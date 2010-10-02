@@ -3,11 +3,11 @@
   <parent>
     <artifactId>jo-widgets</artifactId>
     <groupId>org.jo.widgets</groupId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
   </parent>
   <groupId>org.jo.widgets</groupId>
   <artifactId>jo-widgets-impl-swt</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1</version>
   <name>jo-widgets-impl-swt</name>
   
   <dependencies>
