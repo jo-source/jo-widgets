@@ -35,7 +35,7 @@ import org.jo.widgets.api.widgets.factory.IGenericWidgetFactory;
 import org.jo.widgets.impl.swt.internal.color.IColorCache;
 import org.jo.widgets.impl.swt.util.BorderToComposite;
 
-public class CompositeWidget extends SwtCompositeWidget {
+public class CompositeWidget extends AbstractSwtCompositeWidget {
 
 	public CompositeWidget(final IGenericWidgetFactory factory,
 			final IColorCache colorCache, final IWidget parent,

@@ -47,11 +47,12 @@ import org.jo.widgets.api.widgets.factory.IGenericWidgetFactory;
 import org.jo.widgets.api.widgets.layout.ILayoutDescriptor;
 import org.jo.widgets.impl.swt.internal.color.IColorCache;
 import org.jo.widgets.impl.swt.util.ScrollBarSettingsConvert;
+import org.jo.widgets.impl.swt.widgets.SwtContainerWidget;
 
 public class ScrollCompositeWidget implements IScrollCompositeWidget {
 
 	private final IWidget parent;
-	private final SwtWidgetContainer outerCompositeWidget;
+	private final SwtContainerWidget outerCompositeWidget;
 	private final CompositeWidget innerCompositeWidget;
 
 	private boolean mustChangeScrollCompositeMinSize;
@@ -69,14 +70,14 @@ public class ScrollCompositeWidget implements IScrollCompositeWidget {
 
 		final Composite outerComposite = new HackyMinSizeComposite(
 				(Composite) parent.getUiReference(), SWT.NONE);
-		this.outerCompositeWidget = new SwtWidgetContainer(factory, colorCache,
+		this.outerCompositeWidget = new SwtContainerWidget(factory, colorCache,
 				outerComposite);
 		outerComposite.setLayout(growingMigLayout);
 
 		final int style = ScrollBarSettingsConvert.convert(descriptor);
 		final ScrolledComposite scrolledComposite = new ScrolledComposite(
 				outerComposite, style);
-		final SwtWidgetContainer scrolledWidget = new SwtWidgetContainer(
+		final SwtContainerWidget scrolledWidget = new SwtContainerWidget(
 				factory, colorCache, scrolledComposite);
 		scrolledComposite.setLayout(growingMigLayout);
 		scrolledComposite.setLayoutData(growingCellConstraints);

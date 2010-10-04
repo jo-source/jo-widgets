@@ -31,6 +31,7 @@ import org.eclipse.swt.widgets.Control;
 import org.jo.widgets.api.widgets.IChildWidget;
 import org.jo.widgets.api.widgets.IWidget;
 import org.jo.widgets.impl.swt.internal.color.IColorCache;
+import org.jo.widgets.impl.swt.widgets.SwtWidget;
 
 public abstract class AbstractSwtChildWidget extends SwtWidget implements
 		IChildWidget {

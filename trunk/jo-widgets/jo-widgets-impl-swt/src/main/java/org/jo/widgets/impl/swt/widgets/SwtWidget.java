@@ -25,32 +25,58 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH 
  * DAMAGE.
  */
-package org.jo.widgets.impl.swt.factory.internal;
+package org.jo.widgets.impl.swt.widgets;
 
 import org.eclipse.swt.widgets.Composite;
-import org.jo.widgets.api.widgets.ICompositeWidget;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Shell;
+import org.jo.widgets.api.color.IColorConstant;
 import org.jo.widgets.api.widgets.IWidget;
-import org.jo.widgets.api.widgets.factory.IGenericWidgetFactory;
 import org.jo.widgets.impl.swt.internal.color.IColorCache;
-import org.jo.widgets.util.Assert;
 
-public class SwtCompositeWidget extends SwtWidgetContainer implements
-		ICompositeWidget {
+public class SwtWidget implements IWidget {
 
-	private final IWidget parent;
+	private final IColorCache colorCache;
+	private final Control control;
 
-	public SwtCompositeWidget(final IGenericWidgetFactory factory,
-			final IColorCache colorCache, final IWidget parent,
-			final Composite component) {
-
-		super(factory, colorCache, component);
-		Assert.paramNotNull(parent, "parent");
-		this.parent = parent;
+	public SwtWidget(final IColorCache colorCache, final Control control) {
+		super();
+		this.colorCache = colorCache;
+		this.control = control;
 	}
 
 	@Override
-	public IWidget getParent() {
-		return parent;
+	public Control getUiReference() {
+		return control;
+	}
+
+	@Override
+	public void redraw() {
+		redrawParentShell(control.getParent(), control);
+	}
+
+	private void redrawParentShell(final Control parent, final Control child) {
+		if (parent instanceof Shell) {
+			if (child instanceof Composite) {
+				((Composite) child).layout(false, true);
+				((Composite) child).redraw();
+			} else {
+				((Shell) parent).layout(false, true);
+				((Shell) parent).redraw();
+			}
+		} else {
+			redrawParentShell(parent.getParent(), parent);
+		}
+	}
+
+	@Override
+	public void setForegroundColor(final IColorConstant colorValue) {
+		control.setForeground(colorCache.getColor(colorValue));
+	}
+
+	@Override
+	public void setBackgroundColor(final IColorConstant colorValue) {
+		control.setBackground(colorCache.getColor(colorValue));
 	}
 
 }

@@ -27,28 +27,32 @@
  */
 package org.jo.widgets.impl.swt.factory.internal;
 
-import org.eclipse.swt.widgets.Shell;
-import org.jo.widgets.api.util.ColorSettingsInvoker;
-import org.jo.widgets.api.widgets.IRootWindowWidget;
-import org.jo.widgets.api.widgets.descriptor.base.IBaseRootWindowDescriptor;
+import org.eclipse.swt.widgets.Composite;
+import org.jo.widgets.api.widgets.ICompositeWidget;
+import org.jo.widgets.api.widgets.IWidget;
 import org.jo.widgets.api.widgets.factory.IGenericWidgetFactory;
 import org.jo.widgets.impl.swt.internal.color.IColorCache;
-import org.jo.widgets.impl.swt.internal.image.SwtImageRegistry;
-import org.jo.widgets.impl.swt.widgets.SwtWindowWidget;
+import org.jo.widgets.impl.swt.widgets.SwtContainerWidget;
+import org.jo.widgets.util.Assert;
 
-public class RootWindowWidget extends SwtWindowWidget implements IRootWindowWidget {
+public abstract class AbstractSwtCompositeWidget extends SwtContainerWidget implements ICompositeWidget {
 
-	public RootWindowWidget(
+	private final IWidget parent;
+
+	public AbstractSwtCompositeWidget(
 		final IGenericWidgetFactory factory,
 		final IColorCache colorCache,
-		final SwtImageRegistry imageRegistry,
-		final IBaseRootWindowDescriptor<?> descriptor) {
-		super(factory, colorCache, new Shell(), descriptor.getAutoPackPolicy());
+		final IWidget parent,
+		final Composite component) {
 
-		getUiReference().setText(descriptor.getTitle());
-		setLayout(descriptor.getLayout());
-		setIcon(imageRegistry, descriptor.getIcon());
-		ColorSettingsInvoker.setColors(descriptor, this);
+		super(factory, colorCache, component);
+		Assert.paramNotNull(parent, "parent");
+		this.parent = parent;
+	}
+
+	@Override
+	public IWidget getParent() {
+		return parent;
 	}
 
 }

@@ -1,28 +1,28 @@
 /*
  * Copyright (c) 2010, Michael Grossmann
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- *   * Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *   * Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
- *   * Neither the name of the jo-widgets.org nor the
- *     names of its contributors may be used to endorse or promote products
- *     derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+ * * Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ * * Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
+ * * Neither the name of the jo-widgets.org nor the
+ * names of its contributors may be used to endorse or promote products
+ * derived from this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
  * ARE DISCLAIMED. IN NO EVENT SHALL jo-widgets.org BE LIABLE FOR ANY
  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR 
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
- * LIABILITY, OR TORT(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH 
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
 package org.jo.widgets.impl.swt.factory.internal;
@@ -42,20 +42,23 @@ import org.jo.widgets.api.widgets.descriptor.base.IBaseDialogDescriptor;
 import org.jo.widgets.api.widgets.factory.IGenericWidgetFactory;
 import org.jo.widgets.impl.swt.internal.color.IColorCache;
 import org.jo.widgets.impl.swt.internal.image.SwtImageRegistry;
+import org.jo.widgets.impl.swt.widgets.SwtWindowWidget;
 
-public class DialogWidget extends AbstractSwtWindowWidget implements
-		IDialogWidget {
+public class DialogWidget extends SwtWindowWidget implements IDialogWidget {
 
 	private final IWidget parent;
 	private final IBaseDialogDescriptor<?> descriptor;
 	private boolean wasVisible;
 
-	public DialogWidget(final IGenericWidgetFactory factory,
-			final IColorCache colorCache, final SwtImageRegistry imageRegistry,
-			final IWidget parent, final IBaseDialogDescriptor<?> descriptor) {
-		super(factory, colorCache, descriptor.getAutoPackPolicy(), new Shell(
-				(Shell) parent.getUiReference(), SWT.DIALOG_TRIM
-						| SWT.APPLICATION_MODAL | SWT.RESIZE));
+	public DialogWidget(
+		final IGenericWidgetFactory factory,
+		final IColorCache colorCache,
+		final SwtImageRegistry imageRegistry,
+		final IWidget parent,
+		final IBaseDialogDescriptor<?> descriptor) {
+		super(factory, colorCache, new Shell((Shell) parent.getUiReference(), SWT.DIALOG_TRIM
+			| SWT.APPLICATION_MODAL
+			| SWT.RESIZE), descriptor.getAutoPackPolicy());
 
 		this.parent = parent;
 		this.descriptor = descriptor;
@@ -80,10 +83,8 @@ public class DialogWidget extends AbstractSwtWindowWidget implements
 		final Shell shell = getUiReference();
 		final Composite parentShell = shell.getParent();
 		shell.setLocation(
-				parentShell.getLocation().x
-						+ ((parentShell.getSize().x - shell.getSize().x) / 2),
-				parentShell.getLocation().y
-						+ ((parentShell.getSize().y - shell.getSize().y) / 2));
+				parentShell.getLocation().x + ((parentShell.getSize().x - shell.getSize().x) / 2),
+				parentShell.getLocation().y + ((parentShell.getSize().y - shell.getSize().y) / 2));
 
 	}
 
@@ -93,17 +94,12 @@ public class DialogWidget extends AbstractSwtWindowWidget implements
 
 			if (AutoPackPolicy.ALLWAYS.equals(descriptor.getAutoPackPolicy())) {
 				pack();
-			} else if (!wasVisible
-					&& AutoPackPolicy.ONCE.equals(descriptor
-							.getAutoPackPolicy())) {
+			} else if (!wasVisible && AutoPackPolicy.ONCE.equals(descriptor.getAutoPackPolicy())) {
 				pack();
 			}
-			if (AutoCenterPolicy.ALLWAYS.equals(descriptor
-					.getAutoCenterPolicy())) {
+			if (AutoCenterPolicy.ALLWAYS.equals(descriptor.getAutoCenterPolicy())) {
 				centerLocation();
-			} else if (!wasVisible
-					&& AutoCenterPolicy.ONCE.equals(descriptor
-							.getAutoCenterPolicy())) {
+			} else if (!wasVisible && AutoCenterPolicy.ONCE.equals(descriptor.getAutoCenterPolicy())) {
 				centerLocation();
 			}
 			wasVisible = true;

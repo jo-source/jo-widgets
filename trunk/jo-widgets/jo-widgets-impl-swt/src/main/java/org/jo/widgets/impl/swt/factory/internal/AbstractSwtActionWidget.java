@@ -32,6 +32,7 @@ import org.jo.widgets.api.color.IColorConstant;
 import org.jo.widgets.api.widgets.IWidget;
 import org.jo.widgets.api.widgets.impl.AbstractActionWidget;
 import org.jo.widgets.impl.swt.internal.color.IColorCache;
+import org.jo.widgets.impl.swt.widgets.SwtWidget;
 
 public abstract class AbstractSwtActionWidget extends AbstractActionWidget {
 
