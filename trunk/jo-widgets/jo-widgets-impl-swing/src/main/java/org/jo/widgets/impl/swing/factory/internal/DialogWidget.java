@@ -27,6 +27,7 @@
  */
 package org.jo.widgets.impl.swing.factory.internal;
 
+import java.awt.Component;
 import java.awt.Window;
 
 import javax.swing.JDialog;
