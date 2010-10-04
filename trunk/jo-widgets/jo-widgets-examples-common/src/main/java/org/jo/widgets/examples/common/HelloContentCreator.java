@@ -1,28 +1,28 @@
 /*
  * Copyright (c) 2010, Michael Grossmann
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- *   * Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *   * Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
- *   * Neither the name of the jo-widgets.org nor the
- *     names of its contributors may be used to endorse or promote products
- *     derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+ * * Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ * * Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
+ * * Neither the name of the jo-widgets.org nor the
+ * names of its contributors may be used to endorse or promote products
+ * derived from this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
  * ARE DISCLAIMED. IN NO EVENT SHALL jo-widgets.org BE LIABLE FOR ANY
  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR 
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
- * LIABILITY, OR TORT(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH 
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
 package org.jo.widgets.examples.common;
@@ -48,8 +48,7 @@ public class HelloContentCreator implements IInputContentCreator<String> {
 	private final IInputWidget<String>[] widgets = new IInputWidget[textFieldCount];
 
 	@Override
-	public void createContent(
-			final IInputContentContainer<String> widgetContainer) {
+	public void createContent(final IInputContentContainer widgetContainer) {
 		final BluePrintFactory bpF = new BluePrintFactory();
 
 		final IValidator<String> characterLenghtValidator = new IValidator<String>() {
@@ -57,16 +56,14 @@ public class HelloContentCreator implements IInputContentCreator<String> {
 			@Override
 			public ValidationResult validate(final String validationInput) {
 				if (validationInput != null && validationInput.length() > 15) {
-					return new ValidationResult(ValidationMessageType.ERROR,
-							"Only 15 characters allowed");
+					return new ValidationResult(ValidationMessageType.ERROR, "Only 15 characters allowed");
 				}
 				return new ValidationResult();
 			}
 
 		};
 
-		widgetContainer.setLayout(new MigLayoutDescriptor(
-				"[][grow, 250:250:800][250::800]", ""));
+		widgetContainer.setLayout(new MigLayoutDescriptor("[][grow, 250:250:800][250::800]", ""));
 		for (int i = 0; i < widgets.length; i++) {
 
 			final boolean mandatory = i <= 5;
@@ -76,8 +73,7 @@ public class HelloContentCreator implements IInputContentCreator<String> {
 
 			widgetContainer.add(bpF.textLabel(label + mandatoryMarker), "");
 
-			final IInputFieldBluePrint<String> textFieldBp = bpF
-					.inputFieldString();
+			final IInputFieldBluePrint<String> textFieldBp = bpF.inputFieldString();
 
 			textFieldBp.setMandatory(mandatory);
 			textFieldBp.setValidator(characterLenghtValidator);
@@ -85,17 +81,15 @@ public class HelloContentCreator implements IInputContentCreator<String> {
 			widgets[i] = widgetContainer.add(textFieldBp, "growx");
 			widgetContainer.registerInputWidget(label, widgets[i]);
 
-			final IValidationLabelBluePrint validationLabelDescr = bpF
-					.validationLabel();
+			final IValidationLabelBluePrint validationLabelDescr = bpF.validationLabel();
 			if (mandatory) {
 				validationLabelDescr.setMissingInputText("*mandatory field");
-			} else {
-				validationLabelDescr.setMissingInputText("optional field")
-						.setMissingInputMarkup(Markup.DEFAULT);
+			}
+			else {
+				validationLabelDescr.setMissingInputText("optional field").setMissingInputMarkup(Markup.DEFAULT);
 			}
 
-			final IValidationLabelWidget validationLabelWidget = widgetContainer
-					.add(validationLabelDescr, "wrap");
+			final IValidationLabelWidget validationLabelWidget = widgetContainer.add(validationLabelDescr, "wrap");
 			validationLabelWidget.registerInputWidget(widgets[i]);
 		}
 

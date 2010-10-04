@@ -45,7 +45,7 @@ import org.jo.widgets.api.widgets.layout.MigLayoutDescriptor;
 public class HelloContentCreator2 implements IInputContentCreator<String> {
 
 	@Override
-	public void createContent(final IInputContentContainer<String> widgetContainer) {
+	public void createContent(final IInputContentContainer widgetContainer) {
 		widgetContainer.setLayout(new MigLayoutDescriptor("[grow]", "[][][][]"));
 
 		final BluePrintFactory bpF = new BluePrintFactory();
