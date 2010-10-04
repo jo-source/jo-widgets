@@ -39,6 +39,7 @@ import org.jo.widgets.api.widgets.IWidget;
 import org.jo.widgets.api.widgets.descriptor.base.IBaseWidgetDescriptor;
 import org.jo.widgets.api.widgets.factory.ICustomWidgetFactory;
 import org.jo.widgets.api.widgets.factory.IGenericWidgetFactory;
+import org.jo.widgets.api.widgets.factory.IWidgetFactory;
 import org.jo.widgets.api.widgets.layout.ILayoutDescriptor;
 import org.jo.widgets.api.widgets.layout.MigLayoutDescriptor;
 import org.jo.widgets.impl.swt.internal.color.IColorCache;
@@ -109,10 +110,17 @@ public class SwtContainerWidget implements IContainerWidget {
 
 	@Override
 	public final <WIDGET_TYPE extends IChildWidget> WIDGET_TYPE add(
-		final ICustomWidgetFactory<WIDGET_TYPE> factory,
+		final ICustomWidgetFactory<WIDGET_TYPE> customFactory,
 		final Object cellConstraints) {
 
-		final WIDGET_TYPE result = factory.create(this);
+		final IWidgetFactory<WIDGET_TYPE, IBaseWidgetDescriptor<? extends WIDGET_TYPE>> widgetFactory = new IWidgetFactory<WIDGET_TYPE, IBaseWidgetDescriptor<? extends WIDGET_TYPE>>() {
+			@Override
+			public WIDGET_TYPE create(final IWidget parent, final IBaseWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+				return factory.create(parent, descriptor);
+			}
+		};
+
+		final WIDGET_TYPE result = customFactory.create(this, widgetFactory);
 		setLayoutConstraints(result, cellConstraints);
 		return result;
 	}
