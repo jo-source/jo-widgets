@@ -32,6 +32,7 @@ import java.awt.Component;
 import org.jo.widgets.api.color.IColorConstant;
 import org.jo.widgets.api.widgets.IWidget;
 import org.jo.widgets.api.widgets.impl.AbstractActionWidget;
+import org.jo.widgets.impl.swing.widgets.SwingWidget;
 
 public abstract class AbstractSwingActionWidget extends AbstractActionWidget {
 

@@ -43,11 +43,12 @@ import org.jo.widgets.api.widgets.factory.ICustomWidgetFactory;
 import org.jo.widgets.api.widgets.factory.IGenericWidgetFactory;
 import org.jo.widgets.api.widgets.layout.ILayoutDescriptor;
 import org.jo.widgets.impl.swing.util.ScrollBarSettingsConvert;
+import org.jo.widgets.impl.swing.widgets.SwingContainerWidget;
 
 public class ScrollCompositeWidget implements IScrollCompositeWidget {
 
 	private final IWidget parent;
-	private final SwingWidgetContainer outerCompositeWidget;
+	private final SwingContainerWidget outerCompositeWidget;
 	private final CompositeWidget innerCompositeWidget;
 
 	public ScrollCompositeWidget(final IGenericWidgetFactory factory,
@@ -66,7 +67,7 @@ public class ScrollCompositeWidget implements IScrollCompositeWidget {
 		scrollPane.setVerticalScrollBarPolicy(verticalPolicy);
 		scrollPane.setHorizontalScrollBarPolicy(horizontalPolicy);
 
-		this.outerCompositeWidget = new SwingWidgetContainer(factory,
+		this.outerCompositeWidget = new SwingContainerWidget(factory,
 				scrollPane);
 		this.innerCompositeWidget = new CompositeWidget(factory,
 				outerCompositeWidget, descriptor);

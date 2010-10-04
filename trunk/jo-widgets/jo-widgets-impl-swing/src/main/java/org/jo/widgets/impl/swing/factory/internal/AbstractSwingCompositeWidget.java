@@ -27,33 +27,34 @@
  */
 package org.jo.widgets.impl.swing.factory.internal;
 
-import javax.swing.JFrame;
+import javax.swing.JComponent;
 
-import org.jo.widgets.api.util.ColorSettingsInvoker;
-import org.jo.widgets.api.widgets.IRootWindowWidget;
-import org.jo.widgets.api.widgets.descriptor.base.IBaseRootWindowDescriptor;
+import org.jo.widgets.api.widgets.ICompositeWidget;
+import org.jo.widgets.api.widgets.IWidget;
 import org.jo.widgets.api.widgets.factory.IGenericWidgetFactory;
-import org.jo.widgets.impl.swing.internal.image.SwingImageRegistry;
-import org.jo.widgets.impl.swing.widgets.SwingWindowWidget;
+import org.jo.widgets.impl.swing.widgets.SwingContainerWidget;
+import org.jo.widgets.util.Assert;
 
-public class RootWindowWidget extends SwingWindowWidget implements IRootWindowWidget {
+public abstract class AbstractSwingCompositeWidget extends SwingContainerWidget implements ICompositeWidget {
 
-	public RootWindowWidget(
-		final IGenericWidgetFactory factory,
-		final SwingImageRegistry imageRegistry,
-		final IBaseRootWindowDescriptor<?> descriptor) {
-		super(factory, new JFrame(), descriptor.getAutoPackPolicy());
+	private final IWidget parent;
 
-		getUiReference().setTitle(descriptor.getTitle());
+	public AbstractSwingCompositeWidget(final IGenericWidgetFactory factory, final IWidget parent, final JComponent container) {
 
-		setIcon(descriptor.getIcon(), imageRegistry);
-		setLayout(descriptor.getLayout());
-		ColorSettingsInvoker.setColors(descriptor, this);
+		super(factory, container);
+
+		Assert.paramNotNull(parent, "parent");
+		this.parent = parent;
 	}
 
 	@Override
-	public JFrame getUiReference() {
-		return (JFrame) super.getUiReference();
+	public JComponent getUiReference() {
+		return (JComponent) super.getUiReference();
+	}
+
+	@Override
+	public IWidget getParent() {
+		return parent;
 	}
 
 }

@@ -1,34 +1,36 @@
 /*
  * Copyright (c) 2010, Michael Grossmann
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- *   * Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *   * Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
- *   * Neither the name of the jo-widgets.org nor the
- *     names of its contributors may be used to endorse or promote products
- *     derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+ * * Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ * * Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
+ * * Neither the name of the jo-widgets.org nor the
+ * names of its contributors may be used to endorse or promote products
+ * derived from this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
  * ARE DISCLAIMED. IN NO EVENT SHALL jo-widgets.org BE LIABLE FOR ANY
  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR 
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
- * LIABILITY, OR TORT(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH 
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jo.widgets.impl.swing.factory.internal;
+package org.jo.widgets.impl.swing.widgets;
 
 import java.awt.Component;
 import java.awt.Container;
+
+import net.miginfocom.swing.MigLayout;
 
 import org.jo.widgets.api.color.IColorConstant;
 import org.jo.widgets.api.widgets.IChildWidget;
@@ -40,16 +42,13 @@ import org.jo.widgets.api.widgets.layout.ILayoutDescriptor;
 import org.jo.widgets.api.widgets.layout.MigLayoutDescriptor;
 import org.jo.widgets.util.Assert;
 
-import net.miginfocom.swing.MigLayout;
-
-public class SwingWidgetContainer implements IContainerWidget {
+public class SwingContainerWidget implements IContainerWidget {
 
 	private final IGenericWidgetFactory factory;
 	private final Container container;
 	private final SwingWidget swingWidgetDelegate;
 
-	public SwingWidgetContainer(final IGenericWidgetFactory factory,
-			final Container container) {
+	public SwingContainerWidget(final IGenericWidgetFactory factory, final Container container) {
 
 		Assert.paramNotNull(factory, "factory");
 		Assert.paramNotNull(container, "container");
@@ -64,13 +63,14 @@ public class SwingWidgetContainer implements IContainerWidget {
 		Assert.paramNotNull(layoutManager, "layoutManager");
 		if (layoutManager instanceof MigLayoutDescriptor) {
 			final MigLayoutDescriptor migLayoutManager = (MigLayoutDescriptor) layoutManager;
-			container.setLayout(new MigLayout(migLayoutManager
-					.getLayoutConstraints(), migLayoutManager
-					.getColumnConstraints(), migLayoutManager
-					.getRowConstraints()));
+			container.setLayout(new MigLayout(
+				migLayoutManager.getLayoutConstraints(),
+				migLayoutManager.getColumnConstraints(),
+				migLayoutManager.getRowConstraints()));
 		} else {
 			throw new IllegalArgumentException("Layout Manager of type '"
-					+ layoutManager.getClass().getName() + "' is not supported");
+				+ layoutManager.getClass().getName()
+				+ "' is not supported");
 		}
 	}
 
@@ -96,8 +96,8 @@ public class SwingWidgetContainer implements IContainerWidget {
 
 	@Override
 	public final <WIDGET_TYPE extends IChildWidget> WIDGET_TYPE add(
-			final IBaseWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
-			final Object cellConstraints) {
+		final IBaseWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+		final Object cellConstraints) {
 
 		final WIDGET_TYPE result = factory.create(this, descriptor);
 		addToContainer(result, cellConstraints);
@@ -106,8 +106,8 @@ public class SwingWidgetContainer implements IContainerWidget {
 
 	@Override
 	public final <WIDGET_TYPE extends IChildWidget> WIDGET_TYPE add(
-			final ICustomWidgetFactory<WIDGET_TYPE> factory,
-			final Object cellConstraints) {
+		final ICustomWidgetFactory<WIDGET_TYPE> factory,
+		final Object cellConstraints) {
 
 		final WIDGET_TYPE result = factory.create(this);
 		addToContainer(result, cellConstraints);
@@ -128,11 +128,9 @@ public class SwingWidgetContainer implements IContainerWidget {
 		return factory;
 	}
 
-	private void addToContainer(final IChildWidget widget,
-			final Object cellConstraints) {
+	private void addToContainer(final IChildWidget widget, final Object cellConstraints) {
 		if (cellConstraints != null) {
-			container.add((Component) (widget.getUiReference()),
-					cellConstraints);
+			container.add((Component) (widget.getUiReference()), cellConstraints);
 		} else {
 			container.add((Component) (widget.getUiReference()));
 		}

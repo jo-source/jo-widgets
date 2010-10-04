@@ -35,7 +35,7 @@ import org.jo.widgets.api.widgets.descriptor.base.IBaseCompositeDescriptor;
 import org.jo.widgets.api.widgets.factory.IGenericWidgetFactory;
 import org.jo.widgets.impl.swing.util.BorderConvert;
 
-public class CompositeWidget extends SwingCompositeWidget {
+public class CompositeWidget extends AbstractSwingCompositeWidget {
 
 	public CompositeWidget(final IGenericWidgetFactory factory,
 			final IWidget parent, final IBaseCompositeDescriptor<?> settings) {

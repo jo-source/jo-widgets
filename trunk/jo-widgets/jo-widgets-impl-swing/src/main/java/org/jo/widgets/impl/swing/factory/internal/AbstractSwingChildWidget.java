@@ -31,6 +31,7 @@ import java.awt.Component;
 
 import org.jo.widgets.api.widgets.IChildWidget;
 import org.jo.widgets.api.widgets.IWidget;
+import org.jo.widgets.impl.swing.widgets.SwingWidget;
 
 public abstract class AbstractSwingChildWidget extends SwingWidget implements
 		IChildWidget {

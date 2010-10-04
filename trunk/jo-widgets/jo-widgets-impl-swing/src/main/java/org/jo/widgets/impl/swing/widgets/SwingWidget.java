@@ -25,37 +25,46 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH 
  * DAMAGE.
  */
-package org.jo.widgets.impl.swing.factory.internal;
+package org.jo.widgets.impl.swing.widgets;
+
+import java.awt.Component;
 
 import javax.swing.JComponent;
 
-import org.jo.widgets.api.widgets.ICompositeWidget;
+import org.jo.widgets.api.color.IColorConstant;
 import org.jo.widgets.api.widgets.IWidget;
-import org.jo.widgets.api.widgets.factory.IGenericWidgetFactory;
-import org.jo.widgets.util.Assert;
+import org.jo.widgets.impl.swing.util.ColorConvert;
 
-public class SwingCompositeWidget extends SwingWidgetContainer implements
-		ICompositeWidget {
+public class SwingWidget implements IWidget {
 
-	private final IWidget parent;
+	private final Component component;
 
-	public SwingCompositeWidget(final IGenericWidgetFactory factory,
-			final IWidget parent, final JComponent container) {
-
-		super(factory, container);
-
-		Assert.paramNotNull(parent, "parent");
-		this.parent = parent;
+	public SwingWidget(final Component component) {
+		super();
+		this.component = component;
 	}
 
 	@Override
-	public JComponent getUiReference() {
-		return (JComponent) super.getUiReference();
+	public Component getUiReference() {
+		return component;
 	}
 
 	@Override
-	public IWidget getParent() {
-		return parent;
+	public void redraw() {
+		if (component instanceof JComponent) {
+			((JComponent) component).revalidate();
+		}
+		component.repaint();
+	}
+
+	@Override
+	public void setForegroundColor(final IColorConstant colorValue) {
+		component.setForeground(ColorConvert.convert(colorValue));
+	}
+
+	@Override
+	public void setBackgroundColor(final IColorConstant colorValue) {
+		component.setBackground(ColorConvert.convert(colorValue));
 	}
 
 }

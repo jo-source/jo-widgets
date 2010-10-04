@@ -33,6 +33,7 @@ import org.jo.widgets.api.color.IColorConstant;
 import org.jo.widgets.api.validation.IValidator;
 import org.jo.widgets.api.widgets.IWidget;
 import org.jo.widgets.api.widgets.impl.AbstractInputWidget;
+import org.jo.widgets.impl.swing.widgets.SwingWidget;
 
 public abstract class AbstractSwingInputWidget<VALUE_TYPE> extends
 		AbstractInputWidget<VALUE_TYPE> {
