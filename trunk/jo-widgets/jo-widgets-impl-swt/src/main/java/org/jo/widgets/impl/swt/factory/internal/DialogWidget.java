@@ -91,7 +91,7 @@ public class DialogWidget extends SwtWindowWidget implements IDialogWidget {
 		int y = 0;
 
 		if (parentShell == null) {
-			final Rectangle clientArea = Display.getDefault().getClientArea();
+			final Rectangle clientArea = Display.getCurrent().getClientArea();
 			parentSize = new Point(clientArea.width, clientArea.height);
 		}
 		else {
