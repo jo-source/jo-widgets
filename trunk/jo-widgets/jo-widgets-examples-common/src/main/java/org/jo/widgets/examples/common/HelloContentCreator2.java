@@ -27,7 +27,7 @@
  */
 package org.jo.widgets.examples.common;
 
-import org.jo.widgets.api.convert.impl.DefaultConverter;
+import org.jo.widgets.api.convert.impl.DefaultTypeConverter;
 import org.jo.widgets.api.image.defaults.Icons;
 import org.jo.widgets.api.validation.ValidationResult;
 import org.jo.widgets.api.widgets.IComboBoxWidget;
@@ -67,7 +67,7 @@ public class HelloContentCreator2 implements IInputContentCreator<String> {
 		final IComboBoxBluePrint<String> comboBoxBp2 = bpF.comboBox("red", "green", "blue");
 		final IComboBoxWidget<String> cBox2 = widgetContainer.add(comboBoxBp2, "wrap, growx");
 
-		final IComboBoxBluePrint<Long> comboBoxBp3 = bpF.comboBox(DefaultConverter.LONG_CONVERTER);
+		final IComboBoxBluePrint<Long> comboBoxBp3 = bpF.comboBox(DefaultTypeConverter.LONG_CONVERTER);
 		comboBoxBp3.setElements(Long.valueOf(23456), Long.valueOf(15468), Long.valueOf(5345519));
 		final IComboBoxWidget<Long> cBox3 = widgetContainer.add(comboBoxBp3, "wrap, growx");
 

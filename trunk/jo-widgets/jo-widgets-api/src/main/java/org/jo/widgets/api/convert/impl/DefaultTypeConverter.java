@@ -36,7 +36,7 @@ import org.jo.widgets.api.convert.impl.internal.DefaultShortConverter;
 import org.jo.widgets.api.convert.impl.internal.DefaultStringConverter;
 import org.jo.widgets.util.Assert;
 
-public final class DefaultConverter {
+public final class DefaultTypeConverter {
 
 	public static final IConverter<String> STRING_CONVERTER = new DefaultStringConverter();
 	public static final IConverter<Long> LONG_CONVERTER = new DefaultLongConverter();
@@ -44,7 +44,7 @@ public final class DefaultConverter {
 
 	private static final Map<Class<?>, IConverter<? extends Object>> CONVERTER_MAP = createConverterMap();
 
-	private DefaultConverter() {
+	private DefaultTypeConverter() {
 	}
 
 	@SuppressWarnings("unchecked")

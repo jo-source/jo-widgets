@@ -29,7 +29,7 @@ package org.jo.widgets.api.widgets.blueprint.factory.impl;
 
 import org.jo.widgets.api.convert.IConverter;
 import org.jo.widgets.api.convert.IObjectStringConverter;
-import org.jo.widgets.api.convert.impl.DefaultConverter;
+import org.jo.widgets.api.convert.impl.DefaultTypeConverter;
 import org.jo.widgets.api.image.IImageConstant;
 import org.jo.widgets.api.look.Border;
 import org.jo.widgets.api.widgets.blueprint.IButtonBluePrint;
@@ -176,17 +176,17 @@ public final class BluePrintFactory implements IBluePrintFactory {
 
 	@Override
 	public IInputFieldBluePrint<String> inputFieldString() {
-		return coreFactory.inputField(DefaultConverter.STRING_CONVERTER);
+		return coreFactory.inputField(DefaultTypeConverter.STRING_CONVERTER);
 	}
 
 	@Override
 	public IInputFieldBluePrint<Long> inputFieldLongNumber() {
-		return coreFactory.inputField(DefaultConverter.LONG_CONVERTER);
+		return coreFactory.inputField(DefaultTypeConverter.LONG_CONVERTER);
 	}
 
 	@Override
 	public IInputFieldBluePrint<Short> inputFieldShortNumber() {
-		return coreFactory.inputField(DefaultConverter.SHORT_CONVERTER);
+		return coreFactory.inputField(DefaultTypeConverter.SHORT_CONVERTER);
 	}
 
 	// ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -290,7 +290,7 @@ public final class BluePrintFactory implements IBluePrintFactory {
 
 	@Override
 	public IComboBoxBluePrint<String> comboBox() {
-		return comboBox(DefaultConverter.STRING_CONVERTER);
+		return comboBox(DefaultTypeConverter.STRING_CONVERTER);
 	}
 
 	@Override
@@ -300,7 +300,7 @@ public final class BluePrintFactory implements IBluePrintFactory {
 
 	@Override
 	public IComboBoxSelectionBluePrint<String> comboBoxSelection() {
-		return comboBoxSelection(DefaultConverter.STRING_CONVERTER);
+		return comboBoxSelection(DefaultTypeConverter.STRING_CONVERTER);
 	}
 
 	@Override
