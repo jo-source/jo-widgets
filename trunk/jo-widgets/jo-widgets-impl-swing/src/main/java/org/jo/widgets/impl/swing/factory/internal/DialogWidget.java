@@ -27,7 +27,6 @@
  */
 package org.jo.widgets.impl.swing.factory.internal;
 
-import java.awt.Frame;
 import java.awt.Window;
 
 import javax.swing.JDialog;
@@ -77,7 +76,7 @@ public class DialogWidget extends SwingWindowWidget implements IDialogWidget {
 	@Override
 	public void centerLocation() {
 		final JDialog dialog = getUiReference();
-		dialog.setLocation(ComponentUtil.getCenterLocation((Frame) getParent().getUiReference(), dialog));
+		dialog.setLocation(ComponentUtil.getCenterLocation((Component) getParent().getUiReference(), dialog));
 
 	}
 
@@ -86,12 +85,14 @@ public class DialogWidget extends SwingWindowWidget implements IDialogWidget {
 		if (visible) {
 			if (AutoPackPolicy.ALLWAYS.equals(settings.getAutoPackPolicy())) {
 				pack();
-			} else if (!wasVisible && AutoPackPolicy.ONCE.equals(settings.getAutoPackPolicy())) {
+			}
+			else if (!wasVisible && AutoPackPolicy.ONCE.equals(settings.getAutoPackPolicy())) {
 				pack();
 			}
 			if (AutoCenterPolicy.ALLWAYS.equals(settings.getAutoCenterPolicy())) {
 				centerLocation();
-			} else if (!wasVisible && AutoCenterPolicy.ONCE.equals(settings.getAutoCenterPolicy())) {
+			}
+			else if (!wasVisible && AutoCenterPolicy.ONCE.equals(settings.getAutoCenterPolicy())) {
 				centerLocation();
 			}
 			wasVisible = true;
