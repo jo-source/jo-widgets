@@ -21,7 +21,6 @@
 			<groupId>org.jo.widgets</groupId>
 			<artifactId>jo-widgets-impl-swing</artifactId>
 			<version>${project.parent.version}</version>
-			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>jgoodies</groupId> 

@@ -15,21 +15,18 @@
 		<groupId>org.jo.widgets</groupId>
 		<artifactId>jo-widgets-api</artifactId>
 		<version>${project.parent.version}</version>
-		<scope>compile</scope>
     </dependency>
 	<dependency>
 		<groupId>org.eclipse</groupId>                         
 		<artifactId>swt</artifactId>                         
 		<version>3.6</version>                         
 		<classifier>win32</classifier> 
-		<scope>compile</scope>
 	</dependency>
 	<dependency>
 		<groupId>com.miglayout</groupId>
 		<artifactId>miglayout</artifactId>
 		<classifier>swt</classifier>
 		<version>3.7.3.1</version>
-		<scope>compile</scope>
     </dependency>
   </dependencies>
 </project>
