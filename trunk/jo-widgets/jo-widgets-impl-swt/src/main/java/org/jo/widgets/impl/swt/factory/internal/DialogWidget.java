@@ -30,6 +30,8 @@ package org.jo.widgets.impl.swt.factory.internal;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ShellAdapter;
 import org.eclipse.swt.events.ShellEvent;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -82,9 +84,23 @@ public class DialogWidget extends SwtWindowWidget implements IDialogWidget {
 	public void centerLocation() {
 		final Shell shell = getUiReference();
 		final Composite parentShell = shell.getParent();
-		shell.setLocation(
-				parentShell.getLocation().x + ((parentShell.getSize().x - shell.getSize().x) / 2),
-				parentShell.getLocation().y + ((parentShell.getSize().y - shell.getSize().y) / 2));
+
+		Point parentSize = null;
+
+		int x = 0;
+		int y = 0;
+
+		if (parentShell == null) {
+			final Rectangle clientArea = Display.getCurrent().getClientArea();
+			parentSize = new Point(clientArea.height, clientArea.width);
+		}
+		else {
+			parentSize = parentShell.getSize();
+			x = parentShell.getLocation().x;
+			y = parentShell.getLocation().y;
+		}
+
+		shell.setLocation(x + ((parentSize.x - shell.getSize().x) / 2), y + ((parentSize.y - shell.getSize().y) / 2));
 
 	}
 
@@ -94,12 +110,14 @@ public class DialogWidget extends SwtWindowWidget implements IDialogWidget {
 
 			if (AutoPackPolicy.ALLWAYS.equals(descriptor.getAutoPackPolicy())) {
 				pack();
-			} else if (!wasVisible && AutoPackPolicy.ONCE.equals(descriptor.getAutoPackPolicy())) {
+			}
+			else if (!wasVisible && AutoPackPolicy.ONCE.equals(descriptor.getAutoPackPolicy())) {
 				pack();
 			}
 			if (AutoCenterPolicy.ALLWAYS.equals(descriptor.getAutoCenterPolicy())) {
 				centerLocation();
-			} else if (!wasVisible && AutoCenterPolicy.ONCE.equals(descriptor.getAutoCenterPolicy())) {
+			}
+			else if (!wasVisible && AutoCenterPolicy.ONCE.equals(descriptor.getAutoCenterPolicy())) {
 				centerLocation();
 			}
 			wasVisible = true;
@@ -126,7 +144,8 @@ public class DialogWidget extends SwtWindowWidget implements IDialogWidget {
 				}
 			}
 
-		} else {
+		}
+		else {
 			getUiReference().setVisible(false);
 		}
 	}
