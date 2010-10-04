@@ -53,7 +53,7 @@ public class SwingContainerWidget implements IContainerWidget {
 	public SwingContainerWidget(final IGenericWidgetFactory factory, final Container container) {
 
 		Assert.paramNotNull(factory, "factory");
-		Assert.paramNotNull(container, "container");
+		//Assert.paramNotNull(container, "container");
 
 		this.factory = factory;
 		this.container = container;
@@ -69,7 +69,8 @@ public class SwingContainerWidget implements IContainerWidget {
 				migLayoutManager.getLayoutConstraints(),
 				migLayoutManager.getColumnConstraints(),
 				migLayoutManager.getRowConstraints()));
-		} else {
+		}
+		else {
 			throw new IllegalArgumentException("Layout Manager of type '"
 				+ layoutManager.getClass().getName()
 				+ "' is not supported");
@@ -140,7 +141,8 @@ public class SwingContainerWidget implements IContainerWidget {
 	private void addToContainer(final IChildWidget widget, final Object cellConstraints) {
 		if (cellConstraints != null) {
 			container.add((Component) (widget.getUiReference()), cellConstraints);
-		} else {
+		}
+		else {
 			container.add((Component) (widget.getUiReference()));
 		}
 	}

@@ -55,7 +55,7 @@ public class SwtContainerWidget implements IContainerWidget {
 
 		Assert.paramNotNull(factory, "factory");
 		Assert.paramNotNull(colorCache, "colorCache");
-		Assert.paramNotNull(composite, "composite");
+		//Assert.paramNotNull(composite, "composite");
 
 		this.factory = factory;
 		this.composite = composite;
@@ -71,7 +71,8 @@ public class SwtContainerWidget implements IContainerWidget {
 				migLayoutManager.getLayoutConstraints(),
 				migLayoutManager.getColumnConstraints(),
 				migLayoutManager.getRowConstraints()));
-		} else {
+		}
+		else {
 			throw new IllegalArgumentException("Layout Manager of type '"
 				+ layoutManager.getClass().getName()
 				+ "' is not supported");
@@ -129,7 +130,8 @@ public class SwtContainerWidget implements IContainerWidget {
 	public void setRedraw(final boolean redraw) {
 		if (!redraw) {
 			getParentShell(composite).setRedraw(false);
-		} else {
+		}
+		else {
 			getParentShell(composite).layout(true, true);
 			getParentShell(composite).setRedraw(true);
 		}
@@ -140,7 +142,8 @@ public class SwtContainerWidget implements IContainerWidget {
 		if (object instanceof Control) {
 			final Control control = (Control) object;
 			control.setLayoutData(layoutConstraints);
-		} else {
+		}
+		else {
 			throw new IllegalArgumentException("'"
 				+ Control.class
 				+ "' excpected, but '"
@@ -171,9 +174,11 @@ public class SwtContainerWidget implements IContainerWidget {
 	private Shell getParentShell(final Control control) {
 		if (control instanceof Shell) {
 			return (Shell) control;
-		} else if (control.getParent() != null) {
+		}
+		else if (control.getParent() != null) {
 			return getParentShell(control.getParent());
-		} else {
+		}
+		else {
 			return null;
 		}
 	}
