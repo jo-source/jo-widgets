@@ -150,6 +150,10 @@ public class ComboBoxSelectionWidget<INPUT_TYPE> extends AbstractSwtInputWidget<
 			combo.add(objectStringConverter.convertToString(element));
 			content.add(element);
 		}
+
+		if (elements.size() > 0) {
+			combo.select(0);
+		}
 	}
 
 	private void setToolTip() {
