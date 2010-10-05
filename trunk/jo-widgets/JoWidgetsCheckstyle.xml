@@ -113,10 +113,8 @@
   </module>
   <module name="SuppressionCommentFilter"/>
   <module name="RegexpHeader">
-    <property name="severity" value="ignore"/>
-    <property name="header" value="^/\*\s*\n^ \* Copyright \([cC]\) \d\d\d\d "/>
-    <property name="fileExtensions" value="java"/>
+    <property name="header" value="^/\*\s*\n^ \* Copyright *"/>
+    <property name="fileExtensions" value=".java"/>
     <message key="header.mismatch" value="Zeile entspricht nicht der erwarteten Header-Zeile mit Copyright ''{0}''."/>
-    <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
   </module>
 </module>
