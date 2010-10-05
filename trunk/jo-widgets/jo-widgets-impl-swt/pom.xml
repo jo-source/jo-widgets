@@ -2,17 +2,17 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <artifactId>jo-widgets</artifactId>
-    <groupId>org.jo.widgets</groupId>
+    <groupId>org.jowidgets</groupId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <groupId>org.jo.widgets</groupId>
+  <groupId>org.jowidgets</groupId>
   <artifactId>jo-widgets-impl-swt</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>jo-widgets-impl-swt</name>
   
   <dependencies>
     <dependency>
-		<groupId>org.jo.widgets</groupId>
+		<groupId>org.jowidgets</groupId>
 		<artifactId>jo-widgets-api</artifactId>
 		<version>${project.parent.version}</version>
     </dependency>
