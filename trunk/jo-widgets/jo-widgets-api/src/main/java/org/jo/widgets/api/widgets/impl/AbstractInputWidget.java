@@ -153,7 +153,7 @@ public abstract class AbstractInputWidget<VALUE_TYPE> implements IInputWidget<VA
 		subWidget.removeInputListener(subWidgetListener);
 	}
 
-	protected final void fireContentChanged(final Object source) {
+	public final void fireContentChanged(final Object source) {
 		for (final IInputListener listener : inputListeners) {
 			listener.inputChanged(source);
 		}

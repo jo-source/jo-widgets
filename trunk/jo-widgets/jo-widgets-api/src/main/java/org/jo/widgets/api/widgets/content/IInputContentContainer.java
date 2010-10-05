@@ -38,4 +38,6 @@ public interface IInputContentContainer extends IContainerWidget {
 
 	void unRegisterInputWidget(IInputWidget<?> inputWidget);
 
+	void fireContentChanged(Object source);
+
 }

@@ -96,4 +96,9 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 		subContentCreator.createContent(innerContainer);
 	}
 
+	@Override
+	public void fireContentChanged(final Object source) {
+		outerContainer.fireContentChanged(source);
+	}
+
 }
