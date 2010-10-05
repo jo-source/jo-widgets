@@ -158,8 +158,14 @@ public class ComboBoxSelectionWidget<INPUT_TYPE> extends AbstractSwtInputWidget<
 
 	private void setToolTip() {
 		final Combo combo = getUiReference();
-		final INPUT_TYPE value = getValue();
-		combo.setToolTipText(objectStringConverter.getDescription(value));
+
+		if (combo.getItemCount() > 0) {
+			final INPUT_TYPE value = getValue();
+			combo.setToolTipText(objectStringConverter.getDescription(value));
+		}
+		else {
+			combo.setToolTipText(null);
+		}
 	}
 
 }
