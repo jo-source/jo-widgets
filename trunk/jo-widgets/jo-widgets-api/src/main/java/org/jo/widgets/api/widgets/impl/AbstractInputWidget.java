@@ -170,7 +170,7 @@ public abstract class AbstractInputWidget<VALUE_TYPE> implements IInputWidget<VA
 	}
 
 	@Override
-	public void addValidator(final IValidator<VALUE_TYPE> validator) {
+	public final void addValidator(final IValidator<VALUE_TYPE> validator) {
 		Assert.paramNotNull(validator, "validator");
 		this.validators.add(validator);
 	}
