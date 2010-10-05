@@ -29,6 +29,7 @@ package org.jo.widgets.api.widgets.blueprint.factory.impl;
 
 import org.jo.widgets.api.convert.IConverter;
 import org.jo.widgets.api.convert.IObjectStringConverter;
+import org.jo.widgets.api.convert.impl.DefaultObjectStringConverter;
 import org.jo.widgets.api.convert.impl.DefaultTypeConverter;
 import org.jo.widgets.api.image.IImageConstant;
 import org.jo.widgets.api.look.Border;
@@ -305,4 +306,9 @@ public final class BluePrintFactory implements IBluePrintFactory {
 		return comboBoxSelection().setElements(elements);
 	}
 
+	@Override
+	public <ENUM_TYPE extends Enum<?>> IComboBoxSelectionBluePrint<ENUM_TYPE> comboBoxSelection(final ENUM_TYPE... enumValues) {
+		final IObjectStringConverter<ENUM_TYPE> converter = DefaultObjectStringConverter.getInstance();
+		return comboBoxSelection(converter).setElements(enumValues);
+	}
 }

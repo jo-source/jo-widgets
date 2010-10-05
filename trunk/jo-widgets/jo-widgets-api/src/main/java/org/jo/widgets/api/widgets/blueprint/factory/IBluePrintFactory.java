@@ -104,4 +104,6 @@ public interface IBluePrintFactory extends ICoreBluePrintFactory {
 	IComboBoxSelectionBluePrint<String> comboBoxSelection();
 
 	IComboBoxSelectionBluePrint<String> comboBoxSelection(String... elements);
+
+	<ENUM_TYPE extends Enum<?>> IComboBoxSelectionBluePrint<ENUM_TYPE> comboBoxSelection(final ENUM_TYPE... enumValues);
 }
