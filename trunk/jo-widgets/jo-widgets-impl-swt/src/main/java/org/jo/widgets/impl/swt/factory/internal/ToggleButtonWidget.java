@@ -125,7 +125,12 @@ public class ToggleButtonWidget extends AbstractSwtInputWidget<Boolean> implemen
 
 	@Override
 	public void setText(final String text) {
-		getUiReference().setText(text);
+		if (text != null) {
+			getUiReference().setText(text);
+		}
+		else {
+			setText("");
+		}
 	}
 
 	@Override
