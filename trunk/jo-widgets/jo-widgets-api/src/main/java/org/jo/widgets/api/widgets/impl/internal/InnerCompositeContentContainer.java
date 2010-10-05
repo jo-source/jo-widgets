@@ -40,7 +40,7 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 
 	@Override
 	public void layoutEnd() {
-		compositeWidget.layoutBegin();
+		compositeWidget.layoutEnd();
 	}
 
 	@Override
