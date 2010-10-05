@@ -51,7 +51,8 @@ public class SwingImageRegistry extends ImageRegistry {
 		final SwingImageHandle imageHandle = getImageHandle(key);
 		if (imageHandle != null) {
 			return imageHandle.getImage();
-		} else {
+		}
+		else {
 			throw new IllegalArgumentException("No icon found for the image constant '" + key + "'");
 		}
 	}
@@ -59,7 +60,8 @@ public class SwingImageRegistry extends ImageRegistry {
 	public synchronized ImageIcon getImageIcon(final IImageConstant key) {
 		if (key == null) {
 			return null;
-		} else {
+		}
+		else {
 			return new ImageIcon(getImage(key));
 		}
 	}

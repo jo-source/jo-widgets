@@ -70,7 +70,8 @@ public class SwingWindowWidget extends SwingContainerWidget implements IWindowWi
 		if (visible) {
 			if (AutoPackPolicy.ALLWAYS.equals(autoPackPolicy)) {
 				pack();
-			} else if (!wasVisible && AutoPackPolicy.ONCE.equals(autoPackPolicy)) {
+			}
+			else if (!wasVisible && AutoPackPolicy.ONCE.equals(autoPackPolicy)) {
 				pack();
 			}
 			wasVisible = true;

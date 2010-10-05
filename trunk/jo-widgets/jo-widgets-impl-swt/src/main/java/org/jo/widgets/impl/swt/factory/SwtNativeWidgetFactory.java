@@ -1,28 +1,28 @@
 /*
  * Copyright (c) 2010, Michael Grossmann
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- *   * Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *   * Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
- *   * Neither the name of the jo-widgets.org nor the
- *     names of its contributors may be used to endorse or promote products
- *     derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+ * * Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ * * Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
+ * * Neither the name of the jo-widgets.org nor the
+ * names of its contributors may be used to endorse or promote products
+ * derived from this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
  * ARE DISCLAIMED. IN NO EVENT SHALL jo-widgets.org BE LIABLE FOR ANY
  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR 
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
- * LIABILITY, OR TORT(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH 
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
 package org.jo.widgets.impl.swt.factory;
@@ -92,90 +92,79 @@ public final class SwtNativeWidgetFactory implements INativeWidgetFactory {
 
 	@Override
 	public IDialogWidget createDialogWidget(
-			final IGenericWidgetFactory factory, final IWidget parent,
-			final IDialogDescriptor descriptor) {
-		return new DialogWidget(factory, colorCache, imageRegistry, parent,
-				descriptor);
+		final IGenericWidgetFactory factory,
+		final IWidget parent,
+		final IDialogDescriptor descriptor) {
+		return new DialogWidget(factory, colorCache, imageRegistry, parent, descriptor);
 	}
 
 	@Override
-	public IRootWindowWidget createRootWindowWidget(
-			final IGenericWidgetFactory factory,
-			final IRootWindowDescriptor descriptor) {
-		return new RootWindowWidget(factory, colorCache, imageRegistry,
-				descriptor);
+	public IRootWindowWidget createRootWindowWidget(final IGenericWidgetFactory factory, final IRootWindowDescriptor descriptor) {
+		return new RootWindowWidget(factory, colorCache, imageRegistry, descriptor);
 	}
 
 	@Override
 	public ICompositeWidget createCompositeWidget(
-			final IGenericWidgetFactory factory, final IWidget parent,
-			final ICompositeDescriptor descriptor) {
+		final IGenericWidgetFactory factory,
+		final IWidget parent,
+		final ICompositeDescriptor descriptor) {
 		return new CompositeWidget(factory, colorCache, parent, descriptor);
 	}
 
 	@Override
 	public IScrollCompositeWidget createScrollPaneWidget(
-			final IGenericWidgetFactory factory, final IWidget parent,
-			final IScrollCompositeDescriptor descriptor) {
-		return new ScrollCompositeWidget(factory, colorCache, parent,
-				descriptor);
+		final IGenericWidgetFactory factory,
+		final IWidget parent,
+		final IScrollCompositeDescriptor descriptor) {
+		return new ScrollCompositeWidget(factory, colorCache, parent, descriptor);
 	}
 
 	@Override
-	public IInputWidget<String> createTextFieldWidget(final IWidget parent,
-			final ITextFieldDescriptor descriptor) {
+	public IInputWidget<String> createTextFieldWidget(final IWidget parent, final ITextFieldDescriptor descriptor) {
 		return new TextFieldWidget(colorCache, parent, descriptor);
 	}
 
 	@Override
-	public ITextLabelWidget createTextLabelWidget(final IWidget parent,
-			final ITextLabelDescriptor descriptor) {
+	public ITextLabelWidget createTextLabelWidget(final IWidget parent, final ITextLabelDescriptor descriptor) {
 		return new TextLabelWidget(colorCache, parent, descriptor);
 	}
 
 	@Override
-	public IIconWidget createIconWidget(final IWidget parent,
-			final IIconDescriptor descriptor) {
+	public IIconWidget createIconWidget(final IWidget parent, final IIconDescriptor descriptor) {
 		return new IconWidget(colorCache, imageRegistry, parent, descriptor);
 	}
 
 	@Override
-	public IButtonWidget createButtonWidget(final IWidget parent,
-			final IButtonDescriptor descriptor) {
+	public IButtonWidget createButtonWidget(final IWidget parent, final IButtonDescriptor descriptor) {
 		return new ButtonWidget(colorCache, imageRegistry, parent, descriptor);
 	}
 
 	@Override
-	public ISeparatorWidget createSeparatorWidget(final IWidget parent,
-			final ISeparatorDescriptor descriptor) {
+	public ISeparatorWidget createSeparatorWidget(final IWidget parent, final ISeparatorDescriptor descriptor) {
 		return new SeparatorWidget(colorCache, parent, descriptor);
 	}
 
 	@Override
-	public IToggleButtonWidget createCheckBoxWidget(final IWidget parent,
-			final ICheckBoxDescriptor descriptor) {
+	public IToggleButtonWidget createCheckBoxWidget(final IWidget parent, final ICheckBoxDescriptor descriptor) {
 		return new CheckBoxWidget(colorCache, imageRegistry, parent, descriptor);
 	}
 
 	@Override
-	public IToggleButtonWidget createToggleButtonWidget(final IWidget parent,
-			final IToggleButtonDescriptor descriptor) {
-		return new ToggleButtonWidget(colorCache, imageRegistry, parent,
-				descriptor);
+	public IToggleButtonWidget createToggleButtonWidget(final IWidget parent, final IToggleButtonDescriptor descriptor) {
+		return new ToggleButtonWidget(colorCache, imageRegistry, parent, descriptor);
 	}
 
 	@Override
 	public <INPUT_TYPE> IComboBoxWidget<INPUT_TYPE> createComboBoxSelectionWidget(
-			final IWidget parent,
-			final IComboBoxSelectionDescriptor<INPUT_TYPE> descriptor) {
-		return new ComboBoxSelectionWidget<INPUT_TYPE>(parent, colorCache,
-				descriptor);
+		final IWidget parent,
+		final IComboBoxSelectionDescriptor<INPUT_TYPE> descriptor) {
+		return new ComboBoxSelectionWidget<INPUT_TYPE>(parent, colorCache, descriptor);
 	}
 
 	@Override
 	public <INPUT_TYPE> IComboBoxWidget<INPUT_TYPE> createComboBoxWidget(
-			final IWidget parent,
-			final IComboBoxDescriptor<INPUT_TYPE> descriptor) {
+		final IWidget parent,
+		final IComboBoxDescriptor<INPUT_TYPE> descriptor) {
 		return new ComboBoxWidget<INPUT_TYPE>(parent, colorCache, descriptor);
 	}
 

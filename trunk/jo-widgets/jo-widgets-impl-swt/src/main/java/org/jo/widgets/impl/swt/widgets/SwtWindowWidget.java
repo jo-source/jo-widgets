@@ -78,7 +78,8 @@ public class SwtWindowWidget extends SwtContainerWidget implements IWindowWidget
 
 			if (AutoPackPolicy.ALLWAYS.equals(autoPackPolicy)) {
 				pack();
-			} else if (!wasVisible && AutoPackPolicy.ONCE.equals(autoPackPolicy)) {
+			}
+			else if (!wasVisible && AutoPackPolicy.ONCE.equals(autoPackPolicy)) {
 				pack();
 			}
 			wasVisible = true;
@@ -94,7 +95,8 @@ public class SwtWindowWidget extends SwtContainerWidget implements IWindowWidget
 				}
 			}
 
-		} else {
+		}
+		else {
 			getUiReference().close();
 		}
 	}

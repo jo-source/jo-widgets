@@ -1,28 +1,28 @@
 /*
  * Copyright (c) 2010, Michael Grossmann
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- *   * Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *   * Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
- *   * Neither the name of the jo-widgets.org nor the
- *     names of its contributors may be used to endorse or promote products
- *     derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+ * * Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ * * Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
+ * * Neither the name of the jo-widgets.org nor the
+ * names of its contributors may be used to endorse or promote products
+ * derived from this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
  * ARE DISCLAIMED. IN NO EVENT SHALL jo-widgets.org BE LIABLE FOR ANY
  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR 
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
- * LIABILITY, OR TORT(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH 
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
 package org.jo.widgets.api.widgets.factory.impl.internal;
@@ -53,8 +53,7 @@ public class ValidationLabelWidget implements IValidationLabelWidget {
 	private final IChildWidget childWidgetAdapter;
 	private LabelState currentLabelState;
 
-	public ValidationLabelWidget(final ILabelWidget labelWidget,
-			final IValidationLabelDescriptor descriptor) {
+	public ValidationLabelWidget(final ILabelWidget labelWidget, final IValidationLabelDescriptor descriptor) {
 
 		this.currentLabelState = LabelState.EMPTY;
 
@@ -101,7 +100,8 @@ public class ValidationLabelWidget implements IValidationLabelWidget {
 		final boolean hasInput;
 		if (hasMandatoryWidgets()) {
 			hasInput = hasAllMandatoryInput() && hasAnyInput();
-		} else {
+		}
+		else {
 			hasInput = hasAnyInput();
 		}
 		return hasInput;
@@ -130,12 +130,12 @@ public class ValidationLabelWidget implements IValidationLabelWidget {
 			if (inputWidget.isMandatory()) {
 				if (inputWidget instanceof IMandatoryInputContainer) {
 					final IMandatoryInputContainer mandatoryInputContainer = (IMandatoryInputContainer) inputWidget;
-					final boolean allMandatoryInput = mandatoryInputContainer
-							.hasAllMandatoryInput();
+					final boolean allMandatoryInput = mandatoryInputContainer.hasAllMandatoryInput();
 					if (!allMandatoryInput) {
 						return false;
 					}
-				} else {
+				}
+				else {
 					final boolean hasInput = inputWidget.hasInput();
 					if (!hasInput) {
 						return false;
@@ -154,10 +154,8 @@ public class ValidationLabelWidget implements IValidationLabelWidget {
 		setValidationResult(validationResult, hasInput);
 	}
 
-	private void setValidationResult(final ValidationResult validationResult,
-			final boolean hasInput) {
-		final ValidationMessage firstWorst = validationResult
-				.getWorstFirstMessage();
+	private void setValidationResult(final ValidationResult validationResult, final boolean hasInput) {
+		final ValidationMessage firstWorst = validationResult.getWorstFirstMessage();
 
 		final StringBuilder messageText = new StringBuilder();
 		final String context = firstWorst.getContext();
@@ -173,19 +171,22 @@ public class ValidationLabelWidget implements IValidationLabelWidget {
 			labelWidget.setForegroundColor(descriptor.getOkColor());
 			labelWidget.setText(messageText.toString());
 			currentLabelState = LabelState.OK_VALIDATION;
-		} else if (firstWorst.getType() == ValidationMessageType.WARNING) {
+		}
+		else if (firstWorst.getType() == ValidationMessageType.WARNING) {
 			labelWidget.setMarkup(descriptor.getWarningMarkup());
 			labelWidget.setIcon(descriptor.getWarningIcon());
 			labelWidget.setForegroundColor(descriptor.getWarningColor());
 			labelWidget.setText(messageText.toString());
 			currentLabelState = LabelState.WARNING_VALIDATION;
-		} else if (firstWorst.getType() == ValidationMessageType.ERROR) {
+		}
+		else if (firstWorst.getType() == ValidationMessageType.ERROR) {
 			labelWidget.setMarkup(descriptor.getErrorMarkup());
 			labelWidget.setIcon(descriptor.getErrorIcon());
 			labelWidget.setForegroundColor(descriptor.getErrorColor());
 			labelWidget.setText(messageText.toString());
 			currentLabelState = LabelState.ERROR_VALIDATION;
-		} else {
+		}
+		else {
 			setInputCheckResult(hasInput);
 		}
 	}
@@ -197,7 +198,8 @@ public class ValidationLabelWidget implements IValidationLabelWidget {
 			labelWidget.setForegroundColor(descriptor.getMissingInputColor());
 			labelWidget.setText(descriptor.getMissingInputText());
 			currentLabelState = LabelState.MISSING_INPUT;
-		} else {
+		}
+		else {
 			labelWidget.setIcon(null);
 			labelWidget.setText(null);
 			currentLabelState = LabelState.EMPTY;
@@ -230,7 +232,11 @@ public class ValidationLabelWidget implements IValidationLabelWidget {
 	}
 
 	private enum LabelState {
-		OK_VALIDATION, WARNING_VALIDATION, ERROR_VALIDATION, MISSING_INPUT, EMPTY;
+		OK_VALIDATION,
+		WARNING_VALIDATION,
+		ERROR_VALIDATION,
+		MISSING_INPUT,
+		EMPTY;
 	}
 
 }

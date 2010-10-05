@@ -48,7 +48,8 @@ public class SwtImageRegistry extends ImageRegistry {
 		final SwtImageHandle imageHandle = getImageHandle(key);
 		if (imageHandle != null) {
 			return imageHandle.getImage();
-		} else {
+		}
+		else {
 			throw new IllegalArgumentException("No icon found for the image constant '" + key + "'");
 		}
 	}

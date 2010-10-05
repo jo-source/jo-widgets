@@ -46,7 +46,8 @@ public class SwtImageHandle extends AbstractImageHandle<Image> {
 	protected Image createImage() {
 		try {
 			return new Image(Display.getDefault(), url.openStream());
-		} catch (final IOException e) {
+		}
+		catch (final IOException e) {
 			throw new RuntimeException(e);
 		}
 	}

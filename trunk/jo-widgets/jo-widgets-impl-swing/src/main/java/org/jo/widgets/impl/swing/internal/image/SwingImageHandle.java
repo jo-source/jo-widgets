@@ -47,7 +47,8 @@ public class SwingImageHandle extends AbstractImageHandle<Image> {
 	protected Image createImage() {
 		try {
 			return ImageIO.read(url);
-		} catch (final IOException e) {
+		}
+		catch (final IOException e) {
 			throw new RuntimeException(e);
 		}
 
