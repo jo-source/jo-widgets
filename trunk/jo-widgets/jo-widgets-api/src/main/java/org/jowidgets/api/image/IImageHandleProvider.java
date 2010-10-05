@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Manuel Wölker, Michael Grossmann
+ * Copyright (c) 2010, Manuel Woelker, Michael Grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
