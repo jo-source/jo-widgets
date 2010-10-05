@@ -1,28 +1,28 @@
 /*
  * Copyright (c) 2010, Michael Grossmann
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- *   * Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *   * Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
- *   * Neither the name of the jo-widgets.org nor the
- *     names of its contributors may be used to endorse or promote products
- *     derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+ * * Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ * * Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
+ * * Neither the name of the jo-widgets.org nor the
+ * names of its contributors may be used to endorse or promote products
+ * derived from this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
  * ARE DISCLAIMED. IN NO EVENT SHALL jo-widgets.org BE LIABLE FOR ANY
  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR 
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
- * LIABILITY, OR TORT(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH 
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
 package org.jo.widgets.impl.swt.factory.internal;
@@ -45,42 +45,38 @@ import org.jo.widgets.api.widgets.descriptor.base.IBaseComboBoxSelectionDescript
 import org.jo.widgets.impl.swt.internal.color.IColorCache;
 import org.jo.widgets.util.Assert;
 
-public class ComboBoxSelectionWidget<INPUT_TYPE> extends
-		AbstractSwtInputWidget<INPUT_TYPE> implements
+public class ComboBoxSelectionWidget<INPUT_TYPE> extends AbstractSwtInputWidget<INPUT_TYPE> implements
 		IComboBoxWidget<INPUT_TYPE> {
 
 	private final ArrayList<INPUT_TYPE> content;
-	private final boolean mandatory;
 	private boolean hasInput;
 	private final IObjectStringConverter<INPUT_TYPE> objectStringConverter;
 
 	public ComboBoxSelectionWidget(
-			final IWidget parent,
-			final IColorCache colorCache,
-			final IBaseComboBoxSelectionDescriptor<IComboBoxWidget<INPUT_TYPE>, INPUT_TYPE> descriptor) {
+		final IWidget parent,
+		final IColorCache colorCache,
+		final IBaseComboBoxSelectionDescriptor<IComboBoxWidget<INPUT_TYPE>, INPUT_TYPE> descriptor) {
 		this(parent, colorCache, descriptor, null);
 	}
 
 	public ComboBoxSelectionWidget(
-			final IWidget parent,
-			final IColorCache colorCache,
-			final IBaseComboBoxSelectionDescriptor<IComboBoxWidget<INPUT_TYPE>, INPUT_TYPE> descriptor,
-			final IValidator<INPUT_TYPE> validator) {
-		this(parent, colorCache, new Combo((Composite) parent.getUiReference(),
-				SWT.NONE | SWT.READ_ONLY), descriptor, validator);
+		final IWidget parent,
+		final IColorCache colorCache,
+		final IBaseComboBoxSelectionDescriptor<IComboBoxWidget<INPUT_TYPE>, INPUT_TYPE> descriptor,
+		final IValidator<INPUT_TYPE> validator) {
+		this(parent, colorCache, new Combo((Composite) parent.getUiReference(), SWT.NONE | SWT.READ_ONLY), descriptor, validator);
 	}
 
 	public ComboBoxSelectionWidget(
-			final IWidget parent,
-			final IColorCache colorCache,
-			final Combo combo,
-			final IBaseComboBoxSelectionDescriptor<IComboBoxWidget<INPUT_TYPE>, INPUT_TYPE> descriptor,
-			final IValidator<INPUT_TYPE> validator) {
-		super(parent, colorCache, combo, validator);
+		final IWidget parent,
+		final IColorCache colorCache,
+		final Combo combo,
+		final IBaseComboBoxSelectionDescriptor<IComboBoxWidget<INPUT_TYPE>, INPUT_TYPE> descriptor,
+		final IValidator<INPUT_TYPE> validator) {
+		super(parent, colorCache, combo, descriptor.isMandatory(), validator);
 
 		this.content = new ArrayList<INPUT_TYPE>();
 		this.objectStringConverter = descriptor.getObjectStringConverter();
-		this.mandatory = descriptor.isMandatory();
 		this.hasInput = false;
 
 		ColorSettingsInvoker.setColors(descriptor, this);
@@ -107,11 +103,6 @@ public class ComboBoxSelectionWidget<INPUT_TYPE> extends
 	}
 
 	@Override
-	public boolean isMandatory() {
-		return mandatory;
-	}
-
-	@Override
 	public boolean hasInput() {
 		return hasInput;
 	}
@@ -126,9 +117,9 @@ public class ComboBoxSelectionWidget<INPUT_TYPE> extends
 		final int index = content.indexOf(value);
 		if (index != -1) {
 			combo.select(index);
-		} else {
-			throw new IllegalArgumentException("The value '" + value
-					+ "' is not element of this combobox");
+		}
+		else {
+			throw new IllegalArgumentException("The value '" + value + "' is not element of this combobox");
 		}
 	}
 

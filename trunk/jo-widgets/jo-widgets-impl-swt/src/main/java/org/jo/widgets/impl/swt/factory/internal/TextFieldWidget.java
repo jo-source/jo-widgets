@@ -41,12 +41,8 @@ import org.jo.widgets.impl.swt.internal.color.IColorCache;
 
 public class TextFieldWidget extends AbstractSwtTextInputWidget<String> {
 
-	private final boolean mandatory;
-
 	public TextFieldWidget(final IColorCache colorCache, final IWidget parent, final IBaseTextFieldDescriptor<?> descriptor) {
-		super(parent, colorCache, createText(parent, descriptor), descriptor.getTextInputValidator());
-
-		this.mandatory = descriptor.isMandatory();
+		super(parent, colorCache, createText(parent, descriptor), descriptor.isMandatory(), descriptor.getTextInputValidator());
 
 		final ITextInputValidator validator = descriptor.getTextInputValidator();
 
@@ -92,11 +88,6 @@ public class TextFieldWidget extends AbstractSwtTextInputWidget<String> {
 	@Override
 	public void setEditable(final boolean editable) {
 		getUiReference().setEditable(editable);
-	}
-
-	@Override
-	public boolean isMandatory() {
-		return mandatory;
 	}
 
 	@Override

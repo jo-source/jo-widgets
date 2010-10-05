@@ -53,16 +53,12 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractInputWidget<INPUT
 	private final ICompositeWidget compositeWidget;
 	private final IInputContentCreator<INPUT_TYPE> content;
 
-	public InputContentContainer(final IContainerWidget parent, final IInputContentCreator<INPUT_TYPE> content) {
-		this(parent, content, false, null);
-	}
-
 	public InputContentContainer(
 		final IContainerWidget parent,
 		final IInputContentCreator<INPUT_TYPE> content,
 		final boolean scrollableContent,
 		final Border border) {
-		super();
+		super(content.isMandatory());
 
 		final BluePrintFactory bpF = new BluePrintFactory();
 
@@ -140,11 +136,6 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractInputWidget<INPUT
 	@Override
 	public void unRegisterInputWidget(final IInputWidget<?> inputWidget) {
 		unRegisterSubInputWidget(inputWidget);
-	}
-
-	@Override
-	public boolean isMandatory() {
-		return content.isMandatory();
 	}
 
 	@Override
