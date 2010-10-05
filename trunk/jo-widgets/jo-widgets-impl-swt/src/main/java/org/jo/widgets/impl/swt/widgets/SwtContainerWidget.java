@@ -127,14 +127,14 @@ public class SwtContainerWidget implements IContainerWidget {
 	}
 
 	@Override
-	public void setRedraw(final boolean redraw) {
-		if (!redraw) {
-			getParentShell(composite).setRedraw(false);
-		}
-		else {
-			getParentShell(composite).layout(true, true);
-			getParentShell(composite).setRedraw(true);
-		}
+	public void layoutBegin() {
+		getParentShell(composite).setRedraw(false);
+	}
+
+	@Override
+	public void layoutEnd() {
+		getParentShell(composite).layout(true, true);
+		getParentShell(composite).setRedraw(true);
 	}
 
 	protected void setLayoutConstraints(final IWidget widget, final Object layoutConstraints) {

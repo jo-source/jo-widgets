@@ -109,8 +109,13 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractInputWidget<INPUT
 	}
 
 	@Override
-	public void setRedraw(final boolean redraw) {
-		compositeWidget.setRedraw(redraw);
+	public void layoutBegin() {
+		compositeWidget.layoutBegin();
+	}
+
+	@Override
+	public void layoutEnd() {
+		compositeWidget.layoutEnd();
 	}
 
 	@Override

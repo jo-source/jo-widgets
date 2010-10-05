@@ -289,7 +289,7 @@ public class InputDialogWidget<INPUT_TYPE> implements IInputDialogWidget<INPUT_T
 		}
 
 		private void setValidationResult(final ValidationMessage firstWorst) {
-			parentContainer.setRedraw(false);
+			parentContainer.layoutBegin();
 			if (firstWorst.getType() == ValidationMessageType.OK) {
 				buttonWidget.setEnabled(true);
 				buttonWidget.setToolTipText(buttonDescriptor.getToolTipText());
@@ -302,7 +302,7 @@ public class InputDialogWidget<INPUT_TYPE> implements IInputDialogWidget<INPUT_T
 				buttonWidget.setEnabled(false);
 				buttonWidget.setToolTipText(firstWorst.getMessageText());
 			}
-			parentContainer.setRedraw(true);
+			parentContainer.layoutEnd();
 
 		}
 	}

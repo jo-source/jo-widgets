@@ -34,8 +34,13 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 	}
 
 	@Override
-	public void setRedraw(final boolean redraw) {
-		compositeWidget.setRedraw(redraw);
+	public void layoutBegin() {
+		compositeWidget.layoutBegin();
+	}
+
+	@Override
+	public void layoutEnd() {
+		compositeWidget.layoutBegin();
 	}
 
 	@Override

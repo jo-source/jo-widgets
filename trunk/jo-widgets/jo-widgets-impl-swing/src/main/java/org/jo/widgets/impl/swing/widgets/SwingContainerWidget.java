@@ -125,8 +125,13 @@ public class SwingContainerWidget implements IContainerWidget {
 	}
 
 	@Override
-	public void setRedraw(final boolean redraw) {
-		// TODO Auto-generated method stub
+	public void layoutBegin() {
+		//do nothing here (swing does not flicker like swt)
+	}
+
+	@Override
+	public void layoutEnd() {
+		redraw();
 	}
 
 	@Override
