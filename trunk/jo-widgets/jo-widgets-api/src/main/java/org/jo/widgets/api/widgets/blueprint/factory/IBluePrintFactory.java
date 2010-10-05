@@ -52,6 +52,8 @@ public interface IBluePrintFactory extends ICoreBluePrintFactory {
 
 	IInputFieldBluePrint<Long> inputFieldLongNumber();
 
+	IInputFieldBluePrint<Integer> inputFieldIntegerNumber();
+
 	IInputFieldBluePrint<Short> inputFieldShortNumber();
 
 	// ///////////////////////////////////////////////////////////////////////////////////////////////

@@ -185,6 +185,11 @@ public final class BluePrintFactory implements IBluePrintFactory {
 		return coreFactory.inputField(DefaultTypeConverter.SHORT_CONVERTER);
 	}
 
+	@Override
+	public IInputFieldBluePrint<Integer> inputFieldIntegerNumber() {
+		return coreFactory.inputField(DefaultTypeConverter.INTEGER_CONVERTER);
+	}
+
 	// ///////////////////////////////////////////////////////////////////////////////////////////////
 	// //////////////////////some convenience methods starting
 	// here///////////////////////////////////

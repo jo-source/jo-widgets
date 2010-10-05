@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.jo.widgets.api.convert.IConverter;
+import org.jo.widgets.api.convert.impl.internal.DefaultIntegerConverter;
 import org.jo.widgets.api.convert.impl.internal.DefaultLongConverter;
 import org.jo.widgets.api.convert.impl.internal.DefaultShortConverter;
 import org.jo.widgets.api.convert.impl.internal.DefaultStringConverter;
@@ -40,6 +41,7 @@ public final class DefaultTypeConverter {
 
 	public static final IConverter<String> STRING_CONVERTER = new DefaultStringConverter();
 	public static final IConverter<Long> LONG_CONVERTER = new DefaultLongConverter();
+	public static final IConverter<Integer> INTEGER_CONVERTER = new DefaultIntegerConverter();
 	public static final IConverter<Short> SHORT_CONVERTER = new DefaultShortConverter();
 
 	private static final Map<Class<?>, IConverter<? extends Object>> CONVERTER_MAP = createConverterMap();
@@ -57,6 +59,7 @@ public final class DefaultTypeConverter {
 		final Map<Class<?>, IConverter<? extends Object>> result = new HashMap<Class<?>, IConverter<? extends Object>>();
 		result.put(String.class, STRING_CONVERTER);
 		result.put(Long.class, LONG_CONVERTER);
+		result.put(Long.class, INTEGER_CONVERTER);
 		result.put(Short.class, SHORT_CONVERTER);
 		return result;
 	}

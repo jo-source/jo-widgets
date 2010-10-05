@@ -84,7 +84,7 @@ public class HelloWidget {
 
 		// row2
 		group.add(labelBp.setText("Number 2").setToolTipText("Very very useful numbers here"), "sg lg");
-		final IInputWidget<Short> widget2 = group.add(bpF.inputFieldShortNumber(), "growx");
+		final IInputWidget<Integer> widget2 = group.add(bpF.inputFieldIntegerNumber(), "growx");
 		final IValidationLabelWidget valLabel2 = group.add(validationLabelBp, "wrap");
 		valLabel2.registerInputWidget(widget2);
 
