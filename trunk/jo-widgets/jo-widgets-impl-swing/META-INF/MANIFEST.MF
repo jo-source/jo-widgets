@@ -21,7 +21,7 @@ Export-Package: org.jowidgets.impl.swing.factory.internal.defaults;use
 Bundle-Version: 0.0.1.SNAPSHOT
 Tool: Bnd-0.0.357
 Bundle-Name: jo-widgets-impl-swing
-Bnd-LastModified: 1286354787868
+Bnd-LastModified: 1286357083338
 Created-By: 1.6.0_13 (Sun Microsystems Inc.)
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.jowidgets.jo-widgets-impl-swing

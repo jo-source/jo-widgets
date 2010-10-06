@@ -24,7 +24,7 @@ Export-Package: org.jowidgets.impl.swt.internal.color;uses:="org.jowid
 Bundle-Version: 0.0.1.SNAPSHOT
 Tool: Bnd-0.0.357
 Bundle-Name: jo-widgets-impl-swt
-Bnd-LastModified: 1286354789071
+Bnd-LastModified: 1286356957201
 Created-By: 1.6.0_13 (Sun Microsystems Inc.)
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.jowidgets.jo-widgets-impl-swt

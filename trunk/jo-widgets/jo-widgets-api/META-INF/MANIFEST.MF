@@ -86,7 +86,7 @@ Export-Package: org.jowidgets.api.convert.impl;uses:="org.jowidgets.ap
 Bundle-Version: 0.0.1.SNAPSHOT
 Tool: Bnd-0.0.357
 Bundle-Name: jo-widgets-api
-Bnd-LastModified: 1286354785556
+Bnd-LastModified: 1286356953717
 Created-By: 1.6.0_13 (Sun Microsystems Inc.)
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.jowidgets.jo-widgets-api

@@ -13,7 +13,7 @@ Export-Package: org.jowidgets.examples.common;uses:="org.jowidgets.api
 Bundle-Version: 0.0.1.SNAPSHOT
 Tool: Bnd-0.0.357
 Bundle-Name: jo-widgets-examples-common
-Bnd-LastModified: 1286354790103
+Bnd-LastModified: 1286357089041
 Created-By: 1.6.0_13 (Sun Microsystems Inc.)
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.jowidgets.jo-widgets-examples-common

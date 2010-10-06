@@ -6,12 +6,12 @@ Export-Package: org.jowidgets.examples.swing;uses:="org.jowidgets.impl
 Bundle-Version: 0.0.1.SNAPSHOT
 Tool: Bnd-0.0.357
 Bundle-Name: jo-widgets-examples-swing
-Bnd-LastModified: 1286354790868
+Bnd-LastModified: 1286357075932
 Created-By: 1.6.0_13 (Sun Microsystems Inc.)
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.jowidgets.jo-widgets-examples-swing
 Import-Package: com.jgoodies.looks,com.jgoodies.looks.plastic,javax.sw
- ing,javax.swing.plaf,org.jowidgets.api.widgets.factory;version="0.0",
- org.jowidgets.examples.common;version="0.0",org.jowidgets.examples.sw
- ing;version="0.0",org.jowidgets.impl.swing.factory;version="0.0"
+ ing,javax.swing.plaf,org.jowidgets.api.widgets.factory,org.jowidgets.
+ examples.common,org.jowidgets.examples.swing;version="0.0",org.jowidg
+ ets.impl.swing.factory
 
