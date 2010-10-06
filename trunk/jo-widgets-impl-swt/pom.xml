@@ -13,6 +13,20 @@
 	<artifactId>jo-widgets-impl-swt</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>jo-widgets-impl-swt</name>
+	
+	<repositories>
+		<repository>
+			<id>seasar</id>
+			<url>http://maven.seasar.org/maven2/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
 
 	<dependencies>
 		<dependency>
@@ -21,10 +35,9 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse</groupId>
-			<artifactId>swt</artifactId>
-			<version>3.6</version>
-			<classifier>win32</classifier>
+			<groupId>org.eclipse</groupId> 
+			<artifactId>swt-win32-win32-x86</artifactId> 
+			<version>3.5.2</version> 
 		</dependency>
 		<dependency>
 			<groupId>com.miglayout</groupId>
