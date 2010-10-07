@@ -6,13 +6,13 @@
 
 	<parent>
 		<groupId>org.jowidgets</groupId>
-		<artifactId>jo-widgets-parent</artifactId>
+		<artifactId>org.jowidgets.parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../jo-widgets-parent/pom.xml</relativePath>
 	</parent>
 
 	<groupId>org.jowidgets</groupId>
-	<artifactId>jo-widgets-impl-swing</artifactId>
+	<artifactId>org.jowidgets.impl.swing</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>jo-widgets-impl-swing</name>
 	<url>http://maven.apache.org</url>
@@ -24,7 +24,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
-			<artifactId>jo-widgets-api</artifactId>
+			<artifactId>org.jowidgets.api</artifactId>
 			<version>${project.parent.version}</version>
 			<type>jar</type>
 		</dependency>

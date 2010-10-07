@@ -3,7 +3,7 @@
 	
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jowidgets</groupId>
-	<artifactId>jo-widgets-parent</artifactId>
+	<artifactId>org.jowidgets.parent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>jo-widgets-parent</name>
@@ -62,6 +62,7 @@
 							<manifestLocation>META-INF</manifestLocation>
 							<instructions>
 								<Export-Package>!*.internal;org.jowidgets.*</Export-Package>
+								<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
 							</instructions>
 						</configuration>
 					</execution>
