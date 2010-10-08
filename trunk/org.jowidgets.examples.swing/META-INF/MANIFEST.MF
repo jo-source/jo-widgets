@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Export-Package: org.jowidgets.examples.swing;uses:="org.jowidgets.impl
+ .swing.factory,org.jowidgets.api.widgets.factory,org.jowidgets.exampl
+ es.common,com.jgoodies.looks,javax.swing,javax.swing.plaf,com.jgoodie
+ s.looks.plastic";version="0.0.1.SNAPSHOT"
+Bundle-Version: 0.0.1.SNAPSHOT
+Tool: Bnd-0.0.357
+Bundle-Name: jo-widgets-examples-swing
+Bnd-LastModified: 1286552701827
+Created-By: 1.6.0_20 (Sun Microsystems Inc.)
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.jowidgets.examples.swing
+Import-Package: com.jgoodies.looks,com.jgoodies.looks.plastic,javax.sw
+ ing,javax.swing.plaf,org.jowidgets.api.widgets.factory,org.jowidgets.
+ examples.common,org.jowidgets.examples.swing;version="0.0",org.jowidg
+ ets.impl.swing.factory
+
