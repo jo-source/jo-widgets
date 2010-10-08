@@ -5,13 +5,13 @@
     <groupId>org.jowidgets</groupId>
     <artifactId>org.jowidgets.parent</artifactId> 
     <version>0.0.1-SNAPSHOT</version>
-	<relativePath>../jo-widgets-parent/pom.xml</relativePath>
+	<relativePath>../org.jowidgets.parent/pom.xml</relativePath>
   </parent>
   
   <groupId>org.jowidgets</groupId>
   <artifactId>org.jowidgets.examples.swing</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>jo-widgets-examples-swing</name>
+  <name>org.jowidgets.examples.swing</name>
   
   <repositories>
 		<repository>
