@@ -6,13 +6,13 @@
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../jo-widgets-parent/pom.xml</relativePath>
+		<relativePath>../org.jowidgets.parent/pom.xml</relativePath>
 	</parent>
 
 	<groupId>org.jowidgets</groupId>
 	<artifactId>org.jowidgets.impl.swt</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>jo-widgets-impl-swt</name>
+	<name>org.jowidgets.impl.swt</name>
 	
 	<repositories>
 		<repository>

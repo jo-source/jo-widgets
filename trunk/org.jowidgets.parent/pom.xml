@@ -6,7 +6,7 @@
 	<artifactId>org.jowidgets.parent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>jo-widgets-parent</name>
+	<name>org.jowidgets.parent</name>
 	
 	<properties>
 		<java.version>1.6</java.version>
@@ -14,12 +14,12 @@
 	</properties>
 	
 	<modules>
-		<module>../jo-widgets-api</module>
-		<module>../jo-widgets-impl-swing</module>
-		<module>../jo-widgets-impl-swt</module>
-		<module>../jo-widgets-examples-common</module>
-		<module>../jo-widgets-examples-swing</module>
-		<module>../jo-widgets-examples-swt</module>
+		<module>../org.jowidgets.api</module>
+		<module>../org.jowidgets.impl.swing</module>
+		<module>../org.jowidgets.impl.swt</module>
+		<module>../org.jowidgets.examples.common</module>
+		<module>../org.jowidgets.examples.swing</module>
+		<module>../org.jowidgets.examples.swt</module>
 	</modules>
 
 	<build>
