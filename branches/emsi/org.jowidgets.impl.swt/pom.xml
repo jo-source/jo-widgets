@@ -1,0 +1,49 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.jowidgets</groupId>
+		<artifactId>org.jowidgets.parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../jo-widgets-parent/pom.xml</relativePath>
+	</parent>
+
+	<groupId>org.jowidgets</groupId>
+	<artifactId>org.jowidgets.impl.swt</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>jo-widgets-impl-swt</name>
+	
+	<repositories>
+		<repository>
+			<id>seasar</id>
+			<url>http://maven.seasar.org/maven2/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.api</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse</groupId> 
+			<artifactId>swt-win32-win32-x86</artifactId> 
+			<version>3.5.2</version> 
+		</dependency>
+		<dependency>
+			<groupId>com.miglayout</groupId>
+			<artifactId>miglayout</artifactId>
+			<classifier>swt</classifier>
+			<version>3.7.3.1</version>
+		</dependency>
+	</dependencies>
+</project>
