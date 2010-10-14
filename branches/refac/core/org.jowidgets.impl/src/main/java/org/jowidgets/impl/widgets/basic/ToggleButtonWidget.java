@@ -46,7 +46,7 @@ public class ToggleButtonWidget extends ToggleButtonWidgetCommonWrapper implemen
 	public ToggleButtonWidget(
 		final IWidget parent,
 		final IToggleButtonWidgetSpi toggleButtonWidgetSpi,
-		final IToggleButtonSetup<?> setup) {
+		final IToggleButtonSetup setup) {
 		super(toggleButtonWidgetSpi);
 		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
 		this.inputWidgetDelegate = new InputWidgetDelegate<Boolean>(toggleButtonWidgetSpi, setup);

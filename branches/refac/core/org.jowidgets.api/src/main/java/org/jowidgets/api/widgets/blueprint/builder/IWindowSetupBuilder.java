@@ -29,12 +29,11 @@ package org.jowidgets.api.widgets.blueprint.builder;
 
 import org.jowidgets.api.look.AutoCenterPolicy;
 import org.jowidgets.api.look.AutoPackPolicy;
-import org.jowidgets.api.widgets.IWindowWidget;
 import org.jowidgets.api.widgets.blueprint.builder.convenience.IWindowSetupConvenience;
 import org.jowidgets.api.widgets.builder.IWidgetSetupBuilderCommon;
 
-public interface IWindowSetupBuilder<INSTANCE_TYPE extends IWindowSetupBuilder<?, ?>, WIDGET_TYPE extends IWindowWidget> extends
-		IWidgetSetupBuilderCommon<INSTANCE_TYPE, WIDGET_TYPE>,
+public interface IWindowSetupBuilder<INSTANCE_TYPE extends IWindowSetupBuilder<?>> extends
+		IWidgetSetupBuilderCommon<INSTANCE_TYPE>,
 		IWindowSetupConvenience<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setAutoPackPolicy(final AutoPackPolicy autoPackPolicy);

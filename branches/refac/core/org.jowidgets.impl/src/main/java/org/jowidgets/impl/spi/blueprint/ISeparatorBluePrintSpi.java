@@ -28,9 +28,6 @@
 package org.jowidgets.impl.spi.blueprint;
 
 import org.jowidgets.impl.spi.blueprint.builder.ISeparatorSetupBuilderSpi;
-import org.jowidgets.spi.widgets.IWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.ISeparatorDescriptorSpi;
+import org.jowidgets.impl.spi.descriptor.ISeparatorDescriptorSpi;
 
-public interface ISeparatorBluePrintSpi extends
-		ISeparatorSetupBuilderSpi<ISeparatorBluePrintSpi, IWidgetSpi>,
-		ISeparatorDescriptorSpi {}
+public interface ISeparatorBluePrintSpi extends ISeparatorSetupBuilderSpi<ISeparatorBluePrintSpi>, ISeparatorDescriptorSpi {}

@@ -28,10 +28,9 @@
 package org.jowidgets.api.widgets.builder;
 
 import org.jowidgets.api.look.Orientation;
-import org.jowidgets.api.widgets.IWidget;
 
-public interface ISeparatorSetupBuilderCommon<INSTANCE_TYPE extends ISeparatorSetupBuilderCommon<?, ?>, WIDGET_TYPE extends IWidget> extends
-		IWidgetSetupBuilderCommon<INSTANCE_TYPE, WIDGET_TYPE> {
+public interface ISeparatorSetupBuilderCommon<INSTANCE_TYPE extends ISeparatorSetupBuilderCommon<?>> extends
+		IWidgetSetupBuilderCommon<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setOrientation(final Orientation orientation);
 

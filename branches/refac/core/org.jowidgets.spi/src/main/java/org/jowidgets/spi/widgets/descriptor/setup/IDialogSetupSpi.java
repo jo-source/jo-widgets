@@ -27,9 +27,8 @@
  */
 package org.jowidgets.spi.widgets.descriptor.setup;
 
-import org.jowidgets.api.widgets.IFrameWidgetCommon;
-import org.jowidgets.api.widgets.setup.IDialogSetupCommon;
+import org.jowidgets.api.widgets.descriptor.setup.IDialogSetupCommon;
 
-public interface IDialogSetupSpi<WIDGET_TYPE extends IFrameWidgetCommon> extends IDialogSetupCommon<WIDGET_TYPE> {
+public interface IDialogSetupSpi extends IDialogSetupCommon {
 
 }

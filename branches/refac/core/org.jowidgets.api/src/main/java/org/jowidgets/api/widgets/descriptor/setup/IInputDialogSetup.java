@@ -27,13 +27,10 @@
  */
 package org.jowidgets.api.widgets.descriptor.setup;
 
-import org.jowidgets.api.widgets.IInputDialogWidget;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
-import org.jowidgets.api.widgets.setup.mandatory.Mandatory;
+import org.jowidgets.api.widgets.descriptor.setup.mandatory.Mandatory;
 
-public interface IInputDialogSetup<WIDGET_TYPE extends IInputDialogWidget<INPUT_TYPE>, INPUT_TYPE> extends
-		IWindowSetup<WIDGET_TYPE>,
-		IInputCompositeSetup<WIDGET_TYPE, INPUT_TYPE> {
+public interface IInputDialogSetup<INPUT_TYPE> extends IWindowSetup, IInputCompositeSetup<INPUT_TYPE> {
 
 	@Mandatory
 	IButtonDescriptor getOkButton();

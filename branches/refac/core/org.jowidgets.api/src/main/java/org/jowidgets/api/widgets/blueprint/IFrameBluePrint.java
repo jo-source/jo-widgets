@@ -27,10 +27,9 @@
  */
 package org.jowidgets.api.widgets.blueprint;
 
-import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.blueprint.builder.IFrameSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
 
-public interface IFrameBluePrint extends IFrameSetupBuilder<IFrameBluePrint, IFrameWidget>, IFrameDescriptor {
+public interface IFrameBluePrint extends IFrameSetupBuilder<IFrameBluePrint>, IFrameDescriptor {
 
 }

@@ -33,9 +33,9 @@ import java.util.Map;
 import org.jowidgets.api.image.IImageRegistry;
 import org.jowidgets.api.widgets.IContainerWidgetCommon;
 import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.api.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.api.widgets.factory.IWidgetFactory;
-import org.jowidgets.api.widgets.setup.IWidgetSetupCommon;
 import org.jowidgets.util.Assert;
 
 public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory {
@@ -52,7 +52,7 @@ public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory 
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IContainerWidgetCommon, DESCRIPTOR_TYPE extends IWidgetSetupCommon<? extends WIDGET_TYPE>> WIDGET_TYPE create(
+	public <WIDGET_TYPE extends IContainerWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE create(
 		final DESCRIPTOR_TYPE descriptor) {
 		return create(null, descriptor);
 	}
@@ -64,7 +64,7 @@ public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory 
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetSetupCommon<? extends WIDGET_TYPE>> WIDGET_TYPE create(
+	public <WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE create(
 		final IWidget parent,
 		final DESCRIPTOR_TYPE descriptor) {
 		return (WIDGET_TYPE) createWidget(parent, descriptor);
@@ -72,7 +72,7 @@ public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory 
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetSetupCommon<? extends WIDGET_TYPE>> void register(
+	public <WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> void register(
 		final Class<? extends DESCRIPTOR_TYPE> descriptorClass,
 		final IWidgetFactory<WIDGET_TYPE, ? extends DESCRIPTOR_TYPE> widgetFactory) {
 
@@ -89,7 +89,7 @@ public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory 
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetSetupCommon<? extends WIDGET_TYPE>> void unRegister(
+	public <WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> void unRegister(
 		final Class<? extends DESCRIPTOR_TYPE> descriptorClass) {
 		Assert.paramNotNull(descriptorClass, "descriptorClass");
 
@@ -105,13 +105,13 @@ public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory 
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetSetupCommon<? extends WIDGET_TYPE>> IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> getFactory(
+	public <WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> getFactory(
 		final Class<? extends DESCRIPTOR_TYPE> descriptorClass) {
 		return (IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE>) factories.get(descriptorClass);
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	private Object createWidget(final IWidget parent, final IWidgetSetupCommon descriptor) {
+	private Object createWidget(final IWidget parent, final IWidgetDescriptor descriptor) {
 		Assert.paramNotNull(descriptor, "descriptor");
 
 		final IWidgetFactory factory = (IWidgetFactory) factories.get(descriptor.getDescriptorInterface());

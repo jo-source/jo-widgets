@@ -33,26 +33,26 @@ import org.jowidgets.api.widgets.builder.ITextLabelSetupBuilderCommon;
 import org.jowidgets.api.widgets.builder.convenience.ITextLabelSetupConvenienceCommon;
 import org.jowidgets.impl.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 
-public class TextLabelSetupConvenienceCommon extends AbstractSetupBuilderConvenience<ITextLabelSetupBuilderCommon<?, ?>> implements
-		ITextLabelSetupConvenienceCommon<ITextLabelSetupBuilderCommon<?, ?>> {
+public class TextLabelSetupConvenienceCommon extends AbstractSetupBuilderConvenience<ITextLabelSetupBuilderCommon<?>> implements
+		ITextLabelSetupConvenienceCommon<ITextLabelSetupBuilderCommon<?>> {
 
 	@Override
-	public ITextLabelSetupBuilderCommon<?, ?> alignLeft() {
+	public ITextLabelSetupBuilderCommon<?> alignLeft() {
 		return getBuilder().setAlignment(AlignmentHorizontal.LEFT);
 	}
 
 	@Override
-	public ITextLabelSetupBuilderCommon<?, ?> alignRight() {
+	public ITextLabelSetupBuilderCommon<?> alignRight() {
 		return getBuilder().setAlignment(AlignmentHorizontal.RIGHT);
 	}
 
 	@Override
-	public ITextLabelSetupBuilderCommon<?, ?> alignCenter() {
+	public ITextLabelSetupBuilderCommon<?> alignCenter() {
 		return getBuilder().setAlignment(AlignmentHorizontal.CENTER);
 	}
 
 	@Override
-	public ITextLabelSetupBuilderCommon<?, ?> setStrong() {
+	public ITextLabelSetupBuilderCommon<?> setStrong() {
 		return getBuilder().setMarkup(Markup.STRONG);
 	}
 

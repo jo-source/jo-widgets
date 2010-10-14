@@ -35,36 +35,36 @@ import javax.swing.JScrollPane;
 import org.jowidgets.api.color.IColorConstant;
 import org.jowidgets.api.util.ColorSettingsInvoker;
 import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.api.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.api.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.api.widgets.layout.ILayoutDescriptor;
-import org.jowidgets.api.widgets.setup.IWidgetSetupCommon;
 import org.jowidgets.impl.swing.util.ScrollBarSettingsConvert;
 import org.jowidgets.impl.swing.widgets.SwingContainerWidget;
 import org.jowidgets.spi.widgets.IScrollContainerWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.IScrollCompositeDescriptorSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.IScrollCompositeSetupSpi;
 
 public class ScrollCompositeWidget implements IScrollContainerWidgetSpi {
 
 	private final SwingContainerWidget outerCompositeWidget;
 	private final CompositeWidget innerCompositeWidget;
 
-	public ScrollCompositeWidget(final IGenericWidgetFactory factory, final IScrollCompositeDescriptorSpi descriptor) {
+	public ScrollCompositeWidget(final IGenericWidgetFactory factory, final IScrollCompositeSetupSpi setup) {
 
 		final JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBorder(BorderFactory.createEmptyBorder());
 
-		final int horizontalPolicy = ScrollBarSettingsConvert.convertHorizontal(descriptor);
-		final int verticalPolicy = ScrollBarSettingsConvert.convertVertical(descriptor);
+		final int horizontalPolicy = ScrollBarSettingsConvert.convertHorizontal(setup);
+		final int verticalPolicy = ScrollBarSettingsConvert.convertVertical(setup);
 
 		scrollPane.setVerticalScrollBarPolicy(verticalPolicy);
 		scrollPane.setHorizontalScrollBarPolicy(horizontalPolicy);
 
 		this.outerCompositeWidget = new SwingContainerWidget(factory, scrollPane);
-		this.innerCompositeWidget = new CompositeWidget(factory, descriptor);
+		this.innerCompositeWidget = new CompositeWidget(factory, setup);
 		scrollPane.setViewportView(innerCompositeWidget.getUiReference());
 
-		ColorSettingsInvoker.setColors(descriptor, this);
+		ColorSettingsInvoker.setColors(setup, this);
 
 	}
 
@@ -95,7 +95,7 @@ public class ScrollCompositeWidget implements IScrollContainerWidgetSpi {
 
 	@Override
 	public final <WIDGET_TYPE extends IWidget> WIDGET_TYPE add(
-		final IWidgetSetupCommon<? extends WIDGET_TYPE> descriptor,
+		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object cellConstraints) {
 		return innerCompositeWidget.add(descriptor, cellConstraints);
 	}

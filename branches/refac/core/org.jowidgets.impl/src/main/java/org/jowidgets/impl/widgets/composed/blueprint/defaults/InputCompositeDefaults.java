@@ -31,11 +31,11 @@ import org.jowidgets.api.widgets.blueprint.builder.IInputCompositeSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
-public class InputCompositeDefaults implements IDefaultInitializer<IInputCompositeSetupBuilder<?, ?, ?>> {
+public class InputCompositeDefaults implements IDefaultInitializer<IInputCompositeSetupBuilder<?, ?>> {
 
 	// i18n
 	@Override
-	public void initialize(final IInputCompositeSetupBuilder<?, ?, ?> builder) {
+	public void initialize(final IInputCompositeSetupBuilder<?, ?> builder) {
 		builder.setContentScrolled(true);
 		final BluePrintFactory bpF = new BluePrintFactory();
 		builder.setValidationLabel(bpF.validationLabel());

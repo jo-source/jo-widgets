@@ -33,11 +33,11 @@ import org.jowidgets.api.veto.NoVetoChecker;
 import org.jowidgets.api.widgets.blueprint.builder.IInputFieldSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
-public class InputFieldDefaults implements IDefaultInitializer<IInputFieldSetupBuilder<?, ?, Object>> {
+public class InputFieldDefaults implements IDefaultInitializer<IInputFieldSetupBuilder<?, Object>> {
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	@Override
-	public void initialize(final IInputFieldSetupBuilder<?, ?, Object> builder) {
+	public void initialize(final IInputFieldSetupBuilder<?, Object> builder) {
 		builder.setValidator(new OkValidator());
 		final IInputVetoChecker<String> checker = NoVetoChecker.getInstance();
 		builder.setInputVetoChecker(checker);

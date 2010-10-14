@@ -29,13 +29,9 @@ package org.jowidgets.api.widgets.descriptor.setup;
 
 import org.jowidgets.api.convert.IValidatedStringObjectConverter;
 import org.jowidgets.api.validation.IValidator;
-import org.jowidgets.api.widgets.IComboBoxWidget;
-import org.jowidgets.api.widgets.setup.IComboBoxSetupCommon;
-import org.jowidgets.api.widgets.setup.mandatory.Mandatory;
+import org.jowidgets.api.widgets.descriptor.setup.mandatory.Mandatory;
 
-public interface IComboBoxSetup<WIDGET_TYPE extends IComboBoxWidget<INPUT_TYPE>, INPUT_TYPE> extends
-		IComboBoxSetupCommon<WIDGET_TYPE, INPUT_TYPE>,
-		IComboBoxSelectionSetup<WIDGET_TYPE, INPUT_TYPE> {
+public interface IComboBoxSetup<INPUT_TYPE> extends IComboBoxSetupCommon<INPUT_TYPE>, IComboBoxSelectionSetup<INPUT_TYPE> {
 
 	@Override
 	@Mandatory

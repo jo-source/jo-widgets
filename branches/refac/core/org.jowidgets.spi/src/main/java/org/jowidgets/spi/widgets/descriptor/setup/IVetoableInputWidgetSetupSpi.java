@@ -27,10 +27,8 @@
  */
 package org.jowidgets.spi.widgets.descriptor.setup;
 
-import org.jowidgets.api.widgets.IInputWidgetCommon;
-import org.jowidgets.api.widgets.setup.IVetoableInputWidgetSetupCommon;
+import org.jowidgets.api.widgets.descriptor.setup.IVetoableInputWidgetSetupCommon;
 
-public interface IVetoableInputWidgetSetupSpi<WIDGET_TYPE extends IInputWidgetCommon<INPUT_TYPE>, INPUT_TYPE> extends
-		IVetoableInputWidgetSetupCommon<WIDGET_TYPE, INPUT_TYPE> {
+public interface IVetoableInputWidgetSetupSpi<INPUT_TYPE> extends IVetoableInputWidgetSetupCommon<INPUT_TYPE> {
 
 }

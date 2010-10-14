@@ -38,7 +38,7 @@ public class DialogWidget extends FrameWidget implements IDialogWidget {
 
 	private final ChildWidgetDelegate childWidgetDelegate;
 
-	public DialogWidget(final IWidget parent, final IFrameWidgetSpi frameWidgetSpi, final IDialogSetup<?> setup) {
+	public DialogWidget(final IWidget parent, final IFrameWidgetSpi frameWidgetSpi, final IDialogSetup setup) {
 		super(frameWidgetSpi, setup);
 		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
 	}

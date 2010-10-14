@@ -36,7 +36,7 @@ public final class ScrollBarSettingsConvert {
 
 	private ScrollBarSettingsConvert() {};
 
-	public static int convertVertical(final IScrollCompositeSetupSpi<?> setup) {
+	public static int convertVertical(final IScrollCompositeSetupSpi setup) {
 		Assert.paramNotNull(setup, "setup");
 
 		if (setup.hasVerticalBar()) {
@@ -52,7 +52,7 @@ public final class ScrollBarSettingsConvert {
 		}
 	}
 
-	public static int convertHorizontal(final IScrollCompositeSetupSpi<?> setup) {
+	public static int convertHorizontal(final IScrollCompositeSetupSpi setup) {
 		Assert.paramNotNull(setup, "setup");
 
 		if (setup.hasHorizontalBar()) {

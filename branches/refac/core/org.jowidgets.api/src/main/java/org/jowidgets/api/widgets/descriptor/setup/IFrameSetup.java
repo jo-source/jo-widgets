@@ -27,11 +27,7 @@
  */
 package org.jowidgets.api.widgets.descriptor.setup;
 
-import org.jowidgets.api.widgets.IFrameWidgetCommon;
-import org.jowidgets.api.widgets.setup.IFrameSetupCommon;
 
-public interface IFrameSetup<WIDGET_TYPE extends IFrameWidgetCommon> extends
-		ITitledWindowSetup<WIDGET_TYPE>,
-		IFrameSetupCommon<WIDGET_TYPE> {
+public interface IFrameSetup extends ITitledWindowSetup, IFrameSetupCommon {
 
 }

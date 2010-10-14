@@ -57,19 +57,19 @@ import org.jowidgets.spi.widgets.IScrollContainerWidgetSpi;
 import org.jowidgets.spi.widgets.ITextLabelWidgetSpi;
 import org.jowidgets.spi.widgets.IToggleButtonWidgetSpi;
 import org.jowidgets.spi.widgets.IWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.IButtonDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.ICheckBoxDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.IComboBoxDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.IComboBoxSelectionDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.ICompositeDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.IDialogDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.IFrameDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.IIconDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.IScrollCompositeDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.ISeparatorDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.ITextFieldDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.ITextLabelDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.IToggleButtonDescriptorSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.IButtonSetupSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.ICheckBoxSetupSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.IComboBoxSelectionSetupSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.IComboBoxSetupSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.ICompositeSetupSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.IDialogSetupSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.IFrameSetupSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.IIconSetupSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.IScrollCompositeSetupSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.ISeparatorSetupSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.ITextLabelSetupSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.IToggleButtonSetupSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.IVetoableInputWidgetSetupSpi;
 
 public final class SwtWidgetFactory implements IWidgetFactorySpi {
 
@@ -90,81 +90,81 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 	}
 
 	@Override
-	public IFrameWidgetSpi createDialogWidget(
-		final IGenericWidgetFactory factory,
-		final IWidget parent,
-		final IDialogDescriptorSpi descriptor) {
-		return new DialogWidget(factory, colorCache, imageRegistry, parent, descriptor);
+	public IFrameWidgetSpi createFrameWidget(final IGenericWidgetFactory factory, final IFrameSetupSpi setup) {
+		return new FrameWidget(factory, colorCache, imageRegistry, setup);
 	}
 
 	@Override
-	public IFrameWidgetSpi createFrameWidget(final IGenericWidgetFactory factory, final IFrameDescriptorSpi descriptor) {
-		return new FrameWidget(factory, colorCache, imageRegistry, descriptor);
+	public IFrameWidgetSpi createDialogWidget(
+		final IGenericWidgetFactory factory,
+		final IWidget parent,
+		final IDialogSetupSpi setup) {
+		return new DialogWidget(factory, colorCache, imageRegistry, parent, setup);
 	}
 
 	@Override
 	public IContainerWidgetSpi createCompositeWidget(
 		final IGenericWidgetFactory factory,
 		final IWidget parent,
-		final ICompositeDescriptorSpi descriptor) {
-		return new CompositeWidget(factory, colorCache, parent, descriptor);
+		final ICompositeSetupSpi setup) {
+		return new CompositeWidget(factory, colorCache, parent, setup);
 	}
 
 	@Override
 	public IScrollContainerWidgetSpi createScrollCompositeWidget(
 		final IGenericWidgetFactory factory,
 		final IWidget parent,
-		final IScrollCompositeDescriptorSpi descriptor) {
-		return new ScrollCompositeWidget(factory, colorCache, parent, descriptor);
+		final IScrollCompositeSetupSpi setup) {
+		return new ScrollCompositeWidget(factory, colorCache, parent, setup);
 	}
 
 	@Override
-	public IInputWidgetSpi<String> createTextFieldWidget(final IWidget parent, final ITextFieldDescriptorSpi descriptor) {
-		return new TextFieldWidget(colorCache, parent, descriptor);
+	public IInputWidgetSpi<String> createTextFieldWidget(final IWidget parent, final IVetoableInputWidgetSetupSpi<String> setup) {
+		return new TextFieldWidget(colorCache, parent, setup);
 	}
 
 	@Override
-	public ITextLabelWidgetSpi createTextLabelWidget(final IWidget parent, final ITextLabelDescriptorSpi descriptor) {
-		return new TextLabelWidget(colorCache, parent, descriptor);
+	public ITextLabelWidgetSpi createTextLabelWidget(final IWidget parent, final ITextLabelSetupSpi setup) {
+		return new TextLabelWidget(colorCache, parent, setup);
 	}
 
 	@Override
-	public IIconWidgetSpi createIconWidget(final IWidget parent, final IIconDescriptorSpi descriptor) {
-		return new IconWidget(colorCache, imageRegistry, parent, descriptor);
+	public IIconWidgetSpi createIconWidget(final IWidget parent, final IIconSetupSpi setup) {
+		return new IconWidget(colorCache, imageRegistry, parent, setup);
 	}
 
 	@Override
-	public IButtonWidgetSpi createButtonWidget(final IWidget parent, final IButtonDescriptorSpi descriptor) {
-		return new ButtonWidget(colorCache, imageRegistry, parent, descriptor);
+	public IButtonWidgetSpi createButtonWidget(final IWidget parent, final IButtonSetupSpi setup) {
+		return new ButtonWidget(colorCache, imageRegistry, parent, setup);
 	}
 
 	@Override
-	public IWidgetSpi createSeparatorWidget(final IWidget parent, final ISeparatorDescriptorSpi descriptor) {
-		return new SeparatorWidget(colorCache, parent, descriptor);
+	public IWidgetSpi createSeparatorWidget(final IWidget parent, final ISeparatorSetupSpi setup) {
+		return new SeparatorWidget(colorCache, parent, setup);
 	}
 
 	@Override
-	public IToggleButtonWidgetSpi createCheckBoxWidget(final IWidget parent, final ICheckBoxDescriptorSpi descriptor) {
-		return new CheckBoxWidget(colorCache, imageRegistry, parent, descriptor);
+	public IToggleButtonWidgetSpi createCheckBoxWidget(final IWidget parent, final ICheckBoxSetupSpi setup) {
+		return new CheckBoxWidget(colorCache, imageRegistry, parent, setup);
 	}
 
 	@Override
-	public IToggleButtonWidgetSpi createToggleButtonWidget(final IWidget parent, final IToggleButtonDescriptorSpi descriptor) {
-		return new ToggleButtonWidget(colorCache, imageRegistry, parent, descriptor);
+	public IToggleButtonWidgetSpi createToggleButtonWidget(final IWidget parent, final IToggleButtonSetupSpi setup) {
+		return new ToggleButtonWidget(colorCache, imageRegistry, parent, setup);
 	}
 
 	@Override
 	public <INPUT_TYPE> IComboBoxWidgetSpi<INPUT_TYPE> createComboBoxSelectionWidget(
 		final IWidget parent,
-		final IComboBoxSelectionDescriptorSpi<INPUT_TYPE> descriptor) {
-		return new ComboBoxSelectionWidget<INPUT_TYPE>(parent, colorCache, descriptor);
+		final IComboBoxSelectionSetupSpi<INPUT_TYPE> setup) {
+		return new ComboBoxSelectionWidget<INPUT_TYPE>(parent, colorCache, setup);
 	}
 
 	@Override
 	public <INPUT_TYPE> IComboBoxWidgetSpi<INPUT_TYPE> createComboBoxWidget(
 		final IWidget parent,
-		final IComboBoxDescriptorSpi<INPUT_TYPE> descriptor) {
-		return new ComboBoxWidget<INPUT_TYPE>(parent, colorCache, descriptor);
+		final IComboBoxSetupSpi<INPUT_TYPE> setup) {
+		return new ComboBoxWidget<INPUT_TYPE>(parent, colorCache, setup);
 	}
 
 	public static SwtWidgetFactory getInstance() {

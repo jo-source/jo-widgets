@@ -27,12 +27,9 @@
  */
 package org.jowidgets.api.widgets.blueprint;
 
-import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.blueprint.builder.ITextFieldSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.ITextFieldDescriptor;
 
-public interface ITextFieldBluePrint extends
-		ITextFieldSetupBuilder<ITextFieldBluePrint, IInputWidget<String>>,
-		ITextFieldDescriptor {
+public interface ITextFieldBluePrint extends ITextFieldSetupBuilder<ITextFieldBluePrint>, ITextFieldDescriptor {
 
 }

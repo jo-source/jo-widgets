@@ -27,10 +27,8 @@
  */
 package org.jowidgets.spi.widgets.descriptor.setup;
 
-import org.jowidgets.api.widgets.setup.IComboBoxSelectionSetupCommon;
-import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;
+import org.jowidgets.api.widgets.descriptor.setup.IComboBoxSelectionSetupCommon;
 
-public interface IComboBoxSelectionSetupSpi<WIDGET_TYPE extends IComboBoxWidgetSpi<INPUT_TYPE>, INPUT_TYPE> extends
-		IComboBoxSelectionSetupCommon<WIDGET_TYPE, INPUT_TYPE> {
+public interface IComboBoxSelectionSetupSpi<INPUT_TYPE> extends IComboBoxSelectionSetupCommon<INPUT_TYPE> {
 
 }

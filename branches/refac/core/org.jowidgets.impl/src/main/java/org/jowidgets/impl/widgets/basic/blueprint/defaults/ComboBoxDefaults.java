@@ -31,11 +31,11 @@ import org.jowidgets.api.validation.OkValidator;
 import org.jowidgets.api.widgets.blueprint.builder.IComboBoxSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
-public class ComboBoxDefaults implements IDefaultInitializer<IComboBoxSetupBuilder<?, ?, ?>> {
+public class ComboBoxDefaults implements IDefaultInitializer<IComboBoxSetupBuilder<?, ?>> {
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	@Override
-	public void initialize(final IComboBoxSetupBuilder<?, ?, ?> builder) {
+	public void initialize(final IComboBoxSetupBuilder<?, ?> builder) {
 		builder.setValidator(new OkValidator());
 	}
 

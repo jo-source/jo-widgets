@@ -30,11 +30,9 @@ package org.jowidgets.api.widgets.descriptor.setup;
 import org.jowidgets.api.convert.IValidatedConverter;
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.veto.IInputVetoChecker;
-import org.jowidgets.api.widgets.IInputWidget;
-import org.jowidgets.api.widgets.setup.mandatory.Mandatory;
+import org.jowidgets.api.widgets.descriptor.setup.mandatory.Mandatory;
 
-public interface IInputFieldSetup<WIDGET_TYPE extends IInputWidget<INPUT_TYPE>, INPUT_TYPE> extends
-		IInputWidgetSetup<WIDGET_TYPE, INPUT_TYPE> {
+public interface IInputFieldSetup<INPUT_TYPE> extends IInputWidgetSetup<INPUT_TYPE> {
 
 	@Mandatory
 	IInputVetoChecker<String> getInputVetoChecker();

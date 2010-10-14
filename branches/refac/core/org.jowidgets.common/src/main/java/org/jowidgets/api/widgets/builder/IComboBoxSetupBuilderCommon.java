@@ -28,11 +28,10 @@
 package org.jowidgets.api.widgets.builder;
 
 import org.jowidgets.api.convert.IStringObjectConverter;
-import org.jowidgets.api.widgets.IComboBoxWidgetCommon;
 
-public interface IComboBoxSetupBuilderCommon<INSTANCE_TYPE extends IComboBoxSetupBuilderCommon<?, ?, ?>, WIDGET_TYPE extends IComboBoxWidgetCommon<INPUT_TYPE>, INPUT_TYPE> extends
-		IComboBoxSelectionSetupBuilderCommon<INSTANCE_TYPE, WIDGET_TYPE, INPUT_TYPE>,
-		IVetoableInputWidgetSetupBuilderCommon<INSTANCE_TYPE, WIDGET_TYPE, INPUT_TYPE> {
+public interface IComboBoxSetupBuilderCommon<INSTANCE_TYPE extends IComboBoxSetupBuilderCommon<?, ?>, INPUT_TYPE> extends
+		IComboBoxSelectionSetupBuilderCommon<INSTANCE_TYPE, INPUT_TYPE>,
+		IVetoableInputWidgetSetupBuilderCommon<INSTANCE_TYPE, INPUT_TYPE> {
 
 	INSTANCE_TYPE setStringObjectConverter(IStringObjectConverter<INPUT_TYPE> stringObjectConverter);
 

@@ -30,6 +30,6 @@ package org.jowidgets.api.widgets.descriptor;
 import org.jowidgets.api.widgets.IIconWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IIconSetup;
 
-public interface IIconDescriptor extends IIconSetup<IIconWidget> {
+public interface IIconDescriptor extends IIconSetup, IWidgetDescriptor<IIconWidget> {
 
 }

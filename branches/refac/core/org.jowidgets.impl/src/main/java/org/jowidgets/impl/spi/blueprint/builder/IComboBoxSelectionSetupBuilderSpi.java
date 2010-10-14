@@ -27,10 +27,9 @@
  */
 package org.jowidgets.impl.spi.blueprint.builder;
 
-import org.jowidgets.api.widgets.IComboBoxWidgetCommon;
 import org.jowidgets.api.widgets.builder.IComboBoxSelectionSetupBuilderCommon;
 
-public interface IComboBoxSelectionSetupBuilderSpi<INSTANCE_TYPE extends IComboBoxSelectionSetupBuilderSpi<?, ?, ?>, WIDGET_TYPE extends IComboBoxWidgetCommon<INPUT_TYPE>, INPUT_TYPE> extends
-		IComboBoxSelectionSetupBuilderCommon<INSTANCE_TYPE, WIDGET_TYPE, INPUT_TYPE> {
+public interface IComboBoxSelectionSetupBuilderSpi<INSTANCE_TYPE extends IComboBoxSelectionSetupBuilderSpi<?, ?>, INPUT_TYPE> extends
+		IComboBoxSelectionSetupBuilderCommon<INSTANCE_TYPE, INPUT_TYPE> {
 
 }

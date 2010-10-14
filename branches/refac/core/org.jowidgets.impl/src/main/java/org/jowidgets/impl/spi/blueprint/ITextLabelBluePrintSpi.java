@@ -28,9 +28,6 @@
 package org.jowidgets.impl.spi.blueprint;
 
 import org.jowidgets.impl.spi.blueprint.builder.ITextLabelSetupBuilderSpi;
-import org.jowidgets.spi.widgets.ITextLabelWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.ITextLabelDescriptorSpi;
+import org.jowidgets.impl.spi.descriptor.ITextLabelDescriptorSpi;
 
-public interface ITextLabelBluePrintSpi extends
-		ITextLabelSetupBuilderSpi<ITextLabelBluePrintSpi, ITextLabelWidgetSpi>,
-		ITextLabelDescriptorSpi {}
+public interface ITextLabelBluePrintSpi extends ITextLabelSetupBuilderSpi<ITextLabelBluePrintSpi>, ITextLabelDescriptorSpi {}

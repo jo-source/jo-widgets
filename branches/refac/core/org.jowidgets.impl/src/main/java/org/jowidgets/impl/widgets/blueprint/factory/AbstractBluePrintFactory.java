@@ -27,10 +27,10 @@
  */
 package org.jowidgets.impl.widgets.blueprint.factory;
 
+import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
-import org.jowidgets.api.widgets.builder.ISetupBuilder;
-import org.jowidgets.api.widgets.setup.IWidgetSetupCommon;
+import org.jowidgets.api.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.impl.spi.blueprint.IFrameBluePrintSpi;
 import org.jowidgets.impl.widgets.blueprint.proxy.BluePrintProxyProvider;
 
@@ -47,14 +47,14 @@ public abstract class AbstractBluePrintFactory {
 		this.defaultInitializerRegistry = defaultInitializerRegistry;
 	}
 
-	@SuppressWarnings({"rawtypes", "unchecked"})
-	protected <BLUE_PRINT_TYPE extends ISetupBuilder<?>> BLUE_PRINT_TYPE createProxy(
-		final Class<? extends ISetupBuilder> bluePrintType,
-		final Class<? extends IWidgetSetupCommon> widgetDescrType) {
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	protected <BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends IWidget>> BLUE_PRINT_TYPE createProxy(
+		final Class<? extends IWidgetDescriptor> bluePrintType,
+		final Class<? extends IWidgetDescriptor> descriptorType) {
 
 		return (BLUE_PRINT_TYPE) new BluePrintProxyProvider<IFrameBluePrintSpi>(
 			bluePrintType,
-			widgetDescrType,
+			descriptorType,
 			setupBuilderConvenienceRegistry,
 			defaultInitializerRegistry).getBluePrint();
 	}

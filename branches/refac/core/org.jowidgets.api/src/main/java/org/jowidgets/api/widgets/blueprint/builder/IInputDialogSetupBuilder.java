@@ -27,13 +27,12 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
-import org.jowidgets.api.widgets.IInputDialogWidget;
 import org.jowidgets.api.widgets.blueprint.builder.convenience.IInputDialogSetupConvenience;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 
-public interface IInputDialogSetupBuilder<INSTANCE_TYPE extends IInputDialogSetupBuilder<?, ?, ?>, WIDGET_TYPE extends IInputDialogWidget<INPUT_TYPE>, INPUT_TYPE> extends
-		ITitledWindowSetupBuilder<INSTANCE_TYPE, WIDGET_TYPE>,
-		IInputCompositeSetupBuilder<INSTANCE_TYPE, WIDGET_TYPE, INPUT_TYPE>,
+public interface IInputDialogSetupBuilder<INSTANCE_TYPE extends IInputDialogSetupBuilder<?, ?>, INPUT_TYPE> extends
+		ITitledWindowSetupBuilder<INSTANCE_TYPE>,
+		IInputCompositeSetupBuilder<INSTANCE_TYPE, INPUT_TYPE>,
 		IInputDialogSetupConvenience<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setOkButton(final IButtonDescriptor buttonDescriptor);

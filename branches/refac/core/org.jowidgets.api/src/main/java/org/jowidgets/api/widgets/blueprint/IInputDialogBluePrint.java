@@ -27,12 +27,11 @@
  */
 package org.jowidgets.api.widgets.blueprint;
 
-import org.jowidgets.api.widgets.IInputDialogWidget;
 import org.jowidgets.api.widgets.blueprint.builder.IInputDialogSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.IInputDialogDescriptor;
 
 public interface IInputDialogBluePrint<INPUT_TYPE> extends
-		IInputDialogSetupBuilder<IInputDialogBluePrint<INPUT_TYPE>, IInputDialogWidget<INPUT_TYPE>, INPUT_TYPE>,
+		IInputDialogSetupBuilder<IInputDialogBluePrint<INPUT_TYPE>, INPUT_TYPE>,
 		IInputDialogDescriptor<INPUT_TYPE> {
 
 }

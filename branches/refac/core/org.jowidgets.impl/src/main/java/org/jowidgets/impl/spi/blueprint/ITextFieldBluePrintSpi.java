@@ -28,9 +28,8 @@
 package org.jowidgets.impl.spi.blueprint;
 
 import org.jowidgets.impl.spi.blueprint.builder.IVetoableInputWidgetSetupBuilderSpi;
-import org.jowidgets.spi.widgets.IInputWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.ITextFieldDescriptorSpi;
+import org.jowidgets.impl.spi.descriptor.ITextFieldDescriptorSpi;
 
 public interface ITextFieldBluePrintSpi extends
-		IVetoableInputWidgetSetupBuilderSpi<ITextFieldBluePrintSpi, IInputWidgetSpi<String>, String>,
+		IVetoableInputWidgetSetupBuilderSpi<ITextFieldBluePrintSpi, String>,
 		ITextFieldDescriptorSpi {}

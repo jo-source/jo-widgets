@@ -28,10 +28,10 @@
 package org.jowidgets.api.widgets.factory;
 
 import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.setup.IWidgetSetupCommon;
+import org.jowidgets.api.widgets.descriptor.IWidgetDescriptor;
 
 public interface ICustomWidgetFactory<WIDGET_TYPE extends IWidget> {
 
-	WIDGET_TYPE create(IWidget parent, IWidgetFactory<WIDGET_TYPE, IWidgetSetupCommon<? extends WIDGET_TYPE>> widgetFactory);
+	WIDGET_TYPE create(IWidget parent, IWidgetFactory<WIDGET_TYPE, IWidgetDescriptor<? extends WIDGET_TYPE>> widgetFactory);
 
 }

@@ -28,9 +28,6 @@
 package org.jowidgets.impl.spi.blueprint;
 
 import org.jowidgets.impl.spi.blueprint.builder.ICheckBoxSetupBuilderSpi;
-import org.jowidgets.spi.widgets.IToggleButtonWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.ICheckBoxDescriptorSpi;
+import org.jowidgets.impl.spi.descriptor.ICheckBoxDescriptorSpi;
 
-public interface ICheckBoxBluePrintSpi extends
-		ICheckBoxSetupBuilderSpi<ICheckBoxBluePrintSpi, IToggleButtonWidgetSpi>,
-		ICheckBoxDescriptorSpi {}
+public interface ICheckBoxBluePrintSpi extends ICheckBoxSetupBuilderSpi<ICheckBoxBluePrintSpi>, ICheckBoxDescriptorSpi {}

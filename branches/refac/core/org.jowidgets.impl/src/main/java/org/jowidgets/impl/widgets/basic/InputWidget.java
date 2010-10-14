@@ -46,7 +46,7 @@ public class InputWidget<VALUE_TYPE> extends InputWidgetCommonWrapper<VALUE_TYPE
 	public InputWidget(
 		final IWidget parent,
 		final IInputWidgetSpi<VALUE_TYPE> inputWidgetSpi,
-		final IInputWidgetSetup<?, VALUE_TYPE> setup) {
+		final IInputWidgetSetup<VALUE_TYPE> setup) {
 		super(inputWidgetSpi);
 		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
 		this.inputWidgetDelegate = new InputWidgetDelegate<VALUE_TYPE>(inputWidgetSpi, setup);

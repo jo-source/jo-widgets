@@ -30,6 +30,6 @@ package org.jowidgets.api.widgets.descriptor;
 import org.jowidgets.api.widgets.IValidationLabelWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IValidationLabelSetup;
 
-public interface IValidationLabelDescriptor extends IValidationLabelSetup<IValidationLabelWidget> {
+public interface IValidationLabelDescriptor extends IValidationLabelSetup, IWidgetDescriptor<IValidationLabelWidget> {
 
 }

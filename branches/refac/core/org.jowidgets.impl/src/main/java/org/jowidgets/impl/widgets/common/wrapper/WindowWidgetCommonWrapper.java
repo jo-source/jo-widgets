@@ -32,7 +32,7 @@ import org.jowidgets.api.look.Dimension;
 import org.jowidgets.api.look.Position;
 import org.jowidgets.api.look.Rectangle;
 import org.jowidgets.api.widgets.IWindowWidgetCommon;
-import org.jowidgets.api.widgets.setup.IWidgetSetupCommon;
+import org.jowidgets.api.widgets.descriptor.IWidgetDescriptor;
 
 public class WindowWidgetCommonWrapper extends WidgetCommonWrapper implements IWindowWidgetCommon {
 
@@ -82,7 +82,7 @@ public class WindowWidgetCommonWrapper extends WidgetCommonWrapper implements IW
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IWindowWidgetCommon, DESCRIPTOR_TYPE extends IWidgetSetupCommon<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
+	public <WIDGET_TYPE extends IWindowWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
 		final DESCRIPTOR_TYPE descriptor) {
 		return getWidget().createChildWindow(descriptor);
 	}

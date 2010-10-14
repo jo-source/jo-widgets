@@ -35,7 +35,7 @@ import javax.swing.JToggleButton;
 import org.jowidgets.api.image.IImageConstant;
 import org.jowidgets.api.look.Markup;
 import org.jowidgets.api.util.ColorSettingsInvoker;
-import org.jowidgets.api.widgets.setup.ICheckBoxSetupCommon;
+import org.jowidgets.api.widgets.descriptor.setup.ICheckBoxSetupCommon;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.impl.swing.util.AlignmentConvert;
 import org.jowidgets.impl.swing.util.FontProvider;
@@ -46,14 +46,14 @@ public class ToggleButtonWidget extends AbstractSwingInputWidget<Boolean> implem
 
 	private final SwingImageRegistry imageRegistry;
 
-	public ToggleButtonWidget(final SwingImageRegistry imageRegistry, final ICheckBoxSetupCommon<IToggleButtonWidgetSpi> descriptor) {
-		this(imageRegistry, new JToggleButton(), descriptor);
+	public ToggleButtonWidget(final SwingImageRegistry imageRegistry, final ICheckBoxSetupCommon setup) {
+		this(imageRegistry, new JToggleButton(), setup);
 	}
 
 	public ToggleButtonWidget(
 		final SwingImageRegistry imageRegistry,
 		final JToggleButton toggleButton,
-		final ICheckBoxSetupCommon<IToggleButtonWidgetSpi> descriptor) {
+		final ICheckBoxSetupCommon descriptor) {
 		super(toggleButton);
 
 		this.imageRegistry = imageRegistry;

@@ -43,19 +43,19 @@ import javax.swing.MutableComboBoxModel;
 
 import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.util.ColorSettingsInvoker;
-import org.jowidgets.api.widgets.setup.IComboBoxSelectionSetupCommon;
+import org.jowidgets.api.widgets.descriptor.setup.IComboBoxSelectionSetupCommon;
 import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;
 import org.jowidgets.util.Assert;
 
 public class ComboBoxSelectionWidget<INPUT_TYPE> extends AbstractSwingInputWidget<INPUT_TYPE> implements
 		IComboBoxWidgetSpi<INPUT_TYPE> {
 
-	public ComboBoxSelectionWidget(final IComboBoxSelectionSetupCommon<?, INPUT_TYPE> descriptor) {
-		super(new JComboBox(new DefaultComboBoxModel(descriptor.getElements().toArray())));
+	public ComboBoxSelectionWidget(final IComboBoxSelectionSetupCommon<INPUT_TYPE> setup) {
+		super(new JComboBox(new DefaultComboBoxModel(setup.getElements().toArray())));
 
-		ColorSettingsInvoker.setColors(descriptor, this);
+		ColorSettingsInvoker.setColors(setup, this);
 
-		final IObjectStringConverter<INPUT_TYPE> objectStringConverter = descriptor.getObjectStringConverter();
+		final IObjectStringConverter<INPUT_TYPE> objectStringConverter = setup.getObjectStringConverter();
 
 		setRenderer(objectStringConverter);
 		addItemListener(objectStringConverter);

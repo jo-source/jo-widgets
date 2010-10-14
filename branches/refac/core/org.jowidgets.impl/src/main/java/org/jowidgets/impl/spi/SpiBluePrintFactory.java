@@ -40,22 +40,22 @@ import org.jowidgets.impl.spi.blueprint.ISeparatorBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITextFieldBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITextLabelBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IToggleButtonBluePrintSpi;
+import org.jowidgets.impl.spi.descriptor.IButtonDescriptorSpi;
+import org.jowidgets.impl.spi.descriptor.ICheckBoxDescriptorSpi;
+import org.jowidgets.impl.spi.descriptor.IComboBoxDescriptorSpi;
+import org.jowidgets.impl.spi.descriptor.IComboBoxSelectionDescriptorSpi;
+import org.jowidgets.impl.spi.descriptor.ICompositeDescriptorSpi;
+import org.jowidgets.impl.spi.descriptor.IDialogDescriptorSpi;
+import org.jowidgets.impl.spi.descriptor.IFrameDescriptorSpi;
+import org.jowidgets.impl.spi.descriptor.IIconDescriptorSpi;
+import org.jowidgets.impl.spi.descriptor.IScrollCompositeDescriptorSpi;
+import org.jowidgets.impl.spi.descriptor.ISeparatorDescriptorSpi;
+import org.jowidgets.impl.spi.descriptor.ITextFieldDescriptorSpi;
+import org.jowidgets.impl.spi.descriptor.ITextLabelDescriptorSpi;
+import org.jowidgets.impl.spi.descriptor.IToggleButtonDescriptorSpi;
 import org.jowidgets.impl.widgets.blueprint.factory.AbstractBluePrintFactory;
 import org.jowidgets.impl.widgets.common.blueprint.convenience.registry.CommonSetupConvenienceRegistry;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.registry.CommonDefaultsInitializerRegistry;
-import org.jowidgets.spi.widgets.descriptor.IButtonDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.ICheckBoxDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.IComboBoxDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.IComboBoxSelectionDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.ICompositeDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.IDialogDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.IFrameDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.IIconDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.IScrollCompositeDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.ISeparatorDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.ITextFieldDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.ITextLabelDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.IToggleButtonDescriptorSpi;
 
 public class SpiBluePrintFactory extends AbstractBluePrintFactory implements ISpiBluePrintFactory {
 

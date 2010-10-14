@@ -27,10 +27,9 @@
  */
 package org.jowidgets.impl.spi.blueprint.builder;
 
-import org.jowidgets.api.widgets.IContainerWidgetCommon;
 import org.jowidgets.api.widgets.builder.ICompositeSetupBuilderCommon;
 
-public interface ICompositeSetupBuilderSpi<INSTANCE_TYPE extends ICompositeSetupBuilderSpi<?, ?>, WIDGET_TYPE extends IContainerWidgetCommon> extends
-		ICompositeSetupBuilderCommon<INSTANCE_TYPE, WIDGET_TYPE> {
+public interface ICompositeSetupBuilderSpi<INSTANCE_TYPE extends ICompositeSetupBuilderSpi<?>> extends
+		ICompositeSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

@@ -33,18 +33,18 @@ import org.jowidgets.api.util.ColorSettingsInvoker;
 import org.jowidgets.api.veto.IInputVetoChecker;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.impl.swing.widgets.internal.util.ValidatedInputDocument;
-import org.jowidgets.spi.widgets.descriptor.ITextFieldDescriptorSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.IVetoableInputWidgetSetupSpi;
 
 public class TextFieldWidget extends AbstractSwingTextInputWidget<String> {
 
-	public TextFieldWidget(final IWidget parent, final ITextFieldDescriptorSpi descriptor) {
+	public TextFieldWidget(final IWidget parent, final IVetoableInputWidgetSetupSpi<String> setup) {
 		super(new JTextField());
 
-		final IInputVetoChecker<String> vetoChecker = descriptor.getInputVetoChecker();
+		final IInputVetoChecker<String> vetoChecker = setup.getInputVetoChecker();
 
 		getUiReference().setDocument(new ValidatedInputDocument(getUiReference(), vetoChecker));
 		registerTextComponent(getUiReference());
-		ColorSettingsInvoker.setColors(descriptor, this);
+		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

@@ -35,46 +35,46 @@ import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 import org.jowidgets.impl.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
-public class InputDialogSetupConvenience extends AbstractSetupBuilderConvenience<IInputDialogSetupBuilder<?, ?, ?>> implements
-		IInputDialogSetupConvenience<IInputDialogSetupBuilder<?, ?, ?>> {
+public class InputDialogSetupConvenience extends AbstractSetupBuilderConvenience<IInputDialogSetupBuilder<?, ?>> implements
+		IInputDialogSetupConvenience<IInputDialogSetupBuilder<?, ?>> {
 
 	@Override
-	public IInputDialogSetupBuilder<?, ?, ?> setOkButtonText(final String text) {
+	public IInputDialogSetupBuilder<?, ?> setOkButtonText(final String text) {
 		getOkButtonBluePrint().setText(text);
 		return getBuilder();
 	}
 
 	@Override
-	public IInputDialogSetupBuilder<?, ?, ?> setOkButtonToolTipText(final String toolTipText) {
+	public IInputDialogSetupBuilder<?, ?> setOkButtonToolTipText(final String toolTipText) {
 		getOkButtonBluePrint().setToolTipText(toolTipText);
 		return getBuilder();
 	}
 
 	@Override
-	public IInputDialogSetupBuilder<?, ?, ?> setOkButton(final String text, final String toolTipText) {
+	public IInputDialogSetupBuilder<?, ?> setOkButton(final String text, final String toolTipText) {
 		return setOkButtonText(text).setOkButtonToolTipText(toolTipText);
 	}
 
 	@Override
-	public IInputDialogSetupBuilder<?, ?, ?> setOkButtonIcon(final IImageConstant icon) {
+	public IInputDialogSetupBuilder<?, ?> setOkButtonIcon(final IImageConstant icon) {
 		getOkButtonBluePrint().setIcon(icon);
 		return getBuilder();
 	}
 
 	@Override
-	public IInputDialogSetupBuilder<?, ?, ?> setCancelButtonText(final String text) {
+	public IInputDialogSetupBuilder<?, ?> setCancelButtonText(final String text) {
 		getCancelButtonBluePrint().setText(text);
 		return getBuilder();
 	}
 
 	@Override
-	public IInputDialogSetupBuilder<?, ?, ?> setCancelButtonToolTipText(final String toolTipText) {
+	public IInputDialogSetupBuilder<?, ?> setCancelButtonToolTipText(final String toolTipText) {
 		getCancelButtonBluePrint().setToolTipText(toolTipText);
 		return getBuilder();
 	}
 
 	@Override
-	public IInputDialogSetupBuilder<?, ?, ?> setCancelButtonIcon(final IImageConstant icon) {
+	public IInputDialogSetupBuilder<?, ?> setCancelButtonIcon(final IImageConstant icon) {
 		getCancelButtonBluePrint().setIcon(icon);
 		return getBuilder();
 	}
@@ -92,7 +92,7 @@ public class InputDialogSetupConvenience extends AbstractSetupBuilderConvenience
 	}
 
 	@Override
-	public IInputDialogSetupBuilder<?, ?, ?> setCancelButton(final String text, final String toolTipText) {
+	public IInputDialogSetupBuilder<?, ?> setCancelButton(final String text, final String toolTipText) {
 		return setCancelButtonText(text).setCancelButtonToolTipText(toolTipText);
 	}
 
@@ -104,7 +104,7 @@ public class InputDialogSetupConvenience extends AbstractSetupBuilderConvenience
 			return (IButtonBluePrint) buttonDescriptor;
 		}
 		else {
-			return new BluePrintFactory().button().setDescriptor(buttonDescriptor);
+			return new BluePrintFactory().button().setSetup(buttonDescriptor);
 		}
 	}
 

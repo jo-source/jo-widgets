@@ -41,7 +41,7 @@ public class ComboBoxWidget<INPUT_TYPE> extends ComboBoxSelectionWidget<INPUT_TY
 
 	private final IStringObjectConverter<INPUT_TYPE> stringObjectConverter;
 
-	public ComboBoxWidget(final IWidget parent, final IColorCache colorCache, final IComboBoxSetupSpi<?, INPUT_TYPE> descriptor) {
+	public ComboBoxWidget(final IWidget parent, final IColorCache colorCache, final IComboBoxSetupSpi<INPUT_TYPE> descriptor) {
 		super(colorCache, new Combo((Composite) parent.getUiReference(), SWT.NONE | SWT.DROP_DOWN), descriptor);
 
 		this.stringObjectConverter = descriptor.getStringObjectConverter();

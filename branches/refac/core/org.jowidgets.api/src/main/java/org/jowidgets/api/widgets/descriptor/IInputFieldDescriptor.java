@@ -30,6 +30,8 @@ package org.jowidgets.api.widgets.descriptor;
 import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IInputFieldSetup;
 
-public interface IInputFieldDescriptor<INPUT_TYPE> extends IInputFieldSetup<IInputWidget<INPUT_TYPE>, INPUT_TYPE> {
+public interface IInputFieldDescriptor<INPUT_TYPE> extends
+		IInputFieldSetup<INPUT_TYPE>,
+		IWidgetDescriptor<IInputWidget<INPUT_TYPE>> {
 
 }

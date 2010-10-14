@@ -27,10 +27,9 @@
  */
 package org.jowidgets.api.widgets.blueprint;
 
-import org.jowidgets.api.widgets.ICompositeWidget;
 import org.jowidgets.api.widgets.blueprint.builder.ICompositeSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.ICompositeDescriptor;
 
-public interface ICompositeBluePrint extends ICompositeSetupBuilder<ICompositeBluePrint, ICompositeWidget>, ICompositeDescriptor {
+public interface ICompositeBluePrint extends ICompositeSetupBuilder<ICompositeBluePrint>, ICompositeDescriptor {
 
 }

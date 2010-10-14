@@ -27,11 +27,9 @@
  */
 package org.jowidgets.api.widgets.descriptor.setup;
 
-import org.jowidgets.api.widgets.IInputWidget;
-import org.jowidgets.api.widgets.setup.IWidgetSetupCommon;
-import org.jowidgets.api.widgets.setup.mandatory.Mandatory;
+import org.jowidgets.api.widgets.descriptor.setup.mandatory.Mandatory;
 
-public interface IInputWidgetSetup<WIDGET_TYPE extends IInputWidget<INPUT_TYPE>, INPUT_TYPE> extends IWidgetSetupCommon<WIDGET_TYPE> {
+public interface IInputWidgetSetup<INPUT_TYPE> extends IWidgetSetupCommon {
 
 	@Mandatory
 	boolean isMandatory();

@@ -27,10 +27,9 @@
  */
 package org.jowidgets.api.widgets.blueprint;
 
-import org.jowidgets.api.widgets.IButtonWidget;
 import org.jowidgets.api.widgets.blueprint.builder.IButtonSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 
-public interface IButtonBluePrint extends IButtonSetupBuilder<IButtonBluePrint, IButtonWidget>, IButtonDescriptor {
+public interface IButtonBluePrint extends IButtonSetupBuilder<IButtonBluePrint>, IButtonDescriptor {
 
 }

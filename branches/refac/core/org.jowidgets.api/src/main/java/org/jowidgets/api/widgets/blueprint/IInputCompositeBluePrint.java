@@ -27,12 +27,11 @@
  */
 package org.jowidgets.api.widgets.blueprint;
 
-import org.jowidgets.api.widgets.IInputCompositeWidget;
 import org.jowidgets.api.widgets.blueprint.builder.IInputCompositeSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.IInputCompositeDescriptor;
 
 public interface IInputCompositeBluePrint<INPUT_TYPE> extends
-		IInputCompositeSetupBuilder<IInputCompositeBluePrint<INPUT_TYPE>, IInputCompositeWidget<INPUT_TYPE>, INPUT_TYPE>,
+		IInputCompositeSetupBuilder<IInputCompositeBluePrint<INPUT_TYPE>, INPUT_TYPE>,
 		IInputCompositeDescriptor<INPUT_TYPE> {
 
 }

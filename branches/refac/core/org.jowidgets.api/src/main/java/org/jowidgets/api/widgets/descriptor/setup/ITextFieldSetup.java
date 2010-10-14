@@ -28,13 +28,9 @@
 package org.jowidgets.api.widgets.descriptor.setup;
 
 import org.jowidgets.api.validation.ITextInputValidator;
-import org.jowidgets.api.widgets.IInputWidget;
-import org.jowidgets.api.widgets.setup.IVetoableInputWidgetSetupCommon;
-import org.jowidgets.api.widgets.setup.mandatory.Mandatory;
+import org.jowidgets.api.widgets.descriptor.setup.mandatory.Mandatory;
 
-public interface ITextFieldSetup<WIDGET_TYPE extends IInputWidget<String>> extends
-		IInputWidgetSetup<WIDGET_TYPE, String>,
-		IVetoableInputWidgetSetupCommon<WIDGET_TYPE, String> {
+public interface ITextFieldSetup extends IInputWidgetSetup<String>, IVetoableInputWidgetSetupCommon<String> {
 
 	@Mandatory
 	ITextInputValidator getTextInputValidator();

@@ -31,10 +31,10 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.api.widgets.builder.IContainerSetupBuilderCommon;
 import org.jowidgets.api.widgets.layout.MigLayoutDescriptor;
 
-public class ContainerDefaultsCommon implements IDefaultInitializer<IContainerSetupBuilderCommon<?, ?>> {
+public class ContainerDefaultsCommon implements IDefaultInitializer<IContainerSetupBuilderCommon<?>> {
 
 	@Override
-	public void initialize(final IContainerSetupBuilderCommon<?, ?> builder) {
+	public void initialize(final IContainerSetupBuilderCommon<?> builder) {
 		builder.setLayout(new MigLayoutDescriptor());
 	}
 

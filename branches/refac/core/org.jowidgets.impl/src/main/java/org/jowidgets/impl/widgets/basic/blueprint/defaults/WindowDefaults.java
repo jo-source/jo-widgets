@@ -32,10 +32,10 @@ import org.jowidgets.api.look.AutoPackPolicy;
 import org.jowidgets.api.widgets.blueprint.builder.ITitledWindowSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
-public class WindowDefaults implements IDefaultInitializer<ITitledWindowSetupBuilder<?, ?>> {
+public class WindowDefaults implements IDefaultInitializer<ITitledWindowSetupBuilder<?>> {
 
 	@Override
-	public void initialize(final ITitledWindowSetupBuilder<?, ?> builder) {
+	public void initialize(final ITitledWindowSetupBuilder<?> builder) {
 		builder.setAutoPackPolicy(AutoPackPolicy.ONCE);
 		builder.setAutoCenterPolicy(AutoCenterPolicy.ONCE);
 	}

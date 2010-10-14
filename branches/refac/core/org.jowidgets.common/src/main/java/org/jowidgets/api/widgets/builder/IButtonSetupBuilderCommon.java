@@ -27,9 +27,7 @@
  */
 package org.jowidgets.api.widgets.builder;
 
-import org.jowidgets.api.widgets.IButtonWidgetCommon;
-
-public interface IButtonSetupBuilderCommon<INSTANCE_TYPE extends IButtonSetupBuilderCommon<?, ?>, WIDGET_TYPE extends IButtonWidgetCommon> extends
-		ILabelSetupBuilderCommon<INSTANCE_TYPE, WIDGET_TYPE> {
+public interface IButtonSetupBuilderCommon<INSTANCE_TYPE extends IButtonSetupBuilderCommon<?>> extends
+		ILabelSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

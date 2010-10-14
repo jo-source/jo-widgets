@@ -28,10 +28,9 @@
 package org.jowidgets.api.widgets.builder;
 
 import org.jowidgets.api.image.IImageConstant;
-import org.jowidgets.api.widgets.IWindowWidgetCommon;
 
-public interface ITitledWindowSetupBuilderCommon<INSTANCE_TYPE extends ITitledWindowSetupBuilderCommon<?, ?>, WIDGET_TYPE extends IWindowWidgetCommon> extends
-		IWidgetSetupBuilderCommon<INSTANCE_TYPE, WIDGET_TYPE> {
+public interface ITitledWindowSetupBuilderCommon<INSTANCE_TYPE extends ITitledWindowSetupBuilderCommon<?>> extends
+		IWidgetSetupBuilderCommon<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setTitle(final String title);
 

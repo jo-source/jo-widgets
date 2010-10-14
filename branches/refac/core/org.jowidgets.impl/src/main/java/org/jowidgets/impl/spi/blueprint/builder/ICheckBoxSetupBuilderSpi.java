@@ -27,10 +27,9 @@
  */
 package org.jowidgets.impl.spi.blueprint.builder;
 
-import org.jowidgets.api.widgets.IToggleButtonWidgetCommon;
 import org.jowidgets.api.widgets.builder.ICheckBoxSetupBuilderCommon;
 
-public interface ICheckBoxSetupBuilderSpi<INSTANCE_TYPE extends ICheckBoxSetupBuilderSpi<?, ?>, WIDGET_TYPE extends IToggleButtonWidgetCommon> extends
-		ICheckBoxSetupBuilderCommon<INSTANCE_TYPE, WIDGET_TYPE> {
+public interface ICheckBoxSetupBuilderSpi<INSTANCE_TYPE extends ICheckBoxSetupBuilderSpi<?>> extends
+		ICheckBoxSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

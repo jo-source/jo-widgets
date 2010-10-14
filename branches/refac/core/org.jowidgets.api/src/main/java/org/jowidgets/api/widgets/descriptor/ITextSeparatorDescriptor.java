@@ -30,6 +30,6 @@ package org.jowidgets.api.widgets.descriptor;
 import org.jowidgets.api.widgets.ITextLabelWidget;
 import org.jowidgets.api.widgets.descriptor.setup.ITextSeparatorSetup;
 
-public interface ITextSeparatorDescriptor extends ITextSeparatorSetup<ITextLabelWidget> {
+public interface ITextSeparatorDescriptor extends ITextSeparatorSetup, IWidgetDescriptor<ITextLabelWidget> {
 
 }

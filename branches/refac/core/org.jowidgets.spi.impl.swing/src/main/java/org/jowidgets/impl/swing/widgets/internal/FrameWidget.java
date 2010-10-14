@@ -41,14 +41,14 @@ public class FrameWidget extends SwingWindowWidget implements IFrameWidgetSpi {
 	public FrameWidget(
 		final IGenericWidgetFactory factory,
 		final SwingImageRegistry imageRegistry,
-		final IFrameSetupSpi<?> descriptor) {
+		final IFrameSetupSpi setup) {
 		super(factory, new JFrame());
 
-		getUiReference().setTitle(descriptor.getTitle());
+		getUiReference().setTitle(setup.getTitle());
 
-		setIcon(descriptor.getIcon(), imageRegistry);
-		setLayout(descriptor.getLayout());
-		ColorSettingsInvoker.setColors(descriptor, this);
+		setIcon(setup.getIcon(), imageRegistry);
+		setLayout(setup.getLayout());
+		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

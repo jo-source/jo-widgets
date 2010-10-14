@@ -30,6 +30,8 @@ package org.jowidgets.api.widgets.descriptor;
 import org.jowidgets.api.widgets.IComboBoxWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IComboBoxSetup;
 
-public interface IComboBoxDescriptor<INPUT_TYPE> extends IComboBoxSetup<IComboBoxWidget<INPUT_TYPE>, INPUT_TYPE> {
+public interface IComboBoxDescriptor<INPUT_TYPE> extends
+		IComboBoxSetup<INPUT_TYPE>,
+		IWidgetDescriptor<IComboBoxWidget<INPUT_TYPE>> {
 
 }

@@ -27,12 +27,11 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.builder.IWidgetSetupBuilderCommon;
 import org.jowidgets.api.widgets.builder.convenience.IWidgetSetupConvenienceCommon;
 
-public interface IWidgetSetupBuilder<INSTANCE_TYPE extends IWidgetSetupBuilder<?, ?>, WIDGET_TYPE extends IWidget> extends
-		IWidgetSetupBuilderCommon<INSTANCE_TYPE, WIDGET_TYPE>,
+public interface IWidgetSetupBuilder<INSTANCE_TYPE extends IWidgetSetupBuilder<?>> extends
+		IWidgetSetupBuilderCommon<INSTANCE_TYPE>,
 		IWidgetSetupConvenienceCommon<INSTANCE_TYPE> {
 
 }

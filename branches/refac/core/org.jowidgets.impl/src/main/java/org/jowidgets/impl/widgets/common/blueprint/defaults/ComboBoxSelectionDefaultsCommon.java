@@ -33,11 +33,11 @@ import java.util.LinkedList;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.api.widgets.builder.IComboBoxSelectionSetupBuilderCommon;
 
-public class ComboBoxSelectionDefaultsCommon implements IDefaultInitializer<IComboBoxSelectionSetupBuilderCommon<?, ?, ?>> {
+public class ComboBoxSelectionDefaultsCommon implements IDefaultInitializer<IComboBoxSelectionSetupBuilderCommon<?, ?>> {
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	@Override
-	public void initialize(final IComboBoxSelectionSetupBuilderCommon<?, ?, ?> builder) {
+	public void initialize(final IComboBoxSelectionSetupBuilderCommon<?, ?> builder) {
 		builder.setAutoCompletion(true);
 		builder.setElements(Collections.unmodifiableList(new LinkedList()));
 	}

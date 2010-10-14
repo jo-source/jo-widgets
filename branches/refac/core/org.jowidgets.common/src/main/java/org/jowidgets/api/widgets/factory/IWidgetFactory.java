@@ -28,9 +28,9 @@
 package org.jowidgets.api.widgets.factory;
 
 import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.setup.IWidgetSetupCommon;
+import org.jowidgets.api.widgets.descriptor.IWidgetDescriptor;
 
-public interface IWidgetFactory<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetSetupCommon<? extends WIDGET_TYPE>> {
+public interface IWidgetFactory<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> {
 
 	WIDGET_TYPE create(IWidget parent, DESCRIPTOR_TYPE descriptor);
 

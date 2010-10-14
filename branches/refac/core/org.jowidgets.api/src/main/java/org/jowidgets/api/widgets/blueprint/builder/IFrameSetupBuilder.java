@@ -27,11 +27,10 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
-import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.builder.IContainerSetupBuilderCommon;
 
-public interface IFrameSetupBuilder<INSTANCE_TYPE extends IFrameSetupBuilder<?, ?>, WIDGET_TYPE extends IFrameWidget> extends
-		ITitledWindowSetupBuilder<INSTANCE_TYPE, WIDGET_TYPE>,
-		IContainerSetupBuilderCommon<INSTANCE_TYPE, WIDGET_TYPE> {
+public interface IFrameSetupBuilder<INSTANCE_TYPE extends IFrameSetupBuilder<?>> extends
+		ITitledWindowSetupBuilder<INSTANCE_TYPE>,
+		IContainerSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

@@ -43,7 +43,7 @@ public class WindowWidgetDelegate {
 	private final IWindowWidgetCommon windowWidgetCi;
 	private boolean wasVisible;
 
-	public WindowWidgetDelegate(final IWindowWidgetCommon windowWidgetCi, final IWindowSetup<?> setup) {
+	public WindowWidgetDelegate(final IWindowWidgetCommon windowWidgetCi, final IWindowSetup setup) {
 		this.autoCenterPolicy = setup.getAutoCenterPolicy();
 		this.autoPackPolicy = setup.getAutoPackPolicy();
 		this.windowWidgetCi = windowWidgetCi;

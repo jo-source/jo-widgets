@@ -45,15 +45,15 @@ public class DialogWidget extends SwingWindowWidget implements IFrameWidgetSpi {
 		final IGenericWidgetFactory factory,
 		final SwingImageRegistry imageRegistry,
 		final IWidget parent,
-		final IDialogSetupSpi<?> descriptor) {
+		final IDialogSetupSpi setup) {
 		super(factory, new JDialog((Window) parent.getUiReference()));
 
-		getUiReference().setTitle(descriptor.getTitle());
+		getUiReference().setTitle(setup.getTitle());
 		getUiReference().setModal(true);
 
-		setIcon(descriptor.getIcon(), imageRegistry);
-		setLayout(descriptor.getLayout());
-		ColorSettingsInvoker.setColors(descriptor, this);
+		setIcon(setup.getIcon(), imageRegistry);
+		setLayout(setup.getLayout());
+		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

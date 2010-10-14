@@ -53,14 +53,14 @@ public class ComboBoxSelectionWidget<INPUT_TYPE> extends AbstractSwtInputWidget<
 	public ComboBoxSelectionWidget(
 		final IWidget parent,
 		final IColorCache colorCache,
-		final IComboBoxSelectionSetupSpi<?, INPUT_TYPE> descriptor) {
+		final IComboBoxSelectionSetupSpi<INPUT_TYPE> descriptor) {
 		this(colorCache, new Combo((Composite) parent.getUiReference(), SWT.NONE | SWT.READ_ONLY), descriptor);
 	}
 
 	public ComboBoxSelectionWidget(
 		final IColorCache colorCache,
 		final Combo combo,
-		final IComboBoxSelectionSetupSpi<?, INPUT_TYPE> descriptor) {
+		final IComboBoxSelectionSetupSpi<INPUT_TYPE> descriptor) {
 		super(colorCache, combo);
 
 		this.content = new ArrayList<INPUT_TYPE>();

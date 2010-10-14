@@ -27,11 +27,7 @@
  */
 package org.jowidgets.api.widgets.descriptor.setup;
 
-import org.jowidgets.api.widgets.IWindowWidgetCommon;
-import org.jowidgets.api.widgets.setup.ITitledWindowSetupCommon;
 
-public interface ITitledWindowSetup<WIDGET_TYPE extends IWindowWidgetCommon> extends
-		ITitledWindowSetupCommon<WIDGET_TYPE>,
-		IWindowSetup<WIDGET_TYPE> {
+public interface ITitledWindowSetup extends ITitledWindowSetupCommon, IWindowSetup {
 
 }

@@ -27,9 +27,7 @@
  */
 package org.jowidgets.api.widgets.descriptor.setup;
 
-import org.jowidgets.api.widgets.IButtonWidget;
-import org.jowidgets.api.widgets.setup.IButtonSetupCommon;
 
-public interface IButtonSetup<WIDGET_TYPE extends IButtonWidget> extends IButtonSetupCommon<WIDGET_TYPE> {
+public interface IButtonSetup extends IButtonSetupCommon {
 
 }

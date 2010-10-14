@@ -30,6 +30,6 @@ package org.jowidgets.api.widgets.descriptor;
 import org.jowidgets.api.widgets.IButtonWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IButtonSetup;
 
-public interface IButtonDescriptor extends IButtonSetup<IButtonWidget> {
+public interface IButtonDescriptor extends IButtonSetup, IWidgetDescriptor<IButtonWidget> {
 
 }

@@ -30,6 +30,6 @@ package org.jowidgets.api.widgets.descriptor;
 import org.jowidgets.api.widgets.IToggleButtonWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IToggleButtonSetup;
 
-public interface IToggleButtonDescriptor extends IToggleButtonSetup<IToggleButtonWidget> {
+public interface IToggleButtonDescriptor extends IToggleButtonSetup, IWidgetDescriptor<IToggleButtonWidget> {
 
 }

@@ -28,10 +28,9 @@
 package org.jowidgets.api.widgets.builder;
 
 import org.jowidgets.api.veto.IInputVetoChecker;
-import org.jowidgets.api.widgets.IInputWidgetCommon;
 
-public interface IVetoableInputWidgetSetupBuilderCommon<INSTANCE_TYPE extends IVetoableInputWidgetSetupBuilderCommon<?, ?, ?>, WIDGET_TYPE extends IInputWidgetCommon<INPUT_TYPE>, INPUT_TYPE> extends
-		IWidgetSetupBuilderCommon<INSTANCE_TYPE, WIDGET_TYPE> {
+public interface IVetoableInputWidgetSetupBuilderCommon<INSTANCE_TYPE extends IVetoableInputWidgetSetupBuilderCommon<?, ?>, INPUT_TYPE> extends
+		IWidgetSetupBuilderCommon<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setInputVetoChecker(IInputVetoChecker<INPUT_TYPE> vetoChecker);
 

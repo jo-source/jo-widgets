@@ -28,7 +28,6 @@
 package org.jowidgets.impl.spi.blueprint;
 
 import org.jowidgets.impl.spi.blueprint.builder.IButtonSetupBuilderSpi;
-import org.jowidgets.spi.widgets.IButtonWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.IButtonDescriptorSpi;
+import org.jowidgets.impl.spi.descriptor.IButtonDescriptorSpi;
 
-public interface IButtonBluePrintSpi extends IButtonSetupBuilderSpi<IButtonBluePrintSpi, IButtonWidgetSpi>, IButtonDescriptorSpi {}
+public interface IButtonBluePrintSpi extends IButtonSetupBuilderSpi<IButtonBluePrintSpi>, IButtonDescriptorSpi {}

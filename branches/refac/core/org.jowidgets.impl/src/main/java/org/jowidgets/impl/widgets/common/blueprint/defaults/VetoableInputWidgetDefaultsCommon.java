@@ -31,10 +31,10 @@ import org.jowidgets.api.veto.NoVetoChecker;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.api.widgets.builder.IVetoableInputWidgetSetupBuilderCommon;
 
-public class VetoableInputWidgetDefaultsCommon implements IDefaultInitializer<IVetoableInputWidgetSetupBuilderCommon<?, ?, Object>> {
+public class VetoableInputWidgetDefaultsCommon implements IDefaultInitializer<IVetoableInputWidgetSetupBuilderCommon<?, Object>> {
 
 	@Override
-	public void initialize(final IVetoableInputWidgetSetupBuilderCommon<?, ?, Object> builder) {
+	public void initialize(final IVetoableInputWidgetSetupBuilderCommon<?, Object> builder) {
 		builder.setInputVetoChecker(NoVetoChecker.getInstance());
 	}
 

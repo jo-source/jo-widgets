@@ -31,11 +31,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
-import org.jowidgets.api.widgets.builder.ISetupBuilder;
+import org.jowidgets.api.widgets.builder.IWidgetSetupBuilder;
 
 @Retention(RetentionPolicy.RUNTIME)
 public @interface DefaultsInitializer {
 
-	Class<? extends IDefaultInitializer<? extends ISetupBuilder<?>>> value();
+	Class<? extends IDefaultInitializer<? extends IWidgetSetupBuilder<?>>> value();
 
 }

@@ -35,12 +35,12 @@ import org.jowidgets.api.widgets.builder.convenience.IComboBoxSelectionSetupConv
 import org.jowidgets.impl.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 
 public class ComboBoxSelectionSetupConvenienceCommon extends
-		AbstractSetupBuilderConvenience<IComboBoxSelectionSetupBuilderCommon<?, ?, ?>> implements
-		IComboBoxSelectionSetupConvenienceCommon<IComboBoxSelectionSetupBuilderCommon<?, ?, ?>, Object> {
+		AbstractSetupBuilderConvenience<IComboBoxSelectionSetupBuilderCommon<?, ?>> implements
+		IComboBoxSelectionSetupConvenienceCommon<IComboBoxSelectionSetupBuilderCommon<?, ?>, Object> {
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	@Override
-	public IComboBoxSelectionSetupBuilderCommon<?, ?, ?> setElements(final Object... elements) {
+	public IComboBoxSelectionSetupBuilderCommon<?, ?> setElements(final Object... elements) {
 		getBuilder().setElements((List) Arrays.asList(elements));
 		return getBuilder();
 	}

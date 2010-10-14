@@ -32,16 +32,16 @@ import org.jowidgets.api.widgets.builder.convenience.IContainerSetupConvenienceC
 import org.jowidgets.api.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 
-public class ContainerSetupConvenienceCommon extends AbstractSetupBuilderConvenience<IContainerSetupBuilderCommon<?, ?>> implements
-		IContainerSetupConvenienceCommon<IContainerSetupBuilderCommon<?, ?>> {
+public class ContainerSetupConvenienceCommon extends AbstractSetupBuilderConvenience<IContainerSetupBuilderCommon<?>> implements
+		IContainerSetupConvenienceCommon<IContainerSetupBuilderCommon<?>> {
 
 	@Override
-	public IContainerSetupBuilderCommon<?, ?> setMigLayout(final String columnConstraints, final String rowConstraints) {
+	public IContainerSetupBuilderCommon<?> setMigLayout(final String columnConstraints, final String rowConstraints) {
 		return getBuilder().setLayout(new MigLayoutDescriptor(columnConstraints, rowConstraints));
 	}
 
 	@Override
-	public IContainerSetupBuilderCommon<?, ?> setMigLayout(
+	public IContainerSetupBuilderCommon<?> setMigLayout(
 		final String layoutConstraints,
 		final String columnConstraints,
 		final String rowConstraints) {

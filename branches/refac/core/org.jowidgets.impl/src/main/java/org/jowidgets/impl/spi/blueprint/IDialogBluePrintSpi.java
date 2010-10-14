@@ -28,7 +28,6 @@
 package org.jowidgets.impl.spi.blueprint;
 
 import org.jowidgets.impl.spi.blueprint.builder.IDialogSetupBuilderSpi;
-import org.jowidgets.spi.widgets.IFrameWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.IDialogDescriptorSpi;
+import org.jowidgets.impl.spi.descriptor.IDialogDescriptorSpi;
 
-public interface IDialogBluePrintSpi extends IDialogSetupBuilderSpi<IDialogBluePrintSpi, IFrameWidgetSpi>, IDialogDescriptorSpi {}
+public interface IDialogBluePrintSpi extends IDialogSetupBuilderSpi<IDialogBluePrintSpi>, IDialogDescriptorSpi {}

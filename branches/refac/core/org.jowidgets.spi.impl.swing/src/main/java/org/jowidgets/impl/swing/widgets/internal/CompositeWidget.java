@@ -30,18 +30,18 @@ package org.jowidgets.impl.swing.widgets.internal;
 import javax.swing.JPanel;
 
 import org.jowidgets.api.util.ColorSettingsInvoker;
+import org.jowidgets.api.widgets.descriptor.setup.ICompositeSetupCommon;
 import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.api.widgets.setup.ICompositeSetupCommon;
 import org.jowidgets.impl.swing.util.BorderConvert;
 import org.jowidgets.impl.swing.widgets.SwingContainerWidget;
 
 public class CompositeWidget extends SwingContainerWidget {
 
-	public CompositeWidget(final IGenericWidgetFactory factory, final ICompositeSetupCommon<?> settings) {
+	public CompositeWidget(final IGenericWidgetFactory factory, final ICompositeSetupCommon setup) {
 		super(factory, new JPanel());
-		getUiReference().setBorder(BorderConvert.convert(settings.getBorder()));
-		setLayout(settings.getLayout());
-		ColorSettingsInvoker.setColors(settings, this);
+		getUiReference().setBorder(BorderConvert.convert(setup.getBorder()));
+		setLayout(setup.getLayout());
+		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

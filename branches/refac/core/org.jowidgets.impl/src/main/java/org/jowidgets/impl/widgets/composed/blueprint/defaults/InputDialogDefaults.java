@@ -31,11 +31,11 @@ import org.jowidgets.api.widgets.blueprint.builder.IInputDialogSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
-public class InputDialogDefaults implements IDefaultInitializer<IInputDialogSetupBuilder<?, ?, ?>> {
+public class InputDialogDefaults implements IDefaultInitializer<IInputDialogSetupBuilder<?, ?>> {
 
 	// i18n
 	@Override
-	public void initialize(final IInputDialogSetupBuilder<?, ?, ?> builder) {
+	public void initialize(final IInputDialogSetupBuilder<?, ?> builder) {
 		builder.setContentScrolled(true);
 		final BluePrintFactory bpF = new BluePrintFactory();
 		builder.setOkButton(bpF.button("OK"));

@@ -30,13 +30,13 @@ package org.jowidgets.impl.widgets.composed.factory.internal;
 import org.jowidgets.api.widgets.IDialogWidget;
 import org.jowidgets.api.widgets.IInputDialogWidget;
 import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.api.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.ICompositeSetup;
 import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.api.widgets.factory.IWidgetFactory;
-import org.jowidgets.api.widgets.setup.IWidgetSetupCommon;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
-public abstract class AbstractDialogWidgetFactory<WIDGET_TYPE extends IInputDialogWidget<?>, DESCRIPTOR_TYPE extends IWidgetSetupCommon<? extends WIDGET_TYPE>> implements
+public abstract class AbstractDialogWidgetFactory<WIDGET_TYPE extends IInputDialogWidget<?>, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> implements
 		IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> {
 
 	private final IGenericWidgetFactory genericWidgetFactory;
@@ -53,7 +53,7 @@ public abstract class AbstractDialogWidgetFactory<WIDGET_TYPE extends IInputDial
 
 		final IDialogWidget dialogWidget = genericWidgetFactory.create(
 				parent,
-				new BluePrintFactory().dialog().setDescriptor(descriptor));
+				new BluePrintFactory().dialog().setSetup(descriptor));
 
 		if (dialogWidget == null) {
 			throw new IllegalStateException("Could not create widget with descriptor interface class '"

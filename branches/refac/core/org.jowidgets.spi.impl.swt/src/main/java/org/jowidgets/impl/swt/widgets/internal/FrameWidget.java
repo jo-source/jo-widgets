@@ -34,7 +34,7 @@ import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.impl.swt.widgets.SwtWindowWidget;
 import org.jowidgets.spi.widgets.IFrameWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.IFrameDescriptorSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.IFrameSetupSpi;
 
 public class FrameWidget extends SwtWindowWidget implements IFrameWidgetSpi {
 
@@ -42,13 +42,13 @@ public class FrameWidget extends SwtWindowWidget implements IFrameWidgetSpi {
 		final IGenericWidgetFactory factory,
 		final IColorCache colorCache,
 		final SwtImageRegistry imageRegistry,
-		final IFrameDescriptorSpi descriptor) {
+		final IFrameSetupSpi setup) {
 		super(factory, colorCache, new Shell());
 
-		getUiReference().setText(descriptor.getTitle());
-		setLayout(descriptor.getLayout());
-		setIcon(imageRegistry, descriptor.getIcon());
-		ColorSettingsInvoker.setColors(descriptor, this);
+		getUiReference().setText(setup.getTitle());
+		setLayout(setup.getLayout());
+		setIcon(imageRegistry, setup.getIcon());
+		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 }

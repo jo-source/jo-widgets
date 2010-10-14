@@ -27,9 +27,9 @@
  */
 package org.jowidgets.api.widgets;
 
+import org.jowidgets.api.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.api.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.api.widgets.layout.ILayoutDescriptor;
-import org.jowidgets.api.widgets.setup.IWidgetSetupCommon;
 
 public interface IContainerWidgetCommon extends IWidget {
 
@@ -46,7 +46,7 @@ public interface IContainerWidgetCommon extends IWidget {
 	void removeAll();
 
 	<WIDGET_TYPE extends IWidget> WIDGET_TYPE add(
-		IWidgetSetupCommon<? extends WIDGET_TYPE> descriptor,
+		IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		Object layoutConstraints);
 
 	<WIDGET_TYPE extends IWidget> WIDGET_TYPE add(ICustomWidgetFactory<WIDGET_TYPE> factory, Object layoutConstraints);

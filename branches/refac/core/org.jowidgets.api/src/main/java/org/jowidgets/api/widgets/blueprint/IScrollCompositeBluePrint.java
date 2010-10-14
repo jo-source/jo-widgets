@@ -27,12 +27,11 @@
  */
 package org.jowidgets.api.widgets.blueprint;
 
-import org.jowidgets.api.widgets.IScrollCompositeWidget;
 import org.jowidgets.api.widgets.blueprint.builder.IScrollCompositeSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.IScrollCompositeDescriptor;
 
 public interface IScrollCompositeBluePrint extends
-		IScrollCompositeSetupBuilder<IScrollCompositeBluePrint, IScrollCompositeWidget>,
+		IScrollCompositeSetupBuilder<IScrollCompositeBluePrint>,
 		IScrollCompositeDescriptor {
 
 }

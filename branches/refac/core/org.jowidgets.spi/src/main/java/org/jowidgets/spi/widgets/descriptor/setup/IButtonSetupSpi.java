@@ -27,9 +27,8 @@
  */
 package org.jowidgets.spi.widgets.descriptor.setup;
 
-import org.jowidgets.api.widgets.setup.IButtonSetupCommon;
-import org.jowidgets.spi.widgets.IButtonWidgetSpi;
+import org.jowidgets.api.widgets.descriptor.setup.IButtonSetupCommon;
 
-public interface IButtonSetupSpi<WIDGET_TYPE extends IButtonWidgetSpi> extends IButtonSetupCommon<WIDGET_TYPE> {
+public interface IButtonSetupSpi extends IButtonSetupCommon {
 
 }

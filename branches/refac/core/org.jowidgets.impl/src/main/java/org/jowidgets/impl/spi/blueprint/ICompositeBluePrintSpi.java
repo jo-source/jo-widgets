@@ -28,9 +28,6 @@
 package org.jowidgets.impl.spi.blueprint;
 
 import org.jowidgets.impl.spi.blueprint.builder.ICompositeSetupBuilderSpi;
-import org.jowidgets.spi.widgets.IContainerWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.ICompositeDescriptorSpi;
+import org.jowidgets.impl.spi.descriptor.ICompositeDescriptorSpi;
 
-public interface ICompositeBluePrintSpi extends
-		ICompositeSetupBuilderSpi<ICompositeBluePrintSpi, IContainerWidgetSpi>,
-		ICompositeDescriptorSpi {}
+public interface ICompositeBluePrintSpi extends ICompositeSetupBuilderSpi<ICompositeBluePrintSpi>, ICompositeDescriptorSpi {}

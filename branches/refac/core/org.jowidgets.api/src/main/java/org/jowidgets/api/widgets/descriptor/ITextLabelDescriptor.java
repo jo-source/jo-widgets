@@ -30,6 +30,6 @@ package org.jowidgets.api.widgets.descriptor;
 import org.jowidgets.api.widgets.ITextLabelWidget;
 import org.jowidgets.api.widgets.descriptor.setup.ITextLabelSetup;
 
-public interface ITextLabelDescriptor extends ITextLabelSetup<ITextLabelWidget> {
+public interface ITextLabelDescriptor extends ITextLabelSetup, IWidgetDescriptor<ITextLabelWidget> {
 
 }

@@ -28,13 +28,13 @@
 package org.jowidgets.api.util;
 
 import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.setup.IWidgetSetupCommon;
+import org.jowidgets.api.widgets.descriptor.setup.IWidgetSetupCommon;
 
 public final class ColorSettingsInvoker {
 
 	private ColorSettingsInvoker() {}
 
-	public static void setColors(final IWidgetSetupCommon<?> descriptor, final IWidget widget) {
+	public static void setColors(final IWidgetSetupCommon descriptor, final IWidget widget) {
 		if (descriptor.getForegroundColor() != null) {
 			widget.setForegroundColor(descriptor.getForegroundColor());
 		}

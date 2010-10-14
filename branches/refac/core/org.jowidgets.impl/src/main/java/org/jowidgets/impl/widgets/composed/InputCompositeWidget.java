@@ -47,20 +47,20 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputCompositeWidget<I
 	private final ICompositeWidget composite;
 	private final InputContentContainer<INPUT_TYPE> contentContainer;
 
-	public InputCompositeWidget(final ICompositeWidget composite, final IInputCompositeSetup<?, INPUT_TYPE> descriptor) {
+	public InputCompositeWidget(final ICompositeWidget composite, final IInputCompositeSetup<INPUT_TYPE> setup) {
 		super();
 
 		this.parentComposite = composite;
 		this.parentComposite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
 
-		final ICompositeBluePrint compositeBp = new BluePrintFactory().composite().setBorder(descriptor.getBorder());
+		final ICompositeBluePrint compositeBp = new BluePrintFactory().composite().setBorder(setup.getBorder());
 
 		this.composite = parentComposite.add(compositeBp, "growx, growy, h 0::, w 0::");
 
 		IValidationLabelWidget validationLabel = null;
-		if (descriptor.getValidationLabel() != null) {
+		if (setup.getValidationLabel() != null) {
 			this.composite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[][grow][]0"));
-			validationLabel = this.composite.add(descriptor.getValidationLabel(), "h 18::, wrap");// TODO use hide instead
+			validationLabel = this.composite.add(setup.getValidationLabel(), "h 18::, wrap");// TODO use hide instead
 		}
 		else {
 			this.composite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow][]0"));
@@ -68,9 +68,9 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputCompositeWidget<I
 
 		this.contentContainer = new InputContentContainer<INPUT_TYPE>(
 			this.composite,
-			descriptor.getContentCreator(),
-			descriptor.isContentScrolled(),
-			descriptor.getContentBorder());
+			setup.getContentCreator(),
+			setup.isContentScrolled(),
+			setup.getContentBorder());
 
 		if (validationLabel != null) {
 			validationLabel.registerInputWidget(contentContainer);

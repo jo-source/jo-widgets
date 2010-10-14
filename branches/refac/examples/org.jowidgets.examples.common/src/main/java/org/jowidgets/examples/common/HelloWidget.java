@@ -53,6 +53,7 @@ public class HelloWidget {
 
 	private final IFrameWidget rootFrame;
 
+	@SuppressWarnings("unused")
 	public HelloWidget(final IWidgetFactorySpi nativeWidgetFactory, final String title) {
 
 		final IGenericWidgetFactory factory = new GenericWidgetFactory(nativeWidgetFactory);

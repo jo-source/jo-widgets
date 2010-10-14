@@ -27,11 +27,10 @@
  */
 package org.jowidgets.api.widgets.builder;
 
-import org.jowidgets.api.widgets.IScrollCompositeWidgetCommon;
 
-public interface IScrollCompositeSetupBuilderCommon<INSTANCE_TYPE extends IScrollCompositeSetupBuilderCommon<?, ?>, WIDGET_TYPE extends IScrollCompositeWidgetCommon> extends
-		IContainerSetupBuilderCommon<INSTANCE_TYPE, WIDGET_TYPE>,
-		ICompositeSetupBuilderCommon<INSTANCE_TYPE, WIDGET_TYPE> {
+public interface IScrollCompositeSetupBuilderCommon<INSTANCE_TYPE extends IScrollCompositeSetupBuilderCommon<?>> extends
+		IContainerSetupBuilderCommon<INSTANCE_TYPE>,
+		ICompositeSetupBuilderCommon<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setVerticalBar(final boolean hasVerticalBar);
 

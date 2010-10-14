@@ -52,17 +52,17 @@ public class ButtonWidget extends AbstractSwtActionWidget implements IButtonWidg
 		final IColorCache colorCache,
 		final SwtImageRegistry imageRegistry,
 		final IWidget parent,
-		final IButtonSetupSpi<?> descriptor) {
+		final IButtonSetupSpi setup) {
 		super(colorCache, new Button((Composite) parent.getUiReference(), SWT.NONE));
 		this.imageRegistry = imageRegistry;
 
-		setText(descriptor.getText());
-		setToolTipText(descriptor.getToolTipText());
-		setIcon(descriptor.getIcon());
+		setText(setup.getText());
+		setToolTipText(setup.getToolTipText());
+		setIcon(setup.getIcon());
 
-		setMarkup(descriptor.getMarkup());
+		setMarkup(setup.getMarkup());
 
-		getUiReference().setAlignment(AlignmentConvert.convert(descriptor.getAlignment()));
+		getUiReference().setAlignment(AlignmentConvert.convert(setup.getAlignment()));
 
 		getUiReference().addListener(SWT.Selection, new Listener() {
 			@Override
@@ -70,7 +70,7 @@ public class ButtonWidget extends AbstractSwtActionWidget implements IButtonWidg
 				fireActionPerformed();
 			}
 		});
-		ColorSettingsInvoker.setColors(descriptor, this);
+		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

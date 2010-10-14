@@ -27,12 +27,11 @@
  */
 package org.jowidgets.api.widgets.builder;
 
-import org.jowidgets.api.widgets.IContainerWidgetCommon;
 import org.jowidgets.api.widgets.builder.convenience.IContainerSetupConvenienceCommon;
 import org.jowidgets.api.widgets.layout.ILayoutDescriptor;
 
-public interface IContainerSetupBuilderCommon<INSTANCE_TYPE extends IContainerSetupBuilderCommon<?, ?>, WIDGET_TYPE extends IContainerWidgetCommon> extends
-		IWidgetSetupBuilderCommon<INSTANCE_TYPE, WIDGET_TYPE>,
+public interface IContainerSetupBuilderCommon<INSTANCE_TYPE extends IContainerSetupBuilderCommon<?>> extends
+		IWidgetSetupBuilderCommon<INSTANCE_TYPE>,
 		IContainerSetupConvenienceCommon<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setLayout(final ILayoutDescriptor layoutDescriptor);

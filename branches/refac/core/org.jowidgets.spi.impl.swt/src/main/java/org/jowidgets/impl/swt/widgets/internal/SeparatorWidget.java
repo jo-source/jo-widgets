@@ -40,9 +40,9 @@ import org.jowidgets.spi.widgets.descriptor.setup.ISeparatorSetupSpi;
 
 public class SeparatorWidget extends SwtWidget implements IWidgetSpi {
 
-	public SeparatorWidget(final IColorCache colorCache, final IWidget parent, final ISeparatorSetupSpi<?> descriptor) {
-		super(colorCache, createSeparator(parent, descriptor));
-		ColorSettingsInvoker.setColors(descriptor, this);
+	public SeparatorWidget(final IColorCache colorCache, final IWidget parent, final ISeparatorSetupSpi setup) {
+		super(colorCache, createSeparator(parent, setup));
+		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override
@@ -50,8 +50,8 @@ public class SeparatorWidget extends SwtWidget implements IWidgetSpi {
 		return (Label) super.getUiReference();
 	}
 
-	private static Label createSeparator(final IWidget parent, final ISeparatorSetupSpi<?> descriptor) {
-		final int orientation = OrientationConvert.convert(descriptor.getOrientation());
+	private static Label createSeparator(final IWidget parent, final ISeparatorSetupSpi setup) {
+		final int orientation = OrientationConvert.convert(setup.getOrientation());
 		return new Label((Composite) parent.getUiReference(), SWT.SEPARATOR | orientation);
 	}
 

@@ -34,12 +34,12 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.api.color.IColorConstant;
 import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.api.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.api.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.api.widgets.factory.IWidgetFactory;
 import org.jowidgets.api.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.api.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.api.widgets.setup.IWidgetSetupCommon;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.spi.widgets.IContainerWidgetSpi;
 import org.jowidgets.util.Assert;
@@ -99,7 +99,7 @@ public class SwtContainerWidget implements IContainerWidgetSpi {
 
 	@Override
 	public final <WIDGET_TYPE extends IWidget> WIDGET_TYPE add(
-		final IWidgetSetupCommon<? extends WIDGET_TYPE> descriptor,
+		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object cellConstraints) {
 
 		final WIDGET_TYPE result = factory.create(this, descriptor);
@@ -112,9 +112,9 @@ public class SwtContainerWidget implements IContainerWidgetSpi {
 		final ICustomWidgetFactory<WIDGET_TYPE> customFactory,
 		final Object cellConstraints) {
 
-		final IWidgetFactory<WIDGET_TYPE, IWidgetSetupCommon<? extends WIDGET_TYPE>> widgetFactory = new IWidgetFactory<WIDGET_TYPE, IWidgetSetupCommon<? extends WIDGET_TYPE>>() {
+		final IWidgetFactory<WIDGET_TYPE, IWidgetDescriptor<? extends WIDGET_TYPE>> widgetFactory = new IWidgetFactory<WIDGET_TYPE, IWidgetDescriptor<? extends WIDGET_TYPE>>() {
 			@Override
-			public WIDGET_TYPE create(final IWidget parent, final IWidgetSetupCommon<? extends WIDGET_TYPE> descriptor) {
+			public WIDGET_TYPE create(final IWidget parent, final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
 				return factory.create(parent, descriptor);
 			}
 		};

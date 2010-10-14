@@ -37,7 +37,7 @@ import org.jowidgets.api.image.IImageConstant;
 import org.jowidgets.api.look.Markup;
 import org.jowidgets.api.util.ColorSettingsInvoker;
 import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.setup.ICheckBoxSetupCommon;
+import org.jowidgets.api.widgets.descriptor.setup.ICheckBoxSetupCommon;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.impl.swt.util.AlignmentConvert;
@@ -53,13 +53,13 @@ public class ToggleButtonWidget extends AbstractSwtInputWidget<Boolean> implemen
 		final IColorCache colorCache,
 		final SwtImageRegistry imageRegistry,
 		final IWidget parent,
-		final ICheckBoxSetupCommon<?> descriptor) {
+		final ICheckBoxSetupCommon setup) {
 		this(
 			colorCache,
 			imageRegistry,
 			parent,
 			new Button((Composite) parent.getUiReference(), SWT.NONE | SWT.TOGGLE),
-			descriptor);
+			setup);
 	}
 
 	public ToggleButtonWidget(
@@ -67,18 +67,18 @@ public class ToggleButtonWidget extends AbstractSwtInputWidget<Boolean> implemen
 		final SwtImageRegistry imageRegistry,
 		final IWidget parent,
 		final Button button,
-		final ICheckBoxSetupCommon<?> descriptor) {
+		final ICheckBoxSetupCommon setup) {
 		super(colorCache, button);
 
 		this.imageRegistry = imageRegistry;
 
-		setText(descriptor.getText());
-		setToolTipText(descriptor.getToolTipText());
-		setIcon(descriptor.getIcon());
-		setMarkup(descriptor.getMarkup());
+		setText(setup.getText());
+		setToolTipText(setup.getToolTipText());
+		setIcon(setup.getIcon());
+		setMarkup(setup.getMarkup());
 
-		getUiReference().setAlignment(AlignmentConvert.convert(descriptor.getAlignment()));
-		ColorSettingsInvoker.setColors(descriptor, this);
+		getUiReference().setAlignment(AlignmentConvert.convert(setup.getAlignment()));
+		ColorSettingsInvoker.setColors(setup, this);
 
 		getUiReference().addListener(SWT.Selection, new Listener() {
 			@Override

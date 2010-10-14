@@ -27,10 +27,9 @@
  */
 package org.jowidgets.impl.spi.blueprint.builder;
 
-import org.jowidgets.api.widgets.IInputWidgetCommon;
 import org.jowidgets.api.widgets.builder.IVetoableInputWidgetSetupBuilderCommon;
 
-public interface IVetoableInputWidgetSetupBuilderSpi<INSTANCE_TYPE extends IVetoableInputWidgetSetupBuilderSpi<?, ?, ?>, WIDGET_TYPE extends IInputWidgetCommon<INPUT_TYPE>, INPUT_TYPE> extends
-		IVetoableInputWidgetSetupBuilderCommon<INSTANCE_TYPE, WIDGET_TYPE, INPUT_TYPE> {
+public interface IVetoableInputWidgetSetupBuilderSpi<INSTANCE_TYPE extends IVetoableInputWidgetSetupBuilderSpi<?, ?>, INPUT_TYPE> extends
+		IVetoableInputWidgetSetupBuilderCommon<INSTANCE_TYPE, INPUT_TYPE> {
 
 }

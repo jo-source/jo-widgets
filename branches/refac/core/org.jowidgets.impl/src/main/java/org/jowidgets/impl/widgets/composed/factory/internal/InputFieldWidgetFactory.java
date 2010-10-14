@@ -32,7 +32,7 @@ import org.jowidgets.api.veto.IInputVetoChecker;
 import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.ITextFieldBluePrint;
-import org.jowidgets.api.widgets.descriptor.setup.IInputFieldSetup;
+import org.jowidgets.api.widgets.descriptor.IInputFieldDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.ITextFieldSetup;
 import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.api.widgets.factory.IWidgetFactory;
@@ -41,7 +41,7 @@ import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 import org.jowidgets.spi.IWidgetFactorySpi;
 
 public class InputFieldWidgetFactory<VALUE_TYPE> implements
-		IWidgetFactory<IInputWidget<VALUE_TYPE>, IInputFieldSetup<IInputWidget<VALUE_TYPE>, VALUE_TYPE>> {
+		IWidgetFactory<IInputWidget<VALUE_TYPE>, IInputFieldDescriptor<VALUE_TYPE>> {
 
 	private final IGenericWidgetFactory genericFactory;
 
@@ -51,9 +51,7 @@ public class InputFieldWidgetFactory<VALUE_TYPE> implements
 	}
 
 	@Override
-	public IInputWidget<VALUE_TYPE> create(
-		final IWidget parent,
-		final IInputFieldSetup<IInputWidget<VALUE_TYPE>, VALUE_TYPE> descriptor) {
+	public IInputWidget<VALUE_TYPE> create(final IWidget parent, final IInputFieldDescriptor<VALUE_TYPE> descriptor) {
 
 		final BluePrintFactory bpF = new BluePrintFactory();
 

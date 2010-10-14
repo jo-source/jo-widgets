@@ -41,12 +41,12 @@ public class IconWidget extends SwingWidget implements IIconWidgetSpi {
 
 	private final SwingImageRegistry imageRegistry;
 
-	public IconWidget(final SwingImageRegistry imageRegistry, final IWidget parent, final IIconSetupSpi<?> descriptor) {
+	public IconWidget(final SwingImageRegistry imageRegistry, final IWidget parent, final IIconSetupSpi setup) {
 		super(new JLabel());
 
 		this.imageRegistry = imageRegistry;
-		setIcon(descriptor.getIcon());
-		ColorSettingsInvoker.setColors(descriptor, this);
+		setIcon(setup.getIcon());
+		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

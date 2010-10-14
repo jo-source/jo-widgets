@@ -27,10 +27,9 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
-import org.jowidgets.api.widgets.IButtonWidget;
 import org.jowidgets.api.widgets.builder.IButtonSetupBuilderCommon;
 
-public interface IButtonSetupBuilder<INSTANCE_TYPE extends IButtonSetupBuilder<?, ?>, WIDGET_TYPE extends IButtonWidget> extends
-		IButtonSetupBuilderCommon<INSTANCE_TYPE, WIDGET_TYPE> {
+public interface IButtonSetupBuilder<INSTANCE_TYPE extends IButtonSetupBuilder<?>> extends
+		IButtonSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

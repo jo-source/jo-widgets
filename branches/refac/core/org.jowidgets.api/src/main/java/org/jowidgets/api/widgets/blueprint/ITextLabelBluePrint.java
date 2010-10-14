@@ -27,10 +27,9 @@
  */
 package org.jowidgets.api.widgets.blueprint;
 
-import org.jowidgets.api.widgets.ITextLabelWidget;
 import org.jowidgets.api.widgets.blueprint.builder.ITextLabelSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.ITextLabelDescriptor;
 
-public interface ITextLabelBluePrint extends ITextLabelSetupBuilder<ITextLabelBluePrint, ITextLabelWidget>, ITextLabelDescriptor {
+public interface ITextLabelBluePrint extends ITextLabelSetupBuilder<ITextLabelBluePrint>, ITextLabelDescriptor {
 
 }

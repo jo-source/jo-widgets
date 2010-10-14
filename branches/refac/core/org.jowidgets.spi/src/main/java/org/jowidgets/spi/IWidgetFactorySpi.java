@@ -40,55 +40,53 @@ import org.jowidgets.spi.widgets.IScrollContainerWidgetSpi;
 import org.jowidgets.spi.widgets.ITextLabelWidgetSpi;
 import org.jowidgets.spi.widgets.IToggleButtonWidgetSpi;
 import org.jowidgets.spi.widgets.IWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.IButtonDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.ICheckBoxDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.IComboBoxDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.IComboBoxSelectionDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.ICompositeDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.IDialogDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.IFrameDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.IIconDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.IScrollCompositeDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.ISeparatorDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.ITextFieldDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.ITextLabelDescriptorSpi;
-import org.jowidgets.spi.widgets.descriptor.IToggleButtonDescriptorSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.IButtonSetupSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.ICheckBoxSetupSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.IComboBoxSelectionSetupSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.IComboBoxSetupSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.ICompositeSetupSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.IDialogSetupSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.IFrameSetupSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.IIconSetupSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.IScrollCompositeSetupSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.ISeparatorSetupSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.ITextLabelSetupSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.IToggleButtonSetupSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.IVetoableInputWidgetSetupSpi;
 
 public interface IWidgetFactorySpi {
 
 	IImageRegistry getImageRegistry();
 
-	IFrameWidgetSpi createFrameWidget(IGenericWidgetFactory factory, IFrameDescriptorSpi descriptor);
+	IFrameWidgetSpi createFrameWidget(IGenericWidgetFactory factory, IFrameSetupSpi setup);
 
-	IFrameWidgetSpi createDialogWidget(IGenericWidgetFactory factory, IWidget parent, IDialogDescriptorSpi descriptor);
+	IFrameWidgetSpi createDialogWidget(IGenericWidgetFactory factory, IWidget parent, IDialogSetupSpi setup);
 
-	IContainerWidgetSpi createCompositeWidget(IGenericWidgetFactory factory, IWidget parent, ICompositeDescriptorSpi descriptor);
+	IContainerWidgetSpi createCompositeWidget(IGenericWidgetFactory factory, IWidget parent, ICompositeSetupSpi setup);
 
 	IScrollContainerWidgetSpi createScrollCompositeWidget(
 		IGenericWidgetFactory factory,
 		IWidget parent,
-		IScrollCompositeDescriptorSpi descriptor);
+		IScrollCompositeSetupSpi setup);
 
-	IInputWidgetSpi<String> createTextFieldWidget(IWidget parent, ITextFieldDescriptorSpi descritor);
+	IInputWidgetSpi<String> createTextFieldWidget(IWidget parent, IVetoableInputWidgetSetupSpi<String> setup);
 
-	ITextLabelWidgetSpi createTextLabelWidget(IWidget parent, ITextLabelDescriptorSpi descriptor);
+	ITextLabelWidgetSpi createTextLabelWidget(IWidget parent, ITextLabelSetupSpi setup);
 
-	IIconWidgetSpi createIconWidget(IWidget parent, IIconDescriptorSpi descriptor);
+	IIconWidgetSpi createIconWidget(IWidget parent, IIconSetupSpi setup);
 
-	IButtonWidgetSpi createButtonWidget(final IWidget parent, IButtonDescriptorSpi descriptor);
+	IButtonWidgetSpi createButtonWidget(final IWidget parent, IButtonSetupSpi setup);
 
-	IWidgetSpi createSeparatorWidget(final IWidget parent, ISeparatorDescriptorSpi descriptor);
+	IWidgetSpi createSeparatorWidget(final IWidget parent, ISeparatorSetupSpi setup);
 
-	IToggleButtonWidgetSpi createCheckBoxWidget(final IWidget parent, ICheckBoxDescriptorSpi descriptor);
+	IToggleButtonWidgetSpi createCheckBoxWidget(final IWidget parent, ICheckBoxSetupSpi setup);
 
-	IToggleButtonWidgetSpi createToggleButtonWidget(final IWidget parent, IToggleButtonDescriptorSpi descriptor);
+	IToggleButtonWidgetSpi createToggleButtonWidget(final IWidget parent, IToggleButtonSetupSpi setup);
 
 	<INPUT_TYPE> IComboBoxWidgetSpi<INPUT_TYPE> createComboBoxSelectionWidget(
 		final IWidget parent,
-		IComboBoxSelectionDescriptorSpi<INPUT_TYPE> descriptor);
+		IComboBoxSelectionSetupSpi<INPUT_TYPE> setup);
 
-	<INPUT_TYPE> IComboBoxWidgetSpi<INPUT_TYPE> createComboBoxWidget(
-		final IWidget parent,
-		IComboBoxDescriptorSpi<INPUT_TYPE> descriptor);
+	<INPUT_TYPE> IComboBoxWidgetSpi<INPUT_TYPE> createComboBoxWidget(final IWidget parent, IComboBoxSetupSpi<INPUT_TYPE> setup);
 
 }

@@ -29,14 +29,13 @@ package org.jowidgets.impl.swing.widgets.internal;
 
 import javax.swing.JCheckBox;
 
-import org.jowidgets.api.widgets.setup.ICheckBoxSetupCommon;
+import org.jowidgets.api.widgets.descriptor.setup.ICheckBoxSetupCommon;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
-import org.jowidgets.spi.widgets.IToggleButtonWidgetSpi;
 
 public class CheckBoxWidget extends ToggleButtonWidget {
 
-	public CheckBoxWidget(final SwingImageRegistry imageRegistry, final ICheckBoxSetupCommon<IToggleButtonWidgetSpi> descriptor) {
-		super(imageRegistry, new JCheckBox(), descriptor);
+	public CheckBoxWidget(final SwingImageRegistry imageRegistry, final ICheckBoxSetupCommon setup) {
+		super(imageRegistry, new JCheckBox(), setup);
 	}
 
 }

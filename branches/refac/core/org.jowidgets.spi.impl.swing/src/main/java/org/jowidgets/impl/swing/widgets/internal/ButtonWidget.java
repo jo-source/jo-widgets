@@ -45,17 +45,17 @@ public class ButtonWidget extends AbstractSwingActionWidget implements IButtonWi
 
 	private final SwingImageRegistry imageRegistry;
 
-	public ButtonWidget(final SwingImageRegistry imageRegistry, final IButtonSetupSpi<?> descriptor) {
+	public ButtonWidget(final SwingImageRegistry imageRegistry, final IButtonSetupSpi setup) {
 		super(new JButton());
 		this.imageRegistry = imageRegistry;
 
-		setText(descriptor.getText());
-		setToolTipText(descriptor.getToolTipText());
-		setIcon(descriptor.getIcon());
+		setText(setup.getText());
+		setToolTipText(setup.getToolTipText());
+		setIcon(setup.getIcon());
 
-		setMarkup(descriptor.getMarkup());
+		setMarkup(setup.getMarkup());
 
-		getUiReference().setHorizontalAlignment(AlignmentConvert.convert(descriptor.getAlignment()));
+		getUiReference().setHorizontalAlignment(AlignmentConvert.convert(setup.getAlignment()));
 
 		getUiReference().addActionListener(new ActionListener() {
 
@@ -66,7 +66,7 @@ public class ButtonWidget extends AbstractSwingActionWidget implements IButtonWi
 
 		});
 
-		ColorSettingsInvoker.setColors(descriptor, this);
+		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

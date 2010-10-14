@@ -47,9 +47,9 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.controler.IActionListener;
 import org.jowidgets.api.widgets.controler.IInputListener;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
+import org.jowidgets.api.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.IInputDialogSetup;
 import org.jowidgets.api.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.api.widgets.setup.IWidgetSetupCommon;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
 public class InputDialogWidget<INPUT_TYPE> implements IInputDialogWidget<INPUT_TYPE> {
@@ -60,7 +60,7 @@ public class InputDialogWidget<INPUT_TYPE> implements IInputDialogWidget<INPUT_T
 	private INPUT_TYPE value;
 	private boolean okPressed;
 
-	public InputDialogWidget(final IDialogWidget dialogWidget, final IInputDialogSetup<?, INPUT_TYPE> descriptor) {
+	public InputDialogWidget(final IDialogWidget dialogWidget, final IInputDialogSetup<INPUT_TYPE> setup) {
 		super();
 		this.okPressed = false;
 		this.dialogWidget = dialogWidget;
@@ -71,7 +71,7 @@ public class InputDialogWidget<INPUT_TYPE> implements IInputDialogWidget<INPUT_T
 
 		// composite widget
 		final ICompositeWidget compositeWidget = dialogWidget.add(bpF.composite(), "growx, growy, h 0::,w 0::, wrap");
-		this.inputCompositeWidget = new InputCompositeWidget<INPUT_TYPE>(compositeWidget, descriptor);
+		this.inputCompositeWidget = new InputCompositeWidget<INPUT_TYPE>(compositeWidget, setup);
 
 		// buttons
 		final ICompositeWidget buttonBar = dialogWidget.add(bpF.composite(), "align right");
@@ -80,17 +80,17 @@ public class InputDialogWidget<INPUT_TYPE> implements IInputDialogWidget<INPUT_T
 		final String buttonCellConstraints = "w 100::, sg bg";
 
 		String missingInputText = null;
-		if (descriptor.getValidationLabel() != null) {
-			missingInputText = descriptor.getValidationLabel().getMissingInputText();
+		if (setup.getValidationLabel() != null) {
+			missingInputText = setup.getValidationLabel().getMissingInputText();
 		}
 		final ValidationButton validationButton = new ValidationButton(
-			descriptor.getOkButton(),
+			setup.getOkButton(),
 			missingInputText,
 			buttonBar,
 			buttonCellConstraints);
 
 		final IButtonWidgetCommon okButton = validationButton.getButtonWidget();
-		final IButtonWidgetCommon cancelButton = buttonBar.add(descriptor.getCancelButton(), buttonCellConstraints);
+		final IButtonWidgetCommon cancelButton = buttonBar.add(setup.getCancelButton(), buttonCellConstraints);
 
 		okButton.addActionListener(new IActionListener() {
 
@@ -156,7 +156,7 @@ public class InputDialogWidget<INPUT_TYPE> implements IInputDialogWidget<INPUT_T
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IWindowWidgetCommon, DESCRIPTOR_TYPE extends IWidgetSetupCommon<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
+	public <WIDGET_TYPE extends IWindowWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
 		final DESCRIPTOR_TYPE descriptor) {
 		return dialogWidget.createChildWindow(descriptor);
 	}
@@ -266,7 +266,7 @@ public class InputDialogWidget<INPUT_TYPE> implements IInputDialogWidget<INPUT_T
 			this.buttonWidget = parentContainer.add(buttonDescriptor, cellConstraints);
 			this.missingInputText = missingInputText;
 
-			this.buttonDescriptor = new BluePrintFactory().button().setDescriptor(buttonDescriptor);
+			this.buttonDescriptor = new BluePrintFactory().button().setSetup(buttonDescriptor);
 
 			inputCompositeWidget.addInputListener(new IInputListener() {
 

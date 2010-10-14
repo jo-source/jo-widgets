@@ -27,10 +27,9 @@
  */
 package org.jowidgets.api.widgets.blueprint;
 
-import org.jowidgets.api.widgets.IChildWidget;
 import org.jowidgets.api.widgets.blueprint.builder.ISeparatorSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.ISeparatorDescriptor;
 
-public interface ISeparatorBluePrint extends ISeparatorSetupBuilder<ISeparatorBluePrint, IChildWidget>, ISeparatorDescriptor {
+public interface ISeparatorBluePrint extends ISeparatorSetupBuilder<ISeparatorBluePrint>, ISeparatorDescriptor {
 
 }

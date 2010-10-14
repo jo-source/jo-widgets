@@ -31,11 +31,11 @@ import org.jowidgets.api.validation.OkTextInputValidator;
 import org.jowidgets.api.widgets.blueprint.builder.ITextFieldSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
-public class TextFieldDefaults implements IDefaultInitializer<ITextFieldSetupBuilder<?, ?>> {
+public class TextFieldDefaults implements IDefaultInitializer<ITextFieldSetupBuilder<?>> {
 
 	@Override
-	public void initialize(final ITextFieldSetupBuilder<?, ?> bluePrint) {
-		bluePrint.setTextInputValidator(new OkTextInputValidator());
+	public void initialize(final ITextFieldSetupBuilder<?> builder) {
+		builder.setTextInputValidator(new OkTextInputValidator());
 	}
 
 }

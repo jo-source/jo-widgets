@@ -27,11 +27,7 @@
  */
 package org.jowidgets.api.widgets.descriptor.setup;
 
-import org.jowidgets.api.widgets.IToggleButtonWidget;
-import org.jowidgets.api.widgets.setup.IToggleButtonSetupCommon;
 
-public interface IToggleButtonSetup<WIDGET_TYPE extends IToggleButtonWidget> extends
-		IToggleButtonSetupCommon<WIDGET_TYPE>,
-		IInputWidgetSetup<WIDGET_TYPE, Boolean> {
+public interface IToggleButtonSetup extends IToggleButtonSetupCommon, IInputWidgetSetup<Boolean> {
 
 }

@@ -48,7 +48,7 @@ public class LabelWidget implements ILabelWidget {
 	private final ITextLabelWidgetCommon textLabelWidget;
 	private final ICompositeWidget compositeWidget;
 
-	public LabelWidget(final ICompositeWidget compositeWidget, final ILabelSetup<ILabelWidget> descriptor) {
+	public LabelWidget(final ICompositeWidget compositeWidget, final ILabelSetup setup) {
 
 		super();
 
@@ -57,13 +57,13 @@ public class LabelWidget implements ILabelWidget {
 
 		final BluePrintFactory bpF = new BluePrintFactory();
 
-		final IIconDescriptor iconDescriptor = bpF.icon(descriptor.getIcon());
+		final IIconDescriptor iconDescriptor = bpF.icon(setup.getIcon());
 		this.iconWidget = compositeWidget.add(iconDescriptor, "w 0::");
 
-		final ITextLabelDescriptor textLabelDescriptor = bpF.textLabel().setDescriptor(descriptor);
+		final ITextLabelDescriptor textLabelDescriptor = bpF.textLabel().setSetup(setup);
 		this.textLabelWidget = compositeWidget.add(textLabelDescriptor, "");
 
-		ColorSettingsInvoker.setColors(descriptor, this);
+		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

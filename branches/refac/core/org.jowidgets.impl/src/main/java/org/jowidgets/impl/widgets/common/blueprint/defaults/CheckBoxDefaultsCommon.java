@@ -30,10 +30,10 @@ package org.jowidgets.impl.widgets.common.blueprint.defaults;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.api.widgets.builder.ICheckBoxSetupBuilderCommon;
 
-public class CheckBoxDefaultsCommon implements IDefaultInitializer<ICheckBoxSetupBuilderCommon<?, ?>> {
+public class CheckBoxDefaultsCommon implements IDefaultInitializer<ICheckBoxSetupBuilderCommon<?>> {
 
 	@Override
-	public void initialize(final ICheckBoxSetupBuilderCommon<?, ?> builder) {
+	public void initialize(final ICheckBoxSetupBuilderCommon<?> builder) {
 		builder.setInitialState(false);
 	}
 

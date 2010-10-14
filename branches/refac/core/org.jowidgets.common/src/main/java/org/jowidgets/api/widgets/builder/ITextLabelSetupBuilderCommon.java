@@ -29,11 +29,10 @@ package org.jowidgets.api.widgets.builder;
 
 import org.jowidgets.api.look.AlignmentHorizontal;
 import org.jowidgets.api.look.Markup;
-import org.jowidgets.api.widgets.ITextLabelWidgetCommon;
 import org.jowidgets.api.widgets.builder.convenience.ITextLabelSetupConvenienceCommon;
 
-public interface ITextLabelSetupBuilderCommon<INSTANCE_TYPE extends ITextLabelSetupBuilderCommon<?, ?>, WIDGET_TYPE extends ITextLabelWidgetCommon> extends
-		IWidgetSetupBuilderCommon<INSTANCE_TYPE, WIDGET_TYPE>,
+public interface ITextLabelSetupBuilderCommon<INSTANCE_TYPE extends ITextLabelSetupBuilderCommon<?>> extends
+		IWidgetSetupBuilderCommon<INSTANCE_TYPE>,
 		ITextLabelSetupConvenienceCommon<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setText(String text);

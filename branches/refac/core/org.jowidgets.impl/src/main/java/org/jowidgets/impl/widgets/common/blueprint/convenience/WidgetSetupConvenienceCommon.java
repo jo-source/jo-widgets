@@ -32,11 +32,11 @@ import org.jowidgets.api.widgets.builder.IWidgetSetupBuilderCommon;
 import org.jowidgets.api.widgets.builder.convenience.IWidgetSetupConvenienceCommon;
 import org.jowidgets.impl.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 
-public class WidgetSetupConvenienceCommon extends AbstractSetupBuilderConvenience<IWidgetSetupBuilderCommon<?, ?>> implements
-		IWidgetSetupConvenienceCommon<IWidgetSetupBuilderCommon<?, ?>> {
+public class WidgetSetupConvenienceCommon extends AbstractSetupBuilderConvenience<IWidgetSetupBuilderCommon<?>> implements
+		IWidgetSetupConvenienceCommon<IWidgetSetupBuilderCommon<?>> {
 
 	@Override
-	public IWidgetSetupBuilderCommon<?, ?> setColor(final IColorConstant colorConstant) {
+	public IWidgetSetupBuilderCommon<?> setColor(final IColorConstant colorConstant) {
 		return getBuilder().setForegroundColor(colorConstant);
 	}
 

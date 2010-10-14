@@ -42,15 +42,15 @@ public class CompositeWidget extends SwtContainerWidget {
 		final IGenericWidgetFactory factory,
 		final IColorCache colorCache,
 		final IWidget parent,
-		final ICompositeSetupSpi<?> settings) {
+		final ICompositeSetupSpi setup) {
 
-		super(factory, colorCache, createComposite(parent, settings));
+		super(factory, colorCache, createComposite(parent, setup));
 
-		setLayout(settings.getLayout());
-		ColorSettingsInvoker.setColors(settings, this);
+		setLayout(setup.getLayout());
+		ColorSettingsInvoker.setColors(setup, this);
 	}
 
-	private static Composite createComposite(final IWidget parent, final ICompositeSetupSpi<?> descriptor) {
-		return BorderToComposite.convert((Composite) parent.getUiReference(), descriptor.getBorder());
+	private static Composite createComposite(final IWidget parent, final ICompositeSetupSpi setup) {
+		return BorderToComposite.convert((Composite) parent.getUiReference(), setup.getBorder());
 	}
 }

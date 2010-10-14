@@ -27,10 +27,9 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
-import org.jowidgets.api.widgets.ILabelWidget;
 
-public interface ILabelSetupBuilder<INSTANCE_TYPE extends ILabelSetupBuilder<?, ?>, WIDGET_TYPE extends ILabelWidget> extends
-		ITextLabelSetupBuilder<INSTANCE_TYPE, WIDGET_TYPE>,
-		IIconSetupBuilder<INSTANCE_TYPE, WIDGET_TYPE> {
+public interface ILabelSetupBuilder<INSTANCE_TYPE extends ILabelSetupBuilder<?>> extends
+		ITextLabelSetupBuilder<INSTANCE_TYPE>,
+		IIconSetupBuilder<INSTANCE_TYPE> {
 
 }

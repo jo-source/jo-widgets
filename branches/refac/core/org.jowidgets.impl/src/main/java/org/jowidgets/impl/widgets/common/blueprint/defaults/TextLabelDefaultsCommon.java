@@ -32,10 +32,10 @@ import org.jowidgets.api.look.Markup;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.api.widgets.builder.ITextLabelSetupBuilderCommon;
 
-public class TextLabelDefaultsCommon implements IDefaultInitializer<ITextLabelSetupBuilderCommon<?, ?>> {
+public class TextLabelDefaultsCommon implements IDefaultInitializer<ITextLabelSetupBuilderCommon<?>> {
 
 	@Override
-	public void initialize(final ITextLabelSetupBuilderCommon<?, ?> builder) {
+	public void initialize(final ITextLabelSetupBuilderCommon<?> builder) {
 		builder.setAlignment(AlignmentHorizontal.LEFT);
 		builder.setMarkup(Markup.DEFAULT);
 	}

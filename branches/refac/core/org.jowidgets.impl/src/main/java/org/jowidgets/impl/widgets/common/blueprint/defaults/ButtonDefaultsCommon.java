@@ -32,10 +32,10 @@ import org.jowidgets.api.look.Markup;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.api.widgets.builder.IButtonSetupBuilderCommon;
 
-public class ButtonDefaultsCommon implements IDefaultInitializer<IButtonSetupBuilderCommon<?, ?>> {
+public class ButtonDefaultsCommon implements IDefaultInitializer<IButtonSetupBuilderCommon<?>> {
 
 	@Override
-	public void initialize(final IButtonSetupBuilderCommon<?, ?> builder) {
+	public void initialize(final IButtonSetupBuilderCommon<?> builder) {
 		builder.setAlignment(AlignmentHorizontal.CENTER);
 		builder.setMarkup(Markup.DEFAULT);
 	}

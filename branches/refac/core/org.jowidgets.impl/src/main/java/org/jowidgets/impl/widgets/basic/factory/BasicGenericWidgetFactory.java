@@ -107,7 +107,7 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 		register(IFrameDescriptor.class, new IWidgetFactory<IFrameWidget, IFrameDescriptor>() {
 			@Override
 			public IFrameWidget create(final IWidget parent, final IFrameDescriptor descriptor) {
-				final IFrameBluePrintSpi bp = bpF.frame().setDescriptor(descriptor);
+				final IFrameBluePrintSpi bp = bpF.frame().setSetup(descriptor);
 				final IFrameWidgetSpi frameSpi = spiWidgetFactory.createFrameWidget(BasicGenericWidgetFactory.this, bp);
 				return new FrameWidget(frameSpi, descriptor);
 			}
@@ -116,7 +116,7 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 		register(IDialogDescriptor.class, new IWidgetFactory<IDialogWidget, IDialogDescriptor>() {
 			@Override
 			public IDialogWidget create(final IWidget parent, final IDialogDescriptor descriptor) {
-				final IDialogBluePrintSpi bp = bpF.dialog().setDescriptor(descriptor);
+				final IDialogBluePrintSpi bp = bpF.dialog().setSetup(descriptor);
 				final IFrameWidgetSpi frameSpi = spiWidgetFactory.createDialogWidget(BasicGenericWidgetFactory.this, parent, bp);
 				return new DialogWidget(parent, frameSpi, descriptor);
 			}
@@ -125,7 +125,7 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 		register(ICompositeDescriptor.class, new IWidgetFactory<ICompositeWidget, ICompositeDescriptor>() {
 			@Override
 			public ICompositeWidget create(final IWidget parent, final ICompositeDescriptor descriptor) {
-				final ICompositeBluePrintSpi bp = bpF.composite().setDescriptor(descriptor);
+				final ICompositeBluePrintSpi bp = bpF.composite().setSetup(descriptor);
 				final IContainerWidgetSpi containerSpi = spiWidgetFactory.createCompositeWidget(
 						BasicGenericWidgetFactory.this,
 						parent,
@@ -138,7 +138,7 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 		register(IScrollCompositeDescriptor.class, new IWidgetFactory<ICompositeWidget, IScrollCompositeDescriptor>() {
 			@Override
 			public IScrollCompositeWidget create(final IWidget parent, final IScrollCompositeDescriptor descriptor) {
-				final IScrollCompositeBluePrintSpi bp = bpF.scrollComposite().setDescriptor(descriptor);
+				final IScrollCompositeBluePrintSpi bp = bpF.scrollComposite().setSetup(descriptor);
 				final IScrollContainerWidgetSpi scrollContainerSpi = spiWidgetFactory.createScrollCompositeWidget(
 						BasicGenericWidgetFactory.this,
 						parent,
@@ -151,7 +151,7 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 		register(ITextFieldDescriptor.class, new IWidgetFactory<IInputWidget<String>, ITextFieldDescriptor>() {
 			@Override
 			public IInputWidget<String> create(final IWidget parent, final ITextFieldDescriptor descriptor) {
-				final ITextFieldBluePrintSpi bp = bpF.textField().setDescriptor(descriptor);
+				final ITextFieldBluePrintSpi bp = bpF.textField().setSetup(descriptor);
 				final IInputWidgetSpi<String> textFieldSpi = spiWidgetFactory.createTextFieldWidget(parent, bp);
 				final IInputWidget<String> result = new InputWidget(parent, textFieldSpi, descriptor);
 				result.addValidator(descriptor.getTextInputValidator());
@@ -162,7 +162,7 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 		register(IIconDescriptor.class, new IWidgetFactory<IIconWidget, IIconDescriptor>() {
 			@Override
 			public IIconWidget create(final IWidget parent, final IIconDescriptor descriptor) {
-				final IIconBluePrintSpi bp = bpF.icon().setDescriptor(descriptor);
+				final IIconBluePrintSpi bp = bpF.icon().setSetup(descriptor);
 				final IIconWidgetSpi iconSpi = spiWidgetFactory.createIconWidget(parent, bp);
 				return new IconWidget(parent, iconSpi);
 			}
@@ -171,7 +171,7 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 		register(ITextLabelDescriptor.class, new IWidgetFactory<ITextLabelWidget, ITextLabelDescriptor>() {
 			@Override
 			public ITextLabelWidget create(final IWidget parent, final ITextLabelDescriptor descriptor) {
-				final ITextLabelBluePrintSpi bp = bpF.textLabel().setDescriptor(descriptor);
+				final ITextLabelBluePrintSpi bp = bpF.textLabel().setSetup(descriptor);
 				final ITextLabelWidgetSpi textLabelSpi = spiWidgetFactory.createTextLabelWidget(parent, bp);
 				return new TextLabelWidget(parent, textLabelSpi);
 			}
@@ -180,7 +180,7 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 		register(IButtonDescriptor.class, new IWidgetFactory<IButtonWidget, IButtonDescriptor>() {
 			@Override
 			public IButtonWidget create(final IWidget parent, final IButtonDescriptor descriptor) {
-				final IButtonBluePrintSpi bp = bpF.button().setDescriptor(descriptor);
+				final IButtonBluePrintSpi bp = bpF.button().setSetup(descriptor);
 				final IButtonWidgetSpi buttonWidgetSpi = spiWidgetFactory.createButtonWidget(parent, bp);
 				return new ButtonWidget(parent, buttonWidgetSpi);
 			}
@@ -189,7 +189,7 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 		register(ISeparatorDescriptor.class, new IWidgetFactory<IChildWidget, ISeparatorDescriptor>() {
 			@Override
 			public IChildWidget create(final IWidget parent, final ISeparatorDescriptor descriptor) {
-				final ISeparatorBluePrintSpi bp = bpF.separator().setDescriptor(descriptor);
+				final ISeparatorBluePrintSpi bp = bpF.separator().setSetup(descriptor);
 				final IWidgetSpi widget = spiWidgetFactory.createSeparatorWidget(parent, bp);
 				return new ChildWidget(parent, widget);
 			}
@@ -198,7 +198,7 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 		register(IToggleButtonDescriptor.class, new IWidgetFactory<IToggleButtonWidget, IToggleButtonDescriptor>() {
 			@Override
 			public IToggleButtonWidget create(final IWidget parent, final IToggleButtonDescriptor descriptor) {
-				final IToggleButtonBluePrintSpi bp = bpF.toggleButton().setDescriptor(descriptor);
+				final IToggleButtonBluePrintSpi bp = bpF.toggleButton().setSetup(descriptor);
 				final IToggleButtonWidgetSpi widget = spiWidgetFactory.createToggleButtonWidget(parent, bp);
 				return new ToggleButtonWidget(parent, widget, descriptor);
 			}
@@ -207,7 +207,7 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 		register(ICheckBoxDescriptor.class, new IWidgetFactory<IToggleButtonWidget, ICheckBoxDescriptor>() {
 			@Override
 			public IToggleButtonWidget create(final IWidget parent, final ICheckBoxDescriptor descriptor) {
-				final ICheckBoxBluePrintSpi bp = bpF.checkBox().setDescriptor(descriptor);
+				final ICheckBoxBluePrintSpi bp = bpF.checkBox().setSetup(descriptor);
 				final IToggleButtonWidgetSpi widget = spiWidgetFactory.createCheckBoxWidget(parent, bp);
 				return new ToggleButtonWidget(parent, widget, descriptor);
 			}
@@ -216,7 +216,7 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 		register(IComboBoxSelectionDescriptor.class, new IWidgetFactory<IComboBoxWidget<?>, IComboBoxSelectionDescriptor<?>>() {
 			@Override
 			public IComboBoxWidget<?> create(final IWidget parent, final IComboBoxSelectionDescriptor descriptor) {
-				final IComboBoxSelectionBluePrintSpi bp = bpF.comboBoxSelection().setDescriptor(descriptor);
+				final IComboBoxSelectionBluePrintSpi bp = bpF.comboBoxSelection().setSetup(descriptor);
 				final IComboBoxWidgetSpi<?> widget = spiWidgetFactory.createComboBoxSelectionWidget(parent, bp);
 				return new ComboBoxWidget(parent, widget, descriptor);
 			}
@@ -225,7 +225,7 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 		register(IComboBoxDescriptor.class, new IWidgetFactory<IComboBoxWidget<?>, IComboBoxDescriptor<?>>() {
 			@Override
 			public IComboBoxWidget<?> create(final IWidget parent, final IComboBoxDescriptor descriptor) {
-				final IComboBoxBluePrintSpi bp = bpF.comboBox().setDescriptor(descriptor);
+				final IComboBoxBluePrintSpi bp = bpF.comboBox().setSetup(descriptor);
 				final IComboBoxWidgetSpi<?> widget = spiWidgetFactory.createComboBoxWidget(parent, bp);
 				return new ComboBoxWidget(parent, widget, descriptor);
 			}

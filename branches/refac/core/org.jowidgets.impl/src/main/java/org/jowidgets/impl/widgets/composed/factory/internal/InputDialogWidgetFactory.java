@@ -29,12 +29,12 @@ package org.jowidgets.impl.widgets.composed.factory.internal;
 
 import org.jowidgets.api.widgets.IDialogWidget;
 import org.jowidgets.api.widgets.IInputDialogWidget;
-import org.jowidgets.api.widgets.descriptor.setup.IInputDialogSetup;
+import org.jowidgets.api.widgets.descriptor.IInputDialogDescriptor;
 import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.widgets.composed.InputDialogWidget;
 
 public class InputDialogWidgetFactory<INPUT_TYPE> extends
-		AbstractDialogWidgetFactory<IInputDialogWidget<INPUT_TYPE>, IInputDialogSetup<IInputDialogWidget<INPUT_TYPE>, INPUT_TYPE>> {
+		AbstractDialogWidgetFactory<IInputDialogWidget<INPUT_TYPE>, IInputDialogDescriptor<INPUT_TYPE>> {
 
 	public InputDialogWidgetFactory(final IGenericWidgetFactory genericWidgetFactory) {
 		super(genericWidgetFactory);
@@ -43,7 +43,7 @@ public class InputDialogWidgetFactory<INPUT_TYPE> extends
 	@Override
 	protected IInputDialogWidget<INPUT_TYPE> createWidget(
 		final IDialogWidget dialogWidget,
-		final IInputDialogSetup<IInputDialogWidget<INPUT_TYPE>, INPUT_TYPE> descriptor) {
+		final IInputDialogDescriptor<INPUT_TYPE> descriptor) {
 		return new InputDialogWidget<INPUT_TYPE>(dialogWidget, descriptor);
 	}
 

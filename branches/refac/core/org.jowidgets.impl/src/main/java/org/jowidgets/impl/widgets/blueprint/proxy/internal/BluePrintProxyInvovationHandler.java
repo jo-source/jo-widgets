@@ -33,45 +33,48 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenience;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
 import org.jowidgets.api.widgets.blueprint.convenience.anotations.ConvenienceMethods;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.api.widgets.blueprint.defaults.anotations.DefaultsInitializer;
-import org.jowidgets.api.widgets.builder.ISetupBuilder;
-import org.jowidgets.spi.widgets.descriptor.setup.IWidgetSetupSpi;
+import org.jowidgets.api.widgets.builder.IWidgetSetupBuilder;
+import org.jowidgets.api.widgets.descriptor.IWidgetDescriptor;
 
 /**
  * Achtung EXPERIMENTELL, soll so nicht bleiben ;-)
  */
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class BluePrintProxyInvovationHandler implements InvocationHandler {
 
 	private static final long serialVersionUID = -983268051877912134L;
 
 	private final Map<String, Object> fields;
-	private final Map<MethodKey, ISetupBuilderConvenience<ISetupBuilder<?>>> convenienceMethodsMap;
+	private final Map<MethodKey, ISetupBuilderConvenience<IWidgetSetupBuilder<?>>> convenienceMethodsMap;
 
-	private Class<? extends ISetupBuilder<ISetupBuilder<?>>> bluePrintType;
-	private Class<? extends IWidgetSetupSpi<? extends IWidget>> widgetType;
+	private Class<? extends IWidgetDescriptor> bluePrintType;
+	private Class<? extends IWidgetDescriptor> widgetDescrType;
 
 	public BluePrintProxyInvovationHandler() {
 		this.fields = new HashMap<String, Object>();
-		this.convenienceMethodsMap = new HashMap<MethodKey, ISetupBuilderConvenience<ISetupBuilder<?>>>();
+		this.convenienceMethodsMap = new HashMap<MethodKey, ISetupBuilderConvenience<IWidgetSetupBuilder<?>>>();
 	}
 
 	public void initialize(
-		final ISetupBuilder<?> proxy,
-		final Class<? extends ISetupBuilder<ISetupBuilder<?>>> bluePrintType,
-		final Class<? extends IWidgetSetupSpi<? extends IWidget>> widgetType,
+		final IWidgetSetupBuilder<?> proxy,
+		final Class<? extends IWidgetDescriptor> bluePrintType,
+		final Class<? extends IWidgetDescriptor> widgetDescrType,
 		final ISetupBuilderConvenienceRegistry convenienceRegistry,
 		final IDefaultsInitializerRegistry defaultsRegistry) {
 
-		this.widgetType = widgetType;
+		this.widgetDescrType = widgetDescrType;
 		this.bluePrintType = bluePrintType;
-		initialize(proxy, bluePrintType, convenienceRegistry, defaultsRegistry);
-
+		initialize(
+				proxy,
+				(Class<? extends IWidgetSetupBuilder<IWidgetSetupBuilder<?>>>) bluePrintType,
+				convenienceRegistry,
+				defaultsRegistry);
 	}
 
 	@Override
@@ -80,7 +83,7 @@ public class BluePrintProxyInvovationHandler implements InvocationHandler {
 		if (method.getName().equals("toString")) {
 			final StringBuilder stringBuilder = new StringBuilder();
 			stringBuilder.append("BluePrintType: " + bluePrintType.getName() + "\n");
-			stringBuilder.append("WidgetType: " + widgetType.getName() + "\n");
+			stringBuilder.append("WidgetType: " + widgetDescrType.getName() + "\n");
 			stringBuilder.append("Fields: \n");
 			for (final Entry<String, Object> entry : fields.entrySet()) {
 				stringBuilder.append("Property: " + entry.getKey() + " \nValue: " + entry.getValue() + "\n");
@@ -88,9 +91,9 @@ public class BluePrintProxyInvovationHandler implements InvocationHandler {
 			return stringBuilder.toString();
 		}
 		else if (method.getName().equals("getDescriptorInterface")) {
-			return widgetType;
+			return widgetDescrType;
 		}
-		else if (method.getName().equals("setDescriptor")) {
+		else if (method.getName().equals("setSetup")) {
 			final Object argument = args[0];
 
 			if (argument != null) {
@@ -124,8 +127,8 @@ public class BluePrintProxyInvovationHandler implements InvocationHandler {
 
 		}
 		else if (convenienceMethodsMap.get(methodKey) != null) {
-			final ISetupBuilderConvenience<ISetupBuilder<?>> impl = convenienceMethodsMap.get(methodKey);
-			impl.setBuilder((ISetupBuilder<?>) proxy);
+			final ISetupBuilderConvenience<IWidgetSetupBuilder<?>> impl = convenienceMethodsMap.get(methodKey);
+			impl.setBuilder((IWidgetSetupBuilder<?>) proxy);
 			method.invoke(impl, args);
 			return proxy;
 		}
@@ -147,32 +150,35 @@ public class BluePrintProxyInvovationHandler implements InvocationHandler {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	private void initialize(
-		final ISetupBuilder<?> proxy,
-		final Class<? extends ISetupBuilder<?>> bluePrintType,
+		final IWidgetSetupBuilder<?> proxy,
+		final Class<? extends IWidgetSetupBuilder<IWidgetSetupBuilder<?>>> bluePrintType,
 		final ISetupBuilderConvenienceRegistry convenienceRegistry,
 		final IDefaultsInitializerRegistry defaultsRegistry) {
 
 		for (final Class<?> superInterface : bluePrintType.getInterfaces()) {
-			initialize(proxy, (Class<? extends ISetupBuilder<?>>) superInterface, convenienceRegistry, defaultsRegistry);
+			initialize(
+					proxy,
+					(Class<? extends IWidgetSetupBuilder<IWidgetSetupBuilder<?>>>) superInterface,
+					convenienceRegistry,
+					defaultsRegistry);
 		}
-		final IDefaultInitializer<ISetupBuilder<?>> defaultInitializer = getDefaultInitializer(bluePrintType);
+		final IDefaultInitializer<IWidgetSetupBuilder<?>> defaultInitializer = getDefaultInitializer(bluePrintType);
 		if (defaultInitializer != null) {
 			defaultInitializer.initialize(proxy);
 		}
-		for (final IDefaultInitializer<ISetupBuilder<?>> registeredInitializer : defaultsRegistry.getRegistered(bluePrintType)) {
+		for (final IDefaultInitializer<IWidgetSetupBuilder<?>> registeredInitializer : defaultsRegistry.getRegistered(bluePrintType)) {
 			registeredInitializer.initialize(proxy);
 		}
 
-		final ISetupBuilderConvenience<ISetupBuilder<?>> convenienceMethods = getConvenienceMethods(bluePrintType);
+		final ISetupBuilderConvenience<IWidgetSetupBuilder<?>> convenienceMethods = getConvenienceMethods(bluePrintType);
 		if (convenienceMethods != null) {
 			for (final Method method : convenienceMethods.getClass().getDeclaredMethods()) {
 				final MethodKey methodKey = new MethodKey(method);
 				convenienceMethodsMap.put(methodKey, convenienceMethods);
 			}
 		}
-		for (final ISetupBuilderConvenience<ISetupBuilder<?>> registeredMethods : convenienceRegistry.getRegistered(bluePrintType)) {
+		for (final ISetupBuilderConvenience<IWidgetSetupBuilder<?>> registeredMethods : convenienceRegistry.getRegistered(bluePrintType)) {
 			for (final Method method : registeredMethods.getClass().getDeclaredMethods()) {
 				final MethodKey methodKey = new MethodKey(method);
 				convenienceMethodsMap.put(methodKey, registeredMethods);
@@ -181,14 +187,13 @@ public class BluePrintProxyInvovationHandler implements InvocationHandler {
 
 	}
 
-	@SuppressWarnings("unchecked")
-	private ISetupBuilderConvenience<ISetupBuilder<?>> getConvenienceMethods(final Class<?> clazz) {
+	private ISetupBuilderConvenience<IWidgetSetupBuilder<?>> getConvenienceMethods(final Class<?> clazz) {
 		final ConvenienceMethods convenienceMethods = clazz.getAnnotation(ConvenienceMethods.class);
 		if (convenienceMethods != null) {
 			final Class<? extends ISetupBuilderConvenience<?>> convenienceMethodsClass = convenienceMethods.value();
 			if (convenienceMethodsClass != null) {
 				try {
-					return (ISetupBuilderConvenience<ISetupBuilder<?>>) convenienceMethodsClass.newInstance();
+					return (ISetupBuilderConvenience<IWidgetSetupBuilder<?>>) convenienceMethodsClass.newInstance();
 				}
 				catch (final Exception e) {
 					throw new RuntimeException("Exception creating instance of '" + convenienceMethodsClass.getName() + "'");
@@ -198,14 +203,13 @@ public class BluePrintProxyInvovationHandler implements InvocationHandler {
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
-	private IDefaultInitializer<ISetupBuilder<?>> getDefaultInitializer(final Class<?> clazz) {
+	private IDefaultInitializer<IWidgetSetupBuilder<?>> getDefaultInitializer(final Class<?> clazz) {
 		final DefaultsInitializer defaultsInitializer = clazz.getAnnotation(DefaultsInitializer.class);
 		if (defaultsInitializer != null) {
 			final Class<? extends IDefaultInitializer<?>> initializerClass = defaultsInitializer.value();
 			if (initializerClass != null) {
 				try {
-					return (IDefaultInitializer<ISetupBuilder<?>>) initializerClass.newInstance();
+					return (IDefaultInitializer<IWidgetSetupBuilder<?>>) initializerClass.newInstance();
 				}
 				catch (final Exception e) {
 					throw new RuntimeException("Exception creating instance of '" + initializerClass.getName() + "'");

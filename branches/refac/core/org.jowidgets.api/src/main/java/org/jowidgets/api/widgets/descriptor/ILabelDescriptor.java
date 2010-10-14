@@ -30,6 +30,6 @@ package org.jowidgets.api.widgets.descriptor;
 import org.jowidgets.api.widgets.ILabelWidget;
 import org.jowidgets.api.widgets.descriptor.setup.ILabelSetup;
 
-public interface ILabelDescriptor extends ILabelSetup<ILabelWidget> {
+public interface ILabelDescriptor extends ILabelSetup, IWidgetDescriptor<ILabelWidget> {
 
 }

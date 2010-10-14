@@ -36,14 +36,17 @@ import org.jowidgets.api.util.ColorSettingsInvoker;
 import org.jowidgets.api.veto.IInputVetoChecker;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.impl.swt.color.IColorCache;
-import org.jowidgets.spi.widgets.descriptor.ITextFieldDescriptorSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.IVetoableInputWidgetSetupSpi;
 
 public class TextFieldWidget extends AbstractSwtTextInputWidget<String> {
 
-	public TextFieldWidget(final IColorCache colorCache, final IWidget parent, final ITextFieldDescriptorSpi descriptor) {
+	public TextFieldWidget(
+		final IColorCache colorCache,
+		final IWidget parent,
+		final IVetoableInputWidgetSetupSpi<String> setup) {
 		super(colorCache, createText(parent));
 
-		final IInputVetoChecker<String> vetoChecker = descriptor.getInputVetoChecker();
+		final IInputVetoChecker<String> vetoChecker = setup.getInputVetoChecker();
 
 		this.getUiReference().addVerifyListener(new VerifyListener() {
 
@@ -61,7 +64,7 @@ public class TextFieldWidget extends AbstractSwtTextInputWidget<String> {
 		});
 
 		registerTextControl(getUiReference());
-		ColorSettingsInvoker.setColors(descriptor, this);
+		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

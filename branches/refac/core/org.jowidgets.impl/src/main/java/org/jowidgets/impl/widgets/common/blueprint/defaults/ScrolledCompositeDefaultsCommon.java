@@ -30,10 +30,10 @@ package org.jowidgets.impl.widgets.common.blueprint.defaults;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.api.widgets.builder.IScrollCompositeSetupBuilderCommon;
 
-public class ScrolledCompositeDefaultsCommon implements IDefaultInitializer<IScrollCompositeSetupBuilderCommon<?, ?>> {
+public class ScrolledCompositeDefaultsCommon implements IDefaultInitializer<IScrollCompositeSetupBuilderCommon<?>> {
 
 	@Override
-	public void initialize(final IScrollCompositeSetupBuilderCommon<?, ?> builder) {
+	public void initialize(final IScrollCompositeSetupBuilderCommon<?> builder) {
 		builder.setHorizontalBar(true);
 		builder.setVerticalBar(true);
 		builder.setAllwaysShowBars(false);

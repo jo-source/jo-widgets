@@ -31,10 +31,10 @@ import org.jowidgets.api.look.Orientation;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.api.widgets.builder.ISeparatorSetupBuilderCommon;
 
-public class SeparatorDefaultsCommon implements IDefaultInitializer<ISeparatorSetupBuilderCommon<?, ?>> {
+public class SeparatorDefaultsCommon implements IDefaultInitializer<ISeparatorSetupBuilderCommon<?>> {
 
 	@Override
-	public void initialize(final ISeparatorSetupBuilderCommon<?, ?> builder) {
+	public void initialize(final ISeparatorSetupBuilderCommon<?> builder) {
 		builder.setOrientation(Orientation.HORIZONTAL);
 	}
 

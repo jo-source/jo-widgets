@@ -30,6 +30,6 @@ package org.jowidgets.api.widgets.descriptor;
 import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.descriptor.setup.ITextFieldSetup;
 
-public interface ITextFieldDescriptor extends ITextFieldSetup<IInputWidget<String>> {
+public interface ITextFieldDescriptor extends ITextFieldSetup, IWidgetDescriptor<IInputWidget<String>> {
 
 }

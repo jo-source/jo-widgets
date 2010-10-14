@@ -27,11 +27,10 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
-import org.jowidgets.api.widgets.IToggleButtonWidget;
 import org.jowidgets.api.widgets.builder.ICheckBoxSetupBuilderCommon;
 
-public interface ICheckBoxSetupBuilder<INSTANCE_TYPE extends ICheckBoxSetupBuilder<?, ?>, WIDGET_TYPE extends IToggleButtonWidget> extends
-		ICheckBoxSetupBuilderCommon<INSTANCE_TYPE, WIDGET_TYPE>,
-		IInputWidgetSetupBuilder<INSTANCE_TYPE, WIDGET_TYPE, Boolean> {
+public interface ICheckBoxSetupBuilder<INSTANCE_TYPE extends ICheckBoxSetupBuilder<?>> extends
+		ICheckBoxSetupBuilderCommon<INSTANCE_TYPE>,
+		IInputWidgetSetupBuilder<INSTANCE_TYPE, Boolean> {
 
 }

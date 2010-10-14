@@ -30,27 +30,27 @@ package org.jowidgets.api.widgets.factory;
 import org.jowidgets.api.image.IImageRegistry;
 import org.jowidgets.api.widgets.IContainerWidgetCommon;
 import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.setup.IWidgetSetupCommon;
+import org.jowidgets.api.widgets.descriptor.IWidgetDescriptor;
 
 public interface IGenericWidgetFactory {
 
 	IImageRegistry getImageRegistry();
 
-	<WIDGET_TYPE extends IContainerWidgetCommon, DESCRIPTOR_TYPE extends IWidgetSetupCommon<? extends WIDGET_TYPE>> WIDGET_TYPE create(
+	<WIDGET_TYPE extends IContainerWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE create(
 		DESCRIPTOR_TYPE descriptor);
 
-	<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetSetupCommon<? extends WIDGET_TYPE>> WIDGET_TYPE create(
+	<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE create(
 		IWidget parent,
 		DESCRIPTOR_TYPE descriptor);
 
-	<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetSetupCommon<? extends WIDGET_TYPE>> IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> getFactory(
+	<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> getFactory(
 		final Class<? extends DESCRIPTOR_TYPE> descriptorClass);
 
-	<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetSetupCommon<? extends WIDGET_TYPE>> void register(
+	<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> void register(
 		final Class<? extends DESCRIPTOR_TYPE> descriptorClass,
 		final IWidgetFactory<WIDGET_TYPE, ? extends DESCRIPTOR_TYPE> widgetFactory);
 
-	<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetSetupCommon<? extends WIDGET_TYPE>> void unRegister(
+	<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> void unRegister(
 		final Class<? extends DESCRIPTOR_TYPE> descriptorClass);
 
 }

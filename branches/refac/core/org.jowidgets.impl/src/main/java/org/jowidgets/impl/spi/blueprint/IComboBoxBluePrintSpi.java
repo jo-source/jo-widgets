@@ -28,9 +28,8 @@
 package org.jowidgets.impl.spi.blueprint;
 
 import org.jowidgets.impl.spi.blueprint.builder.IComboBoxSetupBuilderSpi;
-import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.IComboBoxDescriptorSpi;
+import org.jowidgets.impl.spi.descriptor.IComboBoxDescriptorSpi;
 
 public interface IComboBoxBluePrintSpi<INPUT_TYPE> extends
-		IComboBoxSetupBuilderSpi<IComboBoxBluePrintSpi<INPUT_TYPE>, IComboBoxWidgetSpi<INPUT_TYPE>, INPUT_TYPE>,
+		IComboBoxSetupBuilderSpi<IComboBoxBluePrintSpi<INPUT_TYPE>, INPUT_TYPE>,
 		IComboBoxDescriptorSpi<INPUT_TYPE> {}

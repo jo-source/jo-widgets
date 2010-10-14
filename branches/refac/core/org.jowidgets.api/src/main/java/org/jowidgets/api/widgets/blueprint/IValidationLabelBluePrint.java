@@ -28,12 +28,11 @@
 
 package org.jowidgets.api.widgets.blueprint;
 
-import org.jowidgets.api.widgets.IValidationLabelWidget;
 import org.jowidgets.api.widgets.blueprint.builder.IValidationLabelSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
 
 public interface IValidationLabelBluePrint extends
-		IValidationLabelSetupBuilder<IValidationLabelBluePrint, IValidationLabelWidget>,
+		IValidationLabelSetupBuilder<IValidationLabelBluePrint>,
 		IValidationLabelDescriptor {
 
 }

@@ -27,10 +27,9 @@
  */
 package org.jowidgets.api.widgets.blueprint;
 
-import org.jowidgets.api.widgets.IDialogWidget;
 import org.jowidgets.api.widgets.blueprint.builder.IDialogSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.IDialogDescriptor;
 
-public interface IDialogBluePrint extends IDialogSetupBuilder<IDialogBluePrint, IDialogWidget>, IDialogDescriptor {
+public interface IDialogBluePrint extends IDialogSetupBuilder<IDialogBluePrint>, IDialogDescriptor {
 
 }

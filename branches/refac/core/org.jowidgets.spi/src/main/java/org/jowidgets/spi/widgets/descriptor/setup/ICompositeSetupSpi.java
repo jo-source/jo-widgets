@@ -27,9 +27,8 @@
  */
 package org.jowidgets.spi.widgets.descriptor.setup;
 
-import org.jowidgets.api.widgets.IContainerWidgetCommon;
-import org.jowidgets.api.widgets.setup.ICompositeSetupCommon;
+import org.jowidgets.api.widgets.descriptor.setup.ICompositeSetupCommon;
 
-public interface ICompositeSetupSpi<WIDGET_TYPE extends IContainerWidgetCommon> extends ICompositeSetupCommon<WIDGET_TYPE> {
+public interface ICompositeSetupSpi extends ICompositeSetupCommon {
 
 }

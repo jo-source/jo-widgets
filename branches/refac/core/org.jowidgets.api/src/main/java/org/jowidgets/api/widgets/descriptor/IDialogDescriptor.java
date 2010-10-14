@@ -30,6 +30,6 @@ package org.jowidgets.api.widgets.descriptor;
 import org.jowidgets.api.widgets.IDialogWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IDialogSetup;
 
-public interface IDialogDescriptor extends IDialogSetup<IDialogWidget> {
+public interface IDialogDescriptor extends IDialogSetup, IWidgetDescriptor<IDialogWidget> {
 
 }

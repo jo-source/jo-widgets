@@ -27,10 +27,9 @@
  */
 package org.jowidgets.impl.spi.blueprint.builder;
 
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.builder.ISeparatorSetupBuilderCommon;
 
-public interface ISeparatorSetupBuilderSpi<INSTANCE_TYPE extends ISeparatorSetupBuilderSpi<?, ?>, WIDGET_TYPE extends IWidget> extends
-		ISeparatorSetupBuilderCommon<INSTANCE_TYPE, WIDGET_TYPE> {
+public interface ISeparatorSetupBuilderSpi<INSTANCE_TYPE extends ISeparatorSetupBuilderSpi<?>> extends
+		ISeparatorSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

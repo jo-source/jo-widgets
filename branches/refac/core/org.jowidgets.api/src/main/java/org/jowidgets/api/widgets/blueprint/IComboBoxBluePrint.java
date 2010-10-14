@@ -27,12 +27,11 @@
  */
 package org.jowidgets.api.widgets.blueprint;
 
-import org.jowidgets.api.widgets.IComboBoxWidget;
 import org.jowidgets.api.widgets.blueprint.builder.IComboBoxSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.IComboBoxDescriptor;
 
 public interface IComboBoxBluePrint<INPUT_TYPE> extends
-		IComboBoxSetupBuilder<IComboBoxBluePrint<INPUT_TYPE>, IComboBoxWidget<INPUT_TYPE>, INPUT_TYPE>,
+		IComboBoxSetupBuilder<IComboBoxBluePrint<INPUT_TYPE>, INPUT_TYPE>,
 		IComboBoxDescriptor<INPUT_TYPE> {
 
 }

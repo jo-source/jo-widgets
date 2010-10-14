@@ -28,14 +28,14 @@
 package org.jowidgets.impl.swt.util;
 
 import org.eclipse.swt.SWT;
-import org.jowidgets.api.widgets.setup.IScrollCompositeSetupCommon;
+import org.jowidgets.api.widgets.descriptor.setup.IScrollCompositeSetupCommon;
 import org.jowidgets.util.Assert;
 
 public final class ScrollBarSettingsConvert {
 
 	private ScrollBarSettingsConvert() {};
 
-	public static int convert(final IScrollCompositeSetupCommon<?> setup) {
+	public static int convert(final IScrollCompositeSetupCommon setup) {
 		Assert.paramNotNull(setup, "setup");
 
 		int result = SWT.NONE;

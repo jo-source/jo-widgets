@@ -28,13 +28,12 @@
 package org.jowidgets.api.widgets.blueprint.builder;
 
 import org.jowidgets.api.look.Border;
-import org.jowidgets.api.widgets.IInputCompositeWidget;
 import org.jowidgets.api.widgets.blueprint.builder.convenience.IInputCompositeSetupConvenience;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
 
-public interface IInputCompositeSetupBuilder<INSTANCE_TYPE extends IInputCompositeSetupBuilder<?, ?, ?>, WIDGET_TYPE extends IInputCompositeWidget<INPUT_TYPE>, INPUT_TYPE> extends
-		IInputWidgetSetupBuilder<INSTANCE_TYPE, WIDGET_TYPE, INPUT_TYPE>,
+public interface IInputCompositeSetupBuilder<INSTANCE_TYPE extends IInputCompositeSetupBuilder<?, ?>, INPUT_TYPE> extends
+		IInputWidgetSetupBuilder<INSTANCE_TYPE, INPUT_TYPE>,
 		IInputCompositeSetupConvenience<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setContentCreator(final IInputContentCreator<INPUT_TYPE> contentCreator);

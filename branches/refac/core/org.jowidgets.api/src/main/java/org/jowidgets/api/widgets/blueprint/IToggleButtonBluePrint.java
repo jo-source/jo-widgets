@@ -27,12 +27,9 @@
  */
 package org.jowidgets.api.widgets.blueprint;
 
-import org.jowidgets.api.widgets.IToggleButtonWidget;
 import org.jowidgets.api.widgets.blueprint.builder.IToggleButtonSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.IToggleButtonDescriptor;
 
-public interface IToggleButtonBluePrint extends
-		IToggleButtonSetupBuilder<IToggleButtonBluePrint, IToggleButtonWidget>,
-		IToggleButtonDescriptor {
+public interface IToggleButtonBluePrint extends IToggleButtonSetupBuilder<IToggleButtonBluePrint>, IToggleButtonDescriptor {
 
 }

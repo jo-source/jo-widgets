@@ -31,7 +31,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.setup.ICheckBoxSetupCommon;
+import org.jowidgets.api.widgets.descriptor.setup.ICheckBoxSetupCommon;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.image.SwtImageRegistry;
 
@@ -41,13 +41,13 @@ public class CheckBoxWidget extends ToggleButtonWidget {
 		final IColorCache colorCache,
 		final SwtImageRegistry imageRegistry,
 		final IWidget parent,
-		final ICheckBoxSetupCommon<?> descriptor) {
+		final ICheckBoxSetupCommon setup) {
 		super(
 			colorCache,
 			imageRegistry,
 			parent,
 			new Button((Composite) parent.getUiReference(), SWT.NONE | SWT.CHECK),
-			descriptor);
+			setup);
 	}
 
 }

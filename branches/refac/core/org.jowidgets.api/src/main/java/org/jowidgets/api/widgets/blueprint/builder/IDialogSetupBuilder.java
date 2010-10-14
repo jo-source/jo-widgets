@@ -27,11 +27,10 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
-import org.jowidgets.api.widgets.IDialogWidget;
 import org.jowidgets.api.widgets.builder.IDialogSetupBuilderCommon;
 
-public interface IDialogSetupBuilder<INSTANCE_TYPE extends IDialogSetupBuilder<?, ?>, WIDGET_TYPE extends IDialogWidget> extends
-		IFrameSetupBuilder<INSTANCE_TYPE, WIDGET_TYPE>,
-		IDialogSetupBuilderCommon<INSTANCE_TYPE, WIDGET_TYPE> {
+public interface IDialogSetupBuilder<INSTANCE_TYPE extends IDialogSetupBuilder<?>> extends
+		IFrameSetupBuilder<INSTANCE_TYPE>,
+		IDialogSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

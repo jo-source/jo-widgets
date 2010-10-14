@@ -40,12 +40,12 @@ public class InputFieldWidget<VALUE_TYPE> extends AbstractInputWidget<VALUE_TYPE
 	private final IInputWidget<String> textFieldWidget;
 	private final IValidatedConverter<VALUE_TYPE> converter;
 
-	public InputFieldWidget(final IInputWidget<String> textFieldWidget, final IInputFieldSetup<?, VALUE_TYPE> descriptor) {
+	public InputFieldWidget(final IInputWidget<String> textFieldWidget, final IInputFieldSetup<VALUE_TYPE> setup) {
 
-		super(descriptor.isMandatory(), descriptor.getValidator());
+		super(setup.isMandatory(), setup.getValidator());
 
 		this.textFieldWidget = textFieldWidget;
-		this.converter = descriptor.getConverter();
+		this.converter = setup.getConverter();
 
 		registerSubInputWidget(textFieldWidget);
 
@@ -56,7 +56,7 @@ public class InputFieldWidget<VALUE_TYPE> extends AbstractInputWidget<VALUE_TYPE
 			}
 		});
 
-		ColorSettingsInvoker.setColors(descriptor, this);
+		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

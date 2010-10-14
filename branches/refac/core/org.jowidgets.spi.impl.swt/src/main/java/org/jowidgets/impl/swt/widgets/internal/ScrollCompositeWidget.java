@@ -38,15 +38,15 @@ import org.eclipse.swt.widgets.Layout;
 import org.jowidgets.api.color.IColorConstant;
 import org.jowidgets.api.util.ColorSettingsInvoker;
 import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.api.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.api.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.api.widgets.layout.ILayoutDescriptor;
-import org.jowidgets.api.widgets.setup.IWidgetSetupCommon;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.util.ScrollBarSettingsConvert;
 import org.jowidgets.impl.swt.widgets.SwtContainerWidget;
 import org.jowidgets.spi.widgets.IScrollContainerWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.IScrollCompositeDescriptorSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.IScrollCompositeSetupSpi;
 
 public class ScrollCompositeWidget implements IScrollContainerWidgetSpi {
 
@@ -59,7 +59,7 @@ public class ScrollCompositeWidget implements IScrollContainerWidgetSpi {
 		final IGenericWidgetFactory factory,
 		final IColorCache colorCache,
 		final IWidget parent,
-		final IScrollCompositeDescriptorSpi descriptor) {
+		final IScrollCompositeSetupSpi setup) {
 
 		this.mustChangeScrollCompositeMinSize = true;
 
@@ -70,16 +70,16 @@ public class ScrollCompositeWidget implements IScrollContainerWidgetSpi {
 		this.outerCompositeWidget = new SwtContainerWidget(factory, colorCache, outerComposite);
 		outerComposite.setLayout(growingMigLayout);
 
-		final int style = ScrollBarSettingsConvert.convert(descriptor);
+		final int style = ScrollBarSettingsConvert.convert(setup);
 		final ScrolledComposite scrolledComposite = new ScrolledComposite(outerComposite, style);
 		final SwtContainerWidget scrolledWidget = new SwtContainerWidget(factory, colorCache, scrolledComposite);
 		scrolledComposite.setLayout(growingMigLayout);
 		scrolledComposite.setLayoutData(growingCellConstraints);
 		scrolledComposite.setExpandHorizontal(true);
 		scrolledComposite.setExpandVertical(true);
-		scrolledComposite.setAlwaysShowScrollBars(descriptor.isAllwaysShowBars());
+		scrolledComposite.setAlwaysShowScrollBars(setup.isAllwaysShowBars());
 
-		this.innerCompositeWidget = new CompositeWidget(factory, colorCache, scrolledWidget, descriptor);
+		this.innerCompositeWidget = new CompositeWidget(factory, colorCache, scrolledWidget, setup);
 		final Composite innerComposite = this.innerCompositeWidget.getUiReference();
 		scrolledComposite.setContent(innerComposite);
 		innerComposite.setLayoutData(growingCellConstraints);
@@ -101,7 +101,7 @@ public class ScrollCompositeWidget implements IScrollContainerWidgetSpi {
 
 			}
 		});
-		ColorSettingsInvoker.setColors(descriptor, this);
+		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override
@@ -131,7 +131,7 @@ public class ScrollCompositeWidget implements IScrollContainerWidgetSpi {
 
 	@Override
 	public final <WIDGET_TYPE extends IWidget> WIDGET_TYPE add(
-		final IWidgetSetupCommon<? extends WIDGET_TYPE> descriptor,
+		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object cellConstraints) {
 		mustChangeScrollCompositeMinSize = true;
 		return innerCompositeWidget.add(descriptor, cellConstraints);

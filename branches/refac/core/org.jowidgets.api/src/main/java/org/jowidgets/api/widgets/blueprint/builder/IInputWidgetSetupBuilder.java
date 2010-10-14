@@ -27,11 +27,10 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
-import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.builder.IWidgetSetupBuilderCommon;
 
-public interface IInputWidgetSetupBuilder<INSTANCE_TYPE extends IInputWidgetSetupBuilder<?, ?, ?>, WIDGET_TYPE extends IInputWidget<INPUT_TYPE>, INPUT_TYPE> extends
-		IWidgetSetupBuilderCommon<INSTANCE_TYPE, WIDGET_TYPE> {
+public interface IInputWidgetSetupBuilder<INSTANCE_TYPE extends IInputWidgetSetupBuilder<?, ?>, INPUT_TYPE> extends
+		IWidgetSetupBuilderCommon<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setMandatory(boolean mandatory);
 

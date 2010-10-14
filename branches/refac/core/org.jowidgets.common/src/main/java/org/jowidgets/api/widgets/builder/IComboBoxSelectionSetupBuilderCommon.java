@@ -30,11 +30,10 @@ package org.jowidgets.api.widgets.builder;
 import java.util.List;
 
 import org.jowidgets.api.convert.IObjectStringConverter;
-import org.jowidgets.api.widgets.IComboBoxWidgetCommon;
 import org.jowidgets.api.widgets.builder.convenience.IComboBoxSelectionSetupConvenienceCommon;
 
-public interface IComboBoxSelectionSetupBuilderCommon<INSTANCE_TYPE extends IComboBoxSelectionSetupBuilderCommon<?, ?, ?>, WIDGET_TYPE extends IComboBoxWidgetCommon<INPUT_TYPE>, INPUT_TYPE> extends
-		IVetoableInputWidgetSetupBuilderCommon<INSTANCE_TYPE, WIDGET_TYPE, INPUT_TYPE>,
+public interface IComboBoxSelectionSetupBuilderCommon<INSTANCE_TYPE extends IComboBoxSelectionSetupBuilderCommon<?, ?>, INPUT_TYPE> extends
+		IVetoableInputWidgetSetupBuilderCommon<INSTANCE_TYPE, INPUT_TYPE>,
 		IComboBoxSelectionSetupConvenienceCommon<INSTANCE_TYPE, INPUT_TYPE> {
 
 	INSTANCE_TYPE setElements(List<INPUT_TYPE> elements);

@@ -27,10 +27,9 @@
  */
 package org.jowidgets.api.widgets.blueprint;
 
-import org.jowidgets.api.widgets.IToggleButtonWidget;
 import org.jowidgets.api.widgets.blueprint.builder.ICheckBoxSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.ICheckBoxDescriptor;
 
-public interface ICheckBoxBluePrint extends ICheckBoxSetupBuilder<ICheckBoxBluePrint, IToggleButtonWidget>, ICheckBoxDescriptor {
+public interface ICheckBoxBluePrint extends ICheckBoxSetupBuilder<ICheckBoxBluePrint>, ICheckBoxDescriptor {
 
 }

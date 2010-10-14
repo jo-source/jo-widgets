@@ -55,7 +55,7 @@ public class TextSeparatorWidget implements ITextLabelWidget {
 
 		final BluePrintFactory bpF = new BluePrintFactory();
 
-		final ITextLabelDescriptor textLabelDescriptor = bpF.textLabel().setDescriptor(descriptor);
+		final ITextLabelDescriptor textLabelDescriptor = bpF.textLabel().setSetup(descriptor);
 
 		if (AlignmentHorizontal.LEFT.equals(descriptor.getAlignment())) {
 			this.compositeWidget.setLayout(new MigLayoutDescriptor("0[][grow]", "0[]0"));

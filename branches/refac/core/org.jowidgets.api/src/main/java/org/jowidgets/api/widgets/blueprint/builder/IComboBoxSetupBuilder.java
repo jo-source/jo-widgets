@@ -29,10 +29,9 @@ package org.jowidgets.api.widgets.blueprint.builder;
 
 import org.jowidgets.api.convert.IValidatedStringObjectConverter;
 import org.jowidgets.api.validation.IValidator;
-import org.jowidgets.api.widgets.IComboBoxWidget;
 
-public interface IComboBoxSetupBuilder<INSTANCE_TYPE extends IComboBoxSetupBuilder<?, ?, ?>, WIDGET_TYPE extends IComboBoxWidget<INPUT_TYPE>, INPUT_TYPE> extends
-		IComboBoxSelectionSetupBuilder<INSTANCE_TYPE, WIDGET_TYPE, INPUT_TYPE> {
+public interface IComboBoxSetupBuilder<INSTANCE_TYPE extends IComboBoxSetupBuilder<?, ?>, INPUT_TYPE> extends
+		IComboBoxSelectionSetupBuilder<INSTANCE_TYPE, INPUT_TYPE> {
 
 	INSTANCE_TYPE setStringObjectConverter(IValidatedStringObjectConverter<INPUT_TYPE> stringObjectConverter);
 

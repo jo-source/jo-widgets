@@ -48,13 +48,13 @@ public class IconWidget extends SwtWidget implements IIconWidgetSpi {
 		final IColorCache colorCache,
 		final SwtImageRegistry imageRegistry,
 		final IWidget parent,
-		final IIconSetupSpi<?> descriptor) {
+		final IIconSetupSpi setup) {
 
 		super(colorCache, new Label((Composite) parent.getUiReference(), SWT.NONE));
 		this.imageRegistry = imageRegistry;
 
-		setIcon(descriptor.getIcon());
-		ColorSettingsInvoker.setColors(descriptor, this);
+		setIcon(setup.getIcon());
+		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

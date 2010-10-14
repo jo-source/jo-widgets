@@ -30,7 +30,7 @@ package org.jowidgets.api.widgets;
 import org.jowidgets.api.look.Dimension;
 import org.jowidgets.api.look.Position;
 import org.jowidgets.api.look.Rectangle;
-import org.jowidgets.api.widgets.setup.IWidgetSetupCommon;
+import org.jowidgets.api.widgets.descriptor.IWidgetDescriptor;
 
 public interface IWindowWidgetCommon extends IWidget {
 
@@ -48,7 +48,7 @@ public interface IWindowWidgetCommon extends IWidget {
 
 	void setVisible(boolean visible);
 
-	<WIDGET_TYPE extends IWindowWidgetCommon, DESCRIPTOR_TYPE extends IWidgetSetupCommon<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
+	<WIDGET_TYPE extends IWindowWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
 		final DESCRIPTOR_TYPE descriptor);
 
 }

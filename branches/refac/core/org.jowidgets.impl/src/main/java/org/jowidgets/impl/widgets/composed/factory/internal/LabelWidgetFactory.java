@@ -29,18 +29,18 @@ package org.jowidgets.impl.widgets.composed.factory.internal;
 
 import org.jowidgets.api.widgets.ICompositeWidget;
 import org.jowidgets.api.widgets.ILabelWidget;
-import org.jowidgets.api.widgets.descriptor.setup.ILabelSetup;
+import org.jowidgets.api.widgets.descriptor.ILabelDescriptor;
 import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.widgets.composed.LabelWidget;
 
-public class LabelWidgetFactory extends AbstractCompositeWidgetFactory<ILabelWidget, ILabelSetup<ILabelWidget>> {
+public class LabelWidgetFactory extends AbstractCompositeWidgetFactory<ILabelWidget, ILabelDescriptor> {
 
 	public LabelWidgetFactory(final IGenericWidgetFactory genericWidgetFactory) {
 		super(genericWidgetFactory);
 	}
 
 	@Override
-	protected ILabelWidget createWidget(final ICompositeWidget compositeWidget, final ILabelSetup<ILabelWidget> descriptor) {
+	protected ILabelWidget createWidget(final ICompositeWidget compositeWidget, final ILabelDescriptor descriptor) {
 		return new LabelWidget(compositeWidget, descriptor);
 	}
 

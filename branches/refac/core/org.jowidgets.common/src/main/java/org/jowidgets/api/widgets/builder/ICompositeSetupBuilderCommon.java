@@ -28,11 +28,10 @@
 package org.jowidgets.api.widgets.builder;
 
 import org.jowidgets.api.look.Border;
-import org.jowidgets.api.widgets.IContainerWidgetCommon;
 import org.jowidgets.api.widgets.builder.convenience.ICompositeSetupConvenienceCommon;
 
-public interface ICompositeSetupBuilderCommon<INSTANCE_TYPE extends ICompositeSetupBuilderCommon<?, ?>, WIDGET_TYPE extends IContainerWidgetCommon> extends
-		IContainerSetupBuilderCommon<INSTANCE_TYPE, WIDGET_TYPE>,
+public interface ICompositeSetupBuilderCommon<INSTANCE_TYPE extends ICompositeSetupBuilderCommon<?>> extends
+		IContainerSetupBuilderCommon<INSTANCE_TYPE>,
 		ICompositeSetupConvenienceCommon<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setBorder(final Border border);

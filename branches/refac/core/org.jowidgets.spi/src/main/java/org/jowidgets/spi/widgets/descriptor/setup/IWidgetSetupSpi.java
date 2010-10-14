@@ -27,9 +27,8 @@
  */
 package org.jowidgets.spi.widgets.descriptor.setup;
 
-import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.setup.IWidgetSetupCommon;
+import org.jowidgets.api.widgets.descriptor.setup.IWidgetSetupCommon;
 
-public interface IWidgetSetupSpi<WIDGET_TYPE extends IWidget> extends IWidgetSetupCommon<WIDGET_TYPE> {
+public interface IWidgetSetupSpi extends IWidgetSetupCommon {
 
 }

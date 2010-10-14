@@ -27,10 +27,9 @@
  */
 package org.jowidgets.impl.spi.blueprint.builder;
 
-import org.jowidgets.api.widgets.IToggleButtonWidgetCommon;
 import org.jowidgets.api.widgets.builder.IToggleButtonSetupBuilderCommon;
 
-public interface IToggleButtonSetupBuilderSpi<INSTANCE_TYPE extends IToggleButtonSetupBuilderSpi<?, ?>, WIDGET_TYPE extends IToggleButtonWidgetCommon> extends
-		IToggleButtonSetupBuilderCommon<INSTANCE_TYPE, WIDGET_TYPE> {
+public interface IToggleButtonSetupBuilderSpi<INSTANCE_TYPE extends IToggleButtonSetupBuilderSpi<?>> extends
+		IToggleButtonSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

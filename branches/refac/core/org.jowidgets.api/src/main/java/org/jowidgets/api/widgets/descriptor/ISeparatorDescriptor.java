@@ -30,6 +30,6 @@ package org.jowidgets.api.widgets.descriptor;
 import org.jowidgets.api.widgets.IChildWidget;
 import org.jowidgets.api.widgets.descriptor.setup.ISeparatorSetup;
 
-public interface ISeparatorDescriptor extends ISeparatorSetup<IChildWidget> {
+public interface ISeparatorDescriptor extends ISeparatorSetup, IWidgetDescriptor<IChildWidget> {
 
 }

@@ -27,11 +27,10 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
-import org.jowidgets.api.widgets.IWindowWidget;
 import org.jowidgets.api.widgets.builder.ITitledWindowSetupBuilderCommon;
 
-public interface ITitledWindowSetupBuilder<INSTANCE_TYPE extends ITitledWindowSetupBuilder<?, ?>, WIDGET_TYPE extends IWindowWidget> extends
-		IWindowSetupBuilder<INSTANCE_TYPE, WIDGET_TYPE>,
-		ITitledWindowSetupBuilderCommon<INSTANCE_TYPE, WIDGET_TYPE> {
+public interface ITitledWindowSetupBuilder<INSTANCE_TYPE extends ITitledWindowSetupBuilder<?>> extends
+		IWindowSetupBuilder<INSTANCE_TYPE>,
+		ITitledWindowSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

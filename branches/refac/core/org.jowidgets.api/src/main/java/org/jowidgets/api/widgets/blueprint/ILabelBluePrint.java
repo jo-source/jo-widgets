@@ -27,10 +27,9 @@
  */
 package org.jowidgets.api.widgets.blueprint;
 
-import org.jowidgets.api.widgets.ILabelWidget;
 import org.jowidgets.api.widgets.blueprint.builder.ILabelSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.ILabelDescriptor;
 
-public interface ILabelBluePrint extends ILabelSetupBuilder<ILabelBluePrint, ILabelWidget>, ILabelDescriptor {
+public interface ILabelBluePrint extends ILabelSetupBuilder<ILabelBluePrint>, ILabelDescriptor {
 
 }

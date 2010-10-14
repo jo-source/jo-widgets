@@ -29,23 +29,21 @@ package org.jowidgets.impl.widgets.blueprint.proxy;
 
 import java.lang.reflect.Proxy;
 
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
-import org.jowidgets.api.widgets.builder.ISetupBuilder;
-import org.jowidgets.api.widgets.setup.IWidgetSetupCommon;
+import org.jowidgets.api.widgets.builder.IWidgetSetupBuilder;
+import org.jowidgets.api.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.impl.widgets.blueprint.proxy.internal.BluePrintProxyInvovationHandler;
-import org.jowidgets.spi.widgets.descriptor.setup.IWidgetSetupSpi;
 import org.jowidgets.util.Assert;
 
-public class BluePrintProxyProvider<BLUE_PRINT_TYPE extends ISetupBuilder<?>> {
+public class BluePrintProxyProvider<BLUE_PRINT_TYPE extends IWidgetSetupBuilder<?>> {
 
 	private final BLUE_PRINT_TYPE proxy;
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public BluePrintProxyProvider(
-		final Class<? extends ISetupBuilder> bluePrintType,
-		final Class<? extends IWidgetSetupCommon> widgetDescrType,
+		final Class<? extends IWidgetDescriptor> bluePrintType,
+		final Class<? extends IWidgetDescriptor> widgetDescrType,
 		final ISetupBuilderConvenienceRegistry convenienceRegistry,
 		final IDefaultsInitializerRegistry defaultsRegistry) {
 
@@ -61,8 +59,8 @@ public class BluePrintProxyProvider<BLUE_PRINT_TYPE extends ISetupBuilder<?>> {
 
 		invocationHandler.initialize(
 				proxy,
-				(Class<? extends ISetupBuilder<ISetupBuilder<?>>>) bluePrintType,
-				(Class<? extends IWidgetSetupSpi<? extends IWidget>>) widgetDescrType,
+				(Class<? extends IWidgetDescriptor>) bluePrintType,
+				(Class<? extends IWidgetDescriptor>) widgetDescrType,
 				convenienceRegistry,
 				defaultsRegistry);
 

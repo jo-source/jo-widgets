@@ -46,7 +46,7 @@ public class InputWidgetDelegate<VALUE_TYPE> {
 	private boolean mandatory;
 	private boolean hasInput;
 
-	public InputWidgetDelegate(final IInputWidgetCommon<VALUE_TYPE> inputWidgetCi, final IInputWidgetSetup<?, VALUE_TYPE> setup) {
+	public InputWidgetDelegate(final IInputWidgetCommon<VALUE_TYPE> inputWidgetCi, final IInputWidgetSetup<VALUE_TYPE> setup) {
 		super();
 		this.validators = new LinkedList<IValidator<VALUE_TYPE>>();
 

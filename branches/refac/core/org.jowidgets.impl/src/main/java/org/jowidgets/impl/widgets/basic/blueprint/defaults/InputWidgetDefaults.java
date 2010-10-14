@@ -30,11 +30,11 @@ package org.jowidgets.impl.widgets.basic.blueprint.defaults;
 import org.jowidgets.api.widgets.blueprint.builder.IInputWidgetSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
-public class InputWidgetDefaults implements IDefaultInitializer<IInputWidgetSetupBuilder<?, ?, ?>> {
+public class InputWidgetDefaults implements IDefaultInitializer<IInputWidgetSetupBuilder<?, ?>> {
 
 	@Override
-	public void initialize(final IInputWidgetSetupBuilder<?, ?, ?> bluePrint) {
-		bluePrint.setMandatory(false);
+	public void initialize(final IInputWidgetSetupBuilder<?, ?> builder) {
+		builder.setMandatory(false);
 	}
 
 }

@@ -27,8 +27,7 @@
  */
 package org.jowidgets.api.widgets.descriptor.setup;
 
-import org.jowidgets.api.widgets.ILabelWidget;
 
-public interface ILabelSetup<WIDGET_TYPE extends ILabelWidget> extends IIconSetup<WIDGET_TYPE>, ITextLabelSetup<WIDGET_TYPE> {
+public interface ILabelSetup extends IIconSetup, ITextLabelSetup {
 
 }

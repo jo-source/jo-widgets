@@ -30,9 +30,9 @@ package org.jowidgets.impl.widgets.common.wrapper;
 
 import org.jowidgets.api.widgets.IFrameWidgetCommon;
 import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.api.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.api.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.api.widgets.layout.ILayoutDescriptor;
-import org.jowidgets.api.widgets.setup.IWidgetSetupCommon;
 
 public class FrameWidgetCommonWrapper extends WindowWidgetCommonWrapper implements IFrameWidgetCommon {
 
@@ -67,7 +67,7 @@ public class FrameWidgetCommonWrapper extends WindowWidgetCommonWrapper implemen
 
 	@Override
 	public <WIDGET_TYPE extends IWidget> WIDGET_TYPE add(
-		final IWidgetSetupCommon<? extends WIDGET_TYPE> descriptor,
+		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
 		return getWidget().add(descriptor, layoutConstraints);
 	}

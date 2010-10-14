@@ -28,10 +28,9 @@
 package org.jowidgets.api.widgets.builder;
 
 import org.jowidgets.api.image.IImageConstant;
-import org.jowidgets.api.widgets.IIconWidgetCommon;
 
-public interface IIconSetupBuilderCommon<INSTANCE_TYPE extends IIconSetupBuilderCommon<?, ?>, WIDGET_TYPE extends IIconWidgetCommon> extends
-		IWidgetSetupBuilderCommon<INSTANCE_TYPE, WIDGET_TYPE> {
+public interface IIconSetupBuilderCommon<INSTANCE_TYPE extends IIconSetupBuilderCommon<?>> extends
+		IWidgetSetupBuilderCommon<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setIcon(IImageConstant icon);
 

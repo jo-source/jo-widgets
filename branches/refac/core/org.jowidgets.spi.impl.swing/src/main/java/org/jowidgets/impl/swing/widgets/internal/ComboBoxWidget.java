@@ -38,18 +38,17 @@ import javax.swing.event.DocumentListener;
 import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.convert.IStringObjectConverter;
 import org.jowidgets.impl.swing.widgets.internal.util.ValidatedInputDocument;
-import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;
 import org.jowidgets.spi.widgets.descriptor.setup.IComboBoxSetupSpi;
 
 public class ComboBoxWidget<INPUT_TYPE> extends ComboBoxSelectionWidget<INPUT_TYPE> {
 
 	private final ComboBoxEditorImpl comboBoxEditor;
 
-	public ComboBoxWidget(final IComboBoxSetupSpi<IComboBoxWidgetSpi<INPUT_TYPE>, INPUT_TYPE> descriptor) {
-		super(descriptor);
+	public ComboBoxWidget(final IComboBoxSetupSpi<INPUT_TYPE> setup) {
+		super(setup);
 
 		getUiReference().setEditable(true);
-		this.comboBoxEditor = new ComboBoxEditorImpl(descriptor.getObjectStringConverter(), descriptor.getStringObjectConverter());
+		this.comboBoxEditor = new ComboBoxEditorImpl(setup.getObjectStringConverter(), setup.getStringObjectConverter());
 
 		getUiReference().setEditor(comboBoxEditor);
 

@@ -27,10 +27,9 @@
  */
 package org.jowidgets.api.widgets.builder;
 
-import org.jowidgets.api.widgets.ILabelWidgetCommon;
 
-public interface ILabelSetupBuilderCommon<INSTANCE_TYPE extends ILabelSetupBuilderCommon<?, ?>, WIDGET_TYPE extends ILabelWidgetCommon> extends
-		ITextLabelSetupBuilderCommon<INSTANCE_TYPE, WIDGET_TYPE>,
-		IIconSetupBuilderCommon<INSTANCE_TYPE, WIDGET_TYPE> {
+public interface ILabelSetupBuilderCommon<INSTANCE_TYPE extends ILabelSetupBuilderCommon<?>> extends
+		ITextLabelSetupBuilderCommon<INSTANCE_TYPE>,
+		IIconSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

@@ -28,13 +28,11 @@
 package org.jowidgets.api.widgets.descriptor.setup;
 
 import org.jowidgets.api.look.Border;
-import org.jowidgets.api.widgets.IInputCompositeWidget;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
-import org.jowidgets.api.widgets.setup.mandatory.Mandatory;
+import org.jowidgets.api.widgets.descriptor.setup.mandatory.Mandatory;
 
-public interface IInputCompositeSetup<WIDGET_TYPE extends IInputCompositeWidget<INPUT_TYPE>, INPUT_TYPE> extends
-		IInputWidgetSetup<WIDGET_TYPE, INPUT_TYPE> {
+public interface IInputCompositeSetup<INPUT_TYPE> extends IInputWidgetSetup<INPUT_TYPE> {
 
 	@Mandatory
 	IInputContentCreator<INPUT_TYPE> getContentCreator();

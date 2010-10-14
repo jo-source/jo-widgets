@@ -48,19 +48,19 @@ public class DialogWidget extends SwtWindowWidget implements IFrameWidgetSpi {
 		final IColorCache colorCache,
 		final SwtImageRegistry imageRegistry,
 		final IWidget parent,
-		final IDialogSetupSpi<?> descriptor) {
+		final IDialogSetupSpi setup) {
 
 		super(factory, colorCache, new Shell((Shell) parent.getUiReference(), SWT.DIALOG_TRIM
 			| SWT.APPLICATION_MODAL
 			| SWT.RESIZE));
 
-		if (descriptor.getTitle() != null) {
-			getUiReference().setText(descriptor.getTitle());
+		if (setup.getTitle() != null) {
+			getUiReference().setText(setup.getTitle());
 		}
 
-		setLayout(descriptor.getLayout());
-		setIcon(imageRegistry, descriptor.getIcon());
-		ColorSettingsInvoker.setColors(descriptor, this);
+		setLayout(setup.getLayout());
+		setIcon(imageRegistry, setup.getIcon());
+		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

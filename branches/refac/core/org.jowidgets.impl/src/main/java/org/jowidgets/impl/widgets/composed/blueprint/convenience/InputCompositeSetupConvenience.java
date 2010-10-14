@@ -35,31 +35,31 @@ import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
 import org.jowidgets.impl.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
-public class InputCompositeSetupConvenience extends AbstractSetupBuilderConvenience<IInputCompositeSetupBuilder<?, ?, ?>> implements
-		IInputCompositeSetupConvenience<IInputCompositeSetupBuilder<?, ?, ?>> {
+public class InputCompositeSetupConvenience extends AbstractSetupBuilderConvenience<IInputCompositeSetupBuilder<?, ?>> implements
+		IInputCompositeSetupConvenience<IInputCompositeSetupBuilder<?, ?>> {
 
 	@Override
-	public IInputCompositeSetupBuilder<?, ?, ?> setBorder(final String borderTitle) {
+	public IInputCompositeSetupBuilder<?, ?> setBorder(final String borderTitle) {
 		return getBuilder().setBorder(new Border(borderTitle));
 	}
 
 	@Override
-	public IInputCompositeSetupBuilder<?, ?, ?> setBorder() {
+	public IInputCompositeSetupBuilder<?, ?> setBorder() {
 		return getBuilder().setBorder(new Border());
 	}
 
 	@Override
-	public IInputCompositeSetupBuilder<?, ?, ?> setContentBorder(final String borderTitle) {
+	public IInputCompositeSetupBuilder<?, ?> setContentBorder(final String borderTitle) {
 		return getBuilder().setContentBorder(new Border(borderTitle));
 	}
 
 	@Override
-	public IInputCompositeSetupBuilder<?, ?, ?> setContentBorder() {
+	public IInputCompositeSetupBuilder<?, ?> setContentBorder() {
 		return getBuilder().setContentBorder(new Border());
 	}
 
 	@Override
-	public IInputCompositeSetupBuilder<?, ?, ?> setMissingInputText(final String text) {
+	public IInputCompositeSetupBuilder<?, ?> setMissingInputText(final String text) {
 		getValidationLabelBluePrint().setMissingInputText(text);
 		return getBuilder();
 	}
@@ -73,7 +73,7 @@ public class InputCompositeSetupConvenience extends AbstractSetupBuilderConvenie
 			return (IValidationLabelBluePrint) validationLabelDescriptor;
 		}
 		else {
-			return new BluePrintFactory().validationLabel().setDescriptor(validationLabelDescriptor);
+			return new BluePrintFactory().validationLabel().setSetup(validationLabelDescriptor);
 		}
 	}
 

@@ -43,17 +43,17 @@ import org.jowidgets.spi.widgets.descriptor.setup.ITextLabelSetupSpi;
 
 public class TextLabelWidget extends SwtWidget implements ITextLabelWidgetSpi {
 
-	public TextLabelWidget(final IColorCache colorCache, final IWidget parent, final ITextLabelSetupSpi<?> descriptor) {
+	public TextLabelWidget(final IColorCache colorCache, final IWidget parent, final ITextLabelSetupSpi setup) {
 
 		super(colorCache, new Label((Composite) parent.getUiReference(), SWT.BOLD));
 
-		setText(descriptor.getText());
-		setToolTipText(descriptor.getToolTipText());
+		setText(setup.getText());
+		setToolTipText(setup.getToolTipText());
 
-		setMarkup(descriptor.getMarkup());
+		setMarkup(setup.getMarkup());
 
-		getUiReference().setAlignment(AlignmentConvert.convert(descriptor.getAlignment()));
-		ColorSettingsInvoker.setColors(descriptor, this);
+		getUiReference().setAlignment(AlignmentConvert.convert(setup.getAlignment()));
+		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

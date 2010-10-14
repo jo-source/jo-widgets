@@ -28,11 +28,10 @@
 package org.jowidgets.api.widgets.builder;
 
 import org.jowidgets.api.color.IColorConstant;
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.builder.convenience.IWidgetSetupConvenienceCommon;
 
-public interface IWidgetSetupBuilderCommon<INSTANCE_TYPE extends IWidgetSetupBuilderCommon<?, ?>, WIDGET_TYPE extends IWidget> extends
-		ISetupBuilder<INSTANCE_TYPE>,
+public interface IWidgetSetupBuilderCommon<INSTANCE_TYPE extends IWidgetSetupBuilderCommon<?>> extends
+		IWidgetSetupBuilder<INSTANCE_TYPE>,
 		IWidgetSetupConvenienceCommon<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setForegroundColor(final IColorConstant foregroundColor);

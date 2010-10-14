@@ -30,11 +30,9 @@ package org.jowidgets.api.widgets.descriptor.setup;
 import org.jowidgets.api.color.IColorConstant;
 import org.jowidgets.api.image.IImageConstant;
 import org.jowidgets.api.look.Markup;
-import org.jowidgets.api.widgets.IValidationLabelWidget;
-import org.jowidgets.api.widgets.setup.IWidgetSetupCommon;
-import org.jowidgets.api.widgets.setup.mandatory.Mandatory;
+import org.jowidgets.api.widgets.descriptor.setup.mandatory.Mandatory;
 
-public interface IValidationLabelSetup<WIDGET_TYPE extends IValidationLabelWidget> extends IWidgetSetupCommon<WIDGET_TYPE> {
+public interface IValidationLabelSetup extends IWidgetSetupCommon {
 
 	@Mandatory
 	Markup getOkMarkup();

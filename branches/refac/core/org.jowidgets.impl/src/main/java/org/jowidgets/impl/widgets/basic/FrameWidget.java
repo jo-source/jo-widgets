@@ -38,7 +38,7 @@ public class FrameWidget extends FrameWidgetCommonWrapper implements IFrameWidge
 
 	private final WindowWidgetDelegate windowWidgetDelegate;
 
-	public FrameWidget(final IFrameWidgetSpi frameWidgetSpi, final IFrameSetup<?> setup) {
+	public FrameWidget(final IFrameWidgetSpi frameWidgetSpi, final IFrameSetup setup) {
 		super(frameWidgetSpi);
 		this.windowWidgetDelegate = new WindowWidgetDelegate(frameWidgetSpi, setup);
 	}

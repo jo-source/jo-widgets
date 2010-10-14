@@ -33,10 +33,10 @@ import org.jowidgets.api.look.Markup;
 import org.jowidgets.api.widgets.blueprint.builder.IValidationLabelSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
-public class ValidationLabelDefaults implements IDefaultInitializer<IValidationLabelSetupBuilder<?, ?>> {
+public class ValidationLabelDefaults implements IDefaultInitializer<IValidationLabelSetupBuilder<?>> {
 
 	@Override
-	public void initialize(final IValidationLabelSetupBuilder<?, ?> builder) {
+	public void initialize(final IValidationLabelSetupBuilder<?> builder) {
 		builder.setOkMarkup(Markup.STRONG);
 		builder.setWarningMarkup(Markup.STRONG);
 		builder.setErrorMarkup(Markup.STRONG);

@@ -33,36 +33,36 @@ import org.jowidgets.api.widgets.blueprint.builder.IWindowSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.convenience.IWindowSetupConvenience;
 import org.jowidgets.impl.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 
-public class WindowSetupConvenience extends AbstractSetupBuilderConvenience<IWindowSetupBuilder<?, ?>> implements
-		IWindowSetupConvenience<IWindowSetupBuilder<?, ?>> {
+public class WindowSetupConvenience extends AbstractSetupBuilderConvenience<IWindowSetupBuilder<?>> implements
+		IWindowSetupConvenience<IWindowSetupBuilder<?>> {
 
 	@Override
-	public IWindowSetupBuilder<?, ?> autoPackOnce() {
+	public IWindowSetupBuilder<?> autoPackOnce() {
 		return getBuilder().setAutoPackPolicy(AutoPackPolicy.ONCE);
 	}
 
 	@Override
-	public IWindowSetupBuilder<?, ?> autoPackAllways() {
+	public IWindowSetupBuilder<?> autoPackAllways() {
 		return getBuilder().setAutoPackPolicy(AutoPackPolicy.ALLWAYS);
 	}
 
 	@Override
-	public IWindowSetupBuilder<?, ?> autoPackOff() {
+	public IWindowSetupBuilder<?> autoPackOff() {
 		return getBuilder().setAutoPackPolicy(AutoPackPolicy.OFF);
 	}
 
 	@Override
-	public IWindowSetupBuilder<?, ?> autoCenterOnce() {
+	public IWindowSetupBuilder<?> autoCenterOnce() {
 		return getBuilder().setAutoCenterPolicy(AutoCenterPolicy.ONCE);
 	}
 
 	@Override
-	public IWindowSetupBuilder<?, ?> autoCenterAllways() {
+	public IWindowSetupBuilder<?> autoCenterAllways() {
 		return getBuilder().setAutoCenterPolicy(AutoCenterPolicy.ALLWAYS);
 	}
 
 	@Override
-	public IWindowSetupBuilder<?, ?> autoCenterOff() {
+	public IWindowSetupBuilder<?> autoCenterOff() {
 		return getBuilder().setAutoCenterPolicy(AutoCenterPolicy.OFF);
 	}
 

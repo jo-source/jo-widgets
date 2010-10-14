@@ -30,11 +30,10 @@ package org.jowidgets.api.widgets.blueprint.builder;
 import org.jowidgets.api.color.IColorConstant;
 import org.jowidgets.api.image.IImageConstant;
 import org.jowidgets.api.look.Markup;
-import org.jowidgets.api.widgets.IValidationLabelWidget;
 import org.jowidgets.api.widgets.builder.IWidgetSetupBuilderCommon;
 
-public interface IValidationLabelSetupBuilder<INSTANCE_TYPE extends IValidationLabelSetupBuilder<?, ?>, WIDGET_TYPE extends IValidationLabelWidget> extends
-		IWidgetSetupBuilderCommon<INSTANCE_TYPE, WIDGET_TYPE> {
+public interface IValidationLabelSetupBuilder<INSTANCE_TYPE extends IValidationLabelSetupBuilder<?>> extends
+		IWidgetSetupBuilderCommon<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setOkMarkup(Markup markup);
 

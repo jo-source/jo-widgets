@@ -46,7 +46,7 @@ public class ComboBoxWidget<VALUE_TYPE> extends ComboBoxWidgetCommonWrapper<VALU
 	public ComboBoxWidget(
 		final IWidget parent,
 		final IComboBoxWidgetSpi<VALUE_TYPE> comboBoxWidgetSpi,
-		final IComboBoxSelectionSetup<?, VALUE_TYPE> setup) {
+		final IComboBoxSelectionSetup<VALUE_TYPE> setup) {
 		super(comboBoxWidgetSpi);
 		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
 		this.inputWidgetDelegate = new InputWidgetDelegate<VALUE_TYPE>(comboBoxWidgetSpi, setup);
