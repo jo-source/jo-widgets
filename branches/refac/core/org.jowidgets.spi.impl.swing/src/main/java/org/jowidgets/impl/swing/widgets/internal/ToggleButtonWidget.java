@@ -25,53 +25,80 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swing.factory.internal;
+package org.jowidgets.impl.swing.widgets.internal;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
-import javax.swing.JButton;
+import javax.swing.JToggleButton;
 
 import org.jowidgets.api.image.IImageConstant;
 import org.jowidgets.api.look.Markup;
 import org.jowidgets.api.util.ColorSettingsInvoker;
-import org.jowidgets.impl.swing.internal.image.SwingImageRegistry;
+import org.jowidgets.api.widgets.setup.ICheckBoxSetupCommon;
+import org.jowidgets.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.impl.swing.util.AlignmentConvert;
 import org.jowidgets.impl.swing.util.FontProvider;
-import org.jowidgets.spi.widgets.IButtonWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.IButtonSetupSpi;
+import org.jowidgets.spi.widgets.IToggleButtonWidgetSpi;
+import org.jowidgets.util.Assert;
 
-public class ButtonWidget extends AbstractSwingActionWidget implements IButtonWidgetSpi {
+public class ToggleButtonWidget extends AbstractSwingInputWidget<Boolean> implements IToggleButtonWidgetSpi {
 
 	private final SwingImageRegistry imageRegistry;
 
-	public ButtonWidget(final SwingImageRegistry imageRegistry, final IButtonSetupSpi<?> descriptor) {
-		super(new JButton());
+	public ToggleButtonWidget(final SwingImageRegistry imageRegistry, final ICheckBoxSetupCommon<IToggleButtonWidgetSpi> descriptor) {
+		this(imageRegistry, new JToggleButton(), descriptor);
+	}
+
+	public ToggleButtonWidget(
+		final SwingImageRegistry imageRegistry,
+		final JToggleButton toggleButton,
+		final ICheckBoxSetupCommon<IToggleButtonWidgetSpi> descriptor) {
+		super(toggleButton);
+
 		this.imageRegistry = imageRegistry;
 
 		setText(descriptor.getText());
 		setToolTipText(descriptor.getToolTipText());
 		setIcon(descriptor.getIcon());
-
 		setMarkup(descriptor.getMarkup());
-
 		getUiReference().setHorizontalAlignment(AlignmentConvert.convert(descriptor.getAlignment()));
+		ColorSettingsInvoker.setColors(descriptor, this);
 
-		getUiReference().addActionListener(new ActionListener() {
+		getUiReference().addItemListener(new ItemListener() {
 
 			@Override
-			public void actionPerformed(final ActionEvent e) {
-				fireActionPerformed();
+			public void itemStateChanged(final ItemEvent e) {
+				fireInputChanged(this);
 			}
-
 		});
-
-		ColorSettingsInvoker.setColors(descriptor, this);
 	}
 
 	@Override
-	public JButton getUiReference() {
-		return (JButton) super.getUiReference();
+	public JToggleButton getUiReference() {
+		return (JToggleButton) super.getUiReference();
+	}
+
+	@Override
+	public Boolean getValue() {
+		return Boolean.valueOf(isSelected());
+	}
+
+	@Override
+	public void setValue(final Boolean value) {
+		Assert.paramNotNull(value, "value");
+		setSelected(value.booleanValue());
+	}
+
+	@Override
+	public void setEditable(final boolean editable) {
+		getUiReference().setEnabled(editable);
+	}
+
+	@Override
+	public void setMarkup(final Markup markup) {
+		final JToggleButton toggleButton = getUiReference();
+		toggleButton.setFont(FontProvider.deriveFont(toggleButton.getFont(), markup));
 	}
 
 	@Override
@@ -90,9 +117,13 @@ public class ButtonWidget extends AbstractSwingActionWidget implements IButtonWi
 	}
 
 	@Override
-	public void setMarkup(final Markup markup) {
-		final JButton button = getUiReference();
-		button.setFont(FontProvider.deriveFont(button.getFont(), markup));
+	public boolean isSelected() {
+		return getUiReference().isSelected();
+	}
+
+	@Override
+	public void setSelected(final boolean selected) {
+		getUiReference().setSelected(selected);
 	}
 
 }

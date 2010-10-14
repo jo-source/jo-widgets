@@ -25,46 +25,41 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swing.factory.internal;
+package org.jowidgets.impl.swing.widgets.internal;
 
-import javax.swing.JTextField;
+import java.awt.Component;
+import java.io.Serializable;
 
-import org.jowidgets.api.util.ColorSettingsInvoker;
-import org.jowidgets.api.veto.IInputVetoChecker;
-import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.impl.swing.factory.internal.util.ValidatedInputDocument;
-import org.jowidgets.spi.widgets.descriptor.ITextFieldDescriptorSpi;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.JTextComponent;
 
-public class TextFieldWidget extends AbstractSwingTextInputWidget<String> {
+public abstract class AbstractSwingTextInputWidget<VALUE_TYPE extends Serializable> extends AbstractSwingInputWidget<VALUE_TYPE> {
 
-	public TextFieldWidget(final IWidget parent, final ITextFieldDescriptorSpi descriptor) {
-		super(new JTextField());
-
-		final IInputVetoChecker<String> vetoChecker = descriptor.getInputVetoChecker();
-
-		getUiReference().setDocument(new ValidatedInputDocument(getUiReference(), vetoChecker));
-		registerTextComponent(getUiReference());
-		ColorSettingsInvoker.setColors(descriptor, this);
+	public AbstractSwingTextInputWidget(final Component component) {
+		super(component);
 	}
 
-	@Override
-	public JTextField getUiReference() {
-		return (JTextField) super.getUiReference();
-	}
+	protected void registerTextComponent(final JTextComponent textComponent) {
+		textComponent.getDocument().addDocumentListener(new DocumentListener() {
 
-	@Override
-	public String getValue() {
-		return getUiReference().getText();
-	}
+			@Override
+			public void removeUpdate(final DocumentEvent e) {
+				fireInputChanged(textComponent);
+			}
 
-	@Override
-	public void setValue(final String content) {
-		getUiReference().setText(content);
-	}
+			@Override
+			public void insertUpdate(final DocumentEvent e) {
+				fireInputChanged(textComponent);
+			}
 
-	@Override
-	public void setEditable(final boolean editable) {
-		getUiReference().setEditable(editable);
+			@Override
+			public void changedUpdate(final DocumentEvent e) {
+				fireInputChanged(textComponent);
+			}
+
+		});
+
 	}
 
 }

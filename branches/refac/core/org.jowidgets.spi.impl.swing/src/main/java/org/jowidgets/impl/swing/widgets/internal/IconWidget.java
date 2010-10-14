@@ -25,28 +25,38 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swing.factory.internal;
+package org.jowidgets.impl.swing.widgets.internal;
 
-import javax.swing.JPanel;
+import javax.swing.JLabel;
 
+import org.jowidgets.api.image.IImageConstant;
 import org.jowidgets.api.util.ColorSettingsInvoker;
-import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.api.widgets.setup.ICompositeSetupCommon;
-import org.jowidgets.impl.swing.util.BorderConvert;
-import org.jowidgets.impl.swing.widgets.SwingContainerWidget;
+import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.impl.swing.image.SwingImageRegistry;
+import org.jowidgets.impl.swing.widgets.SwingWidget;
+import org.jowidgets.spi.widgets.IIconWidgetSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.IIconSetupSpi;
 
-public class CompositeWidget extends SwingContainerWidget {
+public class IconWidget extends SwingWidget implements IIconWidgetSpi {
 
-	public CompositeWidget(final IGenericWidgetFactory factory, final ICompositeSetupCommon<?> settings) {
-		super(factory, new JPanel());
-		getUiReference().setBorder(BorderConvert.convert(settings.getBorder()));
-		setLayout(settings.getLayout());
-		ColorSettingsInvoker.setColors(settings, this);
+	private final SwingImageRegistry imageRegistry;
+
+	public IconWidget(final SwingImageRegistry imageRegistry, final IWidget parent, final IIconSetupSpi<?> descriptor) {
+		super(new JLabel());
+
+		this.imageRegistry = imageRegistry;
+		setIcon(descriptor.getIcon());
+		ColorSettingsInvoker.setColors(descriptor, this);
 	}
 
 	@Override
-	public JPanel getUiReference() {
-		return (JPanel) super.getUiReference();
+	public void setIcon(final IImageConstant icon) {
+		getUiReference().setIcon(imageRegistry.getImageIcon(icon));
+	}
+
+	@Override
+	public JLabel getUiReference() {
+		return (JLabel) super.getUiReference();
 	}
 
 }

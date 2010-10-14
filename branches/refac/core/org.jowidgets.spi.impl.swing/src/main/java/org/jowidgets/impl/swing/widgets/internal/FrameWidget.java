@@ -25,47 +25,35 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swing.factory.internal;
+package org.jowidgets.impl.swing.widgets.internal;
 
-import java.awt.Component;
+import javax.swing.JFrame;
 
-import org.jowidgets.api.color.IColorConstant;
-import org.jowidgets.api.widgets.IActionWidgetCommon;
-import org.jowidgets.api.widgets.controler.impl.ActionObservable;
-import org.jowidgets.impl.swing.widgets.SwingWidget;
+import org.jowidgets.api.util.ColorSettingsInvoker;
+import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.impl.swing.image.SwingImageRegistry;
+import org.jowidgets.impl.swing.widgets.SwingWindowWidget;
+import org.jowidgets.spi.widgets.IFrameWidgetSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.IFrameSetupSpi;
 
-public abstract class AbstractSwingActionWidget extends ActionObservable implements IActionWidgetCommon {
+public class FrameWidget extends SwingWindowWidget implements IFrameWidgetSpi {
 
-	private final SwingWidget swingWidgetDelegate;
+	public FrameWidget(
+		final IGenericWidgetFactory factory,
+		final SwingImageRegistry imageRegistry,
+		final IFrameSetupSpi<?> descriptor) {
+		super(factory, new JFrame());
 
-	public AbstractSwingActionWidget(final Component component) {
-		super();
-		this.swingWidgetDelegate = new SwingWidget(component);
+		getUiReference().setTitle(descriptor.getTitle());
+
+		setIcon(descriptor.getIcon(), imageRegistry);
+		setLayout(descriptor.getLayout());
+		ColorSettingsInvoker.setColors(descriptor, this);
 	}
 
 	@Override
-	public void setEnabled(final boolean enabled) {
-		swingWidgetDelegate.getUiReference().setEnabled(enabled);
-	}
-
-	@Override
-	public Component getUiReference() {
-		return swingWidgetDelegate.getUiReference();
-	}
-
-	@Override
-	public void redraw() {
-		swingWidgetDelegate.redraw();
-	}
-
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		swingWidgetDelegate.setForegroundColor(colorValue);
-	}
-
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		swingWidgetDelegate.setBackgroundColor(colorValue);
+	public JFrame getUiReference() {
+		return (JFrame) super.getUiReference();
 	}
 
 }

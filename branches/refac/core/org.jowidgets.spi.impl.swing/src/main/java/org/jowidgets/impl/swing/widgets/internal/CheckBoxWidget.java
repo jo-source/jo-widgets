@@ -25,46 +25,18 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swing.factory.internal;
+package org.jowidgets.impl.swing.widgets.internal;
 
-import java.awt.Component;
+import javax.swing.JCheckBox;
 
-import org.jowidgets.api.color.IColorConstant;
-import org.jowidgets.api.widgets.controler.impl.InputObservable;
-import org.jowidgets.impl.swing.widgets.SwingWidget;
-import org.jowidgets.spi.widgets.IInputWidgetSpi;
+import org.jowidgets.api.widgets.setup.ICheckBoxSetupCommon;
+import org.jowidgets.impl.swing.image.SwingImageRegistry;
+import org.jowidgets.spi.widgets.IToggleButtonWidgetSpi;
 
-public abstract class AbstractSwingInputWidget<VALUE_TYPE> extends InputObservable implements IInputWidgetSpi<VALUE_TYPE> {
+public class CheckBoxWidget extends ToggleButtonWidget {
 
-	private final Component component;
-	private final SwingWidget swingWidgetDelegate;
-
-	public AbstractSwingInputWidget(final Component component) {
-		super();
-		this.component = component;
-		this.swingWidgetDelegate = new SwingWidget(component);
+	public CheckBoxWidget(final SwingImageRegistry imageRegistry, final ICheckBoxSetupCommon<IToggleButtonWidgetSpi> descriptor) {
+		super(imageRegistry, new JCheckBox(), descriptor);
 	}
-
-	@Override
-	public Component getUiReference() {
-		return component;
-	}
-
-	@Override
-	public void redraw() {
-		swingWidgetDelegate.redraw();
-	}
-
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		swingWidgetDelegate.setForegroundColor(colorValue);
-	}
-
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		swingWidgetDelegate.setBackgroundColor(colorValue);
-	}
-	
-	
 
 }

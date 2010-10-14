@@ -25,25 +25,25 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swing.factory;
+package org.jowidgets.impl.swing;
 
 import org.jowidgets.api.image.IImageRegistry;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.impl.swing.factory.internal.ButtonWidget;
-import org.jowidgets.impl.swing.factory.internal.CheckBoxWidget;
-import org.jowidgets.impl.swing.factory.internal.ComboBoxSelectionWidget;
-import org.jowidgets.impl.swing.factory.internal.ComboBoxWidget;
-import org.jowidgets.impl.swing.factory.internal.CompositeWidget;
-import org.jowidgets.impl.swing.factory.internal.DialogWidget;
-import org.jowidgets.impl.swing.factory.internal.FrameWidget;
-import org.jowidgets.impl.swing.factory.internal.IconWidget;
-import org.jowidgets.impl.swing.factory.internal.ScrollCompositeWidget;
-import org.jowidgets.impl.swing.factory.internal.SeparatorWidget;
-import org.jowidgets.impl.swing.factory.internal.TextFieldWidget;
-import org.jowidgets.impl.swing.factory.internal.TextLabelWidget;
-import org.jowidgets.impl.swing.factory.internal.ToggleButtonWidget;
-import org.jowidgets.impl.swing.internal.image.SwingImageRegistry;
+import org.jowidgets.impl.swing.image.SwingImageRegistry;
+import org.jowidgets.impl.swing.widgets.internal.ButtonWidget;
+import org.jowidgets.impl.swing.widgets.internal.CheckBoxWidget;
+import org.jowidgets.impl.swing.widgets.internal.ComboBoxSelectionWidget;
+import org.jowidgets.impl.swing.widgets.internal.ComboBoxWidget;
+import org.jowidgets.impl.swing.widgets.internal.CompositeWidget;
+import org.jowidgets.impl.swing.widgets.internal.DialogWidget;
+import org.jowidgets.impl.swing.widgets.internal.FrameWidget;
+import org.jowidgets.impl.swing.widgets.internal.IconWidget;
+import org.jowidgets.impl.swing.widgets.internal.ScrollCompositeWidget;
+import org.jowidgets.impl.swing.widgets.internal.SeparatorWidget;
+import org.jowidgets.impl.swing.widgets.internal.TextFieldWidget;
+import org.jowidgets.impl.swing.widgets.internal.TextLabelWidget;
+import org.jowidgets.impl.swing.widgets.internal.ToggleButtonWidget;
 import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.widgets.IButtonWidgetSpi;
 import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;

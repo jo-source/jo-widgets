@@ -37,7 +37,7 @@ import org.jowidgets.api.look.Rectangle;
 import org.jowidgets.api.widgets.IWindowWidgetCommon;
 import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.api.widgets.setup.IWidgetSetupCommon;
-import org.jowidgets.impl.swing.internal.image.SwingImageRegistry;
+import org.jowidgets.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.impl.swing.util.DimensionConvert;
 import org.jowidgets.impl.swing.util.PositionConvert;
 

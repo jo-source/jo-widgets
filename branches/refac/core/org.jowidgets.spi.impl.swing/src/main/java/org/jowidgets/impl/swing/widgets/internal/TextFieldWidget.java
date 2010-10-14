@@ -25,38 +25,46 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swing.factory.internal;
+package org.jowidgets.impl.swing.widgets.internal;
 
-import javax.swing.JLabel;
+import javax.swing.JTextField;
 
-import org.jowidgets.api.image.IImageConstant;
 import org.jowidgets.api.util.ColorSettingsInvoker;
+import org.jowidgets.api.veto.IInputVetoChecker;
 import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.impl.swing.internal.image.SwingImageRegistry;
-import org.jowidgets.impl.swing.widgets.SwingWidget;
-import org.jowidgets.spi.widgets.IIconWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.IIconSetupSpi;
+import org.jowidgets.impl.swing.widgets.internal.util.ValidatedInputDocument;
+import org.jowidgets.spi.widgets.descriptor.ITextFieldDescriptorSpi;
 
-public class IconWidget extends SwingWidget implements IIconWidgetSpi {
+public class TextFieldWidget extends AbstractSwingTextInputWidget<String> {
 
-	private final SwingImageRegistry imageRegistry;
+	public TextFieldWidget(final IWidget parent, final ITextFieldDescriptorSpi descriptor) {
+		super(new JTextField());
 
-	public IconWidget(final SwingImageRegistry imageRegistry, final IWidget parent, final IIconSetupSpi<?> descriptor) {
-		super(new JLabel());
+		final IInputVetoChecker<String> vetoChecker = descriptor.getInputVetoChecker();
 
-		this.imageRegistry = imageRegistry;
-		setIcon(descriptor.getIcon());
+		getUiReference().setDocument(new ValidatedInputDocument(getUiReference(), vetoChecker));
+		registerTextComponent(getUiReference());
 		ColorSettingsInvoker.setColors(descriptor, this);
 	}
 
 	@Override
-	public void setIcon(final IImageConstant icon) {
-		getUiReference().setIcon(imageRegistry.getImageIcon(icon));
+	public JTextField getUiReference() {
+		return (JTextField) super.getUiReference();
 	}
 
 	@Override
-	public JLabel getUiReference() {
-		return (JLabel) super.getUiReference();
+	public String getValue() {
+		return getUiReference().getText();
+	}
+
+	@Override
+	public void setValue(final String content) {
+		getUiReference().setText(content);
+	}
+
+	@Override
+	public void setEditable(final boolean editable) {
+		getUiReference().setEditable(editable);
 	}
 
 }

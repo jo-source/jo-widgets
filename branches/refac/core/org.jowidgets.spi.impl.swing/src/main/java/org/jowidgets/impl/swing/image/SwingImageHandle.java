@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swing.internal.image;
+package org.jowidgets.impl.swing.image;
 
 import java.awt.Image;
 import java.io.IOException;

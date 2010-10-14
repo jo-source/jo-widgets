@@ -25,53 +25,24 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swing.factory.internal;
+package org.jowidgets.impl.swing.widgets.internal.defaults;
 
-import javax.swing.JLabel;
+import org.jowidgets.api.color.ColorValue;
+import org.jowidgets.api.color.IColorConstant;
 
-import org.jowidgets.api.look.Markup;
-import org.jowidgets.api.util.ColorSettingsInvoker;
-import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.impl.swing.util.AlignmentConvert;
-import org.jowidgets.impl.swing.util.FontProvider;
-import org.jowidgets.impl.swing.widgets.SwingWidget;
-import org.jowidgets.spi.widgets.ITextLabelWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.ITextLabelSetupSpi;
+public enum Colors implements IColorConstant {
 
-public class TextLabelWidget extends SwingWidget implements ITextLabelWidgetSpi {
+	BORDER_TITLE(new ColorValue(0, 70, 213));
 
-	public TextLabelWidget(final IWidget parent, final ITextLabelSetupSpi<?> descriptor) {
+	private ColorValue colorValue;
 
-		super(new JLabel());
-
-		setText(descriptor.getText());
-		setToolTipText(descriptor.getToolTipText());
-
-		setMarkup(descriptor.getMarkup());
-
-		getUiReference().setHorizontalAlignment(AlignmentConvert.convert(descriptor.getAlignment()));
-		ColorSettingsInvoker.setColors(descriptor, this);
+	private Colors(final ColorValue colorValue) {
+		this.colorValue = colorValue;
 	}
 
 	@Override
-	public JLabel getUiReference() {
-		return (JLabel) super.getUiReference();
-	}
-
-	@Override
-	public void setText(final String text) {
-		getUiReference().setText(text);
-	}
-
-	@Override
-	public void setToolTipText(final String text) {
-		getUiReference().setToolTipText(text);
-	}
-
-	@Override
-	public void setMarkup(final Markup markup) {
-		final JLabel label = getUiReference();
-		label.setFont(FontProvider.deriveFont(label.getFont(), markup));
+	public ColorValue getDefaultValue() {
+		return colorValue;
 	}
 
 }

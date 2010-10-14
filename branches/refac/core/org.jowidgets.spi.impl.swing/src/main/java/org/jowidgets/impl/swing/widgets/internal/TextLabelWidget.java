@@ -25,35 +25,53 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swing.factory.internal;
+package org.jowidgets.impl.swing.widgets.internal;
 
-import javax.swing.JFrame;
+import javax.swing.JLabel;
 
+import org.jowidgets.api.look.Markup;
 import org.jowidgets.api.util.ColorSettingsInvoker;
-import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.impl.swing.internal.image.SwingImageRegistry;
-import org.jowidgets.impl.swing.widgets.SwingWindowWidget;
-import org.jowidgets.spi.widgets.IFrameWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.IFrameSetupSpi;
+import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.impl.swing.util.AlignmentConvert;
+import org.jowidgets.impl.swing.util.FontProvider;
+import org.jowidgets.impl.swing.widgets.SwingWidget;
+import org.jowidgets.spi.widgets.ITextLabelWidgetSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.ITextLabelSetupSpi;
 
-public class FrameWidget extends SwingWindowWidget implements IFrameWidgetSpi {
+public class TextLabelWidget extends SwingWidget implements ITextLabelWidgetSpi {
 
-	public FrameWidget(
-		final IGenericWidgetFactory factory,
-		final SwingImageRegistry imageRegistry,
-		final IFrameSetupSpi<?> descriptor) {
-		super(factory, new JFrame());
+	public TextLabelWidget(final IWidget parent, final ITextLabelSetupSpi<?> descriptor) {
 
-		getUiReference().setTitle(descriptor.getTitle());
+		super(new JLabel());
 
-		setIcon(descriptor.getIcon(), imageRegistry);
-		setLayout(descriptor.getLayout());
+		setText(descriptor.getText());
+		setToolTipText(descriptor.getToolTipText());
+
+		setMarkup(descriptor.getMarkup());
+
+		getUiReference().setHorizontalAlignment(AlignmentConvert.convert(descriptor.getAlignment()));
 		ColorSettingsInvoker.setColors(descriptor, this);
 	}
 
 	@Override
-	public JFrame getUiReference() {
-		return (JFrame) super.getUiReference();
+	public JLabel getUiReference() {
+		return (JLabel) super.getUiReference();
+	}
+
+	@Override
+	public void setText(final String text) {
+		getUiReference().setText(text);
+	}
+
+	@Override
+	public void setToolTipText(final String text) {
+		getUiReference().setToolTipText(text);
+	}
+
+	@Override
+	public void setMarkup(final Markup markup) {
+		final JLabel label = getUiReference();
+		label.setFont(FontProvider.deriveFont(label.getFont(), markup));
 	}
 
 }

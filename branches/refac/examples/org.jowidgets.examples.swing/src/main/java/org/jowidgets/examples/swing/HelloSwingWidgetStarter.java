@@ -31,7 +31,7 @@ import javax.swing.UIManager;
 import javax.swing.plaf.DimensionUIResource;
 
 import org.jowidgets.examples.common.HelloWidget;
-import org.jowidgets.impl.swing.factory.SwingWidgetFactory;
+import org.jowidgets.impl.swing.SwingWidgetFactory;
 
 import com.jgoodies.looks.Options;
 import com.jgoodies.looks.windows.WindowsLookAndFeel;

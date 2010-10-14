@@ -25,41 +25,47 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swing.factory.internal;
+package org.jowidgets.impl.swing.widgets.internal;
 
 import java.awt.Component;
-import java.io.Serializable;
 
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.text.JTextComponent;
+import org.jowidgets.api.color.IColorConstant;
+import org.jowidgets.api.widgets.IActionWidgetCommon;
+import org.jowidgets.api.widgets.controler.impl.ActionObservable;
+import org.jowidgets.impl.swing.widgets.SwingWidget;
 
-public abstract class AbstractSwingTextInputWidget<VALUE_TYPE extends Serializable> extends AbstractSwingInputWidget<VALUE_TYPE> {
+public abstract class AbstractSwingActionWidget extends ActionObservable implements IActionWidgetCommon {
 
-	public AbstractSwingTextInputWidget(final Component component) {
-		super(component);
+	private final SwingWidget swingWidgetDelegate;
+
+	public AbstractSwingActionWidget(final Component component) {
+		super();
+		this.swingWidgetDelegate = new SwingWidget(component);
 	}
 
-	protected void registerTextComponent(final JTextComponent textComponent) {
-		textComponent.getDocument().addDocumentListener(new DocumentListener() {
+	@Override
+	public void setEnabled(final boolean enabled) {
+		swingWidgetDelegate.getUiReference().setEnabled(enabled);
+	}
 
-			@Override
-			public void removeUpdate(final DocumentEvent e) {
-				fireInputChanged(textComponent);
-			}
+	@Override
+	public Component getUiReference() {
+		return swingWidgetDelegate.getUiReference();
+	}
 
-			@Override
-			public void insertUpdate(final DocumentEvent e) {
-				fireInputChanged(textComponent);
-			}
+	@Override
+	public void redraw() {
+		swingWidgetDelegate.redraw();
+	}
 
-			@Override
-			public void changedUpdate(final DocumentEvent e) {
-				fireInputChanged(textComponent);
-			}
+	@Override
+	public void setForegroundColor(final IColorConstant colorValue) {
+		swingWidgetDelegate.setForegroundColor(colorValue);
+	}
 
-		});
-
+	@Override
+	public void setBackgroundColor(final IColorConstant colorValue) {
+		swingWidgetDelegate.setBackgroundColor(colorValue);
 	}
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2010, Manuel Woelker, Michael Grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,42 +25,44 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swing.factory.internal.util;
+package org.jowidgets.impl.swing.image;
 
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.JTextComponent;
-import javax.swing.text.PlainDocument;
+import java.awt.Image;
 
-import org.jowidgets.api.veto.IInputVetoChecker;
+import javax.swing.ImageIcon;
 
-public class ValidatedInputDocument extends PlainDocument {
+import org.jowidgets.api.image.IImageConstant;
+import org.jowidgets.api.image.impl.ImageRegistry;
 
-	private static final long serialVersionUID = 6900501331487160350L;
+public class SwingImageRegistry extends ImageRegistry {
 
-	private final JTextComponent textComponent;
-	private final IInputVetoChecker<String> vetoChecker;
-
-	public ValidatedInputDocument(final JTextComponent textComponent, final IInputVetoChecker<String> vetoChecker) {
-		super();
-		this.textComponent = textComponent;
-		this.vetoChecker = vetoChecker;
+	public SwingImageRegistry() {
+		super(new SwingImageHandleProvider());
 	}
 
-	@Override
-	public void insertString(final int offs, final String str, final AttributeSet a) throws BadLocationException {
+	public synchronized SwingImageHandle getImageHandle(final IImageConstant key) {
+		return (SwingImageHandle) super.getImageHandle(key);
+	}
 
-		final String currentText = textComponent.getText();
-		final StringBuilder newTextBuilder = new StringBuilder();
-		if (currentText != null) {
-			if (offs > 0) {
-				newTextBuilder.append(currentText.substring(0, offs));
-			}
-			newTextBuilder.append(str);
-			newTextBuilder.append(currentText.substring(offs, currentText.length()));
+	public synchronized Image getImage(final IImageConstant key) {
+		if (key == null) {
+			return null;
 		}
-		if (!vetoChecker.vetoCheck(newTextBuilder.toString()).isVeto()) {
-			super.insertString(offs, str, a);
+		final SwingImageHandle imageHandle = getImageHandle(key);
+		if (imageHandle != null) {
+			return imageHandle.getImage();
+		}
+		else {
+			throw new IllegalArgumentException("No icon found for the image constant '" + key + "'");
+		}
+	}
+
+	public synchronized ImageIcon getImageIcon(final IImageConstant key) {
+		if (key == null) {
+			return null;
+		}
+		else {
+			return new ImageIcon(getImage(key));
 		}
 	}
 

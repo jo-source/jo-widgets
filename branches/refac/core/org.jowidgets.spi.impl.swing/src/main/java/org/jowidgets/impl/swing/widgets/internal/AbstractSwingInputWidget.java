@@ -25,45 +25,46 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swing.factory.internal;
+package org.jowidgets.impl.swing.widgets.internal;
 
-import java.awt.Window;
+import java.awt.Component;
 
-import javax.swing.JDialog;
+import org.jowidgets.api.color.IColorConstant;
+import org.jowidgets.api.widgets.controler.impl.InputObservable;
+import org.jowidgets.impl.swing.widgets.SwingWidget;
+import org.jowidgets.spi.widgets.IInputWidgetSpi;
 
-import org.jowidgets.api.util.ColorSettingsInvoker;
-import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.impl.swing.internal.image.SwingImageRegistry;
-import org.jowidgets.impl.swing.widgets.SwingWindowWidget;
-import org.jowidgets.spi.widgets.IFrameWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.IDialogSetupSpi;
+public abstract class AbstractSwingInputWidget<VALUE_TYPE> extends InputObservable implements IInputWidgetSpi<VALUE_TYPE> {
 
-public class DialogWidget extends SwingWindowWidget implements IFrameWidgetSpi {
+	private final Component component;
+	private final SwingWidget swingWidgetDelegate;
 
-	public DialogWidget(
-		final IGenericWidgetFactory factory,
-		final SwingImageRegistry imageRegistry,
-		final IWidget parent,
-		final IDialogSetupSpi<?> descriptor) {
-		super(factory, new JDialog((Window) parent.getUiReference()));
-
-		getUiReference().setTitle(descriptor.getTitle());
-		getUiReference().setModal(true);
-
-		setIcon(descriptor.getIcon(), imageRegistry);
-		setLayout(descriptor.getLayout());
-		ColorSettingsInvoker.setColors(descriptor, this);
+	public AbstractSwingInputWidget(final Component component) {
+		super();
+		this.component = component;
+		this.swingWidgetDelegate = new SwingWidget(component);
 	}
 
 	@Override
-	public JDialog getUiReference() {
-		return (JDialog) super.getUiReference();
+	public Component getUiReference() {
+		return component;
 	}
 
 	@Override
-	public void setVisible(final boolean visible) {
-		getUiReference().setVisible(visible);
+	public void redraw() {
+		swingWidgetDelegate.redraw();
 	}
+
+	@Override
+	public void setForegroundColor(final IColorConstant colorValue) {
+		swingWidgetDelegate.setForegroundColor(colorValue);
+	}
+
+	@Override
+	public void setBackgroundColor(final IColorConstant colorValue) {
+		swingWidgetDelegate.setBackgroundColor(colorValue);
+	}
+	
+	
 
 }

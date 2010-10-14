@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swing.factory.internal;
+package org.jowidgets.impl.swing.widgets.internal;
 
 import java.awt.Component;
 import java.awt.event.ActionListener;
@@ -37,7 +37,7 @@ import javax.swing.event.DocumentListener;
 
 import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.convert.IStringObjectConverter;
-import org.jowidgets.impl.swing.factory.internal.util.ValidatedInputDocument;
+import org.jowidgets.impl.swing.widgets.internal.util.ValidatedInputDocument;
 import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;
 import org.jowidgets.spi.widgets.descriptor.setup.IComboBoxSetupSpi;
 

@@ -25,24 +25,28 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swing.factory.internal.defaults;
+package org.jowidgets.impl.swing.widgets.internal;
 
-import org.jowidgets.api.color.ColorValue;
-import org.jowidgets.api.color.IColorConstant;
+import javax.swing.JPanel;
 
-public enum Colors implements IColorConstant {
+import org.jowidgets.api.util.ColorSettingsInvoker;
+import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.api.widgets.setup.ICompositeSetupCommon;
+import org.jowidgets.impl.swing.util.BorderConvert;
+import org.jowidgets.impl.swing.widgets.SwingContainerWidget;
 
-	BORDER_TITLE(new ColorValue(0, 70, 213));
+public class CompositeWidget extends SwingContainerWidget {
 
-	private ColorValue colorValue;
-
-	private Colors(final ColorValue colorValue) {
-		this.colorValue = colorValue;
+	public CompositeWidget(final IGenericWidgetFactory factory, final ICompositeSetupCommon<?> settings) {
+		super(factory, new JPanel());
+		getUiReference().setBorder(BorderConvert.convert(settings.getBorder()));
+		setLayout(settings.getLayout());
+		ColorSettingsInvoker.setColors(settings, this);
 	}
 
 	@Override
-	public ColorValue getDefaultValue() {
-		return colorValue;
+	public JPanel getUiReference() {
+		return (JPanel) super.getUiReference();
 	}
 
 }

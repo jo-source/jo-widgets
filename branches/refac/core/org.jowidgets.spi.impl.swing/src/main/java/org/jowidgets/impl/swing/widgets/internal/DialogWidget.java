@@ -25,18 +25,45 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swing.factory.internal;
+package org.jowidgets.impl.swing.widgets.internal;
 
-import javax.swing.JCheckBox;
+import java.awt.Window;
 
-import org.jowidgets.api.widgets.setup.ICheckBoxSetupCommon;
-import org.jowidgets.impl.swing.internal.image.SwingImageRegistry;
-import org.jowidgets.spi.widgets.IToggleButtonWidgetSpi;
+import javax.swing.JDialog;
 
-public class CheckBoxWidget extends ToggleButtonWidget {
+import org.jowidgets.api.util.ColorSettingsInvoker;
+import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.impl.swing.image.SwingImageRegistry;
+import org.jowidgets.impl.swing.widgets.SwingWindowWidget;
+import org.jowidgets.spi.widgets.IFrameWidgetSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.IDialogSetupSpi;
 
-	public CheckBoxWidget(final SwingImageRegistry imageRegistry, final ICheckBoxSetupCommon<IToggleButtonWidgetSpi> descriptor) {
-		super(imageRegistry, new JCheckBox(), descriptor);
+public class DialogWidget extends SwingWindowWidget implements IFrameWidgetSpi {
+
+	public DialogWidget(
+		final IGenericWidgetFactory factory,
+		final SwingImageRegistry imageRegistry,
+		final IWidget parent,
+		final IDialogSetupSpi<?> descriptor) {
+		super(factory, new JDialog((Window) parent.getUiReference()));
+
+		getUiReference().setTitle(descriptor.getTitle());
+		getUiReference().setModal(true);
+
+		setIcon(descriptor.getIcon(), imageRegistry);
+		setLayout(descriptor.getLayout());
+		ColorSettingsInvoker.setColors(descriptor, this);
+	}
+
+	@Override
+	public JDialog getUiReference() {
+		return (JDialog) super.getUiReference();
+	}
+
+	@Override
+	public void setVisible(final boolean visible) {
+		getUiReference().setVisible(visible);
 	}
 
 }
