@@ -32,7 +32,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.api.color.IColorConstant;
 import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.impl.swt.internal.color.IColorCache;
+import org.jowidgets.impl.swt.color.IColorCache;
 
 public class SwtWidget implements IWidget {
 

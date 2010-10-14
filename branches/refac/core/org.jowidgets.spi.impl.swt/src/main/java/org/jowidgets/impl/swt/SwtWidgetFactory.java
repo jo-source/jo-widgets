@@ -25,27 +25,27 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swt.factory;
+package org.jowidgets.impl.swt;
 
 import org.jowidgets.api.image.IImageRegistry;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.impl.swt.factory.internal.ButtonWidget;
-import org.jowidgets.impl.swt.factory.internal.CheckBoxWidget;
-import org.jowidgets.impl.swt.factory.internal.ComboBoxSelectionWidget;
-import org.jowidgets.impl.swt.factory.internal.ComboBoxWidget;
-import org.jowidgets.impl.swt.factory.internal.CompositeWidget;
-import org.jowidgets.impl.swt.factory.internal.DialogWidget;
-import org.jowidgets.impl.swt.factory.internal.FrameWidget;
-import org.jowidgets.impl.swt.factory.internal.IconWidget;
-import org.jowidgets.impl.swt.factory.internal.ScrollCompositeWidget;
-import org.jowidgets.impl.swt.factory.internal.SeparatorWidget;
-import org.jowidgets.impl.swt.factory.internal.TextFieldWidget;
-import org.jowidgets.impl.swt.factory.internal.TextLabelWidget;
-import org.jowidgets.impl.swt.factory.internal.ToggleButtonWidget;
-import org.jowidgets.impl.swt.internal.color.ColorCache;
-import org.jowidgets.impl.swt.internal.color.IColorCache;
-import org.jowidgets.impl.swt.internal.image.SwtImageRegistry;
+import org.jowidgets.impl.swt.color.ColorCache;
+import org.jowidgets.impl.swt.color.IColorCache;
+import org.jowidgets.impl.swt.image.SwtImageRegistry;
+import org.jowidgets.impl.swt.widgets.internal.ButtonWidget;
+import org.jowidgets.impl.swt.widgets.internal.CheckBoxWidget;
+import org.jowidgets.impl.swt.widgets.internal.ComboBoxSelectionWidget;
+import org.jowidgets.impl.swt.widgets.internal.ComboBoxWidget;
+import org.jowidgets.impl.swt.widgets.internal.CompositeWidget;
+import org.jowidgets.impl.swt.widgets.internal.DialogWidget;
+import org.jowidgets.impl.swt.widgets.internal.FrameWidget;
+import org.jowidgets.impl.swt.widgets.internal.IconWidget;
+import org.jowidgets.impl.swt.widgets.internal.ScrollCompositeWidget;
+import org.jowidgets.impl.swt.widgets.internal.SeparatorWidget;
+import org.jowidgets.impl.swt.widgets.internal.TextFieldWidget;
+import org.jowidgets.impl.swt.widgets.internal.TextLabelWidget;
+import org.jowidgets.impl.swt.widgets.internal.ToggleButtonWidget;
 import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.widgets.IButtonWidgetSpi;
 import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;

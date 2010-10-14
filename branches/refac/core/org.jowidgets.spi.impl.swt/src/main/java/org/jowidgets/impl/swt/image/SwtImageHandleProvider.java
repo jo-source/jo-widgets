@@ -25,31 +25,18 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swt.internal.image;
+package org.jowidgets.impl.swt.image;
 
-import java.io.IOException;
 import java.net.URL;
 
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Display;
-import org.jowidgets.api.image.impl.AbstractImageHandle;
+import org.jowidgets.api.image.IImageHandle;
+import org.jowidgets.api.image.impl.AbstractImageHandleProvider;
 
-public class SwtImageHandle extends AbstractImageHandle<Image> {
-
-	private final URL url;
-
-	public SwtImageHandle(final URL url) {
-		this.url = url;
-	}
+public class SwtImageHandleProvider extends AbstractImageHandleProvider {
 
 	@Override
-	protected Image createImage() {
-		try {
-			return new Image(Display.getDefault(), url.openStream());
-		}
-		catch (final IOException e) {
-			throw new RuntimeException(e);
-		}
+	protected IImageHandle createImageHandle(final URL url) {
+		return new SwtImageHandle(url);
 	}
 
 }

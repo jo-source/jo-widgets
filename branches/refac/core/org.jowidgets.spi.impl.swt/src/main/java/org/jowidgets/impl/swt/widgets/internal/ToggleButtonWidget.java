@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swt.factory.internal;
+package org.jowidgets.impl.swt.widgets.internal;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
@@ -37,40 +37,55 @@ import org.jowidgets.api.image.IImageConstant;
 import org.jowidgets.api.look.Markup;
 import org.jowidgets.api.util.ColorSettingsInvoker;
 import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.impl.swt.internal.color.IColorCache;
-import org.jowidgets.impl.swt.internal.image.SwtImageRegistry;
+import org.jowidgets.api.widgets.setup.ICheckBoxSetupCommon;
+import org.jowidgets.impl.swt.color.IColorCache;
+import org.jowidgets.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.impl.swt.util.AlignmentConvert;
 import org.jowidgets.impl.swt.util.FontProvider;
-import org.jowidgets.spi.widgets.IButtonWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.IButtonSetupSpi;
+import org.jowidgets.spi.widgets.IToggleButtonWidgetSpi;
+import org.jowidgets.util.Assert;
 
-public class ButtonWidget extends AbstractSwtActionWidget implements IButtonWidgetSpi {
+public class ToggleButtonWidget extends AbstractSwtInputWidget<Boolean> implements IToggleButtonWidgetSpi {
 
 	private final SwtImageRegistry imageRegistry;
 
-	public ButtonWidget(
+	public ToggleButtonWidget(
 		final IColorCache colorCache,
 		final SwtImageRegistry imageRegistry,
 		final IWidget parent,
-		final IButtonSetupSpi<?> descriptor) {
-		super(colorCache, new Button((Composite) parent.getUiReference(), SWT.NONE));
+		final ICheckBoxSetupCommon<?> descriptor) {
+		this(
+			colorCache,
+			imageRegistry,
+			parent,
+			new Button((Composite) parent.getUiReference(), SWT.NONE | SWT.TOGGLE),
+			descriptor);
+	}
+
+	public ToggleButtonWidget(
+		final IColorCache colorCache,
+		final SwtImageRegistry imageRegistry,
+		final IWidget parent,
+		final Button button,
+		final ICheckBoxSetupCommon<?> descriptor) {
+		super(colorCache, button);
+
 		this.imageRegistry = imageRegistry;
 
 		setText(descriptor.getText());
 		setToolTipText(descriptor.getToolTipText());
 		setIcon(descriptor.getIcon());
-
 		setMarkup(descriptor.getMarkup());
 
 		getUiReference().setAlignment(AlignmentConvert.convert(descriptor.getAlignment()));
+		ColorSettingsInvoker.setColors(descriptor, this);
 
 		getUiReference().addListener(SWT.Selection, new Listener() {
 			@Override
 			public void handleEvent(final Event event) {
-				fireActionPerformed();
+				fireInputChanged(this);
 			}
 		});
-		ColorSettingsInvoker.setColors(descriptor, this);
 	}
 
 	@Override
@@ -79,8 +94,36 @@ public class ButtonWidget extends AbstractSwtActionWidget implements IButtonWidg
 	}
 
 	@Override
+	public Boolean getValue() {
+		return Boolean.valueOf(isSelected());
+	}
+
+	@Override
+	public void setValue(final Boolean value) {
+		Assert.paramNotNull(value, "value");
+		setSelected(value.booleanValue());
+	}
+
+	@Override
+	public void setEditable(final boolean editable) {
+		getUiReference().setEnabled(editable);
+	}
+
+	@Override
+	public void setMarkup(final Markup markup) {
+		final Button button = this.getUiReference();
+		final Font newFont = FontProvider.deriveFont(button.getFont(), markup);
+		button.setFont(newFont);
+	}
+
+	@Override
 	public void setText(final String text) {
-		getUiReference().setText(text);
+		if (text != null) {
+			getUiReference().setText(text);
+		}
+		else {
+			setText("");
+		}
 	}
 
 	@Override
@@ -94,10 +137,13 @@ public class ButtonWidget extends AbstractSwtActionWidget implements IButtonWidg
 	}
 
 	@Override
-	public void setMarkup(final Markup markup) {
-		final Button button = this.getUiReference();
-		final Font newFont = FontProvider.deriveFont(button.getFont(), markup);
-		button.setFont(newFont);
+	public boolean isSelected() {
+		return getUiReference().getSelection();
+	}
+
+	@Override
+	public void setSelected(final boolean selected) {
+		getUiReference().setSelection(selected);
 	}
 
 }

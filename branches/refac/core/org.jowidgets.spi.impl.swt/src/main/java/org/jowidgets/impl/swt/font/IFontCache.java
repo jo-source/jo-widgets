@@ -25,29 +25,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swt.factory.internal;
+package org.jowidgets.impl.swt.font;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
-import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.setup.ICheckBoxSetupCommon;
-import org.jowidgets.impl.swt.internal.color.IColorCache;
-import org.jowidgets.impl.swt.internal.image.SwtImageRegistry;
+import org.eclipse.swt.graphics.Font;
 
-public class CheckBoxWidget extends ToggleButtonWidget {
+public interface IFontCache {
 
-	public CheckBoxWidget(
-		final IColorCache colorCache,
-		final SwtImageRegistry imageRegistry,
-		final IWidget parent,
-		final ICheckBoxSetupCommon<?> descriptor) {
-		super(
-			colorCache,
-			imageRegistry,
-			parent,
-			new Button((Composite) parent.getUiReference(), SWT.NONE | SWT.CHECK),
-			descriptor);
-	}
+	Font getFont(FontDataKey fontData);
 
 }

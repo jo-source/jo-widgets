@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swt.internal.image;
+package org.jowidgets.impl.swt.image;
 
 import org.eclipse.swt.graphics.Image;
 import org.jowidgets.api.image.IImageConstant;

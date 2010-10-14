@@ -25,44 +25,32 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swt.factory.internal;
+package org.jowidgets.impl.swt.widgets.internal;
 
-import org.eclipse.swt.widgets.Control;
-import org.jowidgets.api.color.IColorConstant;
-import org.jowidgets.api.widgets.controler.impl.InputObservable;
-import org.jowidgets.impl.swt.internal.color.IColorCache;
-import org.jowidgets.impl.swt.widgets.SwtWidget;
-import org.jowidgets.spi.widgets.IInputWidgetSpi;
+import org.eclipse.swt.widgets.Composite;
+import org.jowidgets.api.util.ColorSettingsInvoker;
+import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.impl.swt.color.IColorCache;
+import org.jowidgets.impl.swt.util.BorderToComposite;
+import org.jowidgets.impl.swt.widgets.SwtContainerWidget;
+import org.jowidgets.spi.widgets.descriptor.setup.ICompositeSetupSpi;
 
-public abstract class AbstractSwtInputWidget<VALUE_TYPE> extends InputObservable implements IInputWidgetSpi<VALUE_TYPE> {
+public class CompositeWidget extends SwtContainerWidget {
 
-	private final Control control;
-	private final SwtWidget swtWidgetDelegate;
+	public CompositeWidget(
+		final IGenericWidgetFactory factory,
+		final IColorCache colorCache,
+		final IWidget parent,
+		final ICompositeSetupSpi<?> settings) {
 
-	public AbstractSwtInputWidget(final IColorCache colorCache, final Control control) {
-		super();
-		this.control = control;
-		this.swtWidgetDelegate = new SwtWidget(colorCache, control);
+		super(factory, colorCache, createComposite(parent, settings));
+
+		setLayout(settings.getLayout());
+		ColorSettingsInvoker.setColors(settings, this);
 	}
 
-	@Override
-	public Control getUiReference() {
-		return control;
+	private static Composite createComposite(final IWidget parent, final ICompositeSetupSpi<?> descriptor) {
+		return BorderToComposite.convert((Composite) parent.getUiReference(), descriptor.getBorder());
 	}
-
-	@Override
-	public void redraw() {
-		swtWidgetDelegate.redraw();
-	}
-
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		swtWidgetDelegate.setForegroundColor(colorValue);
-	}
-
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		swtWidgetDelegate.setBackgroundColor(colorValue);
-	}
-
 }

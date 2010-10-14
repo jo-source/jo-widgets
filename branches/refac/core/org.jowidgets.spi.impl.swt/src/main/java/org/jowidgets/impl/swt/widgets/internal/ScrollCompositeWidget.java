@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swt.factory.internal;
+package org.jowidgets.impl.swt.widgets.internal;
 
 import net.miginfocom.swt.MigLayout;
 
@@ -42,7 +42,7 @@ import org.jowidgets.api.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.api.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.api.widgets.setup.IWidgetSetupCommon;
-import org.jowidgets.impl.swt.internal.color.IColorCache;
+import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.util.ScrollBarSettingsConvert;
 import org.jowidgets.impl.swt.widgets.SwtContainerWidget;
 import org.jowidgets.spi.widgets.IScrollContainerWidgetSpi;

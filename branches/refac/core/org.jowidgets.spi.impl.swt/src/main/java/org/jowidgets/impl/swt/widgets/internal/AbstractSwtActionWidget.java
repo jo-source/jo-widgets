@@ -25,34 +25,47 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swt.factory.internal;
+package org.jowidgets.impl.swt.widgets.internal;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
-import org.jowidgets.api.util.ColorSettingsInvoker;
-import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.impl.swt.internal.color.IColorCache;
-import org.jowidgets.impl.swt.util.OrientationConvert;
+import org.eclipse.swt.widgets.Control;
+import org.jowidgets.api.color.IColorConstant;
+import org.jowidgets.api.widgets.IActionWidgetCommon;
+import org.jowidgets.api.widgets.controler.impl.ActionObservable;
+import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.widgets.SwtWidget;
-import org.jowidgets.spi.widgets.IWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.ISeparatorSetupSpi;
 
-public class SeparatorWidget extends SwtWidget implements IWidgetSpi {
+public abstract class AbstractSwtActionWidget extends ActionObservable implements IActionWidgetCommon {
 
-	public SeparatorWidget(final IColorCache colorCache, final IWidget parent, final ISeparatorSetupSpi<?> descriptor) {
-		super(colorCache, createSeparator(parent, descriptor));
-		ColorSettingsInvoker.setColors(descriptor, this);
+	private final SwtWidget swtWidgetDelegate;
+
+	public AbstractSwtActionWidget(final IColorCache colorCache, final Control control) {
+		super();
+		this.swtWidgetDelegate = new SwtWidget(colorCache, control);
 	}
 
 	@Override
-	public Label getUiReference() {
-		return (Label) super.getUiReference();
+	public void setEnabled(final boolean enabled) {
+		swtWidgetDelegate.getUiReference().setEnabled(enabled);
 	}
 
-	private static Label createSeparator(final IWidget parent, final ISeparatorSetupSpi<?> descriptor) {
-		final int orientation = OrientationConvert.convert(descriptor.getOrientation());
-		return new Label((Composite) parent.getUiReference(), SWT.SEPARATOR | orientation);
+	@Override
+	public Control getUiReference() {
+		return swtWidgetDelegate.getUiReference();
+	}
+
+	@Override
+	public void redraw() {
+		swtWidgetDelegate.redraw();
+	}
+
+	@Override
+	public void setForegroundColor(final IColorConstant colorValue) {
+		swtWidgetDelegate.setForegroundColor(colorValue);
+	}
+
+	@Override
+	public void setBackgroundColor(final IColorConstant colorValue) {
+		swtWidgetDelegate.setBackgroundColor(colorValue);
 	}
 
 }

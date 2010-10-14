@@ -25,49 +25,34 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swt.util;
+package org.jowidgets.impl.swt.widgets.internal;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
-import org.jowidgets.api.look.Markup;
-import org.jowidgets.impl.swt.font.FontCache;
-import org.jowidgets.impl.swt.font.FontDataKey;
-import org.jowidgets.impl.swt.font.IFontCache;
-import org.jowidgets.util.Assert;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+import org.jowidgets.api.util.ColorSettingsInvoker;
+import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.impl.swt.color.IColorCache;
+import org.jowidgets.impl.swt.util.OrientationConvert;
+import org.jowidgets.impl.swt.widgets.SwtWidget;
+import org.jowidgets.spi.widgets.IWidgetSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.ISeparatorSetupSpi;
 
-public final class FontProvider {
+public class SeparatorWidget extends SwtWidget implements IWidgetSpi {
 
-	private static final IFontCache FONT_CACHE = new FontCache();
+	public SeparatorWidget(final IColorCache colorCache, final IWidget parent, final ISeparatorSetupSpi<?> descriptor) {
+		super(colorCache, createSeparator(parent, descriptor));
+		ColorSettingsInvoker.setColors(descriptor, this);
+	}
 
-	private FontProvider() {};
+	@Override
+	public Label getUiReference() {
+		return (Label) super.getUiReference();
+	}
 
-	public static Font deriveFont(final Font baseFont, final Markup markup) {
-		Assert.paramNotNull(baseFont, "baseFont");
-		Assert.paramNotNull(markup, "markup");
-
-		int style;
-		if (Markup.DEFAULT.equals(markup)) {
-			style = SWT.NORMAL;
-		}
-		else if (Markup.STRONG.equals(markup)) {
-			style = SWT.BOLD;
-		}
-		else if (Markup.EMPHASIZED.equals(markup)) {
-			style = SWT.ITALIC;
-		}
-		else {
-			throw new IllegalArgumentException("The markup '" + markup + "' is unknown.");
-		}
-
-		final FontData[] oldFontData = baseFont.getFontData();
-		final FontData[] newFontData = new FontData[oldFontData.length];
-
-		for (int i = 0; i < oldFontData.length; i++) {
-			newFontData[i] = new FontData(oldFontData[i].getName(), oldFontData[i].getHeight(), style);
-		}
-
-		return FONT_CACHE.getFont(new FontDataKey(newFontData));
+	private static Label createSeparator(final IWidget parent, final ISeparatorSetupSpi<?> descriptor) {
+		final int orientation = OrientationConvert.convert(descriptor.getOrientation());
+		return new Label((Composite) parent.getUiReference(), SWT.SEPARATOR | orientation);
 	}
 
 }

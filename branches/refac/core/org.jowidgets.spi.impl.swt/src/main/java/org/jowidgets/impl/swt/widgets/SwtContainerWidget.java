@@ -40,7 +40,7 @@ import org.jowidgets.api.widgets.factory.IWidgetFactory;
 import org.jowidgets.api.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.api.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.api.widgets.setup.IWidgetSetupCommon;
-import org.jowidgets.impl.swt.internal.color.IColorCache;
+import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.spi.widgets.IContainerWidgetSpi;
 import org.jowidgets.util.Assert;
 

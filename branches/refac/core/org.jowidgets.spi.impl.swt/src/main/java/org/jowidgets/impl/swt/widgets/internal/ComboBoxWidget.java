@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swt.factory.internal;
+package org.jowidgets.impl.swt.widgets.internal;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.VerifyEvent;
@@ -34,7 +34,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.api.convert.IStringObjectConverter;
 import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.impl.swt.internal.color.IColorCache;
+import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.spi.widgets.descriptor.setup.IComboBoxSetupSpi;
 
 public class ComboBoxWidget<INPUT_TYPE> extends ComboBoxSelectionWidget<INPUT_TYPE> {

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swt.factory.internal;
+package org.jowidgets.impl.swt.widgets.internal;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ShellAdapter;
@@ -35,8 +35,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.api.util.ColorSettingsInvoker;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.impl.swt.internal.color.IColorCache;
-import org.jowidgets.impl.swt.internal.image.SwtImageRegistry;
+import org.jowidgets.impl.swt.color.IColorCache;
+import org.jowidgets.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.impl.swt.widgets.SwtWindowWidget;
 import org.jowidgets.spi.widgets.IFrameWidgetSpi;
 import org.jowidgets.spi.widgets.descriptor.setup.IDialogSetupSpi;

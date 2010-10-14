@@ -25,32 +25,63 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swt.factory.internal;
+package org.jowidgets.impl.swt.widgets.internal;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+import org.jowidgets.api.look.Markup;
 import org.jowidgets.api.util.ColorSettingsInvoker;
 import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.impl.swt.internal.color.IColorCache;
-import org.jowidgets.impl.swt.util.BorderToComposite;
-import org.jowidgets.impl.swt.widgets.SwtContainerWidget;
-import org.jowidgets.spi.widgets.descriptor.setup.ICompositeSetupSpi;
+import org.jowidgets.impl.swt.color.IColorCache;
+import org.jowidgets.impl.swt.util.AlignmentConvert;
+import org.jowidgets.impl.swt.util.FontProvider;
+import org.jowidgets.impl.swt.widgets.SwtWidget;
+import org.jowidgets.spi.widgets.ITextLabelWidgetSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.ITextLabelSetupSpi;
 
-public class CompositeWidget extends SwtContainerWidget {
+public class TextLabelWidget extends SwtWidget implements ITextLabelWidgetSpi {
 
-	public CompositeWidget(
-		final IGenericWidgetFactory factory,
-		final IColorCache colorCache,
-		final IWidget parent,
-		final ICompositeSetupSpi<?> settings) {
+	public TextLabelWidget(final IColorCache colorCache, final IWidget parent, final ITextLabelSetupSpi<?> descriptor) {
 
-		super(factory, colorCache, createComposite(parent, settings));
+		super(colorCache, new Label((Composite) parent.getUiReference(), SWT.BOLD));
 
-		setLayout(settings.getLayout());
-		ColorSettingsInvoker.setColors(settings, this);
+		setText(descriptor.getText());
+		setToolTipText(descriptor.getToolTipText());
+
+		setMarkup(descriptor.getMarkup());
+
+		getUiReference().setAlignment(AlignmentConvert.convert(descriptor.getAlignment()));
+		ColorSettingsInvoker.setColors(descriptor, this);
 	}
 
-	private static Composite createComposite(final IWidget parent, final ICompositeSetupSpi<?> descriptor) {
-		return BorderToComposite.convert((Composite) parent.getUiReference(), descriptor.getBorder());
+	@Override
+	public Label getUiReference() {
+		return (Label) super.getUiReference();
 	}
+
+	@Override
+	public void setText(String text) {
+		final String oldText = getUiReference().getText();
+		if (text == null) {
+			text = "";
+		}
+		if (!text.equals(oldText)) {
+			getUiReference().setText(text);
+		}
+	}
+
+	@Override
+	public void setToolTipText(final String text) {
+		getUiReference().setToolTipText(text);
+	}
+
+	@Override
+	public void setMarkup(final Markup markup) {
+		final Label label = this.getUiReference();
+		final Font newFont = FontProvider.deriveFont(label.getFont(), markup);
+		label.setFont(newFont);
+	}
+
 }

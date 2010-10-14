@@ -25,63 +25,51 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swt.factory.internal;
+package org.jowidgets.impl.swt.widgets.internal;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.jowidgets.api.look.Markup;
+import org.jowidgets.api.image.IImageConstant;
 import org.jowidgets.api.util.ColorSettingsInvoker;
 import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.impl.swt.internal.color.IColorCache;
-import org.jowidgets.impl.swt.util.AlignmentConvert;
-import org.jowidgets.impl.swt.util.FontProvider;
+import org.jowidgets.impl.swt.color.IColorCache;
+import org.jowidgets.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.impl.swt.widgets.SwtWidget;
-import org.jowidgets.spi.widgets.ITextLabelWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.ITextLabelSetupSpi;
+import org.jowidgets.spi.widgets.IIconWidgetSpi;
+import org.jowidgets.spi.widgets.descriptor.setup.IIconSetupSpi;
 
-public class TextLabelWidget extends SwtWidget implements ITextLabelWidgetSpi {
+public class IconWidget extends SwtWidget implements IIconWidgetSpi {
 
-	public TextLabelWidget(final IColorCache colorCache, final IWidget parent, final ITextLabelSetupSpi<?> descriptor) {
+	private final SwtImageRegistry imageRegistry;
 
-		super(colorCache, new Label((Composite) parent.getUiReference(), SWT.BOLD));
+	public IconWidget(
+		final IColorCache colorCache,
+		final SwtImageRegistry imageRegistry,
+		final IWidget parent,
+		final IIconSetupSpi<?> descriptor) {
 
-		setText(descriptor.getText());
-		setToolTipText(descriptor.getToolTipText());
+		super(colorCache, new Label((Composite) parent.getUiReference(), SWT.NONE));
+		this.imageRegistry = imageRegistry;
 
-		setMarkup(descriptor.getMarkup());
-
-		getUiReference().setAlignment(AlignmentConvert.convert(descriptor.getAlignment()));
+		setIcon(descriptor.getIcon());
 		ColorSettingsInvoker.setColors(descriptor, this);
+	}
+
+	@Override
+	public void setIcon(final IImageConstant icon) {
+		final Image oldImage = getUiReference().getImage();
+		final Image newImage = imageRegistry.getImage(icon);
+
+		if (oldImage != newImage) {
+			getUiReference().setImage(newImage);
+		}
 	}
 
 	@Override
 	public Label getUiReference() {
 		return (Label) super.getUiReference();
-	}
-
-	@Override
-	public void setText(String text) {
-		final String oldText = getUiReference().getText();
-		if (text == null) {
-			text = "";
-		}
-		if (!text.equals(oldText)) {
-			getUiReference().setText(text);
-		}
-	}
-
-	@Override
-	public void setToolTipText(final String text) {
-		getUiReference().setToolTipText(text);
-	}
-
-	@Override
-	public void setMarkup(final Markup markup) {
-		final Label label = this.getUiReference();
-		final Font newFont = FontProvider.deriveFont(label.getFont(), markup);
-		label.setFont(newFont);
 	}
 
 }

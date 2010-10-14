@@ -25,32 +25,29 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swt.factory.internal;
+package org.jowidgets.impl.swt.widgets.internal;
 
 import org.eclipse.swt.widgets.Control;
 import org.jowidgets.api.color.IColorConstant;
-import org.jowidgets.api.widgets.IActionWidgetCommon;
-import org.jowidgets.api.widgets.controler.impl.ActionObservable;
-import org.jowidgets.impl.swt.internal.color.IColorCache;
+import org.jowidgets.api.widgets.controler.impl.InputObservable;
+import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.widgets.SwtWidget;
+import org.jowidgets.spi.widgets.IInputWidgetSpi;
 
-public abstract class AbstractSwtActionWidget extends ActionObservable implements IActionWidgetCommon {
+public abstract class AbstractSwtInputWidget<VALUE_TYPE> extends InputObservable implements IInputWidgetSpi<VALUE_TYPE> {
 
+	private final Control control;
 	private final SwtWidget swtWidgetDelegate;
 
-	public AbstractSwtActionWidget(final IColorCache colorCache, final Control control) {
+	public AbstractSwtInputWidget(final IColorCache colorCache, final Control control) {
 		super();
+		this.control = control;
 		this.swtWidgetDelegate = new SwtWidget(colorCache, control);
 	}
 
 	@Override
-	public void setEnabled(final boolean enabled) {
-		swtWidgetDelegate.getUiReference().setEnabled(enabled);
-	}
-
-	@Override
 	public Control getUiReference() {
-		return swtWidgetDelegate.getUiReference();
+		return control;
 	}
 
 	@Override

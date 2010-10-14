@@ -25,30 +25,50 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swt.factory.internal;
+package org.jowidgets.impl.swt.font;
 
-import java.io.Serializable;
+import java.util.Arrays;
 
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Text;
-import org.jowidgets.impl.swt.internal.color.IColorCache;
+import org.eclipse.swt.graphics.FontData;
+import org.jowidgets.util.Assert;
 
-public abstract class AbstractSwtTextInputWidget<VALUE_TYPE extends Serializable> extends AbstractSwtInputWidget<VALUE_TYPE> {
+public class FontDataKey {
 
-	public AbstractSwtTextInputWidget(final IColorCache colorCache, final Control component) {
-		super(colorCache, component);
+	private final FontData[] fontData;
+
+	public FontDataKey(final FontData[] fontData) {
+		Assert.paramNotNull(fontData, "fontData");
+		this.fontData = fontData;
 	}
 
-	protected void registerTextControl(final Text textControl) {
-		textControl.addModifyListener(new ModifyListener() {
+	public FontData[] getFontData() {
+		return fontData;
+	}
 
-			@Override
-			public void modifyText(final ModifyEvent e) {
-				fireInputChanged(textControl);
-			}
-		});
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(fontData);
+		return result;
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final FontDataKey other = (FontDataKey) obj;
+		if (!Arrays.equals(fontData, other.fontData)) {
+			return false;
+		}
+		return true;
 	}
 
 }

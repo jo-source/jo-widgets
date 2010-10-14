@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swt.internal.color;
+package org.jowidgets.impl.swt.color;
 
 import org.eclipse.swt.graphics.Color;
 import org.jowidgets.api.color.IColorConstant;

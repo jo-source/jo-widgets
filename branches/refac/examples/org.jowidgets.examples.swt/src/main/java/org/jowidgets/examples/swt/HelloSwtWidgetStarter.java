@@ -28,7 +28,7 @@
 package org.jowidgets.examples.swt;
 
 import org.jowidgets.examples.common.HelloWidget;
-import org.jowidgets.impl.swt.factory.SwtWidgetFactory;
+import org.jowidgets.impl.swt.SwtWidgetFactory;
 
 public final class HelloSwtWidgetStarter {
 

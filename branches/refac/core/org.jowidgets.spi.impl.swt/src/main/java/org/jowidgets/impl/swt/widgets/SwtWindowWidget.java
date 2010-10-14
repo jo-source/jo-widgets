@@ -38,8 +38,8 @@ import org.jowidgets.api.look.Rectangle;
 import org.jowidgets.api.widgets.IWindowWidgetCommon;
 import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.api.widgets.setup.IWidgetSetupCommon;
-import org.jowidgets.impl.swt.internal.color.IColorCache;
-import org.jowidgets.impl.swt.internal.image.SwtImageRegistry;
+import org.jowidgets.impl.swt.color.IColorCache;
+import org.jowidgets.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.impl.swt.util.DimensionConvert;
 import org.jowidgets.impl.swt.util.PositionConvert;
 
