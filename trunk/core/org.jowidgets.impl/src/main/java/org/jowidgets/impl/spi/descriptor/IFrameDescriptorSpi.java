@@ -29,6 +29,6 @@ package org.jowidgets.impl.spi.descriptor;
 
 import org.jowidgets.api.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.spi.widgets.IFrameWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.IFrameSetupSpi;
+import org.jowidgets.spi.widgets.setup.IFrameSetupSpi;
 
 public interface IFrameDescriptorSpi extends IFrameSetupSpi, IWidgetDescriptor<IFrameWidgetSpi> {}

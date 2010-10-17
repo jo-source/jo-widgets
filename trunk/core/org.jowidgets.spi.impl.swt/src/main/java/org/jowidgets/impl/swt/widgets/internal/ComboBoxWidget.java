@@ -35,7 +35,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.api.convert.IStringObjectConverter;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.impl.swt.color.IColorCache;
-import org.jowidgets.spi.widgets.descriptor.setup.IComboBoxSetupSpi;
+import org.jowidgets.spi.widgets.setup.IComboBoxSetupSpi;
 
 public class ComboBoxWidget<INPUT_TYPE> extends ComboBoxSelectionWidget<INPUT_TYPE> {
 

@@ -36,7 +36,7 @@ import org.jowidgets.api.util.ColorSettingsInvoker;
 import org.jowidgets.api.veto.IInputVetoChecker;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.impl.swt.color.IColorCache;
-import org.jowidgets.spi.widgets.descriptor.setup.IVetoableInputWidgetSetupSpi;
+import org.jowidgets.spi.widgets.setup.IVetoableInputWidgetSetupSpi;
 
 public class TextFieldWidget extends AbstractSwtTextInputWidget<String> {
 

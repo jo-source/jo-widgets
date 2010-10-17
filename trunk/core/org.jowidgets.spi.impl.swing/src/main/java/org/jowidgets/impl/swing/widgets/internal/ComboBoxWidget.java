@@ -38,7 +38,7 @@ import javax.swing.event.DocumentListener;
 import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.convert.IStringObjectConverter;
 import org.jowidgets.impl.swing.widgets.internal.util.ValidatedInputDocument;
-import org.jowidgets.spi.widgets.descriptor.setup.IComboBoxSetupSpi;
+import org.jowidgets.spi.widgets.setup.IComboBoxSetupSpi;
 
 public class ComboBoxWidget<INPUT_TYPE> extends ComboBoxSelectionWidget<INPUT_TYPE> {
 

@@ -34,7 +34,7 @@ import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.impl.swing.widgets.SwingWindowWidget;
 import org.jowidgets.spi.widgets.IFrameWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.IFrameSetupSpi;
+import org.jowidgets.spi.widgets.setup.IFrameSetupSpi;
 
 public class FrameWidget extends SwingWindowWidget implements IFrameWidgetSpi {
 

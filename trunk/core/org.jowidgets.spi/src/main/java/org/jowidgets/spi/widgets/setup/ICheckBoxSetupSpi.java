@@ -25,10 +25,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.widgets.descriptor.setup;
+package org.jowidgets.spi.widgets.setup;
 
-import org.jowidgets.api.widgets.descriptor.setup.ITextLabelSetupCommon;
+import org.jowidgets.api.widgets.descriptor.setup.ICheckBoxSetupCommon;
 
-public interface ITextLabelSetupSpi extends ITextLabelSetupCommon {
+public interface ICheckBoxSetupSpi extends ICheckBoxSetupCommon {
 
 }

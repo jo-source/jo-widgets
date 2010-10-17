@@ -35,7 +35,7 @@ import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.impl.swing.widgets.SwingWidget;
 import org.jowidgets.spi.widgets.IIconWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.IIconSetupSpi;
+import org.jowidgets.spi.widgets.setup.IIconSetupSpi;
 
 public class IconWidget extends SwingWidget implements IIconWidgetSpi {
 

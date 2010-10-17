@@ -46,7 +46,7 @@ import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.util.ScrollBarSettingsConvert;
 import org.jowidgets.impl.swt.widgets.SwtContainerWidget;
 import org.jowidgets.spi.widgets.IScrollContainerWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.IScrollCompositeSetupSpi;
+import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
 
 public class ScrollCompositeWidget implements IScrollContainerWidgetSpi {
 

@@ -33,7 +33,7 @@ import org.jowidgets.api.util.ColorSettingsInvoker;
 import org.jowidgets.impl.swing.util.OrientationConvert;
 import org.jowidgets.impl.swing.widgets.SwingWidget;
 import org.jowidgets.spi.widgets.IWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.ISeparatorSetupSpi;
+import org.jowidgets.spi.widgets.setup.ISeparatorSetupSpi;
 
 public class SeparatorWidget extends SwingWidget implements IWidgetSpi {
 

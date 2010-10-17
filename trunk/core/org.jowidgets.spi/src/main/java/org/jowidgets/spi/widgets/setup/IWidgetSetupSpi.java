@@ -25,10 +25,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.widgets.descriptor.setup;
+package org.jowidgets.spi.widgets.setup;
 
-import org.jowidgets.api.widgets.descriptor.setup.ISeparatorSetupCommon;
+import org.jowidgets.api.widgets.descriptor.setup.IWidgetSetupCommon;
 
-public interface ISeparatorSetupSpi extends ISeparatorSetupCommon {
+public interface IWidgetSetupSpi extends IWidgetSetupCommon {
 
 }

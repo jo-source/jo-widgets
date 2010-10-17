@@ -25,10 +25,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.widgets.descriptor.setup;
+package org.jowidgets.spi.widgets.setup;
 
-import org.jowidgets.api.widgets.descriptor.setup.IScrollCompositeSetupCommon;
+import org.jowidgets.api.widgets.descriptor.setup.IButtonSetupCommon;
 
-public interface IScrollCompositeSetupSpi extends IScrollCompositeSetupCommon, ICompositeSetupSpi {
+public interface IButtonSetupSpi extends IButtonSetupCommon {
 
 }

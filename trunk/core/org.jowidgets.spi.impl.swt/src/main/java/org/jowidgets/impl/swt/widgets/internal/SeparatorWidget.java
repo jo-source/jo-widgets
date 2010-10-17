@@ -36,7 +36,7 @@ import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.util.OrientationConvert;
 import org.jowidgets.impl.swt.widgets.SwtWidget;
 import org.jowidgets.spi.widgets.IWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.ISeparatorSetupSpi;
+import org.jowidgets.spi.widgets.setup.ISeparatorSetupSpi;
 
 public class SeparatorWidget extends SwtWidget implements IWidgetSpi {
 

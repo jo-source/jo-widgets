@@ -34,7 +34,7 @@ import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.util.BorderToComposite;
 import org.jowidgets.impl.swt.widgets.SwtContainerWidget;
-import org.jowidgets.spi.widgets.descriptor.setup.ICompositeSetupSpi;
+import org.jowidgets.spi.widgets.setup.ICompositeSetupSpi;
 
 public class CompositeWidget extends SwtContainerWidget {
 

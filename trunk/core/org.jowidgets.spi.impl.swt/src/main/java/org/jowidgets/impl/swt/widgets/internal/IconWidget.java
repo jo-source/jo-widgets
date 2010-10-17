@@ -38,7 +38,7 @@ import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.impl.swt.widgets.SwtWidget;
 import org.jowidgets.spi.widgets.IIconWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.IIconSetupSpi;
+import org.jowidgets.spi.widgets.setup.IIconSetupSpi;
 
 public class IconWidget extends SwtWidget implements IIconWidgetSpi {
 

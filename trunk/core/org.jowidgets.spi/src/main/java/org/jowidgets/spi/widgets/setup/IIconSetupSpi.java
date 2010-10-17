@@ -25,10 +25,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.widgets.descriptor.setup;
+package org.jowidgets.spi.widgets.setup;
 
-import org.jowidgets.api.widgets.descriptor.setup.IComboBoxSelectionSetupCommon;
+import org.jowidgets.api.widgets.descriptor.setup.IIconSetupCommon;
 
-public interface IComboBoxSelectionSetupSpi<INPUT_TYPE> extends IComboBoxSelectionSetupCommon<INPUT_TYPE> {
+public interface IIconSetupSpi extends IIconSetupCommon {
 
 }

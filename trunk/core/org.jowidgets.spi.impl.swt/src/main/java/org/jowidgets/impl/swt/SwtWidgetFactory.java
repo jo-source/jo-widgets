@@ -57,19 +57,19 @@ import org.jowidgets.spi.widgets.IScrollContainerWidgetSpi;
 import org.jowidgets.spi.widgets.ITextLabelWidgetSpi;
 import org.jowidgets.spi.widgets.IToggleButtonWidgetSpi;
 import org.jowidgets.spi.widgets.IWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.IButtonSetupSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.ICheckBoxSetupSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.IComboBoxSelectionSetupSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.IComboBoxSetupSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.ICompositeSetupSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.IDialogSetupSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.IFrameSetupSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.IIconSetupSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.IScrollCompositeSetupSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.ISeparatorSetupSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.ITextLabelSetupSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.IToggleButtonSetupSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.IVetoableInputWidgetSetupSpi;
+import org.jowidgets.spi.widgets.setup.IButtonSetupSpi;
+import org.jowidgets.spi.widgets.setup.ICheckBoxSetupSpi;
+import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
+import org.jowidgets.spi.widgets.setup.IComboBoxSetupSpi;
+import org.jowidgets.spi.widgets.setup.ICompositeSetupSpi;
+import org.jowidgets.spi.widgets.setup.IDialogSetupSpi;
+import org.jowidgets.spi.widgets.setup.IFrameSetupSpi;
+import org.jowidgets.spi.widgets.setup.IIconSetupSpi;
+import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
+import org.jowidgets.spi.widgets.setup.ISeparatorSetupSpi;
+import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
+import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;
+import org.jowidgets.spi.widgets.setup.IVetoableInputWidgetSetupSpi;
 
 public final class SwtWidgetFactory implements IWidgetFactorySpi {
 

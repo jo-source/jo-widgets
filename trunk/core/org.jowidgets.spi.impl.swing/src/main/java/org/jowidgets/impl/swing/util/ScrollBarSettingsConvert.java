@@ -29,7 +29,7 @@ package org.jowidgets.impl.swing.util;
 
 import javax.swing.JScrollPane;
 
-import org.jowidgets.spi.widgets.descriptor.setup.IScrollCompositeSetupSpi;
+import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
 import org.jowidgets.util.Assert;
 
 public final class ScrollBarSettingsConvert {

@@ -37,7 +37,7 @@ import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.impl.swing.widgets.SwingWindowWidget;
 import org.jowidgets.spi.widgets.IFrameWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.IDialogSetupSpi;
+import org.jowidgets.spi.widgets.setup.IDialogSetupSpi;
 
 public class DialogWidget extends SwingWindowWidget implements IFrameWidgetSpi {
 

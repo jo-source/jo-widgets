@@ -29,6 +29,6 @@ package org.jowidgets.impl.spi.descriptor;
 
 import org.jowidgets.api.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.spi.widgets.IToggleButtonWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.IToggleButtonSetupSpi;
+import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;
 
 public interface IToggleButtonDescriptorSpi extends IToggleButtonSetupSpi, IWidgetDescriptor<IToggleButtonWidgetSpi> {}

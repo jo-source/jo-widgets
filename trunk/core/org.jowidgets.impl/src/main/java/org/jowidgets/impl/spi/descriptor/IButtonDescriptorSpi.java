@@ -29,6 +29,6 @@ package org.jowidgets.impl.spi.descriptor;
 
 import org.jowidgets.api.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.spi.widgets.IButtonWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.IButtonSetupSpi;
+import org.jowidgets.spi.widgets.setup.IButtonSetupSpi;
 
 public interface IButtonDescriptorSpi extends IButtonSetupSpi, IWidgetDescriptor<IButtonWidgetSpi> {}

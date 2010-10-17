@@ -42,7 +42,7 @@ import org.jowidgets.api.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.impl.swing.util.ScrollBarSettingsConvert;
 import org.jowidgets.impl.swing.widgets.SwingContainerWidget;
 import org.jowidgets.spi.widgets.IScrollContainerWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.IScrollCompositeSetupSpi;
+import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
 
 public class ScrollCompositeWidget implements IScrollContainerWidgetSpi {
 

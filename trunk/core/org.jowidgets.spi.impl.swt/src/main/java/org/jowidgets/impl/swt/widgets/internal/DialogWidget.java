@@ -39,7 +39,7 @@ import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.impl.swt.widgets.SwtWindowWidget;
 import org.jowidgets.spi.widgets.IFrameWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.IDialogSetupSpi;
+import org.jowidgets.spi.widgets.setup.IDialogSetupSpi;
 
 public class DialogWidget extends SwtWindowWidget implements IFrameWidgetSpi {
 

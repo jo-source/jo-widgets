@@ -41,7 +41,7 @@ import org.jowidgets.api.util.ColorSettingsInvoker;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;
-import org.jowidgets.spi.widgets.descriptor.setup.IComboBoxSelectionSetupSpi;
+import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
 import org.jowidgets.util.Assert;
 
 public class ComboBoxSelectionWidget<INPUT_TYPE> extends AbstractSwtInputWidget<INPUT_TYPE> implements
