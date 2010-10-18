@@ -48,6 +48,7 @@ import org.jowidgets.impl.swt.widgets.internal.TextLabelWidget;
 import org.jowidgets.impl.swt.widgets.internal.ToggleButtonWidget;
 import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.widgets.IButtonWidgetSpi;
+import org.jowidgets.spi.widgets.ICheckBoxWidgetSpi;
 import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;
 import org.jowidgets.spi.widgets.IContainerWidgetSpi;
 import org.jowidgets.spi.widgets.IFrameWidgetSpi;
@@ -144,8 +145,8 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 	}
 
 	@Override
-	public IToggleButtonWidgetSpi createCheckBoxWidget(final IWidget parent, final ICheckBoxSetupSpi setup) {
-		return new CheckBoxWidget(colorCache, imageRegistry, parent, setup);
+	public ICheckBoxWidgetSpi createCheckBoxWidget(final IWidget parent, final ICheckBoxSetupSpi setup) {
+		return new CheckBoxWidget(colorCache, parent, setup);
 	}
 
 	@Override

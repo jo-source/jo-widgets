@@ -25,19 +25,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets;
+package org.jowidgets.spi.widgets;
 
-import org.jowidgets.api.validation.IValidateable;
-import org.jowidgets.api.validation.IValidator;
+import org.jowidgets.api.widgets.IInputWidgetCommon;
 
-public interface IInputWidget<VALUE_TYPE> extends IInputWidgetLegacyCommon<VALUE_TYPE>, IChildWidget, IValidateable {
+public interface ICheckBoxWidgetSpi extends ITextLabelWidgetSpi, IInputWidgetCommon {
 
-	boolean isMandatory();
+	boolean isSelected();
 
-	void setMandatory(boolean mandatory);
-
-	boolean hasInput();
-
-	void addValidator(IValidator<VALUE_TYPE> validator);
+	void setSelected(boolean selected);
 
 }

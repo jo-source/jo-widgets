@@ -27,15 +27,77 @@
  */
 package org.jowidgets.impl.swing.widgets.internal;
 
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
 import javax.swing.JCheckBox;
+import javax.swing.JToggleButton;
 
-import org.jowidgets.api.widgets.descriptor.setup.ICheckBoxSetupCommon;
-import org.jowidgets.impl.swing.image.SwingImageRegistry;
+import org.jowidgets.api.look.Markup;
+import org.jowidgets.api.util.ColorSettingsInvoker;
+import org.jowidgets.impl.swing.util.AlignmentConvert;
+import org.jowidgets.impl.swing.util.FontProvider;
+import org.jowidgets.spi.widgets.ICheckBoxWidgetSpi;
+import org.jowidgets.spi.widgets.setup.ICheckBoxSetupSpi;
 
-public class CheckBoxWidget extends ToggleButtonWidget {
+public class CheckBoxWidget extends AbstractSwingInputWidget implements ICheckBoxWidgetSpi {
 
-	public CheckBoxWidget(final SwingImageRegistry imageRegistry, final ICheckBoxSetupCommon setup) {
-		super(imageRegistry, new JCheckBox(), setup);
+	public CheckBoxWidget(final ICheckBoxSetupSpi setup) {
+		this(new JCheckBox(), setup);
+	}
+
+	public CheckBoxWidget(final JToggleButton toggleButton, final ICheckBoxSetupSpi descriptor) {
+		super(toggleButton);
+
+		setText(descriptor.getText());
+		setToolTipText(descriptor.getToolTipText());
+		setMarkup(descriptor.getMarkup());
+		getUiReference().setHorizontalAlignment(AlignmentConvert.convert(descriptor.getAlignment()));
+		ColorSettingsInvoker.setColors(descriptor, this);
+
+		getUiReference().addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(final ItemEvent e) {
+				fireInputChanged(this);
+			}
+		});
+	}
+
+	@Override
+	public JToggleButton getUiReference() {
+		return (JToggleButton) super.getUiReference();
+	}
+
+	@Override
+	public void setEditable(final boolean editable) {
+		getUiReference().setEnabled(editable);
+	}
+
+	@Override
+	public void setMarkup(final Markup markup) {
+		final JToggleButton toggleButton = getUiReference();
+		toggleButton.setFont(FontProvider.deriveFont(toggleButton.getFont(), markup));
+	}
+
+	@Override
+	public void setText(final String text) {
+		getUiReference().setText(text);
+	}
+
+	@Override
+	public void setToolTipText(final String text) {
+		getUiReference().setToolTipText(text);
+	}
+
+	@Override
+	public boolean isSelected() {
+		return getUiReference().isSelected();
+	}
+
+	@Override
+	public void setSelected(final boolean selected) {
+		getUiReference().setSelected(selected);
 	}
 
 }

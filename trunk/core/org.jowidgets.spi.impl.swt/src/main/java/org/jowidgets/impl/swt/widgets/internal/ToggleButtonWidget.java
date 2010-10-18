@@ -28,24 +28,17 @@
 package org.jowidgets.impl.swt.widgets.internal;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
 import org.jowidgets.api.image.IImageConstant;
-import org.jowidgets.api.look.Markup;
-import org.jowidgets.api.util.ColorSettingsInvoker;
 import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.descriptor.setup.ICheckBoxSetupCommon;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.image.SwtImageRegistry;
-import org.jowidgets.impl.swt.util.AlignmentConvert;
-import org.jowidgets.impl.swt.util.FontProvider;
 import org.jowidgets.spi.widgets.IToggleButtonWidgetSpi;
-import org.jowidgets.util.Assert;
+import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;
 
-public class ToggleButtonWidget extends AbstractSwtInputWidget<Boolean> implements IToggleButtonWidgetSpi {
+public class ToggleButtonWidget extends CheckBoxWidget implements IToggleButtonWidgetSpi {
 
 	private final SwtImageRegistry imageRegistry;
 
@@ -53,97 +46,21 @@ public class ToggleButtonWidget extends AbstractSwtInputWidget<Boolean> implemen
 		final IColorCache colorCache,
 		final SwtImageRegistry imageRegistry,
 		final IWidget parent,
-		final ICheckBoxSetupCommon setup) {
-		this(
-			colorCache,
-			imageRegistry,
-			parent,
-			new Button((Composite) parent.getUiReference(), SWT.NONE | SWT.TOGGLE),
-			setup);
-	}
-
-	public ToggleButtonWidget(
-		final IColorCache colorCache,
-		final SwtImageRegistry imageRegistry,
-		final IWidget parent,
-		final Button button,
-		final ICheckBoxSetupCommon setup) {
-		super(colorCache, button);
+		final IToggleButtonSetupSpi setup) {
+		super(colorCache, parent, new Button((Composite) parent.getUiReference(), SWT.NONE | SWT.TOGGLE), setup);
 
 		this.imageRegistry = imageRegistry;
 
-		setText(setup.getText());
-		setToolTipText(setup.getToolTipText());
 		setIcon(setup.getIcon());
-		setMarkup(setup.getMarkup());
-
-		getUiReference().setAlignment(AlignmentConvert.convert(setup.getAlignment()));
-		ColorSettingsInvoker.setColors(setup, this);
-
-		getUiReference().addListener(SWT.Selection, new Listener() {
-			@Override
-			public void handleEvent(final Event event) {
-				fireInputChanged(this);
-			}
-		});
-	}
-
-	@Override
-	public Button getUiReference() {
-		return (Button) super.getUiReference();
-	}
-
-	@Override
-	public Boolean getValue() {
-		return Boolean.valueOf(isSelected());
-	}
-
-	@Override
-	public void setValue(final Boolean value) {
-		Assert.paramNotNull(value, "value");
-		setSelected(value.booleanValue());
-	}
-
-	@Override
-	public void setEditable(final boolean editable) {
-		getUiReference().setEnabled(editable);
-	}
-
-	@Override
-	public void setMarkup(final Markup markup) {
-		final Button button = this.getUiReference();
-		final Font newFont = FontProvider.deriveFont(button.getFont(), markup);
-		button.setFont(newFont);
-	}
-
-	@Override
-	public void setText(final String text) {
-		if (text != null) {
-			getUiReference().setText(text);
-		}
-		else {
-			setText("");
-		}
-	}
-
-	@Override
-	public void setToolTipText(final String text) {
-		getUiReference().setToolTipText(text);
 	}
 
 	@Override
 	public void setIcon(final IImageConstant icon) {
-		getUiReference().setImage(imageRegistry.getImage(icon));
-	}
-
-	@Override
-	public boolean isSelected() {
-		return getUiReference().getSelection();
-	}
-
-	@Override
-	public void setSelected(final boolean selected) {
-		getUiReference().setSelection(selected);
+		final Image oldImage = getUiReference().getImage();
+		final Image newImage = imageRegistry.getImage(icon);
+		if (oldImage != newImage) {
+			getUiReference().setImage(newImage);
+		}
 	}
 
 }

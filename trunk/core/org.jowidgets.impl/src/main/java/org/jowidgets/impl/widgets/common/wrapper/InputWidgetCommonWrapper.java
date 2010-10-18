@@ -31,26 +31,15 @@ package org.jowidgets.impl.widgets.common.wrapper;
 import org.jowidgets.api.widgets.IInputWidgetCommon;
 import org.jowidgets.api.widgets.controler.IInputListener;
 
-public class InputWidgetCommonWrapper<VALUE_TYPE> extends WidgetCommonWrapper implements IInputWidgetCommon<VALUE_TYPE> {
+public class InputWidgetCommonWrapper extends WidgetCommonWrapper implements IInputWidgetCommon {
 
-	public InputWidgetCommonWrapper(final IInputWidgetCommon<VALUE_TYPE> widget) {
+	public InputWidgetCommonWrapper(final IInputWidgetCommon widget) {
 		super(widget);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	protected IInputWidgetCommon<VALUE_TYPE> getWidget() {
-		return (IInputWidgetCommon<VALUE_TYPE>) super.getWidget();
-	}
-
-	@Override
-	public void setValue(final VALUE_TYPE content) {
-		getWidget().setValue(content);
-	}
-
-	@Override
-	public VALUE_TYPE getValue() {
-		return getWidget().getValue();
+	protected IInputWidgetCommon getWidget() {
+		return (IInputWidgetCommon) super.getWidget();
 	}
 
 	@Override

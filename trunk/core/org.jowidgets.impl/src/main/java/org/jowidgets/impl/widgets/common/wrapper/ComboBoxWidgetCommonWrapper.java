@@ -31,12 +31,12 @@ package org.jowidgets.impl.widgets.common.wrapper;
 import java.util.List;
 
 import org.jowidgets.api.widgets.IComboBoxWidgetCommon;
-import org.jowidgets.api.widgets.IInputWidgetCommon;
+import org.jowidgets.api.widgets.IInputWidgetLegacyCommon;
 
-public class ComboBoxWidgetCommonWrapper<VALUE_TYPE> extends InputWidgetCommonWrapper<VALUE_TYPE> implements
+public class ComboBoxWidgetCommonWrapper<VALUE_TYPE> extends InputWidgetCommonWrapperLegacy<VALUE_TYPE> implements
 		IComboBoxWidgetCommon<VALUE_TYPE> {
 
-	public ComboBoxWidgetCommonWrapper(final IInputWidgetCommon<VALUE_TYPE> widget) {
+	public ComboBoxWidgetCommonWrapper(final IInputWidgetLegacyCommon<VALUE_TYPE> widget) {
 		super(widget);
 	}
 

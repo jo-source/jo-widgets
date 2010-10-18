@@ -28,8 +28,8 @@
 
 package org.jowidgets.spi.widgets;
 
-import org.jowidgets.api.widgets.IInputWidgetCommon;
+import org.jowidgets.api.widgets.IInputWidgetLegacyCommon;
 
-public interface IInputWidgetSpi<VALUE_TYPE> extends IInputWidgetCommon<VALUE_TYPE>, IWidgetSpi {
+public interface IInputWidgetLegacySpi<VALUE_TYPE> extends IInputWidgetLegacyCommon<VALUE_TYPE>, IWidgetSpi {
 
 }

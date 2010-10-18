@@ -29,12 +29,12 @@ package org.jowidgets.impl.swt.widgets.internal;
 
 import org.eclipse.swt.widgets.Control;
 import org.jowidgets.api.color.IColorConstant;
+import org.jowidgets.api.widgets.IInputWidgetCommon;
 import org.jowidgets.api.widgets.controler.impl.InputObservable;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.widgets.SwtWidget;
-import org.jowidgets.spi.widgets.IInputWidgetSpi;
 
-public abstract class AbstractSwtInputWidget<VALUE_TYPE> extends InputObservable implements IInputWidgetSpi<VALUE_TYPE> {
+public abstract class AbstractSwtInputWidget extends InputObservable implements IInputWidgetCommon {
 
 	private final Control control;
 	private final SwtWidget swtWidgetDelegate;

@@ -27,17 +27,21 @@
  */
 package org.jowidgets.api.widgets;
 
-import org.jowidgets.api.validation.IValidateable;
-import org.jowidgets.api.validation.IValidator;
+public interface ICheckBoxWidgetCommon extends IInputWidgetLegacyCommon<Boolean>, ITextLabelWidgetCommon {
 
-public interface IInputWidget<VALUE_TYPE> extends IInputWidgetLegacyCommon<VALUE_TYPE>, IChildWidget, IValidateable {
+	/**
+	 * Convenience method for the generic method getValue()
+	 * 
+	 * @return true, if the toggle button is selected
+	 */
+	boolean isSelected();
 
-	boolean isMandatory();
-
-	void setMandatory(boolean mandatory);
-
-	boolean hasInput();
-
-	void addValidator(IValidator<VALUE_TYPE> validator);
+	/**
+	 * Convenience method for the generic method setValue(Boolean value)
+	 * 
+	 * @param selected
+	 *            the selection state to set
+	 */
+	void setSelected(boolean selected);
 
 }

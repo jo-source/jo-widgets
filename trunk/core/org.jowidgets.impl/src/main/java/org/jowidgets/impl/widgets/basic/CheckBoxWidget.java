@@ -28,49 +28,39 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import org.jowidgets.api.look.Markup;
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationResult;
-import org.jowidgets.api.widgets.IInputWidget;
+import org.jowidgets.api.widgets.ICheckBoxWidget;
 import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.descriptor.setup.IInputWidgetSetup;
+import org.jowidgets.api.widgets.descriptor.setup.ICheckBoxSetup;
 import org.jowidgets.impl.widgets.basic.delegate.ChildWidgetDelegate;
 import org.jowidgets.impl.widgets.basic.delegate.InputWidgetDelegate;
 import org.jowidgets.impl.widgets.common.wrapper.InputWidgetCommonWrapper;
-import org.jowidgets.spi.widgets.ITextInputWidgetSpi;
+import org.jowidgets.impl.widgets.common.wrapper.TextLabelWidgetCommonWrapper;
+import org.jowidgets.spi.widgets.ICheckBoxWidgetSpi;
+import org.jowidgets.util.Assert;
 
-public class TextInputWidget extends InputWidgetCommonWrapper implements IInputWidget<String> {
+public class CheckBoxWidget extends InputWidgetCommonWrapper implements ICheckBoxWidget {
 
+	private final ICheckBoxWidgetSpi checkBoxWidgetSpi;
 	private final ChildWidgetDelegate childWidgetDelegate;
-	private final InputWidgetDelegate<String> inputWidgetDelegate;
-	private final ITextInputWidgetSpi inputWidgetSpi;
+	private final InputWidgetDelegate<Boolean> inputWidgetDelegate;
+	private final TextLabelWidgetCommonWrapper textLabelWidgetCommonWrapper;
 
-	public TextInputWidget(final IWidget parent, final ITextInputWidgetSpi inputWidgetSpi, final IInputWidgetSetup<String> setup) {
-		super(inputWidgetSpi);
-		this.inputWidgetSpi = inputWidgetSpi;
+	public CheckBoxWidget(final IWidget parent, final ICheckBoxWidgetSpi checkBoxWidgetSpi, final ICheckBoxSetup setup) {
+		super(checkBoxWidgetSpi);
+		this.checkBoxWidgetSpi = checkBoxWidgetSpi;
 		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
+		this.textLabelWidgetCommonWrapper = new TextLabelWidgetCommonWrapper(checkBoxWidgetSpi);
 
-		//must be last statement of constructor
-		this.inputWidgetDelegate = new InputWidgetDelegate<String>(this, setup);
+		//this must be invoked last
+		this.inputWidgetDelegate = new InputWidgetDelegate<Boolean>(this, setup);
 	}
 
 	@Override
 	public IWidget getParent() {
 		return childWidgetDelegate.getParent();
-	}
-
-	@Override
-	public void setValue(final String value) {
-		inputWidgetSpi.setText(value);
-	}
-
-	@Override
-	public String getValue() {
-		return inputWidgetSpi.getText();
-	}
-
-	@Override
-	public ValidationResult validate() {
-		return inputWidgetDelegate.validate();
 	}
 
 	@Override
@@ -89,8 +79,49 @@ public class TextInputWidget extends InputWidgetCommonWrapper implements IInputW
 	}
 
 	@Override
-	public void addValidator(final IValidator<String> validator) {
+	public void addValidator(final IValidator<Boolean> validator) {
 		inputWidgetDelegate.addValidator(validator);
+	}
+
+	@Override
+	public ValidationResult validate() {
+		return inputWidgetDelegate.validate();
+	}
+
+	@Override
+	public boolean isSelected() {
+		return checkBoxWidgetSpi.isSelected();
+	}
+
+	@Override
+	public void setSelected(final boolean selected) {
+		checkBoxWidgetSpi.setSelected(selected);
+	}
+
+	@Override
+	public void setValue(final Boolean value) {
+		Assert.paramNotNull(value, "value");
+		setSelected(value.booleanValue());
+	}
+
+	@Override
+	public Boolean getValue() {
+		return Boolean.valueOf(isSelected());
+	}
+
+	@Override
+	public void setMarkup(final Markup markup) {
+		textLabelWidgetCommonWrapper.setMarkup(markup);
+	}
+
+	@Override
+	public void setText(final String text) {
+		textLabelWidgetCommonWrapper.setText(text);
+	}
+
+	@Override
+	public void setToolTipText(final String text) {
+		textLabelWidgetCommonWrapper.setToolTipText(text);
 	}
 
 }

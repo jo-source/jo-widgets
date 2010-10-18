@@ -28,10 +28,9 @@
 
 package org.jowidgets.api.widgets;
 
-import org.jowidgets.api.widgets.access.IInputValueAccessor;
 import org.jowidgets.api.widgets.controler.IInputObservable;
 
-public interface IInputWidgetCommon<VALUE_TYPE> extends IWidget, IInputValueAccessor<VALUE_TYPE>, IInputObservable {
+public interface IInputWidgetCommon extends IWidget, IInputObservable {
 
 	void setEditable(boolean editable);
 

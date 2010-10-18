@@ -28,26 +28,85 @@
 package org.jowidgets.impl.swt.widgets.internal;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
+import org.jowidgets.api.look.Markup;
+import org.jowidgets.api.util.ColorSettingsInvoker;
 import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.descriptor.setup.ICheckBoxSetupCommon;
 import org.jowidgets.impl.swt.color.IColorCache;
-import org.jowidgets.impl.swt.image.SwtImageRegistry;
+import org.jowidgets.impl.swt.util.AlignmentConvert;
+import org.jowidgets.impl.swt.util.FontProvider;
+import org.jowidgets.spi.widgets.ICheckBoxWidgetSpi;
+import org.jowidgets.spi.widgets.setup.ICheckBoxSetupSpi;
 
-public class CheckBoxWidget extends ToggleButtonWidget {
+public class CheckBoxWidget extends AbstractSwtInputWidget implements ICheckBoxWidgetSpi {
 
-	public CheckBoxWidget(
-		final IColorCache colorCache,
-		final SwtImageRegistry imageRegistry,
-		final IWidget parent,
-		final ICheckBoxSetupCommon setup) {
-		super(
-			colorCache,
-			imageRegistry,
-			parent,
-			new Button((Composite) parent.getUiReference(), SWT.NONE | SWT.CHECK),
-			setup);
+	public CheckBoxWidget(final IColorCache colorCache, final IWidget parent, final ICheckBoxSetupSpi setup) {
+		this(colorCache, parent, new Button((Composite) parent.getUiReference(), SWT.NONE | SWT.CHECK), setup);
+	}
+
+	public CheckBoxWidget(final IColorCache colorCache, final IWidget parent, final Button button, final ICheckBoxSetupSpi setup) {
+		super(colorCache, button);
+
+		setText(setup.getText());
+		setToolTipText(setup.getToolTipText());
+
+		setMarkup(setup.getMarkup());
+
+		getUiReference().setAlignment(AlignmentConvert.convert(setup.getAlignment()));
+		ColorSettingsInvoker.setColors(setup, this);
+
+		getUiReference().addListener(SWT.Selection, new Listener() {
+			@Override
+			public void handleEvent(final Event event) {
+				fireInputChanged(this);
+			}
+		});
+	}
+
+	@Override
+	public Button getUiReference() {
+		return (Button) super.getUiReference();
+	}
+
+	@Override
+	public void setEditable(final boolean editable) {
+		getUiReference().setEnabled(editable);
+	}
+
+	@Override
+	public void setMarkup(final Markup markup) {
+		final Button button = this.getUiReference();
+		final Font newFont = FontProvider.deriveFont(button.getFont(), markup);
+		button.setFont(newFont);
+	}
+
+	@Override
+	public void setText(final String text) {
+		if (text != null) {
+			getUiReference().setText(text);
+		}
+		else {
+			setText("");
+		}
+	}
+
+	@Override
+	public void setToolTipText(final String text) {
+		getUiReference().setToolTipText(text);
+	}
+
+	@Override
+	public boolean isSelected() {
+		return getUiReference().getSelection();
+	}
+
+	@Override
+	public void setSelected(final boolean selected) {
+		getUiReference().setSelection(selected);
 	}
 
 }

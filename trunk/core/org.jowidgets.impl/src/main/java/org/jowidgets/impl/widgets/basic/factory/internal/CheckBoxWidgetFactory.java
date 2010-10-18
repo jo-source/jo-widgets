@@ -28,19 +28,18 @@
 
 package org.jowidgets.impl.widgets.basic.factory.internal;
 
-import org.jowidgets.api.widgets.IToggleButtonWidget;
+import org.jowidgets.api.widgets.ICheckBoxWidget;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.ICheckBoxDescriptor;
 import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.api.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.ICheckBoxBluePrintSpi;
-import org.jowidgets.impl.widgets.basic.ToggleButtonWidget;
+import org.jowidgets.impl.widgets.basic.CheckBoxWidget;
 import org.jowidgets.spi.IWidgetFactorySpi;
-import org.jowidgets.spi.widgets.IToggleButtonWidgetSpi;
+import org.jowidgets.spi.widgets.ICheckBoxWidgetSpi;
 
-public class CheckBoxWidgetFactory extends AbstractWidgetFactory implements
-		IWidgetFactory<IToggleButtonWidget, ICheckBoxDescriptor> {
+public class CheckBoxWidgetFactory extends AbstractWidgetFactory implements IWidgetFactory<ICheckBoxWidget, ICheckBoxDescriptor> {
 
 	public CheckBoxWidgetFactory(
 		final IGenericWidgetFactory genericWidgetFactory,
@@ -51,10 +50,10 @@ public class CheckBoxWidgetFactory extends AbstractWidgetFactory implements
 	}
 
 	@Override
-	public IToggleButtonWidget create(final IWidget parent, final ICheckBoxDescriptor descriptor) {
+	public ICheckBoxWidget create(final IWidget parent, final ICheckBoxDescriptor descriptor) {
 		final ICheckBoxBluePrintSpi bp = getSpiBluePrintFactory().checkBox().setSetup(descriptor);
-		final IToggleButtonWidgetSpi widget = getSpiWidgetFactory().createCheckBoxWidget(parent, bp);
-		return new ToggleButtonWidget(parent, widget, descriptor);
+		final ICheckBoxWidgetSpi widget = getSpiWidgetFactory().createCheckBoxWidget(parent, bp);
+		return new CheckBoxWidget(parent, widget, descriptor);
 	}
 
 }

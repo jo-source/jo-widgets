@@ -33,20 +33,12 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.JTextComponent;
 
-import org.jowidgets.api.color.IColorConstant;
-import org.jowidgets.api.widgets.controler.impl.InputObservable;
-import org.jowidgets.impl.swing.widgets.SwingWidget;
 import org.jowidgets.spi.widgets.ITextInputWidgetSpi;
 
-public abstract class AbstractSwingTextInputWidget extends InputObservable implements ITextInputWidgetSpi {
-
-	private final Component component;
-	private final SwingWidget swingWidgetDelegate;
+public abstract class AbstractSwingTextInputWidget extends AbstractSwingInputWidget implements ITextInputWidgetSpi {
 
 	public AbstractSwingTextInputWidget(final Component component) {
-		super();
-		this.component = component;
-		this.swingWidgetDelegate = new SwingWidget(component);
+		super(component);
 	}
 
 	protected void registerTextComponent(final JTextComponent textComponent) {
@@ -69,26 +61,6 @@ public abstract class AbstractSwingTextInputWidget extends InputObservable imple
 
 		});
 
-	}
-
-	@Override
-	public Component getUiReference() {
-		return component;
-	}
-
-	@Override
-	public void redraw() {
-		swingWidgetDelegate.redraw();
-	}
-
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		swingWidgetDelegate.setForegroundColor(colorValue);
-	}
-
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		swingWidgetDelegate.setBackgroundColor(colorValue);
 	}
 
 }

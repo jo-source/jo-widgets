@@ -30,11 +30,11 @@ package org.jowidgets.impl.swing.widgets.internal;
 import java.awt.Component;
 
 import org.jowidgets.api.color.IColorConstant;
+import org.jowidgets.api.widgets.IInputWidgetCommon;
 import org.jowidgets.api.widgets.controler.impl.InputObservable;
 import org.jowidgets.impl.swing.widgets.SwingWidget;
-import org.jowidgets.spi.widgets.IInputWidgetSpi;
 
-public abstract class AbstractSwingInputWidget<VALUE_TYPE> extends InputObservable implements IInputWidgetSpi<VALUE_TYPE> {
+public abstract class AbstractSwingInputWidget extends InputObservable implements IInputWidgetCommon {
 
 	private final Component component;
 	private final SwingWidget swingWidgetDelegate;
@@ -64,7 +64,5 @@ public abstract class AbstractSwingInputWidget<VALUE_TYPE> extends InputObservab
 	public void setBackgroundColor(final IColorConstant colorValue) {
 		swingWidgetDelegate.setBackgroundColor(colorValue);
 	}
-	
-	
 
 }

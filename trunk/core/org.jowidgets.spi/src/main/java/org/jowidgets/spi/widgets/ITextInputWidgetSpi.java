@@ -28,16 +28,14 @@
 
 package org.jowidgets.spi.widgets;
 
-import org.jowidgets.api.widgets.controler.IInputObservable;
+import org.jowidgets.api.widgets.IInputWidgetCommon;
 
-public interface ITextInputWidgetSpi extends IInputObservable, IWidgetSpi {
+public interface ITextInputWidgetSpi extends IInputWidgetCommon {
 
 	String getText();
 
 	void setText(String text);
 
 	void setTooltipText(String tooltipText);
-
-	void setEditable(boolean editable);
 
 }

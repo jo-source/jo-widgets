@@ -28,58 +28,29 @@
 
 package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.api.validation.IValidator;
-import org.jowidgets.api.validation.ValidationResult;
+import org.jowidgets.api.image.IImageConstant;
 import org.jowidgets.api.widgets.IToggleButtonWidget;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IToggleButtonSetup;
-import org.jowidgets.impl.widgets.basic.delegate.ChildWidgetDelegate;
-import org.jowidgets.impl.widgets.basic.delegate.InputWidgetDelegate;
-import org.jowidgets.impl.widgets.common.wrapper.ToggleButtonWidgetCommonWrapper;
 import org.jowidgets.spi.widgets.IToggleButtonWidgetSpi;
 
-public class ToggleButtonWidget extends ToggleButtonWidgetCommonWrapper implements IToggleButtonWidget {
+public class ToggleButtonWidget extends CheckBoxWidget implements IToggleButtonWidget {
 
-	private final ChildWidgetDelegate childWidgetDelegate;
-	private final InputWidgetDelegate<Boolean> inputWidgetDelegate;
+	private final IToggleButtonWidgetSpi toggleButtonWidgetSpi;
 
 	public ToggleButtonWidget(
 		final IWidget parent,
 		final IToggleButtonWidgetSpi toggleButtonWidgetSpi,
 		final IToggleButtonSetup setup) {
-		super(toggleButtonWidgetSpi);
-		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
-		this.inputWidgetDelegate = new InputWidgetDelegate<Boolean>(toggleButtonWidgetSpi, setup);
+
+		super(parent, toggleButtonWidgetSpi, setup);
+
+		this.toggleButtonWidgetSpi = toggleButtonWidgetSpi;
 	}
 
 	@Override
-	public IWidget getParent() {
-		return childWidgetDelegate.getParent();
-	}
-
-	@Override
-	public boolean isMandatory() {
-		return inputWidgetDelegate.isMandatory();
-	}
-
-	@Override
-	public void setMandatory(final boolean mandatory) {
-		inputWidgetDelegate.setMandatory(mandatory);
-	}
-
-	@Override
-	public boolean hasInput() {
-		return inputWidgetDelegate.hasInput();
-	}
-
-	@Override
-	public void addValidator(final IValidator<Boolean> validator) {
-		inputWidgetDelegate.addValidator(validator);
-	}
-
-	@Override
-	public ValidationResult validate() {
-		return inputWidgetDelegate.validate();
+	public void setIcon(final IImageConstant icon) {
+		toggleButtonWidgetSpi.setIcon(icon);
 	}
 
 }

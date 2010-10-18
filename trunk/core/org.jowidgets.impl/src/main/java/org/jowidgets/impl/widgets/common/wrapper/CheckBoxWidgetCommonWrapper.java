@@ -28,23 +28,43 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.api.image.IImageConstant;
-import org.jowidgets.api.widgets.IToggleButtonWidgetCommon;
+import org.jowidgets.api.look.Markup;
+import org.jowidgets.api.widgets.ICheckBoxWidgetCommon;
 
-public class ToggleButtonWidgetCommonWrapper extends CheckBoxWidgetCommonWrapper implements IToggleButtonWidgetCommon {
+public class CheckBoxWidgetCommonWrapper extends InputWidgetCommonWrapperLegacy<Boolean> implements ICheckBoxWidgetCommon {
 
-	public ToggleButtonWidgetCommonWrapper(final IToggleButtonWidgetCommon widget) {
+	public CheckBoxWidgetCommonWrapper(final ICheckBoxWidgetCommon widget) {
 		super(widget);
 	}
 
 	@Override
-	protected IToggleButtonWidgetCommon getWidget() {
-		return (IToggleButtonWidgetCommon) super.getWidget();
+	protected ICheckBoxWidgetCommon getWidget() {
+		return (ICheckBoxWidgetCommon) super.getWidget();
 	}
 
 	@Override
-	public void setIcon(final IImageConstant icon) {
-		getWidget().setIcon(icon);
+	public void setMarkup(final Markup markup) {
+		getWidget().setMarkup(markup);
+	}
+
+	@Override
+	public void setText(final String text) {
+		getWidget().setText(text);
+	}
+
+	@Override
+	public void setToolTipText(final String text) {
+		getWidget().setToolTipText(text);
+	}
+
+	@Override
+	public boolean isSelected() {
+		return getWidget().isSelected();
+	}
+
+	@Override
+	public void setSelected(final boolean selected) {
+		getWidget().setSelected(selected);
 	}
 
 }

@@ -29,7 +29,7 @@ package org.jowidgets.api.widgets.descriptor.setup;
 
 import org.jowidgets.api.widgets.descriptor.setup.mandatory.Mandatory;
 
-public interface ICheckBoxSetupCommon extends ITextLabelSetupCommon, IIconSetupCommon {
+public interface ICheckBoxSetupCommon extends ITextLabelSetupCommon {
 
 	@Mandatory
 	boolean getInitialState();

@@ -31,6 +31,7 @@ import org.jowidgets.api.image.IImageRegistry;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.widgets.IButtonWidgetSpi;
+import org.jowidgets.spi.widgets.ICheckBoxWidgetSpi;
 import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;
 import org.jowidgets.spi.widgets.IContainerWidgetSpi;
 import org.jowidgets.spi.widgets.IFrameWidgetSpi;
@@ -79,7 +80,7 @@ public interface IWidgetFactorySpi {
 
 	IWidgetSpi createSeparatorWidget(final IWidget parent, ISeparatorSetupSpi setup);
 
-	IToggleButtonWidgetSpi createCheckBoxWidget(final IWidget parent, ICheckBoxSetupSpi setup);
+	ICheckBoxWidgetSpi createCheckBoxWidget(final IWidget parent, ICheckBoxSetupSpi setup);
 
 	IToggleButtonWidgetSpi createToggleButtonWidget(final IWidget parent, IToggleButtonSetupSpi setup);
 

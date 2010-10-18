@@ -27,17 +27,6 @@
  */
 package org.jowidgets.api.widgets;
 
-import org.jowidgets.api.validation.IValidateable;
-import org.jowidgets.api.validation.IValidator;
-
-public interface IInputWidget<VALUE_TYPE> extends IInputWidgetLegacyCommon<VALUE_TYPE>, IChildWidget, IValidateable {
-
-	boolean isMandatory();
-
-	void setMandatory(boolean mandatory);
-
-	boolean hasInput();
-
-	void addValidator(IValidator<VALUE_TYPE> validator);
+public interface ICheckBoxWidget extends ICheckBoxWidgetCommon, IInputWidget<Boolean> {
 
 }

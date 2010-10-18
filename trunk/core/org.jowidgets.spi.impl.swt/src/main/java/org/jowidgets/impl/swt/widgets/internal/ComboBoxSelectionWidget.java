@@ -44,7 +44,7 @@ import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
 import org.jowidgets.util.Assert;
 
-public class ComboBoxSelectionWidget<INPUT_TYPE> extends AbstractSwtInputWidget<INPUT_TYPE> implements
+public class ComboBoxSelectionWidget<INPUT_TYPE> extends AbstractSwtInputWidgetLegacy<INPUT_TYPE> implements
 		IComboBoxWidgetSpi<INPUT_TYPE> {
 
 	private final ArrayList<INPUT_TYPE> content;

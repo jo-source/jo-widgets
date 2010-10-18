@@ -25,19 +25,46 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets;
+package org.jowidgets.impl.swing.widgets.internal;
 
-import org.jowidgets.api.validation.IValidateable;
-import org.jowidgets.api.validation.IValidator;
+import java.awt.Component;
 
-public interface IInputWidget<VALUE_TYPE> extends IInputWidgetLegacyCommon<VALUE_TYPE>, IChildWidget, IValidateable {
+import org.jowidgets.api.color.IColorConstant;
+import org.jowidgets.api.widgets.controler.impl.InputObservable;
+import org.jowidgets.impl.swing.widgets.SwingWidget;
+import org.jowidgets.spi.widgets.IInputWidgetLegacySpi;
 
-	boolean isMandatory();
+public abstract class AbstractSwingInputWidgetLegacy<VALUE_TYPE> extends InputObservable implements IInputWidgetLegacySpi<VALUE_TYPE> {
 
-	void setMandatory(boolean mandatory);
+	private final Component component;
+	private final SwingWidget swingWidgetDelegate;
 
-	boolean hasInput();
+	public AbstractSwingInputWidgetLegacy(final Component component) {
+		super();
+		this.component = component;
+		this.swingWidgetDelegate = new SwingWidget(component);
+	}
 
-	void addValidator(IValidator<VALUE_TYPE> validator);
+	@Override
+	public Component getUiReference() {
+		return component;
+	}
+
+	@Override
+	public void redraw() {
+		swingWidgetDelegate.redraw();
+	}
+
+	@Override
+	public void setForegroundColor(final IColorConstant colorValue) {
+		swingWidgetDelegate.setForegroundColor(colorValue);
+	}
+
+	@Override
+	public void setBackgroundColor(final IColorConstant colorValue) {
+		swingWidgetDelegate.setBackgroundColor(colorValue);
+	}
+	
+	
 
 }

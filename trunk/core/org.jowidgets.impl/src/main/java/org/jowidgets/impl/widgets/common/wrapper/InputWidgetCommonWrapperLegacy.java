@@ -28,23 +28,44 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.api.image.IImageConstant;
-import org.jowidgets.api.widgets.IToggleButtonWidgetCommon;
+import org.jowidgets.api.widgets.IInputWidgetLegacyCommon;
+import org.jowidgets.api.widgets.controler.IInputListener;
 
-public class ToggleButtonWidgetCommonWrapper extends CheckBoxWidgetCommonWrapper implements IToggleButtonWidgetCommon {
+public class InputWidgetCommonWrapperLegacy<VALUE_TYPE> extends WidgetCommonWrapper implements IInputWidgetLegacyCommon<VALUE_TYPE> {
 
-	public ToggleButtonWidgetCommonWrapper(final IToggleButtonWidgetCommon widget) {
+	public InputWidgetCommonWrapperLegacy(final IInputWidgetLegacyCommon<VALUE_TYPE> widget) {
 		super(widget);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	protected IToggleButtonWidgetCommon getWidget() {
-		return (IToggleButtonWidgetCommon) super.getWidget();
+	protected IInputWidgetLegacyCommon<VALUE_TYPE> getWidget() {
+		return (IInputWidgetLegacyCommon<VALUE_TYPE>) super.getWidget();
 	}
 
 	@Override
-	public void setIcon(final IImageConstant icon) {
-		getWidget().setIcon(icon);
+	public void setValue(final VALUE_TYPE content) {
+		getWidget().setValue(content);
+	}
+
+	@Override
+	public VALUE_TYPE getValue() {
+		return getWidget().getValue();
+	}
+
+	@Override
+	public void addInputListener(final IInputListener listener) {
+		getWidget().addInputListener(listener);
+	}
+
+	@Override
+	public void removeInputListener(final IInputListener listener) {
+		getWidget().removeInputListener(listener);
+	}
+
+	@Override
+	public void setEditable(final boolean editable) {
+		getWidget().setEditable(editable);
 	}
 
 }

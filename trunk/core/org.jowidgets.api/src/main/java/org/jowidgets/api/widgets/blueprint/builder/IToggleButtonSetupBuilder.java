@@ -27,9 +27,9 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
-
 public interface IToggleButtonSetupBuilder<INSTANCE_TYPE extends IToggleButtonSetupBuilder<?>> extends
 		ICheckBoxSetupBuilder<INSTANCE_TYPE>,
+		IIconSetupBuilder<INSTANCE_TYPE>,
 		IInputWidgetSetupBuilder<INSTANCE_TYPE, Boolean> {
 
 }

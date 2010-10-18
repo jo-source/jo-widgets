@@ -33,7 +33,7 @@ import java.util.List;
 
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationResult;
-import org.jowidgets.api.widgets.IInputWidgetCommon;
+import org.jowidgets.api.widgets.IInputWidgetLegacyCommon;
 import org.jowidgets.api.widgets.controler.IInputListener;
 import org.jowidgets.api.widgets.descriptor.setup.IInputWidgetSetup;
 import org.jowidgets.util.EmptyCheck;
@@ -41,12 +41,12 @@ import org.jowidgets.util.EmptyCheck;
 public class InputWidgetDelegate<VALUE_TYPE> {
 
 	private final List<IValidator<VALUE_TYPE>> validators;
-	private final IInputWidgetCommon<VALUE_TYPE> inputWidgetCi;
+	private final IInputWidgetLegacyCommon<VALUE_TYPE> inputWidgetCi;
 
 	private boolean mandatory;
 	private boolean hasInput;
 
-	public InputWidgetDelegate(final IInputWidgetCommon<VALUE_TYPE> inputWidgetCi, final IInputWidgetSetup<VALUE_TYPE> setup) {
+	public InputWidgetDelegate(final IInputWidgetLegacyCommon<VALUE_TYPE> inputWidgetCi, final IInputWidgetSetup<VALUE_TYPE> setup) {
 		super();
 		this.validators = new LinkedList<IValidator<VALUE_TYPE>>();
 

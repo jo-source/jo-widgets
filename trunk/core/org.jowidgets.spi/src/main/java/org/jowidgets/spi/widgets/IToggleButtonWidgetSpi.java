@@ -27,8 +27,6 @@
  */
 package org.jowidgets.spi.widgets;
 
-import org.jowidgets.api.widgets.IToggleButtonWidgetCommon;
-
-public interface IToggleButtonWidgetSpi extends IToggleButtonWidgetCommon, IWidgetSpi {
+public interface IToggleButtonWidgetSpi extends ICheckBoxWidgetSpi, IIconWidgetSpi {
 
 }

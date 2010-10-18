@@ -25,19 +25,44 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets;
+package org.jowidgets.impl.swt.widgets.internal;
 
-import org.jowidgets.api.validation.IValidateable;
-import org.jowidgets.api.validation.IValidator;
+import org.eclipse.swt.widgets.Control;
+import org.jowidgets.api.color.IColorConstant;
+import org.jowidgets.api.widgets.controler.impl.InputObservable;
+import org.jowidgets.impl.swt.color.IColorCache;
+import org.jowidgets.impl.swt.widgets.SwtWidget;
+import org.jowidgets.spi.widgets.IInputWidgetLegacySpi;
 
-public interface IInputWidget<VALUE_TYPE> extends IInputWidgetLegacyCommon<VALUE_TYPE>, IChildWidget, IValidateable {
+public abstract class AbstractSwtInputWidgetLegacy<VALUE_TYPE> extends InputObservable implements IInputWidgetLegacySpi<VALUE_TYPE> {
 
-	boolean isMandatory();
+	private final Control control;
+	private final SwtWidget swtWidgetDelegate;
 
-	void setMandatory(boolean mandatory);
+	public AbstractSwtInputWidgetLegacy(final IColorCache colorCache, final Control control) {
+		super();
+		this.control = control;
+		this.swtWidgetDelegate = new SwtWidget(colorCache, control);
+	}
 
-	boolean hasInput();
+	@Override
+	public Control getUiReference() {
+		return control;
+	}
 
-	void addValidator(IValidator<VALUE_TYPE> validator);
+	@Override
+	public void redraw() {
+		swtWidgetDelegate.redraw();
+	}
+
+	@Override
+	public void setForegroundColor(final IColorConstant colorValue) {
+		swtWidgetDelegate.setForegroundColor(colorValue);
+	}
+
+	@Override
+	public void setBackgroundColor(final IColorConstant colorValue) {
+		swtWidgetDelegate.setBackgroundColor(colorValue);
+	}
 
 }

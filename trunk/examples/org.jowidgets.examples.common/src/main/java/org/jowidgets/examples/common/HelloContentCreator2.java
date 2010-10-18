@@ -30,6 +30,7 @@ package org.jowidgets.examples.common;
 import org.jowidgets.api.convert.impl.defaults.ValidatedTypeConverter;
 import org.jowidgets.api.image.defaults.Icons;
 import org.jowidgets.api.validation.ValidationResult;
+import org.jowidgets.api.widgets.ICheckBoxWidget;
 import org.jowidgets.api.widgets.IComboBoxWidget;
 import org.jowidgets.api.widgets.IToggleButtonWidget;
 import org.jowidgets.api.widgets.blueprint.ICheckBoxBluePrint;
@@ -59,7 +60,7 @@ public class HelloContentCreator2 implements IInputContentCreator<String> {
 		final IToggleButtonWidget tb2 = widgetContainer.add(toggleButtonBluePrint, "wrap, growx");
 
 		final ICheckBoxBluePrint checkBoxBp = bpF.checkBox().setText("Checkbox").setToolTipText("Tooltip");
-		final IToggleButtonWidget cb1 = widgetContainer.add(checkBoxBp, "wrap, growx");
+		final ICheckBoxWidget cb1 = widgetContainer.add(checkBoxBp, "wrap, growx");
 
 		final IComboBoxSelectionBluePrint<String> comboBoxBp1 = bpF.comboBoxSelection(" ", "one", "two", "three");
 		final IComboBoxWidget<String> cBox1 = widgetContainer.add(comboBoxBp1, "wrap, growx");
