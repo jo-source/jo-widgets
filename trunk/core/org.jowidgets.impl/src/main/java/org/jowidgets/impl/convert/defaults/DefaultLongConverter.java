@@ -25,15 +25,59 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.convert.impl;
+package org.jowidgets.impl.convert.defaults;
 
-import org.jowidgets.api.convert.IObjectStringConverter;
+import org.jowidgets.api.convert.IConverter;
+import org.jowidgets.api.validation.OkMessage;
+import org.jowidgets.api.validation.ValidationMessage;
+import org.jowidgets.api.validation.ValidationMessageType;
+import org.jowidgets.api.validation.ValidationResult;
+import org.jowidgets.impl.convert.AbstractObjectStringConverter;
 
-public abstract class AbstractObjectStringConverter<OBJECT_TYPE> implements IObjectStringConverter<OBJECT_TYPE> {
+public class DefaultLongConverter extends AbstractObjectStringConverter<Long> implements IConverter<Long> {
+
+	private static final String NO_VALID_INTEGER_MESSAGE = "is no valid integer number";
 
 	@Override
-	public final String getDescription(final OBJECT_TYPE value) {
+	public Long convertToObject(final String string) {
+		try {
+			// TODO define business logic and parse (less tolerant) with
+			// consideration of i18n
+			return Long.valueOf(Long.parseLong(string));
+		}
+		catch (final NumberFormatException e) {
+			return null;
+		}
+	}
+
+	@Override
+	public String convertToString(final Long value) {
+		if (value != null) {
+			return value.toString();
+		}
 		return null;
+	}
+
+	@Override
+	public ValidationResult validate(final String text) {
+		if (text != null && !text.isEmpty()) {
+			if (convertToObject(text) == null) {
+				return new ValidationResult(ValidationMessageType.ERROR, NO_VALID_INTEGER_MESSAGE);
+			}
+		}
+		return new ValidationResult();
+	}
+
+	@Override
+	public ValidationMessage isCompletableToValid(final String string) {
+		if (string != null) {
+			if (!string.matches("-?[0-9]*")) {
+				return new ValidationMessage(ValidationMessageType.ERROR, "'"
+					+ string
+					+ "' could not be completed to a valid number");
+			}
+		}
+		return OkMessage.getInstance();
 	}
 
 }

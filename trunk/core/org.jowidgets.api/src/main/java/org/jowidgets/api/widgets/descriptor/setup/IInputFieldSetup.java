@@ -27,18 +27,14 @@
  */
 package org.jowidgets.api.widgets.descriptor.setup;
 
-import org.jowidgets.api.convert.IValidatedConverter;
+import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.validation.IValidator;
-import org.jowidgets.api.veto.IInputVetoChecker;
 import org.jowidgets.api.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface IInputFieldSetup<INPUT_TYPE> extends IInputWidgetSetup<INPUT_TYPE> {
 
 	@Mandatory
-	IInputVetoChecker<String> getInputVetoChecker();
-
-	@Mandatory
-	IValidatedConverter<INPUT_TYPE> getConverter();
+	IConverter<INPUT_TYPE> getConverter();
 
 	@Mandatory
 	IValidator<INPUT_TYPE> getValidator();

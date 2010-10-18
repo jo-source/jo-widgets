@@ -27,16 +27,16 @@
  */
 package org.jowidgets.api.widgets.blueprint.factory;
 
+import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.convert.IObjectStringConverter;
-import org.jowidgets.api.convert.IValidatedConverter;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICheckBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
-import org.jowidgets.api.widgets.blueprint.IIconBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
+import org.jowidgets.api.widgets.blueprint.IIconBluePrint;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISeparatorBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextFieldBluePrint;
@@ -67,7 +67,7 @@ public interface IBasicSimpleBluePrintFactory {
 
 	IToggleButtonBluePrint toggleButton();
 
-	<INPUT_TYPE> IComboBoxBluePrint<INPUT_TYPE> comboBox(final IValidatedConverter<INPUT_TYPE> converter);
+	<INPUT_TYPE> IComboBoxBluePrint<INPUT_TYPE> comboBox(final IConverter<INPUT_TYPE> converter);
 
 	<INPUT_TYPE> IComboBoxSelectionBluePrint<INPUT_TYPE> comboBoxSelection(
 		final IObjectStringConverter<INPUT_TYPE> objectStringConverter);

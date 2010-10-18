@@ -28,8 +28,9 @@
 
 package org.jowidgets.impl.widgets.basic.factory.internal;
 
-import org.jowidgets.api.veto.IInputVetoChecker;
-import org.jowidgets.api.veto.VetoCheckResult;
+import org.jowidgets.api.validation.ITextInputValidator;
+import org.jowidgets.api.validation.ValidationMessage;
+import org.jowidgets.api.validation.ValidationMessageType;
 import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.ITextFieldDescriptor;
@@ -57,15 +58,15 @@ public class TextFieldWidgetFactory extends AbstractWidgetFactory implements
 	public IInputWidget<String> create(final IWidget parent, final ITextFieldDescriptor descriptor) {
 		final ITextFieldBluePrintSpi bp = getSpiBluePrintFactory().textField();
 
-		final IInputVetoChecker<String> vetoChecker = descriptor.getInputVetoChecker();
+		final ITextInputValidator textInputValidator = descriptor.getTextInputValidator();
 
 		bp.setInputVerifier(new IInputVerifier() {
 
 			@Override
 			public boolean verify(final String currentValue, final String input, final int start, final int end) {
 				//TODO must check veto on NEW current value
-				final VetoCheckResult vetoCheckResult = vetoChecker.vetoCheck(input);
-				return !vetoCheckResult.isVeto();
+				final ValidationMessage validationMessage = textInputValidator.isCompletableToValid(input);
+				return validationMessage.getType() == ValidationMessageType.OK;
 			}
 
 		});

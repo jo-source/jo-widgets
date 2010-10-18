@@ -28,13 +28,10 @@
 package org.jowidgets.api.widgets.blueprint.builder;
 
 import org.jowidgets.api.validation.ITextInputValidator;
-import org.jowidgets.api.veto.IInputVetoChecker;
 
 public interface ITextFieldSetupBuilder<INSTANCE_TYPE extends ITextFieldSetupBuilder<?>> extends
 		IInputWidgetSetupBuilder<INSTANCE_TYPE, String> {
 
 	INSTANCE_TYPE setTextInputValidator(final ITextInputValidator textInputValidator);
-
-	INSTANCE_TYPE setInputVetoChecker(IInputVetoChecker<String> vetoChecker);
 
 }

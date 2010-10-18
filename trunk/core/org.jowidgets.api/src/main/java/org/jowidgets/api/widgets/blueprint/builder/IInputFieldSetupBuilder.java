@@ -27,17 +27,14 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
-import org.jowidgets.api.convert.IValidatedConverter;
+import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.validation.IValidator;
-import org.jowidgets.api.veto.IInputVetoChecker;
 
 public interface IInputFieldSetupBuilder<INSTANCE_TYPE extends IInputFieldSetupBuilder<?, ?>, INPUT_TYPE> extends
 		IInputWidgetSetupBuilder<INSTANCE_TYPE, INPUT_TYPE> {
 
-	INSTANCE_TYPE setInputVetoChecker(IInputVetoChecker<String> vetoChecker);
+	INSTANCE_TYPE setConverter(IConverter<INPUT_TYPE> converter);
 
-	INSTANCE_TYPE setConverter(IValidatedConverter<INPUT_TYPE> converter);
-
-	INSTANCE_TYPE setValidator(final IValidator<INPUT_TYPE> validator);
+	INSTANCE_TYPE setValidator(IValidator<INPUT_TYPE> validator);
 
 }

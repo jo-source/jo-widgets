@@ -28,15 +28,11 @@
 package org.jowidgets.api.widgets.descriptor.setup;
 
 import org.jowidgets.api.validation.ITextInputValidator;
-import org.jowidgets.api.veto.IInputVetoChecker;
 import org.jowidgets.api.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface ITextFieldSetup extends IInputWidgetSetup<String> {
 
 	@Mandatory
 	ITextInputValidator getTextInputValidator();
-
-	@Mandatory
-	IInputVetoChecker<String> getInputVetoChecker();
 
 }

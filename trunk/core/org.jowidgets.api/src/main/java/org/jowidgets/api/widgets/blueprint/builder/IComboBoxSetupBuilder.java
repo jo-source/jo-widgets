@@ -27,16 +27,14 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
-import org.jowidgets.api.convert.IValidatedStringObjectConverter;
+import org.jowidgets.api.convert.IStringObjectConverter;
 import org.jowidgets.api.validation.IValidator;
-import org.jowidgets.api.veto.IInputVetoChecker;
 
 public interface IComboBoxSetupBuilder<INSTANCE_TYPE extends IComboBoxSetupBuilder<?, ?>, INPUT_TYPE> extends
 		IComboBoxSelectionSetupBuilder<INSTANCE_TYPE, INPUT_TYPE> {
 
-	INSTANCE_TYPE setStringObjectConverter(IValidatedStringObjectConverter<INPUT_TYPE> stringObjectConverter);
+	INSTANCE_TYPE setStringObjectConverter(IStringObjectConverter<INPUT_TYPE> stringObjectConverter);
 
 	INSTANCE_TYPE setValidator(IValidator<INPUT_TYPE> validator);
 
-	INSTANCE_TYPE setInputVetoChecker(IInputVetoChecker<String> vetoChecker);
 }

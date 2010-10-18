@@ -27,8 +27,8 @@
  */
 package org.jowidgets.impl.widgets.basic.blueprint;
 
+import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.convert.IObjectStringConverter;
-import org.jowidgets.api.convert.IValidatedConverter;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICheckBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
@@ -124,7 +124,7 @@ public class BasicSimpleBluePrintFactory extends AbstractBluePrintFactory implem
 	}
 
 	@Override
-	public final <INPUT_TYPE> IComboBoxBluePrint<INPUT_TYPE> comboBox(final IValidatedConverter<INPUT_TYPE> converter) {
+	public final <INPUT_TYPE> IComboBoxBluePrint<INPUT_TYPE> comboBox(final IConverter<INPUT_TYPE> converter) {
 
 		final IComboBoxBluePrint<INPUT_TYPE> result = createProxy(IComboBoxBluePrint.class, IComboBoxDescriptor.class);
 

@@ -27,7 +27,7 @@
  */
 package org.jowidgets.impl.widgets.composed.blueprint;
 
-import org.jowidgets.api.convert.IValidatedConverter;
+import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
@@ -95,7 +95,7 @@ public class SimpleBluePrintFactory extends BasicBluePrintFactory implements ISi
 	}
 
 	@Override
-	public final <INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField(final IValidatedConverter<INPUT_TYPE> converter) {
+	public final <INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField(final IConverter<INPUT_TYPE> converter) {
 		Assert.paramNotNull(converter, "converter");
 
 		final IInputFieldBluePrint<INPUT_TYPE> result = createProxy(IInputFieldBluePrint.class, IInputFieldDescriptor.class);

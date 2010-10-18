@@ -25,15 +25,38 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.convert.impl.defaults;
+package org.jowidgets.impl.convert.defaults;
 
-import org.jowidgets.api.convert.IValidatedConverter;
+import org.jowidgets.api.convert.IConverter;
+import org.jowidgets.api.validation.OkMessage;
+import org.jowidgets.api.validation.ValidationMessage;
 import org.jowidgets.api.validation.ValidationMessageType;
 import org.jowidgets.api.validation.ValidationResult;
+import org.jowidgets.impl.convert.AbstractObjectStringConverter;
 
-public class ValidatedShortConverter extends ShortConverter implements IValidatedConverter<Short> {
+public class DefaultShortConverter extends AbstractObjectStringConverter<Short> implements IConverter<Short> {
 
 	private static final String NO_VALID_INTEGER_MESSAGE = "is no valid integer number";
+
+	@Override
+	public Short convertToObject(final String string) {
+		try {
+			// TODO define business logic and parse (less tolerant) with
+			// consideration of i18n
+			return Short.valueOf(Short.parseShort(string));
+		}
+		catch (final NumberFormatException e) {
+			return null;
+		}
+	}
+
+	@Override
+	public String convertToString(final Short value) {
+		if (value != null) {
+			return value.toString();
+		}
+		return null;
+	}
 
 	@Override
 	public ValidationResult validate(final String text) {
@@ -43,6 +66,18 @@ public class ValidatedShortConverter extends ShortConverter implements IValidate
 			}
 		}
 		return new ValidationResult();
+	}
+
+	@Override
+	public ValidationMessage isCompletableToValid(final String string) {
+		if (string != null) {
+			if (!string.matches("-?[0-9]*")) {
+				return new ValidationMessage(ValidationMessageType.ERROR, "'"
+					+ string
+					+ "' could not be completed to a valid number");
+			}
+		}
+		return OkMessage.getInstance();
 	}
 
 }

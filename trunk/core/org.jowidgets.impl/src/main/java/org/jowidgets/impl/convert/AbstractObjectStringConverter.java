@@ -25,10 +25,15 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.veto;
+package org.jowidgets.impl.convert;
 
-public interface IInputVetoChecker<INPUT_TYPE> {
+import org.jowidgets.api.convert.IObjectStringConverter;
 
-	VetoCheckResult vetoCheck(INPUT_TYPE input);
+public abstract class AbstractObjectStringConverter<OBJECT_TYPE> implements IObjectStringConverter<OBJECT_TYPE> {
+
+	@Override
+	public final String getDescription(final OBJECT_TYPE value) {
+		return null;
+	}
 
 }

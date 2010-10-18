@@ -27,20 +27,16 @@
  */
 package org.jowidgets.api.widgets.descriptor.setup;
 
-import org.jowidgets.api.convert.IValidatedStringObjectConverter;
+import org.jowidgets.api.convert.IStringObjectConverter;
 import org.jowidgets.api.validation.IValidator;
-import org.jowidgets.api.veto.IInputVetoChecker;
 import org.jowidgets.api.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface IComboBoxSetup<INPUT_TYPE> extends IComboBoxSelectionSetup<INPUT_TYPE> {
 
 	@Mandatory
-	IValidatedStringObjectConverter<INPUT_TYPE> getStringObjectConverter();
+	IStringObjectConverter<INPUT_TYPE> getStringObjectConverter();
 
 	@Mandatory
 	IValidator<INPUT_TYPE> getValidator();
-
-	@Mandatory
-	IInputVetoChecker<String> getInputVetoChecker();
 
 }

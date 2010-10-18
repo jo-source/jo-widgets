@@ -27,8 +27,6 @@
  */
 package org.jowidgets.impl.widgets.composed.factory.internal;
 
-import org.jowidgets.api.veto.CompoundVetoChecker;
-import org.jowidgets.api.veto.IInputVetoChecker;
 import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.ITextFieldBluePrint;
@@ -55,13 +53,7 @@ public class InputFieldWidgetFactory<VALUE_TYPE> implements
 
 		final BluePrintFactory bpF = new BluePrintFactory();
 
-		@SuppressWarnings("unchecked")
-		final IInputVetoChecker<String> vetoChecker = new CompoundVetoChecker<String>(
-			descriptor.getConverter(),
-			descriptor.getInputVetoChecker());
-
-		final ITextFieldBluePrint textFieldBluePrint = bpF.textField().setInputVetoChecker(vetoChecker);
-		textFieldBluePrint.setTextInputValidator(descriptor.getConverter());
+		final ITextFieldBluePrint textFieldBluePrint = bpF.textField().setTextInputValidator(descriptor.getConverter());
 
 		final IInputWidget<String> textFieldWidget = genericFactory.create(parent, textFieldBluePrint);
 

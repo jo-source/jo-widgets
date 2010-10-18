@@ -28,7 +28,7 @@
 package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.color.IColorConstant;
-import org.jowidgets.api.convert.IValidatedConverter;
+import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.util.ColorSettingsInvoker;
 import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.IWidget;
@@ -38,7 +38,7 @@ import org.jowidgets.api.widgets.descriptor.setup.IInputFieldSetup;
 public class InputFieldWidget<VALUE_TYPE> extends AbstractInputWidget<VALUE_TYPE> {
 
 	private final IInputWidget<String> textFieldWidget;
-	private final IValidatedConverter<VALUE_TYPE> converter;
+	private final IConverter<VALUE_TYPE> converter;
 
 	public InputFieldWidget(final IInputWidget<String> textFieldWidget, final IInputFieldSetup<VALUE_TYPE> setup) {
 

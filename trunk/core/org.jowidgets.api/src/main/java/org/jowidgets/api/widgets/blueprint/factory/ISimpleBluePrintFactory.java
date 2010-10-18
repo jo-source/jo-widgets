@@ -27,7 +27,7 @@
  */
 package org.jowidgets.api.widgets.blueprint.factory;
 
-import org.jowidgets.api.convert.IValidatedConverter;
+import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
@@ -44,7 +44,7 @@ public interface ISimpleBluePrintFactory extends IBasicBluePrintFactory {
 
 	IValidationLabelBluePrint validationLabel();
 
-	<INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField(final IValidatedConverter<INPUT_TYPE> converter);
+	<INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField(final IConverter<INPUT_TYPE> converter);
 
 	<INPUT_TYPE> IInputDialogBluePrint<INPUT_TYPE> inputDialog(final IInputContentCreator<INPUT_TYPE> contentCreator);
 

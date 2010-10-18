@@ -28,9 +28,9 @@
 
 package org.jowidgets.impl.widgets.basic.factory.internal;
 
-import org.jowidgets.api.veto.IInputVetoChecker;
-import org.jowidgets.api.veto.NoVetoChecker;
-import org.jowidgets.api.veto.VetoCheckResult;
+import org.jowidgets.api.validation.ITextInputValidator;
+import org.jowidgets.api.validation.ValidationMessage;
+import org.jowidgets.api.validation.ValidationMessageType;
 import org.jowidgets.api.widgets.IComboBoxWidget;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.IComboBoxDescriptor;
@@ -61,33 +61,21 @@ public class ComboBoxWidgetFactory extends AbstractWidgetFactory implements
 		final IComboBoxBluePrintSpi bp = getSpiBluePrintFactory().comboBox().setSetup(descriptor);
 		ComboBoxBuilderConverter.convert(bp, descriptor);
 
-		final IInputVetoChecker<String> vetoChecker = getVetoChecker(descriptor);
+		final ITextInputValidator textInputValidator = descriptor.getStringObjectConverter();
 
 		bp.setInputVerifier(new IInputVerifier() {
 
 			@Override
 			public boolean verify(final String currentValue, final String input, final int start, final int end) {
 				//TODO must check veto on NEW current value
-				final VetoCheckResult vetoCheckResult = vetoChecker.vetoCheck(input);
-				return !vetoCheckResult.isVeto();
+				final ValidationMessage validationMessage = textInputValidator.isCompletableToValid(input);
+				return validationMessage.getType() == ValidationMessageType.OK;
 			}
 
 		});
 
 		final IComboBoxWidgetSpi widget = getSpiWidgetFactory().createComboBoxWidget(parent, bp);
 		return new ComboBoxWidget(parent, widget, descriptor);
-	}
-
-	private IInputVetoChecker<String> getVetoChecker(final IComboBoxDescriptor<?> descriptor) {
-
-		IInputVetoChecker<String> vetoChecker = descriptor.getInputVetoChecker();
-
-		//TODO veto checker will be exchanged by textInputvalidator later
-		if (vetoChecker == null) {
-			vetoChecker = NoVetoChecker.getInstance();
-		}
-
-		return vetoChecker;
 	}
 
 }

@@ -5,13 +5,13 @@
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  * * Redistributions of source code must retain the above copyright
- *   notice, this list of conditions and the following disclaimer.
+ * notice, this list of conditions and the following disclaimer.
  * * Redistributions in binary form must reproduce the above copyright
- *   notice, this list of conditions and the following disclaimer in the
- *   documentation and/or other materials provided with the distribution.
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
  * * Neither the name of the jo-widgets.org nor the
- *   names of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * names of its contributors may be used to endorse or promote products
+ * derived from this software without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -25,10 +25,33 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.convert;
+package org.jowidgets.impl.convert.defaults;
 
-import org.jowidgets.api.validation.ITextInputValidator;
+import org.jowidgets.api.convert.IConverter;
+import org.jowidgets.api.validation.ValidationMessage;
+import org.jowidgets.api.validation.ValidationResult;
+import org.jowidgets.impl.convert.AbstractObjectStringConverter;
 
-public interface IValidatedStringObjectConverter<TO_TYPE> extends IStringObjectConverter<TO_TYPE>, ITextInputValidator {
+public class DefaultStringConverter extends AbstractObjectStringConverter<String> implements IConverter<String> {
+
+	@Override
+	public String convertToObject(final String string) {
+		return string;
+	}
+
+	@Override
+	public String convertToString(final String value) {
+		return value;
+	}
+
+	@Override
+	public ValidationMessage isCompletableToValid(final String string) {
+		return ValidationMessage.OK_MESSAGE;
+	}
+
+	@Override
+	public ValidationResult validate(final String validationInput) {
+		return new ValidationResult();
+	}
 
 }

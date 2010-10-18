@@ -27,8 +27,17 @@
  */
 package org.jowidgets.api.validation;
 
-import org.jowidgets.api.veto.IInputVetoChecker;
+public interface ITextInputValidator extends IValidator<String> {
 
-public interface ITextInputValidator extends IValidator<String>, IInputVetoChecker<String> {
+	/**
+	 * Checks a string if it could be completed to a valid input.
+	 * 
+	 * @param string
+	 *            the string to check
+	 * @return OK if the string is valid or if the string could be completed to
+	 *         a valid input by adding substring at any position(s), ERROR with
+	 *         valuable description otherwise
+	 */
+	ValidationMessage isCompletableToValid(String string);
 
 }

@@ -28,8 +28,6 @@
 package org.jowidgets.impl.widgets.composed.blueprint.defaults;
 
 import org.jowidgets.api.validation.OkValidator;
-import org.jowidgets.api.veto.IInputVetoChecker;
-import org.jowidgets.api.veto.NoVetoChecker;
 import org.jowidgets.api.widgets.blueprint.builder.IInputFieldSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
@@ -39,7 +37,5 @@ public class InputFieldDefaults implements IDefaultInitializer<IInputFieldSetupB
 	@Override
 	public void initialize(final IInputFieldSetupBuilder<?, Object> builder) {
 		builder.setValidator(new OkValidator());
-		final IInputVetoChecker<String> checker = NoVetoChecker.getInstance();
-		builder.setInputVetoChecker(checker);
 	}
 }

@@ -27,7 +27,6 @@
  */
 package org.jowidgets.examples.common;
 
-import org.jowidgets.api.convert.impl.defaults.ValidatedTypeConverter;
 import org.jowidgets.api.image.defaults.Icons;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.ICheckBoxWidget;
@@ -41,6 +40,7 @@ import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.api.widgets.controler.IInputListener;
 import org.jowidgets.api.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.impl.convert.DefaultTypeConverter;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
 public class HelloContentCreator2 implements IInputContentCreator<String> {
@@ -68,7 +68,7 @@ public class HelloContentCreator2 implements IInputContentCreator<String> {
 		final IComboBoxBluePrint<String> comboBoxBp2 = bpF.comboBox("red", "green", "blue");
 		final IComboBoxWidget<String> cBox2 = widgetContainer.add(comboBoxBp2, "wrap, growx");
 
-		final IComboBoxBluePrint<Long> comboBoxBp3 = bpF.comboBox(ValidatedTypeConverter.LONG_CONVERTER);
+		final IComboBoxBluePrint<Long> comboBoxBp3 = bpF.comboBox(DefaultTypeConverter.LONG_CONVERTER);
 		comboBoxBp3.setElements(Long.valueOf(23456), Long.valueOf(15468), Long.valueOf(5345519));
 		final IComboBoxWidget<Long> cBox3 = widgetContainer.add(comboBoxBp3, "wrap, growx");
 

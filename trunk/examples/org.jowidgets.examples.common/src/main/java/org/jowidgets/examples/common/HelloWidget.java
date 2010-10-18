@@ -129,7 +129,7 @@ public class HelloWidget {
 	}
 
 	private IInputDialogWidget<String> createDialogWidget(final ISimpleBluePrintFactory bpF) {
-		final IInputDialogBluePrint<String> inputDialogBp = bpF.inputDialog(new HelloContentCreator());
+		final IInputDialogBluePrint<String> inputDialogBp = bpF.inputDialog(new HelloContentCreator2());
 		inputDialogBp.setTitle("Test dialog").setAutoCenterPolicy(AutoCenterPolicy.ONCE);
 		inputDialogBp.setOkButton("very ok", "This is very ok");
 		inputDialogBp.setCancelButton("cancel user input", "cancel the current user input");

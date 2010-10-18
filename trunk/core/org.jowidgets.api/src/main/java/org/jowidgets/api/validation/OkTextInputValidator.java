@@ -27,8 +27,6 @@
  */
 package org.jowidgets.api.validation;
 
-import org.jowidgets.api.veto.VetoCheckResult;
-
 public class OkTextInputValidator implements ITextInputValidator {
 
 	@Override
@@ -37,8 +35,8 @@ public class OkTextInputValidator implements ITextInputValidator {
 	}
 
 	@Override
-	public VetoCheckResult vetoCheck(final String input) {
-		return VetoCheckResult.NO_VETO;
+	public ValidationMessage isCompletableToValid(final String string) {
+		return OkMessage.getInstance();
 	}
 
 }

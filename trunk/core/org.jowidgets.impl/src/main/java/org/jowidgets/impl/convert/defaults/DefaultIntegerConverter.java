@@ -25,16 +25,21 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.convert.impl.defaults;
+package org.jowidgets.impl.convert.defaults;
 
 import org.jowidgets.api.convert.IConverter;
-import org.jowidgets.api.convert.impl.AbstractObjectStringConverter;
-import org.jowidgets.api.veto.VetoCheckResult;
+import org.jowidgets.api.validation.OkMessage;
+import org.jowidgets.api.validation.ValidationMessage;
+import org.jowidgets.api.validation.ValidationMessageType;
+import org.jowidgets.api.validation.ValidationResult;
+import org.jowidgets.impl.convert.AbstractObjectStringConverter;
 
-public class IntegerConverter extends AbstractObjectStringConverter<Integer> implements IConverter<Integer> {
+public class DefaultIntegerConverter extends AbstractObjectStringConverter<Integer> implements IConverter<Integer> {
+
+	private static final String NO_VALID_INTEGER_MESSAGE = "is no valid integer number";
 
 	@Override
-	public final Integer convertToObject(final String string) {
+	public Integer convertToObject(final String string) {
 		try {
 			// TODO define business logic and parse (less tolerant) with
 			// consideration of i18n
@@ -46,7 +51,7 @@ public class IntegerConverter extends AbstractObjectStringConverter<Integer> imp
 	}
 
 	@Override
-	public final String convertToString(final Integer value) {
+	public String convertToString(final Integer value) {
 		if (value != null) {
 			return value.toString();
 		}
@@ -54,13 +59,25 @@ public class IntegerConverter extends AbstractObjectStringConverter<Integer> imp
 	}
 
 	@Override
-	public final VetoCheckResult vetoCheck(final String string) {
-		if (string != null) {
-			if (!string.matches("-?[0-9]*")) {
-				return new VetoCheckResult("'" + string + "' could not be completed to a valid number");
+	public ValidationResult validate(final String text) {
+		if (text != null && !text.isEmpty()) {
+			if (convertToObject(text) == null) {
+				return new ValidationResult(ValidationMessageType.ERROR, NO_VALID_INTEGER_MESSAGE);
 			}
 		}
-		return VetoCheckResult.NO_VETO;
+		return new ValidationResult();
+	}
+
+	@Override
+	public ValidationMessage isCompletableToValid(final String string) {
+		if (string != null) {
+			if (!string.matches("-?[0-9]*")) {
+				return new ValidationMessage(ValidationMessageType.ERROR, "'"
+					+ string
+					+ "' could not be completed to a valid number");
+			}
+		}
+		return OkMessage.getInstance();
 	}
 
 }

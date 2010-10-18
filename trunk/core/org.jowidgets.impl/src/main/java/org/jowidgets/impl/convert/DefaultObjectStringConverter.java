@@ -25,39 +25,25 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.convert.impl.defaults;
+package org.jowidgets.impl.convert;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.jowidgets.api.convert.IObjectStringConverter;
 
-import org.jowidgets.api.convert.IValidatedConverter;
-import org.jowidgets.util.Assert;
+public final class DefaultObjectStringConverter extends AbstractObjectStringConverter<Object> {
 
-public final class ValidatedTypeConverter {
+	private static final IObjectStringConverter<?> INSTANCE = new DefaultObjectStringConverter();
 
-	public static final IValidatedConverter<String> STRING_CONVERTER = new ValidatedStringConverter();
-	public static final IValidatedConverter<Long> LONG_CONVERTER = new ValidatedLongConverter();
-	public static final IValidatedConverter<Integer> INTEGER_CONVERTER = new ValidatedIntegerConverter();
-	public static final IValidatedConverter<Short> SHORT_CONVERTER = new ValidatedShortConverter();
-
-	private static final Map<Class<?>, IValidatedConverter<? extends Object>> CONVERTER_MAP = createConverterMap();
-
-	private ValidatedTypeConverter() {}
-
-	@SuppressWarnings("unchecked")
-	public static <OBJECT_TYPE> IValidatedConverter<OBJECT_TYPE> getConverter(final Class<? extends OBJECT_TYPE> type) {
-		Assert.paramNotNull(type, "type");
-		final Object result = CONVERTER_MAP.get(type);
-		return (IValidatedConverter<OBJECT_TYPE>) result;
+	@Override
+	public String convertToString(final Object value) {
+		if (value != null) {
+			return value.toString();
+		}
+		return null;
 	}
 
-	private static Map<Class<?>, IValidatedConverter<? extends Object>> createConverterMap() {
-		final Map<Class<?>, IValidatedConverter<? extends Object>> result = new HashMap<Class<?>, IValidatedConverter<? extends Object>>();
-		result.put(String.class, STRING_CONVERTER);
-		result.put(Long.class, LONG_CONVERTER);
-		result.put(Long.class, INTEGER_CONVERTER);
-		result.put(Short.class, SHORT_CONVERTER);
-		return result;
+	@SuppressWarnings("unchecked")
+	public static <OBJECT_TYPE> IObjectStringConverter<OBJECT_TYPE> getInstance() {
+		return (IObjectStringConverter<OBJECT_TYPE>) INSTANCE;
 	}
 
 }

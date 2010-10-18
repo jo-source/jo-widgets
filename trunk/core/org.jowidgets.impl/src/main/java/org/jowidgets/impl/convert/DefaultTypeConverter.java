@@ -25,42 +25,43 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.convert.impl.defaults;
+package org.jowidgets.impl.convert;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.jowidgets.api.convert.IConverter;
-import org.jowidgets.api.convert.impl.AbstractObjectStringConverter;
-import org.jowidgets.api.veto.VetoCheckResult;
+import org.jowidgets.impl.convert.defaults.DefaultIntegerConverter;
+import org.jowidgets.impl.convert.defaults.DefaultLongConverter;
+import org.jowidgets.impl.convert.defaults.DefaultShortConverter;
+import org.jowidgets.impl.convert.defaults.DefaultStringConverter;
+import org.jowidgets.util.Assert;
 
-public class LongConverter extends AbstractObjectStringConverter<Long> implements IConverter<Long> {
+public final class DefaultTypeConverter {
 
-	@Override
-	public final Long convertToObject(final String string) {
-		try {
-			// TODO define business logic and parse (less tolerant) with
-			// consideration of i18n
-			return Long.valueOf(Long.parseLong(string));
-		}
-		catch (final NumberFormatException e) {
-			return null;
-		}
+	public static final IConverter<String> STRING_CONVERTER = new DefaultStringConverter();
+	public static final IConverter<Long> LONG_CONVERTER = new DefaultLongConverter();
+	public static final IConverter<Integer> INTEGER_CONVERTER = new DefaultIntegerConverter();
+	public static final IConverter<Short> SHORT_CONVERTER = new DefaultShortConverter();
+
+	private static final Map<Class<?>, IConverter<? extends Object>> CONVERTER_MAP = createConverterMap();
+
+	private DefaultTypeConverter() {}
+
+	@SuppressWarnings("unchecked")
+	public static <OBJECT_TYPE> IConverter<OBJECT_TYPE> getConverter(final Class<? extends OBJECT_TYPE> type) {
+		Assert.paramNotNull(type, "type");
+		final Object result = CONVERTER_MAP.get(type);
+		return (IConverter<OBJECT_TYPE>) result;
 	}
 
-	@Override
-	public final String convertToString(final Long value) {
-		if (value != null) {
-			return value.toString();
-		}
-		return null;
-	}
-
-	@Override
-	public final VetoCheckResult vetoCheck(final String string) {
-		if (string != null) {
-			if (!string.matches("-?[0-9]*")) {
-				return new VetoCheckResult("'" + string + "' could not be completed to a valid number");
-			}
-		}
-		return VetoCheckResult.NO_VETO;
+	private static Map<Class<?>, IConverter<? extends Object>> createConverterMap() {
+		final Map<Class<?>, IConverter<? extends Object>> result = new HashMap<Class<?>, IConverter<? extends Object>>();
+		result.put(String.class, STRING_CONVERTER);
+		result.put(Long.class, LONG_CONVERTER);
+		result.put(Long.class, INTEGER_CONVERTER);
+		result.put(Short.class, SHORT_CONVERTER);
+		return result;
 	}
 
 }
