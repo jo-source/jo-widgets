@@ -64,7 +64,7 @@ public class ComboBoxSelectionWidget extends AbstractSwingInputWidget implements
 	}
 
 	@Override
-	public void setSelected(final int index) {
+	public void setSelectedIndex(final int index) {
 		getUiReference().setSelectedIndex(index);
 	}
 

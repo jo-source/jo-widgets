@@ -49,7 +49,7 @@ public class ComboBoxWidget<VALUE_TYPE> extends ComboBoxSelectionWidget<VALUE_TY
 	public void setValue(final VALUE_TYPE value) {
 		final int indexOfContent = getElements().indexOf(value);
 		if (indexOfContent != -1) {
-			comboBoxWidgetSpi.setSelected(indexOfContent);
+			comboBoxWidgetSpi.setSelectedIndex(indexOfContent);
 		}
 		else {
 			comboBoxWidgetSpi.setText(getObjectStringConverter().convertToString(value));

@@ -65,7 +65,7 @@ public class ComboBoxSelectionWidget<VALUE_TYPE> extends AbstractInputWidget<VAL
 	public void setValue(final VALUE_TYPE value) {
 		final int indexOfContent = elements.indexOf(value);
 		if (indexOfContent >= 0 && indexOfContent < elements.size()) {
-			comboBoxSelectionWidgetSpi.setSelected(indexOfContent);
+			comboBoxSelectionWidgetSpi.setSelectedIndex(indexOfContent);
 		}
 		else {
 			throw new IllegalArgumentException("Value '" + value + "' is not a elemnt of this combo box");

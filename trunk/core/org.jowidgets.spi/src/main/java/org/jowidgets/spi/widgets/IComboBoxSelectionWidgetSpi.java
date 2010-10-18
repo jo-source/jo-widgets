@@ -33,7 +33,7 @@ public interface IComboBoxSelectionWidgetSpi extends IInputWidgetCommon {
 
 	int getSelectedIndex();
 
-	void setSelected(int index);
+	void setSelectedIndex(int index);
 
 	void setTooltipText(String tooltipText);
 
