@@ -28,7 +28,9 @@
 
 package org.jowidgets.impl.widgets.basic.blueprint.convenience.registry;
 
+import org.jowidgets.api.widgets.blueprint.builder.IComboBoxSelectionSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IWindowSetupBuilder;
+import org.jowidgets.impl.widgets.basic.blueprint.convenience.ComboBoxSelectionSetupConvenience;
 import org.jowidgets.impl.widgets.basic.blueprint.convenience.WindowSetupConvenience;
 import org.jowidgets.impl.widgets.common.blueprint.convenience.registry.CommonSetupConvenienceRegistry;
 
@@ -36,6 +38,7 @@ public class BasicSetupConvenienceRegistry extends CommonSetupConvenienceRegistr
 
 	public BasicSetupConvenienceRegistry() {
 		super();
+		register(IComboBoxSelectionSetupBuilder.class, new ComboBoxSelectionSetupConvenience());
 		register(IWindowSetupBuilder.class, new WindowSetupConvenience());
 	}
 }

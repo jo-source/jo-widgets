@@ -27,6 +27,6 @@
  */
 package org.jowidgets.api.widgets;
 
-public interface IToggleButtonWidget extends IToggleButtonWidgetCommon, IInputWidget<Boolean> {
+public interface IToggleButtonWidget extends ICheckBoxWidget, IIconWidget {
 
 }

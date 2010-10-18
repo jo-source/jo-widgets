@@ -30,34 +30,27 @@ package org.jowidgets.impl.widgets.common.blueprint.defaults.registry;
 
 import org.jowidgets.api.widgets.builder.IButtonSetupBuilderCommon;
 import org.jowidgets.api.widgets.builder.ICheckBoxSetupBuilderCommon;
-import org.jowidgets.api.widgets.builder.IComboBoxSelectionSetupBuilderCommon;
 import org.jowidgets.api.widgets.builder.IContainerSetupBuilderCommon;
 import org.jowidgets.api.widgets.builder.IScrollCompositeSetupBuilderCommon;
 import org.jowidgets.api.widgets.builder.ISeparatorSetupBuilderCommon;
 import org.jowidgets.api.widgets.builder.ITextLabelSetupBuilderCommon;
-import org.jowidgets.api.widgets.builder.IVetoableInputWidgetSetupBuilderCommon;
 import org.jowidgets.impl.widgets.blueprint.defaults.DefaultsInitializerRegistry;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.ButtonDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.CheckBoxDefaultsCommon;
-import org.jowidgets.impl.widgets.common.blueprint.defaults.ComboBoxSelectionDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.ContainerDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.ScrolledCompositeDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.SeparatorDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.TextLabelDefaultsCommon;
-import org.jowidgets.impl.widgets.common.blueprint.defaults.VetoableInputWidgetDefaultsCommon;
 
 public class CommonDefaultsInitializerRegistry extends DefaultsInitializerRegistry {
 
 	public CommonDefaultsInitializerRegistry() {
 		super();
-		register(IComboBoxSelectionSetupBuilderCommon.class, new ComboBoxSelectionDefaultsCommon());
 		register(IButtonSetupBuilderCommon.class, new ButtonDefaultsCommon());
 		register(ICheckBoxSetupBuilderCommon.class, new CheckBoxDefaultsCommon());
 		register(IContainerSetupBuilderCommon.class, new ContainerDefaultsCommon());
 		register(IScrollCompositeSetupBuilderCommon.class, new ScrolledCompositeDefaultsCommon());
 		register(ISeparatorSetupBuilderCommon.class, new SeparatorDefaultsCommon());
 		register(ITextLabelSetupBuilderCommon.class, new TextLabelDefaultsCommon());
-		register(IVetoableInputWidgetSetupBuilderCommon.class, new VetoableInputWidgetDefaultsCommon());
-
 	}
 }

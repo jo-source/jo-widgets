@@ -25,13 +25,21 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.builder;
+package org.jowidgets.impl.widgets.basic.blueprint.defaults;
 
-import org.jowidgets.api.veto.IInputVetoChecker;
+import java.util.Collections;
+import java.util.LinkedList;
 
-public interface IVetoableInputWidgetSetupBuilderCommon<INSTANCE_TYPE extends IVetoableInputWidgetSetupBuilderCommon<?, ?>, INPUT_TYPE> extends
-		IWidgetSetupBuilderCommon<INSTANCE_TYPE> {
+import org.jowidgets.api.widgets.blueprint.builder.IComboBoxSelectionSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
-	INSTANCE_TYPE setInputVetoChecker(IInputVetoChecker<INPUT_TYPE> vetoChecker);
+public class ComboBoxSelectionDefaults implements IDefaultInitializer<IComboBoxSelectionSetupBuilder<?, ?>> {
+
+	@SuppressWarnings({"rawtypes", "unchecked"})
+	@Override
+	public void initialize(final IComboBoxSelectionSetupBuilder<?, ?> builder) {
+		builder.setAutoCompletion(true);
+		builder.setElements(Collections.unmodifiableList(new LinkedList()));
+	}
 
 }

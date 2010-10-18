@@ -35,9 +35,10 @@ import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.api.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.IComboBoxSelectionBluePrintSpi;
-import org.jowidgets.impl.widgets.basic.ComboBoxWidget;
+import org.jowidgets.impl.widgets.basic.ComboBoxSelectionWidget;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.ComboBoxBuilderConverter;
 import org.jowidgets.spi.IWidgetFactorySpi;
-import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;
+import org.jowidgets.spi.widgets.IComboBoxSelectionWidgetSpi;
 
 public class ComboBoxSelectionWidgetFactory extends AbstractWidgetFactory implements
 		IWidgetFactory<IComboBoxWidget<?>, IComboBoxSelectionDescriptor<?>> {
@@ -53,9 +54,10 @@ public class ComboBoxSelectionWidgetFactory extends AbstractWidgetFactory implem
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public IComboBoxWidget<?> create(final IWidget parent, final IComboBoxSelectionDescriptor<?> descriptor) {
-		final IComboBoxSelectionBluePrintSpi<?> bp = getSpiBluePrintFactory().comboBoxSelection().setSetup(descriptor);
-		final IComboBoxWidgetSpi<?> widget = getSpiWidgetFactory().createComboBoxSelectionWidget(parent, bp);
-		return new ComboBoxWidget(parent, widget, descriptor);
+		final IComboBoxSelectionBluePrintSpi bp = getSpiBluePrintFactory().comboBoxSelection().setSetup(descriptor);
+		ComboBoxBuilderConverter.convert(bp, descriptor);
+		final IComboBoxSelectionWidgetSpi widget = getSpiWidgetFactory().createComboBoxSelectionWidget(parent, bp);
+		return new ComboBoxSelectionWidget(parent, widget, descriptor);
 	}
 
 }

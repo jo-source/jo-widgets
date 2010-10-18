@@ -33,6 +33,7 @@ import javax.swing.text.JTextComponent;
 import javax.swing.text.PlainDocument;
 
 import org.jowidgets.spi.verify.IInputVerifier;
+import org.jowidgets.util.Assert;
 
 public class InputModifierDocument extends PlainDocument {
 
@@ -43,6 +44,9 @@ public class InputModifierDocument extends PlainDocument {
 
 	public InputModifierDocument(final JTextComponent textComponent, final IInputVerifier inputVerifier) {
 		super();
+		Assert.paramNotNull(textComponent, "textComponent");
+		Assert.paramNotNull(inputVerifier, "inputVerifier");
+
 		this.textComponent = textComponent;
 		this.inputVerifier = inputVerifier;
 	}

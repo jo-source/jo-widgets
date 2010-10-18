@@ -41,7 +41,6 @@ import org.jowidgets.impl.spi.blueprint.ITextFieldBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITextLabelBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IToggleButtonBluePrintSpi;
 
-
 public interface ISpiBluePrintFactory {
 
 	IFrameBluePrintSpi frame();
@@ -66,8 +65,8 @@ public interface ISpiBluePrintFactory {
 
 	IToggleButtonBluePrintSpi toggleButton();
 
-	<INPUT_TYPE> IComboBoxBluePrintSpi<INPUT_TYPE> comboBox();
+	IComboBoxBluePrintSpi comboBox();
 
-	<INPUT_TYPE> IComboBoxSelectionBluePrintSpi<INPUT_TYPE> comboBoxSelection();
+	IComboBoxSelectionBluePrintSpi comboBoxSelection();
 
 }

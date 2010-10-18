@@ -35,28 +35,23 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import org.jowidgets.api.convert.IObjectStringConverter;
-import org.jowidgets.api.convert.IStringObjectConverter;
-import org.jowidgets.impl.swing.widgets.internal.util.VetoInputDocument;
+import org.jowidgets.impl.swing.widgets.internal.util.InputModifierDocument;
+import org.jowidgets.spi.verify.IInputVerifier;
+import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSetupSpi;
 
-public class ComboBoxWidget<INPUT_TYPE> extends ComboBoxSelectionWidget<INPUT_TYPE> {
+public class ComboBoxWidget extends ComboBoxSelectionWidget implements IComboBoxWidgetSpi {
 
 	private final ComboBoxEditorImpl comboBoxEditor;
 
-	public ComboBoxWidget(final IComboBoxSetupSpi<INPUT_TYPE> setup) {
+	public ComboBoxWidget(final IComboBoxSetupSpi setup) {
 		super(setup);
 
 		getUiReference().setEditable(true);
-		this.comboBoxEditor = new ComboBoxEditorImpl(setup.getObjectStringConverter(), setup.getStringObjectConverter());
+		this.comboBoxEditor = new ComboBoxEditorImpl(setup.getInputVerifier());
 
 		getUiReference().setEditor(comboBoxEditor);
 
-	}
-
-	@Override
-	public INPUT_TYPE getValue() {
-		return comboBoxEditor.getItem();
 	}
 
 	@Override
@@ -65,24 +60,28 @@ public class ComboBoxWidget<INPUT_TYPE> extends ComboBoxSelectionWidget<INPUT_TY
 		getUiReference().setEditable(true);
 	}
 
+	@Override
+	public String getText() {
+		return comboBoxEditor.getItem();
+	}
+
+	@Override
+	public void setText(final String text) {
+		comboBoxEditor.setItem(text);
+	}
+
 	private class ComboBoxEditorImpl implements ComboBoxEditor {
 
 		private boolean setItemInvoked;
 		private final JTextField textField;
-		private final IStringObjectConverter<INPUT_TYPE> stringObjectConverter;
-		private final IObjectStringConverter<INPUT_TYPE> objectStringConverter;
 
-		public ComboBoxEditorImpl(
-			final IObjectStringConverter<INPUT_TYPE> objectStringConverter,
-			final IStringObjectConverter<INPUT_TYPE> stringObjectConverter) {
+		public ComboBoxEditorImpl(final IInputVerifier inputVerifier) {
 			super();
 			this.textField = new JTextField();
-			this.stringObjectConverter = stringObjectConverter;
-			this.objectStringConverter = objectStringConverter;
 
 			this.setItemInvoked = false;
 
-			this.textField.setDocument(new VetoInputDocument(textField, stringObjectConverter));
+			this.textField.setDocument(new InputModifierDocument(textField, inputVerifier));
 			this.textField.getDocument().addDocumentListener(new DocumentListener() {
 
 				@Override
@@ -114,20 +113,18 @@ public class ComboBoxWidget<INPUT_TYPE> extends ComboBoxSelectionWidget<INPUT_TY
 			return textField;
 		}
 
-		@SuppressWarnings("unchecked")
 		@Override
 		public void setItem(final Object anObject) {
 			if (!setItemInvoked) {
 				setItemInvoked = true;
-				textField.setText(objectStringConverter.convertToString((INPUT_TYPE) anObject));
-				textField.setToolTipText(objectStringConverter.getDescription((INPUT_TYPE) anObject));
+				textField.setText((String) anObject);
 				setItemInvoked = false;
 			}
 		}
 
 		@Override
-		public INPUT_TYPE getItem() {
-			return stringObjectConverter.convertToObject(textField.getText());
+		public String getItem() {
+			return textField.getText();
 		}
 
 		@Override

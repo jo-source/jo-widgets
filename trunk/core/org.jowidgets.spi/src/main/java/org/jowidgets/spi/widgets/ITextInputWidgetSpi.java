@@ -30,7 +30,7 @@ package org.jowidgets.spi.widgets;
 
 import org.jowidgets.api.widgets.IInputWidgetCommon;
 
-public interface ITextInputWidgetSpi extends IInputWidgetCommon {
+public interface ITextInputWidgetSpi extends IInputWidgetCommon, IWidgetSpi {
 
 	String getText();
 

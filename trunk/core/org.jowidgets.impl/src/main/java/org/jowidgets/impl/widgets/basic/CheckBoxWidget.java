@@ -29,63 +29,22 @@
 package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.look.Markup;
-import org.jowidgets.api.validation.IValidator;
-import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.ICheckBoxWidget;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.ICheckBoxSetup;
-import org.jowidgets.impl.widgets.basic.delegate.ChildWidgetDelegate;
-import org.jowidgets.impl.widgets.basic.delegate.InputWidgetDelegate;
-import org.jowidgets.impl.widgets.common.wrapper.InputWidgetCommonWrapper;
 import org.jowidgets.impl.widgets.common.wrapper.TextLabelWidgetCommonWrapper;
 import org.jowidgets.spi.widgets.ICheckBoxWidgetSpi;
 import org.jowidgets.util.Assert;
 
-public class CheckBoxWidget extends InputWidgetCommonWrapper implements ICheckBoxWidget {
+public class CheckBoxWidget extends AbstractInputWidget<Boolean> implements ICheckBoxWidget {
 
 	private final ICheckBoxWidgetSpi checkBoxWidgetSpi;
-	private final ChildWidgetDelegate childWidgetDelegate;
-	private final InputWidgetDelegate<Boolean> inputWidgetDelegate;
 	private final TextLabelWidgetCommonWrapper textLabelWidgetCommonWrapper;
 
 	public CheckBoxWidget(final IWidget parent, final ICheckBoxWidgetSpi checkBoxWidgetSpi, final ICheckBoxSetup setup) {
-		super(checkBoxWidgetSpi);
+		super(parent, checkBoxWidgetSpi, setup);
 		this.checkBoxWidgetSpi = checkBoxWidgetSpi;
-		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
 		this.textLabelWidgetCommonWrapper = new TextLabelWidgetCommonWrapper(checkBoxWidgetSpi);
-
-		//this must be invoked last
-		this.inputWidgetDelegate = new InputWidgetDelegate<Boolean>(this, setup);
-	}
-
-	@Override
-	public IWidget getParent() {
-		return childWidgetDelegate.getParent();
-	}
-
-	@Override
-	public boolean isMandatory() {
-		return inputWidgetDelegate.isMandatory();
-	}
-
-	@Override
-	public void setMandatory(final boolean mandatory) {
-		inputWidgetDelegate.setMandatory(mandatory);
-	}
-
-	@Override
-	public boolean hasInput() {
-		return inputWidgetDelegate.hasInput();
-	}
-
-	@Override
-	public void addValidator(final IValidator<Boolean> validator) {
-		inputWidgetDelegate.addValidator(validator);
-	}
-
-	@Override
-	public ValidationResult validate() {
-		return inputWidgetDelegate.validate();
 	}
 
 	@Override

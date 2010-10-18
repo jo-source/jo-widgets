@@ -27,8 +27,6 @@
  */
 package org.jowidgets.spi.widgets;
 
-import org.jowidgets.api.widgets.IComboBoxWidgetCommon;
-
-public interface IComboBoxWidgetSpi<VALUE_TYPE> extends IComboBoxWidgetCommon<VALUE_TYPE>, IWidgetSpi {
+public interface IComboBoxWidgetSpi extends IComboBoxSelectionWidgetSpi, ITextInputWidgetSpi {
 
 }

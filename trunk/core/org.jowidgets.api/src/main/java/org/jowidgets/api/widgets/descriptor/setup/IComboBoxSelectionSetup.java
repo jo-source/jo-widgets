@@ -27,8 +27,20 @@
  */
 package org.jowidgets.api.widgets.descriptor.setup;
 
-public interface IComboBoxSelectionSetup<INPUT_TYPE> extends
-		IComboBoxSelectionSetupCommon<INPUT_TYPE>,
-		IInputWidgetSetup<INPUT_TYPE> {
+import java.util.List;
+
+import org.jowidgets.api.convert.IObjectStringConverter;
+import org.jowidgets.api.widgets.descriptor.setup.mandatory.Mandatory;
+
+public interface IComboBoxSelectionSetup<INPUT_TYPE> extends IInputWidgetSetup<INPUT_TYPE> {
+
+	@Mandatory
+	boolean isAutoCompletion();
+
+	@Mandatory
+	IObjectStringConverter<INPUT_TYPE> getObjectStringConverter();
+
+	@Mandatory
+	List<INPUT_TYPE> getElements();
 
 }

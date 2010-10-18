@@ -27,10 +27,19 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
-import org.jowidgets.api.widgets.builder.IComboBoxSelectionSetupBuilderCommon;
+import java.util.List;
+
+import org.jowidgets.api.convert.IObjectStringConverter;
+import org.jowidgets.api.widgets.blueprint.builder.convenience.IComboBoxSelectionSetupConvenience;
 
 public interface IComboBoxSelectionSetupBuilder<INSTANCE_TYPE extends IComboBoxSelectionSetupBuilder<?, ?>, INPUT_TYPE> extends
 		IInputWidgetSetupBuilder<INSTANCE_TYPE, INPUT_TYPE>,
-		IComboBoxSelectionSetupBuilderCommon<INSTANCE_TYPE, INPUT_TYPE> {
+		IComboBoxSelectionSetupConvenience<INSTANCE_TYPE, INPUT_TYPE> {
+
+	INSTANCE_TYPE setAutoCompletion(final boolean autoCompletion);
+
+	INSTANCE_TYPE setElements(List<INPUT_TYPE> elements);
+
+	INSTANCE_TYPE setObjectStringConverter(IObjectStringConverter<INPUT_TYPE> objectStringConverter);
 
 }

@@ -119,12 +119,12 @@ public class SpiBluePrintFactory extends AbstractBluePrintFactory implements ISp
 	}
 
 	@Override
-	public <INPUT_TYPE> IComboBoxBluePrintSpi<INPUT_TYPE> comboBox() {
+	public IComboBoxBluePrintSpi comboBox() {
 		return createProxy(IComboBoxBluePrintSpi.class, IComboBoxDescriptorSpi.class);
 	}
 
 	@Override
-	public <INPUT_TYPE> IComboBoxSelectionBluePrintSpi<INPUT_TYPE> comboBoxSelection() {
+	public IComboBoxSelectionBluePrintSpi comboBoxSelection() {
 		return createProxy(IComboBoxSelectionBluePrintSpi.class, IComboBoxSelectionDescriptorSpi.class);
 	}
 

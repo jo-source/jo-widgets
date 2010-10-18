@@ -29,8 +29,13 @@ package org.jowidgets.api.widgets;
 
 import org.jowidgets.api.validation.IValidateable;
 import org.jowidgets.api.validation.IValidator;
+import org.jowidgets.api.widgets.access.IInputValueAccessor;
 
-public interface IInputWidget<VALUE_TYPE> extends IInputWidgetLegacyCommon<VALUE_TYPE>, IChildWidget, IValidateable {
+public interface IInputWidget<VALUE_TYPE> extends
+		IInputWidgetCommon,
+		IInputValueAccessor<VALUE_TYPE>,
+		IChildWidget,
+		IValidateable {
 
 	boolean isMandatory();
 

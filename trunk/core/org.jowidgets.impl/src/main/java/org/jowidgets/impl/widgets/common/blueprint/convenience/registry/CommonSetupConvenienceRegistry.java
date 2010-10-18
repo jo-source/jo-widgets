@@ -28,13 +28,11 @@
 
 package org.jowidgets.impl.widgets.common.blueprint.convenience.registry;
 
-import org.jowidgets.api.widgets.builder.IComboBoxSelectionSetupBuilderCommon;
 import org.jowidgets.api.widgets.builder.ICompositeSetupBuilderCommon;
 import org.jowidgets.api.widgets.builder.IContainerSetupBuilderCommon;
 import org.jowidgets.api.widgets.builder.ITextLabelSetupBuilderCommon;
 import org.jowidgets.api.widgets.builder.IWidgetSetupBuilderCommon;
 import org.jowidgets.impl.widgets.blueprint.convenience.SetupBuilderConvenienceRegistry;
-import org.jowidgets.impl.widgets.common.blueprint.convenience.ComboBoxSelectionSetupConvenienceCommon;
 import org.jowidgets.impl.widgets.common.blueprint.convenience.CompositeSetupConvenienceCommon;
 import org.jowidgets.impl.widgets.common.blueprint.convenience.ContainerSetupConvenienceCommon;
 import org.jowidgets.impl.widgets.common.blueprint.convenience.TextLabelSetupConvenienceCommon;
@@ -44,7 +42,6 @@ public class CommonSetupConvenienceRegistry extends SetupBuilderConvenienceRegis
 
 	public CommonSetupConvenienceRegistry() {
 		super();
-		register(IComboBoxSelectionSetupBuilderCommon.class, new ComboBoxSelectionSetupConvenienceCommon());
 		register(ICompositeSetupBuilderCommon.class, new CompositeSetupConvenienceCommon());
 		register(IContainerSetupBuilderCommon.class, new ContainerSetupConvenienceCommon());
 		register(ITextLabelSetupBuilderCommon.class, new TextLabelSetupConvenienceCommon());

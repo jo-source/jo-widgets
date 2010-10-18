@@ -47,6 +47,7 @@ import org.jowidgets.impl.swing.widgets.internal.ToggleButtonWidget;
 import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.widgets.IButtonWidgetSpi;
 import org.jowidgets.spi.widgets.ICheckBoxWidgetSpi;
+import org.jowidgets.spi.widgets.IComboBoxSelectionWidgetSpi;
 import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;
 import org.jowidgets.spi.widgets.IContainerWidgetSpi;
 import org.jowidgets.spi.widgets.IFrameWidgetSpi;
@@ -151,17 +152,13 @@ public final class SwingWidgetFactory implements IWidgetFactorySpi {
 	}
 
 	@Override
-	public <INPUT_TYPE> IComboBoxWidgetSpi<INPUT_TYPE> createComboBoxSelectionWidget(
-		final IWidget parent,
-		final IComboBoxSelectionSetupSpi<INPUT_TYPE> setup) {
-		return new ComboBoxSelectionWidget<INPUT_TYPE>(setup);
+	public IComboBoxSelectionWidgetSpi createComboBoxSelectionWidget(final IWidget parent, final IComboBoxSelectionSetupSpi setup) {
+		return new ComboBoxSelectionWidget(setup);
 	}
 
 	@Override
-	public <INPUT_TYPE> IComboBoxWidgetSpi<INPUT_TYPE> createComboBoxWidget(
-		final IWidget parent,
-		final IComboBoxSetupSpi<INPUT_TYPE> setup) {
-		return new ComboBoxWidget<INPUT_TYPE>(setup);
+	public IComboBoxWidgetSpi createComboBoxWidget(final IWidget parent, final IComboBoxSetupSpi setup) {
+		return new ComboBoxWidget(setup);
 	}
 
 	public static SwingWidgetFactory getInstance() {

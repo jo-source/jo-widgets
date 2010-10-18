@@ -27,6 +27,21 @@
  */
 package org.jowidgets.api.widgets;
 
-public interface ICheckBoxWidget extends ICheckBoxWidgetCommon, IInputWidget<Boolean> {
+public interface ICheckBoxWidget extends IInputWidget<Boolean>, ITextLabelWidget {
+
+	/**
+	 * Convenience method for the generic method getValue()
+	 * 
+	 * @return true, if the toggle button is selected
+	 */
+	boolean isSelected();
+
+	/**
+	 * Convenience method for the generic method setValue(Boolean value)
+	 * 
+	 * @param selected
+	 *            the selection state to set
+	 */
+	void setSelected(boolean selected);
 
 }

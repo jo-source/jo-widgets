@@ -26,25 +26,33 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.common.wrapper;
+package org.jowidgets.impl.widgets.basic.factory.internal.util;
 
-import org.jowidgets.api.image.IImageConstant;
-import org.jowidgets.api.widgets.IToggleButtonWidgetCommon;
+import java.util.List;
 
-public class ToggleButtonWidgetCommonWrapper extends CheckBoxWidgetCommonWrapper implements IToggleButtonWidgetCommon {
+import org.jowidgets.api.convert.IObjectStringConverter;
+import org.jowidgets.api.widgets.descriptor.setup.IComboBoxSelectionSetup;
+import org.jowidgets.impl.spi.blueprint.builder.IComboBoxSelectionSetupBuilderSpi;
 
-	public ToggleButtonWidgetCommonWrapper(final IToggleButtonWidgetCommon widget) {
-		super(widget);
+public class ComboBoxBuilderConverter {
+
+	private ComboBoxBuilderConverter() {};
+
+	public static final <VALUE_TYPE> void convert(
+		final IComboBoxSelectionSetupBuilderSpi<?> builderSpi,
+		final IComboBoxSelectionSetup<VALUE_TYPE> setup) {
+
+		final List<VALUE_TYPE> elements = setup.getElements();
+		final IObjectStringConverter<VALUE_TYPE> objectStringConverter = setup.getObjectStringConverter();
+
+		final String[] spiElements = new String[elements.size()];
+
+		int index = 0;
+
+		for (final VALUE_TYPE element : elements) {
+			spiElements[index] = objectStringConverter.convertToString(element);
+			index++;
+		}
+		builderSpi.setElements(spiElements);
 	}
-
-	@Override
-	protected IToggleButtonWidgetCommon getWidget() {
-		return (IToggleButtonWidgetCommon) super.getWidget();
-	}
-
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		getWidget().setIcon(icon);
-	}
-
 }

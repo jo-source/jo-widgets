@@ -27,53 +27,34 @@
  */
 package org.jowidgets.impl.swt.widgets.internal;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.util.ColorSettingsInvoker;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.impl.swt.color.IColorCache;
-import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;
+import org.jowidgets.spi.widgets.IComboBoxSelectionWidgetSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
 import org.jowidgets.util.Assert;
 
-public class ComboBoxSelectionWidget<INPUT_TYPE> extends AbstractSwtInputWidgetLegacy<INPUT_TYPE> implements
-		IComboBoxWidgetSpi<INPUT_TYPE> {
+public class ComboBoxSelectionWidget extends AbstractSwtInputWidget implements IComboBoxSelectionWidgetSpi {
 
-	private final ArrayList<INPUT_TYPE> content;
-	private final IObjectStringConverter<INPUT_TYPE> objectStringConverter;
-
-	public ComboBoxSelectionWidget(
-		final IWidget parent,
-		final IColorCache colorCache,
-		final IComboBoxSelectionSetupSpi<INPUT_TYPE> descriptor) {
-		this(colorCache, new Combo((Composite) parent.getUiReference(), SWT.NONE | SWT.READ_ONLY), descriptor);
+	public ComboBoxSelectionWidget(final IWidget parent, final IColorCache colorCache, final IComboBoxSelectionSetupSpi setup) {
+		this(colorCache, new Combo((Composite) parent.getUiReference(), SWT.NONE | SWT.READ_ONLY), setup);
 	}
 
-	public ComboBoxSelectionWidget(
-		final IColorCache colorCache,
-		final Combo combo,
-		final IComboBoxSelectionSetupSpi<INPUT_TYPE> descriptor) {
+	public ComboBoxSelectionWidget(final IColorCache colorCache, final Combo combo, final IComboBoxSelectionSetupSpi setup) {
 		super(colorCache, combo);
 
-		this.content = new ArrayList<INPUT_TYPE>();
-		this.objectStringConverter = descriptor.getObjectStringConverter();
-
-		ColorSettingsInvoker.setColors(descriptor, this);
-		setElements(descriptor.getElements());
+		ColorSettingsInvoker.setColors(setup, this);
+		setElements(setup.getElements());
 
 		getUiReference().addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(final ModifyEvent e) {
 				fireInputChanged(getUiReference());
-				setToolTip();
 			}
 		});
 
@@ -90,60 +71,29 @@ public class ComboBoxSelectionWidget<INPUT_TYPE> extends AbstractSwtInputWidgetL
 	}
 
 	@Override
-	public void setValue(final INPUT_TYPE value) {
-		final Combo combo = getUiReference();
-		final int index = content.indexOf(value);
-		if (index != -1) {
-			combo.select(index);
-		}
-		else {
-			throw new IllegalArgumentException("The value '" + value + "' is not element of this combobox");
-		}
+	public String[] getElements() {
+		return getUiReference().getItems();
 	}
 
 	@Override
-	public INPUT_TYPE getValue() {
-		final Combo combo = getUiReference();
-		final int selectedIndex = combo.getSelectionIndex();
-		if (selectedIndex >= 0) {
-			return content.get(selectedIndex);
-		}
-		return null;
-	}
-
-	@Override
-	public List<INPUT_TYPE> getElements() {
-		return Collections.unmodifiableList(content);
-	}
-
-	@Override
-	public void setElements(final List<INPUT_TYPE> elements) {
+	public void setElements(final String[] elements) {
 		Assert.paramNotNull(elements, "elements");
-		final Combo combo = getUiReference();
-
-		combo.removeAll();
-		content.clear();
-
-		for (final INPUT_TYPE element : elements) {
-			combo.add(objectStringConverter.convertToString(element));
-			content.add(element);
-		}
-
-		if (elements.size() > 0) {
-			combo.select(0);
-		}
+		getUiReference().setItems(elements);
 	}
 
-	private void setToolTip() {
-		final Combo combo = getUiReference();
+	@Override
+	public int getSelectedIndex() {
+		return getUiReference().getSelectionIndex();
+	}
 
-		if (combo.getItemCount() > 0) {
-			final INPUT_TYPE value = getValue();
-			combo.setToolTipText(objectStringConverter.getDescription(value));
-		}
-		else {
-			combo.setToolTipText(null);
-		}
+	@Override
+	public void setSelected(final int index) {
+		getUiReference().select(index);
+	}
+
+	@Override
+	public void setTooltipText(final String toolTiptext) {
+		getUiReference().setToolTipText(toolTiptext);
 	}
 
 }

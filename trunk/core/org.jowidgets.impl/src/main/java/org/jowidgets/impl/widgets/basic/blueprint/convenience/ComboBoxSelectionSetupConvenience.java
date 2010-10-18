@@ -25,22 +25,22 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.widgets.common.blueprint.convenience;
+package org.jowidgets.impl.widgets.basic.blueprint.convenience;
 
 import java.util.Arrays;
 import java.util.List;
 
-import org.jowidgets.api.widgets.builder.IComboBoxSelectionSetupBuilderCommon;
-import org.jowidgets.api.widgets.builder.convenience.IComboBoxSelectionSetupConvenienceCommon;
+import org.jowidgets.api.widgets.blueprint.builder.IComboBoxSelectionSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.builder.convenience.IComboBoxSelectionSetupConvenience;
 import org.jowidgets.impl.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 
-public class ComboBoxSelectionSetupConvenienceCommon extends
-		AbstractSetupBuilderConvenience<IComboBoxSelectionSetupBuilderCommon<?, ?>> implements
-		IComboBoxSelectionSetupConvenienceCommon<IComboBoxSelectionSetupBuilderCommon<?, ?>, Object> {
+public class ComboBoxSelectionSetupConvenience extends
+		AbstractSetupBuilderConvenience<IComboBoxSelectionSetupBuilder<?, ?>> implements
+		IComboBoxSelectionSetupConvenience<IComboBoxSelectionSetupBuilder<?, ?>, Object> {
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	@Override
-	public IComboBoxSelectionSetupBuilderCommon<?, ?> setElements(final Object... elements) {
+	public IComboBoxSelectionSetupBuilder<?, ?> setElements(final Object... elements) {
 		getBuilder().setElements((List) Arrays.asList(elements));
 		return getBuilder();
 	}

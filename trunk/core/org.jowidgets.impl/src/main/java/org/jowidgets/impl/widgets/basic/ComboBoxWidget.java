@@ -28,58 +28,37 @@
 
 package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.api.validation.IValidator;
-import org.jowidgets.api.validation.ValidationResult;
-import org.jowidgets.api.widgets.IComboBoxWidget;
+import org.jowidgets.api.convert.IStringObjectConverter;
 import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.descriptor.setup.IComboBoxSelectionSetup;
-import org.jowidgets.impl.widgets.basic.delegate.ChildWidgetDelegate;
-import org.jowidgets.impl.widgets.basic.delegate.InputWidgetDelegate;
-import org.jowidgets.impl.widgets.common.wrapper.ComboBoxWidgetCommonWrapper;
+import org.jowidgets.api.widgets.descriptor.setup.IComboBoxSetup;
 import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;
 
-public class ComboBoxWidget<VALUE_TYPE> extends ComboBoxWidgetCommonWrapper<VALUE_TYPE> implements IComboBoxWidget<VALUE_TYPE> {
+public class ComboBoxWidget<VALUE_TYPE> extends ComboBoxSelectionWidget<VALUE_TYPE> {
 
-	private final ChildWidgetDelegate childWidgetDelegate;
-	private final InputWidgetDelegate<VALUE_TYPE> inputWidgetDelegate;
+	private final IComboBoxWidgetSpi comboBoxWidgetSpi;
+	private final IStringObjectConverter<VALUE_TYPE> stringObjectConverter;
 
-	public ComboBoxWidget(
-		final IWidget parent,
-		final IComboBoxWidgetSpi<VALUE_TYPE> comboBoxWidgetSpi,
-		final IComboBoxSelectionSetup<VALUE_TYPE> setup) {
-		super(comboBoxWidgetSpi);
-		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
-		this.inputWidgetDelegate = new InputWidgetDelegate<VALUE_TYPE>(comboBoxWidgetSpi, setup);
+	public ComboBoxWidget(final IWidget parent, final IComboBoxWidgetSpi comboBoxWidgetSpi, final IComboBoxSetup<VALUE_TYPE> setup) {
+		super(parent, comboBoxWidgetSpi, setup);
+
+		this.comboBoxWidgetSpi = comboBoxWidgetSpi;
+		this.stringObjectConverter = setup.getStringObjectConverter();
 	}
 
 	@Override
-	public IWidget getParent() {
-		return childWidgetDelegate.getParent();
+	public void setValue(final VALUE_TYPE value) {
+		final int indexOfContent = getElements().indexOf(value);
+		if (indexOfContent != -1) {
+			comboBoxWidgetSpi.setSelected(indexOfContent);
+		}
+		else {
+			comboBoxWidgetSpi.setText(getObjectStringConverter().convertToString(value));
+		}
 	}
 
 	@Override
-	public boolean isMandatory() {
-		return inputWidgetDelegate.isMandatory();
-	}
-
-	@Override
-	public void setMandatory(final boolean mandatory) {
-		inputWidgetDelegate.setMandatory(mandatory);
-	}
-
-	@Override
-	public boolean hasInput() {
-		return inputWidgetDelegate.hasInput();
-	}
-
-	@Override
-	public void addValidator(final IValidator<VALUE_TYPE> validator) {
-		inputWidgetDelegate.addValidator(validator);
-	}
-
-	@Override
-	public ValidationResult validate() {
-		return inputWidgetDelegate.validate();
+	public VALUE_TYPE getValue() {
+		return stringObjectConverter.convertToObject(comboBoxWidgetSpi.getText());
 	}
 
 }

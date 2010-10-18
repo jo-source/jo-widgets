@@ -25,22 +25,20 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.descriptor.setup;
+package org.jowidgets.spi.widgets;
 
-import java.util.List;
+import org.jowidgets.api.widgets.IInputWidgetCommon;
 
-import org.jowidgets.api.convert.IObjectStringConverter;
-import org.jowidgets.api.widgets.descriptor.setup.mandatory.Mandatory;
+public interface IComboBoxSelectionWidgetSpi extends IInputWidgetCommon {
 
-public interface IComboBoxSelectionSetupCommon<INPUT_TYPE> extends IWidgetSetupCommon {
+	int getSelectedIndex();
 
-	@Mandatory
-	boolean isAutoCompletion();
+	void setSelected(int index);
 
-	@Mandatory
-	IObjectStringConverter<INPUT_TYPE> getObjectStringConverter();
+	void setTooltipText(String tooltipText);
 
-	@Mandatory
-	List<INPUT_TYPE> getElements();
+	String[] getElements();
+
+	void setElements(String[] elements);
 
 }

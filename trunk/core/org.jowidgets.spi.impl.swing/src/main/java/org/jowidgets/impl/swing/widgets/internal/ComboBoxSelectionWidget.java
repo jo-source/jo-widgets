@@ -27,39 +27,25 @@
  */
 package org.jowidgets.impl.swing.widgets.internal;
 
-import java.awt.Component;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.LinkedList;
-import java.util.List;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JList;
-import javax.swing.MutableComboBoxModel;
 
-import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.util.ColorSettingsInvoker;
-import org.jowidgets.api.widgets.descriptor.setup.IComboBoxSelectionSetupCommon;
-import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;
-import org.jowidgets.util.Assert;
+import org.jowidgets.spi.widgets.IComboBoxSelectionWidgetSpi;
+import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
 
-public class ComboBoxSelectionWidget<INPUT_TYPE> extends AbstractSwingInputWidgetLegacy<INPUT_TYPE> implements
-		IComboBoxWidgetSpi<INPUT_TYPE> {
+public class ComboBoxSelectionWidget extends AbstractSwingInputWidget implements IComboBoxSelectionWidgetSpi {
 
-	public ComboBoxSelectionWidget(final IComboBoxSelectionSetupCommon<INPUT_TYPE> setup) {
-		super(new JComboBox(new DefaultComboBoxModel(setup.getElements().toArray())));
+	public ComboBoxSelectionWidget(final IComboBoxSelectionSetupSpi setup) {
+		super(new JComboBox(new DefaultComboBoxModel(setup.getElements())));
 
 		ColorSettingsInvoker.setColors(setup, this);
 
-		final IObjectStringConverter<INPUT_TYPE> objectStringConverter = setup.getObjectStringConverter();
-
-		setRenderer(objectStringConverter);
-		addItemListener(objectStringConverter);
-
+		addItemListener();
 	}
 
 	@Override
@@ -73,85 +59,36 @@ public class ComboBoxSelectionWidget<INPUT_TYPE> extends AbstractSwingInputWidge
 	}
 
 	@Override
-	public void setValue(final INPUT_TYPE content) {
-		getUiReference().setSelectedItem(content);
+	public int getSelectedIndex() {
+		return getUiReference().getSelectedIndex();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public INPUT_TYPE getValue() {
-		final Object selectedItem = getUiReference().getSelectedItem();
-		if (selectedItem != null) {
-			return (INPUT_TYPE) selectedItem;
-		}
-		return null;
+	public void setSelected(final int index) {
+		getUiReference().setSelectedIndex(index);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public List<INPUT_TYPE> getElements() {
-		final List<INPUT_TYPE> result = new LinkedList<INPUT_TYPE>();
+	public void setTooltipText(final String tooltipText) {
+		getUiReference().setToolTipText(tooltipText);
+	}
+
+	@Override
+	public String[] getElements() {
 		final ComboBoxModel model = getUiReference().getModel();
-		for (int i = 0; i < model.getSize(); i++) {
-			result.add((INPUT_TYPE) model.getElementAt(i));
+		final String[] result = new String[model.getSize()];
+		for (int i = 0; i < result.length; i++) {
+			result[i] = (String) model.getElementAt(i);
 		}
 		return result;
 	}
 
 	@Override
-	public void setElements(final List<INPUT_TYPE> elements) {
-		Assert.paramNotNull(elements, "elements");
-		final MutableComboBoxModel model = (MutableComboBoxModel) getUiReference().getModel();
-
-		// remove all elements
-		for (int i = 0; i < model.getSize(); i++) {
-			model.removeElementAt(0);
-		}
-
-		// then add the new elements
-		for (final INPUT_TYPE value : elements) {
-			model.addElement(value);
-		}
+	public void setElements(final String[] elements) {
+		getUiReference().setModel(new DefaultComboBoxModel(elements));
 	}
 
-	private void setRenderer(final IObjectStringConverter<INPUT_TYPE> objectStringConverter) {
-		getUiReference().setRenderer(new DefaultListCellRenderer() {
-
-			private static final long serialVersionUID = -4789973603601120367L;
-
-			@Override
-			public Component getListCellRendererComponent(
-				final JList list,
-				final Object value,
-				final int index,
-				final boolean isSelected,
-				final boolean cellHasFocus) {
-
-				final Component result;
-
-				if (value != null) {
-					@SuppressWarnings("unchecked")
-					final INPUT_TYPE input = (INPUT_TYPE) value;
-
-					final String valueAsString = objectStringConverter.convertToString(input);
-
-					result = super.getListCellRendererComponent(list, valueAsString, index, isSelected, cellHasFocus);
-
-					if (result instanceof JComponent) {
-						((JComponent) result).setToolTipText(objectStringConverter.getDescription(input));
-					}
-				}
-				else {
-					result = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-				}
-
-				return result;
-			}
-
-		});
-	}
-
-	private void addItemListener(final IObjectStringConverter<INPUT_TYPE> objectStringConverter) {
+	private void addItemListener() {
 		final JComboBox comboBox = getUiReference();
 		comboBox.addItemListener(new ItemListener() {
 
@@ -159,7 +96,6 @@ public class ComboBoxSelectionWidget<INPUT_TYPE> extends AbstractSwingInputWidge
 			public void itemStateChanged(final ItemEvent e) {
 				if (e.getID() == ItemEvent.ITEM_STATE_CHANGED && e.getStateChange() == ItemEvent.SELECTED) {
 					fireInputChanged(getUiReference());
-					comboBox.setToolTipText(objectStringConverter.getDescription(getValue()));
 				}
 			}
 		});

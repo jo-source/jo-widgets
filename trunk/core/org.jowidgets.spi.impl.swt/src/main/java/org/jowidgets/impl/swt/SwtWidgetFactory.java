@@ -49,6 +49,7 @@ import org.jowidgets.impl.swt.widgets.internal.ToggleButtonWidget;
 import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.widgets.IButtonWidgetSpi;
 import org.jowidgets.spi.widgets.ICheckBoxWidgetSpi;
+import org.jowidgets.spi.widgets.IComboBoxSelectionWidgetSpi;
 import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;
 import org.jowidgets.spi.widgets.IContainerWidgetSpi;
 import org.jowidgets.spi.widgets.IFrameWidgetSpi;
@@ -155,17 +156,13 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 	}
 
 	@Override
-	public <INPUT_TYPE> IComboBoxWidgetSpi<INPUT_TYPE> createComboBoxSelectionWidget(
-		final IWidget parent,
-		final IComboBoxSelectionSetupSpi<INPUT_TYPE> setup) {
-		return new ComboBoxSelectionWidget<INPUT_TYPE>(parent, colorCache, setup);
+	public IComboBoxSelectionWidgetSpi createComboBoxSelectionWidget(final IWidget parent, final IComboBoxSelectionSetupSpi setup) {
+		return new ComboBoxSelectionWidget(parent, colorCache, setup);
 	}
 
 	@Override
-	public <INPUT_TYPE> IComboBoxWidgetSpi<INPUT_TYPE> createComboBoxWidget(
-		final IWidget parent,
-		final IComboBoxSetupSpi<INPUT_TYPE> setup) {
-		return new ComboBoxWidget<INPUT_TYPE>(parent, colorCache, setup);
+	public IComboBoxWidgetSpi createComboBoxWidget(final IWidget parent, final IComboBoxSetupSpi setup) {
+		return new ComboBoxWidget(parent, colorCache, setup);
 	}
 
 	public static SwtWidgetFactory getInstance() {

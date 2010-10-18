@@ -27,6 +27,12 @@
  */
 package org.jowidgets.api.widgets;
 
-public interface IComboBoxWidget<VALUE_TYPE> extends IInputWidget<VALUE_TYPE>, IComboBoxWidgetCommon<VALUE_TYPE> {
+import java.util.List;
+
+public interface IComboBoxWidget<VALUE_TYPE> extends IInputWidget<VALUE_TYPE> {
+
+	List<VALUE_TYPE> getElements();
+
+	void setElements(List<VALUE_TYPE> elements);
 
 }

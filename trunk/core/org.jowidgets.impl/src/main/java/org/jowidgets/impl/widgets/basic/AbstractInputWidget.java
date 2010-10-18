@@ -26,35 +26,45 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.basic.delegate;
+package org.jowidgets.impl.widgets.basic;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationResult;
-import org.jowidgets.api.widgets.IInputWidgetLegacyCommon;
+import org.jowidgets.api.widgets.IInputWidget;
+import org.jowidgets.api.widgets.IInputWidgetCommon;
+import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.controler.IInputListener;
 import org.jowidgets.api.widgets.descriptor.setup.IInputWidgetSetup;
+import org.jowidgets.impl.widgets.basic.delegate.ChildWidgetDelegate;
+import org.jowidgets.impl.widgets.common.wrapper.InputWidgetCommonWrapper;
 import org.jowidgets.util.EmptyCheck;
 
-public class InputWidgetDelegate<VALUE_TYPE> {
+public abstract class AbstractInputWidget<VALUE_TYPE> extends InputWidgetCommonWrapper implements IInputWidget<VALUE_TYPE> {
 
 	private final List<IValidator<VALUE_TYPE>> validators;
-	private final IInputWidgetLegacyCommon<VALUE_TYPE> inputWidgetCi;
+	private final IInputWidgetCommon inputWidgetCommon;
+	private final ChildWidgetDelegate childWidgetDelegate;
 
 	private boolean mandatory;
 	private boolean hasInput;
 
-	public InputWidgetDelegate(final IInputWidgetLegacyCommon<VALUE_TYPE> inputWidgetCi, final IInputWidgetSetup<VALUE_TYPE> setup) {
-		super();
+	public AbstractInputWidget(
+		final IWidget parent,
+		final IInputWidgetCommon inputWidgetCommon,
+		final IInputWidgetSetup<VALUE_TYPE> setup) {
+		super(inputWidgetCommon);
 		this.validators = new LinkedList<IValidator<VALUE_TYPE>>();
 
-		this.inputWidgetCi = inputWidgetCi;
+		this.inputWidgetCommon = inputWidgetCommon;
 		this.mandatory = setup.isMandatory();
 		this.hasInput = false;
 
-		this.inputWidgetCi.addInputListener(new IInputListener() {
+		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
+
+		this.inputWidgetCommon.addInputListener(new IInputListener() {
 			@Override
 			public void inputChanged(final Object source) {
 				hasInput = true;
@@ -62,27 +72,37 @@ public class InputWidgetDelegate<VALUE_TYPE> {
 		});
 	}
 
-	public ValidationResult validate() {
+	@Override
+	public final IWidget getParent() {
+		return childWidgetDelegate.getParent();
+	}
+
+	@Override
+	public final ValidationResult validate() {
 		final ValidationResult result = new ValidationResult();
 		for (final IValidator<VALUE_TYPE> validator : validators) {
-			result.addValidationResult(validator.validate(inputWidgetCi.getValue()));
+			result.addValidationResult(validator.validate(getValue()));
 		}
 		return result;
 	}
 
-	public boolean isMandatory() {
+	@Override
+	public final boolean isMandatory() {
 		return mandatory;
 	}
 
-	public void setMandatory(final boolean mandatory) {
+	@Override
+	public final void setMandatory(final boolean mandatory) {
 		this.mandatory = mandatory;
 	}
 
-	public boolean hasInput() {
-		return hasInput && !EmptyCheck.isEmpty(inputWidgetCi.getValue());
+	@Override
+	public final boolean hasInput() {
+		return hasInput && !EmptyCheck.isEmpty(getValue());
 	}
 
-	public void addValidator(final IValidator<VALUE_TYPE> validator) {
+	@Override
+	public final void addValidator(final IValidator<VALUE_TYPE> validator) {
 		validators.add(validator);
 	}
 

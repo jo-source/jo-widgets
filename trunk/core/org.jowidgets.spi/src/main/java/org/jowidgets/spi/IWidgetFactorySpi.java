@@ -32,6 +32,7 @@ import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.widgets.IButtonWidgetSpi;
 import org.jowidgets.spi.widgets.ICheckBoxWidgetSpi;
+import org.jowidgets.spi.widgets.IComboBoxSelectionWidgetSpi;
 import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;
 import org.jowidgets.spi.widgets.IContainerWidgetSpi;
 import org.jowidgets.spi.widgets.IFrameWidgetSpi;
@@ -84,10 +85,8 @@ public interface IWidgetFactorySpi {
 
 	IToggleButtonWidgetSpi createToggleButtonWidget(final IWidget parent, IToggleButtonSetupSpi setup);
 
-	<INPUT_TYPE> IComboBoxWidgetSpi<INPUT_TYPE> createComboBoxSelectionWidget(
-		final IWidget parent,
-		IComboBoxSelectionSetupSpi<INPUT_TYPE> setup);
+	IComboBoxSelectionWidgetSpi createComboBoxSelectionWidget(final IWidget parent, IComboBoxSelectionSetupSpi setup);
 
-	<INPUT_TYPE> IComboBoxWidgetSpi<INPUT_TYPE> createComboBoxWidget(final IWidget parent, IComboBoxSetupSpi<INPUT_TYPE> setup);
+	IComboBoxWidgetSpi createComboBoxWidget(final IWidget parent, IComboBoxSetupSpi setup);
 
 }

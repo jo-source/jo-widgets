@@ -28,34 +28,17 @@
 
 package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.api.validation.IValidator;
-import org.jowidgets.api.validation.ValidationResult;
-import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IInputWidgetSetup;
-import org.jowidgets.impl.widgets.basic.delegate.ChildWidgetDelegate;
-import org.jowidgets.impl.widgets.basic.delegate.InputWidgetDelegate;
-import org.jowidgets.impl.widgets.common.wrapper.InputWidgetCommonWrapper;
 import org.jowidgets.spi.widgets.ITextInputWidgetSpi;
 
-public class TextInputWidget extends InputWidgetCommonWrapper implements IInputWidget<String> {
+public class TextInputWidget extends AbstractInputWidget<String> {
 
-	private final ChildWidgetDelegate childWidgetDelegate;
-	private final InputWidgetDelegate<String> inputWidgetDelegate;
 	private final ITextInputWidgetSpi inputWidgetSpi;
 
-	public TextInputWidget(final IWidget parent, final ITextInputWidgetSpi inputWidgetSpi, final IInputWidgetSetup<String> setup) {
-		super(inputWidgetSpi);
-		this.inputWidgetSpi = inputWidgetSpi;
-		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
-
-		//must be last statement of constructor
-		this.inputWidgetDelegate = new InputWidgetDelegate<String>(this, setup);
-	}
-
-	@Override
-	public IWidget getParent() {
-		return childWidgetDelegate.getParent();
+	public TextInputWidget(final IWidget parent, final ITextInputWidgetSpi textInputWidgetSpi, final IInputWidgetSetup<String> setup) {
+		super(parent, textInputWidgetSpi, setup);
+		this.inputWidgetSpi = textInputWidgetSpi;
 	}
 
 	@Override
@@ -66,31 +49,6 @@ public class TextInputWidget extends InputWidgetCommonWrapper implements IInputW
 	@Override
 	public String getValue() {
 		return inputWidgetSpi.getText();
-	}
-
-	@Override
-	public ValidationResult validate() {
-		return inputWidgetDelegate.validate();
-	}
-
-	@Override
-	public boolean isMandatory() {
-		return inputWidgetDelegate.isMandatory();
-	}
-
-	@Override
-	public void setMandatory(final boolean mandatory) {
-		inputWidgetDelegate.setMandatory(mandatory);
-	}
-
-	@Override
-	public boolean hasInput() {
-		return inputWidgetDelegate.hasInput();
-	}
-
-	@Override
-	public void addValidator(final IValidator<String> validator) {
-		inputWidgetDelegate.addValidator(validator);
 	}
 
 }

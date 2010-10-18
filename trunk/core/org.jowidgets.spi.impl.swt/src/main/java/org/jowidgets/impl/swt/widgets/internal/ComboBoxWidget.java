@@ -32,41 +32,38 @@ import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.jowidgets.api.convert.IStringObjectConverter;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.impl.swt.color.IColorCache;
+import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSetupSpi;
 
-public class ComboBoxWidget<INPUT_TYPE> extends ComboBoxSelectionWidget<INPUT_TYPE> {
+public class ComboBoxWidget extends ComboBoxSelectionWidget implements IComboBoxWidgetSpi {
 
-	private final IStringObjectConverter<INPUT_TYPE> stringObjectConverter;
+	public ComboBoxWidget(final IWidget parent, final IColorCache colorCache, final IComboBoxSetupSpi setup) {
+		super(colorCache, new Combo((Composite) parent.getUiReference(), SWT.NONE | SWT.DROP_DOWN), setup);
 
-	public ComboBoxWidget(final IWidget parent, final IColorCache colorCache, final IComboBoxSetupSpi<INPUT_TYPE> descriptor) {
-		super(colorCache, new Combo((Composite) parent.getUiReference(), SWT.NONE | SWT.DROP_DOWN), descriptor);
-
-		this.stringObjectConverter = descriptor.getStringObjectConverter();
-
-		getUiReference().addVerifyListener(new VerifyListener() {
+		this.getUiReference().addVerifyListener(new VerifyListener() {
 
 			@Override
 			public void verifyText(final VerifyEvent verifyEvent) {
-				final String newText = verifyEvent.text;
-
-				if (!stringObjectConverter.vetoCheck(newText).isVeto()) {
-					verifyEvent.doit = true;
-				}
-				else {
-					verifyEvent.doit = false;
-				}
+				verifyEvent.doit = setup.getInputVerifier().verify(
+						getUiReference().getText(),
+						verifyEvent.text,
+						verifyEvent.start,
+						verifyEvent.end);
 			}
 		});
 
 	}
 
 	@Override
-	public INPUT_TYPE getValue() {
-		final INPUT_TYPE result = stringObjectConverter.convertToObject(getUiReference().getText());
-		return result;
+	public String getText() {
+		return getUiReference().getText();
+	}
+
+	@Override
+	public void setText(final String text) {
+		getUiReference().setText(text);
 	}
 
 }
