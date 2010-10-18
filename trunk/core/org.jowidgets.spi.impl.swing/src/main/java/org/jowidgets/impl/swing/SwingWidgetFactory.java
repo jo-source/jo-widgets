@@ -50,8 +50,8 @@ import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;
 import org.jowidgets.spi.widgets.IContainerWidgetSpi;
 import org.jowidgets.spi.widgets.IFrameWidgetSpi;
 import org.jowidgets.spi.widgets.IIconWidgetSpi;
-import org.jowidgets.spi.widgets.IInputWidgetSpi;
 import org.jowidgets.spi.widgets.IScrollContainerWidgetSpi;
+import org.jowidgets.spi.widgets.ITextInputWidgetSpi;
 import org.jowidgets.spi.widgets.ITextLabelWidgetSpi;
 import org.jowidgets.spi.widgets.IToggleButtonWidgetSpi;
 import org.jowidgets.spi.widgets.IWidgetSpi;
@@ -65,9 +65,9 @@ import org.jowidgets.spi.widgets.setup.IFrameSetupSpi;
 import org.jowidgets.spi.widgets.setup.IIconSetupSpi;
 import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
 import org.jowidgets.spi.widgets.setup.ISeparatorSetupSpi;
+import org.jowidgets.spi.widgets.setup.ITextInputWidgetSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;
-import org.jowidgets.spi.widgets.setup.IVetoableInputWidgetSetupSpi;
 
 public final class SwingWidgetFactory implements IWidgetFactorySpi {
 
@@ -115,7 +115,7 @@ public final class SwingWidgetFactory implements IWidgetFactorySpi {
 	}
 
 	@Override
-	public IInputWidgetSpi<String> createTextFieldWidget(final IWidget parent, final IVetoableInputWidgetSetupSpi<String> setup) {
+	public ITextInputWidgetSpi createTextFieldWidget(final IWidget parent, final ITextInputWidgetSetupSpi setup) {
 		return new TextFieldWidget(parent, setup);
 	}
 

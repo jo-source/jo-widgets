@@ -30,19 +30,19 @@ package org.jowidgets.impl.swing.widgets.internal;
 import javax.swing.JTextField;
 
 import org.jowidgets.api.util.ColorSettingsInvoker;
-import org.jowidgets.api.veto.IInputVetoChecker;
 import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.impl.swing.widgets.internal.util.ValidatedInputDocument;
-import org.jowidgets.spi.widgets.setup.IVetoableInputWidgetSetupSpi;
+import org.jowidgets.impl.swing.widgets.internal.util.InputModifierDocument;
+import org.jowidgets.spi.verify.IInputVerifier;
+import org.jowidgets.spi.widgets.setup.ITextInputWidgetSetupSpi;
 
-public class TextFieldWidget extends AbstractSwingTextInputWidget<String> {
+public class TextFieldWidget extends AbstractSwingTextInputWidget {
 
-	public TextFieldWidget(final IWidget parent, final IVetoableInputWidgetSetupSpi<String> setup) {
+	public TextFieldWidget(final IWidget parent, final ITextInputWidgetSetupSpi setup) {
 		super(new JTextField());
 
-		final IInputVetoChecker<String> vetoChecker = setup.getInputVetoChecker();
+		final IInputVerifier inputModifier = setup.getInputVerifier();
 
-		getUiReference().setDocument(new ValidatedInputDocument(getUiReference(), vetoChecker));
+		getUiReference().setDocument(new InputModifierDocument(getUiReference(), inputModifier));
 		registerTextComponent(getUiReference());
 		ColorSettingsInvoker.setColors(setup, this);
 	}
@@ -53,13 +53,18 @@ public class TextFieldWidget extends AbstractSwingTextInputWidget<String> {
 	}
 
 	@Override
-	public String getValue() {
+	public String getText() {
 		return getUiReference().getText();
 	}
 
 	@Override
-	public void setValue(final String content) {
-		getUiReference().setText(content);
+	public void setText(final String text) {
+		getUiReference().setText(text);
+	}
+
+	@Override
+	public void setTooltipText(final String tooltipText) {
+		getUiReference().setToolTipText(tooltipText);
 	}
 
 	@Override

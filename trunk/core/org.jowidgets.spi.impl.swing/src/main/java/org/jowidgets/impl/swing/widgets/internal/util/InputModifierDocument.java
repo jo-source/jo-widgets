@@ -32,35 +32,34 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.JTextComponent;
 import javax.swing.text.PlainDocument;
 
-import org.jowidgets.api.veto.IInputVetoChecker;
+import org.jowidgets.spi.verify.IInputVerifier;
 
-public class ValidatedInputDocument extends PlainDocument {
+public class InputModifierDocument extends PlainDocument {
 
 	private static final long serialVersionUID = 6900501331487160350L;
 
 	private final JTextComponent textComponent;
-	private final IInputVetoChecker<String> vetoChecker;
+	private final IInputVerifier inputVerifier;
 
-	public ValidatedInputDocument(final JTextComponent textComponent, final IInputVetoChecker<String> vetoChecker) {
+	public InputModifierDocument(final JTextComponent textComponent, final IInputVerifier inputVerifier) {
 		super();
 		this.textComponent = textComponent;
-		this.vetoChecker = vetoChecker;
+		this.inputVerifier = inputVerifier;
 	}
 
 	@Override
 	public void insertString(final int offs, final String str, final AttributeSet a) throws BadLocationException {
-
 		final String currentText = textComponent.getText();
-		final StringBuilder newTextBuilder = new StringBuilder();
-		if (currentText != null) {
-			if (offs > 0) {
-				newTextBuilder.append(currentText.substring(0, offs));
-			}
-			newTextBuilder.append(str);
-			newTextBuilder.append(currentText.substring(offs, currentText.length()));
-		}
-		if (!vetoChecker.vetoCheck(newTextBuilder.toString()).isVeto()) {
+		if (inputVerifier.verify(currentText, str, offs, offs + str.length())) {
 			super.insertString(offs, str, a);
+		}
+	}
+
+	@Override
+	public void remove(final int offs, final int len) throws BadLocationException {
+		final String currentText = textComponent.getText();
+		if (inputVerifier.verify(currentText, "", offs, offs + len)) {
+			super.remove(offs, len);
 		}
 	}
 

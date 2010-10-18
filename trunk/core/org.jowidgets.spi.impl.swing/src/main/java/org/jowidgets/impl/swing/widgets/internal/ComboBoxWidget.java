@@ -37,7 +37,7 @@ import javax.swing.event.DocumentListener;
 
 import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.convert.IStringObjectConverter;
-import org.jowidgets.impl.swing.widgets.internal.util.ValidatedInputDocument;
+import org.jowidgets.impl.swing.widgets.internal.util.VetoInputDocument;
 import org.jowidgets.spi.widgets.setup.IComboBoxSetupSpi;
 
 public class ComboBoxWidget<INPUT_TYPE> extends ComboBoxSelectionWidget<INPUT_TYPE> {
@@ -82,7 +82,7 @@ public class ComboBoxWidget<INPUT_TYPE> extends ComboBoxSelectionWidget<INPUT_TY
 
 			this.setItemInvoked = false;
 
-			this.textField.setDocument(new ValidatedInputDocument(textField, stringObjectConverter));
+			this.textField.setDocument(new VetoInputDocument(textField, stringObjectConverter));
 			this.textField.getDocument().addDocumentListener(new DocumentListener() {
 
 				@Override

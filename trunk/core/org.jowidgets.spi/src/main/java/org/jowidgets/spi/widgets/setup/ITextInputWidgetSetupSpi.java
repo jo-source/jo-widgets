@@ -25,57 +25,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swt.widgets.internal;
+package org.jowidgets.spi.widgets.setup;
 
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Text;
-import org.jowidgets.api.color.IColorConstant;
-import org.jowidgets.api.widgets.controler.impl.InputObservable;
-import org.jowidgets.impl.swt.color.IColorCache;
-import org.jowidgets.impl.swt.widgets.SwtWidget;
-import org.jowidgets.spi.widgets.ITextInputWidgetSpi;
+import org.jowidgets.api.widgets.descriptor.setup.mandatory.Mandatory;
+import org.jowidgets.spi.verify.IInputVerifier;
 
-public abstract class AbstractSwtTextInputWidget extends InputObservable implements ITextInputWidgetSpi {
+public interface ITextInputWidgetSetupSpi extends IWidgetSetupSpi {
 
-	private final Control control;
-	private final SwtWidget swtWidgetDelegate;
-
-	public AbstractSwtTextInputWidget(final IColorCache colorCache, final Control control) {
-		super();
-		this.control = control;
-		this.swtWidgetDelegate = new SwtWidget(colorCache, control);
-	}
-
-	protected void registerTextControl(final Text textControl) {
-		textControl.addModifyListener(new ModifyListener() {
-
-			@Override
-			public void modifyText(final ModifyEvent e) {
-				fireInputChanged(textControl);
-			}
-		});
-	}
-
-	@Override
-	public Control getUiReference() {
-		return control;
-	}
-
-	@Override
-	public void redraw() {
-		swtWidgetDelegate.redraw();
-	}
-
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		swtWidgetDelegate.setForegroundColor(colorValue);
-	}
-
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		swtWidgetDelegate.setBackgroundColor(colorValue);
-	}
+	@Mandatory
+	IInputVerifier getInputVerifier();
 
 }

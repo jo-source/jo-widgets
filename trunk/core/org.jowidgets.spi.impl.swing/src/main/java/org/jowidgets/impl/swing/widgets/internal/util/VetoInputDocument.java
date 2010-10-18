@@ -25,57 +25,43 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swt.widgets.internal;
+package org.jowidgets.impl.swing.widgets.internal.util;
 
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Text;
-import org.jowidgets.api.color.IColorConstant;
-import org.jowidgets.api.widgets.controler.impl.InputObservable;
-import org.jowidgets.impl.swt.color.IColorCache;
-import org.jowidgets.impl.swt.widgets.SwtWidget;
-import org.jowidgets.spi.widgets.ITextInputWidgetSpi;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.JTextComponent;
+import javax.swing.text.PlainDocument;
 
-public abstract class AbstractSwtTextInputWidget extends InputObservable implements ITextInputWidgetSpi {
+import org.jowidgets.api.veto.IInputVetoChecker;
 
-	private final Control control;
-	private final SwtWidget swtWidgetDelegate;
+public class VetoInputDocument extends PlainDocument {
 
-	public AbstractSwtTextInputWidget(final IColorCache colorCache, final Control control) {
+	private static final long serialVersionUID = 6900501331487160350L;
+
+	private final JTextComponent textComponent;
+	private final IInputVetoChecker<String> vetoChecker;
+
+	public VetoInputDocument(final JTextComponent textComponent, final IInputVetoChecker<String> vetoChecker) {
 		super();
-		this.control = control;
-		this.swtWidgetDelegate = new SwtWidget(colorCache, control);
+		this.textComponent = textComponent;
+		this.vetoChecker = vetoChecker;
 	}
 
-	protected void registerTextControl(final Text textControl) {
-		textControl.addModifyListener(new ModifyListener() {
+	@Override
+	public void insertString(final int offs, final String str, final AttributeSet a) throws BadLocationException {
 
-			@Override
-			public void modifyText(final ModifyEvent e) {
-				fireInputChanged(textControl);
+		final String currentText = textComponent.getText();
+		final StringBuilder newTextBuilder = new StringBuilder();
+		if (currentText != null) {
+			if (offs > 0) {
+				newTextBuilder.append(currentText.substring(0, offs));
 			}
-		});
-	}
-
-	@Override
-	public Control getUiReference() {
-		return control;
-	}
-
-	@Override
-	public void redraw() {
-		swtWidgetDelegate.redraw();
-	}
-
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		swtWidgetDelegate.setForegroundColor(colorValue);
-	}
-
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		swtWidgetDelegate.setBackgroundColor(colorValue);
+			newTextBuilder.append(str);
+			newTextBuilder.append(currentText.substring(offs, currentText.length()));
+		}
+		if (!vetoChecker.vetoCheck(newTextBuilder.toString()).isVeto()) {
+			super.insertString(offs, str, a);
+		}
 	}
 
 }

@@ -32,29 +32,56 @@ import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.api.widgets.controler.IInputListener;
 import org.jowidgets.api.widgets.descriptor.setup.IInputWidgetSetup;
 import org.jowidgets.impl.widgets.basic.delegate.ChildWidgetDelegate;
 import org.jowidgets.impl.widgets.basic.delegate.InputWidgetDelegate;
-import org.jowidgets.impl.widgets.common.wrapper.InputWidgetCommonWrapper;
-import org.jowidgets.spi.widgets.IInputWidgetSpi;
+import org.jowidgets.impl.widgets.common.wrapper.WidgetCommonWrapper;
+import org.jowidgets.spi.widgets.ITextInputWidgetSpi;
 
-public class InputWidget<VALUE_TYPE> extends InputWidgetCommonWrapper<VALUE_TYPE> implements IInputWidget<VALUE_TYPE> {
+public class TextInputWidget extends WidgetCommonWrapper implements IInputWidget<String> {
 
 	private final ChildWidgetDelegate childWidgetDelegate;
-	private final InputWidgetDelegate<VALUE_TYPE> inputWidgetDelegate;
+	private final InputWidgetDelegate<String> inputWidgetDelegate;
+	private final ITextInputWidgetSpi inputWidgetSpi;
 
-	public InputWidget(
-		final IWidget parent,
-		final IInputWidgetSpi<VALUE_TYPE> inputWidgetSpi,
-		final IInputWidgetSetup<VALUE_TYPE> setup) {
+	public TextInputWidget(final IWidget parent, final ITextInputWidgetSpi inputWidgetSpi, final IInputWidgetSetup<String> setup) {
 		super(inputWidgetSpi);
+		this.inputWidgetSpi = inputWidgetSpi;
 		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
-		this.inputWidgetDelegate = new InputWidgetDelegate<VALUE_TYPE>(inputWidgetSpi, setup);
+
+		//must be last statement of constructor
+		this.inputWidgetDelegate = new InputWidgetDelegate<String>(this, setup);
 	}
 
 	@Override
 	public IWidget getParent() {
 		return childWidgetDelegate.getParent();
+	}
+
+	@Override
+	public void setEditable(final boolean editable) {
+		inputWidgetSpi.setEditable(editable);
+	}
+
+	@Override
+	public void addInputListener(final IInputListener listener) {
+		inputWidgetSpi.addInputListener(listener);
+	}
+
+	@Override
+	public void removeInputListener(final IInputListener listener) {
+		inputWidgetSpi.removeInputListener(listener);
+	}
+
+	@Override
+	public void setValue(final String value) {
+		inputWidgetSpi.setText(value);
+	}
+
+	@Override
+	public String getValue() {
+		return inputWidgetSpi.getText();
 	}
 
 	@Override
@@ -78,7 +105,7 @@ public class InputWidget<VALUE_TYPE> extends InputWidgetCommonWrapper<VALUE_TYPE
 	}
 
 	@Override
-	public void addValidator(final IValidator<VALUE_TYPE> validator) {
+	public void addValidator(final IValidator<String> validator) {
 		inputWidgetDelegate.addValidator(validator);
 	}
 

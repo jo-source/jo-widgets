@@ -28,16 +28,25 @@
 package org.jowidgets.impl.swing.widgets.internal;
 
 import java.awt.Component;
-import java.io.Serializable;
 
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.JTextComponent;
 
-public abstract class AbstractSwingTextInputWidget<VALUE_TYPE extends Serializable> extends AbstractSwingInputWidget<VALUE_TYPE> {
+import org.jowidgets.api.color.IColorConstant;
+import org.jowidgets.api.widgets.controler.impl.InputObservable;
+import org.jowidgets.impl.swing.widgets.SwingWidget;
+import org.jowidgets.spi.widgets.ITextInputWidgetSpi;
+
+public abstract class AbstractSwingTextInputWidget extends InputObservable implements ITextInputWidgetSpi {
+
+	private final Component component;
+	private final SwingWidget swingWidgetDelegate;
 
 	public AbstractSwingTextInputWidget(final Component component) {
-		super(component);
+		super();
+		this.component = component;
+		this.swingWidgetDelegate = new SwingWidget(component);
 	}
 
 	protected void registerTextComponent(final JTextComponent textComponent) {
@@ -60,6 +69,26 @@ public abstract class AbstractSwingTextInputWidget<VALUE_TYPE extends Serializab
 
 		});
 
+	}
+
+	@Override
+	public Component getUiReference() {
+		return component;
+	}
+
+	@Override
+	public void redraw() {
+		swingWidgetDelegate.redraw();
+	}
+
+	@Override
+	public void setForegroundColor(final IColorConstant colorValue) {
+		swingWidgetDelegate.setForegroundColor(colorValue);
+	}
+
+	@Override
+	public void setBackgroundColor(final IColorConstant colorValue) {
+		swingWidgetDelegate.setBackgroundColor(colorValue);
 	}
 
 }

@@ -33,33 +33,27 @@ import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 import org.jowidgets.api.util.ColorSettingsInvoker;
-import org.jowidgets.api.veto.IInputVetoChecker;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.impl.swt.color.IColorCache;
-import org.jowidgets.spi.widgets.setup.IVetoableInputWidgetSetupSpi;
+import org.jowidgets.spi.verify.IInputVerifier;
+import org.jowidgets.spi.widgets.setup.ITextInputWidgetSetupSpi;
 
-public class TextFieldWidget extends AbstractSwtTextInputWidget<String> {
+public class TextFieldWidget extends AbstractSwtTextInputWidget {
 
-	public TextFieldWidget(
-		final IColorCache colorCache,
-		final IWidget parent,
-		final IVetoableInputWidgetSetupSpi<String> setup) {
+	public TextFieldWidget(final IColorCache colorCache, final IWidget parent, final ITextInputWidgetSetupSpi setup) {
 		super(colorCache, createText(parent));
 
-		final IInputVetoChecker<String> vetoChecker = setup.getInputVetoChecker();
+		final IInputVerifier inputModifier = setup.getInputVerifier();
 
 		this.getUiReference().addVerifyListener(new VerifyListener() {
 
 			@Override
 			public void verifyText(final VerifyEvent verifyEvent) {
-				final String newText = verifyEvent.text;
-
-				if (!vetoChecker.vetoCheck(newText).isVeto()) {
-					verifyEvent.doit = true;
-				}
-				else {
-					verifyEvent.doit = false;
-				}
+				verifyEvent.doit = inputModifier.verify(
+						getUiReference().getText(),
+						verifyEvent.text,
+						verifyEvent.start,
+						verifyEvent.end);
 			}
 		});
 
@@ -73,18 +67,23 @@ public class TextFieldWidget extends AbstractSwtTextInputWidget<String> {
 	}
 
 	@Override
-	public String getValue() {
+	public String getText() {
 		return getUiReference().getText();
 	}
 
 	@Override
-	public void setValue(final String content) {
-		if (content != null) {
-			getUiReference().setText(content);
+	public void setText(final String text) {
+		if (text != null) {
+			getUiReference().setText(text);
 		}
 		else {
 			getUiReference().setText("");
 		}
+	}
+
+	@Override
+	public void setTooltipText(final String tooltipText) {
+		getUiReference().setToolTipText(tooltipText);
 	}
 
 	@Override

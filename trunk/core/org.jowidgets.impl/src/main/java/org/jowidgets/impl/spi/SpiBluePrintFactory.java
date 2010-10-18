@@ -40,6 +40,7 @@ import org.jowidgets.impl.spi.blueprint.ISeparatorBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITextFieldBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITextLabelBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IToggleButtonBluePrintSpi;
+import org.jowidgets.impl.spi.blueprint.defaults.registry.SpiDefaultsInitializerRegistry;
 import org.jowidgets.impl.spi.descriptor.IButtonDescriptorSpi;
 import org.jowidgets.impl.spi.descriptor.ICheckBoxDescriptorSpi;
 import org.jowidgets.impl.spi.descriptor.IComboBoxDescriptorSpi;
@@ -55,12 +56,11 @@ import org.jowidgets.impl.spi.descriptor.ITextLabelDescriptorSpi;
 import org.jowidgets.impl.spi.descriptor.IToggleButtonDescriptorSpi;
 import org.jowidgets.impl.widgets.blueprint.factory.AbstractBluePrintFactory;
 import org.jowidgets.impl.widgets.common.blueprint.convenience.registry.CommonSetupConvenienceRegistry;
-import org.jowidgets.impl.widgets.common.blueprint.defaults.registry.CommonDefaultsInitializerRegistry;
 
 public class SpiBluePrintFactory extends AbstractBluePrintFactory implements ISpiBluePrintFactory {
 
 	public SpiBluePrintFactory() {
-		super(new CommonSetupConvenienceRegistry(), new CommonDefaultsInitializerRegistry());
+		super(new CommonSetupConvenienceRegistry(), new SpiDefaultsInitializerRegistry());
 	}
 
 	@Override

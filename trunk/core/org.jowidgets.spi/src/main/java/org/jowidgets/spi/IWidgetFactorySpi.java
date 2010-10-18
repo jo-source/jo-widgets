@@ -35,8 +35,8 @@ import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;
 import org.jowidgets.spi.widgets.IContainerWidgetSpi;
 import org.jowidgets.spi.widgets.IFrameWidgetSpi;
 import org.jowidgets.spi.widgets.IIconWidgetSpi;
-import org.jowidgets.spi.widgets.IInputWidgetSpi;
 import org.jowidgets.spi.widgets.IScrollContainerWidgetSpi;
+import org.jowidgets.spi.widgets.ITextInputWidgetSpi;
 import org.jowidgets.spi.widgets.ITextLabelWidgetSpi;
 import org.jowidgets.spi.widgets.IToggleButtonWidgetSpi;
 import org.jowidgets.spi.widgets.IWidgetSpi;
@@ -50,9 +50,9 @@ import org.jowidgets.spi.widgets.setup.IFrameSetupSpi;
 import org.jowidgets.spi.widgets.setup.IIconSetupSpi;
 import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
 import org.jowidgets.spi.widgets.setup.ISeparatorSetupSpi;
+import org.jowidgets.spi.widgets.setup.ITextInputWidgetSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;
-import org.jowidgets.spi.widgets.setup.IVetoableInputWidgetSetupSpi;
 
 public interface IWidgetFactorySpi {
 
@@ -69,7 +69,7 @@ public interface IWidgetFactorySpi {
 		IWidget parent,
 		IScrollCompositeSetupSpi setup);
 
-	IInputWidgetSpi<String> createTextFieldWidget(IWidget parent, IVetoableInputWidgetSetupSpi<String> setup);
+	ITextInputWidgetSpi createTextFieldWidget(IWidget parent, ITextInputWidgetSetupSpi setup);
 
 	ITextLabelWidgetSpi createTextLabelWidget(IWidget parent, ITextLabelSetupSpi setup);
 
