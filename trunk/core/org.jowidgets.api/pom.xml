@@ -6,14 +6,14 @@
 	<artifactId>org.jowidgets.api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>org.jowidgets.api</name>
-	
+
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.core.parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
@@ -21,4 +21,18 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<configuration>
+					<instructions>
+						<Require-Bundle>org.jowidgets.common</Require-Bundle>
+					</instructions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
