@@ -27,8 +27,8 @@
  */
 package org.jowidgets.api.widgets.blueprint;
 
-import org.jowidgets.api.widgets.builder.IIconSetupBuilderCommon;
 import org.jowidgets.api.widgets.descriptor.IIconDescriptor;
+import org.jowidgets.common.widgets.builder.IIconSetupBuilderCommon;
 
 public interface IIconBluePrint extends IIconSetupBuilderCommon<IIconBluePrint>, IIconDescriptor {
 

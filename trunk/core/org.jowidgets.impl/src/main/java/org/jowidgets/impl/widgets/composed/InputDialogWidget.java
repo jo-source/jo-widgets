@@ -27,29 +27,29 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
-import org.jowidgets.api.color.IColorConstant;
-import org.jowidgets.api.look.Dimension;
-import org.jowidgets.api.look.Position;
-import org.jowidgets.api.look.Rectangle;
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationMessage;
 import org.jowidgets.api.validation.ValidationMessageType;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IButtonWidget;
-import org.jowidgets.api.widgets.IButtonWidgetCommon;
 import org.jowidgets.api.widgets.ICompositeWidget;
-import org.jowidgets.api.widgets.IContainerWidgetCommon;
 import org.jowidgets.api.widgets.IDialogWidget;
 import org.jowidgets.api.widgets.IInputDialogWidget;
-import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.IWindowWidgetCommon;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.api.widgets.controler.IActionListener;
-import org.jowidgets.api.widgets.controler.IInputListener;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
-import org.jowidgets.api.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.IInputDialogSetup;
-import org.jowidgets.api.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.look.Dimension;
+import org.jowidgets.common.look.Position;
+import org.jowidgets.common.look.Rectangle;
+import org.jowidgets.common.widgets.IButtonWidgetCommon;
+import org.jowidgets.common.widgets.IContainerWidgetCommon;
+import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWindowWidgetCommon;
+import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controler.IInputListener;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
 public class InputDialogWidget<INPUT_TYPE> implements IInputDialogWidget<INPUT_TYPE> {

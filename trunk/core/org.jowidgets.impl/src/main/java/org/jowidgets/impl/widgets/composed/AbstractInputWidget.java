@@ -36,8 +36,8 @@ import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.OkValidator;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IInputWidget;
-import org.jowidgets.api.widgets.controler.IInputListener;
-import org.jowidgets.api.widgets.controler.impl.InputObservable;
+import org.jowidgets.common.widgets.controler.IInputListener;
+import org.jowidgets.common.widgets.controler.impl.InputObservable;
 import org.jowidgets.util.Assert;
 
 public abstract class AbstractInputWidget<VALUE_TYPE> extends InputObservable implements IInputWidget<VALUE_TYPE> {

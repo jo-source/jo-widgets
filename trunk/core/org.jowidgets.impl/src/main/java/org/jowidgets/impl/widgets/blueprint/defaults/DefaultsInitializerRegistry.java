@@ -35,7 +35,7 @@ import java.util.Map;
 
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
-import org.jowidgets.api.widgets.builder.IWidgetSetupBuilder;
+import org.jowidgets.common.widgets.builder.IWidgetSetupBuilder;
 import org.jowidgets.util.Assert;
 
 @SuppressWarnings({"rawtypes", "unchecked"})

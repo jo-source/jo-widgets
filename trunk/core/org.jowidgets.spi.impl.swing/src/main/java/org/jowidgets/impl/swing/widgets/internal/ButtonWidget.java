@@ -32,9 +32,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-import org.jowidgets.api.image.IImageConstant;
-import org.jowidgets.api.look.Markup;
-import org.jowidgets.api.util.ColorSettingsInvoker;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.look.Markup;
+import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.impl.swing.util.AlignmentConvert;
 import org.jowidgets.impl.swing.util.FontProvider;

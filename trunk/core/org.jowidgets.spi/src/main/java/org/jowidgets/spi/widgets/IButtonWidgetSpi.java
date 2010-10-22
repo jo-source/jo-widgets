@@ -27,7 +27,7 @@
  */
 package org.jowidgets.spi.widgets;
 
-import org.jowidgets.api.widgets.IButtonWidgetCommon;
+import org.jowidgets.common.widgets.IButtonWidgetCommon;
 
 public interface IButtonWidgetSpi extends IButtonWidgetCommon, IWidgetSpi {
 

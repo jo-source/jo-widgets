@@ -29,11 +29,11 @@ package org.jowidgets.impl.widgets.composed.factory.internal;
 
 import org.jowidgets.api.widgets.ILabelWidget;
 import org.jowidgets.api.widgets.IValidationLabelWidget;
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
 import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
-import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.api.widgets.factory.IWidgetFactory;
+import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.widgets.composed.ValidationLabelWidget;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 

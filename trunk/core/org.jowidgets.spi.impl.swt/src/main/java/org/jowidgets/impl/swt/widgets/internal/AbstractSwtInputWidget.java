@@ -28,9 +28,9 @@
 package org.jowidgets.impl.swt.widgets.internal;
 
 import org.eclipse.swt.widgets.Control;
-import org.jowidgets.api.color.IColorConstant;
-import org.jowidgets.api.widgets.IInputWidgetCommon;
-import org.jowidgets.api.widgets.controler.impl.InputObservable;
+import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.widgets.IInputWidgetCommon;
+import org.jowidgets.common.widgets.controler.impl.InputObservable;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.widgets.SwtWidget;
 

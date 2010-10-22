@@ -30,7 +30,7 @@ package org.jowidgets.impl.widgets.composed.factory.internal;
 import org.jowidgets.api.widgets.IDialogWidget;
 import org.jowidgets.api.widgets.IInputDialogWidget;
 import org.jowidgets.api.widgets.descriptor.IInputDialogDescriptor;
-import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.widgets.composed.InputDialogWidget;
 
 public class InputDialogWidgetFactory<INPUT_TYPE> extends

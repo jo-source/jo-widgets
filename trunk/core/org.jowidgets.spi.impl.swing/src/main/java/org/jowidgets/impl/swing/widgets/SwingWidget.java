@@ -31,8 +31,8 @@ import java.awt.Component;
 
 import javax.swing.JComponent;
 
-import org.jowidgets.api.color.IColorConstant;
-import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.impl.swing.util.ColorConvert;
 
 public class SwingWidget implements IWidget {

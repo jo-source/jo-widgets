@@ -31,8 +31,8 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 
-import org.jowidgets.api.image.IImageConstant;
-import org.jowidgets.api.image.impl.ImageRegistry;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.image.impl.ImageRegistry;
 
 public class SwingImageRegistry extends ImageRegistry {
 

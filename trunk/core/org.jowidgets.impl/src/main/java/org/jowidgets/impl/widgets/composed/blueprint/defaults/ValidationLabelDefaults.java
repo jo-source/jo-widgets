@@ -29,9 +29,9 @@ package org.jowidgets.impl.widgets.composed.blueprint.defaults;
 
 import org.jowidgets.api.color.defaults.Colors;
 import org.jowidgets.api.image.defaults.Icons;
-import org.jowidgets.api.look.Markup;
 import org.jowidgets.api.widgets.blueprint.builder.IValidationLabelSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
+import org.jowidgets.common.look.Markup;
 
 public class ValidationLabelDefaults implements IDefaultInitializer<IValidationLabelSetupBuilder<?>> {
 

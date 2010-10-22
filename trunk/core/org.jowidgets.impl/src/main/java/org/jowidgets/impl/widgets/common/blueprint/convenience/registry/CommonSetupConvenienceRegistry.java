@@ -28,10 +28,10 @@
 
 package org.jowidgets.impl.widgets.common.blueprint.convenience.registry;
 
-import org.jowidgets.api.widgets.builder.ICompositeSetupBuilderCommon;
-import org.jowidgets.api.widgets.builder.IContainerSetupBuilderCommon;
-import org.jowidgets.api.widgets.builder.ITextLabelSetupBuilderCommon;
-import org.jowidgets.api.widgets.builder.IWidgetSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.ICompositeSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.IContainerSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.ITextLabelSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.IWidgetSetupBuilderCommon;
 import org.jowidgets.impl.widgets.blueprint.convenience.SetupBuilderConvenienceRegistry;
 import org.jowidgets.impl.widgets.common.blueprint.convenience.CompositeSetupConvenienceCommon;
 import org.jowidgets.impl.widgets.common.blueprint.convenience.ContainerSetupConvenienceCommon;

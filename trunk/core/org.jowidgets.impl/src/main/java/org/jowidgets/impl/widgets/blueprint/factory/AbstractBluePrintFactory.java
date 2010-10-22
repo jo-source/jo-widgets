@@ -27,10 +27,10 @@
  */
 package org.jowidgets.impl.widgets.blueprint.factory;
 
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
-import org.jowidgets.api.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.impl.spi.blueprint.IFrameBluePrintSpi;
 import org.jowidgets.impl.widgets.blueprint.proxy.BluePrintProxyProvider;
 

@@ -29,7 +29,7 @@ package org.jowidgets.api.image.defaults;
 
 import java.net.URL;
 
-import org.jowidgets.api.image.IImageConstant;
+import org.jowidgets.common.image.IImageConstant;
 
 public enum Icons implements IImageConstant {
 

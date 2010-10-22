@@ -27,9 +27,9 @@
  */
 package org.jowidgets.spi;
 
-import org.jowidgets.api.image.IImageRegistry;
-import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.image.IImageRegistry;
+import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.widgets.IButtonWidgetSpi;
 import org.jowidgets.spi.widgets.ICheckBoxWidgetSpi;
 import org.jowidgets.spi.widgets.IComboBoxSelectionWidgetSpi;

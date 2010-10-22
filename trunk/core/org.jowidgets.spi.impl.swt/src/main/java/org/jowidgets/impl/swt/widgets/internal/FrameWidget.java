@@ -28,8 +28,8 @@
 package org.jowidgets.impl.swt.widgets.internal;
 
 import org.eclipse.swt.widgets.Shell;
-import org.jowidgets.api.util.ColorSettingsInvoker;
-import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.util.ColorSettingsInvoker;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.impl.swt.widgets.SwtWindowWidget;

@@ -28,7 +28,7 @@
 
 package org.jowidgets.impl.widgets.basic.delegate;
 
-import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidget;
 
 public class ChildWidgetDelegate {
 

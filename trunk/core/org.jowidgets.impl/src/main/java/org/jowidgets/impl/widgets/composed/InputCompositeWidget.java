@@ -27,17 +27,17 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
-import org.jowidgets.api.color.IColorConstant;
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.ICompositeWidget;
 import org.jowidgets.api.widgets.IInputCompositeWidget;
 import org.jowidgets.api.widgets.IValidationLabelWidget;
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
-import org.jowidgets.api.widgets.controler.IInputListener;
 import org.jowidgets.api.widgets.descriptor.setup.IInputCompositeSetup;
-import org.jowidgets.api.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.controler.IInputListener;
+import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 import org.jowidgets.impl.widgets.composed.internal.InputContentContainer;
 

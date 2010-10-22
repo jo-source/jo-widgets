@@ -29,7 +29,7 @@ package org.jowidgets.impl.swing.widgets.internal;
 
 import javax.swing.JToggleButton;
 
-import org.jowidgets.api.image.IImageConstant;
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.spi.widgets.IToggleButtonWidgetSpi;
 import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;

@@ -27,8 +27,8 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
-import org.jowidgets.api.widgets.builder.IWidgetSetupBuilderCommon;
-import org.jowidgets.api.widgets.builder.convenience.IWidgetSetupConvenienceCommon;
+import org.jowidgets.common.widgets.builder.IWidgetSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.convenience.IWidgetSetupConvenienceCommon;
 
 public interface IWidgetSetupBuilder<INSTANCE_TYPE extends IWidgetSetupBuilder<?>> extends
 		IWidgetSetupBuilderCommon<INSTANCE_TYPE>,

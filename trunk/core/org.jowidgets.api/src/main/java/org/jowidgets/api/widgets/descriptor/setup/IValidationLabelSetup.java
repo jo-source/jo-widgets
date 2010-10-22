@@ -27,10 +27,11 @@
  */
 package org.jowidgets.api.widgets.descriptor.setup;
 
-import org.jowidgets.api.color.IColorConstant;
-import org.jowidgets.api.image.IImageConstant;
-import org.jowidgets.api.look.Markup;
-import org.jowidgets.api.widgets.descriptor.setup.mandatory.Mandatory;
+import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.look.Markup;
+import org.jowidgets.common.widgets.descriptor.setup.IWidgetSetupCommon;
+import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface IValidationLabelSetup extends IWidgetSetupCommon {
 

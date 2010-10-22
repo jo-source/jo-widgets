@@ -29,7 +29,7 @@
 package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.widgets.IChildWidget;
-import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.impl.widgets.basic.delegate.ChildWidgetDelegate;
 import org.jowidgets.impl.widgets.common.wrapper.WidgetCommonWrapper;
 import org.jowidgets.spi.widgets.IWidgetSpi;

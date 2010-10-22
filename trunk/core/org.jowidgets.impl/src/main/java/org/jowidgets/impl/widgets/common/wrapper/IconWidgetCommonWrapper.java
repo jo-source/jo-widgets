@@ -28,8 +28,8 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.api.image.IImageConstant;
-import org.jowidgets.api.widgets.IIconWidgetCommon;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.widgets.IIconWidgetCommon;
 
 public class IconWidgetCommonWrapper extends WidgetCommonWrapper implements IIconWidgetCommon {
 

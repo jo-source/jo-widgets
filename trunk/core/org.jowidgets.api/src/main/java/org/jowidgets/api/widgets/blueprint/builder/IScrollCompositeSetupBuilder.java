@@ -27,7 +27,7 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
-import org.jowidgets.api.widgets.builder.IScrollCompositeSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.IScrollCompositeSetupBuilderCommon;
 
 public interface IScrollCompositeSetupBuilder<INSTANCE_TYPE extends IScrollCompositeSetupBuilder<?>> extends
 		IScrollCompositeSetupBuilderCommon<INSTANCE_TYPE>,

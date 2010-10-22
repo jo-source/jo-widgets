@@ -29,6 +29,7 @@ package org.jowidgets.api.widgets.descriptor;
 
 import org.jowidgets.api.widgets.ICheckBoxWidget;
 import org.jowidgets.api.widgets.descriptor.setup.ICheckBoxSetup;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public interface ICheckBoxDescriptor extends ICheckBoxSetup, IWidgetDescriptor<ICheckBoxWidget> {
 

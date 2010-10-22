@@ -32,8 +32,8 @@ import java.util.Map;
 
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Display;
-import org.jowidgets.api.color.ColorValue;
-import org.jowidgets.api.color.IColorConstant;
+import org.jowidgets.common.color.ColorValue;
+import org.jowidgets.common.color.IColorConstant;
 
 public class ColorCache implements IColorCache {
 	// TODO: replace with guava computing concurrent hash map

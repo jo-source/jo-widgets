@@ -28,11 +28,11 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.api.widgets.IContainerWidgetCommon;
-import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.api.widgets.factory.ICustomWidgetFactory;
-import org.jowidgets.api.widgets.layout.ILayoutDescriptor;
+import org.jowidgets.common.widgets.IContainerWidgetCommon;
+import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
+import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 
 public class ContainerWidgetCommonWrapper extends WidgetCommonWrapper implements IContainerWidgetCommon {
 

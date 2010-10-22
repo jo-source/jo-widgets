@@ -32,7 +32,7 @@ import java.net.URL;
 
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
-import org.jowidgets.api.image.impl.AbstractImageHandle;
+import org.jowidgets.common.image.impl.AbstractImageHandle;
 
 public class SwtImageHandle extends AbstractImageHandle<Image> {
 

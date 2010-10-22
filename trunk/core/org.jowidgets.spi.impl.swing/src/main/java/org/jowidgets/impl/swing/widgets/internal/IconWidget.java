@@ -29,9 +29,9 @@ package org.jowidgets.impl.swing.widgets.internal;
 
 import javax.swing.JLabel;
 
-import org.jowidgets.api.image.IImageConstant;
-import org.jowidgets.api.util.ColorSettingsInvoker;
-import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.util.ColorSettingsInvoker;
+import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.impl.swing.widgets.SwingWidget;
 import org.jowidgets.spi.widgets.IIconWidgetSpi;

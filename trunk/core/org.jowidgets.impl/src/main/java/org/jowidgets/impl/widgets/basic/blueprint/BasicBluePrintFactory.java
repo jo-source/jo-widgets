@@ -28,7 +28,6 @@
 package org.jowidgets.impl.widgets.basic.blueprint;
 
 import org.jowidgets.api.convert.IObjectStringConverter;
-import org.jowidgets.api.image.IImageConstant;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
@@ -41,6 +40,7 @@ import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.api.widgets.blueprint.factory.IBasicBluePrintFactory;
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.impl.convert.DefaultObjectStringConverter;
 import org.jowidgets.impl.convert.DefaultTypeConverter;
 

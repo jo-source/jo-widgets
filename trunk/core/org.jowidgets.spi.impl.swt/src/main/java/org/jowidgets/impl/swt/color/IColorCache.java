@@ -28,7 +28,7 @@
 package org.jowidgets.impl.swt.color;
 
 import org.eclipse.swt.graphics.Color;
-import org.jowidgets.api.color.IColorConstant;
+import org.jowidgets.common.color.IColorConstant;
 
 public interface IColorCache {
 	Color getColor(IColorConstant color);

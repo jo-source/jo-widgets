@@ -33,8 +33,8 @@ import java.awt.event.ItemListener;
 import javax.swing.JCheckBox;
 import javax.swing.JToggleButton;
 
-import org.jowidgets.api.look.Markup;
-import org.jowidgets.api.util.ColorSettingsInvoker;
+import org.jowidgets.common.look.Markup;
+import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.impl.swing.util.AlignmentConvert;
 import org.jowidgets.impl.swing.util.FontProvider;
 import org.jowidgets.spi.widgets.ICheckBoxWidgetSpi;

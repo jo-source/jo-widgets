@@ -27,6 +27,8 @@
  */
 package org.jowidgets.api.widgets;
 
+import org.jowidgets.common.widgets.IWidget;
+
 public interface IChildWidget extends IWidget {
 
 	IWidget getParent();

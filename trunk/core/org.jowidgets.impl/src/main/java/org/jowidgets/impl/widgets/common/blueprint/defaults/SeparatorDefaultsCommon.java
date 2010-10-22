@@ -27,9 +27,9 @@
  */
 package org.jowidgets.impl.widgets.common.blueprint.defaults;
 
-import org.jowidgets.api.look.Orientation;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
-import org.jowidgets.api.widgets.builder.ISeparatorSetupBuilderCommon;
+import org.jowidgets.common.look.Orientation;
+import org.jowidgets.common.widgets.builder.ISeparatorSetupBuilderCommon;
 
 public class SeparatorDefaultsCommon implements IDefaultInitializer<ISeparatorSetupBuilderCommon<?>> {
 

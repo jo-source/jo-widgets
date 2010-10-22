@@ -29,10 +29,10 @@
 package org.jowidgets.impl.widgets.basic.factory.internal;
 
 import org.jowidgets.api.widgets.ICheckBoxWidget;
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.ICheckBoxDescriptor;
-import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.api.widgets.factory.IWidgetFactory;
+import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.ICheckBoxBluePrintSpi;
 import org.jowidgets.impl.widgets.basic.CheckBoxWidget;

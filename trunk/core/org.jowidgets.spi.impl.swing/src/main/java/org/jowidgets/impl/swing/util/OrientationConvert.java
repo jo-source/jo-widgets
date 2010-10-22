@@ -29,7 +29,7 @@ package org.jowidgets.impl.swing.util;
 
 import javax.swing.SwingConstants;
 
-import org.jowidgets.api.look.Orientation;
+import org.jowidgets.common.look.Orientation;
 import org.jowidgets.util.Assert;
 
 public final class OrientationConvert {

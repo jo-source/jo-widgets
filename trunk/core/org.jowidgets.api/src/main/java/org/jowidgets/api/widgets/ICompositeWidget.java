@@ -27,6 +27,8 @@
  */
 package org.jowidgets.api.widgets;
 
+import org.jowidgets.common.widgets.IContainerWidgetCommon;
+
 public interface ICompositeWidget extends IContainerWidgetCommon, IChildWidget {
 
 }

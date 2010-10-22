@@ -34,7 +34,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
-import org.jowidgets.api.util.ColorSettingsInvoker;
+import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.spi.widgets.IComboBoxSelectionWidgetSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
 

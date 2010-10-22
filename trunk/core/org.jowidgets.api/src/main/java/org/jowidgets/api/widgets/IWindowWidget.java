@@ -27,6 +27,8 @@
  */
 package org.jowidgets.api.widgets;
 
+import org.jowidgets.common.widgets.IWindowWidgetCommon;
+
 public interface IWindowWidget extends IWindowWidgetCommon {
 
 	/**

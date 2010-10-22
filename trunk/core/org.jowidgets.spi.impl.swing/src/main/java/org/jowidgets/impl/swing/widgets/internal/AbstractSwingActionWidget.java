@@ -29,9 +29,9 @@ package org.jowidgets.impl.swing.widgets.internal;
 
 import java.awt.Component;
 
-import org.jowidgets.api.color.IColorConstant;
-import org.jowidgets.api.widgets.IActionWidgetCommon;
-import org.jowidgets.api.widgets.controler.impl.ActionObservable;
+import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.widgets.IActionWidgetCommon;
+import org.jowidgets.common.widgets.controler.impl.ActionObservable;
 import org.jowidgets.impl.swing.widgets.SwingWidget;
 
 public abstract class AbstractSwingActionWidget extends ActionObservable implements IActionWidgetCommon {

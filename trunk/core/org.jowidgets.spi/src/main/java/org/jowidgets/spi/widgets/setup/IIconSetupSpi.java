@@ -27,7 +27,7 @@
  */
 package org.jowidgets.spi.widgets.setup;
 
-import org.jowidgets.api.widgets.descriptor.setup.IIconSetupCommon;
+import org.jowidgets.common.widgets.descriptor.setup.IIconSetupCommon;
 
 public interface IIconSetupSpi extends IIconSetupCommon {
 

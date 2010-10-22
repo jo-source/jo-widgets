@@ -27,11 +27,11 @@
  */
 package org.jowidgets.impl.widgets.composed.blueprint.convenience;
 
-import org.jowidgets.api.image.IImageConstant;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.builder.IInputDialogSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.convenience.IInputDialogSetupConvenience;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.impl.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 

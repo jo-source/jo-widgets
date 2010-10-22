@@ -27,7 +27,7 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
-import org.jowidgets.api.widgets.builder.ICompositeSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.ICompositeSetupBuilderCommon;
 
 public interface ICompositeSetupBuilder<INSTANCE_TYPE extends ICompositeSetupBuilder<?>> extends
 		ICompositeSetupBuilderCommon<INSTANCE_TYPE> {

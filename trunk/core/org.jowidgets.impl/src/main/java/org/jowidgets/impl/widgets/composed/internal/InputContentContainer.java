@@ -27,21 +27,21 @@
  */
 package org.jowidgets.impl.widgets.composed.internal;
 
-import org.jowidgets.api.color.IColorConstant;
-import org.jowidgets.api.look.Border;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.ICompositeWidget;
-import org.jowidgets.api.widgets.IContainerWidgetCommon;
 import org.jowidgets.api.widgets.IInputWidget;
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.api.widgets.content.IMandatoryInputContainer;
-import org.jowidgets.api.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.api.widgets.factory.ICustomWidgetFactory;
-import org.jowidgets.api.widgets.layout.ILayoutDescriptor;
+import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.look.Border;
+import org.jowidgets.common.widgets.IContainerWidgetCommon;
+import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
+import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.impl.widgets.composed.AbstractInputWidget;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 

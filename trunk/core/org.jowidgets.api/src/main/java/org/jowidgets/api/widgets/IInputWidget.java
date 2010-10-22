@@ -30,6 +30,7 @@ package org.jowidgets.api.widgets;
 import org.jowidgets.api.validation.IValidateable;
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.widgets.access.IInputValueAccessor;
+import org.jowidgets.common.widgets.IInputWidgetCommon;
 
 public interface IInputWidget<VALUE_TYPE> extends
 		IInputWidgetCommon,

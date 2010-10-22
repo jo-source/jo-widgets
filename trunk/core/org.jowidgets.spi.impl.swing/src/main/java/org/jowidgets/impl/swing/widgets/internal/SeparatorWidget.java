@@ -29,7 +29,7 @@ package org.jowidgets.impl.swing.widgets.internal;
 
 import javax.swing.JSeparator;
 
-import org.jowidgets.api.util.ColorSettingsInvoker;
+import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.impl.swing.util.OrientationConvert;
 import org.jowidgets.impl.swing.widgets.SwingWidget;
 import org.jowidgets.spi.widgets.IWidgetSpi;

@@ -27,7 +27,7 @@
  */
 package org.jowidgets.spi.widgets.setup;
 
-import org.jowidgets.api.widgets.descriptor.setup.mandatory.Mandatory;
+import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 import org.jowidgets.spi.verify.IInputVerifier;
 
 public interface ITextInputWidgetSetupSpi extends IWidgetSetupSpi {

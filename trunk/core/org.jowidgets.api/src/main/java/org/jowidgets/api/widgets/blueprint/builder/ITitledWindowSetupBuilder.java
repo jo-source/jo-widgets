@@ -27,7 +27,7 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
-import org.jowidgets.api.widgets.builder.ITitledWindowSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.ITitledWindowSetupBuilderCommon;
 
 public interface ITitledWindowSetupBuilder<INSTANCE_TYPE extends ITitledWindowSetupBuilder<?>> extends
 		IWindowSetupBuilder<INSTANCE_TYPE>,

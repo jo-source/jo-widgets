@@ -27,7 +27,7 @@
  */
 package org.jowidgets.impl.spi.descriptor;
 
-import org.jowidgets.api.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.spi.widgets.ITextLabelWidgetSpi;
 import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 

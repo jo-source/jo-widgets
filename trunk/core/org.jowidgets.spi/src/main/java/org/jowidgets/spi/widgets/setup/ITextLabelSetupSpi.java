@@ -27,7 +27,7 @@
  */
 package org.jowidgets.spi.widgets.setup;
 
-import org.jowidgets.api.widgets.descriptor.setup.ITextLabelSetupCommon;
+import org.jowidgets.common.widgets.descriptor.setup.ITextLabelSetupCommon;
 
 public interface ITextLabelSetupSpi extends ITextLabelSetupCommon {
 

@@ -32,14 +32,14 @@ import java.awt.Container;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.jowidgets.api.color.IColorConstant;
-import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.api.widgets.factory.ICustomWidgetFactory;
-import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.api.widgets.factory.IWidgetFactory;
-import org.jowidgets.api.widgets.layout.ILayoutDescriptor;
-import org.jowidgets.api.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.widgets.factory.IWidgetFactory;
+import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
+import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.spi.widgets.IContainerWidgetSpi;
 import org.jowidgets.util.Assert;
 

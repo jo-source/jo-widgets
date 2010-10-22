@@ -28,7 +28,7 @@
 
 package org.jowidgets.impl.widgets.basic.factory.internal;
 
-import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
 import org.jowidgets.spi.IWidgetFactorySpi;
 

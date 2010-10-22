@@ -28,7 +28,7 @@
 package org.jowidgets.impl.widgets.common.blueprint.defaults;
 
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
-import org.jowidgets.api.widgets.builder.ICheckBoxSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.ICheckBoxSetupBuilderCommon;
 
 public class CheckBoxDefaultsCommon implements IDefaultInitializer<ICheckBoxSetupBuilderCommon<?>> {
 

@@ -30,7 +30,7 @@ package org.jowidgets.impl.widgets.composed.factory.internal;
 import org.jowidgets.api.widgets.ICompositeWidget;
 import org.jowidgets.api.widgets.IInputCompositeWidget;
 import org.jowidgets.api.widgets.descriptor.IInputCompositeDescriptor;
-import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.widgets.composed.InputCompositeWidget;
 
 public class InputCompositeWidgetFactory<INPUT_TYPE> extends

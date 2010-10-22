@@ -27,7 +27,6 @@
  */
 package org.jowidgets.api.widgets.blueprint.factory;
 
-import org.jowidgets.api.image.IImageConstant;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
@@ -37,6 +36,7 @@ import org.jowidgets.api.widgets.blueprint.IIconBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
+import org.jowidgets.common.image.IImageConstant;
 
 public interface IBasicBluePrintFactory extends IBasicSimpleBluePrintFactory {
 

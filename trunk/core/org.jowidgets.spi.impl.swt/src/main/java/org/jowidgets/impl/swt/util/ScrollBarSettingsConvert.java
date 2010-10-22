@@ -28,7 +28,7 @@
 package org.jowidgets.impl.swt.util;
 
 import org.eclipse.swt.SWT;
-import org.jowidgets.api.widgets.descriptor.setup.IScrollCompositeSetupCommon;
+import org.jowidgets.common.widgets.descriptor.setup.IScrollCompositeSetupCommon;
 import org.jowidgets.util.Assert;
 
 public final class ScrollBarSettingsConvert {

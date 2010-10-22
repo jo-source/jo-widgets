@@ -33,7 +33,7 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
-import org.jowidgets.api.image.impl.AbstractImageHandle;
+import org.jowidgets.common.image.impl.AbstractImageHandle;
 
 public class SwingImageHandle extends AbstractImageHandle<Image> {
 

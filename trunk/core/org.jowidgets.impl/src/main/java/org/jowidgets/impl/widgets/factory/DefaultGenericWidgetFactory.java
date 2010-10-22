@@ -30,12 +30,12 @@ package org.jowidgets.impl.widgets.factory;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jowidgets.api.image.IImageRegistry;
-import org.jowidgets.api.widgets.IContainerWidgetCommon;
-import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.api.widgets.factory.IWidgetFactory;
+import org.jowidgets.common.image.IImageRegistry;
+import org.jowidgets.common.widgets.IContainerWidgetCommon;
+import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.util.Assert;
 
 public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory {

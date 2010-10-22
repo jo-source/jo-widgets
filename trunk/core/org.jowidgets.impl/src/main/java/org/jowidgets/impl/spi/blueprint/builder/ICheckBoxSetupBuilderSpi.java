@@ -27,7 +27,7 @@
  */
 package org.jowidgets.impl.spi.blueprint.builder;
 
-import org.jowidgets.api.widgets.builder.ICheckBoxSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.ICheckBoxSetupBuilderCommon;
 
 public interface ICheckBoxSetupBuilderSpi<INSTANCE_TYPE extends ICheckBoxSetupBuilderSpi<?>> extends
 		ICheckBoxSetupBuilderCommon<INSTANCE_TYPE> {

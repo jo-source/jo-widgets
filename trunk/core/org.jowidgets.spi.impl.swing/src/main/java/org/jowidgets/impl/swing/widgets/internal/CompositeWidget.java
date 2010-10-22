@@ -29,9 +29,9 @@ package org.jowidgets.impl.swing.widgets.internal;
 
 import javax.swing.JPanel;
 
-import org.jowidgets.api.util.ColorSettingsInvoker;
-import org.jowidgets.api.widgets.descriptor.setup.ICompositeSetupCommon;
-import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.util.ColorSettingsInvoker;
+import org.jowidgets.common.widgets.descriptor.setup.ICompositeSetupCommon;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swing.util.BorderConvert;
 import org.jowidgets.impl.swing.widgets.SwingContainerWidget;
 

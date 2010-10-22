@@ -29,7 +29,7 @@ package org.jowidgets.impl.swing.util;
 
 import java.awt.Point;
 
-import org.jowidgets.api.look.Position;
+import org.jowidgets.common.look.Position;
 import org.jowidgets.util.Assert;
 
 public final class PositionConvert {

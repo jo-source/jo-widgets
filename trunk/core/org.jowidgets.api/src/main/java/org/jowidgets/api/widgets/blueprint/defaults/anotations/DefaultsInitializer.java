@@ -31,7 +31,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
-import org.jowidgets.api.widgets.builder.IWidgetSetupBuilder;
+import org.jowidgets.common.widgets.builder.IWidgetSetupBuilder;
 
 @Retention(RetentionPolicy.RUNTIME)
 public @interface DefaultsInitializer {

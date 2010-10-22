@@ -27,10 +27,10 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
-import org.jowidgets.api.color.IColorConstant;
-import org.jowidgets.api.image.IImageConstant;
-import org.jowidgets.api.look.Markup;
-import org.jowidgets.api.widgets.builder.IWidgetSetupBuilderCommon;
+import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.look.Markup;
+import org.jowidgets.common.widgets.builder.IWidgetSetupBuilderCommon;
 
 public interface IValidationLabelSetupBuilder<INSTANCE_TYPE extends IValidationLabelSetupBuilder<?>> extends
 		IWidgetSetupBuilderCommon<INSTANCE_TYPE> {

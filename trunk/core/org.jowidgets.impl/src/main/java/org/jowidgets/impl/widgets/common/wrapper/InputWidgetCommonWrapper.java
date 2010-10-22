@@ -28,8 +28,8 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.api.widgets.IInputWidgetCommon;
-import org.jowidgets.api.widgets.controler.IInputListener;
+import org.jowidgets.common.widgets.IInputWidgetCommon;
+import org.jowidgets.common.widgets.controler.IInputListener;
 
 public class InputWidgetCommonWrapper extends WidgetCommonWrapper implements IInputWidgetCommon {
 

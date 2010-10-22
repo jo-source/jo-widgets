@@ -28,8 +28,8 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.api.widgets.IContainerWidgetCommon;
-import org.jowidgets.api.widgets.IScrollCompositeWidgetCommon;
+import org.jowidgets.common.widgets.IContainerWidgetCommon;
+import org.jowidgets.common.widgets.IScrollCompositeWidgetCommon;
 
 public class ScrollContainerWidgetCommonWrapper extends ContainerWidgetCommonWrapper implements IScrollCompositeWidgetCommon {
 

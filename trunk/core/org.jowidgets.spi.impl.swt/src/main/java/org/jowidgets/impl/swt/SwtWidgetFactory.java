@@ -27,9 +27,9 @@
  */
 package org.jowidgets.impl.swt;
 
-import org.jowidgets.api.image.IImageRegistry;
-import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.image.IImageRegistry;
+import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swt.color.ColorCache;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.image.SwtImageRegistry;

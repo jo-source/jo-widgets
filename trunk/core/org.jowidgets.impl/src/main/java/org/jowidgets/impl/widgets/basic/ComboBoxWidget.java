@@ -31,8 +31,8 @@ package org.jowidgets.impl.widgets.basic;
 import org.jowidgets.api.convert.IStringObjectConverter;
 import org.jowidgets.api.validation.ITextInputValidator;
 import org.jowidgets.api.validation.ValidationResult;
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IComboBoxSetup;
+import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;
 
 public class ComboBoxWidget<VALUE_TYPE> extends ComboBoxSelectionWidget<VALUE_TYPE> {

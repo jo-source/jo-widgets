@@ -27,7 +27,7 @@
  */
 package org.jowidgets.spi.widgets;
 
-import org.jowidgets.api.widgets.IWindowWidgetCommon;
+import org.jowidgets.common.widgets.IWindowWidgetCommon;
 
 public interface IWindowWidgetSpi extends IWindowWidgetCommon, IWidgetSpi {
 

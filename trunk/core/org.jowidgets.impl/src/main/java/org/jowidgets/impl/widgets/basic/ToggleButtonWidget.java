@@ -28,10 +28,10 @@
 
 package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.api.image.IImageConstant;
 import org.jowidgets.api.widgets.IToggleButtonWidget;
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IToggleButtonSetup;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.spi.widgets.IToggleButtonWidgetSpi;
 
 public class ToggleButtonWidget extends CheckBoxWidget implements IToggleButtonWidget {

@@ -28,12 +28,12 @@
 
 package org.jowidgets.impl.widgets.common.blueprint.defaults.registry;
 
-import org.jowidgets.api.widgets.builder.IButtonSetupBuilderCommon;
-import org.jowidgets.api.widgets.builder.ICheckBoxSetupBuilderCommon;
-import org.jowidgets.api.widgets.builder.IContainerSetupBuilderCommon;
-import org.jowidgets.api.widgets.builder.IScrollCompositeSetupBuilderCommon;
-import org.jowidgets.api.widgets.builder.ISeparatorSetupBuilderCommon;
-import org.jowidgets.api.widgets.builder.ITextLabelSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.IButtonSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.ICheckBoxSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.IContainerSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.IScrollCompositeSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.ISeparatorSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.ITextLabelSetupBuilderCommon;
 import org.jowidgets.impl.widgets.blueprint.defaults.DefaultsInitializerRegistry;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.ButtonDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.CheckBoxDefaultsCommon;

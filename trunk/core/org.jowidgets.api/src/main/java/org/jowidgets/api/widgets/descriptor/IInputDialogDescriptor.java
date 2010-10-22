@@ -29,6 +29,7 @@ package org.jowidgets.api.widgets.descriptor;
 
 import org.jowidgets.api.widgets.IInputDialogWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IInputDialogSetup;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public interface IInputDialogDescriptor<INPUT_TYPE> extends
 		IInputDialogSetup<INPUT_TYPE>,

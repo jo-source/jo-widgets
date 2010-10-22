@@ -28,7 +28,7 @@
 package org.jowidgets.impl.swt.util;
 
 import org.eclipse.swt.graphics.Point;
-import org.jowidgets.api.look.Position;
+import org.jowidgets.common.look.Position;
 import org.jowidgets.util.Assert;
 
 public final class PositionConvert {

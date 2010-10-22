@@ -27,7 +27,7 @@
  */
 package org.jowidgets.impl.spi.blueprint.builder;
 
-import org.jowidgets.api.widgets.builder.IFrameSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.IFrameSetupBuilderCommon;
 
 public interface IFrameSetupBuilderSpi<INSTANCE_TYPE extends IFrameSetupBuilderSpi<?>> extends
 		IFrameSetupBuilderCommon<INSTANCE_TYPE> {

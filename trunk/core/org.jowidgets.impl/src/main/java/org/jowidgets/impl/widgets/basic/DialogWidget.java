@@ -29,8 +29,8 @@
 package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.widgets.IDialogWidget;
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IDialogSetup;
+import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.impl.widgets.basic.delegate.ChildWidgetDelegate;
 import org.jowidgets.spi.widgets.IFrameWidgetSpi;
 

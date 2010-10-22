@@ -29,9 +29,9 @@ package org.jowidgets.impl.swing.widgets.internal;
 
 import javax.swing.JLabel;
 
-import org.jowidgets.api.look.Markup;
-import org.jowidgets.api.util.ColorSettingsInvoker;
-import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.common.look.Markup;
+import org.jowidgets.common.util.ColorSettingsInvoker;
+import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.impl.swing.util.AlignmentConvert;
 import org.jowidgets.impl.swing.util.FontProvider;
 import org.jowidgets.impl.swing.widgets.SwingWidget;

@@ -27,7 +27,7 @@
  */
 package org.jowidgets.spi.widgets;
 
-import org.jowidgets.api.widgets.ITextLabelWidgetCommon;
+import org.jowidgets.common.widgets.ITextLabelWidgetCommon;
 
 public interface ITextLabelWidgetSpi extends ITextLabelWidgetCommon, IWidgetSpi {
 

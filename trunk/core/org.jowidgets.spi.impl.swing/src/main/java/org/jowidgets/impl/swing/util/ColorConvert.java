@@ -29,8 +29,8 @@ package org.jowidgets.impl.swing.util;
 
 import java.awt.Color;
 
-import org.jowidgets.api.color.ColorValue;
-import org.jowidgets.api.color.IColorConstant;
+import org.jowidgets.common.color.ColorValue;
+import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.util.Assert;
 
 public final class ColorConvert {

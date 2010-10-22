@@ -28,8 +28,8 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.api.color.IColorConstant;
-import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.util.Assert;
 
 public class WidgetCommonWrapper implements IWidget {

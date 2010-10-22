@@ -29,8 +29,8 @@ package org.jowidgets.impl.swing.image;
 
 import java.net.URL;
 
-import org.jowidgets.api.image.IImageHandle;
-import org.jowidgets.api.image.impl.AbstractImageHandleProvider;
+import org.jowidgets.common.image.IImageHandle;
+import org.jowidgets.common.image.impl.AbstractImageHandleProvider;
 
 public class SwingImageHandleProvider extends AbstractImageHandleProvider {
 

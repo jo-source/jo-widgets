@@ -30,7 +30,6 @@ package org.jowidgets.impl.widgets.composed;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.jowidgets.api.color.IColorConstant;
 import org.jowidgets.api.validation.ValidationMessage;
 import org.jowidgets.api.validation.ValidationMessageType;
 import org.jowidgets.api.validation.ValidationResult;
@@ -38,10 +37,11 @@ import org.jowidgets.api.widgets.IChildWidget;
 import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.ILabelWidget;
 import org.jowidgets.api.widgets.IValidationLabelWidget;
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.content.IMandatoryInputContainer;
-import org.jowidgets.api.widgets.controler.IInputListener;
 import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
+import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.impl.widgets.composed.wrapper.ChildWidgetWrapper;
 
 public class ValidationLabelWidget implements IValidationLabelWidget {

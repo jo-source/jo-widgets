@@ -27,7 +27,7 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder.convenience;
 
-import org.jowidgets.api.image.IImageConstant;
+import org.jowidgets.common.image.IImageConstant;
 
 public interface IInputDialogSetupConvenience<INSTANCE_TYPE> {
 

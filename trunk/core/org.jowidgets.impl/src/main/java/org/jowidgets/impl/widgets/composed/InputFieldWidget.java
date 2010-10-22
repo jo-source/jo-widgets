@@ -27,13 +27,13 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
-import org.jowidgets.api.color.IColorConstant;
 import org.jowidgets.api.convert.IConverter;
-import org.jowidgets.api.util.ColorSettingsInvoker;
 import org.jowidgets.api.widgets.IInputWidget;
-import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.controler.IInputListener;
 import org.jowidgets.api.widgets.descriptor.setup.IInputFieldSetup;
+import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.util.ColorSettingsInvoker;
+import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.controler.IInputListener;
 
 public class InputFieldWidget<VALUE_TYPE> extends AbstractInputWidget<VALUE_TYPE> {
 

@@ -34,8 +34,8 @@ import java.util.List;
 
 import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.widgets.IComboBoxWidget;
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IComboBoxSelectionSetup;
+import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.spi.widgets.IComboBoxSelectionWidgetSpi;
 import org.jowidgets.util.Assert;
 

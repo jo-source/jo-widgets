@@ -29,6 +29,7 @@ package org.jowidgets.api.widgets.descriptor;
 
 import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IFrameSetup;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public interface IFrameDescriptor extends IFrameSetup, IWidgetDescriptor<IFrameWidget> {
 

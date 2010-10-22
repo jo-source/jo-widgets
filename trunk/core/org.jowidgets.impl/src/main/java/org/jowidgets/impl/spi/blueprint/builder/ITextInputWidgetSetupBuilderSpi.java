@@ -27,7 +27,7 @@
  */
 package org.jowidgets.impl.spi.blueprint.builder;
 
-import org.jowidgets.api.widgets.builder.IWidgetSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.IWidgetSetupBuilderCommon;
 import org.jowidgets.spi.verify.IInputVerifier;
 
 public interface ITextInputWidgetSetupBuilderSpi<INSTANCE_TYPE extends ITextInputWidgetSetupBuilderSpi<?>> extends

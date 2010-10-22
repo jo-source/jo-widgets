@@ -27,8 +27,8 @@
  */
 package org.jowidgets.api.widgets.content;
 
-import org.jowidgets.api.widgets.IContainerWidgetCommon;
 import org.jowidgets.api.widgets.IInputWidget;
+import org.jowidgets.common.widgets.IContainerWidgetCommon;
 
 public interface IInputContentContainer extends IContainerWidgetCommon {
 

@@ -27,11 +27,11 @@
  */
 package org.jowidgets.impl.widgets.composed.blueprint.convenience;
 
-import org.jowidgets.api.look.Border;
 import org.jowidgets.api.widgets.blueprint.IValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.builder.IInputCompositeSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.convenience.IInputCompositeSetupConvenience;
 import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
+import org.jowidgets.common.look.Border;
 import org.jowidgets.impl.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 

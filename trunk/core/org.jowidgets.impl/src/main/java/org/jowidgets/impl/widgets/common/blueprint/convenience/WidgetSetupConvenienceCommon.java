@@ -27,9 +27,9 @@
  */
 package org.jowidgets.impl.widgets.common.blueprint.convenience;
 
-import org.jowidgets.api.color.IColorConstant;
-import org.jowidgets.api.widgets.builder.IWidgetSetupBuilderCommon;
-import org.jowidgets.api.widgets.builder.convenience.IWidgetSetupConvenienceCommon;
+import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.widgets.builder.IWidgetSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.convenience.IWidgetSetupConvenienceCommon;
 import org.jowidgets.impl.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 
 public class WidgetSetupConvenienceCommon extends AbstractSetupBuilderConvenience<IWidgetSetupBuilderCommon<?>> implements

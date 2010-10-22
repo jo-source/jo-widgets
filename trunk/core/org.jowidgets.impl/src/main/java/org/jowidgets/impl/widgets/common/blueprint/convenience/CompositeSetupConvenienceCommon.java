@@ -27,9 +27,9 @@
  */
 package org.jowidgets.impl.widgets.common.blueprint.convenience;
 
-import org.jowidgets.api.look.Border;
-import org.jowidgets.api.widgets.builder.ICompositeSetupBuilderCommon;
-import org.jowidgets.api.widgets.builder.convenience.ICompositeSetupConvenienceCommon;
+import org.jowidgets.common.look.Border;
+import org.jowidgets.common.widgets.builder.ICompositeSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.convenience.ICompositeSetupConvenienceCommon;
 import org.jowidgets.impl.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 
 public class CompositeSetupConvenienceCommon extends AbstractSetupBuilderConvenience<ICompositeSetupBuilderCommon<?>> implements

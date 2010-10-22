@@ -29,9 +29,9 @@ package org.jowidgets.impl.swing.widgets.internal;
 
 import java.awt.Component;
 
-import org.jowidgets.api.color.IColorConstant;
-import org.jowidgets.api.widgets.IInputWidgetCommon;
-import org.jowidgets.api.widgets.controler.impl.InputObservable;
+import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.widgets.IInputWidgetCommon;
+import org.jowidgets.common.widgets.controler.impl.InputObservable;
 import org.jowidgets.impl.swing.widgets.SwingWidget;
 
 public abstract class AbstractSwingInputWidget extends InputObservable implements IInputWidgetCommon {

@@ -28,12 +28,12 @@
 package org.jowidgets.impl.widgets.composed.factory.internal;
 
 import org.jowidgets.api.widgets.IInputWidget;
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.ITextFieldBluePrint;
 import org.jowidgets.api.widgets.descriptor.IInputFieldDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.ITextFieldSetup;
-import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.api.widgets.factory.IWidgetFactory;
+import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.widgets.composed.InputFieldWidget;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 import org.jowidgets.spi.IWidgetFactorySpi;

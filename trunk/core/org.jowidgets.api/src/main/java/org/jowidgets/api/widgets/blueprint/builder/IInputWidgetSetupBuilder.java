@@ -28,7 +28,7 @@
 package org.jowidgets.api.widgets.blueprint.builder;
 
 import org.jowidgets.api.validation.IValidator;
-import org.jowidgets.api.widgets.builder.IWidgetSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.IWidgetSetupBuilderCommon;
 
 public interface IInputWidgetSetupBuilder<INSTANCE_TYPE extends IInputWidgetSetupBuilder<?, ?>, INPUT_TYPE> extends
 		IWidgetSetupBuilderCommon<INSTANCE_TYPE> {

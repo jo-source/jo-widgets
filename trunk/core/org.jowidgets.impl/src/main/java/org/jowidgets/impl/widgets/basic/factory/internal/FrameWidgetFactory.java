@@ -29,10 +29,10 @@
 package org.jowidgets.impl.widgets.basic.factory.internal;
 
 import org.jowidgets.api.widgets.IFrameWidget;
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
-import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.api.widgets.factory.IWidgetFactory;
+import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.IFrameBluePrintSpi;
 import org.jowidgets.impl.widgets.basic.FrameWidget;

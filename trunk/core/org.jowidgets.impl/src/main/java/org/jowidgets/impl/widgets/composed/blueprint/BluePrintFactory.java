@@ -27,11 +27,11 @@
  */
 package org.jowidgets.impl.widgets.composed.blueprint;
 
-import org.jowidgets.api.image.IImageConstant;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.impl.convert.DefaultTypeConverter;
 import org.jowidgets.impl.widgets.composed.blueprint.convenience.registry.ComposedSetupConvenienceRegistry;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.registry.ComposedDefaultsInitializerRegistry;

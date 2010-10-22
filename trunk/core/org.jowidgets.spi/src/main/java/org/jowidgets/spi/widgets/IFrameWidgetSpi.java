@@ -27,7 +27,7 @@
  */
 package org.jowidgets.spi.widgets;
 
-import org.jowidgets.api.widgets.IFrameWidgetCommon;
+import org.jowidgets.common.widgets.IFrameWidgetCommon;
 
 public interface IFrameWidgetSpi extends IFrameWidgetCommon, IWidgetSpi {
 

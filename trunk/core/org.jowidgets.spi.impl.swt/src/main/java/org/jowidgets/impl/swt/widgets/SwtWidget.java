@@ -30,8 +30,8 @@ package org.jowidgets.impl.swt.widgets;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
-import org.jowidgets.api.color.IColorConstant;
-import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.impl.swt.color.IColorCache;
 
 public class SwtWidget implements IWidget {

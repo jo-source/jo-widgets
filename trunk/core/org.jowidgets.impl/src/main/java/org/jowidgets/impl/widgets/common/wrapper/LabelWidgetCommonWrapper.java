@@ -28,8 +28,8 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.api.image.IImageConstant;
-import org.jowidgets.api.widgets.ILabelWidgetCommon;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.widgets.ILabelWidgetCommon;
 
 public class LabelWidgetCommonWrapper extends TextLabelWidgetCommonWrapper implements ILabelWidgetCommon {
 

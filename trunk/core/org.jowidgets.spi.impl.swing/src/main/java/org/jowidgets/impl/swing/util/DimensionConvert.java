@@ -27,7 +27,7 @@
  */
 package org.jowidgets.impl.swing.util;
 
-import org.jowidgets.api.look.Dimension;
+import org.jowidgets.common.look.Dimension;
 import org.jowidgets.util.Assert;
 
 public final class DimensionConvert {

@@ -28,7 +28,7 @@
 package org.jowidgets.impl.widgets.common.blueprint.defaults;
 
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
-import org.jowidgets.api.widgets.builder.IScrollCompositeSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.IScrollCompositeSetupBuilderCommon;
 
 public class ScrolledCompositeDefaultsCommon implements IDefaultInitializer<IScrollCompositeSetupBuilderCommon<?>> {
 

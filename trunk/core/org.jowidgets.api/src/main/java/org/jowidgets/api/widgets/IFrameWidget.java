@@ -28,6 +28,8 @@
 
 package org.jowidgets.api.widgets;
 
+import org.jowidgets.common.widgets.IFrameWidgetCommon;
+
 public interface IFrameWidget extends IFrameWidgetCommon, IWindowWidget {
 
 }

@@ -28,9 +28,9 @@
 package org.jowidgets.impl.swt.widgets.internal;
 
 import org.eclipse.swt.widgets.Composite;
-import org.jowidgets.api.util.ColorSettingsInvoker;
-import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.util.ColorSettingsInvoker;
+import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.util.BorderToComposite;
 import org.jowidgets.impl.swt.widgets.SwtContainerWidget;

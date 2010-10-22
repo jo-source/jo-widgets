@@ -27,7 +27,7 @@
  */
 package org.jowidgets.spi.widgets;
 
-import org.jowidgets.api.widgets.IContainerWidgetCommon;
+import org.jowidgets.common.widgets.IContainerWidgetCommon;
 
 public interface IContainerWidgetSpi extends IContainerWidgetCommon, IWidgetSpi {
 

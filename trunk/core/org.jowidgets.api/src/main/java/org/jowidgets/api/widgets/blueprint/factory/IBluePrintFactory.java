@@ -27,10 +27,10 @@
  */
 package org.jowidgets.api.widgets.blueprint.factory;
 
-import org.jowidgets.api.image.IImageConstant;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
+import org.jowidgets.common.image.IImageConstant;
 
 public interface IBluePrintFactory extends ISimpleBluePrintFactory {
 

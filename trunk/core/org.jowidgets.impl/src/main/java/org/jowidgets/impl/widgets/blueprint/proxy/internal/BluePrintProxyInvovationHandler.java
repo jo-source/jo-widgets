@@ -39,8 +39,8 @@ import org.jowidgets.api.widgets.blueprint.convenience.anotations.ConvenienceMet
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.api.widgets.blueprint.defaults.anotations.DefaultsInitializer;
-import org.jowidgets.api.widgets.builder.IWidgetSetupBuilder;
-import org.jowidgets.api.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.builder.IWidgetSetupBuilder;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 /**
  * Achtung EXPERIMENTELL, soll so nicht bleiben ;-)

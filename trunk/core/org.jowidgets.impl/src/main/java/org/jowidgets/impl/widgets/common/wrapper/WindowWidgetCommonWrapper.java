@@ -28,11 +28,11 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.api.look.Dimension;
-import org.jowidgets.api.look.Position;
-import org.jowidgets.api.look.Rectangle;
-import org.jowidgets.api.widgets.IWindowWidgetCommon;
-import org.jowidgets.api.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.look.Dimension;
+import org.jowidgets.common.look.Position;
+import org.jowidgets.common.look.Rectangle;
+import org.jowidgets.common.widgets.IWindowWidgetCommon;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public class WindowWidgetCommonWrapper extends WidgetCommonWrapper implements IWindowWidgetCommon {
 

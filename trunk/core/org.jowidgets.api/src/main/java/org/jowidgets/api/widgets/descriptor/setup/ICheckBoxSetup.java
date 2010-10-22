@@ -27,6 +27,8 @@
  */
 package org.jowidgets.api.widgets.descriptor.setup;
 
+import org.jowidgets.common.widgets.descriptor.setup.ICheckBoxSetupCommon;
+
 public interface ICheckBoxSetup extends ICheckBoxSetupCommon, IInputWidgetSetup<Boolean> {
 
 }

@@ -30,7 +30,7 @@ package org.jowidgets.impl.widgets.composed.factory.internal;
 import org.jowidgets.api.widgets.ICompositeWidget;
 import org.jowidgets.api.widgets.ILabelWidget;
 import org.jowidgets.api.widgets.descriptor.ILabelDescriptor;
-import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.widgets.composed.LabelWidget;
 
 public class LabelWidgetFactory extends AbstractCompositeWidgetFactory<ILabelWidget, ILabelDescriptor> {

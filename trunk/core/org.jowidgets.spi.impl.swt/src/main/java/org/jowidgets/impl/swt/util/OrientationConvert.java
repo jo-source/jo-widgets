@@ -28,7 +28,7 @@
 package org.jowidgets.impl.swt.util;
 
 import org.eclipse.swt.SWT;
-import org.jowidgets.api.look.Orientation;
+import org.jowidgets.common.look.Orientation;
 import org.jowidgets.util.Assert;
 
 public final class OrientationConvert {

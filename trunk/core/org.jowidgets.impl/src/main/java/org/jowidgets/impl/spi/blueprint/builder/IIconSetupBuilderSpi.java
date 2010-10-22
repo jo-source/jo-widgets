@@ -27,7 +27,7 @@
  */
 package org.jowidgets.impl.spi.blueprint.builder;
 
-import org.jowidgets.api.widgets.builder.IIconSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.IIconSetupBuilderCommon;
 
 public interface IIconSetupBuilderSpi<INSTANCE_TYPE extends IIconSetupBuilderSpi<?>> extends
 		IIconSetupBuilderCommon<INSTANCE_TYPE> {

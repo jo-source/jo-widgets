@@ -27,17 +27,17 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
-import org.jowidgets.api.color.IColorConstant;
 import org.jowidgets.api.color.defaults.Colors;
-import org.jowidgets.api.look.AlignmentHorizontal;
-import org.jowidgets.api.look.Markup;
 import org.jowidgets.api.widgets.ICompositeWidget;
 import org.jowidgets.api.widgets.ITextLabelWidget;
-import org.jowidgets.api.widgets.ITextLabelWidgetCommon;
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.ITextLabelDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextSeparatorDescriptor;
-import org.jowidgets.api.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.look.AlignmentHorizontal;
+import org.jowidgets.common.look.Markup;
+import org.jowidgets.common.widgets.ITextLabelWidgetCommon;
+import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 import org.jowidgets.util.Assert;
 

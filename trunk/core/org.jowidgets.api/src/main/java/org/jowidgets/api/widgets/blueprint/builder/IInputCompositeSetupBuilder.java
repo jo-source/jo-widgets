@@ -27,10 +27,10 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
-import org.jowidgets.api.look.Border;
 import org.jowidgets.api.widgets.blueprint.builder.convenience.IInputCompositeSetupConvenience;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
+import org.jowidgets.common.look.Border;
 
 public interface IInputCompositeSetupBuilder<INSTANCE_TYPE extends IInputCompositeSetupBuilder<?, ?>, INPUT_TYPE> extends
 		IInputWidgetSetupBuilder<INSTANCE_TYPE, INPUT_TYPE>,

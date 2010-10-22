@@ -27,8 +27,8 @@
  */
 package org.jowidgets.api.color.defaults;
 
-import org.jowidgets.api.color.ColorValue;
-import org.jowidgets.api.color.IColorConstant;
+import org.jowidgets.common.color.ColorValue;
+import org.jowidgets.common.color.IColorConstant;
 
 public enum Colors implements IColorConstant {
 

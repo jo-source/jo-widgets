@@ -27,6 +27,8 @@
  */
 package org.jowidgets.api.widgets.descriptor.setup;
 
+import org.jowidgets.common.widgets.descriptor.setup.IFrameSetupCommon;
+
 
 public interface IFrameSetup extends ITitledWindowSetup, IFrameSetupCommon {
 

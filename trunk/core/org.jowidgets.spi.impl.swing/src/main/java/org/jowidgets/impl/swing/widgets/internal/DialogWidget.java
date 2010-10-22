@@ -31,9 +31,9 @@ import java.awt.Window;
 
 import javax.swing.JDialog;
 
-import org.jowidgets.api.util.ColorSettingsInvoker;
-import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.util.ColorSettingsInvoker;
+import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.impl.swing.widgets.SwingWindowWidget;
 import org.jowidgets.spi.widgets.IFrameWidgetSpi;

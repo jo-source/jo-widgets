@@ -28,8 +28,8 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.api.widgets.IButtonWidgetCommon;
-import org.jowidgets.api.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.IButtonWidgetCommon;
+import org.jowidgets.common.widgets.controler.IActionListener;
 
 public class ButtonWidgetCommonWrapper extends LabelWidgetCommonWrapper implements IButtonWidgetCommon {
 

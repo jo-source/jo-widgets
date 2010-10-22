@@ -30,7 +30,7 @@ package org.jowidgets.api.widgets.blueprint.builder;
 import org.jowidgets.api.look.AutoCenterPolicy;
 import org.jowidgets.api.look.AutoPackPolicy;
 import org.jowidgets.api.widgets.blueprint.builder.convenience.IWindowSetupConvenience;
-import org.jowidgets.api.widgets.builder.IWidgetSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.IWidgetSetupBuilderCommon;
 
 public interface IWindowSetupBuilder<INSTANCE_TYPE extends IWindowSetupBuilder<?>> extends
 		IWidgetSetupBuilderCommon<INSTANCE_TYPE>,

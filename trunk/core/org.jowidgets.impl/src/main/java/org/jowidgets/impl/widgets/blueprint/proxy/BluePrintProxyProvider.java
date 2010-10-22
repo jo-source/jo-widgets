@@ -31,8 +31,8 @@ import java.lang.reflect.Proxy;
 
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
-import org.jowidgets.api.widgets.builder.IWidgetSetupBuilder;
-import org.jowidgets.api.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.builder.IWidgetSetupBuilder;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.impl.widgets.blueprint.proxy.internal.BluePrintProxyInvovationHandler;
 import org.jowidgets.util.Assert;
 

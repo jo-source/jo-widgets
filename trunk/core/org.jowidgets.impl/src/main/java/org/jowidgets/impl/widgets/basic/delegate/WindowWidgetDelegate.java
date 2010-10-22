@@ -30,11 +30,11 @@ package org.jowidgets.impl.widgets.basic.delegate;
 
 import org.jowidgets.api.look.AutoCenterPolicy;
 import org.jowidgets.api.look.AutoPackPolicy;
-import org.jowidgets.api.look.Dimension;
-import org.jowidgets.api.look.Position;
-import org.jowidgets.api.look.Rectangle;
-import org.jowidgets.api.widgets.IWindowWidgetCommon;
 import org.jowidgets.api.widgets.descriptor.setup.IWindowSetup;
+import org.jowidgets.common.look.Dimension;
+import org.jowidgets.common.look.Position;
+import org.jowidgets.common.look.Rectangle;
+import org.jowidgets.common.widgets.IWindowWidgetCommon;
 
 public class WindowWidgetDelegate {
 

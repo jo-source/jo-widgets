@@ -27,7 +27,7 @@
  */
 package org.jowidgets.spi.widgets.setup;
 
-import org.jowidgets.api.widgets.descriptor.setup.IDialogSetupCommon;
+import org.jowidgets.common.widgets.descriptor.setup.IDialogSetupCommon;
 
 public interface IDialogSetupSpi extends IDialogSetupCommon {
 

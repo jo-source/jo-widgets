@@ -32,7 +32,7 @@ import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSetupSpi;

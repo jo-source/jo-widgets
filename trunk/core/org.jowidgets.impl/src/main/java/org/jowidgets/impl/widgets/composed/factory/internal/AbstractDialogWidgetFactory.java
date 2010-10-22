@@ -29,11 +29,11 @@ package org.jowidgets.impl.widgets.composed.factory.internal;
 
 import org.jowidgets.api.widgets.IDialogWidget;
 import org.jowidgets.api.widgets.IInputDialogWidget;
-import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.ICompositeSetup;
-import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.api.widgets.factory.IWidgetFactory;
+import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
 public abstract class AbstractDialogWidgetFactory<WIDGET_TYPE extends IInputDialogWidget<?>, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> implements

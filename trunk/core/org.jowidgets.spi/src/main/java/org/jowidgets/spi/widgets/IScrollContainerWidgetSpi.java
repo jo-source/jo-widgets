@@ -27,7 +27,7 @@
  */
 package org.jowidgets.spi.widgets;
 
-import org.jowidgets.api.widgets.IScrollCompositeWidgetCommon;
+import org.jowidgets.common.widgets.IScrollCompositeWidgetCommon;
 
 public interface IScrollContainerWidgetSpi extends IScrollCompositeWidgetCommon, IWidgetSpi {
 

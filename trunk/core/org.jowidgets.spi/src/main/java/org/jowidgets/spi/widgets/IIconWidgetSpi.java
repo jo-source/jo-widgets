@@ -27,7 +27,7 @@
  */
 package org.jowidgets.spi.widgets;
 
-import org.jowidgets.api.widgets.IIconWidgetCommon;
+import org.jowidgets.common.widgets.IIconWidgetCommon;
 
 public interface IIconWidgetSpi extends IIconWidgetCommon, IWidgetSpi {
 

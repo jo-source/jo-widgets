@@ -30,7 +30,7 @@ package org.jowidgets.api.widgets.blueprint.convenience;
 
 import java.util.List;
 
-import org.jowidgets.api.widgets.builder.IWidgetSetupBuilder;
+import org.jowidgets.common.widgets.builder.IWidgetSetupBuilder;
 
 public interface ISetupBuilderConvenienceRegistry {
 
