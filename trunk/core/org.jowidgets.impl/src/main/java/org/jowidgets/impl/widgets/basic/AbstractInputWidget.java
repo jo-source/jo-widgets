@@ -70,6 +70,8 @@ public abstract class AbstractInputWidget<VALUE_TYPE> extends InputWidgetCommonW
 				hasInput = true;
 			}
 		});
+
+		addValidator(setup.getValidator());
 	}
 
 	@Override
@@ -83,7 +85,19 @@ public abstract class AbstractInputWidget<VALUE_TYPE> extends InputWidgetCommonW
 		for (final IValidator<VALUE_TYPE> validator : validators) {
 			result.addValidationResult(validator.validate(getValue()));
 		}
+
+		result.addValidationResult(additionalValidation());
+
 		return result;
+	}
+
+	/**
+	 * Could be overridden to make additional validations
+	 * 
+	 * @return the result of the additional validation
+	 */
+	protected ValidationResult additionalValidation() {
+		return new ValidationResult();
 	}
 
 	@Override

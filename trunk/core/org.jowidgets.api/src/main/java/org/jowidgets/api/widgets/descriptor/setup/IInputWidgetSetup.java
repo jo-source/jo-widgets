@@ -27,11 +27,15 @@
  */
 package org.jowidgets.api.widgets.descriptor.setup;
 
+import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface IInputWidgetSetup<INPUT_TYPE> extends IWidgetSetupCommon {
 
 	@Mandatory
 	boolean isMandatory();
+
+	@Mandatory
+	IValidator<INPUT_TYPE> getValidator();
 
 }

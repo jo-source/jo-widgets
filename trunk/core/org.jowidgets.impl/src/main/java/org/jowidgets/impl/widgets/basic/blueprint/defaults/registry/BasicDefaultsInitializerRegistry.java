@@ -29,11 +29,9 @@
 package org.jowidgets.impl.widgets.basic.blueprint.defaults.registry;
 
 import org.jowidgets.api.widgets.blueprint.builder.IComboBoxSelectionSetupBuilder;
-import org.jowidgets.api.widgets.blueprint.builder.IComboBoxSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IInputWidgetSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.ITextFieldSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IWindowSetupBuilder;
-import org.jowidgets.impl.widgets.basic.blueprint.defaults.ComboBoxDefaults;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.ComboBoxSelectionDefaults;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.InputWidgetDefaults;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.TextFieldDefaults;
@@ -45,7 +43,6 @@ public class BasicDefaultsInitializerRegistry extends CommonDefaultsInitializerR
 	public BasicDefaultsInitializerRegistry() {
 		super();
 		register(IComboBoxSelectionSetupBuilder.class, new ComboBoxSelectionDefaults());
-		register(IComboBoxSetupBuilder.class, new ComboBoxDefaults());
 		register(IInputWidgetSetupBuilder.class, new InputWidgetDefaults());
 		register(ITextFieldSetupBuilder.class, new TextFieldDefaults());
 		register(IWindowSetupBuilder.class, new WindowDefaults());

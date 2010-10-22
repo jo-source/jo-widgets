@@ -28,13 +28,10 @@
 package org.jowidgets.api.widgets.blueprint.builder;
 
 import org.jowidgets.api.convert.IStringObjectConverter;
-import org.jowidgets.api.validation.IValidator;
 
 public interface IComboBoxSetupBuilder<INSTANCE_TYPE extends IComboBoxSetupBuilder<?, ?>, INPUT_TYPE> extends
 		IComboBoxSelectionSetupBuilder<INSTANCE_TYPE, INPUT_TYPE> {
 
 	INSTANCE_TYPE setStringObjectConverter(IStringObjectConverter<INPUT_TYPE> stringObjectConverter);
-
-	INSTANCE_TYPE setValidator(IValidator<INPUT_TYPE> validator);
 
 }

@@ -75,7 +75,8 @@ public class ComboBoxWidgetFactory extends AbstractWidgetFactory implements
 		});
 
 		final IComboBoxWidgetSpi widget = getSpiWidgetFactory().createComboBoxWidget(parent, bp);
-		return new ComboBoxWidget(parent, widget, descriptor);
+		final IComboBoxWidget<?> result = new ComboBoxWidget(parent, widget, descriptor);
+		return result;
 	}
 
 }
