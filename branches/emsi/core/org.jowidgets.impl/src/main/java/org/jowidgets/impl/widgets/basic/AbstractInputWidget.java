@@ -1,0 +1,123 @@
+/*
+ * Copyright (c) 2010, grossmann
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * * Redistributions of source code must retain the above copyright
+ *   notice, this list of conditions and the following disclaimer.
+ * * Redistributions in binary form must reproduce the above copyright
+ *   notice, this list of conditions and the following disclaimer in the
+ *   documentation and/or other materials provided with the distribution.
+ * * Neither the name of the jo-widgets.org nor the
+ *   names of its contributors may be used to endorse or promote products
+ *   derived from this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL jo-widgets.org BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
+ */
+
+package org.jowidgets.impl.widgets.basic;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import org.jowidgets.api.validation.IValidator;
+import org.jowidgets.api.validation.ValidationResult;
+import org.jowidgets.api.widgets.IInputWidget;
+import org.jowidgets.api.widgets.descriptor.setup.IInputWidgetSetup;
+import org.jowidgets.common.widgets.IInputWidgetCommon;
+import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.controler.IInputListener;
+import org.jowidgets.impl.widgets.basic.delegate.ChildWidgetDelegate;
+import org.jowidgets.impl.widgets.common.wrapper.InputWidgetCommonWrapper;
+import org.jowidgets.util.EmptyCheck;
+
+public abstract class AbstractInputWidget<VALUE_TYPE> extends InputWidgetCommonWrapper implements IInputWidget<VALUE_TYPE> {
+
+	private final List<IValidator<VALUE_TYPE>> validators;
+	private final IInputWidgetCommon inputWidgetCommon;
+	private final ChildWidgetDelegate childWidgetDelegate;
+
+	private boolean mandatory;
+	private boolean hasInput;
+
+	public AbstractInputWidget(
+		final IWidget parent,
+		final IInputWidgetCommon inputWidgetCommon,
+		final IInputWidgetSetup<VALUE_TYPE> setup) {
+		super(inputWidgetCommon);
+		this.validators = new LinkedList<IValidator<VALUE_TYPE>>();
+
+		this.inputWidgetCommon = inputWidgetCommon;
+		this.mandatory = setup.isMandatory();
+		this.hasInput = false;
+
+		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
+
+		this.inputWidgetCommon.addInputListener(new IInputListener() {
+			@Override
+			public void inputChanged(final Object source) {
+				hasInput = true;
+			}
+		});
+
+		addValidator(setup.getValidator());
+	}
+
+	@Override
+	public final IWidget getParent() {
+		return childWidgetDelegate.getParent();
+	}
+
+	@Override
+	public final ValidationResult validate() {
+		final ValidationResult result = new ValidationResult();
+		for (final IValidator<VALUE_TYPE> validator : validators) {
+			result.addValidationResult(validator.validate(getValue()));
+		}
+
+		result.addValidationResult(additionalValidation());
+
+		return result;
+	}
+
+	/**
+	 * Could be overridden to make additional validations
+	 * 
+	 * @return the result of the additional validation
+	 */
+	protected ValidationResult additionalValidation() {
+		return new ValidationResult();
+	}
+
+	@Override
+	public final boolean isMandatory() {
+		return mandatory;
+	}
+
+	@Override
+	public final void setMandatory(final boolean mandatory) {
+		this.mandatory = mandatory;
+	}
+
+	@Override
+	public final boolean hasInput() {
+		return hasInput && !EmptyCheck.isEmpty(getValue());
+	}
+
+	@Override
+	public final void addValidator(final IValidator<VALUE_TYPE> validator) {
+		validators.add(validator);
+	}
+
+}
