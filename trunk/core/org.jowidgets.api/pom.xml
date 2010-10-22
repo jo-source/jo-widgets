@@ -5,7 +5,7 @@
 	<groupId>org.jowidgets</groupId>
 	<artifactId>org.jowidgets.api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>org.jowidgets.core.api</name>
+	<name>org.jowidgets.api</name>
 	
 	<parent>
 		<groupId>org.jowidgets</groupId>
