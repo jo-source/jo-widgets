@@ -37,7 +37,6 @@ import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IInputWidgetSetup;
 import org.jowidgets.common.widgets.IInputWidgetCommon;
 import org.jowidgets.common.widgets.IWidget;
-import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.impl.widgets.basic.delegate.ChildWidgetDelegate;
 import org.jowidgets.impl.widgets.common.wrapper.InputWidgetCommonWrapper;
 import org.jowidgets.util.EmptyCheck;
@@ -49,7 +48,6 @@ public abstract class AbstractInputWidget<VALUE_TYPE> extends InputWidgetCommonW
 	private final ChildWidgetDelegate childWidgetDelegate;
 
 	private boolean mandatory;
-	private boolean hasInput;
 
 	public AbstractInputWidget(
 		final IWidget parent,
@@ -60,16 +58,8 @@ public abstract class AbstractInputWidget<VALUE_TYPE> extends InputWidgetCommonW
 
 		this.inputWidgetCommon = inputWidgetCommon;
 		this.mandatory = setup.isMandatory();
-		this.hasInput = false;
 
 		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
-
-		this.inputWidgetCommon.addInputListener(new IInputListener() {
-			@Override
-			public void inputChanged(final Object source) {
-				hasInput = true;
-			}
-		});
 
 		addValidator(setup.getValidator());
 	}
@@ -111,8 +101,8 @@ public abstract class AbstractInputWidget<VALUE_TYPE> extends InputWidgetCommonW
 	}
 
 	@Override
-	public final boolean hasInput() {
-		return hasInput && !EmptyCheck.isEmpty(getValue());
+	public final boolean isEmpty() {
+		return EmptyCheck.isEmpty(getValue());
 	}
 
 	@Override

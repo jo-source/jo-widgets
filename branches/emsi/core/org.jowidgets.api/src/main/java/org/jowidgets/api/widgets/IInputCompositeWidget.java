@@ -27,8 +27,8 @@
  */
 package org.jowidgets.api.widgets;
 
-import org.jowidgets.api.widgets.content.IMandatoryInputContainer;
+public interface IInputCompositeWidget<INPUT_TYPE> extends IInputWidget<INPUT_TYPE> {
 
-public interface IInputCompositeWidget<INPUT_TYPE> extends IInputWidget<INPUT_TYPE>, IMandatoryInputContainer {
+	void resetValidation();
 
 }

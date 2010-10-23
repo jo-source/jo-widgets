@@ -46,9 +46,13 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputCompositeWidget<I
 	private final ICompositeWidget parentComposite;
 	private final ICompositeWidget composite;
 	private final InputContentContainer<INPUT_TYPE> contentContainer;
+	private final IValidationLabelWidget validationLabel;
+	private final boolean isAutoResetValidation;
 
 	public InputCompositeWidget(final ICompositeWidget composite, final IInputCompositeSetup<INPUT_TYPE> setup) {
 		super();
+
+		this.isAutoResetValidation = setup.isAutoResetValidation();
 
 		this.parentComposite = composite;
 		this.parentComposite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
@@ -57,12 +61,12 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputCompositeWidget<I
 
 		this.composite = parentComposite.add(compositeBp, "growx, growy, h 0::, w 0::");
 
-		IValidationLabelWidget validationLabel = null;
 		if (setup.getValidationLabel() != null) {
 			this.composite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[][grow][]0"));
 			validationLabel = this.composite.add(setup.getValidationLabel(), "h 18::, wrap");// TODO use hide instead
 		}
 		else {
+			validationLabel = null;
 			this.composite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow][]0"));
 		}
 
@@ -99,8 +103,15 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputCompositeWidget<I
 	}
 
 	@Override
-	public boolean hasInput() {
-		return contentContainer.hasInput();
+	public void resetValidation() {
+		if (validationLabel != null) {
+			validationLabel.resetValidation();
+		}
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return contentContainer.isEmpty();
 	}
 
 	@Override
@@ -131,6 +142,9 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputCompositeWidget<I
 	@Override
 	public void setValue(final INPUT_TYPE value) {
 		contentContainer.setValue(value);
+		if (isAutoResetValidation) {
+			resetValidation();
+		}
 	}
 
 	@Override
@@ -151,11 +165,6 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputCompositeWidget<I
 	@Override
 	public void removeInputListener(final IInputListener listener) {
 		contentContainer.removeInputListener(listener);
-	}
-
-	@Override
-	public boolean hasAllMandatoryInput() {
-		return contentContainer.hasAllMandatoryInput();
 	}
 
 }

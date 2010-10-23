@@ -29,6 +29,8 @@ package org.jowidgets.api.widgets;
 
 public interface IValidationLabelWidget extends IChildWidget {
 
+	void resetValidation();
+
 	void registerInputWidget(final IInputWidget<?> inputWidget);
 
 	void unRegisterInputWidget(final IInputWidget<?> inputWidget);

@@ -28,9 +28,6 @@
 
 package org.jowidgets.impl.widgets.basic.factory.internal;
 
-import org.jowidgets.api.validation.ITextInputValidator;
-import org.jowidgets.api.validation.ValidationMessage;
-import org.jowidgets.api.validation.ValidationMessageType;
 import org.jowidgets.api.widgets.IComboBoxWidget;
 import org.jowidgets.api.widgets.descriptor.IComboBoxDescriptor;
 import org.jowidgets.common.widgets.IWidget;
@@ -40,8 +37,8 @@ import org.jowidgets.impl.spi.ISpiBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.IComboBoxBluePrintSpi;
 import org.jowidgets.impl.widgets.basic.ComboBoxWidget;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ComboBoxBuilderConverter;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.InputVerifier;
 import org.jowidgets.spi.IWidgetFactorySpi;
-import org.jowidgets.spi.verify.IInputVerifier;
 import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;
 
 public class ComboBoxWidgetFactory extends AbstractWidgetFactory implements
@@ -61,18 +58,7 @@ public class ComboBoxWidgetFactory extends AbstractWidgetFactory implements
 		final IComboBoxBluePrintSpi bp = getSpiBluePrintFactory().comboBox().setSetup(descriptor);
 		ComboBoxBuilderConverter.convert(bp, descriptor);
 
-		final ITextInputValidator textInputValidator = descriptor.getStringObjectConverter();
-
-		bp.setInputVerifier(new IInputVerifier() {
-
-			@Override
-			public boolean verify(final String currentValue, final String input, final int start, final int end) {
-				//TODO must check veto on NEW current value
-				final ValidationMessage validationMessage = textInputValidator.isCompletableToValid(input);
-				return validationMessage.getType() == ValidationMessageType.OK;
-			}
-
-		});
+		bp.setInputVerifier(new InputVerifier(descriptor.getStringObjectConverter()));
 
 		final IComboBoxWidgetSpi widget = getSpiWidgetFactory().createComboBoxWidget(parent, bp);
 		final IComboBoxWidget<?> result = new ComboBoxWidget(parent, widget, descriptor);

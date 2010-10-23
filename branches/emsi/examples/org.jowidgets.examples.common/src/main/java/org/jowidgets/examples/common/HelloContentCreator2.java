@@ -65,10 +65,10 @@ public class HelloContentCreator2 implements IInputContentCreator<String> {
 		final IComboBoxSelectionBluePrint<String> comboBoxBp1 = bpF.comboBoxSelection(" ", "one", "two", "three");
 		final IComboBoxWidget<String> cBox1 = widgetContainer.add(comboBoxBp1, "wrap, growx");
 
-		final IComboBoxBluePrint<String> comboBoxBp2 = bpF.comboBox("red", "green", "blue");
+		final IComboBoxBluePrint<String> comboBoxBp2 = bpF.comboBox("red", "green", "blue").setMandatory(true);
 		final IComboBoxWidget<String> cBox2 = widgetContainer.add(comboBoxBp2, "wrap, growx");
 
-		final IComboBoxBluePrint<Long> comboBoxBp3 = bpF.comboBox(DefaultTypeConverter.LONG_CONVERTER);
+		final IComboBoxBluePrint<Long> comboBoxBp3 = bpF.comboBox(DefaultTypeConverter.LONG_CONVERTER).setMandatory(true);
 		comboBoxBp3.setElements(Long.valueOf(23456), Long.valueOf(15468), Long.valueOf(5345519));
 		final IComboBoxWidget<Long> cBox3 = widgetContainer.add(comboBoxBp3, "wrap, growx");
 

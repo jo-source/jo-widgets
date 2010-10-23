@@ -59,11 +59,13 @@ public class InputDialogWidget<INPUT_TYPE> implements IInputDialogWidget<INPUT_T
 
 	private INPUT_TYPE value;
 	private boolean okPressed;
+	private final boolean autoResetValidation;
 
 	public InputDialogWidget(final IDialogWidget dialogWidget, final IInputDialogSetup<INPUT_TYPE> setup) {
 		super();
 		this.okPressed = false;
 		this.dialogWidget = dialogWidget;
+		this.autoResetValidation = setup.isAutoResetValidation();
 
 		final IBluePrintFactory bpF = new BluePrintFactory();
 
@@ -151,6 +153,9 @@ public class InputDialogWidget<INPUT_TYPE> implements IInputDialogWidget<INPUT_T
 	public void setVisible(final boolean visible) {
 		if (visible) {
 			this.okPressed = false;
+			if (autoResetValidation) {
+				resetValidation();
+			}
 		}
 		dialogWidget.setVisible(visible);
 	}
@@ -230,13 +235,13 @@ public class InputDialogWidget<INPUT_TYPE> implements IInputDialogWidget<INPUT_T
 	}
 
 	@Override
-	public boolean hasInput() {
-		return inputCompositeWidget.hasInput();
+	public boolean isEmpty() {
+		return inputCompositeWidget.isEmpty();
 	}
 
 	@Override
-	public boolean hasAllMandatoryInput() {
-		return inputCompositeWidget.hasAllMandatoryInput();
+	public void resetValidation() {
+		inputCompositeWidget.resetValidation();
 	}
 
 	@Override
@@ -286,7 +291,7 @@ public class InputDialogWidget<INPUT_TYPE> implements IInputDialogWidget<INPUT_T
 		private void onInputChanged() {
 			final ValidationMessage firstWorst = inputCompositeWidget.validate().getWorstFirstMessage();
 
-			if (!isMandatory() || inputCompositeWidget.hasAllMandatoryInput()) {
+			if (!isMandatory() || !inputCompositeWidget.isEmpty()) {
 				setValidationResult(firstWorst);
 			}
 			else {
