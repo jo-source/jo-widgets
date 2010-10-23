@@ -25,41 +25,26 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.look;
+package org.jowidgets.api.color;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import org.jowidgets.common.color.ColorValue;
+import org.jowidgets.common.color.IColorConstant;
 
-public enum TextForm {
+public enum Colors implements IColorConstant {
 
-	/** short text form */
-	SHORT,
+	DEFAULT(new ColorValue(0, 0, 0)),
+	ERROR(new ColorValue(220, 0, 0)),
+	STRONG(new ColorValue(0, 70, 213));
 
-	/** long text form */
-	LONG;
+	private ColorValue colorValue;
 
-	public static final Set<TextForm> SHORT_SET = createShortSet();
-	public static final Set<TextForm> LONG_SET = createLongSet();
-	public static final Set<TextForm> SHORT_LONG_SET = createShortLongSet();
-
-	private static Set<TextForm> createShortSet() {
-		final Set<TextForm> result = new HashSet<TextForm>();
-		result.add(TextForm.SHORT);
-		return Collections.unmodifiableSet(result);
+	private Colors(final ColorValue colorValue) {
+		this.colorValue = colorValue;
 	}
 
-	private static Set<TextForm> createLongSet() {
-		final Set<TextForm> result = new HashSet<TextForm>();
-		result.add(TextForm.LONG);
-		return Collections.unmodifiableSet(result);
-	}
-
-	private static Set<TextForm> createShortLongSet() {
-		final Set<TextForm> result = new HashSet<TextForm>();
-		result.add(TextForm.SHORT);
-		result.add(TextForm.LONG);
-		return Collections.unmodifiableSet(result);
+	@Override
+	public ColorValue getDefaultValue() {
+		return colorValue;
 	}
 
 }

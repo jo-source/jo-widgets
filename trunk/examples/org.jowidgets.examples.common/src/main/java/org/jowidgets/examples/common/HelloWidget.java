@@ -28,8 +28,6 @@
 package org.jowidgets.examples.common;
 
 import org.jowidgets.api.look.AutoCenterPolicy;
-import org.jowidgets.api.look.Position;
-import org.jowidgets.api.widgets.IActionWidgetCommon;
 import org.jowidgets.api.widgets.ICompositeWidget;
 import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.IInputCompositeWidget;
@@ -43,8 +41,10 @@ import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.ISimpleBluePrintFactory;
-import org.jowidgets.api.widgets.controler.IActionListener;
-import org.jowidgets.api.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.look.Position;
+import org.jowidgets.common.widgets.IActionWidgetCommon;
+import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 import org.jowidgets.impl.widgets.composed.factory.GenericWidgetFactory;
 import org.jowidgets.spi.IWidgetFactorySpi;
