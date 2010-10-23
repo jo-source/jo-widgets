@@ -27,7 +27,7 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
-import org.jowidgets.api.color.defaults.Colors;
+import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.widgets.ICompositeWidget;
 import org.jowidgets.api.widgets.ITextLabelWidget;
 import org.jowidgets.api.widgets.descriptor.ITextLabelDescriptor;

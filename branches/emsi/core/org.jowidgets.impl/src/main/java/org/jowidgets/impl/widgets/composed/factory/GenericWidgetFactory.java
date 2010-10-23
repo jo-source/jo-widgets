@@ -27,7 +27,7 @@
  */
 package org.jowidgets.impl.widgets.composed.factory;
 
-import org.jowidgets.api.image.defaults.Icons;
+import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.widgets.descriptor.IInputCompositeDescriptor;
 import org.jowidgets.api.widgets.descriptor.IInputDialogDescriptor;
 import org.jowidgets.api.widgets.descriptor.IInputFieldDescriptor;
