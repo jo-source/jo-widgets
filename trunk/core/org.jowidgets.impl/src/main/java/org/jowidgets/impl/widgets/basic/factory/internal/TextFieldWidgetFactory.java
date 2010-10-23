@@ -28,9 +28,6 @@
 
 package org.jowidgets.impl.widgets.basic.factory.internal;
 
-import org.jowidgets.api.validation.ITextInputValidator;
-import org.jowidgets.api.validation.ValidationMessage;
-import org.jowidgets.api.validation.ValidationMessageType;
 import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.descriptor.ITextFieldDescriptor;
 import org.jowidgets.common.widgets.IWidget;
@@ -39,8 +36,8 @@ import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.ITextFieldBluePrintSpi;
 import org.jowidgets.impl.widgets.basic.TextInputWidget;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.InputVerifier;
 import org.jowidgets.spi.IWidgetFactorySpi;
-import org.jowidgets.spi.verify.IInputVerifier;
 import org.jowidgets.spi.widgets.ITextInputWidgetSpi;
 
 public class TextFieldWidgetFactory extends AbstractWidgetFactory implements
@@ -58,18 +55,7 @@ public class TextFieldWidgetFactory extends AbstractWidgetFactory implements
 	public IInputWidget<String> create(final IWidget parent, final ITextFieldDescriptor descriptor) {
 		final ITextFieldBluePrintSpi bp = getSpiBluePrintFactory().textField();
 
-		final ITextInputValidator textInputValidator = descriptor.getTextInputValidator();
-
-		bp.setInputVerifier(new IInputVerifier() {
-
-			@Override
-			public boolean verify(final String currentValue, final String input, final int start, final int end) {
-				//TODO must check veto on NEW current value
-				final ValidationMessage validationMessage = textInputValidator.isCompletableToValid(input);
-				return validationMessage.getType() == ValidationMessageType.OK;
-			}
-
-		});
+		bp.setInputVerifier(new InputVerifier(descriptor.getTextInputValidator()));
 
 		final ITextInputWidgetSpi textFieldSpi = getSpiWidgetFactory().createTextFieldWidget(parent, bp);
 
@@ -77,5 +63,4 @@ public class TextFieldWidgetFactory extends AbstractWidgetFactory implements
 		result.addValidator(descriptor.getTextInputValidator());
 		return result;
 	}
-
 }
