@@ -37,7 +37,6 @@ import org.jowidgets.api.widgets.IChildWidget;
 import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.ILabelWidget;
 import org.jowidgets.api.widgets.IValidationLabelWidget;
-import org.jowidgets.api.widgets.content.IMandatoryInputContainer;
 import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.widgets.IWidget;
@@ -52,6 +51,7 @@ public class ValidationLabelWidget implements IValidationLabelWidget {
 	private final IInputListener inputListener;
 	private final IChildWidget childWidgetAdapter;
 	private LabelState currentLabelState;
+	private boolean hasInput;
 
 	public ValidationLabelWidget(final ILabelWidget labelWidget, final IValidationLabelDescriptor descriptor) {
 
@@ -61,10 +61,12 @@ public class ValidationLabelWidget implements IValidationLabelWidget {
 		this.descriptor = descriptor;
 		this.childWidgetAdapter = new ChildWidgetWrapper(labelWidget);
 		this.inputWidgets = new LinkedList<IInputWidget<?>>();
+		this.hasInput = false;
 		this.inputListener = new IInputListener() {
 
 			@Override
 			public void inputChanged(final Object source) {
+				hasInput = true;
 				onInputChanged();
 			}
 		};
@@ -86,75 +88,45 @@ public class ValidationLabelWidget implements IValidationLabelWidget {
 		labelWidget.redraw();
 	}
 
+	@Override
+	public void resetValidation() {
+		hasInput = false;
+		onInputChanged();
+	}
+
 	private void onInputChanged() {
 		final LabelState oldState = currentLabelState;
-		final boolean hasInput = doInputCheck();
-		doValidation(hasInput);
+		doValidation(isEmpty());
 
 		if (oldState != currentLabelState) {
 			labelWidget.redraw();
 		}
 	}
 
-	private boolean doInputCheck() {
-		final boolean hasInput;
-		if (hasMandatoryWidgets()) {
-			hasInput = hasAllMandatoryInput() && hasAnyInput();
-		}
-		else {
-			hasInput = hasAnyInput();
-		}
-		return hasInput;
-	}
+	private boolean isEmpty() {
+		boolean anyFilledOut = false;
 
-	private boolean hasMandatoryWidgets() {
+		//empty if there is any mandatory field empty
 		for (final IInputWidget<?> inputWidget : inputWidgets) {
-			if (inputWidget.isMandatory()) {
+			anyFilledOut = anyFilledOut || !inputWidget.isEmpty();
+			if (inputWidget.isMandatory() && inputWidget.isEmpty()) {
 				return true;
 			}
 		}
-		return false;
+
+		//or if not at least one field is filled out
+		return !anyFilledOut;
 	}
 
-	private boolean hasAnyInput() {
-		for (final IInputWidget<?> inputWidget : inputWidgets) {
-			if (inputWidget.hasInput()) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private boolean hasAllMandatoryInput() {
-		for (final IInputWidget<?> inputWidget : inputWidgets) {
-			if (inputWidget.isMandatory()) {
-				if (inputWidget instanceof IMandatoryInputContainer) {
-					final IMandatoryInputContainer mandatoryInputContainer = (IMandatoryInputContainer) inputWidget;
-					final boolean allMandatoryInput = mandatoryInputContainer.hasAllMandatoryInput();
-					if (!allMandatoryInput) {
-						return false;
-					}
-				}
-				else {
-					final boolean hasInput = inputWidget.hasInput();
-					if (!hasInput) {
-						return false;
-					}
-				}
-			}
-		}
-		return true;
-	}
-
-	private void doValidation(final boolean hasInput) {
+	private void doValidation(final boolean isEmpty) {
 		final ValidationResult validationResult = new ValidationResult();
 		for (final IInputWidget<?> inputWidget : inputWidgets) {
 			validationResult.addValidationResult(inputWidget.validate());
 		}
-		setValidationResult(validationResult, hasInput);
+		setValidationResult(validationResult, isEmpty);
 	}
 
-	private void setValidationResult(final ValidationResult validationResult, final boolean hasInput) {
+	private void setValidationResult(final ValidationResult validationResult, final boolean isEmpty) {
 		final ValidationMessage firstWorst = validationResult.getWorstFirstMessage();
 
 		final StringBuilder messageText = new StringBuilder();
@@ -165,7 +137,7 @@ public class ValidationLabelWidget implements IValidationLabelWidget {
 		}
 		messageText.append(firstWorst.getMessageText());
 
-		if (firstWorst.getType() == ValidationMessageType.OK && hasInput) {
+		if (firstWorst.getType() == ValidationMessageType.OK && hasInput && !isEmpty) {
 			labelWidget.setMarkup(descriptor.getOkMarkup());
 			labelWidget.setIcon(descriptor.getOkIcon());
 			labelWidget.setForegroundColor(descriptor.getOkColor());
@@ -187,12 +159,12 @@ public class ValidationLabelWidget implements IValidationLabelWidget {
 			currentLabelState = LabelState.ERROR_VALIDATION;
 		}
 		else {
-			setInputCheckResult(hasInput);
+			setInputCheckResult(isEmpty);
 		}
 	}
 
-	private void setInputCheckResult(final boolean hasInput) {
-		if (!hasInput) {
+	private void setInputCheckResult(final boolean isEmpty) {
+		if (isEmpty) {
 			labelWidget.setMarkup(descriptor.getMissingInputMarkup());
 			labelWidget.setIcon(descriptor.getMissingInputIcon());
 			labelWidget.setForegroundColor(descriptor.getMissingInputColor());

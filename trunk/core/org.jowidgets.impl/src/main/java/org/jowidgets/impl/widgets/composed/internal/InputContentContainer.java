@@ -34,7 +34,6 @@ import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
-import org.jowidgets.api.widgets.content.IMandatoryInputContainer;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.look.Border;
 import org.jowidgets.common.widgets.IContainerWidgetCommon;
@@ -45,9 +44,7 @@ import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.impl.widgets.composed.AbstractInputWidget;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
-public class InputContentContainer<INPUT_TYPE> extends AbstractInputWidget<INPUT_TYPE> implements
-		IInputContentContainer,
-		IMandatoryInputContainer {
+public class InputContentContainer<INPUT_TYPE> extends AbstractInputWidget<INPUT_TYPE> implements IInputContentContainer {
 
 	private final ICompositeWidget compositeWidget;
 	private final IInputContentCreator<INPUT_TYPE> content;
@@ -153,23 +150,19 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractInputWidget<INPUT
 	}
 
 	@Override
-	public boolean hasInput() {
+	public boolean isEmpty() {
+		boolean anyFilledOut = false;
+
+		//empty if there is any mandatory field empty
 		for (final IInputWidget<?> subWidget : getSubWidgets()) {
-			if (subWidget.hasInput()) {
+			anyFilledOut = anyFilledOut || !subWidget.isEmpty();
+			if (subWidget.isMandatory() && subWidget.isEmpty()) {
 				return true;
 			}
 		}
-		return false;
-	}
 
-	@Override
-	public boolean hasAllMandatoryInput() {
-		for (final IInputWidget<?> subWidget : getSubWidgets()) {
-			if (subWidget.isMandatory() && !subWidget.hasInput()) {
-				return false;
-			}
-		}
-		return true;
+		//or if not at least one field is filled out
+		return !anyFilledOut;
 	}
 
 	@Override

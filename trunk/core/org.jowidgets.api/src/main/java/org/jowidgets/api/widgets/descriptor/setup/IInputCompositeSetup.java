@@ -35,6 +35,9 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 public interface IInputCompositeSetup<INPUT_TYPE> extends IInputWidgetSetup<INPUT_TYPE> {
 
 	@Mandatory
+	boolean isAutoResetValidation();
+
+	@Mandatory
 	IInputContentCreator<INPUT_TYPE> getContentCreator();
 
 	@Mandatory

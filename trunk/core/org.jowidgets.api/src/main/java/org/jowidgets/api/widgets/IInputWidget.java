@@ -38,11 +38,11 @@ public interface IInputWidget<VALUE_TYPE> extends
 		IChildWidget,
 		IValidateable {
 
+	boolean isEmpty();
+
 	boolean isMandatory();
 
 	void setMandatory(boolean mandatory);
-
-	boolean hasInput();
 
 	void addValidator(IValidator<VALUE_TYPE> validator);
 

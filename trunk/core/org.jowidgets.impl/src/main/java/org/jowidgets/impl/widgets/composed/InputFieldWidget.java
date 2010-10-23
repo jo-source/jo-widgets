@@ -100,8 +100,8 @@ public class InputFieldWidget<VALUE_TYPE> extends AbstractInputWidget<VALUE_TYPE
 	}
 
 	@Override
-	public boolean hasInput() {
-		return textFieldWidget.hasInput();
+	public boolean isEmpty() {
+		return textFieldWidget.isEmpty();
 	}
 
 }
