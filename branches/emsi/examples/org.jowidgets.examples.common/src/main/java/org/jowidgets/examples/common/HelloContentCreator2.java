@@ -27,7 +27,7 @@
  */
 package org.jowidgets.examples.common;
 
-import org.jowidgets.api.image.defaults.Icons;
+import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.ICheckBoxWidget;
 import org.jowidgets.api.widgets.IComboBoxWidget;
@@ -38,8 +38,8 @@ import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToggleButtonBluePrint;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
-import org.jowidgets.api.widgets.controler.IInputListener;
-import org.jowidgets.api.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.common.widgets.controler.IInputListener;
+import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.convert.DefaultTypeConverter;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
