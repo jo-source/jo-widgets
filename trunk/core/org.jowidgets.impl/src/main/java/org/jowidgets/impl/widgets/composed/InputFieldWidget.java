@@ -34,7 +34,7 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.common.widgets.IWidget;
 
-public class InputFieldWidget<VALUE_TYPE> extends AbstractInputWidget<VALUE_TYPE> {
+public class InputFieldWidget<VALUE_TYPE> extends AbstractComposedInputWidget<VALUE_TYPE> {
 
 	private final IInputWidget<String> textFieldWidget;
 	private final IConverter<VALUE_TYPE> converter;

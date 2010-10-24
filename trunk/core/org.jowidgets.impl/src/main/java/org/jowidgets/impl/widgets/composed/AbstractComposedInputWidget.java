@@ -40,21 +40,23 @@ import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.controler.impl.InputObservable;
 import org.jowidgets.util.Assert;
 
-public abstract class AbstractInputWidget<VALUE_TYPE> extends InputObservable implements IInputWidget<VALUE_TYPE> {
+public abstract class AbstractComposedInputWidget<VALUE_TYPE> extends InputObservable implements IInputWidget<VALUE_TYPE> {
 
 	private boolean mandatory;
 	private final Map<IInputWidget<?>, String> contextMap;
 	private final List<IInputWidget<?>> subWidgets;
+
 	private final List<IValidator<VALUE_TYPE>> validators;
+
 	private final IInputListener subWidgetListener;
 
 	private final IValidator<VALUE_TYPE> validator;
 
-	public AbstractInputWidget(final boolean mandatory) {
+	public AbstractComposedInputWidget(final boolean mandatory) {
 		this(mandatory, null);
 	}
 
-	public AbstractInputWidget(final boolean mandatory, IValidator<VALUE_TYPE> validator) {
+	public AbstractComposedInputWidget(final boolean mandatory, IValidator<VALUE_TYPE> validator) {
 		super();
 		if (validator == null) {
 			validator = new OkValidator<VALUE_TYPE>();

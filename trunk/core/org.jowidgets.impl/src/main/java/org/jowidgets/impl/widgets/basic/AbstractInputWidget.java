@@ -31,6 +31,7 @@ package org.jowidgets.impl.widgets.basic;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jowidgets.api.validation.IValidateable;
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IInputWidget;
@@ -44,6 +45,7 @@ import org.jowidgets.util.EmptyCheck;
 public abstract class AbstractInputWidget<VALUE_TYPE> extends InputWidgetCommonWrapper implements IInputWidget<VALUE_TYPE> {
 
 	private final List<IValidator<VALUE_TYPE>> validators;
+	private final List<IValidateable> validatables;
 	private final ChildWidgetDelegate childWidgetDelegate;
 
 	private boolean mandatory;
@@ -54,6 +56,7 @@ public abstract class AbstractInputWidget<VALUE_TYPE> extends InputWidgetCommonW
 		final IInputWidgetSetup<VALUE_TYPE> setup) {
 		super(inputWidgetCommon);
 		this.validators = new LinkedList<IValidator<VALUE_TYPE>>();
+		this.validatables = new LinkedList<IValidateable>();
 
 		this.mandatory = setup.isMandatory();
 		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
@@ -69,22 +72,16 @@ public abstract class AbstractInputWidget<VALUE_TYPE> extends InputWidgetCommonW
 	@Override
 	public final ValidationResult validate() {
 		final ValidationResult result = new ValidationResult();
+
 		for (final IValidator<VALUE_TYPE> validator : validators) {
 			result.addValidationResult(validator.validate(getValue()));
 		}
 
-		result.addValidationResult(additionalValidation());
+		for (final IValidateable validateable : validatables) {
+			result.addValidationResult(validateable.validate());
+		}
 
 		return result;
-	}
-
-	/**
-	 * Could be overridden to make additional validations
-	 * 
-	 * @return the result of the additional validation
-	 */
-	protected ValidationResult additionalValidation() {
-		return new ValidationResult();
 	}
 
 	@Override
@@ -105,6 +102,10 @@ public abstract class AbstractInputWidget<VALUE_TYPE> extends InputWidgetCommonW
 	@Override
 	public final void addValidator(final IValidator<VALUE_TYPE> validator) {
 		validators.add(validator);
+	}
+
+	protected final void addValidatable(final IValidateable validateable) {
+		validatables.add(validateable);
 	}
 
 }

@@ -30,6 +30,7 @@ package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.convert.IStringObjectConverter;
 import org.jowidgets.api.validation.ITextInputValidator;
+import org.jowidgets.api.validation.IValidateable;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.descriptor.setup.IComboBoxSetup;
 import org.jowidgets.common.widgets.IWidget;
@@ -48,6 +49,13 @@ public class ComboBoxWidget<VALUE_TYPE> extends ComboBoxSelectionWidget<VALUE_TY
 		this.stringObjectConverter = setup.getStringObjectConverter();
 		this.textInputValidator = setup.getStringObjectConverter();
 
+		addValidatable(new IValidateable() {
+
+			@Override
+			public ValidationResult validate() {
+				return textInputValidator.validate(comboBoxWidgetSpi.getText());
+			}
+		});
 	}
 
 	@Override
@@ -66,8 +74,4 @@ public class ComboBoxWidget<VALUE_TYPE> extends ComboBoxSelectionWidget<VALUE_TY
 		return stringObjectConverter.convertToObject(comboBoxWidgetSpi.getText());
 	}
 
-	@Override
-	protected ValidationResult additionalValidation() {
-		return textInputValidator.validate(comboBoxWidgetSpi.getText());
-	}
 }

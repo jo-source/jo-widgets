@@ -40,36 +40,36 @@ public class WindowWidgetDelegate {
 
 	private final AutoCenterPolicy autoCenterPolicy;
 	private final AutoPackPolicy autoPackPolicy;
-	private final IWindowWidgetCommon windowWidgetCi;
+	private final IWindowWidgetCommon windowWidgetCommon;
 	private boolean wasVisible;
 
-	public WindowWidgetDelegate(final IWindowWidgetCommon windowWidgetCi, final IWindowSetup setup) {
+	public WindowWidgetDelegate(final IWindowWidgetCommon windowWidgetCommon, final IWindowSetup setup) {
 		this.autoCenterPolicy = setup.getAutoCenterPolicy();
 		this.autoPackPolicy = setup.getAutoPackPolicy();
-		this.windowWidgetCi = windowWidgetCi;
+		this.windowWidgetCommon = windowWidgetCommon;
 		this.wasVisible = false;
 	}
 
 	public void centerLocation() {
-		final Rectangle parentBounds = windowWidgetCi.getParentBounds();
+		final Rectangle parentBounds = windowWidgetCommon.getParentBounds();
 		final Dimension parentSize = parentBounds.getSize();
 		final Position parentPosition = parentBounds.getPosition();
 
-		final Dimension size = windowWidgetCi.getSize();
+		final Dimension size = windowWidgetCommon.getSize();
 
 		final int posX = parentPosition.getX() + ((parentSize.getWidth() - size.getWidth()) / 2);
 		final int posY = parentPosition.getY() + ((parentSize.getHeight() - size.getHeight()) / 2);
 
-		windowWidgetCi.setPosition(new Position(posX, posY));
+		windowWidgetCommon.setPosition(new Position(posX, posY));
 	}
 
 	public void setVisible(final boolean visible) {
 		if (visible) {
 			if (AutoPackPolicy.ALLWAYS == autoPackPolicy) {
-				windowWidgetCi.pack();
+				windowWidgetCommon.pack();
 			}
 			else if (!wasVisible && AutoPackPolicy.ONCE == autoPackPolicy) {
-				windowWidgetCi.pack();
+				windowWidgetCommon.pack();
 			}
 			if (AutoCenterPolicy.ALLWAYS == autoCenterPolicy) {
 				centerLocation();
@@ -79,7 +79,7 @@ public class WindowWidgetDelegate {
 			}
 			wasVisible = true;
 		}
-		windowWidgetCi.setVisible(visible);
+		windowWidgetCommon.setVisible(visible);
 	}
 
 }

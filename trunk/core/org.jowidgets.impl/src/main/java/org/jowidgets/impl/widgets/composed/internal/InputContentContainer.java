@@ -41,10 +41,10 @@ import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
-import org.jowidgets.impl.widgets.composed.AbstractInputWidget;
+import org.jowidgets.impl.widgets.composed.AbstractComposedInputWidget;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
-public class InputContentContainer<INPUT_TYPE> extends AbstractInputWidget<INPUT_TYPE> implements IInputContentContainer {
+public class InputContentContainer<INPUT_TYPE> extends AbstractComposedInputWidget<INPUT_TYPE> implements IInputContentContainer {
 
 	private final ICompositeWidget compositeWidget;
 	private final IInputContentCreator<INPUT_TYPE> content;
