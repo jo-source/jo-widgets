@@ -25,13 +25,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.base.widgets.blueprint.factory;
+package org.jowidgets.impl.base.blueprint.factory;
 
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.impl.base.widgets.blueprint.proxy.BluePrintProxyProvider;
+import org.jowidgets.impl.base.blueprint.proxy.BluePrintProxyProvider;
 import org.jowidgets.impl.spi.blueprint.IFrameBluePrintSpi;
 
 public abstract class AbstractBluePrintFactory {

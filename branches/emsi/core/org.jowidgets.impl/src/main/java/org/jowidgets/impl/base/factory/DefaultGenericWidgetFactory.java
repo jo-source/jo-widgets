@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.base.widgets.factory;
+package org.jowidgets.impl.base.factory;
 
 import java.util.HashMap;
 import java.util.Map;

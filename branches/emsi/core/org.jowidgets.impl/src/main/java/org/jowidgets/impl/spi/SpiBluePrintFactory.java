@@ -27,7 +27,7 @@
  */
 package org.jowidgets.impl.spi;
 
-import org.jowidgets.impl.base.widgets.blueprint.factory.AbstractBluePrintFactory;
+import org.jowidgets.impl.base.blueprint.factory.AbstractBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.IButtonBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ICheckBoxBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IComboBoxBluePrintSpi;

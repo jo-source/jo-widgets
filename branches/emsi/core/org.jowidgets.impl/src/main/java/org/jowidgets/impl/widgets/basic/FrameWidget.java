@@ -30,7 +30,7 @@ package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IFrameSetup;
-import org.jowidgets.impl.widgets.basic.delegate.WindowWidgetDelegate;
+import org.jowidgets.impl.base.delegate.WindowWidgetDelegate;
 import org.jowidgets.impl.widgets.common.wrapper.FrameWidgetCommonWrapper;
 import org.jowidgets.spi.widgets.IFrameWidgetSpi;
 

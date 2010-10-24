@@ -30,7 +30,7 @@ package org.jowidgets.impl.widgets.common.blueprint.convenience;
 import org.jowidgets.common.look.Border;
 import org.jowidgets.common.widgets.builder.ICompositeSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.convenience.ICompositeSetupConvenienceCommon;
-import org.jowidgets.impl.base.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
+import org.jowidgets.impl.base.blueprint.convenience.AbstractSetupBuilderConvenience;
 
 public class CompositeSetupConvenienceCommon extends AbstractSetupBuilderConvenience<ICompositeSetupBuilderCommon<?>> implements
 		ICompositeSetupConvenienceCommon<ICompositeSetupBuilderCommon<?>> {

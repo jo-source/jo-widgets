@@ -32,7 +32,7 @@ import java.util.List;
 
 import org.jowidgets.api.widgets.blueprint.builder.IComboBoxSelectionSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.convenience.IComboBoxSelectionSetupConvenience;
-import org.jowidgets.impl.base.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
+import org.jowidgets.impl.base.blueprint.convenience.AbstractSetupBuilderConvenience;
 
 public class ComboBoxSelectionSetupConvenience extends
 		AbstractSetupBuilderConvenience<IComboBoxSelectionSetupBuilder<?, ?>> implements

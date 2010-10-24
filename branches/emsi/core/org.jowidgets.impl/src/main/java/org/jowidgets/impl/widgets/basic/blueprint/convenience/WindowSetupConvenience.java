@@ -31,7 +31,7 @@ import org.jowidgets.api.look.AutoCenterPolicy;
 import org.jowidgets.api.look.AutoPackPolicy;
 import org.jowidgets.api.widgets.blueprint.builder.IWindowSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.convenience.IWindowSetupConvenience;
-import org.jowidgets.impl.base.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
+import org.jowidgets.impl.base.blueprint.convenience.AbstractSetupBuilderConvenience;
 
 public class WindowSetupConvenience extends AbstractSetupBuilderConvenience<IWindowSetupBuilder<?>> implements
 		IWindowSetupConvenience<IWindowSetupBuilder<?>> {

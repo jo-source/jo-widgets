@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.base.widgets.factory;
+package org.jowidgets.impl.base.factory;
 
 import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.widgets.IWidget;

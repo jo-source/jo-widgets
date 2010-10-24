@@ -39,7 +39,7 @@ import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.spi.widgets.IComboBoxSelectionWidgetSpi;
 import org.jowidgets.util.Assert;
 
-public class ComboBoxSelectionWidget<VALUE_TYPE> extends AbstractInputWidget<VALUE_TYPE> implements IComboBoxWidget<VALUE_TYPE> {
+public class ComboBoxSelectionWidget<VALUE_TYPE> extends AbstractBasicInputWidget<VALUE_TYPE> implements IComboBoxWidget<VALUE_TYPE> {
 
 	private final List<VALUE_TYPE> elements;
 	private final List<VALUE_TYPE> elementsView;

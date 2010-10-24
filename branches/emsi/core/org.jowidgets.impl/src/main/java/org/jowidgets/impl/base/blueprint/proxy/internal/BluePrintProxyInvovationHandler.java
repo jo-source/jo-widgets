@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.base.widgets.blueprint.proxy.internal;
+package org.jowidgets.impl.base.blueprint.proxy.internal;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

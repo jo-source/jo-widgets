@@ -32,41 +32,30 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.jowidgets.api.validation.IValidateable;
 import org.jowidgets.api.validation.IValidator;
-import org.jowidgets.api.validation.OkValidator;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.common.widgets.controler.IInputListener;
-import org.jowidgets.common.widgets.controler.impl.InputObservable;
+import org.jowidgets.impl.base.AbstractInputWidget;
 import org.jowidgets.util.Assert;
 
-public abstract class AbstractComposedInputWidget<VALUE_TYPE> extends InputObservable implements IInputWidget<VALUE_TYPE> {
+public abstract class AbstractComposedInputWidget<VALUE_TYPE> extends AbstractInputWidget<VALUE_TYPE> {
 
-	private boolean mandatory;
 	private final Map<IInputWidget<?>, String> contextMap;
 	private final List<IInputWidget<?>> subWidgets;
 
-	private final List<IValidator<VALUE_TYPE>> validators;
-
 	private final IInputListener subWidgetListener;
 
-	private final IValidator<VALUE_TYPE> validator;
-
 	public AbstractComposedInputWidget(final boolean mandatory) {
-		this(mandatory, null);
+		this(null, mandatory);
 	}
 
-	public AbstractComposedInputWidget(final boolean mandatory, IValidator<VALUE_TYPE> validator) {
-		super();
-		if (validator == null) {
-			validator = new OkValidator<VALUE_TYPE>();
-		}
+	public AbstractComposedInputWidget(final IValidator<VALUE_TYPE> validator, final boolean mandatory) {
+		super(validator, mandatory);
 
-		this.mandatory = mandatory;
-		this.validator = validator;
 		this.contextMap = new HashMap<IInputWidget<?>, String>();
 		this.subWidgets = new LinkedList<IInputWidget<?>>();
-		this.validators = new LinkedList<IValidator<VALUE_TYPE>>();
 
 		this.subWidgetListener = new IInputListener() {
 
@@ -76,30 +65,23 @@ public abstract class AbstractComposedInputWidget<VALUE_TYPE> extends InputObser
 			}
 
 		};
-	}
 
-	@Override
-	public final ValidationResult validate() {
-		final VALUE_TYPE value = getValue();
+		this.addValidatable(new IValidateable() {
 
-		final ValidationResult result = new ValidationResult();
-		for (final IInputWidget<?> subWidget : getSubWidgets()) {
-			ValidationResult subResult = subWidget.validate();
-			final String contextLabel = contextMap.get(subWidget);
-			if (contextLabel != null) {
-				subResult = subResult.copyAndSetContext(contextLabel);
+			@Override
+			public ValidationResult validate() {
+				final ValidationResult result = new ValidationResult();
+				for (final IInputWidget<?> subWidget : getSubWidgets()) {
+					ValidationResult subResult = subWidget.validate();
+					final String contextLabel = contextMap.get(subWidget);
+					if (contextLabel != null) {
+						subResult = subResult.copyAndSetContext(contextLabel);
+					}
+					result.addValidationResult(subResult);
+				}
+				return result;
 			}
-			result.addValidationResult(subResult);
-		}
-		result.addValidationResult(validator.validate(value));
-
-		for (final IValidator<VALUE_TYPE> additionalValidator : validators) {
-			result.addValidationResult(additionalValidator.validate(value));
-		}
-
-		result.addValidationResult(additionalValidation());
-
-		return result;
+		});
 	}
 
 	@Override
@@ -107,15 +89,6 @@ public abstract class AbstractComposedInputWidget<VALUE_TYPE> extends InputObser
 		for (final IInputWidget<?> inputWidget : getSubWidgets()) {
 			inputWidget.setEditable(editable);
 		}
-	}
-
-	/**
-	 * Could be overridden to make additional validations
-	 * 
-	 * @return the result of the additional validation
-	 */
-	protected ValidationResult additionalValidation() {
-		return new ValidationResult();
 	}
 
 	protected final List<IInputWidget<?>> getSubWidgets() {
@@ -140,22 +113,6 @@ public abstract class AbstractComposedInputWidget<VALUE_TYPE> extends InputObser
 		subWidgets.remove(subWidget);
 		contextMap.remove(subWidget);
 		subWidget.removeInputListener(subWidgetListener);
-	}
-
-	@Override
-	public final boolean isMandatory() {
-		return mandatory;
-	}
-
-	@Override
-	public void setMandatory(final boolean mandatory) {
-		this.mandatory = mandatory;
-	}
-
-	@Override
-	public final void addValidator(final IValidator<VALUE_TYPE> validator) {
-		Assert.paramNotNull(validator, "validator");
-		this.validators.add(validator);
 	}
 
 }

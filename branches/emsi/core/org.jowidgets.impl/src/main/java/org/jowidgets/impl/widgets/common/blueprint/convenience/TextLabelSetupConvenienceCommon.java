@@ -31,7 +31,7 @@ import org.jowidgets.common.look.AlignmentHorizontal;
 import org.jowidgets.common.look.Markup;
 import org.jowidgets.common.widgets.builder.ITextLabelSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.convenience.ITextLabelSetupConvenienceCommon;
-import org.jowidgets.impl.base.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
+import org.jowidgets.impl.base.blueprint.convenience.AbstractSetupBuilderConvenience;
 
 public class TextLabelSetupConvenienceCommon extends AbstractSetupBuilderConvenience<ITextLabelSetupBuilderCommon<?>> implements
 		ITextLabelSetupConvenienceCommon<ITextLabelSetupBuilderCommon<?>> {

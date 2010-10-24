@@ -30,7 +30,7 @@ package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.widgets.ICompositeWidget;
 import org.jowidgets.common.widgets.IWidget;
-import org.jowidgets.impl.widgets.basic.delegate.ChildWidgetDelegate;
+import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
 import org.jowidgets.impl.widgets.common.wrapper.ContainerWidgetCommonWrapper;
 import org.jowidgets.spi.widgets.IContainerWidgetSpi;
 

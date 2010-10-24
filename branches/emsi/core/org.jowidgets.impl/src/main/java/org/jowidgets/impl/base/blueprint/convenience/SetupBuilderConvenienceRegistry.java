@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.base.widgets.blueprint.convenience;
+package org.jowidgets.impl.base.blueprint.convenience;
 
 import java.util.HashMap;
 import java.util.LinkedList;

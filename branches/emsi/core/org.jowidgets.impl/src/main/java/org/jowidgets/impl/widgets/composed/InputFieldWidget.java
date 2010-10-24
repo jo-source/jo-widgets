@@ -41,7 +41,7 @@ public class InputFieldWidget<VALUE_TYPE> extends AbstractComposedInputWidget<VA
 
 	public InputFieldWidget(final IInputWidget<String> textFieldWidget, final IInputFieldSetup<VALUE_TYPE> setup) {
 
-		super(setup.isMandatory(), setup.getValidator());
+		super(setup.getValidator(), setup.isMandatory());
 
 		this.textFieldWidget = textFieldWidget;
 		this.converter = setup.getConverter();
@@ -89,11 +89,6 @@ public class InputFieldWidget<VALUE_TYPE> extends AbstractComposedInputWidget<VA
 	@Override
 	public void setValue(final VALUE_TYPE value) {
 		textFieldWidget.setValue(converter.convertToString(value));
-	}
-
-	@Override
-	public boolean isEmpty() {
-		return textFieldWidget.isEmpty();
 	}
 
 }

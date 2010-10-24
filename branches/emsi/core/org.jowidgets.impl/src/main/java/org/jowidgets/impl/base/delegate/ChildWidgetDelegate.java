@@ -26,26 +26,21 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.basic;
+package org.jowidgets.impl.base.delegate;
 
-import org.jowidgets.api.widgets.ITextLabelWidget;
 import org.jowidgets.common.widgets.IWidget;
-import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
-import org.jowidgets.impl.widgets.common.wrapper.TextLabelWidgetCommonWrapper;
-import org.jowidgets.spi.widgets.ITextLabelWidgetSpi;
 
-public class TextLabelWidget extends TextLabelWidgetCommonWrapper implements ITextLabelWidget {
+public class ChildWidgetDelegate {
 
-	private final ChildWidgetDelegate childWidgetDelegate;
+	private final IWidget parent;
 
-	public TextLabelWidget(final IWidget parent, final ITextLabelWidgetSpi widget) {
-		super(widget);
-		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
+	public ChildWidgetDelegate(final IWidget parent) {
+		super();
+		this.parent = parent;
 	}
 
-	@Override
 	public IWidget getParent() {
-		return childWidgetDelegate.getParent();
+		return parent;
 	}
 
 }
