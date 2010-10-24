@@ -27,6 +27,9 @@
  */
 package org.jowidgets.impl.swing.widgets.internal;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import javax.swing.JFrame;
 
 import org.jowidgets.common.util.ColorSettingsInvoker;
@@ -38,10 +41,7 @@ import org.jowidgets.spi.widgets.setup.IFrameSetupSpi;
 
 public class FrameWidget extends SwingWindowWidget implements IFrameWidgetSpi {
 
-	public FrameWidget(
-		final IGenericWidgetFactory factory,
-		final SwingImageRegistry imageRegistry,
-		final IFrameSetupSpi setup) {
+	public FrameWidget(final IGenericWidgetFactory factory, final SwingImageRegistry imageRegistry, final IFrameSetupSpi setup) {
 		super(factory, new JFrame());
 
 		getUiReference().setTitle(setup.getTitle());
@@ -49,6 +49,16 @@ public class FrameWidget extends SwingWindowWidget implements IFrameWidgetSpi {
 		setIcon(setup.getIcon(), imageRegistry);
 		setLayout(setup.getLayout());
 		ColorSettingsInvoker.setColors(setup, this);
+
+		//dispose a frame when window closed
+		getUiReference().addWindowListener(new WindowAdapter() {
+
+			@Override
+			public void windowClosing(final WindowEvent e) {
+				close();
+			}
+
+		});
 	}
 
 	@Override

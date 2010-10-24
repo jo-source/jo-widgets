@@ -27,6 +27,8 @@
  */
 package org.jowidgets.impl.swt.widgets;
 
+import org.eclipse.swt.events.ShellEvent;
+import org.eclipse.swt.events.ShellListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -36,6 +38,8 @@ import org.jowidgets.common.look.Dimension;
 import org.jowidgets.common.look.Position;
 import org.jowidgets.common.look.Rectangle;
 import org.jowidgets.common.widgets.IWindowWidgetCommon;
+import org.jowidgets.common.widgets.controler.IWindowListener;
+import org.jowidgets.common.widgets.controler.impl.WindowObservable;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swt.color.IColorCache;
@@ -45,8 +49,41 @@ import org.jowidgets.impl.swt.util.PositionConvert;
 
 public class SwtWindowWidget extends SwtContainerWidget implements IWindowWidgetCommon {
 
+	private final WindowObservable windowObservableDelegate;
+
 	public SwtWindowWidget(final IGenericWidgetFactory factory, final IColorCache colorCache, final Shell window) {
 		super(factory, colorCache, window);
+
+		this.windowObservableDelegate = new WindowObservable();
+
+		getUiReference().addShellListener(new ShellListener() {
+
+			@Override
+			public void shellActivated(final ShellEvent e) {
+				windowObservableDelegate.fireWindowActivated();
+			}
+
+			@Override
+			public void shellDeactivated(final ShellEvent e) {
+				windowObservableDelegate.fireWindowDeactivated();
+			}
+
+			@Override
+			public void shellIconified(final ShellEvent e) {
+				windowObservableDelegate.fireWindowIconified();
+			}
+
+			@Override
+			public void shellDeiconified(final ShellEvent e) {
+				windowObservableDelegate.fireWindowDeiconified();
+			}
+
+			@Override
+			public void shellClosed(final ShellEvent e) {
+				windowObservableDelegate.fireWindowClosed();
+			}
+
+		});
 	}
 
 	@Override
@@ -122,6 +159,21 @@ public class SwtWindowWidget extends SwtContainerWidget implements IWindowWidget
 	public <WIDGET_TYPE extends IWindowWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
 		final DESCRIPTOR_TYPE descriptor) {
 		return getGenericWidgetFactory().create(this, descriptor);
+	}
+
+	@Override
+	public void addWindowListener(final IWindowListener listener) {
+		windowObservableDelegate.addWindowListener(listener);
+	}
+
+	@Override
+	public void removeWindowListener(final IWindowListener listener) {
+		windowObservableDelegate.removeWindowListener(listener);
+	}
+
+	@Override
+	public void close() {
+		getUiReference().close();
 	}
 
 }

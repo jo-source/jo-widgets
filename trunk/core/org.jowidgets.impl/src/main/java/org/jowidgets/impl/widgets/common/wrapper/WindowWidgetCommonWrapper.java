@@ -32,6 +32,7 @@ import org.jowidgets.common.look.Dimension;
 import org.jowidgets.common.look.Position;
 import org.jowidgets.common.look.Rectangle;
 import org.jowidgets.common.widgets.IWindowWidgetCommon;
+import org.jowidgets.common.widgets.controler.IWindowListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public class WindowWidgetCommonWrapper extends WidgetCommonWrapper implements IWindowWidgetCommon {
@@ -85,6 +86,21 @@ public class WindowWidgetCommonWrapper extends WidgetCommonWrapper implements IW
 	public <WIDGET_TYPE extends IWindowWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
 		final DESCRIPTOR_TYPE descriptor) {
 		return getWidget().createChildWindow(descriptor);
+	}
+
+	@Override
+	public void addWindowListener(final IWindowListener listener) {
+		getWidget().addWindowListener(listener);
+	}
+
+	@Override
+	public void removeWindowListener(final IWindowListener listener) {
+		getWidget().removeWindowListener(listener);
+	}
+
+	@Override
+	public void close() {
+		getWidget().close();
 	}
 
 }

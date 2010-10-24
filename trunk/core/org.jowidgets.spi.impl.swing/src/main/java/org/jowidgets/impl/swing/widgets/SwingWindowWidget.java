@@ -29,12 +29,16 @@ package org.jowidgets.impl.swing.widgets;
 
 import java.awt.Toolkit;
 import java.awt.Window;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.look.Dimension;
 import org.jowidgets.common.look.Position;
 import org.jowidgets.common.look.Rectangle;
 import org.jowidgets.common.widgets.IWindowWidgetCommon;
+import org.jowidgets.common.widgets.controler.IWindowListener;
+import org.jowidgets.common.widgets.controler.impl.WindowObservable;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
@@ -43,8 +47,48 @@ import org.jowidgets.impl.swing.util.PositionConvert;
 
 public class SwingWindowWidget extends SwingContainerWidget implements IWindowWidgetCommon {
 
+	private final WindowObservable windowObservableDelegate;
+
 	public SwingWindowWidget(final IGenericWidgetFactory factory, final Window window) {
 		super(factory, window);
+
+		this.windowObservableDelegate = new WindowObservable();
+
+		getUiReference().addWindowListener(new WindowListener() {
+
+			@Override
+			public void windowActivated(final WindowEvent e) {
+				windowObservableDelegate.fireWindowActivated();
+			}
+
+			@Override
+			public void windowDeactivated(final WindowEvent e) {
+				windowObservableDelegate.fireWindowDeactivated();
+			}
+
+			@Override
+			public void windowIconified(final WindowEvent e) {
+				windowObservableDelegate.fireWindowIconified();
+			}
+
+			@Override
+			public void windowDeiconified(final WindowEvent e) {
+				windowObservableDelegate.fireWindowDeiconified();
+			}
+
+			@Override
+			public void windowClosed(final WindowEvent e) {
+				windowObservableDelegate.fireWindowClosed();
+			}
+
+			@Override
+			public void windowClosing(final WindowEvent e) {}
+
+			@Override
+			public void windowOpened(final WindowEvent e) {}
+
+		});
+
 	}
 
 	@Override
@@ -104,6 +148,21 @@ public class SwingWindowWidget extends SwingContainerWidget implements IWindowWi
 			parentSize = DimensionConvert.convert(Toolkit.getDefaultToolkit().getScreenSize());
 		}
 		return new Rectangle(parentPosition, parentSize);
+	}
+
+	@Override
+	public void addWindowListener(final IWindowListener listener) {
+		windowObservableDelegate.addWindowListener(listener);
+	}
+
+	@Override
+	public void removeWindowListener(final IWindowListener listener) {
+		windowObservableDelegate.removeWindowListener(listener);
+	}
+
+	@Override
+	public void close() {
+		getUiReference().dispose();
 	}
 
 }

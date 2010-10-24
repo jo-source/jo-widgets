@@ -48,6 +48,7 @@ import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.common.widgets.IWindowWidgetCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IInputListener;
+import org.jowidgets.common.widgets.controler.IWindowListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
@@ -158,6 +159,21 @@ public class InputDialogWidget<INPUT_TYPE> implements IInputDialogWidget<INPUT_T
 			}
 		}
 		dialogWidget.setVisible(visible);
+	}
+
+	@Override
+	public void close() {
+		dialogWidget.close();
+	}
+
+	@Override
+	public void addWindowListener(final IWindowListener listener) {
+		dialogWidget.addWindowListener(listener);
+	}
+
+	@Override
+	public void removeWindowListener(final IWindowListener listener) {
+		dialogWidget.removeWindowListener(listener);
 	}
 
 	@Override

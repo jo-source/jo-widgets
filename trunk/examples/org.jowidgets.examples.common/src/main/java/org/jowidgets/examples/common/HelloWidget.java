@@ -44,6 +44,7 @@ import org.jowidgets.api.widgets.blueprint.factory.ISimpleBluePrintFactory;
 import org.jowidgets.common.look.Position;
 import org.jowidgets.common.widgets.IActionWidgetCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 import org.jowidgets.impl.widgets.composed.factory.GenericWidgetFactory;
@@ -63,6 +64,15 @@ public class HelloWidget {
 		final IFrameBluePrint frameBp = bpF.frame(title);
 		frameBp.setMigLayout("[left, grow]", "[top, grow]");
 		rootFrame = factory.create(frameBp);
+
+		rootFrame.addWindowListener(new WindowAdapter() {
+
+			@Override
+			public void windowClosed() {
+				System.exit(0);
+			}
+
+		});
 
 		// create dialog
 		final IInputDialogWidget<String> dialog = createDialogWidget(bpF);

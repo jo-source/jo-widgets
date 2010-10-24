@@ -30,9 +30,10 @@ package org.jowidgets.common.widgets;
 import org.jowidgets.common.look.Dimension;
 import org.jowidgets.common.look.Position;
 import org.jowidgets.common.look.Rectangle;
+import org.jowidgets.common.widgets.controler.IWindowObservable;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-public interface IWindowWidgetCommon extends IWidget {
+public interface IWindowWidgetCommon extends IWidget, IWindowObservable {
 
 	void setPosition(Position position);
 
@@ -47,6 +48,8 @@ public interface IWindowWidgetCommon extends IWidget {
 	void pack();
 
 	void setVisible(boolean visible);
+
+	void close();
 
 	<WIDGET_TYPE extends IWindowWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
 		final DESCRIPTOR_TYPE descriptor);
