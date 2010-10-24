@@ -27,7 +27,6 @@
  */
 package org.jowidgets.impl.swing;
 
-import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
@@ -73,18 +72,11 @@ import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;
 
 public final class SwingWidgetFactory implements IWidgetFactorySpi {
 
-	private static final SwingWidgetFactory INSTANCE = new SwingWidgetFactory();
-
 	private final SwingImageRegistry imageRegistry;
 
-	private SwingWidgetFactory() {
+	public SwingWidgetFactory(final SwingImageRegistry imageRegistry) {
 		super();
-		this.imageRegistry = new SwingImageRegistry();
-	}
-
-	@Override
-	public IImageRegistry getImageRegistry() {
-		return imageRegistry;
+		this.imageRegistry = imageRegistry;
 	}
 
 	@Override
@@ -159,10 +151,6 @@ public final class SwingWidgetFactory implements IWidgetFactorySpi {
 	@Override
 	public IComboBoxWidgetSpi createComboBoxWidget(final IWidget parent, final IComboBoxSetupSpi setup) {
 		return new ComboBoxWidget(setup);
-	}
-
-	public static SwingWidgetFactory getInstance() {
-		return INSTANCE;
 	}
 
 }

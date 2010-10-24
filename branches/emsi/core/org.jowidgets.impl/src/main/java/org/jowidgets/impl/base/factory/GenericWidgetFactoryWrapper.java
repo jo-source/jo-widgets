@@ -27,7 +27,6 @@
  */
 package org.jowidgets.impl.base.factory;
 
-import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
@@ -42,11 +41,6 @@ public class GenericWidgetFactoryWrapper implements IGenericWidgetFactory {
 		Assert.paramNotNull(genericWidgetFactory, "genericWidgetFactory");
 
 		this.genericFactory = genericWidgetFactory;
-	}
-
-	@Override
-	public final IImageRegistry getImageRegistry() {
-		return genericFactory.getImageRegistry();
 	}
 
 	@Override

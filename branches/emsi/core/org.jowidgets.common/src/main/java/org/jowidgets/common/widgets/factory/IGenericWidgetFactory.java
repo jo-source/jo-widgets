@@ -27,13 +27,10 @@
  */
 package org.jowidgets.common.widgets.factory;
 
-import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public interface IGenericWidgetFactory {
-
-	IImageRegistry getImageRegistry();
 
 	<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE create(
 		DESCRIPTOR_TYPE descriptor);

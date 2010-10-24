@@ -27,7 +27,6 @@
  */
 package org.jowidgets.impl.swt;
 
-import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swt.color.ColorCache;
@@ -75,20 +74,13 @@ import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;
 
 public final class SwtWidgetFactory implements IWidgetFactorySpi {
 
-	private static final SwtWidgetFactory INSTANCE = new SwtWidgetFactory();
-
 	private final SwtImageRegistry imageRegistry;
 	private final IColorCache colorCache;
 
-	private SwtWidgetFactory() {
+	public SwtWidgetFactory(final SwtImageRegistry imageRegistry) {
 		super();
 		this.colorCache = new ColorCache();
-		this.imageRegistry = new SwtImageRegistry();
-	}
-
-	@Override
-	public IImageRegistry getImageRegistry() {
-		return imageRegistry;
+		this.imageRegistry = imageRegistry;
 	}
 
 	@Override
@@ -163,10 +155,6 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 	@Override
 	public IComboBoxWidgetSpi createComboBoxWidget(final IWidget parent, final IComboBoxSetupSpi setup) {
 		return new ComboBoxWidget(parent, colorCache, setup);
-	}
-
-	public static SwtWidgetFactory getInstance() {
-		return INSTANCE;
 	}
 
 }

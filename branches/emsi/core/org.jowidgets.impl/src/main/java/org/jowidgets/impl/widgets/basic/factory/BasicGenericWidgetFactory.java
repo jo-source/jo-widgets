@@ -62,7 +62,7 @@ import org.jowidgets.spi.IWidgetFactorySpi;
 public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 
 	public BasicGenericWidgetFactory(final IWidgetFactorySpi spiWidgetFactory) {
-		super(new DefaultGenericWidgetFactory(spiWidgetFactory.getImageRegistry()));
+		super(new DefaultGenericWidgetFactory());
 		registerBaseWidgets(spiWidgetFactory, new SpiBluePrintFactory());
 	}
 
