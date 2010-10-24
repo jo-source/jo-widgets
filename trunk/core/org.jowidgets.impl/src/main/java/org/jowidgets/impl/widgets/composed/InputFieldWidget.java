@@ -33,7 +33,6 @@ import org.jowidgets.api.widgets.descriptor.setup.IInputFieldSetup;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.common.widgets.IWidget;
-import org.jowidgets.common.widgets.controler.IInputListener;
 
 public class InputFieldWidget<VALUE_TYPE> extends AbstractInputWidget<VALUE_TYPE> {
 
@@ -48,13 +47,6 @@ public class InputFieldWidget<VALUE_TYPE> extends AbstractInputWidget<VALUE_TYPE
 		this.converter = setup.getConverter();
 
 		registerSubInputWidget(textFieldWidget);
-
-		this.textFieldWidget.addInputListener(new IInputListener() {
-			@Override
-			public void inputChanged(final Object source) {
-				fireInputChanged(source);
-			}
-		});
 
 		ColorSettingsInvoker.setColors(setup, this);
 	}

@@ -28,14 +28,14 @@
 
 package org.jowidgets.spi.verify;
 
-public class OkVerifier implements IInputVerifier {
+public final class OkVerifier implements IInputVerifier {
 
 	public static final IInputVerifier INSTANCE = new OkVerifier();
 
 	private OkVerifier() {};
 
 	@Override
-	public boolean verify(String currentValue, String input, int start, int end) {
+	public boolean verify(final String currentValue, final String input, final int start, final int end) {
 		return true;
 	}
 

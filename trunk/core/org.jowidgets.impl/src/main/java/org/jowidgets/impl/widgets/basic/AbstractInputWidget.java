@@ -44,7 +44,6 @@ import org.jowidgets.util.EmptyCheck;
 public abstract class AbstractInputWidget<VALUE_TYPE> extends InputWidgetCommonWrapper implements IInputWidget<VALUE_TYPE> {
 
 	private final List<IValidator<VALUE_TYPE>> validators;
-	private final IInputWidgetCommon inputWidgetCommon;
 	private final ChildWidgetDelegate childWidgetDelegate;
 
 	private boolean mandatory;
@@ -56,9 +55,7 @@ public abstract class AbstractInputWidget<VALUE_TYPE> extends InputWidgetCommonW
 		super(inputWidgetCommon);
 		this.validators = new LinkedList<IValidator<VALUE_TYPE>>();
 
-		this.inputWidgetCommon = inputWidgetCommon;
 		this.mandatory = setup.isMandatory();
-
 		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
 
 		addValidator(setup.getValidator());

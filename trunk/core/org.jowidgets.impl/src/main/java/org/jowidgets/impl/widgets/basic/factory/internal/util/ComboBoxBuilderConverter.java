@@ -34,11 +34,11 @@ import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.widgets.descriptor.setup.IComboBoxSelectionSetup;
 import org.jowidgets.impl.spi.blueprint.builder.IComboBoxSelectionSetupBuilderSpi;
 
-public class ComboBoxBuilderConverter {
+public final class ComboBoxBuilderConverter {
 
 	private ComboBoxBuilderConverter() {};
 
-	public static final <VALUE_TYPE> void convert(
+	public static <VALUE_TYPE> void convert(
 		final IComboBoxSelectionSetupBuilderSpi<?> builderSpi,
 		final IComboBoxSelectionSetup<VALUE_TYPE> setup) {
 
