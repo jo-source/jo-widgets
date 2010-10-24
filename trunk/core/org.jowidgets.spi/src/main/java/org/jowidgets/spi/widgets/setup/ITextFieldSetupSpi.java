@@ -25,9 +25,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.spi.blueprint;
+package org.jowidgets.spi.widgets.setup;
 
-import org.jowidgets.impl.spi.blueprint.builder.ITextFieldSetupBuilderSpi;
-import org.jowidgets.impl.spi.descriptor.ITextFieldDescriptorSpi;
+import org.jowidgets.common.widgets.descriptor.setup.ITextFieldSetupCommon;
 
-public interface ITextFieldBluePrintSpi extends ITextFieldSetupBuilderSpi<ITextFieldBluePrintSpi>, ITextFieldDescriptorSpi {}
+public interface ITextFieldSetupSpi extends ITextInputWidgetSetupSpi, ITextFieldSetupCommon {
+
+}

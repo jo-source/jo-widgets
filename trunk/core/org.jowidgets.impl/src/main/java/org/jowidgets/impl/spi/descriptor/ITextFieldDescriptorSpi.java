@@ -29,6 +29,6 @@ package org.jowidgets.impl.spi.descriptor;
 
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.spi.widgets.ITextInputWidgetSpi;
-import org.jowidgets.spi.widgets.setup.ITextInputWidgetSetupSpi;
+import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 
-public interface ITextFieldDescriptorSpi extends ITextInputWidgetSetupSpi, IWidgetDescriptor<ITextInputWidgetSpi> {}
+public interface ITextFieldDescriptorSpi extends ITextFieldSetupSpi, IWidgetDescriptor<ITextInputWidgetSpi> {}

@@ -25,9 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.spi.blueprint;
+package org.jowidgets.common.widgets.builder;
 
-import org.jowidgets.impl.spi.blueprint.builder.ITextFieldSetupBuilderSpi;
-import org.jowidgets.impl.spi.descriptor.ITextFieldDescriptorSpi;
+public interface ITextFieldSetupBuilderCommon<INSTANCE_TYPE extends ITextFieldSetupBuilderCommon<?>> extends
+		IWidgetSetupBuilderCommon<INSTANCE_TYPE> {
 
-public interface ITextFieldBluePrintSpi extends ITextFieldSetupBuilderSpi<ITextFieldBluePrintSpi>, ITextFieldDescriptorSpi {}
+	INSTANCE_TYPE setPasswordPresentation(boolean passwordPresentation);
+
+}

@@ -33,6 +33,7 @@ import org.jowidgets.common.widgets.builder.ICheckBoxSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.IContainerSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.IScrollCompositeSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ISeparatorSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.ITextFieldSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITextLabelSetupBuilderCommon;
 import org.jowidgets.impl.widgets.blueprint.defaults.DefaultsInitializerRegistry;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.ButtonDefaultsCommon;
@@ -40,6 +41,7 @@ import org.jowidgets.impl.widgets.common.blueprint.defaults.CheckBoxDefaultsComm
 import org.jowidgets.impl.widgets.common.blueprint.defaults.ContainerDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.ScrolledCompositeDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.SeparatorDefaultsCommon;
+import org.jowidgets.impl.widgets.common.blueprint.defaults.TextFieldDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.TextLabelDefaultsCommon;
 
 public class CommonDefaultsInitializerRegistry extends DefaultsInitializerRegistry {
@@ -52,5 +54,6 @@ public class CommonDefaultsInitializerRegistry extends DefaultsInitializerRegist
 		register(IScrollCompositeSetupBuilderCommon.class, new ScrolledCompositeDefaultsCommon());
 		register(ISeparatorSetupBuilderCommon.class, new SeparatorDefaultsCommon());
 		register(ITextLabelSetupBuilderCommon.class, new TextLabelDefaultsCommon());
+		register(ITextFieldSetupBuilderCommon.class, new TextFieldDefaultsCommon());
 	}
 }

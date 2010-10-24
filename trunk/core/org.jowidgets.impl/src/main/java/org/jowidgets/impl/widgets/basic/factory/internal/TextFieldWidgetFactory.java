@@ -53,7 +53,7 @@ public class TextFieldWidgetFactory extends AbstractWidgetFactory implements
 
 	@Override
 	public IInputWidget<String> create(final IWidget parent, final ITextFieldDescriptor descriptor) {
-		final ITextFieldBluePrintSpi bp = getSpiBluePrintFactory().textField();
+		final ITextFieldBluePrintSpi bp = getSpiBluePrintFactory().textField().setSetup(descriptor);
 
 		bp.setInputVerifier(new InputVerifier(descriptor.getTextInputValidator()));
 
