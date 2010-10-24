@@ -50,7 +50,7 @@ public class DialogWidget extends SwtWindowWidget implements IFrameWidgetSpi {
 		final IWidget parent,
 		final IDialogSetupSpi setup) {
 
-		super(factory, colorCache, new Shell((Shell) parent.getUiReference(), SWT.DIALOG_TRIM
+		super(factory, colorCache, new Shell(parent == null ? null : (Shell) parent.getUiReference(), SWT.DIALOG_TRIM
 			| SWT.APPLICATION_MODAL
 			| SWT.RESIZE));
 

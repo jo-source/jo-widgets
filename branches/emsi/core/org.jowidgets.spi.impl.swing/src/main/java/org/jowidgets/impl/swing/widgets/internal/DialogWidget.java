@@ -46,7 +46,7 @@ public class DialogWidget extends SwingWindowWidget implements IFrameWidgetSpi {
 		final SwingImageRegistry imageRegistry,
 		final IWidget parent,
 		final IDialogSetupSpi setup) {
-		super(factory, new JDialog((Window) parent.getUiReference()));
+		super(factory, new JDialog(parent == null ? null : (Window) parent.getUiReference()));
 
 		getUiReference().setTitle(setup.getTitle());
 		getUiReference().setModal(true);

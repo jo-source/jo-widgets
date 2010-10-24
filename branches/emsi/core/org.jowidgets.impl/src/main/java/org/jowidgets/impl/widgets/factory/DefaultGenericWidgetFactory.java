@@ -31,7 +31,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.jowidgets.common.image.IImageRegistry;
-import org.jowidgets.common.widgets.IContainerWidgetCommon;
 import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
@@ -52,7 +51,7 @@ public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory 
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IContainerWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE create(
+	public <WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE create(
 		final DESCRIPTOR_TYPE descriptor) {
 		return create(null, descriptor);
 	}
