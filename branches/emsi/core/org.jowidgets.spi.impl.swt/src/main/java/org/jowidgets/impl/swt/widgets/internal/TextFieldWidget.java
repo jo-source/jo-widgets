@@ -36,12 +36,12 @@ import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.spi.verify.IInputVerifier;
-import org.jowidgets.spi.widgets.setup.ITextInputWidgetSetupSpi;
+import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 
 public class TextFieldWidget extends AbstractSwtTextInputWidget {
 
-	public TextFieldWidget(final IColorCache colorCache, final IWidget parent, final ITextInputWidgetSetupSpi setup) {
-		super(colorCache, createText(parent));
+	public TextFieldWidget(final IColorCache colorCache, final IWidget parent, final ITextFieldSetupSpi setup) {
+		super(colorCache, createText(parent, setup.isPasswordPresentation()));
 
 		final IInputVerifier inputModifier = setup.getInputVerifier();
 
@@ -91,8 +91,13 @@ public class TextFieldWidget extends AbstractSwtTextInputWidget {
 		getUiReference().setEditable(editable);
 	}
 
-	private static Text createText(final IWidget parent) {
-		return new Text((Composite) parent.getUiReference(), SWT.BORDER);
+	private static Text createText(final IWidget parent, final boolean passwordPresentation) {
+		if (passwordPresentation) {
+			return new Text((Composite) parent.getUiReference(), SWT.BORDER | SWT.PASSWORD);
+		}
+		else {
+			return new Text((Composite) parent.getUiReference(), SWT.BORDER);
+		}
 	}
 
 }

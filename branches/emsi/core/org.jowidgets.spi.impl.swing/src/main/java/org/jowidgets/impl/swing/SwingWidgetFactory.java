@@ -67,7 +67,7 @@ import org.jowidgets.spi.widgets.setup.IFrameSetupSpi;
 import org.jowidgets.spi.widgets.setup.IIconSetupSpi;
 import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
 import org.jowidgets.spi.widgets.setup.ISeparatorSetupSpi;
-import org.jowidgets.spi.widgets.setup.ITextInputWidgetSetupSpi;
+import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;
 
@@ -117,7 +117,7 @@ public final class SwingWidgetFactory implements IWidgetFactorySpi {
 	}
 
 	@Override
-	public ITextInputWidgetSpi createTextFieldWidget(final IWidget parent, final ITextInputWidgetSetupSpi setup) {
+	public ITextInputWidgetSpi createTextFieldWidget(final IWidget parent, final ITextFieldSetupSpi setup) {
 		return new TextFieldWidget(parent, setup);
 	}
 
