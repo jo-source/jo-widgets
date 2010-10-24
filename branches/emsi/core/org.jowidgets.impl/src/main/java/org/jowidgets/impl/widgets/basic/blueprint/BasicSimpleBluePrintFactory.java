@@ -58,7 +58,7 @@ import org.jowidgets.api.widgets.descriptor.ISeparatorDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextFieldDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextLabelDescriptor;
 import org.jowidgets.api.widgets.descriptor.IToggleButtonDescriptor;
-import org.jowidgets.impl.widgets.blueprint.factory.AbstractBluePrintFactory;
+import org.jowidgets.impl.base.widgets.blueprint.factory.AbstractBluePrintFactory;
 
 public class BasicSimpleBluePrintFactory extends AbstractBluePrintFactory implements IBasicSimpleBluePrintFactory {
 

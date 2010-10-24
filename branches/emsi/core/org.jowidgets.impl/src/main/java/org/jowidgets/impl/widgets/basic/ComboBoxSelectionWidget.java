@@ -68,7 +68,7 @@ public class ComboBoxSelectionWidget<VALUE_TYPE> extends AbstractInputWidget<VAL
 			comboBoxSelectionWidgetSpi.setSelectedIndex(indexOfContent);
 		}
 		else {
-			throw new IllegalArgumentException("Value '" + value + "' is not a elemnt of this combo box");
+			throw new IllegalArgumentException("Value '" + value + "' is not a element of this combo box");
 		}
 	}
 

@@ -40,6 +40,8 @@ import org.jowidgets.api.widgets.descriptor.ISeparatorDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextFieldDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextLabelDescriptor;
 import org.jowidgets.api.widgets.descriptor.IToggleButtonDescriptor;
+import org.jowidgets.impl.base.widgets.factory.DefaultGenericWidgetFactory;
+import org.jowidgets.impl.base.widgets.factory.GenericWidgetFactoryWrapper;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
 import org.jowidgets.impl.spi.SpiBluePrintFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.ButtonWidgetFactory;
@@ -55,8 +57,6 @@ import org.jowidgets.impl.widgets.basic.factory.internal.SeparatorWidgetFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.TextFieldWidgetFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.TextLabelWidgetFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.ToggleButtonWidgetFactory;
-import org.jowidgets.impl.widgets.factory.DefaultGenericWidgetFactory;
-import org.jowidgets.impl.widgets.factory.GenericWidgetFactoryWrapper;
 import org.jowidgets.spi.IWidgetFactorySpi;
 
 public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {

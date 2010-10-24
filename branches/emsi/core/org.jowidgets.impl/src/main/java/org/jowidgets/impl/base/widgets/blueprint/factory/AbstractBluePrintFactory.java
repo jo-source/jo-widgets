@@ -25,49 +25,38 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.widgets.blueprint.proxy.internal;
+package org.jowidgets.impl.base.widgets.blueprint.factory;
 
-import java.lang.reflect.Method;
+import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
+import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.impl.base.widgets.blueprint.proxy.BluePrintProxyProvider;
+import org.jowidgets.impl.spi.blueprint.IFrameBluePrintSpi;
 
-public class MethodKey {
+public abstract class AbstractBluePrintFactory {
 
-	private final Method method;
+	private final ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry;
+	private final IDefaultsInitializerRegistry defaultInitializerRegistry;
 
-	public MethodKey(final Method method) {
+	public AbstractBluePrintFactory(
+		final ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry,
+		final IDefaultsInitializerRegistry defaultInitializerRegistry) {
 		super();
-		this.method = method;
+		this.setupBuilderConvenienceRegistry = setupBuilderConvenienceRegistry;
+		this.defaultInitializerRegistry = defaultInitializerRegistry;
 	}
 
-	public Method getMethod() {
-		return method;
-	}
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	protected <BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends IWidget>> BLUE_PRINT_TYPE createProxy(
+		final Class<? extends IWidgetDescriptor> bluePrintType,
+		final Class<? extends IWidgetDescriptor> descriptorType) {
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (obj != null && obj instanceof MethodKey) {
-			final MethodKey other = (MethodKey) obj;
-			if (((method.getName() == other.getMethod().getName()))) {
-				if (!method.getReturnType().equals(other.getMethod().getReturnType())) {
-					return false;
-				}
-				final Class<?>[] params1 = method.getParameterTypes();
-				final Class<?>[] params2 = other.getMethod().getParameterTypes();
-				if (params1.length == params2.length) {
-					for (int i = 0; i < params1.length; i++) {
-						if (params1[i] != params2[i]) {
-							return false;
-						}
-					}
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	@Override
-	public int hashCode() {
-		return method.getName().hashCode();
+		return (BLUE_PRINT_TYPE) new BluePrintProxyProvider<IFrameBluePrintSpi>(
+			bluePrintType,
+			descriptorType,
+			setupBuilderConvenienceRegistry,
+			defaultInitializerRegistry).getBluePrint();
 	}
 
 }

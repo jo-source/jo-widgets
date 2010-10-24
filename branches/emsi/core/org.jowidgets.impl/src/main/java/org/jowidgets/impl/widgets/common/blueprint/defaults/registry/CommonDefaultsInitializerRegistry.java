@@ -35,7 +35,7 @@ import org.jowidgets.common.widgets.builder.IScrollCompositeSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ISeparatorSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITextFieldSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITextLabelSetupBuilderCommon;
-import org.jowidgets.impl.widgets.blueprint.defaults.DefaultsInitializerRegistry;
+import org.jowidgets.impl.base.widgets.blueprint.defaults.DefaultsInitializerRegistry;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.ButtonDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.CheckBoxDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.ContainerDefaultsCommon;
