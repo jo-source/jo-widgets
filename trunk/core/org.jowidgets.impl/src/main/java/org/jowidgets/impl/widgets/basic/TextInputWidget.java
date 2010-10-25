@@ -32,7 +32,7 @@ import org.jowidgets.api.widgets.descriptor.setup.IInputWidgetSetup;
 import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.spi.widgets.ITextInputWidgetSpi;
 
-public class TextInputWidget extends AbstractInputWidget<String> {
+public class TextInputWidget extends AbstractBasicInputWidget<String> {
 
 	private final ITextInputWidgetSpi inputWidgetSpi;
 

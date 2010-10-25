@@ -30,8 +30,10 @@ package org.jowidgets.examples.swing;
 import javax.swing.UIManager;
 import javax.swing.plaf.DimensionUIResource;
 
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.examples.common.HelloWidget;
-import org.jowidgets.impl.swing.SwingWidgetFactory;
+import org.jowidgets.impl.DefaultToolkit;
+import org.jowidgets.impl.swing.SwingToolkit;
 
 import com.jgoodies.looks.Options;
 import com.jgoodies.looks.windows.WindowsLookAndFeel;
@@ -51,7 +53,8 @@ public final class HelloSwingWidgetStarter {
 
 			@Override
 			public void run() {
-				new HelloWidget(SwingWidgetFactory.getInstance(), "Hello Widgets Swing").start();
+				Toolkit.initialize(new DefaultToolkit(new SwingToolkit()));
+				new HelloWidget("Hello Widgets Swing").start();
 			}
 
 		});

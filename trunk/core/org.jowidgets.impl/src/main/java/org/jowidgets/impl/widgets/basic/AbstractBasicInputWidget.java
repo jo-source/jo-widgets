@@ -28,24 +28,66 @@
 
 package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.api.widgets.ITextLabelWidget;
+import org.jowidgets.api.validation.IValidateable;
+import org.jowidgets.api.validation.IValidator;
+import org.jowidgets.api.validation.ValidationResult;
+import org.jowidgets.api.widgets.IInputWidget;
+import org.jowidgets.api.widgets.descriptor.setup.IInputWidgetSetup;
+import org.jowidgets.common.widgets.IInputWidgetCommon;
 import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
-import org.jowidgets.impl.widgets.common.wrapper.TextLabelWidgetCommonWrapper;
-import org.jowidgets.spi.widgets.ITextLabelWidgetSpi;
+import org.jowidgets.impl.base.delegate.InputWidgetDelegate;
+import org.jowidgets.impl.widgets.common.wrapper.InputWidgetCommonWrapper;
 
-public class TextLabelWidget extends TextLabelWidgetCommonWrapper implements ITextLabelWidget {
+public abstract class AbstractBasicInputWidget<VALUE_TYPE> extends InputWidgetCommonWrapper implements IInputWidget<VALUE_TYPE> {
 
 	private final ChildWidgetDelegate childWidgetDelegate;
+	private final InputWidgetDelegate<VALUE_TYPE> inputWidgetDelegate;
 
-	public TextLabelWidget(final IWidget parent, final ITextLabelWidgetSpi widget) {
-		super(widget);
+	public AbstractBasicInputWidget(
+		final IWidget parent,
+		final IInputWidgetCommon inputWidgetCommon,
+		final IInputWidgetSetup<VALUE_TYPE> setup) {
+		super(inputWidgetCommon);
+
 		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
+
+		//this must be last statement
+		this.inputWidgetDelegate = new InputWidgetDelegate<VALUE_TYPE>(this, setup);
 	}
 
 	@Override
-	public IWidget getParent() {
+	public final IWidget getParent() {
 		return childWidgetDelegate.getParent();
+	}
+
+	@Override
+	public final ValidationResult validate() {
+		return inputWidgetDelegate.validate();
+	}
+
+	@Override
+	public final boolean isMandatory() {
+		return inputWidgetDelegate.isMandatory();
+	}
+
+	@Override
+	public final void setMandatory(final boolean mandatory) {
+		inputWidgetDelegate.setMandatory(mandatory);
+	}
+
+	@Override
+	public final boolean isEmpty() {
+		return inputWidgetDelegate.isEmpty();
+	}
+
+	@Override
+	public final void addValidator(final IValidator<VALUE_TYPE> validator) {
+		inputWidgetDelegate.addValidator(validator);
+	}
+
+	protected final void addValidatable(final IValidateable validateable) {
+		inputWidgetDelegate.addValidatable(validateable);
 	}
 
 }

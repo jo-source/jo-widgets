@@ -39,7 +39,7 @@ import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.spi.widgets.IComboBoxSelectionWidgetSpi;
 import org.jowidgets.util.Assert;
 
-public class ComboBoxSelectionWidget<VALUE_TYPE> extends AbstractInputWidget<VALUE_TYPE> implements IComboBoxWidget<VALUE_TYPE> {
+public class ComboBoxSelectionWidget<VALUE_TYPE> extends AbstractBasicInputWidget<VALUE_TYPE> implements IComboBoxWidget<VALUE_TYPE> {
 
 	private final List<VALUE_TYPE> elements;
 	private final List<VALUE_TYPE> elementsView;
@@ -68,7 +68,7 @@ public class ComboBoxSelectionWidget<VALUE_TYPE> extends AbstractInputWidget<VAL
 			comboBoxSelectionWidgetSpi.setSelectedIndex(indexOfContent);
 		}
 		else {
-			throw new IllegalArgumentException("Value '" + value + "' is not a elemnt of this combo box");
+			throw new IllegalArgumentException("Value '" + value + "' is not a element of this combo box");
 		}
 	}
 

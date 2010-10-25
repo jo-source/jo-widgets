@@ -27,7 +27,6 @@
  */
 package org.jowidgets.impl.widgets.composed.factory;
 
-import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.widgets.descriptor.IInputCompositeDescriptor;
 import org.jowidgets.api.widgets.descriptor.IInputDialogDescriptor;
 import org.jowidgets.api.widgets.descriptor.IInputFieldDescriptor;
@@ -47,7 +46,6 @@ public class GenericWidgetFactory extends BasicGenericWidgetFactory {
 
 	public GenericWidgetFactory(final IWidgetFactorySpi spiWidgetsFactory) {
 		super(spiWidgetsFactory);
-		getImageRegistry().registerImageConstants(Icons.class);
 		registerCustomWidgetFactories();
 	}
 

@@ -27,6 +27,7 @@
  */
 package org.jowidgets.impl.widgets.composed.internal;
 
+import org.jowidgets.api.validation.IValidateable;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.ICompositeWidget;
 import org.jowidgets.api.widgets.IInputWidget;
@@ -69,6 +70,15 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractComposedInputWidg
 			compositeWidget = parent.add(compositeBluePrint, "growx, growy, wrap");
 		}
 		this.content = content;
+
+		addValidatable(new IValidateable() {
+
+			@Override
+			public ValidationResult validate() {
+				return content.validate();
+			}
+		});
+
 		content.createContent(this);
 		// do not add initialization after this, because this is given to the
 		// create content method
@@ -137,11 +147,6 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractComposedInputWidg
 	@Override
 	public void unRegisterInputWidget(final IInputWidget<?> inputWidget) {
 		unRegisterSubInputWidget(inputWidget);
-	}
-
-	@Override
-	protected ValidationResult additionalValidation() {
-		return content.validate();
 	}
 
 	@Override

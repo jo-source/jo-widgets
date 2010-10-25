@@ -27,7 +27,6 @@
  */
 package org.jowidgets.spi;
 
-import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.widgets.IButtonWidgetSpi;
@@ -57,8 +56,6 @@ import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;
 
 public interface IWidgetFactorySpi {
-
-	IImageRegistry getImageRegistry();
 
 	IFrameWidgetSpi createFrameWidget(IGenericWidgetFactory factory, IFrameSetupSpi setup);
 

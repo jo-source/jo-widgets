@@ -26,26 +26,30 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.basic;
+package org.jowidgets.api.toolkit;
 
-import org.jowidgets.api.widgets.ITextLabelWidget;
-import org.jowidgets.common.widgets.IWidget;
-import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
-import org.jowidgets.impl.widgets.common.wrapper.TextLabelWidgetCommonWrapper;
-import org.jowidgets.spi.widgets.ITextLabelWidgetSpi;
+import org.jowidgets.util.Assert;
 
-public class TextLabelWidget extends TextLabelWidgetCommonWrapper implements ITextLabelWidget {
+public final class Toolkit {
 
-	private final ChildWidgetDelegate childWidgetDelegate;
+	private static IToolkit toolkit;
 
-	public TextLabelWidget(final IWidget parent, final ITextLabelWidgetSpi widget) {
-		super(widget);
-		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
+	private Toolkit() {}
+
+	public static void initialize(final IToolkit toolkit) {
+		Assert.paramNotNull(toolkit, "toolkit");
+
+		if (Toolkit.toolkit != null) {
+			throw new IllegalStateException("Toolkit is already initialized");
+		}
+		Toolkit.toolkit = toolkit;
 	}
 
-	@Override
-	public IWidget getParent() {
-		return childWidgetDelegate.getParent();
+	public static IToolkit getInstance() {
+		if (toolkit == null) {
+			throw new IllegalStateException("Toolkit is not initialized");
+		}
+		return toolkit;
 	}
 
 }

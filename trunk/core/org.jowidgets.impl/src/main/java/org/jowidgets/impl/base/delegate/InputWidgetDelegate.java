@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.basic;
+package org.jowidgets.impl.base.delegate;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -34,47 +34,45 @@ import java.util.List;
 import org.jowidgets.api.validation.IValidateable;
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationResult;
-import org.jowidgets.api.widgets.IInputWidget;
+import org.jowidgets.api.widgets.access.IInputValueAccessor;
 import org.jowidgets.api.widgets.descriptor.setup.IInputWidgetSetup;
-import org.jowidgets.common.widgets.IInputWidgetCommon;
-import org.jowidgets.common.widgets.IWidget;
-import org.jowidgets.impl.widgets.basic.delegate.ChildWidgetDelegate;
-import org.jowidgets.impl.widgets.common.wrapper.InputWidgetCommonWrapper;
+import org.jowidgets.common.widgets.controler.impl.InputObservable;
+import org.jowidgets.util.Assert;
 import org.jowidgets.util.EmptyCheck;
 
-public abstract class AbstractInputWidget<VALUE_TYPE> extends InputWidgetCommonWrapper implements IInputWidget<VALUE_TYPE> {
+public class InputWidgetDelegate<VALUE_TYPE> extends InputObservable {
 
+	private final IInputValueAccessor<VALUE_TYPE> valueAccessor;
 	private final List<IValidator<VALUE_TYPE>> validators;
 	private final List<IValidateable> validatables;
-	private final ChildWidgetDelegate childWidgetDelegate;
 
 	private boolean mandatory;
 
-	public AbstractInputWidget(
-		final IWidget parent,
-		final IInputWidgetCommon inputWidgetCommon,
-		final IInputWidgetSetup<VALUE_TYPE> setup) {
-		super(inputWidgetCommon);
+	public InputWidgetDelegate(final IInputValueAccessor<VALUE_TYPE> valueAccessor, final IInputWidgetSetup<VALUE_TYPE> setup) {
+		this(valueAccessor, setup.getValidator(), setup.isMandatory());
+	}
+
+	public InputWidgetDelegate(
+		final IInputValueAccessor<VALUE_TYPE> valueAccessor,
+		final IValidator<VALUE_TYPE> validator,
+		final boolean mandatory) {
+		Assert.paramNotNull(valueAccessor, "valueAccessor");
+
 		this.validators = new LinkedList<IValidator<VALUE_TYPE>>();
 		this.validatables = new LinkedList<IValidateable>();
+		this.valueAccessor = valueAccessor;
+		this.mandatory = mandatory;
 
-		this.mandatory = setup.isMandatory();
-		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
-
-		addValidator(setup.getValidator());
+		if (validator != null) {
+			addValidator(validator);
+		}
 	}
 
-	@Override
-	public final IWidget getParent() {
-		return childWidgetDelegate.getParent();
-	}
-
-	@Override
 	public final ValidationResult validate() {
 		final ValidationResult result = new ValidationResult();
 
 		for (final IValidator<VALUE_TYPE> validator : validators) {
-			result.addValidationResult(validator.validate(getValue()));
+			result.addValidationResult(validator.validate(valueAccessor.getValue()));
 		}
 
 		for (final IValidateable validateable : validatables) {
@@ -84,28 +82,26 @@ public abstract class AbstractInputWidget<VALUE_TYPE> extends InputWidgetCommonW
 		return result;
 	}
 
-	@Override
 	public final boolean isMandatory() {
 		return mandatory;
 	}
 
-	@Override
 	public final void setMandatory(final boolean mandatory) {
 		this.mandatory = mandatory;
 	}
 
-	@Override
-	public final boolean isEmpty() {
-		return EmptyCheck.isEmpty(getValue());
-	}
-
-	@Override
 	public final void addValidator(final IValidator<VALUE_TYPE> validator) {
+		Assert.paramNotNull(validator, "validator");
 		validators.add(validator);
 	}
 
-	protected final void addValidatable(final IValidateable validateable) {
+	public final void addValidatable(final IValidateable validateable) {
+		Assert.paramNotNull(validateable, "validateable");
 		validatables.add(validateable);
+	}
+
+	public boolean isEmpty() {
+		return EmptyCheck.isEmpty(valueAccessor.getValue());
 	}
 
 }

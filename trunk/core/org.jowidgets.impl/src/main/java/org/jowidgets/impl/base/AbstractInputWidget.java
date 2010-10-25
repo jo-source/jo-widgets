@@ -26,26 +26,51 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.basic;
+package org.jowidgets.impl.base;
 
-import org.jowidgets.api.widgets.ITextLabelWidget;
-import org.jowidgets.common.widgets.IWidget;
-import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
-import org.jowidgets.impl.widgets.common.wrapper.TextLabelWidgetCommonWrapper;
-import org.jowidgets.spi.widgets.ITextLabelWidgetSpi;
+import org.jowidgets.api.validation.IValidateable;
+import org.jowidgets.api.validation.IValidator;
+import org.jowidgets.api.validation.ValidationResult;
+import org.jowidgets.api.widgets.IInputWidget;
+import org.jowidgets.common.widgets.controler.impl.InputObservable;
+import org.jowidgets.impl.base.delegate.InputWidgetDelegate;
 
-public class TextLabelWidget extends TextLabelWidgetCommonWrapper implements ITextLabelWidget {
+public abstract class AbstractInputWidget<VALUE_TYPE> extends InputObservable implements IInputWidget<VALUE_TYPE> {
 
-	private final ChildWidgetDelegate childWidgetDelegate;
+	private final InputWidgetDelegate<VALUE_TYPE> inputWidgetDelegate;
 
-	public TextLabelWidget(final IWidget parent, final ITextLabelWidgetSpi widget) {
-		super(widget);
-		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
+	public AbstractInputWidget(final IValidator<VALUE_TYPE> validator, final boolean mandatory) {
+		//this must be last statement
+		this.inputWidgetDelegate = new InputWidgetDelegate<VALUE_TYPE>(this, validator, mandatory);
 	}
 
 	@Override
-	public IWidget getParent() {
-		return childWidgetDelegate.getParent();
+	public final ValidationResult validate() {
+		return inputWidgetDelegate.validate();
+	}
+
+	@Override
+	public final boolean isMandatory() {
+		return inputWidgetDelegate.isMandatory();
+	}
+
+	@Override
+	public final void setMandatory(final boolean mandatory) {
+		inputWidgetDelegate.setMandatory(mandatory);
+	}
+
+	@Override
+	public final void addValidator(final IValidator<VALUE_TYPE> validator) {
+		inputWidgetDelegate.addValidator(validator);
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return inputWidgetDelegate.isEmpty();
+	}
+
+	public final void addValidatable(final IValidateable validateable) {
+		inputWidgetDelegate.addValidatable(validateable);
 	}
 
 }

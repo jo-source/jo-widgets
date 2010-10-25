@@ -31,7 +31,7 @@ package org.jowidgets.impl.widgets.basic;
 import org.jowidgets.api.widgets.IDialogWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IDialogSetup;
 import org.jowidgets.common.widgets.IWidget;
-import org.jowidgets.impl.widgets.basic.delegate.ChildWidgetDelegate;
+import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
 import org.jowidgets.spi.widgets.IFrameWidgetSpi;
 
 public class DialogWidget extends FrameWidget implements IDialogWidget {

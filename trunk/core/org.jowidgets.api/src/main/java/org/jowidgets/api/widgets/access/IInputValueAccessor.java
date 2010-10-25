@@ -29,7 +29,7 @@ package org.jowidgets.api.widgets.access;
 
 public interface IInputValueAccessor<VALUE_TYPE> {
 
-	void setValue(VALUE_TYPE content);
+	void setValue(VALUE_TYPE value);
 
 	VALUE_TYPE getValue();
 

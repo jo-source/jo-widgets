@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.widgets.blueprint.proxy;
+package org.jowidgets.impl.base.blueprint.proxy;
 
 import java.lang.reflect.Proxy;
 
@@ -33,7 +33,7 @@ import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceR
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.common.widgets.builder.IWidgetSetupBuilder;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.impl.widgets.blueprint.proxy.internal.BluePrintProxyInvovationHandler;
+import org.jowidgets.impl.base.blueprint.proxy.internal.BluePrintProxyInvovationHandler;
 import org.jowidgets.util.Assert;
 
 public class BluePrintProxyProvider<BLUE_PRINT_TYPE extends IWidgetSetupBuilder<?>> {

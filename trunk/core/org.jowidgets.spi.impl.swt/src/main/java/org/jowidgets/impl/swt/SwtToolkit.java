@@ -26,26 +26,39 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.basic;
+package org.jowidgets.impl.swt;
 
-import org.jowidgets.api.widgets.ITextLabelWidget;
-import org.jowidgets.common.widgets.IWidget;
-import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
-import org.jowidgets.impl.widgets.common.wrapper.TextLabelWidgetCommonWrapper;
-import org.jowidgets.spi.widgets.ITextLabelWidgetSpi;
+import org.jowidgets.common.image.IImageRegistry;
+import org.jowidgets.common.threads.IUiThreadAccess;
+import org.jowidgets.impl.swt.image.SwtImageRegistry;
+import org.jowidgets.spi.IToolkitSpi;
+import org.jowidgets.spi.IWidgetFactorySpi;
 
-public class TextLabelWidget extends TextLabelWidgetCommonWrapper implements ITextLabelWidget {
+public class SwtToolkit implements IToolkitSpi {
 
-	private final ChildWidgetDelegate childWidgetDelegate;
+	private final SwtImageRegistry imageRegistry;
+	private final SwtWidgetFactory widgetFactory;
 
-	public TextLabelWidget(final IWidget parent, final ITextLabelWidgetSpi widget) {
-		super(widget);
-		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
+	public SwtToolkit() {
+		super();
+		this.imageRegistry = new SwtImageRegistry();
+		this.widgetFactory = new SwtWidgetFactory(imageRegistry);
 	}
 
 	@Override
-	public IWidget getParent() {
-		return childWidgetDelegate.getParent();
+	public IImageRegistry getImageRegistry() {
+		return imageRegistry;
+	}
+
+	@Override
+	public IWidgetFactorySpi getWidgetFactory() {
+		return widgetFactory;
+	}
+
+	@Override
+	public IUiThreadAccess getUiThreadAccess() {
+		// TODO 
+		return null;
 	}
 
 }

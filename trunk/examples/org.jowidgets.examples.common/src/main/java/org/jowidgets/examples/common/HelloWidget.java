@@ -28,6 +28,8 @@
 package org.jowidgets.examples.common;
 
 import org.jowidgets.api.look.AutoCenterPolicy;
+import org.jowidgets.api.toolkit.IToolkit;
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.ICompositeWidget;
 import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.IInputCompositeWidget;
@@ -40,25 +42,25 @@ import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IValidationLabelBluePrint;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.blueprint.factory.ISimpleBluePrintFactory;
 import org.jowidgets.common.look.Position;
 import org.jowidgets.common.widgets.IActionWidgetCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
-import org.jowidgets.impl.widgets.composed.factory.GenericWidgetFactory;
-import org.jowidgets.spi.IWidgetFactorySpi;
 
 public class HelloWidget {
 
 	private final IFrameWidget rootFrame;
 
 	@SuppressWarnings("unused")
-	public HelloWidget(final IWidgetFactorySpi nativeWidgetFactory, final String title) {
+	public HelloWidget(final String title) {
 
-		final IGenericWidgetFactory factory = new GenericWidgetFactory(nativeWidgetFactory);
-		final BluePrintFactory bpF = new BluePrintFactory();
+		final IToolkit toolkit = Toolkit.getInstance();
+
+		final IGenericWidgetFactory factory = toolkit.getWidgetFactory();
+		final IBluePrintFactory bpF = toolkit.getBluePrintFactory();
 
 		// create the root window
 		final IFrameBluePrint frameBp = bpF.frame(title);

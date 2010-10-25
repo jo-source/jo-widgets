@@ -31,7 +31,7 @@ package org.jowidgets.impl.widgets.basic;
 import org.jowidgets.api.widgets.IIconWidget;
 import org.jowidgets.common.widgets.IIconWidgetCommon;
 import org.jowidgets.common.widgets.IWidget;
-import org.jowidgets.impl.widgets.basic.delegate.ChildWidgetDelegate;
+import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
 import org.jowidgets.impl.widgets.common.wrapper.IconWidgetCommonWrapper;
 
 public class IconWidget extends IconWidgetCommonWrapper implements IIconWidget {

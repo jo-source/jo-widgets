@@ -27,6 +27,7 @@
  */
 package org.jowidgets.impl.spi;
 
+import org.jowidgets.impl.base.blueprint.factory.AbstractBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.IButtonBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ICheckBoxBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IComboBoxBluePrintSpi;
@@ -54,7 +55,6 @@ import org.jowidgets.impl.spi.descriptor.ISeparatorDescriptorSpi;
 import org.jowidgets.impl.spi.descriptor.ITextFieldDescriptorSpi;
 import org.jowidgets.impl.spi.descriptor.ITextLabelDescriptorSpi;
 import org.jowidgets.impl.spi.descriptor.IToggleButtonDescriptorSpi;
-import org.jowidgets.impl.widgets.blueprint.factory.AbstractBluePrintFactory;
 import org.jowidgets.impl.widgets.common.blueprint.convenience.registry.CommonSetupConvenienceRegistry;
 
 public class SpiBluePrintFactory extends AbstractBluePrintFactory implements ISpiBluePrintFactory {

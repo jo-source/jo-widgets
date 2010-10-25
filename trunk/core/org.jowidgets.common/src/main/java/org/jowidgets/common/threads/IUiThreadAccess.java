@@ -26,21 +26,14 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.basic.delegate;
+package org.jowidgets.common.threads;
 
-import org.jowidgets.common.widgets.IWidget;
+public interface IUiThreadAccess {
 
-public class ChildWidgetDelegate {
+	boolean isUiThread();
 
-	private final IWidget parent;
+	void invokeLater(Runnable runnable);
 
-	public ChildWidgetDelegate(final IWidget parent) {
-		super();
-		this.parent = parent;
-	}
-
-	public IWidget getParent() {
-		return parent;
-	}
+	void invokeAndWait(Runnable runnable) throws InterruptedException;
 
 }

@@ -25,45 +25,38 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swing.widgets.internal;
+package org.jowidgets.impl.base.blueprint.factory;
 
-import java.awt.Window;
-
-import javax.swing.JDialog;
-
-import org.jowidgets.common.util.ColorSettingsInvoker;
+import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.common.widgets.IWidget;
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.impl.swing.image.SwingImageRegistry;
-import org.jowidgets.impl.swing.widgets.SwingWindowWidget;
-import org.jowidgets.spi.widgets.IFrameWidgetSpi;
-import org.jowidgets.spi.widgets.setup.IDialogSetupSpi;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.impl.base.blueprint.proxy.BluePrintProxyProvider;
+import org.jowidgets.impl.spi.blueprint.IFrameBluePrintSpi;
 
-public class DialogWidget extends SwingWindowWidget implements IFrameWidgetSpi {
+public abstract class AbstractBluePrintFactory {
 
-	public DialogWidget(
-		final IGenericWidgetFactory factory,
-		final SwingImageRegistry imageRegistry,
-		final IWidget parent,
-		final IDialogSetupSpi setup) {
-		super(factory, new JDialog(parent == null ? null : (Window) parent.getUiReference()));
+	private final ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry;
+	private final IDefaultsInitializerRegistry defaultInitializerRegistry;
 
-		getUiReference().setTitle(setup.getTitle());
-		getUiReference().setModal(true);
-
-		setIcon(setup.getIcon(), imageRegistry);
-		setLayout(setup.getLayout());
-		ColorSettingsInvoker.setColors(setup, this);
+	public AbstractBluePrintFactory(
+		final ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry,
+		final IDefaultsInitializerRegistry defaultInitializerRegistry) {
+		super();
+		this.setupBuilderConvenienceRegistry = setupBuilderConvenienceRegistry;
+		this.defaultInitializerRegistry = defaultInitializerRegistry;
 	}
 
-	@Override
-	public JDialog getUiReference() {
-		return (JDialog) super.getUiReference();
-	}
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	protected <BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends IWidget>> BLUE_PRINT_TYPE createProxy(
+		final Class<? extends IWidgetDescriptor> bluePrintType,
+		final Class<? extends IWidgetDescriptor> descriptorType) {
 
-	@Override
-	public void setVisible(final boolean visible) {
-		getUiReference().setVisible(visible);
+		return (BLUE_PRINT_TYPE) new BluePrintProxyProvider<IFrameBluePrintSpi>(
+			bluePrintType,
+			descriptorType,
+			setupBuilderConvenienceRegistry,
+			defaultInitializerRegistry).getBluePrint();
 	}
 
 }
