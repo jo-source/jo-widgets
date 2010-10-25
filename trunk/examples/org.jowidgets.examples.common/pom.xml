@@ -17,7 +17,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
-			<artifactId>org.jowidgets.impl</artifactId>
+			<artifactId>org.jowidgets.api</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 	</dependencies>

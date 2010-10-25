@@ -26,24 +26,26 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.toolkit;
+package org.jowidgets.api.convert;
 
-import org.jowidgets.api.convert.IConverterProvider;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.image.IImageRegistry;
-import org.jowidgets.common.threads.IUiThreadAccess;
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+public interface IConverterProvider {
 
-public interface IToolkit {
+	/**
+	 * Generic method to get an converter for an type. This method only gets an converter for the types supported by the
+	 * explicit methods of this interface.
+	 * 
+	 * @param <OBJECT_TYPE> The type of the object to get the converter for
+	 * @param type the class to get the converter for
+	 * @return The converter for the type or null if no converter exists for the type
+	 */
+	<OBJECT_TYPE> IConverter<OBJECT_TYPE> getConverter(final Class<? extends OBJECT_TYPE> type);
 
-	IImageRegistry getImageRegistry();
+	IConverter<String> string();
 
-	IGenericWidgetFactory getWidgetFactory();
+	IConverter<Long> longNumber();
 
-	IBluePrintFactory getBluePrintFactory();
+	IConverter<Integer> integerNumber();
 
-	IConverterProvider getConverterProvider();
-
-	IUiThreadAccess getUiThreadAccess();
+	IConverter<Short> shortNumber();
 
 }

@@ -27,6 +27,7 @@
  */
 package org.jowidgets.examples.common;
 
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationMessageType;
 import org.jowidgets.api.validation.ValidationResult;
@@ -34,11 +35,11 @@ import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.IValidationLabelWidget;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.IValidationLabelBluePrint;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.look.Markup;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
 public class HelloContentCreator implements IInputContentCreator<String> {
 
@@ -49,7 +50,7 @@ public class HelloContentCreator implements IInputContentCreator<String> {
 
 	@Override
 	public void createContent(final IInputContentContainer widgetContainer) {
-		final BluePrintFactory bpF = new BluePrintFactory();
+		final IBluePrintFactory bpF = Toolkit.getInstance().getBluePrintFactory();
 
 		final IValidator<String> characterLenghtValidator = new IValidator<String>() {
 

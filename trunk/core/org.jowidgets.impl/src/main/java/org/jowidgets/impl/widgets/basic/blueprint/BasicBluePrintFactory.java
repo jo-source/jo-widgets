@@ -42,7 +42,7 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry
 import org.jowidgets.api.widgets.blueprint.factory.IBasicBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.impl.convert.DefaultObjectStringConverter;
-import org.jowidgets.impl.convert.DefaultTypeConverter;
+import org.jowidgets.impl.convert.DefaultConverterProvider;
 
 public class BasicBluePrintFactory extends BasicSimpleBluePrintFactory implements IBasicBluePrintFactory {
 
@@ -113,7 +113,7 @@ public class BasicBluePrintFactory extends BasicSimpleBluePrintFactory implement
 
 	@Override
 	public final IComboBoxBluePrint<String> comboBox() {
-		return comboBox(DefaultTypeConverter.STRING_CONVERTER);
+		return comboBox(DefaultConverterProvider.STRING);
 	}
 
 	@Override
@@ -123,7 +123,7 @@ public class BasicBluePrintFactory extends BasicSimpleBluePrintFactory implement
 
 	@Override
 	public final IComboBoxSelectionBluePrint<String> comboBoxSelection() {
-		return comboBoxSelection(DefaultTypeConverter.STRING_CONVERTER);
+		return comboBoxSelection(DefaultConverterProvider.STRING);
 	}
 
 	@Override

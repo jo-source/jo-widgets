@@ -32,7 +32,7 @@ import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.impl.convert.DefaultTypeConverter;
+import org.jowidgets.impl.convert.DefaultConverterProvider;
 import org.jowidgets.impl.widgets.composed.blueprint.convenience.registry.ComposedSetupConvenienceRegistry;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.registry.ComposedDefaultsInitializerRegistry;
 
@@ -48,22 +48,22 @@ public final class BluePrintFactory extends SimpleBluePrintFactory implements IB
 
 	@Override
 	public IInputFieldBluePrint<String> inputFieldString() {
-		return inputField(DefaultTypeConverter.STRING_CONVERTER);
+		return inputField(DefaultConverterProvider.STRING);
 	}
 
 	@Override
 	public IInputFieldBluePrint<Long> inputFieldLongNumber() {
-		return inputField(DefaultTypeConverter.LONG_CONVERTER);
+		return inputField(DefaultConverterProvider.LONG_NUMBER);
 	}
 
 	@Override
 	public IInputFieldBluePrint<Short> inputFieldShortNumber() {
-		return inputField(DefaultTypeConverter.SHORT_CONVERTER);
+		return inputField(DefaultConverterProvider.SHORT_NUMBER);
 	}
 
 	@Override
 	public IInputFieldBluePrint<Integer> inputFieldIntegerNumber() {
-		return inputField(DefaultTypeConverter.INTEGER_CONVERTER);
+		return inputField(DefaultConverterProvider.INTEGER_NUMBER);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////

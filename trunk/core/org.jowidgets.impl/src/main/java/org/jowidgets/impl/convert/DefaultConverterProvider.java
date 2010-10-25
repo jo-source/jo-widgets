@@ -31,25 +31,26 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.jowidgets.api.convert.IConverter;
+import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.impl.convert.defaults.DefaultIntegerConverter;
 import org.jowidgets.impl.convert.defaults.DefaultLongConverter;
 import org.jowidgets.impl.convert.defaults.DefaultShortConverter;
 import org.jowidgets.impl.convert.defaults.DefaultStringConverter;
 import org.jowidgets.util.Assert;
 
-public final class DefaultTypeConverter {
+public final class DefaultConverterProvider implements IConverterProvider {
 
-	public static final IConverter<String> STRING_CONVERTER = new DefaultStringConverter();
-	public static final IConverter<Long> LONG_CONVERTER = new DefaultLongConverter();
-	public static final IConverter<Integer> INTEGER_CONVERTER = new DefaultIntegerConverter();
-	public static final IConverter<Short> SHORT_CONVERTER = new DefaultShortConverter();
+	public static final IConverter<String> STRING = new DefaultStringConverter();
+	public static final IConverter<Long> LONG_NUMBER = new DefaultLongConverter();
+	public static final IConverter<Integer> INTEGER_NUMBER = new DefaultIntegerConverter();
+	public static final IConverter<Short> SHORT_NUMBER = new DefaultShortConverter();
 
 	private static final Map<Class<?>, IConverter<? extends Object>> CONVERTER_MAP = createConverterMap();
 
-	private DefaultTypeConverter() {}
+	public DefaultConverterProvider() {}
 
 	@SuppressWarnings("unchecked")
-	public static <OBJECT_TYPE> IConverter<OBJECT_TYPE> getConverter(final Class<? extends OBJECT_TYPE> type) {
+	private static <OBJECT_TYPE> IConverter<OBJECT_TYPE> getConverterFromMap(final Class<? extends OBJECT_TYPE> type) {
 		Assert.paramNotNull(type, "type");
 		final Object result = CONVERTER_MAP.get(type);
 		return (IConverter<OBJECT_TYPE>) result;
@@ -57,11 +58,36 @@ public final class DefaultTypeConverter {
 
 	private static Map<Class<?>, IConverter<? extends Object>> createConverterMap() {
 		final Map<Class<?>, IConverter<? extends Object>> result = new HashMap<Class<?>, IConverter<? extends Object>>();
-		result.put(String.class, STRING_CONVERTER);
-		result.put(Long.class, LONG_CONVERTER);
-		result.put(Long.class, INTEGER_CONVERTER);
-		result.put(Short.class, SHORT_CONVERTER);
+		result.put(String.class, STRING);
+		result.put(Long.class, LONG_NUMBER);
+		result.put(Long.class, INTEGER_NUMBER);
+		result.put(Short.class, SHORT_NUMBER);
 		return result;
+	}
+
+	@Override
+	public <OBJECT_TYPE> IConverter<OBJECT_TYPE> getConverter(final Class<? extends OBJECT_TYPE> type) {
+		return getConverterFromMap(type);
+	}
+
+	@Override
+	public IConverter<String> string() {
+		return STRING;
+	}
+
+	@Override
+	public IConverter<Long> longNumber() {
+		return LONG_NUMBER;
+	}
+
+	@Override
+	public IConverter<Integer> integerNumber() {
+		return INTEGER_NUMBER;
+	}
+
+	@Override
+	public IConverter<Short> shortNumber() {
+		return SHORT_NUMBER;
 	}
 
 }

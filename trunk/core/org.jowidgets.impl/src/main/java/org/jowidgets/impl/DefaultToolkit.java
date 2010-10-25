@@ -28,12 +28,14 @@
 
 package org.jowidgets.impl;
 
+import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.toolkit.IToolkit;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.threads.IUiThreadAccess;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.impl.convert.DefaultConverterProvider;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 import org.jowidgets.impl.widgets.composed.factory.GenericWidgetFactory;
 import org.jowidgets.spi.IWidgetsServiceProvider;
@@ -44,6 +46,7 @@ public class DefaultToolkit implements IToolkit {
 	private final IWidgetsServiceProvider toolkitSpi;
 	private final IGenericWidgetFactory genericWidgetFactory;
 	private final IBluePrintFactory bluePrintFactory;
+	private final IConverterProvider converterProvider;
 
 	public DefaultToolkit(final IWidgetsServiceProvider toolkitSpi) {
 		Assert.paramNotNull(toolkitSpi, "toolkitSpi");
@@ -51,6 +54,7 @@ public class DefaultToolkit implements IToolkit {
 		this.genericWidgetFactory = new GenericWidgetFactory(toolkitSpi.getWidgetFactory());
 		toolkitSpi.getImageRegistry().registerImageConstants(Icons.class);
 		this.bluePrintFactory = new BluePrintFactory();
+		this.converterProvider = new DefaultConverterProvider();
 	}
 
 	@Override
@@ -71,6 +75,11 @@ public class DefaultToolkit implements IToolkit {
 	@Override
 	public IUiThreadAccess getUiThreadAccess() {
 		return toolkitSpi.getUiThreadAccess();
+	}
+
+	@Override
+	public IConverterProvider getConverterProvider() {
+		return converterProvider;
 	}
 
 }
