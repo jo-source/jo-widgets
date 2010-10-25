@@ -32,8 +32,8 @@ import javax.swing.plaf.DimensionUIResource;
 
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.examples.common.HelloWidget;
-import org.jowidgets.impl.DefaultToolkit;
-import org.jowidgets.impl.swing.SwingToolkit;
+import org.jowidgets.impl.DefaultToolkitProvider;
+import org.jowidgets.impl.swing.SwingWidgetsServiceProvider;
 
 import com.jgoodies.looks.Options;
 import com.jgoodies.looks.windows.WindowsLookAndFeel;
@@ -53,7 +53,7 @@ public final class HelloSwingWidgetStarter {
 
 			@Override
 			public void run() {
-				Toolkit.initialize(new DefaultToolkit(new SwingToolkit()));
+				Toolkit.initialize(new DefaultToolkitProvider(new SwingWidgetsServiceProvider()));
 				new HelloWidget("Hello Widgets Swing").start();
 			}
 

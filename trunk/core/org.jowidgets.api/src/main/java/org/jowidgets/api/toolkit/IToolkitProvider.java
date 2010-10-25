@@ -26,39 +26,10 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.swing;
+package org.jowidgets.api.toolkit;
 
-import org.jowidgets.common.image.IImageRegistry;
-import org.jowidgets.common.threads.IUiThreadAccess;
-import org.jowidgets.impl.swing.image.SwingImageRegistry;
-import org.jowidgets.spi.IToolkitSpi;
-import org.jowidgets.spi.IWidgetFactorySpi;
+public interface IToolkitProvider {
 
-public class SwingToolkit implements IToolkitSpi {
-
-	private final SwingImageRegistry imageRegistry;
-	private final SwingWidgetFactory widgetFactory;
-
-	public SwingToolkit() {
-		super();
-		this.imageRegistry = new SwingImageRegistry();
-		this.widgetFactory = new SwingWidgetFactory(imageRegistry);
-	}
-
-	@Override
-	public IImageRegistry getImageRegistry() {
-		return imageRegistry;
-	}
-
-	@Override
-	public IWidgetFactorySpi getWidgetFactory() {
-		return widgetFactory;
-	}
-
-	@Override
-	public IUiThreadAccess getUiThreadAccess() {
-		// TODO 
-		return null;
-	}
+	IToolkit get();
 
 }

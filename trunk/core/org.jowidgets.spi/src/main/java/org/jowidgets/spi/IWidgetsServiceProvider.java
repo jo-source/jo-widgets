@@ -26,51 +26,17 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl;
+package org.jowidgets.spi;
 
-import org.jowidgets.api.image.Icons;
-import org.jowidgets.api.toolkit.IToolkit;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.threads.IUiThreadAccess;
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
-import org.jowidgets.impl.widgets.composed.factory.GenericWidgetFactory;
-import org.jowidgets.spi.IWidgetsServiceProvider;
-import org.jowidgets.util.Assert;
 
-public class DefaultToolkit implements IToolkit {
+public interface IWidgetsServiceProvider {
 
-	private final IWidgetsServiceProvider toolkitSpi;
-	private final IGenericWidgetFactory genericWidgetFactory;
-	private final IBluePrintFactory bluePrintFactory;
+	IImageRegistry getImageRegistry();
 
-	public DefaultToolkit(final IWidgetsServiceProvider toolkitSpi) {
-		Assert.paramNotNull(toolkitSpi, "toolkitSpi");
-		this.toolkitSpi = toolkitSpi;
-		this.genericWidgetFactory = new GenericWidgetFactory(toolkitSpi.getWidgetFactory());
-		toolkitSpi.getImageRegistry().registerImageConstants(Icons.class);
-		this.bluePrintFactory = new BluePrintFactory();
-	}
+	IWidgetFactorySpi getWidgetFactory();
 
-	@Override
-	public IImageRegistry getImageRegistry() {
-		return toolkitSpi.getImageRegistry();
-	}
-
-	@Override
-	public IGenericWidgetFactory getWidgetFactory() {
-		return genericWidgetFactory;
-	}
-
-	@Override
-	public IBluePrintFactory getBluePrintFactory() {
-		return bluePrintFactory;
-	}
-
-	@Override
-	public IUiThreadAccess getUiThreadAccess() {
-		return toolkitSpi.getUiThreadAccess();
-	}
+	IUiThreadAccess getUiThreadAccess();
 
 }

@@ -26,17 +26,23 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi;
+package org.jowidgets.impl;
 
-import org.jowidgets.common.image.IImageRegistry;
-import org.jowidgets.common.threads.IUiThreadAccess;
+import org.jowidgets.api.toolkit.IToolkit;
+import org.jowidgets.api.toolkit.IToolkitProvider;
+import org.jowidgets.spi.IWidgetsServiceProvider;
 
-public interface IToolkitSpi {
+public class DefaultToolkitProvider implements IToolkitProvider {
 
-	IImageRegistry getImageRegistry();
+	private final IToolkit toolkit;
 
-	IWidgetFactorySpi getWidgetFactory();
+	public DefaultToolkitProvider(final IWidgetsServiceProvider toolkitSpi) {
+		this.toolkit = new DefaultToolkit(toolkitSpi);
+	}
 
-	IUiThreadAccess getUiThreadAccess();
+	@Override
+	public IToolkit get() {
+		return toolkit;
+	}
 
 }

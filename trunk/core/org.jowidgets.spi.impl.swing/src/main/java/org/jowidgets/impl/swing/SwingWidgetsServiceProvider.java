@@ -26,23 +26,23 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.swt;
+package org.jowidgets.impl.swing;
 
 import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.threads.IUiThreadAccess;
-import org.jowidgets.impl.swt.image.SwtImageRegistry;
-import org.jowidgets.spi.IToolkitSpi;
+import org.jowidgets.impl.swing.image.SwingImageRegistry;
+import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.IWidgetFactorySpi;
 
-public class SwtToolkit implements IToolkitSpi {
+public class SwingWidgetsServiceProvider implements IWidgetsServiceProvider {
 
-	private final SwtImageRegistry imageRegistry;
-	private final SwtWidgetFactory widgetFactory;
+	private final SwingImageRegistry imageRegistry;
+	private final SwingWidgetFactory widgetFactory;
 
-	public SwtToolkit() {
+	public SwingWidgetsServiceProvider() {
 		super();
-		this.imageRegistry = new SwtImageRegistry();
-		this.widgetFactory = new SwtWidgetFactory(imageRegistry);
+		this.imageRegistry = new SwingImageRegistry();
+		this.widgetFactory = new SwingWidgetFactory(imageRegistry);
 	}
 
 	@Override

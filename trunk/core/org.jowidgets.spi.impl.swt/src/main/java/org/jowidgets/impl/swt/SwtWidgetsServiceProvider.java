@@ -26,51 +26,39 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl;
+package org.jowidgets.impl.swt;
 
-import org.jowidgets.api.image.Icons;
-import org.jowidgets.api.toolkit.IToolkit;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.threads.IUiThreadAccess;
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
-import org.jowidgets.impl.widgets.composed.factory.GenericWidgetFactory;
+import org.jowidgets.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.spi.IWidgetsServiceProvider;
-import org.jowidgets.util.Assert;
+import org.jowidgets.spi.IWidgetFactorySpi;
 
-public class DefaultToolkit implements IToolkit {
+public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider {
 
-	private final IWidgetsServiceProvider toolkitSpi;
-	private final IGenericWidgetFactory genericWidgetFactory;
-	private final IBluePrintFactory bluePrintFactory;
+	private final SwtImageRegistry imageRegistry;
+	private final SwtWidgetFactory widgetFactory;
 
-	public DefaultToolkit(final IWidgetsServiceProvider toolkitSpi) {
-		Assert.paramNotNull(toolkitSpi, "toolkitSpi");
-		this.toolkitSpi = toolkitSpi;
-		this.genericWidgetFactory = new GenericWidgetFactory(toolkitSpi.getWidgetFactory());
-		toolkitSpi.getImageRegistry().registerImageConstants(Icons.class);
-		this.bluePrintFactory = new BluePrintFactory();
+	public SwtWidgetsServiceProvider() {
+		super();
+		this.imageRegistry = new SwtImageRegistry();
+		this.widgetFactory = new SwtWidgetFactory(imageRegistry);
 	}
 
 	@Override
 	public IImageRegistry getImageRegistry() {
-		return toolkitSpi.getImageRegistry();
+		return imageRegistry;
 	}
 
 	@Override
-	public IGenericWidgetFactory getWidgetFactory() {
-		return genericWidgetFactory;
-	}
-
-	@Override
-	public IBluePrintFactory getBluePrintFactory() {
-		return bluePrintFactory;
+	public IWidgetFactorySpi getWidgetFactory() {
+		return widgetFactory;
 	}
 
 	@Override
 	public IUiThreadAccess getUiThreadAccess() {
-		return toolkitSpi.getUiThreadAccess();
+		// TODO 
+		return null;
 	}
 
 }

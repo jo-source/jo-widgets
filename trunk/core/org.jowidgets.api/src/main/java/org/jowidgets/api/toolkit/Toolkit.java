@@ -32,24 +32,24 @@ import org.jowidgets.util.Assert;
 
 public final class Toolkit {
 
-	private static IToolkit toolkit;
+	private static IToolkitProvider toolkitProvider;
 
 	private Toolkit() {}
 
-	public static void initialize(final IToolkit toolkit) {
-		Assert.paramNotNull(toolkit, "toolkit");
+	public static void initialize(final IToolkitProvider toolkitProvider) {
+		Assert.paramNotNull(toolkitProvider, "toolkitProvider");
 
-		if (Toolkit.toolkit != null) {
+		if (Toolkit.toolkitProvider != null) {
 			throw new IllegalStateException("Toolkit is already initialized");
 		}
-		Toolkit.toolkit = toolkit;
+		Toolkit.toolkitProvider = toolkitProvider;
 	}
 
 	public static IToolkit getInstance() {
-		if (toolkit == null) {
+		if (toolkitProvider == null) {
 			throw new IllegalStateException("Toolkit is not initialized");
 		}
-		return toolkit;
+		return toolkitProvider.get();
 	}
 
 }

@@ -29,15 +29,15 @@ package org.jowidgets.examples.swt;
 
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.examples.common.HelloWidget;
-import org.jowidgets.impl.DefaultToolkit;
-import org.jowidgets.impl.swt.SwtToolkit;
+import org.jowidgets.impl.DefaultToolkitProvider;
+import org.jowidgets.impl.swt.SwtWidgetsServiceProvider;
 
 public final class HelloSwtWidgetStarter {
 
 	private HelloSwtWidgetStarter() {}
 
 	public static void main(final String[] args) throws Exception {
-		Toolkit.initialize(new DefaultToolkit(new SwtToolkit()));
+		Toolkit.initialize(new DefaultToolkitProvider(new SwtWidgetsServiceProvider()));
 		new HelloWidget("Hello Widgets SWT").start();
 	}
 
