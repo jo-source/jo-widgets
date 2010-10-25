@@ -28,6 +28,9 @@
 
 package org.jowidgets.api.toolkit;
 
+import java.util.Iterator;
+import java.util.ServiceLoader;
+
 import org.jowidgets.util.Assert;
 
 public final class Toolkit {
@@ -38,7 +41,6 @@ public final class Toolkit {
 
 	public static void initialize(final IToolkitProvider toolkitProvider) {
 		Assert.paramNotNull(toolkitProvider, "toolkitProvider");
-
 		if (Toolkit.toolkitProvider != null) {
 			throw new IllegalStateException("Toolkit is already initialized");
 		}
@@ -47,7 +49,21 @@ public final class Toolkit {
 
 	public static IToolkit getInstance() {
 		if (toolkitProvider == null) {
-			throw new IllegalStateException("Toolkit is not initialized");
+			final ServiceLoader<IToolkitProvider> toolkitProviderLoader = ServiceLoader.load(IToolkitProvider.class);
+			final Iterator<IToolkitProvider> iterator = toolkitProviderLoader.iterator();
+
+			if (!iterator.hasNext()) {
+				throw new IllegalStateException("No implementation found for '" + IToolkitProvider.class.getName() + "'");
+			}
+
+			Toolkit.toolkitProvider = iterator.next();
+
+			if (iterator.hasNext()) {
+				throw new IllegalStateException("More than one implementation found for '"
+					+ IToolkitProvider.class.getName()
+					+ "'");
+			}
+
 		}
 		return toolkitProvider.get();
 	}
