@@ -44,26 +44,35 @@ import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.blueprint.factory.ISimpleBluePrintFactory;
-import org.jowidgets.common.look.Position;
+import org.jowidgets.common.application.IApplication;
+import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.widgets.IActionWidgetCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 
-public class HelloWidget {
+public class HelloWidgetApplication implements IApplication {
 
-	private final IFrameWidget rootFrame;
+	private final String rootFrameTitle;
+	private IFrameWidget rootFrame;
 
-	@SuppressWarnings("unused")
-	public HelloWidget(final String title) {
+	public HelloWidgetApplication(final String title) {
+		this.rootFrameTitle = title;
+	}
+
+	public void start() {
+		Toolkit.getInstance().getApplicationRunner().run(this);
+	}
+
+	@Override
+	public void start(final IApplicationLifecycle lifecycle) {
 
 		final IToolkit toolkit = Toolkit.getInstance();
-
 		final IGenericWidgetFactory factory = toolkit.getWidgetFactory();
 		final IBluePrintFactory bpF = toolkit.getBluePrintFactory();
 
 		// create the root window
-		final IFrameBluePrint frameBp = bpF.frame(title);
+		final IFrameBluePrint frameBp = bpF.frame(rootFrameTitle);
 		frameBp.setMigLayout("[left, grow]", "[top, grow]");
 		rootFrame = factory.create(frameBp);
 
@@ -71,7 +80,7 @@ public class HelloWidget {
 
 			@Override
 			public void windowClosed() {
-				System.exit(0);
+				lifecycle.finish();
 			}
 
 		});
@@ -128,15 +137,12 @@ public class HelloWidget {
 			@Override
 			public void actionPerformed() {
 				dialog.setVisible(true);
+
 				System.out.println(dialog.isOkPressed());
 				System.out.println("Value:" + dialog.getValue());
 			}
 		});
 
-		rootFrame.setPosition(new Position(200, 200));
-	}
-
-	public void start() {
 		rootFrame.setVisible(true);
 	}
 
@@ -151,5 +157,4 @@ public class HelloWidget {
 
 		return dialog;
 	}
-
 }

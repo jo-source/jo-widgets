@@ -26,20 +26,35 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi;
+package org.jowidgets.impl.application;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationRunner;
-import org.jowidgets.common.image.IImageRegistry;
-import org.jowidgets.common.threads.IUiThreadAccess;
+import org.jowidgets.util.Assert;
 
-public interface IWidgetsServiceProvider {
+public class ApplicationRunner implements IApplicationRunner {
 
-	IImageRegistry getImageRegistry();
+	private final AtomicBoolean running;
 
-	IWidgetFactorySpi getWidgetFactory();
+	private final IApplicationRunner applicationRunner;
 
-	IUiThreadAccess createUiThreadAccess();
+	public ApplicationRunner(final IApplicationRunner applicationRunner) {
+		Assert.paramNotNull(applicationRunner, "applicationRunner");
+		this.applicationRunner = applicationRunner;
+		this.running = new AtomicBoolean(false);
+	}
 
-	IApplicationRunner createApplicationRunner();
+	@Override
+	public void run(final IApplication application) {
+		if (!running.getAndSet(true)) {
+			applicationRunner.run(application);
+			running.set(false);
+		}
+		else {
+			throw new IllegalStateException("Application runner already running");
+		}
+	}
 
 }

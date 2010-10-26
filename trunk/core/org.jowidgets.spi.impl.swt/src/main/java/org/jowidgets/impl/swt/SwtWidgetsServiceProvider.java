@@ -28,11 +28,14 @@
 
 package org.jowidgets.impl.swt;
 
+import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.threads.IUiThreadAccess;
+import org.jowidgets.impl.swt.application.SwtApplicationRunner;
 import org.jowidgets.impl.swt.image.SwtImageRegistry;
-import org.jowidgets.spi.IWidgetsServiceProvider;
+import org.jowidgets.impl.swt.threads.SwtUiThreadAccess;
 import org.jowidgets.spi.IWidgetFactorySpi;
+import org.jowidgets.spi.IWidgetsServiceProvider;
 
 public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider {
 
@@ -56,9 +59,13 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider {
 	}
 
 	@Override
-	public IUiThreadAccess getUiThreadAccess() {
-		// TODO 
-		return null;
+	public IUiThreadAccess createUiThreadAccess() {
+		return new SwtUiThreadAccess();
+	}
+
+	@Override
+	public IApplicationRunner createApplicationRunner() {
+		return new SwtApplicationRunner();
 	}
 
 }

@@ -32,9 +32,11 @@ import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.toolkit.IToolkit;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.threads.IUiThreadAccess;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.impl.application.ApplicationRunner;
 import org.jowidgets.impl.convert.DefaultConverterProvider;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 import org.jowidgets.impl.widgets.composed.factory.GenericWidgetFactory;
@@ -43,14 +45,17 @@ import org.jowidgets.util.Assert;
 
 public class DefaultToolkit implements IToolkit {
 
-	private final IWidgetsServiceProvider toolkitSpi;
+	private final IWidgetsServiceProvider widgetsServiceProvider;
 	private final IGenericWidgetFactory genericWidgetFactory;
 	private final IBluePrintFactory bluePrintFactory;
 	private final IConverterProvider converterProvider;
 
+	private IUiThreadAccess uiThreadAccess;
+	private IApplicationRunner applicationRunner;
+
 	public DefaultToolkit(final IWidgetsServiceProvider toolkitSpi) {
 		Assert.paramNotNull(toolkitSpi, "toolkitSpi");
-		this.toolkitSpi = toolkitSpi;
+		this.widgetsServiceProvider = toolkitSpi;
 		this.genericWidgetFactory = new GenericWidgetFactory(toolkitSpi.getWidgetFactory());
 		toolkitSpi.getImageRegistry().registerImageConstants(Icons.class);
 		this.bluePrintFactory = new BluePrintFactory();
@@ -59,7 +64,7 @@ public class DefaultToolkit implements IToolkit {
 
 	@Override
 	public IImageRegistry getImageRegistry() {
-		return toolkitSpi.getImageRegistry();
+		return widgetsServiceProvider.getImageRegistry();
 	}
 
 	@Override
@@ -73,13 +78,24 @@ public class DefaultToolkit implements IToolkit {
 	}
 
 	@Override
-	public IUiThreadAccess getUiThreadAccess() {
-		return toolkitSpi.getUiThreadAccess();
+	public IConverterProvider getConverterProvider() {
+		return converterProvider;
 	}
 
 	@Override
-	public IConverterProvider getConverterProvider() {
-		return converterProvider;
+	public IUiThreadAccess getUiThreadAccess() {
+		if (uiThreadAccess == null) {
+			uiThreadAccess = widgetsServiceProvider.createUiThreadAccess();
+		}
+		return uiThreadAccess;
+	}
+
+	@Override
+	public IApplicationRunner getApplicationRunner() {
+		if (applicationRunner == null) {
+			applicationRunner = new ApplicationRunner(widgetsServiceProvider.createApplicationRunner());
+		}
+		return applicationRunner;
 	}
 
 }

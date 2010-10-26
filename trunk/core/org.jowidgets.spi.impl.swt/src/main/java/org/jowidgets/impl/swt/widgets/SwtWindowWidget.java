@@ -99,16 +99,7 @@ public class SwtWindowWidget extends SwtContainerWidget implements IWindowWidget
 	@Override
 	public void setVisible(final boolean visible) {
 		if (visible) {
-			getUiReference().open();
-
-			final Shell shell = getUiReference();
-			final Display display = shell.getDisplay();
-
-			while (!shell.isDisposed()) {
-				if (!display.readAndDispatch()) {
-					display.sleep();
-				}
-			}
+			getUiReference().setVisible(true);
 		}
 		else {
 			getUiReference().close();

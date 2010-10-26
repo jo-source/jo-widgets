@@ -30,7 +30,7 @@ package org.jowidgets.examples.swing;
 import javax.swing.UIManager;
 import javax.swing.plaf.DimensionUIResource;
 
-import org.jowidgets.examples.common.HelloWidget;
+import org.jowidgets.examples.common.HelloWidgetApplication;
 
 import com.jgoodies.looks.Options;
 import com.jgoodies.looks.windows.WindowsLookAndFeel;
@@ -46,14 +46,7 @@ public final class HelloSwingWidgetStarter {
 		Options.setPopupDropShadowEnabled(true);
 		UIManager.put("ToolBar.separatorSize", new DimensionUIResource(6, 18));
 
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-
-			@Override
-			public void run() {
-				new HelloWidget("Hello Widgets Swing").start();
-			}
-
-		});
+		new HelloWidgetApplication("Hello Widgets Swing").start();
 
 	}
 

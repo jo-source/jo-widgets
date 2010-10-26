@@ -28,11 +28,14 @@
 
 package org.jowidgets.impl.swing;
 
+import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.threads.IUiThreadAccess;
+import org.jowidgets.impl.swing.application.SwingApplicationRunner;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
-import org.jowidgets.spi.IWidgetsServiceProvider;
+import org.jowidgets.impl.swing.threads.SwingUiThreadAccess;
 import org.jowidgets.spi.IWidgetFactorySpi;
+import org.jowidgets.spi.IWidgetsServiceProvider;
 
 public class SwingWidgetsServiceProvider implements IWidgetsServiceProvider {
 
@@ -56,9 +59,13 @@ public class SwingWidgetsServiceProvider implements IWidgetsServiceProvider {
 	}
 
 	@Override
-	public IUiThreadAccess getUiThreadAccess() {
-		// TODO 
-		return null;
+	public IUiThreadAccess createUiThreadAccess() {
+		return new SwingUiThreadAccess();
+	}
+
+	@Override
+	public IApplicationRunner createApplicationRunner() {
+		return new SwingApplicationRunner();
 	}
 
 }

@@ -27,14 +27,14 @@
  */
 package org.jowidgets.examples.swt;
 
-import org.jowidgets.examples.common.HelloWidget;
+import org.jowidgets.examples.common.HelloWidgetApplication;
 
 public final class HelloSwtWidgetStarter {
 
 	private HelloSwtWidgetStarter() {}
 
 	public static void main(final String[] args) throws Exception {
-		new HelloWidget("Hello Widgets SWT").start();
+		new HelloWidgetApplication("Hello Widgets SWT").start();
 	}
 
 }

@@ -26,20 +26,11 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi;
+package org.jowidgets.common.application;
 
-import org.jowidgets.common.application.IApplicationRunner;
-import org.jowidgets.common.image.IImageRegistry;
-import org.jowidgets.common.threads.IUiThreadAccess;
 
-public interface IWidgetsServiceProvider {
+public interface IApplicationLifecycle {
 
-	IImageRegistry getImageRegistry();
-
-	IWidgetFactorySpi getWidgetFactory();
-
-	IUiThreadAccess createUiThreadAccess();
-
-	IApplicationRunner createApplicationRunner();
+	void finish();
 
 }
