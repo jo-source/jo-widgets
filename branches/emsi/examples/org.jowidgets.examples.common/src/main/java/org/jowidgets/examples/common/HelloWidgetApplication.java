@@ -72,7 +72,7 @@ public class HelloWidgetApplication implements IApplication {
 		final IBluePrintFactory bpF = toolkit.getBluePrintFactory();
 
 		// create the root window
-		final IFrameBluePrint frameBp = bpF.frame(rootFrameTitle);
+		final IFrameBluePrint frameBp = bpF.frame().setTitle(rootFrameTitle);
 		frameBp.setMigLayout("[left, grow]", "[top, grow]");
 		rootFrame = factory.create(frameBp);
 
@@ -117,7 +117,9 @@ public class HelloWidgetApplication implements IApplication {
 		valLabel3.registerInputWidget(widget3);
 
 		// row4
-		group.add(bpF.textSeparator("Integrated input compsosite", "The tooltip text").alignCenter(), "grow, span, wrap");
+		group.add(
+				bpF.textSeparator("Integrated input compsosite", "The tooltip text").alignCenter().setStrong(),
+				"grow, span, wrap");
 
 		// row5
 		final IInputCompositeBluePrint<String> inputCompositeBluePrint = bpF.inputComposite(new HelloContentCreator());
@@ -147,7 +149,7 @@ public class HelloWidgetApplication implements IApplication {
 	}
 
 	private IInputDialogWidget<String> createDialogWidget(final ISimpleBluePrintFactory bpF) {
-		final IInputDialogBluePrint<String> inputDialogBp = bpF.inputDialog(new HelloContentCreator());
+		final IInputDialogBluePrint<String> inputDialogBp = bpF.inputDialog(new HelloContentCreator2());
 		inputDialogBp.setTitle("Test dialog").setAutoCenterPolicy(AutoCenterPolicy.ONCE);
 		inputDialogBp.setOkButton("very ok", "This is very ok");
 		inputDialogBp.setCancelButton("cancel user input", "cancel the current user input");

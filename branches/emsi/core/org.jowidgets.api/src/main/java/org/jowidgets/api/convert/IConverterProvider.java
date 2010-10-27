@@ -40,6 +40,8 @@ public interface IConverterProvider {
 	 */
 	<OBJECT_TYPE> IConverter<OBJECT_TYPE> getConverter(final Class<? extends OBJECT_TYPE> type);
 
+	<OBJECT_TYPE> IObjectStringConverter<OBJECT_TYPE> toStringConverter();
+
 	IConverter<String> string();
 
 	IConverter<Long> longNumber();
