@@ -32,6 +32,7 @@ import java.util.Map;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.convert.IConverterProvider;
+import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.impl.convert.defaults.DefaultIntegerConverter;
 import org.jowidgets.impl.convert.defaults.DefaultLongConverter;
 import org.jowidgets.impl.convert.defaults.DefaultShortConverter;
@@ -40,6 +41,7 @@ import org.jowidgets.util.Assert;
 
 public final class DefaultConverterProvider implements IConverterProvider {
 
+	public static final IObjectStringConverter<Object> TO_STRING_CONVERTER = new DefaultObjectStringConverter();
 	public static final IConverter<String> STRING = new DefaultStringConverter();
 	public static final IConverter<Long> LONG_NUMBER = new DefaultLongConverter();
 	public static final IConverter<Integer> INTEGER_NUMBER = new DefaultIntegerConverter();
@@ -88,6 +90,12 @@ public final class DefaultConverterProvider implements IConverterProvider {
 	@Override
 	public IConverter<Short> shortNumber() {
 		return SHORT_NUMBER;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <OBJECT_TYPE> IObjectStringConverter<OBJECT_TYPE> toStringConverter() {
+		return (IObjectStringConverter<OBJECT_TYPE>) TO_STRING_CONVERTER;
 	}
 
 }
