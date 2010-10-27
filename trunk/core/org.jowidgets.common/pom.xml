@@ -6,7 +6,7 @@
 	<artifactId>org.jowidgets.common</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>org.jowidgets.common</name>
-	
+
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.core.parent</artifactId>

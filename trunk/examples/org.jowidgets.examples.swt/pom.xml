@@ -6,7 +6,7 @@
 	<artifactId>org.jowidgets.examples.swt</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>org.jowidgets.examples.swt</name>
-	
+
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.examples.parent</artifactId>

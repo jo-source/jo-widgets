@@ -8,7 +8,7 @@
 	<artifactId>org.jowidgets.spi.impl.swing</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>org.jowidgets.spi.impl.swing</name>
-	
+
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.core.parent</artifactId>

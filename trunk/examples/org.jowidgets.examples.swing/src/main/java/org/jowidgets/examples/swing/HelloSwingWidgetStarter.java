@@ -28,26 +28,16 @@
 package org.jowidgets.examples.swing;
 
 import javax.swing.UIManager;
-import javax.swing.plaf.DimensionUIResource;
 
 import org.jowidgets.examples.common.HelloWidgetApplication;
-
-import com.jgoodies.looks.Options;
-import com.jgoodies.looks.windows.WindowsLookAndFeel;
 
 public final class HelloSwingWidgetStarter {
 
 	private HelloSwingWidgetStarter() {}
 
 	public static void main(final String[] args) throws Exception {
-
-		UIManager.setLookAndFeel(WindowsLookAndFeel.class.getName());
-		Options.setUseSystemFonts(true);
-		Options.setPopupDropShadowEnabled(true);
-		UIManager.put("ToolBar.separatorSize", new DimensionUIResource(6, 18));
-
+		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		new HelloWidgetApplication("Hello Widgets Swing").start();
-
 	}
 
 }
