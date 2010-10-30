@@ -32,23 +32,26 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.image.impl.ImageHandle;
 import org.jowidgets.common.image.impl.ImageRegistry;
 
 public class SwingImageRegistry extends ImageRegistry {
 
 	public SwingImageRegistry() {
-		super(new SwingImageHandleProvider());
+		super();
 	}
 
-	public synchronized SwingImageHandle getImageHandle(final IImageConstant key) {
-		return (SwingImageHandle) super.getImageHandle(key);
+	@SuppressWarnings("unchecked")
+	@Override
+	public synchronized ImageHandle<Image> getImageHandle(final IImageConstant key) {
+		return (ImageHandle<Image>) super.getImageHandle(key);
 	}
 
 	public synchronized Image getImage(final IImageConstant key) {
 		if (key == null) {
 			return null;
 		}
-		final SwingImageHandle imageHandle = getImageHandle(key);
+		final ImageHandle<Image> imageHandle = getImageHandle(key);
 		if (imageHandle != null) {
 			return imageHandle.getImage();
 		}

@@ -38,9 +38,11 @@ import org.jowidgets.common.threads.IUiThreadAccess;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.application.ApplicationRunner;
 import org.jowidgets.impl.convert.DefaultConverterProvider;
+import org.jowidgets.impl.image.DefaultIconsRegisterService;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 import org.jowidgets.impl.widgets.composed.factory.GenericWidgetFactory;
 import org.jowidgets.spi.IWidgetsServiceProvider;
+import org.jowidgets.spi.image.IImageHandleFactorySpi;
 import org.jowidgets.util.Assert;
 
 public class DefaultToolkit implements IToolkit {
@@ -57,9 +59,19 @@ public class DefaultToolkit implements IToolkit {
 		Assert.paramNotNull(toolkitSpi, "toolkitSpi");
 		this.widgetsServiceProvider = toolkitSpi;
 		this.genericWidgetFactory = new GenericWidgetFactory(toolkitSpi.getWidgetFactory());
-		toolkitSpi.getImageRegistry().registerImageConstants(Icons.class);
 		this.bluePrintFactory = new BluePrintFactory();
 		this.converterProvider = new DefaultConverterProvider();
+
+		final IImageRegistry imageRegistry = toolkitSpi.getImageRegistry();
+		final IImageHandleFactorySpi imageHandleFactory = toolkitSpi.getImageHandleFactory();
+
+		final DefaultIconsRegisterService registerService = new DefaultIconsRegisterService(imageRegistry, imageHandleFactory);
+		registerService.registerIcons();
+
+		imageRegistry.registerImageConstant(Icons.INFO, imageHandleFactory.infoIcon());
+		imageRegistry.registerImageConstant(Icons.QUESTION, imageHandleFactory.questionIcon());
+		imageRegistry.registerImageConstant(Icons.WARNING, imageHandleFactory.warningIcon());
+		imageRegistry.registerImageConstant(Icons.ERROR, imageHandleFactory.errorIcon());
 	}
 
 	@Override

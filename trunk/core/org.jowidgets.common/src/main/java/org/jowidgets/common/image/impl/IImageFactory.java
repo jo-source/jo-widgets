@@ -26,55 +26,10 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.swt;
+package org.jowidgets.common.image.impl;
 
-import org.jowidgets.common.application.IApplicationRunner;
-import org.jowidgets.common.image.IImageRegistry;
-import org.jowidgets.common.threads.IUiThreadAccess;
-import org.jowidgets.impl.swt.application.SwtApplicationRunner;
-import org.jowidgets.impl.swt.image.SwtImageHandleFactory;
-import org.jowidgets.impl.swt.image.SwtImageRegistry;
-import org.jowidgets.impl.swt.threads.SwtUiThreadAccess;
-import org.jowidgets.spi.IWidgetFactorySpi;
-import org.jowidgets.spi.IWidgetsServiceProvider;
-import org.jowidgets.spi.image.IImageHandleFactorySpi;
+public interface IImageFactory<IMAGE_TYPE> {
 
-public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider {
-
-	private final SwtImageRegistry imageRegistry;
-	private final SwtImageHandleFactory imageHandleFactory;
-	private final SwtWidgetFactory widgetFactory;
-
-	public SwtWidgetsServiceProvider() {
-		super();
-		this.imageHandleFactory = new SwtImageHandleFactory();
-		this.imageRegistry = new SwtImageRegistry();
-		this.widgetFactory = new SwtWidgetFactory(imageRegistry);
-	}
-
-	@Override
-	public IImageRegistry getImageRegistry() {
-		return imageRegistry;
-	}
-
-	@Override
-	public IImageHandleFactorySpi getImageHandleFactory() {
-		return imageHandleFactory;
-	}
-
-	@Override
-	public IWidgetFactorySpi getWidgetFactory() {
-		return widgetFactory;
-	}
-
-	@Override
-	public IUiThreadAccess createUiThreadAccess() {
-		return new SwtUiThreadAccess();
-	}
-
-	@Override
-	public IApplicationRunner createApplicationRunner() {
-		return new SwtApplicationRunner();
-	}
+	IMAGE_TYPE createImage();
 
 }

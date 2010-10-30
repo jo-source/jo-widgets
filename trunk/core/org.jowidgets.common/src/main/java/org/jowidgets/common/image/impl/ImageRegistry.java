@@ -32,30 +32,18 @@ import java.util.Map;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.image.IImageHandle;
-import org.jowidgets.common.image.IImageHandleProvider;
 import org.jowidgets.common.image.IImageRegistry;
 
 public class ImageRegistry implements IImageRegistry {
 
-	private final IImageHandleProvider imageHandleProvider;
 	private final Map<Object, IImageHandle> imageMap = new HashMap<Object, IImageHandle>();
 
-	public ImageRegistry(final IImageHandleProvider imageService) {
-		this.imageHandleProvider = imageService;
-	}
-
 	@Override
-	public <T extends Enum<T> & IImageConstant> void registerImageConstants(final Class<T> enumClass) {
-		for (final T value : enumClass.getEnumConstants()) {
-			register(value, imageHandleProvider.getImageHandle(value.getDefaultUrl()));
-		}
-	}
-
-	public synchronized void register(final Object key, final IImageHandle imageHandle) {
+	public synchronized void registerImageConstant(final IImageConstant key, final IImageHandle imageHandle) {
 		imageMap.put(key, imageHandle);
 	}
 
-	public synchronized IImageHandle getImageHandle(final Object key) {
+	public synchronized IImageHandle getImageHandle(final IImageConstant key) {
 		return imageMap.get(key);
 	}
 

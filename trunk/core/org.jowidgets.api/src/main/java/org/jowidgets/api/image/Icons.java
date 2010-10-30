@@ -27,24 +27,13 @@
  */
 package org.jowidgets.api.image;
 
-import java.net.URL;
-
 import org.jowidgets.common.image.IImageConstant;
 
 public enum Icons implements IImageConstant {
 
-	OK("ok.png"),
-	ERROR("error.png");
-
-	private final URL defaultUrl;
-
-	private Icons(final String defaultPath) {
-		this.defaultUrl = getClass().getClassLoader().getResource("images/icons/" + defaultPath);
-	}
-
-	@Override
-	public URL getDefaultUrl() {
-		return defaultUrl;
-	}
+	INFO,
+	QUESTION,
+	WARNING,
+	ERROR;
 
 }

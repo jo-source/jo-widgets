@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Manuel Woelker, Michael Grossmann
+ * Copyright (c) 2010, Michael Grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,18 +25,21 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swing.image;
+package org.jowidgets.impl.image;
 
-import java.net.URL;
+import org.jowidgets.api.image.Icons16x16;
+import org.jowidgets.common.image.IImageRegistry;
+import org.jowidgets.spi.image.IImageHandleFactorySpi;
 
-import org.jowidgets.common.image.IImageHandle;
-import org.jowidgets.common.image.impl.AbstractImageHandleProvider;
+public class DefaultIconsRegisterService extends AbstractImageConstantRegisterService {
 
-public class SwingImageHandleProvider extends AbstractImageHandleProvider {
+	public DefaultIconsRegisterService(final IImageRegistry imageRegistry, final IImageHandleFactorySpi imageHandleFactorySpi) {
+		super("images/icons/", imageRegistry, imageHandleFactorySpi);
+	}
 
-	@Override
-	protected IImageHandle createImageHandle(final URL url) {
-		return new SwingImageHandle(url);
+	public void registerIcons() {
+		registerIcon(Icons16x16.OK, "ok.png");
+		registerIcon(Icons16x16.ERROR, "error.png");
 	}
 
 }

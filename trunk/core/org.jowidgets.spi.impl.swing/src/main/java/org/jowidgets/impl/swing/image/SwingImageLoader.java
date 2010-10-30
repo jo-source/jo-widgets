@@ -25,18 +25,32 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swt.image;
+package org.jowidgets.impl.swing.image;
 
+import java.awt.Image;
+import java.io.IOException;
 import java.net.URL;
 
-import org.jowidgets.common.image.IImageHandle;
-import org.jowidgets.common.image.impl.AbstractImageHandleProvider;
+import javax.imageio.ImageIO;
 
-public class SwtImageHandleProvider extends AbstractImageHandleProvider {
+import org.jowidgets.common.image.impl.IImageFactory;
 
-	@Override
-	protected IImageHandle createImageHandle(final URL url) {
-		return new SwtImageHandle(url);
+public class SwingImageLoader implements IImageFactory<Image> {
+
+	private final URL url;
+
+	public SwingImageLoader(final URL url) {
+		this.url = url;
 	}
 
+	@Override
+	public Image createImage() {
+		try {
+			return ImageIO.read(url);
+		}
+		catch (final IOException e) {
+			throw new RuntimeException(e);
+		}
+
+	}
 }

@@ -27,8 +27,7 @@
  */
 package org.jowidgets.common.image;
 
-import java.net.URL;
 
 public interface IImageConstant {
-	URL getDefaultUrl();
+
 }

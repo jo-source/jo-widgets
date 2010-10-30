@@ -29,28 +29,31 @@ package org.jowidgets.impl.swt.image;
 
 import org.eclipse.swt.graphics.Image;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.image.impl.ImageHandle;
 import org.jowidgets.common.image.impl.ImageRegistry;
 
 public class SwtImageRegistry extends ImageRegistry {
 
 	public SwtImageRegistry() {
-		super(new SwtImageHandleProvider());
+		super();
 	}
 
-	public synchronized SwtImageHandle getImageHandle(final IImageConstant key) {
-		return (SwtImageHandle) super.getImageHandle(key);
+	@SuppressWarnings("unchecked")
+	@Override
+	public synchronized ImageHandle<Image> getImageHandle(final IImageConstant key) {
+		return (ImageHandle<Image>) super.getImageHandle(key);
 	}
 
 	public synchronized Image getImage(final IImageConstant key) {
 		if (key == null) {
 			return null;
 		}
-		final SwtImageHandle imageHandle = getImageHandle(key);
+		final ImageHandle<Image> imageHandle = getImageHandle(key);
 		if (imageHandle != null) {
 			return imageHandle.getImage();
 		}
 		else {
-			throw new IllegalArgumentException("No icon found for the image constant '" + key + "'");
+			throw new IllegalArgumentException("No image found for the image constant '" + key + "'");
 		}
 	}
 

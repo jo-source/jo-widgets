@@ -31,10 +31,13 @@ package org.jowidgets.spi;
 import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.threads.IUiThreadAccess;
+import org.jowidgets.spi.image.IImageHandleFactorySpi;
 
 public interface IWidgetsServiceProvider {
 
 	IImageRegistry getImageRegistry();
+
+	IImageHandleFactorySpi getImageHandleFactory();
 
 	IWidgetFactorySpi getWidgetFactory();
 

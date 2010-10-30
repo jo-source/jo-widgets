@@ -28,7 +28,7 @@
 package org.jowidgets.impl.widgets.composed.blueprint.defaults;
 
 import org.jowidgets.api.color.Colors;
-import org.jowidgets.api.image.Icons;
+import org.jowidgets.api.image.Icons16x16;
 import org.jowidgets.api.widgets.blueprint.builder.IValidationLabelSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.common.look.Markup;
@@ -47,9 +47,9 @@ public class ValidationLabelDefaults implements IDefaultInitializer<IValidationL
 		builder.setWarningColor(Colors.DEFAULT);
 		builder.setMissingInputColor(Colors.DEFAULT);
 
-		builder.setOkIcon(Icons.OK);
+		builder.setOkIcon(Icons16x16.OK);
 		builder.setWarningIcon(null);
-		builder.setErrorIcon(Icons.ERROR);
+		builder.setErrorIcon(Icons16x16.ERROR);
 		builder.setMissingInputIcon(null);
 
 		// i18n

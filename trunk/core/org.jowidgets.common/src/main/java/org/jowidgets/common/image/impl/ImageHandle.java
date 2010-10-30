@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Manuel Woelker, Michael Grossmann
+ * Copyright (c) 2010, Michael Grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,31 +25,26 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swt.image;
+package org.jowidgets.common.image.impl;
 
-import java.io.IOException;
-import java.net.URL;
+import org.jowidgets.common.image.IImageHandle;
+import org.jowidgets.util.Assert;
 
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Display;
-import org.jowidgets.common.image.impl.AbstractImageHandle;
+public final class ImageHandle<IMAGE_TYPE> implements IImageHandle {
 
-public class SwtImageHandle extends AbstractImageHandle<Image> {
+	private final IImageFactory<IMAGE_TYPE> imageFactory;
+	private IMAGE_TYPE image = null;
 
-	private final URL url;
-
-	public SwtImageHandle(final URL url) {
-		this.url = url;
+	public ImageHandle(final IImageFactory<IMAGE_TYPE> imageFactory) {
+		Assert.paramNotNull(imageFactory, "imageFactory");
+		this.imageFactory = imageFactory;
 	}
 
-	@Override
-	protected Image createImage() {
-		try {
-			return new Image(Display.getDefault(), url.openStream());
+	public synchronized IMAGE_TYPE getImage() {
+		if (image == null) {
+			image = imageFactory.createImage();
 		}
-		catch (final IOException e) {
-			throw new RuntimeException(e);
-		}
+		return image;
 	}
 
 }

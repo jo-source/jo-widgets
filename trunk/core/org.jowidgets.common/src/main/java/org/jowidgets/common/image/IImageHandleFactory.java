@@ -25,21 +25,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.common.image.impl;
+package org.jowidgets.common.image;
 
-import org.jowidgets.common.image.IImageHandle;
+import java.net.URL;
 
-public abstract class AbstractImageHandle<IMAGE_TYPE> implements IImageHandle {
-
-	private IMAGE_TYPE image = null;
-
-	public synchronized IMAGE_TYPE getImage() {
-		if (image == null) {
-			image = createImage();
-		}
-		return image;
-	}
-
-	protected abstract IMAGE_TYPE createImage();
-
+public interface IImageHandleFactory {
+	IImageHandle createImageHandle(final URL url);
 }

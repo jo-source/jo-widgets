@@ -28,7 +28,7 @@
 package org.jowidgets.examples.common;
 
 import org.jowidgets.api.convert.IConverterProvider;
-import org.jowidgets.api.image.Icons;
+import org.jowidgets.api.image.Icons16x16;
 import org.jowidgets.api.toolkit.IToolkit;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.validation.ValidationResult;
@@ -61,7 +61,7 @@ public class HelloContentCreator2 implements IInputContentCreator<String> {
 		final IToggleButtonWidget tb1 = widgetContainer.add(toggleButtonBluePrint, "wrap, growx");
 
 		toggleButtonBluePrint = bpF.toggleButton();
-		toggleButtonBluePrint.setText("Text").setToolTipText("ToolTiptext").setIcon(Icons.OK).alignCenter();
+		toggleButtonBluePrint.setText("Text").setToolTipText("ToolTiptext").setIcon(Icons16x16.OK).alignCenter();
 		final IToggleButtonWidget tb2 = widgetContainer.add(toggleButtonBluePrint, "wrap, growx");
 
 		final ICheckBoxBluePrint checkBoxBp = bpF.checkBox().setText("Checkbox").setToolTipText("Tooltip");

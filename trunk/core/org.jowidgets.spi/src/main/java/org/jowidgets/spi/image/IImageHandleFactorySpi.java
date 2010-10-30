@@ -26,55 +26,19 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.swing;
+package org.jowidgets.spi.image;
 
-import org.jowidgets.common.application.IApplicationRunner;
-import org.jowidgets.common.image.IImageRegistry;
-import org.jowidgets.common.threads.IUiThreadAccess;
-import org.jowidgets.impl.swing.application.SwingApplicationRunner;
-import org.jowidgets.impl.swing.image.SwingImageHandleFactory;
-import org.jowidgets.impl.swing.image.SwingImageRegistry;
-import org.jowidgets.impl.swing.threads.SwingUiThreadAccess;
-import org.jowidgets.spi.IWidgetFactorySpi;
-import org.jowidgets.spi.IWidgetsServiceProvider;
-import org.jowidgets.spi.image.IImageHandleFactorySpi;
+import org.jowidgets.common.image.IImageHandle;
+import org.jowidgets.common.image.IImageHandleFactory;
 
-public class SwingWidgetsServiceProvider implements IWidgetsServiceProvider {
+public interface IImageHandleFactorySpi extends IImageHandleFactory {
 
-	private final SwingImageHandleFactory imageHandleFactory;
-	private final SwingImageRegistry imageRegistry;
-	private final SwingWidgetFactory widgetFactory;
+	IImageHandle errorIcon();
 
-	public SwingWidgetsServiceProvider() {
-		super();
-		this.imageHandleFactory = new SwingImageHandleFactory();
-		this.imageRegistry = new SwingImageRegistry();
-		this.widgetFactory = new SwingWidgetFactory(imageRegistry);
-	}
+	IImageHandle infoIcon();
 
-	@Override
-	public IImageRegistry getImageRegistry() {
-		return imageRegistry;
-	}
+	IImageHandle warningIcon();
 
-	@Override
-	public IImageHandleFactorySpi getImageHandleFactory() {
-		return imageHandleFactory;
-	}
-
-	@Override
-	public IWidgetFactorySpi getWidgetFactory() {
-		return widgetFactory;
-	}
-
-	@Override
-	public IUiThreadAccess createUiThreadAccess() {
-		return new SwingUiThreadAccess();
-	}
-
-	@Override
-	public IApplicationRunner createApplicationRunner() {
-		return new SwingApplicationRunner();
-	}
+	IImageHandle questionIcon();
 
 }

@@ -29,6 +29,6 @@ package org.jowidgets.common.image;
 
 public interface IImageRegistry {
 
-	<T extends Enum<T> & IImageConstant> void registerImageConstants(final Class<T> enumClass);
+	void registerImageConstant(final IImageConstant key, final IImageHandle imageHandle);
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Manuel Woelker, Michael Grossmann
+ * Copyright (c) 2010, Michael Grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,32 +25,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swing.image;
+package org.jowidgets.api.image;
 
-import java.awt.Image;
-import java.io.IOException;
-import java.net.URL;
+import org.jowidgets.common.image.IImageConstant;
 
-import javax.imageio.ImageIO;
+public enum Icons16x16 implements IImageConstant {
 
-import org.jowidgets.common.image.impl.AbstractImageHandle;
+	OK,
+	ERROR;
 
-public class SwingImageHandle extends AbstractImageHandle<Image> {
-
-	private final URL url;
-
-	public SwingImageHandle(final URL url) {
-		this.url = url;
-	}
-
-	@Override
-	protected Image createImage() {
-		try {
-			return ImageIO.read(url);
-		}
-		catch (final IOException e) {
-			throw new RuntimeException(e);
-		}
-
-	}
 }
