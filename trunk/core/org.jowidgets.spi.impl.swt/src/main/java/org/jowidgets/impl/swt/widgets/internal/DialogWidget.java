@@ -48,9 +48,7 @@ public class DialogWidget extends SwtWindowWidget implements IFrameWidgetSpi {
 		final IWidget parent,
 		final IDialogSetupSpi setup) {
 
-		super(factory, colorCache, new Shell(parent == null ? null : (Shell) parent.getUiReference(), SWT.DIALOG_TRIM
-			| SWT.APPLICATION_MODAL
-			| SWT.RESIZE));
+		super(factory, colorCache, new Shell(parent == null ? null : (Shell) parent.getUiReference(), getStyle(setup)));
 
 		if (setup.getTitle() != null) {
 			getUiReference().setText(setup.getTitle());
@@ -80,6 +78,17 @@ public class DialogWidget extends SwtWindowWidget implements IFrameWidgetSpi {
 		else {
 			getUiReference().setVisible(false);
 		}
+	}
+
+	private static int getStyle(final IDialogSetupSpi setup) {
+		int result = SWT.DIALOG_TRIM;
+		if (true) {
+			result = result | SWT.APPLICATION_MODAL;
+		}
+		if (setup.isResizable()) {
+			result = result | SWT.RESIZE;
+		}
+		return result;
 	}
 
 }

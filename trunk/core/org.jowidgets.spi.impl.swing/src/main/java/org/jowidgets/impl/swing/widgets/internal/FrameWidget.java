@@ -45,6 +45,7 @@ public class FrameWidget extends SwingWindowWidget implements IFrameWidgetSpi {
 		super(factory, new JFrame());
 
 		getUiReference().setTitle(setup.getTitle());
+		getUiReference().setResizable(setup.isResizable());
 
 		setIcon(setup.getIcon(), imageRegistry);
 		setLayout(setup.getLayout());

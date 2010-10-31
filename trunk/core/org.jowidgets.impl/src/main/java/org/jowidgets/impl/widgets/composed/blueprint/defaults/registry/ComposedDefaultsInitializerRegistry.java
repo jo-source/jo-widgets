@@ -31,11 +31,13 @@ package org.jowidgets.impl.widgets.composed.blueprint.defaults.registry;
 import org.jowidgets.api.widgets.blueprint.builder.IInputCompositeSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IInputDialogSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IInputFieldSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.builder.IMessageDialogSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IValidationLabelSetupBuilder;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.registry.BasicDefaultsInitializerRegistry;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.InputCompositeDefaults;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.InputDialogDefaults;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.InputFieldDefaults;
+import org.jowidgets.impl.widgets.composed.blueprint.defaults.MessageDialogDefaults;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.ValidationLabelDefaults;
 
 public class ComposedDefaultsInitializerRegistry extends BasicDefaultsInitializerRegistry {
@@ -43,6 +45,7 @@ public class ComposedDefaultsInitializerRegistry extends BasicDefaultsInitialize
 	public ComposedDefaultsInitializerRegistry() {
 		super();
 		register(IInputCompositeSetupBuilder.class, new InputCompositeDefaults());
+		register(IMessageDialogSetupBuilder.class, new MessageDialogDefaults());
 		register(IInputDialogSetupBuilder.class, new InputDialogDefaults());
 		register(IInputFieldSetupBuilder.class, new InputFieldDefaults());
 		register(IValidationLabelSetupBuilder.class, new ValidationLabelDefaults());

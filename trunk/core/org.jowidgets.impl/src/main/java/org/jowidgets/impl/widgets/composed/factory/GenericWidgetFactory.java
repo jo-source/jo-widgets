@@ -31,6 +31,7 @@ import org.jowidgets.api.widgets.descriptor.IInputCompositeDescriptor;
 import org.jowidgets.api.widgets.descriptor.IInputDialogDescriptor;
 import org.jowidgets.api.widgets.descriptor.IInputFieldDescriptor;
 import org.jowidgets.api.widgets.descriptor.ILabelDescriptor;
+import org.jowidgets.api.widgets.descriptor.IMessageDialogDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextSeparatorDescriptor;
 import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
 import org.jowidgets.impl.widgets.basic.factory.BasicGenericWidgetFactory;
@@ -38,6 +39,7 @@ import org.jowidgets.impl.widgets.composed.factory.internal.InputCompositeWidget
 import org.jowidgets.impl.widgets.composed.factory.internal.InputDialogWidgetFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.InputFieldWidgetFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.LabelWidgetFactory;
+import org.jowidgets.impl.widgets.composed.factory.internal.MessageDialogWidgetFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.TextSeparatorWidgetFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.ValidationLabelWidgetFactory;
 import org.jowidgets.spi.IWidgetFactorySpi;
@@ -54,6 +56,7 @@ public class GenericWidgetFactory extends BasicGenericWidgetFactory {
 		register(IInputFieldDescriptor.class, new InputFieldWidgetFactory(this));
 		register(ILabelDescriptor.class, new LabelWidgetFactory(this));
 		register(ITextSeparatorDescriptor.class, new TextSeparatorWidgetFactory(this));
+		register(IMessageDialogDescriptor.class, new MessageDialogWidgetFactory(this));
 		register(IInputDialogDescriptor.class, new InputDialogWidgetFactory(this));
 		register(IInputCompositeDescriptor.class, new InputCompositeWidgetFactory(this));
 		register(IValidationLabelDescriptor.class, new ValidationLabelWidgetFactory(this));

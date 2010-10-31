@@ -27,8 +27,10 @@
  */
 package org.jowidgets.impl.widgets.composed.blueprint;
 
+import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
+import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
@@ -93,6 +95,36 @@ public final class BluePrintFactory extends SimpleBluePrintFactory implements IB
 	@Override
 	public ITextSeparatorBluePrint textSeparator(final String text) {
 		return textSeparator().setText(text);
+	}
+
+	@Override
+	public IMessageDialogBluePrint infoDialog() {
+		return messageDialog().setIcon(Icons.INFO);
+	}
+
+	@Override
+	public IMessageDialogBluePrint warningDialog() {
+		return messageDialog().setIcon(Icons.WARNING);
+	}
+
+	@Override
+	public IMessageDialogBluePrint errorDialog() {
+		return messageDialog().setIcon(Icons.ERROR);
+	}
+
+	@Override
+	public IMessageDialogBluePrint infoDialog(final String title, final String message) {
+		return infoDialog().setTitle(title).setText(message);
+	}
+
+	@Override
+	public IMessageDialogBluePrint warningDialog(final String title, final String message) {
+		return warningDialog().setTitle(title).setText(message);
+	}
+
+	@Override
+	public IMessageDialogBluePrint errorDialog(final String title, final String message) {
+		return errorDialog().setTitle(title).setText(message);
 	}
 
 }

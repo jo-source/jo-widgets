@@ -32,6 +32,7 @@ import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
+import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
 import org.jowidgets.api.widgets.blueprint.IValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
@@ -42,6 +43,7 @@ import org.jowidgets.api.widgets.descriptor.IInputCompositeDescriptor;
 import org.jowidgets.api.widgets.descriptor.IInputDialogDescriptor;
 import org.jowidgets.api.widgets.descriptor.IInputFieldDescriptor;
 import org.jowidgets.api.widgets.descriptor.ILabelDescriptor;
+import org.jowidgets.api.widgets.descriptor.IMessageDialogDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextSeparatorDescriptor;
 import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
 import org.jowidgets.impl.widgets.basic.blueprint.BasicBluePrintFactory;
@@ -68,6 +70,11 @@ public class SimpleBluePrintFactory extends BasicBluePrintFactory implements ISi
 	@Override
 	public final IValidationLabelBluePrint validationLabel() {
 		return createProxy(IValidationLabelBluePrint.class, IValidationLabelDescriptor.class);
+	}
+
+	@Override
+	public IMessageDialogBluePrint messageDialog() {
+		return createProxy(IMessageDialogBluePrint.class, IMessageDialogDescriptor.class);
 	}
 
 	@Override

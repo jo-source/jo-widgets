@@ -27,6 +27,7 @@
  */
 package org.jowidgets.impl.swt.widgets.internal;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
@@ -43,12 +44,20 @@ public class FrameWidget extends SwtWindowWidget implements IFrameWidgetSpi {
 		final IColorCache colorCache,
 		final SwtImageRegistry imageRegistry,
 		final IFrameSetupSpi setup) {
-		super(factory, colorCache, new Shell());
+		super(factory, colorCache, new Shell(getStyle(setup)));
 
 		getUiReference().setText(setup.getTitle());
 		setLayout(setup.getLayout());
 		setIcon(imageRegistry, setup.getIcon());
 		ColorSettingsInvoker.setColors(setup, this);
+	}
+
+	private static int getStyle(final IFrameSetupSpi setup) {
+		int result = SWT.SHELL_TRIM;
+		if (setup.isResizable()) {
+			result = result | SWT.RESIZE;
+		}
+		return result;
 	}
 
 }

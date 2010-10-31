@@ -59,7 +59,11 @@ public class TextLabelWidget extends SwingWidget implements ITextLabelWidgetSpi 
 	}
 
 	@Override
-	public void setText(final String text) {
+	public void setText(String text) {
+		//allow line breaks by using html
+		if (text != null && text.contains("\n")) {
+			text = "<html>" + text.replace("\n", "<br>") + "</html>";
+		}
 		getUiReference().setText(text);
 	}
 

@@ -104,10 +104,5 @@ public class ActiveWindowTracker {
 			activeWindowUiReference = null;
 		}
 
-		@Override
-		public void windowClosed() {
-			window.removeWindowListener(this);
-		}
-
 	}
 }
