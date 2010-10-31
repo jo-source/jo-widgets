@@ -28,7 +28,7 @@
 package org.jowidgets.impl.swt.util;
 
 import org.eclipse.swt.graphics.Point;
-import org.jowidgets.common.look.Dimension;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.util.Assert;
 
 public final class DimensionConvert {

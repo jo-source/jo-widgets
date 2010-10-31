@@ -29,7 +29,7 @@ package org.jowidgets.api.widgets.descriptor.setup;
 
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
-import org.jowidgets.common.look.Border;
+import org.jowidgets.common.types.Border;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface IInputCompositeSetup<INPUT_TYPE> extends IInputWidgetSetup<INPUT_TYPE> {

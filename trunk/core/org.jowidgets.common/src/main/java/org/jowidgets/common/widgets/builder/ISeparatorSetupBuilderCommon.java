@@ -27,7 +27,7 @@
  */
 package org.jowidgets.common.widgets.builder;
 
-import org.jowidgets.common.look.Orientation;
+import org.jowidgets.common.types.Orientation;
 
 public interface ISeparatorSetupBuilderCommon<INSTANCE_TYPE extends ISeparatorSetupBuilderCommon<?>> extends
 		IWidgetSetupBuilderCommon<INSTANCE_TYPE> {

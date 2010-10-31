@@ -28,7 +28,7 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.look.Markup;
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.ITextLabelWidgetCommon;
 
 public class TextLabelWidgetCommonWrapper extends WidgetCommonWrapper implements ITextLabelWidgetCommon {

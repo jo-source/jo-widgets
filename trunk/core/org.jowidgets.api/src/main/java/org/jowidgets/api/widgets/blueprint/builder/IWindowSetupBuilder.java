@@ -27,8 +27,8 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
-import org.jowidgets.api.look.AutoCenterPolicy;
-import org.jowidgets.api.look.AutoPackPolicy;
+import org.jowidgets.api.types.AutoCenterPolicy;
+import org.jowidgets.api.types.AutoPackPolicy;
 import org.jowidgets.api.widgets.blueprint.builder.convenience.IWindowSetupConvenience;
 import org.jowidgets.common.widgets.builder.IWidgetSetupBuilderCommon;
 

@@ -25,25 +25,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.common.look;
+package org.jowidgets.common.types;
 
-public final class Dimension {
+public enum AlignmentHorizontal {
 
-	private final int width;
-	private final int height;
-
-	public Dimension(final int width, final int height) {
-		super();
-		this.width = width;
-		this.height = height;
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public int getHeight() {
-		return height;
-	}
+	LEFT,
+	RIGHT,
+	CENTER;
 
 }

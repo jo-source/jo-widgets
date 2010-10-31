@@ -28,8 +28,8 @@
 package org.jowidgets.impl.widgets.common.blueprint.defaults;
 
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
-import org.jowidgets.common.look.AlignmentHorizontal;
-import org.jowidgets.common.look.Markup;
+import org.jowidgets.common.types.AlignmentHorizontal;
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.builder.IButtonSetupBuilderCommon;
 
 public class ButtonDefaultsCommon implements IDefaultInitializer<IButtonSetupBuilderCommon<?>> {

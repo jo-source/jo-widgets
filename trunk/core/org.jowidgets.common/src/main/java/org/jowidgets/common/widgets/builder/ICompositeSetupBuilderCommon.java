@@ -27,7 +27,7 @@
  */
 package org.jowidgets.common.widgets.builder;
 
-import org.jowidgets.common.look.Border;
+import org.jowidgets.common.types.Border;
 import org.jowidgets.common.widgets.builder.convenience.ICompositeSetupConvenienceCommon;
 
 public interface ICompositeSetupBuilderCommon<INSTANCE_TYPE extends ICompositeSetupBuilderCommon<?>> extends

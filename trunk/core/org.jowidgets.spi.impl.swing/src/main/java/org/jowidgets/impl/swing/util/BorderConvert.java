@@ -30,7 +30,7 @@ package org.jowidgets.impl.swing.util;
 import javax.swing.BorderFactory;
 import javax.swing.border.TitledBorder;
 
-import org.jowidgets.common.look.Border;
+import org.jowidgets.common.types.Border;
 import org.jowidgets.impl.swing.widgets.internal.defaults.Colors;
 
 public final class BorderConvert {

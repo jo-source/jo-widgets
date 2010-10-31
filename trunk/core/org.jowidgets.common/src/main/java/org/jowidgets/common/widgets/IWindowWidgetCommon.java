@@ -27,9 +27,9 @@
  */
 package org.jowidgets.common.widgets;
 
-import org.jowidgets.common.look.Dimension;
-import org.jowidgets.common.look.Position;
-import org.jowidgets.common.look.Rectangle;
+import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.controler.IWindowObservable;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 

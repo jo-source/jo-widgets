@@ -29,7 +29,7 @@ package org.jowidgets.api.widgets.blueprint.builder;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.look.Markup;
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.builder.IWidgetSetupBuilderCommon;
 
 public interface IValidationLabelSetupBuilder<INSTANCE_TYPE extends IValidationLabelSetupBuilder<?>> extends

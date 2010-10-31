@@ -28,6 +28,8 @@
 
 package org.jowidgets.api.widgets;
 
+import org.jowidgets.api.types.QuestionResult;
+
 public interface IQuestionDialogWidget extends IChildWidget {
 
 	/**
@@ -36,6 +38,6 @@ public interface IQuestionDialogWidget extends IChildWidget {
 	 * 
 	 * @return the result of the question
 	 */
-	QuestionResult askQuestion();
+	QuestionResult question();
 
 }

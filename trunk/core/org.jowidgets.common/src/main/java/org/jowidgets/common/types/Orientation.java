@@ -25,14 +25,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.look;
+package org.jowidgets.common.types;
 
-public enum AutoPackPolicy {
+public enum Orientation {
 
-	ALLWAYS,
+	HORIZONTAL,
 
-	ONCE,
-
-	OFF;
+	VERTICAL;
 
 }

@@ -28,10 +28,10 @@
 package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.types.QuestionResult;
 import org.jowidgets.api.widgets.ICompositeWidget;
 import org.jowidgets.api.widgets.IDialogWidget;
 import org.jowidgets.api.widgets.IQuestionDialogWidget;
-import org.jowidgets.api.widgets.QuestionResult;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.setup.IQuestionDialogSetup;
 import org.jowidgets.common.color.IColorConstant;
@@ -168,7 +168,7 @@ public class QuestionDialogWidget implements IQuestionDialogWidget {
 	}
 
 	@Override
-	public QuestionResult askQuestion() {
+	public QuestionResult question() {
 		if (!wasVisible) {
 			wasVisible = true;
 			dialogWidget.setVisible(true);

@@ -30,7 +30,7 @@ package org.jowidgets.impl.swt.util;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
-import org.jowidgets.common.look.Markup;
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.impl.swt.font.FontCache;
 import org.jowidgets.impl.swt.font.FontDataKey;
 import org.jowidgets.impl.swt.font.IFontCache;

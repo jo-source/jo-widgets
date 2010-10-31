@@ -27,9 +27,9 @@
  */
 package org.jowidgets.examples.common;
 
-import org.jowidgets.api.look.AutoCenterPolicy;
 import org.jowidgets.api.toolkit.IToolkit;
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.types.AutoCenterPolicy;
 import org.jowidgets.api.widgets.ICompositeWidget;
 import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.IInputCompositeWidget;
@@ -138,6 +138,15 @@ public class HelloWidgetApplication implements IApplication {
 		button.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
+				//				final IQuestionDialogBluePrint questionDialogBp = bpF.yesNoQuestion().setTitle("Test message");
+				//				questionDialogBp.setText("Here is the message text. \nThe text has a new line before this and from now there comes more text");
+				//				questionDialogBp.setDefaultResult(QuestionResult.YES);
+				//				System.out.println(Toolkit.getActiveWindow().createChildWindow(questionDialogBp).askQuestion());
+
+				//				final IMessageDialogBluePrint messageDialogBp = bpF.messageDialog().setTitle("Test message").setIcon(Icons.ERROR);
+				//				messageDialogBp.setText("Here is the message text. \nThe text has a new line before this and from now there comes more text");
+				//				Toolkit.getActiveWindow().createChildWindow(messageDialogBp).showMessage();
+
 				dialog.setVisible(true);
 
 				System.out.println(dialog.isOkPressed());

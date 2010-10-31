@@ -30,8 +30,8 @@ package org.jowidgets.impl.swt.util;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
-import org.jowidgets.common.look.Border;
-import org.jowidgets.common.look.Markup;
+import org.jowidgets.common.types.Border;
+import org.jowidgets.common.types.Markup;
 
 public final class BorderToComposite {
 

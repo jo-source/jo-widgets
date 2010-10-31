@@ -31,7 +31,7 @@ import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.image.Icons16x16;
 import org.jowidgets.api.widgets.blueprint.builder.IValidationLabelSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
-import org.jowidgets.common.look.Markup;
+import org.jowidgets.common.types.Markup;
 
 public class ValidationLabelDefaults implements IDefaultInitializer<IValidationLabelSetupBuilder<?>> {
 

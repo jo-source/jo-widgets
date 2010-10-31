@@ -25,25 +25,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.common.look;
+package org.jowidgets.api.types;
 
-public final class Position {
+public enum AutoCenterPolicy {
 
-	private final int x;
-	private final int y;
+	ALLWAYS,
 
-	public Position(final int x, final int y) {
-		super();
-		this.x = x;
-		this.y = y;
-	}
+	ONCE,
 
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
-	}
+	OFF;
 
 }

@@ -27,8 +27,8 @@
  */
 package org.jowidgets.common.widgets.descriptor.setup;
 
-import org.jowidgets.common.look.AlignmentHorizontal;
-import org.jowidgets.common.look.Markup;
+import org.jowidgets.common.types.AlignmentHorizontal;
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface ITextLabelSetupCommon extends IWidgetSetupCommon {

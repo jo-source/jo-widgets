@@ -27,7 +27,7 @@
  */
 package org.jowidgets.common.widgets;
 
-import org.jowidgets.common.look.Markup;
+import org.jowidgets.common.types.Markup;
 
 public interface ITextLabelWidgetCommon extends IWidget {
 

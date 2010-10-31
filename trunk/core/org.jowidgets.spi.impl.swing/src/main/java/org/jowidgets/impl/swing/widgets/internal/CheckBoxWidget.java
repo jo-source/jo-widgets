@@ -33,7 +33,7 @@ import java.awt.event.ItemListener;
 import javax.swing.JCheckBox;
 import javax.swing.JToggleButton;
 
-import org.jowidgets.common.look.Markup;
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.impl.swing.util.AlignmentConvert;
 import org.jowidgets.impl.swing.util.FontProvider;

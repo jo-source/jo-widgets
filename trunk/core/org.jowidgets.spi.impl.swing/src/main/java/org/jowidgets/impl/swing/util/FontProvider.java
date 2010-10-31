@@ -29,7 +29,7 @@ package org.jowidgets.impl.swing.util;
 
 import java.awt.Font;
 
-import org.jowidgets.common.look.Markup;
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.util.Assert;
 
 public final class FontProvider {

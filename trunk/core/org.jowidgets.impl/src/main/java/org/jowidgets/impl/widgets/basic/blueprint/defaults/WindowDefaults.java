@@ -27,8 +27,8 @@
  */
 package org.jowidgets.impl.widgets.basic.blueprint.defaults;
 
-import org.jowidgets.api.look.AutoCenterPolicy;
-import org.jowidgets.api.look.AutoPackPolicy;
+import org.jowidgets.api.types.AutoCenterPolicy;
+import org.jowidgets.api.types.AutoPackPolicy;
 import org.jowidgets.api.widgets.blueprint.builder.ITitledWindowSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 

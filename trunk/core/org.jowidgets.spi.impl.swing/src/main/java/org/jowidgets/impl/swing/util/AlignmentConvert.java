@@ -29,7 +29,7 @@ package org.jowidgets.impl.swing.util;
 
 import javax.swing.SwingConstants;
 
-import org.jowidgets.common.look.AlignmentHorizontal;
+import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.util.Assert;
 
 public final class AlignmentConvert {

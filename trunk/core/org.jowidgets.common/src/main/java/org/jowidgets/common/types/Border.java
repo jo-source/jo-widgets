@@ -25,12 +25,21 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.common.look;
+package org.jowidgets.common.types;
 
-public enum AlignmentHorizontal {
+public class Border {
 
-	LEFT,
-	RIGHT,
-	CENTER;
+	private String title;
+
+	public Border() {}
+
+	public Border(final String title) {
+		super();
+		this.title = title;
+	}
+
+	public String getTitle() {
+		return title;
+	}
 
 }

@@ -28,7 +28,7 @@
 package org.jowidgets.impl.swt.util;
 
 import org.eclipse.swt.SWT;
-import org.jowidgets.common.look.AlignmentHorizontal;
+import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.util.Assert;
 
 public final class AlignmentConvert {

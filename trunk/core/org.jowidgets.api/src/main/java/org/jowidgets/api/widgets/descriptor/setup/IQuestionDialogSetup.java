@@ -28,7 +28,7 @@
 
 package org.jowidgets.api.widgets.descriptor.setup;
 
-import org.jowidgets.api.widgets.QuestionResult;
+import org.jowidgets.api.types.QuestionResult;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 

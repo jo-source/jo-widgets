@@ -25,21 +25,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.common.look;
+package org.jowidgets.common.types;
 
-public class Border {
+public enum FontType {
 
-	private String title;
+	PROPORTIONAL,
 
-	public Border() {}
-
-	public Border(final String title) {
-		super();
-		this.title = title;
-	}
-
-	public String getTitle() {
-		return title;
-	}
+	MONOSPACED;
 
 }

@@ -27,8 +27,8 @@
  */
 package org.jowidgets.api.widgets.descriptor.setup;
 
-import org.jowidgets.api.look.AutoCenterPolicy;
-import org.jowidgets.api.look.AutoPackPolicy;
+import org.jowidgets.api.types.AutoCenterPolicy;
+import org.jowidgets.api.types.AutoPackPolicy;
 import org.jowidgets.common.widgets.descriptor.setup.IWidgetSetupCommon;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 

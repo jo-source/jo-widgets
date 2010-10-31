@@ -29,7 +29,7 @@ package org.jowidgets.impl.swing.widgets.internal;
 
 import javax.swing.JLabel;
 
-import org.jowidgets.common.look.Markup;
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.impl.swing.util.AlignmentConvert;

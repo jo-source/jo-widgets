@@ -27,8 +27,8 @@
  */
 package org.jowidgets.impl.widgets.common.blueprint.convenience;
 
-import org.jowidgets.common.look.AlignmentHorizontal;
-import org.jowidgets.common.look.Markup;
+import org.jowidgets.common.types.AlignmentHorizontal;
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.builder.ITextLabelSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.convenience.ITextLabelSetupConvenienceCommon;
 import org.jowidgets.impl.base.blueprint.convenience.AbstractSetupBuilderConvenience;
