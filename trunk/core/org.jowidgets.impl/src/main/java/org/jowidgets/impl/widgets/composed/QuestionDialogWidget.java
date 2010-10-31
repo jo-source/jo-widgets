@@ -29,9 +29,10 @@ package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.widgets.ICompositeWidget;
 import org.jowidgets.api.widgets.IDialogWidget;
-import org.jowidgets.api.widgets.IMessageDialogWidget;
+import org.jowidgets.api.widgets.IQuestionDialogWidget;
+import org.jowidgets.api.widgets.QuestionResult;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.api.widgets.descriptor.setup.IMessageDialogSetup;
+import org.jowidgets.api.widgets.descriptor.setup.IQuestionDialogSetup;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.widgets.IButtonWidgetCommon;
 import org.jowidgets.common.widgets.IWidget;
@@ -39,12 +40,13 @@ import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
-public class MessageDialogWidget implements IMessageDialogWidget {
+public class QuestionDialogWidget implements IQuestionDialogWidget {
 
 	private final IDialogWidget dialogWidget;
 	private boolean wasVisible;
+	private QuestionResult result;
 
-	public MessageDialogWidget(final IDialogWidget dialogWidget, final IMessageDialogSetup setup) {
+	public QuestionDialogWidget(final IDialogWidget dialogWidget, final IQuestionDialogSetup setup) {
 		this.wasVisible = false;
 		this.dialogWidget = dialogWidget;
 
@@ -62,19 +64,48 @@ public class MessageDialogWidget implements IMessageDialogWidget {
 
 		// buttons
 		final ICompositeWidget buttonBar = dialogWidget.add(bpF.composite(), "span, align center");
-		buttonBar.setLayout(new MigLayoutDescriptor("[]", "[]"));
+		buttonBar.setLayout(new MigLayoutDescriptor("[][][]", "[]"));
 
 		final String buttonCellConstraints = "w 80::, sg bg";
 
-		final IButtonWidgetCommon okButton = buttonBar.add(setup.getOkButton(), buttonCellConstraints);
-
-		okButton.addActionListener(new IActionListener() {
+		final IButtonWidgetCommon yesButton = buttonBar.add(setup.getYesButton(), buttonCellConstraints);
+		yesButton.addActionListener(new IActionListener() {
 
 			@Override
 			public void actionPerformed() {
+				result = QuestionResult.YES;
 				dialogWidget.setVisible(false);
 			}
 		});
+		result = QuestionResult.YES;
+
+		if (setup.getNoButton() != null) {
+			final IButtonWidgetCommon noButton = buttonBar.add(setup.getNoButton(), buttonCellConstraints);
+			noButton.addActionListener(new IActionListener() {
+
+				@Override
+				public void actionPerformed() {
+					result = QuestionResult.NO;
+					dialogWidget.setVisible(false);
+				}
+			});
+
+			result = QuestionResult.NO;
+		}
+
+		if (setup.getCancelButton() != null) {
+			final IButtonWidgetCommon cancelButton = buttonBar.add(setup.getCancelButton(), buttonCellConstraints);
+			cancelButton.addActionListener(new IActionListener() {
+
+				@Override
+				public void actionPerformed() {
+					result = QuestionResult.CANCEL;
+					dialogWidget.setVisible(false);
+				}
+			});
+
+			result = QuestionResult.CANCEL;
+		}
 
 	}
 
@@ -104,7 +135,7 @@ public class MessageDialogWidget implements IMessageDialogWidget {
 	}
 
 	@Override
-	public void showMessage() {
+	public QuestionResult askQuestion() {
 		if (!wasVisible) {
 			wasVisible = true;
 			dialogWidget.setVisible(true);
@@ -116,6 +147,7 @@ public class MessageDialogWidget implements IMessageDialogWidget {
 		else {
 			throw new IllegalStateException("A message dialog could only be shown once!");
 		}
+		return result;
 	}
 
 }

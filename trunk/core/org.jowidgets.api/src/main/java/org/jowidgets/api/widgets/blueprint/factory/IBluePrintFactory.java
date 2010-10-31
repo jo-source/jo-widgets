@@ -30,6 +30,7 @@ package org.jowidgets.api.widgets.blueprint.factory;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
+import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
 import org.jowidgets.common.image.IImageConstant;
 
@@ -61,16 +62,24 @@ public interface IBluePrintFactory extends ISimpleBluePrintFactory {
 
 	ITextSeparatorBluePrint textSeparator(final String text, final String tooltipText);
 
+	IQuestionDialogBluePrint yesNoQuestion();
+
+	IQuestionDialogBluePrint yesNoCancelQuestion();
+
+	IQuestionDialogBluePrint yesNoQuestion(String question);
+
+	IQuestionDialogBluePrint yesNoCancelQuestion(String question);
+
 	IMessageDialogBluePrint infoDialog();
 
 	IMessageDialogBluePrint warningDialog();
 
 	IMessageDialogBluePrint errorDialog();
 
-	IMessageDialogBluePrint infoDialog(String title, String message);
+	IMessageDialogBluePrint infoDialog(String message);
 
-	IMessageDialogBluePrint warningDialog(String title, String message);
+	IMessageDialogBluePrint warningDialog(String message);
 
-	IMessageDialogBluePrint errorDialog(String title, String message);
+	IMessageDialogBluePrint errorDialog(String message);
 
 }

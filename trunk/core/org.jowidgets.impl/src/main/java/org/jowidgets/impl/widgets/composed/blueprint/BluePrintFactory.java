@@ -31,6 +31,7 @@ import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
+import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
@@ -113,18 +114,39 @@ public final class BluePrintFactory extends SimpleBluePrintFactory implements IB
 	}
 
 	@Override
-	public IMessageDialogBluePrint infoDialog(final String title, final String message) {
-		return infoDialog().setTitle(title).setText(message);
+	public IMessageDialogBluePrint infoDialog(final String message) {
+		return infoDialog().setText(message);
 	}
 
 	@Override
-	public IMessageDialogBluePrint warningDialog(final String title, final String message) {
-		return warningDialog().setTitle(title).setText(message);
+	public IMessageDialogBluePrint warningDialog(final String message) {
+		return warningDialog().setText(message);
 	}
 
 	@Override
-	public IMessageDialogBluePrint errorDialog(final String title, final String message) {
-		return errorDialog().setTitle(title).setText(message);
+	public IMessageDialogBluePrint errorDialog(final String message) {
+		return errorDialog().setText(message);
+	}
+
+	@Override
+	public IQuestionDialogBluePrint yesNoQuestion() {
+		return questionDialog();
+	}
+
+	//TODO i18n
+	@Override
+	public IQuestionDialogBluePrint yesNoCancelQuestion() {
+		return questionDialog().setCancelButton(button("Cancel"));
+	}
+
+	@Override
+	public IQuestionDialogBluePrint yesNoQuestion(final String question) {
+		return yesNoQuestion().setText(question);
+	}
+
+	@Override
+	public IQuestionDialogBluePrint yesNoCancelQuestion(final String question) {
+		return yesNoCancelQuestion().setText(question);
 	}
 
 }
