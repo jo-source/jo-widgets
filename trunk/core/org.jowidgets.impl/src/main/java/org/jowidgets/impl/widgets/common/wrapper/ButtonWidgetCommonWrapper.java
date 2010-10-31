@@ -57,4 +57,10 @@ public class ButtonWidgetCommonWrapper extends LabelWidgetCommonWrapper implemen
 		getWidget().removeActionListener(actionListener);
 	}
 
+	@Override
+	public void requestFocus() {
+		getWidget().requestFocus();
+
+	}
+
 }

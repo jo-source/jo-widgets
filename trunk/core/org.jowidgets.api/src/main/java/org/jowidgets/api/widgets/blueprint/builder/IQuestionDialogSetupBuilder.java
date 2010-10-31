@@ -27,6 +27,7 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
+import org.jowidgets.api.widgets.QuestionResult;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 
 public interface IQuestionDialogSetupBuilder<INSTANCE_TYPE extends IQuestionDialogSetupBuilder<?>> extends
@@ -39,5 +40,7 @@ public interface IQuestionDialogSetupBuilder<INSTANCE_TYPE extends IQuestionDial
 	INSTANCE_TYPE setNoButton(final IButtonDescriptor buttonDescriptor);
 
 	INSTANCE_TYPE setCancelButton(final IButtonDescriptor buttonDescriptor);
+
+	INSTANCE_TYPE setDefaultResult(QuestionResult defaultResult);
 
 }

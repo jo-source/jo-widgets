@@ -62,7 +62,6 @@ public class DialogWidget extends SwtWindowWidget implements IFrameWidgetSpi {
 	@Override
 	public void setVisible(final boolean visible) {
 		if (visible) {
-
 			getUiReference().setVisible(true);
 
 			final Shell shell = getUiReference();

@@ -27,6 +27,7 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.ICompositeWidget;
 import org.jowidgets.api.widgets.IDialogWidget;
 import org.jowidgets.api.widgets.IQuestionDialogWidget;
@@ -37,12 +38,14 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.widgets.IButtonWidgetCommon;
 import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
 public class QuestionDialogWidget implements IQuestionDialogWidget {
 
 	private final IDialogWidget dialogWidget;
+	private IButtonWidgetCommon defaultButton;
 	private boolean wasVisible;
 	private QuestionResult result;
 
@@ -68,6 +71,8 @@ public class QuestionDialogWidget implements IQuestionDialogWidget {
 
 		final String buttonCellConstraints = "w 80::, sg bg";
 
+		result = setup.getDefaultResult();
+
 		final IButtonWidgetCommon yesButton = buttonBar.add(setup.getYesButton(), buttonCellConstraints);
 		yesButton.addActionListener(new IActionListener() {
 
@@ -77,7 +82,12 @@ public class QuestionDialogWidget implements IQuestionDialogWidget {
 				dialogWidget.setVisible(false);
 			}
 		});
-		result = QuestionResult.YES;
+		if (setup.getDefaultResult() == null) {
+			result = QuestionResult.YES;
+		}
+		if (QuestionResult.YES == result) {
+			defaultButton = yesButton;
+		}
 
 		if (setup.getNoButton() != null) {
 			final IButtonWidgetCommon noButton = buttonBar.add(setup.getNoButton(), buttonCellConstraints);
@@ -90,7 +100,12 @@ public class QuestionDialogWidget implements IQuestionDialogWidget {
 				}
 			});
 
-			result = QuestionResult.NO;
+			if (setup.getDefaultResult() == null) {
+				result = QuestionResult.NO;
+			}
+			if (QuestionResult.NO == result) {
+				defaultButton = noButton;
+			}
 		}
 
 		if (setup.getCancelButton() != null) {
@@ -104,8 +119,26 @@ public class QuestionDialogWidget implements IQuestionDialogWidget {
 				}
 			});
 
-			result = QuestionResult.CANCEL;
+			if (setup.getDefaultResult() == null) {
+				result = QuestionResult.CANCEL;
+			}
+			if (QuestionResult.CANCEL == result) {
+				defaultButton = cancelButton;
+			}
+
 		}
+
+		dialogWidget.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowActivated() {
+				Toolkit.getUiThreadAccess().invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						defaultButton.requestFocus();
+					}
+				});
+			}
+		});
 
 	}
 

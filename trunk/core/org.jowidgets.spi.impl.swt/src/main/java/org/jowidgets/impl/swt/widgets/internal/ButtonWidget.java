@@ -100,4 +100,9 @@ public class ButtonWidget extends AbstractSwtActionWidget implements IButtonWidg
 		button.setFont(newFont);
 	}
 
+	@Override
+	public void requestFocus() {
+		getUiReference().setFocus();
+	}
+
 }

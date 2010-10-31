@@ -28,6 +28,7 @@
 
 package org.jowidgets.api.widgets.descriptor.setup;
 
+import org.jowidgets.api.widgets.QuestionResult;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
@@ -39,6 +40,8 @@ public interface IQuestionDialogSetup extends ILabelSetup {
 	IButtonDescriptor getNoButton();
 
 	IButtonDescriptor getCancelButton();
+
+	QuestionResult getDefaultResult();
 
 	String getTitle();
 

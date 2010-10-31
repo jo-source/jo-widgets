@@ -27,6 +27,7 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.ICompositeWidget;
 import org.jowidgets.api.widgets.IDialogWidget;
 import org.jowidgets.api.widgets.IMessageDialogWidget;
@@ -36,6 +37,7 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.widgets.IButtonWidgetCommon;
 import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
@@ -76,6 +78,17 @@ public class MessageDialogWidget implements IMessageDialogWidget {
 			}
 		});
 
+		dialogWidget.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowActivated() {
+				Toolkit.getUiThreadAccess().invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						okButton.requestFocus();
+					}
+				});
+			}
+		});
 	}
 
 	@Override

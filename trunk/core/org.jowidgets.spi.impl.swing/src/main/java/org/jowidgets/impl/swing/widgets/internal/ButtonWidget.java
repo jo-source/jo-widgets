@@ -95,4 +95,9 @@ public class ButtonWidget extends AbstractSwingActionWidget implements IButtonWi
 		button.setFont(FontProvider.deriveFont(button.getFont(), markup));
 	}
 
+	@Override
+	public void requestFocus() {
+		getUiReference().requestFocusInWindow();
+	}
+
 }

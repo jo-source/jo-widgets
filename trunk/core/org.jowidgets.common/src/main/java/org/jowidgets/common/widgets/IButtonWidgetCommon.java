@@ -29,4 +29,6 @@ package org.jowidgets.common.widgets;
 
 public interface IButtonWidgetCommon extends IActionWidgetCommon, ILabelWidgetCommon {
 
+	void requestFocus();
+
 }
