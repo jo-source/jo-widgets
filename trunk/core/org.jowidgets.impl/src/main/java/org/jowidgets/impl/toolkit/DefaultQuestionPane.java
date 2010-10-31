@@ -117,11 +117,9 @@ public class DefaultQuestionPane implements IQuestionPane {
 	private QuestionResult askQuestion(final IQuestionDialogBluePrint messageDialogBluePrint) {
 		final IWindowWidget activeWindow = activeWindowTracker.getActiveWindow();
 		if (activeWindow != null) {
-			System.out.println("active");
 			return activeWindow.createChildWindow(messageDialogBluePrint).question();
 		}
 		else {
-			System.out.println("root");
 			return genericWidgetFactory.create(messageDialogBluePrint).question();
 		}
 	}

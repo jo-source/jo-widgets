@@ -96,11 +96,9 @@ public class DefaultMessagePane implements IMessagePane {
 	private void showMessage(final IMessageDialogBluePrint messageDialogBluePrint) {
 		final IWindowWidget activeWindow = activeWindowTracker.getActiveWindow();
 		if (activeWindow != null) {
-			System.out.println("active");
 			activeWindow.createChildWindow(messageDialogBluePrint).showMessage();
 		}
 		else {
-			System.out.println("root");
 			genericWidgetFactory.create(messageDialogBluePrint).showMessage();
 		}
 	}
