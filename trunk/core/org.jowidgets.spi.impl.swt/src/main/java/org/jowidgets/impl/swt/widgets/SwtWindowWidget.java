@@ -27,8 +27,6 @@
  */
 package org.jowidgets.impl.swt.widgets;
 
-import org.eclipse.swt.events.ShellEvent;
-import org.eclipse.swt.events.ShellListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -57,37 +55,6 @@ public class SwtWindowWidget extends SwtContainerWidget implements IWindowWidget
 
 		this.windowObservableDelegate = new WindowObservable();
 
-		getUiReference().addShellListener(new ShellListener() {
-
-			@Override
-			public void shellActivated(final ShellEvent e) {
-				windowObservableDelegate.fireWindowActivated();
-			}
-
-			@Override
-			public void shellDeactivated(final ShellEvent e) {
-				windowObservableDelegate.fireWindowDeactivated();
-			}
-
-			@Override
-			public void shellIconified(final ShellEvent e) {
-				windowObservableDelegate.fireWindowIconified();
-			}
-
-			@Override
-			public void shellDeiconified(final ShellEvent e) {
-				windowObservableDelegate.fireWindowDeiconified();
-			}
-
-			@Override
-			public void shellClosed(final ShellEvent e) {
-				if (getUiReference().isVisible()) {
-					e.doit = false;
-					setVisible(false);
-				}
-			}
-
-		});
 	}
 
 	@Override
@@ -103,12 +70,16 @@ public class SwtWindowWidget extends SwtContainerWidget implements IWindowWidget
 	@Override
 	public void setVisible(final boolean visible) {
 		if (visible) {
-			getUiReference().setVisible(true);
+			getUiReference().open();
 		}
 		else {
-			getUiReference().setVisible(false);
-			close();
+			getUiReference().close();
 		}
+	}
+
+	@Override
+	public boolean isVisible() {
+		return getUiReference().isVisible();
 	}
 
 	@Override
@@ -170,7 +141,10 @@ public class SwtWindowWidget extends SwtContainerWidget implements IWindowWidget
 	@Override
 	public void close() {
 		getUiReference().close();
-		windowObservableDelegate.fireWindowClosed();
+	}
+
+	protected WindowObservable getWindowObservableDelegate() {
+		return windowObservableDelegate;
 	}
 
 }

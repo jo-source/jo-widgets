@@ -27,7 +27,6 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
-import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.types.QuestionResult;
 import org.jowidgets.api.widgets.ICompositeWidget;
 import org.jowidgets.api.widgets.IDialogWidget;
@@ -131,12 +130,7 @@ public class QuestionDialogWidget implements IQuestionDialogWidget {
 		dialogWidget.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowActivated() {
-				Toolkit.getUiThreadAccess().invokeLater(new Runnable() {
-					@Override
-					public void run() {
-						defaultButton.requestFocus();
-					}
-				});
+				defaultButton.requestFocus();
 			}
 		});
 

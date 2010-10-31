@@ -161,6 +161,11 @@ public class InputDialogWidget<INPUT_TYPE> implements IInputDialogWidget<INPUT_T
 	}
 
 	@Override
+	public boolean isVisible() {
+		return dialogWidget.isVisible();
+	}
+
+	@Override
 	public void close() {
 		dialogWidget.close();
 	}

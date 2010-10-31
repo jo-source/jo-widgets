@@ -28,32 +28,25 @@
 
 package org.jowidgets.api.toolkit;
 
-import org.jowidgets.api.convert.IConverterProvider;
-import org.jowidgets.api.widgets.IWindowWidget;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.application.IApplicationRunner;
-import org.jowidgets.common.image.IImageRegistry;
-import org.jowidgets.common.threads.IUiThreadAccess;
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.api.types.QuestionResult;
+import org.jowidgets.common.image.IImageConstant;
 
-public interface IToolkit {
+public interface IQuestionPane {
 
-	IImageRegistry getImageRegistry();
+	QuestionResult askYesNoQuestion(String question);
 
-	IMessagePane getMessagePane();
+	QuestionResult askYesNoCancelQuestion(String question);
 
-	IQuestionPane getQuestionPane();
+	QuestionResult askYesNoQuestion(String title, String question);
 
-	IGenericWidgetFactory getWidgetFactory();
+	QuestionResult askYesNoCancelQuestion(String title, String question);
 
-	IBluePrintFactory getBluePrintFactory();
+	QuestionResult askYesNoQuestion(String title, String question, QuestionResult defaultResult);
 
-	IConverterProvider getConverterProvider();
+	QuestionResult askYesNoCancelQuestion(String title, String question, QuestionResult defaultResult);
 
-	IApplicationRunner getApplicationRunner();
+	QuestionResult askYesNoQuestion(String title, String question, QuestionResult defaultResult, IImageConstant icon);
 
-	IUiThreadAccess getUiThreadAccess();
-
-	IWindowWidget getActiveWindow();
+	QuestionResult askYesNoCancelQuestion(String title, String question, QuestionResult defaultResult, IImageConstant icon);
 
 }

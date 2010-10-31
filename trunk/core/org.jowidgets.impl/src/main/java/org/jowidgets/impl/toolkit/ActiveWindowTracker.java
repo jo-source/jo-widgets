@@ -71,7 +71,10 @@ public class ActiveWindowTracker {
 
 	public IWindowWidget getActiveWindow() {
 		if (activeWindowUiReference != null) {
-			return uiReferenceToWindow.get(activeWindowUiReference);
+			final IWindowWidget activeWindow = uiReferenceToWindow.get(activeWindowUiReference);
+			if (activeWindow.isVisible()) {
+				return activeWindow;
+			}
 		}
 		return null;
 	}

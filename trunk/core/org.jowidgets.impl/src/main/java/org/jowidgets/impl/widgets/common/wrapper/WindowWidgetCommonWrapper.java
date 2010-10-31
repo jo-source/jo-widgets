@@ -84,6 +84,11 @@ public class WindowWidgetCommonWrapper extends WidgetCommonWrapper implements IW
 	}
 
 	@Override
+	public boolean isVisible() {
+		return getWidget().isVisible();
+	}
+
+	@Override
 	public <WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
 		final DESCRIPTOR_TYPE descriptor) {
 		return getWidget().createChildWindow(descriptor);

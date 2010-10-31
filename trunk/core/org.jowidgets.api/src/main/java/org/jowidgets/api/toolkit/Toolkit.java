@@ -103,4 +103,12 @@ public final class Toolkit {
 		return getInstance().getActiveWindow();
 	}
 
+	public static IMessagePane getMessagePane() {
+		return getInstance().getMessagePane();
+	}
+
+	public static IQuestionPane getQuestionPane() {
+		return getInstance().getQuestionPane();
+	}
+
 }

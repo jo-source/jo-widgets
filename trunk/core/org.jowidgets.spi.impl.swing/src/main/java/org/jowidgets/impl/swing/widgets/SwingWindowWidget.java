@@ -108,6 +108,11 @@ public class SwingWindowWidget extends SwingContainerWidget implements IWindowWi
 	}
 
 	@Override
+	public boolean isVisible() {
+		return getUiReference().isVisible();
+	}
+
+	@Override
 	public final void setPosition(final Position position) {
 		getUiReference().setLocation(PositionConvert.convert(position));
 	}

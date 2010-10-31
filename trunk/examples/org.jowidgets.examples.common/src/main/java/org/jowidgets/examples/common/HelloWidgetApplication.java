@@ -27,7 +27,6 @@
  */
 package org.jowidgets.examples.common;
 
-import org.jowidgets.api.toolkit.IToolkit;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.types.AutoCenterPolicy;
 import org.jowidgets.api.widgets.ICompositeWidget;
@@ -67,9 +66,8 @@ public class HelloWidgetApplication implements IApplication {
 	@Override
 	public void start(final IApplicationLifecycle lifecycle) {
 
-		final IToolkit toolkit = Toolkit.getInstance();
-		final IGenericWidgetFactory factory = toolkit.getWidgetFactory();
-		final IBluePrintFactory bpF = toolkit.getBluePrintFactory();
+		final IGenericWidgetFactory factory = Toolkit.getWidgetFactory();
+		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 
 		// create the root window
 		final IFrameBluePrint frameBp = bpF.frame().setTitle(rootFrameTitle);
@@ -138,15 +136,6 @@ public class HelloWidgetApplication implements IApplication {
 		button.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
-				//				final IQuestionDialogBluePrint questionDialogBp = bpF.yesNoQuestion().setTitle("Test message");
-				//				questionDialogBp.setText("Here is the message text. \nThe text has a new line before this and from now there comes more text");
-				//				questionDialogBp.setDefaultResult(QuestionResult.YES);
-				//				System.out.println(Toolkit.getActiveWindow().createChildWindow(questionDialogBp).askQuestion());
-
-				//				final IMessageDialogBluePrint messageDialogBp = bpF.messageDialog().setTitle("Test message").setIcon(Icons.ERROR);
-				//				messageDialogBp.setText("Here is the message text. \nThe text has a new line before this and from now there comes more text");
-				//				Toolkit.getActiveWindow().createChildWindow(messageDialogBp).showMessage();
-
 				dialog.setVisible(true);
 
 				System.out.println(dialog.isOkPressed());

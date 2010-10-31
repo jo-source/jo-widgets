@@ -28,32 +28,22 @@
 
 package org.jowidgets.api.toolkit;
 
-import org.jowidgets.api.convert.IConverterProvider;
-import org.jowidgets.api.widgets.IWindowWidget;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.application.IApplicationRunner;
-import org.jowidgets.common.image.IImageRegistry;
-import org.jowidgets.common.threads.IUiThreadAccess;
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.image.IImageConstant;
 
-public interface IToolkit {
+public interface IMessagePane {
 
-	IImageRegistry getImageRegistry();
+	void showInfo(String message);
 
-	IMessagePane getMessagePane();
+	void showWarning(String message);
 
-	IQuestionPane getQuestionPane();
+	void showError(String message);
 
-	IGenericWidgetFactory getWidgetFactory();
+	void showInfo(String title, String message);
 
-	IBluePrintFactory getBluePrintFactory();
+	void showWarning(String title, String message);
 
-	IConverterProvider getConverterProvider();
+	void showError(String title, String message);
 
-	IApplicationRunner getApplicationRunner();
-
-	IUiThreadAccess getUiThreadAccess();
-
-	IWindowWidget getActiveWindow();
+	void showMessage(String title, String message, IImageConstant icon);
 
 }

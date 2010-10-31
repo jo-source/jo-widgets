@@ -30,6 +30,8 @@ package org.jowidgets.impl.toolkit;
 
 import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.image.Icons;
+import org.jowidgets.api.toolkit.IMessagePane;
+import org.jowidgets.api.toolkit.IQuestionPane;
 import org.jowidgets.api.toolkit.IToolkit;
 import org.jowidgets.api.widgets.IWindowWidget;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
@@ -53,6 +55,8 @@ public class DefaultToolkit implements IToolkit {
 	private final IBluePrintFactory bluePrintFactory;
 	private final IConverterProvider converterProvider;
 	private final ActiveWindowTracker activeWindowTracker;
+	private final IMessagePane messagePane;
+	private final IQuestionPane questionPane;
 
 	private IUiThreadAccess uiThreadAccess;
 	private IApplicationRunner applicationRunner;
@@ -64,6 +68,8 @@ public class DefaultToolkit implements IToolkit {
 		this.bluePrintFactory = new BluePrintFactory();
 		this.converterProvider = new DefaultConverterProvider();
 		this.activeWindowTracker = new ActiveWindowTracker(genericWidgetFactory);
+		this.messagePane = new DefaultMessagePane(genericWidgetFactory, bluePrintFactory, activeWindowTracker);
+		this.questionPane = new DefaultQuestionPane(genericWidgetFactory, bluePrintFactory, activeWindowTracker);
 
 		final IImageRegistry imageRegistry = toolkitSpi.getImageRegistry();
 		final IImageHandleFactorySpi imageHandleFactory = toolkitSpi.getImageHandleFactory();
@@ -116,6 +122,16 @@ public class DefaultToolkit implements IToolkit {
 	@Override
 	public IWindowWidget getActiveWindow() {
 		return activeWindowTracker.getActiveWindow();
+	}
+
+	@Override
+	public IMessagePane getMessagePane() {
+		return messagePane;
+	}
+
+	@Override
+	public IQuestionPane getQuestionPane() {
+		return questionPane;
 	}
 
 }

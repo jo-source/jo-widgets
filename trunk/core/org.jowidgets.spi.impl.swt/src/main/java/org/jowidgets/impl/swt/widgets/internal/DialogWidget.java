@@ -28,6 +28,8 @@
 package org.jowidgets.impl.swt.widgets.internal;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ShellEvent;
+import org.eclipse.swt.events.ShellListener;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.util.ColorSettingsInvoker;
@@ -41,6 +43,8 @@ import org.jowidgets.spi.widgets.setup.IDialogSetupSpi;
 
 public class DialogWidget extends SwtWindowWidget implements IFrameWidgetSpi {
 
+	private boolean programaticClose;
+
 	public DialogWidget(
 		final IGenericWidgetFactory factory,
 		final IColorCache colorCache,
@@ -50,6 +54,8 @@ public class DialogWidget extends SwtWindowWidget implements IFrameWidgetSpi {
 
 		super(factory, colorCache, new Shell(parent == null ? null : (Shell) parent.getUiReference(), getStyle(setup)));
 
+		this.programaticClose = false;
+
 		if (setup.getTitle() != null) {
 			getUiReference().setText(setup.getTitle());
 		}
@@ -57,12 +63,47 @@ public class DialogWidget extends SwtWindowWidget implements IFrameWidgetSpi {
 		setLayout(setup.getLayout());
 		setIcon(imageRegistry, setup.getIcon());
 		ColorSettingsInvoker.setColors(setup, this);
+
+		getUiReference().addShellListener(new ShellListener() {
+
+			@Override
+			public void shellActivated(final ShellEvent e) {
+				getWindowObservableDelegate().fireWindowActivated();
+			}
+
+			@Override
+			public void shellDeactivated(final ShellEvent e) {
+				getWindowObservableDelegate().fireWindowDeactivated();
+			}
+
+			@Override
+			public void shellIconified(final ShellEvent e) {
+				getWindowObservableDelegate().fireWindowIconified();
+			}
+
+			@Override
+			public void shellDeiconified(final ShellEvent e) {
+				getWindowObservableDelegate().fireWindowDeiconified();
+			}
+
+			@Override
+			public void shellClosed(final ShellEvent e) {
+				if (!programaticClose) {
+					e.doit = false;
+					setVisible(false);
+				}
+				else {
+					getWindowObservableDelegate().fireWindowClosed();
+				}
+			}
+		});
+
 	}
 
 	@Override
 	public void setVisible(final boolean visible) {
 		if (visible) {
-			getUiReference().setVisible(true);
+			getUiReference().open();
 
 			final Shell shell = getUiReference();
 			final Display display = shell.getDisplay();
@@ -88,6 +129,13 @@ public class DialogWidget extends SwtWindowWidget implements IFrameWidgetSpi {
 			result = result | SWT.RESIZE;
 		}
 		return result;
+	}
+
+	@Override
+	public void close() {
+		programaticClose = true;
+		getUiReference().close();
+		programaticClose = false;
 	}
 
 }

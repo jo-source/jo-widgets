@@ -28,6 +28,8 @@
 package org.jowidgets.impl.swt.widgets.internal;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ShellEvent;
+import org.eclipse.swt.events.ShellListener;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
@@ -50,6 +52,35 @@ public class FrameWidget extends SwtWindowWidget implements IFrameWidgetSpi {
 		setLayout(setup.getLayout());
 		setIcon(imageRegistry, setup.getIcon());
 		ColorSettingsInvoker.setColors(setup, this);
+
+		getUiReference().addShellListener(new ShellListener() {
+
+			@Override
+			public void shellActivated(final ShellEvent e) {
+				getWindowObservableDelegate().fireWindowActivated();
+			}
+
+			@Override
+			public void shellDeactivated(final ShellEvent e) {
+				getWindowObservableDelegate().fireWindowDeactivated();
+			}
+
+			@Override
+			public void shellIconified(final ShellEvent e) {
+				getWindowObservableDelegate().fireWindowIconified();
+			}
+
+			@Override
+			public void shellDeiconified(final ShellEvent e) {
+				getWindowObservableDelegate().fireWindowDeiconified();
+			}
+
+			@Override
+			public void shellClosed(final ShellEvent e) {
+				getWindowObservableDelegate().fireWindowClosed();
+			}
+
+		});
 	}
 
 	private static int getStyle(final IFrameSetupSpi setup) {
