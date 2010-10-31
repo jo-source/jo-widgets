@@ -80,7 +80,10 @@ public class SwtWindowWidget extends SwtContainerWidget implements IWindowWidget
 
 			@Override
 			public void shellClosed(final ShellEvent e) {
-				windowObservableDelegate.fireWindowClosed();
+				if (getUiReference().isVisible()) {
+					e.doit = false;
+					setVisible(false);
+				}
 			}
 
 		});
@@ -102,7 +105,8 @@ public class SwtWindowWidget extends SwtContainerWidget implements IWindowWidget
 			getUiReference().setVisible(true);
 		}
 		else {
-			getUiReference().close();
+			getUiReference().setVisible(false);
+			close();
 		}
 	}
 
@@ -165,6 +169,7 @@ public class SwtWindowWidget extends SwtContainerWidget implements IWindowWidget
 	@Override
 	public void close() {
 		getUiReference().close();
+		windowObservableDelegate.fireWindowClosed();
 	}
 
 }

@@ -26,30 +26,12 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.toolkit;
+package org.jowidgets.common.widgets.factory;
 
-import org.jowidgets.api.convert.IConverterProvider;
-import org.jowidgets.api.widgets.IWindowWidget;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.application.IApplicationRunner;
-import org.jowidgets.common.image.IImageRegistry;
-import org.jowidgets.common.threads.IUiThreadAccess;
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.widgets.IWidget;
 
-public interface IToolkit {
+public interface IWidgetFactoryListener {
 
-	IImageRegistry getImageRegistry();
-
-	IGenericWidgetFactory getWidgetFactory();
-
-	IBluePrintFactory getBluePrintFactory();
-
-	IConverterProvider getConverterProvider();
-
-	IApplicationRunner getApplicationRunner();
-
-	IUiThreadAccess getUiThreadAccess();
-
-	IWindowWidget getActiveWindow();
+	void widgetCreated(IWidget widget);
 
 }

@@ -32,6 +32,7 @@ import java.util.Iterator;
 import java.util.ServiceLoader;
 
 import org.jowidgets.api.convert.IConverterProvider;
+import org.jowidgets.api.widgets.IWindowWidget;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
@@ -96,6 +97,10 @@ public final class Toolkit {
 
 	public static IUiThreadAccess getUiThreadAccess() {
 		return getInstance().getUiThreadAccess();
+	}
+
+	public static IWindowWidget getActiveWindow() {
+		return getInstance().getActiveWindow();
 	}
 
 }

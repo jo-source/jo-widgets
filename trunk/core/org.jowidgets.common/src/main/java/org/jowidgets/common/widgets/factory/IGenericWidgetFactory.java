@@ -32,6 +32,10 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public interface IGenericWidgetFactory {
 
+	void addWidgetFactoryListener(final IWidgetFactoryListener widgetFactoryListener);
+
+	void removeWidgetFactoryListener(final IWidgetFactoryListener widgetFactoryListener);
+
 	<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE create(
 		DESCRIPTOR_TYPE descriptor);
 

@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl;
+package org.jowidgets.impl.toolkit;
 
 import java.util.Iterator;
 import java.util.ServiceLoader;

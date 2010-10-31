@@ -28,8 +28,6 @@
 package org.jowidgets.impl.swt.widgets.internal;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ShellAdapter;
-import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.util.ColorSettingsInvoker;
@@ -68,17 +66,6 @@ public class DialogWidget extends SwtWindowWidget implements IFrameWidgetSpi {
 		if (visible) {
 
 			getUiReference().setVisible(true);
-
-			// do not dispose the shell on closing
-			getUiReference().addShellListener(new ShellAdapter() {
-
-				@Override
-				public void shellClosed(final ShellEvent e) {
-					e.doit = false;
-					setVisible(false);
-				}
-
-			});
 
 			final Shell shell = getUiReference();
 			final Display display = shell.getDisplay();

@@ -31,6 +31,7 @@ import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
+import org.jowidgets.common.widgets.factory.IWidgetFactoryListener;
 import org.jowidgets.util.Assert;
 
 public class GenericWidgetFactoryWrapper implements IGenericWidgetFactory {
@@ -73,6 +74,16 @@ public class GenericWidgetFactoryWrapper implements IGenericWidgetFactory {
 	public final <WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> void unRegister(
 		final Class<? extends DESCRIPTOR_TYPE> descriptorClass) {
 		genericFactory.unRegister(descriptorClass);
+	}
+
+	@Override
+	public void addWidgetFactoryListener(final IWidgetFactoryListener widgetFactoryListener) {
+		genericFactory.addWidgetFactoryListener(widgetFactoryListener);
+	}
+
+	@Override
+	public void removeWidgetFactoryListener(final IWidgetFactoryListener widgetFactoryListener) {
+		genericFactory.removeWidgetFactoryListener(widgetFactoryListener);
 	}
 
 }

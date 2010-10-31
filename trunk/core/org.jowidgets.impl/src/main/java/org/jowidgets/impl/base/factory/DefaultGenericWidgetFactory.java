@@ -28,12 +28,15 @@
 package org.jowidgets.impl.base.factory;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
+import org.jowidgets.common.widgets.factory.IWidgetFactoryListener;
 import org.jowidgets.util.Assert;
 
 public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory {
@@ -41,9 +44,22 @@ public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory 
 	@SuppressWarnings("rawtypes")
 	private final Map factories;
 
+	private final Set<IWidgetFactoryListener> widgetFactoryListeners;
+
 	@SuppressWarnings("rawtypes")
 	public DefaultGenericWidgetFactory() {
 		this.factories = new HashMap();
+		this.widgetFactoryListeners = new HashSet<IWidgetFactoryListener>();
+	}
+
+	@Override
+	public void addWidgetFactoryListener(final IWidgetFactoryListener widgetFactoryListener) {
+		this.widgetFactoryListeners.add(widgetFactoryListener);
+	}
+
+	@Override
+	public void removeWidgetFactoryListener(final IWidgetFactoryListener widgetFactoryListener) {
+		this.widgetFactoryListeners.remove(widgetFactoryListener);
 	}
 
 	@Override
@@ -106,7 +122,14 @@ public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory 
 
 		final IWidgetFactory factory = (IWidgetFactory) factories.get(descriptor.getDescriptorInterface());
 		if (factory != null) {
-			return factory.create(parent, descriptor);
+			final Object result = factory.create(parent, descriptor);
+			if (result instanceof IWidget) {
+				fireWidgetCreated((IWidget) result);
+			}
+			else {
+				throw new IllegalStateException("Created widget must be assignable from '" + IWidget.class.getName() + "'");
+			}
+			return result;
 		}
 		else {
 			throw new IllegalArgumentException("No factory found for descriptor interface'"
@@ -114,6 +137,13 @@ public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory 
 				+ "  / implClass:'"
 				+ descriptor.getClass().getName()
 				+ "'");
+		}
+	}
+
+	private void fireWidgetCreated(final IWidget widget) {
+		Assert.paramNotNull(widget, "widget");
+		for (final IWidgetFactoryListener listener : widgetFactoryListeners) {
+			listener.widgetCreated(widget);
 		}
 	}
 
