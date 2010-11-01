@@ -25,17 +25,19 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.examples.rwt;
+package org.jowidgets.examples.swing;
 
-import org.eclipse.rwt.lifecycle.IEntryPoint;
-import org.jowidgets.examples.common.HelloWidgetApplication;
+import javax.swing.UIManager;
 
-public final class HelloRwtWidgetStarter implements IEntryPoint {
+import org.jowidgets.examples.common.DemoApplication;
 
-	@Override
-	public int createUI() {
-		new HelloWidgetApplication("Hello Widgets RWT").start();
-		return 0;
+public final class SwingDemoApplication {
+
+	private SwingDemoApplication() {}
+
+	public static void main(final String[] args) throws Exception {
+		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		new DemoApplication("Swing widgets demo application").start();
 	}
 
 }

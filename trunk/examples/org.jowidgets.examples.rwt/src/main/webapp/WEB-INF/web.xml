@@ -9,7 +9,7 @@
  
   <context-param>
     <param-name>org.eclipse.rwt.entryPoints</param-name>
-    <param-value>org.jowidgets.examples.rwt.HelloRwtWidgetStarter</param-value>
+    <param-value>org.jowidgets.examples.rwt.RwtDemoApplication</param-value>
   </context-param>
  
   <listener>
