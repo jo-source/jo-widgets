@@ -35,4 +35,6 @@ public interface IInputFieldSetup<INPUT_TYPE> extends IInputWidgetSetup<INPUT_TY
 	@Mandatory
 	IConverter<INPUT_TYPE> getConverter();
 
+	int getMaxLength();
+
 }

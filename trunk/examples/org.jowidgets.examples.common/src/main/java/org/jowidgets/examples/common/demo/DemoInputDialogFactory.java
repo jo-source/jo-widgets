@@ -35,6 +35,7 @@ import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.IValidationLabelWidget;
 import org.jowidgets.api.widgets.IWindowWidget;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
+import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
@@ -47,6 +48,7 @@ public class DemoInputDialogFactory {
 	public IInputDialogWidget<String> create(final IWindowWidget parent) {
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 		final IInputDialogBluePrint<String> inputDialogBp = bpF.inputDialog(new DemoInputDialogContent());
+		inputDialogBp.setTitle("Input dialog demo");
 		inputDialogBp.setMissingInputText("Please fill out all mandatory (*) fields");
 		if (parent != null) {
 			return parent.createChildWindow(inputDialogBp);
@@ -64,18 +66,19 @@ public class DemoInputDialogFactory {
 		@Override
 		public void createContent(final IInputContentContainer container) {
 			final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
-			container.setLayout(new MigLayoutDescriptor("[][grow, 180::][20::]", "[]"));
+			container.setLayout(new MigLayoutDescriptor("[][grow, 250::][20::]", "[]"));
 
 			final ITextLabelBluePrint textLabelBp = bpF.textLabel().alignRight();
 			final IValidationLabelBluePrint validationLabelBp = bpF.validationLabel().setShowValidationMessage(false);
+			final IInputFieldBluePrint<String> stringMandatoryFieldBp = bpF.inputFieldString().setMandatory(true).setMaxLength(40);
 
 			container.add(textLabelBp.setText("Name*"), "right");
-			name = container.add(bpF.inputFieldString().setMandatory(true), "grow");
+			name = container.add(stringMandatoryFieldBp, "grow");
 			final IValidationLabelWidget nameValidationWidget = container.add(validationLabelBp, "wrap");
 			nameValidationWidget.registerInputWidget(name);
 
 			container.add(textLabelBp.setText("Firstname*"), "right");
-			firstName = container.add(bpF.inputFieldString().setMandatory(true), "grow");
+			firstName = container.add(stringMandatoryFieldBp, "grow");
 			final IValidationLabelWidget firstnameValidationWidget = container.add(validationLabelBp, "wrap");
 			firstnameValidationWidget.registerInputWidget(firstName);
 

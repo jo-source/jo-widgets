@@ -37,5 +37,6 @@ public class InputFieldDefaults implements IDefaultInitializer<IInputFieldSetupB
 	@Override
 	public void initialize(final IInputFieldSetupBuilder<?, Object> builder) {
 		builder.setValidator(new OkValidator());
+		builder.setMaxLength(100);
 	}
 }

@@ -27,6 +27,10 @@
  */
 package org.jowidgets.impl.widgets.composed.factory.internal;
 
+import org.jowidgets.api.validation.ITextInputValidator;
+import org.jowidgets.api.validation.ValidationMessage;
+import org.jowidgets.api.validation.ValidationMessageType;
+import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.blueprint.ITextFieldBluePrint;
 import org.jowidgets.api.widgets.descriptor.IInputFieldDescriptor;
@@ -53,7 +57,26 @@ public class InputFieldWidgetFactory<VALUE_TYPE> implements
 
 		final BluePrintFactory bpF = new BluePrintFactory();
 
-		final ITextFieldBluePrint textFieldBluePrint = bpF.textField().setTextInputValidator(descriptor.getConverter());
+		final ITextInputValidator inputValidator = descriptor.getConverter();
+
+		final ITextFieldBluePrint textFieldBluePrint = bpF.textField();
+		textFieldBluePrint.setTextInputValidator(new ITextInputValidator() {
+
+			@Override
+			public ValidationResult validate(final String validationInput) {
+				return inputValidator.validate(validationInput);
+			}
+
+			@Override
+			public ValidationMessage isCompletableToValid(final String string) {
+				if (string != null && string.trim().length() > descriptor.getMaxLength()) {
+					return new ValidationMessage(ValidationMessageType.ERROR, "Only '"
+						+ descriptor.getMaxLength()
+						+ "' are allowed");
+				}
+				return inputValidator.isCompletableToValid(string);
+			}
+		});
 
 		final IInputWidget<String> textFieldWidget = genericFactory.create(parent, textFieldBluePrint);
 

@@ -30,7 +30,7 @@ package org.jowidgets.api.widgets.descriptor.setup;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
-public interface IInputDialogSetup<INPUT_TYPE> extends IWindowSetup, IInputCompositeSetup<INPUT_TYPE> {
+public interface IInputDialogSetup<INPUT_TYPE> extends ITitledWindowSetup, IInputCompositeSetup<INPUT_TYPE> {
 
 	@Mandatory
 	IButtonDescriptor getOkButton();
