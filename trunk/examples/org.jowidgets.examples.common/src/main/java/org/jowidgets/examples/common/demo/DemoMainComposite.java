@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common;
+package org.jowidgets.examples.common.demo;
 
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButtonWidget;
@@ -46,7 +46,7 @@ public class DemoMainComposite {
 
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 
-		container.setLayout(new MigLayoutDescriptor("[300::]", "[][]"));
+		container.setLayout(new MigLayoutDescriptor("[300::, grow]", "[][][][][][]"));
 
 		inputDialog = new DemoInputDialogFactory().create(parentWindow);
 		final IButtonWidget inputDialogButton = container.add(
@@ -92,6 +92,30 @@ public class DemoMainComposite {
 				Toolkit.getMessagePane().showError(
 						"Error message title",
 						"This is an error message \nHere comes some more information in text form about the kitchens sink.");
+			}
+		});
+
+		final IButtonWidget yesNoQuestionButton = container.add(
+				bpF.button("Yes/No question demo", "Shows an Yes / No question"),
+				"grow, sg bg, wrap");
+		yesNoQuestionButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				Toolkit.getQuestionPane().askYesNoQuestion(
+						"Question title",
+						"This is an important question \nHere comes some more information in text form about the kitchens sink.");
+			}
+		});
+
+		final IButtonWidget yesNoCancelQuestionButton = container.add(
+				bpF.button("Yes/No/Cancel question demo", "Shows an Yes/No/Cancel question"),
+				"grow, sg bg, wrap");
+		yesNoCancelQuestionButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				Toolkit.getQuestionPane().askYesNoCancelQuestion(
+						"Question title",
+						"This is an important question \nHere comes some more information in text form about the kitchens sink.");
 			}
 		});
 

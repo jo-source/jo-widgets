@@ -37,6 +37,7 @@ import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactoryListener;
 
+//TODO this class may not work correctly, especially with rap
 public class ActiveWindowTracker {
 
 	private final Map<Object, IWindowWidget> uiReferenceToWindow;
@@ -91,20 +92,14 @@ public class ActiveWindowTracker {
 
 		@Override
 		public void windowActivated() {
-			if (activeWindowUiReference != null && activeWindowUiReference != window.getUiReference()) {
-				throw new IllegalStateException("More than one active window. Report this, its a bug");
-			}
-			else {
-				activeWindowUiReference = window.getUiReference();
-			}
+			activeWindowUiReference = window.getUiReference();
 		}
 
 		@Override
 		public void windowDeactivated() {
-			if (activeWindowUiReference != window.getUiReference()) {
-				throw new IllegalStateException("This window is not active. Report this, its a bug");
+			if (activeWindowUiReference == window.getUiReference()) {
+				activeWindowUiReference = null;
 			}
-			activeWindowUiReference = null;
 		}
 
 	}

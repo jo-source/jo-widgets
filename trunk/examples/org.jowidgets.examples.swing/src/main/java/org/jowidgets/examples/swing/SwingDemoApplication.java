@@ -29,7 +29,7 @@ package org.jowidgets.examples.swing;
 
 import javax.swing.UIManager;
 
-import org.jowidgets.examples.common.DemoApplication;
+import org.jowidgets.examples.common.demo.DemoApplication;
 
 public final class SwingDemoApplication {
 

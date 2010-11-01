@@ -27,7 +27,7 @@
  */
 package org.jowidgets.examples.swt;
 
-import org.jowidgets.examples.common.DemoApplication;
+import org.jowidgets.examples.common.demo.DemoApplication;
 
 public final class SwtDemoApplication {
 

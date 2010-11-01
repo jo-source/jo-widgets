@@ -28,7 +28,7 @@
 package org.jowidgets.examples.rwt;
 
 import org.eclipse.rwt.lifecycle.IEntryPoint;
-import org.jowidgets.examples.common.DemoApplication;
+import org.jowidgets.examples.common.demo.DemoApplication;
 
 public final class RwtDemoApplication implements IEntryPoint {
 

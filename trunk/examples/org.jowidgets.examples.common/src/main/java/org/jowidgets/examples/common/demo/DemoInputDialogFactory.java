@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common;
+package org.jowidgets.examples.common.demo;
 
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.validation.ValidationResult;
