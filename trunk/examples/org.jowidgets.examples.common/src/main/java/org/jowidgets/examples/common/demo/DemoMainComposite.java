@@ -67,7 +67,7 @@ public class DemoMainComposite {
 			public void actionPerformed() {
 				Toolkit.getMessagePane().showInfo(
 						"Info message title",
-						"This is an info message \nHere comes some more information in text form about the kitchens sink.");
+						"This is an info message! \nHere comes some more information in text form about the kitchens sink.");
 			}
 		});
 
@@ -79,7 +79,7 @@ public class DemoMainComposite {
 			public void actionPerformed() {
 				Toolkit.getMessagePane().showWarning(
 						"Warning message title",
-						"This is warning message \nHere comes some more information in text form about the kitchens sink.");
+						"This is warning message! \nHere comes some more information in text form about the kitchens sink.");
 			}
 		});
 
@@ -91,7 +91,7 @@ public class DemoMainComposite {
 			public void actionPerformed() {
 				Toolkit.getMessagePane().showError(
 						"Error message title",
-						"This is an error message \nHere comes some more information in text form about the kitchens sink.");
+						"This is an error message! \nHere comes some more information in text form about the kitchens sink.");
 			}
 		});
 
@@ -103,7 +103,7 @@ public class DemoMainComposite {
 			public void actionPerformed() {
 				Toolkit.getQuestionPane().askYesNoQuestion(
 						"Question title",
-						"This is an important question \nHere comes some more information in text form about the kitchens sink.");
+						"This is an important question! \nHere comes some more information in text form about the kitchens sink.");
 			}
 		});
 
@@ -115,7 +115,7 @@ public class DemoMainComposite {
 			public void actionPerformed() {
 				Toolkit.getQuestionPane().askYesNoCancelQuestion(
 						"Question title",
-						"This is an important question \nHere comes some more information in text form about the kitchens sink.");
+						"This is an important question! \nHere comes some more information in text form about the kitchens sink.");
 			}
 		});
 

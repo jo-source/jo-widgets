@@ -29,11 +29,14 @@
 package org.jowidgets.examples.common.demo;
 
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationResult;
+import org.jowidgets.api.widgets.IComboBoxWidget;
 import org.jowidgets.api.widgets.IInputDialogWidget;
 import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.IValidationLabelWidget;
 import org.jowidgets.api.widgets.IWindowWidget;
+import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
@@ -60,30 +63,101 @@ public class DemoInputDialogFactory {
 
 	private class DemoInputDialogContent implements IInputContentCreator<String> {
 
-		private IInputWidget<String> name;
+		private IComboBoxWidget<String> gender;
+		private IInputWidget<String> lastname;
 		private IInputWidget<String> firstName;
+		private IInputWidget<String> street;
+		private IInputWidget<String> city;
+		private IInputWidget<Integer> postalCode;
+		private IComboBoxWidget<String> country;
+		private IInputWidget<String> phoneNumber;
+		private IInputWidget<String> mail;
 
 		@Override
 		public void createContent(final IInputContentContainer container) {
 			final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
-			container.setLayout(new MigLayoutDescriptor("[][grow, 250::][20::]", "[]"));
+			container.setLayout(new MigLayoutDescriptor("[][grow][20::]", "[]"));
+
+			final String inputWidgetConstraints = "w 270:270:, grow, sg fg";
+
+			final IValidator<String> maxLengthValidator = new IValidator<String>() {
+
+				@Override
+				public ValidationResult validate(final String validationInput) {
+					final ValidationResult result = new ValidationResult();
+					if (validationInput != null && validationInput.length() > 50) {
+						result.addValidationError("Input must not have more than 50 characters");
+					}
+					return result;
+				};
+
+			};
 
 			final ITextLabelBluePrint textLabelBp = bpF.textLabel().alignRight();
+
 			final IValidationLabelBluePrint validationLabelBp = bpF.validationLabel().setShowValidationMessage(false);
-			final IInputFieldBluePrint<String> stringMandatoryFieldBp = bpF.inputFieldString().setMandatory(true).setMaxLength(40);
 
-			container.add(textLabelBp.setText("Name*"), "right");
-			name = container.add(stringMandatoryFieldBp, "grow");
-			final IValidationLabelWidget nameValidationWidget = container.add(validationLabelBp, "wrap");
-			nameValidationWidget.registerInputWidget(name);
+			final IInputFieldBluePrint<String> stringMandatoryFieldBp = bpF.inputFieldString().setMandatory(true).setMaxLength(51);
+			final IInputFieldBluePrint<String> stringFieldBp = bpF.inputFieldString().setMandatory(false).setMaxLength(51);
+			stringMandatoryFieldBp.setValidator(maxLengthValidator);
+			stringFieldBp.setValidator(maxLengthValidator);
 
-			container.add(textLabelBp.setText("Firstname*"), "right");
-			firstName = container.add(stringMandatoryFieldBp, "grow");
+			container.add(textLabelBp.setText("Gender"), "right, sg lg");
+			gender = container.add(bpF.comboBoxSelection("Male", "Female").setMandatory(false), inputWidgetConstraints);
+			final IValidationLabelWidget genderValidationWidget = container.add(validationLabelBp, "wrap");
+			genderValidationWidget.registerInputWidget(gender);
+
+			container.add(textLabelBp.setText("Firstname*"), "right, sg lg");
+			firstName = container.add(stringMandatoryFieldBp, inputWidgetConstraints);
 			final IValidationLabelWidget firstnameValidationWidget = container.add(validationLabelBp, "wrap");
 			firstnameValidationWidget.registerInputWidget(firstName);
 
-			container.registerInputWidget("Name", name);
+			container.add(textLabelBp.setText("Lastname*"), "right, sg lg");
+			lastname = container.add(stringMandatoryFieldBp, inputWidgetConstraints);
+			final IValidationLabelWidget lastnameValidationWidget = container.add(validationLabelBp, "wrap");
+			lastnameValidationWidget.registerInputWidget(lastname);
+
+			container.add(textLabelBp.setText("Street*"), "right, sg lg");
+			street = container.add(stringMandatoryFieldBp, inputWidgetConstraints);
+			final IValidationLabelWidget streetValidationWidget = container.add(validationLabelBp, "wrap");
+			streetValidationWidget.registerInputWidget(street);
+
+			container.add(textLabelBp.setText("Postal code*"), "right, sg lg");
+			postalCode = container.add(bpF.inputFieldIntegerNumber().setMaxLength(5), inputWidgetConstraints);
+			final IValidationLabelWidget postalCodeValidationWidget = container.add(validationLabelBp, "wrap");
+			postalCodeValidationWidget.registerInputWidget(postalCode);
+
+			container.add(textLabelBp.setText("City*"), "right, sg lg");
+			city = container.add(stringMandatoryFieldBp, inputWidgetConstraints);
+			final IValidationLabelWidget cityValidationWidget = container.add(validationLabelBp, "wrap");
+			cityValidationWidget.registerInputWidget(city);
+
+			container.add(textLabelBp.setText("Country*"), "right, sg lg");
+			final IComboBoxBluePrint<String> countryBp = bpF.comboBox("Germany", "Spain", "Italy", "United States");
+			countryBp.setMandatory(true);
+			country = container.add(countryBp, inputWidgetConstraints);
+			final IValidationLabelWidget countryValidationWidget = container.add(validationLabelBp, "wrap");
+			countryValidationWidget.registerInputWidget(country);
+
+			container.add(textLabelBp.setText("Phone number"), "right, sg lg");
+			phoneNumber = container.add(stringFieldBp, inputWidgetConstraints);
+			final IValidationLabelWidget phoneValidationWidget = container.add(validationLabelBp, "wrap");
+			phoneValidationWidget.registerInputWidget(phoneNumber);
+
+			container.add(textLabelBp.setText("Email"), "right, sg lg");
+			mail = container.add(stringFieldBp, inputWidgetConstraints);
+			final IValidationLabelWidget mailValidationWidget = container.add(validationLabelBp, "wrap");
+			mailValidationWidget.registerInputWidget(mail);
+
+			container.registerInputWidget("Gender", gender);
+			container.registerInputWidget("Lastname", lastname);
 			container.registerInputWidget("Firstname", firstName);
+			container.registerInputWidget("Street", street);
+			container.registerInputWidget("Postal code", postalCode);
+			container.registerInputWidget("City", city);
+			container.registerInputWidget("Country", country);
+			container.registerInputWidget("Phone Number", phoneNumber);
+			container.registerInputWidget("Mail", mail);
 		}
 
 		@Override
