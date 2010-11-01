@@ -103,7 +103,7 @@ public class DemoInputDialogFactory {
 			stringFieldBp.setValidator(maxLengthValidator);
 
 			container.add(textLabelBp.setText("Gender"), "right, sg lg");
-			gender = container.add(bpF.comboBoxSelection("Male", "Female").setMandatory(false), inputWidgetConstraints);
+			gender = container.add(bpF.comboBoxSelection("Male", "Female", " ").setMandatory(false), inputWidgetConstraints);
 			final IValidationLabelWidget genderValidationWidget = container.add(validationLabelBp, "wrap");
 			genderValidationWidget.registerInputWidget(gender);
 
@@ -123,7 +123,7 @@ public class DemoInputDialogFactory {
 			streetValidationWidget.registerInputWidget(street);
 
 			container.add(textLabelBp.setText("Postal code*"), "right, sg lg");
-			postalCode = container.add(bpF.inputFieldIntegerNumber().setMaxLength(5), inputWidgetConstraints);
+			postalCode = container.add(bpF.inputFieldIntegerNumber().setMaxLength(5).setMandatory(true), inputWidgetConstraints);
 			final IValidationLabelWidget postalCodeValidationWidget = container.add(validationLabelBp, "wrap");
 			postalCodeValidationWidget.registerInputWidget(postalCode);
 
