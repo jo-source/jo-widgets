@@ -35,6 +35,8 @@ import org.jowidgets.common.widgets.builder.IWidgetSetupBuilderCommon;
 public interface IValidationLabelSetupBuilder<INSTANCE_TYPE extends IValidationLabelSetupBuilder<?>> extends
 		IWidgetSetupBuilderCommon<INSTANCE_TYPE> {
 
+	INSTANCE_TYPE setShowValidationMessage(boolean showValidationMessage);
+
 	INSTANCE_TYPE setOkMarkup(Markup markup);
 
 	INSTANCE_TYPE setWarningMarkup(Markup markup);

@@ -37,6 +37,8 @@ public class ValidationLabelDefaults implements IDefaultInitializer<IValidationL
 
 	@Override
 	public void initialize(final IValidationLabelSetupBuilder<?> builder) {
+		builder.setShowValidationMessage(true);
+
 		builder.setOkMarkup(Markup.STRONG);
 		builder.setWarningMarkup(Markup.STRONG);
 		builder.setErrorMarkup(Markup.STRONG);

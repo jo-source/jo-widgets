@@ -36,6 +36,7 @@ import org.jowidgets.api.widgets.IValidationLabelWidget;
 import org.jowidgets.api.widgets.IWindowWidget;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
+import org.jowidgets.api.widgets.blueprint.IValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
@@ -47,7 +48,6 @@ public class DemoInputDialogFactory {
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 		final IInputDialogBluePrint<String> inputDialogBp = bpF.inputDialog(new DemoInputDialogContent());
 		inputDialogBp.setMissingInputText("Please fill out all mandatory (*) fields");
-
 		if (parent != null) {
 			return parent.createChildWindow(inputDialogBp);
 		}
@@ -67,15 +67,16 @@ public class DemoInputDialogFactory {
 			container.setLayout(new MigLayoutDescriptor("[][grow, 180::][20::]", "[]"));
 
 			final ITextLabelBluePrint textLabelBp = bpF.textLabel().alignRight();
+			final IValidationLabelBluePrint validationLabelBp = bpF.validationLabel().setShowValidationMessage(false);
 
 			container.add(textLabelBp.setText("Name*"), "right");
 			name = container.add(bpF.inputFieldString().setMandatory(true), "grow");
-			final IValidationLabelWidget nameValidationWidget = container.add(bpF.validationLabel(), "wrap");
+			final IValidationLabelWidget nameValidationWidget = container.add(validationLabelBp, "wrap");
 			nameValidationWidget.registerInputWidget(name);
 
 			container.add(textLabelBp.setText("Firstname*"), "right");
 			firstName = container.add(bpF.inputFieldString().setMandatory(true), "grow");
-			final IValidationLabelWidget firstnameValidationWidget = container.add(bpF.validationLabel(), "wrap");
+			final IValidationLabelWidget firstnameValidationWidget = container.add(validationLabelBp, "wrap");
 			firstnameValidationWidget.registerInputWidget(firstName);
 
 			container.registerInputWidget("Name", name);

@@ -36,6 +36,9 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 public interface IValidationLabelSetup extends IWidgetSetupCommon {
 
 	@Mandatory
+	boolean isShowValidationMessage();
+
+	@Mandatory
 	Markup getOkMarkup();
 
 	@Mandatory

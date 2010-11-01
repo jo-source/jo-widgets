@@ -50,13 +50,14 @@ public class ValidationLabelWidget implements IValidationLabelWidget {
 	private final List<IInputWidget<?>> inputWidgets;
 	private final IInputListener inputListener;
 	private final IChildWidget childWidgetAdapter;
+	private final boolean showLabel;
 	private LabelState currentLabelState;
 	private boolean hasInput;
 
 	public ValidationLabelWidget(final ILabelWidget labelWidget, final IValidationLabelDescriptor descriptor) {
 
 		this.currentLabelState = LabelState.EMPTY;
-
+		this.showLabel = descriptor.isShowValidationMessage();
 		this.labelWidget = labelWidget;
 		this.descriptor = descriptor;
 		this.childWidgetAdapter = new ChildWidgetWrapper(labelWidget);
@@ -138,24 +139,30 @@ public class ValidationLabelWidget implements IValidationLabelWidget {
 		messageText.append(firstWorst.getMessageText());
 
 		if (firstWorst.getType() == ValidationMessageType.OK && hasInput && !isEmpty) {
-			labelWidget.setMarkup(descriptor.getOkMarkup());
 			labelWidget.setIcon(descriptor.getOkIcon());
-			labelWidget.setForegroundColor(descriptor.getOkColor());
-			labelWidget.setText(messageText.toString());
+			if (showLabel) {
+				labelWidget.setMarkup(descriptor.getOkMarkup());
+				labelWidget.setForegroundColor(descriptor.getOkColor());
+				labelWidget.setText(messageText.toString());
+			}
 			currentLabelState = LabelState.OK_VALIDATION;
 		}
 		else if (firstWorst.getType() == ValidationMessageType.WARNING) {
-			labelWidget.setMarkup(descriptor.getWarningMarkup());
 			labelWidget.setIcon(descriptor.getWarningIcon());
-			labelWidget.setForegroundColor(descriptor.getWarningColor());
-			labelWidget.setText(messageText.toString());
+			if (showLabel) {
+				labelWidget.setMarkup(descriptor.getWarningMarkup());
+				labelWidget.setForegroundColor(descriptor.getWarningColor());
+				labelWidget.setText(messageText.toString());
+			}
 			currentLabelState = LabelState.WARNING_VALIDATION;
 		}
 		else if (firstWorst.getType() == ValidationMessageType.ERROR) {
-			labelWidget.setMarkup(descriptor.getErrorMarkup());
 			labelWidget.setIcon(descriptor.getErrorIcon());
-			labelWidget.setForegroundColor(descriptor.getErrorColor());
-			labelWidget.setText(messageText.toString());
+			if (showLabel) {
+				labelWidget.setMarkup(descriptor.getErrorMarkup());
+				labelWidget.setForegroundColor(descriptor.getErrorColor());
+				labelWidget.setText(messageText.toString());
+			}
 			currentLabelState = LabelState.ERROR_VALIDATION;
 		}
 		else {
@@ -165,8 +172,8 @@ public class ValidationLabelWidget implements IValidationLabelWidget {
 
 	private void setInputCheckResult(final boolean isEmpty) {
 		if (isEmpty) {
-			labelWidget.setMarkup(descriptor.getMissingInputMarkup());
 			labelWidget.setIcon(descriptor.getMissingInputIcon());
+			labelWidget.setMarkup(descriptor.getMissingInputMarkup());
 			labelWidget.setForegroundColor(descriptor.getMissingInputColor());
 			labelWidget.setText(descriptor.getMissingInputText());
 			currentLabelState = LabelState.MISSING_INPUT;
