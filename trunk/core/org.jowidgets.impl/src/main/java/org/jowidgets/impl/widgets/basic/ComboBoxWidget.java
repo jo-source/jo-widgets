@@ -60,12 +60,18 @@ public class ComboBoxWidget<VALUE_TYPE> extends ComboBoxSelectionWidget<VALUE_TY
 
 	@Override
 	public void setValue(final VALUE_TYPE value) {
-		final int indexOfContent = getElements().indexOf(value);
-		if (indexOfContent != -1) {
-			comboBoxWidgetSpi.setSelectedIndex(indexOfContent);
+		if (value == null) {
+			comboBoxWidgetSpi.setText(null);
+			comboBoxWidgetSpi.setSelectedIndex(-1);
 		}
 		else {
-			comboBoxWidgetSpi.setText(getObjectStringConverter().convertToString(value));
+			final int indexOfContent = getElements().indexOf(value);
+			if (indexOfContent != -1) {
+				comboBoxWidgetSpi.setSelectedIndex(indexOfContent);
+			}
+			else {
+				comboBoxWidgetSpi.setText(getObjectStringConverter().convertToString(value));
+			}
 		}
 	}
 

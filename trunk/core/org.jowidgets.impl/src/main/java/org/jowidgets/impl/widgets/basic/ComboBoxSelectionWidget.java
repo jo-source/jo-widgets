@@ -39,7 +39,8 @@ import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.spi.widgets.IComboBoxSelectionWidgetSpi;
 import org.jowidgets.util.Assert;
 
-public class ComboBoxSelectionWidget<VALUE_TYPE> extends AbstractBasicInputWidget<VALUE_TYPE> implements IComboBoxWidget<VALUE_TYPE> {
+public class ComboBoxSelectionWidget<VALUE_TYPE> extends AbstractBasicInputWidget<VALUE_TYPE> implements
+		IComboBoxWidget<VALUE_TYPE> {
 
 	private final List<VALUE_TYPE> elements;
 	private final List<VALUE_TYPE> elementsView;
@@ -59,16 +60,22 @@ public class ComboBoxSelectionWidget<VALUE_TYPE> extends AbstractBasicInputWidge
 		this.elementsView = Collections.unmodifiableList(this.elements);
 
 		setElements(setup.getElements());
+		comboBoxSelectionWidgetSpi.setSelectedIndex(-1);
 	}
 
 	@Override
 	public void setValue(final VALUE_TYPE value) {
-		final int indexOfContent = elements.indexOf(value);
-		if (indexOfContent >= 0 && indexOfContent < elements.size()) {
-			comboBoxSelectionWidgetSpi.setSelectedIndex(indexOfContent);
+		if (value == null) {
+			comboBoxSelectionWidgetSpi.setSelectedIndex(-1);
 		}
 		else {
-			throw new IllegalArgumentException("Value '" + value + "' is not a element of this combo box");
+			final int indexOfContent = elements.indexOf(value);
+			if (indexOfContent >= 0 && indexOfContent < elements.size()) {
+				comboBoxSelectionWidgetSpi.setSelectedIndex(indexOfContent);
+			}
+			else {
+				throw new IllegalArgumentException("Value '" + value + "' is not a element of this combo box");
+			}
 		}
 	}
 
