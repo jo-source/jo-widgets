@@ -1,0 +1,2 @@
+@call mvn install:install-file -Dfile=lib/org.eclipse.rap.rwt_1.4.0.jar -DgroupId=org.eclipse -DartifactId=org.eclipse.rap.rwt -Dversion=1.4.0 -Dpackaging=jar
+@call mvn install:install-file -Dfile=lib/org.eclipse.rap.rwt.q07_1.4.0.jar -DgroupId=org.eclipse -DartifactId=org.eclipse.rap.rwt.q07 -Dversion=1.4.0 -Dpackaging=jar
