@@ -28,18 +28,18 @@
 package org.jowidgets.impl.image;
 
 import org.jowidgets.api.image.Icons16x16;
+import org.jowidgets.common.image.IImageHandleFactory;
 import org.jowidgets.common.image.IImageRegistry;
-import org.jowidgets.spi.image.IImageHandleFactorySpi;
 
-public class DefaultIconsRegisterService extends AbstractImageConstantRegisterService {
+public class DefaultIconsRegisterService extends ImageConstantRegisterService {
 
-	public DefaultIconsRegisterService(final IImageRegistry imageRegistry, final IImageHandleFactorySpi imageHandleFactorySpi) {
-		super("images/icons/", imageRegistry, imageHandleFactorySpi);
+	public DefaultIconsRegisterService(final IImageRegistry imageRegistry, final IImageHandleFactory imageHandleFactory) {
+		super("images/icons/", imageRegistry, imageHandleFactory);
 	}
 
-	public void registerIcons() {
-		registerIcon(Icons16x16.OK, "ok.png");
-		registerIcon(Icons16x16.ERROR, "error.png");
+	public void registerImages() {
+		registerImage(Icons16x16.OK, "ok.png");
+		registerImage(Icons16x16.ERROR, "error.png");
 	}
 
 }

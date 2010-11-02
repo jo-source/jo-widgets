@@ -48,7 +48,7 @@ public class SwingWidgetsServiceProvider implements IWidgetsServiceProvider {
 	public SwingWidgetsServiceProvider() {
 		super();
 		this.imageHandleFactory = new SwingImageHandleFactory();
-		this.imageRegistry = new SwingImageRegistry();
+		this.imageRegistry = new SwingImageRegistry(imageHandleFactory);
 		this.widgetFactory = new SwingWidgetFactory(imageRegistry);
 	}
 

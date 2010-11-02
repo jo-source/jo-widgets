@@ -29,13 +29,14 @@ package org.jowidgets.impl.swt.image;
 
 import org.eclipse.swt.graphics.Image;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.image.IImageHandleFactory;
 import org.jowidgets.common.image.impl.ImageHandle;
 import org.jowidgets.common.image.impl.ImageRegistry;
 
 public class SwtImageRegistry extends ImageRegistry {
 
-	public SwtImageRegistry() {
-		super();
+	public SwtImageRegistry(final IImageHandleFactory imageHandleFactory) {
+		super(imageHandleFactory);
 	}
 
 	@SuppressWarnings("unchecked")

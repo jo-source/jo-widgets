@@ -75,7 +75,7 @@ public class DefaultToolkit implements IToolkit {
 		final IImageHandleFactorySpi imageHandleFactory = toolkitSpi.getImageHandleFactory();
 
 		final DefaultIconsRegisterService registerService = new DefaultIconsRegisterService(imageRegistry, imageHandleFactory);
-		registerService.registerIcons();
+		registerService.registerImages();
 
 		imageRegistry.registerImageConstant(Icons.INFO, imageHandleFactory.infoIcon());
 		imageRegistry.registerImageConstant(Icons.QUESTION, imageHandleFactory.questionIcon());

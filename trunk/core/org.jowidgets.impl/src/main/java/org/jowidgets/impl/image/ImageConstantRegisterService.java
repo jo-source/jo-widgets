@@ -30,32 +30,32 @@ package org.jowidgets.impl.image;
 import java.net.URL;
 
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.image.IImageHandleFactory;
 import org.jowidgets.common.image.IImageRegistry;
-import org.jowidgets.spi.image.IImageHandleFactorySpi;
 
-public abstract class AbstractImageConstantRegisterService {
+public class ImageConstantRegisterService {
 
 	private final IImageRegistry imageRegistry;
-	private final IImageHandleFactorySpi imageHandleFactorySpi;
+	private final IImageHandleFactory imageHandleFactory;
 	private final String rootPath;
 
-	public AbstractImageConstantRegisterService(
+	public ImageConstantRegisterService(
 		final String rootPath,
 		final IImageRegistry imageRegistry,
-		final IImageHandleFactorySpi imageHandleFactorySpi) {
+		final IImageHandleFactory imageHandleFactorySpi) {
 
 		this.rootPath = rootPath;
 		this.imageRegistry = imageRegistry;
-		this.imageHandleFactorySpi = imageHandleFactorySpi;
+		this.imageHandleFactory = imageHandleFactorySpi;
 	}
 
-	protected void registerIcon(final IImageConstant imageConstant, final String relPath) {
+	public final void registerImage(final IImageConstant imageConstant, final String relPath) {
 		final URL url = getClass().getClassLoader().getResource(rootPath + relPath);
-		imageRegistry.registerImageConstant(imageConstant, imageHandleFactorySpi.createImageHandle(url));
+		imageRegistry.registerImageConstant(imageConstant, imageHandleFactory.createImageHandle(url));
 	}
 
-	public IImageHandleFactorySpi getImageHandleFactorySpi() {
-		return imageHandleFactorySpi;
+	protected IImageHandleFactory getImageHandleFactory() {
+		return imageHandleFactory;
 	}
 
 }

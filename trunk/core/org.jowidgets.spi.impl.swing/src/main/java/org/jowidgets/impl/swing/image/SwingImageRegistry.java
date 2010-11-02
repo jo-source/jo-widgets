@@ -32,13 +32,14 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.image.IImageHandleFactory;
 import org.jowidgets.common.image.impl.ImageHandle;
 import org.jowidgets.common.image.impl.ImageRegistry;
 
 public class SwingImageRegistry extends ImageRegistry {
 
-	public SwingImageRegistry() {
-		super();
+	public SwingImageRegistry(final IImageHandleFactory imageHandleFactory) {
+		super(imageHandleFactory);
 	}
 
 	@SuppressWarnings("unchecked")

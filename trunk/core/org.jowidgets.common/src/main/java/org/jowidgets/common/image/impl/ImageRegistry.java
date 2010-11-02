@@ -32,19 +32,36 @@ import java.util.Map;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.image.IImageHandle;
+import org.jowidgets.common.image.IImageHandleFactory;
 import org.jowidgets.common.image.IImageRegistry;
+import org.jowidgets.common.image.IImageUrlProvider;
+import org.jowidgets.util.Assert;
 
 public class ImageRegistry implements IImageRegistry {
 
 	private final Map<Object, IImageHandle> imageMap = new HashMap<Object, IImageHandle>();
+	private final IImageHandleFactory imageHandleFactory;
+
+	public ImageRegistry(final IImageHandleFactory imageHandleFactory) {
+		Assert.paramNotNull(imageHandleFactory, "imageHandleFactory");
+		this.imageHandleFactory = imageHandleFactory;
+	}
 
 	@Override
 	public synchronized void registerImageConstant(final IImageConstant key, final IImageHandle imageHandle) {
+		Assert.paramNotNull(key, "key");
+		Assert.paramNotNull(imageHandle, "imageHandle");
 		imageMap.put(key, imageHandle);
 	}
 
 	public synchronized IImageHandle getImageHandle(final IImageConstant key) {
 		return imageMap.get(key);
+	}
+
+	@Override
+	public void registerImageUrl(final IImageUrlProvider imageUrlProvider) {
+		Assert.paramNotNull(imageUrlProvider, "imageUrlProvider");
+		registerImageConstant(imageUrlProvider, imageHandleFactory.createImageHandle(imageUrlProvider.getImageUrl()));
 	}
 
 }

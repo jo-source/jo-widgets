@@ -48,7 +48,7 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider {
 	public SwtWidgetsServiceProvider() {
 		super();
 		this.imageHandleFactory = new SwtImageHandleFactory();
-		this.imageRegistry = new SwtImageRegistry();
+		this.imageRegistry = new SwtImageRegistry(imageHandleFactory);
 		this.widgetFactory = new SwtWidgetFactory(imageRegistry);
 	}
 
