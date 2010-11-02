@@ -30,19 +30,19 @@ package org.jowidgets.api.types;
 
 public enum AutoSelectionPolicy {
 
-	/** Auto-selects the first element of list when list changes */
+	/** Auto-selects the first element of a list when the list changes */
 	FIRST_ELEMENT,
 
-	/** Auto-selects the last element of list when list changes */
+	/** Auto-selects the last element of a list when the list changes */
 	LAST_ELEMENT,
 
-	/** Auto-selects the element of the previous selection if possible or the first element of list when list changes */
+	/** Auto-selects the element of the previous selection if possible or the first element of a list when the list changes */
 	PREVIOUS_SELECTED_OR_LAST,
 
-	/** Auto-selects the element of the previous selection if possible or the last element of list when list changes */
+	/** Auto-selects the element of the previous selection if possible or the last element of a list when the list changes */
 	PREVIOUS_SELECTED_OR_FIRST,
 
-	/** No Auto-selection, after list changes, nothing will be selected */
+	/** No Auto-selection. After a list changes, nothing will be selected */
 	OFF;
 
 }
