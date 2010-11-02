@@ -33,6 +33,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jowidgets.api.convert.IObjectStringConverter;
+import org.jowidgets.api.types.AutoSelectionPolicy;
 import org.jowidgets.api.widgets.IComboBoxWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IComboBoxSelectionSetup;
 import org.jowidgets.common.widgets.IWidget;
@@ -47,6 +48,7 @@ public class ComboBoxSelectionWidget<VALUE_TYPE> extends AbstractBasicInputWidge
 
 	private final IComboBoxSelectionWidgetSpi comboBoxSelectionWidgetSpi;
 	private final IObjectStringConverter<VALUE_TYPE> objectStringConverter;
+	private final AutoSelectionPolicy autoSelectionPolicy;
 
 	public ComboBoxSelectionWidget(
 		final IWidget parent,
@@ -56,11 +58,11 @@ public class ComboBoxSelectionWidget<VALUE_TYPE> extends AbstractBasicInputWidge
 
 		this.comboBoxSelectionWidgetSpi = comboBoxSelectionWidgetSpi;
 		this.objectStringConverter = setup.getObjectStringConverter();
+		this.autoSelectionPolicy = setup.getAutoSelectionPolicy();
 		this.elements = new ArrayList<VALUE_TYPE>();
 		this.elementsView = Collections.unmodifiableList(this.elements);
 
 		setElements(setup.getElements());
-		comboBoxSelectionWidgetSpi.setSelectedIndex(-1);
 	}
 
 	@Override
@@ -94,20 +96,70 @@ public class ComboBoxSelectionWidget<VALUE_TYPE> extends AbstractBasicInputWidge
 	}
 
 	@Override
-	public final void setElements(final List<VALUE_TYPE> newElements) {
+	public void setElements(final List<VALUE_TYPE> newElements) {
+
 		Assert.paramNotNull(newElements, "newElements");
 
+		//determinie the last selected string
+		String lastSelectedString = null;
+		final int lastSelectedIndex = comboBoxSelectionWidgetSpi.getSelectedIndex();
+		if (comboBoxSelectionWidgetSpi.getElements() != null
+			&& lastSelectedIndex >= 0
+			&& lastSelectedIndex < comboBoxSelectionWidgetSpi.getElements().length - 1) {
+			lastSelectedString = comboBoxSelectionWidgetSpi.getElements()[lastSelectedIndex];
+		}
+
+		//set the new elements
 		final String[] spiElements = new String[newElements.size()];
 		elements.clear();
 
 		int index = 0;
+		int newSelectionIndex = -1;
 
 		for (final VALUE_TYPE element : newElements) {
 			elements.add(element);
-			spiElements[index] = objectStringConverter.convertToString(element);
+			final String elementString = objectStringConverter.convertToString(element);
+			if (lastSelectedString != null && lastSelectedString.equals(elementString)) {
+				newSelectionIndex = index;
+			}
+			spiElements[index] = elementString;
 			index++;
 		}
 		comboBoxSelectionWidgetSpi.setElements(spiElements);
+
+		//do autoselection
+		if (AutoSelectionPolicy.FIRST_ELEMENT == autoSelectionPolicy && spiElements.length > 0) {
+			comboBoxSelectionWidgetSpi.setSelectedIndex(0);
+		}
+		else if (AutoSelectionPolicy.LAST_ELEMENT == autoSelectionPolicy && spiElements.length > 0) {
+			comboBoxSelectionWidgetSpi.setSelectedIndex(spiElements.length - 1);
+		}
+		else if (AutoSelectionPolicy.PREVIOUS_SELECTED_OR_FIRST == autoSelectionPolicy && spiElements.length > 0) {
+			if (newSelectionIndex != -1) {
+				comboBoxSelectionWidgetSpi.setSelectedIndex(newSelectionIndex);
+			}
+			else {
+				comboBoxSelectionWidgetSpi.setSelectedIndex(0);
+			}
+		}
+		else if (AutoSelectionPolicy.PREVIOUS_SELECTED_OR_LAST == autoSelectionPolicy && spiElements.length > 0) {
+			if (newSelectionIndex != -1) {
+				comboBoxSelectionWidgetSpi.setSelectedIndex(newSelectionIndex);
+			}
+			else {
+				comboBoxSelectionWidgetSpi.setSelectedIndex(spiElements.length - 1);
+			}
+		}
+		else if (AutoSelectionPolicy.OFF == autoSelectionPolicy) {
+			comboBoxSelectionWidgetSpi.setSelectedIndex(-1);
+		}
+		else {
+			throw new IllegalStateException("The value '"
+				+ autoSelectionPolicy
+				+ "' for '"
+				+ AutoSelectionPolicy.class.getSimpleName()
+				+ "' is not known");
+		}
 	}
 
 	protected IObjectStringConverter<VALUE_TYPE> getObjectStringConverter() {

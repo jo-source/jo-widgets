@@ -30,6 +30,7 @@ package org.jowidgets.impl.widgets.basic.blueprint.defaults;
 import java.util.Collections;
 import java.util.LinkedList;
 
+import org.jowidgets.api.types.AutoSelectionPolicy;
 import org.jowidgets.api.widgets.blueprint.builder.IComboBoxSelectionSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
@@ -39,6 +40,7 @@ public class ComboBoxSelectionDefaults implements IDefaultInitializer<IComboBoxS
 	@Override
 	public void initialize(final IComboBoxSelectionSetupBuilder<?, ?> builder) {
 		builder.setAutoCompletion(true);
+		builder.setAutoSelectionPolicy(AutoSelectionPolicy.OFF);
 		builder.setElements(Collections.unmodifiableList(new LinkedList()));
 	}
 

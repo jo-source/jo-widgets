@@ -30,6 +30,7 @@ package org.jowidgets.api.widgets.blueprint.builder;
 import java.util.List;
 
 import org.jowidgets.api.convert.IObjectStringConverter;
+import org.jowidgets.api.types.AutoSelectionPolicy;
 import org.jowidgets.api.widgets.blueprint.builder.convenience.IComboBoxSelectionSetupConvenience;
 
 public interface IComboBoxSelectionSetupBuilder<INSTANCE_TYPE extends IComboBoxSelectionSetupBuilder<?, ?>, INPUT_TYPE> extends
@@ -37,6 +38,8 @@ public interface IComboBoxSelectionSetupBuilder<INSTANCE_TYPE extends IComboBoxS
 		IComboBoxSelectionSetupConvenience<INSTANCE_TYPE, INPUT_TYPE> {
 
 	INSTANCE_TYPE setAutoCompletion(final boolean autoCompletion);
+
+	INSTANCE_TYPE setAutoSelectionPolicy(AutoSelectionPolicy autoSelectionPolicy);
 
 	INSTANCE_TYPE setElements(List<INPUT_TYPE> elements);
 
