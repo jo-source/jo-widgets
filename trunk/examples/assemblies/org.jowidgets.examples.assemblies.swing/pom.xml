@@ -35,7 +35,7 @@
 
 				<archive>
 					<manifest>
-					  <mainClass>org.jowidgets.examples.swing.HelloSwingWidgetStarter</mainClass>
+					  <mainClass>org.jowidgets.examples.swing.SwingDemoApplication</mainClass>
 					</manifest>
 				</archive>
 			</configuration>

@@ -35,7 +35,7 @@
 
 				<archive>
 					<manifest>
-					  <mainClass>org.jowidgets.examples.swt.HelloSwtWidgetStarter</mainClass>
+					  <mainClass>org.jowidgets.examples.swt.SwtDemoApplication</mainClass>
 					</manifest>
 				</archive>
 			</configuration>
