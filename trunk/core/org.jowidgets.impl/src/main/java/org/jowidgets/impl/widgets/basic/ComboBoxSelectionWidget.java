@@ -150,7 +150,7 @@ public class ComboBoxSelectionWidget<VALUE_TYPE> extends AbstractBasicInputWidge
 				comboBoxSelectionWidgetSpi.setSelectedIndex(spiElements.length - 1);
 			}
 		}
-		else if (AutoSelectionPolicy.OFF == autoSelectionPolicy) {
+		else if (AutoSelectionPolicy.OFF == autoSelectionPolicy || spiElements.length == 0) {
 			comboBoxSelectionWidgetSpi.setSelectedIndex(-1);
 		}
 		else {
