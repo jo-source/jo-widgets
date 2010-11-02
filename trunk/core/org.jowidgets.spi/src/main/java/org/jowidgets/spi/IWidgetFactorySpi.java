@@ -27,6 +27,8 @@
  */
 package org.jowidgets.spi;
 
+import org.jowidgets.common.widgets.IContainerWidgetCommon;
+import org.jowidgets.common.widgets.IFrameWidgetCommon;
 import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.widgets.IButtonWidgetSpi;
@@ -56,6 +58,18 @@ import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;
 
 public interface IWidgetFactorySpi {
+
+	//create widgets from ui-reference
+
+	boolean isConvertibleToFrame(Object uiReference);
+
+	IFrameWidgetCommon createFrameWidget(IGenericWidgetFactory factory, Object uiReference);
+
+	boolean isConvertibleToContainer(Object uiReference);
+
+	IContainerWidgetCommon createContainerWidget(IGenericWidgetFactory factory, Object uiReference);
+
+	//create widgets from setup
 
 	IFrameWidgetSpi createFrameWidget(IGenericWidgetFactory factory, IFrameSetupSpi setup);
 

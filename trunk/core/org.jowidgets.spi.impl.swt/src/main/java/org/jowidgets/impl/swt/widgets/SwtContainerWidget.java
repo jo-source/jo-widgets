@@ -54,6 +54,7 @@ public class SwtContainerWidget implements IContainerWidgetSpi {
 
 		Assert.paramNotNull(factory, "factory");
 		Assert.paramNotNull(colorCache, "colorCache");
+		Assert.paramNotNull(composite, "composite");
 
 		this.factory = factory;
 		this.composite = composite;

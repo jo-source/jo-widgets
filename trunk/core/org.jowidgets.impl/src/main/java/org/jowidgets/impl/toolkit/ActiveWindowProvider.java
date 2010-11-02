@@ -33,20 +33,23 @@ import java.util.Map;
 
 import org.jowidgets.api.widgets.IWindowWidget;
 import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWindowWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactoryListener;
 import org.jowidgets.spi.IWidgetsServiceProvider;
 
 public class ActiveWindowProvider {
 
+	private final IGenericWidgetFactory genericWidgetFactory;
 	private final IWidgetsServiceProvider widgetsServiceProvider;
-	private final Map<Object, IWindowWidget> uiReferenceToWindow;
+	private final Map<Object, IWindowWidgetCommon> uiReferenceToWindow;
 
 	public ActiveWindowProvider(
 		final IGenericWidgetFactory genericWidgetFactory,
 		final IWidgetsServiceProvider widgetsServiceProvider) {
 
-		this.uiReferenceToWindow = new HashMap<Object, IWindowWidget>();
+		this.genericWidgetFactory = genericWidgetFactory;
+		this.uiReferenceToWindow = new HashMap<Object, IWindowWidgetCommon>();
 		this.widgetsServiceProvider = widgetsServiceProvider;
 
 		genericWidgetFactory.addWidgetFactoryListener(new IWidgetFactoryListener() {
@@ -65,8 +68,25 @@ public class ActiveWindowProvider {
 		});
 	}
 
-	public IWindowWidget getActiveWindow() {
-		return uiReferenceToWindow.get(widgetsServiceProvider.getActiveWindowUiReference());
-	}
+	public IWindowWidgetCommon getActiveWindow() {
+		final Object activeWindowUiReference = widgetsServiceProvider.getActiveWindowUiReference();
+		IWindowWidgetCommon activeWindow = uiReferenceToWindow.get(widgetsServiceProvider.getActiveWindowUiReference());
 
+		//maybe window would be created without jo-widgets, so create a wrapper, if possible
+		if (activeWindowUiReference != null && activeWindow == null) {
+			if (widgetsServiceProvider.getWidgetFactory().isConvertibleToFrame(activeWindowUiReference)) {
+
+				activeWindow = widgetsServiceProvider.getWidgetFactory().createFrameWidget(
+						genericWidgetFactory,
+						activeWindowUiReference);
+
+				//register the created frame to avoid a new creation for every call of this method
+				if (activeWindow != null) {
+					uiReferenceToWindow.put(activeWindowUiReference, activeWindow);
+				}
+			}
+
+		}
+		return activeWindow;
+	}
 }

@@ -27,6 +27,10 @@
  */
 package org.jowidgets.impl.swt;
 
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Shell;
+import org.jowidgets.common.widgets.IContainerWidgetCommon;
+import org.jowidgets.common.widgets.IFrameWidgetCommon;
 import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swt.color.ColorCache;
@@ -37,8 +41,10 @@ import org.jowidgets.impl.swt.widgets.internal.CheckBoxWidget;
 import org.jowidgets.impl.swt.widgets.internal.ComboBoxSelectionWidget;
 import org.jowidgets.impl.swt.widgets.internal.ComboBoxWidget;
 import org.jowidgets.impl.swt.widgets.internal.CompositeWidget;
+import org.jowidgets.impl.swt.widgets.internal.CompositeWidgetWrapper;
 import org.jowidgets.impl.swt.widgets.internal.DialogWidget;
 import org.jowidgets.impl.swt.widgets.internal.FrameWidget;
+import org.jowidgets.impl.swt.widgets.internal.FrameWidgetWrapper;
 import org.jowidgets.impl.swt.widgets.internal.IconWidget;
 import org.jowidgets.impl.swt.widgets.internal.ScrollCompositeWidget;
 import org.jowidgets.impl.swt.widgets.internal.SeparatorWidget;
@@ -71,6 +77,7 @@ import org.jowidgets.spi.widgets.setup.ISeparatorSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;
+import org.jowidgets.util.Assert;
 
 public final class SwtWidgetFactory implements IWidgetFactorySpi {
 
@@ -81,6 +88,34 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 		super();
 		this.colorCache = new ColorCache();
 		this.imageRegistry = imageRegistry;
+	}
+
+	@Override
+	public boolean isConvertibleToFrame(final Object uiReference) {
+		return uiReference instanceof Shell;
+	}
+
+	@Override
+	public IFrameWidgetCommon createFrameWidget(final IGenericWidgetFactory factory, final Object uiReference) {
+		Assert.paramNotNull(uiReference, "uiReference");
+		if (uiReference instanceof Shell) {
+			return new FrameWidgetWrapper(factory, colorCache, (Shell) uiReference);
+		}
+		throw new IllegalArgumentException("UiReference must be instanceof of '" + Shell.class.getName() + "'");
+	}
+
+	@Override
+	public boolean isConvertibleToContainer(final Object uiReference) {
+		return uiReference instanceof Composite;
+	}
+
+	@Override
+	public IContainerWidgetCommon createContainerWidget(final IGenericWidgetFactory factory, final Object uiReference) {
+		Assert.paramNotNull(uiReference, "uiReference");
+		if (uiReference instanceof Composite) {
+			return new CompositeWidgetWrapper(factory, colorCache, (Composite) uiReference);
+		}
+		throw new IllegalArgumentException("UiReference must be instanceof of '" + Composite.class.getName() + "'");
 	}
 
 	@Override

@@ -32,11 +32,12 @@ import java.util.Iterator;
 import java.util.ServiceLoader;
 
 import org.jowidgets.api.convert.IConverterProvider;
-import org.jowidgets.api.widgets.IWindowWidget;
+import org.jowidgets.api.utils.IWidgetUtils;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.threads.IUiThreadAccess;
+import org.jowidgets.common.widgets.IWindowWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.util.Assert;
 
@@ -79,6 +80,10 @@ public final class Toolkit {
 		return getInstance().getImageRegistry();
 	}
 
+	public static IWidgetWrapperFactory getWidgetWrapperFactory() {
+		return getInstance().getWidgetWrapperFactory();
+	}
+
 	public static IGenericWidgetFactory getWidgetFactory() {
 		return getInstance().getWidgetFactory();
 	}
@@ -99,7 +104,7 @@ public final class Toolkit {
 		return getInstance().getUiThreadAccess();
 	}
 
-	public static IWindowWidget getActiveWindow() {
+	public static IWindowWidgetCommon getActiveWindow() {
 		return getInstance().getActiveWindow();
 	}
 
@@ -109,6 +114,10 @@ public final class Toolkit {
 
 	public static IQuestionPane getQuestionPane() {
 		return getInstance().getQuestionPane();
+	}
+
+	public static IWidgetUtils getWidgetUtils() {
+		return getInstance().getWidgetUtils();
 	}
 
 }

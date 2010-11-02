@@ -26,39 +26,43 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.toolkit;
+package org.jowidgets.impl.toolkit;
 
-import org.jowidgets.api.convert.IConverterProvider;
-import org.jowidgets.api.utils.IWidgetUtils;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.application.IApplicationRunner;
-import org.jowidgets.common.image.IImageRegistry;
-import org.jowidgets.common.threads.IUiThreadAccess;
-import org.jowidgets.common.widgets.IWindowWidgetCommon;
+import org.jowidgets.api.toolkit.IWidgetWrapperFactory;
+import org.jowidgets.common.widgets.IContainerWidgetCommon;
+import org.jowidgets.common.widgets.IFrameWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.spi.IWidgetFactorySpi;
 
-public interface IToolkit {
+public class DefaultWidgetWrapperFactory implements IWidgetWrapperFactory {
 
-	IImageRegistry getImageRegistry();
+	private final IGenericWidgetFactory widgetFactory;
+	private final IWidgetFactorySpi widgetFactorySpi;
 
-	IMessagePane getMessagePane();
+	public DefaultWidgetWrapperFactory(final IGenericWidgetFactory widgetFactory, final IWidgetFactorySpi widgetFactorySpi) {
+		super();
+		this.widgetFactory = widgetFactory;
+		this.widgetFactorySpi = widgetFactorySpi;
+	}
 
-	IQuestionPane getQuestionPane();
+	@Override
+	public boolean isConvertibleToFrame(final Object uiReference) {
+		return widgetFactorySpi.isConvertibleToFrame(uiReference);
+	}
 
-	IGenericWidgetFactory getWidgetFactory();
+	@Override
+	public IFrameWidgetCommon createFrameWidget(final Object uiReference) {
+		return widgetFactorySpi.createFrameWidget(widgetFactory, uiReference);
+	}
 
-	IWidgetWrapperFactory getWidgetWrapperFactory();
+	@Override
+	public IContainerWidgetCommon createContainerWidget(final Object uiReference) {
+		return widgetFactorySpi.createContainerWidget(widgetFactory, uiReference);
+	}
 
-	IBluePrintFactory getBluePrintFactory();
-
-	IConverterProvider getConverterProvider();
-
-	IApplicationRunner getApplicationRunner();
-
-	IUiThreadAccess getUiThreadAccess();
-
-	IWidgetUtils getWidgetUtils();
-
-	IWindowWidgetCommon getActiveWindow();
+	@Override
+	public boolean isConvertibleToContainer(final Object uiReference) {
+		return widgetFactorySpi.isConvertibleToContainer(uiReference);
+	}
 
 }

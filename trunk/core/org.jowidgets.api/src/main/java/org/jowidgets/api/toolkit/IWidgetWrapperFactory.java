@@ -28,37 +28,45 @@
 
 package org.jowidgets.api.toolkit;
 
-import org.jowidgets.api.convert.IConverterProvider;
-import org.jowidgets.api.utils.IWidgetUtils;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.application.IApplicationRunner;
-import org.jowidgets.common.image.IImageRegistry;
-import org.jowidgets.common.threads.IUiThreadAccess;
-import org.jowidgets.common.widgets.IWindowWidgetCommon;
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.widgets.IContainerWidgetCommon;
+import org.jowidgets.common.widgets.IFrameWidgetCommon;
 
-public interface IToolkit {
+public interface IWidgetWrapperFactory {
 
-	IImageRegistry getImageRegistry();
+	/**
+	 * Tests if the ui reference could be converted / wrapped to an FrameWidget
+	 * 
+	 * @param uiReference
+	 * @return True if convertible, false otherwise
+	 */
+	boolean isConvertibleToFrame(final Object uiReference);
 
-	IMessagePane getMessagePane();
+	/**
+	 * Creates a FrameWidget from an ui-platform specific ui-reference
+	 * 
+	 * @param uiReference The ui-platform specific object that could be wrapped to an
+	 *            FrameWidget (e.g. Window for Swing, Shell for swt).
+	 * @return The created FrameWidget
+	 * @throws IllegalArgumentException If the ui-reference could not be wrapped to an FrameWidget.
+	 */
+	IFrameWidgetCommon createFrameWidget(final Object uiReference);
 
-	IQuestionPane getQuestionPane();
+	/**
+	 * Tests if the ui reference could be converted / wrapped to an ContainerWidget
+	 * 
+	 * @param uiReference
+	 * @return True if convertible, false otherwise
+	 */
+	boolean isConvertibleToContainer(final Object uiReference);
 
-	IGenericWidgetFactory getWidgetFactory();
-
-	IWidgetWrapperFactory getWidgetWrapperFactory();
-
-	IBluePrintFactory getBluePrintFactory();
-
-	IConverterProvider getConverterProvider();
-
-	IApplicationRunner getApplicationRunner();
-
-	IUiThreadAccess getUiThreadAccess();
-
-	IWidgetUtils getWidgetUtils();
-
-	IWindowWidgetCommon getActiveWindow();
+	/**
+	 * Creates a ContainerWidget from an ui-platform specific ui-reference
+	 * 
+	 * @param uiReference The ui-platform specific object that could be wrapped to an
+	 *            ContainerWidget (e.g. Container for Swing, Composite for swt).
+	 * @return The created ContainerWidget
+	 * @throws IllegalArgumentException If the ui-reference could not be wrapped to an ContainerWidget.
+	 */
+	IContainerWidgetCommon createContainerWidget(final Object uiReference);
 
 }

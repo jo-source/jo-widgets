@@ -51,6 +51,7 @@ public class SwingContainerWidget implements IContainerWidgetSpi {
 
 	public SwingContainerWidget(final IGenericWidgetFactory factory, final Container container) {
 		Assert.paramNotNull(factory, "factory");
+		Assert.paramNotNull(container, "container");
 
 		this.factory = factory;
 		this.container = container;

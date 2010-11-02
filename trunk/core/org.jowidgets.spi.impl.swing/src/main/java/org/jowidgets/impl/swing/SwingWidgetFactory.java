@@ -27,6 +27,13 @@
  */
 package org.jowidgets.impl.swing;
 
+import java.awt.Container;
+import java.awt.Window;
+
+import javax.swing.JPanel;
+
+import org.jowidgets.common.widgets.IContainerWidgetCommon;
+import org.jowidgets.common.widgets.IFrameWidgetCommon;
 import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
@@ -35,8 +42,10 @@ import org.jowidgets.impl.swing.widgets.internal.CheckBoxWidget;
 import org.jowidgets.impl.swing.widgets.internal.ComboBoxSelectionWidget;
 import org.jowidgets.impl.swing.widgets.internal.ComboBoxWidget;
 import org.jowidgets.impl.swing.widgets.internal.CompositeWidget;
+import org.jowidgets.impl.swing.widgets.internal.CompositeWidgetWrapper;
 import org.jowidgets.impl.swing.widgets.internal.DialogWidget;
 import org.jowidgets.impl.swing.widgets.internal.FrameWidget;
+import org.jowidgets.impl.swing.widgets.internal.FrameWidgetWrapper;
 import org.jowidgets.impl.swing.widgets.internal.IconWidget;
 import org.jowidgets.impl.swing.widgets.internal.ScrollCompositeWidget;
 import org.jowidgets.impl.swing.widgets.internal.SeparatorWidget;
@@ -69,6 +78,7 @@ import org.jowidgets.spi.widgets.setup.ISeparatorSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;
+import org.jowidgets.util.Assert;
 
 public final class SwingWidgetFactory implements IWidgetFactorySpi {
 
@@ -77,6 +87,34 @@ public final class SwingWidgetFactory implements IWidgetFactorySpi {
 	public SwingWidgetFactory(final SwingImageRegistry imageRegistry) {
 		super();
 		this.imageRegistry = imageRegistry;
+	}
+
+	@Override
+	public boolean isConvertibleToFrame(final Object uiReference) {
+		return uiReference instanceof Window;
+	}
+
+	@Override
+	public IFrameWidgetCommon createFrameWidget(final IGenericWidgetFactory factory, final Object uiReference) {
+		Assert.paramNotNull(uiReference, "uiReference");
+		if (uiReference instanceof Window) {
+			return new FrameWidgetWrapper(factory, (Window) uiReference);
+		}
+		throw new IllegalArgumentException("UiReference must be instanceof of '" + Window.class.getName() + "'");
+	}
+
+	@Override
+	public boolean isConvertibleToContainer(final Object uiReference) {
+		return uiReference instanceof Container;
+	}
+
+	@Override
+	public IContainerWidgetCommon createContainerWidget(final IGenericWidgetFactory factory, final Object uiReference) {
+		Assert.paramNotNull(uiReference, "uiReference");
+		if (uiReference instanceof Container) {
+			return new CompositeWidgetWrapper(factory, (Container) uiReference);
+		}
+		throw new IllegalArgumentException("UiReference must be instanceof of '" + JPanel.class.getName() + "'");
 	}
 
 	@Override

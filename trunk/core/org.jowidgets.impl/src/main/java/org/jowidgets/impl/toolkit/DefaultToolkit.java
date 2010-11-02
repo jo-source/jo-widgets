@@ -33,12 +33,13 @@ import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.toolkit.IMessagePane;
 import org.jowidgets.api.toolkit.IQuestionPane;
 import org.jowidgets.api.toolkit.IToolkit;
+import org.jowidgets.api.toolkit.IWidgetWrapperFactory;
 import org.jowidgets.api.utils.IWidgetUtils;
-import org.jowidgets.api.widgets.IWindowWidget;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.threads.IUiThreadAccess;
+import org.jowidgets.common.widgets.IWindowWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.application.ApplicationRunner;
 import org.jowidgets.impl.convert.DefaultConverterProvider;
@@ -54,6 +55,7 @@ public class DefaultToolkit implements IToolkit {
 
 	private final IWidgetsServiceProvider widgetsServiceProvider;
 	private final IGenericWidgetFactory genericWidgetFactory;
+	private final IWidgetWrapperFactory widgetWrapperFactory;
 	private final IBluePrintFactory bluePrintFactory;
 	private final IConverterProvider converterProvider;
 	private final ActiveWindowProvider activeWindowProvider;
@@ -68,6 +70,7 @@ public class DefaultToolkit implements IToolkit {
 		Assert.paramNotNull(toolkitSpi, "toolkitSpi");
 		this.widgetsServiceProvider = toolkitSpi;
 		this.genericWidgetFactory = new GenericWidgetFactory(toolkitSpi.getWidgetFactory());
+		this.widgetWrapperFactory = new DefaultWidgetWrapperFactory(genericWidgetFactory, toolkitSpi.getWidgetFactory());
 		this.bluePrintFactory = new BluePrintFactory();
 		this.converterProvider = new DefaultConverterProvider();
 		this.activeWindowProvider = new ActiveWindowProvider(genericWidgetFactory, toolkitSpi);
@@ -98,6 +101,11 @@ public class DefaultToolkit implements IToolkit {
 	}
 
 	@Override
+	public IWidgetWrapperFactory getWidgetWrapperFactory() {
+		return widgetWrapperFactory;
+	}
+
+	@Override
 	public IBluePrintFactory getBluePrintFactory() {
 		return bluePrintFactory;
 	}
@@ -124,7 +132,7 @@ public class DefaultToolkit implements IToolkit {
 	}
 
 	@Override
-	public IWindowWidget getActiveWindow() {
+	public IWindowWidgetCommon getActiveWindow() {
 		return activeWindowProvider.getActiveWindow();
 	}
 

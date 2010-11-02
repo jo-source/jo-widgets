@@ -29,10 +29,10 @@
 package org.jowidgets.impl.toolkit;
 
 import org.jowidgets.api.toolkit.IMessagePane;
-import org.jowidgets.api.widgets.IWindowWidget;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.widgets.IWindowWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 
 public class DefaultMessagePane implements IMessagePane {
@@ -126,7 +126,7 @@ public class DefaultMessagePane implements IMessagePane {
 	}
 
 	private void showMessage(final IMessageDialogBluePrint messageDialogBluePrint) {
-		final IWindowWidget activeWindow = activeWindowProvider.getActiveWindow();
+		final IWindowWidgetCommon activeWindow = activeWindowProvider.getActiveWindow();
 		if (activeWindow != null) {
 			activeWindow.createChildWindow(messageDialogBluePrint).showMessage();
 		}
