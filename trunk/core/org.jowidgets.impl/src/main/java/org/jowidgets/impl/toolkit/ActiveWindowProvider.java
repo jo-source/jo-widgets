@@ -33,20 +33,21 @@ import java.util.Map;
 
 import org.jowidgets.api.widgets.IWindowWidget;
 import org.jowidgets.common.widgets.IWidget;
-import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactoryListener;
+import org.jowidgets.spi.IWidgetsServiceProvider;
 
-//TODO this class may not work correctly, especially with rap
-public class ActiveWindowTracker {
+public class ActiveWindowProvider {
 
+	private final IWidgetsServiceProvider widgetsServiceProvider;
 	private final Map<Object, IWindowWidget> uiReferenceToWindow;
 
-	private Object activeWindowUiReference;
-
-	public ActiveWindowTracker(final IGenericWidgetFactory genericWidgetFactory) {
+	public ActiveWindowProvider(
+		final IGenericWidgetFactory genericWidgetFactory,
+		final IWidgetsServiceProvider widgetsServiceProvider) {
 
 		this.uiReferenceToWindow = new HashMap<Object, IWindowWidget>();
+		this.widgetsServiceProvider = widgetsServiceProvider;
 
 		genericWidgetFactory.addWidgetFactoryListener(new IWidgetFactoryListener() {
 
@@ -54,16 +55,10 @@ public class ActiveWindowTracker {
 			public void widgetCreated(final IWidget widget) {
 				if (widget instanceof IWindowWidget) {
 					final IWindowWidget windowWidget = (IWindowWidget) widget;
-					if (uiReferenceToWindow.get(windowWidget.getUiReference()) != null) {
-						//It will be assumed, that the created window wraps a window, because the uiReference 
-						//is already registered for a different window widget.
-						//From now, the wrapped window will returned for the active window
-						uiReferenceToWindow.put(windowWidget.getUiReference(), windowWidget);
-					}
-					else {
-						uiReferenceToWindow.put(windowWidget.getUiReference(), windowWidget);
-						new WindowListenerImpl((IWindowWidget) widget);
-					}
+					//If a WindowWidget wraps another WindowWidget it will be assumed, 
+					//that the newer window wraps the previous window with the same ui reference.
+					//From now, the wrapping window will returned for the active window
+					uiReferenceToWindow.put(windowWidget.getUiReference(), windowWidget);
 				}
 
 			}
@@ -71,36 +66,7 @@ public class ActiveWindowTracker {
 	}
 
 	public IWindowWidget getActiveWindow() {
-		if (activeWindowUiReference != null) {
-			final IWindowWidget activeWindow = uiReferenceToWindow.get(activeWindowUiReference);
-			if (activeWindow.isVisible()) {
-				return activeWindow;
-			}
-		}
-		return null;
+		return uiReferenceToWindow.get(widgetsServiceProvider.getActiveWindowUiReference());
 	}
 
-	private class WindowListenerImpl extends WindowAdapter {
-
-		private final IWindowWidget window;
-
-		public WindowListenerImpl(final IWindowWidget window) {
-			super();
-			this.window = window;
-			this.window.addWindowListener(this);
-		}
-
-		@Override
-		public void windowActivated() {
-			activeWindowUiReference = window.getUiReference();
-		}
-
-		@Override
-		public void windowDeactivated() {
-			if (activeWindowUiReference == window.getUiReference()) {
-				activeWindowUiReference = null;
-			}
-		}
-
-	}
 }

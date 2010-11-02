@@ -45,4 +45,11 @@ public interface IWidgetsServiceProvider {
 
 	IApplicationRunner createApplicationRunner();
 
+	/**
+	 * Gets the UI Reference (e.g. Shell for SWT, Window for Swing, ...) of the active window.
+	 * 
+	 * @return The UI Reference of the active window or null, if now window is active
+	 */
+	Object getActiveWindowUiReference();
+
 }

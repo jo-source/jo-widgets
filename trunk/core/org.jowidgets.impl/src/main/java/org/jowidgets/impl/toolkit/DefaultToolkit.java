@@ -54,7 +54,7 @@ public class DefaultToolkit implements IToolkit {
 	private final IGenericWidgetFactory genericWidgetFactory;
 	private final IBluePrintFactory bluePrintFactory;
 	private final IConverterProvider converterProvider;
-	private final ActiveWindowTracker activeWindowTracker;
+	private final ActiveWindowProvider activeWindowProvider;
 	private final IMessagePane messagePane;
 	private final IQuestionPane questionPane;
 
@@ -67,9 +67,9 @@ public class DefaultToolkit implements IToolkit {
 		this.genericWidgetFactory = new GenericWidgetFactory(toolkitSpi.getWidgetFactory());
 		this.bluePrintFactory = new BluePrintFactory();
 		this.converterProvider = new DefaultConverterProvider();
-		this.activeWindowTracker = new ActiveWindowTracker(genericWidgetFactory);
-		this.messagePane = new DefaultMessagePane(genericWidgetFactory, bluePrintFactory, activeWindowTracker);
-		this.questionPane = new DefaultQuestionPane(genericWidgetFactory, bluePrintFactory, activeWindowTracker);
+		this.activeWindowProvider = new ActiveWindowProvider(genericWidgetFactory, toolkitSpi);
+		this.messagePane = new DefaultMessagePane(genericWidgetFactory, bluePrintFactory, activeWindowProvider);
+		this.questionPane = new DefaultQuestionPane(genericWidgetFactory, bluePrintFactory, activeWindowProvider);
 
 		final IImageRegistry imageRegistry = toolkitSpi.getImageRegistry();
 		final IImageHandleFactorySpi imageHandleFactory = toolkitSpi.getImageHandleFactory();
@@ -121,7 +121,7 @@ public class DefaultToolkit implements IToolkit {
 
 	@Override
 	public IWindowWidget getActiveWindow() {
-		return activeWindowTracker.getActiveWindow();
+		return activeWindowProvider.getActiveWindow();
 	}
 
 	@Override

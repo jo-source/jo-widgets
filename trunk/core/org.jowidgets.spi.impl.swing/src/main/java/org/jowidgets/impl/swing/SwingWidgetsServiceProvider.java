@@ -28,6 +28,8 @@
 
 package org.jowidgets.impl.swing;
 
+import java.awt.Window;
+
 import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.threads.IUiThreadAccess;
@@ -75,6 +77,16 @@ public class SwingWidgetsServiceProvider implements IWidgetsServiceProvider {
 	@Override
 	public IApplicationRunner createApplicationRunner() {
 		return new SwingApplicationRunner();
+	}
+
+	@Override
+	public Object getActiveWindowUiReference() {
+		for (final Window window : Window.getWindows()) {
+			if (window.isActive()) {
+				return window;
+			}
+		}
+		return null;
 	}
 
 }

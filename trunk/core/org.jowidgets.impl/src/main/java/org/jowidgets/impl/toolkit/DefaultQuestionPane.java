@@ -40,16 +40,16 @@ public class DefaultQuestionPane implements IQuestionPane {
 
 	private final IGenericWidgetFactory genericWidgetFactory;
 	private final IBluePrintFactory bluePrintFactory;
-	private final ActiveWindowTracker activeWindowTracker;
+	private final ActiveWindowProvider activeWindowProvider;
 
 	public DefaultQuestionPane(
 		final IGenericWidgetFactory genericWidgetFactory,
 		final IBluePrintFactory bluePrintFactory,
-		final ActiveWindowTracker activeWindowTracker) {
+		final ActiveWindowProvider activeWindowProvider) {
 		super();
 		this.genericWidgetFactory = genericWidgetFactory;
 		this.bluePrintFactory = bluePrintFactory;
-		this.activeWindowTracker = activeWindowTracker;
+		this.activeWindowProvider = activeWindowProvider;
 	}
 
 	@Override
@@ -141,7 +141,7 @@ public class DefaultQuestionPane implements IQuestionPane {
 	}
 
 	private QuestionResult askQuestion(final IQuestionDialogBluePrint messageDialogBluePrint) {
-		final IWindowWidget activeWindow = activeWindowTracker.getActiveWindow();
+		final IWindowWidget activeWindow = activeWindowProvider.getActiveWindow();
 		if (activeWindow != null) {
 			return activeWindow.createChildWindow(messageDialogBluePrint).question();
 		}
