@@ -28,11 +28,14 @@
 package org.jowidgets.api.widgets.blueprint.builder;
 
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
+import org.jowidgets.common.image.IImageConstant;
 
 public interface IMessageDialogSetupBuilder<INSTANCE_TYPE extends IMessageDialogSetupBuilder<?>> extends
 		ILabelSetupBuilder<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setTitle(final String title);
+
+	INSTANCE_TYPE setTitleIcon(final IImageConstant titleIcon);
 
 	INSTANCE_TYPE setOkButton(final IButtonDescriptor buttonDescriptor);
 

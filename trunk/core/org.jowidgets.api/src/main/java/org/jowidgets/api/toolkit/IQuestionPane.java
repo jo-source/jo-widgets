@@ -49,4 +49,18 @@ public interface IQuestionPane {
 
 	QuestionResult askYesNoCancelQuestion(String title, String question, QuestionResult defaultResult, IImageConstant icon);
 
+	QuestionResult askYesNoQuestion(
+		String title,
+		IImageConstant titleIcon,
+		String question,
+		QuestionResult defaultResult,
+		IImageConstant icon);
+
+	QuestionResult askYesNoCancelQuestion(
+		String title,
+		IImageConstant titleIcon,
+		String question,
+		QuestionResult defaultResult,
+		IImageConstant icon);
+
 }

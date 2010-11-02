@@ -30,6 +30,7 @@ package org.jowidgets.api.widgets.descriptor.setup;
 
 import org.jowidgets.api.types.QuestionResult;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface IQuestionDialogSetup extends ILabelSetup {
@@ -44,5 +45,7 @@ public interface IQuestionDialogSetup extends ILabelSetup {
 	QuestionResult getDefaultResult();
 
 	String getTitle();
+
+	IImageConstant getTitleIcon();
 
 }

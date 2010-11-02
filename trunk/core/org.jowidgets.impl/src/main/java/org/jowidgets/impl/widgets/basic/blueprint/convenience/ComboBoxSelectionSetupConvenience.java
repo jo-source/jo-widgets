@@ -30,12 +30,12 @@ package org.jowidgets.impl.widgets.basic.blueprint.convenience;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jowidgets.api.types.AutoSelectionPolicy;
 import org.jowidgets.api.widgets.blueprint.builder.IComboBoxSelectionSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.convenience.IComboBoxSelectionSetupConvenience;
 import org.jowidgets.impl.base.blueprint.convenience.AbstractSetupBuilderConvenience;
 
-public class ComboBoxSelectionSetupConvenience extends
-		AbstractSetupBuilderConvenience<IComboBoxSelectionSetupBuilder<?, ?>> implements
+public class ComboBoxSelectionSetupConvenience extends AbstractSetupBuilderConvenience<IComboBoxSelectionSetupBuilder<?, ?>> implements
 		IComboBoxSelectionSetupConvenience<IComboBoxSelectionSetupBuilder<?, ?>, Object> {
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
@@ -43,6 +43,16 @@ public class ComboBoxSelectionSetupConvenience extends
 	public IComboBoxSelectionSetupBuilder<?, ?> setElements(final Object... elements) {
 		getBuilder().setElements((List) Arrays.asList(elements));
 		return getBuilder();
+	}
+
+	@Override
+	public IComboBoxSelectionSetupBuilder<?, ?> autoSelectionOn() {
+		return getBuilder().setAutoSelectionPolicy(AutoSelectionPolicy.PREVIOUS_SELECTED_OR_FIRST);
+	}
+
+	@Override
+	public IComboBoxSelectionSetupBuilder<?, ?> autoSelectionOff() {
+		return getBuilder().setAutoSelectionPolicy(AutoSelectionPolicy.OFF);
 	}
 
 }

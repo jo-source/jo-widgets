@@ -127,7 +127,7 @@ public class ComboBoxSelectionWidget<VALUE_TYPE> extends AbstractBasicInputWidge
 		}
 		comboBoxSelectionWidgetSpi.setElements(spiElements);
 
-		//do autoselection
+		//do auto selection
 		if (AutoSelectionPolicy.FIRST_ELEMENT == autoSelectionPolicy && spiElements.length > 0) {
 			comboBoxSelectionWidgetSpi.setSelectedIndex(0);
 		}

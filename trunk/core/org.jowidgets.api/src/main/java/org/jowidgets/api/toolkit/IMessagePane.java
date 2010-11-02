@@ -44,6 +44,14 @@ public interface IMessagePane {
 
 	void showError(String title, String message);
 
-	void showMessage(String title, String message, IImageConstant icon);
+	void showInfo(String title, IImageConstant titleIcon, String message);
+
+	void showWarning(String title, IImageConstant titleIcon, String message);
+
+	void showError(String title, IImageConstant titleIcon, String message);
+
+	void showMessage(String title, String message, IImageConstant messageIcon);
+
+	void showMessage(String title, IImageConstant titleIcon, String message, IImageConstant messageIcon);
 
 }

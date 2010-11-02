@@ -29,6 +29,7 @@
 package org.jowidgets.api.widgets.descriptor.setup;
 
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface IMessageDialogSetup extends ILabelSetup {
@@ -37,5 +38,7 @@ public interface IMessageDialogSetup extends ILabelSetup {
 	IButtonDescriptor getOkButton();
 
 	String getTitle();
+
+	IImageConstant getTitleIcon();
 
 }

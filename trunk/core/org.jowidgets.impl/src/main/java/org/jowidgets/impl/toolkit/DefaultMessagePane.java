@@ -88,8 +88,40 @@ public class DefaultMessagePane implements IMessagePane {
 	}
 
 	@Override
+	public void showInfo(final String title, final IImageConstant titleIcon, final String message) {
+		final IMessageDialogBluePrint bp = bluePrintFactory.infoDialog().setTitle(title).setText(message);
+		bp.setTitleIcon(titleIcon);
+		showMessage(bp);
+	}
+
+	@Override
+	public void showWarning(final String title, final IImageConstant titleIcon, final String message) {
+		final IMessageDialogBluePrint bp = bluePrintFactory.warningDialog().setTitle(title).setText(message);
+		bp.setTitleIcon(titleIcon);
+		showMessage(bp);
+	}
+
+	@Override
+	public void showError(final String title, final IImageConstant titleIcon, final String message) {
+		final IMessageDialogBluePrint bp = bluePrintFactory.errorDialog().setTitle(title).setText(message);
+		bp.setTitleIcon(titleIcon);
+		showMessage(bp);
+	}
+
+	@Override
 	public void showMessage(final String title, final String message, final IImageConstant icon) {
 		final IMessageDialogBluePrint bp = bluePrintFactory.messageDialog().setTitle(title).setText(message).setIcon(icon);
+		showMessage(bp);
+	}
+
+	@Override
+	public void showMessage(
+		final String title,
+		final IImageConstant titleIcon,
+		final String message,
+		final IImageConstant messageIcon) {
+		final IMessageDialogBluePrint bp = bluePrintFactory.messageDialog().setTitle(title).setText(message).setIcon(messageIcon);
+		bp.setTitleIcon(titleIcon);
 		showMessage(bp);
 	}
 
@@ -102,4 +134,5 @@ public class DefaultMessagePane implements IMessagePane {
 			genericWidgetFactory.create(messageDialogBluePrint).showMessage();
 		}
 	}
+
 }

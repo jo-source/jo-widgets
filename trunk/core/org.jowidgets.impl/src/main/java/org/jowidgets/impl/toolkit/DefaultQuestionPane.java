@@ -114,6 +114,32 @@ public class DefaultQuestionPane implements IQuestionPane {
 		return askQuestion(bp);
 	}
 
+	@Override
+	public QuestionResult askYesNoQuestion(
+		final String title,
+		final IImageConstant titleIcon,
+		final String question,
+		final QuestionResult defaultResult,
+		final IImageConstant icon) {
+
+		final IQuestionDialogBluePrint bp = bluePrintFactory.yesNoQuestion().setTitle(title).setTitleIcon(titleIcon);
+		bp.setText(question).setDefaultResult(defaultResult).setIcon(icon);
+		return askQuestion(bp);
+	}
+
+	@Override
+	public QuestionResult askYesNoCancelQuestion(
+		final String title,
+		final IImageConstant titleIcon,
+		final String question,
+		final QuestionResult defaultResult,
+		final IImageConstant icon) {
+
+		final IQuestionDialogBluePrint bp = bluePrintFactory.yesNoCancelQuestion().setTitle(title).setTitleIcon(titleIcon);
+		bp.setText(question).setDefaultResult(defaultResult).setIcon(icon);
+		return askQuestion(bp);
+	}
+
 	private QuestionResult askQuestion(final IQuestionDialogBluePrint messageDialogBluePrint) {
 		final IWindowWidget activeWindow = activeWindowTracker.getActiveWindow();
 		if (activeWindow != null) {

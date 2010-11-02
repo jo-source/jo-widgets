@@ -31,4 +31,8 @@ public interface IComboBoxSelectionSetupConvenience<INSTANCE_TYPE, INPUT_TYPE> {
 
 	INSTANCE_TYPE setElements(INPUT_TYPE... elements);
 
+	INSTANCE_TYPE autoSelectionOn();
+
+	INSTANCE_TYPE autoSelectionOff();
+
 }
