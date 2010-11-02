@@ -134,7 +134,7 @@ public class DemoInputDialogFactory {
 
 			container.add(textLabelBp.setText("Country*"), "right, sg lg");
 			final IComboBoxBluePrint<String> countryBp = bpF.comboBox("Germany", "Spain", "Italy", "United States");
-			countryBp.setMandatory(true);
+			countryBp.setMandatory(true).setValidator(maxLengthValidator);
 			country = container.add(countryBp, inputWidgetConstraints);
 			final IValidationLabelWidget countryValidationWidget = container.add(validationLabelBp, "wrap");
 			countryValidationWidget.registerInputWidget(country);
