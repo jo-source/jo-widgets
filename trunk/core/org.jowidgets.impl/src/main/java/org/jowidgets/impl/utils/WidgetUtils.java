@@ -26,37 +26,33 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.toolkit;
+package org.jowidgets.impl.utils;
 
-import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.utils.IWidgetUtils;
+import org.jowidgets.api.widgets.IChildWidget;
 import org.jowidgets.api.widgets.IWindowWidget;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.application.IApplicationRunner;
-import org.jowidgets.common.image.IImageRegistry;
-import org.jowidgets.common.threads.IUiThreadAccess;
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.util.Assert;
 
-public interface IToolkit {
+public final class WidgetUtils implements IWidgetUtils {
 
-	IImageRegistry getImageRegistry();
+	@Override
+	public IWindowWidget getWindowAncestor(final IWidget widget) {
+		Assert.paramNotNull(widget, "widget");
 
-	IMessagePane getMessagePane();
+		if (widget instanceof IWindowWidget) {
+			return (IWindowWidget) widget;
+		}
 
-	IQuestionPane getQuestionPane();
+		else if (widget instanceof IChildWidget) {
+			final IChildWidget childWidget = (IChildWidget) widget;
+			final IWidget widgetParent = childWidget.getParent();
+			if (widgetParent != null) {
+				return getWindowAncestor(widgetParent);
+			}
+		}
 
-	IGenericWidgetFactory getWidgetFactory();
-
-	IBluePrintFactory getBluePrintFactory();
-
-	IConverterProvider getConverterProvider();
-
-	IApplicationRunner getApplicationRunner();
-
-	IUiThreadAccess getUiThreadAccess();
-
-	IWidgetUtils getWidgetUtils();
-
-	IWindowWidget getActiveWindow();
+		return null;
+	}
 
 }

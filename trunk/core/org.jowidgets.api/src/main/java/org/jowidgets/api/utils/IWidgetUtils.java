@@ -28,26 +28,11 @@
 
 package org.jowidgets.api.utils;
 
-import org.jowidgets.api.widgets.IChildWidget;
 import org.jowidgets.api.widgets.IWindowWidget;
-import org.jowidgets.util.Assert;
+import org.jowidgets.common.widgets.IWidget;
 
-public final class WidgetUtils {
+public interface IWidgetUtils {
 
-	private WidgetUtils() {};
-
-	public static IWindowWidget getParentWindow(final IChildWidget widget) {
-		Assert.paramNotNull(widget, "widget");
-
-		if (widget instanceof IWindowWidget) {
-			return (IWindowWidget) widget;
-		}
-
-		else if (widget.getParent() instanceof IChildWidget) {
-			return getParentWindow((IChildWidget) widget.getParent());
-		}
-
-		return null;
-	}
+	IWindowWidget getWindowAncestor(final IWidget widget);
 
 }

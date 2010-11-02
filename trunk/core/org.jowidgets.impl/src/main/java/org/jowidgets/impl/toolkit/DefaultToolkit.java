@@ -33,6 +33,7 @@ import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.toolkit.IMessagePane;
 import org.jowidgets.api.toolkit.IQuestionPane;
 import org.jowidgets.api.toolkit.IToolkit;
+import org.jowidgets.api.utils.IWidgetUtils;
 import org.jowidgets.api.widgets.IWindowWidget;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.application.IApplicationRunner;
@@ -42,6 +43,7 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.application.ApplicationRunner;
 import org.jowidgets.impl.convert.DefaultConverterProvider;
 import org.jowidgets.impl.image.DefaultIconsRegisterService;
+import org.jowidgets.impl.utils.WidgetUtils;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 import org.jowidgets.impl.widgets.composed.factory.GenericWidgetFactory;
 import org.jowidgets.spi.IWidgetsServiceProvider;
@@ -57,6 +59,7 @@ public class DefaultToolkit implements IToolkit {
 	private final ActiveWindowProvider activeWindowProvider;
 	private final IMessagePane messagePane;
 	private final IQuestionPane questionPane;
+	private final IWidgetUtils widgetUtils;
 
 	private IUiThreadAccess uiThreadAccess;
 	private IApplicationRunner applicationRunner;
@@ -70,6 +73,7 @@ public class DefaultToolkit implements IToolkit {
 		this.activeWindowProvider = new ActiveWindowProvider(genericWidgetFactory, toolkitSpi);
 		this.messagePane = new DefaultMessagePane(genericWidgetFactory, bluePrintFactory, activeWindowProvider);
 		this.questionPane = new DefaultQuestionPane(genericWidgetFactory, bluePrintFactory, activeWindowProvider);
+		this.widgetUtils = new WidgetUtils();
 
 		final IImageRegistry imageRegistry = toolkitSpi.getImageRegistry();
 		final IImageHandleFactorySpi imageHandleFactory = toolkitSpi.getImageHandleFactory();
@@ -132,6 +136,11 @@ public class DefaultToolkit implements IToolkit {
 	@Override
 	public IQuestionPane getQuestionPane() {
 		return questionPane;
+	}
+
+	@Override
+	public IWidgetUtils getWidgetUtils() {
+		return widgetUtils;
 	}
 
 }
