@@ -29,8 +29,6 @@ package org.jowidgets.impl.swing.widgets.internal;
 
 import java.awt.Container;
 
-import javax.swing.JPanel;
-
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swing.widgets.SwingContainerWidget;
 
@@ -41,8 +39,8 @@ public class CompositeWidgetWrapper extends SwingContainerWidget {
 	}
 
 	@Override
-	public JPanel getUiReference() {
-		return (JPanel) super.getUiReference();
+	public Container getUiReference() {
+		return super.getUiReference();
 	}
 
 }

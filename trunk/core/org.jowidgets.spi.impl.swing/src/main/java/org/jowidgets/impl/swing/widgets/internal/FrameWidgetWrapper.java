@@ -31,8 +31,6 @@ import java.awt.Window;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.JFrame;
-
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swing.widgets.SwingWindowWidget;
 import org.jowidgets.spi.widgets.IFrameWidgetSpi;
@@ -54,8 +52,8 @@ public class FrameWidgetWrapper extends SwingWindowWidget implements IFrameWidge
 	}
 
 	@Override
-	public JFrame getUiReference() {
-		return (JFrame) super.getUiReference();
+	public Window getUiReference() {
+		return super.getUiReference();
 	}
 
 }
