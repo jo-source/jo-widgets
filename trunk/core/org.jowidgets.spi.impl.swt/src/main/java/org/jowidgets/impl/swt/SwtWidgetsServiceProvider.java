@@ -48,7 +48,11 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider {
 	private final SwtWidgetFactory widgetFactory;
 
 	public SwtWidgetsServiceProvider() {
-		this(null, new SwtImageRegistry(new SwtImageHandleFactory()));
+		this(null);
+	}
+
+	public SwtWidgetsServiceProvider(final Display display) {
+		this(display, new SwtImageRegistry(new SwtImageHandleFactory()));
 	}
 
 	public SwtWidgetsServiceProvider(final Display display, final SwtImageRegistry imageRegistry) {
