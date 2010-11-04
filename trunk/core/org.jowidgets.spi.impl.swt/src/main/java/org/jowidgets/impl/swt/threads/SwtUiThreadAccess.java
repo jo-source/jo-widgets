@@ -12,7 +12,14 @@ public class SwtUiThreadAccess implements IUiThreadAccess {
 
 	private Display display;
 
-	public SwtUiThreadAccess() {}
+	public SwtUiThreadAccess() {
+		this(null);
+	}
+
+	public SwtUiThreadAccess(final Display display) {
+		super();
+		this.display = display;
+	}
 
 	@Override
 	public void invokeLater(final Runnable runnable) {

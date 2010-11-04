@@ -29,13 +29,12 @@ package org.jowidgets.impl.swt.image;
 
 import org.eclipse.swt.graphics.Image;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.image.IImageHandleFactory;
 import org.jowidgets.common.image.impl.ImageHandle;
 import org.jowidgets.common.image.impl.ImageRegistry;
 
 public class SwtImageRegistry extends ImageRegistry {
 
-	public SwtImageRegistry(final IImageHandleFactory imageHandleFactory) {
+	public SwtImageRegistry(final SwtImageHandleFactory imageHandleFactory) {
 		super(imageHandleFactory);
 	}
 
@@ -56,6 +55,10 @@ public class SwtImageRegistry extends ImageRegistry {
 		else {
 			throw new IllegalArgumentException("No image found for the image constant '" + key + "'");
 		}
+	}
+
+	public SwtImageHandleFactory getSwtImageHandleFactory() {
+		return (SwtImageHandleFactory) super.getImageHandleFactory();
 	}
 
 }

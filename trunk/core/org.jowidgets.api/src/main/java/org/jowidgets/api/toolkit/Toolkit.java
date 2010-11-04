@@ -55,6 +55,10 @@ public final class Toolkit {
 		Toolkit.toolkitProvider = toolkitProvider;
 	}
 
+	public static boolean isInitialized() {
+		return toolkitProvider != null;
+	}
+
 	public static IToolkit getInstance() {
 		if (toolkitProvider == null) {
 			final ServiceLoader<IToolkitProvider> toolkitProviderLoader = ServiceLoader.load(IToolkitProvider.class);

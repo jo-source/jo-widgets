@@ -76,14 +76,7 @@ public class SwtApplicationRunner implements IApplicationRunner {
 
 	private Display getDisplay() {
 		if (display == null) {
-			display = Display.getCurrent();
-			if (display != null) {
-				throw new IllegalStateException(
-					"The current thread has an Display. The application runner assumes, that no display exists at all at creation time.");
-			}
-
 			display = Display.getDefault();
-
 			if (display.getThread() != Thread.currentThread()) {
 				throw new IllegalStateException(
 					"A default Display exists, but the current thread is not the owner of this display.");

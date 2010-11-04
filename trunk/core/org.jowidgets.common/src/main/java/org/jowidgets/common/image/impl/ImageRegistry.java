@@ -64,4 +64,8 @@ public class ImageRegistry implements IImageRegistry {
 		registerImageConstant(imageUrlProvider, imageHandleFactory.createImageHandle(imageUrlProvider.getImageUrl()));
 	}
 
+	protected IImageHandleFactory getImageHandleFactory() {
+		return imageHandleFactory;
+	}
+
 }
