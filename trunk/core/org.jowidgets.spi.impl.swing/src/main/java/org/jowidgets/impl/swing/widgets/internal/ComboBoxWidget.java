@@ -32,6 +32,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ComboBoxEditor;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -78,6 +79,7 @@ public class ComboBoxWidget extends ComboBoxSelectionWidget implements IComboBox
 		public ComboBoxEditorImpl(final IInputVerifier inputVerifier) {
 			super();
 			this.textField = new JTextField();
+			this.textField.setBorder(new EmptyBorder(0, 0, 0, 0));
 
 			this.setItemInvoked = false;
 
