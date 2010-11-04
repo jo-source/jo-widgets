@@ -30,6 +30,7 @@ package org.jowidgets.examples.common.demo;
 
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButtonWidget;
+import org.jowidgets.api.widgets.IDialogWidget;
 import org.jowidgets.api.widgets.IInputDialogWidget;
 import org.jowidgets.api.widgets.IWindowWidget;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
@@ -39,90 +40,37 @@ import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
 public class DemoMainComposite {
 
-	private final IInputDialogWidget<String> inputDialog;
+	public DemoMainComposite(final IContainerWidgetCommon parentContainer) {
 
-	public DemoMainComposite(final IWindowWidget parentWindow, final IContainerWidgetCommon container) {
-		super();
+		final IWindowWidget parentWindow = Toolkit.getWidgetUtils().getWindowAncestor(parentContainer);
 
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 
-		container.setLayout(new MigLayoutDescriptor("[300::, grow]", "[][][][][][]"));
+		parentContainer.setLayout(new MigLayoutDescriptor("[300::, grow]", "[][]"));
 
-		inputDialog = new DemoInputDialogFactory().create(parentWindow);
-		final IButtonWidget inputDialogButton = container.add(
+		final IInputDialogWidget<String> inputDialog1 = new DemoInputDialog1(parentContainer).getInputDialog();
+		final IButtonWidget inputDialog1Button = parentContainer.add(
 				bpF.button("Input dialog demo", "Shows an simple input Dialog"),
 				"grow, sg bg, wrap");
-		inputDialogButton.addActionListener(new IActionListener() {
+		inputDialog1Button.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
-				inputDialog.setVisible(true);
+				inputDialog1.setVisible(true);
 			}
 		});
 
-		final IButtonWidget infoMessageButton = container.add(
-				bpF.button("Info message demo", "Shows an info message"),
+		final IDialogWidget messagesDemoDialog = parentWindow.createChildWindow(bpF.dialog("Messages Demo"));
+		new DemoMessagesComposite(messagesDemoDialog);
+		final IButtonWidget messagesDialogButton = parentContainer.add(
+				bpF.button("Messages demo", "Opens the messages Demo"),
 				"grow, sg bg, wrap");
-		infoMessageButton.addActionListener(new IActionListener() {
+		messagesDialogButton.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
-				Toolkit.getMessagePane().showInfo(
-						"Info message title",
-						"This is an info message! \nHere comes some more information in text form about the kitchens sink.");
+				messagesDemoDialog.setVisible(true);
 			}
 		});
 
-		final IButtonWidget warningMessageButton = container.add(
-				bpF.button("Warning message demo", "Shows an warning message"),
-				"grow, sg bg, wrap");
-		warningMessageButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				Toolkit.getMessagePane().showWarning(
-						"Warning message title",
-						"This is warning message! \nHere comes some more information in text form about the kitchens sink.");
-			}
-		});
-
-		final IButtonWidget errorMessageButton = container.add(
-				bpF.button("Error message demo", "Shows an error message"),
-				"grow, sg bg, wrap");
-		errorMessageButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				Toolkit.getMessagePane().showError(
-						"Error message title",
-						"This is an error message! \nHere comes some more information in text form about the kitchens sink.");
-			}
-		});
-
-		final IButtonWidget yesNoQuestionButton = container.add(
-				bpF.button("Yes/No question demo", "Shows an Yes / No question"),
-				"grow, sg bg, wrap");
-		yesNoQuestionButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				Toolkit.getQuestionPane().askYesNoQuestion(
-						"Question title",
-						"This is an important question! \nHere comes some more information in text form about the kitchens sink.");
-			}
-		});
-
-		final IButtonWidget yesNoCancelQuestionButton = container.add(
-				bpF.button("Yes/No/Cancel question demo", "Shows an Yes/No/Cancel question"),
-				"grow, sg bg, wrap");
-		yesNoCancelQuestionButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				Toolkit.getQuestionPane().askYesNoCancelQuestion(
-						"Question title",
-						"This is an important question! \nHere comes some more information in text form about the kitchens sink.");
-			}
-		});
-
-	}
-
-	public IInputDialogWidget<String> getInputDialog() {
-		return inputDialog;
 	}
 
 }

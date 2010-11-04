@@ -55,7 +55,7 @@ public class DemoApplication implements IApplication {
 		final IGenericWidgetFactory widgetFactory = Toolkit.getWidgetFactory();
 
 		final IFrameWidget frame = widgetFactory.create(bpF.frame(frameTitle));
-		new DemoMainComposite(frame, frame);
+		new DemoMainComposite(frame);
 
 		frame.addWindowListener(new WindowAdapter() {
 			@Override

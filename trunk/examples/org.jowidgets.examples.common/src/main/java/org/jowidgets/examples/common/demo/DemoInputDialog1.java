@@ -35,7 +35,6 @@ import org.jowidgets.api.widgets.IComboBoxWidget;
 import org.jowidgets.api.widgets.IInputDialogWidget;
 import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.IValidationLabelWidget;
-import org.jowidgets.api.widgets.IWindowWidget;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
@@ -44,21 +43,23 @@ import org.jowidgets.api.widgets.blueprint.IValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
+import org.jowidgets.common.widgets.IContainerWidgetCommon;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
-public class DemoInputDialogFactory {
+public class DemoInputDialog1 {
 
-	public IInputDialogWidget<String> create(final IWindowWidget parent) {
+	private final IInputDialogWidget<String> inputDialog;
+
+	public DemoInputDialog1(final IContainerWidgetCommon parent) {
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 		final IInputDialogBluePrint<String> inputDialogBp = bpF.inputDialog(new DemoInputDialogContent());
 		inputDialogBp.setTitle("Input dialog demo");
 		inputDialogBp.setMissingInputText("Please fill out all mandatory (*) fields");
-		if (parent != null) {
-			return parent.createChildWindow(inputDialogBp);
-		}
-		else {
-			return Toolkit.getWidgetFactory().create(inputDialogBp);
-		}
+		inputDialog = Toolkit.getWidgetUtils().getWindowAncestor(parent).createChildWindow(inputDialogBp);
+	}
+
+	public IInputDialogWidget<String> getInputDialog() {
+		return inputDialog;
 	}
 
 	private class DemoInputDialogContent implements IInputContentCreator<String> {
