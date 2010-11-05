@@ -27,6 +27,8 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder.convenience;
 
+import org.jowidgets.common.image.IImageConstant;
+
 public interface IInputCompositeSetupConvenience<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setBorder(final String borderTitle);
@@ -38,5 +40,7 @@ public interface IInputCompositeSetupConvenience<INSTANCE_TYPE> {
 	INSTANCE_TYPE setContentBorder();
 
 	INSTANCE_TYPE setMissingInputText(String text);
+
+	INSTANCE_TYPE setMissingInputIcon(IImageConstant icon);
 
 }

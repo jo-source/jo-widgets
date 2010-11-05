@@ -34,6 +34,7 @@ import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.threads.IUiThreadAccess;
 import org.jowidgets.impl.swt.application.SwtApplicationRunner;
 import org.jowidgets.impl.swt.image.SwtImageHandleFactory;
+import org.jowidgets.impl.swt.image.SwtImageHandleFactorySpi;
 import org.jowidgets.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.impl.swt.threads.SwtUiThreadAccess;
 import org.jowidgets.spi.IWidgetFactorySpi;
@@ -44,7 +45,7 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider {
 
 	private final Display display;
 	private final SwtImageRegistry imageRegistry;
-	private final SwtImageHandleFactory imageHandleFactory;
+	private final SwtImageHandleFactorySpi imageHandleFactorySpi;
 	private final SwtWidgetFactory widgetFactory;
 
 	public SwtWidgetsServiceProvider() {
@@ -59,7 +60,7 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider {
 		super();
 		this.display = display;
 		this.imageRegistry = imageRegistry;
-		this.imageHandleFactory = imageRegistry.getSwtImageHandleFactory();
+		this.imageHandleFactorySpi = new SwtImageHandleFactorySpi(imageRegistry);
 		this.widgetFactory = new SwtWidgetFactory(imageRegistry);
 	}
 
@@ -70,7 +71,7 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider {
 
 	@Override
 	public IImageHandleFactorySpi getImageHandleFactory() {
-		return imageHandleFactory;
+		return imageHandleFactorySpi;
 	}
 
 	@Override

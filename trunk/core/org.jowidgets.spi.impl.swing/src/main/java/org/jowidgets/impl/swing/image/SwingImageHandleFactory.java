@@ -29,67 +29,13 @@
 package org.jowidgets.impl.swing.image;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.net.URL;
 
-import javax.swing.Icon;
-import javax.swing.UIManager;
-
 import org.jowidgets.common.image.IImageHandle;
-import org.jowidgets.common.image.impl.IImageFactory;
+import org.jowidgets.common.image.IImageHandleFactory;
 import org.jowidgets.common.image.impl.ImageHandle;
-import org.jowidgets.spi.image.IImageHandleFactorySpi;
 
-public class SwingImageHandleFactory implements IImageHandleFactorySpi {
-
-	@Override
-	public IImageHandle infoIcon() {
-		return new ImageHandle<Image>(new IImageFactory<Image>() {
-			@Override
-			public Image createImage() {
-				return icon2Image(UIManager.getIcon("OptionPane.informationIcon"));
-			}
-		});
-	}
-
-	@Override
-	public IImageHandle questionIcon() {
-		return new ImageHandle<Image>(new IImageFactory<Image>() {
-			@Override
-			public Image createImage() {
-				return icon2Image(UIManager.getIcon("OptionPane.questionIcon"));
-			}
-		});
-	}
-
-	@Override
-	public IImageHandle warningIcon() {
-		return new ImageHandle<Image>(new IImageFactory<Image>() {
-			@Override
-			public Image createImage() {
-				return icon2Image(UIManager.getIcon("OptionPane.warningIcon"));
-			}
-		});
-	}
-
-	@Override
-	public IImageHandle errorIcon() {
-		return new ImageHandle<Image>(new IImageFactory<Image>() {
-			@Override
-			public Image createImage() {
-				return icon2Image(UIManager.getIcon("OptionPane.errorIcon"));
-			}
-		});
-	}
-
-	private Image icon2Image(final Icon icon) {
-		final BufferedImage bufferedImage = new BufferedImage(
-			icon.getIconWidth(),
-			icon.getIconHeight(),
-			BufferedImage.TYPE_INT_ARGB);
-		icon.paintIcon(null, bufferedImage.getGraphics(), 0, 0);
-		return bufferedImage;
-	}
+public class SwingImageHandleFactory implements IImageHandleFactory {
 
 	@Override
 	public IImageHandle createImageHandle(final URL url) {

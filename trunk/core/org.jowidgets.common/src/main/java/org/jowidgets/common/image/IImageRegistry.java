@@ -29,6 +29,8 @@ package org.jowidgets.common.image;
 
 public interface IImageRegistry {
 
+	IImageHandle getImageHandle(final IImageConstant key);
+
 	void registerImageUrl(final IImageUrlProvider imageUrlProvider);
 
 	void registerImageConstant(final IImageConstant key, final IImageHandle imageHandle);

@@ -31,7 +31,6 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.types.AutoCenterPolicy;
 import org.jowidgets.api.widgets.ICompositeWidget;
 import org.jowidgets.api.widgets.IFrameWidget;
-import org.jowidgets.api.widgets.IInputCompositeWidget;
 import org.jowidgets.api.widgets.IInputDialogWidget;
 import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.IValidationLabelWidget;
@@ -123,7 +122,7 @@ public class HelloWidgetApplication implements IApplication {
 		final IInputCompositeBluePrint<String> inputCompositeBluePrint = bpF.inputComposite(new HelloContentCreator());
 		inputCompositeBluePrint.setContentScrolled(false).setContentBorder();
 		inputCompositeBluePrint.setMissingInputText("Do input all mandatory(*) fields!");
-		final IInputCompositeWidget<String> inputComposite = group.add(inputCompositeBluePrint, "grow, span, wrap");
+		group.add(inputCompositeBluePrint, "grow, span, wrap");
 
 		// row6
 		group.add(bpF.textSeparator("Button follows", "The tooltip text").alignCenter(), "grow, span, wrap");
@@ -137,9 +136,6 @@ public class HelloWidgetApplication implements IApplication {
 			@Override
 			public void actionPerformed() {
 				dialog.setVisible(true);
-
-				System.out.println(dialog.isOkPressed());
-				System.out.println("Value:" + dialog.getValue());
 			}
 		});
 

@@ -30,6 +30,7 @@ package org.jowidgets.impl.toolkit;
 
 import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.image.Icons;
+import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.IMessagePane;
 import org.jowidgets.api.toolkit.IQuestionPane;
 import org.jowidgets.api.toolkit.IToolkit;
@@ -88,6 +89,11 @@ public class DefaultToolkit implements IToolkit {
 		imageRegistry.registerImageConstant(Icons.QUESTION, imageHandleFactory.questionIcon());
 		imageRegistry.registerImageConstant(Icons.WARNING, imageHandleFactory.warningIcon());
 		imageRegistry.registerImageConstant(Icons.ERROR, imageHandleFactory.errorIcon());
+
+		imageRegistry.registerImageConstant(IconsSmall.INFO, imageHandleFactory.createImageHandle(Icons.INFO, 16, 16));
+		imageRegistry.registerImageConstant(IconsSmall.QUESTION, imageHandleFactory.createImageHandle(Icons.QUESTION, 16, 16));
+		imageRegistry.registerImageConstant(IconsSmall.WARNING, imageHandleFactory.createImageHandle(Icons.WARNING, 16, 16));
+		imageRegistry.registerImageConstant(IconsSmall.ERROR, imageHandleFactory.createImageHandle(Icons.ERROR, 16, 16));
 	}
 
 	@Override

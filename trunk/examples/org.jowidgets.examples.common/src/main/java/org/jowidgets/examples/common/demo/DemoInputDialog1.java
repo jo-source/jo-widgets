@@ -28,6 +28,7 @@
 
 package org.jowidgets.examples.common.demo;
 
+import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationResult;
@@ -55,6 +56,7 @@ public class DemoInputDialog1 {
 		final IInputDialogBluePrint<String> inputDialogBp = bpF.inputDialog(new DemoInputDialogContent());
 		inputDialogBp.setTitle("Input dialog demo");
 		inputDialogBp.setMissingInputText("Please fill out all mandatory (*) fields");
+		inputDialogBp.setMissingInputIcon(IconsSmall.INFO);
 		inputDialog = Toolkit.getWidgetUtils().getWindowAncestor(parent).createChildWindow(inputDialogBp);
 	}
 
@@ -80,6 +82,19 @@ public class DemoInputDialog1 {
 			container.setLayout(new MigLayoutDescriptor("[][grow][20::]", "[]"));
 
 			final String inputWidgetConstraints = "w 270:270:, grow, sg fg";
+
+			final IValidator<String> moreThanOneWordValidator = new IValidator<String>() {
+
+				@Override
+				public ValidationResult validate(final String validationInput) {
+					final ValidationResult result = new ValidationResult();
+					if (validationInput != null && validationInput.trim().length() > 0 && validationInput.trim().contains(" ")) {
+						result.addValidationWarning("Input contains more than one word");
+					}
+					return result;
+				};
+
+			};
 
 			final IValidator<String> maxLengthValidator = new IValidator<String>() {
 
@@ -147,6 +162,7 @@ public class DemoInputDialog1 {
 
 			container.add(textLabelBp.setText("Email"), "right, sg lg");
 			mail = container.add(stringFieldBp, inputWidgetConstraints);
+			mail.addValidator(moreThanOneWordValidator);
 			final IValidationLabelWidget mailValidationWidget = container.add(validationLabelBp, "wrap");
 			mailValidationWidget.registerInputWidget(mail);
 

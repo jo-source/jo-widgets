@@ -28,7 +28,7 @@
 package org.jowidgets.examples.common;
 
 import org.jowidgets.api.convert.IConverterProvider;
-import org.jowidgets.api.image.Icons16x16;
+import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.IToolkit;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.validation.ValidationResult;
@@ -42,7 +42,6 @@ import org.jowidgets.api.widgets.blueprint.IToggleButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
-import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
 public class HelloContentCreator2 implements IInputContentCreator<String> {
@@ -61,7 +60,7 @@ public class HelloContentCreator2 implements IInputContentCreator<String> {
 		final IToggleButtonWidget tb1 = widgetContainer.add(toggleButtonBluePrint, "wrap, growx");
 
 		toggleButtonBluePrint = bpF.toggleButton();
-		toggleButtonBluePrint.setText("Text").setToolTipText("ToolTiptext").setIcon(Icons16x16.OK).alignCenter();
+		toggleButtonBluePrint.setText("Text").setToolTipText("ToolTiptext").setIcon(IconsSmall.OK).alignCenter();
 		final IToggleButtonWidget tb2 = widgetContainer.add(toggleButtonBluePrint, "wrap, growx");
 
 		final ICheckBoxBluePrint checkBoxBp = bpF.checkBox().setText("Checkbox").setToolTipText("Tooltip");
@@ -76,23 +75,6 @@ public class HelloContentCreator2 implements IInputContentCreator<String> {
 		final IComboBoxBluePrint<Long> comboBoxBp3 = bpF.comboBox(converter.longNumber()).setMandatory(true);
 		comboBoxBp3.setElements(Long.valueOf(23456), Long.valueOf(15468), Long.valueOf(5345519));
 		final IComboBoxWidget<Long> cBox3 = widgetContainer.add(comboBoxBp3, "wrap, growx");
-
-		final IInputListener inputListener = new IInputListener() {
-
-			@Override
-			public void inputChanged(final Object source) {
-				System.out.println(cBox1.getValue());
-				System.out.println(cBox2.getValue());
-				System.out.println(cBox3.getValue());
-			}
-		};
-
-		tb1.addInputListener(inputListener);
-		tb2.addInputListener(inputListener);
-		cb1.addInputListener(inputListener);
-		cBox1.addInputListener(inputListener);
-		cBox2.addInputListener(inputListener);
-		cBox3.addInputListener(inputListener);
 
 		widgetContainer.registerInputWidget("tb1", tb1);
 		widgetContainer.registerInputWidget("tb2", tb2);

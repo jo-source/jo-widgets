@@ -29,9 +29,12 @@ package org.jowidgets.api.image;
 
 import org.jowidgets.common.image.IImageConstant;
 
-public enum Icons16x16 implements IImageConstant {
+public enum IconsSmall implements IImageConstant {
 
 	OK,
+	INFO,
+	QUESTION,
+	WARNING,
 	ERROR;
 
 }

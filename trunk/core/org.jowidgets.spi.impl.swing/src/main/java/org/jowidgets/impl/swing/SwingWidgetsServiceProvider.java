@@ -35,6 +35,7 @@ import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.threads.IUiThreadAccess;
 import org.jowidgets.impl.swing.application.SwingApplicationRunner;
 import org.jowidgets.impl.swing.image.SwingImageHandleFactory;
+import org.jowidgets.impl.swing.image.SwingImageHandleFactorySpi;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.impl.swing.threads.SwingUiThreadAccess;
 import org.jowidgets.spi.IWidgetFactorySpi;
@@ -43,14 +44,14 @@ import org.jowidgets.spi.image.IImageHandleFactorySpi;
 
 public class SwingWidgetsServiceProvider implements IWidgetsServiceProvider {
 
-	private final SwingImageHandleFactory imageHandleFactory;
+	private final SwingImageHandleFactorySpi imageHandleFactorySpi;
 	private final SwingImageRegistry imageRegistry;
 	private final SwingWidgetFactory widgetFactory;
 
 	public SwingWidgetsServiceProvider() {
 		super();
-		this.imageHandleFactory = new SwingImageHandleFactory();
-		this.imageRegistry = new SwingImageRegistry(imageHandleFactory);
+		this.imageRegistry = new SwingImageRegistry(new SwingImageHandleFactory());
+		this.imageHandleFactorySpi = new SwingImageHandleFactorySpi(imageRegistry);
 		this.widgetFactory = new SwingWidgetFactory(imageRegistry);
 	}
 
@@ -61,7 +62,7 @@ public class SwingWidgetsServiceProvider implements IWidgetsServiceProvider {
 
 	@Override
 	public IImageHandleFactorySpi getImageHandleFactory() {
-		return imageHandleFactory;
+		return imageHandleFactorySpi;
 	}
 
 	@Override

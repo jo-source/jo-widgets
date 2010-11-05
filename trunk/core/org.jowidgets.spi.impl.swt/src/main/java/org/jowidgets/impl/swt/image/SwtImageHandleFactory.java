@@ -29,55 +29,12 @@ package org.jowidgets.impl.swt.image;
 
 import java.net.URL;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Display;
 import org.jowidgets.common.image.IImageHandle;
-import org.jowidgets.common.image.impl.IImageFactory;
+import org.jowidgets.common.image.IImageHandleFactory;
 import org.jowidgets.common.image.impl.ImageHandle;
-import org.jowidgets.spi.image.IImageHandleFactorySpi;
 
-public class SwtImageHandleFactory implements IImageHandleFactorySpi {
-
-	@Override
-	public IImageHandle infoIcon() {
-		return new ImageHandle<Image>(new IImageFactory<Image>() {
-			@Override
-			public Image createImage() {
-				return Display.getDefault().getSystemImage(SWT.ICON_INFORMATION);
-			}
-		});
-	}
-
-	@Override
-	public IImageHandle questionIcon() {
-		return new ImageHandle<Image>(new IImageFactory<Image>() {
-			@Override
-			public Image createImage() {
-				return Display.getDefault().getSystemImage(SWT.ICON_QUESTION);
-			}
-		});
-	}
-
-	@Override
-	public IImageHandle warningIcon() {
-		return new ImageHandle<Image>(new IImageFactory<Image>() {
-			@Override
-			public Image createImage() {
-				return Display.getDefault().getSystemImage(SWT.ICON_WARNING);
-			}
-		});
-	}
-
-	@Override
-	public IImageHandle errorIcon() {
-		return new ImageHandle<Image>(new IImageFactory<Image>() {
-			@Override
-			public Image createImage() {
-				return Display.getDefault().getSystemImage(SWT.ICON_ERROR);
-			}
-		});
-	}
+public class SwtImageHandleFactory implements IImageHandleFactory {
 
 	@Override
 	public IImageHandle createImageHandle(final URL url) {

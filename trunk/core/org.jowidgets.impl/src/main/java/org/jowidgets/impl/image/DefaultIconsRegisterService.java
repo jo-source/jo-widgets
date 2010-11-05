@@ -27,7 +27,7 @@
  */
 package org.jowidgets.impl.image;
 
-import org.jowidgets.api.image.Icons16x16;
+import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.common.image.IImageHandleFactory;
 import org.jowidgets.common.image.IImageRegistry;
 
@@ -38,8 +38,8 @@ public class DefaultIconsRegisterService extends ImageConstantRegisterService {
 	}
 
 	public void registerImages() {
-		registerImage(Icons16x16.OK, "ok.png");
-		registerImage(Icons16x16.ERROR, "error.png");
+		registerImage(IconsSmall.OK, "ok.png");
+		registerImage(IconsSmall.ERROR, "error.png");
 	}
 
 }
