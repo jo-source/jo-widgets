@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Manuel Woelker, Michael Grossmann
+ * Copyright (c) 2010, Michael Grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -36,6 +36,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.image.IImageHandle;
 import org.jowidgets.common.image.impl.IImageFactory;
 import org.jowidgets.common.image.impl.ImageHandle;
+import org.jowidgets.impl.swt.image.util.LowPassFilter;
 import org.jowidgets.spi.image.IImageHandleFactorySpi;
 
 public class SwtImageHandleFactorySpi extends SwtImageHandleFactory implements IImageHandleFactorySpi {
@@ -95,11 +96,16 @@ public class SwtImageHandleFactorySpi extends SwtImageHandleFactory implements I
 				final Image originalImage = swtImageRegistry.getImage(imageConstant);
 				if (originalImage != null) {
 
+					//RWT does not support the smooth scale	
 					try {
 						return smoothScale(originalImage, width, height);
 					}
 					catch (final LinkageError e) {
-						//RWT does not support the smooth scale		
+						//low pass filter works only with direct palette
+						if (originalImage.getImageData().palette.isDirect) {
+							final ImageData filteredImageData = LowPassFilter.filter(originalImage.getImageData(), width, height);
+							return new Image(Display.getDefault(), filteredImageData.scaledTo(width, height));
+						}
 						return new Image(Display.getDefault(), originalImage.getImageData().scaledTo(width, height));
 					}
 
@@ -141,4 +147,5 @@ public class SwtImageHandleFactorySpi extends SwtImageHandleFactory implements I
 		//return the result
 		return new Image(Display.getDefault(), scaledSmoothImageData);
 	}
+
 }
