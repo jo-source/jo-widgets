@@ -32,58 +32,81 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.graphics.RGB;
 
-public final class LowPassFilter {
+public final class AntiAliasingFilter {
 
-	private LowPassFilter() {};
+	private AntiAliasingFilter() {};
 
+	/**
+	 * Filters an image as preliminary for an scale function. If an image must be scaled to an lower resolution,
+	 * it must be low pass filtered to respect the nyquist theorem. After it was scaled, it could be
+	 * scaled (resampled) with an lower resolution (frequency).
+	 * 
+	 * Remark: This algorithm is only used in case of RWT. To simplify matters this implementation filters
+	 * in the 'position space' an not in the 'frequency space'.
+	 * Feel free to implement this method with help of convolution and FFT and send me the patch.
+	 * With respect to the performance, the maximal possible gauss matrix is 25x25. For scaled factors bigger
+	 * than 1/25 aliasing could still occur.
+	 * 
+	 * @param originalData The image data than should be resized.
+	 * @param resultWidth the width of the image after scaling
+	 * @param resultHeight the height of the image after scaling
+	 * @return The image data of the low pass filtered image, if the new image is smaller than the original, otherwise
+	 *         the original
+	 */
 	public static ImageData filter(final ImageData originalData, final int resultWidth, final int resultHeight) {
-		final ImageData result = (ImageData) originalData.clone();
-		final HighResolutionPixel[][] highResDataSource = createHighResolutionData(result);
-		final HighResolutionPixel[][] highResDataDest = new HighResolutionPixel[originalData.width][originalData.height];
 
-		final Double[][] filter = getFilter(result.width, result.height, resultWidth, resultHeight);
-		final int filterLengthX = filter.length;
-		final int filterLengthY = filter[0].length;
-		final int offsetX = (filterLengthX - 1) / 2;
-		final int offsetY = (filterLengthY - 1) / 2;
+		final Double[][] filter = getFilter(originalData.width, originalData.height, resultWidth, resultHeight);
 
-		for (int x = 0; x < result.width; x++) {
-			for (int y = 0; y < result.height; y++) {
+		if (filter != null) {
 
-				HighResolutionPixel pixel = new HighResolutionPixel();
+			final ImageData result = (ImageData) originalData.clone();
+			final HighResolutionPixel[][] highResDataSource = createHighResolutionData(result);
+			final HighResolutionPixel[][] highResDataDest = new HighResolutionPixel[originalData.width][originalData.height];
 
-				for (int filterX = 0; filterX < filterLengthX; filterX++) {
-					for (int filterY = 0; filterY < filterLengthY; filterY++) {
-						int xPos = x + filterX - offsetX;
-						int yPos = y + filterY - offsetY;
+			final int filterLength = filter.length;
 
-						//mirror the picture if filter mask is beyond image
-						if (xPos < 0) {
-							xPos = x + (filterLengthX - filterX) - offsetX;
+			final int offset = (filter.length - 1) / 2;
+
+			for (int x = 0; x < result.width; x++) {
+				for (int y = 0; y < result.height; y++) {
+
+					HighResolutionPixel pixel = new HighResolutionPixel();
+
+					for (int filterX = 0; filterX < filterLength; filterX++) {
+						for (int filterY = 0; filterY < filterLength; filterY++) {
+							int xPos = x + filterX - offset;
+							int yPos = y + filterY - offset;
+
+							//mirror the picture if filter mask is beyond image
+							if (xPos < 0) {
+								xPos = x + (filterLength - filterX) - offset;
+							}
+							if (xPos >= result.width) {
+								xPos = x + (filterX - filterLength) - offset;
+							}
+
+							if (yPos < 0) {
+								yPos = y + (filterLength - filterY) - offset;
+							}
+							if (yPos >= result.height) {
+								yPos = y + (filterY - filterLength) - offset;
+							}
+
+							pixel = pixel.add(highResDataSource[xPos][yPos].multiply(filter[filterX][filterY]));
+
 						}
-						if (xPos >= result.width) {
-							xPos = x + (filterX - filterLengthX) - offsetX;
-						}
-
-						if (yPos < 0) {
-							yPos = y + (filterLengthY - filterY) - offsetY;
-						}
-						if (yPos >= result.height) {
-							yPos = y + (filterY - filterLengthY) - offsetY;
-						}
-
-						pixel = pixel.add(highResDataSource[xPos][yPos].multiply(filter[filterX][filterY]));
-
 					}
-				}
 
-				highResDataDest[x][y] = pixel;
+					highResDataDest[x][y] = pixel;
+				}
 			}
+
+			setLowResolutionData(result, highResDataDest);
+
+			return result;
 		}
 
-		setLowResolutionData(result, highResDataDest);
-
-		return result;
+		return originalData;
 	}
 
 	private static Double[][] getFilter(
@@ -91,17 +114,16 @@ public final class LowPassFilter {
 		final int originalHeight,
 		final int resultWidth,
 		final int resultHeight) {
-		//Simple 4x4 GaussFilter for testing
-		final int size = 4;
-		final Double[][] result = new Double[][] {
-				{1.0, 3.0, 3.0, 1.0}, {3.0, 9.0, 9.0, 3.0}, {3.0, 9.0, 9.0, 3.0}, {1.0, 3.0, 3.0, 1.0}};
 
-		for (int x = 0; x < size; x++) {
-			for (int y = 0; y < size; y++) {
-				result[x][y] = result[x][y] / (64);
-			}
+		final double scaleFacX = ((double) originalWidth) / resultWidth;
+		final double scaleFacY = ((double) originalHeight) / resultHeight;
+
+		final double scaleFac = Math.max(scaleFacX, scaleFacY);
+		if (scaleFac > 1) {
+			return GaussMatrix.getGaussMatrix((int) Math.min(Math.round(scaleFac) + 2, GaussMatrix.MAX_DEPTH));
 		}
-		return result;
+
+		return null;
 	}
 
 	private static HighResolutionPixel[][] createHighResolutionData(final ImageData imageData) {

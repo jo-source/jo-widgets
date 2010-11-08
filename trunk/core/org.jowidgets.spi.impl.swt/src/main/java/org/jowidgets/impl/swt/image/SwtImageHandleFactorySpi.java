@@ -36,7 +36,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.image.IImageHandle;
 import org.jowidgets.common.image.impl.IImageFactory;
 import org.jowidgets.common.image.impl.ImageHandle;
-import org.jowidgets.impl.swt.image.util.LowPassFilter;
+import org.jowidgets.impl.swt.image.util.AntiAliasingFilter;
 import org.jowidgets.spi.image.IImageHandleFactorySpi;
 
 public class SwtImageHandleFactorySpi extends SwtImageHandleFactory implements IImageHandleFactorySpi {
@@ -103,10 +103,16 @@ public class SwtImageHandleFactorySpi extends SwtImageHandleFactory implements I
 					catch (final LinkageError e) {
 						//low pass filter works only with direct palette
 						if (originalImage.getImageData().palette.isDirect) {
-							final ImageData filteredImageData = LowPassFilter.filter(originalImage.getImageData(), width, height);
+							final ImageData filteredImageData = AntiAliasingFilter.filter(
+									originalImage.getImageData(),
+									width,
+									height);
 							return new Image(Display.getDefault(), filteredImageData.scaledTo(width, height));
 						}
-						return new Image(Display.getDefault(), originalImage.getImageData().scaledTo(width, height));
+						//else scale without anti aliasing
+						else {
+							return new Image(Display.getDefault(), originalImage.getImageData().scaledTo(width, height));
+						}
 					}
 
 				}
