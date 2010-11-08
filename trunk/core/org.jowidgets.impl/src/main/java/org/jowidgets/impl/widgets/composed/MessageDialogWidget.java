@@ -121,8 +121,23 @@ public class MessageDialogWidget implements IMessageDialogWidget {
 			dialogWidget.close();
 		}
 		else {
-			throw new IllegalStateException("A message dialog could only be shown once!");
+			throw new IllegalStateException("A message dialog could only be shown more than once!");
 		}
+	}
+
+	@Override
+	public void setVisible(final boolean visible) {
+		if (visible) {
+			showMessage();
+		}
+		else {
+			dialogWidget.close();
+		}
+	}
+
+	@Override
+	public boolean isVisible() {
+		return dialogWidget.isVisible();
 	}
 
 }

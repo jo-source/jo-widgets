@@ -92,6 +92,16 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 	}
 
 	@Override
+	public void setVisible(final boolean visible) {
+		compositeWidget.setVisible(visible);
+	}
+
+	@Override
+	public boolean isVisible() {
+		return compositeWidget.isVisible();
+	}
+
+	@Override
 	public void redraw() {
 		compositeWidget.redraw();
 	}

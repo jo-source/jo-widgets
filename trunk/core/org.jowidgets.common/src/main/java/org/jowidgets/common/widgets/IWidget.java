@@ -47,4 +47,8 @@ public interface IWidget {
 
 	void setBackgroundColor(final IColorConstant colorValue);
 
+	void setVisible(boolean visible);
+
+	boolean isVisible();
+
 }

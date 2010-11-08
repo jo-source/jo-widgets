@@ -81,4 +81,14 @@ public class SwtWidget implements IWidget {
 		control.setBackground(colorCache.getColor(colorValue));
 	}
 
+	@Override
+	public void setVisible(final boolean visible) {
+		control.setVisible(visible);
+	}
+
+	@Override
+	public boolean isVisible() {
+		return control.isVisible();
+	}
+
 }

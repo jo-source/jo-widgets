@@ -96,6 +96,16 @@ public class SwingContainerWidget implements IContainerWidgetSpi {
 	}
 
 	@Override
+	public void setVisible(final boolean visible) {
+		swingWidgetDelegate.setVisible(visible);
+	}
+
+	@Override
+	public boolean isVisible() {
+		return swingWidgetDelegate.isVisible();
+	}
+
+	@Override
 	public final <WIDGET_TYPE extends IWidget> WIDGET_TYPE add(
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object cellConstraints) {

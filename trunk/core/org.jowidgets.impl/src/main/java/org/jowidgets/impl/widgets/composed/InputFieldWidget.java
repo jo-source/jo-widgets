@@ -91,4 +91,14 @@ public class InputFieldWidget<VALUE_TYPE> extends AbstractComposedInputWidget<VA
 		textFieldWidget.setValue(converter.convertToString(value));
 	}
 
+	@Override
+	public void setVisible(final boolean visible) {
+		textFieldWidget.setVisible(visible);
+	}
+
+	@Override
+	public boolean isVisible() {
+		return textFieldWidget.isVisible();
+	}
+
 }

@@ -177,4 +177,19 @@ public class QuestionDialogWidget implements IQuestionDialogWidget {
 		return result;
 	}
 
+	@Override
+	public void setVisible(final boolean visible) {
+		if (visible) {
+			question();
+		}
+		else {
+			dialogWidget.close();
+		}
+	}
+
+	@Override
+	public boolean isVisible() {
+		return dialogWidget.isVisible();
+	}
+
 }

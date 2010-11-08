@@ -102,6 +102,16 @@ public class LabelWidget implements ILabelWidget {
 	}
 
 	@Override
+	public void setVisible(final boolean visible) {
+		compositeWidget.setVisible(visible);
+	}
+
+	@Override
+	public boolean isVisible() {
+		return compositeWidget.isVisible();
+	}
+
+	@Override
 	public void setMarkup(final Markup markup) {
 		textLabelWidget.setMarkup(markup);
 	}

@@ -210,6 +210,16 @@ public class ValidationLabelWidget implements IValidationLabelWidget {
 		childWidgetAdapter.setBackgroundColor(colorValue);
 	}
 
+	@Override
+	public void setVisible(final boolean visible) {
+		childWidgetAdapter.setVisible(visible);
+	}
+
+	@Override
+	public boolean isVisible() {
+		return childWidgetAdapter.isVisible();
+	}
+
 	private enum LabelState {
 		OK_VALIDATION,
 		WARNING_VALIDATION,

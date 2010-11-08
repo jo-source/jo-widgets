@@ -125,6 +125,16 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputCompositeWidget<I
 	}
 
 	@Override
+	public void setVisible(final boolean visible) {
+		parentComposite.setVisible(visible);
+	}
+
+	@Override
+	public boolean isVisible() {
+		return parentComposite.isVisible();
+	}
+
+	@Override
 	public void redraw() {
 		contentContainer.redraw();
 	}

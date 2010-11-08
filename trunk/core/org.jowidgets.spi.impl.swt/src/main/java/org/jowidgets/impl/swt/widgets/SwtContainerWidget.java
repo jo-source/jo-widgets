@@ -99,6 +99,16 @@ public class SwtContainerWidget implements IContainerWidgetSpi {
 	}
 
 	@Override
+	public void setVisible(final boolean visible) {
+		swtWidgetDelegate.setVisible(visible);
+	}
+
+	@Override
+	public boolean isVisible() {
+		return swtWidgetDelegate.isVisible();
+	}
+
+	@Override
 	public final <WIDGET_TYPE extends IWidget> WIDGET_TYPE add(
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object cellConstraints) {

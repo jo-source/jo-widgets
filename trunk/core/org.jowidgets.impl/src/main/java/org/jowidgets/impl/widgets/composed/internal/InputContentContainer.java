@@ -110,6 +110,16 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractComposedInputWidg
 	}
 
 	@Override
+	public void setVisible(final boolean visible) {
+		compositeWidget.setVisible(visible);
+	}
+
+	@Override
+	public boolean isVisible() {
+		return compositeWidget.isVisible();
+	}
+
+	@Override
 	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
 		compositeWidget.setLayout(layoutDescriptor);
 	}

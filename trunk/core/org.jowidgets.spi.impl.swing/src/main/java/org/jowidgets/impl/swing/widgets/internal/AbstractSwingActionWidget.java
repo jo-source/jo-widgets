@@ -68,4 +68,14 @@ public abstract class AbstractSwingActionWidget extends ActionObservable impleme
 		swingWidgetDelegate.setBackgroundColor(colorValue);
 	}
 
+	@Override
+	public void setVisible(final boolean visible) {
+		swingWidgetDelegate.setVisible(visible);
+	}
+
+	@Override
+	public boolean isVisible() {
+		return swingWidgetDelegate.isVisible();
+	}
+
 }

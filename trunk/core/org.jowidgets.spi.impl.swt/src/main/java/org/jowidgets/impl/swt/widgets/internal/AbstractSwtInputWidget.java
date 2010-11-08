@@ -65,4 +65,14 @@ public abstract class AbstractSwtInputWidget extends InputObservable implements 
 		swtWidgetDelegate.setBackgroundColor(colorValue);
 	}
 
+	@Override
+	public void setVisible(final boolean visible) {
+		swtWidgetDelegate.setVisible(visible);
+	}
+
+	@Override
+	public boolean isVisible() {
+		return swtWidgetDelegate.isVisible();
+	}
+
 }

@@ -67,4 +67,14 @@ public class SwingWidget implements IWidget {
 		component.setBackground(ColorConvert.convert(colorValue));
 	}
 
+	@Override
+	public void setVisible(final boolean visible) {
+		component.setVisible(visible);
+	}
+
+	@Override
+	public boolean isVisible() {
+		return component.isVisible();
+	}
+
 }

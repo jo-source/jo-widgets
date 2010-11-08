@@ -60,4 +60,14 @@ public class WidgetWrapper implements IWidget {
 		widget.setBackgroundColor(colorValue);
 	}
 
+	@Override
+	public void setVisible(final boolean visible) {
+		widget.setVisible(visible);
+	}
+
+	@Override
+	public boolean isVisible() {
+		return widget.isVisible();
+	}
+
 }

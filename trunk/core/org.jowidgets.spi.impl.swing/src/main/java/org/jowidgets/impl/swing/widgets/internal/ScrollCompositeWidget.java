@@ -84,6 +84,16 @@ public class ScrollCompositeWidget implements IScrollContainerWidgetSpi {
 	}
 
 	@Override
+	public void setVisible(final boolean visible) {
+		outerCompositeWidget.setVisible(visible);
+	}
+
+	@Override
+	public boolean isVisible() {
+		return outerCompositeWidget.isVisible();
+	}
+
+	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
 		innerCompositeWidget.setForegroundColor(colorValue);
 	}
