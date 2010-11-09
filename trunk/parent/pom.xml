@@ -13,6 +13,13 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
+	<scm>
+		<connection>http://jo-widgets.googlecode.com/svn/</connection>
+		<developerConnection>scm:svn:https://jo-widgets.googlecode.com/svn/</developerConnection>
+		<url>http://jo-widgets.googlecode.com/svn/</url>
+	</scm>
+
+	
 	<modules>
 		<module>../core/parent</module>
 		<module>../examples/parent</module>
@@ -53,6 +60,13 @@
 				<artifactId>maven-deploy-plugin</artifactId>
 				<version>2.5</version>
 			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.1</version>
+			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
