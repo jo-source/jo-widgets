@@ -19,6 +19,7 @@
 		<module>../org.jowidgets.examples.common</module>
 		<module>../org.jowidgets.examples.swing</module>
 		<module>../org.jowidgets.examples.swt</module>
+		<module>../org.jowidgets.examples.rwt</module>
 		<module>../assemblies/parent</module>
 	</modules>
 
