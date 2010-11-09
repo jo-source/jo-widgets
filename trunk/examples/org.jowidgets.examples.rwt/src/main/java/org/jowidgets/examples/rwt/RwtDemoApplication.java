@@ -39,7 +39,7 @@ public final class RwtDemoApplication implements IEntryPoint {
 			Toolkit.initialize(new RwtToolkitProvider());
 		}
 
-		new DemoApplication("Swing widgets demo application").start();
+		new DemoApplication("RWT widgets demo application").start();
 		return 0;
 	}
 }
