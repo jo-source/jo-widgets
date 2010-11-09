@@ -59,7 +59,7 @@ public class HelloWidgetApplication implements IApplication {
 	}
 
 	public void start() {
-		Toolkit.getInstance().getApplicationRunner().run(this);
+		Toolkit.getApplicationRunner().run(this);
 	}
 
 	@Override
