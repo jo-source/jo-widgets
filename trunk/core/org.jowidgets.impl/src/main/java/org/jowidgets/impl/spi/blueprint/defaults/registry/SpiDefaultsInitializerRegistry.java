@@ -28,10 +28,8 @@
 
 package org.jowidgets.impl.spi.blueprint.defaults.registry;
 
-import org.jowidgets.impl.spi.blueprint.builder.IIndeterminateProgressBarSetupBuilderSpi;
 import org.jowidgets.impl.spi.blueprint.builder.IProgressBarSetupBuilderSpi;
 import org.jowidgets.impl.spi.blueprint.builder.ITextInputWidgetSetupBuilderSpi;
-import org.jowidgets.impl.spi.blueprint.defaults.IndeterminateProgressBarDefaultsSpi;
 import org.jowidgets.impl.spi.blueprint.defaults.ProgressBarDefaultsSpi;
 import org.jowidgets.impl.spi.blueprint.defaults.TextInputDefaultsSpi;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.registry.CommonDefaultsInitializerRegistry;
@@ -41,7 +39,6 @@ public class SpiDefaultsInitializerRegistry extends CommonDefaultsInitializerReg
 	public SpiDefaultsInitializerRegistry() {
 		super();
 		register(ITextInputWidgetSetupBuilderSpi.class, new TextInputDefaultsSpi());
-		register(IIndeterminateProgressBarSetupBuilderSpi.class, new IndeterminateProgressBarDefaultsSpi());
 		register(IProgressBarSetupBuilderSpi.class, new ProgressBarDefaultsSpi());
 	}
 }

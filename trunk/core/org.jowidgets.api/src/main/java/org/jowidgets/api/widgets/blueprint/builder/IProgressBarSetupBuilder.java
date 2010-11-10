@@ -32,6 +32,4 @@ import org.jowidgets.common.widgets.builder.IProgressBarSetupBuilderCommon;
 public interface IProgressBarSetupBuilder<INSTANCE_TYPE extends IProgressBarSetupBuilder<?>> extends
 		IProgressBarSetupBuilderCommon<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setIndeterminate(boolean indeterminate);
-
 }

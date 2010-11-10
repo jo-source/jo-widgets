@@ -27,11 +27,17 @@
  */
 package org.jowidgets.common.widgets.builder;
 
+import org.jowidgets.common.types.Orientation;
+
 public interface IProgressBarSetupBuilderCommon<INSTANCE_TYPE extends IProgressBarSetupBuilderCommon<?>> extends
-		IIndeterminateProgressBarSetupBuilderCommon<INSTANCE_TYPE> {
+		IWidgetSetupBuilderCommon<INSTANCE_TYPE> {
+
+	INSTANCE_TYPE setOrientation(Orientation orientation);
 
 	INSTANCE_TYPE setMinimum(int min);
 
 	INSTANCE_TYPE setMaximum(int maximum);
+
+	INSTANCE_TYPE setIndeterminate(boolean indeterminate);
 
 }

@@ -29,6 +29,6 @@ package org.jowidgets.spi.widgets.setup;
 
 import org.jowidgets.common.widgets.descriptor.setup.IProgressBarSetupCommon;
 
-public interface IProgressBarSetupSpi extends IIndeterminateProgressBarSetupSpi, IProgressBarSetupCommon {
+public interface IProgressBarSetupSpi extends IProgressBarSetupCommon {
 
 }

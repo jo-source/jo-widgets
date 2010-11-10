@@ -33,6 +33,12 @@ import org.jowidgets.common.widgets.IWidget;
 
 public interface IWidgetUtils {
 
+	/**
+	 * TODO the current impl does not work for this. Don't use this
+	 * 
+	 * @param widget
+	 * @return
+	 */
 	IWindowWidget getWindowAncestor(final IWidget widget);
 
 }

@@ -32,9 +32,9 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButtonWidget;
 import org.jowidgets.api.widgets.IDialogWidget;
 import org.jowidgets.api.widgets.IInputDialogWidget;
-import org.jowidgets.api.widgets.IWindowWidget;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.widgets.IContainerWidgetCommon;
+import org.jowidgets.common.widgets.IWindowWidgetCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
@@ -42,7 +42,7 @@ public class DemoMainComposite {
 
 	public DemoMainComposite(final IContainerWidgetCommon parentContainer) {
 
-		final IWindowWidget parentWindow = Toolkit.getWidgetUtils().getWindowAncestor(parentContainer);
+		final IWindowWidgetCommon parentWindow = Toolkit.getWidgetUtils().getWindowAncestor(parentContainer);
 
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 
@@ -50,7 +50,7 @@ public class DemoMainComposite {
 
 		final IInputDialogWidget<String> inputDialog1 = new DemoInputDialog1(parentContainer).getInputDialog();
 		final IButtonWidget inputDialog1Button = parentContainer.add(
-				bpF.button("Input dialog demo", "Shows an simple input Dialog"),
+				bpF.button("Input dialog demo", "Shows an simple input dialog"),
 				"grow, sg bg, wrap");
 		inputDialog1Button.addActionListener(new IActionListener() {
 			@Override
@@ -59,10 +59,23 @@ public class DemoMainComposite {
 			}
 		});
 
+		final IButtonWidget progressBarDialogButton = parentContainer.add(
+				bpF.button("Progress bar demo", "Opens the progress bar demo"),
+				"grow, sg bg, wrap");
+		progressBarDialogButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final IDialogWidget progressBarDialog = parentWindow.createChildWindow(bpF.dialog("ProgressBarDemo"));
+				new DemoProgressBarComposite(progressBarDialog, progressBarDialog);
+				progressBarDialog.setVisible(true);
+				progressBarDialog.close();
+			}
+		});
+
 		final IDialogWidget messagesDemoDialog = parentWindow.createChildWindow(bpF.dialog("Messages Demo"));
 		new DemoMessagesComposite(messagesDemoDialog);
 		final IButtonWidget messagesDialogButton = parentContainer.add(
-				bpF.button("Messages demo", "Opens the messages Demo"),
+				bpF.button("Messages demo", "Opens the messages demo"),
 				"grow, sg bg, wrap");
 		messagesDialogButton.addActionListener(new IActionListener() {
 			@Override

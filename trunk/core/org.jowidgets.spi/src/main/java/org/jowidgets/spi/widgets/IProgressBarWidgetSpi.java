@@ -30,6 +30,6 @@ package org.jowidgets.spi.widgets;
 
 import org.jowidgets.common.widgets.IProgressBarWidgetCommon;
 
-public interface IProgressBarWidgetSpi extends IProgressBarWidgetCommon, IIndeterminateProgressBarWidgetSpi {
+public interface IProgressBarWidgetSpi extends IProgressBarWidgetCommon, IWidgetSpi {
 
 }

@@ -45,7 +45,7 @@ public class SwtTests {
 		Shell shell = new Shell(display);
 		shell.setLayout(new MigLayout());
 
-		final ProgressBar progressBar = new ProgressBar(shell, SWT.SMOOTH | SWT.VERTICAL);
+		final ProgressBar progressBar = new ProgressBar(shell, SWT.INDETERMINATE);
 		progressBar.setToolTipText("HUHU");
 		progressBar.setMaximum(10);
 
@@ -57,16 +57,16 @@ public class SwtTests {
 
 			@Override
 			public void run() {
-				for (i = 0; i <= 10; i++) {
+				for (i = 0; i <= 100; i++) {
 					display.syncExec(new Runnable() {
 
 						@Override
 						public void run() {
 							System.out.println(i);
-							if (i == 50) {
-								progressBar.setState(SWT.PAUSED);
+							if (i == 100) {
+								progressBar.setState(SWT.ERROR);
 							}
-							progressBar.setSelection(i);
+							//progressBar.setSelection(i);
 						}
 					});
 					try {

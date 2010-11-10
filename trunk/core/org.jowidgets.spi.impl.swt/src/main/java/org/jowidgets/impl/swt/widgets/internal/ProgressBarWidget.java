@@ -69,14 +69,10 @@ public class ProgressBarWidget extends SwtWidget implements IProgressBarWidgetSp
 		getUiReference().setSelection(progress);
 	}
 
-	@Override
-	public void setFinished() {
-		setProgress(getUiReference().getMaximum());
-	}
-
 	private static ProgressBar createProgressBar(final IWidget parent, final IProgressBarSetupSpi setup) {
 		final int orientation = OrientationConvert.convert(setup.getOrientation());
-		return new ProgressBar((Composite) parent.getUiReference(), SWT.SMOOTH | orientation);
+		return new ProgressBar((Composite) parent.getUiReference(), setup.isIndeterminate() ? SWT.INDETERMINATE : SWT.SMOOTH
+			| orientation);
 	}
 
 }

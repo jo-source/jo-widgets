@@ -26,10 +26,29 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.widgets;
+package org.jowidgets.examples.common.demo;
 
-public interface IIndeterminateProgressBarWidgetCommon extends IWidget {
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.ICompositeWidget;
+import org.jowidgets.api.widgets.IWindowWidget;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.common.widgets.IContainerWidgetCommon;
+import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
-	void setFinished();
+public class DemoProgressBarComposite {
 
+	public DemoProgressBarComposite(final IContainerWidgetCommon parentContainer, final IWindowWidget parentWindow) {
+
+		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
+
+		parentContainer.setLayout(new MigLayoutDescriptor("[grow]", "[grow]"));
+		final ICompositeWidget compositeWidget = parentContainer.add(bpF.scrollComposite(), "growx, growy");
+
+		compositeWidget.setLayout(new MigLayoutDescriptor("[grow]", "[][][][][][][][][][]"));
+
+		for (int i = 0; i < 10; i++) {
+			final ICompositeWidget progressBarComposite = compositeWidget.add(bpF.composite(), "growx, wrap");
+			new DemoProgressBar(progressBarComposite, parentWindow);
+		}
+	}
 }

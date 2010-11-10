@@ -25,11 +25,27 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.spi.blueprint;
+package org.jowidgets.impl.widgets.composed.factory.internal;
 
-import org.jowidgets.impl.spi.blueprint.builder.IProgressBarSetupBuilderSpi;
-import org.jowidgets.impl.spi.descriptor.IProgressBarDescriptorSpi;
+import org.jowidgets.api.widgets.ICompositeWidget;
+import org.jowidgets.api.widgets.IProgressBarWidget;
+import org.jowidgets.api.widgets.descriptor.IProgressBarDescriptor;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.impl.widgets.composed.ProgressBarWidget;
+import org.jowidgets.spi.IWidgetFactorySpi;
 
-public interface IIndeterminateProgressBarBluePrintSpi extends
-		IProgressBarSetupBuilderSpi<IIndeterminateProgressBarBluePrintSpi>,
-		IProgressBarDescriptorSpi {}
+public class ProgressBarWidgetFactory extends AbstractCompositeWidgetFactory<IProgressBarWidget, IProgressBarDescriptor> {
+
+	private final IWidgetFactorySpi widgetsFactorySpi;
+
+	public ProgressBarWidgetFactory(final IGenericWidgetFactory genericWidgetFactory, final IWidgetFactorySpi widgetsFactorySpi) {
+		super(genericWidgetFactory);
+		this.widgetsFactorySpi = widgetsFactorySpi;
+	}
+
+	@Override
+	protected IProgressBarWidget createWidget(final ICompositeWidget compositeWidget, final IProgressBarDescriptor descriptor) {
+		return new ProgressBarWidget(compositeWidget, descriptor, widgetsFactorySpi);
+	}
+
+}

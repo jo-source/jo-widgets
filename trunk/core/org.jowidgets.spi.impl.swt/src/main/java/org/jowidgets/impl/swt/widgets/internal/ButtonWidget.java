@@ -80,7 +80,12 @@ public class ButtonWidget extends AbstractSwtActionWidget implements IButtonWidg
 
 	@Override
 	public void setText(final String text) {
-		getUiReference().setText(text);
+		if (text != null) {
+			getUiReference().setText(text);
+		}
+		else {
+			setText("");
+		}
 	}
 
 	@Override

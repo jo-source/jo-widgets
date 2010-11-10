@@ -35,13 +35,12 @@ import org.jowidgets.impl.spi.blueprint.ICompositeBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IDialogBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IFrameBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IIconBluePrintSpi;
+import org.jowidgets.impl.spi.blueprint.IProgressBarBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IScrollCompositeBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ISeparatorBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITextFieldBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITextLabelBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IToggleButtonBluePrintSpi;
-import org.jowidgets.impl.spi.descriptor.IIndeterminateProgressBarDescriptorSpi;
-import org.jowidgets.impl.spi.descriptor.IProgressBarDescriptorSpi;
 
 public interface ISpiBluePrintFactory {
 
@@ -71,8 +70,6 @@ public interface ISpiBluePrintFactory {
 
 	IComboBoxSelectionBluePrintSpi comboBoxSelection();
 
-	IProgressBarDescriptorSpi progressBar();
-
-	IIndeterminateProgressBarDescriptorSpi indeterminateProgressBar();
+	IProgressBarBluePrintSpi progressBar();
 
 }

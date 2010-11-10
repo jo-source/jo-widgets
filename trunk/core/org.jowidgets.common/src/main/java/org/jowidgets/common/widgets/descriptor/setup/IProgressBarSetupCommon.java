@@ -27,14 +27,21 @@
  */
 package org.jowidgets.common.widgets.descriptor.setup;
 
+import org.jowidgets.common.types.Orientation;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
-public interface IProgressBarSetupCommon extends IIndeterminateProgressBarSetupCommon {
+public interface IProgressBarSetupCommon extends IWidgetSetupCommon {
+
+	@Mandatory
+	Orientation getOrientation();
 
 	@Mandatory
 	int getMinimum();
 
 	@Mandatory
 	int getMaximum();
+
+	@Mandatory
+	boolean isIndeterminate();
 
 }

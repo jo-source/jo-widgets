@@ -38,7 +38,6 @@ import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;
 import org.jowidgets.spi.widgets.IContainerWidgetSpi;
 import org.jowidgets.spi.widgets.IFrameWidgetSpi;
 import org.jowidgets.spi.widgets.IIconWidgetSpi;
-import org.jowidgets.spi.widgets.IIndeterminateProgressBarWidgetSpi;
 import org.jowidgets.spi.widgets.IProgressBarWidgetSpi;
 import org.jowidgets.spi.widgets.IScrollContainerWidgetSpi;
 import org.jowidgets.spi.widgets.ITextInputWidgetSpi;
@@ -53,7 +52,6 @@ import org.jowidgets.spi.widgets.setup.ICompositeSetupSpi;
 import org.jowidgets.spi.widgets.setup.IDialogSetupSpi;
 import org.jowidgets.spi.widgets.setup.IFrameSetupSpi;
 import org.jowidgets.spi.widgets.setup.IIconSetupSpi;
-import org.jowidgets.spi.widgets.setup.IIndeterminateProgressBarSetupSpi;
 import org.jowidgets.spi.widgets.setup.IProgressBarSetupSpi;
 import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
 import org.jowidgets.spi.widgets.setup.ISeparatorSetupSpi;
@@ -105,9 +103,5 @@ public interface IWidgetFactorySpi {
 	IComboBoxWidgetSpi createComboBoxWidget(final IWidget parent, IComboBoxSetupSpi setup);
 
 	IProgressBarWidgetSpi createProgressBar(final IWidget parent, IProgressBarSetupSpi setup);
-
-	IIndeterminateProgressBarWidgetSpi createIndeterminateProgressBar(
-		final IWidget parent,
-		IIndeterminateProgressBarSetupSpi setup);
 
 }

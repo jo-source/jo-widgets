@@ -61,8 +61,11 @@ import org.jowidgets.spi.IWidgetFactorySpi;
 
 public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 
+	private final IWidgetFactorySpi spiWidgetFactory;
+
 	public BasicGenericWidgetFactory(final IWidgetFactorySpi spiWidgetFactory) {
 		super(new DefaultGenericWidgetFactory());
+		this.spiWidgetFactory = spiWidgetFactory;
 		registerBaseWidgets(spiWidgetFactory, new SpiBluePrintFactory());
 	}
 
@@ -82,4 +85,9 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 		register(IComboBoxSelectionDescriptor.class, new ComboBoxSelectionWidgetFactory(this, spiWidgetFactory, bpF));
 		register(IComboBoxDescriptor.class, new ComboBoxWidgetFactory(this, spiWidgetFactory, bpF));
 	}
+
+	protected IWidgetFactorySpi getSpiWidgetFactory() {
+		return spiWidgetFactory;
+	}
+
 }

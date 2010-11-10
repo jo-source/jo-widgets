@@ -28,13 +28,16 @@
 package org.jowidgets.impl.spi.blueprint.defaults;
 
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
+import org.jowidgets.common.types.Orientation;
 import org.jowidgets.impl.spi.blueprint.builder.IProgressBarSetupBuilderSpi;
 
 public class ProgressBarDefaultsSpi implements IDefaultInitializer<IProgressBarSetupBuilderSpi<?>> {
 
 	@Override
 	public void initialize(final IProgressBarSetupBuilderSpi<?> builder) {
+		builder.setOrientation(Orientation.HORIZONTAL);
 		builder.setMinimum(0);
 		builder.setMaximum(100);
+		builder.setIndeterminate(false);
 	}
 }

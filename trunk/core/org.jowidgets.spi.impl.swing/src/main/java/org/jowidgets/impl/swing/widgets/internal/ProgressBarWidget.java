@@ -44,6 +44,7 @@ public class ProgressBarWidget extends SwingWidget implements IProgressBarWidget
 
 		setMinimum(setup.getMinimum());
 		setMinimum(setup.getMaximum());
+		getUiReference().setIndeterminate(setup.isIndeterminate());
 
 		ColorSettingsInvoker.setColors(setup, this);
 	}
@@ -66,11 +67,6 @@ public class ProgressBarWidget extends SwingWidget implements IProgressBarWidget
 	@Override
 	public void setProgress(final int progress) {
 		getUiReference().setValue(progress);
-	}
-
-	@Override
-	public void setFinished() {
-		setProgress(getUiReference().getMaximum());
 	}
 
 }
