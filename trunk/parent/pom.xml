@@ -16,7 +16,7 @@
 	<scm>
 		<connection>scm:svn:http://jo-widgets.googlecode.com/svn/trunk/</connection>
 		<developerConnection>scm:svn:https://jo-widgets.googlecode.com/svn/trunk/</developerConnection>
-		<url>http://jo-widgets.googlecode.com/svn/</url>
+		<url>http://jo-widgets.googlecode.com/svn/trunk/</url>
 	</scm>
 
 	
