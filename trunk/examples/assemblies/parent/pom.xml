@@ -3,14 +3,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jowidgets</groupId>
 	<artifactId>org.jowidgets.examples.assemblies.parent</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>org.jowidgets.examples.assemblies.parent</name>
 	
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.examples.parent</artifactId>
-		<version>0.0.1</version>
+		<version>0.0.2-SNAPSHOT</version>
 		<relativePath>../../parent/pom.xml</relativePath>
 	</parent>
 	
