@@ -25,38 +25,43 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.blueprint.factory;
+package org.jowidgets.impl.swt.widgets.internal;
 
-import org.jowidgets.api.convert.IConverter;
-import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
-import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
-import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
-import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
-import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
-import org.jowidgets.api.widgets.blueprint.IProgressBarBluePrint;
-import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
-import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
-import org.jowidgets.api.widgets.blueprint.IValidationLabelBluePrint;
-import org.jowidgets.api.widgets.content.IInputContentCreator;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.ProgressBar;
+import org.jowidgets.common.util.ColorSettingsInvoker;
+import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.impl.swt.color.IColorCache;
+import org.jowidgets.impl.swt.util.OrientationConvert;
+import org.jowidgets.impl.swt.widgets.SwtWidget;
+import org.jowidgets.spi.widgets.IIndeterminateProgressBarWidgetSpi;
+import org.jowidgets.spi.widgets.setup.IIndeterminateProgressBarSetupSpi;
 
-public interface ISimpleBluePrintFactory extends IBasicBluePrintFactory {
+public class IndeterminateProgressBarWidget extends SwtWidget implements IIndeterminateProgressBarWidgetSpi {
 
-	ILabelBluePrint label();
+	public IndeterminateProgressBarWidget(
+		final IColorCache colorCache,
+		final IWidget parent,
+		final IIndeterminateProgressBarSetupSpi setup) {
+		super(colorCache, createProgressBar(parent, setup));
 
-	ITextSeparatorBluePrint textSeparator();
+		ColorSettingsInvoker.setColors(setup, this);
+	}
 
-	IValidationLabelBluePrint validationLabel();
+	@Override
+	public ProgressBar getUiReference() {
+		return (ProgressBar) super.getUiReference();
+	}
 
-	<INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField(final IConverter<INPUT_TYPE> converter);
+	@Override
+	public void setFinished() {
+		getUiReference().setState(SWT.NORMAL);
+	}
 
-	IMessageDialogBluePrint messageDialog();
-
-	IQuestionDialogBluePrint questionDialog();
-
-	IProgressBarBluePrint progressBar();
-
-	<INPUT_TYPE> IInputDialogBluePrint<INPUT_TYPE> inputDialog(final IInputContentCreator<INPUT_TYPE> contentCreator);
-
-	<INPUT_TYPE> IInputCompositeBluePrint<INPUT_TYPE> inputComposite(final IInputContentCreator<INPUT_TYPE> contentCreator);
+	private static ProgressBar createProgressBar(final IWidget parent, final IIndeterminateProgressBarSetupSpi setup) {
+		final int orientation = OrientationConvert.convert(setup.getOrientation());
+		return new ProgressBar((Composite) parent.getUiReference(), SWT.INDETERMINATE | orientation);
+	}
 
 }

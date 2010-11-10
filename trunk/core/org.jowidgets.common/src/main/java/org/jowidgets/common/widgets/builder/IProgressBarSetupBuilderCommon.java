@@ -25,38 +25,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.blueprint.factory;
+package org.jowidgets.common.widgets.builder;
 
-import org.jowidgets.api.convert.IConverter;
-import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
-import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
-import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
-import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
-import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
-import org.jowidgets.api.widgets.blueprint.IProgressBarBluePrint;
-import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
-import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
-import org.jowidgets.api.widgets.blueprint.IValidationLabelBluePrint;
-import org.jowidgets.api.widgets.content.IInputContentCreator;
+public interface IProgressBarSetupBuilderCommon<INSTANCE_TYPE extends IProgressBarSetupBuilderCommon<?>> extends
+		IIndeterminateProgressBarSetupBuilderCommon<INSTANCE_TYPE> {
 
-public interface ISimpleBluePrintFactory extends IBasicBluePrintFactory {
+	INSTANCE_TYPE setMinimum(int min);
 
-	ILabelBluePrint label();
-
-	ITextSeparatorBluePrint textSeparator();
-
-	IValidationLabelBluePrint validationLabel();
-
-	<INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField(final IConverter<INPUT_TYPE> converter);
-
-	IMessageDialogBluePrint messageDialog();
-
-	IQuestionDialogBluePrint questionDialog();
-
-	IProgressBarBluePrint progressBar();
-
-	<INPUT_TYPE> IInputDialogBluePrint<INPUT_TYPE> inputDialog(final IInputContentCreator<INPUT_TYPE> contentCreator);
-
-	<INPUT_TYPE> IInputCompositeBluePrint<INPUT_TYPE> inputComposite(final IInputContentCreator<INPUT_TYPE> contentCreator);
+	INSTANCE_TYPE setMaximum(int maximum);
 
 }

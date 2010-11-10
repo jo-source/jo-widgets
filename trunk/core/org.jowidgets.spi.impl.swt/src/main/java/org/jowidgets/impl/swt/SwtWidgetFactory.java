@@ -46,6 +46,8 @@ import org.jowidgets.impl.swt.widgets.internal.DialogWidget;
 import org.jowidgets.impl.swt.widgets.internal.FrameWidget;
 import org.jowidgets.impl.swt.widgets.internal.FrameWidgetWrapper;
 import org.jowidgets.impl.swt.widgets.internal.IconWidget;
+import org.jowidgets.impl.swt.widgets.internal.IndeterminateProgressBarWidget;
+import org.jowidgets.impl.swt.widgets.internal.ProgressBarWidget;
 import org.jowidgets.impl.swt.widgets.internal.ScrollCompositeWidget;
 import org.jowidgets.impl.swt.widgets.internal.SeparatorWidget;
 import org.jowidgets.impl.swt.widgets.internal.TextFieldWidget;
@@ -59,6 +61,8 @@ import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;
 import org.jowidgets.spi.widgets.IContainerWidgetSpi;
 import org.jowidgets.spi.widgets.IFrameWidgetSpi;
 import org.jowidgets.spi.widgets.IIconWidgetSpi;
+import org.jowidgets.spi.widgets.IIndeterminateProgressBarWidgetSpi;
+import org.jowidgets.spi.widgets.IProgressBarWidgetSpi;
 import org.jowidgets.spi.widgets.IScrollContainerWidgetSpi;
 import org.jowidgets.spi.widgets.ITextInputWidgetSpi;
 import org.jowidgets.spi.widgets.ITextLabelWidgetSpi;
@@ -72,6 +76,8 @@ import org.jowidgets.spi.widgets.setup.ICompositeSetupSpi;
 import org.jowidgets.spi.widgets.setup.IDialogSetupSpi;
 import org.jowidgets.spi.widgets.setup.IFrameSetupSpi;
 import org.jowidgets.spi.widgets.setup.IIconSetupSpi;
+import org.jowidgets.spi.widgets.setup.IIndeterminateProgressBarSetupSpi;
+import org.jowidgets.spi.widgets.setup.IProgressBarSetupSpi;
 import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
 import org.jowidgets.spi.widgets.setup.ISeparatorSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
@@ -190,6 +196,18 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 	@Override
 	public IComboBoxWidgetSpi createComboBoxWidget(final IWidget parent, final IComboBoxSetupSpi setup) {
 		return new ComboBoxWidget(parent, colorCache, setup);
+	}
+
+	@Override
+	public IProgressBarWidgetSpi createProgressBar(final IWidget parent, final IProgressBarSetupSpi setup) {
+		return new ProgressBarWidget(colorCache, parent, setup);
+	}
+
+	@Override
+	public IIndeterminateProgressBarWidgetSpi createIndeterminateProgressBar(
+		final IWidget parent,
+		final IIndeterminateProgressBarSetupSpi setup) {
+		return new IndeterminateProgressBarWidget(colorCache, parent, setup);
 	}
 
 }

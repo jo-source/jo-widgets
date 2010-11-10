@@ -33,6 +33,7 @@ import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
+import org.jowidgets.api.widgets.blueprint.IProgressBarBluePrint;
 import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
 import org.jowidgets.api.widgets.blueprint.IValidationLabelBluePrint;
@@ -45,6 +46,7 @@ import org.jowidgets.api.widgets.descriptor.IInputDialogDescriptor;
 import org.jowidgets.api.widgets.descriptor.IInputFieldDescriptor;
 import org.jowidgets.api.widgets.descriptor.ILabelDescriptor;
 import org.jowidgets.api.widgets.descriptor.IMessageDialogDescriptor;
+import org.jowidgets.api.widgets.descriptor.IProgressBarDescriptor;
 import org.jowidgets.api.widgets.descriptor.IQuestionDialogDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextSeparatorDescriptor;
 import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
@@ -82,6 +84,11 @@ public class SimpleBluePrintFactory extends BasicBluePrintFactory implements ISi
 	@Override
 	public IQuestionDialogBluePrint questionDialog() {
 		return createProxy(IQuestionDialogBluePrint.class, IQuestionDialogDescriptor.class);
+	}
+
+	@Override
+	public IProgressBarBluePrint progressBar() {
+		return createProxy(IProgressBarBluePrint.class, IProgressBarDescriptor.class);
 	}
 
 	@Override

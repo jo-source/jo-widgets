@@ -26,22 +26,69 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.spi.blueprint.defaults.registry;
+package org.jowidgets.examples.swt;
 
-import org.jowidgets.impl.spi.blueprint.builder.IIndeterminateProgressBarSetupBuilderSpi;
-import org.jowidgets.impl.spi.blueprint.builder.IProgressBarSetupBuilderSpi;
-import org.jowidgets.impl.spi.blueprint.builder.ITextInputWidgetSetupBuilderSpi;
-import org.jowidgets.impl.spi.blueprint.defaults.IndeterminateProgressBarDefaultsSpi;
-import org.jowidgets.impl.spi.blueprint.defaults.ProgressBarDefaultsSpi;
-import org.jowidgets.impl.spi.blueprint.defaults.TextInputDefaultsSpi;
-import org.jowidgets.impl.widgets.common.blueprint.defaults.registry.CommonDefaultsInitializerRegistry;
+import net.miginfocom.swt.MigLayout;
 
-public class SpiDefaultsInitializerRegistry extends CommonDefaultsInitializerRegistry {
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.ProgressBar;
+import org.eclipse.swt.widgets.Shell;
 
-	public SpiDefaultsInitializerRegistry() {
-		super();
-		register(ITextInputWidgetSetupBuilderSpi.class, new TextInputDefaultsSpi());
-		register(IIndeterminateProgressBarSetupBuilderSpi.class, new IndeterminateProgressBarDefaultsSpi());
-		register(IProgressBarSetupBuilderSpi.class, new ProgressBarDefaultsSpi());
+public class SwtTests {
+
+	private static int i;
+
+	public static void main(String[] args) throws Exception {
+
+		final Display display = new Display();
+		Shell shell = new Shell(display);
+		shell.setLayout(new MigLayout());
+
+		final ProgressBar progressBar = new ProgressBar(shell, SWT.SMOOTH | SWT.VERTICAL);
+		progressBar.setToolTipText("HUHU");
+		progressBar.setMaximum(10);
+
+		shell.pack();
+		shell.open();
+		//ProgressBar progressBar = new ProgressBar(shell, SWT.INDETERMINATE);
+
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				for (i = 0; i <= 10; i++) {
+					display.syncExec(new Runnable() {
+
+						@Override
+						public void run() {
+							System.out.println(i);
+							if (i == 50) {
+								progressBar.setState(SWT.PAUSED);
+							}
+							progressBar.setSelection(i);
+						}
+					});
+					try {
+						Thread.currentThread().sleep(100);
+					}
+					catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
+			}
+		}).start();
+
+		// Set up the event loop.
+		while (!shell.isDisposed()) {
+			if (!display.readAndDispatch()) {
+				// If no more entries in event queue
+				display.sleep();
+			}
+		}
+
 	}
+
 }

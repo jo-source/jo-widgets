@@ -30,6 +30,7 @@ package org.jowidgets.api.widgets.blueprint.factory;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
+import org.jowidgets.api.widgets.blueprint.IProgressBarBluePrint;
 import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
 import org.jowidgets.common.image.IImageConstant;
@@ -81,5 +82,9 @@ public interface IBluePrintFactory extends ISimpleBluePrintFactory {
 	IMessageDialogBluePrint warningDialog(String message);
 
 	IMessageDialogBluePrint errorDialog(String message);
+
+	IProgressBarBluePrint progressBar(int minimum, int maximum);
+
+	IProgressBarBluePrint progressBar(int maximum);
 
 }

@@ -25,54 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.spi;
+package org.jowidgets.impl.spi.blueprint;
 
-import org.jowidgets.impl.spi.blueprint.IButtonBluePrintSpi;
-import org.jowidgets.impl.spi.blueprint.ICheckBoxBluePrintSpi;
-import org.jowidgets.impl.spi.blueprint.IComboBoxBluePrintSpi;
-import org.jowidgets.impl.spi.blueprint.IComboBoxSelectionBluePrintSpi;
-import org.jowidgets.impl.spi.blueprint.ICompositeBluePrintSpi;
-import org.jowidgets.impl.spi.blueprint.IDialogBluePrintSpi;
-import org.jowidgets.impl.spi.blueprint.IFrameBluePrintSpi;
-import org.jowidgets.impl.spi.blueprint.IIconBluePrintSpi;
-import org.jowidgets.impl.spi.blueprint.IScrollCompositeBluePrintSpi;
-import org.jowidgets.impl.spi.blueprint.ISeparatorBluePrintSpi;
-import org.jowidgets.impl.spi.blueprint.ITextFieldBluePrintSpi;
-import org.jowidgets.impl.spi.blueprint.ITextLabelBluePrintSpi;
-import org.jowidgets.impl.spi.blueprint.IToggleButtonBluePrintSpi;
-import org.jowidgets.impl.spi.descriptor.IIndeterminateProgressBarDescriptorSpi;
+import org.jowidgets.impl.spi.blueprint.builder.IProgressBarSetupBuilderSpi;
 import org.jowidgets.impl.spi.descriptor.IProgressBarDescriptorSpi;
 
-public interface ISpiBluePrintFactory {
-
-	IFrameBluePrintSpi frame();
-
-	IDialogBluePrintSpi dialog();
-
-	ICompositeBluePrintSpi composite();
-
-	IScrollCompositeBluePrintSpi scrollComposite();
-
-	ITextLabelBluePrintSpi textLabel();
-
-	IIconBluePrintSpi icon();
-
-	ISeparatorBluePrintSpi separator();
-
-	ITextFieldBluePrintSpi textField();
-
-	IButtonBluePrintSpi button();
-
-	ICheckBoxBluePrintSpi checkBox();
-
-	IToggleButtonBluePrintSpi toggleButton();
-
-	IComboBoxBluePrintSpi comboBox();
-
-	IComboBoxSelectionBluePrintSpi comboBoxSelection();
-
-	IProgressBarDescriptorSpi progressBar();
-
-	IIndeterminateProgressBarDescriptorSpi indeterminateProgressBar();
-
-}
+public interface IProgressBarBluePrintSpi extends
+		IProgressBarSetupBuilderSpi<IProgressBarBluePrintSpi>,
+		IProgressBarDescriptorSpi {}

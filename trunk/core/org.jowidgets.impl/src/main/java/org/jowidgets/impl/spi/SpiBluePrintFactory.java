@@ -36,6 +36,8 @@ import org.jowidgets.impl.spi.blueprint.ICompositeBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IDialogBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IFrameBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IIconBluePrintSpi;
+import org.jowidgets.impl.spi.blueprint.IIndeterminateProgressBarBluePrintSpi;
+import org.jowidgets.impl.spi.blueprint.IProgressBarBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IScrollCompositeBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ISeparatorBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITextFieldBluePrintSpi;
@@ -50,6 +52,8 @@ import org.jowidgets.impl.spi.descriptor.ICompositeDescriptorSpi;
 import org.jowidgets.impl.spi.descriptor.IDialogDescriptorSpi;
 import org.jowidgets.impl.spi.descriptor.IFrameDescriptorSpi;
 import org.jowidgets.impl.spi.descriptor.IIconDescriptorSpi;
+import org.jowidgets.impl.spi.descriptor.IIndeterminateProgressBarDescriptorSpi;
+import org.jowidgets.impl.spi.descriptor.IProgressBarDescriptorSpi;
 import org.jowidgets.impl.spi.descriptor.IScrollCompositeDescriptorSpi;
 import org.jowidgets.impl.spi.descriptor.ISeparatorDescriptorSpi;
 import org.jowidgets.impl.spi.descriptor.ITextFieldDescriptorSpi;
@@ -126,6 +130,16 @@ public class SpiBluePrintFactory extends AbstractBluePrintFactory implements ISp
 	@Override
 	public IComboBoxSelectionBluePrintSpi comboBoxSelection() {
 		return createProxy(IComboBoxSelectionBluePrintSpi.class, IComboBoxSelectionDescriptorSpi.class);
+	}
+
+	@Override
+	public IProgressBarDescriptorSpi progressBar() {
+		return createProxy(IProgressBarBluePrintSpi.class, IProgressBarDescriptorSpi.class);
+	}
+
+	@Override
+	public IIndeterminateProgressBarDescriptorSpi indeterminateProgressBar() {
+		return createProxy(IIndeterminateProgressBarBluePrintSpi.class, IIndeterminateProgressBarDescriptorSpi.class);
 	}
 
 }

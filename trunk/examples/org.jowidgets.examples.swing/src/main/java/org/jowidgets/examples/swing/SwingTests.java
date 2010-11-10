@@ -26,22 +26,58 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.spi.blueprint.defaults.registry;
+package org.jowidgets.examples.swing;
 
-import org.jowidgets.impl.spi.blueprint.builder.IIndeterminateProgressBarSetupBuilderSpi;
-import org.jowidgets.impl.spi.blueprint.builder.IProgressBarSetupBuilderSpi;
-import org.jowidgets.impl.spi.blueprint.builder.ITextInputWidgetSetupBuilderSpi;
-import org.jowidgets.impl.spi.blueprint.defaults.IndeterminateProgressBarDefaultsSpi;
-import org.jowidgets.impl.spi.blueprint.defaults.ProgressBarDefaultsSpi;
-import org.jowidgets.impl.spi.blueprint.defaults.TextInputDefaultsSpi;
-import org.jowidgets.impl.widgets.common.blueprint.defaults.registry.CommonDefaultsInitializerRegistry;
+import java.awt.Color;
 
-public class SpiDefaultsInitializerRegistry extends CommonDefaultsInitializerRegistry {
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
-	public SpiDefaultsInitializerRegistry() {
-		super();
-		register(ITextInputWidgetSetupBuilderSpi.class, new TextInputDefaultsSpi());
-		register(IIndeterminateProgressBarSetupBuilderSpi.class, new IndeterminateProgressBarDefaultsSpi());
-		register(IProgressBarSetupBuilderSpi.class, new ProgressBarDefaultsSpi());
+public class SwingTests {
+
+	private static int i;
+
+	public static void main(String[] args) throws Exception {
+
+		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+
+		final JProgressBar progressBar = new JProgressBar(JProgressBar.HORIZONTAL, 0, 100);
+		progressBar.setToolTipText("HUHU");
+		progressBar.setForeground(Color.RED);
+		//progressBar.setIndeterminate(true);
+		progressBar.setStringPainted(true);
+
+		SwingUtilities.invokeAndWait(new Runnable() {
+
+			@Override
+			public void run() {
+				JFrame frame = new JFrame();
+
+				JPanel panel = new JPanel();
+				panel.add(progressBar);
+
+				frame.setContentPane(panel);
+				frame.pack();
+				frame.setVisible(true);
+
+			}
+		});
+
+		for (i = 0; i <= 100; i++) {
+			SwingUtilities.invokeAndWait(new Runnable() {
+
+				@Override
+				public void run() {
+					progressBar.setValue(i);
+					progressBar.setString(i + " of 100");
+				}
+			});
+
+			Thread.currentThread().sleep(100);
+		}
+
 	}
 }

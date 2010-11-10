@@ -25,38 +25,52 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.blueprint.factory;
+package org.jowidgets.impl.swing.widgets.internal;
 
-import org.jowidgets.api.convert.IConverter;
-import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
-import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
-import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
-import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
-import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
-import org.jowidgets.api.widgets.blueprint.IProgressBarBluePrint;
-import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
-import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
-import org.jowidgets.api.widgets.blueprint.IValidationLabelBluePrint;
-import org.jowidgets.api.widgets.content.IInputContentCreator;
+import javax.swing.JProgressBar;
 
-public interface ISimpleBluePrintFactory extends IBasicBluePrintFactory {
+import org.jowidgets.common.util.ColorSettingsInvoker;
+import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.impl.swing.image.SwingImageRegistry;
+import org.jowidgets.impl.swing.util.OrientationConvert;
+import org.jowidgets.impl.swing.widgets.SwingWidget;
+import org.jowidgets.spi.widgets.IProgressBarWidgetSpi;
+import org.jowidgets.spi.widgets.setup.IProgressBarSetupSpi;
 
-	ILabelBluePrint label();
+public class ProgressBarWidget extends SwingWidget implements IProgressBarWidgetSpi {
 
-	ITextSeparatorBluePrint textSeparator();
+	public ProgressBarWidget(final SwingImageRegistry imageRegistry, final IWidget parent, final IProgressBarSetupSpi setup) {
+		super(new JProgressBar(OrientationConvert.convert(setup.getOrientation())));
 
-	IValidationLabelBluePrint validationLabel();
+		setMinimum(setup.getMinimum());
+		setMinimum(setup.getMaximum());
 
-	<INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField(final IConverter<INPUT_TYPE> converter);
+		ColorSettingsInvoker.setColors(setup, this);
+	}
 
-	IMessageDialogBluePrint messageDialog();
+	@Override
+	public JProgressBar getUiReference() {
+		return (JProgressBar) super.getUiReference();
+	}
 
-	IQuestionDialogBluePrint questionDialog();
+	@Override
+	public void setMinimum(final int min) {
+		getUiReference().setMinimum(min);
+	}
 
-	IProgressBarBluePrint progressBar();
+	@Override
+	public void setMaximum(final int max) {
+		getUiReference().setMaximum(max);
+	}
 
-	<INPUT_TYPE> IInputDialogBluePrint<INPUT_TYPE> inputDialog(final IInputContentCreator<INPUT_TYPE> contentCreator);
+	@Override
+	public void setProgress(final int progress) {
+		getUiReference().setValue(progress);
+	}
 
-	<INPUT_TYPE> IInputCompositeBluePrint<INPUT_TYPE> inputComposite(final IInputContentCreator<INPUT_TYPE> contentCreator);
+	@Override
+	public void setFinished() {
+		setProgress(getUiReference().getMaximum());
+	}
 
 }

@@ -26,22 +26,12 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.spi.blueprint.defaults.registry;
+package org.jowidgets.impl.spi.descriptor;
 
-import org.jowidgets.impl.spi.blueprint.builder.IIndeterminateProgressBarSetupBuilderSpi;
-import org.jowidgets.impl.spi.blueprint.builder.IProgressBarSetupBuilderSpi;
-import org.jowidgets.impl.spi.blueprint.builder.ITextInputWidgetSetupBuilderSpi;
-import org.jowidgets.impl.spi.blueprint.defaults.IndeterminateProgressBarDefaultsSpi;
-import org.jowidgets.impl.spi.blueprint.defaults.ProgressBarDefaultsSpi;
-import org.jowidgets.impl.spi.blueprint.defaults.TextInputDefaultsSpi;
-import org.jowidgets.impl.widgets.common.blueprint.defaults.registry.CommonDefaultsInitializerRegistry;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.spi.widgets.IProgressBarWidgetSpi;
+import org.jowidgets.spi.widgets.setup.IProgressBarSetupSpi;
 
-public class SpiDefaultsInitializerRegistry extends CommonDefaultsInitializerRegistry {
+public interface IProgressBarDescriptorSpi extends IProgressBarSetupSpi, IWidgetDescriptor<IProgressBarWidgetSpi> {
 
-	public SpiDefaultsInitializerRegistry() {
-		super();
-		register(ITextInputWidgetSetupBuilderSpi.class, new TextInputDefaultsSpi());
-		register(IIndeterminateProgressBarSetupBuilderSpi.class, new IndeterminateProgressBarDefaultsSpi());
-		register(IProgressBarSetupBuilderSpi.class, new ProgressBarDefaultsSpi());
-	}
 }
