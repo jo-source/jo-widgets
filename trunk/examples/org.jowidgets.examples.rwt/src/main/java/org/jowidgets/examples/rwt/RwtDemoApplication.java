@@ -27,7 +27,10 @@
  */
 package org.jowidgets.examples.rwt;
 
+import java.util.UUID;
+
 import org.eclipse.rwt.lifecycle.IEntryPoint;
+import org.eclipse.rwt.lifecycle.UICallBack;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.examples.common.demo.DemoApplication;
 
@@ -35,11 +38,17 @@ public final class RwtDemoApplication implements IEntryPoint {
 
 	@Override
 	public int createUI() {
+		final String uuid = UUID.randomUUID().toString();
+
+		UICallBack.activate(uuid);
+
 		if (!Toolkit.isInitialized()) {
 			Toolkit.initialize(new RwtToolkitProvider());
 		}
-
 		new DemoApplication("RWT widgets demo application").start();
+
+		UICallBack.deactivate(uuid);
+
 		return 0;
 	}
 }

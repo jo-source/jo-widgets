@@ -37,7 +37,6 @@ import org.jowidgets.api.widgets.IProgressBarWidget;
 import org.jowidgets.api.widgets.IWindowWidget;
 import org.jowidgets.api.widgets.blueprint.IProgressBarBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.threads.IUiThreadAccess;
 import org.jowidgets.common.widgets.IContainerWidgetCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
@@ -45,11 +44,11 @@ import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
 public class DemoProgressBar {
 
-	private final AtomicBoolean windowActive = new AtomicBoolean();
-	private final AtomicBoolean progressBarFinished = new AtomicBoolean();;
-	private final IProgressBarWidget progressBar;
-
 	public DemoProgressBar(final IContainerWidgetCommon parentContainer, final IWindowWidget parentWindow) {
+
+		final AtomicBoolean windowActive = new AtomicBoolean();
+		final AtomicBoolean progressBarFinished = new AtomicBoolean();
+		final IProgressBarWidget progressBar;
 
 		final int max = (int) (Math.random() * 200) + 100;
 		final boolean indetermined = Math.random() > 0.7;
@@ -71,53 +70,56 @@ public class DemoProgressBar {
 			@Override
 			public void actionPerformed() {
 				progressBarFinished.set(true);
-				progressBar.setFinished();
+				progressBar.setProgress(0);
 			}
 		});
 
-		final IUiThreadAccess uiThreadAccess = Toolkit.getUiThreadAccess();
+		if (!indetermined) {
 
-		parentWindow.addWindowListener(new WindowAdapter() {
+			parentWindow.addWindowListener(new WindowAdapter() {
 
-			@Override
-			public void windowActivated() {
-				windowActive.set(true);
-				progressBarFinished.set(false);
-				new Thread(new Runnable() {
+				@Override
+				public void windowActivated() {
+					if (windowActive.getAndSet(true) || progressBarFinished.get()) {
+						return;
+					}
+					progressBarFinished.set(false);
+					new Thread(new Runnable() {
 
-					private int i = 0;
+						private int i = 0;
 
-					@Override
-					public void run() {
-						for (i = 0; i <= max && windowActive.get() && !progressBarFinished.get(); i++) {
-							uiThreadAccess.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							for (i = 0; i <= max && windowActive.get() && !progressBarFinished.get(); i++) {
+								Toolkit.getUiThreadAccess().invokeLater(new Runnable() {
 
-								@Override
-								public void run() {
-									if (windowActive.get()) {
-										progressBar.setProgress(i);
+									@Override
+									public void run() {
+										if (windowActive.get() && !progressBarFinished.get()) {
+											progressBar.setProgress(i);
+										}
 									}
-								}
-							});
+								});
 
-							try {
-								Thread.sleep(200);
-							}
-							catch (final InterruptedException e) {
-								throw new RuntimeException(e);
+								try {
+									Thread.sleep(200);
+								}
+								catch (final InterruptedException e) {
+									throw new RuntimeException(e);
+								}
 							}
 						}
-					}
 
-				}).start();
-			}
+					}).start();
+				}
 
-			@Override
-			public void windowClosed() {
-				windowActive.set(false);
-			}
+				@Override
+				public void windowClosed() {
+					windowActive.set(false);
+				}
 
-		});
+			});
+		}
 
 	}
 }

@@ -109,8 +109,12 @@ public class ProgressBarWidget implements IProgressBarWidget {
 			}
 		}, componentLayoutConstraints);
 
-		setMinimum(setup.getMinimum());
-		setMaximum(setup.getMaximum());
+		this.minimum = setup.getMinimum();
+		progressBar.setMinimum(this.minimum);
+
+		this.maximum = setup.getMaximum();
+		progressBar.setMaximum(this.maximum);
+
 		setIndeterminate(setup.isIndeterminate());
 
 		ColorSettingsInvoker.setColors(setup, this);
@@ -139,23 +143,6 @@ public class ProgressBarWidget implements IProgressBarWidget {
 	@Override
 	public boolean isVisible() {
 		return compositeWidget.isVisible();
-	}
-
-	@Override
-	public void setMinimum(final int min) {
-		this.minimum = min;
-		progressBar.setMinimum(min);
-	}
-
-	@Override
-	public void setMaximum(final int max) {
-		this.maximum = max;
-		progressBar.setMaximum(max);
-	}
-
-	@Override
-	public void setProgress(final int progress) {
-		progressBar.setProgress(progress);
 	}
 
 	@Override
@@ -190,6 +177,32 @@ public class ProgressBarWidget implements IProgressBarWidget {
 	@Override
 	public boolean isIndeterminate() {
 		return isIndeterminate;
+	}
+
+	@Override
+	public void setMinimum(final int min) {
+		this.minimum = min;
+		progressBar.setMinimum(min);
+		if (indeterminateProgressBar.isVisible()) {
+			setIndeterminate(false);
+		}
+	}
+
+	@Override
+	public void setMaximum(final int max) {
+		this.maximum = max;
+		progressBar.setMaximum(max);
+		if (indeterminateProgressBar.isVisible()) {
+			setIndeterminate(false);
+		}
+	}
+
+	@Override
+	public void setProgress(final int progress) {
+		progressBar.setProgress(progress);
+		if (indeterminateProgressBar.isVisible()) {
+			setIndeterminate(false);
+		}
 	}
 
 	@Override

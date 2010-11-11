@@ -44,7 +44,7 @@ public class ProgressBarWidget extends SwtWidget implements IProgressBarWidgetSp
 		super(colorCache, createProgressBar(parent, setup));
 
 		setMinimum(setup.getMinimum());
-		setMinimum(setup.getMaximum());
+		setMaximum(setup.getMaximum());
 
 		ColorSettingsInvoker.setColors(setup, this);
 	}

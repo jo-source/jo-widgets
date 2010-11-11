@@ -43,7 +43,7 @@ public class ProgressBarWidget extends SwingWidget implements IProgressBarWidget
 		super(new JProgressBar(OrientationConvert.convert(setup.getOrientation())));
 
 		setMinimum(setup.getMinimum());
-		setMinimum(setup.getMaximum());
+		setMaximum(setup.getMaximum());
 		getUiReference().setIndeterminate(setup.isIndeterminate());
 
 		ColorSettingsInvoker.setColors(setup, this);
