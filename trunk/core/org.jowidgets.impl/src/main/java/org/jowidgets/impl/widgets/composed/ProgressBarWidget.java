@@ -115,7 +115,7 @@ public class ProgressBarWidget implements IProgressBarWidget {
 		this.maximum = setup.getMaximum();
 		progressBar.setMaximum(this.maximum);
 
-		setIndeterminate(setup.isIndeterminate());
+		setIndeterminatState(setup.isIndeterminate());
 
 		ColorSettingsInvoker.setColors(setup, this);
 	}
@@ -162,6 +162,15 @@ public class ProgressBarWidget implements IProgressBarWidget {
 
 	@Override
 	public void setIndeterminate(final boolean indeterminate) {
+		if (this.isIndeterminate != indeterminate) {
+			compositeWidget.layoutBegin();
+			setIndeterminatState(indeterminate);
+			compositeWidget.layoutEnd();
+			compositeWidget.redraw();
+		}
+	}
+
+	private void setIndeterminatState(final boolean indeterminate) {
 		this.isIndeterminate = indeterminate;
 		if (indeterminate) {
 			indeterminateProgressBar.setVisible(true);
@@ -171,7 +180,6 @@ public class ProgressBarWidget implements IProgressBarWidget {
 			progressBar.setVisible(true);
 			this.indeterminateProgressBar.setVisible(false);
 		}
-		compositeWidget.redraw();
 	}
 
 	@Override
@@ -183,7 +191,7 @@ public class ProgressBarWidget implements IProgressBarWidget {
 	public void setMinimum(final int min) {
 		this.minimum = min;
 		progressBar.setMinimum(min);
-		if (indeterminateProgressBar.isVisible()) {
+		if (isIndeterminate) {
 			setIndeterminate(false);
 		}
 	}
@@ -192,7 +200,7 @@ public class ProgressBarWidget implements IProgressBarWidget {
 	public void setMaximum(final int max) {
 		this.maximum = max;
 		progressBar.setMaximum(max);
-		if (indeterminateProgressBar.isVisible()) {
+		if (isIndeterminate) {
 			setIndeterminate(false);
 		}
 	}
@@ -200,7 +208,7 @@ public class ProgressBarWidget implements IProgressBarWidget {
 	@Override
 	public void setProgress(final int progress) {
 		progressBar.setProgress(progress);
-		if (indeterminateProgressBar.isVisible()) {
+		if (isIndeterminate) {
 			setIndeterminate(false);
 		}
 	}
@@ -209,7 +217,7 @@ public class ProgressBarWidget implements IProgressBarWidget {
 	public void setFinished() {
 		indeterminateProgressBar.setProgress(maximum);
 		progressBar.setProgress(maximum);
-		if (indeterminateProgressBar.isVisible()) {
+		if (isIndeterminate) {
 			setIndeterminate(false);
 		}
 	}
