@@ -25,19 +25,42 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.spi.blueprint.defaults;
+package org.jowidgets.common.widgets.descriptor.setup;
 
-import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
+import org.jowidgets.common.types.Border;
 import org.jowidgets.common.types.Orientation;
-import org.jowidgets.impl.spi.blueprint.builder.IProgressBarSetupBuilderSpi;
+import org.jowidgets.common.types.SplitResizePolicy;
+import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
+import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 
-public class ProgressBarDefaultsSpi implements IDefaultInitializer<IProgressBarSetupBuilderSpi<?>> {
+public interface ISplitContainerSetupCommon extends IWidgetSetupCommon {
 
-	@Override
-	public void initialize(final IProgressBarSetupBuilderSpi<?> builder) {
-		builder.setOrientation(Orientation.HORIZONTAL);
-		builder.setMinimum(0);
-		builder.setMaximum(100);
-		builder.setIndeterminate(false);
-	}
+	@Mandatory
+	Orientation getOrientation();
+
+	/**
+	 * @return The size of the divider in pixel
+	 */
+	@Mandatory
+	int getDividerSize();
+
+	/**
+	 * @return The weight of the divider between 0.0 and 1.0
+	 */
+	@Mandatory
+	double getWeight();
+
+	@Mandatory
+	SplitResizePolicy getResizePolicy();
+
+	@Mandatory
+	ILayoutDescriptor getFirstLayout();
+
+	@Mandatory
+	ILayoutDescriptor getSecondLayout();
+
+	Border getFirstBorder();
+
+	Border getSecondBorder();
+
 }

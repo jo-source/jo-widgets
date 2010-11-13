@@ -40,6 +40,7 @@ import org.jowidgets.spi.widgets.IFrameWidgetSpi;
 import org.jowidgets.spi.widgets.IIconWidgetSpi;
 import org.jowidgets.spi.widgets.IProgressBarWidgetSpi;
 import org.jowidgets.spi.widgets.IScrollContainerWidgetSpi;
+import org.jowidgets.spi.widgets.ISplitContainerWidgetSpi;
 import org.jowidgets.spi.widgets.ITextInputWidgetSpi;
 import org.jowidgets.spi.widgets.ITextLabelWidgetSpi;
 import org.jowidgets.spi.widgets.IToggleButtonWidgetSpi;
@@ -55,6 +56,7 @@ import org.jowidgets.spi.widgets.setup.IIconSetupSpi;
 import org.jowidgets.spi.widgets.setup.IProgressBarSetupSpi;
 import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
 import org.jowidgets.spi.widgets.setup.ISeparatorSetupSpi;
+import org.jowidgets.spi.widgets.setup.ISplitContainerSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;
@@ -78,6 +80,11 @@ public interface IWidgetFactorySpi {
 	IFrameWidgetSpi createDialogWidget(IGenericWidgetFactory factory, IWidget parent, IDialogSetupSpi setup);
 
 	IContainerWidgetSpi createCompositeWidget(IGenericWidgetFactory factory, IWidget parent, ICompositeSetupSpi setup);
+
+	ISplitContainerWidgetSpi createSplitContainerWidget(
+		IGenericWidgetFactory factory,
+		IWidget parent,
+		ISplitContainerSetupSpi setup);
 
 	IScrollContainerWidgetSpi createScrollCompositeWidget(
 		IGenericWidgetFactory factory,

@@ -36,13 +36,15 @@ import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.IIconBluePrint;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
+import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.api.widgets.blueprint.factory.IBasicBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.impl.convert.DefaultObjectStringConverter;
+import org.jowidgets.common.types.Orientation;
 import org.jowidgets.impl.convert.DefaultConverterProvider;
+import org.jowidgets.impl.convert.DefaultObjectStringConverter;
 
 public class BasicBluePrintFactory extends BasicSimpleBluePrintFactory implements IBasicBluePrintFactory {
 
@@ -84,6 +86,16 @@ public class BasicBluePrintFactory extends BasicSimpleBluePrintFactory implement
 	@Override
 	public final ICompositeBluePrint composite(final String borderTitle) {
 		return composite().setBorder(borderTitle);
+	}
+
+	@Override
+	public ISplitCompositeBluePrint splitHorizontal() {
+		return splitComposite().setOrientation(Orientation.HORIZONTAL);
+	}
+
+	@Override
+	public ISplitCompositeBluePrint splitVertical() {
+		return splitComposite().setOrientation(Orientation.VERTICAL);
 	}
 
 	@Override

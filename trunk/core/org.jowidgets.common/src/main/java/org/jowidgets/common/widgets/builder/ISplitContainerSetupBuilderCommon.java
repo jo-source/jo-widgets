@@ -25,34 +25,44 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swt.util;
+package org.jowidgets.common.widgets.builder;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Group;
 import org.jowidgets.common.types.Border;
-import org.jowidgets.common.types.Markup;
+import org.jowidgets.common.types.Orientation;
+import org.jowidgets.common.types.SplitResizePolicy;
+import org.jowidgets.common.widgets.builder.convenience.ISplitContainerSetupConvenience;
+import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 
-public final class BorderToComposite {
+public interface ISplitContainerSetupBuilderCommon<INSTANCE_TYPE extends ISplitContainerSetupBuilderCommon<?>> extends
+		IWidgetSetupBuilderCommon<INSTANCE_TYPE>,
+		ISplitContainerSetupConvenience<INSTANCE_TYPE> {
 
-	private BorderToComposite() {};
+	INSTANCE_TYPE setOrientation(final Orientation orientation);
 
-	public static Composite convert(final Composite parent, final Border border) {
+	INSTANCE_TYPE setFirstBorder(Border border);
 
-		final String title = border != null ? border.getTitle() : null;
+	INSTANCE_TYPE setSecondBorder(Border border);
 
-		if (title != null) {
-			final Group group = new Group(parent, SWT.SHADOW_IN);
-			group.setText(title);
-			group.setFont(FontProvider.deriveFont(group.getFont(), Markup.STRONG));
-			return group;
-		}
-		else if (border != null) {
-			return new Composite(parent, SWT.BORDER);
-		}
-		else {
-			return new Composite(parent, SWT.NONE);
-		}
-	}
+	INSTANCE_TYPE setFirstLayout(ILayoutDescriptor layoutDescriptor);
+
+	INSTANCE_TYPE setSecondLayout(ILayoutDescriptor layoutDescriptor);
+
+	INSTANCE_TYPE setResizePolicy(SplitResizePolicy resizePolicy);
+
+	/**
+	 * Sets the dividers size
+	 * 
+	 * @param size The size in pixel
+	 * @return An instance of this builder
+	 */
+	INSTANCE_TYPE setDividerSize(int size);
+
+	/**
+	 * Sets the weight of the divider.
+	 * 
+	 * @param weight The weight to set. Value must be between 0.0 and 1.0.
+	 * @return An instance of this builder
+	 */
+	INSTANCE_TYPE setWeight(double weight);
 
 }

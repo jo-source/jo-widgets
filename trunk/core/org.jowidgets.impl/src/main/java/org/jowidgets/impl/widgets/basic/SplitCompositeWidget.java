@@ -26,16 +26,41 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.spi.blueprint.defaults.registry;
+package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.impl.spi.blueprint.builder.ITextInputWidgetSetupBuilderSpi;
-import org.jowidgets.impl.spi.blueprint.defaults.TextInputDefaultsSpi;
-import org.jowidgets.impl.widgets.common.blueprint.defaults.registry.CommonDefaultsInitializerRegistry;
+import org.jowidgets.api.widgets.ICompositeWidget;
+import org.jowidgets.api.widgets.ISplitCompositeWidget;
+import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
+import org.jowidgets.impl.widgets.common.wrapper.SplitContainerWidgetCommonWrapper;
+import org.jowidgets.spi.widgets.ISplitContainerWidgetSpi;
 
-public class SpiDefaultsInitializerRegistry extends CommonDefaultsInitializerRegistry {
+public class SplitCompositeWidget extends SplitContainerWidgetCommonWrapper implements ISplitCompositeWidget {
 
-	public SpiDefaultsInitializerRegistry() {
-		super();
-		register(ITextInputWidgetSetupBuilderSpi.class, new TextInputDefaultsSpi());
+	private final ChildWidgetDelegate childWidgetDelegate;
+	private final ICompositeWidget first;
+	private final ICompositeWidget second;
+
+	public SplitCompositeWidget(final IWidget parent, final ISplitContainerWidgetSpi containerWidgetSpi) {
+		super(containerWidgetSpi);
+		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
+		this.first = new CompositeWidget(this, getWidget().getFirst());
+		this.second = new CompositeWidget(this, getWidget().getSecond());
 	}
+
+	@Override
+	public IWidget getParent() {
+		return childWidgetDelegate.getParent();
+	}
+
+	@Override
+	public ICompositeWidget getFirst() {
+		return first;
+	}
+
+	@Override
+	public ICompositeWidget getSecond() {
+		return second;
+	}
+
 }

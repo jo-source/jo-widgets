@@ -31,8 +31,10 @@ package org.jowidgets.examples.common.demo;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButtonWidget;
 import org.jowidgets.api.widgets.IDialogWidget;
+import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.IInputDialogWidget;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IContainerWidgetCommon;
 import org.jowidgets.common.widgets.IWindowWidgetCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
@@ -46,7 +48,7 @@ public class DemoMainComposite {
 
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 
-		parentContainer.setLayout(new MigLayoutDescriptor("[300::, grow]", "[][]"));
+		parentContainer.setLayout(new MigLayoutDescriptor("[300::, grow]", "[][][][]"));
 
 		final IInputDialogWidget<String> inputDialog1 = new DemoInputDialog1(parentContainer).getInputDialog();
 		final IButtonWidget inputDialog1Button = parentContainer.add(
@@ -59,20 +61,33 @@ public class DemoMainComposite {
 			}
 		});
 
+		final IButtonWidget splitDemoButton = parentContainer.add(
+				bpF.button("Split demo", "Shows an frame with split composites"),
+				"grow, sg bg, wrap");
+		splitDemoButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final IFrameWidget splitDemoFrame = parentWindow.createChildWindow(bpF.frame("Split demo").autoPackOff());
+				splitDemoFrame.setSize(new Dimension(800, 600));
+				new DemoSplitComposite(splitDemoFrame);
+				splitDemoFrame.setVisible(true);
+			}
+		});
+
 		final IButtonWidget progressBarDialogButton = parentContainer.add(
 				bpF.button("Progress bar demo", "Opens the progress bar demo"),
 				"grow, sg bg, wrap");
 		progressBarDialogButton.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
-				final IDialogWidget progressBarDialog = parentWindow.createChildWindow(bpF.dialog("ProgressBarDemo"));
+				final IDialogWidget progressBarDialog = parentWindow.createChildWindow(bpF.dialog("Progress bar demo"));
 				new DemoProgressBarComposite(progressBarDialog, progressBarDialog);
 				progressBarDialog.setVisible(true);
 				progressBarDialog.close();
 			}
 		});
 
-		final IDialogWidget messagesDemoDialog = parentWindow.createChildWindow(bpF.dialog("Messages Demo"));
+		final IDialogWidget messagesDemoDialog = parentWindow.createChildWindow(bpF.dialog("Messages demo"));
 		new DemoMessagesComposite(messagesDemoDialog);
 		final IButtonWidget messagesDialogButton = parentContainer.add(
 				bpF.button("Messages demo", "Opens the messages demo"),

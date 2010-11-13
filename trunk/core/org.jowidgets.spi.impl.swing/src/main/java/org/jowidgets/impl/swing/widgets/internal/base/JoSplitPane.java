@@ -25,17 +25,49 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
+package org.jowidgets.impl.swing.widgets.internal.base;
 
-package org.jowidgets.impl.spi.blueprint.defaults.registry;
+import javax.swing.BorderFactory;
+import javax.swing.JSplitPane;
+import javax.swing.plaf.SplitPaneUI;
+import javax.swing.plaf.basic.BasicSplitPaneUI;
 
-import org.jowidgets.impl.spi.blueprint.builder.ITextInputWidgetSetupBuilderSpi;
-import org.jowidgets.impl.spi.blueprint.defaults.TextInputDefaultsSpi;
-import org.jowidgets.impl.widgets.common.blueprint.defaults.registry.CommonDefaultsInitializerRegistry;
+public class JoSplitPane extends JSplitPane {
 
-public class SpiDefaultsInitializerRegistry extends CommonDefaultsInitializerRegistry {
+	private static final long serialVersionUID = 5117985872625236987L;
 
-	public SpiDefaultsInitializerRegistry() {
-		super();
-		register(ITextInputWidgetSetupBuilderSpi.class, new TextInputDefaultsSpi());
+	private boolean initialized = false;
+	private final double dividerWeight;
+	private final double resizeWeight;
+
+	public JoSplitPane(final int orientation, final double dividerWeigth, final double resizeWeight) {
+		super(orientation);
+		this.initialized = false;
+		this.dividerWeight = dividerWeigth;
+		this.resizeWeight = resizeWeight;
+		setOneTouchExpandable(false);
 	}
+
+	@Override
+	public void doLayout() {
+		if (!initialized && this.isDisplayable()) {
+			initialized = true;
+			setDividerLocation(dividerWeight);
+			setResizeWeight(resizeWeight);
+		}
+		super.doLayout();
+	}
+
+	@Override
+	public void updateUI() {
+		super.updateUI();
+
+		final SplitPaneUI splitPaneUI = getUI();
+		this.setBorder(BorderFactory.createEmptyBorder());
+		if (splitPaneUI instanceof BasicSplitPaneUI) {
+			final BasicSplitPaneUI basicUI = (BasicSplitPaneUI) splitPaneUI;
+			basicUI.getDivider().setBorder(BorderFactory.createEmptyBorder());
+		}
+	}
+
 }

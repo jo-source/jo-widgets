@@ -26,16 +26,13 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.spi.blueprint.defaults.registry;
+package org.jowidgets.impl.swt.widgets.internal.layout;
 
-import org.jowidgets.impl.spi.blueprint.builder.ITextInputWidgetSetupBuilderSpi;
-import org.jowidgets.impl.spi.blueprint.defaults.TextInputDefaultsSpi;
-import org.jowidgets.impl.widgets.common.blueprint.defaults.registry.CommonDefaultsInitializerRegistry;
+public interface ILayoutListener {
 
-public class SpiDefaultsInitializerRegistry extends CommonDefaultsInitializerRegistry {
+	void beforeComputeSize();
 
-	public SpiDefaultsInitializerRegistry() {
-		super();
-		register(ITextInputWidgetSetupBuilderSpi.class, new TextInputDefaultsSpi());
-	}
+	void beforeLayout();
+
+	void afterLayout();
 }

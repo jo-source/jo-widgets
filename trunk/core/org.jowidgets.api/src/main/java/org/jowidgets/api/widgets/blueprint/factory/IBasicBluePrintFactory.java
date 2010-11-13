@@ -32,9 +32,10 @@ import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
-import org.jowidgets.api.widgets.blueprint.IIconBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
+import org.jowidgets.api.widgets.blueprint.IIconBluePrint;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
+import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
 import org.jowidgets.common.image.IImageConstant;
 
@@ -59,6 +60,10 @@ public interface IBasicBluePrintFactory extends IBasicSimpleBluePrintFactory {
 	IScrollCompositeBluePrint scrollCompositeWithBorder();
 
 	IScrollCompositeBluePrint scrollComposite(final String borderTitle);
+
+	ISplitCompositeBluePrint splitHorizontal();
+
+	ISplitCompositeBluePrint splitVertical();
 
 	IButtonBluePrint button(final String text);
 

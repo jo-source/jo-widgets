@@ -39,6 +39,7 @@ import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.IIconBluePrint;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISeparatorBluePrint;
+import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToggleButtonBluePrint;
@@ -52,6 +53,8 @@ public interface IBasicSimpleBluePrintFactory {
 	ICompositeBluePrint composite();
 
 	IScrollCompositeBluePrint scrollComposite();
+
+	ISplitCompositeBluePrint splitComposite();
 
 	ITextLabelBluePrint textLabel();
 

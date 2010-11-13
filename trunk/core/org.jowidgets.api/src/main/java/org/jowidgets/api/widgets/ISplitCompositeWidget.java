@@ -26,16 +26,16 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.spi.blueprint.defaults.registry;
+package org.jowidgets.api.widgets;
 
-import org.jowidgets.impl.spi.blueprint.builder.ITextInputWidgetSetupBuilderSpi;
-import org.jowidgets.impl.spi.blueprint.defaults.TextInputDefaultsSpi;
-import org.jowidgets.impl.widgets.common.blueprint.defaults.registry.CommonDefaultsInitializerRegistry;
+import org.jowidgets.common.widgets.ISplitContainerWidgetCommon;
 
-public class SpiDefaultsInitializerRegistry extends CommonDefaultsInitializerRegistry {
+public interface ISplitCompositeWidget extends ISplitContainerWidgetCommon, IChildWidget {
 
-	public SpiDefaultsInitializerRegistry() {
-		super();
-		register(ITextInputWidgetSetupBuilderSpi.class, new TextInputDefaultsSpi());
-	}
+	@Override
+	ICompositeWidget getFirst();
+
+	@Override
+	ICompositeWidget getSecond();
+
 }

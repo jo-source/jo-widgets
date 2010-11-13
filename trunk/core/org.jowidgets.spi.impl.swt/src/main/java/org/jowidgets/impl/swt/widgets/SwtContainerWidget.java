@@ -62,18 +62,18 @@ public class SwtContainerWidget implements IContainerWidgetSpi {
 	}
 
 	@Override
-	public final void setLayout(final ILayoutDescriptor layoutManager) {
-		Assert.paramNotNull(layoutManager, "layoutManager");
-		if (layoutManager instanceof MigLayoutDescriptor) {
-			final MigLayoutDescriptor migLayoutManager = (MigLayoutDescriptor) layoutManager;
+	public final void setLayout(final ILayoutDescriptor layoutDescriptor) {
+		Assert.paramNotNull(layoutDescriptor, "layoutDescriptor");
+		if (layoutDescriptor instanceof MigLayoutDescriptor) {
+			final MigLayoutDescriptor migLayoutManager = (MigLayoutDescriptor) layoutDescriptor;
 			composite.setLayout(new MigLayout(
 				migLayoutManager.getLayoutConstraints(),
 				migLayoutManager.getColumnConstraints(),
 				migLayoutManager.getRowConstraints()));
 		}
 		else {
-			throw new IllegalArgumentException("Layout Manager of type '"
-				+ layoutManager.getClass().getName()
+			throw new IllegalArgumentException("LayoutDescriptor of type '"
+				+ layoutDescriptor.getClass().getName()
 				+ "' is not supported");
 		}
 	}

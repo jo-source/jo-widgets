@@ -26,16 +26,30 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.spi.blueprint.defaults.registry;
+package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.impl.spi.blueprint.builder.ITextInputWidgetSetupBuilderSpi;
-import org.jowidgets.impl.spi.blueprint.defaults.TextInputDefaultsSpi;
-import org.jowidgets.impl.widgets.common.blueprint.defaults.registry.CommonDefaultsInitializerRegistry;
+import org.jowidgets.common.widgets.IContainerWidgetCommon;
+import org.jowidgets.common.widgets.ISplitContainerWidgetCommon;
 
-public class SpiDefaultsInitializerRegistry extends CommonDefaultsInitializerRegistry {
+public class SplitContainerWidgetCommonWrapper extends WidgetCommonWrapper implements ISplitContainerWidgetCommon {
 
-	public SpiDefaultsInitializerRegistry() {
-		super();
-		register(ITextInputWidgetSetupBuilderSpi.class, new TextInputDefaultsSpi());
+	public SplitContainerWidgetCommonWrapper(final ISplitContainerWidgetCommon widget) {
+		super(widget);
 	}
+
+	@Override
+	protected ISplitContainerWidgetCommon getWidget() {
+		return (ISplitContainerWidgetCommon) super.getWidget();
+	}
+
+	@Override
+	public IContainerWidgetCommon getFirst() {
+		return getWidget().getFirst();
+	}
+
+	@Override
+	public IContainerWidgetCommon getSecond() {
+		return getWidget().getSecond();
+	}
+
 }

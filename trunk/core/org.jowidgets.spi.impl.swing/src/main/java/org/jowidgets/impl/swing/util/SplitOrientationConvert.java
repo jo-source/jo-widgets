@@ -25,34 +25,31 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swt.util;
+package org.jowidgets.impl.swing.util;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Group;
-import org.jowidgets.common.types.Border;
-import org.jowidgets.common.types.Markup;
+import javax.swing.JSplitPane;
 
-public final class BorderToComposite {
+import org.jowidgets.common.types.Orientation;
+import org.jowidgets.util.Assert;
 
-	private BorderToComposite() {};
+public final class SplitOrientationConvert {
 
-	public static Composite convert(final Composite parent, final Border border) {
+	private SplitOrientationConvert() {};
 
-		final String title = border != null ? border.getTitle() : null;
+	public static int convert(final Orientation orientation) {
+		Assert.paramNotNull(orientation, "orientation");
 
-		if (title != null) {
-			final Group group = new Group(parent, SWT.SHADOW_IN);
-			group.setText(title);
-			group.setFont(FontProvider.deriveFont(group.getFont(), Markup.STRONG));
-			return group;
+		if (Orientation.HORIZONTAL.equals(orientation)) {
+			return JSplitPane.HORIZONTAL_SPLIT;
 		}
-		else if (border != null) {
-			return new Composite(parent, SWT.BORDER);
+		else if (Orientation.VERTICAL.equals(orientation)) {
+			return JSplitPane.VERTICAL_SPLIT;
 		}
+
 		else {
-			return new Composite(parent, SWT.NONE);
+			throw new IllegalArgumentException("Orientation '" + orientation + "' is unkwon");
 		}
+
 	}
 
 }

@@ -26,16 +26,12 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.spi.blueprint.defaults.registry;
+package org.jowidgets.common.types;
 
-import org.jowidgets.impl.spi.blueprint.builder.ITextInputWidgetSetupBuilderSpi;
-import org.jowidgets.impl.spi.blueprint.defaults.TextInputDefaultsSpi;
-import org.jowidgets.impl.widgets.common.blueprint.defaults.registry.CommonDefaultsInitializerRegistry;
+public enum SplitResizePolicy {
 
-public class SpiDefaultsInitializerRegistry extends CommonDefaultsInitializerRegistry {
+	RESIZE_FIRST,
+	RESIZE_SECOND,
+	RESIZE_BOTH;
 
-	public SpiDefaultsInitializerRegistry() {
-		super();
-		register(ITextInputWidgetSetupBuilderSpi.class, new TextInputDefaultsSpi());
-	}
 }

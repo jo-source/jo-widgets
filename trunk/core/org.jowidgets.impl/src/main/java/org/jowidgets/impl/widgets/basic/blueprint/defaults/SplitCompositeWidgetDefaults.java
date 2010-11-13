@@ -25,34 +25,27 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swt.util;
+package org.jowidgets.impl.widgets.basic.blueprint.defaults;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Group;
+import org.jowidgets.api.widgets.blueprint.builder.ISplitCompositeSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.common.types.Border;
-import org.jowidgets.common.types.Markup;
+import org.jowidgets.common.types.Orientation;
+import org.jowidgets.common.types.SplitResizePolicy;
+import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
-public final class BorderToComposite {
+public class SplitCompositeWidgetDefaults implements IDefaultInitializer<ISplitCompositeSetupBuilder<?>> {
 
-	private BorderToComposite() {};
-
-	public static Composite convert(final Composite parent, final Border border) {
-
-		final String title = border != null ? border.getTitle() : null;
-
-		if (title != null) {
-			final Group group = new Group(parent, SWT.SHADOW_IN);
-			group.setText(title);
-			group.setFont(FontProvider.deriveFont(group.getFont(), Markup.STRONG));
-			return group;
-		}
-		else if (border != null) {
-			return new Composite(parent, SWT.BORDER);
-		}
-		else {
-			return new Composite(parent, SWT.NONE);
-		}
+	@Override
+	public void initialize(final ISplitCompositeSetupBuilder<?> builder) {
+		builder.setOrientation(Orientation.HORIZONTAL);
+		builder.setDividerSize(4);
+		builder.setWeight(0.5);
+		builder.setResizePolicy(SplitResizePolicy.RESIZE_BOTH);
+		builder.setFirstBorder(new Border());
+		builder.setSecondBorder(new Border());
+		builder.setFirstLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
+		builder.setSecondLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
 	}
 
 }

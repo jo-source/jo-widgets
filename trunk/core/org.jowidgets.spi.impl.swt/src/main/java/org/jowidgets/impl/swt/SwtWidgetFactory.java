@@ -49,6 +49,7 @@ import org.jowidgets.impl.swt.widgets.internal.IconWidget;
 import org.jowidgets.impl.swt.widgets.internal.ProgressBarWidget;
 import org.jowidgets.impl.swt.widgets.internal.ScrollCompositeWidget;
 import org.jowidgets.impl.swt.widgets.internal.SeparatorWidget;
+import org.jowidgets.impl.swt.widgets.internal.SplitPaneWidget;
 import org.jowidgets.impl.swt.widgets.internal.TextFieldWidget;
 import org.jowidgets.impl.swt.widgets.internal.TextLabelWidget;
 import org.jowidgets.impl.swt.widgets.internal.ToggleButtonWidget;
@@ -62,6 +63,7 @@ import org.jowidgets.spi.widgets.IFrameWidgetSpi;
 import org.jowidgets.spi.widgets.IIconWidgetSpi;
 import org.jowidgets.spi.widgets.IProgressBarWidgetSpi;
 import org.jowidgets.spi.widgets.IScrollContainerWidgetSpi;
+import org.jowidgets.spi.widgets.ISplitContainerWidgetSpi;
 import org.jowidgets.spi.widgets.ITextInputWidgetSpi;
 import org.jowidgets.spi.widgets.ITextLabelWidgetSpi;
 import org.jowidgets.spi.widgets.IToggleButtonWidgetSpi;
@@ -77,6 +79,7 @@ import org.jowidgets.spi.widgets.setup.IIconSetupSpi;
 import org.jowidgets.spi.widgets.setup.IProgressBarSetupSpi;
 import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
 import org.jowidgets.spi.widgets.setup.ISeparatorSetupSpi;
+import org.jowidgets.spi.widgets.setup.ISplitContainerSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;
@@ -148,6 +151,14 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 		final IWidget parent,
 		final IScrollCompositeSetupSpi setup) {
 		return new ScrollCompositeWidget(factory, colorCache, parent, setup);
+	}
+
+	@Override
+	public ISplitContainerWidgetSpi createSplitContainerWidget(
+		final IGenericWidgetFactory factory,
+		final IWidget parent,
+		final ISplitContainerSetupSpi setup) {
+		return new SplitPaneWidget(factory, colorCache, parent, setup);
 	}
 
 	@Override

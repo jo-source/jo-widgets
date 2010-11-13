@@ -26,16 +26,40 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.spi.blueprint.defaults.registry;
+package org.jowidgets.impl.widgets.basic.factory.internal;
 
-import org.jowidgets.impl.spi.blueprint.builder.ITextInputWidgetSetupBuilderSpi;
-import org.jowidgets.impl.spi.blueprint.defaults.TextInputDefaultsSpi;
-import org.jowidgets.impl.widgets.common.blueprint.defaults.registry.CommonDefaultsInitializerRegistry;
+import org.jowidgets.api.widgets.ISplitCompositeWidget;
+import org.jowidgets.api.widgets.descriptor.ISplitCompositeDescriptor;
+import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.widgets.factory.IWidgetFactory;
+import org.jowidgets.impl.spi.ISpiBluePrintFactory;
+import org.jowidgets.impl.spi.blueprint.ISplitContainerBluePrintSpi;
+import org.jowidgets.impl.widgets.basic.SplitCompositeWidget;
+import org.jowidgets.spi.IWidgetFactorySpi;
+import org.jowidgets.spi.widgets.ISplitContainerWidgetSpi;
 
-public class SpiDefaultsInitializerRegistry extends CommonDefaultsInitializerRegistry {
+public class SplitCompositeWidgetFactory extends AbstractWidgetFactory implements
+		IWidgetFactory<ISplitCompositeWidget, ISplitCompositeDescriptor> {
 
-	public SpiDefaultsInitializerRegistry() {
-		super();
-		register(ITextInputWidgetSetupBuilderSpi.class, new TextInputDefaultsSpi());
+	public SplitCompositeWidgetFactory(
+		final IGenericWidgetFactory genericWidgetFactory,
+		final IWidgetFactorySpi spiWidgetFactory,
+		final ISpiBluePrintFactory bpF) {
+
+		super(genericWidgetFactory, spiWidgetFactory, bpF);
 	}
+
+	@Override
+	public ISplitCompositeWidget create(final IWidget parent, final ISplitCompositeDescriptor descriptor) {
+		final ISplitContainerBluePrintSpi bp = getSpiBluePrintFactory().splitContainer().setSetup(descriptor);
+
+		final ISplitContainerWidgetSpi splitConatinerSpi = getSpiWidgetFactory().createSplitContainerWidget(
+				getGenericWidgetFactory(),
+				parent,
+				bp);
+
+		return new SplitCompositeWidget(parent, splitConatinerSpi);
+	}
+
 }

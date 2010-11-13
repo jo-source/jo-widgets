@@ -39,6 +39,7 @@ import org.jowidgets.impl.spi.blueprint.IIconBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IProgressBarBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IScrollCompositeBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ISeparatorBluePrintSpi;
+import org.jowidgets.impl.spi.blueprint.ISplitContainerBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITextFieldBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITextLabelBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IToggleButtonBluePrintSpi;
@@ -54,6 +55,7 @@ import org.jowidgets.impl.spi.descriptor.IIconDescriptorSpi;
 import org.jowidgets.impl.spi.descriptor.IProgressBarDescriptorSpi;
 import org.jowidgets.impl.spi.descriptor.IScrollCompositeDescriptorSpi;
 import org.jowidgets.impl.spi.descriptor.ISeparatorDescriptorSpi;
+import org.jowidgets.impl.spi.descriptor.ISplitContainerDescriptorSpi;
 import org.jowidgets.impl.spi.descriptor.ITextFieldDescriptorSpi;
 import org.jowidgets.impl.spi.descriptor.ITextLabelDescriptorSpi;
 import org.jowidgets.impl.spi.descriptor.IToggleButtonDescriptorSpi;
@@ -83,6 +85,11 @@ public class SpiBluePrintFactory extends AbstractBluePrintFactory implements ISp
 	@Override
 	public IScrollCompositeBluePrintSpi scrollComposite() {
 		return createProxy(IScrollCompositeBluePrintSpi.class, IScrollCompositeDescriptorSpi.class);
+	}
+
+	@Override
+	public ISplitContainerBluePrintSpi splitContainer() {
+		return createProxy(ISplitContainerBluePrintSpi.class, ISplitContainerDescriptorSpi.class);
 	}
 
 	@Override
