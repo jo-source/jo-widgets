@@ -39,6 +39,7 @@ import org.jowidgets.tools.powo.JoComposite;
 import org.jowidgets.tools.powo.JoDialog;
 import org.jowidgets.tools.powo.JoFrame;
 import org.jowidgets.tools.powo.JoIcon;
+import org.jowidgets.tools.powo.JoProgressBar;
 import org.jowidgets.tools.powo.JoTextLabel;
 
 public class PowoDemoApplication implements IApplication {
@@ -77,11 +78,16 @@ public class PowoDemoApplication implements IApplication {
 
 		//headless creation of composite2
 		final JoComposite composite2 = new JoComposite(bpF.composite("Test"));
-		composite2.setLayout(new MigLayoutDescriptor("[][]", "[][][][]"));
+		composite2.setLayout(new MigLayoutDescriptor("[][grow]", "[][][][]"));
 		composite2.add(new JoIcon(IconsSmall.INFO), "");
 		composite2.add(bpF.textLabel("Test6"), "wrap");
 		composite2.add(new JoIcon(IconsSmall.INFO), "");
 		composite2.add(bpF.textLabel("Test8"), "wrap");
+
+		composite2.add(new JoIcon(IconsSmall.ERROR), "");
+		final JoProgressBar progressBar = new JoProgressBar(100);
+		composite2.add(progressBar, "growx");
+		progressBar.setProgress(35);
 
 		//here composite2 becomes initialized
 		frame.add(composite2, "growx, growy");

@@ -116,6 +116,9 @@ public class ProgressBarWidget implements IProgressBarWidget {
 		this.maximum = setup.getMaximum();
 		progressBar.setMaximum(this.maximum);
 
+		this.progress = setup.getProgress();
+		progressBar.setProgress(progress);
+
 		setIndeterminatState(setup.isIndeterminate());
 
 		ColorSettingsInvoker.setColors(setup, this);

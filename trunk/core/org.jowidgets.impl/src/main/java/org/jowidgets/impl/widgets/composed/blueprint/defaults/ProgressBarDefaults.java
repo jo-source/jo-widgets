@@ -37,6 +37,7 @@ public class ProgressBarDefaults implements IDefaultInitializer<IProgressBarSetu
 	public void initialize(final IProgressBarSetupBuilder<?> builder) {
 		builder.setMinimum(0);
 		builder.setMaximum(100);
+		builder.setProgress(0);
 		builder.setOrientation(Orientation.HORIZONTAL);
 		builder.setIndeterminate(false);
 	}

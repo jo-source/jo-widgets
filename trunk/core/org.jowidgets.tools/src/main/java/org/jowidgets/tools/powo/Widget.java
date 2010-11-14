@@ -116,13 +116,13 @@ class Widget<WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends IWidgetDescrip
 
 	final void checkInitialized() {
 		if (!isInitialized()) {
-			throw new WidgetNotInitializedException("Powo is not yet initialized");
+			throw new WidgetNotInitializedException("Widget is not yet initialized (was not added to an parent)");
 		}
 	}
 
 	final void checkNotInitialized() {
 		if (isInitialized()) {
-			throw new WidgetAlreadyInitializedException("Powo is already initialized");
+			throw new WidgetAlreadyInitializedException("Widget is already initialized (was already added to an parent)");
 		}
 	}
 
