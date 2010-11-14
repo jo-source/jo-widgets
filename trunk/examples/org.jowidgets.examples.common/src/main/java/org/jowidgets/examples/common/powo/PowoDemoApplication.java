@@ -30,9 +30,11 @@ package org.jowidgets.examples.common.powo;
 
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.powo.JoComposite;
@@ -40,6 +42,7 @@ import org.jowidgets.tools.powo.JoDialog;
 import org.jowidgets.tools.powo.JoFrame;
 import org.jowidgets.tools.powo.JoIcon;
 import org.jowidgets.tools.powo.JoProgressBar;
+import org.jowidgets.tools.powo.JoSplitComposite;
 import org.jowidgets.tools.powo.JoTextLabel;
 
 public class PowoDemoApplication implements IApplication {
@@ -60,7 +63,7 @@ public class PowoDemoApplication implements IApplication {
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 
 		final JoFrame frame = new JoFrame(frameTitle);
-		final JoDialog dialog = new JoDialog(frame, "Test");
+		final JoDialog dialog = createDialog(frame);
 
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
@@ -95,5 +98,20 @@ public class PowoDemoApplication implements IApplication {
 		frame.setVisible(true);
 		dialog.setVisible(true);
 
+	}
+
+	private JoDialog createDialog(final IFrameWidget parent) {
+		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
+
+		final JoDialog result = new JoDialog(parent, bpF.dialog("test").autoPackOff());
+		result.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
+
+		final JoSplitComposite split = new JoSplitComposite();
+		split.getFirst().add(new JoTextLabel("Content1"));
+		split.getSecond().add(new JoTextLabel("Content2"));
+
+		result.add(split, "growx, growy");
+		result.setSize(new Dimension(800, 600));
+		return result;
 	}
 }
