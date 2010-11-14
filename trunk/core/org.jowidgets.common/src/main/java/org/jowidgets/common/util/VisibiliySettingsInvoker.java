@@ -25,30 +25,19 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swing.widgets.internal;
+package org.jowidgets.common.util;
 
-import javax.swing.JPanel;
+import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.descriptor.setup.IWidgetSetupCommon;
 
-import org.jowidgets.common.util.ColorSettingsInvoker;
-import org.jowidgets.common.util.VisibiliySettingsInvoker;
-import org.jowidgets.common.widgets.descriptor.setup.ICompositeSetupCommon;
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.impl.swing.util.BorderConvert;
-import org.jowidgets.impl.swing.widgets.SwingContainerWidget;
+public final class VisibiliySettingsInvoker {
 
-public class CompositeWidget extends SwingContainerWidget {
+	private VisibiliySettingsInvoker() {}
 
-	public CompositeWidget(final IGenericWidgetFactory factory, final ICompositeSetupCommon setup) {
-		super(factory, new JPanel());
-		getUiReference().setBorder(BorderConvert.convert(setup.getBorder()));
-		setLayout(setup.getLayout());
-		ColorSettingsInvoker.setColors(setup, this);
-		VisibiliySettingsInvoker.setVisibility(setup, this);
-	}
-
-	@Override
-	public JPanel getUiReference() {
-		return (JPanel) super.getUiReference();
+	public static void setVisibility(final IWidgetSetupCommon setup, final IWidget widget) {
+		if (setup.isVisible() != null) {
+			widget.setVisible(setup.isVisible().booleanValue());
+		}
 	}
 
 }

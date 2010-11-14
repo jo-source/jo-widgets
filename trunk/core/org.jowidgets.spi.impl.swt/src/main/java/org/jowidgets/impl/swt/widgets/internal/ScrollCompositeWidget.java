@@ -37,6 +37,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Layout;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.util.ColorSettingsInvoker;
+import org.jowidgets.common.util.VisibiliySettingsInvoker;
 import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
@@ -102,6 +103,7 @@ public class ScrollCompositeWidget implements IScrollContainerWidgetSpi {
 			}
 		});
 		ColorSettingsInvoker.setColors(setup, this);
+		VisibiliySettingsInvoker.setVisibility(setup, this);
 	}
 
 	@Override

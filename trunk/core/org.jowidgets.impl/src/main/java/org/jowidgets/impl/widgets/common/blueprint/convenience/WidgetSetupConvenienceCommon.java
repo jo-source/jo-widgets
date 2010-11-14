@@ -40,4 +40,9 @@ public class WidgetSetupConvenienceCommon extends AbstractSetupBuilderConvenienc
 		return getBuilder().setForegroundColor(colorConstant);
 	}
 
+	@Override
+	public IWidgetSetupBuilderCommon<?> setVisible(final boolean visible) {
+		return getBuilder().setVisible(Boolean.valueOf(visible));
+	}
+
 }

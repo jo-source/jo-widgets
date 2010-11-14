@@ -36,6 +36,7 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.util.ColorSettingsInvoker;
+import org.jowidgets.common.util.VisibiliySettingsInvoker;
 import org.jowidgets.common.widgets.IIconWidgetCommon;
 import org.jowidgets.common.widgets.ITextLabelWidgetCommon;
 import org.jowidgets.common.widgets.IWidget;
@@ -64,6 +65,7 @@ public class LabelWidget implements ILabelWidget {
 		this.textLabelWidget = compositeWidget.add(textLabelDescriptor, "");
 
 		ColorSettingsInvoker.setColors(setup, this);
+		VisibiliySettingsInvoker.setVisibility(setup, this);
 	}
 
 	@Override

@@ -33,4 +33,6 @@ public interface IWidgetSetupConvenienceCommon<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setColor(IColorConstant colorConstant);
 
+	INSTANCE_TYPE setVisible(boolean visible);
+
 }

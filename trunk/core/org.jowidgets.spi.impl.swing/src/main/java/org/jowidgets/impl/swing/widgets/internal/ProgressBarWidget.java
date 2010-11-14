@@ -30,6 +30,7 @@ package org.jowidgets.impl.swing.widgets.internal;
 import javax.swing.JProgressBar;
 
 import org.jowidgets.common.util.ColorSettingsInvoker;
+import org.jowidgets.common.util.VisibiliySettingsInvoker;
 import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.impl.swing.util.OrientationConvert;
@@ -47,6 +48,7 @@ public class ProgressBarWidget extends SwingWidget implements IProgressBarWidget
 		getUiReference().setIndeterminate(setup.isIndeterminate());
 
 		ColorSettingsInvoker.setColors(setup, this);
+		VisibiliySettingsInvoker.setVisibility(setup, this);
 	}
 
 	@Override

@@ -31,6 +31,7 @@ import javax.swing.JLabel;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.util.ColorSettingsInvoker;
+import org.jowidgets.common.util.VisibiliySettingsInvoker;
 import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.impl.swing.widgets.SwingWidget;
@@ -47,6 +48,7 @@ public class IconWidget extends SwingWidget implements IIconWidgetSpi {
 		this.imageRegistry = imageRegistry;
 		setIcon(setup.getIcon());
 		ColorSettingsInvoker.setColors(setup, this);
+		VisibiliySettingsInvoker.setVisibility(setup, this);
 	}
 
 	@Override

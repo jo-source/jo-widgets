@@ -38,4 +38,6 @@ public interface IWidgetSetupBuilderCommon<INSTANCE_TYPE extends IWidgetSetupBui
 
 	INSTANCE_TYPE setBackgroundColor(final IColorConstant backgroundColor);
 
+	INSTANCE_TYPE setVisible(Boolean visible);
+
 }

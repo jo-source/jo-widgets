@@ -79,6 +79,22 @@ class Widget<WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends IWidgetDescrip
 	}
 
 	@Override
+	public final void setVisible(final boolean visible) {
+		if (isInitialized()) {
+			widget.setVisible(visible);
+		}
+		else {
+			bluePrint.setVisible(visible);
+		}
+	}
+
+	@Override
+	public final boolean isVisible() {
+		checkInitialized();
+		return widget.isVisible();
+	}
+
+	@Override
 	public final Object getUiReference() {
 		checkInitialized();
 		return widget.getUiReference();
@@ -88,18 +104,6 @@ class Widget<WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends IWidgetDescrip
 	public final void redraw() {
 		checkInitialized();
 		widget.redraw();
-	}
-
-	@Override
-	public final void setVisible(final boolean visible) {
-		checkInitialized();
-		widget.setVisible(visible);
-	}
-
-	@Override
-	public final boolean isVisible() {
-		checkInitialized();
-		return widget.isVisible();
 	}
 
 	final BLUE_PRINT_TYPE getBluePrint() {
