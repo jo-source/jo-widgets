@@ -30,23 +30,21 @@ package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.widgets.descriptor.ICompositeDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextLabelDescriptor;
-import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.util.Assert;
 
 class WidgetFactory {
 
-	@SuppressWarnings("unchecked")
-	<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> Widget<WIDGET_TYPE, ?> create(
-		final DESCRIPTOR_TYPE descriptor) {
+	@SuppressWarnings({"rawtypes"})
+	Widget create(final IWidgetDescriptor descriptor) {
 
 		Assert.paramNotNull(descriptor, "descriptor");
 
 		if (descriptor instanceof ICompositeDescriptor) {
-			return (Widget<WIDGET_TYPE, ?>) new JoComposite((ICompositeDescriptor) descriptor);
+			return new JoComposite((ICompositeDescriptor) descriptor);
 		}
 		else if (descriptor instanceof ITextLabelDescriptor) {
-			return (Widget<WIDGET_TYPE, ?>) new JoTextLabel((ITextLabelDescriptor) descriptor);
+			return new JoTextLabel((ITextLabelDescriptor) descriptor);
 		}
 		else {
 			throw new IllegalArgumentException("Could not create a Widget from descriptor '"
