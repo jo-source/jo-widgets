@@ -28,24 +28,21 @@
 
 package org.jowidgets.tools.powo;
 
-import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.ICompositeWidget;
-import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
-import org.jowidgets.api.widgets.descriptor.ICompositeDescriptor;
+import org.jowidgets.api.widgets.blueprint.builder.ICompositeSetupBuilder;
+import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-public class JoComposite extends CompositeWidget<ICompositeWidget, ICompositeBluePrint> implements ICompositeWidget {
+class CompositeWidget<WIDGET_TYPE extends ICompositeWidget, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & ICompositeSetupBuilder<?>> extends
+		ContainerWidget<WIDGET_TYPE, BLUE_PRINT_TYPE> implements ICompositeWidget {
 
-	public JoComposite(final ICompositeWidget widget) {
-		this(Toolkit.getBluePrintFactory().composite());
-		initialize(widget);
+	CompositeWidget(final BLUE_PRINT_TYPE bluePrint) {
+		super(bluePrint);
 	}
 
-	public JoComposite() {
-		this(Toolkit.getBluePrintFactory().composite());
+	@Override
+	public final IWidget getParent() {
+		checkInitialized();
+		return getWidget().getParent();
 	}
-
-	public JoComposite(final ICompositeDescriptor descriptor) {
-		super(Toolkit.getBluePrintFactory().composite().setSetup(descriptor));
-	}
-
 }

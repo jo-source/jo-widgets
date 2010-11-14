@@ -29,15 +29,14 @@
 package org.jowidgets.examples.common.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.ICompositeWidget;
-import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.powo.JoComposite;
+import org.jowidgets.tools.powo.JoFrame;
+import org.jowidgets.tools.powo.JoRootFrame;
 import org.jowidgets.tools.powo.JoTextLabel;
 
 public class PowoDemoApplication implements IApplication {
@@ -56,9 +55,8 @@ public class PowoDemoApplication implements IApplication {
 	@Override
 	public void start(final IApplicationLifecycle lifecycle) {
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
-		final IGenericWidgetFactory widgetFactory = Toolkit.getWidgetFactory();
 
-		final IFrameWidget frame = widgetFactory.create(bpF.frame(frameTitle));
+		final JoFrame frame = new JoRootFrame(frameTitle);
 
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
@@ -67,18 +65,13 @@ public class PowoDemoApplication implements IApplication {
 			}
 		});
 
-		frame.setLayout(new MigLayoutDescriptor("[grow]", "[grow]"));
-		final ICompositeWidget compositeWidget = frame.add(bpF.composite(), "growx, growy");
-
-		final JoComposite composite = new JoComposite(compositeWidget);
-
 		//demonstrates convenient powo use from here
-		composite.setLayout(new MigLayoutDescriptor("[grow]", "[][][][][][grow]"));
-		composite.add(new JoTextLabel("Test1"), "wrap");
-		composite.add(new JoTextLabel("Test2"), "wrap");
-		composite.add(new JoTextLabel("Test3"), "wrap");
-		composite.add(new JoTextLabel("Test4"), "wrap");
-		composite.add(bpF.separator(), "grow, wrap");
+		frame.setLayout(new MigLayoutDescriptor("[grow]", "[][][][][][grow]"));
+		frame.add(new JoTextLabel("Test1"), "wrap");
+		frame.add(new JoTextLabel("Test2"), "wrap");
+		frame.add(new JoTextLabel("Test3"), "wrap");
+		frame.add(new JoTextLabel("Test4"), "wrap");
+		frame.add(bpF.separator(), "grow, wrap");
 
 		//headless creation of composite2
 		final JoComposite composite2 = new JoComposite(bpF.composite("Test"));
@@ -89,7 +82,7 @@ public class PowoDemoApplication implements IApplication {
 		composite2.add(bpF.textLabel("Test8"), "wrap");
 
 		//here composite2 becomes initialized
-		composite.add(composite2, "growx, growy");
+		frame.add(composite2, "growx, growy");
 
 		frame.setVisible(true);
 

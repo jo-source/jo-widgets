@@ -29,23 +29,23 @@
 package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.ICompositeWidget;
-import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
-import org.jowidgets.api.widgets.descriptor.ICompositeDescriptor;
+import org.jowidgets.api.widgets.IFrameWidget;
+import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
+import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
 
-public class JoComposite extends CompositeWidget<ICompositeWidget, ICompositeBluePrint> implements ICompositeWidget {
+public class JoFrame extends WindowWidget<IFrameWidget, IFrameBluePrint> implements IFrameWidget {
 
-	public JoComposite(final ICompositeWidget widget) {
-		this(Toolkit.getBluePrintFactory().composite());
+	public JoFrame(final IFrameWidget widget) {
+		this(Toolkit.getBluePrintFactory().frame());
 		initialize(widget);
 	}
 
-	public JoComposite() {
-		this(Toolkit.getBluePrintFactory().composite());
+	public JoFrame() {
+		this(Toolkit.getBluePrintFactory().frame());
 	}
 
-	public JoComposite(final ICompositeDescriptor descriptor) {
-		super(Toolkit.getBluePrintFactory().composite().setSetup(descriptor));
+	public JoFrame(final IFrameDescriptor descriptor) {
+		super(Toolkit.getBluePrintFactory().frame().setSetup(descriptor));
 	}
 
 }

@@ -28,13 +28,13 @@
 
 package org.jowidgets.tools.powo;
 
-import org.jowidgets.api.widgets.blueprint.builder.IWidgetSetupBuilder;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.builder.IWidgetSetupBuilderCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.util.Assert;
 
-class Widget<WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IWidgetSetupBuilder<?>> implements
+class Widget<WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IWidgetSetupBuilderCommon<?>> implements
 		IWidget {
 
 	private final BLUE_PRINT_TYPE bluePrint;

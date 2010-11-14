@@ -29,23 +29,26 @@
 package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.ICompositeWidget;
-import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
-import org.jowidgets.api.widgets.descriptor.ICompositeDescriptor;
+import org.jowidgets.api.widgets.IFrameWidget;
+import org.jowidgets.api.widgets.descriptor.setup.IFrameSetup;
+import org.jowidgets.common.image.IImageConstant;
 
-public class JoComposite extends CompositeWidget<ICompositeWidget, ICompositeBluePrint> implements ICompositeWidget {
+public class JoRootFrame extends JoFrame implements IFrameWidget {
 
-	public JoComposite(final ICompositeWidget widget) {
-		this(Toolkit.getBluePrintFactory().composite());
-		initialize(widget);
+	public JoRootFrame() {
+		this(Toolkit.getBluePrintFactory().frame());
 	}
 
-	public JoComposite() {
-		this(Toolkit.getBluePrintFactory().composite());
+	public JoRootFrame(final String title) {
+		this(Toolkit.getBluePrintFactory().frame(title));
 	}
 
-	public JoComposite(final ICompositeDescriptor descriptor) {
-		super(Toolkit.getBluePrintFactory().composite().setSetup(descriptor));
+	public JoRootFrame(final String title, final IImageConstant icon) {
+		this(Toolkit.getBluePrintFactory().frame(title, icon));
+	}
+
+	public JoRootFrame(final IFrameSetup frameSetup) {
+		super(Toolkit.getWidgetFactory().create(Toolkit.getBluePrintFactory().frame().setSetup(frameSetup)));
 	}
 
 }
