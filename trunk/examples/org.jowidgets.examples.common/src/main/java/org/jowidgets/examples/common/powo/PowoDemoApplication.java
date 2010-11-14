@@ -28,6 +28,7 @@
 
 package org.jowidgets.examples.common.powo;
 
+import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.application.IApplication;
@@ -37,6 +38,7 @@ import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.powo.JoComposite;
 import org.jowidgets.tools.powo.JoDialog;
 import org.jowidgets.tools.powo.JoFrame;
+import org.jowidgets.tools.powo.JoIcon;
 import org.jowidgets.tools.powo.JoTextLabel;
 
 public class PowoDemoApplication implements IApplication {
@@ -66,7 +68,6 @@ public class PowoDemoApplication implements IApplication {
 			}
 		});
 
-		//demonstrates convenient powo use from here
 		frame.setLayout(new MigLayoutDescriptor("[grow]", "[][][][][][grow]"));
 		frame.add(new JoTextLabel("Test1"), "wrap");
 		frame.add(new JoTextLabel("Test2"), "wrap");
@@ -77,9 +78,9 @@ public class PowoDemoApplication implements IApplication {
 		//headless creation of composite2
 		final JoComposite composite2 = new JoComposite(bpF.composite("Test"));
 		composite2.setLayout(new MigLayoutDescriptor("[][]", "[][][][]"));
-		composite2.add(bpF.textLabel("Test5"), "");
+		composite2.add(new JoIcon(IconsSmall.INFO), "");
 		composite2.add(bpF.textLabel("Test6"), "wrap");
-		composite2.add(bpF.textLabel("Test7"), "");
+		composite2.add(new JoIcon(IconsSmall.INFO), "");
 		composite2.add(bpF.textLabel("Test8"), "wrap");
 
 		//here composite2 becomes initialized

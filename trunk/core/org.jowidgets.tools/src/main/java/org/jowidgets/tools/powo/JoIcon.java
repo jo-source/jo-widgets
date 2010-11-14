@@ -28,22 +28,31 @@
 
 package org.jowidgets.tools.powo;
 
-import org.jowidgets.api.widgets.IChildWidget;
-import org.jowidgets.common.widgets.IWidget;
-import org.jowidgets.common.widgets.builder.IWidgetSetupBuilderCommon;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IIconWidget;
+import org.jowidgets.api.widgets.blueprint.IIconBluePrint;
+import org.jowidgets.api.widgets.descriptor.IIconDescriptor;
+import org.jowidgets.common.image.IImageConstant;
 
-class ChildWidget<WIDGET_TYPE extends IChildWidget, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IWidgetSetupBuilderCommon<?>> extends
-		Widget<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IChildWidget {
+public class JoIcon extends ChildWidget<IIconWidget, IIconBluePrint> implements IIconWidget {
 
-	public ChildWidget(final BLUE_PRINT_TYPE bluePrint) {
-		super(bluePrint);
+	public JoIcon(final IImageConstant icon) {
+		this(Toolkit.getBluePrintFactory().icon(icon));
+	}
+
+	public JoIcon(final IIconDescriptor descriptor) {
+		super(Toolkit.getBluePrintFactory().icon().setSetup(descriptor));
 	}
 
 	@Override
-	public final IWidget getParent() {
-		checkInitialized();
-		return getWidget().getParent();
+	public void setIcon(final IImageConstant icon) {
+		if (isInitialized()) {
+			getWidget().setIcon(icon);
+		}
+		else {
+			getBluePrint().setIcon(icon);
+		}
+
 	}
 
 }
