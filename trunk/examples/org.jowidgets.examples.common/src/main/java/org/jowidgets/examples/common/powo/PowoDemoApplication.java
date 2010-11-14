@@ -35,8 +35,8 @@ import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.powo.JoComposite;
+import org.jowidgets.tools.powo.JoDialog;
 import org.jowidgets.tools.powo.JoFrame;
-import org.jowidgets.tools.powo.JoRootFrame;
 import org.jowidgets.tools.powo.JoTextLabel;
 
 public class PowoDemoApplication implements IApplication {
@@ -56,7 +56,8 @@ public class PowoDemoApplication implements IApplication {
 	public void start(final IApplicationLifecycle lifecycle) {
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 
-		final JoFrame frame = new JoRootFrame(frameTitle);
+		final JoFrame frame = new JoFrame(frameTitle);
+		final JoDialog dialog = new JoDialog(frame, "Test");
 
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
@@ -85,6 +86,7 @@ public class PowoDemoApplication implements IApplication {
 		frame.add(composite2, "growx, growy");
 
 		frame.setVisible(true);
+		dialog.setVisible(true);
 
 	}
 }

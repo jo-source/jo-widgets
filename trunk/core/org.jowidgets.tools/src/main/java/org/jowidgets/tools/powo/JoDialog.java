@@ -29,26 +29,34 @@
 package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IFrameWidget;
-import org.jowidgets.api.widgets.descriptor.setup.IFrameSetup;
-import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.api.widgets.IDialogWidget;
+import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
+import org.jowidgets.api.widgets.descriptor.setup.IDialogSetup;
+import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWindowWidgetCommon;
+import org.jowidgets.util.Assert;
 
-public class JoRootFrame extends JoFrame implements IFrameWidget {
+public class JoDialog extends WindowWidget<IDialogWidget, IDialogBluePrint> implements IDialogWidget {
 
-	public JoRootFrame() {
-		this(Toolkit.getBluePrintFactory().frame());
+	private final IWidget parent;
+
+	public JoDialog(final IWindowWidgetCommon parent) {
+		this(parent, Toolkit.getBluePrintFactory().dialog());
 	}
 
-	public JoRootFrame(final String title) {
-		this(Toolkit.getBluePrintFactory().frame(title));
+	public JoDialog(final IWindowWidgetCommon parent, final String title) {
+		this(parent, Toolkit.getBluePrintFactory().dialog(title));
 	}
 
-	public JoRootFrame(final String title, final IImageConstant icon) {
-		this(Toolkit.getBluePrintFactory().frame(title, icon));
+	public JoDialog(final IWindowWidgetCommon parent, final IDialogSetup setup) {
+		super(parent, Toolkit.getBluePrintFactory().dialog().setSetup(setup));
+		Assert.paramNotNull(parent, "parent");
+		this.parent = parent;
 	}
 
-	public JoRootFrame(final IFrameSetup frameSetup) {
-		super(Toolkit.getWidgetFactory().create(Toolkit.getBluePrintFactory().frame().setSetup(frameSetup)));
+	@Override
+	public IWidget getParent() {
+		return parent;
 	}
 
 }

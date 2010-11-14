@@ -31,21 +31,42 @@ package org.jowidgets.tools.powo;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
-import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
+import org.jowidgets.api.widgets.descriptor.setup.IFrameSetup;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.widgets.IWindowWidgetCommon;
 
 public class JoFrame extends WindowWidget<IFrameWidget, IFrameBluePrint> implements IFrameWidget {
 
-	public JoFrame(final IFrameWidget widget) {
-		this(Toolkit.getBluePrintFactory().frame());
-		initialize(widget);
-	}
-
 	public JoFrame() {
-		this(Toolkit.getBluePrintFactory().frame());
+		super(Toolkit.getBluePrintFactory().frame());
 	}
 
-	public JoFrame(final IFrameDescriptor descriptor) {
-		super(Toolkit.getBluePrintFactory().frame().setSetup(descriptor));
+	public JoFrame(final String title) {
+		super(Toolkit.getBluePrintFactory().frame(title));
+	}
+
+	public JoFrame(final String title, final IImageConstant icon) {
+		super(Toolkit.getBluePrintFactory().frame(title, icon));
+	}
+
+	public JoFrame(final IFrameSetup setup) {
+		super(Toolkit.getBluePrintFactory().frame().setSetup(setup));
+	}
+
+	public JoFrame(final IWindowWidgetCommon parent) {
+		super(parent, Toolkit.getBluePrintFactory().frame());
+	}
+
+	public JoFrame(final IWindowWidgetCommon parent, final String title) {
+		super(Toolkit.getBluePrintFactory().frame(title));
+	}
+
+	public JoFrame(final IWindowWidgetCommon parent, final String title, final IImageConstant icon) {
+		super(Toolkit.getBluePrintFactory().frame(title, icon));
+	}
+
+	public JoFrame(final IWindowWidgetCommon parent, final IFrameSetup setup) {
+		super(Toolkit.getBluePrintFactory().frame().setSetup(setup));
 	}
 
 }

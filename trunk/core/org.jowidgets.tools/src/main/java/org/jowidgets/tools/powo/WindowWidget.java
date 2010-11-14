@@ -28,9 +28,7 @@
 
 package org.jowidgets.tools.powo;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IWindowWidget;
 import org.jowidgets.api.widgets.blueprint.builder.IWindowSetupBuilder;
 import org.jowidgets.common.types.Dimension;
@@ -38,101 +36,81 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IContainerWidgetCommon;
 import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWindowWidgetCommon;
 import org.jowidgets.common.widgets.builder.IContainerSetupBuilderCommon;
 import org.jowidgets.common.widgets.controler.IWindowListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.util.Assert;
 
 class WindowWidget<WIDGET_TYPE extends IWindowWidget & IContainerWidgetCommon, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IContainerSetupBuilderCommon<BLUE_PRINT_TYPE> & IWindowSetupBuilder<BLUE_PRINT_TYPE>> extends
 		ContainerWidget<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IWindowWidget {
 
-	private final Set<IWindowListener> windowListeners;
-
 	WindowWidget(final BLUE_PRINT_TYPE bluePrint) {
 		super(bluePrint);
-		this.windowListeners = new HashSet<IWindowListener>();
+		Assert.paramNotNull(bluePrint, "bluePrint");
+		initialize(Toolkit.getWidgetFactory().create(bluePrint));
 	}
 
-	@Override
-	final void initialize(final WIDGET_TYPE widget) {
-		super.initialize(widget);
-		for (final IWindowListener windowListener : windowListeners) {
-			widget.addWindowListener(windowListener);
-		}
+	WindowWidget(final IWindowWidgetCommon parent, final BLUE_PRINT_TYPE bluePrint) {
+		super(bluePrint);
+		Assert.paramNotNull(parent, "parent");
+		Assert.paramNotNull(bluePrint, "bluePrint");
+		initialize(Toolkit.getWidgetFactory().create(parent, bluePrint));
 	}
 
 	@Override
 	public <M_WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends M_WIDGET_TYPE>> M_WIDGET_TYPE createChildWindow(
 		final DESCRIPTOR_TYPE descriptor) {
-		//TODO this must work without initialization
-		checkInitialized();
 		return getWidget().createChildWindow(descriptor);
 	}
 
 	@Override
 	public final void addWindowListener(final IWindowListener listener) {
-		if (isInitialized()) {
-			getWidget().addWindowListener(listener);
-		}
-		else {
-			windowListeners.add(listener);
-		}
+		getWidget().addWindowListener(listener);
 	}
 
 	@Override
 	public final void removeWindowListener(final IWindowListener listener) {
-		if (isInitialized()) {
-			getWidget().removeWindowListener(listener);
-		}
-		else {
-			windowListeners.remove(listener);
-		}
+		getWidget().removeWindowListener(listener);
 	}
 
 	@Override
 	public final void setPosition(final Position position) {
-		checkInitialized();
 		getWidget().setPosition(position);
 	}
 
 	@Override
 	public final Position getPosition() {
-		checkInitialized();
 		return getWidget().getPosition();
 	}
 
 	@Override
 	public final void setSize(final Dimension size) {
-		checkInitialized();
 		getWidget().setSize(size);
 	}
 
 	@Override
 	public final Dimension getSize() {
-		checkInitialized();
 		return getWidget().getSize();
 	}
 
 	@Override
 	public final Rectangle getParentBounds() {
-		checkInitialized();
 		return getWidget().getParentBounds();
 	}
 
 	@Override
 	public final void pack() {
-		checkInitialized();
 		getWidget().pack();
 	}
 
 	@Override
 	public final void close() {
-		checkInitialized();
 		getWidget().close();
 	}
 
 	@Override
 	public final void centerLocation() {
-		checkInitialized();
 		getWidget().centerLocation();
 	}
 
