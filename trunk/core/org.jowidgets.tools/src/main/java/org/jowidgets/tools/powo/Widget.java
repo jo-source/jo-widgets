@@ -102,21 +102,21 @@ class Widget<WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends IWidgetDescrip
 		return widget.isVisible();
 	}
 
-	public final BLUE_PRINT_TYPE getBluePrint() {
+	final BLUE_PRINT_TYPE getBluePrint() {
 		return bluePrint;
 	}
 
-	protected final WIDGET_TYPE getWidget() {
+	final WIDGET_TYPE getWidget() {
 		return widget;
 	}
 
-	protected final void checkInitialized() {
+	final void checkInitialized() {
 		if (!isInitialized()) {
 			throw new WidgetNotInitializedException("Powo is not yet initialized");
 		}
 	}
 
-	protected final void checkNotInitialized() {
+	final void checkNotInitialized() {
 		if (isInitialized()) {
 			throw new WidgetAlreadyInitializedException("Powo is already initialized");
 		}
