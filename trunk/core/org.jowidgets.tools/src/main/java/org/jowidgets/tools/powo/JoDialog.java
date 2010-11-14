@@ -31,7 +31,7 @@ package org.jowidgets.tools.powo;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IDialogWidget;
 import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
-import org.jowidgets.api.widgets.descriptor.setup.IDialogSetup;
+import org.jowidgets.api.widgets.descriptor.IDialogDescriptor;
 import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.common.widgets.IWindowWidgetCommon;
 import org.jowidgets.util.Assert;
@@ -48,7 +48,7 @@ public class JoDialog extends WindowWidget<IDialogWidget, IDialogBluePrint> impl
 		this(parent, Toolkit.getBluePrintFactory().dialog(title));
 	}
 
-	public JoDialog(final IWindowWidgetCommon parent, final IDialogSetup setup) {
+	public JoDialog(final IWindowWidgetCommon parent, final IDialogDescriptor setup) {
 		super(parent, Toolkit.getBluePrintFactory().dialog().setSetup(setup));
 		Assert.paramNotNull(parent, "parent");
 		this.parent = parent;
