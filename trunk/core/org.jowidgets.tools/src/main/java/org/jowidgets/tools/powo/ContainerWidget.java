@@ -107,6 +107,16 @@ class ContainerWidget<WIDGET_TYPE extends IContainerWidgetCommon, BLUE_PRINT_TYP
 	}
 
 	@Override
+	public final void removeAll() {
+		if (isInitialized()) {
+			getWidget().removeAll();
+		}
+		else {
+			preWidgets.clear();
+		}
+	}
+
+	@Override
 	public final void layoutBegin() {
 		checkInitialized();
 		getWidget().layoutBegin();
@@ -116,12 +126,6 @@ class ContainerWidget<WIDGET_TYPE extends IContainerWidgetCommon, BLUE_PRINT_TYP
 	public final void layoutEnd() {
 		checkInitialized();
 		getWidget().layoutEnd();
-	}
-
-	@Override
-	public final void removeAll() {
-		checkInitialized();
-		getWidget().removeAll();
 	}
 
 	@Override
