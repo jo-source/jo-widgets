@@ -44,13 +44,13 @@ class ContainerWidget<WIDGET_TYPE extends IContainerWidgetCommon, BLUE_PRINT_TYP
 
 	@SuppressWarnings("rawtypes")
 	private final List<Tuple<Widget, Object>> preWidgets;
-	private final WidgetFactory preWidgetFactory;
+	private final WidgetFactory widgetFactory;
 
 	@SuppressWarnings("rawtypes")
 	ContainerWidget(final BLUE_PRINT_TYPE bluePrint) {
 		super(bluePrint);
 		this.preWidgets = new LinkedList<Tuple<Widget, Object>>();
-		this.preWidgetFactory = new WidgetFactory();
+		this.widgetFactory = new WidgetFactory();
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
@@ -90,7 +90,7 @@ class ContainerWidget<WIDGET_TYPE extends IContainerWidgetCommon, BLUE_PRINT_TYP
 			return getWidget().add(descriptor, layoutConstraints);
 		}
 		else {
-			final Widget<M_WIDGET_TYPE, ?> powo = preWidgetFactory.create(descriptor);
+			final Widget<M_WIDGET_TYPE, ?> powo = widgetFactory.create(descriptor);
 			preWidgets.add(new Tuple<Widget, Object>(powo, layoutConstraints));
 			return (M_WIDGET_TYPE) powo;
 		}
