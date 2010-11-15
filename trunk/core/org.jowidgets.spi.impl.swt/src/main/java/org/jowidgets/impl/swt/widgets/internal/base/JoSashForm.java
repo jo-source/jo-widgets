@@ -58,6 +58,7 @@ public class JoSashForm extends Composite {
 	private Sash sash;
 	private FormData sashData;
 	private final SplitResizePolicy resizePolicy;
+	private final int sashWidth;
 	private boolean handleSashSelectionEvent;
 
 	public JoSashForm(final Composite parent, final ISplitContainerSetupSpi setup) {
@@ -66,6 +67,7 @@ public class JoSashForm extends Composite {
 		this.handleSashSelectionEvent = false;
 		this.currentWeight = setup.getWeight();
 		this.resizePolicy = setup.getResizePolicy();
+		this.sashWidth = setup.getDividerSize() + 1;
 
 		if (Orientation.HORIZONTAL == setup.getOrientation()) {
 			initHorizontal(setup);
@@ -95,7 +97,7 @@ public class JoSashForm extends Composite {
 					final Composite parent = JoSashForm.this.getParent();
 					final int parentWidth = parent.getClientArea().width - parent.getBorderWidth();
 					final Rectangle sashRect = sash.getBounds();
-					final int maxX = parentWidth - sashRect.width - LIMIT;
+					final int maxX = parentWidth - sashWidth - LIMIT;
 
 					int x;
 					if (SplitResizePolicy.RESIZE_BOTH == resizePolicy) {
@@ -123,6 +125,7 @@ public class JoSashForm extends Composite {
 					x = Math.max(Math.min(x, maxX), LIMIT);
 					if (x != sashRect.x) {
 						sashData.left = new FormAttachment(0, x);
+						sashData.right = new FormAttachment(0, x + sashWidth);
 						lastFirst = x;
 						lastSecond = parentWidth - x;
 					}
@@ -152,11 +155,12 @@ public class JoSashForm extends Composite {
 				final Composite parent = JoSashForm.this.getParent();
 				final int parentWidth = parent.getClientArea().width - parent.getBorderWidth();
 				final Rectangle sashRect = sash.getBounds();
-				final int maxX = parentWidth - sashRect.width - LIMIT;
+				final int maxX = parentWidth - sashWidth - LIMIT;
 
 				e.x = Math.max(Math.min(e.x, maxX), LIMIT);
 				if (e.x != sashRect.x) {
 					sashData.left = new FormAttachment(0, e.x);
+					sashData.right = new FormAttachment(0, e.x + sashWidth);
 					currentWeight = ((double) e.x) / (parentWidth);
 					lastFirst = e.x;
 					lastSecond = parentWidth - e.x;
@@ -197,7 +201,7 @@ public class JoSashForm extends Composite {
 					final Composite parent = JoSashForm.this.getParent();
 					final int parentHeight = parent.getClientArea().height - parent.getBorderWidth();
 					final Rectangle sashRect = sash.getBounds();
-					final int maxY = parentHeight - sashRect.height - LIMIT;
+					final int maxY = parentHeight - sashWidth - LIMIT;
 
 					int y;
 					if (SplitResizePolicy.RESIZE_BOTH == resizePolicy) {
@@ -225,6 +229,7 @@ public class JoSashForm extends Composite {
 					y = Math.max(Math.min(y, maxY), LIMIT);
 					if (y != sashRect.y) {
 						sashData.top = new FormAttachment(0, y);
+						sashData.bottom = new FormAttachment(0, y + sashWidth);
 						lastFirst = y;
 						lastSecond = parentHeight - y;
 					}
@@ -254,11 +259,12 @@ public class JoSashForm extends Composite {
 				final Composite parent = JoSashForm.this.getParent();
 				final int parentHeight = parent.getClientArea().height - parent.getBorderWidth();
 				final Rectangle sashRect = sash.getBounds();
-				final int maxY = parentHeight - sashRect.height - LIMIT;
+				final int maxY = parentHeight - sashWidth - LIMIT;
 
 				e.y = Math.max(Math.min(e.y, maxY), LIMIT);
 				if (e.y != sashRect.y) {
 					sashData.top = new FormAttachment(0, e.y);
+					sashData.bottom = new FormAttachment(0, e.y + sashWidth);
 					currentWeight = ((double) e.y) / (parentHeight);
 					lastFirst = e.y;
 					lastSecond = parentHeight - e.y;

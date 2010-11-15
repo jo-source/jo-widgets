@@ -53,6 +53,17 @@ class InputWidget<WIDGET_TYPE extends IInputWidget<VALUE_TYPE>, BLUE_PRINT_TYPE 
 	}
 
 	@Override
+	void initialize(final WIDGET_TYPE widget) {
+		super.initialize(widget);
+		for (final IValidator<VALUE_TYPE> validator : validators) {
+			widget.addValidator(validator);
+		}
+		for (final IInputListener inputListener : inputListeners) {
+			widget.addInputListener(inputListener);
+		}
+	}
+
+	@Override
 	public void setEditable(final boolean editable) {
 		if (isInitialized()) {
 			getWidget().setEditable(editable);

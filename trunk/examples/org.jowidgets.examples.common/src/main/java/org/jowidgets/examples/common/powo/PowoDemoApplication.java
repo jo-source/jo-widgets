@@ -28,9 +28,12 @@
 
 package org.jowidgets.examples.common.powo;
 
+import java.util.Date;
+
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IFrameWidget;
+import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
@@ -39,6 +42,8 @@ import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.powo.JoButton;
+import org.jowidgets.tools.powo.JoCheckBox;
+import org.jowidgets.tools.powo.JoComboBoxSelection;
 import org.jowidgets.tools.powo.JoComposite;
 import org.jowidgets.tools.powo.JoDialog;
 import org.jowidgets.tools.powo.JoFrame;
@@ -111,16 +116,39 @@ public class PowoDemoApplication implements IApplication {
 		});
 	}
 
+	@SuppressWarnings("deprecation")
 	private JoDialog createDialog(final IFrameWidget parent) {
 
 		final JoDialog result = new JoDialog(parent, JoDialog.bluePrint("test").autoPackOff());
 		result.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
 
 		final JoSplitComposite split = new JoSplitComposite(JoSplitComposite.bluePrint().resizeSecondPolicy());
-		split.getFirst().add(new JoTextLabel("Content1"));
-		split.getSecond().add(new JoTextLabel("Content2"));
+
+		final JoComposite first = split.getFirst();
+		first.setLayout(new MigLayoutDescriptor("[grow]", "[]"));
+		first.add(new JoTextLabel("Content1"));
+
+		final JoComposite second = split.getSecond();
+		second.setLayout(new MigLayoutDescriptor("[grow]", "[][][][]"));
+
+		final JoComboBoxSelection<String> comboBox1 = new JoComboBoxSelection<String>(new String[] {"hallo", "test", "weiter"});
+		comboBox1.setValue("test");
+		second.add(comboBox1, "growx, wrap");
+
+		final JoComboBoxSelection<Integer> comboBox2 = new JoComboBoxSelection<Integer>(new Integer[] {1, 2, 3, 4, 5});
+		second.add(comboBox2, "growx, wrap");
+
+		final JoCheckBox checkBox = new JoCheckBox("test");
+		second.add(checkBox, "growx, wrap");
+
+		final IComboBoxSelectionBluePrint<Date> cbBp = JoComboBoxSelection.bluePrint();
+		cbBp.autoSelectionOn();
+		cbBp.setElements(new Date[] {new Date(), new Date(110, 11, 9), new Date(110, 11, 11)});
+		final JoComboBoxSelection<Date> comboBox3 = new JoComboBoxSelection<Date>(cbBp);
+		second.add(comboBox3, "growx, wrap");
 
 		result.add(split, "growx, growy");
+
 		result.setSize(new Dimension(800, 600));
 		return result;
 	}

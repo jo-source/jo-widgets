@@ -73,8 +73,8 @@ class ContainerWidget<WIDGET_TYPE extends IContainerWidgetCommon, BLUE_PRINT_TYP
 	public final void add(final Widget<?, ?> widget, final Object layoutConstraints) {
 		if (isInitialized()) {
 			final IWidget newWidget = getWidget().add(widget.getDescriptor(), layoutConstraints);
-			final Widget warWidget = widget;
-			warWidget.initialize(newWidget);
+			final Widget rawWidget = widget;
+			rawWidget.initialize(newWidget);
 		}
 		else {
 			preWidgets.add(new Tuple<Widget, Object>(widget, layoutConstraints));

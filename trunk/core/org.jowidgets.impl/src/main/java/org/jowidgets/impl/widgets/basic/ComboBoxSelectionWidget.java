@@ -29,6 +29,7 @@
 package org.jowidgets.impl.widgets.basic;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -100,6 +101,11 @@ public class ComboBoxSelectionWidget<VALUE_TYPE> extends AbstractBasicInputWidge
 	@Override
 	public final List<VALUE_TYPE> getElements() {
 		return elementsView;
+	}
+
+	@Override
+	public void setElements(final VALUE_TYPE... elements) {
+		setElements(Arrays.asList(elements));
 	}
 
 	@Override

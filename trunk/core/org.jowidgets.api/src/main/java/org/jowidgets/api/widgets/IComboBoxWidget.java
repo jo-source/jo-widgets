@@ -35,4 +35,6 @@ public interface IComboBoxWidget<VALUE_TYPE> extends IInputWidget<VALUE_TYPE> {
 
 	void setElements(List<VALUE_TYPE> elements);
 
+	void setElements(VALUE_TYPE... elements);
+
 }

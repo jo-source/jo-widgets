@@ -65,7 +65,6 @@ public class ScrollCompositeWidget implements IScrollContainerWidgetSpi {
 		scrollPane.setViewportView(innerCompositeWidget.getUiReference());
 
 		ColorSettingsInvoker.setColors(setup, this);
-
 	}
 
 	@Override

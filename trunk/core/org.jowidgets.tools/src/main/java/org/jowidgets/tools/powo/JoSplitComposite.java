@@ -30,6 +30,7 @@ package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.ISplitCompositeWidget;
+import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.ISplitCompositeDescriptor;
@@ -52,13 +53,26 @@ public class JoSplitComposite extends ChildWidget<ISplitCompositeWidget, ISplitC
 	public JoSplitComposite(final ISplitCompositeDescriptor descriptor) {
 		super(Toolkit.getBluePrintFactory().splitComposite().setSetup(descriptor));
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
-		this.first = new JoComposite(bpF.composite().setBorder(descriptor.getFirstBorder()));
-		this.second = new JoComposite(bpF.composite().setBorder(descriptor.getFirstBorder()));
+
+		final ICompositeBluePrint firstBp = bpF.composite();
+		firstBp.setBorder(descriptor.getFirstBorder()).setLayout(descriptor.getFirstLayout());
+		this.first = new JoComposite(firstBp);
+
+		final ICompositeBluePrint secondBp = bpF.composite();
+		secondBp.setBorder(descriptor.getSecondBorder()).setLayout(descriptor.getSecondLayout());
+		this.second = new JoComposite(secondBp);
 	}
 
 	@Override
 	void initialize(final ISplitCompositeWidget widget) {
 		super.initialize(widget);
+
+		//maybe the layout was changed on first or second before initialization, so
+		//write them back to avoid keep using the old layout.
+		//this must be done before first and second will be initialized
+		widget.getFirst().setLayout(first.getBluePrint().getLayout());
+		widget.getSecond().setLayout(second.getBluePrint().getLayout());
+
 		first.initialize(widget.getFirst());
 		second.initialize(widget.getSecond());
 	}
