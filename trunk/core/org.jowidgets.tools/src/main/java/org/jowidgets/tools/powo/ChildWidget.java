@@ -29,11 +29,11 @@
 package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.widgets.IChildWidget;
+import org.jowidgets.api.widgets.blueprint.builder.IWidgetSetupBuilder;
 import org.jowidgets.common.widgets.IWidget;
-import org.jowidgets.common.widgets.builder.IWidgetSetupBuilderCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-class ChildWidget<WIDGET_TYPE extends IChildWidget, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IWidgetSetupBuilderCommon<?>> extends
+class ChildWidget<WIDGET_TYPE extends IChildWidget, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IWidgetSetupBuilder<?>> extends
 		Widget<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IChildWidget {
 
 	public ChildWidget(final BLUE_PRINT_TYPE bluePrint) {

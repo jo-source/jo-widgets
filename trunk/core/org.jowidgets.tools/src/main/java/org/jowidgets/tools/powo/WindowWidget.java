@@ -30,6 +30,7 @@ package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IWindowWidget;
+import org.jowidgets.api.widgets.blueprint.builder.IContainerSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IWindowSetupBuilder;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
@@ -37,12 +38,11 @@ import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IContainerWidgetCommon;
 import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.common.widgets.IWindowWidgetCommon;
-import org.jowidgets.common.widgets.builder.IContainerSetupBuilderCommon;
 import org.jowidgets.common.widgets.controler.IWindowListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.util.Assert;
 
-class WindowWidget<WIDGET_TYPE extends IWindowWidget & IContainerWidgetCommon, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IContainerSetupBuilderCommon<BLUE_PRINT_TYPE> & IWindowSetupBuilder<BLUE_PRINT_TYPE>> extends
+class WindowWidget<WIDGET_TYPE extends IWindowWidget & IContainerWidgetCommon, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IContainerSetupBuilder<BLUE_PRINT_TYPE> & IWindowSetupBuilder<BLUE_PRINT_TYPE>> extends
 		ContainerWidget<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IWindowWidget {
 
 	WindowWidget(final BLUE_PRINT_TYPE bluePrint) {

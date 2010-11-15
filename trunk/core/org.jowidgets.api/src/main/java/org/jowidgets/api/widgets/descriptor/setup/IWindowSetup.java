@@ -29,10 +29,9 @@ package org.jowidgets.api.widgets.descriptor.setup;
 
 import org.jowidgets.api.types.AutoCenterPolicy;
 import org.jowidgets.api.types.AutoPackPolicy;
-import org.jowidgets.common.widgets.descriptor.setup.IWidgetSetupCommon;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
-public interface IWindowSetup extends IWidgetSetupCommon {
+public interface IWindowSetup extends IWidgetSetup {
 
 	@Mandatory
 	AutoPackPolicy getAutoPackPolicy();

@@ -35,7 +35,7 @@ import java.util.Map;
 
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
-import org.jowidgets.common.widgets.builder.IWidgetSetupBuilder;
+import org.jowidgets.common.widgets.builder.ISetupBuilder;
 import org.jowidgets.util.Assert;
 
 @SuppressWarnings({"rawtypes", "unchecked"})
@@ -48,7 +48,7 @@ public class DefaultsInitializerRegistry implements IDefaultsInitializerRegistry
 	}
 
 	@Override
-	public void register(final Class<? extends IWidgetSetupBuilder> setupBuilder, final IDefaultInitializer<?> defaultsImpl) {
+	public void register(final Class<? extends ISetupBuilder> setupBuilder, final IDefaultInitializer<?> defaultsImpl) {
 		Assert.paramNotNull(setupBuilder, "setupBuilder");
 		Assert.paramNotNull(defaultsImpl, "defaultsImpl");
 		List<IDefaultInitializer<?>> list = (List<IDefaultInitializer<?>>) map.get(setupBuilder);
@@ -60,11 +60,11 @@ public class DefaultsInitializerRegistry implements IDefaultsInitializerRegistry
 	}
 
 	@Override
-	public List<IDefaultInitializer<IWidgetSetupBuilder<?>>> getRegistered(final Class<? extends IWidgetSetupBuilder> setupBuilder) {
+	public List<IDefaultInitializer<ISetupBuilder<?>>> getRegistered(final Class<? extends ISetupBuilder> setupBuilder) {
 		Assert.paramNotNull(setupBuilder, "setupBuilder");
-		List<IDefaultInitializer<IWidgetSetupBuilder<?>>> list = (List<IDefaultInitializer<IWidgetSetupBuilder<?>>>) map.get(setupBuilder);
+		List<IDefaultInitializer<ISetupBuilder<?>>> list = (List<IDefaultInitializer<ISetupBuilder<?>>>) map.get(setupBuilder);
 		if (list == null) {
-			list = new LinkedList<IDefaultInitializer<IWidgetSetupBuilder<?>>>();
+			list = new LinkedList<IDefaultInitializer<ISetupBuilder<?>>>();
 		}
 		return list;
 	}

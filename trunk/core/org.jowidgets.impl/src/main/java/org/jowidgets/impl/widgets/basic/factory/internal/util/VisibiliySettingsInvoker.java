@@ -25,11 +25,19 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.blueprint;
+package org.jowidgets.impl.widgets.basic.factory.internal.util;
 
-import org.jowidgets.api.widgets.blueprint.builder.IIconSetupBuilder;
-import org.jowidgets.api.widgets.descriptor.IIconDescriptor;
+import org.jowidgets.api.widgets.descriptor.setup.IWidgetSetup;
+import org.jowidgets.common.widgets.IWidget;
 
-public interface IIconBluePrint extends IIconSetupBuilder<IIconBluePrint>, IIconDescriptor {
+public final class VisibiliySettingsInvoker {
+
+	private VisibiliySettingsInvoker() {}
+
+	public static void setVisibility(final IWidgetSetup setup, final IWidget widget) {
+		if (setup.isVisible() != null) {
+			widget.setVisible(setup.isVisible().booleanValue());
+		}
+	}
 
 }

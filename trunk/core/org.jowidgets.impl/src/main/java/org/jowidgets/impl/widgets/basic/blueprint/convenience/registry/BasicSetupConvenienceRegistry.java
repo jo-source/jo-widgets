@@ -30,9 +30,11 @@ package org.jowidgets.impl.widgets.basic.blueprint.convenience.registry;
 
 import org.jowidgets.api.widgets.blueprint.builder.IComboBoxSelectionSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.ISplitCompositeSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.builder.IWidgetSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IWindowSetupBuilder;
 import org.jowidgets.impl.widgets.basic.blueprint.convenience.ComboBoxSelectionSetupConvenience;
 import org.jowidgets.impl.widgets.basic.blueprint.convenience.SplitContainerSetupConvenience;
+import org.jowidgets.impl.widgets.basic.blueprint.convenience.WidgetSetupConvenience;
 import org.jowidgets.impl.widgets.basic.blueprint.convenience.WindowSetupConvenience;
 import org.jowidgets.impl.widgets.common.blueprint.convenience.registry.CommonSetupConvenienceRegistry;
 
@@ -42,6 +44,7 @@ public class BasicSetupConvenienceRegistry extends CommonSetupConvenienceRegistr
 		super();
 		register(IComboBoxSelectionSetupBuilder.class, new ComboBoxSelectionSetupConvenience());
 		register(IWindowSetupBuilder.class, new WindowSetupConvenience());
+		register(IWidgetSetupBuilder.class, new WidgetSetupConvenience());
 		register(ISplitCompositeSetupBuilder.class, new SplitContainerSetupConvenience());
 	}
 }

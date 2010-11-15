@@ -29,7 +29,6 @@ package org.jowidgets.api.widgets.descriptor.setup;
 
 import org.jowidgets.common.widgets.descriptor.setup.ISeparatorSetupCommon;
 
-
-public interface ISeparatorSetup extends ISeparatorSetupCommon {
+public interface ISeparatorSetup extends ISeparatorSetupCommon, IWidgetSetup {
 
 }

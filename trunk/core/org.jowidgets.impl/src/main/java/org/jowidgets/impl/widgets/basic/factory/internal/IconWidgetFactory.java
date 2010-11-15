@@ -53,7 +53,7 @@ public class IconWidgetFactory extends AbstractWidgetFactory implements IWidgetF
 	public IIconWidget create(final IWidget parent, final IIconDescriptor descriptor) {
 		final IIconBluePrintSpi bp = getSpiBluePrintFactory().icon().setSetup(descriptor);
 		final IIconWidgetSpi iconSpi = getSpiWidgetFactory().createIconWidget(parent, bp);
-		return new IconWidget(parent, iconSpi);
+		return new IconWidget(parent, iconSpi, descriptor);
 	}
 
 }

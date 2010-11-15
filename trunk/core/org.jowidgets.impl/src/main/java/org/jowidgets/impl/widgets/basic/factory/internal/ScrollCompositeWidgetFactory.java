@@ -58,7 +58,7 @@ public class ScrollCompositeWidgetFactory extends AbstractWidgetFactory implemen
 				parent,
 				bp);
 
-		return new ScrollCompositeWidget(parent, scrollContainerSpi);
+		return new ScrollCompositeWidget(parent, scrollContainerSpi, descriptor);
 	}
 
 }

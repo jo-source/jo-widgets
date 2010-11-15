@@ -30,6 +30,7 @@ package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.widgets.descriptor.setup.IInputWidgetSetup;
 import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.spi.widgets.ITextInputWidgetSpi;
 
 public class TextInputWidget extends AbstractBasicInputWidget<String> {
@@ -46,6 +47,8 @@ public class TextInputWidget extends AbstractBasicInputWidget<String> {
 		if (setup.getValue() != null) {
 			setValue(setup.getValue());
 		}
+
+		VisibiliySettingsInvoker.setVisibility(setup, this);
 	}
 
 	@Override

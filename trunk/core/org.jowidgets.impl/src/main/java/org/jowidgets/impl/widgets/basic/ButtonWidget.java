@@ -32,6 +32,7 @@ import org.jowidgets.api.widgets.IButtonWidget;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.ButtonWidgetCommonWrapper;
 import org.jowidgets.spi.widgets.IButtonWidgetSpi;
 
@@ -43,6 +44,7 @@ public class ButtonWidget extends ButtonWidgetCommonWrapper implements IButtonWi
 		super(buttonWidgetSpi);
 		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
 		setEnabled(descriptor.isEnabled());
+		VisibiliySettingsInvoker.setVisibility(descriptor, this);
 	}
 
 	@Override

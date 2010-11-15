@@ -35,6 +35,4 @@ public interface IWidgetSetupCommon {
 
 	IColorConstant getBackgroundColor();
 
-	Boolean isVisible();
-
 }

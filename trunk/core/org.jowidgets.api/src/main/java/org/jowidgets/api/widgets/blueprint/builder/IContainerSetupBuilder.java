@@ -25,11 +25,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.blueprint;
+package org.jowidgets.api.widgets.blueprint.builder;
 
-import org.jowidgets.api.widgets.blueprint.builder.IIconSetupBuilder;
-import org.jowidgets.api.widgets.descriptor.IIconDescriptor;
+import org.jowidgets.common.widgets.builder.IContainerSetupBuilderCommon;
 
-public interface IIconBluePrint extends IIconSetupBuilder<IIconBluePrint>, IIconDescriptor {
+public interface IContainerSetupBuilder<INSTANCE_TYPE extends IContainerSetupBuilder<?>> extends
+		IContainerSetupBuilderCommon<INSTANCE_TYPE>,
+		IWidgetSetupBuilder<INSTANCE_TYPE> {
 
 }

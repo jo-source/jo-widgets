@@ -58,7 +58,7 @@ public class CompositeWidgetFactory extends AbstractWidgetFactory implements
 				parent,
 				bp);
 
-		return new CompositeWidget(parent, containerSpi);
+		return new CompositeWidget(parent, containerSpi, descriptor);
 	}
 
 }

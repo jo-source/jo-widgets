@@ -28,10 +28,9 @@
 package org.jowidgets.api.widgets.descriptor.setup;
 
 import org.jowidgets.api.validation.IValidator;
-import org.jowidgets.common.widgets.descriptor.setup.IWidgetSetupCommon;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
-public interface IInputWidgetSetup<INPUT_TYPE> extends IWidgetSetupCommon {
+public interface IInputWidgetSetup<INPUT_TYPE> extends IWidgetSetup {
 
 	@Mandatory
 	boolean isMandatory();

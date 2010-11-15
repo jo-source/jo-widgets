@@ -34,7 +34,6 @@ import javax.swing.JScrollPane;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.util.ColorSettingsInvoker;
-import org.jowidgets.common.util.VisibiliySettingsInvoker;
 import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
@@ -66,7 +65,6 @@ public class ScrollCompositeWidget implements IScrollContainerWidgetSpi {
 		scrollPane.setViewportView(innerCompositeWidget.getUiReference());
 
 		ColorSettingsInvoker.setColors(setup, this);
-		VisibiliySettingsInvoker.setVisibility(setup, this);
 
 	}
 

@@ -30,7 +30,8 @@ package org.jowidgets.api.widgets.blueprint.builder;
 import org.jowidgets.common.widgets.builder.IButtonSetupBuilderCommon;
 
 public interface IButtonSetupBuilder<INSTANCE_TYPE extends IButtonSetupBuilder<?>> extends
-		IButtonSetupBuilderCommon<INSTANCE_TYPE> {
+		IButtonSetupBuilderCommon<INSTANCE_TYPE>,
+		IWidgetSetupBuilder<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setEnabled(boolean enabled);
 

@@ -30,6 +30,7 @@ package org.jowidgets.api.widgets.blueprint.builder;
 import org.jowidgets.common.widgets.builder.ISeparatorSetupBuilderCommon;
 
 public interface ISeparatorSetupBuilder<INSTANCE_TYPE extends ISeparatorSetupBuilder<?>> extends
-		ISeparatorSetupBuilderCommon<INSTANCE_TYPE> {
+		ISeparatorSetupBuilderCommon<INSTANCE_TYPE>,
+		IWidgetSetupBuilder<INSTANCE_TYPE> {
 
 }

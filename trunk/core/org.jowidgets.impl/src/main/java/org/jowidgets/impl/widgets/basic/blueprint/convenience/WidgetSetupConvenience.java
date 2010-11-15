@@ -25,12 +25,18 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.common.widgets.builder;
+package org.jowidgets.impl.widgets.basic.blueprint.convenience;
 
-import org.jowidgets.common.widgets.descriptor.setup.IWidgetSetupCommon;
+import org.jowidgets.api.widgets.blueprint.builder.IWidgetSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.builder.convenience.IWidgetSetupConvenience;
+import org.jowidgets.impl.base.blueprint.convenience.AbstractSetupBuilderConvenience;
 
-public interface IWidgetSetupBuilder<INSTANCE_TYPE extends IWidgetSetupBuilder<?>> {
+public class WidgetSetupConvenience extends AbstractSetupBuilderConvenience<IWidgetSetupBuilder<?>> implements
+		IWidgetSetupConvenience<IWidgetSetupBuilder<?>> {
 
-	INSTANCE_TYPE setSetup(IWidgetSetupCommon descriptor);
+	@Override
+	public IWidgetSetupBuilder<?> setVisible(final boolean visible) {
+		return getBuilder().setVisible(Boolean.valueOf(visible));
+	}
 
 }

@@ -29,8 +29,10 @@
 package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.widgets.ITextLabelWidget;
+import org.jowidgets.api.widgets.descriptor.setup.ITextLabelSetup;
 import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.TextLabelWidgetCommonWrapper;
 import org.jowidgets.spi.widgets.ITextLabelWidgetSpi;
 
@@ -38,9 +40,11 @@ public class TextLabelWidget extends TextLabelWidgetCommonWrapper implements ITe
 
 	private final ChildWidgetDelegate childWidgetDelegate;
 
-	public TextLabelWidget(final IWidget parent, final ITextLabelWidgetSpi widget) {
+	public TextLabelWidget(final IWidget parent, final ITextLabelWidgetSpi widget, final ITextLabelSetup setup) {
 		super(widget);
 		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
+
+		VisibiliySettingsInvoker.setVisibility(setup, this);
 	}
 
 	@Override

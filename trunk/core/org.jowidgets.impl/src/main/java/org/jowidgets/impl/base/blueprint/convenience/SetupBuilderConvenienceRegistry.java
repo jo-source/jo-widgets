@@ -35,7 +35,7 @@ import java.util.Map;
 
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenience;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
-import org.jowidgets.common.widgets.builder.IWidgetSetupBuilder;
+import org.jowidgets.common.widgets.builder.ISetupBuilder;
 import org.jowidgets.util.Assert;
 
 @SuppressWarnings({"rawtypes", "unchecked"})
@@ -48,7 +48,7 @@ public class SetupBuilderConvenienceRegistry implements ISetupBuilderConvenience
 	}
 
 	@Override
-	public void register(final Class<? extends IWidgetSetupBuilder> setupBuilder, final ISetupBuilderConvenience<?> convenienceImpl) {
+	public void register(final Class<? extends ISetupBuilder> setupBuilder, final ISetupBuilderConvenience<?> convenienceImpl) {
 		Assert.paramNotNull(setupBuilder, "setupBuilder");
 		Assert.paramNotNull(convenienceImpl, "convenienceImpl");
 		List list = (List) map.get(setupBuilder);
@@ -60,11 +60,11 @@ public class SetupBuilderConvenienceRegistry implements ISetupBuilderConvenience
 	}
 
 	@Override
-	public List<ISetupBuilderConvenience<IWidgetSetupBuilder<?>>> getRegistered(final Class<? extends IWidgetSetupBuilder> setupBuilder) {
+	public List<ISetupBuilderConvenience<ISetupBuilder<?>>> getRegistered(final Class<? extends ISetupBuilder> setupBuilder) {
 		Assert.paramNotNull(setupBuilder, "setupBuilder");
-		List<ISetupBuilderConvenience<IWidgetSetupBuilder<?>>> list = (List<ISetupBuilderConvenience<IWidgetSetupBuilder<?>>>) map.get(setupBuilder);
+		List<ISetupBuilderConvenience<ISetupBuilder<?>>> list = (List<ISetupBuilderConvenience<ISetupBuilder<?>>>) map.get(setupBuilder);
 		if (list == null) {
-			list = new LinkedList<ISetupBuilderConvenience<IWidgetSetupBuilder<?>>>();
+			list = new LinkedList<ISetupBuilderConvenience<ISetupBuilder<?>>>();
 		}
 		return list;
 	}

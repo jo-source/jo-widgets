@@ -32,7 +32,6 @@ import java.awt.Window;
 import javax.swing.JDialog;
 
 import org.jowidgets.common.util.ColorSettingsInvoker;
-import org.jowidgets.common.util.VisibiliySettingsInvoker;
 import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
@@ -56,7 +55,6 @@ public class DialogWidget extends SwingWindowWidget implements IFrameWidgetSpi {
 		setIcon(setup.getIcon(), imageRegistry);
 		setLayout(setup.getLayout());
 		ColorSettingsInvoker.setColors(setup, this);
-		VisibiliySettingsInvoker.setVisibility(setup, this);
 	}
 
 	@Override

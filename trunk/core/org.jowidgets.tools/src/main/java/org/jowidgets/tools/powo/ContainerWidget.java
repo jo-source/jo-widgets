@@ -31,15 +31,15 @@ package org.jowidgets.tools.powo;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jowidgets.api.widgets.blueprint.builder.IContainerSetupBuilder;
 import org.jowidgets.common.widgets.IContainerWidgetCommon;
 import org.jowidgets.common.widgets.IWidget;
-import org.jowidgets.common.widgets.builder.IContainerSetupBuilderCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.util.Tuple;
 
-class ContainerWidget<WIDGET_TYPE extends IContainerWidgetCommon, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IContainerSetupBuilderCommon<?>> extends
+class ContainerWidget<WIDGET_TYPE extends IContainerWidgetCommon, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IContainerSetupBuilder<?>> extends
 		Widget<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IContainerWidgetCommon {
 
 	@SuppressWarnings("rawtypes")

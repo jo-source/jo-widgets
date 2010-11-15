@@ -37,6 +37,7 @@ import org.jowidgets.api.types.AutoSelectionPolicy;
 import org.jowidgets.api.widgets.IComboBoxWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IComboBoxSelectionSetup;
 import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.spi.widgets.IComboBoxSelectionWidgetSpi;
 import org.jowidgets.util.Assert;
 
@@ -67,6 +68,8 @@ public class ComboBoxSelectionWidget<VALUE_TYPE> extends AbstractBasicInputWidge
 		if (setup.getValue() != null) {
 			setValue(setup.getValue());
 		}
+
+		VisibiliySettingsInvoker.setVisibility(setup, this);
 	}
 
 	@Override

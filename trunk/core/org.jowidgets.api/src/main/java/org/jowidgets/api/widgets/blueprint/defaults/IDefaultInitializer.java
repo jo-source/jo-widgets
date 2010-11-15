@@ -27,8 +27,8 @@
  */
 package org.jowidgets.api.widgets.blueprint.defaults;
 
-import org.jowidgets.common.widgets.builder.IWidgetSetupBuilder;
+import org.jowidgets.common.widgets.builder.ISetupBuilder;
 
-public interface IDefaultInitializer<BUILDER_TYPE extends IWidgetSetupBuilder<?>> {
+public interface IDefaultInitializer<BUILDER_TYPE extends ISetupBuilder<?>> {
 	void initialize(BUILDER_TYPE setupBuilder);
 }

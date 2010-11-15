@@ -30,14 +30,14 @@ package org.jowidgets.api.widgets.blueprint.convenience;
 
 import java.util.List;
 
-import org.jowidgets.common.widgets.builder.IWidgetSetupBuilder;
+import org.jowidgets.common.widgets.builder.ISetupBuilder;
 
 public interface ISetupBuilderConvenienceRegistry {
 
 	@SuppressWarnings("rawtypes")
-	void register(Class<? extends IWidgetSetupBuilder> setupBuilder, ISetupBuilderConvenience<?> convenienceImpl);
+	void register(Class<? extends ISetupBuilder> setupBuilder, ISetupBuilderConvenience<?> convenienceImpl);
 
 	@SuppressWarnings("rawtypes")
-	List<ISetupBuilderConvenience<IWidgetSetupBuilder<?>>> getRegistered(Class<? extends IWidgetSetupBuilder> setupBuilder);
+	List<ISetupBuilderConvenience<ISetupBuilder<?>>> getRegistered(Class<? extends ISetupBuilder> setupBuilder);
 
 }

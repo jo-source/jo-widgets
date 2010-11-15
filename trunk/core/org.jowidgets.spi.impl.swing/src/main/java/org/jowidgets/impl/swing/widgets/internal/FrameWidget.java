@@ -33,7 +33,6 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 
 import org.jowidgets.common.util.ColorSettingsInvoker;
-import org.jowidgets.common.util.VisibiliySettingsInvoker;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.impl.swing.widgets.SwingWindowWidget;
@@ -51,7 +50,6 @@ public class FrameWidget extends SwingWindowWidget implements IFrameWidgetSpi {
 		setIcon(setup.getIcon(), imageRegistry);
 		setLayout(setup.getLayout());
 		ColorSettingsInvoker.setColors(setup, this);
-		VisibiliySettingsInvoker.setVisibility(setup, this);
 
 		//dispose a frame when window closed
 		getUiReference().addWindowListener(new WindowAdapter() {

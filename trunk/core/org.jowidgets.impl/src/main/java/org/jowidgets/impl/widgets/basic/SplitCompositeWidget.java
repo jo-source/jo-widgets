@@ -30,8 +30,10 @@ package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.widgets.ICompositeWidget;
 import org.jowidgets.api.widgets.ISplitCompositeWidget;
+import org.jowidgets.api.widgets.descriptor.setup.ISplitCompositeSetup;
 import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.SplitContainerWidgetCommonWrapper;
 import org.jowidgets.spi.widgets.ISplitContainerWidgetSpi;
 
@@ -41,11 +43,15 @@ public class SplitCompositeWidget extends SplitContainerWidgetCommonWrapper impl
 	private final ICompositeWidget first;
 	private final ICompositeWidget second;
 
-	public SplitCompositeWidget(final IWidget parent, final ISplitContainerWidgetSpi containerWidgetSpi) {
+	public SplitCompositeWidget(
+		final IWidget parent,
+		final ISplitContainerWidgetSpi containerWidgetSpi,
+		final ISplitCompositeSetup setup) {
 		super(containerWidgetSpi);
 		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
 		this.first = new CompositeWidget(this, getWidget().getFirst());
 		this.second = new CompositeWidget(this, getWidget().getSecond());
+		VisibiliySettingsInvoker.setVisibility(setup, this);
 	}
 
 	@Override

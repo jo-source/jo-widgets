@@ -29,6 +29,6 @@ package org.jowidgets.api.widgets.descriptor.setup;
 
 import org.jowidgets.common.widgets.descriptor.setup.ISplitContainerSetupCommon;
 
-public interface ISplitCompositeSetup extends ISplitContainerSetupCommon {
+public interface ISplitCompositeSetup extends ISplitContainerSetupCommon, IWidgetSetup {
 
 }

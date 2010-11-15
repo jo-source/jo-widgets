@@ -33,7 +33,6 @@ import org.jowidgets.api.widgets.descriptor.setup.IProgressBarSetup;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Orientation;
 import org.jowidgets.common.util.ColorSettingsInvoker;
-import org.jowidgets.common.util.VisibiliySettingsInvoker;
 import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
@@ -43,6 +42,7 @@ import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
 import org.jowidgets.impl.spi.SpiBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.IProgressBarBluePrintSpi;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.widgets.IProgressBarWidgetSpi;
 

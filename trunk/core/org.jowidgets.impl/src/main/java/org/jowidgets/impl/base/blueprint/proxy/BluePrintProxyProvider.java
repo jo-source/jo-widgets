@@ -31,12 +31,12 @@ import java.lang.reflect.Proxy;
 
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
-import org.jowidgets.common.widgets.builder.IWidgetSetupBuilder;
+import org.jowidgets.common.widgets.builder.ISetupBuilder;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.impl.base.blueprint.proxy.internal.BluePrintProxyInvovationHandler;
 import org.jowidgets.util.Assert;
 
-public class BluePrintProxyProvider<BLUE_PRINT_TYPE extends IWidgetSetupBuilder<?>> {
+public class BluePrintProxyProvider<BLUE_PRINT_TYPE extends ISetupBuilder<?>> {
 
 	private final BLUE_PRINT_TYPE proxy;
 
