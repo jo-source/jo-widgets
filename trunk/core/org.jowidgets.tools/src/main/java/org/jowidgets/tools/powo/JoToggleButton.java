@@ -29,34 +29,45 @@
 package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.ICheckBoxWidget;
-import org.jowidgets.api.widgets.blueprint.ICheckBoxBluePrint;
-import org.jowidgets.api.widgets.descriptor.ICheckBoxDescriptor;
+import org.jowidgets.api.widgets.IToggleButtonWidget;
+import org.jowidgets.api.widgets.blueprint.IToggleButtonBluePrint;
+import org.jowidgets.api.widgets.descriptor.IToggleButtonDescriptor;
+import org.jowidgets.common.image.IImageConstant;
 
-public class JoCheckBox extends CheckBoxWidget<ICheckBoxWidget, ICheckBoxBluePrint> implements ICheckBoxWidget {
+public class JoToggleButton extends CheckBoxWidget<IToggleButtonWidget, IToggleButtonBluePrint> implements IToggleButtonWidget {
 
-	public JoCheckBox(final String text) {
-		super(Toolkit.getBluePrintFactory().checkBox().setText(text));
+	public JoToggleButton(final String text) {
+		super(Toolkit.getBluePrintFactory().toggleButton().setText(text));
 	}
 
-	public JoCheckBox(final String text, final String tooltipText) {
-		super(Toolkit.getBluePrintFactory().checkBox().setText(text).setToolTipText(tooltipText));
+	public JoToggleButton(final String text, final String tooltipText) {
+		super(Toolkit.getBluePrintFactory().toggleButton().setText(text).setToolTipText(tooltipText));
 	}
 
-	public JoCheckBox(final ICheckBoxDescriptor descriptor) {
-		super(Toolkit.getBluePrintFactory().checkBox().setSetup(descriptor));
+	public JoToggleButton(final IToggleButtonDescriptor descriptor) {
+		super(Toolkit.getBluePrintFactory().toggleButton().setSetup(descriptor));
 	}
 
-	public static ICheckBoxBluePrint bluePrint() {
-		return Toolkit.getBluePrintFactory().checkBox();
+	@Override
+	public void setIcon(final IImageConstant icon) {
+		if (isInitialized()) {
+			getWidget().setIcon(icon);
+		}
+		else {
+			getBluePrint().setIcon(icon);
+		}
 	}
 
-	public static ICheckBoxBluePrint bluePrint(final String text) {
-		return Toolkit.getBluePrintFactory().checkBox().setText(text);
+	public static IToggleButtonBluePrint bluePrint() {
+		return Toolkit.getBluePrintFactory().toggleButton();
 	}
 
-	public static ICheckBoxBluePrint bluePrint(final String text, final String tooltipText) {
-		return Toolkit.getBluePrintFactory().checkBox().setText(text).setToolTipText(tooltipText);
+	public static IToggleButtonBluePrint bluePrint(final String text) {
+		return Toolkit.getBluePrintFactory().toggleButton().setText(text);
+	}
+
+	public static IToggleButtonBluePrint bluePrint(final String text, final String tooltipText) {
+		return Toolkit.getBluePrintFactory().toggleButton().setText(text).setToolTipText(tooltipText);
 	}
 
 }

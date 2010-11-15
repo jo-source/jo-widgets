@@ -28,35 +28,67 @@
 
 package org.jowidgets.tools.powo;
 
-import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.ICheckBoxWidget;
-import org.jowidgets.api.widgets.blueprint.ICheckBoxBluePrint;
-import org.jowidgets.api.widgets.descriptor.ICheckBoxDescriptor;
+import org.jowidgets.api.widgets.blueprint.builder.ICheckBoxSetupBuilder;
+import org.jowidgets.api.widgets.descriptor.setup.ICheckBoxSetup;
+import org.jowidgets.common.types.Markup;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-public class JoCheckBox extends CheckBoxWidget<ICheckBoxWidget, ICheckBoxBluePrint> implements ICheckBoxWidget {
+class CheckBoxWidget<WIDGET_TYPE extends ICheckBoxWidget, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & ICheckBoxSetup & ICheckBoxSetupBuilder<?>> extends
+		InputWidget<WIDGET_TYPE, BLUE_PRINT_TYPE, Boolean> implements ICheckBoxWidget {
 
-	public JoCheckBox(final String text) {
-		super(Toolkit.getBluePrintFactory().checkBox().setText(text));
+	CheckBoxWidget(final BLUE_PRINT_TYPE bluePrint) {
+		super(bluePrint);
 	}
 
-	public JoCheckBox(final String text, final String tooltipText) {
-		super(Toolkit.getBluePrintFactory().checkBox().setText(text).setToolTipText(tooltipText));
+	@Override
+	public void setMarkup(final Markup markup) {
+		if (isInitialized()) {
+			getWidget().setMarkup(markup);
+		}
+		else {
+			getBluePrint().setMarkup(markup);
+		}
 	}
 
-	public JoCheckBox(final ICheckBoxDescriptor descriptor) {
-		super(Toolkit.getBluePrintFactory().checkBox().setSetup(descriptor));
+	@Override
+	public void setText(final String text) {
+		if (isInitialized()) {
+			getWidget().setText(text);
+		}
+		else {
+			getBluePrint().setText(text);
+		}
 	}
 
-	public static ICheckBoxBluePrint bluePrint() {
-		return Toolkit.getBluePrintFactory().checkBox();
+	@Override
+	public void setToolTipText(final String text) {
+		if (isInitialized()) {
+			getWidget().setToolTipText(text);
+		}
+		else {
+			getBluePrint().setToolTipText(text);
+		}
 	}
 
-	public static ICheckBoxBluePrint bluePrint(final String text) {
-		return Toolkit.getBluePrintFactory().checkBox().setText(text);
+	@Override
+	public boolean isSelected() {
+		if (isInitialized()) {
+			return getWidget().isSelected();
+		}
+		else {
+			return getBluePrint().getInitialState();
+		}
 	}
 
-	public static ICheckBoxBluePrint bluePrint(final String text, final String tooltipText) {
-		return Toolkit.getBluePrintFactory().checkBox().setText(text).setToolTipText(tooltipText);
+	@Override
+	public void setSelected(final boolean selected) {
+		if (isInitialized()) {
+			getWidget().setSelected(selected);
+		}
+		else {
+			getBluePrint().setInitialState(selected);
+		}
 	}
 
 }

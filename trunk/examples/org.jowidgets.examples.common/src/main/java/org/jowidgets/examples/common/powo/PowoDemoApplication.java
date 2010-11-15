@@ -54,6 +54,7 @@ import org.jowidgets.tools.powo.JoIcon;
 import org.jowidgets.tools.powo.JoProgressBar;
 import org.jowidgets.tools.powo.JoSplitComposite;
 import org.jowidgets.tools.powo.JoTextLabel;
+import org.jowidgets.tools.powo.JoToggleButton;
 
 public class PowoDemoApplication implements IApplication {
 
@@ -135,7 +136,7 @@ public class PowoDemoApplication implements IApplication {
 		first.add(new JoTextLabel("Content1"));
 
 		final JoComposite second = split.getSecond();
-		second.setLayout(new MigLayoutDescriptor("[grow]", "[][][][][][]"));
+		second.setLayout(new MigLayoutDescriptor("[grow]", "[][][][][][][]"));
 
 		final JoComboBoxSelection<String> comboBox1 = new JoComboBoxSelection<String>(new String[] {"hallo", "test", "more"});
 		comboBox1.setValue("test");
@@ -160,6 +161,8 @@ public class PowoDemoApplication implements IApplication {
 		second.add(new JoComboBox<Long>(comboBoxBp4), "growx, wrap");
 
 		second.add(JoComboBox.comboBoxString(new String[] {"put your own", "values", "in here"}), "growx, wrap");
+
+		second.add(new JoToggleButton("Toggle me"), "growx, wrap");
 
 		result.add(split, "growx, growy");
 

@@ -38,6 +38,7 @@ import org.jowidgets.api.widgets.descriptor.ILabelDescriptor;
 import org.jowidgets.api.widgets.descriptor.IProgressBarDescriptor;
 import org.jowidgets.api.widgets.descriptor.ISplitCompositeDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextLabelDescriptor;
+import org.jowidgets.api.widgets.descriptor.IToggleButtonDescriptor;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.util.Assert;
 
@@ -77,6 +78,9 @@ class JoWidgetFactory {
 		}
 		else if (descriptor instanceof ITextLabelDescriptor) {
 			return new JoTextLabel((ITextLabelDescriptor) descriptor);
+		}
+		else if (descriptor instanceof IToggleButtonDescriptor) {
+			return new JoToggleButton((IToggleButtonDescriptor) descriptor);
 		}
 		else {
 			throw new IllegalArgumentException("Could not create a Widget from descriptor '"
