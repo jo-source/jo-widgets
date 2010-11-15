@@ -30,12 +30,15 @@ package org.jowidgets.examples.common.powo;
 
 import java.util.Date;
 
+import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.types.QuestionResult;
 import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
+import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.application.IApplication;
@@ -54,6 +57,7 @@ import org.jowidgets.tools.powo.JoFrame;
 import org.jowidgets.tools.powo.JoIcon;
 import org.jowidgets.tools.powo.JoMessageDialog;
 import org.jowidgets.tools.powo.JoProgressBar;
+import org.jowidgets.tools.powo.JoQuestionDialog;
 import org.jowidgets.tools.powo.JoScrollComposite;
 import org.jowidgets.tools.powo.JoSplitComposite;
 import org.jowidgets.tools.powo.JoTextLabel;
@@ -95,7 +99,7 @@ public class PowoDemoApplication implements IApplication {
 
 		//headless creation of composite2
 		final JoComposite composite2 = new JoComposite(bpF.composite("Test"));
-		composite2.setLayout(new MigLayoutDescriptor("[][grow]", "[][][][][]"));
+		composite2.setLayout(new MigLayoutDescriptor("[][grow]", "[][][][][][]"));
 		composite2.add(new JoIcon(IconsSmall.INFO), "");
 		composite2.add(JoTextLabel.bluePrint("Test6"), "wrap");
 		composite2.add(new JoIcon(IconsSmall.INFO), "");
@@ -112,10 +116,11 @@ public class PowoDemoApplication implements IApplication {
 		final JoButton button2 = new JoButton("show message", "shows an message dialog");
 		composite2.add(button2, "grow, span2, wrap");
 
+		final JoButton button3 = new JoButton("ask question", "shows an question dialog");
+		composite2.add(button3, "grow, span2, wrap");
+
 		//here composite2 becomes initialized
 		frame.add(composite2, "growx, growy");
-
-		frame.setVisible(true);
 
 		button1.addActionListener(new IActionListener() {
 			@Override
@@ -133,6 +138,20 @@ public class PowoDemoApplication implements IApplication {
 				new JoMessageDialog(frame, bp).showMessage();
 			}
 		});
+
+		button3.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final IQuestionDialogBluePrint bp = JoQuestionDialog.bluePrintYesNoCancel();
+				bp.setTitle("Title for my message");
+				bp.setText("This is my message!\nI hope you like it very much!");
+				final QuestionResult result = new JoQuestionDialog(frame, bp).question();
+
+				new JoMessageDialog(frame, Icons.INFO, "Answer was:\n" + result).showMessage();
+			}
+		});
+
+		frame.setVisible(true);
 	}
 
 	@SuppressWarnings("deprecation")

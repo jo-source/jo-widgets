@@ -59,6 +59,11 @@ public class JoMessageDialog extends ChildWidget<IMessageDialogWidget, IMessageD
 		initialize(Toolkit.getWidgetFactory().create(parent, descriptor));
 	}
 
+	@Override
+	public void showMessage() {
+		getWidget().showMessage();
+	}
+
 	public static IMessageDialogBluePrint bluePrint() {
 		return Toolkit.getBluePrintFactory().messageDialog();
 	}
@@ -85,11 +90,6 @@ public class JoMessageDialog extends ChildWidget<IMessageDialogWidget, IMessageD
 
 	public static IMessageDialogBluePrint bluePrintError(final String message) {
 		return Toolkit.getBluePrintFactory().errorDialog(message);
-	}
-
-	@Override
-	public void showMessage() {
-		getWidget().showMessage();
 	}
 
 }
