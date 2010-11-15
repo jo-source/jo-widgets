@@ -38,6 +38,7 @@ public class ButtonDefaultsCommon implements IDefaultInitializer<IButtonSetupBui
 	public void initialize(final IButtonSetupBuilderCommon<?> builder) {
 		builder.setAlignment(AlignmentHorizontal.CENTER);
 		builder.setMarkup(Markup.DEFAULT);
+		builder.setEnabled(true);
 	}
 
 }

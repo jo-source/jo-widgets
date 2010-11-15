@@ -33,12 +33,17 @@ import org.jowidgets.api.widgets.ISplitCompositeWidget;
 import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.ISplitCompositeDescriptor;
+import org.jowidgets.common.types.Orientation;
 
 public class JoSplitComposite extends ChildWidget<ISplitCompositeWidget, ISplitCompositeBluePrint> implements
 		ISplitCompositeWidget {
 
 	private final JoComposite first;
 	private final JoComposite second;
+
+	public JoSplitComposite(final Orientation orientation) {
+		this(Toolkit.getBluePrintFactory().splitComposite().setOrientation(orientation));
+	}
 
 	public JoSplitComposite() {
 		this(Toolkit.getBluePrintFactory().splitHorizontal());
@@ -66,6 +71,10 @@ public class JoSplitComposite extends ChildWidget<ISplitCompositeWidget, ISplitC
 	@Override
 	public JoComposite getSecond() {
 		return second;
+	}
+
+	public static ISplitCompositeBluePrint bluePrint() {
+		return Toolkit.getBluePrintFactory().splitComposite();
 	}
 
 }

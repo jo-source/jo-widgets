@@ -29,23 +29,36 @@
 package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.ITextLabelWidget;
-import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
-import org.jowidgets.api.widgets.descriptor.ITextLabelDescriptor;
+import org.jowidgets.api.widgets.ILabelWidget;
+import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
+import org.jowidgets.api.widgets.descriptor.ILabelDescriptor;
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
 
-public class JoTextLabel extends ChildWidget<ITextLabelWidget, ITextLabelBluePrint> implements ITextLabelWidget {
+public class JoLabel extends ChildWidget<ILabelWidget, ILabelBluePrint> implements ILabelWidget {
 
-	public JoTextLabel(final String text) {
-		this(Toolkit.getBluePrintFactory().textLabel(text));
+	public JoLabel(final IImageConstant icon) {
+		this(Toolkit.getBluePrintFactory().label().setIcon(icon));
 	}
 
-	public JoTextLabel(final String text, final String toolTipText) {
-		this(Toolkit.getBluePrintFactory().textLabel(text).setToolTipText(toolTipText));
+	public JoLabel(final IImageConstant icon, final String text) {
+		this(Toolkit.getBluePrintFactory().label().setText(text).setIcon(icon));
 	}
 
-	public JoTextLabel(final ITextLabelDescriptor descriptor) {
-		super(Toolkit.getBluePrintFactory().textLabel().setSetup(descriptor));
+	public JoLabel(final IImageConstant icon, final String text, final String tooltipText) {
+		this(Toolkit.getBluePrintFactory().label().setText(text).setIcon(icon).setToolTipText(tooltipText));
+	}
+
+	public JoLabel(final String text) {
+		this(Toolkit.getBluePrintFactory().label().setText(text));
+	}
+
+	public JoLabel(final String text, final String toolTipText) {
+		this(Toolkit.getBluePrintFactory().label().setText(text).setToolTipText(toolTipText));
+	}
+
+	public JoLabel(final ILabelDescriptor descriptor) {
+		super(Toolkit.getBluePrintFactory().label().setSetup(descriptor));
 	}
 
 	@Override
@@ -78,12 +91,26 @@ public class JoTextLabel extends ChildWidget<ITextLabelWidget, ITextLabelBluePri
 		}
 	}
 
-	public static ITextLabelBluePrint bluePrint() {
-		return Toolkit.getBluePrintFactory().textLabel();
+	@Override
+	public void setIcon(final IImageConstant icon) {
+		if (isInitialized()) {
+			getWidget().setIcon(icon);
+		}
+		else {
+			getBluePrint().setIcon(icon);
+		}
 	}
 
-	public static ITextLabelBluePrint bluePrint(final String text) {
-		return Toolkit.getBluePrintFactory().textLabel(text);
+	public static ILabelBluePrint bluePrint() {
+		return Toolkit.getBluePrintFactory().label();
+	}
+
+	public static ILabelBluePrint bluePrint(final String text) {
+		return Toolkit.getBluePrintFactory().label().setText(text);
+	}
+
+	public static ILabelBluePrint bluePrint(final String text, final IImageConstant icon) {
+		return Toolkit.getBluePrintFactory().label().setText(text).setIcon(icon);
 	}
 
 }

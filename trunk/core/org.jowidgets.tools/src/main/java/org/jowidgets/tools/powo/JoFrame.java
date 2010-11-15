@@ -70,4 +70,12 @@ public class JoFrame extends WindowWidget<IFrameWidget, IFrameBluePrint> impleme
 		super(Toolkit.getBluePrintFactory().frame().setSetup(setup));
 	}
 
+	public static IFrameBluePrint bluePrint() {
+		return Toolkit.getBluePrintFactory().frame();
+	}
+
+	public static IFrameBluePrint bluePrint(final String title) {
+		return Toolkit.getBluePrintFactory().frame(title);
+	}
+
 }

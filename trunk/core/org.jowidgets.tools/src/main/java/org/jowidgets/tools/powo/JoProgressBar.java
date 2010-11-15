@@ -147,4 +147,12 @@ public class JoProgressBar extends ChildWidget<IProgressBarWidget, IProgressBarB
 		return getWidget().isFinished();
 	}
 
+	public static IProgressBarBluePrint bluePrint() {
+		return Toolkit.getBluePrintFactory().progressBar();
+	}
+
+	public static IProgressBarBluePrint bluePrint(final int maximum) {
+		return Toolkit.getBluePrintFactory().progressBar(maximum);
+	}
+
 }

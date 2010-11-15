@@ -59,4 +59,11 @@ public class JoDialog extends WindowWidget<IDialogWidget, IDialogBluePrint> impl
 		return parent;
 	}
 
+	public static IDialogBluePrint bluePrint() {
+		return Toolkit.getBluePrintFactory().dialog();
+	}
+
+	public static IDialogBluePrint bluePrint(final String title) {
+		return Toolkit.getBluePrintFactory().dialog(title);
+	}
 }

@@ -62,6 +62,7 @@ public class ButtonWidget extends AbstractSwtActionWidget implements IButtonWidg
 		setIcon(setup.getIcon());
 
 		setMarkup(setup.getMarkup());
+		setEnabled(setup.isEnabled());
 
 		getUiReference().setAlignment(AlignmentConvert.convert(setup.getAlignment()));
 

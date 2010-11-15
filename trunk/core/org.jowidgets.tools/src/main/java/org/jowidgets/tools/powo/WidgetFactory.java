@@ -28,7 +28,12 @@
 
 package org.jowidgets.tools.powo;
 
+import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 import org.jowidgets.api.widgets.descriptor.ICompositeDescriptor;
+import org.jowidgets.api.widgets.descriptor.IIconDescriptor;
+import org.jowidgets.api.widgets.descriptor.ILabelDescriptor;
+import org.jowidgets.api.widgets.descriptor.IProgressBarDescriptor;
+import org.jowidgets.api.widgets.descriptor.ISplitCompositeDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextLabelDescriptor;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.util.Assert;
@@ -40,8 +45,23 @@ class WidgetFactory {
 
 		Assert.paramNotNull(descriptor, "descriptor");
 
-		if (descriptor instanceof ICompositeDescriptor) {
+		if (descriptor instanceof IButtonDescriptor) {
+			return new JoButton((IButtonDescriptor) descriptor);
+		}
+		else if (descriptor instanceof ICompositeDescriptor) {
 			return new JoComposite((ICompositeDescriptor) descriptor);
+		}
+		else if (descriptor instanceof IIconDescriptor) {
+			return new JoIcon((IIconDescriptor) descriptor);
+		}
+		else if (descriptor instanceof ILabelDescriptor) {
+			return new JoLabel((ILabelDescriptor) descriptor);
+		}
+		else if (descriptor instanceof IProgressBarDescriptor) {
+			return new JoProgressBar((IProgressBarDescriptor) descriptor);
+		}
+		else if (descriptor instanceof ISplitCompositeDescriptor) {
+			return new JoSplitComposite((ISplitCompositeDescriptor) descriptor);
 		}
 		else if (descriptor instanceof ITextLabelDescriptor) {
 			return new JoTextLabel((ITextLabelDescriptor) descriptor);

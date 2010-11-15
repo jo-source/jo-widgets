@@ -35,8 +35,10 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.tools.powo.JoButton;
 import org.jowidgets.tools.powo.JoComposite;
 import org.jowidgets.tools.powo.JoDialog;
 import org.jowidgets.tools.powo.JoFrame;
@@ -83,30 +85,38 @@ public class PowoDemoApplication implements IApplication {
 		final JoComposite composite2 = new JoComposite(bpF.composite("Test"));
 		composite2.setLayout(new MigLayoutDescriptor("[][grow]", "[][][][]"));
 		composite2.add(new JoIcon(IconsSmall.INFO), "");
-		composite2.add(bpF.textLabel("Test6"), "wrap");
+		composite2.add(JoTextLabel.bluePrint("Test6"), "wrap");
 		composite2.add(new JoIcon(IconsSmall.INFO), "");
 		composite2.add(bpF.textLabel("Test8"), "wrap");
 
 		composite2.add(new JoIcon(IconsSmall.ERROR), "");
 		final JoProgressBar progressBar = new JoProgressBar(100);
-		composite2.add(progressBar, "growx");
+		composite2.add(progressBar, "growx, wrap");
 		progressBar.setProgress(35);
+
+		final JoButton button = new JoButton("open dialog");
+		composite2.add(button, "grow, span2");
 
 		//here composite2 becomes initialized
 		frame.add(composite2, "growx, growy");
 
 		frame.setVisible(true);
-		dialog.setVisible(true);
 
+		button.addActionListener(new IActionListener() {
+
+			@Override
+			public void actionPerformed() {
+				dialog.setVisible(true);
+			}
+		});
 	}
 
 	private JoDialog createDialog(final IFrameWidget parent) {
-		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 
-		final JoDialog result = new JoDialog(parent, bpF.dialog("test").autoPackOff());
+		final JoDialog result = new JoDialog(parent, JoDialog.bluePrint("test").autoPackOff());
 		result.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
 
-		final JoSplitComposite split = new JoSplitComposite();
+		final JoSplitComposite split = new JoSplitComposite(JoSplitComposite.bluePrint().resizeSecondPolicy());
 		split.getFirst().add(new JoTextLabel("Content1"));
 		split.getSecond().add(new JoTextLabel("Content2"));
 

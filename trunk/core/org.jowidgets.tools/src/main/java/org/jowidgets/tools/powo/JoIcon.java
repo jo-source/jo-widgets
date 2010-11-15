@@ -52,7 +52,14 @@ public class JoIcon extends ChildWidget<IIconWidget, IIconBluePrint> implements 
 		else {
 			getBluePrint().setIcon(icon);
 		}
+	}
 
+	public static IIconBluePrint bluePrint() {
+		return Toolkit.getBluePrintFactory().icon();
+	}
+
+	public static IIconBluePrint bluePrint(final IImageConstant icon) {
+		return Toolkit.getBluePrintFactory().icon(icon);
 	}
 
 }

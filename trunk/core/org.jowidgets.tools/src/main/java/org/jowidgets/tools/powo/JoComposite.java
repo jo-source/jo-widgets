@@ -48,4 +48,8 @@ public class JoComposite extends CompositeWidget<ICompositeWidget, ICompositeBlu
 		super(Toolkit.getBluePrintFactory().composite().setSetup(descriptor));
 	}
 
+	public static ICompositeBluePrint bluePrint() {
+		return Toolkit.getBluePrintFactory().composite();
+	}
+
 }
