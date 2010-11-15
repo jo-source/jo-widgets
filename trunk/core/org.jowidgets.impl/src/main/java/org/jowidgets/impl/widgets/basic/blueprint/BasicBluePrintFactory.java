@@ -28,6 +28,7 @@
 package org.jowidgets.impl.widgets.basic.blueprint;
 
 import org.jowidgets.api.convert.IObjectStringConverter;
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
@@ -148,6 +149,46 @@ public class BasicBluePrintFactory extends BasicSimpleBluePrintFactory implement
 		final ENUM_TYPE... enumValues) {
 		final IObjectStringConverter<ENUM_TYPE> converter = DefaultObjectStringConverter.getInstance();
 		return comboBoxSelection(converter).setElements(enumValues);
+	}
+
+	@Override
+	public IComboBoxBluePrint<String> comboBoxString() {
+		return comboBox(Toolkit.getConverterProvider().string());
+	}
+
+	@Override
+	public IComboBoxBluePrint<Long> comboBoxLongNumber() {
+		return comboBox(Toolkit.getConverterProvider().longNumber());
+	}
+
+	@Override
+	public IComboBoxBluePrint<Integer> comboBoxIntegerNumber() {
+		return comboBox(Toolkit.getConverterProvider().integerNumber());
+	}
+
+	@Override
+	public IComboBoxBluePrint<Short> comboBoxShortNumber() {
+		return comboBox(Toolkit.getConverterProvider().shortNumber());
+	}
+
+	@Override
+	public IComboBoxSelectionBluePrint<String> comboBoxSelectionString() {
+		return comboBoxSelection(Toolkit.getConverterProvider().string());
+	}
+
+	@Override
+	public IComboBoxSelectionBluePrint<Long> comboBoxSelectionLongNumber() {
+		return comboBoxSelection(Toolkit.getConverterProvider().longNumber());
+	}
+
+	@Override
+	public IComboBoxSelectionBluePrint<Integer> comboBoxSelectionIntegerNumber() {
+		return comboBoxSelection(Toolkit.getConverterProvider().integerNumber());
+	}
+
+	@Override
+	public IComboBoxSelectionBluePrint<Short> comboBoxSelectionShortNumber() {
+		return comboBoxSelection(Toolkit.getConverterProvider().shortNumber());
 	}
 
 	@Override

@@ -26,19 +26,15 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.convert;
+package org.jowidgets.tools.converter;
 
+import org.jowidgets.api.convert.IConverter;
+import org.jowidgets.api.convert.IObjectStringConverter;
+import org.jowidgets.api.convert.IStringObjectConverter;
 import org.jowidgets.api.validation.ValidationMessage;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.util.Assert;
 
-/**
- * TODO remove this class for version 0.0.3-SNAPSHOT or later
- * This class will be removed soon from API.
- * 
- * @deprecated Use org.jowidgets.tools.converter.Converter
- */
-@Deprecated
 public class Converter<TYPE> implements IConverter<TYPE> {
 
 	private final IObjectStringConverter<TYPE> objectStringConverter;

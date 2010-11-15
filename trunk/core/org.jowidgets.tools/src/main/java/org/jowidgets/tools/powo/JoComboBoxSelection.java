@@ -116,19 +116,19 @@ public class JoComboBoxSelection<VALUE_TYPE> extends
 	}
 
 	public static IComboBoxSelectionBluePrint<String> bluePrintString() {
-		return Toolkit.getBluePrintFactory().comboBoxSelection();
+		return Toolkit.getBluePrintFactory().comboBoxSelectionString();
 	}
 
 	public static IComboBoxSelectionBluePrint<Integer> bluePrintInteger() {
-		return Toolkit.getBluePrintFactory().comboBoxSelection(Toolkit.getConverterProvider().integerNumber());
+		return Toolkit.getBluePrintFactory().comboBoxSelectionIntegerNumber();
 	}
 
 	public static IComboBoxSelectionBluePrint<Long> bluePrintLong() {
-		return Toolkit.getBluePrintFactory().comboBoxSelection(Toolkit.getConverterProvider().longNumber());
+		return Toolkit.getBluePrintFactory().comboBoxSelectionLongNumber();
 	}
 
 	public static IComboBoxSelectionBluePrint<Short> bluePrintShort() {
-		return Toolkit.getBluePrintFactory().comboBoxSelection(Toolkit.getConverterProvider().shortNumber());
+		return Toolkit.getBluePrintFactory().comboBoxSelectionShortNumber();
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////

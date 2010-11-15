@@ -33,6 +33,7 @@ import java.util.Date;
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IFrameWidget;
+import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
@@ -44,6 +45,7 @@ import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.powo.JoButton;
 import org.jowidgets.tools.powo.JoCheckBox;
+import org.jowidgets.tools.powo.JoComboBox;
 import org.jowidgets.tools.powo.JoComboBoxSelection;
 import org.jowidgets.tools.powo.JoComposite;
 import org.jowidgets.tools.powo.JoDialog;
@@ -133,7 +135,7 @@ public class PowoDemoApplication implements IApplication {
 		first.add(new JoTextLabel("Content1"));
 
 		final JoComposite second = split.getSecond();
-		second.setLayout(new MigLayoutDescriptor("[grow]", "[][][][][]"));
+		second.setLayout(new MigLayoutDescriptor("[grow]", "[][][][][][]"));
 
 		final JoComboBoxSelection<String> comboBox1 = new JoComboBoxSelection<String>(new String[] {"hallo", "test", "more"});
 		comboBox1.setValue("test");
@@ -152,6 +154,12 @@ public class PowoDemoApplication implements IApplication {
 		second.add(comboBox3, "growx, wrap");
 
 		second.add(bpF.comboBoxSelection(new String[] {"some", "more", "testing"}), "growx, wrap");
+
+		final IComboBoxBluePrint<Long> comboBoxBp4 = JoComboBox.bluePrintLong().autoSelectionOn();
+		comboBoxBp4.setElements(new Long[] {14324L, 4235345L, 324234L, 32423L, 32432432L, 2343234L});
+		second.add(new JoComboBox<Long>(comboBoxBp4), "growx, wrap");
+
+		second.add(JoComboBox.comboBoxString(new String[] {"put your own", "values", "in here"}), "growx, wrap");
 
 		result.add(split, "growx, growy");
 

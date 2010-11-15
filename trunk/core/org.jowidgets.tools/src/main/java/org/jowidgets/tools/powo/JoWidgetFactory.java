@@ -30,6 +30,7 @@ package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 import org.jowidgets.api.widgets.descriptor.ICheckBoxDescriptor;
+import org.jowidgets.api.widgets.descriptor.IComboBoxDescriptor;
 import org.jowidgets.api.widgets.descriptor.IComboBoxSelectionDescriptor;
 import org.jowidgets.api.widgets.descriptor.ICompositeDescriptor;
 import org.jowidgets.api.widgets.descriptor.IIconDescriptor;
@@ -55,6 +56,9 @@ class JoWidgetFactory {
 		}
 		else if (descriptor instanceof IComboBoxSelectionDescriptor) {
 			return new JoComboBoxSelection((IComboBoxSelectionDescriptor) descriptor);
+		}
+		else if (descriptor instanceof IComboBoxDescriptor) {
+			return new JoComboBox((IComboBoxDescriptor) descriptor);
 		}
 		else if (descriptor instanceof ICompositeDescriptor) {
 			return new JoComposite((ICompositeDescriptor) descriptor);

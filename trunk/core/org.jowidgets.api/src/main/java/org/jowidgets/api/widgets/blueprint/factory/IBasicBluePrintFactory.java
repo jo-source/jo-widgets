@@ -79,9 +79,26 @@ public interface IBasicBluePrintFactory extends IBasicSimpleBluePrintFactory {
 
 	IComboBoxBluePrint<String> comboBox(String... elements);
 
+	IComboBoxBluePrint<String> comboBoxString();
+
+	IComboBoxBluePrint<Long> comboBoxLongNumber();
+
+	IComboBoxBluePrint<Integer> comboBoxIntegerNumber();
+
+	IComboBoxBluePrint<Short> comboBoxShortNumber();
+
 	IComboBoxSelectionBluePrint<String> comboBoxSelection();
 
 	IComboBoxSelectionBluePrint<String> comboBoxSelection(String... elements);
 
 	<ENUM_TYPE extends Enum<?>> IComboBoxSelectionBluePrint<ENUM_TYPE> comboBoxSelection(final ENUM_TYPE... enumValues);
+
+	IComboBoxSelectionBluePrint<String> comboBoxSelectionString();
+
+	IComboBoxSelectionBluePrint<Long> comboBoxSelectionLongNumber();
+
+	IComboBoxSelectionBluePrint<Integer> comboBoxSelectionIntegerNumber();
+
+	IComboBoxSelectionBluePrint<Short> comboBoxSelectionShortNumber();
+
 }
