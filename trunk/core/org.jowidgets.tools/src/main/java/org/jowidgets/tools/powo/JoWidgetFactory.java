@@ -30,6 +30,7 @@ package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 import org.jowidgets.api.widgets.descriptor.ICheckBoxDescriptor;
+import org.jowidgets.api.widgets.descriptor.IComboBoxSelectionDescriptor;
 import org.jowidgets.api.widgets.descriptor.ICompositeDescriptor;
 import org.jowidgets.api.widgets.descriptor.IIconDescriptor;
 import org.jowidgets.api.widgets.descriptor.ILabelDescriptor;
@@ -41,7 +42,7 @@ import org.jowidgets.util.Assert;
 
 class JoWidgetFactory {
 
-	@SuppressWarnings({"rawtypes"})
+	@SuppressWarnings({"rawtypes", "unchecked"})
 	Widget create(final IWidgetDescriptor descriptor) {
 
 		Assert.paramNotNull(descriptor, "descriptor");
@@ -51,6 +52,9 @@ class JoWidgetFactory {
 		}
 		else if (descriptor instanceof ICheckBoxDescriptor) {
 			return new JoCheckBox((ICheckBoxDescriptor) descriptor);
+		}
+		else if (descriptor instanceof IComboBoxSelectionDescriptor) {
+			return new JoComboBoxSelection((IComboBoxSelectionDescriptor) descriptor);
 		}
 		else if (descriptor instanceof ICompositeDescriptor) {
 			return new JoComposite((ICompositeDescriptor) descriptor);
@@ -73,7 +77,7 @@ class JoWidgetFactory {
 		else {
 			throw new IllegalArgumentException("Could not create a Widget from descriptor '"
 				+ descriptor.getDescriptorInterface().getName()
-				+ "' Descriptor is not yet supported");
+				+ "' Descriptor is not yet supported for Powo's (Plain old widget objects)");
 		}
 	}
 

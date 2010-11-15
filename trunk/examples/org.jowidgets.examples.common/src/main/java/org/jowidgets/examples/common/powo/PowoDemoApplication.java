@@ -34,6 +34,7 @@ import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
+import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
@@ -119,19 +120,22 @@ public class PowoDemoApplication implements IApplication {
 	@SuppressWarnings("deprecation")
 	private JoDialog createDialog(final IFrameWidget parent) {
 
+		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
+
 		final JoDialog result = new JoDialog(parent, JoDialog.bluePrint("test").autoPackOff());
 		result.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
 
-		final JoSplitComposite split = new JoSplitComposite(JoSplitComposite.bluePrint().resizeSecondPolicy());
+		final ISplitCompositeBluePrint splitBp = JoSplitComposite.bluePrint().setWeight(0.2).resizeSecondPolicy();
+		final JoSplitComposite split = new JoSplitComposite(splitBp);
 
 		final JoComposite first = split.getFirst();
 		first.setLayout(new MigLayoutDescriptor("[grow]", "[]"));
 		first.add(new JoTextLabel("Content1"));
 
 		final JoComposite second = split.getSecond();
-		second.setLayout(new MigLayoutDescriptor("[grow]", "[][][][]"));
+		second.setLayout(new MigLayoutDescriptor("[grow]", "[][][][][]"));
 
-		final JoComboBoxSelection<String> comboBox1 = new JoComboBoxSelection<String>(new String[] {"hallo", "test", "weiter"});
+		final JoComboBoxSelection<String> comboBox1 = new JoComboBoxSelection<String>(new String[] {"hallo", "test", "more"});
 		comboBox1.setValue("test");
 		second.add(comboBox1, "growx, wrap");
 
@@ -146,6 +150,8 @@ public class PowoDemoApplication implements IApplication {
 		cbBp.setElements(new Date[] {new Date(), new Date(110, 11, 9), new Date(110, 11, 11)});
 		final JoComboBoxSelection<Date> comboBox3 = new JoComboBoxSelection<Date>(cbBp);
 		second.add(comboBox3, "growx, wrap");
+
+		second.add(bpF.comboBoxSelection(new String[] {"some", "more", "testing"}), "growx, wrap");
 
 		result.add(split, "growx, growy");
 
