@@ -52,6 +52,7 @@ import org.jowidgets.tools.powo.JoDialog;
 import org.jowidgets.tools.powo.JoFrame;
 import org.jowidgets.tools.powo.JoIcon;
 import org.jowidgets.tools.powo.JoProgressBar;
+import org.jowidgets.tools.powo.JoScrollComposite;
 import org.jowidgets.tools.powo.JoSplitComposite;
 import org.jowidgets.tools.powo.JoTextLabel;
 import org.jowidgets.tools.powo.JoToggleButton;
@@ -136,34 +137,35 @@ public class PowoDemoApplication implements IApplication {
 		first.add(new JoTextLabel("Content1"));
 
 		final JoComposite second = split.getSecond();
-		second.setLayout(new MigLayoutDescriptor("[grow]", "[][][][][][][]"));
+		final JoScrollComposite secondS = new JoScrollComposite(new MigLayoutDescriptor("[grow]", "[][][][][][][]"));
 
 		final JoComboBoxSelection<String> comboBox1 = new JoComboBoxSelection<String>(new String[] {"hallo", "test", "more"});
 		comboBox1.setValue("test");
-		second.add(comboBox1, "growx, wrap");
+		secondS.add(comboBox1, "growx, wrap");
 
 		final JoComboBoxSelection<Integer> comboBox2 = new JoComboBoxSelection<Integer>(new Integer[] {1, 2, 3, 4, 5});
-		second.add(comboBox2, "growx, wrap");
+		secondS.add(comboBox2, "growx, wrap");
 
 		final JoCheckBox checkBox = new JoCheckBox("test");
-		second.add(checkBox, "growx, wrap");
+		secondS.add(checkBox, "growx, wrap");
 
 		final IComboBoxSelectionBluePrint<Date> cbBp = JoComboBoxSelection.bluePrint();
 		cbBp.autoSelectionOn();
 		cbBp.setElements(new Date[] {new Date(), new Date(110, 11, 9), new Date(110, 11, 11)});
 		final JoComboBoxSelection<Date> comboBox3 = new JoComboBoxSelection<Date>(cbBp);
-		second.add(comboBox3, "growx, wrap");
+		secondS.add(comboBox3, "growx, wrap");
 
-		second.add(bpF.comboBoxSelection(new String[] {"some", "more", "testing"}), "growx, wrap");
+		secondS.add(bpF.comboBoxSelection(new String[] {"some", "more", "testing"}), "growx, wrap");
 
 		final IComboBoxBluePrint<Long> comboBoxBp4 = JoComboBox.bluePrintLong().autoSelectionOn();
 		comboBoxBp4.setElements(new Long[] {14324L, 4235345L, 324234L, 32423L, 32432432L, 2343234L});
-		second.add(new JoComboBox<Long>(comboBoxBp4), "growx, wrap");
+		secondS.add(new JoComboBox<Long>(comboBoxBp4), "growx, wrap");
 
-		second.add(JoComboBox.comboBoxString(new String[] {"put your own", "values", "in here"}), "growx, wrap");
+		secondS.add(JoComboBox.comboBoxString(new String[] {"put your own", "values", "in here"}), "growx, wrap");
 
-		second.add(new JoToggleButton("Toggle me"), "growx, wrap");
+		secondS.add(new JoToggleButton("Toggle me"), "growx, wrap");
 
+		second.add(secondS, "growx, growy");
 		result.add(split, "growx, growy");
 
 		result.setSize(new Dimension(800, 600));

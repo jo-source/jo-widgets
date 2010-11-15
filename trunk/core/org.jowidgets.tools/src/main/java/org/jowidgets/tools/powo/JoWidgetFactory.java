@@ -36,6 +36,7 @@ import org.jowidgets.api.widgets.descriptor.ICompositeDescriptor;
 import org.jowidgets.api.widgets.descriptor.IIconDescriptor;
 import org.jowidgets.api.widgets.descriptor.ILabelDescriptor;
 import org.jowidgets.api.widgets.descriptor.IProgressBarDescriptor;
+import org.jowidgets.api.widgets.descriptor.IScrollCompositeDescriptor;
 import org.jowidgets.api.widgets.descriptor.ISplitCompositeDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextLabelDescriptor;
 import org.jowidgets.api.widgets.descriptor.IToggleButtonDescriptor;
@@ -72,6 +73,9 @@ class JoWidgetFactory {
 		}
 		else if (descriptor instanceof IProgressBarDescriptor) {
 			return new JoProgressBar((IProgressBarDescriptor) descriptor);
+		}
+		else if (descriptor instanceof IScrollCompositeDescriptor) {
+			return new JoScrollComposite((IScrollCompositeDescriptor) descriptor);
 		}
 		else if (descriptor instanceof ISplitCompositeDescriptor) {
 			return new JoSplitComposite((ISplitCompositeDescriptor) descriptor);

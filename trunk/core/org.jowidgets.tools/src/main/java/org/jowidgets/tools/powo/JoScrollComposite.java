@@ -29,56 +29,49 @@
 package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.ICompositeWidget;
-import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
-import org.jowidgets.api.widgets.descriptor.ICompositeDescriptor;
+import org.jowidgets.api.widgets.IScrollCompositeWidget;
+import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
+import org.jowidgets.api.widgets.descriptor.IScrollCompositeDescriptor;
 import org.jowidgets.common.types.Border;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.util.Assert;
 
-public class JoComposite extends CompositeWidget<ICompositeWidget, ICompositeBluePrint> implements ICompositeWidget {
+public class JoScrollComposite extends CompositeWidget<IScrollCompositeWidget, IScrollCompositeBluePrint> implements
+		IScrollCompositeWidget {
 
-	public JoComposite(final ICompositeWidget widget) {
+	public JoScrollComposite(final IScrollCompositeWidget widget) {
 		this(bluePrint());
 		Assert.paramNotNull(widget, "widget");
 		initialize(widget);
 	}
 
-	public JoComposite() {
+	public JoScrollComposite() {
 		this(bluePrint());
 	}
 
-	public JoComposite(final String borderTitle) {
-		this(bluePrint(borderTitle));
-	}
-
-	public JoComposite(final boolean border) {
-		this(bluePrint(border));
-	}
-
-	public JoComposite(final ILayoutDescriptor layout) {
+	public JoScrollComposite(final ILayoutDescriptor layout) {
 		this(bluePrint(layout));
 	}
 
-	public JoComposite(final ICompositeDescriptor descriptor) {
+	public JoScrollComposite(final IScrollCompositeDescriptor descriptor) {
 		super(bluePrint().setSetup(descriptor));
 	}
 
-	public static ICompositeBluePrint bluePrint() {
-		return Toolkit.getBluePrintFactory().composite();
+	public static IScrollCompositeBluePrint bluePrint() {
+		return Toolkit.getBluePrintFactory().scrollComposite();
 	}
 
-	public static ICompositeBluePrint bluePrint(final ILayoutDescriptor layout) {
+	public static IScrollCompositeBluePrint bluePrint(final ILayoutDescriptor layout) {
 		Assert.paramNotNull(layout, "layout");
 		return bluePrint().setLayout(layout);
 	}
 
-	public static ICompositeBluePrint bluePrint(final String borderTitle) {
+	public static IScrollCompositeBluePrint bluePrint(final String borderTitle) {
 		return bluePrint().setBorder(new Border(borderTitle));
 	}
 
-	public static ICompositeBluePrint bluePrint(final boolean border) {
-		return border ? Toolkit.getBluePrintFactory().compositeWithBorder() : bluePrint();
+	public static IScrollCompositeBluePrint bluePrint(final boolean border) {
+		return border ? Toolkit.getBluePrintFactory().scrollCompositeWithBorder() : bluePrint();
 	}
 
 }
