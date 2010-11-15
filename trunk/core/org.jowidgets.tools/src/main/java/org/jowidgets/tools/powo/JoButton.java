@@ -52,7 +52,11 @@ public class JoButton extends ChildWidget<IButtonWidget, IButtonBluePrint> imple
 	}
 
 	public JoButton(final String text) {
-		this(Toolkit.getBluePrintFactory().button().setText(text));
+		this(bluePrint(text));
+	}
+
+	public JoButton(final String text, final String tooltipText) {
+		this(bluePrint(text, tooltipText));
 	}
 
 	public JoButton(final IButtonDescriptor descriptor) {
@@ -150,6 +154,10 @@ public class JoButton extends ChildWidget<IButtonWidget, IButtonBluePrint> imple
 
 	public static IButtonBluePrint bluePrint(final String text) {
 		return Toolkit.getBluePrintFactory().button().setText(text);
+	}
+
+	public static IButtonBluePrint bluePrint(final String text, final String tooltipText) {
+		return Toolkit.getBluePrintFactory().button().setText(text).setToolTipText(tooltipText);
 	}
 
 }

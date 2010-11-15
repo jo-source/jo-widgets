@@ -35,6 +35,7 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
+import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.application.IApplication;
@@ -51,6 +52,7 @@ import org.jowidgets.tools.powo.JoComposite;
 import org.jowidgets.tools.powo.JoDialog;
 import org.jowidgets.tools.powo.JoFrame;
 import org.jowidgets.tools.powo.JoIcon;
+import org.jowidgets.tools.powo.JoMessageDialog;
 import org.jowidgets.tools.powo.JoProgressBar;
 import org.jowidgets.tools.powo.JoScrollComposite;
 import org.jowidgets.tools.powo.JoSplitComposite;
@@ -93,7 +95,7 @@ public class PowoDemoApplication implements IApplication {
 
 		//headless creation of composite2
 		final JoComposite composite2 = new JoComposite(bpF.composite("Test"));
-		composite2.setLayout(new MigLayoutDescriptor("[][grow]", "[][][][]"));
+		composite2.setLayout(new MigLayoutDescriptor("[][grow]", "[][][][][]"));
 		composite2.add(new JoIcon(IconsSmall.INFO), "");
 		composite2.add(JoTextLabel.bluePrint("Test6"), "wrap");
 		composite2.add(new JoIcon(IconsSmall.INFO), "");
@@ -104,19 +106,31 @@ public class PowoDemoApplication implements IApplication {
 		composite2.add(progressBar, "growx, wrap");
 		progressBar.setProgress(35);
 
-		final JoButton button = new JoButton("open dialog");
-		composite2.add(button, "grow, span2");
+		final JoButton button1 = new JoButton("open dialog");
+		composite2.add(button1, "grow, span2, wrap");
+
+		final JoButton button2 = new JoButton("show message", "shows an message dialog");
+		composite2.add(button2, "grow, span2, wrap");
 
 		//here composite2 becomes initialized
 		frame.add(composite2, "growx, growy");
 
 		frame.setVisible(true);
 
-		button.addActionListener(new IActionListener() {
-
+		button1.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
 				dialog.setVisible(true);
+			}
+		});
+
+		button2.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final IMessageDialogBluePrint bp = JoMessageDialog.bluePrintInfo();
+				bp.setTitle("Title for my message");
+				bp.setText("This is my message!\nI hope you like it very much!");
+				new JoMessageDialog(frame, bp).showMessage();
 			}
 		});
 	}
