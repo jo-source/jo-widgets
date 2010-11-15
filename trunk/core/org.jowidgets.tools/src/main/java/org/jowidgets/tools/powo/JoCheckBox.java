@@ -26,65 +26,80 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.basic;
+package org.jowidgets.tools.powo;
 
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.ICheckBoxWidget;
-import org.jowidgets.api.widgets.descriptor.setup.ICheckBoxSetup;
+import org.jowidgets.api.widgets.blueprint.ICheckBoxBluePrint;
+import org.jowidgets.api.widgets.descriptor.ICheckBoxDescriptor;
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.widgets.IWidget;
-import org.jowidgets.impl.widgets.common.wrapper.TextLabelWidgetCommonWrapper;
-import org.jowidgets.spi.widgets.ICheckBoxWidgetSpi;
-import org.jowidgets.util.Assert;
 
-public class CheckBoxWidget extends AbstractBasicInputWidget<Boolean> implements ICheckBoxWidget {
+public class JoCheckBox extends InputWidget<ICheckBoxWidget, ICheckBoxBluePrint, Boolean> implements ICheckBoxWidget {
 
-	private final ICheckBoxWidgetSpi checkBoxWidgetSpi;
-	private final TextLabelWidgetCommonWrapper textLabelWidgetCommonWrapper;
+	public JoCheckBox(final String text) {
+		super(Toolkit.getBluePrintFactory().checkBox().setText(text));
+	}
 
-	public CheckBoxWidget(final IWidget parent, final ICheckBoxWidgetSpi checkBoxWidgetSpi, final ICheckBoxSetup setup) {
-		super(parent, checkBoxWidgetSpi, setup);
-		this.checkBoxWidgetSpi = checkBoxWidgetSpi;
-		this.textLabelWidgetCommonWrapper = new TextLabelWidgetCommonWrapper(checkBoxWidgetSpi);
+	public JoCheckBox(final ICheckBoxDescriptor descriptor) {
+		super(Toolkit.getBluePrintFactory().checkBox().setSetup(descriptor));
+	}
 
-		if (setup.getValue() != null) {
-			setValue(setup.getValue());
+	@Override
+	public void setMarkup(final Markup markup) {
+		if (isInitialized()) {
+			getWidget().setMarkup(markup);
+		}
+		else {
+			getBluePrint().setMarkup(markup);
+		}
+	}
+
+	@Override
+	public void setText(final String text) {
+		if (isInitialized()) {
+			getWidget().setText(text);
+		}
+		else {
+			getBluePrint().setText(text);
+		}
+	}
+
+	@Override
+	public void setToolTipText(final String text) {
+		if (isInitialized()) {
+			getWidget().setToolTipText(text);
+		}
+		else {
+			getBluePrint().setToolTipText(text);
 		}
 	}
 
 	@Override
 	public boolean isSelected() {
-		return checkBoxWidgetSpi.isSelected();
+		if (isInitialized()) {
+			return getWidget().isSelected();
+		}
+		else {
+			return getBluePrint().getInitialState();
+		}
 	}
 
 	@Override
 	public void setSelected(final boolean selected) {
-		checkBoxWidgetSpi.setSelected(selected);
+		if (isInitialized()) {
+			getWidget().setSelected(selected);
+		}
+		else {
+			getBluePrint().setInitialState(selected);
+		}
 	}
 
-	@Override
-	public void setValue(final Boolean value) {
-		Assert.paramNotNull(value, "value");
-		setSelected(value.booleanValue());
+	public static ICheckBoxBluePrint bluePrint() {
+		return Toolkit.getBluePrintFactory().checkBox();
 	}
 
-	@Override
-	public Boolean getValue() {
-		return Boolean.valueOf(isSelected());
-	}
-
-	@Override
-	public void setMarkup(final Markup markup) {
-		textLabelWidgetCommonWrapper.setMarkup(markup);
-	}
-
-	@Override
-	public void setText(final String text) {
-		textLabelWidgetCommonWrapper.setText(text);
-	}
-
-	@Override
-	public void setToolTipText(final String text) {
-		textLabelWidgetCommonWrapper.setToolTipText(text);
+	public static ICheckBoxBluePrint bluePrint(final String text) {
+		return Toolkit.getBluePrintFactory().checkBox().setText(text);
 	}
 
 }

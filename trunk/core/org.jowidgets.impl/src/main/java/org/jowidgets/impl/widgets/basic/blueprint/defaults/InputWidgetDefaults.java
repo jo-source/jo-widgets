@@ -38,6 +38,7 @@ public class InputWidgetDefaults implements IDefaultInitializer<IInputWidgetSetu
 	public void initialize(final IInputWidgetSetupBuilder<?, ?> builder) {
 		builder.setValidator(new OkValidator());
 		builder.setMandatory(false);
+		builder.setEditable(true);
 	}
 
 }

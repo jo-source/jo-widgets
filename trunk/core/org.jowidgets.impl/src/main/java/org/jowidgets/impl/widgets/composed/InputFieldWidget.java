@@ -42,7 +42,7 @@ public class InputFieldWidget<VALUE_TYPE> extends AbstractComposedInputWidget<VA
 
 	public InputFieldWidget(final IInputWidget<String> textFieldWidget, final IInputFieldSetup<VALUE_TYPE> setup) {
 
-		super(setup.getValidator(), setup.isMandatory());
+		super(setup.getValidator(), setup.isMandatory(), setup.isEditable());
 
 		this.textFieldWidget = textFieldWidget;
 		this.converter = setup.getConverter();
@@ -51,6 +51,10 @@ public class InputFieldWidget<VALUE_TYPE> extends AbstractComposedInputWidget<VA
 
 		ColorSettingsInvoker.setColors(setup, this);
 		VisibiliySettingsInvoker.setVisibility(setup, this);
+
+		if (setup.getValue() != null) {
+			setValue(setup.getValue());
+		}
 	}
 
 	@Override

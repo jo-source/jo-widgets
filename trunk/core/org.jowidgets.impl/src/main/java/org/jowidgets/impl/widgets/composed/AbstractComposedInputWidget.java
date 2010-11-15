@@ -47,12 +47,12 @@ public abstract class AbstractComposedInputWidget<VALUE_TYPE> extends AbstractIn
 
 	private final IInputListener subWidgetListener;
 
-	public AbstractComposedInputWidget(final boolean mandatory) {
-		this(null, mandatory);
+	public AbstractComposedInputWidget(final boolean mandatory, final boolean editable) {
+		this(null, mandatory, editable);
 	}
 
-	public AbstractComposedInputWidget(final IValidator<VALUE_TYPE> validator, final boolean mandatory) {
-		super(validator, mandatory);
+	public AbstractComposedInputWidget(final IValidator<VALUE_TYPE> validator, final boolean mandatory, final boolean editable) {
+		super(validator, mandatory, editable);
 
 		this.contextMap = new HashMap<IInputWidget<?>, String>();
 		this.subWidgets = new LinkedList<IInputWidget<?>>();

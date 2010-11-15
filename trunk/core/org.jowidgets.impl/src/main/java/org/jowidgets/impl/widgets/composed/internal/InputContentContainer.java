@@ -55,7 +55,7 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractComposedInputWidg
 		final IInputContentCreator<INPUT_TYPE> content,
 		final boolean scrollableContent,
 		final Border border) {
-		super(content.isMandatory());
+		super(content.isMandatory(), true);
 
 		final BluePrintFactory bpF = new BluePrintFactory();
 

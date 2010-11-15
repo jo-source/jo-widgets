@@ -37,6 +37,11 @@ public interface IInputWidgetSetup<INPUT_TYPE> extends IWidgetSetupCommon {
 	boolean isMandatory();
 
 	@Mandatory
+	boolean isEditable();
+
+	@Mandatory
 	IValidator<INPUT_TYPE> getValidator();
+
+	INPUT_TYPE getValue();
 
 }

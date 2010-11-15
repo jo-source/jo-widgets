@@ -49,13 +49,14 @@ public class InputWidgetDelegate<VALUE_TYPE> extends InputObservable {
 	private boolean mandatory;
 
 	public InputWidgetDelegate(final IInputValueAccessor<VALUE_TYPE> valueAccessor, final IInputWidgetSetup<VALUE_TYPE> setup) {
-		this(valueAccessor, setup.getValidator(), setup.isMandatory());
+		this(valueAccessor, setup.getValidator(), setup.isMandatory(), setup.isEditable());
 	}
 
 	public InputWidgetDelegate(
 		final IInputValueAccessor<VALUE_TYPE> valueAccessor,
 		final IValidator<VALUE_TYPE> validator,
-		final boolean mandatory) {
+		final boolean mandatory,
+		final boolean editable) {
 		Assert.paramNotNull(valueAccessor, "valueAccessor");
 
 		this.validators = new LinkedList<IValidator<VALUE_TYPE>>();

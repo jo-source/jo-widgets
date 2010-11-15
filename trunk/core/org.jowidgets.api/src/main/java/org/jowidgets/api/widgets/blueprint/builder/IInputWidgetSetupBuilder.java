@@ -35,6 +35,10 @@ public interface IInputWidgetSetupBuilder<INSTANCE_TYPE extends IInputWidgetSetu
 
 	INSTANCE_TYPE setMandatory(boolean mandatory);
 
+	INSTANCE_TYPE setEditable(final boolean editable);
+
 	INSTANCE_TYPE setValidator(IValidator<INPUT_TYPE> validator);
+
+	INSTANCE_TYPE setValue(INPUT_TYPE value);
 
 }

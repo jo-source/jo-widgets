@@ -63,6 +63,10 @@ public class ComboBoxSelectionWidget<VALUE_TYPE> extends AbstractBasicInputWidge
 		this.elementsView = Collections.unmodifiableList(this.elements);
 
 		setElements(setup.getElements());
+
+		if (setup.getValue() != null) {
+			setValue(setup.getValue());
+		}
 	}
 
 	@Override

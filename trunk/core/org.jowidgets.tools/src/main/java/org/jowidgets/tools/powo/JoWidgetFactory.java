@@ -29,6 +29,7 @@
 package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
+import org.jowidgets.api.widgets.descriptor.ICheckBoxDescriptor;
 import org.jowidgets.api.widgets.descriptor.ICompositeDescriptor;
 import org.jowidgets.api.widgets.descriptor.IIconDescriptor;
 import org.jowidgets.api.widgets.descriptor.ILabelDescriptor;
@@ -38,7 +39,7 @@ import org.jowidgets.api.widgets.descriptor.ITextLabelDescriptor;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.util.Assert;
 
-class WidgetFactory {
+class JoWidgetFactory {
 
 	@SuppressWarnings({"rawtypes"})
 	Widget create(final IWidgetDescriptor descriptor) {
@@ -47,6 +48,9 @@ class WidgetFactory {
 
 		if (descriptor instanceof IButtonDescriptor) {
 			return new JoButton((IButtonDescriptor) descriptor);
+		}
+		else if (descriptor instanceof ICheckBoxDescriptor) {
+			return new JoCheckBox((ICheckBoxDescriptor) descriptor);
 		}
 		else if (descriptor instanceof ICompositeDescriptor) {
 			return new JoComposite((ICompositeDescriptor) descriptor);

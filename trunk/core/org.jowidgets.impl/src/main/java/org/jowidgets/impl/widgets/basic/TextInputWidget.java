@@ -36,9 +36,16 @@ public class TextInputWidget extends AbstractBasicInputWidget<String> {
 
 	private final ITextInputWidgetSpi inputWidgetSpi;
 
-	public TextInputWidget(final IWidget parent, final ITextInputWidgetSpi textInputWidgetSpi, final IInputWidgetSetup<String> setup) {
+	public TextInputWidget(
+		final IWidget parent,
+		final ITextInputWidgetSpi textInputWidgetSpi,
+		final IInputWidgetSetup<String> setup) {
 		super(parent, textInputWidgetSpi, setup);
 		this.inputWidgetSpi = textInputWidgetSpi;
+
+		if (setup.getValue() != null) {
+			setValue(setup.getValue());
+		}
 	}
 
 	@Override

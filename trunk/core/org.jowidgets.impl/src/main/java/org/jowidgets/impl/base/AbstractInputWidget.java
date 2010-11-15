@@ -39,9 +39,9 @@ public abstract class AbstractInputWidget<VALUE_TYPE> extends InputObservable im
 
 	private final InputWidgetDelegate<VALUE_TYPE> inputWidgetDelegate;
 
-	public AbstractInputWidget(final IValidator<VALUE_TYPE> validator, final boolean mandatory) {
+	public AbstractInputWidget(final IValidator<VALUE_TYPE> validator, final boolean mandatory, final boolean editable) {
 		//this must be last statement
-		this.inputWidgetDelegate = new InputWidgetDelegate<VALUE_TYPE>(this, validator, mandatory);
+		this.inputWidgetDelegate = new InputWidgetDelegate<VALUE_TYPE>(this, validator, mandatory, editable);
 	}
 
 	@Override
