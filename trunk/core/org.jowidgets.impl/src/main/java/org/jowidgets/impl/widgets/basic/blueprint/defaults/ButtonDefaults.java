@@ -25,19 +25,16 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.widgets.common.blueprint.defaults;
+package org.jowidgets.impl.widgets.basic.blueprint.defaults;
 
+import org.jowidgets.api.widgets.blueprint.builder.IButtonSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
-import org.jowidgets.common.types.AlignmentHorizontal;
-import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.widgets.builder.IButtonSetupBuilderCommon;
 
-public class ButtonDefaultsCommon implements IDefaultInitializer<IButtonSetupBuilderCommon<?>> {
+public class ButtonDefaults implements IDefaultInitializer<IButtonSetupBuilder<?>> {
 
 	@Override
-	public void initialize(final IButtonSetupBuilderCommon<?> builder) {
-		builder.setAlignment(AlignmentHorizontal.CENTER);
-		builder.setMarkup(Markup.DEFAULT);
+	public void initialize(final IButtonSetupBuilder<?> builder) {
+		builder.setEnabled(true);
 	}
 
 }

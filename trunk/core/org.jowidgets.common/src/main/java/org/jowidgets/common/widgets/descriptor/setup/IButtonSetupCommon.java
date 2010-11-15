@@ -27,11 +27,7 @@
  */
 package org.jowidgets.common.widgets.descriptor.setup;
 
-import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface IButtonSetupCommon extends ITextLabelSetupCommon, IIconSetupCommon {
-
-	@Mandatory
-	boolean isEnabled();
 
 }

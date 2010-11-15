@@ -27,10 +27,7 @@
  */
 package org.jowidgets.common.widgets.builder;
 
-
 public interface IButtonSetupBuilderCommon<INSTANCE_TYPE extends IButtonSetupBuilderCommon<?>> extends
 		ILabelSetupBuilderCommon<INSTANCE_TYPE> {
-
-	INSTANCE_TYPE setEnabled(boolean enabled);
 
 }

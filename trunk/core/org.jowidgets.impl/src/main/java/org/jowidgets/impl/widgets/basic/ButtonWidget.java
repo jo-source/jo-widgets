@@ -29,6 +29,7 @@
 package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.widgets.IButtonWidget;
+import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
 import org.jowidgets.impl.widgets.common.wrapper.ButtonWidgetCommonWrapper;
@@ -38,9 +39,10 @@ public class ButtonWidget extends ButtonWidgetCommonWrapper implements IButtonWi
 
 	private final ChildWidgetDelegate childWidgetDelegate;
 
-	public ButtonWidget(final IWidget parent, final IButtonWidgetSpi buttonWidgetSpi) {
+	public ButtonWidget(final IWidget parent, final IButtonWidgetSpi buttonWidgetSpi, final IButtonDescriptor descriptor) {
 		super(buttonWidgetSpi);
 		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
+		setEnabled(descriptor.isEnabled());
 	}
 
 	@Override
