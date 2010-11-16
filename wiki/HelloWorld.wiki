@@ -33,7 +33,7 @@ public class HelloWorld implements IApplication {
 	
     public static void main(final String[] args) throws Exception {
         //start the application with an application runner
-        Toolkit.getInstance().getApplicationRunner().run(new HelloWorld());
+        Toolkit.getApplicationRunner().run(new HelloWorld());
     }
 
 }
