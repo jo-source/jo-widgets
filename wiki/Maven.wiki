@@ -23,16 +23,21 @@ You may have the folowing dependencies in your poms:
     <artifactId>org.jowidgets.tools</artifactId>
     <version>${jowidgets.version}</version>
 </dependency>
+
 <dependency>
     <groupId>org.jowidgets</groupId>
     <artifactId>org.jowidgets.impl</artifactId>
     <version>${jowidgets.version}</version>
 </dependency>
+
+<!-- use this dependency if you want to use the swing spi impl-->
 <dependency>
     <groupId>org.jowidgets</groupId>
     <artifactId>org.jowidgets.spi.impl.swing</artifactId>
     <version>${jowidgets.version}</version>
 </dependency>
+
+<!-- use this dependency if you want to use the swt spi impl-->
 <dependency>
     <groupId>org.jowidgets</groupId>
     <artifactId>org.jowidgets.spi.impl.swt</artifactId>
