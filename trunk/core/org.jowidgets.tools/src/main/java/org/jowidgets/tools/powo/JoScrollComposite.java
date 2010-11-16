@@ -39,7 +39,7 @@ import org.jowidgets.util.Assert;
 public class JoScrollComposite extends CompositeWidget<IScrollCompositeWidget, IScrollCompositeBluePrint> implements
 		IScrollCompositeWidget {
 
-	public JoScrollComposite(final IScrollCompositeWidget widget) {
+	JoScrollComposite(final IScrollCompositeWidget widget) {
 		this(bluePrint());
 		Assert.paramNotNull(widget, "widget");
 		initialize(widget);
@@ -55,6 +55,16 @@ public class JoScrollComposite extends CompositeWidget<IScrollCompositeWidget, I
 
 	public JoScrollComposite(final IScrollCompositeDescriptor descriptor) {
 		super(bluePrint().setSetup(descriptor));
+	}
+
+	public static JoScrollComposite toJoScrollComposite(final IScrollCompositeWidget widget) {
+		Assert.paramNotNull(widget, "widget");
+		if (widget instanceof JoScrollComposite) {
+			return (JoScrollComposite) widget;
+		}
+		else {
+			return new JoScrollComposite(widget);
+		}
 	}
 
 	public static IScrollCompositeBluePrint bluePrint() {

@@ -38,7 +38,7 @@ import org.jowidgets.util.Assert;
 
 public class JoComposite extends CompositeWidget<ICompositeWidget, ICompositeBluePrint> implements ICompositeWidget {
 
-	public JoComposite(final ICompositeWidget widget) {
+	JoComposite(final ICompositeWidget widget) {
 		this(bluePrint());
 		Assert.paramNotNull(widget, "widget");
 		initialize(widget);
@@ -62,6 +62,16 @@ public class JoComposite extends CompositeWidget<ICompositeWidget, ICompositeBlu
 
 	public JoComposite(final ICompositeDescriptor descriptor) {
 		super(bluePrint().setSetup(descriptor));
+	}
+
+	public static JoComposite toJoComposite(final ICompositeWidget widget) {
+		Assert.paramNotNull(widget, "widget");
+		if (widget instanceof JoComposite) {
+			return (JoComposite) widget;
+		}
+		else {
+			return new JoComposite(widget);
+		}
 	}
 
 	public static ICompositeBluePrint bluePrint() {

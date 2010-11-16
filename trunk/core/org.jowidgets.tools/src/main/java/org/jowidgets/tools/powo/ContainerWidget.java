@@ -32,6 +32,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.api.widgets.blueprint.builder.IContainerSetupBuilder;
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.IContainerWidgetCommon;
 import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
@@ -65,20 +66,51 @@ class ContainerWidget<WIDGET_TYPE extends IContainerWidgetCommon, BLUE_PRINT_TYP
 		}
 	}
 
-	public final void add(final Widget<?, ?> widget) {
-		add(widget, "");
+	public final <P_WIDGET_TYPE extends Widget<?, ?>> P_WIDGET_TYPE add(final P_WIDGET_TYPE widget) {
+		return add(widget, "");
 	}
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
-	public final void add(final Widget<?, ?> widget, final Object layoutConstraints) {
+	public final <P_WIDGET_TYPE extends Widget<?, ?>> P_WIDGET_TYPE add(final P_WIDGET_TYPE widget, final Object layoutConstraints) {
 		if (isInitialized()) {
 			final IWidget newWidget = getWidget().add(widget.getDescriptor(), layoutConstraints);
 			final Widget rawWidget = widget;
 			rawWidget.initialize(newWidget);
+			return widget;
 		}
 		else {
 			preWidgets.add(new Tuple<Widget, Object>(widget, layoutConstraints));
+			return widget;
 		}
+	}
+
+	public final JoLabel addLabel(final String text) {
+		final JoLabel label = new JoLabel(text);
+		add(label);
+		return label;
+	}
+
+	public final JoLabel addLabel(final String text, final Object layoutConstraints) {
+		final JoLabel label = new JoLabel(text);
+		add(label, layoutConstraints);
+		return label;
+	}
+
+	public final JoLabel addLabel(final String text, final String tooltipText, final Object layoutConstraints) {
+		final JoLabel label = new JoLabel(text, tooltipText);
+		add(label, layoutConstraints);
+		return label;
+	}
+
+	public final JoLabel addLabel(
+		final IImageConstant icon,
+		final String text,
+		final String tooltipText,
+		final Object layoutConstraints) {
+
+		final JoLabel label = new JoLabel(icon, text, tooltipText);
+		add(label, layoutConstraints);
+		return label;
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
