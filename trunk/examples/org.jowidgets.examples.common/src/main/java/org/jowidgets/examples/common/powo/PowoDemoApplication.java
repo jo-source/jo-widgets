@@ -171,7 +171,6 @@ public class PowoDemoApplication implements IApplication {
 	}
 
 	private JoScrollComposite createFirstSplit() {
-
 		final JoScrollComposite result = new JoScrollComposite(new MigLayoutDescriptor("[][grow]", "[][][]"));
 		result.addLabel("String input");
 		result.add(JoInputField.inputFieldString(), "growx, wrap");
