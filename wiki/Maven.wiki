@@ -1,6 +1,10 @@
 If you use maven, you must add the following part to your pom.xml
 
 {{{ 
+<properties>
+    <jowidgets.version>0.0.2</jowidgets.version>
+</properties>
+
 <repositories>
     <repository>
 	<id>jowidgets</id>
