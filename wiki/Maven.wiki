@@ -1,4 +1,4 @@
-If you use maven, you must add the following part to your pom.xml
+If you use maven, you must add the jowidgets maven repo to your pom.xml
 
 {{{ 
 <properties>
