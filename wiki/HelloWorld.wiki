@@ -1,9 +1,6 @@
-#Hello World example for swing
-
+#Hello World example 
 {{{
 package org.jowidgets.examples.common;
-
-import javax.swing.UIManager;
 
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.application.IApplication;
@@ -19,7 +16,7 @@ public class HelloWorld implements IApplication {
         //create a new (root) frame
         final JoFrame frame = new JoFrame("Hello World");
  
-        //add a label to the frames container
+        //add a label to the frame 
         frame.addLabel("Hello World");
 
         //finish the application on window closing
@@ -35,11 +32,7 @@ public class HelloWorld implements IApplication {
     }
 	
     public static void main(final String[] args) throws Exception {
-        //this will be done in an swing environment only
-	UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-
-        //start the application with an application runner, this works 
-        //similar´for swt 
+        //start the application with an application runner
         Toolkit.getInstance().getApplicationRunner().run(new HelloWorld());
     }
 
