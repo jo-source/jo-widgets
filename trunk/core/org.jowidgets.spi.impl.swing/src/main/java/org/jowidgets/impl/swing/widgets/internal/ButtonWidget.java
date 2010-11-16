@@ -27,6 +27,7 @@
  */
 package org.jowidgets.impl.swing.widgets.internal;
 
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -54,6 +55,9 @@ public class ButtonWidget extends AbstractSwingActionWidget implements IButtonWi
 		setIcon(setup.getIcon());
 
 		setMarkup(setup.getMarkup());
+
+		final Insets insets = getUiReference().getInsets();
+		getUiReference().setMargin(new Insets(insets.top, insets.bottom, insets.bottom, insets.bottom));
 
 		getUiReference().setHorizontalAlignment(AlignmentConvert.convert(setup.getAlignment()));
 
