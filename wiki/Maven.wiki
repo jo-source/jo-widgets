@@ -1,0 +1,16 @@
+If you use maven, you can add the following part to your pom.xml
+
+{{{ 
+<repositories>
+    <repository>
+	<id>jowidgets</id>
+			<url>http://jowidgets.org/maven2/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+}}}
