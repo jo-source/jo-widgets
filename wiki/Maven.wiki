@@ -1,10 +1,6 @@
 If you use maven, you must add the jowidgets maven repo to your pom.xml
 
 {{{ 
-<properties>
-    <jowidgets.version>0.0.2</jowidgets.version>
-</properties>
-
 <repositories>
     <repository>
 	<id>jowidgets</id>
@@ -22,6 +18,10 @@ If you use maven, you must add the jowidgets maven repo to your pom.xml
 You may have the folowing dependencies in your poms:
 
 {{{
+<properties>
+    <jowidgets.version>0.0.2</jowidgets.version>
+</properties>
+
 <dependency>
     <groupId>org.jowidgets</groupId>
     <artifactId>org.jowidgets.tools</artifactId>
