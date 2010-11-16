@@ -1,0 +1,47 @@
+#Hello World example for swing
+
+{{{
+package org.jowidgets.examples.common;
+
+import javax.swing.UIManager;
+
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.common.application.IApplication;
+import org.jowidgets.common.application.IApplicationLifecycle;
+import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
+import org.jowidgets.tools.powo.JoFrame;
+
+public class HelloWorld implements IApplication {
+
+    @Override
+    public void start(final IApplicationLifecycle lifecycle) {
+
+        //create a new (root) frame
+        final JoFrame frame = new JoFrame("Hello World");
+ 
+        //add a label to the frames container
+        frame.addLabel("Hello World");
+
+        //finish the application on window closing
+	frame.addWindowListener(new WindowAdapter() {
+	    @Override
+	    public void windowClosed() {
+		lifecycle.finish();
+	    }
+	});
+
+        //set the root frame visible
+	frame.setVisible(true);
+    }
+	
+    public static void main(final String[] args) throws Exception {
+        //this will be done in an swing environment only
+	UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+
+        //start the application with an application runner, this works 
+        //similar´for swt 
+        Toolkit.getInstance().getApplicationRunner().run(new HelloWorld());
+    }
+
+}
+}}}
