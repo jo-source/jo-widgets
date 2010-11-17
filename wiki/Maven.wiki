@@ -15,7 +15,7 @@ If you use maven, you must add the jowidgets maven repo to your pom.xml
 </repositories>
 }}}
 
-You may have the folowing dependencies in your poms:
+You may have the following dependencies in your poms:
 
 {{{
 <properties>
