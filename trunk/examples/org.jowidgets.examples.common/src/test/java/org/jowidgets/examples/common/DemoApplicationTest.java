@@ -26,51 +26,33 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.demo;
+package org.jowidgets.examples.common;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IFrameWidget;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
-import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.examples.common.demo.DemoApplication;
+import org.junit.Assert;
+import org.junit.Test;
 
-public class DemoApplication implements IApplication {
+public class DemoApplicationTest {
 
-	private final String frameTitle;
-	private IFrameWidget frame;
+	@Test
+	public void testApplication() {
+		Toolkit.getApplicationRunner().run(new IApplication() {
 
-	public DemoApplication(final String frameTitle) {
-		super();
-		this.frameTitle = frameTitle;
-	}
-
-	public void start() {
-		Toolkit.getInstance().getApplicationRunner().run(this);
-	}
-
-	@Override
-	public void start(final IApplicationLifecycle lifecycle) {
-		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
-		final IGenericWidgetFactory widgetFactory = Toolkit.getWidgetFactory();
-
-		frame = widgetFactory.create(bpF.frame(frameTitle));
-		new DemoMainComposite(frame);
-
-		frame.addWindowListener(new WindowAdapter() {
 			@Override
-			public void windowClosed() {
-				lifecycle.finish();
+			public void start(final IApplicationLifecycle lifecycle) {
+
+				final DemoApplication testApplication = new DemoApplication("Demo application test");
+				testApplication.start(lifecycle);
+				Assert.assertTrue(testApplication.getRootFrame().isVisible());
+
+				testApplication.getRootFrame().close();
+
 			}
 		});
 
-		frame.setVisible(true);
-
-	}
-
-	public IFrameWidget getRootFrame() {
-		return frame;
 	}
 
 }

@@ -153,4 +153,9 @@ public class HelloWidgetApplication implements IApplication {
 
 		return dialog;
 	}
+
+	public IFrameWidget getRootFrame() {
+		return rootFrame;
+	}
+
 }

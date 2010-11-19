@@ -67,6 +67,7 @@ import org.jowidgets.tools.powo.JoToggleButton;
 public class PowoDemoApplication implements IApplication {
 
 	private final String frameTitle;
+	private JoFrame frame;
 
 	public PowoDemoApplication(final String frameTitle) {
 		super();
@@ -81,7 +82,7 @@ public class PowoDemoApplication implements IApplication {
 	public void start(final IApplicationLifecycle lifecycle) {
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 
-		final JoFrame frame = new JoFrame(frameTitle);
+		frame = new JoFrame(frameTitle);
 		final JoDialog dialog = createDialog(frame);
 
 		frame.addWindowListener(new WindowAdapter() {
@@ -216,6 +217,10 @@ public class PowoDemoApplication implements IApplication {
 
 		result.add(new JoToggleButton("Toggle me"), "growx, wrap");
 		return result;
+	}
+
+	public JoFrame getRootFrame() {
+		return frame;
 	}
 
 }
