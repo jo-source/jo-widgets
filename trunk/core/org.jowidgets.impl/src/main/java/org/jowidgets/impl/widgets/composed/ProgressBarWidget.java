@@ -33,7 +33,7 @@ import org.jowidgets.api.widgets.descriptor.setup.IProgressBarSetup;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Orientation;
 import org.jowidgets.common.util.ColorSettingsInvoker;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
@@ -94,7 +94,7 @@ public class ProgressBarWidget implements IProgressBarWidget {
 
 			@Override
 			public IProgressBarWidgetSpi create(
-				final IWidget parent,
+				final IWidgetCommon parent,
 				final IWidgetFactory<IProgressBarWidgetSpi, IWidgetDescriptor<? extends IProgressBarWidgetSpi>> widgetFactory) {
 				return widgetsFactorySpi.createProgressBar(compositeWidget, intermediateProgressBarBp);
 			}
@@ -104,7 +104,7 @@ public class ProgressBarWidget implements IProgressBarWidget {
 
 			@Override
 			public IProgressBarWidgetSpi create(
-				final IWidget parent,
+				final IWidgetCommon parent,
 				final IWidgetFactory<IProgressBarWidgetSpi, IWidgetDescriptor<? extends IProgressBarWidgetSpi>> widgetFactory) {
 				return widgetsFactorySpi.createProgressBar(compositeWidget, progressBarBp);
 			}
@@ -126,7 +126,7 @@ public class ProgressBarWidget implements IProgressBarWidget {
 	}
 
 	@Override
-	public IWidget getParent() {
+	public IWidgetCommon getParent() {
 		return compositeWidget.getParent();
 	}
 

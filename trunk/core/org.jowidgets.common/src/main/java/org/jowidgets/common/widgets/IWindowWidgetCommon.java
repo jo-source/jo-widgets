@@ -33,7 +33,7 @@ import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.controler.IWindowObservable;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-public interface IWindowWidgetCommon extends IWidget, IWindowObservable {
+public interface IWindowWidgetCommon extends IWidgetCommon, IWindowObservable {
 
 	void setPosition(Position position);
 
@@ -53,7 +53,7 @@ public interface IWindowWidgetCommon extends IWidget, IWindowObservable {
 
 	void close();
 
-	<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
+	<WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
 		final DESCRIPTOR_TYPE descriptor);
 
 }

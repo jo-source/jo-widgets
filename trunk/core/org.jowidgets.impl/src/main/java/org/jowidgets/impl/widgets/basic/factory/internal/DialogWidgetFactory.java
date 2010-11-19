@@ -28,9 +28,9 @@
 
 package org.jowidgets.impl.widgets.basic.factory.internal;
 
-import org.jowidgets.api.widgets.IDialogWidget;
+import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.descriptor.IDialogDescriptor;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
@@ -39,7 +39,7 @@ import org.jowidgets.impl.widgets.basic.DialogWidget;
 import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.widgets.IFrameWidgetSpi;
 
-public class DialogWidgetFactory extends AbstractWidgetFactory implements IWidgetFactory<IDialogWidget, IDialogDescriptor> {
+public class DialogWidgetFactory extends AbstractWidgetFactory implements IWidgetFactory<IFrameWidget, IDialogDescriptor> {
 
 	public DialogWidgetFactory(
 		final IGenericWidgetFactory genericWidgetFactory,
@@ -50,7 +50,7 @@ public class DialogWidgetFactory extends AbstractWidgetFactory implements IWidge
 	}
 
 	@Override
-	public IDialogWidget create(final IWidget parent, final IDialogDescriptor descriptor) {
+	public IFrameWidget create(final IWidgetCommon parent, final IDialogDescriptor descriptor) {
 		final IDialogBluePrintSpi bp = getSpiBluePrintFactory().dialog().setSetup(descriptor);
 		final IFrameWidgetSpi frameSpi = getSpiWidgetFactory().createDialogWidget(getGenericWidgetFactory(), parent, bp);
 		return new DialogWidget(parent, frameSpi, descriptor);

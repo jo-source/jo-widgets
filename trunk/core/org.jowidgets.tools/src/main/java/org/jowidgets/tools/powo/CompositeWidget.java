@@ -30,7 +30,7 @@ package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.widgets.ICompositeWidget;
 import org.jowidgets.api.widgets.blueprint.builder.ICompositeSetupBuilder;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 class CompositeWidget<WIDGET_TYPE extends ICompositeWidget, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & ICompositeSetupBuilder<?>> extends
@@ -41,7 +41,7 @@ class CompositeWidget<WIDGET_TYPE extends ICompositeWidget, BLUE_PRINT_TYPE exte
 	}
 
 	@Override
-	public final IWidget getParent() {
+	public final IWidgetCommon getParent() {
 		checkInitialized();
 		return getWidget().getParent();
 	}

@@ -35,7 +35,7 @@ import org.jowidgets.common.widgets.IInputWidgetCommon;
 public interface IInputWidget<VALUE_TYPE> extends
 		IInputWidgetCommon,
 		IInputValueAccessor<VALUE_TYPE>,
-		IChildWidget,
+		IWidget,
 		IValidateable {
 
 	boolean isEmpty();

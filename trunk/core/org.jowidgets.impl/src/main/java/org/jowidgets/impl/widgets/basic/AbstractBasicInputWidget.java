@@ -34,7 +34,7 @@ import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IInputWidgetSetup;
 import org.jowidgets.common.widgets.IInputWidgetCommon;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
 import org.jowidgets.impl.base.delegate.InputWidgetDelegate;
 import org.jowidgets.impl.widgets.common.wrapper.InputWidgetCommonWrapper;
@@ -45,7 +45,7 @@ public abstract class AbstractBasicInputWidget<VALUE_TYPE> extends InputWidgetCo
 	private final InputWidgetDelegate<VALUE_TYPE> inputWidgetDelegate;
 
 	public AbstractBasicInputWidget(
-		final IWidget parent,
+		final IWidgetCommon parent,
 		final IInputWidgetCommon inputWidgetCommon,
 		final IInputWidgetSetup<VALUE_TYPE> setup) {
 		super(inputWidgetCommon);
@@ -57,7 +57,7 @@ public abstract class AbstractBasicInputWidget<VALUE_TYPE> extends InputWidgetCo
 	}
 
 	@Override
-	public final IWidget getParent() {
+	public final IWidgetCommon getParent() {
 		return childWidgetDelegate.getParent();
 	}
 

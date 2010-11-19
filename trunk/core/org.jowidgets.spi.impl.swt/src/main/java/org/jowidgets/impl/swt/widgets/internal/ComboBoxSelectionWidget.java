@@ -33,7 +33,7 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.common.util.ColorSettingsInvoker;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.spi.widgets.IComboBoxSelectionWidgetSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
@@ -41,7 +41,7 @@ import org.jowidgets.util.Assert;
 
 public class ComboBoxSelectionWidget extends AbstractSwtInputWidget implements IComboBoxSelectionWidgetSpi {
 
-	public ComboBoxSelectionWidget(final IWidget parent, final IColorCache colorCache, final IComboBoxSelectionSetupSpi setup) {
+	public ComboBoxSelectionWidget(final IWidgetCommon parent, final IColorCache colorCache, final IComboBoxSelectionSetupSpi setup) {
 		this(colorCache, new Combo((Composite) parent.getUiReference(), SWT.NONE | SWT.READ_ONLY), setup);
 	}
 

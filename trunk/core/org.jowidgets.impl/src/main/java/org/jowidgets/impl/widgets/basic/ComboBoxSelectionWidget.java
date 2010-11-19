@@ -37,7 +37,7 @@ import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.types.AutoSelectionPolicy;
 import org.jowidgets.api.widgets.IComboBoxWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IComboBoxSelectionSetup;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.spi.widgets.IComboBoxSelectionWidgetSpi;
 import org.jowidgets.util.Assert;
@@ -53,7 +53,7 @@ public class ComboBoxSelectionWidget<VALUE_TYPE> extends AbstractBasicInputWidge
 	private final AutoSelectionPolicy autoSelectionPolicy;
 
 	public ComboBoxSelectionWidget(
-		final IWidget parent,
+		final IWidgetCommon parent,
 		final IComboBoxSelectionWidgetSpi comboBoxSelectionWidgetSpi,
 		final IComboBoxSelectionSetup<VALUE_TYPE> setup) {
 		super(parent, comboBoxSelectionWidgetSpi, setup);

@@ -31,14 +31,14 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import org.jowidgets.common.util.ColorSettingsInvoker;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.swing.widgets.internal.util.InputModifierDocument;
 import org.jowidgets.spi.verify.IInputVerifier;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 
 public class TextFieldWidget extends AbstractSwingTextInputWidget {
 
-	public TextFieldWidget(final IWidget parent, final ITextFieldSetupSpi setup) {
+	public TextFieldWidget(final IWidgetCommon parent, final ITextFieldSetupSpi setup) {
 		super(setup.isPasswordPresentation() ? new JPasswordField() : new JTextField());
 
 		final IInputVerifier inputModifier = setup.getInputVerifier();

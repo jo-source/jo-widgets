@@ -36,7 +36,7 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.ITextLabelWidgetCommon;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 import org.jowidgets.util.Assert;
@@ -93,7 +93,7 @@ public class TextSeparatorWidget implements ITextLabelWidget {
 	}
 
 	@Override
-	public IWidget getParent() {
+	public IWidgetCommon getParent() {
 		return compositeWidget.getParent();
 	}
 

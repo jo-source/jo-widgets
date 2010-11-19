@@ -29,7 +29,7 @@
 package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.widgets.descriptor.setup.IInputWidgetSetup;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.spi.widgets.ITextInputWidgetSpi;
 
@@ -38,7 +38,7 @@ public class TextInputWidget extends AbstractBasicInputWidget<String> {
 	private final ITextInputWidgetSpi inputWidgetSpi;
 
 	public TextInputWidget(
-		final IWidget parent,
+		final IWidgetCommon parent,
 		final ITextInputWidgetSpi textInputWidgetSpi,
 		final IInputWidgetSetup<String> setup) {
 		super(parent, textInputWidgetSpi, setup);

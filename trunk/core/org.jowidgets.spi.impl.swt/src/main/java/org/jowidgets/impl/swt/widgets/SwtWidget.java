@@ -31,10 +31,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.swt.color.IColorCache;
 
-public class SwtWidget implements IWidget {
+public class SwtWidget implements IWidgetCommon {
 
 	private final IColorCache colorCache;
 	private final Control control;

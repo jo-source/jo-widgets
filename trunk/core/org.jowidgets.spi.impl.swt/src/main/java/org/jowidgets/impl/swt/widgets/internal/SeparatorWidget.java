@@ -31,7 +31,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.jowidgets.common.util.ColorSettingsInvoker;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.util.OrientationConvert;
 import org.jowidgets.impl.swt.widgets.SwtWidget;
@@ -40,7 +40,7 @@ import org.jowidgets.spi.widgets.setup.ISeparatorSetupSpi;
 
 public class SeparatorWidget extends SwtWidget implements IWidgetSpi {
 
-	public SeparatorWidget(final IColorCache colorCache, final IWidget parent, final ISeparatorSetupSpi setup) {
+	public SeparatorWidget(final IColorCache colorCache, final IWidgetCommon parent, final ISeparatorSetupSpi setup) {
 		super(colorCache, createSeparator(parent, setup));
 		ColorSettingsInvoker.setColors(setup, this);
 	}
@@ -50,7 +50,7 @@ public class SeparatorWidget extends SwtWidget implements IWidgetSpi {
 		return (Label) super.getUiReference();
 	}
 
-	private static Label createSeparator(final IWidget parent, final ISeparatorSetupSpi setup) {
+	private static Label createSeparator(final IWidgetCommon parent, final ISeparatorSetupSpi setup) {
 		final int orientation = OrientationConvert.convert(setup.getOrientation());
 		return new Label((Composite) parent.getUiReference(), SWT.SEPARATOR | orientation);
 	}

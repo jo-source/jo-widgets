@@ -34,7 +34,7 @@ import javax.swing.JScrollPane;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.util.ColorSettingsInvoker;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
@@ -103,14 +103,14 @@ public class ScrollCompositeWidget implements IScrollContainerWidgetSpi {
 	}
 
 	@Override
-	public final <WIDGET_TYPE extends IWidget> WIDGET_TYPE add(
+	public final <WIDGET_TYPE extends IWidgetCommon> WIDGET_TYPE add(
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object cellConstraints) {
 		return innerCompositeWidget.add(descriptor, cellConstraints);
 	}
 
 	@Override
-	public final <WIDGET_TYPE extends IWidget> WIDGET_TYPE add(
+	public final <WIDGET_TYPE extends IWidgetCommon> WIDGET_TYPE add(
 		final ICustomWidgetFactory<WIDGET_TYPE> factory,
 		final Object cellConstraints) {
 		return innerCompositeWidget.add(factory, cellConstraints);

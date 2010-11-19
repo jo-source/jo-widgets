@@ -28,23 +28,23 @@
 
 package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.api.widgets.IChildWidget;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
 import org.jowidgets.impl.widgets.common.wrapper.WidgetCommonWrapper;
 import org.jowidgets.spi.widgets.IWidgetSpi;
 
-public class ChildWidget extends WidgetCommonWrapper implements IChildWidget {
+public class ChildWidget extends WidgetCommonWrapper implements IWidget {
 
 	private final ChildWidgetDelegate childWidgetDelegate;
 
-	public ChildWidget(final IWidget parent, final IWidgetSpi widget) {
+	public ChildWidget(final IWidgetCommon parent, final IWidgetSpi widget) {
 		super(widget);
 		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
 	}
 
 	@Override
-	public IWidget getParent() {
+	public IWidgetCommon getParent() {
 		return childWidgetDelegate.getParent();
 	}
 

@@ -32,7 +32,7 @@ import java.awt.Window;
 import javax.swing.JDialog;
 
 import org.jowidgets.common.util.ColorSettingsInvoker;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.impl.swing.widgets.SwingWindowWidget;
@@ -44,7 +44,7 @@ public class DialogWidget extends SwingWindowWidget implements IFrameWidgetSpi {
 	public DialogWidget(
 		final IGenericWidgetFactory factory,
 		final SwingImageRegistry imageRegistry,
-		final IWidget parent,
+		final IWidgetCommon parent,
 		final IDialogSetupSpi setup) {
 		super(factory, new JDialog(parent == null ? null : (Window) parent.getUiReference()));
 

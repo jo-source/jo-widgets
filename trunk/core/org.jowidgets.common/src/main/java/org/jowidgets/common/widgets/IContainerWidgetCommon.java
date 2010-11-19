@@ -31,7 +31,7 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 
-public interface IContainerWidgetCommon extends IWidget {
+public interface IContainerWidgetCommon extends IWidgetCommon {
 
 	void setLayout(ILayoutDescriptor layoutDescriptor);
 
@@ -45,10 +45,10 @@ public interface IContainerWidgetCommon extends IWidget {
 	 */
 	void removeAll();
 
-	<WIDGET_TYPE extends IWidget> WIDGET_TYPE add(
+	<WIDGET_TYPE extends IWidgetCommon> WIDGET_TYPE add(
 		IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		Object layoutConstraints);
 
-	<WIDGET_TYPE extends IWidget> WIDGET_TYPE add(ICustomWidgetFactory<WIDGET_TYPE> factory, Object layoutConstraints);
+	<WIDGET_TYPE extends IWidgetCommon> WIDGET_TYPE add(ICustomWidgetFactory<WIDGET_TYPE> factory, Object layoutConstraints);
 
 }

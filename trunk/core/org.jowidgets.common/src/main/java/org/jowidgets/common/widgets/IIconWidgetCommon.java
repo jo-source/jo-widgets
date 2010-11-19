@@ -29,7 +29,7 @@ package org.jowidgets.common.widgets;
 
 import org.jowidgets.common.image.IImageConstant;
 
-public interface IIconWidgetCommon extends IWidget {
+public interface IIconWidgetCommon extends IWidgetCommon {
 
 	void setIcon(IImageConstant icon);
 

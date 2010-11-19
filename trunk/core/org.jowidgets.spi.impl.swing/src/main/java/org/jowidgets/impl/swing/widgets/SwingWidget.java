@@ -32,10 +32,10 @@ import java.awt.Component;
 import javax.swing.JComponent;
 
 import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.swing.util.ColorConvert;
 
-public class SwingWidget implements IWidget {
+public class SwingWidget implements IWidgetCommon {
 
 	private final Component component;
 

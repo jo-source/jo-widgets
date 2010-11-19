@@ -36,7 +36,7 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IContainerWidgetCommon;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.IWindowWidgetCommon;
 import org.jowidgets.common.widgets.controler.IWindowListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
@@ -45,9 +45,12 @@ import org.jowidgets.util.Assert;
 class WindowWidget<WIDGET_TYPE extends IWindowWidget & IContainerWidgetCommon, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IContainerSetupBuilder<BLUE_PRINT_TYPE> & IWindowSetupBuilder<BLUE_PRINT_TYPE>> extends
 		ContainerWidget<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IWindowWidget {
 
+	private final IWindowWidgetCommon parent;
+
 	WindowWidget(final BLUE_PRINT_TYPE bluePrint) {
 		super(bluePrint);
 		Assert.paramNotNull(bluePrint, "bluePrint");
+		this.parent = null;
 		initialize(Toolkit.getWidgetFactory().create(bluePrint));
 	}
 
@@ -55,11 +58,12 @@ class WindowWidget<WIDGET_TYPE extends IWindowWidget & IContainerWidgetCommon, B
 		super(bluePrint);
 		Assert.paramNotNull(parent, "parent");
 		Assert.paramNotNull(bluePrint, "bluePrint");
+		this.parent = parent;
 		initialize(Toolkit.getWidgetFactory().create(parent, bluePrint));
 	}
 
 	@Override
-	public <M_WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends M_WIDGET_TYPE>> M_WIDGET_TYPE createChildWindow(
+	public <M_WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends M_WIDGET_TYPE>> M_WIDGET_TYPE createChildWindow(
 		final DESCRIPTOR_TYPE descriptor) {
 		return getWidget().createChildWindow(descriptor);
 	}
@@ -112,6 +116,11 @@ class WindowWidget<WIDGET_TYPE extends IWindowWidget & IContainerWidgetCommon, B
 	@Override
 	public final void centerLocation() {
 		getWidget().centerLocation();
+	}
+
+	@Override
+	public IWidgetCommon getParent() {
+		return parent;
 	}
 
 }

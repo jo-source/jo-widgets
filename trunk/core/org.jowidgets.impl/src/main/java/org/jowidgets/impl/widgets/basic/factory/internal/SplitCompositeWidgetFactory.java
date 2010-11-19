@@ -30,7 +30,7 @@ package org.jowidgets.impl.widgets.basic.factory.internal;
 
 import org.jowidgets.api.widgets.ISplitCompositeWidget;
 import org.jowidgets.api.widgets.descriptor.ISplitCompositeDescriptor;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
@@ -51,7 +51,7 @@ public class SplitCompositeWidgetFactory extends AbstractWidgetFactory implement
 	}
 
 	@Override
-	public ISplitCompositeWidget create(final IWidget parent, final ISplitCompositeDescriptor descriptor) {
+	public ISplitCompositeWidget create(final IWidgetCommon parent, final ISplitCompositeDescriptor descriptor) {
 		final ISplitContainerBluePrintSpi bp = getSpiBluePrintFactory().splitContainer().setSetup(descriptor);
 
 		final ISplitContainerWidgetSpi splitConatinerSpi = getSpiWidgetFactory().createSplitContainerWidget(

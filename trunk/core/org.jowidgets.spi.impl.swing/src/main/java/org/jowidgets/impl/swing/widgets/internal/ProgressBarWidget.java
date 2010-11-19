@@ -30,7 +30,7 @@ package org.jowidgets.impl.swing.widgets.internal;
 import javax.swing.JProgressBar;
 
 import org.jowidgets.common.util.ColorSettingsInvoker;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.impl.swing.util.OrientationConvert;
 import org.jowidgets.impl.swing.widgets.SwingWidget;
@@ -39,7 +39,7 @@ import org.jowidgets.spi.widgets.setup.IProgressBarSetupSpi;
 
 public class ProgressBarWidget extends SwingWidget implements IProgressBarWidgetSpi {
 
-	public ProgressBarWidget(final SwingImageRegistry imageRegistry, final IWidget parent, final IProgressBarSetupSpi setup) {
+	public ProgressBarWidget(final SwingImageRegistry imageRegistry, final IWidgetCommon parent, final IProgressBarSetupSpi setup) {
 		super(new JProgressBar(OrientationConvert.convert(setup.getOrientation())));
 
 		setMinimum(setup.getMinimum());

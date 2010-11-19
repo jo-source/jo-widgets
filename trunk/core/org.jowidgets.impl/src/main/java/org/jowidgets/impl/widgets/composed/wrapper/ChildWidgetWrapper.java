@@ -27,22 +27,22 @@
  */
 package org.jowidgets.impl.widgets.composed.wrapper;
 
-import org.jowidgets.api.widgets.IChildWidget;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.util.Assert;
 
-public class ChildWidgetWrapper extends WidgetWrapper implements IChildWidget {
+public class ChildWidgetWrapper extends WidgetWrapper implements IWidget {
 
-	private final IChildWidget widget;
+	private final IWidget widget;
 
-	public ChildWidgetWrapper(final IChildWidget widget) {
+	public ChildWidgetWrapper(final IWidget widget) {
 		super(widget);
 		Assert.paramNotNull(widget, "widget");
 		this.widget = widget;
 	}
 
 	@Override
-	public IWidget getParent() {
+	public IWidgetCommon getParent() {
 		return widget.getParent();
 	}
 

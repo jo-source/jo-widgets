@@ -30,7 +30,6 @@ package org.jowidgets.examples.common.demo;
 
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButtonWidget;
-import org.jowidgets.api.widgets.IDialogWidget;
 import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.IInputDialogWidget;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
@@ -80,14 +79,14 @@ public class DemoMainComposite {
 		progressBarDialogButton.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
-				final IDialogWidget progressBarDialog = parentWindow.createChildWindow(bpF.dialog("Progress bar demo"));
+				final IFrameWidget progressBarDialog = parentWindow.createChildWindow(bpF.dialog("Progress bar demo"));
 				new DemoProgressBarComposite(progressBarDialog, progressBarDialog);
 				progressBarDialog.setVisible(true);
 				progressBarDialog.close();
 			}
 		});
 
-		final IDialogWidget messagesDemoDialog = parentWindow.createChildWindow(bpF.dialog("Messages demo"));
+		final IFrameWidget messagesDemoDialog = parentWindow.createChildWindow(bpF.dialog("Messages demo"));
 		new DemoMessagesComposite(messagesDemoDialog);
 		final IButtonWidget messagesDialogButton = parentContainer.add(
 				bpF.button("Messages demo", "Opens the messages demo"),

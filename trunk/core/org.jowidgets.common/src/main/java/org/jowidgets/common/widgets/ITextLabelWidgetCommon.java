@@ -29,7 +29,7 @@ package org.jowidgets.common.widgets;
 
 import org.jowidgets.common.types.Markup;
 
-public interface ITextLabelWidgetCommon extends IWidget {
+public interface ITextLabelWidgetCommon extends IWidgetCommon {
 
 	void setMarkup(Markup markup);
 

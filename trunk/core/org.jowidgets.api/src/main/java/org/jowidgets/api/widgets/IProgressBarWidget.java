@@ -30,7 +30,7 @@ package org.jowidgets.api.widgets;
 
 import org.jowidgets.common.widgets.IProgressBarWidgetCommon;
 
-public interface IProgressBarWidget extends IProgressBarWidgetCommon, IChildWidget {
+public interface IProgressBarWidget extends IProgressBarWidgetCommon, IWidget {
 
 	int getMinimum();
 

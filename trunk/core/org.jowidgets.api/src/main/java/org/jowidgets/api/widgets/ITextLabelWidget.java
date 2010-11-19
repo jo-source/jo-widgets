@@ -30,6 +30,6 @@ package org.jowidgets.api.widgets;
 import org.jowidgets.common.widgets.ITextLabelWidgetCommon;
 
 
-public interface ITextLabelWidget extends ITextLabelWidgetCommon, IChildWidget {
+public interface ITextLabelWidget extends ITextLabelWidgetCommon, IWidget {
 
 }

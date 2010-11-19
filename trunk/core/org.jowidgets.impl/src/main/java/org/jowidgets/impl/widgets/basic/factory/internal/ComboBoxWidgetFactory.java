@@ -30,7 +30,7 @@ package org.jowidgets.impl.widgets.basic.factory.internal;
 
 import org.jowidgets.api.widgets.IComboBoxWidget;
 import org.jowidgets.api.widgets.descriptor.IComboBoxDescriptor;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
@@ -54,7 +54,7 @@ public class ComboBoxWidgetFactory extends AbstractWidgetFactory implements
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
-	public IComboBoxWidget<?> create(final IWidget parent, final IComboBoxDescriptor<?> descriptor) {
+	public IComboBoxWidget<?> create(final IWidgetCommon parent, final IComboBoxDescriptor<?> descriptor) {
 		final IComboBoxBluePrintSpi bp = getSpiBluePrintFactory().comboBox().setSetup(descriptor);
 		ComboBoxBuilderConverter.convert(bp, descriptor);
 

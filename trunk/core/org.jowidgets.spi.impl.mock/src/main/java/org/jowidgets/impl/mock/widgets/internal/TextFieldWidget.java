@@ -28,13 +28,13 @@
 package org.jowidgets.impl.mock.widgets.internal;
 
 import org.jowidgets.common.util.ColorSettingsInvoker;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.mock.mockui.UIMTextField;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 
 public class TextFieldWidget extends AbstractMockTextInputWidget {
 
-	public TextFieldWidget(final IWidget parent, final ITextFieldSetupSpi setup) {
+	public TextFieldWidget(final IWidgetCommon parent, final ITextFieldSetupSpi setup) {
 		super(new UIMTextField(setup.getInputVerifier()));
 
 		registerTextComponent(getUiReference());

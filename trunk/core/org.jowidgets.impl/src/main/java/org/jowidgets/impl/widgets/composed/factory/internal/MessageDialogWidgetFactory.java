@@ -28,11 +28,11 @@
 package org.jowidgets.impl.widgets.composed.factory.internal;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IDialogWidget;
+import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.IMessageDialogWidget;
 import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
 import org.jowidgets.api.widgets.descriptor.IMessageDialogDescriptor;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.widgets.composed.MessageDialogWidget;
@@ -46,10 +46,10 @@ public class MessageDialogWidgetFactory implements IWidgetFactory<IMessageDialog
 	}
 
 	@Override
-	public IMessageDialogWidget create(final IWidget parent, final IMessageDialogDescriptor descriptor) {
+	public IMessageDialogWidget create(final IWidgetCommon parent, final IMessageDialogDescriptor descriptor) {
 		final IDialogBluePrint dialogBp = Toolkit.getBluePrintFactory().dialog().setTitle(descriptor.getTitle());
 		dialogBp.setIcon(descriptor.getTitleIcon()).setResizable(false);
-		final IDialogWidget dialogWidget = genericWidgetFactory.create(parent, dialogBp);
+		final IFrameWidget dialogWidget = genericWidgetFactory.create(parent, dialogBp);
 
 		if (dialogWidget == null) {
 			throw new IllegalStateException("Could not create widget with descriptor interface class '"

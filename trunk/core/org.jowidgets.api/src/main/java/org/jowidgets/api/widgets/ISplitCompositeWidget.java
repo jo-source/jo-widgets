@@ -30,7 +30,7 @@ package org.jowidgets.api.widgets;
 
 import org.jowidgets.common.widgets.ISplitContainerWidgetCommon;
 
-public interface ISplitCompositeWidget extends ISplitContainerWidgetCommon, IChildWidget {
+public interface ISplitCompositeWidget extends ISplitContainerWidgetCommon, IWidget {
 
 	@Override
 	ICompositeWidget getFirst();

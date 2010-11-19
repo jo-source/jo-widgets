@@ -27,15 +27,15 @@
  */
 package org.jowidgets.impl.widgets.composed.factory.internal;
 
-import org.jowidgets.api.widgets.IDialogWidget;
+import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.descriptor.setup.ICompositeSetup;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
-public abstract class AbstractDialogWidgetFactory<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> implements
+public abstract class AbstractDialogWidgetFactory<WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> implements
 		IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> {
 
 	private final IGenericWidgetFactory genericWidgetFactory;
@@ -45,12 +45,12 @@ public abstract class AbstractDialogWidgetFactory<WIDGET_TYPE extends IWidget, D
 		this.genericWidgetFactory = genericWidgetFactory;
 	}
 
-	protected abstract WIDGET_TYPE createWidget(IDialogWidget dialogWidget, DESCRIPTOR_TYPE descriptor);
+	protected abstract WIDGET_TYPE createWidget(IFrameWidget dialogWidget, DESCRIPTOR_TYPE descriptor);
 
 	@Override
-	public WIDGET_TYPE create(final IWidget parent, final DESCRIPTOR_TYPE descriptor) {
+	public WIDGET_TYPE create(final IWidgetCommon parent, final DESCRIPTOR_TYPE descriptor) {
 
-		final IDialogWidget dialogWidget = genericWidgetFactory.create(
+		final IFrameWidget dialogWidget = genericWidgetFactory.create(
 				parent,
 				new BluePrintFactory().dialog().setSetup(descriptor));
 

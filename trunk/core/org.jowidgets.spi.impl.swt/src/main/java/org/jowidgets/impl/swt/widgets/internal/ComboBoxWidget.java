@@ -32,14 +32,14 @@ import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSetupSpi;
 
 public class ComboBoxWidget extends ComboBoxSelectionWidget implements IComboBoxWidgetSpi {
 
-	public ComboBoxWidget(final IWidget parent, final IColorCache colorCache, final IComboBoxSetupSpi setup) {
+	public ComboBoxWidget(final IWidgetCommon parent, final IColorCache colorCache, final IComboBoxSetupSpi setup) {
 		super(colorCache, new Combo((Composite) parent.getUiReference(), SWT.NONE | SWT.DROP_DOWN), setup);
 
 		this.getUiReference().addVerifyListener(new VerifyListener() {

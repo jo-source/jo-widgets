@@ -27,10 +27,10 @@
  */
 package org.jowidgets.api.widgets;
 
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 
-public interface IChildWidget extends IWidget {
+public interface IWidget extends IWidgetCommon {
 
-	IWidget getParent();
+	IWidgetCommon getParent();
 
 }

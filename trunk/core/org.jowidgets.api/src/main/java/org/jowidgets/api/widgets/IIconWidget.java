@@ -30,6 +30,6 @@ package org.jowidgets.api.widgets;
 import org.jowidgets.common.widgets.IIconWidgetCommon;
 
 
-public interface IIconWidget extends IIconWidgetCommon, IChildWidget {
+public interface IIconWidget extends IIconWidgetCommon, IWidget {
 
 }

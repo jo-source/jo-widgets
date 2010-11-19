@@ -27,7 +27,7 @@
  */
 package org.jowidgets.api.widgets;
 
-public interface IValidationLabelWidget extends IChildWidget {
+public interface IValidationLabelWidget extends IWidget {
 
 	void resetValidation();
 

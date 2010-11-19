@@ -29,16 +29,16 @@
 package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IDialogWidget;
+import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
 import org.jowidgets.api.widgets.descriptor.IDialogDescriptor;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.IWindowWidgetCommon;
 import org.jowidgets.util.Assert;
 
-public class JoDialog extends WindowWidget<IDialogWidget, IDialogBluePrint> implements IDialogWidget {
+public class JoDialog extends WindowWidget<IFrameWidget, IDialogBluePrint> implements IFrameWidget {
 
-	private final IWidget parent;
+	private final IWidgetCommon parent;
 
 	public JoDialog(final IWindowWidgetCommon parent) {
 		this(parent, Toolkit.getBluePrintFactory().dialog());
@@ -55,7 +55,7 @@ public class JoDialog extends WindowWidget<IDialogWidget, IDialogBluePrint> impl
 	}
 
 	@Override
-	public IWidget getParent() {
+	public IWidgetCommon getParent() {
 		return parent;
 	}
 

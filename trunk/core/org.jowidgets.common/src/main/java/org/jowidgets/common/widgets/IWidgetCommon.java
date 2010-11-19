@@ -25,38 +25,30 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.base.blueprint.factory;
+package org.jowidgets.common.widgets;
 
-import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
-import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
-import org.jowidgets.common.widgets.IWidgetCommon;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.impl.base.blueprint.proxy.BluePrintProxyProvider;
-import org.jowidgets.impl.spi.blueprint.IFrameBluePrintSpi;
+import org.jowidgets.common.color.IColorConstant;
 
-public abstract class AbstractBluePrintFactory {
+public interface IWidgetCommon {
 
-	private final ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry;
-	private final IDefaultsInitializerRegistry defaultInitializerRegistry;
+	/**
+	 * @return the reference to the ui implementation of this widget. e.g.
+	 *         JPanel, JFrame, JLabel, JButton, ... in Swing or Composite,
+	 *         Shell, Text, Button, ... in SWT
+	 */
+	Object getUiReference();
 
-	public AbstractBluePrintFactory(
-		final ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry,
-		final IDefaultsInitializerRegistry defaultInitializerRegistry) {
-		super();
-		this.setupBuilderConvenienceRegistry = setupBuilderConvenienceRegistry;
-		this.defaultInitializerRegistry = defaultInitializerRegistry;
-	}
+	/**
+	 * Marks the widget that a redraw is necessary
+	 */
+	void redraw();
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	protected <BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends IWidgetCommon>> BLUE_PRINT_TYPE createProxy(
-		final Class<? extends IWidgetDescriptor> bluePrintType,
-		final Class<? extends IWidgetDescriptor> descriptorType) {
+	void setForegroundColor(final IColorConstant colorValue);
 
-		return (BLUE_PRINT_TYPE) new BluePrintProxyProvider<IFrameBluePrintSpi>(
-			bluePrintType,
-			descriptorType,
-			setupBuilderConvenienceRegistry,
-			defaultInitializerRegistry).getBluePrint();
-	}
+	void setBackgroundColor(final IColorConstant colorValue);
+
+	void setVisible(boolean visible);
+
+	boolean isVisible();
 
 }

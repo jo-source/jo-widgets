@@ -29,7 +29,7 @@ package org.jowidgets.impl.mock;
 
 import org.jowidgets.common.widgets.IContainerWidgetCommon;
 import org.jowidgets.common.widgets.IFrameWidgetCommon;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.mock.image.MockImageRegistry;
 import org.jowidgets.impl.mock.mockui.UIMContainer;
@@ -128,7 +128,7 @@ public final class MockWidgetFactory implements IWidgetFactorySpi {
 	@Override
 	public IFrameWidgetSpi createDialogWidget(
 		final IGenericWidgetFactory factory,
-		final IWidget parent,
+		final IWidgetCommon parent,
 		final IDialogSetupSpi setup) {
 		return new DialogWidget(factory, imageRegistry, parent, setup);
 	}
@@ -136,7 +136,7 @@ public final class MockWidgetFactory implements IWidgetFactorySpi {
 	@Override
 	public IContainerWidgetSpi createCompositeWidget(
 		final IGenericWidgetFactory factory,
-		final IWidget parent,
+		final IWidgetCommon parent,
 		final ICompositeSetupSpi setup) {
 		return new CompositeWidget(factory, setup);
 	}
@@ -144,7 +144,7 @@ public final class MockWidgetFactory implements IWidgetFactorySpi {
 	@Override
 	public IScrollContainerWidgetSpi createScrollCompositeWidget(
 		final IGenericWidgetFactory factory,
-		final IWidget parent,
+		final IWidgetCommon parent,
 		final IScrollCompositeSetupSpi setup) {
 		return new ScrollCompositeWidget(factory, setup);
 	}
@@ -152,58 +152,58 @@ public final class MockWidgetFactory implements IWidgetFactorySpi {
 	@Override
 	public ISplitContainerWidgetSpi createSplitContainerWidget(
 		final IGenericWidgetFactory factory,
-		final IWidget parent,
+		final IWidgetCommon parent,
 		final ISplitContainerSetupSpi setup) {
 		return new SplitPaneWidget(factory, setup);
 	}
 
 	@Override
-	public ITextInputWidgetSpi createTextFieldWidget(final IWidget parent, final ITextFieldSetupSpi setup) {
+	public ITextInputWidgetSpi createTextFieldWidget(final IWidgetCommon parent, final ITextFieldSetupSpi setup) {
 		return new TextFieldWidget(parent, setup);
 	}
 
 	@Override
-	public ITextLabelWidgetSpi createTextLabelWidget(final IWidget parent, final ITextLabelSetupSpi setup) {
+	public ITextLabelWidgetSpi createTextLabelWidget(final IWidgetCommon parent, final ITextLabelSetupSpi setup) {
 		return new TextLabelWidget(parent, setup);
 	}
 
 	@Override
-	public IIconWidgetSpi createIconWidget(final IWidget parent, final IIconSetupSpi setup) {
+	public IIconWidgetSpi createIconWidget(final IWidgetCommon parent, final IIconSetupSpi setup) {
 		return new IconWidget(imageRegistry, parent, setup);
 	}
 
 	@Override
-	public IButtonWidgetSpi createButtonWidget(final IWidget parent, final IButtonSetupSpi setup) {
+	public IButtonWidgetSpi createButtonWidget(final IWidgetCommon parent, final IButtonSetupSpi setup) {
 		return new ButtonWidget(imageRegistry, setup);
 	}
 
 	@Override
-	public IWidgetSpi createSeparatorWidget(final IWidget parent, final ISeparatorSetupSpi setup) {
+	public IWidgetSpi createSeparatorWidget(final IWidgetCommon parent, final ISeparatorSetupSpi setup) {
 		return new SeparatorWidget(setup);
 	}
 
 	@Override
-	public ICheckBoxWidgetSpi createCheckBoxWidget(final IWidget parent, final ICheckBoxSetupSpi setup) {
+	public ICheckBoxWidgetSpi createCheckBoxWidget(final IWidgetCommon parent, final ICheckBoxSetupSpi setup) {
 		return new CheckBoxWidget(setup);
 	}
 
 	@Override
-	public IToggleButtonWidgetSpi createToggleButtonWidget(final IWidget parent, final IToggleButtonSetupSpi setup) {
+	public IToggleButtonWidgetSpi createToggleButtonWidget(final IWidgetCommon parent, final IToggleButtonSetupSpi setup) {
 		return new ToggleButtonWidget(imageRegistry, setup);
 	}
 
 	@Override
-	public IComboBoxSelectionWidgetSpi createComboBoxSelectionWidget(final IWidget parent, final IComboBoxSelectionSetupSpi setup) {
+	public IComboBoxSelectionWidgetSpi createComboBoxSelectionWidget(final IWidgetCommon parent, final IComboBoxSelectionSetupSpi setup) {
 		return new ComboBoxSelectionWidget(setup);
 	}
 
 	@Override
-	public IComboBoxWidgetSpi createComboBoxWidget(final IWidget parent, final IComboBoxSetupSpi setup) {
+	public IComboBoxWidgetSpi createComboBoxWidget(final IWidgetCommon parent, final IComboBoxSetupSpi setup) {
 		return new ComboBoxWidget(setup);
 	}
 
 	@Override
-	public IProgressBarWidgetSpi createProgressBar(final IWidget parent, final IProgressBarSetupSpi setup) {
+	public IProgressBarWidgetSpi createProgressBar(final IWidgetCommon parent, final IProgressBarSetupSpi setup) {
 		return new ProgressBarWidget(imageRegistry, parent, setup);
 	}
 

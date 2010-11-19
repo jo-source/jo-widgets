@@ -33,13 +33,13 @@ import java.util.List;
 import org.jowidgets.api.validation.ValidationMessage;
 import org.jowidgets.api.validation.ValidationMessageType;
 import org.jowidgets.api.validation.ValidationResult;
-import org.jowidgets.api.widgets.IChildWidget;
+import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.ILabelWidget;
 import org.jowidgets.api.widgets.IValidationLabelWidget;
 import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
 import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.impl.widgets.composed.wrapper.ChildWidgetWrapper;
 
@@ -49,7 +49,7 @@ public class ValidationLabelWidget implements IValidationLabelWidget {
 	private final ILabelWidget labelWidget;
 	private final List<IInputWidget<?>> inputWidgets;
 	private final IInputListener inputListener;
-	private final IChildWidget childWidgetAdapter;
+	private final IWidget childWidgetAdapter;
 	private final boolean showLabel;
 	private LabelState currentLabelState;
 	private boolean hasInput;
@@ -186,7 +186,7 @@ public class ValidationLabelWidget implements IValidationLabelWidget {
 	}
 
 	@Override
-	public IWidget getParent() {
+	public IWidgetCommon getParent() {
 		return childWidgetAdapter.getParent();
 	}
 

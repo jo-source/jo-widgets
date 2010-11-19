@@ -30,7 +30,7 @@ package org.jowidgets.common.widgets;
 
 import org.jowidgets.common.widgets.controler.IInputObservable;
 
-public interface IInputWidgetCommon extends IWidget, IInputObservable {
+public interface IInputWidgetCommon extends IWidgetCommon, IInputObservable {
 
 	void setEditable(boolean editable);
 

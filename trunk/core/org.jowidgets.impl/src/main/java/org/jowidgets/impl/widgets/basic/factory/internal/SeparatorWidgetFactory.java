@@ -28,9 +28,9 @@
 
 package org.jowidgets.impl.widgets.basic.factory.internal;
 
-import org.jowidgets.api.widgets.IChildWidget;
+import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.ISeparatorDescriptor;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
@@ -39,7 +39,7 @@ import org.jowidgets.impl.widgets.basic.ChildWidget;
 import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.widgets.IWidgetSpi;
 
-public class SeparatorWidgetFactory extends AbstractWidgetFactory implements IWidgetFactory<IChildWidget, ISeparatorDescriptor> {
+public class SeparatorWidgetFactory extends AbstractWidgetFactory implements IWidgetFactory<IWidget, ISeparatorDescriptor> {
 
 	public SeparatorWidgetFactory(
 		final IGenericWidgetFactory genericWidgetFactory,
@@ -50,7 +50,7 @@ public class SeparatorWidgetFactory extends AbstractWidgetFactory implements IWi
 	}
 
 	@Override
-	public IChildWidget create(final IWidget parent, final ISeparatorDescriptor descriptor) {
+	public IWidget create(final IWidgetCommon parent, final ISeparatorDescriptor descriptor) {
 		final ISeparatorBluePrintSpi bp = getSpiBluePrintFactory().separator().setSetup(descriptor);
 		final IWidgetSpi widget = getSpiWidgetFactory().createSeparatorWidget(parent, bp);
 		return new ChildWidget(parent, widget);

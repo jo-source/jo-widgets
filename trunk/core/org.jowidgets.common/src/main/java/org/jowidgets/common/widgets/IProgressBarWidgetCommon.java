@@ -28,7 +28,7 @@
 
 package org.jowidgets.common.widgets;
 
-public interface IProgressBarWidgetCommon extends IWidget {
+public interface IProgressBarWidgetCommon extends IWidgetCommon {
 
 	void setMinimum(int min);
 

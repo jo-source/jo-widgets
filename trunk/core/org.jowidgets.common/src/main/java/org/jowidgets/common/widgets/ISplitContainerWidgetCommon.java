@@ -27,7 +27,7 @@
  */
 package org.jowidgets.common.widgets;
 
-public interface ISplitContainerWidgetCommon extends IWidget {
+public interface ISplitContainerWidgetCommon extends IWidgetCommon {
 
 	IContainerWidgetCommon getFirst();
 

@@ -30,7 +30,7 @@ package org.jowidgets.impl.widgets.basic.factory.internal;
 
 import org.jowidgets.api.widgets.IIconWidget;
 import org.jowidgets.api.widgets.descriptor.IIconDescriptor;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
@@ -50,7 +50,7 @@ public class IconWidgetFactory extends AbstractWidgetFactory implements IWidgetF
 	}
 
 	@Override
-	public IIconWidget create(final IWidget parent, final IIconDescriptor descriptor) {
+	public IIconWidget create(final IWidgetCommon parent, final IIconDescriptor descriptor) {
 		final IIconBluePrintSpi bp = getSpiBluePrintFactory().icon().setSetup(descriptor);
 		final IIconWidgetSpi iconSpi = getSpiWidgetFactory().createIconWidget(parent, bp);
 		return new IconWidget(parent, iconSpi, descriptor);

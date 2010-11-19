@@ -28,18 +28,18 @@
 
 package org.jowidgets.impl.base.delegate;
 
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 
 public class ChildWidgetDelegate {
 
-	private final IWidget parent;
+	private final IWidgetCommon parent;
 
-	public ChildWidgetDelegate(final IWidget parent) {
+	public ChildWidgetDelegate(final IWidgetCommon parent) {
 		super();
 		this.parent = parent;
 	}
 
-	public IWidget getParent() {
+	public IWidgetCommon getParent() {
 		return parent;
 	}
 

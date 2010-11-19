@@ -35,7 +35,7 @@ import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.blueprint.ITextFieldBluePrint;
 import org.jowidgets.api.widgets.descriptor.IInputFieldDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.ITextFieldSetup;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.widgets.composed.InputFieldWidget;
@@ -53,7 +53,7 @@ public class InputFieldWidgetFactory<VALUE_TYPE> implements
 	}
 
 	@Override
-	public IInputWidget<VALUE_TYPE> create(final IWidget parent, final IInputFieldDescriptor<VALUE_TYPE> descriptor) {
+	public IInputWidget<VALUE_TYPE> create(final IWidgetCommon parent, final IInputFieldDescriptor<VALUE_TYPE> descriptor) {
 
 		final BluePrintFactory bpF = new BluePrintFactory();
 

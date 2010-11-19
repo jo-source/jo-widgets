@@ -31,7 +31,7 @@ package org.jowidgets.impl.widgets.basic;
 import org.jowidgets.api.widgets.ICompositeWidget;
 import org.jowidgets.api.widgets.descriptor.setup.ICompositeSetup;
 import org.jowidgets.common.widgets.IContainerWidgetCommon;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
 import org.jowidgets.impl.widgets.common.wrapper.ContainerWidgetCommonWrapper;
 
@@ -39,15 +39,15 @@ public class CompositeWidget extends ContainerWidgetCommonWrapper implements ICo
 
 	private final ChildWidgetDelegate childWidgetDelegate;
 
-	public CompositeWidget(final IWidget parent, final IContainerWidgetCommon containerWidgetCommon) {
+	public CompositeWidget(final IWidgetCommon parent, final IContainerWidgetCommon containerWidgetCommon) {
 		this(parent, containerWidgetCommon, (Boolean) null);
 	}
 
-	public CompositeWidget(final IWidget parent, final IContainerWidgetCommon containerWidgetCommon, final ICompositeSetup setup) {
+	public CompositeWidget(final IWidgetCommon parent, final IContainerWidgetCommon containerWidgetCommon, final ICompositeSetup setup) {
 		this(parent, containerWidgetCommon, setup.isVisible());
 	}
 
-	public CompositeWidget(final IWidget parent, final IContainerWidgetCommon containerWidgetCommon, final Boolean visible) {
+	public CompositeWidget(final IWidgetCommon parent, final IContainerWidgetCommon containerWidgetCommon, final Boolean visible) {
 		super(containerWidgetCommon);
 		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
 
@@ -57,7 +57,7 @@ public class CompositeWidget extends ContainerWidgetCommonWrapper implements ICo
 	}
 
 	@Override
-	public IWidget getParent() {
+	public IWidgetCommon getParent() {
 		return childWidgetDelegate.getParent();
 	}
 

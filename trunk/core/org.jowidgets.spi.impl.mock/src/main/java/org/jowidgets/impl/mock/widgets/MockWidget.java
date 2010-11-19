@@ -28,10 +28,10 @@
 package org.jowidgets.impl.mock.widgets;
 
 import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.mock.mockui.UIMComponent;
 
-public class MockWidget implements IWidget {
+public class MockWidget implements IWidgetCommon {
 
 	private final UIMComponent component;
 

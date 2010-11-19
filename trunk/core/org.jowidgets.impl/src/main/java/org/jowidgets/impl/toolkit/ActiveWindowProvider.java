@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.jowidgets.api.widgets.IWindowWidget;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.IWindowWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactoryListener;
@@ -55,7 +55,7 @@ public class ActiveWindowProvider {
 		genericWidgetFactory.addWidgetFactoryListener(new IWidgetFactoryListener() {
 
 			@Override
-			public void widgetCreated(final IWidget widget) {
+			public void widgetCreated(final IWidgetCommon widget) {
 				if (widget instanceof IWindowWidget) {
 					final IWindowWidget windowWidget = (IWindowWidget) widget;
 					//If a WindowWidget wraps another WindowWidget it will be assumed, 

@@ -31,7 +31,7 @@ import org.jowidgets.api.widgets.ILabelWidget;
 import org.jowidgets.api.widgets.IValidationLabelWidget;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
 import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.widgets.composed.ValidationLabelWidget;
@@ -47,7 +47,7 @@ public class ValidationLabelWidgetFactory implements IWidgetFactory<IValidationL
 	}
 
 	@Override
-	public IValidationLabelWidget create(final IWidget parent, final IValidationLabelDescriptor descriptor) {
+	public IValidationLabelWidget create(final IWidgetCommon parent, final IValidationLabelDescriptor descriptor) {
 
 		final ILabelBluePrint labelDescriptor = new BluePrintFactory().label();
 

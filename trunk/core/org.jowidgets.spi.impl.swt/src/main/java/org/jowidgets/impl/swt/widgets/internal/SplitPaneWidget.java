@@ -29,7 +29,7 @@
 package org.jowidgets.impl.swt.widgets.internal;
 
 import org.eclipse.swt.widgets.Composite;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.widgets.SwtContainerWidget;
@@ -47,7 +47,7 @@ public class SplitPaneWidget extends SwtWidget implements ISplitContainerWidgetS
 	public SplitPaneWidget(
 		final IGenericWidgetFactory factory,
 		final IColorCache colorCache,
-		final IWidget parent,
+		final IWidgetCommon parent,
 		final ISplitContainerSetupSpi setup) {
 
 		super(colorCache, new JoSashForm((Composite) parent.getUiReference(), setup));

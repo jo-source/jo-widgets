@@ -35,7 +35,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.IWindowWidgetCommon;
 import org.jowidgets.common.widgets.controler.IWindowListener;
 import org.jowidgets.common.widgets.controler.impl.WindowObservable;
@@ -123,7 +123,7 @@ public class SwtWindowWidget extends SwtContainerWidget implements IWindowWidget
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
+	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
 		final DESCRIPTOR_TYPE descriptor) {
 		return getGenericWidgetFactory().create(this, descriptor);
 	}

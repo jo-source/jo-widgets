@@ -33,7 +33,7 @@ import org.jowidgets.api.validation.ValidationMessageType;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IButtonWidget;
 import org.jowidgets.api.widgets.ICompositeWidget;
-import org.jowidgets.api.widgets.IDialogWidget;
+import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.IInputDialogWidget;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
@@ -44,7 +44,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IButtonWidgetCommon;
 import org.jowidgets.common.widgets.IContainerWidgetCommon;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.controler.IWindowListener;
@@ -54,14 +54,14 @@ import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
 public class InputDialogWidget<INPUT_TYPE> implements IInputDialogWidget<INPUT_TYPE> {
 
-	private final IDialogWidget dialogWidget;
+	private final IFrameWidget dialogWidget;
 	private final InputCompositeWidget<INPUT_TYPE> inputCompositeWidget;
 
 	private INPUT_TYPE value;
 	private boolean okPressed;
 	private final boolean autoResetValidation;
 
-	public InputDialogWidget(final IDialogWidget dialogWidget, final IInputDialogSetup<INPUT_TYPE> setup) {
+	public InputDialogWidget(final IFrameWidget dialogWidget, final IInputDialogSetup<INPUT_TYPE> setup) {
 		super();
 		this.okPressed = false;
 		this.dialogWidget = dialogWidget;
@@ -181,7 +181,7 @@ public class InputDialogWidget<INPUT_TYPE> implements IInputDialogWidget<INPUT_T
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
+	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
 		final DESCRIPTOR_TYPE descriptor) {
 		return dialogWidget.createChildWindow(descriptor);
 	}
@@ -197,7 +197,7 @@ public class InputDialogWidget<INPUT_TYPE> implements IInputDialogWidget<INPUT_T
 	}
 
 	@Override
-	public IWidget getParent() {
+	public IWidgetCommon getParent() {
 		return dialogWidget.getParent();
 	}
 

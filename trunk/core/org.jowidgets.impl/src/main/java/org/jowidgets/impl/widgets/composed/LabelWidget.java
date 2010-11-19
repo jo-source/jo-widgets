@@ -38,7 +38,7 @@ import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.common.widgets.IIconWidgetCommon;
 import org.jowidgets.common.widgets.ITextLabelWidgetCommon;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
@@ -79,7 +79,7 @@ public class LabelWidget implements ILabelWidget {
 	}
 
 	@Override
-	public IWidget getParent() {
+	public IWidgetCommon getParent() {
 		return compositeWidget.getParent();
 	}
 

@@ -34,7 +34,7 @@ import java.util.List;
 import org.jowidgets.api.widgets.blueprint.builder.IContainerSetupBuilder;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.IContainerWidgetCommon;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
@@ -61,7 +61,7 @@ class ContainerWidget<WIDGET_TYPE extends IContainerWidgetCommon, BLUE_PRINT_TYP
 		for (final Tuple<Widget, Object> preWidgetTuple : preWidgets) {
 			final Widget preWidget = preWidgetTuple.getFirst();
 			final Object layoutConstraints = preWidgetTuple.getSecond();
-			final IWidget newWidget = widget.add(preWidget.getDescriptor(), layoutConstraints);
+			final IWidgetCommon newWidget = widget.add(preWidget.getDescriptor(), layoutConstraints);
 			preWidget.initialize(newWidget);
 		}
 	}
@@ -73,7 +73,7 @@ class ContainerWidget<WIDGET_TYPE extends IContainerWidgetCommon, BLUE_PRINT_TYP
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	public final <P_WIDGET_TYPE extends Widget<?, ?>> P_WIDGET_TYPE add(final P_WIDGET_TYPE widget, final Object layoutConstraints) {
 		if (isInitialized()) {
-			final IWidget newWidget = getWidget().add(widget.getDescriptor(), layoutConstraints);
+			final IWidgetCommon newWidget = getWidget().add(widget.getDescriptor(), layoutConstraints);
 			final Widget rawWidget = widget;
 			rawWidget.initialize(newWidget);
 			return widget;
@@ -115,7 +115,7 @@ class ContainerWidget<WIDGET_TYPE extends IContainerWidgetCommon, BLUE_PRINT_TYP
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
-	public final <M_WIDGET_TYPE extends IWidget> M_WIDGET_TYPE add(
+	public final <M_WIDGET_TYPE extends IWidgetCommon> M_WIDGET_TYPE add(
 		final IWidgetDescriptor<? extends M_WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
 		if (isInitialized()) {
@@ -161,7 +161,7 @@ class ContainerWidget<WIDGET_TYPE extends IContainerWidgetCommon, BLUE_PRINT_TYP
 	}
 
 	@Override
-	public final <M_WIDGET_TYPE extends IWidget> M_WIDGET_TYPE add(
+	public final <M_WIDGET_TYPE extends IWidgetCommon> M_WIDGET_TYPE add(
 		final ICustomWidgetFactory<M_WIDGET_TYPE> factory,
 		final Object layoutConstraints) {
 		checkInitialized();

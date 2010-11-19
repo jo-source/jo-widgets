@@ -29,7 +29,7 @@ package org.jowidgets.spi;
 
 import org.jowidgets.common.widgets.IContainerWidgetCommon;
 import org.jowidgets.common.widgets.IFrameWidgetCommon;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.widgets.IButtonWidgetSpi;
 import org.jowidgets.spi.widgets.ICheckBoxWidgetSpi;
@@ -77,38 +77,38 @@ public interface IWidgetFactorySpi {
 
 	IFrameWidgetSpi createFrameWidget(IGenericWidgetFactory factory, IFrameSetupSpi setup);
 
-	IFrameWidgetSpi createDialogWidget(IGenericWidgetFactory factory, IWidget parent, IDialogSetupSpi setup);
+	IFrameWidgetSpi createDialogWidget(IGenericWidgetFactory factory, IWidgetCommon parent, IDialogSetupSpi setup);
 
-	IContainerWidgetSpi createCompositeWidget(IGenericWidgetFactory factory, IWidget parent, ICompositeSetupSpi setup);
+	IContainerWidgetSpi createCompositeWidget(IGenericWidgetFactory factory, IWidgetCommon parent, ICompositeSetupSpi setup);
 
 	ISplitContainerWidgetSpi createSplitContainerWidget(
 		IGenericWidgetFactory factory,
-		IWidget parent,
+		IWidgetCommon parent,
 		ISplitContainerSetupSpi setup);
 
 	IScrollContainerWidgetSpi createScrollCompositeWidget(
 		IGenericWidgetFactory factory,
-		IWidget parent,
+		IWidgetCommon parent,
 		IScrollCompositeSetupSpi setup);
 
-	ITextInputWidgetSpi createTextFieldWidget(IWidget parent, ITextFieldSetupSpi setup);
+	ITextInputWidgetSpi createTextFieldWidget(IWidgetCommon parent, ITextFieldSetupSpi setup);
 
-	ITextLabelWidgetSpi createTextLabelWidget(IWidget parent, ITextLabelSetupSpi setup);
+	ITextLabelWidgetSpi createTextLabelWidget(IWidgetCommon parent, ITextLabelSetupSpi setup);
 
-	IIconWidgetSpi createIconWidget(IWidget parent, IIconSetupSpi setup);
+	IIconWidgetSpi createIconWidget(IWidgetCommon parent, IIconSetupSpi setup);
 
-	IButtonWidgetSpi createButtonWidget(final IWidget parent, IButtonSetupSpi setup);
+	IButtonWidgetSpi createButtonWidget(final IWidgetCommon parent, IButtonSetupSpi setup);
 
-	IWidgetSpi createSeparatorWidget(final IWidget parent, ISeparatorSetupSpi setup);
+	IWidgetSpi createSeparatorWidget(final IWidgetCommon parent, ISeparatorSetupSpi setup);
 
-	ICheckBoxWidgetSpi createCheckBoxWidget(final IWidget parent, ICheckBoxSetupSpi setup);
+	ICheckBoxWidgetSpi createCheckBoxWidget(final IWidgetCommon parent, ICheckBoxSetupSpi setup);
 
-	IToggleButtonWidgetSpi createToggleButtonWidget(final IWidget parent, IToggleButtonSetupSpi setup);
+	IToggleButtonWidgetSpi createToggleButtonWidget(final IWidgetCommon parent, IToggleButtonSetupSpi setup);
 
-	IComboBoxSelectionWidgetSpi createComboBoxSelectionWidget(final IWidget parent, IComboBoxSelectionSetupSpi setup);
+	IComboBoxSelectionWidgetSpi createComboBoxSelectionWidget(final IWidgetCommon parent, IComboBoxSelectionSetupSpi setup);
 
-	IComboBoxWidgetSpi createComboBoxWidget(final IWidget parent, IComboBoxSetupSpi setup);
+	IComboBoxWidgetSpi createComboBoxWidget(final IWidgetCommon parent, IComboBoxSetupSpi setup);
 
-	IProgressBarWidgetSpi createProgressBar(final IWidget parent, IProgressBarSetupSpi setup);
+	IProgressBarWidgetSpi createProgressBar(final IWidgetCommon parent, IProgressBarSetupSpi setup);
 
 }

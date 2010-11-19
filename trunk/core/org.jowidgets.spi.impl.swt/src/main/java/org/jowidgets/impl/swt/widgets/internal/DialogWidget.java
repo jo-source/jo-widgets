@@ -33,7 +33,7 @@ import org.eclipse.swt.events.ShellListener;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.util.ColorSettingsInvoker;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.image.SwtImageRegistry;
@@ -49,7 +49,7 @@ public class DialogWidget extends SwtWindowWidget implements IFrameWidgetSpi {
 		final IGenericWidgetFactory factory,
 		final IColorCache colorCache,
 		final SwtImageRegistry imageRegistry,
-		final IWidget parent,
+		final IWidgetCommon parent,
 		final IDialogSetupSpi setup) {
 
 		super(factory, colorCache, new Shell(parent == null ? null : (Shell) parent.getUiReference(), getStyle(setup)));

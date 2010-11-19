@@ -28,13 +28,13 @@
 package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.widgets.ICompositeWidget;
-import org.jowidgets.api.widgets.IDialogWidget;
+import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.IMessageDialogWidget;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.setup.IMessageDialogSetup;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.widgets.IButtonWidgetCommon;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
@@ -42,10 +42,10 @@ import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
 public class MessageDialogWidget implements IMessageDialogWidget {
 
-	private final IDialogWidget dialogWidget;
+	private final IFrameWidget dialogWidget;
 	private boolean wasVisible;
 
-	public MessageDialogWidget(final IDialogWidget dialogWidget, final IMessageDialogSetup setup) {
+	public MessageDialogWidget(final IFrameWidget dialogWidget, final IMessageDialogSetup setup) {
 		this.wasVisible = false;
 		this.dialogWidget = dialogWidget;
 
@@ -96,7 +96,7 @@ public class MessageDialogWidget implements IMessageDialogWidget {
 	}
 
 	@Override
-	public IWidget getParent() {
+	public IWidgetCommon getParent() {
 		return dialogWidget.getParent();
 	}
 

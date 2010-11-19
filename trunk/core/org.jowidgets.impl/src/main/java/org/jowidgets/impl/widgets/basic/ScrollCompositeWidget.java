@@ -30,7 +30,7 @@ package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.widgets.IScrollCompositeWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IScrollCompositeSetup;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.ScrollContainerWidgetCommonWrapper;
@@ -41,7 +41,7 @@ public class ScrollCompositeWidget extends ScrollContainerWidgetCommonWrapper im
 	private final ChildWidgetDelegate childWidgetDelegate;
 
 	public ScrollCompositeWidget(
-		final IWidget parent,
+		final IWidgetCommon parent,
 		final IScrollContainerWidgetSpi containerWidgetSpi,
 		final IScrollCompositeSetup setup) {
 		super(containerWidgetSpi);
@@ -50,7 +50,7 @@ public class ScrollCompositeWidget extends ScrollContainerWidgetCommonWrapper im
 	}
 
 	@Override
-	public IWidget getParent() {
+	public IWidgetCommon getParent() {
 		return childWidgetDelegate.getParent();
 	}
 

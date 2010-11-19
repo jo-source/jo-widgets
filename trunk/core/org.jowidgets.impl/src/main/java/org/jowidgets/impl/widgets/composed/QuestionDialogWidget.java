@@ -29,13 +29,13 @@ package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.types.QuestionResult;
 import org.jowidgets.api.widgets.ICompositeWidget;
-import org.jowidgets.api.widgets.IDialogWidget;
+import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.IQuestionDialogWidget;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.setup.IQuestionDialogSetup;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.widgets.IButtonWidgetCommon;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
@@ -43,12 +43,12 @@ import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
 public class QuestionDialogWidget implements IQuestionDialogWidget {
 
-	private final IDialogWidget dialogWidget;
+	private final IFrameWidget dialogWidget;
 	private IButtonWidgetCommon defaultButton;
 	private boolean wasVisible;
 	private QuestionResult result;
 
-	public QuestionDialogWidget(final IDialogWidget dialogWidget, final IQuestionDialogSetup setup) {
+	public QuestionDialogWidget(final IFrameWidget dialogWidget, final IQuestionDialogSetup setup) {
 		this.wasVisible = false;
 		this.dialogWidget = dialogWidget;
 
@@ -147,7 +147,7 @@ public class QuestionDialogWidget implements IQuestionDialogWidget {
 	}
 
 	@Override
-	public IWidget getParent() {
+	public IWidgetCommon getParent() {
 		return dialogWidget.getParent();
 	}
 

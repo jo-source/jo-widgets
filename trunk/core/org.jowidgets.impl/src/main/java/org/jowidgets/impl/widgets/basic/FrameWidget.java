@@ -30,17 +30,26 @@ package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IFrameSetup;
+import org.jowidgets.common.widgets.IWidgetCommon;
+import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
 import org.jowidgets.impl.base.delegate.WindowWidgetDelegate;
 import org.jowidgets.impl.widgets.common.wrapper.FrameWidgetCommonWrapper;
 import org.jowidgets.spi.widgets.IFrameWidgetSpi;
 
 public class FrameWidget extends FrameWidgetCommonWrapper implements IFrameWidget {
 
+	private final ChildWidgetDelegate childWidgetDelegate;
 	private final WindowWidgetDelegate windowWidgetDelegate;
 
-	public FrameWidget(final IFrameWidgetSpi frameWidgetSpi, final IFrameSetup setup) {
+	public FrameWidget(final IWidgetCommon parent, final IFrameWidgetSpi frameWidgetSpi, final IFrameSetup setup) {
 		super(frameWidgetSpi);
+		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
 		this.windowWidgetDelegate = new WindowWidgetDelegate(frameWidgetSpi, setup);
+	}
+
+	@Override
+	public IWidgetCommon getParent() {
+		return childWidgetDelegate.getParent();
 	}
 
 	@Override

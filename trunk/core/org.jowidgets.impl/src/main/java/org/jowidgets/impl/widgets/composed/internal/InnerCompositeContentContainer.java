@@ -33,7 +33,7 @@ import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
@@ -72,7 +72,7 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IWidget> WIDGET_TYPE add(
+	public <WIDGET_TYPE extends IWidgetCommon> WIDGET_TYPE add(
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
 
@@ -80,7 +80,7 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IWidget> WIDGET_TYPE add(
+	public <WIDGET_TYPE extends IWidgetCommon> WIDGET_TYPE add(
 		final ICustomWidgetFactory<WIDGET_TYPE> factory,
 		final Object layoutConstraints) {
 		return compositeWidget.add(factory, layoutConstraints);

@@ -28,10 +28,10 @@
 
 package org.jowidgets.common.widgets.factory;
 
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 
 public interface IWidgetFactoryListener {
 
-	void widgetCreated(IWidget widget);
+	void widgetCreated(IWidgetCommon widget);
 
 }

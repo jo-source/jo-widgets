@@ -29,7 +29,7 @@ package org.jowidgets.api.widgets;
 
 import org.jowidgets.common.widgets.IWindowWidgetCommon;
 
-public interface IWindowWidget extends IWindowWidgetCommon {
+public interface IWindowWidget extends IWindowWidgetCommon, IWidget {
 
 	/**
 	 * Centers the location relative to the parent window or desktop

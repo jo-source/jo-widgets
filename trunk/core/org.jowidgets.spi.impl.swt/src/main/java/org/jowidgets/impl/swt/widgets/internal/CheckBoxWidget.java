@@ -35,7 +35,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.util.ColorSettingsInvoker;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.util.AlignmentConvert;
 import org.jowidgets.impl.swt.util.FontProvider;
@@ -44,11 +44,11 @@ import org.jowidgets.spi.widgets.setup.ICheckBoxSetupSpi;
 
 public class CheckBoxWidget extends AbstractSwtInputWidget implements ICheckBoxWidgetSpi {
 
-	public CheckBoxWidget(final IColorCache colorCache, final IWidget parent, final ICheckBoxSetupSpi setup) {
+	public CheckBoxWidget(final IColorCache colorCache, final IWidgetCommon parent, final ICheckBoxSetupSpi setup) {
 		this(colorCache, parent, new Button((Composite) parent.getUiReference(), SWT.NONE | SWT.CHECK), setup);
 	}
 
-	public CheckBoxWidget(final IColorCache colorCache, final IWidget parent, final Button button, final ICheckBoxSetupSpi setup) {
+	public CheckBoxWidget(final IColorCache colorCache, final IWidgetCommon parent, final Button button, final ICheckBoxSetupSpi setup) {
 		super(colorCache, button);
 
 		setText(setup.getText());

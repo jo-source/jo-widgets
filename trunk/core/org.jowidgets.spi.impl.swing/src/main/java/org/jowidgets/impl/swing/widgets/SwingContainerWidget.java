@@ -33,7 +33,7 @@ import java.awt.Container;
 import net.miginfocom.swing.MigLayout;
 
 import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
@@ -106,7 +106,7 @@ public class SwingContainerWidget implements IContainerWidgetSpi {
 	}
 
 	@Override
-	public final <WIDGET_TYPE extends IWidget> WIDGET_TYPE add(
+	public final <WIDGET_TYPE extends IWidgetCommon> WIDGET_TYPE add(
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object cellConstraints) {
 
@@ -116,13 +116,13 @@ public class SwingContainerWidget implements IContainerWidgetSpi {
 	}
 
 	@Override
-	public final <WIDGET_TYPE extends IWidget> WIDGET_TYPE add(
+	public final <WIDGET_TYPE extends IWidgetCommon> WIDGET_TYPE add(
 		final ICustomWidgetFactory<WIDGET_TYPE> customFactory,
 		final Object cellConstraints) {
 
 		final IWidgetFactory<WIDGET_TYPE, IWidgetDescriptor<? extends WIDGET_TYPE>> widgetFactory = new IWidgetFactory<WIDGET_TYPE, IWidgetDescriptor<? extends WIDGET_TYPE>>() {
 			@Override
-			public WIDGET_TYPE create(final IWidget parent, final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+			public WIDGET_TYPE create(final IWidgetCommon parent, final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
 				return factory.create(parent, descriptor);
 			}
 		};
@@ -151,7 +151,7 @@ public class SwingContainerWidget implements IContainerWidgetSpi {
 		return factory;
 	}
 
-	private void addToContainer(final IWidget widget, final Object cellConstraints) {
+	private void addToContainer(final IWidgetCommon widget, final Object cellConstraints) {
 		if (cellConstraints != null) {
 			container.add((Component) (widget.getUiReference()), cellConstraints);
 		}

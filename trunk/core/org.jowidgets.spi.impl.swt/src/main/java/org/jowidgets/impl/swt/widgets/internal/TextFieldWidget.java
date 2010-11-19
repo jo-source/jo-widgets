@@ -33,14 +33,14 @@ import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 import org.jowidgets.common.util.ColorSettingsInvoker;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.spi.verify.IInputVerifier;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 
 public class TextFieldWidget extends AbstractSwtTextInputWidget {
 
-	public TextFieldWidget(final IColorCache colorCache, final IWidget parent, final ITextFieldSetupSpi setup) {
+	public TextFieldWidget(final IColorCache colorCache, final IWidgetCommon parent, final ITextFieldSetupSpi setup) {
 		super(colorCache, createText(parent, setup.isPasswordPresentation()));
 
 		final IInputVerifier inputModifier = setup.getInputVerifier();
@@ -91,7 +91,7 @@ public class TextFieldWidget extends AbstractSwtTextInputWidget {
 		getUiReference().setEditable(editable);
 	}
 
-	private static Text createText(final IWidget parent, final boolean passwordPresentation) {
+	private static Text createText(final IWidgetCommon parent, final boolean passwordPresentation) {
 		if (passwordPresentation) {
 			return new Text((Composite) parent.getUiReference(), SWT.BORDER | SWT.PASSWORD);
 		}

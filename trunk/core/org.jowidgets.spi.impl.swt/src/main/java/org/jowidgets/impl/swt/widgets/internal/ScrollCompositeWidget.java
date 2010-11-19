@@ -37,7 +37,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Layout;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.util.ColorSettingsInvoker;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
@@ -58,7 +58,7 @@ public class ScrollCompositeWidget implements IScrollContainerWidgetSpi {
 	public ScrollCompositeWidget(
 		final IGenericWidgetFactory factory,
 		final IColorCache colorCache,
-		final IWidget parent,
+		final IWidgetCommon parent,
 		final IScrollCompositeSetupSpi setup) {
 
 		this.mustChangeScrollCompositeMinSize = true;
@@ -140,7 +140,7 @@ public class ScrollCompositeWidget implements IScrollContainerWidgetSpi {
 	}
 
 	@Override
-	public final <WIDGET_TYPE extends IWidget> WIDGET_TYPE add(
+	public final <WIDGET_TYPE extends IWidgetCommon> WIDGET_TYPE add(
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object cellConstraints) {
 		mustChangeScrollCompositeMinSize = true;
@@ -148,7 +148,7 @@ public class ScrollCompositeWidget implements IScrollContainerWidgetSpi {
 	}
 
 	@Override
-	public final <WIDGET_TYPE extends IWidget> WIDGET_TYPE add(
+	public final <WIDGET_TYPE extends IWidgetCommon> WIDGET_TYPE add(
 		final ICustomWidgetFactory<WIDGET_TYPE> factory,
 		final Object cellConstraints) {
 		mustChangeScrollCompositeMinSize = true;

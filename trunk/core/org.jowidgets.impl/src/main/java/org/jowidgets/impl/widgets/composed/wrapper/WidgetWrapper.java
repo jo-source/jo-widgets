@@ -28,14 +28,14 @@
 package org.jowidgets.impl.widgets.composed.wrapper;
 
 import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.util.Assert;
 
-public class WidgetWrapper implements IWidget {
+public class WidgetWrapper implements IWidgetCommon {
 
-	private final IWidget widget;
+	private final IWidgetCommon widget;
 
-	public WidgetWrapper(final IWidget widget) {
+	public WidgetWrapper(final IWidgetCommon widget) {
 		Assert.paramNotNull(widget, "widget");
 		this.widget = widget;
 	}

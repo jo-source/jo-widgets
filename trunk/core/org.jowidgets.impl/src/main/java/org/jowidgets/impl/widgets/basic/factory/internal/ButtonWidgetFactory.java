@@ -30,7 +30,7 @@ package org.jowidgets.impl.widgets.basic.factory.internal;
 
 import org.jowidgets.api.widgets.IButtonWidget;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
-import org.jowidgets.common.widgets.IWidget;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
@@ -50,7 +50,7 @@ public class ButtonWidgetFactory extends AbstractWidgetFactory implements IWidge
 	}
 
 	@Override
-	public IButtonWidget create(final IWidget parent, final IButtonDescriptor descriptor) {
+	public IButtonWidget create(final IWidgetCommon parent, final IButtonDescriptor descriptor) {
 		final IButtonBluePrintSpi bp = getSpiBluePrintFactory().button().setSetup(descriptor);
 		final IButtonWidgetSpi buttonWidgetSpi = getSpiWidgetFactory().createButtonWidget(parent, bp);
 		return new ButtonWidget(parent, buttonWidgetSpi, descriptor);
