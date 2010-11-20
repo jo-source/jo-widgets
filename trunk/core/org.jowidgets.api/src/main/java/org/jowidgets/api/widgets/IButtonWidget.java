@@ -29,6 +29,6 @@ package org.jowidgets.api.widgets;
 
 import org.jowidgets.common.widgets.IButtonWidgetCommon;
 
-public interface IButtonWidget extends IButtonWidgetCommon, IActionWidget {
+public interface IButtonWidget extends IButtonWidgetCommon, ILabelWidget, IActionWidget {
 
 }

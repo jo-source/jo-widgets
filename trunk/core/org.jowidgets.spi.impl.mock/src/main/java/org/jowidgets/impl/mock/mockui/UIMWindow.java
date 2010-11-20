@@ -36,6 +36,7 @@ public class UIMWindow extends UIMContainer {
 	public UIMWindow(final UIMWindow parent) {
 		super();
 		this.parent = parent;
+		setVisible(false);
 	}
 
 	public void setIconImage(final UIMImage image) {

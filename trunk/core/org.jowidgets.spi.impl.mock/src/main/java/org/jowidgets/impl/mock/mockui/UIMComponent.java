@@ -39,7 +39,7 @@ public class UIMComponent extends UIMObservable {
 	private IColorConstant foregroundColor;
 	private IColorConstant backgroundColor;
 	private String tooltipText;
-	private boolean visible = false;
+	private boolean visible = true;
 	private boolean enabled = true;
 
 	public void redraw() {}

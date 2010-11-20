@@ -30,11 +30,19 @@ package org.jowidgets.api.test;
 
 import junit.framework.JUnit4TestAdapter;
 
+import org.jowidgets.api.color.Colors;
+import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IButtonWidget;
 import org.jowidgets.api.widgets.IFrameWidget;
+import org.jowidgets.api.widgets.ILabelWidget;
+import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.api.widgets.IWindowWidget;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
+import org.jowidgets.common.types.Markup;
+import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.junit.Assert;
@@ -60,26 +68,11 @@ public class WidgetFactoryTest {
 					}
 				});
 
-				frame.add(bpF.button(), null);
-				frame.add(bpF.checkBox(), null);
-				frame.add(bpF.comboBox(new String[] {}), null);
-				frame.add(bpF.comboBoxSelection(new String[] {}), null);
-				frame.add(bpF.composite(), null);
-				frame.add(bpF.icon(), null);
-				frame.add(bpF.inputFieldString(), null);
-				frame.add(bpF.label(), null);
-				frame.add(bpF.progressBar(), null);
-				frame.add(bpF.scrollComposite(), null);
-				frame.add(bpF.separator(), null);
-				frame.add(bpF.splitComposite(), null);
-				frame.add(bpF.textField(), null);
-				frame.add(bpF.textLabel(), null);
-				frame.add(bpF.textSeparator(), null);
-				frame.add(bpF.toggleButton(), null);
-				frame.add(bpF.validationLabel(), null);
+				//create each widget and check it
+				createWidgets(frame);
 
-				gwF.create(frame.getUiReference(), bpF.dialog());
-				gwF.create(frame.getUiReference(), bpF.frame());
+				checkWindowWidget(frame, gwF.create(frame.getUiReference(), bpF.dialog()));
+				checkWindowWidget(frame, gwF.create(frame.getUiReference(), bpF.frame()));
 
 				frame.setVisible(true);
 
@@ -88,6 +81,79 @@ public class WidgetFactoryTest {
 				frame.close();
 			}
 		});
+	}
+
+	private void createWidgets(final IFrameWidget frame) {
+		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
+		testButtonWidget(frame, frame.add(bpF.button(), null));
+		testWidget(frame, frame.add(bpF.checkBox(), null));
+		testWidget(frame, frame.add(bpF.comboBox(new String[] {}), null));
+		testWidget(frame, frame.add(bpF.comboBoxSelection(new String[] {}), null));
+		testWidget(frame, frame.add(bpF.composite(), null));
+		testWidget(frame, frame.add(bpF.icon(), null));
+		testWidget(frame, frame.add(bpF.inputFieldString(), null));
+		testWidget(frame, frame.add(bpF.label(), null));
+		testWidget(frame, frame.add(bpF.progressBar(), null));
+		testWidget(frame, frame.add(bpF.scrollComposite(), null));
+		testWidget(frame, frame.add(bpF.separator(), null));
+		testWidget(frame, frame.add(bpF.splitComposite(), null));
+		testWidget(frame, frame.add(bpF.textField(), null));
+		testWidget(frame, frame.add(bpF.textLabel(), null));
+		testWidget(frame, frame.add(bpF.textSeparator(), null));
+		testWidget(frame, frame.add(bpF.toggleButton(), null));
+		testWidget(frame, frame.add(bpF.validationLabel(), null));
+	}
+
+	private void testWidget(final IWidget parent, final IWidget widget) {
+		Assert.assertNotNull(widget);
+		Assert.assertNotNull(widget.getUiReference());
+		Assert.assertTrue(widget.isVisible());
+		widget.setVisible(false);
+		Assert.assertFalse(widget.isVisible());
+		widget.setVisible(true);
+		Assert.assertTrue(widget.isVisible());
+
+		widget.setBackgroundColor(Colors.DEFAULT);
+		widget.setForegroundColor(Colors.STRONG);
+		widget.redraw();
+
+		//FIXME fix this test
+		//Assert.assertTrue(widget.getParent() == parent);
+	}
+
+	private void checkWindowWidget(final IWidget parent, final IWindowWidget widget) {
+		Assert.assertNotNull(widget);
+		Assert.assertNotNull(widget.getUiReference());
+
+		//FIXME fix this test
+		//Assert.assertTrue(widget.getParent() == parent);
+	}
+
+	private void testButtonWidget(final IWidget parent, final IButtonWidget widget) {
+		testLabelWidget(parent, widget);
+		final IActionListener listener = new IActionListener() {
+
+			@Override
+			public void actionPerformed() {
+
+			}
+		};
+
+		widget.addActionListener(listener);
+
+		//TODO push button and check listener
+
+		widget.removeActionListener(listener);
+
+		//TODO push button and check listener not invoked
+	}
+
+	private void testLabelWidget(final IWidget parent, final ILabelWidget widget) {
+		testWidget(parent, widget);
+		widget.setIcon(Icons.ERROR);
+		widget.setMarkup(Markup.STRONG);
+		widget.setText("Test");
+		widget.setToolTipText("TooltipTest");
 	}
 
 	public static junit.framework.Test suite() {
