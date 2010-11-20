@@ -29,5 +29,23 @@
 			<artifactId>org.jowidgets.spi.impl.swt</artifactId>
 			<version>0.0.3-SNAPSHOT</version>
 		</dependency>
+		
+		<!-- headfull (GUI) test dependencies -->
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.examples.common</artifactId>
+			<version>0.0.3-SNAPSHOT</version>
+			<type>test-jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.api.test</artifactId>
+			<version>0.0.3-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.2</version>
+		</dependency>
 	</dependencies>
 </project>

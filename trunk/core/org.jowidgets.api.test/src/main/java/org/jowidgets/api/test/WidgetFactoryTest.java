@@ -68,15 +68,14 @@ public class WidgetFactoryTest {
 					}
 				});
 
+				frame.setVisible(true);
+				Assert.assertTrue(frame.isVisible());
+
 				//create each widget and check it
 				createWidgets(frame);
 
 				checkWindowWidget(frame, gwF.create(frame.getUiReference(), bpF.dialog()));
 				checkWindowWidget(frame, gwF.create(frame.getUiReference(), bpF.frame()));
-
-				frame.setVisible(true);
-
-				Assert.assertTrue(frame.isVisible());
 
 				frame.close();
 			}

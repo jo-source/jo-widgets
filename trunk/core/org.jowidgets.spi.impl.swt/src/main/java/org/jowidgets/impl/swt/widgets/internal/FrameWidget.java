@@ -50,7 +50,9 @@ public class FrameWidget extends SwtWindowWidget implements IFrameWidgetSpi {
 		super(factory, colorCache, parentUiReference != null ? new Shell((Shell) parentUiReference, getStyle(setup)) : new Shell(
 			getStyle(setup)));
 
-		getUiReference().setText(setup.getTitle());
+		if (setup.getTitle() != null) {
+			getUiReference().setText(setup.getTitle());
+		}
 		setLayout(setup.getLayout());
 		setIcon(imageRegistry, setup.getIcon());
 		ColorSettingsInvoker.setColors(setup, this);
