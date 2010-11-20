@@ -113,6 +113,8 @@ public class WidgetFactoryTest {
 		widget.setForegroundColor(Colors.STRONG);
 		widget.redraw();
 		testParent(parent, widget);
+
+		Assert.assertNotNull(Toolkit.getWidgetUtils().getWindowAncestor(widget));
 	}
 
 	private void testChildWindowWidget(final IWidget parent, final IWindowWidget widget) {
@@ -149,7 +151,6 @@ public class WidgetFactoryTest {
 	}
 
 	private void testParent(final IWidget parent, final IWidget child) {
-		//FIXME fix widgets so that test is successful
 		Assert.assertNotNull(child.getParent());
 		Assert.assertTrue(parent == child.getParent());
 	}
