@@ -34,6 +34,7 @@ import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButtonWidget;
+import org.jowidgets.api.widgets.ICompositeWidget;
 import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.ILabelWidget;
 import org.jowidgets.api.widgets.IWidget;
@@ -50,16 +51,17 @@ import org.junit.Test;
 
 public class WidgetFactoryTest {
 
+	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
+	private static final IGenericWidgetFactory GWF = Toolkit.getWidgetFactory();
+
 	@Test
 	public void createWidgetsTest() {
 		Toolkit.getApplicationRunner().run(new IApplication() {
 
 			@Override
 			public void start(final IApplicationLifecycle lifecycle) {
-				final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
-				final IGenericWidgetFactory gwF = Toolkit.getWidgetFactory();
 
-				final IFrameWidget frame = gwF.create(bpF.frame());
+				final IFrameWidget frame = GWF.create(BPF.frame());
 				frame.addWindowListener(new WindowAdapter() {
 
 					@Override
@@ -71,39 +73,45 @@ public class WidgetFactoryTest {
 				frame.setVisible(true);
 				Assert.assertTrue(frame.isVisible());
 
-				//create each widget and check it
 				createWidgets(frame);
-
-				checkWindowWidget(frame, gwF.create(frame.getUiReference(), bpF.dialog()));
-				checkWindowWidget(frame, gwF.create(frame.getUiReference(), bpF.frame()));
 
 				frame.close();
 			}
 		});
 	}
 
-	private void createWidgets(final IFrameWidget frame) {
-		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
-		testButtonWidget(frame, frame.add(bpF.button(), null));
-		testWidget(frame, frame.add(bpF.checkBox(), null));
-		testWidget(frame, frame.add(bpF.comboBox(new String[] {}), null));
-		testWidget(frame, frame.add(bpF.comboBoxSelection(new String[] {}), null));
-		testWidget(frame, frame.add(bpF.composite(), null));
-		testWidget(frame, frame.add(bpF.icon(), null));
-		testWidget(frame, frame.add(bpF.inputFieldString(), null));
-		testWidget(frame, frame.add(bpF.label(), null));
-		testWidget(frame, frame.add(bpF.progressBar(), null));
-		testWidget(frame, frame.add(bpF.scrollComposite(), null));
-		testWidget(frame, frame.add(bpF.separator(), null));
-		testWidget(frame, frame.add(bpF.splitComposite(), null));
-		testWidget(frame, frame.add(bpF.textField(), null));
-		testWidget(frame, frame.add(bpF.textLabel(), null));
-		testWidget(frame, frame.add(bpF.textSeparator(), null));
-		testWidget(frame, frame.add(bpF.toggleButton(), null));
-		testWidget(frame, frame.add(bpF.validationLabel(), null));
+	private void createWidgets(final ICompositeWidget composite) {
+		createChildWidgets(composite);
+
+		createChildWidgets(composite.add(BPF.composite(), null));
+		createChildWidgets(composite.add(BPF.scrollComposite(), null));
+
+		testChildWindowWidget(composite, GWF.create(composite.getUiReference(), BPF.dialog()));
+		testChildWindowWidget(composite, GWF.create(composite.getUiReference(), BPF.frame()));
 	}
 
-	private void testWidget(final IWidget parent, final IWidget widget) {
+	private void createChildWidgets(final ICompositeWidget composite) {
+		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
+		testButtonWidget(composite, composite.add(bpF.button(), null));
+		testChildWidget(composite, composite.add(bpF.checkBox(), null));
+		testChildWidget(composite, composite.add(bpF.comboBox(new String[] {}), null));
+		testChildWidget(composite, composite.add(bpF.comboBoxSelection(new String[] {}), null));
+		testChildWidget(composite, composite.add(bpF.composite(), null));
+		testChildWidget(composite, composite.add(bpF.icon(), null));
+		testChildWidget(composite, composite.add(bpF.inputFieldString(), null));
+		testChildWidget(composite, composite.add(bpF.label(), null));
+		testChildWidget(composite, composite.add(bpF.progressBar(), null));
+		testChildWidget(composite, composite.add(bpF.scrollComposite(), null));
+		testChildWidget(composite, composite.add(bpF.separator(), null));
+		testChildWidget(composite, composite.add(bpF.splitComposite(), null));
+		testChildWidget(composite, composite.add(bpF.textField(), null));
+		testChildWidget(composite, composite.add(bpF.textLabel(), null));
+		testChildWidget(composite, composite.add(bpF.textSeparator(), null));
+		testChildWidget(composite, composite.add(bpF.toggleButton(), null));
+		testChildWidget(composite, composite.add(bpF.validationLabel(), null));
+	}
+
+	private void testChildWidget(final IWidget parent, final IWidget widget) {
 		Assert.assertNotNull(widget);
 		Assert.assertNotNull(widget.getUiReference());
 		Assert.assertTrue(widget.isVisible());
@@ -115,17 +123,13 @@ public class WidgetFactoryTest {
 		widget.setBackgroundColor(Colors.DEFAULT);
 		widget.setForegroundColor(Colors.STRONG);
 		widget.redraw();
-
-		//FIXME fix this test
-		//Assert.assertTrue(widget.getParent() == parent);
+		testParent(parent, widget);
 	}
 
-	private void checkWindowWidget(final IWidget parent, final IWindowWidget widget) {
+	private void testChildWindowWidget(final IWidget parent, final IWindowWidget widget) {
 		Assert.assertNotNull(widget);
 		Assert.assertNotNull(widget.getUiReference());
-
-		//FIXME fix this test
-		//Assert.assertTrue(widget.getParent() == parent);
+		testParent(parent, widget);
 	}
 
 	private void testButtonWidget(final IWidget parent, final IButtonWidget widget) {
@@ -148,11 +152,17 @@ public class WidgetFactoryTest {
 	}
 
 	private void testLabelWidget(final IWidget parent, final ILabelWidget widget) {
-		testWidget(parent, widget);
+		testChildWidget(parent, widget);
 		widget.setIcon(Icons.ERROR);
 		widget.setMarkup(Markup.STRONG);
 		widget.setText("Test");
 		widget.setToolTipText("TooltipTest");
+	}
+
+	private void testParent(final IWidget parent, final IWidget child) {
+		//FIXME fix widgets so that test is successful
+		//		Assert.assertNotNull(child.getParent());
+		//		Assert.assertTrue(parent == child.getParent());
 	}
 
 	public static junit.framework.Test suite() {
