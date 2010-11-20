@@ -29,10 +29,10 @@ package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.widgets.IInputWidget;
+import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IInputFieldSetup;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.util.ColorSettingsInvoker;
-import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 
 public class InputFieldWidget<VALUE_TYPE> extends AbstractComposedInputWidget<VALUE_TYPE> {
@@ -63,8 +63,18 @@ public class InputFieldWidget<VALUE_TYPE> extends AbstractComposedInputWidget<VA
 	}
 
 	@Override
-	public IWidgetCommon getParent() {
+	public IWidget getParent() {
 		return textFieldWidget.getParent();
+	}
+
+	@Override
+	public void setParent(final IWidget parent) {
+		textFieldWidget.setParent(parent);
+	}
+
+	@Override
+	public boolean isReparentable() {
+		return textFieldWidget.isReparentable();
 	}
 
 	@Override

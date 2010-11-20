@@ -29,11 +29,11 @@ package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.widgets.ICompositeWidget;
 import org.jowidgets.api.widgets.IProgressBarWidget;
+import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IProgressBarSetup;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Orientation;
 import org.jowidgets.common.util.ColorSettingsInvoker;
-import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
@@ -125,8 +125,18 @@ public class ProgressBarWidget implements IProgressBarWidget {
 	}
 
 	@Override
-	public IWidgetCommon getParent() {
+	public IWidget getParent() {
 		return compositeWidget.getParent();
+	}
+
+	@Override
+	public void setParent(final IWidget parent) {
+		compositeWidget.setParent(parent);
+	}
+
+	@Override
+	public boolean isReparentable() {
+		return compositeWidget.isReparentable();
 	}
 
 	@Override

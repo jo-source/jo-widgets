@@ -52,7 +52,7 @@ public class CheckBoxWidgetFactory extends AbstractWidgetFactory implements IWid
 	public ICheckBoxWidget create(final Object parentUiReference, final ICheckBoxDescriptor descriptor) {
 		final ICheckBoxBluePrintSpi bp = getSpiBluePrintFactory().checkBox().setSetup(descriptor);
 		final ICheckBoxWidgetSpi widget = getSpiWidgetFactory().createCheckBoxWidget(parentUiReference, bp);
-		return new CheckBoxWidget(null, widget, descriptor);
+		return new CheckBoxWidget(widget, descriptor);
 	}
 
 }

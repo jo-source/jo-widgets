@@ -55,7 +55,7 @@ public class DialogWidgetFactory extends AbstractWidgetFactory implements IWidge
 				getGenericWidgetFactory(),
 				parentUiReference,
 				bp);
-		return new DialogWidget(null, frameSpi, descriptor);
+		return new DialogWidget(frameSpi, descriptor);
 	}
 
 }

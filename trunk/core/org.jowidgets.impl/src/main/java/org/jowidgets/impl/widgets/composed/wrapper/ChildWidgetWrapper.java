@@ -28,7 +28,6 @@
 package org.jowidgets.impl.widgets.composed.wrapper;
 
 import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.util.Assert;
 
 public class ChildWidgetWrapper extends WidgetWrapper implements IWidget {
@@ -42,8 +41,18 @@ public class ChildWidgetWrapper extends WidgetWrapper implements IWidget {
 	}
 
 	@Override
-	public IWidgetCommon getParent() {
+	public IWidget getParent() {
 		return widget.getParent();
+	}
+
+	@Override
+	public void setParent(final IWidget parent) {
+		widget.setParent(parent);
+	}
+
+	@Override
+	public boolean isReparentable() {
+		return widget.isReparentable();
 	}
 
 }

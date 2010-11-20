@@ -30,18 +30,18 @@ package org.jowidgets.examples.common.demo;
 
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButtonWidget;
+import org.jowidgets.api.widgets.ICompositeWidget;
 import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.IInputDialogWidget;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.IContainerWidgetCommon;
 import org.jowidgets.common.widgets.IWindowWidgetCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
 public class DemoMainComposite {
 
-	public DemoMainComposite(final IContainerWidgetCommon parentContainer) {
+	public DemoMainComposite(final ICompositeWidget parentContainer) {
 
 		final IWindowWidgetCommon parentWindow = Toolkit.getWidgetUtils().getWindowAncestor(parentContainer);
 

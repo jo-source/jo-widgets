@@ -29,14 +29,11 @@
 package org.jowidgets.impl.widgets.common.wrapper;
 
 import org.jowidgets.common.widgets.IFrameWidgetCommon;
-import org.jowidgets.common.widgets.IWidgetCommon;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 
-public class FrameWidgetCommonWrapper extends WindowWidgetCommonWrapper implements IFrameWidgetCommon {
+public abstract class AbstractFrameWidgetCommonWrapper extends AbstractWindowWidgetCommonWrapper implements IFrameWidgetCommon {
 
-	public FrameWidgetCommonWrapper(final IFrameWidgetCommon widget) {
+	public AbstractFrameWidgetCommonWrapper(final IFrameWidgetCommon widget) {
 		super(widget);
 	}
 
@@ -63,20 +60,6 @@ public class FrameWidgetCommonWrapper extends WindowWidgetCommonWrapper implemen
 	@Override
 	public void removeAll() {
 		getWidget().removeAll();
-	}
-
-	@Override
-	public <WIDGET_TYPE extends IWidgetCommon> WIDGET_TYPE add(
-		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
-		final Object layoutConstraints) {
-		return getWidget().add(descriptor, layoutConstraints);
-	}
-
-	@Override
-	public <WIDGET_TYPE extends IWidgetCommon> WIDGET_TYPE add(
-		final ICustomWidgetFactory<WIDGET_TYPE> factory,
-		final Object layoutConstraints) {
-		return getWidget().add(factory, layoutConstraints);
 	}
 
 }

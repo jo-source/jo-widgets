@@ -58,7 +58,7 @@ public class SplitCompositeWidgetFactory extends AbstractWidgetFactory implement
 				parentUiReference,
 				bp);
 
-		return new SplitCompositeWidget(null, splitConatinerSpi, descriptor);
+		return new SplitCompositeWidget(splitConatinerSpi, descriptor);
 	}
 
 }

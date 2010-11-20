@@ -29,8 +29,8 @@
 package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.widgets.IButtonWidget;
+import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
-import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.ButtonWidgetCommonWrapper;
@@ -40,16 +40,26 @@ public class ButtonWidget extends ButtonWidgetCommonWrapper implements IButtonWi
 
 	private final ChildWidgetDelegate childWidgetDelegate;
 
-	public ButtonWidget(final IWidgetCommon parent, final IButtonWidgetSpi buttonWidgetSpi, final IButtonDescriptor descriptor) {
+	public ButtonWidget(final IButtonWidgetSpi buttonWidgetSpi, final IButtonDescriptor descriptor) {
 		super(buttonWidgetSpi);
-		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
+		this.childWidgetDelegate = new ChildWidgetDelegate();
 		setEnabled(descriptor.isEnabled());
 		VisibiliySettingsInvoker.setVisibility(descriptor, this);
 	}
 
 	@Override
-	public IWidgetCommon getParent() {
+	public IWidget getParent() {
 		return childWidgetDelegate.getParent();
+	}
+
+	@Override
+	public void setParent(final IWidget parent) {
+		childWidgetDelegate.setParent(parent);
+	}
+
+	@Override
+	public boolean isReparentable() {
+		return childWidgetDelegate.isReparentable();
 	}
 
 }

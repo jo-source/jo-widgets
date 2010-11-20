@@ -60,7 +60,7 @@ public class ComboBoxWidgetFactory extends AbstractWidgetFactory implements
 		bp.setInputVerifier(new InputVerifier(descriptor.getStringObjectConverter()));
 
 		final IComboBoxWidgetSpi widget = getSpiWidgetFactory().createComboBoxWidget(parentUiReference, bp);
-		final IComboBoxWidget<?> result = new ComboBoxWidget(null, widget, descriptor);
+		final IComboBoxWidget<?> result = new ComboBoxWidget(widget, descriptor);
 		return result;
 	}
 

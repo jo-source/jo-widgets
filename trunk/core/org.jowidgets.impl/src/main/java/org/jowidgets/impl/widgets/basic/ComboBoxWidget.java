@@ -33,7 +33,6 @@ import org.jowidgets.api.validation.ITextInputValidator;
 import org.jowidgets.api.validation.IValidateable;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.descriptor.setup.IComboBoxSetup;
-import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;
 
 public class ComboBoxWidget<VALUE_TYPE> extends ComboBoxSelectionWidget<VALUE_TYPE> {
@@ -42,8 +41,8 @@ public class ComboBoxWidget<VALUE_TYPE> extends ComboBoxSelectionWidget<VALUE_TY
 	private final IStringObjectConverter<VALUE_TYPE> stringObjectConverter;
 	private final ITextInputValidator textInputValidator;
 
-	public ComboBoxWidget(final IWidgetCommon parent, final IComboBoxWidgetSpi comboBoxWidgetSpi, final IComboBoxSetup<VALUE_TYPE> setup) {
-		super(parent, comboBoxWidgetSpi, setup);
+	public ComboBoxWidget(final IComboBoxWidgetSpi comboBoxWidgetSpi, final IComboBoxSetup<VALUE_TYPE> setup) {
+		super(comboBoxWidgetSpi, setup);
 
 		this.comboBoxWidgetSpi = comboBoxWidgetSpi;
 		this.stringObjectConverter = setup.getStringObjectConverter();

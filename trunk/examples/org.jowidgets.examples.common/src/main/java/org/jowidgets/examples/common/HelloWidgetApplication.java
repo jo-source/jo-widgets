@@ -46,8 +46,6 @@ import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.widgets.IActionWidgetCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
-import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 
 public class HelloWidgetApplication implements IApplication {
 
@@ -65,22 +63,12 @@ public class HelloWidgetApplication implements IApplication {
 	@Override
 	public void start(final IApplicationLifecycle lifecycle) {
 
-		final IGenericWidgetFactory factory = Toolkit.getWidgetFactory();
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 
 		// create the root window
 		final IFrameBluePrint frameBp = bpF.frame().setTitle(rootFrameTitle);
 		frameBp.setMigLayout("[left, grow]", "[top, grow]");
-		rootFrame = factory.create(frameBp);
-
-		rootFrame.addWindowListener(new WindowAdapter() {
-
-			@Override
-			public void windowClosed() {
-				lifecycle.finish();
-			}
-
-		});
+		rootFrame = Toolkit.createRootFrame(frameBp, lifecycle);
 
 		// create dialog
 		final IInputDialogWidget<String> dialog = createDialogWidget(bpF);

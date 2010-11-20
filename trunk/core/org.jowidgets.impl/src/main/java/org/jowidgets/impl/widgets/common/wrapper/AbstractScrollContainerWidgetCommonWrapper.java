@@ -26,38 +26,21 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.basic;
+package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.api.widgets.IIconWidget;
-import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.descriptor.setup.IIconSetup;
-import org.jowidgets.common.widgets.IIconWidgetCommon;
-import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.impl.widgets.common.wrapper.IconWidgetCommonWrapper;
+import org.jowidgets.common.widgets.IContainerWidgetCommon;
+import org.jowidgets.common.widgets.IScrollCompositeWidgetCommon;
 
-public class IconWidget extends IconWidgetCommonWrapper implements IIconWidget {
+public abstract class AbstractScrollContainerWidgetCommonWrapper extends AbstractContainerWidgetCommonWrapper implements
+		IScrollCompositeWidgetCommon {
 
-	private final ChildWidgetDelegate childWidgetDelegate;
-
-	public IconWidget(final IIconWidgetCommon iconWidgetCi, final IIconSetup setup) {
-		super(iconWidgetCi);
-		this.childWidgetDelegate = new ChildWidgetDelegate();
-		VisibiliySettingsInvoker.setVisibility(setup, this);
+	public AbstractScrollContainerWidgetCommonWrapper(final IContainerWidgetCommon widget) {
+		super(widget);
 	}
 
 	@Override
-	public IWidget getParent() {
-		return childWidgetDelegate.getParent();
+	protected IScrollCompositeWidgetCommon getWidget() {
+		return (IScrollCompositeWidgetCommon) super.getWidget();
 	}
 
-	@Override
-	public void setParent(final IWidget parent) {
-		childWidgetDelegate.setParent(parent);
-	}
-
-	@Override
-	public boolean isReparentable() {
-		return childWidgetDelegate.isReparentable();
-	}
 }

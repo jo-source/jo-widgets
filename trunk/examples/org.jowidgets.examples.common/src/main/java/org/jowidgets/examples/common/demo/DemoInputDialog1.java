@@ -33,6 +33,7 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IComboBoxWidget;
+import org.jowidgets.api.widgets.ICompositeWidget;
 import org.jowidgets.api.widgets.IInputDialogWidget;
 import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.IValidationLabelWidget;
@@ -44,14 +45,13 @@ import org.jowidgets.api.widgets.blueprint.IValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
-import org.jowidgets.common.widgets.IContainerWidgetCommon;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
 public class DemoInputDialog1 {
 
 	private final IInputDialogWidget<String> inputDialog;
 
-	public DemoInputDialog1(final IContainerWidgetCommon parent) {
+	public DemoInputDialog1(final ICompositeWidget parent) {
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 		final IInputDialogBluePrint<String> inputDialogBp = bpF.inputDialog(new DemoInputDialogContent());
 		inputDialogBp.setTitle("Input dialog demo");

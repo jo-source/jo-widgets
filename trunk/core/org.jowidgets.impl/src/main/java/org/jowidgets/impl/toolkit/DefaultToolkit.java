@@ -36,11 +36,15 @@ import org.jowidgets.api.toolkit.IQuestionPane;
 import org.jowidgets.api.toolkit.IToolkit;
 import org.jowidgets.api.toolkit.IWidgetWrapperFactory;
 import org.jowidgets.api.utils.IWidgetUtils;
+import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
+import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.threads.IUiThreadAccess;
 import org.jowidgets.common.widgets.IWindowWidgetCommon;
+import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.application.ApplicationRunner;
 import org.jowidgets.impl.convert.DefaultConverterProvider;
@@ -155,6 +159,25 @@ public class DefaultToolkit implements IToolkit {
 	@Override
 	public IWidgetUtils getWidgetUtils() {
 		return widgetUtils;
+	}
+
+	@Override
+	public IFrameWidget createRootFrame(final IFrameDescriptor setup) {
+		return genericWidgetFactory.create(setup);
+	}
+
+	@Override
+	public IFrameWidget createRootFrame(final IFrameDescriptor descriptor, final IApplicationLifecycle lifecycle) {
+		final IFrameWidget result = genericWidgetFactory.create(descriptor);
+		result.addWindowListener(new WindowAdapter() {
+
+			@Override
+			public void windowClosed() {
+				lifecycle.finish();
+			}
+
+		});
+		return result;
 	}
 
 }

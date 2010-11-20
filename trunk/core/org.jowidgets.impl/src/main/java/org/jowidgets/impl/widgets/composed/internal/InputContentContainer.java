@@ -31,6 +31,7 @@ import org.jowidgets.api.validation.IValidateable;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.ICompositeWidget;
 import org.jowidgets.api.widgets.IInputWidget;
+import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
@@ -90,8 +91,18 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractComposedInputWidg
 	}
 
 	@Override
-	public IWidgetCommon getParent() {
+	public IWidget getParent() {
 		return compositeWidget.getParent();
+	}
+
+	@Override
+	public void setParent(final IWidget parent) {
+		compositeWidget.setParent(parent);
+	}
+
+	@Override
+	public boolean isReparentable() {
+		return compositeWidget.isReparentable();
 	}
 
 	@Override

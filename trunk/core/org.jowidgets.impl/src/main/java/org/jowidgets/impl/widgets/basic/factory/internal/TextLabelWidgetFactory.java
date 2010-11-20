@@ -53,7 +53,7 @@ public class TextLabelWidgetFactory extends AbstractWidgetFactory implements
 	public ITextLabelWidget create(final Object parentUiReference, final ITextLabelDescriptor descriptor) {
 		final ITextLabelBluePrintSpi bp = getSpiBluePrintFactory().textLabel().setSetup(descriptor);
 		final ITextLabelWidgetSpi textLabelSpi = getSpiWidgetFactory().createTextLabelWidget(parentUiReference, bp);
-		return new TextLabelWidget(null, textLabelSpi, descriptor);
+		return new TextLabelWidget(textLabelSpi, descriptor);
 	}
 
 }

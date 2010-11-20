@@ -58,7 +58,7 @@ public class TextFieldWidgetFactory extends AbstractWidgetFactory implements
 
 		final ITextInputWidgetSpi textFieldSpi = getSpiWidgetFactory().createTextFieldWidget(parentUiReference, bp);
 
-		final IInputWidget<String> result = new TextInputWidget(null, textFieldSpi, descriptor);
+		final IInputWidget<String> result = new TextInputWidget(textFieldSpi, descriptor);
 		result.addValidator(descriptor.getTextInputValidator());
 		return result;
 	}

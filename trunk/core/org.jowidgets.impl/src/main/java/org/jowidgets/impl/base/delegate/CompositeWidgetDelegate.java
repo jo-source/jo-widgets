@@ -26,38 +26,45 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.basic;
+package org.jowidgets.impl.base.delegate;
 
-import org.jowidgets.api.widgets.IIconWidget;
 import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.descriptor.setup.IIconSetup;
-import org.jowidgets.common.widgets.IIconWidgetCommon;
-import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.impl.widgets.common.wrapper.IconWidgetCommonWrapper;
+import org.jowidgets.common.widgets.IContainerWidgetCommon;
+import org.jowidgets.common.widgets.IWidgetCommon;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
+import org.jowidgets.util.Assert;
 
-public class IconWidget extends IconWidgetCommonWrapper implements IIconWidget {
+public class CompositeWidgetDelegate {
 
-	private final ChildWidgetDelegate childWidgetDelegate;
+	private final IContainerWidgetCommon containerWidget;
+	private final IWidget widget;
 
-	public IconWidget(final IIconWidgetCommon iconWidgetCi, final IIconSetup setup) {
-		super(iconWidgetCi);
-		this.childWidgetDelegate = new ChildWidgetDelegate();
-		VisibiliySettingsInvoker.setVisibility(setup, this);
+	public CompositeWidgetDelegate(final IContainerWidgetCommon containerWidget, final IWidget widget) {
+		Assert.paramNotNull(containerWidget, "containerWidget");
+		Assert.paramNotNull(widget, "widget");
+		this.containerWidget = containerWidget;
+		this.widget = widget;
 	}
 
-	@Override
-	public IWidget getParent() {
-		return childWidgetDelegate.getParent();
+	public <WIDGET_TYPE extends IWidgetCommon> WIDGET_TYPE add(
+		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+		final Object layoutConstraints) {
+		final WIDGET_TYPE result = containerWidget.add(descriptor, layoutConstraints);
+		if (result instanceof IWidget) {
+			((IWidget) result).setParent(widget);
+		}
+		return result;
 	}
 
-	@Override
-	public void setParent(final IWidget parent) {
-		childWidgetDelegate.setParent(parent);
+	public <WIDGET_TYPE extends IWidgetCommon> WIDGET_TYPE add(
+		final ICustomWidgetFactory<WIDGET_TYPE> factory,
+		final Object layoutConstraints) {
+		final WIDGET_TYPE result = containerWidget.add(factory, layoutConstraints);
+		if (result instanceof IWidget) {
+			((IWidget) result).setParent(widget);
+		}
+		return result;
 	}
 
-	@Override
-	public boolean isReparentable() {
-		return childWidgetDelegate.isReparentable();
-	}
 }

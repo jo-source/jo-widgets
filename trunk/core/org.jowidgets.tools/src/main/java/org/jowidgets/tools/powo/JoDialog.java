@@ -32,13 +32,9 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
 import org.jowidgets.api.widgets.descriptor.IDialogDescriptor;
-import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.IWindowWidgetCommon;
-import org.jowidgets.util.Assert;
 
 public class JoDialog extends WindowWidget<IFrameWidget, IDialogBluePrint> implements IFrameWidget {
-
-	private final IWidgetCommon parent;
 
 	public JoDialog(final IWindowWidgetCommon parent) {
 		this(parent, Toolkit.getBluePrintFactory().dialog());
@@ -50,13 +46,6 @@ public class JoDialog extends WindowWidget<IFrameWidget, IDialogBluePrint> imple
 
 	public JoDialog(final IWindowWidgetCommon parent, final IDialogDescriptor setup) {
 		super(parent, Toolkit.getBluePrintFactory().dialog().setSetup(setup));
-		Assert.paramNotNull(parent, "parent");
-		this.parent = parent;
-	}
-
-	@Override
-	public IWidgetCommon getParent() {
-		return parent;
 	}
 
 	public static IDialogBluePrint bluePrint() {

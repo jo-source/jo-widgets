@@ -29,6 +29,7 @@
 package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.IWindowWidget;
 import org.jowidgets.api.widgets.blueprint.builder.IContainerSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IWindowSetupBuilder;
@@ -119,8 +120,18 @@ class WindowWidget<WIDGET_TYPE extends IWindowWidget & IContainerWidgetCommon, B
 	}
 
 	@Override
-	public IWidgetCommon getParent() {
-		return parent;
+	public final IWidget getParent() {
+		return getWidget().getParent();
+	}
+
+	@Override
+	public void setParent(final IWidget parent) {
+		getWidget().setParent(parent);
+	}
+
+	@Override
+	public boolean isReparentable() {
+		return getWidget().isReparentable();
 	}
 
 }

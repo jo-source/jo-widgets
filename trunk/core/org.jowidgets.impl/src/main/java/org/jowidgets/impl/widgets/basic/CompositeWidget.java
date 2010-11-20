@@ -29,36 +29,65 @@
 package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.widgets.ICompositeWidget;
+import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.ICompositeSetup;
 import org.jowidgets.common.widgets.IContainerWidgetCommon;
 import org.jowidgets.common.widgets.IWidgetCommon;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
-import org.jowidgets.impl.widgets.common.wrapper.ContainerWidgetCommonWrapper;
+import org.jowidgets.impl.base.delegate.CompositeWidgetDelegate;
+import org.jowidgets.impl.widgets.common.wrapper.AbstractContainerWidgetCommonWrapper;
 
-public class CompositeWidget extends ContainerWidgetCommonWrapper implements ICompositeWidget {
+public class CompositeWidget extends AbstractContainerWidgetCommonWrapper implements ICompositeWidget {
 
 	private final ChildWidgetDelegate childWidgetDelegate;
+	private final CompositeWidgetDelegate compositeWidgetDelegate;
 
-	public CompositeWidget(final IWidgetCommon parent, final IContainerWidgetCommon containerWidgetCommon) {
-		this(parent, containerWidgetCommon, (Boolean) null);
+	public CompositeWidget(final IContainerWidgetCommon containerWidgetCommon) {
+		this(containerWidgetCommon, (Boolean) null);
 	}
 
-	public CompositeWidget(final IWidgetCommon parent, final IContainerWidgetCommon containerWidgetCommon, final ICompositeSetup setup) {
-		this(parent, containerWidgetCommon, setup.isVisible());
+	public CompositeWidget(final IContainerWidgetCommon containerWidgetCommon, final ICompositeSetup setup) {
+		this(containerWidgetCommon, setup.isVisible());
 	}
 
-	public CompositeWidget(final IWidgetCommon parent, final IContainerWidgetCommon containerWidgetCommon, final Boolean visible) {
+	public CompositeWidget(final IContainerWidgetCommon containerWidgetCommon, final Boolean visible) {
 		super(containerWidgetCommon);
-		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
+		this.childWidgetDelegate = new ChildWidgetDelegate();
 
 		if (visible != null) {
 			setVisible(visible.booleanValue());
 		}
+		this.compositeWidgetDelegate = new CompositeWidgetDelegate(containerWidgetCommon, this);
 	}
 
 	@Override
-	public IWidgetCommon getParent() {
+	public <WIDGET_TYPE extends IWidgetCommon> WIDGET_TYPE add(
+		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+		final Object layoutConstraints) {
+		return compositeWidgetDelegate.add(descriptor, layoutConstraints);
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IWidgetCommon> WIDGET_TYPE add(
+		final ICustomWidgetFactory<WIDGET_TYPE> factory,
+		final Object layoutConstraints) {
+		return compositeWidgetDelegate.add(factory, layoutConstraints);
+	}
+
+	@Override
+	public IWidget getParent() {
 		return childWidgetDelegate.getParent();
 	}
 
+	@Override
+	public void setParent(final IWidget parent) {
+		childWidgetDelegate.setParent(parent);
+	}
+
+	@Override
+	public boolean isReparentable() {
+		return childWidgetDelegate.isReparentable();
+	}
 }

@@ -56,7 +56,7 @@ public class ComboBoxSelectionWidgetFactory extends AbstractWidgetFactory implem
 		final IComboBoxSelectionBluePrintSpi bp = getSpiBluePrintFactory().comboBoxSelection().setSetup(descriptor);
 		ComboBoxBuilderConverter.convert(bp, descriptor);
 		final IComboBoxSelectionWidgetSpi widget = getSpiWidgetFactory().createComboBoxSelectionWidget(parentUiReference, bp);
-		return new ComboBoxSelectionWidget(null, widget, descriptor);
+		return new ComboBoxSelectionWidget(widget, descriptor);
 	}
 
 }

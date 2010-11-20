@@ -35,6 +35,7 @@ import org.jowidgets.api.widgets.IButtonWidget;
 import org.jowidgets.api.widgets.ICompositeWidget;
 import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.IInputDialogWidget;
+import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.IInputDialogSetup;
@@ -197,8 +198,18 @@ public class InputDialogWidget<INPUT_TYPE> implements IInputDialogWidget<INPUT_T
 	}
 
 	@Override
-	public IWidgetCommon getParent() {
+	public IWidget getParent() {
 		return dialogWidget.getParent();
+	}
+
+	@Override
+	public void setParent(final IWidget parent) {
+		dialogWidget.setParent(parent);
+	}
+
+	@Override
+	public boolean isReparentable() {
+		return dialogWidget.isReparentable();
 	}
 
 	@Override

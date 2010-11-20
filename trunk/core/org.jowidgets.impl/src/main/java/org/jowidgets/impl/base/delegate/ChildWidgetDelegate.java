@@ -28,19 +28,31 @@
 
 package org.jowidgets.impl.base.delegate;
 
-import org.jowidgets.common.widgets.IWidgetCommon;
+import org.jowidgets.api.widgets.IWidget;
 
 public class ChildWidgetDelegate {
 
-	private final IWidgetCommon parent;
+	private IWidget parent;
 
-	public ChildWidgetDelegate(final IWidgetCommon parent) {
+	public ChildWidgetDelegate() {
 		super();
-		this.parent = parent;
 	}
 
-	public IWidgetCommon getParent() {
+	public IWidget getParent() {
 		return parent;
 	}
 
+	public void setParent(final IWidget parent) {
+		if (this.parent == null) {
+			this.parent = parent;
+		}
+		else if (!isReparentable()) {
+			throw new IllegalStateException("Widget is not reparentable");
+		}
+	}
+
+	public boolean isReparentable() {
+		//TODO will be implemented later
+		return false;
+	}
 }

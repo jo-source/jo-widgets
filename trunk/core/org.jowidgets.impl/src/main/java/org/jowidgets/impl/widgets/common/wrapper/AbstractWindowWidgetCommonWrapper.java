@@ -28,54 +28,77 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.widgets.IContainerWidgetCommon;
-import org.jowidgets.common.widgets.IWidgetCommon;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
-import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
+import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.common.types.Rectangle;
+import org.jowidgets.common.widgets.IWindowWidgetCommon;
+import org.jowidgets.common.widgets.controler.IWindowListener;
 
-public class ContainerWidgetCommonWrapper extends WidgetCommonWrapper implements IContainerWidgetCommon {
+public abstract class AbstractWindowWidgetCommonWrapper extends WidgetCommonWrapper implements IWindowWidgetCommon {
 
-	public ContainerWidgetCommonWrapper(final IContainerWidgetCommon widget) {
+	public AbstractWindowWidgetCommonWrapper(final IWindowWidgetCommon widget) {
 		super(widget);
 	}
 
 	@Override
-	protected IContainerWidgetCommon getWidget() {
-		return (IContainerWidgetCommon) super.getWidget();
+	protected IWindowWidgetCommon getWidget() {
+		return (IWindowWidgetCommon) super.getWidget();
 	}
 
 	@Override
-	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
-		getWidget().setLayout(layoutDescriptor);
+	public void setPosition(final Position position) {
+		getWidget().setPosition(position);
 	}
 
 	@Override
-	public void layoutBegin() {
-		getWidget().layoutBegin();
+	public Position getPosition() {
+		return getWidget().getPosition();
 	}
 
 	@Override
-	public void layoutEnd() {
-		getWidget().layoutEnd();
+	public void setSize(final Dimension size) {
+		getWidget().setSize(size);
 	}
 
 	@Override
-	public void removeAll() {
-		getWidget().removeAll();
+	public Dimension getSize() {
+		return getWidget().getSize();
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IWidgetCommon> WIDGET_TYPE add(
-		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
-		final Object layoutConstraints) {
-		return getWidget().add(descriptor, layoutConstraints);
+	public Rectangle getParentBounds() {
+		return getWidget().getParentBounds();
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IWidgetCommon> WIDGET_TYPE add(
-		final ICustomWidgetFactory<WIDGET_TYPE> factory,
-		final Object layoutConstraints) {
-		return getWidget().add(factory, layoutConstraints);
+	public void pack() {
+		getWidget().pack();
+
 	}
+
+	@Override
+	public void setVisible(final boolean visible) {
+		getWidget().setVisible(visible);
+	}
+
+	@Override
+	public boolean isVisible() {
+		return getWidget().isVisible();
+	}
+
+	@Override
+	public void addWindowListener(final IWindowListener listener) {
+		getWidget().addWindowListener(listener);
+	}
+
+	@Override
+	public void removeWindowListener(final IWindowListener listener) {
+		getWidget().removeWindowListener(listener);
+	}
+
+	@Override
+	public void close() {
+		getWidget().close();
+	}
+
 }

@@ -33,8 +33,6 @@ import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
-import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 
 public class DemoApplication implements IApplication {
 
@@ -53,17 +51,9 @@ public class DemoApplication implements IApplication {
 	@Override
 	public void start(final IApplicationLifecycle lifecycle) {
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
-		final IGenericWidgetFactory widgetFactory = Toolkit.getWidgetFactory();
 
-		frame = widgetFactory.create(bpF.frame(frameTitle));
+		frame = Toolkit.createRootFrame(bpF.frame(frameTitle), lifecycle);
 		new DemoMainComposite(frame);
-
-		frame.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosed() {
-				lifecycle.finish();
-			}
-		});
 
 		frame.setVisible(true);
 

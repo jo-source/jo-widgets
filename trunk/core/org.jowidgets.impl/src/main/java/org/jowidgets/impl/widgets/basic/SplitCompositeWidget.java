@@ -30,8 +30,8 @@ package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.widgets.ICompositeWidget;
 import org.jowidgets.api.widgets.ISplitCompositeWidget;
+import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.ISplitCompositeSetup;
-import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.SplitContainerWidgetCommonWrapper;
@@ -43,20 +43,29 @@ public class SplitCompositeWidget extends SplitContainerWidgetCommonWrapper impl
 	private final ICompositeWidget first;
 	private final ICompositeWidget second;
 
-	public SplitCompositeWidget(
-		final IWidgetCommon parent,
-		final ISplitContainerWidgetSpi containerWidgetSpi,
-		final ISplitCompositeSetup setup) {
+	public SplitCompositeWidget(final ISplitContainerWidgetSpi containerWidgetSpi, final ISplitCompositeSetup setup) {
 		super(containerWidgetSpi);
-		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
-		this.first = new CompositeWidget(this, getWidget().getFirst());
-		this.second = new CompositeWidget(this, getWidget().getSecond());
+		this.childWidgetDelegate = new ChildWidgetDelegate();
+		this.first = new CompositeWidget(getWidget().getFirst());
+		this.second = new CompositeWidget(getWidget().getSecond());
+		this.first.setParent(this);
+		this.second.setParent(this);
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 	}
 
 	@Override
-	public IWidgetCommon getParent() {
+	public IWidget getParent() {
 		return childWidgetDelegate.getParent();
+	}
+
+	@Override
+	public void setParent(final IWidget parent) {
+		childWidgetDelegate.setParent(parent);
+	}
+
+	@Override
+	public boolean isReparentable() {
+		return childWidgetDelegate.isReparentable();
 	}
 
 	@Override

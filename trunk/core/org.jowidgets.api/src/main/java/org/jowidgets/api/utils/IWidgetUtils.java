@@ -28,17 +28,15 @@
 
 package org.jowidgets.api.utils;
 
+import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.IWindowWidget;
-import org.jowidgets.common.widgets.IWidgetCommon;
 
 public interface IWidgetUtils {
 
 	/**
-	 * TODO the current impl does not work for this. Don't use this
-	 * 
-	 * @param widget
-	 * @return
+	 * @param widget the widget to get ancestor for
+	 * @return the first found window ancestor for an widget
 	 */
-	IWindowWidget getWindowAncestor(final IWidgetCommon widget);
+	IWindowWidget getWindowAncestor(final IWidget widget);
 
 }

@@ -53,7 +53,7 @@ public class ToggleButtonWidgetFactory extends AbstractWidgetFactory implements
 	public IToggleButtonWidget create(final Object parentUiReference, final IToggleButtonDescriptor descriptor) {
 		final IToggleButtonBluePrintSpi bp = getSpiBluePrintFactory().toggleButton().setSetup(descriptor);
 		final IToggleButtonWidgetSpi widget = getSpiWidgetFactory().createToggleButtonWidget(parentUiReference, bp);
-		return new ToggleButtonWidget(null, widget, descriptor);
+		return new ToggleButtonWidget(widget, descriptor);
 	}
 
 }

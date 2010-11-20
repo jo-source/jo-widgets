@@ -31,11 +31,11 @@ import org.jowidgets.api.types.QuestionResult;
 import org.jowidgets.api.widgets.ICompositeWidget;
 import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.IQuestionDialogWidget;
+import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.setup.IQuestionDialogSetup;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.widgets.IButtonWidgetCommon;
-import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
@@ -147,8 +147,18 @@ public class QuestionDialogWidget implements IQuestionDialogWidget {
 	}
 
 	@Override
-	public IWidgetCommon getParent() {
+	public IWidget getParent() {
 		return dialogWidget.getParent();
+	}
+
+	@Override
+	public void setParent(final IWidget parent) {
+		dialogWidget.setParent(parent);
+	}
+
+	@Override
+	public boolean isReparentable() {
+		return dialogWidget.isReparentable();
 	}
 
 	@Override

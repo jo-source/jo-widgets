@@ -52,7 +52,7 @@ public class SeparatorWidgetFactory extends AbstractWidgetFactory implements IWi
 	public IWidget create(final Object parentUiReference, final ISeparatorDescriptor descriptor) {
 		final ISeparatorBluePrintSpi bp = getSpiBluePrintFactory().separator().setSetup(descriptor);
 		final IWidgetSpi widget = getSpiWidgetFactory().createSeparatorWidget(parentUiReference, bp);
-		return new ChildWidget(null, widget);
+		return new ChildWidget(widget);
 	}
 
 }

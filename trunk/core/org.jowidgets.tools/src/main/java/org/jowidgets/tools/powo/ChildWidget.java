@@ -30,7 +30,6 @@ package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.builder.IWidgetSetupBuilder;
-import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 class ChildWidget<WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IWidgetSetupBuilder<?>> extends
@@ -41,9 +40,21 @@ class ChildWidget<WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends IWidgetDe
 	}
 
 	@Override
-	public final IWidgetCommon getParent() {
+	public final IWidget getParent() {
 		checkInitialized();
 		return getWidget().getParent();
+	}
+
+	@Override
+	public void setParent(final IWidget parent) {
+		checkInitialized();
+		getWidget().setParent(parent);
+	}
+
+	@Override
+	public boolean isReparentable() {
+		checkInitialized();
+		return getWidget().isReparentable();
 	}
 
 }

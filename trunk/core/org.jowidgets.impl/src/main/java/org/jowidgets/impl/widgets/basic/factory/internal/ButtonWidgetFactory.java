@@ -52,7 +52,7 @@ public class ButtonWidgetFactory extends AbstractWidgetFactory implements IWidge
 	public IButtonWidget create(final Object parentUiReference, final IButtonDescriptor descriptor) {
 		final IButtonBluePrintSpi bp = getSpiBluePrintFactory().button().setSetup(descriptor);
 		final IButtonWidgetSpi buttonWidgetSpi = getSpiWidgetFactory().createButtonWidget(parentUiReference, bp);
-		return new ButtonWidget(null, buttonWidgetSpi, descriptor);
+		return new ButtonWidget(buttonWidgetSpi, descriptor);
 	}
 
 }

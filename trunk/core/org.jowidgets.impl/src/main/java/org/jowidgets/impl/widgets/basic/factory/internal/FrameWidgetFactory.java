@@ -52,7 +52,7 @@ public class FrameWidgetFactory extends AbstractWidgetFactory implements IWidget
 	public IFrameWidget create(final Object parentUiReference, final IFrameDescriptor descriptor) {
 		final IFrameBluePrintSpi bp = getSpiBluePrintFactory().frame().setSetup(descriptor);
 		final IFrameWidgetSpi frameSpi = getSpiWidgetFactory().createFrameWidget(getGenericWidgetFactory(), parentUiReference, bp);
-		return new FrameWidget(null, frameSpi, descriptor);
+		return new FrameWidget(frameSpi, descriptor);
 	}
 
 }

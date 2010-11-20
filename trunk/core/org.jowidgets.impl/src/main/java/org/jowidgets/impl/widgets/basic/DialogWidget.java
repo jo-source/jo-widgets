@@ -30,13 +30,12 @@ package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IDialogSetup;
-import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.spi.widgets.IFrameWidgetSpi;
 
 public class DialogWidget extends FrameWidget implements IFrameWidget {
 
-	public DialogWidget(final IWidgetCommon parent, final IFrameWidgetSpi frameWidgetSpi, final IDialogSetup setup) {
-		super(parent, frameWidgetSpi, setup);
+	public DialogWidget(final IFrameWidgetSpi frameWidgetSpi, final IDialogSetup setup) {
+		super(frameWidgetSpi, setup);
 	}
 
 }

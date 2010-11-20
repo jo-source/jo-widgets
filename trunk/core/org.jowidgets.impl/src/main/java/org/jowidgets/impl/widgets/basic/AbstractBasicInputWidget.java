@@ -32,9 +32,9 @@ import org.jowidgets.api.validation.IValidateable;
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IInputWidget;
+import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IInputWidgetSetup;
 import org.jowidgets.common.widgets.IInputWidgetCommon;
-import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
 import org.jowidgets.impl.base.delegate.InputWidgetDelegate;
 import org.jowidgets.impl.widgets.common.wrapper.InputWidgetCommonWrapper;
@@ -44,21 +44,28 @@ public abstract class AbstractBasicInputWidget<VALUE_TYPE> extends InputWidgetCo
 	private final ChildWidgetDelegate childWidgetDelegate;
 	private final InputWidgetDelegate<VALUE_TYPE> inputWidgetDelegate;
 
-	public AbstractBasicInputWidget(
-		final IWidgetCommon parent,
-		final IInputWidgetCommon inputWidgetCommon,
-		final IInputWidgetSetup<VALUE_TYPE> setup) {
+	public AbstractBasicInputWidget(final IInputWidgetCommon inputWidgetCommon, final IInputWidgetSetup<VALUE_TYPE> setup) {
 		super(inputWidgetCommon);
 
-		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
+		this.childWidgetDelegate = new ChildWidgetDelegate();
 
 		//this must be last statement
 		this.inputWidgetDelegate = new InputWidgetDelegate<VALUE_TYPE>(this, setup);
 	}
 
 	@Override
-	public final IWidgetCommon getParent() {
+	public final IWidget getParent() {
 		return childWidgetDelegate.getParent();
+	}
+
+	@Override
+	public void setParent(final IWidget parent) {
+		childWidgetDelegate.setParent(parent);
+	}
+
+	@Override
+	public boolean isReparentable() {
+		return childWidgetDelegate.isReparentable();
 	}
 
 	@Override

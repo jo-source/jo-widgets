@@ -31,6 +31,10 @@ import org.jowidgets.common.widgets.IWidgetCommon;
 
 public interface IWidget extends IWidgetCommon {
 
-	IWidgetCommon getParent();
+	void setParent(IWidget parent);
+
+	boolean isReparentable();
+
+	IWidget getParent();
 
 }

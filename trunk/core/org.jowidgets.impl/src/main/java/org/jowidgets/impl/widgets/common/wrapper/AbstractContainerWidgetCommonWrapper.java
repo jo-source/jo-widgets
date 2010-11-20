@@ -29,17 +29,37 @@
 package org.jowidgets.impl.widgets.common.wrapper;
 
 import org.jowidgets.common.widgets.IContainerWidgetCommon;
-import org.jowidgets.common.widgets.IScrollCompositeWidgetCommon;
+import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 
-public class ScrollContainerWidgetCommonWrapper extends ContainerWidgetCommonWrapper implements IScrollCompositeWidgetCommon {
+public abstract class AbstractContainerWidgetCommonWrapper extends WidgetCommonWrapper implements IContainerWidgetCommon {
 
-	public ScrollContainerWidgetCommonWrapper(final IContainerWidgetCommon widget) {
+	public AbstractContainerWidgetCommonWrapper(final IContainerWidgetCommon widget) {
 		super(widget);
 	}
 
 	@Override
-	protected IScrollCompositeWidgetCommon getWidget() {
-		return (IScrollCompositeWidgetCommon) super.getWidget();
+	protected IContainerWidgetCommon getWidget() {
+		return (IContainerWidgetCommon) super.getWidget();
+	}
+
+	@Override
+	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
+		getWidget().setLayout(layoutDescriptor);
+	}
+
+	@Override
+	public void layoutBegin() {
+		getWidget().layoutBegin();
+	}
+
+	@Override
+	public void layoutEnd() {
+		getWidget().layoutEnd();
+	}
+
+	@Override
+	public void removeAll() {
+		getWidget().removeAll();
 	}
 
 }

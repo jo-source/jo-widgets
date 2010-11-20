@@ -57,7 +57,7 @@ public class CompositeWidgetFactory extends AbstractWidgetFactory implements
 				parentUiReference,
 				bp);
 
-		return new CompositeWidget(null, containerSpi, descriptor);
+		return new CompositeWidget(containerSpi, descriptor);
 	}
 
 }

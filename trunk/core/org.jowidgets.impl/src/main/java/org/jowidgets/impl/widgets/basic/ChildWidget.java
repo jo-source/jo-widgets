@@ -32,20 +32,29 @@ import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
 import org.jowidgets.impl.widgets.common.wrapper.WidgetCommonWrapper;
-import org.jowidgets.spi.widgets.IWidgetSpi;
 
 public class ChildWidget extends WidgetCommonWrapper implements IWidget {
 
 	private final ChildWidgetDelegate childWidgetDelegate;
 
-	public ChildWidget(final IWidgetCommon parent, final IWidgetSpi widget) {
+	public ChildWidget(final IWidgetCommon widget) {
 		super(widget);
-		this.childWidgetDelegate = new ChildWidgetDelegate(parent);
+		this.childWidgetDelegate = new ChildWidgetDelegate();
 	}
 
 	@Override
-	public IWidgetCommon getParent() {
+	public IWidget getParent() {
 		return childWidgetDelegate.getParent();
+	}
+
+	@Override
+	public void setParent(final IWidget parent) {
+		childWidgetDelegate.setParent(parent);
+	}
+
+	@Override
+	public boolean isReparentable() {
+		return childWidgetDelegate.isReparentable();
 	}
 
 }

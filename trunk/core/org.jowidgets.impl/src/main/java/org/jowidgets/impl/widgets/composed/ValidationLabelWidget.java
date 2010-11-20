@@ -33,13 +33,12 @@ import java.util.List;
 import org.jowidgets.api.validation.ValidationMessage;
 import org.jowidgets.api.validation.ValidationMessageType;
 import org.jowidgets.api.validation.ValidationResult;
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.ILabelWidget;
 import org.jowidgets.api.widgets.IValidationLabelWidget;
+import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
 import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.impl.widgets.composed.wrapper.ChildWidgetWrapper;
 
@@ -186,8 +185,18 @@ public class ValidationLabelWidget implements IValidationLabelWidget {
 	}
 
 	@Override
-	public IWidgetCommon getParent() {
+	public IWidget getParent() {
 		return childWidgetAdapter.getParent();
+	}
+
+	@Override
+	public void setParent(final IWidget parent) {
+		childWidgetAdapter.setParent(parent);
+	}
+
+	@Override
+	public boolean isReparentable() {
+		return childWidgetAdapter.isReparentable();
 	}
 
 	@Override
