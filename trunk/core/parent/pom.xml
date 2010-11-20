@@ -17,6 +17,7 @@
 	<modules>
 		<module>../org.jowidgets.common</module>
 		<module>../org.jowidgets.api</module>
+		<module>../org.jowidgets.api.test</module>
 		<module>../org.jowidgets.tools</module>
 		<module>../org.jowidgets.impl</module>
 		<module>../org.jowidgets.spi</module>

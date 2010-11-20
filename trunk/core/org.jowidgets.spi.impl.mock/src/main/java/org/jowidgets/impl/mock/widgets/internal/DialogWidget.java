@@ -43,7 +43,7 @@ public class DialogWidget extends MockWindowWidget implements IFrameWidgetSpi {
 		final MockImageRegistry imageRegistry,
 		final Object parentUiReference,
 		final IDialogSetupSpi setup) {
-		super(factory, new UIMDialog(parentUiReference == null ? null : (UIMWindow) parentUiReference));
+		super(factory, new UIMDialog((UIMWindow) parentUiReference));
 
 		getUiReference().setTitle(setup.getTitle());
 		getUiReference().setResizable(setup.isResizable());
