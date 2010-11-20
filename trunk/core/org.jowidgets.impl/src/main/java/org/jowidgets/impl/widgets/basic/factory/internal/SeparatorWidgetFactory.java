@@ -30,7 +30,6 @@ package org.jowidgets.impl.widgets.basic.factory.internal;
 
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.ISeparatorDescriptor;
-import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
@@ -50,10 +49,10 @@ public class SeparatorWidgetFactory extends AbstractWidgetFactory implements IWi
 	}
 
 	@Override
-	public IWidget create(final IWidgetCommon parent, final ISeparatorDescriptor descriptor) {
+	public IWidget create(final Object parentUiReference, final ISeparatorDescriptor descriptor) {
 		final ISeparatorBluePrintSpi bp = getSpiBluePrintFactory().separator().setSetup(descriptor);
-		final IWidgetSpi widget = getSpiWidgetFactory().createSeparatorWidget(parent, bp);
-		return new ChildWidget(parent, widget);
+		final IWidgetSpi widget = getSpiWidgetFactory().createSeparatorWidget(parentUiReference, bp);
+		return new ChildWidget(null, widget);
 	}
 
 }

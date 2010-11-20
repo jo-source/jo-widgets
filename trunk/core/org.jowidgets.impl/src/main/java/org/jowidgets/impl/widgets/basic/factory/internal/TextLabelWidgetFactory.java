@@ -30,7 +30,6 @@ package org.jowidgets.impl.widgets.basic.factory.internal;
 
 import org.jowidgets.api.widgets.ITextLabelWidget;
 import org.jowidgets.api.widgets.descriptor.ITextLabelDescriptor;
-import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
@@ -51,10 +50,10 @@ public class TextLabelWidgetFactory extends AbstractWidgetFactory implements
 	}
 
 	@Override
-	public ITextLabelWidget create(final IWidgetCommon parent, final ITextLabelDescriptor descriptor) {
+	public ITextLabelWidget create(final Object parentUiReference, final ITextLabelDescriptor descriptor) {
 		final ITextLabelBluePrintSpi bp = getSpiBluePrintFactory().textLabel().setSetup(descriptor);
-		final ITextLabelWidgetSpi textLabelSpi = getSpiWidgetFactory().createTextLabelWidget(parent, bp);
-		return new TextLabelWidget(parent, textLabelSpi, descriptor);
+		final ITextLabelWidgetSpi textLabelSpi = getSpiWidgetFactory().createTextLabelWidget(parentUiReference, bp);
+		return new TextLabelWidget(null, textLabelSpi, descriptor);
 	}
 
 }

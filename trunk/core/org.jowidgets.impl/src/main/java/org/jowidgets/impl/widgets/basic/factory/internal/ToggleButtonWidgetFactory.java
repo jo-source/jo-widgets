@@ -30,7 +30,6 @@ package org.jowidgets.impl.widgets.basic.factory.internal;
 
 import org.jowidgets.api.widgets.IToggleButtonWidget;
 import org.jowidgets.api.widgets.descriptor.IToggleButtonDescriptor;
-import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
@@ -51,10 +50,10 @@ public class ToggleButtonWidgetFactory extends AbstractWidgetFactory implements
 	}
 
 	@Override
-	public IToggleButtonWidget create(final IWidgetCommon parent, final IToggleButtonDescriptor descriptor) {
+	public IToggleButtonWidget create(final Object parentUiReference, final IToggleButtonDescriptor descriptor) {
 		final IToggleButtonBluePrintSpi bp = getSpiBluePrintFactory().toggleButton().setSetup(descriptor);
-		final IToggleButtonWidgetSpi widget = getSpiWidgetFactory().createToggleButtonWidget(parent, bp);
-		return new ToggleButtonWidget(parent, widget, descriptor);
+		final IToggleButtonWidgetSpi widget = getSpiWidgetFactory().createToggleButtonWidget(parentUiReference, bp);
+		return new ToggleButtonWidget(null, widget, descriptor);
 	}
 
 }

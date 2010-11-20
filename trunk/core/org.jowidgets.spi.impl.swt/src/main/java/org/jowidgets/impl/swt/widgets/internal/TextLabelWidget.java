@@ -33,7 +33,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.util.ColorSettingsInvoker;
-import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.util.AlignmentConvert;
 import org.jowidgets.impl.swt.util.FontProvider;
@@ -43,9 +42,9 @@ import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 
 public class TextLabelWidget extends SwtWidget implements ITextLabelWidgetSpi {
 
-	public TextLabelWidget(final IColorCache colorCache, final IWidgetCommon parent, final ITextLabelSetupSpi setup) {
+	public TextLabelWidget(final IColorCache colorCache, final Object parentUiReference, final ITextLabelSetupSpi setup) {
 
-		super(colorCache, new Label((Composite) parent.getUiReference(), SWT.BOLD));
+		super(colorCache, new Label((Composite) parentUiReference, SWT.BOLD));
 
 		setText(setup.getText());
 		setToolTipText(setup.getToolTipText());

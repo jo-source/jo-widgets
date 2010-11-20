@@ -31,7 +31,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.widgets.IContainerWidgetCommon;
 import org.jowidgets.common.widgets.IFrameWidgetCommon;
-import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swt.color.ColorCache;
 import org.jowidgets.impl.swt.color.IColorCache;
@@ -125,90 +124,95 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 	}
 
 	@Override
-	public IFrameWidgetSpi createFrameWidget(final IGenericWidgetFactory factory, final IFrameSetupSpi setup) {
-		return new FrameWidget(factory, colorCache, imageRegistry, setup);
+	public IFrameWidgetSpi createFrameWidget(
+		final IGenericWidgetFactory factory,
+		final Object parentUiReference,
+		final IFrameSetupSpi setup) {
+		return new FrameWidget(factory, colorCache, imageRegistry, parentUiReference, setup);
 	}
 
 	@Override
 	public IFrameWidgetSpi createDialogWidget(
 		final IGenericWidgetFactory factory,
-		final IWidgetCommon parent,
+		final Object parentUiReference,
 		final IDialogSetupSpi setup) {
-		return new DialogWidget(factory, colorCache, imageRegistry, parent, setup);
+		return new DialogWidget(factory, colorCache, imageRegistry, parentUiReference, setup);
 	}
 
 	@Override
 	public IContainerWidgetSpi createCompositeWidget(
 		final IGenericWidgetFactory factory,
-		final IWidgetCommon parent,
+		final Object parentUiReference,
 		final ICompositeSetupSpi setup) {
-		return new CompositeWidget(factory, colorCache, parent, setup);
+		return new CompositeWidget(factory, colorCache, parentUiReference, setup);
 	}
 
 	@Override
 	public IScrollContainerWidgetSpi createScrollCompositeWidget(
 		final IGenericWidgetFactory factory,
-		final IWidgetCommon parent,
+		final Object parentUiReference,
 		final IScrollCompositeSetupSpi setup) {
-		return new ScrollCompositeWidget(factory, colorCache, parent, setup);
+		return new ScrollCompositeWidget(factory, colorCache, parentUiReference, setup);
 	}
 
 	@Override
 	public ISplitContainerWidgetSpi createSplitContainerWidget(
 		final IGenericWidgetFactory factory,
-		final IWidgetCommon parent,
+		final Object parentUiReference,
 		final ISplitContainerSetupSpi setup) {
-		return new SplitPaneWidget(factory, colorCache, parent, setup);
+		return new SplitPaneWidget(factory, colorCache, parentUiReference, setup);
 	}
 
 	@Override
-	public ITextInputWidgetSpi createTextFieldWidget(final IWidgetCommon parent, final ITextFieldSetupSpi setup) {
-		return new TextFieldWidget(colorCache, parent, setup);
+	public ITextInputWidgetSpi createTextFieldWidget(final Object parentUiReference, final ITextFieldSetupSpi setup) {
+		return new TextFieldWidget(colorCache, parentUiReference, setup);
 	}
 
 	@Override
-	public ITextLabelWidgetSpi createTextLabelWidget(final IWidgetCommon parent, final ITextLabelSetupSpi setup) {
-		return new TextLabelWidget(colorCache, parent, setup);
+	public ITextLabelWidgetSpi createTextLabelWidget(final Object parentUiReference, final ITextLabelSetupSpi setup) {
+		return new TextLabelWidget(colorCache, parentUiReference, setup);
 	}
 
 	@Override
-	public IIconWidgetSpi createIconWidget(final IWidgetCommon parent, final IIconSetupSpi setup) {
-		return new IconWidget(colorCache, imageRegistry, parent, setup);
+	public IIconWidgetSpi createIconWidget(final Object parentUiReference, final IIconSetupSpi setup) {
+		return new IconWidget(colorCache, imageRegistry, parentUiReference, setup);
 	}
 
 	@Override
-	public IButtonWidgetSpi createButtonWidget(final IWidgetCommon parent, final IButtonSetupSpi setup) {
-		return new ButtonWidget(colorCache, imageRegistry, parent, setup);
+	public IButtonWidgetSpi createButtonWidget(final Object parentUiReference, final IButtonSetupSpi setup) {
+		return new ButtonWidget(colorCache, imageRegistry, parentUiReference, setup);
 	}
 
 	@Override
-	public IWidgetSpi createSeparatorWidget(final IWidgetCommon parent, final ISeparatorSetupSpi setup) {
-		return new SeparatorWidget(colorCache, parent, setup);
+	public IWidgetSpi createSeparatorWidget(final Object parentUiReference, final ISeparatorSetupSpi setup) {
+		return new SeparatorWidget(colorCache, parentUiReference, setup);
 	}
 
 	@Override
-	public ICheckBoxWidgetSpi createCheckBoxWidget(final IWidgetCommon parent, final ICheckBoxSetupSpi setup) {
-		return new CheckBoxWidget(colorCache, parent, setup);
+	public ICheckBoxWidgetSpi createCheckBoxWidget(final Object parentUiReference, final ICheckBoxSetupSpi setup) {
+		return new CheckBoxWidget(colorCache, parentUiReference, setup);
 	}
 
 	@Override
-	public IToggleButtonWidgetSpi createToggleButtonWidget(final IWidgetCommon parent, final IToggleButtonSetupSpi setup) {
-		return new ToggleButtonWidget(colorCache, imageRegistry, parent, setup);
+	public IToggleButtonWidgetSpi createToggleButtonWidget(final Object parentUiReference, final IToggleButtonSetupSpi setup) {
+		return new ToggleButtonWidget(colorCache, imageRegistry, parentUiReference, setup);
 	}
 
 	@Override
-	public IComboBoxSelectionWidgetSpi createComboBoxSelectionWidget(final IWidgetCommon parent, final IComboBoxSelectionSetupSpi setup) {
-		return new ComboBoxSelectionWidget(parent, colorCache, setup);
+	public IComboBoxSelectionWidgetSpi createComboBoxSelectionWidget(
+		final Object parentUiReference,
+		final IComboBoxSelectionSetupSpi setup) {
+		return new ComboBoxSelectionWidget(parentUiReference, colorCache, setup);
 	}
 
 	@Override
-	public IComboBoxWidgetSpi createComboBoxWidget(final IWidgetCommon parent, final IComboBoxSetupSpi setup) {
-		return new ComboBoxWidget(parent, colorCache, setup);
+	public IComboBoxWidgetSpi createComboBoxWidget(final Object parentUiReference, final IComboBoxSetupSpi setup) {
+		return new ComboBoxWidget(parentUiReference, colorCache, setup);
 	}
 
 	@Override
-	public IProgressBarWidgetSpi createProgressBar(final IWidgetCommon parent, final IProgressBarSetupSpi setup) {
-		return new ProgressBarWidget(colorCache, parent, setup);
+	public IProgressBarWidgetSpi createProgressBar(final Object parentUiReference, final IProgressBarSetupSpi setup) {
+		return new ProgressBarWidget(colorCache, parentUiReference, setup);
 	}
 
 }

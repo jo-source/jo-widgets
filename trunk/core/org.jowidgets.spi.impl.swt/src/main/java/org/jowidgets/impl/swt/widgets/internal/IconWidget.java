@@ -33,7 +33,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.util.ColorSettingsInvoker;
-import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.impl.swt.widgets.SwtWidget;
@@ -47,10 +46,10 @@ public class IconWidget extends SwtWidget implements IIconWidgetSpi {
 	public IconWidget(
 		final IColorCache colorCache,
 		final SwtImageRegistry imageRegistry,
-		final IWidgetCommon parent,
+		final Object parentUiReference,
 		final IIconSetupSpi setup) {
 
-		super(colorCache, new Label((Composite) parent.getUiReference(), SWT.NONE));
+		super(colorCache, new Label((Composite) parentUiReference, SWT.NONE));
 		this.imageRegistry = imageRegistry;
 
 		setIcon(setup.getIcon());

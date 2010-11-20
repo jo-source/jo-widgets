@@ -31,14 +31,19 @@ import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.mock.image.MockImageRegistry;
 import org.jowidgets.impl.mock.mockui.UIMFrame;
+import org.jowidgets.impl.mock.mockui.UIMWindow;
 import org.jowidgets.impl.mock.widgets.MockWindowWidget;
 import org.jowidgets.spi.widgets.IFrameWidgetSpi;
 import org.jowidgets.spi.widgets.setup.IFrameSetupSpi;
 
 public class FrameWidget extends MockWindowWidget implements IFrameWidgetSpi {
 
-	public FrameWidget(final IGenericWidgetFactory factory, final MockImageRegistry imageRegistry, final IFrameSetupSpi setup) {
-		super(factory, new UIMFrame(null));
+	public FrameWidget(
+		final IGenericWidgetFactory factory,
+		final MockImageRegistry imageRegistry,
+		final Object parentUiReference,
+		final IFrameSetupSpi setup) {
+		super(factory, new UIMFrame((UIMWindow) parentUiReference));
 
 		getUiReference().setTitle(setup.getTitle());
 		getUiReference().setResizable(setup.isResizable());

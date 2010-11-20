@@ -25,36 +25,46 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.mock.widgets.internal;
+package org.jowidgets.impl.swing.widgets.internal;
 
-import org.jowidgets.common.image.IImageConstant;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import javax.swing.JFrame;
+
 import org.jowidgets.common.util.ColorSettingsInvoker;
-import org.jowidgets.impl.mock.image.MockImageRegistry;
-import org.jowidgets.impl.mock.mockui.UIMIcon;
-import org.jowidgets.impl.mock.widgets.MockWidget;
-import org.jowidgets.spi.widgets.IIconWidgetSpi;
-import org.jowidgets.spi.widgets.setup.IIconSetupSpi;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.impl.swing.image.SwingImageRegistry;
+import org.jowidgets.impl.swing.widgets.SwingWindowWidget;
+import org.jowidgets.spi.widgets.IFrameWidgetSpi;
+import org.jowidgets.spi.widgets.setup.IFrameSetupSpi;
 
-public class IconWidget extends MockWidget implements IIconWidgetSpi {
+public class RootFrameWidget extends SwingWindowWidget implements IFrameWidgetSpi {
 
-	private final MockImageRegistry imageRegistry;
+	public RootFrameWidget(final IGenericWidgetFactory factory, final SwingImageRegistry imageRegistry, final IFrameSetupSpi setup) {
+		super(factory, new JFrame());
 
-	public IconWidget(final MockImageRegistry imageRegistry, final IIconSetupSpi setup) {
-		super(new UIMIcon());
+		getUiReference().setTitle(setup.getTitle());
+		getUiReference().setResizable(setup.isResizable());
 
-		this.imageRegistry = imageRegistry;
-		setIcon(setup.getIcon());
+		setIcon(setup.getIcon(), imageRegistry);
+		setLayout(setup.getLayout());
 		ColorSettingsInvoker.setColors(setup, this);
+
+		//dispose a root frame when window closed
+		getUiReference().addWindowListener(new WindowAdapter() {
+
+			@Override
+			public void windowClosing(final WindowEvent e) {
+				close();
+			}
+
+		});
 	}
 
 	@Override
-	public void setIcon(final IImageConstant icon) {
-		getUiReference().setIcon(imageRegistry.getImageIcon(icon));
-	}
-
-	@Override
-	public UIMIcon getUiReference() {
-		return (UIMIcon) super.getUiReference();
+	public JFrame getUiReference() {
+		return (JFrame) super.getUiReference();
 	}
 
 }

@@ -31,7 +31,6 @@ import javax.swing.JLabel;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.util.ColorSettingsInvoker;
-import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.impl.swing.widgets.SwingWidget;
 import org.jowidgets.spi.widgets.IIconWidgetSpi;
@@ -41,7 +40,7 @@ public class IconWidget extends SwingWidget implements IIconWidgetSpi {
 
 	private final SwingImageRegistry imageRegistry;
 
-	public IconWidget(final SwingImageRegistry imageRegistry, final IWidgetCommon parent, final IIconSetupSpi setup) {
+	public IconWidget(final SwingImageRegistry imageRegistry, final IIconSetupSpi setup) {
 		super(new JLabel());
 
 		this.imageRegistry = imageRegistry;

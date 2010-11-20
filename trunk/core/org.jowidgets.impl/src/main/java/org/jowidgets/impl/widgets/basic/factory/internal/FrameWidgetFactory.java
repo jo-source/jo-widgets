@@ -30,7 +30,6 @@ package org.jowidgets.impl.widgets.basic.factory.internal;
 
 import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
-import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
@@ -50,10 +49,10 @@ public class FrameWidgetFactory extends AbstractWidgetFactory implements IWidget
 	}
 
 	@Override
-	public IFrameWidget create(final IWidgetCommon parent, final IFrameDescriptor descriptor) {
+	public IFrameWidget create(final Object parentUiReference, final IFrameDescriptor descriptor) {
 		final IFrameBluePrintSpi bp = getSpiBluePrintFactory().frame().setSetup(descriptor);
-		final IFrameWidgetSpi frameSpi = getSpiWidgetFactory().createFrameWidget(getGenericWidgetFactory(), bp);
-		return new FrameWidget(parent, frameSpi, descriptor);
+		final IFrameWidgetSpi frameSpi = getSpiWidgetFactory().createFrameWidget(getGenericWidgetFactory(), parentUiReference, bp);
+		return new FrameWidget(null, frameSpi, descriptor);
 	}
 
 }

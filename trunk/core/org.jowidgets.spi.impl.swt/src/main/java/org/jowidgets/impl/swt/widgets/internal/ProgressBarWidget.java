@@ -31,7 +31,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.jowidgets.common.util.ColorSettingsInvoker;
-import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.util.OrientationConvert;
 import org.jowidgets.impl.swt.widgets.SwtWidget;
@@ -40,8 +39,8 @@ import org.jowidgets.spi.widgets.setup.IProgressBarSetupSpi;
 
 public class ProgressBarWidget extends SwtWidget implements IProgressBarWidgetSpi {
 
-	public ProgressBarWidget(final IColorCache colorCache, final IWidgetCommon parent, final IProgressBarSetupSpi setup) {
-		super(colorCache, createProgressBar(parent, setup));
+	public ProgressBarWidget(final IColorCache colorCache, final Object parentUiReference, final IProgressBarSetupSpi setup) {
+		super(colorCache, createProgressBar(parentUiReference, setup));
 
 		setMinimum(setup.getMinimum());
 		setMaximum(setup.getMaximum());
@@ -69,9 +68,9 @@ public class ProgressBarWidget extends SwtWidget implements IProgressBarWidgetSp
 		getUiReference().setSelection(progress);
 	}
 
-	private static ProgressBar createProgressBar(final IWidgetCommon parent, final IProgressBarSetupSpi setup) {
+	private static ProgressBar createProgressBar(final Object parentUiReference, final IProgressBarSetupSpi setup) {
 		final int orientation = OrientationConvert.convert(setup.getOrientation());
-		return new ProgressBar((Composite) parent.getUiReference(), setup.isIndeterminate() ? SWT.INDETERMINATE : SWT.SMOOTH
+		return new ProgressBar((Composite) parentUiReference, setup.isIndeterminate() ? SWT.INDETERMINATE : SWT.SMOOTH
 			| orientation);
 	}
 

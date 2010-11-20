@@ -28,7 +28,6 @@
 package org.jowidgets.impl.mock.widgets.internal;
 
 import org.jowidgets.common.util.ColorSettingsInvoker;
-import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.mock.image.MockImageRegistry;
 import org.jowidgets.impl.mock.mockui.UIMDialog;
@@ -42,9 +41,9 @@ public class DialogWidget extends MockWindowWidget implements IFrameWidgetSpi {
 	public DialogWidget(
 		final IGenericWidgetFactory factory,
 		final MockImageRegistry imageRegistry,
-		final IWidgetCommon parent,
+		final Object parentUiReference,
 		final IDialogSetupSpi setup) {
-		super(factory, new UIMDialog(parent == null ? null : (UIMWindow) parent.getUiReference()));
+		super(factory, new UIMDialog(parentUiReference == null ? null : (UIMWindow) parentUiReference));
 
 		getUiReference().setTitle(setup.getTitle());
 		getUiReference().setResizable(setup.isResizable());

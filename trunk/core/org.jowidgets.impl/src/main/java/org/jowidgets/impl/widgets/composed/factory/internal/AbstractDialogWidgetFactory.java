@@ -48,10 +48,10 @@ public abstract class AbstractDialogWidgetFactory<WIDGET_TYPE extends IWidgetCom
 	protected abstract WIDGET_TYPE createWidget(IFrameWidget dialogWidget, DESCRIPTOR_TYPE descriptor);
 
 	@Override
-	public WIDGET_TYPE create(final IWidgetCommon parent, final DESCRIPTOR_TYPE descriptor) {
+	public WIDGET_TYPE create(final Object parentUiReference, final DESCRIPTOR_TYPE descriptor) {
 
 		final IFrameWidget dialogWidget = genericWidgetFactory.create(
-				parent,
+				parentUiReference,
 				new BluePrintFactory().dialog().setSetup(descriptor));
 
 		if (dialogWidget == null) {

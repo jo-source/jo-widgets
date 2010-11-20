@@ -32,7 +32,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.IToggleButtonWidgetSpi;
@@ -45,9 +44,9 @@ public class ToggleButtonWidget extends CheckBoxWidget implements IToggleButtonW
 	public ToggleButtonWidget(
 		final IColorCache colorCache,
 		final SwtImageRegistry imageRegistry,
-		final IWidgetCommon parent,
+		final Object parentUiReference,
 		final IToggleButtonSetupSpi setup) {
-		super(colorCache, parent, new Button((Composite) parent.getUiReference(), SWT.NONE | SWT.TOGGLE), setup);
+		super(colorCache, new Button((Composite) parentUiReference, SWT.NONE | SWT.TOGGLE), setup);
 
 		this.imageRegistry = imageRegistry;
 

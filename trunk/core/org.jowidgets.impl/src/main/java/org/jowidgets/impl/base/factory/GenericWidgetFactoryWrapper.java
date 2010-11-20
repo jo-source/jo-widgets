@@ -52,9 +52,9 @@ public class GenericWidgetFactoryWrapper implements IGenericWidgetFactory {
 
 	@Override
 	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE create(
-		final IWidgetCommon parent,
+		final Object parentUiReference,
 		final DESCRIPTOR_TYPE descriptor) {
-		return genericFactory.create(parent, descriptor);
+		return genericFactory.create(parentUiReference, descriptor);
 	}
 
 	@Override

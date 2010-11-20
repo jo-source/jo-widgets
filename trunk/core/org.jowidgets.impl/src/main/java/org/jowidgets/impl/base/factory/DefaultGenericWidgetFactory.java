@@ -71,9 +71,9 @@ public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory 
 	@SuppressWarnings("unchecked")
 	@Override
 	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE create(
-		final IWidgetCommon parent,
+		final Object parentUiReference,
 		final DESCRIPTOR_TYPE descriptor) {
-		return (WIDGET_TYPE) createWidget(parent, descriptor);
+		return (WIDGET_TYPE) createWidget(parentUiReference, descriptor);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -117,12 +117,12 @@ public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory 
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	private Object createWidget(final IWidgetCommon parent, final IWidgetDescriptor descriptor) {
+	private Object createWidget(final Object parentUiReference, final IWidgetDescriptor descriptor) {
 		Assert.paramNotNull(descriptor, "descriptor");
 
 		final IWidgetFactory factory = (IWidgetFactory) factories.get(descriptor.getDescriptorInterface());
 		if (factory != null) {
-			final Object result = factory.create(parent, descriptor);
+			final Object result = factory.create(parentUiReference, descriptor);
 			if (result instanceof IWidgetCommon) {
 				fireWidgetCreated((IWidgetCommon) result);
 			}

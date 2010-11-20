@@ -94,19 +94,18 @@ public class ProgressBarWidget implements IProgressBarWidget {
 
 			@Override
 			public IProgressBarWidgetSpi create(
-				final IWidgetCommon parent,
+				final Object parentUiReference,
 				final IWidgetFactory<IProgressBarWidgetSpi, IWidgetDescriptor<? extends IProgressBarWidgetSpi>> widgetFactory) {
-				return widgetsFactorySpi.createProgressBar(compositeWidget, intermediateProgressBarBp);
+				return widgetsFactorySpi.createProgressBar(parentUiReference, intermediateProgressBarBp);
 			}
 		}, componentLayoutConstraints);
-
 		this.progressBar = compositeWidget.add(new ICustomWidgetFactory<IProgressBarWidgetSpi>() {
 
 			@Override
 			public IProgressBarWidgetSpi create(
-				final IWidgetCommon parent,
+				final Object parentUiReference,
 				final IWidgetFactory<IProgressBarWidgetSpi, IWidgetDescriptor<? extends IProgressBarWidgetSpi>> widgetFactory) {
-				return widgetsFactorySpi.createProgressBar(compositeWidget, progressBarBp);
+				return widgetsFactorySpi.createProgressBar(parentUiReference, progressBarBp);
 			}
 		}, componentLayoutConstraints);
 

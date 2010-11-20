@@ -29,7 +29,6 @@ package org.jowidgets.impl.swt.widgets.internal;
 
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.common.util.ColorSettingsInvoker;
-import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.util.BorderToComposite;
@@ -41,16 +40,16 @@ public class CompositeWidget extends SwtContainerWidget {
 	public CompositeWidget(
 		final IGenericWidgetFactory factory,
 		final IColorCache colorCache,
-		final IWidgetCommon parent,
+		final Object parentUiReference,
 		final ICompositeSetupSpi setup) {
 
-		super(factory, colorCache, createComposite(parent, setup));
+		super(factory, colorCache, createComposite(parentUiReference, setup));
 
 		setLayout(setup.getLayout());
 		ColorSettingsInvoker.setColors(setup, this);
 	}
 
-	private static Composite createComposite(final IWidgetCommon parent, final ICompositeSetupSpi setup) {
-		return BorderToComposite.convert((Composite) parent.getUiReference(), setup.getBorder());
+	private static Composite createComposite(final Object parentUiReference, final ICompositeSetupSpi setup) {
+		return BorderToComposite.convert((Composite) parentUiReference, setup.getBorder());
 	}
 }

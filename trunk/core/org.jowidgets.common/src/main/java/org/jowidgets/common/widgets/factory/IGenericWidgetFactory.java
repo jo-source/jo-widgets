@@ -40,7 +40,7 @@ public interface IGenericWidgetFactory {
 		DESCRIPTOR_TYPE descriptor);
 
 	<WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE create(
-		IWidgetCommon parent,
+		Object parentUiReference,
 		DESCRIPTOR_TYPE descriptor);
 
 	<WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> getFactory(

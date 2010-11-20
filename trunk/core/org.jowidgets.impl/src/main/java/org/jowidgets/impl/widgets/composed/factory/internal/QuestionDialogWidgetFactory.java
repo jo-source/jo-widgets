@@ -32,7 +32,6 @@ import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.IQuestionDialogWidget;
 import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
 import org.jowidgets.api.widgets.descriptor.IQuestionDialogDescriptor;
-import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.widgets.composed.QuestionDialogWidget;
@@ -46,10 +45,10 @@ public class QuestionDialogWidgetFactory implements IWidgetFactory<IQuestionDial
 	}
 
 	@Override
-	public IQuestionDialogWidget create(final IWidgetCommon parent, final IQuestionDialogDescriptor descriptor) {
+	public IQuestionDialogWidget create(final Object parentUiReference, final IQuestionDialogDescriptor descriptor) {
 		final IDialogBluePrint dialogBp = Toolkit.getBluePrintFactory().dialog().setTitle(descriptor.getTitle());
 		dialogBp.setIcon(descriptor.getTitleIcon()).setResizable(false);
-		final IFrameWidget dialogWidget = genericWidgetFactory.create(parent, dialogBp);
+		final IFrameWidget dialogWidget = genericWidgetFactory.create(parentUiReference, dialogBp);
 
 		if (dialogWidget == null) {
 			throw new IllegalStateException("Could not create widget with descriptor interface class '"

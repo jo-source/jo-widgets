@@ -56,7 +56,7 @@ public class JoMessageDialog extends ChildWidget<IMessageDialogWidget, IMessageD
 
 	public JoMessageDialog(final IWindowWidgetCommon parent, final IMessageDialogDescriptor descriptor) {
 		super(bluePrint().setSetup(descriptor));
-		initialize(Toolkit.getWidgetFactory().create(parent, descriptor));
+		initialize(Toolkit.getWidgetFactory().create(parent.getUiReference(), descriptor));
 	}
 
 	@Override

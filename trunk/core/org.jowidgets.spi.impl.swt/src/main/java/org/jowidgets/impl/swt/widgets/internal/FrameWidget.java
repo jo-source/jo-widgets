@@ -45,8 +45,10 @@ public class FrameWidget extends SwtWindowWidget implements IFrameWidgetSpi {
 		final IGenericWidgetFactory factory,
 		final IColorCache colorCache,
 		final SwtImageRegistry imageRegistry,
+		final Object parentUiReference,
 		final IFrameSetupSpi setup) {
-		super(factory, colorCache, new Shell(getStyle(setup)));
+		super(factory, colorCache, parentUiReference != null ? new Shell((Shell) parentUiReference, getStyle(setup)) : new Shell(
+			getStyle(setup)));
 
 		getUiReference().setText(setup.getTitle());
 		setLayout(setup.getLayout());

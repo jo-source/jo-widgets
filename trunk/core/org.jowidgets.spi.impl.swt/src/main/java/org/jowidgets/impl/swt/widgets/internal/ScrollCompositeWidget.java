@@ -58,7 +58,7 @@ public class ScrollCompositeWidget implements IScrollContainerWidgetSpi {
 	public ScrollCompositeWidget(
 		final IGenericWidgetFactory factory,
 		final IColorCache colorCache,
-		final IWidgetCommon parent,
+		final Object parentUiReference,
 		final IScrollCompositeSetupSpi setup) {
 
 		this.mustChangeScrollCompositeMinSize = true;
@@ -66,7 +66,7 @@ public class ScrollCompositeWidget implements IScrollContainerWidgetSpi {
 		final MigLayout growingMigLayout = new MigLayout("", "0[grow, 0::]0", "0[grow, 0::]0");
 		final String growingCellConstraints = "grow, w 0::,h 0::";
 
-		final Composite outerComposite = new HackyMinSizeComposite((Composite) parent.getUiReference(), SWT.NONE);
+		final Composite outerComposite = new HackyMinSizeComposite((Composite) parentUiReference, SWT.NONE);
 		this.outerCompositeWidget = new SwtContainerWidget(factory, colorCache, outerComposite);
 		outerComposite.setLayout(growingMigLayout);
 
@@ -79,7 +79,7 @@ public class ScrollCompositeWidget implements IScrollContainerWidgetSpi {
 		scrolledComposite.setExpandVertical(true);
 		scrolledComposite.setAlwaysShowScrollBars(setup.isAllwaysShowBars());
 
-		this.innerCompositeWidget = new CompositeWidget(factory, colorCache, scrolledWidget, setup);
+		this.innerCompositeWidget = new CompositeWidget(factory, colorCache, scrolledWidget.getUiReference(), setup);
 		final Composite innerComposite = this.innerCompositeWidget.getUiReference();
 		scrolledComposite.setContent(innerComposite);
 		innerComposite.setLayoutData(growingCellConstraints);

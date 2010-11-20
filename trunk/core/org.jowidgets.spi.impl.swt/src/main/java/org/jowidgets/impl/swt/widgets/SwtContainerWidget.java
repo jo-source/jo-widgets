@@ -113,7 +113,7 @@ public class SwtContainerWidget implements IContainerWidgetSpi {
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object cellConstraints) {
 
-		final WIDGET_TYPE result = factory.create(this, descriptor);
+		final WIDGET_TYPE result = factory.create(getUiReference(), descriptor);
 		setLayoutConstraints(result, cellConstraints);
 		return result;
 	}
@@ -125,12 +125,12 @@ public class SwtContainerWidget implements IContainerWidgetSpi {
 
 		final IWidgetFactory<WIDGET_TYPE, IWidgetDescriptor<? extends WIDGET_TYPE>> widgetFactory = new IWidgetFactory<WIDGET_TYPE, IWidgetDescriptor<? extends WIDGET_TYPE>>() {
 			@Override
-			public WIDGET_TYPE create(final IWidgetCommon parent, final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
-				return factory.create(parent, descriptor);
+			public WIDGET_TYPE create(final Object parentUiReference, final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+				return factory.create(parentUiReference, descriptor);
 			}
 		};
 
-		final WIDGET_TYPE result = customFactory.create(this, widgetFactory);
+		final WIDGET_TYPE result = customFactory.create(getUiReference(), widgetFactory);
 		setLayoutConstraints(result, cellConstraints);
 		return result;
 	}

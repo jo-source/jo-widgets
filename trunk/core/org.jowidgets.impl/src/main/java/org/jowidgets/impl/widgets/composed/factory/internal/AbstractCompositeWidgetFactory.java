@@ -48,9 +48,11 @@ public abstract class AbstractCompositeWidgetFactory<WIDGET_TYPE extends IWidget
 	protected abstract WIDGET_TYPE createWidget(ICompositeWidget compositeWidget, DESCRIPTOR_TYPE descriptor);
 
 	@Override
-	public WIDGET_TYPE create(final IWidgetCommon parent, final DESCRIPTOR_TYPE descriptor) {
+	public WIDGET_TYPE create(final Object parentUiReference, final DESCRIPTOR_TYPE descriptor) {
 
-		final ICompositeWidget compositeWidget = genericWidgetFactory.create(parent, new BluePrintFactory().composite());
+		final ICompositeWidget compositeWidget = genericWidgetFactory.create(
+				parentUiReference,
+				new BluePrintFactory().composite());
 
 		if (compositeWidget == null) {
 			throw new IllegalStateException("Could not create widget with descriptor interface class '"

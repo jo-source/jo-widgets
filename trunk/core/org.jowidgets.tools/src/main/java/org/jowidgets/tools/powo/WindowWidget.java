@@ -59,7 +59,7 @@ class WindowWidget<WIDGET_TYPE extends IWindowWidget & IContainerWidgetCommon, B
 		Assert.paramNotNull(parent, "parent");
 		Assert.paramNotNull(bluePrint, "bluePrint");
 		this.parent = parent;
-		initialize(Toolkit.getWidgetFactory().create(parent, bluePrint));
+		initialize(Toolkit.getWidgetFactory().create(parent.getUiReference(), bluePrint));
 	}
 
 	@Override

@@ -36,7 +36,6 @@ import org.eclipse.swt.widgets.Listener;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.util.ColorSettingsInvoker;
-import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.impl.swt.util.AlignmentConvert;
@@ -51,9 +50,9 @@ public class ButtonWidget extends AbstractSwtActionWidget implements IButtonWidg
 	public ButtonWidget(
 		final IColorCache colorCache,
 		final SwtImageRegistry imageRegistry,
-		final IWidgetCommon parent,
+		final Object parentUiReference,
 		final IButtonSetupSpi setup) {
-		super(colorCache, new Button((Composite) parent.getUiReference(), SWT.NONE));
+		super(colorCache, new Button((Composite) parentUiReference, SWT.NONE));
 		this.imageRegistry = imageRegistry;
 
 		setText(setup.getText());

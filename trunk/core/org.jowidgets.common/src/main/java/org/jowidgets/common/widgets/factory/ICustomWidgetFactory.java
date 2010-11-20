@@ -32,6 +32,8 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public interface ICustomWidgetFactory<WIDGET_TYPE extends IWidgetCommon> {
 
-	WIDGET_TYPE create(IWidgetCommon parent, IWidgetFactory<WIDGET_TYPE, IWidgetDescriptor<? extends WIDGET_TYPE>> widgetFactory);
+	WIDGET_TYPE create(
+		Object parentUiReference,
+		IWidgetFactory<WIDGET_TYPE, IWidgetDescriptor<? extends WIDGET_TYPE>> widgetFactory);
 
 }

@@ -31,7 +31,6 @@ import org.jowidgets.api.widgets.ILabelWidget;
 import org.jowidgets.api.widgets.IValidationLabelWidget;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
 import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
-import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.widgets.composed.ValidationLabelWidget;
@@ -47,11 +46,11 @@ public class ValidationLabelWidgetFactory implements IWidgetFactory<IValidationL
 	}
 
 	@Override
-	public IValidationLabelWidget create(final IWidgetCommon parent, final IValidationLabelDescriptor descriptor) {
+	public IValidationLabelWidget create(final Object parentUiReference, final IValidationLabelDescriptor descriptor) {
 
 		final ILabelBluePrint labelDescriptor = new BluePrintFactory().label();
 
-		final ILabelWidget labelWidget = genericWidgetFactory.create(parent, labelDescriptor);
+		final ILabelWidget labelWidget = genericWidgetFactory.create(parentUiReference, labelDescriptor);
 
 		if (labelWidget == null) {
 			throw new IllegalStateException("Could not create widget with descriptor interface class '"

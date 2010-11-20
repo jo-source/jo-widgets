@@ -30,7 +30,6 @@ package org.jowidgets.impl.widgets.basic.factory.internal;
 
 import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.descriptor.ITextFieldDescriptor;
-import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
@@ -52,14 +51,14 @@ public class TextFieldWidgetFactory extends AbstractWidgetFactory implements
 	}
 
 	@Override
-	public IInputWidget<String> create(final IWidgetCommon parent, final ITextFieldDescriptor descriptor) {
+	public IInputWidget<String> create(final Object parentUiReference, final ITextFieldDescriptor descriptor) {
 		final ITextFieldBluePrintSpi bp = getSpiBluePrintFactory().textField().setSetup(descriptor);
 
 		bp.setInputVerifier(new InputVerifier(descriptor.getTextInputValidator()));
 
-		final ITextInputWidgetSpi textFieldSpi = getSpiWidgetFactory().createTextFieldWidget(parent, bp);
+		final ITextInputWidgetSpi textFieldSpi = getSpiWidgetFactory().createTextFieldWidget(parentUiReference, bp);
 
-		final IInputWidget<String> result = new TextInputWidget(parent, textFieldSpi, descriptor);
+		final IInputWidget<String> result = new TextInputWidget(null, textFieldSpi, descriptor);
 		result.addValidator(descriptor.getTextInputValidator());
 		return result;
 	}

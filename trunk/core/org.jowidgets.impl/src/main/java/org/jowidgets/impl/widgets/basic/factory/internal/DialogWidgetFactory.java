@@ -30,7 +30,6 @@ package org.jowidgets.impl.widgets.basic.factory.internal;
 
 import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.descriptor.IDialogDescriptor;
-import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
@@ -50,10 +49,13 @@ public class DialogWidgetFactory extends AbstractWidgetFactory implements IWidge
 	}
 
 	@Override
-	public IFrameWidget create(final IWidgetCommon parent, final IDialogDescriptor descriptor) {
+	public IFrameWidget create(final Object parentUiReference, final IDialogDescriptor descriptor) {
 		final IDialogBluePrintSpi bp = getSpiBluePrintFactory().dialog().setSetup(descriptor);
-		final IFrameWidgetSpi frameSpi = getSpiWidgetFactory().createDialogWidget(getGenericWidgetFactory(), parent, bp);
-		return new DialogWidget(parent, frameSpi, descriptor);
+		final IFrameWidgetSpi frameSpi = getSpiWidgetFactory().createDialogWidget(
+				getGenericWidgetFactory(),
+				parentUiReference,
+				bp);
+		return new DialogWidget(null, frameSpi, descriptor);
 	}
 
 }

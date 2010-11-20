@@ -73,7 +73,7 @@ public class JoQuestionDialog extends ChildWidget<IQuestionDialogWidget, IQuesti
 
 	public JoQuestionDialog(final IWindowWidgetCommon parent, final IQuestionDialogDescriptor descriptor) {
 		super(bluePrint().setSetup(descriptor));
-		initialize(Toolkit.getWidgetFactory().create(parent, descriptor));
+		initialize(Toolkit.getWidgetFactory().create(parent.getUiReference(), descriptor));
 	}
 
 	@Override

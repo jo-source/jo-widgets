@@ -30,7 +30,6 @@ package org.jowidgets.impl.widgets.basic.factory.internal;
 
 import org.jowidgets.api.widgets.ICheckBoxWidget;
 import org.jowidgets.api.widgets.descriptor.ICheckBoxDescriptor;
-import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
@@ -50,10 +49,10 @@ public class CheckBoxWidgetFactory extends AbstractWidgetFactory implements IWid
 	}
 
 	@Override
-	public ICheckBoxWidget create(final IWidgetCommon parent, final ICheckBoxDescriptor descriptor) {
+	public ICheckBoxWidget create(final Object parentUiReference, final ICheckBoxDescriptor descriptor) {
 		final ICheckBoxBluePrintSpi bp = getSpiBluePrintFactory().checkBox().setSetup(descriptor);
-		final ICheckBoxWidgetSpi widget = getSpiWidgetFactory().createCheckBoxWidget(parent, bp);
-		return new CheckBoxWidget(parent, widget, descriptor);
+		final ICheckBoxWidgetSpi widget = getSpiWidgetFactory().createCheckBoxWidget(parentUiReference, bp);
+		return new CheckBoxWidget(null, widget, descriptor);
 	}
 
 }

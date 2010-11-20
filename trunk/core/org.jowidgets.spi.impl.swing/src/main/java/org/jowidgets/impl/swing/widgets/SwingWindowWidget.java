@@ -135,7 +135,7 @@ public class SwingWindowWidget extends SwingContainerWidget implements IWindowWi
 	@Override
 	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
 		final DESCRIPTOR_TYPE descriptor) {
-		return getGenericWidgetFactory().create(this, descriptor);
+		return getGenericWidgetFactory().create(getUiReference(), descriptor);
 	}
 
 	protected void setIcon(final IImageConstant icon, final SwingImageRegistry imageRegistry) {
