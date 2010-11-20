@@ -46,12 +46,9 @@ import org.jowidgets.util.Assert;
 class WindowWidget<WIDGET_TYPE extends IWindowWidget & IContainerWidgetCommon, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IContainerSetupBuilder<BLUE_PRINT_TYPE> & IWindowSetupBuilder<BLUE_PRINT_TYPE>> extends
 		ContainerWidget<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IWindowWidget {
 
-	private final IWindowWidgetCommon parent;
-
 	WindowWidget(final BLUE_PRINT_TYPE bluePrint) {
 		super(bluePrint);
 		Assert.paramNotNull(bluePrint, "bluePrint");
-		this.parent = null;
 		initialize(Toolkit.getWidgetFactory().create(bluePrint));
 	}
 
@@ -59,8 +56,10 @@ class WindowWidget<WIDGET_TYPE extends IWindowWidget & IContainerWidgetCommon, B
 		super(bluePrint);
 		Assert.paramNotNull(parent, "parent");
 		Assert.paramNotNull(bluePrint, "bluePrint");
-		this.parent = parent;
 		initialize(Toolkit.getWidgetFactory().create(parent.getUiReference(), bluePrint));
+		if (parent instanceof IWidget) {
+			getWidget().setParent((IWidget) parent);
+		}
 	}
 
 	@Override
