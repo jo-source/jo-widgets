@@ -33,8 +33,10 @@ import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.IFrameSetup;
+import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.IWindowWidgetCommon;
+import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
 
 public class JoFrame extends WindowWidget<IFrameWidget, IFrameBluePrint> implements IFrameWidget {
 
@@ -68,6 +70,17 @@ public class JoFrame extends WindowWidget<IFrameWidget, IFrameBluePrint> impleme
 
 	public JoFrame(final IWindowWidgetCommon parent, final IFrameDescriptor setup) {
 		super(Toolkit.getBluePrintFactory().frame().setSetup(setup));
+	}
+
+	public void finishLifecycleOnClose(final IApplicationLifecycle lifecycle) {
+		addWindowListener(new WindowAdapter() {
+
+			@Override
+			public void windowClosed() {
+				lifecycle.finish();
+			}
+
+		});
 	}
 
 	public static IFrameBluePrint bluePrint() {
