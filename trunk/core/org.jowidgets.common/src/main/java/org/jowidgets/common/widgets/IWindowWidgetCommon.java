@@ -47,10 +47,6 @@ public interface IWindowWidgetCommon extends IWidgetCommon, IWindowObservable {
 
 	void pack();
 
-	void setVisible(boolean visible);
-
-	boolean isVisible();
-
 	void close();
 
 	<WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
