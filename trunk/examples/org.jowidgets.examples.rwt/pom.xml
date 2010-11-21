@@ -4,13 +4,13 @@
 	<groupId>org.jowidgets</groupId>
 	<artifactId>org.jowidgets.examples.rwt</artifactId>
 	<packaging>war</packaging>
-	<version>0.0.3</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<name>org.jowidgets.examples.rwt</name>
 
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.examples.parent</artifactId>
-		<version>0.0.3</version>
+		<version>0.0.4-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 
@@ -18,17 +18,17 @@
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.impl</artifactId>
-			<version>0.0.3</version>
+			<version>0.0.4-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.examples.common</artifactId>
-			<version>0.0.3</version>
+			<version>0.0.4-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.spi.impl.swt</artifactId>
-			<version>0.0.3</version>
+			<version>0.0.4-SNAPSHOT</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.eclipse</groupId>
