@@ -33,10 +33,10 @@ import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.impl.swing.util.OrientationConvert;
 import org.jowidgets.impl.swing.widgets.SwingWidget;
-import org.jowidgets.spi.widgets.IProgressBarWidgetSpi;
+import org.jowidgets.spi.widgets.IProgressBarSpi;
 import org.jowidgets.spi.widgets.setup.IProgressBarSetupSpi;
 
-public class ProgressBarWidget extends SwingWidget implements IProgressBarWidgetSpi {
+public class ProgressBarWidget extends SwingWidget implements IProgressBarSpi {
 
 	public ProgressBarWidget(final SwingImageRegistry imageRegistry, final IProgressBarSetupSpi setup) {
 		super(new JProgressBar(OrientationConvert.convert(setup.getOrientation())));

@@ -34,11 +34,11 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.impl.swt.color.IColorCache;
-import org.jowidgets.spi.widgets.IComboBoxSelectionWidgetSpi;
+import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
 import org.jowidgets.util.Assert;
 
-public class ComboBoxSelectionWidget extends AbstractSwtInputWidget implements IComboBoxSelectionWidgetSpi {
+public class ComboBoxSelectionWidget extends AbstractSwtInputWidget implements IComboBoxSelectionSpi {
 
 	public ComboBoxSelectionWidget(
 		final Object parentUiReference,

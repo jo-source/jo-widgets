@@ -27,10 +27,10 @@
  */
 package org.jowidgets.api.widgets.descriptor;
 
-import org.jowidgets.api.widgets.ITextLabelWidget;
+import org.jowidgets.api.widgets.ITextLabel;
 import org.jowidgets.api.widgets.descriptor.setup.ITextSeparatorSetup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-public interface ITextSeparatorDescriptor extends ITextSeparatorSetup, IWidgetDescriptor<ITextLabelWidget> {
+public interface ITextSeparatorDescriptor extends ITextSeparatorSetup, IWidgetDescriptor<ITextLabel> {
 
 }

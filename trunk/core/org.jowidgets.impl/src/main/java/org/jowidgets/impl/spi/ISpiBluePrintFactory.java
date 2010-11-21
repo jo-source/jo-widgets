@@ -38,7 +38,7 @@ import org.jowidgets.impl.spi.blueprint.IIconBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IProgressBarBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IScrollCompositeBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ISeparatorBluePrintSpi;
-import org.jowidgets.impl.spi.blueprint.ISplitContainerBluePrintSpi;
+import org.jowidgets.impl.spi.blueprint.ISplitCompositeBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITextFieldBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITextLabelBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IToggleButtonBluePrintSpi;
@@ -53,7 +53,7 @@ public interface ISpiBluePrintFactory {
 
 	IScrollCompositeBluePrintSpi scrollComposite();
 
-	ISplitContainerBluePrintSpi splitContainer();
+	ISplitCompositeBluePrintSpi splitComposite();
 
 	ITextLabelBluePrintSpi textLabel();
 

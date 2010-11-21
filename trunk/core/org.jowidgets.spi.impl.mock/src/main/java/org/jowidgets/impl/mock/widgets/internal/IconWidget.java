@@ -32,10 +32,10 @@ import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.impl.mock.image.MockImageRegistry;
 import org.jowidgets.impl.mock.mockui.UIMIcon;
 import org.jowidgets.impl.mock.widgets.MockWidget;
-import org.jowidgets.spi.widgets.IIconWidgetSpi;
+import org.jowidgets.spi.widgets.IIconSpi;
 import org.jowidgets.spi.widgets.setup.IIconSetupSpi;
 
-public class IconWidget extends MockWidget implements IIconWidgetSpi {
+public class IconWidget extends MockWidget implements IIconSpi {
 
 	private final MockImageRegistry imageRegistry;
 

@@ -27,10 +27,10 @@
  */
 package org.jowidgets.api.widgets.content;
 
-import org.jowidgets.common.widgets.IContainerWidgetCommon;
+import org.jowidgets.common.widgets.IContainerCommon;
 
 public interface IContentCreator {
 
-	void createContent(IContainerWidgetCommon container);
+	void createContent(IContainerCommon container);
 
 }

@@ -31,9 +31,9 @@ import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.common.widgets.descriptor.setup.ICompositeSetupCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.mock.mockui.UIMContainer;
-import org.jowidgets.impl.mock.widgets.MockContainerWidget;
+import org.jowidgets.impl.mock.widgets.MockCompositeWidget;
 
-public class CompositeWidget extends MockContainerWidget {
+public class CompositeWidget extends MockCompositeWidget {
 
 	public CompositeWidget(final IGenericWidgetFactory factory, final ICompositeSetupCommon setup) {
 		super(factory, new UIMContainer());

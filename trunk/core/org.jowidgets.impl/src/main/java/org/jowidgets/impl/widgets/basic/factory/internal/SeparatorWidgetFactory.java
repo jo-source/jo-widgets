@@ -34,9 +34,9 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.ISeparatorBluePrintSpi;
-import org.jowidgets.impl.widgets.basic.ChildWidget;
+import org.jowidgets.impl.widgets.basic.Control;
 import org.jowidgets.spi.IWidgetFactorySpi;
-import org.jowidgets.spi.widgets.IWidgetSpi;
+import org.jowidgets.spi.widgets.IControlSpi;
 
 public class SeparatorWidgetFactory extends AbstractWidgetFactory implements IWidgetFactory<IWidget, ISeparatorDescriptor> {
 
@@ -51,8 +51,8 @@ public class SeparatorWidgetFactory extends AbstractWidgetFactory implements IWi
 	@Override
 	public IWidget create(final Object parentUiReference, final ISeparatorDescriptor descriptor) {
 		final ISeparatorBluePrintSpi bp = getSpiBluePrintFactory().separator().setSetup(descriptor);
-		final IWidgetSpi widget = getSpiWidgetFactory().createSeparatorWidget(parentUiReference, bp);
-		return new ChildWidget(widget);
+		final IControlSpi widget = getSpiWidgetFactory().createSeparator(parentUiReference, bp);
+		return new Control(widget);
 	}
 
 }

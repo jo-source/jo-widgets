@@ -34,18 +34,18 @@ import org.jowidgets.api.validation.ValidationMessage;
 import org.jowidgets.api.validation.ValidationMessageType;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IInputWidget;
-import org.jowidgets.api.widgets.ILabelWidget;
-import org.jowidgets.api.widgets.IValidationLabelWidget;
+import org.jowidgets.api.widgets.ILabel;
+import org.jowidgets.api.widgets.IValidationLabel;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.impl.widgets.composed.wrapper.ChildWidgetWrapper;
 
-public class ValidationLabelWidget implements IValidationLabelWidget {
+public class ValidationLabelWidget implements IValidationLabel {
 
 	private final IValidationLabelDescriptor descriptor;
-	private final ILabelWidget labelWidget;
+	private final ILabel labelWidget;
 	private final List<IInputWidget<?>> inputWidgets;
 	private final IInputListener inputListener;
 	private final IWidget childWidgetAdapter;
@@ -53,7 +53,7 @@ public class ValidationLabelWidget implements IValidationLabelWidget {
 	private LabelState currentLabelState;
 	private boolean hasInput;
 
-	public ValidationLabelWidget(final ILabelWidget labelWidget, final IValidationLabelDescriptor descriptor) {
+	public ValidationLabelWidget(final ILabel labelWidget, final IValidationLabelDescriptor descriptor) {
 
 		this.currentLabelState = LabelState.EMPTY;
 		this.showLabel = descriptor.isShowValidationMessage();

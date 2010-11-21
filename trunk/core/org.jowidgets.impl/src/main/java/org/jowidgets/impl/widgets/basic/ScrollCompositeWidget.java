@@ -28,24 +28,24 @@
 
 package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.api.widgets.IScrollCompositeWidget;
+import org.jowidgets.api.widgets.IScrollComposite;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IScrollCompositeSetup;
-import org.jowidgets.common.widgets.IWidgetCommon;
+import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
 import org.jowidgets.impl.base.delegate.CompositeWidgetDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractScrollContainerWidgetCommonWrapper;
-import org.jowidgets.spi.widgets.IScrollContainerWidgetSpi;
+import org.jowidgets.spi.widgets.IScrollCompositeSpi;
 
-public class ScrollCompositeWidget extends AbstractScrollContainerWidgetCommonWrapper implements IScrollCompositeWidget {
+public class ScrollCompositeWidget extends AbstractScrollContainerWidgetCommonWrapper implements IScrollComposite {
 
 	private final ChildWidgetDelegate childWidgetDelegate;
 	private final CompositeWidgetDelegate compositeWidgetDelegate;
 
-	public ScrollCompositeWidget(final IScrollContainerWidgetSpi containerWidgetSpi, final IScrollCompositeSetup setup) {
+	public ScrollCompositeWidget(final IScrollCompositeSpi containerWidgetSpi, final IScrollCompositeSetup setup) {
 		super(containerWidgetSpi);
 		this.childWidgetDelegate = new ChildWidgetDelegate();
 		this.compositeWidgetDelegate = new CompositeWidgetDelegate(containerWidgetSpi, this);
@@ -53,14 +53,14 @@ public class ScrollCompositeWidget extends AbstractScrollContainerWidgetCommonWr
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IWidgetCommon> WIDGET_TYPE add(
+	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
 		return compositeWidgetDelegate.add(descriptor, layoutConstraints);
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IWidgetCommon> WIDGET_TYPE add(
+	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
 		final ICustomWidgetFactory<WIDGET_TYPE> factory,
 		final Object layoutConstraints) {
 		return compositeWidgetDelegate.add(factory, layoutConstraints);

@@ -29,17 +29,17 @@
 package org.jowidgets.impl.widgets.common.wrapper;
 
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.widgets.ITextLabelWidgetCommon;
+import org.jowidgets.common.widgets.ITextLabelCommon;
 
-public class TextLabelWidgetCommonWrapper extends WidgetCommonWrapper implements ITextLabelWidgetCommon {
+public class TextLabelWidgetCommonWrapper extends WidgetCommonWrapper implements ITextLabelCommon {
 
-	public TextLabelWidgetCommonWrapper(final ITextLabelWidgetCommon widget) {
+	public TextLabelWidgetCommonWrapper(final ITextLabelCommon widget) {
 		super(widget);
 	}
 
 	@Override
-	protected ITextLabelWidgetCommon getWidget() {
-		return (ITextLabelWidgetCommon) super.getWidget();
+	protected ITextLabelCommon getWidget() {
+		return (ITextLabelCommon) super.getWidget();
 	}
 
 	@Override

@@ -29,13 +29,13 @@
 package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.ILabelWidget;
+import org.jowidgets.api.widgets.ILabel;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
 import org.jowidgets.api.widgets.descriptor.ILabelDescriptor;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
 
-public class JoLabel extends ChildWidget<ILabelWidget, ILabelBluePrint> implements ILabelWidget {
+public class JoLabel extends ChildWidget<ILabel, ILabelBluePrint> implements ILabel {
 
 	public JoLabel(final IImageConstant icon) {
 		this(Toolkit.getBluePrintFactory().label().setIcon(icon));

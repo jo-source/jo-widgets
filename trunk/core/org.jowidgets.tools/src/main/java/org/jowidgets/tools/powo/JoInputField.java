@@ -30,12 +30,12 @@ package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IInputWidget;
+import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.descriptor.IInputFieldDescriptor;
 
-public class JoInputField<VALUE_TYPE> extends InputWidget<IInputWidget<VALUE_TYPE>, IInputFieldBluePrint<VALUE_TYPE>, VALUE_TYPE> implements
-		IInputWidget<VALUE_TYPE> {
+public class JoInputField<VALUE_TYPE> extends InputWidget<IInputControl<VALUE_TYPE>, IInputFieldBluePrint<VALUE_TYPE>, VALUE_TYPE> implements
+		IInputControl<VALUE_TYPE> {
 
 	public JoInputField(final IConverter<VALUE_TYPE> converter) {
 		this(bluePrint(converter));

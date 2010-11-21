@@ -29,24 +29,24 @@
 package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IMessageDialogWidget;
+import org.jowidgets.api.widgets.IMessageDialog;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
 import org.jowidgets.api.widgets.descriptor.IMessageDialogDescriptor;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.IWindowWidgetCommon;
+import org.jowidgets.common.widgets.IWindowCommon;
 
-public class JoMessageDialog extends ChildWidget<IMessageDialogWidget, IMessageDialogBluePrint> implements IMessageDialogWidget {
+public class JoMessageDialog extends ChildWidget<IMessageDialog, IMessageDialogBluePrint> implements IMessageDialog {
 
-	public JoMessageDialog(final IWindowWidgetCommon parent, final IImageConstant icon, final String message) {
+	public JoMessageDialog(final IWindowCommon parent, final IImageConstant icon, final String message) {
 		this(parent, bluePrint().setIcon(icon).setText(message));
 	}
 
-	public JoMessageDialog(final IWindowWidgetCommon parent, final String title, final IImageConstant icon, final String message) {
+	public JoMessageDialog(final IWindowCommon parent, final String title, final IImageConstant icon, final String message) {
 		this(parent, bluePrint().setTitle(title).setIcon(icon).setText(message));
 	}
 
 	public JoMessageDialog(
-		final IWindowWidgetCommon parent,
+		final IWindowCommon parent,
 		final IImageConstant titleIcon,
 		final String title,
 		final IImageConstant icon,
@@ -54,7 +54,7 @@ public class JoMessageDialog extends ChildWidget<IMessageDialogWidget, IMessageD
 		this(parent, bluePrint().setTitleIcon(titleIcon).setTitle(title).setIcon(icon).setText(message));
 	}
 
-	public JoMessageDialog(final IWindowWidgetCommon parent, final IMessageDialogDescriptor descriptor) {
+	public JoMessageDialog(final IWindowCommon parent, final IMessageDialogDescriptor descriptor) {
 		super(bluePrint().setSetup(descriptor));
 		initialize(Toolkit.getWidgetFactory().create(parent.getUiReference(), descriptor));
 	}

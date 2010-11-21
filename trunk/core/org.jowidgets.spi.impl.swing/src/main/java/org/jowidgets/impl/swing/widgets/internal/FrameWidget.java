@@ -35,10 +35,10 @@ import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.impl.swing.widgets.SwingWindowWidget;
-import org.jowidgets.spi.widgets.IFrameWidgetSpi;
+import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.spi.widgets.setup.IDialogSetupSpi;
 
-public class FrameWidget extends SwingWindowWidget implements IFrameWidgetSpi {
+public class FrameWidget extends SwingWindowWidget implements IFrameSpi {
 
 	public FrameWidget(
 		final IGenericWidgetFactory factory,

@@ -29,7 +29,7 @@ package org.jowidgets.common.widgets;
 
 import org.jowidgets.common.widgets.controler.IActionObservable;
 
-public interface IActionWidgetCommon extends IActionObservable, IWidgetCommon {
+public interface IActionWidgetCommon extends IWidgetCommon, IActionObservable {
 
 	void setEnabled(boolean enabled);
 

@@ -29,15 +29,15 @@
 package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.ISplitCompositeWidget;
+import org.jowidgets.api.widgets.ISplitComposite;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.ISplitCompositeDescriptor;
 import org.jowidgets.common.types.Orientation;
 
-public class JoSplitComposite extends ChildWidget<ISplitCompositeWidget, ISplitCompositeBluePrint> implements
-		ISplitCompositeWidget {
+public class JoSplitComposite extends ChildWidget<ISplitComposite, ISplitCompositeBluePrint> implements
+		ISplitComposite {
 
 	private final JoComposite first;
 	private final JoComposite second;
@@ -64,7 +64,7 @@ public class JoSplitComposite extends ChildWidget<ISplitCompositeWidget, ISplitC
 	}
 
 	@Override
-	void initialize(final ISplitCompositeWidget widget) {
+	void initialize(final ISplitComposite widget) {
 		super.initialize(widget);
 
 		//maybe the layout was changed on first or second before initialization, so

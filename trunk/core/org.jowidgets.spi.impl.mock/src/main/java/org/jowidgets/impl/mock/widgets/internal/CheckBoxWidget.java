@@ -31,10 +31,10 @@ import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.impl.mock.mockui.UIMToggleButton;
-import org.jowidgets.spi.widgets.ICheckBoxWidgetSpi;
+import org.jowidgets.spi.widgets.ICheckBoxSpi;
 import org.jowidgets.spi.widgets.setup.ICheckBoxSetupSpi;
 
-public class CheckBoxWidget extends AbstractMockInputWidget implements ICheckBoxWidgetSpi {
+public class CheckBoxWidget extends AbstractMockInputWidget implements ICheckBoxSpi {
 
 	public CheckBoxWidget(final ICheckBoxSetupSpi setup) {
 		this(new UIMToggleButton(), setup);

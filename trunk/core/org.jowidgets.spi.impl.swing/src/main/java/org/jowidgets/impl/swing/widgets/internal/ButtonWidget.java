@@ -39,10 +39,10 @@ import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.impl.swing.util.AlignmentConvert;
 import org.jowidgets.impl.swing.util.FontProvider;
-import org.jowidgets.spi.widgets.IButtonWidgetSpi;
+import org.jowidgets.spi.widgets.IButtonSpi;
 import org.jowidgets.spi.widgets.setup.IButtonSetupSpi;
 
-public class ButtonWidget extends AbstractSwingActionWidget implements IButtonWidgetSpi {
+public class ButtonWidget extends AbstractSwingActionWidget implements IButtonSpi {
 
 	private final SwingImageRegistry imageRegistry;
 

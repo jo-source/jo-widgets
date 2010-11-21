@@ -37,10 +37,10 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.impl.swt.widgets.SwtWindowWidget;
-import org.jowidgets.spi.widgets.IFrameWidgetSpi;
+import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.spi.widgets.setup.IDialogSetupSpi;
 
-public class DialogWidget extends SwtWindowWidget implements IFrameWidgetSpi {
+public class DialogWidget extends SwtWindowWidget implements IFrameSpi {
 
 	private boolean programaticClose;
 

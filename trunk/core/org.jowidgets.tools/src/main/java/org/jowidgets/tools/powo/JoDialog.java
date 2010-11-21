@@ -29,22 +29,22 @@
 package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IFrameWidget;
+import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
 import org.jowidgets.api.widgets.descriptor.IDialogDescriptor;
-import org.jowidgets.common.widgets.IWindowWidgetCommon;
+import org.jowidgets.common.widgets.IWindowCommon;
 
-public class JoDialog extends WindowWidget<IFrameWidget, IDialogBluePrint> implements IFrameWidget {
+public class JoDialog extends WindowWidget<IFrame, IDialogBluePrint> implements IFrame {
 
-	public JoDialog(final IWindowWidgetCommon parent) {
+	public JoDialog(final IWindowCommon parent) {
 		this(parent, Toolkit.getBluePrintFactory().dialog());
 	}
 
-	public JoDialog(final IWindowWidgetCommon parent, final String title) {
+	public JoDialog(final IWindowCommon parent, final String title) {
 		this(parent, Toolkit.getBluePrintFactory().dialog(title));
 	}
 
-	public JoDialog(final IWindowWidgetCommon parent, final IDialogDescriptor setup) {
+	public JoDialog(final IWindowCommon parent, final IDialogDescriptor setup) {
 		super(parent, Toolkit.getBluePrintFactory().dialog().setSetup(setup));
 	}
 

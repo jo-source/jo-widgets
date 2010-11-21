@@ -28,7 +28,7 @@
 package org.jowidgets.impl.spi.descriptor;
 
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.spi.widgets.IContainerWidgetSpi;
+import org.jowidgets.spi.widgets.IContainerSpi;
 import org.jowidgets.spi.widgets.setup.ICompositeSetupSpi;
 
-public interface ICompositeDescriptorSpi extends ICompositeSetupSpi, IWidgetDescriptor<IContainerWidgetSpi> {}
+public interface ICompositeDescriptorSpi extends ICompositeSetupSpi, IWidgetDescriptor<IContainerSpi> {}

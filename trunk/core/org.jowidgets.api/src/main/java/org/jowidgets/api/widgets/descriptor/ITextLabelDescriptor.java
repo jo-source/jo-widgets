@@ -27,10 +27,10 @@
  */
 package org.jowidgets.api.widgets.descriptor;
 
-import org.jowidgets.api.widgets.ITextLabelWidget;
+import org.jowidgets.api.widgets.ITextLabel;
 import org.jowidgets.api.widgets.descriptor.setup.ITextLabelSetup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-public interface ITextLabelDescriptor extends ITextLabelSetup, IWidgetDescriptor<ITextLabelWidget> {
+public interface ITextLabelDescriptor extends ITextLabelSetup, IWidgetDescriptor<ITextLabel> {
 
 }

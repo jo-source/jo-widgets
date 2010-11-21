@@ -32,9 +32,9 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 import org.jowidgets.impl.swt.color.IColorCache;
-import org.jowidgets.spi.widgets.ITextInputWidgetSpi;
+import org.jowidgets.spi.widgets.ITextFieldSpi;
 
-public abstract class AbstractSwtTextInputWidget extends AbstractSwtInputWidget implements ITextInputWidgetSpi {
+public abstract class AbstractSwtTextInputWidget extends AbstractSwtInputWidget implements ITextFieldSpi {
 
 	public AbstractSwtTextInputWidget(final IColorCache colorCache, final Control control) {
 		super(colorCache, control);

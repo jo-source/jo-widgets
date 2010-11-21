@@ -29,7 +29,7 @@ package org.jowidgets.impl.widgets.composed.internal;
 
 import org.jowidgets.api.validation.IValidateable;
 import org.jowidgets.api.validation.ValidationResult;
-import org.jowidgets.api.widgets.ICompositeWidget;
+import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
@@ -38,8 +38,8 @@ import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Border;
-import org.jowidgets.common.widgets.IContainerWidgetCommon;
-import org.jowidgets.common.widgets.IWidgetCommon;
+import org.jowidgets.common.widgets.IContainerCommon;
+import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
@@ -48,11 +48,11 @@ import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
 public class InputContentContainer<INPUT_TYPE> extends AbstractComposedInputWidget<INPUT_TYPE> implements IInputContentContainer {
 
-	private final ICompositeWidget compositeWidget;
+	private final IComposite compositeWidget;
 	private final IInputContentCreator<INPUT_TYPE> content;
 
 	public InputContentContainer(
-		final IContainerWidgetCommon parent,
+		final IContainerCommon parent,
 		final IInputContentCreator<INPUT_TYPE> content,
 		final boolean scrollableContent,
 		final Border border) {
@@ -194,20 +194,20 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractComposedInputWidg
 	@Override
 	public void addSubContent(final IInputContentCreator<?> subContentCreator, final Object layoutConstraints) {
 		final ICompositeBluePrint compositeBp = new BluePrintFactory().composite();
-		final ICompositeWidget innerComposite = add(compositeBp, layoutConstraints);
+		final IComposite innerComposite = add(compositeBp, layoutConstraints);
 		final InnerCompositeContentContainer innerContainer = new InnerCompositeContentContainer(this, innerComposite);
 		subContentCreator.createContent(innerContainer);
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IWidgetCommon> WIDGET_TYPE add(
+	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
 		return compositeWidget.add(descriptor, layoutConstraints);
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IWidgetCommon> WIDGET_TYPE add(
+	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
 		final ICustomWidgetFactory<WIDGET_TYPE> factory,
 		final Object layoutConstraints) {
 		return compositeWidget.add(factory, layoutConstraints);

@@ -29,12 +29,12 @@
 package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.ITextLabelWidget;
+import org.jowidgets.api.widgets.ITextLabel;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
 import org.jowidgets.api.widgets.descriptor.ITextLabelDescriptor;
 import org.jowidgets.common.types.Markup;
 
-public class JoTextLabel extends ChildWidget<ITextLabelWidget, ITextLabelBluePrint> implements ITextLabelWidget {
+public class JoTextLabel extends ChildWidget<ITextLabel, ITextLabelBluePrint> implements ITextLabel {
 
 	public JoTextLabel(final String text) {
 		this(Toolkit.getBluePrintFactory().textLabel(text));

@@ -29,7 +29,7 @@
 package org.jowidgets.examples.common.demo;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IFrameWidget;
+import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
@@ -37,7 +37,7 @@ import org.jowidgets.common.application.IApplicationLifecycle;
 public class DemoApplication implements IApplication {
 
 	private final String frameTitle;
-	private IFrameWidget frame;
+	private IFrame frame;
 
 	public DemoApplication(final String frameTitle) {
 		super();
@@ -59,7 +59,7 @@ public class DemoApplication implements IApplication {
 
 	}
 
-	public IFrameWidget getRootFrame() {
+	public IFrame getRootFrame() {
 		return frame;
 	}
 

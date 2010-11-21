@@ -27,7 +27,7 @@
  */
 package org.jowidgets.impl.widgets.composed.factory.internal;
 
-import org.jowidgets.api.widgets.ICompositeWidget;
+import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.descriptor.setup.ICompositeSetup;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
@@ -45,12 +45,12 @@ public abstract class AbstractCompositeWidgetFactory<WIDGET_TYPE extends IWidget
 		this.genericWidgetFactory = genericWidgetFactory;
 	}
 
-	protected abstract WIDGET_TYPE createWidget(ICompositeWidget compositeWidget, DESCRIPTOR_TYPE descriptor);
+	protected abstract WIDGET_TYPE createWidget(IComposite compositeWidget, DESCRIPTOR_TYPE descriptor);
 
 	@Override
 	public WIDGET_TYPE create(final Object parentUiReference, final DESCRIPTOR_TYPE descriptor) {
 
-		final ICompositeWidget compositeWidget = genericWidgetFactory.create(
+		final IComposite compositeWidget = genericWidgetFactory.create(
 				parentUiReference,
 				new BluePrintFactory().composite());
 

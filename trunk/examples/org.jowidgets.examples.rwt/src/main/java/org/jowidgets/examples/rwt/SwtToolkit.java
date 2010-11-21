@@ -34,14 +34,14 @@ import org.jowidgets.api.toolkit.IQuestionPane;
 import org.jowidgets.api.toolkit.IToolkit;
 import org.jowidgets.api.toolkit.IWidgetWrapperFactory;
 import org.jowidgets.api.utils.IWidgetUtils;
-import org.jowidgets.api.widgets.IFrameWidget;
+import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.threads.IUiThreadAccess;
-import org.jowidgets.common.widgets.IWindowWidgetCommon;
+import org.jowidgets.common.widgets.IWindowCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swt.SwtWidgetsServiceProvider;
 import org.jowidgets.impl.toolkit.DefaultToolkit;
@@ -106,17 +106,17 @@ public class SwtToolkit implements IToolkit {
 	}
 
 	@Override
-	public IWindowWidgetCommon getActiveWindow() {
+	public IWindowCommon getActiveWindow() {
 		return toolkit.getActiveWindow();
 	}
 
 	@Override
-	public IFrameWidget createRootFrame(final IFrameDescriptor descriptor) {
+	public IFrame createRootFrame(final IFrameDescriptor descriptor) {
 		return toolkit.createRootFrame(descriptor);
 	}
 
 	@Override
-	public IFrameWidget createRootFrame(final IFrameDescriptor descriptor, final IApplicationLifecycle lifecycle) {
+	public IFrame createRootFrame(final IFrameDescriptor descriptor, final IApplicationLifecycle lifecycle) {
 		return toolkit.createRootFrame(descriptor, lifecycle);
 	}
 

@@ -28,15 +28,16 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.descriptor.setup.IInputWidgetSetup;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.spi.widgets.ITextInputWidgetSpi;
+import org.jowidgets.spi.widgets.ITextFieldSpi;
 
-public class TextInputWidget extends AbstractBasicInputWidget<String> {
+public class TextInputWidget extends AbstractBasicInputWidget<String> implements IInputControl<String> {
 
-	private final ITextInputWidgetSpi inputWidgetSpi;
+	private final ITextFieldSpi inputWidgetSpi;
 
-	public TextInputWidget(final ITextInputWidgetSpi textInputWidgetSpi, final IInputWidgetSetup<String> setup) {
+	public TextInputWidget(final ITextFieldSpi textInputWidgetSpi, final IInputWidgetSetup<String> setup) {
 		super(textInputWidgetSpi, setup);
 		this.inputWidgetSpi = textInputWidgetSpi;
 

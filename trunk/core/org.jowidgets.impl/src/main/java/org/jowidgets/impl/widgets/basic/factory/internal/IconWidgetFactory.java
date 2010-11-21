@@ -28,7 +28,7 @@
 
 package org.jowidgets.impl.widgets.basic.factory.internal;
 
-import org.jowidgets.api.widgets.IIconWidget;
+import org.jowidgets.api.widgets.IIcon;
 import org.jowidgets.api.widgets.descriptor.IIconDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
@@ -36,9 +36,9 @@ import org.jowidgets.impl.spi.ISpiBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.IIconBluePrintSpi;
 import org.jowidgets.impl.widgets.basic.IconWidget;
 import org.jowidgets.spi.IWidgetFactorySpi;
-import org.jowidgets.spi.widgets.IIconWidgetSpi;
+import org.jowidgets.spi.widgets.IIconSpi;
 
-public class IconWidgetFactory extends AbstractWidgetFactory implements IWidgetFactory<IIconWidget, IIconDescriptor> {
+public class IconWidgetFactory extends AbstractWidgetFactory implements IWidgetFactory<IIcon, IIconDescriptor> {
 
 	public IconWidgetFactory(
 		final IGenericWidgetFactory genericWidgetFactory,
@@ -49,9 +49,9 @@ public class IconWidgetFactory extends AbstractWidgetFactory implements IWidgetF
 	}
 
 	@Override
-	public IIconWidget create(final Object parentUiReference, final IIconDescriptor descriptor) {
+	public IIcon create(final Object parentUiReference, final IIconDescriptor descriptor) {
 		final IIconBluePrintSpi bp = getSpiBluePrintFactory().icon().setSetup(descriptor);
-		final IIconWidgetSpi iconSpi = getSpiWidgetFactory().createIconWidget(parentUiReference, bp);
+		final IIconSpi iconSpi = getSpiWidgetFactory().createIcon(parentUiReference, bp);
 		return new IconWidget(iconSpi, descriptor);
 	}
 

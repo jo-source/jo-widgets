@@ -29,21 +29,21 @@
 package org.jowidgets.examples.common.demo;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IButtonWidget;
+import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.widgets.IContainerWidgetCommon;
+import org.jowidgets.common.widgets.IContainerCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
 public class DemoMessagesComposite {
 
-	public DemoMessagesComposite(final IContainerWidgetCommon parentContainer) {
+	public DemoMessagesComposite(final IContainerCommon parentContainer) {
 
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 
 		parentContainer.setLayout(new MigLayoutDescriptor("[300::, grow]", "[][][][][]"));
 
-		final IButtonWidget infoMessageButton = parentContainer.add(
+		final IButton infoMessageButton = parentContainer.add(
 				bpF.button("Info message demo", "Shows an info message"),
 				"grow, sg bg, wrap");
 		infoMessageButton.addActionListener(new IActionListener() {
@@ -55,7 +55,7 @@ public class DemoMessagesComposite {
 			}
 		});
 
-		final IButtonWidget warningMessageButton = parentContainer.add(
+		final IButton warningMessageButton = parentContainer.add(
 				bpF.button("Warning message demo", "Shows an warning message"),
 				"grow, sg bg, wrap");
 		warningMessageButton.addActionListener(new IActionListener() {
@@ -67,7 +67,7 @@ public class DemoMessagesComposite {
 			}
 		});
 
-		final IButtonWidget errorMessageButton = parentContainer.add(
+		final IButton errorMessageButton = parentContainer.add(
 				bpF.button("Error message demo", "Shows an error message"),
 				"grow, sg bg, wrap");
 		errorMessageButton.addActionListener(new IActionListener() {
@@ -79,7 +79,7 @@ public class DemoMessagesComposite {
 			}
 		});
 
-		final IButtonWidget yesNoQuestionButton = parentContainer.add(
+		final IButton yesNoQuestionButton = parentContainer.add(
 				bpF.button("Yes/No question demo", "Shows an Yes / No question"),
 				"grow, sg bg, wrap");
 		yesNoQuestionButton.addActionListener(new IActionListener() {
@@ -91,7 +91,7 @@ public class DemoMessagesComposite {
 			}
 		});
 
-		final IButtonWidget yesNoCancelQuestionButton = parentContainer.add(
+		final IButton yesNoCancelQuestionButton = parentContainer.add(
 				bpF.button("Yes/No/Cancel question demo", "Shows an Yes/No/Cancel question"),
 				"grow, sg bg, wrap");
 		yesNoCancelQuestionButton.addActionListener(new IActionListener() {

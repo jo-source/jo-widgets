@@ -32,7 +32,7 @@ import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationMessageType;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IInputWidget;
-import org.jowidgets.api.widgets.IValidationLabelWidget;
+import org.jowidgets.api.widgets.IValidationLabel;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.IValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
@@ -90,7 +90,7 @@ public class HelloContentCreator implements IInputContentCreator<String> {
 				validationLabelDescr.setMissingInputText("optional field").setMissingInputMarkup(Markup.DEFAULT);
 			}
 
-			final IValidationLabelWidget validationLabelWidget = widgetContainer.add(validationLabelDescr, "wrap");
+			final IValidationLabel validationLabelWidget = widgetContainer.add(validationLabelDescr, "wrap");
 			validationLabelWidget.registerInputWidget(widgets[i]);
 		}
 

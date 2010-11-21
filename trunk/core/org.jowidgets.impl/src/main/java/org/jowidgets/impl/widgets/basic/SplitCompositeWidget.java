@@ -28,22 +28,22 @@
 
 package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.api.widgets.ICompositeWidget;
-import org.jowidgets.api.widgets.ISplitCompositeWidget;
+import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.ISplitComposite;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.ISplitCompositeSetup;
 import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.impl.widgets.common.wrapper.SplitContainerWidgetCommonWrapper;
-import org.jowidgets.spi.widgets.ISplitContainerWidgetSpi;
+import org.jowidgets.impl.widgets.common.wrapper.SplitCompositeWidgetCommonWrapper;
+import org.jowidgets.spi.widgets.ISplitCompositeSpi;
 
-public class SplitCompositeWidget extends SplitContainerWidgetCommonWrapper implements ISplitCompositeWidget {
+public class SplitCompositeWidget extends SplitCompositeWidgetCommonWrapper implements ISplitComposite {
 
 	private final ChildWidgetDelegate childWidgetDelegate;
-	private final ICompositeWidget first;
-	private final ICompositeWidget second;
+	private final IComposite first;
+	private final IComposite second;
 
-	public SplitCompositeWidget(final ISplitContainerWidgetSpi containerWidgetSpi, final ISplitCompositeSetup setup) {
+	public SplitCompositeWidget(final ISplitCompositeSpi containerWidgetSpi, final ISplitCompositeSetup setup) {
 		super(containerWidgetSpi);
 		this.childWidgetDelegate = new ChildWidgetDelegate();
 		this.first = new CompositeWidget(getWidget().getFirst());
@@ -69,12 +69,12 @@ public class SplitCompositeWidget extends SplitContainerWidgetCommonWrapper impl
 	}
 
 	@Override
-	public ICompositeWidget getFirst() {
+	public IComposite getFirst() {
 		return first;
 	}
 
 	@Override
-	public ICompositeWidget getSecond() {
+	public IComposite getSecond() {
 		return second;
 	}
 

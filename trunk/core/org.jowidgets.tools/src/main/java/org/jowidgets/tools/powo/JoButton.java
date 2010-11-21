@@ -32,14 +32,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IButtonWidget;
+import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.controler.IActionListener;
 
-public class JoButton extends ChildWidget<IButtonWidget, IButtonBluePrint> implements IButtonWidget {
+public class JoButton extends ChildWidget<IButton, IButtonBluePrint> implements IButton {
 
 	private final Set<IActionListener> actionListeners;
 
@@ -65,7 +65,7 @@ public class JoButton extends ChildWidget<IButtonWidget, IButtonBluePrint> imple
 	}
 
 	@Override
-	void initialize(final IButtonWidget widget) {
+	void initialize(final IButton widget) {
 		super.initialize(widget);
 		for (final IActionListener actionListener : actionListeners) {
 			widget.addActionListener(actionListener);

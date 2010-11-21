@@ -27,8 +27,8 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
-import org.jowidgets.api.widgets.ICompositeWidget;
-import org.jowidgets.api.widgets.IProgressBarWidget;
+import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.IProgressBar;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IProgressBarSetup;
 import org.jowidgets.common.color.IColorConstant;
@@ -44,13 +44,13 @@ import org.jowidgets.impl.spi.SpiBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.IProgressBarBluePrintSpi;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.spi.IWidgetFactorySpi;
-import org.jowidgets.spi.widgets.IProgressBarWidgetSpi;
+import org.jowidgets.spi.widgets.IProgressBarSpi;
 
-public class ProgressBarWidget implements IProgressBarWidget {
+public class ProgressBarWidget implements IProgressBar {
 
-	private final ICompositeWidget compositeWidget;
-	private final IProgressBarWidgetSpi indeterminateProgressBar;
-	private final IProgressBarWidgetSpi progressBar;
+	private final IComposite compositeWidget;
+	private final IProgressBarSpi indeterminateProgressBar;
+	private final IProgressBarSpi progressBar;
 
 	private int maximum;
 	private int minimum;
@@ -58,7 +58,7 @@ public class ProgressBarWidget implements IProgressBarWidget {
 	private boolean isIndeterminate;
 
 	public ProgressBarWidget(
-		final ICompositeWidget compositeWidget,
+		final IComposite compositeWidget,
 		final IProgressBarSetup setup,
 		final IWidgetFactorySpi widgetsFactorySpi) {
 
@@ -90,21 +90,21 @@ public class ProgressBarWidget implements IProgressBarWidget {
 		final IProgressBarBluePrintSpi progressBarBp = spiBpf.progressBar();
 		progressBarBp.setSetup(setup).setIndeterminate(false);
 
-		this.indeterminateProgressBar = compositeWidget.add(new ICustomWidgetFactory<IProgressBarWidgetSpi>() {
+		this.indeterminateProgressBar = compositeWidget.add(new ICustomWidgetFactory<IProgressBarSpi>() {
 
 			@Override
-			public IProgressBarWidgetSpi create(
+			public IProgressBarSpi create(
 				final Object parentUiReference,
-				final IWidgetFactory<IProgressBarWidgetSpi, IWidgetDescriptor<? extends IProgressBarWidgetSpi>> widgetFactory) {
+				final IWidgetFactory<IProgressBarSpi, IWidgetDescriptor<? extends IProgressBarSpi>> widgetFactory) {
 				return widgetsFactorySpi.createProgressBar(parentUiReference, intermediateProgressBarBp);
 			}
 		}, componentLayoutConstraints);
-		this.progressBar = compositeWidget.add(new ICustomWidgetFactory<IProgressBarWidgetSpi>() {
+		this.progressBar = compositeWidget.add(new ICustomWidgetFactory<IProgressBarSpi>() {
 
 			@Override
-			public IProgressBarWidgetSpi create(
+			public IProgressBarSpi create(
 				final Object parentUiReference,
-				final IWidgetFactory<IProgressBarWidgetSpi, IWidgetDescriptor<? extends IProgressBarWidgetSpi>> widgetFactory) {
+				final IWidgetFactory<IProgressBarSpi, IWidgetDescriptor<? extends IProgressBarSpi>> widgetFactory) {
 				return widgetsFactorySpi.createProgressBar(parentUiReference, progressBarBp);
 			}
 		}, componentLayoutConstraints);
@@ -180,7 +180,6 @@ public class ProgressBarWidget implements IProgressBarWidget {
 			compositeWidget.layoutBegin();
 			setIndeterminatState(indeterminate);
 			compositeWidget.layoutEnd();
-			compositeWidget.redraw();
 		}
 	}
 

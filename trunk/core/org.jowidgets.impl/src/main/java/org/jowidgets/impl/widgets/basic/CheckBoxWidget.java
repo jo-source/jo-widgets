@@ -28,20 +28,20 @@
 
 package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.api.widgets.ICheckBoxWidget;
+import org.jowidgets.api.widgets.ICheckBox;
 import org.jowidgets.api.widgets.descriptor.setup.ICheckBoxSetup;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.TextLabelWidgetCommonWrapper;
-import org.jowidgets.spi.widgets.ICheckBoxWidgetSpi;
+import org.jowidgets.spi.widgets.ICheckBoxSpi;
 import org.jowidgets.util.Assert;
 
-public class CheckBoxWidget extends AbstractBasicInputWidget<Boolean> implements ICheckBoxWidget {
+public class CheckBoxWidget extends AbstractBasicInputWidget<Boolean> implements ICheckBox {
 
-	private final ICheckBoxWidgetSpi checkBoxWidgetSpi;
+	private final ICheckBoxSpi checkBoxWidgetSpi;
 	private final TextLabelWidgetCommonWrapper textLabelWidgetCommonWrapper;
 
-	public CheckBoxWidget(final ICheckBoxWidgetSpi checkBoxWidgetSpi, final ICheckBoxSetup setup) {
+	public CheckBoxWidget(final ICheckBoxSpi checkBoxWidgetSpi, final ICheckBoxSetup setup) {
 		super(checkBoxWidgetSpi, setup);
 		this.checkBoxWidgetSpi = checkBoxWidgetSpi;
 		this.textLabelWidgetCommonWrapper = new TextLabelWidgetCommonWrapper(checkBoxWidgetSpi);

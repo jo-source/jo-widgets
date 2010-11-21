@@ -33,15 +33,15 @@ import org.jowidgets.api.validation.ITextInputValidator;
 import org.jowidgets.api.validation.IValidateable;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.descriptor.setup.IComboBoxSetup;
-import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;
+import org.jowidgets.spi.widgets.IComboBoxSpi;
 
 public class ComboBoxWidget<VALUE_TYPE> extends ComboBoxSelectionWidget<VALUE_TYPE> {
 
-	private final IComboBoxWidgetSpi comboBoxWidgetSpi;
+	private final IComboBoxSpi comboBoxWidgetSpi;
 	private final IStringObjectConverter<VALUE_TYPE> stringObjectConverter;
 	private final ITextInputValidator textInputValidator;
 
-	public ComboBoxWidget(final IComboBoxWidgetSpi comboBoxWidgetSpi, final IComboBoxSetup<VALUE_TYPE> setup) {
+	public ComboBoxWidget(final IComboBoxSpi comboBoxWidgetSpi, final IComboBoxSetup<VALUE_TYPE> setup) {
 		super(comboBoxWidgetSpi, setup);
 
 		this.comboBoxWidgetSpi = comboBoxWidgetSpi;

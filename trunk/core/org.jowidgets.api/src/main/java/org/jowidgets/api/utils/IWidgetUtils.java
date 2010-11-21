@@ -29,7 +29,7 @@
 package org.jowidgets.api.utils;
 
 import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.IWindowWidget;
+import org.jowidgets.api.widgets.IWindow;
 
 public interface IWidgetUtils {
 
@@ -37,6 +37,6 @@ public interface IWidgetUtils {
 	 * @param widget the widget to get ancestor for
 	 * @return the first found window ancestor for an widget
 	 */
-	IWindowWidget getWindowAncestor(final IWidget widget);
+	IWindow getWindowAncestor(final IWidget widget);
 
 }

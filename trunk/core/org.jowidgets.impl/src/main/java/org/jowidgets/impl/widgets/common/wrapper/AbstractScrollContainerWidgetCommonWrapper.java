@@ -28,19 +28,19 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.widgets.IContainerWidgetCommon;
-import org.jowidgets.common.widgets.IScrollCompositeWidgetCommon;
+import org.jowidgets.common.widgets.IContainerCommon;
+import org.jowidgets.common.widgets.IScrollCompositeCommon;
 
 public abstract class AbstractScrollContainerWidgetCommonWrapper extends AbstractContainerWidgetCommonWrapper implements
-		IScrollCompositeWidgetCommon {
+		IScrollCompositeCommon {
 
-	public AbstractScrollContainerWidgetCommonWrapper(final IContainerWidgetCommon widget) {
+	public AbstractScrollContainerWidgetCommonWrapper(final IContainerCommon widget) {
 		super(widget);
 	}
 
 	@Override
-	protected IScrollCompositeWidgetCommon getWidget() {
-		return (IScrollCompositeWidgetCommon) super.getWidget();
+	protected IScrollCompositeCommon getWidget() {
+		return (IScrollCompositeCommon) super.getWidget();
 	}
 
 }

@@ -29,8 +29,8 @@
 package org.jowidgets.impl.toolkit;
 
 import org.jowidgets.api.toolkit.IWidgetWrapperFactory;
-import org.jowidgets.common.widgets.IContainerWidgetCommon;
-import org.jowidgets.common.widgets.IFrameWidgetCommon;
+import org.jowidgets.common.widgets.ICompositeCommon;
+import org.jowidgets.common.widgets.IFrameCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.IWidgetFactorySpi;
 
@@ -51,18 +51,18 @@ public class DefaultWidgetWrapperFactory implements IWidgetWrapperFactory {
 	}
 
 	@Override
-	public IFrameWidgetCommon createFrameWidget(final Object uiReference) {
-		return widgetFactorySpi.createFrameWidget(widgetFactory, uiReference);
+	public IFrameCommon createFrame(final Object uiReference) {
+		return widgetFactorySpi.createFrame(widgetFactory, uiReference);
 	}
 
 	@Override
-	public IContainerWidgetCommon createContainerWidget(final Object uiReference) {
-		return widgetFactorySpi.createContainerWidget(widgetFactory, uiReference);
+	public ICompositeCommon createComposite(final Object uiReference) {
+		return widgetFactorySpi.createComposite(widgetFactory, uiReference);
 	}
 
 	@Override
-	public boolean isConvertibleToContainer(final Object uiReference) {
-		return widgetFactorySpi.isConvertibleToContainer(uiReference);
+	public boolean isConvertibleToComposite(final Object uiReference) {
+		return widgetFactorySpi.isConvertibleToComposite(uiReference);
 	}
 
 }

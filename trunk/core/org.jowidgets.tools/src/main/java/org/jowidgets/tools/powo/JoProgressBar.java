@@ -29,11 +29,11 @@
 package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IProgressBarWidget;
+import org.jowidgets.api.widgets.IProgressBar;
 import org.jowidgets.api.widgets.blueprint.IProgressBarBluePrint;
 import org.jowidgets.api.widgets.descriptor.IProgressBarDescriptor;
 
-public class JoProgressBar extends ChildWidget<IProgressBarWidget, IProgressBarBluePrint> implements IProgressBarWidget {
+public class JoProgressBar extends ChildWidget<IProgressBar, IProgressBarBluePrint> implements IProgressBar {
 
 	public JoProgressBar() {
 		super(Toolkit.getBluePrintFactory().progressBar());

@@ -29,11 +29,11 @@ package org.jowidgets.examples.common;
 
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.types.AutoCenterPolicy;
-import org.jowidgets.api.widgets.ICompositeWidget;
-import org.jowidgets.api.widgets.IFrameWidget;
-import org.jowidgets.api.widgets.IInputDialogWidget;
+import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.widgets.IInputDialog;
 import org.jowidgets.api.widgets.IInputWidget;
-import org.jowidgets.api.widgets.IValidationLabelWidget;
+import org.jowidgets.api.widgets.IValidationLabel;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
@@ -50,7 +50,7 @@ import org.jowidgets.common.widgets.controler.IActionListener;
 public class HelloWidgetApplication implements IApplication {
 
 	private final String rootFrameTitle;
-	private IFrameWidget rootFrame;
+	private IFrame rootFrame;
 
 	public HelloWidgetApplication(final String title) {
 		this.rootFrameTitle = title;
@@ -71,12 +71,12 @@ public class HelloWidgetApplication implements IApplication {
 		rootFrame = Toolkit.createRootFrame(frameBp, lifecycle);
 
 		// create dialog
-		final IInputDialogWidget<String> dialog = createDialogWidget(bpF);
+		final IInputDialog<String> dialog = createDialogWidget(bpF);
 
 		// create the scrolled content
 		final IScrollCompositeBluePrint scrollCompositeBp = bpF.scrollComposite("Titled border");
 		scrollCompositeBp.setMigLayout("[][grow, 250:250:800][260::]", "[]5[]5[]5[][][][][]");
-		final ICompositeWidget group = rootFrame.add(scrollCompositeBp, "grow");
+		final IComposite group = rootFrame.add(scrollCompositeBp, "grow");
 
 		// base descriptor for left labels
 		final ITextLabelBluePrint labelBp = bpF.textLabel().alignRight();
@@ -86,19 +86,19 @@ public class HelloWidgetApplication implements IApplication {
 		// row1
 		group.add(labelBp.setText("Number 1").setToolTipText("Very useful numbers here"), "sg lg");
 		final IInputWidget<Long> widget1 = group.add(bpF.inputFieldLongNumber(), "growx");
-		final IValidationLabelWidget valLabel1 = group.add(validationLabelBp, "wrap");
+		final IValidationLabel valLabel1 = group.add(validationLabelBp, "wrap");
 		valLabel1.registerInputWidget(widget1);
 
 		// row2
 		group.add(labelBp.setText("Number 2").setToolTipText("Very very useful numbers here"), "sg lg");
 		final IInputWidget<Integer> widget2 = group.add(bpF.inputFieldIntegerNumber(), "growx");
-		final IValidationLabelWidget valLabel2 = group.add(validationLabelBp, "wrap");
+		final IValidationLabel valLabel2 = group.add(validationLabelBp, "wrap");
 		valLabel2.registerInputWidget(widget2);
 
 		// row3
 		group.add(labelBp.setText("String").setToolTipText("Very special input here"), "sg lg");
 		final IInputWidget<String> widget3 = group.add(bpF.textField(), "growx");
-		final IValidationLabelWidget valLabel3 = group.add(validationLabelBp, "wrap");
+		final IValidationLabel valLabel3 = group.add(validationLabelBp, "wrap");
 		valLabel3.registerInputWidget(widget3);
 
 		// row4
@@ -130,19 +130,19 @@ public class HelloWidgetApplication implements IApplication {
 		rootFrame.setVisible(true);
 	}
 
-	private IInputDialogWidget<String> createDialogWidget(final ISimpleBluePrintFactory bpF) {
+	private IInputDialog<String> createDialogWidget(final ISimpleBluePrintFactory bpF) {
 		final IInputDialogBluePrint<String> inputDialogBp = bpF.inputDialog(new HelloContentCreator());
 		inputDialogBp.setTitle("Test dialog").setAutoCenterPolicy(AutoCenterPolicy.ONCE);
 		inputDialogBp.setOkButton("very ok", "This is very ok");
 		inputDialogBp.setCancelButton("cancel user input", "cancel the current user input");
 		inputDialogBp.setMissingInputText("Do input all mandatory(*) fields!");
 		inputDialogBp.setContentBorder().setContentScrolled(true);
-		final IInputDialogWidget<String> dialog = rootFrame.createChildWindow(inputDialogBp);
+		final IInputDialog<String> dialog = rootFrame.createChildWindow(inputDialogBp);
 
 		return dialog;
 	}
 
-	public IFrameWidget getRootFrame() {
+	public IFrame getRootFrame() {
 		return rootFrame;
 	}
 

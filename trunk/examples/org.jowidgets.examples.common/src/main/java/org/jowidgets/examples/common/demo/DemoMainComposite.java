@@ -29,28 +29,28 @@
 package org.jowidgets.examples.common.demo;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IButtonWidget;
-import org.jowidgets.api.widgets.ICompositeWidget;
-import org.jowidgets.api.widgets.IFrameWidget;
-import org.jowidgets.api.widgets.IInputDialogWidget;
+import org.jowidgets.api.widgets.IButton;
+import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.widgets.IInputDialog;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.IWindowWidgetCommon;
+import org.jowidgets.common.widgets.IWindowCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
 public class DemoMainComposite {
 
-	public DemoMainComposite(final ICompositeWidget parentContainer) {
+	public DemoMainComposite(final IContainer parentContainer) {
 
-		final IWindowWidgetCommon parentWindow = Toolkit.getWidgetUtils().getWindowAncestor(parentContainer);
+		final IWindowCommon parentWindow = Toolkit.getWidgetUtils().getWindowAncestor(parentContainer);
 
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 
 		parentContainer.setLayout(new MigLayoutDescriptor("[300::, grow]", "[][][][]"));
 
-		final IInputDialogWidget<String> inputDialog1 = new DemoInputDialog1(parentContainer).getInputDialog();
-		final IButtonWidget inputDialog1Button = parentContainer.add(
+		final IInputDialog<String> inputDialog1 = new DemoInputDialog1(parentContainer).getInputDialog();
+		final IButton inputDialog1Button = parentContainer.add(
 				bpF.button("Input dialog demo", "Shows an simple input dialog"),
 				"grow, sg bg, wrap");
 		inputDialog1Button.addActionListener(new IActionListener() {
@@ -60,35 +60,35 @@ public class DemoMainComposite {
 			}
 		});
 
-		final IButtonWidget splitDemoButton = parentContainer.add(
+		final IButton splitDemoButton = parentContainer.add(
 				bpF.button("Split demo", "Shows an frame with split composites"),
 				"grow, sg bg, wrap");
 		splitDemoButton.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
-				final IFrameWidget splitDemoFrame = parentWindow.createChildWindow(bpF.frame("Split demo").autoPackOff());
+				final IFrame splitDemoFrame = parentWindow.createChildWindow(bpF.frame("Split demo").autoPackOff());
 				splitDemoFrame.setSize(new Dimension(800, 600));
 				new DemoSplitComposite(splitDemoFrame);
 				splitDemoFrame.setVisible(true);
 			}
 		});
 
-		final IButtonWidget progressBarDialogButton = parentContainer.add(
+		final IButton progressBarDialogButton = parentContainer.add(
 				bpF.button("Progress bar demo", "Opens the progress bar demo"),
 				"grow, sg bg, wrap");
 		progressBarDialogButton.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
-				final IFrameWidget progressBarDialog = parentWindow.createChildWindow(bpF.dialog("Progress bar demo"));
+				final IFrame progressBarDialog = parentWindow.createChildWindow(bpF.dialog("Progress bar demo"));
 				new DemoProgressBarComposite(progressBarDialog, progressBarDialog);
 				progressBarDialog.setVisible(true);
 				progressBarDialog.close();
 			}
 		});
 
-		final IFrameWidget messagesDemoDialog = parentWindow.createChildWindow(bpF.dialog("Messages demo"));
+		final IFrame messagesDemoDialog = parentWindow.createChildWindow(bpF.dialog("Messages demo"));
 		new DemoMessagesComposite(messagesDemoDialog);
-		final IButtonWidget messagesDialogButton = parentContainer.add(
+		final IButton messagesDialogButton = parentContainer.add(
 				bpF.button("Messages demo", "Opens the messages demo"),
 				"grow, sg bg, wrap");
 		messagesDialogButton.addActionListener(new IActionListener() {

@@ -34,10 +34,10 @@ import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.impl.swing.util.AlignmentConvert;
 import org.jowidgets.impl.swing.util.FontProvider;
 import org.jowidgets.impl.swing.widgets.SwingWidget;
-import org.jowidgets.spi.widgets.ITextLabelWidgetSpi;
+import org.jowidgets.spi.widgets.ITextLabelSpi;
 import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 
-public class TextLabelWidget extends SwingWidget implements ITextLabelWidgetSpi {
+public class TextLabelWidget extends SwingWidget implements ITextLabelSpi {
 
 	public TextLabelWidget(final ITextLabelSetupSpi setup) {
 

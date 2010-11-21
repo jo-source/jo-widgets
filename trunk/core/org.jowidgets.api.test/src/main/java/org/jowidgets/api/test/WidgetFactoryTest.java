@@ -33,12 +33,12 @@ import junit.framework.JUnit4TestAdapter;
 import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IButtonWidget;
-import org.jowidgets.api.widgets.ICompositeWidget;
-import org.jowidgets.api.widgets.IFrameWidget;
-import org.jowidgets.api.widgets.ILabelWidget;
+import org.jowidgets.api.widgets.IButton;
+import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.widgets.ILabel;
 import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.IWindowWidget;
+import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
@@ -58,7 +58,7 @@ public class WidgetFactoryTest {
 			@Override
 			public void start(final IApplicationLifecycle lifecycle) {
 
-				final IFrameWidget frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
+				final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
 
 				frame.setVisible(true);
 				Assert.assertTrue(frame.isVisible());
@@ -70,7 +70,7 @@ public class WidgetFactoryTest {
 		});
 	}
 
-	private void createWidgets(final IFrameWidget frame) {
+	private void createWidgets(final IFrame frame) {
 		createChildWidgets(frame);
 
 		createChildWidgets(frame.add(BPF.composite(), null));
@@ -80,24 +80,24 @@ public class WidgetFactoryTest {
 		testChildWindowWidget(frame, frame.createChildWindow(BPF.frame()));
 	}
 
-	private void createChildWidgets(final ICompositeWidget composite) {
-		testButtonWidget(composite, composite.add(BPF.button(), null));
-		testChildWidget(composite, composite.add(BPF.checkBox(), null));
-		testChildWidget(composite, composite.add(BPF.comboBox(new String[] {}), null));
-		testChildWidget(composite, composite.add(BPF.comboBoxSelection(new String[] {}), null));
-		testChildWidget(composite, composite.add(BPF.composite(), null));
-		testChildWidget(composite, composite.add(BPF.icon(), null));
-		testChildWidget(composite, composite.add(BPF.inputFieldString(), null));
-		testChildWidget(composite, composite.add(BPF.label(), null));
-		testChildWidget(composite, composite.add(BPF.progressBar(), null));
-		testChildWidget(composite, composite.add(BPF.scrollComposite(), null));
-		testChildWidget(composite, composite.add(BPF.separator(), null));
-		testChildWidget(composite, composite.add(BPF.splitComposite(), null));
-		testChildWidget(composite, composite.add(BPF.textField(), null));
-		testChildWidget(composite, composite.add(BPF.textLabel(), null));
-		testChildWidget(composite, composite.add(BPF.textSeparator(), null));
-		testChildWidget(composite, composite.add(BPF.toggleButton(), null));
-		testChildWidget(composite, composite.add(BPF.validationLabel(), null));
+	private void createChildWidgets(final IContainer container) {
+		testButtonWidget(container, container.add(BPF.button(), null));
+		testChildWidget(container, container.add(BPF.checkBox(), null));
+		testChildWidget(container, container.add(BPF.comboBox(new String[] {}), null));
+		testChildWidget(container, container.add(BPF.comboBoxSelection(new String[] {}), null));
+		testChildWidget(container, container.add(BPF.composite(), null));
+		testChildWidget(container, container.add(BPF.icon(), null));
+		testChildWidget(container, container.add(BPF.inputFieldString(), null));
+		testChildWidget(container, container.add(BPF.label(), null));
+		testChildWidget(container, container.add(BPF.progressBar(), null));
+		testChildWidget(container, container.add(BPF.scrollComposite(), null));
+		testChildWidget(container, container.add(BPF.separator(), null));
+		testChildWidget(container, container.add(BPF.splitComposite(), null));
+		testChildWidget(container, container.add(BPF.textField(), null));
+		testChildWidget(container, container.add(BPF.textLabel(), null));
+		testChildWidget(container, container.add(BPF.textSeparator(), null));
+		testChildWidget(container, container.add(BPF.toggleButton(), null));
+		testChildWidget(container, container.add(BPF.validationLabel(), null));
 	}
 
 	private void testChildWidget(final IWidget parent, final IWidget widget) {
@@ -117,13 +117,13 @@ public class WidgetFactoryTest {
 		Assert.assertNotNull(Toolkit.getWidgetUtils().getWindowAncestor(widget));
 	}
 
-	private void testChildWindowWidget(final IWidget parent, final IWindowWidget widget) {
+	private void testChildWindowWidget(final IWidget parent, final IWindow widget) {
 		Assert.assertNotNull(widget);
 		Assert.assertNotNull(widget.getUiReference());
 		testParent(parent, widget);
 	}
 
-	private void testButtonWidget(final IWidget parent, final IButtonWidget widget) {
+	private void testButtonWidget(final IWidget parent, final IButton widget) {
 		testLabelWidget(parent, widget);
 		final IActionListener listener = new IActionListener() {
 
@@ -142,7 +142,7 @@ public class WidgetFactoryTest {
 		//TODO push button and check listener not invoked
 	}
 
-	private void testLabelWidget(final IWidget parent, final ILabelWidget widget) {
+	private void testLabelWidget(final IWidget parent, final ILabel widget) {
 		testChildWidget(parent, widget);
 		widget.setIcon(Icons.ERROR);
 		widget.setMarkup(Markup.STRONG);

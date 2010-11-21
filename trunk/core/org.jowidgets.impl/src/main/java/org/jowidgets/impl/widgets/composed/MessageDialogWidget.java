@@ -27,25 +27,25 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
-import org.jowidgets.api.widgets.ICompositeWidget;
-import org.jowidgets.api.widgets.IFrameWidget;
-import org.jowidgets.api.widgets.IMessageDialogWidget;
+import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.widgets.IMessageDialog;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.setup.IMessageDialogSetup;
 import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.widgets.IButtonWidgetCommon;
+import org.jowidgets.common.widgets.IButtonCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
-public class MessageDialogWidget implements IMessageDialogWidget {
+public class MessageDialogWidget implements IMessageDialog {
 
-	private final IFrameWidget dialogWidget;
+	private final IFrame dialogWidget;
 	private boolean wasVisible;
 
-	public MessageDialogWidget(final IFrameWidget dialogWidget, final IMessageDialogSetup setup) {
+	public MessageDialogWidget(final IFrame dialogWidget, final IMessageDialogSetup setup) {
 		this.wasVisible = false;
 		this.dialogWidget = dialogWidget;
 
@@ -62,12 +62,12 @@ public class MessageDialogWidget implements IMessageDialogWidget {
 		this.dialogWidget.add(bpF.textLabel(setup.getText(), setup.getToolTipText()), "wrap");
 
 		// buttons
-		final ICompositeWidget buttonBar = dialogWidget.add(bpF.composite(), "span, align center");
+		final IComposite buttonBar = dialogWidget.add(bpF.composite(), "span, align center");
 		buttonBar.setLayout(new MigLayoutDescriptor("[]", "[]"));
 
 		final String buttonCellConstraints = "w 80::, sg bg";
 
-		final IButtonWidgetCommon okButton = buttonBar.add(setup.getOkButton(), buttonCellConstraints);
+		final IButtonCommon okButton = buttonBar.add(setup.getOkButton(), buttonCellConstraints);
 
 		okButton.addActionListener(new IActionListener() {
 

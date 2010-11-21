@@ -30,9 +30,9 @@ package org.jowidgets.impl.mock.widgets.internal;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.mock.mockui.UIMWindow;
 import org.jowidgets.impl.mock.widgets.MockWindowWidget;
-import org.jowidgets.spi.widgets.IFrameWidgetSpi;
+import org.jowidgets.spi.widgets.IFrameSpi;
 
-public class FrameWidgetWrapper extends MockWindowWidget implements IFrameWidgetSpi {
+public class FrameWidgetWrapper extends MockWindowWidget implements IFrameSpi {
 
 	public FrameWidgetWrapper(final IGenericWidgetFactory factory, final UIMWindow uiReference) {
 		super(factory, uiReference);

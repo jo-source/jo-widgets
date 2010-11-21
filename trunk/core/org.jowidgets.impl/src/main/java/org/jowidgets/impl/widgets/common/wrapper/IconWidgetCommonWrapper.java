@@ -29,17 +29,17 @@
 package org.jowidgets.impl.widgets.common.wrapper;
 
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.IIconWidgetCommon;
+import org.jowidgets.common.widgets.IIconCommon;
 
-public class IconWidgetCommonWrapper extends WidgetCommonWrapper implements IIconWidgetCommon {
+public class IconWidgetCommonWrapper extends WidgetCommonWrapper implements IIconCommon {
 
-	public IconWidgetCommonWrapper(final IIconWidgetCommon widget) {
+	public IconWidgetCommonWrapper(final IIconCommon widget) {
 		super(widget);
 	}
 
 	@Override
-	protected IIconWidgetCommon getWidget() {
-		return (IIconWidgetCommon) super.getWidget();
+	protected IIconCommon getWidget() {
+		return (IIconCommon) super.getWidget();
 	}
 
 	@Override

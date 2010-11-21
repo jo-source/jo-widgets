@@ -38,10 +38,10 @@ import javax.swing.event.DocumentListener;
 
 import org.jowidgets.impl.swing.widgets.internal.util.InputModifierDocument;
 import org.jowidgets.spi.verify.IInputVerifier;
-import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;
+import org.jowidgets.spi.widgets.IComboBoxSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSetupSpi;
 
-public class ComboBoxWidget extends ComboBoxSelectionWidget implements IComboBoxWidgetSpi {
+public class ComboBoxWidget extends ComboBoxSelectionWidget implements IComboBoxSpi {
 
 	private final ComboBoxEditorImpl comboBoxEditor;
 

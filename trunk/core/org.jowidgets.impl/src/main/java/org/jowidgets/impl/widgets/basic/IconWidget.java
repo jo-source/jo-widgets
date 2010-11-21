@@ -28,19 +28,19 @@
 
 package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.api.widgets.IIconWidget;
+import org.jowidgets.api.widgets.IIcon;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IIconSetup;
-import org.jowidgets.common.widgets.IIconWidgetCommon;
+import org.jowidgets.common.widgets.IIconCommon;
 import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.IconWidgetCommonWrapper;
 
-public class IconWidget extends IconWidgetCommonWrapper implements IIconWidget {
+public class IconWidget extends IconWidgetCommonWrapper implements IIcon {
 
 	private final ChildWidgetDelegate childWidgetDelegate;
 
-	public IconWidget(final IIconWidgetCommon iconWidgetCi, final IIconSetup setup) {
+	public IconWidget(final IIconCommon iconWidgetCi, final IIconSetup setup) {
 		super(iconWidgetCi);
 		this.childWidgetDelegate = new ChildWidgetDelegate();
 		VisibiliySettingsInvoker.setVisibility(setup, this);

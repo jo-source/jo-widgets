@@ -32,10 +32,10 @@ import javax.swing.JSeparator;
 import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.impl.swing.util.OrientationConvert;
 import org.jowidgets.impl.swing.widgets.SwingWidget;
-import org.jowidgets.spi.widgets.IWidgetSpi;
+import org.jowidgets.spi.widgets.IControlSpi;
 import org.jowidgets.spi.widgets.setup.ISeparatorSetupSpi;
 
-public class SeparatorWidget extends SwingWidget implements IWidgetSpi {
+public class SeparatorWidget extends SwingWidget implements IControlSpi {
 
 	public SeparatorWidget(final ISeparatorSetupSpi setup) {
 		super(new JSeparator(OrientationConvert.convert(setup.getOrientation())));

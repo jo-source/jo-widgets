@@ -28,18 +28,18 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.widgets.IFrameWidgetCommon;
+import org.jowidgets.common.widgets.IFrameCommon;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 
-public abstract class AbstractFrameWidgetCommonWrapper extends AbstractWindowWidgetCommonWrapper implements IFrameWidgetCommon {
+public abstract class AbstractFrameWidgetCommonWrapper extends AbstractWindowWidgetCommonWrapper implements IFrameCommon {
 
-	public AbstractFrameWidgetCommonWrapper(final IFrameWidgetCommon widget) {
+	public AbstractFrameWidgetCommonWrapper(final IFrameCommon widget) {
 		super(widget);
 	}
 
 	@Override
-	protected IFrameWidgetCommon getWidget() {
-		return (IFrameWidgetCommon) super.getWidget();
+	protected IFrameCommon getWidget() {
+		return (IFrameCommon) super.getWidget();
 	}
 
 	@Override

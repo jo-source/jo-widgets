@@ -28,19 +28,19 @@
 
 package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.api.widgets.ITextLabelWidget;
+import org.jowidgets.api.widgets.ITextLabel;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.ITextLabelSetup;
 import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.TextLabelWidgetCommonWrapper;
-import org.jowidgets.spi.widgets.ITextLabelWidgetSpi;
+import org.jowidgets.spi.widgets.ITextLabelSpi;
 
-public class TextLabelWidget extends TextLabelWidgetCommonWrapper implements ITextLabelWidget {
+public class TextLabelWidget extends TextLabelWidgetCommonWrapper implements ITextLabel {
 
 	private final ChildWidgetDelegate childWidgetDelegate;
 
-	public TextLabelWidget(final ITextLabelWidgetSpi widget, final ITextLabelSetup setup) {
+	public TextLabelWidget(final ITextLabelSpi widget, final ITextLabelSetup setup) {
 		super(widget);
 		this.childWidgetDelegate = new ChildWidgetDelegate();
 

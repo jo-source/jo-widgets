@@ -29,8 +29,7 @@ package org.jowidgets.impl.swt;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
-import org.jowidgets.common.widgets.IContainerWidgetCommon;
-import org.jowidgets.common.widgets.IFrameWidgetCommon;
+import org.jowidgets.common.widgets.IFrameCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swt.color.ColorCache;
 import org.jowidgets.impl.swt.color.IColorCache;
@@ -48,25 +47,25 @@ import org.jowidgets.impl.swt.widgets.internal.IconWidget;
 import org.jowidgets.impl.swt.widgets.internal.ProgressBarWidget;
 import org.jowidgets.impl.swt.widgets.internal.ScrollCompositeWidget;
 import org.jowidgets.impl.swt.widgets.internal.SeparatorWidget;
-import org.jowidgets.impl.swt.widgets.internal.SplitPaneWidget;
+import org.jowidgets.impl.swt.widgets.internal.SplitCompositeWidget;
 import org.jowidgets.impl.swt.widgets.internal.TextFieldWidget;
 import org.jowidgets.impl.swt.widgets.internal.TextLabelWidget;
 import org.jowidgets.impl.swt.widgets.internal.ToggleButtonWidget;
 import org.jowidgets.spi.IWidgetFactorySpi;
-import org.jowidgets.spi.widgets.IButtonWidgetSpi;
-import org.jowidgets.spi.widgets.ICheckBoxWidgetSpi;
-import org.jowidgets.spi.widgets.IComboBoxSelectionWidgetSpi;
-import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;
-import org.jowidgets.spi.widgets.IContainerWidgetSpi;
-import org.jowidgets.spi.widgets.IFrameWidgetSpi;
-import org.jowidgets.spi.widgets.IIconWidgetSpi;
-import org.jowidgets.spi.widgets.IProgressBarWidgetSpi;
-import org.jowidgets.spi.widgets.IScrollContainerWidgetSpi;
-import org.jowidgets.spi.widgets.ISplitContainerWidgetSpi;
-import org.jowidgets.spi.widgets.ITextInputWidgetSpi;
-import org.jowidgets.spi.widgets.ITextLabelWidgetSpi;
-import org.jowidgets.spi.widgets.IToggleButtonWidgetSpi;
-import org.jowidgets.spi.widgets.IWidgetSpi;
+import org.jowidgets.spi.widgets.IButtonSpi;
+import org.jowidgets.spi.widgets.ICheckBoxSpi;
+import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
+import org.jowidgets.spi.widgets.IComboBoxSpi;
+import org.jowidgets.spi.widgets.ICompositeSpi;
+import org.jowidgets.spi.widgets.IControlSpi;
+import org.jowidgets.spi.widgets.IFrameSpi;
+import org.jowidgets.spi.widgets.IIconSpi;
+import org.jowidgets.spi.widgets.IProgressBarSpi;
+import org.jowidgets.spi.widgets.IScrollCompositeSpi;
+import org.jowidgets.spi.widgets.ISplitCompositeSpi;
+import org.jowidgets.spi.widgets.ITextFieldSpi;
+import org.jowidgets.spi.widgets.ITextLabelSpi;
+import org.jowidgets.spi.widgets.IToggleButtonSpi;
 import org.jowidgets.spi.widgets.setup.IButtonSetupSpi;
 import org.jowidgets.spi.widgets.setup.ICheckBoxSetupSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
@@ -78,7 +77,7 @@ import org.jowidgets.spi.widgets.setup.IIconSetupSpi;
 import org.jowidgets.spi.widgets.setup.IProgressBarSetupSpi;
 import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
 import org.jowidgets.spi.widgets.setup.ISeparatorSetupSpi;
-import org.jowidgets.spi.widgets.setup.ISplitContainerSetupSpi;
+import org.jowidgets.spi.widgets.setup.ISplitCompositeSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;
@@ -101,7 +100,7 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 	}
 
 	@Override
-	public IFrameWidgetCommon createFrameWidget(final IGenericWidgetFactory factory, final Object uiReference) {
+	public IFrameCommon createFrame(final IGenericWidgetFactory factory, final Object uiReference) {
 		Assert.paramNotNull(uiReference, "uiReference");
 		if (uiReference instanceof Shell) {
 			return new FrameWidgetWrapper(factory, colorCache, (Shell) uiReference);
@@ -110,12 +109,12 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 	}
 
 	@Override
-	public boolean isConvertibleToContainer(final Object uiReference) {
+	public boolean isConvertibleToComposite(final Object uiReference) {
 		return uiReference instanceof Composite;
 	}
 
 	@Override
-	public IContainerWidgetCommon createContainerWidget(final IGenericWidgetFactory factory, final Object uiReference) {
+	public ICompositeSpi createComposite(final IGenericWidgetFactory factory, final Object uiReference) {
 		Assert.paramNotNull(uiReference, "uiReference");
 		if (uiReference instanceof Composite) {
 			return new CompositeWidgetWrapper(factory, colorCache, (Composite) uiReference);
@@ -124,23 +123,17 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 	}
 
 	@Override
-	public IFrameWidgetSpi createFrameWidget(
-		final IGenericWidgetFactory factory,
-		final Object parentUiReference,
-		final IFrameSetupSpi setup) {
+	public IFrameSpi createFrame(final IGenericWidgetFactory factory, final Object parentUiReference, final IFrameSetupSpi setup) {
 		return new FrameWidget(factory, colorCache, imageRegistry, parentUiReference, setup);
 	}
 
 	@Override
-	public IFrameWidgetSpi createDialogWidget(
-		final IGenericWidgetFactory factory,
-		final Object parentUiReference,
-		final IDialogSetupSpi setup) {
+	public IFrameSpi createDialog(final IGenericWidgetFactory factory, final Object parentUiReference, final IDialogSetupSpi setup) {
 		return new DialogWidget(factory, colorCache, imageRegistry, parentUiReference, setup);
 	}
 
 	@Override
-	public IContainerWidgetSpi createCompositeWidget(
+	public ICompositeSpi createComposite(
 		final IGenericWidgetFactory factory,
 		final Object parentUiReference,
 		final ICompositeSetupSpi setup) {
@@ -148,7 +141,7 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 	}
 
 	@Override
-	public IScrollContainerWidgetSpi createScrollCompositeWidget(
+	public IScrollCompositeSpi createScrollComposite(
 		final IGenericWidgetFactory factory,
 		final Object parentUiReference,
 		final IScrollCompositeSetupSpi setup) {
@@ -156,62 +149,60 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 	}
 
 	@Override
-	public ISplitContainerWidgetSpi createSplitContainerWidget(
+	public ISplitCompositeSpi createSplitComposite(
 		final IGenericWidgetFactory factory,
 		final Object parentUiReference,
-		final ISplitContainerSetupSpi setup) {
-		return new SplitPaneWidget(factory, colorCache, parentUiReference, setup);
+		final ISplitCompositeSetupSpi setup) {
+		return new SplitCompositeWidget(factory, colorCache, parentUiReference, setup);
 	}
 
 	@Override
-	public ITextInputWidgetSpi createTextFieldWidget(final Object parentUiReference, final ITextFieldSetupSpi setup) {
+	public ITextFieldSpi createTextField(final Object parentUiReference, final ITextFieldSetupSpi setup) {
 		return new TextFieldWidget(colorCache, parentUiReference, setup);
 	}
 
 	@Override
-	public ITextLabelWidgetSpi createTextLabelWidget(final Object parentUiReference, final ITextLabelSetupSpi setup) {
+	public ITextLabelSpi createTextLabel(final Object parentUiReference, final ITextLabelSetupSpi setup) {
 		return new TextLabelWidget(colorCache, parentUiReference, setup);
 	}
 
 	@Override
-	public IIconWidgetSpi createIconWidget(final Object parentUiReference, final IIconSetupSpi setup) {
+	public IIconSpi createIcon(final Object parentUiReference, final IIconSetupSpi setup) {
 		return new IconWidget(colorCache, imageRegistry, parentUiReference, setup);
 	}
 
 	@Override
-	public IButtonWidgetSpi createButtonWidget(final Object parentUiReference, final IButtonSetupSpi setup) {
+	public IButtonSpi createButton(final Object parentUiReference, final IButtonSetupSpi setup) {
 		return new ButtonWidget(colorCache, imageRegistry, parentUiReference, setup);
 	}
 
 	@Override
-	public IWidgetSpi createSeparatorWidget(final Object parentUiReference, final ISeparatorSetupSpi setup) {
+	public IControlSpi createSeparator(final Object parentUiReference, final ISeparatorSetupSpi setup) {
 		return new SeparatorWidget(colorCache, parentUiReference, setup);
 	}
 
 	@Override
-	public ICheckBoxWidgetSpi createCheckBoxWidget(final Object parentUiReference, final ICheckBoxSetupSpi setup) {
+	public ICheckBoxSpi createCheckBox(final Object parentUiReference, final ICheckBoxSetupSpi setup) {
 		return new CheckBoxWidget(colorCache, parentUiReference, setup);
 	}
 
 	@Override
-	public IToggleButtonWidgetSpi createToggleButtonWidget(final Object parentUiReference, final IToggleButtonSetupSpi setup) {
+	public IToggleButtonSpi createToggleButton(final Object parentUiReference, final IToggleButtonSetupSpi setup) {
 		return new ToggleButtonWidget(colorCache, imageRegistry, parentUiReference, setup);
 	}
 
 	@Override
-	public IComboBoxSelectionWidgetSpi createComboBoxSelectionWidget(
-		final Object parentUiReference,
-		final IComboBoxSelectionSetupSpi setup) {
+	public IComboBoxSelectionSpi createComboBoxSelection(final Object parentUiReference, final IComboBoxSelectionSetupSpi setup) {
 		return new ComboBoxSelectionWidget(parentUiReference, colorCache, setup);
 	}
 
 	@Override
-	public IComboBoxWidgetSpi createComboBoxWidget(final Object parentUiReference, final IComboBoxSetupSpi setup) {
+	public IComboBoxSpi createComboBox(final Object parentUiReference, final IComboBoxSetupSpi setup) {
 		return new ComboBoxWidget(parentUiReference, colorCache, setup);
 	}
 
 	@Override
-	public IProgressBarWidgetSpi createProgressBar(final Object parentUiReference, final IProgressBarSetupSpi setup) {
+	public IProgressBarSpi createProgressBar(final Object parentUiReference, final IProgressBarSetupSpi setup) {
 		return new ProgressBarWidget(colorCache, parentUiReference, setup);
 	}
 

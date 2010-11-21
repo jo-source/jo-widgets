@@ -28,16 +28,16 @@
 
 package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.api.widgets.IToggleButtonWidget;
+import org.jowidgets.api.widgets.IToggleButton;
 import org.jowidgets.api.widgets.descriptor.setup.IToggleButtonSetup;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.spi.widgets.IToggleButtonWidgetSpi;
+import org.jowidgets.spi.widgets.IToggleButtonSpi;
 
-public class ToggleButtonWidget extends CheckBoxWidget implements IToggleButtonWidget {
+public class ToggleButtonWidget extends CheckBoxWidget implements IToggleButton {
 
-	private final IToggleButtonWidgetSpi toggleButtonWidgetSpi;
+	private final IToggleButtonSpi toggleButtonWidgetSpi;
 
-	public ToggleButtonWidget(final IToggleButtonWidgetSpi toggleButtonWidgetSpi, final IToggleButtonSetup setup) {
+	public ToggleButtonWidget(final IToggleButtonSpi toggleButtonWidgetSpi, final IToggleButtonSetup setup) {
 
 		super(toggleButtonWidgetSpi, setup);
 

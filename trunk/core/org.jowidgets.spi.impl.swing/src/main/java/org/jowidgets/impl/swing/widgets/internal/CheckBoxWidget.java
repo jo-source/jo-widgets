@@ -37,10 +37,10 @@ import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.impl.swing.util.AlignmentConvert;
 import org.jowidgets.impl.swing.util.FontProvider;
-import org.jowidgets.spi.widgets.ICheckBoxWidgetSpi;
+import org.jowidgets.spi.widgets.ICheckBoxSpi;
 import org.jowidgets.spi.widgets.setup.ICheckBoxSetupSpi;
 
-public class CheckBoxWidget extends AbstractSwingInputWidget implements ICheckBoxWidgetSpi {
+public class CheckBoxWidget extends AbstractSwingInputWidget implements ICheckBoxSpi {
 
 	public CheckBoxWidget(final ICheckBoxSetupSpi setup) {
 		this(new JCheckBox(), setup);

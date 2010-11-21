@@ -28,18 +28,18 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.widgets.IButtonWidgetCommon;
+import org.jowidgets.common.widgets.IButtonCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 
-public class ButtonWidgetCommonWrapper extends LabelWidgetCommonWrapper implements IButtonWidgetCommon {
+public class ButtonWidgetCommonWrapper extends LabelWidgetCommonWrapper implements IButtonCommon {
 
-	public ButtonWidgetCommonWrapper(final IButtonWidgetCommon widget) {
+	public ButtonWidgetCommonWrapper(final IButtonCommon widget) {
 		super(widget);
 	}
 
 	@Override
-	protected IButtonWidgetCommon getWidget() {
-		return (IButtonWidgetCommon) super.getWidget();
+	protected IButtonCommon getWidget() {
+		return (IButtonCommon) super.getWidget();
 	}
 
 	@Override

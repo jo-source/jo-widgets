@@ -29,11 +29,11 @@
 package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.ICheckBoxWidget;
+import org.jowidgets.api.widgets.ICheckBox;
 import org.jowidgets.api.widgets.blueprint.ICheckBoxBluePrint;
 import org.jowidgets.api.widgets.descriptor.ICheckBoxDescriptor;
 
-public class JoCheckBox extends CheckBoxWidget<ICheckBoxWidget, ICheckBoxBluePrint> implements ICheckBoxWidget {
+public class JoCheckBox extends CheckBoxWidget<ICheckBox, ICheckBoxBluePrint> implements ICheckBox {
 
 	public JoCheckBox(final String text) {
 		super(Toolkit.getBluePrintFactory().checkBox().setText(text));

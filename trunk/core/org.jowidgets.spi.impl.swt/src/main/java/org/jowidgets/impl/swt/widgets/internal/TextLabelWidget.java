@@ -37,10 +37,10 @@ import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.util.AlignmentConvert;
 import org.jowidgets.impl.swt.util.FontProvider;
 import org.jowidgets.impl.swt.widgets.SwtWidget;
-import org.jowidgets.spi.widgets.ITextLabelWidgetSpi;
+import org.jowidgets.spi.widgets.ITextLabelSpi;
 import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 
-public class TextLabelWidget extends SwtWidget implements ITextLabelWidgetSpi {
+public class TextLabelWidget extends SwtWidget implements ITextLabelSpi {
 
 	public TextLabelWidget(final IColorCache colorCache, final Object parentUiReference, final ITextLabelSetupSpi setup) {
 

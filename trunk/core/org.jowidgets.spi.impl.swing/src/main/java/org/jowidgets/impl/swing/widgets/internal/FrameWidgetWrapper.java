@@ -33,9 +33,9 @@ import java.awt.event.WindowEvent;
 
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swing.widgets.SwingWindowWidget;
-import org.jowidgets.spi.widgets.IFrameWidgetSpi;
+import org.jowidgets.spi.widgets.IFrameSpi;
 
-public class FrameWidgetWrapper extends SwingWindowWidget implements IFrameWidgetSpi {
+public class FrameWidgetWrapper extends SwingWindowWidget implements IFrameSpi {
 
 	public FrameWidgetWrapper(final IGenericWidgetFactory factory, final Window uiReference) {
 		super(factory, uiReference);

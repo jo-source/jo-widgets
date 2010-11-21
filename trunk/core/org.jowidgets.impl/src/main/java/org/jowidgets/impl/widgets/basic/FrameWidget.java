@@ -28,25 +28,26 @@
 
 package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.api.widgets.IFrameWidget;
+import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IFrameSetup;
-import org.jowidgets.common.widgets.IWidgetCommon;
+import org.jowidgets.common.widgets.IControlCommon;
+import org.jowidgets.common.widgets.IDisplayCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
 import org.jowidgets.impl.base.delegate.CompositeWidgetDelegate;
 import org.jowidgets.impl.base.delegate.WindowWidgetDelegate;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractFrameWidgetCommonWrapper;
-import org.jowidgets.spi.widgets.IFrameWidgetSpi;
+import org.jowidgets.spi.widgets.IFrameSpi;
 
-public class FrameWidget extends AbstractFrameWidgetCommonWrapper implements IFrameWidget {
+public class FrameWidget extends AbstractFrameWidgetCommonWrapper implements IFrame {
 
 	private final ChildWidgetDelegate childWidgetDelegate;
 	private final WindowWidgetDelegate windowWidgetDelegate;
 	private final CompositeWidgetDelegate compositeWidgetDelegate;
 
-	public FrameWidget(final IFrameWidgetSpi frameWidgetSpi, final IFrameSetup setup) {
+	public FrameWidget(final IFrameSpi frameWidgetSpi, final IFrameSetup setup) {
 		super(frameWidgetSpi);
 		this.childWidgetDelegate = new ChildWidgetDelegate();
 		this.windowWidgetDelegate = new WindowWidgetDelegate(frameWidgetSpi, setup);
@@ -54,21 +55,21 @@ public class FrameWidget extends AbstractFrameWidgetCommonWrapper implements IFr
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IWidgetCommon> WIDGET_TYPE add(
+	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
 		return compositeWidgetDelegate.add(descriptor, layoutConstraints);
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IWidgetCommon> WIDGET_TYPE add(
+	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
 		final ICustomWidgetFactory<WIDGET_TYPE> factory,
 		final Object layoutConstraints) {
 		return compositeWidgetDelegate.add(factory, layoutConstraints);
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
+	public <WIDGET_TYPE extends IDisplayCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
 		final DESCRIPTOR_TYPE descriptor) {
 		final WIDGET_TYPE result = getWidget().createChildWindow(descriptor);
 		if (result instanceof IWidget) {

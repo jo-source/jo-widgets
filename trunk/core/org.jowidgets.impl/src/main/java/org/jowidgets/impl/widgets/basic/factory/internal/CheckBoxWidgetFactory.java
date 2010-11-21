@@ -28,7 +28,7 @@
 
 package org.jowidgets.impl.widgets.basic.factory.internal;
 
-import org.jowidgets.api.widgets.ICheckBoxWidget;
+import org.jowidgets.api.widgets.ICheckBox;
 import org.jowidgets.api.widgets.descriptor.ICheckBoxDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
@@ -36,9 +36,9 @@ import org.jowidgets.impl.spi.ISpiBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.ICheckBoxBluePrintSpi;
 import org.jowidgets.impl.widgets.basic.CheckBoxWidget;
 import org.jowidgets.spi.IWidgetFactorySpi;
-import org.jowidgets.spi.widgets.ICheckBoxWidgetSpi;
+import org.jowidgets.spi.widgets.ICheckBoxSpi;
 
-public class CheckBoxWidgetFactory extends AbstractWidgetFactory implements IWidgetFactory<ICheckBoxWidget, ICheckBoxDescriptor> {
+public class CheckBoxWidgetFactory extends AbstractWidgetFactory implements IWidgetFactory<ICheckBox, ICheckBoxDescriptor> {
 
 	public CheckBoxWidgetFactory(
 		final IGenericWidgetFactory genericWidgetFactory,
@@ -49,9 +49,9 @@ public class CheckBoxWidgetFactory extends AbstractWidgetFactory implements IWid
 	}
 
 	@Override
-	public ICheckBoxWidget create(final Object parentUiReference, final ICheckBoxDescriptor descriptor) {
+	public ICheckBox create(final Object parentUiReference, final ICheckBoxDescriptor descriptor) {
 		final ICheckBoxBluePrintSpi bp = getSpiBluePrintFactory().checkBox().setSetup(descriptor);
-		final ICheckBoxWidgetSpi widget = getSpiWidgetFactory().createCheckBoxWidget(parentUiReference, bp);
+		final ICheckBoxSpi widget = getSpiWidgetFactory().createCheckBox(parentUiReference, bp);
 		return new CheckBoxWidget(widget, descriptor);
 	}
 

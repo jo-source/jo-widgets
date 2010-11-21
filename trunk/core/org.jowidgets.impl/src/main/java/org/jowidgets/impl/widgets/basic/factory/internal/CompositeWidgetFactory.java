@@ -28,7 +28,7 @@
 
 package org.jowidgets.impl.widgets.basic.factory.internal;
 
-import org.jowidgets.api.widgets.ICompositeWidget;
+import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.descriptor.ICompositeDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
@@ -36,10 +36,10 @@ import org.jowidgets.impl.spi.ISpiBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.ICompositeBluePrintSpi;
 import org.jowidgets.impl.widgets.basic.CompositeWidget;
 import org.jowidgets.spi.IWidgetFactorySpi;
-import org.jowidgets.spi.widgets.IContainerWidgetSpi;
+import org.jowidgets.spi.widgets.IContainerSpi;
 
 public class CompositeWidgetFactory extends AbstractWidgetFactory implements
-		IWidgetFactory<ICompositeWidget, ICompositeDescriptor> {
+		IWidgetFactory<IComposite, ICompositeDescriptor> {
 
 	public CompositeWidgetFactory(
 		final IGenericWidgetFactory genericWidgetFactory,
@@ -50,9 +50,9 @@ public class CompositeWidgetFactory extends AbstractWidgetFactory implements
 	}
 
 	@Override
-	public ICompositeWidget create(final Object parentUiReference, final ICompositeDescriptor descriptor) {
+	public IComposite create(final Object parentUiReference, final ICompositeDescriptor descriptor) {
 		final ICompositeBluePrintSpi bp = getSpiBluePrintFactory().composite().setSetup(descriptor);
-		final IContainerWidgetSpi containerSpi = getSpiWidgetFactory().createCompositeWidget(
+		final IContainerSpi containerSpi = getSpiWidgetFactory().createComposite(
 				getGenericWidgetFactory(),
 				parentUiReference,
 				bp);

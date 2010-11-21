@@ -27,14 +27,14 @@
  */
 package org.jowidgets.impl.widgets.composed.factory.internal;
 
-import org.jowidgets.api.widgets.ICompositeWidget;
-import org.jowidgets.api.widgets.IProgressBarWidget;
+import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.IProgressBar;
 import org.jowidgets.api.widgets.descriptor.IProgressBarDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.widgets.composed.ProgressBarWidget;
 import org.jowidgets.spi.IWidgetFactorySpi;
 
-public class ProgressBarWidgetFactory extends AbstractCompositeWidgetFactory<IProgressBarWidget, IProgressBarDescriptor> {
+public class ProgressBarWidgetFactory extends AbstractCompositeWidgetFactory<IProgressBar, IProgressBarDescriptor> {
 
 	private final IWidgetFactorySpi widgetsFactorySpi;
 
@@ -44,7 +44,7 @@ public class ProgressBarWidgetFactory extends AbstractCompositeWidgetFactory<IPr
 	}
 
 	@Override
-	protected IProgressBarWidget createWidget(final ICompositeWidget compositeWidget, final IProgressBarDescriptor descriptor) {
+	protected IProgressBar createWidget(final IComposite compositeWidget, final IProgressBarDescriptor descriptor) {
 		return new ProgressBarWidget(compositeWidget, descriptor, widgetsFactorySpi);
 	}
 

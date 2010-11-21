@@ -30,10 +30,10 @@ package org.jowidgets.impl.mock.widgets.internal;
 import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.impl.mock.mockui.UIMComboBox;
-import org.jowidgets.spi.widgets.IComboBoxSelectionWidgetSpi;
+import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
 
-public class ComboBoxSelectionWidget extends AbstractMockInputWidget implements IComboBoxSelectionWidgetSpi {
+public class ComboBoxSelectionWidget extends AbstractMockInputWidget implements IComboBoxSelectionSpi {
 
 	public ComboBoxSelectionWidget(final IComboBoxSelectionSetupSpi setup) {
 		super(new UIMComboBox(setup.getElements()));

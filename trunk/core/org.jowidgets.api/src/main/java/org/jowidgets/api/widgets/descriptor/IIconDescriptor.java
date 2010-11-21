@@ -27,10 +27,10 @@
  */
 package org.jowidgets.api.widgets.descriptor;
 
-import org.jowidgets.api.widgets.IIconWidget;
+import org.jowidgets.api.widgets.IIcon;
 import org.jowidgets.api.widgets.descriptor.setup.IIconSetup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-public interface IIconDescriptor extends IIconSetup, IWidgetDescriptor<IIconWidget> {
+public interface IIconDescriptor extends IIconSetup, IWidgetDescriptor<IIcon> {
 
 }

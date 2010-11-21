@@ -27,10 +27,10 @@
  */
 package org.jowidgets.impl.mock.widgets.internal;
 
-import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;
+import org.jowidgets.spi.widgets.IComboBoxSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSetupSpi;
 
-public class ComboBoxWidget extends ComboBoxSelectionWidget implements IComboBoxWidgetSpi {
+public class ComboBoxWidget extends ComboBoxSelectionWidget implements IComboBoxSpi {
 
 	public ComboBoxWidget(final IComboBoxSetupSpi setup) {
 		super(setup);

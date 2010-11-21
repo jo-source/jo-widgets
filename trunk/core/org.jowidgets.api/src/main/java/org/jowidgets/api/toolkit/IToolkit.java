@@ -30,14 +30,14 @@ package org.jowidgets.api.toolkit;
 
 import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.utils.IWidgetUtils;
-import org.jowidgets.api.widgets.IFrameWidget;
+import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.threads.IUiThreadAccess;
-import org.jowidgets.common.widgets.IWindowWidgetCommon;
+import org.jowidgets.common.widgets.IWindowCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 
 public interface IToolkit {
@@ -62,9 +62,9 @@ public interface IToolkit {
 
 	IWidgetUtils getWidgetUtils();
 
-	IWindowWidgetCommon getActiveWindow();
+	IWindowCommon getActiveWindow();
 
-	IFrameWidget createRootFrame(IFrameDescriptor descriptor);
+	IFrame createRootFrame(IFrameDescriptor descriptor);
 
 	/**
 	 * Creates an root frame for an application lifecycle. When the rootFrame will be
@@ -74,6 +74,6 @@ public interface IToolkit {
 	 * @param lifecycle The lifecycle of the current application
 	 * @return the created frame
 	 */
-	IFrameWidget createRootFrame(IFrameDescriptor descriptor, IApplicationLifecycle lifecycle);
+	IFrame createRootFrame(IFrameDescriptor descriptor, IApplicationLifecycle lifecycle);
 
 }

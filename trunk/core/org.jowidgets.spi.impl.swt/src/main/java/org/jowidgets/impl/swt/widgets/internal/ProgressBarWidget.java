@@ -34,10 +34,10 @@ import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.util.OrientationConvert;
 import org.jowidgets.impl.swt.widgets.SwtWidget;
-import org.jowidgets.spi.widgets.IProgressBarWidgetSpi;
+import org.jowidgets.spi.widgets.IProgressBarSpi;
 import org.jowidgets.spi.widgets.setup.IProgressBarSetupSpi;
 
-public class ProgressBarWidget extends SwtWidget implements IProgressBarWidgetSpi {
+public class ProgressBarWidget extends SwtWidget implements IProgressBarSpi {
 
 	public ProgressBarWidget(final IColorCache colorCache, final Object parentUiReference, final IProgressBarSetupSpi setup) {
 		super(colorCache, createProgressBar(parentUiReference, setup));

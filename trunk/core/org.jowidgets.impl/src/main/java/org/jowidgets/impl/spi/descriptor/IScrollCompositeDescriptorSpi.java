@@ -28,7 +28,7 @@
 package org.jowidgets.impl.spi.descriptor;
 
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.spi.widgets.IScrollContainerWidgetSpi;
+import org.jowidgets.spi.widgets.IScrollCompositeSpi;
 import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
 
-public interface IScrollCompositeDescriptorSpi extends IScrollCompositeSetupSpi, IWidgetDescriptor<IScrollContainerWidgetSpi> {}
+public interface IScrollCompositeDescriptorSpi extends IScrollCompositeSetupSpi, IWidgetDescriptor<IScrollCompositeSpi> {}

@@ -42,7 +42,7 @@ import org.jowidgets.common.types.SplitResizePolicy;
 import org.jowidgets.impl.swt.util.BorderToComposite;
 import org.jowidgets.impl.swt.widgets.internal.layout.ILayoutListener;
 import org.jowidgets.impl.swt.widgets.internal.layout.LayoutWrapper;
-import org.jowidgets.spi.widgets.setup.ISplitContainerSetupSpi;
+import org.jowidgets.spi.widgets.setup.ISplitCompositeSetupSpi;
 
 public class JoSashForm extends Composite {
 
@@ -61,7 +61,7 @@ public class JoSashForm extends Composite {
 	private final int sashWidth;
 	private boolean handleSashSelectionEvent;
 
-	public JoSashForm(final Composite parent, final ISplitContainerSetupSpi setup) {
+	public JoSashForm(final Composite parent, final ISplitCompositeSetupSpi setup) {
 		super(parent, SWT.NONE);
 
 		this.handleSashSelectionEvent = false;
@@ -77,7 +77,7 @@ public class JoSashForm extends Composite {
 		}
 	}
 
-	private void initHorizontal(final ISplitContainerSetupSpi setup) {
+	private void initHorizontal(final ISplitCompositeSetupSpi setup) {
 		this.first = BorderToComposite.convert(this, setup.getFirstBorder());
 		sash = new Sash(this, SWT.NONE | SWT.VERTICAL);
 		this.second = BorderToComposite.convert(this, setup.getSecondBorder());
@@ -181,7 +181,7 @@ public class JoSashForm extends Composite {
 		second.setLayoutData(secondData);
 	}
 
-	private void initVertical(final ISplitContainerSetupSpi setup) {
+	private void initVertical(final ISplitCompositeSetupSpi setup) {
 		this.first = BorderToComposite.convert(this, setup.getFirstBorder());
 		sash = new Sash(this, SWT.NONE | SWT.HORIZONTAL);
 		this.second = BorderToComposite.convert(this, setup.getSecondBorder());

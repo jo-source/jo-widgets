@@ -39,7 +39,6 @@ public class DefaultIconsRegisterService extends ImageConstantRegisterService {
 
 	public void registerImages() {
 		registerImage(IconsSmall.OK, "ok.png");
-		registerImage(IconsSmall.ERROR, "error.png");
 	}
 
 }

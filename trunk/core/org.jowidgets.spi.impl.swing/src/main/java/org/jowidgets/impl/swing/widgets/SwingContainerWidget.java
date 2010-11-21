@@ -33,6 +33,7 @@ import java.awt.Container;
 import net.miginfocom.swing.MigLayout;
 
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
@@ -40,10 +41,10 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.spi.widgets.IContainerWidgetSpi;
+import org.jowidgets.spi.widgets.ICompositeSpi;
 import org.jowidgets.util.Assert;
 
-public class SwingContainerWidget implements IContainerWidgetSpi {
+public class SwingContainerWidget implements ICompositeSpi {
 
 	private final IGenericWidgetFactory factory;
 	private final Container container;
@@ -106,7 +107,7 @@ public class SwingContainerWidget implements IContainerWidgetSpi {
 	}
 
 	@Override
-	public final <WIDGET_TYPE extends IWidgetCommon> WIDGET_TYPE add(
+	public final <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object cellConstraints) {
 
@@ -116,7 +117,7 @@ public class SwingContainerWidget implements IContainerWidgetSpi {
 	}
 
 	@Override
-	public final <WIDGET_TYPE extends IWidgetCommon> WIDGET_TYPE add(
+	public final <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
 		final ICustomWidgetFactory<WIDGET_TYPE> customFactory,
 		final Object cellConstraints) {
 

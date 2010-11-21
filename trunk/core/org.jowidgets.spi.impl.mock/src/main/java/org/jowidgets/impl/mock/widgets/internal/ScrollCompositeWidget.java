@@ -30,11 +30,11 @@ package org.jowidgets.impl.mock.widgets.internal;
 import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.mock.mockui.UIMScrollPane;
-import org.jowidgets.impl.mock.widgets.MockContainerWidget;
-import org.jowidgets.spi.widgets.IScrollContainerWidgetSpi;
+import org.jowidgets.impl.mock.widgets.MockCompositeWidget;
+import org.jowidgets.spi.widgets.IScrollCompositeSpi;
 import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
 
-public class ScrollCompositeWidget extends MockContainerWidget implements IScrollContainerWidgetSpi {
+public class ScrollCompositeWidget extends MockCompositeWidget implements IScrollCompositeSpi {
 
 	public ScrollCompositeWidget(final IGenericWidgetFactory factory, final IScrollCompositeSetupSpi setup) {
 		super(factory, new UIMScrollPane());

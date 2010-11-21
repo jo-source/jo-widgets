@@ -31,10 +31,10 @@ import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.impl.mock.image.MockImageRegistry;
 import org.jowidgets.impl.mock.mockui.UIMProgressBar;
 import org.jowidgets.impl.mock.widgets.MockWidget;
-import org.jowidgets.spi.widgets.IProgressBarWidgetSpi;
+import org.jowidgets.spi.widgets.IProgressBarSpi;
 import org.jowidgets.spi.widgets.setup.IProgressBarSetupSpi;
 
-public class ProgressBarWidget extends MockWidget implements IProgressBarWidgetSpi {
+public class ProgressBarWidget extends MockWidget implements IProgressBarSpi {
 
 	public ProgressBarWidget(final MockImageRegistry imageRegistry, final IProgressBarSetupSpi setup) {
 		super(new UIMProgressBar(setup.getOrientation()));

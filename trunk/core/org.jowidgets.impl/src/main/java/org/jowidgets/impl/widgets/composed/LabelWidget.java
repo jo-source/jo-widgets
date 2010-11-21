@@ -27,8 +27,8 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
-import org.jowidgets.api.widgets.ICompositeWidget;
-import org.jowidgets.api.widgets.ILabelWidget;
+import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.ILabel;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.IIconDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextLabelDescriptor;
@@ -37,19 +37,19 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.util.ColorSettingsInvoker;
-import org.jowidgets.common.widgets.IIconWidgetCommon;
-import org.jowidgets.common.widgets.ITextLabelWidgetCommon;
+import org.jowidgets.common.widgets.IIconCommon;
+import org.jowidgets.common.widgets.ITextLabelCommon;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
-public class LabelWidget implements ILabelWidget {
+public class LabelWidget implements ILabel {
 
-	private final IIconWidgetCommon iconWidget;
-	private final ITextLabelWidgetCommon textLabelWidget;
-	private final ICompositeWidget compositeWidget;
+	private final IIconCommon iconWidget;
+	private final ITextLabelCommon textLabelWidget;
+	private final IComposite compositeWidget;
 
-	public LabelWidget(final ICompositeWidget compositeWidget, final ILabelSetup setup) {
+	public LabelWidget(final IComposite compositeWidget, final ILabelSetup setup) {
 
 		super();
 

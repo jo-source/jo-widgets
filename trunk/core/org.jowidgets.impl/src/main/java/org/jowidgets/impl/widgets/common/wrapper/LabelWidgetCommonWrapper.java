@@ -29,17 +29,17 @@
 package org.jowidgets.impl.widgets.common.wrapper;
 
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.ILabelWidgetCommon;
+import org.jowidgets.common.widgets.ILabelCommon;
 
-public class LabelWidgetCommonWrapper extends TextLabelWidgetCommonWrapper implements ILabelWidgetCommon {
+public class LabelWidgetCommonWrapper extends TextLabelWidgetCommonWrapper implements ILabelCommon {
 
-	public LabelWidgetCommonWrapper(final ILabelWidgetCommon widget) {
+	public LabelWidgetCommonWrapper(final ILabelCommon widget) {
 		super(widget);
 	}
 
 	@Override
-	protected ILabelWidgetCommon getWidget() {
-		return (ILabelWidgetCommon) super.getWidget();
+	protected ILabelCommon getWidget() {
+		return (ILabelCommon) super.getWidget();
 	}
 
 	@Override

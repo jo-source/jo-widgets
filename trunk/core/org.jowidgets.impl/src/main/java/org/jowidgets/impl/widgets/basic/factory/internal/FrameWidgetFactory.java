@@ -28,7 +28,7 @@
 
 package org.jowidgets.impl.widgets.basic.factory.internal;
 
-import org.jowidgets.api.widgets.IFrameWidget;
+import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
@@ -36,9 +36,9 @@ import org.jowidgets.impl.spi.ISpiBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.IFrameBluePrintSpi;
 import org.jowidgets.impl.widgets.basic.FrameWidget;
 import org.jowidgets.spi.IWidgetFactorySpi;
-import org.jowidgets.spi.widgets.IFrameWidgetSpi;
+import org.jowidgets.spi.widgets.IFrameSpi;
 
-public class FrameWidgetFactory extends AbstractWidgetFactory implements IWidgetFactory<IFrameWidget, IFrameDescriptor> {
+public class FrameWidgetFactory extends AbstractWidgetFactory implements IWidgetFactory<IFrame, IFrameDescriptor> {
 
 	public FrameWidgetFactory(
 		final IGenericWidgetFactory genericWidgetFactory,
@@ -49,9 +49,9 @@ public class FrameWidgetFactory extends AbstractWidgetFactory implements IWidget
 	}
 
 	@Override
-	public IFrameWidget create(final Object parentUiReference, final IFrameDescriptor descriptor) {
+	public IFrame create(final Object parentUiReference, final IFrameDescriptor descriptor) {
 		final IFrameBluePrintSpi bp = getSpiBluePrintFactory().frame().setSetup(descriptor);
-		final IFrameWidgetSpi frameSpi = getSpiWidgetFactory().createFrameWidget(getGenericWidgetFactory(), parentUiReference, bp);
+		final IFrameSpi frameSpi = getSpiWidgetFactory().createFrame(getGenericWidgetFactory(), parentUiReference, bp);
 		return new FrameWidget(frameSpi, descriptor);
 	}
 

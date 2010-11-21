@@ -29,9 +29,9 @@ package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationResult;
-import org.jowidgets.api.widgets.ICompositeWidget;
-import org.jowidgets.api.widgets.IInputCompositeWidget;
-import org.jowidgets.api.widgets.IValidationLabelWidget;
+import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.IInputComposite;
+import org.jowidgets.api.widgets.IValidationLabel;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.descriptor.setup.IInputCompositeSetup;
@@ -41,15 +41,15 @@ import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 import org.jowidgets.impl.widgets.composed.internal.InputContentContainer;
 
-public class InputCompositeWidget<INPUT_TYPE> implements IInputCompositeWidget<INPUT_TYPE> {
+public class InputCompositeWidget<INPUT_TYPE> implements IInputComposite<INPUT_TYPE> {
 
-	private final ICompositeWidget parentComposite;
-	private final ICompositeWidget composite;
+	private final IComposite parentComposite;
+	private final IComposite composite;
 	private final InputContentContainer<INPUT_TYPE> contentContainer;
-	private final IValidationLabelWidget validationLabel;
+	private final IValidationLabel validationLabel;
 	private final boolean isAutoResetValidation;
 
-	public InputCompositeWidget(final ICompositeWidget composite, final IInputCompositeSetup<INPUT_TYPE> setup) {
+	public InputCompositeWidget(final IComposite composite, final IInputCompositeSetup<INPUT_TYPE> setup) {
 		super();
 
 		this.isAutoResetValidation = setup.isAutoResetValidation();

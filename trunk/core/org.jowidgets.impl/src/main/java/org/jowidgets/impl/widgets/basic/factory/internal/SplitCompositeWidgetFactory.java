@@ -28,18 +28,18 @@
 
 package org.jowidgets.impl.widgets.basic.factory.internal;
 
-import org.jowidgets.api.widgets.ISplitCompositeWidget;
+import org.jowidgets.api.widgets.ISplitComposite;
 import org.jowidgets.api.widgets.descriptor.ISplitCompositeDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
-import org.jowidgets.impl.spi.blueprint.ISplitContainerBluePrintSpi;
+import org.jowidgets.impl.spi.blueprint.ISplitCompositeBluePrintSpi;
 import org.jowidgets.impl.widgets.basic.SplitCompositeWidget;
 import org.jowidgets.spi.IWidgetFactorySpi;
-import org.jowidgets.spi.widgets.ISplitContainerWidgetSpi;
+import org.jowidgets.spi.widgets.ISplitCompositeSpi;
 
 public class SplitCompositeWidgetFactory extends AbstractWidgetFactory implements
-		IWidgetFactory<ISplitCompositeWidget, ISplitCompositeDescriptor> {
+		IWidgetFactory<ISplitComposite, ISplitCompositeDescriptor> {
 
 	public SplitCompositeWidgetFactory(
 		final IGenericWidgetFactory genericWidgetFactory,
@@ -50,10 +50,10 @@ public class SplitCompositeWidgetFactory extends AbstractWidgetFactory implement
 	}
 
 	@Override
-	public ISplitCompositeWidget create(final Object parentUiReference, final ISplitCompositeDescriptor descriptor) {
-		final ISplitContainerBluePrintSpi bp = getSpiBluePrintFactory().splitContainer().setSetup(descriptor);
+	public ISplitComposite create(final Object parentUiReference, final ISplitCompositeDescriptor descriptor) {
+		final ISplitCompositeBluePrintSpi bp = getSpiBluePrintFactory().splitComposite().setSetup(descriptor);
 
-		final ISplitContainerWidgetSpi splitConatinerSpi = getSpiWidgetFactory().createSplitContainerWidget(
+		final ISplitCompositeSpi splitConatinerSpi = getSpiWidgetFactory().createSplitComposite(
 				getGenericWidgetFactory(),
 				parentUiReference,
 				bp);

@@ -28,18 +28,18 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.widgets.IContainerWidgetCommon;
+import org.jowidgets.common.widgets.IContainerCommon;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 
-public abstract class AbstractContainerWidgetCommonWrapper extends WidgetCommonWrapper implements IContainerWidgetCommon {
+public abstract class AbstractContainerWidgetCommonWrapper extends WidgetCommonWrapper implements IContainerCommon {
 
-	public AbstractContainerWidgetCommonWrapper(final IContainerWidgetCommon widget) {
+	public AbstractContainerWidgetCommonWrapper(final IContainerCommon widget) {
 		super(widget);
 	}
 
 	@Override
-	protected IContainerWidgetCommon getWidget() {
-		return (IContainerWidgetCommon) super.getWidget();
+	protected IContainerCommon getWidget() {
+		return (IContainerCommon) super.getWidget();
 	}
 
 	@Override

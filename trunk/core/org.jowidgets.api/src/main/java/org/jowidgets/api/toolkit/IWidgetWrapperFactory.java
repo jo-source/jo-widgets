@@ -28,8 +28,8 @@
 
 package org.jowidgets.api.toolkit;
 
-import org.jowidgets.common.widgets.IContainerWidgetCommon;
-import org.jowidgets.common.widgets.IFrameWidgetCommon;
+import org.jowidgets.common.widgets.ICompositeCommon;
+import org.jowidgets.common.widgets.IFrameCommon;
 
 public interface IWidgetWrapperFactory {
 
@@ -42,31 +42,31 @@ public interface IWidgetWrapperFactory {
 	boolean isConvertibleToFrame(final Object uiReference);
 
 	/**
-	 * Creates a FrameWidget from an ui-platform specific ui-reference
+	 * Creates a IFrameCommon from an ui-platform specific ui-reference
 	 * 
 	 * @param uiReference The ui-platform specific object that could be wrapped to an
-	 *            FrameWidget (e.g. Window for Swing, Shell for swt).
-	 * @return The created FrameWidget
-	 * @throws IllegalArgumentException If the ui-reference could not be wrapped to an FrameWidget.
+	 *            IFrameCommon (e.g. Window for Swing, Shell for swt).
+	 * @return The created IFrameCommon
+	 * @throws IllegalArgumentException If the ui-reference could not be wrapped to an IFrameCommon.
 	 */
-	IFrameWidgetCommon createFrameWidget(final Object uiReference);
+	IFrameCommon createFrame(final Object uiReference);
 
 	/**
-	 * Tests if the ui reference could be converted / wrapped to an ContainerWidget
+	 * Tests if the ui reference could be converted / wrapped to an ICompositeCommon
 	 * 
 	 * @param uiReference
 	 * @return True if convertible, false otherwise
 	 */
-	boolean isConvertibleToContainer(final Object uiReference);
+	boolean isConvertibleToComposite(final Object uiReference);
 
 	/**
-	 * Creates a ContainerWidget from an ui-platform specific ui-reference
+	 * Creates a ICompositeCommon from an ui-platform specific ui-reference
 	 * 
 	 * @param uiReference The ui-platform specific object that could be wrapped to an
-	 *            ContainerWidget (e.g. Container for Swing, Composite for swt).
-	 * @return The created ContainerWidget
-	 * @throws IllegalArgumentException If the ui-reference could not be wrapped to an ContainerWidget.
+	 *            ICompositeCommon (e.g. Container for Swing, Composite for swt).
+	 * @return The created ICompositeCommon
+	 * @throws IllegalArgumentException If the ui-reference could not be wrapped to an ICompositeCommon.
 	 */
-	IContainerWidgetCommon createContainerWidget(final Object uiReference);
+	ICompositeCommon createComposite(final Object uiReference);
 
 }

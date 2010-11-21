@@ -28,13 +28,13 @@
 
 package org.jowidgets.tools.powo;
 
-import org.jowidgets.api.widgets.ICompositeWidget;
+import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.builder.ICompositeSetupBuilder;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-class CompositeWidget<WIDGET_TYPE extends ICompositeWidget, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & ICompositeSetupBuilder<?>> extends
-		ContainerWidget<WIDGET_TYPE, BLUE_PRINT_TYPE> implements ICompositeWidget {
+class CompositeWidget<WIDGET_TYPE extends IComposite, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & ICompositeSetupBuilder<?>> extends
+		ContainerWidget<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IComposite {
 
 	CompositeWidget(final BLUE_PRINT_TYPE bluePrint) {
 		super(bluePrint);

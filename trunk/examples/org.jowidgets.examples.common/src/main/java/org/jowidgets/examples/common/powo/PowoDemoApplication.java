@@ -34,7 +34,7 @@ import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.types.QuestionResult;
-import org.jowidgets.api.widgets.IFrameWidget;
+import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
@@ -156,7 +156,7 @@ public class PowoDemoApplication implements IApplication {
 		frame.setVisible(true);
 	}
 
-	private JoDialog createDialog(final IFrameWidget parent) {
+	private JoDialog createDialog(final IFrame parent) {
 
 		final JoDialog result = new JoDialog(parent, JoDialog.bluePrint("test").autoPackOff());
 		result.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));

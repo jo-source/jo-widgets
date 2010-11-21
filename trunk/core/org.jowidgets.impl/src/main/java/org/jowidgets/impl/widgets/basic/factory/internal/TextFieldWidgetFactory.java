@@ -37,7 +37,7 @@ import org.jowidgets.impl.spi.blueprint.ITextFieldBluePrintSpi;
 import org.jowidgets.impl.widgets.basic.TextInputWidget;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.InputVerifier;
 import org.jowidgets.spi.IWidgetFactorySpi;
-import org.jowidgets.spi.widgets.ITextInputWidgetSpi;
+import org.jowidgets.spi.widgets.ITextFieldSpi;
 
 public class TextFieldWidgetFactory extends AbstractWidgetFactory implements
 		IWidgetFactory<IInputWidget<String>, ITextFieldDescriptor> {
@@ -56,7 +56,7 @@ public class TextFieldWidgetFactory extends AbstractWidgetFactory implements
 
 		bp.setInputVerifier(new InputVerifier(descriptor.getTextInputValidator()));
 
-		final ITextInputWidgetSpi textFieldSpi = getSpiWidgetFactory().createTextFieldWidget(parentUiReference, bp);
+		final ITextFieldSpi textFieldSpi = getSpiWidgetFactory().createTextField(parentUiReference, bp);
 
 		final IInputWidget<String> result = new TextInputWidget(textFieldSpi, descriptor);
 		result.addValidator(descriptor.getTextInputValidator());

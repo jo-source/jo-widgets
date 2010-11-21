@@ -40,10 +40,10 @@ import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.impl.swt.util.AlignmentConvert;
 import org.jowidgets.impl.swt.util.FontProvider;
-import org.jowidgets.spi.widgets.IButtonWidgetSpi;
+import org.jowidgets.spi.widgets.IButtonSpi;
 import org.jowidgets.spi.widgets.setup.IButtonSetupSpi;
 
-public class ButtonWidget extends AbstractSwtActionWidget implements IButtonWidgetSpi {
+public class ButtonWidget extends AbstractSwtActionWidget implements IButtonSpi {
 
 	private final SwtImageRegistry imageRegistry;
 

@@ -33,7 +33,7 @@ import org.jowidgets.api.types.QuestionResult;
 import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.IWindowWidgetCommon;
+import org.jowidgets.common.widgets.IWindowCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 
 public class DefaultQuestionPane implements IQuestionPane {
@@ -141,7 +141,7 @@ public class DefaultQuestionPane implements IQuestionPane {
 	}
 
 	private QuestionResult askQuestion(final IQuestionDialogBluePrint messageDialogBluePrint) {
-		final IWindowWidgetCommon activeWindow = activeWindowProvider.getActiveWindow();
+		final IWindowCommon activeWindow = activeWindowProvider.getActiveWindow();
 		if (activeWindow != null) {
 			return activeWindow.createChildWindow(messageDialogBluePrint).question();
 		}

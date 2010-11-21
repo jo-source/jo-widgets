@@ -34,10 +34,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.image.SwtImageRegistry;
-import org.jowidgets.spi.widgets.IToggleButtonWidgetSpi;
+import org.jowidgets.spi.widgets.IToggleButtonSpi;
 import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;
 
-public class ToggleButtonWidget extends CheckBoxWidget implements IToggleButtonWidgetSpi {
+public class ToggleButtonWidget extends CheckBoxWidget implements IToggleButtonSpi {
 
 	private final SwtImageRegistry imageRegistry;
 

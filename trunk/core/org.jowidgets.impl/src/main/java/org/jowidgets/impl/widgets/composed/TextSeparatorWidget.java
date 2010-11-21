@@ -28,25 +28,25 @@
 package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.color.Colors;
-import org.jowidgets.api.widgets.ICompositeWidget;
-import org.jowidgets.api.widgets.ITextLabelWidget;
+import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.ITextLabel;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.ITextLabelDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextSeparatorDescriptor;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.widgets.ITextLabelWidgetCommon;
+import org.jowidgets.common.widgets.ITextLabelCommon;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 import org.jowidgets.util.Assert;
 
-public class TextSeparatorWidget implements ITextLabelWidget {
+public class TextSeparatorWidget implements ITextLabel {
 
-	private final ICompositeWidget compositeWidget;
-	private final ITextLabelWidgetCommon textLabelWidget;
+	private final IComposite compositeWidget;
+	private final ITextLabelCommon textLabelWidget;
 
-	public TextSeparatorWidget(final ICompositeWidget compositeWidget, final ITextSeparatorDescriptor descriptor) {
+	public TextSeparatorWidget(final IComposite compositeWidget, final ITextSeparatorDescriptor descriptor) {
 		super();
 		Assert.paramNotNull(compositeWidget, "compositeWidget");
 		Assert.paramNotNull(descriptor, "descriptor");

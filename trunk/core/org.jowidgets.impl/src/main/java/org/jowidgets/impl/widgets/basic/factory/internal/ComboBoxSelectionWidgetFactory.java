@@ -28,7 +28,7 @@
 
 package org.jowidgets.impl.widgets.basic.factory.internal;
 
-import org.jowidgets.api.widgets.IComboBoxWidget;
+import org.jowidgets.api.widgets.IComboBox;
 import org.jowidgets.api.widgets.descriptor.IComboBoxSelectionDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
@@ -37,10 +37,10 @@ import org.jowidgets.impl.spi.blueprint.IComboBoxSelectionBluePrintSpi;
 import org.jowidgets.impl.widgets.basic.ComboBoxSelectionWidget;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ComboBoxBuilderConverter;
 import org.jowidgets.spi.IWidgetFactorySpi;
-import org.jowidgets.spi.widgets.IComboBoxSelectionWidgetSpi;
+import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
 
 public class ComboBoxSelectionWidgetFactory extends AbstractWidgetFactory implements
-		IWidgetFactory<IComboBoxWidget<?>, IComboBoxSelectionDescriptor<?>> {
+		IWidgetFactory<IComboBox<?>, IComboBoxSelectionDescriptor<?>> {
 
 	public ComboBoxSelectionWidgetFactory(
 		final IGenericWidgetFactory genericWidgetFactory,
@@ -52,10 +52,10 @@ public class ComboBoxSelectionWidgetFactory extends AbstractWidgetFactory implem
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
-	public IComboBoxWidget<?> create(final Object parentUiReference, final IComboBoxSelectionDescriptor<?> descriptor) {
+	public IComboBox<?> create(final Object parentUiReference, final IComboBoxSelectionDescriptor<?> descriptor) {
 		final IComboBoxSelectionBluePrintSpi bp = getSpiBluePrintFactory().comboBoxSelection().setSetup(descriptor);
 		ComboBoxBuilderConverter.convert(bp, descriptor);
-		final IComboBoxSelectionWidgetSpi widget = getSpiWidgetFactory().createComboBoxSelectionWidget(parentUiReference, bp);
+		final IComboBoxSelectionSpi widget = getSpiWidgetFactory().createComboBoxSelection(parentUiReference, bp);
 		return new ComboBoxSelectionWidget(widget, descriptor);
 	}
 

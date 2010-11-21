@@ -31,18 +31,18 @@ package org.jowidgets.impl.widgets.common.wrapper;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
-import org.jowidgets.common.widgets.IWindowWidgetCommon;
+import org.jowidgets.common.widgets.IWindowCommon;
 import org.jowidgets.common.widgets.controler.IWindowListener;
 
-public abstract class AbstractWindowWidgetCommonWrapper extends WidgetCommonWrapper implements IWindowWidgetCommon {
+public abstract class AbstractWindowWidgetCommonWrapper extends WidgetCommonWrapper implements IWindowCommon {
 
-	public AbstractWindowWidgetCommonWrapper(final IWindowWidgetCommon widget) {
+	public AbstractWindowWidgetCommonWrapper(final IWindowCommon widget) {
 		super(widget);
 	}
 
 	@Override
-	protected IWindowWidgetCommon getWidget() {
-		return (IWindowWidgetCommon) super.getWidget();
+	protected IWindowCommon getWidget() {
+		return (IWindowCommon) super.getWidget();
 	}
 
 	@Override

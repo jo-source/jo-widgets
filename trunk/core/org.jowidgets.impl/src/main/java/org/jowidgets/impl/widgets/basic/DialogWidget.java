@@ -28,13 +28,13 @@
 
 package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.api.widgets.IFrameWidget;
+import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.descriptor.setup.IDialogSetup;
-import org.jowidgets.spi.widgets.IFrameWidgetSpi;
+import org.jowidgets.spi.widgets.IFrameSpi;
 
-public class DialogWidget extends FrameWidget implements IFrameWidget {
+public class DialogWidget extends FrameWidget implements IFrame {
 
-	public DialogWidget(final IFrameWidgetSpi frameWidgetSpi, final IDialogSetup setup) {
+	public DialogWidget(final IFrameSpi frameWidgetSpi, final IDialogSetup setup) {
 		super(frameWidgetSpi, setup);
 	}
 

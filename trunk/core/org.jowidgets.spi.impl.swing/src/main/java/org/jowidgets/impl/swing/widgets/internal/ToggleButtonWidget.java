@@ -31,10 +31,10 @@ import javax.swing.JToggleButton;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
-import org.jowidgets.spi.widgets.IToggleButtonWidgetSpi;
+import org.jowidgets.spi.widgets.IToggleButtonSpi;
 import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;
 
-public class ToggleButtonWidget extends CheckBoxWidget implements IToggleButtonWidgetSpi {
+public class ToggleButtonWidget extends CheckBoxWidget implements IToggleButtonSpi {
 
 	private final SwingImageRegistry imageRegistry;
 

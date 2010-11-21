@@ -31,9 +31,9 @@ package org.jowidgets.impl.toolkit;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jowidgets.api.widgets.IWindowWidget;
+import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.common.widgets.IWidgetCommon;
-import org.jowidgets.common.widgets.IWindowWidgetCommon;
+import org.jowidgets.common.widgets.IWindowCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactoryListener;
 import org.jowidgets.spi.IWidgetsServiceProvider;
@@ -42,22 +42,22 @@ public class ActiveWindowProvider {
 
 	private final IGenericWidgetFactory genericWidgetFactory;
 	private final IWidgetsServiceProvider widgetsServiceProvider;
-	private final Map<Object, IWindowWidgetCommon> uiReferenceToWindow;
+	private final Map<Object, IWindowCommon> uiReferenceToWindow;
 
 	public ActiveWindowProvider(
 		final IGenericWidgetFactory genericWidgetFactory,
 		final IWidgetsServiceProvider widgetsServiceProvider) {
 
 		this.genericWidgetFactory = genericWidgetFactory;
-		this.uiReferenceToWindow = new HashMap<Object, IWindowWidgetCommon>();
+		this.uiReferenceToWindow = new HashMap<Object, IWindowCommon>();
 		this.widgetsServiceProvider = widgetsServiceProvider;
 
 		genericWidgetFactory.addWidgetFactoryListener(new IWidgetFactoryListener() {
 
 			@Override
 			public void widgetCreated(final IWidgetCommon widget) {
-				if (widget instanceof IWindowWidget) {
-					final IWindowWidget windowWidget = (IWindowWidget) widget;
+				if (widget instanceof IWindow) {
+					final IWindow windowWidget = (IWindow) widget;
 					//If a WindowWidget wraps another WindowWidget it will be assumed, 
 					//that the newer window wraps the previous window with the same ui reference.
 					//From now, the wrapping window will returned for the active window
@@ -68,15 +68,15 @@ public class ActiveWindowProvider {
 		});
 	}
 
-	public IWindowWidgetCommon getActiveWindow() {
+	public IWindowCommon getActiveWindow() {
 		final Object activeWindowUiReference = widgetsServiceProvider.getActiveWindowUiReference();
-		IWindowWidgetCommon activeWindow = uiReferenceToWindow.get(widgetsServiceProvider.getActiveWindowUiReference());
+		IWindowCommon activeWindow = uiReferenceToWindow.get(widgetsServiceProvider.getActiveWindowUiReference());
 
 		//maybe window would be created without jo-widgets, so create a wrapper, if possible
 		if (activeWindowUiReference != null && activeWindow == null) {
 			if (widgetsServiceProvider.getWidgetFactory().isConvertibleToFrame(activeWindowUiReference)) {
 
-				activeWindow = widgetsServiceProvider.getWidgetFactory().createFrameWidget(
+				activeWindow = widgetsServiceProvider.getWidgetFactory().createFrame(
 						genericWidgetFactory,
 						activeWindowUiReference);
 

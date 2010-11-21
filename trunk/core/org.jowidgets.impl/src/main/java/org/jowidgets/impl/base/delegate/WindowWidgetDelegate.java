@@ -34,16 +34,16 @@ import org.jowidgets.api.widgets.descriptor.setup.IWindowSetup;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
-import org.jowidgets.common.widgets.IWindowWidgetCommon;
+import org.jowidgets.common.widgets.IWindowCommon;
 
 public class WindowWidgetDelegate {
 
 	private final AutoCenterPolicy autoCenterPolicy;
 	private final AutoPackPolicy autoPackPolicy;
-	private final IWindowWidgetCommon windowWidgetCommon;
+	private final IWindowCommon windowWidgetCommon;
 	private boolean wasVisible;
 
-	public WindowWidgetDelegate(final IWindowWidgetCommon windowWidgetCommon, final IWindowSetup setup) {
+	public WindowWidgetDelegate(final IWindowCommon windowWidgetCommon, final IWindowSetup setup) {
 		this.autoCenterPolicy = setup.getAutoCenterPolicy();
 		this.autoPackPolicy = setup.getAutoPackPolicy();
 		this.windowWidgetCommon = windowWidgetCommon;

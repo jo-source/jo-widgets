@@ -36,8 +36,8 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
-import org.jowidgets.common.widgets.IWidgetCommon;
-import org.jowidgets.common.widgets.IWindowWidgetCommon;
+import org.jowidgets.common.widgets.IDisplayCommon;
+import org.jowidgets.common.widgets.IWindowCommon;
 import org.jowidgets.common.widgets.controler.IWindowListener;
 import org.jowidgets.common.widgets.controler.impl.WindowObservable;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
@@ -46,7 +46,7 @@ import org.jowidgets.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.impl.swing.util.DimensionConvert;
 import org.jowidgets.impl.swing.util.PositionConvert;
 
-public class SwingWindowWidget extends SwingContainerWidget implements IWindowWidgetCommon {
+public class SwingWindowWidget extends SwingContainerWidget implements IWindowCommon {
 
 	private final WindowObservable windowObservableDelegate;
 
@@ -133,7 +133,7 @@ public class SwingWindowWidget extends SwingContainerWidget implements IWindowWi
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
+	public <WIDGET_TYPE extends IDisplayCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
 		final DESCRIPTOR_TYPE descriptor) {
 		return getGenericWidgetFactory().create(getUiReference(), descriptor);
 	}

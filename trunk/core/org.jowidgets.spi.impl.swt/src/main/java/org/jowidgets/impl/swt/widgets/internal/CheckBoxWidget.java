@@ -38,10 +38,10 @@ import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.util.AlignmentConvert;
 import org.jowidgets.impl.swt.util.FontProvider;
-import org.jowidgets.spi.widgets.ICheckBoxWidgetSpi;
+import org.jowidgets.spi.widgets.ICheckBoxSpi;
 import org.jowidgets.spi.widgets.setup.ICheckBoxSetupSpi;
 
-public class CheckBoxWidget extends AbstractSwtInputWidget implements ICheckBoxWidgetSpi {
+public class CheckBoxWidget extends AbstractSwtInputWidget implements ICheckBoxSpi {
 
 	public CheckBoxWidget(final IColorCache colorCache, final Object parentUiReference, final ICheckBoxSetupSpi setup) {
 		this(colorCache, new Button((Composite) parentUiReference, SWT.NONE | SWT.CHECK), setup);

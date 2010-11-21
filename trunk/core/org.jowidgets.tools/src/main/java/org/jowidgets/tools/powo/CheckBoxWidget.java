@@ -28,14 +28,14 @@
 
 package org.jowidgets.tools.powo;
 
-import org.jowidgets.api.widgets.ICheckBoxWidget;
+import org.jowidgets.api.widgets.ICheckBox;
 import org.jowidgets.api.widgets.blueprint.builder.ICheckBoxSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.setup.ICheckBoxSetup;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-class CheckBoxWidget<WIDGET_TYPE extends ICheckBoxWidget, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & ICheckBoxSetup & ICheckBoxSetupBuilder<?>> extends
-		InputWidget<WIDGET_TYPE, BLUE_PRINT_TYPE, Boolean> implements ICheckBoxWidget {
+class CheckBoxWidget<WIDGET_TYPE extends ICheckBox, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & ICheckBoxSetup & ICheckBoxSetupBuilder<?>> extends
+		InputWidget<WIDGET_TYPE, BLUE_PRINT_TYPE, Boolean> implements ICheckBox {
 
 	CheckBoxWidget(final BLUE_PRINT_TYPE bluePrint) {
 		super(bluePrint);

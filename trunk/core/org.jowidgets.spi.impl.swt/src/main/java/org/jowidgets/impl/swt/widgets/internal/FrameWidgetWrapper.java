@@ -33,9 +33,9 @@ import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.widgets.SwtWindowWidget;
-import org.jowidgets.spi.widgets.IFrameWidgetSpi;
+import org.jowidgets.spi.widgets.IFrameSpi;
 
-public class FrameWidgetWrapper extends SwtWindowWidget implements IFrameWidgetSpi {
+public class FrameWidgetWrapper extends SwtWindowWidget implements IFrameSpi {
 
 	public FrameWidgetWrapper(final IGenericWidgetFactory factory, final IColorCache colorCache, final Shell shell) {
 		super(factory, colorCache, shell);

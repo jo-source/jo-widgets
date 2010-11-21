@@ -28,7 +28,7 @@
 
 package org.jowidgets.impl.widgets.basic.factory.internal;
 
-import org.jowidgets.api.widgets.ITextLabelWidget;
+import org.jowidgets.api.widgets.ITextLabel;
 import org.jowidgets.api.widgets.descriptor.ITextLabelDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
@@ -36,10 +36,10 @@ import org.jowidgets.impl.spi.ISpiBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.ITextLabelBluePrintSpi;
 import org.jowidgets.impl.widgets.basic.TextLabelWidget;
 import org.jowidgets.spi.IWidgetFactorySpi;
-import org.jowidgets.spi.widgets.ITextLabelWidgetSpi;
+import org.jowidgets.spi.widgets.ITextLabelSpi;
 
 public class TextLabelWidgetFactory extends AbstractWidgetFactory implements
-		IWidgetFactory<ITextLabelWidget, ITextLabelDescriptor> {
+		IWidgetFactory<ITextLabel, ITextLabelDescriptor> {
 
 	public TextLabelWidgetFactory(
 		final IGenericWidgetFactory genericWidgetFactory,
@@ -50,9 +50,9 @@ public class TextLabelWidgetFactory extends AbstractWidgetFactory implements
 	}
 
 	@Override
-	public ITextLabelWidget create(final Object parentUiReference, final ITextLabelDescriptor descriptor) {
+	public ITextLabel create(final Object parentUiReference, final ITextLabelDescriptor descriptor) {
 		final ITextLabelBluePrintSpi bp = getSpiBluePrintFactory().textLabel().setSetup(descriptor);
-		final ITextLabelWidgetSpi textLabelSpi = getSpiWidgetFactory().createTextLabelWidget(parentUiReference, bp);
+		final ITextLabelSpi textLabelSpi = getSpiWidgetFactory().createTextLabel(parentUiReference, bp);
 		return new TextLabelWidget(textLabelSpi, descriptor);
 	}
 

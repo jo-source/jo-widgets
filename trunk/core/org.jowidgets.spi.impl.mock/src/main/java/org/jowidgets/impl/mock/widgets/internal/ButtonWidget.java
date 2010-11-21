@@ -33,10 +33,10 @@ import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.impl.mock.image.MockImageRegistry;
 import org.jowidgets.impl.mock.mockui.UIMButton;
-import org.jowidgets.spi.widgets.IButtonWidgetSpi;
+import org.jowidgets.spi.widgets.IButtonSpi;
 import org.jowidgets.spi.widgets.setup.IButtonSetupSpi;
 
-public class ButtonWidget extends AbstractMockActionWidget implements IButtonWidgetSpi {
+public class ButtonWidget extends AbstractMockActionWidget implements IButtonSpi {
 
 	private final MockImageRegistry imageRegistry;
 

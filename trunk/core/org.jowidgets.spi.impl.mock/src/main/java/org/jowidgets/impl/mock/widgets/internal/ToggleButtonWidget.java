@@ -30,10 +30,10 @@ package org.jowidgets.impl.mock.widgets.internal;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.impl.mock.image.MockImageRegistry;
 import org.jowidgets.impl.mock.mockui.UIMToggleButton;
-import org.jowidgets.spi.widgets.IToggleButtonWidgetSpi;
+import org.jowidgets.spi.widgets.IToggleButtonSpi;
 import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;
 
-public class ToggleButtonWidget extends CheckBoxWidget implements IToggleButtonWidgetSpi {
+public class ToggleButtonWidget extends CheckBoxWidget implements IToggleButtonSpi {
 
 	private final MockImageRegistry imageRegistry;
 

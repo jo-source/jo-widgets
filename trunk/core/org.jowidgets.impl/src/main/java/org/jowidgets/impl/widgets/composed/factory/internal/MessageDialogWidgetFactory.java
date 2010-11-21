@@ -28,15 +28,15 @@
 package org.jowidgets.impl.widgets.composed.factory.internal;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IFrameWidget;
-import org.jowidgets.api.widgets.IMessageDialogWidget;
+import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.widgets.IMessageDialog;
 import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
 import org.jowidgets.api.widgets.descriptor.IMessageDialogDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.widgets.composed.MessageDialogWidget;
 
-public class MessageDialogWidgetFactory implements IWidgetFactory<IMessageDialogWidget, IMessageDialogDescriptor> {
+public class MessageDialogWidgetFactory implements IWidgetFactory<IMessageDialog, IMessageDialogDescriptor> {
 
 	private final IGenericWidgetFactory genericWidgetFactory;
 
@@ -45,10 +45,10 @@ public class MessageDialogWidgetFactory implements IWidgetFactory<IMessageDialog
 	}
 
 	@Override
-	public IMessageDialogWidget create(final Object parentUiReference, final IMessageDialogDescriptor descriptor) {
+	public IMessageDialog create(final Object parentUiReference, final IMessageDialogDescriptor descriptor) {
 		final IDialogBluePrint dialogBp = Toolkit.getBluePrintFactory().dialog().setTitle(descriptor.getTitle());
 		dialogBp.setIcon(descriptor.getTitleIcon()).setResizable(false);
-		final IFrameWidget dialogWidget = genericWidgetFactory.create(parentUiReference, dialogBp);
+		final IFrame dialogWidget = genericWidgetFactory.create(parentUiReference, dialogBp);
 
 		if (dialogWidget == null) {
 			throw new IllegalStateException("Could not create widget with descriptor interface class '"

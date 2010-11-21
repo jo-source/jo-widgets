@@ -32,13 +32,13 @@ import java.util.List;
 
 import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IComboBoxWidget;
+import org.jowidgets.api.widgets.IComboBox;
 import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
 import org.jowidgets.api.widgets.descriptor.IComboBoxSelectionDescriptor;
 
 public class JoComboBoxSelection<VALUE_TYPE> extends
-		InputWidget<IComboBoxWidget<VALUE_TYPE>, IComboBoxSelectionBluePrint<VALUE_TYPE>, VALUE_TYPE> implements
-		IComboBoxWidget<VALUE_TYPE> {
+		InputWidget<IComboBox<VALUE_TYPE>, IComboBoxSelectionBluePrint<VALUE_TYPE>, VALUE_TYPE> implements
+		IComboBox<VALUE_TYPE> {
 
 	@SuppressWarnings("unchecked")
 	public JoComboBoxSelection(final List<VALUE_TYPE> elements) {

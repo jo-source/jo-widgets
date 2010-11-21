@@ -28,7 +28,7 @@
 
 package org.jowidgets.impl.widgets.basic.factory.internal;
 
-import org.jowidgets.api.widgets.IComboBoxWidget;
+import org.jowidgets.api.widgets.IComboBox;
 import org.jowidgets.api.widgets.descriptor.IComboBoxDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
@@ -38,10 +38,10 @@ import org.jowidgets.impl.widgets.basic.ComboBoxWidget;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ComboBoxBuilderConverter;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.InputVerifier;
 import org.jowidgets.spi.IWidgetFactorySpi;
-import org.jowidgets.spi.widgets.IComboBoxWidgetSpi;
+import org.jowidgets.spi.widgets.IComboBoxSpi;
 
 public class ComboBoxWidgetFactory extends AbstractWidgetFactory implements
-		IWidgetFactory<IComboBoxWidget<?>, IComboBoxDescriptor<?>> {
+		IWidgetFactory<IComboBox<?>, IComboBoxDescriptor<?>> {
 
 	public ComboBoxWidgetFactory(
 		final IGenericWidgetFactory genericWidgetFactory,
@@ -53,14 +53,14 @@ public class ComboBoxWidgetFactory extends AbstractWidgetFactory implements
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
-	public IComboBoxWidget<?> create(final Object parentUiReference, final IComboBoxDescriptor<?> descriptor) {
+	public IComboBox<?> create(final Object parentUiReference, final IComboBoxDescriptor<?> descriptor) {
 		final IComboBoxBluePrintSpi bp = getSpiBluePrintFactory().comboBox().setSetup(descriptor);
 		ComboBoxBuilderConverter.convert(bp, descriptor);
 
 		bp.setInputVerifier(new InputVerifier(descriptor.getStringObjectConverter()));
 
-		final IComboBoxWidgetSpi widget = getSpiWidgetFactory().createComboBoxWidget(parentUiReference, bp);
-		final IComboBoxWidget<?> result = new ComboBoxWidget(widget, descriptor);
+		final IComboBoxSpi widget = getSpiWidgetFactory().createComboBox(parentUiReference, bp);
+		final IComboBox<?> result = new ComboBoxWidget(widget, descriptor);
 		return result;
 	}
 

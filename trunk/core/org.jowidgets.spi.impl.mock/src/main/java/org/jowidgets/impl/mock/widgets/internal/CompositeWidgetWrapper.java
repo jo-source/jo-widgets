@@ -29,9 +29,9 @@ package org.jowidgets.impl.mock.widgets.internal;
 
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.mock.mockui.UIMContainer;
-import org.jowidgets.impl.mock.widgets.MockContainerWidget;
+import org.jowidgets.impl.mock.widgets.MockCompositeWidget;
 
-public class CompositeWidgetWrapper extends MockContainerWidget {
+public class CompositeWidgetWrapper extends MockCompositeWidget {
 
 	public CompositeWidgetWrapper(final IGenericWidgetFactory factory, final UIMContainer uiReference) {
 		super(factory, uiReference);

@@ -28,7 +28,7 @@
 
 package org.jowidgets.impl.widgets.basic.factory.internal;
 
-import org.jowidgets.api.widgets.IButtonWidget;
+import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
@@ -36,9 +36,9 @@ import org.jowidgets.impl.spi.ISpiBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.IButtonBluePrintSpi;
 import org.jowidgets.impl.widgets.basic.ButtonWidget;
 import org.jowidgets.spi.IWidgetFactorySpi;
-import org.jowidgets.spi.widgets.IButtonWidgetSpi;
+import org.jowidgets.spi.widgets.IButtonSpi;
 
-public class ButtonWidgetFactory extends AbstractWidgetFactory implements IWidgetFactory<IButtonWidget, IButtonDescriptor> {
+public class ButtonWidgetFactory extends AbstractWidgetFactory implements IWidgetFactory<IButton, IButtonDescriptor> {
 
 	public ButtonWidgetFactory(
 		final IGenericWidgetFactory genericWidgetFactory,
@@ -49,9 +49,9 @@ public class ButtonWidgetFactory extends AbstractWidgetFactory implements IWidge
 	}
 
 	@Override
-	public IButtonWidget create(final Object parentUiReference, final IButtonDescriptor descriptor) {
+	public IButton create(final Object parentUiReference, final IButtonDescriptor descriptor) {
 		final IButtonBluePrintSpi bp = getSpiBluePrintFactory().button().setSetup(descriptor);
-		final IButtonWidgetSpi buttonWidgetSpi = getSpiWidgetFactory().createButtonWidget(parentUiReference, bp);
+		final IButtonSpi buttonWidgetSpi = getSpiWidgetFactory().createButton(parentUiReference, bp);
 		return new ButtonWidget(buttonWidgetSpi, descriptor);
 	}
 

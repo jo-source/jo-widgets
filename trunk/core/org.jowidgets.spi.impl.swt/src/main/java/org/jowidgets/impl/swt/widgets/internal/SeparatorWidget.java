@@ -34,10 +34,10 @@ import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.util.OrientationConvert;
 import org.jowidgets.impl.swt.widgets.SwtWidget;
-import org.jowidgets.spi.widgets.IWidgetSpi;
+import org.jowidgets.spi.widgets.IControlSpi;
 import org.jowidgets.spi.widgets.setup.ISeparatorSetupSpi;
 
-public class SeparatorWidget extends SwtWidget implements IWidgetSpi {
+public class SeparatorWidget extends SwtWidget implements IControlSpi {
 
 	public SeparatorWidget(final IColorCache colorCache, final Object parentUiReference, final ISeparatorSetupSpi setup) {
 		super(colorCache, createSeparator(parentUiReference, setup));

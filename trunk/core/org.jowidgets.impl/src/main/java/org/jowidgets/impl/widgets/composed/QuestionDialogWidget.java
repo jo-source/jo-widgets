@@ -28,27 +28,27 @@
 package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.types.QuestionResult;
-import org.jowidgets.api.widgets.ICompositeWidget;
-import org.jowidgets.api.widgets.IFrameWidget;
-import org.jowidgets.api.widgets.IQuestionDialogWidget;
+import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.widgets.IQuestionDialog;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.setup.IQuestionDialogSetup;
 import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.widgets.IButtonWidgetCommon;
+import org.jowidgets.common.widgets.IButtonCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
-public class QuestionDialogWidget implements IQuestionDialogWidget {
+public class QuestionDialogWidget implements IQuestionDialog {
 
-	private final IFrameWidget dialogWidget;
-	private IButtonWidgetCommon defaultButton;
+	private final IFrame dialogWidget;
+	private IButtonCommon defaultButton;
 	private boolean wasVisible;
 	private QuestionResult result;
 
-	public QuestionDialogWidget(final IFrameWidget dialogWidget, final IQuestionDialogSetup setup) {
+	public QuestionDialogWidget(final IFrame dialogWidget, final IQuestionDialogSetup setup) {
 		this.wasVisible = false;
 		this.dialogWidget = dialogWidget;
 
@@ -65,14 +65,14 @@ public class QuestionDialogWidget implements IQuestionDialogWidget {
 		this.dialogWidget.add(bpF.textLabel(setup.getText(), setup.getToolTipText()), "wrap");
 
 		// buttons
-		final ICompositeWidget buttonBar = dialogWidget.add(bpF.composite(), "span, align center");
+		final IComposite buttonBar = dialogWidget.add(bpF.composite(), "span, align center");
 		buttonBar.setLayout(new MigLayoutDescriptor("[][][]", "[]"));
 
 		final String buttonCellConstraints = "w 80::, sg bg";
 
 		result = setup.getDefaultResult();
 
-		final IButtonWidgetCommon yesButton = buttonBar.add(setup.getYesButton(), buttonCellConstraints);
+		final IButtonCommon yesButton = buttonBar.add(setup.getYesButton(), buttonCellConstraints);
 		yesButton.addActionListener(new IActionListener() {
 
 			@Override
@@ -89,7 +89,7 @@ public class QuestionDialogWidget implements IQuestionDialogWidget {
 		}
 
 		if (setup.getNoButton() != null) {
-			final IButtonWidgetCommon noButton = buttonBar.add(setup.getNoButton(), buttonCellConstraints);
+			final IButtonCommon noButton = buttonBar.add(setup.getNoButton(), buttonCellConstraints);
 			noButton.addActionListener(new IActionListener() {
 
 				@Override
@@ -108,7 +108,7 @@ public class QuestionDialogWidget implements IQuestionDialogWidget {
 		}
 
 		if (setup.getCancelButton() != null) {
-			final IButtonWidgetCommon cancelButton = buttonBar.add(setup.getCancelButton(), buttonCellConstraints);
+			final IButtonCommon cancelButton = buttonBar.add(setup.getCancelButton(), buttonCellConstraints);
 			cancelButton.addActionListener(new IActionListener() {
 
 				@Override

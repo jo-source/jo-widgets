@@ -31,10 +31,10 @@ import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationMessage;
 import org.jowidgets.api.validation.ValidationMessageType;
 import org.jowidgets.api.validation.ValidationResult;
-import org.jowidgets.api.widgets.IButtonWidget;
-import org.jowidgets.api.widgets.ICompositeWidget;
-import org.jowidgets.api.widgets.IFrameWidget;
-import org.jowidgets.api.widgets.IInputDialogWidget;
+import org.jowidgets.api.widgets.IButton;
+import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.widgets.IInputDialog;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
@@ -43,9 +43,9 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
-import org.jowidgets.common.widgets.IButtonWidgetCommon;
-import org.jowidgets.common.widgets.IContainerWidgetCommon;
-import org.jowidgets.common.widgets.IWidgetCommon;
+import org.jowidgets.common.widgets.IButtonCommon;
+import org.jowidgets.common.widgets.IContainerCommon;
+import org.jowidgets.common.widgets.IDisplayCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.controler.IWindowListener;
@@ -53,16 +53,16 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
-public class InputDialogWidget<INPUT_TYPE> implements IInputDialogWidget<INPUT_TYPE> {
+public class InputDialogWidget<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 
-	private final IFrameWidget dialogWidget;
+	private final IFrame dialogWidget;
 	private final InputCompositeWidget<INPUT_TYPE> inputCompositeWidget;
 
 	private INPUT_TYPE value;
 	private boolean okPressed;
 	private final boolean autoResetValidation;
 
-	public InputDialogWidget(final IFrameWidget dialogWidget, final IInputDialogSetup<INPUT_TYPE> setup) {
+	public InputDialogWidget(final IFrame dialogWidget, final IInputDialogSetup<INPUT_TYPE> setup) {
 		super();
 		this.okPressed = false;
 		this.dialogWidget = dialogWidget;
@@ -73,11 +73,11 @@ public class InputDialogWidget<INPUT_TYPE> implements IInputDialogWidget<INPUT_T
 		this.dialogWidget.setLayout(new MigLayoutDescriptor("[grow]", "[grow][]"));
 
 		// composite widget
-		final ICompositeWidget compositeWidget = dialogWidget.add(bpF.composite(), "growx, growy, h 0::,w 0::, wrap");
+		final IComposite compositeWidget = dialogWidget.add(bpF.composite(), "growx, growy, h 0::,w 0::, wrap");
 		this.inputCompositeWidget = new InputCompositeWidget<INPUT_TYPE>(compositeWidget, setup);
 
 		// buttons
-		final ICompositeWidget buttonBar = dialogWidget.add(bpF.composite(), "align right");
+		final IComposite buttonBar = dialogWidget.add(bpF.composite(), "align right");
 		buttonBar.setLayout(new MigLayoutDescriptor("[][]", "[]"));
 
 		final String buttonCellConstraints = "w 100::, sg bg";
@@ -92,8 +92,8 @@ public class InputDialogWidget<INPUT_TYPE> implements IInputDialogWidget<INPUT_T
 			buttonBar,
 			buttonCellConstraints);
 
-		final IButtonWidgetCommon okButton = validationButton.getButtonWidget();
-		final IButtonWidgetCommon cancelButton = buttonBar.add(setup.getCancelButton(), buttonCellConstraints);
+		final IButtonCommon okButton = validationButton.getButtonWidget();
+		final IButtonCommon cancelButton = buttonBar.add(setup.getCancelButton(), buttonCellConstraints);
 
 		okButton.addActionListener(new IActionListener() {
 
@@ -182,7 +182,7 @@ public class InputDialogWidget<INPUT_TYPE> implements IInputDialogWidget<INPUT_T
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
+	public <WIDGET_TYPE extends IDisplayCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
 		final DESCRIPTOR_TYPE descriptor) {
 		return dialogWidget.createChildWindow(descriptor);
 	}
@@ -288,14 +288,14 @@ public class InputDialogWidget<INPUT_TYPE> implements IInputDialogWidget<INPUT_T
 	private class ValidationButton {
 
 		private final IButtonDescriptor buttonDescriptor;
-		private final IContainerWidgetCommon parentContainer;
-		private final IButtonWidget buttonWidget;
+		private final IContainerCommon parentContainer;
+		private final IButton buttonWidget;
 		private final String missingInputText;
 
 		ValidationButton(
 			final IButtonDescriptor buttonDescriptor,
 			final String missingInputText,
-			final IContainerWidgetCommon parentContainer,
+			final IContainerCommon parentContainer,
 			final String cellConstraints) {
 			super();
 			this.parentContainer = parentContainer;
@@ -315,7 +315,7 @@ public class InputDialogWidget<INPUT_TYPE> implements IInputDialogWidget<INPUT_T
 			onInputChanged();
 		}
 
-		public IButtonWidgetCommon getButtonWidget() {
+		public IButtonCommon getButtonWidget() {
 			return buttonWidget;
 		}
 

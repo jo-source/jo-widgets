@@ -30,9 +30,9 @@ package org.jowidgets.impl.mock.widgets.internal;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.impl.mock.mockui.UIMComponent;
 import org.jowidgets.impl.mock.mockui.UIMTextComponent;
-import org.jowidgets.spi.widgets.ITextInputWidgetSpi;
+import org.jowidgets.spi.widgets.ITextFieldSpi;
 
-public abstract class AbstractMockTextInputWidget extends AbstractMockInputWidget implements ITextInputWidgetSpi {
+public abstract class AbstractMockTextInputWidget extends AbstractMockInputWidget implements ITextFieldSpi {
 
 	public AbstractMockTextInputWidget(final UIMComponent component) {
 		super(component);

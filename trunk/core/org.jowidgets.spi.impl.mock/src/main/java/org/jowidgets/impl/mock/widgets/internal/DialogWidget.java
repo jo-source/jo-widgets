@@ -33,10 +33,10 @@ import org.jowidgets.impl.mock.image.MockImageRegistry;
 import org.jowidgets.impl.mock.mockui.UIMDialog;
 import org.jowidgets.impl.mock.mockui.UIMWindow;
 import org.jowidgets.impl.mock.widgets.MockWindowWidget;
-import org.jowidgets.spi.widgets.IFrameWidgetSpi;
+import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.spi.widgets.setup.IDialogSetupSpi;
 
-public class DialogWidget extends MockWindowWidget implements IFrameWidgetSpi {
+public class DialogWidget extends MockWindowWidget implements IFrameSpi {
 
 	public DialogWidget(
 		final IGenericWidgetFactory factory,

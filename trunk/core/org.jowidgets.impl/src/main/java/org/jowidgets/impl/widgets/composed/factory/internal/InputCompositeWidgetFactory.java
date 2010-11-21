@@ -27,22 +27,22 @@
  */
 package org.jowidgets.impl.widgets.composed.factory.internal;
 
-import org.jowidgets.api.widgets.ICompositeWidget;
-import org.jowidgets.api.widgets.IInputCompositeWidget;
+import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.IInputContainer;
 import org.jowidgets.api.widgets.descriptor.IInputCompositeDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.widgets.composed.InputCompositeWidget;
 
 public class InputCompositeWidgetFactory<INPUT_TYPE> extends
-		AbstractCompositeWidgetFactory<IInputCompositeWidget<INPUT_TYPE>, IInputCompositeDescriptor<INPUT_TYPE>> {
+		AbstractCompositeWidgetFactory<IInputContainer<INPUT_TYPE>, IInputCompositeDescriptor<INPUT_TYPE>> {
 
 	public InputCompositeWidgetFactory(final IGenericWidgetFactory genericWidgetFactory) {
 		super(genericWidgetFactory);
 	}
 
 	@Override
-	protected IInputCompositeWidget<INPUT_TYPE> createWidget(
-		final ICompositeWidget compositeWidget,
+	protected IInputContainer<INPUT_TYPE> createWidget(
+		final IComposite compositeWidget,
 		final IInputCompositeDescriptor<INPUT_TYPE> descriptor) {
 		return new InputCompositeWidget<INPUT_TYPE>(compositeWidget, descriptor);
 	}

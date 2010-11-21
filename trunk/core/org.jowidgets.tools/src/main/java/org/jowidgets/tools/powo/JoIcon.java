@@ -29,12 +29,12 @@
 package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IIconWidget;
+import org.jowidgets.api.widgets.IIcon;
 import org.jowidgets.api.widgets.blueprint.IIconBluePrint;
 import org.jowidgets.api.widgets.descriptor.IIconDescriptor;
 import org.jowidgets.common.image.IImageConstant;
 
-public class JoIcon extends ChildWidget<IIconWidget, IIconBluePrint> implements IIconWidget {
+public class JoIcon extends ChildWidget<IIcon, IIconBluePrint> implements IIcon {
 
 	public JoIcon(final IImageConstant icon) {
 		this(Toolkit.getBluePrintFactory().icon(icon));

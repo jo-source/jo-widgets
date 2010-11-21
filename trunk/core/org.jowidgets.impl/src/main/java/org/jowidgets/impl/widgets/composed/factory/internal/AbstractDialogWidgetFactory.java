@@ -27,7 +27,7 @@
  */
 package org.jowidgets.impl.widgets.composed.factory.internal;
 
-import org.jowidgets.api.widgets.IFrameWidget;
+import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.descriptor.setup.ICompositeSetup;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
@@ -45,12 +45,12 @@ public abstract class AbstractDialogWidgetFactory<WIDGET_TYPE extends IWidgetCom
 		this.genericWidgetFactory = genericWidgetFactory;
 	}
 
-	protected abstract WIDGET_TYPE createWidget(IFrameWidget dialogWidget, DESCRIPTOR_TYPE descriptor);
+	protected abstract WIDGET_TYPE createWidget(IFrame dialogWidget, DESCRIPTOR_TYPE descriptor);
 
 	@Override
 	public WIDGET_TYPE create(final Object parentUiReference, final DESCRIPTOR_TYPE descriptor) {
 
-		final IFrameWidget dialogWidget = genericWidgetFactory.create(
+		final IFrame dialogWidget = genericWidgetFactory.create(
 				parentUiReference,
 				new BluePrintFactory().dialog().setSetup(descriptor));
 

@@ -32,11 +32,11 @@ import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationResult;
-import org.jowidgets.api.widgets.IComboBoxWidget;
-import org.jowidgets.api.widgets.ICompositeWidget;
-import org.jowidgets.api.widgets.IInputDialogWidget;
+import org.jowidgets.api.widgets.IComboBox;
+import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IInputDialog;
 import org.jowidgets.api.widgets.IInputWidget;
-import org.jowidgets.api.widgets.IValidationLabelWidget;
+import org.jowidgets.api.widgets.IValidationLabel;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
@@ -49,9 +49,9 @@ import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
 public class DemoInputDialog1 {
 
-	private final IInputDialogWidget<String> inputDialog;
+	private final IInputDialog<String> inputDialog;
 
-	public DemoInputDialog1(final ICompositeWidget parent) {
+	public DemoInputDialog1(final IContainer parent) {
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 		final IInputDialogBluePrint<String> inputDialogBp = bpF.inputDialog(new DemoInputDialogContent());
 		inputDialogBp.setTitle("Input dialog demo");
@@ -60,19 +60,19 @@ public class DemoInputDialog1 {
 		inputDialog = Toolkit.getWidgetUtils().getWindowAncestor(parent).createChildWindow(inputDialogBp);
 	}
 
-	public IInputDialogWidget<String> getInputDialog() {
+	public IInputDialog<String> getInputDialog() {
 		return inputDialog;
 	}
 
 	private class DemoInputDialogContent implements IInputContentCreator<String> {
 
-		private IComboBoxWidget<String> gender;
+		private IComboBox<String> gender;
 		private IInputWidget<String> lastname;
 		private IInputWidget<String> firstName;
 		private IInputWidget<String> street;
 		private IInputWidget<String> city;
 		private IInputWidget<Integer> postalCode;
-		private IComboBoxWidget<String> country;
+		private IComboBox<String> country;
 		private IInputWidget<String> phoneNumber;
 		private IInputWidget<String> mail;
 
@@ -120,50 +120,50 @@ public class DemoInputDialog1 {
 
 			container.add(textLabelBp.setText("Gender"), "right, sg lg");
 			gender = container.add(bpF.comboBoxSelection("Male", "Female", " ").setMandatory(false), inputWidgetConstraints);
-			final IValidationLabelWidget genderValidationWidget = container.add(validationLabelBp, "wrap");
+			final IValidationLabel genderValidationWidget = container.add(validationLabelBp, "wrap");
 			genderValidationWidget.registerInputWidget(gender);
 
 			container.add(textLabelBp.setText("Firstname*"), "right, sg lg");
 			firstName = container.add(stringMandatoryFieldBp, inputWidgetConstraints);
-			final IValidationLabelWidget firstnameValidationWidget = container.add(validationLabelBp, "wrap");
+			final IValidationLabel firstnameValidationWidget = container.add(validationLabelBp, "wrap");
 			firstnameValidationWidget.registerInputWidget(firstName);
 
 			container.add(textLabelBp.setText("Lastname*"), "right, sg lg");
 			lastname = container.add(stringMandatoryFieldBp, inputWidgetConstraints);
-			final IValidationLabelWidget lastnameValidationWidget = container.add(validationLabelBp, "wrap");
+			final IValidationLabel lastnameValidationWidget = container.add(validationLabelBp, "wrap");
 			lastnameValidationWidget.registerInputWidget(lastname);
 
 			container.add(textLabelBp.setText("Street*"), "right, sg lg");
 			street = container.add(stringMandatoryFieldBp, inputWidgetConstraints);
-			final IValidationLabelWidget streetValidationWidget = container.add(validationLabelBp, "wrap");
+			final IValidationLabel streetValidationWidget = container.add(validationLabelBp, "wrap");
 			streetValidationWidget.registerInputWidget(street);
 
 			container.add(textLabelBp.setText("Postal code*"), "right, sg lg");
 			postalCode = container.add(bpF.inputFieldIntegerNumber().setMaxLength(5).setMandatory(true), inputWidgetConstraints);
-			final IValidationLabelWidget postalCodeValidationWidget = container.add(validationLabelBp, "wrap");
+			final IValidationLabel postalCodeValidationWidget = container.add(validationLabelBp, "wrap");
 			postalCodeValidationWidget.registerInputWidget(postalCode);
 
 			container.add(textLabelBp.setText("City*"), "right, sg lg");
 			city = container.add(stringMandatoryFieldBp, inputWidgetConstraints);
-			final IValidationLabelWidget cityValidationWidget = container.add(validationLabelBp, "wrap");
+			final IValidationLabel cityValidationWidget = container.add(validationLabelBp, "wrap");
 			cityValidationWidget.registerInputWidget(city);
 
 			container.add(textLabelBp.setText("Country*"), "right, sg lg");
 			final IComboBoxBluePrint<String> countryBp = bpF.comboBox("Germany", "Spain", "Italy", "United States");
 			countryBp.setMandatory(true).setValidator(maxLengthValidator);
 			country = container.add(countryBp, inputWidgetConstraints);
-			final IValidationLabelWidget countryValidationWidget = container.add(validationLabelBp, "wrap");
+			final IValidationLabel countryValidationWidget = container.add(validationLabelBp, "wrap");
 			countryValidationWidget.registerInputWidget(country);
 
 			container.add(textLabelBp.setText("Phone number"), "right, sg lg");
 			phoneNumber = container.add(stringFieldBp, inputWidgetConstraints);
-			final IValidationLabelWidget phoneValidationWidget = container.add(validationLabelBp, "wrap");
+			final IValidationLabel phoneValidationWidget = container.add(validationLabelBp, "wrap");
 			phoneValidationWidget.registerInputWidget(phoneNumber);
 
 			container.add(textLabelBp.setText("Email"), "right, sg lg");
 			mail = container.add(stringFieldBp, inputWidgetConstraints);
 			mail.addValidator(moreThanOneWordValidator);
-			final IValidationLabelWidget mailValidationWidget = container.add(validationLabelBp, "wrap");
+			final IValidationLabel mailValidationWidget = container.add(validationLabelBp, "wrap");
 			mailValidationWidget.registerInputWidget(mail);
 
 			container.registerInputWidget("Gender", gender);

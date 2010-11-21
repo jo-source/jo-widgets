@@ -27,12 +27,12 @@
  */
 package org.jowidgets.api.widgets.descriptor;
 
-import org.jowidgets.api.widgets.IInputCompositeWidget;
+import org.jowidgets.api.widgets.IInputComposite;
 import org.jowidgets.api.widgets.descriptor.setup.IInputCompositeSetup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public interface IInputCompositeDescriptor<INPUT_TYPE> extends
 		IInputCompositeSetup<INPUT_TYPE>,
-		IWidgetDescriptor<IInputCompositeWidget<INPUT_TYPE>> {
+		IWidgetDescriptor<IInputComposite<INPUT_TYPE>> {
 
 }

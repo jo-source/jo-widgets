@@ -28,7 +28,7 @@
 package org.jowidgets.impl.spi.descriptor;
 
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.spi.widgets.IToggleButtonWidgetSpi;
+import org.jowidgets.spi.widgets.IToggleButtonSpi;
 import org.jowidgets.spi.widgets.setup.ICheckBoxSetupSpi;
 
-public interface ICheckBoxDescriptorSpi extends ICheckBoxSetupSpi, IWidgetDescriptor<IToggleButtonWidgetSpi> {}
+public interface ICheckBoxDescriptorSpi extends ICheckBoxSetupSpi, IWidgetDescriptor<IToggleButtonSpi> {}
