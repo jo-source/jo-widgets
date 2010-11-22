@@ -46,7 +46,7 @@ import org.jowidgets.util.Assert;
 class JoWidgetFactory {
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
-	Widget create(final IWidgetDescriptor descriptor) {
+	WidgetCommon create(final IWidgetDescriptor descriptor) {
 
 		Assert.paramNotNull(descriptor, "descriptor");
 

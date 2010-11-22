@@ -29,8 +29,8 @@ package org.jowidgets.common.widgets;
 
 public interface ISplitCompositeCommon extends IControlCommon {
 
-	ICompositeCommon getFirst();
+	IContainerCommon getFirst();
 
-	ICompositeCommon getSecond();
+	IContainerCommon getSecond();
 
 }

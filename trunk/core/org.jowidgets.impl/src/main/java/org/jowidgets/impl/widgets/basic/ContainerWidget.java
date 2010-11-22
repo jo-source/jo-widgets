@@ -29,28 +29,37 @@
 package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.IScrollComposite;
 import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.descriptor.setup.IScrollCompositeSetup;
+import org.jowidgets.api.widgets.descriptor.setup.ICompositeSetup;
+import org.jowidgets.common.widgets.IContainerCommon;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
-import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.base.delegate.ContainerWidgetDelegate;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.impl.widgets.common.wrapper.AbstractScrollContainerWidgetCommonWrapper;
-import org.jowidgets.spi.widgets.IScrollCompositeSpi;
+import org.jowidgets.impl.base.delegate.WidgetDelegate;
+import org.jowidgets.impl.widgets.common.wrapper.AbstractContainerWidgetCommonWrapper;
 
-public class ScrollCompositeWidget extends AbstractScrollContainerWidgetCommonWrapper implements IScrollComposite {
+public class ContainerWidget extends AbstractContainerWidgetCommonWrapper implements IContainer {
 
-	private final ControlDelegate controlDelegate;
+	private final WidgetDelegate widgetDelegate;
 	private final ContainerWidgetDelegate containerWidgetDelegate;
 
-	public ScrollCompositeWidget(final IScrollCompositeSpi containerWidgetSpi, final IScrollCompositeSetup setup) {
-		super(containerWidgetSpi);
-		this.controlDelegate = new ControlDelegate();
-		this.containerWidgetDelegate = new ContainerWidgetDelegate(containerWidgetSpi, this);
-		VisibiliySettingsInvoker.setVisibility(setup, this);
+	public ContainerWidget(final IContainerCommon containerWidgetCommon) {
+		this(containerWidgetCommon, (Boolean) null);
+	}
+
+	public ContainerWidget(final IContainerCommon containerWidgetCommon, final ICompositeSetup setup) {
+		this(containerWidgetCommon, setup.isVisible());
+	}
+
+	public ContainerWidget(final IContainerCommon containerWidgetCommon, final Boolean visible) {
+		super(containerWidgetCommon);
+		this.widgetDelegate = new WidgetDelegate();
+
+		if (visible != null) {
+			setVisible(visible.booleanValue());
+		}
+		this.containerWidgetDelegate = new ContainerWidgetDelegate(containerWidgetCommon, this);
 	}
 
 	@Override
@@ -68,18 +77,17 @@ public class ScrollCompositeWidget extends AbstractScrollContainerWidgetCommonWr
 	}
 
 	@Override
-	public IContainer getParent() {
-		return controlDelegate.getParent();
+	public IWidget getParent() {
+		return widgetDelegate.getParent();
 	}
 
 	@Override
 	public void setParent(final IWidget parent) {
-		controlDelegate.setParent(parent);
+		widgetDelegate.setParent(parent);
 	}
 
 	@Override
 	public boolean isReparentable() {
-		return controlDelegate.isReparentable();
+		return widgetDelegate.isReparentable();
 	}
-
 }

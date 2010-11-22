@@ -37,18 +37,13 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.IWindowCommon;
 import org.jowidgets.util.Assert;
 
-public class JoQuestionDialog extends ChildWidget<IQuestionDialog, IQuestionDialogBluePrint> implements
-		IQuestionDialog {
+public class JoQuestionDialog extends Widget<IQuestionDialog, IQuestionDialogBluePrint> implements IQuestionDialog {
 
 	public JoQuestionDialog(final IWindowCommon parent, final QuestionType questionType, final String message) {
 		this(parent, bluePrint(questionType).setText(message));
 	}
 
-	public JoQuestionDialog(
-		final IWindowCommon parent,
-		final QuestionType questionType,
-		final String title,
-		final String message) {
+	public JoQuestionDialog(final IWindowCommon parent, final QuestionType questionType, final String title, final String message) {
 		this(parent, bluePrint(questionType).setTitle(title).setText(message));
 	}
 

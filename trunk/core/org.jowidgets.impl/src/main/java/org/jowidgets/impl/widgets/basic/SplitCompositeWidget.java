@@ -28,53 +28,53 @@
 
 package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.ISplitComposite;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.ISplitCompositeSetup;
-import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
+import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.SplitCompositeWidgetCommonWrapper;
 import org.jowidgets.spi.widgets.ISplitCompositeSpi;
 
 public class SplitCompositeWidget extends SplitCompositeWidgetCommonWrapper implements ISplitComposite {
 
-	private final ChildWidgetDelegate childWidgetDelegate;
-	private final IComposite first;
-	private final IComposite second;
+	private final ControlDelegate controlDelegate;
+	private final IContainer first;
+	private final IContainer second;
 
 	public SplitCompositeWidget(final ISplitCompositeSpi containerWidgetSpi, final ISplitCompositeSetup setup) {
 		super(containerWidgetSpi);
-		this.childWidgetDelegate = new ChildWidgetDelegate();
-		this.first = new CompositeWidget(getWidget().getFirst());
-		this.second = new CompositeWidget(getWidget().getSecond());
+		this.controlDelegate = new ControlDelegate();
+		this.first = new ContainerWidget(getWidget().getFirst());
+		this.second = new ContainerWidget(getWidget().getSecond());
 		this.first.setParent(this);
 		this.second.setParent(this);
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 	}
 
 	@Override
-	public IWidget getParent() {
-		return childWidgetDelegate.getParent();
+	public IContainer getParent() {
+		return controlDelegate.getParent();
 	}
 
 	@Override
 	public void setParent(final IWidget parent) {
-		childWidgetDelegate.setParent(parent);
+		controlDelegate.setParent(parent);
 	}
 
 	@Override
 	public boolean isReparentable() {
-		return childWidgetDelegate.isReparentable();
+		return controlDelegate.isReparentable();
 	}
 
 	@Override
-	public IComposite getFirst() {
+	public IContainer getFirst() {
 		return first;
 	}
 
 	@Override
-	public IComposite getSecond() {
+	public IContainer getSecond() {
 		return second;
 	}
 

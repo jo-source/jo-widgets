@@ -28,38 +28,39 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.ITextLabel;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.ITextLabelSetup;
-import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
+import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.TextLabelWidgetCommonWrapper;
 import org.jowidgets.spi.widgets.ITextLabelSpi;
 
 public class TextLabelWidget extends TextLabelWidgetCommonWrapper implements ITextLabel {
 
-	private final ChildWidgetDelegate childWidgetDelegate;
+	private final ControlDelegate controlDelegate;
 
 	public TextLabelWidget(final ITextLabelSpi widget, final ITextLabelSetup setup) {
 		super(widget);
-		this.childWidgetDelegate = new ChildWidgetDelegate();
+		this.controlDelegate = new ControlDelegate();
 
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 	}
 
 	@Override
-	public IWidget getParent() {
-		return childWidgetDelegate.getParent();
+	public IContainer getParent() {
+		return controlDelegate.getParent();
 	}
 
 	@Override
 	public void setParent(final IWidget parent) {
-		childWidgetDelegate.setParent(parent);
+		controlDelegate.setParent(parent);
 	}
 
 	@Override
 	public boolean isReparentable() {
-		return childWidgetDelegate.isReparentable();
+		return controlDelegate.isReparentable();
 	}
 
 }

@@ -30,6 +30,7 @@ package org.jowidgets.impl.widgets.composed;
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IInputComposite;
 import org.jowidgets.api.widgets.IValidationLabel;
 import org.jowidgets.api.widgets.IWidget;
@@ -115,7 +116,7 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputComposite<INPUT_T
 	}
 
 	@Override
-	public IWidget getParent() {
+	public IContainer getParent() {
 		return parentComposite.getParent();
 	}
 

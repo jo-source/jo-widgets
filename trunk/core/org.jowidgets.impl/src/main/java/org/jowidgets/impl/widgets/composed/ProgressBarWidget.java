@@ -28,6 +28,7 @@
 package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IProgressBar;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IProgressBarSetup;
@@ -125,7 +126,7 @@ public class ProgressBarWidget implements IProgressBar {
 	}
 
 	@Override
-	public IWidget getParent() {
+	public IContainer getParent() {
 		return compositeWidget.getParent();
 	}
 

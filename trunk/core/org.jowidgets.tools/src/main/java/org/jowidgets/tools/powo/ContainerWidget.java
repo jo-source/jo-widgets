@@ -31,9 +31,10 @@ package org.jowidgets.tools.powo;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.builder.IContainerSetupBuilder;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.IContainerCommon;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
@@ -41,17 +42,17 @@ import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.util.Tuple;
 
-class ContainerWidget<WIDGET_TYPE extends IContainerCommon, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IContainerSetupBuilder<?>> extends
-		Widget<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IContainerCommon {
+class ContainerWidget<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE> & IContainerSetupBuilder<?>> extends
+		WidgetCommon<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IContainer {
 
 	@SuppressWarnings("rawtypes")
-	private final List<Tuple<Widget, Object>> preWidgets;
+	private final List<Tuple<WidgetCommon, Object>> preWidgets;
 	private final JoWidgetFactory widgetFactory;
 
 	@SuppressWarnings("rawtypes")
 	ContainerWidget(final BLUE_PRINT_TYPE bluePrint) {
 		super(bluePrint);
-		this.preWidgets = new LinkedList<Tuple<Widget, Object>>();
+		this.preWidgets = new LinkedList<Tuple<WidgetCommon, Object>>();
 		this.widgetFactory = new JoWidgetFactory();
 	}
 
@@ -59,30 +60,30 @@ class ContainerWidget<WIDGET_TYPE extends IContainerCommon, BLUE_PRINT_TYPE exte
 	@Override
 	void initialize(final WIDGET_TYPE widget) {
 		super.initialize(widget);
-		for (final Tuple<Widget, Object> preWidgetTuple : preWidgets) {
-			final Widget preWidget = preWidgetTuple.getFirst();
+		for (final Tuple<WidgetCommon, Object> preWidgetTuple : preWidgets) {
+			final WidgetCommon preWidget = preWidgetTuple.getFirst();
 			final Object layoutConstraints = preWidgetTuple.getSecond();
 			final IWidgetCommon newWidget = widget.add(preWidget.getDescriptor(), layoutConstraints);
 			preWidget.initialize(newWidget);
 		}
 	}
 
-	public final <P_WIDGET_TYPE extends Widget<? extends IControlCommon, ?>> P_WIDGET_TYPE add(final P_WIDGET_TYPE widget) {
+	public final <P_WIDGET_TYPE extends WidgetCommon<? extends IControlCommon, ?>> P_WIDGET_TYPE add(final P_WIDGET_TYPE widget) {
 		return add(widget, "");
 	}
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
-	public final <P_WIDGET_TYPE extends Widget<? extends IControlCommon, ?>> P_WIDGET_TYPE add(
+	public final <P_WIDGET_TYPE extends WidgetCommon<? extends IControlCommon, ?>> P_WIDGET_TYPE add(
 		final P_WIDGET_TYPE widget,
 		final Object layoutConstraints) {
 		if (isInitialized()) {
 			final IWidgetCommon newWidget = getWidget().add(widget.getDescriptor(), layoutConstraints);
-			final Widget rawWidget = widget;
+			final WidgetCommon rawWidget = widget;
 			rawWidget.initialize(newWidget);
 			return widget;
 		}
 		else {
-			preWidgets.add(new Tuple<Widget, Object>(widget, layoutConstraints));
+			preWidgets.add(new Tuple<WidgetCommon, Object>(widget, layoutConstraints));
 			return widget;
 		}
 	}
@@ -125,10 +126,28 @@ class ContainerWidget<WIDGET_TYPE extends IContainerCommon, BLUE_PRINT_TYPE exte
 			return getWidget().add(descriptor, layoutConstraints);
 		}
 		else {
-			final Widget<M_WIDGET_TYPE, ?> powo = widgetFactory.create(descriptor);
-			preWidgets.add(new Tuple<Widget, Object>(powo, layoutConstraints));
+			final WidgetCommon<M_WIDGET_TYPE, ?> powo = widgetFactory.create(descriptor);
+			preWidgets.add(new Tuple<WidgetCommon, Object>(powo, layoutConstraints));
 			return (M_WIDGET_TYPE) powo;
 		}
+	}
+
+	@Override
+	public IWidget getParent() {
+		checkInitialized();
+		return getWidget().getParent();
+	}
+
+	@Override
+	public void setParent(final IWidget parent) {
+		checkInitialized();
+		getWidget().setParent(parent);
+	}
+
+	@Override
+	public boolean isReparentable() {
+		checkInitialized();
+		return getWidget().isReparentable();
 	}
 
 	@Override

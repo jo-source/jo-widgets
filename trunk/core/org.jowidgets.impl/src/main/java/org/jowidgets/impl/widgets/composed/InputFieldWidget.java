@@ -28,8 +28,8 @@
 package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.convert.IConverter;
+import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IInputControl;
-import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IInputFieldSetup;
 import org.jowidgets.common.color.IColorConstant;
@@ -38,10 +38,10 @@ import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsI
 
 public class InputFieldWidget<VALUE_TYPE> extends AbstractComposedInputWidget<VALUE_TYPE> implements IInputControl<VALUE_TYPE> {
 
-	private final IInputWidget<String> textFieldWidget;
+	private final IInputControl<String> textFieldWidget;
 	private final IConverter<VALUE_TYPE> converter;
 
-	public InputFieldWidget(final IInputWidget<String> textFieldWidget, final IInputFieldSetup<VALUE_TYPE> setup) {
+	public InputFieldWidget(final IInputControl<String> textFieldWidget, final IInputFieldSetup<VALUE_TYPE> setup) {
 
 		super(setup.getValidator(), setup.isMandatory(), setup.isEditable());
 
@@ -64,7 +64,7 @@ public class InputFieldWidget<VALUE_TYPE> extends AbstractComposedInputWidget<VA
 	}
 
 	@Override
-	public IWidget getParent() {
+	public IContainer getParent() {
 		return textFieldWidget.getParent();
 	}
 

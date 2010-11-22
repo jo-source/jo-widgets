@@ -29,7 +29,7 @@
 package org.jowidgets.examples.common.demo;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.ISplitComposite;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.widgets.IContainerCommon;
@@ -50,22 +50,22 @@ public class DemoSplitComposite {
 				bpF.splitHorizontal().setWeight(0.2).disableSecondBorder().resizeSecondPolicy(),
 				"growx, growy");
 
-		final IComposite split1First = split1.getFirst();
-		final IComposite split1Second = split1.getSecond();
+		final IContainer split1First = split1.getFirst();
+		final IContainer split1Second = split1.getSecond();
 
 		split1First.add(bpF.textLabel("Content1"), "align center");
 		final ISplitComposite split2 = split1Second.add(
 				bpF.splitHorizontal().setWeight(1 - 0.2 / 0.8).disableFirstBorder().resizeFirstPolicy(),
 				"growx, growy");
 
-		final IComposite split2First = split2.getFirst();
-		final IComposite split2Second = split2.getSecond();
+		final IContainer split2First = split2.getFirst();
+		final IContainer split2Second = split2.getSecond();
 
 		final ISplitComposite split3 = split2First.add(bpF.splitVertical().resizeFirstPolicy(), "growx, growy");
 		split2Second.add(bpF.textLabel("Content2"), "align center");
 
-		final IComposite split3First = split3.getFirst();
-		final IComposite split3Second = split3.getSecond();
+		final IContainer split3First = split3.getFirst();
+		final IContainer split3Second = split3.getSecond();
 
 		split3First.add(bpF.textLabel("Content3"), "align center");
 		split3Second.add(bpF.textLabel("Content4"), "align center");

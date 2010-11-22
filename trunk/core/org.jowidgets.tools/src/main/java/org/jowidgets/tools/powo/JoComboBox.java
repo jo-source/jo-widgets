@@ -37,7 +37,7 @@ import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.descriptor.IComboBoxDescriptor;
 import org.jowidgets.tools.converter.Converter;
 
-public class JoComboBox<VALUE_TYPE> extends InputWidget<IComboBox<VALUE_TYPE>, IComboBoxBluePrint<VALUE_TYPE>, VALUE_TYPE> implements
+public class JoComboBox<VALUE_TYPE> extends InputControl<IComboBox<VALUE_TYPE>, IComboBoxBluePrint<VALUE_TYPE>, VALUE_TYPE> implements
 		IComboBox<VALUE_TYPE> {
 
 	public JoComboBox(final IConverter<VALUE_TYPE> converter, final List<VALUE_TYPE> elements) {

@@ -37,6 +37,7 @@ import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.ILabel;
+import org.jowidgets.api.widgets.ISplitComposite;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
@@ -92,7 +93,7 @@ public class WidgetFactoryTest {
 		testChildWidget(container, container.add(BPF.progressBar(), null));
 		testChildWidget(container, container.add(BPF.scrollComposite(), null));
 		testChildWidget(container, container.add(BPF.separator(), null));
-		testChildWidget(container, container.add(BPF.splitComposite(), null));
+		testSplitCompositeWidget(container, container.add(BPF.splitComposite(), null));
 		testChildWidget(container, container.add(BPF.textField(), null));
 		testChildWidget(container, container.add(BPF.textLabel(), null));
 		testChildWidget(container, container.add(BPF.textSeparator(), null));
@@ -121,6 +122,12 @@ public class WidgetFactoryTest {
 		Assert.assertNotNull(widget);
 		Assert.assertNotNull(widget.getUiReference());
 		testParent(parent, widget);
+	}
+
+	private void testSplitCompositeWidget(final IWidget parent, final ISplitComposite widget) {
+		testChildWidget(parent, widget);
+		testParent(widget, widget.getFirst());
+		testParent(widget, widget.getSecond());
 	}
 
 	private void testButtonWidget(final IWidget parent, final IButton widget) {

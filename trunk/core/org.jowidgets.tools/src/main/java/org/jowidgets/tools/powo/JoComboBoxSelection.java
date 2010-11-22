@@ -37,8 +37,7 @@ import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
 import org.jowidgets.api.widgets.descriptor.IComboBoxSelectionDescriptor;
 
 public class JoComboBoxSelection<VALUE_TYPE> extends
-		InputWidget<IComboBox<VALUE_TYPE>, IComboBoxSelectionBluePrint<VALUE_TYPE>, VALUE_TYPE> implements
-		IComboBox<VALUE_TYPE> {
+		InputControl<IComboBox<VALUE_TYPE>, IComboBoxSelectionBluePrint<VALUE_TYPE>, VALUE_TYPE> implements IComboBox<VALUE_TYPE> {
 
 	@SuppressWarnings("unchecked")
 	public JoComboBoxSelection(final List<VALUE_TYPE> elements) {

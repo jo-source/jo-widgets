@@ -31,6 +31,7 @@ import org.jowidgets.api.validation.ITextInputValidator;
 import org.jowidgets.api.validation.ValidationMessage;
 import org.jowidgets.api.validation.ValidationMessageType;
 import org.jowidgets.api.validation.ValidationResult;
+import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.blueprint.ITextFieldBluePrint;
 import org.jowidgets.api.widgets.descriptor.IInputFieldDescriptor;
@@ -77,7 +78,7 @@ public class InputFieldWidgetFactory<VALUE_TYPE> implements
 			}
 		});
 
-		final IInputWidget<String> textFieldWidget = genericFactory.create(parentUiReference, textFieldBluePrint);
+		final IInputControl<String> textFieldWidget = genericFactory.create(parentUiReference, textFieldBluePrint);
 
 		if (textFieldWidget == null) {
 			throw new IllegalStateException("Could not create widget with descriptor interface class '"

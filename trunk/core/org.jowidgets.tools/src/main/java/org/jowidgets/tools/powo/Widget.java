@@ -28,102 +28,33 @@
 
 package org.jowidgets.tools.powo;
 
+import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.builder.IWidgetSetupBuilder;
-import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.util.Assert;
 
-class Widget<WIDGET_TYPE extends IWidgetCommon, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IWidgetSetupBuilder<?>> implements
-		IWidgetCommon {
-
-	private final BLUE_PRINT_TYPE bluePrint;
-	private WIDGET_TYPE widget;
+class Widget<WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IWidgetSetupBuilder<?>> extends
+		WidgetCommon<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IWidget {
 
 	Widget(final BLUE_PRINT_TYPE bluePrint) {
-		this.bluePrint = bluePrint;
-	}
-
-	public final boolean isInitialized() {
-		return widget != null;
-	}
-
-	void initialize(final WIDGET_TYPE widget) {
-		Assert.paramNotNull(widget, "widget");
-		checkNotInitialized();
-		this.widget = widget;
-	}
-
-	final IWidgetDescriptor<WIDGET_TYPE> getDescriptor() {
-		return bluePrint;
+		super(bluePrint);
 	}
 
 	@Override
-	public final void setForegroundColor(final IColorConstant colorValue) {
-		if (isInitialized()) {
-			widget.setForegroundColor(colorValue);
-		}
-		else {
-			bluePrint.setForegroundColor(colorValue);
-		}
-	}
-
-	@Override
-	public final void setBackgroundColor(final IColorConstant colorValue) {
-		if (isInitialized()) {
-			widget.setBackgroundColor(colorValue);
-		}
-		else {
-			bluePrint.setBackgroundColor(colorValue);
-		}
-	}
-
-	@Override
-	public final void setVisible(final boolean visible) {
-		if (isInitialized()) {
-			widget.setVisible(visible);
-		}
-		else {
-			bluePrint.setVisible(visible);
-		}
-	}
-
-	@Override
-	public final boolean isVisible() {
+	public IWidget getParent() {
 		checkInitialized();
-		return widget.isVisible();
+		return getWidget().getParent();
 	}
 
 	@Override
-	public final Object getUiReference() {
+	public void setParent(final IWidget parent) {
 		checkInitialized();
-		return widget.getUiReference();
+		getWidget().setParent(parent);
 	}
 
 	@Override
-	public final void redraw() {
+	public boolean isReparentable() {
 		checkInitialized();
-		widget.redraw();
-	}
-
-	final BLUE_PRINT_TYPE getBluePrint() {
-		return bluePrint;
-	}
-
-	final WIDGET_TYPE getWidget() {
-		return widget;
-	}
-
-	final void checkInitialized() {
-		if (!isInitialized()) {
-			throw new WidgetNotInitializedException("Widget is not yet initialized (was not added to an parent)");
-		}
-	}
-
-	final void checkNotInitialized() {
-		if (isInitialized()) {
-			throw new WidgetAlreadyInitializedException("Widget is already initialized (was already added to an parent)");
-		}
+		return getWidget().isReparentable();
 	}
 
 }

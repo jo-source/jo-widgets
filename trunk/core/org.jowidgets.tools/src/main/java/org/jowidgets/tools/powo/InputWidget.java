@@ -41,7 +41,7 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.util.Assert;
 
 class InputWidget<WIDGET_TYPE extends IInputWidget<VALUE_TYPE>, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IInputWidgetSetup<VALUE_TYPE> & IInputWidgetSetupBuilder<?, VALUE_TYPE>, VALUE_TYPE> extends
-		ChildWidget<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IInputWidget<VALUE_TYPE> {
+		Widget<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IInputWidget<VALUE_TYPE> {
 
 	private final List<IValidator<VALUE_TYPE>> validators;
 	private final List<IInputListener> inputListeners;

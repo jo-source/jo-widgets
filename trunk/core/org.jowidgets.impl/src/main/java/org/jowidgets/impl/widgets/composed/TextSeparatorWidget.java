@@ -29,6 +29,7 @@ package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.ITextLabel;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.ITextLabelDescriptor;
@@ -93,7 +94,7 @@ public class TextSeparatorWidget implements ITextLabel {
 	}
 
 	@Override
-	public IWidget getParent() {
+	public IContainer getParent() {
 		return compositeWidget.getParent();
 	}
 

@@ -26,35 +26,28 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.basic;
+package org.jowidgets.tools.powo;
 
-import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.common.widgets.IWidgetCommon;
-import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
-import org.jowidgets.impl.widgets.common.wrapper.WidgetCommonWrapper;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
+import org.jowidgets.api.widgets.descriptor.ICompositeDescriptor;
+import org.jowidgets.util.Assert;
 
-public class Widget extends WidgetCommonWrapper implements IWidget {
+public class JoContainer extends ContainerWidget<IContainer, ICompositeBluePrint> implements IContainer {
 
-	private final ChildWidgetDelegate childWidgetDelegate;
-
-	public Widget(final IWidgetCommon widget) {
-		super(widget);
-		this.childWidgetDelegate = new ChildWidgetDelegate();
+	JoContainer(final IContainer widget) {
+		this(bluePrint());
+		Assert.paramNotNull(widget, "widget");
+		initialize(widget);
 	}
 
-	@Override
-	public IWidget getParent() {
-		return childWidgetDelegate.getParent();
+	JoContainer(final ICompositeDescriptor descriptor) {
+		super(bluePrint().setSetup(descriptor));
 	}
 
-	@Override
-	public void setParent(final IWidget parent) {
-		childWidgetDelegate.setParent(parent);
-	}
-
-	@Override
-	public boolean isReparentable() {
-		return childWidgetDelegate.isReparentable();
+	private static ICompositeBluePrint bluePrint() {
+		return Toolkit.getBluePrintFactory().composite();
 	}
 
 }

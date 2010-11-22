@@ -41,7 +41,7 @@ import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsI
 import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
 import org.jowidgets.util.Assert;
 
-public class ComboBoxSelectionWidget<VALUE_TYPE> extends AbstractBasicInputWidget<VALUE_TYPE> implements
+public class ComboBoxSelectionWidget<VALUE_TYPE> extends AbstractBasicInputControl<VALUE_TYPE> implements
 		IComboBox<VALUE_TYPE> {
 
 	private final List<VALUE_TYPE> elements;

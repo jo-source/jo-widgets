@@ -29,7 +29,7 @@
 package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.widgets.IComposite;
-import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.blueprint.builder.ICompositeSetupBuilder;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
@@ -41,21 +41,9 @@ class CompositeWidget<WIDGET_TYPE extends IComposite, BLUE_PRINT_TYPE extends IW
 	}
 
 	@Override
-	public final IWidget getParent() {
+	public final IContainer getParent() {
 		checkInitialized();
 		return getWidget().getParent();
-	}
-
-	@Override
-	public void setParent(final IWidget parent) {
-		checkInitialized();
-		getWidget().setParent(parent);
-	}
-
-	@Override
-	public boolean isReparentable() {
-		checkInitialized();
-		return getWidget().isReparentable();
 	}
 
 }

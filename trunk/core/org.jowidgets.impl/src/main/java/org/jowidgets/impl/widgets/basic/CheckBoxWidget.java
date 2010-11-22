@@ -36,7 +36,7 @@ import org.jowidgets.impl.widgets.common.wrapper.TextLabelWidgetCommonWrapper;
 import org.jowidgets.spi.widgets.ICheckBoxSpi;
 import org.jowidgets.util.Assert;
 
-public class CheckBoxWidget extends AbstractBasicInputWidget<Boolean> implements ICheckBox {
+public class CheckBoxWidget extends AbstractBasicInputControl<Boolean> implements ICheckBox {
 
 	private final ICheckBoxSpi checkBoxWidgetSpi;
 	private final TextLabelWidgetCommonWrapper textLabelWidgetCommonWrapper;

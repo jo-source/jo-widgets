@@ -33,6 +33,8 @@ import java.util.List;
 import org.jowidgets.api.validation.ValidationMessage;
 import org.jowidgets.api.validation.ValidationMessageType;
 import org.jowidgets.api.validation.ValidationResult;
+import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.ILabel;
 import org.jowidgets.api.widgets.IValidationLabel;
@@ -40,7 +42,7 @@ import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.widgets.controler.IInputListener;
-import org.jowidgets.impl.widgets.composed.wrapper.ChildWidgetWrapper;
+import org.jowidgets.impl.widgets.composed.wrapper.ControlWrapper;
 
 public class ValidationLabelWidget implements IValidationLabel {
 
@@ -48,7 +50,7 @@ public class ValidationLabelWidget implements IValidationLabel {
 	private final ILabel labelWidget;
 	private final List<IInputWidget<?>> inputWidgets;
 	private final IInputListener inputListener;
-	private final IWidget childWidgetAdapter;
+	private final IControl controlAdapter;
 	private final boolean showLabel;
 	private LabelState currentLabelState;
 	private boolean hasInput;
@@ -59,7 +61,7 @@ public class ValidationLabelWidget implements IValidationLabel {
 		this.showLabel = descriptor.isShowValidationMessage();
 		this.labelWidget = labelWidget;
 		this.descriptor = descriptor;
-		this.childWidgetAdapter = new ChildWidgetWrapper(labelWidget);
+		this.controlAdapter = new ControlWrapper(labelWidget);
 		this.inputWidgets = new LinkedList<IInputWidget<?>>();
 		this.hasInput = false;
 		this.inputListener = new IInputListener() {
@@ -185,48 +187,48 @@ public class ValidationLabelWidget implements IValidationLabel {
 	}
 
 	@Override
-	public IWidget getParent() {
-		return childWidgetAdapter.getParent();
+	public IContainer getParent() {
+		return controlAdapter.getParent();
 	}
 
 	@Override
 	public void setParent(final IWidget parent) {
-		childWidgetAdapter.setParent(parent);
+		controlAdapter.setParent(parent);
 	}
 
 	@Override
 	public boolean isReparentable() {
-		return childWidgetAdapter.isReparentable();
+		return controlAdapter.isReparentable();
 	}
 
 	@Override
 	public Object getUiReference() {
-		return childWidgetAdapter.getUiReference();
+		return controlAdapter.getUiReference();
 	}
 
 	@Override
 	public void redraw() {
-		childWidgetAdapter.redraw();
+		controlAdapter.redraw();
 	}
 
 	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
-		childWidgetAdapter.setForegroundColor(colorValue);
+		controlAdapter.setForegroundColor(colorValue);
 	}
 
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
-		childWidgetAdapter.setBackgroundColor(colorValue);
+		controlAdapter.setBackgroundColor(colorValue);
 	}
 
 	@Override
 	public void setVisible(final boolean visible) {
-		childWidgetAdapter.setVisible(visible);
+		controlAdapter.setVisible(visible);
 	}
 
 	@Override
 	public boolean isVisible() {
-		return childWidgetAdapter.isVisible();
+		return controlAdapter.isVisible();
 	}
 
 	private enum LabelState {

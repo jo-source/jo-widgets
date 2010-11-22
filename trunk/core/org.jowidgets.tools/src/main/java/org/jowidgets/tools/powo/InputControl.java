@@ -26,36 +26,25 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.basic;
+package org.jowidgets.tools.powo;
 
+import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IInputControl;
+import org.jowidgets.api.widgets.blueprint.builder.IInputWidgetSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.setup.IInputWidgetSetup;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.spi.widgets.ITextFieldSpi;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-public class TextInputWidget extends AbstractBasicInputControl<String> implements IInputControl<String> {
+class InputControl<WIDGET_TYPE extends IInputControl<VALUE_TYPE>, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IInputWidgetSetup<VALUE_TYPE> & IInputWidgetSetupBuilder<?, VALUE_TYPE>, VALUE_TYPE> extends
+		InputWidget<WIDGET_TYPE, BLUE_PRINT_TYPE, VALUE_TYPE> implements IInputControl<VALUE_TYPE> {
 
-	private final ITextFieldSpi inputWidgetSpi;
-
-	public TextInputWidget(final ITextFieldSpi textInputWidgetSpi, final IInputWidgetSetup<String> setup) {
-		super(textInputWidgetSpi, setup);
-		this.inputWidgetSpi = textInputWidgetSpi;
-
-		if (setup.getValue() != null) {
-			setValue(setup.getValue());
-		}
-
-		VisibiliySettingsInvoker.setVisibility(setup, this);
+	public InputControl(final BLUE_PRINT_TYPE bluePrint) {
+		super(bluePrint);
 	}
 
 	@Override
-	public void setValue(final String value) {
-		inputWidgetSpi.setText(value);
-	}
-
-	@Override
-	public String getValue() {
-		return inputWidgetSpi.getText();
+	public IContainer getParent() {
+		checkInitialized();
+		return getWidget().getParent();
 	}
 
 }

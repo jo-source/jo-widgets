@@ -26,36 +26,40 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.basic;
+package org.jowidgets.impl.base.delegate;
 
-import org.jowidgets.api.widgets.IInputControl;
-import org.jowidgets.api.widgets.descriptor.setup.IInputWidgetSetup;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.spi.widgets.ITextFieldSpi;
+import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IWidget;
 
-public class TextInputWidget extends AbstractBasicInputControl<String> implements IInputControl<String> {
+public class ControlDelegate {
 
-	private final ITextFieldSpi inputWidgetSpi;
+	private IContainer parent;
 
-	public TextInputWidget(final ITextFieldSpi textInputWidgetSpi, final IInputWidgetSetup<String> setup) {
-		super(textInputWidgetSpi, setup);
-		this.inputWidgetSpi = textInputWidgetSpi;
+	public ControlDelegate() {
+		super();
+	}
 
-		if (setup.getValue() != null) {
-			setValue(setup.getValue());
+	public IContainer getParent() {
+		return parent;
+	}
+
+	public void setParent(final IWidget parent) {
+		if (this.parent == null) {
+			if (parent instanceof IContainer) {
+				this.parent = (IContainer) parent;
+			}
+			else {
+				throw new IllegalArgumentException("Parent must be instance of '" + IContainer.class.getName() + "'");
+			}
 		}
-
-		VisibiliySettingsInvoker.setVisibility(setup, this);
+		else if (!isReparentable()) {
+			throw new IllegalStateException("Widget is not reparentable");
+		}
 	}
 
-	@Override
-	public void setValue(final String value) {
-		inputWidgetSpi.setText(value);
-	}
-
-	@Override
-	public String getValue() {
-		return inputWidgetSpi.getText();
+	public boolean isReparentable() {
+		//TODO will be implemented later
+		return false;
 	}
 
 }

@@ -28,6 +28,7 @@
 package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.ILabel;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.IIconDescriptor;
@@ -79,7 +80,7 @@ public class LabelWidget implements ILabel {
 	}
 
 	@Override
-	public IWidget getParent() {
+	public IContainer getParent() {
 		return compositeWidget.getParent();
 	}
 

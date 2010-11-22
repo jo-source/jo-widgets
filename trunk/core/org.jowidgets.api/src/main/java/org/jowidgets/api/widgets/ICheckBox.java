@@ -27,7 +27,7 @@
  */
 package org.jowidgets.api.widgets;
 
-public interface ICheckBox extends IInputWidget<Boolean>, ITextLabel {
+public interface ICheckBox extends IInputControl<Boolean>, ITextLabel {
 
 	/**
 	 * Convenience method for the generic method getValue()

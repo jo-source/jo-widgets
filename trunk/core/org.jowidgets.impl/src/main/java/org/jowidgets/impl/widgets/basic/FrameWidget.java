@@ -35,23 +35,23 @@ import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.IDisplayCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
-import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
-import org.jowidgets.impl.base.delegate.CompositeWidgetDelegate;
+import org.jowidgets.impl.base.delegate.ContainerWidgetDelegate;
+import org.jowidgets.impl.base.delegate.WidgetDelegate;
 import org.jowidgets.impl.base.delegate.WindowWidgetDelegate;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractFrameWidgetCommonWrapper;
 import org.jowidgets.spi.widgets.IFrameSpi;
 
 public class FrameWidget extends AbstractFrameWidgetCommonWrapper implements IFrame {
 
-	private final ChildWidgetDelegate childWidgetDelegate;
+	private final WidgetDelegate widgetDelegate;
 	private final WindowWidgetDelegate windowWidgetDelegate;
-	private final CompositeWidgetDelegate compositeWidgetDelegate;
+	private final ContainerWidgetDelegate compositeWidgetDelegate;
 
 	public FrameWidget(final IFrameSpi frameWidgetSpi, final IFrameSetup setup) {
 		super(frameWidgetSpi);
-		this.childWidgetDelegate = new ChildWidgetDelegate();
+		this.widgetDelegate = new WidgetDelegate();
 		this.windowWidgetDelegate = new WindowWidgetDelegate(frameWidgetSpi, setup);
-		this.compositeWidgetDelegate = new CompositeWidgetDelegate(frameWidgetSpi, this);
+		this.compositeWidgetDelegate = new ContainerWidgetDelegate(frameWidgetSpi, this);
 	}
 
 	@Override
@@ -80,17 +80,17 @@ public class FrameWidget extends AbstractFrameWidgetCommonWrapper implements IFr
 
 	@Override
 	public IWidget getParent() {
-		return childWidgetDelegate.getParent();
+		return widgetDelegate.getParent();
 	}
 
 	@Override
 	public void setParent(final IWidget parent) {
-		childWidgetDelegate.setParent(parent);
+		widgetDelegate.setParent(parent);
 	}
 
 	@Override
 	public boolean isReparentable() {
-		return childWidgetDelegate.isReparentable();
+		return widgetDelegate.isReparentable();
 	}
 
 	@Override

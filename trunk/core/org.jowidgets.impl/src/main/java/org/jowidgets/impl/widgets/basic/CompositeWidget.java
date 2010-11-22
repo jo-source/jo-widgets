@@ -29,20 +29,15 @@
 package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.ICompositeSetup;
 import org.jowidgets.common.widgets.IContainerCommon;
-import org.jowidgets.common.widgets.IControlCommon;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
-import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
-import org.jowidgets.impl.base.delegate.CompositeWidgetDelegate;
-import org.jowidgets.impl.widgets.common.wrapper.AbstractContainerWidgetCommonWrapper;
+import org.jowidgets.impl.base.delegate.ControlDelegate;
 
-public class CompositeWidget extends AbstractContainerWidgetCommonWrapper implements IComposite {
+public class CompositeWidget extends ContainerWidget implements IComposite {
 
-	private final ChildWidgetDelegate childWidgetDelegate;
-	private final CompositeWidgetDelegate compositeWidgetDelegate;
+	private final ControlDelegate controlDelegate;
 
 	public CompositeWidget(final IContainerCommon containerWidgetCommon) {
 		this(containerWidgetCommon, (Boolean) null);
@@ -54,40 +49,21 @@ public class CompositeWidget extends AbstractContainerWidgetCommonWrapper implem
 
 	public CompositeWidget(final IContainerCommon containerWidgetCommon, final Boolean visible) {
 		super(containerWidgetCommon);
-		this.childWidgetDelegate = new ChildWidgetDelegate();
-
-		if (visible != null) {
-			setVisible(visible.booleanValue());
-		}
-		this.compositeWidgetDelegate = new CompositeWidgetDelegate(containerWidgetCommon, this);
+		this.controlDelegate = new ControlDelegate();
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
-		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
-		final Object layoutConstraints) {
-		return compositeWidgetDelegate.add(descriptor, layoutConstraints);
-	}
-
-	@Override
-	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
-		final ICustomWidgetFactory<WIDGET_TYPE> factory,
-		final Object layoutConstraints) {
-		return compositeWidgetDelegate.add(factory, layoutConstraints);
-	}
-
-	@Override
-	public IWidget getParent() {
-		return childWidgetDelegate.getParent();
+	public IContainer getParent() {
+		return controlDelegate.getParent();
 	}
 
 	@Override
 	public void setParent(final IWidget parent) {
-		childWidgetDelegate.setParent(parent);
+		controlDelegate.setParent(parent);
 	}
 
 	@Override
 	public boolean isReparentable() {
-		return childWidgetDelegate.isReparentable();
+		return controlDelegate.isReparentable();
 	}
 }

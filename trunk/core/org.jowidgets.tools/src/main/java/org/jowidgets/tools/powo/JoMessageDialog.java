@@ -35,7 +35,7 @@ import org.jowidgets.api.widgets.descriptor.IMessageDialogDescriptor;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.IWindowCommon;
 
-public class JoMessageDialog extends ChildWidget<IMessageDialog, IMessageDialogBluePrint> implements IMessageDialog {
+public class JoMessageDialog extends Widget<IMessageDialog, IMessageDialogBluePrint> implements IMessageDialog {
 
 	public JoMessageDialog(final IWindowCommon parent, final IImageConstant icon, final String message) {
 		this(parent, bluePrint().setIcon(icon).setText(message));

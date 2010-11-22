@@ -31,41 +31,42 @@ package org.jowidgets.impl.widgets.basic;
 import org.jowidgets.api.validation.IValidateable;
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationResult;
-import org.jowidgets.api.widgets.IInputWidget;
+import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IInputWidgetSetup;
 import org.jowidgets.common.widgets.IInputWidgetCommon;
-import org.jowidgets.impl.base.delegate.ChildWidgetDelegate;
+import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.base.delegate.InputWidgetDelegate;
 import org.jowidgets.impl.widgets.common.wrapper.InputWidgetCommonWrapper;
 
-public abstract class AbstractBasicInputWidget<VALUE_TYPE> extends InputWidgetCommonWrapper implements IInputWidget<VALUE_TYPE> {
+public abstract class AbstractBasicInputControl<VALUE_TYPE> extends InputWidgetCommonWrapper implements IInputControl<VALUE_TYPE> {
 
-	private final ChildWidgetDelegate childWidgetDelegate;
+	private final ControlDelegate controlDelegate;
 	private final InputWidgetDelegate<VALUE_TYPE> inputWidgetDelegate;
 
-	public AbstractBasicInputWidget(final IInputWidgetCommon inputWidgetCommon, final IInputWidgetSetup<VALUE_TYPE> setup) {
+	public AbstractBasicInputControl(final IInputWidgetCommon inputWidgetCommon, final IInputWidgetSetup<VALUE_TYPE> setup) {
 		super(inputWidgetCommon);
 
-		this.childWidgetDelegate = new ChildWidgetDelegate();
+		this.controlDelegate = new ControlDelegate();
 
 		//this must be last statement
 		this.inputWidgetDelegate = new InputWidgetDelegate<VALUE_TYPE>(this, setup);
 	}
 
 	@Override
-	public final IWidget getParent() {
-		return childWidgetDelegate.getParent();
+	public final IContainer getParent() {
+		return controlDelegate.getParent();
 	}
 
 	@Override
 	public void setParent(final IWidget parent) {
-		childWidgetDelegate.setParent(parent);
+		controlDelegate.setParent(parent);
 	}
 
 	@Override
 	public boolean isReparentable() {
-		return childWidgetDelegate.isReparentable();
+		return controlDelegate.isReparentable();
 	}
 
 	@Override

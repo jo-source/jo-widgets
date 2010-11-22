@@ -26,45 +26,37 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.base.delegate;
+package org.jowidgets.impl.widgets.basic;
 
+import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.common.widgets.IContainerCommon;
-import org.jowidgets.common.widgets.IControlCommon;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
-import org.jowidgets.util.Assert;
+import org.jowidgets.common.widgets.IWidgetCommon;
+import org.jowidgets.impl.base.delegate.ControlDelegate;
+import org.jowidgets.impl.widgets.common.wrapper.WidgetCommonWrapper;
 
-public class CompositeWidgetDelegate {
+public class ControlWidget extends WidgetCommonWrapper implements IControl {
 
-	private final IContainerCommon containerWidget;
-	private final IWidget widget;
+	private final ControlDelegate controlDelegate;
 
-	public CompositeWidgetDelegate(final IContainerCommon containerWidget, final IWidget widget) {
-		Assert.paramNotNull(containerWidget, "containerWidget");
-		Assert.paramNotNull(widget, "widget");
-		this.containerWidget = containerWidget;
-		this.widget = widget;
+	public ControlWidget(final IWidgetCommon widget) {
+		super(widget);
+		this.controlDelegate = new ControlDelegate();
 	}
 
-	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
-		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
-		final Object layoutConstraints) {
-		final WIDGET_TYPE result = containerWidget.add(descriptor, layoutConstraints);
-		if (result instanceof IWidget) {
-			((IWidget) result).setParent(widget);
-		}
-		return result;
+	@Override
+	public IContainer getParent() {
+		return controlDelegate.getParent();
 	}
 
-	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
-		final ICustomWidgetFactory<WIDGET_TYPE> factory,
-		final Object layoutConstraints) {
-		final WIDGET_TYPE result = containerWidget.add(factory, layoutConstraints);
-		if (result instanceof IWidget) {
-			((IWidget) result).setParent(widget);
-		}
-		return result;
+	@Override
+	public void setParent(final IWidget parent) {
+		controlDelegate.setParent(parent);
+	}
+
+	@Override
+	public boolean isReparentable() {
+		return controlDelegate.isReparentable();
 	}
 
 }

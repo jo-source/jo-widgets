@@ -28,7 +28,7 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.widgets.ICompositeCommon;
+import org.jowidgets.common.widgets.IContainerCommon;
 import org.jowidgets.common.widgets.ISplitCompositeCommon;
 
 public class SplitCompositeWidgetCommonWrapper extends WidgetCommonWrapper implements ISplitCompositeCommon {
@@ -43,12 +43,12 @@ public class SplitCompositeWidgetCommonWrapper extends WidgetCommonWrapper imple
 	}
 
 	@Override
-	public ICompositeCommon getFirst() {
+	public IContainerCommon getFirst() {
 		return getWidget().getFirst();
 	}
 
 	@Override
-	public ICompositeCommon getSecond() {
+	public IContainerCommon getSecond() {
 		return getWidget().getSecond();
 	}
 

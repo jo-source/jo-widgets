@@ -36,11 +36,10 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.ISplitCompositeDescriptor;
 import org.jowidgets.common.types.Orientation;
 
-public class JoSplitComposite extends ChildWidget<ISplitComposite, ISplitCompositeBluePrint> implements
-		ISplitComposite {
+public class JoSplitComposite extends ControlWidget<ISplitComposite, ISplitCompositeBluePrint> implements ISplitComposite {
 
-	private final JoComposite first;
-	private final JoComposite second;
+	private final JoContainer first;
+	private final JoContainer second;
 
 	public JoSplitComposite(final Orientation orientation) {
 		this(Toolkit.getBluePrintFactory().splitComposite().setOrientation(orientation));
@@ -56,11 +55,11 @@ public class JoSplitComposite extends ChildWidget<ISplitComposite, ISplitComposi
 
 		final ICompositeBluePrint firstBp = bpF.composite();
 		firstBp.setBorder(descriptor.getFirstBorder()).setLayout(descriptor.getFirstLayout());
-		this.first = new JoComposite(firstBp);
+		this.first = new JoContainer(firstBp);
 
 		final ICompositeBluePrint secondBp = bpF.composite();
 		secondBp.setBorder(descriptor.getSecondBorder()).setLayout(descriptor.getSecondLayout());
-		this.second = new JoComposite(secondBp);
+		this.second = new JoContainer(secondBp);
 	}
 
 	@Override
@@ -78,12 +77,12 @@ public class JoSplitComposite extends ChildWidget<ISplitComposite, ISplitComposi
 	}
 
 	@Override
-	public JoComposite getFirst() {
+	public JoContainer getFirst() {
 		return first;
 	}
 
 	@Override
-	public JoComposite getSecond() {
+	public JoContainer getSecond() {
 		return second;
 	}
 

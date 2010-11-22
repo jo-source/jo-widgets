@@ -29,30 +29,42 @@
 package org.jowidgets.impl.base.delegate;
 
 import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.common.widgets.IContainerCommon;
+import org.jowidgets.common.widgets.IControlCommon;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
+import org.jowidgets.util.Assert;
 
-public class ChildWidgetDelegate {
+public class ContainerWidgetDelegate {
 
-	private IWidget parent;
+	private final IContainerCommon containerWidget;
+	private final IWidget widget;
 
-	public ChildWidgetDelegate() {
-		super();
+	public ContainerWidgetDelegate(final IContainerCommon containerWidget, final IWidget widget) {
+		Assert.paramNotNull(containerWidget, "containerWidget");
+		Assert.paramNotNull(widget, "widget");
+		this.containerWidget = containerWidget;
+		this.widget = widget;
 	}
 
-	public IWidget getParent() {
-		return parent;
-	}
-
-	public void setParent(final IWidget parent) {
-		if (this.parent == null) {
-			this.parent = parent;
+	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+		final Object layoutConstraints) {
+		final WIDGET_TYPE result = containerWidget.add(descriptor, layoutConstraints);
+		if (result instanceof IWidget) {
+			((IWidget) result).setParent(widget);
 		}
-		else if (!isReparentable()) {
-			throw new IllegalStateException("Widget is not reparentable");
-		}
+		return result;
 	}
 
-	public boolean isReparentable() {
-		//TODO will be implemented later
-		return false;
+	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+		final ICustomWidgetFactory<WIDGET_TYPE> factory,
+		final Object layoutConstraints) {
+		final WIDGET_TYPE result = containerWidget.add(factory, layoutConstraints);
+		if (result instanceof IWidget) {
+			((IWidget) result).setParent(widget);
+		}
+		return result;
 	}
+
 }
