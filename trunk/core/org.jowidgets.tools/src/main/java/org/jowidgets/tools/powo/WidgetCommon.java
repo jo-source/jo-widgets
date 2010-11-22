@@ -30,6 +30,7 @@ package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.widgets.blueprint.builder.IWidgetSetupBuilder;
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.util.Assert;
@@ -98,6 +99,12 @@ class WidgetCommon<WIDGET_TYPE extends IWidgetCommon, BLUE_PRINT_TYPE extends IW
 	public final Object getUiReference() {
 		checkInitialized();
 		return widget.getUiReference();
+	}
+
+	@Override
+	public Dimension getSize() {
+		checkInitialized();
+		return widget.getSize();
 	}
 
 	@Override

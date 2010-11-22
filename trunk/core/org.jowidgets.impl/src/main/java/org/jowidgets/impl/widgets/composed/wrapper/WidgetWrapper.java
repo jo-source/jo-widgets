@@ -28,6 +28,7 @@
 package org.jowidgets.impl.widgets.composed.wrapper;
 
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.util.Assert;
 
@@ -68,6 +69,11 @@ public class WidgetWrapper implements IWidgetCommon {
 	@Override
 	public boolean isVisible() {
 		return widget.isVisible();
+	}
+
+	@Override
+	public Dimension getSize() {
+		return widget.getSize();
 	}
 
 }

@@ -32,8 +32,10 @@ import java.awt.Component;
 import javax.swing.JComponent;
 
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.swing.util.ColorConvert;
+import org.jowidgets.impl.swing.util.DimensionConvert;
 
 public class SwingWidget implements IWidgetCommon {
 
@@ -75,6 +77,11 @@ public class SwingWidget implements IWidgetCommon {
 	@Override
 	public boolean isVisible() {
 		return component.isVisible();
+	}
+
+	@Override
+	public Dimension getSize() {
+		return DimensionConvert.convert(component.getSize());
 	}
 
 }

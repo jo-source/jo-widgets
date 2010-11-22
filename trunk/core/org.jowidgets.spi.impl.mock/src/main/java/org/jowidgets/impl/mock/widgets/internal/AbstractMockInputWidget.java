@@ -28,6 +28,7 @@
 package org.jowidgets.impl.mock.widgets.internal;
 
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IInputWidgetCommon;
 import org.jowidgets.common.widgets.controler.impl.InputObservable;
 import org.jowidgets.impl.mock.mockui.UIMComponent;
@@ -70,6 +71,11 @@ public abstract class AbstractMockInputWidget extends InputObservable implements
 	@Override
 	public boolean isVisible() {
 		return mockWidgetDelegate.isVisible();
+	}
+
+	@Override
+	public Dimension getSize() {
+		return mockWidgetDelegate.getSize();
 	}
 
 }

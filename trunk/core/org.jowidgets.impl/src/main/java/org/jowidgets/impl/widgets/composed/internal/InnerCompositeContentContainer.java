@@ -33,6 +33,7 @@ import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
@@ -99,6 +100,11 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 	@Override
 	public boolean isVisible() {
 		return compositeWidget.isVisible();
+	}
+
+	@Override
+	public Dimension getSize() {
+		return compositeWidget.getSize();
 	}
 
 	@Override

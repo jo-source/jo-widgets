@@ -30,6 +30,7 @@ package org.jowidgets.impl.swing.widgets.internal;
 import java.awt.Component;
 
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IActionWidgetCommon;
 import org.jowidgets.common.widgets.controler.impl.ActionObservable;
 import org.jowidgets.impl.swing.widgets.SwingWidget;
@@ -76,6 +77,11 @@ public abstract class AbstractSwingActionWidget extends ActionObservable impleme
 	@Override
 	public boolean isVisible() {
 		return swingWidgetDelegate.isVisible();
+	}
+
+	@Override
+	public Dimension getSize() {
+		return swingWidgetDelegate.getSize();
 	}
 
 }

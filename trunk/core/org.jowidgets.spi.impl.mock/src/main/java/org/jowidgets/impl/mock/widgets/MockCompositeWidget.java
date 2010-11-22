@@ -28,6 +28,7 @@
 package org.jowidgets.impl.mock.widgets;
 
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
@@ -97,6 +98,11 @@ public class MockCompositeWidget implements ICompositeSpi {
 	@Override
 	public boolean isVisible() {
 		return mockWidgetDelegate.isVisible();
+	}
+
+	@Override
+	public Dimension getSize() {
+		return mockWidgetDelegate.getSize();
 	}
 
 	@Override

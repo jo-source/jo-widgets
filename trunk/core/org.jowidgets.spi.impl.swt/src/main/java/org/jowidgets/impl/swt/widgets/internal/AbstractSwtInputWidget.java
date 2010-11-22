@@ -29,6 +29,7 @@ package org.jowidgets.impl.swt.widgets.internal;
 
 import org.eclipse.swt.widgets.Control;
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IInputWidgetCommon;
 import org.jowidgets.common.widgets.controler.impl.InputObservable;
 import org.jowidgets.impl.swt.color.IColorCache;
@@ -73,6 +74,11 @@ public abstract class AbstractSwtInputWidget extends InputObservable implements 
 	@Override
 	public boolean isVisible() {
 		return swtWidgetDelegate.isVisible();
+	}
+
+	@Override
+	public Dimension getSize() {
+		return swtWidgetDelegate.getSize();
 	}
 
 }

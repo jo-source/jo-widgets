@@ -31,8 +31,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.swt.color.IColorCache;
+import org.jowidgets.impl.swt.util.DimensionConvert;
 
 public class SwtWidget implements IWidgetCommon {
 
@@ -89,6 +91,11 @@ public class SwtWidget implements IWidgetCommon {
 	@Override
 	public boolean isVisible() {
 		return control.isVisible();
+	}
+
+	@Override
+	public Dimension getSize() {
+		return DimensionConvert.convert(control.getSize());
 	}
 
 }

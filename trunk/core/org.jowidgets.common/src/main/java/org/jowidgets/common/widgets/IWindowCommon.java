@@ -37,11 +37,7 @@ public interface IWindowCommon extends IDisplayCommon, IWindowObservable {
 
 	void setPosition(Position position);
 
-	Position getPosition();
-
 	void setSize(Dimension size);
-
-	Dimension getSize();
 
 	Rectangle getParentBounds();
 

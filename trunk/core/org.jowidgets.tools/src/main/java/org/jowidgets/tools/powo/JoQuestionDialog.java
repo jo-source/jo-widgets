@@ -35,6 +35,7 @@ import org.jowidgets.api.widgets.IQuestionDialog;
 import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
 import org.jowidgets.api.widgets.descriptor.IQuestionDialogDescriptor;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IWindowCommon;
 import org.jowidgets.util.Assert;
 
@@ -79,8 +80,12 @@ public class JoQuestionDialog extends Widget<IQuestionDialog, IQuestionDialogBlu
 
 	@Override
 	public IDisplay getParent() {
-		checkInitialized();
 		return getWidget().getParent();
+	}
+
+	@Override
+	public Position getPosition() {
+		return getPosition();
 	}
 
 	public static IQuestionDialogBluePrint bluePrint() {

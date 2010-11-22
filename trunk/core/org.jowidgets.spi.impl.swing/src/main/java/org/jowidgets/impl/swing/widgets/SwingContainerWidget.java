@@ -33,6 +33,7 @@ import java.awt.Container;
 import net.miginfocom.swing.MigLayout;
 
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
@@ -104,6 +105,11 @@ public class SwingContainerWidget implements ICompositeSpi {
 	@Override
 	public boolean isVisible() {
 		return swingWidgetDelegate.isVisible();
+	}
+
+	@Override
+	public Dimension getSize() {
+		return swingWidgetDelegate.getSize();
 	}
 
 	@Override

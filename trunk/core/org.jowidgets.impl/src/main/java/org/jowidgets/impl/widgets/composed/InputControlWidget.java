@@ -33,15 +33,16 @@ import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IInputFieldSetup;
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 
-public class InputFieldWidget<VALUE_TYPE> extends AbstractComposedInputWidget<VALUE_TYPE> implements IInputControl<VALUE_TYPE> {
+public class InputControlWidget<VALUE_TYPE> extends AbstractComposedInputWidget<VALUE_TYPE> implements IInputControl<VALUE_TYPE> {
 
 	private final IInputControl<String> textFieldWidget;
 	private final IConverter<VALUE_TYPE> converter;
 
-	public InputFieldWidget(final IInputControl<String> textFieldWidget, final IInputFieldSetup<VALUE_TYPE> setup) {
+	public InputControlWidget(final IInputControl<String> textFieldWidget, final IInputFieldSetup<VALUE_TYPE> setup) {
 
 		super(setup.getValidator(), setup.isMandatory(), setup.isEditable());
 
@@ -116,6 +117,11 @@ public class InputFieldWidget<VALUE_TYPE> extends AbstractComposedInputWidget<VA
 	@Override
 	public boolean isVisible() {
 		return textFieldWidget.isVisible();
+	}
+
+	@Override
+	public Dimension getSize() {
+		return textFieldWidget.getSize();
 	}
 
 }

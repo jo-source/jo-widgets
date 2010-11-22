@@ -33,6 +33,7 @@ import org.jowidgets.api.widgets.IProgressBar;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IProgressBarSetup;
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Orientation;
 import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
@@ -158,6 +159,11 @@ public class ProgressBarWidget implements IProgressBar {
 	@Override
 	public boolean isVisible() {
 		return compositeWidget.isVisible();
+	}
+
+	@Override
+	public Dimension getSize() {
+		return compositeWidget.getSize();
 	}
 
 	@Override

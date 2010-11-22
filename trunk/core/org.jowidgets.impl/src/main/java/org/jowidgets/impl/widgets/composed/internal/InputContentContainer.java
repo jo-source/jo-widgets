@@ -38,6 +38,7 @@ import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Border;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IContainerCommon;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
@@ -128,6 +129,11 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractComposedInputWidg
 	@Override
 	public boolean isVisible() {
 		return compositeWidget.isVisible();
+	}
+
+	@Override
+	public Dimension getSize() {
+		return compositeWidget.getSize();
 	}
 
 	@Override

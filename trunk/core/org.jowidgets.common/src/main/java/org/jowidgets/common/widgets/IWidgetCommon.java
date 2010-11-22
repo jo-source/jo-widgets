@@ -28,6 +28,7 @@
 package org.jowidgets.common.widgets;
 
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Dimension;
 
 public interface IWidgetCommon {
 
@@ -50,5 +51,7 @@ public interface IWidgetCommon {
 	void setVisible(boolean visible);
 
 	boolean isVisible();
+
+	Dimension getSize();
 
 }

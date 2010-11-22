@@ -34,6 +34,7 @@ import org.jowidgets.api.widgets.IMessageDialog;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
 import org.jowidgets.api.widgets.descriptor.IMessageDialogDescriptor;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IWindowCommon;
 
 public class JoMessageDialog extends Widget<IMessageDialog, IMessageDialogBluePrint> implements IMessageDialog {
@@ -67,8 +68,12 @@ public class JoMessageDialog extends Widget<IMessageDialog, IMessageDialogBluePr
 
 	@Override
 	public IDisplay getParent() {
-		checkInitialized();
 		return getWidget().getParent();
+	}
+
+	@Override
+	public Position getPosition() {
+		return getPosition();
 	}
 
 	public static IMessageDialogBluePrint bluePrint() {

@@ -38,7 +38,7 @@ import org.jowidgets.api.widgets.descriptor.IInputFieldDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.ITextFieldSetup;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
-import org.jowidgets.impl.widgets.composed.InputFieldWidget;
+import org.jowidgets.impl.widgets.composed.InputControlWidget;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 import org.jowidgets.spi.IWidgetFactorySpi;
 
@@ -88,6 +88,6 @@ public class InputFieldWidgetFactory<VALUE_TYPE> implements
 				+ "'");
 		}
 
-		return new InputFieldWidget<VALUE_TYPE>(textFieldWidget, descriptor);
+		return new InputControlWidget<VALUE_TYPE>(textFieldWidget, descriptor);
 	}
 }

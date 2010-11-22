@@ -33,6 +33,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JScrollPane;
 
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
@@ -90,6 +91,11 @@ public class ScrollCompositeWidget implements IScrollCompositeSpi {
 	@Override
 	public boolean isVisible() {
 		return outerCompositeWidget.isVisible();
+	}
+
+	@Override
+	public Dimension getSize() {
+		return outerCompositeWidget.getSize();
 	}
 
 	@Override

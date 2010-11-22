@@ -35,6 +35,8 @@ import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.setup.IMessageDialogSetup;
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IButtonCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
@@ -149,6 +151,16 @@ public class MessageDialogWidget implements IMessageDialog {
 	@Override
 	public boolean isVisible() {
 		return dialogWidget.isVisible();
+	}
+
+	@Override
+	public Position getPosition() {
+		return dialogWidget.getPosition();
+	}
+
+	@Override
+	public Dimension getSize() {
+		return dialogWidget.getSize();
 	}
 
 }

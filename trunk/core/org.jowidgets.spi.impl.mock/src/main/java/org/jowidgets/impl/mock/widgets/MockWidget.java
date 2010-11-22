@@ -28,6 +28,7 @@
 package org.jowidgets.impl.mock.widgets;
 
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.mock.mockui.UIMComponent;
 
@@ -68,6 +69,11 @@ public class MockWidget implements IWidgetCommon {
 	@Override
 	public boolean isVisible() {
 		return component.isVisible();
+	}
+
+	@Override
+	public Dimension getSize() {
+		return component.getSize();
 	}
 
 }

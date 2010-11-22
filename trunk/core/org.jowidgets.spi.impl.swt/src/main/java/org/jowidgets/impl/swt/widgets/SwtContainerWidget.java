@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
@@ -107,6 +108,11 @@ public class SwtContainerWidget implements ICompositeSpi {
 	@Override
 	public boolean isVisible() {
 		return swtWidgetDelegate.isVisible();
+	}
+
+	@Override
+	public Dimension getSize() {
+		return swtWidgetDelegate.getSize();
 	}
 
 	@Override

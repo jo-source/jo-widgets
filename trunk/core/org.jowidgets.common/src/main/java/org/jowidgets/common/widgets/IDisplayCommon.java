@@ -28,6 +28,10 @@
 
 package org.jowidgets.common.widgets;
 
+import org.jowidgets.common.types.Position;
+
 public interface IDisplayCommon extends IWidgetCommon {
+
+	Position getPosition();
 
 }

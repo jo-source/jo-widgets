@@ -36,6 +36,7 @@ import org.jowidgets.api.widgets.descriptor.ITextLabelDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextSeparatorDescriptor;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.AlignmentHorizontal;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.ITextLabelCommon;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
@@ -126,6 +127,11 @@ public class TextSeparatorWidget implements ITextLabel {
 	@Override
 	public boolean isVisible() {
 		return compositeWidget.isVisible();
+	}
+
+	@Override
+	public Dimension getSize() {
+		return compositeWidget.getSize();
 	}
 
 	@Override
