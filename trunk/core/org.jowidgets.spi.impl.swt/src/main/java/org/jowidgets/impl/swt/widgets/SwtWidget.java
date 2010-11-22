@@ -92,7 +92,7 @@ public class SwtWidget implements IWidgetCommon {
 
 	@Override
 	public IColorConstant getBackgroundColor() {
-		return toColorConstant(control.getForeground());
+		return toColorConstant(control.getBackground());
 	}
 
 	private IColorConstant toColorConstant(final Color color) {
