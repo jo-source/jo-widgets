@@ -28,6 +28,7 @@
 package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.IDisplay;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IMessageDialog;
 import org.jowidgets.api.widgets.IWidget;
@@ -96,7 +97,7 @@ public class MessageDialogWidget implements IMessageDialog {
 	}
 
 	@Override
-	public IWidget getParent() {
+	public IDisplay getParent() {
 		return dialogWidget.getParent();
 	}
 

@@ -26,13 +26,40 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.impl.base.delegate;
 
-import org.jowidgets.common.widgets.IDisplayCommon;
+import org.jowidgets.api.widgets.IDisplay;
+import org.jowidgets.api.widgets.IWidget;
 
-public interface IDisplay extends IWidget, IDisplayCommon {
+public class DisplayDelegate {
 
-	@Override
-	IDisplay getParent();
+	private IDisplay parent;
+
+	public DisplayDelegate() {
+		super();
+	}
+
+	public IDisplay getParent() {
+		return parent;
+	}
+
+	public void setParent(final IWidget parent) {
+		if (this.parent == null) {
+			if (parent instanceof IDisplay) {
+				this.parent = (IDisplay) parent;
+			}
+			else {
+				throw new IllegalArgumentException("Parent must be instance of '" + IDisplay.class.getName() + "'");
+			}
+		}
+		else if (!isReparentable()) {
+			throw new IllegalStateException("Widget is not reparentable");
+		}
+	}
+
+	public boolean isReparentable() {
+		//TODO will be implemented later
+		return false;
+	}
 
 }

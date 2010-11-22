@@ -33,6 +33,7 @@ import org.jowidgets.api.validation.ValidationMessageType;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.IDisplay;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IInputDialog;
 import org.jowidgets.api.widgets.IWidget;
@@ -198,7 +199,7 @@ public class InputDialogWidget<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 	}
 
 	@Override
-	public IWidget getParent() {
+	public IDisplay getParent() {
 		return dialogWidget.getParent();
 	}
 

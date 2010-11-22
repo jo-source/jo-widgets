@@ -30,6 +30,7 @@ package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IDisplay;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.builder.IContainerSetupBuilder;
@@ -119,7 +120,7 @@ class WindowWidget<WIDGET_TYPE extends IWindow & IContainer, BLUE_PRINT_TYPE ext
 	}
 
 	@Override
-	public final IWidget getParent() {
+	public final IDisplay getParent() {
 		return getWidget().getParent();
 	}
 

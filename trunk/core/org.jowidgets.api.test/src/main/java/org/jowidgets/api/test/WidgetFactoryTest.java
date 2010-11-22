@@ -35,11 +35,11 @@ import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IDisplay;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.ILabel;
 import org.jowidgets.api.widgets.ISplitComposite;
 import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
@@ -79,6 +79,8 @@ public class WidgetFactoryTest {
 
 		testChildWindowWidget(frame, frame.createChildWindow(BPF.dialog()));
 		testChildWindowWidget(frame, frame.createChildWindow(BPF.frame()));
+		testChildWindowWidget(frame, frame.createChildWindow(BPF.questionDialog()));
+		testChildWindowWidget(frame, frame.createChildWindow(BPF.messageDialog()));
 	}
 
 	private void createChildWidgets(final IContainer container) {
@@ -118,7 +120,7 @@ public class WidgetFactoryTest {
 		Assert.assertNotNull(Toolkit.getWidgetUtils().getWindowAncestor(widget));
 	}
 
-	private void testChildWindowWidget(final IWidget parent, final IWindow widget) {
+	private void testChildWindowWidget(final IWidget parent, final IDisplay widget) {
 		Assert.assertNotNull(widget);
 		Assert.assertNotNull(widget.getUiReference());
 		testParent(parent, widget);

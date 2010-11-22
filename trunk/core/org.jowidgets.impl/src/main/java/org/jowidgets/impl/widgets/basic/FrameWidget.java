@@ -28,6 +28,7 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import org.jowidgets.api.widgets.IDisplay;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IFrameSetup;
@@ -36,20 +37,20 @@ import org.jowidgets.common.widgets.IDisplayCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.impl.base.delegate.ContainerWidgetDelegate;
-import org.jowidgets.impl.base.delegate.WidgetDelegate;
+import org.jowidgets.impl.base.delegate.DisplayDelegate;
 import org.jowidgets.impl.base.delegate.WindowWidgetDelegate;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractFrameWidgetCommonWrapper;
 import org.jowidgets.spi.widgets.IFrameSpi;
 
 public class FrameWidget extends AbstractFrameWidgetCommonWrapper implements IFrame {
 
-	private final WidgetDelegate widgetDelegate;
+	private final DisplayDelegate displayDelegate;
 	private final WindowWidgetDelegate windowWidgetDelegate;
 	private final ContainerWidgetDelegate compositeWidgetDelegate;
 
 	public FrameWidget(final IFrameSpi frameWidgetSpi, final IFrameSetup setup) {
 		super(frameWidgetSpi);
-		this.widgetDelegate = new WidgetDelegate();
+		this.displayDelegate = new DisplayDelegate();
 		this.windowWidgetDelegate = new WindowWidgetDelegate(frameWidgetSpi, setup);
 		this.compositeWidgetDelegate = new ContainerWidgetDelegate(frameWidgetSpi, this);
 	}
@@ -79,18 +80,18 @@ public class FrameWidget extends AbstractFrameWidgetCommonWrapper implements IFr
 	}
 
 	@Override
-	public IWidget getParent() {
-		return widgetDelegate.getParent();
+	public IDisplay getParent() {
+		return displayDelegate.getParent();
 	}
 
 	@Override
 	public void setParent(final IWidget parent) {
-		widgetDelegate.setParent(parent);
+		displayDelegate.setParent(parent);
 	}
 
 	@Override
 	public boolean isReparentable() {
-		return widgetDelegate.isReparentable();
+		return displayDelegate.isReparentable();
 	}
 
 	@Override

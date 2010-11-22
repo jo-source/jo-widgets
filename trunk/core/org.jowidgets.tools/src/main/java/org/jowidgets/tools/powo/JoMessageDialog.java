@@ -29,6 +29,7 @@
 package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IDisplay;
 import org.jowidgets.api.widgets.IMessageDialog;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
 import org.jowidgets.api.widgets.descriptor.IMessageDialogDescriptor;
@@ -62,6 +63,12 @@ public class JoMessageDialog extends Widget<IMessageDialog, IMessageDialogBluePr
 	@Override
 	public void showMessage() {
 		getWidget().showMessage();
+	}
+
+	@Override
+	public IDisplay getParent() {
+		checkInitialized();
+		return getWidget().getParent();
 	}
 
 	public static IMessageDialogBluePrint bluePrint() {

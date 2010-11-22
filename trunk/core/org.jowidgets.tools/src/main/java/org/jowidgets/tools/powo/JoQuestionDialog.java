@@ -30,6 +30,7 @@ package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.types.QuestionResult;
+import org.jowidgets.api.widgets.IDisplay;
 import org.jowidgets.api.widgets.IQuestionDialog;
 import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
 import org.jowidgets.api.widgets.descriptor.IQuestionDialogDescriptor;
@@ -74,6 +75,12 @@ public class JoQuestionDialog extends Widget<IQuestionDialog, IQuestionDialogBlu
 	@Override
 	public QuestionResult question() {
 		return getWidget().question();
+	}
+
+	@Override
+	public IDisplay getParent() {
+		checkInitialized();
+		return getWidget().getParent();
 	}
 
 	public static IQuestionDialogBluePrint bluePrint() {

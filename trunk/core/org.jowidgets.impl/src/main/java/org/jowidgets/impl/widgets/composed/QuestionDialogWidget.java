@@ -29,6 +29,7 @@ package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.types.QuestionResult;
 import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.IDisplay;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IQuestionDialog;
 import org.jowidgets.api.widgets.IWidget;
@@ -147,7 +148,7 @@ public class QuestionDialogWidget implements IQuestionDialog {
 	}
 
 	@Override
-	public IWidget getParent() {
+	public IDisplay getParent() {
 		return dialogWidget.getParent();
 	}
 
