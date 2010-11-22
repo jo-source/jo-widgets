@@ -27,9 +27,11 @@
  */
 package org.jowidgets.impl.swt.widgets;
 
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
+import org.jowidgets.common.color.ColorValue;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IWidgetCommon;
@@ -81,6 +83,20 @@ public class SwtWidget implements IWidgetCommon {
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
 		control.setBackground(colorCache.getColor(colorValue));
+	}
+
+	@Override
+	public IColorConstant getForegroundColor() {
+		return toColorConstant(control.getForeground());
+	}
+
+	@Override
+	public IColorConstant getBackgroundColor() {
+		return toColorConstant(control.getForeground());
+	}
+
+	private IColorConstant toColorConstant(final Color color) {
+		return new ColorValue(color.getRed(), color.getGreen(), color.getBlue());
 	}
 
 	@Override

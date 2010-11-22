@@ -35,7 +35,6 @@ import javax.swing.JButton;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.impl.swing.util.AlignmentConvert;
 import org.jowidgets.impl.swing.util.FontProvider;
@@ -69,8 +68,6 @@ public class ButtonWidget extends AbstractSwingActionWidget implements IButtonSp
 			}
 
 		});
-
-		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

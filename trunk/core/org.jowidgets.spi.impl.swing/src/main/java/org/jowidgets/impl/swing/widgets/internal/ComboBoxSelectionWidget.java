@@ -34,7 +34,6 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
-import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
 
@@ -43,7 +42,6 @@ public class ComboBoxSelectionWidget extends AbstractSwingInputWidget implements
 	public ComboBoxSelectionWidget(final IComboBoxSelectionSetupSpi setup) {
 		super(new JComboBox(new DefaultComboBoxModel(setup.getElements())));
 
-		ColorSettingsInvoker.setColors(setup, this);
 		addItemListener();
 	}
 

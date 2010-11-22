@@ -30,7 +30,6 @@ package org.jowidgets.impl.swt.widgets.internal;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.util.OrientationConvert;
 import org.jowidgets.impl.swt.widgets.SwtWidget;
@@ -41,7 +40,6 @@ public class SeparatorWidget extends SwtWidget implements IControlSpi {
 
 	public SeparatorWidget(final IColorCache colorCache, final Object parentUiReference, final ISeparatorSetupSpi setup) {
 		super(colorCache, createSeparator(parentUiReference, setup));
-		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

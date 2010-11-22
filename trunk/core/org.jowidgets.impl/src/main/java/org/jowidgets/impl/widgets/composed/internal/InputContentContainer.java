@@ -122,6 +122,16 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractComposedInputWidg
 	}
 
 	@Override
+	public IColorConstant getForegroundColor() {
+		return compositeWidget.getForegroundColor();
+	}
+
+	@Override
+	public IColorConstant getBackgroundColor() {
+		return compositeWidget.getBackgroundColor();
+	}
+
+	@Override
 	public void setVisible(final boolean visible) {
 		compositeWidget.setVisible(visible);
 	}

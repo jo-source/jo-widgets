@@ -34,6 +34,7 @@ import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.ICompositeSetup;
 import org.jowidgets.common.widgets.IContainerCommon;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 
 public class CompositeWidget extends ContainerWidget implements IComposite {
 
@@ -45,6 +46,7 @@ public class CompositeWidget extends ContainerWidget implements IComposite {
 
 	public CompositeWidget(final IContainerCommon containerWidgetCommon, final ICompositeSetup setup) {
 		this(containerWidgetCommon, setup.isVisible());
+		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	public CompositeWidget(final IContainerCommon containerWidgetCommon, final Boolean visible) {

@@ -62,6 +62,16 @@ public class WidgetWrapper implements IWidgetCommon {
 	}
 
 	@Override
+	public IColorConstant getForegroundColor() {
+		return widget.getForegroundColor();
+	}
+
+	@Override
+	public IColorConstant getBackgroundColor() {
+		return widget.getBackgroundColor();
+	}
+
+	@Override
 	public void setVisible(final boolean visible) {
 		widget.setVisible(visible);
 	}

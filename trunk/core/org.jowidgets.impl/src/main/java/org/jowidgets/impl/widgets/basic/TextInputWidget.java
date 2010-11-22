@@ -30,6 +30,7 @@ package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.descriptor.setup.IInputWidgetSetup;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.spi.widgets.ITextFieldSpi;
 
@@ -46,6 +47,7 @@ public class TextInputWidget extends AbstractBasicInputControl<String> implement
 		}
 
 		VisibiliySettingsInvoker.setVisibility(setup, this);
+		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

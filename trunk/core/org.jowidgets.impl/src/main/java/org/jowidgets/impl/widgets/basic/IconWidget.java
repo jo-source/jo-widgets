@@ -34,6 +34,7 @@ import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IIconSetup;
 import org.jowidgets.common.widgets.IIconCommon;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.IconWidgetCommonWrapper;
 
@@ -45,6 +46,7 @@ public class IconWidget extends IconWidgetCommonWrapper implements IIcon {
 		super(iconWidgetCi);
 		this.controlDelegate = new ControlDelegate();
 		VisibiliySettingsInvoker.setVisibility(setup, this);
+		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

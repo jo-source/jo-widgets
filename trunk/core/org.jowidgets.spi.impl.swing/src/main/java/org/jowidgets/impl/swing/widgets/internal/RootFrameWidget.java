@@ -32,7 +32,6 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
-import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.impl.swing.widgets.SwingWindowWidget;
@@ -49,7 +48,6 @@ public class RootFrameWidget extends SwingWindowWidget implements IFrameSpi {
 
 		setIcon(setup.getIcon(), imageRegistry);
 		setLayout(setup.getLayout());
-		ColorSettingsInvoker.setColors(setup, this);
 
 		//dispose a root frame when window closed
 		getUiReference().addWindowListener(new WindowAdapter() {

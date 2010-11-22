@@ -96,6 +96,18 @@ class WidgetCommon<WIDGET_TYPE extends IWidgetCommon, BLUE_PRINT_TYPE extends IW
 	}
 
 	@Override
+	public IColorConstant getForegroundColor() {
+		checkInitialized();
+		return widget.getForegroundColor();
+	}
+
+	@Override
+	public IColorConstant getBackgroundColor() {
+		checkInitialized();
+		return widget.getBackgroundColor();
+	}
+
+	@Override
 	public final Object getUiReference() {
 		checkInitialized();
 		return widget.getUiReference();

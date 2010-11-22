@@ -70,6 +70,16 @@ public class SwingWidget implements IWidgetCommon {
 	}
 
 	@Override
+	public IColorConstant getForegroundColor() {
+		return ColorConvert.convert(component.getForeground());
+	}
+
+	@Override
+	public IColorConstant getBackgroundColor() {
+		return ColorConvert.convert(component.getBackground());
+	}
+
+	@Override
 	public void setVisible(final boolean visible) {
 		component.setVisible(visible);
 	}

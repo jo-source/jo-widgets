@@ -69,6 +69,16 @@ public abstract class AbstractMockActionWidget extends ActionObservable implemen
 	}
 
 	@Override
+	public IColorConstant getForegroundColor() {
+		return mockWidgetDelegate.getForegroundColor();
+	}
+
+	@Override
+	public IColorConstant getBackgroundColor() {
+		return mockWidgetDelegate.getBackgroundColor();
+	}
+
+	@Override
 	public void setVisible(final boolean visible) {
 		mockWidgetDelegate.setVisible(visible);
 	}

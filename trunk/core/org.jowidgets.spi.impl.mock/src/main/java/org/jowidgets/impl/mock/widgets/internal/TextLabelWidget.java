@@ -28,7 +28,6 @@
 package org.jowidgets.impl.mock.widgets.internal;
 
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.impl.mock.mockui.UIMTextLabel;
 import org.jowidgets.impl.mock.widgets.MockWidget;
 import org.jowidgets.spi.widgets.ITextLabelSpi;
@@ -44,7 +43,6 @@ public class TextLabelWidget extends MockWidget implements ITextLabelSpi {
 		setMarkup(setup.getMarkup());
 
 		getUiReference().setHorizontalAlignment(setup.getAlignment());
-		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

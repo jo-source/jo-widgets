@@ -226,6 +226,16 @@ public class InputDialogWidget<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 	}
 
 	@Override
+	public IColorConstant getForegroundColor() {
+		return inputCompositeWidget.getForegroundColor();
+	}
+
+	@Override
+	public IColorConstant getBackgroundColor() {
+		return inputCompositeWidget.getBackgroundColor();
+	}
+
+	@Override
 	public void addInputListener(final IInputListener listener) {
 		inputCompositeWidget.addInputListener(listener);
 	}

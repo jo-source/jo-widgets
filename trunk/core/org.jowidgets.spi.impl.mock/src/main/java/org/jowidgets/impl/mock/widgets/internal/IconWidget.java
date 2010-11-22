@@ -28,7 +28,6 @@
 package org.jowidgets.impl.mock.widgets.internal;
 
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.impl.mock.image.MockImageRegistry;
 import org.jowidgets.impl.mock.mockui.UIMIcon;
 import org.jowidgets.impl.mock.widgets.MockWidget;
@@ -44,7 +43,6 @@ public class IconWidget extends MockWidget implements IIconSpi {
 
 		this.imageRegistry = imageRegistry;
 		setIcon(setup.getIcon());
-		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

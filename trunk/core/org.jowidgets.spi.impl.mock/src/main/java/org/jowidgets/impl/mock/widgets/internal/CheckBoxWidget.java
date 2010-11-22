@@ -28,7 +28,6 @@
 package org.jowidgets.impl.mock.widgets.internal;
 
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.impl.mock.mockui.UIMToggleButton;
 import org.jowidgets.spi.widgets.ICheckBoxSpi;
@@ -47,7 +46,6 @@ public class CheckBoxWidget extends AbstractMockInputWidget implements ICheckBox
 		setToolTipText(descriptor.getToolTipText());
 		setMarkup(descriptor.getMarkup());
 		getUiReference().setHorizontalAlignment(descriptor.getAlignment());
-		ColorSettingsInvoker.setColors(descriptor, this);
 
 		getUiReference().addInputListener(new IInputListener() {
 			@Override

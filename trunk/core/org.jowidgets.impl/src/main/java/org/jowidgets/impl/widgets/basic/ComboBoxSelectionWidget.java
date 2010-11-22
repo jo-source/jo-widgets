@@ -37,12 +37,12 @@ import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.types.AutoSelectionPolicy;
 import org.jowidgets.api.widgets.IComboBox;
 import org.jowidgets.api.widgets.descriptor.setup.IComboBoxSelectionSetup;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
 import org.jowidgets.util.Assert;
 
-public class ComboBoxSelectionWidget<VALUE_TYPE> extends AbstractBasicInputControl<VALUE_TYPE> implements
-		IComboBox<VALUE_TYPE> {
+public class ComboBoxSelectionWidget<VALUE_TYPE> extends AbstractBasicInputControl<VALUE_TYPE> implements IComboBox<VALUE_TYPE> {
 
 	private final List<VALUE_TYPE> elements;
 	private final List<VALUE_TYPE> elementsView;
@@ -69,6 +69,7 @@ public class ComboBoxSelectionWidget<VALUE_TYPE> extends AbstractBasicInputContr
 		}
 
 		VisibiliySettingsInvoker.setVisibility(setup, this);
+		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

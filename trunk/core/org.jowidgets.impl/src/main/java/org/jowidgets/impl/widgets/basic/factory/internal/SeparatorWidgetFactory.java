@@ -35,6 +35,7 @@ import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.ISeparatorBluePrintSpi;
 import org.jowidgets.impl.widgets.basic.ControlWidget;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.widgets.IControlSpi;
 
@@ -52,6 +53,7 @@ public class SeparatorWidgetFactory extends AbstractWidgetFactory implements IWi
 	public IWidget create(final Object parentUiReference, final ISeparatorDescriptor descriptor) {
 		final ISeparatorBluePrintSpi bp = getSpiBluePrintFactory().separator().setSetup(descriptor);
 		final IControlSpi widget = getSpiWidgetFactory().createSeparator(parentUiReference, bp);
+		ColorSettingsInvoker.setColors(descriptor, widget);
 		return new ControlWidget(widget);
 	}
 

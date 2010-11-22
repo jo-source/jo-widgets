@@ -34,7 +34,6 @@ import javax.swing.JScrollPane;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
@@ -65,7 +64,6 @@ public class ScrollCompositeWidget implements IScrollCompositeSpi {
 		this.innerCompositeWidget = new CompositeWidget(factory, setup);
 		scrollPane.setViewportView(innerCompositeWidget.getUiReference());
 
-		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override
@@ -106,6 +104,16 @@ public class ScrollCompositeWidget implements IScrollCompositeSpi {
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
 		innerCompositeWidget.setBackgroundColor(colorValue);
+	}
+
+	@Override
+	public IColorConstant getForegroundColor() {
+		return innerCompositeWidget.getForegroundColor();
+	}
+
+	@Override
+	public IColorConstant getBackgroundColor() {
+		return innerCompositeWidget.getBackgroundColor();
 	}
 
 	@Override

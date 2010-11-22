@@ -28,10 +28,15 @@
 
 package org.jowidgets.api.widgets.descriptor.setup;
 
+import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.widgets.descriptor.setup.IWidgetSetupCommon;
 
 public interface IWidgetSetup extends IWidgetSetupCommon {
 
 	Boolean isVisible();
+
+	IColorConstant getForegroundColor();
+
+	IColorConstant getBackgroundColor();
 
 }

@@ -43,6 +43,8 @@ import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controler.IInputListener;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.composed.wrapper.ControlWrapper;
 
 public class ValidationLabelWidget implements IValidationLabel {
@@ -73,6 +75,8 @@ public class ValidationLabelWidget implements IValidationLabel {
 				onInputChanged();
 			}
 		};
+		ColorSettingsInvoker.setColors(descriptor, this);
+		VisibiliySettingsInvoker.setVisibility(descriptor, this);
 	}
 
 	@Override
@@ -220,6 +224,16 @@ public class ValidationLabelWidget implements IValidationLabel {
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
 		controlAdapter.setBackgroundColor(colorValue);
+	}
+
+	@Override
+	public IColorConstant getForegroundColor() {
+		return controlAdapter.getForegroundColor();
+	}
+
+	@Override
+	public IColorConstant getBackgroundColor() {
+		return controlAdapter.getBackgroundColor();
 	}
 
 	@Override

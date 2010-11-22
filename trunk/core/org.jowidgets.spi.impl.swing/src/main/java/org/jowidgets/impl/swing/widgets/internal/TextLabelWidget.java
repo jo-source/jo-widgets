@@ -30,7 +30,6 @@ package org.jowidgets.impl.swing.widgets.internal;
 import javax.swing.JLabel;
 
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.impl.swing.util.AlignmentConvert;
 import org.jowidgets.impl.swing.util.FontProvider;
 import org.jowidgets.impl.swing.widgets.SwingWidget;
@@ -49,7 +48,6 @@ public class TextLabelWidget extends SwingWidget implements ITextLabelSpi {
 		setMarkup(setup.getMarkup());
 
 		getUiReference().setHorizontalAlignment(AlignmentConvert.convert(setup.getAlignment()));
-		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

@@ -167,6 +167,16 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputComposite<INPUT_T
 	}
 
 	@Override
+	public IColorConstant getForegroundColor() {
+		return composite.getForegroundColor();
+	}
+
+	@Override
+	public IColorConstant getBackgroundColor() {
+		return composite.getBackgroundColor();
+	}
+
+	@Override
 	public void setValue(final INPUT_TYPE value) {
 		contentContainer.setValue(value);
 		if (isAutoResetValidation) {

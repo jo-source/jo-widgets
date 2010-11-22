@@ -101,6 +101,16 @@ public class SwtContainerWidget implements ICompositeSpi {
 	}
 
 	@Override
+	public IColorConstant getForegroundColor() {
+		return swtWidgetDelegate.getForegroundColor();
+	}
+
+	@Override
+	public IColorConstant getBackgroundColor() {
+		return swtWidgetDelegate.getBackgroundColor();
+	}
+
+	@Override
 	public void setVisible(final boolean visible) {
 		swtWidgetDelegate.setVisible(visible);
 	}

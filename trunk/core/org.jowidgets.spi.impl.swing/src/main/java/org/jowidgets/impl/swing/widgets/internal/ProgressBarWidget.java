@@ -29,7 +29,6 @@ package org.jowidgets.impl.swing.widgets.internal;
 
 import javax.swing.JProgressBar;
 
-import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.impl.swing.util.OrientationConvert;
 import org.jowidgets.impl.swing.widgets.SwingWidget;
@@ -45,7 +44,6 @@ public class ProgressBarWidget extends SwingWidget implements IProgressBarSpi {
 		setMaximum(setup.getMaximum());
 		getUiReference().setIndeterminate(setup.isIndeterminate());
 
-		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

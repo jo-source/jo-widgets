@@ -38,10 +38,10 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.common.widgets.IIconCommon;
 import org.jowidgets.common.widgets.ITextLabelCommon;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
@@ -66,8 +66,8 @@ public class LabelWidget implements ILabel {
 		final ITextLabelDescriptor textLabelDescriptor = bpF.textLabel().setSetup(setup);
 		this.textLabelWidget = compositeWidget.add(textLabelDescriptor, "");
 
-		ColorSettingsInvoker.setColors(setup, this);
 		VisibiliySettingsInvoker.setVisibility(setup, this);
+		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override
@@ -113,6 +113,16 @@ public class LabelWidget implements ILabel {
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
 		textLabelWidget.setBackgroundColor(colorValue);
+	}
+
+	@Override
+	public IColorConstant getForegroundColor() {
+		return textLabelWidget.getForegroundColor();
+	}
+
+	@Override
+	public IColorConstant getBackgroundColor() {
+		return textLabelWidget.getBackgroundColor();
 	}
 
 	@Override

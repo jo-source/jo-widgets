@@ -27,7 +27,6 @@
  */
 package org.jowidgets.impl.mock.widgets.internal;
 
-import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.mock.mockui.UIMScrollPane;
 import org.jowidgets.impl.mock.widgets.MockCompositeWidget;
@@ -44,7 +43,6 @@ public class ScrollCompositeWidget extends MockCompositeWidget implements IScrol
 		scrollPane.setHorizontalBar(setup.hasHorizontalBar());
 		scrollPane.setAllwaysShowBars(setup.isAllwaysShowBars());
 
-		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 }

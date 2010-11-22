@@ -45,4 +45,8 @@ public final class ColorConvert {
 		return new Color(colorValue.getRed(), colorValue.getGreen(), colorValue.getBlue());
 	}
 
+	public static IColorConstant convert(final Color color) {
+		Assert.paramNotNull(color, "color");
+		return new ColorValue(color.getRed(), color.getGreen(), color.getBlue());
+	}
 }

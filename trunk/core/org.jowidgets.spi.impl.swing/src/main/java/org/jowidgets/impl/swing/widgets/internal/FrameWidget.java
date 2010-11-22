@@ -31,7 +31,6 @@ import java.awt.Window;
 
 import javax.swing.JDialog;
 
-import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.impl.swing.widgets.SwingWindowWidget;
@@ -53,7 +52,6 @@ public class FrameWidget extends SwingWindowWidget implements IFrameSpi {
 
 		setIcon(setup.getIcon(), imageRegistry);
 		setLayout(setup.getLayout());
-		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

@@ -34,7 +34,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JToggleButton;
 
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.impl.swing.util.AlignmentConvert;
 import org.jowidgets.impl.swing.util.FontProvider;
 import org.jowidgets.spi.widgets.ICheckBoxSpi;
@@ -53,7 +52,6 @@ public class CheckBoxWidget extends AbstractSwingInputWidget implements ICheckBo
 		setToolTipText(descriptor.getToolTipText());
 		setMarkup(descriptor.getMarkup());
 		getUiReference().setHorizontalAlignment(AlignmentConvert.convert(descriptor.getAlignment()));
-		ColorSettingsInvoker.setColors(descriptor, this);
 
 		getUiReference().addItemListener(new ItemListener() {
 

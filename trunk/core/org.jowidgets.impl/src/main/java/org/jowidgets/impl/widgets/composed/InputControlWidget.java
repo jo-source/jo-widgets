@@ -34,7 +34,7 @@ import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IInputFieldSetup;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.util.ColorSettingsInvoker;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 
 public class InputControlWidget<VALUE_TYPE> extends AbstractComposedInputWidget<VALUE_TYPE> implements IInputControl<VALUE_TYPE> {
@@ -51,8 +51,8 @@ public class InputControlWidget<VALUE_TYPE> extends AbstractComposedInputWidget<
 
 		registerSubInputWidget(textFieldWidget);
 
-		ColorSettingsInvoker.setColors(setup, this);
 		VisibiliySettingsInvoker.setVisibility(setup, this);
+		ColorSettingsInvoker.setColors(setup, this);
 
 		if (setup.getValue() != null) {
 			setValue(setup.getValue());
@@ -97,6 +97,16 @@ public class InputControlWidget<VALUE_TYPE> extends AbstractComposedInputWidget<
 	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
 		textFieldWidget.setForegroundColor(colorValue);
+	}
+
+	@Override
+	public IColorConstant getForegroundColor() {
+		return textFieldWidget.getForegroundColor();
+	}
+
+	@Override
+	public IColorConstant getBackgroundColor() {
+		return textFieldWidget.getBackgroundColor();
 	}
 
 	@Override

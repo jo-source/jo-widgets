@@ -33,6 +33,7 @@ import org.jowidgets.api.widgets.ISplitComposite;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.ISplitCompositeSetup;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.SplitCompositeWidgetCommonWrapper;
 import org.jowidgets.spi.widgets.ISplitCompositeSpi;
@@ -51,6 +52,7 @@ public class SplitCompositeWidget extends SplitCompositeWidgetCommonWrapper impl
 		this.first.setParent(this);
 		this.second.setParent(this);
 		VisibiliySettingsInvoker.setVisibility(setup, this);
+		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

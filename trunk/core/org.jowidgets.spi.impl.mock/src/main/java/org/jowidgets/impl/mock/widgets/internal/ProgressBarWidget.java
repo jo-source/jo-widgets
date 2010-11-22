@@ -27,7 +27,6 @@
  */
 package org.jowidgets.impl.mock.widgets.internal;
 
-import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.impl.mock.image.MockImageRegistry;
 import org.jowidgets.impl.mock.mockui.UIMProgressBar;
 import org.jowidgets.impl.mock.widgets.MockWidget;
@@ -43,7 +42,6 @@ public class ProgressBarWidget extends MockWidget implements IProgressBarSpi {
 		setMaximum(setup.getMaximum());
 		getUiReference().setIndeterminate(setup.isIndeterminate());
 
-		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

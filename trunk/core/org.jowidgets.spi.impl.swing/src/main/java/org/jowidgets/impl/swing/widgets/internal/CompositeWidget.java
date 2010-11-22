@@ -29,7 +29,6 @@ package org.jowidgets.impl.swing.widgets.internal;
 
 import javax.swing.JPanel;
 
-import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.common.widgets.descriptor.setup.ICompositeSetupCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swing.util.BorderConvert;
@@ -41,7 +40,6 @@ public class CompositeWidget extends SwingContainerWidget {
 		super(factory, new JPanel());
 		getUiReference().setBorder(BorderConvert.convert(setup.getBorder()));
 		setLayout(setup.getLayout());
-		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

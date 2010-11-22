@@ -25,16 +25,16 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.common.util;
+package org.jowidgets.impl.widgets.basic.factory.internal.util;
 
+import org.jowidgets.api.widgets.descriptor.setup.IWidgetSetup;
 import org.jowidgets.common.widgets.IWidgetCommon;
-import org.jowidgets.common.widgets.descriptor.setup.IWidgetSetupCommon;
 
 public final class ColorSettingsInvoker {
 
 	private ColorSettingsInvoker() {}
 
-	public static void setColors(final IWidgetSetupCommon descriptor, final IWidgetCommon widget) {
+	public static void setColors(final IWidgetSetup descriptor, final IWidgetCommon widget) {
 		if (descriptor.getForegroundColor() != null) {
 			widget.setForegroundColor(descriptor.getForegroundColor());
 		}

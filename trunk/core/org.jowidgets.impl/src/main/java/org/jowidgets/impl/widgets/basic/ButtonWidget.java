@@ -33,6 +33,7 @@ import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.ButtonWidgetCommonWrapper;
 import org.jowidgets.spi.widgets.IButtonSpi;
@@ -46,6 +47,7 @@ public class ButtonWidget extends ButtonWidgetCommonWrapper implements IButton {
 		this.controlDelegate = new ControlDelegate();
 		setEnabled(descriptor.isEnabled());
 		VisibiliySettingsInvoker.setVisibility(descriptor, this);
+		ColorSettingsInvoker.setColors(descriptor, this);
 	}
 
 	@Override

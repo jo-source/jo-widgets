@@ -145,6 +145,16 @@ public class TextSeparatorWidget implements ITextLabel {
 	}
 
 	@Override
+	public IColorConstant getForegroundColor() {
+		return textLabelWidget.getForegroundColor();
+	}
+
+	@Override
+	public IColorConstant getBackgroundColor() {
+		return textLabelWidget.getBackgroundColor();
+	}
+
+	@Override
 	public void setMarkup(final Markup markup) {
 		textLabelWidget.setMarkup(markup);
 	}

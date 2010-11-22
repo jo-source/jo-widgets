@@ -48,6 +48,10 @@ public interface IWidgetCommon {
 
 	void setBackgroundColor(final IColorConstant colorValue);
 
+	IColorConstant getForegroundColor();
+
+	IColorConstant getBackgroundColor();
+
 	void setVisible(boolean visible);
 
 	boolean isVisible();

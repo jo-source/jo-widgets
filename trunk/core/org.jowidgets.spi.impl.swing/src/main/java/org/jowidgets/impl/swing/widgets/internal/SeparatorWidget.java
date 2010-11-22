@@ -29,7 +29,6 @@ package org.jowidgets.impl.swing.widgets.internal;
 
 import javax.swing.JSeparator;
 
-import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.impl.swing.util.OrientationConvert;
 import org.jowidgets.impl.swing.widgets.SwingWidget;
 import org.jowidgets.spi.widgets.IControlSpi;
@@ -39,7 +38,6 @@ public class SeparatorWidget extends SwingWidget implements IControlSpi {
 
 	public SeparatorWidget(final ISeparatorSetupSpi setup) {
 		super(new JSeparator(OrientationConvert.convert(setup.getOrientation())));
-		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

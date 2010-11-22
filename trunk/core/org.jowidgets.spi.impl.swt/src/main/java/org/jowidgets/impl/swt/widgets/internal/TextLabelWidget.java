@@ -32,7 +32,6 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.util.AlignmentConvert;
 import org.jowidgets.impl.swt.util.FontProvider;
@@ -52,7 +51,6 @@ public class TextLabelWidget extends SwtWidget implements ITextLabelSpi {
 		setMarkup(setup.getMarkup());
 
 		getUiReference().setAlignment(AlignmentConvert.convert(setup.getAlignment()));
-		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

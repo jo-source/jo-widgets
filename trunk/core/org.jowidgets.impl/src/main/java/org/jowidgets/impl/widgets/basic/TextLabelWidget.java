@@ -33,6 +33,7 @@ import org.jowidgets.api.widgets.ITextLabel;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.ITextLabelSetup;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.TextLabelWidgetCommonWrapper;
 import org.jowidgets.spi.widgets.ITextLabelSpi;
@@ -46,6 +47,7 @@ public class TextLabelWidget extends TextLabelWidgetCommonWrapper implements ITe
 		this.controlDelegate = new ControlDelegate();
 
 		VisibiliySettingsInvoker.setVisibility(setup, this);
+		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

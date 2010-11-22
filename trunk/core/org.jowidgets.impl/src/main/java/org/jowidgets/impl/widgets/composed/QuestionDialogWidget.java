@@ -42,6 +42,7 @@ import org.jowidgets.common.widgets.IButtonCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
 public class QuestionDialogWidget implements IQuestionDialog {
@@ -137,6 +138,7 @@ public class QuestionDialogWidget implements IQuestionDialog {
 			}
 		});
 
+		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override
@@ -172,6 +174,16 @@ public class QuestionDialogWidget implements IQuestionDialog {
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
 		dialogWidget.setBackgroundColor(colorValue);
+	}
+
+	@Override
+	public IColorConstant getForegroundColor() {
+		return dialogWidget.getForegroundColor();
+	}
+
+	@Override
+	public IColorConstant getBackgroundColor() {
+		return dialogWidget.getBackgroundColor();
 	}
 
 	@Override

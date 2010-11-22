@@ -39,6 +39,7 @@ import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.impl.base.delegate.ContainerWidgetDelegate;
 import org.jowidgets.impl.base.delegate.DisplayDelegate;
 import org.jowidgets.impl.base.delegate.WindowWidgetDelegate;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractFrameWidgetCommonWrapper;
 import org.jowidgets.spi.widgets.IFrameSpi;
 
@@ -53,6 +54,7 @@ public class FrameWidget extends AbstractFrameWidgetCommonWrapper implements IFr
 		this.displayDelegate = new DisplayDelegate();
 		this.windowWidgetDelegate = new WindowWidgetDelegate(frameWidgetSpi, setup);
 		this.compositeWidgetDelegate = new ContainerWidgetDelegate(frameWidgetSpi, this);
+		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

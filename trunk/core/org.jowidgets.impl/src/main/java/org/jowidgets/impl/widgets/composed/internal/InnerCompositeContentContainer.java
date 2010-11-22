@@ -123,6 +123,16 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 	}
 
 	@Override
+	public IColorConstant getForegroundColor() {
+		return compositeWidget.getForegroundColor();
+	}
+
+	@Override
+	public IColorConstant getBackgroundColor() {
+		return compositeWidget.getBackgroundColor();
+	}
+
+	@Override
 	public void registerInputWidget(final String contextLabel, final IInputWidget<?> inputWidget) {
 		outerContainer.registerInputWidget(contextLabel, inputWidget);
 	}

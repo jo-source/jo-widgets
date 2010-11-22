@@ -27,15 +27,8 @@
  */
 package org.jowidgets.common.widgets.builder;
 
-import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.widgets.builder.convenience.IWidgetSetupConvenienceCommon;
 
 public interface IWidgetSetupBuilderCommon<INSTANCE_TYPE extends IWidgetSetupBuilderCommon<?>> extends
-		ISetupBuilder<INSTANCE_TYPE>,
-		IWidgetSetupConvenienceCommon<INSTANCE_TYPE> {
-
-	INSTANCE_TYPE setForegroundColor(final IColorConstant foregroundColor);
-
-	INSTANCE_TYPE setBackgroundColor(final IColorConstant backgroundColor);
+		ISetupBuilder<INSTANCE_TYPE> {
 
 }

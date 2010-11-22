@@ -27,12 +27,7 @@
  */
 package org.jowidgets.common.widgets.descriptor.setup;
 
-import org.jowidgets.common.color.IColorConstant;
 
 public interface IWidgetSetupCommon {
-
-	IColorConstant getForegroundColor();
-
-	IColorConstant getBackgroundColor();
 
 }

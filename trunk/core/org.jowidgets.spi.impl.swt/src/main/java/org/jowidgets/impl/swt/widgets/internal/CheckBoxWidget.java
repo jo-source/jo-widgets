@@ -34,7 +34,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.util.AlignmentConvert;
 import org.jowidgets.impl.swt.util.FontProvider;
@@ -56,7 +55,6 @@ public class CheckBoxWidget extends AbstractSwtInputWidget implements ICheckBoxS
 		setMarkup(setup.getMarkup());
 
 		getUiReference().setAlignment(AlignmentConvert.convert(setup.getAlignment()));
-		ColorSettingsInvoker.setColors(setup, this);
 
 		getUiReference().addListener(SWT.Selection, new Listener() {
 			@Override

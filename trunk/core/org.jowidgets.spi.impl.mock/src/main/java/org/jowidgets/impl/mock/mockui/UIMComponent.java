@@ -28,6 +28,7 @@
 
 package org.jowidgets.impl.mock.mockui;
 
+import org.jowidgets.common.color.ColorValue;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
@@ -36,8 +37,8 @@ public class UIMComponent extends UIMObservable {
 
 	private Position position = new Position(0, 0);
 	private Dimension size = new Dimension(400, 300);
-	private IColorConstant foregroundColor;
-	private IColorConstant backgroundColor;
+	private IColorConstant foregroundColor = new ColorValue(0, 0, 0);
+	private IColorConstant backgroundColor = new ColorValue(230, 230, 230);
 	private String tooltipText;
 	private boolean visible = true;
 	private boolean enabled = true;

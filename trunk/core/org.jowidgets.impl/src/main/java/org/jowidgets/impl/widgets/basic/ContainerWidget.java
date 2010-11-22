@@ -37,6 +37,7 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.impl.base.delegate.ContainerWidgetDelegate;
 import org.jowidgets.impl.base.delegate.WidgetDelegate;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractContainerWidgetCommonWrapper;
 
 public class ContainerWidget extends AbstractContainerWidgetCommonWrapper implements IContainer {
@@ -50,6 +51,7 @@ public class ContainerWidget extends AbstractContainerWidgetCommonWrapper implem
 
 	public ContainerWidget(final IContainerCommon containerWidgetCommon, final ICompositeSetup setup) {
 		this(containerWidgetCommon, setup.isVisible());
+		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	public ContainerWidget(final IContainerCommon containerWidgetCommon, final Boolean visible) {

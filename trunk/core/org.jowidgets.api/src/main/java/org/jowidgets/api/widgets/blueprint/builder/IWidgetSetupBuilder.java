@@ -28,14 +28,17 @@
 package org.jowidgets.api.widgets.blueprint.builder;
 
 import org.jowidgets.api.widgets.blueprint.builder.convenience.IWidgetSetupConvenience;
+import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.widgets.builder.IWidgetSetupBuilderCommon;
-import org.jowidgets.common.widgets.builder.convenience.IWidgetSetupConvenienceCommon;
 
 public interface IWidgetSetupBuilder<INSTANCE_TYPE extends IWidgetSetupBuilder<?>> extends
 		IWidgetSetupBuilderCommon<INSTANCE_TYPE>,
-		IWidgetSetupConvenienceCommon<INSTANCE_TYPE>,
 		IWidgetSetupConvenience<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setVisible(Boolean visible);
+
+	INSTANCE_TYPE setForegroundColor(final IColorConstant foregroundColor);
+
+	INSTANCE_TYPE setBackgroundColor(final IColorConstant backgroundColor);
 
 }

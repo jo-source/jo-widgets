@@ -31,6 +31,7 @@ package org.jowidgets.impl.widgets.basic;
 import org.jowidgets.api.widgets.ICheckBox;
 import org.jowidgets.api.widgets.descriptor.setup.ICheckBoxSetup;
 import org.jowidgets.common.types.Markup;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.TextLabelWidgetCommonWrapper;
 import org.jowidgets.spi.widgets.ICheckBoxSpi;
@@ -47,6 +48,7 @@ public class CheckBoxWidget extends AbstractBasicInputControl<Boolean> implement
 		this.textLabelWidgetCommonWrapper = new TextLabelWidgetCommonWrapper(checkBoxWidgetSpi);
 
 		VisibiliySettingsInvoker.setVisibility(setup, this);
+		ColorSettingsInvoker.setColors(setup, this);
 		if (setup.getValue() != null) {
 			setValue(setup.getValue());
 		}

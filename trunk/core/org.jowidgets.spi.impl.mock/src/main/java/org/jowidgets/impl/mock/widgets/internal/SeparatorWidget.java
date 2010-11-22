@@ -27,7 +27,6 @@
  */
 package org.jowidgets.impl.mock.widgets.internal;
 
-import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.impl.mock.mockui.UIMSeparator;
 import org.jowidgets.impl.mock.widgets.MockWidget;
 import org.jowidgets.spi.widgets.IControlSpi;
@@ -37,7 +36,6 @@ public class SeparatorWidget extends MockWidget implements IControlSpi {
 
 	public SeparatorWidget(final ISeparatorSetupSpi setup) {
 		super(new UIMSeparator(setup.getOrientation()));
-		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

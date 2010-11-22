@@ -27,7 +27,6 @@
  */
 package org.jowidgets.impl.mock.widgets.internal;
 
-import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.impl.mock.mockui.UIMTextField;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 
@@ -37,7 +36,6 @@ public class TextFieldWidget extends AbstractMockTextInputWidget {
 		super(new UIMTextField(setup.getInputVerifier()));
 
 		registerTextComponent(getUiReference());
-		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

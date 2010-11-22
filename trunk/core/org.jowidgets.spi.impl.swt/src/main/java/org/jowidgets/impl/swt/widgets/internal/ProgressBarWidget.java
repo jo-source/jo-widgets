@@ -30,7 +30,6 @@ package org.jowidgets.impl.swt.widgets.internal;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ProgressBar;
-import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.util.OrientationConvert;
 import org.jowidgets.impl.swt.widgets.SwtWidget;
@@ -45,7 +44,6 @@ public class ProgressBarWidget extends SwtWidget implements IProgressBarSpi {
 		setMinimum(setup.getMinimum());
 		setMaximum(setup.getMaximum());
 
-		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

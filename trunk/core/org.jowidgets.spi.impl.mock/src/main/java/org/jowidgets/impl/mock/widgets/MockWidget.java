@@ -62,6 +62,16 @@ public class MockWidget implements IWidgetCommon {
 	}
 
 	@Override
+	public IColorConstant getForegroundColor() {
+		return component.getForegroundColor();
+	}
+
+	@Override
+	public IColorConstant getBackgroundColor() {
+		return component.getBackgroundColor();
+	}
+
+	@Override
 	public void setVisible(final boolean visible) {
 		component.setVisible(visible);
 	}

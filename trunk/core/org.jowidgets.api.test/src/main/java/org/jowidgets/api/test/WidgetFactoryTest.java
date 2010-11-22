@@ -40,9 +40,12 @@ import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.ILabel;
 import org.jowidgets.api.widgets.ISplitComposite;
 import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.api.widgets.blueprint.builder.IWidgetSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
+import org.jowidgets.common.color.ColorValue;
+import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.junit.Assert;
@@ -50,6 +53,8 @@ import org.junit.Test;
 
 public class WidgetFactoryTest {
 
+	private static final IColorConstant DEFAULT_FOREGROUND = new ColorValue(1, 2, 3);
+	private static final IColorConstant DEFAULT_BACKGROUND = new ColorValue(222, 223, 224);
 	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
 	@Test
@@ -77,34 +82,44 @@ public class WidgetFactoryTest {
 		createChildWidgets(frame.add(BPF.composite(), null));
 		createChildWidgets(frame.add(BPF.scrollComposite(), null));
 
-		testChildWindowWidget(frame, frame.createChildWindow(BPF.dialog()));
-		testChildWindowWidget(frame, frame.createChildWindow(BPF.frame()));
-		testChildWindowWidget(frame, frame.createChildWindow(BPF.questionDialog()));
-		testChildWindowWidget(frame, frame.createChildWindow(BPF.messageDialog()));
+		testChildWindowWidget(frame, frame.createChildWindow(bpMod(BPF.dialog())));
+		testChildWindowWidget(frame, frame.createChildWindow(bpMod(BPF.frame())));
+		testChildWindowWidget(frame, frame.createChildWindow(bpMod(BPF.questionDialog())));
+		testChildWindowWidget(frame, frame.createChildWindow(bpMod(BPF.messageDialog())));
 	}
 
 	private void createChildWidgets(final IContainer container) {
-		testButtonWidget(container, container.add(BPF.button(), null));
-		testChildWidget(container, container.add(BPF.checkBox(), null));
-		testChildWidget(container, container.add(BPF.comboBox(new String[] {}), null));
-		testChildWidget(container, container.add(BPF.comboBoxSelection(new String[] {}), null));
-		testChildWidget(container, container.add(BPF.composite(), null));
-		testChildWidget(container, container.add(BPF.icon(), null));
-		testChildWidget(container, container.add(BPF.inputFieldString(), null));
-		testChildWidget(container, container.add(BPF.label(), null));
-		testChildWidget(container, container.add(BPF.progressBar(), null));
-		testChildWidget(container, container.add(BPF.scrollComposite(), null));
-		testChildWidget(container, container.add(BPF.separator(), null));
-		testSplitCompositeWidget(container, container.add(BPF.splitComposite(), null));
-		testChildWidget(container, container.add(BPF.textField(), null));
-		testChildWidget(container, container.add(BPF.textLabel(), null));
-		testChildWidget(container, container.add(BPF.textSeparator(), null));
-		testChildWidget(container, container.add(BPF.toggleButton(), null));
-		testChildWidget(container, container.add(BPF.validationLabel(), null));
+		testButtonWidget(container, container.add(bpMod(BPF.button()), null));
+		testChildWidget(container, container.add(bpMod(BPF.checkBox()), null));
+		testChildWidget(container, container.add(bpMod(BPF.comboBox(new String[] {})), null));
+		testChildWidget(container, container.add(bpMod(BPF.comboBoxSelection(new String[] {})), null));
+		testChildWidget(container, container.add(bpMod(BPF.composite()), null));
+		testChildWidget(container, container.add(bpMod(BPF.icon()), null));
+		testChildWidget(container, container.add(bpMod(BPF.inputFieldString()), null));
+		testChildWidget(container, container.add(bpMod(BPF.label()), null));
+		testChildWidget(container, container.add(bpMod(BPF.progressBar()), null));
+		testChildWidget(container, container.add(bpMod(BPF.scrollComposite()), null));
+		testChildWidget(container, container.add(bpMod(BPF.separator()), null));
+		testSplitCompositeWidget(container, container.add(bpMod(BPF.splitComposite()), null));
+		testChildWidget(container, container.add(bpMod(BPF.textField()), null));
+		testChildWidget(container, container.add(bpMod(BPF.textLabel()), null));
+		testChildWidget(container, container.add(bpMod(BPF.textSeparator()), null));
+		testChildWidget(container, container.add(bpMod(BPF.toggleButton()), null));
+		testChildWidget(container, container.add(bpMod(BPF.validationLabel()), null));
+	}
+
+	private <BLUE_PRINT_TYPE extends IWidgetSetupBuilder<?>> BLUE_PRINT_TYPE bpMod(final BLUE_PRINT_TYPE bluePrint) {
+		bluePrint.setForegroundColor(DEFAULT_FOREGROUND);
+		bluePrint.setBackgroundColor(DEFAULT_BACKGROUND);
+		return bluePrint;
 	}
 
 	private void testChildWidget(final IWidget parent, final IWidget widget) {
 		Assert.assertNotNull(widget);
+
+		Assert.assertTrue(DEFAULT_FOREGROUND.equals(widget.getForegroundColor()));
+		Assert.assertTrue(DEFAULT_BACKGROUND.equals(widget.getBackgroundColor()));
+
 		Assert.assertNotNull(widget.getUiReference());
 		Assert.assertTrue(widget.isVisible());
 		widget.setVisible(false);
@@ -122,6 +137,10 @@ public class WidgetFactoryTest {
 
 	private void testChildWindowWidget(final IWidget parent, final IDisplay widget) {
 		Assert.assertNotNull(widget);
+
+		Assert.assertTrue(DEFAULT_FOREGROUND.equals(widget.getForegroundColor()));
+		Assert.assertTrue(DEFAULT_BACKGROUND.equals(widget.getBackgroundColor()));
+
 		Assert.assertNotNull(widget.getUiReference());
 		testParent(parent, widget);
 	}

@@ -67,6 +67,16 @@ public abstract class AbstractSwingInputWidget extends InputObservable implement
 	}
 
 	@Override
+	public IColorConstant getForegroundColor() {
+		return swingWidgetDelegate.getForegroundColor();
+	}
+
+	@Override
+	public IColorConstant getBackgroundColor() {
+		return swingWidgetDelegate.getBackgroundColor();
+	}
+
+	@Override
 	public void setVisible(final boolean visible) {
 		swingWidgetDelegate.setVisible(visible);
 	}

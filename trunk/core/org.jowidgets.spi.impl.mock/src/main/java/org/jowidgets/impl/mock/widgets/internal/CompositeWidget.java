@@ -27,7 +27,6 @@
  */
 package org.jowidgets.impl.mock.widgets.internal;
 
-import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.common.widgets.descriptor.setup.ICompositeSetupCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.mock.mockui.UIMContainer;
@@ -39,7 +38,6 @@ public class CompositeWidget extends MockCompositeWidget {
 		super(factory, new UIMContainer());
 		getUiReference().setBorder(setup.getBorder());
 		setLayout(setup.getLayout());
-		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

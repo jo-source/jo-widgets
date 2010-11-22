@@ -30,7 +30,6 @@ package org.jowidgets.impl.swing.widgets.internal;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.impl.swing.widgets.internal.util.InputModifierDocument;
 import org.jowidgets.spi.verify.IInputVerifier;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
@@ -44,7 +43,6 @@ public class TextFieldWidget extends AbstractSwingTextInputWidget {
 
 		getUiReference().setDocument(new InputModifierDocument(getUiReference(), inputModifier));
 		registerTextComponent(getUiReference());
-		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override

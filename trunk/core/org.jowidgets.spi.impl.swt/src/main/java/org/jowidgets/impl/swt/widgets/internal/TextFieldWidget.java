@@ -32,7 +32,6 @@ import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
-import org.jowidgets.common.util.ColorSettingsInvoker;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.spi.verify.IInputVerifier;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
@@ -57,7 +56,6 @@ public class TextFieldWidget extends AbstractSwtTextInputWidget {
 		});
 
 		registerTextControl(getUiReference());
-		ColorSettingsInvoker.setColors(setup, this);
 	}
 
 	@Override
