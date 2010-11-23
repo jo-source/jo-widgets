@@ -126,7 +126,7 @@ class ContainerWidget<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IW
 			return getWidget().add(descriptor, layoutConstraints);
 		}
 		else {
-			final ControlWidget powo = (ControlWidget) widgetFactory.create(descriptor);
+			final WidgetCommon powo = widgetFactory.create(descriptor);
 			preWidgets.add(new Tuple<WidgetCommon, Object>(powo, layoutConstraints));
 			return (M_WIDGET_TYPE) powo;
 		}
