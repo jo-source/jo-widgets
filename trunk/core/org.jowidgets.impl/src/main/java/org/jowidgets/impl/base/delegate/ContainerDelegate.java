@@ -78,4 +78,8 @@ public class ContainerDelegate {
 		return children;
 	}
 
+	public void removeAll() {
+		children.clear();
+	}
+
 }

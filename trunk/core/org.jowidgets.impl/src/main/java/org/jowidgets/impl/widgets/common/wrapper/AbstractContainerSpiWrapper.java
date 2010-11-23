@@ -58,9 +58,4 @@ public abstract class AbstractContainerSpiWrapper extends WidgetSpiWrapper imple
 		getWidget().layoutEnd();
 	}
 
-	@Override
-	public void removeAll() {
-		getWidget().removeAll();
-	}
-
 }

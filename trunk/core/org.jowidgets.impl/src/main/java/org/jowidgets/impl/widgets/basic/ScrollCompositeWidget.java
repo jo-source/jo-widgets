@@ -77,6 +77,11 @@ public class ScrollCompositeWidget extends AbstractScrollContainerSpiWrapper imp
 	}
 
 	@Override
+	public void removeAll() {
+		containerDelegate.removeAll();
+	}
+
+	@Override
 	public IContainer getParent() {
 		return controlDelegate.getParent();
 	}

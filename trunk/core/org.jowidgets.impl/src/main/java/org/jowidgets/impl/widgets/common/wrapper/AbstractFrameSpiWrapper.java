@@ -58,9 +58,4 @@ public abstract class AbstractFrameSpiWrapper extends AbstractWindowSpiWrapper i
 		getWidget().layoutEnd();
 	}
 
-	@Override
-	public void removeAll() {
-		getWidget().removeAll();
-	}
-
 }

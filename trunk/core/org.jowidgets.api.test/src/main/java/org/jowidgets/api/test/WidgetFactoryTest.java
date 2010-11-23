@@ -106,6 +106,9 @@ public class WidgetFactoryTest {
 		testChildWidget(container, container.add(bpMod(BPF.textSeparator()), null));
 		testChildWidget(container, container.add(bpMod(BPF.toggleButton()), null));
 		testChildWidget(container, container.add(bpMod(BPF.validationLabel()), null));
+
+		container.removeAll();
+		Assert.assertTrue(container.getChildren().size() == 0);
 	}
 
 	private <BLUE_PRINT_TYPE extends IWidgetSetupBuilder<?>> BLUE_PRINT_TYPE bpMod(final BLUE_PRINT_TYPE bluePrint) {
