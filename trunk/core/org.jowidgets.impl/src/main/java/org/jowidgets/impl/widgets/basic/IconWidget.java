@@ -36,9 +36,9 @@ import org.jowidgets.common.widgets.IIconCommon;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.impl.widgets.common.wrapper.IconWidgetCommonWrapper;
+import org.jowidgets.impl.widgets.common.wrapper.IconCommonWrapper;
 
-public class IconWidget extends IconWidgetCommonWrapper implements IIcon {
+public class IconWidget extends IconCommonWrapper implements IIcon {
 
 	private final ControlDelegate controlDelegate;
 

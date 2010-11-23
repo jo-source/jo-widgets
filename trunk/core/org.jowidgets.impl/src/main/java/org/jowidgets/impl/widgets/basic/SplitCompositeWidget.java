@@ -35,10 +35,10 @@ import org.jowidgets.api.widgets.descriptor.setup.ISplitCompositeSetup;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.impl.widgets.common.wrapper.SplitCompositeWidgetCommonWrapper;
+import org.jowidgets.impl.widgets.common.wrapper.SplitCompositeCommonWrapper;
 import org.jowidgets.spi.widgets.ISplitCompositeSpi;
 
-public class SplitCompositeWidget extends SplitCompositeWidgetCommonWrapper implements ISplitComposite {
+public class SplitCompositeWidget extends SplitCompositeCommonWrapper implements ISplitComposite {
 
 	private final ControlDelegate controlDelegate;
 	private final IContainer first;
@@ -47,8 +47,8 @@ public class SplitCompositeWidget extends SplitCompositeWidgetCommonWrapper impl
 	public SplitCompositeWidget(final ISplitCompositeSpi containerWidgetSpi, final ISplitCompositeSetup setup) {
 		super(containerWidgetSpi);
 		this.controlDelegate = new ControlDelegate();
-		this.first = new ContainerWidget(getWidget().getFirst());
-		this.second = new ContainerWidget(getWidget().getSecond());
+		this.first = new ContainerWidget(getWidget().getFirst(), setup.isInheritBackgroundColor());
+		this.second = new ContainerWidget(getWidget().getSecond(), setup.isInheritBackgroundColor());
 		this.first.setParent(this);
 		this.second.setParent(this);
 		VisibiliySettingsInvoker.setVisibility(setup, this);

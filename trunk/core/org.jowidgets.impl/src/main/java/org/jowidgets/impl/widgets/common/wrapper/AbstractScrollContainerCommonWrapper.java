@@ -28,38 +28,19 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.widgets.IFrameCommon;
-import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
+import org.jowidgets.common.widgets.IContainerCommon;
+import org.jowidgets.common.widgets.IScrollCompositeCommon;
 
-public abstract class AbstractFrameWidgetCommonWrapper extends AbstractWindowWidgetCommonWrapper implements IFrameCommon {
+public abstract class AbstractScrollContainerCommonWrapper extends AbstractContainerCommonWrapper implements
+		IScrollCompositeCommon {
 
-	public AbstractFrameWidgetCommonWrapper(final IFrameCommon widget) {
+	public AbstractScrollContainerCommonWrapper(final IContainerCommon widget) {
 		super(widget);
 	}
 
 	@Override
-	protected IFrameCommon getWidget() {
-		return (IFrameCommon) super.getWidget();
-	}
-
-	@Override
-	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
-		getWidget().setLayout(layoutDescriptor);
-	}
-
-	@Override
-	public void layoutBegin() {
-		getWidget().layoutBegin();
-	}
-
-	@Override
-	public void layoutEnd() {
-		getWidget().layoutEnd();
-	}
-
-	@Override
-	public void removeAll() {
-		getWidget().removeAll();
+	public IScrollCompositeCommon getWidget() {
+		return (IScrollCompositeCommon) super.getWidget();
 	}
 
 }

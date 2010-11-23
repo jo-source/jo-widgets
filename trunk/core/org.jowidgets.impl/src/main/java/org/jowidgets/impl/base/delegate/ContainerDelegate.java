@@ -26,25 +26,45 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.common.wrapper;
+package org.jowidgets.impl.base.delegate;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.ILabelCommon;
+import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.common.widgets.IContainerCommon;
+import org.jowidgets.common.widgets.IControlCommon;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
+import org.jowidgets.util.Assert;
 
-public class LabelWidgetCommonWrapper extends TextLabelWidgetCommonWrapper implements ILabelCommon {
+public class ContainerDelegate {
 
-	public LabelWidgetCommonWrapper(final ILabelCommon widget) {
-		super(widget);
+	private final IContainerCommon containerWidget;
+	private final IWidget widget;
+
+	public ContainerDelegate(final IContainerCommon containerWidget, final IWidget widget) {
+		Assert.paramNotNull(containerWidget, "containerWidget");
+		Assert.paramNotNull(widget, "widget");
+		this.containerWidget = containerWidget;
+		this.widget = widget;
 	}
 
-	@Override
-	protected ILabelCommon getWidget() {
-		return (ILabelCommon) super.getWidget();
+	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+		final Object layoutConstraints) {
+		final WIDGET_TYPE result = containerWidget.add(descriptor, layoutConstraints);
+		if (result instanceof IWidget) {
+			((IWidget) result).setParent(widget);
+		}
+		return result;
 	}
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		getWidget().setIcon(icon);
+	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+		final ICustomWidgetFactory<WIDGET_TYPE> factory,
+		final Object layoutConstraints) {
+		final WIDGET_TYPE result = containerWidget.add(factory, layoutConstraints);
+		if (result instanceof IWidget) {
+			((IWidget) result).setParent(widget);
+		}
+		return result;
 	}
 
 }

@@ -31,22 +31,28 @@ import java.awt.Color;
 
 import org.jowidgets.common.color.ColorValue;
 import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.util.Assert;
 
 public final class ColorConvert {
 
 	private ColorConvert() {};
 
 	public static Color convert(final IColorConstant colorConstant) {
-		Assert.paramNotNull(colorConstant, "colorConstant");
-
-		// TODO this might be replaced by registered color for this constant
-		final ColorValue colorValue = colorConstant.getDefaultValue();
-		return new Color(colorValue.getRed(), colorValue.getGreen(), colorValue.getBlue());
+		if (colorConstant != null) {
+			// TODO this might be replaced by registered color for this constant
+			final ColorValue colorValue = colorConstant.getDefaultValue();
+			return new Color(colorValue.getRed(), colorValue.getGreen(), colorValue.getBlue());
+		}
+		else {
+			return null;
+		}
 	}
 
 	public static IColorConstant convert(final Color color) {
-		Assert.paramNotNull(color, "color");
-		return new ColorValue(color.getRed(), color.getGreen(), color.getBlue());
+		if (color != null) {
+			return new ColorValue(color.getRed(), color.getGreen(), color.getBlue());
+		}
+		else {
+			return null;
+		}
 	}
 }

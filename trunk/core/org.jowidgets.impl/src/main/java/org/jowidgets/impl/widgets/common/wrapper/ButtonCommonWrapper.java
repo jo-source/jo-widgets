@@ -31,14 +31,14 @@ package org.jowidgets.impl.widgets.common.wrapper;
 import org.jowidgets.common.widgets.IButtonCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 
-public class ButtonWidgetCommonWrapper extends LabelWidgetCommonWrapper implements IButtonCommon {
+public class ButtonCommonWrapper extends LabelCommonWrapper implements IButtonCommon {
 
-	public ButtonWidgetCommonWrapper(final IButtonCommon widget) {
+	public ButtonCommonWrapper(final IButtonCommon widget) {
 		super(widget);
 	}
 
 	@Override
-	protected IButtonCommon getWidget() {
+	public IButtonCommon getWidget() {
 		return (IButtonCommon) super.getWidget();
 	}
 

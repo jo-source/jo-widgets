@@ -42,13 +42,18 @@ public class ColorCache implements IColorCache {
 	@Override
 	public synchronized Color getColor(final IColorConstant colorConstant) {
 		// TODO this might be replaced by registered color for this constant
-		final ColorValue colorValue = colorConstant.getDefaultValue();
-		Color color = colorMap.get(colorValue);
-		if (color == null) {
-			color = new Color(Display.getDefault(), colorValue.getRed(), colorValue.getGreen(), colorValue.getBlue());
-			colorMap.put(colorValue, color);
+		if (colorConstant != null) {
+			final ColorValue colorValue = colorConstant.getDefaultValue();
+			Color color = colorMap.get(colorValue);
+			if (color == null) {
+				color = new Color(Display.getDefault(), colorValue.getRed(), colorValue.getGreen(), colorValue.getBlue());
+				colorMap.put(colorValue, color);
+			}
+			return color;
 		}
-		return color;
+		else {
+			return null;
+		}
 	}
 
 }

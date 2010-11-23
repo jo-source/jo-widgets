@@ -28,33 +28,38 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.widgets.ITextLabelCommon;
+import org.jowidgets.common.widgets.IFrameCommon;
+import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 
-public class TextLabelWidgetCommonWrapper extends WidgetCommonWrapper implements ITextLabelCommon {
+public abstract class AbstractFrameCommonWrapper extends AbstractWindowCommonWrapper implements IFrameCommon {
 
-	public TextLabelWidgetCommonWrapper(final ITextLabelCommon widget) {
+	public AbstractFrameCommonWrapper(final IFrameCommon widget) {
 		super(widget);
 	}
 
 	@Override
-	protected ITextLabelCommon getWidget() {
-		return (ITextLabelCommon) super.getWidget();
+	public IFrameCommon getWidget() {
+		return (IFrameCommon) super.getWidget();
 	}
 
 	@Override
-	public void setMarkup(final Markup markup) {
-		getWidget().setMarkup(markup);
+	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
+		getWidget().setLayout(layoutDescriptor);
 	}
 
 	@Override
-	public void setText(final String text) {
-		getWidget().setText(text);
+	public void layoutBegin() {
+		getWidget().layoutBegin();
 	}
 
 	@Override
-	public void setToolTipText(final String text) {
-		getWidget().setToolTipText(text);
+	public void layoutEnd() {
+		getWidget().layoutEnd();
+	}
+
+	@Override
+	public void removeAll() {
+		getWidget().removeAll();
 	}
 
 }

@@ -28,23 +28,77 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.IIconCommon;
+import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.common.types.Rectangle;
+import org.jowidgets.common.widgets.IWindowCommon;
+import org.jowidgets.common.widgets.controler.IWindowListener;
 
-public class IconWidgetCommonWrapper extends WidgetCommonWrapper implements IIconCommon {
+public abstract class AbstractWindowCommonWrapper extends WidgetCommonWrapper implements IWindowCommon {
 
-	public IconWidgetCommonWrapper(final IIconCommon widget) {
+	public AbstractWindowCommonWrapper(final IWindowCommon widget) {
 		super(widget);
 	}
 
 	@Override
-	protected IIconCommon getWidget() {
-		return (IIconCommon) super.getWidget();
+	public IWindowCommon getWidget() {
+		return (IWindowCommon) super.getWidget();
 	}
 
 	@Override
-	public void setIcon(final IImageConstant icon) {
-		getWidget().setIcon(icon);
+	public void setPosition(final Position position) {
+		getWidget().setPosition(position);
+	}
+
+	@Override
+	public Position getPosition() {
+		return getWidget().getPosition();
+	}
+
+	@Override
+	public void setSize(final Dimension size) {
+		getWidget().setSize(size);
+	}
+
+	@Override
+	public Dimension getSize() {
+		return getWidget().getSize();
+	}
+
+	@Override
+	public Rectangle getParentBounds() {
+		return getWidget().getParentBounds();
+	}
+
+	@Override
+	public void pack() {
+		getWidget().pack();
+
+	}
+
+	@Override
+	public void setVisible(final boolean visible) {
+		getWidget().setVisible(visible);
+	}
+
+	@Override
+	public boolean isVisible() {
+		return getWidget().isVisible();
+	}
+
+	@Override
+	public void addWindowListener(final IWindowListener listener) {
+		getWidget().addWindowListener(listener);
+	}
+
+	@Override
+	public void removeWindowListener(final IWindowListener listener) {
+		getWidget().removeWindowListener(listener);
+	}
+
+	@Override
+	public void close() {
+		getWidget().close();
 	}
 
 }

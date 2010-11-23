@@ -37,12 +37,12 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 
-public class InputControlWidget<VALUE_TYPE> extends AbstractComposedInputWidget<VALUE_TYPE> implements IInputControl<VALUE_TYPE> {
+public class InputFieldWidget<VALUE_TYPE> extends AbstractComposedInputWidget<VALUE_TYPE> implements IInputControl<VALUE_TYPE> {
 
 	private final IInputControl<String> textFieldWidget;
 	private final IConverter<VALUE_TYPE> converter;
 
-	public InputControlWidget(final IInputControl<String> textFieldWidget, final IInputFieldSetup<VALUE_TYPE> setup) {
+	public InputFieldWidget(final IInputControl<String> textFieldWidget, final IInputFieldSetup<VALUE_TYPE> setup) {
 
 		super(setup.getValidator(), setup.isMandatory(), setup.isEditable());
 

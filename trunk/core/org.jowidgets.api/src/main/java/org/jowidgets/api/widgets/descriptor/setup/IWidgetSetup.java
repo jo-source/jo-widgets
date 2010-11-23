@@ -30,6 +30,7 @@ package org.jowidgets.api.widgets.descriptor.setup;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.widgets.descriptor.setup.IWidgetSetupCommon;
+import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface IWidgetSetup extends IWidgetSetupCommon {
 
@@ -38,5 +39,8 @@ public interface IWidgetSetup extends IWidgetSetupCommon {
 	IColorConstant getForegroundColor();
 
 	IColorConstant getBackgroundColor();
+
+	@Mandatory
+	boolean isInheritBackgroundColor();
 
 }

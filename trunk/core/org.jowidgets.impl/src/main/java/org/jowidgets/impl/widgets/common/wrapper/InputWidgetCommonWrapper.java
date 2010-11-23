@@ -38,7 +38,7 @@ public class InputWidgetCommonWrapper extends WidgetCommonWrapper implements IIn
 	}
 
 	@Override
-	protected IInputWidgetCommon getWidget() {
+	public IInputWidgetCommon getWidget() {
 		return (IInputWidgetCommon) super.getWidget();
 	}
 

@@ -29,27 +29,37 @@
 package org.jowidgets.impl.widgets.common.wrapper;
 
 import org.jowidgets.common.widgets.IContainerCommon;
-import org.jowidgets.common.widgets.ISplitCompositeCommon;
+import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 
-public class SplitCompositeWidgetCommonWrapper extends WidgetCommonWrapper implements ISplitCompositeCommon {
+public abstract class AbstractContainerCommonWrapper extends WidgetCommonWrapper implements IContainerCommon {
 
-	public SplitCompositeWidgetCommonWrapper(final ISplitCompositeCommon widget) {
+	public AbstractContainerCommonWrapper(final IContainerCommon widget) {
 		super(widget);
 	}
 
 	@Override
-	protected ISplitCompositeCommon getWidget() {
-		return (ISplitCompositeCommon) super.getWidget();
+	public IContainerCommon getWidget() {
+		return (IContainerCommon) super.getWidget();
 	}
 
 	@Override
-	public IContainerCommon getFirst() {
-		return getWidget().getFirst();
+	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
+		getWidget().setLayout(layoutDescriptor);
 	}
 
 	@Override
-	public IContainerCommon getSecond() {
-		return getWidget().getSecond();
+	public void layoutBegin() {
+		getWidget().layoutBegin();
+	}
+
+	@Override
+	public void layoutEnd() {
+		getWidget().layoutEnd();
+	}
+
+	@Override
+	public void removeAll() {
+		getWidget().removeAll();
 	}
 
 }

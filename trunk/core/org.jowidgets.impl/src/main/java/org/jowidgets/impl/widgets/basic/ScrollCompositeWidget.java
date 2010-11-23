@@ -35,22 +35,22 @@ import org.jowidgets.api.widgets.descriptor.setup.IScrollCompositeSetup;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
-import org.jowidgets.impl.base.delegate.ContainerWidgetDelegate;
+import org.jowidgets.impl.base.delegate.ContainerDelegate;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.impl.widgets.common.wrapper.AbstractScrollContainerWidgetCommonWrapper;
+import org.jowidgets.impl.widgets.common.wrapper.AbstractScrollContainerCommonWrapper;
 import org.jowidgets.spi.widgets.IScrollCompositeSpi;
 
-public class ScrollCompositeWidget extends AbstractScrollContainerWidgetCommonWrapper implements IScrollComposite {
+public class ScrollCompositeWidget extends AbstractScrollContainerCommonWrapper implements IScrollComposite {
 
 	private final ControlDelegate controlDelegate;
-	private final ContainerWidgetDelegate containerWidgetDelegate;
+	private final ContainerDelegate containerDelegate;
 
 	public ScrollCompositeWidget(final IScrollCompositeSpi containerWidgetSpi, final IScrollCompositeSetup setup) {
 		super(containerWidgetSpi);
 		this.controlDelegate = new ControlDelegate();
-		this.containerWidgetDelegate = new ContainerWidgetDelegate(containerWidgetSpi, this);
+		this.containerDelegate = new ContainerDelegate(containerWidgetSpi, this);
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
 	}
@@ -59,14 +59,14 @@ public class ScrollCompositeWidget extends AbstractScrollContainerWidgetCommonWr
 	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
-		return containerWidgetDelegate.add(descriptor, layoutConstraints);
+		return containerDelegate.add(descriptor, layoutConstraints);
 	}
 
 	@Override
 	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
 		final ICustomWidgetFactory<WIDGET_TYPE> factory,
 		final Object layoutConstraints) {
-		return containerWidgetDelegate.add(factory, layoutConstraints);
+		return containerDelegate.add(factory, layoutConstraints);
 	}
 
 	@Override

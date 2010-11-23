@@ -28,38 +28,23 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.widgets.IContainerCommon;
-import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.widgets.IIconCommon;
 
-public abstract class AbstractContainerWidgetCommonWrapper extends WidgetCommonWrapper implements IContainerCommon {
+public class IconCommonWrapper extends WidgetCommonWrapper implements IIconCommon {
 
-	public AbstractContainerWidgetCommonWrapper(final IContainerCommon widget) {
+	public IconCommonWrapper(final IIconCommon widget) {
 		super(widget);
 	}
 
 	@Override
-	protected IContainerCommon getWidget() {
-		return (IContainerCommon) super.getWidget();
+	public IIconCommon getWidget() {
+		return (IIconCommon) super.getWidget();
 	}
 
 	@Override
-	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
-		getWidget().setLayout(layoutDescriptor);
-	}
-
-	@Override
-	public void layoutBegin() {
-		getWidget().layoutBegin();
-	}
-
-	@Override
-	public void layoutEnd() {
-		getWidget().layoutEnd();
-	}
-
-	@Override
-	public void removeAll() {
-		getWidget().removeAll();
+	public void setIcon(final IImageConstant icon) {
+		getWidget().setIcon(icon);
 	}
 
 }

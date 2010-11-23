@@ -40,17 +40,9 @@ public class CompositeWidget extends ContainerWidget implements IComposite {
 
 	private final ControlDelegate controlDelegate;
 
-	public CompositeWidget(final IContainerCommon containerWidgetCommon) {
-		this(containerWidgetCommon, (Boolean) null);
-	}
-
 	public CompositeWidget(final IContainerCommon containerWidgetCommon, final ICompositeSetup setup) {
-		this(containerWidgetCommon, setup.isVisible());
+		super(containerWidgetCommon, setup.isVisible());
 		ColorSettingsInvoker.setColors(setup, this);
-	}
-
-	public CompositeWidget(final IContainerCommon containerWidgetCommon, final Boolean visible) {
-		super(containerWidgetCommon);
 		this.controlDelegate = new ControlDelegate();
 	}
 

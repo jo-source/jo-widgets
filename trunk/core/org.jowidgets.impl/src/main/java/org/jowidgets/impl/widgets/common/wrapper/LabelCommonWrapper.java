@@ -28,67 +28,23 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.IWidgetCommon;
-import org.jowidgets.util.Assert;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.widgets.ILabelCommon;
 
-public class WidgetCommonWrapper implements IWidgetCommon {
+public class LabelCommonWrapper extends TextLabelCommonWrapper implements ILabelCommon {
 
-	private final IWidgetCommon widget;
-
-	public WidgetCommonWrapper(final IWidgetCommon widget) {
-		Assert.paramNotNull(widget, "widget");
-		this.widget = widget;
-	}
-
-	public IWidgetCommon getWidget() {
-		return widget;
+	public LabelCommonWrapper(final ILabelCommon widget) {
+		super(widget);
 	}
 
 	@Override
-	public Object getUiReference() {
-		return widget.getUiReference();
+	public ILabelCommon getWidget() {
+		return (ILabelCommon) super.getWidget();
 	}
 
 	@Override
-	public void redraw() {
-		widget.redraw();
-	}
-
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		widget.setForegroundColor(colorValue);
-	}
-
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		widget.setBackgroundColor(colorValue);
-	}
-
-	@Override
-	public IColorConstant getForegroundColor() {
-		return widget.getForegroundColor();
-	}
-
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return widget.getBackgroundColor();
-	}
-
-	@Override
-	public void setVisible(final boolean visible) {
-		widget.setVisible(visible);
-	}
-
-	@Override
-	public boolean isVisible() {
-		return widget.isVisible();
-	}
-
-	@Override
-	public Dimension getSize() {
-		return widget.getSize();
+	public void setIcon(final IImageConstant icon) {
+		getWidget().setIcon(icon);
 	}
 
 }

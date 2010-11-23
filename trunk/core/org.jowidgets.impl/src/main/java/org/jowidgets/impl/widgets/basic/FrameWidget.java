@@ -36,24 +36,24 @@ import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.IDisplayCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
-import org.jowidgets.impl.base.delegate.ContainerWidgetDelegate;
+import org.jowidgets.impl.base.delegate.ContainerDelegate;
 import org.jowidgets.impl.base.delegate.DisplayDelegate;
-import org.jowidgets.impl.base.delegate.WindowWidgetDelegate;
+import org.jowidgets.impl.base.delegate.WindowDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
-import org.jowidgets.impl.widgets.common.wrapper.AbstractFrameWidgetCommonWrapper;
+import org.jowidgets.impl.widgets.common.wrapper.AbstractFrameCommonWrapper;
 import org.jowidgets.spi.widgets.IFrameSpi;
 
-public class FrameWidget extends AbstractFrameWidgetCommonWrapper implements IFrame {
+public class FrameWidget extends AbstractFrameCommonWrapper implements IFrame {
 
 	private final DisplayDelegate displayDelegate;
-	private final WindowWidgetDelegate windowWidgetDelegate;
-	private final ContainerWidgetDelegate compositeWidgetDelegate;
+	private final WindowDelegate windowDelegate;
+	private final ContainerDelegate containerDelegate;
 
 	public FrameWidget(final IFrameSpi frameWidgetSpi, final IFrameSetup setup) {
 		super(frameWidgetSpi);
 		this.displayDelegate = new DisplayDelegate();
-		this.windowWidgetDelegate = new WindowWidgetDelegate(frameWidgetSpi, setup);
-		this.compositeWidgetDelegate = new ContainerWidgetDelegate(frameWidgetSpi, this);
+		this.windowDelegate = new WindowDelegate(frameWidgetSpi, setup);
+		this.containerDelegate = new ContainerDelegate(frameWidgetSpi, this);
 		ColorSettingsInvoker.setColors(setup, this);
 	}
 
@@ -61,14 +61,14 @@ public class FrameWidget extends AbstractFrameWidgetCommonWrapper implements IFr
 	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
-		return compositeWidgetDelegate.add(descriptor, layoutConstraints);
+		return containerDelegate.add(descriptor, layoutConstraints);
 	}
 
 	@Override
 	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
 		final ICustomWidgetFactory<WIDGET_TYPE> factory,
 		final Object layoutConstraints) {
-		return compositeWidgetDelegate.add(factory, layoutConstraints);
+		return containerDelegate.add(factory, layoutConstraints);
 	}
 
 	@Override
@@ -98,12 +98,12 @@ public class FrameWidget extends AbstractFrameWidgetCommonWrapper implements IFr
 
 	@Override
 	public void centerLocation() {
-		windowWidgetDelegate.centerLocation();
+		windowDelegate.centerLocation();
 	}
 
 	@Override
 	public void setVisible(final boolean visible) {
-		windowWidgetDelegate.setVisible(visible);
+		windowDelegate.setVisible(visible);
 	}
 
 }

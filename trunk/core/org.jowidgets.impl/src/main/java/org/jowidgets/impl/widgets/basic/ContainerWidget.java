@@ -35,15 +35,15 @@ import org.jowidgets.common.widgets.IContainerCommon;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
-import org.jowidgets.impl.base.delegate.ContainerWidgetDelegate;
+import org.jowidgets.impl.base.delegate.ContainerDelegate;
 import org.jowidgets.impl.base.delegate.WidgetDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
-import org.jowidgets.impl.widgets.common.wrapper.AbstractContainerWidgetCommonWrapper;
+import org.jowidgets.impl.widgets.common.wrapper.AbstractContainerCommonWrapper;
 
-public class ContainerWidget extends AbstractContainerWidgetCommonWrapper implements IContainer {
+public class ContainerWidget extends AbstractContainerCommonWrapper implements IContainer {
 
 	private final WidgetDelegate widgetDelegate;
-	private final ContainerWidgetDelegate containerWidgetDelegate;
+	private final ContainerDelegate containerDelegate;
 
 	public ContainerWidget(final IContainerCommon containerWidgetCommon) {
 		this(containerWidgetCommon, (Boolean) null);
@@ -61,21 +61,21 @@ public class ContainerWidget extends AbstractContainerWidgetCommonWrapper implem
 		if (visible != null) {
 			setVisible(visible.booleanValue());
 		}
-		this.containerWidgetDelegate = new ContainerWidgetDelegate(containerWidgetCommon, this);
+		this.containerDelegate = new ContainerDelegate(containerWidgetCommon, this);
 	}
 
 	@Override
 	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
-		return containerWidgetDelegate.add(descriptor, layoutConstraints);
+		return containerDelegate.add(descriptor, layoutConstraints);
 	}
 
 	@Override
 	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
 		final ICustomWidgetFactory<WIDGET_TYPE> factory,
 		final Object layoutConstraints) {
-		return containerWidgetDelegate.add(factory, layoutConstraints);
+		return containerDelegate.add(factory, layoutConstraints);
 	}
 
 	@Override

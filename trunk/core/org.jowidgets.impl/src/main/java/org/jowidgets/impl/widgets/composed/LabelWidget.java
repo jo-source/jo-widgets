@@ -113,6 +113,7 @@ public class LabelWidget implements ILabel {
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
 		textLabelWidget.setBackgroundColor(colorValue);
+		iconWidget.setBackgroundColor(colorValue);
 	}
 
 	@Override

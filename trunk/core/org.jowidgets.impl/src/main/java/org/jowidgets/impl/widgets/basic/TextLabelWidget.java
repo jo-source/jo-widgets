@@ -35,10 +35,10 @@ import org.jowidgets.api.widgets.descriptor.setup.ITextLabelSetup;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.impl.widgets.common.wrapper.TextLabelWidgetCommonWrapper;
+import org.jowidgets.impl.widgets.common.wrapper.TextLabelCommonWrapper;
 import org.jowidgets.spi.widgets.ITextLabelSpi;
 
-public class TextLabelWidget extends TextLabelWidgetCommonWrapper implements ITextLabel {
+public class TextLabelWidget extends TextLabelCommonWrapper implements ITextLabel {
 
 	private final ControlDelegate controlDelegate;
 
