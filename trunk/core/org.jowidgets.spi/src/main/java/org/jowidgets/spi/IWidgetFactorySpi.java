@@ -27,8 +27,6 @@
  */
 package org.jowidgets.spi;
 
-import org.jowidgets.common.widgets.ICompositeCommon;
-import org.jowidgets.common.widgets.IFrameCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.widgets.IButtonSpi;
 import org.jowidgets.spi.widgets.ICheckBoxSpi;
@@ -66,11 +64,11 @@ public interface IWidgetFactorySpi {
 
 	boolean isConvertibleToFrame(Object uiReference);
 
-	IFrameCommon createFrame(IGenericWidgetFactory factory, Object uiReference);
+	IFrameSpi createFrame(IGenericWidgetFactory factory, Object uiReference);
 
 	boolean isConvertibleToComposite(Object uiReference);
 
-	ICompositeCommon createComposite(IGenericWidgetFactory factory, Object uiReference);
+	ICompositeSpi createComposite(IGenericWidgetFactory factory, Object uiReference);
 
 	//create widgets from setup
 

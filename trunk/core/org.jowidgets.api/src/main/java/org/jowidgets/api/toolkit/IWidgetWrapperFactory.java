@@ -28,13 +28,13 @@
 
 package org.jowidgets.api.toolkit;
 
-import org.jowidgets.common.widgets.ICompositeCommon;
-import org.jowidgets.common.widgets.IFrameCommon;
+import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.IFrame;
 
 public interface IWidgetWrapperFactory {
 
 	/**
-	 * Tests if the ui reference could be converted / wrapped to an FrameWidget
+	 * Tests if the ui reference could be converted / wrapped to an IFrame
 	 * 
 	 * @param uiReference
 	 * @return True if convertible, false otherwise
@@ -42,17 +42,20 @@ public interface IWidgetWrapperFactory {
 	boolean isConvertibleToFrame(final Object uiReference);
 
 	/**
-	 * Creates a IFrameCommon from an ui-platform specific ui-reference
+	 * Creates a IFrame from an ui-platform specific ui-reference
+	 * 
+	 * Remark: The created IFrame has no parent set
 	 * 
 	 * @param uiReference The ui-platform specific object that could be wrapped to an
-	 *            IFrameCommon (e.g. Window for Swing, Shell for swt).
-	 * @return The created IFrameCommon
-	 * @throws IllegalArgumentException If the ui-reference could not be wrapped to an IFrameCommon.
+	 *            IFrame (e.g. Window for Swing, Shell for swt).
+	 * 
+	 * @return The created IFrame
+	 * @throws IllegalArgumentException If the ui-reference could not be wrapped to an IFrame.
 	 */
-	IFrameCommon createFrame(final Object uiReference);
+	IFrame createFrame(final Object uiReference);
 
 	/**
-	 * Tests if the ui reference could be converted / wrapped to an ICompositeCommon
+	 * Tests if the ui reference could be converted / wrapped to an IComposite
 	 * 
 	 * @param uiReference
 	 * @return True if convertible, false otherwise
@@ -60,13 +63,15 @@ public interface IWidgetWrapperFactory {
 	boolean isConvertibleToComposite(final Object uiReference);
 
 	/**
-	 * Creates a ICompositeCommon from an ui-platform specific ui-reference
+	 * Creates a IComposite from an ui-platform specific ui-reference
+	 * 
+	 * Remark: The created IComposite has no parent set
 	 * 
 	 * @param uiReference The ui-platform specific object that could be wrapped to an
-	 *            ICompositeCommon (e.g. Container for Swing, Composite for swt).
+	 *            IComposite (e.g. Container for Swing, Composite for swt).
 	 * @return The created ICompositeCommon
-	 * @throws IllegalArgumentException If the ui-reference could not be wrapped to an ICompositeCommon.
+	 * @throws IllegalArgumentException If the ui-reference could not be wrapped to an IComposite.
 	 */
-	ICompositeCommon createComposite(final Object uiReference);
+	IComposite createComposite(final Object uiReference);
 
 }

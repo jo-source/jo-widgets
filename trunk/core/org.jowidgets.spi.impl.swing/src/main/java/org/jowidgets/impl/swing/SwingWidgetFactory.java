@@ -32,7 +32,6 @@ import java.awt.Window;
 
 import javax.swing.JPanel;
 
-import org.jowidgets.common.widgets.IFrameCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.impl.swing.widgets.internal.ButtonWidget;
@@ -99,7 +98,7 @@ public final class SwingWidgetFactory implements IWidgetFactorySpi {
 	}
 
 	@Override
-	public IFrameCommon createFrame(final IGenericWidgetFactory factory, final Object uiReference) {
+	public IFrameSpi createFrame(final IGenericWidgetFactory factory, final Object uiReference) {
 		Assert.paramNotNull(uiReference, "uiReference");
 		if (uiReference instanceof Window) {
 			return new FrameWidgetWrapper(factory, (Window) uiReference);

@@ -27,7 +27,6 @@
  */
 package org.jowidgets.impl.mock;
 
-import org.jowidgets.common.widgets.IFrameCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.mock.image.MockImageRegistry;
 import org.jowidgets.impl.mock.mockui.UIMContainer;
@@ -96,7 +95,7 @@ public final class MockWidgetFactory implements IWidgetFactorySpi {
 	}
 
 	@Override
-	public IFrameCommon createFrame(final IGenericWidgetFactory factory, final Object uiReference) {
+	public IFrameSpi createFrame(final IGenericWidgetFactory factory, final Object uiReference) {
 		Assert.paramNotNull(uiReference, "uiReference");
 		if (uiReference instanceof UIMWindow) {
 			return new FrameWidgetWrapper(factory, (UIMWindow) uiReference);

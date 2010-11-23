@@ -29,7 +29,6 @@ package org.jowidgets.impl.swt;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
-import org.jowidgets.common.widgets.IFrameCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swt.color.ColorCache;
 import org.jowidgets.impl.swt.color.IColorCache;
@@ -100,7 +99,7 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 	}
 
 	@Override
-	public IFrameCommon createFrame(final IGenericWidgetFactory factory, final Object uiReference) {
+	public IFrameSpi createFrame(final IGenericWidgetFactory factory, final Object uiReference) {
 		Assert.paramNotNull(uiReference, "uiReference");
 		if (uiReference instanceof Shell) {
 			return new FrameWidgetWrapper(factory, colorCache, (Shell) uiReference);
