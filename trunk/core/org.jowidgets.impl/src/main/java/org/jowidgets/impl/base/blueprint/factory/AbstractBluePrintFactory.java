@@ -49,10 +49,14 @@ public abstract class AbstractBluePrintFactory {
 		this.defaultInitializerRegistry = defaultInitializerRegistry;
 	}
 
+	@SuppressWarnings("unchecked")
 	public <WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>, BLUE_PRINT_TYPE extends IWidgetSetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
 		final Class<BLUE_PRINT_TYPE> bluePrintType,
 		final Class<DESCRIPTOR_TYPE> descriptorType) {
-		return createProxy(bluePrintType, descriptorType);
+		//This cast is necessary for compilation with sun compiler. 
+		//It compiles in eclipse Version: Helios Service Release 1 Build id: 20100917-0705
+		//without the cast, so don't remove the cast
+		return (BLUE_PRINT_TYPE) createProxy(bluePrintType, descriptorType);
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
