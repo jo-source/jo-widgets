@@ -27,6 +27,7 @@
  */
 package org.jowidgets.impl.swt.widgets.internal;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swt.color.IColorCache;
@@ -43,6 +44,8 @@ public class CompositeWidget extends SwtContainerWidget {
 		final ICompositeSetupSpi setup) {
 
 		super(factory, colorCache, createComposite(parentUiReference, setup));
+
+		getUiReference().setBackgroundMode(SWT.INHERIT_DEFAULT);
 
 		setLayout(setup.getLayout());
 	}

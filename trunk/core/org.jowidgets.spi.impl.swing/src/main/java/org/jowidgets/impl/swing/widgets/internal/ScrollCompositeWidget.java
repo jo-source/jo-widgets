@@ -27,8 +27,6 @@
  */
 package org.jowidgets.impl.swing.widgets.internal;
 
-import java.awt.Container;
-
 import javax.swing.BorderFactory;
 import javax.swing.JScrollPane;
 
@@ -53,6 +51,7 @@ public class ScrollCompositeWidget implements IScrollCompositeSpi {
 
 		final JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBorder(BorderFactory.createEmptyBorder());
+		scrollPane.getViewport().setBackground(null);
 
 		final int horizontalPolicy = ScrollBarSettingsConvert.convertHorizontal(setup);
 		final int verticalPolicy = ScrollBarSettingsConvert.convertVertical(setup);
@@ -61,6 +60,8 @@ public class ScrollCompositeWidget implements IScrollCompositeSpi {
 		scrollPane.setHorizontalScrollBarPolicy(horizontalPolicy);
 
 		this.outerCompositeWidget = new SwingContainerWidget(factory, scrollPane);
+		outerCompositeWidget.setBackgroundColor(null);
+
 		this.innerCompositeWidget = new CompositeWidget(factory, setup);
 		scrollPane.setViewportView(innerCompositeWidget.getUiReference());
 
@@ -72,8 +73,8 @@ public class ScrollCompositeWidget implements IScrollCompositeSpi {
 	}
 
 	@Override
-	public Container getUiReference() {
-		return outerCompositeWidget.getUiReference();
+	public JScrollPane getUiReference() {
+		return (JScrollPane) outerCompositeWidget.getUiReference();
 	}
 
 	@Override
@@ -98,11 +99,13 @@ public class ScrollCompositeWidget implements IScrollCompositeSpi {
 
 	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
+		outerCompositeWidget.setForegroundColor(colorValue);
 		innerCompositeWidget.setForegroundColor(colorValue);
 	}
 
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
+		outerCompositeWidget.setBackgroundColor(colorValue);
 		innerCompositeWidget.setBackgroundColor(colorValue);
 	}
 

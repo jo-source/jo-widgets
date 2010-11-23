@@ -41,6 +41,4 @@ public interface IWidgetSetupBuilder<INSTANCE_TYPE extends IWidgetSetupBuilder<?
 
 	INSTANCE_TYPE setBackgroundColor(final IColorConstant backgroundColor);
 
-	INSTANCE_TYPE setInheritBackgroundColor(boolean inheritBackgroundColor);
-
 }

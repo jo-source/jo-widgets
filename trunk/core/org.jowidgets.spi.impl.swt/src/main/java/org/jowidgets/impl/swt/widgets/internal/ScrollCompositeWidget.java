@@ -67,6 +67,7 @@ public class ScrollCompositeWidget implements IScrollCompositeSpi {
 		final String growingCellConstraints = "grow, w 0::,h 0::";
 
 		final Composite outerComposite = new HackyMinSizeComposite((Composite) parentUiReference, SWT.NONE);
+		outerComposite.setBackgroundMode(SWT.INHERIT_FORCE);
 		this.outerCompositeWidget = new SwtContainerWidget(factory, colorCache, outerComposite);
 		outerComposite.setLayout(growingMigLayout);
 
@@ -78,6 +79,7 @@ public class ScrollCompositeWidget implements IScrollCompositeSpi {
 		scrolledComposite.setExpandHorizontal(true);
 		scrolledComposite.setExpandVertical(true);
 		scrolledComposite.setAlwaysShowScrollBars(setup.isAllwaysShowBars());
+		scrolledComposite.setBackgroundMode(SWT.INHERIT_FORCE);
 
 		this.innerCompositeWidget = new CompositeWidget(factory, colorCache, scrolledWidget.getUiReference(), setup);
 		final Composite innerComposite = this.innerCompositeWidget.getUiReference();
@@ -135,11 +137,13 @@ public class ScrollCompositeWidget implements IScrollCompositeSpi {
 
 	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
+		outerCompositeWidget.setForegroundColor(colorValue);
 		innerCompositeWidget.setForegroundColor(colorValue);
 	}
 
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
+		outerCompositeWidget.setBackgroundColor(colorValue);
 		innerCompositeWidget.setBackgroundColor(colorValue);
 	}
 
@@ -158,7 +162,8 @@ public class ScrollCompositeWidget implements IScrollCompositeSpi {
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object cellConstraints) {
 		mustChangeScrollCompositeMinSize = true;
-		return innerCompositeWidget.add(descriptor, cellConstraints);
+		final WIDGET_TYPE result = innerCompositeWidget.add(descriptor, cellConstraints);
+		return result;
 	}
 
 	@Override

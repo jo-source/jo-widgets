@@ -61,6 +61,8 @@ public class DialogWidget extends SwtWindowWidget implements IFrameSpi {
 		setLayout(setup.getLayout());
 		setIcon(imageRegistry, setup.getIcon());
 
+		getUiReference().setBackgroundMode(SWT.INHERIT_DEFAULT);
+
 		getUiReference().addShellListener(new ShellListener() {
 
 			@Override

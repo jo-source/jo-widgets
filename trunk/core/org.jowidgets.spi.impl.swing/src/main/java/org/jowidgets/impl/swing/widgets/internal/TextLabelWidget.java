@@ -29,6 +29,7 @@ package org.jowidgets.impl.swing.widgets.internal;
 
 import javax.swing.JLabel;
 
+import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.impl.swing.util.AlignmentConvert;
 import org.jowidgets.impl.swing.util.FontProvider;
@@ -73,6 +74,14 @@ public class TextLabelWidget extends SwingWidget implements ITextLabelSpi {
 	public void setMarkup(final Markup markup) {
 		final JLabel label = getUiReference();
 		label.setFont(FontProvider.deriveFont(label.getFont(), markup));
+	}
+
+	@Override
+	public void setBackgroundColor(final IColorConstant colorValue) {
+		if (colorValue != null) {
+			getUiReference().setOpaque(true);
+			super.setBackgroundColor(colorValue);
+		}
 	}
 
 }

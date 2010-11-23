@@ -60,6 +60,8 @@ public class CheckBoxWidget extends AbstractSwingInputWidget implements ICheckBo
 				fireInputChanged(this);
 			}
 		});
+
+		getUiReference().setBackground(null);
 	}
 
 	@Override

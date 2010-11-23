@@ -34,7 +34,7 @@ public class WidgetDefaults implements IDefaultInitializer<IWidgetSetupBuilder<?
 
 	@Override
 	public void initialize(final IWidgetSetupBuilder<?> builder) {
-		builder.setInheritBackgroundColor(false);
+
 	}
 
 }

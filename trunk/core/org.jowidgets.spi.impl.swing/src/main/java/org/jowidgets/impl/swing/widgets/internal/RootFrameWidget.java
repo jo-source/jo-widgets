@@ -32,8 +32,10 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
+import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
+import org.jowidgets.impl.swing.util.ColorConvert;
 import org.jowidgets.impl.swing.widgets.SwingWindowWidget;
 import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.spi.widgets.setup.IFrameSetupSpi;
@@ -63,6 +65,12 @@ public class RootFrameWidget extends SwingWindowWidget implements IFrameSpi {
 	@Override
 	public JFrame getUiReference() {
 		return (JFrame) super.getUiReference();
+	}
+
+	@Override
+	public void setBackgroundColor(final IColorConstant colorValue) {
+		getUiReference().getContentPane().setBackground(ColorConvert.convert(colorValue));
+		super.setBackgroundColor(colorValue);
 	}
 
 }

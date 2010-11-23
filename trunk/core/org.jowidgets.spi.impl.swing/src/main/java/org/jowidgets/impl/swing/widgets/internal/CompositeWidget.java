@@ -40,6 +40,7 @@ public class CompositeWidget extends SwingContainerWidget {
 		super(factory, new JPanel());
 		getUiReference().setBorder(BorderConvert.convert(setup.getBorder()));
 		setLayout(setup.getLayout());
+		getUiReference().setBackground(null);
 	}
 
 	@Override

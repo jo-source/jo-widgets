@@ -147,9 +147,9 @@ public class WidgetFactoryTest {
 
 		//test if colors could set
 		widget.setBackgroundColor(Colors.DEFAULT);
-		Assert.assertTrue(Colors.DEFAULT.equals(widget.getBackgroundColor()));
+		Assert.assertTrue(Colors.DEFAULT.getDefaultValue().equals(widget.getBackgroundColor()));
 		widget.setForegroundColor(Colors.STRONG);
-		Assert.assertTrue(Colors.STRONG.equals(widget.getForegroundColor()));
+		Assert.assertTrue(Colors.STRONG.getDefaultValue().equals(widget.getForegroundColor()));
 
 		//test if redraw could be done
 		widget.redraw();
