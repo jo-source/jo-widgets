@@ -31,25 +31,28 @@ package org.jowidgets.impl.toolkit;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IWindow;
+import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.common.widgets.IWidgetCommon;
-import org.jowidgets.common.widgets.IWindowCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactoryListener;
+import org.jowidgets.impl.widgets.basic.FrameWidget;
 import org.jowidgets.spi.IWidgetsServiceProvider;
+import org.jowidgets.spi.widgets.IFrameSpi;
 
 public class ActiveWindowProvider {
 
 	private final IGenericWidgetFactory genericWidgetFactory;
 	private final IWidgetsServiceProvider widgetsServiceProvider;
-	private final Map<Object, IWindowCommon> uiReferenceToWindow;
+	private final Map<Object, IWindow> uiReferenceToWindow;
 
 	public ActiveWindowProvider(
 		final IGenericWidgetFactory genericWidgetFactory,
 		final IWidgetsServiceProvider widgetsServiceProvider) {
 
 		this.genericWidgetFactory = genericWidgetFactory;
-		this.uiReferenceToWindow = new HashMap<Object, IWindowCommon>();
+		this.uiReferenceToWindow = new HashMap<Object, IWindow>();
 		this.widgetsServiceProvider = widgetsServiceProvider;
 
 		genericWidgetFactory.addWidgetFactoryListener(new IWidgetFactoryListener() {
@@ -68,17 +71,21 @@ public class ActiveWindowProvider {
 		});
 	}
 
-	public IWindowCommon getActiveWindow() {
+	public IWindow getActiveWindow() {
 		final Object activeWindowUiReference = widgetsServiceProvider.getActiveWindowUiReference();
-		IWindowCommon activeWindow = uiReferenceToWindow.get(widgetsServiceProvider.getActiveWindowUiReference());
+		IWindow activeWindow = uiReferenceToWindow.get(widgetsServiceProvider.getActiveWindowUiReference());
 
 		//maybe window would be created without jo-widgets, so create a wrapper, if possible
 		if (activeWindowUiReference != null && activeWindow == null) {
 			if (widgetsServiceProvider.getWidgetFactory().isConvertibleToFrame(activeWindowUiReference)) {
 
-				activeWindow = widgetsServiceProvider.getWidgetFactory().createFrame(
+				final IFrameBluePrint bp = Toolkit.getBluePrintFactory().frame().autoCenterOff();
+
+				final IFrameSpi frameSpi = widgetsServiceProvider.getWidgetFactory().createFrame(
 						genericWidgetFactory,
 						activeWindowUiReference);
+
+				activeWindow = new FrameWidget(frameSpi, bp);
 
 				//register the created frame to avoid a new creation for every call of this method
 				if (activeWindow != null) {
