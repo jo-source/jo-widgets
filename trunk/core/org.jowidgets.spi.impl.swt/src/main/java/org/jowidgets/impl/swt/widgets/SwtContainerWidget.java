@@ -32,6 +32,7 @@ import net.miginfocom.swt.MigLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Widget;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IControlCommon;
@@ -150,6 +151,24 @@ public class SwtContainerWidget implements ICompositeSpi {
 		final WIDGET_TYPE result = customFactory.create(getUiReference(), widgetFactory);
 		setLayoutConstraints(result, cellConstraints);
 		return result;
+	}
+
+	@Override
+	public boolean remove(final IControlCommon control) {
+		if (isChild(control)) {
+			((Widget) control.getUiReference()).dispose();
+			return true;
+		}
+		return false;
+	}
+
+	private boolean isChild(final IControlCommon control) {
+		for (final Control child : getUiReference().getChildren()) {
+			if (child == control.getUiReference()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override

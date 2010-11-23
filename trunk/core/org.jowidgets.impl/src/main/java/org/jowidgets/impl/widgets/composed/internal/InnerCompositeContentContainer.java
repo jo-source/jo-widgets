@@ -91,6 +91,11 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 	}
 
 	@Override
+	public boolean remove(final IControl control) {
+		return compositeWidget.remove(control);
+	}
+
+	@Override
 	public List<IControl> getChildren() {
 		return compositeWidget.getChildren();
 	}

@@ -31,6 +31,11 @@ import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 
 public interface IContainerCommon extends IWidgetCommon {
 
+	/**
+	 * Sets the layout for this container
+	 * 
+	 * @param layoutDescriptor The layout to set
+	 */
 	void setLayout(ILayoutDescriptor layoutDescriptor);
 
 	void layoutBegin();

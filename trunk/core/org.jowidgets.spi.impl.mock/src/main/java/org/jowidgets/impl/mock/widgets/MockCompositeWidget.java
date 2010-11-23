@@ -143,6 +143,11 @@ public class MockCompositeWidget implements ICompositeSpi {
 	}
 
 	@Override
+	public boolean remove(final IControlCommon control) {
+		return getUiReference().remove((UIMComponent) control.getUiReference());
+	}
+
+	@Override
 	public void layoutBegin() {
 		//do nothing here
 	}

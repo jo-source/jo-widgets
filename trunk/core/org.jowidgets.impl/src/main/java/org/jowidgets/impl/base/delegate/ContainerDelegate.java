@@ -75,11 +75,29 @@ public class ContainerDelegate {
 	}
 
 	public List<IControl> getChildren() {
-		return children;
+		return new LinkedList<IControl>(children);
 	}
 
 	public void removeAll() {
 		children.clear();
+	}
+
+	public boolean remove(final IControl control) {
+		Assert.paramNotNull(control, "control");
+		if (children.contains(control)) {
+			boolean removed = containerWidget.remove(control);
+			removed = removed && children.remove(control);
+			if (removed) {
+				return true;
+			}
+			else {
+				throw new IllegalStateException(
+					"Control could not be removed from spi container. This seems to be a bug. Please report this");
+			}
+		}
+		else {
+			return false;
+		}
 	}
 
 }

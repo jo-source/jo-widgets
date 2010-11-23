@@ -84,6 +84,11 @@ public class FrameWidget extends AbstractFrameSpiWrapper implements IFrame {
 	}
 
 	@Override
+	public boolean remove(final IControl control) {
+		return containerDelegate.remove(control);
+	}
+
+	@Override
 	public <WIDGET_TYPE extends IDisplayCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
 		final DESCRIPTOR_TYPE descriptor) {
 		final WIDGET_TYPE result = getWidget().createChildWindow(descriptor);

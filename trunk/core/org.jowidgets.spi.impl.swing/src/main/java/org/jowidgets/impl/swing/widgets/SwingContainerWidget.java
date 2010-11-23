@@ -42,6 +42,7 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.impl.swing.widgets.internal.util.ChildRemover;
 import org.jowidgets.spi.widgets.ICompositeSpi;
 import org.jowidgets.util.Assert;
 
@@ -150,6 +151,16 @@ public class SwingContainerWidget implements ICompositeSpi {
 	}
 
 	@Override
+	public boolean remove(final IControlCommon control) {
+		return ChildRemover.removeChild(container, (Component) control.getUiReference());
+	}
+
+	@Override
+	public void removeAll() {
+		container.removeAll();
+	}
+
+	@Override
 	public void layoutBegin() {
 		//do nothing here (swing does not flicker like swt)
 	}
@@ -157,11 +168,6 @@ public class SwingContainerWidget implements ICompositeSpi {
 	@Override
 	public void layoutEnd() {
 		redraw();
-	}
-
-	@Override
-	public void removeAll() {
-		container.removeAll();
 	}
 
 	protected IGenericWidgetFactory getGenericWidgetFactory() {

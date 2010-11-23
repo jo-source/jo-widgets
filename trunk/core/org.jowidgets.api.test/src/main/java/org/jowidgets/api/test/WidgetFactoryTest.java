@@ -30,10 +30,10 @@ package org.jowidgets.api.test;
 
 import junit.framework.JUnit4TestAdapter;
 
-import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
+import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IDisplay;
 import org.jowidgets.api.widgets.IFrame;
@@ -55,6 +55,10 @@ public class WidgetFactoryTest {
 
 	private static final IColorConstant DEFAULT_FOREGROUND = new ColorValue(1, 2, 3);
 	private static final IColorConstant DEFAULT_BACKGROUND = new ColorValue(222, 223, 224);
+
+	private static final IColorConstant FOREGROUND = new ColorValue(4, 5, 6);
+	private static final IColorConstant BACKGROUND = new ColorValue(219, 220, 221);
+
 	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
 	@Test
@@ -69,18 +73,19 @@ public class WidgetFactoryTest {
 				frame.setVisible(true);
 				Assert.assertTrue(frame.isVisible());
 
-				createWidgets(frame);
+				testCreateWidgets(frame);
+				testAddAndRemove(frame);
 
 				frame.close();
 			}
 		});
 	}
 
-	private void createWidgets(final IFrame frame) {
-		createChildWidgets(frame);
+	private void testCreateWidgets(final IFrame frame) {
+		testCreateChildWidgets(frame);
 
-		createChildWidgets(frame.add(BPF.composite(), null));
-		createChildWidgets(frame.add(BPF.scrollComposite(), null));
+		testCreateChildWidgets(frame.add(BPF.composite(), null));
+		testCreateChildWidgets(frame.add(BPF.scrollComposite(), null));
 
 		testChildWindowWidget(frame, frame.createChildWindow(bpMod(BPF.dialog())));
 		testChildWindowWidget(frame, frame.createChildWindow(bpMod(BPF.frame())));
@@ -88,7 +93,7 @@ public class WidgetFactoryTest {
 		testChildWindowWidget(frame, frame.createChildWindow(bpMod(BPF.messageDialog())));
 	}
 
-	private void createChildWidgets(final IContainer container) {
+	private void testCreateChildWidgets(final IContainer container) {
 		testButtonWidget(container, container.add(bpMod(BPF.button()), null));
 		testChildWidget(container, container.add(bpMod(BPF.checkBox()), null));
 		testChildWidget(container, container.add(bpMod(BPF.comboBox(new String[] {})), null));
@@ -146,10 +151,10 @@ public class WidgetFactoryTest {
 		Assert.assertTrue(widget.isVisible());
 
 		//test if colors could set
-		widget.setBackgroundColor(Colors.DEFAULT);
-		Assert.assertTrue(Colors.DEFAULT.getDefaultValue().equals(widget.getBackgroundColor()));
-		widget.setForegroundColor(Colors.STRONG);
-		Assert.assertTrue(Colors.STRONG.getDefaultValue().equals(widget.getForegroundColor()));
+		widget.setBackgroundColor(BACKGROUND);
+		Assert.assertTrue(BACKGROUND.equals(widget.getBackgroundColor()));
+		widget.setForegroundColor(FOREGROUND);
+		Assert.assertTrue(FOREGROUND.equals(widget.getForegroundColor()));
 
 		//test if redraw could be done
 		widget.redraw();
@@ -204,6 +209,30 @@ public class WidgetFactoryTest {
 	private void testParent(final IWidget parent, final IWidget child) {
 		Assert.assertNotNull(child.getParent());
 		Assert.assertTrue(parent == child.getParent());
+	}
+
+	private void testAddAndRemove(final IFrame frame) {
+		testAddAndRemoveForContainer(frame);
+		testAddAndRemoveForContainer(frame.createChildWindow(BPF.frame()));
+		testAddAndRemoveForContainer(frame.createChildWindow(BPF.dialog()));
+	}
+
+	private void testAddAndRemoveForContainer(final IContainer container) {
+		final IComposite childComposite1 = container.add(BPF.composite(), null);
+		Assert.assertTrue(container.getChildren().contains(childComposite1));
+
+		final IComposite childComposite2 = container.add(BPF.composite(), null);
+		Assert.assertTrue(container.getChildren().contains(childComposite2));
+
+		final IComposite childComposite3 = childComposite1.add(BPF.composite(), null);
+		Assert.assertTrue(childComposite1.getChildren().contains(childComposite3));
+
+		Assert.assertTrue(container.remove(childComposite2));
+		Assert.assertFalse(container.getChildren().contains(childComposite2));
+
+		Assert.assertTrue(container.remove(childComposite1));
+		Assert.assertFalse(container.getChildren().contains(childComposite1));
+
 	}
 
 	public static junit.framework.Test suite() {

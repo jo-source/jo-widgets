@@ -232,6 +232,11 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractComposedInputWidg
 	}
 
 	@Override
+	public boolean remove(final IControl control) {
+		return compositeWidget.remove(control);
+	}
+
+	@Override
 	public List<IControl> getChildren() {
 		return compositeWidget.getChildren();
 	}

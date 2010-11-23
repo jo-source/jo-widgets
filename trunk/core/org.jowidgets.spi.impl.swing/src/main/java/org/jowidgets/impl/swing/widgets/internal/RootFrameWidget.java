@@ -27,16 +27,19 @@
  */
 package org.jowidgets.impl.swing.widgets.internal;
 
+import java.awt.Component;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.impl.swing.util.ColorConvert;
 import org.jowidgets.impl.swing.widgets.SwingWindowWidget;
+import org.jowidgets.impl.swing.widgets.internal.util.ChildRemover;
 import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.spi.widgets.setup.IFrameSetupSpi;
 
@@ -71,6 +74,16 @@ public class RootFrameWidget extends SwingWindowWidget implements IFrameSpi {
 	public void setBackgroundColor(final IColorConstant colorValue) {
 		getUiReference().getContentPane().setBackground(ColorConvert.convert(colorValue));
 		super.setBackgroundColor(colorValue);
+	}
+
+	@Override
+	public boolean remove(final IControlCommon control) {
+		return ChildRemover.removeChild(getUiReference().getContentPane(), (Component) control.getUiReference());
+	}
+
+	@Override
+	public void removeAll() {
+		getUiReference().getContentPane().removeAll();
 	}
 
 }

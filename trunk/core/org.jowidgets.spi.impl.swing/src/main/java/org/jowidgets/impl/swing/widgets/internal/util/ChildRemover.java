@@ -26,62 +26,30 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.mock.mockui;
+package org.jowidgets.impl.swing.widgets.internal.util;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.awt.Component;
+import java.awt.Container;
 
-import org.jowidgets.common.types.Border;
+public final class ChildRemover {
 
-public class UIMContainer extends UIMComponent {
+	private ChildRemover() {}
 
-	private final List<UIMComponent> components;
-	private final List<UIMComponent> componentsUnmodifieable;
-	private Object layout;
-	private Border border;
-
-	public UIMContainer() {
-		super();
-		this.components = new LinkedList<UIMComponent>();
-		this.componentsUnmodifieable = Collections.unmodifiableList(components);
+	public static boolean removeChild(final Container parent, final Component child) {
+		final boolean result = isChild(parent, child);
+		if (result) {
+			parent.remove(child);
+		}
+		return result;
 	}
 
-	public UIMComponent add(final UIMComponent component) {
-		components.add(component);
-		return component;
-	}
-
-	public void add(final UIMComponent component, final Object constraints) {
-		add(component);
-	}
-
-	public void setLayout(final Object layout) {
-		this.layout = layout;
-	}
-
-	public Object getLayout() {
-		return layout;
-	}
-
-	public void removeAll() {
-		components.clear();
-	}
-
-	public boolean remove(final UIMComponent component) {
-		return components.remove(component);
-	}
-
-	public void setBorder(final Border border) {
-		this.border = border;
-	}
-
-	public List<UIMComponent> getComponents() {
-		return componentsUnmodifieable;
-	}
-
-	public Border getBorder() {
-		return border;
+	private static boolean isChild(final Container parent, final Component component) {
+		for (final Component child : parent.getComponents()) {
+			if (child == component) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

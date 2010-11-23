@@ -86,6 +86,11 @@ public class ContainerWidget extends AbstractContainerSpiWrapper implements ICon
 	}
 
 	@Override
+	public boolean remove(final IControl control) {
+		return containerDelegate.remove(control);
+	}
+
+	@Override
 	public void removeAll() {
 		containerDelegate.removeAll();
 	}

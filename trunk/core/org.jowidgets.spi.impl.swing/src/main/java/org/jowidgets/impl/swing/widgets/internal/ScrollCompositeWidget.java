@@ -134,6 +134,11 @@ public class ScrollCompositeWidget implements IScrollCompositeSpi {
 	}
 
 	@Override
+	public boolean remove(final IControlCommon control) {
+		return innerCompositeWidget.remove(control);
+	}
+
+	@Override
 	public void layoutBegin() {
 		outerCompositeWidget.layoutBegin();
 	}

@@ -40,6 +40,7 @@ import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
+import org.jowidgets.util.Assert;
 import org.jowidgets.util.Tuple;
 
 class ContainerWidget<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE> & IContainerSetupBuilder<?>> extends
@@ -144,6 +145,37 @@ class ContainerWidget<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IW
 				result.add((IControl) preWidgetTuple.getFirst());
 			}
 			return result;
+		}
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public boolean remove(final IControl control) {
+		if (isInitialized()) {
+			return getWidget().remove(control);
+		}
+		else {
+			Assert.paramNotNull(control, "control");
+			Tuple<WidgetCommon, Object> foundControl = null;
+			for (final Tuple<WidgetCommon, Object> preWidgetTuple : preWidgets) {
+				if (control == preWidgetTuple.getFirst()) {
+					foundControl = preWidgetTuple;
+					break;
+				}
+			}
+			if (foundControl != null) {
+				final boolean removed = preWidgets.remove(foundControl);
+				if (removed) {
+					return true;
+				}
+				else {
+					throw new IllegalStateException(
+						"Control could not be removed from pre widget list. This seems to be a bug. Please report this.");
+				}
+			}
+			else {
+				return false;
+			}
 		}
 	}
 

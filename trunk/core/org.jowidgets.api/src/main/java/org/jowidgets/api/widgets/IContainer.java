@@ -36,10 +36,41 @@ import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 
 public interface IContainer extends IWidget, IContainerCommon {
 
+	/**
+	 * Gets the containers children
+	 * 
+	 * @return a defensive copy of the containers children
+	 */
 	List<IControl> getChildren();
 
+	/**
+	 * Allows to remove a control from an container.
+	 * Removing controls should be nested with layoutBegin() - layoutEnd() to ensure
+	 * that the container revalidates its layout.
+	 * 
+	 * @param control The control to remove
+	 * @return true if the widget could be removed, false otherwise
+	 */
+	boolean remove(IControl control);
+
+	/**
+	 * Creates and adds an control to this container.
+	 * 
+	 * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
+	 * @param descriptor The descriptor that describes the control to add
+	 * @param layoutConstraints The layout constraints / data for the added control
+	 * @return the created and added control
+	 */
 	<WIDGET_TYPE extends IControl> WIDGET_TYPE add(IWidgetDescriptor<? extends WIDGET_TYPE> descriptor, Object layoutConstraints);
 
+	/**
+	 * Creates and adds an control to this container
+	 * 
+	 * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
+	 * @param factory The factory that can create the control
+	 * @param layoutConstraints The layout constraints / data for the added control
+	 * @return the created and added control
+	 */
 	<WIDGET_TYPE extends IControl> WIDGET_TYPE add(ICustomWidgetFactory<WIDGET_TYPE> factory, Object layoutConstraints);
 
 }

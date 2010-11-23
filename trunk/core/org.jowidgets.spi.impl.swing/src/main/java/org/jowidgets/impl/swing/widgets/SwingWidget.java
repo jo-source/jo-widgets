@@ -56,6 +56,9 @@ public class SwingWidget implements IWidgetCommon {
 		if (component instanceof JComponent) {
 			((JComponent) component).revalidate();
 		}
+		else {
+			component.validate();
+		}
 		component.repaint();
 	}
 

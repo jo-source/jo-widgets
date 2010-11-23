@@ -40,4 +40,6 @@ public interface IContainerSpi extends IWidgetSpi, IContainerCommon {
 
 	<WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(ICustomWidgetFactory<WIDGET_TYPE> factory, Object layoutConstraints);
 
+	boolean remove(IControlCommon control);
+
 }
