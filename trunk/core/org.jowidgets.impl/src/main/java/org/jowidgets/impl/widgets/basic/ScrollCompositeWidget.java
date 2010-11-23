@@ -28,21 +28,23 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import java.util.List;
+
 import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IScrollComposite;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IScrollCompositeSetup;
-import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.impl.base.delegate.ContainerDelegate;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.impl.widgets.common.wrapper.AbstractScrollContainerCommonWrapper;
+import org.jowidgets.impl.widgets.common.wrapper.AbstractScrollContainerSpiWrapper;
 import org.jowidgets.spi.widgets.IScrollCompositeSpi;
 
-public class ScrollCompositeWidget extends AbstractScrollContainerCommonWrapper implements IScrollComposite {
+public class ScrollCompositeWidget extends AbstractScrollContainerSpiWrapper implements IScrollComposite {
 
 	private final ControlDelegate controlDelegate;
 	private final ContainerDelegate containerDelegate;
@@ -56,17 +58,22 @@ public class ScrollCompositeWidget extends AbstractScrollContainerCommonWrapper 
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
 		return containerDelegate.add(descriptor, layoutConstraints);
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
 		final ICustomWidgetFactory<WIDGET_TYPE> factory,
 		final Object layoutConstraints) {
 		return containerDelegate.add(factory, layoutConstraints);
+	}
+
+	@Override
+	public List<IControl> getChildren() {
+		return containerDelegate.getChildren();
 	}
 
 	@Override

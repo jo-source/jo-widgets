@@ -28,38 +28,78 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.widgets.IContainerCommon;
-import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
+import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.common.types.Rectangle;
+import org.jowidgets.common.widgets.IWindowCommon;
+import org.jowidgets.common.widgets.controler.IWindowListener;
+import org.jowidgets.spi.widgets.IWindowSpi;
 
-public abstract class AbstractContainerCommonWrapper extends WidgetCommonWrapper implements IContainerCommon {
+public abstract class AbstractWindowSpiWrapper extends WidgetSpiWrapper implements IWindowCommon {
 
-	public AbstractContainerCommonWrapper(final IContainerCommon widget) {
+	public AbstractWindowSpiWrapper(final IWindowSpi widget) {
 		super(widget);
 	}
 
 	@Override
-	public IContainerCommon getWidget() {
-		return (IContainerCommon) super.getWidget();
+	public IWindowSpi getWidget() {
+		return (IWindowSpi) super.getWidget();
 	}
 
 	@Override
-	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
-		getWidget().setLayout(layoutDescriptor);
+	public void setPosition(final Position position) {
+		getWidget().setPosition(position);
 	}
 
 	@Override
-	public void layoutBegin() {
-		getWidget().layoutBegin();
+	public Position getPosition() {
+		return getWidget().getPosition();
 	}
 
 	@Override
-	public void layoutEnd() {
-		getWidget().layoutEnd();
+	public void setSize(final Dimension size) {
+		getWidget().setSize(size);
 	}
 
 	@Override
-	public void removeAll() {
-		getWidget().removeAll();
+	public Dimension getSize() {
+		return getWidget().getSize();
+	}
+
+	@Override
+	public Rectangle getParentBounds() {
+		return getWidget().getParentBounds();
+	}
+
+	@Override
+	public void pack() {
+		getWidget().pack();
+
+	}
+
+	@Override
+	public void setVisible(final boolean visible) {
+		getWidget().setVisible(visible);
+	}
+
+	@Override
+	public boolean isVisible() {
+		return getWidget().isVisible();
+	}
+
+	@Override
+	public void addWindowListener(final IWindowListener listener) {
+		getWidget().addWindowListener(listener);
+	}
+
+	@Override
+	public void removeWindowListener(final IWindowListener listener) {
+		getWidget().removeWindowListener(listener);
+	}
+
+	@Override
+	public void close() {
+		getWidget().close();
 	}
 
 }

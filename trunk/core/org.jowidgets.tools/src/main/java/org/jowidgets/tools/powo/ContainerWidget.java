@@ -32,10 +32,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.builder.IContainerSetupBuilder;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
@@ -68,12 +68,12 @@ class ContainerWidget<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IW
 		}
 	}
 
-	public final <P_WIDGET_TYPE extends WidgetCommon<? extends IControlCommon, ?>> P_WIDGET_TYPE add(final P_WIDGET_TYPE widget) {
+	public final <P_WIDGET_TYPE extends WidgetCommon<? extends IControl, ?>> P_WIDGET_TYPE add(final P_WIDGET_TYPE widget) {
 		return add(widget, "");
 	}
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
-	public final <P_WIDGET_TYPE extends WidgetCommon<? extends IControlCommon, ?>> P_WIDGET_TYPE add(
+	public final <P_WIDGET_TYPE extends WidgetCommon<? extends IControl, ?>> P_WIDGET_TYPE add(
 		final P_WIDGET_TYPE widget,
 		final Object layoutConstraints) {
 		if (isInitialized()) {
@@ -119,16 +119,31 @@ class ContainerWidget<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IW
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
-	public final <M_WIDGET_TYPE extends IControlCommon> M_WIDGET_TYPE add(
+	public final <M_WIDGET_TYPE extends IControl> M_WIDGET_TYPE add(
 		final IWidgetDescriptor<? extends M_WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
 		if (isInitialized()) {
 			return getWidget().add(descriptor, layoutConstraints);
 		}
 		else {
-			final WidgetCommon<M_WIDGET_TYPE, ?> powo = widgetFactory.create(descriptor);
+			final ControlWidget powo = (ControlWidget) widgetFactory.create(descriptor);
 			preWidgets.add(new Tuple<WidgetCommon, Object>(powo, layoutConstraints));
 			return (M_WIDGET_TYPE) powo;
+		}
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public List<IControl> getChildren() {
+		if (isInitialized()) {
+			return getWidget().getChildren();
+		}
+		else {
+			final List<IControl> result = new LinkedList<IControl>();
+			for (final Tuple<WidgetCommon, Object> preWidgetTuple : preWidgets) {
+				result.add((IControl) preWidgetTuple.getFirst());
+			}
+			return result;
 		}
 	}
 
@@ -183,7 +198,7 @@ class ContainerWidget<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IW
 	}
 
 	@Override
-	public final <M_WIDGET_TYPE extends IControlCommon> M_WIDGET_TYPE add(
+	public final <M_WIDGET_TYPE extends IControl> M_WIDGET_TYPE add(
 		final ICustomWidgetFactory<M_WIDGET_TYPE> factory,
 		final Object layoutConstraints) {
 		checkInitialized();

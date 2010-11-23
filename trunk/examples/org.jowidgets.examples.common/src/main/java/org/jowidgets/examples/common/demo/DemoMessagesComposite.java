@@ -30,14 +30,14 @@ package org.jowidgets.examples.common.demo;
 
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
+import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.widgets.IContainerCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
 public class DemoMessagesComposite {
 
-	public DemoMessagesComposite(final IContainerCommon parentContainer) {
+	public DemoMessagesComposite(final IContainer parentContainer) {
 
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 

@@ -32,16 +32,16 @@ import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.ICompositeSetup;
-import org.jowidgets.common.widgets.IContainerCommon;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
+import org.jowidgets.spi.widgets.IContainerSpi;
 
 public class CompositeWidget extends ContainerWidget implements IComposite {
 
 	private final ControlDelegate controlDelegate;
 
-	public CompositeWidget(final IContainerCommon containerWidgetCommon, final ICompositeSetup setup) {
-		super(containerWidgetCommon, setup.isVisible());
+	public CompositeWidget(final IContainerSpi containerSpi, final ICompositeSetup setup) {
+		super(containerSpi, setup.isVisible());
 		ColorSettingsInvoker.setColors(setup, this);
 		this.controlDelegate = new ControlDelegate();
 	}

@@ -28,23 +28,34 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.IIconCommon;
+import org.jowidgets.common.types.Markup;
+import org.jowidgets.common.widgets.ITextLabelCommon;
+import org.jowidgets.spi.widgets.ITextLabelSpi;
 
-public class IconCommonWrapper extends WidgetCommonWrapper implements IIconCommon {
+public class TextLabelSpiWrapper extends WidgetSpiWrapper implements ITextLabelCommon {
 
-	public IconCommonWrapper(final IIconCommon widget) {
+	public TextLabelSpiWrapper(final ITextLabelSpi widget) {
 		super(widget);
 	}
 
 	@Override
-	public IIconCommon getWidget() {
-		return (IIconCommon) super.getWidget();
+	public ITextLabelSpi getWidget() {
+		return (ITextLabelSpi) super.getWidget();
 	}
 
 	@Override
-	public void setIcon(final IImageConstant icon) {
-		getWidget().setIcon(icon);
+	public void setMarkup(final Markup markup) {
+		getWidget().setMarkup(markup);
+	}
+
+	@Override
+	public void setText(final String text) {
+		getWidget().setText(text);
+	}
+
+	@Override
+	public void setToolTipText(final String text) {
+		getWidget().setToolTipText(text);
 	}
 
 }

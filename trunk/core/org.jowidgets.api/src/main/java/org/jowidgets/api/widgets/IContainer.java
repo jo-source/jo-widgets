@@ -28,8 +28,18 @@
 
 package org.jowidgets.api.widgets;
 
+import java.util.List;
+
 import org.jowidgets.common.widgets.IContainerCommon;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 
 public interface IContainer extends IWidget, IContainerCommon {
+
+	List<IControl> getChildren();
+
+	<WIDGET_TYPE extends IControl> WIDGET_TYPE add(IWidgetDescriptor<? extends WIDGET_TYPE> descriptor, Object layoutConstraints);
+
+	<WIDGET_TYPE extends IControl> WIDGET_TYPE add(ICustomWidgetFactory<WIDGET_TYPE> factory, Object layoutConstraints);
 
 }

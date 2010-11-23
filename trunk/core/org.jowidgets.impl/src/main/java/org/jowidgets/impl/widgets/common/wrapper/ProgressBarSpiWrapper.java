@@ -28,38 +28,33 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.widgets.IFrameCommon;
-import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
+import org.jowidgets.common.widgets.IProgressBarCommon;
+import org.jowidgets.spi.widgets.IProgressBarSpi;
 
-public abstract class AbstractFrameCommonWrapper extends AbstractWindowCommonWrapper implements IFrameCommon {
+public class ProgressBarSpiWrapper extends WidgetSpiWrapper implements IProgressBarCommon {
 
-	public AbstractFrameCommonWrapper(final IFrameCommon widget) {
+	public ProgressBarSpiWrapper(final IProgressBarSpi widget) {
 		super(widget);
 	}
 
 	@Override
-	public IFrameCommon getWidget() {
-		return (IFrameCommon) super.getWidget();
+	public IProgressBarSpi getWidget() {
+		return (IProgressBarSpi) super.getWidget();
 	}
 
 	@Override
-	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
-		getWidget().setLayout(layoutDescriptor);
+	public void setMinimum(final int min) {
+		getWidget().setMinimum(min);
 	}
 
 	@Override
-	public void layoutBegin() {
-		getWidget().layoutBegin();
+	public void setMaximum(final int max) {
+		getWidget().setMaximum(max);
 	}
 
 	@Override
-	public void layoutEnd() {
-		getWidget().layoutEnd();
-	}
-
-	@Override
-	public void removeAll() {
-		getWidget().removeAll();
+	public void setProgress(final int progress) {
+		getWidget().setProgress(progress);
 	}
 
 }

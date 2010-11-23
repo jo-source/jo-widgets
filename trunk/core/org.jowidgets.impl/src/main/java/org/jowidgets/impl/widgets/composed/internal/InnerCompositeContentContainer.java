@@ -27,14 +27,17 @@
  */
 package org.jowidgets.impl.widgets.composed.internal;
 
+import java.util.List;
+
 import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IInputWidget;
+import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
@@ -73,7 +76,7 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
 
@@ -81,10 +84,30 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
 		final ICustomWidgetFactory<WIDGET_TYPE> factory,
 		final Object layoutConstraints) {
 		return compositeWidget.add(factory, layoutConstraints);
+	}
+
+	@Override
+	public List<IControl> getChildren() {
+		return compositeWidget.getChildren();
+	}
+
+	@Override
+	public void setParent(final IWidget parent) {
+		compositeWidget.setParent(parent);
+	}
+
+	@Override
+	public boolean isReparentable() {
+		return compositeWidget.isReparentable();
+	}
+
+	@Override
+	public IWidget getParent() {
+		return compositeWidget.getParent();
 	}
 
 	@Override

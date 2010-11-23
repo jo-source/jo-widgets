@@ -28,43 +28,54 @@
 
 package org.jowidgets.impl.base.delegate;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.common.widgets.IContainerCommon;
-import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
+import org.jowidgets.spi.widgets.IContainerSpi;
 import org.jowidgets.util.Assert;
 
 public class ContainerDelegate {
 
-	private final IContainerCommon containerWidget;
+	private final IContainerSpi containerWidget;
 	private final IWidget widget;
+	private final List<IControl> children;
 
-	public ContainerDelegate(final IContainerCommon containerWidget, final IWidget widget) {
+	public ContainerDelegate(final IContainerSpi containerWidget, final IWidget widget) {
 		Assert.paramNotNull(containerWidget, "containerWidget");
 		Assert.paramNotNull(widget, "widget");
 		this.containerWidget = containerWidget;
 		this.widget = widget;
+		this.children = new LinkedList<IControl>();
 	}
 
-	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
 		final WIDGET_TYPE result = containerWidget.add(descriptor, layoutConstraints);
 		if (result instanceof IWidget) {
 			((IWidget) result).setParent(widget);
 		}
+		children.add(result);
 		return result;
 	}
 
-	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
 		final ICustomWidgetFactory<WIDGET_TYPE> factory,
 		final Object layoutConstraints) {
 		final WIDGET_TYPE result = containerWidget.add(factory, layoutConstraints);
 		if (result instanceof IWidget) {
 			((IWidget) result).setParent(widget);
 		}
+		children.add(result);
 		return result;
+	}
+
+	public List<IControl> getChildren() {
+		return children;
 	}
 
 }

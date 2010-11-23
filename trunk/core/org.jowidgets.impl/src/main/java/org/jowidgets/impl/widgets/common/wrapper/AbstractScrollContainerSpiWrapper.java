@@ -28,33 +28,18 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.widgets.IInputWidgetCommon;
-import org.jowidgets.common.widgets.controler.IInputListener;
+import org.jowidgets.common.widgets.IScrollCompositeCommon;
+import org.jowidgets.spi.widgets.IScrollCompositeSpi;
 
-public class InputWidgetCommonWrapper extends WidgetCommonWrapper implements IInputWidgetCommon {
+public abstract class AbstractScrollContainerSpiWrapper extends AbstractContainerSpiWrapper implements IScrollCompositeCommon {
 
-	public InputWidgetCommonWrapper(final IInputWidgetCommon widget) {
+	public AbstractScrollContainerSpiWrapper(final IScrollCompositeSpi widget) {
 		super(widget);
 	}
 
 	@Override
-	public IInputWidgetCommon getWidget() {
-		return (IInputWidgetCommon) super.getWidget();
-	}
-
-	@Override
-	public void addInputListener(final IInputListener listener) {
-		getWidget().addInputListener(listener);
-	}
-
-	@Override
-	public void removeInputListener(final IInputListener listener) {
-		getWidget().removeInputListener(listener);
-	}
-
-	@Override
-	public void setEditable(final boolean editable) {
-		getWidget().setEditable(editable);
+	public IScrollCompositeSpi getWidget() {
+		return (IScrollCompositeSpi) super.getWidget();
 	}
 
 }

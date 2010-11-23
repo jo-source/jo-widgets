@@ -32,18 +32,18 @@ import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IIcon;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IIconSetup;
-import org.jowidgets.common.widgets.IIconCommon;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.impl.widgets.common.wrapper.IconCommonWrapper;
+import org.jowidgets.impl.widgets.common.wrapper.IconSpiWrapper;
+import org.jowidgets.spi.widgets.IIconSpi;
 
-public class IconWidget extends IconCommonWrapper implements IIcon {
+public class IconWidget extends IconSpiWrapper implements IIcon {
 
 	private final ControlDelegate controlDelegate;
 
-	public IconWidget(final IIconCommon iconWidgetCi, final IIconSetup setup) {
-		super(iconWidgetCi);
+	public IconWidget(final IIconSpi iconSpi, final IIconSetup setup) {
+		super(iconSpi);
 		this.controlDelegate = new ControlDelegate();
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);

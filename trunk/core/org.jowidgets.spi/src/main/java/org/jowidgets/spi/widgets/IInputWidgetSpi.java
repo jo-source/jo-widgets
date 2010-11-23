@@ -26,35 +26,10 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.common.wrapper;
+package org.jowidgets.spi.widgets;
 
-import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.widgets.ITextLabelCommon;
+import org.jowidgets.common.widgets.IInputWidgetCommon;
 
-public class TextLabelCommonWrapper extends WidgetCommonWrapper implements ITextLabelCommon {
-
-	public TextLabelCommonWrapper(final ITextLabelCommon widget) {
-		super(widget);
-	}
-
-	@Override
-	public ITextLabelCommon getWidget() {
-		return (ITextLabelCommon) super.getWidget();
-	}
-
-	@Override
-	public void setMarkup(final Markup markup) {
-		getWidget().setMarkup(markup);
-	}
-
-	@Override
-	public void setText(final String text) {
-		getWidget().setText(text);
-	}
-
-	@Override
-	public void setToolTipText(final String text) {
-		getWidget().setToolTipText(text);
-	}
+public interface IInputWidgetSpi extends IWidgetSpi, IInputWidgetCommon {
 
 }

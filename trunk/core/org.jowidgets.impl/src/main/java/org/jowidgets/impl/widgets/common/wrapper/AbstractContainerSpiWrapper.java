@@ -28,39 +28,39 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.widgets.IButtonCommon;
-import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.IContainerCommon;
+import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
+import org.jowidgets.spi.widgets.IContainerSpi;
 
-public class ButtonCommonWrapper extends LabelCommonWrapper implements IButtonCommon {
+public abstract class AbstractContainerSpiWrapper extends WidgetSpiWrapper implements IContainerCommon {
 
-	public ButtonCommonWrapper(final IButtonCommon widget) {
+	public AbstractContainerSpiWrapper(final IContainerSpi widget) {
 		super(widget);
 	}
 
 	@Override
-	public IButtonCommon getWidget() {
-		return (IButtonCommon) super.getWidget();
+	public IContainerSpi getWidget() {
+		return (IContainerSpi) super.getWidget();
 	}
 
 	@Override
-	public void setEnabled(final boolean enabled) {
-		getWidget().setEnabled(enabled);
+	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
+		getWidget().setLayout(layoutDescriptor);
 	}
 
 	@Override
-	public void addActionListener(final IActionListener actionListener) {
-		getWidget().addActionListener(actionListener);
+	public void layoutBegin() {
+		getWidget().layoutBegin();
 	}
 
 	@Override
-	public void removeActionListener(final IActionListener actionListener) {
-		getWidget().removeActionListener(actionListener);
+	public void layoutEnd() {
+		getWidget().layoutEnd();
 	}
 
 	@Override
-	public void requestFocus() {
-		getWidget().requestFocus();
-
+	public void removeAll() {
+		getWidget().removeAll();
 	}
 
 }

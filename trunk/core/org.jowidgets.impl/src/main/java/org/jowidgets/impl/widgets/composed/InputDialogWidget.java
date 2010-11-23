@@ -33,6 +33,7 @@ import org.jowidgets.api.validation.ValidationMessageType;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IDisplay;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IInputDialog;
@@ -45,7 +46,6 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IButtonCommon;
-import org.jowidgets.common.widgets.IContainerCommon;
 import org.jowidgets.common.widgets.IDisplayCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IInputListener;
@@ -299,14 +299,14 @@ public class InputDialogWidget<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 	private class ValidationButton {
 
 		private final IButtonDescriptor buttonDescriptor;
-		private final IContainerCommon parentContainer;
+		private final IContainer parentContainer;
 		private final IButton buttonWidget;
 		private final String missingInputText;
 
 		ValidationButton(
 			final IButtonDescriptor buttonDescriptor,
 			final String missingInputText,
-			final IContainerCommon parentContainer,
+			final IContainer parentContainer,
 			final String cellConstraints) {
 			super();
 			this.parentContainer = parentContainer;

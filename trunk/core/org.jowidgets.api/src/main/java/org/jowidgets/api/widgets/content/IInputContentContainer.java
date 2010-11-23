@@ -27,10 +27,11 @@
  */
 package org.jowidgets.api.widgets.content;
 
+import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.common.widgets.IContainerCommon;
 
-public interface IInputContentContainer extends IContainerCommon {
+public interface IInputContentContainer extends IContainer, IContainerCommon {
 
 	void addSubContent(IInputContentCreator<?> subContentCreator, Object layoutConstraints);
 

@@ -28,67 +28,45 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.IWidgetCommon;
-import org.jowidgets.util.Assert;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.widgets.IButtonCommon;
+import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.spi.widgets.IButtonSpi;
 
-public class WidgetCommonWrapper implements IWidgetCommon {
+public class ButtonSpiWrapper extends TextLabelSpiWrapper implements IButtonCommon {
 
-	private final IWidgetCommon widget;
-
-	public WidgetCommonWrapper(final IWidgetCommon widget) {
-		Assert.paramNotNull(widget, "widget");
-		this.widget = widget;
-	}
-
-	public IWidgetCommon getWidget() {
-		return widget;
+	public ButtonSpiWrapper(final IButtonSpi widget) {
+		super(widget);
 	}
 
 	@Override
-	public Object getUiReference() {
-		return widget.getUiReference();
+	public IButtonSpi getWidget() {
+		return (IButtonSpi) super.getWidget();
 	}
 
 	@Override
-	public void redraw() {
-		widget.redraw();
+	public void setIcon(final IImageConstant icon) {
+		getWidget().setIcon(icon);
 	}
 
 	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		widget.setForegroundColor(colorValue);
+	public void setEnabled(final boolean enabled) {
+		getWidget().setEnabled(enabled);
 	}
 
 	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		widget.setBackgroundColor(colorValue);
+	public void addActionListener(final IActionListener actionListener) {
+		getWidget().addActionListener(actionListener);
 	}
 
 	@Override
-	public IColorConstant getForegroundColor() {
-		return widget.getForegroundColor();
+	public void removeActionListener(final IActionListener actionListener) {
+		getWidget().removeActionListener(actionListener);
 	}
 
 	@Override
-	public IColorConstant getBackgroundColor() {
-		return widget.getBackgroundColor();
-	}
-
-	@Override
-	public void setVisible(final boolean visible) {
-		widget.setVisible(visible);
-	}
-
-	@Override
-	public boolean isVisible() {
-		return widget.isVisible();
-	}
-
-	@Override
-	public Dimension getSize() {
-		return widget.getSize();
+	public void requestFocus() {
+		getWidget().requestFocus();
 	}
 
 }

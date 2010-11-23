@@ -28,11 +28,13 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import java.util.List;
+
+import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IDisplay;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IFrameSetup;
-import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.IDisplayCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
@@ -40,10 +42,10 @@ import org.jowidgets.impl.base.delegate.ContainerDelegate;
 import org.jowidgets.impl.base.delegate.DisplayDelegate;
 import org.jowidgets.impl.base.delegate.WindowDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
-import org.jowidgets.impl.widgets.common.wrapper.AbstractFrameCommonWrapper;
+import org.jowidgets.impl.widgets.common.wrapper.AbstractFrameSpiWrapper;
 import org.jowidgets.spi.widgets.IFrameSpi;
 
-public class FrameWidget extends AbstractFrameCommonWrapper implements IFrame {
+public class FrameWidget extends AbstractFrameSpiWrapper implements IFrame {
 
 	private final DisplayDelegate displayDelegate;
 	private final WindowDelegate windowDelegate;
@@ -58,17 +60,22 @@ public class FrameWidget extends AbstractFrameCommonWrapper implements IFrame {
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
 		return containerDelegate.add(descriptor, layoutConstraints);
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
 		final ICustomWidgetFactory<WIDGET_TYPE> factory,
 		final Object layoutConstraints) {
 		return containerDelegate.add(factory, layoutConstraints);
+	}
+
+	@Override
+	public List<IControl> getChildren() {
+		return containerDelegate.getChildren();
 	}
 
 	@Override

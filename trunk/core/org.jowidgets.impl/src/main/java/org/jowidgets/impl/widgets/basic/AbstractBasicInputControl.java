@@ -35,18 +35,18 @@ import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IInputWidgetSetup;
-import org.jowidgets.common.widgets.IInputWidgetCommon;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.base.delegate.InputWidgetDelegate;
-import org.jowidgets.impl.widgets.common.wrapper.InputWidgetCommonWrapper;
+import org.jowidgets.impl.widgets.common.wrapper.InputWidgetSpiWrapper;
+import org.jowidgets.spi.widgets.IInputWidgetSpi;
 
-public abstract class AbstractBasicInputControl<VALUE_TYPE> extends InputWidgetCommonWrapper implements IInputControl<VALUE_TYPE> {
+public abstract class AbstractBasicInputControl<VALUE_TYPE> extends InputWidgetSpiWrapper implements IInputControl<VALUE_TYPE> {
 
 	private final ControlDelegate controlDelegate;
 	private final InputWidgetDelegate<VALUE_TYPE> inputWidgetDelegate;
 
-	public AbstractBasicInputControl(final IInputWidgetCommon inputWidgetCommon, final IInputWidgetSetup<VALUE_TYPE> setup) {
-		super(inputWidgetCommon);
+	public AbstractBasicInputControl(final IInputWidgetSpi inputWidgetSpi, final IInputWidgetSetup<VALUE_TYPE> setup) {
+		super(inputWidgetSpi);
 
 		this.controlDelegate = new ControlDelegate();
 

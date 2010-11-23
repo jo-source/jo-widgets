@@ -27,9 +27,8 @@
  */
 package org.jowidgets.spi.widgets;
 
-import org.jowidgets.common.widgets.IInputWidgetCommon;
 
-public interface ICheckBoxSpi extends ITextLabelSpi, IInputWidgetCommon {
+public interface ICheckBoxSpi extends ITextLabelSpi, IInputWidgetSpi {
 
 	boolean isSelected();
 

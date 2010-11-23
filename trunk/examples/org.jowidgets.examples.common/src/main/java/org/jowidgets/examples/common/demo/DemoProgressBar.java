@@ -33,18 +33,18 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
+import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IProgressBar;
 import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.IProgressBarBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.widgets.IContainerCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
 public class DemoProgressBar {
 
-	public DemoProgressBar(final IContainerCommon parentContainer, final IWindow parentWindow) {
+	public DemoProgressBar(final IContainer parentContainer, final IWindow parentWindow) {
 
 		final AtomicBoolean windowActive = new AtomicBoolean();
 		final AtomicBoolean progressBarFinished = new AtomicBoolean();
@@ -61,9 +61,7 @@ public class DemoProgressBar {
 
 		progressBar = parentContainer.add(progressBarPb, "growx,w 300::, h 22:22:22");
 
-		final IButton buttonWidget = parentContainer.add(
-				bpF.button().setIcon(IconsSmall.ERROR),
-				" h 25:25:25, w 25:25:25, wrap");
+		final IButton buttonWidget = parentContainer.add(bpF.button().setIcon(IconsSmall.ERROR), " h 25:25:25, w 25:25:25, wrap");
 
 		buttonWidget.addActionListener(new IActionListener() {
 

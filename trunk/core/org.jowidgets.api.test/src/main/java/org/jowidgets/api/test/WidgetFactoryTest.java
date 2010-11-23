@@ -114,24 +114,44 @@ public class WidgetFactoryTest {
 		return bluePrint;
 	}
 
-	private void testChildWidget(final IWidget parent, final IWidget widget) {
+	private void testChildWidget(final IContainer parent, final IWidget widget) {
+		//is widget created
 		Assert.assertNotNull(widget);
 
+		//has widget colors from setup
 		Assert.assertTrue(DEFAULT_FOREGROUND.equals(widget.getForegroundColor()));
 		Assert.assertTrue(DEFAULT_BACKGROUND.equals(widget.getBackgroundColor()));
 
+		//is widget a child its parent
+		Assert.assertTrue(parent.getChildren().contains(widget));
+
+		//test the parent
+		testParent(parent, widget);
+
+		//has widget the widget a uiReference
 		Assert.assertNotNull(widget.getUiReference());
+
+		//is widget visible
 		Assert.assertTrue(widget.isVisible());
+
+		//test if widget could set invisible
 		widget.setVisible(false);
 		Assert.assertFalse(widget.isVisible());
+
+		//test if widget could set visible
 		widget.setVisible(true);
 		Assert.assertTrue(widget.isVisible());
 
+		//test if colors could set
 		widget.setBackgroundColor(Colors.DEFAULT);
+		Assert.assertTrue(Colors.DEFAULT.equals(widget.getBackgroundColor()));
 		widget.setForegroundColor(Colors.STRONG);
-		widget.redraw();
-		testParent(parent, widget);
+		Assert.assertTrue(Colors.STRONG.equals(widget.getForegroundColor()));
 
+		//test if redraw could be done
+		widget.redraw();
+
+		//test if widget has a window anchestor
 		Assert.assertNotNull(Toolkit.getWidgetUtils().getWindowAncestor(widget));
 	}
 
@@ -145,13 +165,13 @@ public class WidgetFactoryTest {
 		testParent(parent, widget);
 	}
 
-	private void testSplitCompositeWidget(final IWidget parent, final ISplitComposite widget) {
+	private void testSplitCompositeWidget(final IContainer parent, final ISplitComposite widget) {
 		testChildWidget(parent, widget);
 		testParent(widget, widget.getFirst());
 		testParent(widget, widget.getSecond());
 	}
 
-	private void testButtonWidget(final IWidget parent, final IButton widget) {
+	private void testButtonWidget(final IContainer parent, final IButton widget) {
 		testLabelWidget(parent, widget);
 		final IActionListener listener = new IActionListener() {
 
@@ -170,7 +190,7 @@ public class WidgetFactoryTest {
 		//TODO push button and check listener not invoked
 	}
 
-	private void testLabelWidget(final IWidget parent, final ILabel widget) {
+	private void testLabelWidget(final IContainer parent, final ILabel widget) {
 		testChildWidget(parent, widget);
 		widget.setIcon(Icons.ERROR);
 		widget.setMarkup(Markup.STRONG);

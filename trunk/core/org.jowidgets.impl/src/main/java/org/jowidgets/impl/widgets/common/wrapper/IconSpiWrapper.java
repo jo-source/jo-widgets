@@ -28,19 +28,24 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.widgets.IContainerCommon;
-import org.jowidgets.common.widgets.IScrollCompositeCommon;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.widgets.IIconCommon;
+import org.jowidgets.spi.widgets.IIconSpi;
 
-public abstract class AbstractScrollContainerCommonWrapper extends AbstractContainerCommonWrapper implements
-		IScrollCompositeCommon {
+public class IconSpiWrapper extends WidgetSpiWrapper implements IIconCommon {
 
-	public AbstractScrollContainerCommonWrapper(final IContainerCommon widget) {
+	public IconSpiWrapper(final IIconSpi widget) {
 		super(widget);
 	}
 
 	@Override
-	public IScrollCompositeCommon getWidget() {
-		return (IScrollCompositeCommon) super.getWidget();
+	public IIconSpi getWidget() {
+		return (IIconSpi) super.getWidget();
+	}
+
+	@Override
+	public void setIcon(final IImageConstant icon) {
+		getWidget().setIcon(icon);
 	}
 
 }

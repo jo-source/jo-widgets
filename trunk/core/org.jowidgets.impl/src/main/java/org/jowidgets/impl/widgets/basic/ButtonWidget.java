@@ -35,10 +35,10 @@ import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.impl.widgets.common.wrapper.ButtonCommonWrapper;
+import org.jowidgets.impl.widgets.common.wrapper.ButtonSpiWrapper;
 import org.jowidgets.spi.widgets.IButtonSpi;
 
-public class ButtonWidget extends ButtonCommonWrapper implements IButton {
+public class ButtonWidget extends ButtonSpiWrapper implements IButton {
 
 	private final ControlDelegate controlDelegate;
 

@@ -28,28 +28,18 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.widgets.IContainerCommon;
 import org.jowidgets.common.widgets.ISplitCompositeCommon;
+import org.jowidgets.spi.widgets.ISplitCompositeSpi;
 
-public class SplitCompositeCommonWrapper extends WidgetCommonWrapper implements ISplitCompositeCommon {
+public abstract class AbstractSplitCompositeSpiWrapper extends WidgetSpiWrapper implements ISplitCompositeCommon {
 
-	public SplitCompositeCommonWrapper(final ISplitCompositeCommon widget) {
+	public AbstractSplitCompositeSpiWrapper(final ISplitCompositeSpi widget) {
 		super(widget);
 	}
 
 	@Override
-	public ISplitCompositeCommon getWidget() {
-		return (ISplitCompositeCommon) super.getWidget();
-	}
-
-	@Override
-	public IContainerCommon getFirst() {
-		return getWidget().getFirst();
-	}
-
-	@Override
-	public IContainerCommon getSecond() {
-		return getWidget().getSecond();
+	public ISplitCompositeSpi getWidget() {
+		return (ISplitCompositeSpi) super.getWidget();
 	}
 
 }

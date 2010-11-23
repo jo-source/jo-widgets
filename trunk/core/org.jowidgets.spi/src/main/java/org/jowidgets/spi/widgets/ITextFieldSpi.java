@@ -28,9 +28,8 @@
 
 package org.jowidgets.spi.widgets;
 
-import org.jowidgets.common.widgets.IInputWidgetCommon;
 
-public interface ITextFieldSpi extends IControlSpi, IInputWidgetCommon {
+public interface ITextFieldSpi extends IControlSpi, IInputWidgetSpi {
 
 	String getText();
 

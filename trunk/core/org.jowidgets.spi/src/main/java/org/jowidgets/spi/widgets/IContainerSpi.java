@@ -28,7 +28,16 @@
 package org.jowidgets.spi.widgets;
 
 import org.jowidgets.common.widgets.IContainerCommon;
+import org.jowidgets.common.widgets.IControlCommon;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 
 public interface IContainerSpi extends IWidgetSpi, IContainerCommon {
+
+	<WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+		IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+		Object layoutConstraints);
+
+	<WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(ICustomWidgetFactory<WIDGET_TYPE> factory, Object layoutConstraints);
 
 }

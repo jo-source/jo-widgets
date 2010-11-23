@@ -32,13 +32,12 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.ISplitComposite;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.widgets.IContainerCommon;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
 public class DemoSplitComposite {
 
-	public DemoSplitComposite(final IContainerCommon parentContainer) {
+	public DemoSplitComposite(final IContainer parentContainer) {
 
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 

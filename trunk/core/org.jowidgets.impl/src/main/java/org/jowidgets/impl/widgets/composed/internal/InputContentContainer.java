@@ -27,9 +27,13 @@
  */
 package org.jowidgets.impl.widgets.composed.internal;
 
+import java.util.List;
+
 import org.jowidgets.api.validation.IValidateable;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
@@ -39,8 +43,6 @@ import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Border;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.IContainerCommon;
-import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
@@ -53,7 +55,7 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractComposedInputWidg
 	private final IInputContentCreator<INPUT_TYPE> content;
 
 	public InputContentContainer(
-		final IContainerCommon parent,
+		final IContainer parent,
 		final IInputContentCreator<INPUT_TYPE> content,
 		final boolean scrollableContent,
 		final Border border) {
@@ -216,17 +218,22 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractComposedInputWidg
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
 		return compositeWidget.add(descriptor, layoutConstraints);
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
 		final ICustomWidgetFactory<WIDGET_TYPE> factory,
 		final Object layoutConstraints) {
 		return compositeWidget.add(factory, layoutConstraints);
+	}
+
+	@Override
+	public List<IControl> getChildren() {
+		return compositeWidget.getChildren();
 	}
 
 }

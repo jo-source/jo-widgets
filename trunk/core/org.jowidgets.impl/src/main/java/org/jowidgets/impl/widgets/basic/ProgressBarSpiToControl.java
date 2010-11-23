@@ -26,29 +26,37 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.demo;
+package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.IWindow;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.api.widgets.IControl;
+import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.impl.base.delegate.ControlDelegate;
+import org.jowidgets.impl.widgets.common.wrapper.ProgressBarSpiWrapper;
+import org.jowidgets.spi.widgets.IProgressBarSpi;
 
-public class DemoProgressBarComposite {
+public class ProgressBarSpiToControl extends ProgressBarSpiWrapper implements IProgressBarSpi, IControl {
 
-	public DemoProgressBarComposite(final IContainer parentContainer, final IWindow parentWindow) {
+	private final ControlDelegate controlDelegate;
 
-		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
-
-		parentContainer.setLayout(new MigLayoutDescriptor("[grow]", "[grow]"));
-		final IComposite compositeWidget = parentContainer.add(bpF.scrollComposite(), "growx, growy");
-
-		compositeWidget.setLayout(new MigLayoutDescriptor("[grow]", "[][][][][][][][][][]"));
-
-		for (int i = 0; i < 10; i++) {
-			final IComposite progressBarComposite = compositeWidget.add(bpF.composite(), "growx, wrap");
-			new DemoProgressBar(progressBarComposite, parentWindow);
-		}
+	public ProgressBarSpiToControl(final IProgressBarSpi iconSpi) {
+		super(iconSpi);
+		this.controlDelegate = new ControlDelegate();
 	}
+
+	@Override
+	public IContainer getParent() {
+		return controlDelegate.getParent();
+	}
+
+	@Override
+	public void setParent(final IWidget parent) {
+		controlDelegate.setParent(parent);
+	}
+
+	@Override
+	public boolean isReparentable() {
+		return controlDelegate.isReparentable();
+	}
+
 }
