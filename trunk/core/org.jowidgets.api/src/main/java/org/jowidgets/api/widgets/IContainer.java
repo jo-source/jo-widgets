@@ -48,6 +48,8 @@ public interface IContainer extends IWidget, IContainerCommon {
 	 * Removing controls should be nested with layoutBegin() - layoutEnd() to ensure
 	 * that the container revalidates its layout.
 	 * 
+	 * A further using / access of removed controls is not indented and may lead to arbitrary behavior
+	 * 
 	 * @param control The control to remove
 	 * @return true if the widget could be removed, false otherwise
 	 */
