@@ -1,0 +1,64 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.jowidgets</groupId>
+	<artifactId>org.jowidgets.core.parent</artifactId>
+	<version>0.0.4</version>
+	<packaging>pom</packaging>
+	<name>org.jowidgets.core.parent</name>
+
+	<parent>
+		<groupId>org.jowidgets</groupId>
+		<artifactId>org.jowidgets.parent</artifactId>
+		<version>0.0.4</version>
+		<relativePath>../../parent/pom.xml</relativePath>
+	</parent>
+
+	<modules>
+		<module>../org.jowidgets.common</module>
+		<module>../org.jowidgets.api</module>
+		<module>../org.jowidgets.api.test</module>
+		<module>../org.jowidgets.tools</module>
+		<module>../org.jowidgets.impl</module>
+		<module>../org.jowidgets.spi</module>
+		<module>../org.jowidgets.spi.impl.mock</module>
+		<module>../org.jowidgets.spi.impl.swing</module>
+		<module>../org.jowidgets.spi.impl.swt</module>
+	</modules>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.1</version>
+				<configuration>
+					<archive>
+						<manifestFile>META-INF/MANIFEST.MF</manifestFile>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>2.1.0</version>
+				<executions>
+					<execution>
+						<id>bundle-manifest</id>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>manifest</goal>
+						</goals>
+						<configuration>
+							<manifestLocation>META-INF</manifestLocation>
+							<instructions>
+								<Export-Package>!*.internal;org.jowidgets.*</Export-Package>
+								<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+							</instructions>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
