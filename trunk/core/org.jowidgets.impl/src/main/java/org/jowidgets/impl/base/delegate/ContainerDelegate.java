@@ -79,6 +79,7 @@ public class ContainerDelegate {
 	}
 
 	public void removeAll() {
+		containerWidget.removeAll();
 		children.clear();
 	}
 
