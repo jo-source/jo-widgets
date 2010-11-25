@@ -34,7 +34,7 @@ public interface IToggleButtonSetupBuilder<INSTANCE_TYPE extends IToggleButtonSe
 
 	@Override
 	//This is necessary to ensure that the return type of 
-	//the method setTooltipText of ITextlabelSetupBuilder and IIconSetupBuilder
+	//the method setTooltipText of ICheckBoxSetupBuilder and IIconSetupBuilder
 	//is consistent
 	INSTANCE_TYPE setToolTipText(String toolTipText);
 
