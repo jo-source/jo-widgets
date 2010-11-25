@@ -25,28 +25,15 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.validation;
+package org.jowidgets.tools.validation;
 
-import org.jowidgets.util.Assert;
+import org.jowidgets.api.validation.IValidator;
+import org.jowidgets.api.validation.ValidationResult;
 
-// TODO Add use ERROR_INFO message type (must be implemented)
-public class MandatoryInfoValidator<VALIDATION_INPUT_TYPE> implements IValidator<VALIDATION_INPUT_TYPE> {
-
-	private final ValidationResult infoResult;
-
-	public MandatoryInfoValidator(final String messageText) {
-		Assert.paramNotEmpty(messageText, "controlName");
-		this.infoResult = new ValidationResult(ValidationMessageType.ERROR, messageText);
-	}
+public class OkValidator<VALIDATION_INPUT_TYPE> implements IValidator<VALIDATION_INPUT_TYPE> {
 
 	@Override
 	public ValidationResult validate(final VALIDATION_INPUT_TYPE validationInput) {
-		if (validationInput == null) {
-			return infoResult;
-		}
-		else if (validationInput instanceof String && ((String) validationInput).trim().isEmpty()) {
-			return infoResult;
-		}
 		return new ValidationResult();
 	}
 

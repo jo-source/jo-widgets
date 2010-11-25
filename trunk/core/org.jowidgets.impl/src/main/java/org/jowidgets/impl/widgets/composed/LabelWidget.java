@@ -78,6 +78,7 @@ public class LabelWidget implements ILabel {
 	@Override
 	public void setToolTipText(final String text) {
 		textLabelWidget.setToolTipText(text);
+		iconWidget.setToolTipText(text);
 	}
 
 	@Override

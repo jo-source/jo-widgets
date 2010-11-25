@@ -29,7 +29,6 @@ package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationMessage;
-import org.jowidgets.api.validation.ValidationMessageType;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IComposite;
@@ -344,15 +343,11 @@ public class InputDialogWidget<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 
 		private void setValidationResult(final ValidationMessage firstWorst) {
 			parentContainer.layoutBegin();
-			if (firstWorst.getType() == ValidationMessageType.OK) {
+			if (firstWorst.getType().isValid()) {
 				buttonWidget.setEnabled(true);
 				buttonWidget.setToolTipText(buttonDescriptor.getToolTipText());
 			}
-			else if (firstWorst.getType() == ValidationMessageType.WARNING) {
-				buttonWidget.setEnabled(true);
-				buttonWidget.setToolTipText(buttonDescriptor.getToolTipText());
-			}
-			else if (firstWorst.getType() == ValidationMessageType.ERROR) {
+			else {
 				buttonWidget.setEnabled(false);
 				buttonWidget.setToolTipText(firstWorst.getMessageText());
 			}

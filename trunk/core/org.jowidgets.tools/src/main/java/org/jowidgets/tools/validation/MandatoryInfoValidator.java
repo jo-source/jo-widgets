@@ -25,12 +25,30 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.validation;
+package org.jowidgets.tools.validation;
 
-public class OkValidator<VALIDATION_INPUT_TYPE> implements IValidator<VALIDATION_INPUT_TYPE> {
+import org.jowidgets.api.validation.IValidator;
+import org.jowidgets.api.validation.ValidationMessageType;
+import org.jowidgets.api.validation.ValidationResult;
+import org.jowidgets.util.Assert;
+
+public class MandatoryInfoValidator<VALIDATION_INPUT_TYPE> implements IValidator<VALIDATION_INPUT_TYPE> {
+
+	private final ValidationResult infoResult;
+
+	public MandatoryInfoValidator(final String messageText) {
+		Assert.paramNotEmpty(messageText, "controlName");
+		this.infoResult = new ValidationResult(ValidationMessageType.INFO_ERROR, messageText);
+	}
 
 	@Override
 	public ValidationResult validate(final VALIDATION_INPUT_TYPE validationInput) {
+		if (validationInput == null) {
+			return infoResult;
+		}
+		else if (validationInput instanceof String && ((String) validationInput).trim().isEmpty()) {
+			return infoResult;
+		}
 		return new ValidationResult();
 	}
 

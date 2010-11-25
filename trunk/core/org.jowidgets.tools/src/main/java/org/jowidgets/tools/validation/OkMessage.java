@@ -25,18 +25,18 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.validation;
+package org.jowidgets.tools.validation;
 
-public class OkTextInputValidator implements ITextInputValidator {
+import org.jowidgets.api.validation.ValidationMessage;
+import org.jowidgets.api.validation.ValidationMessageType;
 
-	@Override
-	public ValidationResult validate(final String validationInput) {
-		return new ValidationResult();
+public final class OkMessage {
+
+	private static final ValidationMessage INSTANCE = new ValidationMessage(ValidationMessageType.OK, "");
+
+	private OkMessage() {}
+
+	public static ValidationMessage getInstance() {
+		return INSTANCE;
 	}
-
-	@Override
-	public ValidationMessage isCompletableToValid(final String string) {
-		return OkMessage.getInstance();
-	}
-
 }

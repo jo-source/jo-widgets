@@ -28,15 +28,15 @@
 package org.jowidgets.impl.convert.defaults;
 
 import org.jowidgets.api.convert.IConverter;
-import org.jowidgets.api.validation.OkMessage;
 import org.jowidgets.api.validation.ValidationMessage;
 import org.jowidgets.api.validation.ValidationMessageType;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.impl.convert.AbstractObjectStringConverter;
+import org.jowidgets.tools.validation.OkMessage;
 
 public class DefaultShortConverter extends AbstractObjectStringConverter<Short> implements IConverter<Short> {
 
-	private static final String NO_VALID_INTEGER_MESSAGE = "is no valid integer number";
+	private static final String NO_VALID_INTEGER_MESSAGE = "No valid short number";
 
 	@Override
 	public Short convertToObject(final String string) {
@@ -60,7 +60,7 @@ public class DefaultShortConverter extends AbstractObjectStringConverter<Short> 
 
 	@Override
 	public ValidationResult validate(final String text) {
-		if (text != null && !text.isEmpty()) {
+		if (text != null && !text.trim().isEmpty()) {
 			if (convertToObject(text) == null) {
 				return new ValidationResult(ValidationMessageType.ERROR, NO_VALID_INTEGER_MESSAGE);
 			}
@@ -70,7 +70,7 @@ public class DefaultShortConverter extends AbstractObjectStringConverter<Short> 
 
 	@Override
 	public ValidationMessage isCompletableToValid(final String string) {
-		if (string != null) {
+		if (string != null && !string.trim().isEmpty()) {
 			if (!string.matches("-?[0-9]*")) {
 				return new ValidationMessage(ValidationMessageType.ERROR, "'"
 					+ string

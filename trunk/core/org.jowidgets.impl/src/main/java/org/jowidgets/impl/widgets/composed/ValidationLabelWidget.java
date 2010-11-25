@@ -53,9 +53,10 @@ public class ValidationLabelWidget implements IValidationLabel {
 	private final ILabel labelWidget;
 	private final List<IInputWidget<?>> inputWidgets;
 	private final IInputListener inputListener;
-	private final IControl controlAdapter;
+	private final IControl labelControl;
 	private final boolean showLabel;
 	private LabelState currentLabelState;
+	private String currentMessageText;
 	private boolean hasInput;
 
 	public ValidationLabelWidget(final ILabel labelWidget, final IValidationLabelDescriptor descriptor) {
@@ -64,7 +65,7 @@ public class ValidationLabelWidget implements IValidationLabel {
 		this.showLabel = descriptor.isShowValidationMessage();
 		this.labelWidget = labelWidget;
 		this.descriptor = descriptor;
-		this.controlAdapter = new ControlWrapper(labelWidget);
+		this.labelControl = new ControlWrapper(labelWidget);
 		this.inputWidgets = new LinkedList<IInputWidget<?>>();
 		this.hasInput = false;
 		this.inputListener = new IInputListener() {
@@ -103,9 +104,10 @@ public class ValidationLabelWidget implements IValidationLabel {
 
 	private void onInputChanged() {
 		final LabelState oldState = currentLabelState;
+		final String oldMessageText = currentMessageText;
 		doValidation(isEmpty());
 
-		if (oldState != currentLabelState) {
+		if (oldState != currentLabelState || oldMessageText != currentMessageText) {
 			labelWidget.redraw();
 		}
 	}
@@ -143,117 +145,136 @@ public class ValidationLabelWidget implements IValidationLabel {
 			messageText.append(firstWorst.getContext() + ": ");
 		}
 		messageText.append(firstWorst.getMessageText());
+		currentMessageText = messageText.toString();
 
 		if (firstWorst.getType() == ValidationMessageType.OK && hasInput && !isEmpty) {
 			labelWidget.setIcon(descriptor.getOkIcon());
 			if (showLabel) {
 				labelWidget.setMarkup(descriptor.getOkMarkup());
 				labelWidget.setForegroundColor(descriptor.getOkColor());
-				labelWidget.setText(messageText.toString());
+				labelWidget.setText(currentMessageText);
+			}
+			else if (currentMessageText != null && !currentMessageText.trim().isEmpty()) {
+				labelWidget.setToolTipText(currentMessageText);
 			}
 			currentLabelState = LabelState.OK_VALIDATION;
 		}
-		else if (firstWorst.getType() == ValidationMessageType.WARNING) {
+		else if (firstWorst.getType() == ValidationMessageType.WARNING && !isEmpty) {
 			labelWidget.setIcon(descriptor.getWarningIcon());
 			if (showLabel) {
 				labelWidget.setMarkup(descriptor.getWarningMarkup());
 				labelWidget.setForegroundColor(descriptor.getWarningColor());
-				labelWidget.setText(messageText.toString());
+				labelWidget.setText(currentMessageText);
+			}
+			else if (currentMessageText != null && !currentMessageText.trim().isEmpty()) {
+				labelWidget.setToolTipText(currentMessageText);
 			}
 			currentLabelState = LabelState.WARNING_VALIDATION;
+		}
+		else if (firstWorst.getType() == ValidationMessageType.INFO_ERROR) {
+			labelWidget.setIcon(descriptor.getInfoErrorIcon());
+			if (showLabel) {
+				labelWidget.setMarkup(descriptor.getInfoErrorMarkup());
+				labelWidget.setForegroundColor(descriptor.getInfoErrorColor());
+				labelWidget.setText(currentMessageText);
+			}
+			else if (currentMessageText != null && !currentMessageText.trim().isEmpty()) {
+				labelWidget.setToolTipText(currentMessageText);
+			}
+			currentLabelState = LabelState.INFO_ERROR_VALIDATION;
 		}
 		else if (firstWorst.getType() == ValidationMessageType.ERROR) {
 			labelWidget.setIcon(descriptor.getErrorIcon());
 			if (showLabel) {
 				labelWidget.setMarkup(descriptor.getErrorMarkup());
 				labelWidget.setForegroundColor(descriptor.getErrorColor());
-				labelWidget.setText(messageText.toString());
+				labelWidget.setText(currentMessageText);
+			}
+			else if (currentMessageText != null && !currentMessageText.trim().isEmpty()) {
+				labelWidget.setToolTipText(currentMessageText);
 			}
 			currentLabelState = LabelState.ERROR_VALIDATION;
 		}
-		else {
-			setInputCheckResult(isEmpty);
-		}
-	}
-
-	private void setInputCheckResult(final boolean isEmpty) {
-		if (isEmpty) {
+		else if (isEmpty) {
 			labelWidget.setIcon(descriptor.getMissingInputIcon());
 			labelWidget.setMarkup(descriptor.getMissingInputMarkup());
 			labelWidget.setForegroundColor(descriptor.getMissingInputColor());
-			labelWidget.setText(descriptor.getMissingInputText());
+			currentMessageText = descriptor.getMissingInputText();
+			labelWidget.setText(currentMessageText);
 			currentLabelState = LabelState.MISSING_INPUT;
 		}
 		else {
 			labelWidget.setIcon(null);
 			labelWidget.setText(null);
+			labelWidget.setToolTipText(null);
 			currentLabelState = LabelState.EMPTY;
 		}
 	}
 
 	@Override
 	public IContainer getParent() {
-		return controlAdapter.getParent();
+		return labelControl.getParent();
 	}
 
 	@Override
 	public void setParent(final IWidget parent) {
-		controlAdapter.setParent(parent);
+		labelControl.setParent(parent);
 	}
 
 	@Override
 	public boolean isReparentable() {
-		return controlAdapter.isReparentable();
+		return labelControl.isReparentable();
 	}
 
 	@Override
 	public Object getUiReference() {
-		return controlAdapter.getUiReference();
+		return labelControl.getUiReference();
 	}
 
 	@Override
 	public void redraw() {
-		controlAdapter.redraw();
+		labelControl.redraw();
 	}
 
 	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
-		controlAdapter.setForegroundColor(colorValue);
+		labelControl.setForegroundColor(colorValue);
 	}
 
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
-		controlAdapter.setBackgroundColor(colorValue);
+		labelControl.setBackgroundColor(colorValue);
 	}
 
 	@Override
 	public IColorConstant getForegroundColor() {
-		return controlAdapter.getForegroundColor();
+		return labelControl.getForegroundColor();
 	}
 
 	@Override
 	public IColorConstant getBackgroundColor() {
-		return controlAdapter.getBackgroundColor();
+		return labelControl.getBackgroundColor();
 	}
 
 	@Override
 	public void setVisible(final boolean visible) {
-		controlAdapter.setVisible(visible);
+		labelControl.setVisible(visible);
 	}
 
 	@Override
 	public boolean isVisible() {
-		return controlAdapter.isVisible();
+		return labelControl.isVisible();
 	}
 
 	@Override
 	public Dimension getSize() {
-		return controlAdapter.getSize();
+		return labelControl.getSize();
 	}
 
 	private enum LabelState {
 		OK_VALIDATION,
 		WARNING_VALIDATION,
+		INFO_ERROR_VALIDATION,
 		ERROR_VALIDATION,
 		MISSING_INPUT,
 		EMPTY;

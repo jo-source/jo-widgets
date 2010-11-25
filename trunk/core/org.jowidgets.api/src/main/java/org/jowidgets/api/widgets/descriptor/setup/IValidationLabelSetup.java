@@ -44,6 +44,9 @@ public interface IValidationLabelSetup extends IWidgetSetup {
 	Markup getWarningMarkup();
 
 	@Mandatory
+	Markup getInfoErrorMarkup();
+
+	@Mandatory
 	Markup getErrorMarkup();
 
 	@Mandatory
@@ -56,6 +59,9 @@ public interface IValidationLabelSetup extends IWidgetSetup {
 	IColorConstant getWarningColor();
 
 	@Mandatory
+	IColorConstant getInfoErrorColor();
+
+	@Mandatory
 	IColorConstant getErrorColor();
 
 	@Mandatory
@@ -64,6 +70,8 @@ public interface IValidationLabelSetup extends IWidgetSetup {
 	IImageConstant getOkIcon();
 
 	IImageConstant getWarningIcon();
+
+	IImageConstant getInfoErrorIcon();
 
 	IImageConstant getErrorIcon();
 

@@ -6,8 +6,6 @@ package org.jowidgets.common.image;
 
 import java.net.URL;
 
-import org.jowidgets.common.image.IImageConstant;
-
 public interface IImageUrlProvider extends IImageConstant {
 
 	URL getImageUrl();

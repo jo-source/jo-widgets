@@ -27,9 +27,9 @@
  */
 package org.jowidgets.impl.widgets.composed.blueprint.defaults;
 
-import org.jowidgets.api.validation.OkValidator;
 import org.jowidgets.api.widgets.blueprint.builder.IInputFieldSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
+import org.jowidgets.tools.validation.OkValidator;
 
 public class InputFieldDefaults implements IDefaultInitializer<IInputFieldSetupBuilder<?, Object>> {
 

@@ -55,4 +55,9 @@ public class IconWidget extends MockWidget implements IIconSpi {
 		return (UIMIcon) super.getUiReference();
 	}
 
+	@Override
+	public void setToolTipText(final String text) {
+		getUiReference().setToolTipText(text);
+	}
+
 }

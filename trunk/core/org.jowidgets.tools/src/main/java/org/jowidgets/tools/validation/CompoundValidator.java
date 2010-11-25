@@ -25,10 +25,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.validation;
+package org.jowidgets.tools.validation;
 
 import java.util.Arrays;
 import java.util.List;
+
+import org.jowidgets.api.validation.IValidator;
+import org.jowidgets.api.validation.ValidationResult;
+import org.jowidgets.util.Assert;
 
 public class CompoundValidator<VALIDATION_INPUT_TYPE> implements IValidator<VALIDATION_INPUT_TYPE> {
 
@@ -36,7 +40,6 @@ public class CompoundValidator<VALIDATION_INPUT_TYPE> implements IValidator<VALI
 
 	public CompoundValidator(final IValidator<VALIDATION_INPUT_TYPE>... validators) {
 		this.validators = Arrays.asList(validators);
-
 	}
 
 	@Override
@@ -47,6 +50,21 @@ public class CompoundValidator<VALIDATION_INPUT_TYPE> implements IValidator<VALI
 			validationResult.addValidationResult(subResult);
 		}
 		return validationResult;
+	}
+
+	public void addValidator(final IValidator<VALIDATION_INPUT_TYPE> validator) {
+		Assert.paramNotNull(validator, "validator");
+		this.validators.add(validator);
+	}
+
+	public void removeValidator(final IValidator<VALIDATION_INPUT_TYPE> validator) {
+		Assert.paramNotNull(validator, "validator");
+		if (validators.contains(validator)) {
+			validators.remove(validator);
+		}
+		else {
+			throw new IllegalArgumentException("Validator '" + validator + "' is not member of this compound validator");
+		}
 	}
 
 }

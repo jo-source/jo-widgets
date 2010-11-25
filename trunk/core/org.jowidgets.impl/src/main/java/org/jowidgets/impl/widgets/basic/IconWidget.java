@@ -45,6 +45,11 @@ public class IconWidget extends IconSpiWrapper implements IIcon {
 	public IconWidget(final IIconSpi iconSpi, final IIconSetup setup) {
 		super(iconSpi);
 		this.controlDelegate = new ControlDelegate();
+
+		if (setup.getToolTipText() != null) {
+			setToolTipText(setup.getToolTipText());
+		}
+
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
 	}

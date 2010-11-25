@@ -52,6 +52,11 @@ public class IconWidget extends SwingWidget implements IIconSpi {
 	}
 
 	@Override
+	public void setToolTipText(final String text) {
+		getUiReference().setToolTipText(text);
+	}
+
+	@Override
 	public JLabel getUiReference() {
 		return (JLabel) super.getUiReference();
 	}

@@ -28,7 +28,6 @@
 
 package org.jowidgets.tools.widgets.base;
 
-import org.jowidgets.api.validation.IValidateable;
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IInputWidget;
@@ -43,11 +42,20 @@ public abstract class AbstractInputWidget<VALUE_TYPE> extends WidgetWrapper impl
 
 	private final InputObservable inputObservable;
 	private final InputValidationDelegate<VALUE_TYPE> inputValidationDelegate;
+	private final IInputListener inputListener;
 
 	public AbstractInputWidget(final IWidget widget, final IInputWidgetSetup<VALUE_TYPE> setup) {
 		super(widget);
 		this.inputObservable = new InputObservable();
 		this.inputValidationDelegate = new InputValidationDelegate<VALUE_TYPE>(setup);
+
+		this.inputListener = new IInputListener() {
+
+			@Override
+			public void inputChanged(final Object source) {
+				fireInputChanged(source);
+			}
+		};
 	}
 
 	@Override
@@ -85,12 +93,18 @@ public abstract class AbstractInputWidget<VALUE_TYPE> extends WidgetWrapper impl
 		inputObservable.removeInputListener(listener);
 	}
 
-	protected void addValidatable(final IValidateable validateable) {
-		inputValidationDelegate.addValidatable(validateable);
-	}
-
 	protected void fireInputChanged(final Object source) {
 		inputObservable.fireInputChanged(source);
+	}
+
+	protected void registerInputWidget(final IInputWidget<?> inputWidget, final String validationContext) {
+		inputWidget.addInputListener(inputListener);
+		inputValidationDelegate.addValidatable(inputWidget, validationContext);
+	}
+
+	protected void unRegisterInputWidget(final IInputWidget<?> inputWidget) {
+		inputWidget.removeInputListener(inputListener);
+		inputValidationDelegate.removeValidatable(inputWidget);
 	}
 
 }

@@ -36,17 +36,18 @@ import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.descriptor.setup.IInputWidgetSetup;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.Tuple;
 
 public class InputValidationDelegate<VALUE_TYPE> {
 
 	private final List<IValidator<VALUE_TYPE>> validators;
-	private final List<IValidateable> validateables;
+	private final List<Tuple<IValidateable, String>> validateables;
 
 	private boolean mandatory;
 
 	public InputValidationDelegate(final IInputWidgetSetup<VALUE_TYPE> setup) {
 		super();
-		this.validateables = new LinkedList<IValidateable>();
+		this.validateables = new LinkedList<Tuple<IValidateable, String>>();
 		this.validators = new LinkedList<IValidator<VALUE_TYPE>>();
 		final IValidator<VALUE_TYPE> validator = setup.getValidator();
 		if (validator != null) {
@@ -55,16 +56,24 @@ public class InputValidationDelegate<VALUE_TYPE> {
 		this.mandatory = setup.isMandatory();
 	}
 
-	public void addValidatable(final IValidateable validateable) {
+	public void addValidatable(final IValidateable validateable, final String validationContext) {
 		Assert.paramNotNull(validateable, "validateable");
-		validateables.add(validateable);
+		validateables.add(new Tuple<IValidateable, String>(validateable, validationContext));
+	}
+
+	public void removeValidatable(final IValidateable validateable) {
+		Assert.paramNotNull(validateable, "validateable");
+		final Tuple<IValidateable, String> validatableTuple = findValidatable(validateable);
+		if (validatableTuple != null) {
+			validateables.remove(validatableTuple);
+		}
 	}
 
 	public ValidationResult validate(final VALUE_TYPE value) {
 		final ValidationResult result = new ValidationResult();
 
-		for (final IValidateable validateable : validateables) {
-			result.addValidationResult(validateable.validate());
+		for (final Tuple<IValidateable, String> validateable : validateables) {
+			result.addValidationResult(validateable.getFirst().validate(), validateable.getSecond());
 		}
 
 		for (final IValidator<VALUE_TYPE> validator : validators) {
@@ -84,6 +93,15 @@ public class InputValidationDelegate<VALUE_TYPE> {
 	public void addValidator(final IValidator<VALUE_TYPE> validator) {
 		Assert.paramNotNull(validator, "validator");
 		validators.add(validator);
+	}
+
+	private Tuple<IValidateable, String> findValidatable(final IValidateable validateable) {
+		for (final Tuple<IValidateable, String> validateableTuple : validateables) {
+			if (validateableTuple.getFirst() == validateable) {
+				return validateableTuple;
+			}
+		}
+		return null;
 	}
 
 }

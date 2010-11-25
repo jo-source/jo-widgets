@@ -33,4 +33,6 @@ public interface IIconSetupBuilder<INSTANCE_TYPE extends IIconSetupBuilder<?>> e
 		IIconSetupBuilderCommon<INSTANCE_TYPE>,
 		IWidgetSetupBuilder<INSTANCE_TYPE> {
 
+	INSTANCE_TYPE setToolTipText(String toolTipText);
+
 }
