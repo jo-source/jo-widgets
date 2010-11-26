@@ -29,6 +29,7 @@ package org.jowidgets.examples.rwt;
 
 import org.eclipse.swt.widgets.Display;
 import org.jowidgets.api.convert.IConverterProvider;
+import org.jowidgets.api.threads.IUiThreadAccess;
 import org.jowidgets.api.toolkit.IMessagePane;
 import org.jowidgets.api.toolkit.IQuestionPane;
 import org.jowidgets.api.toolkit.IToolkit;
@@ -41,7 +42,6 @@ import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
-import org.jowidgets.common.threads.IUiThreadAccess;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swt.SwtWidgetsServiceProvider;
 import org.jowidgets.impl.toolkit.DefaultToolkit;

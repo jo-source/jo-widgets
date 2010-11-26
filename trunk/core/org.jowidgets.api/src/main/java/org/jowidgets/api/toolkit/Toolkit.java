@@ -32,6 +32,7 @@ import java.util.Iterator;
 import java.util.ServiceLoader;
 
 import org.jowidgets.api.convert.IConverterProvider;
+import org.jowidgets.api.threads.IUiThreadAccess;
 import org.jowidgets.api.utils.IWidgetUtils;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
@@ -39,7 +40,6 @@ import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
-import org.jowidgets.common.threads.IUiThreadAccess;
 import org.jowidgets.common.widgets.IWindowCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.util.Assert;

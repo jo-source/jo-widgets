@@ -36,6 +36,10 @@ import org.jowidgets.common.widgets.IWindowCommon;
 
 public class JoDialog extends WindowWidget<IFrame, IDialogBluePrint> implements IFrame {
 
+	public JoDialog(final String title) {
+		super(Toolkit.getBluePrintFactory().dialog(title));
+	}
+
 	public JoDialog(final IWindowCommon parent) {
 		this(parent, Toolkit.getBluePrintFactory().dialog());
 	}
@@ -46,6 +50,10 @@ public class JoDialog extends WindowWidget<IFrame, IDialogBluePrint> implements 
 
 	public JoDialog(final IWindowCommon parent, final IDialogDescriptor setup) {
 		super(parent, Toolkit.getBluePrintFactory().dialog().setSetup(setup));
+	}
+
+	public JoDialog(final IDialogDescriptor setup) {
+		super(Toolkit.getBluePrintFactory().dialog().setSetup(setup));
 	}
 
 	public static IDialogBluePrint bluePrint() {

@@ -8,10 +8,10 @@ import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.SwingUtilities;
 
-import org.jowidgets.common.threads.IUiThreadAccess;
+import org.jowidgets.common.threads.IUiThreadAccessCommon;
 import org.jowidgets.util.Assert;
 
-public class SwingUiThreadAccess implements IUiThreadAccess {
+public class SwingUiThreadAccess implements IUiThreadAccessCommon {
 
 	@Override
 	public void invokeLater(final Runnable runnable) {

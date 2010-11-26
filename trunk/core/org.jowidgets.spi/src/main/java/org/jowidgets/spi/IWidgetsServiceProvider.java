@@ -30,7 +30,7 @@ package org.jowidgets.spi;
 
 import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
-import org.jowidgets.common.threads.IUiThreadAccess;
+import org.jowidgets.common.threads.IUiThreadAccessCommon;
 import org.jowidgets.spi.image.IImageHandleFactorySpi;
 
 public interface IWidgetsServiceProvider {
@@ -41,7 +41,7 @@ public interface IWidgetsServiceProvider {
 
 	IWidgetFactorySpi getWidgetFactory();
 
-	IUiThreadAccess createUiThreadAccess();
+	IUiThreadAccessCommon createUiThreadAccess();
 
 	IApplicationRunner createApplicationRunner();
 
@@ -51,5 +51,7 @@ public interface IWidgetsServiceProvider {
 	 * @return The UI Reference of the active window or null, if now window is active
 	 */
 	Object getActiveWindowUiReference();
+
+	void setAllWindowsEnabled(boolean enabled);
 
 }

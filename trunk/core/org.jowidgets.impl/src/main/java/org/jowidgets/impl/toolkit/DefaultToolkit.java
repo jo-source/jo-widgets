@@ -31,6 +31,7 @@ package org.jowidgets.impl.toolkit;
 import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.image.IconsSmall;
+import org.jowidgets.api.threads.IUiThreadAccess;
 import org.jowidgets.api.toolkit.IMessagePane;
 import org.jowidgets.api.toolkit.IQuestionPane;
 import org.jowidgets.api.toolkit.IToolkit;
@@ -43,12 +44,12 @@ import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
-import org.jowidgets.common.threads.IUiThreadAccess;
 import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.application.ApplicationRunner;
 import org.jowidgets.impl.convert.DefaultConverterProvider;
 import org.jowidgets.impl.image.DefaultIconsRegisterService;
+import org.jowidgets.impl.threads.UiThreadAccess;
 import org.jowidgets.impl.utils.WidgetUtils;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 import org.jowidgets.impl.widgets.composed.factory.GenericWidgetFactory;
@@ -128,7 +129,7 @@ public class DefaultToolkit implements IToolkit {
 	@Override
 	public IUiThreadAccess getUiThreadAccess() {
 		if (uiThreadAccess == null) {
-			uiThreadAccess = widgetsServiceProvider.createUiThreadAccess();
+			uiThreadAccess = new UiThreadAccess(widgetsServiceProvider);
 		}
 		return uiThreadAccess;
 	}

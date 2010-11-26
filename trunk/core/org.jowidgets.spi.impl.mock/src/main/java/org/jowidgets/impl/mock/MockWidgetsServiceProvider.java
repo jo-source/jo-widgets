@@ -30,7 +30,7 @@ package org.jowidgets.impl.mock;
 
 import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
-import org.jowidgets.common.threads.IUiThreadAccess;
+import org.jowidgets.common.threads.IUiThreadAccessCommon;
 import org.jowidgets.impl.mock.application.MockApplicationRunner;
 import org.jowidgets.impl.mock.image.MockImageHandleFactory;
 import org.jowidgets.impl.mock.image.MockImageHandleFactorySpi;
@@ -69,7 +69,7 @@ public class MockWidgetsServiceProvider implements IWidgetsServiceProvider {
 	}
 
 	@Override
-	public IUiThreadAccess createUiThreadAccess() {
+	public IUiThreadAccessCommon createUiThreadAccess() {
 		return new MockUiThreadAccess();
 	}
 
@@ -82,6 +82,11 @@ public class MockWidgetsServiceProvider implements IWidgetsServiceProvider {
 	public Object getActiveWindowUiReference() {
 		//TODO
 		return null;
+	}
+
+	@Override
+	public void setAllWindowsEnabled(final boolean enabled) {
+		// TODO
 	}
 
 }

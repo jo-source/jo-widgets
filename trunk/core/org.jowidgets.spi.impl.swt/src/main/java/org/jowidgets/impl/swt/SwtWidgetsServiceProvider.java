@@ -29,9 +29,10 @@
 package org.jowidgets.impl.swt;
 
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
-import org.jowidgets.common.threads.IUiThreadAccess;
+import org.jowidgets.common.threads.IUiThreadAccessCommon;
 import org.jowidgets.impl.swt.application.SwtApplicationRunner;
 import org.jowidgets.impl.swt.image.SwtImageHandleFactory;
 import org.jowidgets.impl.swt.image.SwtImageHandleFactorySpi;
@@ -80,7 +81,7 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider {
 	}
 
 	@Override
-	public IUiThreadAccess createUiThreadAccess() {
+	public IUiThreadAccessCommon createUiThreadAccess() {
 		return new SwtUiThreadAccess(display);
 	}
 
@@ -92,6 +93,14 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider {
 	@Override
 	public Object getActiveWindowUiReference() {
 		return Display.getDefault().getActiveShell();
+	}
+
+	@Override
+	public void setAllWindowsEnabled(final boolean enabled) {
+		final Display currentDisplay = Display.getDefault();
+		for (final Shell shell : currentDisplay.getShells()) {
+			shell.setEnabled(enabled);
+		}
 	}
 
 }

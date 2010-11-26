@@ -32,7 +32,7 @@ import java.awt.Window;
 
 import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
-import org.jowidgets.common.threads.IUiThreadAccess;
+import org.jowidgets.common.threads.IUiThreadAccessCommon;
 import org.jowidgets.impl.swing.application.SwingApplicationRunner;
 import org.jowidgets.impl.swing.image.SwingImageHandleFactory;
 import org.jowidgets.impl.swing.image.SwingImageHandleFactorySpi;
@@ -71,7 +71,7 @@ public class SwingWidgetsServiceProvider implements IWidgetsServiceProvider {
 	}
 
 	@Override
-	public IUiThreadAccess createUiThreadAccess() {
+	public IUiThreadAccessCommon createUiThreadAccess() {
 		return new SwingUiThreadAccess();
 	}
 
@@ -90,4 +90,10 @@ public class SwingWidgetsServiceProvider implements IWidgetsServiceProvider {
 		return null;
 	}
 
+	@Override
+	public void setAllWindowsEnabled(final boolean enabled) {
+		for (final Window window : Window.getWindows()) {
+			window.setEnabled(enabled);
+		}
+	}
 }

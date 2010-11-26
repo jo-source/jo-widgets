@@ -26,14 +26,20 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.threads;
+package org.jowidgets.api.threads;
 
-public interface IUiThreadAccess {
+import org.jowidgets.common.threads.IUiThreadAccessCommon;
 
-	boolean isUiThread();
+public interface IUiThreadAccess extends IUiThreadAccessCommon {
 
-	void invokeLater(Runnable runnable);
-
-	void invokeAndWait(Runnable runnable) throws InterruptedException;
+	/**
+	 * Disables all windows, executes the runnable and after that enables all windows again.
+	 * 
+	 * WARNING: This method will be invoked in the event dispatcher thread, so the runnable should
+	 * not run to long (e.g. 0-2 seconds seems to be ok).
+	 * 
+	 * @param runnable The runnable to run
+	 */
+	void disableAllWindowsWhile(Runnable runnable);
 
 }

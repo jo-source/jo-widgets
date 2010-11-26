@@ -5,10 +5,10 @@
 package org.jowidgets.impl.swt.threads;
 
 import org.eclipse.swt.widgets.Display;
-import org.jowidgets.common.threads.IUiThreadAccess;
+import org.jowidgets.common.threads.IUiThreadAccessCommon;
 import org.jowidgets.util.Assert;
 
-public class SwtUiThreadAccess implements IUiThreadAccess {
+public class SwtUiThreadAccess implements IUiThreadAccessCommon {
 
 	private Display display;
 

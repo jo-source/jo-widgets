@@ -4,11 +4,11 @@
  */
 package org.jowidgets.impl.mock.threads;
 
-import org.jowidgets.common.threads.IUiThreadAccess;
+import org.jowidgets.common.threads.IUiThreadAccessCommon;
 import org.jowidgets.impl.mock.application.MockApplicationRunner;
 import org.jowidgets.util.Assert;
 
-public class MockUiThreadAccess implements IUiThreadAccess {
+public class MockUiThreadAccess implements IUiThreadAccessCommon {
 
 	@Override
 	public void invokeLater(final Runnable runnable) {
