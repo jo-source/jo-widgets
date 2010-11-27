@@ -46,7 +46,6 @@ public class CompositeWidget extends SwtContainerWidget {
 		super(factory, colorCache, createComposite(parentUiReference, setup));
 
 		getUiReference().setBackgroundMode(SWT.INHERIT_DEFAULT);
-
 		setLayout(setup.getLayout());
 	}
 

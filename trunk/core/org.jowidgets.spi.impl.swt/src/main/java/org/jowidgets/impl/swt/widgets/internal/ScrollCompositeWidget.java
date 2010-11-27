@@ -43,6 +43,7 @@ import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.impl.swt.color.IColorCache;
+import org.jowidgets.impl.swt.util.BorderToComposite;
 import org.jowidgets.impl.swt.util.ScrollBarSettingsConvert;
 import org.jowidgets.impl.swt.widgets.SwtContainerWidget;
 import org.jowidgets.spi.widgets.IScrollCompositeSpi;
@@ -51,7 +52,7 @@ import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
 public class ScrollCompositeWidget implements IScrollCompositeSpi {
 
 	private final SwtContainerWidget outerCompositeWidget;
-	private final CompositeWidget innerCompositeWidget;
+	private final SwtContainerWidget innerCompositeWidget;
 
 	private boolean mustChangeScrollCompositeMinSize;
 
@@ -66,12 +67,22 @@ public class ScrollCompositeWidget implements IScrollCompositeSpi {
 		final MigLayout growingMigLayout = new MigLayout("", "0[grow, 0::]0", "0[grow, 0::]0");
 		final String growingCellConstraints = "grow, w 0::,h 0::";
 
-		final Composite outerComposite = new HackyMinSizeComposite((Composite) parentUiReference, SWT.NONE);
+		final Composite outerComposite;
+		if (setup.getBorder() != null && setup.getBorder().getTitle() != null) {
+			outerComposite = BorderToComposite.convert((Composite) parentUiReference, setup.getBorder());
+		}
+		else {
+			outerComposite = new HackyMinSizeComposite((Composite) parentUiReference, SWT.NONE);
+		}
+
 		outerComposite.setBackgroundMode(SWT.INHERIT_FORCE);
 		this.outerCompositeWidget = new SwtContainerWidget(factory, colorCache, outerComposite);
 		outerComposite.setLayout(growingMigLayout);
 
-		final int style = ScrollBarSettingsConvert.convert(setup);
+		int style = ScrollBarSettingsConvert.convert(setup);
+		if (setup.getBorder() != null && setup.getBorder().getTitle() == null) {
+			style = style | SWT.BORDER;
+		}
 		final ScrolledComposite scrolledComposite = new ScrolledComposite(outerComposite, style);
 		final SwtContainerWidget scrolledWidget = new SwtContainerWidget(factory, colorCache, scrolledComposite);
 		scrolledComposite.setLayout(growingMigLayout);
@@ -81,8 +92,10 @@ public class ScrollCompositeWidget implements IScrollCompositeSpi {
 		scrolledComposite.setAlwaysShowScrollBars(setup.isAllwaysShowBars());
 		scrolledComposite.setBackgroundMode(SWT.INHERIT_FORCE);
 
-		this.innerCompositeWidget = new CompositeWidget(factory, colorCache, scrolledWidget.getUiReference(), setup);
-		final Composite innerComposite = this.innerCompositeWidget.getUiReference();
+		final Composite innerComposite = new Composite(scrolledWidget.getUiReference(), SWT.NONE);
+		innerComposite.setBackgroundMode(SWT.INHERIT_DEFAULT);
+		this.innerCompositeWidget = new SwtContainerWidget(factory, colorCache, innerComposite);
+		this.innerCompositeWidget.setLayout(setup.getLayout());
 		scrolledComposite.setContent(innerComposite);
 		innerComposite.setLayoutData(growingCellConstraints);
 
@@ -235,7 +248,6 @@ public class ScrollCompositeWidget implements IScrollCompositeSpi {
 			}
 			super.setLayoutData(layoutData);
 		}
-
 	}
 
 }

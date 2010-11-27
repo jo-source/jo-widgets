@@ -27,7 +27,7 @@
  */
 package org.jowidgets.impl.swing.widgets.internal;
 
-import javax.swing.BorderFactory;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import org.jowidgets.common.color.IColorConstant;
@@ -37,6 +37,7 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
+import org.jowidgets.impl.swing.util.BorderConvert;
 import org.jowidgets.impl.swing.util.ScrollBarSettingsConvert;
 import org.jowidgets.impl.swing.widgets.SwingContainerWidget;
 import org.jowidgets.spi.widgets.IScrollCompositeSpi;
@@ -45,12 +46,12 @@ import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
 public class ScrollCompositeWidget implements IScrollCompositeSpi {
 
 	private final SwingContainerWidget outerCompositeWidget;
-	private final CompositeWidget innerCompositeWidget;
+	private final SwingContainerWidget innerCompositeWidget;
 
 	public ScrollCompositeWidget(final IGenericWidgetFactory factory, final IScrollCompositeSetupSpi setup) {
 
 		final JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBorder(BorderFactory.createEmptyBorder());
+		scrollPane.setBorder(BorderConvert.convert(setup.getBorder()));
 		scrollPane.getViewport().setBackground(null);
 
 		final int horizontalPolicy = ScrollBarSettingsConvert.convertHorizontal(setup);
@@ -62,7 +63,10 @@ public class ScrollCompositeWidget implements IScrollCompositeSpi {
 		this.outerCompositeWidget = new SwingContainerWidget(factory, scrollPane);
 		outerCompositeWidget.setBackgroundColor(null);
 
-		this.innerCompositeWidget = new CompositeWidget(factory, setup);
+		this.innerCompositeWidget = new SwingContainerWidget(factory, new JPanel());
+		innerCompositeWidget.setLayout(setup.getLayout());
+		innerCompositeWidget.setBackgroundColor(null);
+
 		scrollPane.setViewportView(innerCompositeWidget.getUiReference());
 
 	}
