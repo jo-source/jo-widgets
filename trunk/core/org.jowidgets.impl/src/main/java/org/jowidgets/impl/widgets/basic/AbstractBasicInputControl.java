@@ -36,22 +36,21 @@ import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IInputWidgetSetup;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
-import org.jowidgets.impl.base.delegate.InputWidgetDelegate;
 import org.jowidgets.impl.widgets.common.wrapper.InputWidgetSpiWrapper;
 import org.jowidgets.spi.widgets.IInputWidgetSpi;
+import org.jowidgets.tools.widgets.delegate.InputValidationDelegate;
+import org.jowidgets.util.EmptyCheck;
 
 public abstract class AbstractBasicInputControl<VALUE_TYPE> extends InputWidgetSpiWrapper implements IInputControl<VALUE_TYPE> {
 
 	private final ControlDelegate controlDelegate;
-	private final InputWidgetDelegate<VALUE_TYPE> inputWidgetDelegate;
+	private final InputValidationDelegate<VALUE_TYPE> inputValidationDelegate;
 
 	public AbstractBasicInputControl(final IInputWidgetSpi inputWidgetSpi, final IInputWidgetSetup<VALUE_TYPE> setup) {
 		super(inputWidgetSpi);
 
 		this.controlDelegate = new ControlDelegate();
-
-		//this must be last statement
-		this.inputWidgetDelegate = new InputWidgetDelegate<VALUE_TYPE>(this, setup);
+		this.inputValidationDelegate = new InputValidationDelegate<VALUE_TYPE>(setup);
 	}
 
 	@Override
@@ -71,31 +70,31 @@ public abstract class AbstractBasicInputControl<VALUE_TYPE> extends InputWidgetS
 
 	@Override
 	public final ValidationResult validate() {
-		return inputWidgetDelegate.validate();
+		return inputValidationDelegate.validate(getValue());
 	}
 
 	@Override
 	public final boolean isMandatory() {
-		return inputWidgetDelegate.isMandatory();
+		return inputValidationDelegate.isMandatory();
 	}
 
 	@Override
 	public final void setMandatory(final boolean mandatory) {
-		inputWidgetDelegate.setMandatory(mandatory);
+		inputValidationDelegate.setMandatory(mandatory);
 	}
 
 	@Override
-	public final boolean isEmpty() {
-		return inputWidgetDelegate.isEmpty();
+	public boolean isEmpty() {
+		return EmptyCheck.isEmpty(getValue());
 	}
 
 	@Override
 	public final void addValidator(final IValidator<VALUE_TYPE> validator) {
-		inputWidgetDelegate.addValidator(validator);
+		inputValidationDelegate.addValidator(validator);
 	}
 
 	protected final void addValidatable(final IValidateable validateable) {
-		inputWidgetDelegate.addValidatable(validateable);
+		inputValidationDelegate.addValidatable(validateable, null);
 	}
 
 }

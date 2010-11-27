@@ -46,14 +46,25 @@ public class InputValidationDelegate<VALUE_TYPE> {
 	private boolean mandatory;
 
 	public InputValidationDelegate(final IInputWidgetSetup<VALUE_TYPE> setup) {
+		this(setup.getValidator(), setup.isMandatory());
+	}
+
+	public InputValidationDelegate(final boolean mandatory) {
+		this(null, mandatory);
+	}
+
+	public InputValidationDelegate(final IValidator<VALUE_TYPE> validator, final boolean mandatory) {
 		super();
 		this.validateables = new LinkedList<Tuple<IValidateable, String>>();
 		this.validators = new LinkedList<IValidator<VALUE_TYPE>>();
-		final IValidator<VALUE_TYPE> validator = setup.getValidator();
 		if (validator != null) {
 			validators.add(validator);
 		}
-		this.mandatory = setup.isMandatory();
+		this.mandatory = mandatory;
+	}
+
+	public void addValidatable(final IValidateable validateable) {
+		addValidatable(validateable, null);
 	}
 
 	public void addValidatable(final IValidateable validateable, final String validationContext) {
@@ -73,7 +84,12 @@ public class InputValidationDelegate<VALUE_TYPE> {
 		final ValidationResult result = new ValidationResult();
 
 		for (final Tuple<IValidateable, String> validateable : validateables) {
-			result.addValidationResult(validateable.getFirst().validate(), validateable.getSecond());
+			if (validateable.getSecond() == null) {
+				result.addValidationResult(validateable.getFirst().validate());
+			}
+			else {
+				result.addValidationResult(validateable.getFirst().validate(), validateable.getSecond());
+			}
 		}
 
 		for (final IValidator<VALUE_TYPE> validator : validators) {

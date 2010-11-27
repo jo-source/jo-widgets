@@ -28,6 +28,10 @@
 
 package org.jowidgets.tools.widgets.base;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import org.jowidgets.api.validation.IValidateable;
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IInputWidget;
@@ -37,17 +41,29 @@ import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.controler.impl.InputObservable;
 import org.jowidgets.tools.widgets.delegate.InputValidationDelegate;
 import org.jowidgets.tools.widgets.wrapper.WidgetWrapper;
+import org.jowidgets.util.Assert;
+import org.jowidgets.util.EmptyCheck;
 
 public abstract class AbstractInputWidget<VALUE_TYPE> extends WidgetWrapper implements IInputWidget<VALUE_TYPE> {
 
 	private final InputObservable inputObservable;
 	private final InputValidationDelegate<VALUE_TYPE> inputValidationDelegate;
 	private final IInputListener inputListener;
+	private final List<IInputWidget<?>> inputWidgets;
 
 	public AbstractInputWidget(final IWidget widget, final IInputWidgetSetup<VALUE_TYPE> setup) {
+		this(widget, setup.getValidator(), setup.isMandatory());
+	}
+
+	public AbstractInputWidget(final IWidget widget, final boolean mandatory) {
+		this(widget, null, mandatory);
+	}
+
+	public AbstractInputWidget(final IWidget widget, final IValidator<VALUE_TYPE> validator, final boolean mandatory) {
 		super(widget);
 		this.inputObservable = new InputObservable();
-		this.inputValidationDelegate = new InputValidationDelegate<VALUE_TYPE>(setup);
+		this.inputValidationDelegate = new InputValidationDelegate<VALUE_TYPE>(validator, mandatory);
+		this.inputWidgets = new LinkedList<IInputWidget<?>>();
 
 		this.inputListener = new IInputListener() {
 
@@ -59,8 +75,15 @@ public abstract class AbstractInputWidget<VALUE_TYPE> extends WidgetWrapper impl
 	}
 
 	@Override
+	public void setEditable(final boolean editable) {
+		for (final IInputWidget<?> inputWidget : inputWidgets) {
+			inputWidget.setEditable(editable);
+		}
+	}
+
+	@Override
 	public boolean isEmpty() {
-		return false;
+		return EmptyCheck.isEmpty(getValue());
 	}
 
 	@Override
@@ -76,6 +99,18 @@ public abstract class AbstractInputWidget<VALUE_TYPE> extends WidgetWrapper impl
 	@Override
 	public void addValidator(final IValidator<VALUE_TYPE> validator) {
 		inputValidationDelegate.addValidator(validator);
+	}
+
+	public void addValidatable(final IValidateable validateable, final String context) {
+		inputValidationDelegate.addValidatable(validateable, context);
+	}
+
+	public void addValidatable(final IValidateable validateable) {
+		inputValidationDelegate.addValidatable(validateable);
+	}
+
+	public void removeValidatable(final IValidateable validateable) {
+		inputValidationDelegate.removeValidatable(validateable);
 	}
 
 	@Override
@@ -97,14 +132,30 @@ public abstract class AbstractInputWidget<VALUE_TYPE> extends WidgetWrapper impl
 		inputObservable.fireInputChanged(source);
 	}
 
+	protected void registerInputWidget(final IInputWidget<?> inputWidget) {
+		registerInputWidget(inputWidget, null);
+	}
+
 	protected void registerInputWidget(final IInputWidget<?> inputWidget, final String validationContext) {
+		Assert.paramNotNull(inputWidget, "inputWidget");
+		inputWidgets.add(inputWidget);
 		inputWidget.addInputListener(inputListener);
 		inputValidationDelegate.addValidatable(inputWidget, validationContext);
 	}
 
 	protected void unRegisterInputWidget(final IInputWidget<?> inputWidget) {
+		Assert.paramNotNull(inputWidget, "inputWidget");
+		if (inputWidgets.contains(inputWidget)) {
+			inputWidgets.remove(inputWidget);
+		}
+		else {
+			throw new IllegalArgumentException("Input widget '" + inputWidget + "' is not registered");
+		}
 		inputWidget.removeInputListener(inputListener);
 		inputValidationDelegate.removeValidatable(inputWidget);
 	}
 
+	protected List<IInputWidget<?>> getRegisteredWidgets() {
+		return new LinkedList<IInputWidget<?>>(inputWidgets);
+	}
 }

@@ -30,15 +30,11 @@ package org.jowidgets.impl.widgets.composed.factory.internal;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IInputContainer;
 import org.jowidgets.api.widgets.descriptor.IInputCompositeDescriptor;
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.widgets.composed.InputCompositeWidget;
+import org.jowidgets.tools.widgets.factory.AbstractCompositeWidgetFactory;
 
 public class InputCompositeWidgetFactory<INPUT_TYPE> extends
 		AbstractCompositeWidgetFactory<IInputContainer<INPUT_TYPE>, IInputCompositeDescriptor<INPUT_TYPE>> {
-
-	public InputCompositeWidgetFactory(final IGenericWidgetFactory genericWidgetFactory) {
-		super(genericWidgetFactory);
-	}
 
 	@Override
 	protected IInputContainer<INPUT_TYPE> createWidget(

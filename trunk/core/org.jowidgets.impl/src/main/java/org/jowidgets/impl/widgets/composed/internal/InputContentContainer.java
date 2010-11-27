@@ -29,27 +29,26 @@ package org.jowidgets.impl.widgets.composed.internal;
 
 import java.util.List;
 
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.validation.IValidateable;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IInputWidget;
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
-import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Border;
-import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
-import org.jowidgets.impl.widgets.composed.AbstractComposedInputWidget;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
+import org.jowidgets.tools.widgets.base.AbstractInputWidget;
 
-public class InputContentContainer<INPUT_TYPE> extends AbstractComposedInputWidget<INPUT_TYPE> implements IInputContentContainer {
+public class InputContentContainer<INPUT_TYPE> extends AbstractInputWidget<INPUT_TYPE> implements IInputContentContainer {
 
 	private final IComposite compositeWidget;
 	private final IInputContentCreator<INPUT_TYPE> content;
@@ -59,20 +58,10 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractComposedInputWidg
 		final IInputContentCreator<INPUT_TYPE> content,
 		final boolean scrollableContent,
 		final Border border) {
-		super(content.isMandatory(), true);
+		super(createCompositeWidget(parent, scrollableContent, border), true);
 
-		final BluePrintFactory bpF = new BluePrintFactory();
+		compositeWidget = (IComposite) getWidget();
 
-		if (scrollableContent) {
-			final IScrollCompositeBluePrint scrollCompositeBluePrint = bpF.scrollComposite();
-			scrollCompositeBluePrint.setBorder(border);
-			compositeWidget = parent.add(scrollCompositeBluePrint, "growx, growy, h 0::,w 0::, wrap");
-		}
-		else {
-			final ICompositeBluePrint compositeBluePrint = bpF.composite();
-			compositeBluePrint.setBorder(border);
-			compositeWidget = parent.add(compositeBluePrint, "growx, growy, wrap");
-		}
 		this.content = content;
 
 		addValidatable(new IValidateable() {
@@ -89,86 +78,6 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractComposedInputWidg
 	}
 
 	@Override
-	public Object getUiReference() {
-		return compositeWidget.getUiReference();
-	}
-
-	@Override
-	public IWidget getParent() {
-		return compositeWidget.getParent();
-	}
-
-	@Override
-	public void setParent(final IWidget parent) {
-		compositeWidget.setParent(parent);
-	}
-
-	@Override
-	public boolean isReparentable() {
-		return compositeWidget.isReparentable();
-	}
-
-	@Override
-	public void redraw() {
-		compositeWidget.redraw();
-	}
-
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		compositeWidget.setForegroundColor(colorValue);
-	}
-
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		compositeWidget.setBackgroundColor(colorValue);
-	}
-
-	@Override
-	public IColorConstant getForegroundColor() {
-		return compositeWidget.getForegroundColor();
-	}
-
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return compositeWidget.getBackgroundColor();
-	}
-
-	@Override
-	public void setVisible(final boolean visible) {
-		compositeWidget.setVisible(visible);
-	}
-
-	@Override
-	public boolean isVisible() {
-		return compositeWidget.isVisible();
-	}
-
-	@Override
-	public Dimension getSize() {
-		return compositeWidget.getSize();
-	}
-
-	@Override
-	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
-		compositeWidget.setLayout(layoutDescriptor);
-	}
-
-	@Override
-	public void layoutBegin() {
-		compositeWidget.layoutBegin();
-	}
-
-	@Override
-	public void layoutEnd() {
-		compositeWidget.layoutEnd();
-	}
-
-	@Override
-	public void removeAll() {
-		compositeWidget.removeAll();
-	}
-
-	@Override
 	public void setValue(final INPUT_TYPE value) {
 		content.setValue(value);
 	}
@@ -180,17 +89,17 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractComposedInputWidg
 
 	@Override
 	public void registerInputWidget(final String label, final IInputWidget<?> inputWidget) {
-		registerSubInputWidget(label, inputWidget);
+		super.registerInputWidget(inputWidget, label);
 	}
 
 	@Override
 	public void unRegisterInputWidget(final IInputWidget<?> inputWidget) {
-		unRegisterSubInputWidget(inputWidget);
+		super.unRegisterInputWidget(inputWidget);
 	}
 
 	@Override
-	public void setEditable(final boolean editable) {
-		super.setEditable(editable);
+	public void fireInputChanged(final Object source) {
+		super.fireInputChanged(source);
 	}
 
 	@Override
@@ -198,7 +107,7 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractComposedInputWidg
 		boolean anyFilledOut = false;
 
 		//empty if there is any mandatory field empty
-		for (final IInputWidget<?> subWidget : getSubWidgets()) {
+		for (final IInputWidget<?> subWidget : getRegisteredWidgets()) {
 			anyFilledOut = anyFilledOut || !subWidget.isEmpty();
 			if (subWidget.isMandatory() && subWidget.isEmpty()) {
 				return true;
@@ -232,6 +141,26 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractComposedInputWidg
 	}
 
 	@Override
+	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
+		compositeWidget.setLayout(layoutDescriptor);
+	}
+
+	@Override
+	public void layoutBegin() {
+		compositeWidget.layoutBegin();
+	}
+
+	@Override
+	public void layoutEnd() {
+		compositeWidget.layoutEnd();
+	}
+
+	@Override
+	public void removeAll() {
+		compositeWidget.removeAll();
+	}
+
+	@Override
 	public boolean remove(final IControl control) {
 		return compositeWidget.remove(control);
 	}
@@ -239,6 +168,21 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractComposedInputWidg
 	@Override
 	public List<IControl> getChildren() {
 		return compositeWidget.getChildren();
+	}
+
+	private static IComposite createCompositeWidget(final IContainer parent, final boolean scrollableContent, final Border border) {
+		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
+
+		if (scrollableContent) {
+			final IScrollCompositeBluePrint scrollCompositeBluePrint = bpF.scrollComposite();
+			scrollCompositeBluePrint.setBorder(border);
+			return parent.add(scrollCompositeBluePrint, "growx, growy, h 0::,w 0::, wrap");
+		}
+		else {
+			final ICompositeBluePrint compositeBluePrint = bpF.composite();
+			compositeBluePrint.setBorder(border);
+			return parent.add(compositeBluePrint, "growx, growy, wrap");
+		}
 	}
 
 }

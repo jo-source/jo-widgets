@@ -58,14 +58,14 @@ public class GenericWidgetFactory extends BasicGenericWidgetFactory {
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	private void registerCustomWidgetFactories() {
 		register(IInputFieldDescriptor.class, new InputFieldWidgetFactory(this));
-		register(ILabelDescriptor.class, new LabelWidgetFactory(this));
-		register(ITextSeparatorDescriptor.class, new TextSeparatorWidgetFactory(this));
+		register(ILabelDescriptor.class, new LabelWidgetFactory());
+		register(ITextSeparatorDescriptor.class, new TextSeparatorWidgetFactory());
 		register(IMessageDialogDescriptor.class, new MessageDialogWidgetFactory(this));
 		register(IQuestionDialogDescriptor.class, new QuestionDialogWidgetFactory(this));
 		register(IInputDialogDescriptor.class, new InputDialogWidgetFactory(this));
-		register(IInputCompositeDescriptor.class, new InputCompositeWidgetFactory(this));
+		register(IInputCompositeDescriptor.class, new InputCompositeWidgetFactory());
 		register(IValidationLabelDescriptor.class, new ValidationLabelWidgetFactory(this));
-		register(IProgressBarDescriptor.class, new ProgressBarWidgetFactory(this, getSpiWidgetFactory()));
+		register(IProgressBarDescriptor.class, new ProgressBarWidgetFactory(getSpiWidgetFactory()));
 	}
 
 }

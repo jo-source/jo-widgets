@@ -28,85 +28,33 @@
 package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.convert.IConverter;
-import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IInputControl;
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IInputFieldSetup;
-import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.types.Dimension;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
+import org.jowidgets.tools.widgets.base.AbstractInputControl;
 
-public class InputFieldWidget<VALUE_TYPE> extends AbstractComposedInputWidget<VALUE_TYPE> implements IInputControl<VALUE_TYPE> {
+public class InputFieldWidget<VALUE_TYPE> extends AbstractInputControl<VALUE_TYPE> implements IInputControl<VALUE_TYPE> {
 
 	private final IInputControl<String> textFieldWidget;
 	private final IConverter<VALUE_TYPE> converter;
 
 	public InputFieldWidget(final IInputControl<String> textFieldWidget, final IInputFieldSetup<VALUE_TYPE> setup) {
 
-		super(setup.getValidator(), setup.isMandatory(), setup.isEditable());
+		super(textFieldWidget, setup);
 
 		this.textFieldWidget = textFieldWidget;
 		this.converter = setup.getConverter();
 
-		registerSubInputWidget(textFieldWidget);
+		registerInputWidget(textFieldWidget);
 
+		setEditable(setup.isEditable());
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
 
 		if (setup.getValue() != null) {
 			setValue(setup.getValue());
 		}
-	}
-
-	@Override
-	public Object getUiReference() {
-		return textFieldWidget.getUiReference();
-	}
-
-	@Override
-	public IContainer getParent() {
-		return textFieldWidget.getParent();
-	}
-
-	@Override
-	public void setParent(final IWidget parent) {
-		textFieldWidget.setParent(parent);
-	}
-
-	@Override
-	public boolean isReparentable() {
-		return textFieldWidget.isReparentable();
-	}
-
-	@Override
-	public void redraw() {
-		textFieldWidget.redraw();
-	}
-
-	@Override
-	public void setEditable(final boolean editable) {
-		textFieldWidget.setEditable(editable);
-	}
-
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		textFieldWidget.setBackgroundColor(colorValue);
-	}
-
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		textFieldWidget.setForegroundColor(colorValue);
-	}
-
-	@Override
-	public IColorConstant getForegroundColor() {
-		return textFieldWidget.getForegroundColor();
-	}
-
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return textFieldWidget.getBackgroundColor();
 	}
 
 	@Override
@@ -117,21 +65,6 @@ public class InputFieldWidget<VALUE_TYPE> extends AbstractComposedInputWidget<VA
 	@Override
 	public void setValue(final VALUE_TYPE value) {
 		textFieldWidget.setValue(converter.convertToString(value));
-	}
-
-	@Override
-	public void setVisible(final boolean visible) {
-		textFieldWidget.setVisible(visible);
-	}
-
-	@Override
-	public boolean isVisible() {
-		return textFieldWidget.isVisible();
-	}
-
-	@Override
-	public Dimension getSize() {
-		return textFieldWidget.getSize();
 	}
 
 }

@@ -30,14 +30,10 @@ package org.jowidgets.impl.widgets.composed.factory.internal;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.ITextLabel;
 import org.jowidgets.api.widgets.descriptor.ITextSeparatorDescriptor;
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.widgets.composed.TextSeparatorWidget;
+import org.jowidgets.tools.widgets.factory.AbstractCompositeWidgetFactory;
 
 public class TextSeparatorWidgetFactory extends AbstractCompositeWidgetFactory<ITextLabel, ITextSeparatorDescriptor> {
-
-	public TextSeparatorWidgetFactory(final IGenericWidgetFactory genericWidgetFactory) {
-		super(genericWidgetFactory);
-	}
 
 	@Override
 	protected ITextLabel createWidget(final IComposite compositeWidget, final ITextSeparatorDescriptor descriptor) {

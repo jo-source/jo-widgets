@@ -27,6 +27,7 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IComposite;
@@ -40,7 +41,6 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 import org.jowidgets.impl.widgets.composed.internal.InputContentContainer;
 
 public class InputCompositeWidget<INPUT_TYPE> implements IInputComposite<INPUT_TYPE> {
@@ -59,7 +59,7 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputComposite<INPUT_T
 		this.parentComposite = composite;
 		this.parentComposite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
 
-		final ICompositeBluePrint compositeBp = new BluePrintFactory().composite().setBorder(setup.getBorder());
+		final ICompositeBluePrint compositeBp = Toolkit.getBluePrintFactory().composite().setBorder(setup.getBorder());
 
 		this.composite = parentComposite.add(compositeBp, "growx, growy, h 0::, w 0::");
 
