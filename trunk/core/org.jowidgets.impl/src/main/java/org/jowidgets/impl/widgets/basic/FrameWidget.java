@@ -35,6 +35,8 @@ import org.jowidgets.api.widgets.IDisplay;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IFrameSetup;
+import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.impl.base.delegate.ContainerDelegate;
@@ -121,6 +123,16 @@ public class FrameWidget extends AbstractFrameSpiWrapper implements IFrame {
 	@Override
 	public List<IDisplay> getChildWindows() {
 		return windowDelegate.getChildWindows();
+	}
+
+	@Override
+	public void setPosition(final Position position) {
+		windowDelegate.setPosition(position);
+	}
+
+	@Override
+	public void setSize(final Dimension size) {
+		windowDelegate.setSize(size);
 	}
 
 }

@@ -47,4 +47,44 @@ public class Rectangle {
 		return size;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((position == null) ? 0 : position.hashCode());
+		result = prime * result + ((size == null) ? 0 : size.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final Rectangle other = (Rectangle) obj;
+		if (position == null) {
+			if (other.position != null) {
+				return false;
+			}
+		}
+		else if (!position.equals(other.position)) {
+			return false;
+		}
+		if (size == null) {
+			if (other.size != null) {
+				return false;
+			}
+		}
+		else if (!size.equals(other.size)) {
+			return false;
+		}
+		return true;
+	}
+
 }

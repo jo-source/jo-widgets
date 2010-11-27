@@ -50,6 +50,8 @@ public class WindowDelegate {
 	private final IWindowSpi windowSpi;
 	private final IWindow window;
 	private boolean wasVisible;
+	private boolean positionSet;
+	private boolean sizeSet;
 
 	public WindowDelegate(final IWindowSpi windowSpi, final IWindow window, final IWindowSetup setup) {
 		this.childWindows = new LinkedList<IDisplay>();
@@ -58,6 +60,8 @@ public class WindowDelegate {
 		this.windowSpi = windowSpi;
 		this.window = window;
 		this.wasVisible = false;
+		this.positionSet = false;
+		this.sizeSet = false;
 	}
 
 	public void centerLocation() {
@@ -78,18 +82,28 @@ public class WindowDelegate {
 			if (AutoPackPolicy.ALLWAYS == autoPackPolicy) {
 				windowSpi.pack();
 			}
-			else if (!wasVisible && AutoPackPolicy.ONCE == autoPackPolicy) {
+			else if (!sizeSet && !wasVisible && AutoPackPolicy.ONCE == autoPackPolicy) {
 				windowSpi.pack();
 			}
 			if (AutoCenterPolicy.ALLWAYS == autoCenterPolicy) {
 				centerLocation();
 			}
-			else if (!wasVisible && AutoCenterPolicy.ONCE == autoCenterPolicy) {
+			else if (!positionSet && !wasVisible && AutoCenterPolicy.ONCE == autoCenterPolicy) {
 				centerLocation();
 			}
 			wasVisible = true;
 		}
 		windowSpi.setVisible(visible);
+	}
+
+	public void setPosition(final Position position) {
+		positionSet = true;
+		windowSpi.setPosition(position);
+	}
+
+	public void setSize(final Dimension size) {
+		sizeSet = true;
+		windowSpi.setSize(size);
 	}
 
 	public <WIDGET_TYPE extends IDisplay, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(

@@ -47,7 +47,9 @@ import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.color.ColorValue;
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Markup;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.junit.Assert;
 import org.junit.Test;
@@ -59,6 +61,9 @@ public class WidgetFactoryTest {
 
 	private static final IColorConstant FOREGROUND = new ColorValue(4, 5, 6);
 	private static final IColorConstant BACKGROUND = new ColorValue(219, 220, 221);
+
+	private static final Dimension SIZE = new Dimension(145, 167);
+	private static final Position POSITION = new Position(23, 19);
 
 	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
@@ -88,10 +93,10 @@ public class WidgetFactoryTest {
 		testCreateChildWidgets(frame.add(BPF.composite(), null));
 		testCreateChildWidgets(frame.add(BPF.scrollComposite(), null));
 
-		testChildWindowWidget(frame, frame.createChildWindow(bpMod(BPF.dialog())));
-		testChildWindowWidget(frame, frame.createChildWindow(bpMod(BPF.frame())));
-		testChildWindowWidget(frame, frame.createChildWindow(bpMod(BPF.questionDialog())));
-		testChildWindowWidget(frame, frame.createChildWindow(bpMod(BPF.messageDialog())));
+		testChildWindow(frame, frame.createChildWindow(bpMod(BPF.dialog().setModal(false))));
+		testChildWindow(frame, frame.createChildWindow(bpMod(BPF.frame())));
+		testChildDisplay(frame, frame.createChildWindow(bpMod(BPF.questionDialog())));
+		testChildDisplay(frame, frame.createChildWindow(bpMod(BPF.messageDialog())));
 	}
 
 	private void testCreateChildWidgets(final IContainer container) {
@@ -164,7 +169,7 @@ public class WidgetFactoryTest {
 		Assert.assertNotNull(Toolkit.getWidgetUtils().getWindowAncestor(widget));
 	}
 
-	private void testChildWindowWidget(final IWindow parent, final IDisplay widget) {
+	private void testChildDisplay(final IWindow parent, final IDisplay widget) {
 		Assert.assertNotNull(widget);
 
 		Assert.assertTrue(DEFAULT_FOREGROUND.equals(widget.getForegroundColor()));
@@ -174,6 +179,17 @@ public class WidgetFactoryTest {
 		testParent(parent, widget);
 
 		Assert.assertTrue(parent.getChildWindows().contains(widget));
+	}
+
+	private void testChildWindow(final IWindow parent, final IWindow window) {
+		testChildDisplay(parent, window);
+		window.setSize(SIZE);
+		window.setPosition(POSITION);
+
+		window.setVisible(true);
+
+		Assert.assertTrue(SIZE.equals(window.getSize()));
+		Assert.assertTrue(POSITION.equals(window.getPosition()));
 	}
 
 	private void testSplitCompositeWidget(final IContainer parent, final ISplitComposite widget) {
