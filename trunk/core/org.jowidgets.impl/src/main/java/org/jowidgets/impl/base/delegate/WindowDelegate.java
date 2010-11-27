@@ -28,48 +28,58 @@
 
 package org.jowidgets.impl.base.delegate;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.jowidgets.api.types.AutoCenterPolicy;
 import org.jowidgets.api.types.AutoPackPolicy;
+import org.jowidgets.api.widgets.IDisplay;
+import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.descriptor.setup.IWindowSetup;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
-import org.jowidgets.common.widgets.IWindowCommon;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.spi.widgets.IWindowSpi;
 
 public class WindowDelegate {
 
+	private final List<IDisplay> childWindows;
 	private final AutoCenterPolicy autoCenterPolicy;
 	private final AutoPackPolicy autoPackPolicy;
-	private final IWindowCommon windowWidgetCommon;
+	private final IWindowSpi windowSpi;
+	private final IWindow window;
 	private boolean wasVisible;
 
-	public WindowDelegate(final IWindowCommon windowWidgetCommon, final IWindowSetup setup) {
+	public WindowDelegate(final IWindowSpi windowSpi, final IWindow window, final IWindowSetup setup) {
+		this.childWindows = new LinkedList<IDisplay>();
 		this.autoCenterPolicy = setup.getAutoCenterPolicy();
 		this.autoPackPolicy = setup.getAutoPackPolicy();
-		this.windowWidgetCommon = windowWidgetCommon;
+		this.windowSpi = windowSpi;
+		this.window = window;
 		this.wasVisible = false;
 	}
 
 	public void centerLocation() {
-		final Rectangle parentBounds = windowWidgetCommon.getParentBounds();
+		final Rectangle parentBounds = windowSpi.getParentBounds();
 		final Dimension parentSize = parentBounds.getSize();
 		final Position parentPosition = parentBounds.getPosition();
 
-		final Dimension size = windowWidgetCommon.getSize();
+		final Dimension size = windowSpi.getSize();
 
 		final int posX = parentPosition.getX() + ((parentSize.getWidth() - size.getWidth()) / 2);
 		final int posY = parentPosition.getY() + ((parentSize.getHeight() - size.getHeight()) / 2);
 
-		windowWidgetCommon.setPosition(new Position(posX, posY));
+		windowSpi.setPosition(new Position(posX, posY));
 	}
 
 	public void setVisible(final boolean visible) {
 		if (visible) {
 			if (AutoPackPolicy.ALLWAYS == autoPackPolicy) {
-				windowWidgetCommon.pack();
+				windowSpi.pack();
 			}
 			else if (!wasVisible && AutoPackPolicy.ONCE == autoPackPolicy) {
-				windowWidgetCommon.pack();
+				windowSpi.pack();
 			}
 			if (AutoCenterPolicy.ALLWAYS == autoCenterPolicy) {
 				centerLocation();
@@ -79,7 +89,19 @@ public class WindowDelegate {
 			}
 			wasVisible = true;
 		}
-		windowWidgetCommon.setVisible(visible);
+		windowSpi.setVisible(visible);
+	}
+
+	public <WIDGET_TYPE extends IDisplay, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
+		final DESCRIPTOR_TYPE descriptor) {
+		final WIDGET_TYPE result = windowSpi.createChildWindow(descriptor);
+		result.setParent(window);
+		childWindows.add(result);
+		return result;
+	}
+
+	public List<IDisplay> getChildWindows() {
+		return new LinkedList<IDisplay>(childWindows);
 	}
 
 }

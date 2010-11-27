@@ -28,9 +28,9 @@
 package org.jowidgets.impl.swing.widgets.internal;
 
 import java.awt.Component;
-import java.awt.Window;
 
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.widgets.IControlCommon;
@@ -40,33 +40,28 @@ import org.jowidgets.impl.swing.util.ColorConvert;
 import org.jowidgets.impl.swing.widgets.SwingWindowWidget;
 import org.jowidgets.impl.swing.widgets.internal.util.ChildRemover;
 import org.jowidgets.spi.widgets.IFrameSpi;
-import org.jowidgets.spi.widgets.setup.IDialogSetupSpi;
+import org.jowidgets.spi.widgets.setup.IFrameSetupSpi;
 
 public class FrameWidget extends SwingWindowWidget implements IFrameSpi {
 
-	public FrameWidget(
-		final IGenericWidgetFactory factory,
-		final SwingImageRegistry imageRegistry,
-		final Object parentUiReference,
-		final IDialogSetupSpi setup) {
-		super(factory, new JDialog((Window) parentUiReference));
+	public FrameWidget(final IGenericWidgetFactory factory, final SwingImageRegistry imageRegistry, final IFrameSetupSpi setup) {
+		super(factory, new JFrame());
 
 		getUiReference().setTitle(setup.getTitle());
 		getUiReference().setResizable(setup.isResizable());
-		getUiReference().setModal(false);
+
+		if (!setup.isCloseable()) {
+			getUiReference().setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		}
 
 		setIcon(setup.getIcon(), imageRegistry);
 		setLayout(setup.getLayout());
+
 	}
 
 	@Override
-	public JDialog getUiReference() {
-		return (JDialog) super.getUiReference();
-	}
-
-	@Override
-	public void setVisible(final boolean visible) {
-		getUiReference().setVisible(visible);
+	public JFrame getUiReference() {
+		return (JFrame) super.getUiReference();
 	}
 
 	@Override

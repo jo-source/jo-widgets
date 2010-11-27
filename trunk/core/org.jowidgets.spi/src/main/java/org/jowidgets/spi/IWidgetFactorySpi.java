@@ -72,7 +72,7 @@ public interface IWidgetFactorySpi {
 
 	//create widgets from setup
 
-	IFrameSpi createFrame(IGenericWidgetFactory factory, Object parentUiReference, IFrameSetupSpi setup);
+	IFrameSpi createFrame(IGenericWidgetFactory factory, IFrameSetupSpi setup);
 
 	IFrameSpi createDialog(IGenericWidgetFactory factory, Object parentUiReference, IDialogSetupSpi setup);
 

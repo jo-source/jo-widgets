@@ -35,7 +35,6 @@ import org.jowidgets.api.widgets.IDisplay;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IFrameSetup;
-import org.jowidgets.common.widgets.IDisplayCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.impl.base.delegate.ContainerDelegate;
@@ -54,7 +53,7 @@ public class FrameWidget extends AbstractFrameSpiWrapper implements IFrame {
 	public FrameWidget(final IFrameSpi frameWidgetSpi, final IFrameSetup setup) {
 		super(frameWidgetSpi);
 		this.displayDelegate = new DisplayDelegate();
-		this.windowDelegate = new WindowDelegate(frameWidgetSpi, setup);
+		this.windowDelegate = new WindowDelegate(frameWidgetSpi, this, setup);
 		this.containerDelegate = new ContainerDelegate(frameWidgetSpi, this);
 		ColorSettingsInvoker.setColors(setup, this);
 	}
@@ -89,16 +88,6 @@ public class FrameWidget extends AbstractFrameSpiWrapper implements IFrame {
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IDisplayCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
-		final DESCRIPTOR_TYPE descriptor) {
-		final WIDGET_TYPE result = getWidget().createChildWindow(descriptor);
-		if (result instanceof IWidget) {
-			((IWidget) result).setParent(this);
-		}
-		return result;
-	}
-
-	@Override
 	public IDisplay getParent() {
 		return displayDelegate.getParent();
 	}
@@ -114,6 +103,12 @@ public class FrameWidget extends AbstractFrameSpiWrapper implements IFrame {
 	}
 
 	@Override
+	public <WIDGET_TYPE extends IDisplay, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
+		final DESCRIPTOR_TYPE descriptor) {
+		return windowDelegate.createChildWindow(descriptor);
+	}
+
+	@Override
 	public void centerLocation() {
 		windowDelegate.centerLocation();
 	}
@@ -121,6 +116,11 @@ public class FrameWidget extends AbstractFrameSpiWrapper implements IFrame {
 	@Override
 	public void setVisible(final boolean visible) {
 		windowDelegate.setVisible(visible);
+	}
+
+	@Override
+	public List<IDisplay> getChildWindows() {
+		return windowDelegate.getChildWindows();
 	}
 
 }

@@ -28,6 +28,8 @@
 
 package org.jowidgets.tools.powo;
 
+import java.util.List;
+
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IDisplay;
@@ -38,8 +40,6 @@ import org.jowidgets.api.widgets.blueprint.builder.IWindowSetupBuilder;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
-import org.jowidgets.common.widgets.IDisplayCommon;
-import org.jowidgets.common.widgets.IWindowCommon;
 import org.jowidgets.common.widgets.controler.IWindowListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.util.Assert;
@@ -53,18 +53,15 @@ class WindowWidget<WIDGET_TYPE extends IWindow & IContainer, BLUE_PRINT_TYPE ext
 		initialize(Toolkit.getWidgetFactory().create(bluePrint));
 	}
 
-	WindowWidget(final IWindowCommon parent, final BLUE_PRINT_TYPE bluePrint) {
+	WindowWidget(final IWindow parent, final BLUE_PRINT_TYPE bluePrint) {
 		super(bluePrint);
 		Assert.paramNotNull(parent, "parent");
 		Assert.paramNotNull(bluePrint, "bluePrint");
-		initialize(Toolkit.getWidgetFactory().create(parent.getUiReference(), bluePrint));
-		if (parent instanceof IWidget) {
-			getWidget().setParent((IWidget) parent);
-		}
+		initialize(parent.createChildWindow(bluePrint));
 	}
 
 	@Override
-	public <M_WIDGET_TYPE extends IDisplayCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends M_WIDGET_TYPE>> M_WIDGET_TYPE createChildWindow(
+	public <M_WIDGET_TYPE extends IDisplay, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends M_WIDGET_TYPE>> M_WIDGET_TYPE createChildWindow(
 		final DESCRIPTOR_TYPE descriptor) {
 		return getWidget().createChildWindow(descriptor);
 	}
@@ -110,8 +107,8 @@ class WindowWidget<WIDGET_TYPE extends IWindow & IContainer, BLUE_PRINT_TYPE ext
 	}
 
 	@Override
-	public final void close() {
-		getWidget().close();
+	public final void dispose() {
+		getWidget().dispose();
 	}
 
 	@Override
@@ -127,6 +124,11 @@ class WindowWidget<WIDGET_TYPE extends IWindow & IContainer, BLUE_PRINT_TYPE ext
 	@Override
 	public void setParent(final IWidget parent) {
 		getWidget().setParent(parent);
+	}
+
+	@Override
+	public List<IDisplay> getChildWindows() {
+		return getWidget().getChildWindows();
 	}
 
 	@Override

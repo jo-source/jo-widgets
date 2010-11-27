@@ -144,7 +144,7 @@ public class MessageDialogWidget implements IMessageDialog {
 			//ui block until user closes the dialog
 
 			//after that dispose the message dialog
-			dialogWidget.close();
+			dialogWidget.dispose();
 		}
 		else {
 			throw new IllegalStateException("A message dialog could only be shown more than once!");
@@ -157,7 +157,7 @@ public class MessageDialogWidget implements IMessageDialog {
 			showMessage();
 		}
 		else {
-			dialogWidget.close();
+			dialogWidget.dispose();
 		}
 	}
 

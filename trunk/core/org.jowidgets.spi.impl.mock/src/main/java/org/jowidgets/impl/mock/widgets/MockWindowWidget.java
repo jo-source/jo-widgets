@@ -32,14 +32,14 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IDisplayCommon;
-import org.jowidgets.common.widgets.IWindowCommon;
 import org.jowidgets.common.widgets.controler.IWindowListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.mock.image.MockImageRegistry;
 import org.jowidgets.impl.mock.mockui.UIMWindow;
+import org.jowidgets.spi.widgets.IWindowSpi;
 
-public class MockWindowWidget extends MockCompositeWidget implements IWindowCommon {
+public class MockWindowWidget extends MockCompositeWidget implements IWindowSpi {
 
 	public MockWindowWidget(final IGenericWidgetFactory factory, final UIMWindow window) {
 		super(factory, window);
@@ -120,7 +120,7 @@ public class MockWindowWidget extends MockCompositeWidget implements IWindowComm
 	}
 
 	@Override
-	public void close() {
+	public void dispose() {
 		getUiReference().dispose();
 	}
 

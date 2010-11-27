@@ -28,8 +28,6 @@
 package org.jowidgets.impl.swt.widgets.internal;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ShellEvent;
-import org.eclipse.swt.events.ShellListener;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
@@ -41,7 +39,7 @@ import org.jowidgets.spi.widgets.setup.IDialogSetupSpi;
 
 public class DialogWidget extends SwtWindowWidget implements IFrameSpi {
 
-	private boolean programaticClose;
+	private final boolean isModal;
 
 	public DialogWidget(
 		final IGenericWidgetFactory factory,
@@ -50,91 +48,46 @@ public class DialogWidget extends SwtWindowWidget implements IFrameSpi {
 		final Object parentUiReference,
 		final IDialogSetupSpi setup) {
 
-		super(factory, colorCache, new Shell((Shell) parentUiReference, getStyle(setup)));
+		super(factory, colorCache, new Shell((Shell) parentUiReference, getStyle(setup)), setup.isCloseable());
 
-		this.programaticClose = false;
+		this.isModal = setup.isModal();
 
 		if (setup.getTitle() != null) {
 			getUiReference().setText(setup.getTitle());
 		}
-
 		setLayout(setup.getLayout());
 		setIcon(imageRegistry, setup.getIcon());
-
-		getUiReference().setBackgroundMode(SWT.INHERIT_DEFAULT);
-
-		getUiReference().addShellListener(new ShellListener() {
-
-			@Override
-			public void shellActivated(final ShellEvent e) {
-				getWindowObservableDelegate().fireWindowActivated();
-			}
-
-			@Override
-			public void shellDeactivated(final ShellEvent e) {
-				getWindowObservableDelegate().fireWindowDeactivated();
-			}
-
-			@Override
-			public void shellIconified(final ShellEvent e) {
-				getWindowObservableDelegate().fireWindowIconified();
-			}
-
-			@Override
-			public void shellDeiconified(final ShellEvent e) {
-				getWindowObservableDelegate().fireWindowDeiconified();
-			}
-
-			@Override
-			public void shellClosed(final ShellEvent e) {
-				if (!programaticClose) {
-					e.doit = false;
-					setVisible(false);
-				}
-				else {
-					getWindowObservableDelegate().fireWindowClosed();
-				}
-			}
-		});
-
 	}
 
 	@Override
 	public void setVisible(final boolean visible) {
 		if (visible) {
 			getUiReference().open();
+			if (isModal) {
+				final Shell shell = getUiReference();
+				final Display display = shell.getDisplay();
 
-			final Shell shell = getUiReference();
-			final Display display = shell.getDisplay();
-
-			while (!shell.isDisposed() && shell.isVisible()) {
-				if (!display.readAndDispatch()) {
-					display.sleep();
+				while (!shell.isDisposed() && shell.isVisible()) {
+					if (!display.readAndDispatch()) {
+						display.sleep();
+					}
 				}
 			}
-
 		}
 		else {
-			getUiReference().setVisible(false);
+			super.setVisible(false);
 		}
 	}
 
 	private static int getStyle(final IDialogSetupSpi setup) {
 		int result = SWT.DIALOG_TRIM;
-		if (true) {
-			result = result | SWT.APPLICATION_MODAL;
-		}
 		if (setup.isResizable()) {
 			result = result | SWT.RESIZE;
 		}
+		if (setup.isModal()) {
+			result = result | SWT.APPLICATION_MODAL;
+		}
 		return result;
-	}
-
-	@Override
-	public void close() {
-		programaticClose = true;
-		getUiReference().close();
-		programaticClose = false;
 	}
 
 }

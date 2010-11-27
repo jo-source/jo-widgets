@@ -48,7 +48,7 @@ public class DemoApplicationTest {
 				testApplication.start(lifecycle);
 				Assert.assertTrue(testApplication.getRootFrame().isVisible());
 
-				testApplication.getRootFrame().close();
+				testApplication.getRootFrame().dispose();
 
 			}
 		});

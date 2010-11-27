@@ -122,8 +122,8 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 	}
 
 	@Override
-	public IFrameSpi createFrame(final IGenericWidgetFactory factory, final Object parentUiReference, final IFrameSetupSpi setup) {
-		return new FrameWidget(factory, colorCache, imageRegistry, parentUiReference, setup);
+	public IFrameSpi createFrame(final IGenericWidgetFactory factory, final IFrameSetupSpi setup) {
+		return new FrameWidget(factory, colorCache, imageRegistry, setup);
 	}
 
 	@Override

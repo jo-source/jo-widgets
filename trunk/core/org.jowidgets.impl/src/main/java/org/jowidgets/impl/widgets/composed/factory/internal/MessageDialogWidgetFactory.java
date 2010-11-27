@@ -47,7 +47,7 @@ public class MessageDialogWidgetFactory implements IWidgetFactory<IMessageDialog
 	@Override
 	public IMessageDialog create(final Object parentUiReference, final IMessageDialogDescriptor descriptor) {
 		final IDialogBluePrint dialogBp = Toolkit.getBluePrintFactory().dialog().setTitle(descriptor.getTitle());
-		dialogBp.setIcon(descriptor.getTitleIcon()).setResizable(false);
+		dialogBp.setIcon(descriptor.getTitleIcon()).setResizable(false).setCloseable(false);
 		final IFrame dialogWidget = genericWidgetFactory.create(parentUiReference, dialogBp);
 
 		if (dialogWidget == null) {

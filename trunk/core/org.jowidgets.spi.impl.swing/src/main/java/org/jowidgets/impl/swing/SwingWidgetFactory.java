@@ -44,7 +44,7 @@ import org.jowidgets.impl.swing.widgets.internal.DialogWidget;
 import org.jowidgets.impl.swing.widgets.internal.FrameWidgetWrapper;
 import org.jowidgets.impl.swing.widgets.internal.IconWidget;
 import org.jowidgets.impl.swing.widgets.internal.ProgressBarWidget;
-import org.jowidgets.impl.swing.widgets.internal.RootFrameWidget;
+import org.jowidgets.impl.swing.widgets.internal.FrameWidget;
 import org.jowidgets.impl.swing.widgets.internal.ScrollCompositeWidget;
 import org.jowidgets.impl.swing.widgets.internal.SeparatorWidget;
 import org.jowidgets.impl.swing.widgets.internal.SplitCompositeWidget;
@@ -121,8 +121,8 @@ public final class SwingWidgetFactory implements IWidgetFactorySpi {
 	}
 
 	@Override
-	public IFrameSpi createFrame(final IGenericWidgetFactory factory, final Object uiReference, final IFrameSetupSpi setup) {
-		return new RootFrameWidget(factory, imageRegistry, setup);
+	public IFrameSpi createFrame(final IGenericWidgetFactory factory, final IFrameSetupSpi setup) {
+		return new FrameWidget(factory, imageRegistry, setup);
 	}
 
 	@Override

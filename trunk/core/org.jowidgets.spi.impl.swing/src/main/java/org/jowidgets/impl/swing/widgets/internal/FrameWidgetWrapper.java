@@ -28,8 +28,6 @@
 package org.jowidgets.impl.swing.widgets.internal;
 
 import java.awt.Window;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swing.widgets.SwingWindowWidget;
@@ -39,16 +37,6 @@ public class FrameWidgetWrapper extends SwingWindowWidget implements IFrameSpi {
 
 	public FrameWidgetWrapper(final IGenericWidgetFactory factory, final Window uiReference) {
 		super(factory, uiReference);
-
-		//dispose a frame when window closed
-		getUiReference().addWindowListener(new WindowAdapter() {
-
-			@Override
-			public void windowClosing(final WindowEvent e) {
-				close();
-			}
-
-		});
 	}
 
 	@Override

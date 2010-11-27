@@ -41,6 +41,7 @@ public class InputDialogDefaults implements IDefaultInitializer<IInputDialogSetu
 		builder.setOkButton(bpF.button("OK"));
 		builder.setCancelButton(bpF.button("Cancel"));
 		builder.setValidationLabel(bpF.validationLabel());
+		builder.setCloseable(false);
 	}
 
 }

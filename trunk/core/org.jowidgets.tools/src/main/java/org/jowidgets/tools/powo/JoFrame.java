@@ -31,11 +31,9 @@ package org.jowidgets.tools.powo;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
-import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.IFrameSetup;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.IWindowCommon;
 import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
 
 public class JoFrame extends WindowWidget<IFrame, IFrameBluePrint> implements IFrame {
@@ -53,22 +51,6 @@ public class JoFrame extends WindowWidget<IFrame, IFrameBluePrint> implements IF
 	}
 
 	public JoFrame(final IFrameSetup setup) {
-		super(Toolkit.getBluePrintFactory().frame().setSetup(setup));
-	}
-
-	public JoFrame(final IWindowCommon parent) {
-		super(parent, Toolkit.getBluePrintFactory().frame());
-	}
-
-	public JoFrame(final IWindowCommon parent, final String title) {
-		super(Toolkit.getBluePrintFactory().frame(title));
-	}
-
-	public JoFrame(final IWindowCommon parent, final String title, final IImageConstant icon) {
-		super(Toolkit.getBluePrintFactory().frame(title, icon));
-	}
-
-	public JoFrame(final IWindowCommon parent, final IFrameDescriptor setup) {
 		super(Toolkit.getBluePrintFactory().frame().setSetup(setup));
 	}
 

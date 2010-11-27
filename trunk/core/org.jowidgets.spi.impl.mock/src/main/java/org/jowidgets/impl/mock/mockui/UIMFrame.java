@@ -33,6 +33,10 @@ public class UIMFrame extends UIMWindow {
 	private String title;
 	private boolean resizable;
 
+	public UIMFrame() {
+		this(null);
+	}
+
 	public UIMFrame(final UIMWindow parent) {
 		super(parent);
 	}

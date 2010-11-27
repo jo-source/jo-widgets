@@ -27,7 +27,11 @@
  */
 package org.jowidgets.common.widgets.descriptor.setup;
 
+import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface IFrameSetupCommon extends ITitledWindowSetupCommon, IContainerSetupCommon {
+
+	@Mandatory
+	boolean isCloseable();
 
 }

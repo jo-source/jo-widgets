@@ -28,12 +28,14 @@
 
 package org.jowidgets.impl.swt.widgets.internal;
 
+import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swt.color.IColorCache;
+import org.jowidgets.impl.swt.util.BorderToComposite;
+import org.jowidgets.impl.swt.util.OrientationConvert;
 import org.jowidgets.impl.swt.widgets.SwtContainerWidget;
 import org.jowidgets.impl.swt.widgets.SwtWidget;
-import org.jowidgets.impl.swt.widgets.internal.base.JoSashForm;
 import org.jowidgets.spi.widgets.ICompositeSpi;
 import org.jowidgets.spi.widgets.ISplitCompositeSpi;
 import org.jowidgets.spi.widgets.setup.ISplitCompositeSetupSpi;
@@ -49,38 +51,38 @@ public class SplitCompositeWidget extends SwtWidget implements ISplitCompositeSp
 		final Object parentUiReference,
 		final ISplitCompositeSetupSpi setup) {
 
-		super(colorCache, new JoSashForm((Composite) parentUiReference, setup));
+		//		super(colorCache, new JoSashForm((Composite) parentUiReference, setup));
+		//
+		//		final JoSashForm sashForm = getUiReference();
+		//
+		//		first = new SwtContainerWidget(factory, colorCache, sashForm.getFirst());
+		//		second = new SwtContainerWidget(factory, colorCache, sashForm.getSecond());
+		//
+		//		first.setLayout(setup.getFirstLayout());
+		//		second.setLayout(setup.getSecondLayout());
 
-		final JoSashForm sashForm = getUiReference();
+		super(colorCache, new SashForm((Composite) parentUiReference, OrientationConvert.convert(setup.getOrientation())));
 
-		first = new SwtContainerWidget(factory, colorCache, sashForm.getFirst());
-		second = new SwtContainerWidget(factory, colorCache, sashForm.getSecond());
+		final SashForm sashForm = getUiReference();
+
+		final Composite content1 = BorderToComposite.convert(sashForm, setup.getFirstBorder());
+		final Composite content2 = BorderToComposite.convert(sashForm, setup.getSecondBorder());
+
+		first = new SwtContainerWidget(factory, colorCache, content1);
+		second = new SwtContainerWidget(factory, colorCache, content2);
 
 		first.setLayout(setup.getFirstLayout());
 		second.setLayout(setup.getSecondLayout());
 
-		//		super(colorCache, new SashForm((Composite) parent.getUiReference(), OrientationConvert.convert(setup.getOrientation())));
-		//
-		//		final SashForm sashForm = getUiReference();
-		//
-		//		final Composite content1 = BorderToComposite.convert(sashForm, setup.getFirstBorder());
-		//		final Composite content2 = BorderToComposite.convert(sashForm, setup.getSecondBorder());
-		//
-		//		first = new SwtContainerWidget(factory, colorCache, content1);
-		//		second = new SwtContainerWidget(factory, colorCache, content2);
-		//
-		//		first.setLayout(setup.getFirstLayout());
-		//		second.setLayout(setup.getSecondLayout());
-		//
-		//		sashForm.setWeights(getWeights(setup.getWeight()));
-		//		sashForm.setSashWidth(setup.getDividerSize() + 1);
+		sashForm.setWeights(getWeights(setup.getWeight()));
+		sashForm.setSashWidth(setup.getDividerSize() + 1);
 	}
 
-	//	private int[] getWeights(final double weight) {
-	//		final int firstWeigth = (int) (weight * 1000);
-	//		final int secondWeigth = (int) (1000 - weight * 1000);
-	//		return new int[] {firstWeigth, secondWeigth};
-	//	}
+	private int[] getWeights(final double weight) {
+		final int firstWeigth = (int) (weight * 1000);
+		final int secondWeigth = (int) (1000 - weight * 1000);
+		return new int[] {firstWeigth, secondWeigth};
+	}
 
 	@Override
 	public ICompositeSpi getFirst() {
@@ -93,8 +95,8 @@ public class SplitCompositeWidget extends SwtWidget implements ISplitCompositeSp
 	}
 
 	@Override
-	public JoSashForm getUiReference() {
-		return (JoSashForm) super.getUiReference();
+	public SashForm getUiReference() {
+		return (SashForm) super.getUiReference();
 	}
 
 }

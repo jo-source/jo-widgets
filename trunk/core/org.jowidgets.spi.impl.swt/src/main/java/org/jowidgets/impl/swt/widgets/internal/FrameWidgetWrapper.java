@@ -27,8 +27,6 @@
  */
 package org.jowidgets.impl.swt.widgets.internal;
 
-import org.eclipse.swt.events.ShellEvent;
-import org.eclipse.swt.events.ShellListener;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swt.color.IColorCache;
@@ -38,36 +36,7 @@ import org.jowidgets.spi.widgets.IFrameSpi;
 public class FrameWidgetWrapper extends SwtWindowWidget implements IFrameSpi {
 
 	public FrameWidgetWrapper(final IGenericWidgetFactory factory, final IColorCache colorCache, final Shell shell) {
-		super(factory, colorCache, shell);
-
-		getUiReference().addShellListener(new ShellListener() {
-
-			@Override
-			public void shellActivated(final ShellEvent e) {
-				getWindowObservableDelegate().fireWindowActivated();
-			}
-
-			@Override
-			public void shellDeactivated(final ShellEvent e) {
-				getWindowObservableDelegate().fireWindowDeactivated();
-			}
-
-			@Override
-			public void shellIconified(final ShellEvent e) {
-				getWindowObservableDelegate().fireWindowIconified();
-			}
-
-			@Override
-			public void shellDeiconified(final ShellEvent e) {
-				getWindowObservableDelegate().fireWindowDeiconified();
-			}
-
-			@Override
-			public void shellClosed(final ShellEvent e) {
-				getWindowObservableDelegate().fireWindowClosed();
-			}
-
-		});
+		super(factory, colorCache, shell, true);
 	}
 
 }

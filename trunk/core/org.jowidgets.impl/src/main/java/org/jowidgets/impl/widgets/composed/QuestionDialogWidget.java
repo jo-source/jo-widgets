@@ -194,7 +194,7 @@ public class QuestionDialogWidget implements IQuestionDialog {
 			//ui block until user closes the dialog
 
 			//after that dispose the message dialog
-			dialogWidget.close();
+			dialogWidget.dispose();
 		}
 		else {
 			throw new IllegalStateException("A message dialog could only be shown once!");
@@ -208,7 +208,7 @@ public class QuestionDialogWidget implements IQuestionDialog {
 			question();
 		}
 		else {
-			dialogWidget.close();
+			dialogWidget.dispose();
 		}
 	}
 

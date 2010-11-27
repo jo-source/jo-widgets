@@ -118,8 +118,8 @@ public final class MockWidgetFactory implements IWidgetFactorySpi {
 	}
 
 	@Override
-	public IFrameSpi createFrame(final IGenericWidgetFactory factory, final Object parentUiReference, final IFrameSetupSpi setup) {
-		return new FrameWidget(factory, imageRegistry, parentUiReference, setup);
+	public IFrameSpi createFrame(final IGenericWidgetFactory factory, final IFrameSetupSpi setup) {
+		return new FrameWidget(factory, imageRegistry, setup);
 	}
 
 	@Override

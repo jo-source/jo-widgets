@@ -28,8 +28,6 @@
 package org.jowidgets.impl.swt.widgets.internal;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ShellEvent;
-import org.eclipse.swt.events.ShellListener;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swt.color.IColorCache;
@@ -44,47 +42,14 @@ public class FrameWidget extends SwtWindowWidget implements IFrameSpi {
 		final IGenericWidgetFactory factory,
 		final IColorCache colorCache,
 		final SwtImageRegistry imageRegistry,
-		final Object parentUiReference,
 		final IFrameSetupSpi setup) {
-		super(factory, colorCache, parentUiReference != null ? new Shell((Shell) parentUiReference, getStyle(setup)) : new Shell(
-			getStyle(setup)));
+		super(factory, colorCache, new Shell(getStyle(setup)), setup.isCloseable());
 
 		if (setup.getTitle() != null) {
 			getUiReference().setText(setup.getTitle());
 		}
 		setLayout(setup.getLayout());
 		setIcon(imageRegistry, setup.getIcon());
-
-		getUiReference().setBackgroundMode(SWT.INHERIT_DEFAULT);
-
-		getUiReference().addShellListener(new ShellListener() {
-
-			@Override
-			public void shellActivated(final ShellEvent e) {
-				getWindowObservableDelegate().fireWindowActivated();
-			}
-
-			@Override
-			public void shellDeactivated(final ShellEvent e) {
-				getWindowObservableDelegate().fireWindowDeactivated();
-			}
-
-			@Override
-			public void shellIconified(final ShellEvent e) {
-				getWindowObservableDelegate().fireWindowIconified();
-			}
-
-			@Override
-			public void shellDeiconified(final ShellEvent e) {
-				getWindowObservableDelegate().fireWindowDeiconified();
-			}
-
-			@Override
-			public void shellClosed(final ShellEvent e) {
-				getWindowObservableDelegate().fireWindowClosed();
-			}
-
-		});
 	}
 
 	private static int getStyle(final IFrameSetupSpi setup) {

@@ -27,6 +27,8 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
+import java.util.List;
+
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationMessage;
 import org.jowidgets.api.validation.ValidationResult;
@@ -45,7 +47,6 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IButtonCommon;
-import org.jowidgets.common.widgets.IDisplayCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.controler.IWindowListener;
@@ -167,8 +168,8 @@ public class InputDialogWidget<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 	}
 
 	@Override
-	public void close() {
-		dialogWidget.close();
+	public void dispose() {
+		dialogWidget.dispose();
 	}
 
 	@Override
@@ -182,7 +183,7 @@ public class InputDialogWidget<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IDisplayCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
+	public <WIDGET_TYPE extends IDisplay, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
 		final DESCRIPTOR_TYPE descriptor) {
 		return dialogWidget.createChildWindow(descriptor);
 	}
@@ -210,6 +211,11 @@ public class InputDialogWidget<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 	@Override
 	public boolean isReparentable() {
 		return dialogWidget.isReparentable();
+	}
+
+	@Override
+	public List<IDisplay> getChildWindows() {
+		return dialogWidget.getChildWindows();
 	}
 
 	@Override

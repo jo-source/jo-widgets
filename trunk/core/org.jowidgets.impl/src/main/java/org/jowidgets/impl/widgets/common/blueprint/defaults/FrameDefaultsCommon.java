@@ -25,24 +25,16 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.blueprint.builder;
+package org.jowidgets.impl.widgets.common.blueprint.defaults;
 
-import org.jowidgets.api.widgets.blueprint.builder.convenience.IInputDialogSetupConvenience;
-import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
+import org.jowidgets.common.widgets.builder.IFrameSetupBuilderCommon;
 
-public interface IInputDialogSetupBuilder<INSTANCE_TYPE extends IInputDialogSetupBuilder<?, ?>, INPUT_TYPE> extends
-		ITitledWindowSetupBuilder<INSTANCE_TYPE>,
-		IInputCompositeSetupBuilder<INSTANCE_TYPE, INPUT_TYPE>,
-		IInputDialogSetupConvenience<INSTANCE_TYPE> {
+public class FrameDefaultsCommon implements IDefaultInitializer<IFrameSetupBuilderCommon<?>> {
 
-	INSTANCE_TYPE setOkButton(final IButtonDescriptor buttonDescriptor);
-
-	INSTANCE_TYPE setCancelButton(final IButtonDescriptor buttonDescriptor);
-
-	IButtonDescriptor getOkButton();
-
-	IButtonDescriptor getCancelButton();
-
-	INSTANCE_TYPE setCloseable(boolean closeable);
+	@Override
+	public void initialize(final IFrameSetupBuilderCommon<?> builder) {
+		builder.setCloseable(true);
+	}
 
 }

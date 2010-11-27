@@ -38,4 +38,7 @@ public interface IInputDialogSetup<INPUT_TYPE> extends ITitledWindowSetup, IInpu
 	@Mandatory
 	IButtonDescriptor getCancelButton();
 
+	@Mandatory
+	boolean isCloseable();
+
 }

@@ -33,9 +33,9 @@ import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IInputDialog;
+import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.IWindowCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
@@ -43,7 +43,7 @@ public class DemoMainComposite {
 
 	public DemoMainComposite(final IContainer parentContainer) {
 
-		final IWindowCommon parentWindow = Toolkit.getWidgetUtils().getWindowAncestor(parentContainer);
+		final IWindow parentWindow = Toolkit.getWidgetUtils().getWindowAncestor(parentContainer);
 
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 
@@ -82,7 +82,7 @@ public class DemoMainComposite {
 				final IFrame progressBarDialog = parentWindow.createChildWindow(bpF.dialog("Progress bar demo"));
 				new DemoProgressBarComposite(progressBarDialog, progressBarDialog);
 				progressBarDialog.setVisible(true);
-				progressBarDialog.close();
+				progressBarDialog.dispose();
 			}
 		});
 

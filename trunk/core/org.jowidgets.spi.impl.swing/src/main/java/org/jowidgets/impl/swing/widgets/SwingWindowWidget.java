@@ -37,7 +37,6 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IDisplayCommon;
-import org.jowidgets.common.widgets.IWindowCommon;
 import org.jowidgets.common.widgets.controler.IWindowListener;
 import org.jowidgets.common.widgets.controler.impl.WindowObservable;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
@@ -45,8 +44,9 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.impl.swing.util.DimensionConvert;
 import org.jowidgets.impl.swing.util.PositionConvert;
+import org.jowidgets.spi.widgets.IWindowSpi;
 
-public class SwingWindowWidget extends SwingContainerWidget implements IWindowCommon {
+public class SwingWindowWidget extends SwingContainerWidget implements IWindowSpi {
 
 	private final WindowObservable windowObservableDelegate;
 
@@ -167,7 +167,7 @@ public class SwingWindowWidget extends SwingContainerWidget implements IWindowCo
 	}
 
 	@Override
-	public void close() {
+	public void dispose() {
 		getUiReference().dispose();
 	}
 

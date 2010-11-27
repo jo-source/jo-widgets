@@ -70,15 +70,20 @@ public class BluePrintProxyInvovationHandler implements InvocationHandler {
 
 		this.widgetDescrType = widgetDescrType;
 		this.bluePrintType = bluePrintType;
-		initialize(
-				proxy,
-				(Class<? extends ISetupBuilder<ISetupBuilder<?>>>) bluePrintType,
-				convenienceRegistry,
-				defaultsRegistry);
+		initialize(proxy, (Class<? extends ISetupBuilder<ISetupBuilder<?>>>) bluePrintType, convenienceRegistry, defaultsRegistry);
 	}
 
 	@Override
 	public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
+		try {
+			return doInvoke(proxy, method, args);
+		}
+		catch (final Exception e) {
+			throw new Throwable("Error while invoking method '" + method.getName() + "' on '" + proxy + "'", e);
+		}
+	}
+
+	public Object doInvoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
 		final MethodKey methodKey = new MethodKey(method);
 		if (method.getName().equals("toString")) {
 			final StringBuilder stringBuilder = new StringBuilder();

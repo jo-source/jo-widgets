@@ -98,8 +98,8 @@ public abstract class AbstractWindowSpiWrapper extends WidgetSpiWrapper implemen
 	}
 
 	@Override
-	public void close() {
-		getWidget().close();
+	public void dispose() {
+		getWidget().dispose();
 	}
 
 }

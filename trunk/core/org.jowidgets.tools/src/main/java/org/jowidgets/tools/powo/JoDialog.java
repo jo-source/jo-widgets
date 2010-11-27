@@ -30,9 +30,10 @@ package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
 import org.jowidgets.api.widgets.descriptor.IDialogDescriptor;
-import org.jowidgets.common.widgets.IWindowCommon;
+import org.jowidgets.common.image.IImageConstant;
 
 public class JoDialog extends WindowWidget<IFrame, IDialogBluePrint> implements IFrame {
 
@@ -40,15 +41,15 @@ public class JoDialog extends WindowWidget<IFrame, IDialogBluePrint> implements 
 		super(Toolkit.getBluePrintFactory().dialog(title));
 	}
 
-	public JoDialog(final IWindowCommon parent) {
+	public JoDialog(final IWindow parent) {
 		this(parent, Toolkit.getBluePrintFactory().dialog());
 	}
 
-	public JoDialog(final IWindowCommon parent, final String title) {
+	public JoDialog(final IWindow parent, final String title) {
 		this(parent, Toolkit.getBluePrintFactory().dialog(title));
 	}
 
-	public JoDialog(final IWindowCommon parent, final IDialogDescriptor setup) {
+	public JoDialog(final IWindow parent, final IDialogDescriptor setup) {
 		super(parent, Toolkit.getBluePrintFactory().dialog().setSetup(setup));
 	}
 
@@ -61,6 +62,10 @@ public class JoDialog extends WindowWidget<IFrame, IDialogBluePrint> implements 
 	}
 
 	public static IDialogBluePrint bluePrint(final String title) {
-		return Toolkit.getBluePrintFactory().dialog(title);
+		return bluePrint().setTitle(title);
+	}
+
+	public static IDialogBluePrint bluePrint(final String title, final IImageConstant icon) {
+		return bluePrint(title).setIcon(icon);
 	}
 }

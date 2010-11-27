@@ -40,6 +40,7 @@ import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.ILabel;
 import org.jowidgets.api.widgets.ISplitComposite;
 import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.builder.IWidgetSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.application.IApplication;
@@ -76,7 +77,7 @@ public class WidgetFactoryTest {
 				testCreateWidgets(frame);
 				testAddAndRemove(frame);
 
-				frame.close();
+				frame.dispose();
 			}
 		});
 	}
@@ -163,7 +164,7 @@ public class WidgetFactoryTest {
 		Assert.assertNotNull(Toolkit.getWidgetUtils().getWindowAncestor(widget));
 	}
 
-	private void testChildWindowWidget(final IWidget parent, final IDisplay widget) {
+	private void testChildWindowWidget(final IWindow parent, final IDisplay widget) {
 		Assert.assertNotNull(widget);
 
 		Assert.assertTrue(DEFAULT_FOREGROUND.equals(widget.getForegroundColor()));
@@ -171,6 +172,8 @@ public class WidgetFactoryTest {
 
 		Assert.assertNotNull(widget.getUiReference());
 		testParent(parent, widget);
+
+		Assert.assertTrue(parent.getChildWindows().contains(widget));
 	}
 
 	private void testSplitCompositeWidget(final IContainer parent, final ISplitComposite widget) {
