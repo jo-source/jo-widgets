@@ -3,13 +3,13 @@
 
 	<groupId>org.jowidgets</groupId>
 	<artifactId>org.jowidgets.examples.swing</artifactId>
-	<version>0.0.7</version>
+	<version>0.0.8-SNAPSHOT</version>
 	<name>org.jowidgets.examples.swing</name>
 
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.examples.parent</artifactId>
-		<version>0.0.7</version>
+		<version>0.0.8-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 
@@ -17,30 +17,30 @@
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.examples.common</artifactId>
-			<version>0.0.7</version>
+			<version>0.0.8-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.impl</artifactId>
-			<version>0.0.7</version>
+			<version>0.0.8-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.spi.impl.swing</artifactId>
-			<version>0.0.7</version>
+			<version>0.0.8-SNAPSHOT</version>
 		</dependency>
 
 		<!-- headfull (GUI) test dependencies -->
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.examples.common</artifactId>
-			<version>0.0.7</version>
+			<version>0.0.8-SNAPSHOT</version>
 			<type>test-jar</type>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.api.test</artifactId>
-			<version>0.0.7</version>
+			<version>0.0.8-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
