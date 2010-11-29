@@ -36,7 +36,7 @@ import org.jowidgets.spi.widgets.IFrameSpi;
 public class FrameWidgetWrapper extends SwtWindowWidget implements IFrameSpi {
 
 	public FrameWidgetWrapper(final IGenericWidgetFactory factory, final IColorCache colorCache, final Shell shell) {
-		super(factory, colorCache, shell, true);
+		super(factory, colorCache, shell);
 	}
 
 }

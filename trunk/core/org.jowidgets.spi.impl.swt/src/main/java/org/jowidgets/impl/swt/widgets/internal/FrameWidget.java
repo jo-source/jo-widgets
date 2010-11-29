@@ -32,11 +32,10 @@ import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.image.SwtImageRegistry;
-import org.jowidgets.impl.swt.widgets.SwtWindowWidget;
 import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.spi.widgets.setup.IFrameSetupSpi;
 
-public class FrameWidget extends SwtWindowWidget implements IFrameSpi {
+public class FrameWidget extends WindowWidget implements IFrameSpi {
 
 	public FrameWidget(
 		final IGenericWidgetFactory factory,

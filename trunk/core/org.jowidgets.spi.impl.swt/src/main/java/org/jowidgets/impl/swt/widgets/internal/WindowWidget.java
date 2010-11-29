@@ -28,65 +28,84 @@
 package org.jowidgets.impl.swt.widgets.internal;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.events.ShellEvent;
+import org.eclipse.swt.events.ShellListener;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swt.color.IColorCache;
-import org.jowidgets.impl.swt.image.SwtImageRegistry;
-import org.jowidgets.spi.widgets.IFrameSpi;
-import org.jowidgets.spi.widgets.setup.IDialogSetupSpi;
+import org.jowidgets.impl.swt.widgets.SwtWindowWidget;
+import org.jowidgets.spi.widgets.IWindowSpi;
 
-public class DialogWidget extends WindowWidget implements IFrameSpi {
+public class WindowWidget extends SwtWindowWidget implements IWindowSpi {
 
-	private final boolean isModal;
+	private boolean programaticDispose;
 
-	public DialogWidget(
+	public WindowWidget(
 		final IGenericWidgetFactory factory,
 		final IColorCache colorCache,
-		final SwtImageRegistry imageRegistry,
-		final Object parentUiReference,
-		final IDialogSetupSpi setup) {
+		final Shell window,
+		final boolean isCloseable) {
+		super(factory, colorCache, window);
 
-		super(factory, colorCache, new Shell((Shell) parentUiReference, getStyle(setup)), setup.isCloseable());
+		this.programaticDispose = false;
 
-		this.isModal = setup.isModal();
+		getUiReference().addShellListener(new ShellListener() {
 
-		if (setup.getTitle() != null) {
-			getUiReference().setText(setup.getTitle());
-		}
-		setLayout(setup.getLayout());
-		setIcon(imageRegistry, setup.getIcon());
+			@Override
+			public void shellActivated(final ShellEvent e) {
+				getWindowObservableDelegate().fireWindowActivated();
+			}
+
+			@Override
+			public void shellDeactivated(final ShellEvent e) {
+				getWindowObservableDelegate().fireWindowDeactivated();
+			}
+
+			@Override
+			public void shellIconified(final ShellEvent e) {
+				getWindowObservableDelegate().fireWindowIconified();
+			}
+
+			@Override
+			public void shellDeiconified(final ShellEvent e) {
+				getWindowObservableDelegate().fireWindowDeiconified();
+			}
+
+			@Override
+			public void shellClosed(final ShellEvent e) {
+				//Do not close the shell when 'X' is pressed, except
+				//dispose method was invoked
+				if (!programaticDispose) {
+					e.doit = false;
+					if (isCloseable) {
+						if (!getUiReference().isDisposed()) {
+							getUiReference().setVisible(false);
+						}
+					}
+					else {
+						return;
+					}
+				}
+				getWindowObservableDelegate().fireWindowClosed();
+			}
+		});
+
+		getUiReference().setBackgroundMode(SWT.INHERIT_DEFAULT);
 	}
 
 	@Override
-	public void setVisible(final boolean visible) {
-		if (visible) {
-			getUiReference().open();
-			if (isModal) {
-				final Shell shell = getUiReference();
-				final Display display = shell.getDisplay();
-
-				while (!shell.isDisposed() && shell.isVisible()) {
-					if (!display.readAndDispatch()) {
-						display.sleep();
-					}
-				}
-			}
+	public void dispose() {
+		programaticDispose = true;
+		if (isVisible()) {
+			setVisible(false);
 		}
-		else {
-			super.setVisible(false);
-		}
+		getUiReference().dispose();
+		programaticDispose = false;
 	}
 
-	private static int getStyle(final IDialogSetupSpi setup) {
-		int result = SWT.DIALOG_TRIM;
-		if (setup.isResizable()) {
-			result = result | SWT.RESIZE;
-		}
-		if (setup.isModal()) {
-			result = result | SWT.APPLICATION_MODAL;
-		}
-		return result;
+	@Override
+	public boolean isVisible() {
+		return getUiReference().isVisible();
 	}
 
 }

@@ -27,9 +27,6 @@
  */
 package org.jowidgets.impl.swt.widgets;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ShellEvent;
-import org.eclipse.swt.events.ShellListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -53,58 +50,10 @@ public class SwtWindowWidget extends SwtContainerWidget implements IWindowSpi {
 
 	private final WindowObservable windowObservableDelegate;
 
-	private boolean programaticDispose;
-
-	public SwtWindowWidget(
-		final IGenericWidgetFactory factory,
-		final IColorCache colorCache,
-		final Shell window,
-		final boolean isCloseable) {
+	public SwtWindowWidget(final IGenericWidgetFactory factory, final IColorCache colorCache, final Shell window) {
 		super(factory, colorCache, window);
 
-		this.programaticDispose = false;
 		this.windowObservableDelegate = new WindowObservable();
-
-		getUiReference().addShellListener(new ShellListener() {
-
-			@Override
-			public void shellActivated(final ShellEvent e) {
-				windowObservableDelegate.fireWindowActivated();
-			}
-
-			@Override
-			public void shellDeactivated(final ShellEvent e) {
-				windowObservableDelegate.fireWindowDeactivated();
-			}
-
-			@Override
-			public void shellIconified(final ShellEvent e) {
-				windowObservableDelegate.fireWindowIconified();
-			}
-
-			@Override
-			public void shellDeiconified(final ShellEvent e) {
-				windowObservableDelegate.fireWindowDeiconified();
-			}
-
-			@Override
-			public void shellClosed(final ShellEvent e) {
-				//Do not close the shell when 'X' is pressed, except
-				//dispose method was invoked
-				if (!programaticDispose) {
-					e.doit = false;
-					if (isCloseable) {
-						getUiReference().setVisible(false);
-					}
-					else {
-						return;
-					}
-				}
-				windowObservableDelegate.fireWindowClosed();
-			}
-		});
-
-		getUiReference().setBackgroundMode(SWT.INHERIT_DEFAULT);
 	}
 
 	@Override
@@ -133,12 +82,7 @@ public class SwtWindowWidget extends SwtContainerWidget implements IWindowSpi {
 
 	@Override
 	public void dispose() {
-		programaticDispose = true;
-		if (isVisible()) {
-			setVisible(false);
-		}
 		getUiReference().dispose();
-		programaticDispose = false;
 	}
 
 	@Override
@@ -200,6 +144,10 @@ public class SwtWindowWidget extends SwtContainerWidget implements IWindowSpi {
 	@Override
 	public void removeWindowListener(final IWindowListener listener) {
 		windowObservableDelegate.removeWindowListener(listener);
+	}
+
+	protected WindowObservable getWindowObservableDelegate() {
+		return windowObservableDelegate;
 	}
 
 }
