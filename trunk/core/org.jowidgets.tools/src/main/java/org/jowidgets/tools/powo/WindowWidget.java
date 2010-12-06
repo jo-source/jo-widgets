@@ -55,7 +55,6 @@ class WindowWidget<WIDGET_TYPE extends IWindow & IContainer, BLUE_PRINT_TYPE ext
 
 	WindowWidget(final IWindow parent, final BLUE_PRINT_TYPE bluePrint) {
 		super(bluePrint);
-		Assert.paramNotNull(parent, "parent");
 		Assert.paramNotNull(bluePrint, "bluePrint");
 		initialize(parent.createChildWindow(bluePrint));
 	}
