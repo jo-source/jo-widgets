@@ -62,7 +62,7 @@ public final class DefaultConverterProvider implements IConverterProvider {
 		final Map<Class<?>, IConverter<? extends Object>> result = new HashMap<Class<?>, IConverter<? extends Object>>();
 		result.put(String.class, STRING);
 		result.put(Long.class, LONG_NUMBER);
-		result.put(Long.class, INTEGER_NUMBER);
+		result.put(Integer.class, INTEGER_NUMBER);
 		result.put(Short.class, SHORT_NUMBER);
 		return result;
 	}
