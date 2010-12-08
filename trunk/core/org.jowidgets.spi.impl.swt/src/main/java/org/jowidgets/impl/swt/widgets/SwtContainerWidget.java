@@ -34,6 +34,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Widget;
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.IWidgetCommon;
@@ -109,6 +110,21 @@ public class SwtContainerWidget implements ICompositeSpi {
 	@Override
 	public IColorConstant getBackgroundColor() {
 		return swtWidgetDelegate.getBackgroundColor();
+	}
+
+	@Override
+	public void setCursor(final Cursor cursor) {
+		swtWidgetDelegate.setCursor(cursor);
+	}
+
+	@Override
+	public void setEnabled(final boolean enabled) {
+		swtWidgetDelegate.setEnabled(enabled);
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return swtWidgetDelegate.isEnabled();
 	}
 
 	@Override

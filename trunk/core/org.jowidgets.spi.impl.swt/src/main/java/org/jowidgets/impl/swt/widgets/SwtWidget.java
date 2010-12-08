@@ -33,9 +33,11 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.color.ColorValue;
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.swt.color.IColorCache;
+import org.jowidgets.impl.swt.cursor.CursorCache;
 import org.jowidgets.impl.swt.util.DimensionConvert;
 
 public class SwtWidget implements IWidgetCommon {
@@ -76,6 +78,11 @@ public class SwtWidget implements IWidgetCommon {
 	}
 
 	@Override
+	public void setCursor(final Cursor cursor) {
+		control.setCursor(CursorCache.getCursor(cursor));
+	}
+
+	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
 		control.setForeground(colorCache.getColor(colorValue));
 	}
@@ -97,6 +104,16 @@ public class SwtWidget implements IWidgetCommon {
 
 	private IColorConstant toColorConstant(final Color color) {
 		return new ColorValue(color.getRed(), color.getGreen(), color.getBlue());
+	}
+
+	@Override
+	public void setEnabled(final boolean enabled) {
+		control.setEnabled(enabled);
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return control.isEnabled();
 	}
 
 	@Override

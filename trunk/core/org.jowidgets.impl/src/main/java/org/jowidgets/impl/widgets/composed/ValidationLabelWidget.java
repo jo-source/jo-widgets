@@ -41,6 +41,7 @@ import org.jowidgets.api.widgets.IValidationLabel;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
@@ -257,6 +258,11 @@ public class ValidationLabelWidget implements IValidationLabel {
 	}
 
 	@Override
+	public void setCursor(final Cursor cursor) {
+		labelControl.setCursor(cursor);
+	}
+
+	@Override
 	public void setVisible(final boolean visible) {
 		labelControl.setVisible(visible);
 	}
@@ -264,6 +270,16 @@ public class ValidationLabelWidget implements IValidationLabel {
 	@Override
 	public boolean isVisible() {
 		return labelControl.isVisible();
+	}
+
+	@Override
+	public void setEnabled(final boolean enabled) {
+		labelControl.setEnabled(enabled);
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return labelControl.isEnabled();
 	}
 
 	@Override

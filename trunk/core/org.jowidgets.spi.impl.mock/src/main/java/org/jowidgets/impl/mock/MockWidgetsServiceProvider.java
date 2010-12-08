@@ -28,6 +28,9 @@
 
 package org.jowidgets.impl.mock;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.threads.IUiThreadAccessCommon;
@@ -85,8 +88,8 @@ public class MockWidgetsServiceProvider implements IWidgetsServiceProvider {
 	}
 
 	@Override
-	public void setAllWindowsEnabled(final boolean enabled) {
-		// TODO
+	public List<Object> getAllWindowsUiReference() {
+		return Collections.emptyList();
 	}
 
 }

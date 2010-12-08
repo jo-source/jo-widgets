@@ -30,6 +30,7 @@ package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.widgets.blueprint.builder.IWidgetSetupBuilder;
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
@@ -40,6 +41,8 @@ class WidgetCommon<WIDGET_TYPE extends IWidgetCommon, BLUE_PRINT_TYPE extends IW
 
 	private final BLUE_PRINT_TYPE bluePrint;
 	private WIDGET_TYPE widget;
+	private Cursor cursor;
+	private Boolean enabled;
 
 	WidgetCommon(final BLUE_PRINT_TYPE bluePrint) {
 		this.bluePrint = bluePrint;
@@ -53,6 +56,12 @@ class WidgetCommon<WIDGET_TYPE extends IWidgetCommon, BLUE_PRINT_TYPE extends IW
 		Assert.paramNotNull(widget, "widget");
 		checkNotInitialized();
 		this.widget = widget;
+		if (cursor != null) {
+			widget.setCursor(cursor);
+		}
+		if (enabled != null) {
+			widget.setEnabled(enabled.booleanValue());
+		}
 	}
 
 	final IWidgetDescriptor<? extends WIDGET_TYPE> getDescriptor() {
@@ -87,6 +96,32 @@ class WidgetCommon<WIDGET_TYPE extends IWidgetCommon, BLUE_PRINT_TYPE extends IW
 		else {
 			bluePrint.setVisible(visible);
 		}
+	}
+
+	@Override
+	public void setCursor(final Cursor cursor) {
+		if (isInitialized()) {
+			widget.setCursor(cursor);
+		}
+		else {
+			this.cursor = cursor;
+		}
+	}
+
+	@Override
+	public void setEnabled(final boolean enabled) {
+		if (isInitialized()) {
+			widget.setEnabled(enabled);
+		}
+		else {
+			this.enabled = Boolean.valueOf(enabled);
+		}
+	}
+
+	@Override
+	public boolean isEnabled() {
+		checkInitialized();
+		return widget.isEnabled();
 	}
 
 	@Override

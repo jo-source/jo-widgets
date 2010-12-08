@@ -28,6 +28,7 @@
 package org.jowidgets.impl.mock.widgets.internal;
 
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IActionWidgetCommon;
 import org.jowidgets.common.widgets.controler.impl.ActionObservable;
@@ -45,7 +46,12 @@ public abstract class AbstractMockActionWidget extends ActionObservable implemen
 
 	@Override
 	public void setEnabled(final boolean enabled) {
-		mockWidgetDelegate.getUiReference().setEnabled(enabled);
+		mockWidgetDelegate.setEnabled(enabled);
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return mockWidgetDelegate.isEnabled();
 	}
 
 	@Override
@@ -76,6 +82,11 @@ public abstract class AbstractMockActionWidget extends ActionObservable implemen
 	@Override
 	public IColorConstant getBackgroundColor() {
 		return mockWidgetDelegate.getBackgroundColor();
+	}
+
+	@Override
+	public void setCursor(final Cursor cursor) {
+		mockWidgetDelegate.setCursor(cursor);
 	}
 
 	@Override

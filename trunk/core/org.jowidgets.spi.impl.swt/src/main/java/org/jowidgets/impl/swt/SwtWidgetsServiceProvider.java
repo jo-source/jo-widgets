@@ -28,6 +28,9 @@
 
 package org.jowidgets.impl.swt;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.application.IApplicationRunner;
@@ -96,11 +99,13 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider {
 	}
 
 	@Override
-	public void setAllWindowsEnabled(final boolean enabled) {
+	public List<Object> getAllWindowsUiReference() {
+		final List<Object> result = new LinkedList<Object>();
 		final Display currentDisplay = Display.getDefault();
 		for (final Shell shell : currentDisplay.getShells()) {
-			shell.setEnabled(enabled);
+			result.add(shell);
 		}
+		return result;
 	}
 
 }

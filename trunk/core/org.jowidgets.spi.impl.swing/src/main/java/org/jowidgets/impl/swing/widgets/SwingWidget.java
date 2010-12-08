@@ -32,9 +32,11 @@ import java.awt.Component;
 import javax.swing.JComponent;
 
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.impl.swing.util.ColorConvert;
+import org.jowidgets.impl.swing.util.CursorConvert;
 import org.jowidgets.impl.swing.util.DimensionConvert;
 
 public class SwingWidget implements IWidgetCommon {
@@ -83,6 +85,11 @@ public class SwingWidget implements IWidgetCommon {
 	}
 
 	@Override
+	public void setCursor(final Cursor cursor) {
+		component.setCursor(CursorConvert.convert(cursor));
+	}
+
+	@Override
 	public void setVisible(final boolean visible) {
 		component.setVisible(visible);
 	}
@@ -90,6 +97,16 @@ public class SwingWidget implements IWidgetCommon {
 	@Override
 	public boolean isVisible() {
 		return component.isVisible();
+	}
+
+	@Override
+	public void setEnabled(final boolean enabled) {
+		component.setEnabled(enabled);
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return component.isEnabled();
 	}
 
 	@Override

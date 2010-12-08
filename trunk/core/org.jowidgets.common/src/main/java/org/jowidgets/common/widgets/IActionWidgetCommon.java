@@ -31,6 +31,4 @@ import org.jowidgets.common.widgets.controler.IActionObservable;
 
 public interface IActionWidgetCommon extends IWidgetCommon, IActionObservable {
 
-	void setEnabled(boolean enabled);
-
 }

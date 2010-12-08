@@ -29,6 +29,7 @@
 package org.jowidgets.api.toolkit;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.ServiceLoader;
 
 import org.jowidgets.api.convert.IConverterProvider;
@@ -113,6 +114,10 @@ public final class Toolkit {
 
 	public static IWindow getActiveWindow() {
 		return getInstance().getActiveWindow();
+	}
+
+	public static List<IWindow> getAllWindows() {
+		return getInstance().getAllWindows();
 	}
 
 	public static IMessagePane getMessagePane() {

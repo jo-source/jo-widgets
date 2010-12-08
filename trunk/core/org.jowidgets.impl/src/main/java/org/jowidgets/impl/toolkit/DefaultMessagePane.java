@@ -39,12 +39,12 @@ public class DefaultMessagePane implements IMessagePane {
 
 	private final IGenericWidgetFactory genericWidgetFactory;
 	private final IBluePrintFactory bluePrintFactory;
-	private final ActiveWindowProvider activeWindowProvider;
+	private final WindowProvider activeWindowProvider;
 
 	public DefaultMessagePane(
 		final IGenericWidgetFactory genericWidgetFactory,
 		final IBluePrintFactory bluePrintFactory,
-		final ActiveWindowProvider activeWindowProvider) {
+		final WindowProvider activeWindowProvider) {
 		super();
 		this.genericWidgetFactory = genericWidgetFactory;
 		this.bluePrintFactory = bluePrintFactory;

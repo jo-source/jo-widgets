@@ -30,6 +30,7 @@ package org.jowidgets.impl.mock.mockui;
 
 import org.jowidgets.common.color.ColorValue;
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 
@@ -42,6 +43,7 @@ public class UIMComponent extends UIMObservable {
 	private String tooltipText;
 	private boolean visible = true;
 	private boolean enabled = true;
+	private Cursor cursor;
 
 	public void redraw() {}
 
@@ -99,6 +101,14 @@ public class UIMComponent extends UIMObservable {
 
 	public void setToolTipText(final String tooltipText) {
 		this.tooltipText = tooltipText;
+	}
+
+	public void setCursor(final Cursor cursor) {
+		this.cursor = cursor;
+	}
+
+	public Cursor getCursor() {
+		return cursor;
 	}
 
 }

@@ -29,6 +29,7 @@ package org.jowidgets.impl.swt.widgets.internal;
 
 import org.eclipse.swt.widgets.Control;
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IActionWidgetCommon;
 import org.jowidgets.common.widgets.controler.impl.ActionObservable;
@@ -46,7 +47,12 @@ public abstract class AbstractSwtActionWidget extends ActionObservable implement
 
 	@Override
 	public void setEnabled(final boolean enabled) {
-		swtWidgetDelegate.getUiReference().setEnabled(enabled);
+		swtWidgetDelegate.setEnabled(enabled);
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return swtWidgetDelegate.isEnabled();
 	}
 
 	@Override
@@ -77,6 +83,11 @@ public abstract class AbstractSwtActionWidget extends ActionObservable implement
 	@Override
 	public IColorConstant getBackgroundColor() {
 		return swtWidgetDelegate.getBackgroundColor();
+	}
+
+	@Override
+	public void setCursor(final Cursor cursor) {
+		swtWidgetDelegate.setCursor(cursor);
 	}
 
 	@Override

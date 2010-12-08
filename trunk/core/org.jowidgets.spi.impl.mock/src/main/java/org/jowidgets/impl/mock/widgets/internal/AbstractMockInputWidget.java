@@ -28,6 +28,7 @@
 package org.jowidgets.impl.mock.widgets.internal;
 
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IInputWidgetCommon;
 import org.jowidgets.common.widgets.controler.impl.InputObservable;
@@ -74,6 +75,11 @@ public abstract class AbstractMockInputWidget extends InputObservable implements
 	}
 
 	@Override
+	public void setCursor(final Cursor cursor) {
+		mockWidgetDelegate.setCursor(cursor);
+	}
+
+	@Override
 	public void setVisible(final boolean visible) {
 		mockWidgetDelegate.setVisible(visible);
 	}
@@ -81,6 +87,16 @@ public abstract class AbstractMockInputWidget extends InputObservable implements
 	@Override
 	public boolean isVisible() {
 		return mockWidgetDelegate.isVisible();
+	}
+
+	@Override
+	public void setEnabled(final boolean enabled) {
+		mockWidgetDelegate.setEnabled(enabled);
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return mockWidgetDelegate.isEnabled();
 	}
 
 	@Override

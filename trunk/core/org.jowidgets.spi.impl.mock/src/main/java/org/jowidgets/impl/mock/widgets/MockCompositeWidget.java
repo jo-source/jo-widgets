@@ -28,6 +28,7 @@
 package org.jowidgets.impl.mock.widgets;
 
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.IWidgetCommon;
@@ -98,6 +99,21 @@ public class MockCompositeWidget implements ICompositeSpi {
 	@Override
 	public IColorConstant getBackgroundColor() {
 		return mockWidgetDelegate.getBackgroundColor();
+	}
+
+	@Override
+	public void setCursor(final Cursor cursor) {
+		mockWidgetDelegate.setCursor(cursor);
+	}
+
+	@Override
+	public void setEnabled(final boolean enabled) {
+		mockWidgetDelegate.setEnabled(enabled);
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return mockWidgetDelegate.isEnabled();
 	}
 
 	@Override

@@ -36,6 +36,7 @@ import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.setup.IQuestionDialogSetup;
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IButtonCommon;
@@ -187,6 +188,11 @@ public class QuestionDialogWidget implements IQuestionDialog {
 	}
 
 	@Override
+	public void setCursor(final Cursor cursor) {
+		dialogWidget.setCursor(cursor);
+	}
+
+	@Override
 	public QuestionResult question() {
 		if (!wasVisible) {
 			wasVisible = true;
@@ -215,6 +221,16 @@ public class QuestionDialogWidget implements IQuestionDialog {
 	@Override
 	public boolean isVisible() {
 		return dialogWidget.isVisible();
+	}
+
+	@Override
+	public void setEnabled(final boolean enabled) {
+		dialogWidget.setEnabled(enabled);
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return dialogWidget.isEnabled();
 	}
 
 	@Override

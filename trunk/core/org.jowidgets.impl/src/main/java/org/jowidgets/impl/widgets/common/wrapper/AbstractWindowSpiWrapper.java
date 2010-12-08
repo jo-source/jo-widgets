@@ -74,7 +74,6 @@ public abstract class AbstractWindowSpiWrapper extends WidgetSpiWrapper implemen
 	@Override
 	public void pack() {
 		getWidget().pack();
-
 	}
 
 	@Override

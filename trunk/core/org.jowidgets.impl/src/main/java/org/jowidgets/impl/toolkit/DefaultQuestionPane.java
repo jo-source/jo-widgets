@@ -40,12 +40,12 @@ public class DefaultQuestionPane implements IQuestionPane {
 
 	private final IGenericWidgetFactory genericWidgetFactory;
 	private final IBluePrintFactory bluePrintFactory;
-	private final ActiveWindowProvider activeWindowProvider;
+	private final WindowProvider activeWindowProvider;
 
 	public DefaultQuestionPane(
 		final IGenericWidgetFactory genericWidgetFactory,
 		final IBluePrintFactory bluePrintFactory,
-		final ActiveWindowProvider activeWindowProvider) {
+		final WindowProvider activeWindowProvider) {
 		super();
 		this.genericWidgetFactory = genericWidgetFactory;
 		this.bluePrintFactory = bluePrintFactory;

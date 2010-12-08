@@ -30,6 +30,7 @@ package org.jowidgets.impl.swing.widgets.internal;
 import java.awt.Component;
 
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IInputWidgetCommon;
 import org.jowidgets.common.widgets.controler.impl.InputObservable;
@@ -77,6 +78,11 @@ public abstract class AbstractSwingInputWidget extends InputObservable implement
 	}
 
 	@Override
+	public void setCursor(final Cursor cursor) {
+		swingWidgetDelegate.setCursor(cursor);
+	}
+
+	@Override
 	public void setVisible(final boolean visible) {
 		swingWidgetDelegate.setVisible(visible);
 	}
@@ -84,6 +90,16 @@ public abstract class AbstractSwingInputWidget extends InputObservable implement
 	@Override
 	public boolean isVisible() {
 		return swingWidgetDelegate.isVisible();
+	}
+
+	@Override
+	public void setEnabled(final boolean enabled) {
+		swingWidgetDelegate.setEnabled(enabled);
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return swingWidgetDelegate.isEnabled();
 	}
 
 	@Override

@@ -36,6 +36,7 @@ import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Layout;
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
@@ -134,6 +135,17 @@ public class ScrollCompositeWidget implements IScrollCompositeSpi {
 	}
 
 	@Override
+	public void setEnabled(final boolean enabled) {
+		outerCompositeWidget.setEnabled(enabled);
+		innerCompositeWidget.setEnabled(enabled);
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return outerCompositeWidget.isEnabled();
+	}
+
+	@Override
 	public boolean isVisible() {
 		return outerCompositeWidget.isVisible();
 	}
@@ -158,6 +170,11 @@ public class ScrollCompositeWidget implements IScrollCompositeSpi {
 	public void setBackgroundColor(final IColorConstant colorValue) {
 		outerCompositeWidget.setBackgroundColor(colorValue);
 		innerCompositeWidget.setBackgroundColor(colorValue);
+	}
+
+	@Override
+	public void setCursor(final Cursor cursor) {
+		outerCompositeWidget.setCursor(cursor);
 	}
 
 	@Override

@@ -29,6 +29,8 @@
 package org.jowidgets.impl.swing;
 
 import java.awt.Window;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
@@ -91,9 +93,12 @@ public class SwingWidgetsServiceProvider implements IWidgetsServiceProvider {
 	}
 
 	@Override
-	public void setAllWindowsEnabled(final boolean enabled) {
+	public List<Object> getAllWindowsUiReference() {
+		final List<Object> result = new LinkedList<Object>();
 		for (final Window window : Window.getWindows()) {
-			window.setEnabled(enabled);
+			result.add(window);
 		}
+		return result;
 	}
+
 }

@@ -36,6 +36,7 @@ import org.jowidgets.api.widgets.descriptor.ITextLabelDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.ILabelSetup;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.IIconCommon;
@@ -107,6 +108,11 @@ public class LabelWidget implements ILabel {
 	}
 
 	@Override
+	public void setCursor(final Cursor cursor) {
+		compositeWidget.setCursor(cursor);
+	}
+
+	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
 		textLabelWidget.setForegroundColor(colorValue);
 	}
@@ -135,6 +141,16 @@ public class LabelWidget implements ILabel {
 	@Override
 	public boolean isVisible() {
 		return compositeWidget.isVisible();
+	}
+
+	@Override
+	public void setEnabled(final boolean enabled) {
+		textLabelWidget.setEnabled(enabled);
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return textLabelWidget.isEnabled();
 	}
 
 	@Override

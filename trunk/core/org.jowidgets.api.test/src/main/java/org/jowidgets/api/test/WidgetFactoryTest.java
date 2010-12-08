@@ -156,6 +156,14 @@ public class WidgetFactoryTest {
 		widget.setVisible(true);
 		Assert.assertTrue(widget.isVisible());
 
+		//test if widget could set disabled
+		widget.setEnabled(false);
+		Assert.assertFalse(widget.isEnabled());
+
+		//test if widget could set enabled
+		widget.setEnabled(true);
+		Assert.assertTrue(widget.isEnabled());
+
 		//test if colors could set
 		widget.setBackgroundColor(BACKGROUND);
 		Assert.assertTrue(BACKGROUND.equals(widget.getBackgroundColor()));

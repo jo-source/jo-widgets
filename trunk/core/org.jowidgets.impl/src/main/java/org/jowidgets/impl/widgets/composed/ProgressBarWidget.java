@@ -33,6 +33,7 @@ import org.jowidgets.api.widgets.IProgressBar;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IProgressBarSetup;
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Orientation;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
@@ -170,6 +171,17 @@ public class ProgressBarWidget implements IProgressBar {
 	}
 
 	@Override
+	public void setEnabled(final boolean enabled) {
+		indeterminateProgressBar.setEnabled(enabled);
+		progressBar.setEnabled(enabled);
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return indeterminateProgressBar.isEnabled();
+	}
+
+	@Override
 	public Dimension getSize() {
 		return compositeWidget.getSize();
 	}
@@ -285,6 +297,12 @@ public class ProgressBarWidget implements IProgressBar {
 		else {
 			return progressBar.getBackgroundColor();
 		}
+	}
+
+	@Override
+	public void setCursor(final Cursor cursor) {
+		indeterminateProgressBar.setCursor(cursor);
+		progressBar.setCursor(cursor);
 	}
 
 }

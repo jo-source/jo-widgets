@@ -28,6 +28,7 @@
 package org.jowidgets.common.widgets;
 
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 
 public interface IWidgetCommon {
@@ -51,6 +52,12 @@ public interface IWidgetCommon {
 	IColorConstant getForegroundColor();
 
 	IColorConstant getBackgroundColor();
+
+	void setCursor(Cursor cursor);
+
+	void setEnabled(boolean enabled);
+
+	boolean isEnabled();
 
 	void setVisible(boolean visible);
 

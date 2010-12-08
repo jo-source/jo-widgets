@@ -28,6 +28,8 @@
 
 package org.jowidgets.impl.toolkit;
 
+import java.util.List;
+
 import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.image.IconsSmall;
@@ -64,7 +66,7 @@ public class DefaultToolkit implements IToolkit {
 	private final IWidgetWrapperFactory widgetWrapperFactory;
 	private final IBluePrintFactory bluePrintFactory;
 	private final IConverterProvider converterProvider;
-	private final ActiveWindowProvider activeWindowProvider;
+	private final WindowProvider windowProvider;
 	private final IMessagePane messagePane;
 	private final IQuestionPane questionPane;
 	private final IWidgetUtils widgetUtils;
@@ -79,9 +81,9 @@ public class DefaultToolkit implements IToolkit {
 		this.widgetWrapperFactory = new DefaultWidgetWrapperFactory(genericWidgetFactory, toolkitSpi.getWidgetFactory());
 		this.bluePrintFactory = new BluePrintFactory();
 		this.converterProvider = new DefaultConverterProvider();
-		this.activeWindowProvider = new ActiveWindowProvider(genericWidgetFactory, toolkitSpi);
-		this.messagePane = new DefaultMessagePane(genericWidgetFactory, bluePrintFactory, activeWindowProvider);
-		this.questionPane = new DefaultQuestionPane(genericWidgetFactory, bluePrintFactory, activeWindowProvider);
+		this.windowProvider = new WindowProvider(genericWidgetFactory, toolkitSpi);
+		this.messagePane = new DefaultMessagePane(genericWidgetFactory, bluePrintFactory, windowProvider);
+		this.questionPane = new DefaultQuestionPane(genericWidgetFactory, bluePrintFactory, windowProvider);
 		this.widgetUtils = new WidgetUtils();
 
 		final IImageRegistry imageRegistry = toolkitSpi.getImageRegistry();
@@ -144,7 +146,12 @@ public class DefaultToolkit implements IToolkit {
 
 	@Override
 	public IWindow getActiveWindow() {
-		return activeWindowProvider.getActiveWindow();
+		return windowProvider.getActiveWindow();
+	}
+
+	@Override
+	public List<IWindow> getAllWindows() {
+		return windowProvider.getAllWindows();
 	}
 
 	@Override

@@ -26,39 +26,11 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi;
+package org.jowidgets.common.types;
 
-import java.util.List;
+public enum Cursor {
 
-import org.jowidgets.common.application.IApplicationRunner;
-import org.jowidgets.common.image.IImageRegistry;
-import org.jowidgets.common.threads.IUiThreadAccessCommon;
-import org.jowidgets.spi.image.IImageHandleFactorySpi;
-
-public interface IWidgetsServiceProvider {
-
-	IImageRegistry getImageRegistry();
-
-	IImageHandleFactorySpi getImageHandleFactory();
-
-	IWidgetFactorySpi getWidgetFactory();
-
-	IUiThreadAccessCommon createUiThreadAccess();
-
-	IApplicationRunner createApplicationRunner();
-
-	/**
-	 * Gets the UI reference (e.g. Shell for SWT, Window for Swing, ...) of the active window.
-	 * 
-	 * @return The UI reference of the active window or null, if now window is active
-	 */
-	Object getActiveWindowUiReference();
-
-	/**
-	 * Gets the UI reference (e.g. Shell for SWT, Window for Swing, ...) for all known windows
-	 * 
-	 * @return The UI reference for all known windows or an empty list
-	 */
-	List<Object> getAllWindowsUiReference();
+	DEFAULT,
+	WAIT;
 
 }

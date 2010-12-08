@@ -43,6 +43,7 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.IInputDialogSetup;
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
@@ -168,6 +169,16 @@ public class InputDialogWidget<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 	}
 
 	@Override
+	public void setEnabled(final boolean enabled) {
+		dialogWidget.setEnabled(enabled);
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return dialogWidget.isEnabled();
+	}
+
+	@Override
 	public void dispose() {
 		dialogWidget.dispose();
 	}
@@ -238,6 +249,11 @@ public class InputDialogWidget<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 	@Override
 	public IColorConstant getBackgroundColor() {
 		return inputCompositeWidget.getBackgroundColor();
+	}
+
+	@Override
+	public void setCursor(final Cursor cursor) {
+		inputCompositeWidget.setCursor(cursor);
 	}
 
 	@Override

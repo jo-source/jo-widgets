@@ -29,6 +29,7 @@
 package org.jowidgets.impl.widgets.common.wrapper;
 
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.spi.widgets.IWidgetSpi;
@@ -78,6 +79,11 @@ public class WidgetSpiWrapper implements IWidgetCommon {
 	}
 
 	@Override
+	public void setCursor(final Cursor cursor) {
+		widget.setCursor(cursor);
+	}
+
+	@Override
 	public void setVisible(final boolean visible) {
 		widget.setVisible(visible);
 	}
@@ -85,6 +91,16 @@ public class WidgetSpiWrapper implements IWidgetCommon {
 	@Override
 	public boolean isVisible() {
 		return widget.isVisible();
+	}
+
+	@Override
+	public void setEnabled(final boolean enabled) {
+		widget.setEnabled(enabled);
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return widget.isEnabled();
 	}
 
 	@Override

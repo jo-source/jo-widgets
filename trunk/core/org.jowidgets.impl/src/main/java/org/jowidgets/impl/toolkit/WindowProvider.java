@@ -29,6 +29,8 @@
 package org.jowidgets.impl.toolkit;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import org.jowidgets.api.toolkit.Toolkit;
@@ -41,15 +43,13 @@ import org.jowidgets.impl.widgets.basic.FrameWidget;
 import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.widgets.IFrameSpi;
 
-public class ActiveWindowProvider {
+public class WindowProvider {
 
 	private final IGenericWidgetFactory genericWidgetFactory;
 	private final IWidgetsServiceProvider widgetsServiceProvider;
 	private final Map<Object, IWindow> uiReferenceToWindow;
 
-	public ActiveWindowProvider(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetsServiceProvider widgetsServiceProvider) {
+	public WindowProvider(final IGenericWidgetFactory genericWidgetFactory, final IWidgetsServiceProvider widgetsServiceProvider) {
 
 		this.genericWidgetFactory = genericWidgetFactory;
 		this.uiReferenceToWindow = new HashMap<Object, IWindow>();
@@ -77,23 +77,40 @@ public class ActiveWindowProvider {
 
 		//maybe window would be created without jo-widgets, so create a wrapper, if possible
 		if (activeWindowUiReference != null && activeWindow == null) {
-			if (widgetsServiceProvider.getWidgetFactory().isConvertibleToFrame(activeWindowUiReference)) {
-
-				final IFrameBluePrint bp = Toolkit.getBluePrintFactory().frame().autoCenterOff();
-
-				final IFrameSpi frameSpi = widgetsServiceProvider.getWidgetFactory().createFrame(
-						genericWidgetFactory,
-						activeWindowUiReference);
-
-				activeWindow = new FrameWidget(frameSpi, bp);
-
-				//register the created frame to avoid a new creation for every call of this method
-				if (activeWindow != null) {
-					uiReferenceToWindow.put(activeWindowUiReference, activeWindow);
-				}
-			}
+			activeWindow = createWrapper(activeWindowUiReference);
 
 		}
 		return activeWindow;
+	}
+
+	public List<IWindow> getAllWindows() {
+		final List<IWindow> result = new LinkedList<IWindow>();
+		for (final Object uiRef : widgetsServiceProvider.getAllWindowsUiReference()) {
+			IWindow window = uiReferenceToWindow.get(uiRef);
+			if (window == null) {
+				window = createWrapper(uiRef);
+			}
+			if (window != null) {
+				result.add(window);
+			}
+		}
+		return result;
+	}
+
+	private IWindow createWrapper(final Object uiRef) {
+		if (widgetsServiceProvider.getWidgetFactory().isConvertibleToFrame(uiRef)) {
+
+			final IFrameBluePrint bp = Toolkit.getBluePrintFactory().frame().autoCenterOff();
+
+			final IFrameSpi frameSpi = widgetsServiceProvider.getWidgetFactory().createFrame(genericWidgetFactory, uiRef);
+
+			final IWindow result = new FrameWidget(frameSpi, bp);
+
+			//register the created frame to avoid a new creation for every call of this method
+			uiReferenceToWindow.put(uiRef, result);
+
+			return result;
+		}
+		return null;
 	}
 }

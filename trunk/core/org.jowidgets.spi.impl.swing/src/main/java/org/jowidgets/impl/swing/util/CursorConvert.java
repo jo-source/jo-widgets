@@ -25,80 +25,27 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.mock.widgets;
+package org.jowidgets.impl.swing.util;
 
-import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.IWidgetCommon;
-import org.jowidgets.impl.mock.mockui.UIMComponent;
+import org.jowidgets.util.Assert;
 
-public class MockWidget implements IWidgetCommon {
+public final class CursorConvert {
 
-	private final UIMComponent component;
+	private CursorConvert() {};
 
-	public MockWidget(final UIMComponent component) {
-		super();
-		this.component = component;
-	}
+	public static java.awt.Cursor convert(final Cursor cursor) {
+		Assert.paramNotNull(cursor, "cursor");
 
-	@Override
-	public UIMComponent getUiReference() {
-		return component;
-	}
-
-	@Override
-	public void redraw() {
-		component.redraw();
-	}
-
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		component.setForegroundColor(colorValue);
-	}
-
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		component.setBackgroundColor(colorValue);
-	}
-
-	@Override
-	public IColorConstant getForegroundColor() {
-		return component.getForegroundColor();
-	}
-
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return component.getBackgroundColor();
-	}
-
-	@Override
-	public void setVisible(final boolean visible) {
-		component.setVisible(visible);
-	}
-
-	@Override
-	public boolean isVisible() {
-		return component.isVisible();
-	}
-
-	@Override
-	public void setEnabled(final boolean enabled) {
-		component.setEnabled(enabled);
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return component.isEnabled();
-	}
-
-	@Override
-	public Dimension getSize() {
-		return component.getSize();
-	}
-
-	@Override
-	public void setCursor(final Cursor cursor) {
+		if (cursor == Cursor.DEFAULT) {
+			return java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR);
+		}
+		else if (cursor == Cursor.WAIT) {
+			return java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR);
+		}
+		else {
+			throw new IllegalArgumentException("Cursor '" + cursor + "' is unkwon");
+		}
 
 	}
 

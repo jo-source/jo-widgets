@@ -38,6 +38,7 @@ import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.descriptor.setup.IInputCompositeSetup;
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
@@ -147,6 +148,16 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputComposite<INPUT_T
 	}
 
 	@Override
+	public void setEnabled(final boolean enabled) {
+		parentComposite.setEnabled(enabled);
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return parentComposite.isEnabled();
+	}
+
+	@Override
 	public Dimension getSize() {
 		return parentComposite.getSize();
 	}
@@ -154,6 +165,11 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputComposite<INPUT_T
 	@Override
 	public void redraw() {
 		contentContainer.redraw();
+	}
+
+	@Override
+	public void setCursor(final Cursor cursor) {
+		contentContainer.setCursor(cursor);
 	}
 
 	@Override

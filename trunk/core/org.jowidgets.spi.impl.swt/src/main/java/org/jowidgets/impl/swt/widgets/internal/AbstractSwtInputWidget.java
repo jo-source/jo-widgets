@@ -29,6 +29,7 @@ package org.jowidgets.impl.swt.widgets.internal;
 
 import org.eclipse.swt.widgets.Control;
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IInputWidgetCommon;
 import org.jowidgets.common.widgets.controler.impl.InputObservable;
@@ -74,6 +75,21 @@ public abstract class AbstractSwtInputWidget extends InputObservable implements 
 	@Override
 	public IColorConstant getBackgroundColor() {
 		return swtWidgetDelegate.getBackgroundColor();
+	}
+
+	@Override
+	public void setCursor(final Cursor cursor) {
+		swtWidgetDelegate.setCursor(cursor);
+	}
+
+	@Override
+	public void setEnabled(final boolean enabled) {
+		swtWidgetDelegate.setEnabled(enabled);
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return swtWidgetDelegate.isEnabled();
 	}
 
 	@Override

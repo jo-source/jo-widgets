@@ -37,6 +37,7 @@ import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
@@ -131,6 +132,16 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 	}
 
 	@Override
+	public void setEnabled(final boolean enabled) {
+		compositeWidget.setEnabled(enabled);
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return compositeWidget.isEnabled();
+	}
+
+	@Override
 	public Dimension getSize() {
 		return compositeWidget.getSize();
 	}
@@ -158,6 +169,11 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 	@Override
 	public IColorConstant getBackgroundColor() {
 		return compositeWidget.getBackgroundColor();
+	}
+
+	@Override
+	public void setCursor(final Cursor cursor) {
+		compositeWidget.setCursor(cursor);
 	}
 
 	@Override

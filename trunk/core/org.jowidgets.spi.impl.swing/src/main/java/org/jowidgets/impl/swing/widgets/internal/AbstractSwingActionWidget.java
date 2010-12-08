@@ -30,6 +30,7 @@ package org.jowidgets.impl.swing.widgets.internal;
 import java.awt.Component;
 
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IActionWidgetCommon;
 import org.jowidgets.common.widgets.controler.impl.ActionObservable;
@@ -46,7 +47,12 @@ public abstract class AbstractSwingActionWidget extends ActionObservable impleme
 
 	@Override
 	public void setEnabled(final boolean enabled) {
-		swingWidgetDelegate.getUiReference().setEnabled(enabled);
+		swingWidgetDelegate.setEnabled(enabled);
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return swingWidgetDelegate.isEnabled();
 	}
 
 	@Override
@@ -77,6 +83,11 @@ public abstract class AbstractSwingActionWidget extends ActionObservable impleme
 	@Override
 	public IColorConstant getBackgroundColor() {
 		return swingWidgetDelegate.getBackgroundColor();
+	}
+
+	@Override
+	public void setCursor(final Cursor cursor) {
+		swingWidgetDelegate.setCursor(cursor);
 	}
 
 	@Override
