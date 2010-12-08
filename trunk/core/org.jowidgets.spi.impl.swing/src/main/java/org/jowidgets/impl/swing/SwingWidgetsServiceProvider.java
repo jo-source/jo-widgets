@@ -96,7 +96,9 @@ public class SwingWidgetsServiceProvider implements IWidgetsServiceProvider {
 	public List<Object> getAllWindowsUiReference() {
 		final List<Object> result = new LinkedList<Object>();
 		for (final Window window : Window.getWindows()) {
-			result.add(window);
+			if (window.isDisplayable()) {
+				result.add(window);
+			}
 		}
 		return result;
 	}
