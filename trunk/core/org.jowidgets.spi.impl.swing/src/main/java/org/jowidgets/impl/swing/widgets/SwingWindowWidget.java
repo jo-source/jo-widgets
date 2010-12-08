@@ -103,16 +103,6 @@ public class SwingWindowWidget extends SwingContainerWidget implements IWindowSp
 	}
 
 	@Override
-	public void setVisible(final boolean visible) {
-		getUiReference().setVisible(visible);
-	}
-
-	@Override
-	public boolean isVisible() {
-		return getUiReference().isVisible();
-	}
-
-	@Override
 	public final void setPosition(final Position position) {
 		getUiReference().setLocation(PositionConvert.convert(position));
 	}
