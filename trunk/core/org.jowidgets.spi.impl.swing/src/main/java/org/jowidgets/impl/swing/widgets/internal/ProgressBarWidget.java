@@ -43,7 +43,6 @@ public class ProgressBarWidget extends SwingWidget implements IProgressBarSpi {
 		setMinimum(setup.getMinimum());
 		setMaximum(setup.getMaximum());
 		getUiReference().setIndeterminate(setup.isIndeterminate());
-
 	}
 
 	@Override

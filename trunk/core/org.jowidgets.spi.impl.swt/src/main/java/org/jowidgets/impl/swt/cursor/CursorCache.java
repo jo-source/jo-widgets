@@ -57,6 +57,7 @@ public final class CursorCache {
 			cursorMap = new HashMap<Cursor, org.eclipse.swt.graphics.Cursor>();
 			cursorMap.put(Cursor.DEFAULT, null);
 			cursorMap.put(Cursor.WAIT, new org.eclipse.swt.graphics.Cursor(Display.getDefault(), SWT.CURSOR_WAIT));
+			cursorMap.put(Cursor.ARROW, new org.eclipse.swt.graphics.Cursor(Display.getDefault(), SWT.CURSOR_ARROW));
 		}
 		return cursorMap;
 	}

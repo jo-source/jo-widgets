@@ -31,8 +31,8 @@ import net.miginfocom.swt.MigLayout;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.ControlEvent;
-import org.eclipse.swt.events.ControlListener;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Layout;
 import org.jowidgets.common.color.IColorConstant;
@@ -55,15 +55,11 @@ public class ScrollCompositeWidget implements IScrollCompositeSpi {
 	private final SwtContainerWidget outerCompositeWidget;
 	private final SwtContainerWidget innerCompositeWidget;
 
-	private boolean mustChangeScrollCompositeMinSize;
-
 	public ScrollCompositeWidget(
 		final IGenericWidgetFactory factory,
 		final IColorCache colorCache,
 		final Object parentUiReference,
 		final IScrollCompositeSetupSpi setup) {
-
-		this.mustChangeScrollCompositeMinSize = true;
 
 		final MigLayout growingMigLayout = new MigLayout("", "0[grow, 0::]0", "0[grow, 0::]0");
 		final String growingCellConstraints = "grow, w 0::,h 0::";
@@ -100,23 +96,13 @@ public class ScrollCompositeWidget implements IScrollCompositeSpi {
 		scrolledComposite.setContent(innerComposite);
 		innerComposite.setLayoutData(growingCellConstraints);
 
-		outerComposite.addControlListener(new ControlListener() {
-
+		innerComposite.addPaintListener(new PaintListener() {
 			@Override
-			public void controlResized(final ControlEvent e) {
-				if (mustChangeScrollCompositeMinSize) {
-					scrolledComposite.setRedraw(false);
-					scrolledComposite.setMinSize(innerComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-					scrolledComposite.setRedraw(true);
-					mustChangeScrollCompositeMinSize = false;
-				}
-			}
-
-			@Override
-			public void controlMoved(final ControlEvent e) {
-
+			public void paintControl(final PaintEvent e) {
+				scrolledComposite.setMinSize(innerComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 			}
 		});
+
 	}
 
 	@Override
@@ -191,7 +177,6 @@ public class ScrollCompositeWidget implements IScrollCompositeSpi {
 	public final <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object cellConstraints) {
-		mustChangeScrollCompositeMinSize = true;
 		final WIDGET_TYPE result = innerCompositeWidget.add(descriptor, cellConstraints);
 		return result;
 	}
@@ -200,7 +185,6 @@ public class ScrollCompositeWidget implements IScrollCompositeSpi {
 	public final <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
 		final ICustomWidgetFactory<WIDGET_TYPE> factory,
 		final Object cellConstraints) {
-		mustChangeScrollCompositeMinSize = true;
 		return innerCompositeWidget.add(factory, cellConstraints);
 	}
 
@@ -221,7 +205,6 @@ public class ScrollCompositeWidget implements IScrollCompositeSpi {
 
 	@Override
 	public void removeAll() {
-		mustChangeScrollCompositeMinSize = true;
 		innerCompositeWidget.removeAll();
 	}
 

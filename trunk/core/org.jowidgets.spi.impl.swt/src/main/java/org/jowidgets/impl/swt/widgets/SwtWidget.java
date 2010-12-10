@@ -28,9 +28,7 @@
 package org.jowidgets.impl.swt.widgets;
 
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.color.ColorValue;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
@@ -58,22 +56,12 @@ public class SwtWidget implements IWidgetCommon {
 
 	@Override
 	public void redraw() {
-		redrawParentShell(control.getParent(), control);
-	}
-
-	private void redrawParentShell(final Control parent, final Control child) {
-		if (parent instanceof Shell) {
-			if (child instanceof Composite) {
-				((Composite) child).layout(false, true);
-				((Composite) child).redraw();
-			}
-			else {
-				((Shell) parent).layout(false, true);
-				((Shell) parent).redraw();
-			}
+		if (control.getParent() != null) {
+			control.getParent().layout(new Control[] {control});
+			control.getParent().redraw();
 		}
 		else {
-			redrawParentShell(parent.getParent(), parent);
+			control.redraw();
 		}
 	}
 

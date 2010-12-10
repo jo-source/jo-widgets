@@ -43,6 +43,9 @@ public final class CursorConvert {
 		else if (cursor == Cursor.WAIT) {
 			return java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR);
 		}
+		else if (cursor == Cursor.ARROW) {
+			return java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR);
+		}
 		else {
 			throw new IllegalArgumentException("Cursor '" + cursor + "' is unkwon");
 		}

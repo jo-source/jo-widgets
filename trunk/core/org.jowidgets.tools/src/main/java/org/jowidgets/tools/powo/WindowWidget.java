@@ -48,15 +48,18 @@ class WindowWidget<WIDGET_TYPE extends IWindow & IContainer, BLUE_PRINT_TYPE ext
 		ContainerWidget<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IWindow {
 
 	WindowWidget(final BLUE_PRINT_TYPE bluePrint) {
-		super(bluePrint);
-		Assert.paramNotNull(bluePrint, "bluePrint");
-		initialize(Toolkit.getWidgetFactory().create(bluePrint));
+		this(null, bluePrint);
 	}
 
 	WindowWidget(final IWindow parent, final BLUE_PRINT_TYPE bluePrint) {
 		super(bluePrint);
 		Assert.paramNotNull(bluePrint, "bluePrint");
-		initialize(parent.createChildWindow(bluePrint));
+		if (parent != null) {
+			initialize(parent.createChildWindow(bluePrint));
+		}
+		else {
+			initialize(Toolkit.getWidgetFactory().create(bluePrint));
+		}
 	}
 
 	@Override

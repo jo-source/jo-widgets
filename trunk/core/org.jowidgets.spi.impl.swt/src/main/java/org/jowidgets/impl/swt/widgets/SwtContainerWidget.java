@@ -31,7 +31,6 @@ import net.miginfocom.swt.MigLayout;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Widget;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
@@ -189,13 +188,13 @@ public class SwtContainerWidget implements ICompositeSpi {
 
 	@Override
 	public void layoutBegin() {
-		getParentShell(composite).setRedraw(false);
+		composite.setRedraw(false);
 	}
 
 	@Override
 	public void layoutEnd() {
-		getParentShell(composite).layout(true, true);
-		getParentShell(composite).setRedraw(true);
+		composite.layout(true, true);
+		composite.setRedraw(true);
 	}
 
 	protected void setLayoutConstraints(final IWidgetCommon widget, final Object layoutConstraints) {
@@ -229,18 +228,6 @@ public class SwtContainerWidget implements ICompositeSpi {
 				disposeChildren((Composite) childControl);
 			}
 			childControl.dispose();
-		}
-	}
-
-	private Shell getParentShell(final Control control) {
-		if (control instanceof Shell) {
-			return (Shell) control;
-		}
-		else if (control.getParent() != null) {
-			return getParentShell(control.getParent());
-		}
-		else {
-			return null;
 		}
 	}
 

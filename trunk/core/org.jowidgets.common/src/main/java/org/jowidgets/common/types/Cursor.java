@@ -31,6 +31,7 @@ package org.jowidgets.common.types;
 public enum Cursor {
 
 	DEFAULT,
-	WAIT;
+	WAIT,
+	ARROW;
 
 }
