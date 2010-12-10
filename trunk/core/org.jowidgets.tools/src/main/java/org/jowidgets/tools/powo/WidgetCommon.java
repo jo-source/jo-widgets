@@ -89,7 +89,7 @@ class WidgetCommon<WIDGET_TYPE extends IWidgetCommon, BLUE_PRINT_TYPE extends IW
 	}
 
 	@Override
-	public final void setVisible(final boolean visible) {
+	public void setVisible(final boolean visible) {
 		if (isInitialized()) {
 			widget.setVisible(visible);
 		}
