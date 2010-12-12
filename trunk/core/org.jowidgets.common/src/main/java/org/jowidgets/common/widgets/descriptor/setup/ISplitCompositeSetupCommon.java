@@ -33,7 +33,7 @@ import org.jowidgets.common.types.SplitResizePolicy;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 
-public interface ISplitCompositeSetupCommon extends IWidgetSetupCommon {
+public interface ISplitCompositeSetupCommon extends IComponentSetupCommon {
 
 	@Mandatory
 	Orientation getOrientation();

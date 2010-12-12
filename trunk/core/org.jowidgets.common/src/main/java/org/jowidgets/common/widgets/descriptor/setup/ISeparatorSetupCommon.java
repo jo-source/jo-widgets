@@ -30,7 +30,7 @@ package org.jowidgets.common.widgets.descriptor.setup;
 import org.jowidgets.common.types.Orientation;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
-public interface ISeparatorSetupCommon extends IWidgetSetupCommon {
+public interface ISeparatorSetupCommon extends IComponentSetupCommon {
 
 	@Mandatory
 	Orientation getOrientation();

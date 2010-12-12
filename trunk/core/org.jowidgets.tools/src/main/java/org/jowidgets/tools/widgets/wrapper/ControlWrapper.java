@@ -31,7 +31,7 @@ package org.jowidgets.tools.widgets.wrapper;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 
-public class ControlWrapper extends WidgetWrapper implements IControl {
+public class ControlWrapper extends ComponentWrapper implements IControl {
 
 	public ControlWrapper(final IControl widget) {
 		super(widget);

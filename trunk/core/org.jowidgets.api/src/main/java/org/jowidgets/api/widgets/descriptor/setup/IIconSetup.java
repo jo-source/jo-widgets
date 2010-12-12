@@ -29,7 +29,7 @@ package org.jowidgets.api.widgets.descriptor.setup;
 
 import org.jowidgets.common.widgets.descriptor.setup.IIconSetupCommon;
 
-public interface IIconSetup extends IIconSetupCommon, IWidgetSetup {
+public interface IIconSetup extends IIconSetupCommon, IComponentSetup {
 
 	String getToolTipText();
 

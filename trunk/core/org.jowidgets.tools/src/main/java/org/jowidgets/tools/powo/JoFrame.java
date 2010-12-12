@@ -36,7 +36,7 @@ import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
 
-public class JoFrame extends WindowWidget<IFrame, IFrameBluePrint> implements IFrame {
+public class JoFrame extends Window<IFrame, IFrameBluePrint> implements IFrame {
 
 	public JoFrame() {
 		super(Toolkit.getBluePrintFactory().frame());

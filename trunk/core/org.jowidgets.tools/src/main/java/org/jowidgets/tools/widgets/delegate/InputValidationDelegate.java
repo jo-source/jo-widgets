@@ -34,7 +34,7 @@ import java.util.List;
 import org.jowidgets.api.validation.IValidateable;
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationResult;
-import org.jowidgets.api.widgets.descriptor.setup.IInputWidgetSetup;
+import org.jowidgets.api.widgets.descriptor.setup.IInputComponentSetup;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.Tuple;
 
@@ -45,7 +45,7 @@ public class InputValidationDelegate<VALUE_TYPE> {
 
 	private boolean mandatory;
 
-	public InputValidationDelegate(final IInputWidgetSetup<VALUE_TYPE> setup) {
+	public InputValidationDelegate(final IInputComponentSetup<VALUE_TYPE> setup) {
 		this(setup.getValidator(), setup.isMandatory());
 	}
 

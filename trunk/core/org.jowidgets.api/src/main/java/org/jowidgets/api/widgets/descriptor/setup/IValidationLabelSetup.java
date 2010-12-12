@@ -32,7 +32,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
-public interface IValidationLabelSetup extends IWidgetSetup {
+public interface IValidationLabelSetup extends IComponentSetup {
 
 	@Mandatory
 	boolean isShowValidationMessage();

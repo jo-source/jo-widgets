@@ -28,7 +28,7 @@
 package org.jowidgets.impl.base.blueprint.factory;
 
 import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.blueprint.builder.IWidgetSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.common.widgets.IWidgetCommon;
@@ -50,7 +50,7 @@ public abstract class AbstractBluePrintFactory {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>, BLUE_PRINT_TYPE extends IWidgetSetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
+	public <WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>, BLUE_PRINT_TYPE extends IComponentSetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
 		final Class<BLUE_PRINT_TYPE> bluePrintType,
 		final Class<DESCRIPTOR_TYPE> descriptorType) {
 		//This cast is necessary for compilation with sun compiler. 

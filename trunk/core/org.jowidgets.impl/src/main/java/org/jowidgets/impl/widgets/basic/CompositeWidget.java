@@ -28,9 +28,9 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.ICompositeSetup;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
@@ -52,7 +52,7 @@ public class CompositeWidget extends ContainerWidget implements IComposite {
 	}
 
 	@Override
-	public void setParent(final IWidget parent) {
+	public void setParent(final IComponent parent) {
 		controlDelegate.setParent(parent);
 	}
 

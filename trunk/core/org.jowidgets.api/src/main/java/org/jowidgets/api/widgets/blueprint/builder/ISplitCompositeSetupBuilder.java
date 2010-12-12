@@ -31,6 +31,6 @@ import org.jowidgets.common.widgets.builder.ISplitCompositeSetupBuilderCommon;
 
 public interface ISplitCompositeSetupBuilder<INSTANCE_TYPE extends ISplitCompositeSetupBuilder<?>> extends
 		ISplitCompositeSetupBuilderCommon<INSTANCE_TYPE>,
-		IWidgetSetupBuilder<INSTANCE_TYPE> {
+		IComponentSetupBuilder<INSTANCE_TYPE> {
 
 }

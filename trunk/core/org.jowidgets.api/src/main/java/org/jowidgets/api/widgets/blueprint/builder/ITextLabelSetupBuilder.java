@@ -31,6 +31,6 @@ import org.jowidgets.common.widgets.builder.ITextLabelSetupBuilderCommon;
 
 public interface ITextLabelSetupBuilder<INSTANCE_TYPE extends ITextLabelSetupBuilder<?>> extends
 		ITextLabelSetupBuilderCommon<INSTANCE_TYPE>,
-		IWidgetSetupBuilder<INSTANCE_TYPE> {
+		IComponentSetupBuilder<INSTANCE_TYPE> {
 
 }

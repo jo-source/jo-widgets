@@ -34,7 +34,7 @@ import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.descriptor.ICompositeDescriptor;
 import org.jowidgets.util.Assert;
 
-public class JoContainer extends ContainerWidget<IContainer, ICompositeBluePrint> implements IContainer {
+public class JoContainer extends Container<IContainer, ICompositeBluePrint> implements IContainer {
 
 	JoContainer(final IContainer widget) {
 		this(bluePrint());

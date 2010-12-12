@@ -31,7 +31,7 @@ package org.jowidgets.impl.widgets.common.wrapper;
 import org.jowidgets.common.widgets.IProgressBarCommon;
 import org.jowidgets.spi.widgets.IProgressBarSpi;
 
-public class ProgressBarSpiWrapper extends WidgetSpiWrapper implements IProgressBarCommon {
+public class ProgressBarSpiWrapper extends ComponentSpiWrapper implements IProgressBarCommon {
 
 	public ProgressBarSpiWrapper(final IProgressBarSpi widget) {
 		super(widget);

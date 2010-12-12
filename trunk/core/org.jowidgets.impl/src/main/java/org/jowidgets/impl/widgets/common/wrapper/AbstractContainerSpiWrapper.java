@@ -32,7 +32,7 @@ import org.jowidgets.common.widgets.IContainerCommon;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.spi.widgets.IContainerSpi;
 
-public abstract class AbstractContainerSpiWrapper extends WidgetSpiWrapper implements IContainerCommon {
+public abstract class AbstractContainerSpiWrapper extends ComponentSpiWrapper implements IContainerCommon {
 
 	public AbstractContainerSpiWrapper(final IContainerSpi widget) {
 		super(widget);

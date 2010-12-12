@@ -35,7 +35,7 @@ import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IComboBox;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IInputDialog;
-import org.jowidgets.api.widgets.IInputWidget;
+import org.jowidgets.api.widgets.IInputComponent;
 import org.jowidgets.api.widgets.IValidationLabel;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
@@ -67,14 +67,14 @@ public class DemoInputDialog1 {
 	private class DemoInputDialogContent implements IInputContentCreator<String> {
 
 		private IComboBox<String> gender;
-		private IInputWidget<String> lastname;
-		private IInputWidget<String> firstName;
-		private IInputWidget<String> street;
-		private IInputWidget<String> city;
-		private IInputWidget<Integer> postalCode;
+		private IInputComponent<String> lastname;
+		private IInputComponent<String> firstName;
+		private IInputComponent<String> street;
+		private IInputComponent<String> city;
+		private IInputComponent<Integer> postalCode;
 		private IComboBox<String> country;
-		private IInputWidget<String> phoneNumber;
-		private IInputWidget<String> mail;
+		private IInputComponent<String> phoneNumber;
+		private IInputComponent<String> mail;
 
 		@Override
 		public void createContent(final IInputContentContainer container) {

@@ -28,6 +28,6 @@
 package org.jowidgets.api.widgets;
 
 
-public interface IInputControl<VALUE_TYPE> extends IControl, IInputWidget<VALUE_TYPE> {
+public interface IInputControl<VALUE_TYPE> extends IControl, IInputComponent<VALUE_TYPE> {
 
 }

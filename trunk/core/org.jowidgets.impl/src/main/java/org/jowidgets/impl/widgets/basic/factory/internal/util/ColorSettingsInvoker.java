@@ -27,19 +27,19 @@
  */
 package org.jowidgets.impl.widgets.basic.factory.internal.util;
 
-import org.jowidgets.api.widgets.descriptor.setup.IWidgetSetup;
-import org.jowidgets.common.widgets.IWidgetCommon;
+import org.jowidgets.api.widgets.descriptor.setup.IComponentSetup;
+import org.jowidgets.common.widgets.IComponentCommon;
 
 public final class ColorSettingsInvoker {
 
 	private ColorSettingsInvoker() {}
 
-	public static void setColors(final IWidgetSetup descriptor, final IWidgetCommon widget) {
-		if (descriptor.getForegroundColor() != null) {
-			widget.setForegroundColor(descriptor.getForegroundColor());
+	public static void setColors(final IComponentSetup setup, final IComponentCommon widget) {
+		if (setup.getForegroundColor() != null) {
+			widget.setForegroundColor(setup.getForegroundColor());
 		}
-		if (descriptor.getBackgroundColor() != null) {
-			widget.setBackgroundColor(descriptor.getBackgroundColor());
+		if (setup.getBackgroundColor() != null) {
+			widget.setBackgroundColor(setup.getBackgroundColor());
 		}
 	}
 

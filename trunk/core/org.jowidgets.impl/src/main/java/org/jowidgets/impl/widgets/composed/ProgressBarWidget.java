@@ -27,10 +27,10 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
+import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IProgressBar;
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IProgressBarSetup;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
@@ -141,7 +141,7 @@ public class ProgressBarWidget implements IProgressBar {
 	}
 
 	@Override
-	public void setParent(final IWidget parent) {
+	public void setParent(final IComponent parent) {
 		compositeWidget.setParent(parent);
 	}
 

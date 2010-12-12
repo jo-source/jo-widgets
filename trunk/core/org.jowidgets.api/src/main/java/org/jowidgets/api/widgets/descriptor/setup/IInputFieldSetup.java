@@ -30,7 +30,7 @@ package org.jowidgets.api.widgets.descriptor.setup;
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
-public interface IInputFieldSetup<INPUT_TYPE> extends IInputWidgetSetup<INPUT_TYPE> {
+public interface IInputFieldSetup<INPUT_TYPE> extends IInputComponentSetup<INPUT_TYPE> {
 
 	@Mandatory
 	IConverter<INPUT_TYPE> getConverter();

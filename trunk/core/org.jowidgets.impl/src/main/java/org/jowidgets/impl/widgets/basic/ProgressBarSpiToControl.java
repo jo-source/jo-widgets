@@ -28,9 +28,9 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.common.wrapper.ProgressBarSpiWrapper;
 import org.jowidgets.spi.widgets.IProgressBarSpi;
@@ -50,7 +50,7 @@ public class ProgressBarSpiToControl extends ProgressBarSpiWrapper implements IP
 	}
 
 	@Override
-	public void setParent(final IWidget parent) {
+	public void setParent(final IComponent parent) {
 		controlDelegate.setParent(parent);
 	}
 

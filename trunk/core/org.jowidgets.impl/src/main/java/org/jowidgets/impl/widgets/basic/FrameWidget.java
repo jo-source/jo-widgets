@@ -30,10 +30,10 @@ package org.jowidgets.impl.widgets.basic;
 
 import java.util.List;
 
+import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IDisplay;
 import org.jowidgets.api.widgets.IFrame;
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IFrameSetup;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
@@ -95,7 +95,7 @@ public class FrameWidget extends AbstractFrameSpiWrapper implements IFrame {
 	}
 
 	@Override
-	public void setParent(final IWidget parent) {
+	public void setParent(final IComponent parent) {
 		displayDelegate.setParent(parent);
 	}
 

@@ -27,7 +27,7 @@
  */
 package org.jowidgets.api.widgets;
 
-public interface IInputContainer<INPUT_TYPE> extends IInputWidget<INPUT_TYPE> {
+public interface IInputContainer<INPUT_TYPE> extends IInputComponent<INPUT_TYPE> {
 
 	void resetValidation();
 

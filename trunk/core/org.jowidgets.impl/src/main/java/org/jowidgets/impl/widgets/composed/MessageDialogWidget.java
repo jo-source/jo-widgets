@@ -27,11 +27,11 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
+import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IDisplay;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IMessageDialog;
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.setup.IMessageDialogSetup;
 import org.jowidgets.common.color.IColorConstant;
@@ -108,7 +108,7 @@ public class MessageDialogWidget implements IMessageDialog {
 	}
 
 	@Override
-	public void setParent(final IWidget parent) {
+	public void setParent(final IComponent parent) {
 		dialogWidget.setParent(parent);
 	}
 

@@ -31,7 +31,7 @@ import org.jowidgets.common.widgets.builder.IIconSetupBuilderCommon;
 
 public interface IIconSetupBuilder<INSTANCE_TYPE extends IIconSetupBuilder<?>> extends
 		IIconSetupBuilderCommon<INSTANCE_TYPE>,
-		IWidgetSetupBuilder<INSTANCE_TYPE> {
+		IComponentSetupBuilder<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setToolTipText(String toolTipText);
 

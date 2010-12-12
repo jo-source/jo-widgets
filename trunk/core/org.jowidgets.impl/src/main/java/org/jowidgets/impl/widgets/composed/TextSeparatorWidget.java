@@ -28,10 +28,10 @@
 package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.color.Colors;
+import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.ITextLabel;
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.ITextLabelDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextSeparatorDescriptor;
 import org.jowidgets.common.color.IColorConstant;
@@ -101,7 +101,7 @@ public class TextSeparatorWidget implements ITextLabel {
 	}
 
 	@Override
-	public void setParent(final IWidget parent) {
+	public void setParent(final IComponent parent) {
 		compositeWidget.setParent(parent);
 	}
 

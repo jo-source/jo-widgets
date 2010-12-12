@@ -29,6 +29,6 @@ package org.jowidgets.spi.widgets.setup;
 
 import org.jowidgets.common.widgets.descriptor.setup.ICheckBoxSetupCommon;
 
-public interface ICheckBoxSetupSpi extends ICheckBoxSetupCommon, IWidgetSetupSpi {
+public interface ICheckBoxSetupSpi extends ICheckBoxSetupCommon, IComponentSetupSpi {
 
 }

@@ -32,7 +32,7 @@ import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.builder.convenience.ITextLabelSetupConvenienceCommon;
 
 public interface ITextLabelSetupBuilderCommon<INSTANCE_TYPE extends ITextLabelSetupBuilderCommon<?>> extends
-		IWidgetSetupBuilderCommon<INSTANCE_TYPE>,
+		IComponentSetupBuilderCommon<INSTANCE_TYPE>,
 		ITextLabelSetupConvenienceCommon<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setText(String text);

@@ -33,12 +33,12 @@ import java.util.List;
 import org.jowidgets.api.validation.ValidationMessage;
 import org.jowidgets.api.validation.ValidationMessageType;
 import org.jowidgets.api.validation.ValidationResult;
+import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.api.widgets.IInputWidget;
+import org.jowidgets.api.widgets.IInputComponent;
 import org.jowidgets.api.widgets.ILabel;
 import org.jowidgets.api.widgets.IValidationLabel;
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
@@ -46,13 +46,13 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.impl.widgets.composed.wrapper.ControlWrapper;
+import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 
 public class ValidationLabelWidget implements IValidationLabel {
 
 	private final IValidationLabelDescriptor descriptor;
 	private final ILabel labelWidget;
-	private final List<IInputWidget<?>> inputWidgets;
+	private final List<IInputComponent<?>> inputWidgets;
 	private final IInputListener inputListener;
 	private final IControl labelControl;
 	private final boolean showLabel;
@@ -67,7 +67,7 @@ public class ValidationLabelWidget implements IValidationLabel {
 		this.labelWidget = labelWidget;
 		this.descriptor = descriptor;
 		this.labelControl = new ControlWrapper(labelWidget);
-		this.inputWidgets = new LinkedList<IInputWidget<?>>();
+		this.inputWidgets = new LinkedList<IInputComponent<?>>();
 		this.hasInput = false;
 		this.inputListener = new IInputListener() {
 
@@ -82,7 +82,7 @@ public class ValidationLabelWidget implements IValidationLabel {
 	}
 
 	@Override
-	public void registerInputWidget(final IInputWidget<?> inputWidget) {
+	public void registerInputWidget(final IInputComponent<?> inputWidget) {
 		inputWidgets.add(inputWidget);
 		inputWidget.addInputListener(inputListener);
 		onInputChanged();
@@ -90,7 +90,7 @@ public class ValidationLabelWidget implements IValidationLabel {
 	}
 
 	@Override
-	public void unRegisterInputWidget(final IInputWidget<?> inputWidget) {
+	public void unRegisterInputWidget(final IInputComponent<?> inputWidget) {
 		inputWidget.removeInputListener(inputListener);
 		inputWidgets.remove(inputWidget);
 		onInputChanged();
@@ -117,7 +117,7 @@ public class ValidationLabelWidget implements IValidationLabel {
 		boolean anyFilledOut = false;
 
 		//empty if there is any mandatory field empty
-		for (final IInputWidget<?> inputWidget : inputWidgets) {
+		for (final IInputComponent<?> inputWidget : inputWidgets) {
 			anyFilledOut = anyFilledOut || !inputWidget.isEmpty();
 			if (inputWidget.isMandatory() && inputWidget.isEmpty()) {
 				return true;
@@ -130,7 +130,7 @@ public class ValidationLabelWidget implements IValidationLabel {
 
 	private void doValidation(final boolean isEmpty) {
 		final ValidationResult validationResult = new ValidationResult();
-		for (final IInputWidget<?> inputWidget : inputWidgets) {
+		for (final IInputComponent<?> inputWidget : inputWidgets) {
 			validationResult.addValidationResult(inputWidget.validate());
 		}
 		setValidationResult(validationResult, isEmpty);
@@ -218,7 +218,7 @@ public class ValidationLabelWidget implements IValidationLabel {
 	}
 
 	@Override
-	public void setParent(final IWidget parent) {
+	public void setParent(final IComponent parent) {
 		labelControl.setParent(parent);
 	}
 

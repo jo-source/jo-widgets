@@ -33,7 +33,7 @@ import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
 import org.jowidgets.common.types.Border;
 
 public interface IInputCompositeSetupBuilder<INSTANCE_TYPE extends IInputCompositeSetupBuilder<?, ?>, INPUT_TYPE> extends
-		IInputWidgetSetupBuilder<INSTANCE_TYPE, INPUT_TYPE>,
+		IInputComponentSetupBuilder<INSTANCE_TYPE, INPUT_TYPE>,
 		IInputCompositeSetupConvenience<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setAutoResetValidation(final boolean autoResetValidation);

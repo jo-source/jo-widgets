@@ -27,10 +27,10 @@
  */
 package org.jowidgets.common.widgets.builder;
 
-import org.jowidgets.common.widgets.descriptor.setup.IWidgetSetupCommon;
+import org.jowidgets.common.widgets.descriptor.setup.IComponentSetupCommon;
 
 public interface ISetupBuilder<INSTANCE_TYPE extends ISetupBuilder<?>> {
 
-	INSTANCE_TYPE setSetup(IWidgetSetupCommon descriptor);
+	INSTANCE_TYPE setSetup(IComponentSetupCommon descriptor);
 
 }

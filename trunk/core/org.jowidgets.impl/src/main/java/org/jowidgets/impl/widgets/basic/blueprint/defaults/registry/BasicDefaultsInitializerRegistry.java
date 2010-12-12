@@ -30,10 +30,10 @@ package org.jowidgets.impl.widgets.basic.blueprint.defaults.registry;
 
 import org.jowidgets.api.widgets.blueprint.builder.IButtonSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IComboBoxSelectionSetupBuilder;
-import org.jowidgets.api.widgets.blueprint.builder.IInputWidgetSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.builder.IInputComponentSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.ISplitCompositeSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.ITextFieldSetupBuilder;
-import org.jowidgets.api.widgets.blueprint.builder.IWidgetSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IWindowSetupBuilder;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.ButtonDefaults;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.ComboBoxSelectionDefaults;
@@ -50,10 +50,10 @@ public class BasicDefaultsInitializerRegistry extends CommonDefaultsInitializerR
 		super();
 		register(IButtonSetupBuilder.class, new ButtonDefaults());
 		register(IComboBoxSelectionSetupBuilder.class, new ComboBoxSelectionDefaults());
-		register(IInputWidgetSetupBuilder.class, new InputWidgetDefaults());
+		register(IInputComponentSetupBuilder.class, new InputWidgetDefaults());
 		register(ITextFieldSetupBuilder.class, new TextFieldDefaults());
 		register(IWindowSetupBuilder.class, new WindowDefaults());
 		register(ISplitCompositeSetupBuilder.class, new SplitCompositeWidgetDefaults());
-		register(IWidgetSetupBuilder.class, new WidgetDefaults());
+		register(IComponentSetupBuilder.class, new WidgetDefaults());
 	}
 }

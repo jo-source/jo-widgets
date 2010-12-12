@@ -30,7 +30,7 @@ package org.jowidgets.common.widgets.descriptor.setup;
 import org.jowidgets.common.types.Orientation;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
-public interface IProgressBarSetupCommon extends IWidgetSetupCommon {
+public interface IProgressBarSetupCommon extends IComponentSetupCommon {
 
 	@Mandatory
 	Orientation getOrientation();

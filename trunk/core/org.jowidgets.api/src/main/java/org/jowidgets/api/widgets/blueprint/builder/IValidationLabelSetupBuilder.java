@@ -32,7 +32,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
 
 public interface IValidationLabelSetupBuilder<INSTANCE_TYPE extends IValidationLabelSetupBuilder<?>> extends
-		IWidgetSetupBuilder<INSTANCE_TYPE> {
+		IComponentSetupBuilder<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setShowValidationMessage(boolean showValidationMessage);
 

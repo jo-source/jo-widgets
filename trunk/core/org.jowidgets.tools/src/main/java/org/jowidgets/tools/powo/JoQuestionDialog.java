@@ -39,7 +39,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IWindowCommon;
 import org.jowidgets.util.Assert;
 
-public class JoQuestionDialog extends Widget<IQuestionDialog, IQuestionDialogBluePrint> implements IQuestionDialog {
+public class JoQuestionDialog extends Component<IQuestionDialog, IQuestionDialogBluePrint> implements IQuestionDialog {
 
 	public JoQuestionDialog(final IWindowCommon parent, final QuestionType questionType, final String message) {
 		this(parent, bluePrint(questionType).setText(message));

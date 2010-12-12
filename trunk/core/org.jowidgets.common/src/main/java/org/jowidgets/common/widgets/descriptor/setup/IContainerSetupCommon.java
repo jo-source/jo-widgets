@@ -30,7 +30,7 @@ package org.jowidgets.common.widgets.descriptor.setup;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 
-public interface IContainerSetupCommon extends IWidgetSetupCommon {
+public interface IContainerSetupCommon extends IComponentSetupCommon {
 
 	@Mandatory
 	ILayoutDescriptor getLayout();

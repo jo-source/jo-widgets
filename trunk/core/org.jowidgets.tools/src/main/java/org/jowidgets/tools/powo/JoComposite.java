@@ -36,7 +36,7 @@ import org.jowidgets.common.types.Border;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.util.Assert;
 
-public class JoComposite extends CompositeWidget<IComposite, ICompositeBluePrint> implements IComposite {
+public class JoComposite extends Composite<IComposite, ICompositeBluePrint> implements IComposite {
 
 	JoComposite(final IComposite widget) {
 		this(bluePrint());

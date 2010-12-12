@@ -35,7 +35,7 @@ import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
 import org.jowidgets.api.widgets.descriptor.IDialogDescriptor;
 import org.jowidgets.common.image.IImageConstant;
 
-public class JoDialog extends WindowWidget<IFrame, IDialogBluePrint> implements IFrame {
+public class JoDialog extends Window<IFrame, IDialogBluePrint> implements IFrame {
 
 	public JoDialog(final String title) {
 		super(Toolkit.getBluePrintFactory().dialog(title));

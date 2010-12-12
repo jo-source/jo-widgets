@@ -29,6 +29,6 @@ package org.jowidgets.impl.spi.blueprint.builder;
 
 public interface IComboBoxSetupBuilderSpi<INSTANCE_TYPE extends IComboBoxSetupBuilderSpi<?>> extends
 		IComboBoxSelectionSetupBuilderSpi<INSTANCE_TYPE>,
-		ITextInputWidgetSetupBuilderSpi<INSTANCE_TYPE> {
+		ITextInputComponentSetupBuilderSpi<INSTANCE_TYPE> {
 
 }

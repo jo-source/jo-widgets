@@ -30,7 +30,7 @@ package org.jowidgets.api.widgets;
 
 import org.jowidgets.common.widgets.IControlCommon;
 
-public interface IControl extends IWidget, IControlCommon {
+public interface IControl extends IComponent, IControlCommon {
 
 	@Override
 	IContainer getParent();

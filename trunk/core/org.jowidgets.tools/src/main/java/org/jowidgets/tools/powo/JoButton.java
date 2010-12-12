@@ -39,7 +39,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.controler.IActionListener;
 
-public class JoButton extends ControlWidget<IButton, IButtonBluePrint> implements IButton {
+public class JoButton extends Control<IButton, IButtonBluePrint> implements IButton {
 
 	private final Set<IActionListener> actionListeners;
 

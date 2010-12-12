@@ -32,7 +32,7 @@ import org.jowidgets.api.types.AutoCenterPolicy;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IInputDialog;
-import org.jowidgets.api.widgets.IInputWidget;
+import org.jowidgets.api.widgets.IInputComponent;
 import org.jowidgets.api.widgets.IValidationLabel;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
@@ -85,19 +85,19 @@ public class HelloWidgetApplication implements IApplication {
 
 		// row1
 		group.add(labelBp.setText("Number 1").setToolTipText("Very useful numbers here"), "sg lg");
-		final IInputWidget<Long> widget1 = group.add(bpF.inputFieldLongNumber(), "growx");
+		final IInputComponent<Long> widget1 = group.add(bpF.inputFieldLongNumber(), "growx");
 		final IValidationLabel valLabel1 = group.add(validationLabelBp, "wrap");
 		valLabel1.registerInputWidget(widget1);
 
 		// row2
 		group.add(labelBp.setText("Number 2").setToolTipText("Very very useful numbers here"), "sg lg");
-		final IInputWidget<Integer> widget2 = group.add(bpF.inputFieldIntegerNumber(), "growx");
+		final IInputComponent<Integer> widget2 = group.add(bpF.inputFieldIntegerNumber(), "growx");
 		final IValidationLabel valLabel2 = group.add(validationLabelBp, "wrap");
 		valLabel2.registerInputWidget(widget2);
 
 		// row3
 		group.add(labelBp.setText("String").setToolTipText("Very special input here"), "sg lg");
-		final IInputWidget<String> widget3 = group.add(bpF.textField(), "growx");
+		final IInputComponent<String> widget3 = group.add(bpF.textField(), "growx");
 		final IValidationLabel valLabel3 = group.add(validationLabelBp, "wrap");
 		valLabel3.registerInputWidget(widget3);
 

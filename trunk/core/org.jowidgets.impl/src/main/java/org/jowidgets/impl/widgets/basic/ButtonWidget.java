@@ -29,8 +29,8 @@
 package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.widgets.IButton;
+import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
@@ -56,7 +56,7 @@ public class ButtonWidget extends ButtonSpiWrapper implements IButton {
 	}
 
 	@Override
-	public void setParent(final IWidget parent) {
+	public void setParent(final IComponent parent) {
 		controlDelegate.setParent(parent);
 	}
 

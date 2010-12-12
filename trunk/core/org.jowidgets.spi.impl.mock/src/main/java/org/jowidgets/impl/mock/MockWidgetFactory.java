@@ -31,23 +31,23 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.mock.image.MockImageRegistry;
 import org.jowidgets.impl.mock.mockui.UIMContainer;
 import org.jowidgets.impl.mock.mockui.UIMWindow;
-import org.jowidgets.impl.mock.widgets.internal.ButtonWidget;
-import org.jowidgets.impl.mock.widgets.internal.CheckBoxWidget;
-import org.jowidgets.impl.mock.widgets.internal.ComboBoxSelectionWidget;
-import org.jowidgets.impl.mock.widgets.internal.ComboBoxWidget;
-import org.jowidgets.impl.mock.widgets.internal.CompositeWidget;
-import org.jowidgets.impl.mock.widgets.internal.CompositeWidgetWrapper;
-import org.jowidgets.impl.mock.widgets.internal.DialogWidget;
-import org.jowidgets.impl.mock.widgets.internal.FrameWidget;
-import org.jowidgets.impl.mock.widgets.internal.FrameWidgetWrapper;
-import org.jowidgets.impl.mock.widgets.internal.IconWidget;
-import org.jowidgets.impl.mock.widgets.internal.ProgressBarWidget;
-import org.jowidgets.impl.mock.widgets.internal.ScrollCompositeWidget;
-import org.jowidgets.impl.mock.widgets.internal.SeparatorWidget;
-import org.jowidgets.impl.mock.widgets.internal.SplitCompositeWidget;
-import org.jowidgets.impl.mock.widgets.internal.TextFieldWidget;
-import org.jowidgets.impl.mock.widgets.internal.TextLabelWidget;
-import org.jowidgets.impl.mock.widgets.internal.ToggleButtonWidget;
+import org.jowidgets.impl.mock.widgets.internal.ButtonImpl;
+import org.jowidgets.impl.mock.widgets.internal.CheckBoxImpl;
+import org.jowidgets.impl.mock.widgets.internal.ComboBoxSelectionImpl;
+import org.jowidgets.impl.mock.widgets.internal.ComboBoxImpl;
+import org.jowidgets.impl.mock.widgets.internal.CompositeImpl;
+import org.jowidgets.impl.mock.widgets.internal.CompositeWrapper;
+import org.jowidgets.impl.mock.widgets.internal.DialogImpl;
+import org.jowidgets.impl.mock.widgets.internal.FrameImpl;
+import org.jowidgets.impl.mock.widgets.internal.FrameWrapper;
+import org.jowidgets.impl.mock.widgets.internal.IconImpl;
+import org.jowidgets.impl.mock.widgets.internal.ProgressBarImpl;
+import org.jowidgets.impl.mock.widgets.internal.ScrollCompositeImpl;
+import org.jowidgets.impl.mock.widgets.internal.SeparatorImpl;
+import org.jowidgets.impl.mock.widgets.internal.SplitCompositeImpl;
+import org.jowidgets.impl.mock.widgets.internal.TextFieldImpl;
+import org.jowidgets.impl.mock.widgets.internal.TextLabelImpl;
+import org.jowidgets.impl.mock.widgets.internal.ToggleButtonImpl;
 import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.widgets.IButtonSpi;
 import org.jowidgets.spi.widgets.ICheckBoxSpi;
@@ -98,7 +98,7 @@ public final class MockWidgetFactory implements IWidgetFactorySpi {
 	public IFrameSpi createFrame(final IGenericWidgetFactory factory, final Object uiReference) {
 		Assert.paramNotNull(uiReference, "uiReference");
 		if (uiReference instanceof UIMWindow) {
-			return new FrameWidgetWrapper(factory, (UIMWindow) uiReference);
+			return new FrameWrapper(factory, (UIMWindow) uiReference);
 		}
 		throw new IllegalArgumentException("UiReference must be instanceof of '" + UIMWindow.class.getName() + "'");
 	}
@@ -112,19 +112,19 @@ public final class MockWidgetFactory implements IWidgetFactorySpi {
 	public ICompositeSpi createComposite(final IGenericWidgetFactory factory, final Object uiReference) {
 		Assert.paramNotNull(uiReference, "uiReference");
 		if (uiReference instanceof UIMContainer) {
-			return new CompositeWidgetWrapper(factory, (UIMContainer) uiReference);
+			return new CompositeWrapper(factory, (UIMContainer) uiReference);
 		}
 		throw new IllegalArgumentException("UiReference must be instanceof of '" + UIMContainer.class.getName() + "'");
 	}
 
 	@Override
 	public IFrameSpi createFrame(final IGenericWidgetFactory factory, final IFrameSetupSpi setup) {
-		return new FrameWidget(factory, imageRegistry, setup);
+		return new FrameImpl(factory, imageRegistry, setup);
 	}
 
 	@Override
 	public IFrameSpi createDialog(final IGenericWidgetFactory factory, final Object parentUiReference, final IDialogSetupSpi setup) {
-		return new DialogWidget(factory, imageRegistry, parentUiReference, setup);
+		return new DialogImpl(factory, imageRegistry, parentUiReference, setup);
 	}
 
 	@Override
@@ -132,7 +132,7 @@ public final class MockWidgetFactory implements IWidgetFactorySpi {
 		final IGenericWidgetFactory factory,
 		final Object parentUiReference,
 		final ICompositeSetupSpi setup) {
-		return new CompositeWidget(factory, setup);
+		return new CompositeImpl(factory, setup);
 	}
 
 	@Override
@@ -140,7 +140,7 @@ public final class MockWidgetFactory implements IWidgetFactorySpi {
 		final IGenericWidgetFactory factory,
 		final Object parentUiReference,
 		final IScrollCompositeSetupSpi setup) {
-		return new ScrollCompositeWidget(factory, setup);
+		return new ScrollCompositeImpl(factory, setup);
 	}
 
 	@Override
@@ -148,57 +148,57 @@ public final class MockWidgetFactory implements IWidgetFactorySpi {
 		final IGenericWidgetFactory factory,
 		final Object parentUiReference,
 		final ISplitCompositeSetupSpi setup) {
-		return new SplitCompositeWidget(factory, setup);
+		return new SplitCompositeImpl(factory, setup);
 	}
 
 	@Override
 	public ITextFieldSpi createTextField(final Object parentUiReference, final ITextFieldSetupSpi setup) {
-		return new TextFieldWidget(setup);
+		return new TextFieldImpl(setup);
 	}
 
 	@Override
 	public ITextLabelSpi createTextLabel(final Object parentUiReference, final ITextLabelSetupSpi setup) {
-		return new TextLabelWidget(setup);
+		return new TextLabelImpl(setup);
 	}
 
 	@Override
 	public IIconSpi createIcon(final Object parentUiReference, final IIconSetupSpi setup) {
-		return new IconWidget(imageRegistry, setup);
+		return new IconImpl(imageRegistry, setup);
 	}
 
 	@Override
 	public IButtonSpi createButton(final Object parentUiReference, final IButtonSetupSpi setup) {
-		return new ButtonWidget(imageRegistry, setup);
+		return new ButtonImpl(imageRegistry, setup);
 	}
 
 	@Override
 	public IControlSpi createSeparator(final Object parentUiReference, final ISeparatorSetupSpi setup) {
-		return new SeparatorWidget(setup);
+		return new SeparatorImpl(setup);
 	}
 
 	@Override
 	public ICheckBoxSpi createCheckBox(final Object parentUiReference, final ICheckBoxSetupSpi setup) {
-		return new CheckBoxWidget(setup);
+		return new CheckBoxImpl(setup);
 	}
 
 	@Override
 	public IToggleButtonSpi createToggleButton(final Object parentUiReference, final IToggleButtonSetupSpi setup) {
-		return new ToggleButtonWidget(imageRegistry, setup);
+		return new ToggleButtonImpl(imageRegistry, setup);
 	}
 
 	@Override
 	public IComboBoxSelectionSpi createComboBoxSelection(final Object parentUiReference, final IComboBoxSelectionSetupSpi setup) {
-		return new ComboBoxSelectionWidget(setup);
+		return new ComboBoxSelectionImpl(setup);
 	}
 
 	@Override
 	public IComboBoxSpi createComboBox(final Object parentUiReference, final IComboBoxSetupSpi setup) {
-		return new ComboBoxWidget(setup);
+		return new ComboBoxImpl(setup);
 	}
 
 	@Override
 	public IProgressBarSpi createProgressBar(final Object parentUiReference, final IProgressBarSetupSpi setup) {
-		return new ProgressBarWidget(imageRegistry, setup);
+		return new ProgressBarImpl(imageRegistry, setup);
 	}
 
 }

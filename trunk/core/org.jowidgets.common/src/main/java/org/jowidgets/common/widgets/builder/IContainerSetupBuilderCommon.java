@@ -31,7 +31,7 @@ import org.jowidgets.common.widgets.builder.convenience.IContainerSetupConvenien
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 
 public interface IContainerSetupBuilderCommon<INSTANCE_TYPE extends IContainerSetupBuilderCommon<?>> extends
-		IWidgetSetupBuilderCommon<INSTANCE_TYPE>,
+		IComponentSetupBuilderCommon<INSTANCE_TYPE>,
 		IContainerSetupConvenienceCommon<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setLayout(final ILayoutDescriptor layoutDescriptor);

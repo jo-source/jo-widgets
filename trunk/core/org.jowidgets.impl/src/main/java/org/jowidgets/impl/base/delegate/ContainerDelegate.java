@@ -31,8 +31,8 @@ package org.jowidgets.impl.base.delegate;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.spi.widgets.IContainerSpi;
@@ -41,10 +41,10 @@ import org.jowidgets.util.Assert;
 public class ContainerDelegate {
 
 	private final IContainerSpi containerWidget;
-	private final IWidget widget;
+	private final IComponent widget;
 	private final List<IControl> children;
 
-	public ContainerDelegate(final IContainerSpi containerWidget, final IWidget widget) {
+	public ContainerDelegate(final IContainerSpi containerWidget, final IComponent widget) {
 		Assert.paramNotNull(containerWidget, "containerWidget");
 		Assert.paramNotNull(widget, "widget");
 		this.containerWidget = containerWidget;
@@ -56,8 +56,8 @@ public class ContainerDelegate {
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
 		final WIDGET_TYPE result = containerWidget.add(descriptor, layoutConstraints);
-		if (result instanceof IWidget) {
-			((IWidget) result).setParent(widget);
+		if (result instanceof IComponent) {
+			((IComponent) result).setParent(widget);
 		}
 		children.add(result);
 		return result;
@@ -67,8 +67,8 @@ public class ContainerDelegate {
 		final ICustomWidgetFactory<WIDGET_TYPE> factory,
 		final Object layoutConstraints) {
 		final WIDGET_TYPE result = containerWidget.add(factory, layoutConstraints);
-		if (result instanceof IWidget) {
-			((IWidget) result).setParent(widget);
+		if (result instanceof IComponent) {
+			((IComponent) result).setParent(widget);
 		}
 		children.add(result);
 		return result;

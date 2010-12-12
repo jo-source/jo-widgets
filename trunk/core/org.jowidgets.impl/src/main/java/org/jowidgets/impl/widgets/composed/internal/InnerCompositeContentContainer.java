@@ -29,10 +29,10 @@ package org.jowidgets.impl.widgets.composed.internal;
 
 import java.util.List;
 
+import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.api.widgets.IInputWidget;
-import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.api.widgets.IInputComponent;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
@@ -102,7 +102,7 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 	}
 
 	@Override
-	public void setParent(final IWidget parent) {
+	public void setParent(final IComponent parent) {
 		compositeWidget.setParent(parent);
 	}
 
@@ -112,7 +112,7 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 	}
 
 	@Override
-	public IWidget getParent() {
+	public IComponent getParent() {
 		return compositeWidget.getParent();
 	}
 
@@ -177,12 +177,12 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 	}
 
 	@Override
-	public void registerInputWidget(final String contextLabel, final IInputWidget<?> inputWidget) {
+	public void registerInputWidget(final String contextLabel, final IInputComponent<?> inputWidget) {
 		outerContainer.registerInputWidget(contextLabel, inputWidget);
 	}
 
 	@Override
-	public void unRegisterInputWidget(final IInputWidget<?> inputWidget) {
+	public void unRegisterInputWidget(final IInputComponent<?> inputWidget) {
 		outerContainer.unRegisterInputWidget(inputWidget);
 	}
 

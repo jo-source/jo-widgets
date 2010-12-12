@@ -29,7 +29,7 @@ package org.jowidgets.common.widgets.descriptor.setup;
 
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
-public interface IWindowSetupCommon extends IWidgetSetupCommon {
+public interface IWindowSetupCommon extends IComponentSetupCommon {
 
 	@Mandatory
 	boolean isResizable();

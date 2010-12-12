@@ -29,7 +29,7 @@
 package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.widgets.IInputControl;
-import org.jowidgets.api.widgets.descriptor.setup.IInputWidgetSetup;
+import org.jowidgets.api.widgets.descriptor.setup.IInputComponentSetup;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.spi.widgets.ITextFieldSpi;
@@ -38,7 +38,7 @@ public class TextInputWidget extends AbstractBasicInputControl<String> implement
 
 	private final ITextFieldSpi inputWidgetSpi;
 
-	public TextInputWidget(final ITextFieldSpi textInputWidgetSpi, final IInputWidgetSetup<String> setup) {
+	public TextInputWidget(final ITextFieldSpi textInputWidgetSpi, final IInputComponentSetup<String> setup) {
 		super(textInputWidgetSpi, setup);
 		this.inputWidgetSpi = textInputWidgetSpi;
 

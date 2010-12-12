@@ -33,7 +33,7 @@ import org.jowidgets.api.widgets.ICheckBox;
 import org.jowidgets.api.widgets.blueprint.ICheckBoxBluePrint;
 import org.jowidgets.api.widgets.descriptor.ICheckBoxDescriptor;
 
-public class JoCheckBox extends CheckBoxWidget<ICheckBox, ICheckBoxBluePrint> implements ICheckBox {
+public class JoCheckBox extends CheckBox<ICheckBox, ICheckBoxBluePrint> implements ICheckBox {
 
 	public JoCheckBox(final String text) {
 		super(Toolkit.getBluePrintFactory().checkBox().setText(text));

@@ -28,7 +28,7 @@
 package org.jowidgets.spi.widgets;
 
 
-public interface IComboBoxSelectionSpi extends IControlSpi, IInputWidgetSpi {
+public interface IComboBoxSelectionSpi extends IControlSpi, IInputComponentSpi {
 
 	int getSelectedIndex();
 

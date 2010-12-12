@@ -28,18 +28,18 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
-import org.jowidgets.impl.widgets.common.wrapper.WidgetSpiWrapper;
-import org.jowidgets.spi.widgets.IWidgetSpi;
+import org.jowidgets.impl.widgets.common.wrapper.ComponentSpiWrapper;
+import org.jowidgets.spi.widgets.IComponentSpi;
 
-public class ControlWidget extends WidgetSpiWrapper implements IControl {
+public class ControlWidget extends ComponentSpiWrapper implements IControl {
 
 	private final ControlDelegate controlDelegate;
 
-	public ControlWidget(final IWidgetSpi widget) {
+	public ControlWidget(final IComponentSpi widget) {
 		super(widget);
 		this.controlDelegate = new ControlDelegate();
 	}
@@ -50,7 +50,7 @@ public class ControlWidget extends WidgetSpiWrapper implements IControl {
 	}
 
 	@Override
-	public void setParent(final IWidget parent) {
+	public void setParent(final IComponent parent) {
 		controlDelegate.setParent(parent);
 	}
 

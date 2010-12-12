@@ -32,7 +32,7 @@ import org.jowidgets.api.validation.ValidationMessage;
 import org.jowidgets.api.validation.ValidationMessageType;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IInputControl;
-import org.jowidgets.api.widgets.IInputWidget;
+import org.jowidgets.api.widgets.IInputComponent;
 import org.jowidgets.api.widgets.blueprint.ITextFieldBluePrint;
 import org.jowidgets.api.widgets.descriptor.IInputFieldDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.ITextFieldSetup;
@@ -43,7 +43,7 @@ import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 import org.jowidgets.spi.IWidgetFactorySpi;
 
 public class InputFieldWidgetFactory<VALUE_TYPE> implements
-		IWidgetFactory<IInputWidget<VALUE_TYPE>, IInputFieldDescriptor<VALUE_TYPE>> {
+		IWidgetFactory<IInputComponent<VALUE_TYPE>, IInputFieldDescriptor<VALUE_TYPE>> {
 
 	private final IGenericWidgetFactory genericFactory;
 
@@ -53,7 +53,7 @@ public class InputFieldWidgetFactory<VALUE_TYPE> implements
 	}
 
 	@Override
-	public IInputWidget<VALUE_TYPE> create(final Object parentUiReference, final IInputFieldDescriptor<VALUE_TYPE> descriptor) {
+	public IInputComponent<VALUE_TYPE> create(final Object parentUiReference, final IInputFieldDescriptor<VALUE_TYPE> descriptor) {
 
 		final BluePrintFactory bpF = new BluePrintFactory();
 

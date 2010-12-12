@@ -28,6 +28,6 @@
 
 package org.jowidgets.common.widgets;
 
-public interface IControlCommon extends IWidgetCommon {
+public interface IControlCommon extends IComponentCommon {
 
 }

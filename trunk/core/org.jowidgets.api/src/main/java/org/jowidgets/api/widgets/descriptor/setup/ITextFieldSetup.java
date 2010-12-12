@@ -31,7 +31,7 @@ import org.jowidgets.api.validation.ITextInputValidator;
 import org.jowidgets.common.widgets.descriptor.setup.ITextFieldSetupCommon;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
-public interface ITextFieldSetup extends IInputWidgetSetup<String>, ITextFieldSetupCommon {
+public interface ITextFieldSetup extends IInputComponentSetup<String>, ITextFieldSetupCommon {
 
 	@Mandatory
 	ITextInputValidator getTextInputValidator();

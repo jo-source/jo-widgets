@@ -31,6 +31,6 @@ import org.jowidgets.common.widgets.builder.ICheckBoxSetupBuilderCommon;
 
 public interface ICheckBoxSetupBuilder<INSTANCE_TYPE extends ICheckBoxSetupBuilder<?>> extends
 		ICheckBoxSetupBuilderCommon<INSTANCE_TYPE>,
-		IInputWidgetSetupBuilder<INSTANCE_TYPE, Boolean> {
+		IInputComponentSetupBuilder<INSTANCE_TYPE, Boolean> {
 
 }

@@ -33,7 +33,7 @@ import org.jowidgets.api.widgets.blueprint.builder.convenience.IWindowSetupConve
 import org.jowidgets.common.widgets.builder.IWindowSetupBuilderCommon;
 
 public interface IWindowSetupBuilder<INSTANCE_TYPE extends IWindowSetupBuilder<?>> extends
-		IWidgetSetupBuilder<INSTANCE_TYPE>,
+		IComponentSetupBuilder<INSTANCE_TYPE>,
 		IWindowSetupConvenience<INSTANCE_TYPE>,
 		IWindowSetupBuilderCommon<INSTANCE_TYPE> {
 

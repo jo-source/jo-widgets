@@ -28,8 +28,8 @@
 
 package org.jowidgets.impl.base.delegate;
 
+import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.IWidget;
 
 public class ControlDelegate {
 
@@ -43,7 +43,7 @@ public class ControlDelegate {
 		return parent;
 	}
 
-	public void setParent(final IWidget parent) {
+	public void setParent(final IComponent parent) {
 		if (this.parent == null) {
 			if (parent instanceof IContainer) {
 				this.parent = (IContainer) parent;

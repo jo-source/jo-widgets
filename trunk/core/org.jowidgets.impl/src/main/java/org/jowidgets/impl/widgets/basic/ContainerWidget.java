@@ -30,21 +30,21 @@ package org.jowidgets.impl.widgets.basic;
 
 import java.util.List;
 
+import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.ICompositeSetup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.impl.base.delegate.ContainerDelegate;
-import org.jowidgets.impl.base.delegate.WidgetDelegate;
+import org.jowidgets.impl.base.delegate.ComponentDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractContainerSpiWrapper;
 import org.jowidgets.spi.widgets.IContainerSpi;
 
 public class ContainerWidget extends AbstractContainerSpiWrapper implements IContainer {
 
-	private final WidgetDelegate widgetDelegate;
+	private final ComponentDelegate componentDelegate;
 	private final ContainerDelegate containerDelegate;
 
 	public ContainerWidget(final IContainerSpi containerWidgetCommon) {
@@ -58,7 +58,7 @@ public class ContainerWidget extends AbstractContainerSpiWrapper implements ICon
 
 	public ContainerWidget(final IContainerSpi containerWidgetCommon, final Boolean visible) {
 		super(containerWidgetCommon);
-		this.widgetDelegate = new WidgetDelegate();
+		this.componentDelegate = new ComponentDelegate();
 
 		if (visible != null) {
 			setVisible(visible.booleanValue());
@@ -96,17 +96,17 @@ public class ContainerWidget extends AbstractContainerSpiWrapper implements ICon
 	}
 
 	@Override
-	public IWidget getParent() {
-		return widgetDelegate.getParent();
+	public IComponent getParent() {
+		return componentDelegate.getParent();
 	}
 
 	@Override
-	public void setParent(final IWidget parent) {
-		widgetDelegate.setParent(parent);
+	public void setParent(final IComponent parent) {
+		componentDelegate.setParent(parent);
 	}
 
 	@Override
 	public boolean isReparentable() {
-		return widgetDelegate.isReparentable();
+		return componentDelegate.isReparentable();
 	}
 }
