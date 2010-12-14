@@ -31,8 +31,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.impl.swt.color.IColorCache;
-import org.jowidgets.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.spi.widgets.setup.IDialogSetupSpi;
 
@@ -40,14 +38,9 @@ public class DialogImpl extends WindowImpl implements IFrameSpi {
 
 	private final boolean isModal;
 
-	public DialogImpl(
-		final IGenericWidgetFactory factory,
-		final IColorCache colorCache,
-		final SwtImageRegistry imageRegistry,
-		final Object parentUiReference,
-		final IDialogSetupSpi setup) {
+	public DialogImpl(final IGenericWidgetFactory factory, final Object parentUiReference, final IDialogSetupSpi setup) {
 
-		super(factory, colorCache, new Shell((Shell) parentUiReference, getStyle(setup)), setup.isCloseable());
+		super(factory, new Shell((Shell) parentUiReference, getStyle(setup)), setup.isCloseable());
 
 		this.isModal = setup.isModal();
 
@@ -55,7 +48,7 @@ public class DialogImpl extends WindowImpl implements IFrameSpi {
 			getUiReference().setText(setup.getTitle());
 		}
 		setLayout(setup.getLayout());
-		setIcon(imageRegistry, setup.getIcon());
+		setIcon(setup.getIcon());
 	}
 
 	@Override

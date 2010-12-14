@@ -34,6 +34,7 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IControlCommon;
+import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
@@ -41,6 +42,7 @@ import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.impl.swing.util.BorderConvert;
 import org.jowidgets.impl.swing.util.ScrollBarSettingsConvert;
 import org.jowidgets.impl.swing.widgets.SwingContainer;
+import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.IScrollCompositeSpi;
 import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
 
@@ -133,6 +135,21 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 	@Override
 	public IColorConstant getBackgroundColor() {
 		return innerContainer.getBackgroundColor();
+	}
+
+	@Override
+	public IPopupMenuSpi createPopupMenu() {
+		return innerContainer.createPopupMenu();
+	}
+
+	@Override
+	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+		innerContainer.addPopupDetectionListener(listener);
+	}
+
+	@Override
+	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+		innerContainer.removePopupDetectionListener(listener);
 	}
 
 	@Override

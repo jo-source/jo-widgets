@@ -30,8 +30,9 @@ package org.jowidgets.common.widgets;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.widgets.controler.IPopupDetectionObservable;
 
-public interface IComponentCommon extends IWidgetCommon {
+public interface IComponentCommon extends IWidgetCommon, IPopupDetectionObservable {
 
 	/**
 	 * Marks the widget that a redraw is necessary

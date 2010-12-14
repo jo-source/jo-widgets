@@ -34,6 +34,7 @@ import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IInputControl;
+import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.descriptor.setup.IInputComponentSetup;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.common.wrapper.InputComponentSpiWrapper;
@@ -91,6 +92,11 @@ public abstract class AbstractBasicInputControl<VALUE_TYPE> extends InputCompone
 	@Override
 	public final void addValidator(final IValidator<VALUE_TYPE> validator) {
 		inputValidationDelegate.addValidator(validator);
+	}
+
+	@Override
+	public final IPopupMenu createPopupMenu() {
+		return new PopupMenuImpl(getWidget().createPopupMenu(), this);
 	}
 
 	protected final void addValidatable(final IValidateable validateable) {

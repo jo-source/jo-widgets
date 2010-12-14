@@ -40,7 +40,6 @@ import org.jowidgets.common.widgets.controler.IWindowListener;
 import org.jowidgets.common.widgets.controler.impl.WindowObservable;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.impl.swt.util.DimensionConvert;
 import org.jowidgets.impl.swt.util.PositionConvert;
@@ -50,8 +49,8 @@ public class SwtWindow extends SwtContainer implements IWindowSpi {
 
 	private final WindowObservable windowObservableDelegate;
 
-	public SwtWindow(final IGenericWidgetFactory factory, final IColorCache colorCache, final Shell window) {
-		super(factory, colorCache, window);
+	public SwtWindow(final IGenericWidgetFactory factory, final Shell window) {
+		super(factory, window);
 
 		this.windowObservableDelegate = new WindowObservable();
 	}
@@ -110,8 +109,8 @@ public class SwtWindow extends SwtContainer implements IWindowSpi {
 		return DimensionConvert.convert(getUiReference().getSize());
 	}
 
-	public void setIcon(final SwtImageRegistry imageRegistry, final IImageConstant icon) {
-		getUiReference().setImage(imageRegistry.getImage(icon));
+	public void setIcon(final IImageConstant icon) {
+		getUiReference().setImage(SwtImageRegistry.getInstance().getImage(icon));
 	}
 
 	@Override

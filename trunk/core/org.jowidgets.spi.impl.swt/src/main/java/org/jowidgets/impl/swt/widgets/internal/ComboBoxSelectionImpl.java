@@ -32,22 +32,18 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
 import org.jowidgets.util.Assert;
 
 public class ComboBoxSelectionImpl extends AbstractInputComponent implements IComboBoxSelectionSpi {
 
-	public ComboBoxSelectionImpl(
-		final Object parentUiReference,
-		final IColorCache colorCache,
-		final IComboBoxSelectionSetupSpi setup) {
-		this(colorCache, new Combo((Composite) parentUiReference, SWT.NONE | SWT.READ_ONLY), setup);
+	public ComboBoxSelectionImpl(final Object parentUiReference, final IComboBoxSelectionSetupSpi setup) {
+		this(new Combo((Composite) parentUiReference, SWT.NONE | SWT.READ_ONLY), setup);
 	}
 
-	public ComboBoxSelectionImpl(final IColorCache colorCache, final Combo combo, final IComboBoxSelectionSetupSpi setup) {
-		super(colorCache, combo);
+	public ComboBoxSelectionImpl(final Combo combo, final IComboBoxSelectionSetupSpi setup) {
+		super(combo);
 
 		setElements(setup.getElements());
 

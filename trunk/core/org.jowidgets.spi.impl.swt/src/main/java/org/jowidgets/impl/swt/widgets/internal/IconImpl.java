@@ -32,7 +32,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.impl.swt.widgets.SwtComponent;
 import org.jowidgets.spi.widgets.IIconSpi;
@@ -40,16 +39,9 @@ import org.jowidgets.spi.widgets.setup.IIconSetupSpi;
 
 public class IconImpl extends SwtComponent implements IIconSpi {
 
-	private final SwtImageRegistry imageRegistry;
+	public IconImpl(final Object parentUiReference, final IIconSetupSpi setup) {
 
-	public IconImpl(
-		final IColorCache colorCache,
-		final SwtImageRegistry imageRegistry,
-		final Object parentUiReference,
-		final IIconSetupSpi setup) {
-
-		super(colorCache, new Label((Composite) parentUiReference, SWT.NONE));
-		this.imageRegistry = imageRegistry;
+		super(new Label((Composite) parentUiReference, SWT.NONE));
 
 		setIcon(setup.getIcon());
 	}
@@ -57,7 +49,7 @@ public class IconImpl extends SwtComponent implements IIconSpi {
 	@Override
 	public void setIcon(final IImageConstant icon) {
 		final Image oldImage = getUiReference().getImage();
-		final Image newImage = imageRegistry.getImage(icon);
+		final Image newImage = SwtImageRegistry.getInstance().getImage(icon);
 
 		if (oldImage != newImage) {
 			getUiReference().setImage(newImage);

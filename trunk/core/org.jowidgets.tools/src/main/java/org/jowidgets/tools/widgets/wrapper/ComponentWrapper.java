@@ -29,9 +29,11 @@
 package org.jowidgets.tools.widgets.wrapper;
 
 import org.jowidgets.api.widgets.IComponent;
+import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 
 public class ComponentWrapper extends WidgetWrapper implements IComponent {
 
@@ -102,6 +104,21 @@ public class ComponentWrapper extends WidgetWrapper implements IComponent {
 	@Override
 	public IComponent getParent() {
 		return getWidget().getParent();
+	}
+
+	@Override
+	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+		getWidget().addPopupDetectionListener(listener);
+	}
+
+	@Override
+	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+		getWidget().removePopupDetectionListener(listener);
+	}
+
+	@Override
+	public IPopupMenu createPopupMenu() {
+		return getWidget().createPopupMenu();
 	}
 
 }

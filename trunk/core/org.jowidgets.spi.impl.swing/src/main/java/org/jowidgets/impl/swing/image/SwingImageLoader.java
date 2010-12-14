@@ -34,12 +34,14 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 
 import org.jowidgets.common.image.impl.IImageFactory;
+import org.jowidgets.util.Assert;
 
 public class SwingImageLoader implements IImageFactory<Image> {
 
 	private final URL url;
 
 	public SwingImageLoader(final URL url) {
+		Assert.paramNotNull(url, "url");
 		this.url = url;
 	}
 

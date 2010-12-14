@@ -32,6 +32,7 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IComponentCommon;
+import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.spi.widgets.IComponentSpi;
 
 public class ComponentSpiWrapper extends WidgetSpiWrapper implements IComponentCommon {
@@ -88,6 +89,16 @@ public class ComponentSpiWrapper extends WidgetSpiWrapper implements IComponentC
 	@Override
 	public Dimension getSize() {
 		return getWidget().getSize();
+	}
+
+	@Override
+	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+		getWidget().addPopupDetectionListener(listener);
+	}
+
+	@Override
+	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+		getWidget().removePopupDetectionListener(listener);
 	}
 
 }

@@ -27,67 +27,77 @@
  */
 package org.jowidgets.impl.swt.widgets;
 
+import org.eclipse.swt.events.MenuDetectEvent;
+import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Control;
 import org.jowidgets.common.color.ColorValue;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.IComponentCommon;
-import org.jowidgets.impl.swt.color.IColorCache;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
+import org.jowidgets.common.widgets.controler.impl.PopupDetectionObservable;
+import org.jowidgets.impl.swt.color.ColorCache;
 import org.jowidgets.impl.swt.cursor.CursorCache;
 import org.jowidgets.impl.swt.util.DimensionConvert;
+import org.jowidgets.impl.swt.widgets.internal.PopupMenuImpl;
+import org.jowidgets.spi.widgets.IComponentSpi;
+import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
-public class SwtComponent implements IComponentCommon {
+public class SwtComponent extends SwtWidget implements IComponentSpi {
 
-	private final IColorCache colorCache;
-	private final Control control;
+	private final PopupDetectionObservable popupDetectionObservable;
 
-	public SwtComponent(final IColorCache colorCache, final Control control) {
-		super();
-		this.colorCache = colorCache;
-		this.control = control;
-	}
+	public SwtComponent(final Control control) {
+		super(control);
+		popupDetectionObservable = new PopupDetectionObservable();
 
-	@Override
-	public Control getUiReference() {
-		return control;
+		getUiReference().addMenuDetectListener(new MenuDetectListener() {
+
+			@Override
+			public void menuDetected(final MenuDetectEvent e) {
+				final Point position = getUiReference().toControl(e.x, e.y);
+				popupDetectionObservable.firePopupDetected(new Position(position.x, position.y));
+			}
+		});
 	}
 
 	@Override
 	public void redraw() {
-		if (control.getParent() != null) {
-			control.getParent().layout(new Control[] {control});
-			control.getParent().redraw();
+		if (getUiReference().getParent() != null) {
+			getUiReference().getParent().layout(new Control[] {getUiReference()});
+			getUiReference().getParent().redraw();
 		}
 		else {
-			control.redraw();
+			getUiReference().redraw();
 		}
 	}
 
 	@Override
 	public void setCursor(final Cursor cursor) {
-		control.setCursor(CursorCache.getCursor(cursor));
+		getUiReference().setCursor(CursorCache.getCursor(cursor));
 	}
 
 	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
-		control.setForeground(colorCache.getColor(colorValue));
+		getUiReference().setForeground(ColorCache.getInstance().getColor(colorValue));
 	}
 
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
-		control.setBackground(colorCache.getColor(colorValue));
+		getUiReference().setBackground(ColorCache.getInstance().getColor(colorValue));
 	}
 
 	@Override
 	public IColorConstant getForegroundColor() {
-		return toColorConstant(control.getForeground());
+		return toColorConstant(getUiReference().getForeground());
 	}
 
 	@Override
 	public IColorConstant getBackgroundColor() {
-		return toColorConstant(control.getBackground());
+		return toColorConstant(getUiReference().getBackground());
 	}
 
 	private IColorConstant toColorConstant(final Color color) {
@@ -95,28 +105,33 @@ public class SwtComponent implements IComponentCommon {
 	}
 
 	@Override
-	public void setEnabled(final boolean enabled) {
-		control.setEnabled(enabled);
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return control.isEnabled();
-	}
-
-	@Override
 	public void setVisible(final boolean visible) {
-		control.setVisible(visible);
+		getUiReference().setVisible(visible);
 	}
 
 	@Override
 	public boolean isVisible() {
-		return control.isVisible();
+		return getUiReference().isVisible();
 	}
 
 	@Override
 	public Dimension getSize() {
-		return DimensionConvert.convert(control.getSize());
+		return DimensionConvert.convert(getUiReference().getSize());
+	}
+
+	@Override
+	public IPopupMenuSpi createPopupMenu() {
+		return new PopupMenuImpl(getUiReference());
+	}
+
+	@Override
+	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+		popupDetectionObservable.addPopupDetectionListener(listener);
+	}
+
+	@Override
+	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+		popupDetectionObservable.removePopupDetectionListener(listener);
 	}
 
 }

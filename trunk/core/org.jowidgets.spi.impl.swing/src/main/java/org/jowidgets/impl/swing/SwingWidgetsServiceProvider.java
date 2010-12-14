@@ -36,7 +36,6 @@ import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.threads.IUiThreadAccessCommon;
 import org.jowidgets.impl.swing.application.SwingApplicationRunner;
-import org.jowidgets.impl.swing.image.SwingImageHandleFactory;
 import org.jowidgets.impl.swing.image.SwingImageHandleFactorySpi;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.impl.swing.threads.SwingUiThreadAccess;
@@ -52,7 +51,7 @@ public class SwingWidgetsServiceProvider implements IWidgetsServiceProvider {
 
 	public SwingWidgetsServiceProvider() {
 		super();
-		this.imageRegistry = new SwingImageRegistry(new SwingImageHandleFactory());
+		this.imageRegistry = SwingImageRegistry.getInstance();
 		this.imageHandleFactorySpi = new SwingImageHandleFactorySpi(imageRegistry);
 		this.widgetFactory = new SwingWidgetFactory(imageRegistry);
 	}

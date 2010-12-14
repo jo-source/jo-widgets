@@ -37,6 +37,7 @@ import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.IWidgetCommon;
+import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
@@ -45,6 +46,7 @@ import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.swing.widgets.internal.util.ChildRemover;
 import org.jowidgets.spi.widgets.ICompositeSpi;
+import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.util.Assert;
 
 public class SwingContainer implements ICompositeSpi {
@@ -137,6 +139,21 @@ public class SwingContainer implements ICompositeSpi {
 	@Override
 	public Dimension getSize() {
 		return swingComponentDelegate.getSize();
+	}
+
+	@Override
+	public IPopupMenuSpi createPopupMenu() {
+		return swingComponentDelegate.createPopupMenu();
+	}
+
+	@Override
+	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+		swingComponentDelegate.addPopupDetectionListener(listener);
+	}
+
+	@Override
+	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+		swingComponentDelegate.removePopupDetectionListener(listener);
 	}
 
 	@Override

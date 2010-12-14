@@ -27,6 +27,7 @@
  */
 package org.jowidgets.api.widgets.blueprint.factory;
 
+import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
@@ -100,5 +101,7 @@ public interface IBasicBluePrintFactory extends IBasicSimpleBluePrintFactory {
 	IComboBoxSelectionBluePrint<Integer> comboBoxSelectionIntegerNumber();
 
 	IComboBoxSelectionBluePrint<Short> comboBoxSelectionShortNumber();
+
+	IActionMenuItemBluePrint menuItem(String text);
 
 }

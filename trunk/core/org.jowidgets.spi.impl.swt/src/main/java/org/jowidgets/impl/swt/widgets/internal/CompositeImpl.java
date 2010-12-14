@@ -30,20 +30,15 @@ package org.jowidgets.impl.swt.widgets.internal;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.util.BorderToComposite;
 import org.jowidgets.impl.swt.widgets.SwtContainer;
 import org.jowidgets.spi.widgets.setup.ICompositeSetupSpi;
 
 public class CompositeImpl extends SwtContainer {
 
-	public CompositeImpl(
-		final IGenericWidgetFactory factory,
-		final IColorCache colorCache,
-		final Object parentUiReference,
-		final ICompositeSetupSpi setup) {
+	public CompositeImpl(final IGenericWidgetFactory factory, final Object parentUiReference, final ICompositeSetupSpi setup) {
 
-		super(factory, colorCache, createComposite(parentUiReference, setup));
+		super(factory, createComposite(parentUiReference, setup));
 
 		getUiReference().setBackgroundMode(SWT.INHERIT_DEFAULT);
 		setLayout(setup.getLayout());

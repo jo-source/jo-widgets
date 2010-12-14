@@ -31,11 +31,10 @@ package org.jowidgets.impl.swt.widgets.internal;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.util.BorderToComposite;
 import org.jowidgets.impl.swt.util.OrientationConvert;
-import org.jowidgets.impl.swt.widgets.SwtContainer;
 import org.jowidgets.impl.swt.widgets.SwtComponent;
+import org.jowidgets.impl.swt.widgets.SwtContainer;
 import org.jowidgets.spi.widgets.ICompositeSpi;
 import org.jowidgets.spi.widgets.ISplitCompositeSpi;
 import org.jowidgets.spi.widgets.setup.ISplitCompositeSetupSpi;
@@ -47,7 +46,6 @@ public class SplitCompositeImpl extends SwtComponent implements ISplitCompositeS
 
 	public SplitCompositeImpl(
 		final IGenericWidgetFactory factory,
-		final IColorCache colorCache,
 		final Object parentUiReference,
 		final ISplitCompositeSetupSpi setup) {
 
@@ -61,15 +59,15 @@ public class SplitCompositeImpl extends SwtComponent implements ISplitCompositeS
 		//		first.setLayout(setup.getFirstLayout());
 		//		second.setLayout(setup.getSecondLayout());
 
-		super(colorCache, new SashForm((Composite) parentUiReference, OrientationConvert.convert(setup.getOrientation())));
+		super(new SashForm((Composite) parentUiReference, OrientationConvert.convert(setup.getOrientation())));
 
 		final SashForm sashForm = getUiReference();
 
 		final Composite content1 = BorderToComposite.convert(sashForm, setup.getFirstBorder());
 		final Composite content2 = BorderToComposite.convert(sashForm, setup.getSecondBorder());
 
-		first = new SwtContainer(factory, colorCache, content1);
-		second = new SwtContainer(factory, colorCache, content2);
+		first = new SwtContainer(factory, content1);
+		second = new SwtContainer(factory, content2);
 
 		first.setLayout(setup.getFirstLayout());
 		second.setLayout(setup.getSecondLayout());

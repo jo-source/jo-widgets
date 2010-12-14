@@ -32,7 +32,6 @@ import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.events.ShellListener;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.widgets.SwtWindow;
 import org.jowidgets.spi.widgets.IWindowSpi;
 
@@ -40,12 +39,8 @@ public class WindowImpl extends SwtWindow implements IWindowSpi {
 
 	private boolean programaticDispose;
 
-	public WindowImpl(
-		final IGenericWidgetFactory factory,
-		final IColorCache colorCache,
-		final Shell window,
-		final boolean isCloseable) {
-		super(factory, colorCache, window);
+	public WindowImpl(final IGenericWidgetFactory factory, final Shell window, final boolean isCloseable) {
+		super(factory, window);
 
 		this.programaticDispose = false;
 

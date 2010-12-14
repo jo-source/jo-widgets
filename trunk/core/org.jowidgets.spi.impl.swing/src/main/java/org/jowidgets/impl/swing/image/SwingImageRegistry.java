@@ -36,9 +36,11 @@ import org.jowidgets.common.image.IImageHandleFactory;
 import org.jowidgets.common.image.impl.ImageHandle;
 import org.jowidgets.common.image.impl.ImageRegistry;
 
-public class SwingImageRegistry extends ImageRegistry {
+public final class SwingImageRegistry extends ImageRegistry {
 
-	public SwingImageRegistry(final IImageHandleFactory imageHandleFactory) {
+	private static final SwingImageRegistry INSTANCE = new SwingImageRegistry(new SwingImageHandleFactory());
+
+	private SwingImageRegistry(final IImageHandleFactory imageHandleFactory) {
 		super(imageHandleFactory);
 	}
 
@@ -68,6 +70,10 @@ public class SwingImageRegistry extends ImageRegistry {
 		else {
 			return new ImageIcon(getImage(key));
 		}
+	}
+
+	public static SwingImageRegistry getInstance() {
+		return INSTANCE;
 	}
 
 }

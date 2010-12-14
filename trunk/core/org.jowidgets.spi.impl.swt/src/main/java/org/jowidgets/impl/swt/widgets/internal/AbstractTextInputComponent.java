@@ -31,13 +31,12 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
-import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.spi.widgets.ITextFieldSpi;
 
 public abstract class AbstractTextInputComponent extends AbstractInputComponent implements ITextFieldSpi {
 
-	public AbstractTextInputComponent(final IColorCache colorCache, final Control control) {
-		super(colorCache, control);
+	public AbstractTextInputComponent(final Control control) {
+		super(control);
 	}
 
 	protected void registerTextControl(final Text textControl) {

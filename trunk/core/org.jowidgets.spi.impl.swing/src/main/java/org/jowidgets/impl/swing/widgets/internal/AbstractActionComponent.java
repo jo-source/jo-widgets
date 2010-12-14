@@ -32,33 +32,19 @@ import java.awt.Component;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.IActionWidgetCommon;
-import org.jowidgets.common.widgets.IComponentCommon;
-import org.jowidgets.common.widgets.controler.impl.ActionObservable;
+import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.impl.swing.widgets.SwingComponent;
+import org.jowidgets.spi.widgets.IActionWidgetSpi;
+import org.jowidgets.spi.widgets.IComponentSpi;
+import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
-public abstract class AbstractActionComponent extends ActionObservable implements IActionWidgetCommon, IComponentCommon {
+public abstract class AbstractActionComponent extends AbstractActionWidget implements IActionWidgetSpi, IComponentSpi {
 
 	private final SwingComponent swingComponentDelegate;
 
 	public AbstractActionComponent(final Component component) {
-		super();
+		super(component);
 		this.swingComponentDelegate = new SwingComponent(component);
-	}
-
-	@Override
-	public void setEnabled(final boolean enabled) {
-		swingComponentDelegate.setEnabled(enabled);
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return swingComponentDelegate.isEnabled();
-	}
-
-	@Override
-	public Component getUiReference() {
-		return swingComponentDelegate.getUiReference();
 	}
 
 	@Override
@@ -104,6 +90,21 @@ public abstract class AbstractActionComponent extends ActionObservable implement
 	@Override
 	public Dimension getSize() {
 		return swingComponentDelegate.getSize();
+	}
+
+	@Override
+	public IPopupMenuSpi createPopupMenu() {
+		return swingComponentDelegate.createPopupMenu();
+	}
+
+	@Override
+	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+		swingComponentDelegate.addPopupDetectionListener(listener);
+	}
+
+	@Override
+	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+		swingComponentDelegate.removePopupDetectionListener(listener);
 	}
 
 }

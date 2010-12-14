@@ -31,34 +31,19 @@ import org.eclipse.swt.widgets.Control;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.IActionWidgetCommon;
-import org.jowidgets.common.widgets.IComponentCommon;
-import org.jowidgets.common.widgets.controler.impl.ActionObservable;
-import org.jowidgets.impl.swt.color.IColorCache;
+import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.impl.swt.widgets.SwtComponent;
+import org.jowidgets.spi.widgets.IActionWidgetSpi;
+import org.jowidgets.spi.widgets.IComponentSpi;
+import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
-public abstract class AbstractActionComponent extends ActionObservable implements IActionWidgetCommon, IComponentCommon {
+public abstract class AbstractActionComponent extends AbstractActionWidget implements IActionWidgetSpi, IComponentSpi {
 
 	private final SwtComponent swtComponentDelegate;
 
-	public AbstractActionComponent(final IColorCache colorCache, final Control control) {
-		super();
-		this.swtComponentDelegate = new SwtComponent(colorCache, control);
-	}
-
-	@Override
-	public void setEnabled(final boolean enabled) {
-		swtComponentDelegate.setEnabled(enabled);
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return swtComponentDelegate.isEnabled();
-	}
-
-	@Override
-	public Control getUiReference() {
-		return swtComponentDelegate.getUiReference();
+	public AbstractActionComponent(final Control control) {
+		super(control);
+		this.swtComponentDelegate = new SwtComponent(control);
 	}
 
 	@Override
@@ -104,6 +89,21 @@ public abstract class AbstractActionComponent extends ActionObservable implement
 	@Override
 	public Dimension getSize() {
 		return swtComponentDelegate.getSize();
+	}
+
+	@Override
+	public IPopupMenuSpi createPopupMenu() {
+		return swtComponentDelegate.createPopupMenu();
+	}
+
+	@Override
+	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+		swtComponentDelegate.addPopupDetectionListener(listener);
+	}
+
+	@Override
+	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+		swtComponentDelegate.removePopupDetectionListener(listener);
 	}
 
 }

@@ -40,7 +40,6 @@ import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 public class TextLabelImpl extends SwingComponent implements ITextLabelSpi {
 
 	public TextLabelImpl(final ITextLabelSetupSpi setup) {
-
 		super(new JLabel());
 
 		setText(setup.getText());

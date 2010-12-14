@@ -37,7 +37,6 @@ import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.threads.IUiThreadAccessCommon;
 import org.jowidgets.impl.swt.application.SwtApplicationRunner;
-import org.jowidgets.impl.swt.image.SwtImageHandleFactory;
 import org.jowidgets.impl.swt.image.SwtImageHandleFactorySpi;
 import org.jowidgets.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.impl.swt.threads.SwtUiThreadAccess;
@@ -57,13 +56,9 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider {
 	}
 
 	public SwtWidgetsServiceProvider(final Display display) {
-		this(display, new SwtImageRegistry(new SwtImageHandleFactory()));
-	}
-
-	public SwtWidgetsServiceProvider(final Display display, final SwtImageRegistry imageRegistry) {
 		super();
 		this.display = display;
-		this.imageRegistry = imageRegistry;
+		this.imageRegistry = SwtImageRegistry.getInstance();
 		this.imageHandleFactorySpi = new SwtImageHandleFactorySpi(imageRegistry);
 		this.widgetFactory = new SwtWidgetFactory(imageRegistry);
 	}

@@ -29,13 +29,12 @@ package org.jowidgets.impl.swt.widgets.internal;
 
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.widgets.SwtContainer;
 
 public class CompositeWrapper extends SwtContainer {
 
-	public CompositeWrapper(final IGenericWidgetFactory factory, final IColorCache colorCache, final Composite composite) {
-		super(factory, colorCache, composite);
+	public CompositeWrapper(final IGenericWidgetFactory factory, final Composite composite) {
+		super(factory, composite);
 	}
 
 }

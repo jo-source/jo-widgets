@@ -36,15 +36,15 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.impl.swing.widgets.internal.ButtonImpl;
 import org.jowidgets.impl.swing.widgets.internal.CheckBoxImpl;
-import org.jowidgets.impl.swing.widgets.internal.ComboBoxSelectionImpl;
 import org.jowidgets.impl.swing.widgets.internal.ComboBoxImpl;
+import org.jowidgets.impl.swing.widgets.internal.ComboBoxSelectionImpl;
 import org.jowidgets.impl.swing.widgets.internal.CompositeImpl;
 import org.jowidgets.impl.swing.widgets.internal.CompositeWrapper;
 import org.jowidgets.impl.swing.widgets.internal.DialogImpl;
+import org.jowidgets.impl.swing.widgets.internal.FrameImpl;
 import org.jowidgets.impl.swing.widgets.internal.FrameWrapper;
 import org.jowidgets.impl.swing.widgets.internal.IconImpl;
 import org.jowidgets.impl.swing.widgets.internal.ProgressBarImpl;
-import org.jowidgets.impl.swing.widgets.internal.FrameImpl;
 import org.jowidgets.impl.swing.widgets.internal.ScrollCompositeImpl;
 import org.jowidgets.impl.swing.widgets.internal.SeparatorImpl;
 import org.jowidgets.impl.swing.widgets.internal.SplitCompositeImpl;
@@ -166,12 +166,12 @@ public final class SwingWidgetFactory implements IWidgetFactorySpi {
 
 	@Override
 	public IIconSpi createIcon(final Object parentUiReference, final IIconSetupSpi setup) {
-		return new IconImpl(imageRegistry, setup);
+		return new IconImpl(setup);
 	}
 
 	@Override
 	public IButtonSpi createButton(final Object parentUiReference, final IButtonSetupSpi setup) {
-		return new ButtonImpl(imageRegistry, setup);
+		return new ButtonImpl(setup);
 	}
 
 	@Override
@@ -186,7 +186,7 @@ public final class SwingWidgetFactory implements IWidgetFactorySpi {
 
 	@Override
 	public IToggleButtonSpi createToggleButton(final Object parentUiReference, final IToggleButtonSetupSpi setup) {
-		return new ToggleButtonImpl(imageRegistry, setup);
+		return new ToggleButtonImpl(setup);
 	}
 
 	@Override
@@ -201,7 +201,7 @@ public final class SwingWidgetFactory implements IWidgetFactorySpi {
 
 	@Override
 	public IProgressBarSpi createProgressBar(final Object parentUiReference, final IProgressBarSetupSpi setup) {
-		return new ProgressBarImpl(imageRegistry, setup);
+		return new ProgressBarImpl(setup);
 	}
 
 }

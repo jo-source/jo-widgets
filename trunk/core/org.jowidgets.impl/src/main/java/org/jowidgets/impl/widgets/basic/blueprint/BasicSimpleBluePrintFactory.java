@@ -29,6 +29,7 @@ package org.jowidgets.impl.widgets.basic.blueprint;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.convert.IObjectStringConverter;
+import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICheckBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
@@ -46,6 +47,7 @@ import org.jowidgets.api.widgets.blueprint.IToggleButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.api.widgets.blueprint.factory.IBasicSimpleBluePrintFactory;
+import org.jowidgets.api.widgets.descriptor.IActionMenuItemDescriptor;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 import org.jowidgets.api.widgets.descriptor.ICheckBoxDescriptor;
 import org.jowidgets.api.widgets.descriptor.IComboBoxDescriptor;
@@ -147,6 +149,11 @@ public class BasicSimpleBluePrintFactory extends AbstractBluePrintFactory implem
 				IComboBoxSelectionDescriptor.class);
 
 		return result.setObjectStringConverter(objectStringConverter);
+	}
+
+	@Override
+	public IActionMenuItemBluePrint menuItem() {
+		return createProxy(IActionMenuItemBluePrint.class, IActionMenuItemDescriptor.class);
 	}
 
 }

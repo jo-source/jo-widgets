@@ -32,6 +32,7 @@ import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.IWidgetCommon;
+import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
@@ -41,6 +42,7 @@ import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.mock.mockui.UIMComponent;
 import org.jowidgets.impl.mock.mockui.UIMContainer;
 import org.jowidgets.spi.widgets.ICompositeSpi;
+import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.util.Assert;
 
 public class MockComposite implements ICompositeSpi {
@@ -129,6 +131,21 @@ public class MockComposite implements ICompositeSpi {
 	@Override
 	public Dimension getSize() {
 		return mockComponentDelegate.getSize();
+	}
+
+	@Override
+	public IPopupMenuSpi createPopupMenu() {
+		return mockComponentDelegate.createPopupMenu();
+	}
+
+	@Override
+	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+		mockComponentDelegate.addPopupDetectionListener(listener);
+	}
+
+	@Override
+	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+		mockComponentDelegate.removePopupDetectionListener(listener);
 	}
 
 	@Override

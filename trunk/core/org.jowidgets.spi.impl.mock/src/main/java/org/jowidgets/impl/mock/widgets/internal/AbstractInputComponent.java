@@ -30,12 +30,14 @@ package org.jowidgets.impl.mock.widgets.internal;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.IInputComponentCommon;
+import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.impl.InputObservable;
 import org.jowidgets.impl.mock.mockui.UIMComponent;
 import org.jowidgets.impl.mock.widgets.MockComponent;
+import org.jowidgets.spi.widgets.IInputComponentSpi;
+import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
-public abstract class AbstractInputComponent extends InputObservable implements IInputComponentCommon {
+public abstract class AbstractInputComponent extends InputObservable implements IInputComponentSpi {
 
 	private final MockComponent mockComponentDelegate;
 
@@ -102,6 +104,21 @@ public abstract class AbstractInputComponent extends InputObservable implements 
 	@Override
 	public Dimension getSize() {
 		return mockComponentDelegate.getSize();
+	}
+
+	@Override
+	public IPopupMenuSpi createPopupMenu() {
+		return mockComponentDelegate.createPopupMenu();
+	}
+
+	@Override
+	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+		mockComponentDelegate.addPopupDetectionListener(listener);
+	}
+
+	@Override
+	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+		mockComponentDelegate.removePopupDetectionListener(listener);
 	}
 
 }

@@ -37,15 +37,15 @@ import org.jowidgets.api.widgets.descriptor.IQuestionDialogDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextSeparatorDescriptor;
 import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
 import org.jowidgets.impl.widgets.basic.factory.BasicGenericWidgetFactory;
-import org.jowidgets.impl.widgets.composed.factory.internal.InputCompositeWidgetFactory;
-import org.jowidgets.impl.widgets.composed.factory.internal.InputDialogWidgetFactory;
-import org.jowidgets.impl.widgets.composed.factory.internal.InputFieldWidgetFactory;
-import org.jowidgets.impl.widgets.composed.factory.internal.LabelWidgetFactory;
-import org.jowidgets.impl.widgets.composed.factory.internal.MessageDialogWidgetFactory;
-import org.jowidgets.impl.widgets.composed.factory.internal.ProgressBarWidgetFactory;
-import org.jowidgets.impl.widgets.composed.factory.internal.QuestionDialogWidgetFactory;
-import org.jowidgets.impl.widgets.composed.factory.internal.TextSeparatorWidgetFactory;
-import org.jowidgets.impl.widgets.composed.factory.internal.ValidationLabelWidgetFactory;
+import org.jowidgets.impl.widgets.composed.factory.internal.InputCompositeFactory;
+import org.jowidgets.impl.widgets.composed.factory.internal.InputDialogFactory;
+import org.jowidgets.impl.widgets.composed.factory.internal.InputFieldFactory;
+import org.jowidgets.impl.widgets.composed.factory.internal.LabelFactory;
+import org.jowidgets.impl.widgets.composed.factory.internal.MessageDialogFactory;
+import org.jowidgets.impl.widgets.composed.factory.internal.ProgressBarFactory;
+import org.jowidgets.impl.widgets.composed.factory.internal.QuestionDialogFactory;
+import org.jowidgets.impl.widgets.composed.factory.internal.TextSeparatorFactory;
+import org.jowidgets.impl.widgets.composed.factory.internal.ValidationLabelFactory;
 import org.jowidgets.spi.IWidgetFactorySpi;
 
 public class GenericWidgetFactory extends BasicGenericWidgetFactory {
@@ -57,15 +57,15 @@ public class GenericWidgetFactory extends BasicGenericWidgetFactory {
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	private void registerCustomWidgetFactories() {
-		register(IInputFieldDescriptor.class, new InputFieldWidgetFactory(this));
-		register(ILabelDescriptor.class, new LabelWidgetFactory());
-		register(ITextSeparatorDescriptor.class, new TextSeparatorWidgetFactory());
-		register(IMessageDialogDescriptor.class, new MessageDialogWidgetFactory(this));
-		register(IQuestionDialogDescriptor.class, new QuestionDialogWidgetFactory(this));
-		register(IInputDialogDescriptor.class, new InputDialogWidgetFactory(this));
-		register(IInputCompositeDescriptor.class, new InputCompositeWidgetFactory());
-		register(IValidationLabelDescriptor.class, new ValidationLabelWidgetFactory(this));
-		register(IProgressBarDescriptor.class, new ProgressBarWidgetFactory(getSpiWidgetFactory()));
+		register(IInputFieldDescriptor.class, new InputFieldFactory(this));
+		register(ILabelDescriptor.class, new LabelFactory());
+		register(ITextSeparatorDescriptor.class, new TextSeparatorFactory());
+		register(IMessageDialogDescriptor.class, new MessageDialogFactory(this));
+		register(IQuestionDialogDescriptor.class, new QuestionDialogFactory(this));
+		register(IInputDialogDescriptor.class, new InputDialogFactory(this));
+		register(IInputCompositeDescriptor.class, new InputCompositeFactory());
+		register(IValidationLabelDescriptor.class, new ValidationLabelFactory(this));
+		register(IProgressBarDescriptor.class, new ProgressBarFactory(getSpiWidgetFactory()));
 	}
 
 }

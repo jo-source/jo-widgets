@@ -32,11 +32,13 @@ import java.awt.Component;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.IInputComponentCommon;
+import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.impl.InputObservable;
 import org.jowidgets.impl.swing.widgets.SwingComponent;
+import org.jowidgets.spi.widgets.IInputComponentSpi;
+import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
-public abstract class AbstractInputComponent extends InputObservable implements IInputComponentCommon {
+public abstract class AbstractInputComponent extends InputObservable implements IInputComponentSpi {
 
 	private final Component component;
 	private final SwingComponent swingComponentDelegate;
@@ -105,6 +107,21 @@ public abstract class AbstractInputComponent extends InputObservable implements 
 	@Override
 	public Dimension getSize() {
 		return swingComponentDelegate.getSize();
+	}
+
+	@Override
+	public IPopupMenuSpi createPopupMenu() {
+		return swingComponentDelegate.createPopupMenu();
+	}
+
+	@Override
+	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+		swingComponentDelegate.addPopupDetectionListener(listener);
+	}
+
+	@Override
+	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+		swingComponentDelegate.removePopupDetectionListener(listener);
 	}
 
 }

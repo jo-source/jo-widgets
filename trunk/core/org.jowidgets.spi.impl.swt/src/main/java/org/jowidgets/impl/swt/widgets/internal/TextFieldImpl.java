@@ -32,14 +32,13 @@ import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
-import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.spi.verify.IInputVerifier;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 
 public class TextFieldImpl extends AbstractTextInputComponent {
 
-	public TextFieldImpl(final IColorCache colorCache, final Object parentUiReference, final ITextFieldSetupSpi setup) {
-		super(colorCache, createText(parentUiReference, setup.isPasswordPresentation()));
+	public TextFieldImpl(final Object parentUiReference, final ITextFieldSetupSpi setup) {
+		super(createText(parentUiReference, setup.isPasswordPresentation()));
 
 		final IInputVerifier inputModifier = setup.getInputVerifier();
 

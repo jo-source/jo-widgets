@@ -84,4 +84,8 @@ public class UIMContainer extends UIMComponent {
 		return border;
 	}
 
+	public void remove(final int index) {
+		components.remove(index);
+	}
+
 }

@@ -33,12 +33,14 @@ import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IInputComponent;
+import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
@@ -197,6 +199,21 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 	@Override
 	public void fireInputChanged(final Object source) {
 		outerContainer.fireInputChanged(source);
+	}
+
+	@Override
+	public IPopupMenu createPopupMenu() {
+		return compositeWidget.createPopupMenu();
+	}
+
+	@Override
+	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+		compositeWidget.addPopupDetectionListener(listener);
+	}
+
+	@Override
+	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+		compositeWidget.removePopupDetectionListener(listener);
 	}
 
 }

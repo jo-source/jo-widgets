@@ -29,14 +29,13 @@ package org.jowidgets.impl.swt.widgets.internal;
 
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.widgets.SwtWindow;
 import org.jowidgets.spi.widgets.IFrameSpi;
 
 public class FrameWrapper extends SwtWindow implements IFrameSpi {
 
-	public FrameWrapper(final IGenericWidgetFactory factory, final IColorCache colorCache, final Shell shell) {
-		super(factory, colorCache, shell);
+	public FrameWrapper(final IGenericWidgetFactory factory, final Shell shell) {
+		super(factory, shell);
 	}
 
 }

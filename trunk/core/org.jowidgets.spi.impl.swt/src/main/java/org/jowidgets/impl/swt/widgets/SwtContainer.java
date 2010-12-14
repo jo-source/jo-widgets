@@ -37,14 +37,15 @@ import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.IWidgetCommon;
+import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.spi.widgets.ICompositeSpi;
+import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.util.Assert;
 
 public class SwtContainer implements ICompositeSpi {
@@ -53,15 +54,14 @@ public class SwtContainer implements ICompositeSpi {
 	private final Composite composite;
 	private final SwtComponent swtComponentDelegate;
 
-	public SwtContainer(final IGenericWidgetFactory factory, final IColorCache colorCache, final Composite composite) {
+	public SwtContainer(final IGenericWidgetFactory factory, final Composite composite) {
 
 		Assert.paramNotNull(factory, "factory");
-		Assert.paramNotNull(colorCache, "colorCache");
 		Assert.paramNotNull(composite, "composite");
 
 		this.factory = factory;
 		this.composite = composite;
-		this.swtComponentDelegate = new SwtComponent(colorCache, composite);
+		this.swtComponentDelegate = new SwtComponent(composite);
 	}
 
 	@Override
@@ -139,6 +139,21 @@ public class SwtContainer implements ICompositeSpi {
 	@Override
 	public Dimension getSize() {
 		return swtComponentDelegate.getSize();
+	}
+
+	@Override
+	public IPopupMenuSpi createPopupMenu() {
+		return swtComponentDelegate.createPopupMenu();
+	}
+
+	@Override
+	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+		swtComponentDelegate.addPopupDetectionListener(listener);
+	}
+
+	@Override
+	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+		swtComponentDelegate.removePopupDetectionListener(listener);
 	}
 
 	@Override

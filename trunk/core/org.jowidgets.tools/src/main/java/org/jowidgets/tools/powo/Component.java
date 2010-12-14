@@ -28,11 +28,16 @@
 
 package org.jowidgets.tools.powo;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.jowidgets.api.widgets.IComponent;
+import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.util.Assert;
 
@@ -43,9 +48,11 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 	private WIDGET_TYPE widget;
 	private Cursor cursor;
 	private Boolean enabled;
+	private final Set<IPopupDetectionListener> popupDetectionListeners;
 
 	Component(final BLUE_PRINT_TYPE bluePrint) {
 		this.bluePrint = bluePrint;
+		this.popupDetectionListeners = new HashSet<IPopupDetectionListener>();
 	}
 
 	public final boolean isInitialized() {
@@ -61,6 +68,9 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 		}
 		if (enabled != null) {
 			widget.setEnabled(enabled.booleanValue());
+		}
+		for (final IPopupDetectionListener listener : popupDetectionListeners) {
+			widget.addPopupDetectionListener(listener);
 		}
 	}
 
@@ -116,6 +126,33 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 		else {
 			this.enabled = Boolean.valueOf(enabled);
 		}
+	}
+
+	@Override
+	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+		if (isInitialized()) {
+			widget.addPopupDetectionListener(listener);
+		}
+		else {
+			popupDetectionListeners.add(listener);
+		}
+	}
+
+	@Override
+	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+		if (isInitialized()) {
+			widget.removePopupDetectionListener(listener);
+		}
+		else {
+			popupDetectionListeners.remove(listener);
+		}
+	}
+
+	@Override
+	public IPopupMenu createPopupMenu() {
+		//TODO use JoPopupMenu later
+		checkInitialized();
+		return widget.createPopupMenu();
 	}
 
 	@Override

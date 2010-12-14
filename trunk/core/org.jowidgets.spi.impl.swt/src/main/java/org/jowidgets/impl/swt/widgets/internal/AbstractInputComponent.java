@@ -31,20 +31,21 @@ import org.eclipse.swt.widgets.Control;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.IInputComponentCommon;
+import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.impl.InputObservable;
-import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.widgets.SwtComponent;
+import org.jowidgets.spi.widgets.IInputComponentSpi;
+import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
-public abstract class AbstractInputComponent extends InputObservable implements IInputComponentCommon {
+public abstract class AbstractInputComponent extends InputObservable implements IInputComponentSpi {
 
 	private final Control control;
 	private final SwtComponent swtComponentDelegate;
 
-	public AbstractInputComponent(final IColorCache colorCache, final Control control) {
+	public AbstractInputComponent(final Control control) {
 		super();
 		this.control = control;
-		this.swtComponentDelegate = new SwtComponent(colorCache, control);
+		this.swtComponentDelegate = new SwtComponent(control);
 	}
 
 	@Override
@@ -105,6 +106,21 @@ public abstract class AbstractInputComponent extends InputObservable implements 
 	@Override
 	public Dimension getSize() {
 		return swtComponentDelegate.getSize();
+	}
+
+	@Override
+	public IPopupMenuSpi createPopupMenu() {
+		return swtComponentDelegate.createPopupMenu();
+	}
+
+	@Override
+	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+		swtComponentDelegate.addPopupDetectionListener(listener);
+	}
+
+	@Override
+	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+		swtComponentDelegate.removePopupDetectionListener(listener);
 	}
 
 }

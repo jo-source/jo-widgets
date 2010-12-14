@@ -35,7 +35,6 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.impl.swt.util.AlignmentConvert;
 import org.jowidgets.impl.swt.util.FontProvider;
@@ -44,15 +43,8 @@ import org.jowidgets.spi.widgets.setup.IButtonSetupSpi;
 
 public class ButtonImpl extends AbstractActionComponent implements IButtonSpi {
 
-	private final SwtImageRegistry imageRegistry;
-
-	public ButtonImpl(
-		final IColorCache colorCache,
-		final SwtImageRegistry imageRegistry,
-		final Object parentUiReference,
-		final IButtonSetupSpi setup) {
-		super(colorCache, new Button((Composite) parentUiReference, SWT.NONE));
-		this.imageRegistry = imageRegistry;
+	public ButtonImpl(final Object parentUiReference, final IButtonSetupSpi setup) {
+		super(new Button((Composite) parentUiReference, SWT.NONE));
 
 		setText(setup.getText());
 		setToolTipText(setup.getToolTipText());
@@ -92,7 +84,7 @@ public class ButtonImpl extends AbstractActionComponent implements IButtonSpi {
 
 	@Override
 	public void setIcon(final IImageConstant icon) {
-		getUiReference().setImage(imageRegistry.getImage(icon));
+		getUiReference().setImage(SwtImageRegistry.getInstance().getImage(icon));
 	}
 
 	@Override

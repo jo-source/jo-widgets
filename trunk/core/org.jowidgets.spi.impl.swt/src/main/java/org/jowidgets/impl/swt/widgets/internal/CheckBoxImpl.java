@@ -34,7 +34,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.util.AlignmentConvert;
 import org.jowidgets.impl.swt.util.FontProvider;
 import org.jowidgets.spi.widgets.ICheckBoxSpi;
@@ -42,12 +41,12 @@ import org.jowidgets.spi.widgets.setup.ICheckBoxSetupSpi;
 
 public class CheckBoxImpl extends AbstractInputComponent implements ICheckBoxSpi {
 
-	public CheckBoxImpl(final IColorCache colorCache, final Object parentUiReference, final ICheckBoxSetupSpi setup) {
-		this(colorCache, new Button((Composite) parentUiReference, SWT.NONE | SWT.CHECK), setup);
+	public CheckBoxImpl(final Object parentUiReference, final ICheckBoxSetupSpi setup) {
+		this(new Button((Composite) parentUiReference, SWT.NONE | SWT.CHECK), setup);
 	}
 
-	public CheckBoxImpl(final IColorCache colorCache, final Button button, final ICheckBoxSetupSpi setup) {
-		super(colorCache, button);
+	public CheckBoxImpl(final Button button, final ICheckBoxSetupSpi setup) {
+		super(button);
 
 		setText(setup.getText());
 		setToolTipText(setup.getToolTipText());

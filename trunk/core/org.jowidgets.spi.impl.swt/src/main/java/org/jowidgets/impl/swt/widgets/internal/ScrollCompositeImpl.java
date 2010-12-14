@@ -39,14 +39,15 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IControlCommon;
+import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
-import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.util.BorderToComposite;
 import org.jowidgets.impl.swt.util.ScrollBarSettingsConvert;
 import org.jowidgets.impl.swt.widgets.SwtContainer;
+import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.IScrollCompositeSpi;
 import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
 
@@ -57,7 +58,6 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 
 	public ScrollCompositeImpl(
 		final IGenericWidgetFactory factory,
-		final IColorCache colorCache,
 		final Object parentUiReference,
 		final IScrollCompositeSetupSpi setup) {
 
@@ -73,7 +73,7 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 		}
 
 		outerComposite.setBackgroundMode(SWT.INHERIT_FORCE);
-		this.outerContainer = new SwtContainer(factory, colorCache, outerComposite);
+		this.outerContainer = new SwtContainer(factory, outerComposite);
 		outerComposite.setLayout(growingMigLayout);
 
 		int style = ScrollBarSettingsConvert.convert(setup);
@@ -81,7 +81,7 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 			style = style | SWT.BORDER;
 		}
 		final ScrolledComposite scrolledComposite = new ScrolledComposite(outerComposite, style);
-		final SwtContainer scrolledWidget = new SwtContainer(factory, colorCache, scrolledComposite);
+		final SwtContainer scrolledWidget = new SwtContainer(factory, scrolledComposite);
 		scrolledComposite.setLayout(growingMigLayout);
 		scrolledComposite.setLayoutData(growingCellConstraints);
 		scrolledComposite.setExpandHorizontal(true);
@@ -91,7 +91,7 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 
 		final Composite innerComposite = new Composite(scrolledWidget.getUiReference(), SWT.NONE);
 		innerComposite.setBackgroundMode(SWT.INHERIT_DEFAULT);
-		this.innerContainer = new SwtContainer(factory, colorCache, innerComposite);
+		this.innerContainer = new SwtContainer(factory, innerComposite);
 		this.innerContainer.setLayout(setup.getLayout());
 		scrolledComposite.setContent(innerComposite);
 		innerComposite.setLayoutData(growingCellConstraints);
@@ -171,6 +171,21 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 	@Override
 	public IColorConstant getBackgroundColor() {
 		return innerContainer.getBackgroundColor();
+	}
+
+	@Override
+	public IPopupMenuSpi createPopupMenu() {
+		return innerContainer.createPopupMenu();
+	}
+
+	@Override
+	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+		innerContainer.addPopupDetectionListener(listener);
+	}
+
+	@Override
+	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+		innerContainer.removePopupDetectionListener(listener);
 	}
 
 	@Override

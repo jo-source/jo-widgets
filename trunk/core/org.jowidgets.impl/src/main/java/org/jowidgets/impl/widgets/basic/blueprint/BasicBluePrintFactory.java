@@ -29,6 +29,7 @@ package org.jowidgets.impl.widgets.basic.blueprint;
 
 import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
@@ -199,6 +200,11 @@ public class BasicBluePrintFactory extends BasicSimpleBluePrintFactory implement
 	@Override
 	public final IScrollCompositeBluePrint scrollComposite(final String borderTitle) {
 		return scrollComposite().setBorder(borderTitle);
+	}
+
+	@Override
+	public IActionMenuItemBluePrint menuItem(final String text) {
+		return menuItem().setText(text);
 	}
 
 }

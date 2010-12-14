@@ -35,9 +35,13 @@ import org.eclipse.swt.widgets.Display;
 import org.jowidgets.common.color.ColorValue;
 import org.jowidgets.common.color.IColorConstant;
 
-public class ColorCache implements IColorCache {
-	// TODO: replace with guava computing concurrent hash map
+public final class ColorCache implements IColorCache {
+
+	private static final IColorCache INSTANCE = new ColorCache();
+
 	private final Map<IColorConstant, Color> colorMap = new HashMap<IColorConstant, Color>();
+
+	private ColorCache() {}
 
 	@Override
 	public synchronized Color getColor(final IColorConstant colorConstant) {
@@ -54,6 +58,10 @@ public class ColorCache implements IColorCache {
 		else {
 			return null;
 		}
+	}
+
+	public static IColorCache getInstance() {
+		return INSTANCE;
 	}
 
 }

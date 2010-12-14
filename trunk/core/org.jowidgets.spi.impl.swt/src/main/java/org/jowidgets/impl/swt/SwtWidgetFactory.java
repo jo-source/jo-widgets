@@ -30,13 +30,11 @@ package org.jowidgets.impl.swt;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.impl.swt.color.ColorCache;
-import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.impl.swt.widgets.internal.ButtonImpl;
 import org.jowidgets.impl.swt.widgets.internal.CheckBoxImpl;
-import org.jowidgets.impl.swt.widgets.internal.ComboBoxSelectionImpl;
 import org.jowidgets.impl.swt.widgets.internal.ComboBoxImpl;
+import org.jowidgets.impl.swt.widgets.internal.ComboBoxSelectionImpl;
 import org.jowidgets.impl.swt.widgets.internal.CompositeImpl;
 import org.jowidgets.impl.swt.widgets.internal.CompositeWrapper;
 import org.jowidgets.impl.swt.widgets.internal.DialogImpl;
@@ -84,13 +82,8 @@ import org.jowidgets.util.Assert;
 
 public final class SwtWidgetFactory implements IWidgetFactorySpi {
 
-	private final SwtImageRegistry imageRegistry;
-	private final IColorCache colorCache;
-
 	public SwtWidgetFactory(final SwtImageRegistry imageRegistry) {
 		super();
-		this.colorCache = new ColorCache();
-		this.imageRegistry = imageRegistry;
 	}
 
 	@Override
@@ -102,7 +95,7 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 	public IFrameSpi createFrame(final IGenericWidgetFactory factory, final Object uiReference) {
 		Assert.paramNotNull(uiReference, "uiReference");
 		if (uiReference instanceof Shell) {
-			return new FrameWrapper(factory, colorCache, (Shell) uiReference);
+			return new FrameWrapper(factory, (Shell) uiReference);
 		}
 		throw new IllegalArgumentException("UiReference must be instanceof of '" + Shell.class.getName() + "'");
 	}
@@ -116,19 +109,19 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 	public ICompositeSpi createComposite(final IGenericWidgetFactory factory, final Object uiReference) {
 		Assert.paramNotNull(uiReference, "uiReference");
 		if (uiReference instanceof Composite) {
-			return new CompositeWrapper(factory, colorCache, (Composite) uiReference);
+			return new CompositeWrapper(factory, (Composite) uiReference);
 		}
 		throw new IllegalArgumentException("UiReference must be instanceof of '" + Composite.class.getName() + "'");
 	}
 
 	@Override
 	public IFrameSpi createFrame(final IGenericWidgetFactory factory, final IFrameSetupSpi setup) {
-		return new FrameImpl(factory, colorCache, imageRegistry, setup);
+		return new FrameImpl(factory, setup);
 	}
 
 	@Override
 	public IFrameSpi createDialog(final IGenericWidgetFactory factory, final Object parentUiReference, final IDialogSetupSpi setup) {
-		return new DialogImpl(factory, colorCache, imageRegistry, parentUiReference, setup);
+		return new DialogImpl(factory, parentUiReference, setup);
 	}
 
 	@Override
@@ -136,7 +129,7 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 		final IGenericWidgetFactory factory,
 		final Object parentUiReference,
 		final ICompositeSetupSpi setup) {
-		return new CompositeImpl(factory, colorCache, parentUiReference, setup);
+		return new CompositeImpl(factory, parentUiReference, setup);
 	}
 
 	@Override
@@ -144,7 +137,7 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 		final IGenericWidgetFactory factory,
 		final Object parentUiReference,
 		final IScrollCompositeSetupSpi setup) {
-		return new ScrollCompositeImpl(factory, colorCache, parentUiReference, setup);
+		return new ScrollCompositeImpl(factory, parentUiReference, setup);
 	}
 
 	@Override
@@ -152,57 +145,57 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 		final IGenericWidgetFactory factory,
 		final Object parentUiReference,
 		final ISplitCompositeSetupSpi setup) {
-		return new SplitCompositeImpl(factory, colorCache, parentUiReference, setup);
+		return new SplitCompositeImpl(factory, parentUiReference, setup);
 	}
 
 	@Override
 	public ITextFieldSpi createTextField(final Object parentUiReference, final ITextFieldSetupSpi setup) {
-		return new TextFieldImpl(colorCache, parentUiReference, setup);
+		return new TextFieldImpl(parentUiReference, setup);
 	}
 
 	@Override
 	public ITextLabelSpi createTextLabel(final Object parentUiReference, final ITextLabelSetupSpi setup) {
-		return new TextLabelImpl(colorCache, parentUiReference, setup);
+		return new TextLabelImpl(parentUiReference, setup);
 	}
 
 	@Override
 	public IIconSpi createIcon(final Object parentUiReference, final IIconSetupSpi setup) {
-		return new IconImpl(colorCache, imageRegistry, parentUiReference, setup);
+		return new IconImpl(parentUiReference, setup);
 	}
 
 	@Override
 	public IButtonSpi createButton(final Object parentUiReference, final IButtonSetupSpi setup) {
-		return new ButtonImpl(colorCache, imageRegistry, parentUiReference, setup);
+		return new ButtonImpl(parentUiReference, setup);
 	}
 
 	@Override
 	public IControlSpi createSeparator(final Object parentUiReference, final ISeparatorSetupSpi setup) {
-		return new SeparatorImpl(colorCache, parentUiReference, setup);
+		return new SeparatorImpl(parentUiReference, setup);
 	}
 
 	@Override
 	public ICheckBoxSpi createCheckBox(final Object parentUiReference, final ICheckBoxSetupSpi setup) {
-		return new CheckBoxImpl(colorCache, parentUiReference, setup);
+		return new CheckBoxImpl(parentUiReference, setup);
 	}
 
 	@Override
 	public IToggleButtonSpi createToggleButton(final Object parentUiReference, final IToggleButtonSetupSpi setup) {
-		return new ToggleButtonImpl(colorCache, imageRegistry, parentUiReference, setup);
+		return new ToggleButtonImpl(parentUiReference, setup);
 	}
 
 	@Override
 	public IComboBoxSelectionSpi createComboBoxSelection(final Object parentUiReference, final IComboBoxSelectionSetupSpi setup) {
-		return new ComboBoxSelectionImpl(parentUiReference, colorCache, setup);
+		return new ComboBoxSelectionImpl(parentUiReference, setup);
 	}
 
 	@Override
 	public IComboBoxSpi createComboBox(final Object parentUiReference, final IComboBoxSetupSpi setup) {
-		return new ComboBoxImpl(parentUiReference, colorCache, setup);
+		return new ComboBoxImpl(parentUiReference, setup);
 	}
 
 	@Override
 	public IProgressBarSpi createProgressBar(final Object parentUiReference, final IProgressBarSetupSpi setup) {
-		return new ProgressBarImpl(colorCache, parentUiReference, setup);
+		return new ProgressBarImpl(parentUiReference, setup);
 	}
 
 }

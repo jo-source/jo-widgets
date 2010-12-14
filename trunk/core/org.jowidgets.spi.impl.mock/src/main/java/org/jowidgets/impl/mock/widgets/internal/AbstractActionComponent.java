@@ -30,34 +30,20 @@ package org.jowidgets.impl.mock.widgets.internal;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.IActionWidgetCommon;
-import org.jowidgets.common.widgets.IComponentCommon;
-import org.jowidgets.common.widgets.controler.impl.ActionObservable;
+import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.impl.mock.mockui.UIMComponent;
 import org.jowidgets.impl.mock.widgets.MockComponent;
+import org.jowidgets.spi.widgets.IActionWidgetSpi;
+import org.jowidgets.spi.widgets.IComponentSpi;
+import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
-public abstract class AbstractActionComponent extends ActionObservable implements IActionWidgetCommon, IComponentCommon {
+public abstract class AbstractActionComponent extends AbstractActionWidget implements IActionWidgetSpi, IComponentSpi {
 
 	private final MockComponent mockComponentDelegate;
 
 	public AbstractActionComponent(final UIMComponent component) {
-		super();
+		super(component);
 		this.mockComponentDelegate = new MockComponent(component);
-	}
-
-	@Override
-	public void setEnabled(final boolean enabled) {
-		mockComponentDelegate.setEnabled(enabled);
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return mockComponentDelegate.isEnabled();
-	}
-
-	@Override
-	public UIMComponent getUiReference() {
-		return mockComponentDelegate.getUiReference();
 	}
 
 	@Override
@@ -103,6 +89,21 @@ public abstract class AbstractActionComponent extends ActionObservable implement
 	@Override
 	public Dimension getSize() {
 		return mockComponentDelegate.getSize();
+	}
+
+	@Override
+	public IPopupMenuSpi createPopupMenu() {
+		return mockComponentDelegate.createPopupMenu();
+	}
+
+	@Override
+	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+		mockComponentDelegate.addPopupDetectionListener(listener);
+	}
+
+	@Override
+	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+		mockComponentDelegate.removePopupDetectionListener(listener);
 	}
 
 }

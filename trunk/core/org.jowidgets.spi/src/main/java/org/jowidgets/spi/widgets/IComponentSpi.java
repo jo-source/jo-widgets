@@ -32,4 +32,6 @@ import org.jowidgets.common.widgets.IComponentCommon;
 
 public interface IComponentSpi extends IWidgetSpi, IComponentCommon {
 
+	IPopupMenuSpi createPopupMenu();
+
 }

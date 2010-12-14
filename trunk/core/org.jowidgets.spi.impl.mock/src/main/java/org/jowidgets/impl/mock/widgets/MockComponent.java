@@ -30,76 +30,75 @@ package org.jowidgets.impl.mock.widgets;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.IComponentCommon;
+import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.impl.mock.mockui.UIMComponent;
+import org.jowidgets.spi.widgets.IComponentSpi;
+import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
-public class MockComponent implements IComponentCommon {
-
-	private final UIMComponent component;
+public class MockComponent extends MockWidget implements IComponentSpi {
 
 	public MockComponent(final UIMComponent component) {
-		super();
-		this.component = component;
-	}
-
-	@Override
-	public UIMComponent getUiReference() {
-		return component;
+		super(component);
 	}
 
 	@Override
 	public void redraw() {
-		component.redraw();
+		getUiReference().redraw();
 	}
 
 	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
-		component.setForegroundColor(colorValue);
+		getUiReference().setForegroundColor(colorValue);
 	}
 
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
-		component.setBackgroundColor(colorValue);
+		getUiReference().setBackgroundColor(colorValue);
 	}
 
 	@Override
 	public IColorConstant getForegroundColor() {
-		return component.getForegroundColor();
+		return getUiReference().getForegroundColor();
 	}
 
 	@Override
 	public IColorConstant getBackgroundColor() {
-		return component.getBackgroundColor();
+		return getUiReference().getBackgroundColor();
 	}
 
 	@Override
 	public void setVisible(final boolean visible) {
-		component.setVisible(visible);
+		getUiReference().setVisible(visible);
 	}
 
 	@Override
 	public boolean isVisible() {
-		return component.isVisible();
-	}
-
-	@Override
-	public void setEnabled(final boolean enabled) {
-		component.setEnabled(enabled);
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return component.isEnabled();
+		return getUiReference().isVisible();
 	}
 
 	@Override
 	public Dimension getSize() {
-		return component.getSize();
+		return getUiReference().getSize();
 	}
 
 	@Override
 	public void setCursor(final Cursor cursor) {
 
+	}
+
+	@Override
+	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+
+	}
+
+	@Override
+	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+
+	}
+
+	@Override
+	public IPopupMenuSpi createPopupMenu() {
+		return null;
 	}
 
 }

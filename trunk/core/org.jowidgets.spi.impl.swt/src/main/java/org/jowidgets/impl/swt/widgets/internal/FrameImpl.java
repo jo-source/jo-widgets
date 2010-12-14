@@ -30,25 +30,19 @@ package org.jowidgets.impl.swt.widgets.internal;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.impl.swt.color.IColorCache;
-import org.jowidgets.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.spi.widgets.setup.IFrameSetupSpi;
 
 public class FrameImpl extends WindowImpl implements IFrameSpi {
 
-	public FrameImpl(
-		final IGenericWidgetFactory factory,
-		final IColorCache colorCache,
-		final SwtImageRegistry imageRegistry,
-		final IFrameSetupSpi setup) {
-		super(factory, colorCache, new Shell(getStyle(setup)), setup.isCloseable());
+	public FrameImpl(final IGenericWidgetFactory factory, final IFrameSetupSpi setup) {
+		super(factory, new Shell(getStyle(setup)), setup.isCloseable());
 
 		if (setup.getTitle() != null) {
 			getUiReference().setText(setup.getTitle());
 		}
 		setLayout(setup.getLayout());
-		setIcon(imageRegistry, setup.getIcon());
+		setIcon(setup.getIcon());
 	}
 
 	private static int getStyle(final IFrameSetupSpi setup) {

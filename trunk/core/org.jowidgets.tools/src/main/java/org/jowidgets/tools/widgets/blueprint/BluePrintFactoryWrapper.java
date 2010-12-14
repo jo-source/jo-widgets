@@ -31,6 +31,7 @@ package org.jowidgets.tools.widgets.blueprint;
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICheckBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
@@ -436,6 +437,16 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	@Override
 	public IProgressBarBluePrint progressBar(final int maximum) {
 		return bluePrintFactory.progressBar(maximum);
+	}
+
+	@Override
+	public IActionMenuItemBluePrint menuItem() {
+		return bluePrintFactory.menuItem();
+	}
+
+	@Override
+	public IActionMenuItemBluePrint menuItem(final String text) {
+		return bluePrintFactory.menuItem(text);
 	}
 
 }

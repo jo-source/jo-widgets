@@ -32,23 +32,14 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.impl.swt.color.IColorCache;
 import org.jowidgets.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.IToggleButtonSpi;
 import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;
 
 public class ToggleButtonImpl extends CheckBoxImpl implements IToggleButtonSpi {
 
-	private final SwtImageRegistry imageRegistry;
-
-	public ToggleButtonImpl(
-		final IColorCache colorCache,
-		final SwtImageRegistry imageRegistry,
-		final Object parentUiReference,
-		final IToggleButtonSetupSpi setup) {
-		super(colorCache, new Button((Composite) parentUiReference, SWT.NONE | SWT.TOGGLE), setup);
-
-		this.imageRegistry = imageRegistry;
+	public ToggleButtonImpl(final Object parentUiReference, final IToggleButtonSetupSpi setup) {
+		super(new Button((Composite) parentUiReference, SWT.NONE | SWT.TOGGLE), setup);
 
 		setIcon(setup.getIcon());
 	}
@@ -56,7 +47,7 @@ public class ToggleButtonImpl extends CheckBoxImpl implements IToggleButtonSpi {
 	@Override
 	public void setIcon(final IImageConstant icon) {
 		final Image oldImage = getUiReference().getImage();
-		final Image newImage = imageRegistry.getImage(icon);
+		final Image newImage = SwtImageRegistry.getInstance().getImage(icon);
 		if (oldImage != newImage) {
 			getUiReference().setImage(newImage);
 		}

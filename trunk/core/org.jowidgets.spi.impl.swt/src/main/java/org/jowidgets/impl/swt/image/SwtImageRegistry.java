@@ -32,9 +32,11 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.image.impl.ImageHandle;
 import org.jowidgets.common.image.impl.ImageRegistry;
 
-public class SwtImageRegistry extends ImageRegistry {
+public final class SwtImageRegistry extends ImageRegistry {
 
-	public SwtImageRegistry(final SwtImageHandleFactory imageHandleFactory) {
+	private static final SwtImageRegistry INSTANCE = new SwtImageRegistry(new SwtImageHandleFactory());
+
+	private SwtImageRegistry(final SwtImageHandleFactory imageHandleFactory) {
 		super(imageHandleFactory);
 	}
 
@@ -59,6 +61,10 @@ public class SwtImageRegistry extends ImageRegistry {
 
 	public SwtImageHandleFactory getSwtImageHandleFactory() {
 		return (SwtImageHandleFactory) super.getImageHandleFactory();
+	}
+
+	public static SwtImageRegistry getInstance() {
+		return INSTANCE;
 	}
 
 }

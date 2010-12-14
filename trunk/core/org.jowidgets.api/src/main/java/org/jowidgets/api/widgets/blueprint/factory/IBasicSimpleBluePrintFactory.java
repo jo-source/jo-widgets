@@ -30,6 +30,7 @@ package org.jowidgets.api.widgets.blueprint.factory;
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICheckBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
@@ -81,5 +82,7 @@ public interface IBasicSimpleBluePrintFactory {
 
 	<INPUT_TYPE> IComboBoxSelectionBluePrint<INPUT_TYPE> comboBoxSelection(
 		final IObjectStringConverter<INPUT_TYPE> objectStringConverter);
+
+	IActionMenuItemBluePrint menuItem();
 
 }
