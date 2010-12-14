@@ -32,49 +32,78 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controler.IActionObservable;
 import org.jowidgets.common.widgets.controler.IInputListener;
+import org.jowidgets.common.widgets.controler.IInputObservable;
+import org.jowidgets.common.widgets.controler.IItemStateListener;
+import org.jowidgets.common.widgets.controler.IItemStateObservable;
 import org.jowidgets.common.widgets.controler.IWindowListener;
+import org.jowidgets.common.widgets.controler.IWindowObservable;
 
-public class UIMObservable {
+public class UIMObservable implements IActionObservable, IInputObservable, IWindowObservable, IItemStateObservable {
 
 	private final Set<IInputListener> inputListeners;
 	private final Set<IActionListener> actionListeners;
 	private final Set<IWindowListener> windowListeners;
+	private final Set<IItemStateListener> itemStateListeners;
 
 	public UIMObservable() {
 		super();
 		this.inputListeners = new HashSet<IInputListener>();
 		this.actionListeners = new HashSet<IActionListener>();
 		this.windowListeners = new HashSet<IWindowListener>();
+		this.itemStateListeners = new HashSet<IItemStateListener>();
 	}
 
+	@Override
 	public void addActionListener(final IActionListener listener) {
 		actionListeners.add(listener);
 	}
 
+	@Override
 	public void removeActionListener(final IActionListener listener) {
 		actionListeners.remove(listener);
 	}
 
+	@Override
 	public void addInputListener(final IInputListener listener) {
 		inputListeners.add(listener);
 	}
 
+	@Override
 	public void removeInputListener(final IInputListener listener) {
 		inputListeners.remove(listener);
 	}
 
+	@Override
 	public void addWindowListener(final IWindowListener listener) {
 		windowListeners.add(listener);
 	}
 
+	@Override
 	public void removeWindowListener(final IWindowListener listener) {
 		windowListeners.remove(listener);
+	}
+
+	@Override
+	public void addItemListener(final IItemStateListener listener) {
+		itemStateListeners.add(listener);
+	}
+
+	@Override
+	public void removeItemListener(final IItemStateListener listener) {
+		itemStateListeners.remove(listener);
 	}
 
 	public void fireActionPerformed() {
 		for (final IActionListener listener : actionListeners) {
 			listener.actionPerformed();
+		}
+	}
+
+	public void fireItemStateChanged() {
+		for (final IItemStateListener listener : itemStateListeners) {
+			listener.itemStateChanged();
 		}
 	}
 

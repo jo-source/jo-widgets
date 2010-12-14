@@ -25,14 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.descriptor.setup;
+package org.jowidgets.api.widgets.blueprint.builder;
 
-import org.jowidgets.common.types.Accelerator;
 
-public interface IActionItemSetup extends IItemSetup {
+public interface IMenuItemSetupBuilder<INSTANCE_TYPE extends IMenuItemSetupBuilder<?>> extends IItemSetupBuilder<INSTANCE_TYPE> {
 
-	Accelerator getAccelerator();
-
-	Character getMnemonic();
+	INSTANCE_TYPE setMnemonic(Character mnemonic);
 
 }

@@ -34,6 +34,4 @@ public interface IActionMenuItemCommon extends IMenuItemCommon, IActionWidgetCom
 
 	void setAccelerator(Accelerator accelerator);
 
-	void setMnemonic(char mnemonic);
-
 }

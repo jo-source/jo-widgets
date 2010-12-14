@@ -26,10 +26,43 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.widgets;
+package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.common.widgets.ISelectableMenuItemCommon;
+import org.jowidgets.api.widgets.IMenu;
+import org.jowidgets.api.widgets.ISelectableMenuItem;
+import org.jowidgets.api.widgets.descriptor.setup.ISelectableItemSetup;
+import org.jowidgets.impl.widgets.common.wrapper.SelectableMenuItemSpiWrapper;
+import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 
-public interface ISelectableMenuItemSpi extends IMenuItemSpi, ISelectableMenuItemCommon {
+public class SelectableMenuItemImpl extends SelectableMenuItemSpiWrapper implements ISelectableMenuItem {
+
+	private final IMenu parent;
+
+	public SelectableMenuItemImpl(
+		final IMenu parent,
+		final ISelectableMenuItemSpi actionMenuItemSpi,
+		final ISelectableItemSetup setup) {
+		super(actionMenuItemSpi);
+
+		this.parent = parent;
+
+		setText(setup.getText());
+		setToolTipText(setup.getToolTipText());
+		setIcon(setup.getIcon());
+		setSelected(setup.isSelected());
+
+		if (setup.getAccelerator() != null) {
+			setAccelerator(setup.getAccelerator());
+		}
+
+		if (setup.getMnemonic() != null) {
+			setMnemonic(setup.getMnemonic().charValue());
+		}
+	}
+
+	@Override
+	public IMenu getParent() {
+		return parent;
+	}
 
 }

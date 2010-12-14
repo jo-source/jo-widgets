@@ -35,12 +35,18 @@ import org.jowidgets.api.widgets.IActionMenuItem;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.IMenuItem;
+import org.jowidgets.api.widgets.ISelectableMenuItem;
 import org.jowidgets.api.widgets.descriptor.IActionMenuItemDescriptor;
-import org.jowidgets.api.widgets.descriptor.setup.IActionItemSetup;
+import org.jowidgets.api.widgets.descriptor.ICheckedMenuItemDescriptor;
+import org.jowidgets.api.widgets.descriptor.IRadioMenuItemDescriptor;
+import org.jowidgets.api.widgets.descriptor.setup.IAccelerateableMenuItemSetup;
+import org.jowidgets.api.widgets.descriptor.setup.ISelectableItemSetup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.impl.widgets.basic.ActionMenuItemImpl;
+import org.jowidgets.impl.widgets.basic.SelectableMenuItemImpl;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 import org.jowidgets.spi.widgets.IMenuSpi;
+import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 import org.jowidgets.util.Assert;
 
 public class MenuDelegate {
@@ -84,7 +90,23 @@ public class MenuDelegate {
 
 		if (IActionMenuItemDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
 			final IActionMenuItemSpi actionMenuItemSpi = menuSpi.addActionItem(index);
-			final IActionMenuItem actionMenuItem = new ActionMenuItemImpl(menu, actionMenuItemSpi, (IActionItemSetup) descriptor);
+			final IActionMenuItem actionMenuItem = new ActionMenuItemImpl(menu, actionMenuItemSpi, (IAccelerateableMenuItemSetup) descriptor);
+			result = (WIDGET_TYPE) actionMenuItem;
+		}
+		else if (ICheckedMenuItemDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
+			final ISelectableMenuItemSpi selectableMenuItemSpi = menuSpi.addCheckedItem(index);
+			final ISelectableMenuItem actionMenuItem = new SelectableMenuItemImpl(
+				menu,
+				selectableMenuItemSpi,
+				(ISelectableItemSetup) descriptor);
+			result = (WIDGET_TYPE) actionMenuItem;
+		}
+		else if (IRadioMenuItemDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
+			final ISelectableMenuItemSpi selectableMenuItemSpi = menuSpi.addRadioItem(index);
+			final ISelectableMenuItem actionMenuItem = new SelectableMenuItemImpl(
+				menu,
+				selectableMenuItemSpi,
+				(ISelectableItemSetup) descriptor);
 			result = (WIDGET_TYPE) actionMenuItem;
 		}
 

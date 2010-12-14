@@ -26,10 +26,12 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.widgets;
+package org.jowidgets.common.widgets.controler;
 
-import org.jowidgets.common.widgets.ISelectableMenuItemCommon;
+public interface IItemStateObservable {
 
-public interface ISelectableMenuItemSpi extends IMenuItemSpi, ISelectableMenuItemCommon {
+	void addItemListener(final IItemStateListener listener);
+
+	void removeItemListener(final IItemStateListener listener);
 
 }

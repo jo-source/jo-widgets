@@ -25,12 +25,50 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.descriptor;
+package org.jowidgets.impl.swt.widgets.internal;
 
-import org.jowidgets.api.widgets.IActionMenuItem;
-import org.jowidgets.api.widgets.descriptor.setup.IAccelerateableMenuItemSetup;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.MenuItem;
+import org.jowidgets.common.widgets.controler.IItemStateListener;
+import org.jowidgets.common.widgets.controler.impl.ItemStateObservable;
+import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 
-public interface IActionMenuItemDescriptor extends IAccelerateableMenuItemSetup, IWidgetDescriptor<IActionMenuItem> {
+public class SelectableMenuItemImpl extends MenuItemImpl implements ISelectableMenuItemSpi {
+
+	private final ItemStateObservable itemStateObservable;
+
+	public SelectableMenuItemImpl(final MenuItem menuItem) {
+		super(menuItem);
+
+		this.itemStateObservable = new ItemStateObservable();
+
+		menuItem.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(final SelectionEvent e) {
+				itemStateObservable.fireItemStateChanged();
+			}
+		});
+	}
+
+	@Override
+	public boolean isSelected() {
+		return getUiReference().getSelection();
+	}
+
+	@Override
+	public void setSelected(final boolean selected) {
+		getUiReference().setSelection(selected);
+	}
+
+	@Override
+	public void addItemListener(final IItemStateListener listener) {
+		itemStateObservable.addItemListener(listener);
+	}
+
+	@Override
+	public void removeItemListener(final IItemStateListener listener) {
+		itemStateObservable.removeItemListener(listener);
+	}
 
 }

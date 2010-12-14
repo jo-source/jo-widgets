@@ -29,12 +29,14 @@ package org.jowidgets.api.widgets.blueprint.factory;
 
 import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
+import org.jowidgets.api.widgets.blueprint.ICheckedMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.IIconBluePrint;
+import org.jowidgets.api.widgets.blueprint.IRadioMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
@@ -103,5 +105,9 @@ public interface IBasicBluePrintFactory extends IBasicSimpleBluePrintFactory {
 	IComboBoxSelectionBluePrint<Short> comboBoxSelectionShortNumber();
 
 	IActionMenuItemBluePrint menuItem(String text);
+
+	IRadioMenuItemBluePrint radioMenuItem(String text);
+
+	ICheckedMenuItemBluePrint checkedMenuItem(String text);
 
 }

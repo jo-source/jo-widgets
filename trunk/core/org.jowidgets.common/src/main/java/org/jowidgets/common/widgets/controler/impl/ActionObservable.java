@@ -53,7 +53,7 @@ public class ActionObservable implements IActionObservable {
 		this.actionListeners.remove(listener);
 	}
 
-	protected final void fireActionPerformed() {
+	public final void fireActionPerformed() {
 		for (final IActionListener actionListener : actionListeners) {
 			actionListener.actionPerformed();
 		}

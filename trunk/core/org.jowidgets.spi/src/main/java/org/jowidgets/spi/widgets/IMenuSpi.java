@@ -36,4 +36,8 @@ public interface IMenuSpi extends IWidgetSpi, IMenuCommon {
 
 	IActionMenuItemSpi addActionItem(Integer index);
 
+	ISelectableMenuItemSpi addCheckedItem(Integer index);
+
+	ISelectableMenuItemSpi addRadioItem(Integer index);
+
 }

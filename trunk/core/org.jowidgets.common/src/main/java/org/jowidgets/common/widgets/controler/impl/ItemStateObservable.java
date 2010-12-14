@@ -26,10 +26,37 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.widgets;
+package org.jowidgets.common.widgets.controler.impl;
 
-import org.jowidgets.common.widgets.ISelectableMenuItemCommon;
+import java.util.HashSet;
+import java.util.Set;
 
-public interface ISelectableMenuItemSpi extends IMenuItemSpi, ISelectableMenuItemCommon {
+import org.jowidgets.common.widgets.controler.IItemStateListener;
+import org.jowidgets.common.widgets.controler.IItemStateObservable;
+
+public class ItemStateObservable implements IItemStateObservable {
+
+	private final Set<IItemStateListener> itemListeners;
+
+	public ItemStateObservable() {
+		super();
+		this.itemListeners = new HashSet<IItemStateListener>();
+	}
+
+	@Override
+	public final void addItemListener(final IItemStateListener listener) {
+		this.itemListeners.add(listener);
+	}
+
+	@Override
+	public final void removeItemListener(final IItemStateListener listener) {
+		this.itemListeners.remove(listener);
+	}
+
+	public final void fireItemStateChanged() {
+		for (final IItemStateListener listener : itemListeners) {
+			listener.itemStateChanged();
+		}
+	}
 
 }

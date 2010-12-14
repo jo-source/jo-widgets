@@ -58,4 +58,9 @@ public class MenuItemSpiWrapper extends WidgetSpiWrapper implements IMenuItemCom
 		getWidget().setIcon(icon);
 	}
 
+	@Override
+	public void setMnemonic(final char mnemonic) {
+		getWidget().setMnemonic(mnemonic);
+	}
+
 }

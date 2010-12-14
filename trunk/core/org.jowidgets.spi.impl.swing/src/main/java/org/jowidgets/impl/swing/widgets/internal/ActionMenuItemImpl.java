@@ -31,57 +31,41 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JMenuItem;
-import javax.swing.KeyStroke;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.Accelerator;
-import org.jowidgets.impl.swing.image.SwingImageRegistry;
-import org.jowidgets.impl.swing.util.ModifierConvert;
+import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controler.impl.ActionObservable;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 
-public class ActionMenuItemImpl extends AbstractActionWidget implements IActionMenuItemSpi {
+public class ActionMenuItemImpl extends MenuItemImpl implements IActionMenuItemSpi {
+
+	private final ActionObservable actionObservable;
 
 	public ActionMenuItemImpl() {
-		super(new JMenuItem());
+		this(new JMenuItem());
+	}
+
+	public ActionMenuItemImpl(final JMenuItem menuItem) {
+		super(menuItem);
+
+		this.actionObservable = new ActionObservable();
 
 		getUiReference().addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(final ActionEvent e) {
-				fireActionPerformed();
+				actionObservable.fireActionPerformed();
 			}
 		});
 	}
 
 	@Override
-	public JMenuItem getUiReference() {
-		return (JMenuItem) super.getUiReference();
+	public void addActionListener(final IActionListener actionListener) {
+		actionObservable.addActionListener(actionListener);
 	}
 
 	@Override
-	public void setIcon(final IImageConstant icon) {
-		getUiReference().setIcon(SwingImageRegistry.getInstance().getImageIcon(icon));
-	}
-
-	@Override
-	public void setText(final String text) {
-		getUiReference().setText(text);
-	}
-
-	@Override
-	public void setToolTipText(final String text) {
-		getUiReference().setToolTipText(text);
-	}
-
-	@Override
-	public void setAccelerator(final Accelerator accelerator) {
-		final int modfifier = ModifierConvert.convert(accelerator.getModifier());
-		getUiReference().setAccelerator(KeyStroke.getKeyStroke(accelerator.getKey(), modfifier));
-	}
-
-	@Override
-	public void setMnemonic(final char mnemonic) {
-		getUiReference().setMnemonic(mnemonic);
+	public void removeActionListener(final IActionListener actionListener) {
+		actionObservable.removeActionListener(actionListener);
 	}
 
 }

@@ -25,12 +25,51 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.descriptor;
+package org.jowidgets.impl.mock.widgets.internal;
 
-import org.jowidgets.api.widgets.IActionMenuItem;
-import org.jowidgets.api.widgets.descriptor.setup.IAccelerateableMenuItemSetup;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Accelerator;
+import org.jowidgets.impl.mock.mockui.UIMMenuItem;
+import org.jowidgets.impl.mock.widgets.MockWidget;
+import org.jowidgets.spi.widgets.IMenuItemSpi;
 
-public interface IActionMenuItemDescriptor extends IAccelerateableMenuItemSetup, IWidgetDescriptor<IActionMenuItem> {
+public class MenuItemImpl extends MockWidget implements IMenuItemSpi {
+
+	public MenuItemImpl() {
+		this(new UIMMenuItem());
+	}
+
+	public MenuItemImpl(final UIMMenuItem menuItem) {
+		super(menuItem);
+	}
+
+	@Override
+	public UIMMenuItem getUiReference() {
+		return (UIMMenuItem) super.getUiReference();
+	}
+
+	@Override
+	public void setIcon(final IImageConstant icon) {
+		getUiReference().setIcon(icon);
+	}
+
+	@Override
+	public void setText(final String text) {
+		getUiReference().setText(text);
+	}
+
+	@Override
+	public void setToolTipText(final String text) {
+		getUiReference().setToolTipText(text);
+	}
+
+	public void setAccelerator(final Accelerator accelerator) {
+		getUiReference().setAccelerator(accelerator);
+	}
+
+	@Override
+	public void setMnemonic(final char mnemonic) {
+		getUiReference().setMnemonic(mnemonic);
+	}
 
 }

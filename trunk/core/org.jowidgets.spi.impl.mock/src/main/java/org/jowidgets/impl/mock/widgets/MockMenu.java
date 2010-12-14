@@ -28,10 +28,15 @@
 
 package org.jowidgets.impl.mock.widgets;
 
+import org.jowidgets.impl.mock.mockui.UIMCheckedMenuItem;
 import org.jowidgets.impl.mock.mockui.UIMContainer;
+import org.jowidgets.impl.mock.mockui.UIMRadioMenuItem;
 import org.jowidgets.impl.mock.widgets.internal.ActionMenuItemImpl;
+import org.jowidgets.impl.mock.widgets.internal.MenuItemImpl;
+import org.jowidgets.impl.mock.widgets.internal.SelectableMenuItemImpl;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 import org.jowidgets.spi.widgets.IMenuSpi;
+import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 
 public class MockMenu extends MockWidget implements IMenuSpi {
 
@@ -52,13 +57,30 @@ public class MockMenu extends MockWidget implements IMenuSpi {
 	@Override
 	public IActionMenuItemSpi addActionItem(final Integer index) {
 		final ActionMenuItemImpl result = new ActionMenuItemImpl();
-		if (index != null) {
-			getUiReference().add(result.getUiReference(), index.intValue());
-		}
-		else {
-			getUiReference().add(result.getUiReference());
-		}
+		addItem(index, result);
 		return result;
 	}
 
+	@Override
+	public ISelectableMenuItemSpi addCheckedItem(final Integer index) {
+		final SelectableMenuItemImpl result = new SelectableMenuItemImpl(new UIMCheckedMenuItem());
+		addItem(index, result);
+		return result;
+	}
+
+	@Override
+	public ISelectableMenuItemSpi addRadioItem(final Integer index) {
+		final SelectableMenuItemImpl result = new SelectableMenuItemImpl(new UIMRadioMenuItem());
+		addItem(index, result);
+		return result;
+	}
+
+	private void addItem(final Integer index, final MenuItemImpl item) {
+		if (index != null) {
+			getUiReference().add(item.getUiReference(), index.intValue());
+		}
+		else {
+			getUiReference().add(item.getUiReference());
+		}
+	}
 }

@@ -30,23 +30,12 @@ package org.jowidgets.impl.swt.widgets.internal;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.MenuItem;
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.Accelerator;
-import org.jowidgets.common.widgets.controler.impl.ActionObservable;
-import org.jowidgets.impl.swt.image.SwtImageRegistry;
-import org.jowidgets.impl.swt.util.ModifierConvert;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 
-public class ActionMenuItemImpl extends ActionObservable implements IActionMenuItemSpi {
-
-	private final MenuItem menuItem;
-	private String text;
-	private String tooltipText;
-	private String acceleratorText;
-	private Character mnemonic;
+public class ActionMenuItemImpl extends MenuItemImpl implements IActionMenuItemSpi {
 
 	public ActionMenuItemImpl(final MenuItem menuItem) {
-		this.menuItem = menuItem;
+		super(menuItem);
 
 		menuItem.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -55,80 +44,6 @@ public class ActionMenuItemImpl extends ActionObservable implements IActionMenuI
 			}
 		});
 
-	}
-
-	@Override
-	public MenuItem getUiReference() {
-		return menuItem;
-	}
-
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		menuItem.setImage(SwtImageRegistry.getInstance().getImage(icon));
-	}
-
-	@Override
-	public void setText(final String text) {
-		this.text = text;
-		setCombienedText();
-	}
-
-	@Override
-	public void setToolTipText(final String tooltipText) {
-		this.tooltipText = tooltipText;
-	}
-
-	public String getTooltipText() {
-		return tooltipText;
-	}
-
-	@Override
-	public void setAccelerator(final Accelerator accelerator) {
-		try {
-			final int modfifier = ModifierConvert.convert(accelerator.getModifier());
-			getUiReference().setAccelerator(accelerator.getKey() + modfifier);
-		}
-		catch (final NoSuchMethodError error) {
-			//TODO RWT does not support accelerators
-			return;
-		}
-		this.acceleratorText = ModifierConvert.acceleratorText(accelerator.getModifier()) + accelerator.getKey();
-		setCombienedText();
-
-	}
-
-	@Override
-	public void setMnemonic(final char mnemonic) {
-		this.mnemonic = Character.valueOf(mnemonic);
-		setCombienedText();
-	}
-
-	@Override
-	public void setEnabled(final boolean enabled) {
-		menuItem.setEnabled(enabled);
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return menuItem.isEnabled();
-	}
-
-	private void setCombienedText() {
-		final StringBuilder combiened = new StringBuilder();
-		if (text != null) {
-			combiened.append(text.replace("&", "&&"));
-		}
-		if (mnemonic != null) {
-			final int index = combiened.indexOf(mnemonic.toString());
-			if (index != -1) {
-				combiened.insert(index, '&');
-			}
-		}
-		if (acceleratorText != null) {
-			combiened.append('\t');
-			combiened.append(acceleratorText);
-		}
-		menuItem.setText(combiened.toString());
 	}
 
 }

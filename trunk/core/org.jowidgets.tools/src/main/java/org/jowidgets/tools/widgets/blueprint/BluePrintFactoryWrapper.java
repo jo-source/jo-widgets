@@ -34,6 +34,7 @@ import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICheckBoxBluePrint;
+import org.jowidgets.api.widgets.blueprint.ICheckedMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
@@ -47,6 +48,7 @@ import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IProgressBarBluePrint;
 import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
+import org.jowidgets.api.widgets.blueprint.IRadioMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISeparatorBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
@@ -447,6 +449,26 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	@Override
 	public IActionMenuItemBluePrint menuItem(final String text) {
 		return bluePrintFactory.menuItem(text);
+	}
+
+	@Override
+	public IRadioMenuItemBluePrint radioMenuItem(final String text) {
+		return bluePrintFactory.radioMenuItem(text);
+	}
+
+	@Override
+	public ICheckedMenuItemBluePrint checkedMenuItem(final String text) {
+		return bluePrintFactory.checkedMenuItem(text);
+	}
+
+	@Override
+	public IRadioMenuItemBluePrint radioMenuItem() {
+		return bluePrintFactory.radioMenuItem();
+	}
+
+	@Override
+	public ICheckedMenuItemBluePrint checkedMenuItem() {
+		return bluePrintFactory.checkedMenuItem();
 	}
 
 }

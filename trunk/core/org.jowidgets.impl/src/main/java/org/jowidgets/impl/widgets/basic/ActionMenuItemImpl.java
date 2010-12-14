@@ -30,7 +30,7 @@ package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.widgets.IActionMenuItem;
 import org.jowidgets.api.widgets.IMenu;
-import org.jowidgets.api.widgets.descriptor.setup.IActionItemSetup;
+import org.jowidgets.api.widgets.descriptor.setup.IAccelerateableMenuItemSetup;
 import org.jowidgets.impl.widgets.common.wrapper.ActionMenuItemSpiWrapper;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 
@@ -38,7 +38,7 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 
 	private final IMenu parent;
 
-	public ActionMenuItemImpl(final IMenu parent, final IActionMenuItemSpi actionMenuItemSpi, final IActionItemSetup setup) {
+	public ActionMenuItemImpl(final IMenu parent, final IActionMenuItemSpi actionMenuItemSpi, final IAccelerateableMenuItemSetup setup) {
 		super(actionMenuItemSpi);
 
 		this.parent = parent;

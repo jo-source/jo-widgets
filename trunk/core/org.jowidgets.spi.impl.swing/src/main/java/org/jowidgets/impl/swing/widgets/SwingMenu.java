@@ -30,16 +30,26 @@ package org.jowidgets.impl.swing.widgets;
 
 import java.awt.Container;
 
+import javax.swing.ButtonGroup;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
+import javax.swing.JRadioButtonMenuItem;
 
 import org.jowidgets.impl.swing.widgets.internal.ActionMenuItemImpl;
+import org.jowidgets.impl.swing.widgets.internal.MenuItemImpl;
+import org.jowidgets.impl.swing.widgets.internal.SelectableMenuItemImpl;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 import org.jowidgets.spi.widgets.IMenuSpi;
+import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 
 public class SwingMenu extends SwingWidget implements IMenuSpi {
 
+	//TODO use one radio group for every separator
+	private final ButtonGroup radioGroup;
+
 	public SwingMenu(final Container component) {
 		super(component);
+		this.radioGroup = new ButtonGroup();
 	}
 
 	@Override
@@ -60,13 +70,34 @@ public class SwingMenu extends SwingWidget implements IMenuSpi {
 	@Override
 	public IActionMenuItemSpi addActionItem(final Integer index) {
 		final ActionMenuItemImpl result = new ActionMenuItemImpl();
+		addItem(index, result);
+		return result;
+	}
+
+	@Override
+	public ISelectableMenuItemSpi addCheckedItem(final Integer index) {
+		final SelectableMenuItemImpl result = new SelectableMenuItemImpl(new JCheckBoxMenuItem());
+		addItem(index, result);
+		return result;
+	}
+
+	@Override
+	public ISelectableMenuItemSpi addRadioItem(final Integer index) {
+		final JRadioButtonMenuItem radioItem = new JRadioButtonMenuItem();
+		//TODO use one radio group for every separator
+		radioGroup.add(radioItem);
+		final SelectableMenuItemImpl result = new SelectableMenuItemImpl(radioItem);
+		addItem(index, result);
+		return result;
+	}
+
+	private void addItem(final Integer index, final MenuItemImpl item) {
 		if (index != null) {
-			getUiReference().add(result.getUiReference(), index.intValue());
+			getUiReference().add(item.getUiReference(), index.intValue());
 		}
 		else {
-			getUiReference().add(result.getUiReference());
+			getUiReference().add(item.getUiReference());
 		}
-		return result;
 	}
 
 }

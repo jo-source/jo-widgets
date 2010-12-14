@@ -39,8 +39,11 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.ToolTip;
 import org.jowidgets.impl.swt.widgets.internal.ActionMenuItemImpl;
+import org.jowidgets.impl.swt.widgets.internal.MenuItemImpl;
+import org.jowidgets.impl.swt.widgets.internal.SelectableMenuItemImpl;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 import org.jowidgets.spi.widgets.IMenuSpi;
+import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 
 public class SwtMenu implements IMenuSpi {
 
@@ -56,7 +59,7 @@ public class SwtMenu implements IMenuSpi {
 			this.toolTip = new ToolTip(menu.getShell(), SWT.NONE);
 		}
 		catch (final NoClassDefFoundError error) {
-			//TODO swt has no tooltip, may use a window
+			//TODO swt has no tooltip, may use a window instead
 		}
 
 		if (toolTip != null) {
@@ -106,9 +109,43 @@ public class SwtMenu implements IMenuSpi {
 		return createActionItem(menuItem);
 	}
 
+	@Override
+	public ISelectableMenuItemSpi addCheckedItem(final Integer index) {
+		MenuItem menuItem = null;
+		if (index != null) {
+			menuItem = new MenuItem(menu, SWT.CHECK, index.intValue());
+		}
+		else {
+			menuItem = new MenuItem(menu, SWT.CHECK);
+		}
+		return createSelectableItem(menuItem);
+	}
+
+	@Override
+	public ISelectableMenuItemSpi addRadioItem(final Integer index) {
+		MenuItem menuItem = null;
+		if (index != null) {
+			menuItem = new MenuItem(menu, SWT.RADIO, index.intValue());
+		}
+		else {
+			menuItem = new MenuItem(menu, SWT.RADIO);
+		}
+		return createSelectableItem(menuItem);
+	}
+
 	private ActionMenuItemImpl createActionItem(final MenuItem menuItem) {
 		final ActionMenuItemImpl result = new ActionMenuItemImpl(menuItem);
+		installTooltip(menuItem, result);
+		return result;
+	}
 
+	private SelectableMenuItemImpl createSelectableItem(final MenuItem menuItem) {
+		final SelectableMenuItemImpl result = new SelectableMenuItemImpl(menuItem);
+		installTooltip(menuItem, result);
+		return result;
+	}
+
+	private void installTooltip(final MenuItem menuItem, final MenuItemImpl result) {
 		final ArmListener armListener = new ArmListener() {
 
 			@Override
@@ -144,8 +181,6 @@ public class SwtMenu implements IMenuSpi {
 		if (toolTip != null) {
 			menuItem.addArmListener(armListener);
 		}
-
-		return result;
 	}
 
 	private void showToolTip(final String message) {

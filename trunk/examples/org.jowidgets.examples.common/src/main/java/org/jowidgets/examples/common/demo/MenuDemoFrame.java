@@ -32,12 +32,16 @@ import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IActionMenuItem;
 import org.jowidgets.api.widgets.IPopupMenu;
+import org.jowidgets.api.widgets.ISelectableMenuItem;
 import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
+import org.jowidgets.api.widgets.blueprint.ICheckedMenuItemBluePrint;
+import org.jowidgets.api.widgets.blueprint.IRadioMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.common.types.Modifier;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controler.IItemStateListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.tools.powo.JoFrame;
 
@@ -64,6 +68,18 @@ public class MenuDemoFrame extends JoFrame {
 		item3Bp.setIcon(IconsSmall.WARNING).setAccelerator(new Accelerator('I', Modifier.SHIFT)).setMnemonic('e');
 		final IActionMenuItem item3 = popupMenu.addMenuItem(1, item3Bp);
 
+		final ICheckedMenuItemBluePrint item4Bp = bpf.checkedMenuItem().setText("item4");
+		final ISelectableMenuItem item4 = popupMenu.addMenuItem(item4Bp);
+
+		final IRadioMenuItemBluePrint item5Bp = bpf.radioMenuItem().setText("item5");
+		final ISelectableMenuItem item5 = popupMenu.addMenuItem(item5Bp);
+
+		final IRadioMenuItemBluePrint item6Bp = bpf.radioMenuItem().setText("item6");
+		final ISelectableMenuItem item6 = popupMenu.addMenuItem(item6Bp);
+
+		final IRadioMenuItemBluePrint item7Bp = bpf.radioMenuItem().setText("item7");
+		final ISelectableMenuItem item7 = popupMenu.addMenuItem(item7Bp);
+
 		item1.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
@@ -85,6 +101,34 @@ public class MenuDemoFrame extends JoFrame {
 			}
 		});
 
+		item4.addItemListener(new IItemStateListener() {
+			@Override
+			public void itemStateChanged() {
+				System.out.println("Item4, selected=" + item4.isSelected());
+			}
+		});
+
+		item5.addItemListener(new IItemStateListener() {
+			@Override
+			public void itemStateChanged() {
+				System.out.println("Item5, selected=" + item5.isSelected());
+			}
+		});
+
+		item6.addItemListener(new IItemStateListener() {
+			@Override
+			public void itemStateChanged() {
+				System.out.println("Item6, selected=" + item6.isSelected());
+			}
+		});
+
+		item7.addItemListener(new IItemStateListener() {
+			@Override
+			public void itemStateChanged() {
+				System.out.println("Item7, selected=" + item7.isSelected());
+			}
+		});
+
 		addPopupDetectionListener(new IPopupDetectionListener() {
 
 			@Override
@@ -93,5 +137,4 @@ public class MenuDemoFrame extends JoFrame {
 			}
 		});
 	}
-
 }

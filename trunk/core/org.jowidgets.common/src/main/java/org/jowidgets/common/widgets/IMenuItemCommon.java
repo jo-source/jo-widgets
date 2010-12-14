@@ -28,14 +28,9 @@
 
 package org.jowidgets.common.widgets;
 
-import org.jowidgets.common.image.IImageConstant;
 
-public interface IMenuItemCommon extends IWidgetCommon {
+public interface IMenuItemCommon extends IItemCommon {
 
-	void setText(String text);
-
-	void setToolTipText(String text);
-
-	void setIcon(IImageConstant icon);
+	void setMnemonic(char mnemonic);
 
 }

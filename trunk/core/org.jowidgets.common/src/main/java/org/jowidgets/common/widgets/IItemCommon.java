@@ -26,10 +26,16 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.widgets;
+package org.jowidgets.common.widgets;
 
-import org.jowidgets.common.widgets.ISelectableMenuItemCommon;
+import org.jowidgets.common.image.IImageConstant;
 
-public interface ISelectableMenuItemSpi extends IMenuItemSpi, ISelectableMenuItemCommon {
+public interface IItemCommon extends IWidgetCommon {
+
+	void setText(String text);
+
+	void setToolTipText(String text);
+
+	void setIcon(IImageConstant icon);
 
 }

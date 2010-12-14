@@ -30,6 +30,6 @@ package org.jowidgets.spi.widgets;
 
 import org.jowidgets.common.widgets.IMenuItemCommon;
 
-public interface IMenuItemSpi extends IWidgetSpi, IMenuItemCommon {
+public interface IMenuItemSpi extends IItemSpi, IMenuItemCommon {
 
 }

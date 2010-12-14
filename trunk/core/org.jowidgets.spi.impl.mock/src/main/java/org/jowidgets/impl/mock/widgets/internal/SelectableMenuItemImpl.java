@@ -25,15 +25,47 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.blueprint.builder;
+package org.jowidgets.impl.mock.widgets.internal;
 
-import org.jowidgets.common.types.Accelerator;
+import org.jowidgets.common.widgets.controler.IItemStateListener;
+import org.jowidgets.common.widgets.controler.impl.ItemStateObservable;
+import org.jowidgets.impl.mock.mockui.UIMMenuItem;
+import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 
-public interface IActionItemSetupBuilder<INSTANCE_TYPE extends IActionItemSetupBuilder<?>> extends
-		IItemSetupBuilder<INSTANCE_TYPE> {
+public class SelectableMenuItemImpl extends MenuItemImpl implements ISelectableMenuItemSpi {
 
-	INSTANCE_TYPE setAccelerator(Accelerator accelerator);
+	private final ItemStateObservable itemStateObservable;
 
-	INSTANCE_TYPE setMnemonic(Character mnemonic);
+	public SelectableMenuItemImpl(final UIMMenuItem menuItem) {
+		super(menuItem);
+		this.itemStateObservable = new ItemStateObservable();
+
+		menuItem.addItemListener(new IItemStateListener() {
+			@Override
+			public void itemStateChanged() {
+				itemStateObservable.fireItemStateChanged();
+			}
+		});
+	}
+
+	@Override
+	public boolean isSelected() {
+		return getUiReference().isSelected();
+	}
+
+	@Override
+	public void setSelected(final boolean selected) {
+		getUiReference().setSelected(selected);
+	}
+
+	@Override
+	public void addItemListener(final IItemStateListener listener) {
+		itemStateObservable.addItemListener(listener);
+	}
+
+	@Override
+	public void removeItemListener(final IItemStateListener listener) {
+		itemStateObservable.removeItemListener(listener);
+	}
 
 }

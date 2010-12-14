@@ -26,10 +26,8 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.widgets;
+package org.jowidgets.impl.mock.mockui;
 
-import org.jowidgets.common.widgets.ISelectableMenuItemCommon;
-
-public interface ISelectableMenuItemSpi extends IMenuItemSpi, ISelectableMenuItemCommon {
+public class UIMCheckedMenuItem extends UIMMenuItem {
 
 }

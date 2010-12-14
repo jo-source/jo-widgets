@@ -27,53 +27,40 @@
  */
 package org.jowidgets.impl.mock.widgets.internal;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controler.impl.ActionObservable;
 import org.jowidgets.impl.mock.mockui.UIMMenuItem;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 
-public class ActionMenuItemImpl extends AbstractActionWidget implements IActionMenuItemSpi {
+public class ActionMenuItemImpl extends MenuItemImpl implements IActionMenuItemSpi {
+
+	private final ActionObservable actionObservable;
 
 	public ActionMenuItemImpl() {
-		super(new UIMMenuItem());
+		this(new UIMMenuItem());
+	}
+
+	public ActionMenuItemImpl(final UIMMenuItem menuItem) {
+		super(menuItem);
+
+		this.actionObservable = new ActionObservable();
 
 		getUiReference().addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
-				fireActionPerformed();
+				actionObservable.fireActionPerformed();
 			}
 		});
 	}
 
 	@Override
-	public UIMMenuItem getUiReference() {
-		return (UIMMenuItem) super.getUiReference();
+	public void addActionListener(final IActionListener actionListener) {
+		actionObservable.addActionListener(actionListener);
 	}
 
 	@Override
-	public void setIcon(final IImageConstant icon) {
-		getUiReference().setIcon(icon);
-	}
-
-	@Override
-	public void setText(final String text) {
-		getUiReference().setText(text);
-	}
-
-	@Override
-	public void setToolTipText(final String text) {
-		getUiReference().setToolTipText(text);
-	}
-
-	@Override
-	public void setAccelerator(final Accelerator accelerator) {
-		getUiReference().setAccelerator(accelerator);
-	}
-
-	@Override
-	public void setMnemonic(final char mnemonic) {
-		getUiReference().setMnemonic(mnemonic);
+	public void removeActionListener(final IActionListener actionListener) {
+		actionObservable.removeActionListener(actionListener);
 	}
 
 }

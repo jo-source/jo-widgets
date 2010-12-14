@@ -26,10 +26,10 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.widgets;
+package org.jowidgets.api.widgets;
 
-import org.jowidgets.common.widgets.ISelectableMenuItemCommon;
+import org.jowidgets.common.widgets.IItemCommon;
 
-public interface ISelectableMenuItemSpi extends IMenuItemSpi, ISelectableMenuItemCommon {
+public interface IItem extends IWidget, IItemCommon {
 
 }

@@ -26,10 +26,47 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.widgets;
+package org.jowidgets.impl.widgets.common.wrapper;
 
+import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.common.widgets.ISelectableMenuItemCommon;
+import org.jowidgets.common.widgets.controler.IItemStateListener;
+import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 
-public interface ISelectableMenuItemSpi extends IMenuItemSpi, ISelectableMenuItemCommon {
+public class SelectableMenuItemSpiWrapper extends MenuItemSpiWrapper implements ISelectableMenuItemCommon {
+
+	public SelectableMenuItemSpiWrapper(final ISelectableMenuItemSpi component) {
+		super(component);
+	}
+
+	@Override
+	public ISelectableMenuItemSpi getWidget() {
+		return (ISelectableMenuItemSpi) super.getWidget();
+	}
+
+	@Override
+	public boolean isSelected() {
+		return getWidget().isSelected();
+	}
+
+	@Override
+	public void setSelected(final boolean selected) {
+		getWidget().setSelected(selected);
+	}
+
+	@Override
+	public void addItemListener(final IItemStateListener listener) {
+		getWidget().addItemListener(listener);
+	}
+
+	@Override
+	public void removeItemListener(final IItemStateListener listener) {
+		getWidget().addItemListener(listener);
+	}
+
+	@Override
+	public void setAccelerator(final Accelerator accelerator) {
+		getWidget().setAccelerator(accelerator);
+	}
 
 }

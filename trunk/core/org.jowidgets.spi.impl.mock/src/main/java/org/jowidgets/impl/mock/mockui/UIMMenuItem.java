@@ -33,6 +33,7 @@ import org.jowidgets.common.types.Accelerator;
 
 public class UIMMenuItem extends UIMComponent {
 
+	private boolean selected;
 	private IImageConstant icon;
 	private String text;
 	private Accelerator accelerator;
@@ -68,6 +69,14 @@ public class UIMMenuItem extends UIMComponent {
 
 	public char getMnemonic() {
 		return mnemonic;
+	}
+
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public void setSelected(final boolean selected) {
+		this.selected = selected;
 	}
 
 }

@@ -59,9 +59,4 @@ public class ActionMenuItemSpiWrapper extends MenuItemSpiWrapper implements IAct
 		getWidget().setAccelerator(accelerator);
 	}
 
-	@Override
-	public void setMnemonic(final char mnemonic) {
-		getWidget().setMnemonic(mnemonic);
-	}
-
 }

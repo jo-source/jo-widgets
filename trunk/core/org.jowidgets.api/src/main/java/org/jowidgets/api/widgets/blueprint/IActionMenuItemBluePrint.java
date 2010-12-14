@@ -27,9 +27,9 @@
  */
 package org.jowidgets.api.widgets.blueprint;
 
-import org.jowidgets.api.widgets.blueprint.builder.IActionItemSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.builder.IAccelerateableMenuItemSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.IActionMenuItemDescriptor;
 
-public interface IActionMenuItemBluePrint extends IActionItemSetupBuilder<IActionMenuItemBluePrint>, IActionMenuItemDescriptor {
+public interface IActionMenuItemBluePrint extends IAccelerateableMenuItemSetupBuilder<IActionMenuItemBluePrint>, IActionMenuItemDescriptor {
 
 }

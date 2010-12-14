@@ -30,7 +30,7 @@ package org.jowidgets.api.widgets;
 
 import org.jowidgets.common.widgets.IMenuItemCommon;
 
-public interface IMenuItem extends IWidget, IMenuItemCommon {
+public interface IMenuItem extends IItem, IMenuItemCommon {
 
 	@Override
 	IMenu getParent();

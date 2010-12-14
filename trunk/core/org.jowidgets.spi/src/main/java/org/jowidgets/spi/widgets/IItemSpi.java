@@ -28,8 +28,8 @@
 
 package org.jowidgets.spi.widgets;
 
-import org.jowidgets.common.widgets.ISelectableMenuItemCommon;
+import org.jowidgets.common.widgets.IItemCommon;
 
-public interface ISelectableMenuItemSpi extends IMenuItemSpi, ISelectableMenuItemCommon {
+public interface IItemSpi extends IWidgetSpi, IItemCommon {
 
 }

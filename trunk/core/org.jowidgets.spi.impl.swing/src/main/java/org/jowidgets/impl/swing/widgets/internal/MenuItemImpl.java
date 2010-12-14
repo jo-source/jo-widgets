@@ -25,12 +25,56 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.descriptor;
+package org.jowidgets.impl.swing.widgets.internal;
 
-import org.jowidgets.api.widgets.IActionMenuItem;
-import org.jowidgets.api.widgets.descriptor.setup.IAccelerateableMenuItemSetup;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
 
-public interface IActionMenuItemDescriptor extends IAccelerateableMenuItemSetup, IWidgetDescriptor<IActionMenuItem> {
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Accelerator;
+import org.jowidgets.impl.swing.image.SwingImageRegistry;
+import org.jowidgets.impl.swing.util.ModifierConvert;
+import org.jowidgets.impl.swing.widgets.SwingWidget;
+import org.jowidgets.spi.widgets.IMenuItemSpi;
+
+public class MenuItemImpl extends SwingWidget implements IMenuItemSpi {
+
+	public MenuItemImpl() {
+		this(new JMenuItem());
+	}
+
+	public MenuItemImpl(final JMenuItem menuItem) {
+		super(menuItem);
+	}
+
+	@Override
+	public JMenuItem getUiReference() {
+		return (JMenuItem) super.getUiReference();
+	}
+
+	@Override
+	public void setIcon(final IImageConstant icon) {
+		getUiReference().setIcon(SwingImageRegistry.getInstance().getImageIcon(icon));
+	}
+
+	@Override
+	public void setText(final String text) {
+		getUiReference().setText(text);
+	}
+
+	@Override
+	public void setToolTipText(final String text) {
+		getUiReference().setToolTipText(text);
+	}
+
+	@Override
+	public void setMnemonic(final char mnemonic) {
+		getUiReference().setMnemonic(mnemonic);
+	}
+
+	public void setAccelerator(final Accelerator accelerator) {
+		final int modfifier = ModifierConvert.convert(accelerator.getModifier());
+		getUiReference().setAccelerator(KeyStroke.getKeyStroke(accelerator.getKey(), modfifier));
+	}
 
 }
