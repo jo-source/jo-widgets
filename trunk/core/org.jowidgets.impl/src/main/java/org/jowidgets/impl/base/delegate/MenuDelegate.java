@@ -33,6 +33,7 @@ import java.util.List;
 
 import org.jowidgets.api.widgets.IActionMenuItem;
 import org.jowidgets.api.widgets.IComponent;
+import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.IMenuItem;
 import org.jowidgets.api.widgets.descriptor.IActionMenuItemDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.IActionItemSetup;
@@ -45,13 +46,16 @@ import org.jowidgets.util.Assert;
 public class MenuDelegate {
 
 	private final IMenuSpi menuSpi;
+	private final IMenu menu;
 	private final List<IMenuItem> children;
 	private final IComponent parent;
 
-	public MenuDelegate(final IMenuSpi menuSpi, final IComponent parent) {
+	public MenuDelegate(final IMenu menu, final IMenuSpi menuSpi, final IComponent parent) {
+		Assert.paramNotNull(menu, "menu");
 		Assert.paramNotNull(menuSpi, "menuSpi");
 		Assert.paramNotNull(parent, "parent");
 		this.children = new LinkedList<IMenuItem>();
+		this.menu = menu;
 		this.menuSpi = menuSpi;
 		this.parent = parent;
 	}
@@ -80,7 +84,7 @@ public class MenuDelegate {
 
 		if (IActionMenuItemDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
 			final IActionMenuItemSpi actionMenuItemSpi = menuSpi.addActionItem(index);
-			final IActionMenuItem actionMenuItem = new ActionMenuItemImpl(actionMenuItemSpi, (IActionItemSetup) descriptor);
+			final IActionMenuItem actionMenuItem = new ActionMenuItemImpl(menu, actionMenuItemSpi, (IActionItemSetup) descriptor);
 			result = (WIDGET_TYPE) actionMenuItem;
 		}
 

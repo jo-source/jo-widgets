@@ -44,7 +44,8 @@ public class PopupMenuImpl extends PopupMenuSpiWrapper implements IPopupMenu {
 
 	public PopupMenuImpl(final IPopupMenuSpi popupMenuSpi, final IComponent parent) {
 		super(popupMenuSpi);
-		this.menuDelegate = new MenuDelegate(popupMenuSpi, parent);
+
+		this.menuDelegate = new MenuDelegate(this, popupMenuSpi, parent);
 	}
 
 	@Override

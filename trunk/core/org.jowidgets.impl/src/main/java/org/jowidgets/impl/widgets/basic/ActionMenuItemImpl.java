@@ -36,8 +36,12 @@ import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 
 public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IActionMenuItem {
 
-	public ActionMenuItemImpl(final IActionMenuItemSpi actionMenuItemSpi, final IActionItemSetup setup) {
+	private final IMenu parent;
+
+	public ActionMenuItemImpl(final IMenu parent, final IActionMenuItemSpi actionMenuItemSpi, final IActionItemSetup setup) {
 		super(actionMenuItemSpi);
+
+		this.parent = parent;
 
 		setText(setup.getText());
 		setToolTipText(setup.getToolTipText());
@@ -54,8 +58,7 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 
 	@Override
 	public IMenu getParent() {
-		//TODO
-		return null;
+		return parent;
 	}
 
 }
