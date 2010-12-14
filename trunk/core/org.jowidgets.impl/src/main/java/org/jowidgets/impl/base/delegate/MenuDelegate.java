@@ -44,6 +44,7 @@ import org.jowidgets.api.widgets.descriptor.setup.ISelectableItemSetup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.impl.widgets.basic.ActionMenuItemImpl;
 import org.jowidgets.impl.widgets.basic.SelectableMenuItemImpl;
+import org.jowidgets.impl.widgets.basic.SeparatorMenuItemImpl;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 import org.jowidgets.spi.widgets.IMenuSpi;
 import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
@@ -64,6 +65,18 @@ public class MenuDelegate {
 		this.menu = menu;
 		this.menuSpi = menuSpi;
 		this.parent = parent;
+	}
+
+	public IMenuItem addSeparator() {
+		final IMenuItem result = new SeparatorMenuItemImpl(menu, menuSpi.addSeparator(null));
+		children.add(result);
+		return result;
+	}
+
+	public IMenuItem addSeparator(final int index) {
+		final IMenuItem result = new SeparatorMenuItemImpl(menu, menuSpi.addSeparator(index));
+		children.add(index, result);
+		return result;
 	}
 
 	public <WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addMenuItem(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
@@ -90,7 +103,10 @@ public class MenuDelegate {
 
 		if (IActionMenuItemDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
 			final IActionMenuItemSpi actionMenuItemSpi = menuSpi.addActionItem(index);
-			final IActionMenuItem actionMenuItem = new ActionMenuItemImpl(menu, actionMenuItemSpi, (IAccelerateableMenuItemSetup) descriptor);
+			final IActionMenuItem actionMenuItem = new ActionMenuItemImpl(
+				menu,
+				actionMenuItemSpi,
+				(IAccelerateableMenuItemSetup) descriptor);
 			result = (WIDGET_TYPE) actionMenuItem;
 		}
 		else if (ICheckedMenuItemDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
@@ -110,14 +126,18 @@ public class MenuDelegate {
 			result = (WIDGET_TYPE) actionMenuItem;
 		}
 
-		if (index != null) {
-			children.add(index.intValue(), result);
-		}
-		else {
-			children.add(result);
-		}
+		addToChildren(index, result);
 
 		return result;
+	}
+
+	private void addToChildren(final Integer index, final IMenuItem menuItem) {
+		if (index != null) {
+			children.add(index.intValue(), menuItem);
+		}
+		else {
+			children.add(menuItem);
+		}
 	}
 
 	public List<IMenuItem> getChildren() {

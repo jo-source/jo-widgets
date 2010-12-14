@@ -42,6 +42,7 @@ import org.jowidgets.impl.swt.widgets.internal.ActionMenuItemImpl;
 import org.jowidgets.impl.swt.widgets.internal.MenuItemImpl;
 import org.jowidgets.impl.swt.widgets.internal.SelectableMenuItemImpl;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
+import org.jowidgets.spi.widgets.IMenuItemSpi;
 import org.jowidgets.spi.widgets.IMenuSpi;
 import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 
@@ -131,6 +132,18 @@ public class SwtMenu implements IMenuSpi {
 			menuItem = new MenuItem(menu, SWT.RADIO);
 		}
 		return createSelectableItem(menuItem);
+	}
+
+	@Override
+	public IMenuItemSpi addSeparator(final Integer index) {
+		MenuItem menuItem = null;
+		if (index != null) {
+			menuItem = new MenuItem(menu, SWT.SEPARATOR, index.intValue());
+		}
+		else {
+			menuItem = new MenuItem(menu, SWT.SEPARATOR);
+		}
+		return new MenuItemImpl(menuItem);
 	}
 
 	private ActionMenuItemImpl createActionItem(final MenuItem menuItem) {

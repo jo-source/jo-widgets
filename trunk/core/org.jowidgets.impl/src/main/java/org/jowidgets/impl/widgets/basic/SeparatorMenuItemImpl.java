@@ -26,20 +26,26 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.widgets;
+package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.common.widgets.IMenuCommon;
+import org.jowidgets.api.widgets.IMenu;
+import org.jowidgets.api.widgets.IMenuItem;
+import org.jowidgets.impl.widgets.common.wrapper.MenuItemSpiWrapper;
+import org.jowidgets.spi.widgets.IMenuItemSpi;
 
-public interface IMenuSpi extends IWidgetSpi, IMenuCommon {
+public class SeparatorMenuItemImpl extends MenuItemSpiWrapper implements IMenuItem {
 
-	void remove(int index);
+	private final IMenu parent;
 
-	IActionMenuItemSpi addActionItem(Integer index);
+	public SeparatorMenuItemImpl(final IMenu parent, final IMenuItemSpi menuItemSpi) {
+		super(menuItemSpi);
 
-	ISelectableMenuItemSpi addCheckedItem(Integer index);
+		this.parent = parent;
+	}
 
-	ISelectableMenuItemSpi addRadioItem(Integer index);
-
-	IMenuItemSpi addSeparator(Integer index);
+	@Override
+	public IMenu getParent() {
+		return parent;
+	}
 
 }

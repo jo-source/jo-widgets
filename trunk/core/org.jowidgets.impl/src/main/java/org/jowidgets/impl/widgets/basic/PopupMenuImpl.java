@@ -59,13 +59,18 @@ public class PopupMenuImpl extends PopupMenuSpiWrapper implements IPopupMenu {
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addMenuItem(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
-		return menuDelegate.addMenuItem(descriptor);
+	public IMenuItem addSeparator() {
+		return menuDelegate.addSeparator();
 	}
 
 	@Override
-	public IComponent getParent() {
-		return menuDelegate.getParent();
+	public IMenuItem addSeparator(final int index) {
+		return menuDelegate.addSeparator(index);
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addMenuItem(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+		return menuDelegate.addMenuItem(descriptor);
 	}
 
 	@Override
@@ -75,4 +80,10 @@ public class PopupMenuImpl extends PopupMenuSpiWrapper implements IPopupMenu {
 
 		return menuDelegate.addMenuItem(index, descriptor);
 	}
+
+	@Override
+	public IComponent getParent() {
+		return menuDelegate.getParent();
+	}
+
 }

@@ -68,14 +68,19 @@ public class MenuDemoFrame extends JoFrame {
 		item3Bp.setIcon(IconsSmall.WARNING).setAccelerator(new Accelerator('I', Modifier.SHIFT)).setMnemonic('e');
 		final IActionMenuItem item3 = popupMenu.addMenuItem(1, item3Bp);
 
+		popupMenu.addSeparator();
+
 		final ICheckedMenuItemBluePrint item4Bp = bpf.checkedMenuItem().setText("item4");
 		final ISelectableMenuItem item4 = popupMenu.addMenuItem(item4Bp);
+
+		popupMenu.addSeparator();
 
 		final IRadioMenuItemBluePrint item5Bp = bpf.radioMenuItem().setText("item5");
 		final ISelectableMenuItem item5 = popupMenu.addMenuItem(item5Bp);
 
 		final IRadioMenuItemBluePrint item6Bp = bpf.radioMenuItem().setText("item6");
 		final ISelectableMenuItem item6 = popupMenu.addMenuItem(item6Bp);
+		item6.setSelected(true);
 
 		final IRadioMenuItemBluePrint item7Bp = bpf.radioMenuItem().setText("item7");
 		final ISelectableMenuItem item7 = popupMenu.addMenuItem(item7Bp);

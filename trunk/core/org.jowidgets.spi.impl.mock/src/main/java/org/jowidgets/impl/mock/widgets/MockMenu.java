@@ -30,11 +30,13 @@ package org.jowidgets.impl.mock.widgets;
 
 import org.jowidgets.impl.mock.mockui.UIMCheckedMenuItem;
 import org.jowidgets.impl.mock.mockui.UIMContainer;
+import org.jowidgets.impl.mock.mockui.UIMMenuItem;
 import org.jowidgets.impl.mock.mockui.UIMRadioMenuItem;
 import org.jowidgets.impl.mock.widgets.internal.ActionMenuItemImpl;
 import org.jowidgets.impl.mock.widgets.internal.MenuItemImpl;
 import org.jowidgets.impl.mock.widgets.internal.SelectableMenuItemImpl;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
+import org.jowidgets.spi.widgets.IMenuItemSpi;
 import org.jowidgets.spi.widgets.IMenuSpi;
 import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 
@@ -75,6 +77,13 @@ public class MockMenu extends MockWidget implements IMenuSpi {
 		return result;
 	}
 
+	@Override
+	public IMenuItemSpi addSeparator(final Integer index) {
+		final MenuItemImpl result = new MenuItemImpl(new UIMMenuItem());
+		addItem(index, result);
+		return result;
+	}
+
 	private void addItem(final Integer index, final MenuItemImpl item) {
 		if (index != null) {
 			getUiReference().add(item.getUiReference(), index.intValue());
@@ -83,4 +92,5 @@ public class MockMenu extends MockWidget implements IMenuSpi {
 			getUiReference().add(item.getUiReference());
 		}
 	}
+
 }
