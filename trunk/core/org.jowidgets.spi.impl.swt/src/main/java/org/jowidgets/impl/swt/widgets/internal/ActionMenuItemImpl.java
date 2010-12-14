@@ -84,10 +84,17 @@ public class ActionMenuItemImpl extends ActionObservable implements IActionMenuI
 
 	@Override
 	public void setAccelerator(final Accelerator accelerator) {
-		final int modfifier = ModifierConvert.convert(accelerator.getModifier());
-		getUiReference().setAccelerator(accelerator.getKey() + modfifier);
+		try {
+			final int modfifier = ModifierConvert.convert(accelerator.getModifier());
+			getUiReference().setAccelerator(accelerator.getKey() + modfifier);
+		}
+		catch (final NoSuchMethodError error) {
+			//TODO RWT does not support accelerators
+			return;
+		}
 		this.acceleratorText = ModifierConvert.acceleratorText(accelerator.getModifier()) + accelerator.getKey();
 		setCombienedText();
+
 	}
 
 	@Override

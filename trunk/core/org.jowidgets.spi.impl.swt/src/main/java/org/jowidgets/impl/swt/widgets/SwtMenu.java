@@ -45,22 +45,30 @@ import org.jowidgets.spi.widgets.IMenuSpi;
 public class SwtMenu implements IMenuSpi {
 
 	private final Menu menu;
-	private final ToolTip toolTip;
+	private ToolTip toolTip;
 
 	private ArmListener lastArmListener;
 
 	public SwtMenu(final Menu menu) {
 		this.menu = menu;
-		this.toolTip = new ToolTip(menu.getShell(), SWT.NONE);
 
-		menu.addMenuListener(new MenuAdapter() {
+		try {
+			this.toolTip = new ToolTip(menu.getShell(), SWT.NONE);
+		}
+		catch (final NoClassDefFoundError error) {
+			//TODO swt has no tooltip, may use a window
+		}
 
-			@Override
-			public void menuHidden(final MenuEvent e) {
-				toolTip.setVisible(false);
-				lastArmListener = null;
-			}
-		});
+		if (toolTip != null) {
+			menu.addMenuListener(new MenuAdapter() {
+
+				@Override
+				public void menuHidden(final MenuEvent e) {
+					toolTip.setVisible(false);
+					lastArmListener = null;
+				}
+			});
+		}
 	}
 
 	@Override
@@ -133,7 +141,9 @@ public class SwtMenu implements IMenuSpi {
 			}
 		};
 
-		menuItem.addArmListener(armListener);
+		if (toolTip != null) {
+			menuItem.addArmListener(armListener);
+		}
 
 		return result;
 	}

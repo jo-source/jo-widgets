@@ -96,12 +96,17 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 		scrolledComposite.setContent(innerComposite);
 		innerComposite.setLayoutData(growingCellConstraints);
 
-		innerComposite.addPaintListener(new PaintListener() {
-			@Override
-			public void paintControl(final PaintEvent e) {
-				scrolledComposite.setMinSize(innerComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-			}
-		});
+		try {
+			innerComposite.addPaintListener(new PaintListener() {
+				@Override
+				public void paintControl(final PaintEvent e) {
+					scrolledComposite.setMinSize(innerComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				}
+			});
+		}
+		catch (final NoSuchMethodError error) {
+			//TODO RWT has no paint listener
+		}
 
 	}
 
