@@ -60,6 +60,18 @@ public class DemoMainComposite {
 			}
 		});
 
+		final IButton menuDemoButton = parentContainer.add(
+				bpF.button("Menu demo", "Shows an frame with menus and popup menus"),
+				"grow, sg bg, wrap");
+		menuDemoButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final IFrame menuDemoFrame = new MenuDemoFrame();
+				menuDemoFrame.setSize(new Dimension(800, 600));
+				menuDemoFrame.setVisible(true);
+			}
+		});
+
 		final IButton splitDemoButton = parentContainer.add(
 				bpF.button("Split demo", "Shows an frame with split composites"),
 				"grow, sg bg, wrap");
