@@ -31,6 +31,7 @@ import java.awt.Component;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JMenuBar;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.widgets.IControlCommon;
@@ -40,6 +41,7 @@ import org.jowidgets.impl.swing.util.ColorConvert;
 import org.jowidgets.impl.swing.widgets.SwingWindow;
 import org.jowidgets.impl.swing.widgets.internal.util.ChildRemover;
 import org.jowidgets.spi.widgets.IFrameSpi;
+import org.jowidgets.spi.widgets.IMenuBarSpi;
 import org.jowidgets.spi.widgets.setup.IFrameSetupSpi;
 
 public class FrameImpl extends SwingWindow implements IFrameSpi {
@@ -78,6 +80,13 @@ public class FrameImpl extends SwingWindow implements IFrameSpi {
 	@Override
 	public void removeAll() {
 		getUiReference().getContentPane().removeAll();
+	}
+
+	@Override
+	public IMenuBarSpi createMenuBar() {
+		final JMenuBar menuBar = new JMenuBar();
+		getUiReference().setJMenuBar(menuBar);
+		return new MenuBarImpl(menuBar);
 	}
 
 }

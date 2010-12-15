@@ -25,18 +25,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.widgets;
+package org.jowidgets.api.widgets.blueprint.builder;
 
-import org.jowidgets.common.widgets.IFrameCommon;
+import org.jowidgets.common.widgets.builder.ISetupBuilder;
 
-public interface IFrameSpi extends IWindowSpi, IContainerSpi, IFrameCommon {
+public interface IMainMenuSetupBuilder<INSTANCE_TYPE extends IMainMenuSetupBuilder<?>> extends ISetupBuilder<INSTANCE_TYPE> {
 
-	/**
-	 * Creates a new menu bar. If the frame already has a menu bar, the old menu bar will
-	 * be removed and exchanged by the new one.
-	 * 
-	 * @return The created menu bar.
-	 */
-	IMenuBarSpi createMenuBar();
+	INSTANCE_TYPE setText(String text);
+
+	INSTANCE_TYPE setMnemonic(Character mnemonic);
 
 }

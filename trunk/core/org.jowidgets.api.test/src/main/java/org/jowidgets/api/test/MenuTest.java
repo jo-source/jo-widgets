@@ -33,7 +33,9 @@ import junit.framework.JUnit4TestAdapter;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IActionMenuItem;
 import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.widgets.IMainMenu;
 import org.jowidgets.api.widgets.IMenu;
+import org.jowidgets.api.widgets.IMenuBar;
 import org.jowidgets.api.widgets.IMenuItem;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ISelectableMenuItem;
@@ -59,14 +61,40 @@ public class MenuTest {
 				final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
 
 				frame.setVisible(true);
-				testMenus(frame);
+
+				//create menu bar
+				final IMenuBar menuBar = frame.createMenuBar();
+
+				//create first menu
+				final IMainMenu menu1 = menuBar.addMenu("menu1");
+				Assert.assertTrue(menuBar.getMenus().size() == 1);
+				Assert.assertTrue(menuBar.getMenus().contains(menu1));
+				testMenus(menu1);
+
+				//create second menu
+				final IMainMenu menu2 = menuBar.addMenu("menu2");
+				Assert.assertTrue(menuBar.getMenus().size() == 2);
+				Assert.assertTrue(menuBar.getMenus().contains(menu2));
+				testMenus(menu2);
+
+				//create third menu at second position (index == 1)
+				final IMainMenu menu3 = menuBar.addMenu(1, "menu3");
+				Assert.assertTrue(menuBar.getMenus().size() == 3);
+				Assert.assertTrue(menuBar.getMenus().contains(menu3));
+				Assert.assertTrue(menuBar.getMenus().indexOf(menu3) == 1);
+				testMenus(menu2);
+
+				final IPopupMenu popupMenu = frame.createPopupMenu();
+				popupMenu.show(new Position(0, 0));
+				testMenus(popupMenu);
+
 				frame.dispose();
 			}
 		});
 	}
 
-	public void testMenus(final IFrame frame) {
-		final IPopupMenu popupMenu = frame.createPopupMenu();
+	public void testMenus(final IMenu popupMenu) {
+
 		Assert.assertNotNull(popupMenu);
 
 		//add a menu item
@@ -105,9 +133,6 @@ public class MenuTest {
 		//add at position
 		final IActionMenuItem itemAtPos3 = testMenuItem(popupMenu, popupMenu.addMenuItem(3, BPF.menuItem("test1")));
 		Assert.assertTrue(itemAtPos3 == popupMenu.getChildren().get(3));
-
-		//show the menu
-		popupMenu.show(new Position(0, 0));
 
 		//count the items
 		Assert.assertTrue(popupMenu.getChildren().size() == 9);

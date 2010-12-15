@@ -28,9 +28,11 @@
 package org.jowidgets.impl.mock.widgets.internal;
 
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.impl.mock.mockui.UIMMenuItem;
 import org.jowidgets.impl.mock.mockui.UIMWindow;
 import org.jowidgets.impl.mock.widgets.MockWindow;
 import org.jowidgets.spi.widgets.IFrameSpi;
+import org.jowidgets.spi.widgets.IMenuBarSpi;
 
 public class FrameWrapper extends MockWindow implements IFrameSpi {
 
@@ -41,6 +43,11 @@ public class FrameWrapper extends MockWindow implements IFrameSpi {
 	@Override
 	public UIMWindow getUiReference() {
 		return super.getUiReference();
+	}
+
+	@Override
+	public IMenuBarSpi createMenuBar() {
+		return new MenuBarImpl(new UIMMenuItem());
 	}
 
 }

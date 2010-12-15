@@ -39,6 +39,7 @@ import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.IIconBluePrint;
+import org.jowidgets.api.widgets.blueprint.IMainMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.IRadioMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISeparatorBluePrint;
@@ -60,6 +61,7 @@ import org.jowidgets.api.widgets.descriptor.ICompositeDescriptor;
 import org.jowidgets.api.widgets.descriptor.IDialogDescriptor;
 import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
 import org.jowidgets.api.widgets.descriptor.IIconDescriptor;
+import org.jowidgets.api.widgets.descriptor.IMainMenuDescriptor;
 import org.jowidgets.api.widgets.descriptor.IRadioMenuItemDescriptor;
 import org.jowidgets.api.widgets.descriptor.IScrollCompositeDescriptor;
 import org.jowidgets.api.widgets.descriptor.ISeparatorDescriptor;
@@ -175,6 +177,11 @@ public class BasicSimpleBluePrintFactory extends AbstractBluePrintFactory implem
 	@Override
 	public ISubMenuBluePrint subMenu() {
 		return createProxy(ISubMenuBluePrint.class, ISubMenuDescriptor.class);
+	}
+
+	@Override
+	public IMainMenuBluePrint mainMenu() {
+		return createProxy(IMainMenuBluePrint.class, IMainMenuDescriptor.class);
 	}
 
 }

@@ -32,4 +32,12 @@ import org.jowidgets.common.widgets.IFrameCommon;
 
 public interface IFrame extends IWindow, IContainer, IFrameCommon {
 
+	/**
+	 * Creates a new menu bar. If the frame already has a menu bar, the old menu bar will
+	 * be removed and exchanged by the new one.
+	 * 
+	 * @return The created menu bar.
+	 */
+	IMenuBar createMenuBar();
+
 }

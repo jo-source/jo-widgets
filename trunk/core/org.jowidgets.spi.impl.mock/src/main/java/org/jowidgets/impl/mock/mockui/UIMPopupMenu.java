@@ -28,8 +28,7 @@
 
 package org.jowidgets.impl.mock.mockui;
 
-
-public class UIMPopupMenu extends UIMContainer {
+public class UIMPopupMenu extends UIMMenuItem {
 
 	public void show(final UIMComponent parent, final int x, final int y) {
 

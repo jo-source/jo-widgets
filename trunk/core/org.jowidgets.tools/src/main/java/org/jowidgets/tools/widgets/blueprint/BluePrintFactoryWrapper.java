@@ -45,6 +45,7 @@ import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
+import org.jowidgets.api.widgets.blueprint.IMainMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IProgressBarBluePrint;
 import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
@@ -480,6 +481,16 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	@Override
 	public ISubMenuBluePrint subMenu() {
 		return bluePrintFactory.subMenu();
+	}
+
+	@Override
+	public IMainMenuBluePrint mainMenu() {
+		return bluePrintFactory.mainMenu();
+	}
+
+	@Override
+	public IMainMenuBluePrint mainMenu(final String text) {
+		return mainMenu(text);
 	}
 
 }

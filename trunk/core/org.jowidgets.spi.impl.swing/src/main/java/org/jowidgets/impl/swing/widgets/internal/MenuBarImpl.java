@@ -26,54 +26,56 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.powo;
+package org.jowidgets.impl.swing.widgets.internal;
 
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IFrame;
-import org.jowidgets.api.widgets.IMenuBar;
-import org.jowidgets.api.widgets.IWindow;
-import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
-import org.jowidgets.api.widgets.descriptor.IDialogDescriptor;
-import org.jowidgets.common.image.IImageConstant;
+import javax.swing.JMenuBar;
 
-public class JoDialog extends Window<IFrame, IDialogBluePrint> implements IFrame {
+import org.jowidgets.impl.swing.widgets.SwingWidget;
+import org.jowidgets.spi.widgets.IMainMenuSpi;
+import org.jowidgets.spi.widgets.IMenuBarSpi;
 
-	public JoDialog(final String title) {
-		super(Toolkit.getBluePrintFactory().dialog(title));
-	}
+public class MenuBarImpl implements IMenuBarSpi {
 
-	public JoDialog(final IWindow parent) {
-		this(parent, Toolkit.getBluePrintFactory().dialog());
-	}
+	private final JMenuBar menuBar;
 
-	public JoDialog(final IWindow parent, final String title) {
-		this(parent, Toolkit.getBluePrintFactory().dialog(title));
-	}
-
-	public JoDialog(final IWindow parent, final IDialogDescriptor setup) {
-		super(parent, Toolkit.getBluePrintFactory().dialog().setSetup(setup));
-	}
-
-	public JoDialog(final IDialogDescriptor setup) {
-		super(Toolkit.getBluePrintFactory().dialog().setSetup(setup));
-	}
-
-	public static IDialogBluePrint bluePrint() {
-		return Toolkit.getBluePrintFactory().dialog();
-	}
-
-	public static IDialogBluePrint bluePrint(final String title) {
-		return bluePrint().setTitle(title);
-	}
-
-	public static IDialogBluePrint bluePrint(final String title, final IImageConstant icon) {
-		return bluePrint(title).setIcon(icon);
+	public MenuBarImpl(final JMenuBar menuBar) {
+		this.menuBar = menuBar;
 	}
 
 	@Override
-	public IMenuBar createMenuBar() {
-		//TODO use JoMenuBar later
-		checkInitialized();
-		return getWidget().createMenuBar();
+	public JMenuBar getUiReference() {
+		return menuBar;
 	}
+
+	@Override
+	public void setEnabled(final boolean enabled) {
+		menuBar.setEnabled(enabled);
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return menuBar.isEnabled();
+	}
+
+	@Override
+	public void remove(final int index) {
+		menuBar.remove(index);
+	}
+
+	@Override
+	public IMainMenuSpi addMenu(final Integer index) {
+		final MainMenuImpl result = new MainMenuImpl();
+		addItem(index, result);
+		return result;
+	}
+
+	private void addItem(final Integer index, final SwingWidget item) {
+		if (index != null) {
+			getUiReference().add(item.getUiReference(), index.intValue());
+		}
+		else {
+			getUiReference().add(item.getUiReference());
+		}
+	}
+
 }

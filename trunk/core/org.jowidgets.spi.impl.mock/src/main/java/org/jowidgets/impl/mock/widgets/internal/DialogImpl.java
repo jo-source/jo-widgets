@@ -30,9 +30,11 @@ package org.jowidgets.impl.mock.widgets.internal;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.mock.image.MockImageRegistry;
 import org.jowidgets.impl.mock.mockui.UIMDialog;
+import org.jowidgets.impl.mock.mockui.UIMMenuItem;
 import org.jowidgets.impl.mock.mockui.UIMWindow;
 import org.jowidgets.impl.mock.widgets.MockWindow;
 import org.jowidgets.spi.widgets.IFrameSpi;
+import org.jowidgets.spi.widgets.IMenuBarSpi;
 import org.jowidgets.spi.widgets.setup.IDialogSetupSpi;
 
 public class DialogImpl extends MockWindow implements IFrameSpi {
@@ -60,6 +62,11 @@ public class DialogImpl extends MockWindow implements IFrameSpi {
 	@Override
 	public void setVisible(final boolean visible) {
 		getUiReference().setVisible(visible);
+	}
+
+	@Override
+	public IMenuBarSpi createMenuBar() {
+		return new MenuBarImpl(new UIMMenuItem());
 	}
 
 }

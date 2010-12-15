@@ -26,54 +26,34 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.powo;
+package org.jowidgets.impl.swt.widgets.internal;
 
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IFrame;
-import org.jowidgets.api.widgets.IMenuBar;
-import org.jowidgets.api.widgets.IWindow;
-import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
-import org.jowidgets.api.widgets.descriptor.IDialogDescriptor;
-import org.jowidgets.common.image.IImageConstant;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
+import org.jowidgets.impl.swt.widgets.SwtMenu;
+import org.jowidgets.spi.widgets.IMainMenuSpi;
+import org.jowidgets.spi.widgets.IMenuBarSpi;
 
-public class JoDialog extends Window<IFrame, IDialogBluePrint> implements IFrame {
+public class MenuBarImpl extends SwtMenu implements IMenuBarSpi {
 
-	public JoDialog(final String title) {
-		super(Toolkit.getBluePrintFactory().dialog(title));
-	}
-
-	public JoDialog(final IWindow parent) {
-		this(parent, Toolkit.getBluePrintFactory().dialog());
-	}
-
-	public JoDialog(final IWindow parent, final String title) {
-		this(parent, Toolkit.getBluePrintFactory().dialog(title));
-	}
-
-	public JoDialog(final IWindow parent, final IDialogDescriptor setup) {
-		super(parent, Toolkit.getBluePrintFactory().dialog().setSetup(setup));
-	}
-
-	public JoDialog(final IDialogDescriptor setup) {
-		super(Toolkit.getBluePrintFactory().dialog().setSetup(setup));
-	}
-
-	public static IDialogBluePrint bluePrint() {
-		return Toolkit.getBluePrintFactory().dialog();
-	}
-
-	public static IDialogBluePrint bluePrint(final String title) {
-		return bluePrint().setTitle(title);
-	}
-
-	public static IDialogBluePrint bluePrint(final String title, final IImageConstant icon) {
-		return bluePrint(title).setIcon(icon);
+	public MenuBarImpl(final Menu menu) {
+		super(menu);
 	}
 
 	@Override
-	public IMenuBar createMenuBar() {
-		//TODO use JoMenuBar later
-		checkInitialized();
-		return getWidget().createMenuBar();
+	public IMainMenuSpi addMenu(final Integer index) {
+		MenuItem menuItem = null;
+		if (index != null) {
+			menuItem = new MenuItem(getUiReference(), SWT.CASCADE, index.intValue());
+		}
+		else {
+			menuItem = new MenuItem(getUiReference(), SWT.CASCADE);
+		}
+
+		final Menu menu = new Menu(getUiReference().getShell(), SWT.DROP_DOWN);
+		menuItem.setMenu(menu);
+		return new MainMenuImpl(menuItem, menu);
 	}
+
 }

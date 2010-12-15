@@ -38,6 +38,7 @@ import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.IIconBluePrint;
+import org.jowidgets.api.widgets.blueprint.IMainMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.IRadioMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
@@ -223,6 +224,11 @@ public class BasicBluePrintFactory extends BasicSimpleBluePrintFactory implement
 	@Override
 	public ISubMenuBluePrint subMenu(final String text) {
 		return subMenu().setText(text);
+	}
+
+	@Override
+	public IMainMenuBluePrint mainMenu(final String text) {
+		return mainMenu().setText(text);
 	}
 
 }

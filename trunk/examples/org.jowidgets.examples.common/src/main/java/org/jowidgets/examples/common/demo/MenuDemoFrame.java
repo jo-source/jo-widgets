@@ -31,6 +31,8 @@ package org.jowidgets.examples.common.demo;
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IActionMenuItem;
+import org.jowidgets.api.widgets.IMenu;
+import org.jowidgets.api.widgets.IMenuBar;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ISelectableMenuItem;
 import org.jowidgets.api.widgets.ISubMenu;
@@ -48,57 +50,72 @@ import org.jowidgets.tools.powo.JoFrame;
 
 public class MenuDemoFrame extends JoFrame {
 
-	private static final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
 	public MenuDemoFrame() {
 		super(bluePrint("Menu demo").autoPackOff());
 
+		final IMenuBar menuBar = createMenuBar();
+		final IMenu menu1 = menuBar.addMenu("menu1", 'n');
+		addMenus(menu1);
+
 		final IPopupMenu popupMenu = createPopupMenu();
+		addMenus(popupMenu);
+		addPopupDetectionListener(new IPopupDetectionListener() {
 
-		final ISubMenu subMenu = popupMenu.addMenuItem(bpf.subMenu("sub menu 1").setMnemonic('e'));
-		subMenu.addMenuItem(bpf.menuItem("sub item1"));
-		subMenu.addMenuItem(bpf.menuItem("sub item2"));
+			@Override
+			public void popupDetected(final Position position) {
+				popupMenu.show(position);
+			}
+		});
 
-		final ISubMenu subMenu2 = subMenu.addMenuItem(bpf.subMenu("sub menu 2"));
-		subMenu2.addMenuItem(bpf.menuItem("sub item1"));
-		subMenu2.addMenuItem(bpf.menuItem("sub item2"));
-		subMenu2.addMenuItem(bpf.menuItem("sub item3"));
-		subMenu2.addMenuItem(bpf.menuItem("sub item4"));
+	}
 
-		subMenu.addMenuItem(bpf.menuItem("sub item3"));
+	private void addMenus(final IMenu popupMenu) {
+		final ISubMenu subMenu = popupMenu.addMenuItem(BPF.subMenu("sub menu 1").setMnemonic('e'));
+		subMenu.addMenuItem(BPF.menuItem("sub item1"));
+		subMenu.addMenuItem(BPF.menuItem("sub item2"));
+
+		final ISubMenu subMenu2 = subMenu.addMenuItem(BPF.subMenu("sub menu 2"));
+		subMenu2.addMenuItem(BPF.menuItem("sub item1"));
+		subMenu2.addMenuItem(BPF.menuItem("sub item2"));
+		subMenu2.addMenuItem(BPF.menuItem("sub item3"));
+		subMenu2.addMenuItem(BPF.menuItem("sub item4"));
+
+		subMenu.addMenuItem(BPF.menuItem("sub item3"));
 		subMenu.addSeparator();
-		subMenu.addMenuItem(bpf.menuItem("sub item4"));
-		subMenu.addMenuItem(bpf.menuItem("sub item5"));
+		subMenu.addMenuItem(BPF.menuItem("sub item4"));
+		subMenu.addMenuItem(BPF.menuItem("sub item5"));
 
-		final IActionMenuItemBluePrint item1Bp = bpf.menuItem().setText("Item1").setToolTipText("This is item 1");
+		final IActionMenuItemBluePrint item1Bp = BPF.menuItem().setText("Item1").setToolTipText("This is item 1");
 		item1Bp.setIcon(IconsSmall.INFO).setAccelerator(new Accelerator('T', Modifier.CTRL)).setMnemonic('t');
 		final IActionMenuItem item1 = popupMenu.addMenuItem(item1Bp);
 
-		final IActionMenuItemBluePrint item2Bp = bpf.menuItem().setText("The Second Item");
+		final IActionMenuItemBluePrint item2Bp = BPF.menuItem().setText("The Second Item");
 		item2Bp.setToolTipText("This is the second item");
 		item2Bp.setIcon(IconsSmall.WARNING).setAccelerator(new Accelerator('H', Modifier.ALT)).setMnemonic('m');
 		final IActionMenuItem item2 = popupMenu.addMenuItem(item2Bp);
 
-		final IActionMenuItemBluePrint item3Bp = bpf.menuItem().setText("The Third Item");
+		final IActionMenuItemBluePrint item3Bp = BPF.menuItem().setText("The Third Item");
 		item3Bp.setToolTipText("This is the third item");
 		item3Bp.setIcon(IconsSmall.WARNING).setAccelerator(new Accelerator('I', Modifier.SHIFT)).setMnemonic('e');
 		final IActionMenuItem item3 = popupMenu.addMenuItem(1, item3Bp);
 
 		popupMenu.addSeparator();
 
-		final ICheckedMenuItemBluePrint item4Bp = bpf.checkedMenuItem().setText("item4");
+		final ICheckedMenuItemBluePrint item4Bp = BPF.checkedMenuItem().setText("item4");
 		final ISelectableMenuItem item4 = popupMenu.addMenuItem(item4Bp);
 
 		popupMenu.addSeparator();
 
-		final IRadioMenuItemBluePrint item5Bp = bpf.radioMenuItem().setText("item5");
+		final IRadioMenuItemBluePrint item5Bp = BPF.radioMenuItem().setText("item5");
 		final ISelectableMenuItem item5 = popupMenu.addMenuItem(item5Bp);
 
-		final IRadioMenuItemBluePrint item6Bp = bpf.radioMenuItem().setText("item6");
+		final IRadioMenuItemBluePrint item6Bp = BPF.radioMenuItem().setText("item6");
 		final ISelectableMenuItem item6 = popupMenu.addMenuItem(item6Bp);
 		item6.setSelected(true);
 
-		final IRadioMenuItemBluePrint item7Bp = bpf.radioMenuItem().setText("item7");
+		final IRadioMenuItemBluePrint item7Bp = BPF.radioMenuItem().setText("item7");
 		final ISelectableMenuItem item7 = popupMenu.addMenuItem(item7Bp);
 
 		item1.addActionListener(new IActionListener() {
@@ -150,12 +167,5 @@ public class MenuDemoFrame extends JoFrame {
 			}
 		});
 
-		addPopupDetectionListener(new IPopupDetectionListener() {
-
-			@Override
-			public void popupDetected(final Position position) {
-				popupMenu.show(position);
-			}
-		});
 	}
 }

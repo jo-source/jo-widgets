@@ -29,9 +29,14 @@ package org.jowidgets.impl.swing.widgets.internal;
 
 import java.awt.Window;
 
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swing.widgets.SwingWindow;
 import org.jowidgets.spi.widgets.IFrameSpi;
+import org.jowidgets.spi.widgets.IMenuBarSpi;
 
 public class FrameWrapper extends SwingWindow implements IFrameSpi {
 
@@ -44,4 +49,19 @@ public class FrameWrapper extends SwingWindow implements IFrameSpi {
 		return super.getUiReference();
 	}
 
+	@Override
+	public IMenuBarSpi createMenuBar() {
+		final JMenuBar menuBar = new JMenuBar();
+		if (getUiReference() instanceof JDialog) {
+			((JDialog) getUiReference()).setJMenuBar(menuBar);
+		}
+		else if (getUiReference() instanceof JFrame) {
+			((JFrame) getUiReference()).setJMenuBar(menuBar);
+		}
+		else {
+			throw new IllegalStateException("Type '" + getUiReference().getClass().getName() + "' does not support  a menu bar");
+		}
+
+		return new MenuBarImpl(menuBar);
+	}
 }

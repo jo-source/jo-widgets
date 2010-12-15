@@ -29,14 +29,11 @@
 package org.jowidgets.spi.widgets;
 
 import org.jowidgets.common.widgets.IMenuBarCommon;
-import org.jowidgets.common.widgets.IMenuCommon;
 
 public interface IMenuBarSpi extends IWidgetSpi, IMenuBarCommon {
 
 	void remove(int index);
 
-	<WIDGET_TYPE extends IMenuCommon> WIDGET_TYPE addMenu(String name);
-
-	<WIDGET_TYPE extends IMenuCommon> WIDGET_TYPE addMenu(int index, String name);
+	IMainMenuSpi addMenu(Integer index);
 
 }

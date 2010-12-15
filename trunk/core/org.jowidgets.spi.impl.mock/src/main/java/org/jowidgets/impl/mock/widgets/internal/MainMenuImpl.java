@@ -25,18 +25,34 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.widgets;
+package org.jowidgets.impl.mock.widgets.internal;
 
-import org.jowidgets.common.widgets.IFrameCommon;
+import org.jowidgets.impl.mock.mockui.UIMMenuItem;
+import org.jowidgets.impl.mock.widgets.MockMenu;
+import org.jowidgets.spi.widgets.IMainMenuSpi;
 
-public interface IFrameSpi extends IWindowSpi, IContainerSpi, IFrameCommon {
+public class MainMenuImpl extends MockMenu implements IMainMenuSpi {
 
-	/**
-	 * Creates a new menu bar. If the frame already has a menu bar, the old menu bar will
-	 * be removed and exchanged by the new one.
-	 * 
-	 * @return The created menu bar.
-	 */
-	IMenuBarSpi createMenuBar();
+	private final MenuItemImpl menuItemDelegate;
+
+	public MainMenuImpl() {
+		super(new UIMMenuItem());
+		this.menuItemDelegate = new MenuItemImpl(getUiReference());
+	}
+
+	@Override
+	public UIMMenuItem getUiReference() {
+		return super.getUiReference();
+	}
+
+	@Override
+	public void setText(final String text) {
+		menuItemDelegate.setText(text);
+	}
+
+	@Override
+	public void setMnemonic(final char mnemonic) {
+		menuItemDelegate.setMnemonic(mnemonic);
+	}
 
 }

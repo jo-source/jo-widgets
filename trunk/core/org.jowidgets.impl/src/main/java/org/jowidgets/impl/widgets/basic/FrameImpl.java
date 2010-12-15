@@ -34,6 +34,7 @@ import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IDisplay;
 import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.widgets.IMenuBar;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.descriptor.setup.IFrameSetup;
 import org.jowidgets.common.types.Dimension;
@@ -139,6 +140,11 @@ public class FrameImpl extends AbstractFrameSpiWrapper implements IFrame {
 	@Override
 	public IPopupMenu createPopupMenu() {
 		return new PopupMenuImpl(getWidget().createPopupMenu(), this);
+	}
+
+	@Override
+	public IMenuBar createMenuBar() {
+		return new MenuBarImpl(getWidget().createMenuBar(), this);
 	}
 
 }

@@ -27,8 +27,6 @@
  */
 package org.jowidgets.impl.swt.widgets.internal;
 
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.MenuItem;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
@@ -47,14 +45,6 @@ public class MenuItemImpl extends ActionObservable implements IMenuItemSpi, IToo
 
 	public MenuItemImpl(final MenuItem menuItem) {
 		this.menuItem = menuItem;
-
-		menuItem.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(final SelectionEvent e) {
-				fireActionPerformed();
-			}
-		});
-
 	}
 
 	@Override

@@ -30,6 +30,7 @@ package org.jowidgets.api.widgets;
 
 import java.util.List;
 
+import org.jowidgets.api.widgets.descriptor.IMainMenuDescriptor;
 import org.jowidgets.common.widgets.IMenuBarCommon;
 
 public interface IMenuBar extends IWidget, IMenuBarCommon {
@@ -38,6 +39,14 @@ public interface IMenuBar extends IWidget, IMenuBarCommon {
 
 	boolean remove(IMenu menu);
 
-	<WIDGET_TYPE extends IMenu> WIDGET_TYPE addMenu(String name);
+	IMainMenu addMenu(String name);
+
+	IMainMenu addMenu(String name, char mnemonic);
+
+	IMainMenu addMenu(int index, String name);
+
+	IMainMenu addMenu(IMainMenuDescriptor descriptor);
+
+	IMainMenu addMenu(int index, IMainMenuDescriptor descriptor);
 
 }

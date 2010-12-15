@@ -27,9 +27,11 @@
  */
 package org.jowidgets.impl.swt.widgets;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
@@ -43,6 +45,8 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.impl.swt.util.DimensionConvert;
 import org.jowidgets.impl.swt.util.PositionConvert;
+import org.jowidgets.impl.swt.widgets.internal.MenuBarImpl;
+import org.jowidgets.spi.widgets.IMenuBarSpi;
 import org.jowidgets.spi.widgets.IWindowSpi;
 
 public class SwtWindow extends SwtContainer implements IWindowSpi {
@@ -143,6 +147,12 @@ public class SwtWindow extends SwtContainer implements IWindowSpi {
 	@Override
 	public void removeWindowListener(final IWindowListener listener) {
 		windowObservableDelegate.removeWindowListener(listener);
+	}
+
+	public IMenuBarSpi createMenuBar() {
+		final Menu menuBar = new Menu(getUiReference(), SWT.BAR);
+		getUiReference().setMenuBar(menuBar);
+		return new MenuBarImpl(menuBar);
 	}
 
 	protected WindowObservable getWindowObservableDelegate() {

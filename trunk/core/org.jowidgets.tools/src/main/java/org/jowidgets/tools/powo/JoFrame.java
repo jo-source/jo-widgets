@@ -30,6 +30,7 @@ package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.widgets.IMenuBar;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.descriptor.setup.IFrameSetup;
 import org.jowidgets.common.application.IApplicationLifecycle;
@@ -71,6 +72,13 @@ public class JoFrame extends Window<IFrame, IFrameBluePrint> implements IFrame {
 
 	public static IFrameBluePrint bluePrint(final String title) {
 		return Toolkit.getBluePrintFactory().frame(title);
+	}
+
+	@Override
+	public IMenuBar createMenuBar() {
+		//TODO use JoMenuBar later
+		checkInitialized();
+		return getWidget().createMenuBar();
 	}
 
 }

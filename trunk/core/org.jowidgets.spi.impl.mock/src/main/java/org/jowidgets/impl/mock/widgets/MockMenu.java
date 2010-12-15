@@ -29,7 +29,6 @@
 package org.jowidgets.impl.mock.widgets;
 
 import org.jowidgets.impl.mock.mockui.UIMCheckedMenuItem;
-import org.jowidgets.impl.mock.mockui.UIMContainer;
 import org.jowidgets.impl.mock.mockui.UIMMenuItem;
 import org.jowidgets.impl.mock.mockui.UIMRadioMenuItem;
 import org.jowidgets.impl.mock.widgets.internal.ActionMenuItemImpl;
@@ -44,13 +43,13 @@ import org.jowidgets.spi.widgets.ISubMenuSpi;
 
 public class MockMenu extends MockWidget implements IMenuSpi {
 
-	public MockMenu(final UIMContainer container) {
+	public MockMenu(final UIMMenuItem container) {
 		super(container);
 	}
 
 	@Override
-	public UIMContainer getUiReference() {
-		return (UIMContainer) super.getUiReference();
+	public UIMMenuItem getUiReference() {
+		return (UIMMenuItem) super.getUiReference();
 	}
 
 	@Override

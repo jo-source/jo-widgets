@@ -25,18 +25,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.widgets;
+package org.jowidgets.api.widgets.descriptor;
 
-import org.jowidgets.common.widgets.IFrameCommon;
+import org.jowidgets.api.widgets.IMainMenu;
+import org.jowidgets.api.widgets.descriptor.setup.IMainMenuSetup;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-public interface IFrameSpi extends IWindowSpi, IContainerSpi, IFrameCommon {
-
-	/**
-	 * Creates a new menu bar. If the frame already has a menu bar, the old menu bar will
-	 * be removed and exchanged by the new one.
-	 * 
-	 * @return The created menu bar.
-	 */
-	IMenuBarSpi createMenuBar();
+public interface IMainMenuDescriptor extends IMainMenuSetup, IWidgetDescriptor<IMainMenu> {
 
 }
