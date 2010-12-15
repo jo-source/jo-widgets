@@ -26,34 +26,37 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.base.delegate;
+package org.jowidgets.api.command;
 
-import org.jowidgets.api.widgets.IComponent;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Accelerator;
 
-public class ComponentDelegate {
+public interface IActionBuilder {
 
-	private IComponent parent;
+	IActionBuilder setText(String text);
 
-	public ComponentDelegate() {
-		super();
-	}
+	IActionBuilder setToolTipText(final String toolTipText);
 
-	public IComponent getParent() {
-		return parent;
-	}
+	IActionBuilder setIcon(IImageConstant icon);
 
-	public void setParent(final IComponent parent) {
-		if (this.parent == null) {
-			this.parent = parent;
-		}
-		else if (!isReparentable()) {
-			throw new IllegalStateException("Widget is not reparentable");
-		}
-	}
+	IActionBuilder setMnemonic(final Character mnemonic);
 
-	public boolean isReparentable() {
-		//TODO will be implemented later
-		return false;
-	}
+	IActionBuilder setMnemonic(final char mnemonic);
+
+	IActionBuilder setAccelerator(Accelerator accelerator);
+
+	IActionBuilder setEnabled(boolean enabled);
+
+	IActionBuilder setCommandProvider(ICommandProvider commandProvider);
+
+	IActionBuilder setCommand(ICommand command);
+
+	IActionBuilder setCommand(ICommand command, IExecutableStateChecker executableStateChecker);
+
+	IActionBuilder setTooltipStateDisplay(boolean enabled);
+
+	IActionBuilder setExecutableStateDisplay(IExecutableStateDisplay executableStateDisplay);
+
+	IAction build();
 
 }

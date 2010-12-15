@@ -26,34 +26,20 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.base.delegate;
+package org.jowidgets.api.command;
 
-import org.jowidgets.api.widgets.IComponent;
+public interface IExecutableState {
 
-public class ComponentDelegate {
+	/**
+	 * @return true, if the action is executable, false otherwise
+	 */
+	boolean isExecutable();
 
-	private IComponent parent;
-
-	public ComponentDelegate() {
-		super();
-	}
-
-	public IComponent getParent() {
-		return parent;
-	}
-
-	public void setParent(final IComponent parent) {
-		if (this.parent == null) {
-			this.parent = parent;
-		}
-		else if (!isReparentable()) {
-			throw new IllegalStateException("Widget is not reparentable");
-		}
-	}
-
-	public boolean isReparentable() {
-		//TODO will be implemented later
-		return false;
-	}
-
+	/**
+	 * If the action is not executable, this get's the reason why. This reason should
+	 * be offered to the user, e.g. in the tooltip of a disabled button or menu item
+	 * 
+	 * @return the reason (why is this button grey ?)
+	 */
+	String getReason();
 }

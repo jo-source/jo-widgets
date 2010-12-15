@@ -71,8 +71,8 @@ public class MenuDemoFrame extends JoFrame {
 
 	}
 
-	private void addMenus(final IMenu popupMenu) {
-		final ISubMenu subMenu = popupMenu.addMenuItem(BPF.subMenu("sub menu 1").setMnemonic('e'));
+	private void addMenus(final IMenu menu) {
+		final ISubMenu subMenu = menu.addMenuItem(BPF.subMenu("sub menu 1").setMnemonic('e'));
 		subMenu.addMenuItem(BPF.menuItem("sub item1"));
 		subMenu.addMenuItem(BPF.menuItem("sub item2"));
 
@@ -89,34 +89,34 @@ public class MenuDemoFrame extends JoFrame {
 
 		final IActionMenuItemBluePrint item1Bp = BPF.menuItem().setText("Item1").setToolTipText("This is item 1");
 		item1Bp.setIcon(IconsSmall.INFO).setAccelerator(new Accelerator('T', Modifier.CTRL)).setMnemonic('t');
-		final IActionMenuItem item1 = popupMenu.addMenuItem(item1Bp);
+		final IActionMenuItem item1 = menu.addMenuItem(item1Bp);
 
 		final IActionMenuItemBluePrint item2Bp = BPF.menuItem().setText("The Second Item");
 		item2Bp.setToolTipText("This is the second item");
 		item2Bp.setIcon(IconsSmall.WARNING).setAccelerator(new Accelerator('H', Modifier.ALT)).setMnemonic('m');
-		final IActionMenuItem item2 = popupMenu.addMenuItem(item2Bp);
+		final IActionMenuItem item2 = menu.addMenuItem(item2Bp);
 
 		final IActionMenuItemBluePrint item3Bp = BPF.menuItem().setText("The Third Item");
 		item3Bp.setToolTipText("This is the third item");
 		item3Bp.setIcon(IconsSmall.WARNING).setAccelerator(new Accelerator('I', Modifier.SHIFT)).setMnemonic('e');
-		final IActionMenuItem item3 = popupMenu.addMenuItem(1, item3Bp);
+		final IActionMenuItem item3 = menu.addMenuItem(1, item3Bp);
 
-		popupMenu.addSeparator();
+		menu.addSeparator();
 
 		final ICheckedMenuItemBluePrint item4Bp = BPF.checkedMenuItem().setText("item4");
-		final ISelectableMenuItem item4 = popupMenu.addMenuItem(item4Bp);
+		final ISelectableMenuItem item4 = menu.addMenuItem(item4Bp);
 
-		popupMenu.addSeparator();
+		menu.addSeparator();
 
 		final IRadioMenuItemBluePrint item5Bp = BPF.radioMenuItem().setText("item5");
-		final ISelectableMenuItem item5 = popupMenu.addMenuItem(item5Bp);
+		final ISelectableMenuItem item5 = menu.addMenuItem(item5Bp);
 
 		final IRadioMenuItemBluePrint item6Bp = BPF.radioMenuItem().setText("item6");
-		final ISelectableMenuItem item6 = popupMenu.addMenuItem(item6Bp);
+		final ISelectableMenuItem item6 = menu.addMenuItem(item6Bp);
 		item6.setSelected(true);
 
 		final IRadioMenuItemBluePrint item7Bp = BPF.radioMenuItem().setText("item7");
-		final ISelectableMenuItem item7 = popupMenu.addMenuItem(item7Bp);
+		final ISelectableMenuItem item7 = menu.addMenuItem(item7Bp);
 
 		item1.addActionListener(new IActionListener() {
 			@Override

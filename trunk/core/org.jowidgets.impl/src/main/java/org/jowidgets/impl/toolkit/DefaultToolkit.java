@@ -30,6 +30,7 @@ package org.jowidgets.impl.toolkit;
 
 import java.util.List;
 
+import org.jowidgets.api.command.IActionBuilderFactory;
 import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.image.IconsSmall;
@@ -49,6 +50,7 @@ import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.application.ApplicationRunner;
+import org.jowidgets.impl.command.ActionBuilderFactory;
 import org.jowidgets.impl.convert.DefaultConverterProvider;
 import org.jowidgets.impl.image.DefaultIconsRegisterService;
 import org.jowidgets.impl.threads.UiThreadAccess;
@@ -65,6 +67,7 @@ public class DefaultToolkit implements IToolkit {
 	private final IGenericWidgetFactory genericWidgetFactory;
 	private final IWidgetWrapperFactory widgetWrapperFactory;
 	private final IBluePrintFactory bluePrintFactory;
+	private final IActionBuilderFactory actionBuilderFactory;
 	private final IConverterProvider converterProvider;
 	private final WindowProvider windowProvider;
 	private final IMessagePane messagePane;
@@ -80,6 +83,7 @@ public class DefaultToolkit implements IToolkit {
 		this.genericWidgetFactory = new GenericWidgetFactory(toolkitSpi.getWidgetFactory());
 		this.widgetWrapperFactory = new DefaultWidgetWrapperFactory(genericWidgetFactory, toolkitSpi.getWidgetFactory());
 		this.bluePrintFactory = new BluePrintFactory();
+		this.actionBuilderFactory = new ActionBuilderFactory();
 		this.converterProvider = new DefaultConverterProvider();
 		this.windowProvider = new WindowProvider(genericWidgetFactory, toolkitSpi);
 		this.messagePane = new DefaultMessagePane(genericWidgetFactory, bluePrintFactory, windowProvider);
@@ -121,6 +125,11 @@ public class DefaultToolkit implements IToolkit {
 	@Override
 	public IBluePrintFactory getBluePrintFactory() {
 		return bluePrintFactory;
+	}
+
+	@Override
+	public IActionBuilderFactory getActionBuilderFactory() {
+		return actionBuilderFactory;
 	}
 
 	@Override

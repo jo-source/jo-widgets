@@ -26,34 +26,39 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.base.delegate;
+package org.jowidgets.impl.command;
 
-import org.jowidgets.api.widgets.IComponent;
+import org.jowidgets.api.command.ICommand;
+import org.jowidgets.api.command.ICommandProvider;
+import org.jowidgets.api.command.IExecutableStateChecker;
 
-public class ComponentDelegate {
+public class CommandProvider implements ICommandProvider {
 
-	private IComponent parent;
+	private final ICommand command;
+	private final IExecutableStateChecker executableStateChecker;
 
-	public ComponentDelegate() {
+	public CommandProvider() {
+		this(null, null);
+	}
+
+	public CommandProvider(final ICommand command) {
+		this(command, null);
+	}
+
+	public CommandProvider(final ICommand command, final IExecutableStateChecker executableStateChecker) {
 		super();
+		this.command = command;
+		this.executableStateChecker = executableStateChecker;
 	}
 
-	public IComponent getParent() {
-		return parent;
+	@Override
+	public ICommand getCommand() {
+		return command;
 	}
 
-	public void setParent(final IComponent parent) {
-		if (this.parent == null) {
-			this.parent = parent;
-		}
-		else if (!isReparentable()) {
-			throw new IllegalStateException("Widget is not reparentable");
-		}
-	}
-
-	public boolean isReparentable() {
-		//TODO will be implemented later
-		return false;
+	@Override
+	public IExecutableStateChecker getExecutableStateChecker() {
+		return executableStateChecker;
 	}
 
 }

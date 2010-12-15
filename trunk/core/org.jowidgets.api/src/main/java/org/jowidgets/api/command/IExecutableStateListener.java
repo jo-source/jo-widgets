@@ -26,34 +26,10 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.base.delegate;
+package org.jowidgets.api.command;
 
-import org.jowidgets.api.widgets.IComponent;
+public interface IExecutableStateListener {
 
-public class ComponentDelegate {
-
-	private IComponent parent;
-
-	public ComponentDelegate() {
-		super();
-	}
-
-	public IComponent getParent() {
-		return parent;
-	}
-
-	public void setParent(final IComponent parent) {
-		if (this.parent == null) {
-			this.parent = parent;
-		}
-		else if (!isReparentable()) {
-			throw new IllegalStateException("Widget is not reparentable");
-		}
-	}
-
-	public boolean isReparentable() {
-		//TODO will be implemented later
-		return false;
-	}
+	void executableStateChanged();
 
 }

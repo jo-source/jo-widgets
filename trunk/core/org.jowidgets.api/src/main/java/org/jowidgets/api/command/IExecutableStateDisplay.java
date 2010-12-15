@@ -26,34 +26,14 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.base.delegate;
+package org.jowidgets.api.command;
 
-import org.jowidgets.api.widgets.IComponent;
+/**
+ * Display which shows the current executable state text when action is hovered
+ * (e.g. the status bar my be such a display)
+ */
+public interface IExecutableStateDisplay {
 
-public class ComponentDelegate {
-
-	private IComponent parent;
-
-	public ComponentDelegate() {
-		super();
-	}
-
-	public IComponent getParent() {
-		return parent;
-	}
-
-	public void setParent(final IComponent parent) {
-		if (this.parent == null) {
-			this.parent = parent;
-		}
-		else if (!isReparentable()) {
-			throw new IllegalStateException("Widget is not reparentable");
-		}
-	}
-
-	public boolean isReparentable() {
-		//TODO will be implemented later
-		return false;
-	}
+	void setExecutableStateText(String text);
 
 }

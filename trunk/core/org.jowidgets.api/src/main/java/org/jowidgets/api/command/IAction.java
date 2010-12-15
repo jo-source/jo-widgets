@@ -26,34 +26,47 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.base.delegate;
+package org.jowidgets.api.command;
 
-import org.jowidgets.api.widgets.IComponent;
+import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Accelerator;
+import org.jowidgets.common.widgets.controler.IActionObservable;
 
-public class ComponentDelegate {
+public interface IAction extends IActionObservable {
 
-	private IComponent parent;
+	String getText();
 
-	public ComponentDelegate() {
-		super();
-	}
+	String getToolTipText();
 
-	public IComponent getParent() {
-		return parent;
-	}
+	IImageConstant getIcon();
 
-	public void setParent(final IComponent parent) {
-		if (this.parent == null) {
-			this.parent = parent;
-		}
-		else if (!isReparentable()) {
-			throw new IllegalStateException("Widget is not reparentable");
-		}
-	}
+	Character getMnemonic();
 
-	public boolean isReparentable() {
-		//TODO will be implemented later
-		return false;
-	}
+	Accelerator getAccelerator();
+
+	boolean isEnabled();
+
+	ICommand getCommand();
+
+	IExecutableStateChecker getExecutableStateChecker();
+
+	IExecutableStateDisplay getExecutableStateDisplay();
+
+	boolean isTooltipStateDisplay();
+
+	void setEnabled(boolean enabled);
+
+	void setCommandProvider(ICommandProvider commandProvider);
+
+	void setCommand(ICommand command);
+
+	void setCommand(ICommand command, IExecutableStateChecker executableStateChecker);
+
+	void addActionChangeListener(IActionChangeListener listener);
+
+	void removeActionChangeListener(IActionChangeListener listener);
+
+	void performAction(IWidget source);
 
 }
