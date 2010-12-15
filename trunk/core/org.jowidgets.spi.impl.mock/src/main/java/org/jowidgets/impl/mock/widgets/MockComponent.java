@@ -32,6 +32,7 @@ import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.impl.mock.mockui.UIMComponent;
+import org.jowidgets.impl.mock.widgets.internal.PopupMenuImpl;
 import org.jowidgets.spi.widgets.IComponentSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
@@ -98,7 +99,7 @@ public class MockComponent extends MockWidget implements IComponentSpi {
 
 	@Override
 	public IPopupMenuSpi createPopupMenu() {
-		return null;
+		return new PopupMenuImpl(getUiReference());
 	}
 
 }

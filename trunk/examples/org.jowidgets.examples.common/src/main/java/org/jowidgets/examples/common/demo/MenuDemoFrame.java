@@ -33,6 +33,7 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IActionMenuItem;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ISelectableMenuItem;
+import org.jowidgets.api.widgets.ISubMenu;
 import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICheckedMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IRadioMenuItemBluePrint;
@@ -53,6 +54,21 @@ public class MenuDemoFrame extends JoFrame {
 		super(bluePrint("Menu demo").autoPackOff());
 
 		final IPopupMenu popupMenu = createPopupMenu();
+
+		final ISubMenu subMenu = popupMenu.addMenuItem(bpf.subMenu("sub menu 1").setMnemonic('e'));
+		subMenu.addMenuItem(bpf.menuItem("sub item1"));
+		subMenu.addMenuItem(bpf.menuItem("sub item2"));
+
+		final ISubMenu subMenu2 = subMenu.addMenuItem(bpf.subMenu("sub menu 2"));
+		subMenu2.addMenuItem(bpf.menuItem("sub item1"));
+		subMenu2.addMenuItem(bpf.menuItem("sub item2"));
+		subMenu2.addMenuItem(bpf.menuItem("sub item3"));
+		subMenu2.addMenuItem(bpf.menuItem("sub item4"));
+
+		subMenu.addMenuItem(bpf.menuItem("sub item3"));
+		subMenu.addSeparator();
+		subMenu.addMenuItem(bpf.menuItem("sub item4"));
+		subMenu.addMenuItem(bpf.menuItem("sub item5"));
 
 		final IActionMenuItemBluePrint item1Bp = bpf.menuItem().setText("Item1").setToolTipText("This is item 1");
 		item1Bp.setIcon(IconsSmall.INFO).setAccelerator(new Accelerator('T', Modifier.CTRL)).setMnemonic('t');

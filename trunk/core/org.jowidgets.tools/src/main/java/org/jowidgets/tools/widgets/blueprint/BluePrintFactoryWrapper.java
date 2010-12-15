@@ -52,6 +52,7 @@ import org.jowidgets.api.widgets.blueprint.IRadioMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISeparatorBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
+import org.jowidgets.api.widgets.blueprint.ISubMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
@@ -469,6 +470,16 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	@Override
 	public ICheckedMenuItemBluePrint checkedMenuItem() {
 		return bluePrintFactory.checkedMenuItem();
+	}
+
+	@Override
+	public ISubMenuBluePrint subMenu(final String text) {
+		return bluePrintFactory.subMenu(text);
+	}
+
+	@Override
+	public ISubMenuBluePrint subMenu() {
+		return bluePrintFactory.subMenu();
 	}
 
 }

@@ -40,6 +40,7 @@ public final class ApiBlackBoxTestSuite {
 		//$JUnit-BEGIN$
 		suite.addTest(ToolkitTest.suite());
 		suite.addTest(WidgetFactoryTest.suite());
+		suite.addTest(MenuTest.suite());
 		//$JUnit-END$
 		return suite;
 	}

@@ -39,6 +39,7 @@ import org.jowidgets.api.widgets.blueprint.IIconBluePrint;
 import org.jowidgets.api.widgets.blueprint.IRadioMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
+import org.jowidgets.api.widgets.blueprint.ISubMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
 import org.jowidgets.common.image.IImageConstant;
 
@@ -109,5 +110,7 @@ public interface IBasicBluePrintFactory extends IBasicSimpleBluePrintFactory {
 	IRadioMenuItemBluePrint radioMenuItem(String text);
 
 	ICheckedMenuItemBluePrint checkedMenuItem(String text);
+
+	ISubMenuBluePrint subMenu(String text);
 
 }

@@ -41,6 +41,7 @@ import org.jowidgets.api.widgets.blueprint.IIconBluePrint;
 import org.jowidgets.api.widgets.blueprint.IRadioMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
+import org.jowidgets.api.widgets.blueprint.ISubMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
@@ -217,6 +218,11 @@ public class BasicBluePrintFactory extends BasicSimpleBluePrintFactory implement
 	@Override
 	public ICheckedMenuItemBluePrint checkedMenuItem(final String text) {
 		return checkedMenuItem().setText(text);
+	}
+
+	@Override
+	public ISubMenuBluePrint subMenu(final String text) {
+		return subMenu().setText(text);
 	}
 
 }

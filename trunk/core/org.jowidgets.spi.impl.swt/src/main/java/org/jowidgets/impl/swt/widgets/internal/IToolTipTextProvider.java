@@ -26,57 +26,10 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.mock.mockui;
+package org.jowidgets.impl.swt.widgets.internal;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.Accelerator;
+public interface IToolTipTextProvider {
 
-public class UIMMenuItem extends UIMContainer {
-
-	private boolean selected;
-	private IImageConstant icon;
-	private String text;
-	private Accelerator accelerator;
-	private char mnemonic;
-
-	public void setIcon(final IImageConstant icon) {
-		this.icon = icon;
-	}
-
-	public void setText(final String text) {
-		this.text = text;
-	}
-
-	public void setAccelerator(final Accelerator accelerator) {
-		this.accelerator = accelerator;
-	}
-
-	public void setMnemonic(final char mnemonic) {
-		this.mnemonic = mnemonic;
-	}
-
-	public IImageConstant getIcon() {
-		return icon;
-	}
-
-	public String getText() {
-		return text;
-	}
-
-	public Accelerator getAccelerator() {
-		return accelerator;
-	}
-
-	public char getMnemonic() {
-		return mnemonic;
-	}
-
-	public boolean isSelected() {
-		return selected;
-	}
-
-	public void setSelected(final boolean selected) {
-		this.selected = selected;
-	}
+	String getToolTipText();
 
 }

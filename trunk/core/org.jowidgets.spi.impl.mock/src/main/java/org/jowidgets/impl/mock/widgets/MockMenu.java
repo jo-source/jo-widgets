@@ -35,10 +35,12 @@ import org.jowidgets.impl.mock.mockui.UIMRadioMenuItem;
 import org.jowidgets.impl.mock.widgets.internal.ActionMenuItemImpl;
 import org.jowidgets.impl.mock.widgets.internal.MenuItemImpl;
 import org.jowidgets.impl.mock.widgets.internal.SelectableMenuItemImpl;
+import org.jowidgets.impl.mock.widgets.internal.SubMenuImpl;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 import org.jowidgets.spi.widgets.IMenuItemSpi;
 import org.jowidgets.spi.widgets.IMenuSpi;
 import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
+import org.jowidgets.spi.widgets.ISubMenuSpi;
 
 public class MockMenu extends MockWidget implements IMenuSpi {
 
@@ -84,7 +86,14 @@ public class MockMenu extends MockWidget implements IMenuSpi {
 		return result;
 	}
 
-	private void addItem(final Integer index, final MenuItemImpl item) {
+	@Override
+	public ISubMenuSpi addSubMenu(final Integer index) {
+		final SubMenuImpl result = new SubMenuImpl();
+		addItem(index, result);
+		return result;
+	}
+
+	private void addItem(final Integer index, final MockWidget item) {
 		if (index != null) {
 			getUiReference().add(item.getUiReference(), index.intValue());
 		}

@@ -32,22 +32,26 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.api.widgets.IActionMenuItem;
-import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.IMenuItem;
 import org.jowidgets.api.widgets.ISelectableMenuItem;
+import org.jowidgets.api.widgets.ISubMenu;
 import org.jowidgets.api.widgets.descriptor.IActionMenuItemDescriptor;
 import org.jowidgets.api.widgets.descriptor.ICheckedMenuItemDescriptor;
 import org.jowidgets.api.widgets.descriptor.IRadioMenuItemDescriptor;
+import org.jowidgets.api.widgets.descriptor.ISubMenuDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.IAccelerateableMenuItemSetup;
+import org.jowidgets.api.widgets.descriptor.setup.IMenuItemSetup;
 import org.jowidgets.api.widgets.descriptor.setup.ISelectableItemSetup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.impl.widgets.basic.ActionMenuItemImpl;
 import org.jowidgets.impl.widgets.basic.SelectableMenuItemImpl;
 import org.jowidgets.impl.widgets.basic.SeparatorMenuItemImpl;
+import org.jowidgets.impl.widgets.basic.SubMenuImpl;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 import org.jowidgets.spi.widgets.IMenuSpi;
 import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
+import org.jowidgets.spi.widgets.ISubMenuSpi;
 import org.jowidgets.util.Assert;
 
 public class MenuDelegate {
@@ -55,16 +59,13 @@ public class MenuDelegate {
 	private final IMenuSpi menuSpi;
 	private final IMenu menu;
 	private final List<IMenuItem> children;
-	private final IComponent parent;
 
-	public MenuDelegate(final IMenu menu, final IMenuSpi menuSpi, final IComponent parent) {
+	public MenuDelegate(final IMenu menu, final IMenuSpi menuSpi) {
 		Assert.paramNotNull(menu, "menu");
 		Assert.paramNotNull(menuSpi, "menuSpi");
-		Assert.paramNotNull(parent, "parent");
 		this.children = new LinkedList<IMenuItem>();
 		this.menu = menu;
 		this.menuSpi = menuSpi;
-		this.parent = parent;
 	}
 
 	public IMenuItem addSeparator() {
@@ -101,7 +102,12 @@ public class MenuDelegate {
 
 		WIDGET_TYPE result = null;
 
-		if (IActionMenuItemDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
+		if (ISubMenuDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
+			final ISubMenuSpi subMenuSpi = menuSpi.addSubMenu(index);
+			final ISubMenu subMenuItem = new SubMenuImpl(subMenuSpi, menu, (IMenuItemSetup) descriptor);
+			result = (WIDGET_TYPE) subMenuItem;
+		}
+		else if (IActionMenuItemDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
 			final IActionMenuItemSpi actionMenuItemSpi = menuSpi.addActionItem(index);
 			final IActionMenuItem actionMenuItem = new ActionMenuItemImpl(
 				menu,
@@ -111,19 +117,19 @@ public class MenuDelegate {
 		}
 		else if (ICheckedMenuItemDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
 			final ISelectableMenuItemSpi selectableMenuItemSpi = menuSpi.addCheckedItem(index);
-			final ISelectableMenuItem actionMenuItem = new SelectableMenuItemImpl(
+			final ISelectableMenuItem selectableMenuItem = new SelectableMenuItemImpl(
 				menu,
 				selectableMenuItemSpi,
 				(ISelectableItemSetup) descriptor);
-			result = (WIDGET_TYPE) actionMenuItem;
+			result = (WIDGET_TYPE) selectableMenuItem;
 		}
 		else if (IRadioMenuItemDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
 			final ISelectableMenuItemSpi selectableMenuItemSpi = menuSpi.addRadioItem(index);
-			final ISelectableMenuItem actionMenuItem = new SelectableMenuItemImpl(
+			final ISelectableMenuItem selectableMenuItem = new SelectableMenuItemImpl(
 				menu,
 				selectableMenuItemSpi,
 				(ISelectableItemSetup) descriptor);
-			result = (WIDGET_TYPE) actionMenuItem;
+			result = (WIDGET_TYPE) selectableMenuItem;
 		}
 
 		addToChildren(index, result);
@@ -157,10 +163,6 @@ public class MenuDelegate {
 			return false;
 		}
 
-	}
-
-	public IComponent getParent() {
-		return parent;
 	}
 
 }

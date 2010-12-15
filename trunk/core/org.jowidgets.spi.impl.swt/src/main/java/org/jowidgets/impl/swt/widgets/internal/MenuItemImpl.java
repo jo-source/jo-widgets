@@ -37,7 +37,7 @@ import org.jowidgets.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.impl.swt.util.ModifierConvert;
 import org.jowidgets.spi.widgets.IMenuItemSpi;
 
-public class MenuItemImpl extends ActionObservable implements IMenuItemSpi {
+public class MenuItemImpl extends ActionObservable implements IMenuItemSpi, IToolTipTextProvider {
 
 	private final MenuItem menuItem;
 	private String text;
@@ -78,7 +78,8 @@ public class MenuItemImpl extends ActionObservable implements IMenuItemSpi {
 		this.tooltipText = tooltipText;
 	}
 
-	public String getTooltipText() {
+	@Override
+	public String getToolTipText() {
 		return tooltipText;
 	}
 

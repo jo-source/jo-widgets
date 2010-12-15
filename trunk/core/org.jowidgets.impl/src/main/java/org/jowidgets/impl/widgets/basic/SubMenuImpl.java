@@ -30,24 +30,33 @@ package org.jowidgets.impl.widgets.basic;
 
 import java.util.List;
 
-import org.jowidgets.api.widgets.IComponent;
+import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.IMenuItem;
-import org.jowidgets.api.widgets.IPopupMenu;
+import org.jowidgets.api.widgets.ISubMenu;
+import org.jowidgets.api.widgets.descriptor.setup.IMenuItemSetup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.impl.base.delegate.MenuDelegate;
-import org.jowidgets.impl.widgets.common.wrapper.PopupMenuSpiWrapper;
-import org.jowidgets.spi.widgets.IPopupMenuSpi;
+import org.jowidgets.impl.widgets.common.wrapper.MenuItemSpiWrapper;
+import org.jowidgets.spi.widgets.ISubMenuSpi;
 
-public class PopupMenuImpl extends PopupMenuSpiWrapper implements IPopupMenu {
+public class SubMenuImpl extends MenuItemSpiWrapper implements ISubMenu {
 
 	private final MenuDelegate menuDelegate;
-	private final IComponent parent;
+	private final IMenu parent;
 
-	public PopupMenuImpl(final IPopupMenuSpi popupMenuSpi, final IComponent parent) {
-		super(popupMenuSpi);
+	public SubMenuImpl(final ISubMenuSpi subMenuSpi, final IMenu parent, final IMenuItemSetup setup) {
+		super(subMenuSpi);
 
-		this.menuDelegate = new MenuDelegate(this, popupMenuSpi);
+		this.menuDelegate = new MenuDelegate(this, subMenuSpi);
 		this.parent = parent;
+
+		setText(setup.getText());
+		setToolTipText(setup.getToolTipText());
+		setIcon(setup.getIcon());
+
+		if (setup.getMnemonic() != null) {
+			setMnemonic(setup.getMnemonic().charValue());
+		}
 	}
 
 	@Override
@@ -84,7 +93,7 @@ public class PopupMenuImpl extends PopupMenuSpiWrapper implements IPopupMenu {
 	}
 
 	@Override
-	public IComponent getParent() {
+	public IMenu getParent() {
 		return parent;
 	}
 

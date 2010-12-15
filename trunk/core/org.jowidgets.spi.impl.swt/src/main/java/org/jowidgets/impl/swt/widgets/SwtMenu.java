@@ -39,12 +39,15 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.ToolTip;
 import org.jowidgets.impl.swt.widgets.internal.ActionMenuItemImpl;
+import org.jowidgets.impl.swt.widgets.internal.IToolTipTextProvider;
 import org.jowidgets.impl.swt.widgets.internal.MenuItemImpl;
 import org.jowidgets.impl.swt.widgets.internal.SelectableMenuItemImpl;
+import org.jowidgets.impl.swt.widgets.internal.SubMenuImpl;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 import org.jowidgets.spi.widgets.IMenuItemSpi;
 import org.jowidgets.spi.widgets.IMenuSpi;
 import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
+import org.jowidgets.spi.widgets.ISubMenuSpi;
 
 public class SwtMenu implements IMenuSpi {
 
@@ -96,6 +99,21 @@ public class SwtMenu implements IMenuSpi {
 	@Override
 	public boolean isEnabled() {
 		return menu.isEnabled();
+	}
+
+	@Override
+	public ISubMenuSpi addSubMenu(final Integer index) {
+		MenuItem subMenuItem = null;
+		if (index != null) {
+			subMenuItem = new MenuItem(menu, SWT.CASCADE, index.intValue());
+		}
+		else {
+			subMenuItem = new MenuItem(menu, SWT.CASCADE);
+		}
+
+		final Menu subMenu = new Menu(menu.getShell(), SWT.DROP_DOWN);
+		subMenuItem.setMenu(subMenu);
+		return createSubMenu(subMenuItem, subMenu);
 	}
 
 	@Override
@@ -158,7 +176,13 @@ public class SwtMenu implements IMenuSpi {
 		return result;
 	}
 
-	private void installTooltip(final MenuItem menuItem, final MenuItemImpl result) {
+	private SubMenuImpl createSubMenu(final MenuItem subMenuItem, final Menu subMenu) {
+		final SubMenuImpl result = new SubMenuImpl(subMenuItem, subMenu);
+		installTooltip(subMenuItem, result);
+		return result;
+	}
+
+	private void installTooltip(final MenuItem menuItem, final IToolTipTextProvider toolTipTextProvider) {
 		final ArmListener armListener = new ArmListener() {
 
 			@Override
@@ -166,7 +190,7 @@ public class SwtMenu implements IMenuSpi {
 				final boolean wasVisible = toolTip.isVisible();
 				toolTip.setVisible(false);
 
-				final String toolTipText = result.getTooltipText();
+				final String toolTipText = toolTipTextProvider.getToolTipText();
 				final boolean hasToolTip = toolTipText != null && !toolTipText.isEmpty();
 
 				if (wasVisible) {

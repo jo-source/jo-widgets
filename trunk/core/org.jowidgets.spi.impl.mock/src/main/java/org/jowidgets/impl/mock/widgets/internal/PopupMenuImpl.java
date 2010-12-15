@@ -26,57 +26,30 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.mock.mockui;
+package org.jowidgets.impl.mock.widgets.internal;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.Accelerator;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.impl.mock.mockui.UIMComponent;
+import org.jowidgets.impl.mock.mockui.UIMPopupMenu;
+import org.jowidgets.impl.mock.widgets.MockMenu;
+import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
-public class UIMMenuItem extends UIMContainer {
+public class PopupMenuImpl extends MockMenu implements IPopupMenuSpi {
 
-	private boolean selected;
-	private IImageConstant icon;
-	private String text;
-	private Accelerator accelerator;
-	private char mnemonic;
+	private final UIMComponent parent;
 
-	public void setIcon(final IImageConstant icon) {
-		this.icon = icon;
+	public PopupMenuImpl(final UIMComponent parent) {
+		super(new UIMPopupMenu());
+		this.parent = parent;
 	}
 
-	public void setText(final String text) {
-		this.text = text;
+	@Override
+	public UIMPopupMenu getUiReference() {
+		return (UIMPopupMenu) super.getUiReference();
 	}
 
-	public void setAccelerator(final Accelerator accelerator) {
-		this.accelerator = accelerator;
+	@Override
+	public void show(final Position position) {
+		getUiReference().show(parent, position.getX(), position.getY());
 	}
-
-	public void setMnemonic(final char mnemonic) {
-		this.mnemonic = mnemonic;
-	}
-
-	public IImageConstant getIcon() {
-		return icon;
-	}
-
-	public String getText() {
-		return text;
-	}
-
-	public Accelerator getAccelerator() {
-		return accelerator;
-	}
-
-	public char getMnemonic() {
-		return mnemonic;
-	}
-
-	public boolean isSelected() {
-		return selected;
-	}
-
-	public void setSelected(final boolean selected) {
-		this.selected = selected;
-	}
-
 }

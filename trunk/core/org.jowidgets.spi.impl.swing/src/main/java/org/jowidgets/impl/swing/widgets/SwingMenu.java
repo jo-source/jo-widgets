@@ -38,10 +38,12 @@ import javax.swing.JRadioButtonMenuItem;
 import org.jowidgets.impl.swing.widgets.internal.ActionMenuItemImpl;
 import org.jowidgets.impl.swing.widgets.internal.SelectableMenuItemImpl;
 import org.jowidgets.impl.swing.widgets.internal.SeparatorMenuItemImpl;
+import org.jowidgets.impl.swing.widgets.internal.SubMenuImpl;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 import org.jowidgets.spi.widgets.IMenuItemSpi;
 import org.jowidgets.spi.widgets.IMenuSpi;
 import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
+import org.jowidgets.spi.widgets.ISubMenuSpi;
 
 public class SwingMenu extends SwingWidget implements IMenuSpi {
 
@@ -69,6 +71,13 @@ public class SwingMenu extends SwingWidget implements IMenuSpi {
 	}
 
 	@Override
+	public IMenuItemSpi addSeparator(final Integer index) {
+		final SeparatorMenuItemImpl result = new SeparatorMenuItemImpl();
+		addItem(index, result);
+		return result;
+	}
+
+	@Override
 	public IActionMenuItemSpi addActionItem(final Integer index) {
 		final ActionMenuItemImpl result = new ActionMenuItemImpl();
 		addItem(index, result);
@@ -93,8 +102,8 @@ public class SwingMenu extends SwingWidget implements IMenuSpi {
 	}
 
 	@Override
-	public IMenuItemSpi addSeparator(final Integer index) {
-		final SeparatorMenuItemImpl result = new SeparatorMenuItemImpl();
+	public ISubMenuSpi addSubMenu(final Integer index) {
+		final SubMenuImpl result = new SubMenuImpl();
 		addItem(index, result);
 		return result;
 	}
