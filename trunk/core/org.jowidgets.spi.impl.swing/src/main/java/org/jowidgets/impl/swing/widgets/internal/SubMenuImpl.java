@@ -27,24 +27,23 @@
  */
 package org.jowidgets.impl.swing.widgets.internal;
 
-import javax.swing.JMenu;
-
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.impl.swing.widgets.SwingMenu;
+import org.jowidgets.common.widgets.controler.IMenuListener;
+import org.jowidgets.impl.swing.widgets.internal.base.JoMenu;
 import org.jowidgets.spi.widgets.ISubMenuSpi;
 
-public class SubMenuImpl extends SwingMenu implements ISubMenuSpi {
+public class SubMenuImpl extends AbstractSwingMenu implements ISubMenuSpi {
 
 	private final MenuItemImpl menuItemDelegate;
 
 	public SubMenuImpl() {
-		super(new JMenu());
+		super(new JoMenu());
 		this.menuItemDelegate = new MenuItemImpl(getUiReference());
 	}
 
 	@Override
-	public JMenu getUiReference() {
-		return (JMenu) super.getUiReference();
+	public JoMenu getUiReference() {
+		return (JoMenu) super.getUiReference();
 	}
 
 	@Override
@@ -67,4 +66,13 @@ public class SubMenuImpl extends SwingMenu implements ISubMenuSpi {
 		menuItemDelegate.setMnemonic(mnemonic);
 	}
 
+	@Override
+	public void addMenuListener(final IMenuListener listener) {
+		getUiReference().addMenuListener(listener);
+	}
+
+	@Override
+	public void removeMenuListener(final IMenuListener listener) {
+		getUiReference().removeMenuListener(listener);
+	}
 }

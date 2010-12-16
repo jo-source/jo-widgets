@@ -60,7 +60,7 @@ public class MenuItemImpl extends ActionObservable implements IMenuItemSpi, IToo
 	@Override
 	public void setText(final String text) {
 		this.text = text;
-		setCombienedText();
+		setCombinedText();
 	}
 
 	@Override
@@ -83,14 +83,14 @@ public class MenuItemImpl extends ActionObservable implements IMenuItemSpi, IToo
 			return;
 		}
 		this.acceleratorText = ModifierConvert.acceleratorText(accelerator.getModifier()) + accelerator.getKey();
-		setCombienedText();
+		setCombinedText();
 
 	}
 
 	@Override
 	public void setMnemonic(final char mnemonic) {
 		this.mnemonic = Character.valueOf(mnemonic);
-		setCombienedText();
+		setCombinedText();
 	}
 
 	@Override
@@ -103,7 +103,7 @@ public class MenuItemImpl extends ActionObservable implements IMenuItemSpi, IToo
 		return menuItem.isEnabled();
 	}
 
-	private void setCombienedText() {
+	private void setCombinedText() {
 		final StringBuilder combiened = new StringBuilder();
 		if (text != null) {
 			combiened.append(text.replace("&", "&&"));

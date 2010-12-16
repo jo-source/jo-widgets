@@ -31,13 +31,15 @@ package org.jowidgets.impl.swt.widgets;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ArmEvent;
 import org.eclipse.swt.events.ArmListener;
-import org.eclipse.swt.events.MenuAdapter;
 import org.eclipse.swt.events.MenuEvent;
+import org.eclipse.swt.events.MenuListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.ToolTip;
+import org.jowidgets.common.widgets.controler.IMenuListener;
+import org.jowidgets.common.widgets.controler.impl.MenuObservable;
 import org.jowidgets.impl.swt.widgets.internal.ActionMenuItemImpl;
 import org.jowidgets.impl.swt.widgets.internal.IToolTipTextProvider;
 import org.jowidgets.impl.swt.widgets.internal.MenuItemImpl;
@@ -56,7 +58,11 @@ public class SwtMenu implements IMenuSpi {
 
 	private ArmListener lastArmListener;
 
+	private final MenuObservable menuObservable;
+
 	public SwtMenu(final Menu menu) {
+		this.menuObservable = new MenuObservable();
+
 		this.menu = menu;
 
 		try {
@@ -67,13 +73,20 @@ public class SwtMenu implements IMenuSpi {
 		}
 
 		if (toolTip != null) {
-			menu.addMenuListener(new MenuAdapter() {
+			menu.addMenuListener(new MenuListener() {
+
+				@Override
+				public void menuShown(final MenuEvent e) {
+					menuObservable.fireMenuActivated();
+				}
 
 				@Override
 				public void menuHidden(final MenuEvent e) {
 					toolTip.setVisible(false);
 					lastArmListener = null;
+					menuObservable.fireMenuDeactivated();
 				}
+
 			});
 		}
 	}
@@ -225,6 +238,16 @@ public class SwtMenu implements IMenuSpi {
 		final Point location = Display.getCurrent().getCursorLocation();
 		toolTip.setLocation(location.x + 16, location.y + 16);
 		toolTip.setVisible(true);
+	}
+
+	@Override
+	public void addMenuListener(final IMenuListener listener) {
+		menuObservable.addMenuListener(listener);
+	}
+
+	@Override
+	public void removeMenuListener(final IMenuListener listener) {
+		menuObservable.removeMenuListener(listener);
 	}
 
 }

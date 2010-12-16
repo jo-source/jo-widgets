@@ -26,11 +26,12 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.command;
+package org.jowidgets.common.widgets.controler;
 
-public interface IActionChangeListener {
+public interface IMenuListener {
 
-	void commandChanged();
+	void menuActivated();
 
-	void enabledStateChanged();
+	void menuDeactivated();
+
 }

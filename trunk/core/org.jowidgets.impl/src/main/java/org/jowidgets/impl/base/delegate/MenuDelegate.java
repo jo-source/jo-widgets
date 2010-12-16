@@ -45,6 +45,7 @@ import org.jowidgets.api.widgets.descriptor.setup.IMenuItemSetup;
 import org.jowidgets.api.widgets.descriptor.setup.ISelectableItemSetup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.impl.widgets.basic.ActionMenuItemImpl;
+import org.jowidgets.impl.widgets.basic.IDisposeable;
 import org.jowidgets.impl.widgets.basic.SelectableMenuItemImpl;
 import org.jowidgets.impl.widgets.basic.SeparatorMenuItemImpl;
 import org.jowidgets.impl.widgets.basic.SubMenuImpl;
@@ -155,6 +156,9 @@ public class MenuDelegate {
 
 		final int index = children.indexOf(item);
 		if (index != -1) {
+			if (item instanceof IDisposeable) {
+				((IDisposeable) item).dispose();
+			}
 			children.remove(index);
 			menuSpi.remove(index);
 			return true;

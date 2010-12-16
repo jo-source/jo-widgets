@@ -26,13 +26,10 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.api.command.IAction;
-import org.jowidgets.common.widgets.IActionMenuItemCommon;
+public interface IDisposeable {
 
-public interface IActionMenuItem extends IMenuItem, IActionWidget, IActionMenuItemCommon {
-
-	void setAction(IAction action);
+	void dispose();
 
 }

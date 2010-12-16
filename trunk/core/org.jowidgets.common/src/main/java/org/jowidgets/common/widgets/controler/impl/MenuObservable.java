@@ -26,13 +26,43 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.common.widgets.controler.impl;
 
-import org.jowidgets.api.command.IAction;
-import org.jowidgets.common.widgets.IActionMenuItemCommon;
+import java.util.HashSet;
+import java.util.Set;
 
-public interface IActionMenuItem extends IMenuItem, IActionWidget, IActionMenuItemCommon {
+import org.jowidgets.common.widgets.controler.IMenuListener;
+import org.jowidgets.common.widgets.controler.IMenuObservable;
 
-	void setAction(IAction action);
+public class MenuObservable implements IMenuObservable {
+
+	private final Set<IMenuListener> listeners;
+
+	public MenuObservable() {
+		super();
+		this.listeners = new HashSet<IMenuListener>();
+	}
+
+	@Override
+	public void addMenuListener(final IMenuListener listener) {
+		listeners.add(listener);
+	}
+
+	@Override
+	public void removeMenuListener(final IMenuListener listener) {
+		listeners.remove(listener);
+	}
+
+	public void fireMenuActivated() {
+		for (final IMenuListener menuListener : listeners) {
+			menuListener.menuActivated();
+		}
+	}
+
+	public void fireMenuDeactivated() {
+		for (final IMenuListener menuListener : listeners) {
+			menuListener.menuDeactivated();
+		}
+	}
 
 }

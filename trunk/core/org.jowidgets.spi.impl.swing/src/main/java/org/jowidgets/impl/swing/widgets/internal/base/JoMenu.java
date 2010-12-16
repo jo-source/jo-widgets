@@ -26,13 +26,53 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.impl.swing.widgets.internal.base;
 
-import org.jowidgets.api.command.IAction;
-import org.jowidgets.common.widgets.IActionMenuItemCommon;
+import javax.swing.JMenu;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 
-public interface IActionMenuItem extends IMenuItem, IActionWidget, IActionMenuItemCommon {
+import org.jowidgets.common.widgets.controler.IMenuListener;
+import org.jowidgets.common.widgets.controler.IMenuObservable;
+import org.jowidgets.common.widgets.controler.impl.MenuObservable;
 
-	void setAction(IAction action);
+public class JoMenu extends JMenu implements IMenuObservable {
+
+	private static final long serialVersionUID = -8739364795296901533L;
+
+	private final MenuObservable menuObservable;
+
+	public JoMenu() {
+		super();
+		this.menuObservable = new MenuObservable();
+
+		addMenuListener(new MenuListener() {
+
+			@Override
+			public void menuSelected(final MenuEvent e) {
+				menuObservable.fireMenuActivated();
+			}
+
+			@Override
+			public void menuDeselected(final MenuEvent e) {
+				menuObservable.fireMenuDeactivated();
+			}
+
+			@Override
+			public void menuCanceled(final MenuEvent e) {
+				menuObservable.fireMenuDeactivated();
+			}
+		});
+	}
+
+	@Override
+	public void addMenuListener(final IMenuListener listener) {
+		menuObservable.addMenuListener(listener);
+	}
+
+	@Override
+	public void removeMenuListener(final IMenuListener listener) {
+		menuObservable.removeMenuListener(listener);
+	}
 
 }

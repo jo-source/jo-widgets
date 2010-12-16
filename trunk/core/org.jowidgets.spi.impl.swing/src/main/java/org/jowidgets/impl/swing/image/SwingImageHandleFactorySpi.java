@@ -104,7 +104,10 @@ public class SwingImageHandleFactorySpi extends SwingImageHandleFactory implemen
 			@Override
 			public Image createImage() {
 				final Image templateImage = swingImageRegistry.getImage(imageConstant);
-				return templateImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+				final Image scaledImage = templateImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+				final BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+				bufferedImage.getGraphics().drawImage(scaledImage, 0, 0, null);
+				return bufferedImage;
 			}
 		});
 	}

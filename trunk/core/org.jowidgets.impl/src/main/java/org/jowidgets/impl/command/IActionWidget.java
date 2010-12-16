@@ -26,13 +26,12 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.impl.command;
 
-import org.jowidgets.api.command.IAction;
-import org.jowidgets.common.widgets.IActionMenuItemCommon;
+import org.jowidgets.api.widgets.IWidget;
 
-public interface IActionMenuItem extends IMenuItem, IActionWidget, IActionMenuItemCommon {
+public interface IActionWidget extends IWidget {
 
-	void setAction(IAction action);
+	void setToolTipText(String text);
 
 }

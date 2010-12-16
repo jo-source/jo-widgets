@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.swing.widgets;
+package org.jowidgets.impl.swing.widgets.internal;
 
 import java.awt.Container;
 
@@ -35,22 +35,19 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JRadioButtonMenuItem;
 
-import org.jowidgets.impl.swing.widgets.internal.ActionMenuItemImpl;
-import org.jowidgets.impl.swing.widgets.internal.SelectableMenuItemImpl;
-import org.jowidgets.impl.swing.widgets.internal.SeparatorMenuItemImpl;
-import org.jowidgets.impl.swing.widgets.internal.SubMenuImpl;
+import org.jowidgets.impl.swing.widgets.SwingWidget;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 import org.jowidgets.spi.widgets.IMenuItemSpi;
 import org.jowidgets.spi.widgets.IMenuSpi;
 import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 import org.jowidgets.spi.widgets.ISubMenuSpi;
 
-public class SwingMenu extends SwingWidget implements IMenuSpi {
+public abstract class AbstractSwingMenu extends SwingWidget implements IMenuSpi {
 
 	//TODO use one radio group for every separator
 	private final ButtonGroup radioGroup;
 
-	public SwingMenu(final Container component) {
+	public AbstractSwingMenu(final Container component) {
 		super(component);
 		this.radioGroup = new ButtonGroup();
 	}

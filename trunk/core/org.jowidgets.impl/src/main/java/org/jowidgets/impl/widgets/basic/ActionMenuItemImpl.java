@@ -28,18 +28,30 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.widgets.IActionMenuItem;
 import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.descriptor.setup.IAccelerateableMenuItemSetup;
+import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controler.IMenuListener;
+import org.jowidgets.impl.command.CommandExecuter;
+import org.jowidgets.impl.command.IActionWidget;
 import org.jowidgets.impl.widgets.common.wrapper.ActionMenuItemSpiWrapper;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 
-public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IActionMenuItem {
+public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IActionMenuItem, IActionWidget, IDisposeable {
 
 	private final IMenu parent;
+	private CommandExecuter commandExecuter;
+	private boolean visibleOnScreen;
 
-	public ActionMenuItemImpl(final IMenu parent, final IActionMenuItemSpi actionMenuItemSpi, final IAccelerateableMenuItemSetup setup) {
+	public ActionMenuItemImpl(
+		final IMenu parent,
+		final IActionMenuItemSpi actionMenuItemSpi,
+		final IAccelerateableMenuItemSetup setup) {
 		super(actionMenuItemSpi);
+
+		this.visibleOnScreen = false;
 
 		this.parent = parent;
 
@@ -54,11 +66,72 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 		if (setup.getMnemonic() != null) {
 			setMnemonic(setup.getMnemonic().charValue());
 		}
+
+		parent.addMenuListener(new IMenuListener() {
+
+			@Override
+			public void menuActivated() {
+				visibleOnScreen = true;
+				initializeCommandExecuterWhenVisible();
+			}
+
+			@Override
+			public void menuDeactivated() {
+				visibleOnScreen = false;
+			}
+
+		});
 	}
 
 	@Override
 	public IMenu getParent() {
 		return parent;
+	}
+
+	@Override
+	public void setAction(final IAction action) {
+		setText(action.getText());
+		setToolTipText(action.getToolTipText());
+		setIcon(action.getIcon());
+		setEnabled(action.isEnabled());
+
+		if (action.getAccelerator() != null) {
+			setAccelerator(action.getAccelerator());
+		}
+
+		if (action.getMnemonic() != null) {
+			setMnemonic(action.getMnemonic().charValue());
+		}
+
+		disposeCommandExecuter();
+		commandExecuter = new CommandExecuter(action, this);
+		initializeCommandExecuterWhenVisible();
+
+		addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				commandExecuter.execute();
+			}
+		});
+
+	}
+
+	@Override
+	public void dispose() {
+		disposeCommandExecuter();
+	}
+
+	private void disposeCommandExecuter() {
+		if (commandExecuter != null) {
+			commandExecuter.dispose();
+			commandExecuter = null;
+		}
+	}
+
+	private void initializeCommandExecuterWhenVisible() {
+		if (commandExecuter != null && visibleOnScreen) {
+			commandExecuter.initialize();
+		}
 	}
 
 }

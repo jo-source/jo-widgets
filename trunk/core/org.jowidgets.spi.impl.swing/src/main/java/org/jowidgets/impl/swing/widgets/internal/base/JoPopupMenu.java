@@ -26,13 +26,44 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.impl.swing.widgets.internal.base;
 
-import org.jowidgets.api.command.IAction;
-import org.jowidgets.common.widgets.IActionMenuItemCommon;
+import javax.swing.JPopupMenu;
 
-public interface IActionMenuItem extends IMenuItem, IActionWidget, IActionMenuItemCommon {
+import org.jowidgets.common.widgets.controler.IMenuListener;
+import org.jowidgets.common.widgets.controler.IMenuObservable;
+import org.jowidgets.common.widgets.controler.impl.MenuObservable;
 
-	void setAction(IAction action);
+public class JoPopupMenu extends JPopupMenu implements IMenuObservable {
+
+	private static final long serialVersionUID = -8739364795296901533L;
+
+	private final MenuObservable menuObservable;
+
+	public JoPopupMenu() {
+		super();
+		this.menuObservable = new MenuObservable();
+	}
+
+	@Override
+	public void setVisible(final boolean visible) {
+		super.setVisible(visible);
+		if (visible) {
+			menuObservable.fireMenuActivated();
+		}
+		else {
+			menuObservable.fireMenuDeactivated();
+		}
+	}
+
+	@Override
+	public void addMenuListener(final IMenuListener listener) {
+		menuObservable.addMenuListener(listener);
+	}
+
+	@Override
+	public void removeMenuListener(final IMenuListener listener) {
+		menuObservable.removeMenuListener(listener);
+	}
 
 }

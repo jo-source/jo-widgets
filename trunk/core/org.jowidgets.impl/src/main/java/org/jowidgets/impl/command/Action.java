@@ -31,34 +31,37 @@ package org.jowidgets.impl.command;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.jowidgets.api.command.ExecutableState;
 import org.jowidgets.api.command.IAction;
-import org.jowidgets.api.command.IActionChangeListener;
 import org.jowidgets.api.command.ICommand;
 import org.jowidgets.api.command.ICommandProvider;
 import org.jowidgets.api.command.IExecutableState;
 import org.jowidgets.api.command.IExecutableStateChecker;
 import org.jowidgets.api.command.IExecutableStateDisplay;
-import org.jowidgets.api.image.Icons;
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.IWindow;
-import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
+import org.jowidgets.api.command.IExecutableStateListener;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.common.widgets.controler.impl.ActionObservable;
 
-public class Action extends ActionObservable implements IAction {
+public class Action extends ActionObservable implements IAction, IExecutableStateChecker {
 
-	private final Set<IActionChangeListener> actionChangeListeners;
+	private static final IExecutableState ACTION_DISABLED_STATE = ExecutableState.notExecutable("Action is disabled!");
+	private static final IExecutableState NO_COMMAND_STATE = ExecutableState.notExecutable("Action has no command!");
+
+	private final Set<IExecutableStateListener> executableStateListeners;
 
 	private final String text;
 	private final String toolTipText;
 	private final IImageConstant icon;
 	private final char mnemonic;
 	private final Accelerator accelerator;
-	private boolean enabled;
+	private final boolean isAutoDisableItems;
 	private final IExecutableStateDisplay executableStateDisplay;
 	private final boolean isTooltipStateDisplay;
+	private final IExecutableStateListener executableStateListener;
+
+	private boolean enabled;
+	private IExecutableState executableState;
 
 	private ICommandProvider commandProvider;
 
@@ -69,12 +72,14 @@ public class Action extends ActionObservable implements IAction {
 		final char mnemonic,
 		final Accelerator accelerator,
 		final boolean enabled,
+		final boolean isAutoDisableItems,
 		final IExecutableStateDisplay executableStateDisplay,
 		final boolean isTooltipStateDisplay,
 		final ICommandProvider commandProvider) {
 		super();
 
-		this.actionChangeListeners = new HashSet<IActionChangeListener>();
+		this.executableStateListener = new ExecutabelStateListener();
+		this.executableStateListeners = new HashSet<IExecutableStateListener>();
 
 		this.text = text;
 		this.toolTipText = toolTipText;
@@ -82,6 +87,7 @@ public class Action extends ActionObservable implements IAction {
 		this.mnemonic = mnemonic;
 		this.accelerator = accelerator;
 		this.enabled = enabled;
+		this.isAutoDisableItems = isAutoDisableItems;
 		this.executableStateDisplay = executableStateDisplay;
 		this.isTooltipStateDisplay = isTooltipStateDisplay;
 
@@ -129,6 +135,11 @@ public class Action extends ActionObservable implements IAction {
 	}
 
 	@Override
+	public boolean isAutoDisableItems() {
+		return isAutoDisableItems;
+	}
+
+	@Override
 	public ICommand getCommand() {
 		return commandProvider.getCommand();
 	}
@@ -140,19 +151,31 @@ public class Action extends ActionObservable implements IAction {
 
 	@Override
 	public void setEnabled(final boolean enabled) {
-		this.enabled = enabled;
-		fireEnabledStateChanged();
+		if (enabled != this.enabled) {
+			this.enabled = enabled;
+			fireExecutableStateChanged();
+		}
 	}
 
 	@Override
 	public void setCommandProvider(final ICommandProvider commandProvider) {
+
+		//remove the executable state listener on the old provider
+		if (isAutoDisableItems() && this.commandProvider != null && this.commandProvider.getExecutableStateChecker() != null) {
+			this.commandProvider.getExecutableStateChecker().removeExecutableStateListener(executableStateListener);
+		}
+
 		if (commandProvider != null) {
 			this.commandProvider = commandProvider;
 		}
 		else {
 			this.commandProvider = new CommandProvider();
 		}
-		fireCommandChanged();
+
+		if (this.commandProvider.getExecutableStateChecker() != null) {
+			this.commandProvider.getExecutableStateChecker().addExecutableStateListener(executableStateListener);
+		}
+
 	}
 
 	@Override
@@ -166,80 +189,50 @@ public class Action extends ActionObservable implements IAction {
 	}
 
 	@Override
-	public void addActionChangeListener(final IActionChangeListener listener) {
-		actionChangeListeners.add(listener);
-	}
-
-	@Override
-	public void removeActionChangeListener(final IActionChangeListener listener) {
-		actionChangeListeners.remove(listener);
-	}
-
-	@Override
-	public void performAction(final IWidget source) {
+	public IExecutableState getExecutableState() {
 		if (isEnabled()) {
-			if (getExecutableStateChecker() != null) {
-				final IExecutableState executableState = getExecutableStateChecker().getExecutableState();
-				if (executableState != null && !executableState.isExecutable()) {
-					final IMessageDialogBluePrint messageDialogBp = createMessageDialogBp().setIcon(Icons.INFO);
-					final String reason = executableState.getReason();
-					if (reason != null && !reason.isEmpty()) {
-						messageDialogBp.setText(executableState.getReason());
-					}
-					else {
-						messageDialogBp.setText("Could not execute action '" + getText() + "'");
-					}
-					showMessageDialog(source, messageDialogBp);
+			if (executableState == null) {
+				if (commandProvider.getExecutableStateChecker() != null) {
+					executableState = commandProvider.getExecutableStateChecker().getExecutableState();
+				}
+				else if (commandProvider.getCommand() == null) {
+					executableState = NO_COMMAND_STATE;
 				}
 				else {
-					executeCommand(source);
+					executableState = ExecutableState.EXECUTABLE;
 				}
 			}
-			else {
-				executeCommand(source);
-			}
-			fireActionPerformed();
-		}
-	}
-
-	private void executeCommand(final IWidget source) {
-		if (getCommand() != null) {
-			try {
-				getCommand().execute(this, source);
-			}
-			catch (final Exception exception) {
-				final IMessageDialogBluePrint messageDialogBp = createMessageDialogBp().setIcon(Icons.ERROR);
-				messageDialogBp.setText("Error occurred\n" + exception.getLocalizedMessage());
-			}
+			return executableState;
 		}
 		else {
-			final IMessageDialogBluePrint messageDialogBp = createMessageDialogBp().setIcon(Icons.ERROR);
-			messageDialogBp.setText("No command defined for this action");
-			showMessageDialog(source, messageDialogBp);
+			return ACTION_DISABLED_STATE;
 		}
 	}
 
-	private void fireCommandChanged() {
-		for (final IActionChangeListener listener : actionChangeListeners) {
-			listener.commandChanged();
+	@Override
+	public void addExecutableStateListener(final IExecutableStateListener listener) {
+		this.executableStateListeners.add(listener);
+	}
+
+	@Override
+	public void removeExecutableStateListener(final IExecutableStateListener listener) {
+		this.executableStateListeners.remove(listener);
+	}
+
+	private void fireExecutableStateChanged() {
+		for (final IExecutableStateListener listener : executableStateListeners) {
+			listener.executableStateChanged();
 		}
 	}
 
-	private void fireEnabledStateChanged() {
-		for (final IActionChangeListener listener : actionChangeListeners) {
-			listener.enabledStateChanged();
+	private class ExecutabelStateListener implements IExecutableStateListener {
+		@Override
+		public void executableStateChanged() {
+			executableState = null;
+			if (isAutoDisableItems || isTooltipStateDisplay) {
+				fireExecutableStateChanged();
+			}
 		}
 	}
 
-	private IMessageDialogBluePrint createMessageDialogBp() {
-		final IMessageDialogBluePrint messageDialogBp = Toolkit.getBluePrintFactory().messageDialog();
-		messageDialogBp.setTitleIcon(getIcon());
-		messageDialogBp.setTitle(getText());
-		return messageDialogBp;
-	}
-
-	private void showMessageDialog(final IWidget source, final IMessageDialogBluePrint messageDialogBp) {
-		final IWindow parentWindow = Toolkit.getWidgetUtils().getWindowAncestor(source);
-		parentWindow.createChildWindow(messageDialogBp).showMessage();
-	}
 }

@@ -30,28 +30,56 @@ package org.jowidgets.impl.swing.widgets.internal;
 
 import java.awt.Component;
 
-import javax.swing.JPopupMenu;
-
 import org.jowidgets.common.types.Position;
-import org.jowidgets.impl.swing.widgets.SwingMenu;
+import org.jowidgets.common.widgets.controler.IMenuListener;
+import org.jowidgets.common.widgets.controler.impl.MenuObservable;
+import org.jowidgets.impl.swing.widgets.internal.base.JoPopupMenu;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
-public class PopupMenuImpl extends SwingMenu implements IPopupMenuSpi {
+public class PopupMenuImpl extends AbstractSwingMenu implements IPopupMenuSpi {
 
 	private final Component parent;
 
 	public PopupMenuImpl(final Component parent) {
-		super(new JPopupMenu());
+		super(new JoPopupMenu() {
+
+			private static final long serialVersionUID = -3625772723915271319L;
+
+			private final MenuObservable menuObservable = new MenuObservable();
+
+			@Override
+			public void setVisible(final boolean visible) {
+				super.setVisible(visible);
+				if (visible) {
+					menuObservable.fireMenuActivated();
+				}
+				else {
+					menuObservable.fireMenuDeactivated();
+				}
+			}
+
+		});
 		this.parent = parent;
 	}
 
 	@Override
-	public JPopupMenu getUiReference() {
-		return (JPopupMenu) super.getUiReference();
+	public JoPopupMenu getUiReference() {
+		return (JoPopupMenu) super.getUiReference();
 	}
 
 	@Override
 	public void show(final Position position) {
 		getUiReference().show(parent, position.getX(), position.getY());
 	}
+
+	@Override
+	public void addMenuListener(final IMenuListener listener) {
+		getUiReference().addMenuListener(listener);
+	}
+
+	@Override
+	public void removeMenuListener(final IMenuListener listener) {
+		getUiReference().removeMenuListener(listener);
+	}
+
 }

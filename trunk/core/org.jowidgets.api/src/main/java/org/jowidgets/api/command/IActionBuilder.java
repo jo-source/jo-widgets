@@ -53,6 +53,8 @@ public interface IActionBuilder {
 
 	IActionBuilder setCommand(ICommand command, IExecutableStateChecker executableStateChecker);
 
+	IActionBuilder setAutoDisableItems(boolean autoDisable);
+
 	IActionBuilder setTooltipStateDisplay(boolean enabled);
 
 	IActionBuilder setExecutableStateDisplay(IExecutableStateDisplay executableStateDisplay);

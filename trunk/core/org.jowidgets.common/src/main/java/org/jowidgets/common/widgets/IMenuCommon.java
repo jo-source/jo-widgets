@@ -28,7 +28,8 @@
 
 package org.jowidgets.common.widgets;
 
+import org.jowidgets.common.widgets.controler.IMenuObservable;
 
-public interface IMenuCommon extends IWidgetCommon {
+public interface IMenuCommon extends IWidgetCommon, IMenuObservable {
 
 }

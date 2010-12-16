@@ -30,7 +30,7 @@ package org.jowidgets.api.command;
 
 import org.jowidgets.api.widgets.IWidget;
 
-public interface ICommand extends IExecutableStateChecker {
+public interface ICommand {
 
 	void execute(IAction action, IWidget source);
 

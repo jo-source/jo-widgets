@@ -63,6 +63,7 @@ public class DialogImpl extends SwingWindow implements IFrameSpi {
 
 		setIcon(setup.getIcon(), imageRegistry);
 		setLayout(setup.getLayout());
+
 	}
 
 	@Override

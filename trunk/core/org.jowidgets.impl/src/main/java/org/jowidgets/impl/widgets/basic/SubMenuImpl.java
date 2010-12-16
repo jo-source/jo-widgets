@@ -34,6 +34,7 @@ import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.IMenuItem;
 import org.jowidgets.api.widgets.ISubMenu;
 import org.jowidgets.api.widgets.descriptor.setup.IMenuItemSetup;
+import org.jowidgets.common.widgets.controler.IMenuListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.impl.base.delegate.MenuDelegate;
 import org.jowidgets.impl.widgets.common.wrapper.MenuItemSpiWrapper;
@@ -57,6 +58,12 @@ public class SubMenuImpl extends MenuItemSpiWrapper implements ISubMenu {
 		if (setup.getMnemonic() != null) {
 			setMnemonic(setup.getMnemonic().charValue());
 		}
+
+	}
+
+	@Override
+	public ISubMenuSpi getWidget() {
+		return (ISubMenuSpi) super.getWidget();
 	}
 
 	@Override
@@ -95,6 +102,16 @@ public class SubMenuImpl extends MenuItemSpiWrapper implements ISubMenu {
 	@Override
 	public IMenu getParent() {
 		return parent;
+	}
+
+	@Override
+	public void addMenuListener(final IMenuListener listener) {
+		getWidget().addMenuListener(listener);
+	}
+
+	@Override
+	public void removeMenuListener(final IMenuListener listener) {
+		getWidget().removeMenuListener(listener);
 	}
 
 }

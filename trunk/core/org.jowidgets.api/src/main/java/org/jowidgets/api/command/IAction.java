@@ -28,12 +28,10 @@
 
 package org.jowidgets.api.command;
 
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
-import org.jowidgets.common.widgets.controler.IActionObservable;
 
-public interface IAction extends IActionObservable {
+public interface IAction extends IExecutableStateChecker {
 
 	String getText();
 
@@ -55,6 +53,8 @@ public interface IAction extends IActionObservable {
 
 	boolean isTooltipStateDisplay();
 
+	boolean isAutoDisableItems();
+
 	void setEnabled(boolean enabled);
 
 	void setCommandProvider(ICommandProvider commandProvider);
@@ -62,11 +62,5 @@ public interface IAction extends IActionObservable {
 	void setCommand(ICommand command);
 
 	void setCommand(ICommand command, IExecutableStateChecker executableStateChecker);
-
-	void addActionChangeListener(IActionChangeListener listener);
-
-	void removeActionChangeListener(IActionChangeListener listener);
-
-	void performAction(IWidget source);
 
 }

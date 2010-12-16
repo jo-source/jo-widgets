@@ -37,15 +37,23 @@ import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.controler.IInputObservable;
 import org.jowidgets.common.widgets.controler.IItemStateListener;
 import org.jowidgets.common.widgets.controler.IItemStateObservable;
+import org.jowidgets.common.widgets.controler.IMenuListener;
+import org.jowidgets.common.widgets.controler.IMenuObservable;
 import org.jowidgets.common.widgets.controler.IWindowListener;
 import org.jowidgets.common.widgets.controler.IWindowObservable;
 
-public class UIMObservable implements IActionObservable, IInputObservable, IWindowObservable, IItemStateObservable {
+public class UIMObservable implements
+		IActionObservable,
+		IInputObservable,
+		IWindowObservable,
+		IItemStateObservable,
+		IMenuObservable {
 
 	private final Set<IInputListener> inputListeners;
 	private final Set<IActionListener> actionListeners;
 	private final Set<IWindowListener> windowListeners;
 	private final Set<IItemStateListener> itemStateListeners;
+	private final Set<IMenuListener> menuListeners;
 
 	public UIMObservable() {
 		super();
@@ -53,6 +61,7 @@ public class UIMObservable implements IActionObservable, IInputObservable, IWind
 		this.actionListeners = new HashSet<IActionListener>();
 		this.windowListeners = new HashSet<IWindowListener>();
 		this.itemStateListeners = new HashSet<IItemStateListener>();
+		this.menuListeners = new HashSet<IMenuListener>();
 	}
 
 	@Override
@@ -93,6 +102,16 @@ public class UIMObservable implements IActionObservable, IInputObservable, IWind
 	@Override
 	public void removeItemListener(final IItemStateListener listener) {
 		itemStateListeners.remove(listener);
+	}
+
+	@Override
+	public void addMenuListener(final IMenuListener listener) {
+		menuListeners.add(listener);
+	}
+
+	@Override
+	public void removeMenuListener(final IMenuListener listener) {
+		menuListeners.remove(listener);
 	}
 
 	public void fireActionPerformed() {
@@ -140,6 +159,18 @@ public class UIMObservable implements IActionObservable, IInputObservable, IWind
 	void fireWindowClosed() {
 		for (final IWindowListener listener : windowListeners) {
 			listener.windowClosed();
+		}
+	}
+
+	void fireMenuActivated() {
+		for (final IMenuListener listener : menuListeners) {
+			listener.menuActivated();
+		}
+	}
+
+	void fireMenuDeactivated() {
+		for (final IMenuListener listener : menuListeners) {
+			listener.menuDeactivated();
 		}
 	}
 

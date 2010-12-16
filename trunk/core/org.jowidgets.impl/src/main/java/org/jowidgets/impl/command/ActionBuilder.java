@@ -45,6 +45,7 @@ public class ActionBuilder implements IActionBuilder {
 	private char mnemonic;
 	private Accelerator accelerator;
 	private boolean enabled;
+	private boolean isAutoDisableItems;
 	private IExecutableStateDisplay executableStateDisplay;
 	private boolean isTooltipStateDisplay;
 
@@ -52,6 +53,7 @@ public class ActionBuilder implements IActionBuilder {
 
 	public ActionBuilder() {
 		this.enabled = true;
+		this.isAutoDisableItems = true;
 		this.isTooltipStateDisplay = true;
 	}
 
@@ -116,6 +118,12 @@ public class ActionBuilder implements IActionBuilder {
 	}
 
 	@Override
+	public IActionBuilder setAutoDisableItems(final boolean autoDisable) {
+		this.isAutoDisableItems = autoDisable;
+		return this;
+	}
+
+	@Override
 	public IActionBuilder setTooltipStateDisplay(final boolean enabled) {
 		this.isTooltipStateDisplay = enabled;
 		return this;
@@ -136,6 +144,7 @@ public class ActionBuilder implements IActionBuilder {
 			mnemonic,
 			accelerator,
 			enabled,
+			isAutoDisableItems,
 			executableStateDisplay,
 			isTooltipStateDisplay,
 			commandProvider);

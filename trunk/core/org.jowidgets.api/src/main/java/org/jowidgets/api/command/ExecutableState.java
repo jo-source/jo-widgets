@@ -66,4 +66,40 @@ public final class ExecutableState implements IExecutableState {
 	public static ExecutableState notExecutable(final String reason) {
 		return new ExecutableState(false, reason);
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (executable ? 1231 : 1237);
+		result = prime * result + ((reason == null) ? 0 : reason.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final ExecutableState other = (ExecutableState) obj;
+		if (executable != other.executable) {
+			return false;
+		}
+		if (reason == null) {
+			if (other.reason != null) {
+				return false;
+			}
+		}
+		else if (!reason.equals(other.reason)) {
+			return false;
+		}
+		return true;
+	}
+
 }

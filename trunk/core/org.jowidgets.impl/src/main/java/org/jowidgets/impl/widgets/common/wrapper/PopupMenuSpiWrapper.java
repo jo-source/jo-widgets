@@ -30,6 +30,7 @@ package org.jowidgets.impl.widgets.common.wrapper;
 
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IPopupMenuCommon;
+import org.jowidgets.common.widgets.controler.IMenuListener;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
 public class PopupMenuSpiWrapper extends WidgetSpiWrapper implements IPopupMenuCommon {
@@ -46,6 +47,16 @@ public class PopupMenuSpiWrapper extends WidgetSpiWrapper implements IPopupMenuC
 	@Override
 	public void show(final Position position) {
 		getWidget().show(position);
+	}
+
+	@Override
+	public void addMenuListener(final IMenuListener listener) {
+		getWidget().addMenuListener(listener);
+	}
+
+	@Override
+	public void removeMenuListener(final IMenuListener listener) {
+		getWidget().removeMenuListener(listener);
 	}
 
 }

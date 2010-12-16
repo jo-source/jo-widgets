@@ -26,13 +26,12 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.common.widgets.controler;
 
-import org.jowidgets.api.command.IAction;
-import org.jowidgets.common.widgets.IActionMenuItemCommon;
+public interface IMenuObservable {
 
-public interface IActionMenuItem extends IMenuItem, IActionWidget, IActionMenuItemCommon {
+	void addMenuListener(IMenuListener listener);
 
-	void setAction(IAction action);
+	void removeMenuListener(IMenuListener listener);
 
 }

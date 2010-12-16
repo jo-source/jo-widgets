@@ -26,41 +26,59 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.common.wrapper;
+package org.jowidgets.tools.command;
 
-import org.jowidgets.common.widgets.IMainMenuCommon;
-import org.jowidgets.common.widgets.controler.IMenuListener;
-import org.jowidgets.spi.widgets.IMainMenuSpi;
+import java.util.HashSet;
+import java.util.Set;
 
-public class MainMenuSpiWrapper extends WidgetSpiWrapper implements IMainMenuCommon {
+import org.jowidgets.api.command.ExecutableState;
+import org.jowidgets.api.command.IExecutableState;
+import org.jowidgets.api.command.IExecutableStateChecker;
+import org.jowidgets.api.command.IExecutableStateListener;
+import org.jowidgets.util.Assert;
 
-	public MainMenuSpiWrapper(final IMainMenuSpi component) {
-		super(component);
+public class ExecutableStateChecker implements IExecutableStateChecker {
+
+	private final Set<IExecutableStateListener> executableStateListeners;
+
+	private IExecutableState executableState;
+
+	public ExecutableStateChecker() {
+		super();
+		this.executableStateListeners = new HashSet<IExecutableStateListener>();
+		this.executableState = ExecutableState.EXECUTABLE;
+	}
+
+	public void setExecutableState(final IExecutableState executableState) {
+		Assert.paramNotNull(executableState, "executableState");
+
+		final boolean stateChanged = !this.executableState.equals(executableState);
+		this.executableState = executableState;
+
+		if (stateChanged) {
+			fireExecutableStateChanged();
+		}
 	}
 
 	@Override
-	public IMainMenuSpi getWidget() {
-		return (IMainMenuSpi) super.getWidget();
+	public IExecutableState getExecutableState() {
+		return executableState;
 	}
 
 	@Override
-	public void setText(final String text) {
-		getWidget().setText(text);
+	public final void addExecutableStateListener(final IExecutableStateListener listener) {
+		executableStateListeners.add(listener);
 	}
 
 	@Override
-	public void setMnemonic(final char mnemonic) {
-		getWidget().setMnemonic(mnemonic);
+	public final void removeExecutableStateListener(final IExecutableStateListener listener) {
+		executableStateListeners.remove(listener);
 	}
 
-	@Override
-	public void addMenuListener(final IMenuListener listener) {
-		getWidget().addMenuListener(listener);
-	}
-
-	@Override
-	public void removeMenuListener(final IMenuListener listener) {
-		getWidget().removeMenuListener(listener);
+	public final void fireExecutableStateChanged() {
+		for (final IExecutableStateListener listener : executableStateListeners) {
+			listener.executableStateChanged();
+		}
 	}
 
 }

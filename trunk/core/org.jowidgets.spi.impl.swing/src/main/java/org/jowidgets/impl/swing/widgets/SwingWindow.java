@@ -83,7 +83,9 @@ public class SwingWindow extends SwingContainer implements IWindowSpi {
 			}
 
 			@Override
-			public void windowClosing(final WindowEvent e) {}
+			public void windowClosing(final WindowEvent e) {
+				windowObservableDelegate.fireWindowClosed();
+			}
 
 			@Override
 			public void windowOpened(final WindowEvent e) {}

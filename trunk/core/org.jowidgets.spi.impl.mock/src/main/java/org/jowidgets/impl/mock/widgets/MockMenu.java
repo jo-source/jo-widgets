@@ -28,6 +28,7 @@
 
 package org.jowidgets.impl.mock.widgets;
 
+import org.jowidgets.common.widgets.controler.IMenuListener;
 import org.jowidgets.impl.mock.mockui.UIMCheckedMenuItem;
 import org.jowidgets.impl.mock.mockui.UIMMenuItem;
 import org.jowidgets.impl.mock.mockui.UIMRadioMenuItem;
@@ -99,6 +100,16 @@ public class MockMenu extends MockWidget implements IMenuSpi {
 		else {
 			getUiReference().add(item.getUiReference());
 		}
+	}
+
+	@Override
+	public void addMenuListener(final IMenuListener listener) {
+		getUiReference().addMenuListener(listener);
+	}
+
+	@Override
+	public void removeMenuListener(final IMenuListener listener) {
+		getUiReference().removeMenuListener(listener);
 	}
 
 }
