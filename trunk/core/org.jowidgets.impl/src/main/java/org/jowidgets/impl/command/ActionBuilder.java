@@ -45,14 +45,14 @@ public class ActionBuilder implements IActionBuilder {
 	private Accelerator accelerator;
 	private boolean enabled;
 	private boolean isAutoDisableItems;
-	private boolean isTooltipStateDisplay;
+	private boolean isTooltipShowExecutableState;
 
 	private ICommandProvider commandProvider;
 
 	public ActionBuilder() {
 		this.enabled = true;
 		this.isAutoDisableItems = true;
-		this.isTooltipStateDisplay = true;
+		this.isTooltipShowExecutableState = true;
 	}
 
 	@Override
@@ -123,7 +123,7 @@ public class ActionBuilder implements IActionBuilder {
 
 	@Override
 	public IActionBuilder setTooltipShowExecutableState(final boolean enabled) {
-		this.isTooltipStateDisplay = enabled;
+		this.isTooltipShowExecutableState = enabled;
 		return this;
 	}
 
@@ -137,7 +137,7 @@ public class ActionBuilder implements IActionBuilder {
 			accelerator,
 			enabled,
 			isAutoDisableItems,
-			isTooltipStateDisplay,
+			isTooltipShowExecutableState,
 			commandProvider);
 		return result;
 	}
