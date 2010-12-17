@@ -107,6 +107,8 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 		commandExecuter = new CommandExecuter(action, this);
 		initializeCommandExecuterWhenVisible();
 
+		//TODO must be removed
+		System.out.println("TODO");
 		addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
