@@ -54,7 +54,7 @@ public class CommandExecuter {
 
 	public void initialize() {
 		if (!isInitialized) {
-			if (action.isTooltipStateDisplay() || action.isAutoDisableItems()) {
+			if (action.isTooltipShowExecutableState() || action.isAutoDisableItems()) {
 				executableStateListener = new ExecutabelStateListener();
 				action.addExecutableStateListener(executableStateListener);
 				execStateChanged();
@@ -112,7 +112,7 @@ public class CommandExecuter {
 	private void execStateChanged() {
 		final IExecutableState executableState = action.getExecutableState();
 
-		if (action.isTooltipStateDisplay()) {
+		if (action.isTooltipShowExecutableState()) {
 			final String reason = executableState.getReason();
 			final boolean showReason = !executableState.isExecutable() && !EmptyCheck.isEmpty(reason);
 			if (showReason) {

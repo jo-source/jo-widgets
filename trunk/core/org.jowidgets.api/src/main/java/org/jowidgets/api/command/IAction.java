@@ -49,9 +49,7 @@ public interface IAction extends IExecutableStateChecker {
 
 	IExecutableStateChecker getExecutableStateChecker();
 
-	IExecutableStateDisplay getExecutableStateDisplay();
-
-	boolean isTooltipStateDisplay();
+	boolean isTooltipShowExecutableState();
 
 	boolean isAutoDisableItems();
 

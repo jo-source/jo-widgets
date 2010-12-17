@@ -37,7 +37,6 @@ import org.jowidgets.api.command.ICommand;
 import org.jowidgets.api.command.ICommandProvider;
 import org.jowidgets.api.command.IExecutableState;
 import org.jowidgets.api.command.IExecutableStateChecker;
-import org.jowidgets.api.command.IExecutableStateDisplay;
 import org.jowidgets.api.command.IExecutableStateListener;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
@@ -56,7 +55,6 @@ public class Action extends ActionObservable implements IAction, IExecutableStat
 	private final char mnemonic;
 	private final Accelerator accelerator;
 	private final boolean isAutoDisableItems;
-	private final IExecutableStateDisplay executableStateDisplay;
 	private final boolean isTooltipStateDisplay;
 	private final IExecutableStateListener executableStateListener;
 
@@ -73,7 +71,6 @@ public class Action extends ActionObservable implements IAction, IExecutableStat
 		final Accelerator accelerator,
 		final boolean enabled,
 		final boolean isAutoDisableItems,
-		final IExecutableStateDisplay executableStateDisplay,
 		final boolean isTooltipStateDisplay,
 		final ICommandProvider commandProvider) {
 		super();
@@ -88,7 +85,6 @@ public class Action extends ActionObservable implements IAction, IExecutableStat
 		this.accelerator = accelerator;
 		this.enabled = enabled;
 		this.isAutoDisableItems = isAutoDisableItems;
-		this.executableStateDisplay = executableStateDisplay;
 		this.isTooltipStateDisplay = isTooltipStateDisplay;
 
 		setCommandProvider(commandProvider);
@@ -125,12 +121,7 @@ public class Action extends ActionObservable implements IAction, IExecutableStat
 	}
 
 	@Override
-	public IExecutableStateDisplay getExecutableStateDisplay() {
-		return executableStateDisplay;
-	}
-
-	@Override
-	public boolean isTooltipStateDisplay() {
+	public boolean isTooltipShowExecutableState() {
 		return isTooltipStateDisplay;
 	}
 

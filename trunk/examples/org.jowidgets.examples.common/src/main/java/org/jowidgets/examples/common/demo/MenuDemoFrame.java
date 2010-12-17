@@ -106,7 +106,7 @@ public class MenuDemoFrame extends JoFrame {
 		action2.setCommand(command2, executableStateChecker2);
 
 		final IMenuBar menuBar = createMenuBar();
-		final IMenu menu1 = menuBar.addMenu("menu1", 'n');
+		final IMenu menu1 = menuBar.addMenu("Menu1", 'n');
 		addMenus(menu1);
 
 		final IPopupMenu popupMenu = createPopupMenu();

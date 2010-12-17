@@ -55,9 +55,7 @@ public interface IActionBuilder {
 
 	IActionBuilder setAutoDisableItems(boolean autoDisable);
 
-	IActionBuilder setTooltipStateDisplay(boolean enabled);
-
-	IActionBuilder setExecutableStateDisplay(IExecutableStateDisplay executableStateDisplay);
+	IActionBuilder setTooltipShowExecutableState(boolean enabled);
 
 	IAction build();
 

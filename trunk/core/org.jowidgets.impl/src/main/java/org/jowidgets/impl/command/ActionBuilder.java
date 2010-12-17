@@ -33,7 +33,6 @@ import org.jowidgets.api.command.IActionBuilder;
 import org.jowidgets.api.command.ICommand;
 import org.jowidgets.api.command.ICommandProvider;
 import org.jowidgets.api.command.IExecutableStateChecker;
-import org.jowidgets.api.command.IExecutableStateDisplay;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
 
@@ -46,7 +45,6 @@ public class ActionBuilder implements IActionBuilder {
 	private Accelerator accelerator;
 	private boolean enabled;
 	private boolean isAutoDisableItems;
-	private IExecutableStateDisplay executableStateDisplay;
 	private boolean isTooltipStateDisplay;
 
 	private ICommandProvider commandProvider;
@@ -124,14 +122,8 @@ public class ActionBuilder implements IActionBuilder {
 	}
 
 	@Override
-	public IActionBuilder setTooltipStateDisplay(final boolean enabled) {
+	public IActionBuilder setTooltipShowExecutableState(final boolean enabled) {
 		this.isTooltipStateDisplay = enabled;
-		return this;
-	}
-
-	@Override
-	public IActionBuilder setExecutableStateDisplay(final IExecutableStateDisplay executableStateDisplay) {
-		this.executableStateDisplay = executableStateDisplay;
 		return this;
 	}
 
@@ -145,7 +137,6 @@ public class ActionBuilder implements IActionBuilder {
 			accelerator,
 			enabled,
 			isAutoDisableItems,
-			executableStateDisplay,
 			isTooltipStateDisplay,
 			commandProvider);
 		return result;
