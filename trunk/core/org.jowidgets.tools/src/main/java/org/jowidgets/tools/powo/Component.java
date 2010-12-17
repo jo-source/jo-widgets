@@ -39,79 +39,63 @@ import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.util.Assert;
 
-class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE> & IComponentSetupBuilder<?>> implements
-		IComponent {
+class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE> & IComponentSetupBuilder<?>> extends
+		Widget<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IComponent {
 
-	private final BLUE_PRINT_TYPE bluePrint;
-	private WIDGET_TYPE widget;
 	private Cursor cursor;
-	private Boolean enabled;
 	private final Set<IPopupDetectionListener> popupDetectionListeners;
 
 	Component(final BLUE_PRINT_TYPE bluePrint) {
-		this.bluePrint = bluePrint;
+		super(bluePrint);
 		this.popupDetectionListeners = new HashSet<IPopupDetectionListener>();
 	}
 
-	public final boolean isInitialized() {
-		return widget != null;
-	}
-
+	@Override
 	void initialize(final WIDGET_TYPE widget) {
-		Assert.paramNotNull(widget, "widget");
-		checkNotInitialized();
-		this.widget = widget;
+		super.initialize(widget);
 		if (cursor != null) {
 			widget.setCursor(cursor);
-		}
-		if (enabled != null) {
-			widget.setEnabled(enabled.booleanValue());
 		}
 		for (final IPopupDetectionListener listener : popupDetectionListeners) {
 			widget.addPopupDetectionListener(listener);
 		}
 	}
 
-	final IWidgetDescriptor<? extends WIDGET_TYPE> getDescriptor() {
-		return bluePrint;
-	}
-
 	@Override
 	public final void setForegroundColor(final IColorConstant colorValue) {
 		if (isInitialized()) {
-			widget.setForegroundColor(colorValue);
+			getWidget().setForegroundColor(colorValue);
 		}
 		else {
-			bluePrint.setForegroundColor(colorValue);
+			getBluePrint().setForegroundColor(colorValue);
 		}
 	}
 
 	@Override
 	public final void setBackgroundColor(final IColorConstant colorValue) {
 		if (isInitialized()) {
-			widget.setBackgroundColor(colorValue);
+			getWidget().setBackgroundColor(colorValue);
 		}
 		else {
-			bluePrint.setBackgroundColor(colorValue);
+			getBluePrint().setBackgroundColor(colorValue);
 		}
 	}
 
 	@Override
 	public void setVisible(final boolean visible) {
 		if (isInitialized()) {
-			widget.setVisible(visible);
+			getWidget().setVisible(visible);
 		}
 		else {
-			bluePrint.setVisible(visible);
+			getBluePrint().setVisible(visible);
 		}
 	}
 
 	@Override
 	public void setCursor(final Cursor cursor) {
 		if (isInitialized()) {
-			widget.setCursor(cursor);
+			getWidget().setCursor(cursor);
 		}
 		else {
 			this.cursor = cursor;
@@ -119,19 +103,9 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 	}
 
 	@Override
-	public void setEnabled(final boolean enabled) {
-		if (isInitialized()) {
-			widget.setEnabled(enabled);
-		}
-		else {
-			this.enabled = Boolean.valueOf(enabled);
-		}
-	}
-
-	@Override
 	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
 		if (isInitialized()) {
-			widget.addPopupDetectionListener(listener);
+			getWidget().addPopupDetectionListener(listener);
 		}
 		else {
 			popupDetectionListeners.add(listener);
@@ -141,7 +115,7 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
 		if (isInitialized()) {
-			widget.removePopupDetectionListener(listener);
+			getWidget().removePopupDetectionListener(listener);
 		}
 		else {
 			popupDetectionListeners.remove(listener);
@@ -152,49 +126,37 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 	public IPopupMenu createPopupMenu() {
 		//TODO use JoPopupMenu later
 		checkInitialized();
-		return widget.createPopupMenu();
-	}
-
-	@Override
-	public boolean isEnabled() {
-		checkInitialized();
-		return widget.isEnabled();
+		return getWidget().createPopupMenu();
 	}
 
 	@Override
 	public final boolean isVisible() {
 		checkInitialized();
-		return widget.isVisible();
+		return getWidget().isVisible();
 	}
 
 	@Override
 	public IColorConstant getForegroundColor() {
 		checkInitialized();
-		return widget.getForegroundColor();
+		return getWidget().getForegroundColor();
 	}
 
 	@Override
 	public IColorConstant getBackgroundColor() {
 		checkInitialized();
-		return widget.getBackgroundColor();
-	}
-
-	@Override
-	public final Object getUiReference() {
-		checkInitialized();
-		return widget.getUiReference();
+		return getWidget().getBackgroundColor();
 	}
 
 	@Override
 	public Dimension getSize() {
 		checkInitialized();
-		return widget.getSize();
+		return getWidget().getSize();
 	}
 
 	@Override
 	public final void redraw() {
 		checkInitialized();
-		widget.redraw();
+		getWidget().redraw();
 	}
 
 	@Override
@@ -213,26 +175,6 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 	public boolean isReparentable() {
 		checkInitialized();
 		return getWidget().isReparentable();
-	}
-
-	final BLUE_PRINT_TYPE getBluePrint() {
-		return bluePrint;
-	}
-
-	final WIDGET_TYPE getWidget() {
-		return widget;
-	}
-
-	final void checkInitialized() {
-		if (!isInitialized()) {
-			throw new WidgetNotInitializedException("Widget is not yet initialized (was not added to an parent)");
-		}
-	}
-
-	final void checkNotInitialized() {
-		if (isInitialized()) {
-			throw new WidgetAlreadyInitializedException("Widget is already initialized (was already added to an parent)");
-		}
 	}
 
 }
