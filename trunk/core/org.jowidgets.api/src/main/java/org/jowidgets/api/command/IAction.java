@@ -47,18 +47,16 @@ public interface IAction extends IExecutableStateChecker {
 
 	ICommand getCommand();
 
-	IExecutableStateChecker getExecutableStateChecker();
-
 	boolean isTooltipShowExecutableState();
 
 	boolean isAutoDisableItems();
 
 	void setEnabled(boolean enabled);
 
-	void setCommandProvider(ICommandProvider commandProvider);
-
 	void setCommand(ICommand command);
 
-	void setCommand(ICommand command, IExecutableStateChecker executableStateChecker);
+	void setCommand(ICommandExecutor command);
+
+	void setCommand(ICommandExecutor command, IExecutableStateChecker executableStateChecker);
 
 }

@@ -28,10 +28,9 @@
 
 package org.jowidgets.api.command;
 
-public interface ICommand {
 
-	ICommandExecutor getCommandExecutor();
+public interface ICommandExecutor {
 
-	IExecutableStateChecker getExecutableStateChecker();
+	void execute(IActionEvent actionEvent);
 
 }

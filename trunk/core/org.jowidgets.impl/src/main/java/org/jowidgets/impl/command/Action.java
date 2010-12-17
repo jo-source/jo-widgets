@@ -34,7 +34,7 @@ import java.util.Set;
 import org.jowidgets.api.command.ExecutableState;
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.command.ICommand;
-import org.jowidgets.api.command.ICommandProvider;
+import org.jowidgets.api.command.ICommandExecutor;
 import org.jowidgets.api.command.IExecutableState;
 import org.jowidgets.api.command.IExecutableStateChecker;
 import org.jowidgets.api.command.IExecutableStateListener;
@@ -61,7 +61,7 @@ public class Action extends ActionObservable implements IAction, IExecutableStat
 	private boolean enabled;
 	private IExecutableState executableState;
 
-	private ICommandProvider commandProvider;
+	private ICommand command;
 
 	public Action(
 		final String text,
@@ -72,7 +72,7 @@ public class Action extends ActionObservable implements IAction, IExecutableStat
 		final boolean enabled,
 		final boolean isAutoDisableItems,
 		final boolean isTooltipStateDisplay,
-		final ICommandProvider commandProvider) {
+		final ICommand command) {
 		super();
 
 		this.executableStateListener = new ExecutabelStateListener();
@@ -87,7 +87,7 @@ public class Action extends ActionObservable implements IAction, IExecutableStat
 		this.isAutoDisableItems = isAutoDisableItems;
 		this.isTooltipStateDisplay = isTooltipStateDisplay;
 
-		setCommandProvider(commandProvider);
+		setCommand(command);
 	}
 
 	@Override
@@ -132,12 +132,7 @@ public class Action extends ActionObservable implements IAction, IExecutableStat
 
 	@Override
 	public ICommand getCommand() {
-		return commandProvider.getCommand();
-	}
-
-	@Override
-	public IExecutableStateChecker getExecutableStateChecker() {
-		return commandProvider.getExecutableStateChecker();
+		return command;
 	}
 
 	@Override
@@ -149,44 +144,44 @@ public class Action extends ActionObservable implements IAction, IExecutableStat
 	}
 
 	@Override
-	public void setCommandProvider(final ICommandProvider commandProvider) {
+	public void setCommand(final ICommand command) {
 
 		//remove the executable state listener on the old provider
-		if (isAutoDisableItems() && this.commandProvider != null && this.commandProvider.getExecutableStateChecker() != null) {
-			this.commandProvider.getExecutableStateChecker().removeExecutableStateListener(executableStateListener);
+		if (isAutoDisableItems() && this.command != null && this.command.getExecutableStateChecker() != null) {
+			this.command.getExecutableStateChecker().removeExecutableStateListener(executableStateListener);
 		}
 
-		if (commandProvider != null) {
-			this.commandProvider = commandProvider;
+		if (command != null) {
+			this.command = command;
 		}
 		else {
-			this.commandProvider = new CommandProvider();
+			this.command = new Command();
 		}
 
-		if (this.commandProvider.getExecutableStateChecker() != null) {
-			this.commandProvider.getExecutableStateChecker().addExecutableStateListener(executableStateListener);
+		if (this.command.getExecutableStateChecker() != null) {
+			this.command.getExecutableStateChecker().addExecutableStateListener(executableStateListener);
 		}
 
 	}
 
 	@Override
-	public void setCommand(final ICommand command) {
-		setCommandProvider(new CommandProvider(command));
+	public void setCommand(final ICommandExecutor command) {
+		setCommand(new Command(command));
 	}
 
 	@Override
-	public void setCommand(final ICommand command, final IExecutableStateChecker executableStateChecker) {
-		setCommandProvider(new CommandProvider(command, executableStateChecker));
+	public void setCommand(final ICommandExecutor command, final IExecutableStateChecker executableStateChecker) {
+		setCommand(new Command(command, executableStateChecker));
 	}
 
 	@Override
 	public IExecutableState getExecutableState() {
 		if (isEnabled()) {
 			if (executableState == null) {
-				if (commandProvider.getExecutableStateChecker() != null) {
-					executableState = commandProvider.getExecutableStateChecker().getExecutableState();
+				if (command.getExecutableStateChecker() != null) {
+					executableState = command.getExecutableStateChecker().getExecutableState();
 				}
-				else if (commandProvider.getCommand() == null) {
+				else if (command.getCommandExecutor() == null) {
 					executableState = NO_COMMAND_STATE;
 				}
 				else {

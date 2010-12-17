@@ -28,10 +28,12 @@
 
 package org.jowidgets.api.command;
 
-public interface ICommandProvider {
+import org.jowidgets.api.widgets.IWidget;
 
-	ICommand getCommand();
+public interface IActionEvent {
 
-	IExecutableStateChecker getExecutableStateChecker();
+	IAction getAction();
+
+	IWidget getSource();
 
 }

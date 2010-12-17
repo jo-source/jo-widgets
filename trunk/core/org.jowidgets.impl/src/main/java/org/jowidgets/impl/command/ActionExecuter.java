@@ -37,7 +37,7 @@ import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
 import org.jowidgets.util.EmptyCheck;
 
-public class CommandExecuter {
+public class ActionExecuter {
 
 	private final IAction action;
 	private final IActionWidget actionWidget;
@@ -45,7 +45,7 @@ public class CommandExecuter {
 	private boolean isInitialized;
 	private IExecutableStateListener executableStateListener;
 
-	public CommandExecuter(final IAction action, final IActionWidget actionWidget) {
+	public ActionExecuter(final IAction action, final IActionWidget actionWidget) {
 		super();
 		this.action = action;
 		this.actionWidget = actionWidget;
@@ -88,7 +88,7 @@ public class CommandExecuter {
 
 	private void executeCommand() {
 		try {
-			action.getCommand().execute(action, actionWidget);
+			action.getCommand().getCommandExecutor().execute(new ActionEvent(action, actionWidget));
 		}
 		catch (final Exception exception) {
 			final IMessageDialogBluePrint messageDialogBp = createMessageDialogBp().setIcon(Icons.ERROR);

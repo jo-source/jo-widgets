@@ -30,8 +30,8 @@ package org.jowidgets.impl.command;
 
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.command.IActionBuilder;
+import org.jowidgets.api.command.ICommandExecutor;
 import org.jowidgets.api.command.ICommand;
-import org.jowidgets.api.command.ICommandProvider;
 import org.jowidgets.api.command.IExecutableStateChecker;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
@@ -47,7 +47,7 @@ public class ActionBuilder implements IActionBuilder {
 	private boolean isAutoDisableItems;
 	private boolean isTooltipShowExecutableState;
 
-	private ICommandProvider commandProvider;
+	private ICommand command;
 
 	public ActionBuilder() {
 		this.enabled = true;
@@ -98,20 +98,20 @@ public class ActionBuilder implements IActionBuilder {
 	}
 
 	@Override
-	public IActionBuilder setCommandProvider(final ICommandProvider commandProvider) {
-		this.commandProvider = commandProvider;
+	public IActionBuilder setCommand(final ICommand commandProvider) {
+		this.command = commandProvider;
 		return this;
 	}
 
 	@Override
-	public IActionBuilder setCommand(final ICommand command) {
-		this.commandProvider = new CommandProvider(command);
+	public IActionBuilder setCommand(final ICommandExecutor command) {
+		this.command = new Command(command);
 		return this;
 	}
 
 	@Override
-	public IActionBuilder setCommand(final ICommand command, final IExecutableStateChecker executableStateChecker) {
-		this.commandProvider = new CommandProvider(command, executableStateChecker);
+	public IActionBuilder setCommand(final ICommandExecutor command, final IExecutableStateChecker executableStateChecker) {
+		this.command = new Command(command, executableStateChecker);
 		return this;
 	}
 
@@ -138,7 +138,7 @@ public class ActionBuilder implements IActionBuilder {
 			enabled,
 			isAutoDisableItems,
 			isTooltipShowExecutableState,
-			commandProvider);
+			command);
 		return result;
 	}
 }

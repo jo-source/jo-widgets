@@ -47,11 +47,11 @@ public interface IActionBuilder {
 
 	IActionBuilder setEnabled(boolean enabled);
 
-	IActionBuilder setCommandProvider(ICommandProvider commandProvider);
-
 	IActionBuilder setCommand(ICommand command);
 
-	IActionBuilder setCommand(ICommand command, IExecutableStateChecker executableStateChecker);
+	IActionBuilder setCommand(ICommandExecutor command);
+
+	IActionBuilder setCommand(ICommandExecutor command, IExecutableStateChecker executableStateChecker);
 
 	IActionBuilder setAutoDisableItems(boolean autoDisable);
 

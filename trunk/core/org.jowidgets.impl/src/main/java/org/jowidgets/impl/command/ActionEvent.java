@@ -26,12 +26,31 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.command;
+package org.jowidgets.impl.command;
 
-public interface ICommand {
+import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.command.IActionEvent;
+import org.jowidgets.api.widgets.IWidget;
 
-	ICommandExecutor getCommandExecutor();
+public final class ActionEvent implements IActionEvent {
 
-	IExecutableStateChecker getExecutableStateChecker();
+	private final IAction action;
+	private final IWidget source;
+
+	public ActionEvent(final IAction action, final IWidget source) {
+		super();
+		this.action = action;
+		this.source = source;
+	}
+
+	@Override
+	public IAction getAction() {
+		return action;
+	}
+
+	@Override
+	public IWidget getSource() {
+		return source;
+	}
 
 }

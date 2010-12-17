@@ -28,31 +28,31 @@
 
 package org.jowidgets.impl.command;
 
+import org.jowidgets.api.command.ICommandExecutor;
 import org.jowidgets.api.command.ICommand;
-import org.jowidgets.api.command.ICommandProvider;
 import org.jowidgets.api.command.IExecutableStateChecker;
 
-public class CommandProvider implements ICommandProvider {
+public class Command implements ICommand {
 
-	private final ICommand command;
+	private final ICommandExecutor command;
 	private final IExecutableStateChecker executableStateChecker;
 
-	public CommandProvider() {
+	public Command() {
 		this(null, null);
 	}
 
-	public CommandProvider(final ICommand command) {
+	public Command(final ICommandExecutor command) {
 		this(command, null);
 	}
 
-	public CommandProvider(final ICommand command, final IExecutableStateChecker executableStateChecker) {
+	public Command(final ICommandExecutor command, final IExecutableStateChecker executableStateChecker) {
 		super();
 		this.command = command;
 		this.executableStateChecker = executableStateChecker;
 	}
 
 	@Override
-	public ICommand getCommand() {
+	public ICommandExecutor getCommandExecutor() {
 		return command;
 	}
 

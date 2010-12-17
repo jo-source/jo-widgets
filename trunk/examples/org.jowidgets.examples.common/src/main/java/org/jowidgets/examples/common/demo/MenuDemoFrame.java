@@ -32,7 +32,8 @@ import org.jowidgets.api.command.ExecutableState;
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.command.IActionBuilder;
 import org.jowidgets.api.command.IActionBuilderFactory;
-import org.jowidgets.api.command.ICommand;
+import org.jowidgets.api.command.IActionEvent;
+import org.jowidgets.api.command.ICommandExecutor;
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IActionMenuItem;
@@ -41,7 +42,6 @@ import org.jowidgets.api.widgets.IMenuBar;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ISelectableMenuItem;
 import org.jowidgets.api.widgets.ISubMenu;
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICheckedMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IRadioMenuItemBluePrint;
@@ -77,9 +77,10 @@ public class MenuDemoFrame extends JoFrame {
 		final ExecutableStateChecker executableStateChecker2 = new ExecutableStateChecker();
 		executableStateChecker2.setExecutableState(ExecutableState.notExecutable("Action 1 must be invoked first"));
 
-		final ICommand command1 = new ICommand() {
+		final ICommandExecutor command1 = new ICommandExecutor() {
 			@Override
-			public void execute(final IAction action, final IWidget source) {
+			public void execute(final IActionEvent event) {
+				final IAction action = event.getAction();
 				Toolkit.getMessagePane().showInfo(action.getText(), action.getIcon(), "Hello action1");
 				executableStateChecker1.setExecutableState(ExecutableState.notExecutable("Action 2 must be invoked first"));
 				executableStateChecker2.setExecutableState(ExecutableState.EXECUTABLE);
@@ -94,9 +95,10 @@ public class MenuDemoFrame extends JoFrame {
 		action2Builder.setAutoDisableItems(true);
 		action2 = action2Builder.build();
 
-		final ICommand command2 = new ICommand() {
+		final ICommandExecutor command2 = new ICommandExecutor() {
 			@Override
-			public void execute(final IAction action, final IWidget source) {
+			public void execute(final IActionEvent event) {
+				final IAction action = event.getAction();
 				Toolkit.getMessagePane().showInfo(action.getText(), action.getIcon(), "Hello action2");
 				executableStateChecker1.setExecutableState(ExecutableState.EXECUTABLE);
 				executableStateChecker2.setExecutableState(ExecutableState.notExecutable("Action 1 must be invoked first"));

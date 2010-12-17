@@ -34,7 +34,7 @@ import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.descriptor.setup.IAccelerateableMenuItemSetup;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IMenuListener;
-import org.jowidgets.impl.command.CommandExecuter;
+import org.jowidgets.impl.command.ActionExecuter;
 import org.jowidgets.impl.command.IActionWidget;
 import org.jowidgets.impl.widgets.common.wrapper.ActionMenuItemSpiWrapper;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
@@ -42,7 +42,7 @@ import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IActionMenuItem, IActionWidget, IDisposeable {
 
 	private final IMenu parent;
-	private CommandExecuter commandExecuter;
+	private ActionExecuter actionExecutor;
 	private boolean visibleOnScreen;
 
 	public ActionMenuItemImpl(
@@ -72,7 +72,7 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 			@Override
 			public void menuActivated() {
 				visibleOnScreen = true;
-				initializeCommandExecuterWhenVisible();
+				initializeActionExecuterIfVisible();
 			}
 
 			@Override
@@ -80,6 +80,15 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 				visibleOnScreen = false;
 			}
 
+		});
+
+		addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				if (actionExecutor != null) {
+					actionExecutor.execute();
+				}
+			}
 		});
 	}
 
@@ -103,36 +112,27 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 			setMnemonic(action.getMnemonic().charValue());
 		}
 
-		disposeCommandExecuter();
-		commandExecuter = new CommandExecuter(action, this);
-		initializeCommandExecuterWhenVisible();
-
-		//TODO must be removed
-		System.out.println("TODO");
-		addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				commandExecuter.execute();
-			}
-		});
+		disposeActionExecuter();
+		actionExecutor = new ActionExecuter(action, this);
+		initializeActionExecuterIfVisible();
 
 	}
 
 	@Override
 	public void dispose() {
-		disposeCommandExecuter();
+		disposeActionExecuter();
 	}
 
-	private void disposeCommandExecuter() {
-		if (commandExecuter != null) {
-			commandExecuter.dispose();
-			commandExecuter = null;
+	private void disposeActionExecuter() {
+		if (actionExecutor != null) {
+			actionExecutor.dispose();
+			actionExecutor = null;
 		}
 	}
 
-	private void initializeCommandExecuterWhenVisible() {
-		if (commandExecuter != null && visibleOnScreen) {
-			commandExecuter.initialize();
+	private void initializeActionExecuterIfVisible() {
+		if (actionExecutor != null && visibleOnScreen) {
+			actionExecutor.initialize();
 		}
 	}
 
