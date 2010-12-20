@@ -28,8 +28,14 @@
 
 package org.jowidgets.api.command;
 
-public interface IExecutableStateListener {
+public interface IActionChangeListener {
 
-	void executableStateChanged();
+	void textChanged();
+
+	void toolTipTextChanged();
+
+	void iconChanged();
+
+	void enabledChanged();
 
 }

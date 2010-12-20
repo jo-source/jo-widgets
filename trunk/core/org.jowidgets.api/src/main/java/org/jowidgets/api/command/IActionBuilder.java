@@ -51,12 +51,8 @@ public interface IActionBuilder {
 
 	IActionBuilder setCommand(ICommandExecutor command);
 
-	IActionBuilder setCommand(ICommandExecutor command, IExecutableStateChecker executableStateChecker);
+	IActionBuilder setCommand(ICommandExecutor command, IEnabledChecker executableStateChecker);
 
-	IActionBuilder setAutoDisableItems(boolean autoDisable);
-
-	IActionBuilder setTooltipShowExecutableState(boolean enabled);
-
-	IAction build();
+	ICommandAction build();
 
 }

@@ -32,6 +32,6 @@ public interface ICommand {
 
 	ICommandExecutor getCommandExecutor();
 
-	IExecutableStateChecker getExecutableStateChecker();
+	IEnabledChecker getEnabledChecker();
 
 }

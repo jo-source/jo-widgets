@@ -29,66 +29,32 @@
 package org.jowidgets.impl.command;
 
 import org.jowidgets.api.command.IAction;
-import org.jowidgets.api.command.IExecutableState;
-import org.jowidgets.api.command.IExecutableStateListener;
 import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
-import org.jowidgets.util.EmptyCheck;
 
 public class ActionExecuter {
 
 	private final IAction action;
 	private final IActionWidget actionWidget;
 
-	private boolean isInitialized;
-	private IExecutableStateListener executableStateListener;
-
 	public ActionExecuter(final IAction action, final IActionWidget actionWidget) {
 		super();
 		this.action = action;
 		this.actionWidget = actionWidget;
-		this.isInitialized = false;
-	}
-
-	public void initialize() {
-		if (!isInitialized) {
-			if (action.isTooltipShowExecutableState() || action.isAutoDisableItems()) {
-				executableStateListener = new ExecutabelStateListener();
-				action.addExecutableStateListener(executableStateListener);
-				execStateChanged();
-			}
-			isInitialized = true;
-		}
 	}
 
 	public void execute() {
-		if (action.getExecutableState().isExecutable()) {
+		if (action.isEnabled()) {
 			executeCommand();
 		}
-		else {
-			final IMessageDialogBluePrint messageDialogBp = createMessageDialogBp().setIcon(Icons.INFO);
-			final String reason = action.getExecutableState().getReason();
-			if (reason != null && !reason.isEmpty()) {
-				messageDialogBp.setText(reason);
-			}
-			else {
-				messageDialogBp.setText("Could not execute action '" + action.getText() + "'");
-			}
-			showMessageDialog(messageDialogBp);
-		}
-	}
-
-	public void dispose() {
-		if (executableStateListener != null) {
-			action.removeExecutableStateListener(executableStateListener);
-		}
+		//else do nothing
 	}
 
 	private void executeCommand() {
 		try {
-			action.getCommand().getCommandExecutor().execute(new ActionEvent(action, actionWidget));
+			action.execute(new ExecutionContext(action, actionWidget));
 		}
 		catch (final Exception exception) {
 			final IMessageDialogBluePrint messageDialogBp = createMessageDialogBp().setIcon(Icons.ERROR);
@@ -109,30 +75,4 @@ public class ActionExecuter {
 		parentWindow.createChildWindow(messageDialogBp).showMessage();
 	}
 
-	private void execStateChanged() {
-		final IExecutableState executableState = action.getExecutableState();
-
-		if (action.isTooltipShowExecutableState()) {
-			final String reason = executableState.getReason();
-			final boolean showReason = !executableState.isExecutable() && !EmptyCheck.isEmpty(reason);
-			if (showReason) {
-				actionWidget.setToolTipText(reason);
-			}
-			else {
-				actionWidget.setToolTipText(action.getToolTipText());
-			}
-		}
-		if (action.isAutoDisableItems()) {
-			if (actionWidget.isEnabled() != executableState.isExecutable()) {
-				actionWidget.setEnabled(executableState.isExecutable());
-			}
-		}
-	}
-
-	private class ExecutabelStateListener implements IExecutableStateListener {
-		@Override
-		public void executableStateChanged() {
-			execStateChanged();
-		}
-	}
 }

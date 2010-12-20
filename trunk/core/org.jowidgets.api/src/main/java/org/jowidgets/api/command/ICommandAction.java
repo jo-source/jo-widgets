@@ -26,31 +26,24 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.command;
+package org.jowidgets.api.command;
 
-import org.jowidgets.api.command.IAction;
-import org.jowidgets.api.command.IActionEvent;
-import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.common.image.IImageConstant;
 
-public final class ActionEvent implements IActionEvent {
+public interface ICommandAction extends IAction {
 
-	private final IAction action;
-	private final IWidget source;
+	void setText(String text);
 
-	public ActionEvent(final IAction action, final IWidget source) {
-		super();
-		this.action = action;
-		this.source = source;
-	}
+	void setToolTipText(final String toolTipText);
 
-	@Override
-	public IAction getAction() {
-		return action;
-	}
+	void setIcon(IImageConstant icon);
 
-	@Override
-	public IWidget getSource() {
-		return source;
-	}
+	void setEnabled(boolean enabled);
+
+	void setCommand(ICommand command);
+
+	void setCommand(ICommandExecutor command);
+
+	void setCommand(ICommandExecutor command, IEnabledChecker enabledChecker);
 
 }

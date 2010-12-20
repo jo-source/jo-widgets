@@ -28,15 +28,17 @@
 
 package org.jowidgets.examples.common.demo;
 
-import org.jowidgets.api.command.ExecutableState;
+import org.jowidgets.api.command.EnabledState;
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.command.IActionBuilder;
 import org.jowidgets.api.command.IActionBuilderFactory;
-import org.jowidgets.api.command.IActionEvent;
+import org.jowidgets.api.command.ICommandAction;
 import org.jowidgets.api.command.ICommandExecutor;
+import org.jowidgets.api.command.IExecutionContext;
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IActionMenuItem;
+import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.IMenuBar;
 import org.jowidgets.api.widgets.IPopupMenu;
@@ -52,60 +54,64 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IItemStateListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
-import org.jowidgets.tools.command.ExecutableStateChecker;
+import org.jowidgets.tools.command.EnabledChecker;
 import org.jowidgets.tools.powo.JoFrame;
 
 public class MenuDemoFrame extends JoFrame {
 
 	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
-	private final IAction action1;
-	private final IAction action2;
+	private ICommandAction action1;
+	private ICommandAction action2;
 
 	public MenuDemoFrame() {
 		super(bluePrint("Menu demo").autoPackOff());
+		createMainMenus();
 
+		final IButton action1Button = add(BPF.button(), "");
+		action1Button.setAction(action1);
+	}
+
+	private void createMainMenus() {
 		final IActionBuilderFactory actionBF = Toolkit.getActionBuilderFactory();
 
 		final IActionBuilder action1Builder = actionBF.create();
 		action1Builder.setText("Action1").setToolTipText("The tooltip of Action1").setIcon(IconsSmall.INFO);
 		action1Builder.setMnemonic('c').setAccelerator(new Accelerator('A', Modifier.CTRL));
-		action1Builder.setAutoDisableItems(true);
 		action1 = action1Builder.build();
 
-		final ExecutableStateChecker executableStateChecker1 = new ExecutableStateChecker();
-		final ExecutableStateChecker executableStateChecker2 = new ExecutableStateChecker();
-		executableStateChecker2.setExecutableState(ExecutableState.notExecutable("Action 1 must be invoked first"));
+		final EnabledChecker enabledChecker1 = new EnabledChecker();
+		final EnabledChecker enabledChecker2 = new EnabledChecker();
+		enabledChecker2.setEnabledState(EnabledState.disabled("Action 1 must be invoked first"));
 
 		final ICommandExecutor command1 = new ICommandExecutor() {
 			@Override
-			public void execute(final IActionEvent event) {
+			public void execute(final IExecutionContext event) {
 				final IAction action = event.getAction();
 				Toolkit.getMessagePane().showInfo(action.getText(), action.getIcon(), "Hello action1");
-				executableStateChecker1.setExecutableState(ExecutableState.notExecutable("Action 2 must be invoked first"));
-				executableStateChecker2.setExecutableState(ExecutableState.EXECUTABLE);
+				enabledChecker1.setEnabledState(EnabledState.disabled("Action 2 must be invoked first"));
+				enabledChecker2.setEnabledState(EnabledState.ENABLED);
 			}
 		};
 
-		action1.setCommand(command1, executableStateChecker1);
+		action1.setCommand(command1, enabledChecker1);
 
 		final IActionBuilder action2Builder = actionBF.create();
 		action2Builder.setText("Action2").setToolTipText("The tooltip of Action2");
 		action2Builder.setMnemonic('t').setAccelerator(new Accelerator('A', Modifier.ALT));
-		action2Builder.setAutoDisableItems(true);
 		action2 = action2Builder.build();
 
 		final ICommandExecutor command2 = new ICommandExecutor() {
 			@Override
-			public void execute(final IActionEvent event) {
+			public void execute(final IExecutionContext event) {
 				final IAction action = event.getAction();
 				Toolkit.getMessagePane().showInfo(action.getText(), action.getIcon(), "Hello action2");
-				executableStateChecker1.setExecutableState(ExecutableState.EXECUTABLE);
-				executableStateChecker2.setExecutableState(ExecutableState.notExecutable("Action 1 must be invoked first"));
+				enabledChecker1.setEnabledState(EnabledState.ENABLED);
+				enabledChecker2.setEnabledState(EnabledState.disabled("Action 1 must be invoked first"));
 			}
 		};
 
-		action2.setCommand(command2, executableStateChecker2);
+		action2.setCommand(command2, enabledChecker2);
 
 		final IMenuBar menuBar = createMenuBar();
 		final IMenu menu1 = menuBar.addMenu("Menu1", 'n');
@@ -120,7 +126,6 @@ public class MenuDemoFrame extends JoFrame {
 				popupMenu.show(position);
 			}
 		});
-
 	}
 
 	private void addMenus(final IMenu menu) {

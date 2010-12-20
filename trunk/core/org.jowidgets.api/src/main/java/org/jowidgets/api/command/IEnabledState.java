@@ -28,78 +28,18 @@
 
 package org.jowidgets.api.command;
 
-public final class ExecutableState implements IExecutableState {
-
-	public static final ExecutableState EXECUTABLE = new ExecutableState();
-
-	private final boolean executable;
-	private final String reason;
-
-	private ExecutableState() {
-		this(true, null);
-	}
-
-	private ExecutableState(final boolean executable, final String reason) {
-		this.executable = executable;
-		this.reason = reason;
-	}
+public interface IEnabledState {
 
 	/**
-	 * @return true, if the action is executable, false otherwise
+	 * @return true, if the action is enabled, false otherwise
 	 */
-	@Override
-	public boolean isExecutable() {
-		return executable;
-	}
+	boolean isEnabled();
 
 	/**
-	 * If the action is not executable, this get's the reason why. This reason should
+	 * If the action is not enabled, this get's the reason why. This reason should
 	 * be offered to the user, e.g. in the tooltip of a disabled button or menu item
 	 * 
 	 * @return the reason (why is this button grey ?)
 	 */
-	@Override
-	public String getReason() {
-		return reason;
-	}
-
-	public static ExecutableState notExecutable(final String reason) {
-		return new ExecutableState(false, reason);
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (executable ? 1231 : 1237);
-		result = prime * result + ((reason == null) ? 0 : reason.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final ExecutableState other = (ExecutableState) obj;
-		if (executable != other.executable) {
-			return false;
-		}
-		if (reason == null) {
-			if (other.reason != null) {
-				return false;
-			}
-		}
-		else if (!reason.equals(other.reason)) {
-			return false;
-		}
-		return true;
-	}
-
+	String getReason();
 }

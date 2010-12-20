@@ -31,7 +31,7 @@ package org.jowidgets.api.command;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
 
-public interface IAction extends IExecutableStateChecker {
+public interface IAction {
 
 	String getText();
 
@@ -45,18 +45,16 @@ public interface IAction extends IExecutableStateChecker {
 
 	boolean isEnabled();
 
-	ICommand getCommand();
+	void execute(IExecutionContext actionEvent);
 
-	boolean isTooltipShowExecutableState();
-
-	boolean isAutoDisableItems();
-
-	void setEnabled(boolean enabled);
-
-	void setCommand(ICommand command);
-
-	void setCommand(ICommandExecutor command);
-
-	void setCommand(ICommandExecutor command, IExecutableStateChecker executableStateChecker);
+	/**
+	 * For mutable actions, an observable could be implemented to recognize changes
+	 * on this actions.
+	 * 
+	 * The following properties could be mutable: text, toolTipText, icon, enabled
+	 * 
+	 * @return The observable if the action is observable or null if the action is immutable
+	 */
+	IActionChangeObservable getActionChangeObservable();
 
 }

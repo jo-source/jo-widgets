@@ -26,59 +26,31 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.command;
+package org.jowidgets.impl.command;
 
-import java.util.HashSet;
-import java.util.Set;
+import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.command.IExecutionContext;
+import org.jowidgets.api.widgets.IWidget;
 
-import org.jowidgets.api.command.ExecutableState;
-import org.jowidgets.api.command.IExecutableState;
-import org.jowidgets.api.command.IExecutableStateChecker;
-import org.jowidgets.api.command.IExecutableStateListener;
-import org.jowidgets.util.Assert;
+public final class ExecutionContext implements IExecutionContext {
 
-public class ExecutableStateChecker implements IExecutableStateChecker {
+	private final IAction action;
+	private final IWidget source;
 
-	private final Set<IExecutableStateListener> executableStateListeners;
-
-	private IExecutableState executableState;
-
-	public ExecutableStateChecker() {
+	public ExecutionContext(final IAction action, final IWidget source) {
 		super();
-		this.executableStateListeners = new HashSet<IExecutableStateListener>();
-		this.executableState = ExecutableState.EXECUTABLE;
-	}
-
-	public void setExecutableState(final IExecutableState executableState) {
-		Assert.paramNotNull(executableState, "executableState");
-
-		final boolean stateChanged = !this.executableState.equals(executableState);
-		this.executableState = executableState;
-
-		if (stateChanged) {
-			fireExecutableStateChanged();
-		}
+		this.action = action;
+		this.source = source;
 	}
 
 	@Override
-	public IExecutableState getExecutableState() {
-		return executableState;
+	public IAction getAction() {
+		return action;
 	}
 
 	@Override
-	public final void addExecutableStateListener(final IExecutableStateListener listener) {
-		executableStateListeners.add(listener);
-	}
-
-	@Override
-	public final void removeExecutableStateListener(final IExecutableStateListener listener) {
-		executableStateListeners.remove(listener);
-	}
-
-	public final void fireExecutableStateChanged() {
-		for (final IExecutableStateListener listener : executableStateListeners) {
-			listener.executableStateChanged();
-		}
+	public IWidget getSource() {
+		return source;
 	}
 
 }

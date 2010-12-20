@@ -31,6 +31,6 @@ package org.jowidgets.api.command;
 
 public interface ICommandExecutor {
 
-	void execute(IActionEvent actionEvent);
+	void execute(IExecutionContext actionEvent);
 
 }

@@ -28,12 +28,10 @@
 
 package org.jowidgets.api.command;
 
-public interface IExecutableStateChecker {
+public interface IActionChangeObservable {
 
-	IExecutableState getExecutableState();
+	void addActionChangeListener(IActionChangeListener listener);
 
-	void addExecutableStateListener(IExecutableStateListener listener);
-
-	void removeExecutableStateListener(IExecutableStateListener listener);
+	void removeActionChangeListener(IActionChangeListener listener);
 
 }

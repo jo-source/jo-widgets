@@ -35,6 +35,7 @@ import org.jowidgets.api.widgets.descriptor.setup.IAccelerateableMenuItemSetup;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IMenuListener;
 import org.jowidgets.impl.command.ActionExecuter;
+import org.jowidgets.impl.command.ActionWidgetSync;
 import org.jowidgets.impl.command.IActionWidget;
 import org.jowidgets.impl.widgets.common.wrapper.ActionMenuItemSpiWrapper;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
@@ -42,16 +43,14 @@ import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IActionMenuItem, IActionWidget, IDisposeable {
 
 	private final IMenu parent;
-	private ActionExecuter actionExecutor;
-	private boolean visibleOnScreen;
+	private ActionWidgetSync actionWidgetSync;
+	private ActionExecuter actionExecuter;
 
 	public ActionMenuItemImpl(
 		final IMenu parent,
 		final IActionMenuItemSpi actionMenuItemSpi,
 		final IAccelerateableMenuItemSetup setup) {
 		super(actionMenuItemSpi);
-
-		this.visibleOnScreen = false;
 
 		this.parent = parent;
 
@@ -71,13 +70,16 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 
 			@Override
 			public void menuActivated() {
-				visibleOnScreen = true;
-				initializeActionExecuterIfVisible();
+				if (actionWidgetSync != null) {
+					actionWidgetSync.setActive(true);
+				}
 			}
 
 			@Override
 			public void menuDeactivated() {
-				visibleOnScreen = false;
+				if (actionWidgetSync != null) {
+					actionWidgetSync.setActive(false);
+				}
 			}
 
 		});
@@ -85,8 +87,8 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 		addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
-				if (actionExecutor != null) {
-					actionExecutor.execute();
+				if (actionExecuter != null) {
+					actionExecuter.execute();
 				}
 			}
 		});
@@ -99,10 +101,6 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 
 	@Override
 	public void setAction(final IAction action) {
-		setText(action.getText());
-		setToolTipText(action.getToolTipText());
-		setIcon(action.getIcon());
-		setEnabled(action.isEnabled());
 
 		if (action.getAccelerator() != null) {
 			setAccelerator(action.getAccelerator());
@@ -112,27 +110,22 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 			setMnemonic(action.getMnemonic().charValue());
 		}
 
-		disposeActionExecuter();
-		actionExecutor = new ActionExecuter(action, this);
-		initializeActionExecuterIfVisible();
+		//dispose the old sync if exists
+		disposeActionWidgetSync();
 
+		actionWidgetSync = new ActionWidgetSync(action, this);
+		actionExecuter = new ActionExecuter(action, this);
 	}
 
 	@Override
 	public void dispose() {
-		disposeActionExecuter();
+		disposeActionWidgetSync();
 	}
 
-	private void disposeActionExecuter() {
-		if (actionExecutor != null) {
-			actionExecutor.dispose();
-			actionExecutor = null;
-		}
-	}
-
-	private void initializeActionExecuterIfVisible() {
-		if (actionExecutor != null && visibleOnScreen) {
-			actionExecutor.initialize();
+	private void disposeActionWidgetSync() {
+		if (actionWidgetSync != null) {
+			actionWidgetSync.dispose();
+			actionWidgetSync = null;
 		}
 	}
 

@@ -28,11 +28,11 @@
 
 package org.jowidgets.impl.command;
 
-import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.command.IActionBuilder;
-import org.jowidgets.api.command.ICommandExecutor;
 import org.jowidgets.api.command.ICommand;
-import org.jowidgets.api.command.IExecutableStateChecker;
+import org.jowidgets.api.command.ICommandAction;
+import org.jowidgets.api.command.ICommandExecutor;
+import org.jowidgets.api.command.IEnabledChecker;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
 
@@ -44,15 +44,11 @@ public class ActionBuilder implements IActionBuilder {
 	private char mnemonic;
 	private Accelerator accelerator;
 	private boolean enabled;
-	private boolean isAutoDisableItems;
-	private boolean isTooltipShowExecutableState;
 
 	private ICommand command;
 
 	public ActionBuilder() {
 		this.enabled = true;
-		this.isAutoDisableItems = true;
-		this.isTooltipShowExecutableState = true;
 	}
 
 	@Override
@@ -110,35 +106,14 @@ public class ActionBuilder implements IActionBuilder {
 	}
 
 	@Override
-	public IActionBuilder setCommand(final ICommandExecutor command, final IExecutableStateChecker executableStateChecker) {
+	public IActionBuilder setCommand(final ICommandExecutor command, final IEnabledChecker executableStateChecker) {
 		this.command = new Command(command, executableStateChecker);
 		return this;
 	}
 
 	@Override
-	public IActionBuilder setAutoDisableItems(final boolean autoDisable) {
-		this.isAutoDisableItems = autoDisable;
-		return this;
-	}
-
-	@Override
-	public IActionBuilder setTooltipShowExecutableState(final boolean enabled) {
-		this.isTooltipShowExecutableState = enabled;
-		return this;
-	}
-
-	@Override
-	public IAction build() {
-		final IAction result = new Action(
-			text,
-			toolTipText,
-			icon,
-			mnemonic,
-			accelerator,
-			enabled,
-			isAutoDisableItems,
-			isTooltipShowExecutableState,
-			command);
+	public ICommandAction build() {
+		final ICommandAction result = new CommandAction(text, toolTipText, icon, mnemonic, accelerator, enabled, command);
 		return result;
 	}
 }

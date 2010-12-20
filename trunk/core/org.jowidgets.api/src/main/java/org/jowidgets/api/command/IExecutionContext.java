@@ -26,39 +26,14 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.command;
+package org.jowidgets.api.command;
 
-import org.jowidgets.api.command.ICommandExecutor;
-import org.jowidgets.api.command.ICommand;
-import org.jowidgets.api.command.IEnabledChecker;
+import org.jowidgets.api.widgets.IWidget;
 
-public class Command implements ICommand {
+public interface IExecutionContext {
 
-	private final ICommandExecutor command;
-	private final IEnabledChecker executableStateChecker;
+	IAction getAction();
 
-	public Command() {
-		this(null, null);
-	}
-
-	public Command(final ICommandExecutor command) {
-		this(command, null);
-	}
-
-	public Command(final ICommandExecutor command, final IEnabledChecker executableStateChecker) {
-		super();
-		this.command = command;
-		this.executableStateChecker = executableStateChecker;
-	}
-
-	@Override
-	public ICommandExecutor getCommandExecutor() {
-		return command;
-	}
-
-	@Override
-	public IEnabledChecker getEnabledChecker() {
-		return executableStateChecker;
-	}
+	IWidget getSource();
 
 }

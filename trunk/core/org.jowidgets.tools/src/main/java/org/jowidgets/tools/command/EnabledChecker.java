@@ -26,20 +26,58 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.command;
+package org.jowidgets.tools.command;
 
-public interface IExecutableState {
+import java.util.HashSet;
+import java.util.Set;
 
-	/**
-	 * @return true, if the action is executable, false otherwise
-	 */
-	boolean isExecutable();
+import org.jowidgets.api.command.EnabledState;
+import org.jowidgets.api.command.IEnabledChecker;
+import org.jowidgets.api.command.IEnabledState;
+import org.jowidgets.api.widgets.controler.IChangeListener;
+import org.jowidgets.util.Assert;
 
-	/**
-	 * If the action is not executable, this get's the reason why. This reason should
-	 * be offered to the user, e.g. in the tooltip of a disabled button or menu item
-	 * 
-	 * @return the reason (why is this button grey ?)
-	 */
-	String getReason();
+public class EnabledChecker implements IEnabledChecker {
+
+	private final Set<IChangeListener> changeListeners;
+
+	private IEnabledState enabledState;
+
+	public EnabledChecker() {
+		this.changeListeners = new HashSet<IChangeListener>();
+		this.enabledState = EnabledState.ENABLED;
+	}
+
+	public void setEnabledState(final IEnabledState enabledState) {
+		Assert.paramNotNull(enabledState, "enabledState");
+
+		final boolean stateChanged = !this.enabledState.equals(enabledState);
+		this.enabledState = enabledState;
+
+		if (stateChanged) {
+			fireEnabledStateChanged();
+		}
+	}
+
+	@Override
+	public IEnabledState getEnabledState() {
+		return enabledState;
+	}
+
+	@Override
+	public final void addChangeListener(final IChangeListener listener) {
+		changeListeners.add(listener);
+	}
+
+	@Override
+	public final void removeChangeListener(final IChangeListener listener) {
+		changeListeners.remove(listener);
+	}
+
+	public final void fireEnabledStateChanged() {
+		for (final IChangeListener listener : changeListeners) {
+			listener.changedEvent();
+		}
+	}
+
 }

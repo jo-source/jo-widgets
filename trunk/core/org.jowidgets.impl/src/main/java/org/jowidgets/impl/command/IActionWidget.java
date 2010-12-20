@@ -29,9 +29,14 @@
 package org.jowidgets.impl.command;
 
 import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.common.image.IImageConstant;
 
 public interface IActionWidget extends IWidget {
 
-	void setToolTipText(String text);
+	void setText(String text);
+
+	void setToolTipText(String toolTipText);
+
+	void setIcon(IImageConstant icon);
 
 }

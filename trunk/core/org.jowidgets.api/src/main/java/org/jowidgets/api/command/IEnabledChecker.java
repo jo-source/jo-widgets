@@ -28,12 +28,14 @@
 
 package org.jowidgets.api.command;
 
-import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.api.widgets.controler.IChangeListener;
 
-public interface IActionEvent {
+public interface IEnabledChecker {
 
-	IAction getAction();
+	IEnabledState getEnabledState();
 
-	IWidget getSource();
+	void addChangeListener(IChangeListener listener);
+
+	void removeChangeListener(IChangeListener listener);
 
 }

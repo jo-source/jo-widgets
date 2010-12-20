@@ -28,20 +28,28 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
+import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
+import org.jowidgets.impl.command.ActionExecuter;
+import org.jowidgets.impl.command.ActionWidgetSync;
+import org.jowidgets.impl.command.IActionWidget;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.ButtonSpiWrapper;
 import org.jowidgets.spi.widgets.IButtonSpi;
 
-public class ButtonImpl extends ButtonSpiWrapper implements IButton {
+public class ButtonImpl extends ButtonSpiWrapper implements IButton, IActionWidget, IDisposeable {
 
 	private final ControlDelegate controlDelegate;
+
+	private ActionWidgetSync actionWidgetSync;
+	private ActionExecuter actionExecuter;
 
 	public ButtonImpl(final IButtonSpi buttonWidgetSpi, final IButtonDescriptor descriptor) {
 		super(buttonWidgetSpi);
@@ -49,6 +57,15 @@ public class ButtonImpl extends ButtonSpiWrapper implements IButton {
 		setEnabled(descriptor.isEnabled());
 		VisibiliySettingsInvoker.setVisibility(descriptor, this);
 		ColorSettingsInvoker.setColors(descriptor, this);
+
+		addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				if (actionExecuter != null) {
+					actionExecuter.execute();
+				}
+			}
+		});
 	}
 
 	@Override
@@ -69,6 +86,29 @@ public class ButtonImpl extends ButtonSpiWrapper implements IButton {
 	@Override
 	public IPopupMenu createPopupMenu() {
 		return new PopupMenuImpl(getWidget().createPopupMenu(), this);
+	}
+
+	@Override
+	public void setAction(final IAction action) {
+		//dispose the old sync if exists
+		disposeActionWidgetSync();
+
+		actionWidgetSync = new ActionWidgetSync(action, this);
+		actionWidgetSync.setActive(true);
+
+		actionExecuter = new ActionExecuter(action, this);
+	}
+
+	@Override
+	public void dispose() {
+		disposeActionWidgetSync();
+	}
+
+	private void disposeActionWidgetSync() {
+		if (actionWidgetSync != null) {
+			actionWidgetSync.dispose();
+			actionWidgetSync = null;
+		}
 	}
 
 }
