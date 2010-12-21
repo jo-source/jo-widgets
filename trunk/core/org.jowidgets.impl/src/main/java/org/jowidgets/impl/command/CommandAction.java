@@ -39,6 +39,7 @@ import org.jowidgets.api.command.ICommandAction;
 import org.jowidgets.api.command.ICommandExecutor;
 import org.jowidgets.api.command.IEnabledChecker;
 import org.jowidgets.api.command.IEnabledState;
+import org.jowidgets.api.command.IExceptionHandler;
 import org.jowidgets.api.command.IExecutionContext;
 import org.jowidgets.api.controler.IChangeListener;
 import org.jowidgets.common.image.IImageConstant;
@@ -63,6 +64,8 @@ public class CommandAction implements ICommandAction, IActionChangeObservable {
 
 	private ICommand command;
 
+	private IExceptionHandler exceptionHandler;
+
 	public CommandAction(
 		final String text,
 		final String toolTipText,
@@ -70,7 +73,8 @@ public class CommandAction implements ICommandAction, IActionChangeObservable {
 		final char mnemonic,
 		final Accelerator accelerator,
 		final boolean enabled,
-		final ICommand command) {
+		final ICommand command,
+		final IExceptionHandler exceptionHandler) {
 		super();
 
 		this.enabledStateListener = new EnabledStateListener();
@@ -82,6 +86,8 @@ public class CommandAction implements ICommandAction, IActionChangeObservable {
 		this.mnemonic = mnemonic;
 		this.accelerator = accelerator;
 		this.enabled = enabled;
+
+		this.exceptionHandler = exceptionHandler;
 
 		setCommand(command);
 	}
@@ -146,6 +152,16 @@ public class CommandAction implements ICommandAction, IActionChangeObservable {
 	}
 
 	@Override
+	public void setActionExceptionHandler(final IExceptionHandler exceptionHandler) {
+		this.exceptionHandler = exceptionHandler;
+	}
+
+	@Override
+	public IExceptionHandler getExceptionHandler() {
+		return this.exceptionHandler;
+	}
+
+	@Override
 	public void setCommand(final ICommand command) {
 
 		//remove the executable state listener on the old provider
@@ -179,10 +195,34 @@ public class CommandAction implements ICommandAction, IActionChangeObservable {
 	}
 
 	@Override
-	public void execute(final IExecutionContext actionEvent) {
+	public void setCommand(final ICommandExecutor command, final IExceptionHandler exceptionHandler) {
+		setCommand(new Command(command, exceptionHandler));
+	}
+
+	@Override
+	public void setCommand(
+		final ICommandExecutor command,
+		final IEnabledChecker enabledChecker,
+		final IExceptionHandler exceptionHandler) {
+		setCommand(command, enabledChecker, exceptionHandler);
+	}
+
+	@Override
+	public void execute(final IExecutionContext executionContext) throws Exception {
 		final ICommandExecutor commandExecutor = command.getCommandExecutor();
 		if (commandExecutor != null) {
-			commandExecutor.execute(actionEvent);
+			try {
+				commandExecutor.execute(executionContext);
+			}
+			catch (final Exception exception) {
+				final IExceptionHandler commandExceptionHandler = command.getExceptionHandler();
+				if (commandExceptionHandler != null) {
+					commandExceptionHandler.handleException(executionContext, exception);
+				}
+				else {
+					throw exception;
+				}
+			}
 		}
 	}
 

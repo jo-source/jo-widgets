@@ -45,7 +45,15 @@ public interface IAction {
 
 	boolean isEnabled();
 
-	void execute(IExecutionContext actionEvent);
+	void execute(IExecutionContext actionEvent) throws Exception;
+
+	/**
+	 * Gets the ExceptionHandler of this action. If no ExceptionHandler is defined,
+	 * a default exception handler will be used.
+	 * 
+	 * @return exceptionHandler The exception handler or null, if no handler is defined
+	 */
+	IExceptionHandler getExceptionHandler();
 
 	/**
 	 * For mutable actions, an observable could be implemented to recognize changes

@@ -53,6 +53,24 @@ public interface IActionBuilder {
 
 	IActionBuilder setCommand(ICommandExecutor command, IEnabledChecker executableStateChecker);
 
+	IActionBuilder setCommand(ICommandExecutor command, IExceptionHandler exceptionHandler);
+
+	IActionBuilder setCommand(ICommandExecutor command, IEnabledChecker enabledChecker, IExceptionHandler exceptionHandler);
+
+	/**
+	 * Set's the ExceptionHandler of the action. The actions ExceptionHandler handles exceptions that are not
+	 * handled by the command's exception handler.
+	 * 
+	 * The actions ExceptionHandler should be implemented independently of the current command. If exception handling
+	 * is command specific, the commands exception handler should be used for that.
+	 * 
+	 * If no exception handler is set, a default handler will be used for the action.
+	 * 
+	 * @param exceptionHandler The ExceptionHandler to set
+	 * @return this instance
+	 */
+	IActionBuilder setActionExceptionHandler(IExceptionHandler exceptionHandler);
+
 	ICommandAction build();
 
 }

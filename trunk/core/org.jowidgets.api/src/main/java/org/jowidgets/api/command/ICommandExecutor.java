@@ -28,9 +28,8 @@
 
 package org.jowidgets.api.command;
 
-
 public interface ICommandExecutor {
 
-	void execute(IExecutionContext actionEvent);
+	void execute(IExecutionContext actionEvent) throws Exception;
 
 }

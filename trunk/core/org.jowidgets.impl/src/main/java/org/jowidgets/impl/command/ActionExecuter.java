@@ -29,50 +29,48 @@
 package org.jowidgets.impl.command;
 
 import org.jowidgets.api.command.IAction;
-import org.jowidgets.api.image.Icons;
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IWindow;
-import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
+import org.jowidgets.api.command.IExceptionHandler;
+import org.jowidgets.api.command.IExecutionContext;
+import org.jowidgets.tools.command.DefaultExceptionHandler;
 
 public class ActionExecuter {
 
 	private final IAction action;
 	private final IActionWidget actionWidget;
+	private final IExceptionHandler defaultExceptionHandler;
 
 	public ActionExecuter(final IAction action, final IActionWidget actionWidget) {
 		super();
 		this.action = action;
 		this.actionWidget = actionWidget;
+		this.defaultExceptionHandler = new DefaultExceptionHandler();
 	}
 
 	public void execute() {
 		if (action.isEnabled()) {
-			executeCommand();
+			try {
+				executeCommand();
+			}
+			catch (final Exception exception) {
+				Thread.currentThread().getUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), exception);
+			}
 		}
 		//else do nothing
 	}
 
-	private void executeCommand() {
+	private void executeCommand() throws Exception {
+		final IExecutionContext executionContext = new ExecutionContext(action, actionWidget);
 		try {
-			action.execute(new ExecutionContext(action, actionWidget));
+			action.execute(executionContext);
 		}
 		catch (final Exception exception) {
-			final IMessageDialogBluePrint messageDialogBp = createMessageDialogBp().setIcon(Icons.ERROR);
-			messageDialogBp.setText("Error occurred\n" + exception.getLocalizedMessage());
-			showMessageDialog(messageDialogBp);
+			if (action.getExceptionHandler() != null) {
+				action.getExceptionHandler().handleException(executionContext, exception);
+			}
+			else {
+				defaultExceptionHandler.handleException(executionContext, exception);
+			}
 		}
-	}
-
-	private IMessageDialogBluePrint createMessageDialogBp() {
-		final IMessageDialogBluePrint messageDialogBp = Toolkit.getBluePrintFactory().messageDialog();
-		messageDialogBp.setTitleIcon(action.getIcon());
-		messageDialogBp.setTitle(action.getText());
-		return messageDialogBp;
-	}
-
-	private void showMessageDialog(final IMessageDialogBluePrint messageDialogBp) {
-		final IWindow parentWindow = Toolkit.getWidgetUtils().getWindowAncestor(actionWidget);
-		parentWindow.createChildWindow(messageDialogBp).showMessage();
 	}
 
 }

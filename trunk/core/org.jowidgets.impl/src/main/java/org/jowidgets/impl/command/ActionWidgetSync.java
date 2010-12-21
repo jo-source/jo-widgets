@@ -77,6 +77,7 @@ public class ActionWidgetSync {
 
 	public void setActive(final boolean active) {
 		if (active) {
+			this.active = true;
 			if (enabledDirty) {
 				setEnabled(action.isEnabled());
 			}
@@ -89,7 +90,6 @@ public class ActionWidgetSync {
 			if (iconDirty) {
 				setIcon(action.getIcon());
 			}
-			this.active = true;
 		}
 		else {
 			this.active = false;

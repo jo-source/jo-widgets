@@ -33,7 +33,7 @@ import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceR
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.common.widgets.builder.ISetupBuilder;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.impl.base.blueprint.proxy.internal.BluePrintProxyInvovationHandler;
+import org.jowidgets.impl.base.blueprint.proxy.internal.BluePrintProxyInvocationHandler;
 import org.jowidgets.util.Assert;
 
 public class BluePrintProxyProvider<BLUE_PRINT_TYPE extends ISetupBuilder<?>> {
@@ -50,7 +50,7 @@ public class BluePrintProxyProvider<BLUE_PRINT_TYPE extends ISetupBuilder<?>> {
 		Assert.paramNotNull(bluePrintType, "bluePrintType");
 		Assert.paramNotNull(widgetDescrType, "widgetDescrType");
 
-		final BluePrintProxyInvovationHandler invocationHandler = new BluePrintProxyInvovationHandler();
+		final BluePrintProxyInvocationHandler invocationHandler = new BluePrintProxyInvocationHandler();
 
 		proxy = (BLUE_PRINT_TYPE) Proxy.newProxyInstance(
 				bluePrintType.getClassLoader(),

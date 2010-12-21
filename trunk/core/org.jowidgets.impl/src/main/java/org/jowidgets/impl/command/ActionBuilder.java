@@ -33,6 +33,7 @@ import org.jowidgets.api.command.ICommand;
 import org.jowidgets.api.command.ICommandAction;
 import org.jowidgets.api.command.ICommandExecutor;
 import org.jowidgets.api.command.IEnabledChecker;
+import org.jowidgets.api.command.IExceptionHandler;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
 
@@ -46,6 +47,8 @@ public class ActionBuilder implements IActionBuilder {
 	private boolean enabled;
 
 	private ICommand command;
+
+	private IExceptionHandler exceptionHandler;
 
 	public ActionBuilder() {
 		this.enabled = true;
@@ -112,8 +115,38 @@ public class ActionBuilder implements IActionBuilder {
 	}
 
 	@Override
+	public IActionBuilder setCommand(final ICommandExecutor command, final IExceptionHandler exceptionHandler) {
+		this.command = new Command(command, exceptionHandler);
+		return this;
+	}
+
+	@Override
+	public IActionBuilder setCommand(
+		final ICommandExecutor command,
+		final IEnabledChecker enabledChecker,
+		final IExceptionHandler exceptionHandler) {
+		this.command = new Command(command, enabledChecker, exceptionHandler);
+		return this;
+	}
+
+	@Override
+	public IActionBuilder setActionExceptionHandler(final IExceptionHandler exceptionHandler) {
+		this.exceptionHandler = exceptionHandler;
+		return this;
+	}
+
+	@Override
 	public ICommandAction build() {
-		final ICommandAction result = new CommandAction(text, toolTipText, icon, mnemonic, accelerator, enabled, command);
+		final ICommandAction result = new CommandAction(
+			text,
+			toolTipText,
+			icon,
+			mnemonic,
+			accelerator,
+			enabled,
+			command,
+			exceptionHandler);
 		return result;
 	}
+
 }

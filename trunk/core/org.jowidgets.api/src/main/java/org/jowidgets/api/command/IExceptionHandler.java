@@ -26,58 +26,10 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.command;
+package org.jowidgets.api.command;
 
-import org.jowidgets.api.command.ICommand;
-import org.jowidgets.api.command.ICommandExecutor;
-import org.jowidgets.api.command.IEnabledChecker;
-import org.jowidgets.api.command.IExceptionHandler;
+public interface IExceptionHandler {
 
-public class Command implements ICommand {
-
-	private final ICommandExecutor command;
-	private final IEnabledChecker executableStateChecker;
-	private final IExceptionHandler exceptionHandler;
-
-	public Command() {
-		this(null, null, null);
-	}
-
-	public Command(final ICommandExecutor command) {
-		this(command, null, null);
-	}
-
-	public Command(final ICommandExecutor command, final IExceptionHandler exceptionHandler) {
-		this(command, null, exceptionHandler);
-	}
-
-	public Command(final ICommandExecutor command, final IEnabledChecker executableStateChecker) {
-		this(command, executableStateChecker, null);
-	}
-
-	public Command(
-		final ICommandExecutor command,
-		final IEnabledChecker executableStateChecker,
-		final IExceptionHandler exceptionHandler) {
-		super();
-		this.command = command;
-		this.executableStateChecker = executableStateChecker;
-		this.exceptionHandler = exceptionHandler;
-	}
-
-	@Override
-	public ICommandExecutor getCommandExecutor() {
-		return command;
-	}
-
-	@Override
-	public IEnabledChecker getEnabledChecker() {
-		return executableStateChecker;
-	}
-
-	@Override
-	public IExceptionHandler getExceptionHandler() {
-		return exceptionHandler;
-	}
+	void handleException(IExecutionContext executionContext, final Exception exception) throws Exception;
 
 }

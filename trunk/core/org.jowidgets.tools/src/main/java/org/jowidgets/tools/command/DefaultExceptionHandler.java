@@ -26,58 +26,30 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.command;
+package org.jowidgets.tools.command;
 
-import org.jowidgets.api.command.ICommand;
-import org.jowidgets.api.command.ICommandExecutor;
-import org.jowidgets.api.command.IEnabledChecker;
+import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.command.IExceptionHandler;
+import org.jowidgets.api.command.IExecutionContext;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IWindow;
+import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
 
-public class Command implements ICommand {
-
-	private final ICommandExecutor command;
-	private final IEnabledChecker executableStateChecker;
-	private final IExceptionHandler exceptionHandler;
-
-	public Command() {
-		this(null, null, null);
-	}
-
-	public Command(final ICommandExecutor command) {
-		this(command, null, null);
-	}
-
-	public Command(final ICommandExecutor command, final IExceptionHandler exceptionHandler) {
-		this(command, null, exceptionHandler);
-	}
-
-	public Command(final ICommandExecutor command, final IEnabledChecker executableStateChecker) {
-		this(command, executableStateChecker, null);
-	}
-
-	public Command(
-		final ICommandExecutor command,
-		final IEnabledChecker executableStateChecker,
-		final IExceptionHandler exceptionHandler) {
-		super();
-		this.command = command;
-		this.executableStateChecker = executableStateChecker;
-		this.exceptionHandler = exceptionHandler;
-	}
+public class DefaultExceptionHandler implements IExceptionHandler {
 
 	@Override
-	public ICommandExecutor getCommandExecutor() {
-		return command;
-	}
+	public void handleException(final IExecutionContext actionEvent, final Exception exception) throws Exception {
 
-	@Override
-	public IEnabledChecker getEnabledChecker() {
-		return executableStateChecker;
-	}
+		final IAction action = actionEvent.getAction();
 
-	@Override
-	public IExceptionHandler getExceptionHandler() {
-		return exceptionHandler;
+		final IMessageDialogBluePrint messageDialogBp = Toolkit.getBluePrintFactory().errorDialog();
+		messageDialogBp.setTitleIcon(action.getIcon());
+		messageDialogBp.setTitle(action.getText());
+		messageDialogBp.setText("Error occurred\n" + exception.getLocalizedMessage());
+
+		final IWindow parentWindow = Toolkit.getWidgetUtils().getWindowAncestor(actionEvent.getSource());
+
+		parentWindow.createChildWindow(messageDialogBp).showMessage();
 	}
 
 }

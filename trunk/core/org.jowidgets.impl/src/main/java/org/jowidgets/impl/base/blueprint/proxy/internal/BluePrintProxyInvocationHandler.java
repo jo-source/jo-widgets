@@ -46,7 +46,7 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
  * Achtung EXPERIMENTELL, soll so nicht bleiben ;-)
  */
 @SuppressWarnings({"rawtypes", "unchecked"})
-public class BluePrintProxyInvovationHandler implements InvocationHandler {
+public class BluePrintProxyInvocationHandler implements InvocationHandler {
 
 	private static final long serialVersionUID = -983268051877912134L;
 
@@ -56,7 +56,7 @@ public class BluePrintProxyInvovationHandler implements InvocationHandler {
 	private Class<? extends IWidgetDescriptor> bluePrintType;
 	private Class<? extends IWidgetDescriptor> widgetDescrType;
 
-	public BluePrintProxyInvovationHandler() {
+	public BluePrintProxyInvocationHandler() {
 		this.fields = new HashMap<String, Object>();
 		this.convenienceMethodsMap = new HashMap<MethodKey, ISetupBuilderConvenience<ISetupBuilder<?>>>();
 	}
@@ -79,11 +79,11 @@ public class BluePrintProxyInvovationHandler implements InvocationHandler {
 			return doInvoke(proxy, method, args);
 		}
 		catch (final Exception e) {
-			throw new Throwable("Error while invoking method '" + method.getName() + "' on '" + proxy + "'", e);
+			throw new RuntimeException("Error while invoking method '" + method.getName() + "' on '" + proxy + "'", e);
 		}
 	}
 
-	public Object doInvoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
+	public Object doInvoke(final Object proxy, final Method method, final Object[] args) throws Exception {
 		final MethodKey methodKey = new MethodKey(method);
 		if (method.getName().equals("toString")) {
 			final StringBuilder stringBuilder = new StringBuilder();
