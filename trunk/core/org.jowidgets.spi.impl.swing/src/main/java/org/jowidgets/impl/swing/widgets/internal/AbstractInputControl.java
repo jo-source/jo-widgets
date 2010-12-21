@@ -34,24 +34,34 @@ import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.impl.InputObservable;
-import org.jowidgets.impl.swing.widgets.SwingComponent;
-import org.jowidgets.spi.widgets.IInputComponentSpi;
+import org.jowidgets.impl.swing.widgets.SwingControl;
+import org.jowidgets.spi.widgets.IInputControlSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
-public abstract class AbstractInputComponent extends InputObservable implements IInputComponentSpi {
+public abstract class AbstractInputControl extends InputObservable implements IInputControlSpi {
 
 	private final Component component;
-	private final SwingComponent swingComponentDelegate;
+	private final SwingControl swingComponentDelegate;
 
-	public AbstractInputComponent(final Component component) {
+	public AbstractInputControl(final Component component) {
 		super();
 		this.component = component;
-		this.swingComponentDelegate = new SwingComponent(component);
+		this.swingComponentDelegate = new SwingControl(component);
 	}
 
 	@Override
 	public Component getUiReference() {
 		return component;
+	}
+
+	@Override
+	public void setLayoutConstraints(final Object layoutConstraints) {
+		swingComponentDelegate.setLayoutConstraints(layoutConstraints);
+	}
+
+	@Override
+	public Object getLayoutConstraints() {
+		return swingComponentDelegate.getLayoutConstraints();
 	}
 
 	@Override

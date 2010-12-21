@@ -29,38 +29,26 @@ package org.jowidgets.impl.swing.widgets.internal;
 
 import java.awt.Component;
 
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.text.JTextComponent;
+import org.jowidgets.impl.swing.widgets.SwingControl;
+import org.jowidgets.spi.widgets.IControlSpi;
 
-import org.jowidgets.spi.widgets.ITextFieldSpi;
+public abstract class AbstractActionControl extends AbstractActionComponent implements IControlSpi {
 
-public abstract class AbstractTextInputComponent extends AbstractInputComponent implements ITextFieldSpi {
+	private final SwingControl swingControlDelegate;
 
-	public AbstractTextInputComponent(final Component component) {
+	public AbstractActionControl(final Component component) {
 		super(component);
+		this.swingControlDelegate = new SwingControl(component);
 	}
 
-	protected void registerTextComponent(final JTextComponent textComponent) {
-		textComponent.getDocument().addDocumentListener(new DocumentListener() {
+	@Override
+	public void setLayoutConstraints(final Object layoutConstraints) {
+		swingControlDelegate.setLayoutConstraints(layoutConstraints);
+	}
 
-			@Override
-			public void removeUpdate(final DocumentEvent e) {
-				fireInputChanged(textComponent);
-			}
-
-			@Override
-			public void insertUpdate(final DocumentEvent e) {
-				fireInputChanged(textComponent);
-			}
-
-			@Override
-			public void changedUpdate(final DocumentEvent e) {
-				fireInputChanged(textComponent);
-			}
-
-		});
-
+	@Override
+	public Object getLayoutConstraints() {
+		return swingControlDelegate.getLayoutConstraints();
 	}
 
 }

@@ -44,6 +44,7 @@ public class UIMComponent extends UIMObservable {
 	private boolean visible = true;
 	private boolean enabled = true;
 	private Cursor cursor;
+	private Object layoutConstraints;
 
 	public void redraw() {}
 
@@ -109,6 +110,14 @@ public class UIMComponent extends UIMObservable {
 
 	public Cursor getCursor() {
 		return cursor;
+	}
+
+	public void setLayoutConstraints(final Object layoutConstraints) {
+		this.layoutConstraints = layoutConstraints;
+	}
+
+	public Object getLayoutConstraints() {
+		return layoutConstraints;
 	}
 
 }

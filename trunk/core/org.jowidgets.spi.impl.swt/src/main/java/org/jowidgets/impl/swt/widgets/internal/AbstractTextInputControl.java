@@ -33,9 +33,9 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 import org.jowidgets.spi.widgets.ITextFieldSpi;
 
-public abstract class AbstractTextInputComponent extends AbstractInputComponent implements ITextFieldSpi {
+public abstract class AbstractTextInputControl extends AbstractInputControl implements ITextFieldSpi {
 
-	public AbstractTextInputComponent(final Control control) {
+	public AbstractTextInputControl(final Control control) {
 		super(control);
 	}
 

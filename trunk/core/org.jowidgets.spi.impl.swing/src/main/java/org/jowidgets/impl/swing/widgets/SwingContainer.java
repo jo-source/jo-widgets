@@ -45,11 +45,11 @@ import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.swing.widgets.internal.util.ChildRemover;
-import org.jowidgets.spi.widgets.ICompositeSpi;
+import org.jowidgets.spi.widgets.IContainerSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.util.Assert;
 
-public class SwingContainer implements ICompositeSpi {
+public class SwingContainer implements IContainerSpi {
 
 	private final IGenericWidgetFactory factory;
 	private final Container container;

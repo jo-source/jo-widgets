@@ -50,4 +50,14 @@ public abstract class AbstractInputControl<VALUE_TYPE> extends AbstractInputComp
 		return getWidget().getParent();
 	}
 
+	@Override
+	public void setLayoutConstraints(final Object layoutConstraints) {
+		getWidget().setLayoutConstraints(layoutConstraints);
+	}
+
+	@Override
+	public Object getLayoutConstraints() {
+		return getWidget().getLayoutConstraints();
+	}
+
 }

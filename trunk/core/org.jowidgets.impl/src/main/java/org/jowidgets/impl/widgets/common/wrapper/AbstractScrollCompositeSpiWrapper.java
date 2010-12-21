@@ -26,33 +26,30 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.basic.factory.internal;
+package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.api.widgets.IComposite;
-import org.jowidgets.api.widgets.descriptor.ICompositeDescriptor;
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.common.widgets.factory.IWidgetFactory;
-import org.jowidgets.impl.spi.ISpiBluePrintFactory;
-import org.jowidgets.impl.spi.blueprint.ICompositeBluePrintSpi;
-import org.jowidgets.impl.widgets.basic.CompositeImpl;
-import org.jowidgets.spi.IWidgetFactorySpi;
-import org.jowidgets.spi.widgets.ICompositeSpi;
+import org.jowidgets.common.widgets.IScrollCompositeCommon;
+import org.jowidgets.spi.widgets.IScrollCompositeSpi;
 
-public class CompositeFactory extends AbstractWidgetFactory implements IWidgetFactory<IComposite, ICompositeDescriptor> {
+public abstract class AbstractScrollCompositeSpiWrapper extends AbstractContainerSpiWrapper implements IScrollCompositeCommon {
 
-	public CompositeFactory(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetFactorySpi spiWidgetFactory,
-		final ISpiBluePrintFactory bpF) {
-
-		super(genericWidgetFactory, spiWidgetFactory, bpF);
+	public AbstractScrollCompositeSpiWrapper(final IScrollCompositeSpi widget) {
+		super(widget);
 	}
 
 	@Override
-	public IComposite create(final Object parentUiReference, final ICompositeDescriptor descriptor) {
-		final ICompositeBluePrintSpi bp = getSpiBluePrintFactory().composite().setSetup(descriptor);
-		final ICompositeSpi compositeSpi = getSpiWidgetFactory().createComposite(getGenericWidgetFactory(), parentUiReference, bp);
-		return new CompositeImpl(compositeSpi, descriptor);
+	public IScrollCompositeSpi getWidget() {
+		return (IScrollCompositeSpi) super.getWidget();
+	}
+
+	@Override
+	public void setLayoutConstraints(final Object layoutConstraints) {
+		getWidget().setLayoutConstraints(layoutConstraints);
+	}
+
+	@Override
+	public Object getLayoutConstraints() {
+		return getWidget().getLayoutConstraints();
 	}
 
 }

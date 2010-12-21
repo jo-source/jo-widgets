@@ -37,17 +37,17 @@ import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.descriptor.setup.IInputComponentSetup;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
-import org.jowidgets.impl.widgets.common.wrapper.InputComponentSpiWrapper;
-import org.jowidgets.spi.widgets.IInputComponentSpi;
+import org.jowidgets.impl.widgets.common.wrapper.InputControlSpiWrapper;
+import org.jowidgets.spi.widgets.IInputControlSpi;
 import org.jowidgets.tools.widgets.delegate.InputValidationDelegate;
 import org.jowidgets.util.EmptyCheck;
 
-public abstract class AbstractBasicInputControl<VALUE_TYPE> extends InputComponentSpiWrapper implements IInputControl<VALUE_TYPE> {
+public abstract class AbstractBasicInputControl<VALUE_TYPE> extends InputControlSpiWrapper implements IInputControl<VALUE_TYPE> {
 
 	private final ControlDelegate controlDelegate;
 	private final InputValidationDelegate<VALUE_TYPE> inputValidationDelegate;
 
-	public AbstractBasicInputControl(final IInputComponentSpi inputWidgetSpi, final IInputComponentSetup<VALUE_TYPE> setup) {
+	public AbstractBasicInputControl(final IInputControlSpi inputWidgetSpi, final IInputComponentSetup<VALUE_TYPE> setup) {
 		super(inputWidgetSpi);
 
 		this.controlDelegate = new ControlDelegate();

@@ -105,6 +105,16 @@ public class LabelImpl implements ILabel {
 	}
 
 	@Override
+	public void setLayoutConstraints(final Object layoutConstraints) {
+		compositeWidget.setLayoutConstraints(layoutConstraints);
+	}
+
+	@Override
+	public Object getLayoutConstraints() {
+		return compositeWidget.getLayoutConstraints();
+	}
+
+	@Override
 	public void redraw() {
 		compositeWidget.redraw();
 	}

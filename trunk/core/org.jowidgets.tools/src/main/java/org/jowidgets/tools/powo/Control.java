@@ -36,13 +36,43 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 class Control<WIDGET_TYPE extends IControl, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IComponentSetupBuilder<?>> extends
 		Component<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IControl {
 
+	private Object layoutConstraints;
+
 	public Control(final BLUE_PRINT_TYPE bluePrint) {
 		super(bluePrint);
+	}
+
+	@Override
+	void initialize(final WIDGET_TYPE widget) {
+		super.initialize(widget);
+		if (layoutConstraints != null) {
+			getWidget().setLayoutConstraints(layoutConstraints);
+		}
 	}
 
 	@Override
 	public IContainer getParent() {
 		checkInitialized();
 		return getWidget().getParent();
+	}
+
+	@Override
+	public void setLayoutConstraints(final Object layoutConstraints) {
+		if (isInitialized()) {
+			getWidget().setLayoutConstraints(layoutConstraints);
+		}
+		else {
+			this.layoutConstraints = layoutConstraints;
+		}
+	}
+
+	@Override
+	public Object getLayoutConstraints() {
+		if (isInitialized()) {
+			return getWidget().getLayoutConstraints();
+		}
+		else {
+			return layoutConstraints;
+		}
 	}
 }

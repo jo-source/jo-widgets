@@ -35,7 +35,7 @@ import org.eclipse.swt.widgets.Text;
 import org.jowidgets.spi.verify.IInputVerifier;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 
-public class TextFieldImpl extends AbstractTextInputComponent {
+public class TextFieldImpl extends AbstractTextInputControl {
 
 	public TextFieldImpl(final Object parentUiReference, final ITextFieldSetupSpi setup) {
 		super(createText(parentUiReference, setup.isPasswordPresentation()));

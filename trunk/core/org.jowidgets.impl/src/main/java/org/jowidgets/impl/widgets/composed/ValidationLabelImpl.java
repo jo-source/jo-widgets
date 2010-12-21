@@ -304,6 +304,16 @@ public class ValidationLabelImpl implements IValidationLabel {
 		labelControl.removePopupDetectionListener(listener);
 	}
 
+	@Override
+	public void setLayoutConstraints(final Object layoutConstraints) {
+		labelControl.setLayoutConstraints(layoutConstraints);
+	}
+
+	@Override
+	public Object getLayoutConstraints() {
+		return labelControl.getLayoutConstraints();
+	}
+
 	private enum LabelState {
 		OK_VALIDATION,
 		WARNING_VALIDATION,

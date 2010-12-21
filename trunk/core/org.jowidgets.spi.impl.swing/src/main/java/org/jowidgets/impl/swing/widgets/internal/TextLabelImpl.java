@@ -33,11 +33,11 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.impl.swing.util.AlignmentConvert;
 import org.jowidgets.impl.swing.util.FontProvider;
-import org.jowidgets.impl.swing.widgets.SwingComponent;
+import org.jowidgets.impl.swing.widgets.SwingControl;
 import org.jowidgets.spi.widgets.ITextLabelSpi;
 import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 
-public class TextLabelImpl extends SwingComponent implements ITextLabelSpi {
+public class TextLabelImpl extends SwingControl implements ITextLabelSpi {
 
 	public TextLabelImpl(final ITextLabelSetupSpi setup) {
 		super(new JLabel());

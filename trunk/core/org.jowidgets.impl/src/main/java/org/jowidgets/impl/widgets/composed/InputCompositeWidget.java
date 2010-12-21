@@ -140,6 +140,16 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputComposite<INPUT_T
 	}
 
 	@Override
+	public void setLayoutConstraints(final Object layoutConstraints) {
+		parentComposite.setLayoutConstraints(layoutConstraints);
+	}
+
+	@Override
+	public Object getLayoutConstraints() {
+		return parentComposite.getLayoutConstraints();
+	}
+
+	@Override
 	public void setVisible(final boolean visible) {
 		parentComposite.setVisible(visible);
 	}

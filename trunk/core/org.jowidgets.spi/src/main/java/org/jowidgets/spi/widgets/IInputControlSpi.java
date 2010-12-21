@@ -28,8 +28,8 @@
 
 package org.jowidgets.spi.widgets;
 
-import org.jowidgets.common.widgets.IInputComponentCommon;
+import org.jowidgets.common.widgets.IInputControlCommon;
 
-public interface IInputComponentSpi extends IComponentSpi, IInputComponentCommon {
+public interface IInputControlSpi extends IControlSpi, IInputControlCommon {
 
 }

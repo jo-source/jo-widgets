@@ -30,9 +30,9 @@ package org.jowidgets.impl.swing.widgets.internal;
 import java.awt.Container;
 
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.impl.swing.widgets.SwingContainer;
+import org.jowidgets.impl.swing.widgets.SwingComposite;
 
-public class CompositeWrapper extends SwingContainer {
+public class CompositeWrapper extends SwingComposite {
 
 	public CompositeWrapper(final IGenericWidgetFactory factory, final Container uiReference) {
 		super(factory, uiReference);

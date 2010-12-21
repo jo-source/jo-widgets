@@ -29,11 +29,11 @@ package org.jowidgets.impl.mock.widgets.internal;
 
 import org.jowidgets.impl.mock.image.MockImageRegistry;
 import org.jowidgets.impl.mock.mockui.UIMProgressBar;
-import org.jowidgets.impl.mock.widgets.MockComponent;
+import org.jowidgets.impl.mock.widgets.MockControl;
 import org.jowidgets.spi.widgets.IProgressBarSpi;
 import org.jowidgets.spi.widgets.setup.IProgressBarSetupSpi;
 
-public class ProgressBarImpl extends MockComponent implements IProgressBarSpi {
+public class ProgressBarImpl extends MockControl implements IProgressBarSpi {
 
 	public ProgressBarImpl(final MockImageRegistry imageRegistry, final IProgressBarSetupSpi setup) {
 		super(new UIMProgressBar(setup.getOrientation()));

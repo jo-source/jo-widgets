@@ -25,13 +25,8 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swt.widgets;
+package org.jowidgets.impl.mock.widgets;
 
-import net.miginfocom.swt.MigLayout;
-
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Widget;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
@@ -44,116 +39,113 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.impl.mock.mockui.UIMComponent;
+import org.jowidgets.impl.mock.mockui.UIMContainer;
 import org.jowidgets.spi.widgets.IContainerSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.util.Assert;
 
-public class SwtContainer implements IContainerSpi {
+public class MockContainer implements IContainerSpi {
 
 	private final IGenericWidgetFactory factory;
-	private final Composite composite;
-	private final SwtComponent swtComponentDelegate;
+	private final UIMContainer container;
+	private final MockComponent mockComponentDelegate;
 
-	public SwtContainer(final IGenericWidgetFactory factory, final Composite composite) {
-
+	public MockContainer(final IGenericWidgetFactory factory, final UIMContainer container) {
 		Assert.paramNotNull(factory, "factory");
-		Assert.paramNotNull(composite, "composite");
+		Assert.paramNotNull(container, "container");
 
 		this.factory = factory;
-		this.composite = composite;
-		this.swtComponentDelegate = new SwtComponent(composite);
+		this.container = container;
+		this.mockComponentDelegate = new MockComponent(container);
 	}
 
 	@Override
 	public final void setLayout(final ILayoutDescriptor layoutDescriptor) {
-		Assert.paramNotNull(layoutDescriptor, "layoutDescriptor");
+		Assert.paramNotNull(layoutDescriptor, "layoutManager");
 		if (layoutDescriptor instanceof MigLayoutDescriptor) {
-			final MigLayoutDescriptor migLayoutManager = (MigLayoutDescriptor) layoutDescriptor;
-			composite.setLayout(new MigLayout(
-				migLayoutManager.getLayoutConstraints(),
-				migLayoutManager.getColumnConstraints(),
-				migLayoutManager.getRowConstraints()));
+			container.setLayout(layoutDescriptor);
 		}
 		else {
-			throw new IllegalArgumentException("LayoutDescriptor of type '"
+			throw new IllegalArgumentException("Layout Manager of type '"
 				+ layoutDescriptor.getClass().getName()
 				+ "' is not supported");
 		}
 	}
 
 	@Override
-	public Composite getUiReference() {
-		return composite;
+	public UIMContainer getUiReference() {
+		return container;
 	}
 
 	@Override
 	public void redraw() {
-		swtComponentDelegate.redraw();
+		mockComponentDelegate.redraw();
 	}
 
 	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
-		swtComponentDelegate.setForegroundColor(colorValue);
+		mockComponentDelegate.setForegroundColor(colorValue);
 	}
 
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
-		swtComponentDelegate.setBackgroundColor(colorValue);
+		mockComponentDelegate.setBackgroundColor(colorValue);
 	}
 
 	@Override
 	public IColorConstant getForegroundColor() {
-		return swtComponentDelegate.getForegroundColor();
+		return mockComponentDelegate.getForegroundColor();
 	}
 
 	@Override
 	public IColorConstant getBackgroundColor() {
-		return swtComponentDelegate.getBackgroundColor();
+		return mockComponentDelegate.getBackgroundColor();
 	}
 
 	@Override
 	public void setCursor(final Cursor cursor) {
-		swtComponentDelegate.setCursor(cursor);
+		mockComponentDelegate.setCursor(cursor);
 	}
 
 	@Override
 	public void setEnabled(final boolean enabled) {
-		swtComponentDelegate.setEnabled(enabled);
+		mockComponentDelegate.setEnabled(enabled);
 	}
 
 	@Override
 	public boolean isEnabled() {
-		return swtComponentDelegate.isEnabled();
+		return mockComponentDelegate.isEnabled();
 	}
 
 	@Override
 	public void setVisible(final boolean visible) {
-		swtComponentDelegate.setVisible(visible);
+		mockComponentDelegate.setVisible(visible);
 	}
 
 	@Override
 	public boolean isVisible() {
-		return swtComponentDelegate.isVisible();
+		return mockComponentDelegate.isVisible();
 	}
 
 	@Override
 	public Dimension getSize() {
-		return swtComponentDelegate.getSize();
+		return mockComponentDelegate.getSize();
 	}
 
 	@Override
 	public IPopupMenuSpi createPopupMenu() {
-		return swtComponentDelegate.createPopupMenu();
+		return mockComponentDelegate.createPopupMenu();
 	}
 
 	@Override
 	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		swtComponentDelegate.addPopupDetectionListener(listener);
+		mockComponentDelegate.addPopupDetectionListener(listener);
 	}
 
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		swtComponentDelegate.removePopupDetectionListener(listener);
+		mockComponentDelegate.removePopupDetectionListener(listener);
 	}
 
 	@Override
@@ -162,7 +154,7 @@ public class SwtContainer implements IContainerSpi {
 		final Object cellConstraints) {
 
 		final WIDGET_TYPE result = factory.create(getUiReference(), descriptor);
-		setLayoutConstraints(result, cellConstraints);
+		addToContainer(result, cellConstraints);
 		return result;
 	}
 
@@ -179,70 +171,40 @@ public class SwtContainer implements IContainerSpi {
 		};
 
 		final WIDGET_TYPE result = customFactory.create(getUiReference(), widgetFactory);
-		setLayoutConstraints(result, cellConstraints);
+		addToContainer(result, cellConstraints);
 		return result;
 	}
 
 	@Override
 	public boolean remove(final IControlCommon control) {
-		if (isChild(control)) {
-			((Widget) control.getUiReference()).dispose();
-			return true;
-		}
-		return false;
-	}
-
-	private boolean isChild(final IControlCommon control) {
-		for (final Control child : getUiReference().getChildren()) {
-			if (child == control.getUiReference()) {
-				return true;
-			}
-		}
-		return false;
+		return getUiReference().remove((UIMComponent) control.getUiReference());
 	}
 
 	@Override
 	public void layoutBegin() {
-		composite.setRedraw(false);
+		//do nothing here
 	}
 
 	@Override
 	public void layoutEnd() {
-		composite.layout(true, true);
-		composite.setRedraw(true);
+		redraw();
 	}
 
-	protected void setLayoutConstraints(final IWidgetCommon widget, final Object layoutConstraints) {
-		final Object object = widget.getUiReference();
-		if (object instanceof Control) {
-			final Control control = (Control) object;
-			control.setLayoutData(layoutConstraints);
-		}
-		else {
-			throw new IllegalArgumentException("'"
-				+ Control.class
-				+ "' excpected, but '"
-				+ object.getClass().getName()
-				+ "' found.");
-		}
+	@Override
+	public void removeAll() {
+		container.removeAll();
 	}
 
 	protected IGenericWidgetFactory getGenericWidgetFactory() {
 		return factory;
 	}
 
-	@Override
-	public void removeAll() {
-		disposeChildren(composite);
-		composite.layout(true, true);
-	}
-
-	private void disposeChildren(final Composite composite) {
-		for (final Control childControl : composite.getChildren()) {
-			if (childControl instanceof Composite) {
-				disposeChildren((Composite) childControl);
-			}
-			childControl.dispose();
+	private void addToContainer(final IWidgetCommon widget, final Object cellConstraints) {
+		if (cellConstraints != null) {
+			container.add((UIMComponent) (widget.getUiReference()), cellConstraints);
+		}
+		else {
+			container.add((UIMComponent) (widget.getUiReference()));
 		}
 	}
 

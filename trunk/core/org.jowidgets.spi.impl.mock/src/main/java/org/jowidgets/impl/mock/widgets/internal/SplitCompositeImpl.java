@@ -32,12 +32,12 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.mock.mockui.UIMContainer;
 import org.jowidgets.impl.mock.mockui.UIMSplitPane;
 import org.jowidgets.impl.mock.widgets.MockComposite;
-import org.jowidgets.impl.mock.widgets.MockComponent;
+import org.jowidgets.impl.mock.widgets.MockControl;
 import org.jowidgets.spi.widgets.ICompositeSpi;
 import org.jowidgets.spi.widgets.ISplitCompositeSpi;
 import org.jowidgets.spi.widgets.setup.ISplitCompositeSetupSpi;
 
-public class SplitCompositeImpl extends MockComponent implements ISplitCompositeSpi {
+public class SplitCompositeImpl extends MockControl implements ISplitCompositeSpi {
 
 	private final ICompositeSpi first;
 	private final ICompositeSpi second;

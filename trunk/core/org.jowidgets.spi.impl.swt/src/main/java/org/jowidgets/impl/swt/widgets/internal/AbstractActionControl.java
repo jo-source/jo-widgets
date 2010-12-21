@@ -25,19 +25,29 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.widgets;
+package org.jowidgets.impl.swt.widgets.internal;
 
+import org.eclipse.swt.widgets.Control;
+import org.jowidgets.impl.swt.widgets.SwtControl;
+import org.jowidgets.spi.widgets.IControlSpi;
 
-public interface IComboBoxSelectionSpi extends IControlSpi, IInputControlSpi {
+public abstract class AbstractActionControl extends AbstractActionComponent implements IControlSpi {
 
-	int getSelectedIndex();
+	private final SwtControl swtControlDelegate;
 
-	void setSelectedIndex(int index);
+	public AbstractActionControl(final Control control) {
+		super(control);
+		this.swtControlDelegate = new SwtControl(control);
+	}
 
-	void setTooltipText(String tooltipText);
+	@Override
+	public void setLayoutConstraints(final Object layoutConstraints) {
+		swtControlDelegate.setLayoutConstraints(layoutConstraints);
+	}
 
-	String[] getElements();
-
-	void setElements(String[] elements);
+	@Override
+	public Object getLayoutConstraints() {
+		return swtControlDelegate.getLayoutConstraints();
+	}
 
 }

@@ -30,11 +30,11 @@ package org.jowidgets.impl.mock.widgets.internal;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.impl.mock.image.MockImageRegistry;
 import org.jowidgets.impl.mock.mockui.UIMIcon;
-import org.jowidgets.impl.mock.widgets.MockComponent;
+import org.jowidgets.impl.mock.widgets.MockControl;
 import org.jowidgets.spi.widgets.IIconSpi;
 import org.jowidgets.spi.widgets.setup.IIconSetupSpi;
 
-public class IconImpl extends MockComponent implements IIconSpi {
+public class IconImpl extends MockControl implements IIconSpi {
 
 	private final MockImageRegistry imageRegistry;
 

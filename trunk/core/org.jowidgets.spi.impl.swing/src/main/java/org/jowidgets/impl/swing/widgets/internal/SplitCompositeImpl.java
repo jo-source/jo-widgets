@@ -36,14 +36,14 @@ import org.jowidgets.common.types.SplitResizePolicy;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swing.util.BorderConvert;
 import org.jowidgets.impl.swing.util.SplitOrientationConvert;
-import org.jowidgets.impl.swing.widgets.SwingComponent;
-import org.jowidgets.impl.swing.widgets.SwingContainer;
+import org.jowidgets.impl.swing.widgets.SwingComposite;
+import org.jowidgets.impl.swing.widgets.SwingControl;
 import org.jowidgets.impl.swing.widgets.internal.base.JoSplitPane;
 import org.jowidgets.spi.widgets.ICompositeSpi;
 import org.jowidgets.spi.widgets.ISplitCompositeSpi;
 import org.jowidgets.spi.widgets.setup.ISplitCompositeSetupSpi;
 
-public class SplitCompositeImpl extends SwingComponent implements ISplitCompositeSpi {
+public class SplitCompositeImpl extends SwingControl implements ISplitCompositeSpi {
 
 	private final ICompositeSpi first;
 	private final ICompositeSpi second;
@@ -57,8 +57,8 @@ public class SplitCompositeImpl extends SwingComponent implements ISplitComposit
 		content1.setBorder(BorderConvert.convert(setup.getFirstBorder()));
 		content2.setBorder(BorderConvert.convert(setup.getSecondBorder()));
 
-		first = new SwingContainer(factory, content1);
-		second = new SwingContainer(factory, content2);
+		first = new SwingComposite(factory, content1);
+		second = new SwingComposite(factory, content2);
 
 		first.setLayout(setup.getFirstLayout());
 		second.setLayout(setup.getSecondLayout());

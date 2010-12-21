@@ -34,7 +34,7 @@ import org.jowidgets.impl.swing.widgets.internal.util.InputModifierDocument;
 import org.jowidgets.spi.verify.IInputVerifier;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 
-public class TextFieldImpl extends AbstractTextInputComponent {
+public class TextFieldImpl extends AbstractTextInputControl {
 
 	public TextFieldImpl(final ITextFieldSetupSpi setup) {
 		super(setup.isPasswordPresentation() ? new JPasswordField() : new JTextField());

@@ -30,11 +30,11 @@ package org.jowidgets.impl.swing.widgets.internal;
 import javax.swing.JSeparator;
 
 import org.jowidgets.impl.swing.util.OrientationConvert;
-import org.jowidgets.impl.swing.widgets.SwingComponent;
+import org.jowidgets.impl.swing.widgets.SwingControl;
 import org.jowidgets.spi.widgets.IControlSpi;
 import org.jowidgets.spi.widgets.setup.ISeparatorSetupSpi;
 
-public class SeparatorImpl extends SwingComponent implements IControlSpi {
+public class SeparatorImpl extends SwingControl implements IControlSpi {
 
 	public SeparatorImpl(final ISeparatorSetupSpi setup) {
 		super(new JSeparator(OrientationConvert.convert(setup.getOrientation())));

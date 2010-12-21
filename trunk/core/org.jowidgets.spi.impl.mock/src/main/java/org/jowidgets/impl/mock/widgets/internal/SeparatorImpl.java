@@ -28,11 +28,11 @@
 package org.jowidgets.impl.mock.widgets.internal;
 
 import org.jowidgets.impl.mock.mockui.UIMSeparator;
-import org.jowidgets.impl.mock.widgets.MockComponent;
+import org.jowidgets.impl.mock.widgets.MockControl;
 import org.jowidgets.spi.widgets.IControlSpi;
 import org.jowidgets.spi.widgets.setup.ISeparatorSetupSpi;
 
-public class SeparatorImpl extends MockComponent implements IControlSpi {
+public class SeparatorImpl extends MockControl implements IControlSpi {
 
 	public SeparatorImpl(final ISeparatorSetupSpi setup) {
 		super(new UIMSeparator(setup.getOrientation()));

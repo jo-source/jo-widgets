@@ -35,7 +35,7 @@ import org.jowidgets.impl.mock.mockui.UIMButton;
 import org.jowidgets.spi.widgets.IButtonSpi;
 import org.jowidgets.spi.widgets.setup.IButtonSetupSpi;
 
-public class ButtonImpl extends AbstractActionComponent implements IButtonSpi {
+public class ButtonImpl extends AbstractActionControl implements IButtonSpi {
 
 	private final MockImageRegistry imageRegistry;
 

@@ -25,19 +25,53 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.widgets;
+package org.jowidgets.impl.swing.widgets;
 
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.LayoutManager;
 
-public interface IComboBoxSelectionSpi extends IControlSpi, IInputControlSpi {
+import net.miginfocom.swing.MigLayout;
 
-	int getSelectedIndex();
+import org.jowidgets.spi.widgets.IControlSpi;
 
-	void setSelectedIndex(int index);
+public class SwingControl extends SwingComponent implements IControlSpi {
 
-	void setTooltipText(String tooltipText);
+	public SwingControl(final Component component) {
+		super(component);
+	}
 
-	String[] getElements();
+	@Override
+	public void setLayoutConstraints(final Object layoutConstraints) {
+		final MigLayout migLayout = getParentMigLayout();
+		if (migLayout != null) {
+			migLayout.setComponentConstraints(getUiReference(), layoutConstraints);
+		}
+		else {
+			throw new IllegalStateException("MigLayout expected");
+		}
+	}
 
-	void setElements(String[] elements);
+	@Override
+	public Object getLayoutConstraints() {
+		final MigLayout migLayout = getParentMigLayout();
+		if (migLayout != null) {
+			return migLayout.getComponentConstraints(getUiReference());
+		}
+		else {
+			throw new IllegalStateException("MigLayout expected");
+		}
+	}
+
+	private MigLayout getParentMigLayout() {
+		final Container container = getUiReference().getParent();
+		if (container != null) {
+			final LayoutManager layout = container.getLayout();
+			if (layout instanceof MigLayout) {
+				return (MigLayout) layout;
+			}
+		}
+		return null;
+	}
 
 }

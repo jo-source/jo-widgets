@@ -29,11 +29,11 @@ package org.jowidgets.impl.mock.widgets.internal;
 
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.impl.mock.mockui.UIMTextLabel;
-import org.jowidgets.impl.mock.widgets.MockComponent;
+import org.jowidgets.impl.mock.widgets.MockControl;
 import org.jowidgets.spi.widgets.ITextLabelSpi;
 import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 
-public class TextLabelImpl extends MockComponent implements ITextLabelSpi {
+public class TextLabelImpl extends MockControl implements ITextLabelSpi {
 
 	public TextLabelImpl(final ITextLabelSetupSpi setup) {
 		super(new UIMTextLabel());

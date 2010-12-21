@@ -30,7 +30,7 @@ package org.jowidgets.impl.mock.widgets.internal;
 import org.jowidgets.impl.mock.mockui.UIMTextField;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 
-public class TextFieldImpl extends AbstractTextInputComponent {
+public class TextFieldImpl extends AbstractTextInputControl {
 
 	public TextFieldImpl(final ITextFieldSetupSpi setup) {
 		super(new UIMTextField(setup.getInputVerifier()));

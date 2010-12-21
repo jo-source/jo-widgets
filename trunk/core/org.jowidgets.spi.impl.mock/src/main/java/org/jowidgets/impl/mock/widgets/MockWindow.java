@@ -39,7 +39,7 @@ import org.jowidgets.impl.mock.image.MockImageRegistry;
 import org.jowidgets.impl.mock.mockui.UIMWindow;
 import org.jowidgets.spi.widgets.IWindowSpi;
 
-public class MockWindow extends MockComposite implements IWindowSpi {
+public class MockWindow extends MockContainer implements IWindowSpi {
 
 	public MockWindow(final IGenericWidgetFactory factory, final UIMWindow window) {
 		super(factory, window);

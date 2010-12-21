@@ -32,7 +32,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.IIconCommon;
 import org.jowidgets.spi.widgets.IIconSpi;
 
-public class IconSpiWrapper extends ComponentSpiWrapper implements IIconCommon {
+public class IconSpiWrapper extends ControlSpiWrapper implements IIconCommon {
 
 	public IconSpiWrapper(final IIconSpi widget) {
 		super(widget);

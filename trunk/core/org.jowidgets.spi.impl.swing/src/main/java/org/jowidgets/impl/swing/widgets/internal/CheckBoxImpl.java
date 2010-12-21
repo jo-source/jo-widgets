@@ -39,7 +39,7 @@ import org.jowidgets.impl.swing.util.FontProvider;
 import org.jowidgets.spi.widgets.ICheckBoxSpi;
 import org.jowidgets.spi.widgets.setup.ICheckBoxSetupSpi;
 
-public class CheckBoxImpl extends AbstractInputComponent implements ICheckBoxSpi {
+public class CheckBoxImpl extends AbstractInputControl implements ICheckBoxSpi {
 
 	public CheckBoxImpl(final ICheckBoxSetupSpi setup) {
 		this(new JCheckBox(), setup);

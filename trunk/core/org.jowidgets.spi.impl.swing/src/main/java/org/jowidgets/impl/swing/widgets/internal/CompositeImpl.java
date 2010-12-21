@@ -32,9 +32,9 @@ import javax.swing.JPanel;
 import org.jowidgets.common.widgets.descriptor.setup.ICompositeSetupCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swing.util.BorderConvert;
-import org.jowidgets.impl.swing.widgets.SwingContainer;
+import org.jowidgets.impl.swing.widgets.SwingComposite;
 
-public class CompositeImpl extends SwingContainer {
+public class CompositeImpl extends SwingComposite {
 
 	public CompositeImpl(final IGenericWidgetFactory factory, final ICompositeSetupCommon setup) {
 		super(factory, new JPanel());

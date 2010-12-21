@@ -30,11 +30,11 @@ package org.jowidgets.impl.swing.widgets.internal;
 import javax.swing.JProgressBar;
 
 import org.jowidgets.impl.swing.util.OrientationConvert;
-import org.jowidgets.impl.swing.widgets.SwingComponent;
+import org.jowidgets.impl.swing.widgets.SwingControl;
 import org.jowidgets.spi.widgets.IProgressBarSpi;
 import org.jowidgets.spi.widgets.setup.IProgressBarSetupSpi;
 
-public class ProgressBarImpl extends SwingComponent implements IProgressBarSpi {
+public class ProgressBarImpl extends SwingControl implements IProgressBarSpi {
 
 	public ProgressBarImpl(final IProgressBarSetupSpi setup) {
 		super(new JProgressBar(OrientationConvert.convert(setup.getOrientation())));

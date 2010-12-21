@@ -37,7 +37,7 @@ import javax.swing.JComboBox;
 import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
 
-public class ComboBoxSelectionImpl extends AbstractInputComponent implements IComboBoxSelectionSpi {
+public class ComboBoxSelectionImpl extends AbstractInputControl implements IComboBoxSelectionSpi {
 
 	public ComboBoxSelectionImpl(final IComboBoxSelectionSetupSpi setup) {
 		super(new JComboBox(new DefaultComboBoxModel(setup.getElements())));

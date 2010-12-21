@@ -31,11 +31,11 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.jowidgets.impl.swt.util.OrientationConvert;
-import org.jowidgets.impl.swt.widgets.SwtComponent;
+import org.jowidgets.impl.swt.widgets.SwtControl;
 import org.jowidgets.spi.widgets.IProgressBarSpi;
 import org.jowidgets.spi.widgets.setup.IProgressBarSetupSpi;
 
-public class ProgressBarImpl extends SwtComponent implements IProgressBarSpi {
+public class ProgressBarImpl extends SwtControl implements IProgressBarSpi {
 
 	public ProgressBarImpl(final Object parentUiReference, final IProgressBarSetupSpi setup) {
 		super(createProgressBar(parentUiReference, setup));

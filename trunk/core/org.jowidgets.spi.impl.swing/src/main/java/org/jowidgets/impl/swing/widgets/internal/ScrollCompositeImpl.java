@@ -41,6 +41,7 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.impl.swing.util.BorderConvert;
 import org.jowidgets.impl.swing.util.ScrollBarSettingsConvert;
+import org.jowidgets.impl.swing.widgets.SwingComposite;
 import org.jowidgets.impl.swing.widgets.SwingContainer;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.IScrollCompositeSpi;
@@ -48,7 +49,7 @@ import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
 
 public class ScrollCompositeImpl implements IScrollCompositeSpi {
 
-	private final SwingContainer outerContainer;
+	private final SwingComposite outerContainer;
 	private final SwingContainer innerContainer;
 
 	public ScrollCompositeImpl(final IGenericWidgetFactory factory, final IScrollCompositeSetupSpi setup) {
@@ -63,7 +64,7 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 		scrollPane.setVerticalScrollBarPolicy(verticalPolicy);
 		scrollPane.setHorizontalScrollBarPolicy(horizontalPolicy);
 
-		this.outerContainer = new SwingContainer(factory, scrollPane);
+		this.outerContainer = new SwingComposite(factory, scrollPane);
 		outerContainer.setBackgroundColor(null);
 
 		this.innerContainer = new SwingContainer(factory, new JPanel());
@@ -82,6 +83,16 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 	@Override
 	public JScrollPane getUiReference() {
 		return (JScrollPane) outerContainer.getUiReference();
+	}
+
+	@Override
+	public void setLayoutConstraints(final Object layoutConstraints) {
+		outerContainer.setLayoutConstraints(layoutConstraints);
+	}
+
+	@Override
+	public Object getLayoutConstraints() {
+		return outerContainer.getLayoutConstraints();
 	}
 
 	@Override

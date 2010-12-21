@@ -33,9 +33,9 @@ import junit.framework.JUnit4TestAdapter;
 import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
-import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IDisplay;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.ILabel;
@@ -62,6 +62,8 @@ public class WidgetFactoryTest {
 
 	private static final IColorConstant FOREGROUND = new ColorValue(4, 5, 6);
 	private static final IColorConstant BACKGROUND = new ColorValue(219, 220, 221);
+
+	private static final String LAYOUT_CONSTRAINTS = "growx";
 
 	private static final Dimension SIZE = new Dimension(145, 167);
 	private static final Position POSITION = new Position(23, 19);
@@ -102,22 +104,22 @@ public class WidgetFactoryTest {
 
 	private void testCreateChildWidgets(final IContainer container) {
 		testButtonWidget(container, container.add(bpMod(BPF.button()), null));
-		testChildComponent(container, container.add(bpMod(BPF.checkBox()), null));
-		testChildComponent(container, container.add(bpMod(BPF.comboBox(new String[] {})), null));
-		testChildComponent(container, container.add(bpMod(BPF.comboBoxSelection(new String[] {})), null));
-		testChildComponent(container, container.add(bpMod(BPF.composite()), null));
-		testChildComponent(container, container.add(bpMod(BPF.icon()), null));
-		testChildComponent(container, container.add(bpMod(BPF.inputFieldString()), null));
-		testChildComponent(container, container.add(bpMod(BPF.label()), null));
-		testChildComponent(container, container.add(bpMod(BPF.progressBar()), null));
-		testChildComponent(container, container.add(bpMod(BPF.scrollComposite()), null));
-		testChildComponent(container, container.add(bpMod(BPF.separator()), null));
+		testChildControl(container, container.add(bpMod(BPF.checkBox()), null));
+		testChildControl(container, container.add(bpMod(BPF.comboBox(new String[] {})), null));
+		testChildControl(container, container.add(bpMod(BPF.comboBoxSelection(new String[] {})), null));
+		testChildControl(container, container.add(bpMod(BPF.composite()), null));
+		testChildControl(container, container.add(bpMod(BPF.icon()), null));
+		testChildControl(container, container.add(bpMod(BPF.inputFieldString()), null));
+		testChildControl(container, container.add(bpMod(BPF.label()), null));
+		testChildControl(container, container.add(bpMod(BPF.progressBar()), null));
+		testChildControl(container, container.add(bpMod(BPF.scrollComposite()), null));
+		testChildControl(container, container.add(bpMod(BPF.separator()), null));
 		testSplitCompositeWidget(container, container.add(bpMod(BPF.splitComposite()), null));
-		testChildComponent(container, container.add(bpMod(BPF.textField()), null));
-		testChildComponent(container, container.add(bpMod(BPF.textLabel()), null));
-		testChildComponent(container, container.add(bpMod(BPF.textSeparator()), null));
-		testChildComponent(container, container.add(bpMod(BPF.toggleButton()), null));
-		testChildComponent(container, container.add(bpMod(BPF.validationLabel()), null));
+		testChildControl(container, container.add(bpMod(BPF.textField()), null));
+		testChildControl(container, container.add(bpMod(BPF.textLabel()), null));
+		testChildControl(container, container.add(bpMod(BPF.textSeparator()), null));
+		testChildControl(container, container.add(bpMod(BPF.toggleButton()), null));
+		testChildControl(container, container.add(bpMod(BPF.validationLabel()), null));
 
 		container.removeAll();
 		Assert.assertTrue(container.getChildren().size() == 0);
@@ -129,9 +131,13 @@ public class WidgetFactoryTest {
 		return bluePrint;
 	}
 
-	private void testChildComponent(final IContainer parent, final IComponent widget) {
+	private void testChildControl(final IContainer parent, final IControl widget) {
 		//is widget created
 		Assert.assertNotNull(widget);
+
+		widget.setLayoutConstraints(LAYOUT_CONSTRAINTS);
+		Assert.assertTrue(widget.getLayoutConstraints() instanceof String);
+		Assert.assertTrue(((String) widget.getLayoutConstraints()).contains(LAYOUT_CONSTRAINTS));
 
 		//has widget colors from setup
 		Assert.assertTrue(DEFAULT_FOREGROUND.equals(widget.getForegroundColor()));
@@ -202,7 +208,7 @@ public class WidgetFactoryTest {
 	}
 
 	private void testSplitCompositeWidget(final IContainer parent, final ISplitComposite widget) {
-		testChildComponent(parent, widget);
+		testChildControl(parent, widget);
 		testParent(widget, widget.getFirst());
 		testParent(widget, widget.getSecond());
 	}
@@ -227,7 +233,7 @@ public class WidgetFactoryTest {
 	}
 
 	private void testLabelWidget(final IContainer parent, final ILabel widget) {
-		testChildComponent(parent, widget);
+		testChildControl(parent, widget);
 		widget.setIcon(Icons.ERROR);
 		widget.setMarkup(Markup.STRONG);
 		widget.setText("Test");

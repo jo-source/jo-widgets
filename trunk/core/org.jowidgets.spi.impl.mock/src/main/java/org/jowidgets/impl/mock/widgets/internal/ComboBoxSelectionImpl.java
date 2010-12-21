@@ -32,7 +32,7 @@ import org.jowidgets.impl.mock.mockui.UIMComboBox;
 import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
 
-public class ComboBoxSelectionImpl extends AbstractInputComponent implements IComboBoxSelectionSpi {
+public class ComboBoxSelectionImpl extends AbstractInputControl implements IComboBoxSelectionSpi {
 
 	public ComboBoxSelectionImpl(final IComboBoxSelectionSetupSpi setup) {
 		super(new UIMComboBox(setup.getElements()));

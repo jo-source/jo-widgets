@@ -63,7 +63,7 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 		for (final Tuple<Component, Object> preWidgetTuple : preWidgets) {
 			final Component preWidget = preWidgetTuple.getFirst();
 			final Object layoutConstraints = preWidgetTuple.getSecond();
-			final IComponent newWidget = widget.add(preWidget.getDescriptor(), layoutConstraints);
+			final IControl newWidget = widget.add(preWidget.getDescriptor(), layoutConstraints);
 			preWidget.initialize(newWidget);
 		}
 	}

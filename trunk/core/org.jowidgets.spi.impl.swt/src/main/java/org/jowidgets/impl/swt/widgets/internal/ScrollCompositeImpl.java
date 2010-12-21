@@ -46,6 +46,7 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.impl.swt.util.BorderToComposite;
 import org.jowidgets.impl.swt.util.ScrollBarSettingsConvert;
+import org.jowidgets.impl.swt.widgets.SwtComposite;
 import org.jowidgets.impl.swt.widgets.SwtContainer;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.IScrollCompositeSpi;
@@ -53,7 +54,7 @@ import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
 
 public class ScrollCompositeImpl implements IScrollCompositeSpi {
 
-	private final SwtContainer outerContainer;
+	private final SwtComposite outerContainer;
 	private final SwtContainer innerContainer;
 
 	public ScrollCompositeImpl(
@@ -73,7 +74,7 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 		}
 
 		outerComposite.setBackgroundMode(SWT.INHERIT_FORCE);
-		this.outerContainer = new SwtContainer(factory, outerComposite);
+		this.outerContainer = new SwtComposite(factory, outerComposite);
 		outerComposite.setLayout(growingMigLayout);
 
 		int style = ScrollBarSettingsConvert.convert(setup);
@@ -118,6 +119,16 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 	@Override
 	public Composite getUiReference() {
 		return outerContainer.getUiReference();
+	}
+
+	@Override
+	public void setLayoutConstraints(final Object layoutConstraints) {
+		outerContainer.setLayoutConstraints(layoutConstraints);
+	}
+
+	@Override
+	public Object getLayoutConstraints() {
+		return outerContainer.getLayoutConstraints();
 	}
 
 	@Override

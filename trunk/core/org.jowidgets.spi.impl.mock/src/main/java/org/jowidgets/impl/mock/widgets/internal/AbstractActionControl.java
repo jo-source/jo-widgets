@@ -27,67 +27,27 @@
  */
 package org.jowidgets.impl.mock.widgets.internal;
 
-import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.widgets.controler.IInputListener;
-import org.jowidgets.impl.mock.mockui.UIMToggleButton;
-import org.jowidgets.spi.widgets.ICheckBoxSpi;
-import org.jowidgets.spi.widgets.setup.ICheckBoxSetupSpi;
+import org.jowidgets.impl.mock.mockui.UIMComponent;
+import org.jowidgets.impl.mock.widgets.MockControl;
+import org.jowidgets.spi.widgets.IControlSpi;
 
-public class CheckBoxImpl extends AbstractInputControl implements ICheckBoxSpi {
+public abstract class AbstractActionControl extends AbstractActionComponent implements IControlSpi {
 
-	public CheckBoxImpl(final ICheckBoxSetupSpi setup) {
-		this(new UIMToggleButton(), setup);
-	}
+	private final MockControl mockControlDelegate;
 
-	public CheckBoxImpl(final UIMToggleButton toggleButton, final ICheckBoxSetupSpi descriptor) {
-		super(toggleButton);
-
-		setText(descriptor.getText());
-		setToolTipText(descriptor.getToolTipText());
-		setMarkup(descriptor.getMarkup());
-		getUiReference().setHorizontalAlignment(descriptor.getAlignment());
-
-		getUiReference().addInputListener(new IInputListener() {
-			@Override
-			public void inputChanged(final Object source) {
-				fireInputChanged(this);
-			}
-		});
+	public AbstractActionControl(final UIMComponent component) {
+		super(component);
+		this.mockControlDelegate = new MockControl(component);
 	}
 
 	@Override
-	public UIMToggleButton getUiReference() {
-		return (UIMToggleButton) super.getUiReference();
+	public void setLayoutConstraints(final Object layoutConstraints) {
+		mockControlDelegate.setLayoutConstraints(layoutConstraints);
 	}
 
 	@Override
-	public void setEditable(final boolean editable) {
-		getUiReference().setEnabled(editable);
-	}
-
-	@Override
-	public void setMarkup(final Markup markup) {
-		getUiReference().setMarkup(markup);
-	}
-
-	@Override
-	public void setText(final String text) {
-		getUiReference().setText(text);
-	}
-
-	@Override
-	public void setToolTipText(final String text) {
-		getUiReference().setToolTipText(text);
-	}
-
-	@Override
-	public boolean isSelected() {
-		return getUiReference().isSelected();
-	}
-
-	@Override
-	public void setSelected(final boolean selected) {
-		getUiReference().setSelected(selected);
+	public Object getLayoutConstraints() {
+		return mockControlDelegate.getLayoutConstraints();
 	}
 
 }

@@ -33,13 +33,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.swt.util.BorderToComposite;
 import org.jowidgets.impl.swt.util.OrientationConvert;
-import org.jowidgets.impl.swt.widgets.SwtComponent;
-import org.jowidgets.impl.swt.widgets.SwtContainer;
+import org.jowidgets.impl.swt.widgets.SwtComposite;
+import org.jowidgets.impl.swt.widgets.SwtControl;
 import org.jowidgets.spi.widgets.ICompositeSpi;
 import org.jowidgets.spi.widgets.ISplitCompositeSpi;
 import org.jowidgets.spi.widgets.setup.ISplitCompositeSetupSpi;
 
-public class SplitCompositeImpl extends SwtComponent implements ISplitCompositeSpi {
+public class SplitCompositeImpl extends SwtControl implements ISplitCompositeSpi {
 
 	private final ICompositeSpi first;
 	private final ICompositeSpi second;
@@ -66,8 +66,8 @@ public class SplitCompositeImpl extends SwtComponent implements ISplitCompositeS
 		final Composite content1 = BorderToComposite.convert(sashForm, setup.getFirstBorder());
 		final Composite content2 = BorderToComposite.convert(sashForm, setup.getSecondBorder());
 
-		first = new SwtContainer(factory, content1);
-		second = new SwtContainer(factory, content2);
+		first = new SwtComposite(factory, content1);
+		second = new SwtComposite(factory, content2);
 
 		first.setLayout(setup.getFirstLayout());
 		second.setLayout(setup.getSecondLayout());

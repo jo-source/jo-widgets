@@ -25,102 +25,110 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.swt.widgets.internal;
+package org.jowidgets.impl.mock.widgets.internal;
 
-import org.eclipse.swt.widgets.Control;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.impl.InputObservable;
-import org.jowidgets.impl.swt.widgets.SwtComponent;
-import org.jowidgets.spi.widgets.IInputComponentSpi;
+import org.jowidgets.impl.mock.mockui.UIMComponent;
+import org.jowidgets.impl.mock.widgets.MockControl;
+import org.jowidgets.spi.widgets.IInputControlSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
-public abstract class AbstractInputComponent extends InputObservable implements IInputComponentSpi {
+public abstract class AbstractInputControl extends InputObservable implements IInputControlSpi {
 
-	private final Control control;
-	private final SwtComponent swtComponentDelegate;
+	private final MockControl mockControlDelegate;
 
-	public AbstractInputComponent(final Control control) {
+	public AbstractInputControl(final UIMComponent component) {
 		super();
-		this.control = control;
-		this.swtComponentDelegate = new SwtComponent(control);
+		this.mockControlDelegate = new MockControl(component);
 	}
 
 	@Override
-	public Control getUiReference() {
-		return control;
+	public UIMComponent getUiReference() {
+		return mockControlDelegate.getUiReference();
+	}
+
+	@Override
+	public void setLayoutConstraints(final Object layoutConstraints) {
+		mockControlDelegate.setLayoutConstraints(layoutConstraints);
+	}
+
+	@Override
+	public Object getLayoutConstraints() {
+		return mockControlDelegate.getLayoutConstraints();
 	}
 
 	@Override
 	public void redraw() {
-		swtComponentDelegate.redraw();
+		mockControlDelegate.redraw();
 	}
 
 	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
-		swtComponentDelegate.setForegroundColor(colorValue);
+		mockControlDelegate.setForegroundColor(colorValue);
 	}
 
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
-		swtComponentDelegate.setBackgroundColor(colorValue);
+		mockControlDelegate.setBackgroundColor(colorValue);
 	}
 
 	@Override
 	public IColorConstant getForegroundColor() {
-		return swtComponentDelegate.getForegroundColor();
+		return mockControlDelegate.getForegroundColor();
 	}
 
 	@Override
 	public IColorConstant getBackgroundColor() {
-		return swtComponentDelegate.getBackgroundColor();
+		return mockControlDelegate.getBackgroundColor();
 	}
 
 	@Override
 	public void setCursor(final Cursor cursor) {
-		swtComponentDelegate.setCursor(cursor);
-	}
-
-	@Override
-	public void setEnabled(final boolean enabled) {
-		swtComponentDelegate.setEnabled(enabled);
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return swtComponentDelegate.isEnabled();
+		mockControlDelegate.setCursor(cursor);
 	}
 
 	@Override
 	public void setVisible(final boolean visible) {
-		swtComponentDelegate.setVisible(visible);
+		mockControlDelegate.setVisible(visible);
 	}
 
 	@Override
 	public boolean isVisible() {
-		return swtComponentDelegate.isVisible();
+		return mockControlDelegate.isVisible();
+	}
+
+	@Override
+	public void setEnabled(final boolean enabled) {
+		mockControlDelegate.setEnabled(enabled);
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return mockControlDelegate.isEnabled();
 	}
 
 	@Override
 	public Dimension getSize() {
-		return swtComponentDelegate.getSize();
+		return mockControlDelegate.getSize();
 	}
 
 	@Override
 	public IPopupMenuSpi createPopupMenu() {
-		return swtComponentDelegate.createPopupMenu();
+		return mockControlDelegate.createPopupMenu();
 	}
 
 	@Override
 	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		swtComponentDelegate.addPopupDetectionListener(listener);
+		mockControlDelegate.addPopupDetectionListener(listener);
 	}
 
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		swtComponentDelegate.removePopupDetectionListener(listener);
+		mockControlDelegate.removePopupDetectionListener(listener);
 	}
 
 }

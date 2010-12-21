@@ -34,16 +34,21 @@ import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.descriptor.setup.ICompositeSetup;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
-import org.jowidgets.spi.widgets.IContainerSpi;
+import org.jowidgets.spi.widgets.ICompositeSpi;
 
 public class CompositeImpl extends ContainerImpl implements IComposite {
 
 	private final ControlDelegate controlDelegate;
 
-	public CompositeImpl(final IContainerSpi containerSpi, final ICompositeSetup setup) {
+	public CompositeImpl(final ICompositeSpi containerSpi, final ICompositeSetup setup) {
 		super(containerSpi, setup.isVisible());
 		ColorSettingsInvoker.setColors(setup, this);
 		this.controlDelegate = new ControlDelegate();
+	}
+
+	@Override
+	public ICompositeSpi getWidget() {
+		return (ICompositeSpi) super.getWidget();
 	}
 
 	@Override
@@ -59,5 +64,15 @@ public class CompositeImpl extends ContainerImpl implements IComposite {
 	@Override
 	public boolean isReparentable() {
 		return controlDelegate.isReparentable();
+	}
+
+	@Override
+	public void setLayoutConstraints(final Object layoutConstraints) {
+		getWidget().setLayoutConstraints(layoutConstraints);
+	}
+
+	@Override
+	public Object getLayoutConstraints() {
+		return getWidget().getLayoutConstraints();
 	}
 }

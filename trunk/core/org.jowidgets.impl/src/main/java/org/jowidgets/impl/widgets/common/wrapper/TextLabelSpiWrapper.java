@@ -32,7 +32,7 @@ import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.ITextLabelCommon;
 import org.jowidgets.spi.widgets.ITextLabelSpi;
 
-public class TextLabelSpiWrapper extends ComponentSpiWrapper implements ITextLabelCommon {
+public class TextLabelSpiWrapper extends ControlSpiWrapper implements ITextLabelCommon {
 
 	public TextLabelSpiWrapper(final ITextLabelSpi widget) {
 		super(widget);

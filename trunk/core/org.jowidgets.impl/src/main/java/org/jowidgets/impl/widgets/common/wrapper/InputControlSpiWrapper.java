@@ -28,19 +28,19 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.widgets.IInputComponentCommon;
+import org.jowidgets.common.widgets.IInputControlCommon;
 import org.jowidgets.common.widgets.controler.IInputListener;
-import org.jowidgets.spi.widgets.IInputComponentSpi;
+import org.jowidgets.spi.widgets.IInputControlSpi;
 
-public class InputComponentSpiWrapper extends ComponentSpiWrapper implements IInputComponentCommon {
+public class InputControlSpiWrapper extends ComponentSpiWrapper implements IInputControlCommon {
 
-	public InputComponentSpiWrapper(final IInputComponentSpi widget) {
+	public InputControlSpiWrapper(final IInputControlSpi widget) {
 		super(widget);
 	}
 
 	@Override
-	public IInputComponentSpi getWidget() {
-		return (IInputComponentSpi) super.getWidget();
+	public IInputControlSpi getWidget() {
+		return (IInputControlSpi) super.getWidget();
 	}
 
 	@Override
@@ -56,6 +56,16 @@ public class InputComponentSpiWrapper extends ComponentSpiWrapper implements IIn
 	@Override
 	public void setEditable(final boolean editable) {
 		getWidget().setEditable(editable);
+	}
+
+	@Override
+	public void setLayoutConstraints(final Object layoutConstraints) {
+		getWidget().setLayoutConstraints(layoutConstraints);
+	}
+
+	@Override
+	public Object getLayoutConstraints() {
+		return getWidget().getLayoutConstraints();
 	}
 
 }

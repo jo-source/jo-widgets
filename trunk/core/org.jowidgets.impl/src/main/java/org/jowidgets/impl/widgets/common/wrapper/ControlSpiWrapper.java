@@ -28,18 +28,28 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.widgets.IScrollCompositeCommon;
-import org.jowidgets.spi.widgets.IScrollCompositeSpi;
+import org.jowidgets.common.widgets.IControlCommon;
+import org.jowidgets.spi.widgets.IControlSpi;
 
-public abstract class AbstractScrollContainerSpiWrapper extends AbstractContainerSpiWrapper implements IScrollCompositeCommon {
+public class ControlSpiWrapper extends ComponentSpiWrapper implements IControlCommon {
 
-	public AbstractScrollContainerSpiWrapper(final IScrollCompositeSpi widget) {
-		super(widget);
+	public ControlSpiWrapper(final IControlSpi control) {
+		super(control);
 	}
 
 	@Override
-	public IScrollCompositeSpi getWidget() {
-		return (IScrollCompositeSpi) super.getWidget();
+	public IControlSpi getWidget() {
+		return (IControlSpi) super.getWidget();
+	}
+
+	@Override
+	public void setLayoutConstraints(final Object layoutConstraints) {
+		getWidget().setLayoutConstraints(layoutConstraints);
+	}
+
+	@Override
+	public Object getLayoutConstraints() {
+		return getWidget().getLayoutConstraints();
 	}
 
 }

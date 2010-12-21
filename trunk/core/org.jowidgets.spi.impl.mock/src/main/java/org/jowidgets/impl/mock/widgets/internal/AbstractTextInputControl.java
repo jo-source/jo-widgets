@@ -32,9 +32,9 @@ import org.jowidgets.impl.mock.mockui.UIMComponent;
 import org.jowidgets.impl.mock.mockui.UIMTextComponent;
 import org.jowidgets.spi.widgets.ITextFieldSpi;
 
-public abstract class AbstractTextInputComponent extends AbstractInputComponent implements ITextFieldSpi {
+public abstract class AbstractTextInputControl extends AbstractInputControl implements ITextFieldSpi {
 
-	public AbstractTextInputComponent(final UIMComponent component) {
+	public AbstractTextInputControl(final UIMComponent component) {
 		super(component);
 	}
 

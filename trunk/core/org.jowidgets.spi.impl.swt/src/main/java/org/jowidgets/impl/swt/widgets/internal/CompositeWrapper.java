@@ -29,9 +29,9 @@ package org.jowidgets.impl.swt.widgets.internal;
 
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.impl.swt.widgets.SwtContainer;
+import org.jowidgets.impl.swt.widgets.SwtComposite;
 
-public class CompositeWrapper extends SwtContainer {
+public class CompositeWrapper extends SwtComposite {
 
 	public CompositeWrapper(final IGenericWidgetFactory factory, final Composite composite) {
 		super(factory, composite);

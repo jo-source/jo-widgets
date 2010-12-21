@@ -30,4 +30,8 @@ package org.jowidgets.common.widgets;
 
 public interface IControlCommon extends IComponentCommon {
 
+	void setLayoutConstraints(Object layoutConstraints);
+
+	Object getLayoutConstraints();
+
 }

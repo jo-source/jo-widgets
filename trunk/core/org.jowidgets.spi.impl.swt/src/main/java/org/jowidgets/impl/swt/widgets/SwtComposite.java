@@ -25,19 +25,29 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.widgets;
+package org.jowidgets.impl.swt.widgets;
 
+import org.eclipse.swt.widgets.Composite;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.spi.widgets.ICompositeSpi;
 
-public interface IComboBoxSelectionSpi extends IControlSpi, IInputControlSpi {
+public class SwtComposite extends SwtContainer implements ICompositeSpi {
 
-	int getSelectedIndex();
+	private final SwtControl swtControlDelegate;
 
-	void setSelectedIndex(int index);
+	public SwtComposite(final IGenericWidgetFactory factory, final Composite composite) {
+		super(factory, composite);
+		this.swtControlDelegate = new SwtControl(composite);
+	}
 
-	void setTooltipText(String tooltipText);
+	@Override
+	public void setLayoutConstraints(final Object layoutConstraints) {
+		swtControlDelegate.setLayoutConstraints(layoutConstraints);
+	}
 
-	String[] getElements();
-
-	void setElements(String[] elements);
+	@Override
+	public Object getLayoutConstraints() {
+		return swtControlDelegate.getLayoutConstraints();
+	}
 
 }

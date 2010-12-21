@@ -34,11 +34,11 @@ import org.eclipse.swt.widgets.Label;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.impl.swt.util.AlignmentConvert;
 import org.jowidgets.impl.swt.util.FontProvider;
-import org.jowidgets.impl.swt.widgets.SwtComponent;
+import org.jowidgets.impl.swt.widgets.SwtControl;
 import org.jowidgets.spi.widgets.ITextLabelSpi;
 import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 
-public class TextLabelImpl extends SwtComponent implements ITextLabelSpi {
+public class TextLabelImpl extends SwtControl implements ITextLabelSpi {
 
 	public TextLabelImpl(final Object parentUiReference, final ITextLabelSetupSpi setup) {
 

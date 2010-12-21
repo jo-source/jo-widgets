@@ -41,7 +41,7 @@ import org.jowidgets.impl.swing.util.FontProvider;
 import org.jowidgets.spi.widgets.IButtonSpi;
 import org.jowidgets.spi.widgets.setup.IButtonSetupSpi;
 
-public class ButtonImpl extends AbstractActionComponent implements IButtonSpi {
+public class ButtonImpl extends AbstractActionControl implements IButtonSpi {
 
 	public ButtonImpl(final IButtonSetupSpi setup) {
 		super(new JButton());

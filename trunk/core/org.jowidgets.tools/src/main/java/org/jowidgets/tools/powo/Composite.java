@@ -36,8 +36,18 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 class Composite<WIDGET_TYPE extends IComposite, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & ICompositeSetupBuilder<?>> extends
 		Container<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IComposite {
 
+	private Object layoutConstraints;
+
 	Composite(final BLUE_PRINT_TYPE bluePrint) {
 		super(bluePrint);
+	}
+
+	@Override
+	void initialize(final WIDGET_TYPE widget) {
+		super.initialize(widget);
+		if (layoutConstraints != null) {
+			getWidget().setLayoutConstraints(layoutConstraints);
+		}
 	}
 
 	@Override
@@ -46,4 +56,23 @@ class Composite<WIDGET_TYPE extends IComposite, BLUE_PRINT_TYPE extends IWidgetD
 		return getWidget().getParent();
 	}
 
+	@Override
+	public void setLayoutConstraints(final Object layoutConstraints) {
+		if (isInitialized()) {
+			getWidget().setLayoutConstraints(layoutConstraints);
+		}
+		else {
+			this.layoutConstraints = layoutConstraints;
+		}
+	}
+
+	@Override
+	public Object getLayoutConstraints() {
+		if (isInitialized()) {
+			return getWidget().getLayoutConstraints();
+		}
+		else {
+			return layoutConstraints;
+		}
+	}
 }

@@ -25,19 +25,25 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.widgets;
+package org.jowidgets.impl.swt.widgets;
 
+import org.eclipse.swt.widgets.Control;
+import org.jowidgets.spi.widgets.IControlSpi;
 
-public interface IComboBoxSelectionSpi extends IControlSpi, IInputControlSpi {
+public class SwtControl extends SwtComponent implements IControlSpi {
 
-	int getSelectedIndex();
+	public SwtControl(final Control control) {
+		super(control);
+	}
 
-	void setSelectedIndex(int index);
+	@Override
+	public void setLayoutConstraints(final Object layoutConstraints) {
+		getUiReference().setLayoutData(layoutConstraints);
+	}
 
-	void setTooltipText(String tooltipText);
-
-	String[] getElements();
-
-	void setElements(String[] elements);
+	@Override
+	public Object getLayoutConstraints() {
+		return getUiReference().getLayoutData();
+	}
 
 }

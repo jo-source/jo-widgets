@@ -33,14 +33,14 @@ import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
-import org.jowidgets.impl.widgets.common.wrapper.ComponentSpiWrapper;
-import org.jowidgets.spi.widgets.IComponentSpi;
+import org.jowidgets.impl.widgets.common.wrapper.ControlSpiWrapper;
+import org.jowidgets.spi.widgets.IControlSpi;
 
-public class ControlImpl extends ComponentSpiWrapper implements IControl {
+public class ControlImpl extends ControlSpiWrapper implements IControl {
 
 	private final ControlDelegate controlDelegate;
 
-	public ControlImpl(final IComponentSpi widget) {
+	public ControlImpl(final IControlSpi widget) {
 		super(widget);
 		this.controlDelegate = new ControlDelegate();
 	}

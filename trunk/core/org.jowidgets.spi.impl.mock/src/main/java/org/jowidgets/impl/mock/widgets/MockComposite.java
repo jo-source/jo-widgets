@@ -27,185 +27,28 @@
  */
 package org.jowidgets.impl.mock.widgets;
 
-import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.types.Cursor;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.IControlCommon;
-import org.jowidgets.common.widgets.IWidgetCommon;
-import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.common.widgets.factory.IWidgetFactory;
-import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
-import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.impl.mock.mockui.UIMComponent;
 import org.jowidgets.impl.mock.mockui.UIMContainer;
 import org.jowidgets.spi.widgets.ICompositeSpi;
-import org.jowidgets.spi.widgets.IPopupMenuSpi;
-import org.jowidgets.util.Assert;
 
-public class MockComposite implements ICompositeSpi {
+public class MockComposite extends MockContainer implements ICompositeSpi {
 
-	private final IGenericWidgetFactory factory;
-	private final UIMContainer container;
-	private final MockComponent mockComponentDelegate;
+	private final MockControl mockControlDelegate;
 
 	public MockComposite(final IGenericWidgetFactory factory, final UIMContainer container) {
-		Assert.paramNotNull(factory, "factory");
-		Assert.paramNotNull(container, "container");
+		super(factory, container);
 
-		this.factory = factory;
-		this.container = container;
-		this.mockComponentDelegate = new MockComponent(container);
+		this.mockControlDelegate = new MockControl(container);
 	}
 
 	@Override
-	public final void setLayout(final ILayoutDescriptor layoutDescriptor) {
-		Assert.paramNotNull(layoutDescriptor, "layoutManager");
-		if (layoutDescriptor instanceof MigLayoutDescriptor) {
-			container.setLayout(layoutDescriptor);
-		}
-		else {
-			throw new IllegalArgumentException("Layout Manager of type '"
-				+ layoutDescriptor.getClass().getName()
-				+ "' is not supported");
-		}
+	public void setLayoutConstraints(final Object layoutConstraints) {
+		mockControlDelegate.setLayoutConstraints(layoutConstraints);
 	}
 
 	@Override
-	public UIMContainer getUiReference() {
-		return container;
-	}
-
-	@Override
-	public void redraw() {
-		mockComponentDelegate.redraw();
-	}
-
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		mockComponentDelegate.setForegroundColor(colorValue);
-	}
-
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		mockComponentDelegate.setBackgroundColor(colorValue);
-	}
-
-	@Override
-	public IColorConstant getForegroundColor() {
-		return mockComponentDelegate.getForegroundColor();
-	}
-
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return mockComponentDelegate.getBackgroundColor();
-	}
-
-	@Override
-	public void setCursor(final Cursor cursor) {
-		mockComponentDelegate.setCursor(cursor);
-	}
-
-	@Override
-	public void setEnabled(final boolean enabled) {
-		mockComponentDelegate.setEnabled(enabled);
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return mockComponentDelegate.isEnabled();
-	}
-
-	@Override
-	public void setVisible(final boolean visible) {
-		mockComponentDelegate.setVisible(visible);
-	}
-
-	@Override
-	public boolean isVisible() {
-		return mockComponentDelegate.isVisible();
-	}
-
-	@Override
-	public Dimension getSize() {
-		return mockComponentDelegate.getSize();
-	}
-
-	@Override
-	public IPopupMenuSpi createPopupMenu() {
-		return mockComponentDelegate.createPopupMenu();
-	}
-
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		mockComponentDelegate.addPopupDetectionListener(listener);
-	}
-
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		mockComponentDelegate.removePopupDetectionListener(listener);
-	}
-
-	@Override
-	public final <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
-		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
-		final Object cellConstraints) {
-
-		final WIDGET_TYPE result = factory.create(getUiReference(), descriptor);
-		addToContainer(result, cellConstraints);
-		return result;
-	}
-
-	@Override
-	public final <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
-		final ICustomWidgetFactory<WIDGET_TYPE> customFactory,
-		final Object cellConstraints) {
-
-		final IWidgetFactory<WIDGET_TYPE, IWidgetDescriptor<? extends WIDGET_TYPE>> widgetFactory = new IWidgetFactory<WIDGET_TYPE, IWidgetDescriptor<? extends WIDGET_TYPE>>() {
-			@Override
-			public WIDGET_TYPE create(final Object parentUiReference, final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
-				return factory.create(parentUiReference, descriptor);
-			}
-		};
-
-		final WIDGET_TYPE result = customFactory.create(getUiReference(), widgetFactory);
-		addToContainer(result, cellConstraints);
-		return result;
-	}
-
-	@Override
-	public boolean remove(final IControlCommon control) {
-		return getUiReference().remove((UIMComponent) control.getUiReference());
-	}
-
-	@Override
-	public void layoutBegin() {
-		//do nothing here
-	}
-
-	@Override
-	public void layoutEnd() {
-		redraw();
-	}
-
-	@Override
-	public void removeAll() {
-		container.removeAll();
-	}
-
-	protected IGenericWidgetFactory getGenericWidgetFactory() {
-		return factory;
-	}
-
-	private void addToContainer(final IWidgetCommon widget, final Object cellConstraints) {
-		if (cellConstraints != null) {
-			container.add((UIMComponent) (widget.getUiReference()), cellConstraints);
-		}
-		else {
-			container.add((UIMComponent) (widget.getUiReference()));
-		}
+	public Object getLayoutConstraints() {
+		return mockControlDelegate.getLayoutConstraints();
 	}
 
 }

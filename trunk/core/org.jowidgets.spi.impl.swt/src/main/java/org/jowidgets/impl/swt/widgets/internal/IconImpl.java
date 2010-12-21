@@ -33,11 +33,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.impl.swt.image.SwtImageRegistry;
-import org.jowidgets.impl.swt.widgets.SwtComponent;
+import org.jowidgets.impl.swt.widgets.SwtControl;
 import org.jowidgets.spi.widgets.IIconSpi;
 import org.jowidgets.spi.widgets.setup.IIconSetupSpi;
 
-public class IconImpl extends SwtComponent implements IIconSpi {
+public class IconImpl extends SwtControl implements IIconSpi {
 
 	public IconImpl(final Object parentUiReference, final IIconSetupSpi setup) {
 

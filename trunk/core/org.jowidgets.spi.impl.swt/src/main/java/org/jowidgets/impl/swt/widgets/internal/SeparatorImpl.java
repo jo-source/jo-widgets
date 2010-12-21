@@ -31,11 +31,11 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.jowidgets.impl.swt.util.OrientationConvert;
-import org.jowidgets.impl.swt.widgets.SwtComponent;
+import org.jowidgets.impl.swt.widgets.SwtControl;
 import org.jowidgets.spi.widgets.IControlSpi;
 import org.jowidgets.spi.widgets.setup.ISeparatorSetupSpi;
 
-public class SeparatorImpl extends SwtComponent implements IControlSpi {
+public class SeparatorImpl extends SwtControl implements IControlSpi {
 
 	public SeparatorImpl(final Object parentUiReference, final ISeparatorSetupSpi setup) {
 		super(createSeparator(parentUiReference, setup));

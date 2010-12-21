@@ -31,11 +31,11 @@ import javax.swing.JLabel;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.impl.swing.image.SwingImageRegistry;
-import org.jowidgets.impl.swing.widgets.SwingComponent;
+import org.jowidgets.impl.swing.widgets.SwingControl;
 import org.jowidgets.spi.widgets.IIconSpi;
 import org.jowidgets.spi.widgets.setup.IIconSetupSpi;
 
-public class IconImpl extends SwingComponent implements IIconSpi {
+public class IconImpl extends SwingControl implements IIconSpi {
 
 	public IconImpl(final IIconSetupSpi setup) {
 		super(new JLabel());

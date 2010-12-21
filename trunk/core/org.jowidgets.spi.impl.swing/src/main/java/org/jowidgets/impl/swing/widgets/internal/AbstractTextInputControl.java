@@ -25,19 +25,42 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.widgets;
+package org.jowidgets.impl.swing.widgets.internal;
 
+import java.awt.Component;
 
-public interface IComboBoxSelectionSpi extends IControlSpi, IInputControlSpi {
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.JTextComponent;
 
-	int getSelectedIndex();
+import org.jowidgets.spi.widgets.ITextFieldSpi;
 
-	void setSelectedIndex(int index);
+public abstract class AbstractTextInputControl extends AbstractInputControl implements ITextFieldSpi {
 
-	void setTooltipText(String tooltipText);
+	public AbstractTextInputControl(final Component component) {
+		super(component);
+	}
 
-	String[] getElements();
+	protected void registerTextComponent(final JTextComponent textComponent) {
+		textComponent.getDocument().addDocumentListener(new DocumentListener() {
 
-	void setElements(String[] elements);
+			@Override
+			public void removeUpdate(final DocumentEvent e) {
+				fireInputChanged(textComponent);
+			}
+
+			@Override
+			public void insertUpdate(final DocumentEvent e) {
+				fireInputChanged(textComponent);
+			}
+
+			@Override
+			public void changedUpdate(final DocumentEvent e) {
+				fireInputChanged(textComponent);
+			}
+
+		});
+
+	}
 
 }

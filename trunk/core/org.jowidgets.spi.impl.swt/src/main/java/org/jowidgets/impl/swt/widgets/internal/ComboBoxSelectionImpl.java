@@ -36,7 +36,7 @@ import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
 import org.jowidgets.util.Assert;
 
-public class ComboBoxSelectionImpl extends AbstractInputComponent implements IComboBoxSelectionSpi {
+public class ComboBoxSelectionImpl extends AbstractInputControl implements IComboBoxSelectionSpi {
 
 	public ComboBoxSelectionImpl(final Object parentUiReference, final IComboBoxSelectionSetupSpi setup) {
 		this(new Combo((Composite) parentUiReference, SWT.NONE | SWT.READ_ONLY), setup);
