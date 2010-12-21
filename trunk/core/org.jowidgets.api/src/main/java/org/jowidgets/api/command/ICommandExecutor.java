@@ -30,6 +30,6 @@ package org.jowidgets.api.command;
 
 public interface ICommandExecutor {
 
-	void execute(IExecutionContext actionEvent) throws Exception;
+	void execute(IExecutionContext executionContext) throws Exception;
 
 }
