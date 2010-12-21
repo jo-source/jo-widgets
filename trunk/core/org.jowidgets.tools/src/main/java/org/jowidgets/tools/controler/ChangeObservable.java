@@ -26,42 +26,20 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.command;
+package org.jowidgets.tools.controler;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jowidgets.api.command.EnabledState;
-import org.jowidgets.api.command.IEnabledChecker;
-import org.jowidgets.api.command.IEnabledState;
 import org.jowidgets.api.controler.IChangeListener;
-import org.jowidgets.util.Assert;
+import org.jowidgets.api.controler.IChangeObservable;
 
-public class EnabledChecker implements IEnabledChecker {
+public class ChangeObservable implements IChangeObservable {
 
 	private final Set<IChangeListener> changeListeners;
 
-	private IEnabledState enabledState;
-
-	public EnabledChecker() {
+	public ChangeObservable() {
 		this.changeListeners = new HashSet<IChangeListener>();
-		this.enabledState = EnabledState.ENABLED;
-	}
-
-	public void setEnabledState(final IEnabledState enabledState) {
-		Assert.paramNotNull(enabledState, "enabledState");
-
-		final boolean stateChanged = !this.enabledState.equals(enabledState);
-		this.enabledState = enabledState;
-
-		if (stateChanged) {
-			fireEnabledStateChanged();
-		}
-	}
-
-	@Override
-	public IEnabledState getEnabledState() {
-		return enabledState;
 	}
 
 	@Override
@@ -74,10 +52,9 @@ public class EnabledChecker implements IEnabledChecker {
 		changeListeners.remove(listener);
 	}
 
-	public final void fireEnabledStateChanged() {
+	public final void fireChangedEvent() {
 		for (final IChangeListener listener : changeListeners) {
 			listener.changedEvent();
 		}
 	}
-
 }

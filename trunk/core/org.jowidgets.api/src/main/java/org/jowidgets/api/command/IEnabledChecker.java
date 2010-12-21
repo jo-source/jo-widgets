@@ -28,7 +28,7 @@
 
 package org.jowidgets.api.command;
 
-import org.jowidgets.api.widgets.controler.IChangeListener;
+import org.jowidgets.api.controler.IChangeListener;
 
 public interface IEnabledChecker {
 

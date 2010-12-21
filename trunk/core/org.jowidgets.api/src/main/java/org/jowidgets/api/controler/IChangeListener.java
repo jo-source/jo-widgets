@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets.controler;
+package org.jowidgets.api.controler;
 
 public interface IChangeListener {
 

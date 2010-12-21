@@ -49,11 +49,11 @@ public interface IAction {
 
 	/**
 	 * For mutable actions, an observable could be implemented to recognize changes
-	 * on this actions.
+	 * on this action.
 	 * 
 	 * The following properties could be mutable: text, toolTipText, icon, enabled
 	 * 
-	 * @return The observable if the action is observable or null if the action is immutable
+	 * @return The observable if the action is mutable or null if the action is immutable
 	 */
 	IActionChangeObservable getActionChangeObservable();
 

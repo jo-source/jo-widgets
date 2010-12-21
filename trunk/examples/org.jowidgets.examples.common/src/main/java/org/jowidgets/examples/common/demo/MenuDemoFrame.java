@@ -66,13 +66,14 @@ public class MenuDemoFrame extends JoFrame {
 
 	public MenuDemoFrame() {
 		super(bluePrint("Menu demo").autoPackOff());
+		createActions();
 		createMainMenus();
 
 		final IButton action1Button = add(BPF.button(), "");
 		action1Button.setAction(action1);
 	}
 
-	private void createMainMenus() {
+	private void createActions() {
 		final IActionBuilderFactory actionBF = Toolkit.getActionBuilderFactory();
 
 		final IActionBuilder action1Builder = actionBF.create();
@@ -112,6 +113,9 @@ public class MenuDemoFrame extends JoFrame {
 		};
 
 		action2.setCommand(command2, enabledChecker2);
+	}
+
+	private void createMainMenus() {
 
 		final IMenuBar menuBar = createMenuBar();
 		final IMenu menu1 = menuBar.addMenu("Menu1", 'n');
