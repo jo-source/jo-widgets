@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,22 +26,49 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.widgets;
+package org.jowidgets.impl.swt.widgets.internal;
 
-import org.jowidgets.common.widgets.IToolBarCommon;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.ToolItem;
+import org.jowidgets.common.widgets.controler.IItemStateListener;
+import org.jowidgets.common.widgets.controler.impl.ItemStateObservable;
+import org.jowidgets.spi.widgets.IToolBarToggleButtonSpi;
 
-public interface IToolBarSpi extends IWidgetSpi, IToolBarCommon {
+public class ToolBarToggleButtonImpl extends ToolBarButtonImpl implements IToolBarToggleButtonSpi {
 
-	void remove(int index);
+	private final ItemStateObservable itemStateObservable;
 
-	IToolBarButtonSpi addToolBarButton(Integer index);
+	public ToolBarToggleButtonImpl(final ToolItem item) {
+		super(item);
+		this.itemStateObservable = new ItemStateObservable();
 
-	IToolBarToggleButtonSpi addToolBarToggleButton(Integer index);
+		item.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(final SelectionEvent e) {
+				itemStateObservable.fireItemStateChanged();
+			}
+		});
+	}
 
-	IToolBarPopupButtonSpi addToolBarPopupButton(Integer index);
+	@Override
+	public boolean isSelected() {
+		return getUiReference().getSelection();
+	}
 
-	IToolBarContainerItemSpi addToolBarContainer(Integer index);
+	@Override
+	public void setSelected(final boolean selected) {
+		getUiReference().setSelection(selected);
+	}
 
-	IToolBarItemSpi addSeparator(Integer index);
+	@Override
+	public void addItemListener(final IItemStateListener listener) {
+		itemStateObservable.addItemListener(listener);
+	}
+
+	@Override
+	public void removeItemListener(final IItemStateListener listener) {
+		itemStateObservable.removeItemListener(listener);
+	}
 
 }

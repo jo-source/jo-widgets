@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,22 +26,39 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.widgets;
+package org.jowidgets.impl.swt.widgets.internal;
 
-import org.jowidgets.common.widgets.IToolBarCommon;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.ToolItem;
+import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controler.impl.ActionObservable;
+import org.jowidgets.spi.widgets.IToolBarButtonSpi;
 
-public interface IToolBarSpi extends IWidgetSpi, IToolBarCommon {
+public class ToolBarButtonImpl extends ToolBarItemImpl implements IToolBarButtonSpi {
 
-	void remove(int index);
+	private final ActionObservable actionObservable;
 
-	IToolBarButtonSpi addToolBarButton(Integer index);
+	public ToolBarButtonImpl(final ToolItem item) {
+		super(item);
+		this.actionObservable = new ActionObservable();
 
-	IToolBarToggleButtonSpi addToolBarToggleButton(Integer index);
+		item.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(final SelectionEvent e) {
+				actionObservable.fireActionPerformed();
+			}
+		});
+	}
 
-	IToolBarPopupButtonSpi addToolBarPopupButton(Integer index);
+	@Override
+	public void addActionListener(final IActionListener actionListener) {
+		actionObservable.addActionListener(actionListener);
+	}
 
-	IToolBarContainerItemSpi addToolBarContainer(Integer index);
-
-	IToolBarItemSpi addSeparator(Integer index);
+	@Override
+	public void removeActionListener(final IActionListener actionListener) {
+		actionObservable.removeActionListener(actionListener);
+	}
 
 }

@@ -66,6 +66,7 @@ import org.jowidgets.spi.widgets.ISplitCompositeSpi;
 import org.jowidgets.spi.widgets.ITextFieldSpi;
 import org.jowidgets.spi.widgets.ITextLabelSpi;
 import org.jowidgets.spi.widgets.IToggleButtonSpi;
+import org.jowidgets.spi.widgets.IToolBarSpi;
 import org.jowidgets.spi.widgets.setup.IButtonSetupSpi;
 import org.jowidgets.spi.widgets.setup.ICheckBoxSetupSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
@@ -202,6 +203,12 @@ public final class SwingWidgetFactory implements IWidgetFactorySpi {
 	@Override
 	public IProgressBarSpi createProgressBar(final Object parentUiReference, final IProgressBarSetupSpi setup) {
 		return new ProgressBarImpl(setup);
+	}
+
+	@Override
+	public IToolBarSpi createToolBar(final IGenericWidgetFactory factory, final Object parentUiReference) {
+		// TODO implement Toolbar
+		return null;
 	}
 
 }

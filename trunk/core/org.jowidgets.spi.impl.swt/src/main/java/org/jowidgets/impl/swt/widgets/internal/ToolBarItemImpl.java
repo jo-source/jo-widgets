@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,22 +26,50 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.widgets;
+package org.jowidgets.impl.swt.widgets.internal;
 
-import org.jowidgets.common.widgets.IToolBarCommon;
+import org.eclipse.swt.widgets.ToolItem;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.impl.swt.image.SwtImageRegistry;
+import org.jowidgets.spi.widgets.IToolBarItemSpi;
 
-public interface IToolBarSpi extends IWidgetSpi, IToolBarCommon {
+public class ToolBarItemImpl implements IToolBarItemSpi {
 
-	void remove(int index);
+	private final ToolItem toolItem;
 
-	IToolBarButtonSpi addToolBarButton(Integer index);
+	public ToolBarItemImpl(final ToolItem item) {
+		super();
+		this.toolItem = item;
+	}
 
-	IToolBarToggleButtonSpi addToolBarToggleButton(Integer index);
+	@Override
+	public ToolItem getUiReference() {
+		return toolItem;
+	}
 
-	IToolBarPopupButtonSpi addToolBarPopupButton(Integer index);
+	@Override
+	public void setEnabled(final boolean enabled) {
+		toolItem.setEnabled(enabled);
+	}
 
-	IToolBarContainerItemSpi addToolBarContainer(Integer index);
+	@Override
+	public boolean isEnabled() {
+		return toolItem.isEnabled();
+	}
 
-	IToolBarItemSpi addSeparator(Integer index);
+	@Override
+	public void setText(final String text) {
+		toolItem.setText(text);
+	}
+
+	@Override
+	public void setToolTipText(final String text) {
+		toolItem.setToolTipText(text);
+	}
+
+	@Override
+	public void setIcon(final IImageConstant icon) {
+		toolItem.setImage(SwtImageRegistry.getInstance().getImage(icon));
+	}
 
 }

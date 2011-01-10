@@ -42,6 +42,7 @@ import org.jowidgets.spi.widgets.ISplitCompositeSpi;
 import org.jowidgets.spi.widgets.ITextFieldSpi;
 import org.jowidgets.spi.widgets.ITextLabelSpi;
 import org.jowidgets.spi.widgets.IToggleButtonSpi;
+import org.jowidgets.spi.widgets.IToolBarSpi;
 import org.jowidgets.spi.widgets.setup.IButtonSetupSpi;
 import org.jowidgets.spi.widgets.setup.ICheckBoxSetupSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
@@ -104,5 +105,7 @@ public interface IWidgetFactorySpi {
 	IComboBoxSpi createComboBox(Object parentUiReference, IComboBoxSetupSpi setup);
 
 	IProgressBarSpi createProgressBar(Object parentUiReference, IProgressBarSetupSpi setup);
+
+	IToolBarSpi createToolBar(IGenericWidgetFactory factory, Object parentUiReference);
 
 }
