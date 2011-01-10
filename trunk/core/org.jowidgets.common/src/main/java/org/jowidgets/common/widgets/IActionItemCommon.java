@@ -26,10 +26,9 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.widgets;
+package org.jowidgets.common.widgets;
 
-import org.jowidgets.common.widgets.IActionMenuItemCommon;
 
-public interface IActionMenuItemSpi extends IMenuItemSpi, IActionItemSpi, IActionMenuItemCommon {
+public interface IActionItemCommon extends IItemCommon, IActionWidgetCommon {
 
 }

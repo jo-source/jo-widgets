@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,10 +26,27 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.widgets;
+package org.jowidgets.api.widgets;
 
-import org.jowidgets.common.widgets.IActionMenuItemCommon;
+import java.util.List;
 
-public interface IActionMenuItemSpi extends IMenuItemSpi, IActionItemSpi, IActionMenuItemCommon {
+import org.jowidgets.common.widgets.IToolBarCommon;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+
+public interface IToolBar extends IControl, IToolBarCommon {
+
+	List<IToolBarItem> getChildren();
+
+	boolean remove(IToolBarItem widget);
+
+	void removeAll();
+
+	IToolBarItem addSeparator();
+
+	IToolBarItem addSeparator(int index);
+
+	<WIDGET_TYPE extends IToolBarItem> WIDGET_TYPE addItem(IWidgetDescriptor<? extends WIDGET_TYPE> descriptor);
+
+	<WIDGET_TYPE extends IToolBarItem> WIDGET_TYPE addItem(int index, IWidgetDescriptor<? extends WIDGET_TYPE> descriptor);
 
 }

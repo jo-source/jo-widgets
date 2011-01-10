@@ -26,10 +26,13 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.widgets;
+package org.jowidgets.api.widgets;
 
-import org.jowidgets.common.widgets.IActionMenuItemCommon;
+import org.jowidgets.common.widgets.IToolBarItemCommon;
 
-public interface IActionMenuItemSpi extends IMenuItemSpi, IActionItemSpi, IActionMenuItemCommon {
+public interface IToolBarItem extends IItem, IToolBarItemCommon {
+
+	@Override
+	IToolBar getParent();
 
 }

@@ -29,14 +29,9 @@
 package org.jowidgets.common.widgets;
 
 import org.jowidgets.common.types.Accelerator;
-import org.jowidgets.common.widgets.controler.IItemStateObservable;
 
-public interface ISelectableMenuItemCommon extends IMenuItemCommon, IItemStateObservable {
+public interface ISelectableMenuItemCommon extends ISelectableItemCommon, IMenuItemCommon {
 
 	void setAccelerator(Accelerator accelerator);
-
-	boolean isSelected();
-
-	void setSelected(boolean selected);
 
 }

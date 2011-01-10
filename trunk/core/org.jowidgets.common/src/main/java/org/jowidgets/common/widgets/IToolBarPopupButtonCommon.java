@@ -26,10 +26,10 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.widgets;
+package org.jowidgets.common.widgets;
 
-import org.jowidgets.common.widgets.IActionMenuItemCommon;
+import org.jowidgets.common.widgets.controler.IPopupDetectionObservable;
 
-public interface IActionMenuItemSpi extends IMenuItemSpi, IActionItemSpi, IActionMenuItemCommon {
+public interface IToolBarPopupButtonCommon extends IToolBarButtonCommon, IPopupDetectionObservable {
 
 }

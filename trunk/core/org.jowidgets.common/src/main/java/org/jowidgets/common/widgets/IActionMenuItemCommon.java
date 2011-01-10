@@ -30,7 +30,7 @@ package org.jowidgets.common.widgets;
 
 import org.jowidgets.common.types.Accelerator;
 
-public interface IActionMenuItemCommon extends IMenuItemCommon, IActionWidgetCommon {
+public interface IActionMenuItemCommon extends IMenuItemCommon, IActionItemCommon {
 
 	void setAccelerator(Accelerator accelerator);
 

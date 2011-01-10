@@ -26,10 +26,14 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.widgets;
+package org.jowidgets.common.widgets;
 
-import org.jowidgets.common.widgets.IActionMenuItemCommon;
+import org.jowidgets.common.widgets.controler.IItemStateObservable;
 
-public interface IActionMenuItemSpi extends IMenuItemSpi, IActionItemSpi, IActionMenuItemCommon {
+public interface ISelectableItemCommon extends IItemCommon, IItemStateObservable {
+
+	boolean isSelected();
+
+	void setSelected(boolean selected);
 
 }

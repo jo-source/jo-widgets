@@ -30,6 +30,6 @@ package org.jowidgets.spi.widgets;
 
 import org.jowidgets.common.widgets.ISelectableMenuItemCommon;
 
-public interface ISelectableMenuItemSpi extends IMenuItemSpi, ISelectableMenuItemCommon {
+public interface ISelectableMenuItemSpi extends IMenuItemSpi, ISelectableItemSpi, ISelectableMenuItemCommon {
 
 }

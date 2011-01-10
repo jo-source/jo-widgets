@@ -28,8 +28,20 @@
 
 package org.jowidgets.spi.widgets;
 
-import org.jowidgets.common.widgets.IActionMenuItemCommon;
+import org.jowidgets.common.widgets.IMenuCommon;
 
-public interface IActionMenuItemSpi extends IMenuItemSpi, IActionItemSpi, IActionMenuItemCommon {
+public interface IToolBarSpi extends IWidgetSpi, IMenuCommon {
+
+	void remove(int index);
+
+	IToolBarButtonSpi addToolBarButton(Integer index);
+
+	IToolBarToggleButtonSpi addToolBarToggleButton(Integer index);
+
+	IToolBarPopupButtonSpi addToolBarPopupButton(Integer index);
+
+	IToolBarContainerItemSpi addToolBarContainer(Integer index);
+
+	IToolBarItemSpi addSeparator(Integer index);
 
 }

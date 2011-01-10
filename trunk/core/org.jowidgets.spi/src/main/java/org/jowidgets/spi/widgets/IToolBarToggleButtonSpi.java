@@ -28,8 +28,8 @@
 
 package org.jowidgets.spi.widgets;
 
-import org.jowidgets.common.widgets.IActionMenuItemCommon;
+import org.jowidgets.common.widgets.IToolBarToggleButtonCommon;
 
-public interface IActionMenuItemSpi extends IMenuItemSpi, IActionItemSpi, IActionMenuItemCommon {
+public interface IToolBarToggleButtonSpi extends IToolBarItemSpi, ISelectableItemSpi, IToolBarToggleButtonCommon {
 
 }
