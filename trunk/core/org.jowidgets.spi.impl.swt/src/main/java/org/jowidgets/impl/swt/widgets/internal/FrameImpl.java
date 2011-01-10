@@ -46,9 +46,12 @@ public class FrameImpl extends WindowImpl implements IFrameSpi {
 	}
 
 	private static int getStyle(final IFrameSetupSpi setup) {
-		int result = SWT.SHELL_TRIM;
+		int result = SWT.TITLE | SWT.MIN | SWT.MAX;
 		if (setup.isResizable()) {
 			result = result | SWT.RESIZE;
+		}
+		if (setup.isCloseable()) {
+			result = result | SWT.CLOSE;
 		}
 		return result;
 	}
