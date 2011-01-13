@@ -58,6 +58,11 @@ import org.jowidgets.api.widgets.blueprint.ITextFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToggleButtonBluePrint;
+import org.jowidgets.api.widgets.blueprint.IToolBarBluePrint;
+import org.jowidgets.api.widgets.blueprint.IToolBarButtonBluePrint;
+import org.jowidgets.api.widgets.blueprint.IToolBarContainerItemBluePrint;
+import org.jowidgets.api.widgets.blueprint.IToolBarPopupButtonBluePrint;
+import org.jowidgets.api.widgets.blueprint.IToolBarToggleButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
@@ -490,7 +495,32 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 
 	@Override
 	public IMainMenuBluePrint mainMenu(final String text) {
-		return mainMenu(text);
+		return bluePrintFactory.mainMenu(text);
+	}
+
+	@Override
+	public IToolBarBluePrint toolBar() {
+		return bluePrintFactory.toolBar();
+	}
+
+	@Override
+	public IToolBarButtonBluePrint toolBarButton() {
+		return bluePrintFactory.toolBarButton();
+	}
+
+	@Override
+	public IToolBarToggleButtonBluePrint toolBarToggleButton() {
+		return bluePrintFactory.toolBarToggleButton();
+	}
+
+	@Override
+	public IToolBarPopupButtonBluePrint toolBarPopupButton() {
+		return bluePrintFactory.toolBarPopupButton();
+	}
+
+	@Override
+	public IToolBarContainerItemBluePrint toolBarContainerItem() {
+		return bluePrintFactory.toolBarContainerItem();
 	}
 
 }

@@ -30,6 +30,6 @@ package org.jowidgets.api.widgets;
 
 import org.jowidgets.common.widgets.IToolBarPopupButtonCommon;
 
-public interface IToolBarPopupButton extends IToolBarItem, IToolBarPopupButtonCommon {
+public interface IToolBarPopupButton extends IToolBarButton, IToolBarPopupButtonCommon {
 
 }

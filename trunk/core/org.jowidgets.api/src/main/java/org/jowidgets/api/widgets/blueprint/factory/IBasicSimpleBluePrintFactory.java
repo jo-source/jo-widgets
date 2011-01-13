@@ -49,6 +49,11 @@ import org.jowidgets.api.widgets.blueprint.ISubMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToggleButtonBluePrint;
+import org.jowidgets.api.widgets.blueprint.IToolBarBluePrint;
+import org.jowidgets.api.widgets.blueprint.IToolBarButtonBluePrint;
+import org.jowidgets.api.widgets.blueprint.IToolBarContainerItemBluePrint;
+import org.jowidgets.api.widgets.blueprint.IToolBarPopupButtonBluePrint;
+import org.jowidgets.api.widgets.blueprint.IToolBarToggleButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
@@ -96,5 +101,15 @@ public interface IBasicSimpleBluePrintFactory {
 	ISubMenuBluePrint subMenu();
 
 	IMainMenuBluePrint mainMenu();
+
+	IToolBarBluePrint toolBar();
+
+	IToolBarButtonBluePrint toolBarButton();
+
+	IToolBarToggleButtonBluePrint toolBarToggleButton();
+
+	IToolBarPopupButtonBluePrint toolBarPopupButton();
+
+	IToolBarContainerItemBluePrint toolBarContainerItem();
 
 }

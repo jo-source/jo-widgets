@@ -48,6 +48,11 @@ import org.jowidgets.api.widgets.blueprint.ISubMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToggleButtonBluePrint;
+import org.jowidgets.api.widgets.blueprint.IToolBarBluePrint;
+import org.jowidgets.api.widgets.blueprint.IToolBarButtonBluePrint;
+import org.jowidgets.api.widgets.blueprint.IToolBarContainerItemBluePrint;
+import org.jowidgets.api.widgets.blueprint.IToolBarPopupButtonBluePrint;
+import org.jowidgets.api.widgets.blueprint.IToolBarToggleButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.api.widgets.blueprint.factory.IBasicSimpleBluePrintFactory;
@@ -70,6 +75,11 @@ import org.jowidgets.api.widgets.descriptor.ISubMenuDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextFieldDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextLabelDescriptor;
 import org.jowidgets.api.widgets.descriptor.IToggleButtonDescriptor;
+import org.jowidgets.api.widgets.descriptor.IToolBarButtonDescriptor;
+import org.jowidgets.api.widgets.descriptor.IToolBarContainerItemDescriptor;
+import org.jowidgets.api.widgets.descriptor.IToolBarDescriptor;
+import org.jowidgets.api.widgets.descriptor.IToolBarPopupButtonDescriptor;
+import org.jowidgets.api.widgets.descriptor.IToolBarToggleButtonDescriptor;
 import org.jowidgets.impl.base.blueprint.factory.AbstractBluePrintFactory;
 
 public class BasicSimpleBluePrintFactory extends AbstractBluePrintFactory implements IBasicSimpleBluePrintFactory {
@@ -182,6 +192,31 @@ public class BasicSimpleBluePrintFactory extends AbstractBluePrintFactory implem
 	@Override
 	public IMainMenuBluePrint mainMenu() {
 		return createProxy(IMainMenuBluePrint.class, IMainMenuDescriptor.class);
+	}
+
+	@Override
+	public IToolBarBluePrint toolBar() {
+		return createProxy(IToolBarBluePrint.class, IToolBarDescriptor.class);
+	}
+
+	@Override
+	public IToolBarButtonBluePrint toolBarButton() {
+		return createProxy(IToolBarButtonBluePrint.class, IToolBarButtonDescriptor.class);
+	}
+
+	@Override
+	public IToolBarToggleButtonBluePrint toolBarToggleButton() {
+		return createProxy(IToolBarToggleButtonBluePrint.class, IToolBarToggleButtonDescriptor.class);
+	}
+
+	@Override
+	public IToolBarPopupButtonBluePrint toolBarPopupButton() {
+		return createProxy(IToolBarPopupButtonBluePrint.class, IToolBarPopupButtonDescriptor.class);
+	}
+
+	@Override
+	public IToolBarContainerItemBluePrint toolBarContainerItem() {
+		return createProxy(IToolBarContainerItemBluePrint.class, IToolBarContainerItemDescriptor.class);
 	}
 
 }
