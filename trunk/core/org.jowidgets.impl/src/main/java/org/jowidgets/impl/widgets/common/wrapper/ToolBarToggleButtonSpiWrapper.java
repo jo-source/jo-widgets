@@ -28,23 +28,39 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.widgets.IMenuItemCommon;
-import org.jowidgets.spi.widgets.IMenuItemSpi;
+import org.jowidgets.common.widgets.IToolBarToggleButtonCommon;
+import org.jowidgets.common.widgets.controler.IItemStateListener;
+import org.jowidgets.spi.widgets.IToolBarToggleButtonSpi;
 
-public class MenuItemSpiWrapper extends ItemSpiWrapper implements IMenuItemCommon {
+public class ToolBarToggleButtonSpiWrapper extends ItemSpiWrapper implements IToolBarToggleButtonCommon {
 
-	public MenuItemSpiWrapper(final IMenuItemSpi component) {
+	public ToolBarToggleButtonSpiWrapper(final IToolBarToggleButtonSpi component) {
 		super(component);
 	}
 
 	@Override
-	public IMenuItemSpi getWidget() {
-		return (IMenuItemSpi) super.getWidget();
+	public IToolBarToggleButtonSpi getWidget() {
+		return (IToolBarToggleButtonSpi) super.getWidget();
 	}
 
 	@Override
-	public void setMnemonic(final char mnemonic) {
-		getWidget().setMnemonic(mnemonic);
+	public boolean isSelected() {
+		return getWidget().isSelected();
+	}
+
+	@Override
+	public void setSelected(final boolean selected) {
+		getWidget().setSelected(selected);
+	}
+
+	@Override
+	public void addItemListener(final IItemStateListener listener) {
+		getWidget().addItemListener(listener);
+	}
+
+	@Override
+	public void removeItemListener(final IItemStateListener listener) {
+		getWidget().removeItemListener(listener);
 	}
 
 }

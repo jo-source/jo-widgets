@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,25 +26,20 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.common.wrapper;
+package org.jowidgets.api.command;
 
-import org.jowidgets.common.widgets.IMenuItemCommon;
-import org.jowidgets.spi.widgets.IMenuItemSpi;
+public enum ActionStyle {
 
-public class MenuItemSpiWrapper extends ItemSpiWrapper implements IMenuItemCommon {
+	/**
+	 * This style shows every information of the action that could be
+	 * rendered for the widget.
+	 */
+	COMPLETE,
 
-	public MenuItemSpiWrapper(final IMenuItemSpi component) {
-		super(component);
-	}
-
-	@Override
-	public IMenuItemSpi getWidget() {
-		return (IMenuItemSpi) super.getWidget();
-	}
-
-	@Override
-	public void setMnemonic(final char mnemonic) {
-		getWidget().setMnemonic(mnemonic);
-	}
+	/**
+	 * If an icon exists, the text will be prepended to the tooltip text.
+	 * This style is useful for the toolbar.
+	 */
+	OMIT_TEXT;
 
 }

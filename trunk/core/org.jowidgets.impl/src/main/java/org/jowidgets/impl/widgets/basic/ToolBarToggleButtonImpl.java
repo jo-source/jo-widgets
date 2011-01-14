@@ -26,25 +26,35 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.common.wrapper;
+package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.common.widgets.IMenuItemCommon;
-import org.jowidgets.spi.widgets.IMenuItemSpi;
+import org.jowidgets.api.widgets.IToolBar;
+import org.jowidgets.api.widgets.IToolBarToggleButton;
+import org.jowidgets.api.widgets.descriptor.setup.IItemSetup;
+import org.jowidgets.impl.widgets.common.wrapper.ToolBarToggleButtonSpiWrapper;
+import org.jowidgets.spi.widgets.IToolBarToggleButtonSpi;
 
-public class MenuItemSpiWrapper extends ItemSpiWrapper implements IMenuItemCommon {
+public class ToolBarToggleButtonImpl extends ToolBarToggleButtonSpiWrapper implements IToolBarToggleButton {
 
-	public MenuItemSpiWrapper(final IMenuItemSpi component) {
-		super(component);
+	private final IToolBar parent;
+
+	public ToolBarToggleButtonImpl(
+		final IToolBar parent,
+		final IToolBarToggleButtonSpi toolBarToggleButtonSpi,
+		final IItemSetup setup) {
+		super(toolBarToggleButtonSpi);
+
+		this.parent = parent;
+
+		setText(setup.getText());
+		setToolTipText(setup.getToolTipText());
+		setIcon(setup.getIcon());
+
 	}
 
 	@Override
-	public IMenuItemSpi getWidget() {
-		return (IMenuItemSpi) super.getWidget();
-	}
-
-	@Override
-	public void setMnemonic(final char mnemonic) {
-		getWidget().setMnemonic(mnemonic);
+	public IToolBar getParent() {
+		return parent;
 	}
 
 }

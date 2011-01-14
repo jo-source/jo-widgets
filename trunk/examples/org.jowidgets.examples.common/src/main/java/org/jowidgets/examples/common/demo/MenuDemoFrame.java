@@ -28,6 +28,7 @@
 
 package org.jowidgets.examples.common.demo;
 
+import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.command.EnabledState;
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.command.IActionBuilder;
@@ -38,15 +39,22 @@ import org.jowidgets.api.command.IExecutionContext;
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IActionMenuItem;
-import org.jowidgets.api.widgets.IButton;
+import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.IMenuBar;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ISelectableMenuItem;
 import org.jowidgets.api.widgets.ISubMenu;
+import org.jowidgets.api.widgets.IToolBar;
+import org.jowidgets.api.widgets.IToolBarButton;
+import org.jowidgets.api.widgets.IToolBarContainerItem;
+import org.jowidgets.api.widgets.IToolBarPopupButton;
+import org.jowidgets.api.widgets.IToolBarToggleButton;
 import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICheckedMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IRadioMenuItemBluePrint;
+import org.jowidgets.api.widgets.blueprint.IToolBarToggleButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.common.types.Modifier;
@@ -54,6 +62,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IItemStateListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
+import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.command.EnabledChecker;
 import org.jowidgets.tools.powo.JoFrame;
 
@@ -69,8 +78,51 @@ public class MenuDemoFrame extends JoFrame {
 		createActions();
 		createMainMenus();
 
-		final IButton action1Button = add(BPF.button(), "");
-		action1Button.setAction(action1);
+		setLayout(new MigLayoutDescriptor("0[grow]0", "0[][grow]0"));
+
+		final IToolBar toolBar = add(BPF.toolBar(), "wrap");
+
+		final IToolBarPopupButton toolBarPopupButton = toolBar.addItem(BPF.toolBarPopupButton());
+		toolBarPopupButton.setAction(action1);
+		final IPopupMenu toolBarPopupMenu = toolBar.createPopupMenu();
+		addMenus(toolBarPopupMenu);
+		toolBarPopupButton.addPopupDetectionListener(new IPopupDetectionListener() {
+			@Override
+			public void popupDetected(final Position position) {
+				toolBarPopupMenu.show(position);
+			}
+		});
+
+		final IToolBarButton toolBarButton = toolBar.addItem(BPF.toolBarButton());
+		toolBarButton.setAction(action2);
+
+		final IToolBarToggleButtonBluePrint toggleButtonBp = BPF.toolBarToggleButton().setText("ToggleButton");
+		toggleButtonBp.setToolTipText("Tooltip");
+		final IToolBarToggleButton toggleButton = toolBar.addItem(toggleButtonBp);
+		toggleButton.addItemListener(new IItemStateListener() {
+
+			@Override
+			public void itemStateChanged() {
+				System.out.println("ToggleButton selected: " + toggleButton.isSelected());
+			}
+		});
+
+		final IToolBarContainerItem toolBarContainer = toolBar.addItem(BPF.toolBarContainerItem());
+		final IInputControl<String> textField = toolBarContainer.add(BPF.textField(), "w 200");
+		textField.setValue("Test");
+
+		toolBar.addItem(BPF.toolBarButton().setText("Button").setToolTipText("Tooltip"));
+
+		final IComposite composite = add(BPF.composite().setBackgroundColor(Colors.WHITE), "growx, growy");
+		final IPopupMenu popupMenu = composite.createPopupMenu();
+		addMenus(popupMenu);
+		composite.addPopupDetectionListener(new IPopupDetectionListener() {
+
+			@Override
+			public void popupDetected(final Position position) {
+				popupMenu.show(position);
+			}
+		});
 	}
 
 	private void createActions() {

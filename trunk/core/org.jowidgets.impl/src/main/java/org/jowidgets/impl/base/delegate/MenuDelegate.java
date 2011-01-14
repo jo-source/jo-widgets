@@ -101,6 +101,8 @@ public class MenuDelegate {
 		final Integer index,
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
 
+		Assert.paramNotNull(descriptor, "descriptor");
+
 		WIDGET_TYPE result = null;
 
 		if (ISubMenuDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
@@ -131,6 +133,9 @@ public class MenuDelegate {
 				selectableMenuItemSpi,
 				(ISelectableItemSetup) descriptor);
 			result = (WIDGET_TYPE) selectableMenuItem;
+		}
+		else {
+			throw new IllegalArgumentException("Descriptor with type '" + descriptor.getClass().getName() + "' is not supported");
 		}
 
 		addToChildren(index, result);

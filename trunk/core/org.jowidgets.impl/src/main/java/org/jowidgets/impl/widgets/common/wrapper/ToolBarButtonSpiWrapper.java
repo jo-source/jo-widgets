@@ -28,23 +28,29 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.widgets.IMenuItemCommon;
-import org.jowidgets.spi.widgets.IMenuItemSpi;
+import org.jowidgets.common.widgets.IToolBarButtonCommon;
+import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.spi.widgets.IToolBarButtonSpi;
 
-public class MenuItemSpiWrapper extends ItemSpiWrapper implements IMenuItemCommon {
+public class ToolBarButtonSpiWrapper extends ItemSpiWrapper implements IToolBarButtonCommon {
 
-	public MenuItemSpiWrapper(final IMenuItemSpi component) {
+	public ToolBarButtonSpiWrapper(final IToolBarButtonSpi component) {
 		super(component);
 	}
 
 	@Override
-	public IMenuItemSpi getWidget() {
-		return (IMenuItemSpi) super.getWidget();
+	public IToolBarButtonSpi getWidget() {
+		return (IToolBarButtonSpi) super.getWidget();
 	}
 
 	@Override
-	public void setMnemonic(final char mnemonic) {
-		getWidget().setMnemonic(mnemonic);
+	public void addActionListener(final IActionListener actionListener) {
+		getWidget().addActionListener(actionListener);
+	}
+
+	@Override
+	public void removeActionListener(final IActionListener actionListener) {
+		getWidget().removeActionListener(actionListener);
 	}
 
 }

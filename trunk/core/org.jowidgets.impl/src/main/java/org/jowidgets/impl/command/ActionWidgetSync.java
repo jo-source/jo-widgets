@@ -28,15 +28,18 @@
 
 package org.jowidgets.impl.command;
 
+import org.jowidgets.api.command.ActionStyle;
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.command.IActionChangeListener;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.util.EmptyCheck;
 
 public class ActionWidgetSync {
 
 	private final IAction action;
 	private final IActionWidget actionWidget;
 	private final IActionChangeListener actionChangeListener;
+	private final ActionStyle style;
 
 	private boolean active;
 
@@ -48,8 +51,11 @@ public class ActionWidgetSync {
 	private boolean currentEnabled;
 
 	public ActionWidgetSync(final IAction action, final IActionWidget actionWidget) {
-		super();
+		this(action, ActionStyle.COMPLETE, actionWidget);
+	}
 
+	public ActionWidgetSync(final IAction action, final ActionStyle style, final IActionWidget actionWidget) {
+		super();
 		this.active = false;
 
 		this.textDirty = true;
@@ -58,6 +64,7 @@ public class ActionWidgetSync {
 		this.enabledDirty = true;
 
 		this.action = action;
+		this.style = style;
 		this.actionWidget = actionWidget;
 
 		this.actionChangeListener = new ActionChangeListener();
@@ -81,14 +88,14 @@ public class ActionWidgetSync {
 			if (enabledDirty) {
 				setEnabled(action.isEnabled());
 			}
+			if (iconDirty) {
+				setIcon(action.getIcon());
+			}
 			if (textDirty) {
 				setText(action.getText());
 			}
 			if (toolTipTextDirty) {
 				setTooltipText(action.getToolTipText());
-			}
-			if (iconDirty) {
-				setIcon(action.getIcon());
 			}
 		}
 		else {
@@ -103,7 +110,12 @@ public class ActionWidgetSync {
 	}
 
 	private void setText(final String text) {
-		actionWidget.setText(text);
+		if (style == ActionStyle.COMPLETE || action.getIcon() == null) {
+			actionWidget.setText(text);
+		}
+		else {
+			actionWidget.setToolTipText(text);
+		}
 		textDirty = false;
 	}
 
@@ -119,7 +131,23 @@ public class ActionWidgetSync {
 	}
 
 	private void setTooltipText(final String tooltipText) {
-		actionWidget.setToolTipText(tooltipText);
+		if (style == ActionStyle.OMIT_TEXT && action.getIcon() != null) {
+			if (!EmptyCheck.isEmpty(tooltipText) && !EmptyCheck.isEmpty(action.getText())) {
+				actionWidget.setToolTipText(action.getText() + ": " + tooltipText);
+			}
+			else if (!EmptyCheck.isEmpty(tooltipText)) {
+				actionWidget.setToolTipText(tooltipText);
+			}
+			else if (!EmptyCheck.isEmpty(action.getText())) {
+				actionWidget.setToolTipText(action.getText());
+			}
+			else {
+				actionWidget.setToolTipText(null);
+			}
+		}
+		else {
+			actionWidget.setToolTipText(tooltipText);
+		}
 		toolTipTextDirty = false;
 	}
 

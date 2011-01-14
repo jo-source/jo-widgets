@@ -30,7 +30,7 @@ package org.jowidgets.spi.widgets;
 
 import org.jowidgets.common.widgets.IToolBarCommon;
 
-public interface IToolBarSpi extends IWidgetSpi, IToolBarCommon {
+public interface IToolBarSpi extends IControlSpi, IToolBarCommon {
 
 	void remove(int index);
 

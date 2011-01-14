@@ -89,7 +89,7 @@ public final class SwtToolBarExperiments {
 		textComposite.setLayout(new MigLayout("", "0[grow]0", "0[grow]0"));
 
 		final Text text = new Text(textComposite, SWT.BORDER | SWT.SINGLE);
-		text.setLayoutData("growx");
+		text.setLayoutData("w 200");
 
 		itemSeparator.setWidth(200);
 		itemSeparator.setControl(textComposite);

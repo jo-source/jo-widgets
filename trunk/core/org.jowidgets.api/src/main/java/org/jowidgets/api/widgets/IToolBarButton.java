@@ -28,11 +28,14 @@
 
 package org.jowidgets.api.widgets;
 
+import org.jowidgets.api.command.ActionStyle;
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.common.widgets.IToolBarButtonCommon;
 
 public interface IToolBarButton extends IToolBarItem, IToolBarButtonCommon {
 
 	void setAction(IAction action);
+
+	void setAction(IAction action, ActionStyle style);
 
 }

@@ -37,7 +37,7 @@ public interface IToolBar extends IControl, IToolBarCommon {
 
 	List<IToolBarItem> getChildren();
 
-	boolean remove(IToolBarItem widget);
+	boolean remove(IToolBarItem item);
 
 	void removeAll();
 

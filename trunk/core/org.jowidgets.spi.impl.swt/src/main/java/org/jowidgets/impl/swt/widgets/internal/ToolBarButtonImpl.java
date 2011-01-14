@@ -28,6 +28,7 @@
 
 package org.jowidgets.impl.swt.widgets.internal;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.ToolItem;
@@ -46,7 +47,9 @@ public class ToolBarButtonImpl extends ToolBarItemImpl implements IToolBarButton
 		item.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
-				actionObservable.fireActionPerformed();
+				if (e.detail != SWT.ARROW) {
+					actionObservable.fireActionPerformed();
+				}
 			}
 		});
 	}

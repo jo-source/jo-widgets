@@ -28,23 +28,40 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.widgets.IMenuItemCommon;
-import org.jowidgets.spi.widgets.IMenuItemSpi;
+import org.jowidgets.common.widgets.IToolBarPopupButtonCommon;
+import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
+import org.jowidgets.spi.widgets.IToolBarPopupButtonSpi;
 
-public class MenuItemSpiWrapper extends ItemSpiWrapper implements IMenuItemCommon {
+public class ToolBarPopupButtonSpiWrapper extends ItemSpiWrapper implements IToolBarPopupButtonCommon {
 
-	public MenuItemSpiWrapper(final IMenuItemSpi component) {
+	public ToolBarPopupButtonSpiWrapper(final IToolBarPopupButtonSpi component) {
 		super(component);
 	}
 
 	@Override
-	public IMenuItemSpi getWidget() {
-		return (IMenuItemSpi) super.getWidget();
+	public IToolBarPopupButtonSpi getWidget() {
+		return (IToolBarPopupButtonSpi) super.getWidget();
 	}
 
 	@Override
-	public void setMnemonic(final char mnemonic) {
-		getWidget().setMnemonic(mnemonic);
+	public void addActionListener(final IActionListener actionListener) {
+		getWidget().addActionListener(actionListener);
+	}
+
+	@Override
+	public void removeActionListener(final IActionListener actionListener) {
+		getWidget().removeActionListener(actionListener);
+	}
+
+	@Override
+	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+		getWidget().addPopupDetectionListener(listener);
+	}
+
+	@Override
+	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+		getWidget().removePopupDetectionListener(listener);
 	}
 
 }

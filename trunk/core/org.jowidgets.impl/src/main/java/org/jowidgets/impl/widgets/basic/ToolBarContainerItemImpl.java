@@ -26,25 +26,50 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.common.wrapper;
+package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.common.widgets.IMenuItemCommon;
-import org.jowidgets.spi.widgets.IMenuItemSpi;
+import org.jowidgets.api.widgets.IToolBar;
+import org.jowidgets.api.widgets.IToolBarContainerItem;
+import org.jowidgets.api.widgets.descriptor.setup.IContainerSetup;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.spi.widgets.IToolBarContainerItemSpi;
 
-public class MenuItemSpiWrapper extends ItemSpiWrapper implements IMenuItemCommon {
+public class ToolBarContainerItemImpl extends ContainerImpl implements IToolBarContainerItem {
 
-	public MenuItemSpiWrapper(final IMenuItemSpi component) {
-		super(component);
+	private final IToolBar parent;
+
+	public ToolBarContainerItemImpl(
+		final IToolBar parent,
+		final IToolBarContainerItemSpi toolBarContainerItemSpi,
+		final IContainerSetup setup) {
+		super(toolBarContainerItemSpi, setup);
+
+		this.parent = parent;
 	}
 
 	@Override
-	public IMenuItemSpi getWidget() {
-		return (IMenuItemSpi) super.getWidget();
+	public IToolBarContainerItemSpi getWidget() {
+		return (IToolBarContainerItemSpi) super.getWidget();
 	}
 
 	@Override
-	public void setMnemonic(final char mnemonic) {
-		getWidget().setMnemonic(mnemonic);
+	public IToolBar getParent() {
+		return parent;
+	}
+
+	@Override
+	public void setText(final String text) {
+		getWidget().setText(text);
+	}
+
+	@Override
+	public void setToolTipText(final String text) {
+		getWidget().setToolTipText(text);
+	}
+
+	@Override
+	public void setIcon(final IImageConstant icon) {
+		getWidget().setIcon(icon);
 	}
 
 }

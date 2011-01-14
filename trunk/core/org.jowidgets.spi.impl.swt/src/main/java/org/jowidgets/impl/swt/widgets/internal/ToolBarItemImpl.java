@@ -59,7 +59,12 @@ public class ToolBarItemImpl implements IToolBarItemSpi {
 
 	@Override
 	public void setText(final String text) {
-		toolItem.setText(text);
+		if (text != null) {
+			toolItem.setText(text);
+		}
+		else {
+			toolItem.setText("");
+		}
 	}
 
 	@Override

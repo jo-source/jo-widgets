@@ -103,10 +103,10 @@ public class ToolBarImpl extends SwtControl implements IToolBarSpi {
 	public IToolBarContainerItemSpi addToolBarContainer(final Integer index) {
 		ToolItem toolItem = null;
 		if (index != null) {
-			toolItem = new ToolItem(getUiReference(), SWT.CHECK, index.intValue());
+			toolItem = new ToolItem(getUiReference(), SWT.SEPARATOR, index.intValue());
 		}
 		else {
-			toolItem = new ToolItem(getUiReference(), SWT.CHECK);
+			toolItem = new ToolItem(getUiReference(), SWT.SEPARATOR);
 		}
 		return new ToolBarContainerItemImpl(toolItem, getUiReference(), factory);
 	}

@@ -50,12 +50,14 @@ import org.jowidgets.spi.widgets.IToolBarContainerItemSpi;
 public class ToolBarContainerItemImpl extends ToolBarItemImpl implements IToolBarContainerItemSpi {
 
 	private final SwtComposite swtComposite;
+	private final Composite composite;
 
 	public ToolBarContainerItemImpl(final ToolItem item, final ToolBar toolBar, final IGenericWidgetFactory factory) {
 		super(item);
 
-		final Composite composite = new Composite(toolBar, SWT.NONE);
+		this.composite = new Composite(toolBar, SWT.NONE);
 		composite.setLayout(new MigLayout("", "0[grow]0", "0[grow]0"));
+
 		item.setControl(composite);
 
 		this.swtComposite = new SwtComposite(factory, composite);
@@ -65,7 +67,14 @@ public class ToolBarContainerItemImpl extends ToolBarItemImpl implements IToolBa
 	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
-		return swtComposite.add(descriptor, layoutConstraints);
+		final WIDGET_TYPE result = swtComposite.add(descriptor, layoutConstraints);
+
+		//TODO use new method pack() on controls 
+		//if toolbar will be packed, do this for all containers first
+		composite.pack(true);
+		getUiReference().setWidth(composite.getSize().x);
+
+		return result;
 	}
 
 	@Override

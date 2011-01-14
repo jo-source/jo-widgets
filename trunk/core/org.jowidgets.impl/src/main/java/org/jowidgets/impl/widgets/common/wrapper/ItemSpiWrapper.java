@@ -28,23 +28,34 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.widgets.IMenuItemCommon;
-import org.jowidgets.spi.widgets.IMenuItemSpi;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.widgets.IItemCommon;
+import org.jowidgets.spi.widgets.IItemSpi;
 
-public class MenuItemSpiWrapper extends ItemSpiWrapper implements IMenuItemCommon {
+public class ItemSpiWrapper extends WidgetSpiWrapper implements IItemCommon {
 
-	public MenuItemSpiWrapper(final IMenuItemSpi component) {
+	public ItemSpiWrapper(final IItemSpi component) {
 		super(component);
 	}
 
 	@Override
-	public IMenuItemSpi getWidget() {
-		return (IMenuItemSpi) super.getWidget();
+	public IItemSpi getWidget() {
+		return (IItemSpi) super.getWidget();
 	}
 
 	@Override
-	public void setMnemonic(final char mnemonic) {
-		getWidget().setMnemonic(mnemonic);
+	public void setText(final String text) {
+		getWidget().setText(text);
+	}
+
+	@Override
+	public void setToolTipText(final String text) {
+		getWidget().setToolTipText(text);
+	}
+
+	@Override
+	public void setIcon(final IImageConstant icon) {
+		getWidget().setIcon(icon);
 	}
 
 }

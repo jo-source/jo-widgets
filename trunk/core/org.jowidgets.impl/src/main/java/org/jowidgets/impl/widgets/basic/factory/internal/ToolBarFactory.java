@@ -26,25 +26,31 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.common.wrapper;
+package org.jowidgets.impl.widgets.basic.factory.internal;
 
-import org.jowidgets.common.widgets.IMenuItemCommon;
-import org.jowidgets.spi.widgets.IMenuItemSpi;
+import org.jowidgets.api.widgets.IToolBar;
+import org.jowidgets.api.widgets.descriptor.IToolBarDescriptor;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.widgets.factory.IWidgetFactory;
+import org.jowidgets.impl.spi.ISpiBluePrintFactory;
+import org.jowidgets.impl.widgets.basic.ToolBarImpl;
+import org.jowidgets.spi.IWidgetFactorySpi;
+import org.jowidgets.spi.widgets.IToolBarSpi;
 
-public class MenuItemSpiWrapper extends ItemSpiWrapper implements IMenuItemCommon {
+public class ToolBarFactory extends AbstractWidgetFactory implements IWidgetFactory<IToolBar, IToolBarDescriptor> {
 
-	public MenuItemSpiWrapper(final IMenuItemSpi component) {
-		super(component);
+	public ToolBarFactory(
+		final IGenericWidgetFactory genericWidgetFactory,
+		final IWidgetFactorySpi spiWidgetFactory,
+		final ISpiBluePrintFactory bpF) {
+
+		super(genericWidgetFactory, spiWidgetFactory, bpF);
 	}
 
 	@Override
-	public IMenuItemSpi getWidget() {
-		return (IMenuItemSpi) super.getWidget();
-	}
-
-	@Override
-	public void setMnemonic(final char mnemonic) {
-		getWidget().setMnemonic(mnemonic);
+	public IToolBar create(final Object parentUiReference, final IToolBarDescriptor descriptor) {
+		final IToolBarSpi toolBarSpi = getSpiWidgetFactory().createToolBar(getGenericWidgetFactory(), parentUiReference);
+		return new ToolBarImpl(toolBarSpi, descriptor);
 	}
 
 }
