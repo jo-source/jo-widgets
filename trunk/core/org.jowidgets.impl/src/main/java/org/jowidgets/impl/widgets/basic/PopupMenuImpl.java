@@ -72,12 +72,12 @@ public class PopupMenuImpl extends PopupMenuSpiWrapper implements IPopupMenu {
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addMenuItem(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+	public <WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addItem(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
 		return menuDelegate.addMenuItem(descriptor);
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addMenuItem(
+	public <WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addItem(
 		final int index,
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
 

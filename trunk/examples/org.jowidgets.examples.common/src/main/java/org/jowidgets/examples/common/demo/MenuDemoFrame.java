@@ -189,50 +189,50 @@ public class MenuDemoFrame extends JoFrame {
 	}
 
 	private void addMenus(final IMenu menu) {
-		final ISubMenu subMenu = menu.addMenuItem(BPF.subMenu("sub menu 1").setMnemonic('e'));
-		subMenu.addMenuItem(BPF.menuItem("sub item1"));
-		subMenu.addMenuItem(BPF.menuItem("sub item2"));
+		final ISubMenu subMenu = menu.addItem(BPF.subMenu("sub menu 1").setMnemonic('e'));
+		subMenu.addItem(BPF.menuItem("sub item1"));
+		subMenu.addItem(BPF.menuItem("sub item2"));
 
-		final ISubMenu subMenu2 = subMenu.addMenuItem(BPF.subMenu("sub menu 2"));
-		subMenu2.addMenuItem(BPF.menuItem("sub item1"));
-		subMenu2.addMenuItem(BPF.menuItem("sub item2"));
-		subMenu2.addMenuItem(BPF.menuItem("sub item3"));
-		subMenu2.addMenuItem(BPF.menuItem("sub item4"));
+		final ISubMenu subMenu2 = subMenu.addItem(BPF.subMenu("sub menu 2"));
+		subMenu2.addItem(BPF.menuItem("sub item1"));
+		subMenu2.addItem(BPF.menuItem("sub item2"));
+		subMenu2.addItem(BPF.menuItem("sub item3"));
+		subMenu2.addItem(BPF.menuItem("sub item4"));
 
-		subMenu.addMenuItem(BPF.menuItem("sub item3"));
+		subMenu.addItem(BPF.menuItem("sub item3"));
 		subMenu.addSeparator();
-		subMenu.addMenuItem(BPF.menuItem("sub item4"));
-		subMenu.addMenuItem(BPF.menuItem("sub item5"));
+		subMenu.addItem(BPF.menuItem("sub item4"));
+		subMenu.addItem(BPF.menuItem("sub item5"));
 
 		final IActionMenuItemBluePrint item1Bp = BPF.menuItem();
-		final IActionMenuItem item1 = menu.addMenuItem(item1Bp);
+		final IActionMenuItem item1 = menu.addItem(item1Bp);
 		item1.setAction(action1);
 
 		final IActionMenuItemBluePrint item2Bp = BPF.menuItem();
-		final IActionMenuItem item2 = menu.addMenuItem(item2Bp);
+		final IActionMenuItem item2 = menu.addItem(item2Bp);
 		item2.setAction(action2);
 
 		final IActionMenuItemBluePrint item3Bp = BPF.menuItem().setText("The Third Item");
 		item3Bp.setToolTipText("This is the third item");
 		item3Bp.setIcon(IconsSmall.WARNING).setAccelerator(new Accelerator('I', Modifier.SHIFT)).setMnemonic('e');
-		final IActionMenuItem item3 = menu.addMenuItem(1, item3Bp);
+		final IActionMenuItem item3 = menu.addItem(1, item3Bp);
 
 		menu.addSeparator();
 
 		final ICheckedMenuItemBluePrint item4Bp = BPF.checkedMenuItem().setText("item4");
-		final ISelectableMenuItem item4 = menu.addMenuItem(item4Bp);
+		final ISelectableMenuItem item4 = menu.addItem(item4Bp);
 
 		menu.addSeparator();
 
 		final IRadioMenuItemBluePrint item5Bp = BPF.radioMenuItem().setText("item5");
-		final ISelectableMenuItem item5 = menu.addMenuItem(item5Bp);
+		final ISelectableMenuItem item5 = menu.addItem(item5Bp);
 
 		final IRadioMenuItemBluePrint item6Bp = BPF.radioMenuItem().setText("item6");
-		final ISelectableMenuItem item6 = menu.addMenuItem(item6Bp);
+		final ISelectableMenuItem item6 = menu.addItem(item6Bp);
 		item6.setSelected(true);
 
 		final IRadioMenuItemBluePrint item7Bp = BPF.radioMenuItem().setText("item7");
-		final ISelectableMenuItem item7 = menu.addMenuItem(item7Bp);
+		final ISelectableMenuItem item7 = menu.addItem(item7Bp);
 
 		item3.addActionListener(new IActionListener() {
 			@Override

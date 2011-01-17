@@ -98,15 +98,15 @@ public class MenuTest {
 		Assert.assertNotNull(popupMenu);
 
 		//add a menu item
-		final IActionMenuItem item1 = testMenuItem(popupMenu, popupMenu.addMenuItem(BPF.menuItem("test1")));
+		final IActionMenuItem item1 = testMenuItem(popupMenu, popupMenu.addItem(BPF.menuItem("test1")));
 
 		//add a separator
 		final IMenuItem separator1 = popupMenu.addSeparator();
 
 		//add radio items
-		final ISelectableMenuItem radio1 = testMenuItem(popupMenu, popupMenu.addMenuItem(BPF.radioMenuItem("radio1")));
-		final ISelectableMenuItem radio2 = testMenuItem(popupMenu, popupMenu.addMenuItem(BPF.radioMenuItem("radio1")));
-		final ISelectableMenuItem radio3 = testMenuItem(popupMenu, popupMenu.addMenuItem(BPF.radioMenuItem("radio1")));
+		final ISelectableMenuItem radio1 = testMenuItem(popupMenu, popupMenu.addItem(BPF.radioMenuItem("radio1")));
+		final ISelectableMenuItem radio2 = testMenuItem(popupMenu, popupMenu.addItem(BPF.radioMenuItem("radio1")));
+		final ISelectableMenuItem radio3 = testMenuItem(popupMenu, popupMenu.addItem(BPF.radioMenuItem("radio1")));
 		Assert.assertFalse(radio1.isSelected());
 		Assert.assertFalse(radio2.isSelected());
 		Assert.assertFalse(radio3.isSelected());
@@ -117,7 +117,7 @@ public class MenuTest {
 		final IMenuItem separator2 = popupMenu.addSeparator();
 
 		//add checked item
-		final ISelectableMenuItem checked = testMenuItem(popupMenu, popupMenu.addMenuItem(BPF.checkedMenuItem("checked")));
+		final ISelectableMenuItem checked = testMenuItem(popupMenu, popupMenu.addItem(BPF.checkedMenuItem("checked")));
 		Assert.assertFalse(checked.isSelected());
 		checked.setSelected(true);
 		Assert.assertTrue(checked.isSelected());
@@ -125,13 +125,13 @@ public class MenuTest {
 		Assert.assertFalse(checked.isSelected());
 
 		//add sub menu
-		final ISubMenu subMenu = popupMenu.addMenuItem(BPF.subMenu("subMenu"));
-		subMenu.addMenuItem(BPF.menuItem("subSub1"));
-		subMenu.addMenuItem(BPF.menuItem("subSub2"));
+		final ISubMenu subMenu = popupMenu.addItem(BPF.subMenu("subMenu"));
+		subMenu.addItem(BPF.menuItem("subSub1"));
+		subMenu.addItem(BPF.menuItem("subSub2"));
 		Assert.assertTrue(subMenu.getChildren().size() == 2);
 
 		//add at position
-		final IActionMenuItem itemAtPos3 = testMenuItem(popupMenu, popupMenu.addMenuItem(3, BPF.menuItem("test1")));
+		final IActionMenuItem itemAtPos3 = testMenuItem(popupMenu, popupMenu.addItem(3, BPF.menuItem("test1")));
 		Assert.assertTrue(itemAtPos3 == popupMenu.getChildren().get(3));
 
 		//count the items

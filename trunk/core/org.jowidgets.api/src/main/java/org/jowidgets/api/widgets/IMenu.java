@@ -43,8 +43,8 @@ public interface IMenu extends IWidget, IMenuCommon {
 
 	IMenuItem addSeparator(int index);
 
-	<WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addMenuItem(IWidgetDescriptor<? extends WIDGET_TYPE> descriptor);
+	<WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addItem(IWidgetDescriptor<? extends WIDGET_TYPE> descriptor);
 
-	<WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addMenuItem(int index, IWidgetDescriptor<? extends WIDGET_TYPE> descriptor);
+	<WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addItem(int index, IWidgetDescriptor<? extends WIDGET_TYPE> descriptor);
 
 }
