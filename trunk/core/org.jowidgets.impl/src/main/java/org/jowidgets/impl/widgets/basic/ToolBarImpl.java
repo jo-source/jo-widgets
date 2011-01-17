@@ -54,6 +54,7 @@ import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsI
 import org.jowidgets.impl.widgets.common.wrapper.ToolBarSpiWrapper;
 import org.jowidgets.spi.widgets.IToolBarButtonSpi;
 import org.jowidgets.spi.widgets.IToolBarContainerItemSpi;
+import org.jowidgets.spi.widgets.IToolBarItemSpi;
 import org.jowidgets.spi.widgets.IToolBarPopupButtonSpi;
 import org.jowidgets.spi.widgets.IToolBarSpi;
 import org.jowidgets.spi.widgets.IToolBarToggleButtonSpi;
@@ -126,14 +127,20 @@ public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar {
 
 	@Override
 	public IToolBarItem addSeparator() {
-		// TODO Auto-generated method stub
-		return null;
+		return addSeparator(null);
 	}
 
 	@Override
 	public IToolBarItem addSeparator(final int index) {
-		// TODO Auto-generated method stub
-		return null;
+		if (index < 0 || index > children.size()) {
+			throw new IllegalArgumentException("Index must be between '0' and '" + children.size() + "'.");
+		}
+		return addSeparator(Integer.valueOf(index));
+	}
+
+	private IToolBarItem addSeparator(final Integer index) {
+		final IToolBarItemSpi toolBarItemSpi = getWidget().addSeparator(index);
+		return new ToolBarItemImpl(this, toolBarItemSpi);
 	}
 
 	@Override

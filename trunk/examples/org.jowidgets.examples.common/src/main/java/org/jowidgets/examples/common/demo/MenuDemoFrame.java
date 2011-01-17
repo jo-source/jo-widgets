@@ -96,6 +96,8 @@ public class MenuDemoFrame extends JoFrame {
 		final IToolBarButton toolBarButton = toolBar.addItem(BPF.toolBarButton());
 		toolBarButton.setAction(action2);
 
+		toolBar.addSeparator();
+
 		final IToolBarToggleButtonBluePrint toggleButtonBp = BPF.toolBarToggleButton().setText("ToggleButton");
 		toggleButtonBp.setToolTipText("Tooltip");
 		final IToolBarToggleButton toggleButton = toolBar.addItem(toggleButtonBp);
