@@ -31,6 +31,8 @@ package org.jowidgets.impl.widgets.basic;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
@@ -141,6 +143,20 @@ public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar {
 	private IToolBarItem addSeparator(final Integer index) {
 		final IToolBarItemSpi toolBarItemSpi = getWidget().addSeparator(index);
 		return new ToolBarItemImpl(this, toolBarItemSpi);
+	}
+
+	@Override
+	public IToolBarButton addAction(final int index, final IAction action) {
+		final IToolBarButton result = addItem(index, Toolkit.getBluePrintFactory().toolBarButton());
+		result.setAction(action);
+		return result;
+	}
+
+	@Override
+	public IToolBarButton addAction(final IAction action) {
+		final IToolBarButton result = addItem(Toolkit.getBluePrintFactory().toolBarButton());
+		result.setAction(action);
+		return result;
 	}
 
 	@Override

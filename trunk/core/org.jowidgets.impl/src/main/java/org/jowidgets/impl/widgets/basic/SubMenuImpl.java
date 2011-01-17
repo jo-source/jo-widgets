@@ -30,6 +30,8 @@ package org.jowidgets.impl.widgets.basic;
 
 import java.util.List;
 
+import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.widgets.IActionMenuItem;
 import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.IMenuItem;
 import org.jowidgets.api.widgets.ISubMenu;
@@ -89,6 +91,16 @@ public class SubMenuImpl extends MenuItemSpiWrapper implements ISubMenu {
 	@Override
 	public IMenuItem addSeparator(final int index) {
 		return menuDelegate.addSeparator(index);
+	}
+
+	@Override
+	public IActionMenuItem addAction(final IAction action) {
+		return menuDelegate.addAction(action);
+	}
+
+	@Override
+	public IActionMenuItem addAction(final int index, final IAction action) {
+		return menuDelegate.addAction(index, action);
 	}
 
 	@Override

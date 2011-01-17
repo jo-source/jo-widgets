@@ -31,6 +31,8 @@ package org.jowidgets.impl.base.delegate;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IActionMenuItem;
 import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.IMenuItem;
@@ -178,6 +180,18 @@ public class MenuDelegate {
 		for (final IMenuItem item : getChildren()) {
 			remove(item);
 		}
+	}
+
+	public IActionMenuItem addAction(final int index, final IAction action) {
+		final IActionMenuItem result = menu.addItem(index, Toolkit.getBluePrintFactory().menuItem());
+		result.setAction(action);
+		return result;
+	}
+
+	public IActionMenuItem addAction(final IAction action) {
+		final IActionMenuItem result = menu.addItem(Toolkit.getBluePrintFactory().menuItem());
+		result.setAction(action);
+		return result;
 	}
 
 }

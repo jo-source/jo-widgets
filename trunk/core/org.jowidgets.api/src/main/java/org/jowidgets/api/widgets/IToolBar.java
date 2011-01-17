@@ -30,6 +30,7 @@ package org.jowidgets.api.widgets;
 
 import java.util.List;
 
+import org.jowidgets.api.command.IAction;
 import org.jowidgets.common.widgets.IToolBarCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
@@ -48,5 +49,9 @@ public interface IToolBar extends IControl, IToolBarCommon {
 	<WIDGET_TYPE extends IToolBarItem> WIDGET_TYPE addItem(IWidgetDescriptor<? extends WIDGET_TYPE> descriptor);
 
 	<WIDGET_TYPE extends IToolBarItem> WIDGET_TYPE addItem(int index, IWidgetDescriptor<? extends WIDGET_TYPE> descriptor);
+
+	IToolBarButton addAction(IAction action);
+
+	IToolBarButton addAction(int index, IAction action);
 
 }
