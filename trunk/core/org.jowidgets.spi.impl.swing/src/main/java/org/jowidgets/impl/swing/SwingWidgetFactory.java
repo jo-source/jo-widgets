@@ -51,6 +51,7 @@ import org.jowidgets.impl.swing.widgets.internal.SplitCompositeImpl;
 import org.jowidgets.impl.swing.widgets.internal.TextFieldImpl;
 import org.jowidgets.impl.swing.widgets.internal.TextLabelImpl;
 import org.jowidgets.impl.swing.widgets.internal.ToggleButtonImpl;
+import org.jowidgets.impl.swing.widgets.internal.ToolBarImpl;
 import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.widgets.IButtonSpi;
 import org.jowidgets.spi.widgets.ICheckBoxSpi;
@@ -207,8 +208,7 @@ public final class SwingWidgetFactory implements IWidgetFactorySpi {
 
 	@Override
 	public IToolBarSpi createToolBar(final IGenericWidgetFactory factory, final Object parentUiReference) {
-		// TODO implement Toolbar
-		return null;
+		return new ToolBarImpl(factory);
 	}
 
 }
