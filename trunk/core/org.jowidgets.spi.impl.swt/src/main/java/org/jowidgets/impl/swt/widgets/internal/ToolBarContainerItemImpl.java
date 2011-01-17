@@ -69,11 +69,6 @@ public class ToolBarContainerItemImpl extends ToolBarItemImpl implements IToolBa
 		final Object layoutConstraints) {
 		final WIDGET_TYPE result = swtComposite.add(descriptor, layoutConstraints);
 
-		//TODO use new method pack() on controls 
-		//if toolbar will be packed, do this for all containers first
-		composite.pack(true);
-		getUiReference().setWidth(composite.getSize().x);
-
 		return result;
 	}
 
@@ -167,6 +162,11 @@ public class ToolBarContainerItemImpl extends ToolBarItemImpl implements IToolBa
 	@Override
 	public void removeAll() {
 		swtComposite.removeAll();
+	}
+
+	public void pack() {
+		composite.pack(true);
+		getUiReference().setWidth(composite.getSize().x);
 	}
 
 }

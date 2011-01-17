@@ -113,6 +113,8 @@ public class MenuDemoFrame extends JoFrame {
 
 		toolBar.addItem(BPF.toolBarButton().setText("Button").setToolTipText("Tooltip"));
 
+		toolBar.pack();
+
 		final IComposite composite = add(BPF.composite().setBackgroundColor(Colors.WHITE), "growx, growy");
 		final IPopupMenu popupMenu = composite.createPopupMenu();
 		addMenus(popupMenu);

@@ -42,4 +42,9 @@ public class ToolBarSpiWrapper extends ControlSpiWrapper implements IToolBarComm
 		return (IToolBarSpi) super.getWidget();
 	}
 
+	@Override
+	public void pack() {
+		getWidget().pack();
+	}
+
 }

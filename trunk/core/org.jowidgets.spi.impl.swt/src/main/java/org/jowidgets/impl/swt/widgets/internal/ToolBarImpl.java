@@ -28,6 +28,9 @@
 
 package org.jowidgets.impl.swt.widgets.internal;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ToolBar;
@@ -45,9 +48,12 @@ public class ToolBarImpl extends SwtControl implements IToolBarSpi {
 
 	private final IGenericWidgetFactory factory;
 
+	private final Map<ToolItem, ToolBarContainerItemImpl> containerMap;
+
 	public ToolBarImpl(final IGenericWidgetFactory factory, final Object parentUiReference) {
 		super(new ToolBar((Composite) parentUiReference, SWT.FLAT | SWT.WRAP | SWT.RIGHT));
 		this.factory = factory;
+		this.containerMap = new HashMap<ToolItem, ToolBarContainerItemImpl>();
 	}
 
 	@Override
@@ -59,6 +65,7 @@ public class ToolBarImpl extends SwtControl implements IToolBarSpi {
 	public void remove(final int index) {
 		final ToolItem item = getUiReference().getItem(index);
 		if (item != null && !item.isDisposed()) {
+			containerMap.remove(item);
 			item.dispose();
 		}
 	}
@@ -108,7 +115,9 @@ public class ToolBarImpl extends SwtControl implements IToolBarSpi {
 		else {
 			toolItem = new ToolItem(getUiReference(), SWT.SEPARATOR);
 		}
-		return new ToolBarContainerItemImpl(toolItem, getUiReference(), factory);
+		final ToolBarContainerItemImpl result = new ToolBarContainerItemImpl(toolItem, getUiReference(), factory);
+		containerMap.put(toolItem, result);
+		return result;
 	}
 
 	@Override
@@ -121,6 +130,14 @@ public class ToolBarImpl extends SwtControl implements IToolBarSpi {
 			toolItem = new ToolItem(getUiReference(), SWT.SEPARATOR);
 		}
 		return new ToolBarItemImpl(toolItem);
+	}
+
+	@Override
+	public void pack() {
+		for (final ToolBarContainerItemImpl container : containerMap.values()) {
+			container.pack();
+		}
+		getUiReference().pack();
 	}
 
 }
