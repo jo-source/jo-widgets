@@ -174,4 +174,10 @@ public class MenuDelegate {
 
 	}
 
+	public void removeAll() {
+		for (final IMenuItem item : getChildren()) {
+			remove(item);
+		}
+	}
+
 }

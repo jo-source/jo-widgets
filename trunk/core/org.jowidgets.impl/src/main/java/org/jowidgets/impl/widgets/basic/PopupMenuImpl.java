@@ -62,6 +62,11 @@ public class PopupMenuImpl extends PopupMenuSpiWrapper implements IPopupMenu {
 	}
 
 	@Override
+	public void removeAll() {
+		menuDelegate.removeAll();
+	}
+
+	@Override
 	public IMenuItem addSeparator() {
 		return menuDelegate.addSeparator();
 	}

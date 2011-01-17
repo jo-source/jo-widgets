@@ -39,6 +39,8 @@ public interface IMenu extends IWidget, IMenuCommon {
 
 	boolean remove(IMenuItem item);
 
+	void removeAll();
+
 	IMenuItem addSeparator();
 
 	IMenuItem addSeparator(int index);

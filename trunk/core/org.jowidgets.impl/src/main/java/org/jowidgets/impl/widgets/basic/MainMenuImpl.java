@@ -68,6 +68,11 @@ public class MainMenuImpl extends MainMenuSpiWrapper implements IMainMenu {
 	}
 
 	@Override
+	public void removeAll() {
+		menuDelegate.removeAll();
+	}
+
+	@Override
 	public IMenuItem addSeparator() {
 		return menuDelegate.addSeparator();
 	}
