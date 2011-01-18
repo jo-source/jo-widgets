@@ -29,8 +29,8 @@ package org.jowidgets.examples.rwt;
 
 import org.eclipse.swt.widgets.Display;
 import org.jowidgets.api.toolkit.IToolkit;
-import org.jowidgets.impl.swt.SwtWidgetsServiceProvider;
 import org.jowidgets.impl.toolkit.DefaultToolkit;
+import org.jowidgets.spi.impl.swt.SwtWidgetsServiceProvider;
 import org.jowidgets.tools.toolkit.ToolkitWrapper;
 
 public class SwtToolkit extends ToolkitWrapper implements IToolkit {
