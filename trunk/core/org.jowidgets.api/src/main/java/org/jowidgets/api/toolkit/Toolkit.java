@@ -64,7 +64,7 @@ public final class Toolkit {
 		return toolkitProvider != null;
 	}
 
-	public static IToolkit getInstance() {
+	public static synchronized IToolkit getInstance() {
 		if (toolkitProvider == null) {
 			final ServiceLoader<IToolkitProvider> toolkitProviderLoader = ServiceLoader.load(IToolkitProvider.class);
 			final Iterator<IToolkitProvider> iterator = toolkitProviderLoader.iterator();
