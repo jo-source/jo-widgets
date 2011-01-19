@@ -19,7 +19,7 @@ You may have the following dependencies in your poms:
 
 {{{
 <properties>
-    <jowidgets.version>0.0.2</jowidgets.version>
+    <jowidgets.version>0.0.10</jowidgets.version>
 </properties>
 
 <dependency>
