@@ -226,8 +226,9 @@ public final class SwingToolBarExperiments {
 			g.translate(x, y);
 
 			g.setColor(UIManager.getColor(m.isEnabled() ? "controlText" : "textInactiveText"));
-			for (int i = 0; i < h; i++)
+			for (int i = 0; i < h; i++) {
 				g.drawLine(i + 1, i, w - i, i);
+			}
 
 			g.translate(-x, -y);
 		}
