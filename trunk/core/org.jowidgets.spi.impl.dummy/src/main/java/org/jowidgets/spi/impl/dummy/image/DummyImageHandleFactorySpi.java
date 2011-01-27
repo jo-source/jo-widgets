@@ -37,11 +37,11 @@ import org.jowidgets.spi.impl.dummy.dummyui.UIDImage;
 
 public class DummyImageHandleFactorySpi extends DummyImageHandleFactory implements IImageHandleFactorySpi {
 
-	private final DummyImageRegistry mockImageRegistry;
+	private final DummyImageRegistry dummyImageRegistry;
 
 	public DummyImageHandleFactorySpi(final DummyImageRegistry swingImageRegistry) {
 		super();
-		this.mockImageRegistry = swingImageRegistry;
+		this.dummyImageRegistry = swingImageRegistry;
 	}
 
 	@Override
@@ -89,7 +89,7 @@ public class DummyImageHandleFactorySpi extends DummyImageHandleFactory implemen
 		return new ImageHandle<UIDImage>(new IImageFactory<UIDImage>() {
 			@Override
 			public UIDImage createImage() {
-				final UIDImage templateImage = mockImageRegistry.getImage(imageConstant);
+				final UIDImage templateImage = dummyImageRegistry.getImage(imageConstant);
 				return new UIDImage(templateImage.getDescription() + "_" + width + "x" + height);
 			}
 		});
