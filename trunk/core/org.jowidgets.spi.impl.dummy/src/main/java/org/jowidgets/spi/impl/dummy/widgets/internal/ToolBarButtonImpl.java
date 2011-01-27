@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann, Lukas Gross
+ * Copyright (c) 2011, Lukas Gross
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,10 +26,37 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.dummy.dummyui;
+package org.jowidgets.spi.impl.dummy.widgets.internal;
 
-public class UIDButton extends AbstractUIDButton {
+import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.spi.impl.dummy.dummyui.AbstractUIDButton;
+import org.jowidgets.spi.impl.dummy.dummyui.UIDObservable;
+import org.jowidgets.spi.widgets.IToolBarButtonSpi;
 
-	public void requestFocusInWindow() {}
+public class ToolBarButtonImpl extends ToolBarItemImpl implements IToolBarButtonSpi {
+
+	private final UIDObservable actionObservable;
+
+	public ToolBarButtonImpl(final AbstractUIDButton button) {
+		super(button);
+		getUiReference().addActionListener(new IActionListener() {
+
+			@Override
+			public void actionPerformed() {
+				actionObservable.fireActionPerformed();
+			}
+		});
+		actionObservable = new UIDObservable();
+	}
+
+	@Override
+	public void addActionListener(final IActionListener actionListener) {
+		actionObservable.addActionListener(actionListener);
+	}
+
+	@Override
+	public void removeActionListener(final IActionListener actionListener) {
+		actionObservable.removeActionListener(actionListener);
+	}
 
 }

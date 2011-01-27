@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann, Lukas Gross
+ * Copyright (c) 2011, Lukas Gross
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,10 +26,50 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.dummy.dummyui;
+package org.jowidgets.spi.impl.dummy.widgets.internal;
 
-public class UIDButton extends AbstractUIDButton {
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.spi.impl.dummy.dummyui.AbstractUIDButton;
+import org.jowidgets.spi.widgets.IToolBarItemSpi;
 
-	public void requestFocusInWindow() {}
+public class ToolBarItemImpl implements IToolBarItemSpi {
+
+	private final AbstractUIDButton button;
+
+	public ToolBarItemImpl(final AbstractUIDButton button) {
+		super();
+		this.button = button;
+	}
+
+	@Override
+	public AbstractUIDButton getUiReference() {
+		return button;
+	}
+
+	@Override
+	public void setEnabled(final boolean enabled) {
+		button.setEnabled(enabled);
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return button.isEnabled();
+	}
+
+	@Override
+	public void setText(final String text) {
+		button.setText(text);
+	}
+
+	@Override
+	public void setToolTipText(final String text) {
+		button.setToolTipText(text);
+	}
+
+	// TODO getReference to imageRegistry
+	@Override
+	public void setIcon(final IImageConstant icon) {
+		//button.setIcon();
+	}
 
 }

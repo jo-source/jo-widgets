@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann, Lukas Gross
+ * Copyright (c) 2011, Lukas Gross
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,10 +26,54 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.dummy.dummyui;
+package org.jowidgets.spi.impl.dummy.widgets.internal;
 
-public class UIDButton extends AbstractUIDButton {
+import org.jowidgets.common.widgets.controler.IItemStateListener;
+import org.jowidgets.spi.impl.dummy.dummyui.UIDObservable;
+import org.jowidgets.spi.impl.dummy.dummyui.UIDToolBarToggleButton;
+import org.jowidgets.spi.widgets.IToolBarToggleButtonSpi;
 
-	public void requestFocusInWindow() {}
+public class ToolBarToggleButtonImpl extends ToolBarItemImpl implements IToolBarToggleButtonSpi {
+
+	private final UIDObservable itemStateObersvable;
+
+	public ToolBarToggleButtonImpl(final UIDToolBarToggleButton button) {
+		super(button);
+
+		super.getUiReference().addItemListener(new IItemStateListener() {
+
+			@Override
+			public void itemStateChanged() {
+				itemStateObersvable.fireItemStateChanged();
+			}
+		});
+
+		this.itemStateObersvable = new UIDObservable();
+	}
+
+	@Override
+	public UIDToolBarToggleButton getUiReference() {
+		return (UIDToolBarToggleButton) super.getUiReference();
+	}
+
+	@Override
+	public boolean isSelected() {
+		return getUiReference().isSelected();
+	}
+
+	@Override
+	public void setSelected(final boolean selected) {
+		getUiReference().setSelected(selected);
+	}
+
+	@Override
+	public void addItemListener(final IItemStateListener listener) {
+		itemStateObersvable.addItemListener(listener);
+	}
+
+	@Override
+	public void removeItemListener(final IItemStateListener listener) {
+		itemStateObersvable.removeItemListener(listener);
+	}
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann, Lukas Gross
+ * Copyright (c) 2011, Lukas Gross
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,8 +28,21 @@
 
 package org.jowidgets.spi.impl.dummy.dummyui;
 
-public class UIDButton extends AbstractUIDButton {
+import org.jowidgets.common.types.Orientation;
 
-	public void requestFocusInWindow() {}
+public class UIDToolBarSeparator extends UIDSeparator {
 
+	private String text;
+
+	public UIDToolBarSeparator(final Orientation orientation) {
+		super(orientation);
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(final String text) {
+		this.text = text;
+	}
 }

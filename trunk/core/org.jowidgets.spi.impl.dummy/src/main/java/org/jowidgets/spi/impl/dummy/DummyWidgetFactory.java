@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2010, Michael Grossmann, Lukas Gross
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -49,6 +49,7 @@ import org.jowidgets.spi.impl.dummy.widgets.internal.SplitCompositeImpl;
 import org.jowidgets.spi.impl.dummy.widgets.internal.TextFieldImpl;
 import org.jowidgets.spi.impl.dummy.widgets.internal.TextLabelImpl;
 import org.jowidgets.spi.impl.dummy.widgets.internal.ToggleButtonImpl;
+import org.jowidgets.spi.impl.dummy.widgets.internal.ToolBarImpl;
 import org.jowidgets.spi.widgets.IButtonSpi;
 import org.jowidgets.spi.widgets.ICheckBoxSpi;
 import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
@@ -204,8 +205,7 @@ public final class DummyWidgetFactory implements IWidgetFactorySpi {
 
 	@Override
 	public IToolBarSpi createToolBar(final IGenericWidgetFactory factory, final Object parentUiReference) {
-		// TODO implement Toolbar
-		return null;
+		return new ToolBarImpl(imageRegistry, factory);
 	}
 
 }

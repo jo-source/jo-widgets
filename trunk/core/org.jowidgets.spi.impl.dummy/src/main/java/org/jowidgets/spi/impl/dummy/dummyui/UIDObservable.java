@@ -31,6 +31,7 @@ package org.jowidgets.spi.impl.dummy.dummyui;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IActionObservable;
 import org.jowidgets.common.widgets.controler.IInputListener;
@@ -39,6 +40,8 @@ import org.jowidgets.common.widgets.controler.IItemStateListener;
 import org.jowidgets.common.widgets.controler.IItemStateObservable;
 import org.jowidgets.common.widgets.controler.IMenuListener;
 import org.jowidgets.common.widgets.controler.IMenuObservable;
+import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
+import org.jowidgets.common.widgets.controler.IPopupDetectionObservable;
 import org.jowidgets.common.widgets.controler.IWindowListener;
 import org.jowidgets.common.widgets.controler.IWindowObservable;
 
@@ -47,13 +50,15 @@ public class UIDObservable implements
 		IInputObservable,
 		IWindowObservable,
 		IItemStateObservable,
-		IMenuObservable {
+		IMenuObservable,
+		IPopupDetectionObservable {
 
 	private final Set<IInputListener> inputListeners;
 	private final Set<IActionListener> actionListeners;
 	private final Set<IWindowListener> windowListeners;
 	private final Set<IItemStateListener> itemStateListeners;
 	private final Set<IMenuListener> menuListeners;
+	private final Set<IPopupDetectionListener> popupListeners;
 
 	public UIDObservable() {
 		super();
@@ -62,6 +67,7 @@ public class UIDObservable implements
 		this.windowListeners = new HashSet<IWindowListener>();
 		this.itemStateListeners = new HashSet<IItemStateListener>();
 		this.menuListeners = new HashSet<IMenuListener>();
+		this.popupListeners = new HashSet<IPopupDetectionListener>();
 	}
 
 	@Override
@@ -114,6 +120,16 @@ public class UIDObservable implements
 		menuListeners.remove(listener);
 	}
 
+	@Override
+	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+		popupListeners.add(listener);
+	}
+
+	@Override
+	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+		popupListeners.remove(listener);
+	}
+
 	public void fireActionPerformed() {
 		for (final IActionListener listener : actionListeners) {
 			listener.actionPerformed();
@@ -129,6 +145,12 @@ public class UIDObservable implements
 	public void fireInputChanged(final Object source) {
 		for (final IInputListener listener : inputListeners) {
 			listener.inputChanged(source);
+		}
+	}
+
+	public void firePopupDetected(final Position position) {
+		for (final IPopupDetectionListener listener : popupListeners) {
+			listener.popupDetected(position);
 		}
 	}
 
@@ -173,5 +195,4 @@ public class UIDObservable implements
 			listener.menuDeactivated();
 		}
 	}
-
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann, Lukas Gross
+ * Copyright (c) 2011, Lukas Gross
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,8 +28,15 @@
 
 package org.jowidgets.spi.impl.dummy.dummyui;
 
-public class UIDButton extends AbstractUIDButton {
+public class UIDToolBarToggleButton extends UIDToolBarButton {
 
-	public void requestFocusInWindow() {}
+	private boolean selected = false;
 
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public void setSelected(final boolean selected) {
+		this.selected = selected;
+	}
 }
