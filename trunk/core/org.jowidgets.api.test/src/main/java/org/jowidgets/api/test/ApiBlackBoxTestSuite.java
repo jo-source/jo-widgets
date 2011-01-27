@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2010, grossmann, Lukas Gross
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -41,6 +41,7 @@ public final class ApiBlackBoxTestSuite {
 		suite.addTest(ToolkitTest.suite());
 		suite.addTest(WidgetFactoryTest.suite());
 		suite.addTest(MenuTest.suite());
+		suite.addTest(ToolBarTest.suite());
 		//$JUnit-END$
 		return suite;
 	}
