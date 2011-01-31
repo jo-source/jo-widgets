@@ -3,14 +3,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jowidgets</groupId>
 	<artifactId>org.jowidgets.core.parent</artifactId>
-	<version>0.0.11-SNAPSHOT</version>
+	<version>0.0.11</version>
 	<packaging>pom</packaging>
 	<name>org.jowidgets.core.parent</name>
 
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.parent</artifactId>
-		<version>0.0.11-SNAPSHOT</version>
+		<version>0.0.11</version>
 		<relativePath>../../parent/pom.xml</relativePath>
 	</parent>
 
@@ -19,6 +19,7 @@
 		<module>../org.jowidgets.api</module>
 		<module>../org.jowidgets.api.test</module>
 		<module>../org.jowidgets.tools</module>
+		<module>../org.jowidgets.workbench.api</module>
 		<module>../org.jowidgets.impl</module>
 		<module>../org.jowidgets.spi</module>
 		<module>../org.jowidgets.spi.impl.dummy</module>
