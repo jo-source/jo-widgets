@@ -62,6 +62,14 @@ public class WindowDelegate {
 		this.wasVisible = false;
 		this.positionSet = false;
 		this.sizeSet = false;
+
+		if (setup.getSize() != null) {
+			setSize(setup.getSize());
+		}
+
+		if (setup.getPosition() != null) {
+			setPosition(setup.getPosition());
+		}
 	}
 
 	public void centerLocation() {
