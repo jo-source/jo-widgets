@@ -37,12 +37,14 @@ import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.widgets.IActionMenuItem;
 import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.IMenuItem;
+import org.jowidgets.api.widgets.ISubMenu;
 import org.jowidgets.common.widgets.builder.ISetupBuilder;
 import org.jowidgets.common.widgets.controler.IMenuListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.util.Assert;
 
 class Menu<WIDGET_TYPE extends IMenu, BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE> & ISetupBuilder<?>> extends
-		Widget<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IMenu {
+		Widget<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IMenu, IJoMenu {
 
 	private final Set<IMenuListener> menuListeners;
 	private final List<Widget<?, ?>> preItems;
@@ -65,6 +67,62 @@ class Menu<WIDGET_TYPE extends IMenu, BLUE_PRINT_TYPE extends IWidgetDescriptor<
 		}
 		for (final IMenuListener listener : menuListeners) {
 			getWidget().addMenuListener(listener);
+		}
+	}
+
+	@Override
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	public void addItem(final MenuItem<? extends IMenuItem, ?> item) {
+		Assert.paramNotNull(item, "item");
+		if (isInitialized()) {
+			final IMenuItem newItem = getWidget().addItem(item.getDescriptor());
+			final MenuItem rawWidget = item;
+			rawWidget.initialize(newItem);
+		}
+		else {
+			preItems.add(item);
+		}
+	}
+
+	@Override
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	public void addItem(final int index, final MenuItem<? extends IMenuItem, ?> item) {
+		Assert.paramNotNull(item, "item");
+		if (isInitialized()) {
+			final IMenuItem newItem = getWidget().addItem(index, item.getDescriptor());
+			final MenuItem rawWidget = item;
+			rawWidget.initialize(newItem);
+		}
+		else {
+			preItems.add(index, item);
+		}
+	}
+
+	@Override
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	public void addItem(final SubMenu<? extends ISubMenu, ?> item) {
+		Assert.paramNotNull(item, "item");
+		if (isInitialized()) {
+			final ISubMenu newItem = getWidget().addItem(item.getDescriptor());
+			final SubMenu rawWidget = item;
+			rawWidget.initialize(newItem);
+		}
+		else {
+			preItems.add(item);
+		}
+	}
+
+	@Override
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	public void addItem(final int index, final SubMenu<? extends ISubMenu, ?> item) {
+		Assert.paramNotNull(item, "item");
+		if (isInitialized()) {
+			final ISubMenu newItem = getWidget().addItem(index, item.getDescriptor());
+			final SubMenu rawWidget = item;
+			rawWidget.initialize(newItem);
+		}
+		else {
+			preItems.add(index, item);
 		}
 	}
 
@@ -155,26 +213,50 @@ class Menu<WIDGET_TYPE extends IMenu, BLUE_PRINT_TYPE extends IWidgetDescriptor<
 
 	@Override
 	public IMenuItem addSeparator() {
-		// TODO Auto-generated method stub
-		return null;
+		if (isInitialized()) {
+			return getWidget().addSeparator();
+		}
+		else {
+			final JoSeparatorMenuItem result = new JoSeparatorMenuItem();
+			preItems.add(result);
+			return result;
+		}
 	}
 
 	@Override
 	public IMenuItem addSeparator(final int index) {
-		// TODO Auto-generated method stub
-		return null;
+		if (isInitialized()) {
+			return getWidget().addSeparator(index);
+		}
+		else {
+			final JoSeparatorMenuItem result = new JoSeparatorMenuItem();
+			preItems.add(index, result);
+			return result;
+		}
 	}
 
 	@Override
 	public IActionMenuItem addAction(final IAction action) {
-		// TODO Auto-generated method stub
-		return null;
+		if (isInitialized()) {
+			return getWidget().addAction(action);
+		}
+		else {
+			final JoActionMenuItem result = new JoActionMenuItem(action);
+			preItems.add(result);
+			return result;
+		}
 	}
 
 	@Override
 	public IActionMenuItem addAction(final int index, final IAction action) {
-		// TODO Auto-generated method stub
-		return null;
+		if (isInitialized()) {
+			return getWidget().addAction(index, action);
+		}
+		else {
+			final JoActionMenuItem result = new JoActionMenuItem(action);
+			preItems.add(index, result);
+			return result;
+		}
 	}
 
 }

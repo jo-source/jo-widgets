@@ -36,8 +36,11 @@ import org.jowidgets.api.widgets.descriptor.setup.IFrameSetup;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
+import org.jowidgets.util.Assert;
 
 public class JoFrame extends Window<IFrame, IFrameBluePrint> implements IFrame {
+
+	private JoMenuBar menuBar;
 
 	public JoFrame() {
 		super(Toolkit.getBluePrintFactory().frame());
@@ -57,13 +60,40 @@ public class JoFrame extends Window<IFrame, IFrameBluePrint> implements IFrame {
 
 	public void finishLifecycleOnClose(final IApplicationLifecycle lifecycle) {
 		addWindowListener(new WindowAdapter() {
-
 			@Override
 			public void windowClosed() {
 				lifecycle.finish();
 			}
-
 		});
+	}
+
+	public final void setMenuBar(final JoMenuBar menuBar) {
+		Assert.paramNotNull(menuBar, "menuBar");
+		if (isInitialized()) {
+			menuBar.initialize(createMenuBar());
+		}
+		else {
+			this.menuBar = menuBar;
+		}
+	}
+
+	@Override
+	void initialize(final IFrame widget) {
+		super.initialize(widget);
+		if (menuBar != null) {
+			menuBar.initialize(createMenuBar());
+		}
+	}
+
+	@Override
+	public IMenuBar createMenuBar() {
+		if (isInitialized()) {
+			return getWidget().createMenuBar();
+		}
+		else {
+			menuBar = new JoMenuBar();
+			return menuBar;
+		}
 	}
 
 	public static IFrameBluePrint bluePrint() {
@@ -72,13 +102,6 @@ public class JoFrame extends Window<IFrame, IFrameBluePrint> implements IFrame {
 
 	public static IFrameBluePrint bluePrint(final String title) {
 		return Toolkit.getBluePrintFactory().frame(title);
-	}
-
-	@Override
-	public IMenuBar createMenuBar() {
-		//TODO use JoMenuBar later
-		checkInitialized();
-		return getWidget().createMenuBar();
 	}
 
 }

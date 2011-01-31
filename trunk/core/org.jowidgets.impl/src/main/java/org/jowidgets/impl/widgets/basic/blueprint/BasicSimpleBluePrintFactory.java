@@ -43,6 +43,8 @@ import org.jowidgets.api.widgets.blueprint.IMainMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.IRadioMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISeparatorBluePrint;
+import org.jowidgets.api.widgets.blueprint.ISeparatorMenuItemBluePrint;
+import org.jowidgets.api.widgets.blueprint.ISeparatorToolBarItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISubMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextFieldBluePrint;
@@ -70,6 +72,8 @@ import org.jowidgets.api.widgets.descriptor.IMainMenuDescriptor;
 import org.jowidgets.api.widgets.descriptor.IRadioMenuItemDescriptor;
 import org.jowidgets.api.widgets.descriptor.IScrollCompositeDescriptor;
 import org.jowidgets.api.widgets.descriptor.ISeparatorDescriptor;
+import org.jowidgets.api.widgets.descriptor.ISeparatorMenuItemDescriptor;
+import org.jowidgets.api.widgets.descriptor.ISeparatorToolBarItemDescriptor;
 import org.jowidgets.api.widgets.descriptor.ISplitCompositeDescriptor;
 import org.jowidgets.api.widgets.descriptor.ISubMenuDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextFieldDescriptor;
@@ -217,6 +221,16 @@ public class BasicSimpleBluePrintFactory extends AbstractBluePrintFactory implem
 	@Override
 	public IToolBarContainerItemBluePrint toolBarContainerItem() {
 		return createProxy(IToolBarContainerItemBluePrint.class, IToolBarContainerItemDescriptor.class);
+	}
+
+	@Override
+	public ISeparatorMenuItemBluePrint menuSeparator() {
+		return createProxy(ISeparatorMenuItemBluePrint.class, ISeparatorMenuItemDescriptor.class);
+	}
+
+	@Override
+	public ISeparatorToolBarItemBluePrint toolBarSeparator() {
+		return createProxy(ISeparatorToolBarItemBluePrint.class, ISeparatorToolBarItemDescriptor.class);
 	}
 
 }

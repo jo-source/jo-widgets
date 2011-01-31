@@ -28,52 +28,45 @@
 
 package org.jowidgets.tools.powo;
 
-import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IActionMenuItem;
-import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
-import org.jowidgets.api.widgets.descriptor.IActionMenuItemDescriptor;
+import org.jowidgets.api.widgets.ISelectableMenuItem;
+import org.jowidgets.api.widgets.blueprint.IRadioMenuItemBluePrint;
+import org.jowidgets.api.widgets.descriptor.IRadioMenuItemDescriptor;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.util.Assert;
 
-public class JoActionMenuItem extends ActionMenuItem<IActionMenuItem, IActionMenuItemBluePrint> implements IActionMenuItem {
+public class JoRadioMenuItem extends SelectableMenuItem<ISelectableMenuItem, IRadioMenuItemBluePrint> implements
+		ISelectableMenuItem {
 
-	public JoActionMenuItem(final String text, final IImageConstant icon) {
+	public JoRadioMenuItem(final String text, final IImageConstant icon) {
 		this(bluePrint(text, icon));
 	}
 
-	public JoActionMenuItem(final IAction action) {
-		this(bluePrint());
-		Assert.paramNotNull(action, "action");
-		setAction(action);
-	}
-
-	public JoActionMenuItem(final String text) {
+	public JoRadioMenuItem(final String text) {
 		this(bluePrint(text));
 	}
 
-	public JoActionMenuItem(final String text, final String tooltipText) {
+	public JoRadioMenuItem(final String text, final String tooltipText) {
 		this(bluePrint(text, tooltipText));
 	}
 
-	public JoActionMenuItem(final IActionMenuItemDescriptor descriptor) {
+	public JoRadioMenuItem(final IRadioMenuItemDescriptor descriptor) {
 		super(bluePrint().setSetup(descriptor));
 	}
 
-	public static IActionMenuItemBluePrint bluePrint() {
-		return Toolkit.getBluePrintFactory().menuItem();
+	public static IRadioMenuItemBluePrint bluePrint() {
+		return Toolkit.getBluePrintFactory().radioMenuItem();
 	}
 
-	public static IActionMenuItemBluePrint bluePrint(final String text) {
-		return Toolkit.getBluePrintFactory().menuItem(text);
+	public static IRadioMenuItemBluePrint bluePrint(final String text) {
+		return Toolkit.getBluePrintFactory().radioMenuItem(text);
 	}
 
-	public static IActionMenuItemBluePrint bluePrint(final String text, final String tooltipText) {
-		return Toolkit.getBluePrintFactory().menuItem(text).setToolTipText(tooltipText);
+	public static IRadioMenuItemBluePrint bluePrint(final String text, final String tooltipText) {
+		return Toolkit.getBluePrintFactory().radioMenuItem(text).setToolTipText(tooltipText);
 	}
 
-	public static IActionMenuItemBluePrint bluePrint(final String text, final IImageConstant icon) {
-		return Toolkit.getBluePrintFactory().menuItem(text).setIcon(icon);
+	public static IRadioMenuItemBluePrint bluePrint(final String text, final IImageConstant icon) {
+		return Toolkit.getBluePrintFactory().radioMenuItem(text).setIcon(icon);
 	}
 
 }

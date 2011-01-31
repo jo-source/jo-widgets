@@ -44,6 +44,8 @@ import org.jowidgets.api.widgets.blueprint.IMainMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.IRadioMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISeparatorBluePrint;
+import org.jowidgets.api.widgets.blueprint.ISeparatorMenuItemBluePrint;
+import org.jowidgets.api.widgets.blueprint.ISeparatorToolBarItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISubMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextFieldBluePrint;
@@ -101,6 +103,10 @@ public interface IBasicSimpleBluePrintFactory {
 	ISubMenuBluePrint subMenu();
 
 	IMainMenuBluePrint mainMenu();
+
+	ISeparatorMenuItemBluePrint menuSeparator();
+
+	ISeparatorToolBarItemBluePrint toolBarSeparator();
 
 	IToolBarBluePrint toolBar();
 

@@ -28,52 +28,23 @@
 
 package org.jowidgets.tools.powo;
 
-import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IActionMenuItem;
-import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
-import org.jowidgets.api.widgets.descriptor.IActionMenuItemDescriptor;
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.util.Assert;
+import org.jowidgets.api.widgets.IMenuItem;
+import org.jowidgets.api.widgets.blueprint.ISeparatorMenuItemBluePrint;
+import org.jowidgets.api.widgets.descriptor.ISeparatorMenuItemDescriptor;
 
-public class JoActionMenuItem extends ActionMenuItem<IActionMenuItem, IActionMenuItemBluePrint> implements IActionMenuItem {
+public class JoSeparatorMenuItem extends MenuItem<IMenuItem, ISeparatorMenuItemBluePrint> implements IMenuItem {
 
-	public JoActionMenuItem(final String text, final IImageConstant icon) {
-		this(bluePrint(text, icon));
+	public JoSeparatorMenuItem() {
+		super(bluePrint());
 	}
 
-	public JoActionMenuItem(final IAction action) {
-		this(bluePrint());
-		Assert.paramNotNull(action, "action");
-		setAction(action);
-	}
-
-	public JoActionMenuItem(final String text) {
-		this(bluePrint(text));
-	}
-
-	public JoActionMenuItem(final String text, final String tooltipText) {
-		this(bluePrint(text, tooltipText));
-	}
-
-	public JoActionMenuItem(final IActionMenuItemDescriptor descriptor) {
+	public JoSeparatorMenuItem(final ISeparatorMenuItemDescriptor descriptor) {
 		super(bluePrint().setSetup(descriptor));
 	}
 
-	public static IActionMenuItemBluePrint bluePrint() {
-		return Toolkit.getBluePrintFactory().menuItem();
-	}
-
-	public static IActionMenuItemBluePrint bluePrint(final String text) {
-		return Toolkit.getBluePrintFactory().menuItem(text);
-	}
-
-	public static IActionMenuItemBluePrint bluePrint(final String text, final String tooltipText) {
-		return Toolkit.getBluePrintFactory().menuItem(text).setToolTipText(tooltipText);
-	}
-
-	public static IActionMenuItemBluePrint bluePrint(final String text, final IImageConstant icon) {
-		return Toolkit.getBluePrintFactory().menuItem(text).setIcon(icon);
+	public static ISeparatorMenuItemBluePrint bluePrint() {
+		return Toolkit.getBluePrintFactory().menuSeparator();
 	}
 
 }

@@ -28,52 +28,45 @@
 
 package org.jowidgets.tools.powo;
 
-import org.jowidgets.api.command.IAction;
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IActionMenuItem;
-import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
-import org.jowidgets.api.widgets.descriptor.IActionMenuItemDescriptor;
+import org.jowidgets.api.widgets.IMenu;
+import org.jowidgets.api.widgets.ISubMenu;
+import org.jowidgets.api.widgets.blueprint.builder.IMenuItemSetupBuilder;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.util.Assert;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-public class JoActionMenuItem extends ActionMenuItem<IActionMenuItem, IActionMenuItemBluePrint> implements IActionMenuItem {
+class SubMenu<WIDGET_TYPE extends ISubMenu, BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE> & IMenuItemSetupBuilder<?>> extends
+		Menu<WIDGET_TYPE, BLUE_PRINT_TYPE> implements ISubMenu {
 
-	public JoActionMenuItem(final String text, final IImageConstant icon) {
-		this(bluePrint(text, icon));
+	private final MenuItem<WIDGET_TYPE, BLUE_PRINT_TYPE> menuItemDelegate;
+
+	SubMenu(final BLUE_PRINT_TYPE bluePrint) {
+		super(bluePrint);
+		this.menuItemDelegate = new MenuItem<WIDGET_TYPE, BLUE_PRINT_TYPE>(bluePrint);
 	}
 
-	public JoActionMenuItem(final IAction action) {
-		this(bluePrint());
-		Assert.paramNotNull(action, "action");
-		setAction(action);
+	@Override
+	public void setText(final String text) {
+		menuItemDelegate.setText(text);
 	}
 
-	public JoActionMenuItem(final String text) {
-		this(bluePrint(text));
+	@Override
+	public void setToolTipText(final String text) {
+		menuItemDelegate.setToolTipText(text);
 	}
 
-	public JoActionMenuItem(final String text, final String tooltipText) {
-		this(bluePrint(text, tooltipText));
+	@Override
+	public void setIcon(final IImageConstant icon) {
+		menuItemDelegate.setIcon(icon);
 	}
 
-	public JoActionMenuItem(final IActionMenuItemDescriptor descriptor) {
-		super(bluePrint().setSetup(descriptor));
+	@Override
+	public void setMnemonic(final char mnemonic) {
+		menuItemDelegate.setMnemonic(mnemonic);
 	}
 
-	public static IActionMenuItemBluePrint bluePrint() {
-		return Toolkit.getBluePrintFactory().menuItem();
-	}
-
-	public static IActionMenuItemBluePrint bluePrint(final String text) {
-		return Toolkit.getBluePrintFactory().menuItem(text);
-	}
-
-	public static IActionMenuItemBluePrint bluePrint(final String text, final String tooltipText) {
-		return Toolkit.getBluePrintFactory().menuItem(text).setToolTipText(tooltipText);
-	}
-
-	public static IActionMenuItemBluePrint bluePrint(final String text, final IImageConstant icon) {
-		return Toolkit.getBluePrintFactory().menuItem(text).setIcon(icon);
+	@Override
+	public IMenu getParent() {
+		return menuItemDelegate.getParent();
 	}
 
 }

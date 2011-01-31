@@ -28,52 +28,55 @@
 
 package org.jowidgets.tools.powo;
 
-import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IActionMenuItem;
-import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
-import org.jowidgets.api.widgets.descriptor.IActionMenuItemDescriptor;
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.util.Assert;
+import org.jowidgets.api.widgets.IMainMenu;
+import org.jowidgets.api.widgets.blueprint.IMainMenuBluePrint;
+import org.jowidgets.api.widgets.descriptor.IMainMenuDescriptor;
 
-public class JoActionMenuItem extends ActionMenuItem<IActionMenuItem, IActionMenuItemBluePrint> implements IActionMenuItem {
+public class JoMainMenu extends Menu<IMainMenu, IMainMenuBluePrint> implements IMainMenu {
 
-	public JoActionMenuItem(final String text, final IImageConstant icon) {
-		this(bluePrint(text, icon));
-	}
-
-	public JoActionMenuItem(final IAction action) {
-		this(bluePrint());
-		Assert.paramNotNull(action, "action");
-		setAction(action);
-	}
-
-	public JoActionMenuItem(final String text) {
+	public JoMainMenu(final String text) {
 		this(bluePrint(text));
 	}
 
-	public JoActionMenuItem(final String text, final String tooltipText) {
-		this(bluePrint(text, tooltipText));
+	public JoMainMenu(final String text, final char mnemonic) {
+		this(bluePrint(text, mnemonic));
 	}
 
-	public JoActionMenuItem(final IActionMenuItemDescriptor descriptor) {
+	public JoMainMenu(final IMainMenuDescriptor descriptor) {
 		super(bluePrint().setSetup(descriptor));
 	}
 
-	public static IActionMenuItemBluePrint bluePrint() {
-		return Toolkit.getBluePrintFactory().menuItem();
+	@Override
+	public void setText(final String text) {
+		if (isInitialized()) {
+			getWidget().setText(text);
+		}
+		else {
+			getBluePrint().setText(text);
+		}
 	}
 
-	public static IActionMenuItemBluePrint bluePrint(final String text) {
-		return Toolkit.getBluePrintFactory().menuItem(text);
+	@Override
+	public void setMnemonic(final char mnemonic) {
+		if (isInitialized()) {
+			getWidget().setMnemonic(mnemonic);
+		}
+		else {
+			getBluePrint().setMnemonic(mnemonic);
+		}
 	}
 
-	public static IActionMenuItemBluePrint bluePrint(final String text, final String tooltipText) {
-		return Toolkit.getBluePrintFactory().menuItem(text).setToolTipText(tooltipText);
+	public static IMainMenuBluePrint bluePrint() {
+		return Toolkit.getBluePrintFactory().mainMenu();
 	}
 
-	public static IActionMenuItemBluePrint bluePrint(final String text, final IImageConstant icon) {
-		return Toolkit.getBluePrintFactory().menuItem(text).setIcon(icon);
+	public static IMainMenuBluePrint bluePrint(final String text) {
+		return bluePrint().setText(text);
+	}
+
+	public static IMainMenuBluePrint bluePrint(final String text, final char mnemonic) {
+		return bluePrint(text).setMnemonic(mnemonic);
 	}
 
 }

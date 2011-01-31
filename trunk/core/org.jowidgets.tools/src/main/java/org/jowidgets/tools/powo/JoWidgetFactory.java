@@ -40,6 +40,7 @@ import org.jowidgets.api.widgets.descriptor.ILabelDescriptor;
 import org.jowidgets.api.widgets.descriptor.IProgressBarDescriptor;
 import org.jowidgets.api.widgets.descriptor.IRadioMenuItemDescriptor;
 import org.jowidgets.api.widgets.descriptor.IScrollCompositeDescriptor;
+import org.jowidgets.api.widgets.descriptor.ISeparatorMenuItemDescriptor;
 import org.jowidgets.api.widgets.descriptor.ISplitCompositeDescriptor;
 import org.jowidgets.api.widgets.descriptor.ISubMenuDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextLabelDescriptor;
@@ -97,12 +98,13 @@ class JoWidgetFactory {
 			return new JoCheckedMenuItem((ICheckedMenuItemDescriptor) descriptor);
 		}
 		else if (descriptor instanceof IRadioMenuItemDescriptor) {
-			//TODO
-			return null;
+			return new JoRadioMenuItem((IRadioMenuItemDescriptor) descriptor);
 		}
 		else if (descriptor instanceof ISubMenuDescriptor) {
-			//TODO
-			return null;
+			return new JoSubMenu((ISubMenuDescriptor) descriptor);
+		}
+		else if (descriptor instanceof ISeparatorMenuItemDescriptor) {
+			return new JoSeparatorMenuItem((ISeparatorMenuItemDescriptor) descriptor);
 		}
 		else {
 			throw new IllegalArgumentException("Could not create a Widget from descriptor '"

@@ -52,6 +52,8 @@ import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IRadioMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISeparatorBluePrint;
+import org.jowidgets.api.widgets.blueprint.ISeparatorMenuItemBluePrint;
+import org.jowidgets.api.widgets.blueprint.ISeparatorToolBarItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISubMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextFieldBluePrint;
@@ -521,6 +523,16 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	@Override
 	public IToolBarContainerItemBluePrint toolBarContainerItem() {
 		return bluePrintFactory.toolBarContainerItem();
+	}
+
+	@Override
+	public ISeparatorMenuItemBluePrint menuSeparator() {
+		return bluePrintFactory.menuSeparator();
+	}
+
+	@Override
+	public ISeparatorToolBarItemBluePrint toolBarSeparator() {
+		return bluePrintFactory.toolBarSeparator();
 	}
 
 }

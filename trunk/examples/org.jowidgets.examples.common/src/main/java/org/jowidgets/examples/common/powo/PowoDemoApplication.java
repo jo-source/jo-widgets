@@ -44,11 +44,16 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.tools.powo.IJoMenu;
+import org.jowidgets.tools.powo.JoActionMenuItem;
 import org.jowidgets.tools.powo.JoButton;
 import org.jowidgets.tools.powo.JoCheckBox;
+import org.jowidgets.tools.powo.JoCheckedMenuItem;
 import org.jowidgets.tools.powo.JoComboBox;
 import org.jowidgets.tools.powo.JoComboBoxSelection;
 import org.jowidgets.tools.powo.JoComposite;
@@ -56,11 +61,17 @@ import org.jowidgets.tools.powo.JoDialog;
 import org.jowidgets.tools.powo.JoFrame;
 import org.jowidgets.tools.powo.JoIcon;
 import org.jowidgets.tools.powo.JoInputField;
+import org.jowidgets.tools.powo.JoMainMenu;
+import org.jowidgets.tools.powo.JoMenuBar;
 import org.jowidgets.tools.powo.JoMessageDialog;
+import org.jowidgets.tools.powo.JoPopupMenu;
 import org.jowidgets.tools.powo.JoProgressBar;
 import org.jowidgets.tools.powo.JoQuestionDialog;
+import org.jowidgets.tools.powo.JoRadioMenuItem;
 import org.jowidgets.tools.powo.JoScrollComposite;
+import org.jowidgets.tools.powo.JoSeparatorMenuItem;
 import org.jowidgets.tools.powo.JoSplitComposite;
+import org.jowidgets.tools.powo.JoSubMenu;
 import org.jowidgets.tools.powo.JoTextLabel;
 import org.jowidgets.tools.powo.JoToggleButton;
 
@@ -89,6 +100,17 @@ public class PowoDemoApplication implements IApplication {
 			@Override
 			public void windowClosed() {
 				lifecycle.finish();
+			}
+		});
+
+		frame.setMenuBar(createMenuBar());
+
+		final JoPopupMenu popupMenu = createPopUpMenu();
+		frame.addPopupMenu(popupMenu);
+		frame.addPopupDetectionListener(new IPopupDetectionListener() {
+			@Override
+			public void popupDetected(final Position position) {
+				popupMenu.show(position);
 			}
 		});
 
@@ -154,6 +176,60 @@ public class PowoDemoApplication implements IApplication {
 		frame.add(composite2, "growx, growy");
 
 		frame.setVisible(true);
+	}
+
+	private JoPopupMenu createPopUpMenu() {
+		final JoPopupMenu result = new JoPopupMenu();
+		fillMenu(result);
+		return result;
+	}
+
+	private JoMenuBar createMenuBar() {
+		final JoMenuBar menuBar = new JoMenuBar();
+		menuBar.addMenu(createMainMenu1());
+		menuBar.addMenu(createMainMenu2());
+		return menuBar;
+	}
+
+	private JoMainMenu createMainMenu1() {
+		final JoMainMenu result = new JoMainMenu("File", 'F');
+		fillMenu(result);
+		return result;
+	}
+
+	private JoMainMenu createMainMenu2() {
+		final JoMainMenu result = new JoMainMenu("Edit", 'E');
+		fillMenu(result);
+		return result;
+	}
+
+	private void fillMenu(final IJoMenu menu) {
+		final JoCheckedMenuItem checkedItem = new JoCheckedMenuItem("Checked1");
+		checkedItem.setSelected(true);
+		menu.addItem(checkedItem);
+
+		menu.addItem(new JoSeparatorMenuItem());
+
+		menu.addItem(new JoActionMenuItem("Item1", "Tooltip of item1"));
+		menu.addItem(new JoActionMenuItem("Item2", "Tooltip of item2"));
+		menu.addItem(new JoActionMenuItem("Item3", "Tooltip of item3"));
+
+		menu.addItem(new JoSeparatorMenuItem());
+
+		final JoSubMenu subMenu = new JoSubMenu("Submenu", "Tooltip of submenu");
+		subMenu.addItem(new JoActionMenuItem("Sub item1", "Tooltip of sub item1"));
+		subMenu.addItem(new JoActionMenuItem("Sub item2", "Tooltip of sub item2"));
+		subMenu.addItem(new JoActionMenuItem("Sub item3", "Tooltip of sub item3"));
+		menu.addItem(subMenu);
+
+		menu.addItem(new JoSeparatorMenuItem());
+
+		final JoRadioMenuItem radioItem = new JoRadioMenuItem("Radio1", "Tooltip of radio1");
+		radioItem.setSelected(true);
+		menu.addItem(radioItem);
+		menu.addItem(new JoRadioMenuItem("Radio2", "Tooltip of radio2"));
+		menu.addItem(new JoRadioMenuItem("Radio3", "Tooltip of radio3"));
+
 	}
 
 	private JoDialog createDialog(final IFrame parent) {

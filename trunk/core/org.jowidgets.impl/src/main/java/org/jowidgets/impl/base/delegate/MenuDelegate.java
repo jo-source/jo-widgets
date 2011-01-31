@@ -41,6 +41,7 @@ import org.jowidgets.api.widgets.ISubMenu;
 import org.jowidgets.api.widgets.descriptor.IActionMenuItemDescriptor;
 import org.jowidgets.api.widgets.descriptor.ICheckedMenuItemDescriptor;
 import org.jowidgets.api.widgets.descriptor.IRadioMenuItemDescriptor;
+import org.jowidgets.api.widgets.descriptor.ISeparatorMenuItemDescriptor;
 import org.jowidgets.api.widgets.descriptor.ISubMenuDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.IAccelerateableMenuItemSetup;
 import org.jowidgets.api.widgets.descriptor.setup.IMenuItemSetup;
@@ -52,6 +53,7 @@ import org.jowidgets.impl.widgets.basic.SelectableMenuItemImpl;
 import org.jowidgets.impl.widgets.basic.SeparatorMenuItemImpl;
 import org.jowidgets.impl.widgets.basic.SubMenuImpl;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
+import org.jowidgets.spi.widgets.IMenuItemSpi;
 import org.jowidgets.spi.widgets.IMenuSpi;
 import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 import org.jowidgets.spi.widgets.ISubMenuSpi;
@@ -136,8 +138,15 @@ public class MenuDelegate {
 				(ISelectableItemSetup) descriptor);
 			result = (WIDGET_TYPE) selectableMenuItem;
 		}
+		else if (ISeparatorMenuItemDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
+			final IMenuItemSpi separatorMenuItemSpi = menuSpi.addSeparator(index);
+			final IMenuItem separatorMenuItem = new SeparatorMenuItemImpl(menu, separatorMenuItemSpi);
+			result = (WIDGET_TYPE) separatorMenuItem;
+		}
 		else {
-			throw new IllegalArgumentException("Descriptor with type '" + descriptor.getClass().getName() + "' is not supported");
+			throw new IllegalArgumentException("Descriptor with type '"
+				+ descriptor.getDescriptorInterface().getName()
+				+ "' is not supported");
 		}
 
 		addToChildren(index, result);

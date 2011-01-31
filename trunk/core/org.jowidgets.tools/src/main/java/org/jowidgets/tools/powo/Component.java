@@ -45,10 +45,12 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 
 	private Cursor cursor;
 	private final Set<IPopupDetectionListener> popupDetectionListeners;
+	private final Set<JoPopupMenu> popupMenus;
 
 	Component(final BLUE_PRINT_TYPE bluePrint) {
 		super(bluePrint);
 		this.popupDetectionListeners = new HashSet<IPopupDetectionListener>();
+		this.popupMenus = new HashSet<JoPopupMenu>();
 	}
 
 	@Override
@@ -57,8 +59,20 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 		if (cursor != null) {
 			widget.setCursor(cursor);
 		}
+		for (final JoPopupMenu joPopupMenu : popupMenus) {
+			joPopupMenu.initialize(createPopupMenu());
+		}
 		for (final IPopupDetectionListener listener : popupDetectionListeners) {
 			widget.addPopupDetectionListener(listener);
+		}
+	}
+
+	public final void addPopupMenu(final JoPopupMenu popupMenu) {
+		if (isInitialized()) {
+			popupMenu.initialize(createPopupMenu());
+		}
+		else {
+			popupMenus.add(popupMenu);
 		}
 	}
 
@@ -124,9 +138,14 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 
 	@Override
 	public IPopupMenu createPopupMenu() {
-		//TODO use JoPopupMenu later
-		checkInitialized();
-		return getWidget().createPopupMenu();
+		if (isInitialized()) {
+			return getWidget().createPopupMenu();
+		}
+		else {
+			final JoPopupMenu result = new JoPopupMenu();
+			popupMenus.add(result);
+			return result;
+		}
 	}
 
 	@Override
