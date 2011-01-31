@@ -33,7 +33,7 @@ public interface IComponentContext {
 
 	IMenu getMenu();
 
-	IComponentTreeNodeContext getComponentTreeNode();
+	IComponentTreeNodeContext getComponentTreeNodeContext();
 
 	void setPerspective(IPerspective perspective);
 
