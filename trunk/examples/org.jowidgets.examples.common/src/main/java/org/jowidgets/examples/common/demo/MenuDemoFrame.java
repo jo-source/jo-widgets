@@ -105,7 +105,9 @@ public class MenuDemoFrame extends JoFrame {
 
 			@Override
 			public void itemStateChanged() {
+				// CHECKSTYLE:OFF
 				System.out.println("ToggleButton selected: " + toggleButton.isSelected());
+				// CHECKSTYLE:ON
 			}
 		});
 
@@ -237,35 +239,45 @@ public class MenuDemoFrame extends JoFrame {
 		item3.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
+				// CHECKSTYLE:OFF
 				System.out.println("Item3");
+				// CHECKSTYLE:ON
 			}
 		});
 
 		item4.addItemListener(new IItemStateListener() {
 			@Override
 			public void itemStateChanged() {
+				// CHECKSTYLE:OFF
 				System.out.println("Item4, selected=" + item4.isSelected());
+				// CHECKSTYLE:ON
 			}
 		});
 
 		item5.addItemListener(new IItemStateListener() {
 			@Override
 			public void itemStateChanged() {
+				// CHECKSTYLE:OFF
 				System.out.println("Item5, selected=" + item5.isSelected());
+				// CHECKSTYLE:ON
 			}
 		});
 
 		item6.addItemListener(new IItemStateListener() {
 			@Override
 			public void itemStateChanged() {
+				// CHECKSTYLE:OFF
 				System.out.println("Item6, selected=" + item6.isSelected());
+				// CHECKSTYLE:ON
 			}
 		});
 
 		item7.addItemListener(new IItemStateListener() {
 			@Override
 			public void itemStateChanged() {
+				// CHECKSTYLE:OFF
 				System.out.println("Item7, selected=" + item7.isSelected());
+				// CHECKSTYLE:ON
 			}
 		});
 
