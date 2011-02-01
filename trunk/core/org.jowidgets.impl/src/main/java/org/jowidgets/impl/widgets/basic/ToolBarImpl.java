@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2010, grossmann, Lukas Gross
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -42,6 +42,7 @@ import org.jowidgets.api.widgets.IToolBarContainerItem;
 import org.jowidgets.api.widgets.IToolBarItem;
 import org.jowidgets.api.widgets.IToolBarPopupButton;
 import org.jowidgets.api.widgets.IToolBarToggleButton;
+import org.jowidgets.api.widgets.descriptor.ISeparatorToolBarItemDescriptor;
 import org.jowidgets.api.widgets.descriptor.IToolBarButtonDescriptor;
 import org.jowidgets.api.widgets.descriptor.IToolBarContainerItemDescriptor;
 import org.jowidgets.api.widgets.descriptor.IToolBarPopupButtonDescriptor;
@@ -215,6 +216,11 @@ public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar {
 				toolBarContainerItemSpi,
 				(IContainerSetup) descriptor);
 			result = (WIDGET_TYPE) toolBarContainerItem;
+		}
+		else if (ISeparatorToolBarItemDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
+			final IToolBarItemSpi toolBarSeparatorItemSpi = getWidget().addSeparator(index);
+			final ToolBarItemImpl toolBarSeparatorItem = new ToolBarItemImpl(this, toolBarSeparatorItemSpi);
+			result = (WIDGET_TYPE) toolBarSeparatorItem;
 		}
 		else {
 			throw new IllegalArgumentException("Descriptor with type '" + descriptor.getClass().getName() + "' is not supported");
