@@ -51,8 +51,6 @@ public class ToolBarTest {
 	private static final String DEFAULT_ITEM_TOOLTIP_TEXT = "tooltipp";
 
 	// TODO make more tests!
-	// TODO make tests for adding items at specific positions
-	// TODO complete separator test
 	@Test
 	public void createToolBarTest() {
 		Toolkit.getApplicationRunner().run(new IApplication() {
@@ -65,13 +63,12 @@ public class ToolBarTest {
 				final IToolBar toolBar = frame.add(BPF.toolBar(), "");
 
 				// test toolBarButton
-				final IToolBarButton toolBarButton = toolBar.addItem(BPF.toolBarButton());
+				IToolBarButton toolBarButton = toolBar.addItem(BPF.toolBarButton());
 				Assert.assertTrue(toolBar.getChildren().contains(toolBarButton));
 				Assert.assertTrue(toolBar.getChildren().size() == 1);
 				testToolBarItem(toolBarButton);
 
-				// test toolBarToggleButton
-				final IToolBarToggleButton toolBarToggleButton = toolBar.addItem(BPF.toolBarToggleButton());
+				IToolBarToggleButton toolBarToggleButton = toolBar.addItem(BPF.toolBarToggleButton());
 				Assert.assertTrue(toolBar.getChildren().contains(toolBarToggleButton));
 				Assert.assertTrue(toolBar.getChildren().size() == 2);
 				testToolBarItem(toolBarToggleButton);
@@ -81,27 +78,33 @@ public class ToolBarTest {
 				toolBarToggleButton.setSelected(false);
 				Assert.assertTrue(!toolBarToggleButton.isSelected());
 
-				// test toolBarPopupButton
-				final IToolBarPopupButton toolBarPopupButton = toolBar.addItem(BPF.toolBarPopupButton());
+				IToolBarPopupButton toolBarPopupButton = toolBar.addItem(BPF.toolBarPopupButton());
 				Assert.assertTrue(toolBar.getChildren().contains(toolBarPopupButton));
 				Assert.assertTrue(toolBar.getChildren().size() == 3);
 				testToolBarItem(toolBarPopupButton);
 
-				// test toolBarContainerItem
-				final IToolBarContainerItem toolBarContainerItem = toolBar.addItem(BPF.toolBarContainerItem());
+				IToolBarContainerItem toolBarContainerItem = toolBar.addItem(BPF.toolBarContainerItem());
 				Assert.assertTrue(toolBar.getChildren().contains(toolBarContainerItem));
 				Assert.assertTrue(toolBar.getChildren().size() == 4);
 
-				// test Separator
-				final IToolBarItem separator = toolBar.addSeparator();
-				//Assert.assertTrue(toolBar.getChildren().contains(separator));
-				//Assert.assertTrue(toolBar.getChildren().size() == 5);
+				IToolBarItem separator = toolBar.addSeparator();
+				Assert.assertTrue(toolBar.getChildren().contains(separator));
+				Assert.assertTrue(toolBar.getChildren().size() == 5);
 				testToolBarItem(separator);
 
 				// remove items from toolBar
 				testRemoveToolBarItem(toolBar, toolBarButton);
+				testRemoveToolBarItem(toolBar, toolBarPopupButton);
 				testRemoveToolBarItem(toolBar, toolBarToggleButton);
 				testRemoveToolBarItem(toolBar, toolBarContainerItem);
+				testRemoveToolBarItem(toolBar, separator);
+
+				// add items at specific positions
+				toolBarButton = toolBar.addItem(0, BPF.toolBarButton());
+				toolBarContainerItem = toolBar.addItem(1, BPF.toolBarContainerItem());
+				toolBarPopupButton = toolBar.addItem(2, BPF.toolBarPopupButton());
+				toolBarToggleButton = toolBar.addItem(3, BPF.toolBarToggleButton());
+				separator = toolBar.addItem(4, BPF.toolBarSeparator());
 
 				frame.dispose();
 			}
