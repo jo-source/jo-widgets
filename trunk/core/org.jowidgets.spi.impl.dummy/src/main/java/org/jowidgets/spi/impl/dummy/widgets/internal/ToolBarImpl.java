@@ -30,6 +30,9 @@ package org.jowidgets.spi.impl.dummy.widgets.internal;
 
 import org.jowidgets.common.types.Orientation;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.spi.impl.dummy.dummyui.AbstractUIDButton;
+import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
+import org.jowidgets.spi.impl.dummy.dummyui.UIDContainer;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDToolBar;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDToolBarButton;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDToolBarContainerItem;
@@ -71,61 +74,41 @@ public class ToolBarImpl extends DummyControl implements IToolBarSpi {
 
 	@Override
 	public IToolBarButtonSpi addToolBarButton(final Integer index) {
-		final UIDToolBarButton button = new UIDToolBarButton();
-		if (index != null) {
-			getUiReference().add(button, index.intValue());
-		}
-		else {
-			getUiReference().add(button);
-		}
-		return new ToolBarButtonImpl(new UIDToolBarButton());
+		final UIDComponent button = addItem(new UIDToolBarButton(), index);
+		return new ToolBarButtonImpl((AbstractUIDButton) button);
 	}
 
 	@Override
 	public IToolBarToggleButtonSpi addToolBarToggleButton(final Integer index) {
-		final UIDToolBarToggleButton button = new UIDToolBarToggleButton();
-		if (index != null) {
-			getUiReference().add(button, index.intValue());
-		}
-		else {
-			getUiReference().add(button);
-		}
-		return new ToolBarToggleButtonImpl(button);
+		final UIDComponent button = addItem(new UIDToolBarToggleButton(), index);
+		return new ToolBarToggleButtonImpl((UIDToolBarToggleButton) button);
 	}
 
 	@Override
 	public IToolBarPopupButtonSpi addToolBarPopupButton(final Integer index) {
-		final UIDToolBarPopupButton button = new UIDToolBarPopupButton();
-		if (index != null) {
-			getUiReference().add(button, index.intValue());
-		}
-		else {
-			getUiReference().add(button);
-		}
-		return new ToolBarPopupButtonImpl(button);
+		final UIDComponent button = addItem(new UIDToolBarPopupButton(), index);
+		return new ToolBarPopupButtonImpl((AbstractUIDButton) button);
 	}
 
 	@Override
 	public IToolBarContainerItemSpi addToolBarContainer(final Integer index) {
-		final UIDToolBarContainerItem container = new UIDToolBarContainerItem();
-		if (index != null) {
-			getUiReference().add(container, index.intValue());
-		}
-		else {
-			getUiReference().add(container);
-		}
-		return new ToolBarContainerItemImpl(factory, container);
+		final UIDComponent container = addItem(new UIDToolBarContainerItem(), index);
+		return new ToolBarContainerItemImpl(factory, (UIDContainer) container);
 	}
 
 	@Override
 	public IToolBarItemSpi addSeparator(final Integer index) {
-		final UIDToolBarSeparator separator = new UIDToolBarSeparator(Orientation.VERTICAL);
+		final UIDComponent separator = addItem(new UIDToolBarSeparator(Orientation.VERTICAL), index);
+		return new ToolBarSeparatorImpl((UIDToolBarSeparator) separator);
+	}
+
+	private UIDComponent addItem(final UIDComponent item, final Integer index) {
 		if (index != null) {
-			getUiReference().add(separator, index.intValue());
+			getUiReference().add(item, index.intValue());
 		}
 		else {
-			getUiReference().add(separator);
+			getUiReference().add(item);
 		}
-		return new ToolBarSeparatorImpl(separator);
+		return item;
 	}
 }
