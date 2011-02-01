@@ -45,14 +45,10 @@ public class ToolBarSeparatorImpl extends DummyWidget implements IToolBarItemSpi
 	}
 
 	@Override
-	public void setText(final String text) {
-		getUiReference().setText(text);
-	}
+	public void setText(final String text) {}
 
 	@Override
-	public void setToolTipText(final String text) {
-		getUiReference().setToolTipText(text);
-	}
+	public void setToolTipText(final String text) {}
 
 	@Override
 	public void setIcon(final IImageConstant icon) {}
