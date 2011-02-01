@@ -142,7 +142,9 @@ public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar {
 
 	private IToolBarItem addSeparator(final Integer index) {
 		final IToolBarItemSpi toolBarItemSpi = getWidget().addSeparator(index);
-		return new ToolBarItemImpl(this, toolBarItemSpi);
+		final ToolBarItemImpl item = new ToolBarItemImpl(this, toolBarItemSpi);
+		addToChildren(index, item);
+		return item;
 	}
 
 	@Override
