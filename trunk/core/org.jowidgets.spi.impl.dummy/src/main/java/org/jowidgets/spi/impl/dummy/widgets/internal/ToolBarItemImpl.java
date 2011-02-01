@@ -30,6 +30,7 @@ package org.jowidgets.spi.impl.dummy.widgets.internal;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.spi.impl.dummy.dummyui.AbstractUIDButton;
+import org.jowidgets.spi.impl.dummy.image.DummyImageRegistry;
 import org.jowidgets.spi.widgets.IToolBarItemSpi;
 
 public class ToolBarItemImpl implements IToolBarItemSpi {
@@ -66,10 +67,9 @@ public class ToolBarItemImpl implements IToolBarItemSpi {
 		button.setToolTipText(text);
 	}
 
-	// TODO getReference to imageRegistry
 	@Override
 	public void setIcon(final IImageConstant icon) {
-		//button.setIcon();
+		button.setIcon(DummyImageRegistry.getInstance().getImage(icon));
 	}
 
 }

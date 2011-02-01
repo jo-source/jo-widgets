@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Manuel Woelker, Michael Grossmann
+ * Copyright (c) 2010, Manuel Woelker, Michael Grossmann, Lukas Gross
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -35,6 +35,8 @@ import org.jowidgets.spi.impl.dummy.dummyui.UIDImage;
 
 public class DummyImageRegistry extends ImageRegistry {
 
+	private static final DummyImageRegistry INSTANCE = new DummyImageRegistry(new DummyImageHandleFactory());
+
 	public DummyImageRegistry(final IImageHandleFactory imageHandleFactory) {
 		super(imageHandleFactory);
 	}
@@ -65,6 +67,10 @@ public class DummyImageRegistry extends ImageRegistry {
 		else {
 			return getImage(key);
 		}
+	}
+
+	public static DummyImageRegistry getInstance() {
+		return INSTANCE;
 	}
 
 }
