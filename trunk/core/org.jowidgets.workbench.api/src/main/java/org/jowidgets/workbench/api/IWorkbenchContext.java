@@ -30,7 +30,6 @@ package org.jowidgets.workbench.api;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IMenuBar;
 import org.jowidgets.api.widgets.IToolBar;
-import org.jowidgets.common.application.IApplicationLifecycle;
 
 public interface IWorkbenchContext {
 
@@ -40,7 +39,7 @@ public interface IWorkbenchContext {
 
 	void remove(IWorkbenchApplication workbenchApplication);
 
-	IApplicationLifecycle getApplicationLifecycle();
+	void finish();
 
 	IMenuBar getMenuBar();
 
