@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.base.blueprint.convenience;
+package org.jowidgets.tools.widgets.blueprint.convenience;
 
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenience;
 import org.jowidgets.common.widgets.builder.ISetupBuilder;

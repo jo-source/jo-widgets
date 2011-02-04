@@ -40,7 +40,6 @@ import org.jowidgets.common.widgets.builder.ITabItemSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITextFieldSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITextLabelSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.IWindowSetupBuilderCommon;
-import org.jowidgets.impl.base.blueprint.defaults.DefaultsInitializerRegistry;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.ButtonDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.CheckBoxDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.ContainerDefaultsCommon;
@@ -53,6 +52,7 @@ import org.jowidgets.impl.widgets.common.blueprint.defaults.TabItemDefaultsCommo
 import org.jowidgets.impl.widgets.common.blueprint.defaults.TextFieldDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.TextLabelDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.WindowDefaultsCommon;
+import org.jowidgets.tools.widgets.blueprint.defaults.DefaultsInitializerRegistry;
 
 public class CommonDefaultsInitializerRegistry extends DefaultsInitializerRegistry {
 

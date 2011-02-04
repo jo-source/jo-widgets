@@ -69,6 +69,8 @@ import org.jowidgets.api.widgets.blueprint.IToolBarPopupButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarToggleButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.image.IImageConstant;
@@ -547,4 +549,18 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 		return bluePrintFactory.tabItem();
 	}
 
+	@Override
+	public void addSetupBuilderConvenienceRegistry(final ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry) {
+		bluePrintFactory.addSetupBuilderConvenienceRegistry(setupBuilderConvenienceRegistry);
+	}
+
+	@Override
+	public void addDefaultsInitializerRegistry(final IDefaultsInitializerRegistry defaultInitializerRegistry) {
+		bluePrintFactory.addDefaultsInitializerRegistry(defaultInitializerRegistry);
+	}
+
+	@Override
+	public void setDefaultsInitializerRegistry(final IDefaultsInitializerRegistry defaultInitializerRegistry) {
+		bluePrintFactory.setDefaultsInitializerRegistry(defaultInitializerRegistry);
+	}
 }

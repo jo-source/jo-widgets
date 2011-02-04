@@ -30,7 +30,7 @@ package org.jowidgets.impl.widgets.basic.blueprint.convenience;
 import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.convenience.IComponentSetupConvenience;
 import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.impl.base.blueprint.convenience.AbstractSetupBuilderConvenience;
+import org.jowidgets.tools.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 
 public class WidgetSetupConvenience extends AbstractSetupBuilderConvenience<IComponentSetupBuilder<?>> implements
 		IComponentSetupConvenience<IComponentSetupBuilder<?>> {

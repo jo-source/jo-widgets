@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.base.blueprint.convenience;
+package org.jowidgets.tools.widgets.blueprint.convenience;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -67,6 +67,11 @@ public class SetupBuilderConvenienceRegistry implements ISetupBuilderConvenience
 			list = new LinkedList<ISetupBuilderConvenience<ISetupBuilder<?>>>();
 		}
 		return list;
+	}
+
+	@Override
+	public Map<Class<? extends ISetupBuilder>, List<ISetupBuilderConvenience<ISetupBuilder<?>>>> getAll() {
+		return map;
 	}
 
 }

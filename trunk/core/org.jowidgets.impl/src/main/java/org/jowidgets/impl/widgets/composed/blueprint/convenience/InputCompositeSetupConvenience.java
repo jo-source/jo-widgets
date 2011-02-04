@@ -33,8 +33,8 @@ import org.jowidgets.api.widgets.blueprint.builder.convenience.IInputCompositeSe
 import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Border;
-import org.jowidgets.impl.base.blueprint.convenience.AbstractSetupBuilderConvenience;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
+import org.jowidgets.tools.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 
 public class InputCompositeSetupConvenience extends AbstractSetupBuilderConvenience<IInputCompositeSetupBuilder<?, ?>> implements
 		IInputCompositeSetupConvenience<IInputCompositeSetupBuilder<?, ?>> {

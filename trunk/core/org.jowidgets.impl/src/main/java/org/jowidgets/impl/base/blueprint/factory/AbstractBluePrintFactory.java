@@ -27,19 +27,29 @@
  */
 package org.jowidgets.impl.base.blueprint.factory;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenience;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.common.widgets.IWidgetCommon;
+import org.jowidgets.common.widgets.builder.ISetupBuilder;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.impl.base.blueprint.proxy.BluePrintProxyProvider;
 import org.jowidgets.impl.spi.blueprint.IFrameBluePrintSpi;
+import org.jowidgets.tools.widgets.blueprint.defaults.DefaultsInitializerRegistry;
+import org.jowidgets.util.EmptyCheck;
 
 public abstract class AbstractBluePrintFactory {
 
 	private final ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry;
-	private final IDefaultsInitializerRegistry defaultInitializerRegistry;
+	private IDefaultsInitializerRegistry defaultInitializerRegistry;
 
 	public AbstractBluePrintFactory(
 		final ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry,
@@ -71,4 +81,43 @@ public abstract class AbstractBluePrintFactory {
 			defaultInitializerRegistry).getBluePrint();
 	}
 
+	@SuppressWarnings("rawtypes")
+	public void addSetupBuilderConvenienceRegistry(final ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry) {
+		if (!EmptyCheck.isEmpty(setupBuilderConvenienceRegistry)) {
+			final Map<Class<? extends ISetupBuilder>, List<ISetupBuilderConvenience<ISetupBuilder<?>>>> convenienceMethods = setupBuilderConvenienceRegistry.getAll();
+			if (null != convenienceMethods) {
+				final Set<Entry<Class<? extends ISetupBuilder>, List<ISetupBuilderConvenience<ISetupBuilder<?>>>>> convenienceMethodSet = convenienceMethods.entrySet();
+				for (final Entry<Class<? extends ISetupBuilder>, List<ISetupBuilderConvenience<ISetupBuilder<?>>>> entry : convenienceMethodSet) {
+					final List<ISetupBuilderConvenience<ISetupBuilder<?>>> methods = entry.getValue();
+					if (null != methods) {
+						for (final ISetupBuilderConvenience<ISetupBuilder<?>> iSetupBuilderConvenience : methods) {
+							this.setupBuilderConvenienceRegistry.register(entry.getKey(), iSetupBuilderConvenience);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	@SuppressWarnings("rawtypes")
+	public void addDefaultsInitializerRegistry(final IDefaultsInitializerRegistry defaultInitializerRegistry) {
+		if (!EmptyCheck.isEmpty(defaultInitializerRegistry)) {
+			final Map<Class<? extends ISetupBuilder>, IDefaultInitializer<ISetupBuilder<?>>> initializers = defaultInitializerRegistry.getAll();
+			if (null != initializers) {
+				final Set<Entry<Class<? extends ISetupBuilder>, IDefaultInitializer<ISetupBuilder<?>>>> initializerSet = initializers.entrySet();
+				for (final Entry<Class<? extends ISetupBuilder>, IDefaultInitializer<ISetupBuilder<?>>> entry : initializerSet) {
+					this.defaultInitializerRegistry.register(entry.getKey(), entry.getValue());
+				}
+			}
+		}
+	}
+
+	public void setDefaultsInitializerRegistry(final IDefaultsInitializerRegistry defaultInitializerRegistry) {
+		if (EmptyCheck.isEmpty(defaultInitializerRegistry)) {
+			this.defaultInitializerRegistry = new DefaultsInitializerRegistry();
+		}
+		else {
+			this.defaultInitializerRegistry = defaultInitializerRegistry;
+		}
+	}
 }

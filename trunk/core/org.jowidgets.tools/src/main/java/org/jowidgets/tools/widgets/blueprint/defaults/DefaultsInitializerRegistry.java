@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.base.blueprint.defaults;
+package org.jowidgets.tools.widgets.blueprint.defaults;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -67,6 +67,11 @@ public class DefaultsInitializerRegistry implements IDefaultsInitializerRegistry
 			list = new LinkedList<IDefaultInitializer<ISetupBuilder<?>>>();
 		}
 		return list;
+	}
+
+	@Override
+	public Map<Class<? extends ISetupBuilder>, IDefaultInitializer<ISetupBuilder<?>>> getAll() {
+		return map;
 	}
 
 }
