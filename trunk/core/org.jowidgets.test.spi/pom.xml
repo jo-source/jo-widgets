@@ -3,26 +3,27 @@
 
 	<groupId>org.jowidgets</groupId>
 	<artifactId>org.jowidgets.test.spi</artifactId>
-	<version>0.0.12-SNAPSHOT</version>
+	<version>0.0.13-SNAPSHOT</version>
 	<name>org.jowidgets.test.base.api</name>
 
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.core.parent</artifactId>
-		<version>0.0.12-SNAPSHOT</version>
+		<version>0.0.13-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
-			<artifactId>org.jowidgets.test.common</artifactId>
-			<version>0.0.12-SNAPSHOT</version>
+			<artifactId>org.jowidgets.spi</artifactId>
+			<version>0.0.13-SNAPSHOT</version>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
-			<artifactId>org.jowidgets.spi</artifactId>
-			<version>0.0.12-SNAPSHOT</version>
+			<artifactId>org.jowidgets.test.common</artifactId>
+			<version>0.0.13-SNAPSHOT</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
