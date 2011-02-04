@@ -85,6 +85,19 @@ public class DemoMainComposite {
 			}
 		});
 
+		final IButton tabDemoButton = parentContainer.add(
+				bpF.button("Tab folder demo", "Shows an frame with a tab folder"),
+				"grow, sg bg, wrap");
+		tabDemoButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final IFrame tabDemoFrame = parentWindow.createChildWindow(bpF.frame("Tab folder demo").autoPackOff());
+				tabDemoFrame.setSize(new Dimension(800, 600));
+				new DemoTabFolderComposite(tabDemoFrame);
+				tabDemoFrame.setVisible(true);
+			}
+		});
+
 		final IButton progressBarDialogButton = parentContainer.add(
 				bpF.button("Progress bar demo", "Opens the progress bar demo"),
 				"grow, sg bg, wrap");

@@ -61,6 +61,7 @@ import org.jowidgets.spi.widgets.IIconSpi;
 import org.jowidgets.spi.widgets.IProgressBarSpi;
 import org.jowidgets.spi.widgets.IScrollCompositeSpi;
 import org.jowidgets.spi.widgets.ISplitCompositeSpi;
+import org.jowidgets.spi.widgets.ITabFolderSpi;
 import org.jowidgets.spi.widgets.ITextFieldSpi;
 import org.jowidgets.spi.widgets.ITextLabelSpi;
 import org.jowidgets.spi.widgets.IToggleButtonSpi;
@@ -77,6 +78,7 @@ import org.jowidgets.spi.widgets.setup.IProgressBarSetupSpi;
 import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
 import org.jowidgets.spi.widgets.setup.ISeparatorSetupSpi;
 import org.jowidgets.spi.widgets.setup.ISplitCompositeSetupSpi;
+import org.jowidgets.spi.widgets.setup.ITabFolderSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;
@@ -206,6 +208,15 @@ public final class DummyWidgetFactory implements IWidgetFactorySpi {
 	@Override
 	public IToolBarSpi createToolBar(final IGenericWidgetFactory factory, final Object parentUiReference) {
 		return new ToolBarImpl(imageRegistry, factory);
+	}
+
+	@Override
+	public ITabFolderSpi createTabFolder(
+		final IGenericWidgetFactory factory,
+		final Object parentUiReference,
+		final ITabFolderSetupSpi setup) {
+		// TODO LG
+		return null;
 	}
 
 }

@@ -48,6 +48,8 @@ import org.jowidgets.api.widgets.blueprint.ISeparatorMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISeparatorToolBarItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISubMenuBluePrint;
+import org.jowidgets.api.widgets.blueprint.ITabFolderBluePrint;
+import org.jowidgets.api.widgets.blueprint.ITabItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToggleButtonBluePrint;
@@ -117,5 +119,9 @@ public interface IBasicSimpleBluePrintFactory {
 	IToolBarPopupButtonBluePrint toolBarPopupButton();
 
 	IToolBarContainerItemBluePrint toolBarContainerItem();
+
+	ITabFolderBluePrint tabFolder();
+
+	ITabItemBluePrint tabItem();
 
 }
