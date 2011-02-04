@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2010, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,10 +26,39 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets.descriptor.setup;
+package org.jowidgets.impl.widgets.basic.factory.internal;
 
-import org.jowidgets.common.widgets.descriptor.setup.ITabItemSetupCommon;
+import org.jowidgets.api.widgets.ITabFolder;
+import org.jowidgets.api.widgets.descriptor.ITabFolderDescriptor;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.widgets.factory.IWidgetFactory;
+import org.jowidgets.impl.spi.ISpiBluePrintFactory;
+import org.jowidgets.impl.spi.blueprint.ITabFolderBluePrintSpi;
+import org.jowidgets.impl.widgets.basic.TabFolderImpl;
+import org.jowidgets.spi.IWidgetFactorySpi;
+import org.jowidgets.spi.widgets.ITabFolderSpi;
 
-public interface ITabItemSetup extends IItemSetup, IContainerSetup, ITabItemSetupCommon {
+public class TabFolderFactory extends AbstractWidgetFactory implements IWidgetFactory<ITabFolder, ITabFolderDescriptor> {
+
+	public TabFolderFactory(
+		final IGenericWidgetFactory genericWidgetFactory,
+		final IWidgetFactorySpi spiWidgetFactory,
+		final ISpiBluePrintFactory bpF) {
+
+		super(genericWidgetFactory, spiWidgetFactory, bpF);
+	}
+
+	@Override
+	public ITabFolder create(final Object parentUiReference, final ITabFolderDescriptor descriptor) {
+		final ITabFolderBluePrintSpi tabFolderBpSpi = getSpiBluePrintFactory().tabFolder();
+		tabFolderBpSpi.setSetup(descriptor);
+
+		final ITabFolderSpi tabFolderSpi = getSpiWidgetFactory().createTabFolder(
+				getGenericWidgetFactory(),
+				parentUiReference,
+				tabFolderBpSpi);
+
+		return new TabFolderImpl(tabFolderSpi, descriptor);
+	}
 
 }

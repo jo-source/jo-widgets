@@ -46,6 +46,7 @@ import org.jowidgets.spi.impl.swt.widgets.internal.ProgressBarImpl;
 import org.jowidgets.spi.impl.swt.widgets.internal.ScrollCompositeImpl;
 import org.jowidgets.spi.impl.swt.widgets.internal.SeparatorImpl;
 import org.jowidgets.spi.impl.swt.widgets.internal.SplitCompositeImpl;
+import org.jowidgets.spi.impl.swt.widgets.internal.TabFolderImpl;
 import org.jowidgets.spi.impl.swt.widgets.internal.TextFieldImpl;
 import org.jowidgets.spi.impl.swt.widgets.internal.TextLabelImpl;
 import org.jowidgets.spi.impl.swt.widgets.internal.ToggleButtonImpl;
@@ -212,8 +213,7 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 		final IGenericWidgetFactory factory,
 		final Object parentUiReference,
 		final ITabFolderSetupSpi setup) {
-		// TODO MG
-		return null;
+		return new TabFolderImpl(factory, parentUiReference, setup);
 	}
 
 }

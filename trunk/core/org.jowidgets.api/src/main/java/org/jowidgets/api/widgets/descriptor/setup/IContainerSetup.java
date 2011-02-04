@@ -29,6 +29,6 @@ package org.jowidgets.api.widgets.descriptor.setup;
 
 import org.jowidgets.common.widgets.descriptor.setup.IContainerSetupCommon;
 
-public interface IContainerSetup extends IContainerSetupCommon, IComponentSetup {
+public interface IContainerSetup extends IComponentSetup, IContainerSetupCommon {
 
 }

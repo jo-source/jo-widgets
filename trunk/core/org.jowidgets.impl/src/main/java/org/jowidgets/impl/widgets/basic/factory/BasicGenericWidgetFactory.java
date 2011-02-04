@@ -38,6 +38,7 @@ import org.jowidgets.api.widgets.descriptor.IIconDescriptor;
 import org.jowidgets.api.widgets.descriptor.IScrollCompositeDescriptor;
 import org.jowidgets.api.widgets.descriptor.ISeparatorDescriptor;
 import org.jowidgets.api.widgets.descriptor.ISplitCompositeDescriptor;
+import org.jowidgets.api.widgets.descriptor.ITabFolderDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextFieldDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextLabelDescriptor;
 import org.jowidgets.api.widgets.descriptor.IToggleButtonDescriptor;
@@ -57,6 +58,7 @@ import org.jowidgets.impl.widgets.basic.factory.internal.IconFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.ScrollCompositeFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.SeparatorFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.SplitCompositeFactory;
+import org.jowidgets.impl.widgets.basic.factory.internal.TabFolderFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.TextFieldFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.TextLabelFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.ToggleButtonFactory;
@@ -90,6 +92,7 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 		register(IComboBoxSelectionDescriptor.class, new ComboBoxSelectionFactory(this, spiWidgetFactory, bpF));
 		register(IComboBoxDescriptor.class, new ComboBoxFactory(this, spiWidgetFactory, bpF));
 		register(IToolBarDescriptor.class, new ToolBarFactory(this, spiWidgetFactory, bpF));
+		register(ITabFolderDescriptor.class, new TabFolderFactory(this, spiWidgetFactory, bpF));
 	}
 
 	protected IWidgetFactorySpi getSpiWidgetFactory() {

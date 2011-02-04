@@ -49,22 +49,25 @@ public final class DemoTabFolderComposite {
 		final ILayoutDescriptor fillLayoutDescriptor = new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0");
 		parentContainer.setLayout(fillLayoutDescriptor);
 
-		final ITabFolder tabFolder = parentContainer.add(bpF.tabFolder(), "growx, growy");
+		final ITabFolder tabFolder = parentContainer.add(bpF.tabFolder(), "growx, growy, w 0::, h 0::");
 
 		ITabItemBluePrint tabItemBp = bpF.tabItem();
 		tabItemBp.setText("Tab1").setToolTipText("Tooltip of tab1").setIcon(IconsSmall.INFO);
 		final ITabItem tabItem1 = tabFolder.addItem(tabItemBp);
 		addTabItemListener(tabItem1);
+		tabItem1.add(bpF.textLabel("Tab content1"), "");
 
 		tabItemBp = bpF.tabItem().setCloseable(true);
 		tabItemBp.setText("Tab2").setToolTipText("Tooltip of tab2").setIcon(IconsSmall.QUESTION);
 		final ITabItem tabItem2 = tabFolder.addItem(tabItemBp);
 		addTabItemListener(tabItem2);
+		tabItem2.add(bpF.textLabel("Tab content2"), "");
 
 		tabItemBp = bpF.tabItem();
 		tabItemBp.setText("Tab3").setToolTipText("Tooltip of tab3").setIcon(IconsSmall.WARNING);
 		final ITabItem tabItem3 = tabFolder.addItem(tabItemBp);
 		addTabItemListener(tabItem3);
+		tabItem3.add(bpF.textLabel("Tab content3"), "");
 	}
 
 	private void addTabItemListener(final ITabItem tabItem) {

@@ -40,6 +40,8 @@ import org.jowidgets.impl.spi.blueprint.IProgressBarBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IScrollCompositeBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ISeparatorBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ISplitCompositeBluePrintSpi;
+import org.jowidgets.impl.spi.blueprint.ITabFolderBluePrintSpi;
+import org.jowidgets.impl.spi.blueprint.ITabItemBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITextFieldBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITextLabelBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IToggleButtonBluePrintSpi;
@@ -56,6 +58,8 @@ import org.jowidgets.impl.spi.descriptor.IProgressBarDescriptorSpi;
 import org.jowidgets.impl.spi.descriptor.IScrollCompositeDescriptorSpi;
 import org.jowidgets.impl.spi.descriptor.ISeparatorDescriptorSpi;
 import org.jowidgets.impl.spi.descriptor.ISplitCompositeDescriptorSpi;
+import org.jowidgets.impl.spi.descriptor.ITabFolderDescriptorSpi;
+import org.jowidgets.impl.spi.descriptor.ITabItemDescriptorSpi;
 import org.jowidgets.impl.spi.descriptor.ITextFieldDescriptorSpi;
 import org.jowidgets.impl.spi.descriptor.ITextLabelDescriptorSpi;
 import org.jowidgets.impl.spi.descriptor.IToggleButtonDescriptorSpi;
@@ -140,6 +144,16 @@ public class SpiBluePrintFactory extends AbstractBluePrintFactory implements ISp
 	@Override
 	public IProgressBarBluePrintSpi progressBar() {
 		return createProxy(IProgressBarBluePrintSpi.class, IProgressBarDescriptorSpi.class);
+	}
+
+	@Override
+	public ITabFolderBluePrintSpi tabFolder() {
+		return createProxy(ITabFolderBluePrintSpi.class, ITabFolderDescriptorSpi.class);
+	}
+
+	@Override
+	public ITabItemBluePrintSpi tabItem() {
+		return createProxy(ITabItemBluePrintSpi.class, ITabItemDescriptorSpi.class);
 	}
 
 }

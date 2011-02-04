@@ -25,13 +25,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.blueprint.builder;
+package org.jowidgets.impl.spi.descriptor;
 
-import org.jowidgets.common.widgets.builder.ITabItemSetupBuilderCommon;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.spi.widgets.ITabItemSpi;
+import org.jowidgets.spi.widgets.setup.ITabItemSetupSpi;
 
-public interface ITabItemSetupBuilder<INSTANCE_TYPE extends ITabItemSetupBuilder<?>> extends
-		IItemSetupBuilder<INSTANCE_TYPE>,
-		IContainerSetupBuilder<INSTANCE_TYPE>,
-		ITabItemSetupBuilderCommon<INSTANCE_TYPE> {
-
-}
+public interface ITabItemDescriptorSpi extends ITabItemSetupSpi, IWidgetDescriptor<ITabItemSpi> {}

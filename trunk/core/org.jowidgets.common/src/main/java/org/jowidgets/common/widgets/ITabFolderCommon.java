@@ -28,11 +28,8 @@
 
 package org.jowidgets.common.widgets;
 
-
 public interface ITabFolderCommon extends IControlCommon {
 
 	void removeItem(int index);
-
-	void removeAllItems();
 
 }

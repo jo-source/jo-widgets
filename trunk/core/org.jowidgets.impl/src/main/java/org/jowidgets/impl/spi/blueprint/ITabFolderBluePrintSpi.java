@@ -25,13 +25,9 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.blueprint.builder;
+package org.jowidgets.impl.spi.blueprint;
 
-import org.jowidgets.common.widgets.builder.ITabItemSetupBuilderCommon;
+import org.jowidgets.impl.spi.blueprint.builder.ITabFolderSetupBuilderSpi;
+import org.jowidgets.impl.spi.descriptor.ITabFolderDescriptorSpi;
 
-public interface ITabItemSetupBuilder<INSTANCE_TYPE extends ITabItemSetupBuilder<?>> extends
-		IItemSetupBuilder<INSTANCE_TYPE>,
-		IContainerSetupBuilder<INSTANCE_TYPE>,
-		ITabItemSetupBuilderCommon<INSTANCE_TYPE> {
-
-}
+public interface ITabFolderBluePrintSpi extends ITabFolderSetupBuilderSpi<ITabFolderBluePrintSpi>, ITabFolderDescriptorSpi {}

@@ -41,6 +41,8 @@ public interface ITabFolder extends IControl, ITabFolderCommon {
 
 	void removeItem(ITabItem item);
 
+	void removeAllItems();
+
 	void changeItemIndex(ITabItem item, int newIndex);
 
 	ITabItem getItem(int index);
