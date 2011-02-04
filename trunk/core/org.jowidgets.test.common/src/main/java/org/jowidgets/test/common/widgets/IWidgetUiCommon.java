@@ -32,4 +32,5 @@ import org.jowidgets.common.widgets.IWidgetCommon;
 
 public interface IWidgetUiCommon extends IWidgetCommon {
 
+	boolean isTestable();
 }
