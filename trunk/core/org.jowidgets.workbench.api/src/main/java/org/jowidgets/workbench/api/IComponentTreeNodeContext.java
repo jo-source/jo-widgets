@@ -41,6 +41,6 @@ public interface IComponentTreeNodeContext {
 
 	IComponentTreeNodeContext getParent();
 
-	ISubApplicationContext getSubApplicationContext();
+	IWorkbenchApplicationContext getSubApplicationContext();
 
 }

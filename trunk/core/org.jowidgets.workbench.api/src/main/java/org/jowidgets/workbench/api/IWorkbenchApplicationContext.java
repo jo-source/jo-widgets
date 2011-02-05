@@ -30,7 +30,7 @@ package org.jowidgets.workbench.api;
 import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.IToolBar;
 
-public interface ISubApplicationContext {
+public interface IWorkbenchApplicationContext {
 
 	void add(IComponentTreeNode componentTreeNode);
 

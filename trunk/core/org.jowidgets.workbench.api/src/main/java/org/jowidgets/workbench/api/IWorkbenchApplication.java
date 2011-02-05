@@ -31,7 +31,7 @@ import java.util.List;
 
 public interface IWorkbenchApplication extends IUiPart, ILifecycleCallback {
 
-	void initialize(ISubApplicationContext context);
+	void initialize(IWorkbenchApplicationContext context);
 
 	List<IComponentTreeNode> createComponentTreeNodes();
 
