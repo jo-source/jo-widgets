@@ -29,10 +29,13 @@
 package org.jowidgets.workbench.api;
 
 import org.jowidgets.api.widgets.IMenu;
+import org.jowidgets.common.image.IImageConstant;
 
 public interface ITray {
 
 	IMenu getMenu();
+
+	void setIcon(IImageConstant imageKey);
 
 	void setTooltip(String tooltip);
 
