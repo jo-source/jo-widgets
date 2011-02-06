@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, M. Grossmann, H. Westphal
+ * Copyright (c) 2011, HWestphal
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,26 +25,21 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
+
 package org.jowidgets.workbench.api;
 
-import java.util.List;
+import org.jowidgets.api.widgets.IMenu;
 
-import org.jowidgets.common.types.Dimension;
+public interface ITray {
 
-public interface IWorkbench extends IUiPart {
+	IMenu getMenu();
 
-	void initialize(IWorkbenchContext context);
+	void setTooltip(String tooltip);
 
-	List<IWorkbenchApplication> createWorkbenchApplications();
+	void showInfo(String title, String message);
 
-	Dimension getInitialDimension();
+	void showWarning(String title, String message);
 
-	boolean hasMenuBar();
-
-	boolean hasToolBar();
-
-	boolean hasStatusBar();
-
-	boolean hasTray();
+	void showError(String title, String message);
 
 }

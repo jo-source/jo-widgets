@@ -27,6 +27,8 @@
  */
 package org.jowidgets.workbench.api;
 
+import java.util.concurrent.Callable;
+
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IMenuBar;
 import org.jowidgets.api.widgets.IToolBar;
@@ -46,5 +48,9 @@ public interface IWorkbenchContext {
 	IToolBar getToolBar();
 
 	IContainer getStatusBar();
+
+	ITray getTray();
+
+	void setCloseHandler(Callable<Boolean> closeHandler);
 
 }
