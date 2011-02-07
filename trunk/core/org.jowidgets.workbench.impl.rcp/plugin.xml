@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="org.jowidgets.workbench.impl.rcp.internal.DynamicPerspective"
+            id="org.jowidgets.workbench.impl.rcp.internal.dynamicPerspective"
+            name="Dynamic Perspective">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="true"
+            class="org.jowidgets.workbench.impl.rcp.internal.DynamicView"
+            id="org.jowidgets.workbench.impl.rcp.internal.dynamicView"
+            name="Dynamic View"
+            restorable="true">
+      </view>
+   </extension>
+
+</plugin>
