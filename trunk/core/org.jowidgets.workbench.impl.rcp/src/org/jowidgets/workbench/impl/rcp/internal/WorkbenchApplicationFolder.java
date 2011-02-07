@@ -55,9 +55,12 @@ import org.jowidgets.workbench.api.IWorkbenchContext;
 public final class WorkbenchApplicationFolder extends Composite {
 
 	private final CTabFolder tabFolder;
+	private final IWorkbenchContext workbenchContext;
 
 	public WorkbenchApplicationFolder(final Composite parent, final IWorkbench workbench, final IWorkbenchContext workbenchContext) {
 		super(parent, SWT.NONE);
+		this.workbenchContext = workbenchContext;
+
 		setLayout(new FillLayout());
 		final int tabStyle = PlatformUI.getPreferenceStore().getInt(IWorkbenchPreferenceConstants.VIEW_TAB_POSITION);
 		tabFolder = new CTabFolder(this, tabStyle | SWT.NO_BACKGROUND | SWT.BORDER);
@@ -65,16 +68,7 @@ public final class WorkbenchApplicationFolder extends Composite {
 		setTabHeight();
 
 		for (final IWorkbenchApplication app : workbench.createWorkbenchApplications()) {
-			final CTabItem tabItem = new CTabItem(tabFolder, SWT.NONE);
-			tabItem.setText(app.getLabel());
-			tabItem.setImage(ImageHelper.getImage(
-					app.getIcon(),
-					PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT)));
-			tabItem.setToolTipText(app.getTooltip());
-			final WorkbenchApplicationTree appTree = new WorkbenchApplicationTree(tabFolder, app);
-			tabItem.setControl(appTree);
-			final WorkbenchApplicationContext context = new WorkbenchApplicationContext(appTree, workbenchContext);
-			app.initialize(context);
+			addApplication(app);
 		}
 
 		tabFolder.addSelectionListener(new SelectionAdapter() {
@@ -103,6 +97,41 @@ public final class WorkbenchApplicationFolder extends Composite {
 				setNoFocusColors();
 			}
 		});
+	}
+
+	public void addApplication(final IWorkbenchApplication app) {
+		addApplication(tabFolder.getItemCount(), app);
+	}
+
+	public void addApplication(int index, final IWorkbenchApplication app) {
+		if (index < 0) {
+			index = 0;
+		}
+		else if (index > tabFolder.getItemCount()) {
+			index = tabFolder.getItemCount();
+		}
+		final CTabItem tabItem = new CTabItem(tabFolder, SWT.NONE, index);
+		tabItem.setText(app.getLabel());
+		tabItem.setImage(ImageHelper.getImage(
+				app.getIcon(),
+				PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT)));
+		tabItem.setToolTipText(app.getTooltip());
+		final WorkbenchApplicationTree appTree = new WorkbenchApplicationTree(tabFolder, app);
+		tabItem.setControl(appTree);
+		tabItem.setData(app);
+		final WorkbenchApplicationContext context = new WorkbenchApplicationContext(appTree, workbenchContext);
+		app.initialize(context);
+	}
+
+	public void removeApplication(final IWorkbenchApplication app) {
+		for (final CTabItem item : tabFolder.getItems()) {
+			if (item.getData() == app) {
+				app.onDispose();
+				item.getControl().dispose();
+				item.dispose();
+				break;
+			}
+		}
 	}
 
 	private void setTabHeight() {

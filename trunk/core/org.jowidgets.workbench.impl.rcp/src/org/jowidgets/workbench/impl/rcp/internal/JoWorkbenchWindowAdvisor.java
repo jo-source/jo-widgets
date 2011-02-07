@@ -57,6 +57,7 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	private IContainer statusBar;
 	private ITray tray;
 	private Callable<Boolean> closeHandler;
+	private WorkbenchApplicationFolder applicationFolder;
 
 	public JoWorkbenchWindowAdvisor(
 		final IWorkbenchWindowConfigurer configurer,
@@ -85,6 +86,10 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
 	public void setCloseHandler(final Callable<Boolean> closeHandler) {
 		this.closeHandler = closeHandler;
+	}
+
+	public WorkbenchApplicationFolder getApplicationFolder() {
+		return applicationFolder;
 	}
 
 	@Override
@@ -139,11 +144,8 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
 		final IContainer leftContainer = splitComposite.getFirst();
 		leftContainer.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
-		final WorkbenchApplicationFolder workbenchComposite = new WorkbenchApplicationFolder(
-			(Composite) leftContainer.getUiReference(),
-			workbench,
-			context);
-		workbenchComposite.setLayoutData("grow");
+		applicationFolder = new WorkbenchApplicationFolder((Composite) leftContainer.getUiReference(), workbench, context);
+		applicationFolder.setLayoutData("grow");
 
 		final IContainer rightContainer = splitComposite.getSecond();
 		rightContainer.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
