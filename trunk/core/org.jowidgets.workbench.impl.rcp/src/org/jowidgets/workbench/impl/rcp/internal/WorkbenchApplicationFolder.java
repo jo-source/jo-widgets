@@ -56,6 +56,7 @@ public final class WorkbenchApplicationFolder extends Composite {
 
 	private final CTabFolder tabFolder;
 	private final IWorkbenchContext workbenchContext;
+	private IWorkbenchApplication currentApplication;
 
 	public WorkbenchApplicationFolder(final Composite parent, final IWorkbench workbench, final IWorkbenchContext workbenchContext) {
 		super(parent, SWT.NONE);
@@ -83,6 +84,13 @@ public final class WorkbenchApplicationFolder extends Composite {
 				final Control newControl = appTree.getFolderComposite();
 				newControl.setVisible(true);
 				tabFolder.setTopRight(newControl);
+				if (currentApplication != null) {
+					currentApplication.onVisibleStateChanged(false);
+					currentApplication.onActiveStateChanged(false);
+				}
+				currentApplication = (IWorkbenchApplication) currentItem.getData();
+				currentApplication.onVisibleStateChanged(true);
+				currentApplication.onActiveStateChanged(true);
 			}
 		});
 
@@ -127,6 +135,9 @@ public final class WorkbenchApplicationFolder extends Composite {
 		for (final CTabItem item : tabFolder.getItems()) {
 			if (item.getData() == app) {
 				app.onDispose();
+				if (currentApplication == app) {
+					currentApplication = null;
+				}
 				item.getControl().dispose();
 				item.dispose();
 				break;
