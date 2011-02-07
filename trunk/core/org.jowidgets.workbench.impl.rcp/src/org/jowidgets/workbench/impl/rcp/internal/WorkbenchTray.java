@@ -48,7 +48,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.workbench.api.ITray;
 import org.jowidgets.workbench.api.IWorkbench;
 
-public class WorkbenchTray implements ITray {
+public final class WorkbenchTray implements ITray {
 
 	private final Shell shell;
 	private final IPopupMenu menu;
