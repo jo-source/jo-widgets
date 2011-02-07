@@ -70,6 +70,11 @@ public final class WorkbenchApplicationContext implements IWorkbenchApplicationC
 	}
 
 	@Override
+	public void setMenuTooltip(final String tooltip) {
+		composite.setMenuTooltip(tooltip);
+	}
+
+	@Override
 	public IToolBar getToolBar() {
 		return composite.getToolBar();
 	}

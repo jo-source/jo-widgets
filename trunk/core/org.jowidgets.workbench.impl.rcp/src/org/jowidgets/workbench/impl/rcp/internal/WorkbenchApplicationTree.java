@@ -46,6 +46,7 @@ public final class WorkbenchApplicationTree extends Composite {
 	private final Composite folderComposite;
 	private IToolBar toolBar;
 	private IPopupMenu menu;
+	private IToolBarPopupButton menuButton;
 
 	public WorkbenchApplicationTree(final Composite parent, final IWorkbenchApplication application) {
 		super(parent, SWT.NONE);
@@ -60,7 +61,7 @@ public final class WorkbenchApplicationTree extends Composite {
 
 		if (application.hasMenu()) {
 			final IToolBar menuBar = joComposite.add(bpf.toolBar(), null);
-			final IToolBarPopupButton menuButton = menuBar.addItem(bpf.toolBarPopupButton());
+			menuButton = menuBar.addItem(bpf.toolBarPopupButton());
 			menu = menuBar.createPopupMenu();
 			menuButton.addPopupDetectionListener(new IPopupDetectionListener() {
 				@Override
@@ -81,6 +82,12 @@ public final class WorkbenchApplicationTree extends Composite {
 
 	public IMenu getJoMenu() {
 		return menu;
+	}
+
+	public void setMenuTooltip(final String tooltip) {
+		if (menuButton != null) {
+			menuButton.setToolTipText(tooltip);
+		}
 	}
 
 }
