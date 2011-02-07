@@ -42,6 +42,8 @@ public interface IWorkbenchApplicationContext {
 
 	IMenu getMenu();
 
+	void setMenuTooltip(String tooltip);
+
 	IToolBar getToolBar();
 
 }
