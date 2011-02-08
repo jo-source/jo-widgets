@@ -45,11 +45,17 @@ public class DefaultExceptionHandler implements IExceptionHandler {
 		final IMessageDialogBluePrint messageDialogBp = Toolkit.getBluePrintFactory().errorDialog();
 		messageDialogBp.setTitleIcon(action.getIcon());
 		messageDialogBp.setTitle(action.getText());
-		messageDialogBp.setText("Error occurred\n" + exception.getLocalizedMessage());
+		messageDialogBp.setText("An error occurred:\n" + exception.toString());
+
+		Thread.currentThread().getUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), exception);
 
 		final IWindow parentWindow = Toolkit.getWidgetUtils().getWindowAncestor(actionEvent.getSource());
-
-		parentWindow.createChildWindow(messageDialogBp).showMessage();
+		if (parentWindow != null) {
+			parentWindow.createChildWindow(messageDialogBp).showMessage();
+		}
+		else {
+			Toolkit.getWidgetFactory().create(messageDialogBp).showMessage();
+		}
 	}
 
 }
