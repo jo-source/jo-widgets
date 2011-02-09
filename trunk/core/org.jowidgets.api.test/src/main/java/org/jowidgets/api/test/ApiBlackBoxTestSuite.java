@@ -42,6 +42,7 @@ public final class ApiBlackBoxTestSuite {
 		suite.addTest(WidgetFactoryTest.suite());
 		suite.addTest(MenuTest.suite());
 		suite.addTest(ToolBarTest.suite());
+		suite.addTest(TestBluePrintFactoryTest.suite());
 		suite.addTest(ProxyInvocationTest.suite());
 		//$JUnit-END$
 		return suite;
