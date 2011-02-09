@@ -40,14 +40,12 @@ import org.jowidgets.test.api.widgets.IButtonUi;
 import org.jowidgets.test.api.widgets.IFrameUi;
 import org.jowidgets.test.api.widgets.blueprint.factory.ITestBluePrintFactory;
 import org.jowidgets.test.api.widgets.blueprint.factory.TestBluePrintFactory;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class TestBluePrintFactoryTest {
 
 	private static final ITestBluePrintFactory BPF = TestBluePrintFactory.getInstance();
 
-	@Ignore
 	@Test
 	public void createTestBluePrintFactoryTest() {
 		Assert.assertNotNull(TestBluePrintFactory.getInstance());

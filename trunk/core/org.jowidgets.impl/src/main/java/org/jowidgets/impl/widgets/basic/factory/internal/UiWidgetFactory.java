@@ -28,11 +28,16 @@
 
 package org.jowidgets.impl.widgets.basic.factory.internal;
 
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
+import org.jowidgets.test.api.widgets.IWidgetUi;
 
+@SuppressWarnings("rawtypes")
 public class UiWidgetFactory<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> implements
 		IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> {
 
@@ -54,38 +59,43 @@ public class UiWidgetFactory<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extend
 	}
 
 	// TODO better exception descriptions
+	@SuppressWarnings("unchecked")
 	@Override
 	public WIDGET_TYPE create(final Object parentUiReference, final DESCRIPTOR_TYPE descriptor) {
-		//		final IWidgetDescriptor<?> uiBluePrint = (IWidgetDescriptor<?>) Toolkit.getBluePrintFactory().bluePrint(
-		//				bluePrintType,
-		//				descriptorType).setSetup(descriptor);
-		//
-		//		final Object result = genericWidgetFactory.create(parentUiReference, uiBluePrint);
-		//
-		//		if (result != null) {
-		//			if (uiWidgetType.isAssignableFrom(result.getClass())) {
-		//
-		//				if (result instanceof IWidgetUi) {
-		//					if (((IWidgetUi) result).isTestable()) {
-		//						return (WIDGET_TYPE) result;
-		//					}
-		//					else {
-		//						throw new IllegalStateException("The created Widget is not testable.");
-		//					}
-		//				}
-		//				else {
-		//					throw new IllegalStateException("The created Widget is a unknown UiWidget.");
-		//				}
-		//
-		//			}
-		//			else {
-		//				throw new IllegalStateException("The created Widget is no UiWidget.");
-		//			}
-		//		}
-		//		else {
-		//			throw new IllegalStateException("Error while creating Widget.");
-		//		}
-		return null;
+		final IBluePrintFactory factory = Toolkit.getBluePrintFactory();
+
+		// Don't remove cast from Object to IComponentSetupBuilder, its necessary for sun compiler. 
+		// Its not possible to set this cast before factory.bluePrint(...) 
+		// because save action of eclipse think its a unnecessary cast and will remove it.
+		final Object obj = factory.bluePrint(bluePrintType, descriptorType);
+		final IComponentSetupBuilder<?> bluePrint = (IComponentSetupBuilder<?>) obj;
+		final IWidgetDescriptor<?> uiBluePrint = (IWidgetDescriptor<?>) bluePrint.setSetup(descriptor);
+
+		final Object result = genericWidgetFactory.create(parentUiReference, uiBluePrint);
+
+		if (result != null) {
+			if (uiWidgetType.isAssignableFrom(result.getClass())) {
+
+				if (result instanceof IWidgetUi) {
+					if (((IWidgetUi) result).isTestable()) {
+						return (WIDGET_TYPE) result;
+					}
+					else {
+						throw new IllegalStateException("The created Widget is not testable.");
+					}
+				}
+				else {
+					throw new IllegalStateException("The created Widget is a unknown UiWidget.");
+				}
+
+			}
+			else {
+				throw new IllegalStateException("The created Widget is no UiWidget.");
+			}
+		}
+		else {
+			throw new IllegalStateException("Error while creating Widget.");
+		}
 	}
 
 }
