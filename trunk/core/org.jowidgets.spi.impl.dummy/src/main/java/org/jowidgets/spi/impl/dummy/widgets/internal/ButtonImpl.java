@@ -32,10 +32,10 @@ import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDButton;
 import org.jowidgets.spi.impl.dummy.image.DummyImageRegistry;
-import org.jowidgets.spi.widgets.IButtonSpi;
 import org.jowidgets.spi.widgets.setup.IButtonSetupSpi;
+import org.jowidgets.test.spi.widgets.IButtonUiSpi;
 
-public class ButtonImpl extends AbstractActionControl implements IButtonSpi {
+public class ButtonImpl extends AbstractActionControl implements IButtonUiSpi {
 
 	private final DummyImageRegistry imageRegistry;
 
@@ -86,6 +86,16 @@ public class ButtonImpl extends AbstractActionControl implements IButtonSpi {
 	@Override
 	public void requestFocus() {
 		getUiReference().requestFocusInWindow();
+	}
+
+	@Override
+	public boolean isTestable() {
+		return true;
+	}
+
+	@Override
+	public void push() {
+		fireActionPerformed();
 	}
 
 }
