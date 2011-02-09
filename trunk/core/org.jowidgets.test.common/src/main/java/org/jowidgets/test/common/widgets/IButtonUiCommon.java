@@ -37,4 +37,5 @@ public interface IButtonUiCommon extends
 		IActionWidgetUiCommon,
 		IButtonCommon {
 
+	void push();
 }

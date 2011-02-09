@@ -33,5 +33,4 @@ import org.jowidgets.test.common.widgets.IButtonUiCommon;
 
 public interface IButtonUi extends ILabelUi, IActionWidgetUi, IButtonUiCommon, IButton {
 
-	void push();
 }
