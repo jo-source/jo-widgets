@@ -26,20 +26,60 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.types;
+package org.jowidgets.tools.controler;
 
-public enum TabClosePolicy {
+import java.util.HashSet;
+import java.util.Set;
 
-	/**
-	 * Disposes the ITabItem when close button is pressed. Disposed items
-	 * could not be used any longer.
-	 */
-	DISPOSE,
+import org.jowidgets.api.controler.ITabItemListener;
+import org.jowidgets.api.controler.ITabItemObservable;
+import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.util.ValueHolder;
 
-	/**
-	 * Only hides the ITabItem (setVisible(false)) when close button is pressed.
-	 * Hidden items could be shown with setVisible(true) again.
-	 */
-	HIDE;
+public class TabItemObservable implements ITabItemObservable {
+
+	private final Set<ITabItemListener> listeners;
+
+	public TabItemObservable() {
+		this.listeners = new HashSet<ITabItemListener>();
+	}
+
+	@Override
+	public void addTabItemListener(final ITabItemListener listener) {
+		listeners.add(listener);
+	}
+
+	@Override
+	public void removeTabItemListener(final ITabItemListener listener) {
+		listeners.remove(listener);
+	}
+
+	public void fireSelectionChanged(final boolean selected) {
+		for (final ITabItemListener listener : listeners) {
+			listener.selectionChanged(selected);
+		}
+	}
+
+	public void fireOnClose(final IVetoable vetoable) {
+		for (final ITabItemListener listener : listeners) {
+			listener.onClose(vetoable);
+		}
+	}
+
+	public boolean fireOnClose() {
+		final ValueHolder<Boolean> veto = new ValueHolder<Boolean>(Boolean.FALSE);
+		for (final ITabItemListener listener : listeners) {
+			listener.onClose(new IVetoable() {
+				@Override
+				public void veto() {
+					veto.set(Boolean.TRUE);
+				}
+			});
+			if (veto.get().booleanValue()) {
+				break;
+			}
+		}
+		return veto.get().booleanValue();
+	}
 
 }

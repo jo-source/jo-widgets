@@ -28,15 +28,17 @@
 
 package org.jowidgets.examples.common.demo;
 
+import org.jowidgets.api.controler.ITabItemListener;
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.types.QuestionResult;
 import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.ISplitComposite;
 import org.jowidgets.api.widgets.ITabFolder;
 import org.jowidgets.api.widgets.ITabItem;
 import org.jowidgets.api.widgets.blueprint.ITabItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.widgets.controler.ITabItemListener;
-import org.jowidgets.common.widgets.controler.IVetoable;
+import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
@@ -49,7 +51,35 @@ public final class DemoTabFolderComposite {
 		final ILayoutDescriptor fillLayoutDescriptor = new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0");
 		parentContainer.setLayout(fillLayoutDescriptor);
 
-		final ITabFolder tabFolder = parentContainer.add(bpF.tabFolder(), "growx, growy, w 0::, h 0::");
+		final ISplitComposite split = parentContainer.add(
+				bpF.splitHorizontal().setFirstBorder(null).setSecondBorder(null),
+				"growx, growy");
+
+		final ITabFolder folder1 = addFolder(split.getFirst());
+		final ITabFolder folder2 = addFolder(split.getSecond());
+
+		final ITabItem item = folder1.getItem(0);
+		if (item.isReparentable()) {
+			item.setText(item.getText() + " (r)");
+			folder1.detachItem(item);
+			folder2.attachItem(item);
+		}
+
+		final ITabItem item2 = folder2.getItem(0);
+		if (item2.isReparentable()) {
+			item2.setText(item2.getText() + " (r)");
+			folder2.detachItem(item2);
+			folder1.attachItem(item2);
+		}
+	}
+
+	private ITabFolder addFolder(final IContainer parentContainer) {
+		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
+
+		final ILayoutDescriptor fillLayoutDescriptor = new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0");
+		parentContainer.setLayout(fillLayoutDescriptor);
+
+		final ITabFolder tabFolder = parentContainer.add(bpF.tabFolder().setTabsCloseable(true), "growx, growy, w 0::, h 0::");
 
 		ITabItemBluePrint tabItemBp = bpF.tabItem();
 		tabItemBp.setText("Tab1").setToolTipText("Tooltip of tab1").setIcon(IconsSmall.INFO);
@@ -57,7 +87,7 @@ public final class DemoTabFolderComposite {
 		addTabItemListener(tabItem1);
 		tabItem1.add(bpF.textLabel("Tab content1"), "");
 
-		tabItemBp = bpF.tabItem().setCloseable(true);
+		tabItemBp = bpF.tabItem();
 		tabItemBp.setText("Tab2").setToolTipText("Tooltip of tab2").setIcon(IconsSmall.QUESTION);
 		final ITabItem tabItem2 = tabFolder.addItem(tabItemBp);
 		addTabItemListener(tabItem2);
@@ -68,30 +98,32 @@ public final class DemoTabFolderComposite {
 		final ITabItem tabItem3 = tabFolder.addItem(tabItemBp);
 		addTabItemListener(tabItem3);
 		tabItem3.add(bpF.textLabel("Tab content3"), "");
+
+		tabFolder.changeItemIndex(tabItem1, 2);
+
+		tabFolder.setSelectedItem(tabItem1);
+
+		return tabFolder;
 	}
 
 	private void addTabItemListener(final ITabItem tabItem) {
 		tabItem.addTabItemListener(new ITabItemListener() {
 
 			@Override
-			public void visibilityChanged(final boolean visible) {
-				// CHECKSTYLE:OFF
-				System.out.println("Item Visible: " + visible);
-				// CHECKSTYLE:ON
-			}
-
-			@Override
 			public void selectionChanged(final boolean selected) {
 				// CHECKSTYLE:OFF
-				System.out.println("Item selected: " + selected);
+				System.out.println("Item '" + tabItem.getText() + "' selected: " + selected);
 				// CHECKSTYLE:ON
 			}
 
 			@Override
 			public void onClose(final IVetoable vetoable) {
-				// CHECKSTYLE:OFF
-				System.out.println("Item onClose(): ");
-				// CHECKSTYLE:ON
+				final QuestionResult result = Toolkit.getQuestionPane().askYesNoQuestion(
+						"Close item ?",
+						"Should the item be closed ?");
+				if (result != QuestionResult.YES) {
+					vetoable.veto();
+				}
 			}
 		});
 	}

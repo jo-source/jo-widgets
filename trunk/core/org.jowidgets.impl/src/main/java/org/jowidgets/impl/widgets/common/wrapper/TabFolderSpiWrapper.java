@@ -47,4 +47,14 @@ public class TabFolderSpiWrapper extends ControlSpiWrapper implements ITabFolder
 		getWidget().removeItem(index);
 	}
 
+	@Override
+	public void setSelectedItem(final int index) {
+		getWidget().setSelectedItem(index);
+	}
+
+	@Override
+	public int getSelectedIndex() {
+		return getWidget().getSelectedIndex();
+	}
+
 }

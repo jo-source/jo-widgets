@@ -26,10 +26,12 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.widgets.controler;
+package org.jowidgets.api.controler;
 
-public interface IVetoable {
+public interface ITabItemObservable {
 
-	void veto();
+	void addTabItemListener(ITabItemListener listener);
+
+	void removeTabItemListener(ITabItemListener listener);
 
 }

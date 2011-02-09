@@ -26,12 +26,12 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.widgets.controler;
+package org.jowidgets.spi.widgets.controler;
 
-public interface ITabItemObservable {
+public interface ITabItemObservableSpi {
 
-	void addTabItemListener(ITabItemListener listener);
+	void addTabItemListener(ITabItemListenerSpi listener);
 
-	void removeTabItemListener(ITabItemListener listener);
+	void removeTabItemListener(ITabItemListenerSpi listener);
 
 }

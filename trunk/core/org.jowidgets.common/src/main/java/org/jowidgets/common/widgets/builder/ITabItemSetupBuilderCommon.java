@@ -25,16 +25,9 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-
 package org.jowidgets.common.widgets.builder;
-
-import org.jowidgets.common.types.TabClosePolicy;
 
 public interface ITabItemSetupBuilderCommon<INSTANCE_TYPE extends ITabItemSetupBuilderCommon<?>> extends
 		ISetupBuilder<INSTANCE_TYPE> {
-
-	INSTANCE_TYPE setCloseable(boolean closeable);
-
-	INSTANCE_TYPE setTabClosePolicy(TabClosePolicy tabClosePolicy);
 
 }

@@ -26,55 +26,47 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.widgets.controler.impl;
+package org.jowidgets.spi.widgets.controler;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jowidgets.common.widgets.controler.ITabItemListener;
-import org.jowidgets.common.widgets.controler.ITabItemObservable;
-import org.jowidgets.common.widgets.controler.IVetoable;
+import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.util.ValueHolder;
 
-public class TabItemObservable implements ITabItemObservable {
+public class TabItemObservableSpi implements ITabItemObservableSpi {
 
-	private final Set<ITabItemListener> listeners;
+	private final Set<ITabItemListenerSpi> listeners;
 
-	public TabItemObservable() {
-		this.listeners = new HashSet<ITabItemListener>();
+	public TabItemObservableSpi() {
+		this.listeners = new HashSet<ITabItemListenerSpi>();
 	}
 
 	@Override
-	public void addTabItemListener(final ITabItemListener listener) {
+	public void addTabItemListener(final ITabItemListenerSpi listener) {
 		listeners.add(listener);
 	}
 
 	@Override
-	public void removeTabItemListener(final ITabItemListener listener) {
+	public void removeTabItemListener(final ITabItemListenerSpi listener) {
 		listeners.remove(listener);
 	}
 
-	public void fireSelectionChanged(final boolean selected) {
-		for (final ITabItemListener listener : listeners) {
-			listener.selectionChanged(selected);
-		}
-	}
-
-	public void fireVisibilityChanged(final boolean visible) {
-		for (final ITabItemListener listener : listeners) {
-			listener.visibilityChanged(visible);
+	public void fireSelected() {
+		for (final ITabItemListenerSpi listener : listeners) {
+			listener.selected();
 		}
 	}
 
 	public void fireOnClose(final IVetoable vetoable) {
-		for (final ITabItemListener listener : listeners) {
+		for (final ITabItemListenerSpi listener : listeners) {
 			listener.onClose(vetoable);
 		}
 	}
 
 	public boolean fireOnClose() {
 		final ValueHolder<Boolean> veto = new ValueHolder<Boolean>(Boolean.FALSE);
-		for (final ITabItemListener listener : listeners) {
+		for (final ITabItemListenerSpi listener : listeners) {
 			listener.onClose(new IVetoable() {
 				@Override
 				public void veto() {

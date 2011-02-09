@@ -39,14 +39,13 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.types.TabClosePolicy;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
-import org.jowidgets.common.widgets.controler.impl.TabItemObservable;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
@@ -56,28 +55,31 @@ import org.jowidgets.spi.impl.swt.widgets.SwtComposite;
 import org.jowidgets.spi.impl.swt.widgets.SwtContainer;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.ITabItemSpi;
-import org.jowidgets.spi.widgets.setup.ITabItemSetupSpi;
+import org.jowidgets.spi.widgets.controler.TabItemObservableSpi;
 
-public class TabItemImpl extends TabItemObservable implements ITabItemSpi {
+public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 
 	private final SwtContainer swtContainer;
 	private final CTabItem cTabItem;
+	private final CTabFolder parentFolder;
 
-	public TabItemImpl(final IGenericWidgetFactory factory, final CTabFolder parentFolder, final ITabItemSetupSpi setup) {
-		this(factory, parentFolder, setup, null);
+	public TabItemImpl(final IGenericWidgetFactory factory, final CTabFolder parentFolder, final boolean closeable) {
+		this(factory, parentFolder, closeable, null);
 	}
 
 	public TabItemImpl(
 		final IGenericWidgetFactory factory,
 		final CTabFolder parentFolder,
-		final ITabItemSetupSpi setup,
+		final boolean closeable,
 		final Integer index) {
 
+		this.parentFolder = parentFolder;
+
 		if (index != null) {
-			cTabItem = new CTabItem(parentFolder, setup.isCloseable() ? SWT.CLOSE : SWT.NONE, index.intValue());
+			cTabItem = new CTabItem(parentFolder, closeable ? SWT.CLOSE : SWT.NONE, index.intValue());
 		}
 		else {
-			cTabItem = new CTabItem(parentFolder, setup.isCloseable() ? SWT.CLOSE : SWT.NONE);
+			cTabItem = new CTabItem(parentFolder, closeable ? SWT.CLOSE : SWT.NONE);
 		}
 
 		final Composite composite = new Composite(parentFolder, SWT.NONE);
@@ -95,20 +97,16 @@ public class TabItemImpl extends TabItemObservable implements ITabItemSpi {
 					if (veto) {
 						event.doit = false;
 					}
-					else if (TabClosePolicy.HIDE == setup.getTabClosePolicy()) {
-						setVisible(false);
-					}
 					//else{do nothing}
 				}
 			}
 		});
 
-		//TODO MG fire event for unselected item
 		parentFolder.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
 				if (e.item == getUiReference()) {
-					fireSelectionChanged(getUiReference().isShowing());
+					fireSelected();
 				}
 			}
 		});
@@ -117,6 +115,47 @@ public class TabItemImpl extends TabItemObservable implements ITabItemSpi {
 	@Override
 	public CTabItem getUiReference() {
 		return cTabItem;
+	}
+
+	@Override
+	public Object detachContent() {
+		final Object result = cTabItem.getControl();
+		cTabItem.setControl(null);
+		return result;
+	}
+
+	@Override
+	public void attachContent(final Object content) {
+		if (content != null && !(content instanceof Control)) {
+			throw new IllegalArgumentException("Content must be instance of '" + Control.class.getName() + "' or null");
+		}
+		final Control control = (Control) content;
+		if (control != null) {
+			if (control.getParent() != parentFolder) {
+				if (control.isReparentable()) {
+					control.setParent(parentFolder);
+				}
+				else {
+					throw new IllegalArgumentException("Content is not reparentable");
+				}
+			}
+		}
+		cTabItem.setControl(control);
+	}
+
+	@Override
+	public boolean isReparentable() {
+		final Control control = cTabItem.getControl();
+		if (control != null) {
+			return control.isReparentable();
+		}
+		else {
+			//workaround to test if potential items could be reparented
+			final Composite testComposite = new Composite(parentFolder, SWT.NONE);
+			final boolean result = testComposite.isReparentable();
+			testComposite.dispose();
+			return result;
+		}
 	}
 
 	@Override
@@ -145,14 +184,12 @@ public class TabItemImpl extends TabItemObservable implements ITabItemSpi {
 
 	@Override
 	public void setVisible(final boolean visible) {
-		//TODO MG
-		fireVisibilityChanged(visible);
+		swtContainer.setVisible(visible);
 	}
 
 	@Override
 	public boolean isVisible() {
-		// TODO MG
-		return false;
+		return swtContainer.isVisible();
 	}
 
 	@Override

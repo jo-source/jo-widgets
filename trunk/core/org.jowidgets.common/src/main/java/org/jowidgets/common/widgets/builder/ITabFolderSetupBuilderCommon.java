@@ -37,4 +37,6 @@ public interface ITabFolderSetupBuilderCommon<INSTANCE_TYPE extends ITabFolderSe
 	@Mandatory
 	INSTANCE_TYPE setTabPlacement(TabPlacement tabPlacement);
 
+	INSTANCE_TYPE setTabsCloseable(boolean closeable);
+
 }

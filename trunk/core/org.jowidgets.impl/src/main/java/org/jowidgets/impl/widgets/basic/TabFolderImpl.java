@@ -47,19 +47,20 @@ import org.jowidgets.impl.widgets.common.wrapper.TabFolderSpiWrapper;
 import org.jowidgets.spi.widgets.ITabFolderSpi;
 import org.jowidgets.spi.widgets.ITabItemSpi;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.TypeCast;
 
 public class TabFolderImpl extends TabFolderSpiWrapper implements ITabFolder {
 
 	private static final SpiBluePrintFactory SPI_BPF = new SpiBluePrintFactory();
 	private final ControlDelegate controlDelegate;
 
-	private final List<ITabItem> items;
+	private final List<TabItemImpl> items;
 
 	public TabFolderImpl(final ITabFolderSpi widget, final ITabFolderDescriptor descriptor) {
 		super(widget);
 		this.controlDelegate = new ControlDelegate();
 
-		this.items = new LinkedList<ITabItem>();
+		this.items = new LinkedList<TabItemImpl>();
 
 		VisibiliySettingsInvoker.setVisibility(descriptor, this);
 		ColorSettingsInvoker.setColors(descriptor, this);
@@ -90,8 +91,12 @@ public class TabFolderImpl extends TabFolderSpiWrapper implements ITabFolder {
 		final ITabItemBluePrintSpi tabItemBluePrintSpi = SPI_BPF.tabItem();
 		tabItemBluePrintSpi.setSetup(descriptor);
 		final ITabItemSpi tabItemSpi = getWidget().addItem(tabItemBluePrintSpi);
-		final ITabItem result = new TabItemImpl(tabItemSpi, descriptor);
+		final TabItemImpl result = new TabItemImpl(tabItemSpi, descriptor, this);
 		items.add(result);
+		if (items.size() == 1) {
+			setSelectedItem(0);
+			result.setSelected(true);
+		}
 		return result;
 	}
 
@@ -100,8 +105,12 @@ public class TabFolderImpl extends TabFolderSpiWrapper implements ITabFolder {
 		final ITabItemBluePrintSpi tabItemBluePrintSpi = SPI_BPF.tabItem();
 		tabItemBluePrintSpi.setSetup(descriptor);
 		final ITabItemSpi tabItemSpi = getWidget().addItem(index, tabItemBluePrintSpi);
-		final ITabItem result = new TabItemImpl(tabItemSpi, descriptor);
+		final TabItemImpl result = new TabItemImpl(tabItemSpi, descriptor, this);
 		items.add(index, result);
+		if (items.size() == 1) {
+			setSelectedItem(0);
+			result.setSelected(true);
+		}
 		return result;
 	}
 
@@ -111,7 +120,10 @@ public class TabFolderImpl extends TabFolderSpiWrapper implements ITabFolder {
 		final int index = items.indexOf(item);
 		if (index != -1) {
 			getWidget().removeItem(index);
-			items.remove(index);
+			final TabItemImpl itemImpl = items.remove(index);
+			if (itemImpl.isSelected()) {
+				itemImpl.setSelected(false);
+			}
 		}
 	}
 
@@ -123,14 +135,86 @@ public class TabFolderImpl extends TabFolderSpiWrapper implements ITabFolder {
 	}
 
 	@Override
-	public void changeItemIndex(final ITabItem item, final int newIndex) {
-		Assert.paramNotNull(item, "item");
-		final int oldIndex = getIndex(item);
-		if (oldIndex != -1) {
-			getWidget().changeItemIndex(oldIndex, newIndex);
-			items.remove(oldIndex);
-			items.add(newIndex, item);
+	public void setSelectedItem(final ITabItem item) {
+		final int itemIndex = getItemIndex(item);
+		getWidget().setSelectedItem(itemIndex);
+	}
+
+	@Override
+	public ITabItem getSelectedItem() {
+		final int selectedIndex = getWidget().getSelectedIndex();
+		if (selectedIndex != -1) {
+			items.get(selectedIndex);
 		}
+		return null;
+	}
+
+	@Override
+	public void detachItem(final ITabItem item) {
+		Assert.paramNotNull(item, "item");
+		final int itemIndex = items.indexOf(item);
+		if (itemIndex == -1) {
+			throw new IllegalArgumentException("Item '" + item + "' is not attached to this folder.");
+		}
+		items.get(itemIndex).detach();
+		removeItem(item);
+	}
+
+	@Override
+	public void attachItem(final ITabItem item) {
+		attachItem(null, item);
+	}
+
+	@Override
+	public void attachItem(final int index, final ITabItem item) {
+		attachItem(Integer.valueOf(index), item);
+	}
+
+	private void attachItem(final Integer index, final ITabItem item) {
+		Assert.paramNotNull(item, "item");
+		if (!item.isDetached()) {
+			throw new IllegalArgumentException("The item is not detached.");
+		}
+		final ITabItemBluePrintSpi tabItemBluePrintSpi = SPI_BPF.tabItem();
+		final TabItemImpl itemImpl = TypeCast.toType(item, TabItemImpl.class);
+		final ITabItemSpi tabItemSpi;
+		if (index != null) {
+			tabItemSpi = getWidget().addItem(index.intValue(), tabItemBluePrintSpi);
+			items.add(index.intValue(), itemImpl);
+		}
+		else {
+			tabItemSpi = getWidget().addItem(tabItemBluePrintSpi);
+			items.add(itemImpl);
+		}
+
+		itemImpl.attach(tabItemSpi, this);
+	}
+
+	@Override
+	public void changeItemIndex(final ITabItem item, final int newIndex) {
+		final int itemIndex = getItemIndex(item);
+		if (item.isDetached()) {
+			throw new IllegalArgumentException("The item is detached.");
+		}
+		if (itemIndex != newIndex) {
+			final TabItemImpl itemImpl = TypeCast.toType(item, TabItemImpl.class);
+			final boolean selected = itemImpl.isSelected();
+			detachItem(item);
+			attachItem(Integer.valueOf(newIndex), item);
+			if (selected) {
+				setSelectedItem(newIndex);
+				itemImpl.setSelected(true);
+			}
+		}
+	}
+
+	private int getItemIndex(final ITabItem item) {
+		Assert.paramNotNull(item, "item");
+		final int itemIndex = items.indexOf(item);
+		if (itemIndex == -1) {
+			throw new IllegalArgumentException("Item '" + item + "' is not attached to this folder.");
+		}
+		return itemIndex;
 	}
 
 	@Override
@@ -147,6 +231,10 @@ public class TabFolderImpl extends TabFolderSpiWrapper implements ITabFolder {
 	@Override
 	public List<ITabItem> getItems() {
 		return new LinkedList<ITabItem>(items);
+	}
+
+	protected List<TabItemImpl> getItemsImpl() {
+		return new LinkedList<TabItemImpl>(items);
 	}
 
 }

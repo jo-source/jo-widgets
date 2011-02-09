@@ -28,8 +28,12 @@
 
 package org.jowidgets.common.widgets;
 
-import org.jowidgets.common.widgets.controler.ITabItemObservable;
 
-public interface ITabItemCommon extends IItemCommon, IContainerCommon, ITabItemObservable {
+public interface ITabItemCommon extends IItemCommon, IContainerCommon {
+
+	/**
+	 * @return true if a item content could be attached to items of another folder. False otherwise.
+	 */
+	boolean isReparentable();
 
 }

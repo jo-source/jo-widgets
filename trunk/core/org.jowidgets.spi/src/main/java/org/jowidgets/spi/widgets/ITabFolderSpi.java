@@ -37,6 +37,4 @@ public interface ITabFolderSpi extends IControlSpi, ITabFolderCommon {
 
 	ITabItemSpi addItem(int index, final ITabItemSetupSpi setup);
 
-	void changeItemIndex(int oldIndex, int newIndex);
-
 }

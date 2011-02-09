@@ -44,13 +44,14 @@ import org.jowidgets.spi.widgets.setup.ITabItemSetupSpi;
 public class TabFolderImpl extends SwtControl implements ITabFolderSpi {
 
 	private final IGenericWidgetFactory widgetFactory;
+	private final boolean tabsCloseable;
 
 	public TabFolderImpl(final IGenericWidgetFactory widgetFactory, final Object parentUiReference, final ITabFolderSetupSpi setup) {
 		super(new CTabFolder((Composite) parentUiReference, getStyle(setup)));
 
+		this.tabsCloseable = setup.isTabsCloseable();
 		this.widgetFactory = widgetFactory;
 
-		getUiReference().setSimple(true);
 		getUiReference().setUnselectedImageVisible(true);
 		getUiReference().setUnselectedCloseVisible(true);
 	}
@@ -72,17 +73,22 @@ public class TabFolderImpl extends SwtControl implements ITabFolderSpi {
 
 	@Override
 	public ITabItemSpi addItem(final ITabItemSetupSpi setup) {
-		return new TabItemImpl(widgetFactory, getUiReference(), setup);
+		return new TabItemImpl(widgetFactory, getUiReference(), tabsCloseable);
 	}
 
 	@Override
 	public ITabItemSpi addItem(final int index, final ITabItemSetupSpi setup) {
-		return new TabItemImpl(widgetFactory, getUiReference(), setup, Integer.valueOf(index));
+		return new TabItemImpl(widgetFactory, getUiReference(), tabsCloseable, Integer.valueOf(index));
 	}
 
 	@Override
-	public void changeItemIndex(final int oldIndex, final int newIndex) {
-		// TODO MG
+	public void setSelectedItem(final int index) {
+		getUiReference().setSelection(index);
+	}
+
+	@Override
+	public int getSelectedIndex() {
+		return getUiReference().getSelectionIndex();
 	}
 
 	private static int getStyle(final ITabFolderSetupSpi setup) {

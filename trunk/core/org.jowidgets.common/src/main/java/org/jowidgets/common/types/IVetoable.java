@@ -26,14 +26,10 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.widgets.controler;
+package org.jowidgets.common.types;
 
-public interface ITabItemListener {
+public interface IVetoable {
 
-	void selectionChanged(boolean selected);
-
-	void visibilityChanged(boolean visible);
-
-	void onClose(IVetoable vetoable);
+	void veto();
 
 }

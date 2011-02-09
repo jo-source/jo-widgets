@@ -34,7 +34,7 @@ import org.jowidgets.util.Assert;
 
 public class WidgetSpiWrapper implements IWidgetCommon {
 
-	private final IWidgetSpi widget;
+	private IWidgetSpi widget;
 
 	public WidgetSpiWrapper(final IWidgetSpi widget) {
 		Assert.paramNotNull(widget, "widget");
@@ -43,6 +43,10 @@ public class WidgetSpiWrapper implements IWidgetCommon {
 
 	public IWidgetSpi getWidget() {
 		return widget;
+	}
+
+	public void setWidget(final IWidgetSpi widget) {
+		this.widget = widget;
 	}
 
 	@Override

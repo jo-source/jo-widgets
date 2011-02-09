@@ -36,4 +36,7 @@ public interface ITabFolderSetupCommon extends IComponentSetupCommon {
 	@Mandatory
 	TabPlacement getTabPlacement();
 
+	@Mandatory
+	boolean isTabsCloseable();
+
 }

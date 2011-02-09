@@ -32,4 +32,8 @@ public interface ITabFolderCommon extends IControlCommon {
 
 	void removeItem(int index);
 
+	void setSelectedItem(int index);
+
+	int getSelectedIndex();
+
 }

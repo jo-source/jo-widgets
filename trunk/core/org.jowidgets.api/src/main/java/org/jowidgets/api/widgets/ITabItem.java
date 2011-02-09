@@ -28,8 +28,18 @@
 
 package org.jowidgets.api.widgets;
 
+import org.jowidgets.api.controler.ITabItemObservable;
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.ITabItemCommon;
 
-public interface ITabItem extends IItem, IContainer, ITabItemCommon {
+public interface ITabItem extends IItem, IContainer, ITabItemObservable, ITabItemCommon {
+
+	String getText();
+
+	String getToolTipText();
+
+	IImageConstant getIcon();
+
+	boolean isDetached();
 
 }

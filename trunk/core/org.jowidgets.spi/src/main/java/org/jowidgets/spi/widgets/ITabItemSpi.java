@@ -29,7 +29,24 @@
 package org.jowidgets.spi.widgets;
 
 import org.jowidgets.common.widgets.ITabItemCommon;
+import org.jowidgets.spi.widgets.controler.ITabItemObservableSpi;
 
-public interface ITabItemSpi extends IItemSpi, IContainerSpi, ITabItemCommon {
+public interface ITabItemSpi extends IItemSpi, IContainerSpi, ITabItemObservableSpi, ITabItemCommon {
+
+	/**
+	 * Detaches the content from this item. The detached content could be attached later on another item.
+	 * If the content should be attached to an item of another folder, this item must be reparentable.
+	 * 
+	 * @return The content reference of the item.
+	 */
+	Object detachContent();
+
+	/**
+	 * Attaches a content detached from another item to this item. If the content to set was detached from
+	 * an item of another folder, the source item must be reparentable.
+	 * 
+	 * @param content The content to set.
+	 */
+	void attachContent(Object content);
 
 }

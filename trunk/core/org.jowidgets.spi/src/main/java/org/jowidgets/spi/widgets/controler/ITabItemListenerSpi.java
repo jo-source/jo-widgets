@@ -26,9 +26,14 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.widgets.descriptor.setup;
+package org.jowidgets.spi.widgets.controler;
 
+import org.jowidgets.common.types.IVetoable;
 
-public interface ITabItemSetupCommon {
+public interface ITabItemListenerSpi {
+
+	void selected();
+
+	void onClose(IVetoable vetoable);
 
 }

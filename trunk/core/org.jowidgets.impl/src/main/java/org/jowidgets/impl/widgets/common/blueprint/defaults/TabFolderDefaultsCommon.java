@@ -36,6 +36,7 @@ public class TabFolderDefaultsCommon implements IDefaultInitializer<ITabFolderSe
 	@Override
 	public void initialize(final ITabFolderSetupBuilderCommon<?> builder) {
 		builder.setTabPlacement(TabPlacement.TOP);
+		builder.setTabsCloseable(false);
 	}
 
 }

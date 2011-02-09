@@ -36,7 +36,6 @@ import org.jowidgets.common.widgets.builder.IFrameSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.IScrollCompositeSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ISeparatorSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITabFolderSetupBuilderCommon;
-import org.jowidgets.common.widgets.builder.ITabItemSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITextFieldSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITextLabelSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.IWindowSetupBuilderCommon;
@@ -48,7 +47,6 @@ import org.jowidgets.impl.widgets.common.blueprint.defaults.FrameDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.ScrolledCompositeDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.SeparatorDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.TabFolderDefaultsCommon;
-import org.jowidgets.impl.widgets.common.blueprint.defaults.TabItemDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.TextFieldDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.TextLabelDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.WindowDefaultsCommon;
@@ -69,6 +67,5 @@ public class CommonDefaultsInitializerRegistry extends DefaultsInitializerRegist
 		register(ITextLabelSetupBuilderCommon.class, new TextLabelDefaultsCommon());
 		register(ITextFieldSetupBuilderCommon.class, new TextFieldDefaultsCommon());
 		register(ITabFolderSetupBuilderCommon.class, new TabFolderDefaultsCommon());
-		register(ITabItemSetupBuilderCommon.class, new TabItemDefaultsCommon());
 	}
 }
