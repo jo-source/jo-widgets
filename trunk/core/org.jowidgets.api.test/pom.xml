@@ -29,8 +29,6 @@
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.test.api</artifactId>
 			<version>0.0.13-SNAPSHOT</version>
-			<type>jar</type>
-			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.easymock</groupId>
