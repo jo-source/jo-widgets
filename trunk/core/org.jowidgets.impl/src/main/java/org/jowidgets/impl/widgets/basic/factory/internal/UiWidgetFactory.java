@@ -28,12 +28,10 @@
 
 package org.jowidgets.impl.widgets.basic.factory.internal;
 
-import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
-import org.jowidgets.test.api.widgets.IWidgetUi;
 
 public class UiWidgetFactory<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> implements
 		IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> {
@@ -58,36 +56,36 @@ public class UiWidgetFactory<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extend
 	// TODO better exception descriptions
 	@Override
 	public WIDGET_TYPE create(final Object parentUiReference, final DESCRIPTOR_TYPE descriptor) {
-		final IWidgetDescriptor<?> uiBluePrint = (IWidgetDescriptor<?>) Toolkit.getBluePrintFactory().bluePrint(
-				bluePrintType,
-				descriptorType).setSetup(descriptor);
-
-		final Object result = genericWidgetFactory.create(parentUiReference, uiBluePrint);
-
-		if (result != null) {
-			if (uiWidgetType.isAssignableFrom(result.getClass())) {
-
-				if (result instanceof IWidgetUi) {
-					if (((IWidgetUi) result).isTestable()) {
-						return (WIDGET_TYPE) result;
-					}
-					else {
-						throw new IllegalStateException("The created Widget is not testable.");
-					}
-				}
-				else {
-					throw new IllegalStateException("The created Widget is a unknown UiWidget.");
-				}
-
-			}
-			else {
-				throw new IllegalStateException("The created Widget is no UiWidget.");
-			}
-		}
-		else {
-			throw new IllegalStateException("Error while creating Widget.");
-		}
-
+		//		final IWidgetDescriptor<?> uiBluePrint = (IWidgetDescriptor<?>) Toolkit.getBluePrintFactory().bluePrint(
+		//				bluePrintType,
+		//				descriptorType).setSetup(descriptor);
+		//
+		//		final Object result = genericWidgetFactory.create(parentUiReference, uiBluePrint);
+		//
+		//		if (result != null) {
+		//			if (uiWidgetType.isAssignableFrom(result.getClass())) {
+		//
+		//				if (result instanceof IWidgetUi) {
+		//					if (((IWidgetUi) result).isTestable()) {
+		//						return (WIDGET_TYPE) result;
+		//					}
+		//					else {
+		//						throw new IllegalStateException("The created Widget is not testable.");
+		//					}
+		//				}
+		//				else {
+		//					throw new IllegalStateException("The created Widget is a unknown UiWidget.");
+		//				}
+		//
+		//			}
+		//			else {
+		//				throw new IllegalStateException("The created Widget is no UiWidget.");
+		//			}
+		//		}
+		//		else {
+		//			throw new IllegalStateException("Error while creating Widget.");
+		//		}
+		return null;
 	}
 
 }

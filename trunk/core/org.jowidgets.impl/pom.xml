@@ -41,13 +41,11 @@
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.test.api</artifactId>
 			<version>0.0.13-SNAPSHOT</version>
-			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.test.spi</artifactId>
 			<version>0.0.13-SNAPSHOT</version>
-			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 </project>
