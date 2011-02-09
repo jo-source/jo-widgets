@@ -33,7 +33,6 @@ import java.util.List;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IDisplay;
-import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IMenuBar;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.descriptor.setup.IFrameSetup;
@@ -47,8 +46,9 @@ import org.jowidgets.impl.base.delegate.WindowDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractFrameSpiWrapper;
 import org.jowidgets.spi.widgets.IFrameSpi;
+import org.jowidgets.test.api.widgets.IFrameUi;
 
-public class FrameImpl extends AbstractFrameSpiWrapper implements IFrame {
+public class FrameImpl extends AbstractFrameSpiWrapper implements IFrameUi {
 
 	private final DisplayDelegate displayDelegate;
 	private final WindowDelegate windowDelegate;
@@ -145,6 +145,11 @@ public class FrameImpl extends AbstractFrameSpiWrapper implements IFrame {
 	@Override
 	public IMenuBar createMenuBar() {
 		return new MenuBarImpl(getWidget().createMenuBar(), this);
+	}
+
+	@Override
+	public boolean isTestable() {
+		return true;
 	}
 
 }
