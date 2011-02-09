@@ -25,6 +25,9 @@
 		<module>../org.jowidgets.spi.impl.dummy</module>
 		<module>../org.jowidgets.spi.impl.swing</module>
 		<module>../org.jowidgets.spi.impl.swt</module>
+		<module>../org.jowidgets.test.common</module>
+		<module>../org.jowidgets.test.api</module>
+		<module>../org.jowidgets.test.spi</module>
 	</modules>
 
 	<build>
