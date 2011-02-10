@@ -26,40 +26,49 @@
  * DAMAGE.
  */
 
-package org.jowidgets.test.api.widgets.blueprint.factory;
+package org.jowidgets.impl.toolkit;
 
-import java.util.Iterator;
-import java.util.ServiceLoader;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.common.application.IApplicationLifecycle;
+import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.impl.widgets.basic.blueprint.BasicSimpleTestBluePrintFactory;
+import org.jowidgets.test.api.toolkit.ITestToolkit;
+import org.jowidgets.test.api.widgets.IFrameUi;
+import org.jowidgets.test.api.widgets.blueprint.factory.IBasicSimpleTestBluePrintFactory;
+import org.jowidgets.test.api.widgets.descriptor.IFrameDescriptorUi;
 
-import org.jowidgets.test.api.widgets.blueprint.IButtonBluePrintUi;
+public final class TestToolkit implements ITestToolkit {
 
-public class TestBluePrintFactory {
+	public TestToolkit() {}
 
-	private static ITestBluePrintFactory bluePrintFactory;
-
-	private TestBluePrintFactory() {}
-
-	public static synchronized ITestBluePrintFactory getInstance() {
-		if (bluePrintFactory == null) {
-			final ServiceLoader<ITestBluePrintFactory> bPFLoader = ServiceLoader.load(ITestBluePrintFactory.class);
-			final Iterator<ITestBluePrintFactory> iterator = bPFLoader.iterator();
-
-			if (!iterator.hasNext()) {
-				throw new IllegalStateException("No implementation found for '" + ITestBluePrintFactory.class.getName() + "'");
-			}
-
-			bluePrintFactory = iterator.next();
-
-			if (iterator.hasNext()) {
-				throw new IllegalStateException("More than one implementation found for '"
-					+ ITestBluePrintFactory.class.getName()
-					+ "'");
-			}
-		}
-		return bluePrintFactory;
+	@Override
+	public IBasicSimpleTestBluePrintFactory getBluePrintFactory() {
+		return new BasicSimpleTestBluePrintFactory();
 	}
 
-	public static IButtonBluePrintUi button() {
-		return getInstance().button();
+	@Override
+	public IGenericWidgetFactory getWidgetFactory() {
+		return Toolkit.getWidgetFactory();
 	}
+
+	@Override
+	public IFrameUi createRootFrame(final IFrameDescriptorUi descriptor) {
+		return Toolkit.getWidgetFactory().create(descriptor);
+	}
+
+	@Override
+	public IFrameUi createRootFrame(final IFrameDescriptorUi descriptor, final IApplicationLifecycle lifecycle) {
+		final IFrameUi result = Toolkit.getWidgetFactory().create(descriptor);
+		result.addWindowListener(new WindowAdapter() {
+
+			@Override
+			public void windowClosed() {
+				lifecycle.finish();
+			}
+
+		});
+		return result;
+	}
+
 }

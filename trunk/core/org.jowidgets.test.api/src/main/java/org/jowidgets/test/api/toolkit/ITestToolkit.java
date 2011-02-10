@@ -26,54 +26,29 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.test;
+package org.jowidgets.test.api.toolkit;
 
-import junit.framework.Assert;
-import junit.framework.JUnit4TestAdapter;
-
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
-import org.jowidgets.common.widgets.controler.IActionListener;
-import org.jowidgets.test.api.toolkit.TestToolkit;
-import org.jowidgets.test.api.widgets.IButtonUi;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.test.api.widgets.IFrameUi;
 import org.jowidgets.test.api.widgets.blueprint.factory.IBasicSimpleTestBluePrintFactory;
-import org.junit.Test;
+import org.jowidgets.test.api.widgets.descriptor.IFrameDescriptorUi;
 
-public class TestBluePrintFactoryTest {
+public interface ITestToolkit {
 
-	private static final IBasicSimpleTestBluePrintFactory BPF = TestToolkit.getBluePrintFactory();
+	IBasicSimpleTestBluePrintFactory getBluePrintFactory();
 
-	@Test
-	public void createTestBluePrintFactoryTest() {
-		Assert.assertNotNull(TestToolkit.getInstance());
+	IGenericWidgetFactory getWidgetFactory();
 
-		Toolkit.getApplicationRunner().run(new IApplication() {
+	IFrameUi createRootFrame(IFrameDescriptorUi descriptor);
 
-			@Override
-			public void start(final IApplicationLifecycle lifecycle) {
-				final IFrameUi frame = TestToolkit.createRootFrame(BPF.frame(), lifecycle);
-				frame.setVisible(true);
-
-				final IButtonUi button = frame.add(BPF.button(), "");
-				button.addActionListener(new IActionListener() {
-
-					@Override
-					public void actionPerformed() {
-						// CHECKSTYLE:OFF
-						System.out.println("Button wurde gedrueckt!");
-						// CHECKSTYLE:ON
-					}
-				});
-				button.push();
-
-				frame.dispose();
-			}
-		});
-	}
-
-	public static junit.framework.Test suite() {
-		return new JUnit4TestAdapter(TestBluePrintFactoryTest.class);
-	}
+	/**
+	 * Creates an root frame for an application lifecycle. When the rootFrame will be
+	 * closed, the lifecycle will be finished.
+	 * 
+	 * @param descriptor The frame descriptor
+	 * @param lifecycle The lifecycle of the current application
+	 * @return the created frame
+	 */
+	IFrameUi createRootFrame(IFrameDescriptorUi descriptor, IApplicationLifecycle lifecycle);
 }

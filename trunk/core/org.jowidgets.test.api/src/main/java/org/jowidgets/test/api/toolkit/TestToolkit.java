@@ -26,54 +26,57 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.test;
+package org.jowidgets.test.api.toolkit;
 
-import junit.framework.Assert;
-import junit.framework.JUnit4TestAdapter;
+import java.util.Iterator;
+import java.util.ServiceLoader;
 
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
-import org.jowidgets.common.widgets.controler.IActionListener;
-import org.jowidgets.test.api.toolkit.TestToolkit;
-import org.jowidgets.test.api.widgets.IButtonUi;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.test.api.widgets.IFrameUi;
 import org.jowidgets.test.api.widgets.blueprint.factory.IBasicSimpleTestBluePrintFactory;
-import org.junit.Test;
+import org.jowidgets.test.api.widgets.descriptor.IFrameDescriptorUi;
 
-public class TestBluePrintFactoryTest {
+public final class TestToolkit {
 
-	private static final IBasicSimpleTestBluePrintFactory BPF = TestToolkit.getBluePrintFactory();
+	private static ITestToolkit toolkit;
 
-	@Test
-	public void createTestBluePrintFactoryTest() {
-		Assert.assertNotNull(TestToolkit.getInstance());
+	private TestToolkit() {
 
-		Toolkit.getApplicationRunner().run(new IApplication() {
-
-			@Override
-			public void start(final IApplicationLifecycle lifecycle) {
-				final IFrameUi frame = TestToolkit.createRootFrame(BPF.frame(), lifecycle);
-				frame.setVisible(true);
-
-				final IButtonUi button = frame.add(BPF.button(), "");
-				button.addActionListener(new IActionListener() {
-
-					@Override
-					public void actionPerformed() {
-						// CHECKSTYLE:OFF
-						System.out.println("Button wurde gedrueckt!");
-						// CHECKSTYLE:ON
-					}
-				});
-				button.push();
-
-				frame.dispose();
-			}
-		});
 	}
 
-	public static junit.framework.Test suite() {
-		return new JUnit4TestAdapter(TestBluePrintFactoryTest.class);
+	public static synchronized ITestToolkit getInstance() {
+		if (toolkit == null) {
+			final ServiceLoader<ITestToolkit> toolkitProviderLoader = ServiceLoader.load(ITestToolkit.class);
+			final Iterator<ITestToolkit> iterator = toolkitProviderLoader.iterator();
+
+			if (!iterator.hasNext()) {
+				throw new IllegalStateException("No implementation found for '" + ITestToolkit.class.getName() + "'");
+			}
+
+			TestToolkit.toolkit = iterator.next();
+
+			if (iterator.hasNext()) {
+				throw new IllegalStateException("More than one implementation found for '" + ITestToolkit.class.getName() + "'");
+			}
+
+		}
+		return toolkit;
+	}
+
+	public static IGenericWidgetFactory getWidgetFactory() {
+		return getInstance().getWidgetFactory();
+	}
+
+	public static IBasicSimpleTestBluePrintFactory getBluePrintFactory() {
+		return getInstance().getBluePrintFactory();
+	}
+
+	public static IFrameUi createRootFrame(final IFrameDescriptorUi descriptor) {
+		return getInstance().createRootFrame(descriptor);
+	}
+
+	public static IFrameUi createRootFrame(final IFrameDescriptorUi descriptor, final IApplicationLifecycle lifecycle) {
+		return getInstance().createRootFrame(descriptor, lifecycle);
 	}
 }

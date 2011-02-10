@@ -61,7 +61,7 @@ import org.jowidgets.test.api.widgets.blueprint.IToolBarButtonBluePrintUi;
 import org.jowidgets.test.api.widgets.blueprint.IToolBarContainerItemBluePrintUi;
 import org.jowidgets.test.api.widgets.blueprint.IToolBarPopupButtonBluePrintUi;
 import org.jowidgets.test.api.widgets.blueprint.IToolBarToggleButtonBluePrintUi;
-import org.jowidgets.test.api.widgets.blueprint.factory.ITestBluePrintFactory;
+import org.jowidgets.test.api.widgets.blueprint.factory.IBasicSimpleTestBluePrintFactory;
 import org.jowidgets.test.api.widgets.descriptor.IActionMenuItemDescriptorUi;
 import org.jowidgets.test.api.widgets.descriptor.IButtonDescriptorUi;
 import org.jowidgets.test.api.widgets.descriptor.ICheckBoxDescriptorUi;
@@ -89,13 +89,13 @@ import org.jowidgets.test.api.widgets.descriptor.IToolBarDescriptorUi;
 import org.jowidgets.test.api.widgets.descriptor.IToolBarPopupButtonDescriptorUi;
 import org.jowidgets.test.api.widgets.descriptor.IToolBarToggleButtonDescriptorUi;
 
-public class TestBluePrintFactory extends AbstractBluePrintFactory implements ITestBluePrintFactory {
+public class BasicSimpleTestBluePrintFactory extends AbstractBluePrintFactory implements IBasicSimpleTestBluePrintFactory {
 
-	public TestBluePrintFactory() {
+	public BasicSimpleTestBluePrintFactory() {
 		this(new ComposedSetupConvenienceRegistry(), new ComposedDefaultsInitializerRegistry());
 	}
 
-	public TestBluePrintFactory(
+	public BasicSimpleTestBluePrintFactory(
 		final ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry,
 		final IDefaultsInitializerRegistry defaultInitializerRegistry) {
 		super(setupBuilderConvenienceRegistry, defaultInitializerRegistry);
@@ -239,5 +239,4 @@ public class TestBluePrintFactory extends AbstractBluePrintFactory implements IT
 	public IToolBarContainerItemBluePrintUi toolBarContainerItem() {
 		return createProxy(IToolBarContainerItemBluePrintUi.class, IToolBarContainerItemDescriptorUi.class);
 	}
-
 }
