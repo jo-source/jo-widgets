@@ -29,6 +29,7 @@ package org.jowidgets.impl.widgets.composed;
 
 import java.util.List;
 
+import org.jowidgets.api.types.InputDialogDefaultButtonPolicy;
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationMessage;
 import org.jowidgets.api.validation.ValidationResult;
@@ -48,7 +49,6 @@ import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
-import org.jowidgets.common.widgets.IButtonCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
@@ -96,8 +96,21 @@ public class InputDialogImpl<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 			buttonBar,
 			buttonCellConstraints);
 
-		final IButtonCommon okButton = validationButton.getButtonWidget();
-		final IButtonCommon cancelButton = buttonBar.add(setup.getCancelButton(), buttonCellConstraints);
+		final IButton okButton = validationButton.getButtonWidget();
+		final IButton cancelButton = buttonBar.add(setup.getCancelButton(), buttonCellConstraints);
+
+		if (setup.getDefaultButtonPolicy() == InputDialogDefaultButtonPolicy.OK) {
+			dialogWidget.setDefaultButton(okButton);
+		}
+		else if (setup.getDefaultButtonPolicy() == InputDialogDefaultButtonPolicy.CANCEL) {
+			dialogWidget.setDefaultButton(cancelButton);
+		}
+		else if (setup.getDefaultButtonPolicy() != InputDialogDefaultButtonPolicy.DISABLED) {
+			throw new IllegalArgumentException(InputDialogDefaultButtonPolicy.class.getSimpleName()
+				+ " '"
+				+ setup.getDefaultButtonPolicy()
+				+ "' is not supported");
+		}
 
 		okButton.addActionListener(new IActionListener() {
 
@@ -364,7 +377,7 @@ public class InputDialogImpl<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 			onInputChanged();
 		}
 
-		public IButtonCommon getButtonWidget() {
+		public IButton getButtonWidget() {
 			return buttonWidget;
 		}
 

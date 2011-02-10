@@ -27,6 +27,7 @@
  */
 package org.jowidgets.api.widgets.descriptor.setup;
 
+import org.jowidgets.api.types.InputDialogDefaultButtonPolicy;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
@@ -37,6 +38,9 @@ public interface IInputDialogSetup<INPUT_TYPE> extends ITitledWindowSetup, IInpu
 
 	@Mandatory
 	IButtonDescriptor getCancelButton();
+
+	@Mandatory
+	InputDialogDefaultButtonPolicy getDefaultButtonPolicy();
 
 	@Mandatory
 	boolean isCloseable();

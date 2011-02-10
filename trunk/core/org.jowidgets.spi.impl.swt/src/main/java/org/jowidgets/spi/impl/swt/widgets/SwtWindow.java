@@ -29,6 +29,7 @@ package org.jowidgets.spi.impl.swt.widgets;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
@@ -37,6 +38,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
+import org.jowidgets.common.widgets.IButtonCommon;
 import org.jowidgets.common.widgets.IDisplayCommon;
 import org.jowidgets.common.widgets.controler.IWindowListener;
 import org.jowidgets.common.widgets.controler.impl.WindowObservable;
@@ -48,6 +50,7 @@ import org.jowidgets.spi.impl.swt.util.PositionConvert;
 import org.jowidgets.spi.impl.swt.widgets.internal.MenuBarImpl;
 import org.jowidgets.spi.widgets.IMenuBarSpi;
 import org.jowidgets.spi.widgets.IWindowSpi;
+import org.jowidgets.util.TypeCast;
 
 public class SwtWindow extends SwtContainer implements IWindowSpi {
 
@@ -62,6 +65,15 @@ public class SwtWindow extends SwtContainer implements IWindowSpi {
 	@Override
 	public Shell getUiReference() {
 		return (Shell) super.getUiReference();
+	}
+
+	public void setDefaultButton(final IButtonCommon button) {
+		if (button != null) {
+			getUiReference().setDefaultButton(TypeCast.toType(button.getUiReference(), Button.class));
+		}
+		else {
+			getUiReference().setDefaultButton(null);
+		}
 	}
 
 	@Override

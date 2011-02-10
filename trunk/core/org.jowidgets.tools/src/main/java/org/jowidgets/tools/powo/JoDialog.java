@@ -29,14 +29,19 @@
 package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IMenuBar;
 import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
 import org.jowidgets.api.widgets.descriptor.IDialogDescriptor;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.util.Assert;
 
 public class JoDialog extends Window<IFrame, IDialogBluePrint> implements IFrame {
+
+	private JoMenuBar menuBar;
+	private IButton defaultButton;
 
 	public JoDialog(final String title) {
 		super(Toolkit.getBluePrintFactory().dialog(title));
@@ -71,9 +76,44 @@ public class JoDialog extends Window<IFrame, IDialogBluePrint> implements IFrame
 	}
 
 	@Override
+	void initialize(final IFrame widget) {
+		super.initialize(widget);
+		if (menuBar != null) {
+			menuBar.initialize(createMenuBar());
+		}
+		if (defaultButton != null) {
+			getWidget().setDefaultButton(defaultButton);
+		}
+	}
+
+	public final void setMenuBar(final JoMenuBar menuBar) {
+		Assert.paramNotNull(menuBar, "menuBar");
+		if (isInitialized()) {
+			menuBar.initialize(createMenuBar());
+		}
+		else {
+			this.menuBar = menuBar;
+		}
+	}
+
+	@Override
 	public IMenuBar createMenuBar() {
-		//TODO use JoMenuBar later
-		checkInitialized();
-		return getWidget().createMenuBar();
+		if (isInitialized()) {
+			return getWidget().createMenuBar();
+		}
+		else {
+			menuBar = new JoMenuBar();
+			return menuBar;
+		}
+	}
+
+	@Override
+	public void setDefaultButton(final IButton defaultButton) {
+		if (isInitialized()) {
+			getWidget().setDefaultButton(defaultButton);
+		}
+		else {
+			this.defaultButton = defaultButton;
+		}
 	}
 }

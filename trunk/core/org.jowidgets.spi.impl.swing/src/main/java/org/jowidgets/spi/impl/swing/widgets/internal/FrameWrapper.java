@@ -29,14 +29,18 @@ package org.jowidgets.spi.impl.swing.widgets.internal;
 
 import java.awt.Window;
 
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
+import javax.swing.JRootPane;
 
+import org.jowidgets.common.widgets.IButtonCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.impl.swing.widgets.SwingWindow;
 import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.spi.widgets.IMenuBarSpi;
+import org.jowidgets.util.TypeCast;
 
 public class FrameWrapper extends SwingWindow implements IFrameSpi {
 
@@ -63,5 +67,24 @@ public class FrameWrapper extends SwingWindow implements IFrameSpi {
 		}
 
 		return new MenuBarImpl(menuBar);
+	}
+
+	@Override
+	public void setDefaultButton(final IButtonCommon button) {
+		if (getUiReference() instanceof JFrame) {
+			setDefaultButton(((JFrame) getUiReference()).getRootPane(), button);
+		}
+		else if (getUiReference() instanceof JDialog) {
+			setDefaultButton(((JDialog) getUiReference()).getRootPane(), button);
+		}
+	}
+
+	private void setDefaultButton(final JRootPane rootPane, final IButtonCommon button) {
+		if (button != null) {
+			rootPane.setDefaultButton(TypeCast.toType(button.getUiReference(), JButton.class));
+		}
+		else {
+			rootPane.setDefaultButton(null);
+		}
 	}
 }

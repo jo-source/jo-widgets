@@ -30,6 +30,7 @@ package org.jowidgets.impl.widgets.basic;
 
 import java.util.List;
 
+import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IDisplay;
@@ -135,6 +136,11 @@ public class FrameImpl extends AbstractFrameSpiWrapper implements IFrameUi {
 	@Override
 	public void setSize(final Dimension size) {
 		windowDelegate.setSize(size);
+	}
+
+	@Override
+	public void setDefaultButton(final IButton button) {
+		getWidget().setDefaultButton(button);
 	}
 
 	@Override

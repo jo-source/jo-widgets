@@ -27,6 +27,7 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
+import org.jowidgets.api.types.InputDialogDefaultButtonPolicy;
 import org.jowidgets.api.widgets.blueprint.builder.convenience.IInputDialogSetupConvenience;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 
@@ -42,6 +43,8 @@ public interface IInputDialogSetupBuilder<INSTANCE_TYPE extends IInputDialogSetu
 	IButtonDescriptor getOkButton();
 
 	IButtonDescriptor getCancelButton();
+
+	INSTANCE_TYPE setDefaultButtonPolicy(InputDialogDefaultButtonPolicy policy);
 
 	INSTANCE_TYPE setCloseable(boolean closeable);
 

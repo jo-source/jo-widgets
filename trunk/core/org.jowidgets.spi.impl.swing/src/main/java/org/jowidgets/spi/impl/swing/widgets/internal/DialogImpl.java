@@ -30,10 +30,12 @@ package org.jowidgets.spi.impl.swing.widgets.internal;
 import java.awt.Component;
 import java.awt.Window;
 
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JMenuBar;
 
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.widgets.IButtonCommon;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.impl.swing.image.SwingImageRegistry;
@@ -43,6 +45,7 @@ import org.jowidgets.spi.impl.swing.widgets.internal.util.ChildRemover;
 import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.spi.widgets.IMenuBarSpi;
 import org.jowidgets.spi.widgets.setup.IDialogSetupSpi;
+import org.jowidgets.util.TypeCast;
 
 public class DialogImpl extends SwingWindow implements IFrameSpi {
 
@@ -69,6 +72,16 @@ public class DialogImpl extends SwingWindow implements IFrameSpi {
 	@Override
 	public JDialog getUiReference() {
 		return (JDialog) super.getUiReference();
+	}
+
+	@Override
+	public void setDefaultButton(final IButtonCommon button) {
+		if (button != null) {
+			getUiReference().getRootPane().setDefaultButton(TypeCast.toType(button.getUiReference(), JButton.class));
+		}
+		else {
+			getUiReference().getRootPane().setDefaultButton(null);
+		}
 	}
 
 	@Override

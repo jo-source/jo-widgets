@@ -29,6 +29,7 @@
 package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IMenuBar;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
@@ -41,6 +42,7 @@ import org.jowidgets.util.Assert;
 public class JoFrame extends Window<IFrame, IFrameBluePrint> implements IFrame {
 
 	private JoMenuBar menuBar;
+	private IButton defaultButton;
 
 	public JoFrame() {
 		super(Toolkit.getBluePrintFactory().frame());
@@ -83,6 +85,9 @@ public class JoFrame extends Window<IFrame, IFrameBluePrint> implements IFrame {
 		if (menuBar != null) {
 			menuBar.initialize(createMenuBar());
 		}
+		if (defaultButton != null) {
+			getWidget().setDefaultButton(defaultButton);
+		}
 	}
 
 	@Override
@@ -93,6 +98,16 @@ public class JoFrame extends Window<IFrame, IFrameBluePrint> implements IFrame {
 		else {
 			menuBar = new JoMenuBar();
 			return menuBar;
+		}
+	}
+
+	@Override
+	public void setDefaultButton(final IButton defaultButton) {
+		if (isInitialized()) {
+			getWidget().setDefaultButton(defaultButton);
+		}
+		else {
+			this.defaultButton = defaultButton;
 		}
 	}
 

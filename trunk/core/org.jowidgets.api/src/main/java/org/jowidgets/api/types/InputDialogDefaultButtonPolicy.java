@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,20 +26,12 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.api.types;
 
-import org.jowidgets.common.widgets.IFrameCommon;
+public enum InputDialogDefaultButtonPolicy {
 
-public interface IFrame extends IWindow, IContainer, IFrameCommon {
-
-	/**
-	 * Creates a new menu bar. If the frame already has a menu bar, the old menu bar will
-	 * be removed and exchanged by the new one.
-	 * 
-	 * @return The created menu bar.
-	 */
-	IMenuBar createMenuBar();
-
-	void setDefaultButton(IButton button);
+	OK,
+	CANCEL,
+	DISABLED;
 
 }
