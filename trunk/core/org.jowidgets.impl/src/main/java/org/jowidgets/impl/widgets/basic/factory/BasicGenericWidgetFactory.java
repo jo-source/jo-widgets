@@ -165,6 +165,7 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 		registerUiWidget(ICompositeDescriptorUi.class, ICompositeUi.class, ICompositeDescriptor.class, ICompositeBluePrint.class);
 	}
 
+	@SuppressWarnings({"rawtypes", "unchecked"})
 	private void registerUiWidget(
 		final Class uiDescriptorType,
 		final Class uiWidgetType,
