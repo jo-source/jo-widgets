@@ -28,30 +28,52 @@
 
 package org.jowidgets.workbench.impl.rcp.internal;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IPopupMenu;
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.workbench.api.IComponentTreeNode;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
+import org.jowidgets.workbench.api.IUiPart;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 
-public final class ComponentTreeNodeContext implements IComponentTreeNodeContext {
+public final class ComponentTreeNodeContext implements IComponentTreeNodeContext, IUiPart {
 
-	private final WorkbenchApplicationTree tree;
-	private final IComponentTreeNodeContext parentContext;
 	private final IWorkbenchApplicationContext applicationContext;
+	private final IComponentTreeNodeContext parentContext;
+	private final IComponentTreeNode treeNode;
+	private final WorkbenchApplicationTree tree;
 	private IPopupMenu menu;
+	private final List<ComponentTreeNodeContext> childContexts = new ArrayList<ComponentTreeNodeContext>();
+	private final Map<IComponentTreeNode, ComponentTreeNodeContext> nodeMap = new HashMap<IComponentTreeNode, ComponentTreeNodeContext>();
 
 	public ComponentTreeNodeContext(
-		final WorkbenchApplicationTree componentTree,
-		final IComponentTreeNode treeNode,
+		final IWorkbenchApplicationContext applicationContext,
 		final IComponentTreeNodeContext parentContext,
-		final IWorkbenchApplicationContext applicationContext) {
-		this.tree = componentTree;
-		this.parentContext = parentContext;
+		final IComponentTreeNode treeNode,
+		final WorkbenchApplicationTree tree) {
 		this.applicationContext = applicationContext;
+		this.parentContext = parentContext;
+		this.treeNode = treeNode;
+		this.tree = tree;
+		final List<IComponentTreeNode> subTreeNodes = treeNode.createChildren();
+		for (final IComponentTreeNode subTreeNode : subTreeNodes) {
+			final ComponentTreeNodeContext subTreeNodeContext = new ComponentTreeNodeContext(
+				applicationContext,
+				this,
+				subTreeNode,
+				tree);
+			childContexts.add(subTreeNodeContext);
+			nodeMap.put(subTreeNode, subTreeNodeContext);
+			subTreeNode.initialize(subTreeNodeContext);
+		}
 
-		final IComposite joTree = Toolkit.getWidgetWrapperFactory().createComposite(componentTree);
+		final IComposite joTree = Toolkit.getWidgetWrapperFactory().createComposite(tree);
 		if (treeNode.hasMenu()) {
 			menu = joTree.createPopupMenu();
 		}
@@ -59,17 +81,34 @@ public final class ComponentTreeNodeContext implements IComponentTreeNodeContext
 
 	@Override
 	public void add(final IComponentTreeNode componentTreeNode) {
-		// TODO Auto-generated method stub
+		add(childContexts.size(), componentTreeNode);
 	}
 
 	@Override
 	public void add(final int index, final IComponentTreeNode componentTreeNode) {
-		// TODO Auto-generated method stub
+		final ComponentTreeNodeContext treeNodeContext = new ComponentTreeNodeContext(
+			applicationContext,
+			this,
+			componentTreeNode,
+			tree);
+		childContexts.add(index, treeNodeContext);
+		nodeMap.put(componentTreeNode, treeNodeContext);
+		componentTreeNode.initialize(treeNodeContext);
+		tree.refresh(this);
 	}
 
 	@Override
 	public void remove(final IComponentTreeNode componentTreeNode) {
-		// TODO Auto-generated method stub
+		final ComponentTreeNodeContext treeNodeContext = nodeMap.get(componentTreeNode);
+		if (treeNodeContext != null) {
+			childContexts.remove(componentTreeNode);
+			nodeMap.remove(componentTreeNode);
+			tree.refresh(this);
+		}
+	}
+
+	public ComponentTreeNodeContext[] getComponentTreeNodeContexts() {
+		return childContexts.toArray(new ComponentTreeNodeContext[0]);
 	}
 
 	@Override
@@ -85,6 +124,21 @@ public final class ComponentTreeNodeContext implements IComponentTreeNodeContext
 	@Override
 	public IWorkbenchApplicationContext getWorkbenchApplicationContext() {
 		return applicationContext;
+	}
+
+	@Override
+	public String getLabel() {
+		return treeNode.getLabel();
+	}
+
+	@Override
+	public String getTooltip() {
+		return treeNode.getTooltip();
+	}
+
+	@Override
+	public IImageConstant getIcon() {
+		return treeNode.getIcon();
 	}
 
 }

@@ -124,8 +124,8 @@ public final class WorkbenchApplicationFolder extends Composite {
 				app.getIcon(),
 				PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT)));
 		tabItem.setToolTipText(app.getTooltip());
-		final WorkbenchApplicationContext context = new WorkbenchApplicationContext(workbenchContext, app);
-		final WorkbenchApplicationTree appTree = new WorkbenchApplicationTree(tabFolder, app, context);
+		final WorkbenchApplicationTree appTree = new WorkbenchApplicationTree(tabFolder, app);
+		final WorkbenchApplicationContext context = new WorkbenchApplicationContext(workbenchContext, app, appTree);
 		tabItem.setControl(appTree);
 		tabItem.setData(app);
 		app.initialize(context);

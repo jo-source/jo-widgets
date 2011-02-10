@@ -27,11 +27,6 @@
  */
 package org.jowidgets.workbench.impl.rcp.internal;
 
-import java.util.ArrayList;
-import java.util.IdentityHashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ITreeContentProvider;
@@ -56,34 +51,20 @@ import org.jowidgets.api.widgets.IToolBarPopupButton;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
-import org.jowidgets.workbench.api.IComponentTreeNode;
+import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 import org.jowidgets.workbench.api.IUiPart;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
-import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 
 public final class WorkbenchApplicationTree extends Composite {
 
 	private final Composite folderComposite;
-	private final IWorkbenchApplication application;
-	private final IWorkbenchApplicationContext applicationContext;
 	private IToolBar toolBar;
 	private IPopupMenu menu;
 	private IToolBarPopupButton menuButton;
 	private TreeViewer treeViewer;
 
-	private List<IComponentTreeNode> nodes;
-	private final Map<IComponentTreeNode, ComponentTreeNodeContext> nodeContextMap = new IdentityHashMap<IComponentTreeNode, ComponentTreeNodeContext>();
-
-	public WorkbenchApplicationTree(
-		final Composite parent,
-		final IWorkbenchApplication application,
-		final WorkbenchApplicationContext applicationContext) {
+	public WorkbenchApplicationTree(final Composite parent, final IWorkbenchApplication application) {
 		super(parent, SWT.NONE);
-
-		this.application = application;
-		this.applicationContext = applicationContext;
-		applicationContext.setTree(this);
-
 		setLayout(new FillLayout());
 
 		folderComposite = new Composite(parent, SWT.NONE);
@@ -107,7 +88,7 @@ public final class WorkbenchApplicationTree extends Composite {
 			});
 		}
 
-		addTreeViewer(application);
+		addTreeViewer();
 	}
 
 	private static class ViewLabelProvider extends ColumnLabelProvider {
@@ -141,7 +122,7 @@ public final class WorkbenchApplicationTree extends Composite {
 		}
 	}
 
-	public void addTreeViewer(final IWorkbenchApplication application) {
+	public void addTreeViewer() {
 		treeViewer = new TreeViewer(this, SWT.SINGLE | SWT.H_SCROLL | SWT.V_SCROLL);
 		ColumnViewerToolTipSupport.enableFor(treeViewer);
 		treeViewer.setContentProvider(new ITreeContentProvider() {
@@ -168,63 +149,33 @@ public final class WorkbenchApplicationTree extends Composite {
 
 			@Override
 			public Object[] getChildren(final Object parentElement) {
-				if (parentElement instanceof IWorkbenchApplication) {
-					if (nodes == null) {
-						nodes = new ArrayList<IComponentTreeNode>();
-						nodes.addAll(((IWorkbenchApplication) parentElement).createComponentTreeNodes());
-						for (final IComponentTreeNode node : nodes) {
-							final ComponentTreeNodeContext nodeContext = new ComponentTreeNodeContext(
-								WorkbenchApplicationTree.this,
-								node,
-								null,
-								applicationContext);
-							node.initialize(nodeContext);
-							nodeContextMap.put(node, nodeContext);
-						}
-					}
-					return nodes.toArray();
+				if (parentElement instanceof WorkbenchApplicationContext) {
+					return ((WorkbenchApplicationContext) parentElement).getComponentTreeNodeContexts();
 				}
-				if (parentElement instanceof IComponentTreeNode) {
-					// TODO handle sub components
+				if (parentElement instanceof IComponentTreeNodeContext) {
+					return ((ComponentTreeNodeContext) parentElement).getComponentTreeNodeContexts();
 				}
 				return new Object[0];
 			}
 		});
 		treeViewer.setLabelProvider(new ViewLabelProvider());
-		treeViewer.setInput(application);
 
 		final Tree tree = treeViewer.getTree();
 		tree.addMenuDetectListener(new MenuDetectListener() {
 			@Override
 			public void menuDetected(final MenuDetectEvent e) {
-				final ComponentTreeNodeContext context = nodeContextMap.get(tree.getSelection()[0].getData());
-				if (context != null) {
-					final IPopupMenu nodeMenu = context.getMenu();
-					if (nodeMenu != null && !nodeMenu.getChildren().isEmpty()) {
-						final Point position = WorkbenchApplicationTree.this.toControl(e.x, e.y);
-						nodeMenu.show(new Position(position.x, position.y));
-					}
+				final ComponentTreeNodeContext context = (ComponentTreeNodeContext) tree.getSelection()[0].getData();
+				final IPopupMenu nodeMenu = context.getMenu();
+				if (nodeMenu != null && !nodeMenu.getChildren().isEmpty()) {
+					final Point position = WorkbenchApplicationTree.this.toControl(e.x, e.y);
+					nodeMenu.show(new Position(position.x, position.y));
 				}
 			}
 		});
 	}
 
-	public void addTreeNode(final IComponentTreeNode node) {
-		addTreeNode(nodes.size(), node);
-	}
-
-	public void addTreeNode(final int index, final IComponentTreeNode node) {
-		final ComponentTreeNodeContext nodeContext = new ComponentTreeNodeContext(this, node, null, applicationContext);
-		nodes.add(index, node);
-		node.initialize(nodeContext);
-		nodeContextMap.put(node, nodeContext);
-		treeViewer.refresh(application);
-	}
-
-	public void removeTreeNode(final IComponentTreeNode node) {
-		nodes.remove(node);
-		nodeContextMap.remove(node);
-		treeViewer.refresh(application);
+	public void setInput(final WorkbenchApplicationContext applicationContext) {
+		treeViewer.setInput(applicationContext);
 	}
 
 	public void refresh(final Object object) {

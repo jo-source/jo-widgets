@@ -28,41 +28,62 @@
 
 package org.jowidgets.workbench.impl.rcp.internal;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.IToolBar;
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.workbench.api.IComponentTreeNode;
+import org.jowidgets.workbench.api.IUiPart;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 import org.jowidgets.workbench.api.IWorkbenchContext;
 
-public final class WorkbenchApplicationContext implements IWorkbenchApplicationContext {
+public final class WorkbenchApplicationContext implements IWorkbenchApplicationContext, IUiPart {
 
 	private final IWorkbenchContext workbenchContext;
 	private final IWorkbenchApplication application;
-	private WorkbenchApplicationTree tree;
+	private final WorkbenchApplicationTree tree;
+	private final List<ComponentTreeNodeContext> childContexts = new ArrayList<ComponentTreeNodeContext>();
 
-	public WorkbenchApplicationContext(final IWorkbenchContext workbenchContext, final IWorkbenchApplication application) {
+	public WorkbenchApplicationContext(
+		final IWorkbenchContext workbenchContext,
+		final IWorkbenchApplication application,
+		final WorkbenchApplicationTree tree) {
 		this.workbenchContext = workbenchContext;
 		this.application = application;
-	}
-
-	public void setTree(final WorkbenchApplicationTree tree) {
 		this.tree = tree;
+		final List<IComponentTreeNode> treeNodes = application.createComponentTreeNodes();
+		for (final IComponentTreeNode treeNode : treeNodes) {
+			final ComponentTreeNodeContext treeNodeContext = new ComponentTreeNodeContext(this, null, treeNode, tree);
+			childContexts.add(treeNodeContext);
+			treeNode.initialize(treeNodeContext);
+		}
+		tree.setInput(this);
 	}
 
 	@Override
 	public void add(final IComponentTreeNode componentTreeNode) {
-		tree.addTreeNode(componentTreeNode);
+		add(childContexts.size(), componentTreeNode);
 	}
 
 	@Override
 	public void add(final int index, final IComponentTreeNode componentTreeNode) {
-		tree.addTreeNode(index, componentTreeNode);
+		final ComponentTreeNodeContext treeNodeContext = new ComponentTreeNodeContext(this, null, componentTreeNode, tree);
+		childContexts.add(index, treeNodeContext);
+		componentTreeNode.initialize(treeNodeContext);
+		tree.refresh(this);
 	}
 
 	@Override
 	public void remove(final IComponentTreeNode componentTreeNode) {
-		tree.removeTreeNode(componentTreeNode);
+		childContexts.remove(componentTreeNode);
+		tree.refresh(this);
+	}
+
+	public ComponentTreeNodeContext[] getComponentTreeNodeContexts() {
+		return childContexts.toArray(new ComponentTreeNodeContext[0]);
 	}
 
 	@Override
@@ -83,6 +104,21 @@ public final class WorkbenchApplicationContext implements IWorkbenchApplicationC
 	@Override
 	public IToolBar getToolBar() {
 		return tree.getToolBar();
+	}
+
+	@Override
+	public String getLabel() {
+		return application.getLabel();
+	}
+
+	@Override
+	public String getTooltip() {
+		return application.getTooltip();
+	}
+
+	@Override
+	public IImageConstant getIcon() {
+		return application.getIcon();
 	}
 
 }
