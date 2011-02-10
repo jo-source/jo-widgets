@@ -45,7 +45,7 @@ public interface ITabItemSpi extends IItemSpi, IContainerSpi, ITabItemObservable
 	 * Attaches a content detached from another item to this item. If the content to set was detached from
 	 * an item of another folder, the source item must be reparentable.
 	 * 
-	 * @param content The content to set.
+	 * @param content The content to set. Content must not be null.
 	 */
 	void attachContent(Object content);
 

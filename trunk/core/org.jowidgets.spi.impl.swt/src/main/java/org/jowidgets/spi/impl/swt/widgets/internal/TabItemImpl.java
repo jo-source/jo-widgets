@@ -56,23 +56,28 @@ import org.jowidgets.spi.impl.swt.widgets.SwtContainer;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.ITabItemSpi;
 import org.jowidgets.spi.widgets.controler.TabItemObservableSpi;
+import org.jowidgets.util.Assert;
+import org.jowidgets.util.TypeCast;
 
 public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 
-	private final SwtContainer swtContainer;
+	private final IGenericWidgetFactory genericWidgetFactory;
 	private final CTabItem cTabItem;
 	private final CTabFolder parentFolder;
 
-	public TabItemImpl(final IGenericWidgetFactory factory, final CTabFolder parentFolder, final boolean closeable) {
-		this(factory, parentFolder, closeable, null);
+	private SwtContainer swtContainer;
+
+	public TabItemImpl(final IGenericWidgetFactory genericWidgetFactory, final CTabFolder parentFolder, final boolean closeable) {
+		this(genericWidgetFactory, parentFolder, closeable, null);
 	}
 
 	public TabItemImpl(
-		final IGenericWidgetFactory factory,
+		final IGenericWidgetFactory genericWidgetFactory,
 		final CTabFolder parentFolder,
 		final boolean closeable,
 		final Integer index) {
 
+		this.genericWidgetFactory = genericWidgetFactory;
 		this.parentFolder = parentFolder;
 
 		if (index != null) {
@@ -85,7 +90,7 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 		final Composite composite = new Composite(parentFolder, SWT.NONE);
 		composite.setLayout(new MigLayout("", "[]", "[]"));
 
-		swtContainer = new SwtComposite(factory, composite);
+		swtContainer = new SwtComposite(genericWidgetFactory, composite);
 
 		cTabItem.setControl(swtContainer.getUiReference());
 
@@ -126,21 +131,18 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 
 	@Override
 	public void attachContent(final Object content) {
-		if (content != null && !(content instanceof Control)) {
-			throw new IllegalArgumentException("Content must be instance of '" + Control.class.getName() + "' or null");
-		}
-		final Control control = (Control) content;
-		if (control != null) {
-			if (control.getParent() != parentFolder) {
-				if (control.isReparentable()) {
-					control.setParent(parentFolder);
-				}
-				else {
-					throw new IllegalArgumentException("Content is not reparentable");
-				}
+		Assert.paramNotNull(content, "content");
+		final Composite composite = TypeCast.toType(content, Composite.class);
+		if (composite.getParent() != parentFolder) {
+			if (composite.isReparentable()) {
+				composite.setParent(parentFolder);
+			}
+			else {
+				throw new IllegalArgumentException("Content is not reparentable");
 			}
 		}
-		cTabItem.setControl(control);
+		swtContainer = new SwtComposite(genericWidgetFactory, composite);
+		cTabItem.setControl(composite);
 	}
 
 	@Override
