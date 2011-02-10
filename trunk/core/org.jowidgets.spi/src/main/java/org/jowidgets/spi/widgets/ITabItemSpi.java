@@ -49,4 +49,6 @@ public interface ITabItemSpi extends IItemSpi, IContainerSpi, ITabItemObservable
 	 */
 	void attachContent(Object content);
 
+	IPopupMenuSpi createTabPopupMenu();
+
 }

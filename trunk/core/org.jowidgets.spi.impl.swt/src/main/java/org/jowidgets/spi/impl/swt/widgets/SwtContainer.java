@@ -51,8 +51,9 @@ import org.jowidgets.util.Assert;
 public class SwtContainer implements IContainerSpi {
 
 	private final IGenericWidgetFactory factory;
-	private final Composite composite;
 	private final SwtComponent swtComponentDelegate;
+
+	private Composite composite;
 
 	public SwtContainer(final IGenericWidgetFactory factory, final Composite composite) {
 
@@ -62,6 +63,11 @@ public class SwtContainer implements IContainerSpi {
 		this.factory = factory;
 		this.composite = composite;
 		this.swtComponentDelegate = new SwtComponent(composite);
+	}
+
+	public void setComposite(final Composite composite) {
+		this.composite = composite;
+		swtComponentDelegate.setControl(composite);
 	}
 
 	@Override

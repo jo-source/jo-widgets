@@ -43,6 +43,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
@@ -73,6 +74,12 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 
 	private final Set<ITabItemListener> itemListeners;
 	private final ITabItemListenerSpi tabItemListenerSpi;
+
+	private final Set<IPopupDetectionListener> popupDetectionListeners;
+	private final IPopupDetectionListener popupDetectionListener;
+
+	private final Set<IPopupDetectionListener> tabPopupDetectionListeners;
+	private final IPopupDetectionListener tabPopupDetectionListener;
 
 	public TabItemImpl(final ITabItemSpi widget, final ITabItemDescriptor descriptor, final TabFolderImpl tabFolderImpl) {
 		super(widget);
@@ -126,6 +133,30 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 		};
 		widget.addTabItemListener(tabItemListenerSpi);
 
+		this.popupDetectionListeners = new HashSet<IPopupDetectionListener>();
+		this.tabPopupDetectionListeners = new HashSet<IPopupDetectionListener>();
+
+		this.popupDetectionListener = new IPopupDetectionListener() {
+			@Override
+			public void popupDetected(final Position position) {
+				for (final IPopupDetectionListener listener : popupDetectionListeners) {
+					listener.popupDetected(position);
+				}
+			}
+		};
+
+		this.tabPopupDetectionListener = new IPopupDetectionListener() {
+			@Override
+			public void popupDetected(final Position position) {
+				for (final IPopupDetectionListener listener : tabPopupDetectionListeners) {
+					listener.popupDetected(position);
+				}
+			}
+		};
+
+		widget.addPopupDetectionListener(popupDetectionListener);
+		widget.addTabPopupDetectionListener(tabPopupDetectionListener);
+
 		this.containerDelegate = new ContainerDelegate(widget, this);
 	}
 
@@ -165,6 +196,8 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 		widget.setToolTipText(toolTipText);
 		widget.setIcon(icon);
 		widget.addTabItemListener(tabItemListenerSpi);
+		widget.addPopupDetectionListener(popupDetectionListener);
+		widget.addTabPopupDetectionListener(tabPopupDetectionListener);
 		widget.attachContent(detachedContent);
 	}
 
@@ -172,8 +205,11 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 		if (detached) {
 			throw new IllegalStateException("Item is already detached");
 		}
-		detachedContent = getWidget().detachContent();
-		getWidget().removeTabItemListener(tabItemListenerSpi);
+		final ITabItemSpi widget = getWidget();
+		detachedContent = widget.detachContent();
+		widget.removeTabItemListener(tabItemListenerSpi);
+		widget.removePopupDetectionListener(popupDetectionListener);
+		widget.removeTabPopupDetectionListener(tabPopupDetectionListener);
 		this.detached = true;
 	}
 
@@ -289,6 +325,12 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 	}
 
 	@Override
+	public IPopupMenu createTabPopupMenu() {
+		checkDetached();
+		return new PopupMenuImpl(getWidget().createTabPopupMenu(), this);
+	}
+
+	@Override
 	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
 		checkDetached();
 		super.setLayout(layoutDescriptor);
@@ -362,14 +404,22 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 
 	@Override
 	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		checkDetached();
-		super.addPopupDetectionListener(listener);
+		popupDetectionListeners.add(listener);
 	}
 
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		checkDetached();
-		super.removePopupDetectionListener(listener);
+		popupDetectionListeners.remove(listener);
+	}
+
+	@Override
+	public void addTabPopupDetectionListener(final IPopupDetectionListener listener) {
+		tabPopupDetectionListeners.add(listener);
+	}
+
+	@Override
+	public void removeTabPopupDetectionListener(final IPopupDetectionListener listener) {
+		tabPopupDetectionListeners.remove(listener);
 	}
 
 	@Override

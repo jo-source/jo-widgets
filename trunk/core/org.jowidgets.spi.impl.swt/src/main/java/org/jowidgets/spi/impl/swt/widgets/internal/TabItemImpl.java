@@ -28,6 +28,9 @@
 
 package org.jowidgets.spi.impl.swt.widgets.internal;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import net.miginfocom.swt.MigLayout;
 
 import org.eclipse.swt.SWT;
@@ -44,6 +47,7 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
@@ -61,11 +65,10 @@ import org.jowidgets.util.TypeCast;
 
 public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 
-	private final IGenericWidgetFactory genericWidgetFactory;
 	private final CTabItem cTabItem;
 	private final CTabFolder parentFolder;
-
-	private SwtContainer swtContainer;
+	private final SwtContainer swtContainer;
+	private final Set<IPopupDetectionListener> tabPopupDetectionListeners;
 
 	public TabItemImpl(final IGenericWidgetFactory genericWidgetFactory, final CTabFolder parentFolder, final boolean closeable) {
 		this(genericWidgetFactory, parentFolder, closeable, null);
@@ -77,8 +80,9 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 		final boolean closeable,
 		final Integer index) {
 
-		this.genericWidgetFactory = genericWidgetFactory;
 		this.parentFolder = parentFolder;
+
+		this.tabPopupDetectionListeners = new HashSet<IPopupDetectionListener>();
 
 		if (index != null) {
 			cTabItem = new CTabItem(parentFolder, closeable ? SWT.CLOSE : SWT.NONE, index.intValue());
@@ -141,7 +145,7 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 				throw new IllegalArgumentException("Content is not reparentable");
 			}
 		}
-		swtContainer = new SwtComposite(genericWidgetFactory, composite);
+		swtContainer.setComposite(composite);
 		cTabItem.setControl(composite);
 	}
 
@@ -229,6 +233,11 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 	}
 
 	@Override
+	public IPopupMenuSpi createTabPopupMenu() {
+		return new PopupMenuImpl(parentFolder);
+	}
+
+	@Override
 	public void redraw() {
 		swtContainer.redraw();
 	}
@@ -274,6 +283,16 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 	}
 
 	@Override
+	public void addTabPopupDetectionListener(final IPopupDetectionListener listener) {
+		tabPopupDetectionListeners.add(listener);
+	}
+
+	@Override
+	public void removeTabPopupDetectionListener(final IPopupDetectionListener listener) {
+		tabPopupDetectionListeners.remove(listener);
+	}
+
+	@Override
 	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
 		swtContainer.setLayout(layoutDescriptor);
 	}
@@ -291,6 +310,12 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 	@Override
 	public void removeAll() {
 		swtContainer.removeAll();
+	}
+
+	protected void firePopopDetected(final Position position) {
+		for (final IPopupDetectionListener listener : tabPopupDetectionListeners) {
+			listener.popupDetected(position);
+		}
 	}
 
 }

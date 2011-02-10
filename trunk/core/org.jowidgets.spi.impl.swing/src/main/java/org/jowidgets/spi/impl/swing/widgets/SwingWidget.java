@@ -33,7 +33,7 @@ import org.jowidgets.spi.widgets.IWidgetSpi;
 
 public class SwingWidget implements IWidgetSpi {
 
-	private final Component component;
+	private Component component;
 
 	public SwingWidget(final Component component) {
 		super();
@@ -53,6 +53,10 @@ public class SwingWidget implements IWidgetSpi {
 	@Override
 	public boolean isEnabled() {
 		return component.isEnabled();
+	}
+
+	public void setComponent(final Component component) {
+		this.component = component;
 	}
 
 }

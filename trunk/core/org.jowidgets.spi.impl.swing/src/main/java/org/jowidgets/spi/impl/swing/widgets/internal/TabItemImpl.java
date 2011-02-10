@@ -45,7 +45,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.basic.BasicButtonUI;
@@ -56,8 +55,10 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
+import org.jowidgets.common.widgets.controler.impl.PopupDetectionObservable;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
@@ -72,14 +73,12 @@ import org.jowidgets.util.TypeCast;
 
 public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 
-	private final IGenericWidgetFactory genericWidgetFactory;
-
 	private final JPanel tabContentContainer;
 	private final JPanel tabContent;
 	private final TabComponent tabComponent;
 	private final JTabbedPane tabbedPane;
-
-	private SwingContainer swingContainer;
+	private final SwingContainer swingContainer;
+	private final PopupDetectionObservable tabPopupDetectionObservable;
 
 	public TabItemImpl(final IGenericWidgetFactory factory, final JTabbedPane parentFolder, final boolean closeable) {
 		this(factory, parentFolder, closeable, null);
@@ -93,8 +92,9 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 
 		super();
 
-		this.genericWidgetFactory = genericWidgetFactory;
 		this.tabbedPane = parentFolder;
+
+		this.tabPopupDetectionObservable = new PopupDetectionObservable();
 
 		this.tabContentContainer = new JPanel();
 		this.tabContentContainer.setLayout(new MigLayout("", "0[grow, 0::]0", "0[grow, 0::]0"));
@@ -108,7 +108,7 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 
 		this.tabContent = new JPanel();
 		this.tabContent.setLayout(new MigLayout("", "[]", "[]"));
-
+		this.swingContainer = new SwingContainer(genericWidgetFactory, tabContent);
 		attachContent(tabContent);
 
 		this.tabComponent = new TabComponent(closeable);
@@ -123,6 +123,21 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 			}
 		});
 
+	}
+
+	@Override
+	public void addTabPopupDetectionListener(final IPopupDetectionListener listener) {
+		tabPopupDetectionObservable.addPopupDetectionListener(listener);
+	}
+
+	@Override
+	public void removeTabPopupDetectionListener(final IPopupDetectionListener listener) {
+		tabPopupDetectionObservable.removePopupDetectionListener(listener);
+	}
+
+	@Override
+	public IPopupMenuSpi createTabPopupMenu() {
+		return new PopupMenuImpl(tabComponent);
 	}
 
 	@Override
@@ -141,7 +156,7 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 		tabContentContainer.add(panel, "growx, growy, w 0::, h 0::");
 		tabContentContainer.revalidate();
 		tabContentContainer.repaint();
-		this.swingContainer = new SwingContainer(genericWidgetFactory, panel);
+		swingContainer.setContainer(panel);
 	}
 
 	@Override
@@ -315,13 +330,21 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 			final MouseListener mouseListener = new MouseAdapter() {
 				@Override
 				public void mousePressed(final MouseEvent e) {
-					if (SwingUtilities.isLeftMouseButton(e)) {
-						final int i = tabbedPane.indexOfTabComponent(TabComponent.this);
-						if (i != -1) {
-							if (tabbedPane.getSelectedIndex() != i) {
-								tabbedPane.setSelectedIndex(i);
-							}
+					final int i = tabbedPane.indexOfTabComponent(TabComponent.this);
+					if (i != -1) {
+						if (tabbedPane.getSelectedIndex() != i) {
+							tabbedPane.setSelectedIndex(i);
 						}
+					}
+					if (e.isPopupTrigger()) {
+						tabPopupDetectionObservable.firePopupDetected(new Position(e.getX(), e.getY()));
+					}
+				}
+
+				@Override
+				public void mouseReleased(final MouseEvent e) {
+					if (e.isPopupTrigger()) {
+						tabPopupDetectionObservable.firePopupDetected(new Position(e.getX(), e.getY()));
 					}
 				}
 

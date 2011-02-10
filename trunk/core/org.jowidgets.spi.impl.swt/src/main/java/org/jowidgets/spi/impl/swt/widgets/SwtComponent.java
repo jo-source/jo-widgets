@@ -49,19 +49,39 @@ import org.jowidgets.spi.widgets.IPopupMenuSpi;
 public class SwtComponent extends SwtWidget implements IComponentSpi {
 
 	private final PopupDetectionObservable popupDetectionObservable;
+	private MenuDetectListener menuDetectListener;
 
 	public SwtComponent(final Control control) {
 		super(control);
 		popupDetectionObservable = new PopupDetectionObservable();
 
-		getUiReference().addMenuDetectListener(new MenuDetectListener() {
+		this.menuDetectListener = new MenuDetectListener() {
 
 			@Override
 			public void menuDetected(final MenuDetectEvent e) {
 				final Point position = getUiReference().toControl(e.x, e.y);
 				popupDetectionObservable.firePopupDetected(new Position(position.x, position.y));
 			}
-		});
+		};
+
+		getUiReference().addMenuDetectListener(menuDetectListener);
+	}
+
+	protected PopupDetectionObservable getPopupDetectionObservable() {
+		return popupDetectionObservable;
+	}
+
+	protected void setMenuDetectListener(final MenuDetectListener menuDetectListener) {
+		getUiReference().removeMenuDetectListener(this.menuDetectListener);
+		this.menuDetectListener = menuDetectListener;
+		getUiReference().addMenuDetectListener(menuDetectListener);
+	}
+
+	@Override
+	public void setControl(final Control control) {
+		getUiReference().removeMenuDetectListener(menuDetectListener);
+		super.setControl(control);
+		getUiReference().addMenuDetectListener(menuDetectListener);
 	}
 
 	@Override

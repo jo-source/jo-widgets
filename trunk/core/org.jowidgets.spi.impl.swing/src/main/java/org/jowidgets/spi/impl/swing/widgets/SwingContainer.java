@@ -52,8 +52,9 @@ import org.jowidgets.util.Assert;
 public class SwingContainer implements IContainerSpi {
 
 	private final IGenericWidgetFactory factory;
-	private final Container container;
 	private final SwingComponent swingComponentDelegate;
+
+	private Container container;
 
 	public SwingContainer(final IGenericWidgetFactory factory, final Container container) {
 		Assert.paramNotNull(factory, "factory");
@@ -62,6 +63,11 @@ public class SwingContainer implements IContainerSpi {
 		this.factory = factory;
 		this.container = container;
 		this.swingComponentDelegate = new SwingComponent(container);
+	}
+
+	public void setContainer(final Container container) {
+		this.container = container;
+		swingComponentDelegate.setComponent(container);
 	}
 
 	@Override

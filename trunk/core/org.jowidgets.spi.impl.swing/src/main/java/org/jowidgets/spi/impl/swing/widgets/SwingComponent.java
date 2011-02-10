@@ -30,6 +30,7 @@ package org.jowidgets.spi.impl.swing.widgets;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JComponent;
 
@@ -49,13 +50,13 @@ import org.jowidgets.spi.widgets.IPopupMenuSpi;
 public class SwingComponent extends SwingWidget implements IComponentSpi {
 
 	private final PopupDetectionObservable popupDetectionObservable;
+	private final MouseListener mouseListener;
 
 	public SwingComponent(final Component component) {
 		super(component);
 		this.popupDetectionObservable = new PopupDetectionObservable();
 
-		component.addMouseListener(new MouseAdapter() {
-
+		this.mouseListener = new MouseAdapter() {
 			@Override
 			public void mouseReleased(final MouseEvent e) {
 				if (e.isPopupTrigger()) {
@@ -69,8 +70,16 @@ public class SwingComponent extends SwingWidget implements IComponentSpi {
 					popupDetectionObservable.firePopupDetected(new Position(e.getX(), e.getY()));
 				}
 			}
+		};
 
-		});
+		component.addMouseListener(mouseListener);
+	}
+
+	@Override
+	public void setComponent(final Component component) {
+		getUiReference().removeMouseListener(mouseListener);
+		super.setComponent(component);
+		getUiReference().addMouseListener(mouseListener);
 	}
 
 	@Override

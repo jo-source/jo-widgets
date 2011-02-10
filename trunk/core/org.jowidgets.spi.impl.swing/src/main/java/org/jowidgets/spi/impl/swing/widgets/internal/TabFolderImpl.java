@@ -60,6 +60,7 @@ public class TabFolderImpl extends SwingControl implements ITabFolderSpi {
 		else {
 			throw new IllegalArgumentException("TabPlacement '" + setup.getTabPlacement() + "' is not known");
 		}
+
 	}
 
 	@Override

@@ -28,11 +28,18 @@
 
 package org.jowidgets.spi.impl.swt.widgets.internal;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.events.MenuDetectEvent;
+import org.eclipse.swt.events.MenuDetectListener;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.TabPlacement;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.impl.swt.widgets.SwtControl;
@@ -45,6 +52,7 @@ public class TabFolderImpl extends SwtControl implements ITabFolderSpi {
 
 	private final IGenericWidgetFactory widgetFactory;
 	private final boolean tabsCloseable;
+	private final Map<CTabItem, TabItemImpl> items;
 
 	public TabFolderImpl(final IGenericWidgetFactory widgetFactory, final Object parentUiReference, final ITabFolderSetupSpi setup) {
 		super(new CTabFolder((Composite) parentUiReference, getStyle(setup)));
@@ -52,8 +60,28 @@ public class TabFolderImpl extends SwtControl implements ITabFolderSpi {
 		this.tabsCloseable = setup.isTabsCloseable();
 		this.widgetFactory = widgetFactory;
 
+		this.items = new HashMap<CTabItem, TabItemImpl>();
+
 		getUiReference().setUnselectedImageVisible(true);
 		getUiReference().setUnselectedCloseVisible(true);
+
+		setMenuDetectListener(new MenuDetectListener() {
+
+			@Override
+			public void menuDetected(final MenuDetectEvent e) {
+				final Point position = getUiReference().toControl(e.x, e.y);
+				final CTabItem item = getUiReference().getItem(position);
+				if (item == null) {
+					getPopupDetectionObservable().firePopupDetected(new Position(position.x, position.y));
+				}
+				else {
+					final TabItemImpl itemImpl = items.get(item);
+					getUiReference().setSelection(item);
+					itemImpl.fireSelected();
+					itemImpl.firePopopDetected(new Position(position.x, position.y));
+				}
+			}
+		});
 	}
 
 	@Override
@@ -64,6 +92,7 @@ public class TabFolderImpl extends SwtControl implements ITabFolderSpi {
 	@Override
 	public void removeItem(final int index) {
 		final CTabItem item = getUiReference().getItem(index);
+		items.remove(item);
 		final Control control = item.getControl();
 		if (control != null && !control.isDisposed()) {
 			control.dispose();
@@ -73,12 +102,16 @@ public class TabFolderImpl extends SwtControl implements ITabFolderSpi {
 
 	@Override
 	public ITabItemSpi addItem(final ITabItemSetupSpi setup) {
-		return new TabItemImpl(widgetFactory, getUiReference(), tabsCloseable);
+		final TabItemImpl result = new TabItemImpl(widgetFactory, getUiReference(), tabsCloseable);
+		items.put(result.getUiReference(), result);
+		return result;
 	}
 
 	@Override
 	public ITabItemSpi addItem(final int index, final ITabItemSetupSpi setup) {
-		return new TabItemImpl(widgetFactory, getUiReference(), tabsCloseable, Integer.valueOf(index));
+		final TabItemImpl result = new TabItemImpl(widgetFactory, getUiReference(), tabsCloseable, Integer.valueOf(index));
+		items.put(result.getUiReference(), result);
+		return result;
 	}
 
 	@Override

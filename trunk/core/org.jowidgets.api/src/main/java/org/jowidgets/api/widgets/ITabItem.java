@@ -42,4 +42,6 @@ public interface ITabItem extends IItem, IContainer, ITabItemObservable, ITabIte
 
 	boolean isDetached();
 
+	IPopupMenu createTabPopupMenu();
+
 }
