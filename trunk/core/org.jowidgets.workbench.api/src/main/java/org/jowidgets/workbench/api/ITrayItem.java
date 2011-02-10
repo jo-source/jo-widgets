@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, M. Grossmann, M. Woelker, H. Westphal
+ * Copyright (c) 2011, HWestphal
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -9,7 +9,7 @@
  * * Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * * Neither the name of jo-widgets.org nor the
+ * * Neither the name of the jo-widgets.org nor the
  *   names of its contributors may be used to endorse or promote products
  *   derived from this software without specific prior written permission.
  * 
@@ -25,27 +25,24 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.workbench.impl.rcp.internal;
 
-import org.osgi.framework.BundleActivator;
-import org.osgi.framework.BundleContext;
+package org.jowidgets.workbench.api;
 
-public final class Activator implements BundleActivator {
+import org.jowidgets.api.widgets.IMenu;
+import org.jowidgets.common.image.IImageConstant;
 
-	private static Activator instance;
+public interface ITrayItem {
 
-	public static Activator getDefault() {
-		return instance;
-	}
+	IMenu getMenu();
 
-	@Override
-	public void start(final BundleContext context) throws Exception {
-		instance = this;
-	}
+	void setIcon(IImageConstant imageKey);
 
-	@Override
-	public void stop(final BundleContext context) throws Exception {
-		instance = null;
-	}
+	void setTooltip(String tooltip);
+
+	void showInfo(String title, String message);
+
+	void showWarning(String title, String message);
+
+	void showError(String title, String message);
 
 }

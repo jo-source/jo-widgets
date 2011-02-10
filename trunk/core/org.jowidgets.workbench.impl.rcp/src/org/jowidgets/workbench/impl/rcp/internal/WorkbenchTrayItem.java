@@ -45,16 +45,16 @@ import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Position;
-import org.jowidgets.workbench.api.ITray;
+import org.jowidgets.workbench.api.ITrayItem;
 import org.jowidgets.workbench.api.IWorkbench;
 
-public final class WorkbenchTray implements ITray {
+public final class WorkbenchTrayItem implements ITrayItem {
 
 	private final Shell shell;
 	private final IPopupMenu menu;
 	private TrayItem trayItem;
 
-	public WorkbenchTray(final IFrame frame, final IWorkbench workbench) {
+	public WorkbenchTrayItem(final IFrame frame, final IWorkbench workbench) {
 		shell = (Shell) frame.getUiReference();
 		menu = frame.createPopupMenu();
 		final Tray tray = shell.getDisplay().getSystemTray();

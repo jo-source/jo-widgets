@@ -44,7 +44,7 @@ import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.workbench.api.ITray;
+import org.jowidgets.workbench.api.ITrayItem;
 import org.jowidgets.workbench.api.IWorkbench;
 import org.jowidgets.workbench.api.IWorkbenchContext;
 
@@ -55,7 +55,7 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	private IMenuBar menuBar;
 	private IToolBar toolBar;
 	private IContainer statusBar;
-	private ITray tray;
+	private ITrayItem tray;
 	private Callable<Boolean> closeHandler;
 	private WorkbenchApplicationFolder applicationFolder;
 
@@ -80,7 +80,7 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		return statusBar;
 	}
 
-	public ITray getTray() {
+	public ITrayItem getTray() {
 		return tray;
 	}
 
@@ -156,8 +156,8 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 			statusBar = frame.add(bpf.compositeWithBorder(), "growx");
 		}
 
-		if (workbench.hasTray()) {
-			tray = new WorkbenchTray(frame, workbench);
+		if (workbench.hasTrayItem()) {
+			tray = new WorkbenchTrayItem(frame, workbench);
 		}
 	}
 

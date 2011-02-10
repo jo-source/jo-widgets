@@ -35,7 +35,7 @@ import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IMenuBar;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.common.application.IApplicationLifecycle;
-import org.jowidgets.workbench.api.ITray;
+import org.jowidgets.workbench.api.ITrayItem;
 import org.jowidgets.workbench.api.IWorkbench;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
 import org.jowidgets.workbench.api.IWorkbenchContext;
@@ -100,12 +100,23 @@ public final class WorkbenchContext implements IWorkbenchContext {
 	}
 
 	@Override
-	public ITray getTray() {
+	public ITrayItem getTrayItem() {
 		return workbenchAdvisor.getWorkbenchWindowAdvisor().getTray();
 	}
 
 	@Override
-	public void setCloseHandler(final Callable<Boolean> closeHandler) {
+	public void setWindowCloseHandler(final Callable<Boolean> closeHandler) {
 		workbenchAdvisor.getWorkbenchWindowAdvisor().setCloseHandler(closeHandler);
 	}
+
+	@Override
+	public void addShutdownHook(final Runnable shutdownHook) {
+		workbenchAdvisor.addShutdownHook(shutdownHook);
+	}
+
+	@Override
+	public void removeShutdownHook(final Runnable shutdownHook) {
+		workbenchAdvisor.removeShutdownHook(shutdownHook);
+	}
+
 }

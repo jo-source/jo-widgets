@@ -33,8 +33,6 @@ public interface IView extends ILifecycleCallback {
 
 	boolean hasMenu();
 
-	void setMenuTooltip(String tooltip);
-
 	boolean hasToolBar();
 
 }

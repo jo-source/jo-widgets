@@ -28,61 +28,63 @@
 
 package org.jowidgets.workbench.impl.rcp.internal;
 
-import org.jowidgets.api.widgets.IMenu;
-import org.jowidgets.api.widgets.IToolBar;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.workbench.api.IComponentTreeNode;
-import org.jowidgets.workbench.api.IWorkbenchApplication;
+import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
-import org.jowidgets.workbench.api.IWorkbenchContext;
 
-public final class WorkbenchApplicationContext implements IWorkbenchApplicationContext {
+public final class ComponentTreeNodeContext implements IComponentTreeNodeContext {
 
-	private final IWorkbenchContext workbenchContext;
-	private final IWorkbenchApplication application;
-	private WorkbenchApplicationTree tree;
+	private final WorkbenchApplicationTree tree;
+	private final IComponentTreeNodeContext parentContext;
+	private final IWorkbenchApplicationContext applicationContext;
+	private IPopupMenu menu;
 
-	public WorkbenchApplicationContext(final IWorkbenchContext workbenchContext, final IWorkbenchApplication application) {
-		this.workbenchContext = workbenchContext;
-		this.application = application;
-	}
+	public ComponentTreeNodeContext(
+		final WorkbenchApplicationTree componentTree,
+		final IComponentTreeNode treeNode,
+		final IComponentTreeNodeContext parentContext,
+		final IWorkbenchApplicationContext applicationContext) {
+		this.tree = componentTree;
+		this.parentContext = parentContext;
+		this.applicationContext = applicationContext;
 
-	public void setTree(final WorkbenchApplicationTree tree) {
-		this.tree = tree;
+		final IComposite joTree = Toolkit.getWidgetWrapperFactory().createComposite(componentTree);
+		if (treeNode.hasMenu()) {
+			menu = joTree.createPopupMenu();
+		}
 	}
 
 	@Override
 	public void add(final IComponentTreeNode componentTreeNode) {
-		tree.addTreeNode(componentTreeNode);
+		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void add(final int index, final IComponentTreeNode componentTreeNode) {
-		tree.addTreeNode(index, componentTreeNode);
+		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void remove(final IComponentTreeNode componentTreeNode) {
-		tree.removeTreeNode(componentTreeNode);
+		// TODO Auto-generated method stub
 	}
 
 	@Override
-	public IWorkbenchContext getWorkbenchContext() {
-		return workbenchContext;
+	public IPopupMenu getMenu() {
+		return menu;
 	}
 
 	@Override
-	public IMenu getMenu() {
-		return tree.getJoMenu();
+	public IComponentTreeNodeContext getParent() {
+		return parentContext;
 	}
 
 	@Override
-	public void setMenuTooltip(final String tooltip) {
-		tree.setMenuTooltip(tooltip);
-	}
-
-	@Override
-	public IToolBar getToolBar() {
-		return tree.getToolBar();
+	public IWorkbenchApplicationContext getWorkbenchApplicationContext() {
+		return applicationContext;
 	}
 
 }

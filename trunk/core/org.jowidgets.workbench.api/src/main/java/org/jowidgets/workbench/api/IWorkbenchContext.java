@@ -49,8 +49,12 @@ public interface IWorkbenchContext {
 
 	IContainer getStatusBar();
 
-	ITray getTray();
+	ITrayItem getTrayItem();
 
-	void setCloseHandler(Callable<Boolean> closeHandler);
+	void setWindowCloseHandler(Callable<Boolean> closeHandler);
+
+	void addShutdownHook(Runnable shutdownHook);
+
+	void removeShutdownHook(Runnable shutdownHook);
 
 }

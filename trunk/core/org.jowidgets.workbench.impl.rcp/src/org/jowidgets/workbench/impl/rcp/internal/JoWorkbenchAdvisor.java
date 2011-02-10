@@ -27,6 +27,9 @@
  */
 package org.jowidgets.workbench.impl.rcp.internal;
 
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 import org.eclipse.ui.application.IWorkbenchConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchAdvisor;
@@ -39,6 +42,7 @@ public final class JoWorkbenchAdvisor extends WorkbenchAdvisor {
 	private final IWorkbench workbench;
 	private final IWorkbenchContext context;
 	private JoWorkbenchWindowAdvisor workbenchWindowAdvisor;
+	private final List<Runnable> shutdownHooks = new CopyOnWriteArrayList<Runnable>();
 
 	public JoWorkbenchAdvisor(final IWorkbench workbench, final IWorkbenchContext context) {
 		this.workbench = workbench;
@@ -73,16 +77,18 @@ public final class JoWorkbenchAdvisor extends WorkbenchAdvisor {
 
 	@Override
 	public boolean preShutdown() {
-		// Resetting perspective so it doesn't open uninitialized on next start
-		/*
-		 * Activator.getDefault().getPartSupport().openEmptyPerspective();
-		 * final IPerspectiveRegistry perspectiveRegistry = PlatformUI.getWorkbench().getPerspectiveRegistry();
-		 * final IPerspectiveDescriptor perspectiveDescriptor = perspectiveRegistry.findPerspectiveWithId(DynamicPerspective.ID);
-		 * final IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-		 * activePage.setPerspective(perspectiveDescriptor);
-		 * perspectiveRegistry.setDefaultPerspective(DynamicPerspective.ID);
-		 */
-		return super.preShutdown();
+		for (final Runnable shutdownHook : shutdownHooks) {
+			shutdownHook.run();
+		}
+		return true;
+	}
+
+	public void addShutdownHook(final Runnable shutdownHook) {
+		shutdownHooks.add(shutdownHook);
+	}
+
+	public void removeShutdownHook(final Runnable shutdownHook) {
+		shutdownHooks.remove(shutdownHook);
 	}
 
 }

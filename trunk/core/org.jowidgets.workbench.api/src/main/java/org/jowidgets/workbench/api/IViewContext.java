@@ -39,6 +39,8 @@ public interface IViewContext {
 
 	IMenu getMenu();
 
+	void setMenuTooltip(String tooltip);
+
 	IToolBar getToolBar();
 
 }

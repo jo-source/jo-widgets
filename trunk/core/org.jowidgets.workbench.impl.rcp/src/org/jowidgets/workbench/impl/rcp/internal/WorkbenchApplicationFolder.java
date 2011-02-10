@@ -31,10 +31,10 @@ import org.eclipse.jface.resource.ColorRegistry;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.ShellAdapter;
+import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
@@ -94,14 +94,14 @@ public final class WorkbenchApplicationFolder extends Composite {
 			}
 		});
 
-		tabFolder.addFocusListener(new FocusListener() {
+		getShell().addShellListener(new ShellAdapter() {
 			@Override
-			public void focusGained(final FocusEvent e) {
+			public void shellActivated(final ShellEvent e) {
 				setFocusColors();
 			}
 
 			@Override
-			public void focusLost(final FocusEvent e) {
+			public void shellDeactivated(final ShellEvent e) {
 				setNoFocusColors();
 			}
 		});
@@ -124,10 +124,10 @@ public final class WorkbenchApplicationFolder extends Composite {
 				app.getIcon(),
 				PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT)));
 		tabItem.setToolTipText(app.getTooltip());
-		final WorkbenchApplicationTree appTree = new WorkbenchApplicationTree(tabFolder, app);
+		final WorkbenchApplicationContext context = new WorkbenchApplicationContext(workbenchContext, app);
+		final WorkbenchApplicationTree appTree = new WorkbenchApplicationTree(tabFolder, app, context);
 		tabItem.setControl(appTree);
 		tabItem.setData(app);
-		final WorkbenchApplicationContext context = new WorkbenchApplicationContext(appTree, workbenchContext);
 		app.initialize(context);
 	}
 

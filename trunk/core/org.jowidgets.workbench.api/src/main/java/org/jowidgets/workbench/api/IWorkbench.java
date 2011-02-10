@@ -45,6 +45,6 @@ public interface IWorkbench extends IUiPart {
 
 	boolean hasStatusBar();
 
-	boolean hasTray();
+	boolean hasTrayItem();
 
 }
