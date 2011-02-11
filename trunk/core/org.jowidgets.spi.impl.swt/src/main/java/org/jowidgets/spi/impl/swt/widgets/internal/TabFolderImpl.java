@@ -71,6 +71,13 @@ public class TabFolderImpl extends SwtControl implements ITabFolderSpi {
 		getUiReference().setUnselectedImageVisible(true);
 		getUiReference().setUnselectedCloseVisible(true);
 
+		try {
+			getUiReference().setSimple(false);
+		}
+		catch (final NoSuchMethodError error) {
+			//TODO RWT does not support simple=false
+		}
+
 		setMenuDetectListener(new MenuDetectListener() {
 
 			@Override
@@ -201,7 +208,7 @@ public class TabFolderImpl extends SwtControl implements ITabFolderSpi {
 	}
 
 	private static int getStyle(final ITabFolderSetupSpi setup) {
-		int result = SWT.BORDER | SWT.MULTI;
+		int result = SWT.BORDER;
 		if (TabPlacement.BOTTOM == setup.getTabPlacement()) {
 			result = result | SWT.BOTTOM;
 		}
