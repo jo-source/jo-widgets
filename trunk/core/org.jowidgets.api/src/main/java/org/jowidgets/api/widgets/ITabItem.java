@@ -44,4 +44,7 @@ public interface ITabItem extends IItem, IContainer, ITabItemObservable, ITabIte
 
 	IPopupMenu createTabPopupMenu();
 
+	@Override
+	ITabFolder getParent();
+
 }

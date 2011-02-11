@@ -38,7 +38,7 @@ import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
 public class PopupMenuImpl extends AbstractSwingMenu implements IPopupMenuSpi {
 
-	private final Component parent;
+	private Component parent;
 
 	public PopupMenuImpl(final Component parent) {
 		super(new JoPopupMenu() {
@@ -59,6 +59,10 @@ public class PopupMenuImpl extends AbstractSwingMenu implements IPopupMenuSpi {
 			}
 
 		});
+		this.parent = parent;
+	}
+
+	public void setParent(final Component parent) {
 		this.parent = parent;
 	}
 

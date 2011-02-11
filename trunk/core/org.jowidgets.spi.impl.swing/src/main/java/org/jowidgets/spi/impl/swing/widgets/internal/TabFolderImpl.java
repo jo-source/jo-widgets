@@ -28,6 +28,9 @@
 
 package org.jowidgets.spi.impl.swing.widgets.internal;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.swing.JTabbedPane;
 
 import org.jowidgets.common.types.TabPlacement;
@@ -37,17 +40,21 @@ import org.jowidgets.spi.widgets.ITabFolderSpi;
 import org.jowidgets.spi.widgets.ITabItemSpi;
 import org.jowidgets.spi.widgets.setup.ITabFolderSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITabItemSetupSpi;
+import org.jowidgets.util.Assert;
+import org.jowidgets.util.TypeCast;
 
 public class TabFolderImpl extends SwingControl implements ITabFolderSpi {
 
 	private final IGenericWidgetFactory widgetFactory;
 	private final boolean tabsCloseable;
+	private final List<TabItemImpl> items;
 
 	public TabFolderImpl(final IGenericWidgetFactory widgetFactory, final ITabFolderSetupSpi setup) {
 		super(new JTabbedPane());
 
 		this.tabsCloseable = setup.isTabsCloseable();
 		this.widgetFactory = widgetFactory;
+		this.items = new LinkedList<TabItemImpl>();
 
 		getUiReference().setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 
@@ -71,16 +78,21 @@ public class TabFolderImpl extends SwingControl implements ITabFolderSpi {
 	@Override
 	public void removeItem(final int index) {
 		getUiReference().remove(index);
+		items.remove(index);
 	}
 
 	@Override
 	public ITabItemSpi addItem(final ITabItemSetupSpi setup) {
-		return new TabItemImpl(widgetFactory, getUiReference(), tabsCloseable);
+		final TabItemImpl result = new TabItemImpl(widgetFactory, getUiReference(), tabsCloseable);
+		items.add(result);
+		return result;
 	}
 
 	@Override
 	public ITabItemSpi addItem(final int index, final ITabItemSetupSpi setup) {
-		return new TabItemImpl(widgetFactory, getUiReference(), tabsCloseable, Integer.valueOf(index));
+		final TabItemImpl result = new TabItemImpl(widgetFactory, getUiReference(), tabsCloseable, Integer.valueOf(index));
+		items.add(index, result);
+		return result;
 	}
 
 	@Override
@@ -91,6 +103,44 @@ public class TabFolderImpl extends SwingControl implements ITabFolderSpi {
 	@Override
 	public int getSelectedIndex() {
 		return getUiReference().getSelectedIndex();
+	}
+
+	@Override
+	public void detachItem(final ITabItemSpi item) {
+		Assert.paramNotNull(item, "item");
+		final TabItemImpl itemImpl = TypeCast.toType(item, TabItemImpl.class);
+		final int itemIndex = items.indexOf(itemImpl);
+		if (itemIndex == -1) {
+			throw new IllegalArgumentException("Item is not attached to this folder");
+		}
+		if (itemImpl.isDetached()) {
+			throw new IllegalArgumentException("Item is already detached");
+		}
+
+		items.remove(itemIndex);
+		itemImpl.detach();
+	}
+
+	@Override
+	public void attachItem(final ITabItemSpi item) {
+		Assert.paramNotNull(item, "item");
+		final TabItemImpl itemImpl = TypeCast.toType(item, TabItemImpl.class);
+		if (!itemImpl.isDetached()) {
+			throw new IllegalArgumentException("Item is not detached");
+		}
+		itemImpl.attach(getUiReference(), tabsCloseable, null);
+		items.add(itemImpl);
+	}
+
+	@Override
+	public void attachItem(final int index, final ITabItemSpi item) {
+		Assert.paramNotNull(item, "item");
+		final TabItemImpl itemImpl = TypeCast.toType(item, TabItemImpl.class);
+		if (!itemImpl.isDetached()) {
+			throw new IllegalArgumentException("Item is not detached");
+		}
+		itemImpl.attach(getUiReference(), tabsCloseable, Integer.valueOf(index));
+		items.add(index, itemImpl);
 	}
 
 }

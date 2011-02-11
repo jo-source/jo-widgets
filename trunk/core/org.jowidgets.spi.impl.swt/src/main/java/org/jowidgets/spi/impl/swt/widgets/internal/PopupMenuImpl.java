@@ -38,7 +38,7 @@ import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
 public class PopupMenuImpl extends SwtMenu implements IPopupMenuSpi {
 
-	private final Control parent;
+	private Control parent;
 
 	public PopupMenuImpl(final Control parent) {
 		super(new Menu(parent.getShell(), SWT.POP_UP));
@@ -50,5 +50,9 @@ public class PopupMenuImpl extends SwtMenu implements IPopupMenuSpi {
 		final Point point = parent.toDisplay(position.getX(), position.getY());
 		getUiReference().setLocation(point);
 		getUiReference().setVisible(true);
+	}
+
+	public void setParent(final Control parent) {
+		this.parent = parent;
 	}
 }

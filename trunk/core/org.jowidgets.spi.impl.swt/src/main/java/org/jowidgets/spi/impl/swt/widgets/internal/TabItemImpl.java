@@ -35,11 +35,7 @@ import net.miginfocom.swt.MigLayout;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
-import org.eclipse.swt.custom.CTabFolder2Adapter;
-import org.eclipse.swt.custom.CTabFolderEvent;
 import org.eclipse.swt.custom.CTabItem;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -60,15 +56,20 @@ import org.jowidgets.spi.impl.swt.widgets.SwtContainer;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.ITabItemSpi;
 import org.jowidgets.spi.widgets.controler.TabItemObservableSpi;
-import org.jowidgets.util.Assert;
-import org.jowidgets.util.TypeCast;
 
 public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 
-	private final CTabItem cTabItem;
+	private CTabItem cTabItem;
+	private boolean detached;
+	private Control detachedControl;
+	private String text;
+	private String toolTipText;
+	private IImageConstant icon;
+
 	private final CTabFolder parentFolder;
 	private final SwtContainer swtContainer;
 	private final Set<IPopupDetectionListener> tabPopupDetectionListeners;
+	private final Set<PopupMenuImpl> tabPopupMenus;
 
 	public TabItemImpl(final IGenericWidgetFactory genericWidgetFactory, final CTabFolder parentFolder, final boolean closeable) {
 		this(genericWidgetFactory, parentFolder, closeable, null);
@@ -80,16 +81,13 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 		final boolean closeable,
 		final Integer index) {
 
+		this.detached = false;
 		this.parentFolder = parentFolder;
 
 		this.tabPopupDetectionListeners = new HashSet<IPopupDetectionListener>();
+		this.tabPopupMenus = new HashSet<PopupMenuImpl>();
 
-		if (index != null) {
-			cTabItem = new CTabItem(parentFolder, closeable ? SWT.CLOSE : SWT.NONE, index.intValue());
-		}
-		else {
-			cTabItem = new CTabItem(parentFolder, closeable ? SWT.CLOSE : SWT.NONE);
-		}
+		cTabItem = createItem(parentFolder, closeable, index);
 
 		final Composite composite = new Composite(parentFolder, SWT.NONE);
 		composite.setLayout(new MigLayout("", "[]", "[]"));
@@ -97,28 +95,6 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 		swtContainer = new SwtComposite(genericWidgetFactory, composite);
 
 		cTabItem.setControl(swtContainer.getUiReference());
-
-		parentFolder.addCTabFolder2Listener(new CTabFolder2Adapter() {
-			@Override
-			public void close(final CTabFolderEvent event) {
-				if (event.item == getUiReference()) {
-					final boolean veto = fireOnClose();
-					if (veto) {
-						event.doit = false;
-					}
-					//else{do nothing}
-				}
-			}
-		});
-
-		parentFolder.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(final SelectionEvent e) {
-				if (e.item == getUiReference()) {
-					fireSelected();
-				}
-			}
-		});
 	}
 
 	@Override
@@ -126,27 +102,39 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 		return cTabItem;
 	}
 
-	@Override
-	public Object detachContent() {
-		final Object result = cTabItem.getControl();
+	public void detach() {
+		detached = true;
+		detachedControl = cTabItem.getControl();
 		cTabItem.setControl(null);
-		return result;
+		cTabItem.dispose();
+		cTabItem = null;
 	}
 
-	@Override
-	public void attachContent(final Object content) {
-		Assert.paramNotNull(content, "content");
-		final Composite composite = TypeCast.toType(content, Composite.class);
+	public boolean isDetached() {
+		return detached;
+	}
+
+	public void attach(final CTabFolder parentFolder, final boolean closeable, final Integer index) {
+		cTabItem = createItem(parentFolder, closeable, index);
+		setText(text);
+		setToolTipText(toolTipText);
+		setIcon(icon);
+
+		final Composite composite = (Composite) detachedControl;
 		if (composite.getParent() != parentFolder) {
 			if (composite.isReparentable()) {
 				composite.setParent(parentFolder);
+				for (final PopupMenuImpl popupMenu : tabPopupMenus) {
+					popupMenu.setParent(parentFolder);
+				}
 			}
 			else {
 				throw new IllegalArgumentException("Content is not reparentable");
 			}
 		}
-		swtContainer.setComposite(composite);
+		detached = false;
 		cTabItem.setControl(composite);
+		swtContainer.setComposite(composite);
 	}
 
 	@Override
@@ -166,6 +154,7 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 
 	@Override
 	public void setText(final String text) {
+		this.text = text;
 		if (text != null) {
 			getUiReference().setText(text);
 		}
@@ -175,12 +164,14 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 	}
 
 	@Override
-	public void setToolTipText(final String text) {
-		getUiReference().setToolTipText(text);
+	public void setToolTipText(final String toolTipText) {
+		this.toolTipText = toolTipText;
+		getUiReference().setToolTipText(toolTipText);
 	}
 
 	@Override
 	public void setIcon(final IImageConstant icon) {
+		this.icon = icon;
 		final Image oldImage = getUiReference().getImage();
 		final Image newImage = SwtImageRegistry.getInstance().getImage(icon);
 		if (oldImage != newImage) {
@@ -234,7 +225,9 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 
 	@Override
 	public IPopupMenuSpi createTabPopupMenu() {
-		return new PopupMenuImpl(parentFolder);
+		final PopupMenuImpl result = new PopupMenuImpl(parentFolder);
+		tabPopupMenus.add(result);
+		return result;
 	}
 
 	@Override
@@ -316,6 +309,17 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 		for (final IPopupDetectionListener listener : tabPopupDetectionListeners) {
 			listener.popupDetected(position);
 		}
+	}
+
+	private static CTabItem createItem(final CTabFolder parentFolder, final boolean closeable, final Integer index) {
+		CTabItem result;
+		if (index != null) {
+			result = new CTabItem(parentFolder, closeable ? SWT.CLOSE : SWT.NONE, index.intValue());
+		}
+		else {
+			result = new CTabItem(parentFolder, closeable ? SWT.CLOSE : SWT.NONE);
+		}
+		return result;
 	}
 
 }

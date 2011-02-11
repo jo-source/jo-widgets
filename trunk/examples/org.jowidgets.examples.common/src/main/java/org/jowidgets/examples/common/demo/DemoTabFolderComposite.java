@@ -33,12 +33,17 @@ import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.types.QuestionResult;
 import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ISplitComposite;
 import org.jowidgets.api.widgets.ITabFolder;
 import org.jowidgets.api.widgets.ITabItem;
+import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.ITabItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
@@ -58,7 +63,7 @@ public final class DemoTabFolderComposite {
 		final ITabFolder folder1 = addFolder(split.getFirst());
 		final ITabFolder folder2 = addFolder(split.getSecond());
 
-		final ITabItem item = folder1.getItem(0);
+		final ITabItem item = folder1.getItem(1);
 		if (item.isReparentable()) {
 			item.setText(item.getText() + " (r)");
 			folder1.detachItem(item);
@@ -71,6 +76,51 @@ public final class DemoTabFolderComposite {
 			folder2.detachItem(item2);
 			folder1.attachItem(item2);
 		}
+
+		final IPopupMenu popupMenu = folder1.createPopupMenu();
+		fillPopupMenu(popupMenu);
+		folder1.addPopupDetectionListener(new IPopupDetectionListener() {
+
+			@Override
+			public void popupDetected(final Position position) {
+				popupMenu.show(position);
+			}
+		});
+
+		final IPopupMenu popupMenu2 = item.createPopupMenu();
+		fillPopupMenu(popupMenu2);
+		item.addPopupDetectionListener(new IPopupDetectionListener() {
+
+			@Override
+			public void popupDetected(final Position position) {
+				popupMenu2.show(position);
+			}
+		});
+
+		final IWindow parentWindow = Toolkit.getWidgetUtils().getWindowAncestor(parentContainer);
+		final IFrame childWindow = Toolkit.createRootFrame(bpF.frame("Child"));
+		childWindow.setSize(parentWindow.getSize());
+		childWindow.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));
+
+		final ITabFolder folder = childWindow.add(bpF.tabFolder().setTabsCloseable(true), "growx, growy, w 0::, h 0::");
+		if (item2.isReparentable()) {
+			folder1.detachItem(item2);
+			folder.attachItem(item2);
+		}
+		if (item.isReparentable()) {
+			folder2.detachItem(item);
+			folder.attachItem(item);
+		}
+
+		childWindow.setVisible(true);
+	}
+
+	private void fillPopupMenu(final IPopupMenu popupMenu) {
+		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+		popupMenu.addItem(bpf.menuItem("item1"));
+		popupMenu.addItem(bpf.menuItem("item2"));
+		popupMenu.addItem(bpf.menuItem("item3"));
+		popupMenu.addItem(bpf.menuItem("item4"));
 	}
 
 	private ITabFolder addFolder(final IContainer parentContainer) {
@@ -84,29 +134,28 @@ public final class DemoTabFolderComposite {
 		ITabItemBluePrint tabItemBp = bpF.tabItem();
 		tabItemBp.setText("Tab1").setToolTipText("Tooltip of tab1").setIcon(IconsSmall.INFO);
 		final ITabItem tabItem1 = tabFolder.addItem(tabItemBp);
-		addTabItemListener(tabItem1);
+		addTabListeners(tabItem1);
 		tabItem1.add(bpF.textLabel("Tab content1"), "");
 
 		tabItemBp = bpF.tabItem();
 		tabItemBp.setText("Tab2").setToolTipText("Tooltip of tab2").setIcon(IconsSmall.QUESTION);
 		final ITabItem tabItem2 = tabFolder.addItem(tabItemBp);
-		addTabItemListener(tabItem2);
+		addTabListeners(tabItem2);
 		tabItem2.add(bpF.textLabel("Tab content2"), "");
 
 		tabItemBp = bpF.tabItem();
 		tabItemBp.setText("Tab3").setToolTipText("Tooltip of tab3").setIcon(IconsSmall.WARNING);
 		final ITabItem tabItem3 = tabFolder.addItem(tabItemBp);
-		addTabItemListener(tabItem3);
+		addTabListeners(tabItem3);
 		tabItem3.add(bpF.textLabel("Tab content3"), "");
 
 		tabFolder.changeItemIndex(tabItem1, 2);
-
 		tabFolder.setSelectedItem(tabItem1);
 
 		return tabFolder;
 	}
 
-	private void addTabItemListener(final ITabItem tabItem) {
+	private void addTabListeners(final ITabItem tabItem) {
 		tabItem.addTabItemListener(new ITabItemListener() {
 
 			@Override
@@ -124,6 +173,21 @@ public final class DemoTabFolderComposite {
 				if (result != QuestionResult.YES) {
 					vetoable.veto();
 				}
+			}
+		});
+
+		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+
+		final IPopupMenu popupMenu = tabItem.createTabPopupMenu();
+		popupMenu.addItem(bpf.menuItem(tabItem.getParent().toString() + tabItem.getText() + " item1"));
+		popupMenu.addItem(bpf.menuItem(tabItem.getText() + " item2"));
+		popupMenu.addItem(bpf.menuItem(tabItem.getText() + " item3"));
+		popupMenu.addItem(bpf.menuItem(tabItem.getText() + " item4"));
+		tabItem.addTabPopupDetectionListener(new IPopupDetectionListener() {
+
+			@Override
+			public void popupDetected(final Position position) {
+				popupMenu.show(position);
 			}
 		});
 	}

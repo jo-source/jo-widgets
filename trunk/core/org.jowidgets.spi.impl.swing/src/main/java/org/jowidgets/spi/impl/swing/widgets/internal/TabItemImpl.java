@@ -38,6 +38,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
@@ -68,17 +70,22 @@ import org.jowidgets.spi.impl.swing.widgets.SwingContainer;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.ITabItemSpi;
 import org.jowidgets.spi.widgets.controler.TabItemObservableSpi;
-import org.jowidgets.util.Assert;
-import org.jowidgets.util.TypeCast;
 
 public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 
 	private final JPanel tabContentContainer;
 	private final JPanel tabContent;
-	private final TabComponent tabComponent;
-	private final JTabbedPane tabbedPane;
 	private final SwingContainer swingContainer;
 	private final PopupDetectionObservable tabPopupDetectionObservable;
+	private final Set<PopupMenuImpl> tabPopupMenus;
+	private final ChangeListener tabSelectionListener;
+
+	private JTabbedPane parentTabbedPane;
+	private TabComponent tabComponent;
+	private boolean detached;
+	private String text;
+	private String toolTipText;
+	private IImageConstant icon;
 
 	public TabItemImpl(final IGenericWidgetFactory factory, final JTabbedPane parentFolder, final boolean closeable) {
 		this(factory, parentFolder, closeable, null);
@@ -86,43 +93,45 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 
 	public TabItemImpl(
 		final IGenericWidgetFactory genericWidgetFactory,
-		final JTabbedPane parentFolder,
+		final JTabbedPane parentTabbedPane,
 		final boolean closeable,
 		final Integer index) {
 
 		super();
 
-		this.tabbedPane = parentFolder;
+		this.parentTabbedPane = parentTabbedPane;
 
 		this.tabPopupDetectionObservable = new PopupDetectionObservable();
+		this.tabPopupMenus = new HashSet<PopupMenuImpl>();
 
 		this.tabContentContainer = new JPanel();
 		this.tabContentContainer.setLayout(new MigLayout("", "0[grow, 0::]0", "0[grow, 0::]0"));
 
 		if (index != null) {
-			tabbedPane.add(tabContentContainer, index.intValue());
+			parentTabbedPane.add(tabContentContainer, index.intValue());
 		}
 		else {
-			tabbedPane.add(tabContentContainer);
+			parentTabbedPane.add(tabContentContainer);
 		}
 
 		this.tabContent = new JPanel();
 		this.tabContent.setLayout(new MigLayout("", "[]", "[]"));
 		this.swingContainer = new SwingContainer(genericWidgetFactory, tabContent);
-		attachContent(tabContent);
+		this.tabContentContainer.add(tabContent, "growx, growy, w 0::, h 0::");
 
 		this.tabComponent = new TabComponent(closeable);
-		tabbedPane.setTabComponentAt(getIndex(), tabComponent);
+		parentTabbedPane.setTabComponentAt(getIndex(), tabComponent);
 
-		parentFolder.addChangeListener(new ChangeListener() {
+		this.tabSelectionListener = new ChangeListener() {
 			@Override
 			public void stateChanged(final ChangeEvent e) {
-				if (parentFolder.getSelectedComponent() == tabContentContainer) {
+				if (getParentTabbedPane().getSelectedComponent() == tabContentContainer) {
 					fireSelected();
 				}
 			}
-		});
+		};
 
+		parentTabbedPane.addChangeListener(tabSelectionListener);
 	}
 
 	@Override
@@ -137,26 +146,47 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 
 	@Override
 	public IPopupMenuSpi createTabPopupMenu() {
-		return new PopupMenuImpl(tabComponent);
+		final PopupMenuImpl result = new PopupMenuImpl(tabComponent);
+		tabPopupMenus.add(result);
+		return result;
 	}
 
-	@Override
-	public Object detachContent() {
-		tabContentContainer.removeAll();
-		tabContentContainer.revalidate();
-		tabContentContainer.repaint();
-		return tabContent;
+	public void detach() {
+		detached = true;
+		parentTabbedPane.remove(tabContentContainer);
+		parentTabbedPane.removeChangeListener(tabSelectionListener);
 	}
 
-	@Override
-	public void attachContent(final Object content) {
-		Assert.paramNotNull(content, "content");
-		final JPanel panel = TypeCast.toType(content, JPanel.class);
-		tabContentContainer.removeAll();
-		tabContentContainer.add(panel, "growx, growy, w 0::, h 0::");
-		tabContentContainer.revalidate();
-		tabContentContainer.repaint();
-		swingContainer.setContainer(panel);
+	public void attach(final JTabbedPane parentTabbedPane, final boolean closeable, final Integer index) {
+		this.detached = false;
+		this.parentTabbedPane = parentTabbedPane;
+		this.parentTabbedPane.addChangeListener(tabSelectionListener);
+
+		if (index != null) {
+			parentTabbedPane.add(tabContentContainer, index.intValue());
+		}
+		else {
+			parentTabbedPane.add(tabContentContainer);
+		}
+
+		this.tabComponent = new TabComponent(closeable);
+
+		for (final PopupMenuImpl popupMenu : tabPopupMenus) {
+			popupMenu.setParent(tabComponent);
+		}
+
+		setText(text);
+		setToolTipText(toolTipText);
+		setIcon(icon);
+		parentTabbedPane.setTabComponentAt(getIndex(), tabComponent);
+	}
+
+	private JTabbedPane getParentTabbedPane() {
+		return parentTabbedPane;
+	}
+
+	public boolean isDetached() {
+		return detached;
 	}
 
 	@Override
@@ -166,22 +196,25 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 
 	@Override
 	public void setText(final String text) {
+		this.text = text;
 		tabComponent.setText(text);
 	}
 
 	@Override
-	public void setToolTipText(final String text) {
-		tabComponent.setToolTipText(text);
+	public void setToolTipText(final String toolTipText) {
+		this.toolTipText = toolTipText;
+		tabComponent.setToolTipText(toolTipText);
 	}
 
 	@Override
 	public void setIcon(final IImageConstant icon) {
+		this.icon = icon;
 		tabComponent.setIcon(icon);
 	}
 
 	private int getIndex() {
-		for (int i = 0; i < tabbedPane.getComponentCount(); i++) {
-			if (tabbedPane.getComponentAt(i) == tabContentContainer) {
+		for (int i = 0; i < parentTabbedPane.getComponentCount(); i++) {
+			if (parentTabbedPane.getComponentAt(i) == tabContentContainer) {
 				return i;
 			}
 		}
@@ -330,10 +363,10 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 			final MouseListener mouseListener = new MouseAdapter() {
 				@Override
 				public void mousePressed(final MouseEvent e) {
-					final int i = tabbedPane.indexOfTabComponent(TabComponent.this);
+					final int i = parentTabbedPane.indexOfTabComponent(TabComponent.this);
 					if (i != -1) {
-						if (tabbedPane.getSelectedIndex() != i) {
-							tabbedPane.setSelectedIndex(i);
+						if (parentTabbedPane.getSelectedIndex() != i) {
+							parentTabbedPane.setSelectedIndex(i);
 						}
 					}
 					if (e.isPopupTrigger()) {
@@ -430,11 +463,11 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 			addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(final ActionEvent e) {
-					final int i = tabbedPane.indexOfTabComponent(tabComponent);
+					final int i = parentTabbedPane.indexOfTabComponent(tabComponent);
 					if (i != -1) {
 						final boolean veto = fireOnClose();
 						if (!veto) {
-							tabbedPane.remove(i);
+							parentTabbedPane.remove(i);
 						}
 						//else{do nothing}
 					}
@@ -450,7 +483,9 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 		protected void paintComponent(final Graphics g) {
 			super.paintComponent(g);
 
-			if (getModel().isRollover() || tabComponent.isRollover() || tabbedPane.getSelectedComponent() == tabContentContainer) {
+			if (getModel().isRollover()
+				|| tabComponent.isRollover()
+				|| parentTabbedPane.getSelectedComponent() == tabContentContainer) {
 
 				final Graphics2D g2 = (Graphics2D) g.create();
 				if (getModel().isPressed()) {

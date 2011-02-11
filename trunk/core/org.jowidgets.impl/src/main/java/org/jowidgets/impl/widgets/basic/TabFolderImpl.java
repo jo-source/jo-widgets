@@ -156,8 +156,13 @@ public class TabFolderImpl extends TabFolderSpiWrapper implements ITabFolder {
 		if (itemIndex == -1) {
 			throw new IllegalArgumentException("Item '" + item + "' is not attached to this folder.");
 		}
-		items.get(itemIndex).detach();
-		removeItem(item);
+		if (item.isDetached()) {
+			throw new IllegalArgumentException("The item is already detached.");
+		}
+		final TabItemImpl itemImpl = TypeCast.toType(item, TabItemImpl.class);
+		getWidget().detachItem(itemImpl.getWidget());
+		items.remove(itemIndex);
+		itemImpl.setDetached(true);
 	}
 
 	@Override
@@ -175,19 +180,18 @@ public class TabFolderImpl extends TabFolderSpiWrapper implements ITabFolder {
 		if (!item.isDetached()) {
 			throw new IllegalArgumentException("The item is not detached.");
 		}
-		final ITabItemBluePrintSpi tabItemBluePrintSpi = SPI_BPF.tabItem();
 		final TabItemImpl itemImpl = TypeCast.toType(item, TabItemImpl.class);
-		final ITabItemSpi tabItemSpi;
 		if (index != null) {
-			tabItemSpi = getWidget().addItem(index.intValue(), tabItemBluePrintSpi);
+			getWidget().attachItem(index.intValue(), itemImpl.getWidget());
 			items.add(index.intValue(), itemImpl);
 		}
 		else {
-			tabItemSpi = getWidget().addItem(tabItemBluePrintSpi);
+			getWidget().attachItem(itemImpl.getWidget());
 			items.add(itemImpl);
 		}
 
-		itemImpl.attach(tabItemSpi, this);
+		itemImpl.setDetached(false);
+		itemImpl.setParent(this);
 	}
 
 	@Override

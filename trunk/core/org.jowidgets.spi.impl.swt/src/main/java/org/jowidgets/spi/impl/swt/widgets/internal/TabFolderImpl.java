@@ -33,9 +33,13 @@ import java.util.Map;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabFolder2Adapter;
+import org.eclipse.swt.custom.CTabFolderEvent;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.events.MenuDetectEvent;
 import org.eclipse.swt.events.MenuDetectListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -47,6 +51,8 @@ import org.jowidgets.spi.widgets.ITabFolderSpi;
 import org.jowidgets.spi.widgets.ITabItemSpi;
 import org.jowidgets.spi.widgets.setup.ITabFolderSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITabItemSetupSpi;
+import org.jowidgets.util.Assert;
+import org.jowidgets.util.TypeCast;
 
 public class TabFolderImpl extends SwtControl implements ITabFolderSpi {
 
@@ -82,6 +88,40 @@ public class TabFolderImpl extends SwtControl implements ITabFolderSpi {
 				}
 			}
 		});
+
+		getUiReference().addCTabFolder2Listener(new CTabFolder2Adapter() {
+			@Override
+			public void close(final CTabFolderEvent event) {
+				final TabItemImpl itemImpl = items.get(event.item);
+				if (itemImpl != null) {
+					final boolean veto = itemImpl.fireOnClose();
+					if (veto) {
+						event.doit = false;
+					}
+					//else{do nothing}
+				}
+				else {
+					throw new IllegalStateException("CloseEvent for item '"
+						+ event.item
+						+ "' that is not attached to this folder. This seems to be a bug.");
+				}
+			}
+		});
+
+		getUiReference().addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(final SelectionEvent event) {
+				final TabItemImpl itemImpl = items.get(event.item);
+				if (itemImpl != null) {
+					itemImpl.fireSelected();
+				}
+				else {
+					throw new IllegalStateException("SelectionEvent for item '"
+						+ event.item
+						+ "' that is not attached to this folder. This seems to be a bug.");
+				}
+			}
+		});
 	}
 
 	@Override
@@ -112,6 +152,42 @@ public class TabFolderImpl extends SwtControl implements ITabFolderSpi {
 		final TabItemImpl result = new TabItemImpl(widgetFactory, getUiReference(), tabsCloseable, Integer.valueOf(index));
 		items.put(result.getUiReference(), result);
 		return result;
+	}
+
+	@Override
+	public void detachItem(final ITabItemSpi item) {
+		Assert.paramNotNull(item, "item");
+		final TabItemImpl itemImpl = TypeCast.toType(item, TabItemImpl.class);
+		if (!items.containsKey(itemImpl.getUiReference())) {
+			throw new IllegalArgumentException("Item is not attached to this folder");
+		}
+		if (itemImpl.isDetached()) {
+			throw new IllegalArgumentException("Item is already detached");
+		}
+		items.remove(item);
+		itemImpl.detach();
+	}
+
+	@Override
+	public void attachItem(final ITabItemSpi item) {
+		Assert.paramNotNull(item, "item");
+		final TabItemImpl itemImpl = TypeCast.toType(item, TabItemImpl.class);
+		if (!itemImpl.isDetached()) {
+			throw new IllegalArgumentException("Item is not detached");
+		}
+		itemImpl.attach(getUiReference(), tabsCloseable, null);
+		items.put(itemImpl.getUiReference(), itemImpl);
+	}
+
+	@Override
+	public void attachItem(final int index, final ITabItemSpi item) {
+		Assert.paramNotNull(item, "item");
+		final TabItemImpl itemImpl = TypeCast.toType(item, TabItemImpl.class);
+		if (!itemImpl.isDetached()) {
+			throw new IllegalArgumentException("Item is not detached");
+		}
+		itemImpl.attach(getUiReference(), tabsCloseable, Integer.valueOf(index));
+		items.put(itemImpl.getUiReference(), itemImpl);
 	}
 
 	@Override

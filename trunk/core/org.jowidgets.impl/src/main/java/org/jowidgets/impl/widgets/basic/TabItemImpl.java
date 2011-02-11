@@ -36,6 +36,7 @@ import org.jowidgets.api.controler.ITabItemListener;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IPopupMenu;
+import org.jowidgets.api.widgets.ITabFolder;
 import org.jowidgets.api.widgets.ITabItem;
 import org.jowidgets.api.widgets.descriptor.ITabItemDescriptor;
 import org.jowidgets.common.color.IColorConstant;
@@ -48,29 +49,27 @@ import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
-import org.jowidgets.impl.base.delegate.ComponentDelegate;
 import org.jowidgets.impl.base.delegate.ContainerDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractContainerSpiWrapper;
 import org.jowidgets.spi.widgets.ITabItemSpi;
 import org.jowidgets.spi.widgets.controler.ITabItemListenerSpi;
-import org.jowidgets.util.Assert;
+import org.jowidgets.util.TypeCast;
 import org.jowidgets.util.ValueHolder;
 
 public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem {
 
-	private ContainerDelegate containerDelegate;
-	private final ComponentDelegate componentDelegate;
+	private final ContainerDelegate containerDelegate;
 
-	private TabFolderImpl tabFolderImpl;
+	private final TabFolderImpl tabFolderImpl;
 
+	private ITabFolder parent;
 	private boolean detached;
 	private boolean selected;
 	private String text;
 	private String toolTipText;
 	private IImageConstant icon;
-	private Object detachedContent;
 
 	private final Set<ITabItemListener> itemListeners;
 	private final ITabItemListenerSpi tabItemListenerSpi;
@@ -81,13 +80,13 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 	private final Set<IPopupDetectionListener> tabPopupDetectionListeners;
 	private final IPopupDetectionListener tabPopupDetectionListener;
 
-	public TabItemImpl(final ITabItemSpi widget, final ITabItemDescriptor descriptor, final TabFolderImpl tabFolderImpl) {
-		super(widget);
+	public TabItemImpl(final ITabItemSpi widgetSpi, final ITabItemDescriptor descriptor, final TabFolderImpl tabFolderImpl) {
+		super(widgetSpi);
 		this.tabFolderImpl = tabFolderImpl;
 		this.detached = false;
 		this.selected = false;
 		this.itemListeners = new HashSet<ITabItemListener>();
-		this.componentDelegate = new ComponentDelegate();
+		this.parent = tabFolderImpl;
 
 		VisibiliySettingsInvoker.setVisibility(descriptor, this);
 		ColorSettingsInvoker.setColors(descriptor, this);
@@ -131,7 +130,7 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 
 			}
 		};
-		widget.addTabItemListener(tabItemListenerSpi);
+		widgetSpi.addTabItemListener(tabItemListenerSpi);
 
 		this.popupDetectionListeners = new HashSet<IPopupDetectionListener>();
 		this.tabPopupDetectionListeners = new HashSet<IPopupDetectionListener>();
@@ -154,10 +153,10 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 			}
 		};
 
-		widget.addPopupDetectionListener(popupDetectionListener);
-		widget.addTabPopupDetectionListener(tabPopupDetectionListener);
+		widgetSpi.addPopupDetectionListener(popupDetectionListener);
+		widgetSpi.addTabPopupDetectionListener(tabPopupDetectionListener);
 
-		this.containerDelegate = new ContainerDelegate(widget, this);
+		this.containerDelegate = new ContainerDelegate(widgetSpi, this);
 	}
 
 	@Override
@@ -186,31 +185,8 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 		}
 	}
 
-	protected void attach(final ITabItemSpi widget, final TabFolderImpl tabFolderImpl) {
-		Assert.paramNotNull(widget, "widget");
-		this.detached = false;
-		setWidget(widget);
-		this.tabFolderImpl = tabFolderImpl;
-		this.containerDelegate = new ContainerDelegate(widget, this);
-		widget.setText(text);
-		widget.setToolTipText(toolTipText);
-		widget.setIcon(icon);
-		widget.addTabItemListener(tabItemListenerSpi);
-		widget.addPopupDetectionListener(popupDetectionListener);
-		widget.addTabPopupDetectionListener(tabPopupDetectionListener);
-		widget.attachContent(detachedContent);
-	}
-
-	protected void detach() {
-		if (detached) {
-			throw new IllegalStateException("Item is already detached");
-		}
-		final ITabItemSpi widget = getWidget();
-		detachedContent = widget.detachContent();
-		widget.removeTabItemListener(tabItemListenerSpi);
-		widget.removePopupDetectionListener(popupDetectionListener);
-		widget.removeTabPopupDetectionListener(tabPopupDetectionListener);
-		this.detached = true;
+	protected void setDetached(final boolean detached) {
+		this.detached = detached;
 	}
 
 	@Override
@@ -273,15 +249,13 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 	}
 
 	@Override
-	public IComponent getParent() {
-		checkDetached();
-		return componentDelegate.getParent();
+	public ITabFolder getParent() {
+		return parent;
 	}
 
 	@Override
 	public void setParent(final IComponent parent) {
-		checkDetached();
-		componentDelegate.setParent(parent);
+		this.parent = TypeCast.toType(parent, ITabFolder.class);
 	}
 
 	@Override

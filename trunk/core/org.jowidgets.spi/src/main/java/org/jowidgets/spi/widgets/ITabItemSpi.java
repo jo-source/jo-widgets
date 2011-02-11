@@ -39,7 +39,7 @@ public interface ITabItemSpi extends IItemSpi, IContainerSpi, ITabItemObservable
 	 * 
 	 * @return The content reference of the item.
 	 */
-	Object detachContent();
+	//Object detachContent();
 
 	/**
 	 * Attaches a content detached from another item to this item. If the content to set was detached from
@@ -47,7 +47,7 @@ public interface ITabItemSpi extends IItemSpi, IContainerSpi, ITabItemObservable
 	 * 
 	 * @param content The content to set. Content must not be null.
 	 */
-	void attachContent(Object content);
+	//void attachContent(Object content);
 
 	IPopupMenuSpi createTabPopupMenu();
 
