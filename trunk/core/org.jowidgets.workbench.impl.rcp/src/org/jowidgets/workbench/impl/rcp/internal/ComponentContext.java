@@ -25,32 +25,42 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.workbench.impl.rcp;
 
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.common.application.IApplication;
-import org.jowidgets.common.application.IApplicationLifecycle;
-import org.jowidgets.workbench.api.IWorkbench;
-import org.jowidgets.workbench.api.IWorkbenchConfigurationService;
-import org.jowidgets.workbench.api.IWorkbenchRunner;
-import org.jowidgets.workbench.impl.rcp.internal.WorkbenchContext;
+package org.jowidgets.workbench.impl.rcp.internal;
 
-public final class WorkbenchRunner implements IWorkbenchRunner {
+import java.util.concurrent.atomic.AtomicReference;
 
-	@Override
-	public void run(final IWorkbench workbench) {
-		Toolkit.getApplicationRunner().run(new IApplication() {
-			@Override
-			public void start(final IApplicationLifecycle lifecycle) {
-				new WorkbenchContext(workbench, lifecycle, false).run();
-			}
-		});
+import org.jowidgets.workbench.api.IComponent;
+import org.jowidgets.workbench.api.IComponentContext;
+import org.jowidgets.workbench.api.IComponentTreeNodeContext;
+import org.jowidgets.workbench.api.IPerspective;
+
+public class ComponentContext implements IComponentContext {
+
+	private final IComponentTreeNodeContext componentTreeNodeContext;
+	private final IComponent component;
+	private AtomicReference<IPerspective> perspectiveReference;
+
+	public ComponentContext(final IComponentTreeNodeContext componentTreeNodeContext, final IComponent component) {
+		this.componentTreeNodeContext = componentTreeNodeContext;
+		this.component = component;
 	}
 
 	@Override
-	public void run(final IWorkbench workbench, final IWorkbenchConfigurationService configurationService) {
-		// TODO support configuration service
-		run(workbench);
+	public IComponentTreeNodeContext getComponentTreeNodeContext() {
+		return componentTreeNodeContext;
+	}
+
+	@Override
+	public void setPerspective(final IPerspective perspective) {
+		perspectiveReference = new AtomicReference<IPerspective>(perspective);
+	}
+
+	public IPerspective getPerspective() {
+		if (perspectiveReference == null) {
+			perspectiveReference = new AtomicReference<IPerspective>(component.createPerspective());
+		}
+		return perspectiveReference.get();
 	}
 
 }

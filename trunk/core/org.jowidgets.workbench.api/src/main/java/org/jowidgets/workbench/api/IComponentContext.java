@@ -27,11 +27,7 @@
  */
 package org.jowidgets.workbench.api;
 
-import org.jowidgets.api.widgets.IMenu;
-
 public interface IComponentContext {
-
-	IMenu getMenu();
 
 	IComponentTreeNodeContext getComponentTreeNodeContext();
 

@@ -27,9 +27,14 @@
  */
 package org.jowidgets.workbench.impl.rcp.internal;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.ITreeSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
@@ -40,7 +45,10 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.ui.IPerspectiveDescriptor;
+import org.eclipse.ui.IPerspectiveRegistry;
 import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
@@ -52,6 +60,7 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
+import org.jowidgets.workbench.api.IPerspective;
 import org.jowidgets.workbench.api.IUiPart;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
 
@@ -62,6 +71,7 @@ public final class WorkbenchApplicationTree extends Composite {
 	private IPopupMenu menu;
 	private IToolBarPopupButton menuButton;
 	private TreeViewer treeViewer;
+	private AtomicReference<IPerspective> perspectiveReference;
 
 	public WorkbenchApplicationTree(final Composite parent, final IWorkbenchApplication application) {
 		super(parent, SWT.NONE);
@@ -172,10 +182,58 @@ public final class WorkbenchApplicationTree extends Composite {
 				}
 			}
 		});
+
+		treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			@Override
+			public void selectionChanged(final SelectionChangedEvent event) {
+				if (!event.getSelection().isEmpty()) {
+					final ComponentTreeNodeContext context = (ComponentTreeNodeContext) ((ITreeSelection) treeViewer.getSelection()).getFirstElement();
+					IPerspective perspective = null;
+					final ComponentContext componentContext = context.getComponentContext();
+					if (componentContext != null) {
+						perspective = componentContext.getPerspective();
+					}
+					perspectiveReference = new AtomicReference<IPerspective>(perspective);
+					showPerspective();
+				}
+				else {
+					clearPerspective();
+				}
+			}
+		});
 	}
 
 	public void setInput(final WorkbenchApplicationContext applicationContext) {
 		treeViewer.setInput(applicationContext);
+	}
+
+	public void showPerspective() {
+		if (perspectiveReference != null) {
+			final IPerspective perspective = perspectiveReference.get();
+			if (perspective == null) {
+				showEmptyPerspective();
+			}
+			else {
+				System.err.println("Showing perspective " + perspective);
+			}
+		}
+	}
+
+	public boolean hasPerspective() {
+		return perspectiveReference != null;
+	}
+
+	private void clearPerspective() {
+		perspectiveReference = null;
+		showEmptyPerspective();
+	}
+
+	private void showEmptyPerspective() {
+		final IPerspectiveRegistry perspectiveRegistry = PlatformUI.getWorkbench().getPerspectiveRegistry();
+		final IPerspectiveDescriptor perspectiveDescriptor = perspectiveRegistry.findPerspectiveWithId(DynamicPerspective.ID);
+		final IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+		activePage.setPerspective(perspectiveDescriptor);
+		perspectiveRegistry.setDefaultPerspective(DynamicPerspective.ID);
 	}
 
 	public void refresh(final Object object) {

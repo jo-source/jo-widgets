@@ -57,6 +57,7 @@ public final class WorkbenchApplicationFolder extends Composite {
 	private final CTabFolder tabFolder;
 	private final IWorkbenchContext workbenchContext;
 	private IWorkbenchApplication currentApplication;
+	private WorkbenchApplicationTree activeTree;
 
 	public WorkbenchApplicationFolder(final Composite parent, final IWorkbench workbench, final IWorkbenchContext workbenchContext) {
 		super(parent, SWT.NONE);
@@ -91,6 +92,10 @@ public final class WorkbenchApplicationFolder extends Composite {
 				currentApplication = (IWorkbenchApplication) currentItem.getData();
 				currentApplication.onVisibleStateChanged(true);
 				currentApplication.onActiveStateChanged(true);
+				if (activeTree != null && activeTree.hasPerspective()) {
+					appTree.showPerspective();
+				}
+				activeTree = appTree;
 			}
 		});
 

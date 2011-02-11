@@ -32,11 +32,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentTreeNode;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 import org.jowidgets.workbench.api.IUiPart;
@@ -51,6 +53,7 @@ public final class ComponentTreeNodeContext implements IComponentTreeNodeContext
 	private IPopupMenu menu;
 	private final List<ComponentTreeNodeContext> childContexts = new ArrayList<ComponentTreeNodeContext>();
 	private final Map<IComponentTreeNode, ComponentTreeNodeContext> nodeMap = new HashMap<IComponentTreeNode, ComponentTreeNodeContext>();
+	private AtomicReference<ComponentContext> componentContextReference;
 
 	public ComponentTreeNodeContext(
 		final IWorkbenchApplicationContext applicationContext,
@@ -109,6 +112,19 @@ public final class ComponentTreeNodeContext implements IComponentTreeNodeContext
 
 	public ComponentTreeNodeContext[] getComponentTreeNodeContexts() {
 		return childContexts.toArray(new ComponentTreeNodeContext[0]);
+	}
+
+	public ComponentContext getComponentContext() {
+		if (componentContextReference == null) {
+			ComponentContext componentContext = null;
+			final IComponent component = treeNode.createComponent();
+			if (component != null) {
+				componentContext = new ComponentContext(this, component);
+				component.initialize(componentContext);
+			}
+			componentContextReference = new AtomicReference<ComponentContext>(componentContext);
+		}
+		return componentContextReference.get();
 	}
 
 	@Override

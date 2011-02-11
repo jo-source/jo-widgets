@@ -45,8 +45,8 @@ public final class WorkbenchContext implements IWorkbenchContext {
 	private final JoWorkbenchAdvisor workbenchAdvisor;
 	private final IApplicationLifecycle lifecycle;
 
-	public WorkbenchContext(final IWorkbench workbench, final IApplicationLifecycle lifecycle) {
-		workbenchAdvisor = new JoWorkbenchAdvisor(workbench, this);
+	public WorkbenchContext(final IWorkbench workbench, final IApplicationLifecycle lifecycle, final boolean saveAndRestore) {
+		workbenchAdvisor = new JoWorkbenchAdvisor(workbench, this, saveAndRestore);
 		this.lifecycle = lifecycle;
 	}
 

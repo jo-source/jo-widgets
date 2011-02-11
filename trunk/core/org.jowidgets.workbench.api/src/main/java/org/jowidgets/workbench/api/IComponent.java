@@ -27,11 +27,9 @@
  */
 package org.jowidgets.workbench.api;
 
-public interface IComponent extends ILifecycleCallback {
+public interface IComponent {
 
 	void initialize(IComponentContext context);
-
-	boolean hasMenu();
 
 	IPerspective createPerspective();
 

@@ -41,12 +41,14 @@ public final class JoWorkbenchAdvisor extends WorkbenchAdvisor {
 
 	private final IWorkbench workbench;
 	private final IWorkbenchContext context;
+	private final boolean saveAndRestore;
 	private JoWorkbenchWindowAdvisor workbenchWindowAdvisor;
 	private final List<Runnable> shutdownHooks = new CopyOnWriteArrayList<Runnable>();
 
-	public JoWorkbenchAdvisor(final IWorkbench workbench, final IWorkbenchContext context) {
+	public JoWorkbenchAdvisor(final IWorkbench workbench, final IWorkbenchContext context, final boolean saveAndRestore) {
 		this.workbench = workbench;
 		this.context = context;
+		this.saveAndRestore = saveAndRestore;
 	}
 
 	public JoWorkbenchWindowAdvisor getWorkbenchWindowAdvisor() {
@@ -55,7 +57,7 @@ public final class JoWorkbenchAdvisor extends WorkbenchAdvisor {
 
 	@Override
 	public void initialize(final IWorkbenchConfigurer configurer) {
-		configurer.setSaveAndRestore(true);
+		configurer.setSaveAndRestore(saveAndRestore);
 		super.initialize(configurer);
 	}
 
