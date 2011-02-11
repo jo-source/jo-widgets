@@ -28,16 +28,19 @@
 
 package org.jowidgets.examples.common.demo;
 
+import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.controler.ITabItemListener;
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.types.QuestionResult;
+import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ISplitComposite;
 import org.jowidgets.api.widgets.ITabFolder;
 import org.jowidgets.api.widgets.ITabItem;
+import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.ITabItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
@@ -58,7 +61,7 @@ public final class DemoTabFolderComposite {
 
 		final ISplitComposite split = parentContainer.add(
 				bpF.splitHorizontal().setFirstBorder(null).setSecondBorder(null),
-				"growx, growy");
+				"growx, growy, w 0::, h 0::");
 
 		final ITabFolder folder1 = addFolder(split.getFirst());
 		final ITabFolder folder2 = addFolder(split.getSecond());
@@ -87,16 +90,6 @@ public final class DemoTabFolderComposite {
 			}
 		});
 
-		final IPopupMenu popupMenu2 = item.createPopupMenu();
-		fillPopupMenu(popupMenu2);
-		item.addPopupDetectionListener(new IPopupDetectionListener() {
-
-			@Override
-			public void popupDetected(final Position position) {
-				popupMenu2.show(position);
-			}
-		});
-
 		final IWindow parentWindow = Toolkit.getWidgetUtils().getWindowAncestor(parentContainer);
 		final IFrame childWindow = Toolkit.createRootFrame(bpF.frame("Child"));
 		childWindow.setSize(parentWindow.getSize());
@@ -112,6 +105,7 @@ public final class DemoTabFolderComposite {
 			folder.attachItem(item);
 		}
 
+		childWindow.setPosition(new Position(0, 0));
 		childWindow.setVisible(true);
 	}
 
@@ -134,20 +128,32 @@ public final class DemoTabFolderComposite {
 		ITabItemBluePrint tabItemBp = bpF.tabItem();
 		tabItemBp.setText("Tab1").setToolTipText("Tooltip of tab1").setIcon(IconsSmall.INFO);
 		final ITabItem tabItem1 = tabFolder.addItem(tabItemBp);
-		addTabListeners(tabItem1);
-		tabItem1.add(bpF.textLabel("Tab content1"), "");
+		addTabContent(tabItem1);
 
 		tabItemBp = bpF.tabItem();
 		tabItemBp.setText("Tab2").setToolTipText("Tooltip of tab2").setIcon(IconsSmall.QUESTION);
 		final ITabItem tabItem2 = tabFolder.addItem(tabItemBp);
-		addTabListeners(tabItem2);
-		tabItem2.add(bpF.textLabel("Tab content2"), "");
+		addTabContent(tabItem2);
 
 		tabItemBp = bpF.tabItem();
 		tabItemBp.setText("Tab3").setToolTipText("Tooltip of tab3").setIcon(IconsSmall.WARNING);
 		final ITabItem tabItem3 = tabFolder.addItem(tabItemBp);
-		addTabListeners(tabItem3);
-		tabItem3.add(bpF.textLabel("Tab content3"), "");
+		addTabContent(tabItem3);
+
+		tabItemBp = bpF.tabItem();
+		tabItemBp.setText("Tab4").setToolTipText("Tooltip of tab4");
+		final ITabItem tabItem4 = tabFolder.addItem(tabItemBp);
+		addTabContent(tabItem4);
+
+		tabItemBp = bpF.tabItem();
+		tabItemBp.setText("Tab5").setToolTipText("Tooltip of tab5");
+		final ITabItem tabItem5 = tabFolder.addItem(tabItemBp);
+		addTabContent(tabItem5);
+
+		tabItemBp = bpF.tabItem();
+		tabItemBp.setText("Tab6").setToolTipText("Tooltip of tab6");
+		final ITabItem tabItem6 = tabFolder.addItem(tabItemBp);
+		addTabContent(tabItem6);
 
 		tabFolder.changeItemIndex(tabItem1, 2);
 		tabFolder.setSelectedItem(tabItem1);
@@ -155,7 +161,7 @@ public final class DemoTabFolderComposite {
 		return tabFolder;
 	}
 
-	private void addTabListeners(final ITabItem tabItem) {
+	private void addTabContent(final ITabItem tabItem) {
 		tabItem.addTabItemListener(new ITabItemListener() {
 
 			@Override
@@ -184,10 +190,40 @@ public final class DemoTabFolderComposite {
 		popupMenu.addItem(bpf.menuItem(tabItem.getText() + " item3"));
 		popupMenu.addItem(bpf.menuItem(tabItem.getText() + " item4"));
 		tabItem.addTabPopupDetectionListener(new IPopupDetectionListener() {
-
 			@Override
 			public void popupDetected(final Position position) {
 				popupMenu.show(position);
+			}
+		});
+
+		tabItem.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[]0[grow, 0::]0"));
+		final IToolBar toolBar = tabItem.add(bpf.toolBar(), "growx, w 0::, wrap");
+		toolBar.addItem(bpf.toolBarButton().setText(tabItem.getText()));
+		toolBar.addItem(bpf.toolBarButton().setIcon(IconsSmall.QUESTION));
+		toolBar.addItem(bpf.toolBarButton().setIcon(IconsSmall.INFO));
+		toolBar.addItem(bpf.toolBarPopupButton().setIcon(IconsSmall.WARNING));
+		toolBar.addItem(bpf.toolBarToggleButton().setText("Toggle"));
+
+		final IComposite composite = tabItem.add(bpf.scrollComposite(), "growx, growy, w 0::, h 0::");
+		composite.setLayout(new MigLayoutDescriptor("[]", "[]"));
+		composite.setBackgroundColor(Colors.WHITE);
+
+		final StringBuilder text = new StringBuilder();
+		for (int i = 0; i < 50; i++) {
+			text.append("Content of " + tabItem.getText() + "\n");
+		}
+		composite.add(bpf.textLabel().setText(text.toString()), "wrap");
+
+		final IPopupMenu popupMenu2 = composite.createPopupMenu();
+		popupMenu2.addItem(bpf.menuItem(tabItem.getParent().toString() + tabItem.getText() + " item1"));
+		popupMenu2.addItem(bpf.menuItem(tabItem.getText() + " item2"));
+		popupMenu2.addItem(bpf.menuItem(tabItem.getText() + " item3"));
+		popupMenu2.addItem(bpf.menuItem(tabItem.getText() + " item4"));
+		composite.addPopupDetectionListener(new IPopupDetectionListener() {
+
+			@Override
+			public void popupDetected(final Position position) {
+				popupMenu2.show(position);
 			}
 		});
 	}
