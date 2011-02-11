@@ -74,7 +74,6 @@ import org.jowidgets.spi.widgets.controler.TabItemObservableSpi;
 public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 
 	private final JPanel tabContentContainer;
-	private final JPanel tabContent;
 	private final SwingContainer swingContainer;
 	private final PopupDetectionObservable tabPopupDetectionObservable;
 	private final Set<PopupMenuImpl> tabPopupMenus;
@@ -105,7 +104,7 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 		this.tabPopupMenus = new HashSet<PopupMenuImpl>();
 
 		this.tabContentContainer = new JPanel();
-		this.tabContentContainer.setLayout(new MigLayout("", "0[grow, 0::]0", "0[grow, 0::]0"));
+		this.tabContentContainer.setLayout(new MigLayout("", "[]", "[]"));
 
 		if (index != null) {
 			parentTabbedPane.add(tabContentContainer, index.intValue());
@@ -114,10 +113,7 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 			parentTabbedPane.add(tabContentContainer);
 		}
 
-		this.tabContent = new JPanel();
-		this.tabContent.setLayout(new MigLayout("", "[]", "[]"));
-		this.swingContainer = new SwingContainer(genericWidgetFactory, tabContent);
-		this.tabContentContainer.add(tabContent, "growx, growy, w 0::, h 0::");
+		this.swingContainer = new SwingContainer(genericWidgetFactory, tabContentContainer);
 
 		this.tabComponent = new TabComponent(closeable);
 		parentTabbedPane.setTabComponentAt(getIndex(), tabComponent);
