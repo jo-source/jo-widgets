@@ -101,7 +101,7 @@ public final class ComponentTreeNodeContext implements IComponentTreeNodeContext
 	public void remove(final IComponentTreeNode componentTreeNode) {
 		final ComponentTreeNodeContext treeNodeContext = nodeMap.get(componentTreeNode);
 		if (treeNodeContext != null) {
-			childContexts.remove(componentTreeNode);
+			childContexts.remove(treeNodeContext);
 			nodeMap.remove(componentTreeNode);
 			tree.refresh(this);
 		}

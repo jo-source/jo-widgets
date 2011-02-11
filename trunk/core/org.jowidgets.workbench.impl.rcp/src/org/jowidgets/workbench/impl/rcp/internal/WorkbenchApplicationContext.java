@@ -29,7 +29,9 @@
 package org.jowidgets.workbench.impl.rcp.internal;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.IToolBar;
@@ -46,6 +48,7 @@ public final class WorkbenchApplicationContext implements IWorkbenchApplicationC
 	private final IWorkbenchApplication application;
 	private final WorkbenchApplicationTree tree;
 	private final List<ComponentTreeNodeContext> childContexts = new ArrayList<ComponentTreeNodeContext>();
+	private final Map<IComponentTreeNode, ComponentTreeNodeContext> nodeMap = new HashMap<IComponentTreeNode, ComponentTreeNodeContext>();
 
 	public WorkbenchApplicationContext(
 		final IWorkbenchContext workbenchContext,
@@ -58,6 +61,7 @@ public final class WorkbenchApplicationContext implements IWorkbenchApplicationC
 		for (final IComponentTreeNode treeNode : treeNodes) {
 			final ComponentTreeNodeContext treeNodeContext = new ComponentTreeNodeContext(this, null, treeNode, tree);
 			childContexts.add(treeNodeContext);
+			nodeMap.put(treeNode, treeNodeContext);
 			treeNode.initialize(treeNodeContext);
 		}
 		tree.setInput(this);
@@ -72,14 +76,19 @@ public final class WorkbenchApplicationContext implements IWorkbenchApplicationC
 	public void add(final int index, final IComponentTreeNode componentTreeNode) {
 		final ComponentTreeNodeContext treeNodeContext = new ComponentTreeNodeContext(this, null, componentTreeNode, tree);
 		childContexts.add(index, treeNodeContext);
+		nodeMap.put(componentTreeNode, treeNodeContext);
 		componentTreeNode.initialize(treeNodeContext);
 		tree.refresh(this);
 	}
 
 	@Override
 	public void remove(final IComponentTreeNode componentTreeNode) {
-		childContexts.remove(componentTreeNode);
-		tree.refresh(this);
+		final ComponentTreeNodeContext treeNodeContext = nodeMap.get(componentTreeNode);
+		if (treeNodeContext != null) {
+			childContexts.remove(treeNodeContext);
+			nodeMap.remove(componentTreeNode);
+			tree.refresh(this);
+		}
 	}
 
 	public ComponentTreeNodeContext[] getComponentTreeNodeContexts() {
