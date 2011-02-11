@@ -196,13 +196,15 @@ public final class DemoTabFolderComposite {
 			}
 		});
 
-		tabItem.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[]0[grow, 0::]0"));
+		tabItem.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[]0[]0[grow, 0::]0"));
 		final IToolBar toolBar = tabItem.add(bpf.toolBar(), "growx, w 0::, wrap");
 		toolBar.addItem(bpf.toolBarButton().setText(tabItem.getText()));
 		toolBar.addItem(bpf.toolBarButton().setIcon(IconsSmall.QUESTION));
 		toolBar.addItem(bpf.toolBarButton().setIcon(IconsSmall.INFO));
 		toolBar.addItem(bpf.toolBarPopupButton().setIcon(IconsSmall.WARNING));
 		toolBar.addItem(bpf.toolBarToggleButton().setText("Toggle"));
+
+		tabItem.add(bpf.separator(), "growx, wrap");
 
 		final IComposite composite = tabItem.add(bpf.scrollComposite(), "growx, growy, w 0::, h 0::");
 		composite.setLayout(new MigLayoutDescriptor("[]", "[]"));
