@@ -32,7 +32,7 @@ import java.awt.Component;
 
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IMenuListener;
-import org.jowidgets.common.widgets.controler.impl.MenuObservable;
+import org.jowidgets.spi.impl.controler.MenuObservable;
 import org.jowidgets.spi.impl.swing.widgets.internal.base.JoPopupMenu;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 

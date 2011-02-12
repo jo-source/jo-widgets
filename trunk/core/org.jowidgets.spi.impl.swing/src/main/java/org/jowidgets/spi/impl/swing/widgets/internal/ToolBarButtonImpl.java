@@ -34,7 +34,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 import org.jowidgets.common.widgets.controler.IActionListener;
-import org.jowidgets.common.widgets.controler.impl.ActionObservable;
+import org.jowidgets.spi.impl.controler.ActionObservable;
 import org.jowidgets.spi.widgets.IToolBarButtonSpi;
 
 public class ToolBarButtonImpl extends ToolBarItemImpl implements IToolBarButtonSpi {

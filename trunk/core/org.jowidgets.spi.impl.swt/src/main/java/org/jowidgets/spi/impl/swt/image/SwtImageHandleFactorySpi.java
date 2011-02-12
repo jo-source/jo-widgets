@@ -34,9 +34,9 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Display;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.image.IImageHandle;
-import org.jowidgets.common.image.impl.IImageFactory;
-import org.jowidgets.common.image.impl.ImageHandle;
 import org.jowidgets.spi.image.IImageHandleFactorySpi;
+import org.jowidgets.spi.impl.image.IImageFactory;
+import org.jowidgets.spi.impl.image.ImageHandle;
 import org.jowidgets.spi.impl.swt.image.util.AntiAliasingFilter;
 
 public class SwtImageHandleFactorySpi extends SwtImageHandleFactory implements IImageHandleFactorySpi {

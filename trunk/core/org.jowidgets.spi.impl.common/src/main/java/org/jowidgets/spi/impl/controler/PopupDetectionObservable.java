@@ -26,36 +26,37 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.widgets.controler.impl;
+package org.jowidgets.spi.impl.controler;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jowidgets.common.widgets.controler.IActionListener;
-import org.jowidgets.common.widgets.controler.IActionObservable;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
+import org.jowidgets.common.widgets.controler.IPopupDetectionObservable;
 
-public class ActionObservable implements IActionObservable {
+public class PopupDetectionObservable implements IPopupDetectionObservable {
 
-	private final Set<IActionListener> actionListeners;
+	private final Set<IPopupDetectionListener> listeners;
 
-	public ActionObservable() {
+	public PopupDetectionObservable() {
 		super();
-		this.actionListeners = new HashSet<IActionListener>();
+		this.listeners = new HashSet<IPopupDetectionListener>();
 	}
 
 	@Override
-	public final void addActionListener(final IActionListener listener) {
-		this.actionListeners.add(listener);
+	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+		listeners.add(listener);
 	}
 
 	@Override
-	public final void removeActionListener(final IActionListener listener) {
-		this.actionListeners.remove(listener);
+	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+		listeners.remove(listener);
 	}
 
-	public final void fireActionPerformed() {
-		for (final IActionListener actionListener : actionListeners) {
-			actionListener.actionPerformed();
+	public void firePopupDetected(final Position position) {
+		for (final IPopupDetectionListener listener : listeners) {
+			listener.popupDetected(position);
 		}
 	}
 

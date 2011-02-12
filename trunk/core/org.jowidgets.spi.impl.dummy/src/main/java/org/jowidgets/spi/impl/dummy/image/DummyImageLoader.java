@@ -29,8 +29,8 @@ package org.jowidgets.spi.impl.dummy.image;
 
 import java.net.URL;
 
-import org.jowidgets.common.image.impl.IImageFactory;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDImage;
+import org.jowidgets.spi.impl.image.IImageFactory;
 
 public class DummyImageLoader implements IImageFactory<UIDImage> {
 

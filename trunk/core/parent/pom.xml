@@ -22,6 +22,7 @@
 		<module>../org.jowidgets.workbench.api</module>
 		<module>../org.jowidgets.impl</module>
 		<module>../org.jowidgets.spi</module>
+		<module>../org.jowidgets.spi.impl.common</module>
 		<module>../org.jowidgets.spi.impl.dummy</module>
 		<module>../org.jowidgets.spi.impl.swing</module>
 		<module>../org.jowidgets.spi.impl.swt</module>

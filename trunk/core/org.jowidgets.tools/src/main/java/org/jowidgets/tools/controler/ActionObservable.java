@@ -26,10 +26,37 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.image.impl;
+package org.jowidgets.tools.controler;
 
-public interface IImageFactory<IMAGE_TYPE> {
+import java.util.HashSet;
+import java.util.Set;
 
-	IMAGE_TYPE createImage();
+import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controler.IActionObservable;
+
+public class ActionObservable implements IActionObservable {
+
+	private final Set<IActionListener> actionListeners;
+
+	public ActionObservable() {
+		super();
+		this.actionListeners = new HashSet<IActionListener>();
+	}
+
+	@Override
+	public final void addActionListener(final IActionListener listener) {
+		this.actionListeners.add(listener);
+	}
+
+	@Override
+	public final void removeActionListener(final IActionListener listener) {
+		this.actionListeners.remove(listener);
+	}
+
+	public final void fireActionPerformed() {
+		for (final IActionListener actionListener : actionListeners) {
+			actionListener.actionPerformed();
+		}
+	}
 
 }

@@ -29,4 +29,6 @@ package org.jowidgets.common.image;
 
 public interface IImageHandle {
 
+	Object getImage();
+
 }

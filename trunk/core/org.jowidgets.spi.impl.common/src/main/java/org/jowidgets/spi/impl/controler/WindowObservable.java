@@ -26,36 +26,60 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.widgets.controler.impl;
+package org.jowidgets.spi.impl.controler;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jowidgets.common.widgets.controler.IInputListener;
-import org.jowidgets.common.widgets.controler.IInputObservable;
+import org.jowidgets.common.widgets.controler.IWindowListener;
+import org.jowidgets.common.widgets.controler.IWindowObservable;
 
-public class InputObservable implements IInputObservable {
+public class WindowObservable implements IWindowObservable {
 
-	private final Set<IInputListener> inputListeners;
+	private final Set<IWindowListener> windowListeners;
 
-	public InputObservable() {
+	public WindowObservable() {
 		super();
-		this.inputListeners = new HashSet<IInputListener>();
+		this.windowListeners = new HashSet<IWindowListener>();
 	}
 
 	@Override
-	public final void addInputListener(final IInputListener listener) {
-		this.inputListeners.add(listener);
+	public final void addWindowListener(final IWindowListener listener) {
+		windowListeners.add(listener);
 	}
 
 	@Override
-	public final void removeInputListener(final IInputListener listener) {
-		this.inputListeners.remove(listener);
+	public final void removeWindowListener(final IWindowListener listener) {
+		windowListeners.remove(listener);
 	}
 
-	public final void fireInputChanged(final Object source) {
-		for (final IInputListener inputListener : inputListeners) {
-			inputListener.inputChanged(source);
+	public final void fireWindowActivated() {
+		for (final IWindowListener windowListener : windowListeners) {
+			windowListener.windowActivated();
+		}
+	}
+
+	public final void fireWindowDeactivated() {
+		for (final IWindowListener windowListener : windowListeners) {
+			windowListener.windowDeactivated();
+		}
+	}
+
+	public final void fireWindowIconified() {
+		for (final IWindowListener windowListener : windowListeners) {
+			windowListener.windowIconified();
+		}
+	}
+
+	public final void fireWindowDeiconified() {
+		for (final IWindowListener windowListener : windowListeners) {
+			windowListener.windowDeiconified();
+		}
+	}
+
+	public final void fireWindowClosed() {
+		for (final IWindowListener windowListener : windowListeners) {
+			windowListener.windowClosed();
 		}
 	}
 

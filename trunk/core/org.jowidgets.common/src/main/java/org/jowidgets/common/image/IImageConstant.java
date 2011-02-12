@@ -27,7 +27,6 @@
  */
 package org.jowidgets.common.image;
 
-
 public interface IImageConstant {
 
 }

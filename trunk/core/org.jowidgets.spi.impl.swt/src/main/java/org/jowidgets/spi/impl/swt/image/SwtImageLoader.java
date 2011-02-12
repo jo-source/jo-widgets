@@ -33,7 +33,7 @@ import java.net.URL;
 
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
-import org.jowidgets.common.image.impl.IImageFactory;
+import org.jowidgets.spi.impl.image.IImageFactory;
 
 public class SwtImageLoader implements IImageFactory<Image> {
 

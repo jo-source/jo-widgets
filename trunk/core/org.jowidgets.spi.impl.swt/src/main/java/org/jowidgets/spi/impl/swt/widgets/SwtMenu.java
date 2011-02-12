@@ -39,7 +39,7 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.ToolTip;
 import org.jowidgets.common.widgets.controler.IMenuListener;
-import org.jowidgets.common.widgets.controler.impl.MenuObservable;
+import org.jowidgets.spi.impl.controler.MenuObservable;
 import org.jowidgets.spi.impl.swt.widgets.internal.ActionMenuItemImpl;
 import org.jowidgets.spi.impl.swt.widgets.internal.IToolTipTextProvider;
 import org.jowidgets.spi.impl.swt.widgets.internal.MenuItemImpl;

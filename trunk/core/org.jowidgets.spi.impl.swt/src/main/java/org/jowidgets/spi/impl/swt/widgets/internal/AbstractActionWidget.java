@@ -28,7 +28,7 @@
 package org.jowidgets.spi.impl.swt.widgets.internal;
 
 import org.eclipse.swt.widgets.Control;
-import org.jowidgets.common.widgets.controler.impl.ActionObservable;
+import org.jowidgets.spi.impl.controler.ActionObservable;
 import org.jowidgets.spi.impl.swt.widgets.SwtWidget;
 import org.jowidgets.spi.widgets.IActionWidgetSpi;
 

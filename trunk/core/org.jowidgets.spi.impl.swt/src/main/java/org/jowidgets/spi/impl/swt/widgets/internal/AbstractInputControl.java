@@ -32,7 +32,7 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
-import org.jowidgets.common.widgets.controler.impl.InputObservable;
+import org.jowidgets.spi.impl.controler.InputObservable;
 import org.jowidgets.spi.impl.swt.widgets.SwtControl;
 import org.jowidgets.spi.widgets.IInputControlSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;

@@ -33,8 +33,8 @@ import javax.swing.ImageIcon;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.image.IImageHandleFactory;
-import org.jowidgets.common.image.impl.ImageHandle;
-import org.jowidgets.common.image.impl.ImageRegistry;
+import org.jowidgets.spi.impl.image.ImageHandle;
+import org.jowidgets.spi.impl.image.ImageRegistry;
 
 public final class SwingImageRegistry extends ImageRegistry {
 

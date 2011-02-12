@@ -20,6 +20,12 @@
 			<version>0.0.13-SNAPSHOT</version>
 		</dependency>
 		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.spi.impl.common</artifactId>
+			<version>0.0.13-SNAPSHOT</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
 			<groupId>org.eclipse</groupId>
 			<artifactId>swt-win32-win32-x86</artifactId>
 			<version>3.6.1</version>

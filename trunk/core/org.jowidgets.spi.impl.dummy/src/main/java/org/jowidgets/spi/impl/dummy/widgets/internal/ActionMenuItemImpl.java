@@ -28,7 +28,7 @@
 package org.jowidgets.spi.impl.dummy.widgets.internal;
 
 import org.jowidgets.common.widgets.controler.IActionListener;
-import org.jowidgets.common.widgets.controler.impl.ActionObservable;
+import org.jowidgets.spi.impl.controler.ActionObservable;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDMenuItem;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 

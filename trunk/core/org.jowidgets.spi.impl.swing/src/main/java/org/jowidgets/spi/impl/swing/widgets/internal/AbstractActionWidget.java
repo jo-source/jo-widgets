@@ -29,7 +29,7 @@ package org.jowidgets.spi.impl.swing.widgets.internal;
 
 import java.awt.Component;
 
-import org.jowidgets.common.widgets.controler.impl.ActionObservable;
+import org.jowidgets.spi.impl.controler.ActionObservable;
 import org.jowidgets.spi.impl.swing.widgets.SwingWidget;
 import org.jowidgets.spi.widgets.IActionWidgetSpi;
 

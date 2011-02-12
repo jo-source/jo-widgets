@@ -31,7 +31,7 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
-import org.jowidgets.common.widgets.controler.impl.InputObservable;
+import org.jowidgets.spi.impl.controler.InputObservable;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
 import org.jowidgets.spi.impl.dummy.widgets.DummyControl;
 import org.jowidgets.spi.widgets.IInputControlSpi;

@@ -21,6 +21,12 @@
 			<version>0.0.13-SNAPSHOT</version>
 		</dependency>
 		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.spi.impl.common</artifactId>
+			<version>0.0.13-SNAPSHOT</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
 			<groupId>com.miglayout</groupId>
 			<artifactId>miglayout</artifactId>
 			<classifier>swing</classifier>

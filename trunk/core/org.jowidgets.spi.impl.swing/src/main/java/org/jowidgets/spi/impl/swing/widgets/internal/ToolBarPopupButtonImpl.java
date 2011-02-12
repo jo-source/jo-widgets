@@ -44,7 +44,7 @@ import javax.swing.UIManager;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
-import org.jowidgets.common.widgets.controler.impl.PopupDetectionObservable;
+import org.jowidgets.spi.impl.controler.PopupDetectionObservable;
 import org.jowidgets.spi.widgets.IToolBarPopupButtonSpi;
 
 public class ToolBarPopupButtonImpl extends ToolBarButtonImpl implements IToolBarPopupButtonSpi {

@@ -33,7 +33,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenuItem;
 
 import org.jowidgets.common.widgets.controler.IActionListener;
-import org.jowidgets.common.widgets.controler.impl.ActionObservable;
+import org.jowidgets.spi.impl.controler.ActionObservable;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 
 public class ActionMenuItemImpl extends MenuItemImpl implements IActionMenuItemSpi {

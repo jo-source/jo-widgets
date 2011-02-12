@@ -26,37 +26,42 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.widgets.controler.impl;
+package org.jowidgets.tools.controler;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jowidgets.common.types.Position;
-import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
-import org.jowidgets.common.widgets.controler.IPopupDetectionObservable;
+import org.jowidgets.common.widgets.controler.IMenuListener;
+import org.jowidgets.common.widgets.controler.IMenuObservable;
 
-public class PopupDetectionObservable implements IPopupDetectionObservable {
+public class MenuObservable implements IMenuObservable {
 
-	private final Set<IPopupDetectionListener> listeners;
+	private final Set<IMenuListener> listeners;
 
-	public PopupDetectionObservable() {
+	public MenuObservable() {
 		super();
-		this.listeners = new HashSet<IPopupDetectionListener>();
+		this.listeners = new HashSet<IMenuListener>();
 	}
 
 	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+	public void addMenuListener(final IMenuListener listener) {
 		listeners.add(listener);
 	}
 
 	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+	public void removeMenuListener(final IMenuListener listener) {
 		listeners.remove(listener);
 	}
 
-	public void firePopupDetected(final Position position) {
-		for (final IPopupDetectionListener listener : listeners) {
-			listener.popupDetected(position);
+	public void fireMenuActivated() {
+		for (final IMenuListener menuListener : listeners) {
+			menuListener.menuActivated();
+		}
+	}
+
+	public void fireMenuDeactivated() {
+		for (final IMenuListener menuListener : listeners) {
+			menuListener.menuDeactivated();
 		}
 	}
 

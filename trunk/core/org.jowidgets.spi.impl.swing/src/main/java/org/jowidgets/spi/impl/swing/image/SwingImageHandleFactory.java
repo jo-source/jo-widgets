@@ -33,7 +33,7 @@ import java.net.URL;
 
 import org.jowidgets.common.image.IImageHandle;
 import org.jowidgets.common.image.IImageHandleFactory;
-import org.jowidgets.common.image.impl.ImageHandle;
+import org.jowidgets.spi.impl.image.ImageHandle;
 
 public class SwingImageHandleFactory implements IImageHandleFactory {
 

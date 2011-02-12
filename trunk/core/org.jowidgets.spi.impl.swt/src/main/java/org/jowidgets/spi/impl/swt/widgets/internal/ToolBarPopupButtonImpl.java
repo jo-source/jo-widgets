@@ -36,7 +36,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ToolItem;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
-import org.jowidgets.common.widgets.controler.impl.PopupDetectionObservable;
+import org.jowidgets.spi.impl.controler.PopupDetectionObservable;
 import org.jowidgets.spi.widgets.IToolBarPopupButtonSpi;
 
 public class ToolBarPopupButtonImpl extends ToolBarButtonImpl implements IToolBarPopupButtonSpi {

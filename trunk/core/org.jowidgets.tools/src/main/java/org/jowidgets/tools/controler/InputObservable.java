@@ -26,36 +26,36 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.widgets.controler.impl;
+package org.jowidgets.tools.controler;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jowidgets.common.widgets.controler.IItemStateListener;
-import org.jowidgets.common.widgets.controler.IItemStateObservable;
+import org.jowidgets.common.widgets.controler.IInputListener;
+import org.jowidgets.common.widgets.controler.IInputObservable;
 
-public class ItemStateObservable implements IItemStateObservable {
+public class InputObservable implements IInputObservable {
 
-	private final Set<IItemStateListener> itemListeners;
+	private final Set<IInputListener> inputListeners;
 
-	public ItemStateObservable() {
+	public InputObservable() {
 		super();
-		this.itemListeners = new HashSet<IItemStateListener>();
+		this.inputListeners = new HashSet<IInputListener>();
 	}
 
 	@Override
-	public final void addItemListener(final IItemStateListener listener) {
-		this.itemListeners.add(listener);
+	public final void addInputListener(final IInputListener listener) {
+		this.inputListeners.add(listener);
 	}
 
 	@Override
-	public final void removeItemListener(final IItemStateListener listener) {
-		this.itemListeners.remove(listener);
+	public final void removeInputListener(final IInputListener listener) {
+		this.inputListeners.remove(listener);
 	}
 
-	public final void fireItemStateChanged() {
-		for (final IItemStateListener listener : itemListeners) {
-			listener.itemStateChanged();
+	public final void fireInputChanged(final Object source) {
+		for (final IInputListener inputListener : inputListeners) {
+			inputListener.inputChanged(source);
 		}
 	}
 

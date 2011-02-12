@@ -32,7 +32,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.ToolItem;
 import org.jowidgets.common.widgets.controler.IItemStateListener;
-import org.jowidgets.common.widgets.controler.impl.ItemStateObservable;
+import org.jowidgets.spi.impl.controler.ItemStateObservable;
 import org.jowidgets.spi.widgets.IToolBarToggleButtonSpi;
 
 public class ToolBarToggleButtonImpl extends ToolBarButtonImpl implements IToolBarToggleButtonSpi {

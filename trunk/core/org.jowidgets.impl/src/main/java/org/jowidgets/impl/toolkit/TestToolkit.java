@@ -30,13 +30,13 @@ package org.jowidgets.impl.toolkit;
 
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.application.IApplicationLifecycle;
-import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.widgets.basic.blueprint.BasicSimpleTestBluePrintFactory;
 import org.jowidgets.test.api.toolkit.ITestToolkit;
 import org.jowidgets.test.api.widgets.IFrameUi;
 import org.jowidgets.test.api.widgets.blueprint.factory.IBasicSimpleTestBluePrintFactory;
 import org.jowidgets.test.api.widgets.descriptor.IFrameDescriptorUi;
+import org.jowidgets.tools.controler.WindowAdapter;
 
 public final class TestToolkit implements ITestToolkit {
 

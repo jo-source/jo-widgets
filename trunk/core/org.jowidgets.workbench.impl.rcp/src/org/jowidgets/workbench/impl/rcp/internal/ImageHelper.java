@@ -31,17 +31,16 @@ package org.jowidgets.workbench.impl.rcp.internal;
 import org.eclipse.swt.graphics.Image;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.image.impl.ImageHandle;
+import org.jowidgets.common.image.IImageHandle;
 
 public final class ImageHelper {
 
 	private ImageHelper() {}
 
 	public static Image getImage(final IImageConstant imageKey, final Image defaultImage) {
-		@SuppressWarnings("unchecked")
-		final ImageHandle<Image> imageHandle = (ImageHandle<Image>) Toolkit.getImageRegistry().getImageHandle(imageKey);
+		final IImageHandle imageHandle = Toolkit.getImageRegistry().getImageHandle(imageKey);
 		if (imageHandle != null) {
-			return imageHandle.getImage();
+			return (Image) imageHandle.getImage();
 		}
 		return defaultImage;
 	}

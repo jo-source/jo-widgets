@@ -28,7 +28,7 @@
 package org.jowidgets.spi.impl.dummy.widgets.internal;
 
 import org.jowidgets.common.widgets.controler.IItemStateListener;
-import org.jowidgets.common.widgets.controler.impl.ItemStateObservable;
+import org.jowidgets.spi.impl.controler.ItemStateObservable;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDMenuItem;
 import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 

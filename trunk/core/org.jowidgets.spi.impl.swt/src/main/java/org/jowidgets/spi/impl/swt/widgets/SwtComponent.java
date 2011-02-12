@@ -38,7 +38,7 @@ import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
-import org.jowidgets.common.widgets.controler.impl.PopupDetectionObservable;
+import org.jowidgets.spi.impl.controler.PopupDetectionObservable;
 import org.jowidgets.spi.impl.swt.color.ColorCache;
 import org.jowidgets.spi.impl.swt.cursor.CursorCache;
 import org.jowidgets.spi.impl.swt.util.DimensionConvert;

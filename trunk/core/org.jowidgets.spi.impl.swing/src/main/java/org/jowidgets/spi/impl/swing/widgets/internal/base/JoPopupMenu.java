@@ -32,7 +32,7 @@ import javax.swing.JPopupMenu;
 
 import org.jowidgets.common.widgets.controler.IMenuListener;
 import org.jowidgets.common.widgets.controler.IMenuObservable;
-import org.jowidgets.common.widgets.controler.impl.MenuObservable;
+import org.jowidgets.spi.impl.controler.MenuObservable;
 
 public class JoPopupMenu extends JPopupMenu implements IMenuObservable {
 

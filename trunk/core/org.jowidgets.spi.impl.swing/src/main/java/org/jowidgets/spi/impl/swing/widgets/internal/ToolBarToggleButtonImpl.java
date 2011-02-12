@@ -34,7 +34,7 @@ import java.awt.event.ItemListener;
 import javax.swing.JToggleButton;
 
 import org.jowidgets.common.widgets.controler.IItemStateListener;
-import org.jowidgets.common.widgets.controler.impl.ItemStateObservable;
+import org.jowidgets.spi.impl.controler.ItemStateObservable;
 import org.jowidgets.spi.widgets.IToolBarToggleButtonSpi;
 
 public class ToolBarToggleButtonImpl extends ToolBarItemImpl implements IToolBarToggleButtonSpi {

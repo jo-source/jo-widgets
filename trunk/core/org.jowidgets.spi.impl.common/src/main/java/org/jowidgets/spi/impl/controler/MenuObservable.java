@@ -26,25 +26,43 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.widgets.controler.impl;
+package org.jowidgets.spi.impl.controler;
 
-import org.jowidgets.common.widgets.controler.IWindowListener;
+import java.util.HashSet;
+import java.util.Set;
 
-public class WindowAdapter implements IWindowListener {
+import org.jowidgets.common.widgets.controler.IMenuListener;
+import org.jowidgets.common.widgets.controler.IMenuObservable;
+
+public class MenuObservable implements IMenuObservable {
+
+	private final Set<IMenuListener> listeners;
+
+	public MenuObservable() {
+		super();
+		this.listeners = new HashSet<IMenuListener>();
+	}
 
 	@Override
-	public void windowActivated() {}
+	public void addMenuListener(final IMenuListener listener) {
+		listeners.add(listener);
+	}
 
 	@Override
-	public void windowDeactivated() {}
+	public void removeMenuListener(final IMenuListener listener) {
+		listeners.remove(listener);
+	}
 
-	@Override
-	public void windowIconified() {}
+	public void fireMenuActivated() {
+		for (final IMenuListener menuListener : listeners) {
+			menuListener.menuActivated();
+		}
+	}
 
-	@Override
-	public void windowDeiconified() {}
-
-	@Override
-	public void windowClosed() {}
+	public void fireMenuDeactivated() {
+		for (final IMenuListener menuListener : listeners) {
+			menuListener.menuDeactivated();
+		}
+	}
 
 }

@@ -34,7 +34,7 @@ import javax.swing.event.MenuListener;
 
 import org.jowidgets.common.widgets.controler.IMenuListener;
 import org.jowidgets.common.widgets.controler.IMenuObservable;
-import org.jowidgets.common.widgets.controler.impl.MenuObservable;
+import org.jowidgets.spi.impl.controler.MenuObservable;
 
 public class JoMenu extends JMenu implements IMenuObservable {
 

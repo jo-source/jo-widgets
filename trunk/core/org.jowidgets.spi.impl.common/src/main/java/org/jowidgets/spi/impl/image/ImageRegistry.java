@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2010, Manuel Woelker, Michael Grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,26 +25,47 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.common.image.impl;
+package org.jowidgets.spi.impl.image;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.image.IImageHandle;
+import org.jowidgets.common.image.IImageHandleFactory;
+import org.jowidgets.common.image.IImageRegistry;
+import org.jowidgets.common.image.IImageUrlProvider;
 import org.jowidgets.util.Assert;
 
-public final class ImageHandle<IMAGE_TYPE> implements IImageHandle {
+public class ImageRegistry implements IImageRegistry {
 
-	private final IImageFactory<IMAGE_TYPE> imageFactory;
-	private IMAGE_TYPE image = null;
+	private final Map<Object, IImageHandle> imageMap = new HashMap<Object, IImageHandle>();
+	private final IImageHandleFactory imageHandleFactory;
 
-	public ImageHandle(final IImageFactory<IMAGE_TYPE> imageFactory) {
-		Assert.paramNotNull(imageFactory, "imageFactory");
-		this.imageFactory = imageFactory;
+	public ImageRegistry(final IImageHandleFactory imageHandleFactory) {
+		Assert.paramNotNull(imageHandleFactory, "imageHandleFactory");
+		this.imageHandleFactory = imageHandleFactory;
 	}
 
-	public synchronized IMAGE_TYPE getImage() {
-		if (image == null) {
-			image = imageFactory.createImage();
-		}
-		return image;
+	@Override
+	public synchronized void registerImageConstant(final IImageConstant key, final IImageHandle imageHandle) {
+		Assert.paramNotNull(key, "key");
+		Assert.paramNotNull(imageHandle, "imageHandle");
+		imageMap.put(key, imageHandle);
+	}
+
+	public synchronized IImageHandle getImageHandle(final IImageConstant key) {
+		return imageMap.get(key);
+	}
+
+	@Override
+	public void registerImageUrl(final IImageUrlProvider imageUrlProvider) {
+		Assert.paramNotNull(imageUrlProvider, "imageUrlProvider");
+		registerImageConstant(imageUrlProvider, imageHandleFactory.createImageHandle(imageUrlProvider.getImageUrl()));
+	}
+
+	protected IImageHandleFactory getImageHandleFactory() {
+		return imageHandleFactory;
 	}
 
 }
