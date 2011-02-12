@@ -98,6 +98,19 @@ public class DemoMainComposite {
 			}
 		});
 
+		final IButton treeDemoButton = parentContainer.add(
+				bpF.button("Tree demo", "Shows an frame with a tree"),
+				"grow, sg bg, wrap");
+		treeDemoButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final IFrame treeDemoFrame = parentWindow.createChildWindow(bpF.frame("Tree demo").autoPackOff());
+				treeDemoFrame.setSize(new Dimension(800, 600));
+				new DemoTreeComposite(treeDemoFrame);
+				treeDemoFrame.setVisible(true);
+			}
+		});
+
 		final IButton progressBarDialogButton = parentContainer.add(
 				bpF.button("Progress bar demo", "Opens the progress bar demo"),
 				"grow, sg bg, wrap");
