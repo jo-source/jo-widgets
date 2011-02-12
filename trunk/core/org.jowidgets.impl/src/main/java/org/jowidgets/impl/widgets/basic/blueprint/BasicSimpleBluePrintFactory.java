@@ -57,6 +57,8 @@ import org.jowidgets.api.widgets.blueprint.IToolBarButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarContainerItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarPopupButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarToggleButtonBluePrint;
+import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
+import org.jowidgets.api.widgets.blueprint.ITreeNodeBluePrint;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.api.widgets.blueprint.factory.IBasicSimpleBluePrintFactory;
@@ -88,6 +90,8 @@ import org.jowidgets.api.widgets.descriptor.IToolBarContainerItemDescriptor;
 import org.jowidgets.api.widgets.descriptor.IToolBarDescriptor;
 import org.jowidgets.api.widgets.descriptor.IToolBarPopupButtonDescriptor;
 import org.jowidgets.api.widgets.descriptor.IToolBarToggleButtonDescriptor;
+import org.jowidgets.api.widgets.descriptor.ITreeDescriptor;
+import org.jowidgets.api.widgets.descriptor.ITreeNodeDescriptor;
 import org.jowidgets.impl.base.blueprint.factory.AbstractBluePrintFactory;
 
 public class BasicSimpleBluePrintFactory extends AbstractBluePrintFactory implements IBasicSimpleBluePrintFactory {
@@ -245,6 +249,16 @@ public class BasicSimpleBluePrintFactory extends AbstractBluePrintFactory implem
 	@Override
 	public ITabItemBluePrint tabItem() {
 		return createProxy(ITabItemBluePrint.class, ITabItemDescriptor.class);
+	}
+
+	@Override
+	public ITreeBluePrint tree() {
+		return createProxy(ITreeBluePrint.class, ITreeDescriptor.class);
+	}
+
+	@Override
+	public ITreeNodeBluePrint treeNode() {
+		return createProxy(ITreeNodeBluePrint.class, ITreeNodeDescriptor.class);
 	}
 
 }

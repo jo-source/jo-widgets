@@ -51,6 +51,7 @@ import org.jowidgets.spi.impl.swt.widgets.internal.TextFieldImpl;
 import org.jowidgets.spi.impl.swt.widgets.internal.TextLabelImpl;
 import org.jowidgets.spi.impl.swt.widgets.internal.ToggleButtonImpl;
 import org.jowidgets.spi.impl.swt.widgets.internal.ToolBarImpl;
+import org.jowidgets.spi.impl.swt.widgets.internal.TreeImpl;
 import org.jowidgets.spi.widgets.IButtonSpi;
 import org.jowidgets.spi.widgets.ICheckBoxSpi;
 import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
@@ -67,6 +68,7 @@ import org.jowidgets.spi.widgets.ITextFieldSpi;
 import org.jowidgets.spi.widgets.ITextLabelSpi;
 import org.jowidgets.spi.widgets.IToggleButtonSpi;
 import org.jowidgets.spi.widgets.IToolBarSpi;
+import org.jowidgets.spi.widgets.ITreeSpi;
 import org.jowidgets.spi.widgets.setup.IButtonSetupSpi;
 import org.jowidgets.spi.widgets.setup.ICheckBoxSetupSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
@@ -83,6 +85,7 @@ import org.jowidgets.spi.widgets.setup.ITabFolderSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;
+import org.jowidgets.spi.widgets.setup.ITreeSetupSpi;
 import org.jowidgets.util.Assert;
 
 public final class SwtWidgetFactory implements IWidgetFactorySpi {
@@ -214,6 +217,11 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 		final Object parentUiReference,
 		final ITabFolderSetupSpi setup) {
 		return new TabFolderImpl(factory, parentUiReference, setup);
+	}
+
+	@Override
+	public ITreeSpi createTree(final Object parentUiReference, final ITreeSetupSpi setup) {
+		return new TreeImpl(parentUiReference, setup);
 	}
 
 }

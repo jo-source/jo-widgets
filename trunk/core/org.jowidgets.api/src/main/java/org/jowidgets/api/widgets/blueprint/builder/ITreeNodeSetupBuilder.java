@@ -25,24 +25,25 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.convert;
+package org.jowidgets.api.widgets.blueprint.builder;
 
-public interface IObjectStringConverter<FROM_TYPE> {
+import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Markup;
+import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
-	/**
-	 * Converts the value to an string representation
-	 * 
-	 * @param value The value to convert
-	 * @return the string representation
-	 */
-	String convertToString(FROM_TYPE value);
+public interface ITreeNodeSetupBuilder<INSTANCE_TYPE extends ITreeNodeSetupBuilder<?>> extends IItemSetupBuilder<INSTANCE_TYPE> {
 
-	/**
-	 * Gets an description for an value
-	 * 
-	 * @param value the value to get the description for
-	 * @return the description or null if there is no description
-	 */
-	String getDescription(FROM_TYPE value);
+	@Mandatory
+	INSTANCE_TYPE setMarkup(Markup markup);
+
+	@Mandatory
+	INSTANCE_TYPE setExpanded(boolean expanded);
+
+	@Mandatory
+	INSTANCE_TYPE setSelected(boolean selected);
+
+	INSTANCE_TYPE setForegroundColor(IColorConstant color);
+
+	INSTANCE_TYPE setBackgroundColor(final IColorConstant color);
 
 }

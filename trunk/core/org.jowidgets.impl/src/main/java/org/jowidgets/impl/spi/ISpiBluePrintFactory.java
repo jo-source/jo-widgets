@@ -44,6 +44,7 @@ import org.jowidgets.impl.spi.blueprint.ITabItemBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITextFieldBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITextLabelBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IToggleButtonBluePrintSpi;
+import org.jowidgets.impl.spi.blueprint.ITreeBluePrintSpi;
 
 public interface ISpiBluePrintFactory {
 
@@ -80,5 +81,7 @@ public interface ISpiBluePrintFactory {
 	ITabFolderBluePrintSpi tabFolder();
 
 	ITabItemBluePrintSpi tabItem();
+
+	ITreeBluePrintSpi tree();
 
 }

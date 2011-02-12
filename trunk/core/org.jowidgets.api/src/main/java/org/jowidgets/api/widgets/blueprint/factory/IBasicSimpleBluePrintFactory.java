@@ -58,6 +58,8 @@ import org.jowidgets.api.widgets.blueprint.IToolBarButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarContainerItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarPopupButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarToggleButtonBluePrint;
+import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
+import org.jowidgets.api.widgets.blueprint.ITreeNodeBluePrint;
 import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
@@ -131,5 +133,9 @@ public interface IBasicSimpleBluePrintFactory {
 	ITabFolderBluePrint tabFolder();
 
 	ITabItemBluePrint tabItem();
+
+	ITreeBluePrint tree();
+
+	ITreeNodeBluePrint treeNode();
 
 }

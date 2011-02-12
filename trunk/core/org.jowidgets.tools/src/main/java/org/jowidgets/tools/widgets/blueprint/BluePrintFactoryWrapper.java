@@ -67,6 +67,8 @@ import org.jowidgets.api.widgets.blueprint.IToolBarButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarContainerItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarPopupButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarToggleButtonBluePrint;
+import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
+import org.jowidgets.api.widgets.blueprint.ITreeNodeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
@@ -84,6 +86,21 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	public BluePrintFactoryWrapper(final IBluePrintFactory bluePrintFactory) {
 		Assert.paramNotNull(bluePrintFactory, "bluePrintFactory");
 		this.bluePrintFactory = bluePrintFactory;
+	}
+
+	@Override
+	public void addSetupBuilderConvenienceRegistry(final ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry) {
+		bluePrintFactory.addSetupBuilderConvenienceRegistry(setupBuilderConvenienceRegistry);
+	}
+
+	@Override
+	public void addDefaultsInitializerRegistry(final IDefaultsInitializerRegistry defaultInitializerRegistry) {
+		bluePrintFactory.addDefaultsInitializerRegistry(defaultInitializerRegistry);
+	}
+
+	@Override
+	public void setDefaultsInitializerRegistry(final IDefaultsInitializerRegistry defaultInitializerRegistry) {
+		bluePrintFactory.setDefaultsInitializerRegistry(defaultInitializerRegistry);
 	}
 
 	@Override
@@ -550,17 +567,13 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	}
 
 	@Override
-	public void addSetupBuilderConvenienceRegistry(final ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry) {
-		bluePrintFactory.addSetupBuilderConvenienceRegistry(setupBuilderConvenienceRegistry);
+	public ITreeBluePrint tree() {
+		return bluePrintFactory.tree();
 	}
 
 	@Override
-	public void addDefaultsInitializerRegistry(final IDefaultsInitializerRegistry defaultInitializerRegistry) {
-		bluePrintFactory.addDefaultsInitializerRegistry(defaultInitializerRegistry);
+	public ITreeNodeBluePrint treeNode() {
+		return bluePrintFactory.treeNode();
 	}
 
-	@Override
-	public void setDefaultsInitializerRegistry(final IDefaultsInitializerRegistry defaultInitializerRegistry) {
-		bluePrintFactory.setDefaultsInitializerRegistry(defaultInitializerRegistry);
-	}
 }

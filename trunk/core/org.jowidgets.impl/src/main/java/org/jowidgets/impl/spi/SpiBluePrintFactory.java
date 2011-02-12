@@ -45,6 +45,7 @@ import org.jowidgets.impl.spi.blueprint.ITabItemBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITextFieldBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITextLabelBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IToggleButtonBluePrintSpi;
+import org.jowidgets.impl.spi.blueprint.ITreeBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.defaults.registry.SpiDefaultsInitializerRegistry;
 import org.jowidgets.impl.spi.descriptor.IButtonDescriptorSpi;
 import org.jowidgets.impl.spi.descriptor.ICheckBoxDescriptorSpi;
@@ -63,6 +64,7 @@ import org.jowidgets.impl.spi.descriptor.ITabItemDescriptorSpi;
 import org.jowidgets.impl.spi.descriptor.ITextFieldDescriptorSpi;
 import org.jowidgets.impl.spi.descriptor.ITextLabelDescriptorSpi;
 import org.jowidgets.impl.spi.descriptor.IToggleButtonDescriptorSpi;
+import org.jowidgets.impl.spi.descriptor.ITreeDescriptorSpi;
 import org.jowidgets.impl.widgets.common.blueprint.convenience.registry.CommonSetupConvenienceRegistry;
 
 public class SpiBluePrintFactory extends AbstractBluePrintFactory implements ISpiBluePrintFactory {
@@ -154,6 +156,11 @@ public class SpiBluePrintFactory extends AbstractBluePrintFactory implements ISp
 	@Override
 	public ITabItemBluePrintSpi tabItem() {
 		return createProxy(ITabItemBluePrintSpi.class, ITabItemDescriptorSpi.class);
+	}
+
+	@Override
+	public ITreeBluePrintSpi tree() {
+		return createProxy(ITreeBluePrintSpi.class, ITreeDescriptorSpi.class);
 	}
 
 }

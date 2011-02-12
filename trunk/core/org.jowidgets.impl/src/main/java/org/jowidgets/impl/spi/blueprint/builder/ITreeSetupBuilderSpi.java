@@ -25,24 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.convert;
+package org.jowidgets.impl.spi.blueprint.builder;
 
-public interface IObjectStringConverter<FROM_TYPE> {
+import org.jowidgets.common.widgets.builder.ITreeSetupBuilderCommon;
 
-	/**
-	 * Converts the value to an string representation
-	 * 
-	 * @param value The value to convert
-	 * @return the string representation
-	 */
-	String convertToString(FROM_TYPE value);
-
-	/**
-	 * Gets an description for an value
-	 * 
-	 * @param value the value to get the description for
-	 * @return the description or null if there is no description
-	 */
-	String getDescription(FROM_TYPE value);
+public interface ITreeSetupBuilderSpi<INSTANCE_TYPE extends ITreeSetupBuilderSpi<?>> extends
+		ITreeSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

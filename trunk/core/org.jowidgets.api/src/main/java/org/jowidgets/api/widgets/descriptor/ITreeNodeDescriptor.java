@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2011, Michael Grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,24 +25,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.convert;
+package org.jowidgets.api.widgets.descriptor;
 
-public interface IObjectStringConverter<FROM_TYPE> {
+import org.jowidgets.api.widgets.ITreeNode;
+import org.jowidgets.api.widgets.descriptor.setup.ITreeNodeSetup;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-	/**
-	 * Converts the value to an string representation
-	 * 
-	 * @param value The value to convert
-	 * @return the string representation
-	 */
-	String convertToString(FROM_TYPE value);
-
-	/**
-	 * Gets an description for an value
-	 * 
-	 * @param value the value to get the description for
-	 * @return the description or null if there is no description
-	 */
-	String getDescription(FROM_TYPE value);
+public interface ITreeNodeDescriptor extends ITreeNodeSetup, IWidgetDescriptor<ITreeNode> {
 
 }

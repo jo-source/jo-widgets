@@ -25,24 +25,18 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.convert;
+package org.jowidgets.impl.widgets.common.blueprint.defaults;
 
-public interface IObjectStringConverter<FROM_TYPE> {
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
+import org.jowidgets.common.types.SelectionPolicy;
+import org.jowidgets.common.widgets.builder.ITreeSetupBuilderCommon;
 
-	/**
-	 * Converts the value to an string representation
-	 * 
-	 * @param value The value to convert
-	 * @return the string representation
-	 */
-	String convertToString(FROM_TYPE value);
+public class TreeDefaultsCommon implements IDefaultInitializer<ITreeSetupBuilderCommon<?>> {
 
-	/**
-	 * Gets an description for an value
-	 * 
-	 * @param value the value to get the description for
-	 * @return the description or null if there is no description
-	 */
-	String getDescription(FROM_TYPE value);
+	@Override
+	public void initialize(final ITreeSetupBuilderCommon<?> builder) {
+		builder.setContentScrolled(Boolean.TRUE);
+		builder.setSelectionPolicy(SelectionPolicy.SINGLE_SELECTION);
+	}
 
 }
