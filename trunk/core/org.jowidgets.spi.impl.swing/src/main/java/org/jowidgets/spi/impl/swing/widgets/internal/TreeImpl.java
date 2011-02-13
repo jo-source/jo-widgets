@@ -34,12 +34,17 @@ import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.ToolTipManager;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.jowidgets.common.types.SelectionPolicy;
+import org.jowidgets.spi.impl.swing.image.SwingImageRegistry;
+import org.jowidgets.spi.impl.swing.util.ColorConvert;
+import org.jowidgets.spi.impl.swing.util.FontProvider;
 import org.jowidgets.spi.impl.swing.widgets.SwingControl;
+import org.jowidgets.spi.impl.swing.widgets.internal.base.JoTreeNode;
 import org.jowidgets.spi.widgets.ITreeNodeSpi;
 import org.jowidgets.spi.widgets.ITreeSpi;
 import org.jowidgets.spi.widgets.setup.ITreeSetupSpi;
@@ -47,8 +52,9 @@ import org.jowidgets.spi.widgets.setup.ITreeSetupSpi;
 public class TreeImpl extends SwingControl implements ITreeSpi {
 
 	private final JTree tree;
-	private final DefaultMutableTreeNode rootNode;
+	private final DefaultMutableTreeNode mutableRootNode;
 	private final DefaultTreeModel treeModel;
+	private final ITreeNodeSpi rootNode;
 
 	public TreeImpl(final ITreeSetupSpi setup) {
 		super(createComponent(setup));
@@ -61,30 +67,72 @@ public class TreeImpl extends SwingControl implements ITreeSpi {
 		}
 
 		this.treeModel = (DefaultTreeModel) tree.getModel();
-		this.rootNode = (DefaultMutableTreeNode) treeModel.getRoot();
+		this.mutableRootNode = (DefaultMutableTreeNode) treeModel.getRoot();
 
-		//TODO remove later
-		for (int i = 0; i < 10; i++) {
-			final DefaultMutableTreeNode node = new DefaultMutableTreeNode("node " + i);
-			treeModel.insertNodeInto(node, rootNode, rootNode.getChildCount());
-			tree.expandPath(new TreePath(rootNode.getPath()));
+		tree.setCellRenderer(new DefaultTreeCellRenderer() {
 
-			for (int j = 0; j < 10; j++) {
-				final DefaultMutableTreeNode subNode = new DefaultMutableTreeNode("sub node " + j);
-				treeModel.insertNodeInto(subNode, node, node.getChildCount());
+			private static final long serialVersionUID = 1L;
 
-				for (int k = 0; k < 10; k++) {
-					final DefaultMutableTreeNode subSubNode = new DefaultMutableTreeNode("sub sub node " + k);
-					treeModel.insertNodeInto(subSubNode, subNode, subNode.getChildCount());
+			@Override
+			public Component getTreeCellRendererComponent(
+				final JTree tree,
+				final Object value,
+				final boolean selected,
+				final boolean expanded,
+				final boolean leaf,
+				final int row,
+				final boolean hasFocus) {
+
+				final Component result = super.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus);
+
+				if (value instanceof JoTreeNode) {
+					final JoTreeNode joTreeNode = ((JoTreeNode) value);
+					setText(joTreeNode.getText());
+					setToolTipText(joTreeNode.getToolTipText());
+					setIcon(SwingImageRegistry.getInstance().getImageIcon(joTreeNode.getIcon()));
+
+					if (joTreeNode.getMarkup() != null) {
+						setFont(FontProvider.deriveFont(getFont(), joTreeNode.getMarkup()));
+					}
+
+					if (!selected && joTreeNode.getBackgroundColor() != null) {
+						setBackgroundNonSelectionColor(ColorConvert.convert(joTreeNode.getBackgroundColor()));
+					}
+					else {
+						setBackgroundNonSelectionColor(null);
+					}
+
+					if (!selected && joTreeNode.getForegroundColor() != null) {
+						setForeground(ColorConvert.convert(joTreeNode.getForegroundColor()));
+					}
+					else {
+						setForeground(null);
+					}
 				}
+
+				return result;
+
 			}
-		}
+		});
+
+		this.rootNode = new TreeNodeImpl(this, mutableRootNode);
 	}
 
 	@Override
 	public ITreeNodeSpi getRootNode() {
-		// TODO MG
-		return null;
+		return rootNode;
+	}
+
+	protected DefaultMutableTreeNode getMutableRootNode() {
+		return mutableRootNode;
+	}
+
+	protected JTree getTree() {
+		return tree;
+	}
+
+	protected DefaultTreeModel getTreeModel() {
+		return treeModel;
 	}
 
 	private static Component createComponent(final ITreeSetupSpi setup) {
@@ -118,5 +166,13 @@ public class TreeImpl extends SwingControl implements ITreeSpi {
 		else {
 			return tree;
 		}
+	}
+
+	public void registerItem(final JoTreeNode uiReference, final TreeNodeImpl result) {
+		// TODO Auto-generated method stub
+	}
+
+	public void unRegisterItem(final TreeNode child) {
+		// TODO Auto-generated method stub
 	}
 }

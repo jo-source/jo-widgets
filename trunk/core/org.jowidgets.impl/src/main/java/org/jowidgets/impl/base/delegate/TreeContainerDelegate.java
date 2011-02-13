@@ -37,6 +37,7 @@ import org.jowidgets.api.widgets.descriptor.ITreeNodeDescriptor;
 import org.jowidgets.impl.widgets.basic.TreeImpl;
 import org.jowidgets.impl.widgets.basic.TreeNodeImpl;
 import org.jowidgets.spi.widgets.ITreeNodeSpi;
+import org.jowidgets.util.Assert;
 
 public class TreeContainerDelegate implements ITreeContainer {
 
@@ -52,7 +53,7 @@ public class TreeContainerDelegate implements ITreeContainer {
 		final TreeNodeImpl parentNode,
 		final TreeNodeImpl treeNode,
 		final ITreeNodeSpi treeNodeSpi) {
-		super();
+		Assert.paramNotNull(treeNodeSpi, "treeNodeSpi");
 
 		this.children = new LinkedList<ITreeNode>();
 

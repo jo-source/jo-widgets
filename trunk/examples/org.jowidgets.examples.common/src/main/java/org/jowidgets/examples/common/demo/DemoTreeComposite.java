@@ -87,9 +87,9 @@ public final class DemoTreeComposite {
 				}
 			}
 
-			node.setSelected(false);
-			node.setExpanded(false);
 		}
+
+		tree.getChildren().get(2).getChildren().get(3).setSelected(true);
 	}
 
 	private void registerListners(final ITreeNode node) {

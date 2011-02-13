@@ -26,24 +26,24 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.swt.widgets.internal;
+package org.jowidgets.spi.impl.swing.widgets.internal;
 
+import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.TreeItem;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.MutableTreeNode;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
+
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.spi.impl.controler.TreeNodeObservable;
-import org.jowidgets.spi.impl.swt.color.ColorCache;
-import org.jowidgets.spi.impl.swt.image.SwtImageRegistry;
-import org.jowidgets.spi.impl.swt.util.FontProvider;
+import org.jowidgets.spi.impl.swing.widgets.internal.base.JoTreeNode;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.ITreeNodeSpi;
 import org.jowidgets.util.Assert;
@@ -53,37 +53,30 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 	private final Set<IPopupDetectionListener> popupDetectionListeners;
 
 	private final TreeImpl parentTree;
-	private final TreeItem item;
+	private final DefaultMutableTreeNode node;
 
-	public TreeNodeImpl(final TreeImpl parentTree, final TreeItem parentItem, final Integer index) {
+	public TreeNodeImpl(final TreeImpl parentTree, final DefaultMutableTreeNode node) {
 		super();
 		Assert.paramNotNull(parentTree, "parentTree");
 
 		this.popupDetectionListeners = new HashSet<IPopupDetectionListener>();
 
 		this.parentTree = parentTree;
-
-		if (index != null) {
-			if (parentItem == null) {
-				this.item = new TreeItem(parentTree.getUiReference(), SWT.NONE, index.intValue());
-			}
-			else {
-				this.item = new TreeItem(parentItem, SWT.NONE, index.intValue());
-			}
-		}
-		else {
-			if (parentItem == null) {
-				this.item = new TreeItem(parentTree.getUiReference(), SWT.NONE);
-			}
-			else {
-				this.item = new TreeItem(parentItem, SWT.NONE);
-			}
-		}
+		this.node = node;
 	}
 
 	@Override
-	public TreeItem getUiReference() {
-		return item;
+	public DefaultMutableTreeNode getUiReference() {
+		return node;
+	}
+
+	private JoTreeNode getJoTreeNode() {
+		if (node instanceof JoTreeNode) {
+			return (JoTreeNode) node;
+		}
+		else {
+			throw new UnsupportedOperationException("This Operation is not supported for the root node");
+		}
 	}
 
 	@Override
@@ -100,65 +93,72 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 
 	@Override
 	public void setText(final String text) {
-		if (text != null) {
-			getUiReference().setText(text);
-		}
-		else {
-			getUiReference().setText(String.valueOf(""));
-		}
+		getJoTreeNode().setText(text);
 	}
 
 	@Override
 	public void setToolTipText(final String toolTipText) {
-		//TODO MG
+		getJoTreeNode().setToolTipText(toolTipText);
 	}
 
 	@Override
 	public void setIcon(final IImageConstant icon) {
-		final Image oldImage = getUiReference().getImage();
-		final Image newImage = SwtImageRegistry.getInstance().getImage(icon);
-		if (oldImage != newImage) {
-			getUiReference().setImage(newImage);
-		}
+		getJoTreeNode().setIcon(icon);
 	}
 
 	@Override
 	public void setMarkup(final Markup markup) {
-		final Font newFont = FontProvider.deriveFont(item.getFont(), markup);
-		item.setFont(newFont);
+		getJoTreeNode().setMarkup(markup);
 	}
 
 	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
-		getUiReference().setForeground(ColorCache.getInstance().getColor(colorValue));
+		getJoTreeNode().setForegroundColor(colorValue);
 	}
 
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
-		getUiReference().setBackground(ColorCache.getInstance().getColor(colorValue));
+		getJoTreeNode().setBackgroundColor(colorValue);
 	}
 
 	@Override
 	public void setExpanded(final boolean expanded) {
-		item.setExpanded(expanded);
-		fireExpandedChanged(expanded);
+		if (expanded) {
+			parentTree.getTree().expandPath(new TreePath(node.getPath()));
+		}
+		else {
+			parentTree.getTree().collapsePath(new TreePath(node.getPath()));
+		}
 	}
 
 	@Override
 	public boolean isExpanded() {
-		return item.getExpanded();
+		final TreePath rootPath = new TreePath(parentTree.getMutableRootNode());
+		final TreePath thisPath = new TreePath(node);
+		final Enumeration<TreePath> expandedPaths = parentTree.getTree().getExpandedDescendants(rootPath);
+		while (expandedPaths.hasMoreElements()) {
+			final TreePath expandedPath = expandedPaths.nextElement();
+			if (expandedPath.isDescendant(thisPath)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
 	public void setSelected(final boolean selected) {
-		parentTree.setSelected(this, selected);
+		parentTree.getTree().setSelectionPath(new TreePath(node.getPath()));
 	}
 
 	@Override
 	public boolean isSelected() {
-		for (final TreeItem selectedItem : parentTree.getUiReference().getSelection()) {
-			if (selectedItem == this.item) {
-				return true;
+		final TreePath thisPath = new TreePath(node);
+		final TreePath[] selectedPaths = parentTree.getTree().getSelectionPaths();
+		if (selectedPaths != null) {
+			for (final TreePath selectedPath : selectedPaths) {
+				if (selectedPath.isDescendant(thisPath)) {
+					return true;
+				}
 			}
 		}
 		return false;
@@ -182,17 +182,32 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 
 	@Override
 	public ITreeNodeSpi addNode(final Integer index) {
-		final TreeNodeImpl result = new TreeNodeImpl(parentTree, item, index);
-		parentTree.registerItem(result.getUiReference(), result);
+		final JoTreeNode joTreeNode = new JoTreeNode();
+
+		if (index != null) {
+			parentTree.getTreeModel().insertNodeInto(joTreeNode, node, index.intValue());
+		}
+		else {
+			parentTree.getTreeModel().insertNodeInto(joTreeNode, node, node.getChildCount());
+		}
+
+		//expand the path of the root node to ensure that the child is visible (because root is not)
+		//do not remove this (Swing trees are very strange !!!:()
+		if (parentTree.getTree().getModel().getRoot() == node) {
+			parentTree.getTree().expandPath(new TreePath(node));
+		}
+
+		final TreeNodeImpl result = new TreeNodeImpl(parentTree, joTreeNode);
+		parentTree.registerItem(joTreeNode, result);
 		return result;
 	}
 
 	@Override
 	public void removeNode(final int index) {
-		final TreeItem child = getUiReference().getItem(index);
+		final TreeNode child = node.getChildAt(index);
+		parentTree.getTreeModel().removeNodeFromParent((MutableTreeNode) child);
 		if (child != null) {
 			parentTree.unRegisterItem(child);
-			child.dispose();
 		}
 	}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,36 +26,71 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.basic.factory.internal;
+package org.jowidgets.spi.impl.swing.widgets.internal.base;
 
-import org.jowidgets.api.widgets.ITree;
-import org.jowidgets.api.widgets.descriptor.ITreeDescriptor;
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.common.widgets.factory.IWidgetFactory;
-import org.jowidgets.impl.spi.ISpiBluePrintFactory;
-import org.jowidgets.impl.spi.blueprint.ITreeBluePrintSpi;
-import org.jowidgets.impl.widgets.basic.TreeImpl;
-import org.jowidgets.spi.IWidgetFactorySpi;
-import org.jowidgets.spi.widgets.ITreeSpi;
+import javax.swing.tree.DefaultMutableTreeNode;
 
-public class TreeFactory extends AbstractWidgetFactory implements IWidgetFactory<ITree, ITreeDescriptor> {
+import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Markup;
 
-	public TreeFactory(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetFactorySpi spiWidgetFactory,
-		final ISpiBluePrintFactory bpF) {
+public class JoTreeNode extends DefaultMutableTreeNode {
 
-		super(genericWidgetFactory, spiWidgetFactory, bpF);
+	private static final long serialVersionUID = 1L;
+
+	private String text;
+	private String toolTipText;
+	private IImageConstant icon;
+	private Markup markup;
+	private IColorConstant backgroundColor;
+	private IColorConstant foregroundColor;
+
+	public void setText(final String text) {
+		this.text = text;
 	}
 
-	@Override
-	public ITree create(final Object parentUiReference, final ITreeDescriptor descriptor) {
-		final ITreeBluePrintSpi treeBpSpi = getSpiBluePrintFactory().tree();
-		treeBpSpi.setSetup(descriptor);
+	public String getText() {
+		return text;
+	}
 
-		final ITreeSpi treeSpi = getSpiWidgetFactory().createTree(parentUiReference, treeBpSpi);
+	public void setToolTipText(final String toolTipText) {
+		this.toolTipText = toolTipText;
+	}
 
-		return new TreeImpl(treeSpi, descriptor);
+	public String getToolTipText() {
+		return toolTipText;
+	}
+
+	public void setIcon(final IImageConstant icon) {
+		this.icon = icon;
+	}
+
+	public IImageConstant getIcon() {
+		return icon;
+	}
+
+	public void setMarkup(final Markup markup) {
+		this.markup = markup;
+	}
+
+	public Markup getMarkup() {
+		return markup;
+	}
+
+	public void setBackgroundColor(final IColorConstant backgroundColor) {
+		this.backgroundColor = backgroundColor;
+	}
+
+	public IColorConstant getBackgroundColor() {
+		return backgroundColor;
+	}
+
+	public void setForegroundColor(final IColorConstant foregroundColor) {
+		this.foregroundColor = foregroundColor;
+	}
+
+	public IColorConstant getForegroundColor() {
+		return foregroundColor;
 	}
 
 }

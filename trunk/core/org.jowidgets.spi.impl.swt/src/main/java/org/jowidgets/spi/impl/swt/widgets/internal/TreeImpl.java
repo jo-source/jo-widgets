@@ -203,7 +203,7 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi {
 
 	@Override
 	public ITreeNodeSpi addNode(final Integer index) {
-		final TreeNodeImpl result = new TreeNodeImpl(this, null, multiSelection, index);
+		final TreeNodeImpl result = new TreeNodeImpl(this, null, index);
 		registerItem(result.getUiReference(), result);
 		return result;
 	}
