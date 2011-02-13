@@ -31,10 +31,16 @@ package org.jowidgets.examples.common.demo;
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IMenu;
+import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITree;
 import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.api.widgets.blueprint.ITreeNodeBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.common.types.SelectionPolicy;
+import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
+import org.jowidgets.common.widgets.controler.ITreeNodeListener;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
@@ -47,12 +53,79 @@ public final class DemoTreeComposite {
 		final ILayoutDescriptor fillLayoutDescriptor = new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0");
 		parentContainer.setLayout(fillLayoutDescriptor);
 
-		final ITree tree = parentContainer.add(bpF.tree(), "growx, growy, w 0::, h 0::");
+		final ITree tree = parentContainer.add(
+				bpF.tree().setSelectionPolicy(SelectionPolicy.SINGLE_SELECTION),
+				"growx, growy, w 0::, h 0::");
+		final IPopupMenu popupMenu = tree.createPopupMenu();
+		fillMenu("", popupMenu);
+
+		tree.addPopupDetectionListener(new IPopupDetectionListener() {
+			@Override
+			public void popupDetected(final Position position) {
+				popupMenu.show(position);
+			}
+		});
 
 		for (int i = 0; i < 10; i++) {
-			final ITreeNodeBluePrint treeNodeBp = bpF.treeNode();
-			treeNodeBp.setText("node " + i).setToolTipText("tooltip of node " + i).setIcon(IconsSmall.INFO);
+			ITreeNodeBluePrint treeNodeBp = bpF.treeNode();
+			treeNodeBp.setText("Node " + i).setToolTipText("tooltip of node " + i).setIcon(IconsSmall.INFO);
 			final ITreeNode node = tree.addNode(treeNodeBp);
+
+			registerListners(node);
+
+			for (int j = 0; j < 10; j++) {
+				treeNodeBp = bpF.treeNode();
+				treeNodeBp.setText("SubNode " + j).setToolTipText("tooltip of subNode " + j).setIcon(IconsSmall.QUESTION);
+				final ITreeNode subNode = node.addNode(treeNodeBp);
+				registerListners(subNode);
+
+				for (int k = 0; k < 10; k++) {
+					treeNodeBp = bpF.treeNode();
+					treeNodeBp.setText("SubSubNode " + k).setToolTipText("tooltip of subSubNode " + k).setIcon(IconsSmall.WARNING);
+					final ITreeNode subSubNode = subNode.addNode(treeNodeBp);
+					registerListners(subSubNode);
+				}
+			}
+
+			node.setSelected(false);
+			node.setExpanded(false);
 		}
+	}
+
+	private void registerListners(final ITreeNode node) {
+		node.addTreeNodeListener(new ITreeNodeListener() {
+
+			@Override
+			public void selectionChanged(final boolean selected) {
+				// CHECKSTYLE:OFF
+				System.out.println(node.getText() + " selected = " + selected);
+				// CHECKSTYLE:ON
+			}
+
+			@Override
+			public void expandedChanged(final boolean expanded) {
+				// CHECKSTYLE:OFF
+				System.out.println(node.getText() + " expanded = " + expanded);
+				// CHECKSTYLE:ON
+			}
+		});
+
+		final IPopupMenu popupMenu = node.createPopupMenu();
+		fillMenu(node.getText() + " -> ", popupMenu);
+
+		node.addPopupDetectionListener(new IPopupDetectionListener() {
+			@Override
+			public void popupDetected(final Position position) {
+				popupMenu.show(position);
+			}
+		});
+	}
+
+	private void fillMenu(final String prefix, final IMenu menu) {
+		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
+		menu.addItem(bpF.menuItem(prefix + "menu item 1"));
+		menu.addItem(bpF.menuItem(prefix + "menu item 2"));
+		menu.addItem(bpF.menuItem(prefix + "menu item 3"));
+		menu.addItem(bpF.menuItem(prefix + "menu item 4"));
 	}
 }
