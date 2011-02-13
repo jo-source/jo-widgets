@@ -26,108 +26,110 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.basic;
+package org.jowidgets.impl.base.delegate;
 
+import java.util.LinkedList;
 import java.util.List;
 
-import org.jowidgets.api.widgets.IComponent;
-import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.IPopupMenu;
-import org.jowidgets.api.widgets.ITree;
 import org.jowidgets.api.widgets.ITreeContainer;
 import org.jowidgets.api.widgets.ITreeNode;
-import org.jowidgets.api.widgets.descriptor.ITreeDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITreeNodeDescriptor;
-import org.jowidgets.impl.base.delegate.ControlDelegate;
-import org.jowidgets.impl.base.delegate.TreeContainerDelegate;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.impl.widgets.common.wrapper.ControlSpiWrapper;
-import org.jowidgets.spi.widgets.ITreeSpi;
+import org.jowidgets.impl.widgets.basic.TreeImpl;
+import org.jowidgets.impl.widgets.basic.TreeNodeImpl;
+import org.jowidgets.spi.widgets.ITreeNodeSpi;
 
-public class TreeImpl extends ControlSpiWrapper implements ITree {
+public class TreeContainerDelegate implements ITreeContainer {
 
-	private final ControlDelegate controlDelegate;
-	private final TreeContainerDelegate treeContainerDelegate;
+	private final List<ITreeNode> children;
 
-	public TreeImpl(final ITreeSpi widget, final ITreeDescriptor descriptor) {
-		super(widget);
-		this.controlDelegate = new ControlDelegate();
+	private final TreeImpl parentTree;
+	private final TreeNodeImpl parentNode;
+	private final TreeNodeImpl treeNode;
+	private final ITreeNodeSpi treeNodeSpi;
 
-		VisibiliySettingsInvoker.setVisibility(descriptor, this);
-		ColorSettingsInvoker.setColors(descriptor, this);
+	public TreeContainerDelegate(
+		final TreeImpl parentTree,
+		final TreeNodeImpl parentNode,
+		final TreeNodeImpl treeNode,
+		final ITreeNodeSpi treeNodeSpi) {
+		super();
 
-		this.treeContainerDelegate = new TreeContainerDelegate(this, null, null, widget.getRootNode());
-	}
+		this.children = new LinkedList<ITreeNode>();
 
-	@Override
-	public ITreeSpi getWidget() {
-		return (ITreeSpi) super.getWidget();
-	}
-
-	@Override
-	public IContainer getParent() {
-		return controlDelegate.getParent();
-	}
-
-	@Override
-	public void setParent(final IComponent parent) {
-		controlDelegate.setParent(parent);
-	}
-
-	@Override
-	public boolean isReparentable() {
-		return controlDelegate.isReparentable();
-	}
-
-	@Override
-	public IPopupMenu createPopupMenu() {
-		return new PopupMenuImpl(getWidget().createPopupMenu(), this);
+		this.parentTree = parentTree;
+		this.parentNode = parentNode;
+		this.treeNode = treeNode;
+		this.treeNodeSpi = treeNodeSpi;
 	}
 
 	@Override
 	public ITreeContainer getParentContainer() {
-		return treeContainerDelegate.getParentContainer();
+		if (parentNode != null) {
+			return parentNode;
+		}
+		else {
+			return parentTree;
+		}
 	}
 
 	@Override
 	public ITreeNode addNode() {
-		return treeContainerDelegate.addNode();
+		final ITreeNodeSpi childTreeNodeSpi = treeNodeSpi.addNode(null);
+		final ITreeNode result = new TreeNodeImpl(parentTree, treeNode, childTreeNodeSpi);
+		children.add(result);
+		return result;
 	}
 
 	@Override
 	public ITreeNode addNode(final int index) {
-		return treeContainerDelegate.addNode(index);
+		final ITreeNodeSpi childTreeNodeSpi = treeNodeSpi.addNode(Integer.valueOf(index));
+		final ITreeNode result = new TreeNodeImpl(parentTree, treeNode, childTreeNodeSpi);
+		children.add(index, result);
+		return result;
 	}
 
 	@Override
 	public ITreeNode addNode(final ITreeNodeDescriptor descriptor) {
-		return treeContainerDelegate.addNode(descriptor);
+		final ITreeNodeSpi childTreeNodeSpi = treeNodeSpi.addNode(null);
+		final ITreeNode result = new TreeNodeImpl(parentTree, treeNode, childTreeNodeSpi, descriptor);
+		children.add(result);
+		return result;
 	}
 
 	@Override
 	public ITreeNode addNode(final int index, final ITreeNodeDescriptor descriptor) {
-		return treeContainerDelegate.addNode(index, descriptor);
+		final ITreeNodeSpi childTreeNodeSpi = treeNodeSpi.addNode(Integer.valueOf(index));
+		final ITreeNode result = new TreeNodeImpl(parentTree, treeNode, childTreeNodeSpi, descriptor);
+		children.add(index, result);
+		return result;
 	}
 
 	@Override
 	public void removeNode(final ITreeNode node) {
-		treeContainerDelegate.removeNode(node);
+		final int index = children.indexOf(node);
+		if (index != -1) {
+			children.remove(index);
+			treeNodeSpi.removeNode(index);
+		}
 	}
 
 	@Override
 	public void removeNode(final int index) {
-		treeContainerDelegate.removeNode(index);
+		children.remove(index);
+		treeNodeSpi.removeNode(index);
 	}
 
 	@Override
 	public void removeAllNodes() {
-		treeContainerDelegate.removeAllNodes();
+		for (int i = 0; i < children.size(); i++) {
+			treeNodeSpi.removeNode(i);
+		}
+		children.clear();
 	}
 
 	@Override
 	public List<ITreeNode> getChildren() {
-		return treeContainerDelegate.getChildren();
+		return new LinkedList<ITreeNode>(children);
 	}
 
 }

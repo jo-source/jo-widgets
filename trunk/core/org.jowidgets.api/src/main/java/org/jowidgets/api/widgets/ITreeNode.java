@@ -30,7 +30,7 @@ package org.jowidgets.api.widgets;
 
 import org.jowidgets.common.widgets.ITreeNodeCommon;
 
-public interface ITreeNode extends IItem, ITreeNodeCommon {
+public interface ITreeNode extends IItem, ITreeContainer, ITreeNodeCommon {
 
 	IPopupMenu createPopupMenu();
 

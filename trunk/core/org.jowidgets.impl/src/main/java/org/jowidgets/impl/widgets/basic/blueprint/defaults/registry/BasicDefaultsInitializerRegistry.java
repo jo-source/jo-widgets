@@ -35,6 +35,7 @@ import org.jowidgets.api.widgets.blueprint.builder.IInputComponentSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.ISelectableItemSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.ISplitCompositeSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.ITextFieldSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.builder.ITreeNodeSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IWindowSetupBuilder;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.ButtonDefaults;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.ComboBoxSelectionDefaults;
@@ -42,6 +43,7 @@ import org.jowidgets.impl.widgets.basic.blueprint.defaults.InputWidgetDefaults;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.SelectableItemDefaults;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.SplitCompositeWidgetDefaults;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.TextFieldDefaults;
+import org.jowidgets.impl.widgets.basic.blueprint.defaults.TreeNodeDefaults;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.WidgetDefaults;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.WindowDefaults;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.registry.CommonDefaultsInitializerRegistry;
@@ -58,5 +60,6 @@ public class BasicDefaultsInitializerRegistry extends CommonDefaultsInitializerR
 		register(ISplitCompositeSetupBuilder.class, new SplitCompositeWidgetDefaults());
 		register(IComponentSetupBuilder.class, new WidgetDefaults());
 		register(ISelectableItemSetupBuilder.class, new SelectableItemDefaults());
+		register(ITreeNodeSetupBuilder.class, new TreeNodeDefaults());
 	}
 }

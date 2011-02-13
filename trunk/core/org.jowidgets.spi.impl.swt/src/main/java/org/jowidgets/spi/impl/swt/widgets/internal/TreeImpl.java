@@ -28,36 +28,167 @@
 
 package org.jowidgets.spi.impl.swt.widgets.internal;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MenuDetectEvent;
+import org.eclipse.swt.events.MenuDetectListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.TreeEvent;
+import org.eclipse.swt.events.TreeListener;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Markup;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.SelectionPolicy;
+import org.jowidgets.common.widgets.controler.ITreeNodeListener;
 import org.jowidgets.spi.impl.swt.widgets.SwtControl;
 import org.jowidgets.spi.widgets.ITreeNodeSpi;
 import org.jowidgets.spi.widgets.ITreeSpi;
 import org.jowidgets.spi.widgets.setup.ITreeSetupSpi;
 
-public class TreeImpl extends SwtControl implements ITreeSpi {
+public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi {
+
+	private final boolean multiSelection;
+	private final Map<TreeItem, TreeNodeImpl> items;
+	private List<TreeItem> lastSelection;
 
 	public TreeImpl(final Object parentUiReference, final ITreeSetupSpi setup) {
 		super(new Tree((Composite) parentUiReference, getStyle(setup)));
 
-		//TODO remove later
-		for (int i = 0; i < 10; i++) {
-			final TreeItem item = new TreeItem(getUiReference(), 0);
-			item.setText("Item " + i);
+		this.lastSelection = new LinkedList<TreeItem>();
+		this.items = new HashMap<TreeItem, TreeNodeImpl>();
 
-			for (int j = 0; j < 10; j++) {
-				final TreeItem subItem = new TreeItem(item, 0);
-				subItem.setText("SubItem " + j);
+		this.multiSelection = setup.getSelectionPolicy() == SelectionPolicy.MULTI_SELECTION;
 
-				for (int k = 0; k < 10; k++) {
-					final TreeItem subSubItem = new TreeItem(subItem, 0);
-					subSubItem.setText("SubSubItem " + k);
+		setMenuDetectListener(new MenuDetectListener() {
+			@Override
+			public void menuDetected(final MenuDetectEvent e) {
+				final Point position = getUiReference().toControl(e.x, e.y);
+				final TreeItem item = getUiReference().getItem(position);
+				if (item == null) {
+					getPopupDetectionObservable().firePopupDetected(new Position(position.x, position.y));
+				}
+				else {
+					final TreeNodeImpl itemImpl = items.get(item);
+					itemImpl.firePopupDetected(new Position(position.x, position.y));
 				}
 			}
+		});
+
+		getUiReference().addTreeListener(new TreeListener() {
+
+			@Override
+			public void treeExpanded(final TreeEvent e) {
+				fireExpandedChanged(e, true);
+			}
+
+			@Override
+			public void treeCollapsed(final TreeEvent e) {
+				fireExpandedChanged(e, false);
+			}
+
+			private void fireExpandedChanged(final TreeEvent event, final boolean expanded) {
+				final TreeNodeImpl itemImpl = items.get(event.item);
+				if (itemImpl != null) {
+					itemImpl.fireExpandedChanged(expanded);
+				}
+				else {
+					throw new IllegalStateException("No item impl registered for item '"
+						+ event.item
+						+ "'. This seems to be a bug");
+				}
+			}
+		});
+
+		getUiReference().addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(final SelectionEvent e) {
+				fireSelectionChange(getUiReference().getSelection());
+			}
+		});
+
+	}
+
+	private void fireSelectionChange(final TreeItem[] newSelection) {
+		final List<TreeItem> newSelectionList = Arrays.asList(newSelection);
+
+		for (final TreeItem wasSelected : lastSelection) {
+			if (!newSelectionList.contains(wasSelected)) {
+				items.get(wasSelected).fireSelectionChanged(false);
+			}
 		}
+
+		for (final TreeItem isSelected : newSelectionList) {
+			if (!lastSelection.contains(isSelected)) {
+				items.get(isSelected).fireSelectionChanged(true);
+			}
+		}
+
+		lastSelection = newSelectionList;
+	}
+
+	protected void setSelected(final TreeNodeImpl treeNode, final boolean selected) {
+		if (selected != treeNode.isSelected()) {
+			final TreeItem[] newSelection;
+			if (multiSelection) {
+				if (selected) {//add item to selection
+					TreeItem[] oldSelection = getUiReference().getSelection();
+					if (oldSelection == null) {
+						oldSelection = new TreeItem[0];
+					}
+					newSelection = new TreeItem[oldSelection.length + 1];
+					newSelection[0] = treeNode.getUiReference();
+					for (int i = 0; i < oldSelection.length; i++) {
+						newSelection[i + 1] = oldSelection[i];
+					}
+				}
+				else {//not selected, so remove item from selection
+					final TreeItem[] oldSelection = getUiReference().getSelection();
+					if (oldSelection == null || oldSelection.length == 0) {
+						//nothing to remove from, so return
+						return;
+					}
+					newSelection = new TreeItem[oldSelection.length - 1];
+					int offset = 0;
+					for (int i = 0; i < newSelection.length; i++) {
+						if (oldSelection[i] == treeNode.getUiReference()) {
+							offset = 1;
+						}
+						else {
+							newSelection[i] = oldSelection[i + offset];
+						}
+					}
+				}
+			}
+			else {//single selection
+				if (selected) {
+					newSelection = new TreeItem[1];
+					newSelection[0] = treeNode.getUiReference();
+				}
+				else {
+					newSelection = new TreeItem[0];
+				}
+			}
+			getUiReference().setSelection(newSelection);
+			fireSelectionChange(newSelection);
+		}
+	}
+
+	protected void registerItem(final TreeItem item, final TreeNodeImpl treeNodeImpl) {
+		items.put(item, treeNodeImpl);
+	}
+
+	protected void unRegisterItem(final TreeItem item) {
+		items.remove(item);
 	}
 
 	@Override
@@ -67,8 +198,73 @@ public class TreeImpl extends SwtControl implements ITreeSpi {
 
 	@Override
 	public ITreeNodeSpi getRootNode() {
-		// TODO Auto-generated method stub
-		return null;
+		return this;
+	}
+
+	@Override
+	public ITreeNodeSpi addNode(final Integer index) {
+		final TreeNodeImpl result = new TreeNodeImpl(this, null, multiSelection, index);
+		registerItem(result.getUiReference(), result);
+		return result;
+	}
+
+	@Override
+	public void removeNode(final int index) {
+		final TreeItem child = getUiReference().getItem(index);
+		if (child != null) {
+			unRegisterItem(child);
+			child.dispose();
+		}
+	}
+
+	@Override
+	public void setMarkup(final Markup markup) {
+		throw new UnsupportedOperationException("setMarkup is not possible on the root node");
+	}
+
+	@Override
+	public void setExpanded(final boolean expanded) {
+		throw new UnsupportedOperationException("setExpanded is not possible on the root node");
+	}
+
+	@Override
+	public boolean isExpanded() {
+		throw new UnsupportedOperationException("isExpanded is not possible on the root node");
+	}
+
+	@Override
+	public void setSelected(final boolean selected) {
+		throw new UnsupportedOperationException("setSelected is not possible on the root node");
+	}
+
+	@Override
+	public boolean isSelected() {
+		throw new UnsupportedOperationException("isSelected is not possible on the root node");
+	}
+
+	@Override
+	public void setText(final String text) {
+		throw new UnsupportedOperationException("setText is not possible on the root node");
+	}
+
+	@Override
+	public void setToolTipText(final String text) {
+		throw new UnsupportedOperationException("setToolTipText is not possible on the root node");
+	}
+
+	@Override
+	public void setIcon(final IImageConstant icon) {
+		throw new UnsupportedOperationException("setIcon is not possible on the root node");
+	}
+
+	@Override
+	public void addTreeNodeListener(final ITreeNodeListener listener) {
+		throw new UnsupportedOperationException("addTreeNodeListener is not possible on the root node");
+	}
+
+	@Override
+	public void removeTreeNodeListener(final ITreeNodeListener listener) {
+		throw new UnsupportedOperationException("removeTreeNodeListener is not possible on the root node");
 	}
 
 	private static int getStyle(final ITreeSetupSpi setup) {

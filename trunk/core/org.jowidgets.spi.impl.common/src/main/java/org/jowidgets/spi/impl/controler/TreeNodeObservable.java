@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,35 +26,41 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.powo;
+package org.jowidgets.spi.impl.controler;
 
-import org.jowidgets.api.widgets.IMenu;
-import org.jowidgets.api.widgets.IMenuItem;
-import org.jowidgets.api.widgets.blueprint.builder.IMenuItemSetupBuilder;
-import org.jowidgets.api.widgets.descriptor.setup.IMenuItemSetup;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import java.util.HashSet;
+import java.util.Set;
 
-class MenuItem<WIDGET_TYPE extends IMenuItem, BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE> & IMenuItemSetupBuilder<?> & IMenuItemSetup> extends
-		Item<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IMenuItem {
+import org.jowidgets.common.widgets.controler.ITreeNodeListener;
+import org.jowidgets.common.widgets.controler.ITreeNodeObservable;
 
-	MenuItem(final BLUE_PRINT_TYPE bluePrint) {
-		super(bluePrint);
+public class TreeNodeObservable implements ITreeNodeObservable {
+
+	private final Set<ITreeNodeListener> listeners;
+
+	public TreeNodeObservable() {
+		this.listeners = new HashSet<ITreeNodeListener>();
 	}
 
 	@Override
-	public void setMnemonic(final char mnemonic) {
-		if (isInitialized()) {
-			getWidget().setMnemonic(mnemonic);
-		}
-		else {
-			getBluePrint().setMnemonic(mnemonic);
-		}
+	public void addTreeNodeListener(final ITreeNodeListener listener) {
+		listeners.add(listener);
 	}
 
 	@Override
-	public IMenu getParent() {
-		checkInitialized();
-		return getWidget().getParent();
+	public void removeTreeNodeListener(final ITreeNodeListener listener) {
+		listeners.remove(listener);
 	}
 
+	public void fireSelectionChanged(final boolean selected) {
+		for (final ITreeNodeListener listener : listeners) {
+			listener.selectionChanged(selected);
+		}
+	}
+
+	public void fireExpandedChanged(final boolean expanded) {
+		for (final ITreeNodeListener listener : listeners) {
+			listener.expandedChanged(expanded);
+		}
+	}
 }

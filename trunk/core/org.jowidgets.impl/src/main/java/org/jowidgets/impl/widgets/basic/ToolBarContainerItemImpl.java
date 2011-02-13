@@ -38,6 +38,10 @@ public class ToolBarContainerItemImpl extends ContainerImpl implements IToolBarC
 
 	private final IToolBar parent;
 
+	private String text;
+	private String toolTipText;
+	private IImageConstant icon;
+
 	public ToolBarContainerItemImpl(
 		final IToolBar parent,
 		final IToolBarContainerItemSpi toolBarContainerItemSpi,
@@ -59,17 +63,35 @@ public class ToolBarContainerItemImpl extends ContainerImpl implements IToolBarC
 
 	@Override
 	public void setText(final String text) {
+		this.text = text;
 		getWidget().setText(text);
 	}
 
 	@Override
-	public void setToolTipText(final String text) {
-		getWidget().setToolTipText(text);
+	public void setToolTipText(final String toolTipText) {
+		this.toolTipText = toolTipText;
+		getWidget().setToolTipText(toolTipText);
 	}
 
 	@Override
 	public void setIcon(final IImageConstant icon) {
+		this.icon = icon;
 		getWidget().setIcon(icon);
+	}
+
+	@Override
+	public String getText() {
+		return text;
+	}
+
+	@Override
+	public String getToolTipText() {
+		return toolTipText;
+	}
+
+	@Override
+	public IImageConstant getIcon() {
+		return icon;
 	}
 
 }

@@ -31,10 +31,11 @@ package org.jowidgets.tools.powo;
 import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.ISubMenu;
 import org.jowidgets.api.widgets.blueprint.builder.IMenuItemSetupBuilder;
+import org.jowidgets.api.widgets.descriptor.setup.IMenuItemSetup;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-class SubMenu<WIDGET_TYPE extends ISubMenu, BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE> & IMenuItemSetupBuilder<?>> extends
+class SubMenu<WIDGET_TYPE extends ISubMenu, BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE> & IMenuItemSetupBuilder<?> & IMenuItemSetup> extends
 		Menu<WIDGET_TYPE, BLUE_PRINT_TYPE> implements ISubMenu {
 
 	private final MenuItem<WIDGET_TYPE, BLUE_PRINT_TYPE> menuItemDelegate;
@@ -67,6 +68,21 @@ class SubMenu<WIDGET_TYPE extends ISubMenu, BLUE_PRINT_TYPE extends IWidgetDescr
 	@Override
 	public IMenu getParent() {
 		return menuItemDelegate.getParent();
+	}
+
+	@Override
+	public String getText() {
+		return menuItemDelegate.getText();
+	}
+
+	@Override
+	public String getToolTipText() {
+		return menuItemDelegate.getToolTipText();
+	}
+
+	@Override
+	public IImageConstant getIcon() {
+		return menuItemDelegate.getIcon();
 	}
 
 }

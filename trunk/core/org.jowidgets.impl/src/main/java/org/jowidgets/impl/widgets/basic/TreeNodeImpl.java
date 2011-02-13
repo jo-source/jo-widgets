@@ -30,59 +30,66 @@ package org.jowidgets.impl.widgets.basic;
 
 import java.util.List;
 
-import org.jowidgets.api.widgets.IComponent;
-import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITree;
 import org.jowidgets.api.widgets.ITreeContainer;
 import org.jowidgets.api.widgets.ITreeNode;
-import org.jowidgets.api.widgets.descriptor.ITreeDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITreeNodeDescriptor;
-import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.base.delegate.TreeContainerDelegate;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.impl.widgets.common.wrapper.ControlSpiWrapper;
-import org.jowidgets.spi.widgets.ITreeSpi;
+import org.jowidgets.impl.widgets.common.wrapper.TreeNodeSpiWrapper;
+import org.jowidgets.spi.widgets.ITreeNodeSpi;
 
-public class TreeImpl extends ControlSpiWrapper implements ITree {
+public class TreeNodeImpl extends TreeNodeSpiWrapper implements ITreeNode {
 
-	private final ControlDelegate controlDelegate;
+	private final TreeImpl parentTree;
+	private final TreeNodeImpl parentNode;
 	private final TreeContainerDelegate treeContainerDelegate;
 
-	public TreeImpl(final ITreeSpi widget, final ITreeDescriptor descriptor) {
+	public TreeNodeImpl(final TreeImpl parentTree, final TreeNodeImpl parentNode, final ITreeNodeSpi widget) {
+		this(parentTree, parentNode, widget, Toolkit.getBluePrintFactory().treeNode());
+	}
+
+	public TreeNodeImpl(
+		final TreeImpl parentTree,
+		final TreeNodeImpl parentNode,
+		final ITreeNodeSpi widget,
+		final ITreeNodeDescriptor descriptor) {
 		super(widget);
-		this.controlDelegate = new ControlDelegate();
 
-		VisibiliySettingsInvoker.setVisibility(descriptor, this);
-		ColorSettingsInvoker.setColors(descriptor, this);
+		this.parentTree = parentTree;
+		this.parentNode = parentNode;
 
-		this.treeContainerDelegate = new TreeContainerDelegate(this, null, null, widget.getRootNode());
+		if (descriptor.getForegroundColor() != null) {
+			setForegroundColor(descriptor.getForegroundColor());
+		}
+		if (descriptor.getBackgroundColor() != null) {
+			setBackgroundColor(descriptor.getBackgroundColor());
+		}
+
+		setExpanded(descriptor.isExpanded());
+		setSelected(descriptor.isSelected());
+		setText(descriptor.getText());
+		setToolTipText(descriptor.getToolTipText());
+		setIcon(descriptor.getIcon());
+		setMarkup(descriptor.getMarkup());
+
+		this.treeContainerDelegate = new TreeContainerDelegate(parentTree, parentNode, this, widget);
 	}
 
 	@Override
-	public ITreeSpi getWidget() {
-		return (ITreeSpi) super.getWidget();
+	public ITreeNode getParent() {
+		return parentNode;
 	}
 
 	@Override
-	public IContainer getParent() {
-		return controlDelegate.getParent();
-	}
-
-	@Override
-	public void setParent(final IComponent parent) {
-		controlDelegate.setParent(parent);
-	}
-
-	@Override
-	public boolean isReparentable() {
-		return controlDelegate.isReparentable();
+	public ITree getTree() {
+		return parentTree;
 	}
 
 	@Override
 	public IPopupMenu createPopupMenu() {
-		return new PopupMenuImpl(getWidget().createPopupMenu(), this);
+		return new PopupMenuImpl(getWidget().createPopupMenu(), parentTree);
 	}
 
 	@Override
