@@ -34,4 +34,6 @@ public interface IActionMenuItemModel extends IMenuItemModel {
 
 	IAction getAction();
 
+	void actionPerformed();
+
 }
