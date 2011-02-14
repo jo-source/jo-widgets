@@ -55,9 +55,16 @@ public class TabFolderTest {
 			@Override
 			public void start(final IApplicationLifecycle lifecycle) {
 				final IFrame rootFrame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
+
 				final ITabFolder tabFolder = rootFrame.add(BPF.tabFolder().setTabsCloseable(true), "");
+
 				final ITabItem item1 = tabFolder.addItem(BPF.tabItem());
+				testTabItem(tabFolder, item1);
+				Assert.assertTrue(tabFolder.getItems().contains(item1));
+
 				final ITabItem item2 = tabFolder.addItem(BPF.tabItem());
+				testTabItem(tabFolder, item2);
+				Assert.assertTrue(tabFolder.getItems().contains(item2));
 
 				tabFolder.setSelectedItem(0);
 				Assert.assertEquals(0, tabFolder.getSelectedIndex());
@@ -78,22 +85,31 @@ public class TabFolderTest {
 				toolBar.addItem(BPF.toolBarSeparator());
 				toolBar.addItem(BPF.toolBarPopupButton());
 
-				tabFolder.detachItem(item1);
-				tabFolder.attachItem(item1);
-
 				rootFrame.dispose();
 			}
 		});
 	}
 
-	public void testTabItem(final ITabItem item) {
+	public void testTabItem(final ITabFolder parentFolder, final ITabItem item) {
 		item.setText(DEFAULT_TEXT);
+		Assert.assertEquals(DEFAULT_TEXT, item.getText());
+
 		item.setToolTipText(DEFAULT_TOOLTIP);
+		Assert.assertEquals(DEFAULT_TOOLTIP, item.getToolTipText());
+
+		item.setVisible(false);
+		Assert.assertEquals(false, item.isVisible());
 		item.setVisible(true);
 
-		Assert.assertEquals(true, item.isVisible());
-		Assert.assertEquals(DEFAULT_TEXT, item.getText());
-		Assert.assertEquals(DEFAULT_TOOLTIP, item.getToolTipText());
+		item.setEnabled(false);
+		Assert.assertEquals(false, item.isEnabled());
+		item.setEnabled(true);
+
+		parentFolder.detachItem(item);
+		Assert.assertTrue(item.isDetached());
+
+		parentFolder.attachItem(item);
+		Assert.assertFalse(item.isDetached());
 	}
 
 	public static junit.framework.Test suite() {
