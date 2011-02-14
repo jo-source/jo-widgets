@@ -83,6 +83,16 @@ public class MenuModel extends AbstractItemModelWrapper implements IMenuModel {
 	}
 
 	@Override
+	public IMenuModel addMenu() {
+		return getItemModel().addMenu();
+	}
+
+	@Override
+	public IMenuModel addMenu(final int index) {
+		return getItemModel().addMenu(index);
+	}
+
+	@Override
 	public ISeparatorItemModel addSeparator() {
 		return getItemModel().addSeparator();
 	}
@@ -93,13 +103,13 @@ public class MenuModel extends AbstractItemModelWrapper implements IMenuModel {
 	}
 
 	@Override
-	public void addItem(final IItemModel item) {
-		getItemModel().addItem(item);
+	public IItemModel addItem(final IItemModel item) {
+		return getItemModel().addItem(item);
 	}
 
 	@Override
-	public void addItem(final int index, final IItemModel item) {
-		getItemModel().addItem(index, item);
+	public IItemModel addItem(final int index, final IItemModel item) {
+		return getItemModel().addItem(index, item);
 	}
 
 	@Override

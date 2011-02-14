@@ -44,9 +44,13 @@ public interface IMenuModel extends IItemModel, IMenuModelObservable {
 
 	ISeparatorItemModel addSeparator(int index);
 
-	void addItem(final IItemModel item);
+	IMenuModel addMenu();
 
-	void addItem(final int index, final IItemModel item);
+	IMenuModel addMenu(int index);
+
+	IItemModel addItem(final IItemModel item);
+
+	IItemModel addItem(final int index, final IItemModel item);
 
 	void removeItem(final IItemModel item);
 

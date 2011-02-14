@@ -37,6 +37,10 @@ import org.jowidgets.api.command.ICommandAction;
 import org.jowidgets.api.command.ICommandExecutor;
 import org.jowidgets.api.command.IExecutionContext;
 import org.jowidgets.api.image.IconsSmall;
+import org.jowidgets.api.model.item.IActionItemModel;
+import org.jowidgets.api.model.item.IActionItemModelBuilder;
+import org.jowidgets.api.model.item.ICheckedItemModel;
+import org.jowidgets.api.model.item.IRadioItemModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IActionMenuItem;
 import org.jowidgets.api.widgets.IComposite;
@@ -64,6 +68,10 @@ import org.jowidgets.common.widgets.controler.IItemStateListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.command.EnabledChecker;
+import org.jowidgets.tools.model.item.ActionItemModel;
+import org.jowidgets.tools.model.item.CheckedItemModel;
+import org.jowidgets.tools.model.item.MenuModel;
+import org.jowidgets.tools.model.item.RadioItemModel;
 import org.jowidgets.tools.powo.JoFrame;
 
 public class DemoMenuFrame extends JoFrame {
@@ -188,6 +196,104 @@ public class DemoMenuFrame extends JoFrame {
 				popupMenu.show(position);
 			}
 		});
+	}
+
+	//TODO use the model for test menu model implementation
+	private MenuModel createMenuModel() {
+
+		final MenuModel menu = new MenuModel();
+
+		final MenuModel subMenu = new MenuModel(MenuModel.builder().setText("sub menu 1").setMnemonic('e'));
+		menu.addItem(subMenu);
+
+		subMenu.addItem(new ActionItemModel("sub item1"));
+		subMenu.addItem(new ActionItemModel("sub item2"));
+
+		final MenuModel subMenu2 = new MenuModel(MenuModel.builder().setText("sub menu 2").setMnemonic('n'));
+		subMenu2.addItem(new ActionItemModel("sub item1"));
+		subMenu2.addItem(new ActionItemModel("sub item2"));
+		subMenu2.addItem(new ActionItemModel("sub item3"));
+		subMenu2.addItem(new ActionItemModel("sub item4"));
+		subMenu.addItem(subMenu2);
+
+		subMenu.addItem(new ActionItemModel("sub item3"));
+		subMenu.addSeparator();
+		subMenu.addItem(new ActionItemModel("sub item4"));
+		subMenu.addItem(new ActionItemModel("sub item5"));
+
+		menu.addAction(action1);
+		menu.addAction(action2);
+
+		final IActionItemModelBuilder item2Builder = ActionItemModel.builder().setText("The Third Item");
+		item2Builder.setToolTipText("This is the third item");
+		item2Builder.setIcon(IconsSmall.WARNING).setAccelerator(new Accelerator('I', Modifier.SHIFT)).setMnemonic('e');
+		final IActionItemModel item3 = new ActionItemModel(item2Builder);
+		menu.addItem(1, item3);
+
+		menu.addSeparator();
+
+		final ICheckedItemModel item4 = new CheckedItemModel("item4");
+		menu.addItem(item4);
+
+		menu.addSeparator();
+
+		final IRadioItemModel item5 = new RadioItemModel("item5");
+		menu.addItem(item5);
+
+		final IRadioItemModel item6 = new RadioItemModel("item6");
+		item6.setSelected(true);
+		menu.addItem(item6);
+
+		final IRadioItemModel item7 = new RadioItemModel("item7");
+		menu.addItem(item7);
+
+		item3.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				// CHECKSTYLE:OFF
+				System.out.println("Item3");
+				// CHECKSTYLE:ON
+			}
+		});
+
+		item4.addItemListener(new IItemStateListener() {
+			@Override
+			public void itemStateChanged() {
+				// CHECKSTYLE:OFF
+				System.out.println("Item4, selected=" + item4.isSelected());
+				// CHECKSTYLE:ON
+			}
+		});
+
+		item5.addItemListener(new IItemStateListener() {
+			@Override
+			public void itemStateChanged() {
+				// CHECKSTYLE:OFF
+				System.out.println("Item5, selected=" + item5.isSelected());
+				// CHECKSTYLE:ON
+			}
+		});
+
+		item6.addItemListener(new IItemStateListener() {
+			@Override
+			public void itemStateChanged() {
+				// CHECKSTYLE:OFF
+				System.out.println("Item6, selected=" + item6.isSelected());
+				// CHECKSTYLE:ON
+			}
+		});
+
+		item7.addItemListener(new IItemStateListener() {
+			@Override
+			public void itemStateChanged() {
+				// CHECKSTYLE:OFF
+				System.out.println("Item7, selected=" + item7.isSelected());
+				// CHECKSTYLE:ON
+			}
+		});
+
+		return menu;
+
 	}
 
 	private void addMenus(final IMenu menu) {

@@ -94,6 +94,20 @@ public class MenuModel extends AbstractItemModel implements IMenuModel {
 	}
 
 	@Override
+	public IMenuModel addMenu() {
+		final IMenuModel result = new MenuModel(null, null, null, null, null, null, true);
+		addItem(result);
+		return result;
+	}
+
+	@Override
+	public IMenuModel addMenu(final int index) {
+		final IMenuModel result = new MenuModel(null, null, null, null, null, null, true);
+		addItem(index, result);
+		return result;
+	}
+
+	@Override
 	public ISeparatorItemModel addSeparator() {
 		final ISeparatorItemModel result = new SeparatorItemModel(null, null, null, null, null, null, true);
 		addItem(result);
@@ -108,15 +122,17 @@ public class MenuModel extends AbstractItemModel implements IMenuModel {
 	}
 
 	@Override
-	public final void addItem(final IItemModel item) {
+	public final IItemModel addItem(final IItemModel item) {
 		addItem(children.size(), item);
+		return item;
 	}
 
 	@Override
-	public final void addItem(final int index, final IItemModel item) {
+	public final IItemModel addItem(final int index, final IItemModel item) {
 		Assert.paramNotNull(item, "item");
 		children.add(index, item);
 		fireChildAdded(index);
+		return item;
 	}
 
 	@Override
