@@ -26,19 +26,37 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.spi.impl.controler;
 
-import org.jowidgets.api.controler.ITreeObservable;
-import org.jowidgets.api.controler.ITreePopupDetectionObservable;
-import org.jowidgets.api.controler.ITreeSelectionObservable;
-import org.jowidgets.common.widgets.ITreeCommon;
+import java.util.HashSet;
+import java.util.Set;
 
-public interface ITree extends
-		IControl,
-		ITreeContainer,
-		ITreeObservable,
-		ITreeSelectionObservable,
-		ITreePopupDetectionObservable,
-		ITreeCommon {
+import org.jowidgets.spi.widgets.controler.ITreeSelectionListenerSpi;
+import org.jowidgets.spi.widgets.controler.ITreeSelectionObservableSpi;
+
+public class TreeSelectionObservableSpi implements ITreeSelectionObservableSpi {
+
+	private final Set<ITreeSelectionListenerSpi> listeners;
+
+	public TreeSelectionObservableSpi() {
+		super();
+		this.listeners = new HashSet<ITreeSelectionListenerSpi>();
+	}
+
+	@Override
+	public void addTreeSelectionListener(final ITreeSelectionListenerSpi listener) {
+		listeners.add(listener);
+	}
+
+	@Override
+	public void removeTreeSelectionListener(final ITreeSelectionListenerSpi listener) {
+		listeners.remove(listener);
+	}
+
+	public void fireSelectionChanged() {
+		for (final ITreeSelectionListenerSpi listener : listeners) {
+			listener.selectionChanged();
+		}
+	}
 
 }

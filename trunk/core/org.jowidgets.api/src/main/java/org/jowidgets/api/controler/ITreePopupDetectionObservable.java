@@ -26,43 +26,12 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.controler;
+package org.jowidgets.api.controler;
 
-import java.util.HashSet;
-import java.util.Set;
+public interface ITreePopupDetectionObservable {
 
-import org.jowidgets.spi.widgets.controler.ITreeListenerSpi;
-import org.jowidgets.spi.widgets.controler.ITreeObservableSpi;
+	void addTreePopupDetectionListener(ITreePopupDetectionListener listener);
 
-public class TreeObservableSpi implements ITreeObservableSpi {
-
-	private final Set<ITreeListenerSpi> listeners;
-
-	public TreeObservableSpi() {
-		super();
-		this.listeners = new HashSet<ITreeListenerSpi>();
-	}
-
-	@Override
-	public void addTreeListener(final ITreeListenerSpi listener) {
-		listeners.add(listener);
-	}
-
-	@Override
-	public void removeTreeListener(final ITreeListenerSpi listener) {
-		listeners.remove(listener);
-	}
-
-	public void fireSelectionChanged() {
-		for (final ITreeListenerSpi listener : listeners) {
-			listener.selectionChanged();
-		}
-	}
-
-	public void fireExpansionChanged() {
-		for (final ITreeListenerSpi listener : listeners) {
-			listener.expansionChanged();
-		}
-	}
+	void removeTreePopupDetectionListener(ITreePopupDetectionListener listener);
 
 }

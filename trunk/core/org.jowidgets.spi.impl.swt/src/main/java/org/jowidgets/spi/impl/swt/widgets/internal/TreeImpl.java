@@ -50,18 +50,18 @@ import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.SelectionPolicy;
 import org.jowidgets.common.widgets.controler.ITreeNodeListener;
-import org.jowidgets.spi.impl.controler.TreeObservableSpi;
+import org.jowidgets.spi.impl.controler.TreeSelectionObservableSpi;
 import org.jowidgets.spi.impl.swt.widgets.SwtControl;
 import org.jowidgets.spi.widgets.ITreeNodeSpi;
 import org.jowidgets.spi.widgets.ITreeSpi;
-import org.jowidgets.spi.widgets.controler.ITreeListenerSpi;
+import org.jowidgets.spi.widgets.controler.ITreeSelectionListenerSpi;
 import org.jowidgets.spi.widgets.setup.ITreeSetupSpi;
 
 public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi {
 
 	private final boolean multiSelection;
 	private final Map<TreeItem, TreeNodeImpl> items;
-	private final TreeObservableSpi treeObservable;
+	private final TreeSelectionObservableSpi treeObservable;
 
 	private List<TreeItem> lastSelection;
 
@@ -69,7 +69,7 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi {
 		super(new Tree((Composite) parentUiReference, getStyle(setup)));
 
 		this.lastSelection = new LinkedList<TreeItem>();
-		this.treeObservable = new TreeObservableSpi();
+		this.treeObservable = new TreeSelectionObservableSpi();
 		this.items = new HashMap<TreeItem, TreeNodeImpl>();
 
 		this.multiSelection = setup.getSelectionPolicy() == SelectionPolicy.MULTI_SELECTION;
@@ -105,7 +105,6 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi {
 				final TreeNodeImpl itemImpl = items.get(event.item);
 				if (itemImpl != null) {
 					itemImpl.fireExpandedChanged(expanded);
-					treeObservable.fireExpansionChanged();
 				}
 				else {
 					throw new IllegalStateException("No item impl registered for item '"
@@ -161,13 +160,13 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi {
 	}
 
 	@Override
-	public void addTreeListener(final ITreeListenerSpi listener) {
-		treeObservable.addTreeListener(listener);
+	public void addTreeSelectionListener(final ITreeSelectionListenerSpi listener) {
+		treeObservable.addTreeSelectionListener(listener);
 	}
 
 	@Override
-	public void removeTreeListener(final ITreeListenerSpi listener) {
-		treeObservable.removeTreeListener(listener);
+	public void removeTreeSelectionListener(final ITreeSelectionListenerSpi listener) {
+		treeObservable.removeTreeSelectionListener(listener);
 	}
 
 	@Override

@@ -26,19 +26,14 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.api.controler;
 
-import org.jowidgets.api.controler.ITreeObservable;
-import org.jowidgets.api.controler.ITreePopupDetectionObservable;
-import org.jowidgets.api.controler.ITreeSelectionObservable;
-import org.jowidgets.common.widgets.ITreeCommon;
+import org.jowidgets.api.widgets.ITreeNode;
 
-public interface ITree extends
-		IControl,
-		ITreeContainer,
-		ITreeObservable,
-		ITreeSelectionObservable,
-		ITreePopupDetectionObservable,
-		ITreeCommon {
+public interface ITreeListener {
+
+	void nodeExpanded(ITreeNode node);
+
+	void nodeCollapsed(ITreeNode node);
 
 }

@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.controler;
+package org.jowidgets.impl.event;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -36,7 +36,7 @@ import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.common.types.SelectionPolicy;
 import org.jowidgets.util.Assert;
 
-public class TreeSelectionEvent implements ITreeSelectionEvent {
+public final class TreeSelectionEvent implements ITreeSelectionEvent {
 
 	private final SelectionPolicy selectionPolicy;
 	private final List<ITreeNode> selected;

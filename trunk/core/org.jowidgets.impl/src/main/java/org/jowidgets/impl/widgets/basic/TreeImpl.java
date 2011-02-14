@@ -33,6 +33,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.jowidgets.api.controler.ITreeListener;
+import org.jowidgets.api.controler.ITreePopupDetectionListener;
 import org.jowidgets.api.controler.ITreeSelectionListener;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
@@ -42,21 +44,28 @@ import org.jowidgets.api.widgets.ITreeContainer;
 import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.api.widgets.descriptor.ITreeDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITreeNodeDescriptor;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.base.delegate.TreeContainerDelegate;
+import org.jowidgets.impl.event.TreePopupEvent;
+import org.jowidgets.impl.event.TreeSelectionEvent;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.ControlSpiWrapper;
 import org.jowidgets.spi.widgets.ITreeNodeSpi;
 import org.jowidgets.spi.widgets.ITreeSpi;
-import org.jowidgets.spi.widgets.controler.ITreeListenerSpi;
-import org.jowidgets.tools.controler.TreeSelectionEvent;
+import org.jowidgets.spi.widgets.controler.ITreeSelectionListenerSpi;
+import org.jowidgets.tools.controler.TreeObservable;
+import org.jowidgets.tools.controler.TreePopupDetectionObservable;
 import org.jowidgets.tools.controler.TreeSelectionObservable;
 
 public class TreeImpl extends ControlSpiWrapper implements ITree {
 
 	private final ControlDelegate controlDelegate;
 	private final TreeSelectionObservable treeSelectionObservable;
+	private final TreeObservable treeObservable;
+	private final TreePopupDetectionObservable treePopupDetectionObservable;
 	private final TreeContainerDelegate treeContainerDelegate;
 	private final Map<ITreeNodeSpi, ITreeNode> nodes;
 
@@ -64,15 +73,20 @@ public class TreeImpl extends ControlSpiWrapper implements ITree {
 
 	public TreeImpl(final ITreeSpi widget, final ITreeDescriptor descriptor) {
 		super(widget);
+
 		this.controlDelegate = new ControlDelegate();
+
 		this.treeSelectionObservable = new TreeSelectionObservable();
+		this.treeObservable = new TreeObservable();
+		this.treePopupDetectionObservable = new TreePopupDetectionObservable();
+
 		this.nodes = new HashMap<ITreeNodeSpi, ITreeNode>();
 		this.lastSelection = new LinkedList<ITreeNodeSpi>();
 
 		VisibiliySettingsInvoker.setVisibility(descriptor, this);
 		ColorSettingsInvoker.setColors(descriptor, this);
 
-		getWidget().addTreeListener(new ITreeListenerSpi() {
+		getWidget().addTreeSelectionListener(new ITreeSelectionListenerSpi() {
 
 			@Override
 			public void selectionChanged() {
@@ -107,10 +121,12 @@ public class TreeImpl extends ControlSpiWrapper implements ITree {
 				lastSelection = newSelection;
 			}
 
-			@Override
-			public void expansionChanged() {
-				// TODO Auto-generated method stub
+		});
 
+		addPopupDetectionListener(new IPopupDetectionListener() {
+			@Override
+			public void popupDetected(final Position position) {
+				treePopupDetectionObservable.firePopupDetected(new TreePopupEvent(position, null));
 			}
 		});
 
@@ -143,6 +159,16 @@ public class TreeImpl extends ControlSpiWrapper implements ITree {
 	}
 
 	@Override
+	public void addTreePopupDetectionListener(final ITreePopupDetectionListener listener) {
+		treePopupDetectionObservable.addTreePopupDetectionListener(listener);
+	}
+
+	@Override
+	public void removeTreePopupDetectionListener(final ITreePopupDetectionListener listener) {
+		treePopupDetectionObservable.removeTreePopupDetectionListener(listener);
+	}
+
+	@Override
 	public void addTreeSelectionListener(final ITreeSelectionListener listener) {
 		treeSelectionObservable.addTreeSelectionListener(listener);
 	}
@@ -150,6 +176,16 @@ public class TreeImpl extends ControlSpiWrapper implements ITree {
 	@Override
 	public void removeTreeSelectionListener(final ITreeSelectionListener listener) {
 		treeSelectionObservable.removeTreeSelectionListener(listener);
+	}
+
+	@Override
+	public void addTreeListener(final ITreeListener listener) {
+		treeObservable.addTreeListener(listener);
+	}
+
+	@Override
+	public void removeTreeListener(final ITreeListener listener) {
+		treeObservable.removeTreeListener(listener);
 	}
 
 	@Override
@@ -203,6 +239,14 @@ public class TreeImpl extends ControlSpiWrapper implements ITree {
 
 	public void unRegisterNode(final TreeNodeImpl node) {
 		nodes.remove(node.getWidget());
+	}
+
+	protected TreeObservable getTreeObservable() {
+		return treeObservable;
+	}
+
+	protected TreePopupDetectionObservable getTreePopupDetectionObservable() {
+		return treePopupDetectionObservable;
 	}
 
 }

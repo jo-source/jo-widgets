@@ -50,19 +50,19 @@ import javax.swing.tree.TreeSelectionModel;
 
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.SelectionPolicy;
-import org.jowidgets.spi.impl.controler.TreeObservableSpi;
+import org.jowidgets.spi.impl.controler.TreeSelectionObservableSpi;
 import org.jowidgets.spi.impl.swing.widgets.SwingControl;
 import org.jowidgets.spi.impl.swing.widgets.internal.base.JoTreeNode;
 import org.jowidgets.spi.impl.swing.widgets.internal.base.JoTreeNodeRenderer;
 import org.jowidgets.spi.widgets.ITreeNodeSpi;
 import org.jowidgets.spi.widgets.ITreeSpi;
-import org.jowidgets.spi.widgets.controler.ITreeListenerSpi;
+import org.jowidgets.spi.widgets.controler.ITreeSelectionListenerSpi;
 import org.jowidgets.spi.widgets.setup.ITreeSetupSpi;
 
 public class TreeImpl extends SwingControl implements ITreeSpi {
 
 	private final Map<JoTreeNode, TreeNodeImpl> nodes;
-	private final TreeObservableSpi treeObservable;
+	private final TreeSelectionObservableSpi treeObservable;
 
 	private final JTree tree;
 	private final DefaultMutableTreeNode mutableRootNode;
@@ -75,7 +75,7 @@ public class TreeImpl extends SwingControl implements ITreeSpi {
 		super(createComponent(setup));
 
 		this.nodes = new HashMap<JoTreeNode, TreeNodeImpl>();
-		this.treeObservable = new TreeObservableSpi();
+		this.treeObservable = new TreeSelectionObservableSpi();
 		this.lastSelection = new LinkedList<JoTreeNode>();
 
 		if (getUiReference() instanceof JScrollPane) {
@@ -98,7 +98,6 @@ public class TreeImpl extends SwingControl implements ITreeSpi {
 				if (path.getLastPathComponent() != mutableRootNode) {
 					final JoTreeNode node = (JoTreeNode) path.getLastPathComponent();
 					nodes.get(node).fireExpandedChanged(true);
-					treeObservable.fireExpansionChanged();
 				}
 			}
 
@@ -108,7 +107,6 @@ public class TreeImpl extends SwingControl implements ITreeSpi {
 				if (path.getLastPathComponent() != mutableRootNode) {
 					final JoTreeNode node = (JoTreeNode) path.getLastPathComponent();
 					nodes.get(node).fireExpandedChanged(false);
-					treeObservable.fireExpansionChanged();
 				}
 			}
 		});
@@ -176,13 +174,13 @@ public class TreeImpl extends SwingControl implements ITreeSpi {
 	}
 
 	@Override
-	public void addTreeListener(final ITreeListenerSpi listener) {
-		treeObservable.addTreeListener(listener);
+	public void addTreeSelectionListener(final ITreeSelectionListenerSpi listener) {
+		treeObservable.addTreeSelectionListener(listener);
 	}
 
 	@Override
-	public void removeTreeListener(final ITreeListenerSpi listener) {
-		treeObservable.removeTreeListener(listener);
+	public void removeTreeSelectionListener(final ITreeSelectionListenerSpi listener) {
+		treeObservable.removeTreeSelectionListener(listener);
 	}
 
 	protected void registerNode(final JoTreeNode joTreeNode, final TreeNodeImpl nodeImpl) {

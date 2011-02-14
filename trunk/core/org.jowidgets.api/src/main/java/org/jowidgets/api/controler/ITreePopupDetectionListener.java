@@ -25,13 +25,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
+package org.jowidgets.api.controler;
 
-package org.jowidgets.spi.widgets.controler;
+public interface ITreePopupDetectionListener {
 
-public interface ITreeObservableSpi {
-
-	void addTreeListener(ITreeListenerSpi listener);
-
-	void removeTreeListener(ITreeListenerSpi listener);
+	void popupDetected(ITreePopupEvent event);
 
 }

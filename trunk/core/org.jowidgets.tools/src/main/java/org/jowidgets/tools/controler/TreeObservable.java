@@ -26,12 +26,46 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.widgets.controler;
+package org.jowidgets.tools.controler;
 
-public interface ITreeListenerSpi {
+import java.util.HashSet;
+import java.util.Set;
 
-	void selectionChanged();
+import org.jowidgets.api.controler.ITreeListener;
+import org.jowidgets.api.controler.ITreeObservable;
+import org.jowidgets.api.widgets.ITreeNode;
+import org.jowidgets.util.Assert;
 
-	void expansionChanged();
+public class TreeObservable implements ITreeObservable {
+
+	private final Set<ITreeListener> listeners;
+
+	public TreeObservable() {
+		this.listeners = new HashSet<ITreeListener>();
+	}
+
+	@Override
+	public void addTreeListener(final ITreeListener listener) {
+		listeners.add(listener);
+	}
+
+	@Override
+	public void removeTreeListener(final ITreeListener listener) {
+		listeners.remove(listener);
+	}
+
+	public void fireNodeExpanded(final ITreeNode node) {
+		Assert.paramNotNull(node, "node");
+		for (final ITreeListener listener : listeners) {
+			listener.nodeExpanded(node);
+		}
+	}
+
+	public void fireNodeCollapsed(final ITreeNode node) {
+		Assert.paramNotNull(node, "node");
+		for (final ITreeListener listener : listeners) {
+			listener.nodeCollapsed(node);
+		}
+	}
 
 }

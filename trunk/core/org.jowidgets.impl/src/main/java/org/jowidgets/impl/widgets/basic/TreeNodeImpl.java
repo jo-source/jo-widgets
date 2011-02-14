@@ -36,9 +36,13 @@ import org.jowidgets.api.widgets.ITree;
 import org.jowidgets.api.widgets.ITreeContainer;
 import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.api.widgets.descriptor.ITreeNodeDescriptor;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.impl.base.delegate.TreeContainerDelegate;
+import org.jowidgets.impl.event.TreePopupEvent;
 import org.jowidgets.impl.widgets.common.wrapper.TreeNodeSpiWrapper;
 import org.jowidgets.spi.widgets.ITreeNodeSpi;
+import org.jowidgets.tools.controler.TreeNodeAdapter;
 import org.jowidgets.util.EmptyCheck;
 
 public class TreeNodeImpl extends TreeNodeSpiWrapper implements ITreeNode {
@@ -74,6 +78,25 @@ public class TreeNodeImpl extends TreeNodeSpiWrapper implements ITreeNode {
 		setToolTipText(descriptor.getToolTipText());
 		setIcon(descriptor.getIcon());
 		setMarkup(descriptor.getMarkup());
+
+		addTreeNodeListener(new TreeNodeAdapter() {
+			@Override
+			public void expandedChanged(final boolean expanded) {
+				if (expanded) {
+					parentTree.getTreeObservable().fireNodeExpanded(TreeNodeImpl.this);
+				}
+				else {
+					parentTree.getTreeObservable().fireNodeCollapsed(TreeNodeImpl.this);
+				}
+			}
+		});
+
+		addPopupDetectionListener(new IPopupDetectionListener() {
+			@Override
+			public void popupDetected(final Position position) {
+				parentTree.getTreePopupDetectionObservable().firePopupDetected(new TreePopupEvent(position, TreeNodeImpl.this));
+			}
+		});
 
 		this.treeContainerDelegate = new TreeContainerDelegate(parentTree, parentNode, this, widget);
 	}

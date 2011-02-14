@@ -26,19 +26,36 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.impl.event;
 
-import org.jowidgets.api.controler.ITreeObservable;
-import org.jowidgets.api.controler.ITreePopupDetectionObservable;
-import org.jowidgets.api.controler.ITreeSelectionObservable;
-import org.jowidgets.common.widgets.ITreeCommon;
+import org.jowidgets.api.controler.ITreePopupEvent;
+import org.jowidgets.api.widgets.ITreeNode;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.util.Assert;
 
-public interface ITree extends
-		IControl,
-		ITreeContainer,
-		ITreeObservable,
-		ITreeSelectionObservable,
-		ITreePopupDetectionObservable,
-		ITreeCommon {
+public final class TreePopupEvent implements ITreePopupEvent {
 
+	private final Position position;
+	private final ITreeNode node;
+
+	public TreePopupEvent(final Position position, final ITreeNode node) {
+		Assert.paramNotNull(position, "position");
+		this.position = position;
+		this.node = node;
+	}
+
+	@Override
+	public Position getPosition() {
+		return position;
+	}
+
+	@Override
+	public ITreeNode getNode() {
+		return node;
+	}
+
+	@Override
+	public String toString() {
+		return TreePopupEvent.class.getSimpleName() + " Position: " + position + " Node: " + node;
+	}
 }

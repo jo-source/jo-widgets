@@ -26,19 +26,16 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.tools.controler;
 
-import org.jowidgets.api.controler.ITreeObservable;
-import org.jowidgets.api.controler.ITreePopupDetectionObservable;
-import org.jowidgets.api.controler.ITreeSelectionObservable;
-import org.jowidgets.common.widgets.ITreeCommon;
+import org.jowidgets.common.widgets.controler.ITreeNodeListener;
 
-public interface ITree extends
-		IControl,
-		ITreeContainer,
-		ITreeObservable,
-		ITreeSelectionObservable,
-		ITreePopupDetectionObservable,
-		ITreeCommon {
+public class TreeNodeAdapter implements ITreeNodeListener {
+
+	@Override
+	public void selectionChanged(final boolean selected) {}
+
+	@Override
+	public void expandedChanged(final boolean expanded) {}
 
 }

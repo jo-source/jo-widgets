@@ -28,6 +28,11 @@
 
 package org.jowidgets.examples.common.demo;
 
+import org.jowidgets.api.controler.ITreeListener;
+import org.jowidgets.api.controler.ITreePopupDetectionListener;
+import org.jowidgets.api.controler.ITreePopupEvent;
+import org.jowidgets.api.controler.ITreeSelectionEvent;
+import org.jowidgets.api.controler.ITreeSelectionListener;
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
@@ -56,10 +61,46 @@ public final class DemoTreeComposite {
 		final IPopupMenu popupMenu = tree.createPopupMenu();
 		fillMenu("", popupMenu);
 
+		tree.addTreeSelectionListener(new ITreeSelectionListener() {
+
+			@Override
+			public void selectionChanged(final ITreeSelectionEvent event) {
+				// CHECKSTYLE:OFF
+				System.out.println(event);
+				// CHECKSTYLE:ON
+			}
+		});
+
+		tree.addTreeListener(new ITreeListener() {
+
+			@Override
+			public void nodeExpanded(final ITreeNode node) {
+				// CHECKSTYLE:OFF
+				System.out.println("Tree node expanded: " + node);
+				// CHECKSTYLE:ON
+			}
+
+			@Override
+			public void nodeCollapsed(final ITreeNode node) {
+				// CHECKSTYLE:OFF
+				System.out.println("Tree node collpased: " + node);
+				// CHECKSTYLE:ON
+			}
+		});
+
 		tree.addPopupDetectionListener(new IPopupDetectionListener() {
 			@Override
 			public void popupDetected(final Position position) {
 				popupMenu.show(position);
+			}
+		});
+
+		tree.addTreePopupDetectionListener(new ITreePopupDetectionListener() {
+			@Override
+			public void popupDetected(final ITreePopupEvent event) {
+				// CHECKSTYLE:OFF
+				System.out.println(event);
+				// CHECKSTYLE:ON
 			}
 		});
 
