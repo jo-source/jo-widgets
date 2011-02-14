@@ -26,12 +26,29 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.menu.event;
+package org.jowidgets.impl.model.item;
 
-public interface IMenuItemModelObservable {
+import org.jowidgets.api.model.item.ISelectableItemModelBuilder;
 
-	void addMenuItemModelListener(IMenuItemModelListener listener);
+public abstract class AbstractSelectableItemModelBuilder<INSTANCE_TYPE, ITEM_TYPE> extends
+		AbstractItemModelBuilder<INSTANCE_TYPE, ITEM_TYPE> implements ISelectableItemModelBuilder<INSTANCE_TYPE, ITEM_TYPE> {
 
-	void removeMenuItemModelListener(IMenuItemModelListener listener);
+	private boolean selected;
+
+	public AbstractSelectableItemModelBuilder() {
+		super();
+		this.selected = false;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public INSTANCE_TYPE setSelected(final boolean selected) {
+		this.selected = selected;
+		return (INSTANCE_TYPE) this;
+	}
+
+	protected boolean isSelected() {
+		return selected;
+	}
 
 }

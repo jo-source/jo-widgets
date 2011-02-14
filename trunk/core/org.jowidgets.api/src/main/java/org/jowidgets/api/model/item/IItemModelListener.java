@@ -26,9 +26,10 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.menu;
+package org.jowidgets.api.model.item;
 
+public interface IItemModelListener {
 
-public interface ICheckedMenuItemModel extends ISelectableMenuItemModel {
+	void itemChanged();
 
 }

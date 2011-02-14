@@ -32,6 +32,7 @@ import java.util.List;
 
 import org.jowidgets.api.command.IActionBuilderFactory;
 import org.jowidgets.api.convert.IConverterProvider;
+import org.jowidgets.api.model.IModelBuilderFactoryProvider;
 import org.jowidgets.api.threads.IUiThreadAccess;
 import org.jowidgets.api.toolkit.IMessagePane;
 import org.jowidgets.api.toolkit.IQuestionPane;
@@ -94,6 +95,11 @@ public class ToolkitWrapper implements IToolkit {
 	@Override
 	public IActionBuilderFactory getActionBuilderFactory() {
 		return toolkit.getActionBuilderFactory();
+	}
+
+	@Override
+	public IModelBuilderFactoryProvider getModelBuilderFactoryProvider() {
+		return toolkit.getModelBuilderFactoryProvider();
 	}
 
 	@Override

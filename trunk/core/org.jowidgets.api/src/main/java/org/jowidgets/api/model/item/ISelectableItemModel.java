@@ -26,24 +26,14 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.menu;
+package org.jowidgets.api.model.item;
 
-import org.jowidgets.api.menu.event.IMenuItemModelObservable;
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.Accelerator;
+import org.jowidgets.common.widgets.controler.IItemStateObservable;
 
-public interface IMenuItemModel extends IMenuItemModelObservable {
+public interface ISelectableItemModel extends IItemModel, IItemStateObservable {
 
-	String getId();
+	boolean isSelected();
 
-	String getText();
-
-	String getToolTipText();
-
-	IImageConstant getIcon();
-
-	Accelerator getAccelerator();
-
-	Character getMnemonic();
+	void setSelected(boolean selected);
 
 }

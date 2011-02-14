@@ -26,12 +26,25 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.menu.event;
+package org.jowidgets.impl.model.item;
 
-public interface IMenuModelListener {
+import org.jowidgets.api.model.item.IRadioItemModel;
+import org.jowidgets.api.model.item.IRadioItemModelBuilder;
 
-	void childAdded(int index);
+public class RadioItemModelBuilder extends AbstractSelectableItemModelBuilder<IRadioItemModelBuilder, IRadioItemModel> implements
+		IRadioItemModelBuilder {
 
-	void childRemoved(int index);
+	@Override
+	public IRadioItemModel build() {
+		return new RadioItemModel(
+			getId(),
+			getText(),
+			getToolTipText(),
+			getIcon(),
+			getAccelerator(),
+			getMnemonic(),
+			isEnabled(),
+			isSelected());
+	}
 
 }

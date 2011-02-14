@@ -25,8 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.menu;
 
-public interface IRadioMenuItemModel extends ISelectableMenuItemModel {
+package org.jowidgets.api.model.item;
+
+public interface ISelectableItemModelBuilder<INSTANCE_TYPE, ITEM_TYPE> extends IItemModelBuilder<INSTANCE_TYPE, ITEM_TYPE> {
+
+	INSTANCE_TYPE setSelected(boolean selected);
 
 }

@@ -26,12 +26,34 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.menu;
+package org.jowidgets.impl.model.item;
 
-public interface ISelectableMenuItemModel extends IMenuItemModel {
+import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.model.item.IActionItemModel;
+import org.jowidgets.api.model.item.IActionItemModelBuilder;
 
-	boolean isSelected();
+public class ActionItemModelBuilder extends AbstractItemModelBuilder<IActionItemModelBuilder, IActionItemModel> implements
+		IActionItemModelBuilder {
 
-	void setSelected(boolean selected);
+	private IAction action;
+
+	@Override
+	public IActionItemModelBuilder setAction(final IAction action) {
+		this.action = action;
+		return this;
+	}
+
+	@Override
+	public IActionItemModel build() {
+		return new ActionItemModel(
+			getId(),
+			getText(),
+			getToolTipText(),
+			getIcon(),
+			getAccelerator(),
+			getMnemonic(),
+			isEnabled(),
+			action);
+	}
 
 }

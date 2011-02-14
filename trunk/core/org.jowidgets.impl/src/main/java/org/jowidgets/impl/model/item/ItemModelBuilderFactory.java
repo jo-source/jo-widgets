@@ -26,10 +26,40 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.menu.event;
+package org.jowidgets.impl.model.item;
 
-public interface IMenuItemModelListener {
+import org.jowidgets.api.model.item.IActionItemModelBuilder;
+import org.jowidgets.api.model.item.ICheckedItemModelBuilder;
+import org.jowidgets.api.model.item.IItemModelBuilderFactory;
+import org.jowidgets.api.model.item.IMenuModelBuilder;
+import org.jowidgets.api.model.item.IRadioItemModelBuilder;
+import org.jowidgets.api.model.item.ISeparatorItemModelBuilder;
 
-	void itemChanged();
+public class ItemModelBuilderFactory implements IItemModelBuilderFactory {
+
+	@Override
+	public IMenuModelBuilder menuModel() {
+		return new MenuModelBuilder();
+	}
+
+	@Override
+	public IActionItemModelBuilder actionItem() {
+		return new ActionItemModelBuilder();
+	}
+
+	@Override
+	public ICheckedItemModelBuilder checkedItem() {
+		return new CheckedItemModelBuilder();
+	}
+
+	@Override
+	public IRadioItemModelBuilder radioItem() {
+		return new RadioItemModelBuilder();
+	}
+
+	@Override
+	public ISeparatorItemModelBuilder separatorItem() {
+		return new SeparatorItemModelBuilder();
+	}
 
 }

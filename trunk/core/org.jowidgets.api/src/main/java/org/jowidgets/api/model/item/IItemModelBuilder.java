@@ -26,12 +26,29 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.menu;
+package org.jowidgets.api.model.item;
 
-import org.jowidgets.api.menu.event.IMenuModelObservable;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Accelerator;
 
-public interface IMenuModel extends IMenuItemModel, IMenuModelObservable {
+public interface IItemModelBuilder<INSTANCE_TYPE, ITEM_TYPE> {
 
-	IMenuItemModel getChildren();
+	INSTANCE_TYPE setId(String id);
+
+	INSTANCE_TYPE setText(final String text);
+
+	INSTANCE_TYPE setToolTipText(String toolTipText);
+
+	INSTANCE_TYPE setIcon(IImageConstant icon);
+
+	INSTANCE_TYPE setAccelerator(Accelerator accelerator);
+
+	INSTANCE_TYPE setMnemonic(Character mnemonic);
+
+	INSTANCE_TYPE setMnemonic(char mnemonic);
+
+	INSTANCE_TYPE setEnabled(boolean enabled);
+
+	ITEM_TYPE build();
 
 }

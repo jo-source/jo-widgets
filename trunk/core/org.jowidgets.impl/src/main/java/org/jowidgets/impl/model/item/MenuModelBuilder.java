@@ -26,12 +26,16 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.menu.event;
+package org.jowidgets.impl.model.item;
 
-public interface IMenuModelObservable {
+import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.api.model.item.IMenuModelBuilder;
 
-	void addMenuModelListener(IMenuModelListener listener);
+public class MenuModelBuilder extends AbstractItemModelBuilder<IMenuModelBuilder, IMenuModel> implements IMenuModelBuilder {
 
-	void removeMenuModelListener(IMenuModelListener listener);
+	@Override
+	public IMenuModel build() {
+		return new MenuModel(getId(), getText(), getToolTipText(), getIcon(), getAccelerator(), getMnemonic(), isEnabled());
+	}
 
 }

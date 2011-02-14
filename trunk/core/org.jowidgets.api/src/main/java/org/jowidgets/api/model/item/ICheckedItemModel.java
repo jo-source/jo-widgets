@@ -26,14 +26,9 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.menu;
+package org.jowidgets.api.model.item;
 
-import org.jowidgets.api.command.IAction;
 
-public interface IActionMenuItemModel extends IMenuItemModel {
-
-	IAction getAction();
-
-	void actionPerformed();
+public interface ICheckedItemModel extends ISelectableItemModel {
 
 }
