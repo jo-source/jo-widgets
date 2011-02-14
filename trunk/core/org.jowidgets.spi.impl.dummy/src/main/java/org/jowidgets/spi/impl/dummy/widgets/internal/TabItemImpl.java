@@ -244,7 +244,12 @@ public class TabItemImpl extends DummyContainer implements ITabItemSpi {
 		tabItem.setCloseable(closeable);
 
 		detached = false;
-		tabContainer.add(tabItem, index.intValue());
+		if (index != null) {
+			tabContainer.add(tabItem, index.intValue());
+		}
+		else {
+			tabContainer.add(tabItem);
+		}
 	}
 
 	public void detach() {

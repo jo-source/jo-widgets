@@ -45,6 +45,8 @@ import org.junit.Test;
 public class TabFolderTest {
 
 	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
+	private static final String DEFAULT_TEXT = "text";
+	private static final String DEFAULT_TOOLTIP = "tooltip";
 
 	@Test
 	public void createTabFolderTest() {
@@ -82,6 +84,16 @@ public class TabFolderTest {
 				rootFrame.dispose();
 			}
 		});
+	}
+
+	public void testTabItem(final ITabItem item) {
+		item.setText(DEFAULT_TEXT);
+		item.setToolTipText(DEFAULT_TOOLTIP);
+		item.setVisible(true);
+
+		Assert.assertEquals(true, item.isVisible());
+		Assert.assertEquals(DEFAULT_TEXT, item.getText());
+		Assert.assertEquals(DEFAULT_TOOLTIP, item.getToolTipText());
 	}
 
 	public static junit.framework.Test suite() {
