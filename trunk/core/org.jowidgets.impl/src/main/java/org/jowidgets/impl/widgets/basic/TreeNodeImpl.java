@@ -39,6 +39,7 @@ import org.jowidgets.api.widgets.descriptor.ITreeNodeDescriptor;
 import org.jowidgets.impl.base.delegate.TreeContainerDelegate;
 import org.jowidgets.impl.widgets.common.wrapper.TreeNodeSpiWrapper;
 import org.jowidgets.spi.widgets.ITreeNodeSpi;
+import org.jowidgets.util.EmptyCheck;
 
 public class TreeNodeImpl extends TreeNodeSpiWrapper implements ITreeNode {
 
@@ -135,6 +136,17 @@ public class TreeNodeImpl extends TreeNodeSpiWrapper implements ITreeNode {
 	@Override
 	public List<ITreeNode> getChildren() {
 		return treeContainerDelegate.getChildren();
+	}
+
+	@Override
+	public String toString() {
+		final String text = getText();
+		if (!EmptyCheck.isEmpty(text)) {
+			return text;
+		}
+		else {
+			return super.toString();
+		}
 	}
 
 }

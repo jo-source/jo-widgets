@@ -50,12 +50,12 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
+import org.jowidgets.spi.impl.controler.TabItemObservableSpi;
 import org.jowidgets.spi.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.widgets.SwtComposite;
 import org.jowidgets.spi.impl.swt.widgets.SwtContainer;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.ITabItemSpi;
-import org.jowidgets.spi.widgets.controler.TabItemObservableSpi;
 
 public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 

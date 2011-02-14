@@ -76,56 +76,62 @@ public class TreeContainerDelegate implements ITreeContainer {
 	@Override
 	public ITreeNode addNode() {
 		final ITreeNodeSpi childTreeNodeSpi = treeNodeSpi.addNode(null);
-		final ITreeNode result = new TreeNodeImpl(parentTree, treeNode, childTreeNodeSpi);
+		final TreeNodeImpl result = new TreeNodeImpl(parentTree, treeNode, childTreeNodeSpi);
 		children.add(result);
+		parentTree.registerNode(result);
 		return result;
 	}
 
 	@Override
 	public ITreeNode addNode(final int index) {
 		final ITreeNodeSpi childTreeNodeSpi = treeNodeSpi.addNode(Integer.valueOf(index));
-		final ITreeNode result = new TreeNodeImpl(parentTree, treeNode, childTreeNodeSpi);
+		final TreeNodeImpl result = new TreeNodeImpl(parentTree, treeNode, childTreeNodeSpi);
 		children.add(index, result);
+		parentTree.registerNode(result);
 		return result;
 	}
 
 	@Override
 	public ITreeNode addNode(final ITreeNodeDescriptor descriptor) {
 		final ITreeNodeSpi childTreeNodeSpi = treeNodeSpi.addNode(null);
-		final ITreeNode result = new TreeNodeImpl(parentTree, treeNode, childTreeNodeSpi, descriptor);
+		final TreeNodeImpl result = new TreeNodeImpl(parentTree, treeNode, childTreeNodeSpi, descriptor);
 		children.add(result);
+		parentTree.registerNode(result);
 		return result;
 	}
 
 	@Override
 	public ITreeNode addNode(final int index, final ITreeNodeDescriptor descriptor) {
 		final ITreeNodeSpi childTreeNodeSpi = treeNodeSpi.addNode(Integer.valueOf(index));
-		final ITreeNode result = new TreeNodeImpl(parentTree, treeNode, childTreeNodeSpi, descriptor);
+		final TreeNodeImpl result = new TreeNodeImpl(parentTree, treeNode, childTreeNodeSpi, descriptor);
 		children.add(index, result);
+		parentTree.registerNode(result);
 		return result;
 	}
 
 	@Override
 	public void removeNode(final ITreeNode node) {
+		Assert.paramNotNull(node, "node");
 		final int index = children.indexOf(node);
 		if (index != -1) {
 			children.remove(index);
 			treeNodeSpi.removeNode(index);
 		}
+		parentTree.unRegisterNode((TreeNodeImpl) node);
 	}
 
 	@Override
 	public void removeNode(final int index) {
-		children.remove(index);
+		final ITreeNode node = children.remove(index);
 		treeNodeSpi.removeNode(index);
+		parentTree.unRegisterNode((TreeNodeImpl) node);
 	}
 
 	@Override
 	public void removeAllNodes() {
 		for (int i = 0; i < children.size(); i++) {
-			treeNodeSpi.removeNode(i);
+			removeNode(0);
 		}
-		children.clear();
 	}
 
 	@Override

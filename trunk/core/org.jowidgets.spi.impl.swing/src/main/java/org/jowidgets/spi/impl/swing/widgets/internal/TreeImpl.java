@@ -50,16 +50,19 @@ import javax.swing.tree.TreeSelectionModel;
 
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.SelectionPolicy;
+import org.jowidgets.spi.impl.controler.TreeObservableSpi;
 import org.jowidgets.spi.impl.swing.widgets.SwingControl;
 import org.jowidgets.spi.impl.swing.widgets.internal.base.JoTreeNode;
 import org.jowidgets.spi.impl.swing.widgets.internal.base.JoTreeNodeRenderer;
 import org.jowidgets.spi.widgets.ITreeNodeSpi;
 import org.jowidgets.spi.widgets.ITreeSpi;
+import org.jowidgets.spi.widgets.controler.ITreeListenerSpi;
 import org.jowidgets.spi.widgets.setup.ITreeSetupSpi;
 
 public class TreeImpl extends SwingControl implements ITreeSpi {
 
 	private final Map<JoTreeNode, TreeNodeImpl> nodes;
+	private final TreeObservableSpi treeObservable;
 
 	private final JTree tree;
 	private final DefaultMutableTreeNode mutableRootNode;
@@ -72,6 +75,7 @@ public class TreeImpl extends SwingControl implements ITreeSpi {
 		super(createComponent(setup));
 
 		this.nodes = new HashMap<JoTreeNode, TreeNodeImpl>();
+		this.treeObservable = new TreeObservableSpi();
 		this.lastSelection = new LinkedList<JoTreeNode>();
 
 		if (getUiReference() instanceof JScrollPane) {
@@ -94,6 +98,7 @@ public class TreeImpl extends SwingControl implements ITreeSpi {
 				if (path.getLastPathComponent() != mutableRootNode) {
 					final JoTreeNode node = (JoTreeNode) path.getLastPathComponent();
 					nodes.get(node).fireExpandedChanged(true);
+					treeObservable.fireExpansionChanged();
 				}
 			}
 
@@ -103,6 +108,7 @@ public class TreeImpl extends SwingControl implements ITreeSpi {
 				if (path.getLastPathComponent() != mutableRootNode) {
 					final JoTreeNode node = (JoTreeNode) path.getLastPathComponent();
 					nodes.get(node).fireExpandedChanged(false);
+					treeObservable.fireExpansionChanged();
 				}
 			}
 		});
@@ -149,6 +155,56 @@ public class TreeImpl extends SwingControl implements ITreeSpi {
 		this.rootNode = new TreeNodeImpl(this, mutableRootNode);
 	}
 
+	@Override
+	public ITreeNodeSpi getRootNode() {
+		return rootNode;
+	}
+
+	@Override
+	public List<ITreeNodeSpi> getSelectedNodes() {
+		final List<ITreeNodeSpi> result = new LinkedList<ITreeNodeSpi>();
+		final TreePath[] selectionPaths = tree.getSelectionPaths();
+		if (selectionPaths != null) {
+			for (final TreePath selectionPath : selectionPaths) {
+				final Object selectedNode = selectionPath.getLastPathComponent();
+				if (selectedNode instanceof JoTreeNode) {
+					result.add(nodes.get(selectedNode));
+				}
+			}
+		}
+		return result;
+	}
+
+	@Override
+	public void addTreeListener(final ITreeListenerSpi listener) {
+		treeObservable.addTreeListener(listener);
+	}
+
+	@Override
+	public void removeTreeListener(final ITreeListenerSpi listener) {
+		treeObservable.removeTreeListener(listener);
+	}
+
+	protected void registerNode(final JoTreeNode joTreeNode, final TreeNodeImpl nodeImpl) {
+		nodes.put(joTreeNode, nodeImpl);
+	}
+
+	protected void unRegisterNode(final JoTreeNode joTreeNode) {
+		nodes.remove(joTreeNode);
+	}
+
+	protected DefaultMutableTreeNode getMutableRootNode() {
+		return mutableRootNode;
+	}
+
+	protected JTree getTree() {
+		return tree;
+	}
+
+	protected DefaultTreeModel getTreeModel() {
+		return treeModel;
+	}
+
 	private void fireSelectionChange() {
 
 		final List<JoTreeNode> newSelection = new LinkedList<JoTreeNode>();
@@ -175,23 +231,7 @@ public class TreeImpl extends SwingControl implements ITreeSpi {
 		}
 
 		lastSelection = newSelection;
-	}
-
-	@Override
-	public ITreeNodeSpi getRootNode() {
-		return rootNode;
-	}
-
-	protected DefaultMutableTreeNode getMutableRootNode() {
-		return mutableRootNode;
-	}
-
-	protected JTree getTree() {
-		return tree;
-	}
-
-	protected DefaultTreeModel getTreeModel() {
-		return treeModel;
+		treeObservable.fireSelectionChanged();
 	}
 
 	private static Component createComponent(final ITreeSetupSpi setup) {
@@ -227,11 +267,4 @@ public class TreeImpl extends SwingControl implements ITreeSpi {
 		}
 	}
 
-	public void registerItem(final JoTreeNode joTreeNode, final TreeNodeImpl nodeImpl) {
-		nodes.put(joTreeNode, nodeImpl);
-	}
-
-	public void unRegisterItem(final JoTreeNode joTreeNode) {
-		nodes.remove(joTreeNode);
-	}
 }

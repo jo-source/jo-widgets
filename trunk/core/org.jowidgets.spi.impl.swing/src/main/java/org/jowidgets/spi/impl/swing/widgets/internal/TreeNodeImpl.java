@@ -199,7 +199,7 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 		}
 
 		final TreeNodeImpl result = new TreeNodeImpl(parentTree, joTreeNode);
-		parentTree.registerItem(joTreeNode, result);
+		parentTree.registerNode(joTreeNode, result);
 		return result;
 	}
 
@@ -208,7 +208,7 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 		final TreeNode child = node.getChildAt(index);
 		parentTree.getTreeModel().removeNodeFromParent((JoTreeNode) child);
 		if (child != null) {
-			parentTree.unRegisterItem((JoTreeNode) child);
+			parentTree.unRegisterNode((JoTreeNode) child);
 		}
 	}
 

@@ -26,17 +26,39 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.widgets;
+package org.jowidgets.tools.controler;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-import org.jowidgets.common.widgets.ITreeCommon;
-import org.jowidgets.spi.widgets.controler.ITreeObservableSpi;
+import org.jowidgets.api.controler.ITreeSelectionEvent;
+import org.jowidgets.api.controler.ITreeSelectionListener;
+import org.jowidgets.api.controler.ITreeSelectionObservable;
+import org.jowidgets.util.Assert;
 
-public interface ITreeSpi extends IControlSpi, ITreeObservableSpi, ITreeCommon {
+public class TreeSelectionObservable implements ITreeSelectionObservable {
 
-	ITreeNodeSpi getRootNode();
+	private final Set<ITreeSelectionListener> listeners;
 
-	List<ITreeNodeSpi> getSelectedNodes();
+	public TreeSelectionObservable() {
+		this.listeners = new HashSet<ITreeSelectionListener>();
+	}
+
+	@Override
+	public void addTreeSelectionListener(final ITreeSelectionListener listener) {
+		listeners.add(listener);
+	}
+
+	@Override
+	public void removeTreeSelectionListener(final ITreeSelectionListener listener) {
+		listeners.remove(listener);
+	}
+
+	public void fireSelectionChanged(final ITreeSelectionEvent event) {
+		Assert.paramNotNull(event, "event");
+		for (final ITreeSelectionListener listener : listeners) {
+			listener.selectionChanged(event);
+		}
+	}
 
 }

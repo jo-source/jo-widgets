@@ -65,11 +65,11 @@ import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.spi.impl.controler.PopupDetectionObservable;
+import org.jowidgets.spi.impl.controler.TabItemObservableSpi;
 import org.jowidgets.spi.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.spi.impl.swing.widgets.SwingContainer;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.ITabItemSpi;
-import org.jowidgets.spi.widgets.controler.TabItemObservableSpi;
 
 public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 

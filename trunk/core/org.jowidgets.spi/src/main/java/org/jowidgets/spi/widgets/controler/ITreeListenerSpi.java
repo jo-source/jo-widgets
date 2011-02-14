@@ -26,17 +26,12 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.widgets;
+package org.jowidgets.spi.widgets.controler;
 
-import java.util.List;
+public interface ITreeListenerSpi {
 
-import org.jowidgets.common.widgets.ITreeCommon;
-import org.jowidgets.spi.widgets.controler.ITreeObservableSpi;
+	void selectionChanged();
 
-public interface ITreeSpi extends IControlSpi, ITreeObservableSpi, ITreeCommon {
-
-	ITreeNodeSpi getRootNode();
-
-	List<ITreeNodeSpi> getSelectedNodes();
+	void expansionChanged();
 
 }

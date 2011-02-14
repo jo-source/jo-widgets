@@ -28,8 +28,9 @@
 
 package org.jowidgets.api.widgets;
 
+import org.jowidgets.api.controler.ITreeSelectionObservable;
 import org.jowidgets.common.widgets.ITreeCommon;
 
-public interface ITree extends IControl, ITreeContainer, ITreeCommon {
+public interface ITree extends IControl, ITreeContainer, ITreeSelectionObservable, ITreeCommon {
 
 }

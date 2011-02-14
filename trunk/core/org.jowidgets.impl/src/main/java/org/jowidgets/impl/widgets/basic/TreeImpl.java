@@ -28,8 +28,12 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
+import org.jowidgets.api.controler.ITreeSelectionListener;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
@@ -43,19 +47,72 @@ import org.jowidgets.impl.base.delegate.TreeContainerDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.ControlSpiWrapper;
+import org.jowidgets.spi.widgets.ITreeNodeSpi;
 import org.jowidgets.spi.widgets.ITreeSpi;
+import org.jowidgets.spi.widgets.controler.ITreeListenerSpi;
+import org.jowidgets.tools.controler.TreeSelectionEvent;
+import org.jowidgets.tools.controler.TreeSelectionObservable;
 
 public class TreeImpl extends ControlSpiWrapper implements ITree {
 
 	private final ControlDelegate controlDelegate;
+	private final TreeSelectionObservable treeSelectionObservable;
 	private final TreeContainerDelegate treeContainerDelegate;
+	private final Map<ITreeNodeSpi, ITreeNode> nodes;
+
+	private List<ITreeNodeSpi> lastSelection;
 
 	public TreeImpl(final ITreeSpi widget, final ITreeDescriptor descriptor) {
 		super(widget);
 		this.controlDelegate = new ControlDelegate();
+		this.treeSelectionObservable = new TreeSelectionObservable();
+		this.nodes = new HashMap<ITreeNodeSpi, ITreeNode>();
+		this.lastSelection = new LinkedList<ITreeNodeSpi>();
 
 		VisibiliySettingsInvoker.setVisibility(descriptor, this);
 		ColorSettingsInvoker.setColors(descriptor, this);
+
+		getWidget().addTreeListener(new ITreeListenerSpi() {
+
+			@Override
+			public void selectionChanged() {
+				final List<ITreeNode> selected = new LinkedList<ITreeNode>();
+				final List<ITreeNode> unselected = new LinkedList<ITreeNode>();
+
+				final List<ITreeNodeSpi> newSelection = getWidget().getSelectedNodes();
+
+				for (final ITreeNodeSpi wasSelected : lastSelection) {
+					if (!newSelection.contains(wasSelected)) {
+						final ITreeNode unselectedNode = nodes.get(wasSelected);
+						if (unselectedNode != null) {
+							unselected.add(unselectedNode);
+						}
+					}
+				}
+
+				for (final ITreeNodeSpi isSelected : newSelection) {
+					if (!lastSelection.contains(isSelected)) {
+						final ITreeNode selectedNode = nodes.get(isSelected);
+						if (selectedNode != null) {
+							selected.add(selectedNode);
+						}
+					}
+				}
+
+				treeSelectionObservable.fireSelectionChanged(new TreeSelectionEvent(
+					descriptor.getSelectionPolicy(),
+					selected,
+					unselected));
+
+				lastSelection = newSelection;
+			}
+
+			@Override
+			public void expansionChanged() {
+				// TODO Auto-generated method stub
+
+			}
+		});
 
 		this.treeContainerDelegate = new TreeContainerDelegate(this, null, null, widget.getRootNode());
 	}
@@ -83,6 +140,16 @@ public class TreeImpl extends ControlSpiWrapper implements ITree {
 	@Override
 	public IPopupMenu createPopupMenu() {
 		return new PopupMenuImpl(getWidget().createPopupMenu(), this);
+	}
+
+	@Override
+	public void addTreeSelectionListener(final ITreeSelectionListener listener) {
+		treeSelectionObservable.addTreeSelectionListener(listener);
+	}
+
+	@Override
+	public void removeTreeSelectionListener(final ITreeSelectionListener listener) {
+		treeSelectionObservable.removeTreeSelectionListener(listener);
 	}
 
 	@Override
@@ -128,6 +195,14 @@ public class TreeImpl extends ControlSpiWrapper implements ITree {
 	@Override
 	public List<ITreeNode> getChildren() {
 		return treeContainerDelegate.getChildren();
+	}
+
+	public void registerNode(final TreeNodeImpl node) {
+		nodes.put(node.getWidget(), node);
+	}
+
+	public void unRegisterNode(final TreeNodeImpl node) {
+		nodes.remove(node.getWidget());
 	}
 
 }

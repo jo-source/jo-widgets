@@ -26,17 +26,38 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.widgets;
+package org.jowidgets.api.controler;
 
 import java.util.List;
 
-import org.jowidgets.common.widgets.ITreeCommon;
-import org.jowidgets.spi.widgets.controler.ITreeObservableSpi;
+import org.jowidgets.api.widgets.ITreeNode;
 
-public interface ITreeSpi extends IControlSpi, ITreeObservableSpi, ITreeCommon {
+public interface ITreeSelectionEvent {
 
-	ITreeNodeSpi getRootNode();
+	/**
+	 * @return The nodes that was selected by this event or an empty list if nothing was selected.
+	 */
+	List<ITreeNode> getSelected();
 
-	List<ITreeNodeSpi> getSelectedNodes();
+	/**
+	 * @return The nodes that was unselected by this event or an empty list if nothing was unselected.
+	 */
+	List<ITreeNode> getUnselected();
+
+	/**
+	 * Gets the node that was selected by this event.
+	 * Remark: This operation is only supported for a single selection tree!!
+	 * 
+	 * @return The node that was selected by this event or null if nothing was selected
+	 */
+	ITreeNode getSelectedSingle();
+
+	/**
+	 * Gets the node that was unselected by this event.
+	 * Remark: This operation is only supported for a single selection tree!!
+	 * 
+	 * @return The node that was unselected by this event or null if nothing was unselected
+	 */
+	ITreeNode getUnselectedSingle();
 
 }

@@ -26,12 +26,14 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.widgets.controler;
+package org.jowidgets.spi.impl.controler;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.spi.widgets.controler.ITabItemListenerSpi;
+import org.jowidgets.spi.widgets.controler.ITabItemObservableSpi;
 import org.jowidgets.util.ValueHolder;
 
 public class TabItemObservableSpi implements ITabItemObservableSpi {
