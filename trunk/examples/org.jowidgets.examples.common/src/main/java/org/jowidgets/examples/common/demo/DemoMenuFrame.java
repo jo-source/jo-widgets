@@ -66,14 +66,14 @@ import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.command.EnabledChecker;
 import org.jowidgets.tools.powo.JoFrame;
 
-public class MenuDemoFrame extends JoFrame {
+public class DemoMenuFrame extends JoFrame {
 
 	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
 	private ICommandAction action1;
 	private ICommandAction action2;
 
-	public MenuDemoFrame() {
+	public DemoMenuFrame() {
 		super(bluePrint("Menu demo").autoPackOff());
 		createActions();
 		createMainMenus();
@@ -192,6 +192,7 @@ public class MenuDemoFrame extends JoFrame {
 
 	private void addMenus(final IMenu menu) {
 		final ISubMenu subMenu = menu.addItem(BPF.subMenu("sub menu 1").setMnemonic('e'));
+
 		subMenu.addItem(BPF.menuItem("sub item1"));
 		subMenu.addItem(BPF.menuItem("sub item2"));
 

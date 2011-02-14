@@ -66,7 +66,7 @@ public class DemoMainComposite {
 		menuDemoButton.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
-				final IFrame menuDemoFrame = new MenuDemoFrame();
+				final IFrame menuDemoFrame = new DemoMenuFrame();
 				menuDemoFrame.setSize(new Dimension(800, 600));
 				menuDemoFrame.setVisible(true);
 			}
