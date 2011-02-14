@@ -29,18 +29,21 @@
 package org.jowidgets.api.widgets.blueprint.defaults;
 
 import java.util.List;
-import java.util.Map;
 
 import org.jowidgets.common.widgets.builder.ISetupBuilder;
 
 public interface IDefaultsInitializerRegistry {
 
 	@SuppressWarnings("rawtypes")
-	void register(Class<? extends ISetupBuilder> setupBuilder, IDefaultInitializer<?> defaultsImpl);
+	void register(Class<? extends ISetupBuilder> setupBuilder, IDefaultInitializer<?> defaultInitializer);
+
+	@SuppressWarnings("rawtypes")
+	void setDefaultsInitializer(final Class<? extends ISetupBuilder> setupBuilder, final IDefaultInitializer<?> defaultInitializer);
 
 	@SuppressWarnings("rawtypes")
 	List<IDefaultInitializer<ISetupBuilder<?>>> getRegistered(Class<? extends ISetupBuilder> setupBuilder);
 
 	@SuppressWarnings("rawtypes")
-	Map<Class<? extends ISetupBuilder>, IDefaultInitializer<ISetupBuilder<?>>> getAll();
+	List<Class<ISetupBuilder>> getRegisteredSetupBuilder();
+
 }

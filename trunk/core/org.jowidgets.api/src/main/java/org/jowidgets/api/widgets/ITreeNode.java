@@ -39,4 +39,8 @@ public interface ITreeNode extends IItem, ITreeContainer, ITreeNodeCommon {
 	@Override
 	ITreeNode getParent();
 
+	boolean isLeaf();
+
+	boolean isTopLevel();
+
 }

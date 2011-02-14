@@ -44,6 +44,7 @@ import org.jowidgets.api.widgets.ITreeContainer;
 import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.api.widgets.descriptor.ITreeDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITreeNodeDescriptor;
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
@@ -69,10 +70,16 @@ public class TreeImpl extends ControlSpiWrapper implements ITree {
 	private final TreeContainerDelegate treeContainerDelegate;
 	private final Map<ITreeNodeSpi, ITreeNode> nodes;
 
+	private final IImageConstant defaultInnerIcon;
+	private final IImageConstant defaultLeafIcon;
+
 	private List<ITreeNodeSpi> lastSelection;
 
 	public TreeImpl(final ITreeSpi widget, final ITreeDescriptor descriptor) {
 		super(widget);
+
+		this.defaultInnerIcon = descriptor.getDefaultInnerIcon();
+		this.defaultLeafIcon = descriptor.getDefaultLeafIcon();
 
 		this.controlDelegate = new ControlDelegate();
 
@@ -239,6 +246,14 @@ public class TreeImpl extends ControlSpiWrapper implements ITree {
 
 	public void unRegisterNode(final TreeNodeImpl node) {
 		nodes.remove(node.getWidget());
+	}
+
+	public IImageConstant getDefaultInnerIcon() {
+		return defaultInnerIcon;
+	}
+
+	public IImageConstant getDefaultLeafIcon() {
+		return defaultLeafIcon;
 	}
 
 	protected TreeObservable getTreeObservable() {

@@ -71,11 +71,14 @@ import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeNodeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenience;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.widgets.builder.ISetupBuilder;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.util.Assert;
 
@@ -89,13 +92,37 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	}
 
 	@Override
-	public void addSetupBuilderConvenienceRegistry(final ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry) {
-		bluePrintFactory.addSetupBuilderConvenienceRegistry(setupBuilderConvenienceRegistry);
+	public ISetupBuilderConvenienceRegistry getSetupBuilderConvenienceRegistry() {
+		return bluePrintFactory.getSetupBuilderConvenienceRegistry();
 	}
 
 	@Override
-	public void addDefaultsInitializerRegistry(final IDefaultsInitializerRegistry defaultInitializerRegistry) {
-		bluePrintFactory.addDefaultsInitializerRegistry(defaultInitializerRegistry);
+	public IDefaultsInitializerRegistry getDefaultsInitializerRegistry() {
+		return bluePrintFactory.getDefaultsInitializerRegistry();
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public void addDefaultsInitializer(
+		final Class<? extends ISetupBuilder> setupBuilder,
+		final IDefaultInitializer<?> defaultsImpl) {
+		bluePrintFactory.addDefaultsInitializer(setupBuilder, defaultsImpl);
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public void setDefaultsInitializer(
+		final Class<? extends ISetupBuilder> setupBuilder,
+		final IDefaultInitializer<?> defaultsImpl) {
+		bluePrintFactory.setDefaultsInitializer(setupBuilder, defaultsImpl);
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public void setSetupBuilderConvenience(
+		final Class<? extends ISetupBuilder> setupBuilder,
+		final ISetupBuilderConvenience<?> setupBuilderConvenience) {
+		bluePrintFactory.setSetupBuilderConvenience(setupBuilder, setupBuilderConvenience);
 	}
 
 	@Override

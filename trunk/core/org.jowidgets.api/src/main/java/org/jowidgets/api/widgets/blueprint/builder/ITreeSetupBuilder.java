@@ -28,11 +28,16 @@
 package org.jowidgets.api.widgets.blueprint.builder;
 
 import org.jowidgets.api.widgets.blueprint.builder.convenience.ITreeSetupConvenience;
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.builder.ITreeSetupBuilderCommon;
 
 public interface ITreeSetupBuilder<INSTANCE_TYPE extends ITreeSetupBuilder<?>> extends
 		IComponentSetupBuilder<INSTANCE_TYPE>,
 		ITreeSetupBuilderCommon<INSTANCE_TYPE>,
 		ITreeSetupConvenience<INSTANCE_TYPE> {
+
+	INSTANCE_TYPE setDefaultInnerIcon(IImageConstant icon);
+
+	INSTANCE_TYPE setDefaultLeafIcon(IImageConstant icon);
 
 }

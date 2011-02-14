@@ -60,6 +60,15 @@ public class DefaultsInitializerRegistry implements IDefaultsInitializerRegistry
 	}
 
 	@Override
+	public void setDefaultsInitializer(
+		final Class<? extends ISetupBuilder> setupBuilder,
+		final IDefaultInitializer<?> defaultsImpl) {
+		Assert.paramNotNull(setupBuilder, "setupBuilder");
+		map.remove(setupBuilder);
+		register(setupBuilder, defaultsImpl);
+	}
+
+	@Override
 	public List<IDefaultInitializer<ISetupBuilder<?>>> getRegistered(final Class<? extends ISetupBuilder> setupBuilder) {
 		Assert.paramNotNull(setupBuilder, "setupBuilder");
 		List<IDefaultInitializer<ISetupBuilder<?>>> list = (List<IDefaultInitializer<ISetupBuilder<?>>>) map.get(setupBuilder);
@@ -70,8 +79,12 @@ public class DefaultsInitializerRegistry implements IDefaultsInitializerRegistry
 	}
 
 	@Override
-	public Map<Class<? extends ISetupBuilder>, IDefaultInitializer<ISetupBuilder<?>>> getAll() {
-		return map;
+	public List<Class<ISetupBuilder>> getRegisteredSetupBuilder() {
+		final List<Class<ISetupBuilder>> result = new LinkedList<Class<ISetupBuilder>>();
+		for (final Object object : map.keySet()) {
+			result.add((Class<ISetupBuilder>) object);
+		}
+		return result;
 	}
 
 }

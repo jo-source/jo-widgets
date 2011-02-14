@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,16 +26,38 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets.blueprint.convenience;
+package org.jowidgets.api.widgets.blueprint.factory;
 
+import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenience;
+import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.common.widgets.builder.ISetupBuilder;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-public interface ISetupBuilderConvenienceRegistry {
+public interface IBaseBluePrintFactory {
+
+	<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>, BLUE_PRINT_TYPE extends IComponentSetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
+		final Class<BLUE_PRINT_TYPE> bluePrintType,
+		final Class<DESCRIPTOR_TYPE> descriptorType);
+
+	ISetupBuilderConvenienceRegistry getSetupBuilderConvenienceRegistry();
 
 	@SuppressWarnings("rawtypes")
-	void register(Class<? extends ISetupBuilder> setupBuilder, ISetupBuilderConvenience<?> convenienceImpl);
+	void setSetupBuilderConvenience(
+		Class<? extends ISetupBuilder> setupBuilder,
+		ISetupBuilderConvenience<?> setupBuilderConvenience);
+
+	IDefaultsInitializerRegistry getDefaultsInitializerRegistry();
 
 	@SuppressWarnings("rawtypes")
-	ISetupBuilderConvenience<ISetupBuilder<?>> getRegistered(Class<? extends ISetupBuilder> setupBuilder);
+	void addDefaultsInitializer(Class<? extends ISetupBuilder> setupBuilder, IDefaultInitializer<?> defaultInitializer);
+
+	@SuppressWarnings("rawtypes")
+	void setDefaultsInitializer(Class<? extends ISetupBuilder> setupBuilder, IDefaultInitializer<?> defaultInitializer);
+
+	void setDefaultsInitializerRegistry(IDefaultsInitializerRegistry defaultInitializerRegistry);
 
 }

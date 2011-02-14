@@ -29,8 +29,6 @@
 package org.jowidgets.tools.widgets.blueprint.convenience;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenience;
@@ -51,27 +49,13 @@ public class SetupBuilderConvenienceRegistry implements ISetupBuilderConvenience
 	public void register(final Class<? extends ISetupBuilder> setupBuilder, final ISetupBuilderConvenience<?> convenienceImpl) {
 		Assert.paramNotNull(setupBuilder, "setupBuilder");
 		Assert.paramNotNull(convenienceImpl, "convenienceImpl");
-		List list = (List) map.get(setupBuilder);
-		if (list == null) {
-			list = new LinkedList<ISetupBuilderConvenience<?>>();
-			map.put(setupBuilder, list);
-		}
-		list.add(convenienceImpl);
+		map.put(setupBuilder, convenienceImpl);
 	}
 
 	@Override
-	public List<ISetupBuilderConvenience<ISetupBuilder<?>>> getRegistered(final Class<? extends ISetupBuilder> setupBuilder) {
+	public ISetupBuilderConvenience<ISetupBuilder<?>> getRegistered(final Class<? extends ISetupBuilder> setupBuilder) {
 		Assert.paramNotNull(setupBuilder, "setupBuilder");
-		List<ISetupBuilderConvenience<ISetupBuilder<?>>> list = (List<ISetupBuilderConvenience<ISetupBuilder<?>>>) map.get(setupBuilder);
-		if (list == null) {
-			list = new LinkedList<ISetupBuilderConvenience<ISetupBuilder<?>>>();
-		}
-		return list;
-	}
-
-	@Override
-	public Map<Class<? extends ISetupBuilder>, List<ISetupBuilderConvenience<ISetupBuilder<?>>>> getAll() {
-		return map;
+		return (ISetupBuilderConvenience<ISetupBuilder<?>>) map.get(setupBuilder);
 	}
 
 }

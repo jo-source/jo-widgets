@@ -29,7 +29,6 @@ package org.jowidgets.api.widgets.blueprint.factory;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.convert.IObjectStringConverter;
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICheckBoxBluePrint;
@@ -60,22 +59,8 @@ import org.jowidgets.api.widgets.blueprint.IToolBarPopupButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarToggleButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeNodeBluePrint;
-import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
-import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
-import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-public interface IBasicSimpleBluePrintFactory {
-
-	<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>, BLUE_PRINT_TYPE extends IComponentSetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
-		final Class<BLUE_PRINT_TYPE> bluePrintType,
-		final Class<DESCRIPTOR_TYPE> descriptorType);
-
-	void addSetupBuilderConvenienceRegistry(ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry);
-
-	void addDefaultsInitializerRegistry(IDefaultsInitializerRegistry defaultInitializerRegistry);
-
-	void setDefaultsInitializerRegistry(IDefaultsInitializerRegistry defaultInitializerRegistry);
+public interface IBasicSimpleBluePrintFactory extends IBaseBluePrintFactory {
 
 	IFrameBluePrint frame();
 

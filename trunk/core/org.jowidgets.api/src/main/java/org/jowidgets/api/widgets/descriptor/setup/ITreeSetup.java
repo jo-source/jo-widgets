@@ -28,8 +28,13 @@
 
 package org.jowidgets.api.widgets.descriptor.setup;
 
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.descriptor.setup.ITreeSetupCommon;
 
 public interface ITreeSetup extends IComponentSetup, ITreeSetupCommon {
+
+	IImageConstant getDefaultInnerIcon();
+
+	IImageConstant getDefaultLeafIcon();
 
 }

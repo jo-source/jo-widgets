@@ -183,10 +183,11 @@ public class BluePrintProxyInvocationHandler implements InvocationHandler {
 				convenienceMethodsMap.put(methodKey, convenienceMethods);
 			}
 		}
-		for (final ISetupBuilderConvenience<ISetupBuilder<?>> registeredMethods : convenienceRegistry.getRegistered(bluePrintType)) {
-			for (final Method method : registeredMethods.getClass().getDeclaredMethods()) {
+		final ISetupBuilderConvenience<ISetupBuilder<?>> setupBuilderConvenience = convenienceRegistry.getRegistered(bluePrintType);
+		if (setupBuilderConvenience != null) {
+			for (final Method method : convenienceRegistry.getRegistered(bluePrintType).getClass().getDeclaredMethods()) {
 				final MethodKey methodKey = new MethodKey(method);
-				convenienceMethodsMap.put(methodKey, registeredMethods);
+				convenienceMethodsMap.put(methodKey, setupBuilderConvenience);
 			}
 		}
 

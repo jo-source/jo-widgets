@@ -99,6 +99,8 @@ public class TreeNodeImpl extends TreeNodeSpiWrapper implements ITreeNode {
 		});
 
 		this.treeContainerDelegate = new TreeContainerDelegate(parentTree, parentNode, this, widget);
+
+		checkIcon();
 	}
 
 	@Override
@@ -123,22 +125,30 @@ public class TreeNodeImpl extends TreeNodeSpiWrapper implements ITreeNode {
 
 	@Override
 	public ITreeNode addNode() {
-		return treeContainerDelegate.addNode();
+		final ITreeNode result = treeContainerDelegate.addNode();
+		checkIcon();
+		return result;
 	}
 
 	@Override
 	public ITreeNode addNode(final int index) {
-		return treeContainerDelegate.addNode(index);
+		final ITreeNode result = treeContainerDelegate.addNode(index);
+		checkIcon();
+		return result;
 	}
 
 	@Override
 	public ITreeNode addNode(final ITreeNodeDescriptor descriptor) {
-		return treeContainerDelegate.addNode(descriptor);
+		final ITreeNode result = treeContainerDelegate.addNode(descriptor);
+		checkIcon();
+		return result;
 	}
 
 	@Override
 	public ITreeNode addNode(final int index, final ITreeNodeDescriptor descriptor) {
-		return treeContainerDelegate.addNode(index, descriptor);
+		final ITreeNode result = treeContainerDelegate.addNode(index, descriptor);
+		checkIcon();
+		return result;
 	}
 
 	@Override
@@ -159,6 +169,27 @@ public class TreeNodeImpl extends TreeNodeSpiWrapper implements ITreeNode {
 	@Override
 	public List<ITreeNode> getChildren() {
 		return treeContainerDelegate.getChildren();
+	}
+
+	@Override
+	public boolean isLeaf() {
+		return getChildren().size() == 0;
+	}
+
+	@Override
+	public boolean isTopLevel() {
+		return getParent() == null;
+	}
+
+	private void checkIcon() {
+		if (getIcon() == null) {
+			if (isLeaf()) {
+				getWidget().setIcon(parentTree.getDefaultLeafIcon());
+			}
+			else {
+				getWidget().setIcon(parentTree.getDefaultInnerIcon());
+			}
+		}
 	}
 
 	@Override

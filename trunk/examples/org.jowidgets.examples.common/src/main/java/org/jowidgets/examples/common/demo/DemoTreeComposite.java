@@ -40,7 +40,9 @@ import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITree;
 import org.jowidgets.api.widgets.ITreeNode;
+import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeNodeBluePrint;
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
@@ -53,6 +55,13 @@ public final class DemoTreeComposite {
 	protected DemoTreeComposite(final IContainer parentContainer) {
 
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
+		bpF.addDefaultsInitializer(ITreeBluePrint.class, new IDefaultInitializer<ITreeBluePrint>() {
+			@Override
+			public void initialize(final ITreeBluePrint bluePrint) {
+				bluePrint.setDefaultInnerIcon(IconsSmall.INFO);
+				bluePrint.setDefaultLeafIcon(IconsSmall.WARNING);
+			}
+		});
 
 		final ILayoutDescriptor fillLayoutDescriptor = new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0");
 		parentContainer.setLayout(fillLayoutDescriptor);
@@ -106,20 +115,20 @@ public final class DemoTreeComposite {
 
 		for (int i = 0; i < 10; i++) {
 			ITreeNodeBluePrint treeNodeBp = bpF.treeNode();
-			treeNodeBp.setText("Node " + i).setToolTipText("tooltip of node " + i).setIcon(IconsSmall.INFO);
+			treeNodeBp.setText("Node " + i).setToolTipText("tooltip of node " + i);
 			final ITreeNode node = tree.addNode(treeNodeBp);
 
 			registerListners(node);
 
 			for (int j = 0; j < 10; j++) {
 				treeNodeBp = bpF.treeNode();
-				treeNodeBp.setText("SubNode " + j).setToolTipText("tooltip of subNode " + j).setIcon(IconsSmall.QUESTION);
+				treeNodeBp.setText("SubNode " + j).setToolTipText("tooltip of subNode " + j);
 				final ITreeNode subNode = node.addNode(treeNodeBp);
 				registerListners(subNode);
 
 				for (int k = 0; k < 10; k++) {
 					treeNodeBp = bpF.treeNode();
-					treeNodeBp.setText("SubSubNode " + k).setToolTipText("tooltip of subSubNode " + k).setIcon(IconsSmall.WARNING);
+					treeNodeBp.setText("SubSubNode " + k).setToolTipText("tooltip of subSubNode " + k);
 					final ITreeNode subSubNode = subNode.addNode(treeNodeBp);
 					registerListners(subSubNode);
 				}
@@ -131,6 +140,7 @@ public final class DemoTreeComposite {
 
 		tree.getChildren().get(2).getChildren().get(3).setSelected(true);
 		tree.getChildren().get(2).getChildren().get(5).setSelected(true);
+		tree.getChildren().get(3).getChildren().get(5).setIcon(IconsSmall.ERROR);
 	}
 
 	private void registerListners(final ITreeNode node) {
