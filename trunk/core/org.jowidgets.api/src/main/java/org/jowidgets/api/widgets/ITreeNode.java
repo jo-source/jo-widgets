@@ -28,19 +28,39 @@
 
 package org.jowidgets.api.widgets;
 
+import java.util.List;
+
 import org.jowidgets.common.widgets.ITreeNodeCommon;
 
 public interface ITreeNode extends IItem, ITreeContainer, ITreeNodeCommon {
 
-	IPopupMenu createPopupMenu();
-
+	/**
+	 * @return The tree this node belongs to
+	 */
 	ITree getTree();
+
+	/**
+	 * @return True if this node is a leaf (has no children), false otherwise.
+	 */
+	boolean isLeaf();
+
+	/**
+	 * @return True if this node is a top level node (has no parent), false otherwise
+	 */
+	boolean isTopLevel();
+
+	/**
+	 * @return Gets the path from the top level parent of this node to this node
+	 *         (this node is included into the path)
+	 */
+	List<ITreeNode> getPath();
+
+	/**
+	 * @return A IPopupMenu for this node
+	 */
+	IPopupMenu createPopupMenu();
 
 	@Override
 	ITreeNode getParent();
-
-	boolean isLeaf();
-
-	boolean isTopLevel();
 
 }

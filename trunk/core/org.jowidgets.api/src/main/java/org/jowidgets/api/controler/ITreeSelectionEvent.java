@@ -45,7 +45,7 @@ public interface ITreeSelectionEvent {
 	List<ITreeNode> getUnselected();
 
 	/**
-	 * Gets the node that was selected by this event.
+	 * Gets the (single) node that was selected by this event.
 	 * Remark: This operation is only supported for a single selection tree!!
 	 * 
 	 * @return The node that was selected by this event or null if nothing was selected
@@ -53,7 +53,7 @@ public interface ITreeSelectionEvent {
 	ITreeNode getSelectedSingle();
 
 	/**
-	 * Gets the node that was unselected by this event.
+	 * Gets the (single) node that was unselected by this event.
 	 * Remark: This operation is only supported for a single selection tree!!
 	 * 
 	 * @return The node that was unselected by this event or null if nothing was unselected

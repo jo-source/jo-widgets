@@ -28,6 +28,7 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.api.toolkit.Toolkit;
@@ -111,6 +112,17 @@ public class TreeNodeImpl extends TreeNodeSpiWrapper implements ITreeNode {
 	@Override
 	public ITree getTree() {
 		return parentTree;
+	}
+
+	@Override
+	public List<ITreeNode> getPath() {
+		final LinkedList<ITreeNode> result = new LinkedList<ITreeNode>();
+		ITreeNode node = this;
+		while (node != null) {
+			result.push(node);
+			node = node.getParent();
+		}
+		return result;
 	}
 
 	@Override
