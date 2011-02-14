@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann, Lukas Gross
+ * Copyright (c) 2011, Lukas Gross
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,27 +26,8 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.test;
+package org.jowidgets.spi.impl.dummy.dummyui;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-public final class ApiBlackBoxTestSuite {
-
-	private ApiBlackBoxTestSuite() {};
-
-	public static Test suite() {
-		final TestSuite suite = new TestSuite(ApiBlackBoxTestSuite.class.getName());
-		//$JUnit-BEGIN$
-		suite.addTest(ToolkitTest.suite());
-		suite.addTest(WidgetFactoryTest.suite());
-		suite.addTest(MenuTest.suite());
-		suite.addTest(ToolBarTest.suite());
-		suite.addTest(TestBluePrintFactoryTest.suite());
-		suite.addTest(ProxyInvocationTest.suite());
-		suite.addTest(TabFolderTest.suite());
-		//$JUnit-END$
-		return suite;
-	}
+public class UIDTabContainer extends UIDTabItem {
 
 }

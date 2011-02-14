@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2010, grossmann, Lukas Gross
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -44,6 +44,8 @@ import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionObservable;
 import org.jowidgets.common.widgets.controler.IWindowListener;
 import org.jowidgets.common.widgets.controler.IWindowObservable;
+import org.jowidgets.spi.widgets.controler.ITabItemListenerSpi;
+import org.jowidgets.spi.widgets.controler.ITabItemObservableSpi;
 
 public class UIDObservable implements
 		IActionObservable,
@@ -51,7 +53,8 @@ public class UIDObservable implements
 		IWindowObservable,
 		IItemStateObservable,
 		IMenuObservable,
-		IPopupDetectionObservable {
+		IPopupDetectionObservable,
+		ITabItemObservableSpi {
 
 	private final Set<IInputListener> inputListeners;
 	private final Set<IActionListener> actionListeners;
@@ -59,6 +62,7 @@ public class UIDObservable implements
 	private final Set<IItemStateListener> itemStateListeners;
 	private final Set<IMenuListener> menuListeners;
 	private final Set<IPopupDetectionListener> popupListeners;
+	private final Set<ITabItemListenerSpi> tabItemListeners;
 
 	public UIDObservable() {
 		super();
@@ -68,6 +72,7 @@ public class UIDObservable implements
 		this.itemStateListeners = new HashSet<IItemStateListener>();
 		this.menuListeners = new HashSet<IMenuListener>();
 		this.popupListeners = new HashSet<IPopupDetectionListener>();
+		this.tabItemListeners = new HashSet<ITabItemListenerSpi>();
 	}
 
 	@Override
@@ -128,6 +133,16 @@ public class UIDObservable implements
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
 		popupListeners.remove(listener);
+	}
+
+	@Override
+	public void addTabItemListener(final ITabItemListenerSpi listener) {
+		tabItemListeners.add(listener);
+	}
+
+	@Override
+	public void removeTabItemListener(final ITabItemListenerSpi listener) {
+		tabItemListeners.remove(listener);
 	}
 
 	public void fireActionPerformed() {

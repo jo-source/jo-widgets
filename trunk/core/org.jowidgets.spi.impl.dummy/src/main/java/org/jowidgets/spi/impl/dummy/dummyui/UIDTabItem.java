@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann, Lukas Gross
+ * Copyright (c) 2011, Lukas Gross
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,27 +26,46 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.test;
+package org.jowidgets.spi.impl.dummy.dummyui;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.jowidgets.common.image.IImageConstant;
 
-public final class ApiBlackBoxTestSuite {
+public class UIDTabItem extends UIDContainer {
 
-	private ApiBlackBoxTestSuite() {};
+	private boolean selected;
+	private String text;
+	private IImageConstant icon;
+	private boolean closeable;
 
-	public static Test suite() {
-		final TestSuite suite = new TestSuite(ApiBlackBoxTestSuite.class.getName());
-		//$JUnit-BEGIN$
-		suite.addTest(ToolkitTest.suite());
-		suite.addTest(WidgetFactoryTest.suite());
-		suite.addTest(MenuTest.suite());
-		suite.addTest(ToolBarTest.suite());
-		suite.addTest(TestBluePrintFactoryTest.suite());
-		suite.addTest(ProxyInvocationTest.suite());
-		suite.addTest(TabFolderTest.suite());
-		//$JUnit-END$
-		return suite;
+	public boolean isSelected() {
+		return selected;
 	}
 
+	public void setSelected(final boolean selected) {
+		this.selected = selected;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(final String text) {
+		this.text = text;
+	}
+
+	public IImageConstant getIcon() {
+		return icon;
+	}
+
+	public void setIcon(final IImageConstant icon) {
+		this.icon = icon;
+	}
+
+	public boolean isCloseable() {
+		return closeable;
+	}
+
+	public void setCloseable(final boolean closeable) {
+		this.closeable = closeable;
+	}
 }
