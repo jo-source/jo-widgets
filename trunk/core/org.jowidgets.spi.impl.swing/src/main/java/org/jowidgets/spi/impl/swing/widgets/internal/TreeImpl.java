@@ -29,35 +29,50 @@
 package org.jowidgets.spi.impl.swing.widgets.internal;
 
 import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.ToolTipManager;
+import javax.swing.event.TreeExpansionEvent;
+import javax.swing.event.TreeExpansionListener;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.SelectionPolicy;
-import org.jowidgets.spi.impl.swing.image.SwingImageRegistry;
-import org.jowidgets.spi.impl.swing.util.ColorConvert;
-import org.jowidgets.spi.impl.swing.util.FontProvider;
 import org.jowidgets.spi.impl.swing.widgets.SwingControl;
 import org.jowidgets.spi.impl.swing.widgets.internal.base.JoTreeNode;
+import org.jowidgets.spi.impl.swing.widgets.internal.base.JoTreeNodeRenderer;
 import org.jowidgets.spi.widgets.ITreeNodeSpi;
 import org.jowidgets.spi.widgets.ITreeSpi;
 import org.jowidgets.spi.widgets.setup.ITreeSetupSpi;
 
 public class TreeImpl extends SwingControl implements ITreeSpi {
 
+	private final Map<JoTreeNode, TreeNodeImpl> nodes;
+
 	private final JTree tree;
 	private final DefaultMutableTreeNode mutableRootNode;
 	private final DefaultTreeModel treeModel;
 	private final ITreeNodeSpi rootNode;
 
+	private List<JoTreeNode> lastSelection;
+
 	public TreeImpl(final ITreeSetupSpi setup) {
 		super(createComponent(setup));
+
+		this.nodes = new HashMap<JoTreeNode, TreeNodeImpl>();
+		this.lastSelection = new LinkedList<JoTreeNode>();
 
 		if (getUiReference() instanceof JScrollPane) {
 			this.tree = (JTree) ((JScrollPane) getUiReference()).getViewport().getView();
@@ -69,53 +84,97 @@ public class TreeImpl extends SwingControl implements ITreeSpi {
 		this.treeModel = (DefaultTreeModel) tree.getModel();
 		this.mutableRootNode = (DefaultMutableTreeNode) treeModel.getRoot();
 
-		tree.setCellRenderer(new DefaultTreeCellRenderer() {
+		tree.setCellRenderer(new JoTreeNodeRenderer());
 
-			private static final long serialVersionUID = 1L;
+		tree.addTreeExpansionListener(new TreeExpansionListener() {
 
 			@Override
-			public Component getTreeCellRendererComponent(
-				final JTree tree,
-				final Object value,
-				final boolean selected,
-				final boolean expanded,
-				final boolean leaf,
-				final int row,
-				final boolean hasFocus) {
-
-				final Component result = super.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus);
-
-				if (value instanceof JoTreeNode) {
-					final JoTreeNode joTreeNode = ((JoTreeNode) value);
-					setText(joTreeNode.getText());
-					setToolTipText(joTreeNode.getToolTipText());
-					setIcon(SwingImageRegistry.getInstance().getImageIcon(joTreeNode.getIcon()));
-
-					if (joTreeNode.getMarkup() != null) {
-						setFont(FontProvider.deriveFont(getFont(), joTreeNode.getMarkup()));
-					}
-
-					if (!selected && joTreeNode.getBackgroundColor() != null) {
-						setBackgroundNonSelectionColor(ColorConvert.convert(joTreeNode.getBackgroundColor()));
-					}
-					else {
-						setBackgroundNonSelectionColor(null);
-					}
-
-					if (!selected && joTreeNode.getForegroundColor() != null) {
-						setForeground(ColorConvert.convert(joTreeNode.getForegroundColor()));
-					}
-					else {
-						setForeground(null);
-					}
+			public void treeExpanded(final TreeExpansionEvent event) {
+				final TreePath path = event.getPath();
+				if (path.getLastPathComponent() != mutableRootNode) {
+					final JoTreeNode node = (JoTreeNode) path.getLastPathComponent();
+					nodes.get(node).fireExpandedChanged(true);
 				}
+			}
 
-				return result;
-
+			@Override
+			public void treeCollapsed(final TreeExpansionEvent event) {
+				final TreePath path = event.getPath();
+				if (path.getLastPathComponent() != mutableRootNode) {
+					final JoTreeNode node = (JoTreeNode) path.getLastPathComponent();
+					nodes.get(node).fireExpandedChanged(false);
+				}
 			}
 		});
 
+		tree.addTreeSelectionListener(new TreeSelectionListener() {
+			@Override
+			public void valueChanged(final TreeSelectionEvent e) {
+				fireSelectionChange();
+			}
+		});
+
+		setMouseListener(new MouseAdapter() {});
+		tree.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseReleased(final MouseEvent e) {
+				trigger(e);
+			}
+
+			@Override
+			public void mousePressed(final MouseEvent e) {
+				trigger(e);
+			}
+
+			private void trigger(final MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					final TreePath path = tree.getPathForLocation(e.getX(), e.getY());
+					final Position position = new Position(e.getX(), e.getY());
+					if (path != null) {
+						final JoTreeNode node = (JoTreeNode) path.getLastPathComponent();
+						if (!e.isShiftDown() && !e.isControlDown()) {
+							tree.setSelectionPath(new TreePath(node.getPath()));
+						}
+						nodes.get(node).firePopupDetected(position);
+					}
+					else {
+						getPopupDetectionObservable().firePopupDetected(position);
+					}
+				}
+			}
+
+		});
+
 		this.rootNode = new TreeNodeImpl(this, mutableRootNode);
+	}
+
+	private void fireSelectionChange() {
+
+		final List<JoTreeNode> newSelection = new LinkedList<JoTreeNode>();
+		final TreePath[] selectionPaths = tree.getSelectionPaths();
+		if (selectionPaths != null) {
+			for (final TreePath selectionPath : selectionPaths) {
+				final Object selectedNode = selectionPath.getLastPathComponent();
+				if (selectedNode instanceof JoTreeNode) {
+					newSelection.add((JoTreeNode) selectedNode);
+				}
+			}
+		}
+
+		for (final JoTreeNode wasSelected : lastSelection) {
+			if (!newSelection.contains(wasSelected)) {
+				nodes.get(wasSelected).fireSelectionChanged(false);
+			}
+		}
+
+		for (final JoTreeNode isSelected : newSelection) {
+			if (!lastSelection.contains(isSelected)) {
+				nodes.get(isSelected).fireSelectionChanged(true);
+			}
+		}
+
+		lastSelection = newSelection;
 	}
 
 	@Override
@@ -168,11 +227,11 @@ public class TreeImpl extends SwingControl implements ITreeSpi {
 		}
 	}
 
-	public void registerItem(final JoTreeNode uiReference, final TreeNodeImpl result) {
-		// TODO Auto-generated method stub
+	public void registerItem(final JoTreeNode joTreeNode, final TreeNodeImpl nodeImpl) {
+		nodes.put(joTreeNode, nodeImpl);
 	}
 
-	public void unRegisterItem(final TreeNode child) {
-		// TODO Auto-generated method stub
+	public void unRegisterItem(final JoTreeNode joTreeNode) {
+		nodes.remove(joTreeNode);
 	}
 }

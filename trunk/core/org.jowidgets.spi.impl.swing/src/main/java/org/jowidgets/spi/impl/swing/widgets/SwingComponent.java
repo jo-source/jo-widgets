@@ -50,7 +50,7 @@ import org.jowidgets.spi.widgets.IPopupMenuSpi;
 public class SwingComponent extends SwingWidget implements IComponentSpi {
 
 	private final PopupDetectionObservable popupDetectionObservable;
-	private final MouseListener mouseListener;
+	private MouseListener mouseListener;
 
 	public SwingComponent(final Component component) {
 		super(component);
@@ -73,6 +73,16 @@ public class SwingComponent extends SwingWidget implements IComponentSpi {
 		};
 
 		component.addMouseListener(mouseListener);
+	}
+
+	protected PopupDetectionObservable getPopupDetectionObservable() {
+		return popupDetectionObservable;
+	}
+
+	protected void setMouseListener(final MouseListener mouseListener) {
+		getUiReference().removeMouseListener(this.mouseListener);
+		this.mouseListener = mouseListener;
+		getUiReference().addMouseListener(mouseListener);
 	}
 
 	@Override

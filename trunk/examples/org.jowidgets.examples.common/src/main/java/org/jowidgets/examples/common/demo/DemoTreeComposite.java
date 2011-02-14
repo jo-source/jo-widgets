@@ -38,7 +38,6 @@ import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.api.widgets.blueprint.ITreeNodeBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Position;
-import org.jowidgets.common.types.SelectionPolicy;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.ITreeNodeListener;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
@@ -53,9 +52,7 @@ public final class DemoTreeComposite {
 		final ILayoutDescriptor fillLayoutDescriptor = new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0");
 		parentContainer.setLayout(fillLayoutDescriptor);
 
-		final ITree tree = parentContainer.add(
-				bpF.tree().setSelectionPolicy(SelectionPolicy.SINGLE_SELECTION),
-				"growx, growy, w 0::, h 0::");
+		final ITree tree = parentContainer.add(bpF.tree().multiSelection(), "growx, growy, w 0::, h 0::");
 		final IPopupMenu popupMenu = tree.createPopupMenu();
 		fillMenu("", popupMenu);
 
@@ -89,7 +86,10 @@ public final class DemoTreeComposite {
 
 		}
 
+		tree.removeNode(tree.getChildren().get(5));
+
 		tree.getChildren().get(2).getChildren().get(3).setSelected(true);
+		tree.getChildren().get(2).getChildren().get(5).setSelected(true);
 	}
 
 	private void registerListners(final ITreeNode node) {

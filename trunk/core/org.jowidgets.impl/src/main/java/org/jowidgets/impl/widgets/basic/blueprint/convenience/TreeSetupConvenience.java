@@ -25,14 +25,24 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.blueprint.builder;
+package org.jowidgets.impl.widgets.basic.blueprint.convenience;
 
+import org.jowidgets.api.widgets.blueprint.builder.ITreeSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.convenience.ITreeSetupConvenience;
-import org.jowidgets.common.widgets.builder.ITreeSetupBuilderCommon;
+import org.jowidgets.common.types.SelectionPolicy;
+import org.jowidgets.tools.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 
-public interface ITreeSetupBuilder<INSTANCE_TYPE extends ITreeSetupBuilder<?>> extends
-		IComponentSetupBuilder<INSTANCE_TYPE>,
-		ITreeSetupBuilderCommon<INSTANCE_TYPE>,
-		ITreeSetupConvenience<INSTANCE_TYPE> {
+public class TreeSetupConvenience extends AbstractSetupBuilderConvenience<ITreeSetupBuilder<?>> implements
+		ITreeSetupConvenience<ITreeSetupBuilder<?>> {
+
+	@Override
+	public ITreeSetupBuilder<?> multiSelection() {
+		return getBuilder().setSelectionPolicy(SelectionPolicy.MULTI_SELECTION);
+	}
+
+	@Override
+	public ITreeSetupBuilder<?> singleSelection() {
+		return getBuilder().setSelectionPolicy(SelectionPolicy.SINGLE_SELECTION);
+	}
 
 }

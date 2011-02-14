@@ -25,14 +25,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.blueprint.builder;
+package org.jowidgets.api.widgets.blueprint.builder.convenience;
 
-import org.jowidgets.api.widgets.blueprint.builder.convenience.ITreeSetupConvenience;
-import org.jowidgets.common.widgets.builder.ITreeSetupBuilderCommon;
 
-public interface ITreeSetupBuilder<INSTANCE_TYPE extends ITreeSetupBuilder<?>> extends
-		IComponentSetupBuilder<INSTANCE_TYPE>,
-		ITreeSetupBuilderCommon<INSTANCE_TYPE>,
-		ITreeSetupConvenience<INSTANCE_TYPE> {
+public interface ITreeSetupConvenience<INSTANCE_TYPE> {
+
+	INSTANCE_TYPE multiSelection();
+
+	INSTANCE_TYPE singleSelection();
 
 }

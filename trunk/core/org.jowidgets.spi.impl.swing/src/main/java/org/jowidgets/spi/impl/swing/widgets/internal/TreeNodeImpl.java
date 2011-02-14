@@ -33,7 +33,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
@@ -136,10 +135,12 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 		final TreePath rootPath = new TreePath(parentTree.getMutableRootNode());
 		final TreePath thisPath = new TreePath(node);
 		final Enumeration<TreePath> expandedPaths = parentTree.getTree().getExpandedDescendants(rootPath);
-		while (expandedPaths.hasMoreElements()) {
-			final TreePath expandedPath = expandedPaths.nextElement();
-			if (expandedPath.isDescendant(thisPath)) {
-				return true;
+		if (expandedPaths != null) {
+			while (expandedPaths.hasMoreElements()) {
+				final TreePath expandedPath = expandedPaths.nextElement();
+				if (expandedPath.isDescendant(thisPath)) {
+					return true;
+				}
 			}
 		}
 		return false;
@@ -147,7 +148,7 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 
 	@Override
 	public void setSelected(final boolean selected) {
-		parentTree.getTree().setSelectionPath(new TreePath(node.getPath()));
+		parentTree.getTree().addSelectionPath(new TreePath(node.getPath()));
 	}
 
 	@Override
@@ -205,9 +206,9 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 	@Override
 	public void removeNode(final int index) {
 		final TreeNode child = node.getChildAt(index);
-		parentTree.getTreeModel().removeNodeFromParent((MutableTreeNode) child);
+		parentTree.getTreeModel().removeNodeFromParent((JoTreeNode) child);
 		if (child != null) {
-			parentTree.unRegisterItem(child);
+			parentTree.unRegisterItem((JoTreeNode) child);
 		}
 	}
 
