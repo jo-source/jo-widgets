@@ -46,8 +46,8 @@ public class MenuModel extends AbstractItemModelWrapper implements IMenuModel {
 		this(builder());
 	}
 
-	public MenuModel(final String id) {
-		this(builder().setId(id));
+	public MenuModel(final String text) {
+		this(builder().setText(text));
 	}
 
 	public MenuModel(final String text, final IImageConstant icon) {

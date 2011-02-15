@@ -129,7 +129,6 @@ public class DemoMenuFrame extends JoFrame {
 		final IPopupMenu popupMenu = composite.createPopupMenu();
 		popupMenu.setModel(menuModel);
 		composite.addPopupDetectionListener(new IPopupDetectionListener() {
-
 			@Override
 			public void popupDetected(final Position position) {
 				popupMenu.show(position);
@@ -206,17 +205,18 @@ public class DemoMenuFrame extends JoFrame {
 
 	private MenuModel createMenuModel() {
 
-		final MenuModel menu = new MenuModel();
-		menu.setText("Menu1");
+		final MenuModel menu = new MenuModel("Menu1");
 		menu.setMnemonic('n');
 
-		final MenuModel subMenu = new MenuModel(MenuModel.builder().setText("sub menu 1").setMnemonic('e'));
+		final MenuModel subMenu = new MenuModel("sub menu 1");
+		subMenu.setMnemonic('e');
 		menu.addItem(subMenu);
 
 		subMenu.addItem(new ActionItemModel("sub item1"));
 		subMenu.addItem(new ActionItemModel("sub item2"));
 
-		final MenuModel subMenu2 = new MenuModel(MenuModel.builder().setText("sub menu 2").setMnemonic('n'));
+		final MenuModel subMenu2 = new MenuModel("sub menu 2");
+		subMenu2.setMnemonic('n');
 		subMenu2.addItem(new ActionItemModel("sub item1"));
 		subMenu2.addItem(new ActionItemModel("sub item2"));
 		subMenu2.addItem(new ActionItemModel("sub item3"));
@@ -232,10 +232,9 @@ public class DemoMenuFrame extends JoFrame {
 		menu.addAction(action2);
 
 		final IActionItemModelBuilder item2Builder = ActionItemModel.builder().setText("The Third Item");
-		item2Builder.setToolTipText("This is the third item");
-		item2Builder.setIcon(IconsSmall.WARNING).setAccelerator(new Accelerator('I', Modifier.SHIFT)).setMnemonic('e');
+		item2Builder.setToolTipText("This is the third item").setIcon(IconsSmall.WARNING);
+		item2Builder.setAccelerator(new Accelerator('I', Modifier.SHIFT)).setMnemonic('e');
 		final IActionItemModel item3 = new ActionItemModel(item2Builder);
-
 		menu.addItem(1, item3);
 
 		menu.addSeparator();
