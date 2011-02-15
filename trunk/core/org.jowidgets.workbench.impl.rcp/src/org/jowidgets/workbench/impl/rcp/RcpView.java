@@ -26,40 +26,60 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.impl.rcp.internal.part;
+package org.jowidgets.workbench.impl.rcp;
 
-public final class SingleViewContainerContext implements IViewContainerContext {
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.workbench.api.IView;
+import org.jowidgets.workbench.api.IViewContext;
+
+public final class RcpView implements IView {
 
 	private final String viewId;
-	private final boolean closeable;
-	private final boolean detachable;
-	private final boolean rcpView;
 
-	public SingleViewContainerContext(
-		final String viewId,
-		final boolean closeable,
-		final boolean detachable,
-		final boolean rcpView) {
+	public RcpView(final String viewId) {
 		this.viewId = viewId;
-		this.closeable = closeable;
-		this.detachable = detachable;
-		this.rcpView = rcpView;
 	}
 
-	public String getViewId() {
+	@Override
+	public String getLabel() {
+		return null;
+	}
+
+	@Override
+	public String getTooltip() {
+		return null;
+	}
+
+	@Override
+	public IImageConstant getIcon() {
+		return null;
+	}
+
+	@Override
+	public void onActiveStateChanged(final boolean active) {}
+
+	@Override
+	public void onVisibleStateChanged(final boolean visible) {}
+
+	@Override
+	public void onClose() {}
+
+	@Override
+	public String getId() {
 		return viewId;
 	}
 
-	public boolean isCloseable() {
-		return closeable;
+	@Override
+	public void initialize(final IViewContext context) {}
+
+	@Override
+	public boolean hasMenu() {
+		return false;
 	}
 
-	public boolean isDetachable() {
-		return detachable;
-	}
-
-	public boolean isRcpView() {
-		return rcpView;
+	@Override
+	public boolean hasToolBar() {
+		return false;
 	}
 
 }

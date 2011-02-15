@@ -42,6 +42,7 @@ import org.jowidgets.workbench.api.ISplitViewContainer;
 import org.jowidgets.workbench.api.ITabViewContainer;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContainer;
+import org.jowidgets.workbench.impl.rcp.RcpView;
 
 public final class PartRegistry {
 
@@ -120,8 +121,18 @@ public final class PartRegistry {
 
 	private SingleViewContainerContext registerView(final String perspectiveId, final ISingleViewContainer viewContainer) {
 		final IView view = viewContainer.createView();
-		final String viewId = perspectiveId + "." + view.getId();
-		viewMap.put(viewId, view);
-		return new SingleViewContainerContext(viewId, viewContainer.isCloseable(), viewContainer.isDetachable());
+		final String viewId;
+		if (view instanceof RcpView) {
+			viewId = view.getId();
+		}
+		else {
+			viewId = perspectiveId + "." + view.getId();
+			viewMap.put(viewId, view);
+		}
+		return new SingleViewContainerContext(
+			viewId,
+			viewContainer.isCloseable(),
+			viewContainer.isDetachable(),
+			view instanceof RcpView);
 	}
 }

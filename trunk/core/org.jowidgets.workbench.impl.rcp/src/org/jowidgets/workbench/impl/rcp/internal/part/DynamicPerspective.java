@@ -101,7 +101,13 @@ public final class DynamicPerspective implements IPerspectiveFactory {
 		final String folderId = tabViewContainerContext.getFolderId();
 		final IFolderLayout folder = layout.createFolder(folderId, relation, ratio, relativeTo);
 		for (final SingleViewContainerContext viewContainerContext : tabViewContainerContext) {
-			final String viewId = DynamicView.ID + ":" + viewContainerContext.getViewId();
+			final String viewId;
+			if (viewContainerContext.isRcpView()) {
+				viewId = viewContainerContext.getViewId();
+			}
+			else {
+				viewId = DynamicView.ID + ":" + viewContainerContext.getViewId();
+			}
 			folder.addView(viewId);
 			layout.getViewLayout(viewId).setCloseable(viewContainerContext.isCloseable());
 			layout.getViewLayout(viewId).setMoveable(viewContainerContext.isDetachable());
@@ -133,7 +139,13 @@ public final class DynamicPerspective implements IPerspectiveFactory {
 		final int relation,
 		final float ratio,
 		final String relativeTo) {
-		final String viewId = DynamicView.ID + ":" + viewContainerContext.getViewId();
+		final String viewId;
+		if (viewContainerContext.isRcpView()) {
+			viewId = viewContainerContext.getViewId();
+		}
+		else {
+			viewId = DynamicView.ID + ":" + viewContainerContext.getViewId();
+		}
 		layout.addView(viewId, relation, ratio, relativeTo);
 		layout.getViewLayout(viewId).setCloseable(viewContainerContext.isCloseable());
 		layout.getViewLayout(viewId).setMoveable(viewContainerContext.isDetachable());
