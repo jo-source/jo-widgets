@@ -33,6 +33,6 @@ public interface ISingleViewContainer extends IViewContainer {
 
 	boolean isDetachable();
 
-	boolean isClosable();
+	boolean isCloseable();
 
 }

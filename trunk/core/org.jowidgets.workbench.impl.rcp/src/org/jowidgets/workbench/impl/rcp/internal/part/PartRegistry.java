@@ -33,6 +33,7 @@ import java.util.Map;
 
 import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IPerspectiveRegistry;
+import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.jowidgets.workbench.api.IPerspective;
@@ -86,6 +87,11 @@ public final class PartRegistry {
 		}
 		final IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 		activePage.setPerspective(newPerspective);
+		// initialize views to update view titles from view model
+		final IViewReference[] viewReferences = activePage.getViewReferences();
+		for (final IViewReference viewReference : viewReferences) {
+			viewReference.getView(true);
+		}
 	}
 
 	private IViewContainerContext registerViews(final String perspectiveId, final IViewContainer viewContainer) {
@@ -101,21 +107,21 @@ public final class PartRegistry {
 			final ITabViewContainer viewListContainer = (ITabViewContainer) viewContainer;
 			final TabViewContainerContext context = new TabViewContainerContext(perspectiveId + "." + viewListContainer.getId());
 			for (final ISingleViewContainer singleViewContainer : viewListContainer.createViews()) {
-				context.add(registerView(perspectiveId, singleViewContainer.createView()));
+				context.add(registerView(perspectiveId, singleViewContainer));
 			}
 			return context;
 		}
 		if (viewContainer instanceof ISingleViewContainer) {
 			final ISingleViewContainer singleViewContainer = (ISingleViewContainer) viewContainer;
-			return registerView(perspectiveId, singleViewContainer.createView());
+			return registerView(perspectiveId, singleViewContainer);
 		}
 		throw new IllegalArgumentException("unknown view container type");
 	}
 
-	private SingleViewContainerContext registerView(final String perspectiveId, final IView view) {
+	private SingleViewContainerContext registerView(final String perspectiveId, final ISingleViewContainer viewContainer) {
+		final IView view = viewContainer.createView();
 		final String viewId = perspectiveId + "." + view.getId();
 		viewMap.put(viewId, view);
-		return new SingleViewContainerContext(viewId);
+		return new SingleViewContainerContext(viewId, viewContainer.isCloseable(), viewContainer.isDetachable());
 	}
-
 }

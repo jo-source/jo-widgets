@@ -34,7 +34,7 @@ import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IViewContext;
 
-public class ViewContext implements IViewContext {
+public final class ViewContext implements IViewContext {
 
 	private final IContainer container;
 

@@ -31,6 +31,7 @@ package org.jowidgets.workbench.impl.rcp.internal.part;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IViewSite;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PlatformUI;
@@ -41,14 +42,16 @@ import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.impl.rcp.internal.ImageHelper;
 import org.jowidgets.workbench.impl.rcp.internal.ViewContext;
 
-public final class DynamicView extends ViewPart {
+public final class DynamicView extends ViewPart implements IPartListener2 {
 
 	public static final String ID = "org.jowidgets.workbench.impl.rcp.internal.part.dynamicView"; //$NON-NLS-1$
+
+	private IView view;
 
 	@Override
 	public void createPartControl(final Composite parent) {
 		final String viewId = ((IViewSite) getSite()).getSecondaryId();
-		final IView view = PartRegistry.getInstance().getView(viewId);
+		view = PartRegistry.getInstance().getView(viewId);
 		setPartName(view.getLabel());
 		setTitleImage(ImageHelper.getImage(view.getIcon(), null));
 		setTitleToolTip(view.getTooltip());
@@ -56,13 +59,17 @@ public final class DynamicView extends ViewPart {
 		final IComposite composite = Toolkit.getWidgetWrapperFactory().createComposite(parent);
 		final ViewContext viewContext = new ViewContext(composite);
 
+		// lazy initialization of view content
 		getViewSite().getPage().addPartListener(new IPartListener2() {
 			@Override
 			public void partVisible(final IWorkbenchPartReference partRef) {
 				final IWorkbenchPart part = partRef.getPart(false);
 				if (part == DynamicView.this) {
 					view.initialize(viewContext);
-					getViewSite().getPage().removePartListener(this);
+					final IWorkbenchPage page = getViewSite().getPage();
+					page.removePartListener(this);
+					view.onVisibleStateChanged(true);
+					page.addPartListener(DynamicView.this);
 				}
 			}
 
@@ -73,7 +80,10 @@ public final class DynamicView extends ViewPart {
 				if (part == DynamicView.this
 					&& part.getSite().getShell() != PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell()) {
 					view.initialize(viewContext);
-					getViewSite().getPage().removePartListener(this);
+					final IWorkbenchPage page = getViewSite().getPage();
+					page.removePartListener(this);
+					view.onVisibleStateChanged(true);
+					page.addPartListener(DynamicView.this);
 				}
 			}
 
@@ -95,58 +105,56 @@ public final class DynamicView extends ViewPart {
 			@Override
 			public void partActivated(final IWorkbenchPartReference partRef) {}
 		});
-
-		getViewSite().getPage().addPartListener(new IPartListener2() {
-			@Override
-			public void partActivated(final IWorkbenchPartReference partRef) {
-				final IWorkbenchPart part = partRef.getPart(false);
-				if (part == DynamicView.this) {
-					view.onActiveStateChanged(true);
-				}
-			}
-
-			@Override
-			public void partDeactivated(final IWorkbenchPartReference partRef) {
-				final IWorkbenchPart part = partRef.getPart(false);
-				if (part == DynamicView.this) {
-					view.onActiveStateChanged(false);
-				}
-			}
-
-			@Override
-			public void partVisible(final IWorkbenchPartReference partRef) {
-				final IWorkbenchPart part = partRef.getPart(false);
-				if (part == DynamicView.this) {
-					view.onVisibleStateChanged(true);
-				}
-			}
-
-			@Override
-			public void partHidden(final IWorkbenchPartReference partRef) {
-				final IWorkbenchPart part = partRef.getPart(false);
-				if (part == DynamicView.this) {
-					view.onVisibleStateChanged(false);
-				}
-			}
-
-			@Override
-			public void partClosed(final IWorkbenchPartReference partRef) {
-				final IWorkbenchPart part = partRef.getPart(false);
-				if (part == DynamicView.this) {
-					view.onClose();
-				}
-			}
-
-			@Override
-			public void partBroughtToTop(final IWorkbenchPartReference partRef) {}
-
-			@Override
-			public void partOpened(final IWorkbenchPartReference partRef) {}
-
-			@Override
-			public void partInputChanged(final IWorkbenchPartReference partRef) {}
-		});
 	}
+
+	@Override
+	public void partActivated(final IWorkbenchPartReference partRef) {
+		final IWorkbenchPart part = partRef.getPart(false);
+		if (part == this) {
+			view.onActiveStateChanged(true);
+		}
+	}
+
+	@Override
+	public void partDeactivated(final IWorkbenchPartReference partRef) {
+		final IWorkbenchPart part = partRef.getPart(false);
+		if (part == this) {
+			view.onActiveStateChanged(false);
+		}
+	}
+
+	@Override
+	public void partVisible(final IWorkbenchPartReference partRef) {
+		final IWorkbenchPart part = partRef.getPart(false);
+		if (part == this) {
+			view.onVisibleStateChanged(true);
+		}
+	}
+
+	@Override
+	public void partHidden(final IWorkbenchPartReference partRef) {
+		final IWorkbenchPart part = partRef.getPart(false);
+		if (part == this) {
+			view.onVisibleStateChanged(false);
+		}
+	}
+
+	@Override
+	public void partClosed(final IWorkbenchPartReference partRef) {
+		final IWorkbenchPart part = partRef.getPart(false);
+		if (part == this) {
+			view.onClose();
+		}
+	}
+
+	@Override
+	public void partBroughtToTop(final IWorkbenchPartReference partRef) {}
+
+	@Override
+	public void partOpened(final IWorkbenchPartReference partRef) {}
+
+	@Override
+	public void partInputChanged(final IWorkbenchPartReference partRef) {}
 
 	@Override
 	public void setFocus() {}

@@ -31,13 +31,25 @@ package org.jowidgets.workbench.impl.rcp.internal.part;
 public final class SingleViewContainerContext implements IViewContainerContext {
 
 	private final String viewId;
+	private final boolean closeable;
+	private final boolean detachable;
 
-	public SingleViewContainerContext(final String viewId) {
+	public SingleViewContainerContext(final String viewId, final boolean closeable, final boolean detachable) {
 		this.viewId = viewId;
+		this.closeable = closeable;
+		this.detachable = detachable;
 	}
 
 	public String getViewId() {
 		return viewId;
+	}
+
+	public boolean isCloseable() {
+		return closeable;
+	}
+
+	public boolean isDetachable() {
+		return detachable;
 	}
 
 }
