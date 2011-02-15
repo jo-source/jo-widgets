@@ -95,6 +95,10 @@ public final class WorkbenchApplicationContext implements IWorkbenchApplicationC
 		return childContexts.toArray(new ComponentTreeNodeContext[0]);
 	}
 
+	public String getId() {
+		return application.getId();
+	}
+
 	@Override
 	public IWorkbenchContext getWorkbenchContext() {
 		return workbenchContext;

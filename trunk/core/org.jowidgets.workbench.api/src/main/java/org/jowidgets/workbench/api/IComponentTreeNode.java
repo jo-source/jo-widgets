@@ -31,6 +31,8 @@ import java.util.List;
 
 public interface IComponentTreeNode extends IUiPart {
 
+	String getId();
+
 	void initialize(IComponentTreeNodeContext context);
 
 	IComponent createComponent();

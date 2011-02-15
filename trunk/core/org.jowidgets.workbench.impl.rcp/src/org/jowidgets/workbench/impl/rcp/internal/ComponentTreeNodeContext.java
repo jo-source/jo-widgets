@@ -46,8 +46,8 @@ import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 
 public final class ComponentTreeNodeContext implements IComponentTreeNodeContext, IUiPart {
 
-	private final IWorkbenchApplicationContext applicationContext;
-	private final IComponentTreeNodeContext parentContext;
+	private final WorkbenchApplicationContext applicationContext;
+	private final ComponentTreeNodeContext parentContext;
 	private final IComponentTreeNode treeNode;
 	private final WorkbenchApplicationTree tree;
 	private IPopupMenu menu;
@@ -56,8 +56,8 @@ public final class ComponentTreeNodeContext implements IComponentTreeNodeContext
 	private AtomicReference<ComponentContext> componentContextReference;
 
 	public ComponentTreeNodeContext(
-		final IWorkbenchApplicationContext applicationContext,
-		final IComponentTreeNodeContext parentContext,
+		final WorkbenchApplicationContext applicationContext,
+		final ComponentTreeNodeContext parentContext,
 		final IComponentTreeNode treeNode,
 		final WorkbenchApplicationTree tree) {
 		this.applicationContext = applicationContext;
@@ -125,6 +125,13 @@ public final class ComponentTreeNodeContext implements IComponentTreeNodeContext
 			componentContextReference = new AtomicReference<ComponentContext>(componentContext);
 		}
 		return componentContextReference.get();
+	}
+
+	public String getQualifiedId() {
+		if (parentContext != null) {
+			return parentContext.getQualifiedId() + "." + treeNode.getId();
+		}
+		return applicationContext.getId() + "." + treeNode.getId();
 	}
 
 	@Override

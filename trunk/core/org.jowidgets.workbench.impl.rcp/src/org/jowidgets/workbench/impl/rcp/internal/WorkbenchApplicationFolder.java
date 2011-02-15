@@ -92,8 +92,8 @@ public final class WorkbenchApplicationFolder extends Composite {
 				currentApplication = (IWorkbenchApplication) currentItem.getData();
 				currentApplication.onVisibleStateChanged(true);
 				currentApplication.onActiveStateChanged(true);
-				if (activeTree != null && activeTree.hasPerspective()) {
-					appTree.showPerspective();
+				if (activeTree != null && activeTree.isPerspectiveSelected()) {
+					appTree.showSelectedPerspective();
 				}
 				activeTree = appTree;
 			}

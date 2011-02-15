@@ -132,7 +132,13 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		}
 
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-		frame.setLayout(new MigLayoutDescriptor("0[grow]0", "0[][grow][]0"));
+		frame.setLayout(new MigLayoutDescriptor("0[grow]0", "0[]0" + (workbench.hasToolBar() ? "[]" : "") + "[grow][]0"));
+
+		// dummy coolbar control
+		final Control coolBar = getWindowConfigurer().createCoolBarControl(shell);
+		coolBar.setEnabled(false);
+		coolBar.setVisible(false);
+		coolBar.setLayoutData("wrap");
 
 		if (workbench.hasToolBar()) {
 			toolBar = frame.add(bpf.toolBar(), "wrap");

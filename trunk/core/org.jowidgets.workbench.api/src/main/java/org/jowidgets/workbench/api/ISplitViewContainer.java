@@ -39,7 +39,7 @@ public interface ISplitViewContainer extends IViewContainer {
 	double getWeight();
 
 	/**
-	 * @return The resize policy (this is a hint and may not work on all platforms)
+	 * @return the resize policy (this is a hint and may not work on all platforms)
 	 */
 	SplitResizePolicy getResizePolicy();
 

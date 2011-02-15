@@ -5,8 +5,8 @@
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
-            class="org.jowidgets.workbench.impl.rcp.internal.DynamicPerspective"
-            id="org.jowidgets.workbench.impl.rcp.internal.dynamicPerspective"
+            class="org.jowidgets.workbench.impl.rcp.internal.part.DynamicPerspective"
+            id="org.jowidgets.workbench.impl.rcp.internal.part.dynamicPerspective"
             name="Dynamic Perspective">
       </perspective>
    </extension>
@@ -14,8 +14,8 @@
          point="org.eclipse.ui.views">
       <view
             allowMultiple="true"
-            class="org.jowidgets.workbench.impl.rcp.internal.DynamicView"
-            id="org.jowidgets.workbench.impl.rcp.internal.dynamicView"
+            class="org.jowidgets.workbench.impl.rcp.internal.part.DynamicView"
+            id="org.jowidgets.workbench.impl.rcp.internal.part.dynamicView"
             name="Dynamic View"
             restorable="true">
       </view>

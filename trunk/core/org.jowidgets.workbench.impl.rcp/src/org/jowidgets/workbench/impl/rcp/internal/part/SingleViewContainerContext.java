@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, M. Grossmann, H. Westphal
+ * Copyright (c) 2011, M. Grossmann, M. Woelker, H. Westphal
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -9,7 +9,7 @@
  * * Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * * Neither the name of the jo-widgets.org nor the
+ * * Neither the name of jo-widgets.org nor the
  *   names of its contributors may be used to endorse or promote products
  *   derived from this software without specific prior written permission.
  * 
@@ -25,12 +25,19 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.workbench.api;
 
-public interface IPerspective extends IUiPart {
+package org.jowidgets.workbench.impl.rcp.internal.part;
 
-	String getId();
+public final class SingleViewContainerContext implements IViewContainerContext {
 
-	IViewContainer getViewContainer();
+	private final String viewId;
+
+	public SingleViewContainerContext(final String viewId) {
+		this.viewId = viewId;
+	}
+
+	public String getViewId() {
+		return viewId;
+	}
 
 }

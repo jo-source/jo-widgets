@@ -35,7 +35,7 @@ import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 import org.jowidgets.workbench.api.IPerspective;
 
-public class ComponentContext implements IComponentContext {
+public final class ComponentContext implements IComponentContext {
 
 	private final IComponentTreeNodeContext componentTreeNodeContext;
 	private final IComponent component;

@@ -27,7 +27,9 @@
  */
 package org.jowidgets.workbench.api;
 
-public interface IView extends ILifecycleCallback {
+public interface IView extends ILifecycleCallback, IUiPart {
+
+	String getId();
 
 	void initialize(IViewContext context);
 

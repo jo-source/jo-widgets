@@ -45,10 +45,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Tree;
-import org.eclipse.ui.IPerspectiveDescriptor;
-import org.eclipse.ui.IPerspectiveRegistry;
 import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
@@ -63,6 +60,7 @@ import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 import org.jowidgets.workbench.api.IPerspective;
 import org.jowidgets.workbench.api.IUiPart;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
+import org.jowidgets.workbench.impl.rcp.internal.part.PartRegistry;
 
 public final class WorkbenchApplicationTree extends Composite {
 
@@ -71,6 +69,7 @@ public final class WorkbenchApplicationTree extends Composite {
 	private IPopupMenu menu;
 	private IToolBarPopupButton menuButton;
 	private TreeViewer treeViewer;
+	private String nodeId;
 	private AtomicReference<IPerspective> perspectiveReference;
 
 	public WorkbenchApplicationTree(final Composite parent, final IWorkbenchApplication application) {
@@ -193,11 +192,13 @@ public final class WorkbenchApplicationTree extends Composite {
 					if (componentContext != null) {
 						perspective = componentContext.getPerspective();
 					}
+					nodeId = context.getQualifiedId();
 					perspectiveReference = new AtomicReference<IPerspective>(perspective);
-					showPerspective();
+					showSelectedPerspective();
 				}
 				else {
-					clearPerspective();
+					perspectiveReference = null;
+					PartRegistry.getInstance().showEmptyPerspective();
 				}
 			}
 		});
@@ -207,33 +208,20 @@ public final class WorkbenchApplicationTree extends Composite {
 		treeViewer.setInput(applicationContext);
 	}
 
-	public void showPerspective() {
+	public void showSelectedPerspective() {
 		if (perspectiveReference != null) {
 			final IPerspective perspective = perspectiveReference.get();
 			if (perspective == null) {
-				showEmptyPerspective();
+				PartRegistry.getInstance().showEmptyPerspective();
 			}
 			else {
-				System.err.println("Showing perspective " + perspective);
+				PartRegistry.getInstance().showPerspective(nodeId, perspective);
 			}
 		}
 	}
 
-	public boolean hasPerspective() {
+	public boolean isPerspectiveSelected() {
 		return perspectiveReference != null;
-	}
-
-	private void clearPerspective() {
-		perspectiveReference = null;
-		showEmptyPerspective();
-	}
-
-	private void showEmptyPerspective() {
-		final IPerspectiveRegistry perspectiveRegistry = PlatformUI.getWorkbench().getPerspectiveRegistry();
-		final IPerspectiveDescriptor perspectiveDescriptor = perspectiveRegistry.findPerspectiveWithId(DynamicPerspective.ID);
-		final IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-		activePage.setPerspective(perspectiveDescriptor);
-		perspectiveRegistry.setDefaultPerspective(DynamicPerspective.ID);
 	}
 
 	public void refresh(final Object object) {

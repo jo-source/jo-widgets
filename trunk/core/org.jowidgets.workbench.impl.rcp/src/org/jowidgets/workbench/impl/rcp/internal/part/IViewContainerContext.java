@@ -25,15 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.workbench.impl.rcp.internal;
 
-import org.eclipse.ui.IPageLayout;
-import org.eclipse.ui.IPerspectiveFactory;
+package org.jowidgets.workbench.impl.rcp.internal.part;
 
-public final class DynamicPerspective implements IPerspectiveFactory {
-	public static final String ID = "org.jowidgets.workbench.impl.rcp.internal.dynamicPerspective"; //$NON-NLS-1$
-
-	@Override
-	public void createInitialLayout(final IPageLayout layout) {}
-
-}
+public interface IViewContainerContext {}

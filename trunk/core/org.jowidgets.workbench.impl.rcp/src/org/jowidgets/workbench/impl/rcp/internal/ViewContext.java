@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, M. Grossmann, H. Westphal
+ * Copyright (c) 2011, M. Grossmann, M. Woelker, H. Westphal
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -9,7 +9,7 @@
  * * Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * * Neither the name of the jo-widgets.org nor the
+ * * Neither the name of jo-widgets.org nor the
  *   names of its contributors may be used to endorse or promote products
  *   derived from this software without specific prior written permission.
  * 
@@ -25,12 +25,44 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.workbench.api;
 
-public interface IPerspective extends IUiPart {
+package org.jowidgets.workbench.impl.rcp.internal;
 
-	String getId();
+import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IMenu;
+import org.jowidgets.api.widgets.IToolBar;
+import org.jowidgets.workbench.api.IComponentContext;
+import org.jowidgets.workbench.api.IViewContext;
 
-	IViewContainer getViewContainer();
+public class ViewContext implements IViewContext {
+
+	private final IContainer container;
+
+	public ViewContext(final IContainer container) {
+		this.container = container;
+	}
+
+	@Override
+	public IComponentContext getComponentContext() {
+		return null;
+	}
+
+	@Override
+	public IContainer getContainer() {
+		return container;
+	}
+
+	@Override
+	public IMenu getMenu() {
+		return null;
+	}
+
+	@Override
+	public void setMenuTooltip(final String tooltip) {}
+
+	@Override
+	public IToolBar getToolBar() {
+		return null;
+	}
 
 }
