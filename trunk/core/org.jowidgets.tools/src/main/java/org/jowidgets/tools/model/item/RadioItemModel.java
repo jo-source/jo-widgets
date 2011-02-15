@@ -39,8 +39,8 @@ public class RadioItemModel extends AbstractSelectableItemModelWrapper implement
 		this(builder());
 	}
 
-	public RadioItemModel(final String id) {
-		this(builder().setId(id));
+	public RadioItemModel(final String text) {
+		this(builder().setText(text));
 	}
 
 	public RadioItemModel(final String text, final IImageConstant icon) {

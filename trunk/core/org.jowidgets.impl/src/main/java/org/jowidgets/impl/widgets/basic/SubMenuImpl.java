@@ -47,7 +47,7 @@ import org.jowidgets.impl.widgets.common.wrapper.MenuItemSpiWrapper;
 import org.jowidgets.impl.widgets.common.wrapper.invoker.MenuItemSpiInvoker;
 import org.jowidgets.spi.widgets.ISubMenuSpi;
 
-public class SubMenuImpl extends MenuItemSpiWrapper implements ISubMenu {
+public class SubMenuImpl extends MenuItemSpiWrapper implements ISubMenu, IDisposeable {
 
 	private final MenuDelegate menuDelegate;
 	private final IMenu parent;
@@ -140,6 +140,11 @@ public class SubMenuImpl extends MenuItemSpiWrapper implements ISubMenu {
 	public void setModel(final IMenuModel model) {
 		getItemDelegate().setModel(model);
 		menuDelegate.setModel(model);
+	}
+
+	@Override
+	public void dispose() {
+		menuDelegate.dispose();
 	}
 
 	@Override

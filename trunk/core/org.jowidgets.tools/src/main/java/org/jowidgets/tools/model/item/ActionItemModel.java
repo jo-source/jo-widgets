@@ -41,8 +41,8 @@ public class ActionItemModel extends AbstractItemModelWrapper implements IAction
 		this(builder());
 	}
 
-	public ActionItemModel(final String id) {
-		this(builder().setId(id));
+	public ActionItemModel(final String text) {
+		this(builder().setText(text));
 	}
 
 	public ActionItemModel(final IAction action) {

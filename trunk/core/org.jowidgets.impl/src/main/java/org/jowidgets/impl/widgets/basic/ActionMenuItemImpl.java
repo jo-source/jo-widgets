@@ -81,7 +81,7 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 			@Override
 			public void itemChanged() {
 				if (getModel().getAction() != action) {
-					setAction(action);
+					setActionValue(action);
 				}
 			}
 		};
@@ -123,26 +123,30 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 
 	@Override
 	public void setAction(final IAction action) {
-
-		if (action.getAccelerator() != null) {
-			setAccelerator(action.getAccelerator());
-		}
-
-		if (action.getMnemonic() != null) {
-			setMnemonic(action.getMnemonic().charValue());
-		}
-
-		//dispose the old sync if exists
-		disposeActionWidgetSync();
-
-		actionWidgetSync = new ActionWidgetSync(action, this);
-		actionExecuter = new ActionExecuter(action, this);
-
-		this.action = action;
-
+		setActionValue(action);
 		getModel().removeItemModelListener(modelListener);
 		getModel().setAction(action);
 		getModel().addItemModelListener(modelListener);
+	}
+
+	private void setActionValue(final IAction action) {
+		if (this.action != action) {
+			if (action.getAccelerator() != null) {
+				setAccelerator(action.getAccelerator());
+			}
+
+			if (action.getMnemonic() != null) {
+				setMnemonic(action.getMnemonic().charValue());
+			}
+
+			//dispose the old sync if exists
+			disposeActionWidgetSync();
+
+			actionWidgetSync = new ActionWidgetSync(action, this);
+			actionExecuter = new ActionExecuter(action, this);
+
+			this.action = action;
+		}
 	}
 
 	@Override
@@ -160,7 +164,7 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 	@Override
 	public void setModel(final IActionItemModel model) {
 		getItemDelegate().setModel(model);
-		setAction(model.getAction());
+		setActionValue(model.getAction());
 	}
 
 	@Override

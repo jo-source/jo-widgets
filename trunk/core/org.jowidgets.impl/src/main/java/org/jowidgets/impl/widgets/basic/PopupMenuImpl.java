@@ -44,7 +44,7 @@ import org.jowidgets.impl.widgets.common.wrapper.PopupMenuSpiWrapper;
 import org.jowidgets.impl.widgets.common.wrapper.invoker.PopupMenuSpiInvoker;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
-public class PopupMenuImpl extends PopupMenuSpiWrapper implements IPopupMenu {
+public class PopupMenuImpl extends PopupMenuSpiWrapper implements IPopupMenu, IDisposeable {
 
 	private final MenuDelegate menuDelegate;
 	private final IComponent parent;
@@ -112,6 +112,11 @@ public class PopupMenuImpl extends PopupMenuSpiWrapper implements IPopupMenu {
 	public void setModel(final IMenuModel model) {
 		getItemDelegate().setModel(model);
 		menuDelegate.setModel(model);
+	}
+
+	@Override
+	public void dispose() {
+		menuDelegate.dispose();
 	}
 
 	@Override

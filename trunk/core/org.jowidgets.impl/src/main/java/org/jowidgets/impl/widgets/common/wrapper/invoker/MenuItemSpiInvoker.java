@@ -63,7 +63,9 @@ public class MenuItemSpiInvoker implements IItemSpiInvoker {
 
 	@Override
 	public void setMnemonic(final Character mnemonic) {
-		item.setMnemonic(mnemonic);
+		if (mnemonic != null) {
+			item.setMnemonic(mnemonic);
+		}
 	}
 
 	@Override

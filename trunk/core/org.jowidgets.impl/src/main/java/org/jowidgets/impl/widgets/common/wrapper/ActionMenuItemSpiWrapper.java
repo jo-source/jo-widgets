@@ -37,8 +37,14 @@ import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 
 public class ActionMenuItemSpiWrapper extends MenuItemSpiWrapper implements IActionMenuItemCommon {
 
-	public ActionMenuItemSpiWrapper(final IActionMenuItemSpi component, final ItemDelegate itemDelegate) {
-		super(component, itemDelegate);
+	public ActionMenuItemSpiWrapper(final IActionMenuItemSpi widget, final ItemDelegate itemDelegate) {
+		super(widget, itemDelegate);
+		widget.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				getModel().actionPerformed();
+			}
+		});
 	}
 
 	@Override

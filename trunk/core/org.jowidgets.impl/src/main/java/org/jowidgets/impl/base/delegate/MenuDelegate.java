@@ -32,13 +32,20 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.model.item.IActionItemModel;
+import org.jowidgets.api.model.item.ICheckedItemModel;
+import org.jowidgets.api.model.item.IItemModel;
 import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.api.model.item.IMenuModelListener;
+import org.jowidgets.api.model.item.IRadioItemModel;
+import org.jowidgets.api.model.item.ISeparatorItemModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IActionMenuItem;
 import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.IMenuItem;
 import org.jowidgets.api.widgets.ISelectableMenuItem;
 import org.jowidgets.api.widgets.ISubMenu;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.IActionMenuItemDescriptor;
 import org.jowidgets.api.widgets.descriptor.ICheckedMenuItemDescriptor;
 import org.jowidgets.api.widgets.descriptor.IRadioMenuItemDescriptor;
@@ -63,36 +70,58 @@ import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 import org.jowidgets.spi.widgets.ISubMenuSpi;
 import org.jowidgets.util.Assert;
 
-public class MenuDelegate {
+public class MenuDelegate implements IDisposeable {
 
 	private final IMenuSpi menuSpi;
 	private final IMenu menu;
 	private final List<IMenuItem> children;
+	private final IMenuModelListener menuModelListener;
+
 	private IMenuModel model;
 
 	public MenuDelegate(final IMenu menu, final IMenuSpi menuSpi, final IMenuModel model) {
 		Assert.paramNotNull(menu, "menu");
 		Assert.paramNotNull(menuSpi, "menuSpi");
+
 		this.children = new LinkedList<IMenuItem>();
 		this.menu = menu;
 		this.menuSpi = menuSpi;
-		this.model = model;
+
+		this.menuModelListener = new IMenuModelListener() {
+
+			@Override
+			public void childRemoved(final int index) {
+				removeItem(index);
+			}
+
+			@Override
+			public void childAdded(final int index) {
+				final IItemModel addedModel = getModel().getChildren().get(index);
+				addChild(index, addedModel);
+			}
+		};
+
+		setModel(model);
 	}
 
 	public IMenuItem addSeparator() {
 		final IMenuItem result = new SeparatorMenuItemImpl(menu, menuSpi.addSeparator(null));
 		children.add(result);
+		addToModel(getModel().getChildren().size(), result);
 		return result;
 	}
 
 	public IMenuItem addSeparator(final int index) {
 		final IMenuItem result = new SeparatorMenuItemImpl(menu, menuSpi.addSeparator(index));
 		children.add(index, result);
+		addToModel(index, result);
 		return result;
 	}
 
 	public <WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addMenuItem(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
-		return addMenuItem(null, descriptor);
+		final WIDGET_TYPE result = addMenuItemInternal(null, descriptor);
+		addToModel(getModel().getChildren().size(), result);
+		return result;
 	}
 
 	public <WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addMenuItem(
@@ -103,11 +132,13 @@ public class MenuDelegate {
 			throw new IllegalArgumentException("Index must be between '0' and '" + children.size() + "'.");
 		}
 
-		return addMenuItem(Integer.valueOf(index), descriptor);
+		final WIDGET_TYPE result = addMenuItemInternal(Integer.valueOf(index), descriptor);
+		addToModel(index, result);
+		return result;
 	}
 
 	@SuppressWarnings("unchecked")
-	private <WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addMenuItem(
+	private <WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addMenuItemInternal(
 		final Integer index,
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
 
@@ -175,6 +206,36 @@ public class MenuDelegate {
 		}
 	}
 
+	private void addToModel(final Integer index, final IMenuItem menuItem) {
+		model.removeMenuModelListener(menuModelListener);
+		if (index != null) {
+			getModel().addItem(index.intValue(), menuItem.getModel());
+		}
+		else {
+			getModel().addItem(menuItem.getModel());
+		}
+		model.addMenuModelListener(menuModelListener);
+	}
+
+	private void addChild(final int index, final IItemModel model) {
+		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+		if (model instanceof IRadioItemModel) {
+			addMenuItemInternal(index, bpf.radioMenuItem()).setModel(model);
+		}
+		else if (model instanceof ICheckedItemModel) {
+			addMenuItemInternal(index, bpf.checkedMenuItem()).setModel(model);
+		}
+		else if (model instanceof IActionItemModel) {
+			addMenuItemInternal(index, bpf.menuItem()).setModel(model);
+		}
+		else if (model instanceof IMenuModel) {
+			addMenuItemInternal(index, bpf.subMenu()).setModel(model);
+		}
+		else if (model instanceof ISeparatorItemModel) {
+			addMenuItemInternal(index, bpf.menuSeparator()).setModel(model);
+		}
+	}
+
 	public List<IMenuItem> getChildren() {
 		return new LinkedList<IMenuItem>(children);
 	}
@@ -184,17 +245,21 @@ public class MenuDelegate {
 
 		final int index = children.indexOf(item);
 		if (index != -1) {
-			if (item instanceof IDisposeable) {
-				((IDisposeable) item).dispose();
-			}
-			children.remove(index);
-			menuSpi.remove(index);
+			removeItem(index);
 			return true;
 		}
 		else {
 			return false;
 		}
+	}
 
+	public void removeItem(final int index) {
+		final IMenuItem item = children.get(index);
+		if (item instanceof IDisposeable) {
+			((IDisposeable) item).dispose();
+		}
+		children.remove(index);
+		menuSpi.remove(index);
 	}
 
 	public void removeAll() {
@@ -220,8 +285,22 @@ public class MenuDelegate {
 	}
 
 	public void setModel(final IMenuModel model) {
-		//TODO
+		if (this.model != null) {
+			this.model.removeMenuModelListener(menuModelListener);
+			removeAll();
+		}
 		this.model = model;
+		for (final IItemModel childModel : model.getChildren()) {
+			addChild(children.size(), childModel);
+		}
+
+		model.addMenuModelListener(menuModelListener);
+	}
+
+	@Override
+	public void dispose() {
+		this.model.removeMenuModelListener(menuModelListener);
+		removeAll();
 	}
 
 }

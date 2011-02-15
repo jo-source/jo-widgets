@@ -45,7 +45,7 @@ import org.jowidgets.impl.widgets.common.wrapper.MainMenuSpiWrapper;
 import org.jowidgets.impl.widgets.common.wrapper.invoker.MainMenuSpiInvoker;
 import org.jowidgets.spi.widgets.IMainMenuSpi;
 
-public class MainMenuImpl extends MainMenuSpiWrapper implements IMainMenu {
+public class MainMenuImpl extends MainMenuSpiWrapper implements IMainMenu, IDisposeable {
 
 	private final MenuDelegate menuDelegate;
 	private final IWidget parent;
@@ -112,14 +112,19 @@ public class MainMenuImpl extends MainMenuSpiWrapper implements IMainMenu {
 	}
 
 	@Override
-	public IMenuModel getModel() {
-		return (IMenuModel) getItemDelegate().getModel();
-	}
-
-	@Override
 	public void setModel(final IMenuModel model) {
 		getItemDelegate().setModel(model);
 		menuDelegate.setModel(model);
+	}
+
+	@Override
+	public void dispose() {
+		menuDelegate.dispose();
+	}
+
+	@Override
+	public IMenuModel getModel() {
+		return (IMenuModel) getItemDelegate().getModel();
 	}
 
 	@Override

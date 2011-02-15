@@ -53,7 +53,9 @@ public class MainMenuSpiInvoker implements IItemSpiInvoker {
 
 	@Override
 	public void setMnemonic(final Character mnemonic) {
-		item.setMnemonic(mnemonic);
+		if (mnemonic != null) {
+			item.setMnemonic(mnemonic);
+		}
 	}
 
 	@Override

@@ -37,8 +37,15 @@ import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 
 public class SelectableMenuItemSpiWrapper extends MenuItemSpiWrapper implements ISelectableMenuItemCommon {
 
-	public SelectableMenuItemSpiWrapper(final ISelectableMenuItemSpi component, final SelectableItemDelegate itemDelegate) {
-		super(component, itemDelegate);
+	public SelectableMenuItemSpiWrapper(final ISelectableMenuItemSpi widget, final SelectableItemDelegate itemDelegate) {
+		super(widget, itemDelegate);
+		widget.addItemListener(new IItemStateListener() {
+
+			@Override
+			public void itemStateChanged() {
+				getModel().setSelected(widget.isSelected());
+			}
+		});
 	}
 
 	@Override

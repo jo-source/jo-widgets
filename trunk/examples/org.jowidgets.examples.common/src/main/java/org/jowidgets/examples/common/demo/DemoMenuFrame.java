@@ -40,24 +40,20 @@ import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.IActionItemModelBuilder;
 import org.jowidgets.api.model.item.ICheckedItemModel;
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IRadioItemModel;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IActionMenuItem;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.IMenuBar;
 import org.jowidgets.api.widgets.IPopupMenu;
-import org.jowidgets.api.widgets.ISelectableMenuItem;
 import org.jowidgets.api.widgets.ISubMenu;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.IToolBarButton;
 import org.jowidgets.api.widgets.IToolBarContainerItem;
 import org.jowidgets.api.widgets.IToolBarPopupButton;
 import org.jowidgets.api.widgets.IToolBarToggleButton;
-import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
-import org.jowidgets.api.widgets.blueprint.ICheckedMenuItemBluePrint;
-import org.jowidgets.api.widgets.blueprint.IRadioMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarToggleButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Accelerator;
@@ -80,10 +76,12 @@ public class DemoMenuFrame extends JoFrame {
 
 	private ICommandAction action1;
 	private ICommandAction action2;
+	private final IMenuModel menuModel;
 
 	public DemoMenuFrame() {
 		super(bluePrint("Menu demo").autoPackOff());
 		createActions();
+		this.menuModel = createMenuModel();
 		createMainMenus();
 
 		setLayout(new MigLayoutDescriptor("0[grow]0", "0[][grow]0"));
@@ -93,7 +91,7 @@ public class DemoMenuFrame extends JoFrame {
 		final IToolBarPopupButton toolBarPopupButton = toolBar.addItem(BPF.toolBarPopupButton());
 		toolBarPopupButton.setAction(action1);
 		final IPopupMenu toolBarPopupMenu = toolBar.createPopupMenu();
-		addMenus(toolBarPopupMenu);
+		toolBarPopupMenu.setModel(menuModel);
 		toolBarPopupButton.addPopupDetectionListener(new IPopupDetectionListener() {
 			@Override
 			public void popupDetected(final Position position) {
@@ -129,7 +127,7 @@ public class DemoMenuFrame extends JoFrame {
 
 		final IComposite composite = add(BPF.composite().setBackgroundColor(Colors.WHITE), "growx, growy");
 		final IPopupMenu popupMenu = composite.createPopupMenu();
-		addMenus(popupMenu);
+		popupMenu.setModel(menuModel);
 		composite.addPopupDetectionListener(new IPopupDetectionListener() {
 
 			@Override
@@ -137,6 +135,14 @@ public class DemoMenuFrame extends JoFrame {
 				popupMenu.show(position);
 			}
 		});
+
+		menuModel.getChildren().get(5).setText("renamed in model");
+		((IMenuModel) ((IMenuModel) (menuModel.getChildren().get(0))).getChildren().get(2)).removeItem(3);
+
+		popupMenu.addSeparator();
+		final ISubMenu subMenu = popupMenu.addItem(BPF.subMenu("menu added to view"));
+		subMenu.addItem(BPF.checkedMenuItem("sub menu item 1 added to view"));
+		subMenu.addItem(BPF.checkedMenuItem("sub menu item 2 added to view"));
 	}
 
 	private void createActions() {
@@ -184,11 +190,11 @@ public class DemoMenuFrame extends JoFrame {
 	private void createMainMenus() {
 
 		final IMenuBar menuBar = createMenuBar();
-		final IMenu menu1 = menuBar.addMenu("Menu1", 'n');
-		addMenus(menu1);
+		final IMenu menu1 = menuBar.addMenu(Toolkit.getBluePrintFactory().mainMenu());
+		menu1.setModel(menuModel);
 
 		final IPopupMenu popupMenu = createPopupMenu();
-		addMenus(popupMenu);
+		popupMenu.setModel(menuModel);
 		addPopupDetectionListener(new IPopupDetectionListener() {
 
 			@Override
@@ -198,10 +204,11 @@ public class DemoMenuFrame extends JoFrame {
 		});
 	}
 
-	//TODO use the model for test menu model implementation
 	private MenuModel createMenuModel() {
 
 		final MenuModel menu = new MenuModel();
+		menu.setText("Menu1");
+		menu.setMnemonic('n');
 
 		final MenuModel subMenu = new MenuModel(MenuModel.builder().setText("sub menu 1").setMnemonic('e'));
 		menu.addItem(subMenu);
@@ -228,6 +235,7 @@ public class DemoMenuFrame extends JoFrame {
 		item2Builder.setToolTipText("This is the third item");
 		item2Builder.setIcon(IconsSmall.WARNING).setAccelerator(new Accelerator('I', Modifier.SHIFT)).setMnemonic('e');
 		final IActionItemModel item3 = new ActionItemModel(item2Builder);
+
 		menu.addItem(1, item3);
 
 		menu.addSeparator();
@@ -293,100 +301,6 @@ public class DemoMenuFrame extends JoFrame {
 		});
 
 		return menu;
-
-	}
-
-	private void addMenus(final IMenu menu) {
-		final ISubMenu subMenu = menu.addItem(BPF.subMenu("sub menu 1").setMnemonic('e'));
-
-		subMenu.addItem(BPF.menuItem("sub item1"));
-		subMenu.addItem(BPF.menuItem("sub item2"));
-
-		final ISubMenu subMenu2 = subMenu.addItem(BPF.subMenu("sub menu 2"));
-		subMenu2.addItem(BPF.menuItem("sub item1"));
-		subMenu2.addItem(BPF.menuItem("sub item2"));
-		subMenu2.addItem(BPF.menuItem("sub item3"));
-		subMenu2.addItem(BPF.menuItem("sub item4"));
-
-		subMenu.addItem(BPF.menuItem("sub item3"));
-		subMenu.addSeparator();
-		subMenu.addItem(BPF.menuItem("sub item4"));
-		subMenu.addItem(BPF.menuItem("sub item5"));
-
-		final IActionMenuItemBluePrint item1Bp = BPF.menuItem();
-		final IActionMenuItem item1 = menu.addItem(item1Bp);
-		item1.setAction(action1);
-
-		final IActionMenuItemBluePrint item2Bp = BPF.menuItem();
-		final IActionMenuItem item2 = menu.addItem(item2Bp);
-		item2.setAction(action2);
-
-		final IActionMenuItemBluePrint item3Bp = BPF.menuItem().setText("The Third Item");
-		item3Bp.setToolTipText("This is the third item");
-		item3Bp.setIcon(IconsSmall.WARNING).setAccelerator(new Accelerator('I', Modifier.SHIFT)).setMnemonic('e');
-		final IActionMenuItem item3 = menu.addItem(1, item3Bp);
-
-		menu.addSeparator();
-
-		final ICheckedMenuItemBluePrint item4Bp = BPF.checkedMenuItem().setText("item4");
-		final ISelectableMenuItem item4 = menu.addItem(item4Bp);
-
-		menu.addSeparator();
-
-		final IRadioMenuItemBluePrint item5Bp = BPF.radioMenuItem().setText("item5");
-		final ISelectableMenuItem item5 = menu.addItem(item5Bp);
-
-		final IRadioMenuItemBluePrint item6Bp = BPF.radioMenuItem().setText("item6");
-		final ISelectableMenuItem item6 = menu.addItem(item6Bp);
-		item6.setSelected(true);
-
-		final IRadioMenuItemBluePrint item7Bp = BPF.radioMenuItem().setText("item7");
-		final ISelectableMenuItem item7 = menu.addItem(item7Bp);
-
-		item3.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				// CHECKSTYLE:OFF
-				System.out.println("Item3");
-				// CHECKSTYLE:ON
-			}
-		});
-
-		item4.addItemListener(new IItemStateListener() {
-			@Override
-			public void itemStateChanged() {
-				// CHECKSTYLE:OFF
-				System.out.println("Item4, selected=" + item4.isSelected());
-				// CHECKSTYLE:ON
-			}
-		});
-
-		item5.addItemListener(new IItemStateListener() {
-			@Override
-			public void itemStateChanged() {
-				// CHECKSTYLE:OFF
-				System.out.println("Item5, selected=" + item5.isSelected());
-				// CHECKSTYLE:ON
-			}
-		});
-
-		item6.addItemListener(new IItemStateListener() {
-			@Override
-			public void itemStateChanged() {
-				// CHECKSTYLE:OFF
-				System.out.println("Item6, selected=" + item6.isSelected());
-				// CHECKSTYLE:ON
-			}
-		});
-
-		item7.addItemListener(new IItemStateListener() {
-			@Override
-			public void itemStateChanged() {
-				// CHECKSTYLE:OFF
-				System.out.println("Item7, selected=" + item7.isSelected());
-				// CHECKSTYLE:ON
-			}
-		});
 
 	}
 }

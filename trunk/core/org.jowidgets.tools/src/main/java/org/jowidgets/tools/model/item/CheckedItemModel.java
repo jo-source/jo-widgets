@@ -39,8 +39,8 @@ public class CheckedItemModel extends AbstractSelectableItemModelWrapper impleme
 		this(builder());
 	}
 
-	public CheckedItemModel(final String id) {
-		this(builder().setId(id));
+	public CheckedItemModel(final String text) {
+		this(builder().setText(text));
 	}
 
 	public CheckedItemModel(final String text, final IImageConstant icon) {
