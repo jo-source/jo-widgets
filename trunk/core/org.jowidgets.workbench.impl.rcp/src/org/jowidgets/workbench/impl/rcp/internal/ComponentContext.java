@@ -51,11 +51,6 @@ public final class ComponentContext implements IComponentContext {
 		return componentTreeNodeContext;
 	}
 
-	@Override
-	public void setPerspective(final IPerspective perspective) {
-		perspectiveReference = new AtomicReference<IPerspective>(perspective);
-	}
-
 	public IPerspective getPerspective() {
 		if (perspectiveReference == null) {
 			perspectiveReference = new AtomicReference<IPerspective>(component.createPerspective());

@@ -31,7 +31,7 @@ import java.util.List;
 
 public interface ITabViewContainer extends IViewContainer, IUiPart {
 
-	void initialize(ITabViewContainerContext context);
+	String getId();
 
 	List<ISingleViewContainer> createViews();
 

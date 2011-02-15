@@ -32,8 +32,6 @@ import org.jowidgets.common.types.SplitResizePolicy;
 
 public interface ISplitViewContainer extends IViewContainer {
 
-	void initialize(ISplitViewContainerContext context);
-
 	Orientation getOrientation();
 
 	double getWeight();

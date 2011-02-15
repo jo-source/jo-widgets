@@ -34,7 +34,16 @@ import java.util.List;
 
 public final class TabViewContainerContext implements IViewContainerContext, Iterable<SingleViewContainerContext> {
 
+	private final String folderId;
 	private final List<SingleViewContainerContext> container = new ArrayList<SingleViewContainerContext>();
+
+	public TabViewContainerContext(final String folderId) {
+		this.folderId = folderId;
+	}
+
+	public String getFolderId() {
+		return folderId;
+	}
 
 	public void add(final SingleViewContainerContext context) {
 		container.add(context);

@@ -139,7 +139,7 @@ public final class WorkbenchApplicationFolder extends Composite {
 	public void removeApplication(final IWorkbenchApplication app) {
 		for (final CTabItem item : tabFolder.getItems()) {
 			if (item.getData() == app) {
-				app.onDispose();
+				app.onClose();
 				if (currentApplication == app) {
 					currentApplication = null;
 				}

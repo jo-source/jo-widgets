@@ -27,8 +27,6 @@
  */
 package org.jowidgets.workbench.impl.rcp.internal.part;
 
-import java.util.UUID;
-
 import org.eclipse.ui.IFolderLayout;
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;
@@ -48,8 +46,7 @@ public final class DynamicPerspective implements IPerspectiveFactory {
 		final String editorArea = layout.getEditorArea();
 		layout.setEditorAreaVisible(false);
 		layout.setFixed(false);
-		final IViewContainerContext viewContainerContext = PartRegistry.getInstance().getViewContainerContext(
-				perspectiveId);
+		final IViewContainerContext viewContainerContext = PartRegistry.getInstance().getViewContainerContext(perspectiveId);
 		createLayout(layout, viewContainerContext, editorArea);
 	}
 
@@ -101,7 +98,7 @@ public final class DynamicPerspective implements IPerspectiveFactory {
 		final int relation,
 		final float ratio,
 		final String relativeTo) {
-		final String folderId = UUID.randomUUID().toString();
+		final String folderId = tabViewContainerContext.getFolderId();
 		final IFolderLayout folder = layout.createFolder(folderId, relation, ratio, relativeTo);
 		for (final SingleViewContainerContext viewContainer : tabViewContainerContext) {
 			final String viewId = DynamicView.ID + ":" + viewContainer.getViewId();

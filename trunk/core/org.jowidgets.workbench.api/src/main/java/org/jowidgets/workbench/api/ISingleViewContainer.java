@@ -27,18 +27,12 @@
  */
 package org.jowidgets.workbench.api;
 
-import java.util.Set;
-
 public interface ISingleViewContainer extends IViewContainer {
-
-	void initialize(ISingleViewContainerContext context);
 
 	IView createView();
 
 	boolean isDetachable();
 
-	boolean isDisposable();
-
-	Set<ITabViewContainer> getDropTargets();
+	boolean isClosable();
 
 }

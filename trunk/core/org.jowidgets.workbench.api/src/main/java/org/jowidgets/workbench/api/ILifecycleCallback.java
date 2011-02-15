@@ -33,6 +33,6 @@ public interface ILifecycleCallback {
 
 	void onVisibleStateChanged(boolean visible);
 
-	void onDispose();
+	void onClose();
 
 }

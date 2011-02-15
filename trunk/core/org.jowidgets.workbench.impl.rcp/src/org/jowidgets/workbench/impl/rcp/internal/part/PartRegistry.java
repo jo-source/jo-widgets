@@ -98,8 +98,8 @@ public final class PartRegistry {
 					splitViewContainer.createSecondContainer()));
 		}
 		if (viewContainer instanceof ITabViewContainer) {
-			final TabViewContainerContext context = new TabViewContainerContext();
 			final ITabViewContainer viewListContainer = (ITabViewContainer) viewContainer;
+			final TabViewContainerContext context = new TabViewContainerContext(perspectiveId + "." + viewListContainer.getId());
 			for (final ISingleViewContainer singleViewContainer : viewListContainer.createViews()) {
 				context.add(registerView(perspectiveId, singleViewContainer.createView()));
 			}
@@ -113,7 +113,7 @@ public final class PartRegistry {
 	}
 
 	private SingleViewContainerContext registerView(final String perspectiveId, final IView view) {
-		final String viewId = perspectiveId + view.getId();
+		final String viewId = perspectiveId + "." + view.getId();
 		viewMap.put(viewId, view);
 		return new SingleViewContainerContext(viewId);
 	}
