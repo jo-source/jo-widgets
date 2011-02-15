@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,16 +26,35 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.impl.widgets.common.wrapper.invoker;
 
-import org.jowidgets.api.model.item.ISelectableItemModel;
-import org.jowidgets.common.widgets.ISelectableMenuItemCommon;
+import org.jowidgets.common.types.Accelerator;
+import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 
-public interface ISelectableMenuItem extends IMenuItem, ISelectableMenuItemCommon {
+public class SelectableItemSpiInvoker extends MenuItemSpiInvoker implements ISelectableItemSpiInvoker {
+
+	public SelectableItemSpiInvoker(final ISelectableMenuItemSpi item) {
+		super(item);
+	}
 
 	@Override
-	ISelectableItemModel getModel();
+	public ISelectableMenuItemSpi getItem() {
+		return (ISelectableMenuItemSpi) super.getItem();
+	}
 
-	void setModel(ISelectableItemModel model);
+	@Override
+	public void setAccelerator(final Accelerator accelerator) {
+		getItem().setAccelerator(accelerator);
+	}
+
+	@Override
+	public void setSelected(final boolean selected) {
+		getItem().setSelected(selected);
+	}
+
+	@Override
+	public boolean isSelected() {
+		return getItem().isSelected();
+	}
 
 }

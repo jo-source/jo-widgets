@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.widgets.IActionMenuItem;
 import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.IMenuItem;
@@ -257,6 +258,17 @@ class Menu<WIDGET_TYPE extends IMenu, BLUE_PRINT_TYPE extends IWidgetDescriptor<
 			preItems.add(index, result);
 			return result;
 		}
+	}
+
+	@Override
+	public IMenuModel getModel() {
+		//TODO MG
+		return null;
+	}
+
+	@Override
+	public void setModel(final IMenuModel model) {
+		//TODO MG 
 	}
 
 }

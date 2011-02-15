@@ -32,9 +32,9 @@ import org.jowidgets.api.model.item.ISeparatorItemModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
 
-public class SeparatorItemModel extends AbstractItemModel implements ISeparatorItemModel {
+public class SeparatorItemModel extends ItemModel implements ISeparatorItemModel {
 
-	public SeparatorItemModel(
+	protected SeparatorItemModel(
 		final String id,
 		final String text,
 		final String toolTipText,

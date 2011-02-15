@@ -28,20 +28,26 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
+import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.common.widgets.IActionMenuItemCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.impl.base.delegate.ItemDelegate;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 
 public class ActionMenuItemSpiWrapper extends MenuItemSpiWrapper implements IActionMenuItemCommon {
 
-	public ActionMenuItemSpiWrapper(final IActionMenuItemSpi component) {
-		super(component);
+	public ActionMenuItemSpiWrapper(final IActionMenuItemSpi component, final ItemDelegate itemDelegate) {
+		super(component, itemDelegate);
 	}
 
 	@Override
 	public IActionMenuItemSpi getWidget() {
 		return (IActionMenuItemSpi) super.getWidget();
+	}
+
+	public IActionItemModel getModel() {
+		return (IActionItemModel) getItemDelegate().getModel();
 	}
 
 	@Override
@@ -56,7 +62,7 @@ public class ActionMenuItemSpiWrapper extends MenuItemSpiWrapper implements IAct
 
 	@Override
 	public void setAccelerator(final Accelerator accelerator) {
-		getWidget().setAccelerator(accelerator);
+		getItemDelegate().setAccelerator(accelerator);
 	}
 
 }

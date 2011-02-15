@@ -29,28 +29,39 @@
 package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.model.item.IActionItemModel;
+import org.jowidgets.api.model.item.IItemModel;
+import org.jowidgets.api.model.item.IItemModelListener;
 import org.jowidgets.api.widgets.IActionMenuItem;
 import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.descriptor.setup.IAccelerateableMenuItemSetup;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IMenuListener;
+import org.jowidgets.impl.base.delegate.ItemDelegate;
 import org.jowidgets.impl.command.ActionExecuter;
 import org.jowidgets.impl.command.ActionWidgetSync;
 import org.jowidgets.impl.command.IActionWidget;
+import org.jowidgets.impl.model.item.ActionItemModelBuilder;
 import org.jowidgets.impl.widgets.common.wrapper.ActionMenuItemSpiWrapper;
+import org.jowidgets.impl.widgets.common.wrapper.invoker.MenuItemSpiInvoker;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 
 public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IActionMenuItem, IActionWidget, IDisposeable {
 
 	private final IMenu parent;
+	private final IItemModelListener modelListener;
+
 	private ActionWidgetSync actionWidgetSync;
 	private ActionExecuter actionExecuter;
+	private IAction action;
 
 	public ActionMenuItemImpl(
 		final IMenu parent,
 		final IActionMenuItemSpi actionMenuItemSpi,
 		final IAccelerateableMenuItemSetup setup) {
-		super(actionMenuItemSpi);
+		super(
+			actionMenuItemSpi,
+			new ItemDelegate(new MenuItemSpiInvoker(actionMenuItemSpi), new ActionItemModelBuilder().build()));
 
 		this.parent = parent;
 
@@ -65,6 +76,17 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 		if (setup.getMnemonic() != null) {
 			setMnemonic(setup.getMnemonic().charValue());
 		}
+
+		this.modelListener = new IItemModelListener() {
+			@Override
+			public void itemChanged() {
+				if (getModel().getAction() != action) {
+					setAction(action);
+				}
+			}
+		};
+
+		getModel().addItemModelListener(modelListener);
 
 		parent.addMenuListener(new IMenuListener() {
 
@@ -115,6 +137,12 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 
 		actionWidgetSync = new ActionWidgetSync(action, this);
 		actionExecuter = new ActionExecuter(action, this);
+
+		this.action = action;
+
+		getModel().removeItemModelListener(modelListener);
+		getModel().setAction(action);
+		getModel().addItemModelListener(modelListener);
 	}
 
 	@Override
@@ -126,6 +154,22 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 		if (actionWidgetSync != null) {
 			actionWidgetSync.dispose();
 			actionWidgetSync = null;
+		}
+	}
+
+	@Override
+	public void setModel(final IActionItemModel model) {
+		getItemDelegate().setModel(model);
+		setAction(model.getAction());
+	}
+
+	@Override
+	public void setModel(final IItemModel model) {
+		if (model instanceof IActionItemModel) {
+			setModel((IActionItemModel) model);
+		}
+		else {
+			throw new IllegalArgumentException("Model type '" + IActionItemModel.class.getName() + "' expected");
 		}
 	}
 

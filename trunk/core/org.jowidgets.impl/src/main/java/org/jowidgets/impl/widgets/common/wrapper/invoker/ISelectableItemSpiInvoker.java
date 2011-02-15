@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,16 +26,12 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.impl.widgets.common.wrapper.invoker;
 
-import org.jowidgets.api.model.item.ISelectableItemModel;
-import org.jowidgets.common.widgets.ISelectableMenuItemCommon;
+public interface ISelectableItemSpiInvoker extends IItemSpiInvoker {
 
-public interface ISelectableMenuItem extends IMenuItem, ISelectableMenuItemCommon {
+	void setSelected(boolean selected);
 
-	@Override
-	ISelectableItemModel getModel();
-
-	void setModel(ISelectableItemModel model);
+	boolean isSelected();
 
 }

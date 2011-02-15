@@ -28,15 +28,17 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
+import org.jowidgets.api.model.item.ISelectableItemModel;
 import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.common.widgets.ISelectableMenuItemCommon;
 import org.jowidgets.common.widgets.controler.IItemStateListener;
+import org.jowidgets.impl.base.delegate.SelectableItemDelegate;
 import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 
 public class SelectableMenuItemSpiWrapper extends MenuItemSpiWrapper implements ISelectableMenuItemCommon {
 
-	public SelectableMenuItemSpiWrapper(final ISelectableMenuItemSpi component) {
-		super(component);
+	public SelectableMenuItemSpiWrapper(final ISelectableMenuItemSpi component, final SelectableItemDelegate itemDelegate) {
+		super(component, itemDelegate);
 	}
 
 	@Override
@@ -45,13 +47,12 @@ public class SelectableMenuItemSpiWrapper extends MenuItemSpiWrapper implements 
 	}
 
 	@Override
-	public boolean isSelected() {
-		return getWidget().isSelected();
+	protected SelectableItemDelegate getItemDelegate() {
+		return (SelectableItemDelegate) super.getItemDelegate();
 	}
 
-	@Override
-	public void setSelected(final boolean selected) {
-		getWidget().setSelected(selected);
+	public ISelectableItemModel getModel() {
+		return getItemDelegate().getModel();
 	}
 
 	@Override
@@ -66,7 +67,17 @@ public class SelectableMenuItemSpiWrapper extends MenuItemSpiWrapper implements 
 
 	@Override
 	public void setAccelerator(final Accelerator accelerator) {
-		getWidget().setAccelerator(accelerator);
+		getItemDelegate().setAccelerator(accelerator);
+	}
+
+	@Override
+	public void setSelected(final boolean selected) {
+		getItemDelegate().setSelected(selected);
+	}
+
+	@Override
+	public boolean isSelected() {
+		return getItemDelegate().isSelected();
 	}
 
 }

@@ -36,7 +36,7 @@ import org.jowidgets.api.model.item.IItemModelListener;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
 
-public abstract class AbstractItemModel implements IItemModel {
+public class ItemModel implements IItemModel {
 
 	private final Set<IItemModelListener> menuItemModelListeners;
 	private String id;
@@ -48,7 +48,7 @@ public abstract class AbstractItemModel implements IItemModel {
 	private Character mnemonic;
 	private boolean enabled;
 
-	public AbstractItemModel(
+	protected ItemModel(
 		final String id,
 		final String text,
 		final String toolTipText,

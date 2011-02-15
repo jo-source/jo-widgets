@@ -28,6 +28,7 @@
 
 package org.jowidgets.tools.powo;
 
+import org.jowidgets.api.model.item.IItemModel;
 import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.ISubMenu;
 import org.jowidgets.api.widgets.blueprint.builder.IMenuItemSetupBuilder;
@@ -83,6 +84,11 @@ class SubMenu<WIDGET_TYPE extends ISubMenu, BLUE_PRINT_TYPE extends IWidgetDescr
 	@Override
 	public IImageConstant getIcon() {
 		return menuItemDelegate.getIcon();
+	}
+
+	@Override
+	public void setModel(final IItemModel model) {
+		//TODO MG
 	}
 
 }

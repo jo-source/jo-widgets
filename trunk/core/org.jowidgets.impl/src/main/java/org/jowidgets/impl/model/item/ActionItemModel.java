@@ -35,13 +35,13 @@ import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.tools.controler.ActionObservable;
 
-public class ActionItemModel extends AbstractItemModel implements IActionItemModel {
+public class ActionItemModel extends ItemModel implements IActionItemModel {
 
 	private final ActionObservable actionObservable;
 
 	private IAction action;
 
-	public ActionItemModel(
+	protected ActionItemModel(
 		final String id,
 		final String text,
 		final String toolTipText,

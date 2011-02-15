@@ -28,9 +28,12 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import org.jowidgets.api.model.item.IItemModel;
+import org.jowidgets.api.model.item.ISelectableItemModel;
 import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.ISelectableMenuItem;
 import org.jowidgets.api.widgets.descriptor.setup.ISelectableItemSetup;
+import org.jowidgets.impl.base.delegate.SelectableItemDelegate;
 import org.jowidgets.impl.widgets.common.wrapper.SelectableMenuItemSpiWrapper;
 import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 
@@ -41,8 +44,9 @@ public class SelectableMenuItemImpl extends SelectableMenuItemSpiWrapper impleme
 	public SelectableMenuItemImpl(
 		final IMenu parent,
 		final ISelectableMenuItemSpi actionMenuItemSpi,
-		final ISelectableItemSetup setup) {
-		super(actionMenuItemSpi);
+		final ISelectableItemSetup setup,
+		final SelectableItemDelegate itemDelegate) {
+		super(actionMenuItemSpi, itemDelegate);
 
 		this.parent = parent;
 
@@ -65,4 +69,18 @@ public class SelectableMenuItemImpl extends SelectableMenuItemSpiWrapper impleme
 		return parent;
 	}
 
+	@Override
+	public void setModel(final ISelectableItemModel model) {
+		super.getItemDelegate().setModel(model);
+	}
+
+	@Override
+	public void setModel(final IItemModel model) {
+		if (model instanceof ISelectableItemModel) {
+			setModel((ISelectableItemModel) model);
+		}
+		else {
+			throw new IllegalArgumentException("Model must be a '" + ISelectableItemModel.class.getName() + "'");
+		}
+	}
 }

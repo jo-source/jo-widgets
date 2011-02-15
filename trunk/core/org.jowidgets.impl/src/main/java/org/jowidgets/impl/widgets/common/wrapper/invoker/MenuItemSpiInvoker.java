@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,16 +26,52 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.impl.widgets.common.wrapper.invoker;
 
-import org.jowidgets.api.model.item.ISelectableItemModel;
-import org.jowidgets.common.widgets.ISelectableMenuItemCommon;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Accelerator;
+import org.jowidgets.spi.widgets.IMenuItemSpi;
+import org.jowidgets.util.Assert;
 
-public interface ISelectableMenuItem extends IMenuItem, ISelectableMenuItemCommon {
+public class MenuItemSpiInvoker implements IItemSpiInvoker {
+
+	private final IMenuItemSpi item;
+
+	public MenuItemSpiInvoker(final IMenuItemSpi item) {
+		Assert.paramNotNull(item, "item");
+		this.item = item;
+	}
+
+	public IMenuItemSpi getItem() {
+		return item;
+	}
 
 	@Override
-	ISelectableItemModel getModel();
+	public void setText(final String text) {
+		item.setText(text);
+	}
 
-	void setModel(ISelectableItemModel model);
+	@Override
+	public void setToolTipText(final String toolTipText) {
+		item.setToolTipText(toolTipText);
+	}
+
+	@Override
+	public void setIcon(final IImageConstant icon) {
+		item.setIcon(icon);
+	}
+
+	@Override
+	public void setMnemonic(final Character mnemonic) {
+		item.setMnemonic(mnemonic);
+	}
+
+	@Override
+	public void setEnabled(final boolean enabled) {
+		item.setEnabled(enabled);
+	}
+
+	@Override
+	public void setAccelerator(final Accelerator accelerator) {}
 
 }

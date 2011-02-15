@@ -34,12 +34,12 @@ import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.common.widgets.controler.IItemStateListener;
 import org.jowidgets.tools.controler.ItemStateObservable;
 
-public abstract class AbstractSelectableItemModel extends AbstractItemModel implements ISelectableItemModel {
+public abstract class AbstractSelectableItemModel extends ItemModel implements ISelectableItemModel {
 
 	private final ItemStateObservable itemStateObservable;
 	private boolean selected;
 
-	public AbstractSelectableItemModel(
+	protected AbstractSelectableItemModel(
 		final String id,
 		final String text,
 		final String toolTipText,

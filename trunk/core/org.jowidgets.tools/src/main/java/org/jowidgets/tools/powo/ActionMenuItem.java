@@ -32,6 +32,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.widgets.IActionMenuItem;
 import org.jowidgets.api.widgets.blueprint.builder.IAccelerateableMenuItemSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.setup.IAccelerateableMenuItemSetup;
@@ -99,6 +100,16 @@ class ActionMenuItem<WIDGET_TYPE extends IActionMenuItem, BLUE_PRINT_TYPE extend
 		else {
 			this.action = action;
 		}
+	}
+
+	@Override
+	public void setModel(final IActionItemModel model) {
+		// TODO MG
+	}
+
+	@Override
+	public IActionItemModel getModel() {
+		return (IActionItemModel) super.getModel();
 	}
 
 }

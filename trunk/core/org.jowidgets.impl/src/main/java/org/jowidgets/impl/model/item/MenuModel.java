@@ -43,13 +43,13 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.util.Assert;
 
-public class MenuModel extends AbstractItemModel implements IMenuModel {
+public class MenuModel extends ItemModel implements IMenuModel {
 
 	private final Set<IMenuModelListener> menuModelListeners;
 
 	private final List<IItemModel> children;
 
-	public MenuModel(
+	protected MenuModel(
 		final String id,
 		final String text,
 		final String toolTipText,

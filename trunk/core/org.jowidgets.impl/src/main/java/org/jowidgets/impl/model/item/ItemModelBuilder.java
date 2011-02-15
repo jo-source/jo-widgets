@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,16 +26,16 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.impl.model.item;
 
-import org.jowidgets.api.model.item.ISelectableItemModel;
-import org.jowidgets.common.widgets.ISelectableMenuItemCommon;
+import org.jowidgets.api.model.item.IItemModel;
+import org.jowidgets.api.model.item.IItemModelBuilder;
 
-public interface ISelectableMenuItem extends IMenuItem, ISelectableMenuItemCommon {
+public class ItemModelBuilder extends AbstractItemModelBuilder<IItemModelBuilder<ItemModelBuilder, IItemModel>, IItemModel> {
 
 	@Override
-	ISelectableItemModel getModel();
-
-	void setModel(ISelectableItemModel model);
+	public IItemModel build() {
+		return new ItemModel(getId(), getText(), getToolTipText(), getIcon(), getAccelerator(), getMnemonic(), isEnabled());
+	}
 
 }

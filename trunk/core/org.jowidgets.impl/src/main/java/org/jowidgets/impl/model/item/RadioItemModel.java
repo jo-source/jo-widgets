@@ -34,7 +34,7 @@ import org.jowidgets.common.types.Accelerator;
 
 public class RadioItemModel extends AbstractSelectableItemModel implements IRadioItemModel {
 
-	public RadioItemModel(
+	protected RadioItemModel(
 		final String id,
 		final String text,
 		final String toolTipText,

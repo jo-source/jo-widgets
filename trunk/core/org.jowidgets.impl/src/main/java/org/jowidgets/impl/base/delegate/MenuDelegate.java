@@ -32,6 +32,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IActionMenuItem;
 import org.jowidgets.api.widgets.IMenu;
@@ -47,11 +48,14 @@ import org.jowidgets.api.widgets.descriptor.setup.IAccelerateableMenuItemSetup;
 import org.jowidgets.api.widgets.descriptor.setup.IMenuItemSetup;
 import org.jowidgets.api.widgets.descriptor.setup.ISelectableItemSetup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.impl.model.item.CheckedItemModelBuilder;
+import org.jowidgets.impl.model.item.RadioItemModelBuilder;
 import org.jowidgets.impl.widgets.basic.ActionMenuItemImpl;
 import org.jowidgets.impl.widgets.basic.IDisposeable;
 import org.jowidgets.impl.widgets.basic.SelectableMenuItemImpl;
 import org.jowidgets.impl.widgets.basic.SeparatorMenuItemImpl;
 import org.jowidgets.impl.widgets.basic.SubMenuImpl;
+import org.jowidgets.impl.widgets.common.wrapper.invoker.SelectableItemSpiInvoker;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 import org.jowidgets.spi.widgets.IMenuItemSpi;
 import org.jowidgets.spi.widgets.IMenuSpi;
@@ -64,13 +68,15 @@ public class MenuDelegate {
 	private final IMenuSpi menuSpi;
 	private final IMenu menu;
 	private final List<IMenuItem> children;
+	private IMenuModel model;
 
-	public MenuDelegate(final IMenu menu, final IMenuSpi menuSpi) {
+	public MenuDelegate(final IMenu menu, final IMenuSpi menuSpi, final IMenuModel model) {
 		Assert.paramNotNull(menu, "menu");
 		Assert.paramNotNull(menuSpi, "menuSpi");
 		this.children = new LinkedList<IMenuItem>();
 		this.menu = menu;
 		this.menuSpi = menuSpi;
+		this.model = model;
 	}
 
 	public IMenuItem addSeparator() {
@@ -127,7 +133,10 @@ public class MenuDelegate {
 			final ISelectableMenuItem selectableMenuItem = new SelectableMenuItemImpl(
 				menu,
 				selectableMenuItemSpi,
-				(ISelectableItemSetup) descriptor);
+				(ISelectableItemSetup) descriptor,
+				new SelectableItemDelegate(
+					new SelectableItemSpiInvoker(selectableMenuItemSpi),
+					new CheckedItemModelBuilder().build()));
 			result = (WIDGET_TYPE) selectableMenuItem;
 		}
 		else if (IRadioMenuItemDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
@@ -135,7 +144,10 @@ public class MenuDelegate {
 			final ISelectableMenuItem selectableMenuItem = new SelectableMenuItemImpl(
 				menu,
 				selectableMenuItemSpi,
-				(ISelectableItemSetup) descriptor);
+				(ISelectableItemSetup) descriptor,
+				new SelectableItemDelegate(
+					new SelectableItemSpiInvoker(selectableMenuItemSpi),
+					new RadioItemModelBuilder().build()));
 			result = (WIDGET_TYPE) selectableMenuItem;
 		}
 		else if (ISeparatorMenuItemDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
@@ -201,6 +213,15 @@ public class MenuDelegate {
 		final IActionMenuItem result = menu.addItem(Toolkit.getBluePrintFactory().menuItem());
 		result.setAction(action);
 		return result;
+	}
+
+	public IMenuModel getModel() {
+		return model;
+	}
+
+	public void setModel(final IMenuModel model) {
+		//TODO
+		this.model = model;
 	}
 
 }

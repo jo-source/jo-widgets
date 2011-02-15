@@ -31,17 +31,35 @@ package org.jowidgets.impl.widgets.common.wrapper;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IPopupMenuCommon;
 import org.jowidgets.common.widgets.controler.IMenuListener;
+import org.jowidgets.impl.base.delegate.ItemDelegate;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
 public class PopupMenuSpiWrapper extends WidgetSpiWrapper implements IPopupMenuCommon {
 
-	public PopupMenuSpiWrapper(final IPopupMenuSpi component) {
+	private final ItemDelegate itemDelegate;
+
+	public PopupMenuSpiWrapper(final IPopupMenuSpi component, final ItemDelegate itemDelegate) {
 		super(component);
+		this.itemDelegate = itemDelegate;
 	}
 
 	@Override
 	public IPopupMenuSpi getWidget() {
 		return (IPopupMenuSpi) super.getWidget();
+	}
+
+	protected ItemDelegate getItemDelegate() {
+		return itemDelegate;
+	}
+
+	@Override
+	public void setEnabled(final boolean enabled) {
+		itemDelegate.setEnabled(enabled);
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return itemDelegate.isEnabled();
 	}
 
 	@Override

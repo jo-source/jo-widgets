@@ -31,6 +31,8 @@ package org.jowidgets.impl.widgets.basic;
 import java.util.List;
 
 import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.model.item.IItemModel;
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.widgets.IActionMenuItem;
 import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.IMenuItem;
@@ -38,8 +40,11 @@ import org.jowidgets.api.widgets.ISubMenu;
 import org.jowidgets.api.widgets.descriptor.setup.IMenuItemSetup;
 import org.jowidgets.common.widgets.controler.IMenuListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.impl.base.delegate.ItemDelegate;
 import org.jowidgets.impl.base.delegate.MenuDelegate;
+import org.jowidgets.impl.model.item.MenuModelBuilder;
 import org.jowidgets.impl.widgets.common.wrapper.MenuItemSpiWrapper;
+import org.jowidgets.impl.widgets.common.wrapper.invoker.MenuItemSpiInvoker;
 import org.jowidgets.spi.widgets.ISubMenuSpi;
 
 public class SubMenuImpl extends MenuItemSpiWrapper implements ISubMenu {
@@ -48,9 +53,9 @@ public class SubMenuImpl extends MenuItemSpiWrapper implements ISubMenu {
 	private final IMenu parent;
 
 	public SubMenuImpl(final ISubMenuSpi subMenuSpi, final IMenu parent, final IMenuItemSetup setup) {
-		super(subMenuSpi);
+		super(subMenuSpi, new ItemDelegate(new MenuItemSpiInvoker(subMenuSpi), new MenuModelBuilder().build()));
 
-		this.menuDelegate = new MenuDelegate(this, subMenuSpi);
+		this.menuDelegate = new MenuDelegate(this, subMenuSpi, getModel());
 		this.parent = parent;
 
 		setText(setup.getText());
@@ -66,6 +71,21 @@ public class SubMenuImpl extends MenuItemSpiWrapper implements ISubMenu {
 	@Override
 	public ISubMenuSpi getWidget() {
 		return (ISubMenuSpi) super.getWidget();
+	}
+
+	@Override
+	public IMenuModel getModel() {
+		return (IMenuModel) getItemDelegate().getModel();
+	}
+
+	@Override
+	public void addMenuListener(final IMenuListener listener) {
+		getWidget().addMenuListener(listener);
+	}
+
+	@Override
+	public void removeMenuListener(final IMenuListener listener) {
+		getWidget().removeMenuListener(listener);
 	}
 
 	@Override
@@ -117,18 +137,24 @@ public class SubMenuImpl extends MenuItemSpiWrapper implements ISubMenu {
 	}
 
 	@Override
+	public void setModel(final IMenuModel model) {
+		getItemDelegate().setModel(model);
+		menuDelegate.setModel(model);
+	}
+
+	@Override
+	public void setModel(final IItemModel model) {
+		if (model instanceof IMenuModel) {
+			setModel((IMenuModel) model);
+		}
+		else {
+			throw new IllegalArgumentException("Model must be instance of '" + IMenuModel.class.getName() + "'");
+		}
+	}
+
+	@Override
 	public IMenu getParent() {
 		return parent;
-	}
-
-	@Override
-	public void addMenuListener(final IMenuListener listener) {
-		getWidget().addMenuListener(listener);
-	}
-
-	@Override
-	public void removeMenuListener(final IMenuListener listener) {
-		getWidget().removeMenuListener(listener);
 	}
 
 }

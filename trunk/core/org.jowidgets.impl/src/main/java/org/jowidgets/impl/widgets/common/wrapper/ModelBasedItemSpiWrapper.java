@@ -26,16 +26,66 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.api.model.item.ISelectableItemModel;
-import org.jowidgets.common.widgets.ISelectableMenuItemCommon;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.widgets.IItemCommon;
+import org.jowidgets.impl.base.delegate.ItemDelegate;
+import org.jowidgets.spi.widgets.IItemSpi;
 
-public interface ISelectableMenuItem extends IMenuItem, ISelectableMenuItemCommon {
+public class ModelBasedItemSpiWrapper extends WidgetSpiWrapper implements IItemCommon {
+
+	private final ItemDelegate itemDelegate;
+
+	public ModelBasedItemSpiWrapper(final IItemSpi component, final ItemDelegate itemDelegate) {
+		super(component);
+		this.itemDelegate = itemDelegate;
+	}
 
 	@Override
-	ISelectableItemModel getModel();
+	public IItemSpi getWidget() {
+		return (IItemSpi) super.getWidget();
+	}
 
-	void setModel(ISelectableItemModel model);
+	protected ItemDelegate getItemDelegate() {
+		return itemDelegate;
+	}
+
+	@Override
+	public void setText(final String text) {
+		itemDelegate.setText(text);
+	}
+
+	@Override
+	public void setToolTipText(final String toolTipText) {
+		itemDelegate.setToolTipText(toolTipText);
+	}
+
+	@Override
+	public void setIcon(final IImageConstant icon) {
+		itemDelegate.setIcon(icon);
+	}
+
+	public String getText() {
+		return itemDelegate.getText();
+	}
+
+	public String getToolTipText() {
+		return itemDelegate.getToolTipText();
+	}
+
+	public IImageConstant getIcon() {
+		return itemDelegate.getIcon();
+	}
+
+	@Override
+	public void setEnabled(final boolean enabled) {
+		itemDelegate.setEnabled(enabled);
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return itemDelegate.isEnabled();
+	}
 
 }

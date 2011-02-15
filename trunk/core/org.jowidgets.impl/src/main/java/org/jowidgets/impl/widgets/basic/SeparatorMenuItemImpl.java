@@ -28,9 +28,13 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import org.jowidgets.api.model.item.IItemModel;
 import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.IMenuItem;
+import org.jowidgets.impl.base.delegate.ItemDelegate;
+import org.jowidgets.impl.model.item.SeparatorItemModelBuilder;
 import org.jowidgets.impl.widgets.common.wrapper.MenuItemSpiWrapper;
+import org.jowidgets.impl.widgets.common.wrapper.invoker.MenuItemSpiInvoker;
 import org.jowidgets.spi.widgets.IMenuItemSpi;
 
 public class SeparatorMenuItemImpl extends MenuItemSpiWrapper implements IMenuItem {
@@ -38,7 +42,7 @@ public class SeparatorMenuItemImpl extends MenuItemSpiWrapper implements IMenuIt
 	private final IMenu parent;
 
 	public SeparatorMenuItemImpl(final IMenu parent, final IMenuItemSpi menuItemSpi) {
-		super(menuItemSpi);
+		super(menuItemSpi, new ItemDelegate(new MenuItemSpiInvoker(menuItemSpi), new SeparatorItemModelBuilder().build()));
 
 		this.parent = parent;
 	}
@@ -46,6 +50,16 @@ public class SeparatorMenuItemImpl extends MenuItemSpiWrapper implements IMenuIt
 	@Override
 	public IMenu getParent() {
 		return parent;
+	}
+
+	@Override
+	public IItemModel getModel() {
+		return getItemDelegate().getModel();
+	}
+
+	@Override
+	public void setModel(final IItemModel model) {
+		getItemDelegate().setModel(model);
 	}
 
 }

@@ -30,12 +30,16 @@ package org.jowidgets.impl.widgets.common.wrapper;
 
 import org.jowidgets.common.widgets.IMainMenuCommon;
 import org.jowidgets.common.widgets.controler.IMenuListener;
+import org.jowidgets.impl.base.delegate.ItemDelegate;
 import org.jowidgets.spi.widgets.IMainMenuSpi;
 
 public class MainMenuSpiWrapper extends WidgetSpiWrapper implements IMainMenuCommon {
 
-	public MainMenuSpiWrapper(final IMainMenuSpi component) {
-		super(component);
+	private final ItemDelegate itemDelegate;
+
+	public MainMenuSpiWrapper(final IMainMenuSpi widget, final ItemDelegate itemDelegate) {
+		super(widget);
+		this.itemDelegate = itemDelegate;
 	}
 
 	@Override
@@ -43,14 +47,18 @@ public class MainMenuSpiWrapper extends WidgetSpiWrapper implements IMainMenuCom
 		return (IMainMenuSpi) super.getWidget();
 	}
 
+	protected ItemDelegate getItemDelegate() {
+		return itemDelegate;
+	}
+
 	@Override
 	public void setText(final String text) {
-		getWidget().setText(text);
+		itemDelegate.setText(text);
 	}
 
 	@Override
 	public void setMnemonic(final char mnemonic) {
-		getWidget().setMnemonic(mnemonic);
+		itemDelegate.setMnemonic(mnemonic);
 	}
 
 	@Override

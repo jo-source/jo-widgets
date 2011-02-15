@@ -29,10 +29,16 @@
 package org.jowidgets.api.widgets;
 
 import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.common.widgets.IActionMenuItemCommon;
 
 public interface IActionMenuItem extends IMenuItem, IActionWidget, IActionMenuItemCommon {
 
 	void setAction(IAction action);
+
+	@Override
+	IActionItemModel getModel();
+
+	void setModel(IActionItemModel model);
 
 }
