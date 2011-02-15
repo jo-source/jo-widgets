@@ -28,6 +28,7 @@
 
 package org.jowidgets.workbench.impl.rcp.internal;
 
+import org.eclipse.swt.widgets.ToolItem;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.IToolBar;
@@ -37,9 +38,17 @@ import org.jowidgets.workbench.api.IViewContext;
 public final class ViewContext implements IViewContext {
 
 	private final IContainer container;
+	private final IMenu menu;
+	private final ToolItem menuItem;
 
 	public ViewContext(final IContainer container) {
+		this(container, null, null);
+	}
+
+	public ViewContext(final IContainer container, final IMenu menu, final ToolItem menuItem) {
 		this.container = container;
+		this.menu = menu;
+		this.menuItem = menuItem;
 	}
 
 	@Override
@@ -54,11 +63,15 @@ public final class ViewContext implements IViewContext {
 
 	@Override
 	public IMenu getMenu() {
-		return null;
+		return menu;
 	}
 
 	@Override
-	public void setMenuTooltip(final String tooltip) {}
+	public void setMenuTooltip(final String tooltip) {
+		if (menuItem != null && !menuItem.isDisposed()) {
+			menuItem.setToolTipText(tooltip);
+		}
+	}
 
 	@Override
 	public IToolBar getToolBar() {

@@ -28,9 +28,14 @@
 
 package org.jowidgets.workbench.impl.rcp.internal.part;
 
+import org.eclipse.jface.action.ToolBarManager;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.IPartListener2;
-import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
@@ -38,6 +43,8 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.IPopupMenu;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.impl.rcp.internal.ImageHelper;
 import org.jowidgets.workbench.impl.rcp.internal.ViewContext;
@@ -50,14 +57,29 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 
 	@Override
 	public void createPartControl(final Composite parent) {
-		final String viewId = ((IViewSite) getSite()).getSecondaryId();
+		final String viewId = getViewSite().getSecondaryId();
 		view = PartRegistry.getInstance().getView(viewId);
 		setPartName(view.getLabel());
 		setTitleImage(ImageHelper.getImage(view.getIcon(), null));
 		setTitleToolTip(view.getTooltip());
 
 		final IComposite composite = Toolkit.getWidgetWrapperFactory().createComposite(parent);
-		final ViewContext viewContext = new ViewContext(composite);
+		final ViewContext viewContext;
+		if (view.hasMenu()) {
+			final ToolBar toolBarControl = ((ToolBarManager) getViewSite().getActionBars().getToolBarManager()).getControl();
+			final IPopupMenu menu = Toolkit.getWidgetWrapperFactory().createComposite(toolBarControl).createPopupMenu();
+			final ToolItem menuItem = new ToolItem(toolBarControl, SWT.DROP_DOWN);
+			menuItem.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(final SelectionEvent e) {
+					menu.show(new Position(e.x, e.y));
+				}
+			});
+			viewContext = new ViewContext(composite, menu, menuItem);
+		}
+		else {
+			viewContext = new ViewContext(composite);
+		}
 
 		// lazy initialization of view content
 		getViewSite().getPage().addPartListener(new IPartListener2() {
@@ -65,11 +87,7 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 			public void partVisible(final IWorkbenchPartReference partRef) {
 				final IWorkbenchPart part = partRef.getPart(false);
 				if (part == DynamicView.this) {
-					view.initialize(viewContext);
-					final IWorkbenchPage page = getViewSite().getPage();
-					page.removePartListener(this);
-					view.onVisibleStateChanged(true);
-					page.addPartListener(DynamicView.this);
+					init();
 				}
 			}
 
@@ -79,12 +97,16 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 				// needed for lazy initializing detached views, since partVisible() is not fired for them apparently
 				if (part == DynamicView.this
 					&& part.getSite().getShell() != PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell()) {
-					view.initialize(viewContext);
-					final IWorkbenchPage page = getViewSite().getPage();
-					page.removePartListener(this);
-					view.onVisibleStateChanged(true);
-					page.addPartListener(DynamicView.this);
+					init();
 				}
+			}
+
+			private void init() {
+				view.initialize(viewContext);
+				final IWorkbenchPage page = getViewSite().getPage();
+				page.removePartListener(this);
+				view.onVisibleStateChanged(true);
+				page.addPartListener(DynamicView.this);
 			}
 
 			@Override
