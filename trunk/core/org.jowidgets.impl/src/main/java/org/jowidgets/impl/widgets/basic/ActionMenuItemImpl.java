@@ -79,7 +79,7 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 
 		this.modelListener = new IItemModelListener() {
 			@Override
-			public void itemChanged() {
+			public void itemChanged(final IItemModel item) {
 				if (getModel().getAction() != action) {
 					setActionValue(action);
 				}

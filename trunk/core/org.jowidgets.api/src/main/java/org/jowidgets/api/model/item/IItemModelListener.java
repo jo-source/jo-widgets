@@ -30,6 +30,6 @@ package org.jowidgets.api.model.item;
 
 public interface IItemModelListener {
 
-	void itemChanged();
+	void itemChanged(IItemModel item);
 
 }

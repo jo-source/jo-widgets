@@ -55,7 +55,7 @@ public class ItemDelegate {
 
 		this.itemModelListener = new IItemModelListener() {
 			@Override
-			public void itemChanged() {
+			public void itemChanged(final IItemModel item) {
 				updateFromModel();
 			}
 		};

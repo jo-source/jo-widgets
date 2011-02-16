@@ -38,6 +38,7 @@ import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.ICheckedItemModel;
 import org.jowidgets.api.model.item.IItemModel;
 import org.jowidgets.api.model.item.IItemModelBuilder;
+import org.jowidgets.api.model.item.IItemModelListener;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IMenuModelListener;
 import org.jowidgets.api.model.item.IRadioItemModel;
@@ -45,12 +46,13 @@ import org.jowidgets.api.model.item.ISeparatorItemModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.NullCompatibleEquivalence;
 
 public class MenuModel extends ItemModel implements IMenuModel {
 
 	private final Set<IMenuModelListener> menuModelListeners;
-
 	private final List<IItemModel> children;
+	private final IItemModelListener itemModelListener;
 
 	protected MenuModel() {
 		this(null, null, null, null, null, null, true);
@@ -67,6 +69,13 @@ public class MenuModel extends ItemModel implements IMenuModel {
 		super(id, text, toolTipText, icon, accelerator, mnemonic, enabled);
 		menuModelListeners = new HashSet<IMenuModelListener>();
 		this.children = new LinkedList<IItemModel>();
+
+		this.itemModelListener = new IItemModelListener() {
+			@Override
+			public void itemChanged(final IItemModel item) {
+				checkIds(item);
+			}
+		};
 	}
 
 	@Override
@@ -246,7 +255,12 @@ public class MenuModel extends ItemModel implements IMenuModel {
 	@Override
 	public <MODEL_TYPE extends IItemModel> MODEL_TYPE addItem(final int index, final MODEL_TYPE item) {
 		Assert.paramNotNull(item, "item");
+		if (item instanceof IMenuModel) {
+			checkRecursion((IMenuModel) item, this);
+		}
+		checkIds(item);
 		children.add(index, item);
+		item.addItemModelListener(itemModelListener);
 		fireChildAdded(index);
 		return item;
 	}
@@ -261,8 +275,11 @@ public class MenuModel extends ItemModel implements IMenuModel {
 
 	@Override
 	public void removeItem(final int index) {
-		children.remove(index);
-		fireChildRemoved(index);
+		final IItemModel removedItem = children.remove(index);
+		if (removedItem != null) {
+			removedItem.removeItemModelListener(itemModelListener);
+			fireChildRemoved(index);
+		}
 	}
 
 	@Override
@@ -284,4 +301,33 @@ public class MenuModel extends ItemModel implements IMenuModel {
 		}
 	}
 
+	private void checkIds(final IItemModel item) {
+		if (item.getId() == null) {
+			throw new IllegalArgumentException("Invalid item ID: The item '" + item + "' has no id.");
+		}
+		for (final IItemModel child : children) {
+			if (child != item && NullCompatibleEquivalence.equals(item.getId(), child.getId())) {
+				throw new IllegalArgumentException("Invalid item ID: The item '"
+					+ item
+					+ "' has the same id as the child '"
+					+ child
+					+ " of their parent menu '"
+					+ this
+					+ "'.");
+			}
+		}
+	}
+
+	private void checkRecursion(final IMenuModel menu1, final IMenuModel menu2) {
+		if (NullCompatibleEquivalence.equals(menu1, menu2)) {
+			throw new IllegalArgumentException("Menu Model Recursion: "
+				+ "The added menu has the same id than this menu or has a child menu with the same id than this menu.");
+		}
+
+		for (final IItemModel child : menu1.getChildren()) {
+			if (child instanceof IMenuModel) {
+				checkRecursion((IMenuModel) child, menu2);
+			}
+		}
+	}
 }
