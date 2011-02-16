@@ -46,6 +46,10 @@ public interface IMenuModel extends IItemModel, IMenuModelObservable {
 		int index,
 		final BUILDER_TYPE itemBuilder);
 
+	void addAfter(IItemModel newItem, String... idPath);
+
+	void addBefore(IItemModel newItem, String... idPath);
+
 	IActionItemModel addAction(IAction action);
 
 	IActionItemModel addAction(final int index, IAction action);
@@ -101,6 +105,8 @@ public interface IMenuModel extends IItemModel, IMenuModelObservable {
 	void removeItem(int index);
 
 	void removeAllItems();
+
+	IItemModel findItemByPath(String... idPath);
 
 	List<IItemModel> getChildren();
 

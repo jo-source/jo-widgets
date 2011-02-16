@@ -84,6 +84,11 @@ public class MenuModel extends AbstractItemModelWrapper implements IMenuModel {
 	}
 
 	@Override
+	public IItemModel findItemByPath(final String... idPath) {
+		return getItemModel().findItemByPath(idPath);
+	}
+
+	@Override
 	public IActionItemModel addAction(final IAction action) {
 		return getItemModel().addAction(action);
 	}
@@ -106,6 +111,16 @@ public class MenuModel extends AbstractItemModelWrapper implements IMenuModel {
 	@Override
 	public ISeparatorItemModel addSeparator(final int index) {
 		return getItemModel().addSeparator();
+	}
+
+	@Override
+	public void addBefore(final IItemModel newItem, final String... idPath) {
+		getItemModel().addBefore(newItem, idPath);
+	}
+
+	@Override
+	public void addAfter(final IItemModel newItem, final String... idPath) {
+		getItemModel().addAfter(newItem, idPath);
 	}
 
 	@Override

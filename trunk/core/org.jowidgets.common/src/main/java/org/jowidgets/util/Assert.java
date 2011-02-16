@@ -67,6 +67,18 @@ public final class Assert {
 		}
 	}
 
+	public static void paramAndElementsNotEmpty(final Object[] array, final String name) {
+		paramNotNull(array, name);
+		if (array.length <= 0) {
+			throw new IllegalArgumentException("The parameter '" + name + "' must not be empty!");
+		}
+		for (final Object obj : array) {
+			if (obj == null) {
+				throw new IllegalArgumentException("The parameter '" + name + "' must not have empty elements!");
+			}
+		}
+	}
+
 	public static void paramHasType(final Object object, final Class<?> type, final String name) {
 		paramNotNull(object, name);
 		if (!type.isAssignableFrom(object.getClass())) {

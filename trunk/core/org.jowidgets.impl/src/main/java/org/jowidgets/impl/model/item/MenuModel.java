@@ -104,11 +104,6 @@ public class MenuModel extends ItemModel implements IMenuModel {
 	}
 
 	@Override
-	public final List<IItemModel> getChildren() {
-		return new LinkedList<IItemModel>(children);
-	}
-
-	@Override
 	public IActionItemModel addAction(final IAction action) {
 		return addItem(new ActionItemModelBuilder().setAction(action));
 	}
@@ -234,6 +229,69 @@ public class MenuModel extends ItemModel implements IMenuModel {
 	}
 
 	@Override
+	public void addBefore(final IItemModel newItem, final String... idPath) {
+		addByPath(newItem, true, idPath);
+	}
+
+	@Override
+	public void addAfter(final IItemModel newItem, final String... idPath) {
+		addByPath(newItem, false, idPath);
+	}
+
+	private void addByPath(final IItemModel newItem, final boolean before, final String... idPath) {
+		Assert.paramNotNull(newItem, "newItem");
+		Assert.paramAndElementsNotEmpty(idPath, "idPath");
+
+		//create the path to the last menu 
+		final String[] menuPath = new String[idPath.length - 1];
+		for (int i = 0; i < menuPath.length; i++) {
+			menuPath[i] = idPath[i];
+		}
+
+		//find the menu to add the item to
+		IMenuModel parentMenu = this;
+		if (menuPath.length > 0) {
+			final IItemModel itemForPath = findItemByPath(menuPath);
+			if (itemForPath instanceof IMenuModel) {
+				parentMenu = (IMenuModel) itemForPath;
+			}
+			else {
+				throw new IllegalArgumentException("The id path '" + pathToString(idPath) + "' doesn't match for the menu.");
+			}
+		}
+		final String lastId = idPath[idPath.length - 1];
+
+		//add the item to the menu at the propper index
+		int index = 0;
+		for (final IItemModel child : parentMenu.getChildren()) {
+			if (NullCompatibleEquivalence.equals(child.getId(), lastId)) {
+				if (before) {
+					parentMenu.addItem(index, newItem);
+				}
+				else {
+					parentMenu.addItem(index + 1, newItem);
+				}
+				return;
+			}
+			index++;
+		}
+		throw new IllegalArgumentException("The id path '" + pathToString(idPath) + "' doesn't match for the menu.");
+	}
+
+	private String pathToString(final String... idPath) {
+		final StringBuilder result = new StringBuilder();
+		result.append("[");
+		for (final String tanga : idPath) {
+			result.append(tanga + ", ");
+		}
+		if (idPath.length > 0) {
+			result.delete(result.length() - 2, result.length() - 1);
+		}
+		result.append("]");
+		return result.toString();
+	}
+
+	@Override
 	public <MODEL_TYPE extends IItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
 		final BUILDER_TYPE itemBuilder) {
 		return addItem(itemBuilder.build());
@@ -263,6 +321,35 @@ public class MenuModel extends ItemModel implements IMenuModel {
 		item.addItemModelListener(itemModelListener);
 		fireChildAdded(index);
 		return item;
+	}
+
+	@Override
+	public final List<IItemModel> getChildren() {
+		return new LinkedList<IItemModel>(children);
+	}
+
+	@Override
+	public IItemModel findItemByPath(final String... idPath) {
+		Assert.paramNotEmpty(idPath, "idPath");
+		for (final IItemModel child : children) {
+			if (NullCompatibleEquivalence.equals(child.getId(), idPath[0])) {
+				if (idPath.length == 1) {
+					return child;
+				}
+				else if (child instanceof IMenuModel) {
+					final String[] newPath = new String[idPath.length - 1];
+					for (int i = 0; i < newPath.length; i++) {
+						newPath[i] = idPath[i + 1];
+					}
+					return ((IMenuModel) child).findItemByPath(newPath);
+				}
+				else {
+					//this path can not match
+					return null;
+				}
+			}
+		}
+		return null;
 	}
 
 	@Override
