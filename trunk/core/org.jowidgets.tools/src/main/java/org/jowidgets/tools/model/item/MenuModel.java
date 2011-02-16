@@ -32,10 +32,13 @@ import java.util.List;
 
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.model.item.IActionItemModel;
+import org.jowidgets.api.model.item.ICheckedItemModel;
 import org.jowidgets.api.model.item.IItemModel;
+import org.jowidgets.api.model.item.IItemModelBuilder;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IMenuModelBuilder;
 import org.jowidgets.api.model.item.IMenuModelListener;
+import org.jowidgets.api.model.item.IRadioItemModel;
 import org.jowidgets.api.model.item.ISeparatorItemModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.image.IImageConstant;
@@ -51,11 +54,19 @@ public class MenuModel extends AbstractItemModelWrapper implements IMenuModel {
 	}
 
 	public MenuModel(final String text, final IImageConstant icon) {
-		this(builder().setText(text).setIcon(icon));
+		this(builder(text, icon));
 	}
 
-	public MenuModel(final String id, final String text, final IImageConstant icon) {
-		this(builder().setId(id).setText(text).setIcon(icon));
+	public MenuModel(final String text, final String toolTipText) {
+		this(builder(text, toolTipText));
+	}
+
+	public MenuModel(final String text, final String toolTipText, final IImageConstant icon) {
+		this(builder(text, toolTipText, icon));
+	}
+
+	public MenuModel(final String id, final String text, final String toolTipText, final IImageConstant icon) {
+		this(builder(id, text, toolTipText, icon));
 	}
 
 	public MenuModel(final IMenuModelBuilder builder) {
@@ -88,11 +99,6 @@ public class MenuModel extends AbstractItemModelWrapper implements IMenuModel {
 	}
 
 	@Override
-	public IMenuModel addMenu(final int index) {
-		return getItemModel().addMenu(index);
-	}
-
-	@Override
 	public ISeparatorItemModel addSeparator() {
 		return getItemModel().addSeparator();
 	}
@@ -103,13 +109,126 @@ public class MenuModel extends AbstractItemModelWrapper implements IMenuModel {
 	}
 
 	@Override
-	public IItemModel addItem(final IItemModel item) {
+	public <MODEL_TYPE extends IItemModel> MODEL_TYPE addItem(final MODEL_TYPE item) {
 		return getItemModel().addItem(item);
 	}
 
 	@Override
-	public IItemModel addItem(final int index, final IItemModel item) {
+	public <MODEL_TYPE extends IItemModel> MODEL_TYPE addItem(final int index, final MODEL_TYPE item) {
 		return getItemModel().addItem(index, item);
+	}
+
+	@Override
+	public <MODEL_TYPE extends IItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
+		final BUILDER_TYPE itemBuilder) {
+		return getItemModel().addItem(itemBuilder);
+	}
+
+	@Override
+	public <MODEL_TYPE extends IItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
+		final int index,
+		final BUILDER_TYPE itemBuilder) {
+		return getItemModel().addItem(index, itemBuilder);
+	}
+
+	@Override
+	public IActionItemModel addActionItem() {
+		return getItemModel().addActionItem();
+	}
+
+	@Override
+	public IActionItemModel addActionItem(final String text) {
+		return getItemModel().addActionItem(text);
+	}
+
+	@Override
+	public IActionItemModel addActionItem(final String text, final String toolTipText) {
+		return getItemModel().addActionItem(text, toolTipText);
+	}
+
+	@Override
+	public IActionItemModel addActionItem(final String text, final IImageConstant icon) {
+		return getItemModel().addActionItem(text, icon);
+	}
+
+	@Override
+	public IActionItemModel addActionItem(final String text, final String toolTipText, final IImageConstant icon) {
+		return getItemModel().addActionItem(text, toolTipText, icon);
+	}
+
+	@Override
+	public ICheckedItemModel addCheckedItem() {
+		return getItemModel().addCheckedItem();
+	}
+
+	@Override
+	public ICheckedItemModel addCheckedItem(final String text) {
+		return getItemModel().addCheckedItem(text);
+	}
+
+	@Override
+	public ICheckedItemModel addCheckedItem(final String text, final String toolTipText) {
+		return getItemModel().addCheckedItem(text, toolTipText);
+	}
+
+	@Override
+	public ICheckedItemModel addCheckedItem(final String text, final IImageConstant icon) {
+		return getItemModel().addCheckedItem(text, icon);
+	}
+
+	@Override
+	public ICheckedItemModel addCheckedItem(final String text, final String toolTipText, final IImageConstant icon) {
+		return getItemModel().addCheckedItem(text, toolTipText, icon);
+	}
+
+	@Override
+	public IRadioItemModel addRadioItem() {
+		return getItemModel().addRadioItem();
+	}
+
+	@Override
+	public IRadioItemModel addRadioItem(final String text) {
+		return getItemModel().addRadioItem(text);
+	}
+
+	@Override
+	public IRadioItemModel addRadioItem(final String text, final String toolTipText) {
+		return getItemModel().addRadioItem(text, toolTipText);
+	}
+
+	@Override
+	public IRadioItemModel addRadioItem(final String text, final IImageConstant icon) {
+		return getItemModel().addRadioItem(text, icon);
+	}
+
+	@Override
+	public IRadioItemModel addRadioItem(final String text, final String toolTipText, final IImageConstant icon) {
+		return getItemModel().addRadioItem(text, toolTipText, icon);
+	}
+
+	@Override
+	public ISeparatorItemModel addSeparator(final String id) {
+		return getItemModel().addSeparator(id);
+	}
+
+	@Override
+	public IMenuModel addMenu(final String text) {
+		return getItemModel().addMenu(text);
+	}
+
+	@Override
+	public IMenuModel addMenu(final String text, final String toolTipText) {
+		return getItemModel().addMenu(text, toolTipText);
+	}
+
+	@Override
+	public IMenuModel addMenu(final String text, final IImageConstant icon) {
+		return getItemModel().addMenu(text, icon);
+	}
+
+	@Override
+	public IMenuModel addMenu(final String text, final String toolTipText, final IImageConstant icon) {
+		return getItemModel().addMenu(text, toolTipText, icon);
 	}
 
 	@Override
@@ -144,6 +263,30 @@ public class MenuModel extends AbstractItemModelWrapper implements IMenuModel {
 
 	public static IMenuModelBuilder builder() {
 		return Toolkit.getModelBuilderFactoryProvider().getItemModelBuilderFactory().menuModel();
+	}
+
+	public static IMenuModelBuilder builder(final String text) {
+		return builder().setText(text);
+	}
+
+	public static IMenuModelBuilder builder(final String text, final String toolTipText) {
+		return builder(text).setToolTipText(toolTipText);
+	}
+
+	public static IMenuModelBuilder builder(final String text, final IImageConstant icon) {
+		return builder().setText(text).setIcon(icon);
+	}
+
+	public static IMenuModelBuilder builder(final String text, final String toolTipText, final IImageConstant icon) {
+		return builder(text, toolTipText).setIcon(icon);
+	}
+
+	public static IMenuModelBuilder builder(
+		final String id,
+		final String text,
+		final String toolTipText,
+		final IImageConstant icon) {
+		return builder(text, toolTipText, icon).setId(id);
 	}
 
 }

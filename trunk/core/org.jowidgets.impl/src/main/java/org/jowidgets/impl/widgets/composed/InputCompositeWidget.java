@@ -27,6 +27,7 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationResult;
@@ -235,6 +236,11 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputComposite<INPUT_T
 	@Override
 	public IPopupMenu createPopupMenu() {
 		return composite.createPopupMenu();
+	}
+
+	@Override
+	public void setPopupMenu(final IMenuModel popupMenu) {
+		composite.setPopupMenu(popupMenu);
 	}
 
 	@Override

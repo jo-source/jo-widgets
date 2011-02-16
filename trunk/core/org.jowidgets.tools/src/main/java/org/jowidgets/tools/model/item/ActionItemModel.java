@@ -41,28 +41,28 @@ public class ActionItemModel extends AbstractItemModelWrapper implements IAction
 		this(builder());
 	}
 
-	public ActionItemModel(final String text) {
-		this(builder().setText(text));
-	}
-
 	public ActionItemModel(final IAction action) {
 		this(builder().setAction(action));
 	}
 
-	public ActionItemModel(final String id, final IAction action) {
-		this(builder().setId(id).setAction(action));
+	public ActionItemModel(final String text) {
+		this(builder().setText(text));
 	}
 
 	public ActionItemModel(final String text, final IImageConstant icon) {
-		this(builder().setText(text).setIcon(icon));
+		this(builder(text, icon));
 	}
 
-	public ActionItemModel(final String id, final String text, final IImageConstant icon) {
-		this(builder().setId(id).setText(text).setIcon(icon));
+	public ActionItemModel(final String text, final String toolTipText) {
+		this(builder(text, toolTipText));
+	}
+
+	public ActionItemModel(final String text, final String toolTipText, final IImageConstant icon) {
+		this(builder(text, toolTipText, icon));
 	}
 
 	public ActionItemModel(final String id, final String text, final String toolTipText, final IImageConstant icon) {
-		this(builder().setId(id).setText(text).setToolTipText(toolTipText).setIcon(icon));
+		this(builder(id, text, toolTipText, icon));
 	}
 
 	public ActionItemModel(final IActionItemModelBuilder builder) {
@@ -106,6 +106,30 @@ public class ActionItemModel extends AbstractItemModelWrapper implements IAction
 
 	public static IActionItemModelBuilder builder() {
 		return Toolkit.getModelBuilderFactoryProvider().getItemModelBuilderFactory().actionItem();
+	}
+
+	public static IActionItemModelBuilder builder(final String text) {
+		return builder().setText(text);
+	}
+
+	public static IActionItemModelBuilder builder(final String text, final String toolTipText) {
+		return builder(text).setToolTipText(toolTipText);
+	}
+
+	public static IActionItemModelBuilder builder(final String text, final IImageConstant icon) {
+		return builder().setText(text).setIcon(icon);
+	}
+
+	public static IActionItemModelBuilder builder(final String text, final String toolTipText, final IImageConstant icon) {
+		return builder(text, toolTipText).setIcon(icon);
+	}
+
+	public static IActionItemModelBuilder builder(
+		final String id,
+		final String text,
+		final String toolTipText,
+		final IImageConstant icon) {
+		return builder(text, toolTipText, icon).setId(id);
 	}
 
 }

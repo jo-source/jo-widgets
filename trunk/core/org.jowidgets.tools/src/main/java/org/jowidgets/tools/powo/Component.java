@@ -31,6 +31,7 @@ package org.jowidgets.tools.powo;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
@@ -47,6 +48,8 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 	private final Set<IPopupDetectionListener> popupDetectionListeners;
 	private final Set<JoPopupMenu> popupMenus;
 
+	private IMenuModel popupMenu;
+
 	Component(final BLUE_PRINT_TYPE bluePrint) {
 		super(bluePrint);
 		this.popupDetectionListeners = new HashSet<IPopupDetectionListener>();
@@ -58,6 +61,9 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 		super.initialize(widget);
 		if (cursor != null) {
 			widget.setCursor(cursor);
+		}
+		if (popupMenu != null) {
+			getWidget().setPopupMenu(popupMenu);
 		}
 		for (final JoPopupMenu joPopupMenu : popupMenus) {
 			joPopupMenu.initialize(createPopupMenu());
@@ -145,6 +151,16 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 			final JoPopupMenu result = new JoPopupMenu();
 			popupMenus.add(result);
 			return result;
+		}
+	}
+
+	@Override
+	public void setPopupMenu(final IMenuModel popupMenu) {
+		if (isInitialized()) {
+			getWidget().setPopupMenu(popupMenu);
+		}
+		else {
+			this.popupMenu = popupMenu;
 		}
 	}
 

@@ -28,6 +28,6 @@
 
 package org.jowidgets.api.model.item;
 
-public interface ICheckedItemModelBuilder extends IItemModelBuilder<ICheckedItemModelBuilder, ICheckedItemModel> {
+public interface ICheckedItemModelBuilder extends ISelectableItemModelBuilder<ICheckedItemModelBuilder, ICheckedItemModel> {
 
 }

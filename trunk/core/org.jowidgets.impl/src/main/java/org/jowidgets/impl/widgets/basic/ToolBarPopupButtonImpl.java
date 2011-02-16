@@ -30,10 +30,14 @@ package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.command.ActionStyle;
 import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.IToolBarPopupButton;
 import org.jowidgets.api.widgets.descriptor.setup.IItemSetup;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.impl.command.ActionExecuter;
 import org.jowidgets.impl.command.ActionWidgetSync;
 import org.jowidgets.impl.command.IActionWidget;
@@ -44,6 +48,11 @@ public class ToolBarPopupButtonImpl extends ToolBarPopupButtonSpiWrapper impleme
 		IToolBarPopupButton,
 		IActionWidget,
 		IDisposeable {
+
+	private final IPopupDetectionListener popupListener;
+
+	private IMenuModel popupMenuModel;
+	private IPopupMenu popupMenu;
 
 	private final IToolBar parent;
 	private ActionWidgetSync actionWidgetSync;
@@ -69,6 +78,22 @@ public class ToolBarPopupButtonImpl extends ToolBarPopupButtonSpiWrapper impleme
 				}
 			}
 		});
+
+		this.popupListener = new IPopupDetectionListener() {
+
+			@Override
+			public void popupDetected(final Position position) {
+				if (popupMenuModel != null) {
+					if (popupMenu == null) {
+						popupMenu = parent.createPopupMenu();
+					}
+					if (popupMenu.getModel() != popupMenuModel) {
+						popupMenu.setModel(popupMenuModel);
+					}
+					popupMenu.show(position);
+				}
+			}
+		};
 	}
 
 	@Override
@@ -95,6 +120,17 @@ public class ToolBarPopupButtonImpl extends ToolBarPopupButtonSpiWrapper impleme
 	@Override
 	public void dispose() {
 		disposeActionWidgetSync();
+	}
+
+	@Override
+	public void setPopupMenu(final IMenuModel popupMenuModel) {
+		if (popupMenuModel == null && this.popupMenuModel != null) {
+			removePopupDetectionListener(popupListener);
+		}
+		else if (popupMenuModel != null && this.popupMenuModel == null) {
+			addPopupDetectionListener(popupListener);
+		}
+		this.popupMenuModel = popupMenuModel;
 	}
 
 	private void disposeActionWidgetSync() {

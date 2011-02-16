@@ -28,17 +28,42 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
+import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.api.widgets.IComponent;
+import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
+import org.jowidgets.impl.widgets.basic.PopupMenuImpl;
 import org.jowidgets.spi.widgets.IComponentSpi;
 
 public class ComponentSpiWrapper extends WidgetSpiWrapper implements IComponentCommon {
 
+	private final IPopupDetectionListener popupListener;
+
+	private IMenuModel popupMenuModel;
+	private IPopupMenu popupMenu;
+
 	public ComponentSpiWrapper(final IComponentSpi component) {
 		super(component);
+		this.popupListener = new IPopupDetectionListener() {
+
+			@Override
+			public void popupDetected(final Position position) {
+				if (popupMenuModel != null) {
+					if (popupMenu == null) {
+						popupMenu = new PopupMenuImpl(getWidget().createPopupMenu(), (IComponent) ComponentSpiWrapper.this);
+					}
+					if (popupMenu.getModel() != popupMenuModel) {
+						popupMenu.setModel(popupMenuModel);
+					}
+					popupMenu.show(position);
+				}
+			}
+		};
 	}
 
 	@Override
@@ -99,6 +124,16 @@ public class ComponentSpiWrapper extends WidgetSpiWrapper implements IComponentC
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
 		getWidget().removePopupDetectionListener(listener);
+	}
+
+	public void setPopupMenu(final IMenuModel popupMenuModel) {
+		if (popupMenuModel == null && this.popupMenuModel != null) {
+			removePopupDetectionListener(popupListener);
+		}
+		else if (popupMenuModel != null && this.popupMenuModel == null) {
+			addPopupDetectionListener(popupListener);
+		}
+		this.popupMenuModel = popupMenuModel;
 	}
 
 }

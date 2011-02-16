@@ -30,6 +30,7 @@ package org.jowidgets.impl.widgets.composed;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.validation.ValidationMessage;
 import org.jowidgets.api.validation.ValidationMessageType;
 import org.jowidgets.api.validation.ValidationResult;
@@ -292,6 +293,11 @@ public class ValidationLabelImpl implements IValidationLabel {
 	@Override
 	public IPopupMenu createPopupMenu() {
 		return labelControl.createPopupMenu();
+	}
+
+	@Override
+	public void setPopupMenu(final IMenuModel popupMenu) {
+		labelControl.setPopupMenu(popupMenu);
 	}
 
 	@Override

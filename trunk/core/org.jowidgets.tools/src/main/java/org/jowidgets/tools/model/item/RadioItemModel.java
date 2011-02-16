@@ -44,15 +44,19 @@ public class RadioItemModel extends AbstractSelectableItemModelWrapper implement
 	}
 
 	public RadioItemModel(final String text, final IImageConstant icon) {
-		this(builder().setText(text).setIcon(icon));
+		this(builder(text, icon));
 	}
 
-	public RadioItemModel(final String id, final String text, final IImageConstant icon) {
-		this(builder().setId(id).setText(text).setIcon(icon));
+	public RadioItemModel(final String text, final String toolTipText) {
+		this(builder(text, toolTipText));
+	}
+
+	public RadioItemModel(final String text, final String toolTipText, final IImageConstant icon) {
+		this(builder(text, toolTipText, icon));
 	}
 
 	public RadioItemModel(final String id, final String text, final String toolTipText, final IImageConstant icon) {
-		this(builder().setId(id).setText(text).setToolTipText(toolTipText).setIcon(icon));
+		this(builder(id, text, toolTipText, icon));
 	}
 
 	public RadioItemModel(final IRadioItemModelBuilder builder) {
@@ -71,6 +75,30 @@ public class RadioItemModel extends AbstractSelectableItemModelWrapper implement
 
 	public static IRadioItemModelBuilder builder() {
 		return Toolkit.getModelBuilderFactoryProvider().getItemModelBuilderFactory().radioItem();
+	}
+
+	public static IRadioItemModelBuilder builder(final String text) {
+		return builder().setText(text);
+	}
+
+	public static IRadioItemModelBuilder builder(final String text, final String toolTipText) {
+		return builder(text).setToolTipText(toolTipText);
+	}
+
+	public static IRadioItemModelBuilder builder(final String text, final IImageConstant icon) {
+		return builder().setText(text).setIcon(icon);
+	}
+
+	public static IRadioItemModelBuilder builder(final String text, final String toolTipText, final IImageConstant icon) {
+		return builder(text, toolTipText).setIcon(icon);
+	}
+
+	public static IRadioItemModelBuilder builder(
+		final String id,
+		final String text,
+		final String toolTipText,
+		final IImageConstant icon) {
+		return builder(text, toolTipText, icon).setId(id);
 	}
 
 }

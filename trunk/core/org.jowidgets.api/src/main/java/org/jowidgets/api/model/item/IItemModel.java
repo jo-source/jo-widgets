@@ -30,6 +30,7 @@ package org.jowidgets.api.model.item;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
+import org.jowidgets.common.types.Modifier;
 
 public interface IItemModel extends IItemModelObservable {
 
@@ -56,6 +57,8 @@ public interface IItemModel extends IItemModelObservable {
 	void setIcon(IImageConstant icon);
 
 	void setAccelerator(Accelerator accelerator);
+
+	void setAccelerator(final char key, final Modifier... modifier);
 
 	void setMnemonic(Character mnemonic);
 

@@ -35,6 +35,7 @@ import org.jowidgets.api.model.item.IItemModel;
 import org.jowidgets.api.model.item.IItemModelListener;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
+import org.jowidgets.common.types.Modifier;
 
 public class ItemModel implements IItemModel {
 
@@ -151,6 +152,11 @@ public class ItemModel implements IItemModel {
 	public final void setAccelerator(final Accelerator accelerator) {
 		this.accelerator = accelerator;
 		fireItemChanged();
+	}
+
+	@Override
+	public void setAccelerator(final char key, final Modifier... modifier) {
+		setAccelerator(new Accelerator(key, modifier));
 	}
 
 	@Override

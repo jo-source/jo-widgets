@@ -31,32 +31,78 @@ package org.jowidgets.api.model.item;
 import java.util.List;
 
 import org.jowidgets.api.command.IAction;
+import org.jowidgets.common.image.IImageConstant;
 
 public interface IMenuModel extends IItemModel, IMenuModelObservable {
 
-	List<IItemModel> getChildren();
+	<MODEL_TYPE extends IItemModel> MODEL_TYPE addItem(final MODEL_TYPE item);
+
+	<MODEL_TYPE extends IItemModel> MODEL_TYPE addItem(final int index, final MODEL_TYPE item);
+
+	<MODEL_TYPE extends IItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
+		final BUILDER_TYPE itemBuilder);
+
+	<MODEL_TYPE extends IItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
+		int index,
+		final BUILDER_TYPE itemBuilder);
 
 	IActionItemModel addAction(IAction action);
 
 	IActionItemModel addAction(final int index, IAction action);
 
+	IActionItemModel addActionItem();
+
+	IActionItemModel addActionItem(String text);
+
+	IActionItemModel addActionItem(String text, String toolTipText);
+
+	IActionItemModel addActionItem(String text, IImageConstant icon);
+
+	IActionItemModel addActionItem(String text, String toolTipText, IImageConstant icon);
+
+	ICheckedItemModel addCheckedItem();
+
+	ICheckedItemModel addCheckedItem(String text);
+
+	ICheckedItemModel addCheckedItem(String text, String toolTipText);
+
+	ICheckedItemModel addCheckedItem(String text, IImageConstant icon);
+
+	ICheckedItemModel addCheckedItem(String text, String toolTipText, IImageConstant icon);
+
+	IRadioItemModel addRadioItem();
+
+	IRadioItemModel addRadioItem(String text);
+
+	IRadioItemModel addRadioItem(String text, String toolTipText);
+
+	IRadioItemModel addRadioItem(String text, IImageConstant icon);
+
+	IRadioItemModel addRadioItem(String text, String toolTipText, IImageConstant icon);
+
 	ISeparatorItemModel addSeparator();
+
+	ISeparatorItemModel addSeparator(String id);
 
 	ISeparatorItemModel addSeparator(int index);
 
 	IMenuModel addMenu();
 
-	IMenuModel addMenu(int index);
+	IMenuModel addMenu(String text);
 
-	IItemModel addItem(final IItemModel item);
+	IMenuModel addMenu(String text, String toolTipText);
 
-	IItemModel addItem(final int index, final IItemModel item);
+	IMenuModel addMenu(String text, IImageConstant icon);
+
+	IMenuModel addMenu(String text, String toolTipText, IImageConstant icon);
 
 	void removeItem(final IItemModel item);
 
 	void removeItem(int index);
 
 	void removeAllItems();
+
+	List<IItemModel> getChildren();
 
 	/**
 	 * Makes a deep copy of the item and its children.

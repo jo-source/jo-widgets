@@ -27,6 +27,7 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
@@ -321,6 +322,13 @@ public class ProgressBarImpl implements IProgressBar {
 	@Override
 	public IPopupMenu createPopupMenu() {
 		return compositeWidget.createPopupMenu();
+	}
+
+	@Override
+	public void setPopupMenu(final IMenuModel popupMenu) {
+		//TODO MG this might not work, popup must be set on progressBar and indeterminateProgressBar also. 
+		//For that, progressBar and indeterminateProgressBar must be api widgets 
+		compositeWidget.setPopupMenu(popupMenu);
 	}
 
 	@Override

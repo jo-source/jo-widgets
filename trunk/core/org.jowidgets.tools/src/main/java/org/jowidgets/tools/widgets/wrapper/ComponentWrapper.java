@@ -28,6 +28,7 @@
 
 package org.jowidgets.tools.widgets.wrapper;
 
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.common.color.IColorConstant;
@@ -119,6 +120,11 @@ public class ComponentWrapper extends WidgetWrapper implements IComponent {
 	@Override
 	public IPopupMenu createPopupMenu() {
 		return getWidget().createPopupMenu();
+	}
+
+	@Override
+	public void setPopupMenu(final IMenuModel menuModel) {
+		getWidget().setPopupMenu(menuModel);
 	}
 
 }

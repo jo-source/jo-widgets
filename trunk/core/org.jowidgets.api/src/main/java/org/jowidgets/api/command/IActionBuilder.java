@@ -30,6 +30,7 @@ package org.jowidgets.api.command;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
+import org.jowidgets.common.types.Modifier;
 
 public interface IActionBuilder {
 
@@ -44,6 +45,8 @@ public interface IActionBuilder {
 	IActionBuilder setMnemonic(final char mnemonic);
 
 	IActionBuilder setAccelerator(Accelerator accelerator);
+
+	IActionBuilder setAccelerator(final char key, final Modifier... modifier);
 
 	IActionBuilder setEnabled(boolean enabled);
 

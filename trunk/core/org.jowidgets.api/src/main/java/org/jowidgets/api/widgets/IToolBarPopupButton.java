@@ -28,8 +28,18 @@
 
 package org.jowidgets.api.widgets;
 
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.widgets.IToolBarPopupButtonCommon;
 
 public interface IToolBarPopupButton extends IToolBarButton, IToolBarPopupButtonCommon {
+
+	/**
+	 * Sets a popup menu for this component.
+	 * The popup menu will be shown, when an popup event occurs on this component.
+	 * 
+	 * @param menuModel
+	 *            The model of the popup menu or null, if no popup should be shown on popup events
+	 */
+	void setPopupMenu(IMenuModel popupMenu);
 
 }

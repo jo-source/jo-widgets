@@ -35,9 +35,12 @@ import java.util.Set;
 
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.model.item.IActionItemModel;
+import org.jowidgets.api.model.item.ICheckedItemModel;
 import org.jowidgets.api.model.item.IItemModel;
+import org.jowidgets.api.model.item.IItemModelBuilder;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IMenuModelListener;
+import org.jowidgets.api.model.item.IRadioItemModel;
 import org.jowidgets.api.model.item.ISeparatorItemModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
@@ -98,56 +101,150 @@ public class MenuModel extends ItemModel implements IMenuModel {
 
 	@Override
 	public IActionItemModel addAction(final IAction action) {
-		Assert.paramNotNull(action, "action");
-		final IActionItemModel result = new ActionItemModel(null, null, null, null, null, null, true, action);
-		addItem(result);
-		return result;
+		return addItem(new ActionItemModelBuilder().setAction(action));
 	}
 
 	@Override
 	public IActionItemModel addAction(final int index, final IAction action) {
-		Assert.paramNotNull(action, "action");
-		final IActionItemModel result = new ActionItemModel(null, null, null, null, null, null, true, action);
-		addItem(index, result);
-		return result;
+		return addItem(index, new ActionItemModelBuilder().setAction(action));
+	}
+
+	@Override
+	public IActionItemModel addActionItem() {
+		return addItem(new ActionItemModelBuilder());
+	}
+
+	@Override
+	public IActionItemModel addActionItem(final String text) {
+		return addItem(new ActionItemModelBuilder().setText(text));
+	}
+
+	@Override
+	public IActionItemModel addActionItem(final String text, final String toolTipText) {
+		return addItem(new ActionItemModelBuilder().setText(text).setToolTipText(toolTipText));
+	}
+
+	@Override
+	public IActionItemModel addActionItem(final String text, final IImageConstant icon) {
+		return addItem(new ActionItemModelBuilder().setText(text).setIcon(icon));
+	}
+
+	@Override
+	public IActionItemModel addActionItem(final String text, final String toolTipText, final IImageConstant icon) {
+		return addItem(new ActionItemModelBuilder().setText(text).setToolTipText(toolTipText).setIcon(icon));
+	}
+
+	@Override
+	public ICheckedItemModel addCheckedItem() {
+		return addItem(new CheckedItemModelBuilder());
+	}
+
+	@Override
+	public ICheckedItemModel addCheckedItem(final String text) {
+		return addItem(new CheckedItemModelBuilder().setText(text));
+	}
+
+	@Override
+	public ICheckedItemModel addCheckedItem(final String text, final String toolTipText) {
+		return addItem(new CheckedItemModelBuilder().setText(text).setToolTipText(toolTipText));
+	}
+
+	@Override
+	public ICheckedItemModel addCheckedItem(final String text, final IImageConstant icon) {
+		return addItem(new CheckedItemModelBuilder().setText(text).setIcon(icon));
+	}
+
+	@Override
+	public ICheckedItemModel addCheckedItem(final String text, final String toolTipText, final IImageConstant icon) {
+		return addItem(new CheckedItemModelBuilder().setText(text).setToolTipText(toolTipText).setIcon(icon));
+	}
+
+	@Override
+	public IRadioItemModel addRadioItem() {
+		return addItem(new RadioItemModelBuilder());
+	}
+
+	@Override
+	public IRadioItemModel addRadioItem(final String text) {
+		return addItem(new RadioItemModelBuilder().setText(text));
+	}
+
+	@Override
+	public IRadioItemModel addRadioItem(final String text, final String toolTipText) {
+		return addItem(new RadioItemModelBuilder().setText(text).setToolTipText(toolTipText));
+	}
+
+	@Override
+	public IRadioItemModel addRadioItem(final String text, final IImageConstant icon) {
+		return addItem(new RadioItemModelBuilder().setText(text).setIcon(icon));
+	}
+
+	@Override
+	public IRadioItemModel addRadioItem(final String text, final String toolTipText, final IImageConstant icon) {
+		return addItem(new RadioItemModelBuilder().setText(text).setToolTipText(toolTipText).setIcon(icon));
 	}
 
 	@Override
 	public IMenuModel addMenu() {
-		final IMenuModel result = new MenuModel(null, null, null, null, null, null, true);
-		addItem(result);
-		return result;
+		return addItem(new MenuModelBuilder());
 	}
 
 	@Override
-	public IMenuModel addMenu(final int index) {
-		final IMenuModel result = new MenuModel(null, null, null, null, null, null, true);
-		addItem(index, result);
-		return result;
+	public IMenuModel addMenu(final String text) {
+		return addItem(new MenuModelBuilder().setText(text));
+	}
+
+	@Override
+	public IMenuModel addMenu(final String text, final String toolTipText) {
+		return addItem(new MenuModelBuilder().setText(text).setToolTipText(toolTipText));
+	}
+
+	@Override
+	public IMenuModel addMenu(final String text, final IImageConstant icon) {
+		return addItem(new MenuModelBuilder().setText(text).setIcon(icon));
+	}
+
+	@Override
+	public IMenuModel addMenu(final String text, final String toolTipText, final IImageConstant icon) {
+		return addItem(new MenuModelBuilder().setText(text).setToolTipText(toolTipText).setIcon(icon));
 	}
 
 	@Override
 	public ISeparatorItemModel addSeparator() {
-		final ISeparatorItemModel result = new SeparatorItemModel(null, null, null, null, null, null, true);
-		addItem(result);
-		return result;
+		return addItem(new SeparatorItemModelBuilder());
 	}
 
 	@Override
 	public ISeparatorItemModel addSeparator(final int index) {
-		final ISeparatorItemModel result = new SeparatorItemModel(null, null, null, null, null, null, true);
-		addItem(index, result);
-		return result;
+		return addItem(index, new SeparatorItemModelBuilder());
 	}
 
 	@Override
-	public final IItemModel addItem(final IItemModel item) {
+	public ISeparatorItemModel addSeparator(final String id) {
+		return addItem(new SeparatorItemModelBuilder().setId(id));
+	}
+
+	@Override
+	public <MODEL_TYPE extends IItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
+		final BUILDER_TYPE itemBuilder) {
+		return addItem(itemBuilder.build());
+	}
+
+	@Override
+	public <MODEL_TYPE extends IItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
+		final int index,
+		final BUILDER_TYPE itemBuilder) {
+		return addItem(index, itemBuilder.build());
+	}
+
+	@Override
+	public <MODEL_TYPE extends IItemModel> MODEL_TYPE addItem(final MODEL_TYPE item) {
 		addItem(children.size(), item);
 		return item;
 	}
 
 	@Override
-	public final IItemModel addItem(final int index, final IItemModel item) {
+	public <MODEL_TYPE extends IItemModel> MODEL_TYPE addItem(final int index, final MODEL_TYPE item) {
 		Assert.paramNotNull(item, "item");
 		children.add(index, item);
 		fireChildAdded(index);

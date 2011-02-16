@@ -44,15 +44,19 @@ public class CheckedItemModel extends AbstractSelectableItemModelWrapper impleme
 	}
 
 	public CheckedItemModel(final String text, final IImageConstant icon) {
-		this(builder().setText(text).setIcon(icon));
+		this(builder(text, icon));
 	}
 
-	public CheckedItemModel(final String id, final String text, final IImageConstant icon) {
-		this(builder().setId(id).setText(text).setIcon(icon));
+	public CheckedItemModel(final String text, final String toolTipText) {
+		this(builder(text, toolTipText));
+	}
+
+	public CheckedItemModel(final String text, final String toolTipText, final IImageConstant icon) {
+		this(builder(text, toolTipText, icon));
 	}
 
 	public CheckedItemModel(final String id, final String text, final String toolTipText, final IImageConstant icon) {
-		this(builder().setId(id).setText(text).setToolTipText(toolTipText).setIcon(icon));
+		this(builder(id, text, toolTipText, icon));
 	}
 
 	public CheckedItemModel(final ICheckedItemModelBuilder builder) {
@@ -71,6 +75,30 @@ public class CheckedItemModel extends AbstractSelectableItemModelWrapper impleme
 
 	public static ICheckedItemModelBuilder builder() {
 		return Toolkit.getModelBuilderFactoryProvider().getItemModelBuilderFactory().checkedItem();
+	}
+
+	public static ICheckedItemModelBuilder builder(final String text) {
+		return builder().setText(text);
+	}
+
+	public static ICheckedItemModelBuilder builder(final String text, final String toolTipText) {
+		return builder(text).setToolTipText(toolTipText);
+	}
+
+	public static ICheckedItemModelBuilder builder(final String text, final IImageConstant icon) {
+		return builder().setText(text).setIcon(icon);
+	}
+
+	public static ICheckedItemModelBuilder builder(final String text, final String toolTipText, final IImageConstant icon) {
+		return builder(text, toolTipText).setIcon(icon);
+	}
+
+	public static ICheckedItemModelBuilder builder(
+		final String id,
+		final String text,
+		final String toolTipText,
+		final IImageConstant icon) {
+		return builder(text, toolTipText, icon).setId(id);
 	}
 
 }

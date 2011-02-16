@@ -33,6 +33,7 @@ import java.util.UUID;
 import org.jowidgets.api.model.item.IItemModelBuilder;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
+import org.jowidgets.common.types.Modifier;
 
 public abstract class AbstractItemModelBuilder<INSTANCE_TYPE, ITEM_TYPE> implements IItemModelBuilder<INSTANCE_TYPE, ITEM_TYPE> {
 
@@ -82,6 +83,11 @@ public abstract class AbstractItemModelBuilder<INSTANCE_TYPE, ITEM_TYPE> impleme
 	public INSTANCE_TYPE setAccelerator(final Accelerator accelerator) {
 		this.accelerator = accelerator;
 		return (INSTANCE_TYPE) this;
+	}
+
+	@Override
+	public INSTANCE_TYPE setAccelerator(final char key, final Modifier... modifier) {
+		return setAccelerator(new Accelerator(key, modifier));
 	}
 
 	@SuppressWarnings("unchecked")

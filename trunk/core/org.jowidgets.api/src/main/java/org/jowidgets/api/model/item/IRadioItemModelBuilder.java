@@ -28,6 +28,6 @@
 
 package org.jowidgets.api.model.item;
 
-public interface IRadioItemModelBuilder extends IItemModelBuilder<IRadioItemModelBuilder, IRadioItemModel> {
+public interface IRadioItemModelBuilder extends ISelectableItemModelBuilder<IRadioItemModelBuilder, IRadioItemModel> {
 
 }

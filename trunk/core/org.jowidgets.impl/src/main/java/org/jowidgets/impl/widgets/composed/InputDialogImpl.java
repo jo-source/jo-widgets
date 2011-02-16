@@ -29,6 +29,7 @@ package org.jowidgets.impl.widgets.composed;
 
 import java.util.List;
 
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.types.InputDialogDefaultButtonPolicy;
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationMessage;
@@ -335,6 +336,11 @@ public class InputDialogImpl<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 	@Override
 	public IPopupMenu createPopupMenu() {
 		return inputCompositeWidget.createPopupMenu();
+	}
+
+	@Override
+	public void setPopupMenu(final IMenuModel popupMenu) {
+		inputCompositeWidget.setPopupMenu(popupMenu);
 	}
 
 	@Override

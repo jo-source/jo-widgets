@@ -27,6 +27,7 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.types.QuestionResult;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IComposite;
@@ -248,6 +249,11 @@ public class QuestionDialogImpl implements IQuestionDialog {
 	@Override
 	public IPopupMenu createPopupMenu() {
 		return dialogWidget.createPopupMenu();
+	}
+
+	@Override
+	public void setPopupMenu(final IMenuModel popupMenu) {
+		dialogWidget.setPopupMenu(popupMenu);
 	}
 
 	@Override

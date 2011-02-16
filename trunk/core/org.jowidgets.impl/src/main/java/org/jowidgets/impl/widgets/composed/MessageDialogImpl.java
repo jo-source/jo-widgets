@@ -27,6 +27,7 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IDisplay;
@@ -197,6 +198,11 @@ public class MessageDialogImpl implements IMessageDialog {
 	@Override
 	public IPopupMenu createPopupMenu() {
 		return dialogWidget.createPopupMenu();
+	}
+
+	@Override
+	public void setPopupMenu(final IMenuModel popupMenu) {
+		dialogWidget.setPopupMenu(popupMenu);
 	}
 
 	@Override
