@@ -25,45 +25,35 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
+
 package org.jowidgets.workbench.impl.rcp;
 
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.common.application.IApplication;
-import org.jowidgets.common.application.IApplicationLifecycle;
-import org.jowidgets.util.Assert;
-import org.jowidgets.workbench.api.IWorkbench;
-import org.jowidgets.workbench.api.IWorkbenchConfigurationService;
-import org.jowidgets.workbench.api.IWorkbenchRunner;
-import org.jowidgets.workbench.impl.rcp.internal.WorkbenchContext;
+import java.io.Serializable;
 
-public final class WorkbenchRunner implements IWorkbenchRunner {
+public final class WorkbenchConfiguration implements Serializable {
 
-	@Override
-	public void run(final IWorkbench workbench) {
-		run(new WorkbenchContext(workbench, false));
+	private static final long serialVersionUID = 1L;
+
+	private final String[] selectedTreeNode;
+	private final double folderRatio;
+	private final byte[] workbenchXml;
+
+	public WorkbenchConfiguration(final String[] selectedTreeNode, final double folderRatio, final byte[] workbenchXml) {
+		this.selectedTreeNode = selectedTreeNode;
+		this.folderRatio = folderRatio;
+		this.workbenchXml = workbenchXml;
 	}
 
-	@Override
-	public void run(final IWorkbench workbench, final IWorkbenchConfigurationService configurationService) {
-		// TODO HRW save perspectives and selected component tree node
-		Assert.paramNotNull(configurationService, "configurationService");
-		final WorkbenchConfiguration config = (WorkbenchConfiguration) configurationService.loadConfiguration();
-		final WorkbenchContext context = new WorkbenchContext(workbench, false);
-		if (config != null) {
-			context.setFolderRatio(config.getFolderRatio());
-		}
-		run(context);
-		configurationService.saveConfiguration(new WorkbenchConfiguration(null, context.getFolderRatio(), null));
+	public String[] getSelectedTreeNode() {
+		return selectedTreeNode;
 	}
 
-	private void run(final WorkbenchContext context) {
-		Toolkit.getApplicationRunner().run(new IApplication() {
-			@Override
-			public void start(final IApplicationLifecycle lifecycle) {
-				context.setLifecycle(lifecycle);
-				context.run();
-			}
-		});
+	public double getFolderRatio() {
+		return folderRatio;
+	}
+
+	public byte[] getWorkbenchXml() {
+		return workbenchXml;
 	}
 
 }

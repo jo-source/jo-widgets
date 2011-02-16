@@ -29,6 +29,9 @@ package org.jowidgets.workbench.impl.rcp.internal;
 
 import java.util.concurrent.Callable;
 
+import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -58,6 +61,7 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	private ITrayItem tray;
 	private Callable<Boolean> closeHandler;
 	private WorkbenchApplicationFolder applicationFolder;
+	private double folderRatio = 0.2;
 
 	public JoWorkbenchWindowAdvisor(
 		final IWorkbenchWindowConfigurer configurer,
@@ -145,8 +149,16 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		}
 
 		final ISplitComposite splitComposite = frame.add(
-				bpf.splitHorizontal().setWeight(0.2).disableBorders(),
+				bpf.splitHorizontal().setWeight(folderRatio).disableBorders(),
 				"wmin 0, hmin 0, grow, wrap");
+		final SashForm sashForm = (SashForm) splitComposite.getUiReference();
+		sashForm.addDisposeListener(new DisposeListener() {
+			@Override
+			public void widgetDisposed(final DisposeEvent e) {
+				// save sash weight before it is disposed
+				folderRatio = sashForm.getWeights()[0] / 1000.0;
+			}
+		});
 
 		final IContainer leftContainer = splitComposite.getFirst();
 		leftContainer.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
@@ -165,6 +177,14 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		if (workbench.hasTrayItem()) {
 			tray = new WorkbenchTrayItem(frame, workbench);
 		}
+	}
+
+	public double getFolderRatio() {
+		return folderRatio;
+	}
+
+	public void setFolderRatio(final double folderRatio) {
+		this.folderRatio = folderRatio;
 	}
 
 }

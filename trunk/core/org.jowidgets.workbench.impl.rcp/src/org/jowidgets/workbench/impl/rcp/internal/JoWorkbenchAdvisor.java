@@ -45,6 +45,7 @@ public final class JoWorkbenchAdvisor extends WorkbenchAdvisor {
 	private final boolean saveAndRestore;
 	private JoWorkbenchWindowAdvisor workbenchWindowAdvisor;
 	private final List<Runnable> shutdownHooks = new CopyOnWriteArrayList<Runnable>();
+	private Double folderRatio;
 
 	public JoWorkbenchAdvisor(final IWorkbench workbench, final IWorkbenchContext context, final boolean saveAndRestore) {
 		this.workbench = workbench;
@@ -65,6 +66,9 @@ public final class JoWorkbenchAdvisor extends WorkbenchAdvisor {
 	@Override
 	public WorkbenchWindowAdvisor createWorkbenchWindowAdvisor(final IWorkbenchWindowConfigurer configurer) {
 		workbenchWindowAdvisor = new JoWorkbenchWindowAdvisor(configurer, workbench, context);
+		if (folderRatio != null) {
+			workbenchWindowAdvisor.setFolderRatio(folderRatio);
+		}
 		return workbenchWindowAdvisor;
 	}
 
@@ -92,6 +96,10 @@ public final class JoWorkbenchAdvisor extends WorkbenchAdvisor {
 
 	public void removeShutdownHook(final Runnable shutdownHook) {
 		shutdownHooks.remove(shutdownHook);
+	}
+
+	public void setFolderRatio(final double folderRatio) {
+		this.folderRatio = folderRatio;
 	}
 
 }

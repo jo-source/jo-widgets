@@ -35,6 +35,7 @@ import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IMenuBar;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.common.application.IApplicationLifecycle;
+import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.ITrayItem;
 import org.jowidgets.workbench.api.IWorkbench;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
@@ -43,14 +44,18 @@ import org.jowidgets.workbench.api.IWorkbenchContext;
 public final class WorkbenchContext implements IWorkbenchContext {
 
 	private final JoWorkbenchAdvisor workbenchAdvisor;
-	private final IApplicationLifecycle lifecycle;
+	private IApplicationLifecycle lifecycle;
 
-	public WorkbenchContext(final IWorkbench workbench, final IApplicationLifecycle lifecycle, final boolean saveAndRestore) {
+	public WorkbenchContext(final IWorkbench workbench, final boolean saveAndRestore) {
 		workbenchAdvisor = new JoWorkbenchAdvisor(workbench, this, saveAndRestore);
+	}
+
+	public void setLifecycle(final IApplicationLifecycle lifecycle) {
 		this.lifecycle = lifecycle;
 	}
 
 	public void run() {
+		Assert.paramNotNull(lifecycle, "lifecycle");
 		try {
 			PlatformUI.createAndRunWorkbench(Display.getCurrent(), workbenchAdvisor);
 		}
@@ -76,6 +81,7 @@ public final class WorkbenchContext implements IWorkbenchContext {
 
 	@Override
 	public void finish() {
+		Assert.paramNotNull(lifecycle, "lifecycle");
 		try {
 			PlatformUI.getWorkbench().close();
 		}
@@ -117,6 +123,14 @@ public final class WorkbenchContext implements IWorkbenchContext {
 	@Override
 	public void removeShutdownHook(final Runnable shutdownHook) {
 		workbenchAdvisor.removeShutdownHook(shutdownHook);
+	}
+
+	public void setFolderRatio(final double folderRatio) {
+		workbenchAdvisor.setFolderRatio(folderRatio);
+	}
+
+	public double getFolderRatio() {
+		return workbenchAdvisor.getWorkbenchWindowAdvisor().getFolderRatio();
 	}
 
 }
