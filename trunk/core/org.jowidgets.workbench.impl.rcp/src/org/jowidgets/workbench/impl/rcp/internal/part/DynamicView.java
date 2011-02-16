@@ -41,9 +41,11 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jowidgets.api.toolkit.IWidgetWrapperFactory;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IPopupMenu;
+import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.impl.rcp.internal.ImageHelper;
@@ -64,21 +66,29 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 		setTitleToolTip(view.getTooltip());
 
 		final IComposite composite = Toolkit.getWidgetWrapperFactory().createComposite(parent);
-		final ViewContext viewContext;
-		if (view.hasMenu()) {
+		final ViewContext viewContext = new ViewContext(composite);
+		if (view.hasMenu() || view.hasToolBar()) {
 			final ToolBar toolBarControl = ((ToolBarManager) getViewSite().getActionBars().getToolBarManager()).getControl();
-			final IPopupMenu menu = Toolkit.getWidgetWrapperFactory().createComposite(toolBarControl).createPopupMenu();
-			final ToolItem menuItem = new ToolItem(toolBarControl, SWT.DROP_DOWN);
-			menuItem.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(final SelectionEvent e) {
-					menu.show(new Position(e.x, e.y));
-				}
-			});
-			viewContext = new ViewContext(composite, menu, menuItem);
-		}
-		else {
-			viewContext = new ViewContext(composite);
+			final IWidgetWrapperFactory wrapperFactory = Toolkit.getWidgetWrapperFactory();
+			if (view.hasMenu()) {
+				final IPopupMenu menu = wrapperFactory.createComposite(toolBarControl).createPopupMenu();
+				final ToolItem menuToolItem = new ToolItem(toolBarControl, SWT.DROP_DOWN | SWT.TRAIL);
+				menuToolItem.addSelectionListener(new SelectionAdapter() {
+					@Override
+					public void widgetSelected(final SelectionEvent e) {
+						menu.show(new Position(e.x, e.y));
+					}
+				});
+				viewContext.setMenu(menu);
+				viewContext.setMenuToolItem(menuToolItem);
+			}
+			if (view.hasToolBar()) {
+				// toolbar won't be visible
+				final IToolBar toolBar = wrapperFactory.createComposite(toolBarControl.getParent()).add(
+						Toolkit.getBluePrintFactory().toolBar(),
+						"");
+				viewContext.setToolBar(toolBar);
+			}
 		}
 
 		// lazy initialization of view content
