@@ -28,7 +28,15 @@
 
 package org.jowidgets.api.model.item;
 
-
 public interface ICheckedItemModel extends ISelectableItemModel {
+
+	/**
+	 * Makes a deep copy of the item.
+	 * Registered listeners on items won't be copied.
+	 * 
+	 * @return A new instance that is a clone of this instance
+	 */
+	@Override
+	ICheckedItemModel createCopy();
 
 }

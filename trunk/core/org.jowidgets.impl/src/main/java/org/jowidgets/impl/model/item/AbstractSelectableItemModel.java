@@ -55,6 +55,14 @@ public abstract class AbstractSelectableItemModel extends ItemModel implements I
 	}
 
 	@Override
+	public abstract ISelectableItemModel createCopy();
+
+	protected void setContent(final ISelectableItemModel source) {
+		super.setContent(source);
+		this.selected = source.isSelected();
+	}
+
+	@Override
 	public void addItemListener(final IItemStateListener listener) {
 		itemStateObservable.addItemListener(listener);
 	}

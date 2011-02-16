@@ -48,6 +48,10 @@ public class ItemModel implements IItemModel {
 	private Character mnemonic;
 	private boolean enabled;
 
+	protected ItemModel() {
+		this(null, null, null, null, null, null, true);
+	}
+
 	protected ItemModel(
 		final String id,
 		final String text,
@@ -66,6 +70,23 @@ public class ItemModel implements IItemModel {
 		this.accelerator = accelerator;
 		this.mnemonic = mnemonic;
 		this.enabled = enabled;
+	}
+
+	@Override
+	public IItemModel createCopy() {
+		final ItemModel result = new ItemModel();
+		result.setContent(this);
+		return result;
+	}
+
+	protected void setContent(final IItemModel source) {
+		this.id = source.getId();
+		this.text = source.getText();
+		this.toolTipText = source.getToolTipText();
+		this.icon = source.getIcon();
+		this.accelerator = source.getAccelerator();
+		this.mnemonic = source.getMnemonic();
+		this.enabled = source.isEnabled();
 	}
 
 	@Override

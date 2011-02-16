@@ -137,6 +137,11 @@ public class MenuModel extends AbstractItemModelWrapper implements IMenuModel {
 		getItemModel().removeMenuModelListener(listener);
 	}
 
+	@Override
+	public IMenuModel createCopy() {
+		return getItemModel().createCopy();
+	}
+
 	public static IMenuModelBuilder builder() {
 		return Toolkit.getModelBuilderFactoryProvider().getItemModelBuilderFactory().menuModel();
 	}

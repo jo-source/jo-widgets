@@ -46,6 +46,16 @@ public class SeparatorItemModel extends AbstractItemModelWrapper implements ISep
 		super(builder.build());
 	}
 
+	@Override
+	public ISeparatorItemModel getItemModel() {
+		return (ISeparatorItemModel) super.getItemModel();
+	}
+
+	@Override
+	public ISeparatorItemModel createCopy() {
+		return getItemModel().createCopy();
+	}
+
 	public static ISeparatorItemModelBuilder builder() {
 		return Toolkit.getModelBuilderFactoryProvider().getItemModelBuilderFactory().separatorItem();
 	}

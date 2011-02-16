@@ -39,4 +39,14 @@ public interface IActionItemModel extends IItemModel, IActionObservable {
 
 	void actionPerformed();
 
+	/**
+	 * Makes a deep copy of the item.
+	 * Registered listeners on items won't be copied.
+	 * The Action won't be cloned.
+	 * 
+	 * @return A new instance that is a clone of this instance
+	 */
+	@Override
+	IActionItemModel createCopy();
+
 }

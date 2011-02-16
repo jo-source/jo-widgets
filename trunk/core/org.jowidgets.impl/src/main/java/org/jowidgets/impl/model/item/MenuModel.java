@@ -49,6 +49,10 @@ public class MenuModel extends ItemModel implements IMenuModel {
 
 	private final List<IItemModel> children;
 
+	protected MenuModel() {
+		this(null, null, null, null, null, null, true);
+	}
+
 	protected MenuModel(
 		final String id,
 		final String text,
@@ -60,6 +64,21 @@ public class MenuModel extends ItemModel implements IMenuModel {
 		super(id, text, toolTipText, icon, accelerator, mnemonic, enabled);
 		menuModelListeners = new HashSet<IMenuModelListener>();
 		this.children = new LinkedList<IItemModel>();
+	}
+
+	@Override
+	public IMenuModel createCopy() {
+		final MenuModel result = new MenuModel();
+		result.setContent(this);
+		return result;
+	}
+
+	protected void setContent(final IMenuModel source) {
+		super.setContent(source);
+
+		for (final IItemModel sourceChild : source.getChildren()) {
+			addItem(sourceChild.createCopy());
+		}
 	}
 
 	@Override

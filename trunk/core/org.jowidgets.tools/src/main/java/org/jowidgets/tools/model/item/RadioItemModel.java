@@ -59,6 +59,16 @@ public class RadioItemModel extends AbstractSelectableItemModelWrapper implement
 		super(builder.build());
 	}
 
+	@Override
+	public IRadioItemModel getItemModel() {
+		return (IRadioItemModel) super.getItemModel();
+	}
+
+	@Override
+	public IRadioItemModel createCopy() {
+		return getItemModel().createCopy();
+	}
+
 	public static IRadioItemModelBuilder builder() {
 		return Toolkit.getModelBuilderFactoryProvider().getItemModelBuilderFactory().radioItem();
 	}

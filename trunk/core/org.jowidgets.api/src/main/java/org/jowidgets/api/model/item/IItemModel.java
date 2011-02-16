@@ -63,4 +63,12 @@ public interface IItemModel extends IItemModelObservable {
 
 	void setEnabled(boolean enabled);
 
+	/**
+	 * Makes a deep copy of the item and its children.
+	 * Registered listeners on items won't be copied.
+	 * 
+	 * @return A new instance that is a clone of this instance
+	 */
+	IItemModel createCopy();
+
 }

@@ -34,6 +34,10 @@ import org.jowidgets.common.types.Accelerator;
 
 public class RadioItemModel extends AbstractSelectableItemModel implements IRadioItemModel {
 
+	protected RadioItemModel() {
+		this(null, null, null, null, null, null, true, false);
+	}
+
 	protected RadioItemModel(
 		final String id,
 		final String text,
@@ -44,6 +48,13 @@ public class RadioItemModel extends AbstractSelectableItemModel implements IRadi
 		final boolean enabled,
 		final boolean selected) {
 		super(id, text, toolTipText, icon, accelerator, mnemonic, enabled, selected);
+	}
+
+	@Override
+	public IRadioItemModel createCopy() {
+		final RadioItemModel result = new RadioItemModel();
+		result.setContent(this);
+		return result;
 	}
 
 }

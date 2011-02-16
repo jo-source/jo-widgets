@@ -99,6 +99,11 @@ public class ActionItemModel extends AbstractItemModelWrapper implements IAction
 		getItemModel().actionPerformed();
 	}
 
+	@Override
+	public IActionItemModel createCopy() {
+		return getItemModel().createCopy();
+	}
+
 	public static IActionItemModelBuilder builder() {
 		return Toolkit.getModelBuilderFactoryProvider().getItemModelBuilderFactory().actionItem();
 	}

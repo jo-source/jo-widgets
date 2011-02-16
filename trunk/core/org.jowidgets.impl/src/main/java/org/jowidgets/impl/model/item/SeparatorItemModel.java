@@ -34,6 +34,10 @@ import org.jowidgets.common.types.Accelerator;
 
 public class SeparatorItemModel extends ItemModel implements ISeparatorItemModel {
 
+	protected SeparatorItemModel() {
+		this(null, null, null, null, null, null, true);
+	}
+
 	protected SeparatorItemModel(
 		final String id,
 		final String text,
@@ -43,6 +47,13 @@ public class SeparatorItemModel extends ItemModel implements ISeparatorItemModel
 		final Character mnemonic,
 		final boolean enabled) {
 		super(id, text, toolTipText, icon, accelerator, mnemonic, enabled);
+	}
+
+	@Override
+	public ISeparatorItemModel createCopy() {
+		final SeparatorItemModel result = new SeparatorItemModel();
+		result.setContent(this);
+		return result;
 	}
 
 }

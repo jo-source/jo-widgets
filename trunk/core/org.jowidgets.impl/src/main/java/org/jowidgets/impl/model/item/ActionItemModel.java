@@ -41,6 +41,10 @@ public class ActionItemModel extends ItemModel implements IActionItemModel {
 
 	private IAction action;
 
+	protected ActionItemModel() {
+		this(null, null, null, null, null, null, true, null);
+	}
+
 	protected ActionItemModel(
 		final String id,
 		final String text,
@@ -54,6 +58,18 @@ public class ActionItemModel extends ItemModel implements IActionItemModel {
 
 		this.actionObservable = new ActionObservable();
 		this.action = action;
+	}
+
+	@Override
+	public IActionItemModel createCopy() {
+		final ActionItemModel result = new ActionItemModel();
+		result.setContent(this);
+		return result;
+	}
+
+	protected void setContent(final ActionItemModel source) {
+		super.setContent(source);
+		this.action = source.getAction();
 	}
 
 	@Override

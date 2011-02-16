@@ -59,6 +59,16 @@ public class CheckedItemModel extends AbstractSelectableItemModelWrapper impleme
 		super(builder.build());
 	}
 
+	@Override
+	public ICheckedItemModel getItemModel() {
+		return (ICheckedItemModel) super.getItemModel();
+	}
+
+	@Override
+	public ICheckedItemModel createCopy() {
+		return getItemModel().createCopy();
+	}
+
 	public static ICheckedItemModelBuilder builder() {
 		return Toolkit.getModelBuilderFactoryProvider().getItemModelBuilderFactory().checkedItem();
 	}

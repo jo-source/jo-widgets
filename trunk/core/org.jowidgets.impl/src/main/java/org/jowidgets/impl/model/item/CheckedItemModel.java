@@ -34,6 +34,10 @@ import org.jowidgets.common.types.Accelerator;
 
 public class CheckedItemModel extends AbstractSelectableItemModel implements ICheckedItemModel {
 
+	protected CheckedItemModel() {
+		this(null, null, null, null, null, null, true, false);
+	}
+
 	protected CheckedItemModel(
 		final String id,
 		final String text,
@@ -44,6 +48,13 @@ public class CheckedItemModel extends AbstractSelectableItemModel implements ICh
 		final boolean enabled,
 		final boolean selected) {
 		super(id, text, toolTipText, icon, accelerator, mnemonic, enabled, selected);
+	}
+
+	@Override
+	public ICheckedItemModel createCopy() {
+		final CheckedItemModel result = new CheckedItemModel();
+		result.setContent(this);
+		return result;
 	}
 
 }
