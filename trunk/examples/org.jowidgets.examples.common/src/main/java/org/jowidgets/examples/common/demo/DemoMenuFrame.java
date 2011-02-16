@@ -59,8 +59,8 @@ import org.jowidgets.common.types.Modifier;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IItemStateListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.impl.model.item.ActionItemModelBuilder;
 import org.jowidgets.tools.command.EnabledChecker;
+import org.jowidgets.tools.model.item.ActionItemModel;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.model.item.RadioItemModel;
 import org.jowidgets.tools.powo.JoFrame;
@@ -196,7 +196,7 @@ public class DemoMenuFrame extends JoFrame {
 		menu.addAction(action1);
 		menu.addAction(action2);
 
-		final IActionItemModelBuilder item3Bd = new ActionItemModelBuilder();
+		final IActionItemModelBuilder item3Bd = ActionItemModel.builder();
 		item3Bd.setText("The Third Item").setToolTipText("This is the third item");
 		item3Bd.setIcon(IconsSmall.WARNING);
 		item3Bd.setAccelerator('I', Modifier.SHIFT).setMnemonic('e');
