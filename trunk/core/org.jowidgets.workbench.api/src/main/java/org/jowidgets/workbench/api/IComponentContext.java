@@ -31,4 +31,6 @@ public interface IComponentContext {
 
 	IComponentTreeNodeContext getComponentTreeNodeContext();
 
+	void setPerspective(final IPerspective perspective);
+
 }

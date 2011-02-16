@@ -58,4 +58,10 @@ public final class ComponentContext implements IComponentContext {
 		return perspectiveReference.get();
 	}
 
+	@Override
+	public void setPerspective(final IPerspective perspective) {
+		// TODO HRW support changing of perspectives		
+		throw new UnsupportedOperationException("setPerspective");
+	}
+
 }
