@@ -88,7 +88,7 @@ class SubMenu<WIDGET_TYPE extends ISubMenu, BLUE_PRINT_TYPE extends IWidgetDescr
 
 	@Override
 	public void setModel(final IItemModel model) {
-		//TODO MG
+		//TODO MG model support
 	}
 
 }

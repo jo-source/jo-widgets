@@ -110,7 +110,7 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 
 	@Override
 	public void setToolTipText(final String toolTipText) {
-		//TODO MG
+		//TODO BM Use Tooltip like in SwtMenu
 	}
 
 	@Override

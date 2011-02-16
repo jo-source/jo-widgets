@@ -49,7 +49,7 @@ public final class WorkbenchRunner implements IWorkbenchRunner {
 
 	@Override
 	public void run(final IWorkbench workbench, final IWorkbenchConfigurationService configurationService) {
-		// TODO support configuration service
+		// TODO HW support configuration service
 		run(workbench);
 	}
 

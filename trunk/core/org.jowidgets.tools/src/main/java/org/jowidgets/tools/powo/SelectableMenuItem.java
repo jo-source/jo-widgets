@@ -109,7 +109,7 @@ class SelectableMenuItem<WIDGET_TYPE extends ISelectableMenuItem, BLUE_PRINT_TYP
 
 	@Override
 	public void setModel(final ISelectableItemModel model) {
-		//TODO
+		//TODO MG model support
 	}
 
 	@Override

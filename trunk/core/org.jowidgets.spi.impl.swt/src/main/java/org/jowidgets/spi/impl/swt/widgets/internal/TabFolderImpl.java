@@ -75,7 +75,7 @@ public class TabFolderImpl extends SwtControl implements ITabFolderSpi {
 			getUiReference().setSimple(false);
 		}
 		catch (final NoSuchMethodError error) {
-			//TODO RWT does not support simple=false
+			//RWT does not support simple=false
 		}
 
 		setMenuDetectListener(new MenuDetectListener() {

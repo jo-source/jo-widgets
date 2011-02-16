@@ -104,7 +104,7 @@ class ActionMenuItem<WIDGET_TYPE extends IActionMenuItem, BLUE_PRINT_TYPE extend
 
 	@Override
 	public void setModel(final IActionItemModel model) {
-		// TODO MG
+		// TODO MG model support
 	}
 
 	@Override

@@ -223,7 +223,7 @@ public final class DummyWidgetFactory implements IWidgetFactorySpi {
 
 	@Override
 	public ITreeSpi createTree(final Object parentUiReference, final ITreeSetupSpi setup) {
-		// TODO LG
+		// TODO LG Dummy Tree must be implemented
 		return null;
 	}
 

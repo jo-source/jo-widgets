@@ -38,7 +38,7 @@ public final class ColorConvert {
 
 	public static Color convert(final IColorConstant colorConstant) {
 		if (colorConstant != null) {
-			// TODO this might be replaced by registered color for this constant
+			//TODO MG this might be replaced by registered color for this constant
 			final ColorValue colorValue = colorConstant.getDefaultValue();
 			return new Color(colorValue.getRed(), colorValue.getGreen(), colorValue.getBlue());
 		}

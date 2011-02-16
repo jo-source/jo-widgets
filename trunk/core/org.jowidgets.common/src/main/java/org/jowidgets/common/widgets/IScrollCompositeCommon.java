@@ -29,6 +29,6 @@ package org.jowidgets.common.widgets;
 
 public interface IScrollCompositeCommon extends ICompositeCommon {
 
-	//TODO add vieport stuff here
+	//TODO MG add vieport stuff here
 
 }

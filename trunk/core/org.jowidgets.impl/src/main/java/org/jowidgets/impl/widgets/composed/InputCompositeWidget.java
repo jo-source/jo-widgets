@@ -68,7 +68,7 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputComposite<INPUT_T
 
 		if (setup.getValidationLabel() != null) {
 			this.composite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[][grow][]0"));
-			validationLabel = this.composite.add(setup.getValidationLabel(), "h 18::, wrap");// TODO use hide instead
+			validationLabel = this.composite.add(setup.getValidationLabel(), "h 18::, wrap");// TODO MG use hide instead
 		}
 		else {
 			validationLabel = null;

@@ -106,7 +106,7 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 			});
 		}
 		catch (final NoSuchMethodError error) {
-			//TODO RWT has no paint listener
+			//TODO MG RWT has no paint listener
 		}
 
 	}

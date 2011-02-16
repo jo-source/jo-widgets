@@ -52,7 +52,7 @@ public class ComponentDelegate {
 	}
 
 	public boolean isReparentable() {
-		//TODO will be implemented later
+		//TODO MG will be implemented later
 		return false;
 	}
 

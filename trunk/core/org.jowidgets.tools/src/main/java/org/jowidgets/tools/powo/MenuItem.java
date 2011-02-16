@@ -60,13 +60,13 @@ class MenuItem<WIDGET_TYPE extends IMenuItem, BLUE_PRINT_TYPE extends IWidgetDes
 
 	@Override
 	public IItemModel getModel() {
-		// TODO MG
+		// TODO MG model support
 		return null;
 	}
 
 	@Override
 	public void setModel(final IItemModel model) {
-		// TODO MG
+		// TODO MG model support
 	}
 
 }

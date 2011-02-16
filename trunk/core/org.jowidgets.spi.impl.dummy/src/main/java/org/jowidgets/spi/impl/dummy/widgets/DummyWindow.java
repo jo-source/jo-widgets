@@ -52,7 +52,7 @@ public class DummyWindow extends DummyContainer implements IWindowSpi {
 	}
 
 	public void setDefaultButton(final IButtonCommon button) {
-		// TODO LG
+		// TODO LG default button must be simulated
 	}
 
 	@Override

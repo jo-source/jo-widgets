@@ -79,7 +79,7 @@ public class MenuItemImpl extends ActionObservable implements IMenuItemSpi, IToo
 			getUiReference().setAccelerator(accelerator.getKey() + modfifier);
 		}
 		catch (final NoSuchMethodError error) {
-			//TODO RWT does not support accelerators
+			//RWT does not support accelerators
 			return;
 		}
 		this.acceleratorText = ModifierConvert.acceleratorText(accelerator.getModifier()) + accelerator.getKey();

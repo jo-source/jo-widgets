@@ -50,7 +50,7 @@ public class ToolBarTest {
 	private static final String DEFAULT_ITEM_TEXT = "test";
 	private static final String DEFAULT_ITEM_TOOLTIP_TEXT = "tooltipp";
 
-	// TODO make more tests!
+	// TODO LG make more tests!
 	@Test
 	public void createToolBarTest() {
 		Toolkit.getApplicationRunner().run(new IApplication() {

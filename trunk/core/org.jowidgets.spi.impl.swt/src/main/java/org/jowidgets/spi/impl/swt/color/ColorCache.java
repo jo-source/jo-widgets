@@ -45,7 +45,7 @@ public final class ColorCache implements IColorCache {
 
 	@Override
 	public synchronized Color getColor(final IColorConstant colorConstant) {
-		// TODO this might be replaced by registered color for this constant
+		// TODO MG this might be replaced by registered color for this constant
 		if (colorConstant != null) {
 			final ColorValue colorValue = colorConstant.getDefaultValue();
 			Color color = colorMap.get(colorValue);

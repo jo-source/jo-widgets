@@ -44,7 +44,7 @@ import org.jowidgets.spi.widgets.ISubMenuSpi;
 
 public abstract class AbstractSwingMenu extends SwingWidget implements IMenuSpi {
 
-	//TODO use one radio group for every separator
+	//TODO BM use one radio group for every separator
 	private final ButtonGroup radioGroup;
 
 	public AbstractSwingMenu(final Container component) {
@@ -91,7 +91,7 @@ public abstract class AbstractSwingMenu extends SwingWidget implements IMenuSpi 
 	@Override
 	public ISelectableMenuItemSpi addRadioItem(final Integer index) {
 		final JRadioButtonMenuItem radioItem = new JRadioButtonMenuItem();
-		//TODO use one radio group for every separator
+		//TODO BM use one radio group for every separator
 		radioGroup.add(radioItem);
 		final SelectableMenuItemImpl result = new SelectableMenuItemImpl(radioItem);
 		addItem(index, result);

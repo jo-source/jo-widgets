@@ -225,11 +225,11 @@ public class WidgetFactoryTest {
 
 		widget.addActionListener(listener);
 
-		//TODO push button and check listener
+		//TODO LG push button and check listener
 
 		widget.removeActionListener(listener);
 
-		//TODO push button and check listener not invoked
+		//TODO LG push button and check listener not invoked
 	}
 
 	private void testLabelWidget(final IContainer parent, final ILabel widget) {

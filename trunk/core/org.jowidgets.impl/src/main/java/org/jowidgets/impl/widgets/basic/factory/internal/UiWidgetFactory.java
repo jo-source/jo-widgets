@@ -58,7 +58,7 @@ public class UiWidgetFactory<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extend
 		this.descriptorType = descriptorType;
 	}
 
-	// TODO better exception descriptions
+	// TODO LG better exception descriptions
 	@SuppressWarnings("unchecked")
 	@Override
 	public WIDGET_TYPE create(final Object parentUiReference, final DESCRIPTOR_TYPE descriptor) {

@@ -64,7 +64,7 @@ public class UIDDialog extends UIDWindow {
 
 	@Override
 	public void setVisible(final boolean visible) {
-		//TODO this must block, until the dialog becomes invisible,
+		//TODO LG this must block, until the dialog becomes invisible,
 		//but the event dispatcher thread must not block and pump 
 		//other events may be done on this dialog
 		super.setVisible(visible);
