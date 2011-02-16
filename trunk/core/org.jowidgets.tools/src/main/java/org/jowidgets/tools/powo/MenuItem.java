@@ -60,13 +60,14 @@ class MenuItem<WIDGET_TYPE extends IMenuItem, BLUE_PRINT_TYPE extends IWidgetDes
 
 	@Override
 	public IItemModel getModel() {
-		// TODO MG model support
-		return null;
+		checkInitialized();
+		return getWidget().getModel();
 	}
 
 	@Override
 	public void setModel(final IItemModel model) {
-		// TODO MG model support
+		checkInitialized();
+		getWidget().setModel(model);
 	}
 
 }

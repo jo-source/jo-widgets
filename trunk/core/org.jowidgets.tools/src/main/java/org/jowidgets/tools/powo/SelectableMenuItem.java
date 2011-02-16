@@ -109,12 +109,14 @@ class SelectableMenuItem<WIDGET_TYPE extends ISelectableMenuItem, BLUE_PRINT_TYP
 
 	@Override
 	public void setModel(final ISelectableItemModel model) {
-		//TODO MG model support
+		checkInitialized();
+		getWidget().setModel(model);
 	}
 
 	@Override
 	public ISelectableItemModel getModel() {
-		return (ISelectableItemModel) super.getModel();
+		checkInitialized();
+		return getWidget().getModel();
 	}
 
 }

@@ -262,13 +262,14 @@ class Menu<WIDGET_TYPE extends IMenu, BLUE_PRINT_TYPE extends IWidgetDescriptor<
 
 	@Override
 	public IMenuModel getModel() {
-		//TODO MG model support
-		return null;
+		checkInitialized();
+		return getWidget().getModel();
 	}
 
 	@Override
 	public void setModel(final IMenuModel model) {
-		//TODO MG model support
+		checkInitialized();
+		getWidget().setModel(model);
 	}
 
 }

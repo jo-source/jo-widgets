@@ -104,12 +104,14 @@ class ActionMenuItem<WIDGET_TYPE extends IActionMenuItem, BLUE_PRINT_TYPE extend
 
 	@Override
 	public void setModel(final IActionItemModel model) {
-		// TODO MG model support
+		checkInitialized();
+		getWidget().setModel(model);
 	}
 
 	@Override
 	public IActionItemModel getModel() {
-		return (IActionItemModel) super.getModel();
+		checkInitialized();
+		return getWidget().getModel();
 	}
 
 }
