@@ -44,6 +44,7 @@ import org.jowidgets.api.test.blueprint.defaults.Hierarchy2nd2Defaults;
 import org.jowidgets.api.test.blueprint.defaults.Hierarchy3rdDefaults;
 import org.jowidgets.api.test.blueprint.defaults.registry.DummyDefaultsInitializerRegistry;
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.junit.After;
 import org.junit.Before;
@@ -59,6 +60,7 @@ public final class ProxyInvocationTest {
 	private Hierarchy2nd1Defaults hierarchy2nd1DefaultMock;
 	private Hierarchy2nd2Defaults hierarchy2nd2DefaultMock;
 	private Hierarchy3rdDefaults hierarchy3rdDefaultMock;
+	private IDefaultsInitializerRegistry defaultsInitializerRegistry;
 
 	@Before
 	public void setUp() {
@@ -67,6 +69,7 @@ public final class ProxyInvocationTest {
 		hierarchy3rdDefaultMock = easyMock.createMock(Hierarchy3rdDefaults.class);
 		hierarchy2nd1DefaultMock = easyMock.createMock(Hierarchy2nd1Defaults.class);
 		hierarchy2nd2DefaultMock = easyMock.createMock(Hierarchy2nd2Defaults.class);
+		defaultsInitializerRegistry = BLUE_PRINT_FACTORY.getDefaultsInitializerRegistry();
 		dummyBluePrintFactory = new DummyBluePrintFactory(BLUE_PRINT_FACTORY);
 		dummyBluePrintFactory.setSetupBuilderConvenience(IHierarchy1stSetupBuilder.class, new DummySetupBuilderConvenience());
 		dummyBluePrintFactory.setDefaultsInitializerRegistry(new DummyDefaultsInitializerRegistry(
@@ -78,6 +81,7 @@ public final class ProxyInvocationTest {
 
 	@After
 	public void tearDown() {
+		dummyBluePrintFactory.setDefaultsInitializerRegistry(defaultsInitializerRegistry);
 		easyMock.verify();
 	}
 
