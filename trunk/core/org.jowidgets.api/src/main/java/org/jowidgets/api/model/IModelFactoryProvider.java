@@ -26,18 +26,12 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.model.item;
+package org.jowidgets.api.model;
 
-public interface IItemModelBuilderFactory {
+import org.jowidgets.api.model.item.IItemModelFactory;
 
-	IMenuModelBuilder menuModel();
+public interface IModelFactoryProvider {
 
-	IActionItemModelBuilder actionItem();
-
-	ICheckedItemModelBuilder checkedItem();
-
-	IRadioItemModelBuilder radioItem();
-
-	ISeparatorItemModelBuilder separatorItem();
+	IItemModelFactory getItemModelFactory();
 
 }

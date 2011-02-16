@@ -34,7 +34,7 @@ import org.jowidgets.api.command.IActionBuilderFactory;
 import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.image.IconsSmall;
-import org.jowidgets.api.model.IModelBuilderFactoryProvider;
+import org.jowidgets.api.model.IModelFactoryProvider;
 import org.jowidgets.api.threads.IUiThreadAccess;
 import org.jowidgets.api.toolkit.IMessagePane;
 import org.jowidgets.api.toolkit.IQuestionPane;
@@ -53,7 +53,7 @@ import org.jowidgets.impl.application.ApplicationRunner;
 import org.jowidgets.impl.command.ActionBuilderFactory;
 import org.jowidgets.impl.convert.DefaultConverterProvider;
 import org.jowidgets.impl.image.DefaultIconsRegisterService;
-import org.jowidgets.impl.model.ModelBuilderFactoryProvider;
+import org.jowidgets.impl.model.ModelFactoryProvider;
 import org.jowidgets.impl.threads.UiThreadAccess;
 import org.jowidgets.impl.utils.WidgetUtils;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
@@ -70,7 +70,7 @@ public class DefaultToolkit implements IToolkit {
 	private final IWidgetWrapperFactory widgetWrapperFactory;
 	private final IBluePrintFactory bluePrintFactory;
 	private final IActionBuilderFactory actionBuilderFactory;
-	private final IModelBuilderFactoryProvider modelBuilderFactoryProvider;
+	private final IModelFactoryProvider modelFactoryProvider;
 	private final IConverterProvider converterProvider;
 	private final WindowProvider windowProvider;
 	private final IMessagePane messagePane;
@@ -87,7 +87,7 @@ public class DefaultToolkit implements IToolkit {
 		this.widgetWrapperFactory = new DefaultWidgetWrapperFactory(genericWidgetFactory, toolkitSpi.getWidgetFactory());
 		this.bluePrintFactory = new BluePrintFactory();
 		this.actionBuilderFactory = new ActionBuilderFactory();
-		this.modelBuilderFactoryProvider = new ModelBuilderFactoryProvider();
+		this.modelFactoryProvider = new ModelFactoryProvider();
 		this.converterProvider = new DefaultConverterProvider();
 		this.windowProvider = new WindowProvider(genericWidgetFactory, toolkitSpi);
 		this.messagePane = new DefaultMessagePane(genericWidgetFactory, bluePrintFactory, windowProvider);
@@ -137,8 +137,8 @@ public class DefaultToolkit implements IToolkit {
 	}
 
 	@Override
-	public IModelBuilderFactoryProvider getModelBuilderFactoryProvider() {
-		return modelBuilderFactoryProvider;
+	public IModelFactoryProvider getModelFactoryProvider() {
+		return modelFactoryProvider;
 	}
 
 	@Override

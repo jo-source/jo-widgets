@@ -28,6 +28,7 @@
 
 package org.jowidgets.api.model.item;
 
+//TODO MG rename to IListModelListener
 public interface IMenuModelListener {
 
 	void childAdded(int index);

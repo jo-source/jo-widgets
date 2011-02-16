@@ -26,40 +26,52 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.model.item;
+package org.jowidgets.api.model.item;
 
-import org.jowidgets.api.model.item.IActionItemModelBuilder;
-import org.jowidgets.api.model.item.ICheckedItemModelBuilder;
-import org.jowidgets.api.model.item.IItemModelBuilderFactory;
-import org.jowidgets.api.model.item.IMenuModelBuilder;
-import org.jowidgets.api.model.item.IRadioItemModelBuilder;
-import org.jowidgets.api.model.item.ISeparatorItemModelBuilder;
+import java.util.List;
 
-public class ItemModelBuilderFactory implements IItemModelBuilderFactory {
+import org.jowidgets.common.image.IImageConstant;
 
-	@Override
-	public IMenuModelBuilder menuModel() {
-		return new MenuModelBuilder();
-	}
+public interface IMenuBarModel extends IMenuModelObservable {
 
-	@Override
-	public IActionItemModelBuilder actionItem() {
-		return new ActionItemModelBuilder();
-	}
+	void addAfter(IMenuModel newMenu, String id);
 
-	@Override
-	public ICheckedItemModelBuilder checkedItem() {
-		return new CheckedItemModelBuilder();
-	}
+	void addBefore(IMenuModel newMenu, String id);
 
-	@Override
-	public IRadioItemModelBuilder radioItem() {
-		return new RadioItemModelBuilder();
-	}
+	IMenuModel addMenu(IMenuModel menu);
 
-	@Override
-	public ISeparatorItemModelBuilder separatorItem() {
-		return new SeparatorItemModelBuilder();
-	}
+	IMenuModel addMenu(int index, IMenuModel menu);
+
+	IMenuModel addMenu(IMenuModelBuilder menuBuilder);
+
+	IMenuModel addMenu(int index, IMenuModelBuilder menuBuilder);
+
+	IMenuModel addMenu();
+
+	IMenuModel addMenu(String text);
+
+	IMenuModel addMenu(String text, String toolTipText);
+
+	IMenuModel addMenu(String text, IImageConstant icon);
+
+	IMenuModel addMenu(String text, String toolTipText, IImageConstant icon);
+
+	void removeMenu(final IMenuModel item);
+
+	void removeMenu(int index);
+
+	void removeAllMenus();
+
+	IMenuModel findMenuById(String id);
+
+	List<IMenuModel> getMenus();
+
+	/**
+	 * Makes a deep copy of the menu bar and its children.
+	 * Registered listeners on items won't be copied.
+	 * 
+	 * @return A new instance that is a clone of this instance
+	 */
+	IMenuBarModel createCopy();
 
 }

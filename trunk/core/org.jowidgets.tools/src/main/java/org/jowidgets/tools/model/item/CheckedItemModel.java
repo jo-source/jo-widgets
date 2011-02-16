@@ -74,7 +74,7 @@ public class CheckedItemModel extends AbstractSelectableItemModelWrapper impleme
 	}
 
 	public static ICheckedItemModelBuilder builder() {
-		return Toolkit.getModelBuilderFactoryProvider().getItemModelBuilderFactory().checkedItem();
+		return Toolkit.getModelBuilderFactoryProvider().getItemModelFactory().checkedItemBuilder();
 	}
 
 	public static ICheckedItemModelBuilder builder(final String text) {

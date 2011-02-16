@@ -26,22 +26,32 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.model;
+package org.jowidgets.api.model.item;
 
-import org.jowidgets.api.model.IModelBuilderFactoryProvider;
-import org.jowidgets.api.model.item.IItemModelBuilderFactory;
-import org.jowidgets.impl.model.item.ItemModelBuilderFactory;
+public interface IItemModelFactory {
 
-public class ModelBuilderFactoryProvider implements IModelBuilderFactoryProvider {
+	IMenuModelBuilder menuBuilder();
 
-	private IItemModelBuilderFactory itemModelBuilderFactory;
+	IActionItemModelBuilder actionItemBuilder();
 
-	@Override
-	public IItemModelBuilderFactory getItemModelBuilderFactory() {
-		if (itemModelBuilderFactory == null) {
-			itemModelBuilderFactory = new ItemModelBuilderFactory();
-		}
-		return itemModelBuilderFactory;
-	}
+	ICheckedItemModelBuilder checkedItemBuilder();
+
+	IRadioItemModelBuilder radioItemBuilder();
+
+	ISeparatorItemModelBuilder separatorBuilder();
+
+	IMenuModel menu();
+
+	IActionItemModel actionItem();
+
+	ICheckedItemModel checkedItem();
+
+	IRadioItemModel radioItem();
+
+	ISeparatorItemModel separator();
+
+	IMenuBarModel menuBar();
+
+	IToolBarModel toolBar();
 
 }

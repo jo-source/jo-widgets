@@ -57,7 +57,7 @@ public class SeparatorItemModel extends AbstractItemModelWrapper implements ISep
 	}
 
 	public static ISeparatorItemModelBuilder builder() {
-		return Toolkit.getModelBuilderFactoryProvider().getItemModelBuilderFactory().separatorItem();
+		return Toolkit.getModelBuilderFactoryProvider().getItemModelFactory().separatorBuilder();
 	}
 
 	public static ISeparatorItemModelBuilder builder(final String id) {

@@ -105,7 +105,7 @@ public class ActionItemModel extends AbstractItemModelWrapper implements IAction
 	}
 
 	public static IActionItemModelBuilder builder() {
-		return Toolkit.getModelBuilderFactoryProvider().getItemModelBuilderFactory().actionItem();
+		return Toolkit.getModelBuilderFactoryProvider().getItemModelFactory().actionItemBuilder();
 	}
 
 	public static IActionItemModelBuilder builder(final String text) {

@@ -74,7 +74,7 @@ public class RadioItemModel extends AbstractSelectableItemModelWrapper implement
 	}
 
 	public static IRadioItemModelBuilder builder() {
-		return Toolkit.getModelBuilderFactoryProvider().getItemModelBuilderFactory().radioItem();
+		return Toolkit.getModelBuilderFactoryProvider().getItemModelFactory().radioItemBuilder();
 	}
 
 	public static IRadioItemModelBuilder builder(final String text) {

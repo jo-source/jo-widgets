@@ -26,12 +26,22 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.model;
+package org.jowidgets.impl.model;
 
-import org.jowidgets.api.model.item.IItemModelBuilderFactory;
+import org.jowidgets.api.model.IModelFactoryProvider;
+import org.jowidgets.api.model.item.IItemModelFactory;
+import org.jowidgets.impl.model.item.ItemModelFactory;
 
-public interface IModelBuilderFactoryProvider {
+public class ModelFactoryProvider implements IModelFactoryProvider {
 
-	IItemModelBuilderFactory getItemModelBuilderFactory();
+	private IItemModelFactory itemModelFactory;
+
+	@Override
+	public IItemModelFactory getItemModelFactory() {
+		if (itemModelFactory == null) {
+			itemModelFactory = new ItemModelFactory();
+		}
+		return itemModelFactory;
+	}
 
 }
