@@ -28,17 +28,17 @@
 
 package org.jowidgets.impl.model.item;
 
-import org.jowidgets.api.model.item.IRadioItemModel;
+import org.jowidgets.api.model.item.ICheckedItemModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
 
-public class RadioItemModel extends AbstractSelectableItemModel implements IRadioItemModel {
+class CheckedItemModelImpl extends AbstractSelectableItemModel implements ICheckedItemModel {
 
-	protected RadioItemModel() {
+	protected CheckedItemModelImpl() {
 		this(null, null, null, null, null, null, true, false);
 	}
 
-	protected RadioItemModel(
+	protected CheckedItemModelImpl(
 		final String id,
 		final String text,
 		final String toolTipText,
@@ -51,8 +51,8 @@ public class RadioItemModel extends AbstractSelectableItemModel implements IRadi
 	}
 
 	@Override
-	public IRadioItemModel createCopy() {
-		final RadioItemModel result = new RadioItemModel();
+	public ICheckedItemModel createCopy() {
+		final CheckedItemModelImpl result = new CheckedItemModelImpl();
 		result.setContent(this);
 		return result;
 	}

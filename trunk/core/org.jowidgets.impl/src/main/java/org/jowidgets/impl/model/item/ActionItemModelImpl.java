@@ -35,17 +35,17 @@ import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.tools.controler.ActionObservable;
 
-public class ActionItemModel extends ItemModel implements IActionItemModel {
+class ActionItemModelImpl extends ItemModelImpl implements IActionItemModel {
 
 	private final ActionObservable actionObservable;
 
 	private IAction action;
 
-	protected ActionItemModel() {
+	protected ActionItemModelImpl() {
 		this(null, null, null, null, null, null, true, null);
 	}
 
-	protected ActionItemModel(
+	protected ActionItemModelImpl(
 		final String id,
 		final String text,
 		final String toolTipText,
@@ -62,12 +62,12 @@ public class ActionItemModel extends ItemModel implements IActionItemModel {
 
 	@Override
 	public IActionItemModel createCopy() {
-		final ActionItemModel result = new ActionItemModel();
+		final ActionItemModelImpl result = new ActionItemModelImpl();
 		result.setContent(this);
 		return result;
 	}
 
-	protected void setContent(final ActionItemModel source) {
+	protected void setContent(final ActionItemModelImpl source) {
 		super.setContent(source);
 		this.action = source.getAction();
 	}

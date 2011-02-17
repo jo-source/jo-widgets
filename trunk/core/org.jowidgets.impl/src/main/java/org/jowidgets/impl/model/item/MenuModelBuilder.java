@@ -35,7 +35,7 @@ public class MenuModelBuilder extends AbstractItemModelBuilder<IMenuModelBuilder
 
 	@Override
 	public IMenuModel build() {
-		return new MenuModel(getId(), getText(), getToolTipText(), getIcon(), getAccelerator(), getMnemonic(), isEnabled());
+		return new MenuModelImpl(getId(), getText(), getToolTipText(), getIcon(), getAccelerator(), getMnemonic(), isEnabled());
 	}
 
 }

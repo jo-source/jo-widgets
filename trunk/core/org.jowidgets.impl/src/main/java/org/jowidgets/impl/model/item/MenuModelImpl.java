@@ -48,17 +48,17 @@ import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.NullCompatibleEquivalence;
 
-public class MenuModel extends ItemModel implements IMenuModel {
+class MenuModelImpl extends ItemModelImpl implements IMenuModel {
 
 	private final Set<IListModelListener> listModelListeners;
 	private final List<IItemModel> children;
 	private final IItemModelListener itemModelListener;
 
-	protected MenuModel() {
+	protected MenuModelImpl() {
 		this(null, null, null, null, null, null, true);
 	}
 
-	protected MenuModel(
+	protected MenuModelImpl(
 		final String id,
 		final String text,
 		final String toolTipText,
@@ -80,7 +80,7 @@ public class MenuModel extends ItemModel implements IMenuModel {
 
 	@Override
 	public IMenuModel createCopy() {
-		final MenuModel result = new MenuModel();
+		final MenuModelImpl result = new MenuModelImpl();
 		result.setContent(this);
 		return result;
 	}

@@ -45,7 +45,7 @@ import org.jowidgets.api.controler.IChangeListener;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
 
-public class CommandAction implements ICommandAction, IActionChangeObservable {
+class CommandActionImpl implements ICommandAction, IActionChangeObservable {
 
 	private final Set<IActionChangeListener> actionChangeListeners;
 
@@ -66,7 +66,7 @@ public class CommandAction implements ICommandAction, IActionChangeObservable {
 
 	private IExceptionHandler exceptionHandler;
 
-	public CommandAction(
+	public CommandActionImpl(
 		final String text,
 		final String toolTipText,
 		final IImageConstant icon,

@@ -38,7 +38,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.common.types.Modifier;
 
-public class ItemModel implements IItemModel {
+class ItemModelImpl implements IItemModel {
 
 	private final Set<IItemModelListener> menuItemModelListeners;
 	private String id;
@@ -50,11 +50,11 @@ public class ItemModel implements IItemModel {
 	private Character mnemonic;
 	private boolean enabled;
 
-	protected ItemModel() {
+	protected ItemModelImpl() {
 		this(null, null, null, null, null, null, true);
 	}
 
-	protected ItemModel(
+	protected ItemModelImpl(
 		final String id,
 		final String text,
 		final String toolTipText,
@@ -81,7 +81,7 @@ public class ItemModel implements IItemModel {
 
 	@Override
 	public IItemModel createCopy() {
-		final ItemModel result = new ItemModel();
+		final ItemModelImpl result = new ItemModelImpl();
 		result.setContent(this);
 		return result;
 	}
@@ -223,7 +223,7 @@ public class ItemModel implements IItemModel {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final ItemModel other = (ItemModel) obj;
+		final ItemModelImpl other = (ItemModelImpl) obj;
 		if (id == null) {
 			if (other.id != null) {
 				return false;

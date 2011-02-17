@@ -36,7 +36,7 @@ public class RadioItemModelBuilder extends AbstractSelectableItemModelBuilder<IR
 
 	@Override
 	public IRadioItemModel build() {
-		return new RadioItemModel(
+		return new RadioItemModelImpl(
 			getId(),
 			getText(),
 			getToolTipText(),

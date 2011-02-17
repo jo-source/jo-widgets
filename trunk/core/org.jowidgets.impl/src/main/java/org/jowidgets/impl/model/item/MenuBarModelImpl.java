@@ -36,15 +36,15 @@ import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IMenuModelBuilder;
 
-public class MenuBarModel extends MenuModel implements IMenuBarModel {
+class MenuBarModelImpl extends MenuModelImpl implements IMenuBarModel {
 
-	public MenuBarModel() {
+	protected MenuBarModelImpl() {
 		super();
 	}
 
 	@Override
-	public MenuBarModel createCopy() {
-		final MenuBarModel result = new MenuBarModel();
+	public MenuBarModelImpl createCopy() {
+		final MenuBarModelImpl result = new MenuBarModelImpl();
 		result.setContent(this);
 		return result;
 	}

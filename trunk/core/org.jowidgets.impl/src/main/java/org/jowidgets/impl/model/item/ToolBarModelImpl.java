@@ -39,15 +39,15 @@ import org.jowidgets.api.model.item.IRadioItemModelBuilder;
 import org.jowidgets.api.model.item.ISeparatorItemModel;
 import org.jowidgets.api.model.item.IToolBarModel;
 
-public class ToolBarModel extends MenuModel implements IToolBarModel {
+class ToolBarModelImpl extends MenuModelImpl implements IToolBarModel {
 
-	public ToolBarModel() {
+	protected ToolBarModelImpl() {
 		super();
 	}
 
 	@Override
-	public ToolBarModel createCopy() {
-		final ToolBarModel result = new ToolBarModel();
+	public ToolBarModelImpl createCopy() {
+		final ToolBarModelImpl result = new ToolBarModelImpl();
 		result.setContent(this);
 		return result;
 	}

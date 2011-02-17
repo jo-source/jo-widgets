@@ -35,7 +35,7 @@ public class ItemModelBuilder extends AbstractItemModelBuilder<IItemModelBuilder
 
 	@Override
 	public IItemModel build() {
-		return new ItemModel(getId(), getText(), getToolTipText(), getIcon(), getAccelerator(), getMnemonic(), isEnabled());
+		return new ItemModelImpl(getId(), getText(), getToolTipText(), getIcon(), getAccelerator(), getMnemonic(), isEnabled());
 	}
 
 }

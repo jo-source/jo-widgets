@@ -36,7 +36,7 @@ public class CheckedItemModelBuilder extends AbstractSelectableItemModelBuilder<
 
 	@Override
 	public ICheckedItemModel build() {
-		return new CheckedItemModel(
+		return new CheckedItemModelImpl(
 			getId(),
 			getText(),
 			getToolTipText(),

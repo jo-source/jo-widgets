@@ -32,13 +32,13 @@ import org.jowidgets.api.model.item.ISeparatorItemModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
 
-public class SeparatorItemModel extends ItemModel implements ISeparatorItemModel {
+class SeparatorItemModelImpl extends ItemModelImpl implements ISeparatorItemModel {
 
-	protected SeparatorItemModel() {
+	protected SeparatorItemModelImpl() {
 		this(null, null, null, null, null, null, true);
 	}
 
-	protected SeparatorItemModel(
+	protected SeparatorItemModelImpl(
 		final String id,
 		final String text,
 		final String toolTipText,
@@ -51,7 +51,7 @@ public class SeparatorItemModel extends ItemModel implements ISeparatorItemModel
 
 	@Override
 	public ISeparatorItemModel createCopy() {
-		final SeparatorItemModel result = new SeparatorItemModel();
+		final SeparatorItemModelImpl result = new SeparatorItemModelImpl();
 		result.setContent(this);
 		return result;
 	}

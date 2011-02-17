@@ -143,7 +143,7 @@ public class ActionBuilder implements IActionBuilder {
 
 	@Override
 	public ICommandAction build() {
-		final ICommandAction result = new CommandAction(
+		final ICommandAction result = new CommandActionImpl(
 			text,
 			toolTipText,
 			icon,

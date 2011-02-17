@@ -34,7 +34,7 @@ import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.common.widgets.controler.IItemStateListener;
 import org.jowidgets.tools.controler.ItemStateObservable;
 
-public abstract class AbstractSelectableItemModel extends ItemModel implements ISelectableItemModel {
+abstract class AbstractSelectableItemModel extends ItemModelImpl implements ISelectableItemModel {
 
 	private final ItemStateObservable itemStateObservable;
 	private boolean selected;

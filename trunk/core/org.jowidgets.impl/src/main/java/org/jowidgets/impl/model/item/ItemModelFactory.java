@@ -96,12 +96,12 @@ public class ItemModelFactory implements IItemModelFactory {
 
 	@Override
 	public IMenuBarModel menuBar() {
-		return new MenuBarModel();
+		return new MenuBarModelImpl();
 	}
 
 	@Override
 	public IToolBarModel toolBar() {
-		return new ToolBarModel();
+		return new ToolBarModelImpl();
 	}
 
 }

@@ -45,7 +45,7 @@ public class ActionItemModelBuilder extends AbstractItemModelBuilder<IActionItem
 
 	@Override
 	public IActionItemModel build() {
-		return new ActionItemModel(
+		return new ActionItemModelImpl(
 			getId(),
 			getText(),
 			getToolTipText(),

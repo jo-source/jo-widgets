@@ -36,7 +36,7 @@ public class SeparatorItemModelBuilder extends AbstractItemModelBuilder<ISeparat
 
 	@Override
 	public ISeparatorItemModel build() {
-		return new SeparatorItemModel(
+		return new SeparatorItemModelImpl(
 			getId(),
 			getText(),
 			getToolTipText(),
