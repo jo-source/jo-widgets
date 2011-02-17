@@ -37,12 +37,12 @@ import org.jowidgets.workbench.api.IViewContext;
 
 public final class ViewContext implements IViewContext {
 
-	private final IContainer container;
+	private IContainer container;
 	private IMenu menu;
 	private ToolItem menuToolItem;
 	private IToolBar toolBar;
 
-	public ViewContext(final IContainer container) {
+	public void setContainer(final IContainer container) {
 		this.container = container;
 	}
 

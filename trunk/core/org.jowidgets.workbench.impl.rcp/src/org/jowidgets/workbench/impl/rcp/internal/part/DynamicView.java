@@ -47,6 +47,7 @@ import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.impl.rcp.internal.ImageHelper;
 import org.jowidgets.workbench.impl.rcp.internal.ViewContext;
@@ -65,9 +66,16 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 		setTitleImage(ImageHelper.getImage(view.getIcon(), null));
 		setTitleToolTip(view.getTooltip());
 
-		final IComposite composite = Toolkit.getWidgetWrapperFactory().createComposite(parent);
-		final ViewContext viewContext = new ViewContext(composite);
-		if (view.hasMenu() || view.hasToolBar()) {
+		final ViewContext viewContext = new ViewContext();
+		IComposite composite = Toolkit.getWidgetWrapperFactory().createComposite(parent);
+		if (view.hasToolBar()) {
+			composite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[]0[grow]0"));
+			final IToolBar toolBar = composite.add(Toolkit.getBluePrintFactory().toolBar(), "wrap");
+			viewContext.setToolBar(toolBar);
+			composite = composite.add(Toolkit.getBluePrintFactory().composite(), "grow, w 0::, h 0::");
+		}
+		viewContext.setContainer(composite);
+		if (view.hasMenu()) {
 			final ToolBar toolBarControl = ((ToolBarManager) getViewSite().getActionBars().getToolBarManager()).getControl();
 			final IWidgetWrapperFactory wrapperFactory = Toolkit.getWidgetWrapperFactory();
 			if (view.hasMenu()) {
@@ -81,13 +89,6 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 				});
 				viewContext.setMenu(menu);
 				viewContext.setMenuToolItem(menuToolItem);
-			}
-			if (view.hasToolBar()) {
-				// toolbar won't be visible
-				final IToolBar toolBar = wrapperFactory.createComposite(toolBarControl.getParent()).add(
-						Toolkit.getBluePrintFactory().toolBar(),
-						"");
-				viewContext.setToolBar(toolBar);
 			}
 		}
 
