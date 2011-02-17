@@ -62,6 +62,7 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	private Callable<Boolean> closeHandler;
 	private WorkbenchApplicationFolder applicationFolder;
 	private double folderRatio = 0.2;
+	private String[] selectedTreeNode;
 
 	public JoWorkbenchWindowAdvisor(
 		final IWorkbenchWindowConfigurer configurer,
@@ -104,6 +105,11 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 			configurer.setInitialSize(new Point(initialDimension.getWidth(), initialDimension.getHeight()));
 		}
 		configurer.setTitle(workbench.getLabel());
+	}
+
+	@Override
+	public void postWindowOpen() {
+		applicationFolder.setSelectedTreeNode(selectedTreeNode);
 	}
 
 	@Override
@@ -164,6 +170,12 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		leftContainer.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
 		applicationFolder = new WorkbenchApplicationFolder((Composite) leftContainer.getUiReference(), workbench, context);
 		applicationFolder.setLayoutData("grow");
+		applicationFolder.addDisposeListener(new DisposeListener() {
+			@Override
+			public void widgetDisposed(final DisposeEvent e) {
+				selectedTreeNode = applicationFolder.getSelectedTreeNode();
+			}
+		});
 
 		final IContainer rightContainer = splitComposite.getSecond();
 		rightContainer.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
@@ -185,6 +197,14 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
 	public void setFolderRatio(final double folderRatio) {
 		this.folderRatio = folderRatio;
+	}
+
+	public String[] getSelectedTreeNode() {
+		return selectedTreeNode;
+	}
+
+	public void setSelectedTreeNode(final String[] selectedTreeNode) {
+		this.selectedTreeNode = selectedTreeNode;
 	}
 
 }

@@ -45,15 +45,19 @@ public final class WorkbenchRunner implements IWorkbenchRunner {
 
 	@Override
 	public void run(final IWorkbench workbench, final IWorkbenchConfigurationService configurationService) {
-		// TODO HRW save perspectives and selected component tree node
+		// TODO HRW save perspectives
 		Assert.paramNotNull(configurationService, "configurationService");
 		final WorkbenchConfiguration config = (WorkbenchConfiguration) configurationService.loadConfiguration();
 		final WorkbenchContext context = new WorkbenchContext(workbench, false);
 		if (config != null) {
+			context.setSelectedTreeNode(config.getSelectedTreeNode());
 			context.setFolderRatio(config.getFolderRatio());
 		}
 		run(context);
-		configurationService.saveConfiguration(new WorkbenchConfiguration(null, context.getFolderRatio(), null));
+		configurationService.saveConfiguration(new WorkbenchConfiguration(
+			context.getSelectedTreeNode(),
+			context.getFolderRatio(),
+			null));
 	}
 
 	private void run(final WorkbenchContext context) {

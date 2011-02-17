@@ -133,4 +133,12 @@ public final class WorkbenchContext implements IWorkbenchContext {
 		return workbenchAdvisor.getWorkbenchWindowAdvisor().getFolderRatio();
 	}
 
+	public void setSelectedTreeNode(final String[] selectedTreeNode) {
+		workbenchAdvisor.setSelectedTreeNode(selectedTreeNode);
+	}
+
+	public String[] getSelectedTreeNode() {
+		return workbenchAdvisor.getWorkbenchWindowAdvisor().getSelectedTreeNode();
+	}
+
 }

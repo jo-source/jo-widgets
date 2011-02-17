@@ -127,6 +127,10 @@ public final class ComponentTreeNodeContext implements IComponentTreeNodeContext
 		return componentContextReference.get();
 	}
 
+	public String getId() {
+		return treeNode.getId();
+	}
+
 	public String getQualifiedId() {
 		if (parentContext != null) {
 			return parentContext.getQualifiedId() + "." + treeNode.getId();

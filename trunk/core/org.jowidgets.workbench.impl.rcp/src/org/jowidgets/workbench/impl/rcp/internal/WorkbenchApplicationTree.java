@@ -27,6 +27,8 @@
  */
 package org.jowidgets.workbench.impl.rcp.internal;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.jface.viewers.ColumnLabelProvider;
@@ -35,6 +37,7 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
@@ -45,6 +48,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.jowidgets.api.toolkit.Toolkit;
@@ -64,6 +68,7 @@ import org.jowidgets.workbench.impl.rcp.internal.part.PartRegistry;
 
 public final class WorkbenchApplicationTree extends Composite {
 
+	private final IWorkbenchApplication application;
 	private final Composite folderComposite;
 	private IToolBar toolBar;
 	private IPopupMenu menu;
@@ -76,6 +81,7 @@ public final class WorkbenchApplicationTree extends Composite {
 		super(parent, SWT.NONE);
 		setLayout(new FillLayout());
 
+		this.application = application;
 		folderComposite = new Composite(parent, SWT.NONE);
 		folderComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
 		final IComposite joComposite = Toolkit.getWidgetWrapperFactory().createComposite(folderComposite);
@@ -246,4 +252,50 @@ public final class WorkbenchApplicationTree extends Composite {
 		}
 	}
 
+	public List<String> getSelectedNode() {
+		final List<String> result = new LinkedList<String>();
+		final TreeItem[] items = treeViewer.getTree().getSelection();
+		if (items.length == 1) {
+			TreeItem item = items[0];
+			while (item != null) {
+				final ComponentTreeNodeContext context = (ComponentTreeNodeContext) item.getData();
+				result.add(0, context.getId());
+				item = item.getParentItem();
+			}
+		}
+		result.add(0, application.getId());
+		return result;
+	}
+
+	public void setSelectedNode(final List<String> nodes) {
+		setSelectedNode(nodes.subList(1, nodes.size()), null);
+	}
+
+	private void setSelectedNode(final List<String> nodes, final TreeItem parent) {
+		if (nodes.isEmpty()) {
+			if (parent != null) {
+				final ComponentTreeNodeContext context = (ComponentTreeNodeContext) parent.getData();
+				treeViewer.setSelection(new StructuredSelection(context));
+			}
+			return;
+		}
+
+		final TreeItem[] items;
+		if (parent == null) {
+			items = treeViewer.getTree().getItems();
+		}
+		else {
+			items = parent.getItems();
+		}
+		final String id = nodes.remove(0);
+		for (final TreeItem item : items) {
+			final ComponentTreeNodeContext context = (ComponentTreeNodeContext) item.getData();
+			if (context != null && context.getId().equals(id)) {
+				treeViewer.expandToLevel(context, 1);
+				setSelectedNode(nodes, item);
+				break;
+			}
+		}
+		nodes.add(0, id);
+	}
 }

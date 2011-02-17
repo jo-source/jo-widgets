@@ -46,6 +46,7 @@ public final class JoWorkbenchAdvisor extends WorkbenchAdvisor {
 	private JoWorkbenchWindowAdvisor workbenchWindowAdvisor;
 	private final List<Runnable> shutdownHooks = new CopyOnWriteArrayList<Runnable>();
 	private Double folderRatio;
+	private String[] selectedTreeNode;
 
 	public JoWorkbenchAdvisor(final IWorkbench workbench, final IWorkbenchContext context, final boolean saveAndRestore) {
 		this.workbench = workbench;
@@ -69,6 +70,7 @@ public final class JoWorkbenchAdvisor extends WorkbenchAdvisor {
 		if (folderRatio != null) {
 			workbenchWindowAdvisor.setFolderRatio(folderRatio);
 		}
+		workbenchWindowAdvisor.setSelectedTreeNode(selectedTreeNode);
 		return workbenchWindowAdvisor;
 	}
 
@@ -100,6 +102,10 @@ public final class JoWorkbenchAdvisor extends WorkbenchAdvisor {
 
 	public void setFolderRatio(final double folderRatio) {
 		this.folderRatio = folderRatio;
+	}
+
+	public void setSelectedTreeNode(final String[] selectedTreeNode) {
+		this.selectedTreeNode = selectedTreeNode;
 	}
 
 }

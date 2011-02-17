@@ -27,6 +27,9 @@
  */
 package org.jowidgets.workbench.impl.rcp.internal;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.eclipse.jface.resource.ColorRegistry;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
@@ -58,6 +61,7 @@ public final class WorkbenchApplicationFolder extends Composite {
 	private final IWorkbenchContext workbenchContext;
 	private IWorkbenchApplication currentApplication;
 	private WorkbenchApplicationTree activeTree;
+	private String[] lastSelectedTreeNode;
 
 	public WorkbenchApplicationFolder(final Composite parent, final IWorkbench workbench, final IWorkbenchContext workbenchContext) {
 		super(parent, SWT.NONE);
@@ -93,6 +97,7 @@ public final class WorkbenchApplicationFolder extends Composite {
 				currentApplication.onVisibleStateChanged(true);
 				currentApplication.onActiveStateChanged(true);
 				if (activeTree != null && activeTree.isPerspectiveSelected()) {
+					lastSelectedTreeNode = activeTree.getSelectedNode().toArray(new String[0]);
 					appTree.showSelectedPerspective();
 				}
 				activeTree = appTree;
@@ -210,6 +215,28 @@ public final class WorkbenchApplicationFolder extends Composite {
 
 	private ITheme getTheme() {
 		return PlatformUI.getWorkbench().getThemeManager().getCurrentTheme();
+	}
+
+	public void setSelectedTreeNode(final String[] selectedTreeNode) {
+		if (selectedTreeNode != null && selectedTreeNode.length > 0) {
+			final String appId = selectedTreeNode[0];
+			for (final CTabItem item : tabFolder.getItems()) {
+				final IWorkbenchApplication app = (IWorkbenchApplication) item.getData();
+				if (app.getId().equals(appId)) {
+					final WorkbenchApplicationTree tree = (WorkbenchApplicationTree) item.getControl();
+					tree.setSelectedNode(new ArrayList<String>(Arrays.asList(selectedTreeNode)));
+					tabFolder.showItem(item);
+					break;
+				}
+			}
+		}
+	}
+
+	public String[] getSelectedTreeNode() {
+		if (activeTree != null && activeTree.isPerspectiveSelected()) {
+			return activeTree.getSelectedNode().toArray(new String[0]);
+		}
+		return lastSelectedTreeNode;
 	}
 
 }

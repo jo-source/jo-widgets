@@ -38,21 +38,21 @@ public final class WorkbenchConfiguration implements Serializable {
 	private final double folderRatio;
 	private final byte[] workbenchXml;
 
-	public WorkbenchConfiguration(final String[] selectedTreeNode, final double folderRatio, final byte[] workbenchXml) {
+	WorkbenchConfiguration(final String[] selectedTreeNode, final double folderRatio, final byte[] workbenchXml) {
 		this.selectedTreeNode = selectedTreeNode;
 		this.folderRatio = folderRatio;
 		this.workbenchXml = workbenchXml;
 	}
 
-	public String[] getSelectedTreeNode() {
+	String[] getSelectedTreeNode() {
 		return selectedTreeNode;
 	}
 
-	public double getFolderRatio() {
+	double getFolderRatio() {
 		return folderRatio;
 	}
 
-	public byte[] getWorkbenchXml() {
+	byte[] getWorkbenchXml() {
 		return workbenchXml;
 	}
 
