@@ -32,23 +32,15 @@
 package org.jowidgets.api.test.blueprint.convenience;
 
 import org.jowidgets.api.test.blueprint.builder.IHierarchy2nd2SetupBuilder;
-import org.jowidgets.api.test.blueprint.builder.IHierarchy3rdSetupBuilder;
 import org.jowidgets.tools.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 
-public class Hierarchy3rdConvenience extends
-		AbstractSetupBuilderConvenience<IHierarchy3rdSetupBuilder<IHierarchy3rdSetupBuilder<?>>> implements
+public class Hierarchy2nd2Convenience extends
+		AbstractSetupBuilderConvenience<IHierarchy2nd2SetupBuilder<IHierarchy2nd2SetupBuilder<?>>> implements
 		IHierarchy2nd2Convenience<IHierarchy2nd2SetupBuilder<?>> {
 
-	public static final String ADDITIONAL_PART = " intro 3";
-	public static final String SUB_PART_2_1 = " sub-part 2.1";
-	public static final String SUB_PART_2_2 = " sub-part 2.2";
-	public static final String PART_3 = " part 3";
-
 	@Override
-	public IHierarchy3rdSetupBuilder<IHierarchy3rdSetupBuilder<?>> introduce(final String title) {
-		getBuilder().setIntro(title + ADDITIONAL_PART);
-		getBuilder().setIntroPartTwoTwo(title + SUB_PART_2_2);
-		getBuilder().setIntroPartThree(title + PART_3);
+	public IHierarchy2nd2SetupBuilder<IHierarchy2nd2SetupBuilder<?>> introduce(final String title) {
+		getBuilder().setIntro(title + "");
 		return getBuilder();
 	}
 }

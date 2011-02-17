@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, bemarsta
+ * Copyright (c) 2011, Benjamin Marstaller
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,7 @@
  */
 package org.jowidgets.api.test.blueprint.descriptor.setup;
 
-public interface IHierarchy3rdSetup extends IHierarchy2nd1Setup, IHierarchy2nd2Setup {
+public interface IHierarchy3rdSetup extends IHierarchy2nd2Setup {
 
 	String getIntroPartThree();
 

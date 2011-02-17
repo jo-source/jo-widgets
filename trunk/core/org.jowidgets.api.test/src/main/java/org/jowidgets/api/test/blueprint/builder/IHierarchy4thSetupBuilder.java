@@ -26,29 +26,12 @@
  * DAMAGE.
  */
 
-/**
- * 
- */
-package org.jowidgets.api.test.blueprint.convenience;
+package org.jowidgets.api.test.blueprint.builder;
 
-import org.jowidgets.api.test.blueprint.builder.IHierarchy2nd2SetupBuilder;
-import org.jowidgets.api.test.blueprint.builder.IHierarchy3rdSetupBuilder;
-import org.jowidgets.tools.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
+public interface IHierarchy4thSetupBuilder<INSTANCE_TYPE extends IHierarchy4thSetupBuilder<?>> extends
+		IHierarchy2nd1SetupBuilder<INSTANCE_TYPE>,
+		IHierarchy3rdSetupBuilder<INSTANCE_TYPE>,
+		IHierarchy2nd3SetupBuilder<INSTANCE_TYPE> {
 
-public class Hierarchy3rdConvenience extends
-		AbstractSetupBuilderConvenience<IHierarchy3rdSetupBuilder<IHierarchy3rdSetupBuilder<?>>> implements
-		IHierarchy2nd2Convenience<IHierarchy2nd2SetupBuilder<?>> {
-
-	public static final String ADDITIONAL_PART = " intro 3";
-	public static final String SUB_PART_2_1 = " sub-part 2.1";
-	public static final String SUB_PART_2_2 = " sub-part 2.2";
-	public static final String PART_3 = " part 3";
-
-	@Override
-	public IHierarchy3rdSetupBuilder<IHierarchy3rdSetupBuilder<?>> introduce(final String title) {
-		getBuilder().setIntro(title + ADDITIONAL_PART);
-		getBuilder().setIntroPartTwoTwo(title + SUB_PART_2_2);
-		getBuilder().setIntroPartThree(title + PART_3);
-		return getBuilder();
-	}
+	INSTANCE_TYPE setIntroPartFour(String intro);
 }

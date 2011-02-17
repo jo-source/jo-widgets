@@ -34,11 +34,15 @@ package org.jowidgets.api.test.blueprint.defaults.registry;
 import org.jowidgets.api.test.blueprint.builder.IHierarchy1stSetupBuilder;
 import org.jowidgets.api.test.blueprint.builder.IHierarchy2nd1SetupBuilder;
 import org.jowidgets.api.test.blueprint.builder.IHierarchy2nd2SetupBuilder;
+import org.jowidgets.api.test.blueprint.builder.IHierarchy2nd3SetupBuilder;
 import org.jowidgets.api.test.blueprint.builder.IHierarchy3rdSetupBuilder;
+import org.jowidgets.api.test.blueprint.builder.IHierarchy4thSetupBuilder;
 import org.jowidgets.api.test.blueprint.defaults.Hierarchy1stDefaults;
 import org.jowidgets.api.test.blueprint.defaults.Hierarchy2nd1Defaults;
 import org.jowidgets.api.test.blueprint.defaults.Hierarchy2nd2Defaults;
+import org.jowidgets.api.test.blueprint.defaults.Hierarchy2nd3Defaults;
 import org.jowidgets.api.test.blueprint.defaults.Hierarchy3rdDefaults;
+import org.jowidgets.api.test.blueprint.defaults.Hierarchy4thDefaults;
 import org.jowidgets.tools.widgets.blueprint.defaults.DefaultsInitializerRegistry;
 
 public class DummyDefaultsInitializerRegistry extends DefaultsInitializerRegistry {
@@ -47,12 +51,16 @@ public class DummyDefaultsInitializerRegistry extends DefaultsInitializerRegistr
 		final Hierarchy1stDefaults hierarchyOneDefaultInitializer,
 		final Hierarchy2nd1Defaults hierarchyTwoOneDefaultInitializer,
 		final Hierarchy2nd2Defaults hierarchyTwoTwoDefaultInitializer,
-		final Hierarchy3rdDefaults hierarchyThreeDefaultInitializer) {
+		final Hierarchy2nd3Defaults hierarchyTwoThreeDefaultInitializer,
+		final Hierarchy3rdDefaults hierarchyThreeDefaultInitializer,
+		final Hierarchy4thDefaults hierarchyFourDefaultInitializer) {
 		super();
 		register(IHierarchy1stSetupBuilder.class, hierarchyOneDefaultInitializer);
 		register(IHierarchy2nd1SetupBuilder.class, hierarchyTwoOneDefaultInitializer);
 		register(IHierarchy2nd2SetupBuilder.class, hierarchyTwoTwoDefaultInitializer);
+		register(IHierarchy2nd3SetupBuilder.class, hierarchyTwoThreeDefaultInitializer);
 		register(IHierarchy3rdSetupBuilder.class, hierarchyThreeDefaultInitializer);
+		register(IHierarchy4thSetupBuilder.class, hierarchyFourDefaultInitializer);
 	}
 
 }

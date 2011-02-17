@@ -26,9 +26,14 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.test.blueprint.convenience;
+/**
+ * 
+ */
+package org.jowidgets.api.test.blueprint.builder;
 
-public interface IHierarchy2nd1Convenience<INSTANCE_TYPE> {
+public interface IHierarchy2nd3SetupBuilder<INSTANCE_TYPE extends IHierarchy2nd3SetupBuilder<?>> extends
+		IHierarchy1stSetupBuilder<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE introduce(String title);
+	INSTANCE_TYPE setIntroPartTwoThree(String introPartThree);
+
 }

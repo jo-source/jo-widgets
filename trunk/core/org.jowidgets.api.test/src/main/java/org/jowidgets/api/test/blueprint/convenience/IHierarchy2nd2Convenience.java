@@ -26,21 +26,9 @@
  * DAMAGE.
  */
 
-/**
- * 
- */
 package org.jowidgets.api.test.blueprint.convenience;
 
-import org.jowidgets.api.test.blueprint.builder.IHierarchy2nd1SetupBuilder;
-import org.jowidgets.tools.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
+public interface IHierarchy2nd2Convenience<INSTANCE_TYPE> {
 
-public class Hierarchy2nd1Convenience extends
-		AbstractSetupBuilderConvenience<IHierarchy2nd1SetupBuilder<IHierarchy2nd1SetupBuilder<?>>> implements
-		IHierarchy2nd1Convenience<IHierarchy2nd1SetupBuilder<?>> {
-
-	@Override
-	public IHierarchy2nd1SetupBuilder<IHierarchy2nd1SetupBuilder<?>> introduce(final String title) {
-		getBuilder().setIntro(title + "");
-		return getBuilder();
-	}
+	INSTANCE_TYPE introduce(String title);
 }
