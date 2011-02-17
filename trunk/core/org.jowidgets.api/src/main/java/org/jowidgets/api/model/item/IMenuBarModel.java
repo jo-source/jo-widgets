@@ -30,9 +30,10 @@ package org.jowidgets.api.model.item;
 
 import java.util.List;
 
+import org.jowidgets.api.model.IListModelObservable;
 import org.jowidgets.common.image.IImageConstant;
 
-public interface IMenuBarModel extends IMenuModelObservable {
+public interface IMenuBarModel extends IListModelObservable {
 
 	void addAfter(IMenuModel newMenu, String id);
 

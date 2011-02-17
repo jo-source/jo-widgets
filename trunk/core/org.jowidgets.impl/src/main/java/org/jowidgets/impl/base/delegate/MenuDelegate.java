@@ -32,11 +32,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.ICheckedItemModel;
 import org.jowidgets.api.model.item.IItemModel;
 import org.jowidgets.api.model.item.IMenuModel;
-import org.jowidgets.api.model.item.IMenuModelListener;
 import org.jowidgets.api.model.item.IRadioItemModel;
 import org.jowidgets.api.model.item.ISeparatorItemModel;
 import org.jowidgets.api.toolkit.Toolkit;
@@ -75,7 +75,7 @@ public class MenuDelegate implements IDisposeable {
 	private final IMenuSpi menuSpi;
 	private final IMenu menu;
 	private final List<IMenuItem> children;
-	private final IMenuModelListener menuModelListener;
+	private final IListModelListener listModelListener;
 
 	private IMenuModel model;
 
@@ -87,7 +87,7 @@ public class MenuDelegate implements IDisposeable {
 		this.menu = menu;
 		this.menuSpi = menuSpi;
 
-		this.menuModelListener = new IMenuModelListener() {
+		this.listModelListener = new IListModelListener() {
 
 			@Override
 			public void childRemoved(final int index) {
@@ -207,14 +207,14 @@ public class MenuDelegate implements IDisposeable {
 	}
 
 	private void addToModel(final Integer index, final IMenuItem menuItem) {
-		model.removeMenuModelListener(menuModelListener);
+		model.removeListModelListener(listModelListener);
 		if (index != null) {
 			getModel().addItem(index.intValue(), menuItem.getModel());
 		}
 		else {
 			getModel().addItem(menuItem.getModel());
 		}
-		model.addMenuModelListener(menuModelListener);
+		model.addListModelListener(listModelListener);
 	}
 
 	private void addChild(final int index, final IItemModel model) {
@@ -286,7 +286,7 @@ public class MenuDelegate implements IDisposeable {
 
 	public void setModel(final IMenuModel model) {
 		if (this.model != null) {
-			this.model.removeMenuModelListener(menuModelListener);
+			this.model.removeListModelListener(listModelListener);
 			removeAll();
 		}
 		this.model = model;
@@ -294,12 +294,12 @@ public class MenuDelegate implements IDisposeable {
 			addChild(children.size(), childModel);
 		}
 
-		model.addMenuModelListener(menuModelListener);
+		model.addListModelListener(listModelListener);
 	}
 
 	@Override
 	public void dispose() {
-		this.model.removeMenuModelListener(menuModelListener);
+		this.model.removeListModelListener(listModelListener);
 		removeAll();
 	}
 

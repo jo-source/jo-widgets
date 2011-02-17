@@ -31,9 +31,10 @@ package org.jowidgets.api.model.item;
 import java.util.List;
 
 import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.model.IListModelObservable;
 import org.jowidgets.common.image.IImageConstant;
 
-public interface IMenuModel extends IItemModel, IMenuModelObservable {
+public interface IMenuModel extends IItemModel, IListModelObservable {
 
 	<MODEL_TYPE extends IItemModel> MODEL_TYPE addItem(final MODEL_TYPE item);
 

@@ -31,13 +31,13 @@ package org.jowidgets.tools.model.item;
 import java.util.List;
 
 import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.ICheckedItemModel;
 import org.jowidgets.api.model.item.IItemModel;
 import org.jowidgets.api.model.item.IItemModelBuilder;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IMenuModelBuilder;
-import org.jowidgets.api.model.item.IMenuModelListener;
 import org.jowidgets.api.model.item.IRadioItemModel;
 import org.jowidgets.api.model.item.ISeparatorItemModel;
 import org.jowidgets.api.toolkit.Toolkit;
@@ -262,13 +262,13 @@ public class MenuModel extends AbstractItemModelWrapper implements IMenuModel {
 	}
 
 	@Override
-	public void addMenuModelListener(final IMenuModelListener listener) {
-		getItemModel().addMenuModelListener(listener);
+	public void addListModelListener(final IListModelListener listener) {
+		getItemModel().addListModelListener(listener);
 	}
 
 	@Override
-	public void removeMenuModelListener(final IMenuModelListener listener) {
-		getItemModel().removeMenuModelListener(listener);
+	public void removeListModelListener(final IListModelListener listener) {
+		getItemModel().removeListModelListener(listener);
 	}
 
 	@Override

@@ -31,9 +31,10 @@ package org.jowidgets.api.model.item;
 import java.util.List;
 
 import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.model.IListModelObservable;
 import org.jowidgets.common.image.IImageConstant;
 
-public interface IToolBarModel extends IMenuModelObservable {
+public interface IToolBarModel extends IListModelObservable {
 
 	IActionItemModel addItem(IActionItemModel item);
 

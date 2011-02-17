@@ -26,10 +26,9 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.model.item;
+package org.jowidgets.api.model;
 
-//TODO MG rename to IListModelListener
-public interface IMenuModelListener {
+public interface IListModelListener {
 
 	void childAdded(int index);
 

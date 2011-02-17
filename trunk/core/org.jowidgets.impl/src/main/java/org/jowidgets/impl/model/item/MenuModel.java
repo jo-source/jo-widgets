@@ -34,13 +34,13 @@ import java.util.List;
 import java.util.Set;
 
 import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.ICheckedItemModel;
 import org.jowidgets.api.model.item.IItemModel;
 import org.jowidgets.api.model.item.IItemModelBuilder;
 import org.jowidgets.api.model.item.IItemModelListener;
 import org.jowidgets.api.model.item.IMenuModel;
-import org.jowidgets.api.model.item.IMenuModelListener;
 import org.jowidgets.api.model.item.IRadioItemModel;
 import org.jowidgets.api.model.item.ISeparatorItemModel;
 import org.jowidgets.common.image.IImageConstant;
@@ -50,7 +50,7 @@ import org.jowidgets.util.NullCompatibleEquivalence;
 
 public class MenuModel extends ItemModel implements IMenuModel {
 
-	private final Set<IMenuModelListener> menuModelListeners;
+	private final Set<IListModelListener> listModelListeners;
 	private final List<IItemModel> children;
 	private final IItemModelListener itemModelListener;
 
@@ -67,7 +67,7 @@ public class MenuModel extends ItemModel implements IMenuModel {
 		final Character mnemonic,
 		final boolean enabled) {
 		super(id, text, toolTipText, icon, accelerator, mnemonic, enabled);
-		menuModelListeners = new HashSet<IMenuModelListener>();
+		listModelListeners = new HashSet<IListModelListener>();
 		this.children = new LinkedList<IItemModel>();
 
 		this.itemModelListener = new IItemModelListener() {
@@ -94,13 +94,13 @@ public class MenuModel extends ItemModel implements IMenuModel {
 	}
 
 	@Override
-	public final void addMenuModelListener(final IMenuModelListener listener) {
-		menuModelListeners.add(listener);
+	public final void addListModelListener(final IListModelListener listener) {
+		listModelListeners.add(listener);
 	}
 
 	@Override
-	public final void removeMenuModelListener(final IMenuModelListener listener) {
-		menuModelListeners.remove(listener);
+	public final void removeListModelListener(final IListModelListener listener) {
+		listModelListeners.remove(listener);
 	}
 
 	@Override
@@ -377,13 +377,13 @@ public class MenuModel extends ItemModel implements IMenuModel {
 	}
 
 	protected final void fireChildAdded(final int index) {
-		for (final IMenuModelListener listener : menuModelListeners) {
+		for (final IListModelListener listener : listModelListeners) {
 			listener.childAdded(index);
 		}
 	}
 
 	protected final void fireChildRemoved(final int index) {
-		for (final IMenuModelListener listener : menuModelListeners) {
+		for (final IListModelListener listener : listModelListeners) {
 			listener.childRemoved(index);
 		}
 	}

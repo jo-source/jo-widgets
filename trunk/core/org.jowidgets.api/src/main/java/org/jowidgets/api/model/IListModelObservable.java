@@ -26,13 +26,13 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.model.item;
+package org.jowidgets.api.model;
 
 
-public interface IMenuModelObservable {
+public interface IListModelObservable {
 
-	void addMenuModelListener(IMenuModelListener listener);
+	void addListModelListener(IListModelListener listener);
 
-	void removeMenuModelListener(IMenuModelListener listener);
+	void removeListModelListener(IListModelListener listener);
 
 }
