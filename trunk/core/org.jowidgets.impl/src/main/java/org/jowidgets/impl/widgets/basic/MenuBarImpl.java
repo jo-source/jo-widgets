@@ -178,7 +178,7 @@ public class MenuBarImpl extends WidgetSpiWrapper implements IMenuBar {
 			result = new MainMenuImpl(getWidget().addMenu(Integer.valueOf(index)), this, descriptor);
 		}
 		else {
-			result = new MainMenuImpl(getWidget().addMenu(Integer.valueOf(index)), this, descriptor);
+			result = new MainMenuImpl(getWidget().addMenu(null), this, descriptor);
 		}
 		addToMenus(index, result);
 		return result;
