@@ -31,10 +31,6 @@
  */
 package org.jowidgets.api.test.blueprint.descriptor.setup;
 
-/**
- * @author bemarsta
- * 
- */
 public interface IHierarchy3rdSetup extends IHierarchy2nd1Setup, IHierarchy2nd2Setup {
 
 	String getIntroPartThree();

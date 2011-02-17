@@ -34,7 +34,8 @@ public class Hierarchy3rdDefaults implements IDefaultInitializer<IHierarchy3rdSe
 
 	@Override
 	public void initialize(final IHierarchy3rdSetupBuilder<?> builder) {
-		builder.setIntroPartThree("Default Intro Part Two");
+		builder.setIntro("3rd Part");
+		builder.setIntroPartThree("Default Intro Part Three");
 	}
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, bemarsta
+ * Copyright (c) 2011, Benjamin Marstaller
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -38,10 +38,6 @@ import org.jowidgets.api.test.blueprint.descriptor.IHierarchy3rdDescriptor;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.tools.widgets.blueprint.BluePrintFactoryWrapper;
 
-/**
- * @author bemarsta
- * 
- */
 public class DummyBluePrintFactory extends BluePrintFactoryWrapper {
 
 	public DummyBluePrintFactory(final IBluePrintFactory bluePrintFactory) {

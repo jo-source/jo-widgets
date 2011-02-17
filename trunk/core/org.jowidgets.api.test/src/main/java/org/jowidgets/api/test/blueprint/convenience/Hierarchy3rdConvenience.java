@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, bemarsta
+ * Copyright (c) 2011, Benjamin Marstaller
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -29,9 +29,27 @@
 /**
  * 
  */
-package org.jowidgets.api.test.blueprint.descriptor.setup;
+package org.jowidgets.api.test.blueprint.convenience;
 
-public interface IHierarchy2nd1Setup extends IHierarchy1stSetup {
+import org.jowidgets.api.test.blueprint.builder.IHierarchy2nd1SetupBuilder;
+import org.jowidgets.api.test.blueprint.builder.IHierarchy3rdSetupBuilder;
+import org.jowidgets.tools.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 
-	String getIntroPartTwoOne();
+public class Hierarchy3rdConvenience extends
+		AbstractSetupBuilderConvenience<IHierarchy3rdSetupBuilder<IHierarchy3rdSetupBuilder<?>>> implements
+		IHierarchy2nd1Convenience<IHierarchy2nd1SetupBuilder<?>> {
+
+	public static final String ADDITIONAL_PART = " Intro von 3";
+	public static final String SUB_PART_2_1 = " sub-part 2.1";
+	public static final String SUB_PART_2_2 = " sub-part 2.2";
+	public static final String PART_3 = " part 3";
+
+	@Override
+	public IHierarchy3rdSetupBuilder<IHierarchy3rdSetupBuilder<?>> introduce(final String title) {
+		getBuilder().setIntro(title + " Intro von 3");
+		getBuilder().setIntroPartTwoOne(title + SUB_PART_2_1);
+		getBuilder().setIntroPartTwoTwo(title + SUB_PART_2_2);
+		getBuilder().setIntroPartThree(title + PART_3);
+		return getBuilder();
+	}
 }

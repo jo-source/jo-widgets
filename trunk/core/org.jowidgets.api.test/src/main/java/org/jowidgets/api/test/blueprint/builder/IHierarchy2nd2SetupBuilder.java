@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, bemarsta
+ * Copyright (c) 2011, Benjamin Marstaller
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -31,10 +31,6 @@
  */
 package org.jowidgets.api.test.blueprint.builder;
 
-/**
- * @author bemarsta
- * 
- */
 public interface IHierarchy2nd2SetupBuilder<INSTANCE_TYPE extends IHierarchy2nd2SetupBuilder<?>> extends
 		IHierarchy1stSetupBuilder<INSTANCE_TYPE> {
 

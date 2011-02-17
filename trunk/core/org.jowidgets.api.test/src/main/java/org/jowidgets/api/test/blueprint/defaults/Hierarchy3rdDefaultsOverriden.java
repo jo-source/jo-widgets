@@ -25,11 +25,17 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.test.blueprint;
+package org.jowidgets.api.test.blueprint.defaults;
 
-import org.jowidgets.api.test.blueprint.builder.IHierarchy2nd1SetupBuilder;
-import org.jowidgets.api.test.blueprint.descriptor.IHierarchy2nd1Descriptor;
+import org.jowidgets.api.test.blueprint.builder.IHierarchy3rdSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
-public interface IHierarchy2nd1BluePrint extends IHierarchy2nd1SetupBuilder<IHierarchy2nd1BluePrint>, IHierarchy2nd1Descriptor {
+public class Hierarchy3rdDefaultsOverriden implements IDefaultInitializer<IHierarchy3rdSetupBuilder<?>> {
+
+	@Override
+	public void initialize(final IHierarchy3rdSetupBuilder<?> builder) {
+		builder.setIntro("3rd Part overriden");
+		builder.setIntroPartThree("Overriden Intro Part Three");
+	}
 
 }

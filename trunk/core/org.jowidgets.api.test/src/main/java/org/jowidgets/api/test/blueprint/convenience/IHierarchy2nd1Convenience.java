@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, bemarsta
+ * Copyright (c) 2011, Benjamin Marstaller
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,23 +26,9 @@
  * DAMAGE.
  */
 
-/**
- * 
- */
 package org.jowidgets.api.test.blueprint.convenience;
 
-import org.jowidgets.api.test.blueprint.builder.IHierarchy2nd1SetupBuilder;
-import org.jowidgets.tools.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
+public interface IHierarchy2nd1Convenience<INSTANCE_TYPE> {
 
-/**
- * @author bemarsta
- * 
- */
-public class DummySetupBuilderConvenience extends
-		AbstractSetupBuilderConvenience<IHierarchy2nd1SetupBuilder<IHierarchy2nd1SetupBuilder<?>>> {
-
-	public IHierarchy2nd1SetupBuilder<IHierarchy2nd1SetupBuilder<?>> setTitle(final String title) {
-		getBuilder().setIntro(title + "Intro");
-		return getBuilder();
-	}
+	INSTANCE_TYPE introduce(String title);
 }

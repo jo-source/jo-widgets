@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2011, Benjamin Marstaller
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -30,8 +30,6 @@ package org.jowidgets.api.test.blueprint;
 import org.jowidgets.api.test.blueprint.builder.IHierarchy2nd2SetupBuilder;
 import org.jowidgets.api.test.blueprint.descriptor.IHierarchy2nd2Descriptor;
 
-public interface IHierarchy2nd2BluePrint extends
-		IHierarchy2nd2SetupBuilder<IHierarchy2nd2BluePrint>,
-		IHierarchy2nd2Descriptor {
+public interface IHierarchy2nd2BluePrint extends IHierarchy2nd2SetupBuilder<IHierarchy2nd2BluePrint>, IHierarchy2nd2Descriptor {
 
 }

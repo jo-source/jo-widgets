@@ -29,7 +29,9 @@ package org.jowidgets.impl.base.blueprint.proxy.internal;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -70,7 +72,13 @@ public class BluePrintProxyInvocationHandler implements InvocationHandler {
 
 		this.widgetDescrType = widgetDescrType;
 		this.bluePrintType = bluePrintType;
-		initialize(proxy, (Class<? extends ISetupBuilder<ISetupBuilder<?>>>) bluePrintType, convenienceRegistry, defaultsRegistry);
+		final List<Class<?>> visitedInterfaces = new ArrayList<Class<?>>();
+		initialize(
+				proxy,
+				(Class<? extends ISetupBuilder<ISetupBuilder<?>>>) bluePrintType,
+				convenienceRegistry,
+				defaultsRegistry,
+				visitedInterfaces);
 	}
 
 	@Override
@@ -159,14 +167,19 @@ public class BluePrintProxyInvocationHandler implements InvocationHandler {
 		final ISetupBuilder<?> proxy,
 		final Class<? extends ISetupBuilder<ISetupBuilder<?>>> bluePrintType,
 		final ISetupBuilderConvenienceRegistry convenienceRegistry,
-		final IDefaultsInitializerRegistry defaultsRegistry) {
+		final IDefaultsInitializerRegistry defaultsRegistry,
+		final List<Class<?>> visitedInterfaces) {
 
 		for (final Class<?> superInterface : bluePrintType.getInterfaces()) {
-			initialize(
-					proxy,
-					(Class<? extends ISetupBuilder<ISetupBuilder<?>>>) superInterface,
-					convenienceRegistry,
-					defaultsRegistry);
+			if (!visitedInterfaces.contains(superInterface)) {
+				visitedInterfaces.add(superInterface);
+				initialize(
+						proxy,
+						(Class<? extends ISetupBuilder<ISetupBuilder<?>>>) superInterface,
+						convenienceRegistry,
+						defaultsRegistry,
+						visitedInterfaces);
+			}
 		}
 		final IDefaultInitializer<ISetupBuilder<?>> defaultInitializer = getDefaultInitializer(bluePrintType);
 		if (defaultInitializer != null) {

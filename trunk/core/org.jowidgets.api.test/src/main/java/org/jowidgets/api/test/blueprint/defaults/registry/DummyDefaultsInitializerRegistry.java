@@ -41,25 +41,18 @@ import org.jowidgets.api.test.blueprint.defaults.Hierarchy2nd2Defaults;
 import org.jowidgets.api.test.blueprint.defaults.Hierarchy3rdDefaults;
 import org.jowidgets.tools.widgets.blueprint.defaults.DefaultsInitializerRegistry;
 
-/**
- * @author bemarsta
- * 
- */
 public class DummyDefaultsInitializerRegistry extends DefaultsInitializerRegistry {
 
 	public DummyDefaultsInitializerRegistry(
 		final Hierarchy1stDefaults hierarchyOneDefaultInitializer,
-		final Hierarchy2nd1Defaults hierarchyOneOneDefaultInitializer,
-		final Hierarchy2nd2Defaults hierarchyOneTwoDefaultInitializer,
-		final Hierarchy3rdDefaults hierarchyTwoDefaultInitializer) {
+		final Hierarchy2nd1Defaults hierarchyTwoOneDefaultInitializer,
+		final Hierarchy2nd2Defaults hierarchyTwoTwoDefaultInitializer,
+		final Hierarchy3rdDefaults hierarchyThreeDefaultInitializer) {
 		super();
-		//		HierarchyOneDefaults hierarchyOneDefaultInitializer = new HierarchyOneDefaults();
-		//		HierarchyOneOneDefaults hierarchyOneOneDefaultInitializer = new HierarchyOneOneDefaults();
-
 		register(IHierarchy1stSetupBuilder.class, hierarchyOneDefaultInitializer);
-		register(IHierarchy2nd1SetupBuilder.class, hierarchyOneOneDefaultInitializer);
-		register(IHierarchy2nd2SetupBuilder.class, hierarchyOneTwoDefaultInitializer);
-		register(IHierarchy3rdSetupBuilder.class, hierarchyTwoDefaultInitializer);
+		register(IHierarchy2nd1SetupBuilder.class, hierarchyTwoOneDefaultInitializer);
+		register(IHierarchy2nd2SetupBuilder.class, hierarchyTwoTwoDefaultInitializer);
+		register(IHierarchy3rdSetupBuilder.class, hierarchyThreeDefaultInitializer);
 	}
 
 }

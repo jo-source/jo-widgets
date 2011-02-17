@@ -34,7 +34,8 @@ public class Hierarchy2nd1Defaults implements IDefaultInitializer<IHierarchy2nd1
 
 	@Override
 	public void initialize(final IHierarchy2nd1SetupBuilder<?> builder) {
-		builder.setIntroPartTwoOne("Default Intro one-one");
+		builder.setIntro("2nd Part (1)");
+		builder.setIntroPartTwoOne("Default Intro two-one");
 	}
 
 }
