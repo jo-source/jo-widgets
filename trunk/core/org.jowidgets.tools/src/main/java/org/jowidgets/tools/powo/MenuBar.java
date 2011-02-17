@@ -31,6 +31,7 @@ package org.jowidgets.tools.powo;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.widgets.IMainMenu;
 import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.IMenuBar;
@@ -98,6 +99,26 @@ class MenuBar extends Widget<IMenuBar, DummyBluePrint<IMenuBar>> implements IMen
 	}
 
 	@Override
+	public void remove(final int index) {
+		if (isInitialized()) {
+			getWidget().remove(index);
+		}
+		else {
+			menus.remove(index);
+		}
+	}
+
+	@Override
+	public void removeAll() {
+		if (isInitialized()) {
+			getWidget().removeAll();
+		}
+		else {
+			menus.clear();
+		}
+	}
+
+	@Override
 	public IMainMenu addMenu(final String name) {
 		if (isInitialized()) {
 			return getWidget().addMenu(name);
@@ -155,6 +176,18 @@ class MenuBar extends Widget<IMenuBar, DummyBluePrint<IMenuBar>> implements IMen
 			menus.add(index, result);
 			return result;
 		}
+	}
+
+	@Override
+	public void setModel(final IMenuBarModel model) {
+		checkInitialized();
+		getWidget().setModel(model);
+	}
+
+	@Override
+	public IMenuBarModel getModel() {
+		checkInitialized();
+		return getModel();
 	}
 
 }

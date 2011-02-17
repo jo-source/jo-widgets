@@ -277,7 +277,7 @@ public class MenuModel extends AbstractItemModelWrapper implements IMenuModel {
 	}
 
 	public static IMenuModelBuilder builder() {
-		return Toolkit.getModelBuilderFactoryProvider().getItemModelFactory().menuBuilder();
+		return Toolkit.getModelFactoryProvider().getItemModelFactory().menuBuilder();
 	}
 
 	public static IMenuModelBuilder builder(final String text) {

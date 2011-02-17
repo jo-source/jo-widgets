@@ -309,7 +309,7 @@ public class ToolBarModel implements IToolBarModel {
 	}
 
 	private static IToolBarModel createInstance() {
-		return Toolkit.getModelBuilderFactoryProvider().getItemModelFactory().toolBar();
+		return Toolkit.getModelFactoryProvider().getItemModelFactory().toolBar();
 	}
 
 }

@@ -30,14 +30,23 @@ package org.jowidgets.api.widgets;
 
 import java.util.List;
 
+import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.widgets.descriptor.IMainMenuDescriptor;
 import org.jowidgets.common.widgets.IMenuBarCommon;
 
 public interface IMenuBar extends IWidget, IMenuBarCommon {
 
+	void setModel(IMenuBarModel model);
+
+	IMenuBarModel getModel();
+
 	List<IMenu> getMenus();
 
 	boolean remove(IMenu menu);
+
+	void remove(final int index);
+
+	void removeAll();
 
 	IMainMenu addMenu(String name);
 

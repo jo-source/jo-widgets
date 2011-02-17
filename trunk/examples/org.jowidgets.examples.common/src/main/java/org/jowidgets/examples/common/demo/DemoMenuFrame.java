@@ -46,8 +46,6 @@ import org.jowidgets.api.model.item.ISelectableItemModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IInputControl;
-import org.jowidgets.api.widgets.IMenu;
-import org.jowidgets.api.widgets.IMenuBar;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.IToolBarButton;
 import org.jowidgets.api.widgets.IToolBarContainerItem;
@@ -163,10 +161,7 @@ public class DemoMenuFrame extends JoFrame {
 	}
 
 	private void createMainMenus() {
-		final IMenuBar menuBar = createMenuBar();
-		final IMenu menu1 = menuBar.addMenu(Toolkit.getBluePrintFactory().mainMenu());
-		menu1.setModel(getMenuModel());
-
+		getMenuBarModel().addMenu(getMenuModel());
 		setPopupMenu(getMenuModel());
 	}
 

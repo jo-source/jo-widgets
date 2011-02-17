@@ -147,7 +147,7 @@ public class MenuBarModel implements IMenuBarModel {
 	}
 
 	private static IMenuBarModel createInstance() {
-		return Toolkit.getModelBuilderFactoryProvider().getItemModelFactory().menuBar();
+		return Toolkit.getModelFactoryProvider().getItemModelFactory().menuBar();
 	}
 
 }

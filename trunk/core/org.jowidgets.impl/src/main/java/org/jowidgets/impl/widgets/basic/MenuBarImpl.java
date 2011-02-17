@@ -31,11 +31,15 @@ package org.jowidgets.impl.widgets.basic;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jowidgets.api.model.IListModelListener;
+import org.jowidgets.api.model.item.IMenuBarModel;
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IMainMenu;
 import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.IMenuBar;
 import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.IMainMenuDescriptor;
 import org.jowidgets.impl.widgets.common.wrapper.WidgetSpiWrapper;
 import org.jowidgets.spi.widgets.IMenuBarSpi;
@@ -45,11 +49,30 @@ public class MenuBarImpl extends WidgetSpiWrapper implements IMenuBar {
 
 	private final List<IMenu> menus;
 	private final IWidget parent;
+	private final IListModelListener listModelListener;
+
+	private IMenuBarModel model;
 
 	public MenuBarImpl(final IMenuBarSpi widget, final IWidget parent) {
 		super(widget);
 		this.parent = parent;
 		this.menus = new LinkedList<IMenu>();
+
+		this.listModelListener = new IListModelListener() {
+
+			@Override
+			public void childRemoved(final int index) {
+				remove(index);
+			}
+
+			@Override
+			public void childAdded(final int index) {
+				final IMenuModel addedModel = getModel().getMenus().get(index);
+				addMenuModel(index, addedModel);
+			}
+		};
+
+		setModel(Toolkit.getModelFactoryProvider().getItemModelFactory().menuBar());
 	}
 
 	@Override
@@ -63,15 +86,41 @@ public class MenuBarImpl extends WidgetSpiWrapper implements IMenuBar {
 	}
 
 	@Override
+	public void setModel(final IMenuBarModel model) {
+		if (this.model != null) {
+			this.model.removeListModelListener(listModelListener);
+			removeAll();
+		}
+		this.model = model;
+		for (final IMenuModel childModel : model.getMenus()) {
+			addMenuModel(menus.size(), childModel);
+		}
+		model.addListModelListener(listModelListener);
+	}
+
+	@Override
+	public IMenuBarModel getModel() {
+		return model;
+	}
+
+	@Override
 	public List<IMenu> getMenus() {
 		return new LinkedList<IMenu>(menus);
 	}
 
 	@Override
+	public void removeAll() {
+		for (final IMenu menu : getMenus()) {
+			remove(menu);
+		}
+	}
+
+	@Override
 	public boolean remove(final IMenu menu) {
 		Assert.paramNotNull(menu, "menu");
-		if (menus.contains(menu)) {
-			menus.remove(menu);
+		final int index = menus.indexOf(menu);
+		if (index != -1) {
+			remove(index);
 			return true;
 		}
 		else {
@@ -80,17 +129,13 @@ public class MenuBarImpl extends WidgetSpiWrapper implements IMenuBar {
 	}
 
 	@Override
-	public IMainMenu addMenu(final IMainMenuDescriptor descriptor) {
-		final IMainMenu result = new MainMenuImpl(getWidget().addMenu(null), this, descriptor);
-		menus.add(result);
-		return result;
-	}
-
-	@Override
-	public IMainMenu addMenu(final int index, final IMainMenuDescriptor descriptor) {
-		final IMainMenu result = new MainMenuImpl(getWidget().addMenu(Integer.valueOf(index)), this, descriptor);
-		menus.add(index, result);
-		return result;
+	public void remove(final int index) {
+		final IMenu menu = menus.get(index);
+		if (menu instanceof IDisposeable) {
+			((IDisposeable) menu).dispose();
+		}
+		menus.remove(index);
+		getWidget().remove(index);
 	}
 
 	@Override
@@ -106,6 +151,57 @@ public class MenuBarImpl extends WidgetSpiWrapper implements IMenuBar {
 	@Override
 	public IMainMenu addMenu(final int index, final String name) {
 		return addMenu(index, Toolkit.getBluePrintFactory().mainMenu(name));
+	}
+
+	@Override
+	public IMainMenu addMenu(final IMainMenuDescriptor descriptor) {
+		final IMainMenu result = addMenuInternal(null, descriptor);
+		addToModel(null, result);
+		return result;
+	}
+
+	@Override
+	public IMainMenu addMenu(final int index, final IMainMenuDescriptor descriptor) {
+		final IMainMenu result = addMenuInternal(Integer.valueOf(index), descriptor);
+		addToModel(null, result);
+		return result;
+	}
+
+	private void addMenuModel(final int index, final IMenuModel model) {
+		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+		addMenuInternal(index, bpf.mainMenu()).setModel(model);
+	}
+
+	private IMainMenu addMenuInternal(final Integer index, final IMainMenuDescriptor descriptor) {
+		final IMainMenu result;
+		if (index != null) {
+			result = new MainMenuImpl(getWidget().addMenu(Integer.valueOf(index)), this, descriptor);
+		}
+		else {
+			result = new MainMenuImpl(getWidget().addMenu(Integer.valueOf(index)), this, descriptor);
+		}
+		addToMenus(index, result);
+		return result;
+	}
+
+	private void addToMenus(final Integer index, final IMenu menu) {
+		if (index != null) {
+			menus.add(index.intValue(), menu);
+		}
+		else {
+			menus.add(menu);
+		}
+	}
+
+	private void addToModel(final Integer index, final IMenu menu) {
+		model.removeListModelListener(listModelListener);
+		if (index != null) {
+			getModel().addMenu(index.intValue(), menu.getModel());
+		}
+		else {
+			getModel().addMenu(menu.getModel());
+		}
+		model.addListModelListener(listModelListener);
 	}
 
 }

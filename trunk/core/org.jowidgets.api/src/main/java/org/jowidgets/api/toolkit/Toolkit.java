@@ -106,7 +106,7 @@ public final class Toolkit {
 		return getInstance().getActionBuilderFactory();
 	}
 
-	public static IModelFactoryProvider getModelBuilderFactoryProvider() {
+	public static IModelFactoryProvider getModelFactoryProvider() {
 		return getInstance().getModelFactoryProvider();
 	}
 
