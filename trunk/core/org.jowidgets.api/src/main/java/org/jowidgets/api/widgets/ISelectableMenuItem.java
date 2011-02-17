@@ -28,14 +28,14 @@
 
 package org.jowidgets.api.widgets;
 
-import org.jowidgets.api.model.item.ISelectableItemModel;
+import org.jowidgets.api.model.item.ISelectableMenuItemModel;
 import org.jowidgets.common.widgets.ISelectableMenuItemCommon;
 
 public interface ISelectableMenuItem extends IMenuItem, ISelectableMenuItemCommon {
 
 	@Override
-	ISelectableItemModel getModel();
+	ISelectableMenuItemModel getModel();
 
-	void setModel(ISelectableItemModel model);
+	void setModel(ISelectableMenuItemModel model);
 
 }

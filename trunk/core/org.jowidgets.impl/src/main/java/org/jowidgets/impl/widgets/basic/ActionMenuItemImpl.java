@@ -32,6 +32,7 @@ import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.IItemModel;
 import org.jowidgets.api.model.item.IItemModelListener;
+import org.jowidgets.api.model.item.IMenuItemModel;
 import org.jowidgets.api.widgets.IActionMenuItem;
 import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.descriptor.setup.IAccelerateableMenuItemSetup;
@@ -168,7 +169,7 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 	}
 
 	@Override
-	public void setModel(final IItemModel model) {
+	public void setModel(final IMenuItemModel model) {
 		if (model instanceof IActionItemModel) {
 			setModel((IActionItemModel) model);
 		}

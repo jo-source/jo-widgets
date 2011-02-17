@@ -31,7 +31,7 @@ package org.jowidgets.api.model.item;
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.common.widgets.controler.IActionObservable;
 
-public interface IActionItemModel extends IItemModel, IActionObservable {
+public interface IActionItemModel extends IItemModel, IMenuItemModel, IToolBarItemModel, IActionObservable {
 
 	IAction getAction();
 

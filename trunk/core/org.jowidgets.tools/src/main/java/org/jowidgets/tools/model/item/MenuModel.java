@@ -34,8 +34,8 @@ import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.ICheckedItemModel;
-import org.jowidgets.api.model.item.IItemModel;
 import org.jowidgets.api.model.item.IItemModelBuilder;
+import org.jowidgets.api.model.item.IMenuItemModel;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IMenuModelBuilder;
 import org.jowidgets.api.model.item.IRadioItemModel;
@@ -79,12 +79,12 @@ public class MenuModel extends AbstractItemModelWrapper implements IMenuModel {
 	}
 
 	@Override
-	public List<IItemModel> getChildren() {
+	public List<IMenuItemModel> getChildren() {
 		return getItemModel().getChildren();
 	}
 
 	@Override
-	public IItemModel findItemByPath(final String... idPath) {
+	public IMenuItemModel findItemByPath(final String... idPath) {
 		return getItemModel().findItemByPath(idPath);
 	}
 
@@ -114,33 +114,33 @@ public class MenuModel extends AbstractItemModelWrapper implements IMenuModel {
 	}
 
 	@Override
-	public void addBefore(final IItemModel newItem, final String... idPath) {
+	public void addBefore(final IMenuItemModel newItem, final String... idPath) {
 		getItemModel().addBefore(newItem, idPath);
 	}
 
 	@Override
-	public void addAfter(final IItemModel newItem, final String... idPath) {
+	public void addAfter(final IMenuItemModel newItem, final String... idPath) {
 		getItemModel().addAfter(newItem, idPath);
 	}
 
 	@Override
-	public <MODEL_TYPE extends IItemModel> MODEL_TYPE addItem(final MODEL_TYPE item) {
+	public <MODEL_TYPE extends IMenuItemModel> MODEL_TYPE addItem(final MODEL_TYPE item) {
 		return getItemModel().addItem(item);
 	}
 
 	@Override
-	public <MODEL_TYPE extends IItemModel> MODEL_TYPE addItem(final int index, final MODEL_TYPE item) {
+	public <MODEL_TYPE extends IMenuItemModel> MODEL_TYPE addItem(final int index, final MODEL_TYPE item) {
 		return getItemModel().addItem(index, item);
 	}
 
 	@Override
-	public <MODEL_TYPE extends IItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
+	public <MODEL_TYPE extends IMenuItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
 		final BUILDER_TYPE itemBuilder) {
 		return getItemModel().addItem(itemBuilder);
 	}
 
 	@Override
-	public <MODEL_TYPE extends IItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
+	public <MODEL_TYPE extends IMenuItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
 		final int index,
 		final BUILDER_TYPE itemBuilder) {
 		return getItemModel().addItem(index, itemBuilder);
@@ -247,7 +247,7 @@ public class MenuModel extends AbstractItemModelWrapper implements IMenuModel {
 	}
 
 	@Override
-	public void removeItem(final IItemModel item) {
+	public void removeItem(final IMenuItemModel item) {
 		getItemModel().removeItem(item);
 	}
 

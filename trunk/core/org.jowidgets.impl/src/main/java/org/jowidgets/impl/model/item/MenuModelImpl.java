@@ -28,10 +28,8 @@
 
 package org.jowidgets.impl.model.item;
 
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.model.IListModelListener;
@@ -39,20 +37,16 @@ import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.ICheckedItemModel;
 import org.jowidgets.api.model.item.IItemModel;
 import org.jowidgets.api.model.item.IItemModelBuilder;
-import org.jowidgets.api.model.item.IItemModelListener;
+import org.jowidgets.api.model.item.IMenuItemModel;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IRadioItemModel;
 import org.jowidgets.api.model.item.ISeparatorItemModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
-import org.jowidgets.util.Assert;
-import org.jowidgets.util.NullCompatibleEquivalence;
 
 class MenuModelImpl extends ItemModelImpl implements IMenuModel {
 
-	private final Set<IListModelListener> listModelListeners;
-	private final List<IItemModel> children;
-	private final IItemModelListener itemModelListener;
+	private final ListModelDelegate listModelDelegate;
 
 	protected MenuModelImpl() {
 		this(null, null, null, null, null, null, true);
@@ -67,15 +61,8 @@ class MenuModelImpl extends ItemModelImpl implements IMenuModel {
 		final Character mnemonic,
 		final boolean enabled) {
 		super(id, text, toolTipText, icon, accelerator, mnemonic, enabled);
-		listModelListeners = new HashSet<IListModelListener>();
-		this.children = new LinkedList<IItemModel>();
 
-		this.itemModelListener = new IItemModelListener() {
-			@Override
-			public void itemChanged(final IItemModel item) {
-				checkIds(item);
-			}
-		};
+		this.listModelDelegate = new ListModelDelegate();
 	}
 
 	@Override
@@ -87,334 +74,204 @@ class MenuModelImpl extends ItemModelImpl implements IMenuModel {
 
 	protected void setContent(final IMenuModel source) {
 		super.setContent(source);
-
-		for (final IItemModel sourceChild : source.getChildren()) {
-			addItem(sourceChild.createCopy());
-		}
+		listModelDelegate.setContent(source);
 	}
 
 	@Override
 	public final void addListModelListener(final IListModelListener listener) {
-		listModelListeners.add(listener);
+		listModelDelegate.addListModelListener(listener);
 	}
 
 	@Override
 	public final void removeListModelListener(final IListModelListener listener) {
-		listModelListeners.remove(listener);
+		listModelDelegate.removeListModelListener(listener);
 	}
 
 	@Override
 	public IActionItemModel addAction(final IAction action) {
-		return addItem(new ActionItemModelBuilder().setAction(action));
+		return listModelDelegate.addAction(action);
 	}
 
 	@Override
 	public IActionItemModel addAction(final int index, final IAction action) {
-		return addItem(index, new ActionItemModelBuilder().setAction(action));
+		return listModelDelegate.addAction(index, action);
 	}
 
 	@Override
 	public IActionItemModel addActionItem() {
-		return addItem(new ActionItemModelBuilder());
+		return listModelDelegate.addActionItem();
 	}
 
 	@Override
 	public IActionItemModel addActionItem(final String text) {
-		return addItem(new ActionItemModelBuilder().setText(text));
+		return listModelDelegate.addActionItem(text);
 	}
 
 	@Override
 	public IActionItemModel addActionItem(final String text, final String toolTipText) {
-		return addItem(new ActionItemModelBuilder().setText(text).setToolTipText(toolTipText));
+		return listModelDelegate.addActionItem(text, toolTipText);
 	}
 
 	@Override
 	public IActionItemModel addActionItem(final String text, final IImageConstant icon) {
-		return addItem(new ActionItemModelBuilder().setText(text).setIcon(icon));
+		return listModelDelegate.addActionItem(text, icon);
 	}
 
 	@Override
 	public IActionItemModel addActionItem(final String text, final String toolTipText, final IImageConstant icon) {
-		return addItem(new ActionItemModelBuilder().setText(text).setToolTipText(toolTipText).setIcon(icon));
+		return listModelDelegate.addActionItem(text, toolTipText, icon);
 	}
 
 	@Override
 	public ICheckedItemModel addCheckedItem() {
-		return addItem(new CheckedItemModelBuilder());
+		return listModelDelegate.addCheckedItem();
 	}
 
 	@Override
 	public ICheckedItemModel addCheckedItem(final String text) {
-		return addItem(new CheckedItemModelBuilder().setText(text));
+		return listModelDelegate.addCheckedItem(text);
 	}
 
 	@Override
 	public ICheckedItemModel addCheckedItem(final String text, final String toolTipText) {
-		return addItem(new CheckedItemModelBuilder().setText(text).setToolTipText(toolTipText));
+		return listModelDelegate.addCheckedItem(text, toolTipText);
 	}
 
 	@Override
 	public ICheckedItemModel addCheckedItem(final String text, final IImageConstant icon) {
-		return addItem(new CheckedItemModelBuilder().setText(text).setIcon(icon));
+		return listModelDelegate.addCheckedItem(text, icon);
 	}
 
 	@Override
 	public ICheckedItemModel addCheckedItem(final String text, final String toolTipText, final IImageConstant icon) {
-		return addItem(new CheckedItemModelBuilder().setText(text).setToolTipText(toolTipText).setIcon(icon));
+		return listModelDelegate.addCheckedItem(text, toolTipText, icon);
 	}
 
 	@Override
 	public IRadioItemModel addRadioItem() {
-		return addItem(new RadioItemModelBuilder());
+		return listModelDelegate.addRadioItem();
 	}
 
 	@Override
 	public IRadioItemModel addRadioItem(final String text) {
-		return addItem(new RadioItemModelBuilder().setText(text));
+		return listModelDelegate.addRadioItem(text);
 	}
 
 	@Override
 	public IRadioItemModel addRadioItem(final String text, final String toolTipText) {
-		return addItem(new RadioItemModelBuilder().setText(text).setToolTipText(toolTipText));
+		return listModelDelegate.addRadioItem(text, toolTipText);
 	}
 
 	@Override
 	public IRadioItemModel addRadioItem(final String text, final IImageConstant icon) {
-		return addItem(new RadioItemModelBuilder().setText(text).setIcon(icon));
+		return listModelDelegate.addRadioItem(text, icon);
 	}
 
 	@Override
 	public IRadioItemModel addRadioItem(final String text, final String toolTipText, final IImageConstant icon) {
-		return addItem(new RadioItemModelBuilder().setText(text).setToolTipText(toolTipText).setIcon(icon));
+		return listModelDelegate.addRadioItem(text, toolTipText, icon);
 	}
 
 	@Override
 	public IMenuModel addMenu() {
-		return addItem(new MenuModelBuilder());
+		return listModelDelegate.addMenu();
 	}
 
 	@Override
 	public IMenuModel addMenu(final String text) {
-		return addItem(new MenuModelBuilder().setText(text));
+		return listModelDelegate.addMenu(text);
 	}
 
 	@Override
 	public IMenuModel addMenu(final String text, final String toolTipText) {
-		return addItem(new MenuModelBuilder().setText(text).setToolTipText(toolTipText));
+		return listModelDelegate.addMenu(text, toolTipText);
 	}
 
 	@Override
 	public IMenuModel addMenu(final String text, final IImageConstant icon) {
-		return addItem(new MenuModelBuilder().setText(text).setIcon(icon));
+		return listModelDelegate.addMenu(text, icon);
 	}
 
 	@Override
 	public IMenuModel addMenu(final String text, final String toolTipText, final IImageConstant icon) {
-		return addItem(new MenuModelBuilder().setText(text).setToolTipText(toolTipText).setIcon(icon));
+		return listModelDelegate.addMenu(text, toolTipText, icon);
 	}
 
 	@Override
 	public ISeparatorItemModel addSeparator() {
-		return addItem(new SeparatorItemModelBuilder());
+		return listModelDelegate.addSeparator();
 	}
 
 	@Override
 	public ISeparatorItemModel addSeparator(final int index) {
-		return addItem(index, new SeparatorItemModelBuilder());
+		return listModelDelegate.addSeparator(index);
 	}
 
 	@Override
 	public ISeparatorItemModel addSeparator(final String id) {
-		return addItem(new SeparatorItemModelBuilder().setId(id));
+		return listModelDelegate.addSeparator(id);
 	}
 
 	@Override
-	public void addBefore(final IItemModel newItem, final String... idPath) {
-		addByPath(newItem, true, idPath);
+	public void addBefore(final IMenuItemModel newItem, final String... idPath) {
+		listModelDelegate.addBefore(newItem, idPath);
 	}
 
 	@Override
-	public void addAfter(final IItemModel newItem, final String... idPath) {
-		addByPath(newItem, false, idPath);
-	}
-
-	private void addByPath(final IItemModel newItem, final boolean before, final String... idPath) {
-		Assert.paramNotNull(newItem, "newItem");
-		Assert.paramAndElementsNotEmpty(idPath, "idPath");
-
-		//create the path to the last menu 
-		final String[] menuPath = new String[idPath.length - 1];
-		for (int i = 0; i < menuPath.length; i++) {
-			menuPath[i] = idPath[i];
-		}
-
-		//find the menu to add the item to
-		IMenuModel parentMenu = this;
-		if (menuPath.length > 0) {
-			final IItemModel itemForPath = findItemByPath(menuPath);
-			if (itemForPath instanceof IMenuModel) {
-				parentMenu = (IMenuModel) itemForPath;
-			}
-			else {
-				throw new IllegalArgumentException("The id path '" + pathToString(idPath) + "' doesn't match for the menu.");
-			}
-		}
-		final String lastId = idPath[idPath.length - 1];
-
-		//add the item to the menu at the propper index
-		int index = 0;
-		for (final IItemModel child : parentMenu.getChildren()) {
-			if (NullCompatibleEquivalence.equals(child.getId(), lastId)) {
-				if (before) {
-					parentMenu.addItem(index, newItem);
-				}
-				else {
-					parentMenu.addItem(index + 1, newItem);
-				}
-				return;
-			}
-			index++;
-		}
-		throw new IllegalArgumentException("The id path '" + pathToString(idPath) + "' doesn't match for the menu.");
-	}
-
-	private String pathToString(final String... idPath) {
-		final StringBuilder result = new StringBuilder();
-		result.append("[");
-		for (final String tanga : idPath) {
-			result.append(tanga + ", ");
-		}
-		if (idPath.length > 0) {
-			result.delete(result.length() - 2, result.length() - 1);
-		}
-		result.append("]");
-		return result.toString();
+	public void addAfter(final IMenuItemModel newItem, final String... idPath) {
+		listModelDelegate.addAfter(newItem, idPath);
 	}
 
 	@Override
-	public <MODEL_TYPE extends IItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
+	public <MODEL_TYPE extends IMenuItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
 		final BUILDER_TYPE itemBuilder) {
-		return addItem(itemBuilder.build());
+		return listModelDelegate.addItem(itemBuilder);
 	}
 
 	@Override
-	public <MODEL_TYPE extends IItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
+	public <MODEL_TYPE extends IMenuItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
 		final int index,
 		final BUILDER_TYPE itemBuilder) {
-		return addItem(index, itemBuilder.build());
+		return listModelDelegate.addItem(index, itemBuilder);
 	}
 
 	@Override
-	public <MODEL_TYPE extends IItemModel> MODEL_TYPE addItem(final MODEL_TYPE item) {
-		addItem(children.size(), item);
-		return item;
+	public <MODEL_TYPE extends IMenuItemModel> MODEL_TYPE addItem(final MODEL_TYPE item) {
+		return listModelDelegate.addItem(item);
 	}
 
 	@Override
-	public <MODEL_TYPE extends IItemModel> MODEL_TYPE addItem(final int index, final MODEL_TYPE item) {
-		Assert.paramNotNull(item, "item");
-		if (item instanceof IMenuModel) {
-			checkRecursion((IMenuModel) item, this);
-		}
-		checkIds(item);
-		children.add(index, item);
-		item.addItemModelListener(itemModelListener);
-		fireChildAdded(index);
-		return item;
+	public <MODEL_TYPE extends IMenuItemModel> MODEL_TYPE addItem(final int index, final MODEL_TYPE item) {
+		return listModelDelegate.addItem(index, item);
+	}
+
+	protected <MODEL_TYPE extends IItemModel> MODEL_TYPE addItemImpl(final int index, final MODEL_TYPE item) {
+		return listModelDelegate.addItem(index, item);
+	}
+
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	@Override
+	public final List<IMenuItemModel> getChildren() {
+		return new LinkedList(listModelDelegate.getChildren());
 	}
 
 	@Override
-	public final List<IItemModel> getChildren() {
-		return new LinkedList<IItemModel>(children);
+	public IMenuItemModel findItemByPath(final String... idPath) {
+		return (IMenuItemModel) listModelDelegate.findItemByPath(idPath);
 	}
 
 	@Override
-	public IItemModel findItemByPath(final String... idPath) {
-		Assert.paramNotEmpty(idPath, "idPath");
-		for (final IItemModel child : children) {
-			if (NullCompatibleEquivalence.equals(child.getId(), idPath[0])) {
-				if (idPath.length == 1) {
-					return child;
-				}
-				else if (child instanceof IMenuModel) {
-					final String[] newPath = new String[idPath.length - 1];
-					for (int i = 0; i < newPath.length; i++) {
-						newPath[i] = idPath[i + 1];
-					}
-					return ((IMenuModel) child).findItemByPath(newPath);
-				}
-				else {
-					//this path can not match
-					return null;
-				}
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public void removeItem(final IItemModel item) {
-		final int index = children.indexOf(item);
-		if (index != -1) {
-			removeItem(index);
-		}
+	public void removeItem(final IMenuItemModel item) {
+		listModelDelegate.removeItem(item);
 	}
 
 	@Override
 	public void removeItem(final int index) {
-		final IItemModel removedItem = children.remove(index);
-		if (removedItem != null) {
-			removedItem.removeItemModelListener(itemModelListener);
-			fireChildRemoved(index);
-		}
+		listModelDelegate.removeItem(index);
 	}
 
 	@Override
 	public void removeAllItems() {
-		for (final IItemModel item : getChildren()) {
-			removeItem(item);
-		}
-	}
-
-	protected final void fireChildAdded(final int index) {
-		for (final IListModelListener listener : listModelListeners) {
-			listener.childAdded(index);
-		}
-	}
-
-	protected final void fireChildRemoved(final int index) {
-		for (final IListModelListener listener : listModelListeners) {
-			listener.childRemoved(index);
-		}
-	}
-
-	private void checkIds(final IItemModel item) {
-		if (item.getId() == null) {
-			throw new IllegalArgumentException("Invalid item ID: The item '" + item + "' has no id.");
-		}
-		for (final IItemModel child : children) {
-			if (child != item && NullCompatibleEquivalence.equals(item.getId(), child.getId())) {
-				throw new IllegalArgumentException("Invalid item ID: The item '"
-					+ item
-					+ "' has the same id as the child '"
-					+ child
-					+ " of their parent menu '"
-					+ this
-					+ "'.");
-			}
-		}
-	}
-
-	private void checkRecursion(final IMenuModel menu1, final IMenuModel menu2) {
-		if (NullCompatibleEquivalence.equals(menu1, menu2)) {
-			throw new IllegalArgumentException("Menu Model Recursion: "
-				+ "The added menu has the same id than this menu or has a child menu with the same id than this menu.");
-		}
-
-		for (final IItemModel child : menu1.getChildren()) {
-			if (child instanceof IMenuModel) {
-				checkRecursion((IMenuModel) child, menu2);
-			}
-		}
+		listModelDelegate.removeAllItems();
 	}
 }

@@ -28,12 +28,6 @@
 
 package org.jowidgets.api.model.item;
 
-import org.jowidgets.common.widgets.controler.IItemStateObservable;
-
-public interface ISelectableItemModel extends IItemModel, IItemStateObservable {
-
-	boolean isSelected();
-
-	void setSelected(boolean selected);
+public interface IToolBarItemModel extends IItemModel {
 
 }

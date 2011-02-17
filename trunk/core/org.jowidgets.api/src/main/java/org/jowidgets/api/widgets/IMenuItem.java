@@ -28,14 +28,14 @@
 
 package org.jowidgets.api.widgets;
 
-import org.jowidgets.api.model.item.IItemModel;
+import org.jowidgets.api.model.item.IMenuItemModel;
 import org.jowidgets.common.widgets.IMenuItemCommon;
 
 public interface IMenuItem extends IItem, IMenuItemCommon {
 
-	IItemModel getModel();
+	IMenuItemModel getModel();
 
-	void setModel(IItemModel model);
+	void setModel(IMenuItemModel model);
 
 	@Override
 	IMenu getParent();

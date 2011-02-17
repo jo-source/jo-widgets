@@ -31,15 +31,19 @@ package org.jowidgets.impl.model.item;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.jowidgets.api.model.item.IItemModel;
+import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IMenuModelBuilder;
+import org.jowidgets.common.image.IImageConstant;
 
-class MenuBarModelImpl extends MenuModelImpl implements IMenuBarModel {
+class MenuBarModelImpl implements IMenuBarModel {
+
+	private final ListModelDelegate listModelDelegate;
 
 	protected MenuBarModelImpl() {
 		super();
+		this.listModelDelegate = new ListModelDelegate();
 	}
 
 	@Override
@@ -49,86 +53,99 @@ class MenuBarModelImpl extends MenuModelImpl implements IMenuBarModel {
 		return result;
 	}
 
+	protected void setContent(final IMenuBarModel source) {
+		listModelDelegate.setContent(source);
+	}
+
 	@Override
 	public void addAfter(final IMenuModel newMenu, final String id) {
-		super.addAfter(newMenu, id);
+		listModelDelegate.addAfter(newMenu, id);
 	}
 
 	@Override
 	public void addBefore(final IMenuModel newMenu, final String id) {
-		super.addBefore(newMenu, id);
+		listModelDelegate.addBefore(newMenu, id);
 	}
 
 	@Override
 	public IMenuModel addMenu(final IMenuModel menu) {
-		return super.addItem(menu);
+		return listModelDelegate.addItem(menu);
 	}
 
 	@Override
 	public IMenuModel addMenu(final int index, final IMenuModel menu) {
-		return (IMenuModel) addItem(index, (IItemModel) menu);
+		return listModelDelegate.addItem(index, menu);
 	}
 
 	@Override
 	public IMenuModel addMenu(final IMenuModelBuilder menuBuilder) {
-		return super.addItem(menuBuilder);
+		return listModelDelegate.addItem(menuBuilder);
 	}
 
 	@Override
 	public IMenuModel addMenu(final int index, final IMenuModelBuilder menuBuilder) {
-		return super.addItem(index, menuBuilder);
+		return listModelDelegate.addItem(index, menuBuilder);
+	}
+
+	@Override
+	public IMenuModel addMenu() {
+		return listModelDelegate.addMenu();
+	}
+
+	@Override
+	public IMenuModel addMenu(final String text) {
+		return listModelDelegate.addMenu(text);
+	}
+
+	@Override
+	public IMenuModel addMenu(final String text, final String toolTipText) {
+		return listModelDelegate.addMenu(text, toolTipText);
+	}
+
+	@Override
+	public IMenuModel addMenu(final String text, final IImageConstant icon) {
+		return listModelDelegate.addMenu(text, icon);
+	}
+
+	@Override
+	public IMenuModel addMenu(final String text, final String toolTipText, final IImageConstant icon) {
+		return listModelDelegate.addMenu(text, toolTipText, icon);
 	}
 
 	@Override
 	public IMenuModel findMenuById(final String id) {
-		return (IMenuModel) super.findItemByPath(id);
+		return (IMenuModel) listModelDelegate.findItemByPath(id);
 	}
 
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public List<IMenuModel> getMenus() {
-		final List<IMenuModel> result = new LinkedList<IMenuModel>();
-		for (final IItemModel item : super.getChildren()) {
-			if (item instanceof IMenuModel) {
-				result.add((IMenuModel) item);
-			}
-			else {
-				checkItemType(item);
-			}
-		}
-		return result;
+		return new LinkedList(listModelDelegate.getChildren());
 	}
 
 	@Override
 	public void removeMenu(final IMenuModel item) {
-		super.removeItem(item);
+		listModelDelegate.removeItem(item);
 	}
 
 	@Override
 	public void removeMenu(final int index) {
-		super.removeItem(index);
+		listModelDelegate.removeItem(index);
 	}
 
 	@Override
 	public void removeAllMenus() {
-		super.removeAllItems();
+		listModelDelegate.removeAllItems();
 	}
 
 	@Override
-	public <MODEL_TYPE extends IItemModel> MODEL_TYPE addItem(final int index, final MODEL_TYPE item) {
-		checkItemType(item);
-		return super.addItem(index, item);
+	public void addListModelListener(final IListModelListener listener) {
+		listModelDelegate.addListModelListener(listener);
 	}
 
-	private void checkItemType(final IItemModel item) {
-		if (!(item instanceof IMenuModel)) {
-			throw new IllegalStateException("The item '"
-				+ item
-				+ "' is not type of '"
-				+ IMenuModel.class.getName()
-				+ "' as expected. A menubar could only contain menus."
-				+ " This seems to be an illegal use of the implementation "
-				+ "(e.g. by casting this object to the implementation type and adding unallowed items"
-				+ "like IActionItemModel, IRadioItemModel, ICheckedItemModel, ISeparatorItemModel).");
-		}
+	@Override
+	public void removeListModelListener(final IListModelListener listener) {
+		listModelDelegate.removeListModelListener(listener);
 	}
+
 }

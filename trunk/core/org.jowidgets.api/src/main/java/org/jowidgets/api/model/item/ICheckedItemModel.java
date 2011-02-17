@@ -28,7 +28,7 @@
 
 package org.jowidgets.api.model.item;
 
-public interface ICheckedItemModel extends ISelectableItemModel {
+public interface ICheckedItemModel extends IToolBarItemModel, ISelectableMenuItemModel {
 
 	/**
 	 * Makes a deep copy of the item.

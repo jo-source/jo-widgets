@@ -32,12 +32,12 @@ import org.jowidgets.api.model.item.ISelectableItemModel;
 import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.common.widgets.ISelectableMenuItemCommon;
 import org.jowidgets.common.widgets.controler.IItemStateListener;
-import org.jowidgets.impl.base.delegate.SelectableItemDelegate;
+import org.jowidgets.impl.base.delegate.SelectableMenuItemDelegate;
 import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 
 public class SelectableMenuItemSpiWrapper extends MenuItemSpiWrapper implements ISelectableMenuItemCommon {
 
-	public SelectableMenuItemSpiWrapper(final ISelectableMenuItemSpi widget, final SelectableItemDelegate itemDelegate) {
+	public SelectableMenuItemSpiWrapper(final ISelectableMenuItemSpi widget, final SelectableMenuItemDelegate itemDelegate) {
 		super(widget, itemDelegate);
 		widget.addItemListener(new IItemStateListener() {
 
@@ -54,8 +54,8 @@ public class SelectableMenuItemSpiWrapper extends MenuItemSpiWrapper implements 
 	}
 
 	@Override
-	protected SelectableItemDelegate getItemDelegate() {
-		return (SelectableItemDelegate) super.getItemDelegate();
+	protected SelectableMenuItemDelegate getItemDelegate() {
+		return (SelectableMenuItemDelegate) super.getItemDelegate();
 	}
 
 	public ISelectableItemModel getModel() {

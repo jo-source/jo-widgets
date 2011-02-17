@@ -36,49 +36,20 @@ import org.jowidgets.common.image.IImageConstant;
 
 public interface IToolBarModel extends IListModelObservable {
 
-	IActionItemModel addItem(IActionItemModel item);
+	<MODEL_TYPE extends IToolBarItemModel> MODEL_TYPE addItem(final MODEL_TYPE item);
 
-	IActionItemModel addItem(int index, IActionItemModel item);
+	<MODEL_TYPE extends IToolBarItemModel> MODEL_TYPE addItem(final int index, final MODEL_TYPE item);
 
-	IActionItemModel addItem(IActionItemModelBuilder itemBuilder);
+	<MODEL_TYPE extends IToolBarItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
+		final BUILDER_TYPE itemBuilder);
 
-	IActionItemModel addItem(int index, IActionItemModelBuilder itemBuilder);
+	<MODEL_TYPE extends IToolBarItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
+		int index,
+		final BUILDER_TYPE itemBuilder);
 
-	IRadioItemModel addItem(IRadioItemModel item);
+	void addAfter(IToolBarItemModel newItem, String id);
 
-	IRadioItemModel addItem(int index, IRadioItemModel item);
-
-	IRadioItemModel addItem(IRadioItemModelBuilder itemBuilder);
-
-	IRadioItemModel addItem(int index, IRadioItemModelBuilder itemBuilder);
-
-	ICheckedItemModel addItem(ICheckedItemModel item);
-
-	ICheckedItemModel addItem(int index, ICheckedItemModel item);
-
-	ICheckedItemModel addItem(ICheckedItemModelBuilder itemBuilder);
-
-	ICheckedItemModel addItem(int index, ICheckedItemModelBuilder itemBuilder);
-
-	ISeparatorItemModel addItem(ISeparatorItemModel item);
-
-	ISeparatorItemModel addItem(int index, ISeparatorItemModel item);
-
-	void addAfter(IActionItemModel newItem, String id);
-
-	void addBefore(IActionItemModel newItem, String id);
-
-	void addAfter(IRadioItemModel newItem, String id);
-
-	void addBefore(IRadioItemModel newItem, String id);
-
-	void addAfter(ICheckedItemModel newItem, String id);
-
-	void addBefore(ICheckedItemModel newItem, String id);
-
-	void addAfter(ISeparatorItemModel newItem, String id);
-
-	void addBefore(ISeparatorItemModel newItem, String id);
+	void addBefore(IToolBarItemModel newItem, String id);
 
 	IActionItemModel addAction(IAction action);
 
@@ -104,31 +75,21 @@ public interface IToolBarModel extends IListModelObservable {
 
 	ICheckedItemModel addCheckedItem(String text, String toolTipText, IImageConstant icon);
 
-	IRadioItemModel addRadioItem();
-
-	IRadioItemModel addRadioItem(String text);
-
-	IRadioItemModel addRadioItem(String text, String toolTipText);
-
-	IRadioItemModel addRadioItem(String text, IImageConstant icon);
-
-	IRadioItemModel addRadioItem(String text, String toolTipText, IImageConstant icon);
-
 	ISeparatorItemModel addSeparator();
 
 	ISeparatorItemModel addSeparator(String id);
 
 	ISeparatorItemModel addSeparator(int index);
 
-	void removeItem(final IItemModel item);
+	void removeItem(final IToolBarItemModel item);
 
 	void removeItem(int index);
 
 	void removeAllItems();
 
-	IItemModel findItemById(String id);
+	IToolBarItemModel findItemById(String id);
 
-	List<IItemModel> getChildren();
+	List<IToolBarItemModel> getItems();
 
 	/**
 	 * Makes a deep copy of the tool bar and its children.

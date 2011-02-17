@@ -33,13 +33,10 @@ import java.util.List;
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IActionItemModel;
-import org.jowidgets.api.model.item.IActionItemModelBuilder;
 import org.jowidgets.api.model.item.ICheckedItemModel;
-import org.jowidgets.api.model.item.ICheckedItemModelBuilder;
-import org.jowidgets.api.model.item.IItemModel;
-import org.jowidgets.api.model.item.IRadioItemModel;
-import org.jowidgets.api.model.item.IRadioItemModelBuilder;
+import org.jowidgets.api.model.item.IItemModelBuilder;
 import org.jowidgets.api.model.item.ISeparatorItemModel;
+import org.jowidgets.api.model.item.IToolBarItemModel;
 import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.image.IImageConstant;
@@ -69,112 +66,35 @@ public class ToolBarModel implements IToolBarModel {
 	}
 
 	@Override
-	public IActionItemModel addItem(final IActionItemModel item) {
+	public <MODEL_TYPE extends IToolBarItemModel> MODEL_TYPE addItem(final MODEL_TYPE item) {
 		return model.addItem(item);
 	}
 
 	@Override
-	public IActionItemModel addItem(final int index, final IActionItemModel item) {
+	public <MODEL_TYPE extends IToolBarItemModel> MODEL_TYPE addItem(final int index, final MODEL_TYPE item) {
 		return model.addItem(index, item);
 	}
 
 	@Override
-	public IActionItemModel addItem(final IActionItemModelBuilder itemBuilder) {
+	public <MODEL_TYPE extends IToolBarItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
+		final BUILDER_TYPE itemBuilder) {
 		return model.addItem(itemBuilder);
 	}
 
 	@Override
-	public IActionItemModel addItem(final int index, final IActionItemModelBuilder itemBuilder) {
+	public <MODEL_TYPE extends IToolBarItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
+		final int index,
+		final BUILDER_TYPE itemBuilder) {
 		return model.addItem(index, itemBuilder);
 	}
 
 	@Override
-	public IRadioItemModel addItem(final IRadioItemModel item) {
-		return model.addItem(item);
-	}
-
-	@Override
-	public IRadioItemModel addItem(final int index, final IRadioItemModel item) {
-		return model.addItem(index, item);
-	}
-
-	@Override
-	public IRadioItemModel addItem(final IRadioItemModelBuilder itemBuilder) {
-		return model.addItem(itemBuilder);
-	}
-
-	@Override
-	public IRadioItemModel addItem(final int index, final IRadioItemModelBuilder itemBuilder) {
-		return model.addItem(index, itemBuilder);
-	}
-
-	@Override
-	public ICheckedItemModel addItem(final ICheckedItemModel item) {
-		return model.addItem(item);
-	}
-
-	@Override
-	public ICheckedItemModel addItem(final int index, final ICheckedItemModel item) {
-		return model.addItem(index, item);
-	}
-
-	@Override
-	public ICheckedItemModel addItem(final ICheckedItemModelBuilder itemBuilder) {
-		return model.addItem(itemBuilder);
-	}
-
-	@Override
-	public ICheckedItemModel addItem(final int index, final ICheckedItemModelBuilder itemBuilder) {
-		return model.addItem(index, itemBuilder);
-	}
-
-	@Override
-	public ISeparatorItemModel addItem(final ISeparatorItemModel item) {
-		return model.addItem(item);
-	}
-
-	@Override
-	public ISeparatorItemModel addItem(final int index, final ISeparatorItemModel item) {
-		return model.addItem(index, item);
-	}
-
-	@Override
-	public void addAfter(final IActionItemModel newItem, final String id) {
+	public void addAfter(final IToolBarItemModel newItem, final String id) {
 		model.addAfter(newItem, id);
 	}
 
 	@Override
-	public void addBefore(final IActionItemModel newItem, final String id) {
-		model.addBefore(newItem, id);
-	}
-
-	@Override
-	public void addAfter(final IRadioItemModel newItem, final String id) {
-		model.addAfter(newItem, id);
-	}
-
-	@Override
-	public void addBefore(final IRadioItemModel newItem, final String id) {
-		model.addBefore(newItem, id);
-	}
-
-	@Override
-	public void addAfter(final ICheckedItemModel newItem, final String id) {
-		model.addAfter(newItem, id);
-	}
-
-	@Override
-	public void addBefore(final ICheckedItemModel newItem, final String id) {
-		model.addBefore(newItem, id);
-	}
-
-	@Override
-	public void addAfter(final ISeparatorItemModel newItem, final String id) {
-		model.addAfter(newItem, id);
-	}
-
-	@Override
-	public void addBefore(final ISeparatorItemModel newItem, final String id) {
+	public void addBefore(final IToolBarItemModel newItem, final String id) {
 		model.addBefore(newItem, id);
 	}
 
@@ -239,31 +159,6 @@ public class ToolBarModel implements IToolBarModel {
 	}
 
 	@Override
-	public IRadioItemModel addRadioItem() {
-		return model.addRadioItem();
-	}
-
-	@Override
-	public IRadioItemModel addRadioItem(final String text) {
-		return model.addRadioItem(text);
-	}
-
-	@Override
-	public IRadioItemModel addRadioItem(final String text, final String toolTipText) {
-		return model.addRadioItem(text, toolTipText);
-	}
-
-	@Override
-	public IRadioItemModel addRadioItem(final String text, final IImageConstant icon) {
-		return model.addRadioItem(text, icon);
-	}
-
-	@Override
-	public IRadioItemModel addRadioItem(final String text, final String toolTipText, final IImageConstant icon) {
-		return model.addRadioItem(text, toolTipText, icon);
-	}
-
-	@Override
 	public ISeparatorItemModel addSeparator() {
 		return model.addSeparator();
 	}
@@ -279,7 +174,7 @@ public class ToolBarModel implements IToolBarModel {
 	}
 
 	@Override
-	public void removeItem(final IItemModel item) {
+	public void removeItem(final IToolBarItemModel item) {
 		model.removeItem(item);
 	}
 
@@ -294,13 +189,13 @@ public class ToolBarModel implements IToolBarModel {
 	}
 
 	@Override
-	public IItemModel findItemById(final String id) {
+	public IToolBarItemModel findItemById(final String id) {
 		return model.findItemById(id);
 	}
 
 	@Override
-	public List<IItemModel> getChildren() {
-		return model.getChildren();
+	public List<IToolBarItemModel> getItems() {
+		return model.getItems();
 	}
 
 	@Override

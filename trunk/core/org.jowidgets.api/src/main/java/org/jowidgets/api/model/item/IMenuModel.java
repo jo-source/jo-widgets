@@ -34,22 +34,22 @@ import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.model.IListModelObservable;
 import org.jowidgets.common.image.IImageConstant;
 
-public interface IMenuModel extends IItemModel, IListModelObservable {
+public interface IMenuModel extends IItemModel, IMenuItemModel, IListModelObservable {
 
-	<MODEL_TYPE extends IItemModel> MODEL_TYPE addItem(final MODEL_TYPE item);
+	<MODEL_TYPE extends IMenuItemModel> MODEL_TYPE addItem(final MODEL_TYPE item);
 
-	<MODEL_TYPE extends IItemModel> MODEL_TYPE addItem(final int index, final MODEL_TYPE item);
+	<MODEL_TYPE extends IMenuItemModel> MODEL_TYPE addItem(final int index, final MODEL_TYPE item);
 
-	<MODEL_TYPE extends IItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
+	<MODEL_TYPE extends IMenuItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
 		final BUILDER_TYPE itemBuilder);
 
-	<MODEL_TYPE extends IItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
+	<MODEL_TYPE extends IMenuItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
 		int index,
 		final BUILDER_TYPE itemBuilder);
 
-	void addAfter(IItemModel newItem, String... idPath);
+	void addAfter(IMenuItemModel newItem, String... idPath);
 
-	void addBefore(IItemModel newItem, String... idPath);
+	void addBefore(IMenuItemModel newItem, String... idPath);
 
 	IActionItemModel addAction(IAction action);
 
@@ -101,15 +101,15 @@ public interface IMenuModel extends IItemModel, IListModelObservable {
 
 	IMenuModel addMenu(String text, String toolTipText, IImageConstant icon);
 
-	void removeItem(final IItemModel item);
+	void removeItem(final IMenuItemModel item);
 
 	void removeItem(int index);
 
 	void removeAllItems();
 
-	IItemModel findItemByPath(String... idPath);
+	IMenuItemModel findItemByPath(String... idPath);
 
-	List<IItemModel> getChildren();
+	List<IMenuItemModel> getChildren();
 
 	/**
 	 * Makes a deep copy of the item and its children.

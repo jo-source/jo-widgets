@@ -31,7 +31,7 @@ package org.jowidgets.impl.widgets.basic;
 import java.util.List;
 
 import org.jowidgets.api.command.IAction;
-import org.jowidgets.api.model.item.IItemModel;
+import org.jowidgets.api.model.item.IMenuItemModel;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.widgets.IActionMenuItem;
 import org.jowidgets.api.widgets.IMenu;
@@ -148,7 +148,7 @@ public class SubMenuImpl extends MenuItemSpiWrapper implements ISubMenu, IDispos
 	}
 
 	@Override
-	public void setModel(final IItemModel model) {
+	public void setModel(final IMenuItemModel model) {
 		if (model instanceof IMenuModel) {
 			setModel((IMenuModel) model);
 		}

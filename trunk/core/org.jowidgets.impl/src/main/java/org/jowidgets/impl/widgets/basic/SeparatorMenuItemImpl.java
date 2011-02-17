@@ -28,7 +28,8 @@
 
 package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.api.model.item.IItemModel;
+import org.jowidgets.api.model.item.IMenuItemModel;
+import org.jowidgets.api.model.item.ISeparatorItemModel;
 import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.IMenuItem;
 import org.jowidgets.impl.base.delegate.ItemDelegate;
@@ -53,12 +54,12 @@ public class SeparatorMenuItemImpl extends MenuItemSpiWrapper implements IMenuIt
 	}
 
 	@Override
-	public IItemModel getModel() {
-		return getItemDelegate().getModel();
+	public ISeparatorItemModel getModel() {
+		return (ISeparatorItemModel) getItemDelegate().getModel();
 	}
 
 	@Override
-	public void setModel(final IItemModel model) {
+	public void setModel(final IMenuItemModel model) {
 		getItemDelegate().setModel(model);
 	}
 

@@ -27,7 +27,7 @@
  */
 package org.jowidgets.api.model.item;
 
-public interface IRadioItemModel extends ISelectableItemModel {
+public interface IRadioItemModel extends ISelectableMenuItemModel {
 
 	/**
 	 * Makes a deep copy of the item.

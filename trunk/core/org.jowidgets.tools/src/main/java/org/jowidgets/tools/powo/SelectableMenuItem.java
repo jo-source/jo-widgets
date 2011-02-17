@@ -31,7 +31,7 @@ package org.jowidgets.tools.powo;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jowidgets.api.model.item.ISelectableItemModel;
+import org.jowidgets.api.model.item.ISelectableMenuItemModel;
 import org.jowidgets.api.widgets.ISelectableMenuItem;
 import org.jowidgets.api.widgets.blueprint.builder.ISelectableItemSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.setup.ISelectableItemSetup;
@@ -108,13 +108,13 @@ class SelectableMenuItem<WIDGET_TYPE extends ISelectableMenuItem, BLUE_PRINT_TYP
 	}
 
 	@Override
-	public void setModel(final ISelectableItemModel model) {
+	public void setModel(final ISelectableMenuItemModel model) {
 		checkInitialized();
 		getWidget().setModel(model);
 	}
 
 	@Override
-	public ISelectableItemModel getModel() {
+	public ISelectableMenuItemModel getModel() {
 		checkInitialized();
 		return getWidget().getModel();
 	}

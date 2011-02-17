@@ -35,7 +35,7 @@ import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.ICheckedItemModel;
-import org.jowidgets.api.model.item.IItemModel;
+import org.jowidgets.api.model.item.IMenuItemModel;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IRadioItemModel;
 import org.jowidgets.api.model.item.ISeparatorItemModel;
@@ -96,7 +96,7 @@ public class MenuDelegate implements IDisposeable {
 
 			@Override
 			public void childAdded(final int index) {
-				final IItemModel addedModel = getModel().getChildren().get(index);
+				final IMenuItemModel addedModel = getModel().getChildren().get(index);
 				addChild(index, addedModel);
 			}
 		};
@@ -165,7 +165,7 @@ public class MenuDelegate implements IDisposeable {
 				menu,
 				selectableMenuItemSpi,
 				(ISelectableItemSetup) descriptor,
-				new SelectableItemDelegate(
+				new SelectableMenuItemDelegate(
 					new SelectableItemSpiInvoker(selectableMenuItemSpi),
 					new CheckedItemModelBuilder().build()));
 			result = (WIDGET_TYPE) selectableMenuItem;
@@ -176,7 +176,7 @@ public class MenuDelegate implements IDisposeable {
 				menu,
 				selectableMenuItemSpi,
 				(ISelectableItemSetup) descriptor,
-				new SelectableItemDelegate(
+				new SelectableMenuItemDelegate(
 					new SelectableItemSpiInvoker(selectableMenuItemSpi),
 					new RadioItemModelBuilder().build()));
 			result = (WIDGET_TYPE) selectableMenuItem;
@@ -217,7 +217,7 @@ public class MenuDelegate implements IDisposeable {
 		model.addListModelListener(listModelListener);
 	}
 
-	private void addChild(final int index, final IItemModel model) {
+	private void addChild(final int index, final IMenuItemModel model) {
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 		if (model instanceof IRadioItemModel) {
 			addMenuItemInternal(index, bpf.radioMenuItem()).setModel(model);
@@ -290,7 +290,7 @@ public class MenuDelegate implements IDisposeable {
 			removeAll();
 		}
 		this.model = model;
-		for (final IItemModel childModel : model.getChildren()) {
+		for (final IMenuItemModel childModel : model.getChildren()) {
 			addChild(children.size(), childModel);
 		}
 

@@ -32,6 +32,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
@@ -76,6 +77,17 @@ public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar {
 
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
+	}
+
+	@Override
+	public IToolBarModel getModel() {
+		// TODO MG implement model support
+		return null;
+	}
+
+	@Override
+	public void setModel(final IToolBarModel model) {
+		// TODO MG implement model support	
 	}
 
 	@Override

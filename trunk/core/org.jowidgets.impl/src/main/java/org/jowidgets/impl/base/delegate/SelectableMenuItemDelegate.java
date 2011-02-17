@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2010, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,14 +26,60 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.model.item;
+package org.jowidgets.impl.base.delegate;
 
-import org.jowidgets.common.widgets.controler.IItemStateObservable;
+import org.jowidgets.api.model.item.ISelectableMenuItemModel;
+import org.jowidgets.impl.widgets.common.wrapper.invoker.ISelectableItemSpiInvoker;
+import org.jowidgets.util.Assert;
 
-public interface ISelectableItemModel extends IItemModel, IItemStateObservable {
+public class SelectableMenuItemDelegate extends ItemDelegate {
 
-	boolean isSelected();
+	private boolean selected;
 
-	void setSelected(boolean selected);
+	public SelectableMenuItemDelegate(final ISelectableItemSpiInvoker widget, final ISelectableMenuItemModel model) {
+		super(widget, model);
+		Assert.paramNotNull(model, "model");
+
+		this.selected = false;
+		updateThisFromModel();
+	}
+
+	@Override
+	public ISelectableItemSpiInvoker getWidget() {
+		return (ISelectableItemSpiInvoker) super.getWidget();
+	}
+
+	@Override
+	public ISelectableMenuItemModel getModel() {
+		return (ISelectableMenuItemModel) super.getModel();
+	}
+
+	public void setSelected(final boolean selected) {
+		setSelectedValue(selected);
+		unRegisterModel();
+		getModel().setSelected(selected);
+		registerModel();
+	}
+
+	public boolean isSelected() {
+		return selected;
+	}
+
+	@Override
+	protected void updateFromModel() {
+		super.updateFromModel();
+		updateThisFromModel();
+	}
+
+	private void updateThisFromModel() {
+		setSelectedValue(getModel().isSelected());
+	}
+
+	private void setSelectedValue(final boolean selected) {
+		if (this.selected != selected || getWidget().isSelected() != selected) {
+			this.selected = selected;
+			getWidget().setSelected(selected);
+		}
+	}
 
 }

@@ -28,21 +28,26 @@
 
 package org.jowidgets.impl.model.item;
 
-import org.jowidgets.api.model.item.IActionItemModel;
-import org.jowidgets.api.model.item.IActionItemModelBuilder;
-import org.jowidgets.api.model.item.ICheckedItemModel;
-import org.jowidgets.api.model.item.ICheckedItemModelBuilder;
-import org.jowidgets.api.model.item.IItemModel;
-import org.jowidgets.api.model.item.IMenuModel;
-import org.jowidgets.api.model.item.IRadioItemModel;
-import org.jowidgets.api.model.item.IRadioItemModelBuilder;
-import org.jowidgets.api.model.item.ISeparatorItemModel;
-import org.jowidgets.api.model.item.IToolBarModel;
+import java.util.LinkedList;
+import java.util.List;
 
-class ToolBarModelImpl extends MenuModelImpl implements IToolBarModel {
+import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.model.IListModelListener;
+import org.jowidgets.api.model.item.IActionItemModel;
+import org.jowidgets.api.model.item.ICheckedItemModel;
+import org.jowidgets.api.model.item.IItemModelBuilder;
+import org.jowidgets.api.model.item.ISeparatorItemModel;
+import org.jowidgets.api.model.item.IToolBarItemModel;
+import org.jowidgets.api.model.item.IToolBarModel;
+import org.jowidgets.common.image.IImageConstant;
+
+class ToolBarModelImpl implements IToolBarModel {
+
+	private final ListModelDelegate listModelDelegate;
 
 	protected ToolBarModelImpl() {
 		super();
+		this.listModelDelegate = new ListModelDelegate();
 	}
 
 	@Override
@@ -52,138 +57,152 @@ class ToolBarModelImpl extends MenuModelImpl implements IToolBarModel {
 		return result;
 	}
 
-	@Override
-	public IActionItemModel addItem(final IActionItemModel item) {
-		return super.addItem(item);
+	protected void setContent(final IToolBarModel source) {
+		listModelDelegate.setContent(source);
 	}
 
 	@Override
-	public IActionItemModel addItem(final int index, final IActionItemModel item) {
-		return (IActionItemModel) addItem(index, (IItemModel) item);
+	public void addListModelListener(final IListModelListener listener) {
+		listModelDelegate.addListModelListener(listener);
 	}
 
 	@Override
-	public IActionItemModel addItem(final IActionItemModelBuilder itemBuilder) {
-		return super.addItem(itemBuilder);
+	public void removeListModelListener(final IListModelListener listener) {
+		listModelDelegate.removeListModelListener(listener);
 	}
 
 	@Override
-	public IActionItemModel addItem(final int index, final IActionItemModelBuilder itemBuilder) {
-		return super.addItem(index, itemBuilder);
+	public <MODEL_TYPE extends IToolBarItemModel> MODEL_TYPE addItem(final MODEL_TYPE item) {
+		return listModelDelegate.addItem(item);
 	}
 
 	@Override
-	public IRadioItemModel addItem(final IRadioItemModel item) {
-		return super.addItem(item);
+	public <MODEL_TYPE extends IToolBarItemModel> MODEL_TYPE addItem(final int index, final MODEL_TYPE item) {
+		return listModelDelegate.addItem(index, item);
 	}
 
 	@Override
-	public IRadioItemModel addItem(final int index, final IRadioItemModel item) {
-		return (IRadioItemModel) addItem(index, (IItemModel) item);
+	public <MODEL_TYPE extends IToolBarItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
+		final BUILDER_TYPE itemBuilder) {
+		return listModelDelegate.addItem(itemBuilder);
 	}
 
 	@Override
-	public IRadioItemModel addItem(final IRadioItemModelBuilder itemBuilder) {
-		return super.addItem(itemBuilder);
+	public <MODEL_TYPE extends IToolBarItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
+		final int index,
+		final BUILDER_TYPE itemBuilder) {
+		return listModelDelegate.addItem(index, itemBuilder);
 	}
 
 	@Override
-	public IRadioItemModel addItem(final int index, final IRadioItemModelBuilder itemBuilder) {
-		return super.addItem(index, itemBuilder);
+	public void addAfter(final IToolBarItemModel newItem, final String id) {
+		listModelDelegate.addAfter(newItem, id);
 	}
 
 	@Override
-	public ICheckedItemModel addItem(final ICheckedItemModel item) {
-		return super.addItem(item);
+	public void addBefore(final IToolBarItemModel newItem, final String id) {
+		listModelDelegate.addBefore(newItem, id);
 	}
 
 	@Override
-	public ICheckedItemModel addItem(final int index, final ICheckedItemModel item) {
-		return (ICheckedItemModel) addItem(index, (IItemModel) item);
+	public IActionItemModel addAction(final IAction action) {
+		return listModelDelegate.addAction(action);
 	}
 
 	@Override
-	public ICheckedItemModel addItem(final ICheckedItemModelBuilder itemBuilder) {
-		return super.addItem(itemBuilder);
+	public IActionItemModel addAction(final int index, final IAction action) {
+		return listModelDelegate.addAction(index, action);
 	}
 
 	@Override
-	public ICheckedItemModel addItem(final int index, final ICheckedItemModelBuilder itemBuilder) {
-		return super.addItem(index, itemBuilder);
+	public IActionItemModel addActionItem() {
+		return listModelDelegate.addActionItem();
 	}
 
 	@Override
-	public ISeparatorItemModel addItem(final ISeparatorItemModel item) {
-		return super.addItem(item);
+	public IActionItemModel addActionItem(final String text) {
+		return listModelDelegate.addActionItem(text);
 	}
 
 	@Override
-	public ISeparatorItemModel addItem(final int index, final ISeparatorItemModel item) {
-		return (ISeparatorItemModel) addItem(index, (IItemModel) item);
+	public IActionItemModel addActionItem(final String text, final String toolTipText) {
+		return listModelDelegate.addActionItem(text, toolTipText);
 	}
 
 	@Override
-	public void addAfter(final IActionItemModel newItem, final String id) {
-		super.addAfter(newItem, id);
-
+	public IActionItemModel addActionItem(final String text, final IImageConstant icon) {
+		return listModelDelegate.addActionItem(text, icon);
 	}
 
 	@Override
-	public void addBefore(final IActionItemModel newItem, final String id) {
-		super.addBefore(newItem, id);
+	public IActionItemModel addActionItem(final String text, final String toolTipText, final IImageConstant icon) {
+		return listModelDelegate.addActionItem(text, toolTipText, icon);
 	}
 
 	@Override
-	public void addAfter(final IRadioItemModel newItem, final String id) {
-		super.addAfter(newItem, id);
+	public ICheckedItemModel addCheckedItem() {
+		return listModelDelegate.addCheckedItem();
 	}
 
 	@Override
-	public void addBefore(final IRadioItemModel newItem, final String id) {
-		super.addBefore(newItem, id);
+	public ICheckedItemModel addCheckedItem(final String text) {
+		return listModelDelegate.addCheckedItem(text);
 	}
 
 	@Override
-	public void addAfter(final ICheckedItemModel newItem, final String id) {
-		super.addAfter(newItem, id);
+	public ICheckedItemModel addCheckedItem(final String text, final String toolTipText) {
+		return listModelDelegate.addCheckedItem(text, toolTipText);
 	}
 
 	@Override
-	public void addBefore(final ICheckedItemModel newItem, final String id) {
-		super.addBefore(newItem, id);
+	public ICheckedItemModel addCheckedItem(final String text, final IImageConstant icon) {
+		return listModelDelegate.addCheckedItem(text, icon);
 	}
 
 	@Override
-	public void addAfter(final ISeparatorItemModel newItem, final String id) {
-		super.addAfter(newItem, id);
+	public ICheckedItemModel addCheckedItem(final String text, final String toolTipText, final IImageConstant icon) {
+		return listModelDelegate.addCheckedItem(text, toolTipText, icon);
 	}
 
 	@Override
-	public void addBefore(final ISeparatorItemModel newItem, final String id) {
-		super.addBefore(newItem, id);
+	public ISeparatorItemModel addSeparator() {
+		return listModelDelegate.addSeparator();
 	}
 
 	@Override
-	public IItemModel findItemById(final String id) {
-		return super.findItemByPath(id);
+	public ISeparatorItemModel addSeparator(final String id) {
+		return listModelDelegate.addSeparator(id);
 	}
 
 	@Override
-	public <MODEL_TYPE extends IItemModel> MODEL_TYPE addItem(final int index, final MODEL_TYPE item) {
-		checkItemType(item);
-		return super.addItem(index, item);
+	public ISeparatorItemModel addSeparator(final int index) {
+		return listModelDelegate.addSeparator(index);
 	}
 
-	private void checkItemType(final IItemModel item) {
-		if ((item instanceof IMenuModel)) {
-			throw new IllegalStateException("The item '"
-				+ item
-				+ "' is type of '"
-				+ IMenuModel.class.getName()
-				+ "'. A toolbar could could not contain menus."
-				+ " This seems to be an illegal use of the implementation "
-				+ "(e.g. by casting this object to the implementation type and adding "
-				+ "a IMenuModel).");
-		}
+	@Override
+	public void removeItem(final IToolBarItemModel item) {
+		listModelDelegate.removeItem(item);
 	}
+
+	@Override
+	public void removeItem(final int index) {
+		listModelDelegate.removeItem(index);
+	}
+
+	@Override
+	public void removeAllItems() {
+		listModelDelegate.removeAllItems();
+	}
+
+	@Override
+	public IToolBarItemModel findItemById(final String id) {
+		return (IToolBarItemModel) listModelDelegate.findItemByPath(id);
+	}
+
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	@Override
+	public List<IToolBarItemModel> getItems() {
+		return new LinkedList(listModelDelegate.getChildren());
+	}
+
 }
