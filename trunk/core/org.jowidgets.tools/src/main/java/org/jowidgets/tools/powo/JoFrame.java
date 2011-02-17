@@ -118,10 +118,15 @@ public class JoFrame extends Window<IFrame, IFrameBluePrint> implements IFrame {
 
 	@Override
 	public IMenuBarModel getMenuBarModel() {
-		if (menuBarModel == null) {
-			setMenuBar(Toolkit.getModelFactoryProvider().getItemModelFactory().menuBar());
+		if (isInitialized()) {
+			return getWidget().getMenuBarModel();
 		}
-		return menuBarModel;
+		else {
+			if (menuBarModel == null) {
+				setMenuBar(Toolkit.getModelFactoryProvider().getItemModelFactory().menuBar());
+			}
+			return menuBarModel;
+		}
 	}
 
 	@Override
