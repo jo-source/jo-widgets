@@ -108,11 +108,6 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	}
 
 	@Override
-	public void postWindowOpen() {
-		applicationFolder.setSelectedTreeNode(selectedTreeNode);
-	}
-
-	@Override
 	public boolean preWindowShellClose() {
 		if (closeHandler != null) {
 			try {
@@ -205,6 +200,9 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
 	public void setSelectedTreeNode(final String[] selectedTreeNode) {
 		this.selectedTreeNode = selectedTreeNode;
+		if (applicationFolder != null && !applicationFolder.isDisposed()) {
+			applicationFolder.setSelectedTreeNode(selectedTreeNode);
+		}
 	}
 
 }

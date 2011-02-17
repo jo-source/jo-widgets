@@ -97,7 +97,9 @@ public final class WorkbenchApplicationFolder extends Composite {
 				currentApplication.onVisibleStateChanged(true);
 				currentApplication.onActiveStateChanged(true);
 				if (activeTree != null && activeTree.isPerspectiveSelected()) {
-					lastSelectedTreeNode = activeTree.getSelectedNode().toArray(new String[0]);
+					if (!activeTree.isDisposed()) {
+						lastSelectedTreeNode = activeTree.getSelectedNode().toArray(new String[0]);
+					}
 					appTree.showSelectedPerspective();
 				}
 				activeTree = appTree;
@@ -225,7 +227,7 @@ public final class WorkbenchApplicationFolder extends Composite {
 				if (app.getId().equals(appId)) {
 					final WorkbenchApplicationTree tree = (WorkbenchApplicationTree) item.getControl();
 					tree.setSelectedNode(new ArrayList<String>(Arrays.asList(selectedTreeNode)));
-					tabFolder.showItem(item);
+					tabFolder.setSelection(item);
 					break;
 				}
 			}

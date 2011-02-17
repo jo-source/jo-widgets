@@ -70,7 +70,6 @@ public final class JoWorkbenchAdvisor extends WorkbenchAdvisor {
 		if (folderRatio != null) {
 			workbenchWindowAdvisor.setFolderRatio(folderRatio);
 		}
-		workbenchWindowAdvisor.setSelectedTreeNode(selectedTreeNode);
 		return workbenchWindowAdvisor;
 	}
 
@@ -82,6 +81,7 @@ public final class JoWorkbenchAdvisor extends WorkbenchAdvisor {
 	@Override
 	public void postStartup() {
 		workbench.initialize(context);
+		workbenchWindowAdvisor.setSelectedTreeNode(selectedTreeNode);
 	}
 
 	@Override
