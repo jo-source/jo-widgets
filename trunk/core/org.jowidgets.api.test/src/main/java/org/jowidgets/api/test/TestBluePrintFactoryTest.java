@@ -34,7 +34,6 @@ import junit.framework.JUnit4TestAdapter;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
-import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.test.api.toolkit.TestToolkit;
 import org.jowidgets.test.api.widgets.IButtonUi;
 import org.jowidgets.test.api.widgets.IFrameUi;
@@ -57,15 +56,6 @@ public class TestBluePrintFactoryTest {
 				frame.setVisible(true);
 
 				final IButtonUi button = frame.add(BPF.button(), "");
-				button.addActionListener(new IActionListener() {
-
-					@Override
-					public void actionPerformed() {
-						// CHECKSTYLE:OFF
-						System.out.println("Button wurde gedrueckt!");
-						// CHECKSTYLE:ON
-					}
-				});
 				button.push();
 
 				frame.dispose();
