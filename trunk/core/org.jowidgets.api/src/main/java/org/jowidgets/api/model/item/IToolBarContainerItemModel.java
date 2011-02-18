@@ -30,7 +30,7 @@ package org.jowidgets.api.model.item;
 
 import org.jowidgets.api.widgets.content.IContentCreator;
 
-public interface IToolBarContainerItemModel extends IToolBarItemModel, IItemModel {
+public interface IToolBarContainerItemModel extends IToolBarItemModel {
 
 	IContentCreator getContentCreator();
 

@@ -28,7 +28,7 @@
 
 package org.jowidgets.api.model.item;
 
-public interface ISeparatorItemModel extends IMenuItemModel, IToolBarItemModel, IItemModel {
+public interface ISeparatorItemModel extends IMenuItemModel, IToolBarItemModel {
 
 	/**
 	 * Makes a deep copy of the item.
