@@ -54,6 +54,7 @@ public class ImageRegistry implements IImageRegistry {
 		imageMap.put(key, imageHandle);
 	}
 
+	@Override
 	public synchronized IImageHandle getImageHandle(final IImageConstant key) {
 		return imageMap.get(key);
 	}
@@ -62,6 +63,13 @@ public class ImageRegistry implements IImageRegistry {
 	public void registerImageUrl(final IImageUrlProvider imageUrlProvider) {
 		Assert.paramNotNull(imageUrlProvider, "imageUrlProvider");
 		registerImageConstant(imageUrlProvider, imageHandleFactory.createImageHandle(imageUrlProvider.getImageUrl()));
+	}
+
+	@Override
+	public <T extends Enum<?> & IImageUrlProvider> void registerImageEnum(final Class<T> enumClass) {
+		for (final IImageUrlProvider imageUrlProvider : enumClass.getEnumConstants()) {
+			registerImageUrl(imageUrlProvider);
+		}
 	}
 
 	protected IImageHandleFactory getImageHandleFactory() {

@@ -35,4 +35,6 @@ public interface IImageRegistry {
 
 	void registerImageConstant(final IImageConstant key, final IImageHandle imageHandle);
 
+	<T extends Enum<?> & IImageUrlProvider> void registerImageEnum(final Class<T> enumClass);
+
 }
