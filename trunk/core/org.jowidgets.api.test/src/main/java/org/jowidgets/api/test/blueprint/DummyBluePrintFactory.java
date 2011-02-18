@@ -34,6 +34,7 @@ package org.jowidgets.api.test.blueprint;
 import org.jowidgets.api.test.blueprint.descriptor.IHierarchy1stDescriptor;
 import org.jowidgets.api.test.blueprint.descriptor.IHierarchy2nd1Descriptor;
 import org.jowidgets.api.test.blueprint.descriptor.IHierarchy2nd2Descriptor;
+import org.jowidgets.api.test.blueprint.descriptor.IHierarchy2nd3Descriptor;
 import org.jowidgets.api.test.blueprint.descriptor.IHierarchy3rdDescriptor;
 import org.jowidgets.api.test.blueprint.descriptor.IHierarchy4thDescriptor;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
@@ -55,6 +56,10 @@ public class DummyBluePrintFactory extends BluePrintFactoryWrapper {
 
 	public final IHierarchy2nd2BluePrint hierarchy2nd2() {
 		return bluePrint(IHierarchy2nd2BluePrint.class, IHierarchy2nd2Descriptor.class);
+	}
+
+	public final IHierarchy2nd3BluePrint hierarchy2nd3() {
+		return bluePrint(IHierarchy2nd3BluePrint.class, IHierarchy2nd3Descriptor.class);
 	}
 
 	public final IHierarchy3rdBluePrint hierarchy3rd() {

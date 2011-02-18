@@ -43,7 +43,8 @@ public final class ApiBlackBoxTestSuite {
 		suite.addTest(MenuTest.suite());
 		suite.addTest(ToolBarTest.suite());
 		suite.addTest(TestBluePrintFactoryTest.suite());
-		suite.addTest(ProxyInvocationTest.suite());
+		suite.addTest(BluePrintFactoryTest.suite());
+		suite.addTest(BluePrintFactoryAnnotationsTest.suite());
 		suite.addTest(TabFolderTest.suite());
 		//$JUnit-END$
 		return suite;

@@ -52,13 +52,14 @@ import org.jowidgets.api.test.blueprint.defaults.Hierarchy3rdDefaultsOverriden;
 import org.jowidgets.api.test.blueprint.defaults.Hierarchy4thDefaults;
 import org.jowidgets.api.test.blueprint.defaults.registry.DummyDefaultsInitializerRegistry;
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public final class ProxyInvocationTest {
+public final class BluePrintFactoryTest {
 
 	private static final IBluePrintFactory BLUE_PRINT_FACTORY = Toolkit.getBluePrintFactory();
 	private DummyBluePrintFactory dummyBluePrintFactory;
@@ -74,6 +75,7 @@ public final class ProxyInvocationTest {
 	private Hierarchy2nd2Convenience setupBuilderConvenience2nd2Mock;
 	private Hierarchy3rdConvenience setupBuilderConvenience3rdMock;
 	private Hierarchy2nd3Defaults hierarchy2nd3DefaultMock;
+	private ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry;
 
 	@Before
 	public void setUp() {
@@ -102,6 +104,7 @@ public final class ProxyInvocationTest {
 			hierarchy2nd3DefaultMock,
 			hierarchy3rdDefaultMock,
 			hierarchy4thDefaultMock));
+		setupBuilderConvenienceRegistry = dummyBluePrintFactory.getSetupBuilderConvenienceRegistry();
 	}
 
 	@After
@@ -111,7 +114,7 @@ public final class ProxyInvocationTest {
 	}
 
 	@Test
-	public void testHierarchy1st() {
+	public void testInitializerHierarchy1st() {
 		hierarchy1stDefaultMock.initialize(EasyMock.isA(IHierarchy1stSetupBuilder.class));
 
 		easyMock.replay();
@@ -120,7 +123,7 @@ public final class ProxyInvocationTest {
 	}
 
 	@Test
-	public void testHierarchy2nd1() {
+	public void testInitializerHierarchy2nd1() {
 		hierarchy1stDefaultMock.initialize(EasyMock.isA(IHierarchy1stSetupBuilder.class));
 		hierarchy2nd1DefaultMock.initialize(EasyMock.isA(IHierarchy2nd1SetupBuilder.class));
 
@@ -130,7 +133,7 @@ public final class ProxyInvocationTest {
 	}
 
 	@Test
-	public void testHierarchy2nd2() {
+	public void testInitializerHierarchy2nd2() {
 		hierarchy1stDefaultMock.initialize(EasyMock.isA(IHierarchy1stSetupBuilder.class));
 		hierarchy2nd2DefaultMock.initialize(EasyMock.isA(IHierarchy2nd2SetupBuilder.class));
 
@@ -140,7 +143,17 @@ public final class ProxyInvocationTest {
 	}
 
 	@Test
-	public void testHierarchy3rd() {
+	public void testInitializerHierarchy2nd3() {
+		hierarchy1stDefaultMock.initialize(EasyMock.isA(IHierarchy1stSetupBuilder.class));
+		hierarchy2nd3DefaultMock.initialize(EasyMock.isA(IHierarchy2nd3SetupBuilder.class));
+
+		easyMock.replay();
+
+		dummyBluePrintFactory.hierarchy2nd3();
+	}
+
+	@Test
+	public void testInitializerHierarchy3rd() {
 		hierarchy1stDefaultMock.initialize(EasyMock.isA(IHierarchy1stSetupBuilder.class));
 		hierarchy2nd2DefaultMock.initialize(EasyMock.isA(IHierarchy2nd2SetupBuilder.class));
 		hierarchy3rdDefaultMock.initialize(EasyMock.isA(IHierarchy3rdSetupBuilder.class));
@@ -151,7 +164,7 @@ public final class ProxyInvocationTest {
 	}
 
 	@Test
-	public void testHierarchy3rdAdded() {
+	public void testInitializerHierarchy3rdAdded() {
 		hierarchy1stDefaultMock.initialize(EasyMock.isA(IHierarchy1stSetupBuilder.class));
 		hierarchy2nd2DefaultMock.initialize(EasyMock.isA(IHierarchy2nd2SetupBuilder.class));
 		hierarchy3rdDefaultMock.initialize(EasyMock.isA(IHierarchy3rdSetupBuilder.class));
@@ -164,7 +177,7 @@ public final class ProxyInvocationTest {
 	}
 
 	@Test
-	public void testHierarchy3rdOveridden() {
+	public void testInitializerHierarchy3rdOveridden() {
 		hierarchy1stDefaultMock.initialize(EasyMock.isA(IHierarchy1stSetupBuilder.class));
 		hierarchy2nd2DefaultMock.initialize(EasyMock.isA(IHierarchy2nd2SetupBuilder.class));
 		hierarchy3rdDefaultOveriddenMock.initialize(EasyMock.isA(IHierarchy3rdSetupBuilder.class));
@@ -176,7 +189,7 @@ public final class ProxyInvocationTest {
 	}
 
 	@Test
-	public void testHierarchy4th() {
+	public void testInitializerHierarchy4th() {
 		hierarchy1stDefaultMock.initialize(EasyMock.isA(IHierarchy1stSetupBuilder.class));
 		hierarchy2nd1DefaultMock.initialize(EasyMock.isA(IHierarchy2nd1SetupBuilder.class));
 		hierarchy2nd2DefaultMock.initialize(EasyMock.isA(IHierarchy2nd2SetupBuilder.class));
@@ -215,7 +228,7 @@ public final class ProxyInvocationTest {
 	}
 
 	public static junit.framework.Test suite() {
-		final JUnit4TestAdapter suite = new JUnit4TestAdapter(ProxyInvocationTest.class);
+		final JUnit4TestAdapter suite = new JUnit4TestAdapter(BluePrintFactoryTest.class);
 		return suite;
 	}
 

@@ -29,11 +29,27 @@
 /**
  * 
  */
-package org.jowidgets.api.test.blueprint.descriptor.setup;
+package org.jowidgets.api.test.blueprint.convenience;
 
-public interface IHierarchy2nd3Setup extends IHierarchy1stSetup {
+import org.jowidgets.api.test.blueprint.builder.IHierarchy2nd3SetupBuilder;
+import org.jowidgets.tools.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 
-	String getIntroPartTwoThree();
+public class Hierarchy2nd3Convenience extends
+		AbstractSetupBuilderConvenience<IHierarchy2nd3SetupBuilder<IHierarchy2nd3SetupBuilder<?>>> implements
+		IHierarchy2nd3Convenience<IHierarchy2nd3SetupBuilder<?>> {
 
-	int getConvenienceAnnotationCalled();
+	private Integer called;
+
+	public Hierarchy2nd3Convenience() {
+		called = 0;
+	}
+
+	@Override
+	public IHierarchy2nd3SetupBuilder<?> introduce2nd3(final String title) {
+		called++;
+		getBuilder().setIntro(title + "");
+		getBuilder().setConvenienceAnnotationCalled(called);
+		return getBuilder();
+	}
+
 }

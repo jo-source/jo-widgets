@@ -26,14 +26,13 @@
  * DAMAGE.
  */
 
-/**
- * 
- */
-package org.jowidgets.api.test.blueprint.descriptor.setup;
+package org.jowidgets.api.test.blueprint.convenience;
 
-public interface IHierarchy2nd3Setup extends IHierarchy1stSetup {
+import org.jowidgets.api.widgets.blueprint.convenience.anotations.ConvenienceMethods;
 
-	String getIntroPartTwoThree();
+@ConvenienceMethods(Hierarchy2nd3Convenience.class)
+public interface IHierarchy2nd3Convenience<INSTANCE_TYPE> {
 
-	int getConvenienceAnnotationCalled();
+	INSTANCE_TYPE introduce2nd3(String title);
+
 }
