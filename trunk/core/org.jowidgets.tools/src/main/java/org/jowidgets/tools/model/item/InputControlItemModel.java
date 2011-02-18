@@ -39,8 +39,10 @@ import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.descriptor.setup.IInputComponentSetup;
 import org.jowidgets.common.widgets.controler.IInputListener;
+import org.jowidgets.common.widgets.controler.IInputObservable;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.tools.controler.InputObservable;
 import org.jowidgets.util.Tuple;
 
 /**
@@ -49,10 +51,11 @@ import org.jowidgets.util.Tuple;
  * 
  * @param <VALUE_TYPE> The value type of the input control
  */
-public class InputControlItemModel<VALUE_TYPE> extends AbstractItemModelWrapper implements IContainerItemModel {
+public class InputControlItemModel<VALUE_TYPE> extends AbstractItemModelWrapper implements IContainerItemModel, IInputObservable {
 
 	private final IContainerContentCreator contentCreator;
 	private final Map<IContainer, Tuple<IInputControl<VALUE_TYPE>, IInputListener>> controls;
+	private final InputObservable inputObservable;
 
 	private VALUE_TYPE value;
 
@@ -60,11 +63,12 @@ public class InputControlItemModel<VALUE_TYPE> extends AbstractItemModelWrapper 
 	public InputControlItemModel(final IWidgetDescriptor<? extends IInputControl<VALUE_TYPE>> descriptor) {
 		super(Toolkit.getModelFactoryProvider().getItemModelFactory().containerItem());
 
+		this.inputObservable = new InputObservable();
+		this.controls = new HashMap<IContainer, Tuple<IInputControl<VALUE_TYPE>, IInputListener>>();
+
 		if (descriptor instanceof IInputComponentSetup) {
 			this.value = ((IInputComponentSetup<VALUE_TYPE>) descriptor).getValue();
 		}
-
-		this.controls = new HashMap<IContainer, Tuple<IInputControl<VALUE_TYPE>, IInputListener>>();
 
 		this.contentCreator = new IContainerContentCreator() {
 
@@ -99,11 +103,11 @@ public class InputControlItemModel<VALUE_TYPE> extends AbstractItemModelWrapper 
 		throw new UnsupportedOperationException("The content creator of this model is imutable");
 	}
 
-	protected VALUE_TYPE getValue() {
+	public VALUE_TYPE getValue() {
 		return value;
 	}
 
-	protected void setValue(final VALUE_TYPE value) {
+	public void setValue(final VALUE_TYPE value) {
 		this.value = value;
 		changeValues(value, null);
 	}
@@ -131,6 +135,7 @@ public class InputControlItemModel<VALUE_TYPE> extends AbstractItemModelWrapper 
 				childControl.addInputListener(listener);
 			}
 		}
+		inputObservable.fireInputChanged(sourceControl);
 	}
 
 	private class InputListener implements IInputListener {
@@ -146,5 +151,15 @@ public class InputControlItemModel<VALUE_TYPE> extends AbstractItemModelWrapper 
 			value = control.getValue();
 			changeValues(value, control);
 		}
+	}
+
+	@Override
+	public void addInputListener(final IInputListener listener) {
+		inputObservable.addInputListener(listener);
+	}
+
+	@Override
+	public void removeInputListener(final IInputListener listener) {
+		inputObservable.removeInputListener(listener);
 	}
 }
