@@ -33,4 +33,5 @@ public interface IPerspective extends IUiPart {
 
 	IViewContainer getViewContainer();
 
+	// TODO MG adding and removing of views/view containers 
 }
