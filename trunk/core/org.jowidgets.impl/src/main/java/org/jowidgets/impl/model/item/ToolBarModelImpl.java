@@ -35,7 +35,11 @@ import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.ICheckedItemModel;
+import org.jowidgets.api.model.item.IContainerContentCreator;
+import org.jowidgets.api.model.item.IContainerItemModel;
 import org.jowidgets.api.model.item.IItemModelBuilder;
+import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.api.model.item.IPopupActionItemModel;
 import org.jowidgets.api.model.item.ISeparatorItemModel;
 import org.jowidgets.api.model.item.IToolBarItemModel;
 import org.jowidgets.api.model.item.IToolBarModel;
@@ -120,6 +124,16 @@ class ToolBarModelImpl implements IToolBarModel {
 	}
 
 	@Override
+	public IPopupActionItemModel addPopupAction(final IAction action, final IMenuModel popupMenu) {
+		return addItem(new PopupActionItemModelBuilder().setAction(action).setPopupMenu(popupMenu));
+	}
+
+	@Override
+	public IPopupActionItemModel addPopupAction(final int index, final IAction action, final IMenuModel popupMenu) {
+		return addItem(index, new PopupActionItemModelBuilder().setAction(action).setPopupMenu(popupMenu));
+	}
+
+	@Override
 	public IActionItemModel addActionItem(final String text) {
 		return listModelDelegate.addActionItem(text);
 	}
@@ -192,6 +206,41 @@ class ToolBarModelImpl implements IToolBarModel {
 	@Override
 	public void removeAllItems() {
 		listModelDelegate.removeAllItems();
+	}
+
+	@Override
+	public IPopupActionItemModel addPopupActionItem() {
+		return addItem(new PopupActionItemModelBuilder());
+	}
+
+	@Override
+	public IPopupActionItemModel addPopupActionItem(final String text) {
+		return addItem(new PopupActionItemModelBuilder().setText(text));
+	}
+
+	@Override
+	public IPopupActionItemModel addPopupActionItem(final String text, final String toolTipText) {
+		return addItem(new PopupActionItemModelBuilder().setText(text).setToolTipText(toolTipText));
+	}
+
+	@Override
+	public IPopupActionItemModel addPopupActionItem(final String text, final IImageConstant icon) {
+		return addItem(new PopupActionItemModelBuilder().setText(text).setIcon(icon));
+	}
+
+	@Override
+	public IPopupActionItemModel addPopupActionItem(final String text, final String toolTipText, final IImageConstant icon) {
+		return addItem(new PopupActionItemModelBuilder().setText(text).setToolTipText(toolTipText).setIcon(icon));
+	}
+
+	@Override
+	public IContainerItemModel addContainer() {
+		return addItem(new ContainerItemModelBuilder());
+	}
+
+	@Override
+	public IContainerItemModel addContainer(final IContainerContentCreator contentCreator) {
+		return addItem(new ContainerItemModelBuilder().setContentCreator(contentCreator));
 	}
 
 	@Override

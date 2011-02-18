@@ -28,23 +28,21 @@
 
 package org.jowidgets.impl.model.item;
 
-import org.jowidgets.api.model.item.IActionItemModel;
-import org.jowidgets.api.model.item.IActionItemModelBuilder;
+import org.jowidgets.api.command.IAction;
 
-public class ActionItemModelBuilder extends AbstractActionItemModelBuilder<IActionItemModelBuilder, IActionItemModel> implements
-		IActionItemModelBuilder {
+public abstract class AbstractActionItemModelBuilder<INSTANCE_TYPE, ITEM_TYPE> extends
+		AbstractItemModelBuilder<INSTANCE_TYPE, ITEM_TYPE> {
 
-	@Override
-	public IActionItemModel build() {
-		return new ActionItemModelImpl(
-			getId(),
-			getText(),
-			getToolTipText(),
-			getIcon(),
-			getAccelerator(),
-			getMnemonic(),
-			isEnabled(),
-			getAction());
+	private IAction action;
+
+	@SuppressWarnings("unchecked")
+	public INSTANCE_TYPE setAction(final IAction action) {
+		this.action = action;
+		return (INSTANCE_TYPE) this;
+	}
+
+	protected IAction getAction() {
+		return action;
 	}
 
 }

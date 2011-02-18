@@ -26,25 +26,38 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.model.item;
+package org.jowidgets.api.model.item;
 
-import org.jowidgets.api.model.item.IActionItemModel;
-import org.jowidgets.api.model.item.IActionItemModelBuilder;
+import org.jowidgets.api.command.IAction;
+import org.jowidgets.common.widgets.controler.IActionObservable;
 
-public class ActionItemModelBuilder extends AbstractActionItemModelBuilder<IActionItemModelBuilder, IActionItemModel> implements
-		IActionItemModelBuilder {
+public interface IPopupActionItemModel extends IToolBarItemModel, IActionObservable {
 
+	IAction getAction();
+
+	void setAction(IAction action);
+
+	void actionPerformed();
+
+	/**
+	 * Sets a popup menu for this tool bar popup button.
+	 * The popup menu will be shown, when the popup button is pressed.
+	 * 
+	 * @param menuModel
+	 *            The model of the popup menu or null, if no popup should be shown on popup events
+	 */
+	void setPopupMenu(IMenuModel popupMenu);
+
+	IMenuModel getPopupMenu();
+
+	/**
+	 * Makes a deep copy of the item.
+	 * Registered listeners on items won't be copied.
+	 * The Action won't be cloned.
+	 * 
+	 * @return A new instance that is a clone of this instance
+	 */
 	@Override
-	public IActionItemModel build() {
-		return new ActionItemModelImpl(
-			getId(),
-			getText(),
-			getToolTipText(),
-			getIcon(),
-			getAccelerator(),
-			getMnemonic(),
-			isEnabled(),
-			getAction());
-	}
+	IPopupActionItemModel createCopy();
 
 }

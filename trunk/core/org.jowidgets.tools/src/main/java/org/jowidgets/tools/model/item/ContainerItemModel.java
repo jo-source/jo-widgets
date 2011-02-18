@@ -26,25 +26,49 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.model.item;
+package org.jowidgets.tools.model.item;
 
-import org.jowidgets.api.model.item.IActionItemModel;
-import org.jowidgets.api.model.item.IActionItemModelBuilder;
+import org.jowidgets.api.model.item.IContainerContentCreator;
+import org.jowidgets.api.model.item.IContainerItemModel;
+import org.jowidgets.api.model.item.IContainerItemModelBuilder;
+import org.jowidgets.api.toolkit.Toolkit;
 
-public class ActionItemModelBuilder extends AbstractActionItemModelBuilder<IActionItemModelBuilder, IActionItemModel> implements
-		IActionItemModelBuilder {
+public class ContainerItemModel extends AbstractItemModelWrapper implements IContainerItemModel {
+
+	public ContainerItemModel(final IContainerContentCreator contentCreator) {
+		this(builder(contentCreator));
+	}
+
+	public ContainerItemModel(final IContainerItemModelBuilder builder) {
+		super(builder.build());
+	}
 
 	@Override
-	public IActionItemModel build() {
-		return new ActionItemModelImpl(
-			getId(),
-			getText(),
-			getToolTipText(),
-			getIcon(),
-			getAccelerator(),
-			getMnemonic(),
-			isEnabled(),
-			getAction());
+	protected IContainerItemModel getItemModel() {
+		return (IContainerItemModel) super.getItemModel();
+	}
+
+	@Override
+	public IContainerContentCreator getContentCreator() {
+		return getItemModel().getContentCreator();
+	}
+
+	@Override
+	public void setContentCreator(final IContainerContentCreator contentCreator) {
+		getItemModel().setContentCreator(contentCreator);
+	}
+
+	@Override
+	public IContainerItemModel createCopy() {
+		return getItemModel().createCopy();
+	}
+
+	public static IContainerItemModelBuilder builder() {
+		return Toolkit.getModelFactoryProvider().getItemModelFactory().containerItemBuilder();
+	}
+
+	public static IContainerItemModelBuilder builder(final IContainerContentCreator contentCreator) {
+		return builder().setContentCreator(contentCreator);
 	}
 
 }

@@ -26,25 +26,14 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.model.item;
+package org.jowidgets.api.model.item;
 
-import org.jowidgets.api.model.item.IActionItemModel;
-import org.jowidgets.api.model.item.IActionItemModelBuilder;
+import org.jowidgets.api.command.IAction;
 
-public class ActionItemModelBuilder extends AbstractActionItemModelBuilder<IActionItemModelBuilder, IActionItemModel> implements
-		IActionItemModelBuilder {
+public interface IPopupActionItemModelBuilder extends IItemModelBuilder<IPopupActionItemModelBuilder, IPopupActionItemModel> {
 
-	@Override
-	public IActionItemModel build() {
-		return new ActionItemModelImpl(
-			getId(),
-			getText(),
-			getToolTipText(),
-			getIcon(),
-			getAccelerator(),
-			getMnemonic(),
-			isEnabled(),
-			getAction());
-	}
+	IPopupActionItemModelBuilder setAction(IAction action);
+
+	IPopupActionItemModelBuilder setPopupMenu(IMenuModel popupMenu);
 
 }

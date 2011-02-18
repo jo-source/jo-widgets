@@ -32,14 +32,8 @@ import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
-import org.jowidgets.common.widgets.controler.IActionListener;
-import org.jowidgets.tools.controler.ActionObservable;
 
-class ActionItemModelImpl extends ItemModelImpl implements IActionItemModel {
-
-	private final ActionObservable actionObservable;
-
-	private IAction action;
+class ActionItemModelImpl extends AbstractActionItemModelImpl implements IActionItemModel {
 
 	protected ActionItemModelImpl() {
 		this(null, null, null, null, null, null, true, null);
@@ -54,10 +48,7 @@ class ActionItemModelImpl extends ItemModelImpl implements IActionItemModel {
 		final Character mnemonic,
 		final boolean enabled,
 		final IAction action) {
-		super(id, text, toolTipText, icon, accelerator, mnemonic, enabled);
-
-		this.actionObservable = new ActionObservable();
-		this.action = action;
+		super(id, text, toolTipText, icon, accelerator, mnemonic, enabled, action);
 	}
 
 	@Override
@@ -65,97 +56,6 @@ class ActionItemModelImpl extends ItemModelImpl implements IActionItemModel {
 		final ActionItemModelImpl result = new ActionItemModelImpl();
 		result.setContent(this);
 		return result;
-	}
-
-	protected void setContent(final ActionItemModelImpl source) {
-		super.setContent(source);
-		this.action = source.getAction();
-	}
-
-	@Override
-	public IAction getAction() {
-		return action;
-	}
-
-	@Override
-	public void setAction(final IAction action) {
-		this.action = action;
-		fireItemChanged();
-	}
-
-	@Override
-	public String getText() {
-		if (action != null) {
-			return action.getText();
-		}
-		else {
-			return super.getText();
-		}
-	}
-
-	@Override
-	public String getToolTipText() {
-		if (action != null) {
-			return action.getToolTipText();
-		}
-		else {
-			return super.getToolTipText();
-		}
-	}
-
-	@Override
-	public IImageConstant getIcon() {
-		if (action != null) {
-			return action.getIcon();
-		}
-		else {
-			return super.getIcon();
-		}
-	}
-
-	@Override
-	public Accelerator getAccelerator() {
-		if (action != null) {
-			return action.getAccelerator();
-		}
-		else {
-			return super.getAccelerator();
-		}
-	}
-
-	@Override
-	public Character getMnemonic() {
-		if (action != null) {
-			return action.getMnemonic();
-		}
-		else {
-			return super.getMnemonic();
-		}
-	}
-
-	@Override
-	public boolean isEnabled() {
-		if (action != null) {
-			return action.isEnabled();
-		}
-		else {
-			return super.isEnabled();
-		}
-	}
-
-	@Override
-	public void addActionListener(final IActionListener listener) {
-		actionObservable.addActionListener(listener);
-	}
-
-	@Override
-	public void removeActionListener(final IActionListener listener) {
-		actionObservable.removeActionListener(listener);
-	}
-
-	@Override
-	public void actionPerformed() {
-		actionObservable.fireActionPerformed();
 	}
 
 }

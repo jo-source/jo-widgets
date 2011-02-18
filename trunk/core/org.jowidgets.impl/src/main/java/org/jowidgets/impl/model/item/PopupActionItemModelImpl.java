@@ -28,23 +28,56 @@
 
 package org.jowidgets.impl.model.item;
 
-import org.jowidgets.api.model.item.IActionItemModel;
-import org.jowidgets.api.model.item.IActionItemModelBuilder;
+import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.api.model.item.IPopupActionItemModel;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Accelerator;
 
-public class ActionItemModelBuilder extends AbstractActionItemModelBuilder<IActionItemModelBuilder, IActionItemModel> implements
-		IActionItemModelBuilder {
+class PopupActionItemModelImpl extends AbstractActionItemModelImpl implements IPopupActionItemModel {
+
+	private IMenuModel popupMenu;
+
+	protected PopupActionItemModelImpl() {
+		this(null, null, null, null, null, null, true, null, null);
+	}
+
+	protected PopupActionItemModelImpl(
+		final String id,
+		final String text,
+		final String toolTipText,
+		final IImageConstant icon,
+		final Accelerator accelerator,
+		final Character mnemonic,
+		final boolean enabled,
+		final IAction action,
+		final IMenuModel popupMenu) {
+		super(id, text, toolTipText, icon, accelerator, mnemonic, enabled, action);
+
+		this.popupMenu = popupMenu;
+	}
 
 	@Override
-	public IActionItemModel build() {
-		return new ActionItemModelImpl(
-			getId(),
-			getText(),
-			getToolTipText(),
-			getIcon(),
-			getAccelerator(),
-			getMnemonic(),
-			isEnabled(),
-			getAction());
+	public IPopupActionItemModel createCopy() {
+		final PopupActionItemModelImpl result = new PopupActionItemModelImpl();
+		result.setContent(this);
+		return result;
+	}
+
+	protected void setContent(final PopupActionItemModelImpl source) {
+		super.setContent(source);
+		this.popupMenu = source.getPopupMenu();
+	}
+
+	@Override
+	public void setPopupMenu(final IMenuModel popupMenu) {
+		this.popupMenu = popupMenu;
+		fireItemChanged();
+	}
+
+	@Override
+	public IMenuModel getPopupMenu() {
+		return popupMenu;
 	}
 
 }

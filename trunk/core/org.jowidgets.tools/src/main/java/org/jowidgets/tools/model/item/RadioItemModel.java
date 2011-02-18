@@ -64,7 +64,7 @@ public class RadioItemModel extends AbstractSelectableItemModelWrapper implement
 	}
 
 	@Override
-	public IRadioItemModel getItemModel() {
+	protected IRadioItemModel getItemModel() {
 		return (IRadioItemModel) super.getItemModel();
 	}
 

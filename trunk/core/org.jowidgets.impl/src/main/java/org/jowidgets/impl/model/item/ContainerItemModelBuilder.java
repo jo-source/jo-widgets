@@ -28,15 +28,18 @@
 
 package org.jowidgets.impl.model.item;
 
-import org.jowidgets.api.model.item.IActionItemModel;
-import org.jowidgets.api.model.item.IActionItemModelBuilder;
+import org.jowidgets.api.model.item.IContainerContentCreator;
+import org.jowidgets.api.model.item.IContainerItemModel;
+import org.jowidgets.api.model.item.IContainerItemModelBuilder;
 
-public class ActionItemModelBuilder extends AbstractActionItemModelBuilder<IActionItemModelBuilder, IActionItemModel> implements
-		IActionItemModelBuilder {
+public class ContainerItemModelBuilder extends AbstractActionItemModelBuilder<IContainerItemModelBuilder, IContainerItemModel> implements
+		IContainerItemModelBuilder {
+
+	private IContainerContentCreator contentCreator;
 
 	@Override
-	public IActionItemModel build() {
-		return new ActionItemModelImpl(
+	public IContainerItemModel build() {
+		return new ContainerItemModelImpl(
 			getId(),
 			getText(),
 			getToolTipText(),
@@ -44,7 +47,14 @@ public class ActionItemModelBuilder extends AbstractActionItemModelBuilder<IActi
 			getAccelerator(),
 			getMnemonic(),
 			isEnabled(),
-			getAction());
+			getAction(),
+			contentCreator);
+	}
+
+	@Override
+	public IContainerItemModelBuilder setContentCreator(final IContainerContentCreator contentCreator) {
+		this.contentCreator = contentCreator;
+		return this;
 	}
 
 }

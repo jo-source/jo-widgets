@@ -74,7 +74,7 @@ public class MenuModel extends AbstractItemModelWrapper implements IMenuModel {
 	}
 
 	@Override
-	public IMenuModel getItemModel() {
+	protected IMenuModel getItemModel() {
 		return (IMenuModel) super.getItemModel();
 	}
 

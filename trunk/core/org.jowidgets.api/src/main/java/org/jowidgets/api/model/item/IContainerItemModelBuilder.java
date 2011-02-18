@@ -26,25 +26,12 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.model.item;
+package org.jowidgets.api.model.item;
 
-import org.jowidgets.api.model.item.IActionItemModel;
-import org.jowidgets.api.model.item.IActionItemModelBuilder;
 
-public class ActionItemModelBuilder extends AbstractActionItemModelBuilder<IActionItemModelBuilder, IActionItemModel> implements
-		IActionItemModelBuilder {
+public interface IContainerItemModelBuilder extends
+		IItemModelBuilder<IContainerItemModelBuilder, IContainerItemModel> {
 
-	@Override
-	public IActionItemModel build() {
-		return new ActionItemModelImpl(
-			getId(),
-			getText(),
-			getToolTipText(),
-			getIcon(),
-			getAccelerator(),
-			getMnemonic(),
-			isEnabled(),
-			getAction());
-	}
+	IContainerItemModelBuilder setContentCreator(IContainerContentCreator contentCreator);
 
 }

@@ -40,6 +40,14 @@ public interface IItemModelFactory {
 
 	ISeparatorItemModelBuilder separatorBuilder();
 
+	IPopupActionItemModel popupActionItem();
+
+	IPopupActionItemModelBuilder popupActionItemBuilder();
+
+	IContainerItemModel containerItem();
+
+	IContainerItemModelBuilder containerItemBuilder();
+
 	IMenuModel menu();
 
 	IActionItemModel actionItem();

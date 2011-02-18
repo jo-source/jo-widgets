@@ -43,7 +43,7 @@ abstract class AbstractItemModelWrapper implements IItemModel {
 		this.itemModel = itemModel;
 	}
 
-	public IItemModel getItemModel() {
+	protected IItemModel getItemModel() {
 		return itemModel;
 	}
 

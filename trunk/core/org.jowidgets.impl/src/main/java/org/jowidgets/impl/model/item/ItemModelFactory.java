@@ -32,10 +32,14 @@ import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.IActionItemModelBuilder;
 import org.jowidgets.api.model.item.ICheckedItemModel;
 import org.jowidgets.api.model.item.ICheckedItemModelBuilder;
+import org.jowidgets.api.model.item.IContainerItemModel;
+import org.jowidgets.api.model.item.IContainerItemModelBuilder;
 import org.jowidgets.api.model.item.IItemModelFactory;
 import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IMenuModelBuilder;
+import org.jowidgets.api.model.item.IPopupActionItemModel;
+import org.jowidgets.api.model.item.IPopupActionItemModelBuilder;
 import org.jowidgets.api.model.item.IRadioItemModel;
 import org.jowidgets.api.model.item.IRadioItemModelBuilder;
 import org.jowidgets.api.model.item.ISeparatorItemModel;
@@ -70,6 +74,16 @@ public class ItemModelFactory implements IItemModelFactory {
 	}
 
 	@Override
+	public IPopupActionItemModelBuilder popupActionItemBuilder() {
+		return new PopupActionItemModelBuilder();
+	}
+
+	@Override
+	public IContainerItemModelBuilder containerItemBuilder() {
+		return new ContainerItemModelBuilder();
+	}
+
+	@Override
 	public IMenuModel menu() {
 		return menuBuilder().build();
 	}
@@ -87,6 +101,16 @@ public class ItemModelFactory implements IItemModelFactory {
 	@Override
 	public IRadioItemModel radioItem() {
 		return radioItemBuilder().build();
+	}
+
+	@Override
+	public IPopupActionItemModel popupActionItem() {
+		return popupActionItemBuilder().build();
+	}
+
+	@Override
+	public IContainerItemModel containerItem() {
+		return containerItemBuilder().build();
 	}
 
 	@Override

@@ -26,40 +26,59 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.model.item;
+package org.jowidgets.impl.model.item;
 
-import org.jowidgets.api.model.item.ISelectableItemModel;
-import org.jowidgets.common.widgets.controler.IItemStateListener;
+import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.model.item.IContainerContentCreator;
+import org.jowidgets.api.model.item.IContainerItemModel;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Accelerator;
+import org.jowidgets.util.Assert;
 
-abstract class AbstractSelectableItemModelWrapper extends AbstractItemModelWrapper implements ISelectableItemModel {
+class ContainerItemModelImpl extends AbstractActionItemModelImpl implements IContainerItemModel {
 
-	public AbstractSelectableItemModelWrapper(final ISelectableItemModel itemModel) {
-		super(itemModel);
+	private IContainerContentCreator contentCreator;
+
+	protected ContainerItemModelImpl() {
+		this(null, null, null, null, null, null, true, null, null);
+	}
+
+	protected ContainerItemModelImpl(
+		final String id,
+		final String text,
+		final String toolTipText,
+		final IImageConstant icon,
+		final Accelerator accelerator,
+		final Character mnemonic,
+		final boolean enabled,
+		final IAction action,
+		final IContainerContentCreator contentCreator) {
+		super(id, text, toolTipText, icon, accelerator, mnemonic, enabled, action);
+		Assert.paramNotNull(contentCreator, "contentCreator");
+
+		this.contentCreator = contentCreator;
 	}
 
 	@Override
-	protected ISelectableItemModel getItemModel() {
-		return (ISelectableItemModel) super.getItemModel();
+	public IContainerItemModel createCopy() {
+		final ContainerItemModelImpl result = new ContainerItemModelImpl();
+		result.setContent(this);
+		return result;
+	}
+
+	protected void setContent(final ContainerItemModelImpl source) {
+		super.setContent(source);
+		this.contentCreator = source.getContentCreator();
 	}
 
 	@Override
-	public void addItemListener(final IItemStateListener listener) {
-		getItemModel().addItemListener(listener);
+	public IContainerContentCreator getContentCreator() {
+		return contentCreator;
 	}
 
 	@Override
-	public void removeItemListener(final IItemStateListener listener) {
-		getItemModel().removeItemListener(listener);
+	public void setContentCreator(final IContainerContentCreator contentCreator) {
+		Assert.paramNotNull(contentCreator, "contentCreator");
+		this.contentCreator = contentCreator;
 	}
-
-	@Override
-	public boolean isSelected() {
-		return getItemModel().isSelected();
-	}
-
-	@Override
-	public void setSelected(final boolean selected) {
-		getItemModel().setSelected(selected);
-	}
-
 }

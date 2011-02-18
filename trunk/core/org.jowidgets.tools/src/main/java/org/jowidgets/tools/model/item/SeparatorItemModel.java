@@ -47,7 +47,7 @@ public class SeparatorItemModel extends AbstractItemModelWrapper implements ISep
 	}
 
 	@Override
-	public ISeparatorItemModel getItemModel() {
+	protected ISeparatorItemModel getItemModel() {
 		return (ISeparatorItemModel) super.getItemModel();
 	}
 

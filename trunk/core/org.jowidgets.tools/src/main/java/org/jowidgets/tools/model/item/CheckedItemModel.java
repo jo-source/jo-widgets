@@ -64,7 +64,7 @@ public class CheckedItemModel extends AbstractSelectableItemModelWrapper impleme
 	}
 
 	@Override
-	public ICheckedItemModel getItemModel() {
+	protected ICheckedItemModel getItemModel() {
 		return (ICheckedItemModel) super.getItemModel();
 	}
 

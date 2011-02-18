@@ -55,6 +55,10 @@ public interface IToolBarModel extends IListModelObservable {
 
 	IActionItemModel addAction(final int index, IAction action);
 
+	IPopupActionItemModel addPopupAction(IAction action, IMenuModel popupMenu);
+
+	IPopupActionItemModel addPopupAction(final int index, IAction action, IMenuModel popupMenu);
+
 	IActionItemModel addActionItem();
 
 	IActionItemModel addActionItem(String text);
@@ -65,6 +69,16 @@ public interface IToolBarModel extends IListModelObservable {
 
 	IActionItemModel addActionItem(String text, String toolTipText, IImageConstant icon);
 
+	IPopupActionItemModel addPopupActionItem();
+
+	IPopupActionItemModel addPopupActionItem(String text);
+
+	IPopupActionItemModel addPopupActionItem(String text, String toolTipText);
+
+	IPopupActionItemModel addPopupActionItem(String text, IImageConstant icon);
+
+	IPopupActionItemModel addPopupActionItem(String text, String toolTipText, IImageConstant icon);
+
 	ICheckedItemModel addCheckedItem();
 
 	ICheckedItemModel addCheckedItem(String text);
@@ -74,6 +88,10 @@ public interface IToolBarModel extends IListModelObservable {
 	ICheckedItemModel addCheckedItem(String text, IImageConstant icon);
 
 	ICheckedItemModel addCheckedItem(String text, String toolTipText, IImageConstant icon);
+
+	IContainerItemModel addContainer();
+
+	IContainerItemModel addContainer(IContainerContentCreator contentCreator);
 
 	ISeparatorItemModel addSeparator();
 

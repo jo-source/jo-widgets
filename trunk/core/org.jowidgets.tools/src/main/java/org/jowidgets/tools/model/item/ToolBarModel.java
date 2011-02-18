@@ -34,7 +34,11 @@ import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.ICheckedItemModel;
+import org.jowidgets.api.model.item.IContainerContentCreator;
+import org.jowidgets.api.model.item.IContainerItemModel;
 import org.jowidgets.api.model.item.IItemModelBuilder;
+import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.api.model.item.IPopupActionItemModel;
 import org.jowidgets.api.model.item.ISeparatorItemModel;
 import org.jowidgets.api.model.item.IToolBarItemModel;
 import org.jowidgets.api.model.item.IToolBarModel;
@@ -131,6 +135,51 @@ public class ToolBarModel implements IToolBarModel {
 	@Override
 	public IActionItemModel addActionItem(final String text, final String toolTipText, final IImageConstant icon) {
 		return model.addActionItem(text, toolTipText, icon);
+	}
+
+	@Override
+	public IPopupActionItemModel addPopupActionItem() {
+		return model.addPopupActionItem();
+	}
+
+	@Override
+	public IPopupActionItemModel addPopupActionItem(final String text) {
+		return model.addPopupActionItem(text);
+	}
+
+	@Override
+	public IPopupActionItemModel addPopupActionItem(final String text, final String toolTipText) {
+		return model.addPopupActionItem(text, toolTipText);
+	}
+
+	@Override
+	public IPopupActionItemModel addPopupActionItem(final String text, final IImageConstant icon) {
+		return model.addPopupActionItem(text, icon);
+	}
+
+	@Override
+	public IPopupActionItemModel addPopupActionItem(final String text, final String toolTipText, final IImageConstant icon) {
+		return model.addPopupActionItem(text, toolTipText, icon);
+	}
+
+	@Override
+	public IContainerItemModel addContainer() {
+		return model.addContainer();
+	}
+
+	@Override
+	public IPopupActionItemModel addPopupAction(final IAction action, final IMenuModel popupMenu) {
+		return model.addPopupAction(action, popupMenu);
+	}
+
+	@Override
+	public IPopupActionItemModel addPopupAction(final int index, final IAction action, final IMenuModel popupMenu) {
+		return model.addPopupAction(index, action, popupMenu);
+	}
+
+	@Override
+	public IContainerItemModel addContainer(final IContainerContentCreator contentCreator) {
+		return model.addContainer(contentCreator);
 	}
 
 	@Override
