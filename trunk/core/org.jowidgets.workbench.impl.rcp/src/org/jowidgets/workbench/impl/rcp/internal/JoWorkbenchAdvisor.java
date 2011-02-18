@@ -37,6 +37,7 @@ import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 import org.jowidgets.workbench.api.IWorkbench;
 import org.jowidgets.workbench.api.IWorkbenchContext;
 import org.jowidgets.workbench.impl.rcp.internal.part.DynamicPerspective;
+import org.jowidgets.workbench.impl.rcp.internal.part.PartRegistry;
 
 public final class JoWorkbenchAdvisor extends WorkbenchAdvisor {
 
@@ -86,6 +87,9 @@ public final class JoWorkbenchAdvisor extends WorkbenchAdvisor {
 
 	@Override
 	public boolean preShutdown() {
+		// reset perspective
+		PartRegistry.getInstance().showEmptyPerspective();
+
 		for (final Runnable shutdownHook : shutdownHooks) {
 			shutdownHook.run();
 		}

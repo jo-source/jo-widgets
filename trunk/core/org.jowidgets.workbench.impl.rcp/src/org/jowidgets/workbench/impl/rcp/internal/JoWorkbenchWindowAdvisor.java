@@ -50,6 +50,7 @@ import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.workbench.api.ITrayItem;
 import org.jowidgets.workbench.api.IWorkbench;
 import org.jowidgets.workbench.api.IWorkbenchContext;
+import org.jowidgets.workbench.impl.rcp.internal.util.ImageHelper;
 
 public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 

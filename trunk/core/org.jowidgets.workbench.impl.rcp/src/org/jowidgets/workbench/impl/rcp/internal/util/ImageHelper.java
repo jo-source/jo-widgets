@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.impl.rcp.internal;
+package org.jowidgets.workbench.impl.rcp.internal.util;
 
 import org.eclipse.swt.graphics.Image;
 import org.jowidgets.api.toolkit.Toolkit;

@@ -47,6 +47,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.workbench.api.ITrayItem;
 import org.jowidgets.workbench.api.IWorkbench;
+import org.jowidgets.workbench.impl.rcp.internal.util.ImageHelper;
 
 public final class WorkbenchTrayItem implements ITrayItem {
 

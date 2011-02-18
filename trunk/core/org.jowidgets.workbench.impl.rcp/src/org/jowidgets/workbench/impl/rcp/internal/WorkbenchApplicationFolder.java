@@ -53,6 +53,7 @@ import org.eclipse.ui.themes.ITheme;
 import org.jowidgets.workbench.api.IWorkbench;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
 import org.jowidgets.workbench.api.IWorkbenchContext;
+import org.jowidgets.workbench.impl.rcp.internal.util.ImageHelper;
 
 @SuppressWarnings("restriction")
 public final class WorkbenchApplicationFolder extends Composite {
@@ -100,8 +101,8 @@ public final class WorkbenchApplicationFolder extends Composite {
 					if (!activeTree.isDisposed()) {
 						lastSelectedTreeNode = activeTree.getSelectedNode().toArray(new String[0]);
 					}
-					appTree.showSelectedPerspective();
 				}
+				appTree.showSelectedPerspective();
 				activeTree = appTree;
 			}
 		});
@@ -149,8 +150,12 @@ public final class WorkbenchApplicationFolder extends Composite {
 				app.onClose();
 				if (currentApplication == app) {
 					currentApplication = null;
+					activeTree = null;
 				}
-				item.getControl().dispose();
+				// unselect to clear perspective
+				final WorkbenchApplicationTree tree = (WorkbenchApplicationTree) item.getControl();
+				tree.clearSelection();
+				tree.dispose();
 				item.dispose();
 				break;
 			}

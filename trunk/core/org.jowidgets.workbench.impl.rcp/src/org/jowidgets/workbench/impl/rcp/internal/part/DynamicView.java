@@ -49,8 +49,8 @@ import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.workbench.api.IView;
-import org.jowidgets.workbench.impl.rcp.internal.ImageHelper;
 import org.jowidgets.workbench.impl.rcp.internal.ViewContext;
+import org.jowidgets.workbench.impl.rcp.internal.util.ImageHelper;
 
 public final class DynamicView extends ViewPart implements IPartListener2 {
 

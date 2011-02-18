@@ -65,6 +65,7 @@ import org.jowidgets.workbench.api.IPerspective;
 import org.jowidgets.workbench.api.IUiPart;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
 import org.jowidgets.workbench.impl.rcp.internal.part.PartRegistry;
+import org.jowidgets.workbench.impl.rcp.internal.util.ImageHelper;
 
 public final class WorkbenchApplicationTree extends Composite {
 
@@ -297,5 +298,9 @@ public final class WorkbenchApplicationTree extends Composite {
 			}
 		}
 		nodes.add(0, id);
+	}
+
+	public void clearSelection() {
+		treeViewer.setSelection(null);
 	}
 }

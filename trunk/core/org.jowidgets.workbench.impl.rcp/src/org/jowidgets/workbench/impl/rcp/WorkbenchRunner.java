@@ -35,6 +35,7 @@ import org.jowidgets.workbench.api.IWorkbench;
 import org.jowidgets.workbench.api.IWorkbenchConfigurationService;
 import org.jowidgets.workbench.api.IWorkbenchRunner;
 import org.jowidgets.workbench.impl.rcp.internal.WorkbenchContext;
+import org.jowidgets.workbench.impl.rcp.internal.util.RcpWorkbenchConfigurationSupport;
 
 public final class WorkbenchRunner implements IWorkbenchRunner {
 
@@ -45,19 +46,23 @@ public final class WorkbenchRunner implements IWorkbenchRunner {
 
 	@Override
 	public void run(final IWorkbench workbench, final IWorkbenchConfigurationService configurationService) {
-		// TODO HRW save perspectives
 		Assert.paramNotNull(configurationService, "configurationService");
 		final WorkbenchConfiguration config = (WorkbenchConfiguration) configurationService.loadConfiguration();
-		final WorkbenchContext context = new WorkbenchContext(workbench, false);
+		final WorkbenchContext context = new WorkbenchContext(workbench, true);
+		final RcpWorkbenchConfigurationSupport rcpSupport = new RcpWorkbenchConfigurationSupport();
 		if (config != null) {
 			context.setSelectedTreeNode(config.getSelectedTreeNode());
 			context.setFolderRatio(config.getFolderRatio());
+			rcpSupport.setConfiguration(config.getWorkbenchXml());
+		}
+		else {
+			rcpSupport.setConfiguration(null);
 		}
 		run(context);
 		configurationService.saveConfiguration(new WorkbenchConfiguration(
 			context.getSelectedTreeNode(),
 			context.getFolderRatio(),
-			null));
+			rcpSupport.getConfiguration()));
 	}
 
 	private void run(final WorkbenchContext context) {
