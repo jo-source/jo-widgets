@@ -33,8 +33,10 @@ import org.jowidgets.api.model.item.IToolBarItemModel;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.IToolBarToggleButton;
 import org.jowidgets.api.widgets.descriptor.setup.IItemSetup;
+import org.jowidgets.impl.base.delegate.SelectableItemDelegate;
 import org.jowidgets.impl.model.item.CheckedItemModelBuilder;
 import org.jowidgets.impl.widgets.common.wrapper.ToolBarToggleButtonSpiWrapper;
+import org.jowidgets.impl.widgets.common.wrapper.invoker.ToolBarToggleButtonSpiInvoker;
 import org.jowidgets.spi.widgets.IToolBarToggleButtonSpi;
 
 public class ToolBarToggleButtonImpl extends ToolBarToggleButtonSpiWrapper implements IToolBarToggleButton {
@@ -45,7 +47,9 @@ public class ToolBarToggleButtonImpl extends ToolBarToggleButtonSpiWrapper imple
 		final IToolBar parent,
 		final IToolBarToggleButtonSpi toolBarToggleButtonSpi,
 		final IItemSetup setup) {
-		super(toolBarToggleButtonSpi);
+		super(toolBarToggleButtonSpi, new SelectableItemDelegate(
+			new ToolBarToggleButtonSpiInvoker(toolBarToggleButtonSpi),
+			new CheckedItemModelBuilder().build()));
 
 		this.parent = parent;
 
@@ -61,19 +65,23 @@ public class ToolBarToggleButtonImpl extends ToolBarToggleButtonSpiWrapper imple
 	}
 
 	@Override
-	public void setModel(final IToolBarItemModel model) {
-		// TODO MG implement model support
+	public ICheckedItemModel getModel() {
+		return (ICheckedItemModel) getItemDelegate().getModel();
 	}
 
 	@Override
 	public void setModel(final ICheckedItemModel model) {
-		// TODO MG implement model support
+		getItemDelegate().setModel(model);
 	}
 
 	@Override
-	public ICheckedItemModel getModel() {
-		// TODO MG implement model support
-		return new CheckedItemModelBuilder().build();
+	public void setModel(final IToolBarItemModel model) {
+		if (model instanceof ICheckedItemModel) {
+			setModel((ICheckedItemModel) model);
+		}
+		else {
+			throw new IllegalArgumentException("Model type '" + ICheckedItemModel.class.getName() + "' expected");
+		}
 	}
 
 }

@@ -30,6 +30,8 @@ package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.command.ActionStyle;
 import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.model.item.IItemModel;
+import org.jowidgets.api.model.item.IItemModelListener;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IPopupActionItemModel;
 import org.jowidgets.api.model.item.IToolBarItemModel;
@@ -40,11 +42,13 @@ import org.jowidgets.api.widgets.descriptor.setup.IItemSetup;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
+import org.jowidgets.impl.base.delegate.ItemDelegate;
 import org.jowidgets.impl.command.ActionExecuter;
 import org.jowidgets.impl.command.ActionWidgetSync;
 import org.jowidgets.impl.command.IActionWidget;
 import org.jowidgets.impl.model.item.PopupActionItemModelBuilder;
 import org.jowidgets.impl.widgets.common.wrapper.ToolBarPopupButtonSpiWrapper;
+import org.jowidgets.impl.widgets.common.wrapper.invoker.ToolBarItemSpiInvoker;
 import org.jowidgets.spi.widgets.IToolBarPopupButtonSpi;
 
 public class ToolBarPopupButtonImpl extends ToolBarPopupButtonSpiWrapper implements
@@ -52,26 +56,44 @@ public class ToolBarPopupButtonImpl extends ToolBarPopupButtonSpiWrapper impleme
 		IActionWidget,
 		IDisposeable {
 
+	private final IToolBar parent;
 	private final IPopupDetectionListener popupListener;
+	private final IItemModelListener modelListener;
 
 	private IMenuModel popupMenuModel;
 	private IPopupMenu popupMenu;
 
-	private final IToolBar parent;
 	private ActionWidgetSync actionWidgetSync;
 	private ActionExecuter actionExecuter;
+	private IAction action;
 
 	public ToolBarPopupButtonImpl(
 		final IToolBar parent,
 		final IToolBarPopupButtonSpi toolBarPopupButtonSpi,
 		final IItemSetup setup) {
-		super(toolBarPopupButtonSpi);
+		super(toolBarPopupButtonSpi, new ItemDelegate(
+			new ToolBarItemSpiInvoker(toolBarPopupButtonSpi),
+			new PopupActionItemModelBuilder().build()));
 
 		this.parent = parent;
 
 		setText(setup.getText());
 		setToolTipText(setup.getToolTipText());
 		setIcon(setup.getIcon());
+
+		this.modelListener = new IItemModelListener() {
+			@Override
+			public void itemChanged(final IItemModel item) {
+				if (getModel().getAction() != action) {
+					setActionValue(action, ActionStyle.OMIT_TEXT);
+				}
+				if (getModel().getPopupMenu() != popupMenuModel) {
+					setPopupMenuValue(popupMenuModel);
+				}
+			}
+		};
+
+		getModel().addItemModelListener(modelListener);
 
 		addActionListener(new IActionListener() {
 			@Override
@@ -111,13 +133,10 @@ public class ToolBarPopupButtonImpl extends ToolBarPopupButtonSpiWrapper impleme
 
 	@Override
 	public void setAction(final IAction action, final ActionStyle style) {
-		//dispose the old sync if exists
-		disposeActionWidgetSync();
-
-		actionWidgetSync = new ActionWidgetSync(action, style, this);
-		actionWidgetSync.setActive(true);
-
-		actionExecuter = new ActionExecuter(action, this);
+		setActionValue(action, style);
+		getModel().removeItemModelListener(modelListener);
+		getModel().setAction(action);
+		getModel().addItemModelListener(modelListener);
 	}
 
 	@Override
@@ -127,13 +146,36 @@ public class ToolBarPopupButtonImpl extends ToolBarPopupButtonSpiWrapper impleme
 
 	@Override
 	public void setPopupMenu(final IMenuModel popupMenuModel) {
-		if (popupMenuModel == null && this.popupMenuModel != null) {
-			removePopupDetectionListener(popupListener);
+		setPopupMenuValue(popupMenuModel);
+		getModel().removeItemModelListener(modelListener);
+		getModel().setPopupMenu(popupMenuModel);
+		getModel().addItemModelListener(modelListener);
+	}
+
+	private void setActionValue(final IAction action, final ActionStyle style) {
+		if (this.action != action) {
+			//dispose the old sync if exists
+			disposeActionWidgetSync();
+
+			actionWidgetSync = new ActionWidgetSync(action, style, this);
+			actionWidgetSync.setActive(true);
+
+			actionExecuter = new ActionExecuter(action, this);
+
+			this.action = action;
 		}
-		else if (popupMenuModel != null && this.popupMenuModel == null) {
-			addPopupDetectionListener(popupListener);
+	}
+
+	private void setPopupMenuValue(final IMenuModel popupMenuModel) {
+		if (this.popupMenuModel != popupMenuModel) {
+			if (popupMenuModel == null && this.popupMenuModel != null) {
+				removePopupDetectionListener(popupListener);
+			}
+			else if (popupMenuModel != null && this.popupMenuModel == null) {
+				addPopupDetectionListener(popupListener);
+			}
+			this.popupMenuModel = popupMenuModel;
 		}
-		this.popupMenuModel = popupMenuModel;
 	}
 
 	private void disposeActionWidgetSync() {
@@ -144,18 +186,25 @@ public class ToolBarPopupButtonImpl extends ToolBarPopupButtonSpiWrapper impleme
 	}
 
 	@Override
-	public void setModel(final IToolBarItemModel model) {
-
+	public IPopupActionItemModel getModel() {
+		return (IPopupActionItemModel) getItemDelegate().getModel();
 	}
 
 	@Override
 	public void setModel(final IPopupActionItemModel model) {
-
+		getItemDelegate().setModel(model);
+		setActionValue(model.getAction(), ActionStyle.OMIT_TEXT);
+		setPopupMenuValue(model.getPopupMenu());
 	}
 
 	@Override
-	public IPopupActionItemModel getModel() {
-		return new PopupActionItemModelBuilder().build();
+	public void setModel(final IToolBarItemModel model) {
+		if (model instanceof IPopupActionItemModel) {
+			setModel((IPopupActionItemModel) model);
+		}
+		else {
+			throw new IllegalArgumentException("Model type '" + IPopupActionItemModel.class.getName() + "' expected");
+		}
 	}
 
 }

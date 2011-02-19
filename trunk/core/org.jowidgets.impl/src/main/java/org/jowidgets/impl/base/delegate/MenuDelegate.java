@@ -62,7 +62,7 @@ import org.jowidgets.impl.widgets.basic.IDisposeable;
 import org.jowidgets.impl.widgets.basic.SelectableMenuItemImpl;
 import org.jowidgets.impl.widgets.basic.SeparatorMenuItemImpl;
 import org.jowidgets.impl.widgets.basic.SubMenuImpl;
-import org.jowidgets.impl.widgets.common.wrapper.invoker.SelectableItemSpiInvoker;
+import org.jowidgets.impl.widgets.common.wrapper.invoker.SelectableMenuItemSpiInvoker;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 import org.jowidgets.spi.widgets.IMenuItemSpi;
 import org.jowidgets.spi.widgets.IMenuSpi;
@@ -165,8 +165,8 @@ public class MenuDelegate implements IDisposeable {
 				menu,
 				selectableMenuItemSpi,
 				(ISelectableItemSetup) descriptor,
-				new SelectableMenuItemDelegate(
-					new SelectableItemSpiInvoker(selectableMenuItemSpi),
+				new SelectableItemDelegate(
+					new SelectableMenuItemSpiInvoker(selectableMenuItemSpi),
 					new CheckedItemModelBuilder().build()));
 			result = (WIDGET_TYPE) selectableMenuItem;
 		}
@@ -176,8 +176,8 @@ public class MenuDelegate implements IDisposeable {
 				menu,
 				selectableMenuItemSpi,
 				(ISelectableItemSetup) descriptor,
-				new SelectableMenuItemDelegate(
-					new SelectableItemSpiInvoker(selectableMenuItemSpi),
+				new SelectableItemDelegate(
+					new SelectableMenuItemSpiInvoker(selectableMenuItemSpi),
 					new RadioItemModelBuilder().build()));
 			result = (WIDGET_TYPE) selectableMenuItem;
 		}

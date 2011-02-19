@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,54 +26,58 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.common.wrapper;
+package org.jowidgets.impl.widgets.common.wrapper.invoker;
 
-import org.jowidgets.api.model.item.IPopupActionItemModel;
-import org.jowidgets.common.widgets.IToolBarPopupButtonCommon;
-import org.jowidgets.common.widgets.controler.IActionListener;
-import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
-import org.jowidgets.impl.base.delegate.ItemDelegate;
-import org.jowidgets.spi.widgets.IToolBarPopupButtonSpi;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Accelerator;
+import org.jowidgets.spi.widgets.IToolBarToggleButtonSpi;
 
-public class ToolBarPopupButtonSpiWrapper extends ToolBarItemSpiWrapper implements IToolBarPopupButtonCommon {
+public class ToolBarToggleButtonSpiInvoker implements ISelectableItemSpiInvoker {
 
-	public ToolBarPopupButtonSpiWrapper(final IToolBarPopupButtonSpi component, final ItemDelegate itemDelegate) {
-		super(component, itemDelegate);
-		component.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				getModel().actionPerformed();
-			}
-		});
+	private final IToolBarToggleButtonSpi item;
+
+	public ToolBarToggleButtonSpiInvoker(final IToolBarToggleButtonSpi item) {
+		this.item = item;
+	}
+
+	public IToolBarToggleButtonSpi getItem() {
+		return item;
 	}
 
 	@Override
-	public IToolBarPopupButtonSpi getWidget() {
-		return (IToolBarPopupButtonSpi) super.getWidget();
-	}
-
-	public IPopupActionItemModel getModel() {
-		return (IPopupActionItemModel) getItemDelegate().getModel();
+	public void setSelected(final boolean selected) {
+		getItem().setSelected(selected);
 	}
 
 	@Override
-	public void addActionListener(final IActionListener actionListener) {
-		getWidget().addActionListener(actionListener);
+	public boolean isSelected() {
+		return getItem().isSelected();
 	}
 
 	@Override
-	public void removeActionListener(final IActionListener actionListener) {
-		getWidget().removeActionListener(actionListener);
+	public void setText(final String text) {
+		getItem().setText(text);
 	}
 
 	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		getWidget().addPopupDetectionListener(listener);
+	public void setToolTipText(final String toolTipText) {
+		getItem().setToolTipText(toolTipText);
 	}
 
 	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		getWidget().removePopupDetectionListener(listener);
+	public void setIcon(final IImageConstant icon) {
+		getItem().setIcon(icon);
 	}
+
+	@Override
+	public void setEnabled(final boolean enabled) {
+		getItem().setEnabled(enabled);
+	}
+
+	@Override
+	public void setAccelerator(final Accelerator accelerator) {}
+
+	@Override
+	public void setMnemonic(final Character mnemonic) {}
 
 }

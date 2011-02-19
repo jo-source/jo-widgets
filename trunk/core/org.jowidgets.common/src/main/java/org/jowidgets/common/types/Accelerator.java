@@ -56,4 +56,39 @@ public class Accelerator {
 		return modifier;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + key;
+		result = prime * result + ((modifier == null) ? 0 : modifier.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final Accelerator other = (Accelerator) obj;
+		if (key != other.key) {
+			return false;
+		}
+		if (modifier == null) {
+			if (other.modifier != null) {
+				return false;
+			}
+		}
+		else if (!modifier.equals(other.modifier)) {
+			return false;
+		}
+		return true;
+	}
+
 }

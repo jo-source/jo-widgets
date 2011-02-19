@@ -73,66 +73,6 @@ abstract class AbstractActionItemModelImpl extends ItemModelImpl {
 		fireItemChanged();
 	}
 
-	@Override
-	public String getText() {
-		if (action != null) {
-			return action.getText();
-		}
-		else {
-			return super.getText();
-		}
-	}
-
-	@Override
-	public String getToolTipText() {
-		if (action != null) {
-			return action.getToolTipText();
-		}
-		else {
-			return super.getToolTipText();
-		}
-	}
-
-	@Override
-	public IImageConstant getIcon() {
-		if (action != null) {
-			return action.getIcon();
-		}
-		else {
-			return super.getIcon();
-		}
-	}
-
-	@Override
-	public Accelerator getAccelerator() {
-		if (action != null) {
-			return action.getAccelerator();
-		}
-		else {
-			return super.getAccelerator();
-		}
-	}
-
-	@Override
-	public Character getMnemonic() {
-		if (action != null) {
-			return action.getMnemonic();
-		}
-		else {
-			return super.getMnemonic();
-		}
-	}
-
-	@Override
-	public boolean isEnabled() {
-		if (action != null) {
-			return action.isEnabled();
-		}
-		else {
-			return super.isEnabled();
-		}
-	}
-
 	public void addActionListener(final IActionListener listener) {
 		actionObservable.addActionListener(listener);
 	}

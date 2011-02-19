@@ -28,14 +28,22 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
+import org.jowidgets.api.model.item.ICheckedItemModel;
 import org.jowidgets.common.widgets.IToolBarToggleButtonCommon;
 import org.jowidgets.common.widgets.controler.IItemStateListener;
+import org.jowidgets.impl.base.delegate.SelectableItemDelegate;
 import org.jowidgets.spi.widgets.IToolBarToggleButtonSpi;
 
-public class ToolBarToggleButtonSpiWrapper extends ItemSpiWrapper implements IToolBarToggleButtonCommon {
+public class ToolBarToggleButtonSpiWrapper extends ToolBarItemSpiWrapper implements IToolBarToggleButtonCommon {
 
-	public ToolBarToggleButtonSpiWrapper(final IToolBarToggleButtonSpi component) {
-		super(component);
+	public ToolBarToggleButtonSpiWrapper(final IToolBarToggleButtonSpi component, final SelectableItemDelegate itemDelegate) {
+		super(component, itemDelegate);
+		component.addItemListener(new IItemStateListener() {
+			@Override
+			public void itemStateChanged() {
+				getModel().setSelected(component.isSelected());
+			}
+		});
 	}
 
 	@Override
@@ -44,13 +52,12 @@ public class ToolBarToggleButtonSpiWrapper extends ItemSpiWrapper implements ITo
 	}
 
 	@Override
-	public boolean isSelected() {
-		return getWidget().isSelected();
+	protected SelectableItemDelegate getItemDelegate() {
+		return (SelectableItemDelegate) super.getItemDelegate();
 	}
 
-	@Override
-	public void setSelected(final boolean selected) {
-		getWidget().setSelected(selected);
+	public ICheckedItemModel getModel() {
+		return (ICheckedItemModel) getItemDelegate().getModel();
 	}
 
 	@Override
@@ -61,6 +68,16 @@ public class ToolBarToggleButtonSpiWrapper extends ItemSpiWrapper implements ITo
 	@Override
 	public void removeItemListener(final IItemStateListener listener) {
 		getWidget().removeItemListener(listener);
+	}
+
+	@Override
+	public void setSelected(final boolean selected) {
+		getItemDelegate().setSelected(selected);
+	}
+
+	@Override
+	public boolean isSelected() {
+		return getItemDelegate().isSelected();
 	}
 
 }

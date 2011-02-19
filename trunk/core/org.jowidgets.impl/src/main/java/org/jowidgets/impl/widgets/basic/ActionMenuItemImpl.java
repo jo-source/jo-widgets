@@ -44,7 +44,7 @@ import org.jowidgets.impl.command.ActionWidgetSync;
 import org.jowidgets.impl.command.IActionWidget;
 import org.jowidgets.impl.model.item.ActionItemModelBuilder;
 import org.jowidgets.impl.widgets.common.wrapper.ActionMenuItemSpiWrapper;
-import org.jowidgets.impl.widgets.common.wrapper.invoker.MenuItemSpiInvoker;
+import org.jowidgets.impl.widgets.common.wrapper.invoker.ActionMenuItemSpiInvoker;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 
 public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IActionMenuItem, IActionWidget, IDisposeable {
@@ -60,9 +60,9 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 		final IMenu parent,
 		final IActionMenuItemSpi actionMenuItemSpi,
 		final IAccelerateableMenuItemSetup setup) {
-		super(
-			actionMenuItemSpi,
-			new ItemDelegate(new MenuItemSpiInvoker(actionMenuItemSpi), new ActionItemModelBuilder().build()));
+		super(actionMenuItemSpi, new ItemDelegate(
+			new ActionMenuItemSpiInvoker(actionMenuItemSpi),
+			new ActionItemModelBuilder().build()));
 
 		this.parent = parent;
 

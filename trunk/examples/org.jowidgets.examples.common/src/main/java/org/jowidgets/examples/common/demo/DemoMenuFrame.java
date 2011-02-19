@@ -83,12 +83,9 @@ public class DemoMenuFrame extends JoFrame {
 
 		add(BPF.toolBar(), "wrap").setModel(toolBarModel);
 		add(BPF.toolBar(), "wrap").setModel(toolBarModel);
-
 		add(BPF.separator(), "growx, wrap");
 
 		add(BPF.composite().setBackgroundColor(Colors.WHITE), "growx, growy").setPopupMenu(getMenuModel());
-
-		menuModel.getChildren().get(5).setText("renamed text in menu model");
 	}
 
 	private void createActions() {
@@ -157,14 +154,14 @@ public class DemoMenuFrame extends JoFrame {
 		menuModel.addAction(action2);
 
 		final IActionItemModelBuilder item3Builder = ActionItemModel.builder();
-		item3Builder.setText("The Third Item").setToolTipText("This is the third item");
+		item3Builder.setText("Item3 (pos1)").setToolTipText("This is the third item at position 1");
 		item3Builder.setIcon(IconsSmall.WARNING);
 		item3Builder.setAccelerator('I', Modifier.SHIFT).setMnemonic('i');
 		final IActionItemModel item3 = menuModel.addItem(1, item3Builder);
 
 		menuModel.addSeparator();
 
-		checkedItem = menuModel.addCheckedItem("item4");
+		checkedItem = menuModel.addCheckedItem("checked item");
 
 		menuModel.addSeparator();
 

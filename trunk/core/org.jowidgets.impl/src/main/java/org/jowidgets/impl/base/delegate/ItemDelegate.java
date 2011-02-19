@@ -181,7 +181,7 @@ public class ItemDelegate {
 	}
 
 	private void setIconValue(final IImageConstant icon) {
-		if (model.getIcon() != icon) {
+		if (this.icon != icon) {
 			this.icon = icon;
 			getWidget().setIcon(icon);
 		}
@@ -189,8 +189,10 @@ public class ItemDelegate {
 
 	private void setAcceleratorValue(final Accelerator accelerator) {
 		if (!NullCompatibleEquivalence.equals(this.accelerator, accelerator)) {
-			this.accelerator = accelerator;
-			getWidget().setAccelerator(accelerator);
+			if (accelerator != null) {
+				this.accelerator = accelerator;
+				getWidget().setAccelerator(accelerator);
+			}
 		}
 	}
 

@@ -34,7 +34,7 @@ import org.jowidgets.api.model.item.ISelectableMenuItemModel;
 import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.ISelectableMenuItem;
 import org.jowidgets.api.widgets.descriptor.setup.ISelectableItemSetup;
-import org.jowidgets.impl.base.delegate.SelectableMenuItemDelegate;
+import org.jowidgets.impl.base.delegate.SelectableItemDelegate;
 import org.jowidgets.impl.widgets.common.wrapper.SelectableMenuItemSpiWrapper;
 import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 
@@ -46,7 +46,7 @@ public class SelectableMenuItemImpl extends SelectableMenuItemSpiWrapper impleme
 		final IMenu parent,
 		final ISelectableMenuItemSpi actionMenuItemSpi,
 		final ISelectableItemSetup setup,
-		final SelectableMenuItemDelegate itemDelegate) {
+		final SelectableItemDelegate itemDelegate) {
 		super(actionMenuItemSpi, itemDelegate);
 
 		this.parent = parent;

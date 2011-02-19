@@ -69,7 +69,8 @@ public class SwtMenu implements IMenuSpi {
 			this.toolTip = new ToolTip(menu.getShell(), SWT.NONE);
 		}
 		catch (final NoClassDefFoundError error) {
-			//TODO MG rwt has no tooltip, may use a window instead. New version supports tooltips
+			//TODO MG rwt has no tooltip, may use a window instead. 
+			//(New rwt version supports tooltips)
 		}
 
 		if (toolTip != null) {

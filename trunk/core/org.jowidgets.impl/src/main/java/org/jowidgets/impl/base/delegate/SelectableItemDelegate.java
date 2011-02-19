@@ -32,11 +32,11 @@ import org.jowidgets.api.model.item.ISelectableMenuItemModel;
 import org.jowidgets.impl.widgets.common.wrapper.invoker.ISelectableItemSpiInvoker;
 import org.jowidgets.util.Assert;
 
-public class SelectableMenuItemDelegate extends ItemDelegate {
+public class SelectableItemDelegate extends ItemDelegate {
 
 	private boolean selected;
 
-	public SelectableMenuItemDelegate(final ISelectableItemSpiInvoker widget, final ISelectableMenuItemModel model) {
+	public SelectableItemDelegate(final ISelectableItemSpiInvoker widget, final ISelectableMenuItemModel model) {
 		super(widget, model);
 		Assert.paramNotNull(model, "model");
 

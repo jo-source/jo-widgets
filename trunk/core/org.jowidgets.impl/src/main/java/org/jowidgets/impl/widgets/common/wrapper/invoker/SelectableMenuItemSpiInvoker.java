@@ -31,9 +31,9 @@ package org.jowidgets.impl.widgets.common.wrapper.invoker;
 import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 
-public class SelectableItemSpiInvoker extends MenuItemSpiInvoker implements ISelectableItemSpiInvoker {
+public class SelectableMenuItemSpiInvoker extends MenuItemSpiInvoker implements ISelectableItemSpiInvoker {
 
-	public SelectableItemSpiInvoker(final ISelectableMenuItemSpi item) {
+	public SelectableMenuItemSpiInvoker(final ISelectableMenuItemSpi item) {
 		super(item);
 	}
 

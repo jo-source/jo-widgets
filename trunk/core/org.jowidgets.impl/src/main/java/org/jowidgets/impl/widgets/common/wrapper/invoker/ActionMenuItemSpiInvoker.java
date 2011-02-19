@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,65 +26,24 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.common.wrapper;
+package org.jowidgets.impl.widgets.common.wrapper.invoker;
 
-import org.jowidgets.api.model.item.ISelectableItemModel;
 import org.jowidgets.common.types.Accelerator;
-import org.jowidgets.common.widgets.ISelectableMenuItemCommon;
-import org.jowidgets.common.widgets.controler.IItemStateListener;
-import org.jowidgets.impl.base.delegate.SelectableItemDelegate;
-import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
+import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 
-public class SelectableMenuItemSpiWrapper extends MenuItemSpiWrapper implements ISelectableMenuItemCommon {
+public class ActionMenuItemSpiInvoker extends MenuItemSpiInvoker implements IItemSpiInvoker {
 
-	public SelectableMenuItemSpiWrapper(final ISelectableMenuItemSpi widget, final SelectableItemDelegate itemDelegate) {
-		super(widget, itemDelegate);
-		widget.addItemListener(new IItemStateListener() {
-
-			@Override
-			public void itemStateChanged() {
-				getModel().setSelected(widget.isSelected());
-			}
-		});
+	public ActionMenuItemSpiInvoker(final IActionMenuItemSpi item) {
+		super(item);
 	}
 
 	@Override
-	public ISelectableMenuItemSpi getWidget() {
-		return (ISelectableMenuItemSpi) super.getWidget();
-	}
-
-	@Override
-	protected SelectableItemDelegate getItemDelegate() {
-		return (SelectableItemDelegate) super.getItemDelegate();
-	}
-
-	public ISelectableItemModel getModel() {
-		return getItemDelegate().getModel();
-	}
-
-	@Override
-	public void addItemListener(final IItemStateListener listener) {
-		getWidget().addItemListener(listener);
-	}
-
-	@Override
-	public void removeItemListener(final IItemStateListener listener) {
-		getWidget().addItemListener(listener);
+	public IActionMenuItemSpi getItem() {
+		return (IActionMenuItemSpi) super.getItem();
 	}
 
 	@Override
 	public void setAccelerator(final Accelerator accelerator) {
-		getItemDelegate().setAccelerator(accelerator);
+		getItem().setAccelerator(accelerator);
 	}
-
-	@Override
-	public void setSelected(final boolean selected) {
-		getItemDelegate().setSelected(selected);
-	}
-
-	@Override
-	public boolean isSelected() {
-		return getItemDelegate().isSelected();
-	}
-
 }

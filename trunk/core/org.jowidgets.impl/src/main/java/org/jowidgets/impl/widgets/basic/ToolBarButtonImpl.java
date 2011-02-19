@@ -153,4 +153,33 @@ public class ToolBarButtonImpl extends ToolBarButtonSpiWrapper implements IToolB
 		}
 	}
 
+	//	@Override
+	//	public void setText(final String text) {
+	//		if (action != null) {
+	//			getWidget().setText(text);
+	//		}
+	//		else {
+	//			super.setText(text);
+	//		}
+	//	}
+	//
+	//	@Override
+	//	public void setToolTipText(final String toolTipText) {
+	//		if (action != null) {
+	//			getWidget().setToolTipText(toolTipText);
+	//		}
+	//		else {
+	//			super.setToolTipText(toolTipText);
+	//		}
+	//	}
+	//
+	//	@Override
+	//	public void setIcon(final IImageConstant icon) {
+	//		if (action != null) {
+	//			getWidget().setIcon(icon);
+	//		}
+	//		else {
+	//			super.setIcon(icon);
+	//		}
+	//	}
 }
