@@ -91,7 +91,8 @@ public class DemoMenuFrame extends JoFrame {
 
 		final IPopupMenu popupMenu = toolBar.createPopupMenu();
 		popupMenu.setModel(getMenuModel());
-		final IToolBarButton menuButton = toolBar.addItem(BPF.toolBarButton().setText("show popup"));
+		final IToolBarButton menuButton = toolBar.addItem(BPF.toolBarButton().setIcon(IconsSmall.POPUP_ARROW).setToolTipText(
+				"popupmenu"));
 		menuButton.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
@@ -221,7 +222,9 @@ public class DemoMenuFrame extends JoFrame {
 				"item3"), 80);
 		toolBarModel.addItem(comboBox);
 
-		final InputControlItemModel<String> textField = new InputControlItemModel<String>(BPF.textField().setValue("Test"), 150);
+		final InputControlItemModel<String> textField = new InputControlItemModel<String>(
+			BPF.textField().setValue("Test"),
+			"growx, w 150::");
 		toolBarModel.addItem(textField);
 
 		addInputListener(textField);

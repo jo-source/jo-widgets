@@ -31,6 +31,7 @@ package org.jowidgets.examples.common.demo;
 import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.controler.ITabItemListener;
 import org.jowidgets.api.image.IconsSmall;
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.types.QuestionResult;
 import org.jowidgets.api.widgets.IComposite;
@@ -41,14 +42,18 @@ import org.jowidgets.api.widgets.ISplitComposite;
 import org.jowidgets.api.widgets.ITabFolder;
 import org.jowidgets.api.widgets.ITabItem;
 import org.jowidgets.api.widgets.IToolBar;
+import org.jowidgets.api.widgets.IToolBarButton;
 import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.ITabItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.tools.model.item.MenuModel;
 
 public final class DemoTabFolderComposite {
 
@@ -197,12 +202,13 @@ public final class DemoTabFolderComposite {
 		});
 
 		tabItem.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[]0[]0[grow, 0::]0"));
-		final IToolBar toolBar = tabItem.add(bpf.toolBar(), "growx, w 0::, wrap");
-		toolBar.addItem(bpf.toolBarButton().setText(tabItem.getText()));
+		final IToolBar toolBar = tabItem.add(bpf.toolBar(), "alignx right, w 0::, wrap");
+		toolBar.addItem(bpf.toolBarPopupButton().setIcon(IconsSmall.WARNING));
 		toolBar.addItem(bpf.toolBarButton().setIcon(IconsSmall.QUESTION));
 		toolBar.addItem(bpf.toolBarButton().setIcon(IconsSmall.INFO));
-		toolBar.addItem(bpf.toolBarPopupButton().setIcon(IconsSmall.WARNING));
-		toolBar.addItem(bpf.toolBarToggleButton().setText("Toggle"));
+
+		final IToolBarButton popupItem = toolBar.addItem(bpf.toolBarButton().setIcon(IconsSmall.POPUP_ARROW));
+		toolBar.pack();
 
 		tabItem.add(bpf.separator(), "growx, wrap");
 
@@ -211,21 +217,27 @@ public final class DemoTabFolderComposite {
 		composite.setBackgroundColor(Colors.WHITE);
 
 		final StringBuilder text = new StringBuilder();
-		for (int i = 0; i < 50; i++) {
+		for (int i = 0; i < 1; i++) {
 			text.append("Content of " + tabItem.getText() + "\n");
 		}
 		composite.add(bpf.textLabel().setText(text.toString()), "wrap");
 
-		final IPopupMenu popupMenu2 = composite.createPopupMenu();
-		popupMenu2.addItem(bpf.menuItem(tabItem.getParent().toString() + tabItem.getText() + " item1"));
-		popupMenu2.addItem(bpf.menuItem(tabItem.getText() + " item2"));
-		popupMenu2.addItem(bpf.menuItem(tabItem.getText() + " item3"));
-		popupMenu2.addItem(bpf.menuItem(tabItem.getText() + " item4"));
-		composite.addPopupDetectionListener(new IPopupDetectionListener() {
+		final IMenuModel popupMenu2 = new MenuModel();
 
+		popupMenu2.addActionItem(tabItem.getParent().toString() + tabItem.getText() + " item1");
+		popupMenu2.addActionItem(tabItem.getText() + " item2");
+		popupMenu2.addActionItem(tabItem.getText() + " item3");
+		popupMenu2.addActionItem(tabItem.getText() + " item4");
+		composite.setPopupMenu(popupMenu2);
+
+		final IPopupMenu toolBarPopUp = toolBar.createPopupMenu();
+		toolBarPopUp.setModel(popupMenu2);
+		popupItem.addActionListener(new IActionListener() {
 			@Override
-			public void popupDetected(final Position position) {
-				popupMenu2.show(position);
+			public void actionPerformed() {
+				final Position pos = popupItem.getPosition();
+				final Dimension size = popupItem.getSize();
+				toolBarPopUp.show(new Position(pos.getX(), pos.getY() + size.getHeight()));
 			}
 		});
 	}
