@@ -31,7 +31,11 @@ package org.jowidgets.spi.impl.swing.widgets.internal;
 import javax.swing.AbstractButton;
 
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.spi.impl.swing.image.SwingImageRegistry;
+import org.jowidgets.spi.impl.swing.util.DimensionConvert;
+import org.jowidgets.spi.impl.swing.util.PositionConvert;
 import org.jowidgets.spi.widgets.IToolBarItemSpi;
 
 public class ToolBarItemImpl implements IToolBarItemSpi {
@@ -78,6 +82,16 @@ public class ToolBarItemImpl implements IToolBarItemSpi {
 	@Override
 	public void setIcon(final IImageConstant icon) {
 		button.setIcon(SwingImageRegistry.getInstance().getImageIcon(icon));
+	}
+
+	@Override
+	public Position getPosition() {
+		return PositionConvert.convert(button.getLocation());
+	}
+
+	@Override
+	public Dimension getSize() {
+		return DimensionConvert.convert(button.getSize());
 	}
 
 }

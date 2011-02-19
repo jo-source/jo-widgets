@@ -37,6 +37,8 @@ import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.IToolBarContainerItem;
 import org.jowidgets.api.widgets.descriptor.setup.IContainerSetup;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.impl.model.item.ContainerItemModelBuilder;
 import org.jowidgets.spi.widgets.IToolBarContainerItemSpi;
 import org.jowidgets.util.Assert;
@@ -146,6 +148,16 @@ public class ToolBarContainerItemImpl extends ContainerImpl implements IToolBarC
 			contentCreator.createContent(this);
 			this.contentCreator = contentCreator;
 		}
+	}
+
+	@Override
+	public Position getPosition() {
+		return getWidget().getPosition();
+	}
+
+	@Override
+	public Dimension getSize() {
+		return getWidget().getSize();
 	}
 
 }

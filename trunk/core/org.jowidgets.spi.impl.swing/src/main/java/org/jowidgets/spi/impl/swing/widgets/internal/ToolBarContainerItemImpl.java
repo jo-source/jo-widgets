@@ -33,7 +33,11 @@ import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.spi.impl.swing.util.DimensionConvert;
+import org.jowidgets.spi.impl.swing.util.PositionConvert;
 import org.jowidgets.spi.impl.swing.widgets.SwingContainer;
 import org.jowidgets.spi.widgets.IToolBarContainerItemSpi;
 
@@ -59,5 +63,15 @@ public class ToolBarContainerItemImpl extends SwingContainer implements IToolBar
 
 	@Override
 	public void setIcon(final IImageConstant icon) {}
+
+	@Override
+	public Position getPosition() {
+		return PositionConvert.convert(getUiReference().getLocation());
+	}
+
+	@Override
+	public Dimension getSize() {
+		return DimensionConvert.convert(getUiReference().getSize());
+	}
 
 }

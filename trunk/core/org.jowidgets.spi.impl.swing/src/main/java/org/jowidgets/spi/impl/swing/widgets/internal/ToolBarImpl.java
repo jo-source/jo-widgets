@@ -36,7 +36,11 @@ import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.spi.impl.swing.util.DimensionConvert;
+import org.jowidgets.spi.impl.swing.util.PositionConvert;
 import org.jowidgets.spi.impl.swing.widgets.SwingControl;
 import org.jowidgets.spi.impl.swing.widgets.internal.base.JoArrowButton;
 import org.jowidgets.spi.widgets.IToolBarButtonSpi;
@@ -152,6 +156,16 @@ public class ToolBarImpl extends SwingControl implements IToolBarSpi {
 			@Override
 			public Object getUiReference() {
 				return separator;
+			}
+
+			@Override
+			public Position getPosition() {
+				return PositionConvert.convert(separator.getLocation());
+			}
+
+			@Override
+			public Dimension getSize() {
+				return DimensionConvert.convert(separator.getSize());
 			}
 		};
 	}

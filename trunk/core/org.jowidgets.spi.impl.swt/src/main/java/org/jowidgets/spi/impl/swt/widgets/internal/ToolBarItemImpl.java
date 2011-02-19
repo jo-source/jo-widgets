@@ -28,8 +28,11 @@
 
 package org.jowidgets.spi.impl.swt.widgets.internal;
 
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.ToolItem;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.spi.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.IToolBarItemSpi;
 
@@ -75,6 +78,18 @@ public class ToolBarItemImpl implements IToolBarItemSpi {
 	@Override
 	public void setIcon(final IImageConstant icon) {
 		toolItem.setImage(SwtImageRegistry.getInstance().getImage(icon));
+	}
+
+	@Override
+	public Position getPosition() {
+		final Rectangle bounds = toolItem.getBounds();
+		return new Position(bounds.x, bounds.y);
+	}
+
+	@Override
+	public Dimension getSize() {
+		final Rectangle bounds = toolItem.getBounds();
+		return new Dimension(bounds.width, bounds.height);
 	}
 
 }

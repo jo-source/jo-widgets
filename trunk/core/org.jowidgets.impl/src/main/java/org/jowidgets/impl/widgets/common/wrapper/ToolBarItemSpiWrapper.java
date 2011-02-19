@@ -28,6 +28,8 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
+import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IToolBarItemCommon;
 import org.jowidgets.impl.base.delegate.ItemDelegate;
 import org.jowidgets.spi.widgets.IToolBarItemSpi;
@@ -41,6 +43,16 @@ public class ToolBarItemSpiWrapper extends ModelBasedItemSpiWrapper implements I
 	@Override
 	public IToolBarItemSpi getWidget() {
 		return (IToolBarItemSpi) super.getWidget();
+	}
+
+	@Override
+	public Position getPosition() {
+		return getWidget().getPosition();
+	}
+
+	@Override
+	public Dimension getSize() {
+		return getWidget().getSize();
 	}
 
 }

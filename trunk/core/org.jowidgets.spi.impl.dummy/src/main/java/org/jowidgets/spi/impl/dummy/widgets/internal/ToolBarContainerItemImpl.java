@@ -29,6 +29,7 @@
 package org.jowidgets.spi.impl.dummy.widgets.internal;
 
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDContainer;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDToolBarContainerItem;
@@ -54,5 +55,10 @@ public class ToolBarContainerItemImpl extends DummyContainer implements IToolBar
 
 	@Override
 	public void setIcon(final IImageConstant icon) {}
+
+	@Override
+	public Position getPosition() {
+		return getUiReference().getPosition();
+	}
 
 }

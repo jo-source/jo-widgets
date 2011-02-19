@@ -29,6 +29,8 @@
 package org.jowidgets.spi.impl.dummy.widgets.internal;
 
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDToolBarSeparator;
 import org.jowidgets.spi.impl.dummy.widgets.DummyWidget;
 import org.jowidgets.spi.widgets.IToolBarItemSpi;
@@ -53,4 +55,13 @@ public class ToolBarSeparatorImpl extends DummyWidget implements IToolBarItemSpi
 	@Override
 	public void setIcon(final IImageConstant icon) {}
 
+	@Override
+	public Position getPosition() {
+		return getUiReference().getPosition();
+	}
+
+	@Override
+	public Dimension getSize() {
+		return getUiReference().getSize();
+	}
 }

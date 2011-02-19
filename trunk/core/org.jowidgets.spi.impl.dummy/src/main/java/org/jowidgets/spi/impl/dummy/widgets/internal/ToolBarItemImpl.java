@@ -29,6 +29,8 @@
 package org.jowidgets.spi.impl.dummy.widgets.internal;
 
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.spi.impl.dummy.dummyui.AbstractUIDButton;
 import org.jowidgets.spi.impl.dummy.image.DummyImageRegistry;
 import org.jowidgets.spi.widgets.IToolBarItemSpi;
@@ -70,6 +72,16 @@ public class ToolBarItemImpl implements IToolBarItemSpi {
 	@Override
 	public void setIcon(final IImageConstant icon) {
 		button.setIcon(DummyImageRegistry.getInstance().getImage(icon));
+	}
+
+	@Override
+	public Position getPosition() {
+		return getUiReference().getPosition();
+	}
+
+	@Override
+	public Dimension getSize() {
+		return getUiReference().getSize();
 	}
 
 }
