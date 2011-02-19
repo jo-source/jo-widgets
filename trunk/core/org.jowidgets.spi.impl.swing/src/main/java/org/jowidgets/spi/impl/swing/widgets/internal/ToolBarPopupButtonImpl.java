@@ -28,67 +28,58 @@
 
 package org.jowidgets.spi.impl.swing.widgets.internal;
 
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.AbstractButton;
-import javax.swing.ButtonModel;
-import javax.swing.Icon;
 import javax.swing.JButton;
-import javax.swing.UIManager;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.spi.impl.controler.PopupDetectionObservable;
+import org.jowidgets.spi.impl.swing.widgets.internal.base.JoArrowButton;
 import org.jowidgets.spi.widgets.IToolBarPopupButtonSpi;
 
 public class ToolBarPopupButtonImpl extends ToolBarButtonImpl implements IToolBarPopupButtonSpi {
 
-	private static final Icon ARROW_ICON = new ArrowIcon();
-
 	private final PopupDetectionObservable popupDetectionObservable;
-	private final JButton buttonArrow;
+	private final JoArrowButton arrowButton;
 
-	public ToolBarPopupButtonImpl(final JButton button, final JButton buttonArrow) {
+	public ToolBarPopupButtonImpl(final JButton button, final JoArrowButton arrowButton) {
 		super(button);
 
 		this.popupDetectionObservable = new PopupDetectionObservable();
-		this.buttonArrow = buttonArrow;
+		this.arrowButton = arrowButton;
 
-		buttonArrow.setFocusable(false);
-		buttonArrow.setIcon(ARROW_ICON);
 		adjustArrowSize();
 
 		button.addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mouseReleased(final MouseEvent e) {
-				buttonArrow.getModel().setSelected(false);
+				arrowButton.getModel().setSelected(false);
 			}
 
 			@Override
 			public void mousePressed(final MouseEvent e) {
-				buttonArrow.getModel().setSelected(true);
+				arrowButton.getModel().setSelected(true);
 			}
 
 			@Override
 			public void mouseExited(final MouseEvent e) {
-				buttonArrow.getModel().setRollover(false);
+				arrowButton.getModel().setRollover(false);
 			}
 
 			@Override
 			public void mouseEntered(final MouseEvent e) {
-				buttonArrow.getModel().setRollover(true);
+				arrowButton.getModel().setRollover(true);
 			}
 
 		});
 
-		buttonArrow.addMouseListener(new MouseAdapter() {
+		arrowButton.addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mousePressed(final MouseEvent e) {
@@ -125,13 +116,13 @@ public class ToolBarPopupButtonImpl extends ToolBarButtonImpl implements IToolBa
 	@Override
 	public void setEnabled(final boolean enabled) {
 		super.setEnabled(enabled);
-		buttonArrow.setEnabled(enabled);
+		arrowButton.setEnabled(enabled);
 	}
 
 	@Override
 	public void setToolTipText(final String text) {
 		super.setToolTipText(text);
-		buttonArrow.setToolTipText(text);
+		arrowButton.setToolTipText(text);
 	}
 
 	@Override
@@ -145,47 +136,9 @@ public class ToolBarPopupButtonImpl extends ToolBarButtonImpl implements IToolBa
 	}
 
 	private void adjustArrowSize() {
-		buttonArrow.setMaximumSize(new Dimension(ARROW_ICON.getIconWidth() + 4, getUiReference().getMaximumSize().height));
+		arrowButton.setMaximumSize(new Dimension(
+			JoArrowButton.ARROW_ICON.getIconWidth() + 4,
+			getUiReference().getMaximumSize().height));
 	}
 
-	private static class ArrowIcon implements Icon {
-
-		private static final int HEIGHT = 4;
-		private static final int WIDTH = 10;
-
-		@Override
-		public int getIconWidth() {
-			return WIDTH;
-		}
-
-		@Override
-		public int getIconHeight() {
-			return HEIGHT;
-		}
-
-		@Override
-		public void paintIcon(final Component component, final Graphics graphics, final int x, final int y) {
-			final AbstractButton button = (AbstractButton) component;
-			final ButtonModel buttonModel = button.getModel();
-
-			final int width = WIDTH - 2;
-			final int height = HEIGHT;
-
-			graphics.translate(x, y);
-
-			String colorUI = null;
-			if (buttonModel.isEnabled()) {
-				colorUI = "controlText";
-			}
-			else {
-				colorUI = "textInactiveText";
-			}
-			graphics.setColor(UIManager.getColor(colorUI));
-
-			for (int i = 0; i < height; i++) {
-				graphics.drawLine(i + 1, i, width - i, i);
-			}
-			graphics.translate(-x, -y);
-		}
-	}
 }

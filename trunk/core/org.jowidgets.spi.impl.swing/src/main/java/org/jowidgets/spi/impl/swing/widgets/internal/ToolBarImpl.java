@@ -28,6 +28,8 @@
 
 package org.jowidgets.spi.impl.swing.widgets.internal;
 
+import java.awt.Container;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
@@ -36,6 +38,7 @@ import javax.swing.JToolBar;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.impl.swing.widgets.SwingControl;
+import org.jowidgets.spi.impl.swing.widgets.internal.base.JoArrowButton;
 import org.jowidgets.spi.widgets.IToolBarButtonSpi;
 import org.jowidgets.spi.widgets.IToolBarContainerItemSpi;
 import org.jowidgets.spi.widgets.IToolBarItemSpi;
@@ -64,7 +67,7 @@ public class ToolBarImpl extends SwingControl implements IToolBarSpi {
 		final JButton button = new JButton();
 
 		if (index != null) {
-			getUiReference().add(button, index.intValue());
+			getUiReference().add(button, getCorrectedIndex(index.intValue()));
 		}
 		else {
 			getUiReference().add(button);
@@ -77,7 +80,7 @@ public class ToolBarImpl extends SwingControl implements IToolBarSpi {
 		final JToggleButton button = new JToggleButton();
 
 		if (index != null) {
-			getUiReference().add(button, index.intValue());
+			getUiReference().add(button, getCorrectedIndex(index.intValue()));
 		}
 		else {
 			getUiReference().add(button);
@@ -88,17 +91,18 @@ public class ToolBarImpl extends SwingControl implements IToolBarSpi {
 	@Override
 	public IToolBarPopupButtonSpi addToolBarPopupButton(final Integer index) {
 		final JButton button = new JButton();
-		final JButton buttonArrow = new JButton();
+		final JoArrowButton arrowButton = new JoArrowButton();
 
 		if (index != null) {
-			getUiReference().add(buttonArrow, index.intValue());
-			getUiReference().add(button, index.intValue());
+			final int correctedIndex = getCorrectedIndex(index.intValue());
+			getUiReference().add(arrowButton, correctedIndex);
+			getUiReference().add(button, correctedIndex);
 		}
 		else {
 			getUiReference().add(button);
-			getUiReference().add(buttonArrow);
+			getUiReference().add(arrowButton);
 		}
-		return new ToolBarPopupButtonImpl(button, buttonArrow);
+		return new ToolBarPopupButtonImpl(button, arrowButton);
 	}
 
 	@Override
@@ -106,7 +110,7 @@ public class ToolBarImpl extends SwingControl implements IToolBarSpi {
 		final JPanel panel = new JPanel();
 
 		if (index != null) {
-			getUiReference().add(panel, index.intValue());
+			getUiReference().add(panel, getCorrectedIndex(index.intValue()));
 		}
 		else {
 			getUiReference().add(panel);
@@ -119,7 +123,7 @@ public class ToolBarImpl extends SwingControl implements IToolBarSpi {
 		final JToolBar.Separator separator = new JToolBar.Separator();
 
 		if (index != null) {
-			getUiReference().add(separator, index.intValue());
+			getUiReference().add(separator, getCorrectedIndex(index.intValue()));
 		}
 		else {
 			getUiReference().add(separator);
@@ -154,7 +158,32 @@ public class ToolBarImpl extends SwingControl implements IToolBarSpi {
 
 	@Override
 	public void remove(final int index) {
-		getUiReference().remove(index);
+		final int correctedIndex = getCorrectedIndex(index);
+		final Container container = getUiReference();
+		container.remove(correctedIndex);
+
+		//if the removed item was a popup button, remove the arrow button from the toolbar
+		if (container.getComponentCount() < correctedIndex && container.getComponent(correctedIndex) instanceof JoArrowButton) {
+			container.remove(correctedIndex);
+		}
+	}
+
+	/**
+	 * The given index is potentially wrong, because popup buttons need two button for implementation
+	 * This corrects the index in that way, that for every popup button before thsi index, 1 (one) will be added
+	 * to the result index.
+	 * 
+	 * @param index The given index
+	 * @return The corrected index
+	 */
+	private int getCorrectedIndex(final int index) {
+		int result = index;
+		for (int i = 0; i <= index && i < getUiReference().getComponentCount(); i++) {
+			if (getUiReference().getComponent(i) instanceof JoArrowButton) {
+				result++;
+			}
+		}
+		return result;
 	}
 
 	@Override
