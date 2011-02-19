@@ -93,12 +93,14 @@ public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar {
 			@Override
 			public void childRemoved(final int index) {
 				remove(index);
+				pack();
 			}
 
 			@Override
 			public void childAdded(final int index) {
 				final IToolBarItemModel addedModel = getModel().getItems().get(index);
 				addMenuModel(index, addedModel);
+				pack();
 			}
 		};
 
@@ -116,6 +118,7 @@ public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar {
 			addMenuModel(children.size(), childModel);
 		}
 		model.addListModelListener(listModelListener);
+		pack();
 	}
 
 	@Override
@@ -272,7 +275,7 @@ public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar {
 		}
 		else if (ISeparatorToolBarItemDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
 			final IToolBarItemSpi toolBarSeparatorItemSpi = getWidget().addSeparator(index);
-			final ToolBarItemImpl toolBarSeparatorItem = new ToolBarItemImpl(this, toolBarSeparatorItemSpi);
+			final ToolBarSeparatorItemImpl toolBarSeparatorItem = new ToolBarSeparatorItemImpl(this, toolBarSeparatorItemSpi);
 			result = (WIDGET_TYPE) toolBarSeparatorItem;
 		}
 		else {
@@ -285,6 +288,7 @@ public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar {
 	}
 
 	private void addMenuModel(final int index, final IToolBarItemModel model) {
+		Assert.paramNotNull(model, "model");
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 		if (model instanceof IActionItemModel) {
 			addItemInternal(index, bpf.toolBarButton()).setModel(model);
@@ -300,6 +304,9 @@ public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar {
 		}
 		else if (model instanceof ISeparatorItemModel) {
 			addItemInternal(index, bpf.toolBarSeparator()).setModel(model);
+		}
+		else {
+			throw new IllegalArgumentException("Model of type '" + model.getClass().getName() + "' is not supported.");
 		}
 	}
 

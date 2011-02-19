@@ -31,32 +31,52 @@ package org.jowidgets.impl.widgets.basic;
 import org.jowidgets.api.command.ActionStyle;
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.model.item.IActionItemModel;
+import org.jowidgets.api.model.item.IItemModel;
+import org.jowidgets.api.model.item.IItemModelListener;
 import org.jowidgets.api.model.item.IToolBarItemModel;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.IToolBarButton;
 import org.jowidgets.api.widgets.descriptor.setup.IItemSetup;
 import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.impl.base.delegate.ItemDelegate;
 import org.jowidgets.impl.command.ActionExecuter;
 import org.jowidgets.impl.command.ActionWidgetSync;
 import org.jowidgets.impl.command.IActionWidget;
 import org.jowidgets.impl.model.item.ActionItemModelBuilder;
 import org.jowidgets.impl.widgets.common.wrapper.ToolBarButtonSpiWrapper;
+import org.jowidgets.impl.widgets.common.wrapper.invoker.ToolBarItemSpiInvoker;
 import org.jowidgets.spi.widgets.IToolBarButtonSpi;
 
 public class ToolBarButtonImpl extends ToolBarButtonSpiWrapper implements IToolBarButton, IActionWidget, IDisposeable {
 
 	private final IToolBar parent;
+	private final IItemModelListener modelListener;
+
 	private ActionWidgetSync actionWidgetSync;
 	private ActionExecuter actionExecuter;
+	private IAction action;
 
 	public ToolBarButtonImpl(final IToolBar parent, final IToolBarButtonSpi toolBarButtonSpi, final IItemSetup setup) {
-		super(toolBarButtonSpi);
+		super(toolBarButtonSpi, new ItemDelegate(
+			new ToolBarItemSpiInvoker(toolBarButtonSpi),
+			new ActionItemModelBuilder().build()));
 
 		this.parent = parent;
 
 		setText(setup.getText());
 		setToolTipText(setup.getToolTipText());
 		setIcon(setup.getIcon());
+
+		this.modelListener = new IItemModelListener() {
+			@Override
+			public void itemChanged(final IItemModel item) {
+				if (getModel().getAction() != action) {
+					setActionValue(action, ActionStyle.OMIT_TEXT);
+				}
+			}
+		};
+
+		getModel().addItemModelListener(modelListener);
 
 		addActionListener(new IActionListener() {
 			@Override
@@ -80,13 +100,24 @@ public class ToolBarButtonImpl extends ToolBarButtonSpiWrapper implements IToolB
 
 	@Override
 	public void setAction(final IAction action, final ActionStyle style) {
-		//dispose the old sync if exists
-		disposeActionWidgetSync();
+		setActionValue(action, style);
+		getModel().removeItemModelListener(modelListener);
+		getModel().setAction(action);
+		getModel().addItemModelListener(modelListener);
+	}
 
-		actionWidgetSync = new ActionWidgetSync(action, style, this);
-		actionWidgetSync.setActive(true);
+	private void setActionValue(final IAction action, final ActionStyle style) {
+		if (this.action != action) {
+			//dispose the old sync if exists
+			disposeActionWidgetSync();
 
-		actionExecuter = new ActionExecuter(action, this);
+			actionWidgetSync = new ActionWidgetSync(action, style, this);
+			actionWidgetSync.setActive(true);
+
+			actionExecuter = new ActionExecuter(action, this);
+
+			this.action = action;
+		}
 	}
 
 	@Override
@@ -102,19 +133,24 @@ public class ToolBarButtonImpl extends ToolBarButtonSpiWrapper implements IToolB
 	}
 
 	@Override
-	public void setModel(final IToolBarItemModel model) {
-		// TODO MG implement model support
+	public IActionItemModel getModel() {
+		return (IActionItemModel) getItemDelegate().getModel();
 	}
 
 	@Override
 	public void setModel(final IActionItemModel model) {
-		// TODO MG implement model support
+		getItemDelegate().setModel(model);
+		setActionValue(model.getAction(), ActionStyle.OMIT_TEXT);
 	}
 
 	@Override
-	public IActionItemModel getModel() {
-		// TODO MG implement model support
-		return new ActionItemModelBuilder().build();
+	public void setModel(final IToolBarItemModel model) {
+		if (model instanceof IActionItemModel) {
+			setModel((IActionItemModel) model);
+		}
+		else {
+			throw new IllegalArgumentException("Model type '" + IActionItemModel.class.getName() + "' expected");
+		}
 	}
 
 }

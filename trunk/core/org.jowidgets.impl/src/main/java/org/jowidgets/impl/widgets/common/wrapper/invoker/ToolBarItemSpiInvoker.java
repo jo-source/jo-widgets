@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,43 +26,50 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.common.wrapper;
+package org.jowidgets.impl.widgets.common.wrapper.invoker;
 
-import org.jowidgets.api.model.item.IActionItemModel;
-import org.jowidgets.common.widgets.IToolBarButtonCommon;
-import org.jowidgets.common.widgets.controler.IActionListener;
-import org.jowidgets.impl.base.delegate.ItemDelegate;
-import org.jowidgets.spi.widgets.IToolBarButtonSpi;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Accelerator;
+import org.jowidgets.spi.widgets.IToolBarItemSpi;
+import org.jowidgets.util.Assert;
 
-public class ToolBarButtonSpiWrapper extends ToolBarItemSpiWrapper implements IToolBarButtonCommon {
+public class ToolBarItemSpiInvoker implements IItemSpiInvoker {
 
-	public ToolBarButtonSpiWrapper(final IToolBarButtonSpi widget, final ItemDelegate itemDelegate) {
-		super(widget, itemDelegate);
-		widget.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				getModel().actionPerformed();
-			}
-		});
+	private final IToolBarItemSpi item;
+
+	public ToolBarItemSpiInvoker(final IToolBarItemSpi item) {
+		Assert.paramNotNull(item, "item");
+		this.item = item;
+	}
+
+	public IToolBarItemSpi getItem() {
+		return item;
 	}
 
 	@Override
-	public IToolBarButtonSpi getWidget() {
-		return (IToolBarButtonSpi) super.getWidget();
-	}
-
-	public IActionItemModel getModel() {
-		return (IActionItemModel) getItemDelegate().getModel();
+	public void setText(final String text) {
+		item.setText(text);
 	}
 
 	@Override
-	public void addActionListener(final IActionListener actionListener) {
-		getWidget().addActionListener(actionListener);
+	public void setToolTipText(final String toolTipText) {
+		item.setToolTipText(toolTipText);
 	}
 
 	@Override
-	public void removeActionListener(final IActionListener actionListener) {
-		getWidget().removeActionListener(actionListener);
+	public void setIcon(final IImageConstant icon) {
+		item.setIcon(icon);
 	}
+
+	@Override
+	public void setEnabled(final boolean enabled) {
+		item.setEnabled(enabled);
+	}
+
+	@Override
+	public void setAccelerator(final Accelerator accelerator) {}
+
+	@Override
+	public void setMnemonic(final Character mnemonic) {}
 
 }

@@ -26,43 +26,41 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.common.wrapper;
+package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.api.model.item.IActionItemModel;
-import org.jowidgets.common.widgets.IToolBarButtonCommon;
-import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.api.model.item.IToolBarItemModel;
+import org.jowidgets.api.widgets.IToolBar;
+import org.jowidgets.api.widgets.IToolBarItem;
 import org.jowidgets.impl.base.delegate.ItemDelegate;
-import org.jowidgets.spi.widgets.IToolBarButtonSpi;
+import org.jowidgets.impl.model.item.SeparatorItemModelBuilder;
+import org.jowidgets.impl.widgets.common.wrapper.ToolBarItemSpiWrapper;
+import org.jowidgets.impl.widgets.common.wrapper.invoker.ToolBarItemSpiInvoker;
+import org.jowidgets.spi.widgets.IToolBarItemSpi;
 
-public class ToolBarButtonSpiWrapper extends ToolBarItemSpiWrapper implements IToolBarButtonCommon {
+public class ToolBarSeparatorItemImpl extends ToolBarItemSpiWrapper implements IToolBarItem {
 
-	public ToolBarButtonSpiWrapper(final IToolBarButtonSpi widget, final ItemDelegate itemDelegate) {
-		super(widget, itemDelegate);
-		widget.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				getModel().actionPerformed();
-			}
-		});
+	private final IToolBar parent;
+
+	public ToolBarSeparatorItemImpl(final IToolBar parent, final IToolBarItemSpi toolBarItemSpi) {
+		super(
+			toolBarItemSpi,
+			new ItemDelegate(new ToolBarItemSpiInvoker(toolBarItemSpi), new SeparatorItemModelBuilder().build()));
+		this.parent = parent;
 	}
 
 	@Override
-	public IToolBarButtonSpi getWidget() {
-		return (IToolBarButtonSpi) super.getWidget();
-	}
-
-	public IActionItemModel getModel() {
-		return (IActionItemModel) getItemDelegate().getModel();
+	public IToolBar getParent() {
+		return parent;
 	}
 
 	@Override
-	public void addActionListener(final IActionListener actionListener) {
-		getWidget().addActionListener(actionListener);
+	public void setModel(final IToolBarItemModel model) {
+		getItemDelegate().setModel(model);
 	}
 
 	@Override
-	public void removeActionListener(final IActionListener actionListener) {
-		getWidget().removeActionListener(actionListener);
+	public IToolBarItemModel getModel() {
+		return (IToolBarItemModel) getItemDelegate().getModel();
 	}
 
 }
