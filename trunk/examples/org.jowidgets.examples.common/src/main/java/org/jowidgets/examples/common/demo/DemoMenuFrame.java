@@ -79,9 +79,9 @@ public class DemoMenuFrame extends JoFrame {
 
 		createMainMenus();
 
-		setLayout(new MigLayoutDescriptor("0[grow]0", "0[]0[]0[grow]0"));
+		setLayout(new MigLayoutDescriptor("0[grow, 0 ::]0", "0[]0[0]0[grow]0"));
 
-		add(BPF.toolBar(), "wrap").setModel(toolBarModel);
+		add(BPF.toolBar(), "w 0::, wrap").setModel(toolBarModel);
 		add(BPF.separator(), "growx, wrap");
 
 		add(BPF.composite().setBackgroundColor(Colors.WHITE), "growx, growy").setPopupMenu(getMenuModel());
