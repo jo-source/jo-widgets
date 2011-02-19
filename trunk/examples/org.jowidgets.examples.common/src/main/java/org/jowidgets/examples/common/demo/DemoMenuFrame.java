@@ -79,9 +79,8 @@ public class DemoMenuFrame extends JoFrame {
 
 		createMainMenus();
 
-		setLayout(new MigLayoutDescriptor("0[grow]0", "0[][]0[]0[grow]0"));
+		setLayout(new MigLayoutDescriptor("0[grow]0", "0[]0[]0[grow]0"));
 
-		add(BPF.toolBar(), "wrap").setModel(toolBarModel);
 		add(BPF.toolBar(), "wrap").setModel(toolBarModel);
 		add(BPF.separator(), "growx, wrap");
 
@@ -196,9 +195,17 @@ public class DemoMenuFrame extends JoFrame {
 		toolBarModel.addSeparator();
 		toolBarModel.addItem(checkedItem);
 
-		final InputControlItemModel<String> textField = new InputControlItemModel<String>(BPF.textField().setValue("Test"));
+		final InputControlItemModel<String> comboBox = new InputControlItemModel<String>(BPF.comboBoxSelection(
+				"item1",
+				"item2",
+				"item3"), 80);
+		toolBarModel.addItem(comboBox);
+
+		final InputControlItemModel<String> textField = new InputControlItemModel<String>(BPF.textField().setValue("Test"), 150);
 		toolBarModel.addItem(textField);
+
 		addInputListener(textField);
+		addInputListener(comboBox);
 
 		toolBarModel.addItem(actionItem);
 	}

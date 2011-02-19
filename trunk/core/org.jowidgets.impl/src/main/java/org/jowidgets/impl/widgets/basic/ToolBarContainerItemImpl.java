@@ -28,7 +28,10 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import org.jowidgets.api.model.item.IContainerContentCreator;
 import org.jowidgets.api.model.item.IContainerItemModel;
+import org.jowidgets.api.model.item.IItemModel;
+import org.jowidgets.api.model.item.IItemModelListener;
 import org.jowidgets.api.model.item.IToolBarItemModel;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.IToolBarContainerItem;
@@ -36,14 +39,18 @@ import org.jowidgets.api.widgets.descriptor.setup.IContainerSetup;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.impl.model.item.ContainerItemModelBuilder;
 import org.jowidgets.spi.widgets.IToolBarContainerItemSpi;
+import org.jowidgets.util.Assert;
 
 public class ToolBarContainerItemImpl extends ContainerImpl implements IToolBarContainerItem {
 
 	private final IToolBar parent;
+	private final IItemModelListener modelListener;
 
 	private String text;
 	private String toolTipText;
 	private IImageConstant icon;
+	private IContainerContentCreator contentCreator;
+	private IContainerItemModel model;
 
 	public ToolBarContainerItemImpl(
 		final IToolBar parent,
@@ -52,6 +59,17 @@ public class ToolBarContainerItemImpl extends ContainerImpl implements IToolBarC
 		super(toolBarContainerItemSpi, setup);
 
 		this.parent = parent;
+
+		this.modelListener = new IItemModelListener() {
+			@Override
+			public void itemChanged(final IItemModel item) {
+				if (getModel().getContentCreator() != contentCreator) {
+					setContentCreator(getModel().getContentCreator());
+				}
+			}
+		};
+
+		setModel(new ContainerItemModelBuilder().build());
 	}
 
 	@Override
@@ -67,19 +85,16 @@ public class ToolBarContainerItemImpl extends ContainerImpl implements IToolBarC
 	@Override
 	public void setText(final String text) {
 		this.text = text;
-		getWidget().setText(text);
 	}
 
 	@Override
 	public void setToolTipText(final String toolTipText) {
 		this.toolTipText = toolTipText;
-		getWidget().setToolTipText(toolTipText);
 	}
 
 	@Override
 	public void setIcon(final IImageConstant icon) {
 		this.icon = icon;
-		getWidget().setIcon(icon);
 	}
 
 	@Override
@@ -98,19 +113,39 @@ public class ToolBarContainerItemImpl extends ContainerImpl implements IToolBarC
 	}
 
 	@Override
-	public void setModel(final IToolBarItemModel model) {
-		// TODO MG implement model support
+	public IContainerItemModel getModel() {
+		return model;
 	}
 
 	@Override
 	public void setModel(final IContainerItemModel model) {
-		// TODO MG implement model support
+		Assert.paramNotNull(model, "model");
+		if (this.model != null) {
+			this.model.removeItemModelListener(modelListener);
+		}
+		setContentCreator(model.getContentCreator());
+		model.addItemModelListener(modelListener);
+		getParent().pack();
 	}
 
 	@Override
-	public IContainerItemModel getModel() {
-		// TODO MG implement model support
-		return new ContainerItemModelBuilder().build();
+	public void setModel(final IToolBarItemModel model) {
+		if (model instanceof IContainerItemModel) {
+			setModel((IContainerItemModel) model);
+		}
+		else {
+			throw new IllegalArgumentException("Model type '" + IContainerItemModel.class.getName() + "' expected");
+		}
+	}
+
+	private void setContentCreator(final IContainerContentCreator contentCreator) {
+		if (this.contentCreator != contentCreator) {
+			if (this.contentCreator != null) {
+				this.contentCreator.containerDisposed(this);
+			}
+			contentCreator.createContent(this);
+			this.contentCreator = contentCreator;
+		}
 	}
 
 }

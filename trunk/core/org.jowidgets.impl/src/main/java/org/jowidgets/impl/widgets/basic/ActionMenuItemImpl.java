@@ -115,6 +115,7 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 				}
 			}
 		});
+
 	}
 
 	@Override
@@ -164,8 +165,12 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 
 	@Override
 	public void setModel(final IActionItemModel model) {
+		if (getModel() != null) {
+			getModel().removeItemModelListener(modelListener);
+		}
 		getItemDelegate().setModel(model);
 		setActionValue(model.getAction());
+		model.addItemModelListener(modelListener);
 	}
 
 	@Override

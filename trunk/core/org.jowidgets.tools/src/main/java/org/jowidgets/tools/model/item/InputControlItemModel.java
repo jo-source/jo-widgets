@@ -60,8 +60,14 @@ public class InputControlItemModel<VALUE_TYPE> extends AbstractItemModelWrapper 
 
 	private VALUE_TYPE value;
 
+	public InputControlItemModel(final IWidgetDescriptor<? extends IInputControl<VALUE_TYPE>> descriptor, final int width) {
+		this(descriptor, "w " + width + "!");
+	}
+
 	@SuppressWarnings("unchecked")
-	public InputControlItemModel(final IWidgetDescriptor<? extends IInputControl<VALUE_TYPE>> descriptor) {
+	public InputControlItemModel(
+		final IWidgetDescriptor<? extends IInputControl<VALUE_TYPE>> descriptor,
+		final String layoutConstraints) {
 		super(Toolkit.getModelFactoryProvider().getItemModelFactory().containerItem());
 		Assert.paramNotNull(descriptor, "descriptor");
 
@@ -77,7 +83,7 @@ public class InputControlItemModel<VALUE_TYPE> extends AbstractItemModelWrapper 
 			@Override
 			public void createContent(final IContainer container) {
 				container.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));
-				final IInputControl<VALUE_TYPE> control = container.add(descriptor, "growx, growy, 0::, 0::");
+				final IInputControl<VALUE_TYPE> control = container.add(descriptor, layoutConstraints);
 				control.setValue(value);
 
 				final IInputListener syncListener = new InputListener(control);

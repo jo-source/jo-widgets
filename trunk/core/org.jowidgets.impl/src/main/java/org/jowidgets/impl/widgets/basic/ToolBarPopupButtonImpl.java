@@ -119,6 +119,7 @@ public class ToolBarPopupButtonImpl extends ToolBarPopupButtonSpiWrapper impleme
 				}
 			}
 		};
+
 	}
 
 	@Override
@@ -192,9 +193,13 @@ public class ToolBarPopupButtonImpl extends ToolBarPopupButtonSpiWrapper impleme
 
 	@Override
 	public void setModel(final IPopupActionItemModel model) {
+		if (getModel() != null) {
+			getModel().removeItemModelListener(modelListener);
+		}
 		getItemDelegate().setModel(model);
 		setActionValue(model.getAction(), ActionStyle.OMIT_TEXT);
 		setPopupMenuValue(model.getPopupMenu());
+		model.addItemModelListener(modelListener);
 	}
 
 	@Override
