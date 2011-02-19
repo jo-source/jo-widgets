@@ -28,10 +28,13 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import org.jowidgets.api.model.item.IContainerItemModel;
+import org.jowidgets.api.model.item.IToolBarItemModel;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.IToolBarContainerItem;
 import org.jowidgets.api.widgets.descriptor.setup.IContainerSetup;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.impl.model.item.ContainerItemModelBuilder;
 import org.jowidgets.spi.widgets.IToolBarContainerItemSpi;
 
 public class ToolBarContainerItemImpl extends ContainerImpl implements IToolBarContainerItem {
@@ -92,6 +95,22 @@ public class ToolBarContainerItemImpl extends ContainerImpl implements IToolBarC
 	@Override
 	public IImageConstant getIcon() {
 		return icon;
+	}
+
+	@Override
+	public void setModel(final IToolBarItemModel model) {
+		// TODO MG implement model support
+	}
+
+	@Override
+	public void setModel(final IContainerItemModel model) {
+		// TODO MG implement model support
+	}
+
+	@Override
+	public IContainerItemModel getModel() {
+		// TODO MG implement model support
+		return new ContainerItemModelBuilder().build();
 	}
 
 }

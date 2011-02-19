@@ -45,6 +45,8 @@ public interface IToolBar extends IControl, IToolBarCommon {
 
 	boolean remove(IToolBarItem item);
 
+	void remove(int index);
+
 	void removeAll();
 
 	IToolBarItem addSeparator();

@@ -43,22 +43,19 @@ import org.jowidgets.api.model.item.ICheckedItemModel;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IRadioItemModel;
 import org.jowidgets.api.model.item.ISelectableItemModel;
+import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
-import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.IToolBar;
-import org.jowidgets.api.widgets.IToolBarButton;
-import org.jowidgets.api.widgets.IToolBarContainerItem;
-import org.jowidgets.api.widgets.IToolBarPopupButton;
-import org.jowidgets.api.widgets.IToolBarToggleButton;
-import org.jowidgets.api.widgets.blueprint.IToolBarToggleButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Modifier;
 import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.controler.IItemStateListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.command.EnabledChecker;
 import org.jowidgets.tools.model.item.ActionItemModel;
+import org.jowidgets.tools.model.item.InputControlItemModel;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.model.item.RadioItemModel;
 import org.jowidgets.tools.powo.JoFrame;
@@ -69,46 +66,40 @@ public class DemoMenuFrame extends JoFrame {
 
 	private ICommandAction action1;
 	private ICommandAction action2;
-	private final IMenuModel menuModel;
+	private IMenuModel menuModel;
+	private ICheckedItemModel checkedItem;
 
 	public DemoMenuFrame() {
 		super(bluePrint("Menu demo").autoPackOff());
+
 		createActions();
-		this.menuModel = createMenuModel();
+		createMenuModel();
+
 		createMainMenus();
 
 		setLayout(new MigLayoutDescriptor("0[grow]0", "0[][grow]0"));
 
 		final IToolBar toolBar = add(BPF.toolBar(), "wrap");
+		final IToolBarModel toolBarModel = toolBar.getModel();
 
-		final IToolBarPopupButton toolBarPopupButton = toolBar.addItem(BPF.toolBarPopupButton());
-		toolBarPopupButton.setAction(action1);
-		toolBarPopupButton.setPopupMenu(getMenuModel());
+		toolBarModel.addPopupAction(action1, getMenuModel());
+		toolBarModel.addAction(action2);
+		toolBarModel.addSeparator();
+		toolBarModel.addItem(checkedItem);
 
-		final IToolBarButton toolBarButton = toolBar.addItem(BPF.toolBarButton());
-		toolBarButton.setAction(action2);
-
-		toolBar.addSeparator();
-
-		final IToolBarToggleButtonBluePrint toggleButtonBp = BPF.toolBarToggleButton();
-		toggleButtonBp.setText("ToggleButton").setToolTipText("Tooltip");
-		final IToolBarToggleButton toggleButton = toolBar.addItem(toggleButtonBp);
-		toggleButton.addItemListener(new IItemStateListener() {
+		final InputControlItemModel<String> textField = new InputControlItemModel<String>(BPF.textField().setValue("Test"));
+		toolBarModel.addItem(textField);
+		textField.addInputListener(new IInputListener() {
 
 			@Override
-			public void itemStateChanged() {
+			public void inputChanged(final Object source) {
 				// CHECKSTYLE:OFF
-				System.out.println("ToggleButton selected: " + toggleButton.isSelected());
+				System.out.println("Input changed: " + textField.getValue());
 				// CHECKSTYLE:ON
 			}
 		});
 
-		final IToolBarContainerItem toolBarContainer = toolBar.addItem(BPF.toolBarContainerItem());
-		final IInputControl<String> textField = toolBarContainer.add(BPF.textField(), "w 200");
-		textField.setValue("Test");
-
-		toolBar.addItem(BPF.toolBarButton().setText("Button").setToolTipText("Tooltip"));
-
+		toolBarModel.addActionItem("Button", "Tooltip");
 		toolBar.pack();
 
 		final IComposite composite = add(BPF.composite().setBackgroundColor(Colors.WHITE), "growx, growy");
@@ -171,9 +162,9 @@ public class DemoMenuFrame extends JoFrame {
 
 	private IMenuModel createMenuModel() {
 
-		final IMenuModel menu = new MenuModel(MenuModel.builder("Menu1").setMnemonic('n'));
+		menuModel = new MenuModel(MenuModel.builder("Menu1").setMnemonic('n'));
 
-		final IMenuModel subMenu = menu.addItem(MenuModel.builder("sub menu 1").setMnemonic('e'));
+		final IMenuModel subMenu = menuModel.addItem(MenuModel.builder("sub menu 1").setMnemonic('e'));
 		subMenu.addActionItem("sub item1");
 		subMenu.addActionItem("sub item2");
 
@@ -188,32 +179,32 @@ public class DemoMenuFrame extends JoFrame {
 		subMenu.addActionItem("sub item4");
 		subMenu.addActionItem("sub item5");
 
-		menu.addAction(action1);
-		menu.addAction(action2);
+		menuModel.addAction(action1);
+		menuModel.addAction(action2);
 
 		final IActionItemModelBuilder item3Bd = ActionItemModel.builder();
 		item3Bd.setText("The Third Item").setToolTipText("This is the third item");
 		item3Bd.setIcon(IconsSmall.WARNING);
 		item3Bd.setAccelerator('I', Modifier.SHIFT).setMnemonic('e');
-		final IActionItemModel item3 = menu.addItem(1, item3Bd);
+		final IActionItemModel item3 = menuModel.addItem(1, item3Bd);
 		addActionListener(item3);
 
-		menu.addSeparator();
+		menuModel.addSeparator();
 
-		final ICheckedItemModel item4 = menu.addCheckedItem("item4");
+		checkedItem = menuModel.addCheckedItem("item4");
 
-		menu.addSeparator();
+		menuModel.addSeparator();
 
-		final IRadioItemModel item5 = menu.addRadioItem("item5");
-		final IRadioItemModel item6 = menu.addItem(RadioItemModel.builder("item6").setSelected(true));
-		final IRadioItemModel item7 = menu.addRadioItem("item7");
+		final IRadioItemModel item5 = menuModel.addRadioItem("item5");
+		final IRadioItemModel item6 = menuModel.addItem(RadioItemModel.builder("item6").setSelected(true));
+		final IRadioItemModel item7 = menuModel.addRadioItem("item7");
 
-		addItemListener(item4);
+		addItemListener(checkedItem);
 		addItemListener(item5);
 		addItemListener(item6);
 		addItemListener(item7);
 
-		return menu;
+		return menuModel;
 	}
 
 	private void addActionListener(final IActionItemModel item) {

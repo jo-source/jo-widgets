@@ -43,6 +43,7 @@ import org.jowidgets.common.widgets.controler.IInputObservable;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.controler.InputObservable;
+import org.jowidgets.util.Assert;
 import org.jowidgets.util.Tuple;
 
 /**
@@ -62,6 +63,7 @@ public class InputControlItemModel<VALUE_TYPE> extends AbstractItemModelWrapper 
 	@SuppressWarnings("unchecked")
 	public InputControlItemModel(final IWidgetDescriptor<? extends IInputControl<VALUE_TYPE>> descriptor) {
 		super(Toolkit.getModelFactoryProvider().getItemModelFactory().containerItem());
+		Assert.paramNotNull(descriptor, "descriptor");
 
 		this.inputObservable = new InputObservable();
 		this.controls = new HashMap<IContainer, Tuple<IInputControl<VALUE_TYPE>, IInputListener>>();

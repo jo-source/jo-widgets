@@ -28,8 +28,10 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import org.jowidgets.api.model.item.IToolBarItemModel;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.IToolBarItem;
+import org.jowidgets.impl.model.item.SeparatorItemModelBuilder;
 import org.jowidgets.impl.widgets.common.wrapper.ItemSpiWrapper;
 import org.jowidgets.spi.widgets.IToolBarItemSpi;
 
@@ -45,6 +47,17 @@ public class ToolBarItemImpl extends ItemSpiWrapper implements IToolBarItem {
 	@Override
 	public IToolBar getParent() {
 		return parent;
+	}
+
+	@Override
+	public void setModel(final IToolBarItemModel model) {
+		// TODO MG implement model support
+	}
+
+	@Override
+	public IToolBarItemModel getModel() {
+		// TODO MG implement model support
+		return new SeparatorItemModelBuilder().build();
 	}
 
 }

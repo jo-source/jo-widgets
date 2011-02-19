@@ -32,6 +32,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.model.IListModelListener;
+import org.jowidgets.api.model.item.IActionItemModel;
+import org.jowidgets.api.model.item.ICheckedItemModel;
+import org.jowidgets.api.model.item.IContainerItemModel;
+import org.jowidgets.api.model.item.IPopupActionItemModel;
+import org.jowidgets.api.model.item.ISeparatorItemModel;
+import org.jowidgets.api.model.item.IToolBarItemModel;
 import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComponent;
@@ -43,6 +50,7 @@ import org.jowidgets.api.widgets.IToolBarContainerItem;
 import org.jowidgets.api.widgets.IToolBarItem;
 import org.jowidgets.api.widgets.IToolBarPopupButton;
 import org.jowidgets.api.widgets.IToolBarToggleButton;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.ISeparatorToolBarItemDescriptor;
 import org.jowidgets.api.widgets.descriptor.IToolBarButtonDescriptor;
 import org.jowidgets.api.widgets.descriptor.IToolBarContainerItemDescriptor;
@@ -68,6 +76,8 @@ public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar {
 
 	private final ControlDelegate controlDelegate;
 	private final List<IToolBarItem> children;
+	private final IListModelListener listModelListener;
+	private IToolBarModel model;
 
 	public ToolBarImpl(final IToolBarSpi widget, final IToolBarSetup setup) {
 		super(widget);
@@ -77,17 +87,40 @@ public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar {
 
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
-	}
 
-	@Override
-	public IToolBarModel getModel() {
-		// TODO MG implement model support
-		return null;
+		this.listModelListener = new IListModelListener() {
+
+			@Override
+			public void childRemoved(final int index) {
+				remove(index);
+			}
+
+			@Override
+			public void childAdded(final int index) {
+				final IToolBarItemModel addedModel = getModel().getItems().get(index);
+				addMenuModel(index, addedModel);
+			}
+		};
+
+		setModel(Toolkit.getModelFactoryProvider().getItemModelFactory().toolBar());
 	}
 
 	@Override
 	public void setModel(final IToolBarModel model) {
-		// TODO MG implement model support	
+		if (this.model != null) {
+			this.model.removeListModelListener(listModelListener);
+			removeAll();
+		}
+		this.model = model;
+		for (final IToolBarItemModel childModel : model.getItems()) {
+			addMenuModel(children.size(), childModel);
+		}
+		model.addListModelListener(listModelListener);
+	}
+
+	@Override
+	public IToolBarModel getModel() {
+		return model;
 	}
 
 	@Override
@@ -116,16 +149,21 @@ public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar {
 	}
 
 	@Override
+	public void remove(final int index) {
+		final IToolBarItem item = children.get(index);
+		if (item instanceof IDisposeable) {
+			((IDisposeable) item).dispose();
+		}
+		children.remove(index);
+		getWidget().remove(index);
+	}
+
+	@Override
 	public boolean remove(final IToolBarItem item) {
 		Assert.paramNotNull(item, "item");
-
 		final int index = children.indexOf(item);
 		if (index != -1) {
-			if (item instanceof IDisposeable) {
-				((IDisposeable) item).dispose();
-			}
-			children.remove(index);
-			getWidget().remove(index);
+			remove(index);
 			return true;
 		}
 		else {
@@ -154,10 +192,12 @@ public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar {
 	}
 
 	private IToolBarItem addSeparator(final Integer index) {
-		final IToolBarItemSpi toolBarItemSpi = getWidget().addSeparator(index);
-		final ToolBarItemImpl item = new ToolBarItemImpl(this, toolBarItemSpi);
-		addToChildren(index, item);
-		return item;
+		if (index != null) {
+			return addItem(index.intValue(), Toolkit.getBluePrintFactory().toolBarSeparator());
+		}
+		else {
+			return addItem(Toolkit.getBluePrintFactory().toolBarSeparator());
+		}
 	}
 
 	@Override
@@ -176,7 +216,7 @@ public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar {
 
 	@Override
 	public <WIDGET_TYPE extends IToolBarItem> WIDGET_TYPE addItem(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
-		return addItem(null, descriptor);
+		return addItemInternal(null, descriptor);
 	}
 
 	@Override
@@ -187,12 +227,13 @@ public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar {
 		if (index < 0 || index > children.size()) {
 			throw new IllegalArgumentException("Index must be between '0' and '" + children.size() + "'.");
 		}
-
-		return addItem(Integer.valueOf(index), descriptor);
+		final WIDGET_TYPE result = addItemInternal(Integer.valueOf(index), descriptor);
+		addToModel(index, result);
+		return result;
 	}
 
 	@SuppressWarnings("unchecked")
-	private <WIDGET_TYPE extends IToolBarItem> WIDGET_TYPE addItem(
+	private <WIDGET_TYPE extends IToolBarItem> WIDGET_TYPE addItemInternal(
 		final Integer index,
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
 
@@ -243,6 +284,25 @@ public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar {
 		return result;
 	}
 
+	private void addMenuModel(final int index, final IToolBarItemModel model) {
+		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+		if (model instanceof IActionItemModel) {
+			addItemInternal(index, bpf.toolBarButton()).setModel(model);
+		}
+		else if (model instanceof ICheckedItemModel) {
+			addItemInternal(index, bpf.toolBarToggleButton()).setModel(model);
+		}
+		else if (model instanceof IPopupActionItemModel) {
+			addItemInternal(index, bpf.toolBarPopupButton()).setModel(model);
+		}
+		else if (model instanceof IContainerItemModel) {
+			addItemInternal(index, bpf.toolBarContainerItem()).setModel(model);
+		}
+		else if (model instanceof ISeparatorItemModel) {
+			addItemInternal(index, bpf.toolBarSeparator()).setModel(model);
+		}
+	}
+
 	private void addToChildren(final Integer index, final IToolBarItem item) {
 		if (index != null) {
 			children.add(index.intValue(), item);
@@ -250,6 +310,17 @@ public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar {
 		else {
 			children.add(item);
 		}
+	}
+
+	private void addToModel(final Integer index, final IToolBarItem item) {
+		model.removeListModelListener(listModelListener);
+		if (index != null) {
+			getModel().addItem(index.intValue(), item.getModel());
+		}
+		else {
+			getModel().addItem(item.getModel());
+		}
+		model.addListModelListener(listModelListener);
 	}
 
 }

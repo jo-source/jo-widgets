@@ -54,7 +54,6 @@ class ContainerItemModelImpl extends AbstractActionItemModelImpl implements ICon
 		final IAction action,
 		final IContainerContentCreator contentCreator) {
 		super(id, text, toolTipText, icon, accelerator, mnemonic, enabled, action);
-		Assert.paramNotNull(contentCreator, "contentCreator");
 
 		this.contentCreator = contentCreator;
 	}

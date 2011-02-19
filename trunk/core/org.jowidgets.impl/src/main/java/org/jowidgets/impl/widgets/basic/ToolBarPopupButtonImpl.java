@@ -31,6 +31,8 @@ package org.jowidgets.impl.widgets.basic;
 import org.jowidgets.api.command.ActionStyle;
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.api.model.item.IPopupActionItemModel;
+import org.jowidgets.api.model.item.IToolBarItemModel;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.IToolBarPopupButton;
@@ -41,6 +43,7 @@ import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.impl.command.ActionExecuter;
 import org.jowidgets.impl.command.ActionWidgetSync;
 import org.jowidgets.impl.command.IActionWidget;
+import org.jowidgets.impl.model.item.PopupActionItemModelBuilder;
 import org.jowidgets.impl.widgets.common.wrapper.ToolBarPopupButtonSpiWrapper;
 import org.jowidgets.spi.widgets.IToolBarPopupButtonSpi;
 
@@ -138,6 +141,21 @@ public class ToolBarPopupButtonImpl extends ToolBarPopupButtonSpiWrapper impleme
 			actionWidgetSync.dispose();
 			actionWidgetSync = null;
 		}
+	}
+
+	@Override
+	public void setModel(final IToolBarItemModel model) {
+
+	}
+
+	@Override
+	public void setModel(final IPopupActionItemModel model) {
+
+	}
+
+	@Override
+	public IPopupActionItemModel getModel() {
+		return new PopupActionItemModelBuilder().build();
 	}
 
 }

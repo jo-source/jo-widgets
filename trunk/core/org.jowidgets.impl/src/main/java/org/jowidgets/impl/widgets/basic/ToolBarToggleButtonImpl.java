@@ -28,9 +28,12 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import org.jowidgets.api.model.item.ICheckedItemModel;
+import org.jowidgets.api.model.item.IToolBarItemModel;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.IToolBarToggleButton;
 import org.jowidgets.api.widgets.descriptor.setup.IItemSetup;
+import org.jowidgets.impl.model.item.CheckedItemModelBuilder;
 import org.jowidgets.impl.widgets.common.wrapper.ToolBarToggleButtonSpiWrapper;
 import org.jowidgets.spi.widgets.IToolBarToggleButtonSpi;
 
@@ -55,6 +58,22 @@ public class ToolBarToggleButtonImpl extends ToolBarToggleButtonSpiWrapper imple
 	@Override
 	public IToolBar getParent() {
 		return parent;
+	}
+
+	@Override
+	public void setModel(final IToolBarItemModel model) {
+		// TODO MG implement model support
+	}
+
+	@Override
+	public void setModel(final ICheckedItemModel model) {
+		// TODO MG implement model support
+	}
+
+	@Override
+	public ICheckedItemModel getModel() {
+		// TODO MG implement model support
+		return new CheckedItemModelBuilder().build();
 	}
 
 }

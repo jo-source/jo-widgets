@@ -30,6 +30,8 @@ package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.command.ActionStyle;
 import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.model.item.IActionItemModel;
+import org.jowidgets.api.model.item.IToolBarItemModel;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.IToolBarButton;
 import org.jowidgets.api.widgets.descriptor.setup.IItemSetup;
@@ -37,6 +39,7 @@ import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.impl.command.ActionExecuter;
 import org.jowidgets.impl.command.ActionWidgetSync;
 import org.jowidgets.impl.command.IActionWidget;
+import org.jowidgets.impl.model.item.ActionItemModelBuilder;
 import org.jowidgets.impl.widgets.common.wrapper.ToolBarButtonSpiWrapper;
 import org.jowidgets.spi.widgets.IToolBarButtonSpi;
 
@@ -96,6 +99,22 @@ public class ToolBarButtonImpl extends ToolBarButtonSpiWrapper implements IToolB
 			actionWidgetSync.dispose();
 			actionWidgetSync = null;
 		}
+	}
+
+	@Override
+	public void setModel(final IToolBarItemModel model) {
+		// TODO MG implement model support
+	}
+
+	@Override
+	public void setModel(final IActionItemModel model) {
+		// TODO MG implement model support
+	}
+
+	@Override
+	public IActionItemModel getModel() {
+		// TODO MG implement model support
+		return new ActionItemModelBuilder().build();
 	}
 
 }
