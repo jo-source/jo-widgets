@@ -132,7 +132,7 @@ public class DemoMenuFrame extends JoFrame {
 	private IMenuModel createMenuModel() {
 
 		//first create the menu
-		menuModel = new MenuModel(MenuModel.builder("Menu1", "Tooltip of menu1").setMnemonic('n'));
+		menuModel = new MenuModel(MenuModel.builder("Menu1").setMnemonic('n'));
 
 		final IMenuModel subMenu = menuModel.addItem(MenuModel.builder("sub menu 1").setMnemonic('e'));
 		actionItem = subMenu.addActionItem("sub item1");
