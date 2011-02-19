@@ -52,7 +52,6 @@ import org.jowidgets.api.test.blueprint.defaults.Hierarchy3rdDefaultsOverriden;
 import org.jowidgets.api.test.blueprint.defaults.Hierarchy4thDefaults;
 import org.jowidgets.api.test.blueprint.defaults.registry.DummyDefaultsInitializerRegistry;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.junit.After;
@@ -75,7 +74,6 @@ public final class BluePrintFactoryTest {
 	private Hierarchy2nd2Convenience setupBuilderConvenience2nd2Mock;
 	private Hierarchy3rdConvenience setupBuilderConvenience3rdMock;
 	private Hierarchy2nd3Defaults hierarchy2nd3DefaultMock;
-	private ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry;
 
 	@Before
 	public void setUp() {
@@ -104,7 +102,7 @@ public final class BluePrintFactoryTest {
 			hierarchy2nd3DefaultMock,
 			hierarchy3rdDefaultMock,
 			hierarchy4thDefaultMock));
-		setupBuilderConvenienceRegistry = dummyBluePrintFactory.getSetupBuilderConvenienceRegistry();
+		dummyBluePrintFactory.getSetupBuilderConvenienceRegistry();
 	}
 
 	@After
