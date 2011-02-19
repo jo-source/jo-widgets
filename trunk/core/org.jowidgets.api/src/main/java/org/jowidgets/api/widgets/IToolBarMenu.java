@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Lukas Gross
+ * Copyright (c) 2010, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,11 +26,30 @@
  * DAMAGE.
  */
 
-package org.jowidgets.test.api.widgets.blueprint;
+package org.jowidgets.api.widgets;
 
-import org.jowidgets.api.widgets.blueprint.builder.IItemSetupBuilder;
-import org.jowidgets.test.api.widgets.descriptor.IToolBarButtonDescriptorUi;
+import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.common.widgets.IToolBarItemCommon;
 
-public interface IToolBarButtonBluePrintUi extends IItemSetupBuilder<IToolBarButtonBluePrintUi>, IToolBarButtonDescriptorUi {
+public interface IToolBarMenu extends IToolBarItem, IToolBarItemCommon {
+
+	/**
+	 * Gets the popup menu of this item
+	 * 
+	 * @return The popup menu of this item
+	 */
+	IPopupMenu getPopupMenu();
+
+	/**
+	 * Sets the menu model for this component.
+	 * The menu will be shown, when the button will be pressed on this component.
+	 * 
+	 * @param menuModel
+	 *            The model of the menu or null, if no menu should be shown on action event
+	 */
+	void setModel(IMenuModel model);
+
+	@Override
+	IMenuModel getModel();
 
 }

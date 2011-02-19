@@ -42,7 +42,7 @@ public interface IToolBarPopupButton extends IToolBarItem, IToolBarPopupButtonCo
 
 	/**
 	 * Sets a popup menu for this component.
-	 * The popup menu will be shown, when an popup event occurs on this component.
+	 * The popup menu will be shown, when the menu button will be pressed this component.
 	 * 
 	 * @param menuModel
 	 *            The model of the popup menu or null, if no popup should be shown on popup events

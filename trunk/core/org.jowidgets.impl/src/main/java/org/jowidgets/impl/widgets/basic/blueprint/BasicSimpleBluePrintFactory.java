@@ -55,6 +55,7 @@ import org.jowidgets.api.widgets.blueprint.IToggleButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarContainerItemBluePrint;
+import org.jowidgets.api.widgets.blueprint.IToolBarMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarPopupButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarToggleButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
@@ -88,6 +89,7 @@ import org.jowidgets.api.widgets.descriptor.IToggleButtonDescriptor;
 import org.jowidgets.api.widgets.descriptor.IToolBarButtonDescriptor;
 import org.jowidgets.api.widgets.descriptor.IToolBarContainerItemDescriptor;
 import org.jowidgets.api.widgets.descriptor.IToolBarDescriptor;
+import org.jowidgets.api.widgets.descriptor.IToolBarMenuDescriptor;
 import org.jowidgets.api.widgets.descriptor.IToolBarPopupButtonDescriptor;
 import org.jowidgets.api.widgets.descriptor.IToolBarToggleButtonDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITreeDescriptor;
@@ -224,6 +226,11 @@ public class BasicSimpleBluePrintFactory extends AbstractBluePrintFactory implem
 	@Override
 	public IToolBarPopupButtonBluePrint toolBarPopupButton() {
 		return createProxy(IToolBarPopupButtonBluePrint.class, IToolBarPopupButtonDescriptor.class);
+	}
+
+	@Override
+	public IToolBarMenuBluePrint toolBarMenu() {
+		return createProxy(IToolBarMenuBluePrint.class, IToolBarMenuDescriptor.class);
 	}
 
 	@Override

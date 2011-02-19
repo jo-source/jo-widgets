@@ -45,13 +45,9 @@ import org.jowidgets.api.model.item.IRadioItemModel;
 import org.jowidgets.api.model.item.ISelectableItemModel;
 import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IPopupMenu;
-import org.jowidgets.api.widgets.IToolBar;
-import org.jowidgets.api.widgets.IToolBarButton;
+import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Modifier;
-import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.controler.IItemStateListener;
@@ -86,25 +82,8 @@ public class DemoMenuFrame extends JoFrame {
 
 		setLayout(new MigLayoutDescriptor("0[grow, 0 ::]0", "0[]0[0]0[grow]0"));
 
-		final IToolBar toolBar = add(BPF.toolBar(), "w 0::, wrap");
-		toolBar.setModel(toolBarModel);
-
-		final IPopupMenu popupMenu = toolBar.createPopupMenu();
-		popupMenu.setModel(getMenuModel());
-		final IToolBarButton menuButton = toolBar.addItem(BPF.toolBarButton().setIcon(IconsSmall.POPUP_ARROW).setToolTipText(
-				"popupmenu"));
-		menuButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final Position pos = menuButton.getPosition();
-				final Dimension size = menuButton.getSize();
-				popupMenu.show(new Position(pos.getX(), pos.getY() + size.getHeight()));
-			}
-		});
-		toolBar.pack();
-
+		add(BPF.toolBar(), "w 0::, wrap").setModel(toolBarModel);
 		add(BPF.separator(), "growx, wrap");
-
 		add(BPF.composite().setBackgroundColor(Colors.WHITE), "growx, growy").setPopupMenu(getMenuModel());
 	}
 
@@ -153,7 +132,7 @@ public class DemoMenuFrame extends JoFrame {
 	private IMenuModel createMenuModel() {
 
 		//first create the menu
-		menuModel = new MenuModel(MenuModel.builder("Menu1").setMnemonic('n'));
+		menuModel = new MenuModel(MenuModel.builder("Menu1", "Tooltip of menu1").setMnemonic('n'));
 
 		final IMenuModel subMenu = menuModel.addItem(MenuModel.builder("sub menu 1").setMnemonic('e'));
 		actionItem = subMenu.addActionItem("sub item1");
@@ -216,21 +195,18 @@ public class DemoMenuFrame extends JoFrame {
 		toolBarModel.addSeparator();
 		toolBarModel.addItem(checkedItem);
 
-		final InputControlItemModel<String> comboBox = new InputControlItemModel<String>(BPF.comboBoxSelection(
-				"item1",
-				"item2",
-				"item3"), 80);
+		final IComboBoxSelectionBluePrint<String> comboBoxBp = BPF.comboBoxSelection("item1", "item2", "item3");
+		final InputControlItemModel<String> comboBox = new InputControlItemModel<String>(comboBoxBp, 80);
 		toolBarModel.addItem(comboBox);
 
-		final InputControlItemModel<String> textField = new InputControlItemModel<String>(
-			BPF.textField().setValue("Test"),
-			"growx, w 150::");
+		final InputControlItemModel<String> textField = new InputControlItemModel<String>(BPF.textField().setValue("Test"), 150);
 		toolBarModel.addItem(textField);
+
+		toolBarModel.addItem(actionItem);
+		toolBarModel.addItem(getMenuModel());
 
 		addInputListener(textField);
 		addInputListener(comboBox);
-
-		toolBarModel.addItem(actionItem);
 	}
 
 	private void createMainMenus() {

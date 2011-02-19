@@ -34,7 +34,7 @@ import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.model.IListModelObservable;
 import org.jowidgets.common.image.IImageConstant;
 
-public interface IMenuModel extends IItemModel, IMenuItemModel, IListModelObservable {
+public interface IMenuModel extends IItemModel, IMenuItemModel, IToolBarItemModel, IListModelObservable {
 
 	<MODEL_TYPE extends IMenuItemModel> MODEL_TYPE addItem(final MODEL_TYPE item);
 

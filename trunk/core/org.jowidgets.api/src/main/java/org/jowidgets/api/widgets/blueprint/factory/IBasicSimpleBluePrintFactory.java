@@ -55,6 +55,7 @@ import org.jowidgets.api.widgets.blueprint.IToggleButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarContainerItemBluePrint;
+import org.jowidgets.api.widgets.blueprint.IToolBarMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarPopupButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarToggleButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
@@ -112,6 +113,8 @@ public interface IBasicSimpleBluePrintFactory extends IBaseBluePrintFactory {
 	IToolBarToggleButtonBluePrint toolBarToggleButton();
 
 	IToolBarPopupButtonBluePrint toolBarPopupButton();
+
+	IToolBarMenuBluePrint toolBarMenu();
 
 	IToolBarContainerItemBluePrint toolBarContainerItem();
 

@@ -65,6 +65,7 @@ import org.jowidgets.api.widgets.blueprint.IToggleButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarContainerItemBluePrint;
+import org.jowidgets.api.widgets.blueprint.IToolBarMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarPopupButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarToggleButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
@@ -566,6 +567,11 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	@Override
 	public IToolBarPopupButtonBluePrint toolBarPopupButton() {
 		return bluePrintFactory.toolBarPopupButton();
+	}
+
+	@Override
+	public IToolBarMenuBluePrint toolBarMenu() {
+		return bluePrintFactory.toolBarMenu();
 	}
 
 	@Override

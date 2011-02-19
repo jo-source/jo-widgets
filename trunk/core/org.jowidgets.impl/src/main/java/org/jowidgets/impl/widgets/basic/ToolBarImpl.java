@@ -36,6 +36,7 @@ import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.ICheckedItemModel;
 import org.jowidgets.api.model.item.IContainerItemModel;
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IPopupActionItemModel;
 import org.jowidgets.api.model.item.ISeparatorItemModel;
 import org.jowidgets.api.model.item.IToolBarItemModel;
@@ -48,12 +49,14 @@ import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.IToolBarButton;
 import org.jowidgets.api.widgets.IToolBarContainerItem;
 import org.jowidgets.api.widgets.IToolBarItem;
+import org.jowidgets.api.widgets.IToolBarMenu;
 import org.jowidgets.api.widgets.IToolBarPopupButton;
 import org.jowidgets.api.widgets.IToolBarToggleButton;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.ISeparatorToolBarItemDescriptor;
 import org.jowidgets.api.widgets.descriptor.IToolBarButtonDescriptor;
 import org.jowidgets.api.widgets.descriptor.IToolBarContainerItemDescriptor;
+import org.jowidgets.api.widgets.descriptor.IToolBarMenuDescriptor;
 import org.jowidgets.api.widgets.descriptor.IToolBarPopupButtonDescriptor;
 import org.jowidgets.api.widgets.descriptor.IToolBarToggleButtonDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.IContainerSetup;
@@ -265,6 +268,11 @@ public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar {
 				(IItemSetup) descriptor);
 			result = (WIDGET_TYPE) toolBarPopupButton;
 		}
+		else if (IToolBarMenuDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
+			final IToolBarButtonSpi toolBarBurronSpi = getWidget().addToolBarButton(index);
+			final IToolBarMenu toolBarMenu = new ToolBarMenuImpl(this, toolBarBurronSpi, (IItemSetup) descriptor);
+			result = (WIDGET_TYPE) toolBarMenu;
+		}
 		else if (IToolBarContainerItemDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
 			final IToolBarContainerItemSpi toolBarContainerItemSpi = getWidget().addToolBarContainer(index);
 			final IToolBarContainerItem toolBarContainerItem = new ToolBarContainerItemImpl(
@@ -304,6 +312,9 @@ public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar {
 		}
 		else if (model instanceof ISeparatorItemModel) {
 			addItemInternal(index, bpf.toolBarSeparator()).setModel(model);
+		}
+		else if (model instanceof IMenuModel) {
+			addItemInternal(index, bpf.toolBarMenu()).setModel(model);
 		}
 		else {
 			throw new IllegalArgumentException("Model of type '" + model.getClass().getName() + "' is not supported.");

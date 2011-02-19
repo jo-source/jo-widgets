@@ -27,9 +27,9 @@
  */
 package org.jowidgets.api.widgets.blueprint;
 
-import org.jowidgets.api.widgets.blueprint.builder.ISelectableItemSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.builder.IItemSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.IToolBarButtonDescriptor;
 
-public interface IToolBarButtonBluePrint extends ISelectableItemSetupBuilder<IToolBarButtonBluePrint>, IToolBarButtonDescriptor {
+public interface IToolBarButtonBluePrint extends IItemSetupBuilder<IToolBarButtonBluePrint>, IToolBarButtonDescriptor {
 
 }
