@@ -27,14 +27,13 @@
  */
 package org.jowidgets.spi.impl.swt.widgets.internal;
 
+import net.miginfocom.layout.ComponentWrapper;
+import net.miginfocom.layout.LayoutCallback;
 import net.miginfocom.swt.MigLayout;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Layout;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
@@ -62,16 +61,10 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 		final Object parentUiReference,
 		final IScrollCompositeSetupSpi setup) {
 
-		final MigLayout growingMigLayout = new MigLayout("", "0[grow, 0::]0", "0[grow, 0::]0");
+		final MigLayout growingMigLayout = new MigLayout("", "0[grow]0", "0[grow]0");
 		final String growingCellConstraints = "grow, w 0::,h 0::";
 
-		final Composite outerComposite;
-		if (setup.getBorder() != null && setup.getBorder().getTitle() != null) {
-			outerComposite = BorderToComposite.convert((Composite) parentUiReference, setup.getBorder());
-		}
-		else {
-			outerComposite = new HackyMinSizeComposite((Composite) parentUiReference, SWT.NONE);
-		}
+		final Composite outerComposite = BorderToComposite.convert((Composite) parentUiReference, setup.getBorder());
 
 		outerComposite.setBackgroundMode(SWT.INHERIT_FORCE);
 		this.outerContainer = new SwtComposite(factory, outerComposite);
@@ -92,23 +85,19 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 
 		final Composite innerComposite = new Composite(scrolledWidget.getUiReference(), SWT.NONE);
 		innerComposite.setBackgroundMode(SWT.INHERIT_DEFAULT);
+
 		this.innerContainer = new SwtContainer(factory, innerComposite);
 		this.innerContainer.setLayout(setup.getLayout());
 		scrolledComposite.setContent(innerComposite);
 		innerComposite.setLayoutData(growingCellConstraints);
 
-		try {
-			innerComposite.addPaintListener(new PaintListener() {
-				@Override
-				public void paintControl(final PaintEvent e) {
-					scrolledComposite.setMinSize(innerComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				}
-			});
-		}
-		catch (final NoSuchMethodError error) {
-			//TODO MG RWT has no paint listener
-		}
-
+		growingMigLayout.addLayoutCallback(new LayoutCallback() {
+			@Override
+			public void correctBounds(final ComponentWrapper comp) {
+				scrolledComposite.setMinSize(innerComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				super.correctBounds(comp);
+			}
+		});
 	}
 
 	@Override
@@ -237,48 +226,6 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 	@Override
 	public void removeAll() {
 		innerContainer.removeAll();
-	}
-
-	// This following seems to be strange but its the only idea i have at the
-	// moment to get a behavior of a scroll pane
-	// known from swing!
-	// If the UI-reference of this widget has not a min size like that w 0::, h
-	// 0::, the scroll bars do never
-	// appear.
-	// Even if the min size could be set from outside (what is still possible),
-	// api users should not bother
-	// with that strange default behavior, so if min size is not set in
-	// MigLayout constraints from outside,
-	// this will be done in the HackyMinSizeComposite
-	private class HackyMinSizeComposite extends Composite {
-
-		public HackyMinSizeComposite(final Composite parent, final int style) {
-			super(parent, style);
-		}
-
-		@Override
-		public void setLayoutData(final Object layoutData) {
-			final Layout layout = getLayout();
-			if (layout instanceof MigLayout) {
-
-				String layoutDataString = null;
-				if (layoutData instanceof String) {
-					layoutDataString = (String) layoutData;
-					if (!layoutDataString.contains("w ") && !layoutDataString.contains(("width "))) {
-						layoutDataString += ",w 0::";
-					}
-					if (!layoutDataString.contains("h ") && !layoutDataString.contains(("height "))) {
-						layoutDataString += ",h 0::";
-					}
-				}
-				else {
-					layoutDataString = "w 0::, h 0::";
-				}
-				super.setLayoutData(layoutDataString);
-				return;
-			}
-			super.setLayoutData(layoutData);
-		}
 	}
 
 }

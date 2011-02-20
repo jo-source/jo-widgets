@@ -60,6 +60,18 @@ public class DemoMainComposite {
 			}
 		});
 
+		final IButton scrollCompositeDemoButton = parentContainer.add(
+				bpF.button("Scroll composite demo", "Shows a simple scroll composite with growing content"),
+				"grow, sg bg, wrap");
+		scrollCompositeDemoButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final IFrame menuDemoFrame = new ScrollCompositeDemoFrame();
+				menuDemoFrame.setSize(new Dimension(300, 300));
+				menuDemoFrame.setVisible(true);
+			}
+		});
+
 		final IButton menuDemoButton = parentContainer.add(
 				bpF.button("Menu demo", "Shows an frame with menus and popup menus"),
 				"grow, sg bg, wrap");
