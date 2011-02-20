@@ -70,11 +70,7 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 		this.outerContainer = new SwtComposite(factory, outerComposite);
 		outerComposite.setLayout(growingMigLayout);
 
-		int style = ScrollBarSettingsConvert.convert(setup);
-		if (setup.getBorder() != null && setup.getBorder().getTitle() == null) {
-			style = style | SWT.BORDER;
-		}
-		final ScrolledComposite scrolledComposite = new ScrolledComposite(outerComposite, style);
+		final ScrolledComposite scrolledComposite = new ScrolledComposite(outerComposite, ScrollBarSettingsConvert.convert(setup));
 		final SwtContainer scrolledWidget = new SwtContainer(factory, scrolledComposite);
 		scrolledComposite.setLayout(growingMigLayout);
 		scrolledComposite.setLayoutData(growingCellConstraints);
