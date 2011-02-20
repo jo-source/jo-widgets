@@ -66,7 +66,7 @@ public class DemoMainComposite {
 		scrollCompositeDemoButton.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
-				final IFrame menuDemoFrame = new ScrollCompositeDemoFrame();
+				final IFrame menuDemoFrame = new DemoScrollCompositeFrame();
 				menuDemoFrame.setSize(new Dimension(300, 300));
 				menuDemoFrame.setVisible(true);
 			}

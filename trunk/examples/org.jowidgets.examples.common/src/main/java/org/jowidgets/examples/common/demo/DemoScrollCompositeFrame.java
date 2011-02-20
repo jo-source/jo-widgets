@@ -36,11 +36,11 @@ import org.jowidgets.tools.controler.WindowAdapter;
 import org.jowidgets.tools.powo.JoFrame;
 import org.jowidgets.util.ValueHolder;
 
-public class ScrollCompositeDemoFrame extends JoFrame {
+public class DemoScrollCompositeFrame extends JoFrame {
 
 	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
-	public ScrollCompositeDemoFrame() {
+	public DemoScrollCompositeFrame() {
 		super("Scroll composite demo");
 
 		final ValueHolder<Boolean> finish = new ValueHolder<Boolean>(Boolean.FALSE);
