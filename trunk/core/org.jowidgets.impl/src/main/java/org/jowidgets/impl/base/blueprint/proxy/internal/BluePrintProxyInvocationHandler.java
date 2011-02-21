@@ -43,6 +43,8 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry
 import org.jowidgets.api.widgets.blueprint.defaults.anotations.DefaultsInitializer;
 import org.jowidgets.common.widgets.builder.ISetupBuilder;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
+import org.jowidgets.common.widgets.descriptor.setup.mandatory.MandatoryCheckResult;
 
 /**
  * Achtung EXPERIMENTELL, soll so nicht bleiben ;-)
@@ -58,8 +60,11 @@ public class BluePrintProxyInvocationHandler implements InvocationHandler {
 	private Class<? extends IWidgetDescriptor> bluePrintType;
 	private Class<? extends IWidgetDescriptor> widgetDescrType;
 
+	private final List<String> mandatoryFields;
+
 	public BluePrintProxyInvocationHandler() {
 		this.fields = new HashMap<String, Object>();
+		this.mandatoryFields = new ArrayList<String>();
 		this.convenienceMethodsMap = new HashMap<MethodKey, ISetupBuilderConvenience<ISetupBuilder<?>>>();
 	}
 
@@ -107,6 +112,7 @@ public class BluePrintProxyInvocationHandler implements InvocationHandler {
 			return widgetDescrType;
 		}
 		else if (method.getName().equals("setSetup")) {
+			findMandatoryMethods();
 			final Object argument = args[0];
 
 			if (argument != null) {
@@ -119,16 +125,19 @@ public class BluePrintProxyInvocationHandler implements InvocationHandler {
 							continue;
 						}
 						else if (method2.getName().startsWith("get")) {
+							final String fieldname = method2.getName().substring(3);
 							final Object value = method2.invoke(argument, (Object[]) null);
-							fields.put(method2.getName().substring(3), value);
+							fields.put(fieldname, value);
 						}
 						else if (method2.getName().startsWith("has")) {
+							final String fieldname = method2.getName().substring(3);
 							final Object value = method2.invoke(argument, (Object[]) null);
-							fields.put(method2.getName().substring(3), value);
+							fields.put(fieldname, value);
 						}
 						else if (method2.getName().startsWith("is")) {
 							final Object value = method2.invoke(argument, (Object[]) null);
-							fields.put(method2.getName().substring(2), value);
+							final String fieldname = method2.getName().substring(2);
+							fields.put(fieldname, value);
 						}
 					}
 				}
@@ -158,8 +167,47 @@ public class BluePrintProxyInvocationHandler implements InvocationHandler {
 			fields.put(method.getName().substring(3), args[0]);
 			return proxy;
 		}
+		else if (method.getName().equals("checkMandatoryFields")) {
+			return checkMandatory();
+		}
 		else {
 			throw new IllegalStateException("'" + method.getName() + "' not known.");
+		}
+	}
+
+	private MandatoryCheckResult checkMandatory() {
+		MandatoryCheckResult result = MandatoryCheckResult.OK;
+		String unfilledFields = "";
+		for (final String mandatoryField : mandatoryFields) {
+			if (fields.get(mandatoryField) == null) {
+				unfilledFields += " " + mandatoryField;
+			}
+		}
+		if (!"".equals(unfilledFields)) {
+			result = new MandatoryCheckResult("The following fields are mandatory and not filled: " + unfilledFields);
+		}
+		return result;
+	}
+
+	private void findMandatoryMethods() {
+		final Method[] methods = ((Class<? extends ISetupBuilder<ISetupBuilder<?>>>) bluePrintType).getMethods();
+		if (methods != null) {
+			for (int i = 0; i < methods.length; i++) {
+				final Method method2 = methods[i];
+				if (null != method2.getAnnotation(Mandatory.class)) {
+					String name = method2.getName();
+					if (name.startsWith("get") || name.startsWith("has")) {
+						name = name.substring(3);
+					}
+					else if (name.startsWith("is")) {
+						name = name.substring(2);
+					}
+					else {
+						continue;
+					}
+					mandatoryFields.add(name);
+				}
+			}
 		}
 	}
 

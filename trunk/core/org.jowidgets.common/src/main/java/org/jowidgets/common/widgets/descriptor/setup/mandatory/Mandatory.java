@@ -27,6 +27,10 @@
  */
 package org.jowidgets.common.widgets.descriptor.setup.mandatory;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+@Retention(RetentionPolicy.RUNTIME)
 public @interface Mandatory {
 
 }
