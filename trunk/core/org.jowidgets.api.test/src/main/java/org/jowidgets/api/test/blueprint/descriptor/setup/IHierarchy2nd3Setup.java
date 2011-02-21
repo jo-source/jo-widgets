@@ -31,8 +31,11 @@
  */
 package org.jowidgets.api.test.blueprint.descriptor.setup;
 
+import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
+
 public interface IHierarchy2nd3Setup extends IHierarchy1stSetup {
 
+	@Mandatory
 	String getIntroPartTwoThree();
 
 	int getConvenienceAnnotationCalled();

@@ -41,10 +41,11 @@ public final class ApiBlackBoxTestSuite {
 		suite.addTest(ToolkitTest.suite());
 		suite.addTest(WidgetFactoryTest.suite());
 		suite.addTest(MenuTest.suite());
-		suite.addTest(ToolBarTest.suite());
+		//		suite.addTest(ToolBarTest.suite());
 		suite.addTest(TestBluePrintFactoryTest.suite());
 		suite.addTest(BluePrintFactoryTest.suite());
 		suite.addTest(BluePrintFactoryAnnotationsTest.suite());
+		suite.addTest(CheckMandatoryTest.suite());
 		suite.addTest(TabFolderTest.suite());
 		//$JUnit-END$
 		return suite;

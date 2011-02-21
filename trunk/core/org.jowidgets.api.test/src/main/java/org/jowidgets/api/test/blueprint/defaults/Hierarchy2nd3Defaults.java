@@ -37,7 +37,6 @@ public class Hierarchy2nd3Defaults implements IDefaultInitializer<IHierarchy2nd3
 		builder.setIntro("2nd Part (3)");
 		builder.setConvenienceAnnotationCalled(0);
 		builder.setDefaultInitializerTestValue(0);
-		builder.setIntroPartTwoThree("Default Intro two-three");
 	}
 
 }
