@@ -61,7 +61,7 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 		final Object parentUiReference,
 		final IScrollCompositeSetupSpi setup) {
 
-		final MigLayout growingMigLayout = new MigLayout("", "0[grow]0", "0[grow]0");
+		final MigLayout growingMigLayout = new MigLayout("", "0[grow, 0::]0", "0[grow, 0::]0");
 		final String growingCellConstraints = "grow, w 0::,h 0::";
 
 		final Composite outerComposite = BorderToComposite.convert((Composite) parentUiReference, setup.getBorder());
@@ -90,7 +90,7 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 		growingMigLayout.addLayoutCallback(new LayoutCallback() {
 			@Override
 			public void correctBounds(final ComponentWrapper comp) {
-				scrolledComposite.setMinSize(innerComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				scrolledComposite.setMinSize(innerComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT, false));
 				super.correctBounds(comp);
 			}
 		});
