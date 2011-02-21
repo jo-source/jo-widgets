@@ -36,4 +36,6 @@ public interface IHierarchy2nd3Setup extends IHierarchy1stSetup {
 	String getIntroPartTwoThree();
 
 	int getConvenienceAnnotationCalled();
+
+	int getDefaultInitializerTestValue();
 }

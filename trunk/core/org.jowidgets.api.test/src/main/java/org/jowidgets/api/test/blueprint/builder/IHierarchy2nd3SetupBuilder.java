@@ -41,4 +41,6 @@ public interface IHierarchy2nd3SetupBuilder<INSTANCE_TYPE extends IHierarchy2nd3
 
 	INSTANCE_TYPE setConvenienceAnnotationCalled(int annotationCalled);
 
+	INSTANCE_TYPE setDefaultInitializerTestValue(int defaultInitializerCalled);
+
 }

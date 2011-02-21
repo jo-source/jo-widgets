@@ -87,8 +87,13 @@ public final class BluePrintFactoryAnnotationsTest {
 	}
 
 	@Test
-	public void testConvenienceAnnotation() {
+	public void testAnnotations() {
 		final IHierarchy2nd3BluePrint hierarchy2nd3 = dummyBluePrintFactory.hierarchy2nd3();
+
+		// overwritten with annotation-based DefaultInitializer -> see IHierarchy2nd3BluePrint
+		Assert.assertEquals(666, hierarchy2nd3.getDefaultInitializerTestValue());
+
+		// implementation of convenience-method injected via annotation -> see IHierarchy2nd3Convenience
 		Assert.assertEquals(0, hierarchy2nd3.getConvenienceAnnotationCalled());
 		hierarchy2nd3.introduce2nd3("");
 		Assert.assertEquals(1, hierarchy2nd3.getConvenienceAnnotationCalled());
