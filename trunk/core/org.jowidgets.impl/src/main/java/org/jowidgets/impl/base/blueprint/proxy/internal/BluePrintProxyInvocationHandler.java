@@ -181,12 +181,13 @@ public class BluePrintProxyInvocationHandler implements InvocationHandler {
 						visitedInterfaces);
 			}
 		}
+
+		for (final IDefaultInitializer<ISetupBuilder<?>> registeredInitializer : defaultsRegistry.getRegistered(bluePrintType)) {
+			registeredInitializer.initialize(proxy);
+		}
 		final IDefaultInitializer<ISetupBuilder<?>> defaultInitializer = getDefaultInitializer(bluePrintType);
 		if (defaultInitializer != null) {
 			defaultInitializer.initialize(proxy);
-		}
-		for (final IDefaultInitializer<ISetupBuilder<?>> registeredInitializer : defaultsRegistry.getRegistered(bluePrintType)) {
-			registeredInitializer.initialize(proxy);
 		}
 
 		final ISetupBuilderConvenience<ISetupBuilder<?>> convenienceMethods = getConvenienceMethods(bluePrintType);
