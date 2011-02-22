@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.impl.rcp.internal;
+package org.jowidgets.workbench.legacy.impl.rcp.internal;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MenuDetectEvent;
@@ -45,9 +45,9 @@ import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Position;
-import org.jowidgets.workbench.impl.rcp.internal.util.ImageHelper;
 import org.jowidgets.workbench.legacy.api.ITrayItem;
 import org.jowidgets.workbench.legacy.api.IWorkbench;
+import org.jowidgets.workbench.legacy.impl.rcp.internal.util.ImageHelper;
 
 public final class WorkbenchTrayItem implements ITrayItem {
 

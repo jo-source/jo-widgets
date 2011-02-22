@@ -26,32 +26,34 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.impl.rcp.internal.part;
+package org.jowidgets.workbench.legacy.impl.rcp;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.io.Serializable;
 
-public final class TabViewContainerContext implements IViewContainerContext, Iterable<SingleViewContainerContext> {
+public final class WorkbenchConfiguration implements Serializable {
 
-	private final String folderId;
-	private final List<SingleViewContainerContext> container = new ArrayList<SingleViewContainerContext>();
+	private static final long serialVersionUID = 1L;
 
-	public TabViewContainerContext(final String folderId) {
-		this.folderId = folderId;
+	private final String[] selectedTreeNode;
+	private final double folderRatio;
+	private final String workbenchXml;
+
+	WorkbenchConfiguration(final String[] selectedTreeNode, final double folderRatio, final String workbenchXml) {
+		this.selectedTreeNode = selectedTreeNode;
+		this.folderRatio = folderRatio;
+		this.workbenchXml = workbenchXml;
 	}
 
-	public String getFolderId() {
-		return folderId;
+	String[] getSelectedTreeNode() {
+		return selectedTreeNode;
 	}
 
-	public void add(final SingleViewContainerContext context) {
-		container.add(context);
+	double getFolderRatio() {
+		return folderRatio;
 	}
 
-	@Override
-	public Iterator<SingleViewContainerContext> iterator() {
-		return container.iterator();
+	String getWorkbenchXml() {
+		return workbenchXml;
 	}
 
 }

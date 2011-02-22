@@ -26,23 +26,32 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.impl.rcp.internal.util;
+package org.jowidgets.workbench.legacy.impl.rcp.internal.part;
 
-import org.eclipse.swt.graphics.Image;
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.image.IImageHandle;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
-public final class ImageHelper {
+public final class TabViewContainerContext implements IViewContainerContext, Iterable<SingleViewContainerContext> {
 
-	private ImageHelper() {}
+	private final String folderId;
+	private final List<SingleViewContainerContext> container = new ArrayList<SingleViewContainerContext>();
 
-	public static Image getImage(final IImageConstant imageKey, final Image defaultImage) {
-		final IImageHandle imageHandle = Toolkit.getImageRegistry().getImageHandle(imageKey);
-		if (imageHandle != null) {
-			return (Image) imageHandle.getImage();
-		}
-		return defaultImage;
+	public TabViewContainerContext(final String folderId) {
+		this.folderId = folderId;
+	}
+
+	public String getFolderId() {
+		return folderId;
+	}
+
+	public void add(final SingleViewContainerContext context) {
+		container.add(context);
+	}
+
+	@Override
+	public Iterator<SingleViewContainerContext> iterator() {
+		return container.iterator();
 	}
 
 }

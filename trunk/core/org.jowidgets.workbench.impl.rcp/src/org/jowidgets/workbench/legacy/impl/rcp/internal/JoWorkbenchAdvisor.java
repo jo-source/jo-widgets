@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.workbench.impl.rcp.internal;
+package org.jowidgets.workbench.legacy.impl.rcp.internal;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -34,10 +34,10 @@ import org.eclipse.ui.application.IWorkbenchConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchAdvisor;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
-import org.jowidgets.workbench.impl.rcp.internal.part.DynamicPerspective;
-import org.jowidgets.workbench.impl.rcp.internal.part.PartRegistry;
 import org.jowidgets.workbench.legacy.api.IWorkbench;
 import org.jowidgets.workbench.legacy.api.IWorkbenchContext;
+import org.jowidgets.workbench.legacy.impl.rcp.internal.part.DynamicPerspective;
+import org.jowidgets.workbench.legacy.impl.rcp.internal.part.PartRegistry;
 
 public final class JoWorkbenchAdvisor extends WorkbenchAdvisor {
 

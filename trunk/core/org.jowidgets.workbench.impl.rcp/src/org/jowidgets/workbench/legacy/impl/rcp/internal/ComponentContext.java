@@ -26,63 +26,42 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.impl.rcp.internal;
+package org.jowidgets.workbench.legacy.impl.rcp.internal;
 
-import org.eclipse.swt.widgets.ToolItem;
-import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.IMenu;
-import org.jowidgets.api.widgets.IToolBar;
+import java.util.concurrent.atomic.AtomicReference;
+
+import org.jowidgets.workbench.legacy.api.IComponent;
 import org.jowidgets.workbench.legacy.api.IComponentContext;
-import org.jowidgets.workbench.legacy.api.IViewContext;
+import org.jowidgets.workbench.legacy.api.IComponentTreeNodeContext;
+import org.jowidgets.workbench.legacy.api.IPerspective;
 
-public final class ViewContext implements IViewContext {
+public final class ComponentContext implements IComponentContext {
 
-	private IContainer container;
-	private IMenu menu;
-	private ToolItem menuToolItem;
-	private IToolBar toolBar;
+	private final IComponentTreeNodeContext componentTreeNodeContext;
+	private final IComponent component;
+	private AtomicReference<IPerspective> perspectiveReference;
 
-	public void setContainer(final IContainer container) {
-		this.container = container;
-	}
-
-	public void setMenu(final IMenu menu) {
-		this.menu = menu;
-	}
-
-	public void setMenuToolItem(final ToolItem menuToolItem) {
-		this.menuToolItem = menuToolItem;
-	}
-
-	public void setToolBar(final IToolBar toolBar) {
-		this.toolBar = toolBar;
+	public ComponentContext(final IComponentTreeNodeContext componentTreeNodeContext, final IComponent component) {
+		this.componentTreeNodeContext = componentTreeNodeContext;
+		this.component = component;
 	}
 
 	@Override
-	public IComponentContext getComponentContext() {
-		return null;
+	public IComponentTreeNodeContext getComponentTreeNodeContext() {
+		return componentTreeNodeContext;
 	}
 
-	@Override
-	public IContainer getContainer() {
-		return container;
-	}
-
-	@Override
-	public IMenu getMenu() {
-		return menu;
-	}
-
-	@Override
-	public void setMenuTooltip(final String tooltip) {
-		if (menuToolItem != null && !menuToolItem.isDisposed()) {
-			menuToolItem.setToolTipText(tooltip);
+	public IPerspective getPerspective() {
+		if (perspectiveReference == null) {
+			perspectiveReference = new AtomicReference<IPerspective>(component.createPerspective());
 		}
+		return perspectiveReference.get();
 	}
 
 	@Override
-	public IToolBar getToolBar() {
-		return toolBar;
+	public void setPerspective(final IPerspective perspective) {
+		// TODO HRW support changing of perspectives		
+		throw new UnsupportedOperationException("setPerspective");
 	}
 
 }

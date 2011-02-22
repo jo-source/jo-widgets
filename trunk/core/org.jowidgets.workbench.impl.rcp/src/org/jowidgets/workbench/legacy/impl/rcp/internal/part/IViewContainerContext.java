@@ -26,34 +26,6 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.impl.rcp;
+package org.jowidgets.workbench.legacy.impl.rcp.internal.part;
 
-import java.io.Serializable;
-
-public final class WorkbenchConfiguration implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-
-	private final String[] selectedTreeNode;
-	private final double folderRatio;
-	private final String workbenchXml;
-
-	WorkbenchConfiguration(final String[] selectedTreeNode, final double folderRatio, final String workbenchXml) {
-		this.selectedTreeNode = selectedTreeNode;
-		this.folderRatio = folderRatio;
-		this.workbenchXml = workbenchXml;
-	}
-
-	String[] getSelectedTreeNode() {
-		return selectedTreeNode;
-	}
-
-	double getFolderRatio() {
-		return folderRatio;
-	}
-
-	String getWorkbenchXml() {
-		return workbenchXml;
-	}
-
-}
+public interface IViewContainerContext {}

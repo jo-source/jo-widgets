@@ -26,40 +26,63 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.impl.rcp.internal.part;
+package org.jowidgets.workbench.legacy.impl.rcp.internal;
 
-public final class SingleViewContainerContext implements IViewContainerContext {
+import org.eclipse.swt.widgets.ToolItem;
+import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IMenu;
+import org.jowidgets.api.widgets.IToolBar;
+import org.jowidgets.workbench.legacy.api.IComponentContext;
+import org.jowidgets.workbench.legacy.api.IViewContext;
 
-	private final String viewId;
-	private final boolean closeable;
-	private final boolean detachable;
-	private final boolean rcpView;
+public final class ViewContext implements IViewContext {
 
-	public SingleViewContainerContext(
-		final String viewId,
-		final boolean closeable,
-		final boolean detachable,
-		final boolean rcpView) {
-		this.viewId = viewId;
-		this.closeable = closeable;
-		this.detachable = detachable;
-		this.rcpView = rcpView;
+	private IContainer container;
+	private IMenu menu;
+	private ToolItem menuToolItem;
+	private IToolBar toolBar;
+
+	public void setContainer(final IContainer container) {
+		this.container = container;
 	}
 
-	public String getViewId() {
-		return viewId;
+	public void setMenu(final IMenu menu) {
+		this.menu = menu;
 	}
 
-	public boolean isCloseable() {
-		return closeable;
+	public void setMenuToolItem(final ToolItem menuToolItem) {
+		this.menuToolItem = menuToolItem;
 	}
 
-	public boolean isDetachable() {
-		return detachable;
+	public void setToolBar(final IToolBar toolBar) {
+		this.toolBar = toolBar;
 	}
 
-	public boolean isRcpView() {
-		return rcpView;
+	@Override
+	public IComponentContext getComponentContext() {
+		return null;
+	}
+
+	@Override
+	public IContainer getContainer() {
+		return container;
+	}
+
+	@Override
+	public IMenu getMenu() {
+		return menu;
+	}
+
+	@Override
+	public void setMenuTooltip(final String tooltip) {
+		if (menuToolItem != null && !menuToolItem.isDisposed()) {
+			menuToolItem.setToolTipText(tooltip);
+		}
+	}
+
+	@Override
+	public IToolBar getToolBar() {
+		return toolBar;
 	}
 
 }

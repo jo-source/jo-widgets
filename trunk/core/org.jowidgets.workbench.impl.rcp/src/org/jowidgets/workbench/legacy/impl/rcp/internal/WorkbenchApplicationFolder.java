@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.workbench.impl.rcp.internal;
+package org.jowidgets.workbench.legacy.impl.rcp.internal;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,10 +50,10 @@ import org.eclipse.ui.IWorkbenchPreferenceConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.IWorkbenchThemeConstants;
 import org.eclipse.ui.themes.ITheme;
-import org.jowidgets.workbench.impl.rcp.internal.util.ImageHelper;
 import org.jowidgets.workbench.legacy.api.IWorkbench;
 import org.jowidgets.workbench.legacy.api.IWorkbenchApplication;
 import org.jowidgets.workbench.legacy.api.IWorkbenchContext;
+import org.jowidgets.workbench.legacy.impl.rcp.internal.util.ImageHelper;
 
 @SuppressWarnings("restriction")
 public final class WorkbenchApplicationFolder extends Composite {

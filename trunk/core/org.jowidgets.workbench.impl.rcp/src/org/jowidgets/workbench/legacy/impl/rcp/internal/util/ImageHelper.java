@@ -26,42 +26,23 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.impl.rcp.internal;
+package org.jowidgets.workbench.legacy.impl.rcp.internal.util;
 
-import java.util.concurrent.atomic.AtomicReference;
+import org.eclipse.swt.graphics.Image;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.image.IImageHandle;
 
-import org.jowidgets.workbench.legacy.api.IComponent;
-import org.jowidgets.workbench.legacy.api.IComponentContext;
-import org.jowidgets.workbench.legacy.api.IComponentTreeNodeContext;
-import org.jowidgets.workbench.legacy.api.IPerspective;
+public final class ImageHelper {
 
-public final class ComponentContext implements IComponentContext {
+	private ImageHelper() {}
 
-	private final IComponentTreeNodeContext componentTreeNodeContext;
-	private final IComponent component;
-	private AtomicReference<IPerspective> perspectiveReference;
-
-	public ComponentContext(final IComponentTreeNodeContext componentTreeNodeContext, final IComponent component) {
-		this.componentTreeNodeContext = componentTreeNodeContext;
-		this.component = component;
-	}
-
-	@Override
-	public IComponentTreeNodeContext getComponentTreeNodeContext() {
-		return componentTreeNodeContext;
-	}
-
-	public IPerspective getPerspective() {
-		if (perspectiveReference == null) {
-			perspectiveReference = new AtomicReference<IPerspective>(component.createPerspective());
+	public static Image getImage(final IImageConstant imageKey, final Image defaultImage) {
+		final IImageHandle imageHandle = Toolkit.getImageRegistry().getImageHandle(imageKey);
+		if (imageHandle != null) {
+			return (Image) imageHandle.getImage();
 		}
-		return perspectiveReference.get();
-	}
-
-	@Override
-	public void setPerspective(final IPerspective perspective) {
-		// TODO HRW support changing of perspectives		
-		throw new UnsupportedOperationException("setPerspective");
+		return defaultImage;
 	}
 
 }

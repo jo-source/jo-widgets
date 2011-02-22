@@ -26,45 +26,60 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.impl.rcp.internal;
+package org.jowidgets.workbench.legacy.impl.rcp.internal;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
-import org.jowidgets.api.widgets.IMenu;
-import org.jowidgets.api.widgets.IToolBar;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.workbench.legacy.api.IComponent;
 import org.jowidgets.workbench.legacy.api.IComponentTreeNode;
+import org.jowidgets.workbench.legacy.api.IComponentTreeNodeContext;
 import org.jowidgets.workbench.legacy.api.IUiPart;
-import org.jowidgets.workbench.legacy.api.IWorkbenchApplication;
 import org.jowidgets.workbench.legacy.api.IWorkbenchApplicationContext;
-import org.jowidgets.workbench.legacy.api.IWorkbenchContext;
 
-public final class WorkbenchApplicationContext implements IWorkbenchApplicationContext, IUiPart {
+public final class ComponentTreeNodeContext implements IComponentTreeNodeContext, IUiPart {
 
-	private final IWorkbenchContext workbenchContext;
-	private final IWorkbenchApplication application;
+	private final WorkbenchApplicationContext applicationContext;
+	private final ComponentTreeNodeContext parentContext;
+	private final IComponentTreeNode treeNode;
 	private final WorkbenchApplicationTree tree;
+	private IPopupMenu menu;
 	private final List<ComponentTreeNodeContext> childContexts = new ArrayList<ComponentTreeNodeContext>();
 	private final Map<IComponentTreeNode, ComponentTreeNodeContext> nodeMap = new HashMap<IComponentTreeNode, ComponentTreeNodeContext>();
+	private AtomicReference<ComponentContext> componentContextReference;
 
-	public WorkbenchApplicationContext(
-		final IWorkbenchContext workbenchContext,
-		final IWorkbenchApplication application,
+	public ComponentTreeNodeContext(
+		final WorkbenchApplicationContext applicationContext,
+		final ComponentTreeNodeContext parentContext,
+		final IComponentTreeNode treeNode,
 		final WorkbenchApplicationTree tree) {
-		this.workbenchContext = workbenchContext;
-		this.application = application;
+		this.applicationContext = applicationContext;
+		this.parentContext = parentContext;
+		this.treeNode = treeNode;
 		this.tree = tree;
-		final List<IComponentTreeNode> treeNodes = application.createComponentTreeNodes();
-		for (final IComponentTreeNode treeNode : treeNodes) {
-			final ComponentTreeNodeContext treeNodeContext = new ComponentTreeNodeContext(this, null, treeNode, tree);
-			childContexts.add(treeNodeContext);
-			nodeMap.put(treeNode, treeNodeContext);
-			treeNode.initialize(treeNodeContext);
+		final List<IComponentTreeNode> subTreeNodes = treeNode.createChildren();
+		for (final IComponentTreeNode subTreeNode : subTreeNodes) {
+			final ComponentTreeNodeContext subTreeNodeContext = new ComponentTreeNodeContext(
+				applicationContext,
+				this,
+				subTreeNode,
+				tree);
+			childContexts.add(subTreeNodeContext);
+			nodeMap.put(subTreeNode, subTreeNodeContext);
+			subTreeNode.initialize(subTreeNodeContext);
 		}
-		tree.setInput(this);
+
+		final IComposite joTree = Toolkit.getWidgetWrapperFactory().createComposite(tree);
+		if (treeNode.hasMenu()) {
+			menu = joTree.createPopupMenu();
+		}
 	}
 
 	@Override
@@ -74,7 +89,11 @@ public final class WorkbenchApplicationContext implements IWorkbenchApplicationC
 
 	@Override
 	public void add(final int index, final IComponentTreeNode componentTreeNode) {
-		final ComponentTreeNodeContext treeNodeContext = new ComponentTreeNodeContext(this, null, componentTreeNode, tree);
+		final ComponentTreeNodeContext treeNodeContext = new ComponentTreeNodeContext(
+			applicationContext,
+			this,
+			componentTreeNode,
+			tree);
 		childContexts.add(index, treeNodeContext);
 		nodeMap.put(componentTreeNode, treeNodeContext);
 		componentTreeNode.initialize(treeNodeContext);
@@ -95,43 +114,58 @@ public final class WorkbenchApplicationContext implements IWorkbenchApplicationC
 		return childContexts.toArray(new ComponentTreeNodeContext[0]);
 	}
 
+	public ComponentContext getComponentContext() {
+		if (componentContextReference == null) {
+			ComponentContext componentContext = null;
+			final IComponent component = treeNode.createComponent();
+			if (component != null) {
+				componentContext = new ComponentContext(this, component);
+				component.initialize(componentContext);
+			}
+			componentContextReference = new AtomicReference<ComponentContext>(componentContext);
+		}
+		return componentContextReference.get();
+	}
+
 	public String getId() {
-		return application.getId();
+		return treeNode.getId();
+	}
+
+	public String getQualifiedId() {
+		if (parentContext != null) {
+			return parentContext.getQualifiedId() + "." + treeNode.getId();
+		}
+		return applicationContext.getId() + "." + treeNode.getId();
 	}
 
 	@Override
-	public IWorkbenchContext getWorkbenchContext() {
-		return workbenchContext;
+	public IPopupMenu getMenu() {
+		return menu;
 	}
 
 	@Override
-	public IMenu getMenu() {
-		return tree.getJoMenu();
+	public IComponentTreeNodeContext getParent() {
+		return parentContext;
 	}
 
 	@Override
-	public void setMenuTooltip(final String tooltip) {
-		tree.setMenuTooltip(tooltip);
-	}
-
-	@Override
-	public IToolBar getToolBar() {
-		return tree.getToolBar();
+	public IWorkbenchApplicationContext getWorkbenchApplicationContext() {
+		return applicationContext;
 	}
 
 	@Override
 	public String getLabel() {
-		return application.getLabel();
+		return treeNode.getLabel();
 	}
 
 	@Override
 	public String getTooltip() {
-		return application.getTooltip();
+		return treeNode.getTooltip();
 	}
 
 	@Override
 	public IImageConstant getIcon() {
-		return application.getIcon();
+		return treeNode.getIcon();
 	}
 
 }

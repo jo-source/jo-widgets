@@ -26,35 +26,40 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.impl.rcp.internal.part;
+package org.jowidgets.workbench.legacy.impl.rcp.internal.part;
 
-import org.jowidgets.workbench.legacy.api.ISplitViewContainer;
+public final class SingleViewContainerContext implements IViewContainerContext {
 
-public final class SplitViewContainerContext implements IViewContainerContext {
+	private final String viewId;
+	private final boolean closeable;
+	private final boolean detachable;
+	private final boolean rcpView;
 
-	private final ISplitViewContainer viewContainer;
-	private final IViewContainerContext first;
-	private final IViewContainerContext second;
-
-	public SplitViewContainerContext(
-		final ISplitViewContainer viewContainer,
-		final IViewContainerContext first,
-		final IViewContainerContext second) {
-		this.viewContainer = viewContainer;
-		this.first = first;
-		this.second = second;
+	public SingleViewContainerContext(
+		final String viewId,
+		final boolean closeable,
+		final boolean detachable,
+		final boolean rcpView) {
+		this.viewId = viewId;
+		this.closeable = closeable;
+		this.detachable = detachable;
+		this.rcpView = rcpView;
 	}
 
-	public ISplitViewContainer getViewContainer() {
-		return viewContainer;
+	public String getViewId() {
+		return viewId;
 	}
 
-	public IViewContainerContext getFirst() {
-		return first;
+	public boolean isCloseable() {
+		return closeable;
 	}
 
-	public IViewContainerContext getSecond() {
-		return second;
+	public boolean isDetachable() {
+		return detachable;
+	}
+
+	public boolean isRcpView() {
+		return rcpView;
 	}
 
 }
