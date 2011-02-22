@@ -26,23 +26,60 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.legacy.impl.rcp.internal.util;
+package org.jowidgets.workbench.impl.rcp;
 
-import org.eclipse.swt.graphics.Image;
-import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.image.IImageHandle;
+import org.jowidgets.workbench.legacy.api.IView;
+import org.jowidgets.workbench.legacy.api.IViewContext;
 
-public final class ImageHelper {
+public final class RcpView implements IView {
 
-	private ImageHelper() {}
+	private final String viewId;
 
-	public static Image getImage(final IImageConstant imageKey, final Image defaultImage) {
-		final IImageHandle imageHandle = Toolkit.getImageRegistry().getImageHandle(imageKey);
-		if (imageHandle != null) {
-			return (Image) imageHandle.getImage();
-		}
-		return defaultImage;
+	public RcpView(final String viewId) {
+		this.viewId = viewId;
+	}
+
+	@Override
+	public String getLabel() {
+		return null;
+	}
+
+	@Override
+	public String getTooltip() {
+		return null;
+	}
+
+	@Override
+	public IImageConstant getIcon() {
+		return null;
+	}
+
+	@Override
+	public void onActiveStateChanged(final boolean active) {}
+
+	@Override
+	public void onVisibleStateChanged(final boolean visible) {}
+
+	@Override
+	public void onClose() {}
+
+	@Override
+	public String getId() {
+		return viewId;
+	}
+
+	@Override
+	public void initialize(final IViewContext context) {}
+
+	@Override
+	public boolean hasMenu() {
+		return false;
+	}
+
+	@Override
+	public boolean hasToolBar() {
+		return false;
 	}
 
 }

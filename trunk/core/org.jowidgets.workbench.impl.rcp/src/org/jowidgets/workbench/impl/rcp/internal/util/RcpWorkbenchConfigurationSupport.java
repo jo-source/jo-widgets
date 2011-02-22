@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.legacy.impl.rcp.internal.util;
+package org.jowidgets.workbench.impl.rcp.internal.util;
 
 import java.io.BufferedReader;
 import java.io.File;

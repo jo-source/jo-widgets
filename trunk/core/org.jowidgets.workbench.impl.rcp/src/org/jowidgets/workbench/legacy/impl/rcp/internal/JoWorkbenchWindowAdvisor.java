@@ -47,10 +47,10 @@ import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.workbench.impl.rcp.internal.util.ImageHelper;
 import org.jowidgets.workbench.legacy.api.ITrayItem;
 import org.jowidgets.workbench.legacy.api.IWorkbench;
 import org.jowidgets.workbench.legacy.api.IWorkbenchContext;
-import org.jowidgets.workbench.legacy.impl.rcp.internal.util.ImageHelper;
 
 public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
