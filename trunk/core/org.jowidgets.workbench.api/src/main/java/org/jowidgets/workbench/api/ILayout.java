@@ -31,6 +31,6 @@ public interface ILayout extends IWorkbenchPart {
 
 	String getId();
 
-	ILayoutContainer createViewContainer();
+	ILayoutContainer createLayoutContainer();
 
 }

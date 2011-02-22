@@ -36,7 +36,7 @@ public interface IView extends ILifecycleCallback, IWorkbenchPart {
 
 	String getId();
 
-	void onHiddenStateChanged(boolean active);
+	void onHiddenStateChanged(boolean hidden);
 
 	IMenuModel createToolBarMenu();
 
