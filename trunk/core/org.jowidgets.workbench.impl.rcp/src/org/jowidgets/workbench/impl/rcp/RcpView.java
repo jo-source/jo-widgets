@@ -28,9 +28,12 @@
 
 package org.jowidgets.workbench.impl.rcp;
 
+import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.workbench.legacy.api.IView;
-import org.jowidgets.workbench.legacy.api.IViewContext;
+import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.workbench.api.IView;
+import org.jowidgets.workbench.api.IViewContext;
 
 public final class RcpView implements IView {
 
@@ -39,6 +42,15 @@ public final class RcpView implements IView {
 	public RcpView(final String viewId) {
 		this.viewId = viewId;
 	}
+
+	@Override
+	public void onActiveStateChanged(final boolean active) {}
+
+	@Override
+	public void onVisibleStateChanged(final boolean visible) {}
+
+	@Override
+	public void onClose(final IVetoable vetoable) {}
 
 	@Override
 	public String getLabel() {
@@ -56,13 +68,7 @@ public final class RcpView implements IView {
 	}
 
 	@Override
-	public void onActiveStateChanged(final boolean active) {}
-
-	@Override
-	public void onVisibleStateChanged(final boolean visible) {}
-
-	@Override
-	public void onClose() {}
+	public void initialize(final IViewContext context) {}
 
 	@Override
 	public String getId() {
@@ -70,16 +76,16 @@ public final class RcpView implements IView {
 	}
 
 	@Override
-	public void initialize(final IViewContext context) {}
+	public void onHiddenStateChanged(final boolean hidden) {}
 
 	@Override
-	public boolean hasMenu() {
-		return false;
+	public IMenuModel createToolBarMenu() {
+		return null;
 	}
 
 	@Override
-	public boolean hasToolBar() {
-		return false;
+	public IToolBarModel createToolBar() {
+		return null;
 	}
 
 }
