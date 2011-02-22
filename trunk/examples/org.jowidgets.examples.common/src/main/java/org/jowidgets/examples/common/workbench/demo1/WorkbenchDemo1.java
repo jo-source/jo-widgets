@@ -31,8 +31,6 @@ package org.jowidgets.examples.common.workbench.demo1;
 import java.util.Collections;
 import java.util.List;
 
-import javax.swing.text.Position;
-
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.IMenuBarModel;
@@ -43,6 +41,7 @@ import org.jowidgets.api.types.QuestionResult;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.tools.model.item.ActionItemModel;
 import org.jowidgets.tools.model.item.MenuBarModel;
