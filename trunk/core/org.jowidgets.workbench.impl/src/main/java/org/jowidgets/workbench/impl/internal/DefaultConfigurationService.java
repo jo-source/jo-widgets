@@ -26,32 +26,23 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.impl;
+package org.jowidgets.workbench.impl.internal;
 
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.common.application.IApplication;
-import org.jowidgets.common.application.IApplicationLifecycle;
-import org.jowidgets.workbench.api.IWorkbench;
+import java.io.Serializable;
+
 import org.jowidgets.workbench.api.IWorkbenchConfigurationService;
-import org.jowidgets.workbench.api.IWorkbenchRunner;
-import org.jowidgets.workbench.impl.internal.DefaultConfigurationService;
-import org.jowidgets.workbench.impl.internal.WorkbenchContext;
 
-public class WorkbenchRunner implements IWorkbenchRunner {
+public class DefaultConfigurationService implements IWorkbenchConfigurationService {
 
 	@Override
-	public void run(final IWorkbench workbench) {
-		run(workbench, new DefaultConfigurationService());
+	public Serializable loadConfiguration() {
+		//TODO MG implement workbench config service
+		return null;
 	}
 
 	@Override
-	public void run(final IWorkbench workbench, final IWorkbenchConfigurationService configurationService) {
-		Toolkit.getApplicationRunner().run(new IApplication() {
-			@Override
-			public void start(final IApplicationLifecycle lifecycle) {
-				new WorkbenchContext(workbench, lifecycle).run();
-			}
-		});
+	public void saveConfiguration(final Serializable configuration) {
+		//TODO MG implement workbench config service
 	}
 
 }

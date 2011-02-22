@@ -26,32 +26,51 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.impl;
+package org.jowidgets.workbench.impl.internal;
 
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.common.application.IApplication;
-import org.jowidgets.common.application.IApplicationLifecycle;
-import org.jowidgets.workbench.api.IWorkbench;
-import org.jowidgets.workbench.api.IWorkbenchConfigurationService;
-import org.jowidgets.workbench.api.IWorkbenchRunner;
-import org.jowidgets.workbench.impl.internal.DefaultConfigurationService;
-import org.jowidgets.workbench.impl.internal.WorkbenchContext;
+import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.ITabItem;
+import org.jowidgets.workbench.api.IComponentTreeNode;
+import org.jowidgets.workbench.api.IWorkbenchApplication;
+import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
+import org.jowidgets.workbench.api.IWorkbenchContext;
 
-public class WorkbenchRunner implements IWorkbenchRunner {
+public class WorkbenchApplicationContext implements IWorkbenchApplicationContext {
 
-	@Override
-	public void run(final IWorkbench workbench) {
-		run(workbench, new DefaultConfigurationService());
+	private final IWorkbenchContext workbenchContext;
+
+	public WorkbenchApplicationContext(
+		final IWorkbenchContext workbenchContext,
+		final ITabItem tabItem,
+		final IContainer contentContainer,
+		final IWorkbenchApplication application) {
+		this.workbenchContext = workbenchContext;
+
+		tabItem.setText(application.getLabel());
+		tabItem.setToolTipText(application.getTooltip());
+		tabItem.setIcon(application.getIcon());
+
+		application.initialize(this);
 	}
 
 	@Override
-	public void run(final IWorkbench workbench, final IWorkbenchConfigurationService configurationService) {
-		Toolkit.getApplicationRunner().run(new IApplication() {
-			@Override
-			public void start(final IApplicationLifecycle lifecycle) {
-				new WorkbenchContext(workbench, lifecycle).run();
-			}
-		});
+	public void add(final IComponentTreeNode componentTreeNode) {
+		// TODO MG implement add component tree node
+	}
+
+	@Override
+	public void add(final int index, final IComponentTreeNode componentTreeNode) {
+		// TODO MG implement add component tree node
+	}
+
+	@Override
+	public void remove(final IComponentTreeNode componentTreeNode) {
+		// TODO MG implement remove component tree node
+	}
+
+	@Override
+	public IWorkbenchContext getWorkbenchContext() {
+		return workbenchContext;
 	}
 
 }

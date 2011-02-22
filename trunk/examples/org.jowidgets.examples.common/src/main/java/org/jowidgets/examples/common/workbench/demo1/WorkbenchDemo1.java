@@ -130,7 +130,7 @@ public class WorkbenchDemo1 implements IWorkbench {
 
 	@Override
 	public Dimension getInitialDimension() {
-		return new Dimension(800, 600);
+		return new Dimension(1024, 768);
 	}
 
 	@Override
