@@ -28,8 +28,6 @@
 
 package org.jowidgets.api.test;
 
-import junit.framework.JUnit4TestAdapter;
-
 import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
@@ -273,10 +271,6 @@ public class WidgetFactoryTest {
 		Assert.assertTrue(container.remove(childComposite1));
 		Assert.assertFalse(container.getChildren().contains(childComposite1));
 
-	}
-
-	public static junit.framework.Test suite() {
-		return new JUnit4TestAdapter(WidgetFactoryTest.class);
 	}
 
 }

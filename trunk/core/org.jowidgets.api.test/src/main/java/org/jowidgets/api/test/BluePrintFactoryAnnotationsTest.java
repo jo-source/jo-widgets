@@ -28,8 +28,6 @@
 
 package org.jowidgets.api.test;
 
-import junit.framework.JUnit4TestAdapter;
-
 import org.jowidgets.api.test.blueprint.DummyBluePrintFactory;
 import org.jowidgets.api.test.blueprint.IHierarchy2nd3BluePrint;
 import org.jowidgets.api.test.blueprint.defaults.Hierarchy1stDefaults;
@@ -99,11 +97,6 @@ public final class BluePrintFactoryAnnotationsTest {
 		Assert.assertEquals(1, hierarchy2nd3.getConvenienceAnnotationCalled());
 		hierarchy2nd3.introduce2nd3("");
 		Assert.assertEquals(2, hierarchy2nd3.getConvenienceAnnotationCalled());
-	}
-
-	public static junit.framework.Test suite() {
-		final JUnit4TestAdapter suite = new JUnit4TestAdapter(BluePrintFactoryAnnotationsTest.class);
-		return suite;
 	}
 
 }

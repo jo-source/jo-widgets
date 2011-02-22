@@ -28,27 +28,14 @@
 
 package org.jowidgets.api.test;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
-public final class ApiBlackBoxTestSuite {
-
-	private ApiBlackBoxTestSuite() {};
-
-	public static Test suite() {
-		final TestSuite suite = new TestSuite(ApiBlackBoxTestSuite.class.getName());
-		//$JUnit-BEGIN$
-		suite.addTest(ToolkitTest.suite());
-		suite.addTest(WidgetFactoryTest.suite());
-		suite.addTest(MenuTest.suite());
-		suite.addTest(ToolBarTest.suite());
-		suite.addTest(TestBluePrintFactoryTest.suite());
-		suite.addTest(BluePrintFactoryTest.suite());
-		suite.addTest(BluePrintFactoryAnnotationsTest.suite());
-		suite.addTest(CheckMandatoryTest.suite());
-		suite.addTest(TabFolderTest.suite());
-		//$JUnit-END$
-		return suite;
-	}
+@RunWith(Suite.class)
+@SuiteClasses({
+		ToolkitTest.class, WidgetFactoryTest.class, MenuTest.class, ToolBarTest.class, TestBluePrintFactoryTest.class,
+		BluePrintFactoryTest.class, BluePrintFactoryAnnotationsTest.class, CheckMandatoryTest.class, TabFolderTest.class})
+public class ApiBlackBoxTestSuite {
 
 }

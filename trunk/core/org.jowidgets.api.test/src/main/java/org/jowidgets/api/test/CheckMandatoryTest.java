@@ -28,8 +28,6 @@
 
 package org.jowidgets.api.test;
 
-import junit.framework.JUnit4TestAdapter;
-
 import org.jowidgets.api.test.blueprint.DummyBluePrintFactory;
 import org.jowidgets.api.test.blueprint.IHierarchy2nd3BluePrint;
 import org.jowidgets.api.test.blueprint.defaults.Hierarchy1stDefaults;
@@ -100,7 +98,4 @@ public class CheckMandatoryTest {
 
 	}
 
-	public static junit.framework.Test suite() {
-		return new JUnit4TestAdapter(CheckMandatoryTest.class);
-	}
 }

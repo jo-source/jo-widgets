@@ -28,8 +28,6 @@
 
 package org.jowidgets.api.test;
 
-import junit.framework.JUnit4TestAdapter;
-
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IActionMenuItem;
 import org.jowidgets.api.widgets.IFrame;
@@ -178,10 +176,6 @@ public class MenuTest {
 		item.setMnemonic('e');
 
 		return item;
-	}
-
-	public static junit.framework.Test suite() {
-		return new JUnit4TestAdapter(MenuTest.class);
 	}
 
 }

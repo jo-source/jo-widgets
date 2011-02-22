@@ -28,8 +28,6 @@
 
 package org.jowidgets.api.test;
 
-import junit.framework.JUnit4TestAdapter;
-
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 import org.jowidgets.api.test.blueprint.DummyBluePrintFactory;
@@ -58,7 +56,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public final class BluePrintFactoryTest {
+public class BluePrintFactoryTest {
 
 	private static final IBluePrintFactory BLUE_PRINT_FACTORY = Toolkit.getBluePrintFactory();
 	private DummyBluePrintFactory dummyBluePrintFactory;
@@ -223,11 +221,6 @@ public final class BluePrintFactoryTest {
 
 		final IHierarchy3rdBluePrint hierarchy3rd = dummyBluePrintFactory.hierarchy3rd();
 		hierarchy3rd.introduce("");
-	}
-
-	public static junit.framework.Test suite() {
-		final JUnit4TestAdapter suite = new JUnit4TestAdapter(BluePrintFactoryTest.class);
-		return suite;
 	}
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Lukas Gross
+ * Copyright (c) 2011, Lukas Gross, Benjamin Marstaller
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,9 +28,6 @@
 
 package org.jowidgets.api.test;
 
-import junit.framework.Assert;
-import junit.framework.JUnit4TestAdapter;
-
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IToolBar;
@@ -42,6 +39,7 @@ import org.jowidgets.api.widgets.IToolBarToggleButton;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class ToolBarTest {
@@ -129,7 +127,4 @@ public class ToolBarTest {
 		Assert.assertTrue((parent.getChildren().size() + 1) == oldSize);
 	}
 
-	public static junit.framework.Test suite() {
-		return new JUnit4TestAdapter(ToolBarTest.class);
-	}
 }
