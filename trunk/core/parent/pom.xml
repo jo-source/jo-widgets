@@ -20,6 +20,7 @@
 		<module>../org.jowidgets.api.test</module>
 		<module>../org.jowidgets.tools</module>
 		<module>../org.jowidgets.workbench.api</module>
+		<module>../org.jowidgets.workbench.impl</module>
 		<module>../org.jowidgets.impl</module>
 		<module>../org.jowidgets.spi</module>
 		<module>../org.jowidgets.spi.impl.common</module>
