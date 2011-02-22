@@ -39,10 +39,11 @@ public interface IFolderLayout extends ILayoutContainer, IWorkbenchPart {
 
 	List<? extends IViewLayout> getViews();
 
-	IMenuModel createPopupMenu(String folderId);
-
 	boolean isDetachable();
 
 	boolean getViewsCloseable();
+
+	//TODO MG/HW move this to IComponent (popup menus are no layout aspect)
+	IMenuModel createPopupMenu(String folderId);
 
 }
