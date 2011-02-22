@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, M. Grossmann, H. Westphal
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,8 +25,18 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.ng.workbench.api;
 
-public interface ILayoutContainer {
+package org.jowidgets.workbench.api;
+
+public enum ContributionPlaceholder {
+
+	WORKBENCH_APPLICATION_ACTIONS,
+	COMPONENT_ACTIONS,
+	WORKBENCH_APPLICATION_HELP,
+	COMPONENT_HELP;
+
+	public String getId() {
+		return getClass().getName() + "." + toString();
+	}
 
 }

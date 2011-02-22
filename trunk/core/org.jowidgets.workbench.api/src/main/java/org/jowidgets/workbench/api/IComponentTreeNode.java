@@ -25,21 +25,22 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.ng.workbench.api;
+package org.jowidgets.workbench.api;
 
-public interface IComponentContext {
+import java.util.List;
 
-	IComponentTreeNodeContext getComponentTreeNodeContext();
+import org.jowidgets.api.model.item.IMenuModel;
 
-	/**
-	 * @param addToHead
-	 * @param folderId hint, may be null
-	 * @param view
-	 */
-	void addView(boolean addToHead, String folderId, IView view);
+public interface IComponentTreeNode extends IUiPart {
 
-	void removeView(IView remove);
+	String getId();
 
-	void setLayout(final ILayout perspective);
+	void initialize(IComponentTreeNodeContext context);
+
+	IComponent createComponent();
+
+	IMenuModel createPopupMenu();
+
+	List<IComponentTreeNode> createChildren();
 
 }

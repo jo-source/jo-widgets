@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, M. Grossmann, H. Westphal
+ * Copyright (c) 2011, HWestphal
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,25 +25,24 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.ng.workbench.api;
 
-import org.jowidgets.common.types.Orientation;
-import org.jowidgets.common.types.SplitResizePolicy;
+package org.jowidgets.workbench.api;
 
-public interface ISplitLayout extends ILayoutContainer {
+import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.common.image.IImageConstant;
 
-	Orientation getOrientation();
+public interface ITrayItem {
 
-	double getWeight();
+	void setMenu(IMenuModel menu);
 
-	/**
-	 * @return the resize policy, may be null for default policy
-	 *         (this is a hint and may not work on all platforms)
-	 */
-	SplitResizePolicy getResizePolicy();
+	void setIcon(IImageConstant imageKey);
 
-	ILayoutContainer createFirstContainer();
+	void setTooltip(String tooltip);
 
-	ILayoutContainer createSecondContainer();
+	void showInfo(String title, String message);
+
+	void showWarning(String title, String message);
+
+	void showError(String title, String message);
 
 }

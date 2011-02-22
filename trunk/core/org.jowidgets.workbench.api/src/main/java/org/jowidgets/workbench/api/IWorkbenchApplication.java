@@ -25,22 +25,31 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.ng.workbench.api;
+package org.jowidgets.workbench.api;
 
 import java.util.List;
 
 import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.api.model.item.IToolBarModel;
 
-public interface IComponentTreeNode extends IUiPart {
+public interface IWorkbenchApplication extends IUiPart, ILifecycleCallback {
 
 	String getId();
 
-	void initialize(IComponentTreeNodeContext context);
+	void initialize(IWorkbenchApplicationContext context);
 
-	IComponent createComponent();
+	List<IComponentTreeNode> createComponentTreeNodes();
+
+	IToolBarModel createToolBar();
 
 	IMenuModel createPopupMenu();
 
-	List<IComponentTreeNode> createChildren();
+	IMenuModel createToolBarMenu();
+
+	IMenuModel createWorkbenchMenuContribution();
+
+	IMenuModel createHelpMenuContribution();
+
+	IToolBarModel createWorkbenchToolBarContribution();
 
 }

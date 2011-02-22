@@ -25,12 +25,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.ng.workbench.api;
+package org.jowidgets.workbench.api;
 
-public interface ILayout extends IUiPart {
+public interface IWorkbenchRunner {
 
-	String getId();
+	void run(IWorkbench workbench);
 
-	ILayoutContainer createViewContainer();
+	void run(IWorkbench workbench, IWorkbenchConfigurationService configurationService);
 
 }

@@ -25,26 +25,16 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.ng.workbench.api;
+package org.jowidgets.workbench.api;
 
-import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.common.image.IImageConstant;
 
-public interface IWorkbenchContext {
+public interface IUiPart {
 
-	void add(IWorkbenchApplication workbenchApplication);
+	String getLabel();
 
-	void add(int index, IWorkbenchApplication workbenchApplication);
+	String getTooltip();
 
-	void remove(IWorkbenchApplication workbenchApplication);
-
-	void finish();
-
-	IContainer getStatusBar();
-
-	ITrayItem getTrayItem();
-
-	void addShutdownHook(Runnable shutdownHook);
-
-	void removeShutdownHook(Runnable shutdownHook);
+	IImageConstant getIcon();
 
 }

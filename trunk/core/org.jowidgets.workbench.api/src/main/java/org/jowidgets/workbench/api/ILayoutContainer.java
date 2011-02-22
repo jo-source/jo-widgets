@@ -25,22 +25,8 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.ng.workbench.api;
+package org.jowidgets.workbench.api;
 
-import org.jowidgets.api.model.item.IMenuModel;
-import org.jowidgets.api.model.item.IToolBarModel;
-import org.jowidgets.api.widgets.IContainer;
-
-public interface IViewContext {
-
-	IComponentContext getComponentContext();
-
-	void activate();
-
-	IContainer getContainer();
-
-	IMenuModel getToolBarMenu();
-
-	IToolBarModel getToolBar();
+public interface ILayoutContainer {
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2011, M. Grossmann, H. Westphal
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,18 +25,24 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
+package org.jowidgets.workbench.api;
 
-package org.jowidgets.ng.workbench.api;
+import java.util.List;
 
-public enum ContributionPlaceholder {
+import org.jowidgets.api.model.item.IMenuModel;
 
-	WORKBENCH_APPLICATION_ACTIONS,
-	COMPONENT_ACTIONS,
-	WORKBENCH_APPLICATION_HELP,
-	COMPONENT_HELP;
+public interface IFolderLayout extends ILayoutContainer, IUiPart {
 
-	public String getId() {
-		return getClass().getName() + "." + toString();
-	}
+	String getId();
+
+	String getGroupId();
+
+	List<String> getViewIds();
+
+	IMenuModel createPopupMenu(String folderId);
+
+	boolean isDetachable();
+
+	boolean getViewsCloseable();
 
 }

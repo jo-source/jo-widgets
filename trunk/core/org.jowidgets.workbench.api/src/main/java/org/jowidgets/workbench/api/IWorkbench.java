@@ -25,24 +25,37 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.ng.workbench.api;
+package org.jowidgets.workbench.api;
 
-import org.jowidgets.api.model.item.IMenuModel;
+import java.util.List;
 
-public interface IComponentTreeNodeContext {
+import javax.swing.text.Position;
 
-	void add(IComponentTreeNode componentTreeNode);
+import org.jowidgets.api.model.item.IMenuBarModel;
+import org.jowidgets.api.model.item.IToolBarModel;
+import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.IVetoable;
 
-	void add(int index, IComponentTreeNode componentTreeNode);
+public interface IWorkbench extends IUiPart {
 
-	void remove(IComponentTreeNode componentTreeNode);
+	void initialize(IWorkbenchContext context);
 
-	void select();
+	void onWindowClose(IVetoable vetoable);
 
-	IMenuModel getPopupMenu();
+	List<? extends IWorkbenchApplication> createWorkbenchApplications();
 
-	IComponentTreeNodeContext getParent();
+	IToolBarModel createToolBar();
 
-	IWorkbenchApplicationContext getWorkbenchApplicationContext();
+	IMenuBarModel createMenuBar();
+
+	Dimension getInitialDimension();
+
+	Position getInitialPosition();
+
+	boolean getApplicationsCloseable();
+
+	boolean hasStatusBar();
+
+	boolean hasTrayItem();
 
 }

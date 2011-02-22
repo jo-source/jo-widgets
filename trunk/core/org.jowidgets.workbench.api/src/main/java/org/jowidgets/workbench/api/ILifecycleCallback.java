@@ -25,16 +25,16 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.ng.workbench.api;
+package org.jowidgets.workbench.api;
 
-import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.IVetoable;
 
-public interface IUiPart {
+public interface ILifecycleCallback {
 
-	String getLabel();
+	void onActiveStateChanged(boolean active);
 
-	String getTooltip();
+	void onVisibleStateChanged(boolean visible);
 
-	IImageConstant getIcon();
+	void onClose(IVetoable vetoable);
 
 }

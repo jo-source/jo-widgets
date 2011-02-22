@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, HWestphal
+ * Copyright (c) 2011, M. Grossmann, H. Westphal
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,24 +25,27 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
+package org.jowidgets.workbench.api;
 
-package org.jowidgets.ng.workbench.api;
+import java.util.List;
 
 import org.jowidgets.api.model.item.IMenuModel;
-import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.api.model.item.IToolBarModel;
 
-public interface ITrayItem {
+public interface IView extends IUiPart, ILifecycleCallback {
 
-	void setMenu(IMenuModel menu);
+	void initialize(IViewContext context);
 
-	void setIcon(IImageConstant imageKey);
+	String getId();
 
-	void setTooltip(String tooltip);
+	List<String> getTabViewWhitelist();
 
-	void showInfo(String title, String message);
+	List<String> getTabViewBlacklist();
 
-	void showWarning(String title, String message);
+	boolean isDetachable();
 
-	void showError(String title, String message);
+	IMenuModel createToolBarMenu();
+
+	IToolBarModel createToolBar();
 
 }

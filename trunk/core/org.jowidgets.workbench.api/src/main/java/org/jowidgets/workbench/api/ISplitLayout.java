@@ -25,22 +25,25 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.ng.workbench.api;
+package org.jowidgets.workbench.api;
 
-import java.util.Set;
+import org.jowidgets.common.types.Orientation;
+import org.jowidgets.common.types.SplitResizePolicy;
 
-import org.jowidgets.common.types.IVetoable;
+public interface ISplitLayout extends ILayoutContainer {
 
-public interface IComponent {
+	Orientation getOrientation();
 
-	void initialize(IComponentContext context);
+	double getWeight();
 
-	void onActivation();
+	/**
+	 * @return the resize policy, may be null for default policy
+	 *         (this is a hint and may not work on all platforms)
+	 */
+	SplitResizePolicy getResizePolicy();
 
-	void onDeactivation(IVetoable vetoable);
+	ILayoutContainer createFirstContainer();
 
-	ILayout createInitialLayout();
-
-	Set<IView> createViews();
+	ILayoutContainer createSecondContainer();
 
 }

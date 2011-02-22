@@ -25,25 +25,21 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.ng.workbench.api;
+package org.jowidgets.workbench.api;
 
-import org.jowidgets.api.model.item.IMenuModel;
-import org.jowidgets.api.model.item.IToolBarModel;
+public interface IComponentContext {
 
-public interface IWorkbenchApplicationContext {
+	IComponentTreeNodeContext getComponentTreeNodeContext();
 
-	void add(IComponentTreeNode componentTreeNode);
+	/**
+	 * @param addToHead
+	 * @param folderId hint, may be null
+	 * @param view
+	 */
+	void addView(boolean addToHead, String folderId, IView view);
 
-	void add(int index, IComponentTreeNode componentTreeNode);
+	void removeView(IView remove);
 
-	void remove(IComponentTreeNode componentTreeNode);
-
-	IWorkbenchContext getWorkbenchContext();
-
-	IToolBarModel getToolBar();
-
-	IMenuModel getPopupMenu();
-
-	IMenuModel getToolBarMenu();
+	void setLayout(final ILayout perspective);
 
 }

@@ -25,16 +25,22 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.ng.workbench.api;
+package org.jowidgets.workbench.api;
 
-import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.api.model.item.IToolBarModel;
+import org.jowidgets.api.widgets.IContainer;
 
-public interface ILifecycleCallback {
+public interface IViewContext {
 
-	void onActiveStateChanged(boolean active);
+	IComponentContext getComponentContext();
 
-	void onVisibleStateChanged(boolean visible);
+	void activate();
 
-	void onClose(IVetoable vetoable);
+	IContainer getContainer();
+
+	IMenuModel getToolBarMenu();
+
+	IToolBarModel getToolBar();
 
 }

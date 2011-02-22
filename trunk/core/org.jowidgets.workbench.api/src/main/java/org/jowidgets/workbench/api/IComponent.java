@@ -25,24 +25,22 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.ng.workbench.api;
+package org.jowidgets.workbench.api;
 
-import java.util.List;
+import java.util.Set;
 
-import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.common.types.IVetoable;
 
-public interface IFolderLayout extends ILayoutContainer, IUiPart {
+public interface IComponent {
 
-	String getId();
+	void initialize(IComponentContext context);
 
-	String getGroupId();
+	void onActivation();
 
-	List<String> getViewIds();
+	void onDeactivation(IVetoable vetoable);
 
-	IMenuModel createPopupMenu(String folderId);
+	ILayout createInitialLayout();
 
-	boolean isDetachable();
-
-	boolean getViewsCloseable();
+	Set<IView> createViews();
 
 }
