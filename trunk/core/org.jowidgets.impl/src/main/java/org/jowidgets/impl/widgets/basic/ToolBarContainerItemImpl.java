@@ -127,6 +127,7 @@ public class ToolBarContainerItemImpl extends ContainerImpl implements IToolBarC
 		}
 		setContentCreator(model.getContentCreator());
 		model.addItemModelListener(modelListener);
+		this.model = model;
 		getParent().pack();
 	}
 

@@ -222,7 +222,9 @@ public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar {
 
 	@Override
 	public <WIDGET_TYPE extends IToolBarItem> WIDGET_TYPE addItem(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
-		return addItemInternal(null, descriptor);
+		final WIDGET_TYPE result = addItemInternal(null, descriptor);
+		addToModel(null, result);
+		return result;
 	}
 
 	@Override
