@@ -46,4 +46,10 @@ public interface IWorkbenchApplication extends IUiPart, ILifecycleCallback {
 
 	IMenuModel createToolBarMenu();
 
+	IMenuModel createWorkbenchMenuContribution();
+
+	IMenuModel createHelpMenuContribution();
+
+	IToolBarModel createWorkbenchToolBarContribution();
+
 }

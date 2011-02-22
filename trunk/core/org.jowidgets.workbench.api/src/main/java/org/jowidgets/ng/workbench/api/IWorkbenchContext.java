@@ -27,8 +27,6 @@
  */
 package org.jowidgets.ng.workbench.api;
 
-import org.jowidgets.api.model.item.IMenuBarModel;
-import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.widgets.IContainer;
 
 public interface IWorkbenchContext {
@@ -40,10 +38,6 @@ public interface IWorkbenchContext {
 	void remove(IWorkbenchApplication workbenchApplication);
 
 	void finish();
-
-	IToolBarModel getToolBar();
-
-	IMenuBarModel getMenuBar();
 
 	IContainer getStatusBar();
 

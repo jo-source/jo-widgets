@@ -40,6 +40,8 @@ public interface IWorkbench extends IUiPart {
 
 	void initialize(IWorkbenchContext context);
 
+	void onWindowClose(IVetoable vetoable);
+
 	List<IWorkbenchApplication> createWorkbenchApplications();
 
 	IToolBarModel createToolBar();
@@ -50,7 +52,7 @@ public interface IWorkbench extends IUiPart {
 
 	Position getInitialPosition();
 
-	void onWindowClose(IVetoable vetoable);
+	boolean getApplicationsCloseable();
 
 	boolean hasStatusBar();
 
