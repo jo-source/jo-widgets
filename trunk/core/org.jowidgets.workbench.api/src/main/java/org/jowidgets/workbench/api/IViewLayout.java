@@ -32,7 +32,11 @@ import java.util.List;
 
 public interface IViewLayout {
 
-	String getViewId();
+	/**
+	 * @return The id of the referenced view
+	 * @see IView#getId()
+	 */
+	String getId();
 
 	boolean isHidden();
 

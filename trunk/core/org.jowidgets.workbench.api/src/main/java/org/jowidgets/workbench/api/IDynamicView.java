@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, M. Grossmann, H. Westphal
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,22 +25,9 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
+
 package org.jowidgets.workbench.api;
 
-public interface IComponentContext {
-
-	IComponentTreeNodeContext getComponentTreeNodeContext();
-
-	/**
-	 * @param addToHead
-	 * @param hidden
-	 * @param folderId hint, may be null
-	 * @param view
-	 */
-	void addView(boolean addToHead, String folderId, IDynamicView view);
-
-	void removeView(IView remove);
-
-	void setLayout(final ILayout layout);
+public interface IDynamicView extends IView, IViewLayout {
 
 }
