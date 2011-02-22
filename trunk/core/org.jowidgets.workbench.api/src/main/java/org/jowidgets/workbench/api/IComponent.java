@@ -27,8 +27,6 @@
  */
 package org.jowidgets.workbench.api;
 
-import java.util.Set;
-
 import org.jowidgets.common.types.IVetoable;
 
 public interface IComponent {
@@ -41,6 +39,6 @@ public interface IComponent {
 
 	ILayout createInitialLayout();
 
-	Set<? extends IView> createViews();
+	IView createView(String viewId);
 
 }
