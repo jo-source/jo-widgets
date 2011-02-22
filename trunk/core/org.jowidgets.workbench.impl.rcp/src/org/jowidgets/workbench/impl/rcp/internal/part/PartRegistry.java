@@ -36,13 +36,13 @@ import org.eclipse.ui.IPerspectiveRegistry;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
-import org.jowidgets.workbench.api.IPerspective;
-import org.jowidgets.workbench.api.ISingleViewContainer;
-import org.jowidgets.workbench.api.ISplitViewContainer;
-import org.jowidgets.workbench.api.ITabViewContainer;
-import org.jowidgets.workbench.api.IView;
-import org.jowidgets.workbench.api.IViewContainer;
 import org.jowidgets.workbench.impl.rcp.RcpView;
+import org.jowidgets.workbench.legacy.api.IPerspective;
+import org.jowidgets.workbench.legacy.api.ISingleViewContainer;
+import org.jowidgets.workbench.legacy.api.ISplitViewContainer;
+import org.jowidgets.workbench.legacy.api.ITabViewContainer;
+import org.jowidgets.workbench.legacy.api.IView;
+import org.jowidgets.workbench.legacy.api.IViewContainer;
 
 public final class PartRegistry {
 

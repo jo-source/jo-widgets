@@ -38,11 +38,11 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.workbench.api.IComponent;
-import org.jowidgets.workbench.api.IComponentTreeNode;
-import org.jowidgets.workbench.api.IComponentTreeNodeContext;
-import org.jowidgets.workbench.api.IUiPart;
-import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
+import org.jowidgets.workbench.legacy.api.IComponent;
+import org.jowidgets.workbench.legacy.api.IComponentTreeNode;
+import org.jowidgets.workbench.legacy.api.IComponentTreeNodeContext;
+import org.jowidgets.workbench.legacy.api.IUiPart;
+import org.jowidgets.workbench.legacy.api.IWorkbenchApplicationContext;
 
 public final class ComponentTreeNodeContext implements IComponentTreeNodeContext, IUiPart {
 

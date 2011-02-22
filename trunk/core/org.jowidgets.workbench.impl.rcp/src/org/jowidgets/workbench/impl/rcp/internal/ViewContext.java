@@ -32,8 +32,8 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.IToolBar;
-import org.jowidgets.workbench.api.IComponentContext;
-import org.jowidgets.workbench.api.IViewContext;
+import org.jowidgets.workbench.legacy.api.IComponentContext;
+import org.jowidgets.workbench.legacy.api.IViewContext;
 
 public final class ViewContext implements IViewContext {
 

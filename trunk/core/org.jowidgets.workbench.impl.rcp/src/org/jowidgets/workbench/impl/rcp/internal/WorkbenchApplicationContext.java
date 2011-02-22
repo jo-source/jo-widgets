@@ -36,11 +36,11 @@ import java.util.Map;
 import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.workbench.api.IComponentTreeNode;
-import org.jowidgets.workbench.api.IUiPart;
-import org.jowidgets.workbench.api.IWorkbenchApplication;
-import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
-import org.jowidgets.workbench.api.IWorkbenchContext;
+import org.jowidgets.workbench.legacy.api.IComponentTreeNode;
+import org.jowidgets.workbench.legacy.api.IUiPart;
+import org.jowidgets.workbench.legacy.api.IWorkbenchApplication;
+import org.jowidgets.workbench.legacy.api.IWorkbenchApplicationContext;
+import org.jowidgets.workbench.legacy.api.IWorkbenchContext;
 
 public final class WorkbenchApplicationContext implements IWorkbenchApplicationContext, IUiPart {
 

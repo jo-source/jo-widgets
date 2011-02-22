@@ -31,11 +31,11 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.util.Assert;
-import org.jowidgets.workbench.api.IWorkbench;
-import org.jowidgets.workbench.api.IWorkbenchConfigurationService;
-import org.jowidgets.workbench.api.IWorkbenchRunner;
 import org.jowidgets.workbench.impl.rcp.internal.WorkbenchContext;
 import org.jowidgets.workbench.impl.rcp.internal.util.RcpWorkbenchConfigurationSupport;
+import org.jowidgets.workbench.legacy.api.IWorkbench;
+import org.jowidgets.workbench.legacy.api.IWorkbenchConfigurationService;
+import org.jowidgets.workbench.legacy.api.IWorkbenchRunner;
 
 public final class WorkbenchRunner implements IWorkbenchRunner {
 

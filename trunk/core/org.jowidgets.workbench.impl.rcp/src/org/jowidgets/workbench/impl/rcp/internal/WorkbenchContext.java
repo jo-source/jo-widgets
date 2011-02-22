@@ -36,10 +36,10 @@ import org.jowidgets.api.widgets.IMenuBar;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.util.Assert;
-import org.jowidgets.workbench.api.ITrayItem;
-import org.jowidgets.workbench.api.IWorkbench;
-import org.jowidgets.workbench.api.IWorkbenchApplication;
-import org.jowidgets.workbench.api.IWorkbenchContext;
+import org.jowidgets.workbench.legacy.api.ITrayItem;
+import org.jowidgets.workbench.legacy.api.IWorkbench;
+import org.jowidgets.workbench.legacy.api.IWorkbenchApplication;
+import org.jowidgets.workbench.legacy.api.IWorkbenchContext;
 
 public final class WorkbenchContext implements IWorkbenchContext {
 

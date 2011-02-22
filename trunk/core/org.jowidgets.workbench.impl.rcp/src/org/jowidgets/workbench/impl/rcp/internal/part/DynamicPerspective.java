@@ -31,7 +31,7 @@ import org.eclipse.ui.IFolderLayout;
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;
 import org.jowidgets.common.types.Orientation;
-import org.jowidgets.workbench.api.ISplitViewContainer;
+import org.jowidgets.workbench.legacy.api.ISplitViewContainer;
 
 public final class DynamicPerspective implements IPerspectiveFactory {
 

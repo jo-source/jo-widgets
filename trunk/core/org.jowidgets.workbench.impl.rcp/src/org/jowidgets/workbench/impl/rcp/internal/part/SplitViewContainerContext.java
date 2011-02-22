@@ -28,7 +28,7 @@
 
 package org.jowidgets.workbench.impl.rcp.internal.part;
 
-import org.jowidgets.workbench.api.ISplitViewContainer;
+import org.jowidgets.workbench.legacy.api.ISplitViewContainer;
 
 public final class SplitViewContainerContext implements IViewContainerContext {
 

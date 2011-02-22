@@ -29,8 +29,8 @@
 package org.jowidgets.workbench.impl.rcp;
 
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.workbench.api.IView;
-import org.jowidgets.workbench.api.IViewContext;
+import org.jowidgets.workbench.legacy.api.IView;
+import org.jowidgets.workbench.legacy.api.IViewContext;
 
 public final class RcpView implements IView {
 

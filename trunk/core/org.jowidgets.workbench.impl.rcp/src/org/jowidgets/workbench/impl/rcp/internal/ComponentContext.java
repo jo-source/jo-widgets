@@ -30,10 +30,10 @@ package org.jowidgets.workbench.impl.rcp.internal;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.jowidgets.workbench.api.IComponent;
-import org.jowidgets.workbench.api.IComponentContext;
-import org.jowidgets.workbench.api.IComponentTreeNodeContext;
-import org.jowidgets.workbench.api.IPerspective;
+import org.jowidgets.workbench.legacy.api.IComponent;
+import org.jowidgets.workbench.legacy.api.IComponentContext;
+import org.jowidgets.workbench.legacy.api.IComponentTreeNodeContext;
+import org.jowidgets.workbench.legacy.api.IPerspective;
 
 public final class ComponentContext implements IComponentContext {
 

@@ -60,12 +60,12 @@ import org.jowidgets.api.widgets.IToolBarPopupButton;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
-import org.jowidgets.workbench.api.IComponentTreeNodeContext;
-import org.jowidgets.workbench.api.IPerspective;
-import org.jowidgets.workbench.api.IUiPart;
-import org.jowidgets.workbench.api.IWorkbenchApplication;
 import org.jowidgets.workbench.impl.rcp.internal.part.PartRegistry;
 import org.jowidgets.workbench.impl.rcp.internal.util.ImageHelper;
+import org.jowidgets.workbench.legacy.api.IComponentTreeNodeContext;
+import org.jowidgets.workbench.legacy.api.IPerspective;
+import org.jowidgets.workbench.legacy.api.IUiPart;
+import org.jowidgets.workbench.legacy.api.IWorkbenchApplication;
 
 public final class WorkbenchApplicationTree extends Composite {
 
