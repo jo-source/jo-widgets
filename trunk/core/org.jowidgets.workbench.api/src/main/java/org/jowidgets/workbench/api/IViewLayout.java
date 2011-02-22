@@ -30,7 +30,7 @@ package org.jowidgets.workbench.api;
 
 import java.util.List;
 
-public interface IViewLayout extends IUiPart {
+public interface IViewLayout {
 
 	String getViewId();
 

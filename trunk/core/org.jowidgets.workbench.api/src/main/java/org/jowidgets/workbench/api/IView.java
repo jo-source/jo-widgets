@@ -30,13 +30,13 @@ package org.jowidgets.workbench.api;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IToolBarModel;
 
-public interface IView extends ILifecycleCallback {
+public interface IView extends ILifecycleCallback, IUiPart {
 
 	void initialize(IViewContext context);
-	
-	void onHiddenStateChanged(boolean active);
 
 	String getId();
+
+	void onHiddenStateChanged(boolean active);
 
 	IMenuModel createToolBarMenu();
 

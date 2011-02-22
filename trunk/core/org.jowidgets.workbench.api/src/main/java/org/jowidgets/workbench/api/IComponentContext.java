@@ -33,10 +33,11 @@ public interface IComponentContext {
 
 	/**
 	 * @param addToHead
+	 * @param hidden
 	 * @param folderId hint, may be null
 	 * @param view
 	 */
-	void addView(boolean addToHead, String folderId, IView view);
+	void addView(boolean addToHead, boolean hidden, String folderId, IView view);
 
 	void removeView(IView remove);
 
