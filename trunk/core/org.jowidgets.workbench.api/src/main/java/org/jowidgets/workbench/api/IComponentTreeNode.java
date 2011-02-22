@@ -41,6 +41,6 @@ public interface IComponentTreeNode extends IUiPart {
 
 	IMenuModel createPopupMenu();
 
-	List<IComponentTreeNode> createChildren();
+	List<? extends IComponentTreeNode> createChildren();
 
 }

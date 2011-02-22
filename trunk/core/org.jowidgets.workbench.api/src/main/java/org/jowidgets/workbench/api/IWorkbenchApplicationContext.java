@@ -27,8 +27,6 @@
  */
 package org.jowidgets.workbench.api;
 
-import org.jowidgets.api.model.item.IMenuModel;
-import org.jowidgets.api.model.item.IToolBarModel;
 
 public interface IWorkbenchApplicationContext {
 
@@ -39,11 +37,5 @@ public interface IWorkbenchApplicationContext {
 	void remove(IComponentTreeNode componentTreeNode);
 
 	IWorkbenchContext getWorkbenchContext();
-
-	IToolBarModel getToolBar();
-
-	IMenuModel getPopupMenu();
-
-	IMenuModel getToolBarMenu();
 
 }

@@ -29,6 +29,8 @@ package org.jowidgets.workbench.api;
 
 import java.util.Set;
 
+import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.common.types.IVetoable;
 
 public interface IComponent {
@@ -42,5 +44,15 @@ public interface IComponent {
 	ILayout createInitialLayout();
 
 	Set<IView> createViews();
+
+	IMenuModel createHelpMenuContribution();
+
+	IMenuModel createWorkbenchMenuContribution();
+
+	IToolBarModel createWorkbenchToolBarContribution();
+
+	IMenuModel createApplicationMenuContribution();
+
+	IToolBarModel createApplicationToolBarContribution();
 
 }
