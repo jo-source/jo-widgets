@@ -26,6 +26,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.workbench.impl</artifactId>
+			<version>0.0.13-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.spi.impl.swing</artifactId>
 			<version>0.0.13-SNAPSHOT</version>
 		</dependency>
