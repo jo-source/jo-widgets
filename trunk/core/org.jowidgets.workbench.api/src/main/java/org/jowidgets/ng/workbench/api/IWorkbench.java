@@ -42,7 +42,7 @@ public interface IWorkbench extends IUiPart {
 
 	void onWindowClose(IVetoable vetoable);
 
-	List<IWorkbenchApplication> createWorkbenchApplications();
+	List<? extends IWorkbenchApplication> createWorkbenchApplications();
 
 	IToolBarModel createToolBar();
 
