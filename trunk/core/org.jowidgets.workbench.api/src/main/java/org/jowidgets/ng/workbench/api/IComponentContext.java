@@ -31,8 +31,15 @@ public interface IComponentContext {
 
 	IComponentTreeNodeContext getComponentTreeNodeContext();
 
-	void setPerspective(final IPerspective perspective);
+	/**
+	 * @param addToHead
+	 * @param folderId hint, may be null
+	 * @param view
+	 */
+	void addView(boolean addToHead, String folderId, IView view);
 
-	void resetPerspective();
+	void removeView(IView remove);
+
+	void setLayout(final ILayout perspective);
 
 }

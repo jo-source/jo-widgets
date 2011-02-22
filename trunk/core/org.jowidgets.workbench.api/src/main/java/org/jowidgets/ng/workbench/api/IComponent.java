@@ -27,6 +27,8 @@
  */
 package org.jowidgets.ng.workbench.api;
 
+import java.util.Set;
+
 import org.jowidgets.common.types.IVetoable;
 
 public interface IComponent {
@@ -37,6 +39,8 @@ public interface IComponent {
 
 	void onDeactivation(IVetoable vetoable);
 
-	IPerspective createPerspective();
+	ILayout createInitialLayout();
+
+	Set<IView> createViews();
 
 }

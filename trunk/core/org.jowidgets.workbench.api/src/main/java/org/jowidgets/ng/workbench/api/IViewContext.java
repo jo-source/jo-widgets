@@ -35,8 +35,6 @@ public interface IViewContext {
 
 	IComponentContext getComponentContext();
 
-	ITabViewContainerContext getTabViewContainerContext();
-
 	void activate();
 
 	IContainer getContainer();

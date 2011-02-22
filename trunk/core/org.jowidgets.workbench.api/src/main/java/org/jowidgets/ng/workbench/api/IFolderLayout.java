@@ -27,6 +27,22 @@
  */
 package org.jowidgets.ng.workbench.api;
 
-public interface IViewContainer {
+import java.util.List;
+
+import org.jowidgets.api.model.item.IMenuModel;
+
+public interface IFolderLayout extends ILayoutContainer, IUiPart {
+
+	String getId();
+
+	String getGroupId();
+
+	List<String> getViewIds();
+
+	IMenuModel createPopupMenu(String folderId);
+
+	boolean isDetachable();
+
+	boolean isTabsCloseable();
 
 }

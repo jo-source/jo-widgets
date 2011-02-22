@@ -27,16 +27,10 @@
  */
 package org.jowidgets.ng.workbench.api;
 
-import org.jowidgets.api.model.item.IMenuModel;
+public interface ILayout extends IUiPart {
 
-public interface ITabViewContainerContext {
+	String getId();
 
-	void add(IView view);
-
-	void add(int index, IView view);
-
-	void remove(IView view);
-
-	IMenuModel getPopupMenu();
+	ILayoutContainer createViewContainer();
 
 }

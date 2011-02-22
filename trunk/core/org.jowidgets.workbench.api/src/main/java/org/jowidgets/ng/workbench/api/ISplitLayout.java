@@ -27,10 +27,23 @@
  */
 package org.jowidgets.ng.workbench.api;
 
-public interface IPerspective extends IUiPart {
+import org.jowidgets.common.types.Orientation;
+import org.jowidgets.common.types.SplitResizePolicy;
 
-	String getId();
+public interface ISplitLayout extends ILayoutContainer {
 
-	IViewContainer createViewContainer();
+	Orientation getOrientation();
+
+	double getWeight();
+
+	/**
+	 * @return the resize policy, may be null for default policy
+	 *         (this is a hint and may not work on all platforms)
+	 */
+	SplitResizePolicy getResizePolicy();
+
+	ILayoutContainer createFirstContainer();
+
+	ILayoutContainer createSecondContainer();
 
 }

@@ -27,24 +27,6 @@
  */
 package org.jowidgets.ng.workbench.api;
 
-import java.util.List;
-
-import org.jowidgets.api.model.item.IMenuModel;
-
-public interface ITabViewContainer extends IViewContainer, IUiPart {
-
-	String getId();
-
-	String getGroupId();
-
-	void initialize(ITabViewContainerContext context);
-
-	List<IView> createViews();
-
-	IMenuModel createPopupMenu();
-
-	boolean isDetachable();
-
-	boolean isTabsCloseable();
+public interface ILayoutContainer {
 
 }

@@ -34,13 +34,13 @@ import org.jowidgets.api.model.item.IToolBarModel;
 
 public interface IView extends IUiPart, ILifecycleCallback {
 
+	void initialize(IViewContext context);
+
 	String getId();
 
 	List<String> getTabViewWhitelist();
 
 	List<String> getTabViewBlacklist();
-
-	void initialize(IViewContext context);
 
 	boolean isDetachable();
 
