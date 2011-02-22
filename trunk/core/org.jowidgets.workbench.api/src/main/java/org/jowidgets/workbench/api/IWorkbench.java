@@ -29,12 +29,11 @@ package org.jowidgets.workbench.api;
 
 import java.util.List;
 
-import javax.swing.text.Position;
-
 import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.common.types.Position;
 
 public interface IWorkbench extends IWorkbenchPart {
 
