@@ -25,24 +25,24 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.workbench.api;
+package org.jowidgets.workbench.legacy.api;
 
-import org.jowidgets.common.types.Orientation;
-import org.jowidgets.common.types.SplitResizePolicy;
+import java.io.Serializable;
 
-public interface ISplitViewContainer extends IViewContainer {
-
-	Orientation getOrientation();
-
-	double getWeight();
+public interface IWorkbenchConfigurationService {
 
 	/**
-	 * @return the resize policy (this is a hint and may not work on all platforms)
+	 * Loads the configuration from a repository.
+	 * 
+	 * @return The loaded configuration, or null if no configuration exists
 	 */
-	SplitResizePolicy getResizePolicy();
+	Serializable loadConfiguration();
 
-	IViewContainer createFirstContainer();
-
-	IViewContainer createSecondContainer();
+	/**
+	 * Saves the configuration into a repository
+	 * 
+	 * @param configuration The configuration to save
+	 */
+	void saveConfiguration(Serializable configuration);
 
 }

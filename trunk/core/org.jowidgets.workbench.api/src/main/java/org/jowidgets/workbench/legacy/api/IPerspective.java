@@ -25,22 +25,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.workbench.api;
+package org.jowidgets.workbench.legacy.api;
 
-import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.IMenu;
-import org.jowidgets.api.widgets.IToolBar;
+public interface IPerspective extends IUiPart {
 
-public interface IViewContext {
+	String getId();
 
-	IComponentContext getComponentContext();
+	IViewContainer getViewContainer();
 
-	IContainer getContainer();
-
-	IMenu getMenu();
-
-	void setMenuTooltip(String tooltip);
-
-	IToolBar getToolBar();
-
+	// TODO MG adding and removing of views/view containers 
 }

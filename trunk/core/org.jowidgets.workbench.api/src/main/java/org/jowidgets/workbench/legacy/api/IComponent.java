@@ -25,14 +25,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.workbench.api;
+package org.jowidgets.workbench.legacy.api;
 
-public interface ILifecycleCallback {
+public interface IComponent {
 
-	void onActiveStateChanged(boolean active);
+	void initialize(IComponentContext context);
 
-	void onVisibleStateChanged(boolean visible);
-
-	void onClose();
+	IPerspective createPerspective();
 
 }

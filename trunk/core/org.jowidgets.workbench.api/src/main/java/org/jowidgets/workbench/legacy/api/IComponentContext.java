@@ -25,8 +25,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.workbench.api;
+package org.jowidgets.workbench.legacy.api;
 
-public interface IViewContainer {
+public interface IComponentContext {
+
+	IComponentTreeNodeContext getComponentTreeNodeContext();
+
+	void setPerspective(final IPerspective perspective);
 
 }

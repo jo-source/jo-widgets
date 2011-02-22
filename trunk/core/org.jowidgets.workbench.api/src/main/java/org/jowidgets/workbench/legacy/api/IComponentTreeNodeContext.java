@@ -25,12 +25,22 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.workbench.api;
+package org.jowidgets.workbench.legacy.api;
 
-public interface IComponent {
+import org.jowidgets.api.widgets.IMenu;
 
-	void initialize(IComponentContext context);
+public interface IComponentTreeNodeContext {
 
-	IPerspective createPerspective();
+	void add(IComponentTreeNode componentTreeNode);
+
+	void add(int index, IComponentTreeNode componentTreeNode);
+
+	void remove(IComponentTreeNode componentTreeNode);
+
+	IMenu getMenu();
+
+	IComponentTreeNodeContext getParent();
+
+	IWorkbenchApplicationContext getWorkbenchApplicationContext();
 
 }

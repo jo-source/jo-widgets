@@ -25,24 +25,36 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.workbench.api;
+package org.jowidgets.workbench.legacy.api;
 
-import java.io.Serializable;
+import java.util.concurrent.Callable;
 
-public interface IWorkbenchConfigurationService {
+import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IMenuBar;
+import org.jowidgets.api.widgets.IToolBar;
 
-	/**
-	 * Loads the configuration from a repository.
-	 * 
-	 * @return The loaded configuration, or null if no configuration exists
-	 */
-	Serializable loadConfiguration();
+public interface IWorkbenchContext {
 
-	/**
-	 * Saves the configuration into a repository
-	 * 
-	 * @param configuration The configuration to save
-	 */
-	void saveConfiguration(Serializable configuration);
+	void add(IWorkbenchApplication workbenchApplication);
+
+	void add(int index, IWorkbenchApplication workbenchApplication);
+
+	void remove(IWorkbenchApplication workbenchApplication);
+
+	void finish();
+
+	IMenuBar getMenuBar();
+
+	IToolBar getToolBar();
+
+	IContainer getStatusBar();
+
+	ITrayItem getTrayItem();
+
+	void setWindowCloseHandler(Callable<Boolean> closeHandler);
+
+	void addShutdownHook(Runnable shutdownHook);
+
+	void removeShutdownHook(Runnable shutdownHook);
 
 }

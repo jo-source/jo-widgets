@@ -25,13 +25,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.workbench.api;
+package org.jowidgets.workbench.legacy.api;
 
-public interface IPerspective extends IUiPart {
+public interface ILifecycleCallback {
 
-	String getId();
+	void onActiveStateChanged(boolean active);
 
-	IViewContainer getViewContainer();
+	void onVisibleStateChanged(boolean visible);
 
-	// TODO MG adding and removing of views/view containers 
+	void onClose();
+
 }

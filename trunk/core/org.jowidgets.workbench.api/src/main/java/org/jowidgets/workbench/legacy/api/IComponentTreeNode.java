@@ -25,36 +25,20 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.workbench.api;
+package org.jowidgets.workbench.legacy.api;
 
-import java.util.concurrent.Callable;
+import java.util.List;
 
-import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.IMenuBar;
-import org.jowidgets.api.widgets.IToolBar;
+public interface IComponentTreeNode extends IUiPart {
 
-public interface IWorkbenchContext {
+	String getId();
 
-	void add(IWorkbenchApplication workbenchApplication);
+	void initialize(IComponentTreeNodeContext context);
 
-	void add(int index, IWorkbenchApplication workbenchApplication);
+	IComponent createComponent();
 
-	void remove(IWorkbenchApplication workbenchApplication);
+	boolean hasMenu();
 
-	void finish();
-
-	IMenuBar getMenuBar();
-
-	IToolBar getToolBar();
-
-	IContainer getStatusBar();
-
-	ITrayItem getTrayItem();
-
-	void setWindowCloseHandler(Callable<Boolean> closeHandler);
-
-	void addShutdownHook(Runnable shutdownHook);
-
-	void removeShutdownHook(Runnable shutdownHook);
+	List<IComponentTreeNode> createChildren();
 
 }

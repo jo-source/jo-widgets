@@ -25,20 +25,24 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.workbench.api;
+package org.jowidgets.workbench.legacy.api;
 
-import java.util.List;
+import org.jowidgets.common.types.Orientation;
+import org.jowidgets.common.types.SplitResizePolicy;
 
-public interface IComponentTreeNode extends IUiPart {
+public interface ISplitViewContainer extends IViewContainer {
 
-	String getId();
+	Orientation getOrientation();
 
-	void initialize(IComponentTreeNodeContext context);
+	double getWeight();
 
-	IComponent createComponent();
+	/**
+	 * @return the resize policy (this is a hint and may not work on all platforms)
+	 */
+	SplitResizePolicy getResizePolicy();
 
-	boolean hasMenu();
+	IViewContainer createFirstContainer();
 
-	List<IComponentTreeNode> createChildren();
+	IViewContainer createSecondContainer();
 
 }

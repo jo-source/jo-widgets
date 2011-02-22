@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, HWestphal
+ * Copyright (c) 2011, M. Grossmann, H. Westphal
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,24 +25,22 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
+package org.jowidgets.workbench.legacy.api;
 
-package org.jowidgets.workbench.api;
-
+import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IMenu;
-import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.api.widgets.IToolBar;
 
-public interface ITrayItem {
+public interface IViewContext {
+
+	IComponentContext getComponentContext();
+
+	IContainer getContainer();
 
 	IMenu getMenu();
 
-	void setIcon(IImageConstant imageKey);
+	void setMenuTooltip(String tooltip);
 
-	void setTooltip(String tooltip);
-
-	void showInfo(String title, String message);
-
-	void showWarning(String title, String message);
-
-	void showError(String title, String message);
+	IToolBar getToolBar();
 
 }

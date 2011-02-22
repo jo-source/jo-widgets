@@ -25,20 +25,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.workbench.api;
+package org.jowidgets.workbench.legacy.api;
 
-import java.util.List;
+public interface IWorkbenchRunner {
 
-public interface IWorkbenchApplication extends IUiPart, ILifecycleCallback {
+	void run(IWorkbench workbench);
 
-	String getId();
-
-	void initialize(IWorkbenchApplicationContext context);
-
-	List<IComponentTreeNode> createComponentTreeNodes();
-
-	boolean hasMenu();
-
-	boolean hasToolBar();
+	void run(IWorkbench workbench, IWorkbenchConfigurationService configurationService);
 
 }

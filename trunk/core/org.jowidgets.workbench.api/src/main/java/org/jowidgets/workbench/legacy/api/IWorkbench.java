@@ -25,16 +25,26 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.workbench.api;
+package org.jowidgets.workbench.legacy.api;
 
-import org.jowidgets.common.image.IImageConstant;
+import java.util.List;
 
-public interface IUiPart {
+import org.jowidgets.common.types.Dimension;
 
-	String getLabel();
+public interface IWorkbench extends IUiPart {
 
-	String getTooltip();
+	void initialize(IWorkbenchContext context);
 
-	IImageConstant getIcon();
+	List<IWorkbenchApplication> createWorkbenchApplications();
+
+	Dimension getInitialDimension();
+
+	boolean hasMenuBar();
+
+	boolean hasToolBar();
+
+	boolean hasStatusBar();
+
+	boolean hasTrayItem();
 
 }

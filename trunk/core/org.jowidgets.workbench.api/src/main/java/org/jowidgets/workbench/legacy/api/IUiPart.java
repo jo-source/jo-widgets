@@ -25,25 +25,16 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.workbench.api;
+package org.jowidgets.workbench.legacy.api;
 
-import org.jowidgets.api.widgets.IMenu;
-import org.jowidgets.api.widgets.IToolBar;
+import org.jowidgets.common.image.IImageConstant;
 
-public interface IWorkbenchApplicationContext {
+public interface IUiPart {
 
-	void add(IComponentTreeNode componentTreeNode);
+	String getLabel();
 
-	void add(int index, IComponentTreeNode componentTreeNode);
+	String getTooltip();
 
-	void remove(IComponentTreeNode componentTreeNode);
-
-	IWorkbenchContext getWorkbenchContext();
-
-	IMenu getMenu();
-
-	void setMenuTooltip(String tooltip);
-
-	IToolBar getToolBar();
+	IImageConstant getIcon();
 
 }

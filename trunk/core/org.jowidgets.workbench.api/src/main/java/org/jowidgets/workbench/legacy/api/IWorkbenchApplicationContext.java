@@ -25,12 +25,25 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.workbench.api;
+package org.jowidgets.workbench.legacy.api;
 
-public interface IWorkbenchRunner {
+import org.jowidgets.api.widgets.IMenu;
+import org.jowidgets.api.widgets.IToolBar;
 
-	void run(IWorkbench workbench);
+public interface IWorkbenchApplicationContext {
 
-	void run(IWorkbench workbench, IWorkbenchConfigurationService configurationService);
+	void add(IComponentTreeNode componentTreeNode);
+
+	void add(int index, IComponentTreeNode componentTreeNode);
+
+	void remove(IComponentTreeNode componentTreeNode);
+
+	IWorkbenchContext getWorkbenchContext();
+
+	IMenu getMenu();
+
+	void setMenuTooltip(String tooltip);
+
+	IToolBar getToolBar();
 
 }

@@ -25,26 +25,20 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.workbench.api;
+package org.jowidgets.workbench.legacy.api;
 
 import java.util.List;
 
-import org.jowidgets.common.types.Dimension;
+public interface IWorkbenchApplication extends IUiPart, ILifecycleCallback {
 
-public interface IWorkbench extends IUiPart {
+	String getId();
 
-	void initialize(IWorkbenchContext context);
+	void initialize(IWorkbenchApplicationContext context);
 
-	List<IWorkbenchApplication> createWorkbenchApplications();
+	List<IComponentTreeNode> createComponentTreeNodes();
 
-	Dimension getInitialDimension();
-
-	boolean hasMenuBar();
+	boolean hasMenu();
 
 	boolean hasToolBar();
-
-	boolean hasStatusBar();
-
-	boolean hasTrayItem();
 
 }
