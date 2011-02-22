@@ -32,7 +32,7 @@ import java.util.List;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IToolBarModel;
 
-public interface IWorkbenchApplication extends IUiPart, ILifecycleCallback {
+public interface IWorkbenchApplication extends IWorkbenchPart, ILifecycleCallback {
 
 	String getId();
 

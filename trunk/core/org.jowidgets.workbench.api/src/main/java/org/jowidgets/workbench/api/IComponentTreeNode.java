@@ -31,7 +31,7 @@ import java.util.List;
 
 import org.jowidgets.api.model.item.IMenuModel;
 
-public interface IComponentTreeNode extends IUiPart {
+public interface IComponentTreeNode extends IWorkbenchPart {
 
 	String getId();
 

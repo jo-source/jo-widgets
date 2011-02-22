@@ -36,7 +36,7 @@ import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.IVetoable;
 
-public interface IWorkbench extends IUiPart {
+public interface IWorkbench extends IWorkbenchPart {
 
 	void initialize(IWorkbenchContext context);
 

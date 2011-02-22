@@ -31,7 +31,7 @@ import java.util.List;
 
 import org.jowidgets.api.model.item.IMenuModel;
 
-public interface IFolderLayout extends ILayoutContainer, IUiPart {
+public interface IFolderLayout extends ILayoutContainer, IWorkbenchPart {
 
 	String getId();
 

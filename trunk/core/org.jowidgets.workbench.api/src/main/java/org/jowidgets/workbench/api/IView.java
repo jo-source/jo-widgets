@@ -30,7 +30,7 @@ package org.jowidgets.workbench.api;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IToolBarModel;
 
-public interface IView extends ILifecycleCallback, IUiPart {
+public interface IView extends ILifecycleCallback, IWorkbenchPart {
 
 	void initialize(IViewContext context);
 

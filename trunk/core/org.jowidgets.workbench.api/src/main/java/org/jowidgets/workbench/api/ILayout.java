@@ -27,7 +27,7 @@
  */
 package org.jowidgets.workbench.api;
 
-public interface ILayout extends IUiPart {
+public interface ILayout extends IWorkbenchPart {
 
 	String getId();
 

@@ -29,7 +29,7 @@ package org.jowidgets.workbench.api;
 
 import org.jowidgets.common.image.IImageConstant;
 
-public interface IUiPart {
+public interface IWorkbenchPart {
 
 	String getLabel();
 
