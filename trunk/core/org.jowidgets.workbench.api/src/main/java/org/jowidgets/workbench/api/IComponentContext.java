@@ -40,6 +40,6 @@ public interface IComponentContext {
 
 	void removeView(IView remove);
 
-	void setLayout(final ILayout perspective);
+	void setLayout(final ILayout layout);
 
 }

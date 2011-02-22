@@ -48,8 +48,14 @@ public interface IWorkbench extends IUiPart {
 
 	IMenuBarModel createMenuBar();
 
+	/**
+	 * @return The initial dimension or null
+	 */
 	Dimension getInitialDimension();
 
+	/**
+	 * @return The initial position or null
+	 */
 	Position getInitialPosition();
 
 	boolean getApplicationsCloseable();

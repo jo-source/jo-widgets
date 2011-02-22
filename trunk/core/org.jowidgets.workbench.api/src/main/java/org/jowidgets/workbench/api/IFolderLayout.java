@@ -37,7 +37,7 @@ public interface IFolderLayout extends ILayoutContainer, IUiPart {
 
 	String getGroupId();
 
-	List<String> getViewIds();
+	List<? extends IViewLayout> getViews();
 
 	IMenuModel createPopupMenu(String folderId);
 

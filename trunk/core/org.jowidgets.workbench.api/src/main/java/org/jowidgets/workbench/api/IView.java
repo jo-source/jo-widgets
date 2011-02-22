@@ -27,22 +27,16 @@
  */
 package org.jowidgets.workbench.api;
 
-import java.util.List;
-
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IToolBarModel;
 
-public interface IView extends IUiPart, ILifecycleCallback {
+public interface IView extends ILifecycleCallback {
 
 	void initialize(IViewContext context);
+	
+	void onHiddenStateChanged(boolean active);
 
 	String getId();
-
-	List<String> getTabViewWhitelist();
-
-	List<String> getTabViewBlacklist();
-
-	boolean isDetachable();
 
 	IMenuModel createToolBarMenu();
 

@@ -27,8 +27,6 @@
  */
 package org.jowidgets.workbench.api;
 
-import org.jowidgets.api.model.item.IMenuModel;
-import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.widgets.IContainer;
 
 public interface IViewContext {
@@ -37,10 +35,13 @@ public interface IViewContext {
 
 	void activate();
 
+	/**
+	 * Hides / shows the tab item in the folder.
+	 * 
+	 * @param hidden
+	 */
+	void setHidden(boolean hidden);
+
 	IContainer getContainer();
-
-	IMenuModel getToolBarMenu();
-
-	IToolBarModel getToolBar();
 
 }

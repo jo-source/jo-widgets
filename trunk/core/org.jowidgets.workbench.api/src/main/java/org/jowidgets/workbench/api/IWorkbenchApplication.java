@@ -38,18 +38,12 @@ public interface IWorkbenchApplication extends IUiPart, ILifecycleCallback {
 
 	void initialize(IWorkbenchApplicationContext context);
 
-	List<IComponentTreeNode> createComponentTreeNodes();
+	List<? extends IComponentTreeNode> createComponentTreeNodes();
 
 	IToolBarModel createToolBar();
 
 	IMenuModel createPopupMenu();
 
 	IMenuModel createToolBarMenu();
-
-	IMenuModel createWorkbenchMenuContribution();
-
-	IMenuModel createHelpMenuContribution();
-
-	IToolBarModel createWorkbenchToolBarContribution();
 
 }

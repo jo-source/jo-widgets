@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, M. Grossmann, HWestphal
+ * Copyright (c) 2011, grossmann, H. Westphal
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,21 +28,18 @@
 
 package org.jowidgets.workbench.api;
 
-import org.jowidgets.api.model.item.IMenuModel;
-import org.jowidgets.common.image.IImageConstant;
+import java.util.List;
 
-public interface ITrayItem {
+public interface IViewLayout extends IUiPart {
 
-	void setMenu(IMenuModel menu);
+	String getViewId();
 
-	void setIcon(IImageConstant imageKey);
+	boolean isHidden();
 
-	void setTooltip(String tooltip);
+	boolean isDetachable();
 
-	void showInfo(String title, String message);
+	List<String> getFolderWhitelist();
 
-	void showWarning(String title, String message);
-
-	void showError(String title, String message);
+	List<String> getFolderBlacklist();
 
 }

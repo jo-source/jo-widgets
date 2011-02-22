@@ -27,8 +27,6 @@
  */
 package org.jowidgets.workbench.api;
 
-import org.jowidgets.api.model.item.IMenuModel;
-
 public interface IComponentTreeNodeContext {
 
 	void add(IComponentTreeNode componentTreeNode);
@@ -38,8 +36,6 @@ public interface IComponentTreeNodeContext {
 	void remove(IComponentTreeNode componentTreeNode);
 
 	void select();
-
-	IMenuModel getPopupMenu();
 
 	IComponentTreeNodeContext getParent();
 
