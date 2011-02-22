@@ -116,10 +116,10 @@ public class WorkbenchDemo1 implements IWorkbench {
 		});
 
 		final IMenuModel editModel = new MenuModel("Edit");
-		fileModel.setMnemonic('E');
-		fileModel.addActionItem("Cut");
-		fileModel.addActionItem("Copy");
-		fileModel.addActionItem("Paste");
+		editModel.setMnemonic('E');
+		editModel.addActionItem("Cut");
+		editModel.addActionItem("Copy");
+		editModel.addActionItem("Paste");
 
 		final IMenuBarModel menuBarModel = new MenuBarModel();
 		menuBarModel.addMenu(fileModel);
