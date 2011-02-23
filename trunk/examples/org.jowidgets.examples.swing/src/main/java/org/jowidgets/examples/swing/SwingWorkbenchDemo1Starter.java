@@ -39,7 +39,7 @@ public final class SwingWorkbenchDemo1Starter {
 
 	public static void main(final String[] args) throws Exception {
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		System.setProperty("apple.laf.useScreenMenuBar", "true");
 		new WorkbenchRunner().run(new WorkbenchDemo1());
 	}
-
 }
