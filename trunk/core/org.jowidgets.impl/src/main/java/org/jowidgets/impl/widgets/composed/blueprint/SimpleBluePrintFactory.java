@@ -41,15 +41,6 @@ import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceR
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.api.widgets.blueprint.factory.ISimpleBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
-import org.jowidgets.api.widgets.descriptor.IInputCompositeDescriptor;
-import org.jowidgets.api.widgets.descriptor.IInputDialogDescriptor;
-import org.jowidgets.api.widgets.descriptor.IInputFieldDescriptor;
-import org.jowidgets.api.widgets.descriptor.ILabelDescriptor;
-import org.jowidgets.api.widgets.descriptor.IMessageDialogDescriptor;
-import org.jowidgets.api.widgets.descriptor.IProgressBarDescriptor;
-import org.jowidgets.api.widgets.descriptor.IQuestionDialogDescriptor;
-import org.jowidgets.api.widgets.descriptor.ITextSeparatorDescriptor;
-import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
 import org.jowidgets.impl.widgets.basic.blueprint.BasicBluePrintFactory;
 import org.jowidgets.util.Assert;
 
@@ -63,32 +54,32 @@ public class SimpleBluePrintFactory extends BasicBluePrintFactory implements ISi
 
 	@Override
 	public final ILabelBluePrint label() {
-		return createProxy(ILabelBluePrint.class, ILabelDescriptor.class);
+		return createProxy(ILabelBluePrint.class);
 	}
 
 	@Override
 	public ITextSeparatorBluePrint textSeparator() {
-		return createProxy(ITextSeparatorBluePrint.class, ITextSeparatorDescriptor.class);
+		return createProxy(ITextSeparatorBluePrint.class);
 	}
 
 	@Override
 	public final IValidationLabelBluePrint validationLabel() {
-		return createProxy(IValidationLabelBluePrint.class, IValidationLabelDescriptor.class);
+		return createProxy(IValidationLabelBluePrint.class);
 	}
 
 	@Override
 	public IMessageDialogBluePrint messageDialog() {
-		return createProxy(IMessageDialogBluePrint.class, IMessageDialogDescriptor.class);
+		return createProxy(IMessageDialogBluePrint.class);
 	}
 
 	@Override
 	public IQuestionDialogBluePrint questionDialog() {
-		return createProxy(IQuestionDialogBluePrint.class, IQuestionDialogDescriptor.class);
+		return createProxy(IQuestionDialogBluePrint.class);
 	}
 
 	@Override
 	public IProgressBarBluePrint progressBar() {
-		return createProxy(IProgressBarBluePrint.class, IProgressBarDescriptor.class);
+		return createProxy(IProgressBarBluePrint.class);
 	}
 
 	@Override
@@ -96,7 +87,7 @@ public class SimpleBluePrintFactory extends BasicBluePrintFactory implements ISi
 		Assert.paramNotNull(contentCreator, "contentCreator");
 
 		final IInputDialogBluePrint<INPUT_TYPE> inputDialogBluePrint;
-		inputDialogBluePrint = createProxy(IInputDialogBluePrint.class, IInputDialogDescriptor.class);
+		inputDialogBluePrint = createProxy(IInputDialogBluePrint.class);
 
 		inputDialogBluePrint.setContentCreator(contentCreator);
 		return inputDialogBluePrint;
@@ -107,9 +98,7 @@ public class SimpleBluePrintFactory extends BasicBluePrintFactory implements ISi
 		final IInputContentCreator<INPUT_TYPE> contentCreator) {
 		Assert.paramNotNull(contentCreator, "contentCreator");
 
-		final IInputCompositeBluePrint<INPUT_TYPE> inputCompositeBluePrint = createProxy(
-				IInputCompositeBluePrint.class,
-				IInputCompositeDescriptor.class);
+		final IInputCompositeBluePrint<INPUT_TYPE> inputCompositeBluePrint = createProxy(IInputCompositeBluePrint.class);
 
 		inputCompositeBluePrint.setContentCreator(contentCreator);
 		return inputCompositeBluePrint;
@@ -119,7 +108,7 @@ public class SimpleBluePrintFactory extends BasicBluePrintFactory implements ISi
 	public final <INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField(final IConverter<INPUT_TYPE> converter) {
 		Assert.paramNotNull(converter, "converter");
 
-		final IInputFieldBluePrint<INPUT_TYPE> result = createProxy(IInputFieldBluePrint.class, IInputFieldDescriptor.class);
+		final IInputFieldBluePrint<INPUT_TYPE> result = createProxy(IInputFieldBluePrint.class);
 		return result.setConverter(converter);
 	}
 

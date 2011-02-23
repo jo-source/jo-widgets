@@ -47,24 +47,6 @@ import org.jowidgets.impl.spi.blueprint.ITextLabelBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IToggleButtonBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITreeBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.defaults.registry.SpiDefaultsInitializerRegistry;
-import org.jowidgets.impl.spi.descriptor.IButtonDescriptorSpi;
-import org.jowidgets.impl.spi.descriptor.ICheckBoxDescriptorSpi;
-import org.jowidgets.impl.spi.descriptor.IComboBoxDescriptorSpi;
-import org.jowidgets.impl.spi.descriptor.IComboBoxSelectionDescriptorSpi;
-import org.jowidgets.impl.spi.descriptor.ICompositeDescriptorSpi;
-import org.jowidgets.impl.spi.descriptor.IDialogDescriptorSpi;
-import org.jowidgets.impl.spi.descriptor.IFrameDescriptorSpi;
-import org.jowidgets.impl.spi.descriptor.IIconDescriptorSpi;
-import org.jowidgets.impl.spi.descriptor.IProgressBarDescriptorSpi;
-import org.jowidgets.impl.spi.descriptor.IScrollCompositeDescriptorSpi;
-import org.jowidgets.impl.spi.descriptor.ISeparatorDescriptorSpi;
-import org.jowidgets.impl.spi.descriptor.ISplitCompositeDescriptorSpi;
-import org.jowidgets.impl.spi.descriptor.ITabFolderDescriptorSpi;
-import org.jowidgets.impl.spi.descriptor.ITabItemDescriptorSpi;
-import org.jowidgets.impl.spi.descriptor.ITextFieldDescriptorSpi;
-import org.jowidgets.impl.spi.descriptor.ITextLabelDescriptorSpi;
-import org.jowidgets.impl.spi.descriptor.IToggleButtonDescriptorSpi;
-import org.jowidgets.impl.spi.descriptor.ITreeDescriptorSpi;
 import org.jowidgets.impl.widgets.common.blueprint.convenience.registry.CommonSetupConvenienceRegistry;
 
 public class SpiBluePrintFactory extends AbstractBluePrintFactory implements ISpiBluePrintFactory {
@@ -75,92 +57,92 @@ public class SpiBluePrintFactory extends AbstractBluePrintFactory implements ISp
 
 	@Override
 	public IFrameBluePrintSpi frame() {
-		return createProxy(IFrameBluePrintSpi.class, IFrameDescriptorSpi.class);
+		return createProxy(IFrameBluePrintSpi.class);
 	}
 
 	@Override
 	public IDialogBluePrintSpi dialog() {
-		return createProxy(IDialogBluePrintSpi.class, IDialogDescriptorSpi.class);
+		return createProxy(IDialogBluePrintSpi.class);
 	}
 
 	@Override
 	public ICompositeBluePrintSpi composite() {
-		return createProxy(ICompositeBluePrintSpi.class, ICompositeDescriptorSpi.class);
+		return createProxy(ICompositeBluePrintSpi.class);
 	}
 
 	@Override
 	public IScrollCompositeBluePrintSpi scrollComposite() {
-		return createProxy(IScrollCompositeBluePrintSpi.class, IScrollCompositeDescriptorSpi.class);
+		return createProxy(IScrollCompositeBluePrintSpi.class);
 	}
 
 	@Override
 	public ISplitCompositeBluePrintSpi splitComposite() {
-		return createProxy(ISplitCompositeBluePrintSpi.class, ISplitCompositeDescriptorSpi.class);
+		return createProxy(ISplitCompositeBluePrintSpi.class);
 	}
 
 	@Override
 	public ITextLabelBluePrintSpi textLabel() {
-		return createProxy(ITextLabelBluePrintSpi.class, ITextLabelDescriptorSpi.class);
+		return createProxy(ITextLabelBluePrintSpi.class);
 	}
 
 	@Override
 	public IIconBluePrintSpi icon() {
-		return createProxy(IIconBluePrintSpi.class, IIconDescriptorSpi.class);
+		return createProxy(IIconBluePrintSpi.class);
 	}
 
 	@Override
 	public ISeparatorBluePrintSpi separator() {
-		return createProxy(ISeparatorBluePrintSpi.class, ISeparatorDescriptorSpi.class);
+		return createProxy(ISeparatorBluePrintSpi.class);
 	}
 
 	@Override
 	public ITextFieldBluePrintSpi textField() {
-		return createProxy(ITextFieldBluePrintSpi.class, ITextFieldDescriptorSpi.class);
+		return createProxy(ITextFieldBluePrintSpi.class);
 	}
 
 	@Override
 	public IButtonBluePrintSpi button() {
-		return createProxy(IButtonBluePrintSpi.class, IButtonDescriptorSpi.class);
+		return createProxy(IButtonBluePrintSpi.class);
 	}
 
 	@Override
 	public ICheckBoxBluePrintSpi checkBox() {
-		return createProxy(ICheckBoxBluePrintSpi.class, ICheckBoxDescriptorSpi.class);
+		return createProxy(ICheckBoxBluePrintSpi.class);
 	}
 
 	@Override
 	public IToggleButtonBluePrintSpi toggleButton() {
-		return createProxy(IToggleButtonBluePrintSpi.class, IToggleButtonDescriptorSpi.class);
+		return createProxy(IToggleButtonBluePrintSpi.class);
 	}
 
 	@Override
 	public IComboBoxBluePrintSpi comboBox() {
-		return createProxy(IComboBoxBluePrintSpi.class, IComboBoxDescriptorSpi.class);
+		return createProxy(IComboBoxBluePrintSpi.class);
 	}
 
 	@Override
 	public IComboBoxSelectionBluePrintSpi comboBoxSelection() {
-		return createProxy(IComboBoxSelectionBluePrintSpi.class, IComboBoxSelectionDescriptorSpi.class);
+		return createProxy(IComboBoxSelectionBluePrintSpi.class);
 	}
 
 	@Override
 	public IProgressBarBluePrintSpi progressBar() {
-		return createProxy(IProgressBarBluePrintSpi.class, IProgressBarDescriptorSpi.class);
+		return createProxy(IProgressBarBluePrintSpi.class);
 	}
 
 	@Override
 	public ITabFolderBluePrintSpi tabFolder() {
-		return createProxy(ITabFolderBluePrintSpi.class, ITabFolderDescriptorSpi.class);
+		return createProxy(ITabFolderBluePrintSpi.class);
 	}
 
 	@Override
 	public ITabItemBluePrintSpi tabItem() {
-		return createProxy(ITabItemBluePrintSpi.class, ITabItemDescriptorSpi.class);
+		return createProxy(ITabItemBluePrintSpi.class);
 	}
 
 	@Override
 	public ITreeBluePrintSpi tree() {
-		return createProxy(ITreeBluePrintSpi.class, ITreeDescriptorSpi.class);
+		return createProxy(ITreeBluePrintSpi.class);
 	}
 
 }

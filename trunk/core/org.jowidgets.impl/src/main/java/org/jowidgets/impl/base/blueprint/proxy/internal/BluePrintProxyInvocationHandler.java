@@ -71,7 +71,6 @@ public class BluePrintProxyInvocationHandler implements InvocationHandler {
 	public void initialize(
 		final ISetupBuilder<?> proxy,
 		final Class<? extends IWidgetDescriptor> bluePrintType,
-		final Class<? extends IWidgetDescriptor> widgetDescrType,
 		final ISetupBuilderConvenienceRegistry convenienceRegistry,
 		final IDefaultsInitializerRegistry defaultsRegistry) {
 

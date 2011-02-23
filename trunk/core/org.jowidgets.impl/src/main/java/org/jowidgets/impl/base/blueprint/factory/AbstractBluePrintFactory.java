@@ -57,22 +57,19 @@ public abstract class AbstractBluePrintFactory implements IBaseBluePrintFactory 
 	@Override
 	@SuppressWarnings("unchecked")
 	public <WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>, BLUE_PRINT_TYPE extends IComponentSetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
-		final Class<BLUE_PRINT_TYPE> bluePrintType,
-		final Class<DESCRIPTOR_TYPE> descriptorType) {
+		final Class<BLUE_PRINT_TYPE> bluePrintType) {
 		//This cast is necessary for compilation with sun compiler. 
 		//It compiles in eclipse Version: Helios Service Release 1 Build id: 20100917-0705
 		//without the cast, so don't remove the cast
-		return (BLUE_PRINT_TYPE) createProxy(bluePrintType, descriptorType);
+		return (BLUE_PRINT_TYPE) createProxy(bluePrintType);
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	protected <BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends IWidgetCommon>> BLUE_PRINT_TYPE createProxy(
-		final Class<? extends IWidgetDescriptor> bluePrintType,
-		final Class<? extends IWidgetDescriptor> descriptorType) {
+		final Class<? extends IWidgetDescriptor> bluePrintType) {
 
 		return (BLUE_PRINT_TYPE) new BluePrintProxyProvider<IFrameBluePrintSpi>(
 			bluePrintType,
-			descriptorType,
 			setupBuilderConvenienceRegistry,
 			defaultInitializerRegistry).getBluePrint();
 	}

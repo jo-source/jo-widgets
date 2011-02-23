@@ -142,38 +142,22 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 	}
 
 	private void registerUiWidgets() {
-		registerUiWidget(IFrameDescriptorUi.class, IFrameUi.class, IFrameDescriptor.class, IFrameBluePrint.class);
-		registerUiWidget(IButtonDescriptorUi.class, IButtonUi.class, IButtonDescriptor.class, IButtonBluePrint.class);
-		registerUiWidget(IToolBarDescriptorUi.class, IToolBarUi.class, IToolBarDescriptor.class, IToolBarBluePrint.class);
-		registerUiWidget(IComboBoxDescriptorUi.class, IComboBoxUi.class, IComboBoxDescriptor.class, IComboBoxBluePrint.class);
-		registerUiWidget(ICheckBoxDescriptorUi.class, ICheckBoxUi.class, ICheckBoxDescriptor.class, ICheckBoxBluePrint.class);
-		registerUiWidget(
-				IToggleButtonDescriptorUi.class,
-				IToggleButtonUi.class,
-				IToggleButtonDescriptor.class,
-				IToggleButtonBluePrint.class);
-		registerUiWidget(ITextLabelDescriptorUi.class, ITextLabelUi.class, ITextLabelDescriptor.class, ITextLabelBluePrint.class);
-		registerUiWidget(IIconDescriptorUi.class, IIconUi.class, IIconDescriptor.class, IIconBluePrint.class);
-		registerUiWidget(
-				ISplitCompositeDescriptorUi.class,
-				ISplitCompositeUi.class,
-				ISplitCompositeDescriptor.class,
-				ISplitCompositeBluePrint.class);
-		registerUiWidget(
-				IScrollCompositeDescriptorUi.class,
-				IScrollCompositeUi.class,
-				IScrollCompositeDescriptor.class,
-				IScrollCompositeBluePrint.class);
-		registerUiWidget(ICompositeDescriptorUi.class, ICompositeUi.class, ICompositeDescriptor.class, ICompositeBluePrint.class);
+		registerUiWidget(IFrameDescriptorUi.class, IFrameUi.class, IFrameBluePrint.class);
+		registerUiWidget(IButtonDescriptorUi.class, IButtonUi.class, IButtonBluePrint.class);
+		registerUiWidget(IToolBarDescriptorUi.class, IToolBarUi.class, IToolBarBluePrint.class);
+		registerUiWidget(IComboBoxDescriptorUi.class, IComboBoxUi.class, IComboBoxBluePrint.class);
+		registerUiWidget(ICheckBoxDescriptorUi.class, ICheckBoxUi.class, ICheckBoxBluePrint.class);
+		registerUiWidget(IToggleButtonDescriptorUi.class, IToggleButtonUi.class, IToggleButtonBluePrint.class);
+		registerUiWidget(ITextLabelDescriptorUi.class, ITextLabelUi.class, ITextLabelBluePrint.class);
+		registerUiWidget(IIconDescriptorUi.class, IIconUi.class, IIconBluePrint.class);
+		registerUiWidget(ISplitCompositeDescriptorUi.class, ISplitCompositeUi.class, ISplitCompositeBluePrint.class);
+		registerUiWidget(IScrollCompositeDescriptorUi.class, IScrollCompositeUi.class, IScrollCompositeBluePrint.class);
+		registerUiWidget(ICompositeDescriptorUi.class, ICompositeUi.class, ICompositeBluePrint.class);
 	}
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
-	private void registerUiWidget(
-		final Class uiDescriptorType,
-		final Class uiWidgetType,
-		final Class descriptorType,
-		final Class bluePrintType) {
-		register(uiDescriptorType, new UiWidgetFactory(this, uiWidgetType, bluePrintType, descriptorType));
+	private void registerUiWidget(final Class uiDescriptorType, final Class uiWidgetType, final Class bluePrintType) {
+		register(uiDescriptorType, new UiWidgetFactory(this, uiWidgetType, bluePrintType));
 	}
 
 	protected IWidgetFactorySpi getSpiWidgetFactory() {

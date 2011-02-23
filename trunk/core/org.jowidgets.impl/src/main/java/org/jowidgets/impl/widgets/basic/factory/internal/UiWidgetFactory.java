@@ -44,18 +44,15 @@ public class UiWidgetFactory<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extend
 	private final IGenericWidgetFactory genericWidgetFactory;
 	private final Class<?> uiWidgetType;
 	private final Class bluePrintType;
-	private final Class descriptorType;
 
 	public UiWidgetFactory(
 		final IGenericWidgetFactory genericWidgetFactory,
 		final Class<?> uiWidgetType,
-		final Class bluePrintType,
-		final Class descriptorType) {
+		final Class bluePrintType) {
 
 		this.genericWidgetFactory = genericWidgetFactory;
 		this.uiWidgetType = uiWidgetType;
 		this.bluePrintType = bluePrintType;
-		this.descriptorType = descriptorType;
 	}
 
 	// TODO LG better exception descriptions
@@ -67,7 +64,7 @@ public class UiWidgetFactory<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extend
 		// Don't remove cast from Object to IComponentSetupBuilder, its necessary for sun compiler. 
 		// Its not possible to set this cast before factory.bluePrint(...) 
 		// because save action of eclipse think its a unnecessary cast and will remove it.
-		final Object obj = factory.bluePrint(bluePrintType, descriptorType);
+		final Object obj = factory.bluePrint(bluePrintType);
 		final IComponentSetupBuilder<?> bluePrint = (IComponentSetupBuilder<?>) obj;
 		final IWidgetDescriptor<?> uiBluePrint = (IWidgetDescriptor<?>) bluePrint.setSetup(descriptor);
 

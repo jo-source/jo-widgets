@@ -62,32 +62,6 @@ import org.jowidgets.test.api.widgets.blueprint.IToolBarContainerItemBluePrintUi
 import org.jowidgets.test.api.widgets.blueprint.IToolBarPopupButtonBluePrintUi;
 import org.jowidgets.test.api.widgets.blueprint.IToolBarToggleButtonBluePrintUi;
 import org.jowidgets.test.api.widgets.blueprint.factory.IBasicSimpleTestBluePrintFactory;
-import org.jowidgets.test.api.widgets.descriptor.IActionMenuItemDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.IButtonDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.ICheckBoxDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.ICheckedMenuItemDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.IComboBoxDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.IComboBoxSelectionDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.ICompositeDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.IDialogDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.IFrameDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.IIconDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.IMainMenuDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.IRadioMenuItemDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.IScrollCompositeDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.ISeparatorDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.ISeparatorMenuItemDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.ISeparatorToolBarItemDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.ISplitCompositeDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.ISubMenuDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.ITextFieldDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.ITextLabelDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.IToggleButtonDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.IToolBarButtonDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.IToolBarContainerItemDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.IToolBarDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.IToolBarPopupButtonDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.IToolBarToggleButtonDescriptorUi;
 
 public class BasicSimpleTestBluePrintFactory extends AbstractBluePrintFactory implements IBasicSimpleTestBluePrintFactory {
 
@@ -103,68 +77,68 @@ public class BasicSimpleTestBluePrintFactory extends AbstractBluePrintFactory im
 
 	@Override
 	public IButtonBluePrintUi button() {
-		return createProxy(IButtonBluePrintUi.class, IButtonDescriptorUi.class);
+		return createProxy(IButtonBluePrintUi.class);
 	}
 
 	@Override
 	public IFrameBluePrintUi frame() {
-		return createProxy(IFrameBluePrintUi.class, IFrameDescriptorUi.class);
+		return createProxy(IFrameBluePrintUi.class);
 	}
 
 	@Override
 	public IDialogBluePrintUi dialog() {
-		return createProxy(IDialogBluePrintUi.class, IDialogDescriptorUi.class);
+		return createProxy(IDialogBluePrintUi.class);
 	}
 
 	@Override
 	public ICompositeBluePrintUi composite() {
-		return createProxy(ICompositeBluePrintUi.class, ICompositeDescriptorUi.class);
+		return createProxy(ICompositeBluePrintUi.class);
 	}
 
 	@Override
 	public IScrollCompositeBluePrintUi scrollComposite() {
-		return createProxy(IScrollCompositeBluePrintUi.class, IScrollCompositeDescriptorUi.class);
+		return createProxy(IScrollCompositeBluePrintUi.class);
 	}
 
 	@Override
 	public ISplitCompositeBluePrintUi splitComposite() {
-		return createProxy(ISplitCompositeBluePrintUi.class, ISplitCompositeDescriptorUi.class);
+		return createProxy(ISplitCompositeBluePrintUi.class);
 	}
 
 	@Override
 	public ITextLabelBluePrintUi textLabel() {
-		return createProxy(ITextLabelBluePrintUi.class, ITextLabelDescriptorUi.class);
+		return createProxy(ITextLabelBluePrintUi.class);
 	}
 
 	@Override
 	public IIconBluePrintUi icon() {
-		return createProxy(IIconBluePrintUi.class, IIconDescriptorUi.class);
+		return createProxy(IIconBluePrintUi.class);
 	}
 
 	@Override
 	public ISeparatorBluePrintUi separator() {
-		return createProxy(ISeparatorBluePrintUi.class, ISeparatorDescriptorUi.class);
+		return createProxy(ISeparatorBluePrintUi.class);
 	}
 
 	@Override
 	public ITextFieldBluePrintUi textField() {
-		return createProxy(ITextFieldBluePrintUi.class, ITextFieldDescriptorUi.class);
+		return createProxy(ITextFieldBluePrintUi.class);
 	}
 
 	@Override
 	public ICheckBoxBluePrintUi checkBox() {
-		return createProxy(ICheckBoxBluePrintUi.class, ICheckBoxDescriptorUi.class);
+		return createProxy(ICheckBoxBluePrintUi.class);
 	}
 
 	@Override
 	public IToggleButtonBluePrintUi toggleButton() {
-		return createProxy(IToggleButtonBluePrintUi.class, IToggleButtonDescriptorUi.class);
+		return createProxy(IToggleButtonBluePrintUi.class);
 	}
 
 	@Override
 	public <INPUT_TYPE> IComboBoxBluePrintUi<INPUT_TYPE> comboBox(final IConverter<INPUT_TYPE> converter) {
 
-		final IComboBoxBluePrintUi<INPUT_TYPE> result = createProxy(IComboBoxBluePrintUi.class, IComboBoxDescriptorUi.class);
+		final IComboBoxBluePrintUi<INPUT_TYPE> result = createProxy(IComboBoxBluePrintUi.class);
 
 		return result.setObjectStringConverter(converter).setStringObjectConverter(converter);
 	}
@@ -173,70 +147,68 @@ public class BasicSimpleTestBluePrintFactory extends AbstractBluePrintFactory im
 	public <INPUT_TYPE> IComboBoxSelectionBluePrintUi<INPUT_TYPE> comboBoxSelection(
 		final IObjectStringConverter<INPUT_TYPE> objectStringConverter) {
 
-		final IComboBoxSelectionBluePrintUi<INPUT_TYPE> result = createProxy(
-				IComboBoxSelectionBluePrintUi.class,
-				IComboBoxSelectionDescriptorUi.class);
+		final IComboBoxSelectionBluePrintUi<INPUT_TYPE> result = createProxy(IComboBoxSelectionBluePrintUi.class);
 
 		return result.setObjectStringConverter(objectStringConverter);
 	}
 
 	@Override
 	public IActionMenuItemBluePrintUi menuItem() {
-		return createProxy(IActionMenuItemBluePrintUi.class, IActionMenuItemDescriptorUi.class);
+		return createProxy(IActionMenuItemBluePrintUi.class);
 	}
 
 	@Override
 	public IRadioMenuItemBluePrintUi radioMenuItem() {
-		return createProxy(IRadioMenuItemBluePrintUi.class, IRadioMenuItemDescriptorUi.class);
+		return createProxy(IRadioMenuItemBluePrintUi.class);
 	}
 
 	@Override
 	public ICheckedMenuItemBluePrintUi checkedMenuItem() {
-		return createProxy(ICheckedMenuItemBluePrintUi.class, ICheckedMenuItemDescriptorUi.class);
+		return createProxy(ICheckedMenuItemBluePrintUi.class);
 	}
 
 	@Override
 	public ISubMenuBluePrintUi subMenu() {
-		return createProxy(ISubMenuBluePrintUi.class, ISubMenuDescriptorUi.class);
+		return createProxy(ISubMenuBluePrintUi.class);
 	}
 
 	@Override
 	public IMainMenuBluePrintUi mainMenu() {
-		return createProxy(IMainMenuBluePrintUi.class, IMainMenuDescriptorUi.class);
+		return createProxy(IMainMenuBluePrintUi.class);
 	}
 
 	@Override
 	public ISeparatorMenuItemBluePrintUi menuSeparator() {
-		return createProxy(ISeparatorMenuItemBluePrintUi.class, ISeparatorMenuItemDescriptorUi.class);
+		return createProxy(ISeparatorMenuItemBluePrintUi.class);
 	}
 
 	@Override
 	public ISeparatorToolBarItemBluePrintUi toolBarSeparator() {
-		return createProxy(ISeparatorToolBarItemBluePrintUi.class, ISeparatorToolBarItemDescriptorUi.class);
+		return createProxy(ISeparatorToolBarItemBluePrintUi.class);
 	}
 
 	@Override
 	public IToolBarBluePrintUi toolBar() {
-		return createProxy(IToolBarBluePrintUi.class, IToolBarDescriptorUi.class);
+		return createProxy(IToolBarBluePrintUi.class);
 	}
 
 	@Override
 	public IToolBarButtonBluePrintUi toolBarButton() {
-		return createProxy(IToolBarButtonBluePrintUi.class, IToolBarButtonDescriptorUi.class);
+		return createProxy(IToolBarButtonBluePrintUi.class);
 	}
 
 	@Override
 	public IToolBarToggleButtonBluePrintUi toolBarToggleButton() {
-		return createProxy(IToolBarToggleButtonBluePrintUi.class, IToolBarToggleButtonDescriptorUi.class);
+		return createProxy(IToolBarToggleButtonBluePrintUi.class);
 	}
 
 	@Override
 	public IToolBarPopupButtonBluePrintUi toolBarPopupButton() {
-		return createProxy(IToolBarPopupButtonBluePrintUi.class, IToolBarPopupButtonDescriptorUi.class);
+		return createProxy(IToolBarPopupButtonBluePrintUi.class);
 	}
 
 	@Override
 	public IToolBarContainerItemBluePrintUi toolBarContainerItem() {
-		return createProxy(IToolBarContainerItemBluePrintUi.class, IToolBarContainerItemDescriptorUi.class);
+		return createProxy(IToolBarContainerItemBluePrintUi.class);
 	}
 }
