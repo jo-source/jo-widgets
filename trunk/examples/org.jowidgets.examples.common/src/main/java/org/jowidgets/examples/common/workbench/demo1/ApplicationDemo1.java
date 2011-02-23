@@ -31,13 +31,13 @@ package org.jowidgets.examples.common.workbench.demo1;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.types.QuestionResult;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.workbench.api.IComponentTreeNode;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
@@ -66,7 +66,7 @@ public class ApplicationDemo1 implements IWorkbenchApplication {
 
 	@Override
 	public IImageConstant getIcon() {
-		return IconsSmall.INFO;
+		return SilkIcons.USER_GREEN;
 	}
 
 	@Override

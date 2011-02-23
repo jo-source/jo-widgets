@@ -71,7 +71,7 @@ public class WorkbenchDemo1 implements IWorkbench {
 
 	@Override
 	public IImageConstant getIcon() {
-		return null;
+		return SilkIcons.EMOTICON_SMILE;
 	}
 
 	@Override

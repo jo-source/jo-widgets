@@ -113,19 +113,19 @@ public class WorkbenchContext implements IWorkbenchContext {
 			rootFrame.setMenuBar(menuBarModel);
 		}
 		if (toolBarModel != null) {
-			rootFrame.setLayout(new MigLayoutDescriptor("3[grow]3", "0[]0[grow][]"));
+			rootFrame.setLayout(new MigLayoutDescriptor("3[grow]3", "3[]3[grow][]"));
 			final IToolBar toolBar = rootFrame.add(bpf.toolBar(), "grow, wrap");
 			toolBar.setModel(toolBarModel);
 		}
 		else {
-			rootFrame.setLayout(new MigLayoutDescriptor("3[grow]3", "[grow][]"));
+			rootFrame.setLayout(new MigLayoutDescriptor("3[grow]3", "3[grow][]"));
 		}
 
 		final IComposite rootComposite = rootFrame.add(bpf.composite(), "growx, growy, w 0::, h 0::, wrap");
 		rootComposite.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));
 
 		final ISplitComposite splitComposite = rootComposite.add(
-				bpf.splitHorizontal().setResizePolicy(SplitResizePolicy.RESIZE_FIRST).setWeight(0.25).disableBorders(),
+				bpf.splitHorizontal().setResizePolicy(SplitResizePolicy.RESIZE_SECOND).setWeight(0.25).disableBorders(),
 				"growx, growy, h 0::, w 0::");
 
 		final IContainer applicationsContainer = splitComposite.getFirst();
