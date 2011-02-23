@@ -39,7 +39,7 @@ public class SplitCompositeWidgetDefaults implements IDefaultInitializer<ISplitC
 	@Override
 	public void initialize(final ISplitCompositeSetupBuilder<?> builder) {
 		builder.setOrientation(Orientation.HORIZONTAL);
-		builder.setDividerSize(4);
+		builder.setDividerSize(3);
 		builder.setWeight(0.5);
 		builder.setResizePolicy(SplitResizePolicy.RESIZE_BOTH);
 		builder.setFirstBorder(new Border());
