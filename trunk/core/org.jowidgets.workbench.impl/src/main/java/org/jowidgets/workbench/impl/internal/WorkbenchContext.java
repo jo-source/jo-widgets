@@ -136,6 +136,7 @@ public class WorkbenchContext implements IWorkbenchContext {
 				"growx, growy, h 0::, w 0::");
 
 		contentContainer = splitComposite.getSecond();
+		contentContainer.add(bpf.compositeWithBorder(), "growx, growy");
 
 		if (workbench.hasStatusBar()) {
 			statusBar = rootFrame.add(bpf.composite(), "growx, h 22!");

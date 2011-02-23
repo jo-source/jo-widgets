@@ -74,6 +74,9 @@ public class ComponentDemo1 extends AbstractComponent implements IComponent {
 		else if (ViewDemo5.ID.equals(viewId)) {
 			return new ViewDemo5();
 		}
+		else if (ViewDemo6.ID.equals(viewId)) {
+			return new ViewDemo6();
+		}
 		else {
 			throw new IllegalArgumentException("View id '" + viewId + "' is not known.");
 		}
