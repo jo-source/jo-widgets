@@ -318,9 +318,8 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 
 	@Override
 	public <WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>, BLUE_PRINT_TYPE extends IComponentSetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
-		final Class<BLUE_PRINT_TYPE> bluePrintType,
-		final Class<DESCRIPTOR_TYPE> descriptorType) {
-		return bluePrintFactory.bluePrint(bluePrintType, descriptorType);
+		final Class<BLUE_PRINT_TYPE> bluePrintType) {
+		return bluePrintFactory.bluePrint(bluePrintType);
 	}
 
 	@Override
