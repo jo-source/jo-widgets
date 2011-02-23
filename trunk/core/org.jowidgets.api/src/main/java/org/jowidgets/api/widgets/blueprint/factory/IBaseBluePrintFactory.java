@@ -40,8 +40,7 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 public interface IBaseBluePrintFactory {
 
 	<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>, BLUE_PRINT_TYPE extends IComponentSetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
-		final Class<BLUE_PRINT_TYPE> bluePrintType,
-		final Class<DESCRIPTOR_TYPE> descriptorType);
+		final Class<BLUE_PRINT_TYPE> bluePrintType);
 
 	ISetupBuilderConvenienceRegistry getSetupBuilderConvenienceRegistry();
 
