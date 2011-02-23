@@ -35,20 +35,4 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ApiBlackBoxTestSuite.class})
-public class BlackBoxSuiteTest {
-
-	//	private BlackBoxTestSuite() {};
-	//
-	//	public static Test suite() {
-	//		final TestSuite suite = new TestSuite(BlackBoxTestSuite.class.getName());
-	//		//$JUnit-BEGIN$
-	//		suite.addTest(ApiBlackBoxTestSuite.suite());
-	//		//$JUnit-END$
-	//		return suite;
-	//	}
-	//
-	//	@Test
-	//	public final void testSuite() {
-	//		fail("Not yet implemented"); // TODO
-	//	}
-}
+public class BlackBoxSuiteTest {}
