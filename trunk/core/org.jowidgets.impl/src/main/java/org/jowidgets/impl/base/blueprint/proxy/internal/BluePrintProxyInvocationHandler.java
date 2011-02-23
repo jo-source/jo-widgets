@@ -77,7 +77,7 @@ public class BluePrintProxyInvocationHandler implements InvocationHandler {
 
 		this.widgetDescrType = (Class<? extends IWidgetDescriptor>) getDescriptorInterface(bluePrintType);
 		if (this.widgetDescrType == null) {
-			throw new IllegalStateException("For the blueprint-type '"
+			throw new IllegalArgumentException("For the blueprint-type '"
 				+ bluePrintType
 				+ "' there are either multiple desriptors defined or there is no descriptor defined!");
 		}
