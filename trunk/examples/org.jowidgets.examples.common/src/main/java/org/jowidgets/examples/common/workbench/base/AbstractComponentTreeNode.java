@@ -81,7 +81,7 @@ public abstract class AbstractComponentTreeNode implements IComponentTreeNode {
 		return icon;
 	}
 
-	protected IComponentTreeNodeContext getContext() {
+	public IComponentTreeNodeContext getContext() {
 		return context;
 	}
 

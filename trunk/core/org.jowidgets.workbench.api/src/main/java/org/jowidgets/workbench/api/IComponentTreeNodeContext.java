@@ -27,6 +27,8 @@
  */
 package org.jowidgets.workbench.api;
 
+import org.jowidgets.common.image.IImageConstant;
+
 public interface IComponentTreeNodeContext {
 
 	void add(IComponentTreeNode componentTreeNode);
@@ -36,6 +38,14 @@ public interface IComponentTreeNodeContext {
 	void remove(IComponentTreeNode componentTreeNode);
 
 	void select();
+
+	void setExpanded(boolean expanded);
+
+	void setLabel(String label);
+
+	void setTooltip(String tooltip);
+
+	void setIcon(IImageConstant icon);
 
 	IComponentTreeNodeContext getParent();
 

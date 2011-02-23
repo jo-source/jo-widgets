@@ -28,6 +28,9 @@
 
 package org.jowidgets.workbench.impl.internal;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.ITabItem;
@@ -36,6 +39,7 @@ import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.tools.layout.MigLayoutFactory;
+import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.IComponentTreeNode;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
@@ -46,6 +50,7 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 	private final WorkbenchContext workbenchContext;
 	private final ITree tree;
 	private final IContainer contentContainer;
+	private final Map<IComponentTreeNode, ITreeNode> createdNodes;
 
 	public WorkbenchApplicationContext(
 		final WorkbenchContext workbenchContext,
@@ -55,6 +60,7 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 
 		this.workbenchContext = workbenchContext;
 		this.contentContainer = contentContainer;
+		this.createdNodes = new HashMap<IComponentTreeNode, ITreeNode>();
 
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
@@ -81,13 +87,20 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 
 	@Override
 	public void add(final int index, final IComponentTreeNode componentTreeNode) {
+		Assert.paramNotNull(componentTreeNode, "componentTreeNode");
 		final ITreeNode node = tree.addNode(index);
+		createdNodes.put(componentTreeNode, node);
 		new ComponentTreeNodeContext(componentTreeNode, node, null, this, workbenchContext);
 	}
 
 	@Override
 	public void remove(final IComponentTreeNode componentTreeNode) {
-		// TODO MG implement remove component tree node
+		Assert.paramNotNull(componentTreeNode, "componentTreeNode");
+		final ITreeNode node = createdNodes.get(componentTreeNode);
+		if (node != null) {
+			node.setSelected(false);
+			tree.removeNode(node);
+		}
 	}
 
 	@Override

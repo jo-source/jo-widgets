@@ -31,6 +31,7 @@ package org.jowidgets.impl.widgets.basic;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITree;
@@ -52,6 +53,10 @@ public class TreeNodeImpl extends TreeNodeSpiWrapper implements ITreeNode {
 	private final TreeNodeImpl parentNode;
 	private final TreeContainerDelegate treeContainerDelegate;
 
+	private final IPopupDetectionListener popupListener;
+	private IMenuModel popupMenuModel;
+	private IPopupMenu popupMenu;
+
 	public TreeNodeImpl(final TreeImpl parentTree, final TreeNodeImpl parentNode, final ITreeNodeSpi widget) {
 		this(parentTree, parentNode, widget, Toolkit.getBluePrintFactory().treeNode());
 	}
@@ -62,6 +67,22 @@ public class TreeNodeImpl extends TreeNodeSpiWrapper implements ITreeNode {
 		final ITreeNodeSpi widget,
 		final ITreeNodeDescriptor descriptor) {
 		super(widget);
+
+		this.popupListener = new IPopupDetectionListener() {
+
+			@Override
+			public void popupDetected(final Position position) {
+				if (popupMenuModel != null) {
+					if (popupMenu == null) {
+						popupMenu = new PopupMenuImpl(getWidget().createPopupMenu(), parentTree);
+					}
+					if (popupMenu.getModel() != popupMenuModel) {
+						popupMenu.setModel(popupMenuModel);
+					}
+					popupMenu.show(position);
+				}
+			}
+		};
 
 		this.parentTree = parentTree;
 		this.parentNode = parentNode;
@@ -191,6 +212,17 @@ public class TreeNodeImpl extends TreeNodeSpiWrapper implements ITreeNode {
 	@Override
 	public boolean isTopLevel() {
 		return getParent() == null;
+	}
+
+	@Override
+	public void setPopupMenu(final IMenuModel popupMenuModel) {
+		if (popupMenuModel == null && this.popupMenuModel != null) {
+			removePopupDetectionListener(popupListener);
+		}
+		else if (popupMenuModel != null && this.popupMenuModel == null) {
+			addPopupDetectionListener(popupListener);
+		}
+		this.popupMenuModel = popupMenuModel;
 	}
 
 	private void checkIcon() {

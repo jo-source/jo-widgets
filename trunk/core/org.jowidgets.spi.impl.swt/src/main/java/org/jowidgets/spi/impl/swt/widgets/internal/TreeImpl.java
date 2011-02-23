@@ -279,13 +279,19 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi {
 
 		for (final TreeItem wasSelected : lastSelection) {
 			if (!newSelectionList.contains(wasSelected)) {
-				items.get(wasSelected).fireSelectionChanged(false);
+				final TreeNodeImpl treeNodeImpl = items.get(wasSelected);
+				if (treeNodeImpl != null) {
+					treeNodeImpl.fireSelectionChanged(false);
+				}
 			}
 		}
 
 		for (final TreeItem isSelected : newSelectionList) {
 			if (!lastSelection.contains(isSelected)) {
-				items.get(isSelected).fireSelectionChanged(true);
+				final TreeNodeImpl treeNodeImpl = items.get(isSelected);
+				if (treeNodeImpl != null) {
+					treeNodeImpl.fireSelectionChanged(true);
+				}
 			}
 		}
 

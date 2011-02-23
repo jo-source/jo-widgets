@@ -30,6 +30,7 @@ package org.jowidgets.api.widgets;
 
 import java.util.List;
 
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.widgets.ITreeNodeCommon;
 
 public interface ITreeNode extends IItem, ITreeContainer, ITreeNodeCommon {
@@ -59,6 +60,15 @@ public interface ITreeNode extends IItem, ITreeContainer, ITreeNodeCommon {
 	 * @return A IPopupMenu for this node
 	 */
 	IPopupMenu createPopupMenu();
+
+	/**
+	 * Sets a popup menu for this node.
+	 * The popup menu will be shown, when an popup event occurs on this node.
+	 * 
+	 * @param menuModel
+	 *            The model of the popup menu or null, if no popup should be shown on popup events
+	 */
+	void setPopupMenu(IMenuModel popupMenu);
 
 	@Override
 	ITreeNode getParent();

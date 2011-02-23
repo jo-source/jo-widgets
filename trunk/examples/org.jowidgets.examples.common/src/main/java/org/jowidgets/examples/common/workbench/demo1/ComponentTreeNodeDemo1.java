@@ -31,22 +31,30 @@ package org.jowidgets.examples.common.workbench.demo1;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.command.IActionBuilder;
+import org.jowidgets.api.command.ICommandExecutor;
+import org.jowidgets.api.command.IExecutionContext;
 import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractComponentTreeNode;
+import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentTreeNode;
+import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 
 public class ComponentTreeNodeDemo1 extends AbstractComponentTreeNode {
 
 	private final List<IComponentTreeNode> children;
 
 	public ComponentTreeNodeDemo1(final String id, final String label) {
-		this(id, label, null, null, new LinkedList<IComponentTreeNode>());
+		this(id, label, null, SilkIcons.PAGE_WHITE, new LinkedList<IComponentTreeNode>());
 	}
 
 	public ComponentTreeNodeDemo1(final String id, final String label, final List<IComponentTreeNode> children) {
-		this(id, label, null, null, children);
+		this(id, label, null, SilkIcons.PAGE_WHITE, children);
 	}
 
 	public ComponentTreeNodeDemo1(
@@ -68,7 +76,31 @@ public class ComponentTreeNodeDemo1 extends AbstractComponentTreeNode {
 
 	@Override
 	public IMenuModel createPopupMenu() {
-		return null;
+		final IMenuModel result = new MenuModel();
+		result.addAction(createDeleteComponentAction());
+		return result;
+	}
+
+	private IAction createDeleteComponentAction() {
+		final IActionBuilder actionBuilder = Toolkit.getActionBuilderFactory().create();
+		actionBuilder.setText("Delete " + getLabel());
+		actionBuilder.setIcon(SilkIcons.FOLDER_DELETE);
+		actionBuilder.setCommand(new ICommandExecutor() {
+
+			@Override
+			public void execute(final IExecutionContext executionContext) throws Exception {
+				final IComponentTreeNodeContext parentTreeNode = getContext().getParent();
+				if (parentTreeNode == null) {
+					getContext().getWorkbenchApplicationContext().remove(ComponentTreeNodeDemo1.this);
+				}
+				else {
+					parentTreeNode.remove(ComponentTreeNodeDemo1.this);
+				}
+			}
+
+		});
+
+		return actionBuilder.build();
 	}
 
 	@Override

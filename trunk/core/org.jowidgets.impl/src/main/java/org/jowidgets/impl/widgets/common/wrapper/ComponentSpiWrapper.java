@@ -43,7 +43,6 @@ import org.jowidgets.spi.widgets.IComponentSpi;
 public class ComponentSpiWrapper extends WidgetSpiWrapper implements IComponentCommon {
 
 	private final IPopupDetectionListener popupListener;
-
 	private IMenuModel popupMenuModel;
 	private IPopupMenu popupMenu;
 

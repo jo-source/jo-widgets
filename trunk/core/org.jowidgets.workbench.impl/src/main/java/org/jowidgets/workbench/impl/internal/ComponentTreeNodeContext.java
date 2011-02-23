@@ -28,11 +28,18 @@
 
 package org.jowidgets.workbench.impl.internal;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.jowidgets.api.model.IListModelListener;
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.controler.ITreeNodeListener;
+import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentTreeNode;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
@@ -44,6 +51,9 @@ public class ComponentTreeNodeContext implements IComponentTreeNodeContext {
 	private final WorkbenchContext workbenchContext;
 	private final WorkbenchApplicationContext workbenchApplicationContext;
 	private final ITreeNode treeNode;
+	private final IListModelListener listModelListener;
+	private final IMenuModel popupMenu;
+	private final Map<IComponentTreeNode, ITreeNode> createdNodes;
 
 	private org.jowidgets.api.widgets.IComponent content;
 	private IComponent component;
@@ -58,12 +68,38 @@ public class ComponentTreeNodeContext implements IComponentTreeNodeContext {
 		this.parentTreeNodeContext = parentTreeNodeContext;
 		this.workbenchContext = workbenchContext;
 		this.workbenchApplicationContext = workbenchApplicationContext;
+		this.createdNodes = new HashMap<IComponentTreeNode, ITreeNode>();
 
 		this.treeNode = treeNode;
 		this.treeNode.setText(componentTreeNode.getLabel());
 		this.treeNode.setToolTipText(componentTreeNode.getTooltip());
 		if (componentTreeNode.getIcon() != null) {
 			this.treeNode.setIcon(componentTreeNode.getIcon());
+		}
+
+		this.listModelListener = new IListModelListener() {
+
+			@Override
+			public void childRemoved(final int index) {
+				if (popupMenu.getChildren().size() == 0) {
+					treeNode.setPopupMenu(null);
+				}
+			}
+
+			@Override
+			public void childAdded(final int index) {
+				if (popupMenu.getChildren().size() == 0) {
+					treeNode.setPopupMenu(popupMenu);
+				}
+			}
+		};
+
+		this.popupMenu = componentTreeNode.createPopupMenu();
+		if (popupMenu != null) {
+			this.popupMenu.addListModelListener(listModelListener);
+			if (popupMenu.getChildren().size() > 0) {
+				treeNode.setPopupMenu(popupMenu);
+			}
 		}
 
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
@@ -103,9 +139,7 @@ public class ComponentTreeNodeContext implements IComponentTreeNodeContext {
 			}
 
 			@Override
-			public void expandedChanged(final boolean expanded) {
-				// TODO Auto-generated method stub
-			}
+			public void expandedChanged(final boolean expanded) {}
 		});
 
 		for (final IComponentTreeNode childComponentTreeNode : componentTreeNode.createChildren()) {
@@ -122,18 +156,45 @@ public class ComponentTreeNodeContext implements IComponentTreeNodeContext {
 
 	@Override
 	public void add(final int index, final IComponentTreeNode componentTreeNode) {
+		Assert.paramNotNull(componentTreeNode, "componentTreeNode");
 		final ITreeNode node = treeNode.addNode(index);
+		createdNodes.put(componentTreeNode, node);
 		new ComponentTreeNodeContext(componentTreeNode, node, this, workbenchApplicationContext, workbenchContext);
 	}
 
 	@Override
 	public void remove(final IComponentTreeNode componentTreeNode) {
-		// TODO MG implement remove
+		Assert.paramNotNull(componentTreeNode, "componentTreeNode");
+		final ITreeNode node = createdNodes.get(componentTreeNode);
+		if (node != null) {
+			node.setSelected(false);
+			treeNode.removeNode(node);
+		}
 	}
 
 	@Override
 	public void select() {
 		treeNode.setSelected(true);
+	}
+
+	@Override
+	public void setLabel(final String label) {
+		treeNode.setText(label);
+	}
+
+	@Override
+	public void setTooltip(final String tooltip) {
+		treeNode.setToolTipText(tooltip);
+	}
+
+	@Override
+	public void setIcon(final IImageConstant icon) {
+		treeNode.setIcon(icon);
+	}
+
+	@Override
+	public void setExpanded(final boolean expanded) {
+		treeNode.setExpanded(expanded);
 	}
 
 	@Override
