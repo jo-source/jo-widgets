@@ -88,7 +88,7 @@ public class ComponentTreeNodeContext implements IComponentTreeNodeContext {
 
 			@Override
 			public void childAdded(final int index) {
-				if (popupMenu.getChildren().size() == 0) {
+				if (popupMenu.getChildren().size() == 1) {
 					treeNode.setPopupMenu(popupMenu);
 				}
 			}

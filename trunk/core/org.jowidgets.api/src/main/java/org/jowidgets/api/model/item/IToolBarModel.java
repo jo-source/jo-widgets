@@ -36,6 +36,8 @@ import org.jowidgets.common.image.IImageConstant;
 
 public interface IToolBarModel extends IListModelObservable {
 
+	void addToolBarModel(IToolBarModel model);
+
 	<MODEL_TYPE extends IToolBarItemModel> MODEL_TYPE addItem(final MODEL_TYPE item);
 
 	<MODEL_TYPE extends IToolBarItemModel> MODEL_TYPE addItem(final int index, final MODEL_TYPE item);

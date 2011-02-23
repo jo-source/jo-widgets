@@ -44,6 +44,7 @@ import org.jowidgets.api.model.item.ISeparatorItemModel;
 import org.jowidgets.api.model.item.IToolBarItemModel;
 import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.util.Assert;
 
 class ToolBarModelImpl implements IToolBarModel {
 
@@ -59,6 +60,14 @@ class ToolBarModelImpl implements IToolBarModel {
 		final ToolBarModelImpl result = new ToolBarModelImpl();
 		result.setContent(this);
 		return result;
+	}
+
+	@Override
+	public void addToolBarModel(final IToolBarModel model) {
+		Assert.paramNotNull(model, "model");
+		for (final IToolBarItemModel item : model.getItems()) {
+			addItem(item);
+		}
 	}
 
 	protected void setContent(final IToolBarModel source) {

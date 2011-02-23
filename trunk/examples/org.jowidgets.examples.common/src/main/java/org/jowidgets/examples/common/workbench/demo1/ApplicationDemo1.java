@@ -31,6 +31,7 @@ package org.jowidgets.examples.common.workbench.demo1;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
@@ -38,6 +39,8 @@ import org.jowidgets.api.types.QuestionResult;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.examples.common.icons.SilkIcons;
+import org.jowidgets.tools.model.item.MenuModel;
+import org.jowidgets.tools.model.item.ToolBarModel;
 import org.jowidgets.workbench.api.IComponentTreeNode;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
@@ -46,8 +49,25 @@ public class ApplicationDemo1 implements IWorkbenchApplication {
 
 	private static final String ID = ApplicationDemo1.class.getName();
 
+	private final IMenuModel popupMenu;
+	private final IToolBarModel toolBar;
+	private final IMenuModel toolBarMenu;
+
+	public ApplicationDemo1() {
+		this.toolBar = new ToolBarModel();
+		this.popupMenu = new MenuModel();
+		this.toolBarMenu = new MenuModel();
+	}
+
 	@Override
-	public void onContextInitialize(final IWorkbenchApplicationContext context) {}
+	public void onContextInitialize(final IWorkbenchApplicationContext context) {
+		final ActionFactory actionFactory = new ActionFactory();
+		final IAction addFolderAction = actionFactory.createAddFolderAction(context);
+
+		popupMenu.addAction(addFolderAction);
+		toolBarMenu.addAction(addFolderAction);
+		toolBar.addAction(addFolderAction);
+	}
 
 	@Override
 	public String getId() {
@@ -113,18 +133,18 @@ public class ApplicationDemo1 implements IWorkbenchApplication {
 	}
 
 	@Override
-	public IToolBarModel createToolBar() {
-		return null;
+	public IMenuModel createPopupMenu() {
+		return popupMenu;
 	}
 
 	@Override
-	public IMenuModel createPopupMenu() {
-		return null;
+	public IToolBarModel createToolBar() {
+		return toolBar;
 	}
 
 	@Override
 	public IMenuModel createToolBarMenu() {
-		return null;
+		return toolBarMenu;
 	}
 
 }

@@ -30,27 +30,10 @@ package org.jowidgets.examples.common.workbench.demo1;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.UUID;
 
-import org.jowidgets.api.command.IAction;
-import org.jowidgets.api.command.IActionBuilder;
-import org.jowidgets.api.command.ICommandExecutor;
-import org.jowidgets.api.command.IExecutionContext;
-import org.jowidgets.api.image.IconsSmall;
-import org.jowidgets.api.model.item.IMenuModel;
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.validation.ValidationResult;
-import org.jowidgets.api.widgets.IInputControl;
-import org.jowidgets.api.widgets.IInputDialog;
-import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.api.widgets.content.IInputContentContainer;
-import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractComponentTreeNode;
-import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentTreeNode;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
@@ -80,19 +63,17 @@ public class FolderTreeNodeDemo extends AbstractComponentTreeNode {
 	}
 
 	@Override
-	public IComponent createComponent() {
-		return null;
+	public void onContextInitialize(final IComponentTreeNodeContext context) {
+		super.onContextInitialize(context);
+		final ActionFactory actionFactory = new ActionFactory();
+		getPopupMenu().addAction(actionFactory.createAddFolderAction(context));
+		getPopupMenu().addAction(actionFactory.createAddComponentAction(context));
+		getPopupMenu().addAction(actionFactory.createDeleteAction(context, this, "Delete " + getLabel(), SilkIcons.FOLDER_DELETE));
 	}
 
 	@Override
-	public IMenuModel createPopupMenu() {
-		final IMenuModel result = new MenuModel();
-
-		result.addAction(createAddFolderAction());
-		result.addAction(createAddComponentAction());
-		result.addAction(createDeleteComponentAction());
-
-		return result;
+	public IComponent createComponent() {
+		return null;
 	}
 
 	@Override
@@ -100,129 +81,4 @@ public class FolderTreeNodeDemo extends AbstractComponentTreeNode {
 		return new LinkedList<IComponentTreeNode>(children);
 	}
 
-	private IAction createDeleteComponentAction() {
-		final IActionBuilder actionBuilder = Toolkit.getActionBuilderFactory().create();
-		actionBuilder.setText("Delete " + getLabel());
-		actionBuilder.setIcon(SilkIcons.FOLDER_DELETE);
-		actionBuilder.setCommand(new ICommandExecutor() {
-
-			@Override
-			public void execute(final IExecutionContext executionContext) throws Exception {
-				final IComponentTreeNodeContext parentTreeNode = getContext().getParent();
-				if (parentTreeNode == null) {
-					getContext().getWorkbenchApplicationContext().remove(FolderTreeNodeDemo.this);
-				}
-				else {
-					parentTreeNode.remove(FolderTreeNodeDemo.this);
-				}
-			}
-
-		});
-
-		return actionBuilder.build();
-	}
-
-	private IAction createAddFolderAction() {
-		final IActionBuilder actionBuilder = Toolkit.getActionBuilderFactory().create();
-		actionBuilder.setText("Add new Folder");
-		actionBuilder.setIcon(SilkIcons.FOLDER_ADD);
-		actionBuilder.setCommand(new ICommandExecutor() {
-
-			@Override
-			public void execute(final IExecutionContext executionContext) throws Exception {
-				final IInputDialog<String> inputDialog = createInputDialog(executionContext, "Folder name");
-				inputDialog.setVisible(true);
-				if (inputDialog.isOkPressed()) {
-					final IComponentTreeNode componentTreeNode = new FolderTreeNodeDemo(
-						UUID.randomUUID().toString(),
-						inputDialog.getValue());
-
-					final IComponentTreeNodeContext parentTreeNode = getContext().getParent();
-					if (parentTreeNode == null) {
-						getContext().getWorkbenchApplicationContext().add(componentTreeNode);
-					}
-					else {
-						parentTreeNode.add(componentTreeNode);
-					}
-				}
-			}
-
-		});
-
-		return actionBuilder.build();
-	}
-
-	private IAction createAddComponentAction() {
-		final IActionBuilder actionBuilder = Toolkit.getActionBuilderFactory().create();
-		actionBuilder.setText("Add new Component");
-		actionBuilder.setIcon(SilkIcons.APPLICATION_ADD);
-		actionBuilder.setCommand(new ICommandExecutor() {
-
-			@Override
-			public void execute(final IExecutionContext executionContext) throws Exception {
-				final IInputDialog<String> inputDialog = createInputDialog(executionContext, "Component name");
-				inputDialog.setVisible(true);
-				if (inputDialog.isOkPressed()) {
-					final IComponentTreeNode componentTreeNode = new ComponentTreeNodeDemo1(
-						UUID.randomUUID().toString(),
-						inputDialog.getValue());
-					getContext().add(componentTreeNode);
-					getContext().setExpanded(true);
-				}
-			}
-
-		});
-
-		return actionBuilder.build();
-	}
-
-	private IInputDialog<String> createInputDialog(final IExecutionContext executionContext, final String inputName) {
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-		final IInputDialogBluePrint<String> inputDialogBp = bpf.inputDialog(createLabelDialogCreator(inputName));
-		inputDialogBp.setTitle(executionContext.getAction().getText());
-		inputDialogBp.setIcon(executionContext.getAction().getIcon());
-		inputDialogBp.setMissingInputText("Please enter the " + inputName);
-		inputDialogBp.setMissingInputIcon(IconsSmall.INFO);
-		inputDialogBp.setCloseable(true);
-
-		return Toolkit.getWidgetUtils().getWindowAncestor(executionContext.getSource()).createChildWindow(inputDialogBp);
-
-	}
-
-	private IInputContentCreator<String> createLabelDialogCreator(final String inputName) {
-		return new IInputContentCreator<String>() {
-
-			private IInputControl<String> inputField;
-
-			@Override
-			public void createContent(final IInputContentContainer contentContainer) {
-				final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-				contentContainer.setLayout(new MigLayoutDescriptor("[][grow]", "[]"));
-				contentContainer.add(bpf.textLabel(inputName), "");
-				inputField = contentContainer.add(bpf.inputFieldString(), "growx, w 150::");
-
-				contentContainer.registerInputWidget(inputName, inputField);
-			}
-
-			@Override
-			public void setValue(final String value) {
-				inputField.setValue(value);
-			}
-
-			@Override
-			public String getValue() {
-				return inputField.getValue();
-			}
-
-			@Override
-			public ValidationResult validate() {
-				return new ValidationResult();
-			}
-
-			@Override
-			public boolean isMandatory() {
-				return true;
-			}
-		};
-	}
 }

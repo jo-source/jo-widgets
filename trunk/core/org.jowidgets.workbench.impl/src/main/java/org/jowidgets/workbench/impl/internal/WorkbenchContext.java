@@ -66,7 +66,7 @@ public class WorkbenchContext implements IWorkbenchContext {
 	private final IContainer statusBar;
 	private final ITabFolder applicationTabFolder;
 	private final IContainer contentContainer;
-	private final IComposite emptyContext;
+	private final org.jowidgets.api.widgets.IComponent emptyContext;
 
 	public WorkbenchContext(final IWorkbench workbench, final IApplicationLifecycle lifecycle) {
 
@@ -138,7 +138,7 @@ public class WorkbenchContext implements IWorkbenchContext {
 		contentContainer = splitComposite.getSecond();
 		contentContainer.setLayout(new MigLayoutDescriptor("hidemode 3", "0[grow, 0::]0", "0[grow, 0::]0"));
 
-		emptyContext = contentContainer.add(bpf.compositeWithBorder(), "hidemode 3, growx, growy");
+		emptyContext = contentContainer.add(bpf.tabFolder(), "hidemode 3, growx, growy");
 
 		if (workbench.hasStatusBar()) {
 			statusBar = rootFrame.add(bpf.composite(), "growx, h 20!");

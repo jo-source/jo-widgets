@@ -36,6 +36,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.BorderFactory;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.ToolTipManager;
@@ -258,7 +259,9 @@ public class TreeImpl extends SwingControl implements ITreeSpi {
 		}
 
 		if (setup.isContentScrolled()) {
-			return new JScrollPane(tree);
+			final JScrollPane result = new JScrollPane(tree);
+			result.setBorder(BorderFactory.createEmptyBorder());
+			return result;
 		}
 		else {
 			return tree;

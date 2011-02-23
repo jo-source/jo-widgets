@@ -28,9 +28,11 @@
 
 package org.jowidgets.spi.impl.swing.widgets.internal;
 
+import java.awt.Color;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JTabbedPane;
 
 import org.jowidgets.common.types.TabPlacement;
@@ -57,6 +59,7 @@ public class TabFolderImpl extends SwingControl implements ITabFolderSpi {
 		this.items = new LinkedList<TabItemImpl>();
 
 		getUiReference().setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+		getUiReference().setBorder(BorderFactory.createMatteBorder(3, 1, 1, 1, (Color) null));
 
 		if (setup.getTabPlacement() == TabPlacement.TOP) {
 			getUiReference().setTabPlacement(JTabbedPane.TOP);
