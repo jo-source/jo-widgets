@@ -73,7 +73,8 @@ public class WindowImpl extends SwtWindow implements IWindowSpi {
 				if (!programaticDispose) {
 					e.doit = false;
 					if (isCloseable) {
-						if (!getUiReference().isDisposed()) {
+						final boolean veto = getWindowObservableDelegate().fireWindowClosing();
+						if (!veto && !getUiReference().isDisposed()) {
 							getUiReference().setVisible(false);
 						}
 					}

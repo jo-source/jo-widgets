@@ -31,8 +31,10 @@ package org.jowidgets.tools.controler;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.widgets.controler.IWindowListener;
 import org.jowidgets.common.widgets.controler.IWindowObservable;
+import org.jowidgets.util.ValueHolder;
 
 public class WindowObservable implements IWindowObservable {
 
@@ -81,6 +83,40 @@ public class WindowObservable implements IWindowObservable {
 		for (final IWindowListener windowListener : windowListeners) {
 			windowListener.windowClosed();
 		}
+	}
+
+	public final void fireWindowClosing(final IVetoable vetoable) {
+		final ValueHolder<Boolean> veto = new ValueHolder<Boolean>(Boolean.FALSE);
+		final IVetoable innerVetoable = new IVetoable() {
+			@Override
+			public void veto() {
+				veto.set(Boolean.TRUE);
+			}
+		};
+		for (final IWindowListener windowListener : windowListeners) {
+			windowListener.windowClosing(innerVetoable);
+			if (veto.get().booleanValue()) {
+				vetoable.veto();
+				break;
+			}
+		}
+	}
+
+	public final boolean fireWindowClosing() {
+		final ValueHolder<Boolean> veto = new ValueHolder<Boolean>(Boolean.FALSE);
+		final IVetoable vetoable = new IVetoable() {
+			@Override
+			public void veto() {
+				veto.set(Boolean.TRUE);
+			}
+		};
+		for (final IWindowListener windowListener : windowListeners) {
+			windowListener.windowClosing(vetoable);
+			if (veto.get().booleanValue()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

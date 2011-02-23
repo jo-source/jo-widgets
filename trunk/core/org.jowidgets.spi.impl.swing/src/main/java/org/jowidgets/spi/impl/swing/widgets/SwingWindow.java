@@ -50,7 +50,7 @@ public class SwingWindow extends SwingContainer implements IWindowSpi {
 
 	private final WindowObservable windowObservableDelegate;
 
-	public SwingWindow(final IGenericWidgetFactory factory, final Window window) {
+	public SwingWindow(final IGenericWidgetFactory factory, final Window window, final boolean closeable) {
 		super(factory, window);
 
 		this.windowObservableDelegate = new WindowObservable();
@@ -84,7 +84,10 @@ public class SwingWindow extends SwingContainer implements IWindowSpi {
 
 			@Override
 			public void windowClosing(final WindowEvent e) {
-				windowObservableDelegate.fireWindowClosed();
+				final boolean veto = windowObservableDelegate.fireWindowClosing();
+				if (!veto && closeable) {
+					setVisible(false);
+				}
 			}
 
 			@Override

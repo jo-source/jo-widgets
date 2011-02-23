@@ -28,6 +28,7 @@
 
 package org.jowidgets.tools.controler;
 
+import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.widgets.controler.IWindowListener;
 
 public class WindowAdapter implements IWindowListener {
@@ -46,5 +47,8 @@ public class WindowAdapter implements IWindowListener {
 
 	@Override
 	public void windowClosed() {}
+
+	@Override
+	public void windowClosing(final IVetoable vetoable) {}
 
 }

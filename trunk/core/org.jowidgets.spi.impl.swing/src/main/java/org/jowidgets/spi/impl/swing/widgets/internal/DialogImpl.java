@@ -54,15 +54,13 @@ public class DialogImpl extends SwingWindow implements IFrameSpi {
 		final SwingImageRegistry imageRegistry,
 		final Object parentUiReference,
 		final IDialogSetupSpi setup) {
-		super(factory, new JDialog((Window) parentUiReference));
+		super(factory, new JDialog((Window) parentUiReference), setup.isCloseable());
 
 		getUiReference().setTitle(setup.getTitle());
 		getUiReference().setResizable(setup.isResizable());
 		getUiReference().setModal(setup.isModal());
 
-		if (!setup.isCloseable()) {
-			getUiReference().setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-		}
+		getUiReference().setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 
 		setIcon(setup.getIcon(), imageRegistry);
 		setLayout(setup.getLayout());

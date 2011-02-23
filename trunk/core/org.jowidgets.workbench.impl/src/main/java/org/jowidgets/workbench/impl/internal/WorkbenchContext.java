@@ -68,15 +68,15 @@ public class WorkbenchContext implements IWorkbenchContext {
 	private final IContainer contentContainer;
 
 	public WorkbenchContext(final IWorkbench workbench, final IApplicationLifecycle lifecycle) {
-		this.lifecycle = lifecycle;
 
+		this.lifecycle = lifecycle;
 		this.shutdownHooks = new LinkedList<Runnable>();
 		this.bpf = Toolkit.getBluePrintFactory();
 
 		this.windowListener = new WindowAdapter() {
 
 			@Override
-			public void windowClosed() {
+			public void windowClosing(final IVetoable windowCloseVetoable) {
 				final ValueHolder<Boolean> veto = new ValueHolder<Boolean>(Boolean.FALSE);
 				final IVetoable vetoable = new IVetoable() {
 					@Override
@@ -86,13 +86,12 @@ public class WorkbenchContext implements IWorkbenchContext {
 				};
 				workbench.onWindowClose(vetoable);
 				if (veto.get().booleanValue()) {
-					//TODO MG JoWidgets window listener does not support veto at the moment
-					//CHECKSTYLE:OFF
-					System.out.println("JoWidgets window listener does not support veto at the moment");
-					//CHECKSTYLE:ON
+					windowCloseVetoable.veto();
 				}
-				runShutdownHooks();
-				lifecycle.finish();
+				else {
+					runShutdownHooks();
+					lifecycle.finish();
+				}
 			}
 
 		};

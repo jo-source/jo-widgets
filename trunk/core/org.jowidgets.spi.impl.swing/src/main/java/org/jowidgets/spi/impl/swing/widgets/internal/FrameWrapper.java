@@ -45,7 +45,7 @@ import org.jowidgets.util.TypeCast;
 public class FrameWrapper extends SwingWindow implements IFrameSpi {
 
 	public FrameWrapper(final IGenericWidgetFactory factory, final Window uiReference) {
-		super(factory, uiReference);
+		super(factory, uiReference, true);
 	}
 
 	@Override

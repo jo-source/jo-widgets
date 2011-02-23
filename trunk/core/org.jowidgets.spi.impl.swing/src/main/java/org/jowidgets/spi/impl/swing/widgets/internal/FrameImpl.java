@@ -50,14 +50,11 @@ import org.jowidgets.util.TypeCast;
 public class FrameImpl extends SwingWindow implements IFrameSpi {
 
 	public FrameImpl(final IGenericWidgetFactory factory, final SwingImageRegistry imageRegistry, final IFrameSetupSpi setup) {
-		super(factory, new JFrame());
+		super(factory, new JFrame(), setup.isCloseable());
 
 		getUiReference().setTitle(setup.getTitle());
 		getUiReference().setResizable(setup.isResizable());
-
-		if (!setup.isCloseable()) {
-			getUiReference().setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-		}
+		getUiReference().setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 
 		setIcon(setup.getIcon(), imageRegistry);
 		setLayout(setup.getLayout());
