@@ -46,7 +46,7 @@ public class ViewDemo1 extends AbstractView implements IView {
 	}
 
 	@Override
-	public void initialize(final IViewContext context) {
+	public void onContextInitialize(final IViewContext context) {
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 		final IContainer container = context.getContainer();
 		container.add(bpf.textLabel("view content 1"), "");

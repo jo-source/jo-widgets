@@ -32,9 +32,9 @@ import org.jowidgets.api.model.item.IToolBarModel;
 
 public interface IView extends ILifecycleCallback, IWorkbenchPart {
 
-	void initialize(IViewContext context);
-
 	String getId();
+
+	void onContextInitialize(IViewContext context);
 
 	void onHiddenStateChanged(boolean hidden);
 

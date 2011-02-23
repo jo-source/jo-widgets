@@ -50,7 +50,7 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 		tabItem.setToolTipText(application.getTooltip());
 		tabItem.setIcon(application.getIcon());
 
-		application.initialize(this);
+		application.onContextInitialize(this);
 	}
 
 	@Override

@@ -36,7 +36,7 @@ public interface IWorkbenchApplication extends IWorkbenchPart, ILifecycleCallbac
 
 	String getId();
 
-	void initialize(IWorkbenchApplicationContext context);
+	void onContextInitialize(IWorkbenchApplicationContext context);
 
 	List<? extends IComponentTreeNode> createComponentTreeNodes();
 

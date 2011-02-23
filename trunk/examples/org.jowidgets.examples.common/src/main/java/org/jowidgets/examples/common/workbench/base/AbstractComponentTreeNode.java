@@ -57,7 +57,7 @@ public abstract class AbstractComponentTreeNode implements IComponentTreeNode {
 	}
 
 	@Override
-	public void initialize(final IComponentTreeNodeContext context) {
+	public void onContextInitialize(final IComponentTreeNodeContext context) {
 		this.context = context;
 	}
 

@@ -35,7 +35,7 @@ public interface IComponentTreeNode extends IWorkbenchPart {
 
 	String getId();
 
-	void initialize(IComponentTreeNodeContext context);
+	void onContextInitialize(IComponentTreeNodeContext context);
 
 	IComponent createComponent();
 

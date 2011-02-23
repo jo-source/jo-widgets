@@ -32,7 +32,7 @@ import org.jowidgets.common.types.IVetoable;
 
 public interface IComponent {
 
-	void initialize(IComponentContext context);
+	void onContextInitialize(IComponentContext context);
 
 	void onActivation();
 

@@ -71,7 +71,7 @@ public class WorkbenchDemo1 implements IWorkbench {
 	}
 
 	@Override
-	public void initialize(final IWorkbenchContext context) {
+	public void onContextInitialize(final IWorkbenchContext context) {
 		this.context = context;
 	}
 

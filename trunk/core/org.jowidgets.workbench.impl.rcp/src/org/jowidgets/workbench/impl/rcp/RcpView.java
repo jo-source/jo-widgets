@@ -68,7 +68,7 @@ public final class RcpView implements IView {
 	}
 
 	@Override
-	public void initialize(final IViewContext context) {}
+	public void onContextInitialize(final IViewContext context) {}
 
 	@Override
 	public String getId() {

@@ -47,7 +47,7 @@ public class ApplicationDemo1 implements IWorkbenchApplication {
 	private static final String ID = ApplicationDemo1.class.getName();
 
 	@Override
-	public void initialize(final IWorkbenchApplicationContext context) {}
+	public void onContextInitialize(final IWorkbenchApplicationContext context) {}
 
 	@Override
 	public String getId() {

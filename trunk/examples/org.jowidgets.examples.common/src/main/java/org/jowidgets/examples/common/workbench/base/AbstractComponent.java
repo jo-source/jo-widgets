@@ -38,7 +38,7 @@ public abstract class AbstractComponent implements IComponent {
 	private IComponentContext context;
 
 	@Override
-	public void initialize(final IComponentContext context) {
+	public void onContextInitialize(final IComponentContext context) {
 		this.context = context;
 	}
 

@@ -150,7 +150,7 @@ public class WorkbenchContext implements IWorkbenchContext {
 		}
 
 		//TODO MG / HW discuss when initialize should be invoked
-		workbench.initialize(this);
+		workbench.onContextInitialize(this);
 	}
 
 	public void run() {

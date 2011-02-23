@@ -37,7 +37,7 @@ import org.jowidgets.common.types.Position;
 
 public interface IWorkbench extends IWorkbenchPart {
 
-	void initialize(IWorkbenchContext context);
+	void onContextInitialize(IWorkbenchContext context);
 
 	void onWindowClose(IVetoable vetoable);
 
