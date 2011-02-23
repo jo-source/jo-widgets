@@ -83,12 +83,12 @@ public final class SplitLayout implements ISplitLayout {
 	}
 
 	@Override
-	public ILayoutContainer createFirstContainer() {
+	public ILayoutContainer getFirstContainer() {
 		return firstLayoutContainer;
 	}
 
 	@Override
-	public ILayoutContainer createSecondContainer() {
+	public ILayoutContainer getSecondContainer() {
 		return secondLayoutContainer;
 	}
 

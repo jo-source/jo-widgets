@@ -29,8 +29,6 @@ package org.jowidgets.workbench.api;
 
 import java.util.List;
 
-import org.jowidgets.api.model.item.IMenuModel;
-
 public interface IFolderLayout extends ILayoutContainer, IWorkbenchPart {
 
 	String getId();
@@ -42,8 +40,5 @@ public interface IFolderLayout extends ILayoutContainer, IWorkbenchPart {
 	boolean isDetachable();
 
 	boolean getViewsCloseable();
-
-	//TODO MG/HW move this to IComponent (popup menus are no layout aspect)
-	IMenuModel createPopupMenu(String folderId);
 
 }

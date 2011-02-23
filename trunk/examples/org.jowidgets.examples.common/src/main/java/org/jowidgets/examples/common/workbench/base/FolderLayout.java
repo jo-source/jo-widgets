@@ -31,7 +31,6 @@ package org.jowidgets.examples.common.workbench.base;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.IFolderLayout;
@@ -114,11 +113,6 @@ public class FolderLayout implements IFolderLayout {
 	@Override
 	public boolean getViewsCloseable() {
 		return viewsCloseable;
-	}
-
-	@Override
-	public IMenuModel createPopupMenu(final String folderId) {
-		return null;
 	}
 
 }

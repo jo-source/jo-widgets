@@ -28,6 +28,7 @@
 
 package org.jowidgets.examples.common.workbench.base;
 
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
@@ -57,6 +58,16 @@ public abstract class AbstractComponent implements IComponent {
 
 	protected IComponentContext getContext() {
 		return context;
+	}
+
+	@Override
+	public IMenuModel createFolderPopupMenu(final String folderId) {
+		return null;
+	}
+
+	@Override
+	public IMenuModel createClonedFolderPopupMenu(final String originalFolderId, final String newFolderId) {
+		return null;
 	}
 
 }

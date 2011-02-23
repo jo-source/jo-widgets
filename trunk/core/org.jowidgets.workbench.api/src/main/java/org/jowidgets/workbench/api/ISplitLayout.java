@@ -42,8 +42,8 @@ public interface ISplitLayout extends ILayoutContainer {
 	 */
 	SplitResizePolicy getResizePolicy();
 
-	ILayoutContainer createFirstContainer();
+	ILayoutContainer getFirstContainer();
 
-	ILayoutContainer createSecondContainer();
+	ILayoutContainer getSecondContainer();
 
 }
