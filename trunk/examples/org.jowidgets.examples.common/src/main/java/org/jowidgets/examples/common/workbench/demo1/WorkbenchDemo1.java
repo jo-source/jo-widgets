@@ -31,7 +31,6 @@ package org.jowidgets.examples.common.workbench.demo1;
 import java.util.Collections;
 import java.util.List;
 
-import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.model.item.IMenuModel;
@@ -43,6 +42,7 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.tools.model.item.ActionItemModel;
 import org.jowidgets.tools.model.item.MenuBarModel;
 import org.jowidgets.tools.model.item.MenuModel;
@@ -54,6 +54,10 @@ import org.jowidgets.workbench.api.IWorkbenchContext;
 public class WorkbenchDemo1 implements IWorkbench {
 
 	private IWorkbenchContext context;
+
+	public WorkbenchDemo1() {
+		Toolkit.getImageRegistry().registerImageEnum(SilkIcons.class);
+	}
 
 	@Override
 	public String getLabel() {
@@ -90,8 +94,11 @@ public class WorkbenchDemo1 implements IWorkbench {
 	@Override
 	public IToolBarModel createToolBar() {
 		final IToolBarModel result = new ToolBarModel();
-		result.addItem(ActionItemModel.builder().setIcon(IconsSmall.INFO).setToolTipText("info action tooltip"));
-		result.addItem(ActionItemModel.builder().setIcon(IconsSmall.QUESTION).setToolTipText("question action tooltip"));
+		result.addItem(ActionItemModel.builder().setIcon(SilkIcons.DISK).setToolTipText("Save"));
+		result.addItem(ActionItemModel.builder().setIcon(SilkIcons.CUT).setToolTipText("CUT"));
+		result.addItem(ActionItemModel.builder().setIcon(SilkIcons.PAGE_COPY).setToolTipText("Copy"));
+		result.addItem(ActionItemModel.builder().setIcon(SilkIcons.PASTE_PLAIN).setToolTipText("Paste"));
+		result.addItem(ActionItemModel.builder().setIcon(SilkIcons.PRINTER).setToolTipText("Print"));
 		return result;
 	}
 
@@ -102,8 +109,8 @@ public class WorkbenchDemo1 implements IWorkbench {
 		fileModel.addActionItem("New ");
 		fileModel.addActionItem("Open file... ");
 		fileModel.addSeparator();
-		fileModel.addActionItem("Save");
-		fileModel.addActionItem("Save As...");
+		fileModel.addActionItem("Save", SilkIcons.DISK);
+		fileModel.addActionItem("Save As...", SilkIcons.DISK);
 		fileModel.addSeparator();
 		final IActionItemModel exitAction = fileModel.addActionItem("Exit");
 		exitAction.addActionListener(new IActionListener() {
@@ -117,9 +124,9 @@ public class WorkbenchDemo1 implements IWorkbench {
 
 		final IMenuModel editModel = new MenuModel("Edit");
 		editModel.setMnemonic('E');
-		editModel.addActionItem("Cut");
-		editModel.addActionItem("Copy");
-		editModel.addActionItem("Paste");
+		editModel.addActionItem("Cut", SilkIcons.CUT);
+		editModel.addActionItem("Copy", SilkIcons.PAGE_COPY);
+		editModel.addActionItem("Paste", SilkIcons.PASTE_PLAIN);
 
 		final IMenuBarModel menuBarModel = new MenuBarModel();
 		menuBarModel.addMenu(fileModel);
