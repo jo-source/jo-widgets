@@ -54,7 +54,7 @@ public class BluePrintFactoryProblematicDescriptorTest {
 		try {
 			problematicDescriptorBluePrintFactory.problematicDescriptor();
 		}
-		catch (final IllegalStateException ex) {
+		catch (final IllegalArgumentException ex) {
 			// Correct behavior, there should be an exception with this problematic blueprint-type
 			return;
 		}
