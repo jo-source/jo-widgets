@@ -28,8 +28,14 @@
 
 package org.jowidgets.workbench.impl.internal;
 
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.ITabItem;
+import org.jowidgets.api.widgets.ITree;
+import org.jowidgets.api.widgets.ITreeNode;
+import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.workbench.api.IComponentTreeNode;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
@@ -37,30 +43,46 @@ import org.jowidgets.workbench.api.IWorkbenchContext;
 
 public class WorkbenchApplicationContext implements IWorkbenchApplicationContext {
 
-	private final IWorkbenchContext workbenchContext;
+	private final WorkbenchContext workbenchContext;
+	private final ITree tree;
+	private final IContainer contentContainer;
 
 	public WorkbenchApplicationContext(
-		final IWorkbenchContext workbenchContext,
+		final WorkbenchContext workbenchContext,
 		final ITabItem tabItem,
 		final IContainer contentContainer,
 		final IWorkbenchApplication application) {
+
 		this.workbenchContext = workbenchContext;
+		this.contentContainer = contentContainer;
+
+		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
 		tabItem.setText(application.getLabel());
 		tabItem.setToolTipText(application.getTooltip());
 		tabItem.setIcon(application.getIcon());
+
+		tabItem.setLayout(MigLayoutFactory.growingInnerCellLayout());
+
+		final ITreeBluePrint treeBp = bpf.tree().singleSelection().setContentScrolled(true);
+		this.tree = tabItem.add(treeBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+
+		for (final IComponentTreeNode treeNode : application.createComponentTreeNodes()) {
+			add(treeNode);
+		}
 
 		application.onContextInitialize(this);
 	}
 
 	@Override
 	public void add(final IComponentTreeNode componentTreeNode) {
-		// TODO MG implement add component tree node
+		add(tree.getChildren().size(), componentTreeNode);
 	}
 
 	@Override
 	public void add(final int index, final IComponentTreeNode componentTreeNode) {
-		// TODO MG implement add component tree node
+		final ITreeNode node = tree.addNode(index);
+		new ComponentTreeNodeContext(componentTreeNode, node, null, this, workbenchContext);
 	}
 
 	@Override
@@ -71,6 +93,10 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 	@Override
 	public IWorkbenchContext getWorkbenchContext() {
 		return workbenchContext;
+	}
+
+	protected IContainer getContentContainer() {
+		return contentContainer;
 	}
 
 }

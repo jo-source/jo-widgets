@@ -66,6 +66,7 @@ public class WorkbenchContext implements IWorkbenchContext {
 	private final IContainer statusBar;
 	private final ITabFolder applicationTabFolder;
 	private final IContainer contentContainer;
+	private final IComposite emptyContext;
 
 	public WorkbenchContext(final IWorkbench workbench, final IApplicationLifecycle lifecycle) {
 
@@ -135,10 +136,12 @@ public class WorkbenchContext implements IWorkbenchContext {
 				"growx, growy, h 0::, w 0::");
 
 		contentContainer = splitComposite.getSecond();
-		contentContainer.add(bpf.compositeWithBorder(), "growx, growy");
+		contentContainer.setLayout(new MigLayoutDescriptor("hidemode 3", "0[grow, 0::]0", "0[grow, 0::]0"));
+
+		emptyContext = contentContainer.add(bpf.compositeWithBorder(), "hidemode 3, growx, growy");
 
 		if (workbench.hasStatusBar()) {
-			statusBar = rootFrame.add(bpf.composite(), "growx, h 22!");
+			statusBar = rootFrame.add(bpf.composite(), "growx, h 20!");
 		}
 		else {
 			statusBar = null;
@@ -149,6 +152,12 @@ public class WorkbenchContext implements IWorkbenchContext {
 		}
 
 		workbench.onContextInitialize(this);
+	}
+
+	public void setEmptyContentVisible(final boolean visible) {
+		if (emptyContext.isVisible() != visible) {
+			emptyContext.setVisible(visible);
+		}
 	}
 
 	public void run() {
