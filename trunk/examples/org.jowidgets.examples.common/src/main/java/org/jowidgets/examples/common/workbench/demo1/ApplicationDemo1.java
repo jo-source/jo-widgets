@@ -99,14 +99,14 @@ public class ApplicationDemo1 implements IWorkbenchApplication {
 		componentList1.add(new ComponentTreeNodeDemo1("COMPONENT1", "Component1"));
 		componentList1.add(new ComponentTreeNodeDemo1("COMPONENT2", "Component2"));
 		componentList1.add(new ComponentTreeNodeDemo1("COMPONENT3", "Component3"));
-		final EmptyTreeNodeDemo folderNode1 = new EmptyTreeNodeDemo("FOLDER1", "folder1", componentList1);
+		final EmptyTreeNodeDemo folderNode1 = new EmptyTreeNodeDemo("FOLDER1", "Folder1", componentList1);
 		result.add(folderNode1);
 
 		final List<IComponentTreeNode> componentList2 = new LinkedList<IComponentTreeNode>();
 		componentList2.add(new ComponentTreeNodeDemo1("COMPONENT1", "Component1"));
 		componentList2.add(new ComponentTreeNodeDemo1("COMPONENT2", "Component2"));
 		componentList2.add(new ComponentTreeNodeDemo1("COMPONENT3", "Component3"));
-		final EmptyTreeNodeDemo folderNode2 = new EmptyTreeNodeDemo("FOLDER2", "folder2", componentList2);
+		final EmptyTreeNodeDemo folderNode2 = new EmptyTreeNodeDemo("FOLDER2", "Folder2", componentList2);
 		result.add(folderNode2);
 
 		return result;

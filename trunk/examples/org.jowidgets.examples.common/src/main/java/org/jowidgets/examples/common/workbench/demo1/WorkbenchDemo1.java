@@ -42,6 +42,7 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.examples.common.icons.IconsInitializer;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.tools.model.item.ActionItemModel;
 import org.jowidgets.tools.model.item.MenuBarModel;
@@ -56,7 +57,7 @@ public class WorkbenchDemo1 implements IWorkbench {
 	private IWorkbenchContext context;
 
 	public WorkbenchDemo1() {
-		Toolkit.getImageRegistry().registerImageEnum(SilkIcons.class);
+		IconsInitializer.initializeIcons();
 	}
 
 	@Override
@@ -95,9 +96,11 @@ public class WorkbenchDemo1 implements IWorkbench {
 	public IToolBarModel createToolBar() {
 		final IToolBarModel result = new ToolBarModel();
 		result.addItem(ActionItemModel.builder().setIcon(SilkIcons.DISK).setToolTipText("Save"));
-		result.addItem(ActionItemModel.builder().setIcon(SilkIcons.CUT).setToolTipText("CUT"));
+		result.addSeparator();
+		result.addItem(ActionItemModel.builder().setIcon(SilkIcons.CUT).setToolTipText("Cut"));
 		result.addItem(ActionItemModel.builder().setIcon(SilkIcons.PAGE_COPY).setToolTipText("Copy"));
 		result.addItem(ActionItemModel.builder().setIcon(SilkIcons.PASTE_PLAIN).setToolTipText("Paste"));
+		result.addSeparator();
 		result.addItem(ActionItemModel.builder().setIcon(SilkIcons.PRINTER).setToolTipText("Print"));
 		return result;
 	}
@@ -147,7 +150,7 @@ public class WorkbenchDemo1 implements IWorkbench {
 
 	@Override
 	public boolean getApplicationsCloseable() {
-		return false;
+		return true;
 	}
 
 	@Override
