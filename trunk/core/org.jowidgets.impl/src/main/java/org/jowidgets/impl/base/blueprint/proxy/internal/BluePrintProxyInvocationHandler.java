@@ -75,8 +75,14 @@ public class BluePrintProxyInvocationHandler implements InvocationHandler {
 		final ISetupBuilderConvenienceRegistry convenienceRegistry,
 		final IDefaultsInitializerRegistry defaultsRegistry) {
 
-		this.widgetDescrType = widgetDescrType;
+		this.widgetDescrType = (Class<? extends IWidgetDescriptor>) getDescriptorInterface(bluePrintType);
+		if (this.widgetDescrType == null) {
+			throw new IllegalStateException("For the blueprint-type '"
+				+ bluePrintType
+				+ "' there are either multiple desriptors defined or there is no descriptor defined!");
+		}
 		this.bluePrintType = bluePrintType;
+
 		final List<Class<?>> visitedInterfaces = new ArrayList<Class<?>>();
 		initialize(
 				proxy,
@@ -286,5 +292,59 @@ public class BluePrintProxyInvocationHandler implements InvocationHandler {
 		}
 		return null;
 	}
+
+	/**
+	 * Get interfaces that the type inherits from.
+	 * 
+	 * @param bluePrintType
+	 * @return
+	 */
+	private static Class<?> getDescriptorInterface(final Class<?> bluePrintType) {
+		final Class<?>[] interfaces = bluePrintType.getInterfaces();
+		final ArrayList<Class<?>> possibleInterfaces = new ArrayList<Class<?>>();
+		for (final Class<?> c : interfaces) {
+			if (getSubInterfaces(c) != null) {
+				possibleInterfaces.add(c);
+			}
+		}
+		if (possibleInterfaces.size() == 1) {
+			return possibleInterfaces.get(0);
+		}
+		return null;
+	}
+
+	private static Class<?> getSubInterfaces(final Class<?> in) {
+		final Class<?>[] interfaces = in.getInterfaces();
+		for (final Class<?> c : interfaces) {
+			if (c.isAssignableFrom(IWidgetDescriptor.class)) {
+				return in;
+			}
+		}
+		return null;
+	}
+
+	//	/**
+	//	 * Get superclass of class.
+	//	 * 
+	//	 * @param in
+	//	 * @return
+	//	 */
+	//	private static Class<?> getSuperclass(final Class<?> in) {
+	//		if (in == null) {
+	//			return null;
+	//		}
+	//
+	//		if (in.isArray() && in != Object[].class) {
+	//			Class<?> type = in.getComponentType();
+	//
+	//			while (type.isArray()) {
+	//				type = type.getComponentType();
+	//			}
+	//
+	//			return type;
+	//		}
+	//
+	//		return in.getSuperclass();
+	//	}
 
 }

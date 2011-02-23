@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann, Lukas Gross
+ * Copyright (c) 2011, Benjamin Marstaller
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,15 +28,37 @@
 
 package org.jowidgets.api.test;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
+import org.jowidgets.api.test.blueprint.DescriptorProblematicBluePrintFactory;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-@RunWith(Suite.class)
-@SuiteClasses({
-		ToolkitTest.class, WidgetFactoryTest.class, MenuTest.class, ToolBarTest.class, TestBluePrintFactoryTest.class,
-		BluePrintFactoryTest.class, BluePrintFactoryAnnotationsTest.class, CheckMandatoryTest.class, TabFolderTest.class,
-		BluePrintFactoryProblematicDescriptorTest.class})
-public class ApiBlackBoxTestSuite {
+public class BluePrintFactoryProblematicDescriptorTest {
+
+	private static final IBluePrintFactory BLUE_PRINT_FACTORY = Toolkit.getBluePrintFactory();
+	private DescriptorProblematicBluePrintFactory problematicDescriptorBluePrintFactory;
+
+	@Before
+	public void setUp() {
+		problematicDescriptorBluePrintFactory = new DescriptorProblematicBluePrintFactory(BLUE_PRINT_FACTORY);
+	}
+
+	@After
+	public void tearDown() {}
+
+	@Test
+	public void testProblematicBluePrint() {
+		try {
+			problematicDescriptorBluePrintFactory.problematicDescriptor();
+		}
+		catch (final IllegalStateException ex) {
+			// Correct behavior, there should be an exception with this problematic blueprint-type
+			return;
+		}
+		Assert.fail("There is a problematic blueprint, this should throw an exception. But it did not!");
+	}
 
 }
