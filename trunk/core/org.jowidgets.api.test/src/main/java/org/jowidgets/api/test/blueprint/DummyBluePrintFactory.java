@@ -31,12 +31,6 @@
  */
 package org.jowidgets.api.test.blueprint;
 
-import org.jowidgets.api.test.blueprint.descriptor.IHierarchy1stDescriptor;
-import org.jowidgets.api.test.blueprint.descriptor.IHierarchy2nd1Descriptor;
-import org.jowidgets.api.test.blueprint.descriptor.IHierarchy2nd2Descriptor;
-import org.jowidgets.api.test.blueprint.descriptor.IHierarchy2nd3Descriptor;
-import org.jowidgets.api.test.blueprint.descriptor.IHierarchy3rdDescriptor;
-import org.jowidgets.api.test.blueprint.descriptor.IHierarchy4thDescriptor;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.tools.widgets.blueprint.BluePrintFactoryWrapper;
 
@@ -47,26 +41,26 @@ public class DummyBluePrintFactory extends BluePrintFactoryWrapper {
 	}
 
 	public final IHierarchy1stBluePrint hierarchy1st() {
-		return bluePrint(IHierarchy1stBluePrint.class, IHierarchy1stDescriptor.class);
+		return bluePrint(IHierarchy1stBluePrint.class);
 	}
 
 	public final IHierarchy2nd1BluePrint hierarchy2nd1() {
-		return bluePrint(IHierarchy2nd1BluePrint.class, IHierarchy2nd1Descriptor.class);
+		return bluePrint(IHierarchy2nd1BluePrint.class);
 	}
 
 	public final IHierarchy2nd2BluePrint hierarchy2nd2() {
-		return bluePrint(IHierarchy2nd2BluePrint.class, IHierarchy2nd2Descriptor.class);
+		return bluePrint(IHierarchy2nd2BluePrint.class);
 	}
 
 	public final IHierarchy2nd3BluePrint hierarchy2nd3() {
-		return bluePrint(IHierarchy2nd3BluePrint.class, IHierarchy2nd3Descriptor.class);
+		return bluePrint(IHierarchy2nd3BluePrint.class);
 	}
 
 	public final IHierarchy3rdBluePrint hierarchy3rd() {
-		return bluePrint(IHierarchy3rdBluePrint.class, IHierarchy3rdDescriptor.class);
+		return bluePrint(IHierarchy3rdBluePrint.class);
 	}
 
 	public final IHierarchy4thBluePrint hierarchy4th() {
-		return bluePrint(IHierarchy4thBluePrint.class, IHierarchy4thDescriptor.class);
+		return bluePrint(IHierarchy4thBluePrint.class);
 	}
 }

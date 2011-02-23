@@ -31,7 +31,6 @@
  */
 package org.jowidgets.api.test.blueprint;
 
-import org.jowidgets.api.test.blueprint.descriptor.IProblematicDescriptorOne;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.tools.widgets.blueprint.BluePrintFactoryWrapper;
 
@@ -42,7 +41,7 @@ public class DescriptorProblematicBluePrintFactory extends BluePrintFactoryWrapp
 	}
 
 	public final IProblematicDescriptorBluePrint problematicDescriptor() {
-		return bluePrint(IProblematicDescriptorBluePrint.class, IProblematicDescriptorOne.class);
+		return bluePrint(IProblematicDescriptorBluePrint.class);
 	}
 
 }
