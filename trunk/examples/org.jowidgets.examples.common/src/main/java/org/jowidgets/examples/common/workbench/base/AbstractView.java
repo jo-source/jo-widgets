@@ -42,7 +42,6 @@ public abstract class AbstractView implements IView {
 		this.id = id;
 	}
 
-	@Override
 	public final String getId() {
 		return id;
 	}

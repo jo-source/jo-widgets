@@ -29,9 +29,6 @@ package org.jowidgets.workbench.api;
 
 public interface IView extends ILifecycleCallback {
 
-	//TODO MG / HW is this still necessary
-	String getId();
-
 	void onHiddenStateChanged(boolean hidden);
 
 }
