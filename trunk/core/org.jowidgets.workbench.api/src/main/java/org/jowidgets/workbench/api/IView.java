@@ -31,8 +31,6 @@ public interface IView extends ILifecycleCallback {
 
 	String getId();
 
-	void onContextInitialize(IViewContext context);
-
 	void onHiddenStateChanged(boolean hidden);
 
 }
