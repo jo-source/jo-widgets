@@ -38,7 +38,6 @@ import org.jowidgets.api.widgets.blueprint.ITabFolderBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITabItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.IVetoable;
-import org.jowidgets.common.types.TabPlacement;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.types.VetoHolder;
@@ -70,7 +69,6 @@ public class FolderContext implements IFolderContext {
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
 		final ITabFolderBluePrint tabFolderBluePrint = bpf.tabFolder();
-		tabFolderBluePrint.setTabPlacement(TabPlacement.TOP);
 		tabFolderBluePrint.setTabsCloseable(folderLayout.getViewsCloseable());
 
 		this.tabFolder = parentContainer.add(tabFolderBluePrint, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
