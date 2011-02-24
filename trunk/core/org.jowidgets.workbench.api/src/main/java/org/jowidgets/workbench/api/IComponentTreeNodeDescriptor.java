@@ -27,10 +27,8 @@
  */
 package org.jowidgets.workbench.api;
 
-public interface IComponentTreeNode extends IComponentTreeNodeDescriptor {
+public interface IComponentTreeNodeDescriptor extends IWorkbenchPart {
 
-	void onContextInitialize(IComponentTreeNodeContext context);
-
-	IComponent createComponent();
+	String getId();
 
 }

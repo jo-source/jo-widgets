@@ -27,9 +27,7 @@
  */
 package org.jowidgets.workbench.api;
 
-public interface IWorkbenchApplication extends IWorkbenchPart, ILifecycleCallback {
-
-	String getId();
+public interface IWorkbenchApplication extends IWorkbenchApplicationDescriptor, ILifecycleCallback {
 
 	void onContextInitialize(IWorkbenchApplicationContext context);
 

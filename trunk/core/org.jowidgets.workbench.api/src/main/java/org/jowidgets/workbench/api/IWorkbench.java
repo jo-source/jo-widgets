@@ -27,26 +27,12 @@
  */
 package org.jowidgets.workbench.api;
 
-import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.IVetoable;
-import org.jowidgets.common.types.Position;
 
-public interface IWorkbench extends IWorkbenchPart {
+public interface IWorkbench extends IWorkbenchDescriptor {
 
 	void onContextInitialize(IWorkbenchContext context);
 
-	void onWindowClose(IVetoable vetoable);
-
-	/**
-	 * @return The initial dimension or null
-	 */
-	Dimension getInitialDimension();
-
-	/**
-	 * @return The initial position or null
-	 */
-	Position getInitialPosition();
-
-	boolean getApplicationsCloseable();
+	void onClose(IVetoable vetoable);
 
 }
