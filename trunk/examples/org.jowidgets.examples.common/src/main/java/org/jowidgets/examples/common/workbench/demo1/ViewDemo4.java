@@ -28,11 +28,11 @@
 
 package org.jowidgets.examples.common.workbench.demo1;
 
-import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractView;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
@@ -40,36 +40,15 @@ import org.jowidgets.workbench.api.IViewContext;
 public class ViewDemo4 extends AbstractView implements IView {
 
 	public static final String ID = ViewDemo4.class.getName();
+	public static final String DEFAULT_LABEL = "View4";
+	public static final String DEFAULT_TOOLTIP = "View4 tooltip";
+	public static final IImageConstant DEFAULT_ICON = SilkIcons.APPLICATION_FORM;
 
-	public ViewDemo4() {
+	public ViewDemo4(final IViewContext context) {
 		super(ID);
-	}
-
-	@Override
-	public void onContextInitialize(final IViewContext context) {
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 		final IContainer container = context.getContainer();
-		container.add(bpf.textLabel("view content 4"), "");
-	}
-
-	@Override
-	public String getId() {
-		return ID;
-	}
-
-	@Override
-	public String getLabel() {
-		return "View Demo4";
-	}
-
-	@Override
-	public String getTooltip() {
-		return "Tooltip of view demo4";
-	}
-
-	@Override
-	public IImageConstant getIcon() {
-		return IconsSmall.INFO;
+		container.add(bpf.textLabel("View content 4"), "");
 	}
 
 }

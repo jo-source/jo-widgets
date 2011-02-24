@@ -39,10 +39,11 @@ import org.jowidgets.examples.common.workbench.base.Layout;
 import org.jowidgets.examples.common.workbench.base.SplitLayout;
 import org.jowidgets.examples.common.workbench.base.ViewLayout;
 import org.jowidgets.workbench.api.IComponent;
+import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IFolderLayout;
-import org.jowidgets.workbench.api.ILayout;
 import org.jowidgets.workbench.api.ISplitLayout;
 import org.jowidgets.workbench.api.IView;
+import org.jowidgets.workbench.api.IViewContext;
 import org.jowidgets.workbench.api.IViewLayout;
 
 public class ComponentDemo1 extends AbstractComponent implements IComponent {
@@ -53,29 +54,29 @@ public class ComponentDemo1 extends AbstractComponent implements IComponent {
 	public static final String DETAIL2_FOLDER_ID = "DETAIL2_FOLDER_ID";
 
 	@Override
-	public ILayout createInitialLayout() {
-		return new Layout(DEFAULT_LAYOUT_ID, createMasterSplit());
+	public void onContextInitialize(final IComponentContext context) {
+		context.setLayout(new Layout(DEFAULT_LAYOUT_ID, createMasterSplit()));
 	}
 
 	@Override
-	public IView createView(final String viewId) {
+	public IView createView(final String viewId, final IViewContext context) {
 		if (ViewDemo1.ID.equals(viewId)) {
-			return new ViewDemo1();
+			return new ViewDemo1(context);
 		}
 		else if (ViewDemo2.ID.equals(viewId)) {
-			return new ViewDemo2();
+			return new ViewDemo2(context);
 		}
 		else if (ViewDemo3.ID.equals(viewId)) {
-			return new ViewDemo3();
+			return new ViewDemo3(context);
 		}
 		else if (ViewDemo4.ID.equals(viewId)) {
-			return new ViewDemo4();
+			return new ViewDemo4(context);
 		}
 		else if (ViewDemo5.ID.equals(viewId)) {
-			return new ViewDemo5();
+			return new ViewDemo5(context);
 		}
 		else if (ViewDemo6.ID.equals(viewId)) {
-			return new ViewDemo6();
+			return new ViewDemo6(context);
 		}
 		else {
 			throw new IllegalArgumentException("View id '" + viewId + "' is not known.");
@@ -93,7 +94,7 @@ public class ComponentDemo1 extends AbstractComponent implements IComponent {
 
 	private IFolderLayout createMasterFolder() {
 		final List<IViewLayout> resultViews = new LinkedList<IViewLayout>();
-		resultViews.add(new ViewLayout(ViewDemo1.ID));
+		resultViews.add(new ViewLayout(ViewDemo1.ID, ViewDemo1.DEFAULT_LABEL, ViewDemo1.DEFAULT_TOOLTIP, ViewDemo1.DEFAULT_ICON));
 		return new FolderLayout(MASTER_FOLDER_ID, resultViews);
 	}
 
@@ -108,16 +109,16 @@ public class ComponentDemo1 extends AbstractComponent implements IComponent {
 
 	private IFolderLayout createDetail1Folder() {
 		final List<IViewLayout> resultViews = new LinkedList<IViewLayout>();
-		resultViews.add(new ViewLayout(ViewDemo2.ID));
-		resultViews.add(new ViewLayout(ViewDemo3.ID));
+		resultViews.add(new ViewLayout(ViewDemo2.ID, ViewDemo2.DEFAULT_LABEL, ViewDemo2.DEFAULT_TOOLTIP, ViewDemo2.DEFAULT_ICON));
+		resultViews.add(new ViewLayout(ViewDemo3.ID, ViewDemo3.DEFAULT_LABEL, ViewDemo3.DEFAULT_TOOLTIP, ViewDemo3.DEFAULT_ICON));
 		return new FolderLayout(DETAIL1_FOLDER_ID, resultViews);
 	}
 
 	private IFolderLayout createDetail2Folder() {
 		final List<IViewLayout> resultViews = new LinkedList<IViewLayout>();
-		resultViews.add(new ViewLayout(ViewDemo4.ID));
-		resultViews.add(new ViewLayout(ViewDemo5.ID));
-		resultViews.add(new ViewLayout(ViewDemo6.ID));
+		resultViews.add(new ViewLayout(ViewDemo4.ID, ViewDemo4.DEFAULT_LABEL, ViewDemo4.DEFAULT_TOOLTIP, ViewDemo4.DEFAULT_ICON));
+		resultViews.add(new ViewLayout(ViewDemo5.ID, ViewDemo5.DEFAULT_LABEL, ViewDemo5.DEFAULT_TOOLTIP, ViewDemo5.DEFAULT_ICON));
+		resultViews.add(new ViewLayout(ViewDemo6.ID, ViewDemo6.DEFAULT_LABEL, ViewDemo6.DEFAULT_TOOLTIP, ViewDemo6.DEFAULT_ICON));
 		return new FolderLayout(DETAIL2_FOLDER_ID, resultViews);
 	}
 

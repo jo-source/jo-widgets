@@ -31,6 +31,7 @@ package org.jowidgets.examples.common.workbench.demo1;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractComponentTreeNode;
@@ -64,21 +65,22 @@ public class FolderTreeNodeDemo extends AbstractComponentTreeNode {
 
 	@Override
 	public void onContextInitialize(final IComponentTreeNodeContext context) {
-		super.onContextInitialize(context);
+		//create menus
 		final ActionFactory actionFactory = new ActionFactory();
-		getPopupMenu().addAction(actionFactory.createAddFolderAction(context));
-		getPopupMenu().addAction(actionFactory.createAddComponentAction(context));
-		getPopupMenu().addAction(actionFactory.createDeleteAction(context, this, "Delete " + getLabel(), SilkIcons.FOLDER_DELETE));
+		final IMenuModel popupMenu = context.getPopupMenu();
+		popupMenu.addAction(actionFactory.createAddFolderAction(context));
+		popupMenu.addAction(actionFactory.createAddComponentAction(context));
+		popupMenu.addAction(actionFactory.createDeleteAction(context, this, "Delete " + getLabel(), SilkIcons.FOLDER_DELETE));
+
+		//add children
+		for (final IComponentTreeNode componentTreeNode : children) {
+			context.add(componentTreeNode);
+		}
 	}
 
 	@Override
 	public IComponent createComponent() {
 		return null;
-	}
-
-	@Override
-	public List<IComponentTreeNode> createChildren() {
-		return new LinkedList<IComponentTreeNode>(children);
 	}
 
 }

@@ -28,36 +28,31 @@
 
 package org.jowidgets.examples.common.workbench.demo1;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IToolBarModel;
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.types.QuestionResult;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.types.IVetoable;
-import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.examples.common.icons.IconsInitializer;
 import org.jowidgets.examples.common.icons.SilkIcons;
+import org.jowidgets.examples.common.workbench.base.AbstractWorkbench;
 import org.jowidgets.tools.model.item.ActionItemModel;
-import org.jowidgets.tools.model.item.MenuBarModel;
 import org.jowidgets.tools.model.item.MenuModel;
-import org.jowidgets.tools.model.item.ToolBarModel;
-import org.jowidgets.workbench.api.IWorkbench;
-import org.jowidgets.workbench.api.IWorkbenchApplication;
 import org.jowidgets.workbench.api.IWorkbenchContext;
 
-public class WorkbenchDemo1 implements IWorkbench {
-
-	private IWorkbenchContext context;
+public class WorkbenchDemo1 extends AbstractWorkbench {
 
 	public WorkbenchDemo1() {
 		IconsInitializer.initializeIcons();
+	}
+
+	@Override
+	public void onContextInitialize(final IWorkbenchContext context) {
+		context.add(new ApplicationDemo1());
+		createToolBar(context);
+		createMenuBar(context);
 	}
 
 	@Override
@@ -66,47 +61,32 @@ public class WorkbenchDemo1 implements IWorkbench {
 	}
 
 	@Override
-	public String getTooltip() {
-		return null;
-	}
-
-	@Override
 	public IImageConstant getIcon() {
 		return SilkIcons.EMOTICON_SMILE;
 	}
 
 	@Override
-	public void onContextInitialize(final IWorkbenchContext context) {
-		this.context = context;
+	public Dimension getInitialDimension() {
+		return new Dimension(1024, 768);
 	}
 
 	@Override
-	public void onWindowClose(final IVetoable vetoable) {
-		if (!askFinishWorkbench()) {
-			vetoable.veto();
-		}
+	public boolean getApplicationsCloseable() {
+		return true;
 	}
 
-	@Override
-	public List<? extends IWorkbenchApplication> createWorkbenchApplications() {
-		return Collections.singletonList(new ApplicationDemo1());
+	private void createToolBar(final IWorkbenchContext context) {
+		final IToolBarModel toolBar = context.getToolBar();
+		toolBar.addItem(ActionItemModel.builder().setIcon(SilkIcons.DISK).setToolTipText("Save"));
+		toolBar.addSeparator();
+		toolBar.addItem(ActionItemModel.builder().setIcon(SilkIcons.CUT).setToolTipText("Cut"));
+		toolBar.addItem(ActionItemModel.builder().setIcon(SilkIcons.PAGE_COPY).setToolTipText("Copy"));
+		toolBar.addItem(ActionItemModel.builder().setIcon(SilkIcons.PASTE_PLAIN).setToolTipText("Paste"));
+		toolBar.addSeparator();
+		toolBar.addItem(ActionItemModel.builder().setIcon(SilkIcons.PRINTER).setToolTipText("Print"));
 	}
 
-	@Override
-	public IToolBarModel createToolBar() {
-		final IToolBarModel result = new ToolBarModel();
-		result.addItem(ActionItemModel.builder().setIcon(SilkIcons.DISK).setToolTipText("Save"));
-		result.addSeparator();
-		result.addItem(ActionItemModel.builder().setIcon(SilkIcons.CUT).setToolTipText("Cut"));
-		result.addItem(ActionItemModel.builder().setIcon(SilkIcons.PAGE_COPY).setToolTipText("Copy"));
-		result.addItem(ActionItemModel.builder().setIcon(SilkIcons.PASTE_PLAIN).setToolTipText("Paste"));
-		result.addSeparator();
-		result.addItem(ActionItemModel.builder().setIcon(SilkIcons.PRINTER).setToolTipText("Print"));
-		return result;
-	}
-
-	@Override
-	public IMenuBarModel createMenuBar() {
+	private void createMenuBar(final IWorkbenchContext context) {
 		final IMenuModel fileModel = new MenuModel("File");
 		fileModel.setMnemonic('F');
 		fileModel.addActionItem("New ");
@@ -119,7 +99,7 @@ public class WorkbenchDemo1 implements IWorkbench {
 		exitAction.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
-				if (askFinishWorkbench()) {
+				if (shouldWorkbenchFinished()) {
 					context.finish();
 				}
 			}
@@ -131,44 +111,8 @@ public class WorkbenchDemo1 implements IWorkbench {
 		editModel.addActionItem("Copy", SilkIcons.PAGE_COPY);
 		editModel.addActionItem("Paste", SilkIcons.PASTE_PLAIN);
 
-		final IMenuBarModel menuBarModel = new MenuBarModel();
+		final IMenuBarModel menuBarModel = context.getMenuBar();
 		menuBarModel.addMenu(fileModel);
 		menuBarModel.addMenu(editModel);
-
-		return menuBarModel;
 	}
-
-	@Override
-	public Dimension getInitialDimension() {
-		return new Dimension(1024, 768);
-	}
-
-	@Override
-	public Position getInitialPosition() {
-		return null;
-	}
-
-	@Override
-	public boolean getApplicationsCloseable() {
-		return true;
-	}
-
-	@Override
-	public boolean hasStatusBar() {
-		return true;
-	}
-
-	@Override
-	public boolean hasTrayItem() {
-		return false;
-	}
-
-	private boolean askFinishWorkbench() {
-		final QuestionResult result = Toolkit.getQuestionPane().askYesNoQuestion("Would you really like to quit the workbench?");
-		if (result != QuestionResult.YES) {
-			return false;
-		}
-		return true;
-	}
-
 }

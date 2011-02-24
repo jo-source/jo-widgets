@@ -31,33 +31,52 @@ package org.jowidgets.examples.common.workbench.base;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.IViewLayout;
 
 public class ViewLayout implements IViewLayout {
 
 	private final String id;
+	private final String label;
+	private final String tooltip;
+	private final IImageConstant icon;
 	private final boolean hidden;
 	private final boolean detachable;
 	private final List<String> folderWhitelist;
 	private final List<String> folderBlacklist;
 
-	public ViewLayout(final String id) {
-		this(id, false, true, new LinkedList<String>(), new LinkedList<String>());
+	public ViewLayout(final String id, final String label, final String tooltip, final IImageConstant icon) {
+		this(id, label, tooltip, icon, false, true, new LinkedList<String>(), new LinkedList<String>());
+	}
+
+	public ViewLayout(final String id, final String label, final IImageConstant icon) {
+		this(id, label, null, icon, false, true, new LinkedList<String>(), new LinkedList<String>());
+	}
+
+	public ViewLayout(final String id, final String label) {
+		this(id, label, null, null, false, true, new LinkedList<String>(), new LinkedList<String>());
 	}
 
 	public ViewLayout(
 		final String id,
+		final String label,
+		final String tooltip,
+		final IImageConstant icon,
 		final boolean hidden,
 		final boolean detachable,
 		final List<String> folderWhitelist,
 		final List<String> folderBlacklist) {
 
-		Assert.paramNotNull(id, "id");
+		Assert.paramNotEmpty(id, "id");
+		Assert.paramNotEmpty(label, "label");
 		Assert.paramNotNull(folderWhitelist, "folderWhitelist");
 		Assert.paramNotNull(folderBlacklist, "folderBlacklist");
 
 		this.id = id;
+		this.label = label;
+		this.tooltip = tooltip;
+		this.icon = icon;
 		this.hidden = hidden;
 		this.detachable = detachable;
 		this.folderWhitelist = folderWhitelist;
@@ -67,6 +86,21 @@ public class ViewLayout implements IViewLayout {
 	@Override
 	public String getId() {
 		return id;
+	}
+
+	@Override
+	public String getLabel() {
+		return label;
+	}
+
+	@Override
+	public String getTooltip() {
+		return tooltip;
+	}
+
+	@Override
+	public IImageConstant getIcon() {
+		return icon;
 	}
 
 	@Override

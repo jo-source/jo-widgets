@@ -26,28 +26,54 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.workbench.demo1;
+package org.jowidgets.examples.common.workbench.base;
 
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.examples.common.icons.SilkIcons;
-import org.jowidgets.examples.common.workbench.base.AbstractView;
-import org.jowidgets.workbench.api.IViewContext;
+import org.jowidgets.workbench.api.IViewLayout;
 
-public class ViewDemo1 extends AbstractView {
+public abstract class AbstractLayoutedView extends AbstractView implements IViewLayout {
 
-	public static final String ID = ViewDemo1.class.getName();
-	public static final String DEFAULT_LABEL = "View1";
-	public static final String DEFAULT_TOOLTIP = "View1 tooltip";
-	public static final IImageConstant DEFAULT_ICON = SilkIcons.APPLICATION_FORM;
+	private final List<String> folderBlacklist;
+	private final List<String> folderWhitelist;
 
-	public ViewDemo1(final IViewContext context) {
-		super(ID);
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-		final IContainer container = context.getContainer();
-		container.add(bpf.textLabel("View content 1"), "");
+	public AbstractLayoutedView(final String id) {
+		super(id);
+		folderBlacklist = Collections.unmodifiableList(new LinkedList<String>());
+		folderWhitelist = Collections.unmodifiableList(new LinkedList<String>());
+	}
+
+	@Override
+	public String getTooltip() {
+		return null;
+	}
+
+	@Override
+	public IImageConstant getIcon() {
+		return null;
+	}
+
+	@Override
+	public boolean isHidden() {
+		return false;
+	}
+
+	@Override
+	public boolean isDetachable() {
+		return true;
+	}
+
+	@Override
+	public List<String> getFolderWhitelist() {
+		return folderBlacklist;
+	}
+
+	@Override
+	public List<String> getFolderBlacklist() {
+		return folderWhitelist;
 	}
 
 }

@@ -83,7 +83,7 @@ public final class Layout implements ILayout {
 	}
 
 	@Override
-	public ILayoutContainer createLayoutContainer() {
+	public ILayoutContainer getLayoutContainer() {
 		return layoutContainer;
 	}
 

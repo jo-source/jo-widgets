@@ -26,28 +26,56 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.workbench.demo1;
+package org.jowidgets.examples.common.workbench.base;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.api.types.QuestionResult;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.examples.common.icons.SilkIcons;
-import org.jowidgets.examples.common.workbench.base.AbstractView;
-import org.jowidgets.workbench.api.IViewContext;
+import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.workbench.api.IWorkbench;
 
-public class ViewDemo1 extends AbstractView {
+public abstract class AbstractWorkbench implements IWorkbench {
 
-	public static final String ID = ViewDemo1.class.getName();
-	public static final String DEFAULT_LABEL = "View1";
-	public static final String DEFAULT_TOOLTIP = "View1 tooltip";
-	public static final IImageConstant DEFAULT_ICON = SilkIcons.APPLICATION_FORM;
+	@Override
+	public String getTooltip() {
+		return null;
+	}
 
-	public ViewDemo1(final IViewContext context) {
-		super(ID);
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-		final IContainer container = context.getContainer();
-		container.add(bpf.textLabel("View content 1"), "");
+	@Override
+	public IImageConstant getIcon() {
+		return null;
+	}
+
+	@Override
+	public Dimension getInitialDimension() {
+		return null;
+	}
+
+	@Override
+	public Position getInitialPosition() {
+		return null;
+	}
+
+	@Override
+	public boolean getApplicationsCloseable() {
+		return true;
+	}
+
+	@Override
+	public void onWindowClose(final IVetoable vetoable) {
+		if (!shouldWorkbenchFinished()) {
+			vetoable.veto();
+		}
+	}
+
+	protected boolean shouldWorkbenchFinished() {
+		final QuestionResult result = Toolkit.getQuestionPane().askYesNoQuestion("Would you really like to quit the workbench?");
+		if (result != QuestionResult.YES) {
+			return false;
+		}
+		return true;
 	}
 
 }

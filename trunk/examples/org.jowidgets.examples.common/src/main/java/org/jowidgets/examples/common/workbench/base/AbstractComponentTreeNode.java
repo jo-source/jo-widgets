@@ -28,12 +28,9 @@
 
 package org.jowidgets.examples.common.workbench.base;
 
-import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.IComponentTreeNode;
-import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 
 public abstract class AbstractComponentTreeNode implements IComponentTreeNode {
 
@@ -41,9 +38,6 @@ public abstract class AbstractComponentTreeNode implements IComponentTreeNode {
 	private final String label;
 	private final String tooltip;
 	private final IImageConstant icon;
-	private final IMenuModel popupMenu;
-
-	private IComponentTreeNodeContext context;
 
 	public AbstractComponentTreeNode(final String id, final String label) {
 		this(id, label, null, null);
@@ -57,12 +51,6 @@ public abstract class AbstractComponentTreeNode implements IComponentTreeNode {
 		this.label = label;
 		this.tooltip = tooltip;
 		this.icon = icon;
-		this.popupMenu = new MenuModel();
-	}
-
-	@Override
-	public void onContextInitialize(final IComponentTreeNodeContext context) {
-		this.context = context;
 	}
 
 	@Override
@@ -83,19 +71,6 @@ public abstract class AbstractComponentTreeNode implements IComponentTreeNode {
 	@Override
 	public IImageConstant getIcon() {
 		return icon;
-	}
-
-	public IComponentTreeNodeContext getContext() {
-		return context;
-	}
-
-	@Override
-	public IMenuModel createPopupMenu() {
-		return popupMenu;
-	}
-
-	protected IMenuModel getPopupMenu() {
-		return popupMenu;
 	}
 
 }

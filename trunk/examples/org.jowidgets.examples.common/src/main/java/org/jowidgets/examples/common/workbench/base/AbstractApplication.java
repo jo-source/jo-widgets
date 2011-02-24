@@ -26,28 +26,58 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.workbench.demo1;
+package org.jowidgets.examples.common.workbench.base;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.api.types.QuestionResult;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.examples.common.icons.SilkIcons;
-import org.jowidgets.examples.common.workbench.base.AbstractView;
-import org.jowidgets.workbench.api.IViewContext;
+import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.workbench.api.IWorkbenchApplication;
 
-public class ViewDemo1 extends AbstractView {
+public abstract class AbstractApplication implements IWorkbenchApplication {
 
-	public static final String ID = ViewDemo1.class.getName();
-	public static final String DEFAULT_LABEL = "View1";
-	public static final String DEFAULT_TOOLTIP = "View1 tooltip";
-	public static final IImageConstant DEFAULT_ICON = SilkIcons.APPLICATION_FORM;
+	private final String id;
 
-	public ViewDemo1(final IViewContext context) {
-		super(ID);
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-		final IContainer container = context.getContainer();
-		container.add(bpf.textLabel("View content 1"), "");
+	public AbstractApplication(final String id) {
+		super();
+		this.id = id;
+	}
+
+	@Override
+	public final String getId() {
+		return id;
+	}
+
+	@Override
+	public String getTooltip() {
+		return null;
+	}
+
+	@Override
+	public IImageConstant getIcon() {
+		return null;
+	}
+
+	@Override
+	public void onActiveStateChanged(final boolean active) {
+		// CHECKSTYLE:OFF
+		System.out.println("activated= " + active + ", " + id);
+		// CHECKSTYLE:ON
+	}
+
+	@Override
+	public void onVisibleStateChanged(final boolean visible) {
+		// CHECKSTYLE:OFF
+		System.out.println("visibility= " + visible + ", " + id);
+		// CHECKSTYLE:ON
+	}
+
+	@Override
+	public void onClose(final IVetoable vetoable) {
+		final QuestionResult result = Toolkit.getQuestionPane().askYesNoQuestion("Would you really like to quit the application?");
+		if (result != QuestionResult.YES) {
+			vetoable.veto();
+		}
 	}
 
 }

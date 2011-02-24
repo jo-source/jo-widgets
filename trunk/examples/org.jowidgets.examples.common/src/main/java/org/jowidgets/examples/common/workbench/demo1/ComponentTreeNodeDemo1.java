@@ -31,6 +31,7 @@ package org.jowidgets.examples.common.workbench.demo1;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractComponentTreeNode;
@@ -39,8 +40,6 @@ import org.jowidgets.workbench.api.IComponentTreeNode;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 
 public class ComponentTreeNodeDemo1 extends AbstractComponentTreeNode {
-
-	private final List<IComponentTreeNode> children;
 
 	public ComponentTreeNodeDemo1(final String id, final String label) {
 		this(id, label, null, SilkIcons.PAGE_WHITE, new LinkedList<IComponentTreeNode>());
@@ -58,28 +57,20 @@ public class ComponentTreeNodeDemo1 extends AbstractComponentTreeNode {
 		final List<IComponentTreeNode> children) {
 
 		super(id, label, tooltip, icon);
-
-		this.children = children;
 	}
 
 	@Override
 	public void onContextInitialize(final IComponentTreeNodeContext context) {
-		super.onContextInitialize(context);
 		final ActionFactory actionFactory = new ActionFactory();
-		getPopupMenu().addAction(actionFactory.createAddComponentAction(context.getParent()));
-		getPopupMenu().addAction(actionFactory.createAddFolderAction(context));
-		getPopupMenu().addAction(
-				actionFactory.createDeleteAction(context, this, "Delete " + getLabel(), SilkIcons.APPLICATION_DELETE));
+		final IMenuModel popupMenu = context.getPopupMenu();
+		popupMenu.addAction(actionFactory.createAddComponentAction(context.getParent()));
+		popupMenu.addAction(actionFactory.createAddFolderAction(context));
+		popupMenu.addAction(actionFactory.createDeleteAction(context, this, "Delete " + getLabel(), SilkIcons.APPLICATION_DELETE));
 	}
 
 	@Override
 	public IComponent createComponent() {
 		return new ComponentDemo1();
-	}
-
-	@Override
-	public List<IComponentTreeNode> createChildren() {
-		return new LinkedList<IComponentTreeNode>(children);
 	}
 
 }

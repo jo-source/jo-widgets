@@ -28,14 +28,9 @@
 
 package org.jowidgets.examples.common.workbench.base;
 
-import org.jowidgets.api.model.item.IMenuModel;
-import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.types.QuestionResult;
-import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.IVetoable;
-import org.jowidgets.tools.model.item.MenuModel;
-import org.jowidgets.tools.model.item.ToolBarModel;
 import org.jowidgets.workbench.api.IView;
 
 public abstract class AbstractView implements IView {
@@ -50,16 +45,6 @@ public abstract class AbstractView implements IView {
 	@Override
 	public String getId() {
 		return id;
-	}
-
-	@Override
-	public String getTooltip() {
-		return null;
-	}
-
-	@Override
-	public IImageConstant getIcon() {
-		return null;
 	}
 
 	@Override
@@ -89,16 +74,6 @@ public abstract class AbstractView implements IView {
 		if (result != QuestionResult.YES) {
 			vetoable.veto();
 		}
-	}
-
-	@Override
-	public IMenuModel createToolBarMenu() {
-		return new MenuModel();
-	}
-
-	@Override
-	public IToolBarModel createToolBar() {
-		return new ToolBarModel();
 	}
 
 }

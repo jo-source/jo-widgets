@@ -28,46 +28,30 @@
 
 package org.jowidgets.examples.common.workbench.base;
 
-import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.workbench.api.IComponent;
-import org.jowidgets.workbench.api.IComponentContext;
 
 public abstract class AbstractComponent implements IComponent {
-
-	private IComponentContext context;
-
-	@Override
-	public void onContextInitialize(final IComponentContext context) {
-		this.context = context;
-	}
 
 	@Override
 	public void onActivation() {
 		// CHECKSTYLE:OFF
-		System.out.println("onActivation= ");
+		System.out.println("onActivation");
 		// CHECKSTYLE:ON
 	}
 
 	@Override
 	public void onDeactivation(final IVetoable vetoable) {
 		// CHECKSTYLE:OFF
-		System.out.println("onDeactivation= ");
+		System.out.println("onDeactivation");
 		// CHECKSTYLE:ON
 	}
 
-	protected IComponentContext getContext() {
-		return context;
-	}
-
 	@Override
-	public IMenuModel createFolderPopupMenu(final String folderId) {
-		return null;
-	}
-
-	@Override
-	public IMenuModel createClonedFolderPopupMenu(final String originalFolderId, final String newFolderId) {
-		return null;
+	public void onFolderCloned(final String originalFolderId, final String newFolderId) {
+		// CHECKSTYLE:OFF
+		System.out.println("onFolderCloned, originalID: " + originalFolderId + " , newID: " + newFolderId);
+		// CHECKSTYLE:ON
 	}
 
 }
