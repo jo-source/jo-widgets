@@ -28,21 +28,17 @@
 
 package org.jowidgets.examples.common.workbench.demo1;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractApplication;
-import org.jowidgets.workbench.api.IComponentTreeNode;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 
-public class ApplicationDemo1 extends AbstractApplication {
+public class ApplicationDemo2 extends AbstractApplication {
 
-	private static final String ID = ApplicationDemo1.class.getName();
+	private static final String ID = ApplicationDemo2.class.getName();
 
-	public ApplicationDemo1() {
+	public ApplicationDemo2() {
 		super(ID);
 	}
 
@@ -55,36 +51,21 @@ public class ApplicationDemo1 extends AbstractApplication {
 		context.getPopupMenu().addAction(addFolderAction);
 		context.getToolBarMenu().addAction(addFolderAction);
 		context.getToolBar().addAction(addFolderAction);
-
-		//create tree
-		final List<IComponentTreeNode> componentList1 = new LinkedList<IComponentTreeNode>();
-		componentList1.add(new ComponentTreeNodeDemo1("COMPONENT1", "Component1"));
-		componentList1.add(new ComponentTreeNodeDemo1("COMPONENT2", "Component2"));
-		componentList1.add(new ComponentTreeNodeDemo1("COMPONENT3", "Component3"));
-		final FolderTreeNodeDemo folderNode1 = new FolderTreeNodeDemo("FOLDER1", "Folder1", componentList1);
-		context.add(folderNode1);
-
-		final List<IComponentTreeNode> componentList2 = new LinkedList<IComponentTreeNode>();
-		componentList2.add(new ComponentTreeNodeDemo1("COMPONENT1", "Component1"));
-		componentList2.add(new ComponentTreeNodeDemo1("COMPONENT2", "Component2"));
-		componentList2.add(new ComponentTreeNodeDemo1("COMPONENT3", "Component3"));
-		final FolderTreeNodeDemo folderNode2 = new FolderTreeNodeDemo("FOLDER2", "Folder2", componentList2);
-		context.add(folderNode2);
 	}
 
 	@Override
 	public String getLabel() {
-		return "App 1";
+		return "App 2";
 	}
 
 	@Override
 	public String getTooltip() {
-		return "Application Demo 1";
+		return "Application Demo 2";
 	}
 
 	@Override
 	public IImageConstant getIcon() {
-		return SilkIcons.USER_GREEN;
+		return SilkIcons.USER_RED;
 	}
 
 }

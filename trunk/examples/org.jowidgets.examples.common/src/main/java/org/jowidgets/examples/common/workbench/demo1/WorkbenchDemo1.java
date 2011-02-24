@@ -51,6 +51,7 @@ public class WorkbenchDemo1 extends AbstractWorkbench {
 	@Override
 	public void onContextInitialize(final IWorkbenchContext context) {
 		context.add(new ApplicationDemo1());
+		context.add(new ApplicationDemo2());
 		createToolBar(context);
 		createMenuBar(context);
 	}
