@@ -43,7 +43,7 @@ public abstract class AbstractView implements IView {
 	}
 
 	@Override
-	public String getId() {
+	public final String getId() {
 		return id;
 	}
 

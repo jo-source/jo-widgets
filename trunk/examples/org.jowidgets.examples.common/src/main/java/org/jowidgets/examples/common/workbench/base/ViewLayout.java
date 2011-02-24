@@ -35,7 +35,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.IViewLayout;
 
-public class ViewLayout implements IViewLayout {
+public final class ViewLayout implements IViewLayout {
 
 	private final String id;
 	private final String label;

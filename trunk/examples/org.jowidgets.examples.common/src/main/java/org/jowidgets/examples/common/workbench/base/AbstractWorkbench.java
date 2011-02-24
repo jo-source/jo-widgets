@@ -70,7 +70,7 @@ public abstract class AbstractWorkbench implements IWorkbench {
 		}
 	}
 
-	protected boolean shouldWorkbenchFinished() {
+	protected final boolean shouldWorkbenchFinished() {
 		final QuestionResult result = Toolkit.getQuestionPane().askYesNoQuestion("Would you really like to quit the workbench?");
 		if (result != QuestionResult.YES) {
 			return false;

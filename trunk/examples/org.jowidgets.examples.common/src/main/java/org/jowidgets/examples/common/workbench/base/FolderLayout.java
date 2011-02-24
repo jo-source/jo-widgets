@@ -36,7 +36,7 @@ import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.IFolderLayout;
 import org.jowidgets.workbench.api.IViewLayout;
 
-public class FolderLayout implements IFolderLayout {
+public final class FolderLayout implements IFolderLayout {
 
 	private final String id;
 	private final String groupId;

@@ -54,7 +54,7 @@ public abstract class AbstractComponentTreeNode implements IComponentTreeNode {
 	}
 
 	@Override
-	public String getId() {
+	public final String getId() {
 		return id;
 	}
 
