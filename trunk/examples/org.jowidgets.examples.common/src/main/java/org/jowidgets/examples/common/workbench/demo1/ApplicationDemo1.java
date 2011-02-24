@@ -62,14 +62,17 @@ public class ApplicationDemo1 extends AbstractApplication {
 		componentList1.add(new ComponentTreeNodeDemo1("COMPONENT1", "Component1"));
 		componentList1.add(new ComponentTreeNodeDemo1("COMPONENT2", "Component2"));
 		componentList1.add(new ComponentTreeNodeDemo1("COMPONENT3", "Component3"));
-		final FolderTreeNodeDemo folderNode1 = new FolderTreeNodeDemo("FOLDER1", "Folder1", componentList1);
-		context.add(folderNode1);
+		context.add(new FolderTreeNodeDemo("FOLDER1", "Folder1", componentList1));
 		//create second folder
 		final List<IComponentTreeNode> componentList2 = new LinkedList<IComponentTreeNode>();
 		componentList2.add(new ComponentTreeNodeDemo1("COMPONENT1", "Component1"));
 		componentList2.add(new ComponentTreeNodeDemo1("COMPONENT2", "Component2"));
 		componentList2.add(new ComponentTreeNodeDemo1("COMPONENT3", "Component3"));
-		final FolderTreeNodeDemo folderNode2 = new FolderTreeNodeDemo("FOLDER2", "Folder2", componentList2);
+		context.add(new FolderTreeNodeDemo("FOLDER2", "Folder2", componentList2));
+		//create third folder
+		final List<IComponentTreeNode> componentList3 = new LinkedList<IComponentTreeNode>();
+		componentList3.add(new ImportantComponentTreeNodeDemo1("IMPORTANT1", "Important"));
+		final FolderTreeNodeDemo folderNode2 = new FolderTreeNodeDemo("FOLDER3", "Folder3", componentList3);
 		context.add(folderNode2);
 	}
 

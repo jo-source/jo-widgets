@@ -33,34 +33,27 @@ import java.util.Map;
 
 import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IMenuModel;
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.ITreeNode;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.controler.ITreeNodeListener;
 import org.jowidgets.tools.model.item.MenuModel;
+import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.util.Assert;
-import org.jowidgets.workbench.api.IComponent;
-import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IComponentTreeNode;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
-import org.jowidgets.workbench.api.ILayout;
-import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
-import org.jowidgets.workbench.api.IWorkbenchContext;
 
-public class ComponentTreeNodeContext implements IComponentTreeNodeContext, IComponentContext {
+public class ComponentTreeNodeContext implements IComponentTreeNodeContext {
 
 	private final ComponentTreeNodeContext parentTreeNodeContext;
 	private final WorkbenchContext workbenchContext;
-	private final WorkbenchApplicationContext workbenchApplicationContext;
+	private final WorkbenchApplicationContext applicationContext;
+
+	private final IComponentTreeNode componentTreeNode;
 	private final ITreeNode treeNode;
 	private final IListModelListener listModelListener;
 	private final IMenuModel popupMenuModel;
 	private final Map<IComponentTreeNode, ITreeNode> createdNodes;
 
-	private org.jowidgets.api.widgets.IComponent content;
-	private IComponent component;
+	private ComponentContext componentContext;
 
 	public ComponentTreeNodeContext(
 		final IComponentTreeNode componentTreeNode,
@@ -71,9 +64,10 @@ public class ComponentTreeNodeContext implements IComponentTreeNodeContext, ICom
 
 		this.parentTreeNodeContext = parentTreeNodeContext;
 		this.workbenchContext = workbenchContext;
-		this.workbenchApplicationContext = workbenchApplicationContext;
+		this.applicationContext = workbenchApplicationContext;
 		this.createdNodes = new HashMap<IComponentTreeNode, ITreeNode>();
 
+		this.componentTreeNode = componentTreeNode;
 		this.treeNode = treeNode;
 		this.treeNode.setText(componentTreeNode.getLabel());
 		this.treeNode.setToolTipText(componentTreeNode.getTooltip());
@@ -104,52 +98,15 @@ public class ComponentTreeNodeContext implements IComponentTreeNodeContext, ICom
 			treeNode.setPopupMenu(popupMenuModel);
 		}
 
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-
-		this.treeNode.addTreeNodeListener(new ITreeNodeListener() {
-
-			@Override
-			public void selectionChanged(final boolean selected) {
-				final IContainer wbContent = workbenchApplicationContext.getContentContainer();
-				if (selected) {
-					wbContent.layoutBegin();
-					if (component == null) {
-						component = componentTreeNode.createComponent(ComponentTreeNodeContext.this);
-						if (component != null) {
-							content = wbContent.add(bpf.textLabel("TODO: " + componentTreeNode.getLabel()), "growx, hidemode 3");
-							workbenchContext.setEmptyContentVisible(false);
-						}
-						else {
-							workbenchContext.setEmptyContentVisible(true);
-						}
-					}
-					else {
-						workbenchContext.setEmptyContentVisible(false);
-						content.setVisible(true);
-					}
-					wbContent.layoutEnd();
-
-				}
-				else {
-					if (content != null) {
-						wbContent.layoutBegin();
-						content.setVisible(false);
-						workbenchContext.setEmptyContentVisible(true);
-						wbContent.layoutEnd();
-					}
-				}
-			}
-
-			@Override
-			public void expandedChanged(final boolean expanded) {}
-		});
-
 		componentTreeNode.onContextInitialize(this);
 	}
 
-	@Override
-	public void setLayout(final ILayout layout) {
-		// TODO MG implement setLayout
+	public void activate() {
+		getComponentContextLazy().activate();
+	}
+
+	public VetoHolder deactivate() {
+		return getComponentContextLazy().deactivate();
 	}
 
 	@Override
@@ -162,16 +119,23 @@ public class ComponentTreeNodeContext implements IComponentTreeNodeContext, ICom
 		Assert.paramNotNull(componentTreeNode, "componentTreeNode");
 		final ITreeNode node = treeNode.addNode(index);
 		createdNodes.put(componentTreeNode, node);
-		new ComponentTreeNodeContext(componentTreeNode, node, this, workbenchApplicationContext, workbenchContext);
+		final ComponentTreeNodeContext nodeContext = new ComponentTreeNodeContext(
+			componentTreeNode,
+			node,
+			this,
+			applicationContext,
+			workbenchContext);
+		applicationContext.registerNodeContext(nodeContext);
 	}
 
 	@Override
 	public void remove(final IComponentTreeNode componentTreeNode) {
 		Assert.paramNotNull(componentTreeNode, "componentTreeNode");
-		final ITreeNode node = createdNodes.get(componentTreeNode);
+		final ITreeNode node = createdNodes.remove(componentTreeNode);
 		if (node != null) {
 			node.setSelected(false);
 			treeNode.removeNode(node);
+			applicationContext.unRegisterNodeContext(node);
 		}
 	}
 
@@ -206,23 +170,29 @@ public class ComponentTreeNodeContext implements IComponentTreeNodeContext, ICom
 	}
 
 	@Override
-	public IWorkbenchApplicationContext getWorkbenchApplicationContext() {
-		return workbenchApplicationContext;
-	}
-
-	@Override
 	public IMenuModel getPopupMenu() {
 		return popupMenuModel;
 	}
 
 	@Override
-	public IWorkbenchContext getWorkbenchContext() {
-		return workbenchApplicationContext.getWorkbenchContext();
+	public WorkbenchApplicationContext getWorkbenchApplicationContext() {
+		return applicationContext;
 	}
 
 	@Override
-	public IComponentTreeNodeContext getComponentTreeNodeContext() {
-		return this;
+	public WorkbenchContext getWorkbenchContext() {
+		return applicationContext.getWorkbenchContext();
+	}
+
+	protected ITreeNode getTreeNode() {
+		return treeNode;
+	}
+
+	private ComponentContext getComponentContextLazy() {
+		if (componentContext == null) {
+			componentContext = new ComponentContext(componentTreeNode, ComponentTreeNodeContext.this);
+		}
+		return componentContext;
 	}
 
 }

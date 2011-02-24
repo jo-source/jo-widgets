@@ -69,7 +69,7 @@ public class WorkbenchContext implements IWorkbenchContext {
 	private final IMenuBarModel menuBarModel;
 	private final IToolBarModel toolBarModel;
 	private final ITabFolder applicationTabFolder;
-	private final IContainer contentContainer;
+	private final IContainer workbenchContentContainer;
 	private final org.jowidgets.api.widgets.IComponent emptyContext;
 
 	public WorkbenchContext(final IWorkbench workbench, final IApplicationLifecycle lifecycle) {
@@ -127,10 +127,10 @@ public class WorkbenchContext implements IWorkbenchContext {
 				bpf.tabFolder().setTabsCloseable(workbench.getApplicationsCloseable()),
 				"growx, growy, h 0::, w 0::");
 
-		contentContainer = splitComposite.getSecond();
-		contentContainer.setLayout(new MigLayoutDescriptor("hidemode 3", "0[grow, 0::]0", "0[grow, 0::]0"));
+		workbenchContentContainer = splitComposite.getSecond();
+		workbenchContentContainer.setLayout(new MigLayoutDescriptor("hidemode 3", "0[grow, 0::]0", "0[grow, 0::]0"));
 
-		emptyContext = contentContainer.add(bpf.tabFolder(), "hidemode 3, growx, growy");
+		emptyContext = workbenchContentContainer.add(bpf.tabFolder(), "hidemode 3, growx, growy");
 		statusBar = rootFrame.add(bpf.composite(), "growx, h 20!");
 
 		workbench.onContextInitialize(this);
@@ -166,7 +166,7 @@ public class WorkbenchContext implements IWorkbenchContext {
 	@Override
 	public void add(final int index, final IWorkbenchApplication workbenchApplication) {
 		final ITabItem tabItem = applicationTabFolder.addItem(index, bpf.tabItem());
-		new WorkbenchApplicationContext(this, tabItem, contentContainer, workbenchApplication);
+		new WorkbenchApplicationContext(this, tabItem, workbenchContentContainer, workbenchApplication);
 	}
 
 	@Override
@@ -203,6 +203,10 @@ public class WorkbenchContext implements IWorkbenchContext {
 	@Override
 	public void removeShutdownHook(final Runnable shutdownHook) {
 		shutdownHooks.remove(shutdownHook);
+	}
+
+	protected IContainer getWorkbenchContentContainer() {
+		return workbenchContentContainer;
 	}
 
 	private void runShutdownHooks() {

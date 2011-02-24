@@ -78,7 +78,7 @@ public final class TreeSelectionEvent implements ITreeSelectionEvent {
 	@Override
 	public ITreeNode getUnselectedSingle() {
 		checkSelectionPolicy();
-		if (selected.size() > 0) {
+		if (unselected.size() > 0) {
 			return unselected.get(0);
 		}
 		return null;

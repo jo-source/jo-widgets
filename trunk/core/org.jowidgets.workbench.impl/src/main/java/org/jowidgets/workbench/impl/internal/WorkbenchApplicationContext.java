@@ -32,6 +32,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.jowidgets.api.controler.ITabItemListener;
+import org.jowidgets.api.controler.ITreeSelectionEvent;
+import org.jowidgets.api.controler.ITreeSelectionListener;
 import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IToolBarModel;
@@ -53,28 +55,30 @@ import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.IComponentTreeNode;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
-import org.jowidgets.workbench.api.IWorkbenchContext;
 
 public class WorkbenchApplicationContext implements IWorkbenchApplicationContext {
 
 	private final WorkbenchContext workbenchContext;
 	private final ITree tree;
-	private final IContainer contentContainer;
+	private final ITreeSelectionListener treeSelectionListener;
 	private final IListModelListener listModelListener;
 	private final IMenuModel popupMenuModel;
 	private final IToolBarModel toolBarModel;
 	private final IMenuModel toolBarMenuModel;
 	private final Map<IComponentTreeNode, ITreeNode> createdNodes;
+	private final Map<ITreeNode, ComponentTreeNodeContext> registeredNodes;
+
+	private ITreeNode selectedNode;
 
 	public WorkbenchApplicationContext(
 		final WorkbenchContext workbenchContext,
 		final ITabItem tabItem,
-		final IContainer contentContainer,
+		final IContainer workbenchContentContainer,
 		final IWorkbenchApplication application) {
 
 		this.workbenchContext = workbenchContext;
-		this.contentContainer = contentContainer;
 		this.createdNodes = new HashMap<IComponentTreeNode, ITreeNode>();
+		this.registeredNodes = new HashMap<ITreeNode, ComponentTreeNodeContext>();
 
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
@@ -125,6 +129,38 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 		final ITreeBluePrint treeBp = bpf.tree().singleSelection().setContentScrolled(true);
 		this.tree = tabItem.add(treeBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
+		this.treeSelectionListener = new ITreeSelectionListener() {
+			@Override
+			public void selectionChanged(final ITreeSelectionEvent event) {
+				final ITreeNode wasSelected = selectedNode;
+				final ITreeNode isSelected = event.getSelectedSingle();
+
+				final ComponentTreeNodeContext wasSelectedContext = registeredNodes.get(wasSelected);
+				final ComponentTreeNodeContext isSelectedContext = registeredNodes.get(isSelected);
+
+				workbenchContentContainer.layoutBegin();
+				if (wasSelectedContext != null) {
+					final VetoHolder veto = wasSelectedContext.deactivate();
+					if (veto.hasVeto()) {
+						tree.removeTreeSelectionListener(treeSelectionListener);
+						wasSelected.setSelected(true);
+						tree.addTreeSelectionListener(treeSelectionListener);
+						return;
+					}
+				}
+				if (isSelectedContext != null) {
+					workbenchContext.setEmptyContentVisible(false);
+					isSelectedContext.activate();
+					selectedNode = isSelected;
+				}
+				else {
+					workbenchContext.setEmptyContentVisible(true);
+				}
+				workbenchContentContainer.layoutEnd();
+			}
+		};
+		this.tree.addTreeSelectionListener(treeSelectionListener);
+
 		this.listModelListener = new IListModelListener() {
 
 			@Override
@@ -161,16 +197,17 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 		Assert.paramNotNull(componentTreeNode, "componentTreeNode");
 		final ITreeNode node = tree.addNode(index);
 		createdNodes.put(componentTreeNode, node);
-		new ComponentTreeNodeContext(componentTreeNode, node, null, this, workbenchContext);
+		registerNodeContext(new ComponentTreeNodeContext(componentTreeNode, node, null, this, workbenchContext));
 	}
 
 	@Override
 	public void remove(final IComponentTreeNode componentTreeNode) {
 		Assert.paramNotNull(componentTreeNode, "componentTreeNode");
-		final ITreeNode node = createdNodes.get(componentTreeNode);
+		final ITreeNode node = createdNodes.remove(componentTreeNode);
 		if (node != null) {
 			node.setSelected(false);
 			tree.removeNode(node);
+			unRegisterNodeContext(node);
 		}
 	}
 
@@ -190,12 +227,19 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 	}
 
 	@Override
-	public IWorkbenchContext getWorkbenchContext() {
+	public WorkbenchContext getWorkbenchContext() {
 		return workbenchContext;
 	}
 
-	protected IContainer getContentContainer() {
-		return contentContainer;
+	protected void registerNodeContext(final ComponentTreeNodeContext nodeContext) {
+		registeredNodes.put(nodeContext.getTreeNode(), nodeContext);
+	}
+
+	protected void unRegisterNodeContext(final ITreeNode node) {
+		registeredNodes.remove(node);
+		for (final ITreeNode childNode : node.getChildren()) {
+			unRegisterNodeContext(childNode);
+		}
 	}
 
 }
