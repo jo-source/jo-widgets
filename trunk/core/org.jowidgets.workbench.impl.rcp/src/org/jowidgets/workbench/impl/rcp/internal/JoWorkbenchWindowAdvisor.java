@@ -42,6 +42,7 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.ISplitComposite;
+import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
@@ -123,7 +124,8 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		coolBar.setLayoutData("wrap");
 
 		if (toolBarModel != null) {
-			frame.add(bpf.toolBar(), "wrap");
+			final IToolBar toolBar = frame.add(bpf.toolBar(), "wrap");
+			toolBar.setModel(toolBarModel);
 		}
 
 		final ISplitComposite splitComposite = frame.add(
