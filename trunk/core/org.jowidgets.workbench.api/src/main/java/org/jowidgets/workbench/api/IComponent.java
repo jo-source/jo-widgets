@@ -37,8 +37,8 @@ public interface IComponent {
 
 	void onDeactivation(IVetoable vetoable);
 
-	IView createView(String viewId, IViewContext viewContext);
-
 	void onFolderCloned(String originalFolderId, String newFolderId);
+
+	IView createView(String viewId, IViewContext viewContext);
 
 }
