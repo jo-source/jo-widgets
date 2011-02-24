@@ -46,6 +46,7 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.layout.MigLayoutFactory;
+import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.model.item.ToolBarModel;
 import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.util.Assert;
@@ -60,7 +61,9 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 	private final ITree tree;
 	private final IContainer contentContainer;
 	private final IListModelListener listModelListener;
-	private final IMenuModel popupMenu;
+	private final IMenuModel popupMenuModel;
+	private final IToolBarModel toolBarModel;
+	private final IMenuModel toolBarMenuModel;
 	private final Map<IComponentTreeNode, ITreeNode> createdNodes;
 
 	public WorkbenchApplicationContext(
@@ -97,36 +100,27 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 		});
 
 		final IToolBarModel internalToolBarModel = new ToolBarModel();
-		final IToolBarModel toolBarModel = application.createToolBar();
-		if (toolBarModel != null) {
-			toolBarModel.addListModelListener(new IListModelListener() {
-				@Override
-				public void childRemoved(final int index) {
-					internalToolBarModel.removeItem(index);
-				}
+		toolBarModel = new ToolBarModel();
 
-				@Override
-				public void childAdded(final int index) {
-					internalToolBarModel.addItem(index, toolBarModel.getItems().get(index));
-				}
-			});
-			internalToolBarModel.addToolBarModel(toolBarModel);
-		}
+		toolBarModel.addListModelListener(new IListModelListener() {
+			@Override
+			public void childRemoved(final int index) {
+				internalToolBarModel.removeItem(index);
+			}
 
-		final IMenuModel toolBarMenu = application.createToolBarMenu();
-		if (toolBarMenu != null) {
-			internalToolBarModel.addItem(toolBarMenu);
-		}
+			@Override
+			public void childAdded(final int index) {
+				internalToolBarModel.addItem(index, toolBarModel.getItems().get(index));
+			}
+		});
 
-		if (toolBarModel != null || toolBarMenu != null) {
-			tabItem.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[]0[]0[grow, 0::]0"));
-			final IToolBar toolBar = tabItem.add(bpf.toolBar(), "alignx right, w 0::, wrap");
-			tabItem.add(bpf.separator(), "growx, wrap");
-			toolBar.setModel(internalToolBarModel);
-		}
-		else {
-			tabItem.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));
-		}
+		toolBarMenuModel = new MenuModel();
+		internalToolBarModel.addItem(toolBarMenuModel);
+
+		tabItem.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[]0[]0[grow, 0::]0"));
+		final IToolBar toolBar = tabItem.add(bpf.toolBar(), "alignx right, w 0::, wrap");
+		tabItem.add(bpf.separator(), "growx, wrap");
+		toolBar.setModel(internalToolBarModel);
 
 		final ITreeBluePrint treeBp = bpf.tree().singleSelection().setContentScrolled(true);
 		this.tree = tabItem.add(treeBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
@@ -135,29 +129,23 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 
 			@Override
 			public void childRemoved(final int index) {
-				if (popupMenu.getChildren().size() == 0) {
+				if (popupMenuModel.getChildren().size() == 0) {
 					tree.setPopupMenu(null);
 				}
 			}
 
 			@Override
 			public void childAdded(final int index) {
-				if (popupMenu.getChildren().size() == 1) {
-					tree.setPopupMenu(popupMenu);
+				if (popupMenuModel.getChildren().size() == 1) {
+					tree.setPopupMenu(popupMenuModel);
 				}
 			}
 		};
 
-		this.popupMenu = application.createPopupMenu();
-		if (popupMenu != null) {
-			this.popupMenu.addListModelListener(listModelListener);
-			if (popupMenu.getChildren().size() > 0) {
-				tree.setPopupMenu(popupMenu);
-			}
-		}
-
-		for (final IComponentTreeNode treeNode : application.createComponentTreeNodes()) {
-			add(treeNode);
+		this.popupMenuModel = new MenuModel();
+		this.popupMenuModel.addListModelListener(listModelListener);
+		if (popupMenuModel.getChildren().size() > 0) {
+			tree.setPopupMenu(popupMenuModel);
 		}
 
 		application.onContextInitialize(this);
@@ -184,6 +172,21 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 			node.setSelected(false);
 			tree.removeNode(node);
 		}
+	}
+
+	@Override
+	public IToolBarModel getToolBar() {
+		return toolBarModel;
+	}
+
+	@Override
+	public IMenuModel getToolBarMenu() {
+		return toolBarMenuModel;
+	}
+
+	@Override
+	public IMenuModel getPopupMenu() {
+		return popupMenuModel;
 	}
 
 	@Override

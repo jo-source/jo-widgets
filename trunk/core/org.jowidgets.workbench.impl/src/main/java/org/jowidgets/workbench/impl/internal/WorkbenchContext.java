@@ -49,7 +49,9 @@ import org.jowidgets.common.types.SplitResizePolicy;
 import org.jowidgets.common.widgets.controler.IWindowListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.controler.WindowAdapter;
-import org.jowidgets.util.ValueHolder;
+import org.jowidgets.tools.model.item.MenuBarModel;
+import org.jowidgets.tools.model.item.ToolBarModel;
+import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.workbench.api.ITrayItem;
 import org.jowidgets.workbench.api.IWorkbench;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
@@ -64,6 +66,8 @@ public class WorkbenchContext implements IWorkbenchContext {
 
 	private final IFrame rootFrame;
 	private final IContainer statusBar;
+	private final IMenuBarModel menuBarModel;
+	private final IToolBarModel toolBarModel;
 	private final ITabFolder applicationTabFolder;
 	private final IContainer contentContainer;
 	private final org.jowidgets.api.widgets.IComponent emptyContext;
@@ -78,15 +82,10 @@ public class WorkbenchContext implements IWorkbenchContext {
 
 			@Override
 			public void windowClosing(final IVetoable windowCloseVetoable) {
-				final ValueHolder<Boolean> veto = new ValueHolder<Boolean>(Boolean.FALSE);
-				final IVetoable vetoable = new IVetoable() {
-					@Override
-					public void veto() {
-						veto.set(Boolean.TRUE);
-					}
-				};
-				workbench.onWindowClose(vetoable);
-				if (veto.get().booleanValue()) {
+				final VetoHolder vetoHolder = new VetoHolder();
+
+				workbench.onClose(vetoHolder);
+				if (vetoHolder.hasVeto()) {
 					windowCloseVetoable.veto();
 				}
 				else {
@@ -106,20 +105,13 @@ public class WorkbenchContext implements IWorkbenchContext {
 		rootFrame = Toolkit.createRootFrame(rootFrameBp);
 		rootFrame.addWindowListener(windowListener);
 
-		final IMenuBarModel menuBarModel = workbench.createMenuBar();
-		final IToolBarModel toolBarModel = workbench.createToolBar();
+		menuBarModel = new MenuBarModel();
+		toolBarModel = new ToolBarModel();
 
-		if (menuBarModel != null) {
-			rootFrame.setMenuBar(menuBarModel);
-		}
-		if (toolBarModel != null) {
-			rootFrame.setLayout(new MigLayoutDescriptor("3[grow]3", "3[]3[grow][]"));
-			final IToolBar toolBar = rootFrame.add(bpf.toolBar(), "grow, wrap");
-			toolBar.setModel(toolBarModel);
-		}
-		else {
-			rootFrame.setLayout(new MigLayoutDescriptor("3[grow]3", "3[grow][]"));
-		}
+		rootFrame.setMenuBar(menuBarModel);
+		rootFrame.setLayout(new MigLayoutDescriptor("3[grow]3", "3[]3[grow][]"));
+		final IToolBar toolBar = rootFrame.add(bpf.toolBar(), "grow, wrap");
+		toolBar.setModel(toolBarModel);
 
 		final IComposite rootComposite = rootFrame.add(bpf.composite(), "growx, growy, w 0::, h 0::, wrap");
 		rootComposite.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));
@@ -139,17 +131,7 @@ public class WorkbenchContext implements IWorkbenchContext {
 		contentContainer.setLayout(new MigLayoutDescriptor("hidemode 3", "0[grow, 0::]0", "0[grow, 0::]0"));
 
 		emptyContext = contentContainer.add(bpf.tabFolder(), "hidemode 3, growx, growy");
-
-		if (workbench.hasStatusBar()) {
-			statusBar = rootFrame.add(bpf.composite(), "growx, h 20!");
-		}
-		else {
-			statusBar = null;
-		}
-
-		for (final IWorkbenchApplication application : workbench.createWorkbenchApplications()) {
-			add(application);
-		}
+		statusBar = rootFrame.add(bpf.composite(), "growx, h 20!");
 
 		workbench.onContextInitialize(this);
 	}
@@ -178,13 +160,13 @@ public class WorkbenchContext implements IWorkbenchContext {
 
 	@Override
 	public void add(final IWorkbenchApplication workbenchApplication) {
-		final ITabItem tabItem = applicationTabFolder.addItem(bpf.tabItem());
-		new WorkbenchApplicationContext(this, tabItem, contentContainer, workbenchApplication);
+		add(applicationTabFolder.getItems().size(), workbenchApplication);
 	}
 
 	@Override
 	public void add(final int index, final IWorkbenchApplication workbenchApplication) {
-		// TODO MG implement application add
+		final ITabItem tabItem = applicationTabFolder.addItem(index, bpf.tabItem());
+		new WorkbenchApplicationContext(this, tabItem, contentContainer, workbenchApplication);
 	}
 
 	@Override
@@ -195,6 +177,16 @@ public class WorkbenchContext implements IWorkbenchContext {
 	@Override
 	public IContainer getStatusBar() {
 		return statusBar;
+	}
+
+	@Override
+	public IToolBarModel getToolBar() {
+		return toolBarModel;
+	}
+
+	@Override
+	public IMenuBarModel getMenuBar() {
+		return menuBarModel;
 	}
 
 	@Override

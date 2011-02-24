@@ -39,11 +39,13 @@ import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.controler.ITreeNodeListener;
+import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentTreeNode;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
+import org.jowidgets.workbench.api.IWorkbenchContext;
 
 public class ComponentTreeNodeContext implements IComponentTreeNodeContext {
 
@@ -52,7 +54,7 @@ public class ComponentTreeNodeContext implements IComponentTreeNodeContext {
 	private final WorkbenchApplicationContext workbenchApplicationContext;
 	private final ITreeNode treeNode;
 	private final IListModelListener listModelListener;
-	private final IMenuModel popupMenu;
+	private final IMenuModel popupMenuModel;
 	private final Map<IComponentTreeNode, ITreeNode> createdNodes;
 
 	private org.jowidgets.api.widgets.IComponent content;
@@ -81,25 +83,23 @@ public class ComponentTreeNodeContext implements IComponentTreeNodeContext {
 
 			@Override
 			public void childRemoved(final int index) {
-				if (popupMenu.getChildren().size() == 0) {
+				if (popupMenuModel.getChildren().size() == 0) {
 					treeNode.setPopupMenu(null);
 				}
 			}
 
 			@Override
 			public void childAdded(final int index) {
-				if (popupMenu.getChildren().size() == 1) {
-					treeNode.setPopupMenu(popupMenu);
+				if (popupMenuModel.getChildren().size() == 1) {
+					treeNode.setPopupMenu(popupMenuModel);
 				}
 			}
 		};
 
-		this.popupMenu = componentTreeNode.createPopupMenu();
-		if (popupMenu != null) {
-			this.popupMenu.addListModelListener(listModelListener);
-			if (popupMenu.getChildren().size() > 0) {
-				treeNode.setPopupMenu(popupMenu);
-			}
+		this.popupMenuModel = new MenuModel();
+		this.popupMenuModel.addListModelListener(listModelListener);
+		if (popupMenuModel.getChildren().size() > 0) {
+			treeNode.setPopupMenu(popupMenuModel);
 		}
 
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
@@ -141,10 +141,6 @@ public class ComponentTreeNodeContext implements IComponentTreeNodeContext {
 			@Override
 			public void expandedChanged(final boolean expanded) {}
 		});
-
-		for (final IComponentTreeNode childComponentTreeNode : componentTreeNode.createChildren()) {
-			add(childComponentTreeNode);
-		}
 
 		componentTreeNode.onContextInitialize(this);
 	}
@@ -205,6 +201,16 @@ public class ComponentTreeNodeContext implements IComponentTreeNodeContext {
 	@Override
 	public IWorkbenchApplicationContext getWorkbenchApplicationContext() {
 		return workbenchApplicationContext;
+	}
+
+	@Override
+	public IMenuModel getPopupMenu() {
+		return popupMenuModel;
+	}
+
+	@Override
+	public IWorkbenchContext getWorkbenchContext() {
+		return workbenchApplicationContext.getWorkbenchContext();
 	}
 
 }
