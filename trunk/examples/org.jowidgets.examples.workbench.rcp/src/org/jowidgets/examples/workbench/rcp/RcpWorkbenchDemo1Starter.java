@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, M. Grossmann, M. Woelker, H. Westphal
+ * Copyright (c) 2011, H. Westphal
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -27,6 +27,8 @@
  */
 package org.jowidgets.examples.workbench.rcp;
 
+import java.io.File;
+
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.swt.widgets.Display;
@@ -43,7 +45,8 @@ public class RcpWorkbenchDemo1Starter implements IApplication {
 		if (!Toolkit.isInitialized()) {
 			Toolkit.initialize(new DefaultToolkitProvider(new SwtWidgetsServiceProvider(Display.getDefault())));
 		}
-		new WorkbenchRunner().run(new WorkbenchDemo1(), new ConfigService());
+		final String configFilePath = System.getProperty("user.home") + File.separator + getClass().getName() + ".config";
+		new WorkbenchRunner().run(new WorkbenchDemo1(), new FileConfigService(configFilePath));
 		return IApplication.EXIT_OK;
 	}
 

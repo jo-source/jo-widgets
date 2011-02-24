@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, M. Grossmann, M. Woelker, H. Westphal
+ * Copyright (c) 2011, H. Westphal
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,6 @@
 
 package org.jowidgets.examples.workbench.rcp;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -38,18 +37,18 @@ import java.io.Serializable;
 
 import org.jowidgets.workbench.api.IWorkbenchConfigurationService;
 
-public class ConfigService implements IWorkbenchConfigurationService {
+public class FileConfigService implements IWorkbenchConfigurationService {
 
-	private static final String CONFIG_PATH = System.getProperty("user.home")
-		+ File.separator
-		+ "."
-		+ ConfigService.class.getPackage().getName()
-		+ ".config";
+	private final String filePath;
+
+	public FileConfigService(final String filePath) {
+		this.filePath = filePath;
+	}
 
 	@Override
 	public Serializable loadConfiguration() {
 		try {
-			final ObjectInputStream oos = new ObjectInputStream(new FileInputStream(CONFIG_PATH));
+			final ObjectInputStream oos = new ObjectInputStream(new FileInputStream(filePath));
 			try {
 				return (Serializable) oos.readObject();
 			}
@@ -66,7 +65,7 @@ public class ConfigService implements IWorkbenchConfigurationService {
 	@Override
 	public void saveConfiguration(final Serializable configuration) {
 		try {
-			final ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(CONFIG_PATH));
+			final ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath));
 			try {
 				oos.writeObject(configuration);
 			}
