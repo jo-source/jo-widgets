@@ -30,6 +30,7 @@ package org.jowidgets.examples.common.workbench.base;
 
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.workbench.api.IComponent;
+import org.jowidgets.workbench.api.IFolderContext;
 
 public abstract class AbstractComponent implements IComponent {
 
@@ -48,10 +49,10 @@ public abstract class AbstractComponent implements IComponent {
 	}
 
 	@Override
-	public void onFolderCloned(final String originalFolderId, final String newFolderId) {
+	public void onFolderCreated(final IFolderContext folderContext) {
 		// CHECKSTYLE:OFF
-		System.out.println("onFolderCloned, originalID: " + originalFolderId + " , newID: " + newFolderId);
-		// CHECKSTYLE:ON
+		System.out.println("onFolderCloned, originalID: " + folderContext.getOriginalFolderId() + " , newID: " + folderContext.getFolderId());
+		// CHECKSTYLE:ON	
 	}
 
 }

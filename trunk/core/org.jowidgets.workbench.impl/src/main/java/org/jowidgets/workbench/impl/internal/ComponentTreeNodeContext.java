@@ -42,12 +42,14 @@ import org.jowidgets.common.widgets.controler.ITreeNodeListener;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.IComponent;
+import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IComponentTreeNode;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
+import org.jowidgets.workbench.api.ILayout;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 import org.jowidgets.workbench.api.IWorkbenchContext;
 
-public class ComponentTreeNodeContext implements IComponentTreeNodeContext {
+public class ComponentTreeNodeContext implements IComponentTreeNodeContext, IComponentContext {
 
 	private final ComponentTreeNodeContext parentTreeNodeContext;
 	private final WorkbenchContext workbenchContext;
@@ -112,7 +114,7 @@ public class ComponentTreeNodeContext implements IComponentTreeNodeContext {
 				if (selected) {
 					wbContent.layoutBegin();
 					if (component == null) {
-						component = componentTreeNode.createComponent();
+						component = componentTreeNode.createComponent(ComponentTreeNodeContext.this);
 						if (component != null) {
 							content = wbContent.add(bpf.textLabel("TODO: " + componentTreeNode.getLabel()), "growx, hidemode 3");
 							workbenchContext.setEmptyContentVisible(false);
@@ -143,6 +145,11 @@ public class ComponentTreeNodeContext implements IComponentTreeNodeContext {
 		});
 
 		componentTreeNode.onContextInitialize(this);
+	}
+
+	@Override
+	public void setLayout(final ILayout layout) {
+		// TODO MG implement setLayout
 	}
 
 	@Override
@@ -211,6 +218,11 @@ public class ComponentTreeNodeContext implements IComponentTreeNodeContext {
 	@Override
 	public IWorkbenchContext getWorkbenchContext() {
 		return workbenchApplicationContext.getWorkbenchContext();
+	}
+
+	@Override
+	public IComponentTreeNodeContext getComponentTreeNodeContext() {
+		return this;
 	}
 
 }

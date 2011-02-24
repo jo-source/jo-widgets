@@ -31,6 +31,6 @@ public interface IComponentTreeNode extends IComponentTreeNodeDescriptor {
 
 	void onContextInitialize(IComponentTreeNodeContext context);
 
-	IComponent createComponent();
+	IComponent createComponent(IComponentContext context);
 
 }

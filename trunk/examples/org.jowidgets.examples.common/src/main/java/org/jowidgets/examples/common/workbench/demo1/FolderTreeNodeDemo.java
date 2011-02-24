@@ -36,6 +36,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractComponentTreeNode;
 import org.jowidgets.workbench.api.IComponent;
+import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IComponentTreeNode;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 
@@ -79,7 +80,7 @@ public class FolderTreeNodeDemo extends AbstractComponentTreeNode {
 	}
 
 	@Override
-	public IComponent createComponent() {
+	public IComponent createComponent(final IComponentContext context) {
 		return null;
 	}
 

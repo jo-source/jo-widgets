@@ -34,7 +34,6 @@ public interface IViewLayout extends IWorkbenchPart {
 
 	/**
 	 * @return The id of the referenced view
-	 * @see IView#getId()
 	 */
 	String getId();
 

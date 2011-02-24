@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, M. Grossmann, H. Westphal
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,18 +25,46 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
+
 package org.jowidgets.workbench.api;
 
-import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.api.model.item.IMenuModel;
 
-public interface IComponent {
+public interface IFolderContext {
 
-	void onActivation();
+	/**
+	 * @return The id of the corresponding folder
+	 */
+	String getFolderId();
 
-	void onDeactivation(IVetoable vetoable);
+	/**
+	 * Gets the id of the original folder in the layout, if this folder was cloned.
+	 * If this folder is not a clone, the id is returned.
+	 * 
+	 * @return The id of the original folder for clones or the id of this folder, if folder is not a clone.
+	 */
+	String getOriginalFolderId();
 
-	void onFolderCreated(IFolderContext folderContext);
+	void addView(IViewLayout viewLayout);
 
-	IView createView(String viewId, IViewContext viewContext);
+	void addView(boolean addToFront, IViewLayout viewLayout);
+
+	void removeView(IView remove);
+
+	/**
+	 * Gets the folders popop menu model.
+	 * If no popup menu model already exists for the folder, a popup menu model will be created
+	 * 
+	 * @return the popup menu model for a folder or null if the folder is not known
+	 */
+	IMenuModel getPopupMenu();
+
+	IComponentContext getComponentContext();
+
+	IComponentTreeNodeContext getComponentTreeNodeContext();
+
+	IWorkbenchApplicationContext getWorkbenchApplicationContext();
+
+	IWorkbenchContext getWorkbenchContext();
 
 }

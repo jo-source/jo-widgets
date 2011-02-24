@@ -53,8 +53,7 @@ public class ComponentDemo1 extends AbstractComponent implements IComponent {
 	public static final String DETAIL1_FOLDER_ID = "DETAIL1_FOLDER_ID";
 	public static final String DETAIL2_FOLDER_ID = "DETAIL2_FOLDER_ID";
 
-	@Override
-	public void onContextInitialize(final IComponentContext context) {
+	public ComponentDemo1(final IComponentContext context) {
 		context.setLayout(new Layout(DEFAULT_LAYOUT_ID, createMasterSplit()));
 	}
 

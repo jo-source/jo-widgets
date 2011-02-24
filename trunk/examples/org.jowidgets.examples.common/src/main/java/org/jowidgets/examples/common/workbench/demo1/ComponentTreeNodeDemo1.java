@@ -36,6 +36,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractComponentTreeNode;
 import org.jowidgets.workbench.api.IComponent;
+import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IComponentTreeNode;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 
@@ -69,8 +70,8 @@ public class ComponentTreeNodeDemo1 extends AbstractComponentTreeNode {
 	}
 
 	@Override
-	public IComponent createComponent() {
-		return new ComponentDemo1();
+	public IComponent createComponent(final IComponentContext context) {
+		return new ComponentDemo1(context);
 	}
 
 }
