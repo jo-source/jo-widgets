@@ -27,7 +27,6 @@
  */
 package org.jowidgets.workbench.api;
 
-import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.types.IVetoable;
 
 public interface IComponent {
@@ -40,6 +39,6 @@ public interface IComponent {
 
 	IView createView(String viewId, IViewContext viewContext);
 
-	IMenuModel onFolderCloned(String originalFolderId, String newFolderId);
+	void onFolderCloned(String originalFolderId, String newFolderId);
 
 }
