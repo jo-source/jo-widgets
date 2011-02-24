@@ -64,7 +64,7 @@ public abstract class AbstractWorkbench implements IWorkbench {
 	}
 
 	@Override
-	public void onWindowClose(final IVetoable vetoable) {
+	public void onClose(final IVetoable vetoable) {
 		if (!shouldWorkbenchFinished()) {
 			vetoable.veto();
 		}
