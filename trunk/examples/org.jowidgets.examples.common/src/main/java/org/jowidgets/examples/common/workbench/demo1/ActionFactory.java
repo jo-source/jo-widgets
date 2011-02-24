@@ -39,6 +39,7 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.IInputDialog;
+import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
@@ -167,8 +168,11 @@ public class ActionFactory {
 		inputDialogBp.setCloseable(true);
 		inputDialogBp.setResizable(false);
 
-		return Toolkit.getWidgetUtils().getWindowAncestor(executionContext.getSource()).createChildWindow(inputDialogBp);
-
+		final IWindow windowAncestor = Toolkit.getWidgetUtils().getWindowAncestor(executionContext.getSource());
+		if (windowAncestor != null) {
+			return windowAncestor.createChildWindow(inputDialogBp);
+		}
+		return Toolkit.getWidgetFactory().create(inputDialogBp);
 	}
 
 	private IInputContentCreator<String> createLabelDialogCreator(final String inputName) {

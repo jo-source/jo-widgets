@@ -78,6 +78,7 @@
 							<instructions>
 								<Export-Package>org.jowidgets.examples.common.*</Export-Package>
 								<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+								<Require-Bundle>org.jowidgets.common</Require-Bundle>
 							</instructions>
 						</configuration>
 					</execution>
