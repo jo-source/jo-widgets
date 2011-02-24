@@ -48,7 +48,7 @@ public interface IComponentContext {
 	 * 
 	 * @param folder the folder to get the popup menu for
 	 * 
-	 * @return the popup menu model for a folder
+	 * @return the popup menu model for a folder or null if the folder is not known
 	 */
 	IMenuModel getFolderPopupMenu(String folderId);
 
