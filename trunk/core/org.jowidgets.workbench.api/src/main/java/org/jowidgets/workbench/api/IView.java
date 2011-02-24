@@ -27,19 +27,12 @@
  */
 package org.jowidgets.workbench.api;
 
-import org.jowidgets.api.model.item.IMenuModel;
-import org.jowidgets.api.model.item.IToolBarModel;
-
-public interface IView extends ILifecycleCallback, IWorkbenchPart {
+public interface IView extends ILifecycleCallback {
 
 	String getId();
 
 	void onContextInitialize(IViewContext context);
 
 	void onHiddenStateChanged(boolean hidden);
-
-	IMenuModel createToolBarMenu();
-
-	IToolBarModel createToolBar();
 
 }

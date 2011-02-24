@@ -27,10 +27,6 @@
  */
 package org.jowidgets.workbench.api;
 
-import java.util.List;
-
-import org.jowidgets.api.model.item.IMenuBarModel;
-import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.types.Position;
@@ -40,12 +36,6 @@ public interface IWorkbench extends IWorkbenchPart {
 	void onContextInitialize(IWorkbenchContext context);
 
 	void onWindowClose(IVetoable vetoable);
-
-	List<? extends IWorkbenchApplication> createWorkbenchApplications();
-
-	IToolBarModel createToolBar();
-
-	IMenuBarModel createMenuBar();
 
 	/**
 	 * @return The initial dimension or null
@@ -58,9 +48,5 @@ public interface IWorkbench extends IWorkbenchPart {
 	Position getInitialPosition();
 
 	boolean getApplicationsCloseable();
-
-	boolean hasStatusBar();
-
-	boolean hasTrayItem();
 
 }

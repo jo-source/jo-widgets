@@ -27,11 +27,11 @@
  */
 package org.jowidgets.workbench.api;
 
+import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.widgets.IContainer;
 
 public interface IViewContext {
-
-	IComponentContext getComponentContext();
 
 	void activate();
 
@@ -42,6 +42,33 @@ public interface IViewContext {
 	 */
 	void setHidden(boolean hidden);
 
+	/**
+	 * Gets the container this view could paint into
+	 * 
+	 * @return the views container
+	 */
 	IContainer getContainer();
+
+	/**
+	 * Gets the toolBar model. If no toolBar already exists, a toolBar will be created
+	 * 
+	 * @return the toolBar model
+	 */
+	IToolBarModel getToolBar();
+
+	/**
+	 * Gets the toolBar menu model. If no toolBar menu model already exists, a toolBar menu model will be created
+	 * 
+	 * @return the toolBar menu model
+	 */
+	IMenuModel getToolBarMenu();
+
+	IComponentContext getComponentContext();
+
+	IComponentTreeNodeContext getComponentTreeNodeContext();
+
+	IWorkbenchApplicationContext getWorkbenchApplicationContext();
+
+	IWorkbenchContext getWorkbenchContext();
 
 }

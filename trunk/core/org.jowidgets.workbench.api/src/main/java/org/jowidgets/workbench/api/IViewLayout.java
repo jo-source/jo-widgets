@@ -30,7 +30,7 @@ package org.jowidgets.workbench.api;
 
 import java.util.List;
 
-public interface IViewLayout {
+public interface IViewLayout extends IWorkbenchPart {
 
 	/**
 	 * @return The id of the referenced view

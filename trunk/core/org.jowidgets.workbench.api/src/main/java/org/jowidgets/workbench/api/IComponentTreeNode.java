@@ -27,20 +27,12 @@
  */
 package org.jowidgets.workbench.api;
 
-import java.util.List;
-
-import org.jowidgets.api.model.item.IMenuModel;
-
 public interface IComponentTreeNode extends IWorkbenchPart {
-
-	String getId();
 
 	void onContextInitialize(IComponentTreeNodeContext context);
 
+	String getId();
+
 	IComponent createComponent();
-
-	IMenuModel createPopupMenu();
-
-	List<? extends IComponentTreeNode> createChildren();
 
 }

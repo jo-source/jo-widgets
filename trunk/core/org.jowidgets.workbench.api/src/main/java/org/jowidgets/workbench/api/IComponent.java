@@ -38,12 +38,8 @@ public interface IComponent {
 
 	void onDeactivation(IVetoable vetoable);
 
-	ILayout createInitialLayout();
+	IView createView(String viewId, IViewContext viewContext);
 
-	IView createView(String viewId);
-
-	IMenuModel createFolderPopupMenu(String folderId);
-
-	IMenuModel createClonedFolderPopupMenu(String originalFolderId, String newFolderId);
+	IMenuModel onFolderCloned(String originalFolderId, String newFolderId);
 
 }

@@ -27,23 +27,10 @@
  */
 package org.jowidgets.workbench.api;
 
-import java.util.List;
-
-import org.jowidgets.api.model.item.IMenuModel;
-import org.jowidgets.api.model.item.IToolBarModel;
-
 public interface IWorkbenchApplication extends IWorkbenchPart, ILifecycleCallback {
 
 	String getId();
 
 	void onContextInitialize(IWorkbenchApplicationContext context);
-
-	List<? extends IComponentTreeNode> createComponentTreeNodes();
-
-	IToolBarModel createToolBar();
-
-	IMenuModel createPopupMenu();
-
-	IMenuModel createToolBarMenu();
 
 }

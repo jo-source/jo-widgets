@@ -27,19 +27,35 @@
  */
 package org.jowidgets.workbench.api;
 
+import org.jowidgets.api.model.item.IMenuModel;
+
 public interface IComponentContext {
 
-	IComponentTreeNodeContext getComponentTreeNodeContext();
+	void setLayout(final ILayout layout);
 
 	/**
 	 * @param addToHead
 	 * @param folderId hint, may be null
 	 * @param view
 	 */
-	void addView(boolean addToHead, String folderId, IViewLayout view);
+	void addView(boolean addToHead, String folderId, IViewLayout viewLayout);
 
 	void removeView(IView remove);
 
-	void setLayout(final ILayout layout);
+	/**
+	 * Gets the folders popop menu model.
+	 * If no popup menu model already exists for the folder, a popup menu model will be created
+	 * 
+	 * @param folder the folder to get the popup menu for
+	 * 
+	 * @return the popup menu model for a folder
+	 */
+	IMenuModel getFolderPopupMenu(String folderId);
+
+	IComponentTreeNodeContext getComponentTreeNodeContext();
+
+	IWorkbenchApplicationContext getWorkbenchApplicationContext();
+
+	IWorkbenchContext getWorkbenchContext();
 
 }
