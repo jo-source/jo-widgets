@@ -35,14 +35,12 @@ import java.util.Map;
 
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IToolBarModel;
-import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.workbench.api.IComponentTreeNode;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 import org.jowidgets.workbench.api.IWorkbenchContext;
 import org.jowidgets.workbench.api.IWorkbenchPart;
-import org.jowidgets.workbench.legacy.impl.rcp.internal.ComponentTreeNodeContext;
 
 public final class WorkbenchApplicationContext implements IWorkbenchApplicationContext, IWorkbenchPart {
 
@@ -69,10 +67,10 @@ public final class WorkbenchApplicationContext implements IWorkbenchApplicationC
 
 	@Override
 	public void add(final int index, final IComponentTreeNode componentTreeNode) {
-		//		final ComponentTreeNodeContext treeNodeContext = new ComponentTreeNodeContext(this, null, componentTreeNode, tree);
-		//		childContexts.add(index, treeNodeContext);
-		//		nodeMap.put(componentTreeNode, treeNodeContext);
-		//		componentTreeNode.onContextInitialize(treeNodeContext);
+		final ComponentTreeNodeContext treeNodeContext = new ComponentTreeNodeContext(this, null, componentTreeNode, tree);
+		childContexts.add(index, treeNodeContext);
+		nodeMap.put(componentTreeNode, treeNodeContext);
+		componentTreeNode.onContextInitialize(treeNodeContext);
 		tree.refresh(this);
 	}
 
@@ -116,17 +114,17 @@ public final class WorkbenchApplicationContext implements IWorkbenchApplicationC
 
 	@Override
 	public IToolBarModel getToolBar() {
-		return Toolkit.getModelFactoryProvider().getItemModelFactory().toolBar();
+		return tree.getToolBar();
 	}
 
 	@Override
 	public IMenuModel getToolBarMenu() {
-		return Toolkit.getModelFactoryProvider().getItemModelFactory().menu();
+		return tree.getToolBarMenu();
 	}
 
 	@Override
 	public IMenuModel getPopupMenu() {
-		return Toolkit.getModelFactoryProvider().getItemModelFactory().menu();
+		return tree.getPopupMenu();
 	}
 
 }

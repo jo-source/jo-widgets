@@ -50,6 +50,8 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
+import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IPopupMenu;
@@ -60,13 +62,14 @@ import org.jowidgets.workbench.api.ILayout;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
 import org.jowidgets.workbench.api.IWorkbenchPart;
 import org.jowidgets.workbench.impl.rcp.internal.util.ImageHelper;
-import org.jowidgets.workbench.legacy.impl.rcp.internal.ComponentTreeNodeContext;
 
 public final class WorkbenchApplicationTree extends Composite {
 
 	private final IWorkbenchApplication application;
 	private final Composite folderComposite;
 	private TreeViewer treeViewer;
+	private IMenuModel popupMenuModel;
+	private IPopupMenu popupMenu;
 	private String nodeId;
 	private AtomicReference<ILayout> perspectiveReference;
 
@@ -178,11 +181,17 @@ public final class WorkbenchApplicationTree extends Composite {
 		tree.addMenuDetectListener(new MenuDetectListener() {
 			@Override
 			public void menuDetected(final MenuDetectEvent e) {
-				final ComponentTreeNodeContext context = (ComponentTreeNodeContext) tree.getSelection()[0].getData();
-				final IPopupMenu nodeMenu = context.getMenu();
-				if (nodeMenu != null && !nodeMenu.getChildren().isEmpty()) {
-					final Point position = WorkbenchApplicationTree.this.toControl(e.x, e.y);
-					nodeMenu.show(new Position(position.x, position.y));
+				final Point position = WorkbenchApplicationTree.this.toControl(e.x, e.y);
+				final TreeItem item = tree.getItem(position);
+				if (item != null) {
+					final ComponentTreeNodeContext context = (ComponentTreeNodeContext) item.getData();
+					final IPopupMenu nodeMenu = context.getJoPopupMenu();
+					if (nodeMenu != null) {
+						nodeMenu.show(new Position(position.x, position.y));
+					}
+				}
+				else if (popupMenu != null) {
+					popupMenu.show(new Position(position.x, position.y));
 				}
 			}
 		});
@@ -287,4 +296,22 @@ public final class WorkbenchApplicationTree extends Composite {
 	public void clearSelection() {
 		treeViewer.setSelection(null);
 	}
+
+	public IToolBarModel getToolBar() {
+		return Toolkit.getModelFactoryProvider().getItemModelFactory().toolBar();
+	}
+
+	public IMenuModel getToolBarMenu() {
+		return Toolkit.getModelFactoryProvider().getItemModelFactory().menu();
+	}
+
+	public IMenuModel getPopupMenu() {
+		if (popupMenuModel == null) {
+			popupMenu = Toolkit.getWidgetWrapperFactory().createComposite(treeViewer.getTree()).createPopupMenu();
+			popupMenuModel = Toolkit.getModelFactoryProvider().getItemModelFactory().menu();
+			popupMenu.setModel(popupMenuModel);
+		}
+		return popupMenuModel;
+	}
+
 }

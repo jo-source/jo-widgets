@@ -64,17 +64,17 @@ public final class WorkbenchContext implements IWorkbenchContext {
 
 	@Override
 	public void add(final IWorkbenchApplication workbenchApplication) {
-		//workbenchAdvisor.getWorkbenchWindowAdvisor().getApplicationFolder().addApplication(workbenchApplication);
+		workbenchAdvisor.getWorkbenchWindowAdvisor().getApplicationFolder().addApplication(workbenchApplication);
 	}
 
 	@Override
 	public void add(final int index, final IWorkbenchApplication workbenchApplication) {
-		//workbenchAdvisor.getWorkbenchWindowAdvisor().getApplicationFolder().addApplication(index, workbenchApplication);
+		workbenchAdvisor.getWorkbenchWindowAdvisor().getApplicationFolder().addApplication(index, workbenchApplication);
 	}
 
 	@Override
 	public void remove(final IWorkbenchApplication workbenchApplication) {
-		//workbenchAdvisor.getWorkbenchWindowAdvisor().getApplicationFolder().removeApplication(workbenchApplication);
+		workbenchAdvisor.getWorkbenchWindowAdvisor().getApplicationFolder().removeApplication(workbenchApplication);
 	}
 
 	@Override

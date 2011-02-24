@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, M. Grossmann, M. Woelker, H. Westphal
+ * Copyright (c) 2011, M. Woelker, H. Westphal
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.legacy.impl.rcp.internal;
+package org.jowidgets.workbench.impl.rcp.internal;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,25 +34,27 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.workbench.impl.rcp.internal.WorkbenchApplicationContext;
-import org.jowidgets.workbench.impl.rcp.internal.WorkbenchApplicationTree;
-import org.jowidgets.workbench.legacy.api.IComponent;
-import org.jowidgets.workbench.legacy.api.IComponentTreeNode;
-import org.jowidgets.workbench.legacy.api.IComponentTreeNodeContext;
-import org.jowidgets.workbench.legacy.api.IUiPart;
-import org.jowidgets.workbench.legacy.api.IWorkbenchApplicationContext;
+import org.jowidgets.workbench.api.IComponentTreeNode;
+import org.jowidgets.workbench.api.IComponentTreeNodeContext;
+import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
+import org.jowidgets.workbench.api.IWorkbenchContext;
+import org.jowidgets.workbench.api.IWorkbenchPart;
+import org.jowidgets.workbench.legacy.impl.rcp.internal.ComponentContext;
 
-public final class ComponentTreeNodeContext implements IComponentTreeNodeContext, IUiPart {
+public final class ComponentTreeNodeContext implements IComponentTreeNodeContext, IWorkbenchPart {
 
 	private final WorkbenchApplicationContext applicationContext;
 	private final ComponentTreeNodeContext parentContext;
 	private final IComponentTreeNode treeNode;
 	private final WorkbenchApplicationTree tree;
-	private IPopupMenu menu;
+	private final IComposite joTree;
+	private IPopupMenu popupMenu;
+	private IMenuModel popupMenuModel;
 	private final List<ComponentTreeNodeContext> childContexts = new ArrayList<ComponentTreeNodeContext>();
 	private final Map<IComponentTreeNode, ComponentTreeNodeContext> nodeMap = new HashMap<IComponentTreeNode, ComponentTreeNodeContext>();
 	private AtomicReference<ComponentContext> componentContextReference;
@@ -66,22 +68,7 @@ public final class ComponentTreeNodeContext implements IComponentTreeNodeContext
 		this.parentContext = parentContext;
 		this.treeNode = treeNode;
 		this.tree = tree;
-		final List<IComponentTreeNode> subTreeNodes = treeNode.createChildren();
-		for (final IComponentTreeNode subTreeNode : subTreeNodes) {
-			final ComponentTreeNodeContext subTreeNodeContext = new ComponentTreeNodeContext(
-				applicationContext,
-				this,
-				subTreeNode,
-				tree);
-			childContexts.add(subTreeNodeContext);
-			nodeMap.put(subTreeNode, subTreeNodeContext);
-			subTreeNode.initialize(subTreeNodeContext);
-		}
-
-		final IComposite joTree = Toolkit.getWidgetWrapperFactory().createComposite(tree);
-		if (treeNode.hasMenu()) {
-			menu = joTree.createPopupMenu();
-		}
+		joTree = Toolkit.getWidgetWrapperFactory().createComposite(tree);
 	}
 
 	@Override
@@ -98,7 +85,7 @@ public final class ComponentTreeNodeContext implements IComponentTreeNodeContext
 			tree);
 		childContexts.add(index, treeNodeContext);
 		nodeMap.put(componentTreeNode, treeNodeContext);
-		componentTreeNode.initialize(treeNodeContext);
+		componentTreeNode.onContextInitialize(treeNodeContext);
 		tree.refresh(this);
 	}
 
@@ -117,16 +104,17 @@ public final class ComponentTreeNodeContext implements IComponentTreeNodeContext
 	}
 
 	public ComponentContext getComponentContext() {
-		if (componentContextReference == null) {
-			ComponentContext componentContext = null;
-			final IComponent component = treeNode.createComponent();
-			if (component != null) {
-				componentContext = new ComponentContext(this, component);
-				component.initialize(componentContext);
-			}
-			componentContextReference = new AtomicReference<ComponentContext>(componentContext);
-		}
-		return componentContextReference.get();
+		return null;
+		//		if (componentContextReference == null) {
+		//			ComponentContext componentContext = null;
+		//			final IComponent component = treeNode.createComponent();
+		//			if (component != null) {
+		//				componentContext = new ComponentContext(this, component);
+		//				component.initialize(componentContext);
+		//			}
+		//			componentContextReference = new AtomicReference<ComponentContext>(componentContext);
+		//		}
+		//		return componentContextReference.get();
 	}
 
 	public String getId() {
@@ -138,11 +126,6 @@ public final class ComponentTreeNodeContext implements IComponentTreeNodeContext
 			return parentContext.getQualifiedId() + "." + treeNode.getId();
 		}
 		return applicationContext.getId() + "." + treeNode.getId();
-	}
-
-	@Override
-	public IPopupMenu getMenu() {
-		return menu;
 	}
 
 	@Override
@@ -168,6 +151,55 @@ public final class ComponentTreeNodeContext implements IComponentTreeNodeContext
 	@Override
 	public IImageConstant getIcon() {
 		return treeNode.getIcon();
+	}
+
+	@Override
+	public void select() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void setExpanded(final boolean expanded) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void setLabel(final String label) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void setTooltip(final String tooltip) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void setIcon(final IImageConstant icon) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public IMenuModel getPopupMenu() {
+		if (popupMenuModel == null) {
+			popupMenuModel = Toolkit.getModelFactoryProvider().getItemModelFactory().menu();
+			popupMenu = joTree.createPopupMenu();
+			popupMenu.setModel(popupMenuModel);
+		}
+		return popupMenuModel;
+	}
+
+	public IPopupMenu getJoPopupMenu() {
+		return popupMenu;
+	}
+
+	@Override
+	public IWorkbenchContext getWorkbenchContext() {
+		return applicationContext.getWorkbenchContext();
 	}
 
 }

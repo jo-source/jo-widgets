@@ -76,6 +76,7 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	}
 
 	public IContainer getStatusBar() {
+		// TODO HRW un-hide statusbar
 		return statusBar;
 	}
 
@@ -180,6 +181,7 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		if (toolBarModel == null && toolBar != null) {
 			toolBarModel = Toolkit.getModelFactoryProvider().getItemModelFactory().toolBar();
 			toolBar.setModel(toolBarModel);
+			// TODO HRW un-hide toolbar
 		}
 		return toolBarModel;
 	}
