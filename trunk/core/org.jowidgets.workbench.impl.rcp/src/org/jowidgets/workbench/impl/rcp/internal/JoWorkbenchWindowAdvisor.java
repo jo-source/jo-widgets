@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, M. Grossmann, M. Woelker, H. Westphal
+ * Copyright (c) 2011, M. Woelker, H. Westphal
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -51,14 +51,17 @@ import org.jowidgets.workbench.api.ITrayItem;
 import org.jowidgets.workbench.api.IWorkbench;
 import org.jowidgets.workbench.api.IWorkbenchContext;
 import org.jowidgets.workbench.impl.rcp.internal.util.ImageHelper;
-import org.jowidgets.workbench.legacy.impl.rcp.internal.WorkbenchApplicationFolder;
 
 public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
 	private final IWorkbench workbench;
 	private final IWorkbenchContext context;
+	private IFrame frame;
 	private IContainer statusBar;
 	private ITrayItem tray;
+	private IMenuBarModel menuBarModel;
+	private IToolBar toolBar;
+	private IToolBarModel toolBarModel;
 	private WorkbenchApplicationFolder applicationFolder;
 	private double folderRatio = 0.2;
 	private String[] selectedTreeNode;
@@ -76,7 +79,10 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		return statusBar;
 	}
 
-	public ITrayItem getTray() {
+	public ITrayItem getTrayItem() {
+		if (tray == null && frame != null) {
+			tray = new WorkbenchTrayItem(frame, workbench);
+		}
 		return tray;
 	}
 
@@ -97,7 +103,7 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	@Override
 	public boolean preWindowShellClose() {
 		final VetoHolder vetoHolder = new VetoHolder();
-		workbench.onWindowClose(vetoHolder);
+		workbench.onClose(vetoHolder);
 		return !vetoHolder.hasVeto();
 	}
 
@@ -105,17 +111,10 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	public void createWindowContents(final Shell shell) {
 		shell.setImage(ImageHelper.getImage(workbench.getIcon(), null));
 
-		final IFrame frame = Toolkit.getWidgetWrapperFactory().createFrame(shell);
-
-		final IMenuBarModel menuBarModel = workbench.createMenuBar();
-		if (menuBarModel != null) {
-			frame.createMenuBar().setModel(menuBarModel);
-		}
-
-		final IToolBarModel toolBarModel = workbench.createToolBar();
+		frame = Toolkit.getWidgetWrapperFactory().createFrame(shell);
 
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-		frame.setLayout(new MigLayoutDescriptor("0[grow]0", "0[]0" + (toolBarModel != null ? "[]" : "") + "[grow][]0"));
+		frame.setLayout(new MigLayoutDescriptor("3[grow]3", "0[]0[][grow][]0"));
 
 		// dummy coolbar control
 		final Control coolBar = getWindowConfigurer().createCoolBarControl(shell);
@@ -123,10 +122,8 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		coolBar.setVisible(false);
 		coolBar.setLayoutData("wrap");
 
-		if (toolBarModel != null) {
-			final IToolBar toolBar = frame.add(bpf.toolBar(), "wrap");
-			toolBar.setModel(toolBarModel);
-		}
+		// TODO HRW hide toolbar
+		toolBar = frame.add(bpf.toolBar(), "wrap");
 
 		final ISplitComposite splitComposite = frame.add(
 				bpf.splitHorizontal().setWeight(folderRatio).disableBorders(),
@@ -142,28 +139,22 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
 		final IContainer leftContainer = splitComposite.getFirst();
 		leftContainer.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
-		leftContainer.add(bpf.tabFolder(), "grow");
-		//		applicationFolder = new WorkbenchApplicationFolder((Composite) leftContainer.getUiReference(), workbench, context);
-		//		applicationFolder.setLayoutData("grow");
-		//		applicationFolder.addDisposeListener(new DisposeListener() {
-		//			@Override
-		//			public void widgetDisposed(final DisposeEvent e) {
-		//				selectedTreeNode = applicationFolder.getSelectedTreeNode();
-		//			}
-		//		});
+		applicationFolder = new WorkbenchApplicationFolder((Composite) leftContainer.getUiReference(), workbench, context);
+		applicationFolder.setLayoutData("grow");
+		applicationFolder.addDisposeListener(new DisposeListener() {
+			@Override
+			public void widgetDisposed(final DisposeEvent e) {
+				selectedTreeNode = applicationFolder.getSelectedTreeNode();
+			}
+		});
 
 		final IContainer rightContainer = splitComposite.getSecond();
 		rightContainer.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
 		final Control pageComposite = getWindowConfigurer().createPageComposite((Composite) rightContainer.getUiReference());
 		pageComposite.setLayoutData("wmin 0, hmin 0, grow");
 
-		if (workbench.hasStatusBar()) {
-			statusBar = frame.add(bpf.compositeWithBorder(), "growx");
-		}
-
-		if (workbench.hasTrayItem()) {
-			tray = new WorkbenchTrayItem(frame, workbench);
-		}
+		// TODO HRW hide statusbar
+		statusBar = frame.add(bpf.compositeWithBorder(), "growx");
 	}
 
 	public double getFolderRatio() {
@@ -183,6 +174,22 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		if (applicationFolder != null && !applicationFolder.isDisposed()) {
 			applicationFolder.setSelectedTreeNode(selectedTreeNode);
 		}
+	}
+
+	public IToolBarModel getToolBar() {
+		if (toolBarModel == null && toolBar != null) {
+			toolBarModel = Toolkit.getModelFactoryProvider().getItemModelFactory().toolBar();
+			toolBar.setModel(toolBarModel);
+		}
+		return toolBarModel;
+	}
+
+	public IMenuBarModel getMenuBar() {
+		if (menuBarModel == null && frame != null) {
+			menuBarModel = Toolkit.getModelFactoryProvider().getItemModelFactory().menuBar();
+			frame.createMenuBar().setModel(menuBarModel);
+		}
+		return menuBarModel;
 	}
 
 }

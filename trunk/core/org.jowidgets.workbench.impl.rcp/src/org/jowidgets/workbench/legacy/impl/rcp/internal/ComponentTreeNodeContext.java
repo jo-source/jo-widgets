@@ -38,6 +38,8 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.workbench.impl.rcp.internal.WorkbenchApplicationContext;
+import org.jowidgets.workbench.impl.rcp.internal.WorkbenchApplicationTree;
 import org.jowidgets.workbench.legacy.api.IComponent;
 import org.jowidgets.workbench.legacy.api.IComponentTreeNode;
 import org.jowidgets.workbench.legacy.api.IComponentTreeNodeContext;

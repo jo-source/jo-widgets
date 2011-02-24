@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, M. Grossmann, M. Woelker, H. Westphal
+ * Copyright (c) 2011, M. Woelker, H. Westphal
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -29,6 +29,8 @@ package org.jowidgets.workbench.impl.rcp.internal;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
+import org.jowidgets.api.model.item.IMenuBarModel;
+import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.util.Assert;
@@ -93,7 +95,7 @@ public final class WorkbenchContext implements IWorkbenchContext {
 
 	@Override
 	public ITrayItem getTrayItem() {
-		return workbenchAdvisor.getWorkbenchWindowAdvisor().getTray();
+		return workbenchAdvisor.getWorkbenchWindowAdvisor().getTrayItem();
 	}
 
 	@Override
@@ -120,6 +122,16 @@ public final class WorkbenchContext implements IWorkbenchContext {
 
 	public String[] getSelectedTreeNode() {
 		return workbenchAdvisor.getWorkbenchWindowAdvisor().getSelectedTreeNode();
+	}
+
+	@Override
+	public IToolBarModel getToolBar() {
+		return workbenchAdvisor.getWorkbenchWindowAdvisor().getToolBar();
+	}
+
+	@Override
+	public IMenuBarModel getMenuBar() {
+		return workbenchAdvisor.getWorkbenchWindowAdvisor().getMenuBar();
 	}
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, M. Grossmann, M. Woelker, H. Westphal
+ * Copyright (c) 2011, M. Woelker, H. Westphal
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,23 +26,25 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.legacy.impl.rcp.internal;
+package org.jowidgets.workbench.impl.rcp.internal;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jowidgets.api.widgets.IMenu;
-import org.jowidgets.api.widgets.IToolBar;
+import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.api.model.item.IToolBarModel;
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.workbench.legacy.api.IComponentTreeNode;
-import org.jowidgets.workbench.legacy.api.IUiPart;
-import org.jowidgets.workbench.legacy.api.IWorkbenchApplication;
-import org.jowidgets.workbench.legacy.api.IWorkbenchApplicationContext;
-import org.jowidgets.workbench.legacy.api.IWorkbenchContext;
+import org.jowidgets.workbench.api.IComponentTreeNode;
+import org.jowidgets.workbench.api.IWorkbenchApplication;
+import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
+import org.jowidgets.workbench.api.IWorkbenchContext;
+import org.jowidgets.workbench.api.IWorkbenchPart;
+import org.jowidgets.workbench.legacy.impl.rcp.internal.ComponentTreeNodeContext;
 
-public final class WorkbenchApplicationContext implements IWorkbenchApplicationContext, IUiPart {
+public final class WorkbenchApplicationContext implements IWorkbenchApplicationContext, IWorkbenchPart {
 
 	private final IWorkbenchContext workbenchContext;
 	private final IWorkbenchApplication application;
@@ -57,13 +59,6 @@ public final class WorkbenchApplicationContext implements IWorkbenchApplicationC
 		this.workbenchContext = workbenchContext;
 		this.application = application;
 		this.tree = tree;
-		final List<IComponentTreeNode> treeNodes = application.createComponentTreeNodes();
-		for (final IComponentTreeNode treeNode : treeNodes) {
-			final ComponentTreeNodeContext treeNodeContext = new ComponentTreeNodeContext(this, null, treeNode, tree);
-			childContexts.add(treeNodeContext);
-			nodeMap.put(treeNode, treeNodeContext);
-			treeNode.initialize(treeNodeContext);
-		}
 		tree.setInput(this);
 	}
 
@@ -74,10 +69,10 @@ public final class WorkbenchApplicationContext implements IWorkbenchApplicationC
 
 	@Override
 	public void add(final int index, final IComponentTreeNode componentTreeNode) {
-		final ComponentTreeNodeContext treeNodeContext = new ComponentTreeNodeContext(this, null, componentTreeNode, tree);
-		childContexts.add(index, treeNodeContext);
-		nodeMap.put(componentTreeNode, treeNodeContext);
-		componentTreeNode.initialize(treeNodeContext);
+		//		final ComponentTreeNodeContext treeNodeContext = new ComponentTreeNodeContext(this, null, componentTreeNode, tree);
+		//		childContexts.add(index, treeNodeContext);
+		//		nodeMap.put(componentTreeNode, treeNodeContext);
+		//		componentTreeNode.onContextInitialize(treeNodeContext);
 		tree.refresh(this);
 	}
 
@@ -105,21 +100,6 @@ public final class WorkbenchApplicationContext implements IWorkbenchApplicationC
 	}
 
 	@Override
-	public IMenu getMenu() {
-		return tree.getJoMenu();
-	}
-
-	@Override
-	public void setMenuTooltip(final String tooltip) {
-		tree.setMenuTooltip(tooltip);
-	}
-
-	@Override
-	public IToolBar getToolBar() {
-		return tree.getToolBar();
-	}
-
-	@Override
 	public String getLabel() {
 		return application.getLabel();
 	}
@@ -132,6 +112,21 @@ public final class WorkbenchApplicationContext implements IWorkbenchApplicationC
 	@Override
 	public IImageConstant getIcon() {
 		return application.getIcon();
+	}
+
+	@Override
+	public IToolBarModel getToolBar() {
+		return Toolkit.getModelFactoryProvider().getItemModelFactory().toolBar();
+	}
+
+	@Override
+	public IMenuModel getToolBarMenu() {
+		return Toolkit.getModelFactoryProvider().getItemModelFactory().menu();
+	}
+
+	@Override
+	public IMenuModel getPopupMenu() {
+		return Toolkit.getModelFactoryProvider().getItemModelFactory().menu();
 	}
 
 }

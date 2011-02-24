@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, M. Grossmann, M. Woelker, H. Westphal
+ * Copyright (c) 2011, M. Woelker, H. Westphal
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -36,8 +36,8 @@ import org.eclipse.ui.application.WorkbenchAdvisor;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 import org.jowidgets.workbench.api.IWorkbench;
 import org.jowidgets.workbench.api.IWorkbenchContext;
+import org.jowidgets.workbench.impl.rcp.internal.part.PartRegistry;
 import org.jowidgets.workbench.legacy.impl.rcp.internal.part.DynamicPerspective;
-import org.jowidgets.workbench.legacy.impl.rcp.internal.part.PartRegistry;
 
 public final class JoWorkbenchAdvisor extends WorkbenchAdvisor {
 

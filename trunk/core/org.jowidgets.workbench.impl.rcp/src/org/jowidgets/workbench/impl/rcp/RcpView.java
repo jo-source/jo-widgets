@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, M. Grossmann, M. Woelker, H. Westphal
+ * Copyright (c) 2011, M. Woelker, H. Westphal
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,64 +28,50 @@
 
 package org.jowidgets.workbench.impl.rcp;
 
-import org.jowidgets.api.model.item.IMenuModel;
-import org.jowidgets.api.model.item.IToolBarModel;
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.IVetoable;
-import org.jowidgets.workbench.api.IView;
-import org.jowidgets.workbench.api.IViewContext;
+import org.eclipse.ui.IViewLayout;
 
-public final class RcpView implements IView {
+public final class RcpView implements IViewLayout {
 
 	private final String viewId;
+	private boolean closeable;
+	private boolean moveable;
 
 	public RcpView(final String viewId) {
 		this.viewId = viewId;
 	}
 
-	@Override
-	public void onActiveStateChanged(final boolean active) {}
-
-	@Override
-	public void onVisibleStateChanged(final boolean visible) {}
-
-	@Override
-	public void onClose(final IVetoable vetoable) {}
-
-	@Override
-	public String getLabel() {
-		return null;
-	}
-
-	@Override
-	public String getTooltip() {
-		return null;
-	}
-
-	@Override
-	public IImageConstant getIcon() {
-		return null;
-	}
-
-	@Override
-	public void onContextInitialize(final IViewContext context) {}
-
-	@Override
-	public String getId() {
+	public String getViewId() {
 		return viewId;
 	}
 
 	@Override
-	public void onHiddenStateChanged(final boolean hidden) {}
-
-	@Override
-	public IMenuModel createToolBarMenu() {
-		return null;
+	public boolean isCloseable() {
+		return closeable;
 	}
 
 	@Override
-	public IToolBarModel createToolBar() {
-		return null;
+	public void setCloseable(final boolean closeable) {
+		this.closeable = closeable;
+	}
+
+	@Override
+	public boolean isMoveable() {
+		return moveable;
+	}
+
+	@Override
+	public void setMoveable(final boolean moveable) {
+		this.moveable = moveable;
+	}
+
+	@Override
+	public boolean isStandalone() {
+		return false;
+	}
+
+	@Override
+	public boolean getShowTitle() {
+		return true;
 	}
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, M. Grossmann, M. Woelker, H. Westphal
+ * Copyright (c) 2011, M. Woelker, H. Westphal
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.legacy.impl.rcp.internal.part;
+package org.jowidgets.workbench.impl.rcp.internal.part;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,13 +36,13 @@ import org.eclipse.ui.IPerspectiveRegistry;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
-import org.jowidgets.workbench.legacy.api.IPerspective;
-import org.jowidgets.workbench.legacy.api.ISingleViewContainer;
-import org.jowidgets.workbench.legacy.api.ISplitViewContainer;
-import org.jowidgets.workbench.legacy.api.ITabViewContainer;
-import org.jowidgets.workbench.legacy.api.IView;
-import org.jowidgets.workbench.legacy.api.IViewContainer;
-import org.jowidgets.workbench.legacy.impl.rcp.RcpView;
+import org.jowidgets.workbench.api.IView;
+import org.jowidgets.workbench.impl.rcp.RcpView;
+import org.jowidgets.workbench.legacy.impl.rcp.internal.part.DynamicPerspective;
+import org.jowidgets.workbench.legacy.impl.rcp.internal.part.IViewContainerContext;
+import org.jowidgets.workbench.legacy.impl.rcp.internal.part.SingleViewContainerContext;
+import org.jowidgets.workbench.legacy.impl.rcp.internal.part.SplitViewContainerContext;
+import org.jowidgets.workbench.legacy.impl.rcp.internal.part.TabViewContainerContext;
 
 public final class PartRegistry {
 

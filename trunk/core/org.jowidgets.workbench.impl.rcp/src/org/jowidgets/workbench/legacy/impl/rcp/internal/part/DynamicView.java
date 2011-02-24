@@ -48,6 +48,7 @@ import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.workbench.impl.rcp.internal.part.PartRegistry;
 import org.jowidgets.workbench.impl.rcp.internal.util.ImageHelper;
 import org.jowidgets.workbench.legacy.api.IView;
 import org.jowidgets.workbench.legacy.impl.rcp.internal.ViewContext;

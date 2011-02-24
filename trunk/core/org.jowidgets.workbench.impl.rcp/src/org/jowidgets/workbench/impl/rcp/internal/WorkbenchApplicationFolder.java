@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, M. Grossmann, M. Woelker, H. Westphal
+ * Copyright (c) 2011, M. Woelker, H. Westphal
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.workbench.legacy.impl.rcp.internal;
+package org.jowidgets.workbench.impl.rcp.internal;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,10 +50,10 @@ import org.eclipse.ui.IWorkbenchPreferenceConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.IWorkbenchThemeConstants;
 import org.eclipse.ui.themes.ITheme;
+import org.jowidgets.workbench.api.IWorkbench;
+import org.jowidgets.workbench.api.IWorkbenchApplication;
+import org.jowidgets.workbench.api.IWorkbenchContext;
 import org.jowidgets.workbench.impl.rcp.internal.util.ImageHelper;
-import org.jowidgets.workbench.legacy.api.IWorkbench;
-import org.jowidgets.workbench.legacy.api.IWorkbenchApplication;
-import org.jowidgets.workbench.legacy.api.IWorkbenchContext;
 
 @SuppressWarnings("restriction")
 public final class WorkbenchApplicationFolder extends Composite {
@@ -73,10 +73,6 @@ public final class WorkbenchApplicationFolder extends Composite {
 		tabFolder = new CTabFolder(this, tabStyle | SWT.NO_BACKGROUND | SWT.BORDER);
 		setFont();
 		setTabHeight();
-
-		for (final IWorkbenchApplication app : workbench.createWorkbenchApplications()) {
-			addApplication(app);
-		}
 
 		tabFolder.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -141,13 +137,12 @@ public final class WorkbenchApplicationFolder extends Composite {
 		final WorkbenchApplicationContext context = new WorkbenchApplicationContext(workbenchContext, app, appTree);
 		tabItem.setControl(appTree);
 		tabItem.setData(app);
-		app.initialize(context);
+		app.onContextInitialize(context);
 	}
 
 	public void removeApplication(final IWorkbenchApplication app) {
 		for (final CTabItem item : tabFolder.getItems()) {
 			if (item.getData() == app) {
-				app.onClose();
 				if (currentApplication == app) {
 					currentApplication = null;
 					activeTree = null;
