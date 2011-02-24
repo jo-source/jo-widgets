@@ -5,8 +5,7 @@ Bundle-SymbolicName: org.jowidgets.workbench.impl.rcp;singleton:=true
 Bundle-Version: 0.0.13.qualifier
 Bundle-Vendor: jo-widgets.org
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.jowidgets.workbench.impl.rcp,
- org.jowidgets.workbench.legacy.impl.rcp
+Export-Package: org.jowidgets.workbench.impl.rcp
 Require-Bundle: org.jowidgets.api;bundle-version="0.0.13",
  org.jowidgets.common;bundle-version="0.0.13",
  org.jowidgets.workbench.api;bundle-version="0.0.13",
