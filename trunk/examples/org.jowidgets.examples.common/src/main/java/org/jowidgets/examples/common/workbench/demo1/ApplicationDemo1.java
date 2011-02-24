@@ -57,13 +57,14 @@ public class ApplicationDemo1 extends AbstractApplication {
 		context.getToolBar().addAction(addFolderAction);
 
 		//create tree
+		//create first folder
 		final List<IComponentTreeNode> componentList1 = new LinkedList<IComponentTreeNode>();
 		componentList1.add(new ComponentTreeNodeDemo1("COMPONENT1", "Component1"));
 		componentList1.add(new ComponentTreeNodeDemo1("COMPONENT2", "Component2"));
 		componentList1.add(new ComponentTreeNodeDemo1("COMPONENT3", "Component3"));
 		final FolderTreeNodeDemo folderNode1 = new FolderTreeNodeDemo("FOLDER1", "Folder1", componentList1);
 		context.add(folderNode1);
-
+		//create second folder
 		final List<IComponentTreeNode> componentList2 = new LinkedList<IComponentTreeNode>();
 		componentList2.add(new ComponentTreeNodeDemo1("COMPONENT1", "Component1"));
 		componentList2.add(new ComponentTreeNodeDemo1("COMPONENT2", "Component2"));
