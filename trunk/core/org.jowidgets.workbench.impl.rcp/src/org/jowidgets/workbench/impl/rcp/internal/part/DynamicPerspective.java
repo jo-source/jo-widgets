@@ -120,7 +120,7 @@ public final class DynamicPerspective implements IPerspectiveFactory {
 			final SplitViewContainerContext splitViewContainerContext = (SplitViewContainerContext) viewContainerContext;
 			final ISplitLayout splitViewContainer = splitViewContainerContext.getViewContainer();
 			final float innerRatio = (float) splitViewContainer.getWeight();
-			final int innerRelation = splitViewContainer.getOrientation().equals(Orientation.HORIZONTAL)
+			final int innerRelation = splitViewContainer.getOrientation().equals(Orientation.VERTICAL)
 					? IPageLayout.BOTTOM : IPageLayout.RIGHT;
 			final String secondViewId = layoutFirst(
 					layout,
