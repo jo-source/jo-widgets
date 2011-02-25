@@ -30,12 +30,16 @@ package org.jowidgets.workbench.impl.rcp.internal.part;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IPartListener2;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewLayout;
+import org.jowidgets.workbench.impl.rcp.internal.ComponentContext;
+import org.jowidgets.workbench.impl.rcp.internal.ViewContext;
 import org.jowidgets.workbench.impl.rcp.internal.util.ImageHelper;
 
 public final class DynamicView extends ViewPart implements IPartListener2 {
@@ -47,36 +51,13 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 	@Override
 	public void createPartControl(final Composite parent) {
 		final String viewId = getViewSite().getSecondaryId();
-		final IViewLayout viewLayout = PartSupport.getInstance().getView(viewId);
+		final ViewLayoutContext viewLayoutContext = PartSupport.getInstance().getView(viewId);
+		final IViewLayout viewLayout = viewLayoutContext.getViewLayout();
+		final ComponentContext componentContext = viewLayoutContext.getComponentContext();
+
 		setPartName(viewLayout.getLabel());
 		setTitleImage(ImageHelper.getImage(viewLayout.getIcon(), null));
 		setTitleToolTip(viewLayout.getTooltip());
-
-		//		final ViewContext viewContext = new ViewContext();
-		//		IComposite composite = Toolkit.getWidgetWrapperFactory().createComposite(parent);
-		//		if (view.hasToolBar()) {
-		//			composite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[]0[grow]0"));
-		//			final IToolBar toolBar = composite.add(Toolkit.getBluePrintFactory().toolBar(), "wrap");
-		//			viewContext.setToolBar(toolBar);
-		//			composite = composite.add(Toolkit.getBluePrintFactory().composite(), "grow, w 0::, h 0::");
-		//		}
-		//		viewContext.setContainer(composite);
-		//		if (view.hasMenu()) {
-		//			final ToolBar toolBarControl = ((ToolBarManager) getViewSite().getActionBars().getToolBarManager()).getControl();
-		//			final IWidgetWrapperFactory wrapperFactory = Toolkit.getWidgetWrapperFactory();
-		//			if (view.hasMenu()) {
-		//				final IPopupMenu menu = wrapperFactory.createComposite(toolBarControl).createPopupMenu();
-		//				final ToolItem menuToolItem = new ToolItem(toolBarControl, SWT.DROP_DOWN | SWT.TRAIL);
-		//				menuToolItem.addSelectionListener(new SelectionAdapter() {
-		//					@Override
-		//					public void widgetSelected(final SelectionEvent e) {
-		//						menu.show(new Position(e.x, e.y));
-		//					}
-		//				});
-		//				viewContext.setMenu(menu);
-		//				viewContext.setMenuToolItem(menuToolItem);
-		//			}
-		//		}
 
 		// lazy initialization of view content
 		getViewSite().getPage().addPartListener(new IPartListener2() {
@@ -99,11 +80,12 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 			}
 
 			private void init() {
-				//				view.initialize(viewContext);
-				//				final IWorkbenchPage page = getViewSite().getPage();
-				//				page.removePartListener(this);
-				//				view.onVisibleStateChanged(true);
-				//				page.addPartListener(DynamicView.this);
+				final ViewContext viewContext = new ViewContext(parent, componentContext);
+				view = componentContext.getComponent().createView(viewLayout.getId(), viewContext);
+				final IWorkbenchPage page = getViewSite().getPage();
+				page.removePartListener(this);
+				view.onVisibleStateChanged(true);
+				page.addPartListener(DynamicView.this);
 			}
 
 			@Override
@@ -129,7 +111,7 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 	@Override
 	public void partActivated(final IWorkbenchPartReference partRef) {
 		final IWorkbenchPart part = partRef.getPart(false);
-		if (part == this) {
+		if (part == this && view != null) {
 			view.onActiveStateChanged(true);
 		}
 	}
@@ -137,7 +119,7 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 	@Override
 	public void partDeactivated(final IWorkbenchPartReference partRef) {
 		final IWorkbenchPart part = partRef.getPart(false);
-		if (part == this) {
+		if (part == this && view != null) {
 			view.onActiveStateChanged(false);
 		}
 	}
@@ -145,7 +127,7 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 	@Override
 	public void partVisible(final IWorkbenchPartReference partRef) {
 		final IWorkbenchPart part = partRef.getPart(false);
-		if (part == this) {
+		if (part == this && view != null) {
 			view.onVisibleStateChanged(true);
 		}
 	}
@@ -153,7 +135,7 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 	@Override
 	public void partHidden(final IWorkbenchPartReference partRef) {
 		final IWorkbenchPart part = partRef.getPart(false);
-		if (part == this) {
+		if (part == this && view != null) {
 			view.onVisibleStateChanged(false);
 		}
 	}
@@ -161,8 +143,10 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 	@Override
 	public void partClosed(final IWorkbenchPartReference partRef) {
 		final IWorkbenchPart part = partRef.getPart(false);
-		if (part == this) {
-			//			view.onClose();
+		if (part == this && view != null) {
+			final VetoHolder vetoHolder = new VetoHolder();
+			view.onClose(vetoHolder);
+			// TODO HRW restore view after veto?
 		}
 	}
 
@@ -177,5 +161,11 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 
 	@Override
 	public void setFocus() {}
+
+	@Override
+	public void dispose() {
+		// TODO HRW implement dispose?
+		super.dispose();
+	}
 
 }

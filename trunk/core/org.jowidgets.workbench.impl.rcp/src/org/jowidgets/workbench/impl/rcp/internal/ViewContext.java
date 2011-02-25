@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, M. Grossmann, M. Woelker, H. Westphal
+ * Copyright (c) 2011, M. Woelker, H. Westphal
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,39 +28,47 @@
 
 package org.jowidgets.workbench.impl.rcp.internal;
 
-import org.eclipse.swt.widgets.ToolItem;
+import org.eclipse.swt.widgets.Composite;
+import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.api.model.item.IToolBarModel;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.IToolBar;
-import org.jowidgets.workbench.legacy.api.IComponentContext;
-import org.jowidgets.workbench.legacy.api.IViewContext;
+import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.tools.model.item.MenuModel;
+import org.jowidgets.tools.model.item.ToolBarModel;
+import org.jowidgets.workbench.api.IComponentContext;
+import org.jowidgets.workbench.api.IComponentTreeNodeContext;
+import org.jowidgets.workbench.api.IViewContext;
+import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
+import org.jowidgets.workbench.api.IWorkbenchContext;
 
 public final class ViewContext implements IViewContext {
 
-	private IContainer container;
-	private IMenu menu;
-	private ToolItem menuToolItem;
-	private IToolBar toolBar;
+	private final IContainer container;
+	private final IComponentContext componentContext;
+	private final ToolBarModel toolBarModel;
 
-	public void setContainer(final IContainer container) {
-		this.container = container;
-	}
+	public ViewContext(final Composite parent, final IComponentContext componentContext) {
+		this.componentContext = componentContext;
 
-	public void setMenu(final IMenu menu) {
-		this.menu = menu;
-	}
+		final IComposite composite = Toolkit.getWidgetWrapperFactory().createComposite(parent);
+		composite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[]0[grow]0"));
 
-	public void setMenuToolItem(final ToolItem menuToolItem) {
-		this.menuToolItem = menuToolItem;
-	}
+		// TODO HRW hide toolbar
+		final IToolBar toolBar = composite.add(Toolkit.getBluePrintFactory().toolBar(), "wrap");
+		toolBarModel = new ToolBarModel();
+		toolBar.setModel(toolBarModel);
 
-	public void setToolBar(final IToolBar toolBar) {
-		this.toolBar = toolBar;
+		// TODO HRW toolbar menu
+
+		container = composite.add(Toolkit.getBluePrintFactory().composite(), "grow, w 0::, h 0::");
 	}
 
 	@Override
 	public IComponentContext getComponentContext() {
-		return null;
+		return componentContext;
 	}
 
 	@Override
@@ -69,20 +77,39 @@ public final class ViewContext implements IViewContext {
 	}
 
 	@Override
-	public IMenu getMenu() {
-		return menu;
+	public void activate() {
+		// TODO HRW implement
 	}
 
 	@Override
-	public void setMenuTooltip(final String tooltip) {
-		if (menuToolItem != null && !menuToolItem.isDisposed()) {
-			menuToolItem.setToolTipText(tooltip);
-		}
+	public void setHidden(final boolean hidden) {
+		// TODO HRW is this supported by RCP workbench?
 	}
 
 	@Override
-	public IToolBar getToolBar() {
-		return toolBar;
+	public IToolBarModel getToolBar() {
+		// TODO HRW un-hide toolbar
+		return toolBarModel;
+	}
+
+	@Override
+	public IMenuModel getToolBarMenu() {
+		return new MenuModel();
+	}
+
+	@Override
+	public IComponentTreeNodeContext getComponentTreeNodeContext() {
+		return getComponentContext().getComponentTreeNodeContext();
+	}
+
+	@Override
+	public IWorkbenchApplicationContext getWorkbenchApplicationContext() {
+		return getComponentTreeNodeContext().getWorkbenchApplicationContext();
+	}
+
+	@Override
+	public IWorkbenchContext getWorkbenchContext() {
+		return getWorkbenchApplicationContext().getWorkbenchContext();
 	}
 
 }

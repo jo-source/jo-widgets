@@ -42,13 +42,14 @@ import org.jowidgets.workbench.api.ILayoutContainer;
 import org.jowidgets.workbench.api.ISplitLayout;
 import org.jowidgets.workbench.api.IViewLayout;
 import org.jowidgets.workbench.impl.rcp.RcpView;
+import org.jowidgets.workbench.impl.rcp.internal.ComponentContext;
 
 public final class PartSupport {
 
 	private static final PartSupport INSTANCE = new PartSupport();
 
 	private final Map<String, IViewContainerContext> viewContainerContextMap = new HashMap<String, IViewContainerContext>();
-	private final Map<String, IViewLayout> viewMap = new HashMap<String, IViewLayout>();
+	private final Map<String, ViewLayoutContext> viewMap = new HashMap<String, ViewLayoutContext>();
 
 	private PartSupport() {}
 
@@ -60,7 +61,7 @@ public final class PartSupport {
 		return viewContainerContextMap.get(perspectiveId);
 	}
 
-	public IViewLayout getView(final String viewId) {
+	public ViewLayoutContext getView(final String viewId) {
 		return viewMap.get(viewId);
 	}
 
@@ -72,9 +73,20 @@ public final class PartSupport {
 		perspectiveRegistry.setDefaultPerspective(DynamicPerspective.ID);
 	}
 
-	public void showPerspective(final String nodeId, final ILayout perspective) {
+	public void showPerspective(final String nodeId, final ComponentContext componentContext) {
 		final IPerspectiveRegistry perspectiveRegistry = PlatformUI.getWorkbench().getPerspectiveRegistry();
 		final IPerspectiveDescriptor perspectiveDescriptor = perspectiveRegistry.findPerspectiveWithId(DynamicPerspective.ID);
+		if (componentContext == null) {
+			showEmptyPerspective();
+			return;
+		}
+
+		final ILayout perspective = componentContext.getPerspective();
+		if (perspective == null) {
+			showEmptyPerspective();
+			return;
+		}
+
 		final String perspectiveId = nodeId + "." + perspective.getId();
 		IPerspectiveDescriptor newPerspective = perspectiveRegistry.findPerspectiveWithId(perspectiveId);
 		if (newPerspective == null) {
@@ -82,7 +94,7 @@ public final class PartSupport {
 					perspectiveId,
 					String.valueOf(perspective.getLabel()),
 					perspectiveDescriptor);
-			final IViewContainerContext context = registerViews(perspectiveId, perspective.getLayoutContainer());
+			final IViewContainerContext context = registerViews(perspectiveId, perspective.getLayoutContainer(), componentContext);
 			viewContainerContextMap.put(perspectiveId, context);
 		}
 		final IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
@@ -94,19 +106,22 @@ public final class PartSupport {
 		}
 	}
 
-	private IViewContainerContext registerViews(final String perspectiveId, final ILayoutContainer viewContainer) {
+	private IViewContainerContext registerViews(
+		final String perspectiveId,
+		final ILayoutContainer viewContainer,
+		final ComponentContext componentContext) {
 		if (viewContainer instanceof ISplitLayout) {
 			final ISplitLayout splitViewContainer = (ISplitLayout) viewContainer;
-			return new SplitViewContainerContext(
-				splitViewContainer,
-				registerViews(perspectiveId, splitViewContainer.getFirstContainer()),
-				registerViews(perspectiveId, splitViewContainer.getSecondContainer()));
+			return new SplitViewContainerContext(splitViewContainer, registerViews(
+					perspectiveId,
+					splitViewContainer.getFirstContainer(),
+					componentContext), registerViews(perspectiveId, splitViewContainer.getSecondContainer(), componentContext));
 		}
 		if (viewContainer instanceof IFolderLayout) {
 			final IFolderLayout viewListContainer = (IFolderLayout) viewContainer;
 			final TabViewContainerContext context = new TabViewContainerContext(perspectiveId + "." + viewListContainer.getId());
 			for (final IViewLayout singleViewContainer : viewListContainer.getViews()) {
-				context.add(registerView(perspectiveId, viewListContainer, singleViewContainer));
+				context.add(registerView(perspectiveId, viewListContainer, singleViewContainer, componentContext));
 			}
 			return context;
 		}
@@ -116,14 +131,15 @@ public final class PartSupport {
 	private SingleViewContainerContext registerView(
 		final String perspectiveId,
 		final IFolderLayout folderLayout,
-		final IViewLayout view) {
+		final IViewLayout view,
+		final ComponentContext componentContext) {
 		final String viewId;
 		if (view instanceof RcpView) {
 			viewId = view.getId();
 		}
 		else {
 			viewId = perspectiveId + "." + view.getId();
-			viewMap.put(viewId, view);
+			viewMap.put(viewId, new ViewLayoutContext(view, componentContext));
 		}
 		return new SingleViewContainerContext(
 			viewId,

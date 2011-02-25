@@ -33,6 +33,8 @@ import java.util.Arrays;
 import org.eclipse.jface.resource.ColorRegistry;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabFolder2Adapter;
+import org.eclipse.swt.custom.CTabFolderEvent;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -50,6 +52,7 @@ import org.eclipse.ui.IWorkbenchPreferenceConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.IWorkbenchThemeConstants;
 import org.eclipse.ui.themes.ITheme;
+import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.workbench.api.IWorkbench;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
 import org.jowidgets.workbench.api.IWorkbenchContext;
@@ -70,7 +73,10 @@ public final class WorkbenchApplicationFolder extends Composite {
 
 		setLayout(new FillLayout());
 		final int tabStyle = PlatformUI.getPreferenceStore().getInt(IWorkbenchPreferenceConstants.VIEW_TAB_POSITION);
-		tabFolder = new CTabFolder(this, tabStyle | SWT.NO_BACKGROUND | SWT.BORDER);
+		tabFolder = new CTabFolder(this, tabStyle
+			| SWT.NO_BACKGROUND
+			| SWT.BORDER
+			| (workbench.getApplicationsCloseable() ? SWT.CLOSE : SWT.NONE));
 		setFont();
 		setTabHeight();
 
@@ -100,6 +106,22 @@ public final class WorkbenchApplicationFolder extends Composite {
 				}
 				appTree.showSelectedPerspective();
 				activeTree = appTree;
+			}
+		});
+
+		tabFolder.addCTabFolder2Listener(new CTabFolder2Adapter() {
+			@Override
+			public void close(final CTabFolderEvent event) {
+				final CTabItem tabItem = (CTabItem) event.item;
+				final IWorkbenchApplication application = (IWorkbenchApplication) tabItem.getData();
+				final VetoHolder vetoHolder = new VetoHolder();
+				application.onClose(vetoHolder);
+				if (!vetoHolder.hasVeto()) {
+					final WorkbenchApplicationTree tree = (WorkbenchApplicationTree) tabItem.getControl();
+					tree.clearSelection();
+					tree.dispose();
+					event.doit = !vetoHolder.hasVeto();
+				}
 			}
 		});
 

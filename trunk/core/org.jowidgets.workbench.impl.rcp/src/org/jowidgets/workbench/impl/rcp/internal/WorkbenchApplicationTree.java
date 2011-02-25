@@ -29,7 +29,6 @@ package org.jowidgets.workbench.impl.rcp.internal;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
@@ -82,7 +81,7 @@ public final class WorkbenchApplicationTree extends Composite {
 	private final IToolBarModel toolBarModel;
 	private IMenuModel toolBarMenuModel;
 	private String nodeId;
-	private AtomicReference<ILayout> perspectiveReference;
+	private ComponentContext componentContext;
 
 	public WorkbenchApplicationTree(final Composite parent, final IWorkbenchApplication application) {
 		super(parent, SWT.NONE);
@@ -210,8 +209,9 @@ public final class WorkbenchApplicationTree extends Composite {
 					final WorkbenchContext workbenchContext = (WorkbenchContext) context.getWorkbenchContext();
 					final IComponent currentComponent = workbenchContext.getCurrentComponent();
 					if (currentComponent != null) {
-						if (context.getComponentContext().getComponent() == currentComponent) {
-							// do nothing
+						final ComponentContext selectedComponentContext = context.getComponentContext();
+						if (selectedComponentContext != null && selectedComponentContext.getComponent() == currentComponent) {
+							// component re-selected, do nothing
 							return;
 						}
 						final VetoHolder vetoHolder = new VetoHolder();
@@ -222,19 +222,19 @@ public final class WorkbenchApplicationTree extends Composite {
 						}
 					}
 					ILayout perspective = null;
-					final ComponentContext componentContext = context.getComponentContext();
-					if (componentContext != null) {
-						perspective = componentContext.getPerspective();
-						final IComponent newComponent = componentContext.getComponent();
+					final ComponentContext newComponentContext = context.getComponentContext();
+					if (newComponentContext != null) {
+						perspective = newComponentContext.getPerspective();
+						final IComponent newComponent = newComponentContext.getComponent();
 						workbenchContext.setCurrentComponent(newComponent);
 						newComponent.onActivation();
 					}
 					nodeId = context.getQualifiedId();
-					perspectiveReference = new AtomicReference<ILayout>(perspective);
+					componentContext = newComponentContext;
 					showSelectedPerspective();
 				}
 				else {
-					perspectiveReference = null;
+					componentContext = null;
 					PartSupport.getInstance().showEmptyPerspective();
 				}
 			}
@@ -246,19 +246,11 @@ public final class WorkbenchApplicationTree extends Composite {
 	}
 
 	public void showSelectedPerspective() {
-		if (perspectiveReference != null) {
-			final ILayout perspective = perspectiveReference.get();
-			if (perspective == null) {
-				PartSupport.getInstance().showEmptyPerspective();
-			}
-			else {
-				PartSupport.getInstance().showPerspective(nodeId, perspective);
-			}
-		}
+		PartSupport.getInstance().showPerspective(nodeId, componentContext);
 	}
 
 	public boolean isPerspectiveSelected() {
-		return perspectiveReference != null;
+		return componentContext != null;
 	}
 
 	public void refresh(final Object object) {
