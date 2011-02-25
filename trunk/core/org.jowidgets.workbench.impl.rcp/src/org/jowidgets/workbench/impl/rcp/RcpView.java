@@ -28,50 +28,64 @@
 
 package org.jowidgets.workbench.impl.rcp;
 
-import org.eclipse.ui.IViewLayout;
+import java.util.Collections;
+import java.util.List;
+
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.workbench.api.IViewLayout;
 
 public final class RcpView implements IViewLayout {
 
 	private final String viewId;
-	private boolean closeable;
-	private boolean moveable;
+	private boolean detachable = true;
 
 	public RcpView(final String viewId) {
 		this.viewId = viewId;
 	}
 
-	public String getViewId() {
+	@Override
+	public String getId() {
 		return viewId;
 	}
 
 	@Override
-	public boolean isCloseable() {
-		return closeable;
+	public boolean isDetachable() {
+		return detachable;
+	}
+
+	public void setDetachable(final boolean detachable) {
+		this.detachable = detachable;
 	}
 
 	@Override
-	public void setCloseable(final boolean closeable) {
-		this.closeable = closeable;
-	}
-
-	@Override
-	public boolean isMoveable() {
-		return moveable;
-	}
-
-	@Override
-	public void setMoveable(final boolean moveable) {
-		this.moveable = moveable;
-	}
-
-	@Override
-	public boolean isStandalone() {
+	public boolean isHidden() {
+		// TODO HRW is this supported by RCP workbench?
 		return false;
 	}
 
 	@Override
-	public boolean getShowTitle() {
-		return true;
+	public String getLabel() {
+		return null;
+	}
+
+	@Override
+	public String getTooltip() {
+		return null;
+	}
+
+	@Override
+	public IImageConstant getIcon() {
+		return null;
+	}
+
+	@Override
+	public List<String> getFolderWhitelist() {
+		return Collections.emptyList();
+	}
+
+	@Override
+	public List<String> getFolderBlacklist() {
+		return Collections.emptyList();
 	}
 
 }
