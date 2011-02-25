@@ -210,6 +210,10 @@ public final class WorkbenchApplicationTree extends Composite {
 					final WorkbenchContext workbenchContext = (WorkbenchContext) context.getWorkbenchContext();
 					final IComponent currentComponent = workbenchContext.getCurrentComponent();
 					if (currentComponent != null) {
+						if (context.getComponentContext().getComponent() == currentComponent) {
+							// do nothing
+							return;
+						}
 						final VetoHolder vetoHolder = new VetoHolder();
 						currentComponent.onDeactivation(vetoHolder);
 						if (vetoHolder.hasVeto()) {
