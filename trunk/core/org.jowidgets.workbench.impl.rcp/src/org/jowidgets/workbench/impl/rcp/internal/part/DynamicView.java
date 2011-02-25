@@ -28,6 +28,11 @@
 
 package org.jowidgets.workbench.impl.rcp.internal.part;
 
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IWorkbenchPage;
@@ -35,6 +40,11 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jowidgets.api.model.IListModelListener;
+import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IPopupMenu;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewLayout;
@@ -45,6 +55,8 @@ import org.jowidgets.workbench.impl.rcp.internal.util.ImageHelper;
 public final class DynamicView extends ViewPart implements IPartListener2 {
 
 	public static final String ID = "org.jowidgets.workbench.impl.rcp.internal.part.dynamicView"; //$NON-NLS-1$
+
+	private static final IAction EMPTY_ACTION = new Action() {};
 
 	private IView view;
 
@@ -58,6 +70,46 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 		setPartName(viewLayout.getLabel());
 		setTitleImage(ImageHelper.getImage(viewLayout.getIcon(), null));
 		setTitleToolTip(viewLayout.getTooltip());
+
+		final IMenuModel menuModel = viewLayoutContext.getFolderContext().getPopupMenu();
+		final IPopupMenu popupMenu = Toolkit.getWidgetWrapperFactory().createComposite(parent).createPopupMenu();
+		popupMenu.setModel(menuModel);
+		final IMenuManager menuManager = getViewSite().getActionBars().getMenuManager();
+		menuManager.setRemoveAllWhenShown(true);
+		if (!menuModel.getChildren().isEmpty()) {
+			menuManager.add(EMPTY_ACTION);
+		}
+		menuManager.addMenuListener(new IMenuListener() {
+			@Override
+			public void menuAboutToShow(final IMenuManager manager) {
+				final Point position = parent.toControl(parent.getDisplay().getCursorLocation());
+				popupMenu.show(new Position(position.x - 10, -3));
+				parent.getDisplay().asyncExec(new Runnable() {
+					@Override
+					public void run() {
+						menuManager.add(EMPTY_ACTION);
+						menuManager.update(true);
+					}
+				});
+			}
+		});
+		menuModel.addListModelListener(new IListModelListener() {
+			@Override
+			public void childAdded(final int index) {
+				if (menuModel.getChildren().size() == 1) {
+					menuManager.add(EMPTY_ACTION);
+					menuManager.update(true);
+				}
+			}
+
+			@Override
+			public void childRemoved(final int index) {
+				if (menuModel.getChildren().size() == 0) {
+					menuManager.removeAll();
+					menuManager.update(true);
+				}
+			}
+		});
 
 		// lazy initialization of view content
 		getViewSite().getPage().addPartListener(new IPartListener2() {

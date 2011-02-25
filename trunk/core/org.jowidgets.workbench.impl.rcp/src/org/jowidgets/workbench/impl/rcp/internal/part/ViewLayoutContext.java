@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, M. Grossmann, M. Woelker, H. Westphal
+ * Copyright (c) 2011, M. Woelker, H. Westphal
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,6 +28,7 @@
 
 package org.jowidgets.workbench.impl.rcp.internal.part;
 
+import org.jowidgets.workbench.api.IFolderContext;
 import org.jowidgets.workbench.api.IViewLayout;
 import org.jowidgets.workbench.impl.rcp.internal.ComponentContext;
 
@@ -35,10 +36,15 @@ public final class ViewLayoutContext {
 
 	private final IViewLayout viewLayout;
 	private final ComponentContext componentContext;
+	private final IFolderContext folderContext;
 
-	public ViewLayoutContext(final IViewLayout viewLayout, final ComponentContext componentContext) {
+	public ViewLayoutContext(
+		final IViewLayout viewLayout,
+		final ComponentContext componentContext,
+		final IFolderContext folderContext) {
 		this.viewLayout = viewLayout;
 		this.componentContext = componentContext;
+		this.folderContext = folderContext;
 	}
 
 	public IViewLayout getViewLayout() {
@@ -47,6 +53,10 @@ public final class ViewLayoutContext {
 
 	public ComponentContext getComponentContext() {
 		return componentContext;
+	}
+
+	public IFolderContext getFolderContext() {
+		return folderContext;
 	}
 
 }

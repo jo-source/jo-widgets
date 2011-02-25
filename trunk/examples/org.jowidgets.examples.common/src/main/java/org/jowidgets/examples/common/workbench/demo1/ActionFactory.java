@@ -49,6 +49,7 @@ import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.workbench.api.IComponentTreeNode;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
+import org.jowidgets.workbench.api.IFolderContext;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 
 public class ActionFactory {
@@ -210,6 +211,25 @@ public class ActionFactory {
 				return true;
 			}
 		};
+	}
+
+	public IAction createAddViewAction(final IFolderContext context) {
+		final IActionBuilder actionBuilder = Toolkit.getActionBuilderFactory().create();
+		actionBuilder.setText("Add new View");
+		actionBuilder.setIcon(SilkIcons.ADD);
+		actionBuilder.setCommand(new ICommandExecutor() {
+			@Override
+			public void execute(final IExecutionContext executionContext) throws Exception {
+				final IInputDialog<String> inputDialog = createInputDialog(executionContext, "View name");
+				inputDialog.setVisible(true);
+				if (inputDialog.isOkPressed()) {
+					// TODO MG implement
+				}
+			}
+
+		});
+
+		return actionBuilder.build();
 	}
 
 }

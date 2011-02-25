@@ -40,6 +40,7 @@ import org.jowidgets.examples.common.workbench.base.SplitLayout;
 import org.jowidgets.examples.common.workbench.base.ViewLayout;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
+import org.jowidgets.workbench.api.IFolderContext;
 import org.jowidgets.workbench.api.IFolderLayout;
 import org.jowidgets.workbench.api.ISplitLayout;
 import org.jowidgets.workbench.api.IView;
@@ -121,4 +122,11 @@ public class ComponentDemo1 extends AbstractComponent implements IComponent {
 		return new FolderLayout(DETAIL2_FOLDER_ID, resultViews);
 	}
 
+	@Override
+	public void onFolderCreated(final IFolderContext folderContext) {
+		if (DETAIL2_FOLDER_ID.equals(folderContext.getOriginalFolderId())) {
+			final ActionFactory actionFactory = new ActionFactory();
+			folderContext.getPopupMenu().addAction(actionFactory.createAddViewAction(folderContext));
+		}
+	}
 }

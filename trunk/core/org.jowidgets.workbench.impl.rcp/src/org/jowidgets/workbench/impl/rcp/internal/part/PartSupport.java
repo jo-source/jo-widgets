@@ -36,6 +36,7 @@ import org.eclipse.ui.IPerspectiveRegistry;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
+import org.jowidgets.workbench.api.IFolderContext;
 import org.jowidgets.workbench.api.IFolderLayout;
 import org.jowidgets.workbench.api.ILayout;
 import org.jowidgets.workbench.api.ILayoutContainer;
@@ -43,6 +44,7 @@ import org.jowidgets.workbench.api.ISplitLayout;
 import org.jowidgets.workbench.api.IViewLayout;
 import org.jowidgets.workbench.impl.rcp.RcpView;
 import org.jowidgets.workbench.impl.rcp.internal.ComponentContext;
+import org.jowidgets.workbench.impl.rcp.internal.FolderContext;
 
 public final class PartSupport {
 
@@ -120,8 +122,10 @@ public final class PartSupport {
 		if (viewContainer instanceof IFolderLayout) {
 			final IFolderLayout viewListContainer = (IFolderLayout) viewContainer;
 			final TabViewContainerContext context = new TabViewContainerContext(perspectiveId + "." + viewListContainer.getId());
+			final IFolderContext folderContext = new FolderContext(viewListContainer.getId(), componentContext);
+			componentContext.getComponent().onFolderCreated(folderContext);
 			for (final IViewLayout singleViewContainer : viewListContainer.getViews()) {
-				context.add(registerView(perspectiveId, viewListContainer, singleViewContainer, componentContext));
+				context.add(registerView(perspectiveId, viewListContainer, singleViewContainer, componentContext, folderContext));
 			}
 			return context;
 		}
@@ -132,14 +136,15 @@ public final class PartSupport {
 		final String perspectiveId,
 		final IFolderLayout folderLayout,
 		final IViewLayout view,
-		final ComponentContext componentContext) {
+		final ComponentContext componentContext,
+		final IFolderContext folderContext) {
 		final String viewId;
 		if (view instanceof RcpView) {
 			viewId = view.getId();
 		}
 		else {
 			viewId = perspectiveId + "." + view.getId();
-			viewMap.put(viewId, new ViewLayoutContext(view, componentContext));
+			viewMap.put(viewId, new ViewLayoutContext(view, componentContext, folderContext));
 		}
 		return new SingleViewContainerContext(
 			viewId,
