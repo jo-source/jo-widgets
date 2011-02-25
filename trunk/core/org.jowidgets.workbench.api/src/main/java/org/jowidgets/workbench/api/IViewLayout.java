@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann, H. Westphal
+ * Copyright (c) 2011, M. Grossmann, H. Westphal
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
