@@ -50,13 +50,17 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
+import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IPopupMenu;
+import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.tools.model.item.MenuModel;
+import org.jowidgets.tools.model.item.ToolBarModel;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 import org.jowidgets.workbench.api.ILayout;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
@@ -70,6 +74,8 @@ public final class WorkbenchApplicationTree extends Composite {
 	private TreeViewer treeViewer;
 	private IMenuModel popupMenuModel;
 	private IPopupMenu popupMenu;
+	private final IToolBarModel toolBarModel;
+	private final IMenuModel toolBarMenuModel;
 	private String nodeId;
 	private AtomicReference<ILayout> perspectiveReference;
 
@@ -83,10 +89,26 @@ public final class WorkbenchApplicationTree extends Composite {
 		final IComposite joComposite = Toolkit.getWidgetWrapperFactory().createComposite(folderComposite);
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-		//		final IToolBarModel toolBarModel = application.createToolBar();
-		//		if (toolBarModel != null) {
-		//			joComposite.add(bpf.toolBar(), null).setModel(toolBarModel);
-		//		}
+		final IToolBar toolBar = joComposite.add(bpf.toolBar(), null);
+		final IToolBarModel internalToolBarModel = new ToolBarModel();
+		toolBar.setModel(internalToolBarModel);
+
+		toolBarModel = new ToolBarModel();
+		toolBarModel.addListModelListener(new IListModelListener() {
+			@Override
+			public void childRemoved(final int index) {
+				internalToolBarModel.removeItem(index);
+			}
+
+			@Override
+			public void childAdded(final int index) {
+				internalToolBarModel.addItem(index, toolBarModel.getItems().get(index));
+			}
+		});
+
+		toolBarMenuModel = new MenuModel();
+		internalToolBarModel.addItem(toolBarMenuModel);
+
 		//
 		//		final IMenuModel toolBarMenuModel = application.createToolBarMenu();
 		//		if (toolBarMenuModel != null) {
@@ -298,11 +320,11 @@ public final class WorkbenchApplicationTree extends Composite {
 	}
 
 	public IToolBarModel getToolBar() {
-		return Toolkit.getModelFactoryProvider().getItemModelFactory().toolBar();
+		return toolBarModel;
 	}
 
 	public IMenuModel getToolBarMenu() {
-		return Toolkit.getModelFactoryProvider().getItemModelFactory().menu();
+		return toolBarMenuModel;
 	}
 
 	public IMenuModel getPopupMenu() {
