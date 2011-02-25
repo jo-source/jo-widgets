@@ -64,7 +64,6 @@ import org.jowidgets.tools.model.item.ToolBarModel;
 import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
-import org.jowidgets.workbench.api.ILayout;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
 import org.jowidgets.workbench.api.IWorkbenchPart;
 import org.jowidgets.workbench.impl.rcp.internal.part.PartSupport;
@@ -221,10 +220,8 @@ public final class WorkbenchApplicationTree extends Composite {
 							return;
 						}
 					}
-					ILayout perspective = null;
 					final ComponentContext newComponentContext = context.getComponentContext();
 					if (newComponentContext != null) {
-						perspective = newComponentContext.getPerspective();
 						final IComponent newComponent = newComponentContext.getComponent();
 						workbenchContext.setCurrentComponent(newComponent);
 						newComponent.onActivation();
