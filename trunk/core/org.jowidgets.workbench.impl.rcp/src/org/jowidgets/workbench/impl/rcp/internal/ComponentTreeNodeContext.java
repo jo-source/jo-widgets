@@ -39,6 +39,7 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentTreeNode;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
@@ -103,17 +104,17 @@ public final class ComponentTreeNodeContext implements IComponentTreeNodeContext
 	}
 
 	public ComponentContext getComponentContext() {
-		return null;
-		//		if (componentContextReference == null) {
-		//			ComponentContext componentContext = null;
-		//			final IComponent component = treeNode.createComponent();
-		//			if (component != null) {
-		//				componentContext = new ComponentContext(this, component);
-		//				component.initialize(componentContext);
-		//			}
-		//			componentContextReference = new AtomicReference<ComponentContext>(componentContext);
-		//		}
-		//		return componentContextReference.get();
+		if (componentContextReference == null) {
+			final ComponentContext componentContext = new ComponentContext(this);
+			final IComponent component = treeNode.createComponent(componentContext);
+			if (component != null) {
+				componentContextReference = new AtomicReference<ComponentContext>(componentContext);
+			}
+			else {
+				componentContextReference = new AtomicReference<ComponentContext>(null);
+			}
+		}
+		return componentContextReference.get();
 	}
 
 	public String getId() {
@@ -154,32 +155,27 @@ public final class ComponentTreeNodeContext implements IComponentTreeNodeContext
 
 	@Override
 	public void select() {
-		// TODO Auto-generated method stub
-
+		// TODO HRW implement
 	}
 
 	@Override
 	public void setExpanded(final boolean expanded) {
-		// TODO Auto-generated method stub
-
+		// TODO HRW implement
 	}
 
 	@Override
 	public void setLabel(final String label) {
-		// TODO Auto-generated method stub
-
+		// TODO HRW implement
 	}
 
 	@Override
 	public void setTooltip(final String tooltip) {
-		// TODO Auto-generated method stub
-
+		// TODO HRW implement
 	}
 
 	@Override
 	public void setIcon(final IImageConstant icon) {
-		// TODO Auto-generated method stub
-
+		// TODO HRW implement
 	}
 
 	@Override
