@@ -155,7 +155,7 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		pageComposite.setLayoutData("wmin 0, hmin 0, grow");
 
 		// TODO HRW hide statusbar
-		statusBar = frame.add(bpf.compositeWithBorder(), "growx");
+		statusBar = frame.add(bpf.composite(), "growx");
 	}
 
 	public double getFolderRatio() {
