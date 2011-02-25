@@ -25,13 +25,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.workbench.legacy.impl.rcp.internal.part;
+package org.jowidgets.workbench.impl.rcp.internal.part;
 
 import org.eclipse.ui.IFolderLayout;
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;
 import org.jowidgets.common.types.Orientation;
-import org.jowidgets.workbench.impl.rcp.internal.part.PartRegistry;
 import org.jowidgets.workbench.legacy.api.ISplitViewContainer;
 
 public final class DynamicPerspective implements IPerspectiveFactory {

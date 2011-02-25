@@ -26,40 +26,42 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.legacy.impl.rcp.internal.part;
+package org.jowidgets.workbench.impl.rcp.internal;
 
-public final class SingleViewContainerContext implements IViewContainerContext {
+import java.util.concurrent.atomic.AtomicReference;
 
-	private final String viewId;
-	private final boolean closeable;
-	private final boolean detachable;
-	private final boolean rcpView;
+import org.jowidgets.workbench.legacy.api.IComponent;
+import org.jowidgets.workbench.legacy.api.IComponentContext;
+import org.jowidgets.workbench.legacy.api.IComponentTreeNodeContext;
+import org.jowidgets.workbench.legacy.api.IPerspective;
 
-	public SingleViewContainerContext(
-		final String viewId,
-		final boolean closeable,
-		final boolean detachable,
-		final boolean rcpView) {
-		this.viewId = viewId;
-		this.closeable = closeable;
-		this.detachable = detachable;
-		this.rcpView = rcpView;
+public final class ComponentContext implements IComponentContext {
+
+	private final IComponentTreeNodeContext componentTreeNodeContext;
+	private final IComponent component;
+	private AtomicReference<IPerspective> perspectiveReference;
+
+	public ComponentContext(final IComponentTreeNodeContext componentTreeNodeContext, final IComponent component) {
+		this.componentTreeNodeContext = componentTreeNodeContext;
+		this.component = component;
 	}
 
-	public String getViewId() {
-		return viewId;
+	@Override
+	public IComponentTreeNodeContext getComponentTreeNodeContext() {
+		return componentTreeNodeContext;
 	}
 
-	public boolean isCloseable() {
-		return closeable;
+	public IPerspective getPerspective() {
+		if (perspectiveReference == null) {
+			perspectiveReference = new AtomicReference<IPerspective>(component.createPerspective());
+		}
+		return perspectiveReference.get();
 	}
 
-	public boolean isDetachable() {
-		return detachable;
-	}
-
-	public boolean isRcpView() {
-		return rcpView;
+	@Override
+	public void setPerspective(final IPerspective perspective) {
+		// TODO HRW support changing of perspectives		
+		throw new UnsupportedOperationException("setPerspective");
 	}
 
 }

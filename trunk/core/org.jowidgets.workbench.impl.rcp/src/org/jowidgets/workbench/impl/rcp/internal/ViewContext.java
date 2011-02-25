@@ -26,6 +26,63 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.legacy.impl.rcp.internal.part;
+package org.jowidgets.workbench.impl.rcp.internal;
 
-public interface IViewContainerContext {}
+import org.eclipse.swt.widgets.ToolItem;
+import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IMenu;
+import org.jowidgets.api.widgets.IToolBar;
+import org.jowidgets.workbench.legacy.api.IComponentContext;
+import org.jowidgets.workbench.legacy.api.IViewContext;
+
+public final class ViewContext implements IViewContext {
+
+	private IContainer container;
+	private IMenu menu;
+	private ToolItem menuToolItem;
+	private IToolBar toolBar;
+
+	public void setContainer(final IContainer container) {
+		this.container = container;
+	}
+
+	public void setMenu(final IMenu menu) {
+		this.menu = menu;
+	}
+
+	public void setMenuToolItem(final ToolItem menuToolItem) {
+		this.menuToolItem = menuToolItem;
+	}
+
+	public void setToolBar(final IToolBar toolBar) {
+		this.toolBar = toolBar;
+	}
+
+	@Override
+	public IComponentContext getComponentContext() {
+		return null;
+	}
+
+	@Override
+	public IContainer getContainer() {
+		return container;
+	}
+
+	@Override
+	public IMenu getMenu() {
+		return menu;
+	}
+
+	@Override
+	public void setMenuTooltip(final String tooltip) {
+		if (menuToolItem != null && !menuToolItem.isDisposed()) {
+			menuToolItem.setToolTipText(tooltip);
+		}
+	}
+
+	@Override
+	public IToolBar getToolBar() {
+		return toolBar;
+	}
+
+}

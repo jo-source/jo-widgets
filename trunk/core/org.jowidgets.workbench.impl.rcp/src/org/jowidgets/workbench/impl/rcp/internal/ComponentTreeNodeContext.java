@@ -44,7 +44,6 @@ import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 import org.jowidgets.workbench.api.IWorkbenchContext;
 import org.jowidgets.workbench.api.IWorkbenchPart;
-import org.jowidgets.workbench.legacy.impl.rcp.internal.ComponentContext;
 
 public final class ComponentTreeNodeContext implements IComponentTreeNodeContext, IWorkbenchPart {
 

@@ -36,8 +36,8 @@ import org.eclipse.ui.application.WorkbenchAdvisor;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 import org.jowidgets.workbench.api.IWorkbench;
 import org.jowidgets.workbench.api.IWorkbenchContext;
+import org.jowidgets.workbench.impl.rcp.internal.part.DynamicPerspective;
 import org.jowidgets.workbench.impl.rcp.internal.part.PartRegistry;
-import org.jowidgets.workbench.legacy.impl.rcp.internal.part.DynamicPerspective;
 
 public final class JoWorkbenchAdvisor extends WorkbenchAdvisor {
 

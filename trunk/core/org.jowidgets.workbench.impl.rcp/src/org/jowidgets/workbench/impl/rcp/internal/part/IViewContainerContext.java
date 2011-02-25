@@ -26,35 +26,6 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.legacy.impl.rcp.internal.part;
+package org.jowidgets.workbench.impl.rcp.internal.part;
 
-import org.jowidgets.workbench.legacy.api.ISplitViewContainer;
-
-public final class SplitViewContainerContext implements IViewContainerContext {
-
-	private final ISplitViewContainer viewContainer;
-	private final IViewContainerContext first;
-	private final IViewContainerContext second;
-
-	public SplitViewContainerContext(
-		final ISplitViewContainer viewContainer,
-		final IViewContainerContext first,
-		final IViewContainerContext second) {
-		this.viewContainer = viewContainer;
-		this.first = first;
-		this.second = second;
-	}
-
-	public ISplitViewContainer getViewContainer() {
-		return viewContainer;
-	}
-
-	public IViewContainerContext getFirst() {
-		return first;
-	}
-
-	public IViewContainerContext getSecond() {
-		return second;
-	}
-
-}
+public interface IViewContainerContext {}

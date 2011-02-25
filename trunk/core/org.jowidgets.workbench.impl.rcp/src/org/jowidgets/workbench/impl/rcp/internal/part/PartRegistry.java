@@ -36,13 +36,10 @@ import org.eclipse.ui.IPerspectiveRegistry;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
+import org.jowidgets.workbench.api.ILayout;
+import org.jowidgets.workbench.api.ILayoutContainer;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.impl.rcp.RcpView;
-import org.jowidgets.workbench.legacy.impl.rcp.internal.part.DynamicPerspective;
-import org.jowidgets.workbench.legacy.impl.rcp.internal.part.IViewContainerContext;
-import org.jowidgets.workbench.legacy.impl.rcp.internal.part.SingleViewContainerContext;
-import org.jowidgets.workbench.legacy.impl.rcp.internal.part.SplitViewContainerContext;
-import org.jowidgets.workbench.legacy.impl.rcp.internal.part.TabViewContainerContext;
 
 public final class PartRegistry {
 
@@ -73,7 +70,7 @@ public final class PartRegistry {
 		perspectiveRegistry.setDefaultPerspective(DynamicPerspective.ID);
 	}
 
-	public void showPerspective(final String nodeId, final IPerspective perspective) {
+	public void showPerspective(final String nodeId, final ILayout perspective) {
 		final IPerspectiveRegistry perspectiveRegistry = PlatformUI.getWorkbench().getPerspectiveRegistry();
 		final IPerspectiveDescriptor perspectiveDescriptor = perspectiveRegistry.findPerspectiveWithId(DynamicPerspective.ID);
 		final String perspectiveId = nodeId + "." + perspective.getId();
@@ -95,7 +92,7 @@ public final class PartRegistry {
 		}
 	}
 
-	private IViewContainerContext registerViews(final String perspectiveId, final IViewContainer viewContainer) {
+	private IViewContainerContext registerViews(final String perspectiveId, final ILayoutContainer viewContainer) {
 		if (viewContainer instanceof ISplitViewContainer) {
 			final ISplitViewContainer splitViewContainer = (ISplitViewContainer) viewContainer;
 			return new SplitViewContainerContext(splitViewContainer, registerViews(

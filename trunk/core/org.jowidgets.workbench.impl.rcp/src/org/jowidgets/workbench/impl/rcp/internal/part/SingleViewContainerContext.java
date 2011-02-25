@@ -26,32 +26,40 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.legacy.impl.rcp.internal.part;
+package org.jowidgets.workbench.impl.rcp.internal.part;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+public final class SingleViewContainerContext implements IViewContainerContext {
 
-public final class TabViewContainerContext implements IViewContainerContext, Iterable<SingleViewContainerContext> {
+	private final String viewId;
+	private final boolean closeable;
+	private final boolean detachable;
+	private final boolean rcpView;
 
-	private final String folderId;
-	private final List<SingleViewContainerContext> container = new ArrayList<SingleViewContainerContext>();
-
-	public TabViewContainerContext(final String folderId) {
-		this.folderId = folderId;
+	public SingleViewContainerContext(
+		final String viewId,
+		final boolean closeable,
+		final boolean detachable,
+		final boolean rcpView) {
+		this.viewId = viewId;
+		this.closeable = closeable;
+		this.detachable = detachable;
+		this.rcpView = rcpView;
 	}
 
-	public String getFolderId() {
-		return folderId;
+	public String getViewId() {
+		return viewId;
 	}
 
-	public void add(final SingleViewContainerContext context) {
-		container.add(context);
+	public boolean isCloseable() {
+		return closeable;
 	}
 
-	@Override
-	public Iterator<SingleViewContainerContext> iterator() {
-		return container.iterator();
+	public boolean isDetachable() {
+		return detachable;
+	}
+
+	public boolean isRcpView() {
+		return rcpView;
 	}
 
 }

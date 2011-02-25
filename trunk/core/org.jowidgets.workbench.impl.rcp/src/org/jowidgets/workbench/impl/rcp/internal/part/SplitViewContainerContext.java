@@ -26,63 +26,35 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.legacy.impl.rcp.internal;
+package org.jowidgets.workbench.impl.rcp.internal.part;
 
-import org.eclipse.swt.widgets.ToolItem;
-import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.IMenu;
-import org.jowidgets.api.widgets.IToolBar;
-import org.jowidgets.workbench.legacy.api.IComponentContext;
-import org.jowidgets.workbench.legacy.api.IViewContext;
+import org.jowidgets.workbench.legacy.api.ISplitViewContainer;
 
-public final class ViewContext implements IViewContext {
+public final class SplitViewContainerContext implements IViewContainerContext {
 
-	private IContainer container;
-	private IMenu menu;
-	private ToolItem menuToolItem;
-	private IToolBar toolBar;
+	private final ISplitViewContainer viewContainer;
+	private final IViewContainerContext first;
+	private final IViewContainerContext second;
 
-	public void setContainer(final IContainer container) {
-		this.container = container;
+	public SplitViewContainerContext(
+		final ISplitViewContainer viewContainer,
+		final IViewContainerContext first,
+		final IViewContainerContext second) {
+		this.viewContainer = viewContainer;
+		this.first = first;
+		this.second = second;
 	}
 
-	public void setMenu(final IMenu menu) {
-		this.menu = menu;
+	public ISplitViewContainer getViewContainer() {
+		return viewContainer;
 	}
 
-	public void setMenuToolItem(final ToolItem menuToolItem) {
-		this.menuToolItem = menuToolItem;
+	public IViewContainerContext getFirst() {
+		return first;
 	}
 
-	public void setToolBar(final IToolBar toolBar) {
-		this.toolBar = toolBar;
-	}
-
-	@Override
-	public IComponentContext getComponentContext() {
-		return null;
-	}
-
-	@Override
-	public IContainer getContainer() {
-		return container;
-	}
-
-	@Override
-	public IMenu getMenu() {
-		return menu;
-	}
-
-	@Override
-	public void setMenuTooltip(final String tooltip) {
-		if (menuToolItem != null && !menuToolItem.isDisposed()) {
-			menuToolItem.setToolTipText(tooltip);
-		}
-	}
-
-	@Override
-	public IToolBar getToolBar() {
-		return toolBar;
+	public IViewContainerContext getSecond() {
+		return second;
 	}
 
 }

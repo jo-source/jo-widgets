@@ -26,42 +26,32 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.legacy.impl.rcp.internal;
+package org.jowidgets.workbench.impl.rcp.internal.part;
 
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
-import org.jowidgets.workbench.legacy.api.IComponent;
-import org.jowidgets.workbench.legacy.api.IComponentContext;
-import org.jowidgets.workbench.legacy.api.IComponentTreeNodeContext;
-import org.jowidgets.workbench.legacy.api.IPerspective;
+public final class TabViewContainerContext implements IViewContainerContext, Iterable<SingleViewContainerContext> {
 
-public final class ComponentContext implements IComponentContext {
+	private final String folderId;
+	private final List<SingleViewContainerContext> container = new ArrayList<SingleViewContainerContext>();
 
-	private final IComponentTreeNodeContext componentTreeNodeContext;
-	private final IComponent component;
-	private AtomicReference<IPerspective> perspectiveReference;
+	public TabViewContainerContext(final String folderId) {
+		this.folderId = folderId;
+	}
 
-	public ComponentContext(final IComponentTreeNodeContext componentTreeNodeContext, final IComponent component) {
-		this.componentTreeNodeContext = componentTreeNodeContext;
-		this.component = component;
+	public String getFolderId() {
+		return folderId;
+	}
+
+	public void add(final SingleViewContainerContext context) {
+		container.add(context);
 	}
 
 	@Override
-	public IComponentTreeNodeContext getComponentTreeNodeContext() {
-		return componentTreeNodeContext;
-	}
-
-	public IPerspective getPerspective() {
-		if (perspectiveReference == null) {
-			perspectiveReference = new AtomicReference<IPerspective>(component.createPerspective());
-		}
-		return perspectiveReference.get();
-	}
-
-	@Override
-	public void setPerspective(final IPerspective perspective) {
-		// TODO HRW support changing of perspectives		
-		throw new UnsupportedOperationException("setPerspective");
+	public Iterator<SingleViewContainerContext> iterator() {
+		return container.iterator();
 	}
 
 }
