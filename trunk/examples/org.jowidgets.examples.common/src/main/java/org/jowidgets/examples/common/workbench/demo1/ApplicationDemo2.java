@@ -49,7 +49,7 @@ public class ApplicationDemo2 extends AbstractApplication {
 
 		//create menus
 		context.getPopupMenu().addAction(addFolderAction);
-		context.getToolBarMenu().addAction(addFolderAction);
+		//context.getToolBarMenu().addAction(addFolderAction);
 		context.getToolBar().addAction(addFolderAction);
 	}
 
