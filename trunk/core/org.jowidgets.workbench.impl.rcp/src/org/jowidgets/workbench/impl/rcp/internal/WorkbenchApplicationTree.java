@@ -35,6 +35,7 @@ import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -65,6 +66,7 @@ import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 import org.jowidgets.workbench.api.ILayout;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
 import org.jowidgets.workbench.api.IWorkbenchPart;
+import org.jowidgets.workbench.impl.rcp.internal.part.PartSupport;
 import org.jowidgets.workbench.impl.rcp.internal.util.ImageHelper;
 
 public final class WorkbenchApplicationTree extends Composite {
@@ -74,8 +76,9 @@ public final class WorkbenchApplicationTree extends Composite {
 	private TreeViewer treeViewer;
 	private IMenuModel popupMenuModel;
 	private IPopupMenu popupMenu;
+	private final IToolBarModel internalToolBarModel;
 	private final IToolBarModel toolBarModel;
-	private final IMenuModel toolBarMenuModel;
+	private IMenuModel toolBarMenuModel;
 	private String nodeId;
 	private AtomicReference<ILayout> perspectiveReference;
 
@@ -90,7 +93,7 @@ public final class WorkbenchApplicationTree extends Composite {
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
 		final IToolBar toolBar = joComposite.add(bpf.toolBar(), null);
-		final IToolBarModel internalToolBarModel = new ToolBarModel();
+		internalToolBarModel = new ToolBarModel();
 		toolBar.setModel(internalToolBarModel);
 
 		toolBarModel = new ToolBarModel();
@@ -105,27 +108,6 @@ public final class WorkbenchApplicationTree extends Composite {
 				internalToolBarModel.addItem(index, toolBarModel.getItems().get(index));
 			}
 		});
-
-		toolBarMenuModel = new MenuModel();
-		internalToolBarModel.addItem(toolBarMenuModel);
-
-		//
-		//		final IMenuModel toolBarMenuModel = application.createToolBarMenu();
-		//		if (toolBarMenuModel != null) {
-		//			final IToolBar menuBar = joComposite.add(bpf.toolBar(), null);
-		//			menuBar.addItem(bpf.toolBarMenu()).setModel(toolBarMenuModel);
-		//		}
-		// TODO popup menu
-		//		if (application.hasMenu()) {
-		//			menuButton = menuBar.addItem(bpf.toolBarPopupButton());
-		//			menu = menuBar.createPopupMenu();
-		//			menuButton.addPopupDetectionListener(new IPopupDetectionListener() {
-		//				@Override
-		//				public void popupDetected(final Position position) {
-		//					menu.show(position);
-		//				}
-		//			});
-		//		}
 
 		addTreeViewer();
 	}
@@ -221,21 +203,21 @@ public final class WorkbenchApplicationTree extends Composite {
 		treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(final SelectionChangedEvent event) {
-				//				if (!event.getSelection().isEmpty()) {
-				//					final ComponentTreeNodeContext context = (ComponentTreeNodeContext) ((ITreeSelection) treeViewer.getSelection()).getFirstElement();
-				//					ILayout perspective = null;
-				//					final ComponentContext componentContext = context.getComponentContext();
-				//					if (componentContext != null) {
-				//						perspective = componentContext.getPerspective();
-				//					}
-				//					nodeId = context.getQualifiedId();
-				//					perspectiveReference = new AtomicReference<IPerspective>(perspective);
-				//					showSelectedPerspective();
-				//				}
-				//				else {
-				//					perspectiveReference = null;
-				//					PartRegistry.getInstance().showEmptyPerspective();
-				//				}
+				if (!event.getSelection().isEmpty()) {
+					final ComponentTreeNodeContext context = (ComponentTreeNodeContext) ((ITreeSelection) treeViewer.getSelection()).getFirstElement();
+					ILayout perspective = null;
+					final ComponentContext componentContext = context.getComponentContext();
+					if (componentContext != null) {
+						perspective = componentContext.getPerspective();
+					}
+					nodeId = context.getQualifiedId();
+					perspectiveReference = new AtomicReference<ILayout>(perspective);
+					showSelectedPerspective();
+				}
+				else {
+					perspectiveReference = null;
+					PartSupport.getInstance().showEmptyPerspective();
+				}
 			}
 		});
 	}
@@ -245,15 +227,15 @@ public final class WorkbenchApplicationTree extends Composite {
 	}
 
 	public void showSelectedPerspective() {
-		//		if (perspectiveReference != null) {
-		//			final ILayout perspective = perspectiveReference.get();
-		//			if (perspective == null) {
-		//				PartRegistry.getInstance().showEmptyPerspective();
-		//			}
-		//			else {
-		//				PartRegistry.getInstance().showPerspective(nodeId, perspective);
-		//			}
-		//		}
+		if (perspectiveReference != null) {
+			final ILayout perspective = perspectiveReference.get();
+			if (perspective == null) {
+				PartSupport.getInstance().showEmptyPerspective();
+			}
+			else {
+				PartSupport.getInstance().showPerspective(nodeId, perspective);
+			}
+		}
 	}
 
 	public boolean isPerspectiveSelected() {
@@ -324,6 +306,10 @@ public final class WorkbenchApplicationTree extends Composite {
 	}
 
 	public IMenuModel getToolBarMenu() {
+		if (toolBarMenuModel == null) {
+			toolBarMenuModel = new MenuModel();
+			internalToolBarModel.addItem(internalToolBarModel.getItems().size(), toolBarMenuModel);
+		}
 		return toolBarMenuModel;
 	}
 

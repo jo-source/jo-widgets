@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, M. Grossmann, M. Woelker, H. Westphal
+ * Copyright (c) 2011, M. Woelker, H. Westphal
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,18 +28,18 @@
 
 package org.jowidgets.workbench.impl.rcp.internal;
 
-import java.util.concurrent.atomic.AtomicReference;
-
-import org.jowidgets.workbench.legacy.api.IComponent;
-import org.jowidgets.workbench.legacy.api.IComponentContext;
-import org.jowidgets.workbench.legacy.api.IComponentTreeNodeContext;
-import org.jowidgets.workbench.legacy.api.IPerspective;
+import org.jowidgets.workbench.api.IComponent;
+import org.jowidgets.workbench.api.IComponentContext;
+import org.jowidgets.workbench.api.IComponentTreeNodeContext;
+import org.jowidgets.workbench.api.ILayout;
+import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
+import org.jowidgets.workbench.api.IWorkbenchContext;
 
 public final class ComponentContext implements IComponentContext {
 
 	private final IComponentTreeNodeContext componentTreeNodeContext;
 	private final IComponent component;
-	private AtomicReference<IPerspective> perspectiveReference;
+	private ILayout perspective;
 
 	public ComponentContext(final IComponentTreeNodeContext componentTreeNodeContext, final IComponent component) {
 		this.componentTreeNodeContext = componentTreeNodeContext;
@@ -51,17 +51,23 @@ public final class ComponentContext implements IComponentContext {
 		return componentTreeNodeContext;
 	}
 
-	public IPerspective getPerspective() {
-		if (perspectiveReference == null) {
-			perspectiveReference = new AtomicReference<IPerspective>(component.createPerspective());
-		}
-		return perspectiveReference.get();
+	public ILayout getPerspective() {
+		return perspective;
 	}
 
 	@Override
-	public void setPerspective(final IPerspective perspective) {
-		// TODO HRW support changing of perspectives		
-		throw new UnsupportedOperationException("setPerspective");
+	public void setLayout(final ILayout layout) {
+		perspective = layout;
+	}
+
+	@Override
+	public IWorkbenchApplicationContext getWorkbenchApplicationContext() {
+		return componentTreeNodeContext.getWorkbenchApplicationContext();
+	}
+
+	@Override
+	public IWorkbenchContext getWorkbenchContext() {
+		return getWorkbenchApplicationContext().getWorkbenchContext();
 	}
 
 }

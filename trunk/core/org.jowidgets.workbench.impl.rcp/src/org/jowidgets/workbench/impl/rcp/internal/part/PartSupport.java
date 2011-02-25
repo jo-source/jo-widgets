@@ -36,21 +36,23 @@ import org.eclipse.ui.IPerspectiveRegistry;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
+import org.jowidgets.workbench.api.IFolderLayout;
 import org.jowidgets.workbench.api.ILayout;
 import org.jowidgets.workbench.api.ILayoutContainer;
-import org.jowidgets.workbench.api.IView;
+import org.jowidgets.workbench.api.ISplitLayout;
+import org.jowidgets.workbench.api.IViewLayout;
 import org.jowidgets.workbench.impl.rcp.RcpView;
 
-public final class PartRegistry {
+public final class PartSupport {
 
-	private static final PartRegistry INSTANCE = new PartRegistry();
+	private static final PartSupport INSTANCE = new PartSupport();
 
 	private final Map<String, IViewContainerContext> viewContainerContextMap = new HashMap<String, IViewContainerContext>();
-	private final Map<String, IView> viewMap = new HashMap<String, IView>();
+	private final Map<String, IViewLayout> viewMap = new HashMap<String, IViewLayout>();
 
-	private PartRegistry() {}
+	private PartSupport() {}
 
-	public static PartRegistry getInstance() {
+	public static PartSupport getInstance() {
 		return INSTANCE;
 	}
 
@@ -58,7 +60,7 @@ public final class PartRegistry {
 		return viewContainerContextMap.get(perspectiveId);
 	}
 
-	public IView getView(final String viewId) {
+	public IViewLayout getView(final String viewId) {
 		return viewMap.get(viewId);
 	}
 
@@ -80,7 +82,7 @@ public final class PartRegistry {
 					perspectiveId,
 					String.valueOf(perspective.getLabel()),
 					perspectiveDescriptor);
-			final IViewContainerContext context = registerViews(perspectiveId, perspective.getViewContainer());
+			final IViewContainerContext context = registerViews(perspectiveId, perspective.getLayoutContainer());
 			viewContainerContextMap.put(perspectiveId, context);
 		}
 		final IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
@@ -93,31 +95,28 @@ public final class PartRegistry {
 	}
 
 	private IViewContainerContext registerViews(final String perspectiveId, final ILayoutContainer viewContainer) {
-		if (viewContainer instanceof ISplitViewContainer) {
-			final ISplitViewContainer splitViewContainer = (ISplitViewContainer) viewContainer;
-			return new SplitViewContainerContext(splitViewContainer, registerViews(
-					perspectiveId,
-					splitViewContainer.createFirstContainer()), registerViews(
-					perspectiveId,
-					splitViewContainer.createSecondContainer()));
+		if (viewContainer instanceof ISplitLayout) {
+			final ISplitLayout splitViewContainer = (ISplitLayout) viewContainer;
+			return new SplitViewContainerContext(
+				splitViewContainer,
+				registerViews(perspectiveId, splitViewContainer.getFirstContainer()),
+				registerViews(perspectiveId, splitViewContainer.getSecondContainer()));
 		}
-		if (viewContainer instanceof ITabViewContainer) {
-			final ITabViewContainer viewListContainer = (ITabViewContainer) viewContainer;
+		if (viewContainer instanceof IFolderLayout) {
+			final IFolderLayout viewListContainer = (IFolderLayout) viewContainer;
 			final TabViewContainerContext context = new TabViewContainerContext(perspectiveId + "." + viewListContainer.getId());
-			for (final ISingleViewContainer singleViewContainer : viewListContainer.createViews()) {
-				context.add(registerView(perspectiveId, singleViewContainer));
+			for (final IViewLayout singleViewContainer : viewListContainer.getViews()) {
+				context.add(registerView(perspectiveId, viewListContainer, singleViewContainer));
 			}
 			return context;
-		}
-		if (viewContainer instanceof ISingleViewContainer) {
-			final ISingleViewContainer singleViewContainer = (ISingleViewContainer) viewContainer;
-			return registerView(perspectiveId, singleViewContainer);
 		}
 		throw new IllegalArgumentException("unknown view container type");
 	}
 
-	private SingleViewContainerContext registerView(final String perspectiveId, final ISingleViewContainer viewContainer) {
-		final IView view = viewContainer.createView();
+	private SingleViewContainerContext registerView(
+		final String perspectiveId,
+		final IFolderLayout folderLayout,
+		final IViewLayout view) {
 		final String viewId;
 		if (view instanceof RcpView) {
 			viewId = view.getId();
@@ -128,8 +127,8 @@ public final class PartRegistry {
 		}
 		return new SingleViewContainerContext(
 			viewId,
-			viewContainer.isCloseable(),
-			viewContainer.isDetachable(),
+			folderLayout.getViewsCloseable(),
+			view.isDetachable(),
 			view instanceof RcpView);
 	}
 }

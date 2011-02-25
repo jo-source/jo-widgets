@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, M. Grossmann, M. Woelker, H. Westphal
+ * Copyright (c) 2011, M. Woelker, H. Westphal
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,16 +28,16 @@
 
 package org.jowidgets.workbench.impl.rcp.internal.part;
 
-import org.jowidgets.workbench.legacy.api.ISplitViewContainer;
+import org.jowidgets.workbench.api.ISplitLayout;
 
 public final class SplitViewContainerContext implements IViewContainerContext {
 
-	private final ISplitViewContainer viewContainer;
+	private final ISplitLayout viewContainer;
 	private final IViewContainerContext first;
 	private final IViewContainerContext second;
 
 	public SplitViewContainerContext(
-		final ISplitViewContainer viewContainer,
+		final ISplitLayout viewContainer,
 		final IViewContainerContext first,
 		final IViewContainerContext second) {
 		this.viewContainer = viewContainer;
@@ -45,7 +45,7 @@ public final class SplitViewContainerContext implements IViewContainerContext {
 		this.second = second;
 	}
 
-	public ISplitViewContainer getViewContainer() {
+	public ISplitLayout getViewContainer() {
 		return viewContainer;
 	}
 

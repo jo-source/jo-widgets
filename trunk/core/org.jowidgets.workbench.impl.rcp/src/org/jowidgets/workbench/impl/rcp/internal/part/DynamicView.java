@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, M. Grossmann, M. Woelker, H. Westphal
+ * Copyright (c) 2011, M. Woelker, H. Westphal
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,29 +28,15 @@
 
 package org.jowidgets.workbench.impl.rcp.internal.part;
 
-import org.eclipse.jface.action.ToolBarManager;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.IPartListener2;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
-import org.jowidgets.api.toolkit.IWidgetWrapperFactory;
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IComposite;
-import org.jowidgets.api.widgets.IPopupMenu;
-import org.jowidgets.api.widgets.IToolBar;
-import org.jowidgets.common.types.Position;
-import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.workbench.impl.rcp.internal.ViewContext;
+import org.jowidgets.workbench.api.IView;
+import org.jowidgets.workbench.api.IViewLayout;
 import org.jowidgets.workbench.impl.rcp.internal.util.ImageHelper;
-import org.jowidgets.workbench.legacy.api.IView;
 
 public final class DynamicView extends ViewPart implements IPartListener2 {
 
@@ -61,36 +47,36 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 	@Override
 	public void createPartControl(final Composite parent) {
 		final String viewId = getViewSite().getSecondaryId();
-		view = PartRegistry.getInstance().getView(viewId);
-		setPartName(view.getLabel());
-		setTitleImage(ImageHelper.getImage(view.getIcon(), null));
-		setTitleToolTip(view.getTooltip());
+		final IViewLayout viewLayout = PartSupport.getInstance().getView(viewId);
+		setPartName(viewLayout.getLabel());
+		setTitleImage(ImageHelper.getImage(viewLayout.getIcon(), null));
+		setTitleToolTip(viewLayout.getTooltip());
 
-		final ViewContext viewContext = new ViewContext();
-		IComposite composite = Toolkit.getWidgetWrapperFactory().createComposite(parent);
-		if (view.hasToolBar()) {
-			composite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[]0[grow]0"));
-			final IToolBar toolBar = composite.add(Toolkit.getBluePrintFactory().toolBar(), "wrap");
-			viewContext.setToolBar(toolBar);
-			composite = composite.add(Toolkit.getBluePrintFactory().composite(), "grow, w 0::, h 0::");
-		}
-		viewContext.setContainer(composite);
-		if (view.hasMenu()) {
-			final ToolBar toolBarControl = ((ToolBarManager) getViewSite().getActionBars().getToolBarManager()).getControl();
-			final IWidgetWrapperFactory wrapperFactory = Toolkit.getWidgetWrapperFactory();
-			if (view.hasMenu()) {
-				final IPopupMenu menu = wrapperFactory.createComposite(toolBarControl).createPopupMenu();
-				final ToolItem menuToolItem = new ToolItem(toolBarControl, SWT.DROP_DOWN | SWT.TRAIL);
-				menuToolItem.addSelectionListener(new SelectionAdapter() {
-					@Override
-					public void widgetSelected(final SelectionEvent e) {
-						menu.show(new Position(e.x, e.y));
-					}
-				});
-				viewContext.setMenu(menu);
-				viewContext.setMenuToolItem(menuToolItem);
-			}
-		}
+		//		final ViewContext viewContext = new ViewContext();
+		//		IComposite composite = Toolkit.getWidgetWrapperFactory().createComposite(parent);
+		//		if (view.hasToolBar()) {
+		//			composite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[]0[grow]0"));
+		//			final IToolBar toolBar = composite.add(Toolkit.getBluePrintFactory().toolBar(), "wrap");
+		//			viewContext.setToolBar(toolBar);
+		//			composite = composite.add(Toolkit.getBluePrintFactory().composite(), "grow, w 0::, h 0::");
+		//		}
+		//		viewContext.setContainer(composite);
+		//		if (view.hasMenu()) {
+		//			final ToolBar toolBarControl = ((ToolBarManager) getViewSite().getActionBars().getToolBarManager()).getControl();
+		//			final IWidgetWrapperFactory wrapperFactory = Toolkit.getWidgetWrapperFactory();
+		//			if (view.hasMenu()) {
+		//				final IPopupMenu menu = wrapperFactory.createComposite(toolBarControl).createPopupMenu();
+		//				final ToolItem menuToolItem = new ToolItem(toolBarControl, SWT.DROP_DOWN | SWT.TRAIL);
+		//				menuToolItem.addSelectionListener(new SelectionAdapter() {
+		//					@Override
+		//					public void widgetSelected(final SelectionEvent e) {
+		//						menu.show(new Position(e.x, e.y));
+		//					}
+		//				});
+		//				viewContext.setMenu(menu);
+		//				viewContext.setMenuToolItem(menuToolItem);
+		//			}
+		//		}
 
 		// lazy initialization of view content
 		getViewSite().getPage().addPartListener(new IPartListener2() {
@@ -113,11 +99,11 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 			}
 
 			private void init() {
-				view.initialize(viewContext);
-				final IWorkbenchPage page = getViewSite().getPage();
-				page.removePartListener(this);
-				view.onVisibleStateChanged(true);
-				page.addPartListener(DynamicView.this);
+				//				view.initialize(viewContext);
+				//				final IWorkbenchPage page = getViewSite().getPage();
+				//				page.removePartListener(this);
+				//				view.onVisibleStateChanged(true);
+				//				page.addPartListener(DynamicView.this);
 			}
 
 			@Override
@@ -176,7 +162,7 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 	public void partClosed(final IWorkbenchPartReference partRef) {
 		final IWorkbenchPart part = partRef.getPart(false);
 		if (part == this) {
-			view.onClose();
+			//			view.onClose();
 		}
 	}
 

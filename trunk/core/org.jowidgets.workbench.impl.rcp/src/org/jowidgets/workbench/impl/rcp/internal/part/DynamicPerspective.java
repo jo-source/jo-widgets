@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, M. Grossmann, M. Woelker, H. Westphal
+ * Copyright (c) 2011, M. Woelker, H. Westphal
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,7 @@ import org.eclipse.ui.IFolderLayout;
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;
 import org.jowidgets.common.types.Orientation;
-import org.jowidgets.workbench.legacy.api.ISplitViewContainer;
+import org.jowidgets.workbench.api.ISplitLayout;
 
 public final class DynamicPerspective implements IPerspectiveFactory {
 
@@ -46,7 +46,7 @@ public final class DynamicPerspective implements IPerspectiveFactory {
 		final String editorArea = layout.getEditorArea();
 		layout.setEditorAreaVisible(false);
 		layout.setFixed(false);
-		final IViewContainerContext viewContainerContext = PartRegistry.getInstance().getViewContainerContext(perspectiveId);
+		final IViewContainerContext viewContainerContext = PartSupport.getInstance().getViewContainerContext(perspectiveId);
 		createLayout(layout, viewContainerContext, editorArea);
 	}
 
@@ -118,7 +118,7 @@ public final class DynamicPerspective implements IPerspectiveFactory {
 	private void layoutRest(final IPageLayout layout, final IViewContainerContext viewContainerContext, final String relativeTo) {
 		if (viewContainerContext instanceof SplitViewContainerContext) {
 			final SplitViewContainerContext splitViewContainerContext = (SplitViewContainerContext) viewContainerContext;
-			final ISplitViewContainer splitViewContainer = splitViewContainerContext.getViewContainer();
+			final ISplitLayout splitViewContainer = splitViewContainerContext.getViewContainer();
 			final float innerRatio = (float) splitViewContainer.getWeight();
 			final int innerRelation = splitViewContainer.getOrientation().equals(Orientation.HORIZONTAL)
 					? IPageLayout.BOTTOM : IPageLayout.RIGHT;
