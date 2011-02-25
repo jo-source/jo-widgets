@@ -109,6 +109,7 @@ public final class ComponentTreeNodeContext implements IComponentTreeNodeContext
 			final IComponent component = treeNode.createComponent(componentContext);
 			if (component != null) {
 				componentContextReference = new AtomicReference<ComponentContext>(componentContext);
+				componentContext.setComponent(component);
 			}
 			else {
 				componentContextReference = new AtomicReference<ComponentContext>(null);

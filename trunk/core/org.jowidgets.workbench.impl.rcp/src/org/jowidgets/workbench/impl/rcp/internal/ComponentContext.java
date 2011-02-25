@@ -28,6 +28,7 @@
 
 package org.jowidgets.workbench.impl.rcp.internal;
 
+import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 import org.jowidgets.workbench.api.ILayout;
@@ -38,6 +39,7 @@ public final class ComponentContext implements IComponentContext {
 
 	private final IComponentTreeNodeContext componentTreeNodeContext;
 	private ILayout perspective;
+	private IComponent component;
 
 	public ComponentContext(final IComponentTreeNodeContext componentTreeNodeContext) {
 		this.componentTreeNodeContext = componentTreeNodeContext;
@@ -66,6 +68,14 @@ public final class ComponentContext implements IComponentContext {
 	@Override
 	public IWorkbenchContext getWorkbenchContext() {
 		return getWorkbenchApplicationContext().getWorkbenchContext();
+	}
+
+	public void setComponent(final IComponent component) {
+		this.component = component;
+	}
+
+	public IComponent getComponent() {
+		return component;
 	}
 
 }

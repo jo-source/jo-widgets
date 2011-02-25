@@ -62,6 +62,8 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.model.item.ToolBarModel;
+import org.jowidgets.tools.types.VetoHolder;
+import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 import org.jowidgets.workbench.api.ILayout;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
@@ -205,10 +207,23 @@ public final class WorkbenchApplicationTree extends Composite {
 			public void selectionChanged(final SelectionChangedEvent event) {
 				if (!event.getSelection().isEmpty()) {
 					final ComponentTreeNodeContext context = (ComponentTreeNodeContext) ((ITreeSelection) treeViewer.getSelection()).getFirstElement();
+					final WorkbenchContext workbenchContext = (WorkbenchContext) context.getWorkbenchContext();
+					final IComponent currentComponent = workbenchContext.getCurrentComponent();
+					if (currentComponent != null) {
+						final VetoHolder vetoHolder = new VetoHolder();
+						currentComponent.onDeactivation(vetoHolder);
+						if (vetoHolder.hasVeto()) {
+							// TODO HRW re-select component tree node
+							return;
+						}
+					}
 					ILayout perspective = null;
 					final ComponentContext componentContext = context.getComponentContext();
 					if (componentContext != null) {
 						perspective = componentContext.getPerspective();
+						final IComponent newComponent = componentContext.getComponent();
+						workbenchContext.setCurrentComponent(newComponent);
+						newComponent.onActivation();
 					}
 					nodeId = context.getQualifiedId();
 					perspectiveReference = new AtomicReference<ILayout>(perspective);

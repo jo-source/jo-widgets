@@ -34,6 +34,7 @@ import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.util.Assert;
+import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.ITrayItem;
 import org.jowidgets.workbench.api.IWorkbench;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
@@ -43,6 +44,7 @@ public final class WorkbenchContext implements IWorkbenchContext {
 
 	private final JoWorkbenchAdvisor workbenchAdvisor;
 	private IApplicationLifecycle lifecycle;
+	private IComponent currentComponent;
 
 	public WorkbenchContext(final IWorkbench workbench, final boolean saveAndRestore) {
 		workbenchAdvisor = new JoWorkbenchAdvisor(workbench, this, saveAndRestore);
@@ -132,6 +134,14 @@ public final class WorkbenchContext implements IWorkbenchContext {
 	@Override
 	public IMenuBarModel getMenuBar() {
 		return workbenchAdvisor.getWorkbenchWindowAdvisor().getMenuBar();
+	}
+
+	public IComponent getCurrentComponent() {
+		return currentComponent;
+	}
+
+	public void setCurrentComponent(final IComponent currentComponent) {
+		this.currentComponent = currentComponent;
 	}
 
 }
