@@ -30,24 +30,24 @@ package org.jowidgets.addons.swt;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
-import org.jowidgets.api.widgets.IComposite;
-import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.tools.powo.JoComposite;
+import org.jowidgets.tools.powo.JoFrame;
 import org.jowidgets.util.Assert;
 
-public final class JoToSwt {
+public final class SwtToJo {
 
-	private JoToSwt() {}
+	private SwtToJo() {}
 
-	public static Composite convert(final IComposite composite) {
+	public static JoComposite create(final Composite composite) {
 		Assert.paramNotNull(composite, "composite");
-		return (Composite) composite.getUiReference();
+		return JoComposite.toJoComposite(Toolkit.getWidgetWrapperFactory().createComposite(composite));
 	}
 
-	public static Shell convert(final IFrame frame) {
-		Assert.paramNotNull(frame, "frame");
-		return (Shell) frame.getUiReference();
+	public static JoFrame create(final Shell shell) {
+		Assert.paramNotNull(shell, "shell");
+		return JoFrame.toJoFrame(Toolkit.getWidgetWrapperFactory().createFrame(shell));
 	}
 
-	//TODO ANYBODY may feel free to add more convert methods
-
+	//TODO ANYBODY may feel free to add more create methods
 }

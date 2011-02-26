@@ -26,6 +26,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.addons.swt</artifactId>
+			<version>0.0.13-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.examples.common</artifactId>
 			<version>0.0.13-SNAPSHOT</version>
 		</dependency>

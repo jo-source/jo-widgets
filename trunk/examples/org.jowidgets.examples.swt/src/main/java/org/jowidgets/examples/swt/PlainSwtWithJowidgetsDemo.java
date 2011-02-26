@@ -26,63 +26,67 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.swing;
+package org.jowidgets.examples.swt;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import org.jowidgets.addons.swing.SwingToJo;
+import net.miginfocom.swt.MigLayout;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.jowidgets.addons.swt.SwtToJo;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.examples.common.demo.DemoForm1Creator;
 import org.jowidgets.examples.common.icons.DemoIconsInitializer;
 
-public final class PlainSwingWithJowidgetsDemo {
+public final class PlainSwtWithJowidgetsDemo {
 
-	private PlainSwingWithJowidgetsDemo() {}
+	private PlainSwtWithJowidgetsDemo() {}
 
 	public static void main(final String[] args) throws Exception {
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		DemoIconsInitializer.initialize();
 
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				createAndShowJFrame();
-			}
-		});
+		createAndShowJFrame();
 	}
 
 	private static void createAndShowJFrame() {
-		//create the root frame with swing
-		final JFrame frame = new JFrame();
-		frame.setSize(450, 350);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//create the root shell with swt
+		final Display display = new Display();
+		final Shell shell = new Shell(display);
+		shell.setLayout(new MigLayout("", "[grow, 0::]", "[grow, 20!][grow, 0::]"));
+		shell.setSize(500, 400);
 
-		//setting the border layout for the content pane
-		final Container contentPane = frame.getContentPane();
-		contentPane.setLayout(new BorderLayout());
+		//creating the first swt composite
+		final Composite swtComposite1 = new Composite(shell, SWT.NONE);
+		swtComposite1.setLayoutData("growx, growy, w 0::, h 0::, wrap");
+		swtComposite1.setLayout(new MigLayout("", "[grow, 0::]", "[grow, 0::]"));
 
-		//adding a label in swing
-		final JLabel swingLabel = new JLabel("JLabel created with Swing");
-		contentPane.add(BorderLayout.NORTH, swingLabel);
+		//adding a swt label
+		final Label swtlabel = new Label(swtComposite1, SWT.NONE);
+		swtlabel.setText("Label created with Swt");
+		swtlabel.setLayoutData("alignx center");
 
-		//creating the center panel with swing and adding it to the content pane
-		final JPanel centerPanel = new JPanel();
-		contentPane.add(BorderLayout.CENTER, centerPanel);
+		//creating the second composite with swt and adding it to the shell
+		final Composite swtComposite2 = new Composite(shell, SWT.NONE);
+		swtComposite2.setLayoutData("growx, growy, w 0::, h 0::");
 
-		//now a jowidgets composite will be created with help of the swing panel
+		//now a jowidgets composite will be created with help of the swt composite
 		//and the demo form 1 from examples common will be added 
-		final IComposite centerComposite = SwingToJo.create(centerPanel);
-		DemoForm1Creator.createDemoForm1(centerComposite);
+		final IComposite joComposite = SwtToJo.create(swtComposite2);
+		DemoForm1Creator.createDemoForm1(joComposite);
 
-		//show the frame
-		frame.setVisible(true);
+		//open the shell
+		shell.open();
+		while (!shell.isDisposed()) {
+			if (!display.readAndDispatch()) {
+				display.sleep();
+			}
+		}
+		display.dispose();
 	}
 
 }
