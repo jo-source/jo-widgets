@@ -4,12 +4,12 @@
   xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
   version="2.4">
  
-  <display-name>Welcome to RWT</display-name>
-  <description>Welcome to RWT</description>
+  <display-name>RwtWorkbenchDemo</display-name>
+  <description>RwtWorkbenchDemo</description>
  
   <context-param>
     <param-name>org.eclipse.rwt.entryPoints</param-name>
-    <param-value>org.jowidgets.examples.rwt.RwtDemoApplication</param-value>
+    <param-value>org.jowidgets.examples.rwt.RwtWorkbenchDemo</param-value>
   </context-param>
  
   <listener>
@@ -17,12 +17,12 @@
   </listener>
  
   <servlet>
-    <servlet-name>helloWidget</servlet-name>
+    <servlet-name>RwtWorkbenchDemo</servlet-name>
     <servlet-class>org.eclipse.rwt.internal.engine.RWTDelegate</servlet-class>
   </servlet>
  
   <servlet-mapping>
-    <servlet-name>helloWidget</servlet-name>
-    <url-pattern>/main</url-pattern>
+    <servlet-name>RwtWorkbenchDemo</servlet-name>
+    <url-pattern>/RwtWorkbenchDemo</url-pattern>
   </servlet-mapping>
 </web-app>

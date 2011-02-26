@@ -32,9 +32,10 @@ import java.util.UUID;
 import org.eclipse.rwt.lifecycle.IEntryPoint;
 import org.eclipse.rwt.lifecycle.UICallBack;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.examples.common.demo.DemoApplication;
+import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1;
+import org.jowidgets.workbench.impl.WorkbenchRunner;
 
-public final class RwtDemoApplication implements IEntryPoint {
+public final class RwtWorkbenchDemo implements IEntryPoint {
 
 	@Override
 	public int createUI() {
@@ -45,7 +46,8 @@ public final class RwtDemoApplication implements IEntryPoint {
 		if (!Toolkit.isInitialized()) {
 			Toolkit.initialize(new RwtToolkitProvider());
 		}
-		new DemoApplication("RWT widgets demo application").start();
+
+		new WorkbenchRunner().run(new WorkbenchDemo1());
 
 		UICallBack.deactivate(uuid);
 
