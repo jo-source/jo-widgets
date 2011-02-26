@@ -32,6 +32,7 @@ import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IInputDialog;
+import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 
@@ -39,13 +40,13 @@ public class DemoInputDialog1 {
 
 	private final IInputDialog<String> inputDialog;
 
-	public DemoInputDialog1(final IContainer parent) {
+	public DemoInputDialog1(final IContainer parent, final IWindow parentWindow) {
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 		final IInputDialogBluePrint<String> inputDialogBp = bpF.inputDialog(new DemoForm1ContentCreator());
 		inputDialogBp.setTitle("Input dialog demo");
 		inputDialogBp.setMissingInputText("Please fill out all mandatory (*) fields");
 		inputDialogBp.setMissingInputIcon(IconsSmall.INFO);
-		inputDialog = Toolkit.getWidgetUtils().getWindowAncestor(parent).createChildWindow(inputDialogBp);
+		inputDialog = parentWindow.createChildWindow(inputDialogBp);
 	}
 
 	public IInputDialog<String> getInputDialog() {

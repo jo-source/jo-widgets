@@ -39,17 +39,18 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
-public class DemoMainComposite {
+public final class DemoMainComposite {
+
+	private final IContainer parentContainer;
 
 	public DemoMainComposite(final IContainer parentContainer) {
-
-		final IWindow parentWindow = Toolkit.getWidgetUtils().getWindowAncestor(parentContainer);
+		this.parentContainer = parentContainer;
 
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 
 		parentContainer.setLayout(new MigLayoutDescriptor("[300::, grow]", "[][][][]"));
 
-		final IInputDialog<String> inputDialog1 = new DemoInputDialog1(parentContainer).getInputDialog();
+		final IInputDialog<String> inputDialog1 = new DemoInputDialog1(parentContainer, getParentWindow()).getInputDialog();
 		final IButton inputDialog1Button = parentContainer.add(
 				bpF.button("Input dialog demo", "Shows an simple input dialog"),
 				"grow, sg bg, wrap");
@@ -90,7 +91,7 @@ public class DemoMainComposite {
 		splitDemoButton.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
-				final IFrame splitDemoFrame = parentWindow.createChildWindow(bpF.frame("Split demo").autoPackOff());
+				final IFrame splitDemoFrame = getParentWindow().createChildWindow(bpF.frame("Split demo").autoPackOff());
 				splitDemoFrame.setSize(new Dimension(800, 600));
 				new DemoSplitComposite(splitDemoFrame);
 				splitDemoFrame.setVisible(true);
@@ -103,8 +104,8 @@ public class DemoMainComposite {
 		tabDemoButton.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
-				final IFrame tabDemoFrame = parentWindow.createChildWindow(bpF.frame("Tab folder demo").autoPackOff());
-				tabDemoFrame.setSize(new Dimension(800, 600));
+				final IFrame tabDemoFrame = getParentWindow().createChildWindow(bpF.frame("Tab folder demo").autoPackOff());
+				tabDemoFrame.setSize(new Dimension(1024, 768));
 				new DemoTabFolderComposite(tabDemoFrame);
 				tabDemoFrame.setVisible(true);
 			}
@@ -116,7 +117,7 @@ public class DemoMainComposite {
 		treeDemoButton.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
-				final IFrame treeDemoFrame = parentWindow.createChildWindow(bpF.frame("Tree demo").autoPackOff());
+				final IFrame treeDemoFrame = getParentWindow().createChildWindow(bpF.frame("Tree demo").autoPackOff());
 				treeDemoFrame.setSize(new Dimension(800, 600));
 				new DemoTreeComposite(treeDemoFrame);
 				treeDemoFrame.setVisible(true);
@@ -129,14 +130,14 @@ public class DemoMainComposite {
 		progressBarDialogButton.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
-				final IFrame progressBarDialog = parentWindow.createChildWindow(bpF.dialog("Progress bar demo"));
+				final IFrame progressBarDialog = getParentWindow().createChildWindow(bpF.dialog("Progress bar demo"));
 				new DemoProgressBarComposite(progressBarDialog, progressBarDialog);
 				progressBarDialog.setVisible(true);
 				progressBarDialog.dispose();
 			}
 		});
 
-		final IFrame messagesDemoDialog = parentWindow.createChildWindow(bpF.dialog("Messages demo"));
+		final IFrame messagesDemoDialog = getParentWindow().createChildWindow(bpF.dialog("Messages demo"));
 		new DemoMessagesComposite(messagesDemoDialog);
 		final IButton messagesDialogButton = parentContainer.add(
 				bpF.button("Messages demo", "Opens the messages demo"),
@@ -148,6 +149,16 @@ public class DemoMainComposite {
 			}
 		});
 
+	}
+
+	public void foo() {}
+
+	private IWindow getParentWindow() {
+		IWindow parentWindow = Toolkit.getWidgetUtils().getWindowAncestor(parentContainer);
+		if (parentWindow == null) {
+			parentWindow = Toolkit.getActiveWindow();
+		}
+		return parentWindow;
 	}
 
 }

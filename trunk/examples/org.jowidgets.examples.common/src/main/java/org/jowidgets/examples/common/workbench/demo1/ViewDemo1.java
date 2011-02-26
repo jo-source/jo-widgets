@@ -45,7 +45,7 @@ public class ViewDemo1 extends AbstractView {
 	public static final String ID = ViewDemo1.class.getName();
 	public static final String DEFAULT_LABEL = "View1";
 	public static final String DEFAULT_TOOLTIP = "View1 tooltip";
-	public static final IImageConstant DEFAULT_ICON = SilkIcons.APPLICATION_FORM;
+	public static final IImageConstant DEFAULT_ICON = SilkIcons.STATUS_ONLINE;
 
 	public ViewDemo1(final IViewContext context) {
 		super(ID);

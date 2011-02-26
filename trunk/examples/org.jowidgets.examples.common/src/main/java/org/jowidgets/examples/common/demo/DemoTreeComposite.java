@@ -33,7 +33,6 @@ import org.jowidgets.api.controler.ITreePopupDetectionListener;
 import org.jowidgets.api.controler.ITreePopupEvent;
 import org.jowidgets.api.controler.ITreeSelectionEvent;
 import org.jowidgets.api.controler.ITreeSelectionListener;
-import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IMenu;
@@ -104,7 +103,7 @@ public final class DemoTreeComposite {
 			}
 		});
 
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 5; i++) {
 			ITreeNodeBluePrint treeNodeBp = bpF.treeNode();
 			treeNodeBp.setText("Node " + i).setToolTipText("tooltip of node " + i);
 			final ITreeNode node = tree.addNode(treeNodeBp);
@@ -126,12 +125,6 @@ public final class DemoTreeComposite {
 			}
 
 		}
-
-		tree.removeNode(tree.getChildren().get(5));
-
-		tree.getChildren().get(2).getChildren().get(3).setSelected(true);
-		tree.getChildren().get(2).getChildren().get(5).setSelected(true);
-		tree.getChildren().get(3).getChildren().get(5).setIcon(IconsSmall.ERROR);
 	}
 
 	private void registerListners(final ITreeNode node) {

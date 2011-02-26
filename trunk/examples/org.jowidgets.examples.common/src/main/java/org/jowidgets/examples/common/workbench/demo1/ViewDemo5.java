@@ -28,10 +28,9 @@
 
 package org.jowidgets.examples.common.workbench.demo1;
 
-import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.examples.common.demo.DemoMainComposite;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractView;
 import org.jowidgets.workbench.api.IView;
@@ -42,13 +41,12 @@ public class ViewDemo5 extends AbstractView implements IView {
 	public static final String ID = ViewDemo5.class.getName();
 	public static final String DEFAULT_LABEL = "View5";
 	public static final String DEFAULT_TOOLTIP = "View5 tooltip";
-	public static final IImageConstant DEFAULT_ICON = SilkIcons.APPLICATION_FORM;
+	public static final IImageConstant DEFAULT_ICON = SilkIcons.CHART_PIE;
 
 	public ViewDemo5(final IViewContext context) {
 		super(ID);
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 		final IContainer container = context.getContainer();
-		container.add(bpf.textLabel("View content 5"), "");
+		new DemoMainComposite(container);
 	}
 
 }

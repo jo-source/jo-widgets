@@ -30,8 +30,8 @@ package org.jowidgets.examples.common.demo;
 
 import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.controler.ITabItemListener;
-import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.types.QuestionResult;
 import org.jowidgets.api.widgets.IComposite;
@@ -42,7 +42,6 @@ import org.jowidgets.api.widgets.ISplitComposite;
 import org.jowidgets.api.widgets.ITabFolder;
 import org.jowidgets.api.widgets.ITabItem;
 import org.jowidgets.api.widgets.IToolBar;
-import org.jowidgets.api.widgets.IToolBarMenu;
 import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.ITabItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
@@ -51,11 +50,16 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.tools.model.item.MenuModel;
 
 public final class DemoTabFolderComposite {
 
+	private final IToolBarModel toolBarModel;
+
 	protected DemoTabFolderComposite(final IContainer parentContainer) {
+
+		this.toolBarModel = new DemoMenuProvider().getToolBarModel();
 
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 
@@ -129,32 +133,32 @@ public final class DemoTabFolderComposite {
 		final ITabFolder tabFolder = parentContainer.add(bpF.tabFolder().setTabsCloseable(true), "growx, growy, w 0::, h 0::");
 
 		ITabItemBluePrint tabItemBp = bpF.tabItem();
-		tabItemBp.setText("Tab1").setToolTipText("Tooltip of tab1").setIcon(IconsSmall.INFO);
+		tabItemBp.setText("Tab1").setToolTipText("Tooltip of tab1").setIcon(SilkIcons.ATTACH);
 		final ITabItem tabItem1 = tabFolder.addItem(tabItemBp);
 		addTabContent(tabItem1);
 
 		tabItemBp = bpF.tabItem();
-		tabItemBp.setText("Tab2").setToolTipText("Tooltip of tab2").setIcon(IconsSmall.QUESTION);
+		tabItemBp.setText("Tab2").setToolTipText("Tooltip of tab2").setIcon(SilkIcons.PALETTE);
 		final ITabItem tabItem2 = tabFolder.addItem(tabItemBp);
 		addTabContent(tabItem2);
 
 		tabItemBp = bpF.tabItem();
-		tabItemBp.setText("Tab3").setToolTipText("Tooltip of tab3").setIcon(IconsSmall.WARNING);
+		tabItemBp.setText("Tab3").setToolTipText("Tooltip of tab3").setIcon(SilkIcons.STATUS_ONLINE);
 		final ITabItem tabItem3 = tabFolder.addItem(tabItemBp);
 		addTabContent(tabItem3);
 
 		tabItemBp = bpF.tabItem();
-		tabItemBp.setText("Tab4").setToolTipText("Tooltip of tab4");
+		tabItemBp.setText("Tab4").setToolTipText("Tooltip of tab4").setIcon(SilkIcons.ROSETTE);
 		final ITabItem tabItem4 = tabFolder.addItem(tabItemBp);
 		addTabContent(tabItem4);
 
 		tabItemBp = bpF.tabItem();
-		tabItemBp.setText("Tab5").setToolTipText("Tooltip of tab5");
+		tabItemBp.setText("Tab5").setToolTipText("Tooltip of tab5").setIcon(SilkIcons.CHART_PIE);
 		final ITabItem tabItem5 = tabFolder.addItem(tabItemBp);
 		addTabContent(tabItem5);
 
 		tabItemBp = bpF.tabItem();
-		tabItemBp.setText("Tab6").setToolTipText("Tooltip of tab6");
+		tabItemBp.setText("Tab6").setToolTipText("Tooltip of tab6").setIcon(SilkIcons.GROUP);
 		final ITabItem tabItem6 = tabFolder.addItem(tabItemBp);
 		addTabContent(tabItem6);
 
@@ -207,12 +211,7 @@ public final class DemoTabFolderComposite {
 
 		tabItem.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[]0[]0[grow, 0::]0"));
 		final IToolBar toolBar = tabItem.add(bpf.toolBar(), "alignx right, w 0::, wrap");
-		toolBar.addItem(bpf.toolBarPopupButton().setIcon(IconsSmall.WARNING));
-		toolBar.addItem(bpf.toolBarButton().setIcon(IconsSmall.QUESTION));
-		toolBar.addItem(bpf.toolBarButton().setIcon(IconsSmall.INFO));
-		final IToolBarMenu menuItem = toolBar.addItem(bpf.toolBarMenu());
-		menuItem.setModel(popupMenu2);
-		toolBar.pack();
+		toolBar.setModel(toolBarModel);
 
 		tabItem.add(bpf.separator(), "growx, wrap");
 
