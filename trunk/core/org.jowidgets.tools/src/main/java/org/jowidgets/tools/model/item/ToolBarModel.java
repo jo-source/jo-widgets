@@ -243,6 +243,11 @@ public class ToolBarModel implements IToolBarModel {
 	}
 
 	@Override
+	public void removeItemsOfModel(final IToolBarModel toolBarModel) {
+		model.removeItemsOfModel(toolBarModel);
+	}
+
+	@Override
 	public IToolBarItemModel findItemById(final String id) {
 		return model.findItemById(id);
 	}

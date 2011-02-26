@@ -107,6 +107,8 @@ public interface IToolBarModel extends IListModelObservable {
 
 	void removeAllItems();
 
+	void removeItemsOfModel(IToolBarModel toolBarModel);
+
 	IToolBarItemModel findItemById(String id);
 
 	List<IToolBarItemModel> getItems();

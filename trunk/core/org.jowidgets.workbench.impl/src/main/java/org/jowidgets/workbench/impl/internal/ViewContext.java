@@ -33,8 +33,6 @@ import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.ITabFolder;
 import org.jowidgets.api.widgets.ITabItem;
-import org.jowidgets.tools.model.item.MenuModel;
-import org.jowidgets.tools.model.item.ToolBarModel;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 import org.jowidgets.workbench.api.IViewContext;
@@ -45,9 +43,9 @@ public class ViewContext implements IViewContext {
 
 	private final ITabFolder tabFolder;
 	private final ITabItem tabItem;
+	private final ToolBarHelper toolBarHelper;;
+
 	private final IComponentContext componentContext;
-	private final IToolBarModel toolBarModel;
-	private final IMenuModel toolBarMenuModel;
 
 	public ViewContext(final ITabFolder tabFolder, final ITabItem tabItem, final IComponentContext componentContext) {
 		super();
@@ -55,8 +53,7 @@ public class ViewContext implements IViewContext {
 		this.tabItem = tabItem;
 		this.componentContext = componentContext;
 
-		this.toolBarModel = new ToolBarModel();
-		this.toolBarMenuModel = new MenuModel();
+		this.toolBarHelper = new ToolBarHelper(tabItem);
 	}
 
 	@Override
@@ -71,17 +68,17 @@ public class ViewContext implements IViewContext {
 
 	@Override
 	public IContainer getContainer() {
-		return tabItem;
+		return toolBarHelper.getContent();
 	}
 
 	@Override
 	public IToolBarModel getToolBar() {
-		return toolBarModel;
+		return toolBarHelper.getToolBarModel();
 	}
 
 	@Override
 	public IMenuModel getToolBarMenu() {
-		return toolBarMenuModel;
+		return toolBarHelper.getToolBarMenuModel();
 	}
 
 	@Override

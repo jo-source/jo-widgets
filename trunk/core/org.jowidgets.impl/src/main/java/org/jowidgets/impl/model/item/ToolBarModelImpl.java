@@ -218,6 +218,14 @@ class ToolBarModelImpl implements IToolBarModel {
 	}
 
 	@Override
+	public void removeItemsOfModel(final IToolBarModel toolBarModel) {
+		Assert.paramNotNull(toolBarModel, "toolBarModel");
+		for (final IToolBarItemModel childModel : toolBarModel.getItems()) {
+			removeItem(childModel);
+		}
+	}
+
+	@Override
 	public IPopupActionItemModel addPopupActionItem() {
 		return addItem(new PopupActionItemModelBuilder());
 	}

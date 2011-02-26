@@ -59,7 +59,7 @@ public final class DemoTabFolderComposite {
 
 	protected DemoTabFolderComposite(final IContainer parentContainer) {
 
-		this.toolBarModel = new DemoMenuProvider().getToolBarModel();
+		this.toolBarModel = new DemoMenuProvider(false).getToolBarModel();
 
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 

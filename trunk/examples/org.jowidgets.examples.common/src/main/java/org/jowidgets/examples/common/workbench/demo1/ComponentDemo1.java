@@ -33,6 +33,7 @@ import java.util.List;
 
 import org.jowidgets.common.types.Orientation;
 import org.jowidgets.common.types.SplitResizePolicy;
+import org.jowidgets.examples.common.demo.DemoMenuProvider;
 import org.jowidgets.examples.common.workbench.base.AbstractComponent;
 import org.jowidgets.examples.common.workbench.base.FolderLayout;
 import org.jowidgets.examples.common.workbench.base.Layout;
@@ -54,17 +55,20 @@ public class ComponentDemo1 extends AbstractComponent implements IComponent {
 	public static final String DETAIL1_FOLDER_ID = "DETAIL1_FOLDER_ID";
 	public static final String DETAIL2_FOLDER_ID = "DETAIL2_FOLDER_ID";
 
-	public ComponentDemo1(final IComponentContext context) {
-		context.setLayout(new Layout(DEFAULT_LAYOUT_ID, createMasterSplit()));
+	private final DemoMenuProvider menuProvider;
+
+	public ComponentDemo1(final IComponentContext componentContext) {
+		componentContext.setLayout(new Layout(DEFAULT_LAYOUT_ID, createMasterSplit()));
+		menuProvider = new DemoMenuProvider(true);
 	}
 
 	@Override
 	public IView createView(final String viewId, final IViewContext context) {
 		if (ViewDemo1.ID.equals(viewId)) {
-			return new ViewDemo1(context);
+			return new ViewDemo1(context, menuProvider);
 		}
 		else if (ViewDemo2.ID.equals(viewId)) {
-			return new ViewDemo2(context);
+			return new ViewDemo2(context, menuProvider);
 		}
 		else if (ViewDemo3.ID.equals(viewId)) {
 			return new ViewDemo3(context);

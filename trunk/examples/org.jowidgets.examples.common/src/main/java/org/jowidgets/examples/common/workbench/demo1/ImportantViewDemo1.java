@@ -28,42 +28,38 @@
 
 package org.jowidgets.examples.common.workbench.demo1;
 
-import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.color.Colors;
+import org.jowidgets.api.image.IconsSmall;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.examples.common.icons.SilkIcons;
-import org.jowidgets.examples.common.workbench.base.AbstractApplication;
-import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
+import org.jowidgets.examples.common.workbench.base.AbstractView;
+import org.jowidgets.tools.layout.MigLayoutFactory;
+import org.jowidgets.workbench.api.IViewContext;
 
-public class ApplicationDemo2 extends AbstractApplication {
+public class ImportantViewDemo1 extends AbstractView {
 
-	private static final String ID = ApplicationDemo2.class.getName();
+	public static final String ID = ImportantViewDemo1.class.getName();
+	public static final String DEFAULT_LABEL = "View";
+	public static final String DEFAULT_TOOLTIP = "View tooltip";
+	public static final IImageConstant DEFAULT_ICON = IconsSmall.WARNING;
 
-	public ApplicationDemo2() {
+	public ImportantViewDemo1(final IViewContext context) {
 		super(ID);
-	}
 
-	@Override
-	public void onContextInitialize(final IWorkbenchApplicationContext context) {
-		final ActionFactory actionFactory = new ActionFactory();
-		final IAction addFolderAction = actionFactory.createAddFolderAction(context);
+		final IContainer container = context.getContainer();
+		container.setLayout(MigLayoutFactory.growingInnerCellLayout());
+		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-		//create menus
-		context.getPopupMenu().addAction(addFolderAction);
-	}
+		final IComposite content = container.add(
+				bpf.composite().setBackgroundColor(Colors.WHITE),
+				MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
-	@Override
-	public String getLabel() {
-		return "App 2";
-	}
+		content.setLayout(MigLayoutFactory.growingInnerCellLayout());
+		content.add(bpf.textLabel("Demo for component deacivate listener"), "alignx center, aligny center");
 
-	@Override
-	public String getTooltip() {
-		return "Application Demo 2";
-	}
-
-	@Override
-	public IImageConstant getIcon() {
-		return SilkIcons.USER_RED;
 	}
 
 }

@@ -56,8 +56,8 @@ public class ImportantComponentDemo1 extends AbstractComponent implements ICompo
 
 	@Override
 	public IView createView(final String viewId, final IViewContext context) {
-		if (ViewDemo1.ID.equals(viewId)) {
-			return new ViewDemo1(context);
+		if (ImportantViewDemo1.ID.equals(viewId)) {
+			return new ImportantViewDemo1(context);
 		}
 		else {
 			throw new IllegalArgumentException("View id '" + viewId + "' is not known.");
@@ -74,7 +74,11 @@ public class ImportantComponentDemo1 extends AbstractComponent implements ICompo
 
 	private IFolderLayout createMasterFolder() {
 		final List<IViewLayout> resultViews = new LinkedList<IViewLayout>();
-		resultViews.add(new ViewLayout(ViewDemo1.ID, ViewDemo1.DEFAULT_LABEL, ViewDemo1.DEFAULT_TOOLTIP, ViewDemo1.DEFAULT_ICON));
+		resultViews.add(new ViewLayout(
+			ImportantViewDemo1.ID,
+			ImportantViewDemo1.DEFAULT_LABEL,
+			ImportantViewDemo1.DEFAULT_TOOLTIP,
+			ImportantViewDemo1.DEFAULT_ICON));
 		return new FolderLayout(MASTER_FOLDER_ID, resultViews);
 	}
 

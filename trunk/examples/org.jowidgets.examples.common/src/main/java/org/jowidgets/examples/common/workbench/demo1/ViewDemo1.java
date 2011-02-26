@@ -47,10 +47,9 @@ public class ViewDemo1 extends AbstractView {
 	public static final String DEFAULT_TOOLTIP = "View1 tooltip";
 	public static final IImageConstant DEFAULT_ICON = SilkIcons.STATUS_ONLINE;
 
-	public ViewDemo1(final IViewContext context) {
+	public ViewDemo1(final IViewContext context, final DemoMenuProvider menuProvider) {
 		super(ID);
 
-		final DemoMenuProvider menuProvider = new DemoMenuProvider();
 		context.getToolBar().addItemsOfModel(menuProvider.getToolBarModel());
 		context.getToolBarMenu().addItemsOfModel(menuProvider.getMenuModel());
 
@@ -63,7 +62,7 @@ public class ViewDemo1 extends AbstractView {
 				MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
 		content.setLayout(MigLayoutFactory.growingInnerCellLayout());
-		content.add(bpf.textLabel("View content 1"), "alignx center, aligny center");
+		content.add(bpf.textLabel("View1 content"), "alignx center, aligny center");
 
 	}
 

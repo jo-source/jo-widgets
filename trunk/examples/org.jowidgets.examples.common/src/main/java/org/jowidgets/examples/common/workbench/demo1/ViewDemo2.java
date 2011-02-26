@@ -29,6 +29,7 @@
 package org.jowidgets.examples.common.workbench.demo1;
 
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.examples.common.demo.DemoMenuProvider;
 import org.jowidgets.examples.common.demo.DemoTreeComposite;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractView;
@@ -42,8 +43,11 @@ public class ViewDemo2 extends AbstractView implements IView {
 	public static final String DEFAULT_TOOLTIP = "View2 tooltip";
 	public static final IImageConstant DEFAULT_ICON = SilkIcons.ATTACH;
 
-	public ViewDemo2(final IViewContext context) {
+	public ViewDemo2(final IViewContext context, final DemoMenuProvider menuProvider) {
 		super(ID);
+		context.getToolBar().addItemsOfModel(menuProvider.getToolBarModel());
+		context.getToolBarMenu().addItemsOfModel(menuProvider.getMenuModel());
+
 		new DemoTreeComposite(context.getContainer());
 	}
 

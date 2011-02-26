@@ -39,7 +39,7 @@ public class DemoMenuFrame extends JoFrame {
 	public DemoMenuFrame() {
 		super(bluePrint("Menu demo").autoPackOff());
 
-		final DemoMenuProvider menuProvider = new DemoMenuProvider();
+		final DemoMenuProvider menuProvider = new DemoMenuProvider(false);
 
 		getMenuBarModel().addMenu(menuProvider.getMenuModel());
 		setPopupMenu(menuProvider.getMenuModel());

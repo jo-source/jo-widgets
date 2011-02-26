@@ -67,10 +67,10 @@ public class DemoMenuProvider {
 	private ICheckedItemModel editItem;
 	private IToolBarModel toolBarModel;
 
-	public DemoMenuProvider() {
+	public DemoMenuProvider(final boolean lessToolBarItems) {
 		createActions();
 		createMenuModel();
-		createToolBarModel();
+		createToolBarModel(lessToolBarItems);
 	}
 
 	private void createActions() {
@@ -196,7 +196,7 @@ public class DemoMenuProvider {
 		return menuModel;
 	}
 
-	private void createToolBarModel() {
+	private void createToolBarModel(final boolean lessToolBarItems) {
 		toolBarModel = new ToolBarModel();
 
 		final IMenuModel radioSubMenu = new MenuModel();
@@ -209,18 +209,21 @@ public class DemoMenuProvider {
 		toolBarModel.addAction(action2);
 		toolBarModel.addItem(editItem);
 
-		toolBarModel.addSeparator();
-		final IComboBoxSelectionBluePrint<String> comboBoxBp = BPF.comboBoxSelection(" ", "Spain", "Italy", "France");
-		final InputControlItemModel<String> comboBox = new InputControlItemModel<String>(comboBoxBp, 80);
-		toolBarModel.addItem(comboBox);
+		if (!lessToolBarItems) {
+			toolBarModel.addSeparator();
+			final IComboBoxSelectionBluePrint<String> comboBoxBp = BPF.comboBoxSelection(" ", "Spain", "Italy", "France");
+			final InputControlItemModel<String> comboBox = new InputControlItemModel<String>(comboBoxBp, 80);
+			toolBarModel.addItem(comboBox);
 
-		final InputControlItemModel<String> textField = new InputControlItemModel<String>(BPF.textField(), 150);
-		toolBarModel.addItem(textField);
+			final InputControlItemModel<String> textField = new InputControlItemModel<String>(BPF.textField(), 150);
+			toolBarModel.addItem(textField);
 
-		toolBarModel.addItem(getMenuModel());
+			toolBarModel.addItem(getMenuModel());
 
-		addInputListener(textField);
-		addInputListener(comboBox);
+			addInputListener(textField);
+			addInputListener(comboBox);
+		}
+
 	}
 
 	public IMenuModel getMenuModel() {
