@@ -101,6 +101,8 @@ public interface IMenuModel extends IItemModel, IMenuItemModel, IToolBarItemMode
 
 	IMenuModel addMenu(String text, String toolTipText, IImageConstant icon);
 
+	void addItemsOfModel(IMenuModel menuModel);
+
 	void removeItem(final IMenuItemModel item);
 
 	void removeItem(int index);

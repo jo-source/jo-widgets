@@ -27,6 +27,8 @@
  */
 package org.jowidgets.common.image;
 
+import java.net.URL;
+
 public interface IImageRegistry {
 
 	IImageHandle getImageHandle(final IImageConstant key);
@@ -34,6 +36,10 @@ public interface IImageRegistry {
 	void registerImageUrl(final IImageUrlProvider imageUrlProvider);
 
 	void registerImageConstant(final IImageConstant key, final IImageHandle imageHandle);
+
+	void registerImageConstant(final IImageConstant key, URL url);
+
+	void registerImageConstant(final IImageConstant key, IImageUrlProvider urlProvider);
 
 	<T extends Enum<?> & IImageUrlProvider> void registerImageEnum(final Class<T> enumClass);
 

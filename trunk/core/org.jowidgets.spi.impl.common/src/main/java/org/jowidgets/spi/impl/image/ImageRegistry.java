@@ -27,6 +27,7 @@
  */
 package org.jowidgets.spi.impl.image;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,7 +63,21 @@ public class ImageRegistry implements IImageRegistry {
 	@Override
 	public void registerImageUrl(final IImageUrlProvider imageUrlProvider) {
 		Assert.paramNotNull(imageUrlProvider, "imageUrlProvider");
-		registerImageConstant(imageUrlProvider, imageHandleFactory.createImageHandle(imageUrlProvider.getImageUrl()));
+		registerImageConstant(imageUrlProvider, imageUrlProvider.getImageUrl());
+	}
+
+	@Override
+	public void registerImageConstant(final IImageConstant key, final IImageUrlProvider urlProvider) {
+		Assert.paramNotNull(key, "key");
+		Assert.paramNotNull(urlProvider, "urlProvider");
+		registerImageConstant(key, urlProvider.getImageUrl());
+	}
+
+	@Override
+	public void registerImageConstant(final IImageConstant key, final URL url) {
+		Assert.paramNotNull(key, "key");
+		Assert.paramNotNull(url, "url");
+		imageMap.put(key, imageHandleFactory.createImageHandle(url));
 	}
 
 	@Override

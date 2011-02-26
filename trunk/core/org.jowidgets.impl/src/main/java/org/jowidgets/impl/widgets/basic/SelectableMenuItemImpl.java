@@ -34,6 +34,7 @@ import org.jowidgets.api.model.item.ISelectableMenuItemModel;
 import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.ISelectableMenuItem;
 import org.jowidgets.api.widgets.descriptor.setup.ISelectableItemSetup;
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.impl.base.delegate.SelectableItemDelegate;
 import org.jowidgets.impl.widgets.common.wrapper.SelectableMenuItemSpiWrapper;
 import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
@@ -68,6 +69,11 @@ public class SelectableMenuItemImpl extends SelectableMenuItemSpiWrapper impleme
 	@Override
 	public IMenu getParent() {
 		return parent;
+	}
+
+	@Override
+	public void setIcon(final IImageConstant icon) {
+		//Do not set the icon for selectable item, because they have a default icon
 	}
 
 	@Override

@@ -33,6 +33,7 @@ import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
+import org.jowidgets.examples.common.icons.DemoIconsInitializer;
 
 public class DemoApplication implements IApplication {
 
@@ -45,6 +46,7 @@ public class DemoApplication implements IApplication {
 	}
 
 	public void start() {
+		DemoIconsInitializer.initialize();
 		Toolkit.getInstance().getApplicationRunner().run(this);
 	}
 

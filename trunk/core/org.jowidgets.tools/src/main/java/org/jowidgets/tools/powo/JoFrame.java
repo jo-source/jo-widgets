@@ -46,6 +46,12 @@ public class JoFrame extends Window<IFrame, IFrameBluePrint> implements IFrame {
 	private IMenuBarModel menuBarModel;
 	private IButton defaultButton;
 
+	JoFrame(final IFrame widget) {
+		this(bluePrint());
+		Assert.paramNotNull(widget, "widget");
+		initialize(widget);
+	}
+
 	public JoFrame() {
 		super(Toolkit.getBluePrintFactory().frame());
 	}
@@ -152,6 +158,16 @@ public class JoFrame extends Window<IFrame, IFrameBluePrint> implements IFrame {
 		}
 		else {
 			this.defaultButton = defaultButton;
+		}
+	}
+
+	public static JoFrame toJoFrame(final IFrame widget) {
+		Assert.paramNotNull(widget, "widget");
+		if (widget instanceof JoFrame) {
+			return (JoFrame) widget;
+		}
+		else {
+			return new JoFrame(widget);
 		}
 	}
 

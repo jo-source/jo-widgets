@@ -63,7 +63,7 @@ class ToolBarModelImpl implements IToolBarModel {
 	}
 
 	@Override
-	public void addToolBarModel(final IToolBarModel model) {
+	public void addItemsOfModel(final IToolBarModel model) {
 		Assert.paramNotNull(model, "model");
 		for (final IToolBarItemModel item : model.getItems()) {
 			addItem(item);

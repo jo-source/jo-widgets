@@ -40,9 +40,7 @@ import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITree;
 import org.jowidgets.api.widgets.ITreeNode;
-import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeNodeBluePrint;
-import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
@@ -52,16 +50,9 @@ import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
 public final class DemoTreeComposite {
 
-	protected DemoTreeComposite(final IContainer parentContainer) {
+	public DemoTreeComposite(final IContainer parentContainer) {
 
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
-		bpF.addDefaultsInitializer(ITreeBluePrint.class, new IDefaultInitializer<ITreeBluePrint>() {
-			@Override
-			public void initialize(final ITreeBluePrint bluePrint) {
-				bluePrint.setDefaultInnerIcon(IconsSmall.INFO);
-				bluePrint.setDefaultLeafIcon(IconsSmall.WARNING);
-			}
-		});
 
 		final ILayoutDescriptor fillLayoutDescriptor = new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0");
 		parentContainer.setLayout(fillLayoutDescriptor);
@@ -178,5 +169,9 @@ public final class DemoTreeComposite {
 		menu.addItem(bpF.menuItem(prefix + "menu item 2"));
 		menu.addItem(bpF.menuItem(prefix + "menu item 3"));
 		menu.addItem(bpF.menuItem(prefix + "menu item 4"));
+	}
+
+	public void foo() {
+
 	}
 }

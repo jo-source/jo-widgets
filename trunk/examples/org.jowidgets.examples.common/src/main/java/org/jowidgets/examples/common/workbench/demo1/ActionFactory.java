@@ -222,9 +222,11 @@ public class ActionFactory {
 			public void execute(final IExecutionContext executionContext) throws Exception {
 				final IInputDialog<String> inputDialog = createInputDialog(executionContext, "View name");
 				inputDialog.setVisible(true);
+				// CHECKSTYLE:OFF
 				if (inputDialog.isOkPressed()) {
 					// TODO MG implement
 				}
+				// CHECKSTYLE:ON
 			}
 
 		});

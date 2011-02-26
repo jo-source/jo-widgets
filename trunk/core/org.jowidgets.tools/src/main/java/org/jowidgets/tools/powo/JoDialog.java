@@ -45,6 +45,12 @@ public class JoDialog extends Window<IFrame, IDialogBluePrint> implements IFrame
 	private IMenuBarModel menuBarModel;
 	private IButton defaultButton;
 
+	JoDialog(final IFrame widget) {
+		this(bluePrint());
+		Assert.paramNotNull(widget, "widget");
+		initialize(widget);
+	}
+
 	public JoDialog(final String title) {
 		super(Toolkit.getBluePrintFactory().dialog(title));
 	}
@@ -158,6 +164,16 @@ public class JoDialog extends Window<IFrame, IDialogBluePrint> implements IFrame
 		}
 		else {
 			this.defaultButton = defaultButton;
+		}
+	}
+
+	public static JoDialog toJoDialog(final IFrame widget) {
+		Assert.paramNotNull(widget, "widget");
+		if (widget instanceof JoDialog) {
+			return (JoDialog) widget;
+		}
+		else {
+			return new JoDialog(widget);
 		}
 	}
 }

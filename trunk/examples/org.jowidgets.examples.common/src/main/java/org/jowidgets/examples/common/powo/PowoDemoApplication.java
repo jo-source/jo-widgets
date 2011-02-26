@@ -48,6 +48,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.examples.common.icons.DemoIconsInitializer;
 import org.jowidgets.tools.controler.WindowAdapter;
 import org.jowidgets.tools.powo.IJoMenu;
 import org.jowidgets.tools.powo.JoActionMenuItem;
@@ -86,6 +87,7 @@ public class PowoDemoApplication implements IApplication {
 	}
 
 	public void start() {
+		DemoIconsInitializer.initialize();
 		Toolkit.getInstance().getApplicationRunner().run(this);
 	}
 

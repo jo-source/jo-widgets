@@ -32,8 +32,10 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.examples.common.demo.DemoMenuProvider;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractView;
+import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.workbench.api.IViewContext;
 
 public class ViewDemo1 extends AbstractView {
@@ -45,9 +47,17 @@ public class ViewDemo1 extends AbstractView {
 
 	public ViewDemo1(final IViewContext context) {
 		super(ID);
+
+		final DemoMenuProvider menuProvider = new DemoMenuProvider();
+		context.getToolBar().addItemsOfModel(menuProvider.getToolBarModel());
+		context.getToolBarMenu().addItemsOfModel(menuProvider.getMenuModel());
+
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 		final IContainer container = context.getContainer();
-		container.add(bpf.textLabel("View content 1"), "");
+		container.setLayout(MigLayoutFactory.growingCellLayout());
+		container.setLayout(MigLayoutFactory.growingInnerCellLayout());
+		container.add(bpf.textLabel("View content 1"), "alignx center, aligny center");
+
 	}
 
 }

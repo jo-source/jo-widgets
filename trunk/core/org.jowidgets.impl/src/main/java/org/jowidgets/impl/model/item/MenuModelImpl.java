@@ -43,6 +43,7 @@ import org.jowidgets.api.model.item.IRadioItemModel;
 import org.jowidgets.api.model.item.ISeparatorItemModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
+import org.jowidgets.util.Assert;
 
 class MenuModelImpl extends ItemModelImpl implements IMenuModel {
 
@@ -243,6 +244,14 @@ class MenuModelImpl extends ItemModelImpl implements IMenuModel {
 	@Override
 	public <MODEL_TYPE extends IMenuItemModel> MODEL_TYPE addItem(final int index, final MODEL_TYPE item) {
 		return listModelDelegate.addItem(index, item);
+	}
+
+	@Override
+	public void addItemsOfModel(final IMenuModel menuModel) {
+		Assert.paramNotNull(menuModel, "menuModel");
+		for (final IMenuItemModel child : menuModel.getChildren()) {
+			addItem(child);
+		}
 	}
 
 	protected <MODEL_TYPE extends IItemModel> MODEL_TYPE addItemImpl(final int index, final MODEL_TYPE item) {

@@ -26,28 +26,10 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.icons;
+package org.jowidgets.addons.swt;
 
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
-import org.jowidgets.api.widgets.blueprint.builder.ITreeSetupBuilder;
-import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
+public final class JoToSwt {
 
-public final class IconsInitializer {
+	private JoToSwt() {}
 
-	private IconsInitializer() {}
-
-	public static void initializeIcons() {
-		Toolkit.getImageRegistry().registerImageEnum(SilkIcons.class);
-
-		Toolkit.getBluePrintFactory().addDefaultsInitializer(
-				ITreeBluePrint.class,
-				new IDefaultInitializer<ITreeSetupBuilder<?>>() {
-					@Override
-					public void initialize(final ITreeSetupBuilder<?> setupBuilder) {
-						setupBuilder.setDefaultInnerIcon(SilkIcons.FOLDER);
-						setupBuilder.setDefaultLeafIcon(SilkIcons.PAGE_WHITE);
-					}
-				});
-	}
 }

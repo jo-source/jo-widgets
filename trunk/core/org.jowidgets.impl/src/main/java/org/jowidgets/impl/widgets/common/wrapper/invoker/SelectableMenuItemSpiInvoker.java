@@ -28,6 +28,7 @@
 
 package org.jowidgets.impl.widgets.common.wrapper.invoker;
 
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 
@@ -55,6 +56,11 @@ public class SelectableMenuItemSpiInvoker extends MenuItemSpiInvoker implements 
 	@Override
 	public boolean isSelected() {
 		return getItem().isSelected();
+	}
+
+	@Override
+	public void setIcon(final IImageConstant icon) {
+		//Do not set the icon for selectable item, because they have a default icon
 	}
 
 }

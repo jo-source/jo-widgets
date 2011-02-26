@@ -21,6 +21,7 @@
 
 	<modules>
 		<module>../core/parent</module>
+		<module>../addons/parent</module>
 		<module>../examples/parent</module>
 	</modules>
 

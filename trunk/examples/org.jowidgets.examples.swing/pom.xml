@@ -21,6 +21,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.addons.swing</artifactId>
+			<version>0.0.13-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.impl</artifactId>
 			<version>0.0.13-SNAPSHOT</version>
 		</dependency>

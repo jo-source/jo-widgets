@@ -35,7 +35,7 @@ import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controler.IActionListener;
-import org.jowidgets.examples.common.icons.IconsInitializer;
+import org.jowidgets.examples.common.icons.DemoIconsInitializer;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractWorkbench;
 import org.jowidgets.tools.model.item.ActionItemModel;
@@ -45,7 +45,7 @@ import org.jowidgets.workbench.api.IWorkbenchContext;
 public class WorkbenchDemo1 extends AbstractWorkbench {
 
 	public WorkbenchDemo1() {
-		IconsInitializer.initializeIcons();
+		DemoIconsInitializer.initialize();
 	}
 
 	@Override
