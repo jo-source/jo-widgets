@@ -28,7 +28,9 @@
 
 package org.jowidgets.examples.common.workbench.demo1;
 
+import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
@@ -52,11 +54,16 @@ public class ViewDemo1 extends AbstractView {
 		context.getToolBar().addItemsOfModel(menuProvider.getToolBarModel());
 		context.getToolBarMenu().addItemsOfModel(menuProvider.getMenuModel());
 
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 		final IContainer container = context.getContainer();
-		container.setLayout(MigLayoutFactory.growingCellLayout());
 		container.setLayout(MigLayoutFactory.growingInnerCellLayout());
-		container.add(bpf.textLabel("View content 1"), "alignx center, aligny center");
+		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+
+		final IComposite content = container.add(
+				bpf.composite().setBackgroundColor(Colors.WHITE),
+				MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+
+		content.setLayout(MigLayoutFactory.growingInnerCellLayout());
+		content.add(bpf.textLabel("View content 1"), "alignx center, aligny center");
 
 	}
 
