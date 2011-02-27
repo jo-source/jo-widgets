@@ -35,6 +35,7 @@ import org.jowidgets.api.command.IAction;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractApplication;
+import org.jowidgets.examples.common.workbench.widgets.WidgetsDemoTreeNode;
 import org.jowidgets.workbench.api.IComponentTreeNode;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 
@@ -62,17 +63,13 @@ public class ApplicationDemo1 extends AbstractApplication {
 		componentList1.add(new ComponentTreeNodeDemo1("COMPONENT1", "Component1"));
 		componentList1.add(new ComponentTreeNodeDemo1("COMPONENT2", "Component2"));
 		componentList1.add(new ComponentTreeNodeDemo1("COMPONENT3", "Component3"));
-		context.add(new FolderTreeNodeDemo("FOLDER1", "Folder1", componentList1));
-		//create second folder
-		final List<IComponentTreeNode> componentList2 = new LinkedList<IComponentTreeNode>();
-		componentList2.add(new ComponentTreeNodeDemo1("COMPONENT1", "Component1"));
-		componentList2.add(new ComponentTreeNodeDemo1("COMPONENT2", "Component2"));
-		componentList2.add(new ComponentTreeNodeDemo1("COMPONENT3", "Component3"));
-		context.add(new FolderTreeNodeDemo("FOLDER2", "Folder2", componentList2));
-		//create third folder
+		context.add(new FolderTreeNodeDemo("COMPONENTS", "Components", componentList1));
+		//create second node
+		context.add(new WidgetsDemoTreeNode());
+		//create third node
 		final List<IComponentTreeNode> componentList3 = new LinkedList<IComponentTreeNode>();
 		componentList3.add(new ImportantComponentTreeNodeDemo1("IMPORTANT1", "Important"));
-		final FolderTreeNodeDemo folderNode2 = new FolderTreeNodeDemo("FOLDER3", "Folder3", componentList3);
+		final FolderTreeNodeDemo folderNode2 = new FolderTreeNodeDemo("MISC", "Misc", componentList3);
 		context.add(folderNode2);
 	}
 

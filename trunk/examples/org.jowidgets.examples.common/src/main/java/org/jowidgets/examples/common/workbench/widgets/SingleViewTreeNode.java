@@ -26,55 +26,40 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.workbench.base;
+package org.jowidgets.examples.common.workbench.widgets;
 
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.util.Assert;
-import org.jowidgets.workbench.api.IComponentTreeNode;
-import org.jowidgets.workbench.api.IComponentTreeNodeContext;
+import org.jowidgets.examples.common.icons.SilkIcons;
+import org.jowidgets.examples.common.workbench.base.AbstractComponentTreeNode;
+import org.jowidgets.workbench.api.IComponent;
+import org.jowidgets.workbench.api.IComponentContext;
+import org.jowidgets.workbench.api.IView;
 
-public abstract class AbstractComponentTreeNode implements IComponentTreeNode {
+public class SingleViewTreeNode extends AbstractComponentTreeNode {
 
+	private final Class<? extends IView> viewClass;
 	private final String id;
 	private final String label;
-	private final String tooltip;
-	private final IImageConstant icon;
 
-	public AbstractComponentTreeNode(final String id, final String label) {
-		this(id, label, null, null);
+	public SingleViewTreeNode(final Class<? extends IView> viewClass, final String id, final String label) {
+		this(viewClass, id, label, null, SilkIcons.APPLICATION);
 	}
 
-	public AbstractComponentTreeNode(final String id, final String label, final String tooltip, final IImageConstant icon) {
-		Assert.paramNotEmpty(id, "id");
-		Assert.paramNotEmpty(label, "label");
-
+	public SingleViewTreeNode(
+		final Class<? extends IView> viewClass,
+		final String id,
+		final String label,
+		final String tooltip,
+		final IImageConstant icon) {
+		super(id, label, tooltip, icon);
+		this.viewClass = viewClass;
 		this.id = id;
 		this.label = label;
-		this.tooltip = tooltip;
-		this.icon = icon;
 	}
 
 	@Override
-	public void onContextInitialize(final IComponentTreeNodeContext context) {}
-
-	@Override
-	public final String getId() {
-		return id;
-	}
-
-	@Override
-	public String getLabel() {
-		return label;
-	}
-
-	@Override
-	public String getTooltip() {
-		return tooltip;
-	}
-
-	@Override
-	public IImageConstant getIcon() {
-		return icon;
+	public IComponent createComponent(final IComponentContext context) {
+		return new SingleViewComponent(context, viewClass, id, label);
 	}
 
 }

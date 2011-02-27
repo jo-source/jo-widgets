@@ -26,55 +26,32 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.workbench.base;
+package org.jowidgets.examples.common.workbench.widgets;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.util.Assert;
-import org.jowidgets.workbench.api.IComponentTreeNode;
+import org.jowidgets.examples.common.icons.SilkIcons;
+import org.jowidgets.examples.common.workbench.base.AbstractComponentTreeNode;
+import org.jowidgets.examples.common.workbench.widgets.views.LabelsView;
+import org.jowidgets.workbench.api.IComponent;
+import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 
-public abstract class AbstractComponentTreeNode implements IComponentTreeNode {
+public class WidgetsDemoTreeNode extends AbstractComponentTreeNode {
 
-	private final String id;
-	private final String label;
-	private final String tooltip;
-	private final IImageConstant icon;
+	public static final String ID = WidgetsDemoTreeNode.class.getName();
 
-	public AbstractComponentTreeNode(final String id, final String label) {
-		this(id, label, null, null);
-	}
-
-	public AbstractComponentTreeNode(final String id, final String label, final String tooltip, final IImageConstant icon) {
-		Assert.paramNotEmpty(id, "id");
-		Assert.paramNotEmpty(label, "label");
-
-		this.id = id;
-		this.label = label;
-		this.tooltip = tooltip;
-		this.icon = icon;
+	public WidgetsDemoTreeNode() {
+		super(ID, "Widgets Demo", "Demonstrates different widgets", SilkIcons.FOLDER);
 	}
 
 	@Override
-	public void onContextInitialize(final IComponentTreeNodeContext context) {}
+	public void onContextInitialize(final IComponentTreeNodeContext context) {
+		context.add(new SingleViewTreeNode(LabelsView.class, LabelsView.ID, LabelsView.DEFAULT_LABEL));
 
-	@Override
-	public final String getId() {
-		return id;
 	}
 
 	@Override
-	public String getLabel() {
-		return label;
-	}
-
-	@Override
-	public String getTooltip() {
-		return tooltip;
-	}
-
-	@Override
-	public IImageConstant getIcon() {
-		return icon;
+	public IComponent createComponent(final IComponentContext context) {
+		return null;
 	}
 
 }

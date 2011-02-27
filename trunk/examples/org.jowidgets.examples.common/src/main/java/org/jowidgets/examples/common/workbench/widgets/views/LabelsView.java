@@ -26,55 +26,27 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.workbench.base;
+package org.jowidgets.examples.common.workbench.widgets.views;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.util.Assert;
-import org.jowidgets.workbench.api.IComponentTreeNode;
-import org.jowidgets.workbench.api.IComponentTreeNodeContext;
+import org.jowidgets.api.image.IconsSmall;
+import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.workbench.api.IView;
+import org.jowidgets.workbench.api.IViewContext;
 
-public abstract class AbstractComponentTreeNode implements IComponentTreeNode {
+public class LabelsView extends AbstractDemoView implements IView {
 
-	private final String id;
-	private final String label;
-	private final String tooltip;
-	private final IImageConstant icon;
+	public static final String ID = LabelsView.class.getName();
+	public static final String DEFAULT_LABEL = "Labels";
 
-	public AbstractComponentTreeNode(final String id, final String label) {
-		this(id, label, null, null);
-	}
-
-	public AbstractComponentTreeNode(final String id, final String label, final String tooltip, final IImageConstant icon) {
-		Assert.paramNotEmpty(id, "id");
-		Assert.paramNotEmpty(label, "label");
-
-		this.id = id;
-		this.label = label;
-		this.tooltip = tooltip;
-		this.icon = icon;
+	public LabelsView(final IViewContext context) {
+		super(context);
 	}
 
 	@Override
-	public void onContextInitialize(final IComponentTreeNodeContext context) {}
-
-	@Override
-	public final String getId() {
-		return id;
+	public void createViewContent(final IContainer container, final IBluePrintFactory bpf) {
+		container.setLayout(new MigLayoutDescriptor("[]", "[]"));
+		container.add(bpf.label().setText("Hello Label").setIcon(IconsSmall.INFO), "");
 	}
-
-	@Override
-	public String getLabel() {
-		return label;
-	}
-
-	@Override
-	public String getTooltip() {
-		return tooltip;
-	}
-
-	@Override
-	public IImageConstant getIcon() {
-		return icon;
-	}
-
 }
