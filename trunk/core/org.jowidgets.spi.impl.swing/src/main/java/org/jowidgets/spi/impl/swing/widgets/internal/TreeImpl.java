@@ -49,9 +49,11 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
+import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.SelectionPolicy;
 import org.jowidgets.spi.impl.controler.TreeSelectionObservableSpi;
+import org.jowidgets.spi.impl.swing.util.ColorConvert;
 import org.jowidgets.spi.impl.swing.widgets.SwingControl;
 import org.jowidgets.spi.impl.swing.widgets.internal.base.JoTreeNode;
 import org.jowidgets.spi.impl.swing.widgets.internal.base.JoTreeNodeRenderer;
@@ -172,6 +174,28 @@ public class TreeImpl extends SwingControl implements ITreeSpi {
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public void setForegroundColor(final IColorConstant colorValue) {
+		tree.setForeground(ColorConvert.convert(colorValue));
+		super.setForegroundColor(colorValue);
+	}
+
+	@Override
+	public void setBackgroundColor(final IColorConstant colorValue) {
+		tree.setBackground(ColorConvert.convert(colorValue));
+		super.setBackgroundColor(colorValue);
+	}
+
+	@Override
+	public IColorConstant getForegroundColor() {
+		return ColorConvert.convert(tree.getForeground());
+	}
+
+	@Override
+	public IColorConstant getBackgroundColor() {
+		return ColorConvert.convert(tree.getBackground());
 	}
 
 	@Override
