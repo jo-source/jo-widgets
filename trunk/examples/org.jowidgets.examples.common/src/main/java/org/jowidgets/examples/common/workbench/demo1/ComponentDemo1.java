@@ -54,11 +54,12 @@ public class ComponentDemo1 extends AbstractComponent implements IComponent {
 	public static final String MASTER_FOLDER_ID = "MASTER_FOLDER_ID";
 	public static final String DETAIL1_FOLDER_ID = "DETAIL1_FOLDER_ID";
 	public static final String DETAIL2_FOLDER_ID = "DETAIL2_FOLDER_ID";
+	public static final String MAIL_FOLDER_ID = "DETAIL3_FOLDER_ID";
 
 	private final DemoMenuProvider menuProvider;
 
 	public ComponentDemo1(final IComponentContext componentContext) {
-		componentContext.setLayout(new Layout(DEFAULT_LAYOUT_ID, createMasterSplit()));
+		componentContext.setLayout(new Layout(DEFAULT_LAYOUT_ID, createMainSplit()));
 		menuProvider = new DemoMenuProvider(true);
 	}
 
@@ -80,17 +81,29 @@ public class ComponentDemo1 extends AbstractComponent implements IComponent {
 			return new ViewDemo5(context);
 		}
 		else if (ViewDemo6.ID.equals(viewId)) {
-			return new ViewDemo6(context);
+			return new ViewDemo6(context, menuProvider);
+		}
+		else if (ViewDemo7.ID.equals(viewId)) {
+			return new ViewDemo7(context);
 		}
 		else {
 			throw new IllegalArgumentException("View id '" + viewId + "' is not known.");
 		}
 	}
 
-	private ISplitLayout createMasterSplit() {
+	private ISplitLayout createMainSplit() {
+		return new SplitLayout(
+			Orientation.HORIZONTAL,
+			0.78,
+			SplitResizePolicy.RESIZE_FIRST,
+			createMasterDetailSplit(),
+			createMailFolder());
+	}
+
+	private ISplitLayout createMasterDetailSplit() {
 		return new SplitLayout(
 			Orientation.VERTICAL,
-			0.45,
+			0.55,
 			SplitResizePolicy.RESIZE_SECOND,
 			createMasterFolder(),
 			createDetailSplit());
@@ -105,8 +118,8 @@ public class ComponentDemo1 extends AbstractComponent implements IComponent {
 	private ISplitLayout createDetailSplit() {
 		return new SplitLayout(
 			Orientation.HORIZONTAL,
-			0.3,
-			SplitResizePolicy.RESIZE_BOTH,
+			0.28,
+			SplitResizePolicy.RESIZE_SECOND,
 			createDetail1Folder(),
 			createDetail2Folder());
 	}
@@ -124,6 +137,12 @@ public class ComponentDemo1 extends AbstractComponent implements IComponent {
 		resultViews.add(new ViewLayout(ViewDemo5.ID, ViewDemo5.DEFAULT_LABEL, ViewDemo5.DEFAULT_TOOLTIP, ViewDemo5.DEFAULT_ICON));
 		resultViews.add(new ViewLayout(ViewDemo6.ID, ViewDemo6.DEFAULT_LABEL, ViewDemo6.DEFAULT_TOOLTIP, ViewDemo6.DEFAULT_ICON));
 		return new FolderLayout(DETAIL2_FOLDER_ID, resultViews);
+	}
+
+	private IFolderLayout createMailFolder() {
+		final List<IViewLayout> resultViews = new LinkedList<IViewLayout>();
+		resultViews.add(new ViewLayout(ViewDemo7.ID, ViewDemo7.DEFAULT_LABEL, ViewDemo7.DEFAULT_TOOLTIP, ViewDemo7.DEFAULT_ICON));
+		return new FolderLayout(MAIL_FOLDER_ID, resultViews);
 	}
 
 	@Override

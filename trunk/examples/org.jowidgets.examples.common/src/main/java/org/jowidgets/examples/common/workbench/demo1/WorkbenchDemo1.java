@@ -68,7 +68,7 @@ public class WorkbenchDemo1 extends AbstractWorkbench {
 
 	@Override
 	public Dimension getInitialDimension() {
-		return new Dimension(1024, 768);
+		return new Dimension(1280, 900);
 	}
 
 	@Override

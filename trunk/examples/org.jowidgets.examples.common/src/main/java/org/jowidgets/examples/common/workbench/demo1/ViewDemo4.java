@@ -39,8 +39,8 @@ import org.jowidgets.workbench.api.IViewContext;
 public class ViewDemo4 extends AbstractView implements IView {
 
 	public static final String ID = ViewDemo4.class.getName();
-	public static final String DEFAULT_LABEL = "View4";
-	public static final String DEFAULT_TOOLTIP = "View4 tooltip";
+	public static final String DEFAULT_LABEL = "Person";
+	public static final String DEFAULT_TOOLTIP = "Person View";
 	public static final IImageConstant DEFAULT_ICON = SilkIcons.APPLICATION_FORM;
 
 	public ViewDemo4(final IViewContext context) {

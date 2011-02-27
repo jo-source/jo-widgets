@@ -117,7 +117,7 @@ public class WorkbenchContext implements IWorkbenchContext {
 		rootComposite.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));
 
 		final ISplitComposite splitComposite = rootComposite.add(
-				bpf.splitHorizontal().setResizePolicy(SplitResizePolicy.RESIZE_SECOND).setWeight(0.25).disableBorders(),
+				bpf.splitHorizontal().setResizePolicy(SplitResizePolicy.RESIZE_SECOND).setWeight(0.18).disableBorders(),
 				"growx, growy, h 0::, w 0::");
 
 		final IContainer applicationsContainer = splitComposite.getFirst();

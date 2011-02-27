@@ -126,15 +126,17 @@ public class FolderContext implements IFolderContext {
 		}
 
 		//TODO MG this must be done lazily (later)
-		final IView view = layoutContext.getComponent().createView(
-				viewLayout.getId(),
-				new ViewContext(tabFolder, tabItem, layoutContext.getComponentContext()));
+		final ViewContext viewContext = new ViewContext(tabFolder, tabItem, layoutContext.getComponentContext());
+		final IView view = layoutContext.getComponent().createView(viewLayout.getId(), viewContext);
 
 		tabItem.addTabItemListener(new ITabItemListener() {
 
 			@Override
 			public void selectionChanged(final boolean selected) {
 				view.onVisibleStateChanged(selected);
+				viewContext.packToolBar();
+				tabItem.layoutBegin();
+				tabItem.layoutEnd();
 			}
 
 			@Override

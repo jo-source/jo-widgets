@@ -101,4 +101,8 @@ public class ViewContext implements IViewContext {
 		return componentContext.getWorkbenchContext();
 	}
 
+	public void packToolBar() {
+		toolBarHelper.pack();
+	}
+
 }

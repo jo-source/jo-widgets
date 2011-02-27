@@ -28,10 +28,9 @@
 
 package org.jowidgets.examples.common.workbench.demo1;
 
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.examples.common.demo.DemoMenuProvider;
+import org.jowidgets.examples.common.demo.DemoTreeComposite;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractView;
 import org.jowidgets.workbench.api.IView;
@@ -44,11 +43,11 @@ public class ViewDemo6 extends AbstractView implements IView {
 	public static final String DEFAULT_TOOLTIP = "View6 tooltip";
 	public static final IImageConstant DEFAULT_ICON = SilkIcons.ROSETTE;
 
-	public ViewDemo6(final IViewContext context) {
+	public ViewDemo6(final IViewContext context, final DemoMenuProvider menuProvider) {
 		super(ID);
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-		final IContainer container = context.getContainer();
-		container.add(bpf.textLabel("View content 6"), "");
+		context.getToolBar().addItemsOfModel(menuProvider.getToolBarModel());
+		context.getToolBarMenu().addItemsOfModel(menuProvider.getMenuModel());
+		new DemoTreeComposite(context.getContainer());
 	}
 
 }

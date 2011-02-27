@@ -35,25 +35,21 @@ import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.examples.common.demo.DemoMenuProvider;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractView;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
 
-public class ViewDemo2 extends AbstractView implements IView {
+public class ViewDemo7 extends AbstractView implements IView {
 
-	public static final String ID = ViewDemo2.class.getName();
-	public static final String DEFAULT_LABEL = "Media";
-	public static final String DEFAULT_TOOLTIP = "Media View";
-	public static final IImageConstant DEFAULT_ICON = SilkIcons.ATTACH;
+	public static final String ID = ViewDemo7.class.getName();
+	public static final String DEFAULT_LABEL = "Reports";
+	public static final String DEFAULT_TOOLTIP = "Reports view";
+	public static final IImageConstant DEFAULT_ICON = SilkIcons.ARROW_RIGHT;
 
-	public ViewDemo2(final IViewContext context, final DemoMenuProvider menuProvider) {
+	public ViewDemo7(final IViewContext context) {
 		super(ID);
-		context.getToolBar().addItemsOfModel(menuProvider.getToolBarModel());
-		context.getToolBarMenu().addItemsOfModel(menuProvider.getMenuModel());
-
 		final IContainer container = context.getContainer();
 		container.setLayout(MigLayoutFactory.growingCellLayout());
 
@@ -64,32 +60,24 @@ public class ViewDemo2 extends AbstractView implements IView {
 		final ITree tree = container.add(treeBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 		container.setBackgroundColor(tree.getBackgroundColor());
 
-		final ITreeNode cdNode = tree.addNode(bpf.treeNode().setText("CD").setIcon(SilkIcons.CD));
-		final ITreeNode dvdNode = tree.addNode(bpf.treeNode().setText("DVD").setIcon(SilkIcons.DVD));
-		final ITreeNode diskNode = tree.addNode(bpf.treeNode().setText("Drive").setIcon(SilkIcons.DRIVE));
-		final ITreeNode floppyNode = tree.addNode(bpf.treeNode().setText("Floppy").setIcon(SilkIcons.DISK));
+		final ITreeNode externalNode = tree.addNode(bpf.treeNode().setText("External").setIcon(SilkIcons.REPORT));
+		final ITreeNode internalNode = tree.addNode(bpf.treeNode().setText("Internal").setIcon(SilkIcons.EMAIL));
 
-		cdNode.addNode(bpf.treeNode().setText("Bugs").setIcon(SilkIcons.BUG));
-		cdNode.addNode(bpf.treeNode().setText("Charts").setIcon(SilkIcons.CHART_BAR));
-		cdNode.addNode(bpf.treeNode().setText("Camera").setIcon(SilkIcons.CAMERA));
-		cdNode.addNode(bpf.treeNode().setText("Organization").setIcon(SilkIcons.CHART_ORGANISATION));
+		externalNode.addNode(bpf.treeNode().setText("Customer Report").setIcon(SilkIcons.REPORT_GO));
+		externalNode.addNode(bpf.treeNode().setText("Info Post").setIcon(SilkIcons.GROUP_GO));
 
-		dvdNode.addNode(bpf.treeNode().setText("Bugs").setIcon(SilkIcons.BUG));
-		dvdNode.addNode(bpf.treeNode().setText("Charts").setIcon(SilkIcons.CHART_BAR));
-		dvdNode.addNode(bpf.treeNode().setText("Camera").setIcon(SilkIcons.CAMERA));
-		dvdNode.addNode(bpf.treeNode().setText("Organization").setIcon(SilkIcons.CHART_ORGANISATION));
+		internalNode.addNode(bpf.treeNode().setText("Malcom").setIcon(SilkIcons.USER_GO));
+		internalNode.addNode(bpf.treeNode().setText("Paul").setIcon(SilkIcons.USER_GO));
+		internalNode.addNode(bpf.treeNode().setText("Marry").setIcon(SilkIcons.USER_GO));
+		internalNode.addNode(bpf.treeNode().setText("Lisa").setIcon(SilkIcons.USER_GO));
+		internalNode.addNode(bpf.treeNode().setText("Pete").setIcon(SilkIcons.USER_GO));
+		internalNode.addNode(bpf.treeNode().setText("Bruce").setIcon(SilkIcons.USER_GO));
+		internalNode.addNode(bpf.treeNode().setText("Joe").setIcon(SilkIcons.USER_GO));
 
-		diskNode.addNode(bpf.treeNode().setText("Bugs").setIcon(SilkIcons.BUG));
-		diskNode.addNode(bpf.treeNode().setText("Charts").setIcon(SilkIcons.CHART_BAR));
-		diskNode.addNode(bpf.treeNode().setText("Camera").setIcon(SilkIcons.CAMERA));
-		diskNode.addNode(bpf.treeNode().setText("Organization").setIcon(SilkIcons.CHART_ORGANISATION));
+		internalNode.setExpanded(true);
 
-		floppyNode.addNode(bpf.treeNode().setText("Bugs").setIcon(SilkIcons.BUG));
-		floppyNode.addNode(bpf.treeNode().setText("Charts").setIcon(SilkIcons.CHART_BAR));
-		floppyNode.addNode(bpf.treeNode().setText("Camera").setIcon(SilkIcons.CAMERA));
-		floppyNode.addNode(bpf.treeNode().setText("Organization").setIcon(SilkIcons.CHART_ORGANISATION));
+		context.getToolBar().addActionItem(null, "Add external", SilkIcons.REPORT);
+		context.getToolBar().addActionItem(null, "Add mail", SilkIcons.EMAIL);
 
-		diskNode.setExpanded(true);
 	}
-
 }

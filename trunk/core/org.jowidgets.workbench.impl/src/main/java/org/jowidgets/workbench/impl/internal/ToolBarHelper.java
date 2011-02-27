@@ -46,6 +46,7 @@ public class ToolBarHelper {
 
 	private final IComposite content;
 
+	private final IToolBar toolBar;
 	private final IToolBarModel toolBarModel;
 	private final IMenuModel toolBarMenuModel;
 
@@ -58,7 +59,7 @@ public class ToolBarHelper {
 
 		container.setLayout(new MigLayoutDescriptor("hidemode 2", "0[grow, 0::]0", "0[]0[]0[grow, 0::]0"));
 
-		final IToolBar toolBar = container.add(bpf.toolBar(), "alignx right, w 0::, hidemode 2, wrap");
+		toolBar = container.add(bpf.toolBar(), "alignx right, w 0::, hidemode 2, wrap");
 		toolBar.setModel(innerToolBarModel);
 		toolBar.setVisible(false);
 		final IControl toolBarSeparator = container.add(bpf.separator(), "growx, w 0::, hidemode 2, wrap");
@@ -132,4 +133,7 @@ public class ToolBarHelper {
 		return toolBarMenuModel;
 	}
 
+	public void pack() {
+		toolBar.pack();
+	}
 }
