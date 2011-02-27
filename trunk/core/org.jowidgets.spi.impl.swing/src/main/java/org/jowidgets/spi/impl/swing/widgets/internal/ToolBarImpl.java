@@ -184,7 +184,7 @@ public class ToolBarImpl extends SwingControl implements IToolBarSpi {
 
 	/**
 	 * The given index is potentially wrong, because popup buttons need two button for implementation
-	 * This corrects the index in that way, that for every popup button before thsi index, 1 (one) will be added
+	 * This corrects the index in that way, that for every popup button before this index, 1 (one) will be added
 	 * to the result index.
 	 * 
 	 * @param index The given index
@@ -192,7 +192,7 @@ public class ToolBarImpl extends SwingControl implements IToolBarSpi {
 	 */
 	private int getCorrectedIndex(final int index) {
 		int result = index;
-		for (int i = 0; i <= index && i < getUiReference().getComponentCount(); i++) {
+		for (int i = 0; i < getUiReference().getComponentCount(); i++) {
 			if (getUiReference().getComponent(i) instanceof JoArrowButton) {
 				result++;
 			}
