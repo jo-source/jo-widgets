@@ -50,8 +50,9 @@ public abstract class AbstractDemoView extends AbstractView implements IView {
 		+ "source/browse/trunk/examples/org.jowidgets.examples.common/"
 		+ "src/main/java/org/jowidgets/examples/common/workbench/widgets/views/";
 
-	private final URI uri;
-	private final Desktop desktop;
+	private URI sourceUri;
+	private URI migLayoutUri;
+	private Desktop desktop;
 
 	public AbstractDemoView(final IViewContext context) {
 		super(ID);
@@ -60,28 +61,40 @@ public abstract class AbstractDemoView extends AbstractView implements IView {
 			desktop = Desktop.getDesktop();
 			if (desktop.isSupported(Desktop.Action.BROWSE)) {
 				try {
-					this.uri = new URI(URL_PREFIX + getClass().getSimpleName() + ".java");
+					this.sourceUri = new URI(URL_PREFIX + getClass().getSimpleName() + ".java");
+					this.migLayoutUri = new URI("http://www.miglayout.com/");
 				}
 				catch (final Exception e1) {
 					throw new RuntimeException();
 				}
 			}
-			else {
-				uri = null;
-			}
-		}
-		else {
-			uri = null;
-			desktop = null;
 		}
 
-		final IActionItemModel action = context.getToolBar().addActionItem("View Source", null, SilkIcons.PAGE_WHITE_TEXT);
-		action.addActionListener(new IActionListener() {
+		final IActionItemModel sourceAction = context.getToolBar().addActionItem("View Source", null, SilkIcons.PAGE_WHITE_TEXT);
+		sourceAction.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
 				try {
-					if (desktop != null && uri != null) {
-						desktop.browse(uri);
+					if (desktop != null && sourceUri != null) {
+						desktop.browse(sourceUri);
+					}
+					else {
+						Toolkit.getMessagePane().showError("Could not open browser. \n Maybe java desktop is not supported.");
+					}
+				}
+				catch (final Exception e) {
+					throw new RuntimeException(e);
+				}
+			}
+		});
+
+		final IActionItemModel migLayout = context.getToolBar().addActionItem("MiGLayout Layout Manager", null, SilkIcons.WORLD);
+		migLayout.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				try {
+					if (desktop != null && sourceUri != null) {
+						desktop.browse(migLayoutUri);
 					}
 					else {
 						Toolkit.getMessagePane().showError("Could not open browser. \n Maybe java desktop is not supported.");

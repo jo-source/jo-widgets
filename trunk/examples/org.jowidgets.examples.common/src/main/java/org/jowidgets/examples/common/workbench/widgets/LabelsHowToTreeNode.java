@@ -26,34 +26,34 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.workbench.widgets.views;
+package org.jowidgets.examples.common.workbench.widgets;
 
-import org.jowidgets.api.image.IconsSmall;
-import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.workbench.api.IView;
-import org.jowidgets.workbench.api.IViewContext;
+import org.jowidgets.examples.common.icons.SilkIcons;
+import org.jowidgets.examples.common.workbench.base.AbstractComponentTreeNode;
+import org.jowidgets.examples.common.workbench.widgets.views.LabelWithTextView;
+import org.jowidgets.examples.common.workbench.widgets.views.LabelWithIconView;
+import org.jowidgets.workbench.api.IComponent;
+import org.jowidgets.workbench.api.IComponentContext;
+import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 
-public class LabelsView extends AbstractDemoView implements IView {
+public class LabelsHowToTreeNode extends AbstractComponentTreeNode {
 
-	public static final String ID = LabelsView.class.getName();
-	public static final String DEFAULT_LABEL = "Labels";
+	public static final String ID = LabelsHowToTreeNode.class.getName();
 
-	public LabelsView(final IViewContext context) {
-		super(context);
+	public LabelsHowToTreeNode() {
+		super(ID, "Labels", null, SilkIcons.FOLDER);
 	}
 
 	@Override
-	public void createViewContent(final IContainer container, final IBluePrintFactory bpFactory) {
-		//set the layout
-		container.setLayout(new MigLayoutDescriptor("[]", "[]"));
+	public void onContextInitialize(final IComponentTreeNodeContext context) {
+		context.add(new SingleViewTreeNode(LabelWithTextView.class, LabelWithTextView.ID, LabelWithTextView.DEFAULT_LABEL));
+		context.add(new SingleViewTreeNode(LabelWithIconView.class, LabelWithIconView.ID, LabelWithIconView.DEFAULT_LABEL));
 
-		//create the labels blue print
-		final ILabelBluePrint labelBp = bpFactory.label().setText("Hello Label").setIcon(IconsSmall.INFO);
-
-		//add the label blue print to the container
-		container.add(labelBp, "");
 	}
+
+	@Override
+	public IComponent createComponent(final IComponentContext context) {
+		return null;
+	}
+
 }

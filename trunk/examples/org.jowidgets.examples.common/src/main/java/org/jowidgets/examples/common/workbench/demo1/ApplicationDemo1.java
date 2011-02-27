@@ -35,7 +35,7 @@ import org.jowidgets.api.command.IAction;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractApplication;
-import org.jowidgets.examples.common.workbench.widgets.WidgetsDemoTreeNode;
+import org.jowidgets.examples.common.workbench.widgets.WidgetsHowToTreeNode;
 import org.jowidgets.workbench.api.IComponentTreeNode;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 
@@ -65,7 +65,7 @@ public class ApplicationDemo1 extends AbstractApplication {
 		componentList1.add(new ComponentTreeNodeDemo1("COMPONENT3", "Component3"));
 		context.add(new FolderTreeNodeDemo("COMPONENTS", "Components", componentList1));
 		//create second node
-		context.add(new WidgetsDemoTreeNode());
+		context.add(new WidgetsHowToTreeNode());
 		//create third node
 		final List<IComponentTreeNode> componentList3 = new LinkedList<IComponentTreeNode>();
 		componentList3.add(new ImportantComponentTreeNodeDemo1("IMPORTANT1", "Important"));

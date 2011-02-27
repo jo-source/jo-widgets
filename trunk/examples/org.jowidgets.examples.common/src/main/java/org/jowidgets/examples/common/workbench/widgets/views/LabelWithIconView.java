@@ -26,32 +26,34 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.workbench.widgets;
+package org.jowidgets.examples.common.workbench.widgets.views;
 
-import org.jowidgets.examples.common.icons.SilkIcons;
-import org.jowidgets.examples.common.workbench.base.AbstractComponentTreeNode;
-import org.jowidgets.examples.common.workbench.widgets.views.LabelsView;
-import org.jowidgets.workbench.api.IComponent;
-import org.jowidgets.workbench.api.IComponentContext;
-import org.jowidgets.workbench.api.IComponentTreeNodeContext;
+import org.jowidgets.api.image.Icons;
+import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.workbench.api.IView;
+import org.jowidgets.workbench.api.IViewContext;
 
-public class WidgetsDemoTreeNode extends AbstractComponentTreeNode {
+public class LabelWithIconView extends AbstractDemoView implements IView {
 
-	public static final String ID = WidgetsDemoTreeNode.class.getName();
+	public static final String ID = LabelWithIconView.class.getName();
+	public static final String DEFAULT_LABEL = "Label with icon";
 
-	public WidgetsDemoTreeNode() {
-		super(ID, "Widgets Demo", "Demonstrates different widgets", SilkIcons.FOLDER);
+	public LabelWithIconView(final IViewContext context) {
+		super(context);
 	}
 
 	@Override
-	public void onContextInitialize(final IComponentTreeNodeContext context) {
-		context.add(new SingleViewTreeNode(LabelsView.class, LabelsView.ID, LabelsView.DEFAULT_LABEL));
+	public void createViewContent(final IContainer container, final IBluePrintFactory bpFactory) {
+		//set the layout
+		container.setLayout(new MigLayoutDescriptor("[]", "[]"));
 
+		//create the labels blue print
+		final ILabelBluePrint labelBp = bpFactory.label().setIcon(Icons.INFO);
+
+		//add the label blue print to the container
+		container.add(labelBp, "");
 	}
-
-	@Override
-	public IComponent createComponent(final IComponentContext context) {
-		return null;
-	}
-
 }
