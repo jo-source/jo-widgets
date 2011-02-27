@@ -28,11 +28,8 @@
 
 package org.jowidgets.spi.impl.swing.widgets.internal;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -41,7 +38,6 @@ import java.awt.event.MouseListener;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -55,6 +51,7 @@ import net.miginfocom.swing.MigLayout;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.image.IconsSmallCommon;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
@@ -403,6 +400,7 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 
 		public void setText(final String text) {
 			label.setText(text);
+			tabButton.setText(text);
 		}
 
 		@Override
@@ -424,37 +422,18 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 
 		private static final long serialVersionUID = 1171212461380220004L;
 
+		private static final String CLOSE_LABEL = "Close"; //TODO I18N
+
 		public TabButton() {
 
-			final int size = 17;
-			setPreferredSize(new java.awt.Dimension(size, size));
-			setToolTipText("close this tab");
+			setPreferredSize(new java.awt.Dimension(16, 16));
+			setMargin(new Insets(0, 0, 0, 0));
 			setUI(new BasicButtonUI());
 			setContentAreaFilled(false);
 			setFocusable(false);
-			setBorder(BorderFactory.createEtchedBorder());
-			setBorderPainted(false);
 			setRolloverEnabled(true);
 
-			addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseEntered(final MouseEvent e) {
-					final Component component = e.getComponent();
-					if (component instanceof AbstractButton) {
-						final AbstractButton button = (AbstractButton) component;
-						button.setBorderPainted(true);
-					}
-				}
-
-				@Override
-				public void mouseExited(final MouseEvent e) {
-					final Component component = e.getComponent();
-					if (component instanceof AbstractButton) {
-						final AbstractButton button = (AbstractButton) component;
-						button.setBorderPainted(false);
-					}
-				}
-			});
+			setToolTipText(CLOSE_LABEL);
 
 			addActionListener(new ActionListener() {
 				@Override
@@ -473,27 +452,28 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 		}
 
 		@Override
+		public void setText(final String text) {
+			setToolTipText(CLOSE_LABEL + " " + text);
+		}
+
+		@Override
 		public void updateUI() {}
 
 		@Override
 		protected void paintComponent(final Graphics g) {
 			super.paintComponent(g);
-
 			if (getModel().isRollover()
 				|| tabComponent.isRollover()
 				|| parentTabbedPane.getSelectedComponent() == tabContentContainer) {
-
-				final Graphics2D g2 = (Graphics2D) g.create();
 				if (getModel().isPressed()) {
-					g2.translate(1, 1);
+					g.translate(1, 1);
 				}
-				g2.setStroke(new BasicStroke(3));
-				g2.setColor(Color.BLACK);
-
-				final int delta = 5;
-				g2.drawLine(delta, delta, getWidth() - delta - 1, getHeight() - delta - 1);
-				g2.drawLine(getWidth() - delta - 1, delta, delta, getHeight() - delta - 1);
-				g2.dispose();
+				if (getModel().isRollover()) {
+					SwingImageRegistry.getInstance().getImageIcon(IconsSmallCommon.CLOSE_MOUSEOVER).paintIcon(this, g, 0, 0);
+				}
+				else {
+					SwingImageRegistry.getInstance().getImageIcon(IconsSmallCommon.CLOSE).paintIcon(this, g, 0, 0);
+				}
 			}
 		}
 

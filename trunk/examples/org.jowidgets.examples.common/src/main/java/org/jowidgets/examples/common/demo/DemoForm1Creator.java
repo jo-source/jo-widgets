@@ -52,7 +52,6 @@ public final class DemoForm1Creator {
 
 		//define the blue print for the input composite
 		final IInputCompositeBluePrint<String> inputCompositeBp = bpf.inputComposite(new DemoForm1ContentCreator());
-		inputCompositeBp.setContentBorder();
 		inputCompositeBp.setContentScrolled(scrolledContent);
 		inputCompositeBp.setMissingInputText("Please fill out all mandatory (*) fields");
 		inputCompositeBp.setMissingInputIcon(IconsSmall.INFO);
