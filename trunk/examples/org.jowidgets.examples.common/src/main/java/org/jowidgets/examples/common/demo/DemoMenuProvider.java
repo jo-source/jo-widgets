@@ -201,7 +201,7 @@ public class DemoMenuProvider {
 
 		final IMenuModel radioSubMenu = new MenuModel();
 		radioSubMenu.addRadioItem("All").setSelected(true);
-		radioSubMenu.addRadioItem("Currect");
+		radioSubMenu.addRadioItem("Current");
 
 		toolBarModel.addPopupAction(refreshAction, radioSubMenu);
 		toolBarModel.addPopupAction(imageEditAction, radioSubMenu);
