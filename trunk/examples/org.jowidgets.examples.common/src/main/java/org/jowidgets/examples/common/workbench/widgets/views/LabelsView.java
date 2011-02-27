@@ -30,6 +30,7 @@ package org.jowidgets.examples.common.workbench.widgets.views;
 
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.workbench.api.IView;
@@ -45,8 +46,14 @@ public class LabelsView extends AbstractDemoView implements IView {
 	}
 
 	@Override
-	public void createViewContent(final IContainer container, final IBluePrintFactory bpf) {
+	public void createViewContent(final IContainer container, final IBluePrintFactory bpFactory) {
+		//set the layout
 		container.setLayout(new MigLayoutDescriptor("[]", "[]"));
-		container.add(bpf.label().setText("Hello Label").setIcon(IconsSmall.INFO), "");
+
+		//create the labels blue print
+		final ILabelBluePrint labelBp = bpFactory.label().setText("Hello Label").setIcon(IconsSmall.INFO);
+
+		//add the label blue print to the container
+		container.add(labelBp, "");
 	}
 }
