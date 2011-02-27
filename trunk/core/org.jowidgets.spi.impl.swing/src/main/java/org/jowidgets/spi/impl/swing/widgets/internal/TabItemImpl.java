@@ -328,7 +328,11 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 		swingContainer.removeAll();
 	}
 
-	private final class TabComponent extends JPanel {
+	protected String getText() {
+		return text;
+	}
+
+	public final class TabComponent extends JPanel {
 
 		private static final long serialVersionUID = 7620592636356667921L;
 		private final JLabel label;
@@ -414,6 +418,10 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 
 		public boolean isRollover() {
 			return rollover;
+		}
+
+		public JLabel getLabel() {
+			return label;
 		}
 
 	}

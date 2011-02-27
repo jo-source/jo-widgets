@@ -131,7 +131,7 @@ public class WorkbenchContext implements IWorkbenchContext {
 		workbenchContentContainer.setLayout(new MigLayoutDescriptor("hidemode 3", "0[grow, 0::]0", "0[grow, 0::]0"));
 
 		emptyContext = workbenchContentContainer.add(bpf.tabFolder(), "hidemode 3, growx, growy");
-		statusBar = rootFrame.add(bpf.composite(), "growx, h 20!");
+		statusBar = rootFrame.add(bpf.composite(), "growx, h 16!");
 
 		workbench.onContextInitialize(this);
 	}

@@ -46,6 +46,7 @@ import org.eclipse.swt.widgets.Control;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.TabPlacement;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.spi.impl.swt.options.SwtOptions;
 import org.jowidgets.spi.impl.swt.widgets.SwtControl;
 import org.jowidgets.spi.widgets.ITabFolderSpi;
 import org.jowidgets.spi.widgets.ITabItemSpi;
@@ -72,7 +73,7 @@ public class TabFolderImpl extends SwtControl implements ITabFolderSpi {
 		getUiReference().setUnselectedCloseVisible(true);
 
 		try {
-			getUiReference().setSimple(false);
+			getUiReference().setSimple(SwtOptions.hasClassicTabs());
 		}
 		catch (final NoSuchMethodError error) {
 			//RWT does not support simple=false

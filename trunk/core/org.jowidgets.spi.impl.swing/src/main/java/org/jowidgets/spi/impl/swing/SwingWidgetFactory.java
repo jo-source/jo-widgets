@@ -35,6 +35,7 @@ import javax.swing.JPanel;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.impl.swing.image.SwingImageRegistry;
+import org.jowidgets.spi.impl.swing.options.SwingOptions;
 import org.jowidgets.spi.impl.swing.widgets.internal.ButtonImpl;
 import org.jowidgets.spi.impl.swing.widgets.internal.CheckBoxImpl;
 import org.jowidgets.spi.impl.swing.widgets.internal.ComboBoxImpl;
@@ -50,6 +51,7 @@ import org.jowidgets.spi.impl.swing.widgets.internal.ScrollCompositeImpl;
 import org.jowidgets.spi.impl.swing.widgets.internal.SeparatorImpl;
 import org.jowidgets.spi.impl.swing.widgets.internal.SplitCompositeImpl;
 import org.jowidgets.spi.impl.swing.widgets.internal.TabFolderImpl;
+import org.jowidgets.spi.impl.swing.widgets.internal.TabFolderWithInternalFrameImpl;
 import org.jowidgets.spi.impl.swing.widgets.internal.TextFieldImpl;
 import org.jowidgets.spi.impl.swing.widgets.internal.TextLabelImpl;
 import org.jowidgets.spi.impl.swing.widgets.internal.ToggleButtonImpl;
@@ -222,7 +224,13 @@ public final class SwingWidgetFactory implements IWidgetFactorySpi {
 		final IGenericWidgetFactory factory,
 		final Object parentUiReference,
 		final ITabFolderSetupSpi setup) {
-		return new TabFolderImpl(factory, setup);
+
+		if (SwingOptions.isInternalFramesForTabFolders()) {
+			return new TabFolderWithInternalFrameImpl(factory, setup);
+		}
+		else {
+			return new TabFolderImpl(factory, setup);
+		}
 	}
 
 	@Override

@@ -32,6 +32,8 @@ import javax.swing.JSplitPane;
 import javax.swing.plaf.SplitPaneUI;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
 
+import org.jowidgets.spi.impl.swing.options.SwingOptions;
+
 public class JoSplitPane extends JSplitPane {
 
 	private static final long serialVersionUID = 5117985872625236987L;
@@ -45,7 +47,15 @@ public class JoSplitPane extends JSplitPane {
 		this.initialized = false;
 		this.dividerWeight = dividerWeigth;
 		this.resizeWeight = resizeWeight;
-		setOneTouchExpandable(false);
+		setOneTouchExpandable(SwingOptions.isOneTouchExpandableSplits());
+	}
+
+	@Override
+	public void setDividerSize(int newSize) {
+		if (SwingOptions.isOneTouchExpandableSplits()) {
+			newSize = Math.max(newSize, 8);
+		}
+		super.setDividerSize(newSize);
 	}
 
 	@Override
