@@ -74,7 +74,7 @@ public class ViewDemo7 extends AbstractView implements IView {
 		internalNode.addNode(bpf.treeNode().setText("Bruce").setIcon(SilkIcons.USER_GO));
 		internalNode.addNode(bpf.treeNode().setText("Joe").setIcon(SilkIcons.USER_GO));
 
-		internalNode.setExpanded(true);
+		externalNode.setExpanded(true);
 
 		context.getToolBar().addActionItem(null, "Add external", SilkIcons.REPORT);
 		context.getToolBar().addActionItem(null, "Add mail", SilkIcons.EMAIL);
