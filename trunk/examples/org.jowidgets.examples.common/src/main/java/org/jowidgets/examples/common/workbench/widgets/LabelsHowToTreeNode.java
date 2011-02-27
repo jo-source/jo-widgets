@@ -30,8 +30,10 @@ package org.jowidgets.examples.common.workbench.widgets;
 
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractComponentTreeNode;
-import org.jowidgets.examples.common.workbench.widgets.views.LabelWithTextView;
+import org.jowidgets.examples.common.workbench.widgets.views.LabelKitchensinkView;
 import org.jowidgets.examples.common.workbench.widgets.views.LabelWithIconView;
+import org.jowidgets.examples.common.workbench.widgets.views.LabelWithTextAndIconView;
+import org.jowidgets.examples.common.workbench.widgets.views.LabelWithTextView;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
@@ -47,7 +49,18 @@ public class LabelsHowToTreeNode extends AbstractComponentTreeNode {
 	@Override
 	public void onContextInitialize(final IComponentTreeNodeContext context) {
 		context.add(new SingleViewTreeNode(LabelWithTextView.class, LabelWithTextView.ID, LabelWithTextView.DEFAULT_LABEL));
+
 		context.add(new SingleViewTreeNode(LabelWithIconView.class, LabelWithIconView.ID, LabelWithIconView.DEFAULT_LABEL));
+
+		context.add(new SingleViewTreeNode(
+			LabelWithTextAndIconView.class,
+			LabelWithTextAndIconView.ID,
+			LabelWithTextAndIconView.DEFAULT_LABEL));
+
+		context.add(new SingleViewTreeNode(
+			LabelKitchensinkView.class,
+			LabelKitchensinkView.ID,
+			LabelKitchensinkView.DEFAULT_LABEL));
 
 	}
 
