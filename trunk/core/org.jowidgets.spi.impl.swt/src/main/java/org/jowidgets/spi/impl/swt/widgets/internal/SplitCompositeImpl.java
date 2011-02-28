@@ -28,13 +28,12 @@
 
 package org.jowidgets.spi.impl.swt.widgets.internal;
 
-import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.impl.swt.util.BorderToComposite;
-import org.jowidgets.spi.impl.swt.util.OrientationConvert;
 import org.jowidgets.spi.impl.swt.widgets.SwtComposite;
 import org.jowidgets.spi.impl.swt.widgets.SwtControl;
+import org.jowidgets.spi.impl.swt.widgets.internal.base.JoSashForm;
 import org.jowidgets.spi.widgets.ICompositeSpi;
 import org.jowidgets.spi.widgets.ISplitCompositeSpi;
 import org.jowidgets.spi.widgets.setup.ISplitCompositeSetupSpi;
@@ -48,24 +47,12 @@ public class SplitCompositeImpl extends SwtControl implements ISplitCompositeSpi
 		final IGenericWidgetFactory factory,
 		final Object parentUiReference,
 		final ISplitCompositeSetupSpi setup) {
+		super(new JoSashForm((Composite) parentUiReference, setup));
 
-		//		super(colorCache, new JoSashForm((Composite) parentUiReference, setup));
-		//
-		//		final JoSashForm sashForm = getUiReference();
-		//
-		//		first = new SwtContainerWidget(factory, colorCache, sashForm.getFirst());
-		//		second = new SwtContainerWidget(factory, colorCache, sashForm.getSecond());
-		//
-		//		first.setLayout(setup.getFirstLayout());
-		//		second.setLayout(setup.getSecondLayout());
-
-		super(new SashForm((Composite) parentUiReference, OrientationConvert.convert(setup.getOrientation())));
-
-		final SashForm sashForm = getUiReference();
+		final JoSashForm sashForm = getUiReference();
 
 		final Composite content1 = BorderToComposite.convert(sashForm, setup.getFirstBorder());
 		final Composite content2 = BorderToComposite.convert(sashForm, setup.getSecondBorder());
-
 		first = new SwtComposite(factory, content1);
 		second = new SwtComposite(factory, content2);
 
@@ -93,8 +80,8 @@ public class SplitCompositeImpl extends SwtControl implements ISplitCompositeSpi
 	}
 
 	@Override
-	public SashForm getUiReference() {
-		return (SashForm) super.getUiReference();
+	public JoSashForm getUiReference() {
+		return (JoSashForm) super.getUiReference();
 	}
 
 }
