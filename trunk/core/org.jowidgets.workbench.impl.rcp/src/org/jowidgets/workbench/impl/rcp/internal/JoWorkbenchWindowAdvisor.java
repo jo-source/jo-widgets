@@ -76,7 +76,11 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	}
 
 	public IContainer getStatusBar() {
-		// TODO HRW un-hide statusbar
+		if (statusBar == null) {
+			frame.layoutBegin();
+			statusBar = frame.add(Toolkit.getBluePrintFactory().composite(), "growx");
+			frame.layoutEnd();
+		}
 		return statusBar;
 	}
 
@@ -153,9 +157,6 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		rightContainer.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
 		final Control pageComposite = getWindowConfigurer().createPageComposite((Composite) rightContainer.getUiReference());
 		pageComposite.setLayoutData("wmin 0, hmin 0, grow");
-
-		// TODO HRW hide statusbar
-		statusBar = frame.add(bpf.composite(), "growx");
 	}
 
 	public double getFolderRatio() {
