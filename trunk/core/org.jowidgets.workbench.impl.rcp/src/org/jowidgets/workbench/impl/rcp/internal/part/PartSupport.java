@@ -35,6 +35,7 @@ import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IPerspectiveRegistry;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.jowidgets.workbench.api.IFolderContext;
 import org.jowidgets.workbench.api.IFolderLayout;
@@ -152,4 +153,23 @@ public final class PartSupport {
 			view.isDetachable(),
 			view instanceof RcpView);
 	}
+
+	public String showView(
+		final IViewLayout viewLayout,
+		final ComponentContext componentContext,
+		final IFolderContext folderContext) {
+		final String viewId = viewLayout.getId();
+		viewMap.put(viewId, new ViewLayoutContext(viewLayout, componentContext, folderContext));
+		try {
+			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(
+					DynamicView.ID,
+					viewId,
+					IWorkbenchPage.VIEW_CREATE);
+		}
+		catch (final PartInitException e) {
+			throw new RuntimeException(e);
+		}
+		return viewId;
+	}
+
 }

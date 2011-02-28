@@ -64,6 +64,12 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 	public void createPartControl(final Composite parent) {
 		final String viewId = getViewSite().getSecondaryId();
 		final ViewLayoutContext viewLayoutContext = PartSupport.getInstance().getView(viewId);
+
+		if (viewLayoutContext == null) {
+			// close stale view
+			PlatformUI.getWorkbench().close();
+		}
+
 		final IViewLayout viewLayout = viewLayoutContext.getViewLayout();
 		final ComponentContext componentContext = viewLayoutContext.getComponentContext();
 

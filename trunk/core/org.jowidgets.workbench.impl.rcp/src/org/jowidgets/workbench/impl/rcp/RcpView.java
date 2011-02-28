@@ -59,7 +59,6 @@ public final class RcpView implements IViewLayout {
 
 	@Override
 	public boolean isHidden() {
-		// TODO HRW is this supported by RCP workbench?
 		return false;
 	}
 

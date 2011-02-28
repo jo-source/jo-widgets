@@ -37,6 +37,7 @@ import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewLayout;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 import org.jowidgets.workbench.api.IWorkbenchContext;
+import org.jowidgets.workbench.impl.rcp.internal.part.PartSupport;
 
 public final class FolderContext implements IFolderContext {
 
@@ -61,12 +62,12 @@ public final class FolderContext implements IFolderContext {
 
 	@Override
 	public void addView(final IViewLayout viewLayout) {
-		// TODO HRW implement
+		addView(false, viewLayout);
 	}
 
 	@Override
 	public void addView(final boolean addToFront, final IViewLayout viewLayout) {
-		// TODO HRW implement
+		PartSupport.getInstance().showView(viewLayout, componentContext, this);
 	}
 
 	@Override
