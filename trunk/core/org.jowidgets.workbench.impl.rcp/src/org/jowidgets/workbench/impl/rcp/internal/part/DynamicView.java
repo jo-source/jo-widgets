@@ -67,7 +67,7 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 
 		if (viewLayoutContext == null) {
 			// close stale view
-			PlatformUI.getWorkbench().close();
+			//.getWorkbench().close();
 		}
 
 		final IViewLayout viewLayout = viewLayoutContext.getViewLayout();
