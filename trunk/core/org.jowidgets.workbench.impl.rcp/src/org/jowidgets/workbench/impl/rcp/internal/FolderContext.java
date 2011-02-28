@@ -38,7 +38,7 @@ import org.jowidgets.workbench.api.IViewLayout;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 import org.jowidgets.workbench.api.IWorkbenchContext;
 
-public class FolderContext implements IFolderContext {
+public final class FolderContext implements IFolderContext {
 
 	private final String folderId;
 	private final ComponentContext componentContext;

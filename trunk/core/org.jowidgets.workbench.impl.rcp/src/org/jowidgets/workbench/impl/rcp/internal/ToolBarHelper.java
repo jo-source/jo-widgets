@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, M.Grossmann
+ * Copyright (c) 2011, M. Grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -42,7 +42,7 @@ import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.model.item.ToolBarModel;
 
-public class ToolBarHelper {
+public final class ToolBarHelper {
 
 	private final IComposite content;
 
