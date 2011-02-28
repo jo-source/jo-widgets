@@ -440,6 +440,7 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 			setContentAreaFilled(false);
 			setFocusable(false);
 			setRolloverEnabled(true);
+			setBorder(BorderFactory.createEmptyBorder());
 
 			setToolTipText(CLOSE_LABEL);
 
