@@ -84,7 +84,6 @@ public final class WorkbenchApplicationFolder extends Composite {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
 				final CTabItem currentItem = tabFolder.getSelection();
-				System.err.println("selected: " + currentItem);
 				final WorkbenchApplicationTree appTree = (WorkbenchApplicationTree) currentItem.getControl();
 				final Control oldControl = tabFolder.getTopRight();
 				if (oldControl != null) {
