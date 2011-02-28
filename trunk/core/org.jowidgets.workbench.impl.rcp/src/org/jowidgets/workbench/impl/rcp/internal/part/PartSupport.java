@@ -154,13 +154,24 @@ public final class PartSupport {
 			view instanceof RcpView);
 	}
 
-	public String showView(
-		final IViewLayout viewLayout,
-		final ComponentContext componentContext,
-		final IFolderContext folderContext) {
+	public void showView(final IViewLayout viewLayout, final ComponentContext componentContext, final IFolderContext folderContext) {
 		final String viewId = viewLayout.getId();
-		viewMap.put(viewId, new ViewLayoutContext(viewLayout, componentContext, folderContext));
+
 		try {
+			if (viewLayout instanceof RcpView) {
+				final String[] ids = viewId.split(":", 2);
+				String secondaryId = null;
+				if (ids.length == 2) {
+					secondaryId = ids[1];
+				}
+				PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(
+						ids[0],
+						secondaryId,
+						IWorkbenchPage.VIEW_CREATE);
+				return;
+			}
+
+			viewMap.put(viewId, new ViewLayoutContext(viewLayout, componentContext, folderContext));
 			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(
 					DynamicView.ID,
 					viewId,
@@ -169,7 +180,6 @@ public final class PartSupport {
 		catch (final PartInitException e) {
 			throw new RuntimeException(e);
 		}
-		return viewId;
 	}
 
 }
