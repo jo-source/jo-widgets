@@ -107,7 +107,7 @@ public class ComponentDemo1 extends AbstractComponent implements IComponent {
 		return new SplitLayout(
 			Orientation.VERTICAL,
 			0.55,
-			SplitResizePolicy.RESIZE_SECOND,
+			SplitResizePolicy.RESIZE_FIRST,
 			createMasterFolder(),
 			createDetailSplit());
 	}
