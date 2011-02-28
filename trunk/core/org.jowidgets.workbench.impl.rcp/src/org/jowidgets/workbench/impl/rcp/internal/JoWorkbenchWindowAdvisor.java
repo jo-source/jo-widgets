@@ -127,8 +127,8 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		coolBar.setVisible(false);
 		coolBar.setLayoutData("wrap");
 
-		// TODO HRW hide toolbar
-		toolBar = frame.add(bpf.toolBar(), "wrap");
+		toolBar = frame.add(bpf.toolBar(), "hidemode 2, wrap");
+		toolBar.setVisible(false);
 
 		final ISplitComposite splitComposite = frame.add(
 				bpf.splitHorizontal().setWeight(folderRatio).disableBorders(),
@@ -182,7 +182,9 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		if (toolBarModel == null && toolBar != null) {
 			toolBarModel = Toolkit.getModelFactoryProvider().getItemModelFactory().toolBar();
 			toolBar.setModel(toolBarModel);
-			// TODO HRW un-hide toolbar
+			frame.layoutBegin();
+			toolBar.setVisible(true);
+			frame.layoutEnd();
 		}
 		return toolBarModel;
 	}
