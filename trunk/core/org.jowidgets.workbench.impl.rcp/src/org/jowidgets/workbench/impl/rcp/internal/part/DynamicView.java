@@ -34,6 +34,7 @@ import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
@@ -66,8 +67,14 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 		final ViewLayoutContext viewLayoutContext = PartSupport.getInstance().getView(viewId);
 
 		if (viewLayoutContext == null) {
-			// close stale view
-			//.getWorkbench().close();
+			// view layout is not registered -> close it immediately
+			Display.getCurrent().asyncExec(new Runnable() {
+				@Override
+				public void run() {
+					PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().hideView(DynamicView.this);
+				}
+			});
+			return;
 		}
 
 		final IViewLayout viewLayout = viewLayoutContext.getViewLayout();
