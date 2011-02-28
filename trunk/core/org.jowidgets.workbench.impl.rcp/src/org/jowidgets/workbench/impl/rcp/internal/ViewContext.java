@@ -29,16 +29,12 @@
 package org.jowidgets.workbench.impl.rcp.internal;
 
 import org.eclipse.swt.widgets.Composite;
-import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.tools.model.item.MenuModel;
-import org.jowidgets.tools.model.item.ToolBarModel;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 import org.jowidgets.workbench.api.IViewContext;
@@ -47,11 +43,8 @@ import org.jowidgets.workbench.api.IWorkbenchContext;
 
 public final class ViewContext implements IViewContext {
 
-	private final IContainer container;
 	private final IComponentContext componentContext;
-	private final IToolBarModel internalToolBarModel;
-	private final IToolBarModel toolBarModel;
-	private IMenuModel toolBarMenuModel;
+	private final ToolBarHelper toolBarHelper;
 
 	public ViewContext(final Composite parent, final IComponentContext componentContext) {
 		this.componentContext = componentContext;
@@ -59,25 +52,7 @@ public final class ViewContext implements IViewContext {
 		final IComposite composite = Toolkit.getWidgetWrapperFactory().createComposite(parent);
 		composite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[]0[grow]0"));
 
-		// TODO HRW hide toolbar
-		final IToolBar toolBar = composite.add(Toolkit.getBluePrintFactory().toolBar(), "wrap");
-		internalToolBarModel = new ToolBarModel();
-		toolBar.setModel(internalToolBarModel);
-
-		toolBarModel = new ToolBarModel();
-		toolBarModel.addListModelListener(new IListModelListener() {
-			@Override
-			public void childRemoved(final int index) {
-				internalToolBarModel.removeItem(index);
-			}
-
-			@Override
-			public void childAdded(final int index) {
-				internalToolBarModel.addItem(index, toolBarModel.getItems().get(index));
-			}
-		});
-
-		container = composite.add(Toolkit.getBluePrintFactory().composite(), "grow, w 0::, h 0::");
+		toolBarHelper = new ToolBarHelper(composite);
 	}
 
 	@Override
@@ -87,7 +62,7 @@ public final class ViewContext implements IViewContext {
 
 	@Override
 	public IContainer getContainer() {
-		return container;
+		return toolBarHelper.getContent();
 	}
 
 	@Override
@@ -102,17 +77,12 @@ public final class ViewContext implements IViewContext {
 
 	@Override
 	public IToolBarModel getToolBar() {
-		// TODO HRW un-hide toolbar
-		return toolBarModel;
+		return toolBarHelper.getToolBarModel();
 	}
 
 	@Override
 	public IMenuModel getToolBarMenu() {
-		if (toolBarMenuModel == null) {
-			toolBarMenuModel = new MenuModel();
-			internalToolBarModel.addItem(internalToolBarModel.getItems().size(), toolBarMenuModel);
-		}
-		return toolBarMenuModel;
+		return toolBarHelper.getToolBarMenuModel();
 	}
 
 	@Override
