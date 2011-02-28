@@ -29,6 +29,7 @@
 package org.jowidgets.workbench.impl.rcp.internal;
 
 import org.eclipse.swt.widgets.Composite;
+import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
@@ -48,7 +49,9 @@ public final class ViewContext implements IViewContext {
 
 	private final IContainer container;
 	private final IComponentContext componentContext;
-	private final ToolBarModel toolBarModel;
+	private final IToolBarModel internalToolBarModel;
+	private final IToolBarModel toolBarModel;
+	private IMenuModel toolBarMenuModel;
 
 	public ViewContext(final Composite parent, final IComponentContext componentContext) {
 		this.componentContext = componentContext;
@@ -58,10 +61,21 @@ public final class ViewContext implements IViewContext {
 
 		// TODO HRW hide toolbar
 		final IToolBar toolBar = composite.add(Toolkit.getBluePrintFactory().toolBar(), "wrap");
-		toolBarModel = new ToolBarModel();
-		toolBar.setModel(toolBarModel);
+		internalToolBarModel = new ToolBarModel();
+		toolBar.setModel(internalToolBarModel);
 
-		// TODO HRW toolbar menu
+		toolBarModel = new ToolBarModel();
+		toolBarModel.addListModelListener(new IListModelListener() {
+			@Override
+			public void childRemoved(final int index) {
+				internalToolBarModel.removeItem(index);
+			}
+
+			@Override
+			public void childAdded(final int index) {
+				internalToolBarModel.addItem(index, toolBarModel.getItems().get(index));
+			}
+		});
 
 		container = composite.add(Toolkit.getBluePrintFactory().composite(), "grow, w 0::, h 0::");
 	}
@@ -94,7 +108,11 @@ public final class ViewContext implements IViewContext {
 
 	@Override
 	public IMenuModel getToolBarMenu() {
-		return new MenuModel();
+		if (toolBarMenuModel == null) {
+			toolBarMenuModel = new MenuModel();
+			internalToolBarModel.addItem(internalToolBarModel.getItems().size(), toolBarMenuModel);
+		}
+		return toolBarMenuModel;
 	}
 
 	@Override
