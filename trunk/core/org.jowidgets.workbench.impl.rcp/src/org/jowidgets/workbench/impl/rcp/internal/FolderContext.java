@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, M. Grossmann, M. Woelker, H. Westphal
+ * Copyright (c) 2011, M. Woelker, H. Westphal
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -33,7 +33,6 @@ import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 import org.jowidgets.workbench.api.IFolderContext;
-import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewLayout;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 import org.jowidgets.workbench.api.IWorkbenchContext;
@@ -68,11 +67,6 @@ public final class FolderContext implements IFolderContext {
 	@Override
 	public void addView(final boolean addToFront, final IViewLayout viewLayout) {
 		PartSupport.getInstance().showView(viewLayout, componentContext, this);
-	}
-
-	@Override
-	public void removeView(final IView remove) {
-		// TODO HRW implement
 	}
 
 	@Override

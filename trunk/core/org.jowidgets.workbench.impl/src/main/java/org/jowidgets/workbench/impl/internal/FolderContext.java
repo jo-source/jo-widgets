@@ -105,11 +105,6 @@ public class FolderContext implements IFolderContext {
 		createTabItem(0, viewLayout);
 	}
 
-	@Override
-	public void removeView(final IView remove) {
-		// TODO MG implement remove view
-	}
-
 	private ITabItem createTabItem(final Integer index, final IViewLayout viewLayout) {
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 		final ITabItemBluePrint tabItemBp = bpf.tabItem();

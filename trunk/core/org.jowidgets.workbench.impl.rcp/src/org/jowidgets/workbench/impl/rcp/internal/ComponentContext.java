@@ -32,6 +32,7 @@ import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 import org.jowidgets.workbench.api.ILayout;
+import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 import org.jowidgets.workbench.api.IWorkbenchContext;
 
@@ -58,6 +59,11 @@ public final class ComponentContext implements IComponentContext {
 	public void setLayout(final ILayout layout) {
 		perspective = layout;
 		// TODO HRW switch perspective if this is the current active component
+	}
+
+	@Override
+	public void removeView(final IView view) {
+		// TODO HRW implement
 	}
 
 	@Override

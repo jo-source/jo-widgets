@@ -31,6 +31,8 @@ public interface IComponentContext {
 
 	void setLayout(final ILayout layout);
 
+	void removeView(IView view);
+
 	IComponentTreeNodeContext getComponentTreeNodeContext();
 
 	IWorkbenchApplicationContext getWorkbenchApplicationContext();
