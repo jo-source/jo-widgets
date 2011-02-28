@@ -84,6 +84,7 @@ public final class WorkbenchApplicationFolder extends Composite {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
 				final CTabItem currentItem = tabFolder.getSelection();
+				System.err.println("selected: " + currentItem);
 				final WorkbenchApplicationTree appTree = (WorkbenchApplicationTree) currentItem.getControl();
 				final Control oldControl = tabFolder.getTopRight();
 				if (oldControl != null) {
@@ -249,6 +250,8 @@ public final class WorkbenchApplicationFolder extends Composite {
 				if (app.getId().equals(appId)) {
 					final WorkbenchApplicationTree tree = (WorkbenchApplicationTree) item.getControl();
 					tree.setSelectedNode(new ArrayList<String>(Arrays.asList(selectedTreeNode)));
+					tabFolder.setTopRight(tree.getFolderComposite());
+					tree.getFolderComposite().setVisible(true);
 					tabFolder.setSelection(item);
 					break;
 				}
