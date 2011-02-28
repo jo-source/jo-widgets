@@ -25,31 +25,15 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.image;
+package org.jowidgets.common.image;
 
-import org.jowidgets.api.image.IconsSmall;
-import org.jowidgets.common.image.IImageHandleFactory;
-import org.jowidgets.common.image.IImageRegistry;
-import org.jowidgets.common.image.IconsCommon;
-import org.jowidgets.common.image.IconsSmallCommon;
+public enum IconsCommon implements IImageConstant {
 
-public class DefaultIconsRegisterService extends ImageConstantRegisterService {
+	/** fallback - icons for cases where no default-icons were found **/
 
-	public DefaultIconsRegisterService(final IImageRegistry imageRegistry, final IImageHandleFactory imageHandleFactory) {
-		super("images/icons/", imageRegistry, imageHandleFactory);
-	}
-
-	public void registerImages() {
-		registerImage(IconsSmall.OK, "ok.png");
-		registerImage(IconsSmall.POPUP_ARROW, "popup_arrow.png");
-
-		registerImage(IconsCommon.FALLBACK_INFO, "empty.png");
-		registerImage(IconsCommon.FALLBACK_ERROR, "empty.png");
-		registerImage(IconsCommon.FALLBACK_QUESTION, "empty.png");
-		registerImage(IconsCommon.FALLBACK_WARNING, "empty.png");
-
-		registerImage(IconsSmallCommon.CLOSE, "close.png");
-		registerImage(IconsSmallCommon.CLOSE_MOUSEOVER, "close_mouseover.png");
-	}
+	FALLBACK_INFO,
+	FALLBACK_QUESTION,
+	FALLBACK_WARNING,
+	FALLBACK_ERROR;
 
 }
