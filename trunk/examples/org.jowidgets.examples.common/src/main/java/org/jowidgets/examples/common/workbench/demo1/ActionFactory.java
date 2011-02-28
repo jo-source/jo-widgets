@@ -47,6 +47,7 @@ import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.examples.common.icons.SilkIcons;
+import org.jowidgets.examples.common.workbench.base.ViewLayout;
 import org.jowidgets.workbench.api.IComponentTreeNode;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 import org.jowidgets.workbench.api.IFolderContext;
@@ -222,16 +223,13 @@ public class ActionFactory {
 			public void execute(final IExecutionContext executionContext) throws Exception {
 				final IInputDialog<String> inputDialog = createInputDialog(executionContext, "View name");
 				inputDialog.setVisible(true);
-				// CHECKSTYLE:OFF
 				if (inputDialog.isOkPressed()) {
-					// TODO MG implement
+					context.addView(new ViewLayout(DynamicViewDemo.ID_PREFIX + UUID.randomUUID(), inputDialog.getValue()));
 				}
-				// CHECKSTYLE:ON
 			}
 
 		});
 
 		return actionBuilder.build();
 	}
-
 }
