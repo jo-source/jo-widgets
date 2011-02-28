@@ -195,7 +195,7 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 	@Override
 	public void partClosed(final IWorkbenchPartReference partRef) {
 		final IWorkbenchPart part = partRef.getPart(false);
-		if (part == this && view != null) {
+		if (part == this && view != null && !PlatformUI.getWorkbench().isClosing()) {
 			final VetoHolder vetoHolder = new VetoHolder();
 			view.onClose(vetoHolder);
 			// TODO HRW restore view after veto?
