@@ -27,12 +27,28 @@
  */
 package org.jowidgets.workbench.impl.rcp.internal.part;
 
+import java.io.ByteArrayInputStream;
+import java.io.UnsupportedEncodingException;
+
+import org.eclipse.core.internal.registry.ExtensionRegistry;
+import org.eclipse.core.runtime.ContributorFactoryOSGi;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IContributor;
+import org.eclipse.core.runtime.IExtension;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.ui.IFolderLayout;
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.internal.registry.ViewDescriptor;
+import org.eclipse.ui.internal.registry.ViewRegistry;
+import org.eclipse.ui.views.IViewDescriptor;
 import org.jowidgets.common.types.Orientation;
 import org.jowidgets.workbench.api.ISplitLayout;
+import org.osgi.framework.Bundle;
 
+@SuppressWarnings("restriction")
 public final class DynamicPerspective implements IPerspectiveFactory {
 
 	public static final String ID = "org.jowidgets.workbench.impl.rcp.internal.part.dynamicPerspective"; //$NON-NLS-1$
@@ -100,6 +116,7 @@ public final class DynamicPerspective implements IPerspectiveFactory {
 		final String relativeTo) {
 		final String folderId = tabViewContainerContext.getFolderId();
 		final IFolderLayout folder = layout.createFolder(folderId, relation, ratio, relativeTo);
+
 		for (final SingleViewContainerContext viewContainerContext : tabViewContainerContext) {
 			final String viewId;
 			if (viewContainerContext.isRcpView()) {
@@ -112,6 +129,14 @@ public final class DynamicPerspective implements IPerspectiveFactory {
 			layout.getViewLayout(viewId).setCloseable(viewContainerContext.isCloseable());
 			layout.getViewLayout(viewId).setMoveable(viewContainerContext.isDetachable());
 		}
+
+		// add placeholder for dynamically created views
+		final String[] ids = folderId.split("\\.");
+		final String simpleFolderId = ids[ids.length - 1];
+		final String primaryViewId = DynamicView.ID + "." + simpleFolderId;
+		registerFolderView(primaryViewId);
+		folder.addPlaceholder(primaryViewId + ":*");
+
 		return folderId;
 	}
 
@@ -150,6 +175,37 @@ public final class DynamicPerspective implements IPerspectiveFactory {
 		layout.getViewLayout(viewId).setCloseable(viewContainerContext.isCloseable());
 		layout.getViewLayout(viewId).setMoveable(viewContainerContext.isDetachable());
 		return viewId;
+	}
+
+	private void registerFolderView(final String primaryViewId) {
+		final ViewRegistry viewRegistry = (ViewRegistry) PlatformUI.getWorkbench().getViewRegistry();
+		final IViewDescriptor viewDescriptor = viewRegistry.find(primaryViewId);
+		if (viewDescriptor == null) {
+			// register a new dynamic view for this folder
+			final String xml = String.format(
+					"<plugin><extension point='org.eclipse.ui.views' id='%s'><view allowMultiple='true' class='%s' id='%s' name='Dynamic View' restorable='false'></view></extension></plugin>",
+					primaryViewId,
+					DynamicView.class.getName(),
+					primaryViewId);
+			try {
+				// TODO HRW add bundle activator to get bundle object
+				final Bundle bundle = Platform.getBundle("org.jowidgets.workbench.impl.rcp");
+				final IContributor contributor = ContributorFactoryOSGi.createContributor(bundle);
+				final IExtensionRegistry registry = Platform.getExtensionRegistry();
+				final Object key = ((ExtensionRegistry) registry).getTemporaryUserToken();
+				registry.addContribution(new ByteArrayInputStream(xml.getBytes("UTF-8")), contributor, false, null, null, key);
+				final IExtension extension = registry.getExtension("org.eclipse.ui.views", contributor.getName()
+					+ "."
+					+ primaryViewId);
+				viewRegistry.add(new ViewDescriptor(extension.getConfigurationElements()[0]));
+			}
+			catch (final UnsupportedEncodingException e) {
+				throw new Error(e);
+			}
+			catch (final CoreException e) {
+				throw new RuntimeException(e);
+			}
+		}
 	}
 
 }

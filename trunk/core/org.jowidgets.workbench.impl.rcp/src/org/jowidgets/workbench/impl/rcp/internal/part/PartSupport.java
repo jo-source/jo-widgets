@@ -28,15 +28,27 @@
 
 package org.jowidgets.workbench.impl.rcp.internal.part;
 
+import java.io.ByteArrayInputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.core.internal.registry.ExtensionRegistry;
+import org.eclipse.core.runtime.ContributorFactoryOSGi;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IContributor;
+import org.eclipse.core.runtime.IExtension;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IPerspectiveRegistry;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.internal.registry.ViewDescriptor;
+import org.eclipse.ui.internal.registry.ViewRegistry;
+import org.eclipse.ui.views.IViewDescriptor;
 import org.jowidgets.workbench.api.IFolderContext;
 import org.jowidgets.workbench.api.IFolderLayout;
 import org.jowidgets.workbench.api.ILayout;
@@ -46,7 +58,9 @@ import org.jowidgets.workbench.api.IViewLayout;
 import org.jowidgets.workbench.impl.rcp.RcpView;
 import org.jowidgets.workbench.impl.rcp.internal.ComponentContext;
 import org.jowidgets.workbench.impl.rcp.internal.FolderContext;
+import org.osgi.framework.Bundle;
 
+@SuppressWarnings("restriction")
 public final class PartSupport {
 
 	private static final PartSupport INSTANCE = new PartSupport();
@@ -159,27 +173,64 @@ public final class PartSupport {
 
 		try {
 			if (viewLayout instanceof RcpView) {
-				final String[] ids = viewId.split(":", 2);
-				String secondaryId = null;
-				if (ids.length == 2) {
-					secondaryId = ids[1];
-				}
-				PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(
-						ids[0],
-						secondaryId,
-						IWorkbenchPage.VIEW_CREATE);
+				showRcpView(viewId);
 				return;
 			}
 
+			final String primaryViewId = DynamicView.ID + "." + folderContext.getFolderId();
+			registerFolderView(primaryViewId);
+
 			viewMap.put(viewId, new ViewLayoutContext(viewLayout, componentContext, folderContext));
 			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(
-					DynamicView.ID,
+					primaryViewId,
 					viewId,
 					IWorkbenchPage.VIEW_CREATE);
 		}
 		catch (final PartInitException e) {
 			throw new RuntimeException(e);
 		}
+		catch (final CoreException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
+	private void showRcpView(final String viewId) throws PartInitException {
+		final String[] ids = viewId.split(":", 2);
+		String secondaryId = null;
+		if (ids.length == 2) {
+			secondaryId = ids[1];
+		}
+		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(
+				ids[0],
+				secondaryId,
+				IWorkbenchPage.VIEW_CREATE);
+	}
+
+	private void registerFolderView(final String primaryViewId) throws CoreException {
+		final ViewRegistry viewRegistry = (ViewRegistry) PlatformUI.getWorkbench().getViewRegistry();
+		final IViewDescriptor viewDescriptor = viewRegistry.find(primaryViewId);
+		if (viewDescriptor == null) {
+			// register a new dynamic view for this folder
+			final String xml = String.format(
+					"<plugin><extension point='org.eclipse.ui.views' id='%s'><view allowMultiple='true' class='%s' id='%s' name='Dynamic View' restorable='true'></view></extension></plugin>",
+					primaryViewId,
+					DynamicView.class.getName(),
+					primaryViewId);
+			try {
+				// TODO HRW add bundle activator to get bundle object
+				final Bundle bundle = Platform.getBundle("org.jowidgets.workbench.impl.rcp");
+				final IContributor contributor = ContributorFactoryOSGi.createContributor(bundle);
+				final IExtensionRegistry registry = Platform.getExtensionRegistry();
+				final Object key = ((ExtensionRegistry) registry).getTemporaryUserToken();
+				registry.addContribution(new ByteArrayInputStream(xml.getBytes("UTF-8")), contributor, false, null, null, key);
+				final IExtension extension = registry.getExtension("org.eclipse.ui.views", contributor.getName()
+					+ "."
+					+ primaryViewId);
+				viewRegistry.add(new ViewDescriptor(extension.getConfigurationElements()[0]));
+			}
+			catch (final UnsupportedEncodingException e) {
+				throw new Error(e);
+			}
+		}
+	}
 }
