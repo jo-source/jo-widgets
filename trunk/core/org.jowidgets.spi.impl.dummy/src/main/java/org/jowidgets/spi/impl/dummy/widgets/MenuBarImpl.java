@@ -28,20 +28,14 @@
 
 package org.jowidgets.spi.impl.dummy.widgets;
 
-import org.jowidgets.common.widgets.controler.IMenuListener;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDCheckedMenuItem;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDMenuItem;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDRadioMenuItem;
-import org.jowidgets.spi.widgets.IActionMenuItemSpi;
-import org.jowidgets.spi.widgets.IMenuItemSpi;
-import org.jowidgets.spi.widgets.IMenuSpi;
-import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
-import org.jowidgets.spi.widgets.ISubMenuSpi;
+import org.jowidgets.spi.widgets.IMainMenuSpi;
+import org.jowidgets.spi.widgets.IMenuBarSpi;
 
-public class DummyMenu extends DummyWidget implements IMenuSpi {
+public class MenuBarImpl extends DummyWidget implements IMenuBarSpi {
 
-	public DummyMenu(final UIDMenuItem container) {
-		super(container);
+	public MenuBarImpl(final UIDMenuItem menuBar) {
+		super(menuBar);
 	}
 
 	@Override
@@ -50,41 +44,23 @@ public class DummyMenu extends DummyWidget implements IMenuSpi {
 	}
 
 	@Override
+	public void setEnabled(final boolean enabled) {
+		getUiReference().setEnabled(enabled);
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return getUiReference().isEnabled();
+	}
+
+	@Override
 	public void remove(final int index) {
 		getUiReference().remove(index);
 	}
 
 	@Override
-	public IActionMenuItemSpi addActionItem(final Integer index) {
-		final ActionMenuItemImpl result = new ActionMenuItemImpl();
-		addItem(index, result);
-		return result;
-	}
-
-	@Override
-	public ISelectableMenuItemSpi addCheckedItem(final Integer index) {
-		final SelectableMenuItemImpl result = new SelectableMenuItemImpl(new UIDCheckedMenuItem());
-		addItem(index, result);
-		return result;
-	}
-
-	@Override
-	public ISelectableMenuItemSpi addRadioItem(final Integer index) {
-		final SelectableMenuItemImpl result = new SelectableMenuItemImpl(new UIDRadioMenuItem());
-		addItem(index, result);
-		return result;
-	}
-
-	@Override
-	public IMenuItemSpi addSeparator(final Integer index) {
-		final MenuItemImpl result = new MenuItemImpl(new UIDMenuItem());
-		addItem(index, result);
-		return result;
-	}
-
-	@Override
-	public ISubMenuSpi addSubMenu(final Integer index) {
-		final SubMenuImpl result = new SubMenuImpl();
+	public IMainMenuSpi addMenu(final Integer index) {
+		final MainMenuImpl result = new MainMenuImpl();
 		addItem(index, result);
 		return result;
 	}
@@ -96,16 +72,6 @@ public class DummyMenu extends DummyWidget implements IMenuSpi {
 		else {
 			getUiReference().add(item.getUiReference());
 		}
-	}
-
-	@Override
-	public void addMenuListener(final IMenuListener listener) {
-		getUiReference().addMenuListener(listener);
-	}
-
-	@Override
-	public void removeMenuListener(final IMenuListener listener) {
-		getUiReference().removeMenuListener(listener);
 	}
 
 }

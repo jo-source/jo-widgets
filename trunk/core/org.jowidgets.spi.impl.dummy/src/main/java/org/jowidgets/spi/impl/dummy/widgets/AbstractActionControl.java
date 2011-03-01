@@ -27,78 +27,26 @@
  */
 package org.jowidgets.spi.impl.dummy.widgets;
 
-import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.types.Cursor;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
-import org.jowidgets.spi.widgets.IComponentSpi;
-import org.jowidgets.spi.widgets.IPopupMenuSpi;
+import org.jowidgets.spi.widgets.IControlSpi;
 
-public class DummyComponent extends DummyWidget implements IComponentSpi {
+public abstract class AbstractActionControl extends AbstractActionComponent implements IControlSpi {
 
-	public DummyComponent(final UIDComponent component) {
+	private final DummyControl mockControlDelegate;
+
+	public AbstractActionControl(final UIDComponent component) {
 		super(component);
+		this.mockControlDelegate = new DummyControl(component);
 	}
 
 	@Override
-	public void redraw() {
-		getUiReference().redraw();
+	public void setLayoutConstraints(final Object layoutConstraints) {
+		mockControlDelegate.setLayoutConstraints(layoutConstraints);
 	}
 
 	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		getUiReference().setForegroundColor(colorValue);
-	}
-
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		getUiReference().setBackgroundColor(colorValue);
-	}
-
-	@Override
-	public IColorConstant getForegroundColor() {
-		return getUiReference().getForegroundColor();
-	}
-
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return getUiReference().getBackgroundColor();
-	}
-
-	@Override
-	public void setVisible(final boolean visible) {
-		getUiReference().setVisible(visible);
-	}
-
-	@Override
-	public boolean isVisible() {
-		return getUiReference().isVisible();
-	}
-
-	@Override
-	public Dimension getSize() {
-		return getUiReference().getSize();
-	}
-
-	@Override
-	public void setCursor(final Cursor cursor) {
-
-	}
-
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-
-	}
-
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-
-	}
-
-	@Override
-	public IPopupMenuSpi createPopupMenu() {
-		return new PopupMenuImpl(getUiReference());
+	public Object getLayoutConstraints() {
+		return mockControlDelegate.getLayoutConstraints();
 	}
 
 }

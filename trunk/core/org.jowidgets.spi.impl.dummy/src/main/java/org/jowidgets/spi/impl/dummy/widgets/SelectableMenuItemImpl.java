@@ -27,78 +27,45 @@
  */
 package org.jowidgets.spi.impl.dummy.widgets;
 
-import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.types.Cursor;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
-import org.jowidgets.spi.widgets.IComponentSpi;
-import org.jowidgets.spi.widgets.IPopupMenuSpi;
+import org.jowidgets.common.widgets.controler.IItemStateListener;
+import org.jowidgets.spi.impl.controler.ItemStateObservable;
+import org.jowidgets.spi.impl.dummy.dummyui.UIDMenuItem;
+import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 
-public class DummyComponent extends DummyWidget implements IComponentSpi {
+public class SelectableMenuItemImpl extends MenuItemImpl implements ISelectableMenuItemSpi {
 
-	public DummyComponent(final UIDComponent component) {
-		super(component);
+	private final ItemStateObservable itemStateObservable;
+
+	public SelectableMenuItemImpl(final UIDMenuItem menuItem) {
+		super(menuItem);
+		this.itemStateObservable = new ItemStateObservable();
+
+		menuItem.addItemListener(new IItemStateListener() {
+			@Override
+			public void itemStateChanged() {
+				itemStateObservable.fireItemStateChanged();
+			}
+		});
 	}
 
 	@Override
-	public void redraw() {
-		getUiReference().redraw();
+	public boolean isSelected() {
+		return getUiReference().isSelected();
 	}
 
 	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		getUiReference().setForegroundColor(colorValue);
+	public void setSelected(final boolean selected) {
+		getUiReference().setSelected(selected);
 	}
 
 	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		getUiReference().setBackgroundColor(colorValue);
+	public void addItemListener(final IItemStateListener listener) {
+		itemStateObservable.addItemListener(listener);
 	}
 
 	@Override
-	public IColorConstant getForegroundColor() {
-		return getUiReference().getForegroundColor();
-	}
-
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return getUiReference().getBackgroundColor();
-	}
-
-	@Override
-	public void setVisible(final boolean visible) {
-		getUiReference().setVisible(visible);
-	}
-
-	@Override
-	public boolean isVisible() {
-		return getUiReference().isVisible();
-	}
-
-	@Override
-	public Dimension getSize() {
-		return getUiReference().getSize();
-	}
-
-	@Override
-	public void setCursor(final Cursor cursor) {
-
-	}
-
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-
-	}
-
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-
-	}
-
-	@Override
-	public IPopupMenuSpi createPopupMenu() {
-		return new PopupMenuImpl(getUiReference());
+	public void removeItemListener(final IItemStateListener listener) {
+		itemStateObservable.removeItemListener(listener);
 	}
 
 }

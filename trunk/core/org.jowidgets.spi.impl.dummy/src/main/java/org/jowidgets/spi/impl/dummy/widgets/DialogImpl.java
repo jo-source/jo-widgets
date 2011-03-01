@@ -27,43 +27,35 @@
  */
 package org.jowidgets.spi.impl.dummy.widgets;
 
-import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.types.Cursor;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
-import org.jowidgets.spi.widgets.IComponentSpi;
-import org.jowidgets.spi.widgets.IPopupMenuSpi;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.spi.impl.dummy.dummyui.UIDDialog;
+import org.jowidgets.spi.impl.dummy.dummyui.UIDMenuItem;
+import org.jowidgets.spi.impl.dummy.dummyui.UIDWindow;
+import org.jowidgets.spi.impl.dummy.image.DummyImageRegistry;
+import org.jowidgets.spi.widgets.IFrameSpi;
+import org.jowidgets.spi.widgets.IMenuBarSpi;
+import org.jowidgets.spi.widgets.setup.IDialogSetupSpi;
 
-public class DummyComponent extends DummyWidget implements IComponentSpi {
+public class DialogImpl extends DummyWindow implements IFrameSpi {
 
-	public DummyComponent(final UIDComponent component) {
-		super(component);
+	public DialogImpl(
+		final IGenericWidgetFactory factory,
+		final DummyImageRegistry imageRegistry,
+		final Object parentUiReference,
+		final IDialogSetupSpi setup) {
+		super(factory, new UIDDialog((UIDWindow) parentUiReference));
+
+		getUiReference().setTitle(setup.getTitle());
+		getUiReference().setResizable(setup.isResizable());
+		getUiReference().setModal(true);
+
+		setIcon(setup.getIcon(), imageRegistry);
+		setLayout(setup.getLayout());
 	}
 
 	@Override
-	public void redraw() {
-		getUiReference().redraw();
-	}
-
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		getUiReference().setForegroundColor(colorValue);
-	}
-
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		getUiReference().setBackgroundColor(colorValue);
-	}
-
-	@Override
-	public IColorConstant getForegroundColor() {
-		return getUiReference().getForegroundColor();
-	}
-
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return getUiReference().getBackgroundColor();
+	public UIDDialog getUiReference() {
+		return (UIDDialog) super.getUiReference();
 	}
 
 	@Override
@@ -72,33 +64,8 @@ public class DummyComponent extends DummyWidget implements IComponentSpi {
 	}
 
 	@Override
-	public boolean isVisible() {
-		return getUiReference().isVisible();
-	}
-
-	@Override
-	public Dimension getSize() {
-		return getUiReference().getSize();
-	}
-
-	@Override
-	public void setCursor(final Cursor cursor) {
-
-	}
-
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-
-	}
-
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-
-	}
-
-	@Override
-	public IPopupMenuSpi createPopupMenu() {
-		return new PopupMenuImpl(getUiReference());
+	public IMenuBarSpi createMenuBar() {
+		return new MenuBarImpl(new UIDMenuItem());
 	}
 
 }

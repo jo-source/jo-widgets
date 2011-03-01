@@ -27,78 +27,41 @@
  */
 package org.jowidgets.spi.impl.dummy.widgets;
 
-import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.types.Cursor;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
-import org.jowidgets.spi.widgets.IComponentSpi;
-import org.jowidgets.spi.widgets.IPopupMenuSpi;
+import org.jowidgets.common.types.Markup;
+import org.jowidgets.spi.impl.dummy.dummyui.UIDTextLabel;
+import org.jowidgets.spi.widgets.ITextLabelSpi;
+import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 
-public class DummyComponent extends DummyWidget implements IComponentSpi {
+public class TextLabelImpl extends DummyControl implements ITextLabelSpi {
 
-	public DummyComponent(final UIDComponent component) {
-		super(component);
+	public TextLabelImpl(final ITextLabelSetupSpi setup) {
+		super(new UIDTextLabel());
+
+		setText(setup.getText());
+		setToolTipText(setup.getToolTipText());
+		setMarkup(setup.getMarkup());
+
+		getUiReference().setHorizontalAlignment(setup.getAlignment());
 	}
 
 	@Override
-	public void redraw() {
-		getUiReference().redraw();
+	public UIDTextLabel getUiReference() {
+		return (UIDTextLabel) super.getUiReference();
 	}
 
 	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		getUiReference().setForegroundColor(colorValue);
+	public void setText(final String text) {
+		getUiReference().setText(text);
 	}
 
 	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		getUiReference().setBackgroundColor(colorValue);
+	public void setToolTipText(final String text) {
+		getUiReference().setToolTipText(text);
 	}
 
 	@Override
-	public IColorConstant getForegroundColor() {
-		return getUiReference().getForegroundColor();
-	}
-
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return getUiReference().getBackgroundColor();
-	}
-
-	@Override
-	public void setVisible(final boolean visible) {
-		getUiReference().setVisible(visible);
-	}
-
-	@Override
-	public boolean isVisible() {
-		return getUiReference().isVisible();
-	}
-
-	@Override
-	public Dimension getSize() {
-		return getUiReference().getSize();
-	}
-
-	@Override
-	public void setCursor(final Cursor cursor) {
-
-	}
-
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-
-	}
-
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-
-	}
-
-	@Override
-	public IPopupMenuSpi createPopupMenu() {
-		return new PopupMenuImpl(getUiReference());
+	public void setMarkup(final Markup markup) {
+		getUiReference().setMarkup(markup);
 	}
 
 }

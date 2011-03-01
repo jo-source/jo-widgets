@@ -27,78 +27,57 @@
  */
 package org.jowidgets.spi.impl.dummy.widgets;
 
-import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.types.Cursor;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
-import org.jowidgets.spi.widgets.IComponentSpi;
-import org.jowidgets.spi.widgets.IPopupMenuSpi;
+import org.jowidgets.common.widgets.controler.IInputListener;
+import org.jowidgets.spi.impl.dummy.dummyui.UIDComboBox;
+import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
+import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
 
-public class DummyComponent extends DummyWidget implements IComponentSpi {
+public class ComboBoxSelectionImpl extends AbstractInputControl implements IComboBoxSelectionSpi {
 
-	public DummyComponent(final UIDComponent component) {
-		super(component);
+	public ComboBoxSelectionImpl(final IComboBoxSelectionSetupSpi setup) {
+		super(new UIDComboBox(setup.getElements()));
+
+		getUiReference().addInputListener(new IInputListener() {
+			@Override
+			public void inputChanged(final Object source) {
+				fireInputChanged(source);
+			}
+		});
 	}
 
 	@Override
-	public void redraw() {
-		getUiReference().redraw();
+	public UIDComboBox getUiReference() {
+		return (UIDComboBox) super.getUiReference();
 	}
 
 	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		getUiReference().setForegroundColor(colorValue);
+	public void setEditable(final boolean editable) {
+		getUiReference().setEnabled(editable);
 	}
 
 	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		getUiReference().setBackgroundColor(colorValue);
+	public int getSelectedIndex() {
+		return getUiReference().getSelectedIndex();
 	}
 
 	@Override
-	public IColorConstant getForegroundColor() {
-		return getUiReference().getForegroundColor();
+	public void setSelectedIndex(final int index) {
+		getUiReference().setSelectedIndex(index);
 	}
 
 	@Override
-	public IColorConstant getBackgroundColor() {
-		return getUiReference().getBackgroundColor();
+	public void setTooltipText(final String tooltipText) {
+		getUiReference().setToolTipText(tooltipText);
 	}
 
 	@Override
-	public void setVisible(final boolean visible) {
-		getUiReference().setVisible(visible);
+	public String[] getElements() {
+		return getUiReference().getElements();
 	}
 
 	@Override
-	public boolean isVisible() {
-		return getUiReference().isVisible();
-	}
-
-	@Override
-	public Dimension getSize() {
-		return getUiReference().getSize();
-	}
-
-	@Override
-	public void setCursor(final Cursor cursor) {
-
-	}
-
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-
-	}
-
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-
-	}
-
-	@Override
-	public IPopupMenuSpi createPopupMenu() {
-		return new PopupMenuImpl(getUiReference());
+	public void setElements(final String[] elements) {
+		getUiReference().setElements(elements);
 	}
 
 }

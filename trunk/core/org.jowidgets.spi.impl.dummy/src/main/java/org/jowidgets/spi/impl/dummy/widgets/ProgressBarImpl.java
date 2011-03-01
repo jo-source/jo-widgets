@@ -27,78 +27,40 @@
  */
 package org.jowidgets.spi.impl.dummy.widgets;
 
-import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.types.Cursor;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
-import org.jowidgets.spi.widgets.IComponentSpi;
-import org.jowidgets.spi.widgets.IPopupMenuSpi;
+import org.jowidgets.spi.impl.dummy.dummyui.UIDProgressBar;
+import org.jowidgets.spi.impl.dummy.image.DummyImageRegistry;
+import org.jowidgets.spi.widgets.IProgressBarSpi;
+import org.jowidgets.spi.widgets.setup.IProgressBarSetupSpi;
 
-public class DummyComponent extends DummyWidget implements IComponentSpi {
+public class ProgressBarImpl extends DummyControl implements IProgressBarSpi {
 
-	public DummyComponent(final UIDComponent component) {
-		super(component);
-	}
+	public ProgressBarImpl(final DummyImageRegistry imageRegistry, final IProgressBarSetupSpi setup) {
+		super(new UIDProgressBar(setup.getOrientation()));
 
-	@Override
-	public void redraw() {
-		getUiReference().redraw();
-	}
-
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		getUiReference().setForegroundColor(colorValue);
-	}
-
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		getUiReference().setBackgroundColor(colorValue);
-	}
-
-	@Override
-	public IColorConstant getForegroundColor() {
-		return getUiReference().getForegroundColor();
-	}
-
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return getUiReference().getBackgroundColor();
-	}
-
-	@Override
-	public void setVisible(final boolean visible) {
-		getUiReference().setVisible(visible);
-	}
-
-	@Override
-	public boolean isVisible() {
-		return getUiReference().isVisible();
-	}
-
-	@Override
-	public Dimension getSize() {
-		return getUiReference().getSize();
-	}
-
-	@Override
-	public void setCursor(final Cursor cursor) {
+		setMinimum(setup.getMinimum());
+		setMaximum(setup.getMaximum());
+		getUiReference().setIndeterminate(setup.isIndeterminate());
 
 	}
 
 	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-
+	public UIDProgressBar getUiReference() {
+		return (UIDProgressBar) super.getUiReference();
 	}
 
 	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-
+	public void setMinimum(final int min) {
+		getUiReference().setMinimum(min);
 	}
 
 	@Override
-	public IPopupMenuSpi createPopupMenu() {
-		return new PopupMenuImpl(getUiReference());
+	public void setMaximum(final int max) {
+		getUiReference().setMaximum(max);
+	}
+
+	@Override
+	public void setProgress(final int progress) {
+		getUiReference().setProgress(progress);
 	}
 
 }

@@ -27,78 +27,67 @@
  */
 package org.jowidgets.spi.impl.dummy.widgets;
 
-import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.types.Cursor;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
-import org.jowidgets.spi.widgets.IComponentSpi;
-import org.jowidgets.spi.widgets.IPopupMenuSpi;
+import org.jowidgets.common.types.Markup;
+import org.jowidgets.common.widgets.controler.IInputListener;
+import org.jowidgets.spi.impl.dummy.dummyui.UIDToggleButton;
+import org.jowidgets.spi.widgets.ICheckBoxSpi;
+import org.jowidgets.spi.widgets.setup.ICheckBoxSetupSpi;
 
-public class DummyComponent extends DummyWidget implements IComponentSpi {
+public class CheckBoxImpl extends AbstractInputControl implements ICheckBoxSpi {
 
-	public DummyComponent(final UIDComponent component) {
-		super(component);
+	public CheckBoxImpl(final ICheckBoxSetupSpi setup) {
+		this(new UIDToggleButton(), setup);
+	}
+
+	public CheckBoxImpl(final UIDToggleButton toggleButton, final ICheckBoxSetupSpi descriptor) {
+		super(toggleButton);
+
+		setText(descriptor.getText());
+		setToolTipText(descriptor.getToolTipText());
+		setMarkup(descriptor.getMarkup());
+		getUiReference().setHorizontalAlignment(descriptor.getAlignment());
+
+		getUiReference().addInputListener(new IInputListener() {
+			@Override
+			public void inputChanged(final Object source) {
+				fireInputChanged(this);
+			}
+		});
 	}
 
 	@Override
-	public void redraw() {
-		getUiReference().redraw();
+	public UIDToggleButton getUiReference() {
+		return (UIDToggleButton) super.getUiReference();
 	}
 
 	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		getUiReference().setForegroundColor(colorValue);
+	public void setEditable(final boolean editable) {
+		getUiReference().setEnabled(editable);
 	}
 
 	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		getUiReference().setBackgroundColor(colorValue);
+	public void setMarkup(final Markup markup) {
+		getUiReference().setMarkup(markup);
 	}
 
 	@Override
-	public IColorConstant getForegroundColor() {
-		return getUiReference().getForegroundColor();
+	public void setText(final String text) {
+		getUiReference().setText(text);
 	}
 
 	@Override
-	public IColorConstant getBackgroundColor() {
-		return getUiReference().getBackgroundColor();
+	public void setToolTipText(final String text) {
+		getUiReference().setToolTipText(text);
 	}
 
 	@Override
-	public void setVisible(final boolean visible) {
-		getUiReference().setVisible(visible);
+	public boolean isSelected() {
+		return getUiReference().isSelected();
 	}
 
 	@Override
-	public boolean isVisible() {
-		return getUiReference().isVisible();
-	}
-
-	@Override
-	public Dimension getSize() {
-		return getUiReference().getSize();
-	}
-
-	@Override
-	public void setCursor(final Cursor cursor) {
-
-	}
-
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-
-	}
-
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-
-	}
-
-	@Override
-	public IPopupMenuSpi createPopupMenu() {
-		return new PopupMenuImpl(getUiReference());
+	public void setSelected(final boolean selected) {
+		getUiReference().setSelected(selected);
 	}
 
 }

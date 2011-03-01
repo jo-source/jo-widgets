@@ -32,73 +32,77 @@ import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
+import org.jowidgets.spi.widgets.IActionWidgetSpi;
 import org.jowidgets.spi.widgets.IComponentSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
-public class DummyComponent extends DummyWidget implements IComponentSpi {
+public abstract class AbstractActionComponent extends AbstractActionWidget implements IActionWidgetSpi, IComponentSpi {
 
-	public DummyComponent(final UIDComponent component) {
+	private final DummyComponent mockComponentDelegate;
+
+	public AbstractActionComponent(final UIDComponent component) {
 		super(component);
+		this.mockComponentDelegate = new DummyComponent(component);
 	}
 
 	@Override
 	public void redraw() {
-		getUiReference().redraw();
+		mockComponentDelegate.redraw();
 	}
 
 	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
-		getUiReference().setForegroundColor(colorValue);
+		mockComponentDelegate.setForegroundColor(colorValue);
 	}
 
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
-		getUiReference().setBackgroundColor(colorValue);
+		mockComponentDelegate.setBackgroundColor(colorValue);
 	}
 
 	@Override
 	public IColorConstant getForegroundColor() {
-		return getUiReference().getForegroundColor();
+		return mockComponentDelegate.getForegroundColor();
 	}
 
 	@Override
 	public IColorConstant getBackgroundColor() {
-		return getUiReference().getBackgroundColor();
-	}
-
-	@Override
-	public void setVisible(final boolean visible) {
-		getUiReference().setVisible(visible);
-	}
-
-	@Override
-	public boolean isVisible() {
-		return getUiReference().isVisible();
-	}
-
-	@Override
-	public Dimension getSize() {
-		return getUiReference().getSize();
+		return mockComponentDelegate.getBackgroundColor();
 	}
 
 	@Override
 	public void setCursor(final Cursor cursor) {
-
+		mockComponentDelegate.setCursor(cursor);
 	}
 
 	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-
+	public void setVisible(final boolean visible) {
+		mockComponentDelegate.setVisible(visible);
 	}
 
 	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+	public boolean isVisible() {
+		return mockComponentDelegate.isVisible();
+	}
 
+	@Override
+	public Dimension getSize() {
+		return mockComponentDelegate.getSize();
 	}
 
 	@Override
 	public IPopupMenuSpi createPopupMenu() {
-		return new PopupMenuImpl(getUiReference());
+		return mockComponentDelegate.createPopupMenu();
+	}
+
+	@Override
+	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+		mockComponentDelegate.addPopupDetectionListener(listener);
+	}
+
+	@Override
+	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+		mockComponentDelegate.removePopupDetectionListener(listener);
 	}
 
 }

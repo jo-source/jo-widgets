@@ -31,74 +31,103 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
+import org.jowidgets.spi.impl.controler.InputObservable;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
-import org.jowidgets.spi.widgets.IComponentSpi;
+import org.jowidgets.spi.widgets.IInputControlSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
-public class DummyComponent extends DummyWidget implements IComponentSpi {
+public abstract class AbstractInputControl extends InputObservable implements IInputControlSpi {
 
-	public DummyComponent(final UIDComponent component) {
-		super(component);
+	private final DummyControl mockControlDelegate;
+
+	public AbstractInputControl(final UIDComponent component) {
+		super();
+		this.mockControlDelegate = new DummyControl(component);
+	}
+
+	@Override
+	public UIDComponent getUiReference() {
+		return mockControlDelegate.getUiReference();
+	}
+
+	@Override
+	public void setLayoutConstraints(final Object layoutConstraints) {
+		mockControlDelegate.setLayoutConstraints(layoutConstraints);
+	}
+
+	@Override
+	public Object getLayoutConstraints() {
+		return mockControlDelegate.getLayoutConstraints();
 	}
 
 	@Override
 	public void redraw() {
-		getUiReference().redraw();
+		mockControlDelegate.redraw();
 	}
 
 	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
-		getUiReference().setForegroundColor(colorValue);
+		mockControlDelegate.setForegroundColor(colorValue);
 	}
 
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
-		getUiReference().setBackgroundColor(colorValue);
+		mockControlDelegate.setBackgroundColor(colorValue);
 	}
 
 	@Override
 	public IColorConstant getForegroundColor() {
-		return getUiReference().getForegroundColor();
+		return mockControlDelegate.getForegroundColor();
 	}
 
 	@Override
 	public IColorConstant getBackgroundColor() {
-		return getUiReference().getBackgroundColor();
-	}
-
-	@Override
-	public void setVisible(final boolean visible) {
-		getUiReference().setVisible(visible);
-	}
-
-	@Override
-	public boolean isVisible() {
-		return getUiReference().isVisible();
-	}
-
-	@Override
-	public Dimension getSize() {
-		return getUiReference().getSize();
+		return mockControlDelegate.getBackgroundColor();
 	}
 
 	@Override
 	public void setCursor(final Cursor cursor) {
-
+		mockControlDelegate.setCursor(cursor);
 	}
 
 	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-
+	public void setVisible(final boolean visible) {
+		mockControlDelegate.setVisible(visible);
 	}
 
 	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+	public boolean isVisible() {
+		return mockControlDelegate.isVisible();
+	}
 
+	@Override
+	public void setEnabled(final boolean enabled) {
+		mockControlDelegate.setEnabled(enabled);
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return mockControlDelegate.isEnabled();
+	}
+
+	@Override
+	public Dimension getSize() {
+		return mockControlDelegate.getSize();
 	}
 
 	@Override
 	public IPopupMenuSpi createPopupMenu() {
-		return new PopupMenuImpl(getUiReference());
+		return mockControlDelegate.createPopupMenu();
+	}
+
+	@Override
+	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+		mockControlDelegate.addPopupDetectionListener(listener);
+	}
+
+	@Override
+	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+		mockControlDelegate.removePopupDetectionListener(listener);
 	}
 
 }

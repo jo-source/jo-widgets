@@ -27,78 +27,24 @@
  */
 package org.jowidgets.spi.impl.dummy.widgets;
 
-import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.types.Cursor;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
+import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
-import org.jowidgets.spi.widgets.IComponentSpi;
-import org.jowidgets.spi.widgets.IPopupMenuSpi;
+import org.jowidgets.spi.impl.dummy.dummyui.UIDTextComponent;
+import org.jowidgets.spi.widgets.ITextFieldSpi;
 
-public class DummyComponent extends DummyWidget implements IComponentSpi {
+public abstract class AbstractTextInputControl extends AbstractInputControl implements ITextFieldSpi {
 
-	public DummyComponent(final UIDComponent component) {
+	public AbstractTextInputControl(final UIDComponent component) {
 		super(component);
 	}
 
-	@Override
-	public void redraw() {
-		getUiReference().redraw();
+	protected void registerTextComponent(final UIDTextComponent textComponent) {
+		textComponent.addInputListener(new IInputListener() {
+
+			@Override
+			public void inputChanged(final Object source) {
+				fireInputChanged(source);
+			}
+		});
 	}
-
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		getUiReference().setForegroundColor(colorValue);
-	}
-
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		getUiReference().setBackgroundColor(colorValue);
-	}
-
-	@Override
-	public IColorConstant getForegroundColor() {
-		return getUiReference().getForegroundColor();
-	}
-
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return getUiReference().getBackgroundColor();
-	}
-
-	@Override
-	public void setVisible(final boolean visible) {
-		getUiReference().setVisible(visible);
-	}
-
-	@Override
-	public boolean isVisible() {
-		return getUiReference().isVisible();
-	}
-
-	@Override
-	public Dimension getSize() {
-		return getUiReference().getSize();
-	}
-
-	@Override
-	public void setCursor(final Cursor cursor) {
-
-	}
-
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-
-	}
-
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-
-	}
-
-	@Override
-	public IPopupMenuSpi createPopupMenu() {
-		return new PopupMenuImpl(getUiReference());
-	}
-
 }
