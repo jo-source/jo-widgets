@@ -67,6 +67,7 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 
 	private String viewId;
 	private IView view;
+	private ViewContext viewContext;
 	private Composite parent;
 	private IPopupMenu popupMenu;
 
@@ -103,6 +104,7 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 			parent.setParent(viewComposite);
 			dummyParent.dispose();
 			view = PartSupport.getInstance().getView(viewId);
+			viewContext = closedViewContext;
 			getViewSite().getPage().addPartListener(DynamicView.this);
 		}
 		else {
@@ -171,7 +173,7 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 				}
 
 				private void init() {
-					final ViewContext viewContext = new ViewContext(getViewSite().getId(), parent, componentContext);
+					viewContext = new ViewContext(getViewSite().getId(), parent, componentContext);
 					view = componentContext.getComponent().createView(viewLayout.getId(), viewContext);
 					PartSupport.getInstance().setViewAndContext(viewId, view, viewContext);
 					final IWorkbenchPage page = getViewSite().getPage();
@@ -273,7 +275,9 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 
 	@Override
 	public void setFocus() {
-		parent.setFocus();
+		if (viewContext != null) {
+			((Composite) viewContext.getContainer().getUiReference()).setFocus();
+		}
 	}
 
 	@Override
