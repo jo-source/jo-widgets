@@ -42,6 +42,8 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Sash;
 import org.jowidgets.common.types.Orientation;
 import org.jowidgets.common.types.SplitResizePolicy;
+import org.jowidgets.spi.impl.swt.options.SplitlayoutMode;
+import org.jowidgets.spi.impl.swt.options.SwtOptions;
 import org.jowidgets.spi.impl.swt.util.OrientationConvert;
 import org.jowidgets.spi.widgets.setup.ISplitCompositeSetupSpi;
 
@@ -49,7 +51,6 @@ public class JoSashForm extends Composite {
 
 	protected static final int DRAG_MINIMUM = 40;
 
-	private final Listener sashListener;
 	private boolean initialized;
 	private int sashWidth;
 	private final int sashStyle;
@@ -63,6 +64,7 @@ public class JoSashForm extends Composite {
 	private Control maxControl;
 	private Control first;
 	private Control second;
+	private Listener sashListener;
 
 	public JoSashForm(final Composite parent, final ISplitCompositeSetupSpi setup) {
 		super(parent, checkStyle(setup));
@@ -81,11 +83,13 @@ public class JoSashForm extends Composite {
 
 		sashListener = new Listener() {
 			@Override
-			public void handleEvent(final Event e) {
-				onDragSash(e);
+			public void handleEvent(final Event event) {
+				if (event.detail == SWT.DRAG) {
+					return;
+				}
+				onDragSash(event);
 			}
 		};
-
 		sash = new Sash(this, sashStyle);
 		sash.setBackground(background);
 		sash.setForeground(foreground);
@@ -108,7 +112,9 @@ public class JoSashForm extends Composite {
 		if ((style & SWT.BORDER) != 0) {
 			returnValue |= SWT.BORDER;
 		}
-		returnValue |= SWT.SMOOTH;
+		if (SwtOptions.getSplitLayoutMode().equals(SplitlayoutMode.ON_MOUSE_MOVE)) {
+			returnValue |= SWT.SMOOTH;
+		}
 		return returnValue;
 	}
 
