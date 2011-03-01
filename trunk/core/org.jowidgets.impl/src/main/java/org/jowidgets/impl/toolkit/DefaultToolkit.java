@@ -147,7 +147,7 @@ public class DefaultToolkit implements IToolkit {
 	}
 
 	@Override
-	public IUiThreadAccess getUiThreadAccess() {
+	public synchronized IUiThreadAccess getUiThreadAccess() {
 		if (uiThreadAccess == null) {
 			uiThreadAccess = new UiThreadAccess(widgetsServiceProvider);
 		}
@@ -155,7 +155,7 @@ public class DefaultToolkit implements IToolkit {
 	}
 
 	@Override
-	public IApplicationRunner getApplicationRunner() {
+	public synchronized IApplicationRunner getApplicationRunner() {
 		if (applicationRunner == null) {
 			applicationRunner = new ApplicationRunner(widgetsServiceProvider.createApplicationRunner());
 		}
