@@ -44,8 +44,15 @@ import org.jowidgets.workbench.api.IWorkbenchContext;
 
 public class WorkbenchDemo1 extends AbstractWorkbench {
 
+	private final Dimension initialDimension;
+
 	public WorkbenchDemo1() {
+		this(new Dimension(1280, 900));
+	}
+
+	public WorkbenchDemo1(final Dimension initialDimension) {
 		DemoIconsInitializer.initialize();
+		this.initialDimension = initialDimension;
 	}
 
 	@Override
@@ -68,7 +75,7 @@ public class WorkbenchDemo1 extends AbstractWorkbench {
 
 	@Override
 	public Dimension getInitialDimension() {
-		return new Dimension(1280, 900);
+		return initialDimension;
 	}
 
 	@Override
