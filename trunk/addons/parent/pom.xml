@@ -17,6 +17,7 @@
 	<modules>
 		<module>../org.jowidgets.addons.swing</module>
 		<module>../org.jowidgets.addons.swt</module>
+		<module>../org.jowidgets.addons.testtool</module>
 	</modules>
 
 	<build>
