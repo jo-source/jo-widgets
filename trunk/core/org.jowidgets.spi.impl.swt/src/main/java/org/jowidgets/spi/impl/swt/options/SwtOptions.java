@@ -31,7 +31,7 @@ package org.jowidgets.spi.impl.swt.options;
 public final class SwtOptions {
 
 	private static boolean classicTabs = false;
-	private static SplitlayoutMode splitLayoutMode = SplitlayoutMode.ON_MOUSE_RELEASE;
+	private static SplitlayoutMode splitLayoutMode = SplitlayoutMode.ON_MOUSE_MOVE;
 
 	private SwtOptions() {}
 
