@@ -26,23 +26,34 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.impl.internal;
+package org.jowidgets.workbench.impl;
 
-import java.io.Serializable;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.ISplitComposite;
+import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.tools.layout.MigLayoutFactory;
+import org.jowidgets.workbench.api.ISplitLayout;
 
-import org.jowidgets.workbench.api.IWorkbenchConfigurationService;
+public class SplitContext {
 
-public class DefaultConfigurationService implements IWorkbenchConfigurationService {
+	public SplitContext(final IContainer parentContainer, final ISplitLayout splitLayout, final LayoutContext layoutContext) {
+		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+		parentContainer.setLayout(MigLayoutFactory.growingInnerCellLayout());
 
-	@Override
-	public Serializable loadConfiguration() {
-		//TODO MG implement workbench config service
-		return null;
-	}
+		final ISplitCompositeBluePrint splitCompositeBp = bpf.splitComposite();
+		splitCompositeBp.disableBorders();
+		splitCompositeBp.setOrientation(splitLayout.getOrientation());
+		if (splitLayout.getResizePolicy() != null) {
+			splitCompositeBp.setResizePolicy(splitLayout.getResizePolicy());
+		}
+		splitCompositeBp.setWeight(splitLayout.getWeight());
 
-	@Override
-	public void saveConfiguration(final Serializable configuration) {
-		//TODO MG implement workbench config service
+		final ISplitComposite splitComposite = parentContainer.add(splitCompositeBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+
+		LayoutContextCreationHelper.createLayout(splitLayout.getFirstContainer(), splitComposite.getFirst(), layoutContext);
+		LayoutContextCreationHelper.createLayout(splitLayout.getSecondContainer(), splitComposite.getSecond(), layoutContext);
 	}
 
 }

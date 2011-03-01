@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.impl.internal;
+package org.jowidgets.workbench.impl;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -26,34 +26,39 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.impl.internal;
+package org.jowidgets.workbench.impl;
 
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.ISplitComposite;
-import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.tools.layout.MigLayoutFactory;
-import org.jowidgets.workbench.api.ISplitLayout;
+import org.jowidgets.workbench.api.IComponent;
+import org.jowidgets.workbench.api.ILayout;
 
-public class SplitContext {
+public class LayoutContext {
 
-	public SplitContext(final IContainer parentContainer, final ISplitLayout splitLayout, final LayoutContext layoutContext) {
+	private final IComposite composite;
+	private final ComponentContext componentContext;
+
+	public LayoutContext(final IContainer parentContainer, final ILayout layout, final ComponentContext componentContext) {
+		this.componentContext = componentContext;
+
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-		parentContainer.setLayout(MigLayoutFactory.growingInnerCellLayout());
+		composite = parentContainer.add(bpf.composite(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS + ", hidemode 3");
+		LayoutContextCreationHelper.createLayout(layout.getLayoutContainer(), composite, this);
+	}
 
-		final ISplitCompositeBluePrint splitCompositeBp = bpf.splitComposite();
-		splitCompositeBp.disableBorders();
-		splitCompositeBp.setOrientation(splitLayout.getOrientation());
-		if (splitLayout.getResizePolicy() != null) {
-			splitCompositeBp.setResizePolicy(splitLayout.getResizePolicy());
-		}
-		splitCompositeBp.setWeight(splitLayout.getWeight());
+	public void setVisible(final boolean visible) {
+		this.composite.setVisible(visible);
+	}
 
-		final ISplitComposite splitComposite = parentContainer.add(splitCompositeBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+	protected IComponent getComponent() {
+		return componentContext.getComponent();
+	}
 
-		LayoutContextCreationHelper.createLayout(splitLayout.getFirstContainer(), splitComposite.getFirst(), layoutContext);
-		LayoutContextCreationHelper.createLayout(splitLayout.getSecondContainer(), splitComposite.getSecond(), layoutContext);
+	protected ComponentContext getComponentContext() {
+		return componentContext;
 	}
 
 }

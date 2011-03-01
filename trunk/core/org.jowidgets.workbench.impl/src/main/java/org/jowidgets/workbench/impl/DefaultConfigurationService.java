@@ -26,29 +26,23 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.impl.internal;
+package org.jowidgets.workbench.impl;
 
-import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.workbench.api.IFolderLayout;
-import org.jowidgets.workbench.api.ILayoutContainer;
-import org.jowidgets.workbench.api.ISplitLayout;
+import java.io.Serializable;
 
-public final class LayoutContextCreationHelper {
+import org.jowidgets.workbench.api.IWorkbenchConfigurationService;
 
-	private LayoutContextCreationHelper() {}
+public class DefaultConfigurationService implements IWorkbenchConfigurationService {
 
-	public static void createLayout(
-		final ILayoutContainer layout,
-		final IContainer parentContainer,
-		final LayoutContext layoutContext) {
+	@Override
+	public Serializable loadConfiguration() {
+		//TODO MG implement workbench config service
+		return null;
+	}
 
-		if (layout instanceof ISplitLayout) {
-			new SplitContext(parentContainer, (ISplitLayout) layout, layoutContext);
-		}
-		else if (layout instanceof IFolderLayout) {
-			new FolderContext(parentContainer, (IFolderLayout) layout, layoutContext);
-		}
-
+	@Override
+	public void saveConfiguration(final Serializable configuration) {
+		//TODO MG implement workbench config service
 	}
 
 }

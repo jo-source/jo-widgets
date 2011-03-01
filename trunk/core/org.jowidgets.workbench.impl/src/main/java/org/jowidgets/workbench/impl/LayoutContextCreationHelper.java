@@ -26,39 +26,29 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.impl.internal;
+package org.jowidgets.workbench.impl;
 
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.tools.layout.MigLayoutFactory;
-import org.jowidgets.workbench.api.IComponent;
-import org.jowidgets.workbench.api.ILayout;
+import org.jowidgets.workbench.api.IFolderLayout;
+import org.jowidgets.workbench.api.ILayoutContainer;
+import org.jowidgets.workbench.api.ISplitLayout;
 
-public class LayoutContext {
+public final class LayoutContextCreationHelper {
 
-	private final IComposite composite;
-	private final ComponentContext componentContext;
+	private LayoutContextCreationHelper() {}
 
-	public LayoutContext(final IContainer parentContainer, final ILayout layout, final ComponentContext componentContext) {
-		this.componentContext = componentContext;
+	public static void createLayout(
+		final ILayoutContainer layout,
+		final IContainer parentContainer,
+		final LayoutContext layoutContext) {
 
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-		composite = parentContainer.add(bpf.composite(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS + ", hidemode 3");
-		LayoutContextCreationHelper.createLayout(layout.getLayoutContainer(), composite, this);
-	}
+		if (layout instanceof ISplitLayout) {
+			new SplitContext(parentContainer, (ISplitLayout) layout, layoutContext);
+		}
+		else if (layout instanceof IFolderLayout) {
+			new FolderContext(parentContainer, (IFolderLayout) layout, layoutContext);
+		}
 
-	public void setVisible(final boolean visible) {
-		this.composite.setVisible(visible);
-	}
-
-	protected IComponent getComponent() {
-		return componentContext.getComponent();
-	}
-
-	protected ComponentContext getComponentContext() {
-		return componentContext;
 	}
 
 }

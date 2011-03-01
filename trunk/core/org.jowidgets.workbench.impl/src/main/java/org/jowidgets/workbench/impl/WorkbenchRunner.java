@@ -34,8 +34,6 @@ import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.workbench.api.IWorkbench;
 import org.jowidgets.workbench.api.IWorkbenchConfigurationService;
 import org.jowidgets.workbench.api.IWorkbenchRunner;
-import org.jowidgets.workbench.impl.internal.DefaultConfigurationService;
-import org.jowidgets.workbench.impl.internal.WorkbenchContext;
 
 public class WorkbenchRunner implements IWorkbenchRunner {
 
