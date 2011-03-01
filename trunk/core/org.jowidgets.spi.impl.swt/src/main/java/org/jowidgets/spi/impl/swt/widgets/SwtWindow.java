@@ -47,7 +47,6 @@ import org.jowidgets.spi.impl.controler.WindowObservable;
 import org.jowidgets.spi.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.util.DimensionConvert;
 import org.jowidgets.spi.impl.swt.util.PositionConvert;
-import org.jowidgets.spi.impl.swt.widgets.internal.MenuBarImpl;
 import org.jowidgets.spi.widgets.IMenuBarSpi;
 import org.jowidgets.spi.widgets.IWindowSpi;
 import org.jowidgets.util.TypeCast;

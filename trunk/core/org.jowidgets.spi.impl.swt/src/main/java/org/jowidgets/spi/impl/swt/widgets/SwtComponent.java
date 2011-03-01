@@ -42,7 +42,6 @@ import org.jowidgets.spi.impl.controler.PopupDetectionObservable;
 import org.jowidgets.spi.impl.swt.color.ColorCache;
 import org.jowidgets.spi.impl.swt.cursor.CursorCache;
 import org.jowidgets.spi.impl.swt.util.DimensionConvert;
-import org.jowidgets.spi.impl.swt.widgets.internal.PopupMenuImpl;
 import org.jowidgets.spi.widgets.IComponentSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
