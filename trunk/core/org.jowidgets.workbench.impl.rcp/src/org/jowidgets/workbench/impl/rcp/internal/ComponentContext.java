@@ -35,6 +35,7 @@ import org.jowidgets.workbench.api.ILayout;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 import org.jowidgets.workbench.api.IWorkbenchContext;
+import org.jowidgets.workbench.impl.rcp.internal.part.PartSupport;
 
 public final class ComponentContext implements IComponentContext {
 
@@ -63,7 +64,7 @@ public final class ComponentContext implements IComponentContext {
 
 	@Override
 	public void removeView(final IView view) {
-		// TODO HRW implement
+		PartSupport.getInstance().closeView(view);
 	}
 
 	@Override

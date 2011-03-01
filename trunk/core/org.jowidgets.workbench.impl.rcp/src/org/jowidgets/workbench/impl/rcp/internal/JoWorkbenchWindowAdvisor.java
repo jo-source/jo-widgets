@@ -27,6 +27,7 @@
  */
 package org.jowidgets.workbench.impl.rcp.internal;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -41,7 +42,6 @@ import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IFrame;
-import org.jowidgets.api.widgets.ISplitComposite;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Dimension;
@@ -130,10 +130,8 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		toolBar = frame.add(bpf.toolBar(), "hidemode 2, wrap");
 		toolBar.setVisible(false);
 
-		final ISplitComposite splitComposite = frame.add(
-				bpf.splitHorizontal().setWeight(folderRatio).disableBorders(),
-				"wmin 0, hmin 0, grow, wrap");
-		final SashForm sashForm = (SashForm) splitComposite.getUiReference();
+		final SashForm sashForm = new SashForm(shell, SWT.HORIZONTAL);
+		sashForm.setLayoutData("wmin 0, hmin 0, grow, wrap");
 		sashForm.addDisposeListener(new DisposeListener() {
 			@Override
 			public void widgetDisposed(final DisposeEvent e) {
@@ -142,7 +140,7 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 			}
 		});
 
-		final IContainer leftContainer = splitComposite.getFirst();
+		final IContainer leftContainer = Toolkit.getWidgetWrapperFactory().createComposite(new Composite(sashForm, SWT.NONE));
 		leftContainer.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
 		applicationFolder = new WorkbenchApplicationFolder((Composite) leftContainer.getUiReference(), workbench, context);
 		applicationFolder.setLayoutData("grow");
@@ -153,10 +151,12 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 			}
 		});
 
-		final IContainer rightContainer = splitComposite.getSecond();
+		final IContainer rightContainer = Toolkit.getWidgetWrapperFactory().createComposite(new Composite(sashForm, SWT.NONE));
 		rightContainer.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
 		final Control pageComposite = getWindowConfigurer().createPageComposite((Composite) rightContainer.getUiReference());
 		pageComposite.setLayoutData("wmin 0, hmin 0, grow");
+
+		sashForm.setWeights(new int[] {(int) (folderRatio * 1000), (int) ((1 - folderRatio) * 1000)});
 	}
 
 	public double getFolderRatio() {

@@ -48,9 +48,11 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.ViewLayout;
+import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IComponentTreeNode;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 import org.jowidgets.workbench.api.IFolderContext;
+import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 
 public class ActionFactory {
@@ -232,4 +234,18 @@ public class ActionFactory {
 
 		return actionBuilder.build();
 	}
+
+	public IAction createRemoveViewAction(final IComponentContext context, final IView view) {
+		final IActionBuilder actionBuilder = Toolkit.getActionBuilderFactory().create();
+		actionBuilder.setText("Remove this View");
+		actionBuilder.setIcon(SilkIcons.DELETE);
+		actionBuilder.setCommand(new ICommandExecutor() {
+			@Override
+			public void execute(final IExecutionContext executionContext) throws Exception {
+				context.removeView(view);
+			}
+		});
+		return actionBuilder.build();
+	}
+
 }

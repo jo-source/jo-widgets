@@ -43,11 +43,13 @@ import org.jowidgets.workbench.api.IWorkbenchContext;
 
 public final class ViewContext implements IViewContext {
 
+	private final String primaryViewId;
 	private final Composite parent;
 	private final IComponentContext componentContext;
 	private final ToolBarHelper toolBarHelper;
 
-	public ViewContext(final Composite parent, final IComponentContext componentContext) {
+	public ViewContext(final String primaryViewId, final Composite parent, final IComponentContext componentContext) {
+		this.primaryViewId = primaryViewId;
 		this.parent = parent;
 		this.componentContext = componentContext;
 
@@ -55,6 +57,10 @@ public final class ViewContext implements IViewContext {
 		composite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[]0[grow]0"));
 
 		toolBarHelper = new ToolBarHelper(composite);
+	}
+
+	public String getPrimaryViewId() {
+		return primaryViewId;
 	}
 
 	public Composite getParent() {

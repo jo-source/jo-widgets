@@ -49,6 +49,7 @@ public class ViewDemo3 extends AbstractView implements IView {
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 		final IContainer container = context.getContainer();
 		container.add(bpf.textLabel("View content 3"), "");
+		context.getToolBarMenu().addAction(new ActionFactory().createRemoveViewAction(context.getComponentContext(), this));
 	}
 
 }

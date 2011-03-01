@@ -29,7 +29,10 @@
 package org.jowidgets.workbench.impl.rcp.internal.part;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IPerspectiveRegistry;
@@ -57,6 +60,7 @@ public final class PartSupport {
 	private final Map<String, ViewLayoutContext> viewLayoutContextMap = new HashMap<String, ViewLayoutContext>();
 	private final Map<String, ViewContext> viewContextMap = new HashMap<String, ViewContext>();
 	private final Map<String, IView> viewMap = new HashMap<String, IView>();
+	private final Set<String> closingViewSet = new HashSet<String>();
 
 	private PartSupport() {}
 
@@ -88,6 +92,7 @@ public final class PartSupport {
 	public void removeViewAndContext(final String viewId) {
 		viewMap.remove(viewId);
 		viewContextMap.remove(viewId);
+		closingViewSet.remove(viewId);
 	}
 
 	public void showEmptyPerspective() {
@@ -207,6 +212,29 @@ public final class PartSupport {
 				ids[0],
 				secondaryId,
 				IWorkbenchPage.VIEW_CREATE);
+	}
+
+	public void closeView(final IView view) {
+		for (final Entry<String, IView> viewEntry : viewMap.entrySet()) {
+			// find viewId
+			if (viewEntry.getValue() == view) {
+				final String viewId = viewEntry.getKey();
+				final String primaryViewId = viewContextMap.get(viewId).getPrimaryViewId();
+				for (final IWorkbenchPage page : PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPages()) {
+					final IViewReference viewRef = page.findViewReference(primaryViewId, viewId);
+					if (viewRef != null) {
+						closingViewSet.add(viewId);
+						page.hideView(viewRef);
+						break;
+					}
+				}
+				break;
+			}
+		}
+	}
+
+	public boolean isViewClosing(final String viewId) {
+		return closingViewSet.contains(viewId);
 	}
 
 }

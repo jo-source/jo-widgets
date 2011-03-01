@@ -171,8 +171,7 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 				}
 
 				private void init() {
-					System.err.println("creating view + " + viewId);
-					final ViewContext viewContext = new ViewContext(parent, componentContext);
+					final ViewContext viewContext = new ViewContext(getViewSite().getId(), parent, componentContext);
 					view = componentContext.getComponent().createView(viewLayout.getId(), viewContext);
 					PartSupport.getInstance().setViewAndContext(viewId, view, viewContext);
 					final IWorkbenchPage page = getViewSite().getPage();
@@ -237,7 +236,10 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 	@Override
 	public void partClosed(final IWorkbenchPartReference partRef) {
 		final IWorkbenchPart part = partRef.getPart(false);
-		if (part == this && view != null && !PlatformUI.getWorkbench().isClosing()) {
+		if (part == this
+			&& view != null
+			&& !PlatformUI.getWorkbench().isClosing()
+			&& !PartSupport.getInstance().isViewClosing(viewId)) {
 			final VetoHolder vetoHolder = new VetoHolder();
 			view.onClose(vetoHolder);
 			if (vetoHolder.hasVeto()) {
