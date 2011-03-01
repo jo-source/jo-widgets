@@ -188,7 +188,7 @@ public final class WorkbenchApplicationTree extends Composite {
 						final VetoHolder vetoHolder = new VetoHolder();
 						currentComponent.onDeactivation(vetoHolder);
 						if (vetoHolder.hasVeto()) {
-							// TODO HRW re-select component tree node
+							treeViewer.setSelection(new StructuredSelection(componentContext.getComponentTreeNodeContext()));
 							return;
 						}
 					}
@@ -197,6 +197,9 @@ public final class WorkbenchApplicationTree extends Composite {
 						final IComponent newComponent = newComponentContext.getComponent();
 						workbenchContext.setCurrentComponent(newComponent);
 						newComponent.onActivation();
+					}
+					else {
+						workbenchContext.setCurrentComponent(null);
 					}
 					nodeId = context.getQualifiedId();
 					componentContext = newComponentContext;
