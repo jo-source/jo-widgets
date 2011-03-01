@@ -28,133 +28,82 @@
 package org.jowidgets.spi.impl.swing.widgets;
 
 import java.awt.Component;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
-import javax.swing.JComponent;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
-import org.jowidgets.spi.impl.controler.PopupDetectionObservable;
-import org.jowidgets.spi.impl.swing.util.ColorConvert;
-import org.jowidgets.spi.impl.swing.util.CursorConvert;
-import org.jowidgets.spi.impl.swing.util.DimensionConvert;
+import org.jowidgets.spi.widgets.IActionWidgetSpi;
 import org.jowidgets.spi.widgets.IComponentSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
-public class SwingComponent extends SwingWidget implements IComponentSpi {
+public abstract class AbstractActionComponent extends AbstractActionWidget implements IActionWidgetSpi, IComponentSpi {
 
-	private final PopupDetectionObservable popupDetectionObservable;
-	private MouseListener mouseListener;
+	private final SwingComponent swingComponentDelegate;
 
-	public SwingComponent(final Component component) {
+	public AbstractActionComponent(final Component component) {
 		super(component);
-		this.popupDetectionObservable = new PopupDetectionObservable();
-
-		this.mouseListener = new MouseAdapter() {
-			@Override
-			public void mouseReleased(final MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					popupDetectionObservable.firePopupDetected(new Position(e.getX(), e.getY()));
-				}
-			}
-
-			@Override
-			public void mousePressed(final MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					popupDetectionObservable.firePopupDetected(new Position(e.getX(), e.getY()));
-				}
-			}
-		};
-
-		component.addMouseListener(mouseListener);
-	}
-
-	protected PopupDetectionObservable getPopupDetectionObservable() {
-		return popupDetectionObservable;
-	}
-
-	protected void setMouseListener(final MouseListener mouseListener) {
-		getUiReference().removeMouseListener(this.mouseListener);
-		this.mouseListener = mouseListener;
-		getUiReference().addMouseListener(mouseListener);
-	}
-
-	@Override
-	public void setComponent(final Component component) {
-		getUiReference().removeMouseListener(mouseListener);
-		super.setComponent(component);
-		getUiReference().addMouseListener(mouseListener);
+		this.swingComponentDelegate = new SwingComponent(component);
 	}
 
 	@Override
 	public void redraw() {
-		if (getUiReference() instanceof JComponent) {
-			((JComponent) getUiReference()).revalidate();
-		}
-		else {
-			getUiReference().validate();
-		}
-		getUiReference().repaint();
+		swingComponentDelegate.redraw();
 	}
 
 	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
-		getUiReference().setForeground(ColorConvert.convert(colorValue));
+		swingComponentDelegate.setForegroundColor(colorValue);
 	}
 
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
-		getUiReference().setBackground(ColorConvert.convert(colorValue));
+		swingComponentDelegate.setBackgroundColor(colorValue);
 	}
 
 	@Override
 	public IColorConstant getForegroundColor() {
-		return ColorConvert.convert(getUiReference().getForeground());
+		return swingComponentDelegate.getForegroundColor();
 	}
 
 	@Override
 	public IColorConstant getBackgroundColor() {
-		return ColorConvert.convert(getUiReference().getBackground());
+		return swingComponentDelegate.getBackgroundColor();
 	}
 
 	@Override
 	public void setCursor(final Cursor cursor) {
-		getUiReference().setCursor(CursorConvert.convert(cursor));
+		swingComponentDelegate.setCursor(cursor);
 	}
 
 	@Override
 	public void setVisible(final boolean visible) {
-		getUiReference().setVisible(visible);
+		swingComponentDelegate.setVisible(visible);
 	}
 
 	@Override
 	public boolean isVisible() {
-		return getUiReference().isVisible();
+		return swingComponentDelegate.isVisible();
 	}
 
 	@Override
 	public Dimension getSize() {
-		return DimensionConvert.convert(getUiReference().getSize());
+		return swingComponentDelegate.getSize();
 	}
 
 	@Override
 	public IPopupMenuSpi createPopupMenu() {
-		return new PopupMenuImpl(getUiReference());
+		return swingComponentDelegate.createPopupMenu();
 	}
 
 	@Override
 	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		popupDetectionObservable.addPopupDetectionListener(listener);
+		swingComponentDelegate.addPopupDetectionListener(listener);
 	}
 
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		popupDetectionObservable.removePopupDetectionListener(listener);
+		swingComponentDelegate.removePopupDetectionListener(listener);
 	}
 
 }

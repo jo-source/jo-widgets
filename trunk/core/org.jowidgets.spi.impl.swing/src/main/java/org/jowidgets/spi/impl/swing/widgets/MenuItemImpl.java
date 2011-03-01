@@ -25,34 +25,55 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.impl.swing.util;
+package org.jowidgets.spi.impl.swing.widgets;
 
-import javax.swing.BorderFactory;
-import javax.swing.border.TitledBorder;
+import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
 
-import org.jowidgets.common.types.Border;
-import org.jowidgets.spi.impl.swing.widgets.defaults.Colors;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Accelerator;
+import org.jowidgets.spi.impl.swing.image.SwingImageRegistry;
+import org.jowidgets.spi.impl.swing.util.ModifierConvert;
+import org.jowidgets.spi.widgets.IMenuItemSpi;
 
-public final class BorderConvert {
+public class MenuItemImpl extends SwingWidget implements IMenuItemSpi {
 
-	private BorderConvert() {};
+	public MenuItemImpl() {
+		this(new JMenuItem());
+	}
 
-	public static javax.swing.border.Border convert(final Border border) {
-		if (border != null) {
-			final String title = border.getTitle();
-			if (title != null && !title.isEmpty()) {
-				final TitledBorder result = BorderFactory.createTitledBorder(title);
-				result.setTitleColor(ColorConvert.convert(Colors.BORDER_TITLE));
-				return result;
-			}
-			else {
-				return BorderFactory.createEtchedBorder();
-			}
-		}
-		else {
-			return BorderFactory.createEmptyBorder();
-		}
+	public MenuItemImpl(final JMenuItem menuItem) {
+		super(menuItem);
+	}
 
+	@Override
+	public JMenuItem getUiReference() {
+		return (JMenuItem) super.getUiReference();
+	}
+
+	@Override
+	public void setIcon(final IImageConstant icon) {
+		getUiReference().setIcon(SwingImageRegistry.getInstance().getImageIcon(icon));
+	}
+
+	@Override
+	public void setText(final String text) {
+		getUiReference().setText(text);
+	}
+
+	@Override
+	public void setToolTipText(final String text) {
+		getUiReference().setToolTipText(text);
+	}
+
+	@Override
+	public void setMnemonic(final char mnemonic) {
+		getUiReference().setMnemonic(mnemonic);
+	}
+
+	public void setAccelerator(final Accelerator accelerator) {
+		final int modfifier = ModifierConvert.convert(accelerator.getModifier());
+		getUiReference().setAccelerator(KeyStroke.getKeyStroke(accelerator.getKey(), modfifier));
 	}
 
 }

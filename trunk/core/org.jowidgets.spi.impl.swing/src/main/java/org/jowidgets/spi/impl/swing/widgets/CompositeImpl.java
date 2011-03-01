@@ -25,34 +25,26 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.impl.swing.util;
+package org.jowidgets.spi.impl.swing.widgets;
 
-import javax.swing.BorderFactory;
-import javax.swing.border.TitledBorder;
+import javax.swing.JPanel;
 
-import org.jowidgets.common.types.Border;
-import org.jowidgets.spi.impl.swing.widgets.defaults.Colors;
+import org.jowidgets.common.widgets.descriptor.setup.ICompositeSetupCommon;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.spi.impl.swing.util.BorderConvert;
 
-public final class BorderConvert {
+public class CompositeImpl extends SwingComposite {
 
-	private BorderConvert() {};
+	public CompositeImpl(final IGenericWidgetFactory factory, final ICompositeSetupCommon setup) {
+		super(factory, new JPanel());
+		getUiReference().setBorder(BorderConvert.convert(setup.getBorder()));
+		setLayout(setup.getLayout());
+		getUiReference().setBackground(null);
+	}
 
-	public static javax.swing.border.Border convert(final Border border) {
-		if (border != null) {
-			final String title = border.getTitle();
-			if (title != null && !title.isEmpty()) {
-				final TitledBorder result = BorderFactory.createTitledBorder(title);
-				result.setTitleColor(ColorConvert.convert(Colors.BORDER_TITLE));
-				return result;
-			}
-			else {
-				return BorderFactory.createEtchedBorder();
-			}
-		}
-		else {
-			return BorderFactory.createEmptyBorder();
-		}
-
+	@Override
+	public JPanel getUiReference() {
+		return (JPanel) super.getUiReference();
 	}
 
 }

@@ -25,34 +25,24 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.impl.swing.util;
+package org.jowidgets.spi.impl.swing.widgets.defaults;
 
-import javax.swing.BorderFactory;
-import javax.swing.border.TitledBorder;
+import org.jowidgets.common.color.ColorValue;
+import org.jowidgets.common.color.IColorConstant;
 
-import org.jowidgets.common.types.Border;
-import org.jowidgets.spi.impl.swing.widgets.defaults.Colors;
+public enum Colors implements IColorConstant {
 
-public final class BorderConvert {
+	BORDER_TITLE(new ColorValue(0, 70, 213));
 
-	private BorderConvert() {};
+	private ColorValue colorValue;
 
-	public static javax.swing.border.Border convert(final Border border) {
-		if (border != null) {
-			final String title = border.getTitle();
-			if (title != null && !title.isEmpty()) {
-				final TitledBorder result = BorderFactory.createTitledBorder(title);
-				result.setTitleColor(ColorConvert.convert(Colors.BORDER_TITLE));
-				return result;
-			}
-			else {
-				return BorderFactory.createEtchedBorder();
-			}
-		}
-		else {
-			return BorderFactory.createEmptyBorder();
-		}
+	private Colors(final ColorValue colorValue) {
+		this.colorValue = colorValue;
+	}
 
+	@Override
+	public ColorValue getDefaultValue() {
+		return colorValue;
 	}
 
 }

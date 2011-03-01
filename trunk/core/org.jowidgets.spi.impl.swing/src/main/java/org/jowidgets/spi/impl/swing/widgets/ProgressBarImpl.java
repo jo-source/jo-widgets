@@ -25,34 +25,42 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.impl.swing.util;
+package org.jowidgets.spi.impl.swing.widgets;
 
-import javax.swing.BorderFactory;
-import javax.swing.border.TitledBorder;
+import javax.swing.JProgressBar;
 
-import org.jowidgets.common.types.Border;
-import org.jowidgets.spi.impl.swing.widgets.defaults.Colors;
+import org.jowidgets.spi.impl.swing.util.OrientationConvert;
+import org.jowidgets.spi.widgets.IProgressBarSpi;
+import org.jowidgets.spi.widgets.setup.IProgressBarSetupSpi;
 
-public final class BorderConvert {
+public class ProgressBarImpl extends SwingControl implements IProgressBarSpi {
 
-	private BorderConvert() {};
+	public ProgressBarImpl(final IProgressBarSetupSpi setup) {
+		super(new JProgressBar(OrientationConvert.convert(setup.getOrientation())));
 
-	public static javax.swing.border.Border convert(final Border border) {
-		if (border != null) {
-			final String title = border.getTitle();
-			if (title != null && !title.isEmpty()) {
-				final TitledBorder result = BorderFactory.createTitledBorder(title);
-				result.setTitleColor(ColorConvert.convert(Colors.BORDER_TITLE));
-				return result;
-			}
-			else {
-				return BorderFactory.createEtchedBorder();
-			}
-		}
-		else {
-			return BorderFactory.createEmptyBorder();
-		}
+		setMinimum(setup.getMinimum());
+		setMaximum(setup.getMaximum());
+		getUiReference().setIndeterminate(setup.isIndeterminate());
+	}
 
+	@Override
+	public JProgressBar getUiReference() {
+		return (JProgressBar) super.getUiReference();
+	}
+
+	@Override
+	public void setMinimum(final int min) {
+		getUiReference().setMinimum(min);
+	}
+
+	@Override
+	public void setMaximum(final int max) {
+		getUiReference().setMaximum(max);
+	}
+
+	@Override
+	public void setProgress(final int progress) {
+		getUiReference().setValue(progress);
 	}
 
 }

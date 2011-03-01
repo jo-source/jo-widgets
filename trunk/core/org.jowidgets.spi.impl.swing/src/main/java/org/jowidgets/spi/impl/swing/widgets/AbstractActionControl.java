@@ -25,34 +25,29 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.impl.swing.util;
+package org.jowidgets.spi.impl.swing.widgets;
 
-import javax.swing.BorderFactory;
-import javax.swing.border.TitledBorder;
+import java.awt.Component;
 
-import org.jowidgets.common.types.Border;
-import org.jowidgets.spi.impl.swing.widgets.defaults.Colors;
+import org.jowidgets.spi.widgets.IControlSpi;
 
-public final class BorderConvert {
+public abstract class AbstractActionControl extends AbstractActionComponent implements IControlSpi {
 
-	private BorderConvert() {};
+	private final SwingControl swingControlDelegate;
 
-	public static javax.swing.border.Border convert(final Border border) {
-		if (border != null) {
-			final String title = border.getTitle();
-			if (title != null && !title.isEmpty()) {
-				final TitledBorder result = BorderFactory.createTitledBorder(title);
-				result.setTitleColor(ColorConvert.convert(Colors.BORDER_TITLE));
-				return result;
-			}
-			else {
-				return BorderFactory.createEtchedBorder();
-			}
-		}
-		else {
-			return BorderFactory.createEmptyBorder();
-		}
+	public AbstractActionControl(final Component component) {
+		super(component);
+		this.swingControlDelegate = new SwingControl(component);
+	}
 
+	@Override
+	public void setLayoutConstraints(final Object layoutConstraints) {
+		swingControlDelegate.setLayoutConstraints(layoutConstraints);
+	}
+
+	@Override
+	public Object getLayoutConstraints() {
+		return swingControlDelegate.getLayoutConstraints();
 	}
 
 }

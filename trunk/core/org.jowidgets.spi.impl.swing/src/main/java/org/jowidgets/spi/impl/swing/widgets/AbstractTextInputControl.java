@@ -25,33 +25,41 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.impl.swing.util;
+package org.jowidgets.spi.impl.swing.widgets;
 
-import javax.swing.BorderFactory;
-import javax.swing.border.TitledBorder;
+import java.awt.Component;
 
-import org.jowidgets.common.types.Border;
-import org.jowidgets.spi.impl.swing.widgets.defaults.Colors;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.JTextComponent;
 
-public final class BorderConvert {
+import org.jowidgets.spi.widgets.ITextFieldSpi;
 
-	private BorderConvert() {};
+public abstract class AbstractTextInputControl extends AbstractInputControl implements ITextFieldSpi {
 
-	public static javax.swing.border.Border convert(final Border border) {
-		if (border != null) {
-			final String title = border.getTitle();
-			if (title != null && !title.isEmpty()) {
-				final TitledBorder result = BorderFactory.createTitledBorder(title);
-				result.setTitleColor(ColorConvert.convert(Colors.BORDER_TITLE));
-				return result;
+	public AbstractTextInputControl(final Component component) {
+		super(component);
+	}
+
+	protected void registerTextComponent(final JTextComponent textComponent) {
+		textComponent.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void removeUpdate(final DocumentEvent e) {
+				fireInputChanged(textComponent);
 			}
-			else {
-				return BorderFactory.createEtchedBorder();
+
+			@Override
+			public void insertUpdate(final DocumentEvent e) {
+				fireInputChanged(textComponent);
 			}
-		}
-		else {
-			return BorderFactory.createEmptyBorder();
-		}
+
+			@Override
+			public void changedUpdate(final DocumentEvent e) {
+				fireInputChanged(textComponent);
+			}
+
+		});
 
 	}
 

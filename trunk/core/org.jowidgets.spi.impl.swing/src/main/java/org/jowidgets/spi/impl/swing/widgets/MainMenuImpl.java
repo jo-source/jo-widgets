@@ -25,34 +25,44 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.impl.swing.util;
+package org.jowidgets.spi.impl.swing.widgets;
 
-import javax.swing.BorderFactory;
-import javax.swing.border.TitledBorder;
+import org.jowidgets.common.widgets.controler.IMenuListener;
+import org.jowidgets.spi.impl.swing.widgets.base.JoMenu;
+import org.jowidgets.spi.widgets.IMainMenuSpi;
 
-import org.jowidgets.common.types.Border;
-import org.jowidgets.spi.impl.swing.widgets.defaults.Colors;
+public class MainMenuImpl extends AbstractSwingMenu implements IMainMenuSpi {
 
-public final class BorderConvert {
+	private final MenuItemImpl menuItemDelegate;
 
-	private BorderConvert() {};
+	public MainMenuImpl() {
+		super(new JoMenu());
+		this.menuItemDelegate = new MenuItemImpl(getUiReference());
+	}
 
-	public static javax.swing.border.Border convert(final Border border) {
-		if (border != null) {
-			final String title = border.getTitle();
-			if (title != null && !title.isEmpty()) {
-				final TitledBorder result = BorderFactory.createTitledBorder(title);
-				result.setTitleColor(ColorConvert.convert(Colors.BORDER_TITLE));
-				return result;
-			}
-			else {
-				return BorderFactory.createEtchedBorder();
-			}
-		}
-		else {
-			return BorderFactory.createEmptyBorder();
-		}
+	@Override
+	public JoMenu getUiReference() {
+		return (JoMenu) super.getUiReference();
+	}
 
+	@Override
+	public void setText(final String text) {
+		menuItemDelegate.setText(text);
+	}
+
+	@Override
+	public void setMnemonic(final char mnemonic) {
+		menuItemDelegate.setMnemonic(mnemonic);
+	}
+
+	@Override
+	public void addMenuListener(final IMenuListener listener) {
+		getUiReference().addMenuListener(listener);
+	}
+
+	@Override
+	public void removeMenuListener(final IMenuListener listener) {
+		getUiReference().removeMenuListener(listener);
 	}
 
 }

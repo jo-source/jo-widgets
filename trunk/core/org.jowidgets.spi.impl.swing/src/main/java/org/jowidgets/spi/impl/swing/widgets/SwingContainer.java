@@ -44,7 +44,7 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.spi.impl.swing.widgets.internal.util.ChildRemover;
+import org.jowidgets.spi.impl.swing.widgets.util.ChildRemover;
 import org.jowidgets.spi.widgets.IContainerSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.util.Assert;

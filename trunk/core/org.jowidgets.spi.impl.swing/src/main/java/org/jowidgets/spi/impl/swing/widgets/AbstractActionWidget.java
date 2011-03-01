@@ -25,34 +25,35 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.impl.swing.util;
+package org.jowidgets.spi.impl.swing.widgets;
 
-import javax.swing.BorderFactory;
-import javax.swing.border.TitledBorder;
+import java.awt.Component;
 
-import org.jowidgets.common.types.Border;
-import org.jowidgets.spi.impl.swing.widgets.defaults.Colors;
+import org.jowidgets.spi.impl.controler.ActionObservable;
+import org.jowidgets.spi.widgets.IActionWidgetSpi;
 
-public final class BorderConvert {
+public abstract class AbstractActionWidget extends ActionObservable implements IActionWidgetSpi {
 
-	private BorderConvert() {};
+	private final SwingWidget swingWidgetDelegate;
 
-	public static javax.swing.border.Border convert(final Border border) {
-		if (border != null) {
-			final String title = border.getTitle();
-			if (title != null && !title.isEmpty()) {
-				final TitledBorder result = BorderFactory.createTitledBorder(title);
-				result.setTitleColor(ColorConvert.convert(Colors.BORDER_TITLE));
-				return result;
-			}
-			else {
-				return BorderFactory.createEtchedBorder();
-			}
-		}
-		else {
-			return BorderFactory.createEmptyBorder();
-		}
+	public AbstractActionWidget(final Component component) {
+		super();
+		this.swingWidgetDelegate = new SwingWidget(component);
+	}
 
+	@Override
+	public void setEnabled(final boolean enabled) {
+		swingWidgetDelegate.setEnabled(enabled);
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return swingWidgetDelegate.isEnabled();
+	}
+
+	@Override
+	public Component getUiReference() {
+		return swingWidgetDelegate.getUiReference();
 	}
 
 }

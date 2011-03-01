@@ -25,34 +25,49 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.impl.swing.util;
+package org.jowidgets.spi.impl.swing.widgets;
 
-import javax.swing.BorderFactory;
-import javax.swing.border.TitledBorder;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
-import org.jowidgets.common.types.Border;
-import org.jowidgets.spi.impl.swing.widgets.defaults.Colors;
+import org.jowidgets.spi.impl.swing.widgets.util.InputModifierDocument;
+import org.jowidgets.spi.verify.IInputVerifier;
+import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 
-public final class BorderConvert {
+public class TextFieldImpl extends AbstractTextInputControl {
 
-	private BorderConvert() {};
+	public TextFieldImpl(final ITextFieldSetupSpi setup) {
+		super(setup.isPasswordPresentation() ? new JPasswordField() : new JTextField());
 
-	public static javax.swing.border.Border convert(final Border border) {
-		if (border != null) {
-			final String title = border.getTitle();
-			if (title != null && !title.isEmpty()) {
-				final TitledBorder result = BorderFactory.createTitledBorder(title);
-				result.setTitleColor(ColorConvert.convert(Colors.BORDER_TITLE));
-				return result;
-			}
-			else {
-				return BorderFactory.createEtchedBorder();
-			}
-		}
-		else {
-			return BorderFactory.createEmptyBorder();
-		}
+		final IInputVerifier inputModifier = setup.getInputVerifier();
 
+		getUiReference().setDocument(new InputModifierDocument(getUiReference(), inputModifier));
+		registerTextComponent(getUiReference());
+	}
+
+	@Override
+	public JTextField getUiReference() {
+		return (JTextField) super.getUiReference();
+	}
+
+	@Override
+	public String getText() {
+		return getUiReference().getText();
+	}
+
+	@Override
+	public void setText(final String text) {
+		getUiReference().setText(text);
+	}
+
+	@Override
+	public void setTooltipText(final String tooltipText) {
+		getUiReference().setToolTipText(tooltipText);
+	}
+
+	@Override
+	public void setEditable(final boolean editable) {
+		getUiReference().setEditable(editable);
 	}
 
 }

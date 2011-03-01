@@ -25,34 +25,36 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.impl.swing.util;
+package org.jowidgets.spi.impl.swing.widgets;
 
-import javax.swing.BorderFactory;
-import javax.swing.border.TitledBorder;
+import javax.swing.JLabel;
 
-import org.jowidgets.common.types.Border;
-import org.jowidgets.spi.impl.swing.widgets.defaults.Colors;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.spi.impl.swing.image.SwingImageRegistry;
+import org.jowidgets.spi.widgets.IIconSpi;
+import org.jowidgets.spi.widgets.setup.IIconSetupSpi;
 
-public final class BorderConvert {
+public class IconImpl extends SwingControl implements IIconSpi {
 
-	private BorderConvert() {};
+	public IconImpl(final IIconSetupSpi setup) {
+		super(new JLabel());
 
-	public static javax.swing.border.Border convert(final Border border) {
-		if (border != null) {
-			final String title = border.getTitle();
-			if (title != null && !title.isEmpty()) {
-				final TitledBorder result = BorderFactory.createTitledBorder(title);
-				result.setTitleColor(ColorConvert.convert(Colors.BORDER_TITLE));
-				return result;
-			}
-			else {
-				return BorderFactory.createEtchedBorder();
-			}
-		}
-		else {
-			return BorderFactory.createEmptyBorder();
-		}
+		setIcon(setup.getIcon());
+	}
 
+	@Override
+	public void setIcon(final IImageConstant icon) {
+		getUiReference().setIcon(SwingImageRegistry.getInstance().getImageIcon(icon));
+	}
+
+	@Override
+	public void setToolTipText(final String text) {
+		getUiReference().setToolTipText(text);
+	}
+
+	@Override
+	public JLabel getUiReference() {
+		return (JLabel) super.getUiReference();
 	}
 
 }

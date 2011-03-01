@@ -25,34 +25,51 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.impl.swing.util;
+package org.jowidgets.spi.impl.swing.widgets;
 
-import javax.swing.BorderFactory;
-import javax.swing.border.TitledBorder;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
-import org.jowidgets.common.types.Border;
-import org.jowidgets.spi.impl.swing.widgets.defaults.Colors;
+import javax.swing.JMenuItem;
 
-public final class BorderConvert {
+import org.jowidgets.common.widgets.controler.IItemStateListener;
+import org.jowidgets.spi.impl.controler.ItemStateObservable;
+import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 
-	private BorderConvert() {};
+public class SelectableMenuItemImpl extends MenuItemImpl implements ISelectableMenuItemSpi {
 
-	public static javax.swing.border.Border convert(final Border border) {
-		if (border != null) {
-			final String title = border.getTitle();
-			if (title != null && !title.isEmpty()) {
-				final TitledBorder result = BorderFactory.createTitledBorder(title);
-				result.setTitleColor(ColorConvert.convert(Colors.BORDER_TITLE));
-				return result;
+	private final ItemStateObservable itemStateObservable;
+
+	public SelectableMenuItemImpl(final JMenuItem menuItem) {
+		super(menuItem);
+		this.itemStateObservable = new ItemStateObservable();
+
+		menuItem.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(final ItemEvent e) {
+				itemStateObservable.fireItemStateChanged();
 			}
-			else {
-				return BorderFactory.createEtchedBorder();
-			}
-		}
-		else {
-			return BorderFactory.createEmptyBorder();
-		}
+		});
+	}
 
+	@Override
+	public boolean isSelected() {
+		return getUiReference().isSelected();
+	}
+
+	@Override
+	public void setSelected(final boolean selected) {
+		getUiReference().setSelected(selected);
+	}
+
+	@Override
+	public void addItemListener(final IItemStateListener listener) {
+		itemStateObservable.addItemListener(listener);
+	}
+
+	@Override
+	public void removeItemListener(final IItemStateListener listener) {
+		itemStateObservable.removeItemListener(listener);
 	}
 
 }

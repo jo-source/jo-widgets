@@ -25,34 +25,37 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.impl.swing.util;
+package org.jowidgets.spi.impl.swing.widgets;
 
-import javax.swing.BorderFactory;
-import javax.swing.border.TitledBorder;
+import javax.swing.JSeparator;
 
-import org.jowidgets.common.types.Border;
-import org.jowidgets.spi.impl.swing.widgets.defaults.Colors;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Accelerator;
+import org.jowidgets.spi.widgets.IMenuItemSpi;
 
-public final class BorderConvert {
+public class SeparatorMenuItemImpl extends SwingWidget implements IMenuItemSpi {
 
-	private BorderConvert() {};
-
-	public static javax.swing.border.Border convert(final Border border) {
-		if (border != null) {
-			final String title = border.getTitle();
-			if (title != null && !title.isEmpty()) {
-				final TitledBorder result = BorderFactory.createTitledBorder(title);
-				result.setTitleColor(ColorConvert.convert(Colors.BORDER_TITLE));
-				return result;
-			}
-			else {
-				return BorderFactory.createEtchedBorder();
-			}
-		}
-		else {
-			return BorderFactory.createEmptyBorder();
-		}
-
+	public SeparatorMenuItemImpl() {
+		super(new JSeparator());
 	}
+
+	@Override
+	public JSeparator getUiReference() {
+		return (JSeparator) super.getUiReference();
+	}
+
+	@Override
+	public void setIcon(final IImageConstant icon) {}
+
+	@Override
+	public void setText(final String text) {}
+
+	@Override
+	public void setToolTipText(final String text) {}
+
+	@Override
+	public void setMnemonic(final char mnemonic) {}
+
+	public void setAccelerator(final Accelerator accelerator) {}
 
 }

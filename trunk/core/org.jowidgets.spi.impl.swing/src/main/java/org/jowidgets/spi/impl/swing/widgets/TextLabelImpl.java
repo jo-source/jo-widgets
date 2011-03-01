@@ -25,34 +25,61 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.impl.swing.util;
+package org.jowidgets.spi.impl.swing.widgets;
 
-import javax.swing.BorderFactory;
-import javax.swing.border.TitledBorder;
+import javax.swing.JLabel;
 
-import org.jowidgets.common.types.Border;
-import org.jowidgets.spi.impl.swing.widgets.defaults.Colors;
+import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Markup;
+import org.jowidgets.spi.impl.swing.util.AlignmentConvert;
+import org.jowidgets.spi.impl.swing.util.FontProvider;
+import org.jowidgets.spi.widgets.ITextLabelSpi;
+import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 
-public final class BorderConvert {
+public class TextLabelImpl extends SwingControl implements ITextLabelSpi {
 
-	private BorderConvert() {};
+	public TextLabelImpl(final ITextLabelSetupSpi setup) {
+		super(new JLabel());
 
-	public static javax.swing.border.Border convert(final Border border) {
-		if (border != null) {
-			final String title = border.getTitle();
-			if (title != null && !title.isEmpty()) {
-				final TitledBorder result = BorderFactory.createTitledBorder(title);
-				result.setTitleColor(ColorConvert.convert(Colors.BORDER_TITLE));
-				return result;
-			}
-			else {
-				return BorderFactory.createEtchedBorder();
-			}
+		setText(setup.getText());
+		setToolTipText(setup.getToolTipText());
+
+		setMarkup(setup.getMarkup());
+
+		getUiReference().setHorizontalAlignment(AlignmentConvert.convert(setup.getAlignment()));
+	}
+
+	@Override
+	public JLabel getUiReference() {
+		return (JLabel) super.getUiReference();
+	}
+
+	@Override
+	public void setText(String text) {
+		//allow line breaks by using html
+		if (text != null && text.contains("\n")) {
+			text = "<html>" + text.replace("\n", "<br>") + "</html>";
 		}
-		else {
-			return BorderFactory.createEmptyBorder();
-		}
+		getUiReference().setText(text);
+	}
 
+	@Override
+	public void setToolTipText(final String text) {
+		getUiReference().setToolTipText(text);
+	}
+
+	@Override
+	public void setMarkup(final Markup markup) {
+		final JLabel label = getUiReference();
+		label.setFont(FontProvider.deriveFont(label.getFont(), markup));
+	}
+
+	@Override
+	public void setBackgroundColor(final IColorConstant colorValue) {
+		if (colorValue != null) {
+			getUiReference().setOpaque(true);
+			super.setBackgroundColor(colorValue);
+		}
 	}
 
 }

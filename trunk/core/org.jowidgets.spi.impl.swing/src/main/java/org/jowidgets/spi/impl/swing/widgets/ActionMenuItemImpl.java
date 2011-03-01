@@ -25,34 +25,47 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.impl.swing.util;
+package org.jowidgets.spi.impl.swing.widgets;
 
-import javax.swing.BorderFactory;
-import javax.swing.border.TitledBorder;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import org.jowidgets.common.types.Border;
-import org.jowidgets.spi.impl.swing.widgets.defaults.Colors;
+import javax.swing.JMenuItem;
 
-public final class BorderConvert {
+import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.spi.impl.controler.ActionObservable;
+import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 
-	private BorderConvert() {};
+public class ActionMenuItemImpl extends MenuItemImpl implements IActionMenuItemSpi {
 
-	public static javax.swing.border.Border convert(final Border border) {
-		if (border != null) {
-			final String title = border.getTitle();
-			if (title != null && !title.isEmpty()) {
-				final TitledBorder result = BorderFactory.createTitledBorder(title);
-				result.setTitleColor(ColorConvert.convert(Colors.BORDER_TITLE));
-				return result;
+	private final ActionObservable actionObservable;
+
+	public ActionMenuItemImpl() {
+		this(new JMenuItem());
+	}
+
+	public ActionMenuItemImpl(final JMenuItem menuItem) {
+		super(menuItem);
+
+		this.actionObservable = new ActionObservable();
+
+		getUiReference().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(final ActionEvent e) {
+				actionObservable.fireActionPerformed();
 			}
-			else {
-				return BorderFactory.createEtchedBorder();
-			}
-		}
-		else {
-			return BorderFactory.createEmptyBorder();
-		}
+		});
+	}
 
+	@Override
+	public void addActionListener(final IActionListener actionListener) {
+		actionObservable.addActionListener(actionListener);
+	}
+
+	@Override
+	public void removeActionListener(final IActionListener actionListener) {
+		actionObservable.removeActionListener(actionListener);
 	}
 
 }

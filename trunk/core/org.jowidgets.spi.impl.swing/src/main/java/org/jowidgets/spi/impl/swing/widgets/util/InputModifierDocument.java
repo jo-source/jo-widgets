@@ -25,34 +25,46 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.impl.swing.util;
+package org.jowidgets.spi.impl.swing.widgets.util;
 
-import javax.swing.BorderFactory;
-import javax.swing.border.TitledBorder;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.JTextComponent;
+import javax.swing.text.PlainDocument;
 
-import org.jowidgets.common.types.Border;
-import org.jowidgets.spi.impl.swing.widgets.defaults.Colors;
+import org.jowidgets.spi.verify.IInputVerifier;
+import org.jowidgets.util.Assert;
 
-public final class BorderConvert {
+public class InputModifierDocument extends PlainDocument {
 
-	private BorderConvert() {};
+	private static final long serialVersionUID = 6900501331487160350L;
 
-	public static javax.swing.border.Border convert(final Border border) {
-		if (border != null) {
-			final String title = border.getTitle();
-			if (title != null && !title.isEmpty()) {
-				final TitledBorder result = BorderFactory.createTitledBorder(title);
-				result.setTitleColor(ColorConvert.convert(Colors.BORDER_TITLE));
-				return result;
-			}
-			else {
-				return BorderFactory.createEtchedBorder();
-			}
+	private final JTextComponent textComponent;
+	private final IInputVerifier inputVerifier;
+
+	public InputModifierDocument(final JTextComponent textComponent, final IInputVerifier inputVerifier) {
+		super();
+		Assert.paramNotNull(textComponent, "textComponent");
+		Assert.paramNotNull(inputVerifier, "inputVerifier");
+
+		this.textComponent = textComponent;
+		this.inputVerifier = inputVerifier;
+	}
+
+	@Override
+	public void insertString(final int offs, final String str, final AttributeSet a) throws BadLocationException {
+		final String currentText = textComponent.getText();
+		if (inputVerifier.verify(currentText, str, offs, offs + str.length())) {
+			super.insertString(offs, str, a);
 		}
-		else {
-			return BorderFactory.createEmptyBorder();
-		}
+	}
 
+	@Override
+	public void remove(final int offs, final int len) throws BadLocationException {
+		final String currentText = textComponent.getText();
+		if (inputVerifier.verify(currentText, "", offs, offs + len)) {
+			super.remove(offs, len);
+		}
 	}
 
 }
