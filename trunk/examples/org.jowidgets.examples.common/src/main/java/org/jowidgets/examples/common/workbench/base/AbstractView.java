@@ -56,14 +56,14 @@ public abstract class AbstractView implements IView {
 	@Override
 	public void onVisibleStateChanged(final boolean visible) {
 		// CHECKSTYLE:OFF
-		System.out.println(getId() + " onVisibleStateChanged, active= " + visible);
+		System.out.println(getId() + " onVisibleStateChanged, visible= " + visible);
 		// CHECKSTYLE:ON
 	}
 
 	@Override
 	public void onHiddenStateChanged(final boolean hidden) {
 		// CHECKSTYLE:OFF
-		System.out.println(getId() + " onVisibleStateChanged, active= " + hidden);
+		System.out.println(getId() + " onHiddenStateChanged, hidden= " + hidden);
 		// CHECKSTYLE:ON
 	}
 

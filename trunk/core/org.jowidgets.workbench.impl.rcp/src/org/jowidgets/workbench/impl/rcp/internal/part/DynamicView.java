@@ -105,6 +105,9 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 			dummyParent.dispose();
 			view = PartSupport.getInstance().getView(viewId);
 			viewContext = closedViewContext;
+			if (PartSupport.getInstance().isViewHiding(viewId)) {
+				view.onHiddenStateChanged(false);
+			}
 			getViewSite().getPage().addPartListener(DynamicView.this);
 		}
 		else {
@@ -238,24 +241,30 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 	@Override
 	public void partClosed(final IWorkbenchPartReference partRef) {
 		final IWorkbenchPart part = partRef.getPart(false);
-		if (part == this
-			&& view != null
-			&& !PlatformUI.getWorkbench().isClosing()
-			&& !PartSupport.getInstance().isViewClosing(viewId)) {
-			final VetoHolder vetoHolder = new VetoHolder();
-			view.onClose(vetoHolder);
-			if (vetoHolder.hasVeto()) {
-				// re-parent composite to re-use it when opening view again
-				parent.setParent(new Shell());
-				final IViewReference viewRef = (IViewReference) partRef;
-				try {
-					PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(
-							viewRef.getId(),
-							viewRef.getSecondaryId(),
-							IWorkbenchPage.VIEW_ACTIVATE);
+		if (part == this && view != null && !PlatformUI.getWorkbench().isClosing()) {
+			if (!PartSupport.getInstance().isViewClosing(viewId)) {
+				if (PartSupport.getInstance().isViewHiding(viewId)) {
+					// re-parent composite to re-use it when opening view again
+					parent.setParent(new Shell());
+					view.onHiddenStateChanged(true);
 				}
-				catch (final PartInitException e) {
-					throw new RuntimeException(e);
+				else {
+					final VetoHolder vetoHolder = new VetoHolder();
+					view.onClose(vetoHolder);
+					if (vetoHolder.hasVeto()) {
+						// re-parent composite to re-use it when opening view again
+						parent.setParent(new Shell());
+						final IViewReference viewRef = (IViewReference) partRef;
+						try {
+							PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(
+									viewRef.getId(),
+									viewRef.getSecondaryId(),
+									IWorkbenchPage.VIEW_ACTIVATE);
+						}
+						catch (final PartInitException e) {
+							throw new RuntimeException(e);
+						}
+					}
 				}
 			}
 			else {

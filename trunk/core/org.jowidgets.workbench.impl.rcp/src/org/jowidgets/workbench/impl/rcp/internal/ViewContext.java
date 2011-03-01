@@ -48,6 +48,7 @@ public final class ViewContext implements IViewContext {
 	private final Composite parent;
 	private final IComponentContext componentContext;
 	private final ToolBarHelper toolBarHelper;
+	private boolean hidden;
 
 	public ViewContext(final String primaryViewId, final Composite parent, final IComponentContext componentContext) {
 		this.primaryViewId = primaryViewId;
@@ -80,12 +81,22 @@ public final class ViewContext implements IViewContext {
 
 	@Override
 	public void activate() {
-		PartSupport.getInstance().activateView(this);
+		if (!hidden) {
+			// do not activate hidden views
+			PartSupport.getInstance().activateView(this);
+		}
 	}
 
 	@Override
-	public void setHidden(final boolean hidden) {
-		// TODO HRW is this supported by RCP workbench?
+	public void setHidden(final boolean newHidden) {
+		if (hidden && !newHidden) {
+			PartSupport.getInstance().unhideView(this);
+			hidden = false;
+		}
+		else if (!hidden && newHidden) {
+			PartSupport.getInstance().hideView(this);
+			hidden = true;
+		}
 	}
 
 	@Override

@@ -61,6 +61,7 @@ public final class PartSupport {
 	private final Map<String, ViewContext> viewContextMap = new HashMap<String, ViewContext>();
 	private final Map<String, IView> viewMap = new HashMap<String, IView>();
 	private final Set<String> closingViewSet = new HashSet<String>();
+	private final Set<String> hidingViewSet = new HashSet<String>();
 
 	private PartSupport() {}
 
@@ -254,6 +255,50 @@ public final class PartSupport {
 						}
 						break;
 					}
+				}
+				break;
+			}
+		}
+	}
+
+	public void hideView(final ViewContext viewContext) {
+		for (final Entry<String, ViewContext> viewContextEntry : viewContextMap.entrySet()) {
+			// find viewId
+			if (viewContextEntry.getValue() == viewContext) {
+				final String viewId = viewContextEntry.getKey();
+				final String primaryViewId = viewContext.getPrimaryViewId();
+				for (final IWorkbenchPage page : PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPages()) {
+					final IViewReference viewRef = page.findViewReference(primaryViewId, viewId);
+					if (viewRef != null) {
+						hidingViewSet.add(viewId);
+						page.hideView(viewRef);
+						break;
+					}
+				}
+				break;
+			}
+		}
+	}
+
+	public boolean isViewHiding(final String viewId) {
+		return hidingViewSet.contains(viewId);
+	}
+
+	public void unhideView(final ViewContext viewContext) {
+		for (final Entry<String, ViewContext> viewContextEntry : viewContextMap.entrySet()) {
+			// find viewId
+			if (viewContextEntry.getValue() == viewContext) {
+				final String viewId = viewContextEntry.getKey();
+				final String primaryViewId = viewContext.getPrimaryViewId();
+				try {
+					PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(
+							primaryViewId,
+							viewId,
+							IWorkbenchPage.VIEW_ACTIVATE);
+					hidingViewSet.remove(viewId);
+				}
+				catch (final PartInitException e) {
+					throw new RuntimeException(e);
 				}
 				break;
 			}

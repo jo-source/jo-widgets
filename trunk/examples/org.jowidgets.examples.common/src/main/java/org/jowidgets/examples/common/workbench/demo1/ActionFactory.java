@@ -262,4 +262,30 @@ public class ActionFactory {
 		return actionBuilder.build();
 	}
 
+	public IAction createHideViewAction(final IViewContext context) {
+		final IActionBuilder actionBuilder = Toolkit.getActionBuilderFactory().create();
+		actionBuilder.setText("Hide this View");
+		actionBuilder.setIcon(SilkIcons.ARROW_OUT);
+		actionBuilder.setCommand(new ICommandExecutor() {
+			@Override
+			public void execute(final IExecutionContext executionContext) throws Exception {
+				context.setHidden(true);
+			}
+		});
+		return actionBuilder.build();
+	}
+
+	public IAction createUnHideViewAction(final IViewContext context, final String viewLabel) {
+		final IActionBuilder actionBuilder = Toolkit.getActionBuilderFactory().create();
+		actionBuilder.setText("Unhide " + viewLabel);
+		actionBuilder.setIcon(SilkIcons.ARROW_IN);
+		actionBuilder.setCommand(new ICommandExecutor() {
+			@Override
+			public void execute(final IExecutionContext executionContext) throws Exception {
+				context.setHidden(false);
+			}
+		});
+		return actionBuilder.build();
+	}
+
 }

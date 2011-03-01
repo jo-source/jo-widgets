@@ -51,8 +51,6 @@ public class ViewDemo3 extends AbstractView implements IView {
 		container.add(bpf.textLabel("View content 3"), "");
 		final ActionFactory actionFactory = new ActionFactory();
 		context.getToolBarMenu().addAction(actionFactory.createRemoveViewAction(context.getComponentContext(), this));
-		context.getComponentTreeNodeContext().getPopupMenu().addAction(
-				actionFactory.createActivateViewAction(context, DEFAULT_LABEL));
 	}
 
 }
