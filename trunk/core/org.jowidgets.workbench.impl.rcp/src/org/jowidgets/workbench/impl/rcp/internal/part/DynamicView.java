@@ -36,9 +36,11 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IPartListener2;
+import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jowidgets.api.model.IListModelListener;
@@ -211,7 +213,18 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 		if (part == this && view != null && !PlatformUI.getWorkbench().isClosing()) {
 			final VetoHolder vetoHolder = new VetoHolder();
 			view.onClose(vetoHolder);
-			// TODO HRW restore view after veto?
+			if (vetoHolder.hasVeto()) {
+				final IViewReference viewRef = (IViewReference) partRef;
+				try {
+					PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(
+							viewRef.getId(),
+							viewRef.getSecondaryId(),
+							IWorkbenchPage.VIEW_ACTIVATE);
+				}
+				catch (final PartInitException e) {
+					throw new RuntimeException(e);
+				}
+			}
 		}
 	}
 
