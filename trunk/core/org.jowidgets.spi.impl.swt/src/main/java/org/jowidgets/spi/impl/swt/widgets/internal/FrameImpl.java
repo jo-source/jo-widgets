@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2010, Michael Grossmann, Lukas Gross
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -30,10 +30,10 @@ package org.jowidgets.spi.impl.swt.widgets.internal;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.spi.widgets.setup.IFrameSetupSpi;
+import org.jowidgets.test.spi.widgets.IFrameUiSpi;
 
-public class FrameImpl extends WindowImpl implements IFrameSpi {
+public class FrameImpl extends WindowImpl implements IFrameUiSpi {
 
 	public FrameImpl(final IGenericWidgetFactory factory, final IFrameSetupSpi setup) {
 		super(factory, new Shell(getStyle(setup)), setup.isCloseable());
@@ -56,4 +56,8 @@ public class FrameImpl extends WindowImpl implements IFrameSpi {
 		return result;
 	}
 
+	@Override
+	public boolean isTestable() {
+		return true;
+	}
 }

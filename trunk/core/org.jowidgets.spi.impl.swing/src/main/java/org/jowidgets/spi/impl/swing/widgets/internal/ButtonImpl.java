@@ -27,9 +27,12 @@
  */
 package org.jowidgets.spi.impl.swing.widgets.internal;
 
+import java.awt.AWTException;
 import java.awt.Insets;
+import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
 
 import javax.swing.JButton;
 
@@ -38,10 +41,10 @@ import org.jowidgets.common.types.Markup;
 import org.jowidgets.spi.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.spi.impl.swing.util.AlignmentConvert;
 import org.jowidgets.spi.impl.swing.util.FontProvider;
-import org.jowidgets.spi.widgets.IButtonSpi;
 import org.jowidgets.spi.widgets.setup.IButtonSetupSpi;
+import org.jowidgets.test.spi.widgets.IButtonUiSpi;
 
-public class ButtonImpl extends AbstractActionControl implements IButtonSpi {
+public class ButtonImpl extends AbstractActionControl implements IButtonUiSpi {
 
 	public ButtonImpl(final IButtonSetupSpi setup) {
 		super(new JButton());
@@ -96,6 +99,31 @@ public class ButtonImpl extends AbstractActionControl implements IButtonSpi {
 	@Override
 	public void requestFocus() {
 		getUiReference().requestFocusInWindow();
+	}
+
+	@Override
+	public boolean isTestable() {
+		return true;
+	}
+
+	@Override
+	public void push() {
+		Robot robo = null;
+		try {
+			robo = new Robot();
+		}
+		catch (final AWTException e) {
+			// CHECKSTYLE:OFF
+			e.printStackTrace();
+			// CHECKSTYLE:ON
+			return;
+		}
+		final JButton button = getUiReference();
+		robo.mouseMove(
+				button.getLocationOnScreen().x + button.getWidth() / 2,
+				button.getLocationOnScreen().y + button.getHeight() / 2);
+		robo.mousePress(InputEvent.BUTTON1_MASK);
+		robo.mouseRelease(InputEvent.BUTTON1_MASK);
 	}
 
 }

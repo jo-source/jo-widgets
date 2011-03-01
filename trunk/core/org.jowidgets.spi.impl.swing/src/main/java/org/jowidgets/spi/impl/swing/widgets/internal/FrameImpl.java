@@ -42,12 +42,12 @@ import org.jowidgets.spi.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.spi.impl.swing.util.ColorConvert;
 import org.jowidgets.spi.impl.swing.widgets.SwingWindow;
 import org.jowidgets.spi.impl.swing.widgets.internal.util.ChildRemover;
-import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.spi.widgets.IMenuBarSpi;
 import org.jowidgets.spi.widgets.setup.IFrameSetupSpi;
+import org.jowidgets.test.spi.widgets.IFrameUiSpi;
 import org.jowidgets.util.TypeCast;
 
-public class FrameImpl extends SwingWindow implements IFrameSpi {
+public class FrameImpl extends SwingWindow implements IFrameUiSpi {
 
 	public FrameImpl(final IGenericWidgetFactory factory, final SwingImageRegistry imageRegistry, final IFrameSetupSpi setup) {
 		super(factory, new JFrame(), setup.isCloseable());
@@ -97,6 +97,11 @@ public class FrameImpl extends SwingWindow implements IFrameSpi {
 		final JMenuBar menuBar = new JMenuBar();
 		getUiReference().setJMenuBar(menuBar);
 		return new MenuBarImpl(menuBar);
+	}
+
+	@Override
+	public boolean isTestable() {
+		return true;
 	}
 
 }

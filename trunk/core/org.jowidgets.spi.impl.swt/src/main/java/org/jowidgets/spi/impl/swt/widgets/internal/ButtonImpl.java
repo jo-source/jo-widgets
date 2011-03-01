@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2010, Michael Grossmann, Lukas Gross
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -29,8 +29,10 @@ package org.jowidgets.spi.impl.swt.widgets.internal;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.jowidgets.common.image.IImageConstant;
@@ -38,10 +40,10 @@ import org.jowidgets.common.types.Markup;
 import org.jowidgets.spi.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.util.AlignmentConvert;
 import org.jowidgets.spi.impl.swt.util.FontProvider;
-import org.jowidgets.spi.widgets.IButtonSpi;
 import org.jowidgets.spi.widgets.setup.IButtonSetupSpi;
+import org.jowidgets.test.spi.widgets.IButtonUiSpi;
 
-public class ButtonImpl extends AbstractActionControl implements IButtonSpi {
+public class ButtonImpl extends AbstractActionControl implements IButtonUiSpi {
 
 	public ButtonImpl(final Object parentUiReference, final IButtonSetupSpi setup) {
 		super(new Button((Composite) parentUiReference, SWT.NONE));
@@ -99,4 +101,37 @@ public class ButtonImpl extends AbstractActionControl implements IButtonSpi {
 		getUiReference().setFocus();
 	}
 
+	@Override
+	public boolean isTestable() {
+		return true;
+	}
+
+	@Override
+	public void push() {
+		final Event e = new Event();
+		boolean focus = getUiReference().forceFocus();
+		// TODO LG remove this after testing
+		focus = false;
+		if (focus) {
+			e.type = SWT.KeyDown;
+			e.keyCode = SWT.CR;
+			e.widget = getUiReference();
+			Display.getCurrent().post(e);
+		}
+		else {
+			e.type = SWT.MouseMove;
+			final Point widgetPos = getUiReference().toDisplay(getUiReference().getLocation().x, getUiReference().getLocation().y);
+			e.x = widgetPos.x;
+			e.y = widgetPos.y;
+			Display.getCurrent().post(e);
+
+			// TODO LG exception handling when mouse couldn't be pressed/released
+			e.type = SWT.MouseDown;
+			e.button = 1;
+			Display.getCurrent().post(e);
+
+			e.type = SWT.MouseUp;
+			Display.getCurrent().post(e);
+		}
+	}
 }
