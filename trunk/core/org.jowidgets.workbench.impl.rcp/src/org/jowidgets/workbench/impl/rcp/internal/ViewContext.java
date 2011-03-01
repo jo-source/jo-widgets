@@ -40,6 +40,7 @@ import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 import org.jowidgets.workbench.api.IViewContext;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 import org.jowidgets.workbench.api.IWorkbenchContext;
+import org.jowidgets.workbench.impl.rcp.internal.part.PartSupport;
 
 public final class ViewContext implements IViewContext {
 
@@ -79,7 +80,7 @@ public final class ViewContext implements IViewContext {
 
 	@Override
 	public void activate() {
-		// TODO HRW implement
+		PartSupport.getInstance().activateView(this);
 	}
 
 	@Override

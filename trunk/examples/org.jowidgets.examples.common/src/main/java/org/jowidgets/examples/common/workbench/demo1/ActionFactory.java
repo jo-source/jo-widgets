@@ -53,6 +53,7 @@ import org.jowidgets.workbench.api.IComponentTreeNode;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 import org.jowidgets.workbench.api.IFolderContext;
 import org.jowidgets.workbench.api.IView;
+import org.jowidgets.workbench.api.IViewContext;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 
 public class ActionFactory {
@@ -243,6 +244,19 @@ public class ActionFactory {
 			@Override
 			public void execute(final IExecutionContext executionContext) throws Exception {
 				context.removeView(view);
+			}
+		});
+		return actionBuilder.build();
+	}
+
+	public IAction createActivateViewAction(final IViewContext context, final String viewLabel) {
+		final IActionBuilder actionBuilder = Toolkit.getActionBuilderFactory().create();
+		actionBuilder.setText("Activate " + viewLabel);
+		actionBuilder.setIcon(SilkIcons.ACCEPT);
+		actionBuilder.setCommand(new ICommandExecutor() {
+			@Override
+			public void execute(final IExecutionContext executionContext) throws Exception {
+				context.activate();
 			}
 		});
 		return actionBuilder.build();

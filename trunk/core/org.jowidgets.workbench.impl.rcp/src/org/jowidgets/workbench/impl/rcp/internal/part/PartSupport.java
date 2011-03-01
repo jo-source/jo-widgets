@@ -237,4 +237,27 @@ public final class PartSupport {
 		return closingViewSet.contains(viewId);
 	}
 
+	public void activateView(final ViewContext viewContext) {
+		for (final Entry<String, ViewContext> viewContextEntry : viewContextMap.entrySet()) {
+			// find viewId
+			if (viewContextEntry.getValue() == viewContext) {
+				final String viewId = viewContextEntry.getKey();
+				final String primaryViewId = viewContext.getPrimaryViewId();
+				for (final IWorkbenchPage page : PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPages()) {
+					final IViewReference viewRef = page.findViewReference(primaryViewId, viewId);
+					if (viewRef != null) {
+						try {
+							page.showView(primaryViewId, viewId, IWorkbenchPage.VIEW_ACTIVATE);
+						}
+						catch (final PartInitException e) {
+							throw new RuntimeException(e);
+						}
+						break;
+					}
+				}
+				break;
+			}
+		}
+	}
+
 }
