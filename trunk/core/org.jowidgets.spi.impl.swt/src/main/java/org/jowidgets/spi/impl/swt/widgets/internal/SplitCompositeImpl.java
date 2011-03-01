@@ -59,14 +59,11 @@ public class SplitCompositeImpl extends SwtControl implements ISplitCompositeSpi
 		first.setLayout(setup.getFirstLayout());
 		second.setLayout(setup.getSecondLayout());
 
-		sashForm.setWeights(getWeights(setup.getWeight()));
-		sashForm.setSashWidth(setup.getDividerSize() + 1);
-	}
+		final int firstWeight = (int) (setup.getWeight() * 1000);
+		final int secondWeight = (int) (1000 - setup.getWeight() * 1000);
+		sashForm.setWeights(firstWeight, secondWeight);
 
-	private int[] getWeights(final double weight) {
-		final int firstWeigth = (int) (weight * 1000);
-		final int secondWeigth = (int) (1000 - weight * 1000);
-		return new int[] {firstWeigth, secondWeigth};
+		sashForm.setSashWidth(setup.getDividerSize() + 1);
 	}
 
 	@Override

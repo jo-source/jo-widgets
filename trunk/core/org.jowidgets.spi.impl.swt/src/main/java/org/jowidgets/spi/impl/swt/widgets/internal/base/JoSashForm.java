@@ -47,23 +47,34 @@ import org.jowidgets.spi.widgets.setup.ISplitCompositeSetupSpi;
 
 public class JoSashForm extends Composite {
 
-	static final int DRAG_MINIMUM = 40;
+	protected static final int DRAG_MINIMUM = 40;
 
 	private final Listener sashListener;
-	private boolean initialized = false;
-	private int sashWidth = 3;
-	private int sashStyle;
+	private boolean initialized;
+	private int sashWidth;
+	private final int sashStyle;
 	private Sash sash = null;
-	private Color background = null;
-	private Color foreground = null;
+	private Color background;
+	private Color foreground;
 	private SplitResizePolicy stretchFactor;
-	private int[] weights = new int[2];
-	private JoSashFormLayout layout = null;
-	private List<Control> controls = new ArrayList<Control>();;
-	private Control maxControl = null;
+	private int firstWeight;
+	private int secondWeight;
+	private final JoSashFormLayout layout;
+	private Control maxControl;
+	private Control first;
+	private Control second;
 
 	public JoSashForm(final Composite parent, final ISplitCompositeSetupSpi setup) {
 		super(parent, checkStyle(setup));
+		initialized = false;
+		first = null;
+		second = null;
+		maxControl = null;
+		background = null;
+		foreground = null;
+		sashWidth = 3;
+		firstWeight = 0;
+		secondWeight = 0;
 		layout = new JoSashFormLayout();
 		super.setLayout(layout);
 		sashStyle = getSashStyle(setup);
@@ -74,9 +85,15 @@ public class JoSashForm extends Composite {
 				onDragSash(e);
 			}
 		};
+
+		sash = new Sash(this, sashStyle);
+		sash.setBackground(background);
+		sash.setForeground(foreground);
+		sash.setToolTipText(getToolTipText());
+		sash.addListener(SWT.Selection, sashListener);
 	}
 
-	static int checkStyle(final ISplitCompositeSetupSpi setup) {
+	private static int checkStyle(final ISplitCompositeSetupSpi setup) {
 		final Orientation orientation = setup.getOrientation();
 		final int style = OrientationConvert.convert(orientation);
 		final int mask = SWT.BORDER | SWT.LEFT_TO_RIGHT | SWT.RIGHT_TO_LEFT;
@@ -84,7 +101,6 @@ public class JoSashForm extends Composite {
 	}
 
 	private int getSashStyle(final ISplitCompositeSetupSpi setup) {
-		//		setResizePolicyInternal(setup);
 		stretchFactor = setup.getResizePolicy();
 		final Orientation orientation = setup.getOrientation();
 		final int style = OrientationConvert.convert(orientation);
@@ -96,48 +112,16 @@ public class JoSashForm extends Composite {
 		return returnValue;
 	}
 
-	//	private void setResizePolicyInternal(final ISplitCompositeSetupSpi setup) {
-	//		final SplitResizePolicy resizePolicy = setup.getResizePolicy();
-	//		if (resizePolicy == SplitResizePolicy.RESIZE_FIRST) {
-	//			stretchFactor = FIRST;
-	//		}
-	//		else if (resizePolicy == SplitResizePolicy.RESIZE_SECOND) {
-	//			stretchFactor = SECOND;
-	//		}
-	//		else if (resizePolicy == SplitResizePolicy.RESIZE_BOTH) {
-	//			stretchFactor = BOTH;
-	//		}
-	//	}
-
-	public Sash createSash() {
-		disposeSashes();
-		final Sash returnSash = new Sash(this, sashStyle);
-		returnSash.setBackground(background);
-		returnSash.setForeground(foreground);
-		returnSash.setToolTipText(getToolTipText());
-		returnSash.addListener(SWT.Selection, sashListener);
-		return returnSash;
-	}
-
-	private void disposeSashes() {
-		sash = null;
-		for (final Object child : this.getChildren()) {
-			if (child instanceof Sash) {
-				((Sash) child).dispose();
-			}
-		}
-	}
-
 	public int getOrientation() {
 		checkWidget();
 		return (sashStyle & SWT.VERTICAL) != 0 ? SWT.HORIZONTAL : SWT.VERTICAL;
 	}
 
-	public int getSashWidth() {
+	protected int getSashWidth() {
 		return sashWidth;
 	}
 
-	public int getCheckedSashWidth() {
+	protected int getCheckedSashWidth() {
 		checkWidget();
 		return sashWidth;
 	}
@@ -152,18 +136,22 @@ public class JoSashForm extends Composite {
 		return style;
 	}
 
-	public Control getMaximizedControl() {
+	protected Control getMaximizedControl() {
 		checkWidget();
 		return this.getMaxControl();
 	}
 
-	public int[] getWeights() {
+	protected int getFirstWeight() {
 		checkWidget();
-
-		return weights;
+		return firstWeight;
 	}
 
-	public List<Control> getControls(final boolean onlyVisible) {
+	protected int getSecondWeight() {
+		checkWidget();
+		return secondWeight;
+	}
+
+	protected void initializeControls(final boolean onlyVisible) {
 		final Control[] children = getChildren();
 		final List<Control> result = new ArrayList<Control>();
 		for (int i = 0; i < children.length; i++) {
@@ -176,29 +164,30 @@ public class JoSashForm extends Composite {
 
 			result.add(children[i]);
 		}
-		return result;
+		if (first == null && second == null && result.size() == 0) {
+			throw new IllegalStateException("The JoSashForm has no visible Sash-childs");
+		}
+		first = result.get(0);
+		second = result.get(1);
 	}
 
-	public void onDragSash(final Event event) {
+	private void onDragSash(final Event event) {
 		event.doit = checkSizes((Sash) event.widget, event);
 	}
 
-	public boolean checkSizes(final Sash sash, final Event event) {
+	private boolean checkSizes(final Sash sash, final Event event) {
 
 		if (sash == null) {
 			return false;
 		}
 
-		if (controls.size() < 2) {
-			controls.get(0).setBounds(getClientArea());
+		if (second == null) {
+			first.setBounds(getClientArea());
 			return false;
 		}
 
-		final Control c1 = controls.get(0);
-		final Control c2 = controls.get(1);
-
-		final Rectangle b1 = c1.getBounds();
-		final Rectangle b2 = c2.getBounds();
+		final Rectangle b1 = first.getBounds();
+		final Rectangle b2 = second.getBounds();
 
 		final Rectangle sashBounds = sash.getBounds();
 
@@ -244,25 +233,25 @@ public class JoSashForm extends Composite {
 			}
 		}
 
-		c1.setBounds(b1);
+		first.setBounds(b1);
 		sash.setBounds(event.x, event.y, sashBounds.width, sashBounds.height);
-		c2.setBounds(b2);
+		second.setBounds(b2);
 
 		if (layout.getSave() > 0) {
 			if (getOrientation() == SWT.HORIZONTAL) {
 				if (getStretchFactor() == SplitResizePolicy.RESIZE_FIRST) {
-					layout.setSave(c2.getBounds().width);
+					layout.setSave(second.getBounds().width);
 				}
 				else if (getStretchFactor() == SplitResizePolicy.RESIZE_SECOND) {
-					layout.setSave(c1.getBounds().width);
+					layout.setSave(first.getBounds().width);
 				}
 			}
 			else {
 				if (getStretchFactor() == SplitResizePolicy.RESIZE_FIRST) {
-					layout.setSave(c2.getBounds().height);
+					layout.setSave(second.getBounds().height);
 				}
 				else if (getStretchFactor() == SplitResizePolicy.RESIZE_SECOND) {
-					layout.setSave(c1.getBounds().height);
+					layout.setSave(first.getBounds().height);
 				}
 			}
 
@@ -272,47 +261,20 @@ public class JoSashForm extends Composite {
 	}
 
 	private void correctWeights() {
-		if (controls.size() < 2) {
+		if (second == null) {
 			return;
 		}
 
 		final Rectangle area = this.getClientArea();
-		final Control first = controls.get(0);
-		final Control second = controls.get(1);
 
 		if (this.getOrientation() == SWT.HORIZONTAL) {
-			this.weights[0] = (int) (1000000 * (first.getBounds().width + (float) this.sashWidth / 2) / area.width);
-			this.weights[1] = (int) (1000000 * (second.getBounds().width + (float) this.sashWidth / 2) / area.width);
+			firstWeight = (int) (1000000 * (first.getBounds().width + (float) this.sashWidth / 2) / area.width);
+			secondWeight = (int) (1000000 * (second.getBounds().width + (float) this.sashWidth / 2) / area.width);
 		}
 		else {
-			this.weights[0] = (int) (1000000 * (first.getBounds().height + (float) this.sashWidth / 2) / area.height);
-			this.weights[1] = (int) (1000000 * (second.getBounds().height + (float) this.sashWidth / 2) / area.height);
+			firstWeight = (int) (1000000 * (first.getBounds().height + (float) this.sashWidth / 2) / area.height);
+			secondWeight = (int) (1000000 * (second.getBounds().height + (float) this.sashWidth / 2) / area.height);
 		}
-	}
-
-	public List<Control> getControls() {
-		return controls;
-	}
-
-	public void setControls(final List<Control> controls) {
-		this.controls = controls;
-	}
-
-	public void setOrientation(final int orientation) {
-		checkWidget();
-		if (getOrientation() == orientation) {
-			return;
-		}
-		if (orientation != SWT.HORIZONTAL && orientation != SWT.VERTICAL) {
-			SWT.error(SWT.ERROR_INVALID_ARGUMENT);
-		}
-		sashStyle &= ~(SWT.HORIZONTAL | SWT.VERTICAL);
-		sashStyle |= orientation == SWT.VERTICAL ? SWT.HORIZONTAL : SWT.VERTICAL;
-
-		sash = null;
-		sash = createSash();
-
-		layout(false);
 	}
 
 	@Override
@@ -339,7 +301,7 @@ public class JoSashForm extends Composite {
 		return;
 	}
 
-	public void setMaximizedControl(final Control control) {
+	protected void setMaximizedControl(final Control control) {
 		checkWidget();
 		if (control == null) {
 			if (getMaxControl() != null) {
@@ -376,40 +338,53 @@ public class JoSashForm extends Composite {
 		}
 	}
 
-	public void setWeights(final int[] weights) {
+	public void bothWeightsChanged() {
 		checkWidget();
-		if (weights == null) {
+
+		final int total = firstWeight + secondWeight;
+		if (total <= 0) {
 			SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 		}
-
-		int total = 0;
-		for (int i = 0; i < weights.length; i++) {
-			if (weights[i] < 0) {
-				SWT.error(SWT.ERROR_INVALID_ARGUMENT);
-			}
-			total += weights[i];
-		}
-		if (total == 0) {
-			SWT.error(SWT.ERROR_INVALID_ARGUMENT);
-		}
-		this.weights = weights;
-
 		layout(false);
+	}
+
+	public void setFirstWeight(final int firstWeight) {
+		if (firstWeight < 0) {
+			SWT.error(SWT.ERROR_INVALID_ARGUMENT);
+		}
+		this.firstWeight = firstWeight;
+	}
+
+	public void setSecondWeight(final int secondWeight) {
+		if (secondWeight < 0) {
+			SWT.error(SWT.ERROR_INVALID_ARGUMENT);
+		}
+		this.secondWeight = secondWeight;
+	}
+
+	public void setWeights(final int firstWeight, final int secondWeight) {
+		if (firstWeight < 0) {
+			SWT.error(SWT.ERROR_INVALID_ARGUMENT);
+		}
+		this.firstWeight = firstWeight;
+
+		if (secondWeight < 0) {
+			SWT.error(SWT.ERROR_INVALID_ARGUMENT);
+		}
+		this.secondWeight = secondWeight;
+
+		bothWeightsChanged();
 	}
 
 	public Sash getSash() {
 		return sash;
 	}
 
-	public void setSash(final Sash sash) {
-		this.sash = sash;
-	}
-
-	public void setStretchFactor(final SplitResizePolicy factor) {
+	protected void setStretchFactor(final SplitResizePolicy factor) {
 		this.stretchFactor = factor;
 	}
 
-	public void setMaxControl(final Control maxControl) {
+	protected void setMaxControl(final Control maxControl) {
 		this.maxControl = maxControl;
 	}
 
@@ -430,6 +405,14 @@ public class JoSashForm extends Composite {
 
 	public SplitResizePolicy getStretchFactor() {
 		return stretchFactor;
+	}
+
+	public Control getFirst() {
+		return first;
+	}
+
+	public Control getSecond() {
+		return second;
 	}
 
 }
