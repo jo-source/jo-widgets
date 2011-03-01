@@ -43,16 +43,22 @@ import org.jowidgets.workbench.api.IWorkbenchContext;
 
 public final class ViewContext implements IViewContext {
 
+	private final Composite parent;
 	private final IComponentContext componentContext;
 	private final ToolBarHelper toolBarHelper;
 
 	public ViewContext(final Composite parent, final IComponentContext componentContext) {
+		this.parent = parent;
 		this.componentContext = componentContext;
 
 		final IComposite composite = Toolkit.getWidgetWrapperFactory().createComposite(parent);
 		composite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[]0[grow]0"));
 
 		toolBarHelper = new ToolBarHelper(composite);
+	}
+
+	public Composite getParent() {
+		return parent;
 	}
 
 	@Override

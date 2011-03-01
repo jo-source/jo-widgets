@@ -32,9 +32,13 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchPage;
@@ -61,12 +65,15 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 
 	private static final IAction EMPTY_ACTION = new Action() {};
 
+	private String viewId;
 	private IView view;
+	private Composite parent;
+	private IPopupMenu popupMenu;
 
 	@Override
-	public void createPartControl(final Composite parent) {
-		final String viewId = getViewSite().getSecondaryId();
-		final ViewLayoutContext viewLayoutContext = PartSupport.getInstance().getView(viewId);
+	public void createPartControl(final Composite viewComposite) {
+		viewId = getViewSite().getSecondaryId();
+		final ViewLayoutContext viewLayoutContext = PartSupport.getInstance().getViewLayoutContext(viewId);
 
 		if (viewLayoutContext == null) {
 			// view layout is not registered -> close it immediately
@@ -86,8 +93,24 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 		setTitleImage(ImageHelper.getImage(viewLayout.getIcon(), null));
 		setTitleToolTip(viewLayout.getTooltip());
 
+		viewComposite.setLayout(new FillLayout());
+
+		final ViewContext closedViewContext = PartSupport.getInstance().getViewContext(viewId);
+		if (closedViewContext != null) {
+			// re-use closed view
+			parent = closedViewContext.getParent();
+			final Composite dummyParent = parent.getParent();
+			parent.setParent(viewComposite);
+			dummyParent.dispose();
+			view = PartSupport.getInstance().getView(viewId);
+			getViewSite().getPage().addPartListener(DynamicView.this);
+		}
+		else {
+			parent = new Composite(viewComposite, SWT.NONE);
+		}
+
 		final IMenuModel menuModel = viewLayoutContext.getFolderContext().getPopupMenu();
-		final IPopupMenu popupMenu = Toolkit.getWidgetWrapperFactory().createComposite(parent).createPopupMenu();
+		popupMenu = Toolkit.getWidgetWrapperFactory().createComposite(parent).createPopupMenu();
 		popupMenu.setModel(menuModel);
 		final IMenuManager menuManager = getViewSite().getActionBars().getMenuManager();
 		menuManager.setRemoveAllWhenShown(true);
@@ -126,53 +149,57 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 			}
 		});
 
-		// lazy initialization of view content
-		getViewSite().getPage().addPartListener(new IPartListener2() {
-			@Override
-			public void partVisible(final IWorkbenchPartReference partRef) {
-				final IWorkbenchPart part = partRef.getPart(false);
-				if (part == DynamicView.this) {
-					init();
+		if (closedViewContext == null) {
+			// lazy initialization of view content
+			getViewSite().getPage().addPartListener(new IPartListener2() {
+				@Override
+				public void partVisible(final IWorkbenchPartReference partRef) {
+					final IWorkbenchPart part = partRef.getPart(false);
+					if (part == DynamicView.this) {
+						init();
+					}
 				}
-			}
 
-			@Override
-			public void partOpened(final IWorkbenchPartReference partRef) {
-				final IWorkbenchPart part = partRef.getPart(false);
-				// needed for lazy initializing detached views, since partVisible() is not fired for them apparently
-				if (part == DynamicView.this
-					&& part.getSite().getShell() != PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell()) {
-					init();
+				@Override
+				public void partOpened(final IWorkbenchPartReference partRef) {
+					final IWorkbenchPart part = partRef.getPart(false);
+					// needed for lazy initializing detached views, since partVisible() is not fired for them apparently
+					if (part == DynamicView.this
+						&& part.getSite().getShell() != PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell()) {
+						init();
+					}
 				}
-			}
 
-			private void init() {
-				final ViewContext viewContext = new ViewContext(parent, componentContext);
-				view = componentContext.getComponent().createView(viewLayout.getId(), viewContext);
-				final IWorkbenchPage page = getViewSite().getPage();
-				page.removePartListener(this);
-				view.onVisibleStateChanged(true);
-				page.addPartListener(DynamicView.this);
-			}
+				private void init() {
+					System.err.println("creating view + " + viewId);
+					final ViewContext viewContext = new ViewContext(parent, componentContext);
+					view = componentContext.getComponent().createView(viewLayout.getId(), viewContext);
+					PartSupport.getInstance().setViewAndContext(viewId, view, viewContext);
+					final IWorkbenchPage page = getViewSite().getPage();
+					page.removePartListener(this);
+					view.onVisibleStateChanged(true);
+					page.addPartListener(DynamicView.this);
+				}
 
-			@Override
-			public void partInputChanged(final IWorkbenchPartReference partRef) {}
+				@Override
+				public void partInputChanged(final IWorkbenchPartReference partRef) {}
 
-			@Override
-			public void partHidden(final IWorkbenchPartReference partRef) {}
+				@Override
+				public void partHidden(final IWorkbenchPartReference partRef) {}
 
-			@Override
-			public void partDeactivated(final IWorkbenchPartReference partRef) {}
+				@Override
+				public void partDeactivated(final IWorkbenchPartReference partRef) {}
 
-			@Override
-			public void partClosed(final IWorkbenchPartReference partRef) {}
+				@Override
+				public void partClosed(final IWorkbenchPartReference partRef) {}
 
-			@Override
-			public void partBroughtToTop(final IWorkbenchPartReference partRef) {}
+				@Override
+				public void partBroughtToTop(final IWorkbenchPartReference partRef) {}
 
-			@Override
-			public void partActivated(final IWorkbenchPartReference partRef) {}
-		});
+				@Override
+				public void partActivated(final IWorkbenchPartReference partRef) {}
+			});
+		}
 	}
 
 	@Override
@@ -214,6 +241,8 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 			final VetoHolder vetoHolder = new VetoHolder();
 			view.onClose(vetoHolder);
 			if (vetoHolder.hasVeto()) {
+				// re-parent composite to re-use it when opening view again
+				parent.setParent(new Shell());
 				final IViewReference viewRef = (IViewReference) partRef;
 				try {
 					PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(
@@ -224,6 +253,9 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 				catch (final PartInitException e) {
 					throw new RuntimeException(e);
 				}
+			}
+			else {
+				PartSupport.getInstance().removeViewAndContext(viewId);
 			}
 		}
 	}
@@ -238,11 +270,13 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 	public void partInputChanged(final IWorkbenchPartReference partRef) {}
 
 	@Override
-	public void setFocus() {}
+	public void setFocus() {
+		parent.setFocus();
+	}
 
 	@Override
 	public void dispose() {
-		// TODO HRW implement dispose?
+		((Menu) popupMenu.getUiReference()).dispose();
 		super.dispose();
 	}
 
