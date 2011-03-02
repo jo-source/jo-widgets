@@ -31,6 +31,7 @@ package org.jowidgets.examples.common.workbench.demo1;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.types.Orientation;
 import org.jowidgets.common.types.SplitResizePolicy;
 import org.jowidgets.examples.common.demo.DemoMenuProvider;
@@ -43,6 +44,7 @@ import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IFolderContext;
 import org.jowidgets.workbench.api.IFolderLayout;
+import org.jowidgets.workbench.api.ILayout;
 import org.jowidgets.workbench.api.ISplitLayout;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
@@ -59,8 +61,12 @@ public class ComponentDemo1 extends AbstractComponent implements IComponent {
 	private final DemoMenuProvider menuProvider;
 
 	public ComponentDemo1(final IComponentContext componentContext) {
-		componentContext.setLayout(new Layout(DEFAULT_LAYOUT_ID, createMainSplit()));
+		final ILayout defaultLayout = new Layout(DEFAULT_LAYOUT_ID, createMainSplit());
+		componentContext.setLayout(defaultLayout);
 		menuProvider = new DemoMenuProvider(true);
+		final IMenuModel popupMenu = componentContext.getComponentTreeNodeContext().getPopupMenu();
+		popupMenu.addSeparator();
+		popupMenu.addAction(new ActionFactory().createResetLayoutAction(componentContext, defaultLayout));
 	}
 
 	@Override

@@ -40,6 +40,8 @@ import org.jowidgets.workbench.impl.rcp.internal.part.PartSupport;
 public final class ComponentContext implements IComponentContext {
 
 	private final IComponentTreeNodeContext componentTreeNodeContext;
+	private boolean firstLayout = true;
+	private boolean resetLayout;
 	private ILayout perspective;
 	private IComponent component;
 
@@ -59,7 +61,20 @@ public final class ComponentContext implements IComponentContext {
 	@Override
 	public void setLayout(final ILayout layout) {
 		perspective = layout;
-		// TODO HRW switch perspective if this is the current active component
+		resetLayout = !firstLayout && layout != null;
+		firstLayout = false;
+		final WorkbenchContext workbenchContext = (WorkbenchContext) componentTreeNodeContext.getWorkbenchContext();
+		if (component != null && workbenchContext.getCurrentComponent() == component) {
+			// re-set perspective
+			if (layout == null) {
+				PartSupport.getInstance().showEmptyPerspective();
+			}
+			else {
+				PartSupport.getInstance().showPerspective(
+						((ComponentTreeNodeContext) componentTreeNodeContext).getQualifiedId(),
+						this);
+			}
+		}
 	}
 
 	@Override
@@ -83,6 +98,14 @@ public final class ComponentContext implements IComponentContext {
 
 	public IComponent getComponent() {
 		return component;
+	}
+
+	public boolean getResetLayout() {
+		if (resetLayout) {
+			resetLayout = false;
+			return true;
+		}
+		return false;
 	}
 
 }

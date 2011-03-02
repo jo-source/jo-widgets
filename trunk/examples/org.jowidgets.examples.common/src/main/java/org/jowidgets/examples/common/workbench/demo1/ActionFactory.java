@@ -52,6 +52,7 @@ import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IComponentTreeNode;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 import org.jowidgets.workbench.api.IFolderContext;
+import org.jowidgets.workbench.api.ILayout;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
@@ -283,6 +284,19 @@ public class ActionFactory {
 			@Override
 			public void execute(final IExecutionContext executionContext) throws Exception {
 				context.setHidden(false);
+			}
+		});
+		return actionBuilder.build();
+	}
+
+	public IAction createResetLayoutAction(final IComponentContext context, final ILayout layout) {
+		final IActionBuilder actionBuilder = Toolkit.getActionBuilderFactory().create();
+		actionBuilder.setText("Reset layout");
+		actionBuilder.setIcon(SilkIcons.NEW);
+		actionBuilder.setCommand(new ICommandExecutor() {
+			@Override
+			public void execute(final IExecutionContext executionContext) throws Exception {
+				context.setLayout(layout);
 			}
 		});
 		return actionBuilder.build();

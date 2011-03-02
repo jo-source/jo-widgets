@@ -130,6 +130,11 @@ public final class PartSupport {
 		}
 		final IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 		activePage.setPerspective(newPerspective);
+
+		if (componentContext.getResetLayout()) {
+			activePage.resetPerspective();
+		}
+
 		// initialize views to update view titles from view model
 		final IViewReference[] viewReferences = activePage.getViewReferences();
 		for (final IViewReference viewReference : viewReferences) {
