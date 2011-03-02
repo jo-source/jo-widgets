@@ -301,4 +301,12 @@ public final class WorkbenchApplicationTree extends Composite {
 		return popupMenuModel;
 	}
 
+	public void expand(final ComponentTreeNodeContext componentTreeNodeContext) {
+		treeViewer.expandToLevel(componentTreeNodeContext, 1);
+	}
+
+	public void collapse(final ComponentTreeNodeContext componentTreeNodeContext) {
+		treeViewer.collapseToLevel(componentTreeNodeContext, 1);
+	}
+
 }

@@ -75,6 +75,9 @@ public class FolderTreeNodeDemo extends AbstractComponentTreeNode {
 		popupMenu.addSeparator();
 		popupMenu.addAction(actionFactory.createRenameComponentTreeNode(context));
 		popupMenu.addAction(actionFactory.createSelectParentNode(context));
+		popupMenu.addSeparator();
+		popupMenu.addAction(actionFactory.createExpandNode(context));
+		popupMenu.addAction(actionFactory.createCollapseNode(context));
 
 		//add children
 		for (final IComponentTreeNode componentTreeNode : children) {

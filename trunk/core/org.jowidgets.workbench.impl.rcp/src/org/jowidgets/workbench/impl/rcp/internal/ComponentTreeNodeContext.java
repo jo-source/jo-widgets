@@ -175,7 +175,12 @@ public final class ComponentTreeNodeContext implements IComponentTreeNodeContext
 
 	@Override
 	public void setExpanded(final boolean expanded) {
-		// TODO HRW implement
+		if (expanded) {
+			tree.expand(this);
+		}
+		else {
+			tree.collapse(this);
+		}
 	}
 
 	@Override

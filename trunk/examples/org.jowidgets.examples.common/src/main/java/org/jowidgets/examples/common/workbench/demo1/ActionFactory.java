@@ -339,4 +339,32 @@ public class ActionFactory {
 
 		return actionBuilder.build();
 	}
+
+	public IAction createExpandNode(final IComponentTreeNodeContext context) {
+		final IActionBuilder actionBuilder = Toolkit.getActionBuilderFactory().create();
+		actionBuilder.setText("Expand");
+		actionBuilder.setIcon(SilkIcons.PLUGIN_ADD);
+		actionBuilder.setCommand(new ICommandExecutor() {
+			@Override
+			public void execute(final IExecutionContext executionContext) throws Exception {
+				context.setExpanded(true);
+			}
+		});
+
+		return actionBuilder.build();
+	}
+
+	public IAction createCollapseNode(final IComponentTreeNodeContext context) {
+		final IActionBuilder actionBuilder = Toolkit.getActionBuilderFactory().create();
+		actionBuilder.setText("Collapse");
+		actionBuilder.setIcon(SilkIcons.PLUGIN_DELETE);
+		actionBuilder.setCommand(new ICommandExecutor() {
+			@Override
+			public void execute(final IExecutionContext executionContext) throws Exception {
+				context.setExpanded(false);
+			}
+		});
+
+		return actionBuilder.build();
+	}
 }
