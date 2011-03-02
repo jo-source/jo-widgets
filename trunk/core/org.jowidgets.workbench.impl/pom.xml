@@ -4,7 +4,7 @@
 	<groupId>org.jowidgets</groupId>
 	<artifactId>org.jowidgets.workbench.impl</artifactId>
 	<version>0.0.14-SNAPSHOT</version>
-	<name>org.jowidgets.impl</name>
+	<name>org.jowidgets.workbench.impl</name>
 
 	<parent>
 		<groupId>org.jowidgets</groupId>
