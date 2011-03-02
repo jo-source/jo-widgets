@@ -241,21 +241,26 @@ public final class WorkbenchApplicationFolder extends Composite {
 		}
 	}
 
+	public void onTreeNodeUnselection() {
+		onTreeNodeSelectionChange(null, null);
+	}
+
 	public void onTreeNodeSelectionChange(
 		final WorkbenchApplicationTree tree,
 		final ComponentTreeNodeContext selectedComponentTreeNodeContext) {
-		if (selectedComponentTreeNodeContext != null) {
-			if (selectedApplicationTree != null && selectedApplicationTree != tree) {
-				selectedApplicationTree.clearSelection(false);
-			}
-			selectedApplicationTree = tree;
+		if (selectedComponentTreeNodeContext != null && selectedApplicationTree != null && selectedApplicationTree != tree) {
+			selectedApplicationTree.clearSelection(false);
 		}
-		else {
-			this.selectedApplicationTree = null;
-		}
-		this.selectedComponentTreeNodeContext = selectedComponentTreeNodeContext;
 
-		// TODO HRW call IComponent#onDeactivation
+		final IComponent currentComponent = workbenchContext.getCurrentComponent();
+		if (currentComponent != null) {
+			final VetoHolder vetoHolder = new VetoHolder();
+			currentComponent.onDeactivation(vetoHolder);
+			if (vetoHolder.hasVeto()) {
+				// TODO HRW re-select current component
+				return;
+			}
+		}
 
 		if (selectedComponentTreeNodeContext != null) {
 			final ComponentContext componentContext = selectedComponentTreeNodeContext.getComponentContext();
@@ -269,6 +274,9 @@ public final class WorkbenchApplicationFolder extends Composite {
 			workbenchContext.setCurrentComponent(null);
 		}
 		PartSupport.getInstance().showEmptyPerspective();
+
+		selectedApplicationTree = tree;
+		this.selectedComponentTreeNodeContext = selectedComponentTreeNodeContext;
 	}
 
 	public String[] getSelectedTreeNode() {

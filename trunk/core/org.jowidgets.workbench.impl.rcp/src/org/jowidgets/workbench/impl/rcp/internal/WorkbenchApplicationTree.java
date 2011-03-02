@@ -185,7 +185,7 @@ public final class WorkbenchApplicationTree extends Composite {
 					folder.onTreeNodeSelectionChange(WorkbenchApplicationTree.this, context);
 				}
 				else if (notifyUnselection) {
-					folder.onTreeNodeSelectionChange(WorkbenchApplicationTree.this, null);
+					folder.onTreeNodeUnselection();
 					notifyUnselection = false;
 				}
 			}
