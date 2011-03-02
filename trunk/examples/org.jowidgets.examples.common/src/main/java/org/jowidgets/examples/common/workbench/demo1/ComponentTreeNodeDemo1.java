@@ -43,11 +43,11 @@ import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 public class ComponentTreeNodeDemo1 extends AbstractComponentTreeNode {
 
 	public ComponentTreeNodeDemo1(final String id, final String label) {
-		this(id, label, null, SilkIcons.PAGE_WHITE, new LinkedList<IComponentTreeNode>());
+		this(id, label, "Tooltip for " + label, SilkIcons.PAGE_WHITE, new LinkedList<IComponentTreeNode>());
 	}
 
 	public ComponentTreeNodeDemo1(final String id, final String label, final List<IComponentTreeNode> children) {
-		this(id, label, null, SilkIcons.PAGE_WHITE, children);
+		this(id, label, "Tooltip for " + label, SilkIcons.PAGE_WHITE, children);
 	}
 
 	public ComponentTreeNodeDemo1(
@@ -67,6 +67,8 @@ public class ComponentTreeNodeDemo1 extends AbstractComponentTreeNode {
 		popupMenu.addAction(actionFactory.createAddComponentAction(context.getParent()));
 		popupMenu.addAction(actionFactory.createAddFolderAction(context));
 		popupMenu.addAction(actionFactory.createDeleteAction(context, this, "Delete " + getLabel(), SilkIcons.APPLICATION_DELETE));
+		popupMenu.addSeparator();
+		popupMenu.addAction(actionFactory.createRenameComponentTreeNode(context));
 	}
 
 	@Override

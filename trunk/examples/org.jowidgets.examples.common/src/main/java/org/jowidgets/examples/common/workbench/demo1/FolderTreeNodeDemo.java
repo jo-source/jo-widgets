@@ -72,6 +72,8 @@ public class FolderTreeNodeDemo extends AbstractComponentTreeNode {
 		popupMenu.addAction(actionFactory.createAddFolderAction(context));
 		popupMenu.addAction(actionFactory.createAddComponentAction(context));
 		popupMenu.addAction(actionFactory.createDeleteAction(context, this, "Delete " + getLabel(), SilkIcons.FOLDER_DELETE));
+		popupMenu.addSeparator();
+		popupMenu.addAction(actionFactory.createRenameComponentTreeNode(context));
 
 		//add children
 		for (final IComponentTreeNode componentTreeNode : children) {

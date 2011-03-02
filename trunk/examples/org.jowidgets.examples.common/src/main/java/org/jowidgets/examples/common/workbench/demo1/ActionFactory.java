@@ -302,4 +302,23 @@ public class ActionFactory {
 		return actionBuilder.build();
 	}
 
+	public IAction createRenameComponentTreeNode(final IComponentTreeNodeContext context) {
+		final IActionBuilder actionBuilder = Toolkit.getActionBuilderFactory().create();
+		actionBuilder.setText("Rename...");
+		actionBuilder.setIcon(SilkIcons.BOOK_EDIT);
+		actionBuilder.setCommand(new ICommandExecutor() {
+			@Override
+			public void execute(final IExecutionContext executionContext) throws Exception {
+				final IInputDialog<String> inputDialog = createInputDialog(executionContext, "Component name");
+				inputDialog.setVisible(true);
+				if (inputDialog.isOkPressed()) {
+					context.setLabel(inputDialog.getValue());
+				}
+			}
+
+		});
+
+		return actionBuilder.build();
+	}
+
 }

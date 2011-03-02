@@ -58,6 +58,9 @@ public final class ComponentTreeNodeContext implements IComponentTreeNodeContext
 	private final List<ComponentTreeNodeContext> childContexts = new ArrayList<ComponentTreeNodeContext>();
 	private final Map<IComponentTreeNode, ComponentTreeNodeContext> nodeMap = new HashMap<IComponentTreeNode, ComponentTreeNodeContext>();
 	private AtomicReference<ComponentContext> componentContextReference;
+	private String label;
+	private String tooltip;
+	private IImageConstant icon;
 
 	public ComponentTreeNodeContext(
 		final WorkbenchApplicationContext applicationContext,
@@ -69,6 +72,9 @@ public final class ComponentTreeNodeContext implements IComponentTreeNodeContext
 		this.treeNode = treeNode;
 		this.tree = tree;
 		joTree = Toolkit.getWidgetWrapperFactory().createComposite(tree);
+		label = treeNode.getLabel();
+		tooltip = treeNode.getTooltip();
+		icon = treeNode.getIcon();
 	}
 
 	@Override
@@ -141,17 +147,17 @@ public final class ComponentTreeNodeContext implements IComponentTreeNodeContext
 
 	@Override
 	public String getLabel() {
-		return treeNode.getLabel();
+		return label;
 	}
 
 	@Override
 	public String getTooltip() {
-		return treeNode.getTooltip();
+		return tooltip;
 	}
 
 	@Override
 	public IImageConstant getIcon() {
-		return treeNode.getIcon();
+		return icon;
 	}
 
 	@Override
@@ -166,17 +172,20 @@ public final class ComponentTreeNodeContext implements IComponentTreeNodeContext
 
 	@Override
 	public void setLabel(final String label) {
-		// TODO HRW implement
+		this.label = label;
+		tree.refresh(this);
 	}
 
 	@Override
 	public void setTooltip(final String tooltip) {
-		// TODO HRW implement
+		this.tooltip = tooltip;
+		tree.refresh(this);
 	}
 
 	@Override
 	public void setIcon(final IImageConstant icon) {
-		// TODO HRW implement
+		this.icon = icon;
+		tree.refresh(this);
 	}
 
 	@Override
