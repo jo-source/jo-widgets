@@ -61,7 +61,9 @@ public class FileConfigService implements IWorkbenchConfigurationService {
 			}
 		}
 		catch (final Exception e) {
+			// CHECKSTYLE:OFF
 			System.err.println("An error occured while loading config: " + e);
+			// CHECKSTYLE:ON
 			return null;
 		}
 	}
