@@ -3,13 +3,13 @@
 
 	<groupId>org.jowidgets</groupId>
 	<artifactId>org.jowidgets.impl</artifactId>
-	<version>0.0.13</version>
+	<version>0.0.14-SNAPSHOT</version>
 	<name>org.jowidgets.impl</name>
 
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.core.parent</artifactId>
-		<version>0.0.13</version>
+		<version>0.0.14-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 
@@ -17,35 +17,35 @@
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.tools</artifactId>
-			<version>0.0.13</version>
+			<version>0.0.14-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.spi</artifactId>
-			<version>0.0.13</version>
+			<version>0.0.14-SNAPSHOT</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.api.test</artifactId>
-			<version>0.0.13</version>
+			<version>0.0.14-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.spi.impl.dummy</artifactId>
-			<version>0.0.13</version>
+			<version>0.0.14-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.test.api</artifactId>
-			<version>0.0.13</version>
+			<version>0.0.14-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.test.spi</artifactId>
-			<version>0.0.13</version>
+			<version>0.0.14-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>
