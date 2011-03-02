@@ -28,18 +28,30 @@
 
 package org.jowidgets.workbench.impl.rcp.internal.part;
 
+import java.io.ByteArrayInputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.eclipse.core.internal.registry.ExtensionRegistry;
+import org.eclipse.core.runtime.ContributorFactoryOSGi;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IContributor;
+import org.eclipse.core.runtime.IExtension;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IPerspectiveRegistry;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.internal.registry.ViewDescriptor;
+import org.eclipse.ui.internal.registry.ViewRegistry;
+import org.eclipse.ui.views.IViewDescriptor;
 import org.jowidgets.workbench.api.IFolderContext;
 import org.jowidgets.workbench.api.IFolderLayout;
 import org.jowidgets.workbench.api.ILayout;
@@ -48,10 +60,12 @@ import org.jowidgets.workbench.api.ISplitLayout;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewLayout;
 import org.jowidgets.workbench.impl.rcp.RcpView;
+import org.jowidgets.workbench.impl.rcp.internal.Activator;
 import org.jowidgets.workbench.impl.rcp.internal.ComponentContext;
 import org.jowidgets.workbench.impl.rcp.internal.FolderContext;
 import org.jowidgets.workbench.impl.rcp.internal.ViewContext;
 
+@SuppressWarnings("restriction")
 public final class PartSupport {
 
 	private static final PartSupport INSTANCE = new PartSupport();
@@ -197,6 +211,7 @@ public final class PartSupport {
 			}
 
 			final String primaryViewId = DynamicView.ID + "." + folderContext.getFolderId();
+			registerFolderView(primaryViewId);
 			viewLayoutContextMap.put(viewId, new ViewLayoutContext(viewLayout, componentContext, folderContext));
 			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(
 					primaryViewId,
@@ -306,6 +321,35 @@ public final class PartSupport {
 					throw new RuntimeException(e);
 				}
 				break;
+			}
+		}
+	}
+
+	public void registerFolderView(final String primaryViewId) {
+		final ViewRegistry viewRegistry = (ViewRegistry) PlatformUI.getWorkbench().getViewRegistry();
+		final IViewDescriptor viewDescriptor = viewRegistry.find(primaryViewId);
+		if (viewDescriptor == null) {
+			// register a new dynamic view for this folder
+			final String xml = String.format(
+					"<plugin><extension point='org.eclipse.ui.views' id='%s'><view allowMultiple='true' class='%s' id='%s' name='Dynamic View' restorable='false'></view></extension></plugin>",
+					primaryViewId,
+					DynamicView.class.getName(),
+					primaryViewId);
+			try {
+				final IContributor contributor = ContributorFactoryOSGi.createContributor(Activator.getBundle());
+				final IExtensionRegistry registry = Platform.getExtensionRegistry();
+				final Object key = ((ExtensionRegistry) registry).getTemporaryUserToken();
+				registry.addContribution(new ByteArrayInputStream(xml.getBytes("UTF-8")), contributor, false, null, null, key);
+				final IExtension extension = registry.getExtension("org.eclipse.ui.views", contributor.getName()
+					+ "."
+					+ primaryViewId);
+				viewRegistry.add(new ViewDescriptor(extension.getConfigurationElements()[0]));
+			}
+			catch (final UnsupportedEncodingException e) {
+				throw new Error(e);
+			}
+			catch (final CoreException e) {
+				throw new RuntimeException(e);
 			}
 		}
 	}
