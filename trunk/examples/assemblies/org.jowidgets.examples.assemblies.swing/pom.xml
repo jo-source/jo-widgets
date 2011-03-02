@@ -3,14 +3,14 @@
   
 	<groupId>org.jowidgets</groupId>
 	<artifactId>org.jowidgets.examples.assemblies.swing</artifactId>
-	<version>0.0.13-SNAPSHOT</version>
+	<version>0.0.13</version>
 	<packaging>pom</packaging>
 	<name>org.jowidgets.examples.assemblies.swing</name>
   
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.examples.assemblies.parent</artifactId>
-		<version>0.0.13-SNAPSHOT</version>
+		<version>0.0.13</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
   
@@ -18,7 +18,7 @@
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.examples.swing</artifactId>
-			<version>0.0.13-SNAPSHOT</version>
+			<version>0.0.13</version>
 		</dependency>   
 	</dependencies>
 	
@@ -35,7 +35,7 @@
 
 				<archive>
 					<manifest>
-					  <mainClass>org.jowidgets.examples.swing.SwingDemoApplication</mainClass>
+					  <mainClass>org.jowidgets.examples.swing.SwingWorkbenchDemo1Starter</mainClass>
 					</manifest>
 				</archive>
 			</configuration>
