@@ -41,7 +41,7 @@ import org.eclipse.core.internal.runtime.DataArea;
 import org.eclipse.core.runtime.IPath;
 
 @SuppressWarnings("restriction")
-public class RcpWorkbenchConfigurationSupport {
+public final class RcpWorkbenchConfigurationSupport {
 	private static final String WORKBENCH_BUNDLE = "org.eclipse.ui.workbench";
 	private static final String WORKBENCH_FILENAME = "workbench.xml";
 	private static final String WORKBENCH_FILE_ENCODING = "UTF-8";

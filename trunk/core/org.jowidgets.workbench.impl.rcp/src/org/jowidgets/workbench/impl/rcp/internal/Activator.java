@@ -32,7 +32,7 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
-public class Activator implements BundleActivator {
+public final class Activator implements BundleActivator {
 
 	private static Bundle bundle;
 
