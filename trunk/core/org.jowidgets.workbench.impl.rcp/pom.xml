@@ -31,7 +31,7 @@
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.workbench.api</artifactId>
-			<version>0.0.13-SNAPSHOT</version>
+			<version>0.0.14-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
