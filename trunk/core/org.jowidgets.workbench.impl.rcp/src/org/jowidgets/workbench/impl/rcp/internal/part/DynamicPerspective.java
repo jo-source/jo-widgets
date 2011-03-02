@@ -46,7 +46,7 @@ import org.eclipse.ui.internal.registry.ViewRegistry;
 import org.eclipse.ui.views.IViewDescriptor;
 import org.jowidgets.common.types.Orientation;
 import org.jowidgets.workbench.api.ISplitLayout;
-import org.osgi.framework.Bundle;
+import org.jowidgets.workbench.impl.rcp.internal.Activator;
 
 @SuppressWarnings("restriction")
 public final class DynamicPerspective implements IPerspectiveFactory {
@@ -188,9 +188,7 @@ public final class DynamicPerspective implements IPerspectiveFactory {
 					DynamicView.class.getName(),
 					primaryViewId);
 			try {
-				// TODO HRW add bundle activator to get bundle object
-				final Bundle bundle = Platform.getBundle("org.jowidgets.workbench.impl.rcp");
-				final IContributor contributor = ContributorFactoryOSGi.createContributor(bundle);
+				final IContributor contributor = ContributorFactoryOSGi.createContributor(Activator.getBundle());
 				final IExtensionRegistry registry = Platform.getExtensionRegistry();
 				final Object key = ((ExtensionRegistry) registry).getTemporaryUserToken();
 				registry.addContribution(new ByteArrayInputStream(xml.getBytes("UTF-8")), contributor, false, null, null, key);

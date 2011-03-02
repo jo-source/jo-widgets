@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.impl.rcp.internal;
+package org.jowidgets.workbench.impl.rcp.internal.util;
 
 import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IMenuModel;

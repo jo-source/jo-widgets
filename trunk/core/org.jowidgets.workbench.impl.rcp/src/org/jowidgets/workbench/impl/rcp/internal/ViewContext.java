@@ -41,6 +41,7 @@ import org.jowidgets.workbench.api.IViewContext;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 import org.jowidgets.workbench.api.IWorkbenchContext;
 import org.jowidgets.workbench.impl.rcp.internal.part.PartSupport;
+import org.jowidgets.workbench.impl.rcp.internal.util.ToolBarHelper;
 
 public final class ViewContext implements IViewContext {
 
