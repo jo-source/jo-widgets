@@ -125,4 +125,11 @@ public final class ViewContext implements IViewContext {
 		return getWorkbenchApplicationContext().getWorkbenchContext();
 	}
 
+	/**
+	 * Sets a stale hidden state to false.
+	 */
+	public void unsetHidden() {
+		hidden = false;
+	}
+
 }

@@ -304,6 +304,10 @@ public final class PartSupport {
 		return hidingViewSet.contains(viewId);
 	}
 
+	public void clearViewHiding(final String viewId) {
+		hidingViewSet.remove(viewId);
+	}
+
 	public void unhideView(final ViewContext viewContext) {
 		for (final Entry<String, ViewContext> viewContextEntry : viewContextMap.entrySet()) {
 			// find viewId
@@ -315,7 +319,6 @@ public final class PartSupport {
 							primaryViewId,
 							viewId,
 							IWorkbenchPage.VIEW_ACTIVATE);
-					hidingViewSet.remove(viewId);
 				}
 				catch (final PartInitException e) {
 					throw new RuntimeException(e);

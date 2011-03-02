@@ -109,6 +109,8 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 			viewContext = closedViewContext;
 			if (PartSupport.getInstance().isViewHiding(viewId)) {
 				view.onHiddenStateChanged(false);
+				viewContext.unsetHidden();
+				PartSupport.getInstance().clearViewHiding(viewId);
 			}
 			getViewSite().getPage().addPartListener(DynamicView.this);
 		}
@@ -256,29 +258,29 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 					// re-parent composite to re-use it when opening view again
 					parent.setParent(new Shell());
 					view.onHiddenStateChanged(true);
+					return;
 				}
-				else {
-					final VetoHolder vetoHolder = new VetoHolder();
-					view.onClose(vetoHolder);
-					if (vetoHolder.hasVeto()) {
-						// re-parent composite to re-use it when opening view again
-						parent.setParent(new Shell());
-						final IViewReference viewRef = (IViewReference) partRef;
-						try {
-							PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(
-									viewRef.getId(),
-									viewRef.getSecondaryId(),
-									IWorkbenchPage.VIEW_ACTIVATE);
-						}
-						catch (final PartInitException e) {
-							throw new RuntimeException(e);
-						}
+
+				final VetoHolder vetoHolder = new VetoHolder();
+				view.onClose(vetoHolder);
+				if (vetoHolder.hasVeto()) {
+					// re-parent composite to re-use it when opening view again
+					parent.setParent(new Shell());
+					final IViewReference viewRef = (IViewReference) partRef;
+					try {
+						PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(
+								viewRef.getId(),
+								viewRef.getSecondaryId(),
+								IWorkbenchPage.VIEW_ACTIVATE);
 					}
+					catch (final PartInitException e) {
+						throw new RuntimeException(e);
+					}
+					return;
 				}
 			}
-			else {
-				PartSupport.getInstance().removeViewAndContext(viewId);
-			}
+
+			PartSupport.getInstance().removeViewAndContext(viewId);
 		}
 	}
 
