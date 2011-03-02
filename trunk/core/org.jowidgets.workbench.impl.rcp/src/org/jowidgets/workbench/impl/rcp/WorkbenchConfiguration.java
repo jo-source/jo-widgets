@@ -29,6 +29,7 @@
 package org.jowidgets.workbench.impl.rcp;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 public final class WorkbenchConfiguration implements Serializable {
 
@@ -54,6 +55,14 @@ public final class WorkbenchConfiguration implements Serializable {
 
 	String getWorkbenchXml() {
 		return workbenchXml;
+	}
+
+	@Override
+	public String toString() {
+		return String.format(
+				"WorkbenchConfiguration(selectedTreeNode=%s, folderRatio=%.3f)",
+				Arrays.toString(selectedTreeNode),
+				folderRatio);
 	}
 
 }

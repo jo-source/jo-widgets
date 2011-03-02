@@ -50,7 +50,11 @@ public class FileConfigService implements IWorkbenchConfigurationService {
 		try {
 			final ObjectInputStream oos = new ObjectInputStream(new FileInputStream(filePath));
 			try {
-				return (Serializable) oos.readObject();
+				final Serializable configuration = (Serializable) oos.readObject();
+				// CHECKSTYLE:OFF
+				System.out.println("Read configuration: " + configuration);
+				// CHECKSTYLE:ON
+				return configuration;
 			}
 			finally {
 				oos.close();
@@ -68,6 +72,9 @@ public class FileConfigService implements IWorkbenchConfigurationService {
 			final ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath));
 			try {
 				oos.writeObject(configuration);
+				// CHECKSTYLE:OFF
+				System.out.println("Wrote configuration: " + configuration);
+				// CHECKSTYLE:ON
 			}
 			finally {
 				oos.close();
