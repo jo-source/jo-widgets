@@ -29,6 +29,8 @@
 package org.jowidgets.spi.impl.swing.widgets;
 
 import java.awt.Container;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBoxMenuItem;
@@ -43,12 +45,12 @@ import org.jowidgets.spi.widgets.ISubMenuSpi;
 
 public abstract class AbstractSwingMenu extends SwingWidget implements IMenuSpi {
 
-	//TODO BM use one radio group for every separator
-	private final ButtonGroup radioGroup;
+	private final List<JoSwingButtonGroup> radioGroups;
 
 	public AbstractSwingMenu(final Container component) {
 		super(component);
-		this.radioGroup = new ButtonGroup();
+		this.radioGroups = new ArrayList<AbstractSwingMenu.JoSwingButtonGroup>();
+		this.radioGroups.add(new JoSwingButtonGroup(null, new ButtonGroup()));
 	}
 
 	@Override
@@ -69,6 +71,7 @@ public abstract class AbstractSwingMenu extends SwingWidget implements IMenuSpi 
 	@Override
 	public IMenuItemSpi addSeparator(final Integer index) {
 		final SeparatorMenuItemImpl result = new SeparatorMenuItemImpl();
+		radioGroups.add(new JoSwingButtonGroup(result, new ButtonGroup()));
 		addItem(index, result);
 		return result;
 	}
@@ -90,7 +93,7 @@ public abstract class AbstractSwingMenu extends SwingWidget implements IMenuSpi 
 	@Override
 	public ISelectableMenuItemSpi addRadioItem(final Integer index) {
 		final JRadioButtonMenuItem radioItem = new JRadioButtonMenuItem();
-		//TODO BM use one radio group for every separator
+		final ButtonGroup radioGroup = findRadioGroup(index);
 		radioGroup.add(radioItem);
 		final SelectableMenuItemImpl result = new SelectableMenuItemImpl(radioItem);
 		addItem(index, result);
@@ -113,4 +116,54 @@ public abstract class AbstractSwingMenu extends SwingWidget implements IMenuSpi 
 		}
 	}
 
+	private ButtonGroup findRadioGroup(final Integer index) {
+		ButtonGroup result = radioGroups.get(0).getButtonGroup();
+		if (radioGroups.size() != 1) {
+			for (final JoSwingButtonGroup joButtonGroup : radioGroups) {
+				final SeparatorMenuItemImpl separator = joButtonGroup.getSeparator();
+				if (separator == null) {
+					continue;
+				}
+				int componentIndex = 0;
+				final int componentCount = getUiReference().getComponentCount();
+				for (int i = 0; i < componentCount; i++) {
+					if (getUiReference().getComponent(i) == separator.getUiReference()) {
+						componentIndex = i;
+						break;
+					}
+				}
+				if (componentIndex >= index) {
+					break;
+				}
+				result = joButtonGroup.getButtonGroup();
+			}
+		}
+		return result;
+	}
+
+	private static class JoSwingButtonGroup {
+
+		private final SeparatorMenuItemImpl separator;
+
+		private final ButtonGroup buttonGroup;
+
+		/**
+		 * @param separatorIndex
+		 * @param separator
+		 * @param buttonGroup
+		 */
+		public JoSwingButtonGroup(final SeparatorMenuItemImpl separator, final ButtonGroup buttonGroup) {
+			this.separator = separator;
+			this.buttonGroup = buttonGroup;
+		}
+
+		protected SeparatorMenuItemImpl getSeparator() {
+			return separator;
+		}
+
+		protected ButtonGroup getButtonGroup() {
+			return buttonGroup;
+		}
+
+	}
 }
