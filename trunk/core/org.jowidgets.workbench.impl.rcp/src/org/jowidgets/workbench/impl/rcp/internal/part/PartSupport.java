@@ -119,13 +119,6 @@ public final class PartSupport {
 	}
 
 	public void showPerspective(final String nodeId, final ComponentContext componentContext) {
-		final IPerspectiveRegistry perspectiveRegistry = PlatformUI.getWorkbench().getPerspectiveRegistry();
-		final IPerspectiveDescriptor perspectiveDescriptor = perspectiveRegistry.findPerspectiveWithId(DynamicPerspective.ID);
-		if (componentContext == null) {
-			showEmptyPerspective();
-			return;
-		}
-
 		final ILayout perspective = componentContext.getPerspective();
 		if (perspective == null) {
 			showEmptyPerspective();
@@ -133,8 +126,10 @@ public final class PartSupport {
 		}
 
 		final String perspectiveId = nodeId + "." + perspective.getId();
+		final IPerspectiveRegistry perspectiveRegistry = PlatformUI.getWorkbench().getPerspectiveRegistry();
 		IPerspectiveDescriptor newPerspective = perspectiveRegistry.findPerspectiveWithId(perspectiveId);
 		if (newPerspective == null) {
+			final IPerspectiveDescriptor perspectiveDescriptor = perspectiveRegistry.findPerspectiveWithId(DynamicPerspective.ID);
 			newPerspective = perspectiveRegistry.clonePerspective(
 					perspectiveId,
 					String.valueOf(perspective.getLabel()),

@@ -49,13 +49,12 @@ import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.workbench.api.ITrayItem;
 import org.jowidgets.workbench.api.IWorkbench;
-import org.jowidgets.workbench.api.IWorkbenchContext;
 import org.jowidgets.workbench.impl.rcp.internal.util.ImageHelper;
 
 public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
 	private final IWorkbench workbench;
-	private final IWorkbenchContext context;
+	private final WorkbenchContext context;
 	private IFrame frame;
 	private IContainer statusBar;
 	private ITrayItem tray;
@@ -69,7 +68,7 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	public JoWorkbenchWindowAdvisor(
 		final IWorkbenchWindowConfigurer configurer,
 		final IWorkbench workbench,
-		final IWorkbenchContext context) {
+		final WorkbenchContext context) {
 		super(configurer);
 		this.workbench = workbench;
 		this.context = context;
@@ -174,7 +173,7 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	public void selectTreeNode(final String[] selectedTreeNode) {
 		this.selectedTreeNode = selectedTreeNode;
 		if (applicationFolder != null && !applicationFolder.isDisposed()) {
-			applicationFolder.setSelectedTreeNode(selectedTreeNode);
+			applicationFolder.selectTreeNode(selectedTreeNode);
 		}
 	}
 

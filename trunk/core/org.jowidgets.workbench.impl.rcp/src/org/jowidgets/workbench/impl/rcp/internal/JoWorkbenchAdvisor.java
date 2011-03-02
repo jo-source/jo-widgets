@@ -35,21 +35,20 @@ import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchAdvisor;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 import org.jowidgets.workbench.api.IWorkbench;
-import org.jowidgets.workbench.api.IWorkbenchContext;
 import org.jowidgets.workbench.impl.rcp.internal.part.DynamicPerspective;
 import org.jowidgets.workbench.impl.rcp.internal.part.PartSupport;
 
 public final class JoWorkbenchAdvisor extends WorkbenchAdvisor {
 
 	private final IWorkbench workbench;
-	private final IWorkbenchContext context;
+	private final WorkbenchContext context;
 	private final boolean saveAndRestore;
 	private JoWorkbenchWindowAdvisor workbenchWindowAdvisor;
 	private final List<Runnable> shutdownHooks = new CopyOnWriteArrayList<Runnable>();
 	private Double folderRatio;
 	private String[] selectedTreeNode;
 
-	public JoWorkbenchAdvisor(final IWorkbench workbench, final IWorkbenchContext context, final boolean saveAndRestore) {
+	public JoWorkbenchAdvisor(final IWorkbench workbench, final WorkbenchContext context, final boolean saveAndRestore) {
 		this.workbench = workbench;
 		this.context = context;
 		this.saveAndRestore = saveAndRestore;

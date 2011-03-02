@@ -27,7 +27,7 @@
  */
 package org.jowidgets.workbench.impl.rcp.internal;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jface.viewers.ColumnLabelProvider;
@@ -55,34 +55,20 @@ import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.common.types.Position;
-import org.jowidgets.tools.types.VetoHolder;
-import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
 import org.jowidgets.workbench.api.IWorkbenchPart;
-import org.jowidgets.workbench.impl.rcp.internal.part.PartSupport;
 import org.jowidgets.workbench.impl.rcp.internal.util.ImageHelper;
 
 public final class WorkbenchApplicationTree extends Composite {
 
 	private final IWorkbenchApplication application;
+	private final WorkbenchApplicationFolder folder;
 	private final FolderToolBarHelper toolBarHelper;
 	private TreeViewer treeViewer;
 	private IMenuModel popupMenuModel;
 	private IPopupMenu popupMenu;
-	private String nodeId;
-	private ComponentContext componentContext;
-
-	public WorkbenchApplicationTree(final Composite parent, final IWorkbenchApplication application) {
-		super(parent, SWT.NONE);
-		setLayout(new FillLayout());
-
-		this.application = application;
-
-		toolBarHelper = new FolderToolBarHelper(parent);
-
-		addTreeViewer();
-	}
+	private boolean notifyUnselection;
 
 	private static class ViewLabelProvider extends ColumnLabelProvider {
 		@Override
@@ -115,7 +101,26 @@ public final class WorkbenchApplicationTree extends Composite {
 		}
 	}
 
-	public void addTreeViewer() {
+	public WorkbenchApplicationTree(
+		final Composite parent,
+		final IWorkbenchApplication application,
+		final WorkbenchApplicationFolder folder) {
+		super(parent, SWT.NONE);
+		setLayout(new FillLayout());
+
+		this.application = application;
+		this.folder = folder;
+
+		toolBarHelper = new FolderToolBarHelper(parent);
+
+		addTreeViewer();
+	}
+
+	public IWorkbenchApplication getApplication() {
+		return application;
+	}
+
+	private void addTreeViewer() {
 		treeViewer = new TreeViewer(this, SWT.SINGLE | SWT.H_SCROLL | SWT.V_SCROLL);
 		ColumnViewerToolTipSupport.enableFor(treeViewer);
 		treeViewer.setContentProvider(new ITreeContentProvider() {
@@ -177,37 +182,11 @@ public final class WorkbenchApplicationTree extends Composite {
 			public void selectionChanged(final SelectionChangedEvent event) {
 				if (!event.getSelection().isEmpty()) {
 					final ComponentTreeNodeContext context = (ComponentTreeNodeContext) ((ITreeSelection) treeViewer.getSelection()).getFirstElement();
-					final WorkbenchContext workbenchContext = (WorkbenchContext) context.getWorkbenchContext();
-					final IComponent currentComponent = workbenchContext.getCurrentComponent();
-					if (currentComponent != null) {
-						final ComponentContext selectedComponentContext = context.getComponentContext();
-						if (selectedComponentContext != null && selectedComponentContext.getComponent() == currentComponent) {
-							// component re-selected, do nothing
-							return;
-						}
-						final VetoHolder vetoHolder = new VetoHolder();
-						currentComponent.onDeactivation(vetoHolder);
-						if (vetoHolder.hasVeto()) {
-							treeViewer.setSelection(new StructuredSelection(componentContext.getComponentTreeNodeContext()));
-							return;
-						}
-					}
-					final ComponentContext newComponentContext = context.getComponentContext();
-					if (newComponentContext != null) {
-						final IComponent newComponent = newComponentContext.getComponent();
-						workbenchContext.setCurrentComponent(newComponent);
-						newComponent.onActivation();
-					}
-					else {
-						workbenchContext.setCurrentComponent(null);
-					}
-					nodeId = context.getQualifiedId();
-					componentContext = newComponentContext;
-					showSelectedPerspective();
+					folder.onTreeNodeSelectionChange(WorkbenchApplicationTree.this, context);
 				}
-				else {
-					componentContext = null;
-					PartSupport.getInstance().showEmptyPerspective();
+				else if (notifyUnselection) {
+					folder.onTreeNodeSelectionChange(WorkbenchApplicationTree.this, null);
+					notifyUnselection = false;
 				}
 			}
 		});
@@ -215,14 +194,6 @@ public final class WorkbenchApplicationTree extends Composite {
 
 	public void setInput(final WorkbenchApplicationContext applicationContext) {
 		treeViewer.setInput(applicationContext);
-	}
-
-	public void showSelectedPerspective() {
-		PartSupport.getInstance().showPerspective(nodeId, componentContext);
-	}
-
-	public boolean isPerspectiveSelected() {
-		return componentContext != null;
 	}
 
 	public void refresh(final Object object) {
@@ -233,26 +204,11 @@ public final class WorkbenchApplicationTree extends Composite {
 		return toolBarHelper.getUiReference();
 	}
 
-	public List<String> getSelectedNode() {
-		final List<String> result = new LinkedList<String>();
-		final TreeItem[] items = treeViewer.getTree().getSelection();
-		if (items.length == 1) {
-			TreeItem item = items[0];
-			while (item != null) {
-				final ComponentTreeNodeContext context = (ComponentTreeNodeContext) item.getData();
-				result.add(0, context.getId());
-				item = item.getParentItem();
-			}
-		}
-		result.add(0, application.getId());
-		return result;
+	public void selectTreeNode(final List<String> nodes) {
+		selectTreeNode(new ArrayList<String>(nodes), null);
 	}
 
-	public void setSelectedNode(final List<String> nodes) {
-		setSelectedNode(nodes.subList(1, nodes.size()), null);
-	}
-
-	private void setSelectedNode(final List<String> nodes, final TreeItem parent) {
+	private void selectTreeNode(final List<String> nodes, final TreeItem parent) {
 		if (nodes.isEmpty()) {
 			if (parent != null) {
 				final ComponentTreeNodeContext context = (ComponentTreeNodeContext) parent.getData();
@@ -273,14 +229,15 @@ public final class WorkbenchApplicationTree extends Composite {
 			final ComponentTreeNodeContext context = (ComponentTreeNodeContext) item.getData();
 			if (context != null && context.getId().equals(id)) {
 				treeViewer.expandToLevel(context, 1);
-				setSelectedNode(nodes, item);
+				selectTreeNode(nodes, item);
 				break;
 			}
 		}
 		nodes.add(0, id);
 	}
 
-	public void clearSelection() {
+	public void clearSelection(final boolean notify) {
+		notifyUnselection = notify;
 		treeViewer.setSelection(null);
 	}
 

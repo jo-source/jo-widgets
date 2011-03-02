@@ -27,8 +27,9 @@
  */
 package org.jowidgets.workbench.impl.rcp.internal;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.eclipse.jface.resource.ColorRegistry;
 import org.eclipse.swt.SWT;
@@ -53,21 +54,21 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.IWorkbenchThemeConstants;
 import org.eclipse.ui.themes.ITheme;
 import org.jowidgets.tools.types.VetoHolder;
+import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IWorkbench;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
-import org.jowidgets.workbench.api.IWorkbenchContext;
+import org.jowidgets.workbench.impl.rcp.internal.part.PartSupport;
 import org.jowidgets.workbench.impl.rcp.internal.util.ImageHelper;
 
 @SuppressWarnings("restriction")
 public final class WorkbenchApplicationFolder extends Composite {
 
 	private final CTabFolder tabFolder;
-	private final IWorkbenchContext workbenchContext;
-	private IWorkbenchApplication currentApplication;
-	private WorkbenchApplicationTree activeTree;
-	private String[] lastSelectedTreeNode;
+	private final WorkbenchContext workbenchContext;
+	private WorkbenchApplicationTree selectedApplicationTree;
+	private ComponentTreeNodeContext selectedComponentTreeNodeContext;
 
-	public WorkbenchApplicationFolder(final Composite parent, final IWorkbench workbench, final IWorkbenchContext workbenchContext) {
+	public WorkbenchApplicationFolder(final Composite parent, final IWorkbench workbench, final WorkbenchContext workbenchContext) {
 		super(parent, SWT.NONE);
 		this.workbenchContext = workbenchContext;
 
@@ -92,20 +93,6 @@ public final class WorkbenchApplicationFolder extends Composite {
 				final Control newControl = appTree.getFolderComposite();
 				newControl.setVisible(true);
 				tabFolder.setTopRight(newControl);
-				if (currentApplication != null) {
-					currentApplication.onVisibleStateChanged(false);
-					currentApplication.onActiveStateChanged(false);
-				}
-				currentApplication = (IWorkbenchApplication) currentItem.getData();
-				currentApplication.onVisibleStateChanged(true);
-				currentApplication.onActiveStateChanged(true);
-				if (activeTree != null && activeTree.isPerspectiveSelected()) {
-					if (!activeTree.isDisposed()) {
-						lastSelectedTreeNode = activeTree.getSelectedNode().toArray(new String[0]);
-					}
-				}
-				appTree.showSelectedPerspective();
-				activeTree = appTree;
 			}
 		});
 
@@ -118,7 +105,7 @@ public final class WorkbenchApplicationFolder extends Composite {
 				application.onClose(vetoHolder);
 				if (!vetoHolder.hasVeto()) {
 					final WorkbenchApplicationTree tree = (WorkbenchApplicationTree) tabItem.getControl();
-					tree.clearSelection();
+					tree.clearSelection(true);
 					tree.dispose();
 				}
 				event.doit = !vetoHolder.hasVeto();
@@ -155,7 +142,7 @@ public final class WorkbenchApplicationFolder extends Composite {
 				app.getIcon(),
 				PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT)));
 		tabItem.setToolTipText(app.getTooltip());
-		final WorkbenchApplicationTree appTree = new WorkbenchApplicationTree(tabFolder, app);
+		final WorkbenchApplicationTree appTree = new WorkbenchApplicationTree(tabFolder, app, this);
 		final WorkbenchApplicationContext context = new WorkbenchApplicationContext(workbenchContext, app, appTree);
 		tabItem.setControl(appTree);
 		tabItem.setData(app);
@@ -165,13 +152,9 @@ public final class WorkbenchApplicationFolder extends Composite {
 	public void removeApplication(final IWorkbenchApplication app) {
 		for (final CTabItem item : tabFolder.getItems()) {
 			if (item.getData() == app) {
-				if (currentApplication == app) {
-					currentApplication = null;
-					activeTree = null;
-				}
 				// unselect to clear perspective
 				final WorkbenchApplicationTree tree = (WorkbenchApplicationTree) item.getControl();
-				tree.clearSelection();
+				tree.clearSelection(true);
 				tree.dispose();
 				item.dispose();
 				break;
@@ -241,14 +224,14 @@ public final class WorkbenchApplicationFolder extends Composite {
 		return PlatformUI.getWorkbench().getThemeManager().getCurrentTheme();
 	}
 
-	public void setSelectedTreeNode(final String[] selectedTreeNode) {
+	public void selectTreeNode(final String[] selectedTreeNode) {
 		if (selectedTreeNode != null && selectedTreeNode.length > 0) {
 			final String appId = selectedTreeNode[0];
 			for (final CTabItem item : tabFolder.getItems()) {
 				final IWorkbenchApplication app = (IWorkbenchApplication) item.getData();
 				if (app.getId().equals(appId)) {
 					final WorkbenchApplicationTree tree = (WorkbenchApplicationTree) item.getControl();
-					tree.setSelectedNode(new ArrayList<String>(Arrays.asList(selectedTreeNode)));
+					tree.selectTreeNode(Arrays.asList(selectedTreeNode).subList(1, selectedTreeNode.length));
 					tabFolder.setTopRight(tree.getFolderComposite());
 					tree.getFolderComposite().setVisible(true);
 					tabFolder.setSelection(item);
@@ -258,11 +241,48 @@ public final class WorkbenchApplicationFolder extends Composite {
 		}
 	}
 
-	public String[] getSelectedTreeNode() {
-		if (activeTree != null && activeTree.isPerspectiveSelected()) {
-			return activeTree.getSelectedNode().toArray(new String[0]);
+	public void onTreeNodeSelectionChange(
+		final WorkbenchApplicationTree tree,
+		final ComponentTreeNodeContext selectedComponentTreeNodeContext) {
+		if (selectedComponentTreeNodeContext != null) {
+			if (selectedApplicationTree != null && selectedApplicationTree != tree) {
+				selectedApplicationTree.clearSelection(false);
+			}
+			selectedApplicationTree = tree;
 		}
-		return lastSelectedTreeNode;
+		else {
+			this.selectedApplicationTree = null;
+		}
+		this.selectedComponentTreeNodeContext = selectedComponentTreeNodeContext;
+
+		// TODO HRW call IComponent#onDeactivation
+
+		if (selectedComponentTreeNodeContext != null) {
+			final ComponentContext componentContext = selectedComponentTreeNodeContext.getComponentContext();
+			if (componentContext != null) {
+				final IComponent newComponent = componentContext.getComponent();
+				workbenchContext.setCurrentComponent(newComponent);
+				newComponent.onActivation();
+				PartSupport.getInstance().showPerspective(selectedComponentTreeNodeContext.getQualifiedId(), componentContext);
+				return;
+			}
+			workbenchContext.setCurrentComponent(null);
+		}
+		PartSupport.getInstance().showEmptyPerspective();
+	}
+
+	public String[] getSelectedTreeNode() {
+		if (selectedComponentTreeNodeContext == null) {
+			return null;
+		}
+		final List<String> result = new LinkedList<String>();
+		ComponentTreeNodeContext context = selectedComponentTreeNodeContext;
+		while (context != null) {
+			result.add(0, context.getId());
+			context = (ComponentTreeNodeContext) context.getParent();
+		}
+		result.add(0, selectedApplicationTree.getApplication().getId());
+		return result.toArray(new String[0]);
 	}
 
 }
