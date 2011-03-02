@@ -33,6 +33,8 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -112,6 +114,13 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 		}
 		else {
 			parent = new Composite(viewComposite, SWT.NONE);
+			// add paint listener to correct layout after re-setting perspective
+			parent.addPaintListener(new PaintListener() {
+				@Override
+				public void paintControl(final PaintEvent e) {
+					parent.layout();
+				}
+			});
 		}
 
 		final IMenuModel menuModel = viewLayoutContext.getFolderContext().getPopupMenu();
