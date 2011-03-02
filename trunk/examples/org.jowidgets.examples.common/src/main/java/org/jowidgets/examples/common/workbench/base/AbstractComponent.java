@@ -51,7 +51,10 @@ public abstract class AbstractComponent implements IComponent {
 	@Override
 	public void onFolderCreated(final IFolderContext folderContext) {
 		// CHECKSTYLE:OFF
-		System.out.println("onFolderCloned, originalID: " + folderContext.getOriginalFolderId() + " , newID: " + folderContext.getFolderId());
+		System.out.println("onFolderCreated, originalID: "
+			+ folderContext.getOriginalFolderId()
+			+ " , newID: "
+			+ folderContext.getFolderId());
 		// CHECKSTYLE:ON	
 	}
 

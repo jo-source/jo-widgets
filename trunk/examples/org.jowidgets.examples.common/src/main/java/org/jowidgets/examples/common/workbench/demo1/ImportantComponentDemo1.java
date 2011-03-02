@@ -31,6 +31,7 @@ package org.jowidgets.examples.common.workbench.demo1;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.types.QuestionResult;
 import org.jowidgets.common.types.IVetoable;
@@ -41,6 +42,7 @@ import org.jowidgets.examples.common.workbench.base.ViewLayout;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IFolderLayout;
+import org.jowidgets.workbench.api.ILayout;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
 import org.jowidgets.workbench.api.IViewLayout;
@@ -51,7 +53,11 @@ public class ImportantComponentDemo1 extends AbstractComponent implements ICompo
 	public static final String MASTER_FOLDER_ID = "MASTER_FOLDER_ID";
 
 	public ImportantComponentDemo1(final IComponentContext context) {
-		context.setLayout(new Layout(DEFAULT_LAYOUT_ID, createMasterFolder()));
+		final ILayout defaultLayout = new Layout(DEFAULT_LAYOUT_ID, createMasterFolder());
+		context.setLayout(defaultLayout);
+		final IMenuModel popupMenu = context.getComponentTreeNodeContext().getPopupMenu();
+		popupMenu.addSeparator();
+		popupMenu.addAction(new ActionFactory().createResetLayoutAction(context, defaultLayout));
 	}
 
 	@Override

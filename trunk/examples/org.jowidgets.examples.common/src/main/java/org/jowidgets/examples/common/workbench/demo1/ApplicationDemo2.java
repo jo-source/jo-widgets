@@ -28,10 +28,14 @@
 
 package org.jowidgets.examples.common.workbench.demo1;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractApplication;
+import org.jowidgets.workbench.api.IComponentTreeNode;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 
 public class ApplicationDemo2 extends AbstractApplication {
@@ -49,6 +53,11 @@ public class ApplicationDemo2 extends AbstractApplication {
 
 		//create menus
 		context.getPopupMenu().addAction(addFolderAction);
+
+		final List<IComponentTreeNode> componentList3 = new LinkedList<IComponentTreeNode>();
+		componentList3.add(new ImportantComponentTreeNodeDemo1("IMPORTANT1", "Important"));
+		final FolderTreeNodeDemo folderNode2 = new FolderTreeNodeDemo("MISC", "Misc", componentList3);
+		context.add(folderNode2);
 	}
 
 	@Override
