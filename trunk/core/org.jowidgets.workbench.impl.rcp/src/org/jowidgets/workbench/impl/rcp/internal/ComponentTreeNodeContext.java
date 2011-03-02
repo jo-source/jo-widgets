@@ -170,7 +170,6 @@ public final class ComponentTreeNodeContext implements IComponentTreeNodeContext
 			context = (ComponentTreeNodeContext) context.getParent();
 		}
 		result.add(0, applicationContext.getId());
-		System.err.println("Select " + result);
 		((WorkbenchContext) getWorkbenchContext()).selectTreeNode(result.toArray(new String[0]));
 	}
 
