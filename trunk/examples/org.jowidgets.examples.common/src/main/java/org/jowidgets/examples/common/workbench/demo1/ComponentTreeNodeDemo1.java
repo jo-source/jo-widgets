@@ -69,6 +69,7 @@ public class ComponentTreeNodeDemo1 extends AbstractComponentTreeNode {
 		popupMenu.addAction(actionFactory.createDeleteAction(context, this, "Delete " + getLabel(), SilkIcons.APPLICATION_DELETE));
 		popupMenu.addSeparator();
 		popupMenu.addAction(actionFactory.createRenameComponentTreeNode(context));
+		popupMenu.addAction(actionFactory.createSelectParentNode(context));
 	}
 
 	@Override

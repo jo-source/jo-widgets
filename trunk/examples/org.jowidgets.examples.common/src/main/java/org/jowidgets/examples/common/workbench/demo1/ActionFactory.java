@@ -30,6 +30,7 @@ package org.jowidgets.examples.common.workbench.demo1;
 
 import java.util.UUID;
 
+import org.jowidgets.api.command.EnabledState;
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.command.IActionBuilder;
 import org.jowidgets.api.command.ICommandExecutor;
@@ -48,6 +49,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.ViewLayout;
+import org.jowidgets.tools.command.EnabledChecker;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IComponentTreeNode;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
@@ -321,4 +323,20 @@ public class ActionFactory {
 		return actionBuilder.build();
 	}
 
+	public IAction createSelectParentNode(final IComponentTreeNodeContext context) {
+		final IActionBuilder actionBuilder = Toolkit.getActionBuilderFactory().create();
+		actionBuilder.setText("Select parent Component");
+		actionBuilder.setIcon(SilkIcons.TABLE_GO);
+		final EnabledChecker enabledChecker = new EnabledChecker();
+		enabledChecker.setEnabledState(context.getParent() == null
+				? EnabledState.disabled("cannot select parent because this is a root node") : EnabledState.ENABLED);
+		actionBuilder.setCommand(new ICommandExecutor() {
+			@Override
+			public void execute(final IExecutionContext executionContext) throws Exception {
+				context.getParent().select();
+			}
+		}, enabledChecker);
+
+		return actionBuilder.build();
+	}
 }

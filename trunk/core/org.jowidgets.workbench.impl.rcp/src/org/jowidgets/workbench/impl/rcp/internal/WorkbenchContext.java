@@ -144,4 +144,8 @@ public final class WorkbenchContext implements IWorkbenchContext {
 		this.currentComponent = currentComponent;
 	}
 
+	public void selectTreeNode(final String[] selectedTreeNode) {
+		workbenchAdvisor.getWorkbenchWindowAdvisor().selectTreeNode(selectedTreeNode);
+	}
+
 }

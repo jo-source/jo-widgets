@@ -171,7 +171,7 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		return selectedTreeNode;
 	}
 
-	public void setSelectedTreeNode(final String[] selectedTreeNode) {
+	public void selectTreeNode(final String[] selectedTreeNode) {
 		this.selectedTreeNode = selectedTreeNode;
 		if (applicationFolder != null && !applicationFolder.isDisposed()) {
 			applicationFolder.setSelectedTreeNode(selectedTreeNode);

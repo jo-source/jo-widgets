@@ -30,6 +30,7 @@ package org.jowidgets.workbench.impl.rcp.internal;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
@@ -162,7 +163,15 @@ public final class ComponentTreeNodeContext implements IComponentTreeNodeContext
 
 	@Override
 	public void select() {
-		// TODO HRW implement
+		final List<String> result = new LinkedList<String>();
+		ComponentTreeNodeContext context = this;
+		while (context != null) {
+			result.add(0, context.getId());
+			context = (ComponentTreeNodeContext) context.getParent();
+		}
+		result.add(0, applicationContext.getId());
+		System.err.println("Select " + result);
+		((WorkbenchContext) getWorkbenchContext()).selectTreeNode(result.toArray(new String[0]));
 	}
 
 	@Override
