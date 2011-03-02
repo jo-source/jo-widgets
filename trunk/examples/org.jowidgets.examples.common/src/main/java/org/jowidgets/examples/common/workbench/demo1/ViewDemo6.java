@@ -49,10 +49,12 @@ public class ViewDemo6 extends AbstractView implements IView {
 		context.getToolBarMenu().addItemsOfModel(menuProvider.getMenuModel());
 		new DemoTreeComposite(context.getContainer());
 		final ActionFactory actionFactory = new ActionFactory();
+		context.getComponentTreeNodeContext().getPopupMenu().addSeparator();
 		context.getComponentTreeNodeContext().getPopupMenu().addAction(
 				actionFactory.createActivateViewAction(context, DEFAULT_LABEL));
 		context.getComponentTreeNodeContext().getPopupMenu().addAction(
 				actionFactory.createUnHideViewAction(context, DEFAULT_LABEL));
+		context.getToolBarMenu().addSeparator();
 		context.getToolBarMenu().addAction(actionFactory.createHideViewAction(context));
 	}
 
