@@ -120,8 +120,8 @@ public final class WorkbenchApplicationFolder extends Composite {
 					final WorkbenchApplicationTree tree = (WorkbenchApplicationTree) tabItem.getControl();
 					tree.clearSelection();
 					tree.dispose();
-					event.doit = !vetoHolder.hasVeto();
 				}
+				event.doit = !vetoHolder.hasVeto();
 			}
 		});
 
