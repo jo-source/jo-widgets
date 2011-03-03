@@ -35,7 +35,7 @@ import org.jowidgets.api.widgets.descriptor.ILabelDescriptor;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
 
-public class JoLabel extends Control<ILabel, ILabelBluePrint> implements ILabel {
+public class JoLabel extends ControlWidget<ILabel, ILabelBluePrint> implements ILabel {
 
 	public JoLabel(final IImageConstant icon) {
 		this(Toolkit.getBluePrintFactory().label().setIcon(icon));

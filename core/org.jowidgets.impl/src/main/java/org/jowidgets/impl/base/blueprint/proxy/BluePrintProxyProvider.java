@@ -33,7 +33,7 @@ import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceR
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.common.widgets.builder.ISetupBuilder;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.impl.base.blueprint.proxy.internal.BluePrintProxyInvocationHandler;
+import org.jowidgets.impl.base.blueprint.proxy.internal.BluePrintProxyInvovationHandler;
 import org.jowidgets.util.Assert;
 
 public class BluePrintProxyProvider<BLUE_PRINT_TYPE extends ISetupBuilder<?>> {
@@ -43,19 +43,26 @@ public class BluePrintProxyProvider<BLUE_PRINT_TYPE extends ISetupBuilder<?>> {
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public BluePrintProxyProvider(
 		final Class<? extends IWidgetDescriptor> bluePrintType,
+		final Class<? extends IWidgetDescriptor> widgetDescrType,
 		final ISetupBuilderConvenienceRegistry convenienceRegistry,
 		final IDefaultsInitializerRegistry defaultsRegistry) {
 
 		Assert.paramNotNull(bluePrintType, "bluePrintType");
+		Assert.paramNotNull(widgetDescrType, "widgetDescrType");
 
-		final BluePrintProxyInvocationHandler invocationHandler = new BluePrintProxyInvocationHandler();
+		final BluePrintProxyInvovationHandler invocationHandler = new BluePrintProxyInvovationHandler();
 
 		proxy = (BLUE_PRINT_TYPE) Proxy.newProxyInstance(
 				bluePrintType.getClassLoader(),
 				new Class[] {bluePrintType},
 				invocationHandler);
 
-		invocationHandler.initialize(proxy, bluePrintType, convenienceRegistry, defaultsRegistry);
+		invocationHandler.initialize(
+				proxy,
+				(Class<? extends IWidgetDescriptor>) bluePrintType,
+				(Class<? extends IWidgetDescriptor>) widgetDescrType,
+				convenienceRegistry,
+				defaultsRegistry);
 
 	}
 

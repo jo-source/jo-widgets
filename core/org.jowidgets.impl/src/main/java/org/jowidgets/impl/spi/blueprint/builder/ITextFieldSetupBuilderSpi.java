@@ -30,7 +30,7 @@ package org.jowidgets.impl.spi.blueprint.builder;
 import org.jowidgets.common.widgets.builder.ITextFieldSetupBuilderCommon;
 
 public interface ITextFieldSetupBuilderSpi<INSTANCE_TYPE extends ITextFieldSetupBuilderSpi<?>> extends
-		ITextInputComponentSetupBuilderSpi<INSTANCE_TYPE>,
+		ITextInputWidgetSetupBuilderSpi<INSTANCE_TYPE>,
 		ITextFieldSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

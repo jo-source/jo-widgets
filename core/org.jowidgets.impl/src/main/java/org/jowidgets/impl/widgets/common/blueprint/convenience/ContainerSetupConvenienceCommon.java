@@ -30,7 +30,7 @@ package org.jowidgets.impl.widgets.common.blueprint.convenience;
 import org.jowidgets.common.widgets.builder.IContainerSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.convenience.IContainerSetupConvenienceCommon;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.tools.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
+import org.jowidgets.impl.base.blueprint.convenience.AbstractSetupBuilderConvenience;
 
 public class ContainerSetupConvenienceCommon extends AbstractSetupBuilderConvenience<IContainerSetupBuilderCommon<?>> implements
 		IContainerSetupConvenienceCommon<IContainerSetupBuilderCommon<?>> {

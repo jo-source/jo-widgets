@@ -31,8 +31,8 @@ public interface IValidationLabel extends IControl {
 
 	void resetValidation();
 
-	void registerInputWidget(final IInputComponent<?> inputWidget);
+	void registerInputWidget(final IInputWidget<?> inputWidget);
 
-	void unRegisterInputWidget(final IInputComponent<?> inputWidget);
+	void unRegisterInputWidget(final IInputWidget<?> inputWidget);
 
 }
