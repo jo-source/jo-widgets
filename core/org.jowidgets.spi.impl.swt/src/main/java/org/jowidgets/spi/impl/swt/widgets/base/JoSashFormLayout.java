@@ -123,17 +123,17 @@ class JoSashFormLayout extends Layout {
 			newSize += toAdd;
 
 			if (newSize < JoSashForm.DRAG_MINIMUM) {
-				newSize = (int) ((JoSashForm.DRAG_MINIMUM - (float) sashForm.getSashWidth()) / 2);
+				newSize = (int) (((float) JoSashForm.DRAG_MINIMUM - (float) sashForm.getSashWidth()) / 2);
 			}
 
 			first.setBounds(area.x, area.y, newSize, area.height);
 
 			x += first.getBounds().width;
 
-			if (sashForm.getSash() == null) {
+			final Sash sash = sashForm.getSash();
+			if (sash == null) {
 				return;
 			}
-			final Sash sash = sashForm.getSash();
 			sash.setBounds(x, area.y, sashForm.getSashWidth(), area.height);
 
 			x += sashForm.getSashWidth();
@@ -141,7 +141,7 @@ class JoSashFormLayout extends Layout {
 			newSize = area.width - first.getBounds().width - sashForm.getSashWidth();
 
 			if (newSize < JoSashForm.DRAG_MINIMUM) {
-				newSize = (int) ((JoSashForm.DRAG_MINIMUM - (float) sashForm.getSashWidth()) / 2);
+				newSize = (int) (((float) JoSashForm.DRAG_MINIMUM - (float) sashForm.getSashWidth()) / 2);
 			}
 
 			second.setBounds(x, area.y, newSize, area.height);
@@ -156,16 +156,16 @@ class JoSashFormLayout extends Layout {
 			newSize += toAdd;
 
 			if (newSize < JoSashForm.DRAG_MINIMUM) {
-				newSize = (int) ((JoSashForm.DRAG_MINIMUM - (float) sashForm.getSashWidth()) / 2);
+				newSize = (int) (((float) JoSashForm.DRAG_MINIMUM - (float) sashForm.getSashWidth()) / 2);
 			}
 
 			first.setBounds(area.x, area.y, area.width, newSize);
 			y += first.getBounds().height;
 
-			if (sashForm.getSash() == null) {
+			final Sash sash = sashForm.getSash();
+			if (sash == null) {
 				return;
 			}
-			final Sash sash = sashForm.getSash();
 
 			sash.setBounds(area.x, y, area.width, sashForm.getSashWidth());
 
@@ -174,7 +174,7 @@ class JoSashFormLayout extends Layout {
 			newSize = area.height - first.getBounds().height - sashForm.getSashWidth();
 
 			if (newSize < JoSashForm.DRAG_MINIMUM) {
-				newSize = (int) ((JoSashForm.DRAG_MINIMUM - (float) sashForm.getSashWidth()) / 2);
+				newSize = (int) (((float) JoSashForm.DRAG_MINIMUM - (float) sashForm.getSashWidth()) / 2);
 			}
 
 			second.setBounds(area.x, y, area.width, newSize);
@@ -243,7 +243,7 @@ class JoSashFormLayout extends Layout {
 			}
 
 			if (newWidth < JoSashForm.DRAG_MINIMUM) {
-				newWidth = (int) ((JoSashForm.DRAG_MINIMUM - (float) sashForm.getSashWidth()) / 2);
+				newWidth = (int) (((float) JoSashForm.DRAG_MINIMUM - (float) sashForm.getSashWidth()) / 2);
 				if (save <= 0) {
 					save = second.getBounds().height;
 				}
@@ -276,10 +276,10 @@ class JoSashFormLayout extends Layout {
 		int newWidth = 0;
 		int firstSize = 0;
 
-		if (sashForm.getSash() == null) {
+		final Sash sash = sashForm.getSash();
+		if (sash == null) {
 			return;
 		}
-		final Sash sash = sashForm.getSash();
 
 		if (sashForm.getOrientation() == SWT.HORIZONTAL) {
 			int x = area.x;
@@ -370,10 +370,10 @@ class JoSashFormLayout extends Layout {
 			first.setBounds(area.x, area.y, newValue, area.height);
 			x += first.getBounds().width;
 
-			if (sashForm.getSash() == null) {
+			final Sash sash = sashForm.getSash();
+			if (sash == null) {
 				return;
 			}
-			final Sash sash = sashForm.getSash();
 
 			sash.setBounds(x, area.y, sashForm.getSashWidth(), area.height);
 
@@ -388,15 +388,15 @@ class JoSashFormLayout extends Layout {
 			first.setBounds(area.x, area.y, area.width, newValue);
 			y += first.getBounds().height;
 
-			if (sashForm.getSash() == null) {
+			final Sash sash = sashForm.getSash();
+			if (sash == null) {
 				return;
 			}
-			final Sash sash = sashForm.getSash();
 
 			sash.setBounds(area.x, y, area.width, sashForm.getSashWidth());
 
 			y += sashForm.getSashWidth();
-			newValue = (int) ((area.height * (((float) firstWeight / (float) total))) - ((float) sashForm.getSashWidth() / 2));
+			newValue = (int) ((area.height * (((float) secondWeight / (float) total))) - ((float) sashForm.getSashWidth() / 2));
 			second.setBounds(area.x, y, area.width, newValue);
 		}
 		else {
