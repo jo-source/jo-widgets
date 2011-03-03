@@ -86,13 +86,7 @@ public final class WorkbenchApplicationFolder extends Composite {
 			public void widgetSelected(final SelectionEvent e) {
 				final CTabItem currentItem = tabFolder.getSelection();
 				final WorkbenchApplicationTree appTree = (WorkbenchApplicationTree) currentItem.getControl();
-				final Control oldControl = tabFolder.getTopRight();
-				if (oldControl != null) {
-					oldControl.setVisible(false);
-				}
-				final Control newControl = appTree.getFolderComposite();
-				newControl.setVisible(true);
-				tabFolder.setTopRight(newControl);
+				updateTopRightComposite(appTree.getFolderComposite());
 			}
 		});
 
@@ -232,8 +226,7 @@ public final class WorkbenchApplicationFolder extends Composite {
 				if (app.getId().equals(appId)) {
 					final WorkbenchApplicationTree tree = (WorkbenchApplicationTree) item.getControl();
 					tree.selectTreeNode(Arrays.asList(selectedTreeNode).subList(1, selectedTreeNode.length));
-					tabFolder.setTopRight(tree.getFolderComposite());
-					tree.getFolderComposite().setVisible(true);
+					updateTopRightComposite(tree.getFolderComposite());
 					tabFolder.setSelection(item);
 					break;
 				}
@@ -297,6 +290,15 @@ public final class WorkbenchApplicationFolder extends Composite {
 		}
 		result.add(0, selectedApplicationTree.getApplication().getId());
 		return result.toArray(new String[0]);
+	}
+
+	private void updateTopRightComposite(final Control newControl) {
+		final Control oldControl = tabFolder.getTopRight();
+		if (oldControl != null) {
+			oldControl.setVisible(false);
+		}
+		tabFolder.setTopRight(newControl);
+		newControl.setVisible(true);
 	}
 
 }
