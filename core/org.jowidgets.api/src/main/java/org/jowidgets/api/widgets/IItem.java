@@ -28,15 +28,8 @@
 
 package org.jowidgets.api.widgets;
 
-import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.IItemCommon;
 
 public interface IItem extends IWidget, IItemCommon {
-
-	String getText();
-
-	String getToolTipText();
-
-	IImageConstant getIcon();
 
 }

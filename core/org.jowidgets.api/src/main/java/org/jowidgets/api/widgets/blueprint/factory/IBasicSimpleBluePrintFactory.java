@@ -29,6 +29,7 @@ package org.jowidgets.api.widgets.blueprint.factory;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.convert.IObjectStringConverter;
+import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICheckBoxBluePrint;
@@ -47,21 +48,22 @@ import org.jowidgets.api.widgets.blueprint.ISeparatorMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISeparatorToolBarItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISubMenuBluePrint;
-import org.jowidgets.api.widgets.blueprint.ITabFolderBluePrint;
-import org.jowidgets.api.widgets.blueprint.ITabItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToggleButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarContainerItemBluePrint;
-import org.jowidgets.api.widgets.blueprint.IToolBarMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarPopupButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarToggleButtonBluePrint;
-import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
-import org.jowidgets.api.widgets.blueprint.ITreeNodeBluePrint;
+import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-public interface IBasicSimpleBluePrintFactory extends IBaseBluePrintFactory {
+public interface IBasicSimpleBluePrintFactory {
+
+	<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>, BLUE_PRINT_TYPE extends IComponentSetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
+		final Class<BLUE_PRINT_TYPE> bluePrintType,
+		final Class<DESCRIPTOR_TYPE> descriptorType);
 
 	IFrameBluePrint frame();
 
@@ -114,16 +116,6 @@ public interface IBasicSimpleBluePrintFactory extends IBaseBluePrintFactory {
 
 	IToolBarPopupButtonBluePrint toolBarPopupButton();
 
-	IToolBarMenuBluePrint toolBarMenu();
-
 	IToolBarContainerItemBluePrint toolBarContainerItem();
-
-	ITabFolderBluePrint tabFolder();
-
-	ITabItemBluePrint tabItem();
-
-	ITreeBluePrint tree();
-
-	ITreeNodeBluePrint treeNode();
 
 }

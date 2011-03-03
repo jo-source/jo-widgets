@@ -41,7 +41,7 @@ public class DefaultIntegerConverter extends AbstractObjectStringConverter<Integ
 	@Override
 	public Integer convertToObject(final String string) {
 		try {
-			// TODO MG define business logic and parse (less tolerant) with
+			// TODO define business logic and parse (less tolerant) with
 			// consideration of i18n
 			return Integer.valueOf(Integer.parseInt(string));
 		}

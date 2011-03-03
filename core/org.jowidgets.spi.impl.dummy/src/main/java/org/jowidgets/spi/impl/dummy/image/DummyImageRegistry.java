@@ -29,9 +29,9 @@ package org.jowidgets.spi.impl.dummy.image;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.image.IImageHandleFactory;
+import org.jowidgets.common.image.impl.ImageHandle;
+import org.jowidgets.common.image.impl.ImageRegistry;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDImage;
-import org.jowidgets.spi.impl.image.ImageHandle;
-import org.jowidgets.spi.impl.image.ImageRegistry;
 
 public class DummyImageRegistry extends ImageRegistry {
 

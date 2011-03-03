@@ -28,14 +28,12 @@
 
 package org.jowidgets.tools.powo;
 
-import org.jowidgets.api.model.item.IMenuItemModel;
 import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.IMenuItem;
 import org.jowidgets.api.widgets.blueprint.builder.IMenuItemSetupBuilder;
-import org.jowidgets.api.widgets.descriptor.setup.IMenuItemSetup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-class MenuItem<WIDGET_TYPE extends IMenuItem, BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE> & IMenuItemSetupBuilder<?> & IMenuItemSetup> extends
+class MenuItem<WIDGET_TYPE extends IMenuItem, BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE> & IMenuItemSetupBuilder<?>> extends
 		Item<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IMenuItem {
 
 	MenuItem(final BLUE_PRINT_TYPE bluePrint) {
@@ -56,18 +54,6 @@ class MenuItem<WIDGET_TYPE extends IMenuItem, BLUE_PRINT_TYPE extends IWidgetDes
 	public IMenu getParent() {
 		checkInitialized();
 		return getWidget().getParent();
-	}
-
-	@Override
-	public IMenuItemModel getModel() {
-		checkInitialized();
-		return getWidget().getModel();
-	}
-
-	@Override
-	public void setModel(final IMenuItemModel model) {
-		checkInitialized();
-		getWidget().setModel(model);
 	}
 
 }

@@ -29,8 +29,8 @@ package org.jowidgets.spi.impl.swt.image;
 
 import org.eclipse.swt.graphics.Image;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.spi.impl.image.ImageHandle;
-import org.jowidgets.spi.impl.image.ImageRegistry;
+import org.jowidgets.common.image.impl.ImageHandle;
+import org.jowidgets.common.image.impl.ImageRegistry;
 
 public final class SwtImageRegistry extends ImageRegistry {
 

@@ -31,7 +31,6 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
-import org.jowidgets.common.widgets.IButtonCommon;
 import org.jowidgets.common.widgets.IDisplayCommon;
 import org.jowidgets.common.widgets.controler.IWindowListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
@@ -49,10 +48,6 @@ public class DummyWindow extends DummyContainer implements IWindowSpi {
 	@Override
 	public UIDWindow getUiReference() {
 		return (UIDWindow) super.getUiReference();
-	}
-
-	public void setDefaultButton(final IButtonCommon button) {
-		// TODO LG default button must be simulated
 	}
 
 	@Override

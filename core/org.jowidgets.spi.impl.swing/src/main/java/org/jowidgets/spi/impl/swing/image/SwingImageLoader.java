@@ -33,7 +33,7 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
-import org.jowidgets.spi.impl.image.IImageFactory;
+import org.jowidgets.common.image.impl.IImageFactory;
 import org.jowidgets.util.Assert;
 
 public class SwingImageLoader implements IImageFactory<Image> {

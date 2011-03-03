@@ -31,7 +31,6 @@ package org.jowidgets.api.widgets;
 import java.util.List;
 
 import org.jowidgets.api.command.IAction;
-import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.widgets.IMenuCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
@@ -54,9 +53,5 @@ public interface IMenu extends IWidget, IMenuCommon {
 	IActionMenuItem addAction(IAction action);
 
 	IActionMenuItem addAction(int index, IAction action);
-
-	IMenuModel getModel();
-
-	void setModel(IMenuModel model);
 
 }

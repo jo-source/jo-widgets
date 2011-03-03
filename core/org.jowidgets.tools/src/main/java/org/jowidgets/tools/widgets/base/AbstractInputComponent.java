@@ -38,7 +38,7 @@ import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IInputComponent;
 import org.jowidgets.api.widgets.descriptor.setup.IInputComponentSetup;
 import org.jowidgets.common.widgets.controler.IInputListener;
-import org.jowidgets.tools.controler.InputObservable;
+import org.jowidgets.common.widgets.controler.impl.InputObservable;
 import org.jowidgets.tools.widgets.delegate.InputValidationDelegate;
 import org.jowidgets.tools.widgets.wrapper.ComponentWrapper;
 import org.jowidgets.util.Assert;

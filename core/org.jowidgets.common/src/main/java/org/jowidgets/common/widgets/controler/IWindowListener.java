@@ -28,8 +28,6 @@
 
 package org.jowidgets.common.widgets.controler;
 
-import org.jowidgets.common.types.IVetoable;
-
 public interface IWindowListener {
 
 	void windowActivated();
@@ -39,8 +37,6 @@ public interface IWindowListener {
 	void windowIconified();
 
 	void windowDeiconified();
-
-	void windowClosing(IVetoable vetoable);
 
 	void windowClosed();
 

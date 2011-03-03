@@ -27,9 +27,10 @@
  */
 package org.jowidgets.workbench.api;
 
-import org.jowidgets.api.model.item.IMenuBarModel;
-import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IMenuBar;
+import org.jowidgets.api.widgets.IToolBar;
+import org.jowidgets.common.application.IApplicationLifecycle;
 
 public interface IWorkbenchContext {
 
@@ -39,33 +40,12 @@ public interface IWorkbenchContext {
 
 	void remove(IWorkbenchApplication workbenchApplication);
 
-	void finish();
+	IApplicationLifecycle getApplicationLifecycle();
 
-	/**
-	 * Gets the toolBar model. If no toolBar already exists, a toolBar will be created
-	 * 
-	 * @return the toolBar model
-	 */
-	IToolBarModel getToolBar();
+	IMenuBar getMenuBar();
 
-	/**
-	 * Gets the menuBar model. If no menuBar already exists, a menuBar will be created
-	 * 
-	 * @return the menuBar model
-	 */
-	IMenuBarModel getMenuBar();
+	IToolBar getToolBar();
 
-	/**
-	 * Gets the statusBar. If no statusBar already exists, a statusBar will be created
-	 * 
-	 * @return the menuBar model
-	 */
 	IContainer getStatusBar();
-
-	ITrayItem getTrayItem();
-
-	void addShutdownHook(Runnable shutdownHook);
-
-	void removeShutdownHook(Runnable shutdownHook);
 
 }

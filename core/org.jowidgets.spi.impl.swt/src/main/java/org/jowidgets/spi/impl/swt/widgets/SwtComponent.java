@@ -38,49 +38,30 @@ import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
-import org.jowidgets.spi.impl.controler.PopupDetectionObservable;
+import org.jowidgets.common.widgets.controler.impl.PopupDetectionObservable;
 import org.jowidgets.spi.impl.swt.color.ColorCache;
 import org.jowidgets.spi.impl.swt.cursor.CursorCache;
 import org.jowidgets.spi.impl.swt.util.DimensionConvert;
+import org.jowidgets.spi.impl.swt.widgets.internal.PopupMenuImpl;
 import org.jowidgets.spi.widgets.IComponentSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
 public class SwtComponent extends SwtWidget implements IComponentSpi {
 
 	private final PopupDetectionObservable popupDetectionObservable;
-	private MenuDetectListener menuDetectListener;
 
 	public SwtComponent(final Control control) {
 		super(control);
 		popupDetectionObservable = new PopupDetectionObservable();
 
-		this.menuDetectListener = new MenuDetectListener() {
+		getUiReference().addMenuDetectListener(new MenuDetectListener() {
 
 			@Override
 			public void menuDetected(final MenuDetectEvent e) {
 				final Point position = getUiReference().toControl(e.x, e.y);
 				popupDetectionObservable.firePopupDetected(new Position(position.x, position.y));
 			}
-		};
-
-		getUiReference().addMenuDetectListener(menuDetectListener);
-	}
-
-	protected PopupDetectionObservable getPopupDetectionObservable() {
-		return popupDetectionObservable;
-	}
-
-	protected void setMenuDetectListener(final MenuDetectListener menuDetectListener) {
-		getUiReference().removeMenuDetectListener(this.menuDetectListener);
-		this.menuDetectListener = menuDetectListener;
-		getUiReference().addMenuDetectListener(menuDetectListener);
-	}
-
-	@Override
-	public void setControl(final Control control) {
-		getUiReference().removeMenuDetectListener(menuDetectListener);
-		super.setControl(control);
-		getUiReference().addMenuDetectListener(menuDetectListener);
+		});
 	}
 
 	@Override

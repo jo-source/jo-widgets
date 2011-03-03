@@ -30,6 +30,6 @@ package org.jowidgets.common.widgets;
 
 import org.jowidgets.common.widgets.controler.IPopupDetectionObservable;
 
-public interface IToolBarPopupButtonCommon extends IToolBarItemCommon, IActionItemCommon, IPopupDetectionObservable {
+public interface IToolBarPopupButtonCommon extends IToolBarButtonCommon, IPopupDetectionObservable {
 
 }

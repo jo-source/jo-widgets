@@ -31,7 +31,7 @@ import javax.swing.BorderFactory;
 import javax.swing.border.TitledBorder;
 
 import org.jowidgets.common.types.Border;
-import org.jowidgets.spi.impl.swing.widgets.defaults.Colors;
+import org.jowidgets.spi.impl.swing.widgets.internal.defaults.Colors;
 
 public final class BorderConvert {
 

@@ -73,7 +73,7 @@ public final class ModifierConvert {
 
 	}
 
-	//TODO I18N
+	//TODO i18n
 	public static String acceleratorText(final Modifier modifier) {
 		Assert.paramNotNull(modifier, "modifier");
 

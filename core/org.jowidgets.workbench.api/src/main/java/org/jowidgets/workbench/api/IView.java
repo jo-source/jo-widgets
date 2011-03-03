@@ -29,6 +29,10 @@ package org.jowidgets.workbench.api;
 
 public interface IView extends ILifecycleCallback {
 
-	void onHiddenStateChanged(boolean hidden);
+	void initialize(IViewContext context);
+
+	boolean hasMenu();
+
+	boolean hasToolBar();
 
 }

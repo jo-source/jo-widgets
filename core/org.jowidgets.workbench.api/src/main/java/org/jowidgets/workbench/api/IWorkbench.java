@@ -27,12 +27,18 @@
  */
 package org.jowidgets.workbench.api;
 
-import org.jowidgets.common.types.IVetoable;
+import java.util.List;
 
-public interface IWorkbench extends IWorkbenchDescriptor {
+public interface IWorkbench extends IUiPart {
 
-	void onContextInitialize(IWorkbenchContext context);
+	void initialize(IWorkbenchContext context);
 
-	void onClose(IVetoable vetoable);
+	List<IWorkbenchApplication> createWorkbenchApplications();
+
+	boolean hasMenuBar();
+
+	boolean hasToolBar();
+
+	boolean hasStatusBar();
 
 }

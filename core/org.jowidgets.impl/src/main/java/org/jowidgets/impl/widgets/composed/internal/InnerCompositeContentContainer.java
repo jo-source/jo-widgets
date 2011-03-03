@@ -29,7 +29,6 @@ package org.jowidgets.impl.widgets.composed.internal;
 
 import java.util.List;
 
-import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IControl;
@@ -205,11 +204,6 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 	@Override
 	public IPopupMenu createPopupMenu() {
 		return compositeWidget.createPopupMenu();
-	}
-
-	@Override
-	public void setPopupMenu(final IMenuModel popupMenu) {
-		compositeWidget.setPopupMenu(popupMenu);
 	}
 
 	@Override

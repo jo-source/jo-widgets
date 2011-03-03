@@ -61,7 +61,7 @@ public class DummyContainer implements IContainerSpi {
 	}
 
 	@Override
-	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
+	public final void setLayout(final ILayoutDescriptor layoutDescriptor) {
 		Assert.paramNotNull(layoutDescriptor, "layoutManager");
 		if (layoutDescriptor instanceof MigLayoutDescriptor) {
 			container.setLayout(layoutDescriptor);

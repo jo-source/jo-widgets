@@ -27,7 +27,6 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
-import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.types.QuestionResult;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IComposite;
@@ -44,10 +43,10 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IButtonCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
+import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
-import org.jowidgets.tools.controler.WindowAdapter;
 
 public class QuestionDialogImpl implements IQuestionDialog {
 
@@ -249,11 +248,6 @@ public class QuestionDialogImpl implements IQuestionDialog {
 	@Override
 	public IPopupMenu createPopupMenu() {
 		return dialogWidget.createPopupMenu();
-	}
-
-	@Override
-	public void setPopupMenu(final IMenuModel popupMenu) {
-		dialogWidget.setPopupMenu(popupMenu);
 	}
 
 	@Override
