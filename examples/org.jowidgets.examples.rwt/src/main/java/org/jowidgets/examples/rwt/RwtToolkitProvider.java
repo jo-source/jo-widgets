@@ -27,23 +27,20 @@
  */
 package org.jowidgets.examples.rwt;
 
+import org.eclipse.rwt.SessionSingletonBase;
 import org.jowidgets.api.toolkit.IToolkit;
 import org.jowidgets.api.toolkit.IToolkitProvider;
 
 public class RwtToolkitProvider implements IToolkitProvider {
 
-	private final InheritableThreadLocal<IToolkit> toolkit = new InheritableThreadLocal<IToolkit>() {
-
-		@Override
-		protected IToolkit initialValue() {
-			return new SwtToolkit();
-		}
-
-	};
-
 	@Override
 	public IToolkit get() {
-		return toolkit.get();
+		final Object result = SessionSingletonBase.getInstance(SwtToolkit.class);
+
+		if (result instanceof IToolkit) {
+			return (IToolkit) result;
+		}
+		throw new IllegalStateException("SessionSingleton could not create an Toolkit");
 	}
 
 }

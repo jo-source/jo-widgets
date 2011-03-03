@@ -33,7 +33,6 @@ import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
-import org.jowidgets.api.widgets.blueprint.IProgressBarBluePrint;
 import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
 import org.jowidgets.api.widgets.blueprint.IValidationLabelBluePrint;
@@ -52,8 +51,6 @@ public interface ISimpleBluePrintFactory extends IBasicBluePrintFactory {
 	IMessageDialogBluePrint messageDialog();
 
 	IQuestionDialogBluePrint questionDialog();
-
-	IProgressBarBluePrint progressBar();
 
 	<INPUT_TYPE> IInputDialogBluePrint<INPUT_TYPE> inputDialog(final IInputContentCreator<INPUT_TYPE> contentCreator);
 

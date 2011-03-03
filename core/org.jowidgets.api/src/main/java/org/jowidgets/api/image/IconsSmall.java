@@ -35,7 +35,6 @@ public enum IconsSmall implements IImageConstant {
 	INFO,
 	QUESTION,
 	WARNING,
-	ERROR,
-	POPUP_ARROW;
+	ERROR;
 
 }

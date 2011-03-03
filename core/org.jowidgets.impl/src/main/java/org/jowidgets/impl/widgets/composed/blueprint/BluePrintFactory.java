@@ -31,7 +31,6 @@ import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
-import org.jowidgets.api.widgets.blueprint.IProgressBarBluePrint;
 import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
@@ -134,7 +133,7 @@ public final class BluePrintFactory extends SimpleBluePrintFactory implements IB
 		return questionDialog();
 	}
 
-	//TODO I18N
+	//TODO i18n
 	@Override
 	public IQuestionDialogBluePrint yesNoCancelQuestion() {
 		return questionDialog().setCancelButton(button("Cancel"));
@@ -148,16 +147,6 @@ public final class BluePrintFactory extends SimpleBluePrintFactory implements IB
 	@Override
 	public IQuestionDialogBluePrint yesNoCancelQuestion(final String question) {
 		return yesNoCancelQuestion().setText(question);
-	}
-
-	@Override
-	public IProgressBarBluePrint progressBar(final int minimum, final int maximum) {
-		return progressBar(maximum).setMinimum(minimum);
-	}
-
-	@Override
-	public IProgressBarBluePrint progressBar(final int maximum) {
-		return progressBar().setIndeterminate(false).setMaximum(maximum);
 	}
 
 }

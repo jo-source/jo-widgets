@@ -34,9 +34,7 @@ public enum Colors implements IColorConstant {
 
 	DEFAULT(new ColorValue(0, 0, 0)),
 	ERROR(new ColorValue(220, 0, 0)),
-	STRONG(new ColorValue(0, 70, 213)),
-	WHITE(new ColorValue(255, 255, 255)),
-	DISABLED(new ColorValue(130, 130, 130));
+	STRONG(new ColorValue(0, 70, 213));
 
 	private ColorValue colorValue;
 

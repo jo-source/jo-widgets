@@ -30,21 +30,14 @@ package org.jowidgets.api.widgets.blueprint.builder;
 import org.jowidgets.api.types.AutoCenterPolicy;
 import org.jowidgets.api.types.AutoPackPolicy;
 import org.jowidgets.api.widgets.blueprint.builder.convenience.IWindowSetupConvenience;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.types.Position;
-import org.jowidgets.common.widgets.builder.IWindowSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.IWidgetSetupBuilderCommon;
 
 public interface IWindowSetupBuilder<INSTANCE_TYPE extends IWindowSetupBuilder<?>> extends
-		IComponentSetupBuilder<INSTANCE_TYPE>,
-		IWindowSetupConvenience<INSTANCE_TYPE>,
-		IWindowSetupBuilderCommon<INSTANCE_TYPE> {
+		IWidgetSetupBuilderCommon<INSTANCE_TYPE>,
+		IWindowSetupConvenience<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setAutoPackPolicy(final AutoPackPolicy autoPackPolicy);
 
 	INSTANCE_TYPE setAutoCenterPolicy(final AutoCenterPolicy autoCenterPolicy);
-
-	INSTANCE_TYPE setSize(Dimension size);
-
-	INSTANCE_TYPE setPosition(Position position);
 
 }

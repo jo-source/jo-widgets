@@ -30,17 +30,16 @@ package org.jowidgets.api.widgets.blueprint.builder;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
+import org.jowidgets.common.widgets.builder.IWidgetSetupBuilderCommon;
 
 public interface IValidationLabelSetupBuilder<INSTANCE_TYPE extends IValidationLabelSetupBuilder<?>> extends
-		IComponentSetupBuilder<INSTANCE_TYPE> {
+		IWidgetSetupBuilderCommon<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setShowValidationMessage(boolean showValidationMessage);
 
 	INSTANCE_TYPE setOkMarkup(Markup markup);
 
 	INSTANCE_TYPE setWarningMarkup(Markup markup);
-
-	INSTANCE_TYPE setInfoErrorMarkup(Markup markup);
 
 	INSTANCE_TYPE setErrorMarkup(Markup markup);
 
@@ -50,8 +49,6 @@ public interface IValidationLabelSetupBuilder<INSTANCE_TYPE extends IValidationL
 
 	INSTANCE_TYPE setWarningColor(IColorConstant color);
 
-	INSTANCE_TYPE setInfoErrorColor(IColorConstant color);
-
 	INSTANCE_TYPE setErrorColor(IColorConstant color);
 
 	INSTANCE_TYPE setMissingInputColor(IColorConstant color);
@@ -59,8 +56,6 @@ public interface IValidationLabelSetupBuilder<INSTANCE_TYPE extends IValidationL
 	INSTANCE_TYPE setOkIcon(IImageConstant icon);
 
 	INSTANCE_TYPE setWarningIcon(IImageConstant icon);
-
-	INSTANCE_TYPE setInfoErrorIcon(IImageConstant icon);
 
 	INSTANCE_TYPE setErrorIcon(IImageConstant icon);
 

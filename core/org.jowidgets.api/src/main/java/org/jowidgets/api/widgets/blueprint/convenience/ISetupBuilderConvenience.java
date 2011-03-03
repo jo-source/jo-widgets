@@ -27,9 +27,9 @@
  */
 package org.jowidgets.api.widgets.blueprint.convenience;
 
-import org.jowidgets.common.widgets.builder.ISetupBuilder;
+import org.jowidgets.common.widgets.builder.IWidgetSetupBuilder;
 
-public interface ISetupBuilderConvenience<BUILDER_TYPE extends ISetupBuilder<?>> {
+public interface ISetupBuilderConvenience<BUILDER_TYPE extends IWidgetSetupBuilder<?>> {
 
 	void setBuilder(BUILDER_TYPE builder);
 

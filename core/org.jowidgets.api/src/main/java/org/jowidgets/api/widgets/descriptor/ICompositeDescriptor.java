@@ -27,10 +27,10 @@
  */
 package org.jowidgets.api.widgets.descriptor;
 
-import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.ICompositeWidget;
 import org.jowidgets.api.widgets.descriptor.setup.ICompositeSetup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-public interface ICompositeDescriptor extends ICompositeSetup, IWidgetDescriptor<IComposite> {
+public interface ICompositeDescriptor extends ICompositeSetup, IWidgetDescriptor<ICompositeWidget> {
 
 }

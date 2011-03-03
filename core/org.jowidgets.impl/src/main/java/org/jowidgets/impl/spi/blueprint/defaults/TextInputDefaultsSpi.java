@@ -28,13 +28,13 @@
 package org.jowidgets.impl.spi.blueprint.defaults;
 
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
-import org.jowidgets.impl.spi.blueprint.builder.ITextInputComponentSetupBuilderSpi;
+import org.jowidgets.impl.spi.blueprint.builder.ITextInputWidgetSetupBuilderSpi;
 import org.jowidgets.spi.verify.OkVerifier;
 
-public class TextInputDefaultsSpi implements IDefaultInitializer<ITextInputComponentSetupBuilderSpi<?>> {
+public class TextInputDefaultsSpi implements IDefaultInitializer<ITextInputWidgetSetupBuilderSpi<?>> {
 
 	@Override
-	public void initialize(final ITextInputComponentSetupBuilderSpi<?> builder) {
+	public void initialize(final ITextInputWidgetSetupBuilderSpi<?> builder) {
 		builder.setInputVerifier(OkVerifier.INSTANCE);
 	}
 }

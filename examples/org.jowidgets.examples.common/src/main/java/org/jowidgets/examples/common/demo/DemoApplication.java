@@ -29,16 +29,16 @@
 package org.jowidgets.examples.common.demo;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.widgets.IFrameWidget;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
-import org.jowidgets.examples.common.icons.DemoIconsInitializer;
+import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 
 public class DemoApplication implements IApplication {
 
 	private final String frameTitle;
-	private IFrame frame;
 
 	public DemoApplication(final String frameTitle) {
 		super();
@@ -46,23 +46,26 @@ public class DemoApplication implements IApplication {
 	}
 
 	public void start() {
-		DemoIconsInitializer.initialize();
 		Toolkit.getInstance().getApplicationRunner().run(this);
 	}
 
 	@Override
 	public void start(final IApplicationLifecycle lifecycle) {
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
+		final IGenericWidgetFactory widgetFactory = Toolkit.getWidgetFactory();
 
-		frame = Toolkit.createRootFrame(bpF.frame(frameTitle), lifecycle);
+		final IFrameWidget frame = widgetFactory.create(bpF.frame(frameTitle));
 		new DemoMainComposite(frame);
+
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed() {
+				lifecycle.finish();
+			}
+		});
 
 		frame.setVisible(true);
 
-	}
-
-	public IFrame getRootFrame() {
-		return frame;
 	}
 
 }

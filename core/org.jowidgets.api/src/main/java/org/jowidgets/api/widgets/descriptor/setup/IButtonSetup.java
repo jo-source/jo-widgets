@@ -28,11 +28,8 @@
 package org.jowidgets.api.widgets.descriptor.setup;
 
 import org.jowidgets.common.widgets.descriptor.setup.IButtonSetupCommon;
-import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
-public interface IButtonSetup extends IButtonSetupCommon, IComponentSetup {
 
-	@Mandatory
-	boolean isEnabled();
+public interface IButtonSetup extends IButtonSetupCommon {
 
 }

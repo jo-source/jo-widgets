@@ -28,25 +28,13 @@
 
 package org.jowidgets.impl.widgets.basic.blueprint.defaults.registry;
 
-import org.jowidgets.api.widgets.blueprint.IToolBarMenuBluePrint;
-import org.jowidgets.api.widgets.blueprint.builder.IButtonSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IComboBoxSelectionSetupBuilder;
-import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
-import org.jowidgets.api.widgets.blueprint.builder.IInputComponentSetupBuilder;
-import org.jowidgets.api.widgets.blueprint.builder.ISelectableItemSetupBuilder;
-import org.jowidgets.api.widgets.blueprint.builder.ISplitCompositeSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.builder.IInputWidgetSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.ITextFieldSetupBuilder;
-import org.jowidgets.api.widgets.blueprint.builder.ITreeNodeSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IWindowSetupBuilder;
-import org.jowidgets.impl.widgets.basic.blueprint.defaults.ButtonDefaults;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.ComboBoxSelectionDefaults;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.InputWidgetDefaults;
-import org.jowidgets.impl.widgets.basic.blueprint.defaults.SelectableItemDefaults;
-import org.jowidgets.impl.widgets.basic.blueprint.defaults.SplitCompositeWidgetDefaults;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.TextFieldDefaults;
-import org.jowidgets.impl.widgets.basic.blueprint.defaults.ToolBarMenuDefaults;
-import org.jowidgets.impl.widgets.basic.blueprint.defaults.TreeNodeDefaults;
-import org.jowidgets.impl.widgets.basic.blueprint.defaults.WidgetDefaults;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.WindowDefaults;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.registry.CommonDefaultsInitializerRegistry;
 
@@ -54,15 +42,9 @@ public class BasicDefaultsInitializerRegistry extends CommonDefaultsInitializerR
 
 	public BasicDefaultsInitializerRegistry() {
 		super();
-		register(IButtonSetupBuilder.class, new ButtonDefaults());
 		register(IComboBoxSelectionSetupBuilder.class, new ComboBoxSelectionDefaults());
-		register(IInputComponentSetupBuilder.class, new InputWidgetDefaults());
+		register(IInputWidgetSetupBuilder.class, new InputWidgetDefaults());
 		register(ITextFieldSetupBuilder.class, new TextFieldDefaults());
 		register(IWindowSetupBuilder.class, new WindowDefaults());
-		register(ISplitCompositeSetupBuilder.class, new SplitCompositeWidgetDefaults());
-		register(IComponentSetupBuilder.class, new WidgetDefaults());
-		register(ISelectableItemSetupBuilder.class, new SelectableItemDefaults());
-		register(ITreeNodeSetupBuilder.class, new TreeNodeDefaults());
-		register(IToolBarMenuBluePrint.class, new ToolBarMenuDefaults());
 	}
 }

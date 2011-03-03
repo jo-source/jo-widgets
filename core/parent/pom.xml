@@ -3,33 +3,24 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jowidgets</groupId>
 	<artifactId>org.jowidgets.core.parent</artifactId>
-	<version>0.0.15-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<packaging>pom</packaging>
 	<name>org.jowidgets.core.parent</name>
 
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.parent</artifactId>
-		<version>0.0.15-SNAPSHOT</version>
+		<version>0.0.1</version>
 		<relativePath>../../parent/pom.xml</relativePath>
 	</parent>
 
 	<modules>
 		<module>../org.jowidgets.common</module>
 		<module>../org.jowidgets.api</module>
-		<module>../org.jowidgets.api.test</module>
-		<module>../org.jowidgets.tools</module>
-		<module>../org.jowidgets.workbench.api</module>
-		<module>../org.jowidgets.workbench.impl</module>
 		<module>../org.jowidgets.impl</module>
 		<module>../org.jowidgets.spi</module>
-		<module>../org.jowidgets.spi.impl.common</module>
-		<module>../org.jowidgets.spi.impl.dummy</module>
 		<module>../org.jowidgets.spi.impl.swing</module>
 		<module>../org.jowidgets.spi.impl.swt</module>
-		<module>../org.jowidgets.test.common</module>
-		<module>../org.jowidgets.test.api</module>
-		<module>../org.jowidgets.test.spi</module>
 	</modules>
 
 	<build>

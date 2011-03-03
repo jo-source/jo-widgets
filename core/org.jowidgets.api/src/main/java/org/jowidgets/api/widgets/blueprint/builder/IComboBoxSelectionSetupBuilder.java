@@ -34,7 +34,7 @@ import org.jowidgets.api.types.AutoSelectionPolicy;
 import org.jowidgets.api.widgets.blueprint.builder.convenience.IComboBoxSelectionSetupConvenience;
 
 public interface IComboBoxSelectionSetupBuilder<INSTANCE_TYPE extends IComboBoxSelectionSetupBuilder<?, ?>, INPUT_TYPE> extends
-		IInputComponentSetupBuilder<INSTANCE_TYPE, INPUT_TYPE>,
+		IInputWidgetSetupBuilder<INSTANCE_TYPE, INPUT_TYPE>,
 		IComboBoxSelectionSetupConvenience<INSTANCE_TYPE, INPUT_TYPE> {
 
 	INSTANCE_TYPE setAutoCompletion(final boolean autoCompletion);

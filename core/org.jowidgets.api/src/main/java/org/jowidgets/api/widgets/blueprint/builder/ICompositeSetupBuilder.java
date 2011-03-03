@@ -30,7 +30,6 @@ package org.jowidgets.api.widgets.blueprint.builder;
 import org.jowidgets.common.widgets.builder.ICompositeSetupBuilderCommon;
 
 public interface ICompositeSetupBuilder<INSTANCE_TYPE extends ICompositeSetupBuilder<?>> extends
-		ICompositeSetupBuilderCommon<INSTANCE_TYPE>,
-		IContainerSetupBuilder<INSTANCE_TYPE> {
+		ICompositeSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

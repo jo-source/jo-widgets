@@ -29,6 +29,6 @@ package org.jowidgets.api.widgets;
 
 import org.jowidgets.common.widgets.IActionWidgetCommon;
 
-public interface IActionWidget extends IWidget, IActionWidgetCommon {
+public interface IActionWidget extends IActionWidgetCommon, IChildWidget {
 
 }

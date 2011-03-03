@@ -27,20 +27,14 @@
  */
 package org.jowidgets.api.widgets.blueprint.factory;
 
-import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
-import org.jowidgets.api.widgets.blueprint.ICheckedMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
-import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.IIconBluePrint;
-import org.jowidgets.api.widgets.blueprint.IMainMenuBluePrint;
-import org.jowidgets.api.widgets.blueprint.IRadioMenuItemBluePrint;
+import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
-import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
-import org.jowidgets.api.widgets.blueprint.ISubMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
 import org.jowidgets.common.image.IImageConstant;
 
@@ -66,10 +60,6 @@ public interface IBasicBluePrintFactory extends IBasicSimpleBluePrintFactory {
 
 	IScrollCompositeBluePrint scrollComposite(final String borderTitle);
 
-	ISplitCompositeBluePrint splitHorizontal();
-
-	ISplitCompositeBluePrint splitVertical();
-
 	IButtonBluePrint button(final String text);
 
 	IButtonBluePrint button(final String text, final String toolTipText);
@@ -84,36 +74,9 @@ public interface IBasicBluePrintFactory extends IBasicSimpleBluePrintFactory {
 
 	IComboBoxBluePrint<String> comboBox(String... elements);
 
-	IComboBoxBluePrint<String> comboBoxString();
-
-	IComboBoxBluePrint<Long> comboBoxLongNumber();
-
-	IComboBoxBluePrint<Integer> comboBoxIntegerNumber();
-
-	IComboBoxBluePrint<Short> comboBoxShortNumber();
-
 	IComboBoxSelectionBluePrint<String> comboBoxSelection();
 
 	IComboBoxSelectionBluePrint<String> comboBoxSelection(String... elements);
 
 	<ENUM_TYPE extends Enum<?>> IComboBoxSelectionBluePrint<ENUM_TYPE> comboBoxSelection(final ENUM_TYPE... enumValues);
-
-	IComboBoxSelectionBluePrint<String> comboBoxSelectionString();
-
-	IComboBoxSelectionBluePrint<Long> comboBoxSelectionLongNumber();
-
-	IComboBoxSelectionBluePrint<Integer> comboBoxSelectionIntegerNumber();
-
-	IComboBoxSelectionBluePrint<Short> comboBoxSelectionShortNumber();
-
-	IActionMenuItemBluePrint menuItem(String text);
-
-	IRadioMenuItemBluePrint radioMenuItem(String text);
-
-	ICheckedMenuItemBluePrint checkedMenuItem(String text);
-
-	ISubMenuBluePrint subMenu(String text);
-
-	IMainMenuBluePrint mainMenu(String text);
-
 }

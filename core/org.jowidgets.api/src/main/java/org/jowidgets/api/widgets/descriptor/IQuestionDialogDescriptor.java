@@ -27,10 +27,10 @@
  */
 package org.jowidgets.api.widgets.descriptor;
 
-import org.jowidgets.api.widgets.IQuestionDialog;
+import org.jowidgets.api.widgets.IQuestionDialogWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IQuestionDialogSetup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-public interface IQuestionDialogDescriptor extends IQuestionDialogSetup, IWidgetDescriptor<IQuestionDialog> {
+public interface IQuestionDialogDescriptor extends IQuestionDialogSetup, IWidgetDescriptor<IQuestionDialogWidget> {
 
 }

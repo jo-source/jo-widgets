@@ -28,29 +28,21 @@
 package org.jowidgets.impl.widgets.basic.blueprint;
 
 import org.jowidgets.api.convert.IObjectStringConverter;
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
-import org.jowidgets.api.widgets.blueprint.ICheckedMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.IIconBluePrint;
-import org.jowidgets.api.widgets.blueprint.IMainMenuBluePrint;
-import org.jowidgets.api.widgets.blueprint.IRadioMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
-import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
-import org.jowidgets.api.widgets.blueprint.ISubMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.api.widgets.blueprint.factory.IBasicBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.Orientation;
-import org.jowidgets.impl.convert.DefaultConverterProvider;
 import org.jowidgets.impl.convert.DefaultObjectStringConverter;
+import org.jowidgets.impl.convert.DefaultConverterProvider;
 
 public class BasicBluePrintFactory extends BasicSimpleBluePrintFactory implements IBasicBluePrintFactory {
 
@@ -92,16 +84,6 @@ public class BasicBluePrintFactory extends BasicSimpleBluePrintFactory implement
 	@Override
 	public final ICompositeBluePrint composite(final String borderTitle) {
 		return composite().setBorder(borderTitle);
-	}
-
-	@Override
-	public ISplitCompositeBluePrint splitHorizontal() {
-		return splitComposite().setOrientation(Orientation.HORIZONTAL);
-	}
-
-	@Override
-	public ISplitCompositeBluePrint splitVertical() {
-		return splitComposite().setOrientation(Orientation.VERTICAL);
 	}
 
 	@Override
@@ -157,46 +139,6 @@ public class BasicBluePrintFactory extends BasicSimpleBluePrintFactory implement
 	}
 
 	@Override
-	public IComboBoxBluePrint<String> comboBoxString() {
-		return comboBox(Toolkit.getConverterProvider().string());
-	}
-
-	@Override
-	public IComboBoxBluePrint<Long> comboBoxLongNumber() {
-		return comboBox(Toolkit.getConverterProvider().longNumber());
-	}
-
-	@Override
-	public IComboBoxBluePrint<Integer> comboBoxIntegerNumber() {
-		return comboBox(Toolkit.getConverterProvider().integerNumber());
-	}
-
-	@Override
-	public IComboBoxBluePrint<Short> comboBoxShortNumber() {
-		return comboBox(Toolkit.getConverterProvider().shortNumber());
-	}
-
-	@Override
-	public IComboBoxSelectionBluePrint<String> comboBoxSelectionString() {
-		return comboBoxSelection(Toolkit.getConverterProvider().string());
-	}
-
-	@Override
-	public IComboBoxSelectionBluePrint<Long> comboBoxSelectionLongNumber() {
-		return comboBoxSelection(Toolkit.getConverterProvider().longNumber());
-	}
-
-	@Override
-	public IComboBoxSelectionBluePrint<Integer> comboBoxSelectionIntegerNumber() {
-		return comboBoxSelection(Toolkit.getConverterProvider().integerNumber());
-	}
-
-	@Override
-	public IComboBoxSelectionBluePrint<Short> comboBoxSelectionShortNumber() {
-		return comboBoxSelection(Toolkit.getConverterProvider().shortNumber());
-	}
-
-	@Override
 	public final IScrollCompositeBluePrint scrollCompositeWithBorder() {
 		return scrollComposite().setBorder();
 	}
@@ -204,31 +146,6 @@ public class BasicBluePrintFactory extends BasicSimpleBluePrintFactory implement
 	@Override
 	public final IScrollCompositeBluePrint scrollComposite(final String borderTitle) {
 		return scrollComposite().setBorder(borderTitle);
-	}
-
-	@Override
-	public IActionMenuItemBluePrint menuItem(final String text) {
-		return menuItem().setText(text);
-	}
-
-	@Override
-	public IRadioMenuItemBluePrint radioMenuItem(final String text) {
-		return radioMenuItem().setText(text);
-	}
-
-	@Override
-	public ICheckedMenuItemBluePrint checkedMenuItem(final String text) {
-		return checkedMenuItem().setText(text);
-	}
-
-	@Override
-	public ISubMenuBluePrint subMenu(final String text) {
-		return subMenu().setText(text);
-	}
-
-	@Override
-	public IMainMenuBluePrint mainMenu(final String text) {
-		return mainMenu().setText(text);
 	}
 
 }

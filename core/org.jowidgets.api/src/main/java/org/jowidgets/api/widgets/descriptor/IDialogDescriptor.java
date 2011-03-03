@@ -27,10 +27,10 @@
  */
 package org.jowidgets.api.widgets.descriptor;
 
-import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.widgets.IDialogWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IDialogSetup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-public interface IDialogDescriptor extends IDialogSetup, IWidgetDescriptor<IFrame> {
+public interface IDialogDescriptor extends IDialogSetup, IWidgetDescriptor<IDialogWidget> {
 
 }
