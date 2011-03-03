@@ -3,13 +3,13 @@
 
 	<groupId>org.jowidgets</groupId>
 	<artifactId>org.jowidgets.addons.swing</artifactId>
-	<version>0.0.15</version>
+	<version>0.0.16-SNAPSHOT</version>
 	<name>org.jowidgets.addons.swing</name>
 
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.addons.parent</artifactId>
-		<version>0.0.15</version>
+		<version>0.0.16-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 
@@ -17,7 +17,7 @@
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.tools</artifactId>
-			<version>0.0.15</version>
+			<version>0.0.16-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
