@@ -27,6 +27,9 @@
  */
 package org.jowidgets.common.widgets;
 
+import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Cursor;
+import org.jowidgets.common.types.Dimension;
 
 public interface IWidgetCommon {
 
@@ -37,8 +40,29 @@ public interface IWidgetCommon {
 	 */
 	Object getUiReference();
 
+	/**
+	 * Marks the widget that a redraw is necessary
+	 */
+	void redraw();
+
+	void setForegroundColor(final IColorConstant colorValue);
+
+	void setBackgroundColor(final IColorConstant colorValue);
+
+	IColorConstant getForegroundColor();
+
+	IColorConstant getBackgroundColor();
+
+	void setCursor(Cursor cursor);
+
 	void setEnabled(boolean enabled);
 
 	boolean isEnabled();
+
+	void setVisible(boolean visible);
+
+	boolean isVisible();
+
+	Dimension getSize();
 
 }

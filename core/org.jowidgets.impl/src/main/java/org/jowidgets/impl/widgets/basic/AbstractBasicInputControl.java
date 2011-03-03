@@ -31,25 +31,24 @@ package org.jowidgets.impl.widgets.basic;
 import org.jowidgets.api.validation.IValidateable;
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationResult;
-import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IInputControl;
-import org.jowidgets.api.widgets.IPopupMenu;
-import org.jowidgets.api.widgets.descriptor.setup.IInputComponentSetup;
+import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.api.widgets.descriptor.setup.IInputWidgetSetup;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
-import org.jowidgets.impl.widgets.common.wrapper.InputControlSpiWrapper;
-import org.jowidgets.spi.widgets.IInputControlSpi;
+import org.jowidgets.impl.widgets.common.wrapper.InputWidgetSpiWrapper;
+import org.jowidgets.spi.widgets.IInputWidgetSpi;
 import org.jowidgets.tools.widgets.delegate.InputValidationDelegate;
 import org.jowidgets.util.EmptyCheck;
 
-public abstract class AbstractBasicInputControl<VALUE_TYPE> extends InputControlSpiWrapper implements IInputControl<VALUE_TYPE> {
+public abstract class AbstractBasicInputControl<VALUE_TYPE> extends InputWidgetSpiWrapper implements IInputControl<VALUE_TYPE> {
 
 	private final ControlDelegate controlDelegate;
 	private final InputValidationDelegate<VALUE_TYPE> inputValidationDelegate;
 
-	public AbstractBasicInputControl(final IInputControlSpi inputWidgetSpi, final IInputComponentSetup<VALUE_TYPE> setup) {
+	public AbstractBasicInputControl(final IInputWidgetSpi inputWidgetSpi, final IInputWidgetSetup<VALUE_TYPE> setup) {
 		super(inputWidgetSpi);
-		setEditable(setup.isEditable());
+
 		this.controlDelegate = new ControlDelegate();
 		this.inputValidationDelegate = new InputValidationDelegate<VALUE_TYPE>(setup);
 	}
@@ -60,7 +59,7 @@ public abstract class AbstractBasicInputControl<VALUE_TYPE> extends InputControl
 	}
 
 	@Override
-	public void setParent(final IComponent parent) {
+	public void setParent(final IWidget parent) {
 		controlDelegate.setParent(parent);
 	}
 
@@ -92,11 +91,6 @@ public abstract class AbstractBasicInputControl<VALUE_TYPE> extends InputControl
 	@Override
 	public final void addValidator(final IValidator<VALUE_TYPE> validator) {
 		inputValidationDelegate.addValidator(validator);
-	}
-
-	@Override
-	public final IPopupMenu createPopupMenu() {
-		return new PopupMenuImpl(getWidget().createPopupMenu(), this);
 	}
 
 	protected final void addValidatable(final IValidateable validateable) {

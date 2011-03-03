@@ -39,7 +39,7 @@ import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactoryListener;
-import org.jowidgets.impl.widgets.basic.FrameImpl;
+import org.jowidgets.impl.widgets.basic.FrameWidget;
 import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.widgets.IFrameSpi;
 
@@ -104,7 +104,7 @@ public class WindowProvider {
 
 			final IFrameSpi frameSpi = widgetsServiceProvider.getWidgetFactory().createFrame(genericWidgetFactory, uiRef);
 
-			final IWindow result = new FrameImpl(frameSpi, bp);
+			final IWindow result = new FrameWidget(frameSpi, bp);
 
 			//register the created frame to avoid a new creation for every call of this method
 			uiReferenceToWindow.put(uiRef, result);

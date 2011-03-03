@@ -30,25 +30,15 @@ package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IInputControl;
-import org.jowidgets.api.widgets.blueprint.builder.IInputComponentSetupBuilder;
-import org.jowidgets.api.widgets.descriptor.setup.IInputComponentSetup;
+import org.jowidgets.api.widgets.blueprint.builder.IInputWidgetSetupBuilder;
+import org.jowidgets.api.widgets.descriptor.setup.IInputWidgetSetup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-class InputControl<WIDGET_TYPE extends IInputControl<VALUE_TYPE>, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IInputComponentSetup<VALUE_TYPE> & IInputComponentSetupBuilder<?, VALUE_TYPE>, VALUE_TYPE> extends
-		InputComponent<WIDGET_TYPE, BLUE_PRINT_TYPE, VALUE_TYPE> implements IInputControl<VALUE_TYPE> {
-
-	private Object layoutConstraints;
+class InputControl<WIDGET_TYPE extends IInputControl<VALUE_TYPE>, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IInputWidgetSetup<VALUE_TYPE> & IInputWidgetSetupBuilder<?, VALUE_TYPE>, VALUE_TYPE> extends
+		InputWidget<WIDGET_TYPE, BLUE_PRINT_TYPE, VALUE_TYPE> implements IInputControl<VALUE_TYPE> {
 
 	public InputControl(final BLUE_PRINT_TYPE bluePrint) {
 		super(bluePrint);
-	}
-
-	@Override
-	void initialize(final WIDGET_TYPE widget) {
-		super.initialize(widget);
-		if (layoutConstraints != null) {
-			getWidget().setLayoutConstraints(layoutConstraints);
-		}
 	}
 
 	@Override
@@ -57,23 +47,4 @@ class InputControl<WIDGET_TYPE extends IInputControl<VALUE_TYPE>, BLUE_PRINT_TYP
 		return getWidget().getParent();
 	}
 
-	@Override
-	public void setLayoutConstraints(final Object layoutConstraints) {
-		if (isInitialized()) {
-			getWidget().setLayoutConstraints(layoutConstraints);
-		}
-		else {
-			this.layoutConstraints = layoutConstraints;
-		}
-	}
-
-	@Override
-	public Object getLayoutConstraints() {
-		if (isInitialized()) {
-			return getWidget().getLayoutConstraints();
-		}
-		else {
-			return layoutConstraints;
-		}
-	}
 }

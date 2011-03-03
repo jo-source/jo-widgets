@@ -28,21 +28,16 @@
 
 package org.jowidgets.tools.powo;
 
-import org.jowidgets.api.widgets.descriptor.IActionMenuItemDescriptor;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 import org.jowidgets.api.widgets.descriptor.ICheckBoxDescriptor;
-import org.jowidgets.api.widgets.descriptor.ICheckedMenuItemDescriptor;
 import org.jowidgets.api.widgets.descriptor.IComboBoxDescriptor;
 import org.jowidgets.api.widgets.descriptor.IComboBoxSelectionDescriptor;
 import org.jowidgets.api.widgets.descriptor.ICompositeDescriptor;
 import org.jowidgets.api.widgets.descriptor.IIconDescriptor;
 import org.jowidgets.api.widgets.descriptor.ILabelDescriptor;
 import org.jowidgets.api.widgets.descriptor.IProgressBarDescriptor;
-import org.jowidgets.api.widgets.descriptor.IRadioMenuItemDescriptor;
 import org.jowidgets.api.widgets.descriptor.IScrollCompositeDescriptor;
-import org.jowidgets.api.widgets.descriptor.ISeparatorMenuItemDescriptor;
 import org.jowidgets.api.widgets.descriptor.ISplitCompositeDescriptor;
-import org.jowidgets.api.widgets.descriptor.ISubMenuDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextLabelDescriptor;
 import org.jowidgets.api.widgets.descriptor.IToggleButtonDescriptor;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
@@ -51,7 +46,7 @@ import org.jowidgets.util.Assert;
 class JoWidgetFactory {
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
-	Widget create(final IWidgetDescriptor descriptor) {
+	WidgetCommon create(final IWidgetDescriptor descriptor) {
 
 		Assert.paramNotNull(descriptor, "descriptor");
 
@@ -90,21 +85,6 @@ class JoWidgetFactory {
 		}
 		else if (descriptor instanceof IToggleButtonDescriptor) {
 			return new JoToggleButton((IToggleButtonDescriptor) descriptor);
-		}
-		else if (descriptor instanceof IActionMenuItemDescriptor) {
-			return new JoActionMenuItem((IActionMenuItemDescriptor) descriptor);
-		}
-		else if (descriptor instanceof ICheckedMenuItemDescriptor) {
-			return new JoCheckedMenuItem((ICheckedMenuItemDescriptor) descriptor);
-		}
-		else if (descriptor instanceof IRadioMenuItemDescriptor) {
-			return new JoRadioMenuItem((IRadioMenuItemDescriptor) descriptor);
-		}
-		else if (descriptor instanceof ISubMenuDescriptor) {
-			return new JoSubMenu((ISubMenuDescriptor) descriptor);
-		}
-		else if (descriptor instanceof ISeparatorMenuItemDescriptor) {
-			return new JoSeparatorMenuItem((ISeparatorMenuItemDescriptor) descriptor);
 		}
 		else {
 			throw new IllegalArgumentException("Could not create a Widget from descriptor '"

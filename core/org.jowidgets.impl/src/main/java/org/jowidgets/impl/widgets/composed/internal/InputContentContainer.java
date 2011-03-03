@@ -35,7 +35,7 @@ import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.api.widgets.IInputComponent;
+import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
@@ -46,9 +46,9 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
-import org.jowidgets.tools.widgets.base.AbstractInputComponent;
+import org.jowidgets.tools.widgets.base.AbstractInputWidget;
 
-public class InputContentContainer<INPUT_TYPE> extends AbstractInputComponent<INPUT_TYPE> implements IInputContentContainer {
+public class InputContentContainer<INPUT_TYPE> extends AbstractInputWidget<INPUT_TYPE> implements IInputContentContainer {
 
 	private final IComposite compositeWidget;
 	private final IInputContentCreator<INPUT_TYPE> content;
@@ -88,12 +88,12 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractInputComponent<IN
 	}
 
 	@Override
-	public void registerInputWidget(final String label, final IInputComponent<?> inputWidget) {
+	public void registerInputWidget(final String label, final IInputWidget<?> inputWidget) {
 		super.registerInputWidget(inputWidget, label);
 	}
 
 	@Override
-	public void unRegisterInputWidget(final IInputComponent<?> inputWidget) {
+	public void unRegisterInputWidget(final IInputWidget<?> inputWidget) {
 		super.unRegisterInputWidget(inputWidget);
 	}
 
@@ -107,7 +107,7 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractInputComponent<IN
 		boolean anyFilledOut = false;
 
 		//empty if there is any mandatory field empty
-		for (final IInputComponent<?> subWidget : getRegisteredWidgets()) {
+		for (final IInputWidget<?> subWidget : getRegisteredWidgets()) {
 			anyFilledOut = anyFilledOut || !subWidget.isEmpty();
 			if (subWidget.isMandatory() && subWidget.isEmpty()) {
 				return true;

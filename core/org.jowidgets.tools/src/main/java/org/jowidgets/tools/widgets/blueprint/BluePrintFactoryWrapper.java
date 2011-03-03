@@ -31,10 +31,8 @@ package org.jowidgets.tools.widgets.blueprint;
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICheckBoxBluePrint;
-import org.jowidgets.api.widgets.blueprint.ICheckedMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
@@ -45,41 +43,21 @@ import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
-import org.jowidgets.api.widgets.blueprint.IMainMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IProgressBarBluePrint;
 import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
-import org.jowidgets.api.widgets.blueprint.IRadioMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISeparatorBluePrint;
-import org.jowidgets.api.widgets.blueprint.ISeparatorMenuItemBluePrint;
-import org.jowidgets.api.widgets.blueprint.ISeparatorToolBarItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
-import org.jowidgets.api.widgets.blueprint.ISubMenuBluePrint;
-import org.jowidgets.api.widgets.blueprint.ITabFolderBluePrint;
-import org.jowidgets.api.widgets.blueprint.ITabItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToggleButtonBluePrint;
-import org.jowidgets.api.widgets.blueprint.IToolBarBluePrint;
-import org.jowidgets.api.widgets.blueprint.IToolBarButtonBluePrint;
-import org.jowidgets.api.widgets.blueprint.IToolBarContainerItemBluePrint;
-import org.jowidgets.api.widgets.blueprint.IToolBarMenuBluePrint;
-import org.jowidgets.api.widgets.blueprint.IToolBarPopupButtonBluePrint;
-import org.jowidgets.api.widgets.blueprint.IToolBarToggleButtonBluePrint;
-import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
-import org.jowidgets.api.widgets.blueprint.ITreeNodeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IValidationLabelBluePrint;
-import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
-import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenience;
-import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
-import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
-import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
+import org.jowidgets.api.widgets.blueprint.builder.IWidgetSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.builder.ISetupBuilder;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.util.Assert;
 
@@ -90,45 +68,6 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	public BluePrintFactoryWrapper(final IBluePrintFactory bluePrintFactory) {
 		Assert.paramNotNull(bluePrintFactory, "bluePrintFactory");
 		this.bluePrintFactory = bluePrintFactory;
-	}
-
-	@Override
-	public ISetupBuilderConvenienceRegistry getSetupBuilderConvenienceRegistry() {
-		return bluePrintFactory.getSetupBuilderConvenienceRegistry();
-	}
-
-	@Override
-	public IDefaultsInitializerRegistry getDefaultsInitializerRegistry() {
-		return bluePrintFactory.getDefaultsInitializerRegistry();
-	}
-
-	@SuppressWarnings("rawtypes")
-	@Override
-	public void addDefaultsInitializer(
-		final Class<? extends ISetupBuilder> setupBuilder,
-		final IDefaultInitializer<?> defaultsImpl) {
-		bluePrintFactory.addDefaultsInitializer(setupBuilder, defaultsImpl);
-	}
-
-	@SuppressWarnings("rawtypes")
-	@Override
-	public void setDefaultsInitializer(
-		final Class<? extends ISetupBuilder> setupBuilder,
-		final IDefaultInitializer<?> defaultsImpl) {
-		bluePrintFactory.setDefaultsInitializer(setupBuilder, defaultsImpl);
-	}
-
-	@SuppressWarnings("rawtypes")
-	@Override
-	public void setSetupBuilderConvenience(
-		final Class<? extends ISetupBuilder> setupBuilder,
-		final ISetupBuilderConvenience<?> setupBuilderConvenience) {
-		bluePrintFactory.setSetupBuilderConvenience(setupBuilder, setupBuilderConvenience);
-	}
-
-	@Override
-	public void setDefaultsInitializerRegistry(final IDefaultsInitializerRegistry defaultInitializerRegistry) {
-		bluePrintFactory.setDefaultsInitializerRegistry(defaultInitializerRegistry);
 	}
 
 	@Override
@@ -317,9 +256,10 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>, BLUE_PRINT_TYPE extends IComponentSetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
-		final Class<BLUE_PRINT_TYPE> bluePrintType) {
-		return bluePrintFactory.bluePrint(bluePrintType);
+	public <WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>, BLUE_PRINT_TYPE extends IWidgetSetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
+		final Class<BLUE_PRINT_TYPE> bluePrintType,
+		final Class<DESCRIPTOR_TYPE> descriptorType) {
+		return bluePrintFactory.bluePrint(bluePrintType, descriptorType);
 	}
 
 	@Override
@@ -496,116 +436,6 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	@Override
 	public IProgressBarBluePrint progressBar(final int maximum) {
 		return bluePrintFactory.progressBar(maximum);
-	}
-
-	@Override
-	public IActionMenuItemBluePrint menuItem() {
-		return bluePrintFactory.menuItem();
-	}
-
-	@Override
-	public IActionMenuItemBluePrint menuItem(final String text) {
-		return bluePrintFactory.menuItem(text);
-	}
-
-	@Override
-	public IRadioMenuItemBluePrint radioMenuItem(final String text) {
-		return bluePrintFactory.radioMenuItem(text);
-	}
-
-	@Override
-	public ICheckedMenuItemBluePrint checkedMenuItem(final String text) {
-		return bluePrintFactory.checkedMenuItem(text);
-	}
-
-	@Override
-	public IRadioMenuItemBluePrint radioMenuItem() {
-		return bluePrintFactory.radioMenuItem();
-	}
-
-	@Override
-	public ICheckedMenuItemBluePrint checkedMenuItem() {
-		return bluePrintFactory.checkedMenuItem();
-	}
-
-	@Override
-	public ISubMenuBluePrint subMenu(final String text) {
-		return bluePrintFactory.subMenu(text);
-	}
-
-	@Override
-	public ISubMenuBluePrint subMenu() {
-		return bluePrintFactory.subMenu();
-	}
-
-	@Override
-	public IMainMenuBluePrint mainMenu() {
-		return bluePrintFactory.mainMenu();
-	}
-
-	@Override
-	public IMainMenuBluePrint mainMenu(final String text) {
-		return bluePrintFactory.mainMenu(text);
-	}
-
-	@Override
-	public IToolBarBluePrint toolBar() {
-		return bluePrintFactory.toolBar();
-	}
-
-	@Override
-	public IToolBarButtonBluePrint toolBarButton() {
-		return bluePrintFactory.toolBarButton();
-	}
-
-	@Override
-	public IToolBarToggleButtonBluePrint toolBarToggleButton() {
-		return bluePrintFactory.toolBarToggleButton();
-	}
-
-	@Override
-	public IToolBarPopupButtonBluePrint toolBarPopupButton() {
-		return bluePrintFactory.toolBarPopupButton();
-	}
-
-	@Override
-	public IToolBarMenuBluePrint toolBarMenu() {
-		return bluePrintFactory.toolBarMenu();
-	}
-
-	@Override
-	public IToolBarContainerItemBluePrint toolBarContainerItem() {
-		return bluePrintFactory.toolBarContainerItem();
-	}
-
-	@Override
-	public ISeparatorMenuItemBluePrint menuSeparator() {
-		return bluePrintFactory.menuSeparator();
-	}
-
-	@Override
-	public ISeparatorToolBarItemBluePrint toolBarSeparator() {
-		return bluePrintFactory.toolBarSeparator();
-	}
-
-	@Override
-	public ITabFolderBluePrint tabFolder() {
-		return bluePrintFactory.tabFolder();
-	}
-
-	@Override
-	public ITabItemBluePrint tabItem() {
-		return bluePrintFactory.tabItem();
-	}
-
-	@Override
-	public ITreeBluePrint tree() {
-		return bluePrintFactory.tree();
-	}
-
-	@Override
-	public ITreeNodeBluePrint treeNode() {
-		return bluePrintFactory.treeNode();
 	}
 
 }

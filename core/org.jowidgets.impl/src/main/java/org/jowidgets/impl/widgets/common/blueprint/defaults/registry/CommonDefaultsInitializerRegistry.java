@@ -35,11 +35,10 @@ import org.jowidgets.common.widgets.builder.IDialogSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.IFrameSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.IScrollCompositeSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ISeparatorSetupBuilderCommon;
-import org.jowidgets.common.widgets.builder.ITabFolderSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITextFieldSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITextLabelSetupBuilderCommon;
-import org.jowidgets.common.widgets.builder.ITreeSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.IWindowSetupBuilderCommon;
+import org.jowidgets.impl.base.blueprint.defaults.DefaultsInitializerRegistry;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.ButtonDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.CheckBoxDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.ContainerDefaultsCommon;
@@ -47,12 +46,9 @@ import org.jowidgets.impl.widgets.common.blueprint.defaults.DialogDefaultsCommon
 import org.jowidgets.impl.widgets.common.blueprint.defaults.FrameDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.ScrolledCompositeDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.SeparatorDefaultsCommon;
-import org.jowidgets.impl.widgets.common.blueprint.defaults.TabFolderDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.TextFieldDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.TextLabelDefaultsCommon;
-import org.jowidgets.impl.widgets.common.blueprint.defaults.TreeDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.WindowDefaultsCommon;
-import org.jowidgets.tools.widgets.blueprint.defaults.DefaultsInitializerRegistry;
 
 public class CommonDefaultsInitializerRegistry extends DefaultsInitializerRegistry {
 
@@ -68,7 +64,5 @@ public class CommonDefaultsInitializerRegistry extends DefaultsInitializerRegist
 		register(ISeparatorSetupBuilderCommon.class, new SeparatorDefaultsCommon());
 		register(ITextLabelSetupBuilderCommon.class, new TextLabelDefaultsCommon());
 		register(ITextFieldSetupBuilderCommon.class, new TextFieldDefaultsCommon());
-		register(ITabFolderSetupBuilderCommon.class, new TabFolderDefaultsCommon());
-		register(ITreeSetupBuilderCommon.class, new TreeDefaultsCommon());
 	}
 }

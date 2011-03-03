@@ -41,7 +41,7 @@ public class DefaultShortConverter extends AbstractObjectStringConverter<Short> 
 	@Override
 	public Short convertToObject(final String string) {
 		try {
-			// TODO MG define business logic and parse (less tolerant) with
+			// TODO define business logic and parse (less tolerant) with
 			// consideration of i18n
 			return Short.valueOf(Short.parseShort(string));
 		}

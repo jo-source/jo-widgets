@@ -27,7 +27,6 @@
  */
 package org.jowidgets.impl.widgets.composed.blueprint.defaults;
 
-import org.jowidgets.api.types.InputDialogDefaultButtonPolicy;
 import org.jowidgets.api.widgets.blueprint.builder.IInputDialogSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
@@ -42,7 +41,6 @@ public class InputDialogDefaults implements IDefaultInitializer<IInputDialogSetu
 		builder.setOkButton(bpF.button("OK"));
 		builder.setCancelButton(bpF.button("Cancel"));
 		builder.setValidationLabel(bpF.validationLabel());
-		builder.setDefaultButtonPolicy(InputDialogDefaultButtonPolicy.OK);
 		builder.setCloseable(false);
 	}
 

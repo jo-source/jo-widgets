@@ -29,7 +29,7 @@ package org.jowidgets.common.widgets;
 
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 
-public interface IContainerCommon extends IComponentCommon {
+public interface IContainerCommon extends IWidgetCommon {
 
 	/**
 	 * Sets the layout for this container

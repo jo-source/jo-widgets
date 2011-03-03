@@ -28,13 +28,16 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
+import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Cursor;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.spi.widgets.IWidgetSpi;
 import org.jowidgets.util.Assert;
 
 public class WidgetSpiWrapper implements IWidgetCommon {
 
-	private IWidgetSpi widget;
+	private final IWidgetSpi widget;
 
 	public WidgetSpiWrapper(final IWidgetSpi widget) {
 		Assert.paramNotNull(widget, "widget");
@@ -45,13 +48,49 @@ public class WidgetSpiWrapper implements IWidgetCommon {
 		return widget;
 	}
 
-	public void setWidget(final IWidgetSpi widget) {
-		this.widget = widget;
-	}
-
 	@Override
 	public Object getUiReference() {
 		return widget.getUiReference();
+	}
+
+	@Override
+	public void redraw() {
+		widget.redraw();
+	}
+
+	@Override
+	public void setForegroundColor(final IColorConstant colorValue) {
+		widget.setForegroundColor(colorValue);
+	}
+
+	@Override
+	public void setBackgroundColor(final IColorConstant colorValue) {
+		widget.setBackgroundColor(colorValue);
+	}
+
+	@Override
+	public IColorConstant getForegroundColor() {
+		return widget.getForegroundColor();
+	}
+
+	@Override
+	public IColorConstant getBackgroundColor() {
+		return widget.getBackgroundColor();
+	}
+
+	@Override
+	public void setCursor(final Cursor cursor) {
+		widget.setCursor(cursor);
+	}
+
+	@Override
+	public void setVisible(final boolean visible) {
+		widget.setVisible(visible);
+	}
+
+	@Override
+	public boolean isVisible() {
+		return widget.isVisible();
 	}
 
 	@Override
@@ -62,6 +101,11 @@ public class WidgetSpiWrapper implements IWidgetCommon {
 	@Override
 	public boolean isEnabled() {
 		return widget.isEnabled();
+	}
+
+	@Override
+	public Dimension getSize() {
+		return widget.getSize();
 	}
 
 }

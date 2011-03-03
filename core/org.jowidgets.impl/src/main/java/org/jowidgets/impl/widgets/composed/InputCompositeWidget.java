@@ -27,23 +27,20 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
-import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationResult;
-import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IInputComposite;
-import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.IValidationLabel;
+import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.descriptor.setup.IInputCompositeSetup;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controler.IInputListener;
-import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.composed.internal.InputContentContainer;
 
@@ -69,7 +66,7 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputComposite<INPUT_T
 
 		if (setup.getValidationLabel() != null) {
 			this.composite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[][grow][]0"));
-			validationLabel = this.composite.add(setup.getValidationLabel(), "h 18::, wrap");// TODO MG use hide instead
+			validationLabel = this.composite.add(setup.getValidationLabel(), "h 18::, wrap");// TODO use hide instead
 		}
 		else {
 			validationLabel = null;
@@ -126,7 +123,7 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputComposite<INPUT_T
 	}
 
 	@Override
-	public void setParent(final IComponent parent) {
+	public void setParent(final IWidget parent) {
 		parentComposite.setParent(parent);
 	}
 
@@ -138,16 +135,6 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputComposite<INPUT_T
 	@Override
 	public Object getUiReference() {
 		return parentComposite.getUiReference();
-	}
-
-	@Override
-	public void setLayoutConstraints(final Object layoutConstraints) {
-		parentComposite.setLayoutConstraints(layoutConstraints);
-	}
-
-	@Override
-	public Object getLayoutConstraints() {
-		return parentComposite.getLayoutConstraints();
 	}
 
 	@Override
@@ -231,26 +218,6 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputComposite<INPUT_T
 	@Override
 	public void removeInputListener(final IInputListener listener) {
 		contentContainer.removeInputListener(listener);
-	}
-
-	@Override
-	public IPopupMenu createPopupMenu() {
-		return composite.createPopupMenu();
-	}
-
-	@Override
-	public void setPopupMenu(final IMenuModel popupMenu) {
-		composite.setPopupMenu(popupMenu);
-	}
-
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		composite.addPopupDetectionListener(listener);
-	}
-
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		composite.removePopupDetectionListener(listener);
 	}
 
 }
