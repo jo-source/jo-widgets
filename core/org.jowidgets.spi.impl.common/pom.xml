@@ -4,13 +4,13 @@
 
 	<groupId>org.jowidgets</groupId>
 	<artifactId>org.jowidgets.spi.impl.common</artifactId>
-	<version>0.0.15-SNAPSHOT</version>
+	<version>0.0.13</version>
 	<name>org.jowidgets.spi.impl.common</name>
 
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.core.parent</artifactId>
-		<version>0.0.15-SNAPSHOT</version>
+		<version>0.0.13</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 
@@ -18,7 +18,7 @@
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.spi</artifactId>
-			<version>0.0.15-SNAPSHOT</version>
+			<version>0.0.13</version>
 			<type>jar</type>
 		</dependency>
 	</dependencies>
