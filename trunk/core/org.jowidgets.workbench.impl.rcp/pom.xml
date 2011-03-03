@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.core.parent</artifactId>
-		<version>0.0.14-SNAPSHOT</version>
+		<version>0.0.15-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 	<artifactId>org.jowidgets.workbench.impl.rcp</artifactId>
@@ -31,12 +31,12 @@
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.workbench.api</artifactId>
-			<version>0.0.14-SNAPSHOT</version>
+			<version>0.0.15-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.tools</artifactId>
-			<version>0.0.14-SNAPSHOT</version>
+			<version>0.0.15-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
