@@ -287,7 +287,7 @@ public class JoSashForm extends Composite {
 	public void setBackground(final Color color) {
 		super.setBackground(color);
 		background = color;
-		if (sash == null) {
+		if (sash != null) {
 			sash.setBackground(background);
 		}
 	}
@@ -296,7 +296,7 @@ public class JoSashForm extends Composite {
 	public void setForeground(final Color color) {
 		super.setForeground(color);
 		foreground = color;
-		if (sash == null) {
+		if (sash != null) {
 			sash.setForeground(foreground);
 		}
 	}
@@ -313,14 +313,14 @@ public class JoSashForm extends Composite {
 			if (getMaxControl() != null) {
 				this.setMaxControl(null);
 				layout(false);
-				if (sash == null) {
+				if (sash != null) {
 					sash.setVisible(true);
 				}
 			}
 			return;
 		}
 
-		if (sash == null) {
+		if (sash != null) {
 			sash.setVisible(false);
 		}
 		setMaxControl(control);
@@ -339,7 +339,7 @@ public class JoSashForm extends Composite {
 	@Override
 	public void setToolTipText(final String string) {
 		super.setToolTipText(string);
-		if (sash == null) {
+		if (sash != null) {
 			sash.setToolTipText(string);
 		}
 	}
