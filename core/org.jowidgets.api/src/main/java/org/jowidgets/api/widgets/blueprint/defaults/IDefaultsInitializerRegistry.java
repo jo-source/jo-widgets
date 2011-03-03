@@ -35,15 +35,9 @@ import org.jowidgets.common.widgets.builder.ISetupBuilder;
 public interface IDefaultsInitializerRegistry {
 
 	@SuppressWarnings("rawtypes")
-	void register(Class<? extends ISetupBuilder> setupBuilder, IDefaultInitializer<?> defaultInitializer);
-
-	@SuppressWarnings("rawtypes")
-	void setDefaultsInitializer(final Class<? extends ISetupBuilder> setupBuilder, final IDefaultInitializer<?> defaultInitializer);
+	void register(Class<? extends ISetupBuilder> setupBuilder, IDefaultInitializer<?> defaultsImpl);
 
 	@SuppressWarnings("rawtypes")
 	List<IDefaultInitializer<ISetupBuilder<?>>> getRegistered(Class<? extends ISetupBuilder> setupBuilder);
-
-	@SuppressWarnings("rawtypes")
-	List<Class<ISetupBuilder>> getRegisteredSetupBuilder();
 
 }

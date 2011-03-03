@@ -46,13 +46,13 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 		Component<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IContainer {
 
 	@SuppressWarnings("rawtypes")
-	private final List<Tuple<Widget, Object>> preWidgets;
+	private final List<Tuple<Component, Object>> preWidgets;
 	private final JoWidgetFactory widgetFactory;
 
 	@SuppressWarnings("rawtypes")
 	Container(final BLUE_PRINT_TYPE bluePrint) {
 		super(bluePrint);
-		this.preWidgets = new LinkedList<Tuple<Widget, Object>>();
+		this.preWidgets = new LinkedList<Tuple<Component, Object>>();
 		this.widgetFactory = new JoWidgetFactory();
 	}
 
@@ -60,8 +60,8 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 	@Override
 	void initialize(final WIDGET_TYPE widget) {
 		super.initialize(widget);
-		for (final Tuple<Widget, Object> preWidgetTuple : preWidgets) {
-			final Widget preWidget = preWidgetTuple.getFirst();
+		for (final Tuple<Component, Object> preWidgetTuple : preWidgets) {
+			final Component preWidget = preWidgetTuple.getFirst();
 			final Object layoutConstraints = preWidgetTuple.getSecond();
 			final IControl newWidget = widget.add(preWidget.getDescriptor(), layoutConstraints);
 			preWidget.initialize(newWidget);
@@ -83,7 +83,7 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 			return widget;
 		}
 		else {
-			preWidgets.add(new Tuple<Widget, Object>(widget, layoutConstraints));
+			preWidgets.add(new Tuple<Component, Object>(widget, layoutConstraints));
 			return widget;
 		}
 	}
@@ -126,8 +126,8 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 			return getWidget().add(descriptor, layoutConstraints);
 		}
 		else {
-			final Widget powo = widgetFactory.create(descriptor);
-			preWidgets.add(new Tuple<Widget, Object>(powo, layoutConstraints));
+			final Component powo = widgetFactory.create(descriptor);
+			preWidgets.add(new Tuple<Component, Object>(powo, layoutConstraints));
 			return (M_WIDGET_TYPE) powo;
 		}
 	}
@@ -140,7 +140,7 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 		}
 		else {
 			final List<IControl> result = new LinkedList<IControl>();
-			for (final Tuple<Widget, Object> preWidgetTuple : preWidgets) {
+			for (final Tuple<Component, Object> preWidgetTuple : preWidgets) {
 				result.add((IControl) preWidgetTuple.getFirst());
 			}
 			return result;
@@ -155,8 +155,8 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 		}
 		else {
 			Assert.paramNotNull(control, "control");
-			Tuple<Widget, Object> foundControl = null;
-			for (final Tuple<Widget, Object> preWidgetTuple : preWidgets) {
+			Tuple<Component, Object> foundControl = null;
+			for (final Tuple<Component, Object> preWidgetTuple : preWidgets) {
 				if (control == preWidgetTuple.getFirst()) {
 					foundControl = preWidgetTuple;
 					break;

@@ -28,14 +28,9 @@
 
 package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.api.model.item.IMenuItemModel;
-import org.jowidgets.api.model.item.ISelectableItemModel;
-import org.jowidgets.api.model.item.ISelectableMenuItemModel;
 import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.ISelectableMenuItem;
 import org.jowidgets.api.widgets.descriptor.setup.ISelectableItemSetup;
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.impl.base.delegate.SelectableItemDelegate;
 import org.jowidgets.impl.widgets.common.wrapper.SelectableMenuItemSpiWrapper;
 import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 
@@ -46,9 +41,8 @@ public class SelectableMenuItemImpl extends SelectableMenuItemSpiWrapper impleme
 	public SelectableMenuItemImpl(
 		final IMenu parent,
 		final ISelectableMenuItemSpi actionMenuItemSpi,
-		final ISelectableItemSetup setup,
-		final SelectableItemDelegate itemDelegate) {
-		super(actionMenuItemSpi, itemDelegate);
+		final ISelectableItemSetup setup) {
+		super(actionMenuItemSpi);
 
 		this.parent = parent;
 
@@ -69,31 +63,6 @@ public class SelectableMenuItemImpl extends SelectableMenuItemSpiWrapper impleme
 	@Override
 	public IMenu getParent() {
 		return parent;
-	}
-
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		//Do not set the icon for selectable item, because they have a default icon
-	}
-
-	@Override
-	public void setModel(final ISelectableMenuItemModel model) {
-		super.getItemDelegate().setModel(model);
-	}
-
-	@Override
-	public void setModel(final IMenuItemModel model) {
-		if (model instanceof ISelectableMenuItemModel) {
-			setModel((ISelectableMenuItemModel) model);
-		}
-		else {
-			throw new IllegalArgumentException("Model must be a '" + ISelectableItemModel.class.getName() + "'");
-		}
-	}
-
-	@Override
-	public ISelectableMenuItemModel getModel() {
-		return getItemDelegate().getModel();
 	}
 
 }

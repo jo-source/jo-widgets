@@ -50,14 +50,4 @@ public class JoContainer extends Container<IContainer, ICompositeBluePrint> impl
 		return Toolkit.getBluePrintFactory().composite();
 	}
 
-	public static JoContainer toJoContainer(final IContainer widget) {
-		Assert.paramNotNull(widget, "widget");
-		if (widget instanceof JoContainer) {
-			return (JoContainer) widget;
-		}
-		else {
-			return new JoContainer(widget);
-		}
-	}
-
 }

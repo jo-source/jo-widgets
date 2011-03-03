@@ -36,7 +36,6 @@ import org.jowidgets.api.command.IEnabledChecker;
 import org.jowidgets.api.command.IExceptionHandler;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
-import org.jowidgets.common.types.Modifier;
 
 public class ActionBuilder implements IActionBuilder {
 
@@ -92,11 +91,6 @@ public class ActionBuilder implements IActionBuilder {
 	}
 
 	@Override
-	public IActionBuilder setAccelerator(final char key, final Modifier... modifier) {
-		return setAccelerator(new Accelerator(key, modifier));
-	}
-
-	@Override
 	public IActionBuilder setEnabled(final boolean enabled) {
 		this.enabled = enabled;
 		return this;
@@ -143,7 +137,7 @@ public class ActionBuilder implements IActionBuilder {
 
 	@Override
 	public ICommandAction build() {
-		final ICommandAction result = new CommandActionImpl(
+		final ICommandAction result = new CommandAction(
 			text,
 			toolTipText,
 			icon,

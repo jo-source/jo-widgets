@@ -30,11 +30,10 @@ package org.jowidgets.impl.widgets.basic;
 
 import java.util.List;
 
-import org.jowidgets.api.model.item.IMenuBarModel;
-import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IDisplay;
+import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IMenuBar;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.descriptor.setup.IFrameSetup;
@@ -48,16 +47,12 @@ import org.jowidgets.impl.base.delegate.WindowDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractFrameSpiWrapper;
 import org.jowidgets.spi.widgets.IFrameSpi;
-import org.jowidgets.test.api.widgets.IFrameUi;
-import org.jowidgets.util.Assert;
 
-public class FrameImpl extends AbstractFrameSpiWrapper implements IFrameUi {
+public class FrameImpl extends AbstractFrameSpiWrapper implements IFrame {
 
 	private final DisplayDelegate displayDelegate;
 	private final WindowDelegate windowDelegate;
 	private final ContainerDelegate containerDelegate;
-
-	private IMenuBar menuBar;
 
 	public FrameImpl(final IFrameSpi frameWidgetSpi, final IFrameSetup setup) {
 		super(frameWidgetSpi);
@@ -143,37 +138,13 @@ public class FrameImpl extends AbstractFrameSpiWrapper implements IFrameUi {
 	}
 
 	@Override
-	public void setDefaultButton(final IButton button) {
-		getWidget().setDefaultButton(button);
-	}
-
-	@Override
 	public IPopupMenu createPopupMenu() {
 		return new PopupMenuImpl(getWidget().createPopupMenu(), this);
 	}
 
 	@Override
 	public IMenuBar createMenuBar() {
-		if (menuBar == null) {
-			menuBar = new MenuBarImpl(getWidget().createMenuBar(), this);
-		}
-		return menuBar;
-	}
-
-	@Override
-	public IMenuBarModel getMenuBarModel() {
-		return createMenuBar().getModel();
-	}
-
-	@Override
-	public void setMenuBar(final IMenuBarModel model) {
-		Assert.paramNotNull(model, "model");
-		createMenuBar().setModel(model);
-	}
-
-	@Override
-	public boolean isTestable() {
-		return true;
+		return new MenuBarImpl(getWidget().createMenuBar(), this);
 	}
 
 }

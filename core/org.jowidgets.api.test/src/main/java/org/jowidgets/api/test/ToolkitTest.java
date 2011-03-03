@@ -28,6 +28,8 @@
 
 package org.jowidgets.api.test;
 
+import junit.framework.JUnit4TestAdapter;
+
 import org.jowidgets.api.toolkit.Toolkit;
 import org.junit.Assert;
 import org.junit.Test;
@@ -37,6 +39,10 @@ public class ToolkitTest {
 	@Test
 	public void createToolkitTest() {
 		Assert.assertNotNull(Toolkit.getInstance());
+	}
+
+	public static junit.framework.Test suite() {
+		return new JUnit4TestAdapter(ToolkitTest.class);
 	}
 
 }

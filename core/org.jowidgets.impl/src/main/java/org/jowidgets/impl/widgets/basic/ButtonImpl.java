@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann, Lukas Gross
+ * Copyright (c) 2010, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -29,6 +29,7 @@
 package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
@@ -42,10 +43,8 @@ import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvok
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.ButtonSpiWrapper;
 import org.jowidgets.spi.widgets.IButtonSpi;
-import org.jowidgets.test.api.widgets.IButtonUi;
-import org.jowidgets.test.spi.widgets.IButtonUiSpi;
 
-public class ButtonImpl extends ButtonSpiWrapper implements IButtonUi, IActionWidget, IDisposeable {
+public class ButtonImpl extends ButtonSpiWrapper implements IButton, IActionWidget, IDisposeable {
 
 	private final ControlDelegate controlDelegate;
 
@@ -112,16 +111,4 @@ public class ButtonImpl extends ButtonSpiWrapper implements IButtonUi, IActionWi
 		}
 	}
 
-	@Override
-	public void push() {
-		if (getWidget() instanceof IButtonUiSpi) {
-			final IButtonUiSpi widget = (IButtonUiSpi) getWidget();
-			widget.push();
-		}
-	}
-
-	@Override
-	public boolean isTestable() {
-		return true;
-	}
 }

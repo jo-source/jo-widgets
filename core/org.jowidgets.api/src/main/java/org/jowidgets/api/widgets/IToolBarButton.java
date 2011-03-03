@@ -30,7 +30,6 @@ package org.jowidgets.api.widgets;
 
 import org.jowidgets.api.command.ActionStyle;
 import org.jowidgets.api.command.IAction;
-import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.common.widgets.IToolBarButtonCommon;
 
 public interface IToolBarButton extends IToolBarItem, IToolBarButtonCommon {
@@ -38,10 +37,5 @@ public interface IToolBarButton extends IToolBarItem, IToolBarButtonCommon {
 	void setAction(IAction action);
 
 	void setAction(IAction action, ActionStyle style);
-
-	void setModel(IActionItemModel model);
-
-	@Override
-	IActionItemModel getModel();
 
 }

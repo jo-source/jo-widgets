@@ -28,31 +28,15 @@
 
 package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.api.model.item.IContainerContentCreator;
-import org.jowidgets.api.model.item.IContainerItemModel;
-import org.jowidgets.api.model.item.IItemModel;
-import org.jowidgets.api.model.item.IItemModelListener;
-import org.jowidgets.api.model.item.IToolBarItemModel;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.IToolBarContainerItem;
 import org.jowidgets.api.widgets.descriptor.setup.IContainerSetup;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.types.Position;
-import org.jowidgets.impl.model.item.ContainerItemModelBuilder;
 import org.jowidgets.spi.widgets.IToolBarContainerItemSpi;
-import org.jowidgets.util.Assert;
 
 public class ToolBarContainerItemImpl extends ContainerImpl implements IToolBarContainerItem {
 
 	private final IToolBar parent;
-	private final IItemModelListener modelListener;
-
-	private String text;
-	private String toolTipText;
-	private IImageConstant icon;
-	private IContainerContentCreator contentCreator;
-	private IContainerItemModel model;
 
 	public ToolBarContainerItemImpl(
 		final IToolBar parent,
@@ -61,17 +45,6 @@ public class ToolBarContainerItemImpl extends ContainerImpl implements IToolBarC
 		super(toolBarContainerItemSpi, setup);
 
 		this.parent = parent;
-
-		this.modelListener = new IItemModelListener() {
-			@Override
-			public void itemChanged(final IItemModel item) {
-				if (getModel().getContentCreator() != contentCreator) {
-					setContentCreator(getModel().getContentCreator());
-				}
-			}
-		};
-
-		setModel(new ContainerItemModelBuilder().build());
 	}
 
 	@Override
@@ -86,79 +59,17 @@ public class ToolBarContainerItemImpl extends ContainerImpl implements IToolBarC
 
 	@Override
 	public void setText(final String text) {
-		this.text = text;
+		getWidget().setText(text);
 	}
 
 	@Override
-	public void setToolTipText(final String toolTipText) {
-		this.toolTipText = toolTipText;
+	public void setToolTipText(final String text) {
+		getWidget().setToolTipText(text);
 	}
 
 	@Override
 	public void setIcon(final IImageConstant icon) {
-		this.icon = icon;
-	}
-
-	@Override
-	public String getText() {
-		return text;
-	}
-
-	@Override
-	public String getToolTipText() {
-		return toolTipText;
-	}
-
-	@Override
-	public IImageConstant getIcon() {
-		return icon;
-	}
-
-	@Override
-	public IContainerItemModel getModel() {
-		return model;
-	}
-
-	@Override
-	public void setModel(final IContainerItemModel model) {
-		Assert.paramNotNull(model, "model");
-		if (this.model != null) {
-			this.model.removeItemModelListener(modelListener);
-		}
-		setContentCreator(model.getContentCreator());
-		model.addItemModelListener(modelListener);
-		this.model = model;
-		getParent().pack();
-	}
-
-	@Override
-	public void setModel(final IToolBarItemModel model) {
-		if (model instanceof IContainerItemModel) {
-			setModel((IContainerItemModel) model);
-		}
-		else {
-			throw new IllegalArgumentException("Model type '" + IContainerItemModel.class.getName() + "' expected");
-		}
-	}
-
-	private void setContentCreator(final IContainerContentCreator contentCreator) {
-		if (this.contentCreator != contentCreator) {
-			if (this.contentCreator != null) {
-				this.contentCreator.containerDisposed(this);
-			}
-			contentCreator.createContent(this);
-			this.contentCreator = contentCreator;
-		}
-	}
-
-	@Override
-	public Position getPosition() {
-		return getWidget().getPosition();
-	}
-
-	@Override
-	public Dimension getSize() {
-		return getWidget().getSize();
+		getWidget().setIcon(icon);
 	}
 
 }

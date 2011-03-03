@@ -28,16 +28,11 @@
 
 package org.jowidgets.api.widgets;
 
-import org.jowidgets.api.model.item.IToolBarItemModel;
 import org.jowidgets.common.widgets.IToolBarItemCommon;
 
 public interface IToolBarItem extends IItem, IToolBarItemCommon {
 
 	@Override
 	IToolBar getParent();
-
-	void setModel(IToolBarItemModel model);
-
-	IToolBarItemModel getModel();
 
 }

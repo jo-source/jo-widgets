@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann, Lukas Gross
+ * Copyright (c) 2010, Michael Grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -27,17 +27,6 @@
  */
 package org.jowidgets.impl.widgets.basic.factory;
 
-import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
-import org.jowidgets.api.widgets.blueprint.ICheckBoxBluePrint;
-import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
-import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
-import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
-import org.jowidgets.api.widgets.blueprint.IIconBluePrint;
-import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
-import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
-import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
-import org.jowidgets.api.widgets.blueprint.IToggleButtonBluePrint;
-import org.jowidgets.api.widgets.blueprint.IToolBarBluePrint;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 import org.jowidgets.api.widgets.descriptor.ICheckBoxDescriptor;
 import org.jowidgets.api.widgets.descriptor.IComboBoxDescriptor;
@@ -49,12 +38,10 @@ import org.jowidgets.api.widgets.descriptor.IIconDescriptor;
 import org.jowidgets.api.widgets.descriptor.IScrollCompositeDescriptor;
 import org.jowidgets.api.widgets.descriptor.ISeparatorDescriptor;
 import org.jowidgets.api.widgets.descriptor.ISplitCompositeDescriptor;
-import org.jowidgets.api.widgets.descriptor.ITabFolderDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextFieldDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextLabelDescriptor;
 import org.jowidgets.api.widgets.descriptor.IToggleButtonDescriptor;
 import org.jowidgets.api.widgets.descriptor.IToolBarDescriptor;
-import org.jowidgets.api.widgets.descriptor.ITreeDescriptor;
 import org.jowidgets.impl.base.factory.DefaultGenericWidgetFactory;
 import org.jowidgets.impl.base.factory.GenericWidgetFactoryWrapper;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
@@ -70,40 +57,11 @@ import org.jowidgets.impl.widgets.basic.factory.internal.IconFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.ScrollCompositeFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.SeparatorFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.SplitCompositeFactory;
-import org.jowidgets.impl.widgets.basic.factory.internal.TabFolderFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.TextFieldFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.TextLabelFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.ToggleButtonFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.ToolBarFactory;
-import org.jowidgets.impl.widgets.basic.factory.internal.TreeFactory;
-import org.jowidgets.impl.widgets.basic.factory.internal.UiWidgetFactory;
 import org.jowidgets.spi.IWidgetFactorySpi;
-import org.jowidgets.test.api.widgets.IButtonUi;
-import org.jowidgets.test.api.widgets.ICheckBoxUi;
-import org.jowidgets.test.api.widgets.IComboBoxUi;
-import org.jowidgets.test.api.widgets.ICompositeUi;
-import org.jowidgets.test.api.widgets.IFrameUi;
-import org.jowidgets.test.api.widgets.IIconUi;
-import org.jowidgets.test.api.widgets.IScrollCompositeUi;
-import org.jowidgets.test.api.widgets.ISplitCompositeUi;
-import org.jowidgets.test.api.widgets.ITextLabelUi;
-import org.jowidgets.test.api.widgets.IToggleButtonUi;
-import org.jowidgets.test.api.widgets.IToolBarUi;
-import org.jowidgets.test.api.widgets.descriptor.IButtonDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.ICheckBoxDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.IComboBoxDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.IComboBoxSelectionDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.ICompositeDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.IDialogDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.IFrameDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.IIconDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.IScrollCompositeDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.ISeparatorDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.ISplitCompositeDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.ITextFieldDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.ITextLabelDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.IToggleButtonDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.IToolBarDescriptorUi;
 
 public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 
@@ -113,7 +71,6 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 		super(new DefaultGenericWidgetFactory());
 		this.spiWidgetFactory = spiWidgetFactory;
 		registerBaseWidgets(spiWidgetFactory, new SpiBluePrintFactory());
-		registerUiWidgets();
 	}
 
 	@SuppressWarnings({"unchecked"})
@@ -133,31 +90,6 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 		register(IComboBoxSelectionDescriptor.class, new ComboBoxSelectionFactory(this, spiWidgetFactory, bpF));
 		register(IComboBoxDescriptor.class, new ComboBoxFactory(this, spiWidgetFactory, bpF));
 		register(IToolBarDescriptor.class, new ToolBarFactory(this, spiWidgetFactory, bpF));
-		register(ITabFolderDescriptor.class, new TabFolderFactory(this, spiWidgetFactory, bpF));
-		register(ITreeDescriptor.class, new TreeFactory(this, spiWidgetFactory, bpF));
-		register(IDialogDescriptorUi.class, new DialogFactory(this, spiWidgetFactory, bpF));
-		register(ITextFieldDescriptorUi.class, new TextFieldFactory(this, spiWidgetFactory, bpF));
-		register(ISeparatorDescriptorUi.class, new SeparatorFactory(this, spiWidgetFactory, bpF));
-		register(IComboBoxSelectionDescriptorUi.class, new ComboBoxSelectionFactory(this, spiWidgetFactory, bpF));
-	}
-
-	private void registerUiWidgets() {
-		registerUiWidget(IFrameDescriptorUi.class, IFrameUi.class, IFrameBluePrint.class);
-		registerUiWidget(IButtonDescriptorUi.class, IButtonUi.class, IButtonBluePrint.class);
-		registerUiWidget(IToolBarDescriptorUi.class, IToolBarUi.class, IToolBarBluePrint.class);
-		registerUiWidget(IComboBoxDescriptorUi.class, IComboBoxUi.class, IComboBoxBluePrint.class);
-		registerUiWidget(ICheckBoxDescriptorUi.class, ICheckBoxUi.class, ICheckBoxBluePrint.class);
-		registerUiWidget(IToggleButtonDescriptorUi.class, IToggleButtonUi.class, IToggleButtonBluePrint.class);
-		registerUiWidget(ITextLabelDescriptorUi.class, ITextLabelUi.class, ITextLabelBluePrint.class);
-		registerUiWidget(IIconDescriptorUi.class, IIconUi.class, IIconBluePrint.class);
-		registerUiWidget(ISplitCompositeDescriptorUi.class, ISplitCompositeUi.class, ISplitCompositeBluePrint.class);
-		registerUiWidget(IScrollCompositeDescriptorUi.class, IScrollCompositeUi.class, IScrollCompositeBluePrint.class);
-		registerUiWidget(ICompositeDescriptorUi.class, ICompositeUi.class, ICompositeBluePrint.class);
-	}
-
-	@SuppressWarnings({"rawtypes", "unchecked"})
-	private void registerUiWidget(final Class uiDescriptorType, final Class uiWidgetType, final Class bluePrintType) {
-		register(uiDescriptorType, new UiWidgetFactory(this, uiWidgetType, bluePrintType));
 	}
 
 	protected IWidgetFactorySpi getSpiWidgetFactory() {

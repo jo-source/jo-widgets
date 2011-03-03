@@ -31,7 +31,6 @@ package org.jowidgets.tools.powo;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
@@ -46,14 +45,10 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 
 	private Cursor cursor;
 	private final Set<IPopupDetectionListener> popupDetectionListeners;
-	private final Set<JoPopupMenu> popupMenus;
-
-	private IMenuModel popupMenu;
 
 	Component(final BLUE_PRINT_TYPE bluePrint) {
 		super(bluePrint);
 		this.popupDetectionListeners = new HashSet<IPopupDetectionListener>();
-		this.popupMenus = new HashSet<JoPopupMenu>();
 	}
 
 	@Override
@@ -62,23 +57,8 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 		if (cursor != null) {
 			widget.setCursor(cursor);
 		}
-		if (popupMenu != null) {
-			getWidget().setPopupMenu(popupMenu);
-		}
-		for (final JoPopupMenu joPopupMenu : popupMenus) {
-			joPopupMenu.initialize(createPopupMenu());
-		}
 		for (final IPopupDetectionListener listener : popupDetectionListeners) {
 			widget.addPopupDetectionListener(listener);
-		}
-	}
-
-	public final void addPopupMenu(final JoPopupMenu popupMenu) {
-		if (isInitialized()) {
-			popupMenu.initialize(createPopupMenu());
-		}
-		else {
-			popupMenus.add(popupMenu);
 		}
 	}
 
@@ -144,24 +124,9 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 
 	@Override
 	public IPopupMenu createPopupMenu() {
-		if (isInitialized()) {
-			return getWidget().createPopupMenu();
-		}
-		else {
-			final JoPopupMenu result = new JoPopupMenu();
-			popupMenus.add(result);
-			return result;
-		}
-	}
-
-	@Override
-	public void setPopupMenu(final IMenuModel popupMenu) {
-		if (isInitialized()) {
-			getWidget().setPopupMenu(popupMenu);
-		}
-		else {
-			this.popupMenu = popupMenu;
-		}
+		//TODO use JoPopupMenu later
+		checkInitialized();
+		return getWidget().createPopupMenu();
 	}
 
 	@Override
