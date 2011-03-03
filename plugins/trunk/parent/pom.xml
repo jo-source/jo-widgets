@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jowidgets</groupId>
 	<artifactId>org.jowidgets.plugins.parent</artifactId>
-	<version>0.0.15-SNAPSHOT</version>
+	<version>0.0.16-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>org.jowidgets.plugins.parent</name>
 
@@ -28,6 +28,7 @@
 		<java.version>1.6</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<tycho.version>0.10.0</tycho.version>
+		<jo-widgets.version>0.0.16-SNAPSHOT</jo-widgets.version>
 	</properties>
 
 	<modules>
@@ -110,6 +111,13 @@
 				<configuration>
 					<resolver>p2</resolver>
 					<pomDependencies>consider</pomDependencies>
+					<environments>
+						<environment>
+	              			<os>win32</os>
+	              			<ws>win32</ws>
+	              			<arch>x86</arch>
+	            		</environment>
+					</environments>
 				</configuration>
 			</plugin>
 			<plugin>
