@@ -27,21 +27,21 @@
  */
 package org.jowidgets.impl.widgets.basic.blueprint.convenience;
 
-import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
-import org.jowidgets.api.widgets.blueprint.builder.convenience.IComponentSetupConvenience;
+import org.jowidgets.api.widgets.blueprint.builder.IWidgetSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.builder.convenience.IWidgetSetupConvenience;
 import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.tools.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
+import org.jowidgets.impl.base.blueprint.convenience.AbstractSetupBuilderConvenience;
 
-public class WidgetSetupConvenience extends AbstractSetupBuilderConvenience<IComponentSetupBuilder<?>> implements
-		IComponentSetupConvenience<IComponentSetupBuilder<?>> {
+public class WidgetSetupConvenience extends AbstractSetupBuilderConvenience<IWidgetSetupBuilder<?>> implements
+		IWidgetSetupConvenience<IWidgetSetupBuilder<?>> {
 
 	@Override
-	public IComponentSetupBuilder<?> setVisible(final boolean visible) {
+	public IWidgetSetupBuilder<?> setVisible(final boolean visible) {
 		return getBuilder().setVisible(Boolean.valueOf(visible));
 	}
 
 	@Override
-	public IComponentSetupBuilder<?> setColor(final IColorConstant colorConstant) {
+	public IWidgetSetupBuilder<?> setColor(final IColorConstant colorConstant) {
 		return getBuilder().setForegroundColor(colorConstant);
 	}
 

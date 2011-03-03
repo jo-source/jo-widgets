@@ -30,7 +30,7 @@ package org.jowidgets.common.widgets.builder;
 import org.jowidgets.common.types.Orientation;
 
 public interface IProgressBarSetupBuilderCommon<INSTANCE_TYPE extends IProgressBarSetupBuilderCommon<?>> extends
-		IComponentSetupBuilderCommon<INSTANCE_TYPE> {
+		IWidgetSetupBuilderCommon<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setOrientation(Orientation orientation);
 

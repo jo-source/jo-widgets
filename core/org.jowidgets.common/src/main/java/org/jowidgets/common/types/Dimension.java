@@ -46,34 +46,4 @@ public final class Dimension {
 		return height;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + height;
-		result = prime * result + width;
-		return result;
-	}
-
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final Dimension other = (Dimension) obj;
-		if (height != other.height) {
-			return false;
-		}
-		if (width != other.width) {
-			return false;
-		}
-		return true;
-	}
-
 }

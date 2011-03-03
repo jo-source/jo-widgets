@@ -28,8 +28,8 @@
 
 package org.jowidgets.impl.base.delegate;
 
-import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IWidget;
 
 public class ControlDelegate {
 
@@ -43,7 +43,7 @@ public class ControlDelegate {
 		return parent;
 	}
 
-	public void setParent(final IComponent parent) {
+	public void setParent(final IWidget parent) {
 		if (this.parent == null) {
 			if (parent instanceof IContainer) {
 				this.parent = (IContainer) parent;
@@ -58,7 +58,7 @@ public class ControlDelegate {
 	}
 
 	public boolean isReparentable() {
-		//TODO MG will be implemented later
+		//TODO will be implemented later
 		return false;
 	}
 

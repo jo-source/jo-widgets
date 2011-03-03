@@ -28,102 +28,58 @@
 
 package org.jowidgets.impl.base.delegate;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.jowidgets.api.types.AutoCenterPolicy;
 import org.jowidgets.api.types.AutoPackPolicy;
-import org.jowidgets.api.widgets.IDisplay;
-import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.descriptor.setup.IWindowSetup;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.spi.widgets.IWindowSpi;
+import org.jowidgets.common.widgets.IWindowCommon;
 
 public class WindowDelegate {
 
-	private final List<IDisplay> childWindows;
 	private final AutoCenterPolicy autoCenterPolicy;
 	private final AutoPackPolicy autoPackPolicy;
-	private final IWindowSpi windowSpi;
-	private final IWindow window;
+	private final IWindowCommon windowWidgetCommon;
 	private boolean wasVisible;
-	private boolean positionSet;
-	private boolean sizeSet;
 
-	public WindowDelegate(final IWindowSpi windowSpi, final IWindow window, final IWindowSetup setup) {
-		this.childWindows = new LinkedList<IDisplay>();
+	public WindowDelegate(final IWindowCommon windowWidgetCommon, final IWindowSetup setup) {
 		this.autoCenterPolicy = setup.getAutoCenterPolicy();
 		this.autoPackPolicy = setup.getAutoPackPolicy();
-		this.windowSpi = windowSpi;
-		this.window = window;
+		this.windowWidgetCommon = windowWidgetCommon;
 		this.wasVisible = false;
-		this.positionSet = false;
-		this.sizeSet = false;
-
-		if (setup.getSize() != null) {
-			setSize(setup.getSize());
-		}
-
-		if (setup.getPosition() != null) {
-			setPosition(setup.getPosition());
-		}
 	}
 
 	public void centerLocation() {
-		final Rectangle parentBounds = windowSpi.getParentBounds();
+		final Rectangle parentBounds = windowWidgetCommon.getParentBounds();
 		final Dimension parentSize = parentBounds.getSize();
 		final Position parentPosition = parentBounds.getPosition();
 
-		final Dimension size = windowSpi.getSize();
+		final Dimension size = windowWidgetCommon.getSize();
 
 		final int posX = parentPosition.getX() + ((parentSize.getWidth() - size.getWidth()) / 2);
 		final int posY = parentPosition.getY() + ((parentSize.getHeight() - size.getHeight()) / 2);
 
-		windowSpi.setPosition(new Position(posX, posY));
+		windowWidgetCommon.setPosition(new Position(posX, posY));
 	}
 
 	public void setVisible(final boolean visible) {
 		if (visible) {
 			if (AutoPackPolicy.ALLWAYS == autoPackPolicy) {
-				windowSpi.pack();
+				windowWidgetCommon.pack();
 			}
-			else if (!sizeSet && !wasVisible && AutoPackPolicy.ONCE == autoPackPolicy) {
-				windowSpi.pack();
+			else if (!wasVisible && AutoPackPolicy.ONCE == autoPackPolicy) {
+				windowWidgetCommon.pack();
 			}
 			if (AutoCenterPolicy.ALLWAYS == autoCenterPolicy) {
 				centerLocation();
 			}
-			else if (!positionSet && !wasVisible && AutoCenterPolicy.ONCE == autoCenterPolicy) {
+			else if (!wasVisible && AutoCenterPolicy.ONCE == autoCenterPolicy) {
 				centerLocation();
 			}
 			wasVisible = true;
 		}
-		windowSpi.setVisible(visible);
-	}
-
-	public void setPosition(final Position position) {
-		positionSet = true;
-		windowSpi.setPosition(position);
-	}
-
-	public void setSize(final Dimension size) {
-		sizeSet = true;
-		windowSpi.setSize(size);
-	}
-
-	public <WIDGET_TYPE extends IDisplay, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
-		final DESCRIPTOR_TYPE descriptor) {
-		final WIDGET_TYPE result = windowSpi.createChildWindow(descriptor);
-		result.setParent(window);
-		childWindows.add(result);
-		return result;
-	}
-
-	public List<IDisplay> getChildWindows() {
-		return new LinkedList<IDisplay>(childWindows);
+		windowWidgetCommon.setVisible(visible);
 	}
 
 }

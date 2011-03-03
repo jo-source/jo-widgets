@@ -36,7 +36,7 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.ISplitCompositeDescriptor;
 import org.jowidgets.common.types.Orientation;
 
-public class JoSplitComposite extends Control<ISplitComposite, ISplitCompositeBluePrint> implements ISplitComposite {
+public class JoSplitComposite extends ControlWidget<ISplitComposite, ISplitCompositeBluePrint> implements ISplitComposite {
 
 	private final JoContainer first;
 	private final JoContainer second;

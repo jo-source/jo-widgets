@@ -27,13 +27,8 @@
  */
 package org.jowidgets.spi.widgets;
 
-import org.jowidgets.common.widgets.IDisplayCommon;
 import org.jowidgets.common.widgets.IWindowCommon;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public interface IWindowSpi extends IDisplaySpi, IWindowCommon {
-
-	<WIDGET_TYPE extends IDisplayCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
-		final DESCRIPTOR_TYPE descriptor);
 
 }

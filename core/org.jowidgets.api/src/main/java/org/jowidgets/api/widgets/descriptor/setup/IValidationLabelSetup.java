@@ -32,7 +32,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
-public interface IValidationLabelSetup extends IComponentSetup {
+public interface IValidationLabelSetup extends IWidgetSetup {
 
 	@Mandatory
 	boolean isShowValidationMessage();
@@ -42,9 +42,6 @@ public interface IValidationLabelSetup extends IComponentSetup {
 
 	@Mandatory
 	Markup getWarningMarkup();
-
-	@Mandatory
-	Markup getInfoErrorMarkup();
 
 	@Mandatory
 	Markup getErrorMarkup();
@@ -59,9 +56,6 @@ public interface IValidationLabelSetup extends IComponentSetup {
 	IColorConstant getWarningColor();
 
 	@Mandatory
-	IColorConstant getInfoErrorColor();
-
-	@Mandatory
 	IColorConstant getErrorColor();
 
 	@Mandatory
@@ -70,8 +64,6 @@ public interface IValidationLabelSetup extends IComponentSetup {
 	IImageConstant getOkIcon();
 
 	IImageConstant getWarningIcon();
-
-	IImageConstant getInfoErrorIcon();
 
 	IImageConstant getErrorIcon();
 

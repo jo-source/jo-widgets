@@ -34,7 +34,7 @@ import org.jowidgets.api.widgets.blueprint.IIconBluePrint;
 import org.jowidgets.api.widgets.descriptor.IIconDescriptor;
 import org.jowidgets.common.image.IImageConstant;
 
-public class JoIcon extends Control<IIcon, IIconBluePrint> implements IIcon {
+public class JoIcon extends ControlWidget<IIcon, IIconBluePrint> implements IIcon {
 
 	public JoIcon(final IImageConstant icon) {
 		this(Toolkit.getBluePrintFactory().icon(icon));
@@ -51,16 +51,6 @@ public class JoIcon extends Control<IIcon, IIconBluePrint> implements IIcon {
 		}
 		else {
 			getBluePrint().setIcon(icon);
-		}
-	}
-
-	@Override
-	public void setToolTipText(final String text) {
-		if (isInitialized()) {
-			getWidget().setToolTipText(text);
-		}
-		else {
-			getBluePrint().setToolTipText(text);
 		}
 	}
 
