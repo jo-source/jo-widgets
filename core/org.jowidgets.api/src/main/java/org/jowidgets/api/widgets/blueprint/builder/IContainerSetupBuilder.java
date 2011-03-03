@@ -31,6 +31,6 @@ import org.jowidgets.common.widgets.builder.IContainerSetupBuilderCommon;
 
 public interface IContainerSetupBuilder<INSTANCE_TYPE extends IContainerSetupBuilder<?>> extends
 		IContainerSetupBuilderCommon<INSTANCE_TYPE>,
-		IComponentSetupBuilder<INSTANCE_TYPE> {
+		IWidgetSetupBuilder<INSTANCE_TYPE> {
 
 }

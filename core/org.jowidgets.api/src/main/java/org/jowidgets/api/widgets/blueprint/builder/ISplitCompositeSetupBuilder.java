@@ -27,10 +27,10 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
-import org.jowidgets.common.widgets.builder.ISplitCompositeSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.ISplitContainerSetupBuilderCommon;
 
 public interface ISplitCompositeSetupBuilder<INSTANCE_TYPE extends ISplitCompositeSetupBuilder<?>> extends
-		ISplitCompositeSetupBuilderCommon<INSTANCE_TYPE>,
-		IComponentSetupBuilder<INSTANCE_TYPE> {
+		ISplitContainerSetupBuilderCommon<INSTANCE_TYPE>,
+		IWidgetSetupBuilder<INSTANCE_TYPE> {
 
 }

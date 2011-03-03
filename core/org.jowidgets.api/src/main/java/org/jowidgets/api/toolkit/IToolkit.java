@@ -28,20 +28,13 @@
 
 package org.jowidgets.api.toolkit;
 
-import java.util.List;
-
-import org.jowidgets.api.command.IActionBuilderFactory;
 import org.jowidgets.api.convert.IConverterProvider;
-import org.jowidgets.api.model.IModelFactoryProvider;
-import org.jowidgets.api.threads.IUiThreadAccess;
 import org.jowidgets.api.utils.IWidgetUtils;
-import org.jowidgets.api.widgets.IFrame;
-import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
-import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
+import org.jowidgets.common.threads.IUiThreadAccess;
+import org.jowidgets.common.widgets.IWindowWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 
 public interface IToolkit {
@@ -60,30 +53,12 @@ public interface IToolkit {
 
 	IConverterProvider getConverterProvider();
 
-	IActionBuilderFactory getActionBuilderFactory();
-
-	IModelFactoryProvider getModelFactoryProvider();
-
 	IApplicationRunner getApplicationRunner();
 
 	IUiThreadAccess getUiThreadAccess();
 
 	IWidgetUtils getWidgetUtils();
 
-	IWindow getActiveWindow();
-
-	List<IWindow> getAllWindows();
-
-	IFrame createRootFrame(IFrameDescriptor descriptor);
-
-	/**
-	 * Creates an root frame for an application lifecycle. When the rootFrame will be
-	 * closed, the lifecycle will be finished.
-	 * 
-	 * @param descriptor The frame descriptor
-	 * @param lifecycle The lifecycle of the current application
-	 * @return the created frame
-	 */
-	IFrame createRootFrame(IFrameDescriptor descriptor, IApplicationLifecycle lifecycle);
+	IWindowWidgetCommon getActiveWindow();
 
 }

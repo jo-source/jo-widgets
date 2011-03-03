@@ -30,8 +30,6 @@ package org.jowidgets.impl.image;
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.common.image.IImageHandleFactory;
 import org.jowidgets.common.image.IImageRegistry;
-import org.jowidgets.common.image.IconsCommon;
-import org.jowidgets.common.image.IconsSmallCommon;
 
 public class DefaultIconsRegisterService extends ImageConstantRegisterService {
 
@@ -41,15 +39,7 @@ public class DefaultIconsRegisterService extends ImageConstantRegisterService {
 
 	public void registerImages() {
 		registerImage(IconsSmall.OK, "ok.png");
-		registerImage(IconsSmall.POPUP_ARROW, "popup_arrow.png");
-
-		registerImage(IconsCommon.FALLBACK_INFO, "empty.png");
-		registerImage(IconsCommon.FALLBACK_ERROR, "empty.png");
-		registerImage(IconsCommon.FALLBACK_QUESTION, "empty.png");
-		registerImage(IconsCommon.FALLBACK_WARNING, "empty.png");
-
-		registerImage(IconsSmallCommon.CLOSE, "close.png");
-		registerImage(IconsSmallCommon.CLOSE_MOUSEOVER, "close_mouseover.png");
+		registerImage(IconsSmall.ERROR, "error.png");
 	}
 
 }

@@ -31,20 +31,17 @@ package org.jowidgets.tools.powo;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IButton;
+import org.jowidgets.api.widgets.IButtonWidget;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.controler.IActionListener;
 
-public class JoButton extends Control<IButton, IButtonBluePrint> implements IButton {
+public class JoButton extends ChildWidget<IButtonWidget, IButtonBluePrint> implements IButtonWidget {
 
 	private final Set<IActionListener> actionListeners;
-
-	private IAction action;
 
 	public JoButton(final IImageConstant icon, final String text) {
 		this(Toolkit.getBluePrintFactory().button().setIcon(icon).setText(text));
@@ -68,11 +65,8 @@ public class JoButton extends Control<IButton, IButtonBluePrint> implements IBut
 	}
 
 	@Override
-	void initialize(final IButton widget) {
+	void initialize(final IButtonWidget widget) {
 		super.initialize(widget);
-		if (action != null) {
-			widget.setAction(action);
-		}
 		for (final IActionListener actionListener : actionListeners) {
 			widget.addActionListener(actionListener);
 		}
@@ -115,16 +109,6 @@ public class JoButton extends Control<IButton, IButtonBluePrint> implements IBut
 		}
 		else {
 			getBluePrint().setIcon(icon);
-		}
-	}
-
-	@Override
-	public void setAction(final IAction action) {
-		if (isInitialized()) {
-			getWidget().setAction(action);
-		}
-		else {
-			this.action = action;
 		}
 	}
 

@@ -27,10 +27,10 @@
  */
 package org.jowidgets.api.widgets.descriptor;
 
-import org.jowidgets.api.widgets.ISplitComposite;
+import org.jowidgets.api.widgets.ISplitCompositeWidget;
 import org.jowidgets.api.widgets.descriptor.setup.ISplitCompositeSetup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-public interface ISplitCompositeDescriptor extends ISplitCompositeSetup, IWidgetDescriptor<ISplitComposite> {
+public interface ISplitCompositeDescriptor extends ISplitCompositeSetup, IWidgetDescriptor<ISplitCompositeWidget> {
 
 }

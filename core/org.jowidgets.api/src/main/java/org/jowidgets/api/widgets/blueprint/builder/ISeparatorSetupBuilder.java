@@ -31,6 +31,6 @@ import org.jowidgets.common.widgets.builder.ISeparatorSetupBuilderCommon;
 
 public interface ISeparatorSetupBuilder<INSTANCE_TYPE extends ISeparatorSetupBuilder<?>> extends
 		ISeparatorSetupBuilderCommon<INSTANCE_TYPE>,
-		IComponentSetupBuilder<INSTANCE_TYPE> {
+		IWidgetSetupBuilder<INSTANCE_TYPE> {
 
 }

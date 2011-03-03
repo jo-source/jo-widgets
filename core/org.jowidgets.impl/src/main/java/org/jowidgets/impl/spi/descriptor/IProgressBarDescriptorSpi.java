@@ -29,9 +29,9 @@
 package org.jowidgets.impl.spi.descriptor;
 
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.spi.widgets.IProgressBarSpi;
+import org.jowidgets.spi.widgets.IProgressBarWidgetSpi;
 import org.jowidgets.spi.widgets.setup.IProgressBarSetupSpi;
 
-public interface IProgressBarDescriptorSpi extends IProgressBarSetupSpi, IWidgetDescriptor<IProgressBarSpi> {
+public interface IProgressBarDescriptorSpi extends IProgressBarSetupSpi, IWidgetDescriptor<IProgressBarWidgetSpi> {
 
 }

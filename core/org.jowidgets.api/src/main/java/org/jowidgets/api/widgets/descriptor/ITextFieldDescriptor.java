@@ -27,10 +27,10 @@
  */
 package org.jowidgets.api.widgets.descriptor;
 
-import org.jowidgets.api.widgets.IInputControl;
+import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.descriptor.setup.ITextFieldSetup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-public interface ITextFieldDescriptor extends ITextFieldSetup, IWidgetDescriptor<IInputControl<String>> {
+public interface ITextFieldDescriptor extends ITextFieldSetup, IWidgetDescriptor<IInputWidget<String>> {
 
 }

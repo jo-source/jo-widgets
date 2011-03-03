@@ -29,6 +29,6 @@ package org.jowidgets.spi.widgets.setup;
 
 import org.jowidgets.common.widgets.descriptor.setup.ITextFieldSetupCommon;
 
-public interface ITextFieldSetupSpi extends ITextInputComponentSetupSpi, ITextFieldSetupCommon {
+public interface ITextFieldSetupSpi extends ITextInputWidgetSetupSpi, ITextFieldSetupCommon {
 
 }

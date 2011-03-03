@@ -27,35 +27,29 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
-import org.jowidgets.api.model.item.IMenuModel;
-import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationResult;
-import org.jowidgets.api.widgets.IComponent;
-import org.jowidgets.api.widgets.IComposite;
-import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.IInputComposite;
-import org.jowidgets.api.widgets.IPopupMenu;
-import org.jowidgets.api.widgets.IValidationLabel;
+import org.jowidgets.api.widgets.ICompositeWidget;
+import org.jowidgets.api.widgets.IInputCompositeWidget;
+import org.jowidgets.api.widgets.IValidationLabelWidget;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.descriptor.setup.IInputCompositeSetup;
 import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.types.Cursor;
-import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.common.widgets.controler.IInputListener;
-import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 import org.jowidgets.impl.widgets.composed.internal.InputContentContainer;
 
-public class InputCompositeWidget<INPUT_TYPE> implements IInputComposite<INPUT_TYPE> {
+public class InputCompositeWidget<INPUT_TYPE> implements IInputCompositeWidget<INPUT_TYPE> {
 
-	private final IComposite parentComposite;
-	private final IComposite composite;
+	private final ICompositeWidget parentComposite;
+	private final ICompositeWidget composite;
 	private final InputContentContainer<INPUT_TYPE> contentContainer;
-	private final IValidationLabel validationLabel;
+	private final IValidationLabelWidget validationLabel;
 	private final boolean isAutoResetValidation;
 
-	public InputCompositeWidget(final IComposite composite, final IInputCompositeSetup<INPUT_TYPE> setup) {
+	public InputCompositeWidget(final ICompositeWidget composite, final IInputCompositeSetup<INPUT_TYPE> setup) {
 		super();
 
 		this.isAutoResetValidation = setup.isAutoResetValidation();
@@ -63,13 +57,13 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputComposite<INPUT_T
 		this.parentComposite = composite;
 		this.parentComposite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
 
-		final ICompositeBluePrint compositeBp = Toolkit.getBluePrintFactory().composite().setBorder(setup.getBorder());
+		final ICompositeBluePrint compositeBp = new BluePrintFactory().composite().setBorder(setup.getBorder());
 
 		this.composite = parentComposite.add(compositeBp, "growx, growy, h 0::, w 0::");
 
 		if (setup.getValidationLabel() != null) {
 			this.composite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[][grow][]0"));
-			validationLabel = this.composite.add(setup.getValidationLabel(), "h 18::, wrap");// TODO MG use hide instead
+			validationLabel = this.composite.add(setup.getValidationLabel(), "h 18::, wrap");// TODO use hide instead
 		}
 		else {
 			validationLabel = null;
@@ -121,33 +115,13 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputComposite<INPUT_T
 	}
 
 	@Override
-	public IContainer getParent() {
+	public IWidget getParent() {
 		return parentComposite.getParent();
-	}
-
-	@Override
-	public void setParent(final IComponent parent) {
-		parentComposite.setParent(parent);
-	}
-
-	@Override
-	public boolean isReparentable() {
-		return parentComposite.isReparentable();
 	}
 
 	@Override
 	public Object getUiReference() {
 		return parentComposite.getUiReference();
-	}
-
-	@Override
-	public void setLayoutConstraints(final Object layoutConstraints) {
-		parentComposite.setLayoutConstraints(layoutConstraints);
-	}
-
-	@Override
-	public Object getLayoutConstraints() {
-		return parentComposite.getLayoutConstraints();
 	}
 
 	@Override
@@ -161,28 +135,8 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputComposite<INPUT_T
 	}
 
 	@Override
-	public void setEnabled(final boolean enabled) {
-		parentComposite.setEnabled(enabled);
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return parentComposite.isEnabled();
-	}
-
-	@Override
-	public Dimension getSize() {
-		return parentComposite.getSize();
-	}
-
-	@Override
 	public void redraw() {
 		contentContainer.redraw();
-	}
-
-	@Override
-	public void setCursor(final Cursor cursor) {
-		contentContainer.setCursor(cursor);
 	}
 
 	@Override
@@ -193,16 +147,6 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputComposite<INPUT_T
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
 		composite.setBackgroundColor(colorValue);
-	}
-
-	@Override
-	public IColorConstant getForegroundColor() {
-		return composite.getForegroundColor();
-	}
-
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return composite.getBackgroundColor();
 	}
 
 	@Override
@@ -231,26 +175,6 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputComposite<INPUT_T
 	@Override
 	public void removeInputListener(final IInputListener listener) {
 		contentContainer.removeInputListener(listener);
-	}
-
-	@Override
-	public IPopupMenu createPopupMenu() {
-		return composite.createPopupMenu();
-	}
-
-	@Override
-	public void setPopupMenu(final IMenuModel popupMenu) {
-		composite.setPopupMenu(popupMenu);
-	}
-
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		composite.addPopupDetectionListener(listener);
-	}
-
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		composite.removePopupDetectionListener(listener);
 	}
 
 }

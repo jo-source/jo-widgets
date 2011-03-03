@@ -32,23 +32,23 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IButton;
-import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.IProgressBar;
-import org.jowidgets.api.widgets.IWindow;
+import org.jowidgets.api.widgets.IButtonWidget;
+import org.jowidgets.api.widgets.IProgressBarWidget;
+import org.jowidgets.api.widgets.IWindowWidget;
 import org.jowidgets.api.widgets.blueprint.IProgressBarBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.common.widgets.IContainerWidgetCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.tools.controler.WindowAdapter;
 
 public class DemoProgressBar {
 
-	public DemoProgressBar(final IContainer parentContainer, final IWindow parentWindow) {
+	public DemoProgressBar(final IContainerWidgetCommon parentContainer, final IWindowWidget parentWindow) {
 
 		final AtomicBoolean windowActive = new AtomicBoolean();
 		final AtomicBoolean progressBarFinished = new AtomicBoolean();
-		final IProgressBar progressBar;
+		final IProgressBarWidget progressBar;
 
 		final int max = (int) (Math.random() * 200) + 100;
 		final boolean indetermined = Math.random() > 0.7;
@@ -61,7 +61,9 @@ public class DemoProgressBar {
 
 		progressBar = parentContainer.add(progressBarPb, "growx,w 300::, h 22:22:22");
 
-		final IButton buttonWidget = parentContainer.add(bpF.button().setIcon(IconsSmall.ERROR), " h 25:25:25, w 25:25:25, wrap");
+		final IButtonWidget buttonWidget = parentContainer.add(
+				bpF.button().setIcon(IconsSmall.ERROR),
+				" h 25:25:25, w 25:25:25, wrap");
 
 		buttonWidget.addActionListener(new IActionListener() {
 

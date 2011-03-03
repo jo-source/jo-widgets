@@ -29,16 +29,16 @@
 package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.ICompositeWidget;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.descriptor.ICompositeDescriptor;
 import org.jowidgets.common.types.Border;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.util.Assert;
 
-public class JoComposite extends Composite<IComposite, ICompositeBluePrint> implements IComposite {
+public class JoComposite extends CompositeWidget<ICompositeWidget, ICompositeBluePrint> implements ICompositeWidget {
 
-	JoComposite(final IComposite widget) {
+	JoComposite(final ICompositeWidget widget) {
 		this(bluePrint());
 		Assert.paramNotNull(widget, "widget");
 		initialize(widget);
@@ -64,7 +64,7 @@ public class JoComposite extends Composite<IComposite, ICompositeBluePrint> impl
 		super(bluePrint().setSetup(descriptor));
 	}
 
-	public static JoComposite toJoComposite(final IComposite widget) {
+	public static JoComposite toJoComposite(final ICompositeWidget widget) {
 		Assert.paramNotNull(widget, "widget");
 		if (widget instanceof JoComposite) {
 			return (JoComposite) widget;

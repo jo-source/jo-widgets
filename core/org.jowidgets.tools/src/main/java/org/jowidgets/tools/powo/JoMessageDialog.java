@@ -29,26 +29,24 @@
 package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IDisplay;
-import org.jowidgets.api.widgets.IMessageDialog;
+import org.jowidgets.api.widgets.IMessageDialogWidget;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
 import org.jowidgets.api.widgets.descriptor.IMessageDialogDescriptor;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.Position;
-import org.jowidgets.common.widgets.IWindowCommon;
+import org.jowidgets.common.widgets.IWindowWidgetCommon;
 
-public class JoMessageDialog extends Component<IMessageDialog, IMessageDialogBluePrint> implements IMessageDialog {
+public class JoMessageDialog extends ChildWidget<IMessageDialogWidget, IMessageDialogBluePrint> implements IMessageDialogWidget {
 
-	public JoMessageDialog(final IWindowCommon parent, final IImageConstant icon, final String message) {
+	public JoMessageDialog(final IWindowWidgetCommon parent, final IImageConstant icon, final String message) {
 		this(parent, bluePrint().setIcon(icon).setText(message));
 	}
 
-	public JoMessageDialog(final IWindowCommon parent, final String title, final IImageConstant icon, final String message) {
+	public JoMessageDialog(final IWindowWidgetCommon parent, final String title, final IImageConstant icon, final String message) {
 		this(parent, bluePrint().setTitle(title).setIcon(icon).setText(message));
 	}
 
 	public JoMessageDialog(
-		final IWindowCommon parent,
+		final IWindowWidgetCommon parent,
 		final IImageConstant titleIcon,
 		final String title,
 		final IImageConstant icon,
@@ -56,24 +54,14 @@ public class JoMessageDialog extends Component<IMessageDialog, IMessageDialogBlu
 		this(parent, bluePrint().setTitleIcon(titleIcon).setTitle(title).setIcon(icon).setText(message));
 	}
 
-	public JoMessageDialog(final IWindowCommon parent, final IMessageDialogDescriptor descriptor) {
+	public JoMessageDialog(final IWindowWidgetCommon parent, final IMessageDialogDescriptor descriptor) {
 		super(bluePrint().setSetup(descriptor));
-		initialize(Toolkit.getWidgetFactory().create(parent.getUiReference(), descriptor));
+		initialize(Toolkit.getWidgetFactory().create(parent, descriptor));
 	}
 
 	@Override
 	public void showMessage() {
 		getWidget().showMessage();
-	}
-
-	@Override
-	public IDisplay getParent() {
-		return getWidget().getParent();
-	}
-
-	@Override
-	public Position getPosition() {
-		return getPosition();
 	}
 
 	public static IMessageDialogBluePrint bluePrint() {

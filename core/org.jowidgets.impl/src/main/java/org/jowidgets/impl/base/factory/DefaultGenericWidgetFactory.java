@@ -32,7 +32,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.jowidgets.common.widgets.IWidgetCommon;
+import org.jowidgets.common.widgets.IWidget;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
@@ -63,22 +63,22 @@ public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory 
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE create(
+	public <WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE create(
 		final DESCRIPTOR_TYPE descriptor) {
 		return create(null, descriptor);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE create(
-		final Object parentUiReference,
+	public <WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE create(
+		final IWidget parent,
 		final DESCRIPTOR_TYPE descriptor) {
-		return (WIDGET_TYPE) createWidget(parentUiReference, descriptor);
+		return (WIDGET_TYPE) createWidget(parent, descriptor);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> void register(
+	public <WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> void register(
 		final Class<? extends DESCRIPTOR_TYPE> descriptorClass,
 		final IWidgetFactory<WIDGET_TYPE, ? extends DESCRIPTOR_TYPE> widgetFactory) {
 
@@ -95,7 +95,7 @@ public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory 
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> void unRegister(
+	public <WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> void unRegister(
 		final Class<? extends DESCRIPTOR_TYPE> descriptorClass) {
 		Assert.paramNotNull(descriptorClass, "descriptorClass");
 
@@ -111,23 +111,23 @@ public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory 
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> getFactory(
+	public <WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> getFactory(
 		final Class<? extends DESCRIPTOR_TYPE> descriptorClass) {
 		return (IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE>) factories.get(descriptorClass);
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	private Object createWidget(final Object parentUiReference, final IWidgetDescriptor descriptor) {
+	private Object createWidget(final IWidget parent, final IWidgetDescriptor descriptor) {
 		Assert.paramNotNull(descriptor, "descriptor");
 
 		final IWidgetFactory factory = (IWidgetFactory) factories.get(descriptor.getDescriptorInterface());
 		if (factory != null) {
-			final Object result = factory.create(parentUiReference, descriptor);
-			if (result instanceof IWidgetCommon) {
-				fireWidgetCreated((IWidgetCommon) result);
+			final Object result = factory.create(parent, descriptor);
+			if (result instanceof IWidget) {
+				fireWidgetCreated((IWidget) result);
 			}
 			else {
-				throw new IllegalStateException("Created widget must be assignable from '" + IWidgetCommon.class.getName() + "'");
+				throw new IllegalStateException("Created widget must be assignable from '" + IWidget.class.getName() + "'");
 			}
 			return result;
 		}
@@ -140,7 +140,7 @@ public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory 
 		}
 	}
 
-	private void fireWidgetCreated(final IWidgetCommon widget) {
+	private void fireWidgetCreated(final IWidget widget) {
 		Assert.paramNotNull(widget, "widget");
 		for (final IWidgetFactoryListener listener : widgetFactoryListeners) {
 			listener.widgetCreated(widget);

@@ -27,12 +27,12 @@
  */
 package org.jowidgets.api.widgets.descriptor;
 
-import org.jowidgets.api.widgets.IComboBox;
+import org.jowidgets.api.widgets.IComboBoxWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IComboBoxSelectionSetup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public interface IComboBoxSelectionDescriptor<INPUT_TYPE> extends
 		IComboBoxSelectionSetup<INPUT_TYPE>,
-		IWidgetDescriptor<IComboBox<INPUT_TYPE>> {
+		IWidgetDescriptor<IComboBoxWidget<INPUT_TYPE>> {
 
 }

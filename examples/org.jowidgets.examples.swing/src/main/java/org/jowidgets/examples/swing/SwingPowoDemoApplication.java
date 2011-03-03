@@ -37,7 +37,6 @@ public final class SwingPowoDemoApplication {
 
 	public static void main(final String[] args) throws Exception {
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		System.setProperty("apple.laf.useScreenMenuBar", "true");
 		new PowoDemoApplication("Swing widgets demo application").start();
 	}
 

@@ -36,8 +36,6 @@ public final class ValidationResult {
 
 	private final List<ValidationMessage> errorMessages = new LinkedList<ValidationMessage>();
 
-	private final List<ValidationMessage> infoErrorMessages = new LinkedList<ValidationMessage>();
-
 	private final List<ValidationMessage> warningMessages = new LinkedList<ValidationMessage>();
 
 	private ValidationMessage okMessage;
@@ -53,13 +51,6 @@ public final class ValidationResult {
 		this(new ValidationMessage(type, messageText));
 	}
 
-	public void addValidationResult(final ValidationResult result, final String context) {
-		Assert.paramNotNull(result, "result"); //$NON-NLS-1$
-		for (final ValidationMessage message : result.getValidationMessages()) {
-			addValidationMessage(new ValidationMessage(message, context));
-		}
-	}
-
 	public void addValidationResult(final ValidationResult result) {
 		Assert.paramNotNull(result, "result"); //$NON-NLS-1$
 		for (final ValidationMessage message : result.getValidationMessages()) {
@@ -72,9 +63,6 @@ public final class ValidationResult {
 		if (ValidationMessageType.ERROR.equals(message.getType())) {
 			errorMessages.add(message);
 		}
-		if (ValidationMessageType.INFO_ERROR.equals(message.getType())) {
-			infoErrorMessages.add(message);
-		}
 		else if (ValidationMessageType.WARNING.equals(message.getType())) {
 			warningMessages.add(message);
 		}
@@ -83,11 +71,6 @@ public final class ValidationResult {
 	public void addValidationError(final String messageText) {
 		Assert.paramNotEmpty(messageText, "messageText"); //$NON-NLS-1$
 		this.errorMessages.add(new ValidationMessage(ValidationMessageType.ERROR, messageText));
-	}
-
-	public void addValidationInfoError(final String messageText) {
-		Assert.paramNotEmpty(messageText, "messageText"); //$NON-NLS-1$
-		this.infoErrorMessages.add(new ValidationMessage(ValidationMessageType.INFO_ERROR, messageText));
 	}
 
 	public void addValidationWarning(final String messageText) {
@@ -102,17 +85,12 @@ public final class ValidationResult {
 
 	public List<ValidationMessage> getValidationMessages() {
 		final List<ValidationMessage> result = getErrorMessages();
-		result.addAll(getInfoErrorMessages());
 		result.addAll(getWarningMessages());
 		return result;
 	}
 
 	public List<ValidationMessage> getErrorMessages() {
 		return new LinkedList<ValidationMessage>(errorMessages);
-	}
-
-	public List<ValidationMessage> getInfoErrorMessages() {
-		return new LinkedList<ValidationMessage>(infoErrorMessages);
 	}
 
 	public List<ValidationMessage> getWarningMessages() {
@@ -134,9 +112,6 @@ public final class ValidationResult {
 	public ValidationMessage getWorstFirstMessage() {
 		if (!errorMessages.isEmpty()) {
 			return errorMessages.iterator().next();
-		}
-		else if (!infoErrorMessages.isEmpty()) {
-			return infoErrorMessages.iterator().next();
 		}
 		else if (!warningMessages.isEmpty()) {
 			return warningMessages.iterator().next();

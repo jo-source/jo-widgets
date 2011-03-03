@@ -30,27 +30,30 @@ package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.types.QuestionResult;
-import org.jowidgets.api.widgets.IDisplay;
-import org.jowidgets.api.widgets.IQuestionDialog;
+import org.jowidgets.api.widgets.IQuestionDialogWidget;
 import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
 import org.jowidgets.api.widgets.descriptor.IQuestionDialogDescriptor;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.Position;
-import org.jowidgets.common.widgets.IWindowCommon;
+import org.jowidgets.common.widgets.IWindowWidgetCommon;
 import org.jowidgets.util.Assert;
 
-public class JoQuestionDialog extends Component<IQuestionDialog, IQuestionDialogBluePrint> implements IQuestionDialog {
+public class JoQuestionDialog extends ChildWidget<IQuestionDialogWidget, IQuestionDialogBluePrint> implements
+		IQuestionDialogWidget {
 
-	public JoQuestionDialog(final IWindowCommon parent, final QuestionType questionType, final String message) {
+	public JoQuestionDialog(final IWindowWidgetCommon parent, final QuestionType questionType, final String message) {
 		this(parent, bluePrint(questionType).setText(message));
 	}
 
-	public JoQuestionDialog(final IWindowCommon parent, final QuestionType questionType, final String title, final String message) {
+	public JoQuestionDialog(
+		final IWindowWidgetCommon parent,
+		final QuestionType questionType,
+		final String title,
+		final String message) {
 		this(parent, bluePrint(questionType).setTitle(title).setText(message));
 	}
 
 	public JoQuestionDialog(
-		final IWindowCommon parent,
+		final IWindowWidgetCommon parent,
 		final QuestionType questionType,
 		final String title,
 		final IImageConstant icon,
@@ -59,7 +62,7 @@ public class JoQuestionDialog extends Component<IQuestionDialog, IQuestionDialog
 	}
 
 	public JoQuestionDialog(
-		final IWindowCommon parent,
+		final IWindowWidgetCommon parent,
 		final QuestionType questionType,
 		final IImageConstant titleIcon,
 		final String title,
@@ -68,24 +71,14 @@ public class JoQuestionDialog extends Component<IQuestionDialog, IQuestionDialog
 		this(parent, bluePrint(questionType).setTitleIcon(titleIcon).setTitle(title).setIcon(icon).setText(message));
 	}
 
-	public JoQuestionDialog(final IWindowCommon parent, final IQuestionDialogDescriptor descriptor) {
+	public JoQuestionDialog(final IWindowWidgetCommon parent, final IQuestionDialogDescriptor descriptor) {
 		super(bluePrint().setSetup(descriptor));
-		initialize(Toolkit.getWidgetFactory().create(parent.getUiReference(), descriptor));
+		initialize(Toolkit.getWidgetFactory().create(parent, descriptor));
 	}
 
 	@Override
 	public QuestionResult question() {
 		return getWidget().question();
-	}
-
-	@Override
-	public IDisplay getParent() {
-		return getWidget().getParent();
-	}
-
-	@Override
-	public Position getPosition() {
-		return getPosition();
 	}
 
 	public static IQuestionDialogBluePrint bluePrint() {

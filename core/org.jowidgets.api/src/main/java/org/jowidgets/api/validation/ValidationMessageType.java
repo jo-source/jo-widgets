@@ -29,34 +29,8 @@ package org.jowidgets.api.validation;
 
 public enum ValidationMessageType {
 
-	/**
-	 * input is valid
-	 */
-	OK(true),
-
-	/**
-	 * input is valid but seems to be unusual
-	 */
-	WARNING(true),
-
-	/**
-	 * input not valid, but user did not make any mistake yet (e.g. field is mandatory and empty)
-	 */
-	INFO_ERROR(false),
-
-	/**
-	 * input is not valid
-	 */
-	ERROR(false);
-
-	private final boolean valid;
-
-	private ValidationMessageType(final boolean valid) {
-		this.valid = valid;
-	}
-
-	public boolean isValid() {
-		return valid;
-	}
+	OK,
+	ERROR,
+	WARNING;
 
 }

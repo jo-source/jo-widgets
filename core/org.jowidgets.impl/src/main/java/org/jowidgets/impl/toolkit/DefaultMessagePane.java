@@ -29,22 +29,22 @@
 package org.jowidgets.impl.toolkit;
 
 import org.jowidgets.api.toolkit.IMessagePane;
-import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.widgets.IWindowWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 
 public class DefaultMessagePane implements IMessagePane {
 
 	private final IGenericWidgetFactory genericWidgetFactory;
 	private final IBluePrintFactory bluePrintFactory;
-	private final WindowProvider activeWindowProvider;
+	private final ActiveWindowProvider activeWindowProvider;
 
 	public DefaultMessagePane(
 		final IGenericWidgetFactory genericWidgetFactory,
 		final IBluePrintFactory bluePrintFactory,
-		final WindowProvider activeWindowProvider) {
+		final ActiveWindowProvider activeWindowProvider) {
 		super();
 		this.genericWidgetFactory = genericWidgetFactory;
 		this.bluePrintFactory = bluePrintFactory;
@@ -126,7 +126,7 @@ public class DefaultMessagePane implements IMessagePane {
 	}
 
 	private void showMessage(final IMessageDialogBluePrint messageDialogBluePrint) {
-		final IWindow activeWindow = activeWindowProvider.getActiveWindow();
+		final IWindowWidgetCommon activeWindow = activeWindowProvider.getActiveWindow();
 		if (activeWindow != null) {
 			activeWindow.createChildWindow(messageDialogBluePrint).showMessage();
 		}

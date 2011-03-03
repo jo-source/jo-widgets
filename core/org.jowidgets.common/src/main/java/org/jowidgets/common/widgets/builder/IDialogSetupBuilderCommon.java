@@ -27,8 +27,9 @@
  */
 package org.jowidgets.common.widgets.builder;
 
+
 public interface IDialogSetupBuilderCommon<INSTANCE_TYPE extends IDialogSetupBuilderCommon<?>> extends
 		IFrameSetupBuilderCommon<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setModal(boolean modal);
+	//TODO setModal(boolean modal)
 }

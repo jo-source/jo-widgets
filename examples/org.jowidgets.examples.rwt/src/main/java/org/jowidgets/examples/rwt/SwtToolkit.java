@@ -28,15 +28,83 @@
 package org.jowidgets.examples.rwt;
 
 import org.eclipse.swt.widgets.Display;
+import org.jowidgets.api.convert.IConverterProvider;
+import org.jowidgets.api.toolkit.IMessagePane;
+import org.jowidgets.api.toolkit.IQuestionPane;
 import org.jowidgets.api.toolkit.IToolkit;
+import org.jowidgets.api.toolkit.IWidgetWrapperFactory;
+import org.jowidgets.api.utils.IWidgetUtils;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.common.application.IApplicationRunner;
+import org.jowidgets.common.image.IImageRegistry;
+import org.jowidgets.common.threads.IUiThreadAccess;
+import org.jowidgets.common.widgets.IWindowWidgetCommon;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.impl.swt.SwtWidgetsServiceProvider;
 import org.jowidgets.impl.toolkit.DefaultToolkit;
-import org.jowidgets.spi.impl.swt.SwtWidgetsServiceProvider;
-import org.jowidgets.tools.toolkit.ToolkitWrapper;
 
-public class SwtToolkit extends ToolkitWrapper implements IToolkit {
+public class SwtToolkit implements IToolkit {
+
+	private final IToolkit toolkit;
 
 	public SwtToolkit() {
-		super(new DefaultToolkit(new SwtWidgetsServiceProvider(Display.getDefault())));
+		super();
+		this.toolkit = new DefaultToolkit(new SwtWidgetsServiceProvider(Display.getDefault()));
+	}
+
+	@Override
+	public IImageRegistry getImageRegistry() {
+		return toolkit.getImageRegistry();
+	}
+
+	@Override
+	public IMessagePane getMessagePane() {
+		return toolkit.getMessagePane();
+	}
+
+	@Override
+	public IQuestionPane getQuestionPane() {
+		return toolkit.getQuestionPane();
+	}
+
+	@Override
+	public IGenericWidgetFactory getWidgetFactory() {
+		return toolkit.getWidgetFactory();
+	}
+
+	@Override
+	public IWidgetWrapperFactory getWidgetWrapperFactory() {
+		return toolkit.getWidgetWrapperFactory();
+	}
+
+	@Override
+	public IBluePrintFactory getBluePrintFactory() {
+		return toolkit.getBluePrintFactory();
+	}
+
+	@Override
+	public IConverterProvider getConverterProvider() {
+		return toolkit.getConverterProvider();
+	}
+
+	@Override
+	public IApplicationRunner getApplicationRunner() {
+		return toolkit.getApplicationRunner();
+	}
+
+	@Override
+	public IUiThreadAccess getUiThreadAccess() {
+		return toolkit.getUiThreadAccess();
+	}
+
+	@Override
+	public IWidgetUtils getWidgetUtils() {
+		return toolkit.getWidgetUtils();
+	}
+
+	@Override
+	public IWindowWidgetCommon getActiveWindow() {
+		return toolkit.getActiveWindow();
 	}
 
 }

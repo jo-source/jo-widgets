@@ -28,7 +28,7 @@
 package org.jowidgets.impl.spi.descriptor;
 
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.spi.widgets.IIconSpi;
+import org.jowidgets.spi.widgets.IIconWidgetSpi;
 import org.jowidgets.spi.widgets.setup.IIconSetupSpi;
 
-public interface IIconDescriptorSpi extends IIconSetupSpi, IWidgetDescriptor<IIconSpi> {}
+public interface IIconDescriptorSpi extends IIconSetupSpi, IWidgetDescriptor<IIconWidgetSpi> {}

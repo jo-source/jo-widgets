@@ -39,10 +39,6 @@ public final class ValidationMessage {
 
 	private final String context;
 
-	public ValidationMessage(final ValidationMessage message, final String context) {
-		this(message.type, message.messageText, context);
-	}
-
 	public ValidationMessage(final ValidationMessageType type, final String messageText) {
 		this(type, messageText, null);
 	}

@@ -29,17 +29,17 @@
 package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IScrollComposite;
+import org.jowidgets.api.widgets.IScrollCompositeWidget;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.descriptor.IScrollCompositeDescriptor;
 import org.jowidgets.common.types.Border;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.util.Assert;
 
-public class JoScrollComposite extends Composite<IScrollComposite, IScrollCompositeBluePrint> implements
-		IScrollComposite {
+public class JoScrollComposite extends CompositeWidget<IScrollCompositeWidget, IScrollCompositeBluePrint> implements
+		IScrollCompositeWidget {
 
-	JoScrollComposite(final IScrollComposite widget) {
+	JoScrollComposite(final IScrollCompositeWidget widget) {
 		this(bluePrint());
 		Assert.paramNotNull(widget, "widget");
 		initialize(widget);
@@ -57,7 +57,7 @@ public class JoScrollComposite extends Composite<IScrollComposite, IScrollCompos
 		super(bluePrint().setSetup(descriptor));
 	}
 
-	public static JoScrollComposite toJoScrollComposite(final IScrollComposite widget) {
+	public static JoScrollComposite toJoScrollComposite(final IScrollCompositeWidget widget) {
 		Assert.paramNotNull(widget, "widget");
 		if (widget instanceof JoScrollComposite) {
 			return (JoScrollComposite) widget;

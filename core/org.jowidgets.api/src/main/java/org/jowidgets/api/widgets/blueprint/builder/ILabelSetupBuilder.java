@@ -27,14 +27,9 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
+
 public interface ILabelSetupBuilder<INSTANCE_TYPE extends ILabelSetupBuilder<?>> extends
 		ITextLabelSetupBuilder<INSTANCE_TYPE>,
 		IIconSetupBuilder<INSTANCE_TYPE> {
-
-	@Override
-	//This is necessary to ensure that the return type of 
-	//the method setTooltipText of ITextlabelSetupBuilder and IIconSetupBuilder
-	//is consistent
-	INSTANCE_TYPE setToolTipText(String toolTipText);
 
 }

@@ -32,13 +32,13 @@ import java.util.List;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IComboBox;
+import org.jowidgets.api.widgets.IComboBoxWidget;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.descriptor.IComboBoxDescriptor;
 import org.jowidgets.tools.converter.Converter;
 
-public class JoComboBox<VALUE_TYPE> extends InputControl<IComboBox<VALUE_TYPE>, IComboBoxBluePrint<VALUE_TYPE>, VALUE_TYPE> implements
-		IComboBox<VALUE_TYPE> {
+public class JoComboBox<VALUE_TYPE> extends InputWidget<IComboBoxWidget<VALUE_TYPE>, IComboBoxBluePrint<VALUE_TYPE>, VALUE_TYPE> implements
+		IComboBoxWidget<VALUE_TYPE> {
 
 	public JoComboBox(final IConverter<VALUE_TYPE> converter, final List<VALUE_TYPE> elements) {
 		this(bluePrint(converter).setElements(elements));

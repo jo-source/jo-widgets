@@ -30,22 +30,22 @@ package org.jowidgets.impl.toolkit;
 
 import org.jowidgets.api.toolkit.IQuestionPane;
 import org.jowidgets.api.types.QuestionResult;
-import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.widgets.IWindowWidgetCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 
 public class DefaultQuestionPane implements IQuestionPane {
 
 	private final IGenericWidgetFactory genericWidgetFactory;
 	private final IBluePrintFactory bluePrintFactory;
-	private final WindowProvider activeWindowProvider;
+	private final ActiveWindowProvider activeWindowProvider;
 
 	public DefaultQuestionPane(
 		final IGenericWidgetFactory genericWidgetFactory,
 		final IBluePrintFactory bluePrintFactory,
-		final WindowProvider activeWindowProvider) {
+		final ActiveWindowProvider activeWindowProvider) {
 		super();
 		this.genericWidgetFactory = genericWidgetFactory;
 		this.bluePrintFactory = bluePrintFactory;
@@ -141,7 +141,7 @@ public class DefaultQuestionPane implements IQuestionPane {
 	}
 
 	private QuestionResult askQuestion(final IQuestionDialogBluePrint messageDialogBluePrint) {
-		final IWindow activeWindow = activeWindowProvider.getActiveWindow();
+		final IWindowWidgetCommon activeWindow = activeWindowProvider.getActiveWindow();
 		if (activeWindow != null) {
 			return activeWindow.createChildWindow(messageDialogBluePrint).question();
 		}
