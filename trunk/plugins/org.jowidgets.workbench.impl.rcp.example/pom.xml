@@ -7,19 +7,24 @@
 		<version>0.0.15-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
-	<artifactId>org.jowidgets.workbench.impl.rcp</artifactId>
-	<name>org.jowidgets.workbench.impl.rcp</name>
+	<artifactId>org.jowidgets.workbench.impl.rcp.example</artifactId>
+	<name>org.jowidgets.workbench.impl.rcp.example</name>
 	<packaging>eclipse-plugin</packaging>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
-			<artifactId>org.jowidgets.workbench.api</artifactId>
+			<artifactId>org.jowidgets.examples.common</artifactId>
 			<version>0.0.15-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
-			<artifactId>org.jowidgets.tools</artifactId>
+			<artifactId>org.jowidgets.impl</artifactId>
+			<version>0.0.15-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.spi.impl.swt</artifactId>
 			<version>0.0.15-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
