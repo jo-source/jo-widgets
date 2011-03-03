@@ -28,23 +28,6 @@
 
 package org.jowidgets.common.widgets;
 
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.types.Position;
-
 public interface IToolBarItemCommon extends IItemCommon {
-
-	/**
-	 * Gets the position of the item (upper left corner) relative to its tool bar.
-	 * 
-	 * @return The position relative to its toolbar
-	 */
-	Position getPosition();
-
-	/**
-	 * Gets the size of the toolbar item
-	 * 
-	 * @return the size of the toolbar item
-	 */
-	Dimension getSize();
 
 }

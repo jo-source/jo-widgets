@@ -29,9 +29,7 @@ package org.jowidgets.impl.base.blueprint.proxy.internal;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -43,8 +41,6 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry
 import org.jowidgets.api.widgets.blueprint.defaults.anotations.DefaultsInitializer;
 import org.jowidgets.common.widgets.builder.ISetupBuilder;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
-import org.jowidgets.common.widgets.descriptor.setup.mandatory.MandatoryCheckResult;
 
 /**
  * Achtung EXPERIMENTELL, soll so nicht bleiben ;-)
@@ -60,35 +56,21 @@ public class BluePrintProxyInvocationHandler implements InvocationHandler {
 	private Class<? extends IWidgetDescriptor> bluePrintType;
 	private Class<? extends IWidgetDescriptor> widgetDescrType;
 
-	private final List<String> mandatoryFields;
-
 	public BluePrintProxyInvocationHandler() {
 		this.fields = new HashMap<String, Object>();
-		this.mandatoryFields = new ArrayList<String>();
 		this.convenienceMethodsMap = new HashMap<MethodKey, ISetupBuilderConvenience<ISetupBuilder<?>>>();
 	}
 
 	public void initialize(
 		final ISetupBuilder<?> proxy,
 		final Class<? extends IWidgetDescriptor> bluePrintType,
+		final Class<? extends IWidgetDescriptor> widgetDescrType,
 		final ISetupBuilderConvenienceRegistry convenienceRegistry,
 		final IDefaultsInitializerRegistry defaultsRegistry) {
 
-		this.widgetDescrType = (Class<? extends IWidgetDescriptor>) getDescriptorInterface(bluePrintType);
-		if (this.widgetDescrType == null) {
-			throw new IllegalArgumentException("For the blueprint-type '"
-				+ bluePrintType
-				+ "' there are either multiple desriptors defined or there is no descriptor defined!");
-		}
+		this.widgetDescrType = widgetDescrType;
 		this.bluePrintType = bluePrintType;
-
-		final List<Class<?>> visitedInterfaces = new ArrayList<Class<?>>();
-		initialize(
-				proxy,
-				(Class<? extends ISetupBuilder<ISetupBuilder<?>>>) bluePrintType,
-				convenienceRegistry,
-				defaultsRegistry,
-				visitedInterfaces);
+		initialize(proxy, (Class<? extends ISetupBuilder<ISetupBuilder<?>>>) bluePrintType, convenienceRegistry, defaultsRegistry);
 	}
 
 	@Override
@@ -117,7 +99,6 @@ public class BluePrintProxyInvocationHandler implements InvocationHandler {
 			return widgetDescrType;
 		}
 		else if (method.getName().equals("setSetup")) {
-			findMandatoryMethods();
 			final Object argument = args[0];
 
 			if (argument != null) {
@@ -130,19 +111,16 @@ public class BluePrintProxyInvocationHandler implements InvocationHandler {
 							continue;
 						}
 						else if (method2.getName().startsWith("get")) {
-							final String fieldname = method2.getName().substring(3);
 							final Object value = method2.invoke(argument, (Object[]) null);
-							fields.put(fieldname, value);
+							fields.put(method2.getName().substring(3), value);
 						}
 						else if (method2.getName().startsWith("has")) {
-							final String fieldname = method2.getName().substring(3);
 							final Object value = method2.invoke(argument, (Object[]) null);
-							fields.put(fieldname, value);
+							fields.put(method2.getName().substring(3), value);
 						}
 						else if (method2.getName().startsWith("is")) {
 							final Object value = method2.invoke(argument, (Object[]) null);
-							final String fieldname = method2.getName().substring(2);
-							fields.put(fieldname, value);
+							fields.put(method2.getName().substring(2), value);
 						}
 					}
 				}
@@ -172,47 +150,8 @@ public class BluePrintProxyInvocationHandler implements InvocationHandler {
 			fields.put(method.getName().substring(3), args[0]);
 			return proxy;
 		}
-		else if (method.getName().equals("checkMandatoryFields")) {
-			return checkMandatory();
-		}
 		else {
 			throw new IllegalStateException("'" + method.getName() + "' not known.");
-		}
-	}
-
-	private MandatoryCheckResult checkMandatory() {
-		MandatoryCheckResult result = MandatoryCheckResult.OK;
-		String unfilledFields = "";
-		for (final String mandatoryField : mandatoryFields) {
-			if (fields.get(mandatoryField) == null) {
-				unfilledFields += " " + mandatoryField;
-			}
-		}
-		if (!"".equals(unfilledFields)) {
-			result = new MandatoryCheckResult("The following fields are mandatory and not filled: " + unfilledFields);
-		}
-		return result;
-	}
-
-	private void findMandatoryMethods() {
-		final Method[] methods = ((Class<? extends ISetupBuilder<ISetupBuilder<?>>>) bluePrintType).getMethods();
-		if (methods != null) {
-			for (int i = 0; i < methods.length; i++) {
-				final Method method2 = methods[i];
-				if (null != method2.getAnnotation(Mandatory.class)) {
-					String name = method2.getName();
-					if (name.startsWith("get") || name.startsWith("has")) {
-						name = name.substring(3);
-					}
-					else if (name.startsWith("is")) {
-						name = name.substring(2);
-					}
-					else {
-						continue;
-					}
-					mandatoryFields.add(name);
-				}
-			}
 		}
 	}
 
@@ -220,27 +159,21 @@ public class BluePrintProxyInvocationHandler implements InvocationHandler {
 		final ISetupBuilder<?> proxy,
 		final Class<? extends ISetupBuilder<ISetupBuilder<?>>> bluePrintType,
 		final ISetupBuilderConvenienceRegistry convenienceRegistry,
-		final IDefaultsInitializerRegistry defaultsRegistry,
-		final List<Class<?>> visitedInterfaces) {
+		final IDefaultsInitializerRegistry defaultsRegistry) {
 
 		for (final Class<?> superInterface : bluePrintType.getInterfaces()) {
-			if (!visitedInterfaces.contains(superInterface)) {
-				visitedInterfaces.add(superInterface);
-				initialize(
-						proxy,
-						(Class<? extends ISetupBuilder<ISetupBuilder<?>>>) superInterface,
-						convenienceRegistry,
-						defaultsRegistry,
-						visitedInterfaces);
-			}
-		}
-
-		for (final IDefaultInitializer<ISetupBuilder<?>> registeredInitializer : defaultsRegistry.getRegistered(bluePrintType)) {
-			registeredInitializer.initialize(proxy);
+			initialize(
+					proxy,
+					(Class<? extends ISetupBuilder<ISetupBuilder<?>>>) superInterface,
+					convenienceRegistry,
+					defaultsRegistry);
 		}
 		final IDefaultInitializer<ISetupBuilder<?>> defaultInitializer = getDefaultInitializer(bluePrintType);
 		if (defaultInitializer != null) {
 			defaultInitializer.initialize(proxy);
+		}
+		for (final IDefaultInitializer<ISetupBuilder<?>> registeredInitializer : defaultsRegistry.getRegistered(bluePrintType)) {
+			registeredInitializer.initialize(proxy);
 		}
 
 		final ISetupBuilderConvenience<ISetupBuilder<?>> convenienceMethods = getConvenienceMethods(bluePrintType);
@@ -250,11 +183,10 @@ public class BluePrintProxyInvocationHandler implements InvocationHandler {
 				convenienceMethodsMap.put(methodKey, convenienceMethods);
 			}
 		}
-		final ISetupBuilderConvenience<ISetupBuilder<?>> setupBuilderConvenience = convenienceRegistry.getRegistered(bluePrintType);
-		if (setupBuilderConvenience != null) {
-			for (final Method method : convenienceRegistry.getRegistered(bluePrintType).getClass().getDeclaredMethods()) {
+		for (final ISetupBuilderConvenience<ISetupBuilder<?>> registeredMethods : convenienceRegistry.getRegistered(bluePrintType)) {
+			for (final Method method : registeredMethods.getClass().getDeclaredMethods()) {
 				final MethodKey methodKey = new MethodKey(method);
-				convenienceMethodsMap.put(methodKey, setupBuilderConvenience);
+				convenienceMethodsMap.put(methodKey, registeredMethods);
 			}
 		}
 
@@ -291,59 +223,5 @@ public class BluePrintProxyInvocationHandler implements InvocationHandler {
 		}
 		return null;
 	}
-
-	/**
-	 * Get interfaces that the type inherits from.
-	 * 
-	 * @param bluePrintType
-	 * @return
-	 */
-	private static Class<?> getDescriptorInterface(final Class<?> bluePrintType) {
-		final Class<?>[] interfaces = bluePrintType.getInterfaces();
-		final ArrayList<Class<?>> possibleInterfaces = new ArrayList<Class<?>>();
-		for (final Class<?> c : interfaces) {
-			if (getSubInterfaces(c) != null) {
-				possibleInterfaces.add(c);
-			}
-		}
-		if (possibleInterfaces.size() == 1) {
-			return possibleInterfaces.get(0);
-		}
-		return null;
-	}
-
-	private static Class<?> getSubInterfaces(final Class<?> in) {
-		final Class<?>[] interfaces = in.getInterfaces();
-		for (final Class<?> c : interfaces) {
-			if (c.isAssignableFrom(IWidgetDescriptor.class)) {
-				return in;
-			}
-		}
-		return null;
-	}
-
-	//	/**
-	//	 * Get superclass of class.
-	//	 * 
-	//	 * @param in
-	//	 * @return
-	//	 */
-	//	private static Class<?> getSuperclass(final Class<?> in) {
-	//		if (in == null) {
-	//			return null;
-	//		}
-	//
-	//		if (in.isArray() && in != Object[].class) {
-	//			Class<?> type = in.getComponentType();
-	//
-	//			while (type.isArray()) {
-	//				type = type.getComponentType();
-	//			}
-	//
-	//			return type;
-	//		}
-	//
-	//		return in.getSuperclass();
-	//	}
 
 }

@@ -31,8 +31,8 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.types.AutoCenterPolicy;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IFrame;
-import org.jowidgets.api.widgets.IInputComponent;
 import org.jowidgets.api.widgets.IInputDialog;
+import org.jowidgets.api.widgets.IInputComponent;
 import org.jowidgets.api.widgets.IValidationLabel;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
@@ -46,7 +46,6 @@ import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.widgets.IActionWidgetCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
-import org.jowidgets.examples.common.icons.DemoIconsInitializer;
 
 public class HelloWidgetApplication implements IApplication {
 
@@ -58,7 +57,6 @@ public class HelloWidgetApplication implements IApplication {
 	}
 
 	public void start() {
-		DemoIconsInitializer.initialize();
 		Toolkit.getApplicationRunner().run(this);
 	}
 

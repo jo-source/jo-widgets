@@ -27,10 +27,16 @@
  */
 package org.jowidgets.workbench.api;
 
-public interface IComponentTreeNode extends IComponentTreeNodeDescriptor {
+import java.util.List;
 
-	void onContextInitialize(IComponentTreeNodeContext context);
+public interface IComponentTreeNode extends IUiPart {
 
-	IComponent createComponent(IComponentContext context);
+	void initialize(IComponentTreeNodeContext context);
+
+	IComponent createComponent();
+
+	boolean hasMenu();
+
+	List<IComponentTreeNode> createChildren();
 
 }

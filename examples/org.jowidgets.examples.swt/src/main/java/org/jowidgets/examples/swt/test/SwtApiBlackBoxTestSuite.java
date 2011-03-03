@@ -28,13 +28,21 @@
 
 package org.jowidgets.examples.swt.test;
 
-import org.jowidgets.api.test.ApiBlackBoxTestSuite;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
-@RunWith(Suite.class)
-@SuiteClasses({ApiBlackBoxTestSuite.class})
+import org.jowidgets.api.test.ApiBlackBoxTestSuite;
+
 public final class SwtApiBlackBoxTestSuite {
+
+	private SwtApiBlackBoxTestSuite() {};
+
+	public static Test suite() {
+		final TestSuite suite = new TestSuite(SwtApiBlackBoxTestSuite.class.getName());
+		//$JUnit-BEGIN$
+		suite.addTest(ApiBlackBoxTestSuite.suite());
+		//$JUnit-END$
+		return suite;
+	}
 
 }

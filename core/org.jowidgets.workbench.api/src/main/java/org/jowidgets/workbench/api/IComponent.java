@@ -27,16 +27,12 @@
  */
 package org.jowidgets.workbench.api;
 
-import org.jowidgets.common.types.IVetoable;
+public interface IComponent extends ILifecycleCallback {
 
-public interface IComponent {
+	void initialize(IComponentContext context);
 
-	void onActivation();
+	boolean hasMenu();
 
-	void onDeactivation(IVetoable vetoable);
-
-	void onFolderCreated(IFolderContext folderContext);
-
-	IView createView(String viewId, IViewContext viewContext);
+	IPerspective createPerspective();
 
 }

@@ -28,14 +28,8 @@
 
 package org.jowidgets.api.widgets;
 
-import org.jowidgets.api.model.item.ICheckedItemModel;
 import org.jowidgets.common.widgets.IToolBarToggleButtonCommon;
 
 public interface IToolBarToggleButton extends IToolBarItem, IToolBarToggleButtonCommon {
-
-	void setModel(ICheckedItemModel model);
-
-	@Override
-	ICheckedItemModel getModel();
 
 }

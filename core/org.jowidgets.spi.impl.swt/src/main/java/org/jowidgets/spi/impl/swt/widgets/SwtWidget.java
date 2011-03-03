@@ -32,7 +32,7 @@ import org.jowidgets.spi.widgets.IWidgetSpi;
 
 public class SwtWidget implements IWidgetSpi {
 
-	private Control control;
+	private final Control control;
 
 	public SwtWidget(final Control control) {
 		super();
@@ -52,10 +52,6 @@ public class SwtWidget implements IWidgetSpi {
 	@Override
 	public boolean isEnabled() {
 		return control.isEnabled();
-	}
-
-	public void setControl(final Control control) {
-		this.control = control;
 	}
 
 }

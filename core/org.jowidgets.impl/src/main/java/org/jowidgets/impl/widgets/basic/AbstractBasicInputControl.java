@@ -49,7 +49,7 @@ public abstract class AbstractBasicInputControl<VALUE_TYPE> extends InputControl
 
 	public AbstractBasicInputControl(final IInputControlSpi inputWidgetSpi, final IInputComponentSetup<VALUE_TYPE> setup) {
 		super(inputWidgetSpi);
-		setEditable(setup.isEditable());
+
 		this.controlDelegate = new ControlDelegate();
 		this.inputValidationDelegate = new InputValidationDelegate<VALUE_TYPE>(setup);
 	}

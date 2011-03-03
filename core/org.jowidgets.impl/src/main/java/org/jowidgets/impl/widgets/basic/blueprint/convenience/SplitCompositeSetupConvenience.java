@@ -32,7 +32,7 @@ import org.jowidgets.common.types.Border;
 import org.jowidgets.common.types.Orientation;
 import org.jowidgets.common.types.SplitResizePolicy;
 import org.jowidgets.common.widgets.builder.convenience.ISplitCompositeSetupConvenience;
-import org.jowidgets.tools.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
+import org.jowidgets.impl.base.blueprint.convenience.AbstractSetupBuilderConvenience;
 
 public class SplitCompositeSetupConvenience extends AbstractSetupBuilderConvenience<ISplitCompositeSetupBuilder<?>> implements
 		ISplitCompositeSetupConvenience<ISplitCompositeSetupBuilder<?>> {

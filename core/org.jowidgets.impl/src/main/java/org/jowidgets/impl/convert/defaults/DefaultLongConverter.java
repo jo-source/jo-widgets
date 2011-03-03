@@ -41,7 +41,7 @@ public class DefaultLongConverter extends AbstractObjectStringConverter<Long> im
 	@Override
 	public Long convertToObject(final String string) {
 		try {
-			// TODO MG define business logic and parse (less tolerant) with
+			// TODO define business logic and parse (less tolerant) with
 			// consideration of i18n
 			return Long.valueOf(Long.parseLong(string));
 		}

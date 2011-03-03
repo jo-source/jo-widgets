@@ -38,9 +38,9 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IDisplayCommon;
 import org.jowidgets.common.widgets.controler.IWindowListener;
+import org.jowidgets.common.widgets.controler.impl.WindowObservable;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.spi.impl.controler.WindowObservable;
 import org.jowidgets.spi.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.spi.impl.swing.util.DimensionConvert;
 import org.jowidgets.spi.impl.swing.util.PositionConvert;
@@ -50,7 +50,7 @@ public class SwingWindow extends SwingContainer implements IWindowSpi {
 
 	private final WindowObservable windowObservableDelegate;
 
-	public SwingWindow(final IGenericWidgetFactory factory, final Window window, final boolean closeable) {
+	public SwingWindow(final IGenericWidgetFactory factory, final Window window) {
 		super(factory, window);
 
 		this.windowObservableDelegate = new WindowObservable();
@@ -84,10 +84,7 @@ public class SwingWindow extends SwingContainer implements IWindowSpi {
 
 			@Override
 			public void windowClosing(final WindowEvent e) {
-				final boolean veto = windowObservableDelegate.fireWindowClosing();
-				if (!veto && closeable) {
-					setVisible(false);
-				}
+				windowObservableDelegate.fireWindowClosed();
 			}
 
 			@Override

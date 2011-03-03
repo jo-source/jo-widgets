@@ -28,31 +28,19 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.common.widgets.IToolBarButtonCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
-import org.jowidgets.impl.base.delegate.ItemDelegate;
 import org.jowidgets.spi.widgets.IToolBarButtonSpi;
 
-public class ToolBarButtonSpiWrapper extends ToolBarItemSpiWrapper implements IToolBarButtonCommon {
+public class ToolBarButtonSpiWrapper extends ItemSpiWrapper implements IToolBarButtonCommon {
 
-	public ToolBarButtonSpiWrapper(final IToolBarButtonSpi widget, final ItemDelegate itemDelegate) {
-		super(widget, itemDelegate);
-		widget.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				getModel().actionPerformed();
-			}
-		});
+	public ToolBarButtonSpiWrapper(final IToolBarButtonSpi component) {
+		super(component);
 	}
 
 	@Override
 	public IToolBarButtonSpi getWidget() {
 		return (IToolBarButtonSpi) super.getWidget();
-	}
-
-	public IActionItemModel getModel() {
-		return (IActionItemModel) getItemDelegate().getModel();
 	}
 
 	@Override

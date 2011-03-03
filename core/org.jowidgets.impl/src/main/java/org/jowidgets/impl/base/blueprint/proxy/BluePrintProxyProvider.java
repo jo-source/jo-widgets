@@ -43,10 +43,12 @@ public class BluePrintProxyProvider<BLUE_PRINT_TYPE extends ISetupBuilder<?>> {
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public BluePrintProxyProvider(
 		final Class<? extends IWidgetDescriptor> bluePrintType,
+		final Class<? extends IWidgetDescriptor> widgetDescrType,
 		final ISetupBuilderConvenienceRegistry convenienceRegistry,
 		final IDefaultsInitializerRegistry defaultsRegistry) {
 
 		Assert.paramNotNull(bluePrintType, "bluePrintType");
+		Assert.paramNotNull(widgetDescrType, "widgetDescrType");
 
 		final BluePrintProxyInvocationHandler invocationHandler = new BluePrintProxyInvocationHandler();
 
@@ -55,7 +57,12 @@ public class BluePrintProxyProvider<BLUE_PRINT_TYPE extends ISetupBuilder<?>> {
 				new Class[] {bluePrintType},
 				invocationHandler);
 
-		invocationHandler.initialize(proxy, bluePrintType, convenienceRegistry, defaultsRegistry);
+		invocationHandler.initialize(
+				proxy,
+				(Class<? extends IWidgetDescriptor>) bluePrintType,
+				(Class<? extends IWidgetDescriptor>) widgetDescrType,
+				convenienceRegistry,
+				defaultsRegistry);
 
 	}
 

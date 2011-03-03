@@ -27,7 +27,6 @@
  */
 package org.jowidgets.spi.widgets;
 
-import org.jowidgets.common.widgets.IButtonCommon;
 import org.jowidgets.common.widgets.IFrameCommon;
 
 public interface IFrameSpi extends IWindowSpi, IContainerSpi, IFrameCommon {
@@ -39,7 +38,5 @@ public interface IFrameSpi extends IWindowSpi, IContainerSpi, IFrameCommon {
 	 * @return The created menu bar.
 	 */
 	IMenuBarSpi createMenuBar();
-
-	void setDefaultButton(IButtonCommon button);
 
 }

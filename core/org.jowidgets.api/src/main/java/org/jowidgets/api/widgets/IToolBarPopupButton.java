@@ -28,30 +28,8 @@
 
 package org.jowidgets.api.widgets;
 
-import org.jowidgets.api.command.ActionStyle;
-import org.jowidgets.api.command.IAction;
-import org.jowidgets.api.model.item.IMenuModel;
-import org.jowidgets.api.model.item.IPopupActionItemModel;
 import org.jowidgets.common.widgets.IToolBarPopupButtonCommon;
 
-public interface IToolBarPopupButton extends IToolBarItem, IToolBarPopupButtonCommon {
-
-	void setAction(IAction action);
-
-	void setAction(IAction action, ActionStyle style);
-
-	/**
-	 * Sets a popup menu for this component.
-	 * The popup menu will be shown, when the menu button will be pressed this component.
-	 * 
-	 * @param menuModel
-	 *            The model of the popup menu or null, if no popup should be shown on popup events
-	 */
-	void setPopupMenu(IMenuModel popupMenu);
-
-	void setModel(IPopupActionItemModel model);
-
-	@Override
-	IPopupActionItemModel getModel();
+public interface IToolBarPopupButton extends IToolBarButton, IToolBarPopupButtonCommon {
 
 }

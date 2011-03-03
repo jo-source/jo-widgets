@@ -36,10 +36,9 @@ import javax.swing.UIManager;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.image.IImageHandle;
-import org.jowidgets.common.image.IconsCommon;
+import org.jowidgets.common.image.impl.IImageFactory;
+import org.jowidgets.common.image.impl.ImageHandle;
 import org.jowidgets.spi.image.IImageHandleFactorySpi;
-import org.jowidgets.spi.impl.image.IImageFactory;
-import org.jowidgets.spi.impl.image.ImageHandle;
 
 public class SwingImageHandleFactorySpi extends SwingImageHandleFactory implements IImageHandleFactorySpi {
 
@@ -55,12 +54,7 @@ public class SwingImageHandleFactorySpi extends SwingImageHandleFactory implemen
 		return new ImageHandle<Image>(new IImageFactory<Image>() {
 			@Override
 			public Image createImage() {
-				final Icon icon = UIManager.getIcon("OptionPane.informationIcon");
-				if (icon == null) {
-					return SwingImageRegistry.getInstance().getImage(IconsCommon.FALLBACK_INFO);
-				}
-				final Image icon2Image = icon2Image(icon);
-				return icon2Image;
+				return icon2Image(UIManager.getIcon("OptionPane.informationIcon"));
 			}
 		});
 	}
@@ -70,12 +64,7 @@ public class SwingImageHandleFactorySpi extends SwingImageHandleFactory implemen
 		return new ImageHandle<Image>(new IImageFactory<Image>() {
 			@Override
 			public Image createImage() {
-				final Icon icon = UIManager.getIcon("OptionPane.questionIcon");
-				if (icon == null) {
-					return SwingImageRegistry.getInstance().getImage(IconsCommon.FALLBACK_QUESTION);
-				}
-				final Image icon2Image = icon2Image(icon);
-				return icon2Image;
+				return icon2Image(UIManager.getIcon("OptionPane.questionIcon"));
 			}
 		});
 	}
@@ -85,12 +74,7 @@ public class SwingImageHandleFactorySpi extends SwingImageHandleFactory implemen
 		return new ImageHandle<Image>(new IImageFactory<Image>() {
 			@Override
 			public Image createImage() {
-				final Icon icon = UIManager.getIcon("OptionPane.warningIcon");
-				if (icon == null) {
-					return SwingImageRegistry.getInstance().getImage(IconsCommon.FALLBACK_WARNING);
-				}
-				final Image icon2Image = icon2Image(icon);
-				return icon2Image;
+				return icon2Image(UIManager.getIcon("OptionPane.warningIcon"));
 			}
 		});
 	}
@@ -100,12 +84,7 @@ public class SwingImageHandleFactorySpi extends SwingImageHandleFactory implemen
 		return new ImageHandle<Image>(new IImageFactory<Image>() {
 			@Override
 			public Image createImage() {
-				final Icon icon = UIManager.getIcon("OptionPane.errorIcon");
-				if (icon == null) {
-					return SwingImageRegistry.getInstance().getImage(IconsCommon.FALLBACK_ERROR);
-				}
-				final Image icon2Image = icon2Image(icon);
-				return icon2Image;
+				return icon2Image(UIManager.getIcon("OptionPane.errorIcon"));
 			}
 		});
 	}

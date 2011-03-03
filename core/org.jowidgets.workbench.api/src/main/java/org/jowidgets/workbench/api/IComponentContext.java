@@ -27,16 +27,14 @@
  */
 package org.jowidgets.workbench.api;
 
+import org.jowidgets.api.widgets.IMenu;
+
 public interface IComponentContext {
 
-	void setLayout(final ILayout layout);
-
-	void removeView(IView view);
+	IMenu getMenu();
 
 	IComponentTreeNodeContext getComponentTreeNodeContext();
 
-	IWorkbenchApplicationContext getWorkbenchApplicationContext();
-
-	IWorkbenchContext getWorkbenchContext();
+	void setPerspective(IPerspective perspective);
 
 }

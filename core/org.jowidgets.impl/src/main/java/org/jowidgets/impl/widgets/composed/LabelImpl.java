@@ -27,7 +27,6 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
-import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
@@ -174,13 +173,6 @@ public class LabelImpl implements ILabel {
 	@Override
 	public IPopupMenu createPopupMenu() {
 		return compositeWidget.createPopupMenu();
-	}
-
-	@Override
-	public void setPopupMenu(final IMenuModel popupMenu) {
-		//TODO MG this might not work, popup must be set on label an text also. 
-		//For that, label and texfield must be api widgets 
-		compositeWidget.setPopupMenu(popupMenu);
 	}
 
 	@Override

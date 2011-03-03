@@ -3,13 +3,13 @@
 
 	<groupId>org.jowidgets</groupId>
 	<artifactId>org.jowidgets.examples.common</artifactId>
-	<version>0.0.15-SNAPSHOT</version>
+	<version>0.0.11</version>
 	<name>org.jowidgets.examples.common</name>
 
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.examples.parent</artifactId>
-		<version>0.0.15-SNAPSHOT</version>
+		<version>0.0.11</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 
@@ -17,25 +17,20 @@
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.tools</artifactId>
-			<version>0.0.15-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jowidgets</groupId>
-			<artifactId>org.jowidgets.workbench.api</artifactId>
-			<version>0.0.15-SNAPSHOT</version>
+			<version>0.0.11</version>
 		</dependency>
 		
 		
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.impl</artifactId>
-			<version>0.0.15-SNAPSHOT</version>
+			<version>0.0.11</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.spi.impl.dummy</artifactId>
-			<version>0.0.15-SNAPSHOT</version>
+			<version>0.0.11</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -50,37 +45,6 @@
 						<goals>
 							<goal>test-jar</goal>
 						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.3.1</version>
-				<configuration>
-					<archive>
-						<manifestFile>META-INF/MANIFEST.MF</manifestFile>
-					</archive>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.felix</groupId>
-				<artifactId>maven-bundle-plugin</artifactId>
-				<version>2.1.0</version>
-				<executions>
-					<execution>
-						<id>bundle-manifest</id>
-						<phase>process-classes</phase>
-						<goals>
-							<goal>manifest</goal>
-						</goals>
-						<configuration>
-							<manifestLocation>META-INF</manifestLocation>
-							<instructions>
-								<Export-Package>org.jowidgets.examples.common.*</Export-Package>
-								<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-								<Require-Bundle>org.jowidgets.common</Require-Bundle>
-							</instructions>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>

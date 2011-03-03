@@ -4,13 +4,13 @@
 
 	<groupId>org.jowidgets</groupId>
 	<artifactId>org.jowidgets.spi.impl.dummy</artifactId>
-	<version>0.0.15-SNAPSHOT</version>
+	<version>0.0.11</version>
 	<name>org.jowidgets.spi.impl.dummy</name>
 
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.core.parent</artifactId>
-		<version>0.0.15-SNAPSHOT</version>
+		<version>0.0.11</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 
@@ -18,25 +18,13 @@
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.spi</artifactId>
-			<version>0.0.15-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jowidgets</groupId>
-			<artifactId>org.jowidgets.spi.impl.common</artifactId>
-			<version>0.0.15-SNAPSHOT</version>
-			<type>jar</type>
+			<version>0.0.11</version>
 		</dependency>
 		<dependency>
 			<groupId>com.miglayout</groupId>
 			<artifactId>miglayout</artifactId>
 			<classifier>swing</classifier>
 			<version>3.7.3.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jowidgets</groupId>
-			<artifactId>org.jowidgets.test.spi</artifactId>
-			<version>0.0.15-SNAPSHOT</version>
-			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 </project>

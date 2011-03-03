@@ -28,32 +28,20 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.api.model.item.IPopupActionItemModel;
 import org.jowidgets.common.widgets.IToolBarPopupButtonCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
-import org.jowidgets.impl.base.delegate.ItemDelegate;
 import org.jowidgets.spi.widgets.IToolBarPopupButtonSpi;
 
-public class ToolBarPopupButtonSpiWrapper extends ToolBarItemSpiWrapper implements IToolBarPopupButtonCommon {
+public class ToolBarPopupButtonSpiWrapper extends ItemSpiWrapper implements IToolBarPopupButtonCommon {
 
-	public ToolBarPopupButtonSpiWrapper(final IToolBarPopupButtonSpi component, final ItemDelegate itemDelegate) {
-		super(component, itemDelegate);
-		component.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				getModel().actionPerformed();
-			}
-		});
+	public ToolBarPopupButtonSpiWrapper(final IToolBarPopupButtonSpi component) {
+		super(component);
 	}
 
 	@Override
 	public IToolBarPopupButtonSpi getWidget() {
 		return (IToolBarPopupButtonSpi) super.getWidget();
-	}
-
-	public IPopupActionItemModel getModel() {
-		return (IPopupActionItemModel) getItemDelegate().getModel();
 	}
 
 	@Override

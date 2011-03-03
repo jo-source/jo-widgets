@@ -60,7 +60,7 @@ public class ComboBoxImpl<VALUE_TYPE> extends ComboBoxSelectionImpl<VALUE_TYPE> 
 	@Override
 	public void setValue(final VALUE_TYPE value) {
 		if (value == null) {
-			comboBoxWidgetSpi.setText("");
+			comboBoxWidgetSpi.setText(null);
 			comboBoxWidgetSpi.setSelectedIndex(-1);
 		}
 		else {

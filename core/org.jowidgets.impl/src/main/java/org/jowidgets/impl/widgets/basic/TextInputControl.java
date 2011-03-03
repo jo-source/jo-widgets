@@ -46,8 +46,6 @@ public class TextInputControl extends AbstractBasicInputControl<String> implemen
 			setValue(setup.getValue());
 		}
 
-		setEditable(setup.isEditable());
-
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
 	}

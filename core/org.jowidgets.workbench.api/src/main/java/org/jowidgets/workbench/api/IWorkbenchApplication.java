@@ -27,8 +27,16 @@
  */
 package org.jowidgets.workbench.api;
 
-public interface IWorkbenchApplication extends IWorkbenchApplicationDescriptor, ILifecycleCallback {
+import java.util.List;
 
-	void onContextInitialize(IWorkbenchApplicationContext context);
+public interface IWorkbenchApplication extends IUiPart, ILifecycleCallback {
+
+	void initialize(ISubApplicationContext context);
+
+	List<IComponentTreeNode> createComponentTreeNodes();
+
+	boolean hasMenu();
+
+	boolean hasToolBar();
 
 }

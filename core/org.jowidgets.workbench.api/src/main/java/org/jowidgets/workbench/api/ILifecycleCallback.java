@@ -27,14 +27,12 @@
  */
 package org.jowidgets.workbench.api;
 
-import org.jowidgets.common.types.IVetoable;
-
 public interface ILifecycleCallback {
 
 	void onActiveStateChanged(boolean active);
 
 	void onVisibleStateChanged(boolean visible);
 
-	void onClose(IVetoable vetoable);
+	void onDispose();
 
 }

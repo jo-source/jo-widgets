@@ -31,21 +31,14 @@ package org.jowidgets.api.widgets;
 import java.util.List;
 
 import org.jowidgets.api.command.IAction;
-import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.common.widgets.IToolBarCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public interface IToolBar extends IControl, IToolBarCommon {
 
-	IToolBarModel getModel();
-
-	void setModel(IToolBarModel model);
-
 	List<IToolBarItem> getChildren();
 
 	boolean remove(IToolBarItem item);
-
-	void remove(int index);
 
 	void removeAll();
 

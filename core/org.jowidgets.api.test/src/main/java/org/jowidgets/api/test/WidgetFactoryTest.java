@@ -28,6 +28,8 @@
 
 package org.jowidgets.api.test;
 
+import junit.framework.JUnit4TestAdapter;
+
 import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
@@ -67,8 +69,6 @@ public class WidgetFactoryTest {
 	private static final Position POSITION = new Position(23, 19);
 
 	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
-
-	//	private boolean invoked;
 
 	@Test
 	public void createWidgetsTest() {
@@ -225,11 +225,11 @@ public class WidgetFactoryTest {
 
 		widget.addActionListener(listener);
 
-		//TODO LG push button and check listener
+		//TODO push button and check listener
 
 		widget.removeActionListener(listener);
 
-		//TODO LG push button and check listener not invoked
+		//TODO push button and check listener not invoked
 	}
 
 	private void testLabelWidget(final IContainer parent, final ILabel widget) {
@@ -267,6 +267,10 @@ public class WidgetFactoryTest {
 		Assert.assertTrue(container.remove(childComposite1));
 		Assert.assertFalse(container.getChildren().contains(childComposite1));
 
+	}
+
+	public static junit.framework.Test suite() {
+		return new JUnit4TestAdapter(WidgetFactoryTest.class);
 	}
 
 }

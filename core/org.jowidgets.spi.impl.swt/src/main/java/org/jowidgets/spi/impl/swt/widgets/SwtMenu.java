@@ -39,7 +39,12 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.ToolTip;
 import org.jowidgets.common.widgets.controler.IMenuListener;
-import org.jowidgets.spi.impl.controler.MenuObservable;
+import org.jowidgets.common.widgets.controler.impl.MenuObservable;
+import org.jowidgets.spi.impl.swt.widgets.internal.ActionMenuItemImpl;
+import org.jowidgets.spi.impl.swt.widgets.internal.IToolTipTextProvider;
+import org.jowidgets.spi.impl.swt.widgets.internal.MenuItemImpl;
+import org.jowidgets.spi.impl.swt.widgets.internal.SelectableMenuItemImpl;
+import org.jowidgets.spi.impl.swt.widgets.internal.SubMenuImpl;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 import org.jowidgets.spi.widgets.IMenuItemSpi;
 import org.jowidgets.spi.widgets.IMenuSpi;
@@ -64,8 +69,7 @@ public class SwtMenu implements IMenuSpi {
 			this.toolTip = new ToolTip(menu.getShell(), SWT.NONE);
 		}
 		catch (final NoClassDefFoundError error) {
-			//TODO MG rwt has no tooltip, may use a window instead. 
-			//(New rwt version supports tooltips)
+			//TODO swt has no tooltip, may use a window instead
 		}
 
 		if (toolTip != null) {

@@ -83,7 +83,7 @@ public class DummyWidgetsServiceProvider implements IWidgetsServiceProvider {
 
 	@Override
 	public Object getActiveWindowUiReference() {
-		//TODO LG active window must be simulated
+		//TODO
 		return null;
 	}
 

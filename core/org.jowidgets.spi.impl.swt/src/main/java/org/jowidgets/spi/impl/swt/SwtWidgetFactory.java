@@ -32,26 +32,24 @@ import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.impl.swt.image.SwtImageRegistry;
-import org.jowidgets.spi.impl.swt.widgets.ButtonImpl;
-import org.jowidgets.spi.impl.swt.widgets.CheckBoxImpl;
-import org.jowidgets.spi.impl.swt.widgets.ComboBoxImpl;
-import org.jowidgets.spi.impl.swt.widgets.ComboBoxSelectionImpl;
-import org.jowidgets.spi.impl.swt.widgets.CompositeImpl;
-import org.jowidgets.spi.impl.swt.widgets.CompositeWrapper;
-import org.jowidgets.spi.impl.swt.widgets.DialogImpl;
-import org.jowidgets.spi.impl.swt.widgets.FrameImpl;
-import org.jowidgets.spi.impl.swt.widgets.FrameWrapper;
-import org.jowidgets.spi.impl.swt.widgets.IconImpl;
-import org.jowidgets.spi.impl.swt.widgets.ProgressBarImpl;
-import org.jowidgets.spi.impl.swt.widgets.ScrollCompositeImpl;
-import org.jowidgets.spi.impl.swt.widgets.SeparatorImpl;
-import org.jowidgets.spi.impl.swt.widgets.SplitCompositeImpl;
-import org.jowidgets.spi.impl.swt.widgets.TabFolderImpl;
-import org.jowidgets.spi.impl.swt.widgets.TextFieldImpl;
-import org.jowidgets.spi.impl.swt.widgets.TextLabelImpl;
-import org.jowidgets.spi.impl.swt.widgets.ToggleButtonImpl;
-import org.jowidgets.spi.impl.swt.widgets.ToolBarImpl;
-import org.jowidgets.spi.impl.swt.widgets.TreeImpl;
+import org.jowidgets.spi.impl.swt.widgets.internal.ButtonImpl;
+import org.jowidgets.spi.impl.swt.widgets.internal.CheckBoxImpl;
+import org.jowidgets.spi.impl.swt.widgets.internal.ComboBoxImpl;
+import org.jowidgets.spi.impl.swt.widgets.internal.ComboBoxSelectionImpl;
+import org.jowidgets.spi.impl.swt.widgets.internal.CompositeImpl;
+import org.jowidgets.spi.impl.swt.widgets.internal.CompositeWrapper;
+import org.jowidgets.spi.impl.swt.widgets.internal.DialogImpl;
+import org.jowidgets.spi.impl.swt.widgets.internal.FrameImpl;
+import org.jowidgets.spi.impl.swt.widgets.internal.FrameWrapper;
+import org.jowidgets.spi.impl.swt.widgets.internal.IconImpl;
+import org.jowidgets.spi.impl.swt.widgets.internal.ProgressBarImpl;
+import org.jowidgets.spi.impl.swt.widgets.internal.ScrollCompositeImpl;
+import org.jowidgets.spi.impl.swt.widgets.internal.SeparatorImpl;
+import org.jowidgets.spi.impl.swt.widgets.internal.SplitCompositeImpl;
+import org.jowidgets.spi.impl.swt.widgets.internal.TextFieldImpl;
+import org.jowidgets.spi.impl.swt.widgets.internal.TextLabelImpl;
+import org.jowidgets.spi.impl.swt.widgets.internal.ToggleButtonImpl;
+import org.jowidgets.spi.impl.swt.widgets.internal.ToolBarImpl;
 import org.jowidgets.spi.widgets.IButtonSpi;
 import org.jowidgets.spi.widgets.ICheckBoxSpi;
 import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
@@ -63,12 +61,10 @@ import org.jowidgets.spi.widgets.IIconSpi;
 import org.jowidgets.spi.widgets.IProgressBarSpi;
 import org.jowidgets.spi.widgets.IScrollCompositeSpi;
 import org.jowidgets.spi.widgets.ISplitCompositeSpi;
-import org.jowidgets.spi.widgets.ITabFolderSpi;
 import org.jowidgets.spi.widgets.ITextFieldSpi;
 import org.jowidgets.spi.widgets.ITextLabelSpi;
 import org.jowidgets.spi.widgets.IToggleButtonSpi;
 import org.jowidgets.spi.widgets.IToolBarSpi;
-import org.jowidgets.spi.widgets.ITreeSpi;
 import org.jowidgets.spi.widgets.setup.IButtonSetupSpi;
 import org.jowidgets.spi.widgets.setup.ICheckBoxSetupSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
@@ -81,11 +77,9 @@ import org.jowidgets.spi.widgets.setup.IProgressBarSetupSpi;
 import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
 import org.jowidgets.spi.widgets.setup.ISeparatorSetupSpi;
 import org.jowidgets.spi.widgets.setup.ISplitCompositeSetupSpi;
-import org.jowidgets.spi.widgets.setup.ITabFolderSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;
-import org.jowidgets.spi.widgets.setup.ITreeSetupSpi;
 import org.jowidgets.util.Assert;
 
 public final class SwtWidgetFactory implements IWidgetFactorySpi {
@@ -209,19 +203,6 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 	@Override
 	public IToolBarSpi createToolBar(final IGenericWidgetFactory factory, final Object parentUiReference) {
 		return new ToolBarImpl(factory, parentUiReference);
-	}
-
-	@Override
-	public ITabFolderSpi createTabFolder(
-		final IGenericWidgetFactory factory,
-		final Object parentUiReference,
-		final ITabFolderSetupSpi setup) {
-		return new TabFolderImpl(factory, parentUiReference, setup);
-	}
-
-	@Override
-	public ITreeSpi createTree(final Object parentUiReference, final ITreeSetupSpi setup) {
-		return new TreeImpl(parentUiReference, setup);
 	}
 
 }

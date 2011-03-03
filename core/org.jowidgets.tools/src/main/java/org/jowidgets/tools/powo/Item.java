@@ -30,11 +30,10 @@ package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.widgets.IItem;
 import org.jowidgets.api.widgets.blueprint.builder.IItemSetupBuilder;
-import org.jowidgets.api.widgets.descriptor.setup.IItemSetup;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-class Item<WIDGET_TYPE extends IItem, BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE> & IItemSetupBuilder<?> & IItemSetup> extends
+class Item<WIDGET_TYPE extends IItem, BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE> & IItemSetupBuilder<?>> extends
 		Widget<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IItem {
 
 	Item(final BLUE_PRINT_TYPE bluePrint) {
@@ -68,36 +67,6 @@ class Item<WIDGET_TYPE extends IItem, BLUE_PRINT_TYPE extends IWidgetDescriptor<
 		}
 		else {
 			getBluePrint().setIcon(icon);
-		}
-	}
-
-	@Override
-	public String getText() {
-		if (isInitialized()) {
-			return getWidget().getText();
-		}
-		else {
-			return getBluePrint().getText();
-		}
-	}
-
-	@Override
-	public String getToolTipText() {
-		if (isInitialized()) {
-			return getWidget().getToolTipText();
-		}
-		else {
-			return getBluePrint().getToolTipText();
-		}
-	}
-
-	@Override
-	public IImageConstant getIcon() {
-		if (isInitialized()) {
-			return getWidget().getIcon();
-		}
-		else {
-			return getBluePrint().getIcon();
 		}
 	}
 
