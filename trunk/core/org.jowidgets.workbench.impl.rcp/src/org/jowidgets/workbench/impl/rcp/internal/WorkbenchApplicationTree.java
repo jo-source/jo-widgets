@@ -58,6 +58,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
 import org.jowidgets.workbench.api.IWorkbenchPart;
+import org.jowidgets.workbench.impl.rcp.internal.util.FolderToolBarHelper;
 import org.jowidgets.workbench.impl.rcp.internal.util.ImageHelper;
 
 public final class WorkbenchApplicationTree extends Composite {

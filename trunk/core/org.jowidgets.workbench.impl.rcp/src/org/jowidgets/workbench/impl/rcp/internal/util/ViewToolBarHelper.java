@@ -26,42 +26,44 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.impl.rcp.internal;
+package org.jowidgets.workbench.impl.rcp.internal.util;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.model.item.ToolBarModel;
 
-public final class FolderToolBarHelper {
+public final class ViewToolBarHelper {
 
+	private final IComposite content;
+
+	private final IToolBar toolBar;
 	private final IToolBarModel toolBarModel;
 	private final IMenuModel toolBarMenuModel;
-	private final Composite uiReference;
 
-	public FolderToolBarHelper(final Composite parent) {
+	public ViewToolBarHelper(final IContainer container) {
 		final IToolBarModel innerToolBarModel = new ToolBarModel();
 		this.toolBarModel = new ToolBarModel();
 		this.toolBarMenuModel = new MenuModel();
 
-		uiReference = new Composite(parent, SWT.NONE);
-		uiReference.setLayout(new FillLayout(SWT.HORIZONTAL));
-		final IComposite joComposite = Toolkit.getWidgetWrapperFactory().createComposite(uiReference);
-		joComposite.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[]0"));
-
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-		final IToolBar toolBar = joComposite.add(bpf.toolBar(), "alignx right, wrap");
+		container.setLayout(new MigLayoutDescriptor("hidemode 2", "0[grow, 0::]0", "0[]0[]0[grow, 0::]0"));
+
+		toolBar = container.add(bpf.toolBar(), "alignx right, w 0::, hidemode 2, wrap");
 		toolBar.setModel(innerToolBarModel);
+		toolBar.setVisible(false);
+		final IControl toolBarSeparator = container.add(bpf.separator(), "growx, w 0::, hidemode 2, wrap");
+		toolBarSeparator.setVisible(false);
 
 		toolBarModel.addListModelListener(new IListModelListener() {
 			@Override
@@ -90,10 +92,31 @@ public final class FolderToolBarHelper {
 				}
 			}
 		});
+
+		innerToolBarModel.addListModelListener(new IListModelListener() {
+			@Override
+			public void childAdded(final int index) {
+				if (innerToolBarModel.getItems().size() == 1) {
+					toolBar.setVisible(true);
+					toolBarSeparator.setVisible(true);
+				}
+			}
+
+			@Override
+			public void childRemoved(final int index) {
+				if (innerToolBarModel.getItems().size() == 0) {
+					innerToolBarModel.removeItem(innerToolBarModel.getItems().size());
+					toolBar.setVisible(false);
+					toolBarSeparator.setVisible(false);
+				}
+			}
+		});
+
+		content = container.add(bpf.composite(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 	}
 
-	public Composite getUiReference() {
-		return uiReference;
+	public IComposite getContent() {
+		return content;
 	}
 
 	public IToolBarModel getToolBarModel() {

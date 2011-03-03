@@ -41,14 +41,14 @@ import org.jowidgets.workbench.api.IViewContext;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 import org.jowidgets.workbench.api.IWorkbenchContext;
 import org.jowidgets.workbench.impl.rcp.internal.part.PartSupport;
-import org.jowidgets.workbench.impl.rcp.internal.util.ToolBarHelper;
+import org.jowidgets.workbench.impl.rcp.internal.util.ViewToolBarHelper;
 
 public final class ViewContext implements IViewContext {
 
 	private final String primaryViewId;
 	private final Composite parent;
 	private final IComponentContext componentContext;
-	private final ToolBarHelper toolBarHelper;
+	private final ViewToolBarHelper toolBarHelper;
 	private boolean hidden;
 
 	public ViewContext(final String primaryViewId, final Composite parent, final IComponentContext componentContext) {
@@ -59,7 +59,7 @@ public final class ViewContext implements IViewContext {
 		final IComposite composite = Toolkit.getWidgetWrapperFactory().createComposite(parent);
 		composite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[]0[grow]0"));
 
-		toolBarHelper = new ToolBarHelper(composite);
+		toolBarHelper = new ViewToolBarHelper(composite);
 	}
 
 	public String getPrimaryViewId() {
