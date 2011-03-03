@@ -3,14 +3,14 @@
   
 	<groupId>org.jowidgets</groupId>
 	<artifactId>org.jowidgets.examples.assemblies.swt.win32</artifactId>
-	<version>0.0.14</version>
+	<version>0.0.15-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>org.jowidgets.examples.assemblies.swt.win32</name>
   
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.examples.assemblies.parent</artifactId>
-		<version>0.0.14</version>
+		<version>0.0.15-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
   
@@ -18,7 +18,7 @@
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.examples.swt</artifactId>
-			<version>0.0.14</version>
+			<version>0.0.15-SNAPSHOT</version>
 		</dependency>   
 	</dependencies>
 	
