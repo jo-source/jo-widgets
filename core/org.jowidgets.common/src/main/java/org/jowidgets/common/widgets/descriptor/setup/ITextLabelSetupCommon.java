@@ -31,7 +31,7 @@ import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
-public interface ITextLabelSetupCommon extends IComponentSetupCommon {
+public interface ITextLabelSetupCommon extends IWidgetSetupCommon {
 
 	String getText();
 

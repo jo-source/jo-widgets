@@ -29,10 +29,10 @@
 package org.jowidgets.common.widgets.descriptor;
 
 import org.jowidgets.common.widgets.IWidgetCommon;
-import org.jowidgets.common.widgets.descriptor.setup.IComponentSetupCommon;
+import org.jowidgets.common.widgets.descriptor.setup.IWidgetSetupCommon;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.MandatoryCheckResult;
 
-public interface IWidgetDescriptor<WIDGET_TYPE extends IWidgetCommon> extends IComponentSetupCommon {
+public interface IWidgetDescriptor<WIDGET_TYPE extends IWidgetCommon> extends IWidgetSetupCommon {
 
 	Class<? extends IWidgetDescriptor<WIDGET_TYPE>> getDescriptorInterface();
 

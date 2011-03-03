@@ -27,14 +27,14 @@
  */
 package org.jowidgets.impl.widgets.basic.factory.internal.util;
 
-import org.jowidgets.api.widgets.descriptor.setup.IComponentSetup;
-import org.jowidgets.common.widgets.IComponentCommon;
+import org.jowidgets.api.widgets.descriptor.setup.IWidgetSetup;
+import org.jowidgets.common.widgets.IWidgetCommon;
 
 public final class VisibiliySettingsInvoker {
 
 	private VisibiliySettingsInvoker() {}
 
-	public static void setVisibility(final IComponentSetup setup, final IComponentCommon widget) {
+	public static void setVisibility(final IWidgetSetup setup, final IWidgetCommon widget) {
 		if (setup.isVisible() != null) {
 			widget.setVisible(setup.isVisible().booleanValue());
 		}

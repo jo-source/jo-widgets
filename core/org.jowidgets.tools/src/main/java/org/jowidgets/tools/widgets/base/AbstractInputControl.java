@@ -31,12 +31,12 @@ package org.jowidgets.tools.widgets.base;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IInputControl;
-import org.jowidgets.api.widgets.descriptor.setup.IInputComponentSetup;
+import org.jowidgets.api.widgets.descriptor.setup.IInputWidgetSetup;
 
-public abstract class AbstractInputControl<VALUE_TYPE> extends AbstractInputComponent<VALUE_TYPE> implements
+public abstract class AbstractInputControl<VALUE_TYPE> extends AbstractInputWidget<VALUE_TYPE> implements
 		IInputControl<VALUE_TYPE> {
 
-	public AbstractInputControl(final IControl widget, final IInputComponentSetup<VALUE_TYPE> setup) {
+	public AbstractInputControl(final IControl widget, final IInputWidgetSetup<VALUE_TYPE> setup) {
 		super(widget, setup);
 	}
 
@@ -48,16 +48,6 @@ public abstract class AbstractInputControl<VALUE_TYPE> extends AbstractInputComp
 	@Override
 	public IContainer getParent() {
 		return getWidget().getParent();
-	}
-
-	@Override
-	public void setLayoutConstraints(final Object layoutConstraints) {
-		getWidget().setLayoutConstraints(layoutConstraints);
-	}
-
-	@Override
-	public Object getLayoutConstraints() {
-		return getWidget().getLayoutConstraints();
 	}
 
 }

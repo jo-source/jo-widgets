@@ -29,18 +29,18 @@
 package org.jowidgets.impl.threads;
 
 import org.jowidgets.api.threads.IUiThreadAccess;
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.common.threads.IUiThreadAccessCommon;
 import org.jowidgets.spi.IWidgetsServiceProvider;
 
 public class UiThreadAccess implements IUiThreadAccess {
 
 	private final IUiThreadAccessCommon uiThreadAccessCommon;
+	private final IWidgetsServiceProvider widgetsServiceProvider;
 
 	public UiThreadAccess(final IWidgetsServiceProvider widgetsServiceProvider) {
 		super();
 		this.uiThreadAccessCommon = widgetsServiceProvider.createUiThreadAccess();
+		this.widgetsServiceProvider = widgetsServiceProvider;
 	}
 
 	@Override
@@ -79,9 +79,7 @@ public class UiThreadAccess implements IUiThreadAccess {
 	}
 
 	private void blockEvents(final Runnable runnable) {
-		for (final IWindow window : Toolkit.getAllWindows()) {
-			window.setEnabled(false);
-		}
+		widgetsServiceProvider.setAllWindowsEnabled(false);
 		try {
 			runnable.run();
 		}
@@ -92,9 +90,16 @@ public class UiThreadAccess implements IUiThreadAccess {
 			throw new RuntimeException("Error while blocking events.", e);
 		}
 		finally {
-			for (final IWindow window : Toolkit.getAllWindows()) {
-				window.setEnabled(true);
-			}
+			//do this later to allow accumulated events to be fired on
+			//the disabled windows, because from know, accumulated events will 
+			//be fired first
+			invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					widgetsServiceProvider.setAllWindowsEnabled(true);
+				}
+			});
+
 		}
 	}
 

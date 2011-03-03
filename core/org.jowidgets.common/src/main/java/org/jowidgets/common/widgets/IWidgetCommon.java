@@ -27,6 +27,8 @@
  */
 package org.jowidgets.common.widgets;
 
+import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Dimension;
 
 public interface IWidgetCommon {
 
@@ -37,8 +39,23 @@ public interface IWidgetCommon {
 	 */
 	Object getUiReference();
 
-	void setEnabled(boolean enabled);
+	/**
+	 * Marks the widget that a redraw is necessary
+	 */
+	void redraw();
 
-	boolean isEnabled();
+	void setForegroundColor(final IColorConstant colorValue);
+
+	void setBackgroundColor(final IColorConstant colorValue);
+
+	IColorConstant getForegroundColor();
+
+	IColorConstant getBackgroundColor();
+
+	void setVisible(boolean visible);
+
+	boolean isVisible();
+
+	Dimension getSize();
 
 }

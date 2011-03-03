@@ -28,6 +28,6 @@
 package org.jowidgets.spi.widgets.setup;
 
 
-public interface IComboBoxSetupSpi extends ITextInputComponentSetupSpi, IComboBoxSelectionSetupSpi {
+public interface IComboBoxSetupSpi extends ITextInputWidgetSetupSpi, IComboBoxSelectionSetupSpi {
 
 }

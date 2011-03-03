@@ -29,58 +29,14 @@
 package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.common.widgets.builder.ISetupBuilder;
+import org.jowidgets.api.widgets.blueprint.builder.IWidgetSetupBuilder;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.util.Assert;
 
-class Widget<WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE> & ISetupBuilder<?>> implements
-		IWidget {
-
-	private final BLUE_PRINT_TYPE bluePrint;
-	private WIDGET_TYPE widget;
-	private Boolean enabled;
+class Widget<WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IWidgetSetupBuilder<?>> extends
+		WidgetCommon<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IWidget {
 
 	Widget(final BLUE_PRINT_TYPE bluePrint) {
-		this.bluePrint = bluePrint;
-	}
-
-	public final boolean isInitialized() {
-		return widget != null;
-	}
-
-	void initialize(final WIDGET_TYPE widget) {
-		Assert.paramNotNull(widget, "widget");
-		checkNotInitialized();
-		this.widget = widget;
-		if (enabled != null) {
-			widget.setEnabled(enabled.booleanValue());
-		}
-	}
-
-	final IWidgetDescriptor<? extends WIDGET_TYPE> getDescriptor() {
-		return bluePrint;
-	}
-
-	@Override
-	public void setEnabled(final boolean enabled) {
-		if (isInitialized()) {
-			widget.setEnabled(enabled);
-		}
-		else {
-			this.enabled = Boolean.valueOf(enabled);
-		}
-	}
-
-	@Override
-	public boolean isEnabled() {
-		checkInitialized();
-		return widget.isEnabled();
-	}
-
-	@Override
-	public final Object getUiReference() {
-		checkInitialized();
-		return widget.getUiReference();
+		super(bluePrint);
 	}
 
 	@Override
@@ -89,24 +45,16 @@ class Widget<WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends IWidgetDescrip
 		return getWidget().getParent();
 	}
 
-	final BLUE_PRINT_TYPE getBluePrint() {
-		return bluePrint;
+	@Override
+	public void setParent(final IWidget parent) {
+		checkInitialized();
+		getWidget().setParent(parent);
 	}
 
-	final WIDGET_TYPE getWidget() {
-		return widget;
-	}
-
-	final void checkInitialized() {
-		if (!isInitialized()) {
-			throw new WidgetNotInitializedException("Widget is not yet initialized (was not added to a parent)");
-		}
-	}
-
-	final void checkNotInitialized() {
-		if (isInitialized()) {
-			throw new WidgetAlreadyInitializedException("Widget is already initialized (was already added to a parent)");
-		}
+	@Override
+	public boolean isReparentable() {
+		checkInitialized();
+		return getWidget().isReparentable();
 	}
 
 }

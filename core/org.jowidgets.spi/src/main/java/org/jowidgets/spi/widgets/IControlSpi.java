@@ -30,6 +30,6 @@ package org.jowidgets.spi.widgets;
 
 import org.jowidgets.common.widgets.IControlCommon;
 
-public interface IControlSpi extends IComponentSpi, IControlCommon {
+public interface IControlSpi extends IWidgetSpi, IControlCommon {
 
 }

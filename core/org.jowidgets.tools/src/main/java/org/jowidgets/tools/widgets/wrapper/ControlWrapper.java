@@ -31,7 +31,7 @@ package org.jowidgets.tools.widgets.wrapper;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 
-public class ControlWrapper extends ComponentWrapper implements IControl {
+public class ControlWrapper extends WidgetWrapper implements IControl {
 
 	public ControlWrapper(final IControl widget) {
 		super(widget);
@@ -45,16 +45,6 @@ public class ControlWrapper extends ComponentWrapper implements IControl {
 	@Override
 	public IContainer getParent() {
 		return getWidget().getParent();
-	}
-
-	@Override
-	public void setLayoutConstraints(final Object layoutConstraints) {
-		getWidget().setLayoutConstraints(layoutConstraints);
-	}
-
-	@Override
-	public Object getLayoutConstraints() {
-		return getWidget().getLayoutConstraints();
 	}
 
 }

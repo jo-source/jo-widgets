@@ -35,8 +35,8 @@ import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.impl.widgets.basic.CompositeImpl;
-import org.jowidgets.impl.widgets.basic.FrameImpl;
+import org.jowidgets.impl.widgets.basic.CompositeWidget;
+import org.jowidgets.impl.widgets.basic.FrameWidget;
 import org.jowidgets.spi.IWidgetFactorySpi;
 
 public class DefaultWidgetWrapperFactory implements IWidgetWrapperFactory {
@@ -58,13 +58,13 @@ public class DefaultWidgetWrapperFactory implements IWidgetWrapperFactory {
 	@Override
 	public IFrame createFrame(final Object uiReference) {
 		final IFrameBluePrint bp = Toolkit.getBluePrintFactory().frame().autoCenterOff();
-		return new FrameImpl(widgetFactorySpi.createFrame(widgetFactory, uiReference), bp);
+		return new FrameWidget(widgetFactorySpi.createFrame(widgetFactory, uiReference), bp);
 	}
 
 	@Override
 	public IComposite createComposite(final Object uiReference) {
 		final ICompositeBluePrint bp = Toolkit.getBluePrintFactory().composite();
-		return new CompositeImpl(widgetFactorySpi.createComposite(widgetFactory, uiReference), bp);
+		return new CompositeWidget(widgetFactorySpi.createComposite(widgetFactory, uiReference), bp);
 	}
 
 	@Override

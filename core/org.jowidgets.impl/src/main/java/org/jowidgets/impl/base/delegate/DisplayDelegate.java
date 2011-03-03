@@ -58,7 +58,7 @@ public class DisplayDelegate {
 	}
 
 	public boolean isReparentable() {
-		//TODO MG will be implemented later
+		//TODO will be implemented later
 		return false;
 	}
 
