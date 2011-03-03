@@ -30,22 +30,25 @@ package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.types.QuestionResult;
-import org.jowidgets.api.widgets.IDisplay;
 import org.jowidgets.api.widgets.IQuestionDialog;
 import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
 import org.jowidgets.api.widgets.descriptor.IQuestionDialogDescriptor;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IWindowCommon;
 import org.jowidgets.util.Assert;
 
-public class JoQuestionDialog extends Component<IQuestionDialog, IQuestionDialogBluePrint> implements IQuestionDialog {
+public class JoQuestionDialog extends ChildWidget<IQuestionDialog, IQuestionDialogBluePrint> implements
+		IQuestionDialog {
 
 	public JoQuestionDialog(final IWindowCommon parent, final QuestionType questionType, final String message) {
 		this(parent, bluePrint(questionType).setText(message));
 	}
 
-	public JoQuestionDialog(final IWindowCommon parent, final QuestionType questionType, final String title, final String message) {
+	public JoQuestionDialog(
+		final IWindowCommon parent,
+		final QuestionType questionType,
+		final String title,
+		final String message) {
 		this(parent, bluePrint(questionType).setTitle(title).setText(message));
 	}
 
@@ -76,16 +79,6 @@ public class JoQuestionDialog extends Component<IQuestionDialog, IQuestionDialog
 	@Override
 	public QuestionResult question() {
 		return getWidget().question();
-	}
-
-	@Override
-	public IDisplay getParent() {
-		return getWidget().getParent();
-	}
-
-	@Override
-	public Position getPosition() {
-		return getPosition();
 	}
 
 	public static IQuestionDialogBluePrint bluePrint() {

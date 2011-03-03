@@ -27,15 +27,12 @@
  */
 package org.jowidgets.common.widgets;
 
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 
-public interface IContainerCommon extends IComponentCommon {
+public interface IContainerCommon extends IWidgetCommon {
 
-	/**
-	 * Sets the layout for this container
-	 * 
-	 * @param layoutDescriptor The layout to set
-	 */
 	void setLayout(ILayoutDescriptor layoutDescriptor);
 
 	void layoutBegin();
@@ -47,5 +44,11 @@ public interface IContainerCommon extends IComponentCommon {
 	 * child widgets is not indented and may lead to arbitrary behavior
 	 */
 	void removeAll();
+
+	<WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+		IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+		Object layoutConstraints);
+
+	<WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(ICustomWidgetFactory<WIDGET_TYPE> factory, Object layoutConstraints);
 
 }

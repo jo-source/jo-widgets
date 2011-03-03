@@ -33,9 +33,9 @@ import org.jowidgets.common.widgets.ISplitCompositeCommon;
 public interface ISplitComposite extends IControl, ISplitCompositeCommon {
 
 	@Override
-	IContainer getFirst();
+	IComposite getFirst();
 
 	@Override
-	IContainer getSecond();
+	IComposite getSecond();
 
 }

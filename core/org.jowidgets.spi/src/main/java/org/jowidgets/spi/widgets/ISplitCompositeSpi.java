@@ -32,9 +32,9 @@ import org.jowidgets.common.widgets.ISplitCompositeCommon;
 public interface ISplitCompositeSpi extends IControlSpi, ISplitCompositeCommon {
 
 	@Override
-	IContainerSpi getFirst();
+	ICompositeSpi getFirst();
 
 	@Override
-	IContainerSpi getSecond();
+	ICompositeSpi getSecond();
 
 }

@@ -29,14 +29,9 @@
 package org.jowidgets.impl.toolkit;
 
 import org.jowidgets.api.toolkit.IWidgetWrapperFactory;
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IComposite;
-import org.jowidgets.api.widgets.IFrame;
-import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
-import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
+import org.jowidgets.common.widgets.ICompositeCommon;
+import org.jowidgets.common.widgets.IFrameCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.impl.widgets.basic.CompositeImpl;
-import org.jowidgets.impl.widgets.basic.FrameImpl;
 import org.jowidgets.spi.IWidgetFactorySpi;
 
 public class DefaultWidgetWrapperFactory implements IWidgetWrapperFactory {
@@ -56,15 +51,13 @@ public class DefaultWidgetWrapperFactory implements IWidgetWrapperFactory {
 	}
 
 	@Override
-	public IFrame createFrame(final Object uiReference) {
-		final IFrameBluePrint bp = Toolkit.getBluePrintFactory().frame().autoCenterOff();
-		return new FrameImpl(widgetFactorySpi.createFrame(widgetFactory, uiReference), bp);
+	public IFrameCommon createFrame(final Object uiReference) {
+		return widgetFactorySpi.createFrame(widgetFactory, uiReference);
 	}
 
 	@Override
-	public IComposite createComposite(final Object uiReference) {
-		final ICompositeBluePrint bp = Toolkit.getBluePrintFactory().composite();
-		return new CompositeImpl(widgetFactorySpi.createComposite(widgetFactory, uiReference), bp);
+	public ICompositeCommon createComposite(final Object uiReference) {
+		return widgetFactorySpi.createComposite(widgetFactory, uiReference);
 	}
 
 	@Override

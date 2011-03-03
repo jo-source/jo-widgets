@@ -34,7 +34,7 @@ import org.jowidgets.api.widgets.blueprint.IToggleButtonBluePrint;
 import org.jowidgets.api.widgets.descriptor.IToggleButtonDescriptor;
 import org.jowidgets.common.image.IImageConstant;
 
-public class JoToggleButton extends CheckBox<IToggleButton, IToggleButtonBluePrint> implements IToggleButton {
+public class JoToggleButton extends CheckBoxWidget<IToggleButton, IToggleButtonBluePrint> implements IToggleButton {
 
 	public JoToggleButton(final String text) {
 		super(Toolkit.getBluePrintFactory().toggleButton().setText(text));

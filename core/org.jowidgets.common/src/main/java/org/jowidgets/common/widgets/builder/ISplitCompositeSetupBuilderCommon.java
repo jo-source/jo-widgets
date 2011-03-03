@@ -34,7 +34,7 @@ import org.jowidgets.common.widgets.builder.convenience.ISplitCompositeSetupConv
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 
 public interface ISplitCompositeSetupBuilderCommon<INSTANCE_TYPE extends ISplitCompositeSetupBuilderCommon<?>> extends
-		IComponentSetupBuilderCommon<INSTANCE_TYPE>,
+		IWidgetSetupBuilderCommon<INSTANCE_TYPE>,
 		ISplitCompositeSetupConvenience<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setOrientation(final Orientation orientation);

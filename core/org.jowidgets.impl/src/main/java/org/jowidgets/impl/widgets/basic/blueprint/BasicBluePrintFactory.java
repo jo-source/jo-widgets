@@ -29,20 +29,15 @@ package org.jowidgets.impl.widgets.basic.blueprint;
 
 import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
-import org.jowidgets.api.widgets.blueprint.ICheckedMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.IIconBluePrint;
-import org.jowidgets.api.widgets.blueprint.IMainMenuBluePrint;
-import org.jowidgets.api.widgets.blueprint.IRadioMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
-import org.jowidgets.api.widgets.blueprint.ISubMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
@@ -204,31 +199,6 @@ public class BasicBluePrintFactory extends BasicSimpleBluePrintFactory implement
 	@Override
 	public final IScrollCompositeBluePrint scrollComposite(final String borderTitle) {
 		return scrollComposite().setBorder(borderTitle);
-	}
-
-	@Override
-	public IActionMenuItemBluePrint menuItem(final String text) {
-		return menuItem().setText(text);
-	}
-
-	@Override
-	public IRadioMenuItemBluePrint radioMenuItem(final String text) {
-		return radioMenuItem().setText(text);
-	}
-
-	@Override
-	public ICheckedMenuItemBluePrint checkedMenuItem(final String text) {
-		return checkedMenuItem().setText(text);
-	}
-
-	@Override
-	public ISubMenuBluePrint subMenu(final String text) {
-		return subMenu().setText(text);
-	}
-
-	@Override
-	public IMainMenuBluePrint mainMenu(final String text) {
-		return mainMenu().setText(text);
 	}
 
 }

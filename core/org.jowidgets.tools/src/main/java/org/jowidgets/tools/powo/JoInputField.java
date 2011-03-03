@@ -34,8 +34,7 @@ import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.descriptor.IInputFieldDescriptor;
 
-public class JoInputField<VALUE_TYPE> extends
-		InputControl<IInputControl<VALUE_TYPE>, IInputFieldBluePrint<VALUE_TYPE>, VALUE_TYPE> implements
+public class JoInputField<VALUE_TYPE> extends InputWidget<IInputControl<VALUE_TYPE>, IInputFieldBluePrint<VALUE_TYPE>, VALUE_TYPE> implements
 		IInputControl<VALUE_TYPE> {
 
 	public JoInputField(final IConverter<VALUE_TYPE> converter) {

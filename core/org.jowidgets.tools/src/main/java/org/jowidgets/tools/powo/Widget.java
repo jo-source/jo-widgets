@@ -28,17 +28,17 @@
 
 package org.jowidgets.tools.powo;
 
-import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.common.widgets.builder.ISetupBuilder;
+import org.jowidgets.api.widgets.blueprint.builder.IWidgetSetupBuilder;
+import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.util.Assert;
 
-class Widget<WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE> & ISetupBuilder<?>> implements
-		IWidget {
+class Widget<WIDGET_TYPE extends IWidgetCommon, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IWidgetSetupBuilder<?>> implements
+		IWidgetCommon {
 
 	private final BLUE_PRINT_TYPE bluePrint;
 	private WIDGET_TYPE widget;
-	private Boolean enabled;
 
 	Widget(final BLUE_PRINT_TYPE bluePrint) {
 		this.bluePrint = bluePrint;
@@ -52,29 +52,46 @@ class Widget<WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends IWidgetDescrip
 		Assert.paramNotNull(widget, "widget");
 		checkNotInitialized();
 		this.widget = widget;
-		if (enabled != null) {
-			widget.setEnabled(enabled.booleanValue());
-		}
 	}
 
-	final IWidgetDescriptor<? extends WIDGET_TYPE> getDescriptor() {
+	final IWidgetDescriptor<WIDGET_TYPE> getDescriptor() {
 		return bluePrint;
 	}
 
 	@Override
-	public void setEnabled(final boolean enabled) {
+	public final void setForegroundColor(final IColorConstant colorValue) {
 		if (isInitialized()) {
-			widget.setEnabled(enabled);
+			widget.setForegroundColor(colorValue);
 		}
 		else {
-			this.enabled = Boolean.valueOf(enabled);
+			bluePrint.setForegroundColor(colorValue);
 		}
 	}
 
 	@Override
-	public boolean isEnabled() {
+	public final void setBackgroundColor(final IColorConstant colorValue) {
+		if (isInitialized()) {
+			widget.setBackgroundColor(colorValue);
+		}
+		else {
+			bluePrint.setBackgroundColor(colorValue);
+		}
+	}
+
+	@Override
+	public final void setVisible(final boolean visible) {
+		if (isInitialized()) {
+			widget.setVisible(visible);
+		}
+		else {
+			bluePrint.setVisible(visible);
+		}
+	}
+
+	@Override
+	public final boolean isVisible() {
 		checkInitialized();
-		return widget.isEnabled();
+		return widget.isVisible();
 	}
 
 	@Override
@@ -84,9 +101,9 @@ class Widget<WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends IWidgetDescrip
 	}
 
 	@Override
-	public IWidget getParent() {
+	public final void redraw() {
 		checkInitialized();
-		return getWidget().getParent();
+		widget.redraw();
 	}
 
 	final BLUE_PRINT_TYPE getBluePrint() {
@@ -99,13 +116,13 @@ class Widget<WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends IWidgetDescrip
 
 	final void checkInitialized() {
 		if (!isInitialized()) {
-			throw new WidgetNotInitializedException("Widget is not yet initialized (was not added to a parent)");
+			throw new WidgetNotInitializedException("Widget is not yet initialized (was not added to an parent)");
 		}
 	}
 
 	final void checkNotInitialized() {
 		if (isInitialized()) {
-			throw new WidgetAlreadyInitializedException("Widget is already initialized (was already added to a parent)");
+			throw new WidgetAlreadyInitializedException("Widget is already initialized (was already added to an parent)");
 		}
 	}
 

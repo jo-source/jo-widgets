@@ -33,6 +33,4 @@ public interface IIconCommon extends IControlCommon {
 
 	void setIcon(IImageConstant icon);
 
-	void setToolTipText(String text);
-
 }

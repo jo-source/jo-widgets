@@ -27,21 +27,13 @@
  */
 package org.jowidgets.impl.widgets.composed.internal;
 
-import java.util.List;
-
-import org.jowidgets.api.model.item.IMenuModel;
-import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IComposite;
-import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.api.widgets.IInputComponent;
-import org.jowidgets.api.widgets.IPopupMenu;
+import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.types.Cursor;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
+import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
@@ -80,7 +72,7 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
 
@@ -88,35 +80,10 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
 		final ICustomWidgetFactory<WIDGET_TYPE> factory,
 		final Object layoutConstraints) {
 		return compositeWidget.add(factory, layoutConstraints);
-	}
-
-	@Override
-	public boolean remove(final IControl control) {
-		return compositeWidget.remove(control);
-	}
-
-	@Override
-	public List<IControl> getChildren() {
-		return compositeWidget.getChildren();
-	}
-
-	@Override
-	public void setParent(final IComponent parent) {
-		compositeWidget.setParent(parent);
-	}
-
-	@Override
-	public boolean isReparentable() {
-		return compositeWidget.isReparentable();
-	}
-
-	@Override
-	public IComponent getParent() {
-		return compositeWidget.getParent();
 	}
 
 	@Override
@@ -135,21 +102,6 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 	}
 
 	@Override
-	public void setEnabled(final boolean enabled) {
-		compositeWidget.setEnabled(enabled);
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return compositeWidget.isEnabled();
-	}
-
-	@Override
-	public Dimension getSize() {
-		return compositeWidget.getSize();
-	}
-
-	@Override
 	public void redraw() {
 		compositeWidget.redraw();
 	}
@@ -165,27 +117,12 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 	}
 
 	@Override
-	public IColorConstant getForegroundColor() {
-		return compositeWidget.getForegroundColor();
-	}
-
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return compositeWidget.getBackgroundColor();
-	}
-
-	@Override
-	public void setCursor(final Cursor cursor) {
-		compositeWidget.setCursor(cursor);
-	}
-
-	@Override
-	public void registerInputWidget(final String contextLabel, final IInputComponent<?> inputWidget) {
+	public void registerInputWidget(final String contextLabel, final IInputWidget<?> inputWidget) {
 		outerContainer.registerInputWidget(contextLabel, inputWidget);
 	}
 
 	@Override
-	public void unRegisterInputWidget(final IInputComponent<?> inputWidget) {
+	public void unRegisterInputWidget(final IInputWidget<?> inputWidget) {
 		outerContainer.unRegisterInputWidget(inputWidget);
 	}
 
@@ -200,26 +137,6 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 	@Override
 	public void fireInputChanged(final Object source) {
 		outerContainer.fireInputChanged(source);
-	}
-
-	@Override
-	public IPopupMenu createPopupMenu() {
-		return compositeWidget.createPopupMenu();
-	}
-
-	@Override
-	public void setPopupMenu(final IMenuModel popupMenu) {
-		compositeWidget.setPopupMenu(popupMenu);
-	}
-
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		compositeWidget.addPopupDetectionListener(listener);
-	}
-
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		compositeWidget.removePopupDetectionListener(listener);
 	}
 
 }

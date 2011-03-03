@@ -27,11 +27,9 @@
  */
 package org.jowidgets.common.widgets.descriptor.setup;
 
-import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface IDialogSetupCommon extends IFrameSetupCommon {
 
-	@Mandatory
-	boolean isModal();
+	//TODO add isModal() here
 
 }

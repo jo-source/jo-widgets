@@ -27,6 +27,8 @@
  */
 package org.jowidgets.spi;
 
+import org.jowidgets.common.widgets.ICompositeCommon;
+import org.jowidgets.common.widgets.IFrameCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.widgets.IButtonSpi;
 import org.jowidgets.spi.widgets.ICheckBoxSpi;
@@ -39,12 +41,9 @@ import org.jowidgets.spi.widgets.IIconSpi;
 import org.jowidgets.spi.widgets.IProgressBarSpi;
 import org.jowidgets.spi.widgets.IScrollCompositeSpi;
 import org.jowidgets.spi.widgets.ISplitCompositeSpi;
-import org.jowidgets.spi.widgets.ITabFolderSpi;
 import org.jowidgets.spi.widgets.ITextFieldSpi;
 import org.jowidgets.spi.widgets.ITextLabelSpi;
 import org.jowidgets.spi.widgets.IToggleButtonSpi;
-import org.jowidgets.spi.widgets.IToolBarSpi;
-import org.jowidgets.spi.widgets.ITreeSpi;
 import org.jowidgets.spi.widgets.setup.IButtonSetupSpi;
 import org.jowidgets.spi.widgets.setup.ICheckBoxSetupSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
@@ -57,11 +56,9 @@ import org.jowidgets.spi.widgets.setup.IProgressBarSetupSpi;
 import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
 import org.jowidgets.spi.widgets.setup.ISeparatorSetupSpi;
 import org.jowidgets.spi.widgets.setup.ISplitCompositeSetupSpi;
-import org.jowidgets.spi.widgets.setup.ITabFolderSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;
-import org.jowidgets.spi.widgets.setup.ITreeSetupSpi;
 
 public interface IWidgetFactorySpi {
 
@@ -69,15 +66,15 @@ public interface IWidgetFactorySpi {
 
 	boolean isConvertibleToFrame(Object uiReference);
 
-	IFrameSpi createFrame(IGenericWidgetFactory factory, Object uiReference);
+	IFrameCommon createFrame(IGenericWidgetFactory factory, Object uiReference);
 
 	boolean isConvertibleToComposite(Object uiReference);
 
-	ICompositeSpi createComposite(IGenericWidgetFactory factory, Object uiReference);
+	ICompositeCommon createComposite(IGenericWidgetFactory factory, Object uiReference);
 
 	//create widgets from setup
 
-	IFrameSpi createFrame(IGenericWidgetFactory factory, IFrameSetupSpi setup);
+	IFrameSpi createFrame(IGenericWidgetFactory factory, Object parentUiReference, IFrameSetupSpi setup);
 
 	IFrameSpi createDialog(IGenericWidgetFactory factory, Object parentUiReference, IDialogSetupSpi setup);
 
@@ -109,11 +106,5 @@ public interface IWidgetFactorySpi {
 	IComboBoxSpi createComboBox(Object parentUiReference, IComboBoxSetupSpi setup);
 
 	IProgressBarSpi createProgressBar(Object parentUiReference, IProgressBarSetupSpi setup);
-
-	IToolBarSpi createToolBar(IGenericWidgetFactory factory, Object parentUiReference);
-
-	ITabFolderSpi createTabFolder(IGenericWidgetFactory factory, Object parentUiReference, ITabFolderSetupSpi setup);
-
-	ITreeSpi createTree(Object parentUiReference, ITreeSetupSpi setup);
 
 }

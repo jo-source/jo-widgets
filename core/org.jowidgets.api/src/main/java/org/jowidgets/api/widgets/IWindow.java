@@ -27,35 +27,13 @@
  */
 package org.jowidgets.api.widgets;
 
-import java.util.List;
-
 import org.jowidgets.common.widgets.IWindowCommon;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public interface IWindow extends IDisplay, IWindowCommon {
 
 	/**
-	 * Centers the location relative to the parent display
+	 * Centers the location relative to the parent window or desktop
 	 */
 	void centerLocation();
-
-	/**
-	 * Creates a child window with this window as parent
-	 * 
-	 * @param <WIDGET_TYPE> The type of the created child window
-	 * @param <DESCRIPTOR_TYPE> The type of the child windows descriptor
-	 * @param descriptor The child windows descriptor
-	 * @return The created window
-	 */
-	<WIDGET_TYPE extends IDisplay, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
-		final DESCRIPTOR_TYPE descriptor);
-
-	/**
-	 * Gets the child windows of this window
-	 * 
-	 * @return all children of this window or an empty list if this window
-	 *         has no child windows
-	 */
-	List<IDisplay> getChildWindows();
 
 }

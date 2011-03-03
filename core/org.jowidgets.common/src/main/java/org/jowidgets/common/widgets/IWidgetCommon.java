@@ -27,6 +27,7 @@
  */
 package org.jowidgets.common.widgets;
 
+import org.jowidgets.common.color.IColorConstant;
 
 public interface IWidgetCommon {
 
@@ -37,8 +38,17 @@ public interface IWidgetCommon {
 	 */
 	Object getUiReference();
 
-	void setEnabled(boolean enabled);
+	/**
+	 * Marks the widget that a redraw is necessary
+	 */
+	void redraw();
 
-	boolean isEnabled();
+	void setForegroundColor(final IColorConstant colorValue);
+
+	void setBackgroundColor(final IColorConstant colorValue);
+
+	void setVisible(boolean visible);
+
+	boolean isVisible();
 
 }

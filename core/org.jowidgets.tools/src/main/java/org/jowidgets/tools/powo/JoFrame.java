@@ -28,29 +28,17 @@
 
 package org.jowidgets.tools.powo;
 
-import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IFrame;
-import org.jowidgets.api.widgets.IMenuBar;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
+import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.IFrameSetup;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.tools.controler.WindowAdapter;
-import org.jowidgets.util.Assert;
+import org.jowidgets.common.widgets.IWindowCommon;
+import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
 
-public class JoFrame extends Window<IFrame, IFrameBluePrint> implements IFrame {
-
-	private JoMenuBar menuBar;
-	private IMenuBarModel menuBarModel;
-	private IButton defaultButton;
-
-	JoFrame(final IFrame widget) {
-		this(bluePrint());
-		Assert.paramNotNull(widget, "widget");
-		initialize(widget);
-	}
+public class JoFrame extends WindowWidget<IFrame, IFrameBluePrint> implements IFrame {
 
 	public JoFrame() {
 		super(Toolkit.getBluePrintFactory().frame());
@@ -68,107 +56,31 @@ public class JoFrame extends Window<IFrame, IFrameBluePrint> implements IFrame {
 		super(Toolkit.getBluePrintFactory().frame().setSetup(setup));
 	}
 
+	public JoFrame(final IWindowCommon parent) {
+		super(parent, Toolkit.getBluePrintFactory().frame());
+	}
+
+	public JoFrame(final IWindowCommon parent, final String title) {
+		super(Toolkit.getBluePrintFactory().frame(title));
+	}
+
+	public JoFrame(final IWindowCommon parent, final String title, final IImageConstant icon) {
+		super(Toolkit.getBluePrintFactory().frame(title, icon));
+	}
+
+	public JoFrame(final IWindowCommon parent, final IFrameDescriptor setup) {
+		super(Toolkit.getBluePrintFactory().frame().setSetup(setup));
+	}
+
 	public void finishLifecycleOnClose(final IApplicationLifecycle lifecycle) {
 		addWindowListener(new WindowAdapter() {
+
 			@Override
 			public void windowClosed() {
 				lifecycle.finish();
 			}
+
 		});
-	}
-
-	public final void setMenuBar(final JoMenuBar menuBar) {
-		Assert.paramNotNull(menuBar, "menuBar");
-		if (isInitialized()) {
-			menuBar.initialize(createMenuBar());
-		}
-		else {
-			if (menuBarModel != null) {
-				throw new UnsupportedOperationException("This frame has already a menu bar model and is not yet initialized. "
-					+ "Uninitialized JoFrame's must not have a JoMenuBar and a menu model at the same time. This might be "
-					+ "supported in future releases.");
-			}
-			this.menuBar = menuBar;
-		}
-	}
-
-	@Override
-	void initialize(final IFrame widget) {
-		super.initialize(widget);
-		if (menuBar != null) {
-			menuBar.initialize(createMenuBar());
-		}
-		if (menuBarModel != null) {
-			widget.setMenuBar(menuBarModel);
-		}
-		if (defaultButton != null) {
-			widget.setDefaultButton(defaultButton);
-		}
-	}
-
-	@Override
-	public IMenuBar createMenuBar() {
-		if (isInitialized()) {
-			return getWidget().createMenuBar();
-		}
-		else {
-			if (menuBarModel != null) {
-				throw new UnsupportedOperationException("This frame has already a menu bar model and is not yet initialized. "
-					+ "Uninitialized JoFrame's must not have a JoMenuBar and a menu model at the same time. This might be "
-					+ "supported in future releases.");
-			}
-			menuBar = new JoMenuBar();
-			return menuBar;
-		}
-	}
-
-	@Override
-	public IMenuBarModel getMenuBarModel() {
-		if (isInitialized()) {
-			return getWidget().getMenuBarModel();
-		}
-		else {
-			if (menuBarModel == null) {
-				setMenuBar(Toolkit.getModelFactoryProvider().getItemModelFactory().menuBar());
-			}
-			return menuBarModel;
-		}
-	}
-
-	@Override
-	public void setMenuBar(final IMenuBarModel menuBarModel) {
-		if (isInitialized()) {
-			getWidget().setMenuBar(menuBarModel);
-		}
-		else {
-			if (menuBar != null) {
-				throw new UnsupportedOperationException(
-					"This frame has already a menu bar (JoMenuBar) and is not yet initialized. "
-						+ "Uninitialized JoFrame's must not have a JoMenuBar and a menu model at the same time. This might be "
-						+ "supported in future releases.");
-			}
-			this.menuBarModel = menuBarModel;
-		}
-	}
-
-	@Override
-	public void setDefaultButton(final IButton defaultButton) {
-		if (isInitialized()) {
-			getWidget().setDefaultButton(defaultButton);
-		}
-		else {
-			this.defaultButton = defaultButton;
-		}
-	}
-
-	public static JoFrame toJoFrame(final IFrame widget) {
-		Assert.paramNotNull(widget, "widget");
-		if (widget instanceof JoFrame) {
-			return (JoFrame) widget;
-		}
-		else {
-			return new JoFrame(widget);
-		}
 	}
 
 	public static IFrameBluePrint bluePrint() {

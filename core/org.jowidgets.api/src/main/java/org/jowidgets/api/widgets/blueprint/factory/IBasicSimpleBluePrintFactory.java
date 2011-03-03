@@ -29,39 +29,22 @@ package org.jowidgets.api.widgets.blueprint.factory;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.convert.IObjectStringConverter;
-import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICheckBoxBluePrint;
-import org.jowidgets.api.widgets.blueprint.ICheckedMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.IIconBluePrint;
-import org.jowidgets.api.widgets.blueprint.IMainMenuBluePrint;
-import org.jowidgets.api.widgets.blueprint.IRadioMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISeparatorBluePrint;
-import org.jowidgets.api.widgets.blueprint.ISeparatorMenuItemBluePrint;
-import org.jowidgets.api.widgets.blueprint.ISeparatorToolBarItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
-import org.jowidgets.api.widgets.blueprint.ISubMenuBluePrint;
-import org.jowidgets.api.widgets.blueprint.ITabFolderBluePrint;
-import org.jowidgets.api.widgets.blueprint.ITabItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToggleButtonBluePrint;
-import org.jowidgets.api.widgets.blueprint.IToolBarBluePrint;
-import org.jowidgets.api.widgets.blueprint.IToolBarButtonBluePrint;
-import org.jowidgets.api.widgets.blueprint.IToolBarContainerItemBluePrint;
-import org.jowidgets.api.widgets.blueprint.IToolBarMenuBluePrint;
-import org.jowidgets.api.widgets.blueprint.IToolBarPopupButtonBluePrint;
-import org.jowidgets.api.widgets.blueprint.IToolBarToggleButtonBluePrint;
-import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
-import org.jowidgets.api.widgets.blueprint.ITreeNodeBluePrint;
 
-public interface IBasicSimpleBluePrintFactory extends IBaseBluePrintFactory {
+public interface IBasicSimpleBluePrintFactory {
 
 	IFrameBluePrint frame();
 
@@ -91,39 +74,5 @@ public interface IBasicSimpleBluePrintFactory extends IBaseBluePrintFactory {
 
 	<INPUT_TYPE> IComboBoxSelectionBluePrint<INPUT_TYPE> comboBoxSelection(
 		final IObjectStringConverter<INPUT_TYPE> objectStringConverter);
-
-	IActionMenuItemBluePrint menuItem();
-
-	IRadioMenuItemBluePrint radioMenuItem();
-
-	ICheckedMenuItemBluePrint checkedMenuItem();
-
-	ISubMenuBluePrint subMenu();
-
-	IMainMenuBluePrint mainMenu();
-
-	ISeparatorMenuItemBluePrint menuSeparator();
-
-	ISeparatorToolBarItemBluePrint toolBarSeparator();
-
-	IToolBarBluePrint toolBar();
-
-	IToolBarButtonBluePrint toolBarButton();
-
-	IToolBarToggleButtonBluePrint toolBarToggleButton();
-
-	IToolBarPopupButtonBluePrint toolBarPopupButton();
-
-	IToolBarMenuBluePrint toolBarMenu();
-
-	IToolBarContainerItemBluePrint toolBarContainerItem();
-
-	ITabFolderBluePrint tabFolder();
-
-	ITabItemBluePrint tabItem();
-
-	ITreeBluePrint tree();
-
-	ITreeNodeBluePrint treeNode();
 
 }

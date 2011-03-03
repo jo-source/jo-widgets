@@ -27,11 +27,8 @@
  */
 package org.jowidgets.api.widgets;
 
-import org.jowidgets.api.command.IAction;
 import org.jowidgets.common.widgets.IButtonCommon;
 
 public interface IButton extends ILabel, IActionWidget, IButtonCommon {
-
-	void setAction(final IAction action);
 
 }

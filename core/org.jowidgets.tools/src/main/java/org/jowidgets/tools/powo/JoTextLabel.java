@@ -34,7 +34,7 @@ import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
 import org.jowidgets.api.widgets.descriptor.ITextLabelDescriptor;
 import org.jowidgets.common.types.Markup;
 
-public class JoTextLabel extends Control<ITextLabel, ITextLabelBluePrint> implements ITextLabel {
+public class JoTextLabel extends ChildWidget<ITextLabel, ITextLabelBluePrint> implements ITextLabel {
 
 	public JoTextLabel(final String text) {
 		this(Toolkit.getBluePrintFactory().textLabel(text));
