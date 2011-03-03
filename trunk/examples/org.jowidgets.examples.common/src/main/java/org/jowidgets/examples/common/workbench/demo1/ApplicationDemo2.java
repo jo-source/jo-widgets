@@ -32,15 +32,21 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.types.QuestionResult;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractApplication;
 import org.jowidgets.workbench.api.IComponentTreeNode;
+import org.jowidgets.workbench.api.ITrayItem;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 
 public class ApplicationDemo2 extends AbstractApplication {
 
 	private static final String ID = ApplicationDemo2.class.getName();
+
+	private IWorkbenchApplicationContext context;
 
 	public ApplicationDemo2() {
 		super(ID);
@@ -48,6 +54,8 @@ public class ApplicationDemo2 extends AbstractApplication {
 
 	@Override
 	public void onContextInitialize(final IWorkbenchApplicationContext context) {
+		this.context = context;
+
 		final ActionFactory actionFactory = new ActionFactory();
 		final IAction addFolderAction = actionFactory.createAddFolderAction(context);
 
@@ -73,6 +81,20 @@ public class ApplicationDemo2 extends AbstractApplication {
 	@Override
 	public IImageConstant getIcon() {
 		return SilkIcons.USER_RED;
+	}
+
+	@Override
+	public void onClose(final IVetoable vetoable) {
+		final QuestionResult result = Toolkit.getQuestionPane().askYesNoQuestion("Would you really like to quit the application?");
+		if (result != QuestionResult.YES) {
+			vetoable.veto();
+		}
+		else {
+			final ITrayItem trayItem = context.getWorkbenchContext().getTrayItem();
+			if (trayItem != null) {
+				trayItem.showWarning("Application closed", "You really have closed the application!");
+			}
+		}
 	}
 
 }
