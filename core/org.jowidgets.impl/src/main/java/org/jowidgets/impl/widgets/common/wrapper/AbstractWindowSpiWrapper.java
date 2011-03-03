@@ -35,7 +35,7 @@ import org.jowidgets.common.widgets.IWindowCommon;
 import org.jowidgets.common.widgets.controler.IWindowListener;
 import org.jowidgets.spi.widgets.IWindowSpi;
 
-public abstract class AbstractWindowSpiWrapper extends ComponentSpiWrapper implements IWindowCommon {
+public abstract class AbstractWindowSpiWrapper extends WidgetSpiWrapper implements IWindowCommon {
 
 	public AbstractWindowSpiWrapper(final IWindowSpi widget) {
 		super(widget);
@@ -74,6 +74,7 @@ public abstract class AbstractWindowSpiWrapper extends ComponentSpiWrapper imple
 	@Override
 	public void pack() {
 		getWidget().pack();
+
 	}
 
 	@Override
@@ -97,8 +98,8 @@ public abstract class AbstractWindowSpiWrapper extends ComponentSpiWrapper imple
 	}
 
 	@Override
-	public void dispose() {
-		getWidget().dispose();
+	public void close() {
+		getWidget().close();
 	}
 
 }

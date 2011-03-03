@@ -31,6 +31,7 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.controler.IWindowObservable;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public interface IWindowCommon extends IDisplayCommon, IWindowObservable {
 
@@ -42,6 +43,9 @@ public interface IWindowCommon extends IDisplayCommon, IWindowObservable {
 
 	void pack();
 
-	void dispose();
+	void close();
+
+	<WIDGET_TYPE extends IDisplayCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
+		final DESCRIPTOR_TYPE descriptor);
 
 }

@@ -34,7 +34,7 @@ import org.jowidgets.common.widgets.IContainerCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 
-public interface IContainer extends IComponent, IContainerCommon {
+public interface IContainer extends IWidget, IContainerCommon {
 
 	/**
 	 * Gets the containers children

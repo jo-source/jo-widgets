@@ -32,8 +32,8 @@ import org.jowidgets.api.widgets.blueprint.builder.IInputDialogSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.convenience.IInputDialogSetupConvenience;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.impl.base.blueprint.convenience.AbstractSetupBuilderConvenience;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
-import org.jowidgets.tools.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 
 public class InputDialogSetupConvenience extends AbstractSetupBuilderConvenience<IInputDialogSetupBuilder<?, ?>> implements
 		IInputDialogSetupConvenience<IInputDialogSetupBuilder<?, ?>> {

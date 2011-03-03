@@ -3,13 +3,13 @@
 
 	<groupId>org.jowidgets</groupId>
 	<artifactId>org.jowidgets.common</artifactId>
-	<version>0.0.15-SNAPSHOT</version>
+	<version>0.0.5</version>
 	<name>org.jowidgets.common</name>
 
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.core.parent</artifactId>
-		<version>0.0.15-SNAPSHOT</version>
+		<version>0.0.5</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 </project>

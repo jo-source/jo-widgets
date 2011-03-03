@@ -30,7 +30,7 @@ package org.jowidgets.api.widgets.descriptor.setup;
 import org.jowidgets.common.widgets.descriptor.setup.IProgressBarSetupCommon;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
-public interface IProgressBarSetup extends IProgressBarSetupCommon, IComponentSetup {
+public interface IProgressBarSetup extends IProgressBarSetupCommon, IWidgetSetup {
 
 	@Mandatory
 	int getProgress();

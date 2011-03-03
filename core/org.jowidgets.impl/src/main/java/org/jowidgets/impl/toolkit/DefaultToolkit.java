@@ -28,14 +28,9 @@
 
 package org.jowidgets.impl.toolkit;
 
-import java.util.List;
-
-import org.jowidgets.api.command.IActionBuilderFactory;
 import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.image.IconsSmall;
-import org.jowidgets.api.model.IModelFactoryProvider;
-import org.jowidgets.api.threads.IUiThreadAccess;
 import org.jowidgets.api.toolkit.IMessagePane;
 import org.jowidgets.api.toolkit.IQuestionPane;
 import org.jowidgets.api.toolkit.IToolkit;
@@ -48,19 +43,17 @@ import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
+import org.jowidgets.common.threads.IUiThreadAccess;
+import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.application.ApplicationRunner;
-import org.jowidgets.impl.command.ActionBuilderFactory;
 import org.jowidgets.impl.convert.DefaultConverterProvider;
 import org.jowidgets.impl.image.DefaultIconsRegisterService;
-import org.jowidgets.impl.model.ModelFactoryProvider;
-import org.jowidgets.impl.threads.UiThreadAccess;
 import org.jowidgets.impl.utils.WidgetUtils;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 import org.jowidgets.impl.widgets.composed.factory.GenericWidgetFactory;
 import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.image.IImageHandleFactorySpi;
-import org.jowidgets.tools.controler.WindowAdapter;
 import org.jowidgets.util.Assert;
 
 public class DefaultToolkit implements IToolkit {
@@ -69,10 +62,8 @@ public class DefaultToolkit implements IToolkit {
 	private final IGenericWidgetFactory genericWidgetFactory;
 	private final IWidgetWrapperFactory widgetWrapperFactory;
 	private final IBluePrintFactory bluePrintFactory;
-	private final IActionBuilderFactory actionBuilderFactory;
-	private final IModelFactoryProvider modelFactoryProvider;
 	private final IConverterProvider converterProvider;
-	private final WindowProvider windowProvider;
+	private final ActiveWindowProvider activeWindowProvider;
 	private final IMessagePane messagePane;
 	private final IQuestionPane questionPane;
 	private final IWidgetUtils widgetUtils;
@@ -86,12 +77,10 @@ public class DefaultToolkit implements IToolkit {
 		this.genericWidgetFactory = new GenericWidgetFactory(toolkitSpi.getWidgetFactory());
 		this.widgetWrapperFactory = new DefaultWidgetWrapperFactory(genericWidgetFactory, toolkitSpi.getWidgetFactory());
 		this.bluePrintFactory = new BluePrintFactory();
-		this.actionBuilderFactory = new ActionBuilderFactory();
-		this.modelFactoryProvider = new ModelFactoryProvider();
 		this.converterProvider = new DefaultConverterProvider();
-		this.windowProvider = new WindowProvider(genericWidgetFactory, toolkitSpi);
-		this.messagePane = new DefaultMessagePane(genericWidgetFactory, bluePrintFactory, windowProvider);
-		this.questionPane = new DefaultQuestionPane(genericWidgetFactory, bluePrintFactory, windowProvider);
+		this.activeWindowProvider = new ActiveWindowProvider(genericWidgetFactory, toolkitSpi);
+		this.messagePane = new DefaultMessagePane(genericWidgetFactory, bluePrintFactory, activeWindowProvider);
+		this.questionPane = new DefaultQuestionPane(genericWidgetFactory, bluePrintFactory, activeWindowProvider);
 		this.widgetUtils = new WidgetUtils();
 
 		final IImageRegistry imageRegistry = toolkitSpi.getImageRegistry();
@@ -132,30 +121,20 @@ public class DefaultToolkit implements IToolkit {
 	}
 
 	@Override
-	public IActionBuilderFactory getActionBuilderFactory() {
-		return actionBuilderFactory;
-	}
-
-	@Override
-	public IModelFactoryProvider getModelFactoryProvider() {
-		return modelFactoryProvider;
-	}
-
-	@Override
 	public IConverterProvider getConverterProvider() {
 		return converterProvider;
 	}
 
 	@Override
-	public synchronized IUiThreadAccess getUiThreadAccess() {
+	public IUiThreadAccess getUiThreadAccess() {
 		if (uiThreadAccess == null) {
-			uiThreadAccess = new UiThreadAccess(widgetsServiceProvider);
+			uiThreadAccess = widgetsServiceProvider.createUiThreadAccess();
 		}
 		return uiThreadAccess;
 	}
 
 	@Override
-	public synchronized IApplicationRunner getApplicationRunner() {
+	public IApplicationRunner getApplicationRunner() {
 		if (applicationRunner == null) {
 			applicationRunner = new ApplicationRunner(widgetsServiceProvider.createApplicationRunner());
 		}
@@ -164,12 +143,7 @@ public class DefaultToolkit implements IToolkit {
 
 	@Override
 	public IWindow getActiveWindow() {
-		return windowProvider.getActiveWindow();
-	}
-
-	@Override
-	public List<IWindow> getAllWindows() {
-		return windowProvider.getAllWindows();
+		return activeWindowProvider.getActiveWindow();
 	}
 
 	@Override

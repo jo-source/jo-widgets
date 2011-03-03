@@ -29,21 +29,18 @@
 package org.jowidgets.api.toolkit;
 
 import java.util.Iterator;
-import java.util.List;
 import java.util.ServiceLoader;
 
-import org.jowidgets.api.command.IActionBuilderFactory;
 import org.jowidgets.api.convert.IConverterProvider;
-import org.jowidgets.api.model.IModelFactoryProvider;
-import org.jowidgets.api.threads.IUiThreadAccess;
 import org.jowidgets.api.utils.IWidgetUtils;
 import org.jowidgets.api.widgets.IFrame;
-import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
+import org.jowidgets.common.threads.IUiThreadAccess;
+import org.jowidgets.common.widgets.IWindowCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.util.Assert;
 
@@ -65,7 +62,7 @@ public final class Toolkit {
 		return toolkitProvider != null;
 	}
 
-	public static synchronized IToolkit getInstance() {
+	public static IToolkit getInstance() {
 		if (toolkitProvider == null) {
 			final ServiceLoader<IToolkitProvider> toolkitProviderLoader = ServiceLoader.load(IToolkitProvider.class);
 			final Iterator<IToolkitProvider> iterator = toolkitProviderLoader.iterator();
@@ -102,14 +99,6 @@ public final class Toolkit {
 		return getInstance().getBluePrintFactory();
 	}
 
-	public static IActionBuilderFactory getActionBuilderFactory() {
-		return getInstance().getActionBuilderFactory();
-	}
-
-	public static IModelFactoryProvider getModelFactoryProvider() {
-		return getInstance().getModelFactoryProvider();
-	}
-
 	public static IConverterProvider getConverterProvider() {
 		return getInstance().getConverterProvider();
 	}
@@ -122,12 +111,8 @@ public final class Toolkit {
 		return getInstance().getUiThreadAccess();
 	}
 
-	public static IWindow getActiveWindow() {
+	public static IWindowCommon getActiveWindow() {
 		return getInstance().getActiveWindow();
-	}
-
-	public static List<IWindow> getAllWindows() {
-		return getInstance().getAllWindows();
 	}
 
 	public static IMessagePane getMessagePane() {

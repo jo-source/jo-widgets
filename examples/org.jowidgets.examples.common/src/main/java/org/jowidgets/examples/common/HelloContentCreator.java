@@ -31,7 +31,7 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationMessageType;
 import org.jowidgets.api.validation.ValidationResult;
-import org.jowidgets.api.widgets.IInputComponent;
+import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.api.widgets.IValidationLabel;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.IValidationLabelBluePrint;
@@ -46,7 +46,7 @@ public class HelloContentCreator implements IInputContentCreator<String> {
 	private final int textFieldCount = 10;
 
 	@SuppressWarnings("unchecked")
-	private final IInputComponent<String>[] widgets = new IInputComponent[textFieldCount];
+	private final IInputWidget<String>[] widgets = new IInputWidget[textFieldCount];
 
 	@Override
 	public void createContent(final IInputContentContainer widgetContainer) {
@@ -97,7 +97,9 @@ public class HelloContentCreator implements IInputContentCreator<String> {
 	}
 
 	@Override
-	public void setValue(final String content) {}
+	public void setValue(final String content) {
+		// TODO Auto-generated method stub
+	}
 
 	@Override
 	public String getValue() {

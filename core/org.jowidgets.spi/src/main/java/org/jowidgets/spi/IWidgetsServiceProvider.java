@@ -28,11 +28,9 @@
 
 package org.jowidgets.spi;
 
-import java.util.List;
-
 import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
-import org.jowidgets.common.threads.IUiThreadAccessCommon;
+import org.jowidgets.common.threads.IUiThreadAccess;
 import org.jowidgets.spi.image.IImageHandleFactorySpi;
 
 public interface IWidgetsServiceProvider {
@@ -43,22 +41,15 @@ public interface IWidgetsServiceProvider {
 
 	IWidgetFactorySpi getWidgetFactory();
 
-	IUiThreadAccessCommon createUiThreadAccess();
+	IUiThreadAccess createUiThreadAccess();
 
 	IApplicationRunner createApplicationRunner();
 
 	/**
-	 * Gets the UI reference (e.g. Shell for SWT, Window for Swing, ...) of the active window.
+	 * Gets the UI Reference (e.g. Shell for SWT, Window for Swing, ...) of the active window.
 	 * 
-	 * @return The UI reference of the active window or null, if now window is active
+	 * @return The UI Reference of the active window or null, if now window is active
 	 */
 	Object getActiveWindowUiReference();
-
-	/**
-	 * Gets the UI reference (e.g. Shell for SWT, Window for Swing, ...) for all known windows
-	 * 
-	 * @return The UI reference for all known windows or an empty list
-	 */
-	List<Object> getAllWindowsUiReference();
 
 }

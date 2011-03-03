@@ -31,7 +31,7 @@ import org.jowidgets.api.validation.ITextInputValidator;
 import org.jowidgets.common.widgets.builder.ITextFieldSetupBuilderCommon;
 
 public interface ITextFieldSetupBuilder<INSTANCE_TYPE extends ITextFieldSetupBuilder<?>> extends
-		IInputComponentSetupBuilder<INSTANCE_TYPE, String>,
+		IInputWidgetSetupBuilder<INSTANCE_TYPE, String>,
 		ITextFieldSetupBuilderCommon<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setTextInputValidator(final ITextInputValidator textInputValidator);
