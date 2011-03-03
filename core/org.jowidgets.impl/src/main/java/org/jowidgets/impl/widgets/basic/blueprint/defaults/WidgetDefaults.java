@@ -27,13 +27,13 @@
  */
 package org.jowidgets.impl.widgets.basic.blueprint.defaults;
 
-import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.builder.IWidgetSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
-public class WidgetDefaults implements IDefaultInitializer<IComponentSetupBuilder<?>> {
+public class WidgetDefaults implements IDefaultInitializer<IWidgetSetupBuilder<?>> {
 
 	@Override
-	public void initialize(final IComponentSetupBuilder<?> builder) {
+	public void initialize(final IWidgetSetupBuilder<?> builder) {
 
 	}
 

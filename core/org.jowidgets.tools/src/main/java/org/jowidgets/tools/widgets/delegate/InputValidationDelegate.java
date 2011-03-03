@@ -34,7 +34,7 @@ import java.util.List;
 import org.jowidgets.api.validation.IValidateable;
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationResult;
-import org.jowidgets.api.widgets.descriptor.setup.IInputComponentSetup;
+import org.jowidgets.api.widgets.descriptor.setup.IInputWidgetSetup;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.Tuple;
 
@@ -45,26 +45,15 @@ public class InputValidationDelegate<VALUE_TYPE> {
 
 	private boolean mandatory;
 
-	public InputValidationDelegate(final IInputComponentSetup<VALUE_TYPE> setup) {
-		this(setup.getValidator(), setup.isMandatory());
-	}
-
-	public InputValidationDelegate(final boolean mandatory) {
-		this(null, mandatory);
-	}
-
-	public InputValidationDelegate(final IValidator<VALUE_TYPE> validator, final boolean mandatory) {
+	public InputValidationDelegate(final IInputWidgetSetup<VALUE_TYPE> setup) {
 		super();
 		this.validateables = new LinkedList<Tuple<IValidateable, String>>();
 		this.validators = new LinkedList<IValidator<VALUE_TYPE>>();
+		final IValidator<VALUE_TYPE> validator = setup.getValidator();
 		if (validator != null) {
 			validators.add(validator);
 		}
-		this.mandatory = mandatory;
-	}
-
-	public void addValidatable(final IValidateable validateable) {
-		addValidatable(validateable, null);
+		this.mandatory = setup.isMandatory();
 	}
 
 	public void addValidatable(final IValidateable validateable, final String validationContext) {
@@ -84,12 +73,7 @@ public class InputValidationDelegate<VALUE_TYPE> {
 		final ValidationResult result = new ValidationResult();
 
 		for (final Tuple<IValidateable, String> validateable : validateables) {
-			if (validateable.getSecond() == null) {
-				result.addValidationResult(validateable.getFirst().validate());
-			}
-			else {
-				result.addValidationResult(validateable.getFirst().validate(), validateable.getSecond());
-			}
+			result.addValidationResult(validateable.getFirst().validate(), validateable.getSecond());
 		}
 
 		for (final IValidator<VALUE_TYPE> validator : validators) {

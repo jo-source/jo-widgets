@@ -31,7 +31,7 @@ package org.jowidgets.impl.widgets.common.wrapper;
 import org.jowidgets.common.widgets.ISplitCompositeCommon;
 import org.jowidgets.spi.widgets.ISplitCompositeSpi;
 
-public abstract class AbstractSplitCompositeSpiWrapper extends ControlSpiWrapper implements ISplitCompositeCommon {
+public abstract class AbstractSplitCompositeSpiWrapper extends WidgetSpiWrapper implements ISplitCompositeCommon {
 
 	public AbstractSplitCompositeSpiWrapper(final ISplitCompositeSpi widget) {
 		super(widget);

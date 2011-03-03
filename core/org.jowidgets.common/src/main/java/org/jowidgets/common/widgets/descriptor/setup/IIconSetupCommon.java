@@ -29,7 +29,7 @@ package org.jowidgets.common.widgets.descriptor.setup;
 
 import org.jowidgets.common.image.IImageConstant;
 
-public interface IIconSetupCommon extends IComponentSetupCommon {
+public interface IIconSetupCommon extends IWidgetSetupCommon {
 
 	IImageConstant getIcon();
 

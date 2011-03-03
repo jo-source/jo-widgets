@@ -16,15 +16,15 @@ import org.jowidgets.common.widgets.factory.IWidgetFactory;
 public abstract class AbstractCompositeWidgetFactory<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> implements
 		IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> {
 
+	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
+	private static final IGenericWidgetFactory GWF = Toolkit.getWidgetFactory();
+
 	protected abstract WIDGET_TYPE createWidget(IComposite composite, DESCRIPTOR_TYPE descriptor);
 
 	@Override
 	public WIDGET_TYPE create(final Object parentUiReference, final DESCRIPTOR_TYPE descriptor) {
 
-		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
-		final IGenericWidgetFactory gwF = Toolkit.getWidgetFactory();
-
-		final IComposite compositeWidget = gwF.create(parentUiReference, bpF.composite());
+		final IComposite compositeWidget = GWF.create(parentUiReference, BPF.composite());
 
 		if (compositeWidget == null) {
 			throw new IllegalStateException("Could not create widget with descriptor interface class '"

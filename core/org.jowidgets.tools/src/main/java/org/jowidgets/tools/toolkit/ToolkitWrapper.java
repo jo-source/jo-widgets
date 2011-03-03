@@ -28,12 +28,7 @@
 
 package org.jowidgets.tools.toolkit;
 
-import java.util.List;
-
-import org.jowidgets.api.command.IActionBuilderFactory;
 import org.jowidgets.api.convert.IConverterProvider;
-import org.jowidgets.api.model.IModelFactoryProvider;
-import org.jowidgets.api.threads.IUiThreadAccess;
 import org.jowidgets.api.toolkit.IMessagePane;
 import org.jowidgets.api.toolkit.IQuestionPane;
 import org.jowidgets.api.toolkit.IToolkit;
@@ -46,6 +41,7 @@ import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
+import org.jowidgets.common.threads.IUiThreadAccess;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.util.Assert;
 
@@ -93,16 +89,6 @@ public class ToolkitWrapper implements IToolkit {
 	}
 
 	@Override
-	public IActionBuilderFactory getActionBuilderFactory() {
-		return toolkit.getActionBuilderFactory();
-	}
-
-	@Override
-	public IModelFactoryProvider getModelFactoryProvider() {
-		return toolkit.getModelFactoryProvider();
-	}
-
-	@Override
 	public IConverterProvider getConverterProvider() {
 		return toolkit.getConverterProvider();
 	}
@@ -125,11 +111,6 @@ public class ToolkitWrapper implements IToolkit {
 	@Override
 	public IWindow getActiveWindow() {
 		return toolkit.getActiveWindow();
-	}
-
-	@Override
-	public List<IWindow> getAllWindows() {
-		return toolkit.getAllWindows();
 	}
 
 	@Override

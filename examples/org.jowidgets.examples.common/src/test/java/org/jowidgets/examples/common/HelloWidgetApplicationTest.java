@@ -47,7 +47,7 @@ public class HelloWidgetApplicationTest {
 				testApplication.start(lifecycle);
 				Assert.assertTrue(testApplication.getRootFrame().isVisible());
 
-				testApplication.getRootFrame().dispose();
+				testApplication.getRootFrame().close();
 
 			}
 		});

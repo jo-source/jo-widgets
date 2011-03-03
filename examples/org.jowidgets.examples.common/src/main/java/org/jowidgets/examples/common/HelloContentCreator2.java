@@ -85,7 +85,9 @@ public class HelloContentCreator2 implements IInputContentCreator<String> {
 	}
 
 	@Override
-	public void setValue(final String content) {}
+	public void setValue(final String content) {
+		// TODO Auto-generated method stub
+	}
 
 	@Override
 	public String getValue() {

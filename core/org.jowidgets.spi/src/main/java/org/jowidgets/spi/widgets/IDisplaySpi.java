@@ -30,6 +30,6 @@ package org.jowidgets.spi.widgets;
 
 import org.jowidgets.common.widgets.IDisplayCommon;
 
-public interface IDisplaySpi extends IComponentSpi, IDisplayCommon {
+public interface IDisplaySpi extends IWidgetSpi, IDisplayCommon {
 
 }

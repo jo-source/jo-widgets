@@ -29,6 +29,8 @@
 package org.jowidgets.tools.widgets.wrapper;
 
 import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.util.Assert;
 
 public class WidgetWrapper implements IWidget {
@@ -50,13 +52,53 @@ public class WidgetWrapper implements IWidget {
 	}
 
 	@Override
-	public void setEnabled(final boolean enabled) {
-		widget.setEnabled(enabled);
+	public void redraw() {
+		widget.redraw();
 	}
 
 	@Override
-	public boolean isEnabled() {
-		return widget.isEnabled();
+	public void setForegroundColor(final IColorConstant colorValue) {
+		widget.setForegroundColor(colorValue);
+	}
+
+	@Override
+	public void setBackgroundColor(final IColorConstant colorValue) {
+		widget.setBackgroundColor(colorValue);
+	}
+
+	@Override
+	public IColorConstant getForegroundColor() {
+		return widget.getForegroundColor();
+	}
+
+	@Override
+	public IColorConstant getBackgroundColor() {
+		return widget.getBackgroundColor();
+	}
+
+	@Override
+	public void setVisible(final boolean visible) {
+		widget.setVisible(visible);
+	}
+
+	@Override
+	public boolean isVisible() {
+		return widget.isVisible();
+	}
+
+	@Override
+	public Dimension getSize() {
+		return widget.getSize();
+	}
+
+	@Override
+	public void setParent(final IWidget parent) {
+		widget.setParent(parent);
+	}
+
+	@Override
+	public boolean isReparentable() {
+		return widget.isReparentable();
 	}
 
 	@Override

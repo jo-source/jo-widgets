@@ -30,7 +30,7 @@ package org.jowidgets.api.widgets.blueprint.builder;
 import org.jowidgets.api.convert.IConverter;
 
 public interface IInputFieldSetupBuilder<INSTANCE_TYPE extends IInputFieldSetupBuilder<?, ?>, INPUT_TYPE> extends
-		IInputComponentSetupBuilder<INSTANCE_TYPE, INPUT_TYPE> {
+		IInputWidgetSetupBuilder<INSTANCE_TYPE, INPUT_TYPE> {
 
 	INSTANCE_TYPE setConverter(IConverter<INPUT_TYPE> converter);
 

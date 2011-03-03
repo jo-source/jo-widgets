@@ -28,16 +28,16 @@
 package org.jowidgets.api.widgets.content;
 
 import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.IInputComponent;
+import org.jowidgets.api.widgets.IInputWidget;
 import org.jowidgets.common.widgets.IContainerCommon;
 
 public interface IInputContentContainer extends IContainer, IContainerCommon {
 
 	void addSubContent(IInputContentCreator<?> subContentCreator, Object layoutConstraints);
 
-	void registerInputWidget(String contextLabel, IInputComponent<?> inputWidget);
+	void registerInputWidget(String contextLabel, IInputWidget<?> inputWidget);
 
-	void unRegisterInputWidget(IInputComponent<?> inputWidget);
+	void unRegisterInputWidget(IInputWidget<?> inputWidget);
 
 	void fireInputChanged(Object source);
 

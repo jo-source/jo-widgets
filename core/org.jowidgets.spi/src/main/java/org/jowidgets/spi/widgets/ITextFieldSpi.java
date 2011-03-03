@@ -29,7 +29,7 @@
 package org.jowidgets.spi.widgets;
 
 
-public interface ITextFieldSpi extends IControlSpi, IInputControlSpi {
+public interface ITextFieldSpi extends IControlSpi, IInputWidgetSpi {
 
 	String getText();
 

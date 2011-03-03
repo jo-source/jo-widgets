@@ -46,7 +46,7 @@ public class InputVerifier implements IInputVerifier {
 	public boolean verify(final String currentValue, final String input, final int start, final int end) {
 		final String first = currentValue.substring(0, start);
 		String second = "";
-		if (end < currentValue.length() && end >= 0) {
+		if (end < currentValue.length()) {
 			second = currentValue.substring(end, currentValue.length() - 1);
 		}
 

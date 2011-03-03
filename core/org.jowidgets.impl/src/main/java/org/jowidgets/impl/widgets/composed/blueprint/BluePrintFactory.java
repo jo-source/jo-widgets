@@ -134,7 +134,7 @@ public final class BluePrintFactory extends SimpleBluePrintFactory implements IB
 		return questionDialog();
 	}
 
-	//TODO I18N
+	//TODO i18n
 	@Override
 	public IQuestionDialogBluePrint yesNoCancelQuestion() {
 		return questionDialog().setCancelButton(button("Cancel"));
