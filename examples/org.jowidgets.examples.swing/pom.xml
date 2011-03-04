@@ -21,7 +21,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
-			<artifactId>org.jowidgets.addons.swing</artifactId>
+			<artifactId>org.jowidgets.spi.impl.swing.addons</artifactId>
 			<version>0.0.17-SNAPSHOT</version>
 		</dependency>
 		<dependency>
