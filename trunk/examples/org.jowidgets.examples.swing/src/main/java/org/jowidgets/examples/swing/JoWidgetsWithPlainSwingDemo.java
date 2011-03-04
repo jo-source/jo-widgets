@@ -34,7 +34,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
-import org.jowidgets.addons.swing.JoToSwing;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IFrame;
@@ -46,6 +45,7 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.examples.common.demo.DemoForm1Creator;
 import org.jowidgets.examples.common.icons.DemoIconsInitializer;
+import org.jowidgets.spi.impl.swing.addons.JoToSwing;
 
 public final class JoWidgetsWithPlainSwingDemo {
 

@@ -37,10 +37,10 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import org.jowidgets.addons.swing.SwingToJo;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.examples.common.demo.DemoForm1Creator;
 import org.jowidgets.examples.common.icons.DemoIconsInitializer;
+import org.jowidgets.spi.impl.swing.addons.SwingToJo;
 
 public final class PlainSwingWithJowidgetsDemo {
 

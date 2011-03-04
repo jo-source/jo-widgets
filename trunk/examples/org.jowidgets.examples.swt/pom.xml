@@ -26,7 +26,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
-			<artifactId>org.jowidgets.addons.swt</artifactId>
+			<artifactId>org.jowidgets.spi.impl.swt.addons</artifactId>
 			<version>0.0.17-SNAPSHOT</version>
 		</dependency>
 		<dependency>

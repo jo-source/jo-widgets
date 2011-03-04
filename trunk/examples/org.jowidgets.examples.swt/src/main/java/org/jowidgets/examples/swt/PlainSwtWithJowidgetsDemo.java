@@ -37,10 +37,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
-import org.jowidgets.addons.swt.SwtToJo;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.examples.common.demo.DemoForm1Creator;
 import org.jowidgets.examples.common.icons.DemoIconsInitializer;
+import org.jowidgets.spi.impl.swt.addons.SwtToJo;
 
 public final class PlainSwtWithJowidgetsDemo {
 
