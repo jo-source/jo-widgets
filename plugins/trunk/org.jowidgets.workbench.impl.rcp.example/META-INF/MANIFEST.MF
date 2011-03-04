@@ -2,18 +2,18 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.jowidgets.workbench.impl.rcp.example
 Bundle-SymbolicName: org.jowidgets.workbench.impl.rcp.example;singleton:=true
-Bundle-Version: 0.0.16
+Bundle-Version: 0.0.17.qualifier
 Bundle-Vendor: jo-widgets.org
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui;bundle-version="3.6.1",
- org.jowidgets.workbench.api;bundle-version="0.0.16",
- org.jowidgets.workbench.impl.rcp;bundle-version="0.0.16",
- org.jowidgets.examples.common;bundle-version="0.0.16",
- org.jowidgets.api;bundle-version="0.0.16",
- org.jowidgets.common;bundle-version="0.0.16",
- org.jowidgets.impl;bundle-version="0.0.16",
- org.jowidgets.spi;bundle-version="0.0.16",
- org.jowidgets.spi.impl.swt;bundle-version="0.0.16"
+ org.jowidgets.workbench.api;bundle-version="0.0.17",
+ org.jowidgets.workbench.impl.rcp;bundle-version="0.0.17",
+ org.jowidgets.examples.common;bundle-version="0.0.17",
+ org.jowidgets.api;bundle-version="0.0.17",
+ org.jowidgets.common;bundle-version="0.0.17",
+ org.jowidgets.impl;bundle-version="0.0.17",
+ org.jowidgets.spi;bundle-version="0.0.17",
+ org.jowidgets.spi.impl.swt;bundle-version="0.0.17"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: miglayout-3.7.3.1-swt.jar,
  easymock-3.0.jar,
