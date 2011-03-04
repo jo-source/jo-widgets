@@ -1,0 +1,40 @@
+#Hello World example 
+{{{
+package org.jowidgets.examples.common;
+
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.common.application.IApplication;
+import org.jowidgets.common.application.IApplicationLifecycle;
+import org.jowidgets.common.widgets.controler.impl.WindowAdapter;
+import org.jowidgets.tools.powo.JoFrame;
+
+public class HelloWorld implements IApplication {
+
+    @Override
+    public void start(final IApplicationLifecycle lifecycle) {
+
+        //create a new (root) frame
+        final JoFrame frame = new JoFrame("Hello World");
+ 
+        //add a label to the frame 
+        frame.addLabel("Hello World");
+
+        //finish the application on window closing
+	frame.addWindowListener(new WindowAdapter() {
+	    @Override
+	    public void windowClosed() {
+		lifecycle.finish();
+	    }
+	});
+
+        //set the root frame visible
+	frame.setVisible(true);
+    }
+	
+    public static void main(final String[] args) throws Exception {
+        //start the application with an application runner
+        Toolkit.getApplicationRunner().run(new HelloWorld());
+    }
+
+}
+}}}
