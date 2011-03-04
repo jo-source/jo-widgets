@@ -2,21 +2,20 @@
 	
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jowidgets</groupId>
-	<artifactId>org.jowidgets.examples.assemblies.parent</artifactId>
+	<artifactId>org.jowidgets.assemblies.parent</artifactId>
 	<version>0.0.17-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>org.jowidgets.examples.assemblies.parent</name>
+	<name>org.jowidgets.assemblies.parent</name>
 	
 	<parent>
 		<groupId>org.jowidgets</groupId>
-		<artifactId>org.jowidgets.examples.parent</artifactId>
+		<artifactId>org.jowidgets.parent</artifactId>
 		<version>0.0.17-SNAPSHOT</version>
 		<relativePath>../../parent/pom.xml</relativePath>
 	</parent>
 	
 	<modules>
-		<module>../org.jowidgets.examples.assemblies.swing</module>
-		<module>../org.jowidgets.examples.assemblies.swt.win32</module>
+		<module>../examples/parent</module>
 	</modules>
 
 </project>
