@@ -2,7 +2,9 @@
               The BSD License for jo-widgets
               ==============================
 
-  Copyright (c) 2010, jo-widgets.org, jowidgets.org, Michael Grossmann
+  Copyright (c) 2010, jo-widgets.org, jowidgets.org, 
+  Michael Grossmann, Harald Westphal, 
+  Michael Hengler, Benjamin Marstaller, Manuel Woelker, Lukas Gross
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without
