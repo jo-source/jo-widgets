@@ -56,7 +56,7 @@ public abstract class AbstractBluePrintFactory implements IBaseBluePrintFactory 
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public <WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>, BLUE_PRINT_TYPE extends IComponentSetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
+	public <WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends IComponentSetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
 		final Class<BLUE_PRINT_TYPE> bluePrintType) {
 		//This cast is necessary for compilation with sun compiler. 
 		//It compiles in eclipse Version: Helios Service Release 1 Build id: 20100917-0705

@@ -31,9 +31,11 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenience;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
@@ -299,51 +301,33 @@ public class BluePrintProxyInvocationHandler implements InvocationHandler {
 	 * @return
 	 */
 	private static Class<?> getDescriptorInterface(final Class<?> bluePrintType) {
-		final Class<?>[] interfaces = bluePrintType.getInterfaces();
-		final ArrayList<Class<?>> possibleInterfaces = new ArrayList<Class<?>>();
-		for (final Class<?> c : interfaces) {
-			if (getSubInterfaces(c) != null) {
-				possibleInterfaces.add(c);
-			}
-		}
+		final Set<Class<?>> possibleInterfaces = getDescriptorInterfaces(bluePrintType);
 		if (possibleInterfaces.size() == 1) {
-			return possibleInterfaces.get(0);
+			return possibleInterfaces.iterator().next();
 		}
 		return null;
 	}
 
-	private static Class<?> getSubInterfaces(final Class<?> in) {
+	private static Set<Class<?>> getDescriptorInterfaces(final Class<?> in) {
+		final Set<Class<?>> possibleInterfaces = new HashSet<Class<?>>();
+		if (isDescriptor(in)) {
+			possibleInterfaces.add(in);
+		}
 		final Class<?>[] interfaces = in.getInterfaces();
 		for (final Class<?> c : interfaces) {
-			if (c.isAssignableFrom(IWidgetDescriptor.class)) {
-				return in;
-			}
+			possibleInterfaces.addAll(getDescriptorInterfaces(c));
 		}
-		return null;
+		return possibleInterfaces;
 	}
 
-	//	/**
-	//	 * Get superclass of class.
-	//	 * 
-	//	 * @param in
-	//	 * @return
-	//	 */
-	//	private static Class<?> getSuperclass(final Class<?> in) {
-	//		if (in == null) {
-	//			return null;
-	//		}
-	//
-	//		if (in.isArray() && in != Object[].class) {
-	//			Class<?> type = in.getComponentType();
-	//
-	//			while (type.isArray()) {
-	//				type = type.getComponentType();
-	//			}
-	//
-	//			return type;
-	//		}
-	//
-	//		return in.getSuperclass();
-	//	}
+	private static boolean isDescriptor(final Class<?> in) {
+		final Class<?>[] interfaces = in.getInterfaces();
+		for (final Class<?> c : interfaces) {
+			if (c == IWidgetDescriptor.class) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }
