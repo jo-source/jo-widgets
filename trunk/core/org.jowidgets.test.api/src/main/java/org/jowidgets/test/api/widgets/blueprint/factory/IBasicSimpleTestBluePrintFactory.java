@@ -61,7 +61,7 @@ import org.jowidgets.test.api.widgets.blueprint.IToolBarPopupButtonBluePrintUi;
 import org.jowidgets.test.api.widgets.blueprint.IToolBarToggleButtonBluePrintUi;
 
 public interface IBasicSimpleTestBluePrintFactory {
-	<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>, BLUE_PRINT_TYPE extends IComponentSetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
+	<WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends IComponentSetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
 		final Class<BLUE_PRINT_TYPE> bluePrintType);
 
 	IFrameBluePrintUi frame();
