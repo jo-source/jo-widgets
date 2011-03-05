@@ -11,5 +11,17 @@
          </run>
       </application>
    </extension>
+   <extension
+         id="demo1"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.jowidgets.workbench.impl.rcp.example.demo1"
+            name="org.jowidgets.workbench.impl.rcp.example">
+         <property
+               name="appName"
+               value="org.jowidgets.workbench.impl.rcp.example">
+         </property>
+      </product>
+   </extension>
 
 </plugin>
