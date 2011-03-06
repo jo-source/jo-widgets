@@ -36,7 +36,7 @@ import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.IViewLayout;
 import org.jowidgets.workbench.tools.api.IViewLayoutBuilder;
 
-public class ViewLayoutBuilder extends WorkbenchPartBuilder<IViewLayoutBuilder> implements IViewLayoutBuilder {
+class ViewLayoutBuilder extends WorkbenchPartBuilder<IViewLayoutBuilder> implements IViewLayoutBuilder {
 
 	private String id;
 	private boolean hidden;

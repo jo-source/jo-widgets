@@ -36,7 +36,7 @@ import org.jowidgets.workbench.api.ISplitLayout;
 import org.jowidgets.workbench.tools.api.ILayoutContainerBuilder;
 import org.jowidgets.workbench.tools.api.ISplitLayoutBuilder;
 
-public class SplitLayoutBuilder extends WorkbenchPartBuilder<ISplitLayoutBuilder> implements ISplitLayoutBuilder {
+class SplitLayoutBuilder extends WorkbenchPartBuilder<ISplitLayoutBuilder> implements ISplitLayoutBuilder {
 
 	private Orientation orientation;
 	private double weight;
@@ -55,10 +55,12 @@ public class SplitLayoutBuilder extends WorkbenchPartBuilder<ISplitLayoutBuilder
 		return this;
 	}
 
+	@Override
 	public ISplitLayoutBuilder setHorizontal() {
 		return setOrientation(Orientation.HORIZONTAL);
 	}
 
+	@Override
 	public ISplitLayoutBuilder setVertical() {
 		return setOrientation(Orientation.VERTICAL);
 	}
@@ -76,14 +78,17 @@ public class SplitLayoutBuilder extends WorkbenchPartBuilder<ISplitLayoutBuilder
 		return this;
 	}
 
+	@Override
 	public ISplitLayoutBuilder setResizeFirst() {
 		return setResizePolicy(SplitResizePolicy.RESIZE_FIRST);
 	}
 
+	@Override
 	public ISplitLayoutBuilder setResizeSecond() {
 		return setResizePolicy(SplitResizePolicy.RESIZE_SECOND);
 	}
 
+	@Override
 	public ISplitLayoutBuilder setResizeBoth() {
 		return setResizePolicy(SplitResizePolicy.RESIZE_BOTH);
 	}
