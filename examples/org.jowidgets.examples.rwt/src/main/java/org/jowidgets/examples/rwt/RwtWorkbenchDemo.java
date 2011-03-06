@@ -34,6 +34,7 @@ import org.eclipse.rwt.lifecycle.UICallBack;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1;
+import org.jowidgets.workbench.impl.WorkbenchRunner;
 
 public final class RwtWorkbenchDemo implements IEntryPoint {
 
@@ -47,7 +48,7 @@ public final class RwtWorkbenchDemo implements IEntryPoint {
 			Toolkit.initialize(new RwtToolkitProvider());
 		}
 
-		WorkbenchDemo1.runWorkbench(new Dimension(1024, 768));
+		new WorkbenchRunner().run(new WorkbenchDemo1(new Dimension(1024, 768)));
 
 		UICallBack.deactivate(uuid);
 

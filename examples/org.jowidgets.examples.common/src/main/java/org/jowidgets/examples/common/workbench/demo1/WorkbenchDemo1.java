@@ -41,7 +41,6 @@ import org.jowidgets.examples.common.workbench.base.AbstractWorkbench;
 import org.jowidgets.tools.model.item.ActionItemModel;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.workbench.api.IWorkbenchContext;
-import org.jowidgets.workbench.api.WorkbenchToolkit;
 
 public class WorkbenchDemo1 extends AbstractWorkbench {
 
@@ -130,11 +129,4 @@ public class WorkbenchDemo1 extends AbstractWorkbench {
 		menuBarModel.addMenu(editModel);
 	}
 
-	public static final void runWorkbench() {
-		WorkbenchToolkit.getWorkbenchRunner().run(new WorkbenchDemo1());
-	}
-
-	public static final void runWorkbench(final Dimension initialDimension) {
-		WorkbenchToolkit.getWorkbenchRunner().run(new WorkbenchDemo1(initialDimension));
-	}
 }
