@@ -26,21 +26,21 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.swt;
+package org.jowidgets.workbench.impl;
 
-import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1;
-import org.jowidgets.spi.impl.swt.options.SplitlayoutMode;
-import org.jowidgets.spi.impl.swt.options.SwtOptions;
+import org.jowidgets.workbench.api.IWorkbenchToolkit;
+import org.jowidgets.workbench.api.IWorkbenchToolkitProvider;
 
-public final class SwtWorkbenchDemo1ClassicTabsStarter {
+public class DefaultWorkbenchToolkitProvider implements IWorkbenchToolkitProvider {
 
-	private SwtWorkbenchDemo1ClassicTabsStarter() {
-	}
+	private IWorkbenchToolkit workbenchToolkit;
 
-	public static void main(final String[] args) throws Exception {
-		SwtOptions.setClassicTabs(true);
-		SwtOptions.setSplitLayoutMode(SplitlayoutMode.ON_MOUSE_MOVE);
-		WorkbenchDemo1.runWorkbench();
+	@Override
+	public IWorkbenchToolkit get() {
+		if (workbenchToolkit == null) {
+			workbenchToolkit = new DefaultWorkbenchToolkit();
+		}
+		return workbenchToolkit;
 	}
 
 }

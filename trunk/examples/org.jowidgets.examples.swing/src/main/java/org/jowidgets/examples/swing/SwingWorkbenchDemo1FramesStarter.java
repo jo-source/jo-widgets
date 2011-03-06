@@ -38,7 +38,6 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.TabPlacement;
 import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1;
 import org.jowidgets.spi.impl.swing.options.SwingOptions;
-import org.jowidgets.workbench.impl.WorkbenchRunner;
 
 public final class SwingWorkbenchDemo1FramesStarter {
 
@@ -56,7 +55,7 @@ public final class SwingWorkbenchDemo1FramesStarter {
 		bpf.addDefaultsInitializer(ITabFolderBluePrint.class, createTabDefaults());
 		bpf.addDefaultsInitializer(ISplitCompositeBluePrint.class, createSplitDefaults());
 
-		new WorkbenchRunner().run(new WorkbenchDemo1());
+		WorkbenchDemo1.runWorkbench();
 	}
 
 	private static IDefaultInitializer<ITabFolderBluePrint> createTabDefaults() {
