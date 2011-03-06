@@ -33,8 +33,7 @@ import java.util.List;
 import org.jowidgets.workbench.api.IFolderLayout;
 import org.jowidgets.workbench.api.IViewLayout;
 
-public interface IFolderLayoutBuilder extends ILayoutContainerBuilder,
-		IWorkbenchPartBuilder<IFolderLayoutBuilder> {
+public interface IFolderLayoutBuilder extends ILayoutContainerBuilder, IWorkbenchPartBuilder<IFolderLayoutBuilder> {
 
 	IFolderLayoutBuilder setId(String id);
 
@@ -44,7 +43,7 @@ public interface IFolderLayoutBuilder extends ILayoutContainerBuilder,
 
 	IFolderLayoutBuilder setViewsCloseable(boolean viewsCloseable);
 
-	IFolderLayoutBuilder setViews(final List<? extends IViewLayout> views);
+	IFolderLayoutBuilder setViews(List<? extends IViewLayout> views);
 
 	IFolderLayoutBuilder setViews(IViewLayout... views);
 

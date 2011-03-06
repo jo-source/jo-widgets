@@ -40,8 +40,7 @@ public interface ILayoutBuilder extends IWorkbenchPartBuilder<ILayoutBuilder> {
 
 	ILayoutBuilder setLayoutContainer(ILayoutContainer layoutContainer);
 
-	ILayoutBuilder setLayoutContainer(
-			ILayoutContainerBuilder layoutContainerBuilder);
+	ILayoutBuilder setLayoutContainer(ILayoutContainerBuilder layoutContainerBuilder);
 
 	ILayout build();
 
