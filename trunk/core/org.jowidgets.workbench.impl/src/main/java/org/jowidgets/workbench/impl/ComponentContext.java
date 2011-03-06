@@ -78,6 +78,16 @@ public final class ComponentContext implements IComponentContext {
 	}
 
 	@Override
+	public void resetLayout(final ILayout layout) {
+		//TODO MG implement reset
+	}
+
+	@Override
+	public void addLayout(final ILayout layout) {
+		//TODO MG implement add layout
+	}
+
+	@Override
 	public void removeView(final IView view) {
 		// TODO MG implement remove view
 	}

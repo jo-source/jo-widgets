@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, M. Grossmann, H. Westphal
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,14 +25,26 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
+
 package org.jowidgets.workbench.api;
 
-public interface ILayout extends IWorkbenchPart {
+public enum LayoutScope {
 
-	String getId();
+	/**
+	 * One separate instance of the layout for each component its used for.
+	 */
+	COMPONENT,
 
-	LayoutScope getScope();
+	/**
+	 * One separate instance of the layout for each workbench application its used for.
+	 * Components so may share layout instances with same id's.
+	 */
+	WORKBENCH_APPLICATION,
 
-	ILayoutContainer getLayoutContainer();
+	/**
+	 * One separate instance of the layout for each workbench its used for.
+	 * Components so may share layout instances with same id's.
+	 */
+	WORKBENCH;
 
 }

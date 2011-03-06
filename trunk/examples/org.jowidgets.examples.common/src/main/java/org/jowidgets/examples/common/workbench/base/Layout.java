@@ -32,21 +32,28 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.ILayout;
 import org.jowidgets.workbench.api.ILayoutContainer;
+import org.jowidgets.workbench.api.LayoutScope;
 
 public final class Layout implements ILayout {
 
 	private final String id;
+	private final LayoutScope scope;
 	private final String label;
 	private final String tooltip;
 	private final IImageConstant icon;
 	private final ILayoutContainer layoutContainer;
 
 	public Layout(final String id, final ILayoutContainer layoutContainer) {
-		this(id, null, null, null, layoutContainer);
+		this(id, LayoutScope.COMPONENT, layoutContainer);
+	}
+
+	public Layout(final String id, final LayoutScope scope, final ILayoutContainer layoutContainer) {
+		this(id, scope, null, null, null, layoutContainer);
 	}
 
 	public Layout(
 		final String id,
+		final LayoutScope scope,
 		final String label,
 		final String tooltip,
 		final IImageConstant icon,
@@ -56,6 +63,7 @@ public final class Layout implements ILayout {
 		Assert.paramNotNull(layoutContainer, "layoutContainer");
 
 		this.id = id;
+		this.scope = scope;
 		this.label = label;
 		this.tooltip = tooltip;
 		this.icon = icon;
@@ -65,6 +73,11 @@ public final class Layout implements ILayout {
 	@Override
 	public String getId() {
 		return id;
+	}
+
+	@Override
+	public LayoutScope getScope() {
+		return scope;
 	}
 
 	@Override

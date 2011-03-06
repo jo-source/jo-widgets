@@ -79,6 +79,11 @@ public class WorkbenchDemo1 extends AbstractWorkbench {
 	}
 
 	@Override
+	public double getInitialSplitWeight() {
+		return 0.18;
+	}
+
+	@Override
 	public boolean getApplicationsCloseable() {
 		return true;
 	}

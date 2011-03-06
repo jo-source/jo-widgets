@@ -43,6 +43,8 @@ public interface IWorkbenchDescriptor extends IWorkbenchPart {
 	 */
 	Position getInitialPosition();
 
+	double getInitialSplitWeight();
+
 	boolean getApplicationsCloseable();
 
 }

@@ -42,6 +42,7 @@ import org.jowidgets.api.widgets.ITabFolder;
 import org.jowidgets.api.widgets.ITabItem;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
+import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.types.IVetoable;
@@ -116,9 +117,10 @@ public class WorkbenchContext implements IWorkbenchContext {
 		final IComposite rootComposite = rootFrame.add(bpf.composite(), "growx, growy, w 0::, h 0::, wrap");
 		rootComposite.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));
 
-		final ISplitComposite splitComposite = rootComposite.add(
-				bpf.splitHorizontal().setResizePolicy(SplitResizePolicy.RESIZE_SECOND).setWeight(0.18).disableBorders(),
-				"growx, growy, h 0::, w 0::");
+		final ISplitCompositeBluePrint splitCompositeBp = bpf.splitHorizontal().disableBorders();
+		splitCompositeBp.setResizePolicy(SplitResizePolicy.RESIZE_SECOND);
+		splitCompositeBp.setWeight(workbench.getInitialSplitWeight());
+		final ISplitComposite splitComposite = rootComposite.add(splitCompositeBp, "growx, growy, h 0::, w 0::");
 
 		final IContainer applicationsContainer = splitComposite.getFirst();
 		applicationsContainer.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));

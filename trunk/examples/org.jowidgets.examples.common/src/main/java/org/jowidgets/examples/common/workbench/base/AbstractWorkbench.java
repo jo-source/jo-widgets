@@ -59,6 +59,11 @@ public abstract class AbstractWorkbench implements IWorkbench {
 	}
 
 	@Override
+	public double getInitialSplitWeight() {
+		return 0.2;
+	}
+
+	@Override
 	public boolean getApplicationsCloseable() {
 		return true;
 	}
