@@ -48,16 +48,6 @@ public interface IComponentContext {
 	 */
 	void resetLayout(final ILayout layout);
 
-	/**
-	 * Adds a layout this component could be switched to by user interaction.
-	 * 
-	 * The workbench implementation must gives the possibility to switch between
-	 * the added layouts.
-	 * 
-	 * @param layout The layout to add
-	 */
-	void addLayout(final ILayout layout);
-
 	void removeView(IView view);
 
 	IComponentTreeNodeContext getComponentTreeNodeContext();
