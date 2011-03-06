@@ -32,16 +32,15 @@ import java.util.List;
 
 import org.jowidgets.workbench.api.IViewLayout;
 
-public interface IViewLayoutBuilder extends
-		IWorkbenchPartBuilder<IViewLayoutBuilder> {
+public interface IViewLayoutBuilder extends IWorkbenchPartBuilder<IViewLayoutBuilder> {
 
-	IViewLayoutBuilder setId(final String id);
+	IViewLayoutBuilder setId(String id);
 
-	IViewLayoutBuilder setHidden(final boolean hidden);
+	IViewLayoutBuilder setHidden(boolean hidden);
 
-	IViewLayoutBuilder setDetachable(final boolean detachable);
+	IViewLayoutBuilder setDetachable(boolean detachable);
 
-	IViewLayoutBuilder setFolderWhitelist(final List<String> folderWhiteList);
+	IViewLayoutBuilder setFolderWhitelist(List<String> folderWhiteList);
 
 	IViewLayoutBuilder setFolderWhitelist(String... folderWhiteList);
 

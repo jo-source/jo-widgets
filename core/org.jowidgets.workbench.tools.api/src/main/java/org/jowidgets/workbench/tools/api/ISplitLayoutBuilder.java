@@ -33,24 +33,31 @@ import org.jowidgets.common.types.SplitResizePolicy;
 import org.jowidgets.workbench.api.ILayoutContainer;
 import org.jowidgets.workbench.api.ISplitLayout;
 
-public interface ISplitLayoutBuilder extends ILayoutContainerBuilder,
-		IWorkbenchPartBuilder<ISplitLayoutBuilder> {
+public interface ISplitLayoutBuilder extends ILayoutContainerBuilder, IWorkbenchPartBuilder<ISplitLayoutBuilder> {
 
 	ISplitLayoutBuilder setOrientation(Orientation orientation);
+
+	ISplitLayoutBuilder setHorizontal();
+
+	ISplitLayoutBuilder setVertical();
 
 	ISplitLayoutBuilder setWeight(double weigth);
 
 	ISplitLayoutBuilder setResizePolicy(SplitResizePolicy splitResizePolicy);
 
+	ISplitLayoutBuilder setResizeFirst();
+
+	ISplitLayoutBuilder setResizeSecond();
+
+	ISplitLayoutBuilder setResizeBoth();
+
 	ISplitLayoutBuilder setFirstContainer(ILayoutContainer firstContainer);
 
-	ISplitLayoutBuilder setFirstContainer(
-			ILayoutContainerBuilder firstContainerBuilder);
+	ISplitLayoutBuilder setFirstContainer(ILayoutContainerBuilder firstContainerBuilder);
 
 	ISplitLayoutBuilder setSecondContainer(ILayoutContainer secondContainer);
 
-	ISplitLayoutBuilder setSecondContainer(
-			ILayoutContainerBuilder secondContainerBuilder);
+	ISplitLayoutBuilder setSecondContainer(ILayoutContainerBuilder secondContainerBuilder);
 
 	@Override
 	ISplitLayout build();

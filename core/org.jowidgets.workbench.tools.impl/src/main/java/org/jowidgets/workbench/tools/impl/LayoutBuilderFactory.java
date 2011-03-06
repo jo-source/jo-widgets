@@ -38,26 +38,24 @@ public class LayoutBuilderFactory implements ILayoutBuilderFactory {
 
 	@Override
 	public ILayoutBuilder layout() {
-		// TODO MG implement layout()
+		// TODO MG implement layoutBuilder()
 		return null;
 	}
 
 	@Override
 	public IFolderLayoutBuilder folder() {
-		// TODO MG implement folder()
+		// TODO MG implement folderLayoutBuilder()
 		return null;
 	}
 
 	@Override
 	public ISplitLayoutBuilder split() {
-		// TODO MG implement split()
-		return null;
+		return new SplitLayoutBuilder();
 	}
 
 	@Override
 	public IViewLayoutBuilder view() {
-		// TODO MG implement view()
-		return null;
+		return new ViewLayoutBuilder();
 	}
 
 }
