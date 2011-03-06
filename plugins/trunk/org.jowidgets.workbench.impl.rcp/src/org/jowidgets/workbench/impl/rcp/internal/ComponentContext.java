@@ -83,11 +83,6 @@ public final class ComponentContext implements IComponentContext {
 	}
 
 	@Override
-	public void addLayout(final ILayout layout) {
-		//TODO HW implement add layout
-	}
-
-	@Override
 	public void removeView(final IView view) {
 		PartSupport.getInstance().closeView(view);
 	}
