@@ -31,6 +31,7 @@ package org.jowidgets.examples.swing;
 import javax.swing.UIManager;
 
 import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1;
+import org.jowidgets.workbench.impl.WorkbenchRunner;
 
 public final class SwingWorkbenchDemo1Motif {
 
@@ -39,6 +40,6 @@ public final class SwingWorkbenchDemo1Motif {
 	public static void main(final String[] args) throws Exception {
 		UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
-		WorkbenchDemo1.runWorkbench();
+		new WorkbenchRunner().run(new WorkbenchDemo1());
 	}
 }
