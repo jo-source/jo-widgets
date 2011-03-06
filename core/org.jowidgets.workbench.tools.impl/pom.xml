@@ -2,9 +2,9 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.jowidgets</groupId>
-	<artifactId>org.jowidgets.workbench.impl</artifactId>
+	<artifactId>org.jowidgets.workbench.tools.impl</artifactId>
 	<version>0.0.17-SNAPSHOT</version>
-	<name>org.jowidgets.workbench.impl</name>
+	<name>org.jowidgets.workbench.tools.impl</name>
 
 	<parent>
 		<groupId>org.jowidgets</groupId>
@@ -16,16 +16,11 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
-			<artifactId>org.jowidgets.workbench.api</artifactId>
-			<version>0.0.17-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jowidgets</groupId>
-			<artifactId>org.jowidgets.tools</artifactId>
+			<artifactId>org.jowidgets.workbench.tools.api</artifactId>
 			<version>0.0.17-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<plugins>
 			<plugin>
@@ -33,12 +28,10 @@
 				<artifactId>maven-bundle-plugin</artifactId>
 				<configuration>
 					<instructions>
-						<Require-Bundle>org.jowidgets.workbench.api</Require-Bundle>
-						<Require-Bundle>org.jowidgets.tools</Require-Bundle>
+						<Require-Bundle>org.jowidgets.workbench.tools.api</Require-Bundle>
 					</instructions>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

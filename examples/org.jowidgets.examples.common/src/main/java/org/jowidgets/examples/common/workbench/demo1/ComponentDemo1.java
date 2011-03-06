@@ -49,6 +49,8 @@ import org.jowidgets.workbench.api.ISplitLayout;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
 import org.jowidgets.workbench.api.IViewLayout;
+import org.jowidgets.workbench.tools.api.ILayoutBuilderFactory;
+import org.jowidgets.workbench.tools.api.WorkbenchToolkit;
 
 public class ComponentDemo1 extends AbstractComponent implements IComponent {
 
@@ -101,6 +103,8 @@ public class ComponentDemo1 extends AbstractComponent implements IComponent {
 	}
 
 	private ISplitLayout createMainSplit() {
+		final ILayoutBuilderFactory layoutBuilderFactory = WorkbenchToolkit.getLayoutBuilderFactory();
+		layoutBuilderFactory.layout();
 		return new SplitLayout(
 			Orientation.HORIZONTAL,
 			0.78,
