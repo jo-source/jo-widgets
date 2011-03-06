@@ -45,6 +45,8 @@ public interface IWorkbenchDescriptor extends IWorkbenchPart {
 
 	double getInitialSplitWeight();
 
+	boolean hasApplicationNavigator();
+
 	boolean getApplicationsCloseable();
 
 }
