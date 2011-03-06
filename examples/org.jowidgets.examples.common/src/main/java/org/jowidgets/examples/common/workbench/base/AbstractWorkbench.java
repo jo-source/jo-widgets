@@ -64,6 +64,11 @@ public abstract class AbstractWorkbench implements IWorkbench {
 	}
 
 	@Override
+	public boolean hasApplicationNavigator() {
+		return true;
+	}
+
+	@Override
 	public boolean getApplicationsCloseable() {
 		return true;
 	}
