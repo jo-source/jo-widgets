@@ -13,7 +13,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.jowidgets.common;bundle-version="0.0.17",
  org.jowidgets.impl;bundle-version="0.0.17",
  org.jowidgets.spi;bundle-version="0.0.17",
- org.jowidgets.spi.impl.swt;bundle-version="0.0.17"
+ org.jowidgets.spi.impl.swt;bundle-version="0.0.17",
+ org.jowidgets.workbench.tools.api;bundle-version="0.0.17",
+ org.jowidgets.workbench.tools.impl;bundle-version="0.0.17"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: miglayout-3.7.3.1-swt.jar,
  easymock-3.0.jar,

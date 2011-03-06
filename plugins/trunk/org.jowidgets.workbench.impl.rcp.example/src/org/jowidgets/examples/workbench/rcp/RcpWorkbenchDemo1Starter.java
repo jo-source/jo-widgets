@@ -37,6 +37,8 @@ import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1;
 import org.jowidgets.impl.toolkit.DefaultToolkitProvider;
 import org.jowidgets.spi.impl.swt.SwtWidgetsServiceProvider;
 import org.jowidgets.workbench.impl.rcp.WorkbenchRunner;
+import org.jowidgets.workbench.tools.api.WorkbenchToolkit;
+import org.jowidgets.workbench.tools.impl.DefaultWorkbenchToolkit;
 
 public class RcpWorkbenchDemo1Starter implements IApplication {
 
@@ -44,6 +46,9 @@ public class RcpWorkbenchDemo1Starter implements IApplication {
 	public Object start(final IApplicationContext context) {
 		if (!Toolkit.isInitialized()) {
 			Toolkit.initialize(new DefaultToolkitProvider(new SwtWidgetsServiceProvider(Display.getDefault())));
+		}
+		if (!WorkbenchToolkit.isInitialized()) {
+			WorkbenchToolkit.initialize(new DefaultWorkbenchToolkit());
 		}
 		final String configFilePath = System.getProperty("user.home") + File.separator + getClass().getName() + ".config";
 		new WorkbenchRunner().run(new WorkbenchDemo1(), new FileConfigService(configFilePath));

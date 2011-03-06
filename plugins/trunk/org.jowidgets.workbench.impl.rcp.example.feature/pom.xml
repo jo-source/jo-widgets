@@ -52,6 +52,16 @@
 			<artifactId>org.jowidgets.api.test</artifactId>
 			<version>${jo-widgets.version}</version>
 		</dependency>
+		<dependency>
+            <groupId>org.jowidgets</groupId>
+            <artifactId>org.jowidgets.workbench.tools.api</artifactId>
+            <version>${jo-widgets.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jowidgets</groupId>
+            <artifactId>org.jowidgets.workbench.tools.impl</artifactId>
+            <version>${jo-widgets.version}</version>
+        </dependency>
 	</dependencies>
 	
 </project>

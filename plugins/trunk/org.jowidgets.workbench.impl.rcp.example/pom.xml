@@ -23,6 +23,16 @@
 			<version>${jo-widgets.version}</version>
 		</dependency>
 		<dependency>
+            <groupId>org.jowidgets</groupId>
+            <artifactId>org.jowidgets.workbench.tools.api</artifactId>
+            <version>${jo-widgets.version}</version>
+        </dependency>
+		<dependency>
+            <groupId>org.jowidgets</groupId>
+            <artifactId>org.jowidgets.workbench.tools.impl</artifactId>
+            <version>${jo-widgets.version}</version>
+        </dependency>
+		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.spi.impl.swt</artifactId>
 			<version>${jo-widgets.version}</version>
