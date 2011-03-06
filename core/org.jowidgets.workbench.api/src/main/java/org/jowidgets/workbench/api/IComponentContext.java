@@ -29,7 +29,34 @@ package org.jowidgets.workbench.api;
 
 public interface IComponentContext {
 
+	/**
+	 * Sets the layout for the component context.
+	 * If not already an instance exists for the given layout, an new instance will be
+	 * created, added and set. Otherwise, the the existing layouts instance will be used.
+	 * 
+	 * @param layout The layout to set
+	 */
 	void setLayout(final ILayout layout);
+
+	/**
+	 * Resets the layout for the component context.
+	 * If not already an instance exists for the given layout, an new instance will be
+	 * created, added and set. Otherwise, the the existing layouts instance will be reseted with the given
+	 * layout.
+	 * 
+	 * @param layout The layout to set / reset
+	 */
+	void resetLayout(final ILayout layout);
+
+	/**
+	 * Adds a layout this component could be switched to by user interaction.
+	 * 
+	 * The workbench implementation must gives the possibility to switch between
+	 * the added layouts.
+	 * 
+	 * @param layout The layout to add
+	 */
+	void addLayout(final ILayout layout);
 
 	void removeView(IView view);
 

@@ -298,7 +298,7 @@ public class ActionFactory {
 		actionBuilder.setCommand(new ICommandExecutor() {
 			@Override
 			public void execute(final IExecutionContext executionContext) throws Exception {
-				context.setLayout(layout);
+				context.resetLayout(layout);
 			}
 		});
 		return actionBuilder.build();
