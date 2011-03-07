@@ -37,8 +37,8 @@ import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1;
 import org.jowidgets.impl.toolkit.DefaultToolkitProvider;
 import org.jowidgets.spi.impl.swt.SwtWidgetsServiceProvider;
 import org.jowidgets.workbench.impl.rcp.WorkbenchRunner;
-import org.jowidgets.workbench.tools.api.WorkbenchToolkit;
-import org.jowidgets.workbench.tools.impl.DefaultWorkbenchToolkit;
+import org.jowidgets.workbench.toolkit.api.WorkbenchToolkit;
+import org.jowidgets.workbench.toolkit.impl.DefaultWorkbenchToolkit;
 
 public class RcpWorkbenchDemo1Starter implements IApplication {
 

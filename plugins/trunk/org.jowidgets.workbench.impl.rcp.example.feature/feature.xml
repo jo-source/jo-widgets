@@ -145,14 +145,14 @@
          unpack="false"/>
 
    <plugin
-         id="org.jowidgets.workbench.tools.api"
+         id="org.jowidgets.workbench.toolkit.api"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.jowidgets.workbench.tools.impl"
+         id="org.jowidgets.workbench.toolkit.impl"
          download-size="0"
          install-size="0"
          version="0.0.0"
