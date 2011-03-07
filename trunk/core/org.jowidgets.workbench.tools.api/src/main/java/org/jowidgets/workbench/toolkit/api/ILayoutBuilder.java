@@ -26,32 +26,22 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.tools.api;
+package org.jowidgets.workbench.toolkit.api;
 
-import java.util.List;
+import org.jowidgets.workbench.api.ILayout;
+import org.jowidgets.workbench.api.ILayoutContainer;
+import org.jowidgets.workbench.api.LayoutScope;
 
-import org.jowidgets.workbench.api.IViewLayout;
+public interface ILayoutBuilder extends IWorkbenchPartBuilder<ILayoutBuilder> {
 
-public interface IViewLayoutBuilder extends IWorkbenchPartBuilder<IViewLayoutBuilder> {
+	ILayoutBuilder setId(String id);
 
-	IViewLayoutBuilder setId(String id);
+	ILayoutBuilder setScope(LayoutScope scope);
 
-	IViewLayoutBuilder setHidden(boolean hidden);
+	ILayoutBuilder setLayoutContainer(ILayoutContainer layoutContainer);
 
-	IViewLayoutBuilder setDetachable(boolean detachable);
+	ILayoutBuilder setLayoutContainer(ILayoutContainerBuilder layoutContainerBuilder);
 
-	IViewLayoutBuilder setFolderWhitelist(List<String> folderWhiteList);
-
-	IViewLayoutBuilder setFolderWhitelist(String... folderWhiteList);
-
-	IViewLayoutBuilder addToFolderWhitelist(String folder);
-
-	IViewLayoutBuilder setFolderBlacklist(List<String> folderBlackList);
-
-	IViewLayoutBuilder setFolderBlacklist(String... folderBlackList);
-
-	IViewLayoutBuilder addToFolderBlacklist(String folder);
-
-	IViewLayout build();
+	ILayout build();
 
 }

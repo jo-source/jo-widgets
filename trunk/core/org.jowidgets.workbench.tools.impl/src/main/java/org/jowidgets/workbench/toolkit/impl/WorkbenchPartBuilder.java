@@ -26,54 +26,50 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.tools.impl;
+package org.jowidgets.workbench.toolkit.impl;
 
-import org.jowidgets.util.Assert;
-import org.jowidgets.workbench.api.ILayout;
-import org.jowidgets.workbench.api.ILayoutContainer;
-import org.jowidgets.workbench.api.LayoutScope;
-import org.jowidgets.workbench.tools.api.ILayoutBuilder;
-import org.jowidgets.workbench.tools.api.ILayoutContainerBuilder;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.workbench.toolkit.api.IWorkbenchPartBuilder;
 
-class LayoutBuilder extends WorkbenchPartBuilder<ILayoutBuilder> implements ILayoutBuilder {
+public class WorkbenchPartBuilder<BUILDER_INSTANCE_TYPE> implements IWorkbenchPartBuilder<BUILDER_INSTANCE_TYPE> {
 
-	private String id;
-	private LayoutScope scope;
-	private ILayoutContainer layoutContainer;
+	private String label;
+	private String tooltip;
+	private IImageConstant icon;
 
-	LayoutBuilder() {
-		super();
+	WorkbenchPartBuilder() {}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public BUILDER_INSTANCE_TYPE setLabel(final String label) {
+		this.label = label;
+		return (BUILDER_INSTANCE_TYPE) this;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public ILayoutBuilder setId(final String id) {
-		Assert.paramNotEmpty(id, "id");
-		this.id = id;
-		return this;
+	public BUILDER_INSTANCE_TYPE setTooltip(final String tooltip) {
+		this.tooltip = tooltip;
+		return (BUILDER_INSTANCE_TYPE) this;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public ILayoutBuilder setScope(final LayoutScope scope) {
-		Assert.paramNotNull(scope, "scope");
-		this.scope = scope;
-		return this;
+	public BUILDER_INSTANCE_TYPE setIcon(final IImageConstant icon) {
+		this.icon = icon;
+		return (BUILDER_INSTANCE_TYPE) this;
 	}
 
-	@Override
-	public ILayoutBuilder setLayoutContainer(final ILayoutContainer layoutContainer) {
-		Assert.paramNotNull(layoutContainer, "layoutContainer");
-		this.layoutContainer = layoutContainer;
-		return this;
+	protected String getLabel() {
+		return label;
 	}
 
-	@Override
-	public ILayoutBuilder setLayoutContainer(final ILayoutContainerBuilder layoutContainerBuilder) {
-		return setLayoutContainer(layoutContainerBuilder.build());
+	protected String getTooltip() {
+		return tooltip;
 	}
 
-	@Override
-	public ILayout build() {
-		return new Layout(id, scope, getLabel(), getTooltip(), getIcon(), layoutContainer);
+	protected IImageConstant getIcon() {
+		return icon;
 	}
 
 }

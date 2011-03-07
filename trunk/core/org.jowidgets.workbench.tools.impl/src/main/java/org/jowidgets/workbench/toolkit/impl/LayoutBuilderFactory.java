@@ -26,63 +26,34 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.tools.impl;
+package org.jowidgets.workbench.toolkit.impl;
 
-import org.jowidgets.common.types.Orientation;
-import org.jowidgets.common.types.SplitResizePolicy;
-import org.jowidgets.util.Assert;
-import org.jowidgets.workbench.api.ILayoutContainer;
-import org.jowidgets.workbench.api.ISplitLayout;
+import org.jowidgets.workbench.toolkit.api.IFolderLayoutBuilder;
+import org.jowidgets.workbench.toolkit.api.ILayoutBuilder;
+import org.jowidgets.workbench.toolkit.api.ILayoutBuilderFactory;
+import org.jowidgets.workbench.toolkit.api.ISplitLayoutBuilder;
+import org.jowidgets.workbench.toolkit.api.IViewLayoutBuilder;
 
-final class SplitLayout implements ISplitLayout {
+public class LayoutBuilderFactory implements ILayoutBuilderFactory {
 
-	private final Orientation orientation;
-	private final double weight;
-	private final SplitResizePolicy resizePolicy;
-	private final ILayoutContainer firstLayoutContainer;
-	private final ILayoutContainer secondLayoutContainer;
-
-	SplitLayout(
-		final Orientation orientation,
-		final double weight,
-		final SplitResizePolicy resizePolicy,
-		final ILayoutContainer firstLayoutContainer,
-		final ILayoutContainer secondLayoutContainer) {
-
-		Assert.paramNotNull(orientation, "orientation");
-		Assert.paramNotNull(firstLayoutContainer, "firstLayoutContainer");
-		Assert.paramNotNull(secondLayoutContainer, "secondLayoutContainer");
-
-		this.orientation = orientation;
-		this.weight = weight;
-		this.resizePolicy = resizePolicy;
-		this.firstLayoutContainer = firstLayoutContainer;
-		this.secondLayoutContainer = secondLayoutContainer;
+	@Override
+	public ILayoutBuilder layout() {
+		return new LayoutBuilder();
 	}
 
 	@Override
-	public Orientation getOrientation() {
-		return orientation;
+	public IFolderLayoutBuilder folder() {
+		return new FolderLayoutBuilder();
 	}
 
 	@Override
-	public double getWeight() {
-		return weight;
+	public ISplitLayoutBuilder split() {
+		return new SplitLayoutBuilder();
 	}
 
 	@Override
-	public SplitResizePolicy getResizePolicy() {
-		return resizePolicy;
-	}
-
-	@Override
-	public ILayoutContainer getFirstContainer() {
-		return firstLayoutContainer;
-	}
-
-	@Override
-	public ILayoutContainer getSecondContainer() {
-		return secondLayoutContainer;
+	public IViewLayoutBuilder view() {
+		return new ViewLayoutBuilder();
 	}
 
 }

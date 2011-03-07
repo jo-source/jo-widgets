@@ -26,16 +26,34 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.tools.api;
+package org.jowidgets.workbench.toolkit.api;
 
-import org.jowidgets.common.image.IImageConstant;
+import java.util.List;
 
-public interface IWorkbenchPartBuilder<BUILDER_INSTANCE_TYPE> {
+import org.jowidgets.workbench.api.IFolderLayout;
+import org.jowidgets.workbench.api.IViewLayout;
 
-	BUILDER_INSTANCE_TYPE setLabel(String label);
+public interface IFolderLayoutBuilder extends ILayoutContainerBuilder, IWorkbenchPartBuilder<IFolderLayoutBuilder> {
 
-	BUILDER_INSTANCE_TYPE setTooltip(String toolTiptext);
+	IFolderLayoutBuilder setId(String id);
 
-	BUILDER_INSTANCE_TYPE setIcon(IImageConstant icon);
+	IFolderLayoutBuilder setGroupId(String groupId);
+
+	IFolderLayoutBuilder setDetachable(boolean detachable);
+
+	IFolderLayoutBuilder setViewsCloseable(boolean viewsCloseable);
+
+	IFolderLayoutBuilder setViews(List<? extends IViewLayout> views);
+
+	IFolderLayoutBuilder setViews(IViewLayout... views);
+
+	IFolderLayoutBuilder addView(IViewLayout view);
+
+	IFolderLayoutBuilder setViews(IViewLayoutBuilder... viewsBuilder);
+
+	IFolderLayoutBuilder addView(IViewLayoutBuilder viewBuilder);
+
+	@Override
+	IFolderLayout build();
 
 }

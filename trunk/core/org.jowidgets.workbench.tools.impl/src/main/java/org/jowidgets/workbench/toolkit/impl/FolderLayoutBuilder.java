@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.tools.impl;
+package org.jowidgets.workbench.toolkit.impl;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -35,8 +35,8 @@ import java.util.List;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.IFolderLayout;
 import org.jowidgets.workbench.api.IViewLayout;
-import org.jowidgets.workbench.tools.api.IFolderLayoutBuilder;
-import org.jowidgets.workbench.tools.api.IViewLayoutBuilder;
+import org.jowidgets.workbench.toolkit.api.IFolderLayoutBuilder;
+import org.jowidgets.workbench.toolkit.api.IViewLayoutBuilder;
 
 class FolderLayoutBuilder extends WorkbenchPartBuilder<IFolderLayoutBuilder> implements IFolderLayoutBuilder {
 

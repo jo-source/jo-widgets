@@ -26,10 +26,32 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.tools.api;
+package org.jowidgets.workbench.toolkit.api;
 
-public interface IWorkbenchToolkit {
+import java.util.List;
 
-	ILayoutBuilderFactory getLayoutBuilderFactory();
+import org.jowidgets.workbench.api.IViewLayout;
+
+public interface IViewLayoutBuilder extends IWorkbenchPartBuilder<IViewLayoutBuilder> {
+
+	IViewLayoutBuilder setId(String id);
+
+	IViewLayoutBuilder setHidden(boolean hidden);
+
+	IViewLayoutBuilder setDetachable(boolean detachable);
+
+	IViewLayoutBuilder setFolderWhitelist(List<String> folderWhiteList);
+
+	IViewLayoutBuilder setFolderWhitelist(String... folderWhiteList);
+
+	IViewLayoutBuilder addToFolderWhitelist(String folder);
+
+	IViewLayoutBuilder setFolderBlacklist(List<String> folderBlackList);
+
+	IViewLayoutBuilder setFolderBlacklist(String... folderBlackList);
+
+	IViewLayoutBuilder addToFolderBlacklist(String folder);
+
+	IViewLayout build();
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2010, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,21 +26,54 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.tools.impl;
+package org.jowidgets.workbench.toolkit.api;
 
-import org.jowidgets.workbench.tools.api.ILayoutBuilderFactory;
-import org.jowidgets.workbench.tools.api.IWorkbenchToolkit;
+import java.util.Iterator;
+import java.util.ServiceLoader;
 
-public class DefaultWorkbenchToolkit implements IWorkbenchToolkit {
+import org.jowidgets.util.Assert;
 
-	private ILayoutBuilderFactory layoutBuilderFactory;
+public final class WorkbenchToolkit {
 
-	@Override
-	public ILayoutBuilderFactory getLayoutBuilderFactory() {
-		if (layoutBuilderFactory == null) {
-			this.layoutBuilderFactory = new LayoutBuilderFactory();
+	private static IWorkbenchToolkit workbenchToolkit;
+
+	private WorkbenchToolkit() {}
+
+	public static void initialize(final IWorkbenchToolkit workbenchToolkit) {
+		Assert.paramNotNull(workbenchToolkit, "workbenchTools");
+		if (WorkbenchToolkit.workbenchToolkit != null) {
+			throw new IllegalStateException("Workbench toolkit is already initialized");
 		}
-		return layoutBuilderFactory;
+		WorkbenchToolkit.workbenchToolkit = workbenchToolkit;
+	}
+
+	public static boolean isInitialized() {
+		return workbenchToolkit != null;
+	}
+
+	public static synchronized IWorkbenchToolkit getInstance() {
+		if (workbenchToolkit == null) {
+			final ServiceLoader<IWorkbenchToolkit> toolkitProviderLoader = ServiceLoader.load(IWorkbenchToolkit.class);
+			final Iterator<IWorkbenchToolkit> iterator = toolkitProviderLoader.iterator();
+
+			if (!iterator.hasNext()) {
+				throw new IllegalStateException("No implementation found for '" + IWorkbenchToolkit.class.getName() + "'");
+			}
+
+			WorkbenchToolkit.workbenchToolkit = iterator.next();
+
+			if (iterator.hasNext()) {
+				throw new IllegalStateException("More than one implementation found for '"
+					+ IWorkbenchToolkit.class.getName()
+					+ "'");
+			}
+
+		}
+		return workbenchToolkit;
+	}
+
+	public static ILayoutBuilderFactory getLayoutBuilderFactory() {
+		return getInstance().getLayoutBuilderFactory();
 	}
 
 }

@@ -26,12 +26,21 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.tools.api;
+package org.jowidgets.workbench.toolkit.impl;
 
-import org.jowidgets.workbench.api.ILayoutContainer;
+import org.jowidgets.workbench.toolkit.api.ILayoutBuilderFactory;
+import org.jowidgets.workbench.toolkit.api.IWorkbenchToolkit;
 
-public interface ILayoutContainerBuilder {
+public class DefaultWorkbenchToolkit implements IWorkbenchToolkit {
 
-	ILayoutContainer build();
+	private ILayoutBuilderFactory layoutBuilderFactory;
+
+	@Override
+	public ILayoutBuilderFactory getLayoutBuilderFactory() {
+		if (layoutBuilderFactory == null) {
+			this.layoutBuilderFactory = new LayoutBuilderFactory();
+		}
+		return layoutBuilderFactory;
+	}
 
 }

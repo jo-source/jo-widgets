@@ -26,34 +26,12 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.tools.api;
+package org.jowidgets.workbench.toolkit.api;
 
-import java.util.List;
+import org.jowidgets.workbench.api.ILayoutContainer;
 
-import org.jowidgets.workbench.api.IFolderLayout;
-import org.jowidgets.workbench.api.IViewLayout;
+public interface ILayoutContainerBuilder {
 
-public interface IFolderLayoutBuilder extends ILayoutContainerBuilder, IWorkbenchPartBuilder<IFolderLayoutBuilder> {
-
-	IFolderLayoutBuilder setId(String id);
-
-	IFolderLayoutBuilder setGroupId(String groupId);
-
-	IFolderLayoutBuilder setDetachable(boolean detachable);
-
-	IFolderLayoutBuilder setViewsCloseable(boolean viewsCloseable);
-
-	IFolderLayoutBuilder setViews(List<? extends IViewLayout> views);
-
-	IFolderLayoutBuilder setViews(IViewLayout... views);
-
-	IFolderLayoutBuilder addView(IViewLayout view);
-
-	IFolderLayoutBuilder setViews(IViewLayoutBuilder... viewsBuilder);
-
-	IFolderLayoutBuilder addView(IViewLayoutBuilder viewBuilder);
-
-	@Override
-	IFolderLayout build();
+	ILayoutContainer build();
 
 }

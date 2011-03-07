@@ -26,16 +26,50 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.tools.api;
+package org.jowidgets.workbench.toolkit.impl;
 
-public interface ILayoutBuilderFactory {
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.util.Assert;
+import org.jowidgets.workbench.api.ILayout;
+import org.jowidgets.workbench.api.ILayoutContainer;
+import org.jowidgets.workbench.api.LayoutScope;
 
-	ILayoutBuilder layout();
+final class Layout extends WorkbenchPart implements ILayout {
 
-	IFolderLayoutBuilder folder();
+	private final String id;
+	private final LayoutScope scope;
+	private final ILayoutContainer layoutContainer;
 
-	ISplitLayoutBuilder split();
+	Layout(
+		final String id,
+		final LayoutScope scope,
+		final String label,
+		final String tooltip,
+		final IImageConstant icon,
+		final ILayoutContainer layoutContainer) {
+		super(label, tooltip, icon);
 
-	IViewLayoutBuilder view();
+		Assert.paramNotEmpty(id, "id");
+		Assert.paramNotNull(layoutContainer, "layoutContainer");
+
+		this.id = id;
+		this.scope = scope;
+		this.layoutContainer = layoutContainer;
+	}
+
+	@Override
+	public String getId() {
+		return id;
+	}
+
+	@Override
+	public LayoutScope getScope() {
+		return scope;
+	}
+
+	@Override
+	public ILayoutContainer getLayoutContainer() {
+		return layoutContainer;
+	}
 
 }
