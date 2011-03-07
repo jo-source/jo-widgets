@@ -28,24 +28,20 @@
 
 package org.jowidgets.examples.common.workbench.demo1;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.types.QuestionResult;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.examples.common.workbench.base.AbstractComponent;
-import org.jowidgets.examples.common.workbench.base.FolderLayout;
-import org.jowidgets.examples.common.workbench.base.Layout;
-import org.jowidgets.examples.common.workbench.base.ViewLayout;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IFolderLayout;
 import org.jowidgets.workbench.api.ILayout;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
-import org.jowidgets.workbench.api.IViewLayout;
+import org.jowidgets.workbench.toolkit.api.IFolderLayoutBuilder;
+import org.jowidgets.workbench.tools.FolderLayoutBuilder;
+import org.jowidgets.workbench.tools.Layout;
 
 public class ImportantComponentDemo1 extends AbstractComponent implements IComponent {
 
@@ -79,13 +75,14 @@ public class ImportantComponentDemo1 extends AbstractComponent implements ICompo
 	}
 
 	private IFolderLayout createMasterFolder() {
-		final List<IViewLayout> resultViews = new LinkedList<IViewLayout>();
-		resultViews.add(new ViewLayout(
-			ImportantViewDemo1.ID,
-			ImportantViewDemo1.DEFAULT_LABEL,
-			ImportantViewDemo1.DEFAULT_TOOLTIP,
-			ImportantViewDemo1.DEFAULT_ICON));
-		return new FolderLayout(MASTER_FOLDER_ID, resultViews);
-	}
+		final IFolderLayoutBuilder folderLayoutBuilder = new FolderLayoutBuilder(MASTER_FOLDER_ID);
 
+		folderLayoutBuilder.addView(
+				ImportantViewDemo1.ID,
+				ImportantViewDemo1.DEFAULT_LABEL,
+				ImportantViewDemo1.DEFAULT_TOOLTIP,
+				ImportantViewDemo1.DEFAULT_ICON);
+
+		return folderLayoutBuilder.build();
+	}
 }

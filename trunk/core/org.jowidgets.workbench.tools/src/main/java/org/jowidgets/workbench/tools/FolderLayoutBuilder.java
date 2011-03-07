@@ -127,6 +127,36 @@ public class FolderLayoutBuilder implements IFolderLayoutBuilder {
 	}
 
 	@Override
+	public IFolderLayoutBuilder addView(final String id, final String label, final String tooltip, final IImageConstant icon) {
+		builder.addView(id, label, tooltip, icon);
+		return this;
+	}
+
+	@Override
+	public IFolderLayoutBuilder addView(final String id, final String label, final IImageConstant icon) {
+		builder.addView(id, label, icon);
+		return this;
+	}
+
+	@Override
+	public IFolderLayoutBuilder addView(final String id, final String label, final String tooltip) {
+		builder.addView(id, label, tooltip);
+		return this;
+	}
+
+	@Override
+	public IFolderLayoutBuilder addView(final String id, final String label) {
+		builder.addView(id, label);
+		return this;
+	}
+
+	@Override
+	public IFolderLayoutBuilder addView(final String id, final IImageConstant icon) {
+		builder.addView(id, icon);
+		return this;
+	}
+
+	@Override
 	public IFolderLayout build() {
 		return builder.build();
 	}

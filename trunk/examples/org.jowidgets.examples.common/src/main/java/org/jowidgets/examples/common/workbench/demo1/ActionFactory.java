@@ -48,7 +48,6 @@ import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.examples.common.icons.SilkIcons;
-import org.jowidgets.examples.common.workbench.base.ViewLayout;
 import org.jowidgets.tools.command.EnabledChecker;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IComponentTreeNode;
@@ -58,6 +57,8 @@ import org.jowidgets.workbench.api.ILayout;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
+import org.jowidgets.workbench.toolkit.api.IViewLayoutBuilder;
+import org.jowidgets.workbench.tools.ViewLayoutBuilder;
 
 public class ActionFactory {
 
@@ -230,7 +231,10 @@ public class ActionFactory {
 				final IInputDialog<String> inputDialog = createInputDialog(executionContext, "View name");
 				inputDialog.setVisible(true);
 				if (inputDialog.isOkPressed()) {
-					context.addView(new ViewLayout(DynamicViewDemo.ID_PREFIX + UUID.randomUUID(), inputDialog.getValue()));
+					final IViewLayoutBuilder viewLayoutBuilder = new ViewLayoutBuilder();
+					viewLayoutBuilder.setId(DynamicViewDemo.ID_PREFIX + UUID.randomUUID());
+					viewLayoutBuilder.setLabel(inputDialog.getValue());
+					context.addView(viewLayoutBuilder.build());
 				}
 			}
 
