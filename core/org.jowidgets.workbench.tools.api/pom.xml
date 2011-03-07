@@ -2,9 +2,9 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.jowidgets</groupId>
-	<artifactId>org.jowidgets.workbench.tools.api</artifactId>
+	<artifactId>org.jowidgets.workbench.toolkit.api</artifactId>
 	<version>0.0.18-SNAPSHOT</version>
-	<name>org.jowidgets.workbench.api</name>
+	<name>org.jowidgets.workbench.toolkit.api</name>
 
 	<parent>
 		<groupId>org.jowidgets</groupId>

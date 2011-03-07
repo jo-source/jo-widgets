@@ -26,15 +26,15 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.tools.impl;
+package org.jowidgets.workbench.toolkit.impl;
 
 import org.jowidgets.common.types.Orientation;
 import org.jowidgets.common.types.SplitResizePolicy;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.ILayoutContainer;
 import org.jowidgets.workbench.api.ISplitLayout;
-import org.jowidgets.workbench.tools.api.ILayoutContainerBuilder;
-import org.jowidgets.workbench.tools.api.ISplitLayoutBuilder;
+import org.jowidgets.workbench.toolkit.api.ILayoutContainerBuilder;
+import org.jowidgets.workbench.toolkit.api.ISplitLayoutBuilder;
 
 class SplitLayoutBuilder implements ISplitLayoutBuilder {
 

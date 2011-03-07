@@ -26,37 +26,10 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.tools.impl;
+package org.jowidgets.workbench.toolkit.api;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.workbench.api.IWorkbenchPart;
+public interface IWorkbenchToolkit {
 
-class WorkbenchPart implements IWorkbenchPart {
-
-	private final String label;
-	private final String tooltip;
-	private final IImageConstant icon;
-
-	WorkbenchPart(final String label, final String tooltip, final IImageConstant icon) {
-
-		this.label = label;
-		this.tooltip = tooltip;
-		this.icon = icon;
-	}
-
-	@Override
-	public String getLabel() {
-		return label;
-	}
-
-	@Override
-	public String getTooltip() {
-		return tooltip;
-	}
-
-	@Override
-	public IImageConstant getIcon() {
-		return icon;
-	}
+	ILayoutBuilderFactory getLayoutBuilderFactory();
 
 }

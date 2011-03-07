@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,54 +26,63 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.tools.api;
+package org.jowidgets.workbench.toolkit.impl;
 
-import java.util.Iterator;
-import java.util.ServiceLoader;
-
+import org.jowidgets.common.types.Orientation;
+import org.jowidgets.common.types.SplitResizePolicy;
 import org.jowidgets.util.Assert;
+import org.jowidgets.workbench.api.ILayoutContainer;
+import org.jowidgets.workbench.api.ISplitLayout;
 
-public final class WorkbenchToolkit {
+final class SplitLayout implements ISplitLayout {
 
-	private static IWorkbenchToolkit workbenchToolkit;
+	private final Orientation orientation;
+	private final double weight;
+	private final SplitResizePolicy resizePolicy;
+	private final ILayoutContainer firstLayoutContainer;
+	private final ILayoutContainer secondLayoutContainer;
 
-	private WorkbenchToolkit() {}
+	SplitLayout(
+		final Orientation orientation,
+		final double weight,
+		final SplitResizePolicy resizePolicy,
+		final ILayoutContainer firstLayoutContainer,
+		final ILayoutContainer secondLayoutContainer) {
 
-	public static void initialize(final IWorkbenchToolkit workbenchToolkit) {
-		Assert.paramNotNull(workbenchToolkit, "workbenchTools");
-		if (WorkbenchToolkit.workbenchToolkit != null) {
-			throw new IllegalStateException("Workbench toolkit is already initialized");
-		}
-		WorkbenchToolkit.workbenchToolkit = workbenchToolkit;
+		Assert.paramNotNull(orientation, "orientation");
+		Assert.paramNotNull(firstLayoutContainer, "firstLayoutContainer");
+		Assert.paramNotNull(secondLayoutContainer, "secondLayoutContainer");
+
+		this.orientation = orientation;
+		this.weight = weight;
+		this.resizePolicy = resizePolicy;
+		this.firstLayoutContainer = firstLayoutContainer;
+		this.secondLayoutContainer = secondLayoutContainer;
 	}
 
-	public static boolean isInitialized() {
-		return workbenchToolkit != null;
+	@Override
+	public Orientation getOrientation() {
+		return orientation;
 	}
 
-	public static synchronized IWorkbenchToolkit getInstance() {
-		if (workbenchToolkit == null) {
-			final ServiceLoader<IWorkbenchToolkit> toolkitProviderLoader = ServiceLoader.load(IWorkbenchToolkit.class);
-			final Iterator<IWorkbenchToolkit> iterator = toolkitProviderLoader.iterator();
-
-			if (!iterator.hasNext()) {
-				throw new IllegalStateException("No implementation found for '" + IWorkbenchToolkit.class.getName() + "'");
-			}
-
-			WorkbenchToolkit.workbenchToolkit = iterator.next();
-
-			if (iterator.hasNext()) {
-				throw new IllegalStateException("More than one implementation found for '"
-					+ IWorkbenchToolkit.class.getName()
-					+ "'");
-			}
-
-		}
-		return workbenchToolkit;
+	@Override
+	public double getWeight() {
+		return weight;
 	}
 
-	public static ILayoutBuilderFactory getLayoutBuilderFactory() {
-		return getInstance().getLayoutBuilderFactory();
+	@Override
+	public SplitResizePolicy getResizePolicy() {
+		return resizePolicy;
+	}
+
+	@Override
+	public ILayoutContainer getFirstContainer() {
+		return firstLayoutContainer;
+	}
+
+	@Override
+	public ILayoutContainer getSecondContainer() {
+		return secondLayoutContainer;
 	}
 
 }

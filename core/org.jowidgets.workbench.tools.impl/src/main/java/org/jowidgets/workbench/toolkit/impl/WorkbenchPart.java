@@ -26,22 +26,37 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.tools.api;
+package org.jowidgets.workbench.toolkit.impl;
 
-import org.jowidgets.workbench.api.ILayout;
-import org.jowidgets.workbench.api.ILayoutContainer;
-import org.jowidgets.workbench.api.LayoutScope;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.workbench.api.IWorkbenchPart;
 
-public interface ILayoutBuilder extends IWorkbenchPartBuilder<ILayoutBuilder> {
+class WorkbenchPart implements IWorkbenchPart {
 
-	ILayoutBuilder setId(String id);
+	private final String label;
+	private final String tooltip;
+	private final IImageConstant icon;
 
-	ILayoutBuilder setScope(LayoutScope scope);
+	WorkbenchPart(final String label, final String tooltip, final IImageConstant icon) {
 
-	ILayoutBuilder setLayoutContainer(ILayoutContainer layoutContainer);
+		this.label = label;
+		this.tooltip = tooltip;
+		this.icon = icon;
+	}
 
-	ILayoutBuilder setLayoutContainer(ILayoutContainerBuilder layoutContainerBuilder);
+	@Override
+	public String getLabel() {
+		return label;
+	}
 
-	ILayout build();
+	@Override
+	public String getTooltip() {
+		return tooltip;
+	}
+
+	@Override
+	public IImageConstant getIcon() {
+		return icon;
+	}
 
 }

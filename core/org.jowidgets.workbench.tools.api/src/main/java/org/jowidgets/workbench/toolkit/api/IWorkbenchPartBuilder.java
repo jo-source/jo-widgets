@@ -26,39 +26,16 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.tools.api;
+package org.jowidgets.workbench.toolkit.api;
 
-import org.jowidgets.common.types.Orientation;
-import org.jowidgets.common.types.SplitResizePolicy;
-import org.jowidgets.workbench.api.ILayoutContainer;
-import org.jowidgets.workbench.api.ISplitLayout;
+import org.jowidgets.common.image.IImageConstant;
 
-public interface ISplitLayoutBuilder extends ILayoutContainerBuilder {
+public interface IWorkbenchPartBuilder<BUILDER_INSTANCE_TYPE> {
 
-	ISplitLayoutBuilder setOrientation(Orientation orientation);
+	BUILDER_INSTANCE_TYPE setLabel(String label);
 
-	ISplitLayoutBuilder setHorizontal();
+	BUILDER_INSTANCE_TYPE setTooltip(String toolTiptext);
 
-	ISplitLayoutBuilder setVertical();
+	BUILDER_INSTANCE_TYPE setIcon(IImageConstant icon);
 
-	ISplitLayoutBuilder setWeight(double weigth);
-
-	ISplitLayoutBuilder setResizePolicy(SplitResizePolicy splitResizePolicy);
-
-	ISplitLayoutBuilder setResizeFirst();
-
-	ISplitLayoutBuilder setResizeSecond();
-
-	ISplitLayoutBuilder setResizeBoth();
-
-	ISplitLayoutBuilder setFirstContainer(ILayoutContainer firstContainer);
-
-	ISplitLayoutBuilder setFirstContainer(ILayoutContainerBuilder firstContainerBuilder);
-
-	ISplitLayoutBuilder setSecondContainer(ILayoutContainer secondContainer);
-
-	ISplitLayoutBuilder setSecondContainer(ILayoutContainerBuilder secondContainerBuilder);
-
-	@Override
-	ISplitLayout build();
 }

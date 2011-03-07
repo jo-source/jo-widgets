@@ -36,7 +36,7 @@
 		</dependency>
 		<dependency>
             <groupId>org.jowidgets</groupId>
-            <artifactId>org.jowidgets.workbench.tools.impl</artifactId>
+            <artifactId>org.jowidgets.workbench.toolkit.impl</artifactId>
             <version>0.0.18-SNAPSHOT</version>
         </dependency>
 		<dependency>

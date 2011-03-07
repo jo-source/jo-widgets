@@ -26,50 +26,69 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.tools.impl;
+package org.jowidgets.workbench.toolkit.impl;
+
+import java.util.LinkedList;
+import java.util.List;
 
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.workbench.tools.api.IWorkbenchPartBuilder;
+import org.jowidgets.util.Assert;
+import org.jowidgets.workbench.api.IViewLayout;
 
-public class WorkbenchPartBuilder<BUILDER_INSTANCE_TYPE> implements IWorkbenchPartBuilder<BUILDER_INSTANCE_TYPE> {
+final class ViewLayout extends WorkbenchPart implements IViewLayout {
 
-	private String label;
-	private String tooltip;
-	private IImageConstant icon;
+	private final String id;
+	private final boolean hidden;
+	private final boolean detachable;
+	private final List<String> folderWhitelist;
+	private final List<String> folderBlacklist;
 
-	WorkbenchPartBuilder() {}
+	ViewLayout(
+		final String id,
+		final String label,
+		final String tooltip,
+		final IImageConstant icon,
+		final boolean hidden,
+		final boolean detachable,
+		final List<String> folderWhitelist,
+		final List<String> folderBlacklist) {
 
-	@SuppressWarnings("unchecked")
+		super(label, tooltip, icon);
+
+		Assert.paramNotEmpty(id, "id");
+		Assert.paramNotNull(folderWhitelist, "folderWhitelist");
+		Assert.paramNotNull(folderBlacklist, "folderBlacklist");
+
+		this.id = id;
+		this.hidden = hidden;
+		this.detachable = detachable;
+		this.folderWhitelist = folderWhitelist;
+		this.folderBlacklist = folderBlacklist;
+	}
+
 	@Override
-	public BUILDER_INSTANCE_TYPE setLabel(final String label) {
-		this.label = label;
-		return (BUILDER_INSTANCE_TYPE) this;
+	public String getId() {
+		return id;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public BUILDER_INSTANCE_TYPE setTooltip(final String tooltip) {
-		this.tooltip = tooltip;
-		return (BUILDER_INSTANCE_TYPE) this;
+	public boolean isHidden() {
+		return hidden;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public BUILDER_INSTANCE_TYPE setIcon(final IImageConstant icon) {
-		this.icon = icon;
-		return (BUILDER_INSTANCE_TYPE) this;
+	public boolean isDetachable() {
+		return detachable;
 	}
 
-	protected String getLabel() {
-		return label;
+	@Override
+	public List<String> getFolderWhitelist() {
+		return new LinkedList<String>(folderWhitelist);
 	}
 
-	protected String getTooltip() {
-		return tooltip;
-	}
-
-	protected IImageConstant getIcon() {
-		return icon;
+	@Override
+	public List<String> getFolderBlacklist() {
+		return new LinkedList<String>(folderBlacklist);
 	}
 
 }

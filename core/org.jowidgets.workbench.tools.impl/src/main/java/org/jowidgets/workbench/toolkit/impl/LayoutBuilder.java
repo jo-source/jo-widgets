@@ -5,13 +5,13 @@
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  * * Redistributions of source code must retain the above copyright
- *   notice, this list of conditions and the following disclaimer.
+ * notice, this list of conditions and the following disclaimer.
  * * Redistributions in binary form must reproduce the above copyright
- *   notice, this list of conditions and the following disclaimer in the
- *   documentation and/or other materials provided with the distribution.
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
  * * Neither the name of the jo-widgets.org nor the
- *   names of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * names of its contributors may be used to endorse or promote products
+ * derived from this software without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -26,50 +26,54 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.tools.impl;
+package org.jowidgets.workbench.toolkit.impl;
 
-import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.ILayout;
 import org.jowidgets.workbench.api.ILayoutContainer;
 import org.jowidgets.workbench.api.LayoutScope;
+import org.jowidgets.workbench.toolkit.api.ILayoutBuilder;
+import org.jowidgets.workbench.toolkit.api.ILayoutContainerBuilder;
 
-final class Layout extends WorkbenchPart implements ILayout {
+class LayoutBuilder extends WorkbenchPartBuilder<ILayoutBuilder> implements ILayoutBuilder {
 
-	private final String id;
-	private final LayoutScope scope;
-	private final ILayoutContainer layoutContainer;
+	private String id;
+	private LayoutScope scope;
+	private ILayoutContainer layoutContainer;
 
-	Layout(
-		final String id,
-		final LayoutScope scope,
-		final String label,
-		final String tooltip,
-		final IImageConstant icon,
-		final ILayoutContainer layoutContainer) {
-		super(label, tooltip, icon);
+	LayoutBuilder() {
+		super();
+	}
 
+	@Override
+	public ILayoutBuilder setId(final String id) {
 		Assert.paramNotEmpty(id, "id");
-		Assert.paramNotNull(layoutContainer, "layoutContainer");
-
 		this.id = id;
+		return this;
+	}
+
+	@Override
+	public ILayoutBuilder setScope(final LayoutScope scope) {
+		Assert.paramNotNull(scope, "scope");
 		this.scope = scope;
+		return this;
+	}
+
+	@Override
+	public ILayoutBuilder setLayoutContainer(final ILayoutContainer layoutContainer) {
+		Assert.paramNotNull(layoutContainer, "layoutContainer");
 		this.layoutContainer = layoutContainer;
+		return this;
 	}
 
 	@Override
-	public String getId() {
-		return id;
+	public ILayoutBuilder setLayoutContainer(final ILayoutContainerBuilder layoutContainerBuilder) {
+		return setLayoutContainer(layoutContainerBuilder.build());
 	}
 
 	@Override
-	public LayoutScope getScope() {
-		return scope;
-	}
-
-	@Override
-	public ILayoutContainer getLayoutContainer() {
-		return layoutContainer;
+	public ILayout build() {
+		return new Layout(id, scope, getLabel(), getTooltip(), getIcon(), layoutContainer);
 	}
 
 }
