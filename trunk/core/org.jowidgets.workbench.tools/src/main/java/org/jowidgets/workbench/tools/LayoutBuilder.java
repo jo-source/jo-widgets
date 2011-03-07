@@ -55,37 +55,44 @@ public class LayoutBuilder implements ILayoutBuilder {
 
 	@Override
 	public ILayoutBuilder setLabel(final String label) {
-		return builder.setLabel(label);
+		builder.setLabel(label);
+		return this;
 	}
 
 	@Override
 	public ILayoutBuilder setTooltip(final String toolTiptext) {
-		return builder.setTooltip(toolTiptext);
+		builder.setTooltip(toolTiptext);
+		return this;
 	}
 
 	@Override
 	public ILayoutBuilder setIcon(final IImageConstant icon) {
-		return builder.setIcon(icon);
+		builder.setIcon(icon);
+		return this;
 	}
 
 	@Override
 	public ILayoutBuilder setId(final String id) {
-		return builder.setId(id);
+		builder.setId(id);
+		return this;
 	}
 
 	@Override
 	public ILayoutBuilder setScope(final LayoutScope scope) {
-		return builder.setScope(scope);
+		builder.setScope(scope);
+		return this;
 	}
 
 	@Override
 	public ILayoutBuilder setLayoutContainer(final ILayoutContainer layoutContainer) {
-		return builder.setLayoutContainer(layoutContainer);
+		builder.setLayoutContainer(layoutContainer);
+		return this;
 	}
 
 	@Override
 	public ILayoutBuilder setLayoutContainer(final ILayoutContainerBuilder layoutContainerBuilder) {
-		return builder.setLayoutContainer(layoutContainerBuilder);
+		builder.setLayoutContainer(layoutContainerBuilder);
+		return this;
 	}
 
 	@Override

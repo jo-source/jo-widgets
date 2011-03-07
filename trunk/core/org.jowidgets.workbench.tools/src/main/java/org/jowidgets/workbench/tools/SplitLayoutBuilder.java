@@ -28,113 +28,106 @@
 
 package org.jowidgets.workbench.tools;
 
-import java.util.List;
-
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.workbench.api.IViewLayout;
-import org.jowidgets.workbench.toolkit.api.IViewLayoutBuilder;
+import org.jowidgets.common.types.Orientation;
+import org.jowidgets.common.types.SplitResizePolicy;
+import org.jowidgets.workbench.api.ILayoutContainer;
+import org.jowidgets.workbench.api.ISplitLayout;
+import org.jowidgets.workbench.toolkit.api.ILayoutContainerBuilder;
+import org.jowidgets.workbench.toolkit.api.ISplitLayoutBuilder;
 import org.jowidgets.workbench.toolkit.api.WorkbenchToolkit;
 
-public class ViewLayoutBuilder implements IViewLayoutBuilder {
+public class SplitLayoutBuilder implements ISplitLayoutBuilder {
 
-	private final IViewLayoutBuilder builder;
+	private final ISplitLayoutBuilder builder;
 
-	public ViewLayoutBuilder() {
+	public SplitLayoutBuilder() {
 		this(builder());
 	}
 
-	public ViewLayoutBuilder(final String id) {
-		this(builder(id));
-	}
-
-	public ViewLayoutBuilder(final IViewLayoutBuilder builder) {
+	public SplitLayoutBuilder(final ISplitLayoutBuilder builder) {
 		super();
 		this.builder = builder;
 	}
 
 	@Override
-	public IViewLayoutBuilder setLabel(final String label) {
-		builder.setLabel(label);
+	public ISplitLayoutBuilder setOrientation(final Orientation orientation) {
+		builder.setOrientation(orientation);
 		return this;
 	}
 
 	@Override
-	public IViewLayoutBuilder setTooltip(final String toolTiptext) {
-		builder.setTooltip(toolTiptext);
+	public ISplitLayoutBuilder setHorizontal() {
+		builder.setHorizontal();
 		return this;
 	}
 
 	@Override
-	public IViewLayoutBuilder setIcon(final IImageConstant icon) {
-		builder.setIcon(icon);
+	public ISplitLayoutBuilder setVertical() {
+		builder.setVertical();
 		return this;
 	}
 
 	@Override
-	public IViewLayoutBuilder setId(final String id) {
-		builder.setId(id);
+	public ISplitLayoutBuilder setWeight(final double weigth) {
+		builder.setWeight(weigth);
 		return this;
 	}
 
 	@Override
-	public IViewLayoutBuilder setHidden(final boolean hidden) {
-		builder.setHidden(hidden);
+	public ISplitLayoutBuilder setResizePolicy(final SplitResizePolicy splitResizePolicy) {
+		builder.setResizePolicy(splitResizePolicy);
 		return this;
 	}
 
 	@Override
-	public IViewLayoutBuilder setDetachable(final boolean detachable) {
-		builder.setDetachable(detachable);
+	public ISplitLayoutBuilder setResizeFirst() {
+		builder.setResizeFirst();
 		return this;
 	}
 
 	@Override
-	public IViewLayoutBuilder setFolderWhitelist(final List<String> folderWhiteList) {
-		builder.setFolderWhitelist(folderWhiteList);
+	public ISplitLayoutBuilder setResizeSecond() {
+		builder.setResizeSecond();
 		return this;
 	}
 
 	@Override
-	public IViewLayoutBuilder setFolderWhitelist(final String... folderWhiteList) {
-		builder.setFolderWhitelist(folderWhiteList);
+	public ISplitLayoutBuilder setResizeBoth() {
+		builder.setResizeBoth();
 		return this;
 	}
 
 	@Override
-	public IViewLayoutBuilder addToFolderWhitelist(final String folder) {
-		builder.addToFolderWhitelist(folder);
+	public ISplitLayoutBuilder setFirstContainer(final ILayoutContainer firstContainer) {
+		builder.setFirstContainer(firstContainer);
 		return this;
 	}
 
 	@Override
-	public IViewLayoutBuilder setFolderBlacklist(final List<String> folderBlackList) {
-		builder.setFolderBlacklist(folderBlackList);
+	public ISplitLayoutBuilder setFirstContainer(final ILayoutContainerBuilder firstContainerBuilder) {
+		builder.setFirstContainer(firstContainerBuilder);
 		return this;
 	}
 
 	@Override
-	public IViewLayoutBuilder setFolderBlacklist(final String... folderBlackList) {
-		builder.setFolderBlacklist(folderBlackList);
+	public ISplitLayoutBuilder setSecondContainer(final ILayoutContainer secondContainer) {
+		builder.setSecondContainer(secondContainer);
 		return this;
 	}
 
 	@Override
-	public IViewLayoutBuilder addToFolderBlacklist(final String folder) {
-		builder.addToFolderBlacklist(folder);
+	public ISplitLayoutBuilder setSecondContainer(final ILayoutContainerBuilder secondContainerBuilder) {
+		builder.setSecondContainer(secondContainerBuilder);
 		return this;
 	}
 
 	@Override
-	public IViewLayout build() {
+	public ISplitLayout build() {
 		return builder.build();
 	}
 
-	public static IViewLayoutBuilder builder() {
-		return WorkbenchToolkit.getLayoutBuilderFactory().view();
-	}
-
-	public static IViewLayoutBuilder builder(final String id) {
-		return builder().setId(id);
+	public static ISplitLayoutBuilder builder() {
+		return WorkbenchToolkit.getLayoutBuilderFactory().split();
 	}
 
 }
