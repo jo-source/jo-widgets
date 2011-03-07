@@ -28,32 +28,68 @@
 
 package org.jowidgets.workbench.tools.impl;
 
-import org.jowidgets.workbench.tools.api.IFolderLayoutBuilder;
-import org.jowidgets.workbench.tools.api.ILayoutBuilder;
-import org.jowidgets.workbench.tools.api.ILayoutBuilderFactory;
-import org.jowidgets.workbench.tools.api.ISplitLayoutBuilder;
-import org.jowidgets.workbench.tools.api.IViewLayoutBuilder;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.util.Assert;
+import org.jowidgets.workbench.api.ILayout;
+import org.jowidgets.workbench.api.ILayoutContainer;
+import org.jowidgets.workbench.api.LayoutScope;
 
-public class LayoutBuilderFactory implements ILayoutBuilderFactory {
+public final class Layout implements ILayout {
 
-	@Override
-	public ILayoutBuilder layout() {
-		return new LayoutBuilder();
+	private final String id;
+	private final LayoutScope scope;
+	private final String label;
+	private final String tooltip;
+	private final IImageConstant icon;
+	private final ILayoutContainer layoutContainer;
+
+	public Layout(
+		final String id,
+		final LayoutScope scope,
+		final String label,
+		final String tooltip,
+		final IImageConstant icon,
+		final ILayoutContainer layoutContainer) {
+
+		Assert.paramNotEmpty(id, "id");
+		Assert.paramNotNull(layoutContainer, "layoutContainer");
+
+		this.id = id;
+		this.scope = scope;
+		this.label = label;
+		this.tooltip = tooltip;
+		this.icon = icon;
+		this.layoutContainer = layoutContainer;
 	}
 
 	@Override
-	public IFolderLayoutBuilder folder() {
-		return new FolderLayoutBuilder();
+	public String getId() {
+		return id;
 	}
 
 	@Override
-	public ISplitLayoutBuilder split() {
-		return new SplitLayoutBuilder();
+	public LayoutScope getScope() {
+		return scope;
 	}
 
 	@Override
-	public IViewLayoutBuilder view() {
-		return new ViewLayoutBuilder();
+	public String getLabel() {
+		return label;
+	}
+
+	@Override
+	public String getTooltip() {
+		return tooltip;
+	}
+
+	@Override
+	public IImageConstant getIcon() {
+		return icon;
+	}
+
+	@Override
+	public ILayoutContainer getLayoutContainer() {
+		return layoutContainer;
 	}
 
 }
