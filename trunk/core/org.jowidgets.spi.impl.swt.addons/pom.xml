@@ -3,13 +3,13 @@
 
 	<groupId>org.jowidgets</groupId>
 	<artifactId>org.jowidgets.spi.impl.swt.addons</artifactId>
-	<version>0.0.17-SNAPSHOT</version>
+	<version>0.0.17</version>
 	<name>org.jowidgets.spi.impl.swt.addons</name>
 
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.core.parent</artifactId>
-		<version>0.0.17-SNAPSHOT</version>
+		<version>0.0.17</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 
@@ -17,7 +17,7 @@
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.tools</artifactId>
-			<version>0.0.17-SNAPSHOT</version>
+			<version>0.0.17</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse</groupId>
