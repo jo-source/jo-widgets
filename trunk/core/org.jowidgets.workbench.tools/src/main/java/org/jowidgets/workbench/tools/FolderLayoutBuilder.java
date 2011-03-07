@@ -28,76 +28,102 @@
 
 package org.jowidgets.workbench.tools;
 
+import java.util.List;
+
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.workbench.api.ILayout;
-import org.jowidgets.workbench.api.ILayoutContainer;
-import org.jowidgets.workbench.api.LayoutScope;
-import org.jowidgets.workbench.toolkit.api.ILayoutBuilder;
-import org.jowidgets.workbench.toolkit.api.ILayoutContainerBuilder;
+import org.jowidgets.workbench.api.IFolderLayout;
+import org.jowidgets.workbench.api.IViewLayout;
+import org.jowidgets.workbench.toolkit.api.IFolderLayoutBuilder;
+import org.jowidgets.workbench.toolkit.api.IViewLayoutBuilder;
 import org.jowidgets.workbench.toolkit.api.WorkbenchToolkit;
 
-public class LayoutBuilder implements ILayoutBuilder {
+public class FolderLayoutBuilder implements IFolderLayoutBuilder {
 
-	private final ILayoutBuilder builder;
+	private final IFolderLayoutBuilder builder;
 
-	public LayoutBuilder() {
+	public FolderLayoutBuilder() {
 		this(builder());
 	}
 
-	public LayoutBuilder(final String id) {
+	public FolderLayoutBuilder(final String id) {
 		this(builder(id));
 	}
 
-	public LayoutBuilder(final ILayoutBuilder builder) {
+	public FolderLayoutBuilder(final IFolderLayoutBuilder builder) {
 		super();
 		this.builder = builder;
 	}
 
 	@Override
-	public ILayoutBuilder setLabel(final String label) {
-		return builder.setLabel(label);
-	}
-
-	@Override
-	public ILayoutBuilder setTooltip(final String toolTiptext) {
-		return builder.setTooltip(toolTiptext);
-	}
-
-	@Override
-	public ILayoutBuilder setIcon(final IImageConstant icon) {
-		return builder.setIcon(icon);
-	}
-
-	@Override
-	public ILayoutBuilder setId(final String id) {
+	public IFolderLayoutBuilder setId(final String id) {
 		return builder.setId(id);
 	}
 
 	@Override
-	public ILayoutBuilder setScope(final LayoutScope scope) {
-		return builder.setScope(scope);
+	public IFolderLayoutBuilder setLabel(final String label) {
+		return builder.setLabel(label);
 	}
 
 	@Override
-	public ILayoutBuilder setLayoutContainer(final ILayoutContainer layoutContainer) {
-		return builder.setLayoutContainer(layoutContainer);
+	public IFolderLayoutBuilder setTooltip(final String toolTiptext) {
+		return builder.setTooltip(toolTiptext);
 	}
 
 	@Override
-	public ILayoutBuilder setLayoutContainer(final ILayoutContainerBuilder layoutContainerBuilder) {
-		return builder.setLayoutContainer(layoutContainerBuilder);
+	public IFolderLayoutBuilder setIcon(final IImageConstant icon) {
+		return builder.setIcon(icon);
 	}
 
 	@Override
-	public ILayout build() {
+	public IFolderLayoutBuilder setGroupId(final String groupId) {
+		return builder.setGroupId(groupId);
+	}
+
+	@Override
+	public IFolderLayoutBuilder setDetachable(final boolean detachable) {
+		return builder.setDetachable(detachable);
+	}
+
+	@Override
+	public IFolderLayoutBuilder setViewsCloseable(final boolean viewsCloseable) {
+		return builder.setViewsCloseable(viewsCloseable);
+	}
+
+	@Override
+	public IFolderLayoutBuilder setViews(final List<? extends IViewLayout> views) {
+		return builder.setViews(views);
+	}
+
+	@Override
+	public IFolderLayoutBuilder setViews(final IViewLayout... views) {
+		return builder.setViews(views);
+	}
+
+	@Override
+	public IFolderLayoutBuilder addView(final IViewLayout view) {
+		return builder.addView(view);
+	}
+
+	@Override
+	public IFolderLayoutBuilder setViews(final IViewLayoutBuilder... viewsBuilder) {
+		return builder.setViews(viewsBuilder);
+	}
+
+	@Override
+	public IFolderLayoutBuilder addView(final IViewLayoutBuilder viewBuilder) {
+		return builder.addView(viewBuilder);
+	}
+
+	@Override
+	public IFolderLayout build() {
 		return builder.build();
 	}
 
-	public static ILayoutBuilder builder() {
-		return WorkbenchToolkit.getLayoutBuilderFactory().layout();
+	public static IFolderLayoutBuilder builder() {
+		return WorkbenchToolkit.getLayoutBuilderFactory().folder();
 	}
 
-	public static ILayoutBuilder builder(final String id) {
+	public static IFolderLayoutBuilder builder(final String id) {
 		return builder().setId(id);
 	}
 
