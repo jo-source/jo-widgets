@@ -33,9 +33,9 @@ import java.lang.reflect.Constructor;
 import org.jowidgets.examples.common.workbench.base.AbstractComponent;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
-import org.jowidgets.workbench.api.IFolderLayout;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
+import org.jowidgets.workbench.toolkit.api.IFolderLayoutBuilder;
 import org.jowidgets.workbench.tools.FolderLayoutBuilder;
 import org.jowidgets.workbench.tools.Layout;
 
@@ -73,8 +73,8 @@ public class SingleViewComponent extends AbstractComponent implements IComponent
 		}
 	}
 
-	private IFolderLayout createMasterFolder() {
-		return new FolderLayoutBuilder(MASTER_FOLDER_ID).addView(id, label).build();
+	private IFolderLayoutBuilder createMasterFolder() {
+		return new FolderLayoutBuilder(MASTER_FOLDER_ID).addView(id, label);
 	}
 
 }
