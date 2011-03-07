@@ -32,11 +32,13 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.IFolderLayout;
 import org.jowidgets.workbench.api.IViewLayout;
 import org.jowidgets.workbench.toolkit.api.IFolderLayoutBuilder;
 import org.jowidgets.workbench.toolkit.api.IViewLayoutBuilder;
+import org.jowidgets.workbench.toolkit.api.WorkbenchToolkit;
 
 class FolderLayoutBuilder extends WorkbenchPartBuilder<IFolderLayoutBuilder> implements IFolderLayoutBuilder {
 
@@ -117,8 +119,37 @@ class FolderLayoutBuilder extends WorkbenchPartBuilder<IFolderLayoutBuilder> imp
 	}
 
 	@Override
+	public IFolderLayoutBuilder addView(final String id, final String label, final String tooltip, final IImageConstant icon) {
+		return addView(view().setId(id).setLabel(label).setTooltip(tooltip).setIcon(icon));
+	}
+
+	@Override
+	public IFolderLayoutBuilder addView(final String id, final String label, final IImageConstant icon) {
+		return addView(view().setId(id).setLabel(label).setIcon(icon));
+	}
+
+	@Override
+	public IFolderLayoutBuilder addView(final String id, final String label, final String tooltip) {
+		return addView(view().setId(id).setLabel(label).setTooltip(tooltip));
+	}
+
+	@Override
+	public IFolderLayoutBuilder addView(final String id, final String label) {
+		return addView(view().setId(id).setLabel(label));
+	}
+
+	@Override
+	public IFolderLayoutBuilder addView(final String id, final IImageConstant icon) {
+		return addView(view().setId(id));
+	}
+
+	@Override
 	public IFolderLayout build() {
 		return new FolderLayout(id, groupId, getLabel(), getTooltip(), getIcon(), views, detachable, viewsCloseable);
+	}
+
+	private static IViewLayoutBuilder view() {
+		return WorkbenchToolkit.getLayoutBuilderFactory().view();
 	}
 
 }

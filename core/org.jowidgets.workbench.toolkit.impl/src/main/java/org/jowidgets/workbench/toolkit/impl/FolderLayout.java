@@ -56,11 +56,15 @@ final class FolderLayout extends WorkbenchPart implements IFolderLayout {
 		super(label, tooltip, icon);
 
 		Assert.paramNotEmpty(id, "id");
-		Assert.paramNotEmpty(groupId, "groupId");
 		Assert.paramNotNull(views, "views");
 
 		this.id = id;
-		this.groupId = groupId;
+		if (groupId != null) {
+			this.groupId = groupId;
+		}
+		else {
+			this.groupId = id;
+		}
 		this.views = new LinkedList<IViewLayout>(views);
 		this.isDetachable = isDetachable;
 		this.viewsCloseable = viewsCloseable;

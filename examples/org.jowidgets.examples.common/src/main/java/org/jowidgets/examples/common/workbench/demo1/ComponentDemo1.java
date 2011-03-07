@@ -28,27 +28,20 @@
 
 package org.jowidgets.examples.common.workbench.demo1;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.jowidgets.api.model.item.IMenuModel;
-import org.jowidgets.common.types.Orientation;
-import org.jowidgets.common.types.SplitResizePolicy;
 import org.jowidgets.examples.common.demo.DemoMenuProvider;
 import org.jowidgets.examples.common.workbench.base.AbstractComponent;
-import org.jowidgets.examples.common.workbench.base.FolderLayout;
-import org.jowidgets.examples.common.workbench.base.Layout;
-import org.jowidgets.examples.common.workbench.base.SplitLayout;
-import org.jowidgets.examples.common.workbench.base.ViewLayout;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IFolderContext;
-import org.jowidgets.workbench.api.IFolderLayout;
 import org.jowidgets.workbench.api.ILayout;
-import org.jowidgets.workbench.api.ISplitLayout;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
-import org.jowidgets.workbench.api.IViewLayout;
+import org.jowidgets.workbench.toolkit.api.IFolderLayoutBuilder;
+import org.jowidgets.workbench.toolkit.api.ISplitLayoutBuilder;
+import org.jowidgets.workbench.tools.FolderLayoutBuilder;
+import org.jowidgets.workbench.tools.Layout;
+import org.jowidgets.workbench.tools.SplitLayoutBuilder;
 
 public class ComponentDemo1 extends AbstractComponent implements IComponent {
 
@@ -100,58 +93,55 @@ public class ComponentDemo1 extends AbstractComponent implements IComponent {
 		}
 	}
 
-	private ISplitLayout createMainSplit() {
-		return new SplitLayout(
-			Orientation.HORIZONTAL,
-			0.78,
-			SplitResizePolicy.RESIZE_FIRST,
-			createMasterDetailSplit(),
-			createMailFolder());
+	private ISplitLayoutBuilder createMainSplit() {
+		final ISplitLayoutBuilder result = new SplitLayoutBuilder();
+		result.setHorizontal().setWeight(0.78).setResizeFirst();
+		result.setFirstContainer(createMasterDetailSplit());
+		result.setSecondContainer(createMailFolder());
+		return result;
 	}
 
-	private ISplitLayout createMasterDetailSplit() {
-		return new SplitLayout(
-			Orientation.VERTICAL,
-			0.55,
-			SplitResizePolicy.RESIZE_FIRST,
-			createMasterFolder(),
-			createDetailSplit());
+	private ISplitLayoutBuilder createMasterDetailSplit() {
+		final ISplitLayoutBuilder result = new SplitLayoutBuilder();
+		result.setVertical().setWeight(0.55).setResizeFirst();
+		result.setFirstContainer(createMasterFolder());
+		result.setSecondContainer(createDetailSplit());
+		return result;
 	}
 
-	private IFolderLayout createMasterFolder() {
-		final List<IViewLayout> resultViews = new LinkedList<IViewLayout>();
-		resultViews.add(new ViewLayout(ViewDemo1.ID, ViewDemo1.DEFAULT_LABEL, ViewDemo1.DEFAULT_TOOLTIP, ViewDemo1.DEFAULT_ICON));
-		return new FolderLayout(MASTER_FOLDER_ID, resultViews);
+	private IFolderLayoutBuilder createMasterFolder() {
+		final IFolderLayoutBuilder result = new FolderLayoutBuilder(MASTER_FOLDER_ID);
+		result.addView(ViewDemo1.ID, ViewDemo1.DEFAULT_LABEL, ViewDemo1.DEFAULT_TOOLTIP, ViewDemo1.DEFAULT_ICON);
+		return result;
 	}
 
-	private ISplitLayout createDetailSplit() {
-		return new SplitLayout(
-			Orientation.HORIZONTAL,
-			0.28,
-			SplitResizePolicy.RESIZE_SECOND,
-			createDetail1Folder(),
-			createDetail2Folder());
+	private ISplitLayoutBuilder createDetailSplit() {
+		final ISplitLayoutBuilder result = new SplitLayoutBuilder();
+		result.setHorizontal().setWeight(0.28).setResizeSecond();
+		result.setFirstContainer(createDetail1Folder());
+		result.setSecondContainer(createDetail2Folder());
+		return result;
 	}
 
-	private IFolderLayout createDetail1Folder() {
-		final List<IViewLayout> resultViews = new LinkedList<IViewLayout>();
-		resultViews.add(new ViewLayout(ViewDemo2.ID, ViewDemo2.DEFAULT_LABEL, ViewDemo2.DEFAULT_TOOLTIP, ViewDemo2.DEFAULT_ICON));
-		resultViews.add(new ViewLayout(ViewDemo3.ID, ViewDemo3.DEFAULT_LABEL, ViewDemo3.DEFAULT_TOOLTIP, ViewDemo3.DEFAULT_ICON));
-		return new FolderLayout(DETAIL1_FOLDER_ID, resultViews);
+	private IFolderLayoutBuilder createDetail1Folder() {
+		final IFolderLayoutBuilder result = new FolderLayoutBuilder(DETAIL1_FOLDER_ID);
+		result.addView(ViewDemo2.ID, ViewDemo2.DEFAULT_LABEL, ViewDemo2.DEFAULT_TOOLTIP, ViewDemo2.DEFAULT_ICON);
+		result.addView(ViewDemo3.ID, ViewDemo3.DEFAULT_LABEL, ViewDemo3.DEFAULT_TOOLTIP, ViewDemo3.DEFAULT_ICON);
+		return result;
 	}
 
-	private IFolderLayout createDetail2Folder() {
-		final List<IViewLayout> resultViews = new LinkedList<IViewLayout>();
-		resultViews.add(new ViewLayout(ViewDemo4.ID, ViewDemo4.DEFAULT_LABEL, ViewDemo4.DEFAULT_TOOLTIP, ViewDemo4.DEFAULT_ICON));
-		resultViews.add(new ViewLayout(ViewDemo5.ID, ViewDemo5.DEFAULT_LABEL, ViewDemo5.DEFAULT_TOOLTIP, ViewDemo5.DEFAULT_ICON));
-		resultViews.add(new ViewLayout(ViewDemo6.ID, ViewDemo6.DEFAULT_LABEL, ViewDemo6.DEFAULT_TOOLTIP, ViewDemo6.DEFAULT_ICON));
-		return new FolderLayout(DETAIL2_FOLDER_ID, resultViews);
+	private IFolderLayoutBuilder createDetail2Folder() {
+		final IFolderLayoutBuilder result = new FolderLayoutBuilder(DETAIL2_FOLDER_ID);
+		result.addView(ViewDemo4.ID, ViewDemo4.DEFAULT_LABEL, ViewDemo4.DEFAULT_TOOLTIP, ViewDemo4.DEFAULT_ICON);
+		result.addView(ViewDemo5.ID, ViewDemo5.DEFAULT_LABEL, ViewDemo5.DEFAULT_TOOLTIP, ViewDemo5.DEFAULT_ICON);
+		result.addView(ViewDemo6.ID, ViewDemo6.DEFAULT_LABEL, ViewDemo6.DEFAULT_TOOLTIP, ViewDemo6.DEFAULT_ICON);
+		return result;
 	}
 
-	private IFolderLayout createMailFolder() {
-		final List<IViewLayout> resultViews = new LinkedList<IViewLayout>();
-		resultViews.add(new ViewLayout(ViewDemo7.ID, ViewDemo7.DEFAULT_LABEL, ViewDemo7.DEFAULT_TOOLTIP, ViewDemo7.DEFAULT_ICON));
-		return new FolderLayout(MAIL_FOLDER_ID, resultViews);
+	private IFolderLayoutBuilder createMailFolder() {
+		final IFolderLayoutBuilder result = new FolderLayoutBuilder(MAIL_FOLDER_ID);
+		result.addView(ViewDemo7.ID, ViewDemo7.DEFAULT_LABEL, ViewDemo7.DEFAULT_TOOLTIP, ViewDemo7.DEFAULT_ICON);
+		return result;
 	}
 
 	@Override

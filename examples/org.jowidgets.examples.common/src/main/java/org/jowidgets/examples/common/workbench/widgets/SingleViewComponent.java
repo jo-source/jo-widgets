@@ -29,19 +29,15 @@
 package org.jowidgets.examples.common.workbench.widgets;
 
 import java.lang.reflect.Constructor;
-import java.util.LinkedList;
-import java.util.List;
 
 import org.jowidgets.examples.common.workbench.base.AbstractComponent;
-import org.jowidgets.examples.common.workbench.base.FolderLayout;
-import org.jowidgets.examples.common.workbench.base.Layout;
-import org.jowidgets.examples.common.workbench.base.ViewLayout;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IFolderLayout;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
-import org.jowidgets.workbench.api.IViewLayout;
+import org.jowidgets.workbench.tools.FolderLayoutBuilder;
+import org.jowidgets.workbench.tools.Layout;
 
 public class SingleViewComponent extends AbstractComponent implements IComponent {
 
@@ -78,9 +74,7 @@ public class SingleViewComponent extends AbstractComponent implements IComponent
 	}
 
 	private IFolderLayout createMasterFolder() {
-		final List<IViewLayout> resultViews = new LinkedList<IViewLayout>();
-		resultViews.add(new ViewLayout(id, label, null, null));
-		return new FolderLayout(MASTER_FOLDER_ID, resultViews);
+		return new FolderLayoutBuilder(MASTER_FOLDER_ID).addView(id, label).build();
 	}
 
 }
