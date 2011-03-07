@@ -35,12 +35,9 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.IViewLayout;
 
-final class ViewLayout implements IViewLayout {
+final class ViewLayout extends WorkbenchPart implements IViewLayout {
 
 	private final String id;
-	private final String label;
-	private final String tooltip;
-	private final IImageConstant icon;
 	private final boolean hidden;
 	private final boolean detachable;
 	private final List<String> folderWhitelist;
@@ -56,15 +53,13 @@ final class ViewLayout implements IViewLayout {
 		final List<String> folderWhitelist,
 		final List<String> folderBlacklist) {
 
+		super(label, tooltip, icon);
+
 		Assert.paramNotEmpty(id, "id");
-		Assert.paramNotEmpty(label, "label");
 		Assert.paramNotNull(folderWhitelist, "folderWhitelist");
 		Assert.paramNotNull(folderBlacklist, "folderBlacklist");
 
 		this.id = id;
-		this.label = label;
-		this.tooltip = tooltip;
-		this.icon = icon;
 		this.hidden = hidden;
 		this.detachable = detachable;
 		this.folderWhitelist = folderWhitelist;
@@ -74,21 +69,6 @@ final class ViewLayout implements IViewLayout {
 	@Override
 	public String getId() {
 		return id;
-	}
-
-	@Override
-	public String getLabel() {
-		return label;
-	}
-
-	@Override
-	public String getTooltip() {
-		return tooltip;
-	}
-
-	@Override
-	public IImageConstant getIcon() {
-		return icon;
 	}
 
 	@Override

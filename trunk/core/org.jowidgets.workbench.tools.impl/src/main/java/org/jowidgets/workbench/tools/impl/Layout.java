@@ -34,31 +34,26 @@ import org.jowidgets.workbench.api.ILayout;
 import org.jowidgets.workbench.api.ILayoutContainer;
 import org.jowidgets.workbench.api.LayoutScope;
 
-public final class Layout implements ILayout {
+final class Layout extends WorkbenchPart implements ILayout {
 
 	private final String id;
 	private final LayoutScope scope;
-	private final String label;
-	private final String tooltip;
-	private final IImageConstant icon;
 	private final ILayoutContainer layoutContainer;
 
-	public Layout(
+	Layout(
 		final String id,
 		final LayoutScope scope,
 		final String label,
 		final String tooltip,
 		final IImageConstant icon,
 		final ILayoutContainer layoutContainer) {
+		super(label, tooltip, icon);
 
 		Assert.paramNotEmpty(id, "id");
 		Assert.paramNotNull(layoutContainer, "layoutContainer");
 
 		this.id = id;
 		this.scope = scope;
-		this.label = label;
-		this.tooltip = tooltip;
-		this.icon = icon;
 		this.layoutContainer = layoutContainer;
 	}
 
@@ -70,21 +65,6 @@ public final class Layout implements ILayout {
 	@Override
 	public LayoutScope getScope() {
 		return scope;
-	}
-
-	@Override
-	public String getLabel() {
-		return label;
-	}
-
-	@Override
-	public String getTooltip() {
-		return tooltip;
-	}
-
-	@Override
-	public IImageConstant getIcon() {
-		return icon;
 	}
 
 	@Override
