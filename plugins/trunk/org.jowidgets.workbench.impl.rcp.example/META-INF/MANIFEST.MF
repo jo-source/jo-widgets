@@ -13,8 +13,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.jowidgets.impl;bundle-version="0.0.18",
  org.jowidgets.spi;bundle-version="0.0.18",
  org.jowidgets.spi.impl.swt;bundle-version="0.0.18",
- org.jowidgets.workbench.toolkit.api;bundle-version="0.0.17",
- org.jowidgets.workbench.toolkit.impl;bundle-version="0.0.17",
+ org.jowidgets.workbench.toolkit.api;bundle-version="0.0.18",
+ org.jowidgets.workbench.toolkit.impl;bundle-version="0.0.18",
  org.jowidgets.workbench.impl.rcp;bundle-version="0.0.18"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: miglayout-3.7.3.1-swt.jar,
