@@ -3,13 +3,13 @@
 
 	<groupId>org.jowidgets</groupId>
 	<artifactId>org.jowidgets.examples.swing</artifactId>
-	<version>0.0.17</version>
+	<version>0.0.18-SNAPSHOT</version>
 	<name>org.jowidgets.examples.swing</name>
 
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.examples.parent</artifactId>
-		<version>0.0.17</version>
+		<version>0.0.18-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 
@@ -17,45 +17,45 @@
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.examples.common</artifactId>
-			<version>0.0.17</version>
+			<version>0.0.18-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.spi.impl.swing.addons</artifactId>
-			<version>0.0.17</version>
+			<version>0.0.18-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.impl</artifactId>
-			<version>0.0.17</version>
+			<version>0.0.18-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.workbench.impl</artifactId>
-			<version>0.0.17</version>
+			<version>0.0.18-SNAPSHOT</version>
 		</dependency>
 		<dependency>
             <groupId>org.jowidgets</groupId>
             <artifactId>org.jowidgets.workbench.tools.impl</artifactId>
-            <version>0.0.17</version>
+            <version>0.0.18-SNAPSHOT</version>
         </dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.spi.impl.swing</artifactId>
-			<version>0.0.17</version>
+			<version>0.0.18-SNAPSHOT</version>
 		</dependency>
 
 		<!-- headfull (GUI) test dependencies -->
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.examples.common</artifactId>
-			<version>0.0.17</version>
+			<version>0.0.18-SNAPSHOT</version>
 			<type>test-jar</type>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.api.test</artifactId>
-			<version>0.0.17</version>
+			<version>0.0.18-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
