@@ -28,76 +28,100 @@
 
 package org.jowidgets.workbench.tools;
 
+import java.util.List;
+
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.workbench.api.ILayout;
-import org.jowidgets.workbench.api.ILayoutContainer;
-import org.jowidgets.workbench.api.LayoutScope;
-import org.jowidgets.workbench.toolkit.api.ILayoutBuilder;
-import org.jowidgets.workbench.toolkit.api.ILayoutContainerBuilder;
+import org.jowidgets.workbench.api.IViewLayout;
+import org.jowidgets.workbench.toolkit.api.IViewLayoutBuilder;
 import org.jowidgets.workbench.toolkit.api.WorkbenchToolkit;
 
-public class LayoutBuilder implements ILayoutBuilder {
+public class ViewLayoutBuilder implements IViewLayoutBuilder {
 
-	private final ILayoutBuilder builder;
+	private final IViewLayoutBuilder builder;
 
-	public LayoutBuilder() {
+	public ViewLayoutBuilder() {
 		this(builder());
 	}
 
-	public LayoutBuilder(final String id) {
+	public ViewLayoutBuilder(final String id) {
 		this(builder(id));
 	}
 
-	public LayoutBuilder(final ILayoutBuilder builder) {
+	public ViewLayoutBuilder(final IViewLayoutBuilder builder) {
 		super();
 		this.builder = builder;
 	}
 
 	@Override
-	public ILayoutBuilder setLabel(final String label) {
+	public IViewLayoutBuilder setLabel(final String label) {
 		return builder.setLabel(label);
 	}
 
 	@Override
-	public ILayoutBuilder setTooltip(final String toolTiptext) {
+	public IViewLayoutBuilder setTooltip(final String toolTiptext) {
 		return builder.setTooltip(toolTiptext);
 	}
 
 	@Override
-	public ILayoutBuilder setIcon(final IImageConstant icon) {
+	public IViewLayoutBuilder setIcon(final IImageConstant icon) {
 		return builder.setIcon(icon);
 	}
 
 	@Override
-	public ILayoutBuilder setId(final String id) {
+	public IViewLayoutBuilder setId(final String id) {
 		return builder.setId(id);
 	}
 
 	@Override
-	public ILayoutBuilder setScope(final LayoutScope scope) {
-		return builder.setScope(scope);
+	public IViewLayoutBuilder setHidden(final boolean hidden) {
+		return builder.setHidden(hidden);
 	}
 
 	@Override
-	public ILayoutBuilder setLayoutContainer(final ILayoutContainer layoutContainer) {
-		return builder.setLayoutContainer(layoutContainer);
+	public IViewLayoutBuilder setDetachable(final boolean detachable) {
+		return builder.setDetachable(detachable);
 	}
 
 	@Override
-	public ILayoutBuilder setLayoutContainer(final ILayoutContainerBuilder layoutContainerBuilder) {
-		return builder.setLayoutContainer(layoutContainerBuilder);
+	public IViewLayoutBuilder setFolderWhitelist(final List<String> folderWhiteList) {
+		return builder.setFolderWhitelist(folderWhiteList);
 	}
 
 	@Override
-	public ILayout build() {
+	public IViewLayoutBuilder setFolderWhitelist(final String... folderWhiteList) {
+		return builder.setFolderWhitelist(folderWhiteList);
+	}
+
+	@Override
+	public IViewLayoutBuilder addToFolderWhitelist(final String folder) {
+		return builder.addToFolderWhitelist(folder);
+	}
+
+	@Override
+	public IViewLayoutBuilder setFolderBlacklist(final List<String> folderBlackList) {
+		return builder.setFolderBlacklist(folderBlackList);
+	}
+
+	@Override
+	public IViewLayoutBuilder setFolderBlacklist(final String... folderBlackList) {
+		return builder.setFolderBlacklist(folderBlackList);
+	}
+
+	@Override
+	public IViewLayoutBuilder addToFolderBlacklist(final String folder) {
+		return builder.addToFolderBlacklist(folder);
+	}
+
+	@Override
+	public IViewLayout build() {
 		return builder.build();
 	}
 
-	public static ILayoutBuilder builder() {
-		return WorkbenchToolkit.getLayoutBuilderFactory().layout();
+	public static IViewLayoutBuilder builder() {
+		return WorkbenchToolkit.getLayoutBuilderFactory().view();
 	}
 
-	public static ILayoutBuilder builder(final String id) {
+	public static IViewLayoutBuilder builder(final String id) {
 		return builder().setId(id);
 	}
 
