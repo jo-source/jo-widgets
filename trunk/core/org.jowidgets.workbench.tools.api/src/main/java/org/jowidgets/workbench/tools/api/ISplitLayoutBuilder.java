@@ -33,7 +33,7 @@ import org.jowidgets.common.types.SplitResizePolicy;
 import org.jowidgets.workbench.api.ILayoutContainer;
 import org.jowidgets.workbench.api.ISplitLayout;
 
-public interface ISplitLayoutBuilder extends ILayoutContainerBuilder, IWorkbenchPartBuilder<ISplitLayoutBuilder> {
+public interface ISplitLayoutBuilder extends ILayoutContainerBuilder {
 
 	ISplitLayoutBuilder setOrientation(Orientation orientation);
 

@@ -36,7 +36,7 @@ import org.jowidgets.workbench.api.ISplitLayout;
 import org.jowidgets.workbench.tools.api.ILayoutContainerBuilder;
 import org.jowidgets.workbench.tools.api.ISplitLayoutBuilder;
 
-class SplitLayoutBuilder extends WorkbenchPartBuilder<ISplitLayoutBuilder> implements ISplitLayoutBuilder {
+class SplitLayoutBuilder implements ISplitLayoutBuilder {
 
 	private Orientation orientation;
 	private double weight;
