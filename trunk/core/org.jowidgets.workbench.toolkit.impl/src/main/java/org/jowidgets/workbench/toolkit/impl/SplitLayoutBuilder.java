@@ -46,6 +46,7 @@ class SplitLayoutBuilder implements ISplitLayoutBuilder {
 
 	SplitLayoutBuilder() {
 		super();
+		this.weight = 0.5;
 	}
 
 	@Override

@@ -46,6 +46,8 @@ class ViewLayoutBuilder extends WorkbenchPartBuilder<IViewLayoutBuilder> impleme
 
 	ViewLayoutBuilder() {
 		super();
+		this.hidden = false;
+		this.detachable = true;
 		this.folderWhiteList = new LinkedList<String>();
 		this.folderBlackList = new LinkedList<String>();
 	}
