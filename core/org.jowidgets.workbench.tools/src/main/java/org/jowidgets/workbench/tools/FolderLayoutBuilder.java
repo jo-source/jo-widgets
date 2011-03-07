@@ -56,62 +56,74 @@ public class FolderLayoutBuilder implements IFolderLayoutBuilder {
 
 	@Override
 	public IFolderLayoutBuilder setId(final String id) {
-		return builder.setId(id);
+		builder.setId(id);
+		return this;
 	}
 
 	@Override
 	public IFolderLayoutBuilder setLabel(final String label) {
-		return builder.setLabel(label);
+		builder.setLabel(label);
+		return this;
 	}
 
 	@Override
 	public IFolderLayoutBuilder setTooltip(final String toolTiptext) {
-		return builder.setTooltip(toolTiptext);
+		builder.setTooltip(toolTiptext);
+		return this;
 	}
 
 	@Override
 	public IFolderLayoutBuilder setIcon(final IImageConstant icon) {
-		return builder.setIcon(icon);
+		builder.setIcon(icon);
+		return this;
 	}
 
 	@Override
 	public IFolderLayoutBuilder setGroupId(final String groupId) {
-		return builder.setGroupId(groupId);
+		builder.setGroupId(groupId);
+		return this;
 	}
 
 	@Override
 	public IFolderLayoutBuilder setDetachable(final boolean detachable) {
-		return builder.setDetachable(detachable);
+		builder.setDetachable(detachable);
+		return this;
 	}
 
 	@Override
 	public IFolderLayoutBuilder setViewsCloseable(final boolean viewsCloseable) {
-		return builder.setViewsCloseable(viewsCloseable);
+		builder.setViewsCloseable(viewsCloseable);
+		return this;
 	}
 
 	@Override
 	public IFolderLayoutBuilder setViews(final List<? extends IViewLayout> views) {
-		return builder.setViews(views);
+		builder.setViews(views);
+		return this;
 	}
 
 	@Override
 	public IFolderLayoutBuilder setViews(final IViewLayout... views) {
-		return builder.setViews(views);
+		builder.setViews(views);
+		return this;
 	}
 
 	@Override
 	public IFolderLayoutBuilder addView(final IViewLayout view) {
-		return builder.addView(view);
+		builder.addView(view);
+		return this;
 	}
 
 	@Override
 	public IFolderLayoutBuilder setViews(final IViewLayoutBuilder... viewsBuilder) {
-		return builder.setViews(viewsBuilder);
+		builder.setViews(viewsBuilder);
+		return this;
 	}
 
 	@Override
 	public IFolderLayoutBuilder addView(final IViewLayoutBuilder viewBuilder) {
-		return builder.addView(viewBuilder);
+		builder.addView(viewBuilder);
+		return this;
 	}
 
 	@Override
