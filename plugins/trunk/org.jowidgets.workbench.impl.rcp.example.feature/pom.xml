@@ -4,11 +4,11 @@
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.plugins.parent</artifactId>
-		<version>0.0.17-SNAPSHOT</version>
+		<version>0.0.17</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
-	<artifactId>org.jowidgets.workbench.impl.rcp.feature</artifactId>
-	<name>org.jowidgets.workbench.impl.rcp.feature</name>
+	<artifactId>org.jowidgets.workbench.impl.rcp.example.feature</artifactId>
+	<name>org.jowidgets.workbench.impl.rcp.example.feature</name>
 	<packaging>eclipse-feature</packaging>
 
 	<dependencies>
