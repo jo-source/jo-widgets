@@ -1,0 +1,27 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.jowidgets</groupId>
+		<artifactId>org.jowidgets.plugins.parent</artifactId>
+		<version>0.0.17</version>
+		<relativePath>../parent/pom.xml</relativePath>
+	</parent>
+	<artifactId>org.jowidgets.workbench.impl.rcp</artifactId>
+	<name>org.jowidgets.workbench.impl.rcp</name>
+	<packaging>eclipse-plugin</packaging>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.workbench.api</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.tools</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+	</dependencies>
+
+</project>

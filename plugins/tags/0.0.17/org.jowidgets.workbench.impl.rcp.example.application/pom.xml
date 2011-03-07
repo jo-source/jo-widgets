@@ -1,0 +1,67 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.jowidgets</groupId>
+		<artifactId>org.jowidgets.plugins.parent</artifactId>
+		<version>0.0.17</version>
+		<relativePath>../parent/pom.xml</relativePath>
+	</parent>
+	<artifactId>org.jowidgets.workbench.impl.rcp.example.application</artifactId>
+	<name>org.jowidgets.workbench.impl.rcp.example.application</name>
+	<packaging>eclipse-application</packaging>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.workbench.api</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.tools</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.spi.impl.swt</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.examples.common</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.impl</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.test.api</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.test.spi</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.api.test</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+            <groupId>org.jowidgets</groupId>
+            <artifactId>org.jowidgets.workbench.tools.api</artifactId>
+            <version>${jo-widgets.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jowidgets</groupId>
+            <artifactId>org.jowidgets.workbench.tools.impl</artifactId>
+            <version>${jo-widgets.version}</version>
+        </dependency>
+	</dependencies>
+	
+</project>
