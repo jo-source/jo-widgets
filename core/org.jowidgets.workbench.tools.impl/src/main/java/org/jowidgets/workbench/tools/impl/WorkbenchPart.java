@@ -28,67 +28,35 @@
 
 package org.jowidgets.workbench.tools.impl;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.util.Assert;
-import org.jowidgets.workbench.api.IFolderLayout;
-import org.jowidgets.workbench.api.IViewLayout;
+import org.jowidgets.workbench.api.IWorkbenchPart;
 
-final class FolderLayout extends WorkbenchPart implements IFolderLayout {
+class WorkbenchPart implements IWorkbenchPart {
 
-	private final String id;
-	private final String groupId;
-	private final List<? extends IViewLayout> views;
-	private final boolean isDetachable;
-	private final boolean viewsCloseable;
+	private final String label;
+	private final String tooltip;
+	private final IImageConstant icon;
 
-	FolderLayout(
-		final String id,
-		final String groupId,
-		final String label,
-		final String tooltip,
-		final IImageConstant icon,
-		final List<? extends IViewLayout> views,
-		final boolean isDetachable,
-		final boolean viewsCloseable) {
-		super(label, tooltip, icon);
+	WorkbenchPart(final String label, final String tooltip, final IImageConstant icon) {
 
-		Assert.paramNotEmpty(id, "id");
-		Assert.paramNotEmpty(groupId, "groupId");
-		Assert.paramNotNull(views, "views");
-
-		this.id = id;
-		this.groupId = groupId;
-		this.views = new LinkedList<IViewLayout>(views);
-		this.isDetachable = isDetachable;
-		this.viewsCloseable = viewsCloseable;
+		this.label = label;
+		this.tooltip = tooltip;
+		this.icon = icon;
 	}
 
 	@Override
-	public String getId() {
-		return id;
+	public String getLabel() {
+		return label;
 	}
 
 	@Override
-	public String getGroupId() {
-		return groupId;
+	public String getTooltip() {
+		return tooltip;
 	}
 
 	@Override
-	public List<? extends IViewLayout> getViews() {
-		return new LinkedList<IViewLayout>(views);
-	}
-
-	@Override
-	public boolean isDetachable() {
-		return isDetachable;
-	}
-
-	@Override
-	public boolean getViewsCloseable() {
-		return viewsCloseable;
+	public IImageConstant getIcon() {
+		return icon;
 	}
 
 }
