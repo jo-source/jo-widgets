@@ -42,6 +42,7 @@ import org.jowidgets.workbench.toolkit.api.WorkbenchToolkit;
 public class Workbench implements IWorkbench {
 
 	private final IWorkbench workbench;
+	private final IWorkbenchModel model;
 
 	public Workbench() {
 		this(new WorkbenchModelBuilder());
@@ -59,9 +60,14 @@ public class Workbench implements IWorkbench {
 		this(workbenchModelBuilder.build());
 	}
 
-	public Workbench(final IWorkbenchModel workbenchModel) {
-		Assert.paramNotNull(workbenchModel, "workbenchModel");
-		this.workbench = WorkbenchToolkit.getWorkbenchPartFactory().workbench(workbenchModel);
+	public Workbench(final IWorkbenchModel model) {
+		Assert.paramNotNull(model, "model");
+		this.model = model;
+		this.workbench = WorkbenchToolkit.getWorkbenchPartFactory().workbench(model);
+	}
+
+	public final IWorkbenchModel getModel() {
+		return model;
 	}
 
 	@Override
