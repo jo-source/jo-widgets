@@ -76,4 +76,12 @@ public final class WorkbenchToolkit {
 		return getInstance().getLayoutBuilderFactory();
 	}
 
+	public static IWorkbenchPartBuilderFactory getWorkbenchPartBuilderFactory() {
+		return getInstance().getWorkbenchPartBuilderFactory();
+	}
+
+	public static IWorkbenchPartFactory getWorkbenchPartFactory() {
+		return getInstance().getWorkbenchPartFactory();
+	}
+
 }
