@@ -32,4 +32,8 @@ public interface IWorkbenchToolkit {
 
 	ILayoutBuilderFactory getLayoutBuilderFactory();
 
+	IWorkbenchPartBuilderFactory getWorkbenchPartBuilderFactory();
+
+	IWorkbenchPartFactory getWorkbenchPartFactory();
+
 }

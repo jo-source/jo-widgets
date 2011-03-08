@@ -28,43 +28,32 @@
 
 package org.jowidgets.workbench.toolkit.api;
 
-import java.util.List;
+import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.api.model.item.IToolBarModel;
+import org.jowidgets.workbench.api.ILifecycleCallback;
+import org.jowidgets.workbench.api.IWorkbenchApplicationDescriptor;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.workbench.api.IFolderLayout;
-import org.jowidgets.workbench.api.IViewLayout;
+public interface IWorkbenchApplicationModel extends
+		IWorkbenchApplicationDescriptor,
+		IComponentNodeContainerModel,
+		IWorkbenchPartModel {
 
-public interface IFolderLayoutBuilder extends ILayoutContainerBuilder, IWorkbenchPartBuilder<IFolderLayoutBuilder> {
+	IMenuModel getPopupMenu();
 
-	IFolderLayoutBuilder setId(String id);
+	IToolBarModel getToolBar();
 
-	IFolderLayoutBuilder setGroupId(String groupId);
+	IMenuModel getToolBarMenu();
 
-	IFolderLayoutBuilder setDetachable(boolean detachable);
+	ILifecycleCallback getLifecycleCallback();
 
-	IFolderLayoutBuilder setViewsCloseable(boolean viewsCloseable);
+	void setPopupMenu(IMenuModel menuModel);
 
-	IFolderLayoutBuilder setViews(List<? extends IViewLayout> views);
+	void setToolBar(IToolBarModel toolBarModel);
 
-	IFolderLayoutBuilder setViews(IViewLayout... views);
+	void setToolBarMenu(IMenuModel toolBarMenu);
 
-	IFolderLayoutBuilder setViews(IViewLayoutBuilder... viewsBuilder);
+	void setLifecycleCallback(ILifecycleCallback lifecycleCallback);
 
-	IFolderLayoutBuilder addView(IViewLayout view);
-
-	IFolderLayoutBuilder addView(String id, String label, String tooltip, IImageConstant icon);
-
-	IFolderLayoutBuilder addView(String id, String label, IImageConstant icon);
-
-	IFolderLayoutBuilder addView(String id, String label, String tooltip);
-
-	IFolderLayoutBuilder addView(String id, String label);
-
-	IFolderLayoutBuilder addView(String id, IImageConstant icon);
-
-	IFolderLayoutBuilder addView(IViewLayoutBuilder viewBuilder);
-
-	@Override
-	IFolderLayout build();
+	IWorkbenchModel getWorkbenchModel();
 
 }

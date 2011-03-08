@@ -29,11 +29,15 @@
 package org.jowidgets.workbench.toolkit.impl;
 
 import org.jowidgets.workbench.toolkit.api.ILayoutBuilderFactory;
+import org.jowidgets.workbench.toolkit.api.IWorkbenchPartBuilderFactory;
+import org.jowidgets.workbench.toolkit.api.IWorkbenchPartFactory;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchToolkit;
 
 public class DefaultWorkbenchToolkit implements IWorkbenchToolkit {
 
 	private ILayoutBuilderFactory layoutBuilderFactory;
+	private IWorkbenchPartBuilderFactory workbenchPartBuilderFactory;
+	private IWorkbenchPartFactory workbenchPartFactory;
 
 	@Override
 	public ILayoutBuilderFactory getLayoutBuilderFactory() {
@@ -41,6 +45,18 @@ public class DefaultWorkbenchToolkit implements IWorkbenchToolkit {
 			this.layoutBuilderFactory = new LayoutBuilderFactory();
 		}
 		return layoutBuilderFactory;
+	}
+
+	@Override
+	public IWorkbenchPartBuilderFactory getWorkbenchPartBuilderFactory() {
+		//TODO MG initialize the workbenchPartBuilderFactory lazy
+		return workbenchPartBuilderFactory;
+	}
+
+	@Override
+	public IWorkbenchPartFactory getWorkbenchPartFactory() {
+		//TODO MG initialize the workbenchPartFactory lazy
+		return workbenchPartFactory;
 	}
 
 }
