@@ -28,43 +28,22 @@
 
 package org.jowidgets.workbench.toolkit.api;
 
-import java.util.List;
+import org.jowidgets.workbench.api.IComponentTreeNode;
+import org.jowidgets.workbench.api.IWorkbench;
+import org.jowidgets.workbench.api.IWorkbenchApplication;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.workbench.api.IFolderLayout;
-import org.jowidgets.workbench.api.IViewLayout;
+public interface IWorkbenchPartFactory {
 
-public interface IFolderLayoutBuilder extends ILayoutContainerBuilder, IWorkbenchPartBuilder<IFolderLayoutBuilder> {
+	IWorkbench workbench(IWorkbenchModel model);
 
-	IFolderLayoutBuilder setId(String id);
+	IWorkbenchApplication application(IWorkbenchApplicationModel model);
 
-	IFolderLayoutBuilder setGroupId(String groupId);
+	IComponentTreeNode componentNode(IComponentNodeModel model);
 
-	IFolderLayoutBuilder setDetachable(boolean detachable);
+	IWorkbench workbench(IWorkbenchModelBuilder modelBuilder);
 
-	IFolderLayoutBuilder setViewsCloseable(boolean viewsCloseable);
+	IWorkbenchApplication application(IWorkbenchApplicationModelBuilder modelBuilder);
 
-	IFolderLayoutBuilder setViews(List<? extends IViewLayout> views);
-
-	IFolderLayoutBuilder setViews(IViewLayout... views);
-
-	IFolderLayoutBuilder setViews(IViewLayoutBuilder... viewsBuilder);
-
-	IFolderLayoutBuilder addView(IViewLayout view);
-
-	IFolderLayoutBuilder addView(String id, String label, String tooltip, IImageConstant icon);
-
-	IFolderLayoutBuilder addView(String id, String label, IImageConstant icon);
-
-	IFolderLayoutBuilder addView(String id, String label, String tooltip);
-
-	IFolderLayoutBuilder addView(String id, String label);
-
-	IFolderLayoutBuilder addView(String id, IImageConstant icon);
-
-	IFolderLayoutBuilder addView(IViewLayoutBuilder viewBuilder);
-
-	@Override
-	IFolderLayout build();
+	IComponentTreeNode componentNode(IComponentNodeModelBuilder modelBuilder);
 
 }

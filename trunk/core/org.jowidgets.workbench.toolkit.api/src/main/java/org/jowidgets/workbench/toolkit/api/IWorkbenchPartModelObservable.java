@@ -28,43 +28,10 @@
 
 package org.jowidgets.workbench.toolkit.api;
 
-import java.util.List;
+public interface IWorkbenchPartModelObservable {
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.workbench.api.IFolderLayout;
-import org.jowidgets.workbench.api.IViewLayout;
+	void addWorkbenchPartModelListener(IWorkbenchPartModelListener listener);
 
-public interface IFolderLayoutBuilder extends ILayoutContainerBuilder, IWorkbenchPartBuilder<IFolderLayoutBuilder> {
-
-	IFolderLayoutBuilder setId(String id);
-
-	IFolderLayoutBuilder setGroupId(String groupId);
-
-	IFolderLayoutBuilder setDetachable(boolean detachable);
-
-	IFolderLayoutBuilder setViewsCloseable(boolean viewsCloseable);
-
-	IFolderLayoutBuilder setViews(List<? extends IViewLayout> views);
-
-	IFolderLayoutBuilder setViews(IViewLayout... views);
-
-	IFolderLayoutBuilder setViews(IViewLayoutBuilder... viewsBuilder);
-
-	IFolderLayoutBuilder addView(IViewLayout view);
-
-	IFolderLayoutBuilder addView(String id, String label, String tooltip, IImageConstant icon);
-
-	IFolderLayoutBuilder addView(String id, String label, IImageConstant icon);
-
-	IFolderLayoutBuilder addView(String id, String label, String tooltip);
-
-	IFolderLayoutBuilder addView(String id, String label);
-
-	IFolderLayoutBuilder addView(String id, IImageConstant icon);
-
-	IFolderLayoutBuilder addView(IViewLayoutBuilder viewBuilder);
-
-	@Override
-	IFolderLayout build();
+	void removeWorkbenchPartModelListener(IWorkbenchPartModelListener listener);
 
 }

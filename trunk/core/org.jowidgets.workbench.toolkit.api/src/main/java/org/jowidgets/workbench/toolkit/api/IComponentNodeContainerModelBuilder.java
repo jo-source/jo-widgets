@@ -28,43 +28,26 @@
 
 package org.jowidgets.workbench.toolkit.api;
 
-import java.util.List;
-
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.workbench.api.IFolderLayout;
-import org.jowidgets.workbench.api.IViewLayout;
 
-public interface IFolderLayoutBuilder extends ILayoutContainerBuilder, IWorkbenchPartBuilder<IFolderLayoutBuilder> {
+public interface IComponentNodeContainerModelBuilder<BUILDER_INSTANCE_TYPE> {
 
-	IFolderLayoutBuilder setId(String id);
+	BUILDER_INSTANCE_TYPE addChild(IComponentNodeModel childModel);
 
-	IFolderLayoutBuilder setGroupId(String groupId);
+	BUILDER_INSTANCE_TYPE addChild(int index, IComponentNodeModel childModel);
 
-	IFolderLayoutBuilder setDetachable(boolean detachable);
+	BUILDER_INSTANCE_TYPE addChild(IComponentNodeModelBuilder childModel);
 
-	IFolderLayoutBuilder setViewsCloseable(boolean viewsCloseable);
+	BUILDER_INSTANCE_TYPE addChild(int index, IComponentNodeModelBuilder childModel);
 
-	IFolderLayoutBuilder setViews(List<? extends IViewLayout> views);
+	BUILDER_INSTANCE_TYPE addChild(String id, String label, String tooltip, IImageConstant icon);
 
-	IFolderLayoutBuilder setViews(IViewLayout... views);
+	BUILDER_INSTANCE_TYPE addChild(String id, String label, IImageConstant icon);
 
-	IFolderLayoutBuilder setViews(IViewLayoutBuilder... viewsBuilder);
+	BUILDER_INSTANCE_TYPE addChild(String id, String label, String tooltip);
 
-	IFolderLayoutBuilder addView(IViewLayout view);
+	BUILDER_INSTANCE_TYPE addChild(String id, String label);
 
-	IFolderLayoutBuilder addView(String id, String label, String tooltip, IImageConstant icon);
-
-	IFolderLayoutBuilder addView(String id, String label, IImageConstant icon);
-
-	IFolderLayoutBuilder addView(String id, String label, String tooltip);
-
-	IFolderLayoutBuilder addView(String id, String label);
-
-	IFolderLayoutBuilder addView(String id, IImageConstant icon);
-
-	IFolderLayoutBuilder addView(IViewLayoutBuilder viewBuilder);
-
-	@Override
-	IFolderLayout build();
+	BUILDER_INSTANCE_TYPE addChild(String id);
 
 }

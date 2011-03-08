@@ -28,43 +28,24 @@
 
 package org.jowidgets.workbench.toolkit.api;
 
-import java.util.List;
+import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.api.model.item.IToolBarModel;
+import org.jowidgets.workbench.api.ILifecycleCallback;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.workbench.api.IFolderLayout;
-import org.jowidgets.workbench.api.IViewLayout;
+public interface IWorkbenchApplicationModelBuilder extends
+		IComponentNodeContainerModelBuilder<IComponentNodeModelBuilder>,
+		IWorkbenchPartBuilder<IWorkbenchApplicationModelBuilder> {
 
-public interface IFolderLayoutBuilder extends ILayoutContainerBuilder, IWorkbenchPartBuilder<IFolderLayoutBuilder> {
+	IWorkbenchApplicationModelBuilder setId(String id);
 
-	IFolderLayoutBuilder setId(String id);
+	IWorkbenchApplicationModelBuilder setPopupMenu(IMenuModel menuModel);
 
-	IFolderLayoutBuilder setGroupId(String groupId);
+	IWorkbenchApplicationModelBuilder setToolBar(IToolBarModel toolBarModel);
 
-	IFolderLayoutBuilder setDetachable(boolean detachable);
+	IWorkbenchApplicationModelBuilder setToolBarMenu(IMenuModel toolBarMenu);
 
-	IFolderLayoutBuilder setViewsCloseable(boolean viewsCloseable);
+	IWorkbenchApplicationModelBuilder setLifecycleCallback(ILifecycleCallback lifecycleCallback);
 
-	IFolderLayoutBuilder setViews(List<? extends IViewLayout> views);
-
-	IFolderLayoutBuilder setViews(IViewLayout... views);
-
-	IFolderLayoutBuilder setViews(IViewLayoutBuilder... viewsBuilder);
-
-	IFolderLayoutBuilder addView(IViewLayout view);
-
-	IFolderLayoutBuilder addView(String id, String label, String tooltip, IImageConstant icon);
-
-	IFolderLayoutBuilder addView(String id, String label, IImageConstant icon);
-
-	IFolderLayoutBuilder addView(String id, String label, String tooltip);
-
-	IFolderLayoutBuilder addView(String id, String label);
-
-	IFolderLayoutBuilder addView(String id, IImageConstant icon);
-
-	IFolderLayoutBuilder addView(IViewLayoutBuilder viewBuilder);
-
-	@Override
-	IFolderLayout build();
+	IWorkbenchApplicationModel build();
 
 }

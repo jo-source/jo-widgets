@@ -28,43 +28,39 @@
 
 package org.jowidgets.workbench.toolkit.api;
 
-import java.util.List;
-
+import org.jowidgets.api.model.IListModelObservable;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.workbench.api.IFolderLayout;
-import org.jowidgets.workbench.api.IViewLayout;
 
-public interface IFolderLayoutBuilder extends ILayoutContainerBuilder, IWorkbenchPartBuilder<IFolderLayoutBuilder> {
+public interface IComponentNodeContainerModel extends IListModelObservable {
 
-	IFolderLayoutBuilder setId(String id);
+	IComponentNodeContainerModel getParentContainer();
 
-	IFolderLayoutBuilder setGroupId(String groupId);
+	IComponentNodeModel getChildren();
 
-	IFolderLayoutBuilder setDetachable(boolean detachable);
+	int getChildrenCount();
 
-	IFolderLayoutBuilder setViewsCloseable(boolean viewsCloseable);
+	IComponentNodeModel addChild(IComponentNodeModel childModel);
 
-	IFolderLayoutBuilder setViews(List<? extends IViewLayout> views);
+	IComponentNodeModel addChild(int index, IComponentNodeModel childModel);
 
-	IFolderLayoutBuilder setViews(IViewLayout... views);
+	IComponentNodeModel addChild(IComponentNodeModelBuilder childModelBuilder);
 
-	IFolderLayoutBuilder setViews(IViewLayoutBuilder... viewsBuilder);
+	IComponentNodeModel addChild(int index, IComponentNodeModelBuilder childModelBuilder);
 
-	IFolderLayoutBuilder addView(IViewLayout view);
+	IComponentNodeModel addChild(String id, String label, String tooltip, IImageConstant icon);
 
-	IFolderLayoutBuilder addView(String id, String label, String tooltip, IImageConstant icon);
+	IComponentNodeModel addChild(String id, String label, IImageConstant icon);
 
-	IFolderLayoutBuilder addView(String id, String label, IImageConstant icon);
+	IComponentNodeModel addChild(String id, String label, String tooltip);
 
-	IFolderLayoutBuilder addView(String id, String label, String tooltip);
+	IComponentNodeModel addChild(String id, String label);
 
-	IFolderLayoutBuilder addView(String id, String label);
+	IComponentNodeModel addChild(String id);
 
-	IFolderLayoutBuilder addView(String id, IImageConstant icon);
+	void remove(int index);
 
-	IFolderLayoutBuilder addView(IViewLayoutBuilder viewBuilder);
+	void remove(IComponentNodeModel childModel);
 
-	@Override
-	IFolderLayout build();
+	void removeAll();
 
 }
