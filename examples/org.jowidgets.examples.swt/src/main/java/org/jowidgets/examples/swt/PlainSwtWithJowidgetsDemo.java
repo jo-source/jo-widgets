@@ -28,8 +28,6 @@
 
 package org.jowidgets.examples.swt;
 
-import javax.swing.UIManager;
-
 import net.miginfocom.swt.MigLayout;
 
 import org.eclipse.swt.SWT;
@@ -44,42 +42,45 @@ import org.jowidgets.spi.impl.swt.addons.SwtToJo;
 
 public final class PlainSwtWithJowidgetsDemo {
 
-	private PlainSwtWithJowidgetsDemo() {}
+	private PlainSwtWithJowidgetsDemo() {
+	}
 
 	public static void main(final String[] args) throws Exception {
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		DemoIconsInitializer.initialize();
 
 		createAndShowJFrame();
 	}
 
 	private static void createAndShowJFrame() {
-		//create the root shell with swt
+		// create the root shell with swt
 		final Display display = new Display();
 		final Shell shell = new Shell(display);
-		shell.setLayout(new MigLayout("", "[grow, 0::]", "[grow, 20!][grow, 0::]"));
+		shell.setLayout(new MigLayout("", "[grow, 0::]",
+				"[grow, 20!][grow, 0::]"));
 		shell.setSize(500, 400);
 
-		//creating the first swt composite
+		// creating the first swt composite
 		final Composite swtComposite1 = new Composite(shell, SWT.NONE);
 		swtComposite1.setLayoutData("growx, growy, w 0::, h 0::, wrap");
-		swtComposite1.setLayout(new MigLayout("", "[grow, 0::]", "[grow, 0::]"));
+		swtComposite1
+				.setLayout(new MigLayout("", "[grow, 0::]", "[grow, 0::]"));
 
-		//adding a swt label
+		// adding a swt label
 		final Label swtlabel = new Label(swtComposite1, SWT.NONE);
 		swtlabel.setText("Label created with Swt");
 		swtlabel.setLayoutData("alignx center");
 
-		//creating the second composite with swt and adding it to the shell
+		// creating the second composite with swt and adding it to the shell
 		final Composite swtComposite2 = new Composite(shell, SWT.NONE);
 		swtComposite2.setLayoutData("growx, growy, w 0::, h 0::");
 
-		//now a jowidgets composite will be created with help of the swt composite
-		//and the demo form 1 from examples common will be added 
+		// now a jowidgets composite will be created with help of the swt
+		// composite
+		// and the demo form 1 from examples common will be added
 		final IComposite joComposite = SwtToJo.create(swtComposite2);
 		DemoForm1Creator.createDemoForm1(joComposite);
 
-		//open the shell
+		// open the shell
 		shell.open();
 		while (!shell.isDisposed()) {
 			if (!display.readAndDispatch()) {

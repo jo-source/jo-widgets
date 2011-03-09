@@ -28,8 +28,6 @@
 
 package org.jowidgets.examples.swt;
 
-import javax.swing.UIManager;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
@@ -51,10 +49,10 @@ import org.jowidgets.spi.impl.swt.addons.JoToSwt;
 
 public final class JoWidgetsWithPlainSwtDemo {
 
-	private JoWidgetsWithPlainSwtDemo() {}
+	private JoWidgetsWithPlainSwtDemo() {
+	}
 
 	public static void main(final String[] args) throws Exception {
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		DemoIconsInitializer.initialize();
 
 		Toolkit.getApplicationRunner().run(new IApplication() {
@@ -66,32 +64,37 @@ public final class JoWidgetsWithPlainSwtDemo {
 	}
 
 	private static void startApplication(final IApplicationLifecycle lifecycle) {
-		//get the blue print factory
+		// get the blue print factory
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-		//create the root frame
-		final IFrameBluePrint frameBp = bpf.frame("JoWidgetFrame").setSize(new Dimension(500, 400));
+		// create the root frame
+		final IFrameBluePrint frameBp = bpf.frame("JoWidgetFrame").setSize(
+				new Dimension(500, 400));
 		final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
 		frame.setLayout(new MigLayoutDescriptor("[grow, 0::]", "[grow, 0::]"));
 
-		//create a scroll composite to put the content into
-		final IComposite scrollComposite = frame.add(bpf.scrollComposite(), "growx, growy, w 0::, h 0::");
-		scrollComposite.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::][0::]0"));
+		// create a scroll composite to put the content into
+		final IComposite scrollComposite = frame.add(bpf.scrollComposite(),
+				"growx, growy, w 0::, h 0::");
+		scrollComposite.setLayout(new MigLayoutDescriptor("0[grow, 0::]0",
+				"0[grow, 0::][0::]0"));
 
-		//add the demo from 1 to the first row
-		final IComposite composite1 = scrollComposite.add(bpf.composite(), "growx, growy, w 0::, h 0::, wrap");
+		// add the demo from 1 to the first row
+		final IComposite composite1 = scrollComposite.add(bpf.composite(),
+				"growx, growy, w 0::, h 0::, wrap");
 		DemoForm1Creator.createDemoForm1(composite1, false);
 
-		//add a composite to the second row and convert it to a JPanel
-		final IComposite joComposite2 = scrollComposite.add(bpf.composite(), "alignx center");
+		// add a composite to the second row and convert it to a JPanel
+		final IComposite joComposite2 = scrollComposite.add(bpf.composite(),
+				"alignx center");
 		final Composite swtComposite2 = JoToSwt.convert(joComposite2);
 
-		//add a swt label to the panel
+		// add a swt label to the panel
 		final Label label = new Label(swtComposite2, SWT.NONE);
 		label.setText("Label created with swt");
 		label.setForeground(new Color(Display.getCurrent(), new RGB(255, 0, 0)));
 
-		//show the frame
+		// show the frame
 		frame.setVisible(true);
 	}
 
