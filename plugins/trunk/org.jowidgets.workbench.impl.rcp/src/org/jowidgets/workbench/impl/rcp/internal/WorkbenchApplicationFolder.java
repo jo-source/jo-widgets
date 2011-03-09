@@ -270,7 +270,10 @@ public final class WorkbenchApplicationFolder extends Composite {
 				final IComponent newComponent = componentContext.getComponent();
 				workbenchContext.setCurrentComponent(newComponent);
 				newComponent.onActivation();
-				PartSupport.getInstance().showPerspective(selectedComponentTreeNodeContext.getQualifiedId(), componentContext);
+				PartSupport.getInstance().showPerspective(
+						selectedComponentTreeNodeContext.getQualifiedId(),
+						componentContext,
+						componentContext.getPerspective());
 				return;
 			}
 		}
