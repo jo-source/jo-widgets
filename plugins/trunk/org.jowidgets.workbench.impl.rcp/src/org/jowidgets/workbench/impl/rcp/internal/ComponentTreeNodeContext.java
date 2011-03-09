@@ -129,13 +129,6 @@ public final class ComponentTreeNodeContext implements IComponentTreeNodeContext
 		return treeNode.getId();
 	}
 
-	public String getQualifiedId() {
-		if (parentContext != null) {
-			return parentContext.getQualifiedId() + "." + treeNode.getId();
-		}
-		return applicationContext.getId() + "." + treeNode.getId();
-	}
-
 	@Override
 	public IComponentTreeNodeContext getParent() {
 		return parentContext;

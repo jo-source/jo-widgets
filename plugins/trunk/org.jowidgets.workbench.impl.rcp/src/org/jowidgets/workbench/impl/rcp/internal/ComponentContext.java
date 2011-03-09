@@ -67,10 +67,7 @@ public final class ComponentContext implements IComponentContext {
 					PartSupport.getInstance().showEmptyPerspective();
 				}
 				else {
-					PartSupport.getInstance().showPerspective(
-							((ComponentTreeNodeContext) componentTreeNodeContext).getQualifiedId(),
-							this,
-							layout);
+					PartSupport.getInstance().showPerspective((ComponentTreeNodeContext) componentTreeNodeContext, this, layout);
 				}
 			}
 		}

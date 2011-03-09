@@ -66,6 +66,7 @@ import org.jowidgets.workbench.impl.rcp.internal.ComponentContext;
 import org.jowidgets.workbench.impl.rcp.internal.ComponentTreeNodeContext;
 import org.jowidgets.workbench.impl.rcp.internal.FolderContext;
 import org.jowidgets.workbench.impl.rcp.internal.ViewContext;
+import org.jowidgets.workbench.impl.rcp.internal.WorkbenchApplicationContext;
 
 @SuppressWarnings("restriction")
 public final class PartSupport {
@@ -120,21 +121,16 @@ public final class PartSupport {
 		perspectiveRegistry.setDefaultPerspective(DynamicPerspective.ID);
 	}
 
-	public void showPerspective(final String nodeId, final ComponentContext componentContext, final ILayout perspective) {
+	public void showPerspective(
+		final ComponentTreeNodeContext componentTreeNodeContext,
+		final ComponentContext componentContext,
+		final ILayout perspective) {
 		if (perspective == null) {
 			showEmptyPerspective();
 			return;
 		}
 
-		if (perspective.getScope() != LayoutScope.COMPONENT) {
-			// TODO HRW add support for layout scopes
-			throw new IllegalArgumentException("Layout \""
-				+ perspective.getId()
-				+ "\" has unsupported scope \""
-				+ perspective.getScope()
-				+ "\".");
-		}
-		final String perspectiveId = nodeId + "." + perspective.getId();
+		final String perspectiveId = getPerspectiveId(perspective, componentTreeNodeContext);
 		final IPerspectiveRegistry perspectiveRegistry = PlatformUI.getWorkbench().getPerspectiveRegistry();
 		IPerspectiveDescriptor newPerspective = perspectiveRegistry.findPerspectiveWithId(perspectiveId);
 		if (newPerspective == null) {
@@ -151,6 +147,29 @@ public final class PartSupport {
 
 		// initialize views to update view titles from view model
 		initializeViews();
+	}
+
+	private String getPerspectiveId(final ILayout layout, ComponentTreeNodeContext componentTreeNodeContext) {
+		final LayoutScope scope = layout.getScope();
+
+		if (scope == LayoutScope.WORKBENCH) {
+			return layout.getId();
+		}
+
+		final String appId = ((WorkbenchApplicationContext) componentTreeNodeContext.getWorkbenchApplicationContext()).getId();
+		if (scope == LayoutScope.WORKBENCH_APPLICATION) {
+			return appId + "." + layout.getId();
+		}
+
+		final StringBuilder id = new StringBuilder();
+		while (componentTreeNodeContext != null) {
+			id.insert(0, "." + componentTreeNodeContext.getId());
+			componentTreeNodeContext = (ComponentTreeNodeContext) componentTreeNodeContext.getParent();
+		}
+		id.insert(0, appId);
+		id.append(".");
+		id.append(layout.getId());
+		return id.toString();
 	}
 
 	private void initializeViews() {
@@ -368,7 +387,7 @@ public final class PartSupport {
 		final ILayout layout) {
 		final IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 		final IPerspectiveDescriptor currentPerspective = activePage.getPerspective();
-		showPerspective(componentTreeNodeContext.getQualifiedId(), componentContext, layout);
+		showPerspective(componentTreeNodeContext, componentContext, layout);
 		activePage.resetPerspective();
 		activePage.setPerspective(currentPerspective);
 		// initialize views to update view titles from view model
