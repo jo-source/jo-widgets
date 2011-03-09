@@ -35,8 +35,7 @@ import org.jowidgets.workbench.impl.WorkbenchRunner;
 
 public final class SwtWorkbenchDemo1ClassicTabsStarter {
 
-	private SwtWorkbenchDemo1ClassicTabsStarter() {
-	}
+	private SwtWorkbenchDemo1ClassicTabsStarter() {}
 
 	public static void main(final String[] args) throws Exception {
 		SwtOptions.setClassicTabs(true);
