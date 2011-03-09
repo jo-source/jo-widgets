@@ -42,8 +42,7 @@ import org.jowidgets.spi.impl.swt.addons.SwtToJo;
 
 public final class PlainSwtWithJowidgetsDemo {
 
-	private PlainSwtWithJowidgetsDemo() {
-	}
+	private PlainSwtWithJowidgetsDemo() {}
 
 	public static void main(final String[] args) throws Exception {
 		DemoIconsInitializer.initialize();
@@ -55,15 +54,13 @@ public final class PlainSwtWithJowidgetsDemo {
 		// create the root shell with swt
 		final Display display = new Display();
 		final Shell shell = new Shell(display);
-		shell.setLayout(new MigLayout("", "[grow, 0::]",
-				"[grow, 20!][grow, 0::]"));
+		shell.setLayout(new MigLayout("", "[grow, 0::]", "[grow, 20!][grow, 0::]"));
 		shell.setSize(500, 400);
 
 		// creating the first swt composite
 		final Composite swtComposite1 = new Composite(shell, SWT.NONE);
 		swtComposite1.setLayoutData("growx, growy, w 0::, h 0::, wrap");
-		swtComposite1
-				.setLayout(new MigLayout("", "[grow, 0::]", "[grow, 0::]"));
+		swtComposite1.setLayout(new MigLayout("", "[grow, 0::]", "[grow, 0::]"));
 
 		// adding a swt label
 		final Label swtlabel = new Label(swtComposite1, SWT.NONE);
