@@ -6,10 +6,10 @@ Bundle-Version: 0.0.18.qualifier
 Bundle-Vendor: jo-widgets.org
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.jowidgets.workbench.impl.rcp
-Require-Bundle: org.jowidgets.api;bundle-version="0.0.18",
- org.jowidgets.common;bundle-version="0.0.18",
- org.jowidgets.workbench.api;bundle-version="0.0.18",
- org.jowidgets.tools;bundle-version="0.0.18",
+Require-Bundle: org.jowidgets.api,
+ org.jowidgets.common,
+ org.jowidgets.workbench.api,
+ org.jowidgets.tools,
  org.eclipse.ui;bundle-version="3.6.0",
  org.eclipse.ui.workbench;bundle-version="3.6.0",
  org.eclipse.core.runtime;bundle-version="3.6.0"

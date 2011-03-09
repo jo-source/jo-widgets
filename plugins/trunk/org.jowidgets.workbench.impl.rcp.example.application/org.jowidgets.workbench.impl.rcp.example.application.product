@@ -24,7 +24,7 @@
    </plugins>
 
    <features>
-      <feature id="org.jowidgets.workbench.impl.rcp.example.feature" version="0.0.18.qualifier"/>
+      <feature id="org.jowidgets.workbench.impl.rcp.example.feature"/>
    </features>
 
 
