@@ -69,6 +69,7 @@ import org.jowidgets.spi.widgets.IProgressBarSpi;
 import org.jowidgets.spi.widgets.IScrollCompositeSpi;
 import org.jowidgets.spi.widgets.ISplitCompositeSpi;
 import org.jowidgets.spi.widgets.ITabFolderSpi;
+import org.jowidgets.spi.widgets.ITableSpi;
 import org.jowidgets.spi.widgets.ITextFieldSpi;
 import org.jowidgets.spi.widgets.ITextLabelSpi;
 import org.jowidgets.spi.widgets.IToggleButtonSpi;
@@ -87,6 +88,7 @@ import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
 import org.jowidgets.spi.widgets.setup.ISeparatorSetupSpi;
 import org.jowidgets.spi.widgets.setup.ISplitCompositeSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITabFolderSetupSpi;
+import org.jowidgets.spi.widgets.setup.ITableSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;
@@ -236,6 +238,12 @@ public final class SwingWidgetFactory implements IWidgetFactorySpi {
 	@Override
 	public ITreeSpi createTree(final Object parentUiReference, final ITreeSetupSpi setup) {
 		return new TreeImpl(setup);
+	}
+
+	@Override
+	public ITableSpi createTable(final Object parentUiReference, final ITableSetupSpi setup) {
+		// TODO MG implement tableSpi for swing
+		return null;
 	}
 
 }
