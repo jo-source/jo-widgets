@@ -26,47 +26,11 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.workbench;
+package org.jowidgets.addons.testtool.internal;
 
-import org.jowidgets.addons.testtool.ITestTool;
-import org.jowidgets.addons.testtool.TestToolGui;
-import org.jowidgets.addons.testtool.TestToolImpl;
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.common.widgets.IWidgetCommon;
-import org.jowidgets.common.widgets.factory.IWidgetFactoryListener;
-import org.jowidgets.workbench.api.IWorkbench;
-import org.jowidgets.workbench.api.IWorkbenchConfigurationService;
-import org.jowidgets.workbench.api.IWorkbenchRunner;
-import org.jowidgets.workbench.impl.WorkbenchRunner;
+public enum UserAction {
 
-public class TestWorkbenchRunner implements IWorkbenchRunner {
-
-	private final IWorkbenchRunner runner;
-
-	public TestWorkbenchRunner() {
-		runner = new WorkbenchRunnerWrapper(new WorkbenchRunner());
-	}
-
-	@Override
-	public void run(final IWorkbench workbench) {
-		run(workbench, null);
-	}
-
-	@Override
-	public void run(final IWorkbench workbench, final IWorkbenchConfigurationService configurationService) {
-		final ITestTool testTool = new TestToolImpl();
-		Toolkit.getWidgetFactory().addWidgetFactoryListener(new IWidgetFactoryListener() {
-
-			@Override
-			public void widgetCreated(final IWidgetCommon widget) {
-				// CHECKSTYLE:OFF
-				System.out.println("Register Widget: " + widget);
-				// CHECKSTYLE:ON
-				testTool.register(widget);
-			}
-		});
-		new TestToolGui();
-		runner.run(workbench, configurationService);
-	}
-
+	CLICK,
+	SELECT,
+	READ;
 }

@@ -28,9 +28,34 @@
 
 package org.jowidgets.addons.testtool;
 
-public enum UserAction {
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.widgets.ILabel;
+import org.jowidgets.api.widgets.IMenuBar;
+import org.jowidgets.api.widgets.IToolBar;
+import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.common.color.ColorValue;
 
-	CLICK,
-	SELECT,
-	READ;
+public class TestToolGui {
+
+	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
+
+	public TestToolGui() {
+		createContent();
+	}
+
+	public void createContent() {
+		final IFrameBluePrint frameBP = BPF.frame("TestTool");
+		final IFrame frame = Toolkit.createRootFrame(frameBP);
+		final IMenuBar menuBar = frame.createMenuBar();
+		menuBar.addMenu("File");
+		final IToolBar toolBar = frame.add(BPF.toolBar(), "");
+		toolBar.addItem(BPF.toolBarButton().setText("play"));
+		toolBar.addItem(BPF.toolBarButton().setText("stop"));
+		toolBar.addItem(BPF.toolBarButton().setText("record"));
+		final ILabel table = frame.add(BPF.label().setBackgroundColor(new ColorValue(200, 200, 200)), "growx");
+		table.setText("<Jo Widget Table>");
+		frame.setVisible(true);
+	}
 }

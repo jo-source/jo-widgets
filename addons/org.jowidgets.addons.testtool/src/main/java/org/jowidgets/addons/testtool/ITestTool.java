@@ -28,13 +28,14 @@
 
 package org.jowidgets.addons.testtool;
 
+import org.jowidgets.addons.testtool.internal.UserAction;
 import org.jowidgets.common.widgets.IWidgetCommon;
 
 public interface ITestTool {
 
 	void register(IWidgetCommon widget);
 
-	void record(IWidgetCommon widget, UserAction action);
+	void record(IWidgetCommon widget, UserAction action, String id);
 
 	void replay();
 }

@@ -28,41 +28,45 @@
 
 package org.jowidgets.addons.testtool;
 
+import org.jowidgets.addons.testtool.internal.TestToolUtilities;
+import org.jowidgets.addons.testtool.internal.UserAction;
+import org.jowidgets.api.controler.ITabItemListener;
 import org.jowidgets.api.controler.ITreeListener;
 import org.jowidgets.api.controler.ITreePopupDetectionListener;
 import org.jowidgets.api.controler.ITreePopupEvent;
 import org.jowidgets.api.controler.ITreeSelectionEvent;
 import org.jowidgets.api.controler.ITreeSelectionListener;
-import org.jowidgets.api.model.item.IItemModel;
-import org.jowidgets.api.model.item.IItemModelListener;
+import org.jowidgets.api.model.IListModelListener;
+import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.widgets.ITabFolder;
+import org.jowidgets.api.widgets.ITabItem;
 import org.jowidgets.api.widgets.IToolBar;
-import org.jowidgets.api.widgets.IToolBarItem;
 import org.jowidgets.api.widgets.ITree;
 import org.jowidgets.api.widgets.ITreeNode;
+import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.test.api.widgets.IButtonUi;
 
-// TODO LG make a utility class for TestTool
 public final class TestToolImpl implements ITestTool {
 
-	private int id;
+	private final TestToolUtilities testToolUtilities;
 
 	public TestToolImpl() {
-		id = 0;
+		testToolUtilities = new TestToolUtilities();
 	}
 
 	// TODO LG save recorded user actions
 	// TODO LG generate and add id (maybe in utility class)
+	// TODO LG Remove Checkstyle off/on
 	@Override
-	public void record(final IWidgetCommon widget, final UserAction action) {
-		id++;
+	public void record(final IWidgetCommon widget, final UserAction action, final String id) {
 		// CHECKSTYLE:OFF
 		System.out.println("Recorded: "
-			+ widget.getUiReference().getClass()
-			+ "\nwith ID = "
+			+ widget.getClass().getSimpleName()
+			+ "\nwith ID : "
 			+ id
 			+ "\nAction was: "
 			+ action.toString());
@@ -75,36 +79,51 @@ public final class TestToolImpl implements ITestTool {
 
 	@Override
 	public void register(final IWidgetCommon widget) {
+		if (widget instanceof IFrame) {
+			final IFrame frame = (IFrame) widget;
+			frame.getMenuBarModel().addListModelListener(new IListModelListener() {
+
+				@Override
+				public void childRemoved(final int index) {
+					System.out.println("Menuitem removed at index : " + index);
+				}
+
+				@Override
+				public void childAdded(final int index) {
+					System.out.println("Menuitem added at index : " + index);
+				}
+			});
+		}
 		if (widget instanceof IButtonUi) {
-			((IButtonUi) widget).addActionListener(new IActionListener() {
+			final IButtonUi button = (IButtonUi) widget;
+			button.addActionListener(new IActionListener() {
 
 				@Override
 				public void actionPerformed() {
-					record(widget, UserAction.CLICK);
+					record(widget, UserAction.CLICK, testToolUtilities.createWidgetID(button));
 				}
 			});
 		}
 		// TODO LG check why the listener doesnt work on toolbar
 		if (widget instanceof IToolBar) {
 			final IToolBar toolBar = (IToolBar) widget;
-			for (final IToolBarItem item : toolBar.getChildren()) {
-				item.getModel().addItemModelListener(new IItemModelListener() {
+			toolBar.getModel().addListModelListener(new IListModelListener() {
 
-					@Override
-					public void itemChanged(final IItemModel item) {
-						// CHECKSTYLE:OFF
-						System.out.println("Item changed: " + item.getClass());
-						// CHECKSTYLE:ON
-					}
-				});
-			}
+				@Override
+				public void childRemoved(final int index) {
+					System.out.println("child removed at " + index);
+				}
+
+				@Override
+				public void childAdded(final int index) {
+					System.out.println("child added at " + index);
+				}
+			});
 			toolBar.addPopupDetectionListener(new IPopupDetectionListener() {
 
 				@Override
 				public void popupDetected(final Position position) {
-					// CHECKSTYLE:OFF
 					System.out.println("popup at position: " + position);
-					// CHECKSTYLE:ON
 				}
 			});
 		}
@@ -115,28 +134,52 @@ public final class TestToolImpl implements ITestTool {
 
 				@Override
 				public void selectionChanged(final ITreeSelectionEvent event) {
-					record(widget, UserAction.SELECT);
+					record(widget, UserAction.SELECT, testToolUtilities.createWidgetID(event.getSelectedSingle()));
 				}
 			});
 			tree.addTreeListener(new ITreeListener() {
 
 				@Override
 				public void nodeExpanded(final ITreeNode node) {
-					record(widget, UserAction.SELECT);
+					record(widget, UserAction.SELECT, testToolUtilities.createWidgetID(node));
 				}
 
 				@Override
 				public void nodeCollapsed(final ITreeNode node) {
-					record(widget, UserAction.SELECT);
+					record(widget, UserAction.SELECT, testToolUtilities.createWidgetID(node));
 				}
 			});
 			tree.addTreePopupDetectionListener(new ITreePopupDetectionListener() {
 
 				@Override
 				public void popupDetected(final ITreePopupEvent event) {
-					record(widget, UserAction.CLICK);
+					record(widget, UserAction.CLICK, testToolUtilities.createWidgetID(event.getNode()));
 				}
 			});
+		}
+		if (widget instanceof ITabFolder) {
+			final ITabFolder folder = (ITabFolder) widget;
+			folder.addPopupDetectionListener(new IPopupDetectionListener() {
+
+				@Override
+				public void popupDetected(final Position position) {
+					record(widget, UserAction.CLICK, "");
+				}
+			});
+			for (final ITabItem item : folder.getItems()) {
+				item.addTabItemListener(new ITabItemListener() {
+
+					@Override
+					public void selectionChanged(final boolean selected) {
+						System.out.println(selected);
+					}
+
+					@Override
+					public void onClose(final IVetoable vetoable) {
+						System.out.println(vetoable);
+					}
+				});
+			}
 		}
 	}
 }
