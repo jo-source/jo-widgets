@@ -30,12 +30,13 @@ package org.jowidgets.addons.testtool;
 
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IFrame;
-import org.jowidgets.api.widgets.ILabel;
+import org.jowidgets.api.widgets.IMainMenu;
 import org.jowidgets.api.widgets.IMenuBar;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.color.ColorValue;
+import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
 public class TestToolGui {
 
@@ -46,16 +47,15 @@ public class TestToolGui {
 	}
 
 	public void createContent() {
-		final IFrameBluePrint frameBP = BPF.frame("TestTool");
+		final IFrameBluePrint frameBP = BPF.frame("TestTool").setSize(new Dimension(500, 400));
 		final IFrame frame = Toolkit.createRootFrame(frameBP);
+		frame.setLayout(new MigLayoutDescriptor("[grow]", "[]"));
 		final IMenuBar menuBar = frame.createMenuBar();
-		menuBar.addMenu("File");
+		final IMainMenu fileMenu = menuBar.addMenu("File");
 		final IToolBar toolBar = frame.add(BPF.toolBar(), "");
 		toolBar.addItem(BPF.toolBarButton().setText("play"));
 		toolBar.addItem(BPF.toolBarButton().setText("stop"));
 		toolBar.addItem(BPF.toolBarButton().setText("record"));
-		final ILabel table = frame.add(BPF.label().setBackgroundColor(new ColorValue(200, 200, 200)), "growx");
-		table.setText("<Jo Widget Table>");
 		frame.setVisible(true);
 	}
 }

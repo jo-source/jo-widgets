@@ -79,6 +79,10 @@ public final class TestToolImpl implements ITestTool {
 
 	@Override
 	public void register(final IWidgetCommon widget) {
+		addListener(widget);
+	}
+
+	private void addListener(final IWidgetCommon widget) {
 		if (widget instanceof IFrame) {
 			final IFrame frame = (IFrame) widget;
 			frame.getMenuBarModel().addListModelListener(new IListModelListener() {
@@ -103,82 +107,82 @@ public final class TestToolImpl implements ITestTool {
 					record(widget, UserAction.CLICK, testToolUtilities.createWidgetID(button));
 				}
 			});
-		}
-		// TODO LG check why the listener doesnt work on toolbar
-		if (widget instanceof IToolBar) {
-			final IToolBar toolBar = (IToolBar) widget;
-			toolBar.getModel().addListModelListener(new IListModelListener() {
-
-				@Override
-				public void childRemoved(final int index) {
-					System.out.println("child removed at " + index);
-				}
-
-				@Override
-				public void childAdded(final int index) {
-					System.out.println("child added at " + index);
-				}
-			});
-			toolBar.addPopupDetectionListener(new IPopupDetectionListener() {
-
-				@Override
-				public void popupDetected(final Position position) {
-					System.out.println("popup at position: " + position);
-				}
-			});
-		}
-		// TODO LG use ITreeUi instead of ITree
-		if (widget instanceof ITree) {
-			final ITree tree = (ITree) widget;
-			tree.addTreeSelectionListener(new ITreeSelectionListener() {
-
-				@Override
-				public void selectionChanged(final ITreeSelectionEvent event) {
-					record(widget, UserAction.SELECT, testToolUtilities.createWidgetID(event.getSelectedSingle()));
-				}
-			});
-			tree.addTreeListener(new ITreeListener() {
-
-				@Override
-				public void nodeExpanded(final ITreeNode node) {
-					record(widget, UserAction.SELECT, testToolUtilities.createWidgetID(node));
-				}
-
-				@Override
-				public void nodeCollapsed(final ITreeNode node) {
-					record(widget, UserAction.SELECT, testToolUtilities.createWidgetID(node));
-				}
-			});
-			tree.addTreePopupDetectionListener(new ITreePopupDetectionListener() {
-
-				@Override
-				public void popupDetected(final ITreePopupEvent event) {
-					record(widget, UserAction.CLICK, testToolUtilities.createWidgetID(event.getNode()));
-				}
-			});
-		}
-		if (widget instanceof ITabFolder) {
-			final ITabFolder folder = (ITabFolder) widget;
-			folder.addPopupDetectionListener(new IPopupDetectionListener() {
-
-				@Override
-				public void popupDetected(final Position position) {
-					record(widget, UserAction.CLICK, "");
-				}
-			});
-			for (final ITabItem item : folder.getItems()) {
-				item.addTabItemListener(new ITabItemListener() {
+			// TODO LG check why the listener doesnt work on toolbar
+			if (widget instanceof IToolBar) {
+				final IToolBar toolBar = (IToolBar) widget;
+				toolBar.getModel().addListModelListener(new IListModelListener() {
 
 					@Override
-					public void selectionChanged(final boolean selected) {
-						System.out.println(selected);
+					public void childRemoved(final int index) {
+						System.out.println("child removed at " + index);
 					}
 
 					@Override
-					public void onClose(final IVetoable vetoable) {
-						System.out.println(vetoable);
+					public void childAdded(final int index) {
+						System.out.println("child added at " + index);
 					}
 				});
+				toolBar.addPopupDetectionListener(new IPopupDetectionListener() {
+
+					@Override
+					public void popupDetected(final Position position) {
+						System.out.println("popup at position: " + position);
+					}
+				});
+			}
+			// TODO LG use ITreeUi instead of ITree
+			if (widget instanceof ITree) {
+				final ITree tree = (ITree) widget;
+				tree.addTreeSelectionListener(new ITreeSelectionListener() {
+
+					@Override
+					public void selectionChanged(final ITreeSelectionEvent event) {
+						record(widget, UserAction.SELECT, testToolUtilities.createWidgetID(event.getSelectedSingle()));
+					}
+				});
+				tree.addTreeListener(new ITreeListener() {
+
+					@Override
+					public void nodeExpanded(final ITreeNode node) {
+						record(widget, UserAction.SELECT, testToolUtilities.createWidgetID(node));
+					}
+
+					@Override
+					public void nodeCollapsed(final ITreeNode node) {
+						record(widget, UserAction.SELECT, testToolUtilities.createWidgetID(node));
+					}
+				});
+				tree.addTreePopupDetectionListener(new ITreePopupDetectionListener() {
+
+					@Override
+					public void popupDetected(final ITreePopupEvent event) {
+						record(widget, UserAction.CLICK, testToolUtilities.createWidgetID(event.getNode()));
+					}
+				});
+			}
+			if (widget instanceof ITabFolder) {
+				final ITabFolder folder = (ITabFolder) widget;
+				folder.addPopupDetectionListener(new IPopupDetectionListener() {
+
+					@Override
+					public void popupDetected(final Position position) {
+						record(widget, UserAction.CLICK, "");
+					}
+				});
+				for (final ITabItem item : folder.getItems()) {
+					item.addTabItemListener(new ITabItemListener() {
+
+						@Override
+						public void selectionChanged(final boolean selected) {
+							System.out.println(selected);
+						}
+
+						@Override
+						public void onClose(final IVetoable vetoable) {
+							System.out.println(vetoable);
+						}
+					});
+				}
 			}
 		}
 	}
