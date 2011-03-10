@@ -26,29 +26,56 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.impl.widgets.basic;
 
-import java.util.List;
-
+import org.jowidgets.api.widgets.ITable;
+import org.jowidgets.api.widgets.ITableColumn;
+import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.common.types.TableColumnPackPolicy;
-import org.jowidgets.common.widgets.ITableCommon;
+import org.jowidgets.impl.widgets.common.wrapper.ItemSpiWrapper;
+import org.jowidgets.spi.widgets.ITableColumnSpi;
+import org.jowidgets.util.Assert;
 
-public interface ITable extends IControl, ITableCommon {
+public class TableColumnImpl extends ItemSpiWrapper implements ITableColumn {
 
-	int getRowCount();
+	private final ITable parent;
 
-	List<ITableColumn> getColumns();
+	public TableColumnImpl(final ITableColumnSpi component, final ITable parent) {
+		super(component);
+		this.parent = parent;
+	}
 
-	int getColumnCount();
+	@Override
+	public ITableColumnSpi getWidget() {
+		return (ITableColumnSpi) super.getWidget();
+	}
 
-	ITableCell getCell(int rowIndex, int columnIndex);
+	@Override
+	public IWidget getParent() {
+		return parent;
+	}
 
-	ITableColumn getColumn(int columnIndex);
+	@Override
+	public void setAlignment(final AlignmentHorizontal alignment) {
+		Assert.paramNotNull(alignment, "alignment");
+		getWidget().setAlignment(alignment);
+	}
 
-	ITableColumn insertColumn(int columnIndex);
+	@Override
+	public void setWidth(final int width) {
+		getWidget().setWidth(width);
+	}
 
-	ITableColumn insertColumns(int columnIndex, int columnsCount);
+	@Override
+	public int getWidth(final int width) {
+		return getWidget().getWidth(width);
+	}
 
-	void pack(TableColumnPackPolicy policy);
+	@Override
+	public void pack(final TableColumnPackPolicy policy) {
+		Assert.paramNotNull(policy, "policy");
+		getWidget().pack(policy);
+	}
 
 }

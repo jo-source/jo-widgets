@@ -47,6 +47,7 @@ import org.jowidgets.spi.impl.swt.widgets.ScrollCompositeImpl;
 import org.jowidgets.spi.impl.swt.widgets.SeparatorImpl;
 import org.jowidgets.spi.impl.swt.widgets.SplitCompositeImpl;
 import org.jowidgets.spi.impl.swt.widgets.TabFolderImpl;
+import org.jowidgets.spi.impl.swt.widgets.TableImpl;
 import org.jowidgets.spi.impl.swt.widgets.TextFieldImpl;
 import org.jowidgets.spi.impl.swt.widgets.TextLabelImpl;
 import org.jowidgets.spi.impl.swt.widgets.ToggleButtonImpl;
@@ -228,8 +229,7 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 
 	@Override
 	public ITableSpi createTable(final Object parentUiReference, final ITableSetupSpi setup) {
-		// TODO MG implement tableSpi for swt
-		return null;
+		return new TableImpl(parentUiReference, setup);
 	}
 
 }

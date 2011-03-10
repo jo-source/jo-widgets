@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2010, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,29 +26,35 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.impl.widgets.basic.factory.internal;
 
-import java.util.List;
+import org.jowidgets.api.widgets.ITable;
+import org.jowidgets.api.widgets.descriptor.ITableDescriptor;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.widgets.factory.IWidgetFactory;
+import org.jowidgets.impl.spi.ISpiBluePrintFactory;
+import org.jowidgets.impl.spi.blueprint.ITableBluePrintSpi;
+import org.jowidgets.impl.widgets.basic.TableImpl;
+import org.jowidgets.spi.IWidgetFactorySpi;
+import org.jowidgets.spi.widgets.ITableSpi;
 
-import org.jowidgets.common.types.TableColumnPackPolicy;
-import org.jowidgets.common.widgets.ITableCommon;
+public class TableFactory extends AbstractWidgetFactory implements IWidgetFactory<ITable, ITableDescriptor> {
 
-public interface ITable extends IControl, ITableCommon {
+	public TableFactory(
+		final IGenericWidgetFactory genericWidgetFactory,
+		final IWidgetFactorySpi spiWidgetFactory,
+		final ISpiBluePrintFactory bpF) {
 
-	int getRowCount();
+		super(genericWidgetFactory, spiWidgetFactory, bpF);
+	}
 
-	List<ITableColumn> getColumns();
+	@Override
+	public ITable create(final Object parentUiReference, final ITableDescriptor descriptor) {
+		final ITableBluePrintSpi tableBpSpi = getSpiBluePrintFactory().table();
+		tableBpSpi.setSetup(descriptor);
 
-	int getColumnCount();
+		final ITableSpi tableSpi = getSpiWidgetFactory().createTable(parentUiReference, tableBpSpi);
 
-	ITableCell getCell(int rowIndex, int columnIndex);
-
-	ITableColumn getColumn(int columnIndex);
-
-	ITableColumn insertColumn(int columnIndex);
-
-	ITableColumn insertColumns(int columnIndex, int columnsCount);
-
-	void pack(TableColumnPackPolicy policy);
-
+		return new TableImpl(tableSpi, descriptor);
+	}
 }
