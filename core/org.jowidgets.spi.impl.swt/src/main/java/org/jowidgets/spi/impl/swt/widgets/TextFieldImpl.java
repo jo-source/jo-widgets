@@ -40,13 +40,13 @@ public class TextFieldImpl extends AbstractTextInputControl {
 	public TextFieldImpl(final Object parentUiReference, final ITextFieldSetupSpi setup) {
 		super(createText(parentUiReference, setup.isPasswordPresentation()));
 
-		final IInputVerifier inputModifier = setup.getInputVerifier();
+		final IInputVerifier inputVerifier = setup.getInputVerifier();
 
 		this.getUiReference().addVerifyListener(new VerifyListener() {
 
 			@Override
 			public void verifyText(final VerifyEvent verifyEvent) {
-				verifyEvent.doit = inputModifier.verify(
+				verifyEvent.doit = inputVerifier.verify(
 						getUiReference().getText(),
 						verifyEvent.text,
 						verifyEvent.start,
