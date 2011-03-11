@@ -28,7 +28,7 @@
 
 package org.jowidgets.impl.widgets.basic;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jowidgets.api.widgets.IComponent;
@@ -54,20 +54,23 @@ import org.jowidgets.spi.widgets.ITableSpi;
 public class TableImpl extends ControlSpiWrapper implements ITable {
 
 	private final ControlDelegate controlDelegate;
-	private final List<ITableColumn> columns;
+	private final ArrayList<ITableColumn> columns;
+	private final ArrayList<ArrayList<TableCellImpl>> data;
 
-	private final int rowCount;
-
-	public TableImpl(final ITableSpi widget, final ITableDescriptor descriptor) {
+	public TableImpl(final ITableSpi widget, final ITableDescriptor setup) {
 		super(widget);
 
 		this.controlDelegate = new ControlDelegate();
-		this.columns = new LinkedList<ITableColumn>();
-		this.rowCount = 0;
+		this.columns = new ArrayList<ITableColumn>();
+		this.data = new ArrayList<ArrayList<TableCellImpl>>();
 
-		VisibiliySettingsInvoker.setVisibility(descriptor, this);
-		ColorSettingsInvoker.setColors(descriptor, this);
+		VisibiliySettingsInvoker.setVisibility(setup, this);
+		ColorSettingsInvoker.setColors(setup, this);
 
+		final Integer rowCount = setup.getRowCount();
+		final Integer columnCount = setup.getColumnCount();
+
+		initialize(rowCount != null ? rowCount.intValue() : 0, columnCount != null ? columnCount : 1);
 	}
 
 	@Override
@@ -97,7 +100,7 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 
 	@Override
 	public int getRowCount() {
-		return rowCount;
+		return data.size();
 	}
 
 	@Override
@@ -106,20 +109,44 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 	}
 
 	@Override
-	public List<ITableColumn> getColumns() {
-		return new LinkedList<ITableColumn>(columns);
+	public void initialize(final int rowsCount, final int columnsCount) {
+		final ITableSpi widgetSpi = getWidget();
+
+		widgetSpi.initialize(rowsCount, columnsCount);
+
+		for (final ArrayList<TableCellImpl> rowList : data) {
+			rowList.clear();
+		}
+		data.clear();
+		columns.clear();
+
+		for (int rowIndex = 0; rowIndex < rowsCount; rowIndex++) {
+
+			final ArrayList<TableCellImpl> columnList = new ArrayList<TableCellImpl>();
+			data.add(columnList);
+			for (int columnIndex = 0; columnIndex < columnsCount; columnIndex++) {
+				columnList.add(new TableCellImpl(widgetSpi.getCell(rowIndex, columnIndex), this));
+			}
+		}
+
+		for (int columnIndex = 0; columnIndex < columnsCount; columnIndex++) {
+			columns.add(new TableColumnImpl(widgetSpi.getColumn(columnIndex), this));
+		}
+	}
+
+	@Override
+	public ArrayList<ITableColumn> getColumns() {
+		return new ArrayList<ITableColumn>(columns);
 	}
 
 	@Override
 	public ITableCell getCell(final int rowIndex, final int columnIndex) {
-		// TODO MG implement table impl
-		return null;
+		return data.get(rowIndex).get(columnIndex);
 	}
 
 	@Override
 	public ITableColumn getColumn(final int columnIndex) {
-		// TODO MG implement table impl
-		return null;
+		return columns.get(columnIndex);
 	}
 
 	@Override
@@ -132,33 +159,6 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 	public ITableColumn insertColumns(final int columnIndex, final int columnsCount) {
 		// TODO MG implement table impl
 		return null;
-	}
-
-	@Override
-	public void pack(final TableColumnPackPolicy policy) {
-		for (final ITableColumn column : getColumns()) {
-			column.pack(policy);
-		}
-	}
-
-	@Override
-	public void initialize(final int rowsCount, final int columnsCount) {
-		getWidget().initialize(rowsCount, columnsCount);
-	}
-
-	@Override
-	public List<Integer> getSelection() {
-		return getWidget().getSelection();
-	}
-
-	@Override
-	public void setSelection(final List<Integer> selection) {
-		getWidget().setSelection(selection);
-	}
-
-	@Override
-	public List<Integer> getColumnPermutation() {
-		return getWidget().getColumnPermutation();
 	}
 
 	@Override
@@ -189,6 +189,28 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 	@Override
 	public void removeRows(final int index, final int rowsCount) {
 		getWidget().removeRows(index, rowsCount);
+	}
+
+	@Override
+	public void pack(final TableColumnPackPolicy policy) {
+		for (final ITableColumn column : getColumns()) {
+			column.pack(policy);
+		}
+	}
+
+	@Override
+	public ArrayList<Integer> getSelection() {
+		return getWidget().getSelection();
+	}
+
+	@Override
+	public void setSelection(final List<Integer> selection) {
+		getWidget().setSelection(selection);
+	}
+
+	@Override
+	public ArrayList<Integer> getColumnPermutation() {
+		return getWidget().getColumnPermutation();
 	}
 
 	@Override
