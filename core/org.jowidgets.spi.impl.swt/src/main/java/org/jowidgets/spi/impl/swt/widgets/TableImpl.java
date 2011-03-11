@@ -53,8 +53,8 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	private final boolean columnsMoveable;
 	private final boolean columnsResizeable;
 
-	private final ArrayList<TableColumnImpl> columns;
-	private final ArrayList<ArrayList<TableCellImpl>> data;
+	private ArrayList<TableColumnImpl> columns;
+	private ArrayList<ArrayList<TableCellImpl>> data;
 
 	public TableImpl(final Object parentUiReference, final ITableSetupSpi setup) {
 		super(new Table((Composite) parentUiReference, getStyle(setup)));
@@ -76,15 +76,16 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 	@Override
 	public void initialize(final int rowsCount, final int columnsCount) {
+		getUiReference().setRedraw(false);
 		for (final ArrayList<TableCellImpl> rowList : data) {
 			rowList.clear();
 		}
-		data.clear();
-		columns.clear();
+		data = new ArrayList<ArrayList<TableCellImpl>>(rowsCount);
+		columns = new ArrayList<TableColumnImpl>(columnsCount);
 
 		for (int rowIndex = 0; rowIndex < rowsCount; rowIndex++) {
 			final TableItem item = new TableItem(getUiReference(), SWT.NONE);
-			final ArrayList<TableCellImpl> columnList = new ArrayList<TableCellImpl>();
+			final ArrayList<TableCellImpl> columnList = new ArrayList<TableCellImpl>(columnsCount);
 			data.add(columnList);
 			for (int columnIndex = 0; columnIndex < columnsCount; columnIndex++) {
 				columnList.add(new TableCellImpl(item, columnIndex));
@@ -96,6 +97,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			column.setWidth(50);
 			columns.add(new TableColumnImpl(column, columnsMoveable, columnsResizeable));
 		}
+		getUiReference().setRedraw(true);
 	}
 
 	@Override

@@ -54,14 +54,14 @@ import org.jowidgets.spi.widgets.ITableSpi;
 public class TableImpl extends ControlSpiWrapper implements ITable {
 
 	private final ControlDelegate controlDelegate;
-	private final ArrayList<ITableColumn> columns;
-	private final ArrayList<ArrayList<TableCellImpl>> data;
+	private ArrayList<TableColumnImpl> columns;
+	private ArrayList<ArrayList<TableCellImpl>> data;
 
 	public TableImpl(final ITableSpi widget, final ITableDescriptor setup) {
 		super(widget);
 
 		this.controlDelegate = new ControlDelegate();
-		this.columns = new ArrayList<ITableColumn>();
+		this.columns = new ArrayList<TableColumnImpl>();
 		this.data = new ArrayList<ArrayList<TableCellImpl>>();
 
 		VisibiliySettingsInvoker.setVisibility(setup, this);
@@ -117,12 +117,12 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 		for (final ArrayList<TableCellImpl> rowList : data) {
 			rowList.clear();
 		}
-		data.clear();
-		columns.clear();
+		data = new ArrayList<ArrayList<TableCellImpl>>(rowsCount);
+		columns = new ArrayList<TableColumnImpl>(columnsCount);
 
 		for (int rowIndex = 0; rowIndex < rowsCount; rowIndex++) {
 
-			final ArrayList<TableCellImpl> columnList = new ArrayList<TableCellImpl>();
+			final ArrayList<TableCellImpl> columnList = new ArrayList<TableCellImpl>(columnsCount);
 			data.add(columnList);
 			for (int columnIndex = 0; columnIndex < columnsCount; columnIndex++) {
 				columnList.add(new TableCellImpl(widgetSpi.getCell(rowIndex, columnIndex), this));
