@@ -29,16 +29,15 @@
 package org.jowidgets.impl.widgets.basic;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.api.widgets.descriptor.ITableDescriptor;
+import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.TableColumnPackPolicy;
-import org.jowidgets.common.widgets.ITableCell;
-import org.jowidgets.common.widgets.ITableColumn;
 import org.jowidgets.common.widgets.controler.ITableCellEditorListener;
 import org.jowidgets.common.widgets.controler.ITableCellListener;
 import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionListener;
@@ -116,79 +115,25 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 	}
 
 	@Override
-	public ArrayList<ITableColumn> getColumns() {
-		final ArrayList<ITableColumn> result = new ArrayList<ITableColumn>(columnCount);
-		for (int i = 0; i < columnCount; i++) {
-			result.add(getWidget().getColumn(i));
-		}
-		return result;
-	}
-
-	@Override
-	public ITableCell getCell(final int rowIndex, final int columnIndex) {
-		return getWidget().getCell(rowIndex, columnIndex);
-	}
-
-	@Override
-	public ITableColumn getColumn(final int columnIndex) {
-		return getWidget().getColumn(columnIndex);
-	}
-
-	@Override
-	public ITableColumn insertColumn(final int columnIndex) {
-		return getWidget().insertColumn(columnIndex);
-	}
-
-	@Override
-	public ITableColumn insertColumns(final int columnIndex, final int columnsCount) {
-		return getWidget().insertColumns(columnIndex, columnsCount);
-	}
-
-	@Override
-	public void removeColumn(final int columnIndex) {
-		getWidget().removeColumn(columnIndex);
-	}
-
-	@Override
-	public void removeColumns(final int columnIndex, final int columnsCount) {
-		getWidget().removeColumns(columnIndex, columnsCount);
-	}
-
-	@Override
-	public void insertRow(final int index) {
-		getWidget().insertRow(index);
-	}
-
-	@Override
-	public void insertRows(final int index, final int rowsCount) {
-		getWidget().insertRows(index, rowsCount);
-	}
-
-	@Override
-	public void removeRow(final int index) {
-		getWidget().removeRow(index);
-	}
-
-	@Override
-	public void removeRows(final int index, final int rowsCount) {
-		getWidget().removeRows(index, rowsCount);
-	}
-
-	@Override
 	public void pack(final TableColumnPackPolicy policy) {
-		for (final ITableColumn column : getColumns()) {
-			column.pack(policy);
+		for (int i = 0; i < columnCount; i++) {
+			pack(i, policy);
 		}
 	}
 
 	@Override
-	public ArrayList<Integer> getSelection() {
-		return getWidget().getSelection();
+	public void pack(final int columnIndex, final TableColumnPackPolicy policy) {
+		getWidget().pack(columnIndex, policy);
 	}
 
 	@Override
-	public void setSelection(final List<Integer> selection) {
-		getWidget().setSelection(selection);
+	public Position getCellPosition(final int rowIndex, final int columnIndex) {
+		return getWidget().getCellPosition(rowIndex, columnIndex);
+	}
+
+	@Override
+	public Dimension getCellSize(final int rowIndex, final int columnIndex) {
+		return getWidget().getCellSize(rowIndex, columnIndex);
 	}
 
 	@Override

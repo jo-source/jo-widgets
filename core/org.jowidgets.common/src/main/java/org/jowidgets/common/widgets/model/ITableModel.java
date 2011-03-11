@@ -26,17 +26,21 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.common.widgets.model;
 
-import org.jowidgets.common.types.TableColumnPackPolicy;
-import org.jowidgets.common.widgets.ITableCommon;
+import java.util.ArrayList;
+import java.util.List;
 
-public interface ITable extends IControl, ITableCommon {
+public interface ITableModel {
 
-	int getRowCount();
+	ITableColumnModel getColumn(int columnIndex);
 
-	int getColumnCount();
+	ITableCellModel getCell(int rowIndex, int columnIndex);
 
-	void pack(TableColumnPackPolicy policy);
+	ArrayList<Integer> getSelection();
+
+	void setSelection(List<Integer> selection);
+
+	ITableModelObservable getTableModelObservable();
 
 }

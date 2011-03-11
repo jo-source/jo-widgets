@@ -26,17 +26,28 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.common.widgets.model;
 
-import org.jowidgets.common.types.TableColumnPackPolicy;
-import org.jowidgets.common.widgets.ITableCommon;
+import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Markup;
 
-public interface ITable extends IControl, ITableCommon {
+public interface ITableCellModel {
 
-	int getRowCount();
+	IColorConstant getForegroundColor();
 
-	int getColumnCount();
+	IColorConstant getBackgroundColor();
 
-	void pack(TableColumnPackPolicy policy);
+	Markup getMarkup();
+
+	void setText(String text);
+
+	String getText();
+
+	String getToolTipText();
+
+	IImageConstant getIcon();
+
+	boolean isEditable();
 
 }

@@ -26,17 +26,12 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.common.widgets.model;
 
-import org.jowidgets.common.types.TableColumnPackPolicy;
-import org.jowidgets.common.widgets.ITableCommon;
+public interface ITableModelObservable {
 
-public interface ITable extends IControl, ITableCommon {
+	void addTableModelListener(ITableModelListener listener);
 
-	int getRowCount();
-
-	int getColumnCount();
-
-	void pack(TableColumnPackPolicy policy);
+	void removeTableModelListener(ITableModelListener listener);
 
 }
