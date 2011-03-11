@@ -26,48 +26,36 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.widgets;
+package org.jowidgets.common.widgets.model;
 
-import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.types.Position;
+public interface ITableModelListener {
 
-public interface ITableCell extends IItemCommon {
+	void rowAdded(int index);
 
-	void setEditable(boolean editable);
+	void rowsAdded(int index, int rowCount);
 
-	void setForegroundColor(final IColorConstant colorValue);
+	void rowChanged(int index);
 
-	void setBackgroundColor(final IColorConstant colorValue);
+	void rowsChanged(int index, int rowCount);
 
-	IColorConstant getForegroundColor();
+	void rowRemoved(int index);
 
-	IColorConstant getBackgroundColor();
+	void rowsRemoved(int index, int rowsCount);
 
-	void setMarkup(Markup markup);
+	void columnAdded(int index);
 
-	String getText();
+	void columnsAdded(int index, int columnCount);
 
-	String getToolTipText();
+	void columnRemoved(int index);
 
-	IImageConstant getIcon();
+	void columnsRemoved(int index, int columnsCount);
 
-	boolean isEditable();
+	void columnChanged(int index);
 
-	/**
-	 * Gets the position of the cell (upper left corner) relative to its table.
-	 * 
-	 * @return The position relative to its table
-	 */
-	Position getPosition();
+	void columnsChanged(int index, int columnsCount);
 
-	/**
-	 * Gets the size of the cell
-	 * 
-	 * @return the size of the cell
-	 */
-	Dimension getSize();
+	void tableStructureChanged();
+
+	void selectionChanged();
 
 }

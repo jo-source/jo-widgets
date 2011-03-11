@@ -26,75 +26,51 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.swt.widgets;
+package org.jowidgets.impl.widgets.basic.model;
 
-import org.eclipse.swt.widgets.TableColumn;
+import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.AlignmentHorizontal;
-import org.jowidgets.common.types.TableColumnPackPolicy;
-import org.jowidgets.common.widgets.ITableColumn;
-import org.jowidgets.spi.impl.swt.image.SwtImageRegistry;
-import org.jowidgets.spi.impl.swt.util.AlignmentConvert;
+import org.jowidgets.common.types.Markup;
+import org.jowidgets.common.widgets.model.ITableCellModel;
 
-public class TableColumnImpl implements ITableColumn {
+public class DefaultTableCellModel implements ITableCellModel {
 
-	private final TableColumn tableColumn;
-
+	private String text;
+	private String toolTipText;
 	private IImageConstant icon;
+	private Markup markup;
+	private IColorConstant foregroundColor;
+	private IColorConstant backgroundColor;
+	private boolean editable;
 
-	public TableColumnImpl(final TableColumn tableColumn, final boolean columnsMoveable, final boolean columnsResizeable) {
-		super();
-		this.tableColumn = tableColumn;
-		this.tableColumn.setMoveable(columnsMoveable);
-		this.tableColumn.setResizable(columnsResizeable);
+	@Override
+	public IColorConstant getForegroundColor() {
+		return foregroundColor;
 	}
 
 	@Override
-	public TableColumn getUiReference() {
-		return tableColumn;
+	public IColorConstant getBackgroundColor() {
+		return backgroundColor;
 	}
 
 	@Override
-	public void setEnabled(final boolean enabled) {
-		if (!enabled) {
-			throw new IllegalArgumentException("Table cell could not be disabled.");
-		}
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return true;
+	public Markup getMarkup() {
+		return markup;
 	}
 
 	@Override
 	public void setText(final String text) {
-		if (text != null) {
-			tableColumn.setText(text);
-		}
-		else {
-			tableColumn.setText("");
-		}
+		this.text = text;
 	}
 
 	@Override
 	public String getText() {
-		return tableColumn.getText();
-	}
-
-	@Override
-	public void setToolTipText(final String text) {
-		tableColumn.setToolTipText(text);
+		return text;
 	}
 
 	@Override
 	public String getToolTipText() {
-		return tableColumn.getToolTipText();
-	}
-
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		this.icon = icon;
-		tableColumn.setImage(SwtImageRegistry.getInstance().getImage(icon));
+		return toolTipText;
 	}
 
 	@Override
@@ -103,24 +79,8 @@ public class TableColumnImpl implements ITableColumn {
 	}
 
 	@Override
-	public void setAlignment(final AlignmentHorizontal alignment) {
-		tableColumn.setAlignment(AlignmentConvert.convert(alignment));
-	}
-
-	@Override
-	public void setWidth(final int width) {
-		tableColumn.setWidth(width);
-	}
-
-	@Override
-	public int getWidth(final int width) {
-		return tableColumn.getWidth();
-	}
-
-	@Override
-	public void pack(final TableColumnPackPolicy policy) {
-		//TODO MG consider pack policy
-		tableColumn.pack();
+	public boolean isEditable() {
+		return editable;
 	}
 
 }

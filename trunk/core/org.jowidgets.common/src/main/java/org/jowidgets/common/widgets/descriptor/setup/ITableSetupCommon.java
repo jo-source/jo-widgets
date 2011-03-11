@@ -30,6 +30,7 @@ package org.jowidgets.common.widgets.descriptor.setup;
 
 import org.jowidgets.common.types.SelectionPolicy;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
+import org.jowidgets.common.widgets.model.ITableModel;
 
 public interface ITableSetupCommon extends IComponentSetupCommon {
 
@@ -41,5 +42,8 @@ public interface ITableSetupCommon extends IComponentSetupCommon {
 
 	@Mandatory
 	boolean getColumnsResizeable();
+
+	@Mandatory
+	ITableModel getModel();
 
 }

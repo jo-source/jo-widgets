@@ -26,17 +26,43 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.impl.widgets.basic.model;
 
-import org.jowidgets.common.types.TableColumnPackPolicy;
-import org.jowidgets.common.widgets.ITableCommon;
+import java.util.ArrayList;
+import java.util.List;
 
-public interface ITable extends IControl, ITableCommon {
+import org.jowidgets.common.widgets.model.ITableCellModel;
+import org.jowidgets.common.widgets.model.ITableColumnModel;
+import org.jowidgets.common.widgets.model.ITableModel;
+import org.jowidgets.common.widgets.model.ITableModelObservable;
 
-	int getRowCount();
+public class DefaultTableModel implements ITableModel {
 
-	int getColumnCount();
+	@Override
+	public ITableColumnModel getColumn(final int columnIndex) {
+		//TODO MG implement defaultTableColumnModel
+		return null;
+	}
 
-	void pack(TableColumnPackPolicy policy);
+	@Override
+	public ITableCellModel getCell(final int rowIndex, final int columnIndex) {
+		return new DefaultTableCellModel();
+	}
+
+	@Override
+	public ArrayList<Integer> getSelection() {
+		// TODO MG implement getSelection
+		return null;
+	}
+
+	@Override
+	public void setSelection(final List<Integer> selection) {
+		// TODO MG implement setSelection
+	}
+
+	@Override
+	public ITableModelObservable getTableModelObservable() {
+		return null;
+	}
 
 }

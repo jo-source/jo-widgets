@@ -29,8 +29,10 @@
 package org.jowidgets.common.widgets;
 
 import java.util.ArrayList;
-import java.util.List;
 
+import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.common.types.TableColumnPackPolicy;
 import org.jowidgets.common.widgets.controler.ITableCellEditorObservable;
 import org.jowidgets.common.widgets.controler.ITableCellObservable;
 import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionObservable;
@@ -49,30 +51,12 @@ public interface ITableCommon extends
 
 	void initialize(int rowsCount, int columnsCount);
 
-	ArrayList<Integer> getSelection();
+	Position getCellPosition(int rowIndex, int columnIndex);
 
-	void setSelection(List<Integer> selection);
+	Dimension getCellSize(int rowIndex, int columnIndex);
 
 	ArrayList<Integer> getColumnPermutation();
 
-	ITableCell getCell(int rowIndex, int columnIndex);
-
-	ITableColumn getColumn(int columnIndex);
-
-	ITableColumn insertColumn(int columnIndex);
-
-	ITableColumn insertColumns(int columnIndex, int columnsCount);
-
-	void removeColumn(int columnIndex);
-
-	void removeColumns(int columnIndex, int columnsCount);
-
-	void insertRow(int index);
-
-	void insertRows(int index, int rowsCount);
-
-	void removeRow(int index);
-
-	void removeRows(int index, int rowsCount);
+	void pack(int columnIndex, TableColumnPackPolicy policy);
 
 }
