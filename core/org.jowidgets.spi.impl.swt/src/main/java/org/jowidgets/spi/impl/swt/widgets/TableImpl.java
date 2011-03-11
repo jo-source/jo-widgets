@@ -28,11 +28,14 @@
 
 package org.jowidgets.spi.impl.swt.widgets;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.jowidgets.common.types.SelectionPolicy;
 import org.jowidgets.common.widgets.controler.ITableCellEditorListener;
 import org.jowidgets.common.widgets.controler.ITableCellListener;
@@ -50,8 +53,14 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	private final boolean columnsMoveable;
 	private final boolean columnsResizeable;
 
+	private final ArrayList<TableColumnImpl> columns;
+	private final ArrayList<ArrayList<TableCellImpl>> data;
+
 	public TableImpl(final Object parentUiReference, final ITableSetupSpi setup) {
 		super(new Table((Composite) parentUiReference, getStyle(setup)));
+
+		this.columns = new ArrayList<TableColumnImpl>();
+		this.data = new ArrayList<ArrayList<TableCellImpl>>();
 
 		this.columnsMoveable = setup.getColumnsMoveable();
 		this.columnsResizeable = setup.getColumnsResizeable();
@@ -67,17 +76,36 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 	@Override
 	public void initialize(final int rowsCount, final int columnsCount) {
+		for (final ArrayList<TableCellImpl> rowList : data) {
+			rowList.clear();
+		}
+		data.clear();
+		columns.clear();
 
+		for (int rowIndex = 0; rowIndex < rowsCount; rowIndex++) {
+			final TableItem item = new TableItem(getUiReference(), SWT.NONE);
+			final ArrayList<TableCellImpl> columnList = new ArrayList<TableCellImpl>();
+			data.add(columnList);
+			for (int columnIndex = 0; columnIndex < columnsCount; columnIndex++) {
+				columnList.add(new TableCellImpl(item, columnIndex));
+			}
+		}
+
+		for (int columnIndex = 0; columnIndex < columnsCount; columnIndex++) {
+			final TableColumn column = new TableColumn(getUiReference(), SWT.NONE);
+			column.setWidth(50);
+			columns.add(new TableColumnImpl(column, columnsMoveable, columnsResizeable));
+		}
 	}
 
 	@Override
 	public ITableCellSpi getCell(final int rowIndex, final int columnIndex) {
-		return null;
+		return data.get(rowIndex).get(columnIndex);
 	}
 
 	@Override
 	public ITableColumnSpi getColumn(final int columnIndex) {
-		return null;
+		return columns.get(columnIndex);
 	}
 
 	@Override
@@ -87,21 +115,6 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 	@Override
 	public ITableColumnSpi insertColumns(final int columnIndex, final int columnsCount) {
-		return null;
-	}
-
-	@Override
-	public List<Integer> getSelection() {
-		return null;
-	}
-
-	@Override
-	public void setSelection(final List<Integer> selection) {
-
-	}
-
-	@Override
-	public List<Integer> getColumnPermutation() {
 		return null;
 	}
 
@@ -133,6 +146,35 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	@Override
 	public void removeRows(final int index, final int rowsCount) {
 
+	}
+
+	@Override
+	public ArrayList<Integer> getSelection() {
+		final ArrayList<Integer> result = new ArrayList<Integer>();
+		for (final int index : getUiReference().getSelectionIndices()) {
+			result.add(Integer.valueOf(index));
+		}
+		return result;
+	}
+
+	@Override
+	public void setSelection(final List<Integer> selection) {
+		final int[] selectionArray = new int[selection.size()];
+		int arrayIndex = 0;
+		for (final Integer index : selection) {
+			selectionArray[arrayIndex] = index;
+			arrayIndex++;
+		}
+		getUiReference().setSelection(selectionArray);
+	}
+
+	@Override
+	public ArrayList<Integer> getColumnPermutation() {
+		final ArrayList<Integer> result = new ArrayList<Integer>();
+		for (final int index : getUiReference().getColumnOrder()) {
+			result.add(Integer.valueOf(index));
+		}
+		return result;
 	}
 
 	@Override

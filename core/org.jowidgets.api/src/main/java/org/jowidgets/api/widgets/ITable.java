@@ -28,7 +28,7 @@
 
 package org.jowidgets.api.widgets;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import org.jowidgets.common.types.TableColumnPackPolicy;
 import org.jowidgets.common.widgets.ITableCommon;
@@ -37,7 +37,7 @@ public interface ITable extends IControl, ITableCommon {
 
 	int getRowCount();
 
-	List<ITableColumn> getColumns();
+	ArrayList<ITableColumn> getColumns();
 
 	int getColumnCount();
 

@@ -28,6 +28,7 @@
 
 package org.jowidgets.common.widgets;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jowidgets.common.widgets.controler.ITableCellEditorObservable;
@@ -48,11 +49,11 @@ public interface ITableCommon extends
 
 	void initialize(int rowsCount, int columnsCount);
 
-	List<Integer> getSelection();
+	ArrayList<Integer> getSelection();
 
 	void setSelection(List<Integer> selection);
 
-	List<Integer> getColumnPermutation();
+	ArrayList<Integer> getColumnPermutation();
 
 	void removeColumn(int columnIndex);
 
