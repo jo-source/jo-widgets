@@ -99,6 +99,7 @@ public final class TestToolImpl implements ITestTool {
 				@Override
 				public void childAdded(final int index) {}
 			});
+			// TODO LG dock TestToolGui to frame. But first getPosition on frame must work;)
 		}
 		if (widget instanceof IButtonUi) {
 			final IButtonUi button = (IButtonUi) widget;

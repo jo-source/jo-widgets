@@ -31,22 +31,24 @@ package org.jowidgets.addons.testtool.internal;
 import java.util.LinkedList;
 
 import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.util.Assert;
 
 // TODO LG generate unique id
-// TODO LG remove default identifier
 public final class TestToolUtilities {
 
 	private static final String ELEMENT_SEPARATOR = "/";
+	private static final String PROPERTY_SEPARATOR = ":";
+	private static final String CHILD_INDEX_SEPARATOR = "_";
+	private static final String DEFAULT_IDENTIFIER = "test";
 
 	public TestToolUtilities() {}
 
 	public String createWidgetID(final IWidget widget, final String identifier) {
 		Assert.paramNotNull(widget, "widget");
-		if (identifier.isEmpty()) {
-			throw new IllegalArgumentException("An empty identifier is not allowed!");
-		}
+		Assert.paramNotNull(identifier, "identifier");
+
 		final LinkedList<IWidget> widgetList = new LinkedList<IWidget>();
 		widgetList.add(widget);
 		IWidget parent = widget.getParent();
@@ -63,34 +65,41 @@ public final class TestToolUtilities {
 					final IWidget childWidget = widgetList.get(widgetList.size() - 2);
 					final int childPosition = tmpContainer.getChildren().indexOf(childWidget);
 					sb.append(widgetList.getLast().getClass().getSimpleName());
+					sb.append(PROPERTY_SEPARATOR);
+					if (identifier.isEmpty()) {
+						sb.append(getIdentifier(widgetList.getLast()));
+					}
 					sb.append(ELEMENT_SEPARATOR);
 					if (childPosition != -1) {
 						sb.append(childPosition);
-						sb.append("_");
+						sb.append(CHILD_INDEX_SEPARATOR);
 					}
 					widgetList.removeLast();
 				}
 				else {
 					sb.append(widgetList.getLast().getClass().getSimpleName());
+					sb.append(PROPERTY_SEPARATOR);
+					if (identifier.isEmpty()) {
+						sb.append(getIdentifier(widgetList.getLast()));
+					}
 					sb.append(ELEMENT_SEPARATOR);
 					widgetList.removeLast();
-
 				}
 			}
 			else {
 				sb.append(widgetList.getLast().getClass().getSimpleName());
-				sb.append(ELEMENT_SEPARATOR);
+				sb.append(PROPERTY_SEPARATOR);
+				sb.append(getIdentifier(widgetList.getLast()));
 				widgetList.removeLast();
 			}
 		}
-		//sb.append(widget.getClass().getSimpleName());
-		//sb.append(ELEMENT_SEPARATOR);
-		if (identifier.isEmpty()) {
-			sb.append("test");
-		}
-		else {
-			sb.append(identifier);
-		}
 		return sb.toString();
+	}
+
+	private String getIdentifier(final IWidget widget) {
+		if (widget instanceof ITreeNode) {
+			return ((ITreeNode) widget).getText();
+		}
+		return DEFAULT_IDENTIFIER;
 	}
 }
