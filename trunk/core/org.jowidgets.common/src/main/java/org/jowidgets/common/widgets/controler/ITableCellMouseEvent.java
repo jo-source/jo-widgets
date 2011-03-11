@@ -35,8 +35,6 @@ import org.jowidgets.common.types.MouseButton;
 
 public interface ITableCellMouseEvent extends ITableCellEvent {
 
-	int getClickCount();
-
 	MouseButton getMouseButton();
 
 	Set<Modifier> getModifiers();

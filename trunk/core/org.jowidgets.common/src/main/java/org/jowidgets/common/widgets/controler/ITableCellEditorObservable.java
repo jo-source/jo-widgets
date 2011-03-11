@@ -31,8 +31,8 @@ package org.jowidgets.common.widgets.controler;
 
 public interface ITableCellEditorObservable {
 
-	void addTableItemEditorListener(ITableCellEditorListener listener);
+	void addTableCellEditorListener(ITableCellEditorListener listener);
 
-	void removeTableItemEditorListener(ITableCellEditorListener listener);
+	void removeTableCellEditorListener(ITableCellEditorListener listener);
 
 }

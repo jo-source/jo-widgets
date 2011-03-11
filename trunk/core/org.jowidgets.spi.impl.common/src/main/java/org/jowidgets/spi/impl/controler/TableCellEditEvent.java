@@ -26,14 +26,34 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.widgets.controler;
+package org.jowidgets.spi.impl.controler;
 
-public interface ITableCellListener {
+import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.controler.ITableCellPopupEvent;
 
-	void mousePressed(ITableCellMouseEvent event);
+public class TableCellEditEvent extends TableCellEvent implements ITableCellPopupEvent {
 
-	void mouseReleased(ITableCellMouseEvent event);
+	private final Position position;
 
-	void mouseDoubleClicked(ITableCellMouseEvent event);
+	public TableCellEditEvent(final int rowIndex, final int columnIndex, final Position position) {
+		super(rowIndex, columnIndex);
+		this.position = position;
+	}
+
+	@Override
+	public Position getPosition() {
+		return position;
+	}
+
+	@Override
+	public String toString() {
+		return "TableCellEditEvent [position="
+			+ position
+			+ ", rowIndex="
+			+ getRowIndex()
+			+ ", columnIndex="
+			+ getColumnIndex()
+			+ "]";
+	}
 
 }

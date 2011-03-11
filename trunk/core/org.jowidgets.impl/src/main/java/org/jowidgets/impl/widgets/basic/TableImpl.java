@@ -142,33 +142,33 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 	}
 
 	@Override
-	public void addTableItemPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
-		getWidget().addTableItemPopupDetectionListener(listener);
+	public void addTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
+		getWidget().addTableCellPopupDetectionListener(listener);
 	}
 
 	@Override
-	public void removeTableItemPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
-		getWidget().removeTableItemPopupDetectionListener(listener);
+	public void removeTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
+		getWidget().removeTableCellPopupDetectionListener(listener);
 	}
 
 	@Override
-	public void addTableItemEditorListener(final ITableCellEditorListener listener) {
-		getWidget().addTableItemEditorListener(listener);
+	public void addTableCellEditorListener(final ITableCellEditorListener listener) {
+		getWidget().addTableCellEditorListener(listener);
 	}
 
 	@Override
-	public void removeTableItemEditorListener(final ITableCellEditorListener listener) {
-		getWidget().removeTableItemEditorListener(listener);
+	public void removeTableCellEditorListener(final ITableCellEditorListener listener) {
+		getWidget().removeTableCellEditorListener(listener);
 	}
 
 	@Override
-	public void addTableItemListener(final ITableCellListener listener) {
-		getWidget().addTableItemListener(listener);
+	public void addTableCellListener(final ITableCellListener listener) {
+		getWidget().addTableCellListener(listener);
 	}
 
 	@Override
-	public void removeTableItemListener(final ITableCellListener listener) {
-		getWidget().removeTableItemListener(listener);
+	public void removeTableCellListener(final ITableCellListener listener) {
+		getWidget().removeTableCellListener(listener);
 	}
 
 	@Override
