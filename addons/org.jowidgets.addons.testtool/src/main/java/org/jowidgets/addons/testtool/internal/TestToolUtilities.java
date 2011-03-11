@@ -66,9 +66,7 @@ public final class TestToolUtilities {
 					final int childPosition = tmpContainer.getChildren().indexOf(childWidget);
 					sb.append(widgetList.getLast().getClass().getSimpleName());
 					sb.append(PROPERTY_SEPARATOR);
-					if (identifier.isEmpty()) {
-						sb.append(getIdentifier(widgetList.getLast()));
-					}
+					sb.append(getIdentifier(widgetList.getLast()));
 					sb.append(ELEMENT_SEPARATOR);
 					if (childPosition != -1) {
 						sb.append(childPosition);
@@ -79,9 +77,7 @@ public final class TestToolUtilities {
 				else {
 					sb.append(widgetList.getLast().getClass().getSimpleName());
 					sb.append(PROPERTY_SEPARATOR);
-					if (identifier.isEmpty()) {
-						sb.append(getIdentifier(widgetList.getLast()));
-					}
+					sb.append(getIdentifier(widgetList.getLast()));
 					sb.append(ELEMENT_SEPARATOR);
 					widgetList.removeLast();
 				}
@@ -89,13 +85,20 @@ public final class TestToolUtilities {
 			else {
 				sb.append(widgetList.getLast().getClass().getSimpleName());
 				sb.append(PROPERTY_SEPARATOR);
-				sb.append(getIdentifier(widgetList.getLast()));
+				if (!identifier.isEmpty()) {
+					sb.append(identifier);
+				}
+				else {
+					sb.append(getIdentifier(widgetList.getLast()));
+				}
 				widgetList.removeLast();
 			}
 		}
 		return sb.toString();
 	}
 
+	// TODO LG add IButtonUi, IFrameUi... 
+	// TODO LG replace non ui interfaces with ui interfaces
 	private String getIdentifier(final IWidget widget) {
 		if (widget instanceof ITreeNode) {
 			return ((ITreeNode) widget).getText();
