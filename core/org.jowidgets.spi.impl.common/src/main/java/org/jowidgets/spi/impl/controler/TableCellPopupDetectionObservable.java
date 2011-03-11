@@ -28,32 +28,36 @@
 
 package org.jowidgets.spi.impl.controler;
 
-import org.jowidgets.common.types.Position;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionListener;
+import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionObservable;
 import org.jowidgets.common.widgets.controler.ITableCellPopupEvent;
 
-public class TableCellPopupEvent extends TableCellEvent implements ITableCellPopupEvent {
+public class TableCellPopupDetectionObservable implements ITableCellPopupDetectionObservable {
 
-	private final Position position;
+	private final Set<ITableCellPopupDetectionListener> listeners;
 
-	public TableCellPopupEvent(final int rowIndex, final int columnIndex, final Position position) {
-		super(rowIndex, columnIndex);
-		this.position = position;
+	public TableCellPopupDetectionObservable() {
+		super();
+		this.listeners = new HashSet<ITableCellPopupDetectionListener>();
 	}
 
 	@Override
-	public Position getPosition() {
-		return position;
+	public void addTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
+		listeners.add(listener);
 	}
 
 	@Override
-	public String toString() {
-		return "TableCellEditEvent [position="
-			+ position
-			+ ", rowIndex="
-			+ getRowIndex()
-			+ ", columnIndex="
-			+ getColumnIndex()
-			+ "]";
+	public void removeTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
+		listeners.remove(listener);
+	}
+
+	public void firePopupDetected(final ITableCellPopupEvent event) {
+		for (final ITableCellPopupDetectionListener listener : listeners) {
+			listener.popupDetected(event);
+		}
 	}
 
 }

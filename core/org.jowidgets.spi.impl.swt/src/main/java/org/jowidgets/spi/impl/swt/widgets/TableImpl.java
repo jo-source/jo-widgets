@@ -33,6 +33,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MenuDetectEvent;
+import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.Point;
@@ -61,6 +63,10 @@ import org.jowidgets.common.widgets.model.ITableColumnModel;
 import org.jowidgets.common.widgets.model.ITableModel;
 import org.jowidgets.spi.impl.controler.TableCellMouseEvent;
 import org.jowidgets.spi.impl.controler.TableCellObservable;
+import org.jowidgets.spi.impl.controler.TableCellPopupDetectionObservable;
+import org.jowidgets.spi.impl.controler.TableCellPopupEvent;
+import org.jowidgets.spi.impl.controler.TableColumnPopupDetectionObservable;
+import org.jowidgets.spi.impl.controler.TableColumnPopupEvent;
 import org.jowidgets.spi.impl.swt.color.ColorCache;
 import org.jowidgets.spi.widgets.ITableSpi;
 import org.jowidgets.spi.widgets.setup.ITableSetupSpi;
@@ -68,6 +74,8 @@ import org.jowidgets.spi.widgets.setup.ITableSetupSpi;
 public class TableImpl extends SwtControl implements ITableSpi {
 
 	private final TableCellObservable tableCellObservable;
+	private final TableCellPopupDetectionObservable tableCellPopupDetectionObservable;
+	private final TableColumnPopupDetectionObservable tableColumnPopupDetectionObservable;
 
 	private final boolean columnsMoveable;
 	private final boolean columnsResizeable;
@@ -77,6 +85,8 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		super(new Table((Composite) parentUiReference, getStyle(setup)));
 
 		this.tableCellObservable = new TableCellObservable();
+		this.tableCellPopupDetectionObservable = new TableCellPopupDetectionObservable();
+		this.tableColumnPopupDetectionObservable = new TableColumnPopupDetectionObservable();
 
 		this.model = setup.getModel();
 		this.columnsMoveable = setup.getColumnsMoveable();
@@ -133,6 +143,54 @@ public class TableImpl extends SwtControl implements ITableSpi {
 				return null;
 			}
 
+		});
+
+		table.addMenuDetectListener(new MenuDetectListener() {
+
+			@Override
+			public void menuDetected(final MenuDetectEvent e) {
+				Point point = new Point(e.x, e.y);
+				point = table.toControl(point);
+				final Position position = new Position(point.x, point.y);
+				TableItem item = table.getItem(point);
+				if (item != null && point.y > table.getHeaderHeight()) {
+					for (int colIndex = 0; colIndex < table.getColumnCount(); colIndex++) {
+						final Rectangle rect = item.getBounds(colIndex);
+						if (rect.contains(point)) {
+							final int rowIndex = table.indexOf(item);
+							if (rowIndex != -1) {
+
+								tableCellPopupDetectionObservable.firePopupDetected(new TableCellPopupEvent(
+									rowIndex,
+									colIndex,
+									position));
+							}
+						}
+					}
+				}
+				else if (table.getItemCount() > 0) {
+					item = table.getItem(0);
+					for (int colIndex = 0; colIndex < table.getColumnCount(); colIndex++) {
+						final Rectangle rect = item.getBounds(colIndex);
+						if (rect.x <= point.x && point.x <= rect.x + rect.width) {
+							tableColumnPopupDetectionObservable.firePopupDetected(new TableColumnPopupEvent(colIndex, position));
+						}
+					}
+				}
+				else {
+					table.setRedraw(false);
+					final TableItem dummyItem = new TableItem(table, SWT.NONE);
+					for (int colIndex = 0; colIndex < table.getColumnCount(); colIndex++) {
+						final Rectangle rect = item.getBounds(colIndex);
+						if (rect.x <= point.x && point.x <= rect.x + rect.width) {
+							tableColumnPopupDetectionObservable.firePopupDetected(new TableColumnPopupEvent(colIndex, position));
+						}
+					}
+					dummyItem.dispose();
+					table.setRedraw(true);
+				}
+
+			}
 		});
 	}
 
@@ -216,24 +274,30 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	}
 
 	@Override
-	public void addTableCellEditorListener(final ITableCellEditorListener listener) {
-
-	}
-
-	@Override
-	public void removeTableCellEditorListener(final ITableCellEditorListener listener) {
-
-	}
-
-	@Override
 	public void addTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
-
+		tableCellPopupDetectionObservable.addTableCellPopupDetectionListener(listener);
 	}
 
 	@Override
 	public void removeTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
-
+		tableCellPopupDetectionObservable.removeTableCellPopupDetectionListener(listener);
 	}
+
+	@Override
+	public void addTableColumnPopupDetectionListener(final ITableColumnPopupDetectionListener listener) {
+		tableColumnPopupDetectionObservable.addTableColumnPopupDetectionListener(listener);
+	}
+
+	@Override
+	public void removeTableColumnPopupDetectionListener(final ITableColumnPopupDetectionListener listener) {
+		tableColumnPopupDetectionObservable.addTableColumnPopupDetectionListener(listener);
+	}
+
+	@Override
+	public void addTableCellEditorListener(final ITableCellEditorListener listener) {}
+
+	@Override
+	public void removeTableCellEditorListener(final ITableCellEditorListener listener) {}
 
 	@Override
 	public void addTableSelectionListener(final ITableSelectionListener listener) {
@@ -252,16 +316,6 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 	@Override
 	public void removeTableColumnListener(final ITableColumnListener listener) {
-
-	}
-
-	@Override
-	public void addTableColumnPopupDetectionListener(final ITableColumnPopupDetectionListener listener) {
-
-	}
-
-	@Override
-	public void removeTableColumnPopupDetectionListener(final ITableColumnPopupDetectionListener listener) {
 
 	}
 
