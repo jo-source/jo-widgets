@@ -30,14 +30,25 @@ package org.jowidgets.addons.testtool.internal;
 
 import java.util.LinkedList;
 
+import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.util.Assert;
 
+// TODO LG generate unique id
+// TODO LG remove default identifier
 public final class TestToolUtilities {
+
+	private static final String ELEMENT_SEPARATOR = "/";
 
 	public TestToolUtilities() {}
 
-	public String createWidgetID(final IWidget widget) {
+	public String createWidgetID(final IWidget widget, final String identifier) {
+		Assert.paramNotNull(widget, "widget");
+		if (identifier.isEmpty()) {
+			throw new IllegalArgumentException("An empty identifier is not allowed!");
+		}
 		final LinkedList<IWidget> widgetList = new LinkedList<IWidget>();
+		widgetList.add(widget);
 		IWidget parent = widget.getParent();
 		while (parent != null) {
 			widgetList.add(parent);
@@ -45,13 +56,41 @@ public final class TestToolUtilities {
 		}
 		final StringBuilder sb = new StringBuilder();
 		while (!widgetList.isEmpty()) {
-			sb.append(widgetList.getLast().getClass().getSimpleName());
-			sb.append("/");
-			widgetList.removeLast();
+			if (widgetList.size() > 1) {
+				final IWidget tmpWidget = widgetList.getLast();
+				if (tmpWidget instanceof IContainer) {
+					final IContainer tmpContainer = (IContainer) tmpWidget;
+					final IWidget childWidget = widgetList.get(widgetList.size() - 2);
+					final int childPosition = tmpContainer.getChildren().indexOf(childWidget);
+					sb.append(widgetList.getLast().getClass().getSimpleName());
+					sb.append(ELEMENT_SEPARATOR);
+					if (childPosition != -1) {
+						sb.append(childPosition);
+						sb.append("_");
+					}
+					widgetList.removeLast();
+				}
+				else {
+					sb.append(widgetList.getLast().getClass().getSimpleName());
+					sb.append(ELEMENT_SEPARATOR);
+					widgetList.removeLast();
+
+				}
+			}
+			else {
+				sb.append(widgetList.getLast().getClass().getSimpleName());
+				sb.append(ELEMENT_SEPARATOR);
+				widgetList.removeLast();
+			}
 		}
-		sb.append(widget.getClass().getSimpleName());
-		sb.append("/");
-		sb.append("test");
+		//sb.append(widget.getClass().getSimpleName());
+		//sb.append(ELEMENT_SEPARATOR);
+		if (identifier.isEmpty()) {
+			sb.append("test");
+		}
+		else {
+			sb.append(identifier);
+		}
 		return sb.toString();
 	}
 }

@@ -49,13 +49,14 @@ public class TestToolGui {
 	public void createContent() {
 		final IFrameBluePrint frameBP = BPF.frame("TestTool").setSize(new Dimension(500, 400));
 		final IFrame frame = Toolkit.createRootFrame(frameBP);
-		frame.setLayout(new MigLayoutDescriptor("[grow]", "[]"));
+		frame.setLayout(new MigLayoutDescriptor("[grow]", "[grow]"));
 		final IMenuBar menuBar = frame.createMenuBar();
 		final IMainMenu fileMenu = menuBar.addMenu("File");
-		final IToolBar toolBar = frame.add(BPF.toolBar(), "");
+		final IToolBar toolBar = frame.add(BPF.toolBar(), "north, wrap");
 		toolBar.addItem(BPF.toolBarButton().setText("play"));
 		toolBar.addItem(BPF.toolBarButton().setText("stop"));
 		toolBar.addItem(BPF.toolBarButton().setText("record"));
+		frame.add(BPF.label().setText("sdfksdf"), "");
 		frame.setVisible(true);
 	}
 }
