@@ -30,8 +30,8 @@ package org.jowidgets.common.widgets.controler;
 
 public interface ITableCellPopupDetectionObservable {
 
-	void addTableItemPopupDetectionListener(ITableCellPopupDetectionListener listener);
+	void addTableCellPopupDetectionListener(ITableCellPopupDetectionListener listener);
 
-	void removeTableItemPopupDetectionListener(ITableCellPopupDetectionListener listener);
+	void removeTableCellPopupDetectionListener(ITableCellPopupDetectionListener listener);
 
 }

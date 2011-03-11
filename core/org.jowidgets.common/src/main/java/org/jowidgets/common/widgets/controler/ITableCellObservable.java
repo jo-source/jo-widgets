@@ -30,8 +30,8 @@ package org.jowidgets.common.widgets.controler;
 
 public interface ITableCellObservable {
 
-	void addTableItemListener(ITableCellListener listener);
+	void addTableCellListener(ITableCellListener listener);
 
-	void removeTableItemListener(ITableCellListener listener);
+	void removeTableCellListener(ITableCellListener listener);
 
 }

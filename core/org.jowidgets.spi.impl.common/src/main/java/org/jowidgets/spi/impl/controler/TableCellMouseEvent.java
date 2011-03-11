@@ -26,14 +26,51 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.widgets.controler;
+package org.jowidgets.spi.impl.controler;
 
-public interface ITableCellListener {
+import java.util.Collections;
+import java.util.Set;
 
-	void mousePressed(ITableCellMouseEvent event);
+import org.jowidgets.common.types.Modifier;
+import org.jowidgets.common.types.MouseButton;
+import org.jowidgets.common.widgets.controler.ITableCellMouseEvent;
 
-	void mouseReleased(ITableCellMouseEvent event);
+public class TableCellMouseEvent extends TableCellEvent implements ITableCellMouseEvent {
 
-	void mouseDoubleClicked(ITableCellMouseEvent event);
+	private final MouseButton mouseButton;
+	private final Set<Modifier> modifier;
+
+	public TableCellMouseEvent(
+		final int rowIndex,
+		final int columnIndex,
+		final MouseButton mouseButton,
+		final Set<Modifier> modifier) {
+		super(rowIndex, columnIndex);
+		this.mouseButton = mouseButton;
+		this.modifier = Collections.unmodifiableSet(modifier);
+	}
+
+	@Override
+	public MouseButton getMouseButton() {
+		return mouseButton;
+	}
+
+	@Override
+	public Set<Modifier> getModifiers() {
+		return modifier;
+	}
+
+	@Override
+	public String toString() {
+		return "TableCellMouseEvent [mouseButton="
+			+ mouseButton
+			+ ", modifier="
+			+ modifier
+			+ ", rowIndex="
+			+ getRowIndex()
+			+ ", columnIndex="
+			+ getColumnIndex()
+			+ "]";
+	}
 
 }

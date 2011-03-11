@@ -26,14 +26,50 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.widgets.controler;
+package org.jowidgets.spi.impl.controler;
 
-public interface ITableCellListener {
+import java.util.HashSet;
+import java.util.Set;
 
-	void mousePressed(ITableCellMouseEvent event);
+import org.jowidgets.common.widgets.controler.ITableCellListener;
+import org.jowidgets.common.widgets.controler.ITableCellMouseEvent;
+import org.jowidgets.common.widgets.controler.ITableCellObservable;
 
-	void mouseReleased(ITableCellMouseEvent event);
+public class TableCellObservable implements ITableCellObservable {
 
-	void mouseDoubleClicked(ITableCellMouseEvent event);
+	private final Set<ITableCellListener> listeners;
+
+	public TableCellObservable() {
+		super();
+		this.listeners = new HashSet<ITableCellListener>();
+	}
+
+	@Override
+	public void addTableCellListener(final ITableCellListener listener) {
+		listeners.add(listener);
+	}
+
+	@Override
+	public void removeTableCellListener(final ITableCellListener listener) {
+		listeners.remove(listener);
+	}
+
+	public void fireMousePressed(final ITableCellMouseEvent event) {
+		for (final ITableCellListener listener : listeners) {
+			listener.mousePressed(event);
+		}
+	}
+
+	public void fireMouseReleased(final ITableCellMouseEvent event) {
+		for (final ITableCellListener listener : listeners) {
+			listener.mouseReleased(event);
+		}
+	}
+
+	public void fireMouseDoubleClicked(final ITableCellMouseEvent event) {
+		for (final ITableCellListener listener : listeners) {
+			listener.mouseDoubleClicked(event);
+		}
+	}
 
 }

@@ -29,8 +29,13 @@
 package org.jowidgets.spi.impl.swt.widgets;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
@@ -39,11 +44,14 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Modifier;
+import org.jowidgets.common.types.MouseButton;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.SelectionPolicy;
 import org.jowidgets.common.types.TableColumnPackPolicy;
 import org.jowidgets.common.widgets.controler.ITableCellEditorListener;
 import org.jowidgets.common.widgets.controler.ITableCellListener;
+import org.jowidgets.common.widgets.controler.ITableCellMouseEvent;
 import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.ITableColumnListener;
 import org.jowidgets.common.widgets.controler.ITableColumnPopupDetectionListener;
@@ -51,11 +59,15 @@ import org.jowidgets.common.widgets.controler.ITableSelectionListener;
 import org.jowidgets.common.widgets.model.ITableCellModel;
 import org.jowidgets.common.widgets.model.ITableColumnModel;
 import org.jowidgets.common.widgets.model.ITableModel;
+import org.jowidgets.spi.impl.controler.TableCellMouseEvent;
+import org.jowidgets.spi.impl.controler.TableCellObservable;
 import org.jowidgets.spi.impl.swt.color.ColorCache;
 import org.jowidgets.spi.widgets.ITableSpi;
 import org.jowidgets.spi.widgets.setup.ITableSetupSpi;
 
 public class TableImpl extends SwtControl implements ITableSpi {
+
+	private final TableCellObservable tableCellObservable;
 
 	private final boolean columnsMoveable;
 	private final boolean columnsResizeable;
@@ -64,14 +76,64 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	public TableImpl(final Object parentUiReference, final ITableSetupSpi setup) {
 		super(new Table((Composite) parentUiReference, getStyle(setup)));
 
-		this.model = setup.getModel();
+		this.tableCellObservable = new TableCellObservable();
 
+		this.model = setup.getModel();
 		this.columnsMoveable = setup.getColumnsMoveable();
 		this.columnsResizeable = setup.getColumnsResizeable();
 
-		getUiReference().setLinesVisible(true);
-		getUiReference().setHeaderVisible(true);
+		final Table table = getUiReference();
 
+		table.setLinesVisible(true);
+		table.setHeaderVisible(true);
+
+		table.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseUp(final MouseEvent e) {
+				final ITableCellMouseEvent mouseEvent = getMouseEvent(e, 1);
+				if (mouseEvent != null) {
+					tableCellObservable.fireMouseReleased(mouseEvent);
+				}
+			}
+
+			@Override
+			public void mouseDown(final MouseEvent e) {
+				final ITableCellMouseEvent mouseEvent = getMouseEvent(e, 1);
+				if (mouseEvent != null) {
+					tableCellObservable.fireMousePressed(mouseEvent);
+				}
+			}
+
+			@Override
+			public void mouseDoubleClick(final MouseEvent e) {
+				final ITableCellMouseEvent mouseEvent = getMouseEvent(e, 2);
+				if (mouseEvent != null) {
+					tableCellObservable.fireMouseDoubleClicked(mouseEvent);
+				}
+			}
+
+			private ITableCellMouseEvent getMouseEvent(final MouseEvent event, final int maxCount) {
+				if (event.count > maxCount) {
+					return null;
+				}
+				final MouseButton mouseButton = getMouseButton(event);
+				if (mouseButton == null) {
+					return null;
+				}
+				final Point point = new Point(event.x, event.y);
+				final CellIndices indices = getCellIndices(point);
+				if (indices != null) {
+					return new TableCellMouseEvent(
+						indices.getRowIndex(),
+						indices.getColumnIndex(),
+						mouseButton,
+						getModifier(event.stateMask));
+				}
+				return null;
+			}
+
+		});
 	}
 
 	@Override
@@ -144,32 +206,32 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	}
 
 	@Override
-	public void addTableItemListener(final ITableCellListener listener) {
+	public void addTableCellListener(final ITableCellListener listener) {
+		tableCellObservable.addTableCellListener(listener);
+	}
+
+	@Override
+	public void removeTableCellListener(final ITableCellListener listener) {
+		tableCellObservable.removeTableCellListener(listener);
+	}
+
+	@Override
+	public void addTableCellEditorListener(final ITableCellEditorListener listener) {
 
 	}
 
 	@Override
-	public void removeTableItemListener(final ITableCellListener listener) {
+	public void removeTableCellEditorListener(final ITableCellEditorListener listener) {
 
 	}
 
 	@Override
-	public void addTableItemEditorListener(final ITableCellEditorListener listener) {
+	public void addTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
 
 	}
 
 	@Override
-	public void removeTableItemEditorListener(final ITableCellEditorListener listener) {
-
-	}
-
-	@Override
-	public void addTableItemPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
-
-	}
-
-	@Override
-	public void removeTableItemPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
+	public void removeTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
 
 	}
 
@@ -203,6 +265,50 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 	}
 
+	private CellIndices getCellIndices(final Point point) {
+		final Table table = getUiReference();
+		final TableItem item = table.getItem(point);
+		if (item != null) {
+			for (int columnIndex = 0; columnIndex < table.getColumnCount(); columnIndex++) {
+				final Rectangle rect = item.getBounds(columnIndex);
+				if (rect.contains(point)) {
+					final int rowIndex = table.indexOf(item);
+					if (rowIndex != -1) {
+						return new CellIndices(rowIndex, columnIndex);
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+	private MouseButton getMouseButton(final MouseEvent event) {
+		if (event.button == 1) {
+			return MouseButton.LEFT;
+		}
+		else if (event.button == 3) {
+			return MouseButton.RIGTH;
+		}
+		else {
+			return null;
+		}
+
+	}
+
+	private Set<Modifier> getModifier(final int stateMask) {
+		final Set<Modifier> modifier = new HashSet<Modifier>();
+		if ((stateMask & SWT.SHIFT) > 0) {
+			modifier.add(Modifier.SHIFT);
+		}
+		if ((stateMask & SWT.CTRL) > 0) {
+			modifier.add(Modifier.CTRL);
+		}
+		if ((stateMask & SWT.ALT) > 0) {
+			modifier.add(Modifier.ALT);
+		}
+		return modifier;
+	}
+
 	private static int getStyle(final ITableSetupSpi setup) {
 		int result = SWT.FULL_SELECTION | SWT.VIRTUAL;
 
@@ -214,5 +320,26 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		}
 
 		return result;
+	}
+
+	public final class CellIndices {
+
+		private final int rowIndex;
+		private final int columnIndex;
+
+		public CellIndices(final int rowIndex, final int columnIndex) {
+			super();
+			this.rowIndex = rowIndex;
+			this.columnIndex = columnIndex;
+		}
+
+		public int getRowIndex() {
+			return rowIndex;
+		}
+
+		public int getColumnIndex() {
+			return columnIndex;
+		}
+
 	}
 }
