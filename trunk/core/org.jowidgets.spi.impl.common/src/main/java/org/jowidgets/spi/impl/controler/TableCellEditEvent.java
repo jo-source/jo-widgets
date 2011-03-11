@@ -28,27 +28,26 @@
 
 package org.jowidgets.spi.impl.controler;
 
-import org.jowidgets.common.types.Position;
-import org.jowidgets.common.widgets.controler.ITableCellPopupEvent;
+import org.jowidgets.common.widgets.controler.ITableCellEditEvent;
 
-public class TableCellEditEvent extends TableCellEvent implements ITableCellPopupEvent {
+public class TableCellEditEvent extends TableCellEvent implements ITableCellEditEvent {
 
-	private final Position position;
+	private final String currentText;
 
-	public TableCellEditEvent(final int rowIndex, final int columnIndex, final Position position) {
+	public TableCellEditEvent(final int rowIndex, final int columnIndex, final String currentText) {
 		super(rowIndex, columnIndex);
-		this.position = position;
+		this.currentText = currentText;
 	}
 
 	@Override
-	public Position getPosition() {
-		return position;
+	public String getCurrentText() {
+		return currentText;
 	}
 
 	@Override
 	public String toString() {
-		return "TableCellEditEvent [position="
-			+ position
+		return "TableCellPopupEvent [currentText="
+			+ currentText
 			+ ", rowIndex="
 			+ getRowIndex()
 			+ ", columnIndex="

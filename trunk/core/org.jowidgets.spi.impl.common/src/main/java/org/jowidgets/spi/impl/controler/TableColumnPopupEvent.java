@@ -29,14 +29,14 @@
 package org.jowidgets.spi.impl.controler;
 
 import org.jowidgets.common.types.Position;
-import org.jowidgets.common.widgets.controler.ITableCellPopupEvent;
+import org.jowidgets.common.widgets.controler.ITableColumnPopupEvent;
 
-public class TableCellPopupEvent extends TableCellEvent implements ITableCellPopupEvent {
+public class TableColumnPopupEvent extends TableColumnEvent implements ITableColumnPopupEvent {
 
 	private final Position position;
 
-	public TableCellPopupEvent(final int rowIndex, final int columnIndex, final Position position) {
-		super(rowIndex, columnIndex);
+	public TableColumnPopupEvent(final int columnIndex, final Position position) {
+		super(columnIndex);
 		this.position = position;
 	}
 
@@ -47,13 +47,7 @@ public class TableCellPopupEvent extends TableCellEvent implements ITableCellPop
 
 	@Override
 	public String toString() {
-		return "TableCellEditEvent [position="
-			+ position
-			+ ", rowIndex="
-			+ getRowIndex()
-			+ ", columnIndex="
-			+ getColumnIndex()
-			+ "]";
+		return "TableCellEditEvent [position=" + position + ", columnIndex=" + getColumnIndex() + "]";
 	}
 
 }
