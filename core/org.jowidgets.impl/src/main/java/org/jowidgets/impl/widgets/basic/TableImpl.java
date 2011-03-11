@@ -35,10 +35,10 @@ import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITable;
-import org.jowidgets.api.widgets.ITableCell;
-import org.jowidgets.api.widgets.ITableColumn;
 import org.jowidgets.api.widgets.descriptor.ITableDescriptor;
 import org.jowidgets.common.types.TableColumnPackPolicy;
+import org.jowidgets.common.widgets.ITableCell;
+import org.jowidgets.common.widgets.ITableColumn;
 import org.jowidgets.common.widgets.controler.ITableCellEditorListener;
 import org.jowidgets.common.widgets.controler.ITableCellListener;
 import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionListener;
@@ -54,23 +54,25 @@ import org.jowidgets.spi.widgets.ITableSpi;
 public class TableImpl extends ControlSpiWrapper implements ITable {
 
 	private final ControlDelegate controlDelegate;
-	private ArrayList<TableColumnImpl> columns;
-	private ArrayList<ArrayList<TableCellImpl>> data;
+
+	private final int rowCount;
+	private final int columnCount;
 
 	public TableImpl(final ITableSpi widget, final ITableDescriptor setup) {
 		super(widget);
 
 		this.controlDelegate = new ControlDelegate();
-		this.columns = new ArrayList<TableColumnImpl>();
-		this.data = new ArrayList<ArrayList<TableCellImpl>>();
 
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
 
-		final Integer rowCount = setup.getRowCount();
-		final Integer columnCount = setup.getColumnCount();
+		final Integer rowCountSetup = setup.getRowCount();
+		final Integer columnCountSetup = setup.getColumnCount();
 
-		initialize(rowCount != null ? rowCount.intValue() : 0, columnCount != null ? columnCount : 1);
+		this.rowCount = rowCountSetup != null ? rowCountSetup.intValue() : 0;
+		this.columnCount = columnCountSetup != null ? columnCountSetup : 1;
+
+		initialize(rowCount, columnCount);
 	}
 
 	@Override
@@ -100,65 +102,46 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 
 	@Override
 	public int getRowCount() {
-		return data.size();
+		return rowCount;
 	}
 
 	@Override
 	public int getColumnCount() {
-		return columns.size();
+		return columnCount;
 	}
 
 	@Override
 	public void initialize(final int rowsCount, final int columnsCount) {
-		final ITableSpi widgetSpi = getWidget();
-
-		widgetSpi.initialize(rowsCount, columnsCount);
-
-		for (final ArrayList<TableCellImpl> rowList : data) {
-			rowList.clear();
-		}
-		data = new ArrayList<ArrayList<TableCellImpl>>(rowsCount);
-		columns = new ArrayList<TableColumnImpl>(columnsCount);
-
-		for (int rowIndex = 0; rowIndex < rowsCount; rowIndex++) {
-
-			final ArrayList<TableCellImpl> columnList = new ArrayList<TableCellImpl>(columnsCount);
-			data.add(columnList);
-			for (int columnIndex = 0; columnIndex < columnsCount; columnIndex++) {
-				columnList.add(new TableCellImpl(widgetSpi.getCell(rowIndex, columnIndex), this));
-			}
-		}
-
-		for (int columnIndex = 0; columnIndex < columnsCount; columnIndex++) {
-			columns.add(new TableColumnImpl(widgetSpi.getColumn(columnIndex), this));
-		}
+		getWidget().initialize(rowsCount, columnsCount);
 	}
 
 	@Override
 	public ArrayList<ITableColumn> getColumns() {
-		return new ArrayList<ITableColumn>(columns);
+		final ArrayList<ITableColumn> result = new ArrayList<ITableColumn>(columnCount);
+		for (int i = 0; i < columnCount; i++) {
+			result.add(getWidget().getColumn(i));
+		}
+		return result;
 	}
 
 	@Override
 	public ITableCell getCell(final int rowIndex, final int columnIndex) {
-		return data.get(rowIndex).get(columnIndex);
+		return getWidget().getCell(rowIndex, columnIndex);
 	}
 
 	@Override
 	public ITableColumn getColumn(final int columnIndex) {
-		return columns.get(columnIndex);
+		return getWidget().getColumn(columnIndex);
 	}
 
 	@Override
 	public ITableColumn insertColumn(final int columnIndex) {
-		// TODO MG implement table impl
-		return null;
+		return getWidget().insertColumn(columnIndex);
 	}
 
 	@Override
 	public ITableColumn insertColumns(final int columnIndex, final int columnsCount) {
-		// TODO MG implement table impl
-		return null;
+		return getWidget().insertColumns(columnIndex, columnsCount);
 	}
 
 	@Override

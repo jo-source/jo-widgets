@@ -26,10 +26,26 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.common.widgets;
 
-import org.jowidgets.common.widgets.ITableColumnCommon;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.AlignmentHorizontal;
+import org.jowidgets.common.types.TableColumnPackPolicy;
 
-public interface ITableColumn extends IItem, ITableColumnCommon {
+public interface ITableColumn extends IItemCommon {
+
+	void setAlignment(AlignmentHorizontal alignment);
+
+	void setWidth(int width);
+
+	int getWidth(int width);
+
+	String getText();
+
+	String getToolTipText();
+
+	IImageConstant getIcon();
+
+	void pack(TableColumnPackPolicy policy);
 
 }
