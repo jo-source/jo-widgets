@@ -38,15 +38,19 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.ITableCell;
 import org.jowidgets.spi.impl.swt.color.ColorCache;
 import org.jowidgets.spi.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.util.FontProvider;
-import org.jowidgets.spi.widgets.ITableCellSpi;
 
-public class TableCellImpl implements ITableCellSpi {
+public class TableCellImpl implements ITableCell {
 
 	private final TableItem tableItem;
 	private final int columnIndex;
+
+	private String tooltipText;
+	private IImageConstant icon;
+	private boolean editable;
 
 	public TableCellImpl(final TableItem tableItem, final int columnIndex) {
 		super();
@@ -82,18 +86,41 @@ public class TableCellImpl implements ITableCellSpi {
 	}
 
 	@Override
-	public void setToolTipText(final String text) {
-		//TODO BM Use Tooltip like in SwtMenu
+	public void setToolTipText(final String tooltipText) {
+		this.tooltipText = tooltipText;
+		// TODO BM Use Tooltip like in SwtMenu
+	}
+
+	@Override
+	public String getToolTipText() {
+		return tooltipText;
 	}
 
 	@Override
 	public void setIcon(final IImageConstant icon) {
+		this.icon = icon;
 		tableItem.setImage(columnIndex, SwtImageRegistry.getInstance().getImage(icon));
 	}
 
 	@Override
+	public IImageConstant getIcon() {
+		return icon;
+	}
+
+	@Override
 	public void setEditable(final boolean editable) {
+		this.editable = editable;
 		// TODO MG implement editor
+	}
+
+	@Override
+	public boolean isEditable() {
+		return editable;
+	}
+
+	@Override
+	public String getText() {
+		return tableItem.getText(columnIndex);
 	}
 
 	@Override

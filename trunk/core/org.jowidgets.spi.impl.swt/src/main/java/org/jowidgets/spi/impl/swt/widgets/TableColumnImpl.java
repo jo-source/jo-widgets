@@ -32,13 +32,15 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.common.types.TableColumnPackPolicy;
+import org.jowidgets.common.widgets.ITableColumn;
 import org.jowidgets.spi.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.util.AlignmentConvert;
-import org.jowidgets.spi.widgets.ITableColumnSpi;
 
-public class TableColumnImpl implements ITableColumnSpi {
+public class TableColumnImpl implements ITableColumn {
 
 	private final TableColumn tableColumn;
+
+	private IImageConstant icon;
 
 	public TableColumnImpl(final TableColumn tableColumn, final boolean columnsMoveable, final boolean columnsResizeable) {
 		super();
@@ -75,13 +77,29 @@ public class TableColumnImpl implements ITableColumnSpi {
 	}
 
 	@Override
+	public String getText() {
+		return tableColumn.getText();
+	}
+
+	@Override
 	public void setToolTipText(final String text) {
 		tableColumn.setToolTipText(text);
 	}
 
 	@Override
+	public String getToolTipText() {
+		return tableColumn.getToolTipText();
+	}
+
+	@Override
 	public void setIcon(final IImageConstant icon) {
+		this.icon = icon;
 		tableColumn.setImage(SwtImageRegistry.getInstance().getImage(icon));
+	}
+
+	@Override
+	public IImageConstant getIcon() {
+		return icon;
 	}
 
 	@Override

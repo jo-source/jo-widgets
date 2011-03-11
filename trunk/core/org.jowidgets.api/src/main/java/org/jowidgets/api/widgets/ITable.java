@@ -31,6 +31,7 @@ package org.jowidgets.api.widgets;
 import java.util.ArrayList;
 
 import org.jowidgets.common.types.TableColumnPackPolicy;
+import org.jowidgets.common.widgets.ITableColumn;
 import org.jowidgets.common.widgets.ITableCommon;
 
 public interface ITable extends IControl, ITableCommon {
@@ -40,14 +41,6 @@ public interface ITable extends IControl, ITableCommon {
 	ArrayList<ITableColumn> getColumns();
 
 	int getColumnCount();
-
-	ITableCell getCell(int rowIndex, int columnIndex);
-
-	ITableColumn getColumn(int columnIndex);
-
-	ITableColumn insertColumn(int columnIndex);
-
-	ITableColumn insertColumns(int columnIndex, int columnsCount);
 
 	void pack(TableColumnPackPolicy policy);
 

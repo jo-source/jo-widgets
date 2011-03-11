@@ -32,12 +32,4 @@ import org.jowidgets.common.widgets.ITableCommon;
 
 public interface ITableSpi extends IControlSpi, ITableCommon {
 
-	ITableCellSpi getCell(int rowIndex, int columnIndex);
-
-	ITableColumnSpi getColumn(int columnIndex);
-
-	ITableColumnSpi insertColumn(int columnIndex);
-
-	ITableColumnSpi insertColumns(int columnIndex, int columnsCount);
-
 }

@@ -28,17 +28,46 @@
 
 package org.jowidgets.common.widgets;
 
-import org.jowidgets.common.types.AlignmentHorizontal;
-import org.jowidgets.common.types.TableColumnPackPolicy;
+import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Markup;
+import org.jowidgets.common.types.Position;
 
-public interface ITableColumnCommon extends IItemCommon {
+public interface ITableCell extends IItemCommon {
 
-	void setAlignment(AlignmentHorizontal alignment);
+	void setEditable(boolean editable);
 
-	void setWidth(int width);
+	void setForegroundColor(final IColorConstant colorValue);
 
-	int getWidth(int width);
+	void setBackgroundColor(final IColorConstant colorValue);
 
-	void pack(TableColumnPackPolicy policy);
+	IColorConstant getForegroundColor();
+
+	IColorConstant getBackgroundColor();
+
+	void setMarkup(Markup markup);
+
+	String getText();
+
+	String getToolTipText();
+
+	IImageConstant getIcon();
+
+	boolean isEditable();
+
+	/**
+	 * Gets the position of the cell (upper left corner) relative to its table.
+	 * 
+	 * @return The position relative to its table
+	 */
+	Position getPosition();
+
+	/**
+	 * Gets the size of the cell
+	 * 
+	 * @return the size of the cell
+	 */
+	Dimension getSize();
 
 }

@@ -37,14 +37,14 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.jowidgets.common.types.SelectionPolicy;
+import org.jowidgets.common.widgets.ITableCell;
+import org.jowidgets.common.widgets.ITableColumn;
 import org.jowidgets.common.widgets.controler.ITableCellEditorListener;
 import org.jowidgets.common.widgets.controler.ITableCellListener;
 import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.ITableColumnListener;
 import org.jowidgets.common.widgets.controler.ITableColumnPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.ITableSelectionListener;
-import org.jowidgets.spi.widgets.ITableCellSpi;
-import org.jowidgets.spi.widgets.ITableColumnSpi;
 import org.jowidgets.spi.widgets.ITableSpi;
 import org.jowidgets.spi.widgets.setup.ITableSetupSpi;
 
@@ -101,22 +101,22 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	}
 
 	@Override
-	public ITableCellSpi getCell(final int rowIndex, final int columnIndex) {
+	public ITableCell getCell(final int rowIndex, final int columnIndex) {
 		return data.get(rowIndex).get(columnIndex);
 	}
 
 	@Override
-	public ITableColumnSpi getColumn(final int columnIndex) {
+	public ITableColumn getColumn(final int columnIndex) {
 		return columns.get(columnIndex);
 	}
 
 	@Override
-	public ITableColumnSpi insertColumn(final int columnIndex) {
+	public ITableColumn insertColumn(final int columnIndex) {
 		return null;
 	}
 
 	@Override
-	public ITableColumnSpi insertColumns(final int columnIndex, final int columnsCount) {
+	public ITableColumn insertColumns(final int columnIndex, final int columnsCount) {
 		return null;
 	}
 

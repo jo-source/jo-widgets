@@ -55,6 +55,14 @@ public interface ITableCommon extends
 
 	ArrayList<Integer> getColumnPermutation();
 
+	ITableCell getCell(int rowIndex, int columnIndex);
+
+	ITableColumn getColumn(int columnIndex);
+
+	ITableColumn insertColumn(int columnIndex);
+
+	ITableColumn insertColumns(int columnIndex, int columnsCount);
+
 	void removeColumn(int columnIndex);
 
 	void removeColumns(int columnIndex, int columnsCount);
