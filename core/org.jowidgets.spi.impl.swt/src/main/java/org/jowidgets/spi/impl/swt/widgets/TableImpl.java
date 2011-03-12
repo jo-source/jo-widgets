@@ -86,6 +86,8 @@ import org.jowidgets.spi.widgets.setup.ITableSetupSpi;
 public class TableImpl extends SwtControl implements ITableSpi {
 
 	private final Table table;
+	private final ITableModel tableModel;
+	private final ITableColumnModel columnModel;
 
 	private final TableCellObservable tableCellObservable;
 	private final TableCellPopupDetectionObservable tableCellPopupDetectionObservable;
@@ -98,8 +100,6 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 	private final boolean columnsMoveable;
 	private final boolean columnsResizeable;
-	private final ITableModel tableModel;
-	private final ITableColumnModel columnModel;
 
 	private int[] lastColumnOrder;
 
@@ -117,6 +117,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 		this.tableModel = setup.getTableModel();
 		this.columnModel = setup.getColumnModel();
+
 		this.columnsMoveable = setup.getColumnsMoveable();
 		this.columnsResizeable = setup.getColumnsResizeable();
 
