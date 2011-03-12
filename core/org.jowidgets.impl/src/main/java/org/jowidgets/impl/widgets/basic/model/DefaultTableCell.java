@@ -59,11 +59,6 @@ public class DefaultTableCell implements ITableCell {
 	}
 
 	@Override
-	public void setText(final String text) {
-		this.text = text;
-	}
-
-	@Override
 	public String getText() {
 		return text;
 	}
