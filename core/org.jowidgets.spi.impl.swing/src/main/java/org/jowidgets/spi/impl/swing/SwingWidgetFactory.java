@@ -52,6 +52,7 @@ import org.jowidgets.spi.impl.swing.widgets.SeparatorImpl;
 import org.jowidgets.spi.impl.swing.widgets.SplitCompositeImpl;
 import org.jowidgets.spi.impl.swing.widgets.TabFolderImpl;
 import org.jowidgets.spi.impl.swing.widgets.TabFolderWithInternalFrameImpl;
+import org.jowidgets.spi.impl.swing.widgets.TableImpl;
 import org.jowidgets.spi.impl.swing.widgets.TextFieldImpl;
 import org.jowidgets.spi.impl.swing.widgets.TextLabelImpl;
 import org.jowidgets.spi.impl.swing.widgets.ToggleButtonImpl;
@@ -242,8 +243,7 @@ public final class SwingWidgetFactory implements IWidgetFactorySpi {
 
 	@Override
 	public ITableSpi createTable(final Object parentUiReference, final ITableSetupSpi setup) {
-		// TODO MG implement tableSpi for swing
-		return null;
+		return new TableImpl(setup);
 	}
 
 }
