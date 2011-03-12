@@ -26,43 +26,23 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.widgets;
+package org.jowidgets.common.widgets.model;
 
-import java.util.ArrayList;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.AlignmentHorizontal;
 
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.types.Position;
-import org.jowidgets.common.types.TableColumnPackPolicy;
-import org.jowidgets.common.widgets.controler.ITableCellEditorObservable;
-import org.jowidgets.common.widgets.controler.ITableCellObservable;
-import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionObservable;
-import org.jowidgets.common.widgets.controler.ITableColumnObservable;
-import org.jowidgets.common.widgets.controler.ITableColumnPopupDetectionObservable;
-import org.jowidgets.common.widgets.controler.ITableSelectionObservable;
+public interface ITableColumn {
 
-public interface ITableCommon extends
-		ITableSelectionObservable,
-		ITableCellObservable,
-		ITableCellPopupDetectionObservable,
-		ITableCellEditorObservable,
-		ITableColumnObservable,
-		ITableColumnPopupDetectionObservable,
-		IControlCommon {
+	String getText();
 
-	void initialize();
+	String getToolTipText();
 
-	Position getCellPosition(int rowIndex, int columnIndex);
+	IImageConstant getIcon();
 
-	Dimension getCellSize(int rowIndex, int columnIndex);
+	void setWidth(int width);
 
-	ArrayList<Integer> getColumnPermutation();
+	int getWidth();
 
-	ArrayList<Integer> getSelection();
-
-	void setSelection(ArrayList<Integer> selection);
-
-	void pack(TableColumnPackPolicy policy);
-
-	void pack(int columnIndex, TableColumnPackPolicy policy);
+	AlignmentHorizontal getAlignment(AlignmentHorizontal alignment);
 
 }

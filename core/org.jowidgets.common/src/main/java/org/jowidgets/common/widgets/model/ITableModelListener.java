@@ -30,31 +30,13 @@ package org.jowidgets.common.widgets.model;
 
 public interface ITableModelListener {
 
-	void rowAdded(int index);
+	void rowsAdded(int[] rowIndices);
 
-	void rowsAdded(int index, int rowCount);
+	void rowsRemoved(int[] rowIndices);
 
-	void rowChanged(int index);
+	void rowsChanged(int[] rowIndices);
 
-	void rowsChanged(int index, int rowCount);
-
-	void rowRemoved(int index);
-
-	void rowsRemoved(int index, int rowsCount);
-
-	void columnAdded(int index);
-
-	void columnsAdded(int index, int columnCount);
-
-	void columnRemoved(int index);
-
-	void columnsRemoved(int index, int columnsCount);
-
-	void columnChanged(int index);
-
-	void columnsChanged(int index, int columnsCount);
-
-	void tableStructureChanged();
+	void rowsStructureChanged();
 
 	void selectionChanged();
 

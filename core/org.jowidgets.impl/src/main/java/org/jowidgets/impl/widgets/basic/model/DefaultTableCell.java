@@ -26,43 +26,61 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.widgets;
+package org.jowidgets.impl.widgets.basic.model;
 
-import java.util.ArrayList;
+import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Markup;
+import org.jowidgets.common.widgets.model.ITableCell;
 
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.types.Position;
-import org.jowidgets.common.types.TableColumnPackPolicy;
-import org.jowidgets.common.widgets.controler.ITableCellEditorObservable;
-import org.jowidgets.common.widgets.controler.ITableCellObservable;
-import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionObservable;
-import org.jowidgets.common.widgets.controler.ITableColumnObservable;
-import org.jowidgets.common.widgets.controler.ITableColumnPopupDetectionObservable;
-import org.jowidgets.common.widgets.controler.ITableSelectionObservable;
+public class DefaultTableCell implements ITableCell {
 
-public interface ITableCommon extends
-		ITableSelectionObservable,
-		ITableCellObservable,
-		ITableCellPopupDetectionObservable,
-		ITableCellEditorObservable,
-		ITableColumnObservable,
-		ITableColumnPopupDetectionObservable,
-		IControlCommon {
+	private String text;
+	private String toolTipText;
+	private IImageConstant icon;
+	private Markup markup;
+	private IColorConstant foregroundColor;
+	private IColorConstant backgroundColor;
+	private boolean editable;
 
-	void initialize();
+	@Override
+	public IColorConstant getForegroundColor() {
+		return foregroundColor;
+	}
 
-	Position getCellPosition(int rowIndex, int columnIndex);
+	@Override
+	public IColorConstant getBackgroundColor() {
+		return backgroundColor;
+	}
 
-	Dimension getCellSize(int rowIndex, int columnIndex);
+	@Override
+	public Markup getMarkup() {
+		return markup;
+	}
 
-	ArrayList<Integer> getColumnPermutation();
+	@Override
+	public void setText(final String text) {
+		this.text = text;
+	}
 
-	ArrayList<Integer> getSelection();
+	@Override
+	public String getText() {
+		return text;
+	}
 
-	void setSelection(ArrayList<Integer> selection);
+	@Override
+	public String getToolTipText() {
+		return toolTipText;
+	}
 
-	void pack(TableColumnPackPolicy policy);
+	@Override
+	public IImageConstant getIcon() {
+		return icon;
+	}
 
-	void pack(int columnIndex, TableColumnPackPolicy policy);
+	@Override
+	public boolean isEditable() {
+		return editable;
+	}
 
 }

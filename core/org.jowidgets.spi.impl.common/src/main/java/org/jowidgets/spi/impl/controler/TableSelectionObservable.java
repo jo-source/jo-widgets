@@ -26,28 +26,36 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.widgets.model;
+package org.jowidgets.spi.impl.controler;
 
-import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.Markup;
+import java.util.HashSet;
+import java.util.Set;
 
-public interface ITableCellModel {
+import org.jowidgets.common.widgets.controler.ITableSelectionListener;
+import org.jowidgets.common.widgets.controler.ITableSelectionObservable;
 
-	IColorConstant getForegroundColor();
+public class TableSelectionObservable implements ITableSelectionObservable {
 
-	IColorConstant getBackgroundColor();
+	private final Set<ITableSelectionListener> listeners;
 
-	Markup getMarkup();
+	public TableSelectionObservable() {
+		super();
+		this.listeners = new HashSet<ITableSelectionListener>();
+	}
 
-	void setText(String text);
+	@Override
+	public void addTableSelectionListener(final ITableSelectionListener listener) {
+		listeners.add(listener);
+	}
 
-	String getText();
+	@Override
+	public void removeTableSelectionListener(final ITableSelectionListener listener) {
+		listeners.remove(listener);
+	}
 
-	String getToolTipText();
-
-	IImageConstant getIcon();
-
-	boolean isEditable();
-
+	public void fireSelectionChanged() {
+		for (final ITableSelectionListener listener : listeners) {
+			listener.selectionChanged();
+		}
+	}
 }

@@ -26,43 +26,16 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.widgets;
+package org.jowidgets.common.widgets.model;
 
-import java.util.ArrayList;
+public interface ITableColumnModelListener {
 
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.types.Position;
-import org.jowidgets.common.types.TableColumnPackPolicy;
-import org.jowidgets.common.widgets.controler.ITableCellEditorObservable;
-import org.jowidgets.common.widgets.controler.ITableCellObservable;
-import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionObservable;
-import org.jowidgets.common.widgets.controler.ITableColumnObservable;
-import org.jowidgets.common.widgets.controler.ITableColumnPopupDetectionObservable;
-import org.jowidgets.common.widgets.controler.ITableSelectionObservable;
+	void columnsAdded(int[] columnIndices);
 
-public interface ITableCommon extends
-		ITableSelectionObservable,
-		ITableCellObservable,
-		ITableCellPopupDetectionObservable,
-		ITableCellEditorObservable,
-		ITableColumnObservable,
-		ITableColumnPopupDetectionObservable,
-		IControlCommon {
+	void columnsRemoved(int[] columnIndices);
 
-	void initialize();
+	void columnsChanged(int[] columnIndices);
 
-	Position getCellPosition(int rowIndex, int columnIndex);
-
-	Dimension getCellSize(int rowIndex, int columnIndex);
-
-	ArrayList<Integer> getColumnPermutation();
-
-	ArrayList<Integer> getSelection();
-
-	void setSelection(ArrayList<Integer> selection);
-
-	void pack(TableColumnPackPolicy policy);
-
-	void pack(int columnIndex, TableColumnPackPolicy policy);
+	void columnsStructureChanged();
 
 }
