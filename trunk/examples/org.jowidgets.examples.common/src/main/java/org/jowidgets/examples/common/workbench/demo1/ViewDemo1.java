@@ -103,8 +103,8 @@ public class ViewDemo1 extends AbstractView {
 
 		content.setLayout(MigLayoutFactory.growingInnerCellLayout());
 
-		final int rowCount = 2000000;
-		final int columnCount = 100;
+		final int rowCount = 20000;
+		final int columnCount = 13;
 
 		final ITableBluePrint tableBp = bpf.table();
 
@@ -216,7 +216,7 @@ public class ViewDemo1 extends AbstractView {
 					@Override
 					public IColorConstant getBackgroundColor() {
 						if (rowIndex % 2 == 0) {
-							return new ColorValue(212, 230, 230);
+							return new ColorValue(222, 235, 235);
 						}
 						return null;
 					}
