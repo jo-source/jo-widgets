@@ -105,8 +105,8 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	private final Table table;
 	private final ITableModel tableModel;
 	private final ITableColumnModel columnModel;
-	private final TableCursor cursor;
-	private final ControlEditor editor;
+	private TableCursor cursor;
+	private ControlEditor editor;
 
 	private final TableCellObservable tableCellObservable;
 	private final TableCellPopupDetectionObservable tableCellPopupDetectionObservable;
@@ -146,15 +146,22 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		table.setLinesVisible(true);
 		table.setHeaderVisible(true);
 
-		this.cursor = new TableCursor(table, SWT.NONE);
-		this.cursor.setVisible(false);
-		this.editor = new ControlEditor(table);
-		this.editor.grabHorizontal = true;
-		this.editor.grabVertical = true;
+		try {
+			this.cursor = new TableCursor(table, SWT.NONE);
+			this.cursor.setVisible(false);
+			this.editor = new ControlEditor(table);
+			this.editor.grabHorizontal = true;
+			this.editor.grabVertical = true;
+			table.addMouseListener(new TableEditListener());
+		}
+		catch (final NoClassDefFoundError e) {
+			//RWT does not support TableCursor yet :-(
+			this.cursor = null;
+			this.editor = null;
+		}
 
 		table.addListener(SWT.SetData, new DataListener());
 		table.addMouseListener(new TableCellListener());
-		table.addMouseListener(new TableEditListener());
 		table.addMenuDetectListener(new TableMenuDetectListener());
 		table.addSelectionListener(new TableSelectionListener());
 	}
