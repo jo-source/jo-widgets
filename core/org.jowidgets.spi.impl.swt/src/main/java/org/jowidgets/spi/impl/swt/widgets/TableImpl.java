@@ -501,7 +501,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 					}
 				}
 			}
-			//Menu detect on header. Table has item(s)
+			//Menu detect on header. Table has some item(s)
 			else if (table.getItemCount() > 0) {
 				item = table.getItem(0);
 				fireColumnPopupDetected(item, point, position);
@@ -593,14 +593,14 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 		@Override
 		public void rowsAdded(final int[] rowIndices) {
-			table.clearAll();
-			table.setItemCount(tableModel.getRowCount());
+			// TODO MG better implementation of rowsAdded observe
+			rowsStructureChanged();
 		}
 
 		@Override
 		public void rowsRemoved(final int[] rowIndices) {
-			table.clearAll();
-			table.setItemCount(tableModel.getRowCount());
+			// TODO MG better implementation of rowsRemoved observe
+			rowsStructureChanged();
 		}
 
 		@Override
@@ -625,22 +625,22 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 		@Override
 		public void columnsAdded(final int[] columnIndices) {
-			// TODO Auto-generated method stub
+			// TODO MG implement columnsAdded
 		}
 
 		@Override
 		public void columnsRemoved(final int[] columnIndices) {
-			// TODO Auto-generated method stub
+			// TODO MG implement columnsRemoved
 		}
 
 		@Override
 		public void columnsChanged(final int[] columnIndices) {
-			// TODO Auto-generated method stub
+			// TODO MG implement columnsChanged
 		}
 
 		@Override
 		public void columnsStructureChanged() {
-			// TODO Auto-generated method stub
+			// TODO MG implement columnsStructureChanged
 		}
 
 	}
