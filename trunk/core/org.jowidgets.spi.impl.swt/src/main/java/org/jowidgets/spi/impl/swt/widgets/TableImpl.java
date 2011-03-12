@@ -29,10 +29,13 @@
 package org.jowidgets.spi.impl.swt.widgets;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.MenuDetectEvent;
 import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.events.MouseAdapter;
@@ -71,6 +74,7 @@ import org.jowidgets.spi.impl.controler.TableColumnMouseEvent;
 import org.jowidgets.spi.impl.controler.TableColumnObservable;
 import org.jowidgets.spi.impl.controler.TableColumnPopupDetectionObservable;
 import org.jowidgets.spi.impl.controler.TableColumnPopupEvent;
+import org.jowidgets.spi.impl.controler.TableColumnResizeEvent;
 import org.jowidgets.spi.impl.swt.color.ColorCache;
 import org.jowidgets.spi.widgets.ITableSpi;
 import org.jowidgets.spi.widgets.setup.ITableSetupSpi;
@@ -85,10 +89,13 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	private final TableColumnObservable tableColumnObservable;
 
 	private final ColumnSelectionListener columnSelectionListener;
+	private final ColumnControlListener columnControlListener;
 
 	private final boolean columnsMoveable;
 	private final boolean columnsResizeable;
 	private final ITableModel model;
+
+	private int[] lastColumnOrder;
 
 	public TableImpl(final Object parentUiReference, final ITableSetupSpi setup) {
 		super(new Table((Composite) parentUiReference, getStyle(setup)));
@@ -99,6 +106,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		this.tableColumnObservable = new TableColumnObservable();
 
 		this.columnSelectionListener = new ColumnSelectionListener();
+		this.columnControlListener = new ColumnControlListener();
 
 		this.model = setup.getModel();
 		this.columnsMoveable = setup.getColumnsMoveable();
@@ -124,6 +132,9 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		table.setRedraw(false);
 
 		for (int columnIndex = 0; columnIndex < table.getColumnCount(); columnIndex++) {
+			removeColumnListener(columnIndex);
+		}
+		for (int columnIndex = 0; columnIndex < table.getColumnCount(); columnIndex++) {
 			removeColumn(0);
 		}
 
@@ -133,13 +144,15 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		for (int columnIndex = 0; columnIndex < columnsCount; columnIndex++) {
 			addColumn(columnIndex, model.getColumn(columnIndex));
 		}
+		for (int columnIndex = 0; columnIndex < columnsCount; columnIndex++) {
+			addColumnListener(columnIndex);
+		}
 
 		table.setRedraw(true);
 	}
 
 	private void addColumn(final int index, final ITableColumnModel columnModel) {
 		final TableColumn column = new TableColumn(getUiReference(), SWT.NONE, index);
-		column.addSelectionListener(columnSelectionListener);
 		column.setMoveable(columnsMoveable);
 		column.setResizable(columnsResizeable);
 		column.setWidth(columnModel.getWidth());
@@ -148,10 +161,25 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		//TODO MG support the other attributes of table column model
 	}
 
-	private void removeColumn(final int index) {
+	private void addColumnListener(final int index) {
+		final TableColumn column = table.getColumn(index);
+		if (column != null && !column.isDisposed()) {
+			column.addSelectionListener(columnSelectionListener);
+			column.addControlListener(columnControlListener);
+		}
+	}
+
+	private void removeColumnListener(final int index) {
 		final TableColumn column = table.getColumn(index);
 		if (column != null && !column.isDisposed()) {
 			column.removeSelectionListener(columnSelectionListener);
+			column.removeControlListener(columnControlListener);
+		}
+	}
+
+	private void removeColumn(final int index) {
+		final TableColumn column = table.getColumn(index);
+		if (column != null && !column.isDisposed()) {
 			column.dispose();
 		}
 	}
@@ -262,6 +290,18 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			}
 		}
 		return null;
+	}
+
+	private int getColumnIndex(final TableColumn columnOfInterest) {
+		if (columnOfInterest != null) {
+			final TableColumn[] columns = getUiReference().getColumns();
+			for (int columnIndex = 0; columnIndex < columns.length; columnIndex++) {
+				if (columns[columnIndex] == columnOfInterest) {
+					return columnIndex;
+				}
+			}
+		}
+		return -1;
 	}
 
 	private static MouseButton getMouseButton(final MouseEvent event) {
@@ -427,14 +467,37 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	final class ColumnSelectionListener extends SelectionAdapter {
 		@Override
 		public void widgetSelected(final SelectionEvent e) {
-			final TableColumn selectedColumn = (TableColumn) e.widget;
-			if (selectedColumn != null) {
-				final TableColumn[] columns = getUiReference().getColumns();
-				for (int columnIndex = 0; columnIndex < columns.length; columnIndex++) {
-					if (columns[columnIndex] == selectedColumn) {
-						final TableColumnMouseEvent event = new TableColumnMouseEvent(columnIndex, getModifier(e.stateMask));
-						tableColumnObservable.fireMouseClicked(event);
-					}
+			final TableColumn column = (TableColumn) e.widget;
+			if (column != null) {
+				final int columnIndex = getColumnIndex(column);
+				final Set<Modifier> modifier = getModifier(e.stateMask);
+				tableColumnObservable.fireMouseClicked(new TableColumnMouseEvent(columnIndex, modifier));
+			}
+		}
+	}
+
+	final class ColumnControlListener implements ControlListener {
+
+		private long lastResizeTime;
+
+		@Override
+		public void controlResized(final ControlEvent e) {
+			final TableColumn column = (TableColumn) e.widget;
+			lastResizeTime = e.time;
+			if (column != null) {
+				final int columnIndex = getColumnIndex(column);
+				final int width = column.getWidth();
+				tableColumnObservable.fireColumnResized(new TableColumnResizeEvent(columnIndex, width));
+			}
+		}
+
+		@Override
+		public void controlMoved(final ControlEvent e) {
+			if (e.time != lastResizeTime) {
+				final int[] columnOrder = table.getColumnOrder();
+				if (lastColumnOrder == null || !Arrays.equals(columnOrder, lastColumnOrder)) {
+					lastColumnOrder = columnOrder;
+					tableColumnObservable.fireColumnPermutationChanged();
 				}
 			}
 		}
