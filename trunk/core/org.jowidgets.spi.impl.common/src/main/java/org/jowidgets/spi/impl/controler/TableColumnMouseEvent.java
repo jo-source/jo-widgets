@@ -28,31 +28,29 @@
 
 package org.jowidgets.spi.impl.controler;
 
-import org.jowidgets.common.widgets.controler.ITableCellEditEvent;
+import java.util.Collections;
+import java.util.Set;
 
-public class TableCellEditEvent extends TableCellEvent implements ITableCellEditEvent {
+import org.jowidgets.common.types.Modifier;
+import org.jowidgets.common.widgets.controler.ITableColumnMouseEvent;
 
-	private final String currentText;
+public class TableColumnMouseEvent extends TableColumnEvent implements ITableColumnMouseEvent {
 
-	public TableCellEditEvent(final int rowIndex, final int columnIndex, final String currentText) {
-		super(rowIndex, columnIndex);
-		this.currentText = currentText;
+	private final Set<Modifier> modifier;
+
+	public TableColumnMouseEvent(final int columnIndex, final Set<Modifier> modifier) {
+		super(columnIndex);
+		this.modifier = Collections.unmodifiableSet(modifier);
 	}
 
 	@Override
-	public String getCurrentText() {
-		return currentText;
+	public Set<Modifier> getModifiers() {
+		return modifier;
 	}
 
 	@Override
 	public String toString() {
-		return "TableCellEditEvent [currentText="
-			+ currentText
-			+ ", rowIndex="
-			+ getRowIndex()
-			+ ", columnIndex="
-			+ getColumnIndex()
-			+ "]";
+		return "TableColumnMouseEvent [modifier=" + modifier + ", columnIndex=" + getColumnIndex() + "]";
 	}
 
 }

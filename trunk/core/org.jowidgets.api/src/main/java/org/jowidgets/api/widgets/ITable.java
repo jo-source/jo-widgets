@@ -28,7 +28,6 @@
 
 package org.jowidgets.api.widgets;
 
-import org.jowidgets.common.types.TableColumnPackPolicy;
 import org.jowidgets.common.widgets.ITableCommon;
 
 public interface ITable extends IControl, ITableCommon {
@@ -36,7 +35,5 @@ public interface ITable extends IControl, ITableCommon {
 	int getRowCount();
 
 	int getColumnCount();
-
-	void pack(TableColumnPackPolicy policy);
 
 }

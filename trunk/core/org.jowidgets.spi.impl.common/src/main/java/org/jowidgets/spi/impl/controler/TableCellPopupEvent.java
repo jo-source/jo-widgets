@@ -47,7 +47,7 @@ public class TableCellPopupEvent extends TableCellEvent implements ITableCellPop
 
 	@Override
 	public String toString() {
-		return "TableCellEditEvent [position="
+		return "TableCellPopupEvent [position="
 			+ position
 			+ ", rowIndex="
 			+ getRowIndex()

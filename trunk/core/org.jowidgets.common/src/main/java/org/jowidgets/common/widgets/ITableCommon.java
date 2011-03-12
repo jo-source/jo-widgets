@@ -57,6 +57,8 @@ public interface ITableCommon extends
 
 	ArrayList<Integer> getColumnPermutation();
 
+	void pack(TableColumnPackPolicy policy);
+
 	void pack(int columnIndex, TableColumnPackPolicy policy);
 
 }
