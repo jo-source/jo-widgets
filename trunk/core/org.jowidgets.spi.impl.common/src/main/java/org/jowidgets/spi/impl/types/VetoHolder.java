@@ -26,23 +26,25 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.widgets.model;
+package org.jowidgets.spi.impl.types;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.AlignmentHorizontal;
+import org.jowidgets.common.types.IVetoable;
 
-public interface ITableColumn {
+public class VetoHolder implements IVetoable {
 
-	String getText();
+	private boolean veto;
 
-	String getToolTipText();
+	public VetoHolder() {
+		this.veto = false;
+	}
 
-	IImageConstant getIcon();
+	@Override
+	public void veto() {
+		this.veto = true;
+	}
 
-	void setWidth(int width);
-
-	int getWidth();
-
-	AlignmentHorizontal getAlignment();
+	public boolean hasVeto() {
+		return veto;
+	}
 
 }

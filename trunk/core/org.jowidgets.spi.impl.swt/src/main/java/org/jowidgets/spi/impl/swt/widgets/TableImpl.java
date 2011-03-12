@@ -34,14 +34,21 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ControlEditor;
+import org.eclipse.swt.custom.TableCursor;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.MenuDetectEvent;
 import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
@@ -50,7 +57,12 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Text;
+import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.types.Modifier;
 import org.jowidgets.common.types.MouseButton;
 import org.jowidgets.common.types.Position;
@@ -69,6 +81,8 @@ import org.jowidgets.common.widgets.model.ITableColumnModel;
 import org.jowidgets.common.widgets.model.ITableColumnModelListener;
 import org.jowidgets.common.widgets.model.ITableModel;
 import org.jowidgets.common.widgets.model.ITableModelListener;
+import org.jowidgets.spi.impl.controler.TableCellEditEvent;
+import org.jowidgets.spi.impl.controler.TableCellEditorObservable;
 import org.jowidgets.spi.impl.controler.TableCellMouseEvent;
 import org.jowidgets.spi.impl.controler.TableCellObservable;
 import org.jowidgets.spi.impl.controler.TableCellPopupDetectionObservable;
@@ -80,6 +94,9 @@ import org.jowidgets.spi.impl.controler.TableColumnPopupEvent;
 import org.jowidgets.spi.impl.controler.TableColumnResizeEvent;
 import org.jowidgets.spi.impl.controler.TableSelectionObservable;
 import org.jowidgets.spi.impl.swt.color.ColorCache;
+import org.jowidgets.spi.impl.swt.image.SwtImageRegistry;
+import org.jowidgets.spi.impl.swt.util.AlignmentConvert;
+import org.jowidgets.spi.impl.swt.util.FontProvider;
 import org.jowidgets.spi.widgets.ITableSpi;
 import org.jowidgets.spi.widgets.setup.ITableSetupSpi;
 
@@ -88,12 +105,15 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	private final Table table;
 	private final ITableModel tableModel;
 	private final ITableColumnModel columnModel;
+	private final TableCursor cursor;
+	private final ControlEditor editor;
 
 	private final TableCellObservable tableCellObservable;
 	private final TableCellPopupDetectionObservable tableCellPopupDetectionObservable;
 	private final TableColumnPopupDetectionObservable tableColumnPopupDetectionObservable;
 	private final TableColumnObservable tableColumnObservable;
 	private final TableSelectionObservable tableSelectionObservable;
+	private final TableCellEditorObservable tableCellEditorObservable;
 
 	private final ColumnSelectionListener columnSelectionListener;
 	private final ColumnControlListener columnControlListener;
@@ -111,6 +131,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		this.tableColumnPopupDetectionObservable = new TableColumnPopupDetectionObservable();
 		this.tableColumnObservable = new TableColumnObservable();
 		this.tableSelectionObservable = new TableSelectionObservable();
+		this.tableCellEditorObservable = new TableCellEditorObservable();
 
 		this.columnSelectionListener = new ColumnSelectionListener();
 		this.columnControlListener = new ColumnControlListener();
@@ -125,8 +146,15 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		table.setLinesVisible(true);
 		table.setHeaderVisible(true);
 
+		this.cursor = new TableCursor(table, SWT.NONE);
+		this.cursor.setVisible(false);
+		this.editor = new ControlEditor(table);
+		this.editor.grabHorizontal = true;
+		this.editor.grabVertical = true;
+
 		table.addListener(SWT.SetData, new DataListener());
 		table.addMouseListener(new TableCellListener());
+		table.addMouseListener(new TableEditListener());
 		table.addMenuDetectListener(new TableMenuDetectListener());
 		table.addSelectionListener(new TableSelectionListener());
 	}
@@ -138,20 +166,30 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 	@Override
 	public void initialize() {
-		final int oldColumnCount = table.getColumnCount();
-
 		table.setRedraw(false);
 
+		removeAllColumns();
+		table.clearAll();
+
+		addAllColumns();
+
+		table.setItemCount(tableModel.getRowCount());
+		setSelection(tableModel.getSelection());
+
+		table.setRedraw(true);
+	}
+
+	private void removeAllColumns() {
+		final int oldColumnCount = table.getColumnCount();
 		for (int columnIndex = 0; columnIndex < oldColumnCount; columnIndex++) {
 			removeColumnListener(columnIndex);
 		}
 		for (int columnIndex = 0; columnIndex < oldColumnCount; columnIndex++) {
 			removeColumn(0);
 		}
+	}
 
-		table.clearAll();
-
-		final int rowsCount = tableModel.getRowCount();
+	private void addAllColumns() {
 		final int columnsCount = columnModel.getColumnCount();
 
 		for (int columnIndex = 0; columnIndex < columnsCount; columnIndex++) {
@@ -161,21 +199,40 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		for (int columnIndex = 0; columnIndex < columnsCount; columnIndex++) {
 			addColumnListener(columnIndex);
 		}
-
-		table.setItemCount(rowsCount);
-		setSelection(tableModel.getSelection());
-
-		table.setRedraw(true);
 	}
 
-	private void addColumn(final int index, final ITableColumn columnModel) {
-		final TableColumn column = new TableColumn(getUiReference(), SWT.NONE, index);
-		column.setMoveable(columnsMoveable);
-		column.setResizable(columnsResizeable);
-		column.setText(columnModel.getText());
-		column.setToolTipText(columnModel.getToolTipText());
-		column.setWidth(columnModel.getWidth());
-		//TODO MG support the other attributes of table column model
+	private void addColumn(final int index, final ITableColumn joColumn) {
+		final TableColumn swtColumn = new TableColumn(getUiReference(), SWT.NONE, index);
+		swtColumn.setMoveable(columnsMoveable);
+		swtColumn.setResizable(columnsResizeable);
+		setColumnData(swtColumn, joColumn);
+	}
+
+	private void setColumnData(final TableColumn swtColumn, final ITableColumn joColumn) {
+		final String text = joColumn.getText();
+		final IImageConstant icon = joColumn.getIcon();
+		final AlignmentHorizontal alignment = joColumn.getAlignment();
+
+		if (text != null) {
+			swtColumn.setText(text);
+		}
+		else {
+			swtColumn.setText("");
+		}
+		if (icon != null) {
+			swtColumn.setImage(SwtImageRegistry.getInstance().getImage(icon));
+		}
+		else {
+			swtColumn.setImage(null);
+		}
+		if (alignment != null) {
+			swtColumn.setAlignment(AlignmentConvert.convert(alignment));
+		}
+		else {
+			swtColumn.setAlignment(SWT.LEFT);
+		}
+		swtColumn.setToolTipText(joColumn.getToolTipText());
+		swtColumn.setWidth(joColumn.getWidth());
 	}
 
 	private void addColumnListener(final int index) {
@@ -320,10 +377,14 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	}
 
 	@Override
-	public void addTableCellEditorListener(final ITableCellEditorListener listener) {}
+	public void addTableCellEditorListener(final ITableCellEditorListener listener) {
+		tableCellEditorObservable.addTableCellEditorListener(listener);
+	}
 
 	@Override
-	public void removeTableCellEditorListener(final ITableCellEditorListener listener) {}
+	public void removeTableCellEditorListener(final ITableCellEditorListener listener) {
+		tableCellEditorObservable.removeTableCellEditorListener(listener);
+	}
 
 	private CellIndices getCellIndices(final Point point) {
 		final TableItem item = table.getItem(point);
@@ -414,14 +475,36 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			final TableItem item = (TableItem) event.item;
 			final int rowIndex = getUiReference().indexOf(item);
 			for (int columnIndex = 0; columnIndex < getUiReference().getColumnCount(); columnIndex++) {
-				final ITableCell cellModel = tableModel.getCell(rowIndex, columnIndex);
-				if (cellModel.getBackgroundColor() != null) {
-					item.setBackground(columnIndex, ColorCache.getInstance().getColor(cellModel.getBackgroundColor()));
+
+				final ITableCell cell = tableModel.getCell(rowIndex, columnIndex);
+
+				final String text = cell.getText();
+				final IImageConstant icon = cell.getIcon();
+				final IColorConstant backgroundColor = cell.getBackgroundColor();
+				final IColorConstant foregroundColor = cell.getForegroundColor();
+				final Markup markup = cell.getMarkup();
+				//TODO BM support tooltip like in SwtMenu
+				//final String toolTipText = cell.getToolTipText(); 
+
+				if (text != null) {
+					item.setText(columnIndex, text);
 				}
-				if (cellModel.getText() != null) {
-					item.setText(columnIndex, cellModel.getText());
+				else {
+					item.setText(columnIndex, "");
 				}
-				//TODO MG support the other attributes of table cell model
+				if (icon != null) {
+					item.setImage(columnIndex, SwtImageRegistry.getInstance().getImage(icon));
+				}
+				if (markup != null) {
+					final Font newFont = FontProvider.deriveFont(item.getFont(), markup);
+					item.setFont(columnIndex, newFont);
+				}
+				if (backgroundColor != null) {
+					item.setBackground(columnIndex, ColorCache.getInstance().getColor(backgroundColor));
+				}
+				if (foregroundColor != null) {
+					item.setForeground(columnIndex, ColorCache.getInstance().getColor(foregroundColor));
+				}
 			}
 		}
 	}
@@ -475,6 +558,79 @@ public class TableImpl extends SwtControl implements ITableSpi {
 					getModifier(event.stateMask));
 			}
 			return null;
+		}
+	}
+
+	final class TableEditListener extends MouseAdapter {
+
+		@Override
+		public void mouseDoubleClick(final MouseEvent e) {
+			final CellIndices indices = getCellIndices(new Point(e.x, e.y));
+			if (indices != null) {
+				final ITableCell cell = tableModel.getCell(indices.getRowIndex(), indices.getColumnIndex());
+				if (cell.isEditable()) {
+					activateEditor(indices);
+				}
+			}
+		}
+
+		private void activateEditor(final CellIndices indices) {
+			final int rowIndex = indices.getRowIndex();
+			final int columnIndex = indices.getColumnIndex();
+
+			cursor.setSelection(rowIndex, columnIndex);
+			cursor.setVisible(true);
+
+			final Text textField = new Text(cursor, SWT.NONE);
+			final TableItem item = cursor.getRow();
+			textField.setText(item.getText(columnIndex));
+			textField.setSelection(0, textField.getText().length());
+
+			textField.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(final KeyEvent keyEvent) {
+					final String newText = getNewText(textField, keyEvent);
+					final TableCellEditEvent editEvent = new TableCellEditEvent(rowIndex, columnIndex, newText);
+					if (keyEvent.character == SWT.CR) {
+						final boolean veto = tableCellEditorObservable.fireEditFinished(editEvent);
+						if (!veto) {
+							item.setText(columnIndex, textField.getText());
+						}
+						textField.dispose();
+						cursor.setVisible(false);
+					}
+					else if (keyEvent.character == SWT.ESC) {
+						tableCellEditorObservable.fireEditCanceled(editEvent);
+						textField.dispose();
+						cursor.setVisible(false);
+					}
+					else {
+						final boolean veto = tableCellEditorObservable.fireOnEdit(editEvent);
+						if (veto) {
+							keyEvent.doit = false;
+						}
+					}
+				}
+			});
+			textField.addFocusListener(new FocusAdapter() {
+				@Override
+				public void focusLost(final FocusEvent e) {
+					final TableCellEditEvent editEvent = new TableCellEditEvent(rowIndex, columnIndex, textField.getText());
+					final boolean veto = tableCellEditorObservable.fireEditFinished(editEvent);
+					if (!veto) {
+						item.setText(columnIndex, textField.getText());
+					}
+					textField.dispose();
+					cursor.setVisible(false);
+				}
+			});
+			editor.setEditor(textField);
+			textField.setFocus();
+		}
+
+		private String getNewText(final Text textField, final KeyEvent keyEvent) {
+			//TODO MG get the correct new text
+			return textField.getText();
 		}
 	}
 
@@ -626,22 +782,33 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 		@Override
 		public void columnsAdded(final int[] columnIndices) {
-			// TODO MG implement columnsAdded
+			// TODO MG better implementation of columnsAdded observe
+			columnsStructureChanged();
 		}
 
 		@Override
 		public void columnsRemoved(final int[] columnIndices) {
-			// TODO MG implement columnsRemoved
+			// TODO MG better implementation of columnsRemoved observe
+			columnsStructureChanged();
 		}
 
 		@Override
 		public void columnsChanged(final int[] columnIndices) {
-			// TODO MG implement columnsChanged
+			final TableColumn[] columns = table.getColumns();
+			for (int i = 0; i < columnIndices.length; i++) {
+				final int changedIndex = columnIndices[i];
+				setColumnData(columns[changedIndex], columnModel.getColumn(changedIndex));
+			}
 		}
 
 		@Override
 		public void columnsStructureChanged() {
-			// TODO MG implement columnsStructureChanged
+			table.setRedraw(false);
+
+			removeAllColumns();
+			addAllColumns();
+
+			table.setRedraw(true);
 		}
 
 	}

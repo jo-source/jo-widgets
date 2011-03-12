@@ -40,8 +40,6 @@ public interface ITableCell {
 
 	Markup getMarkup();
 
-	void setText(String text);
-
 	String getText();
 
 	String getToolTipText();
