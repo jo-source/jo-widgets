@@ -28,31 +28,25 @@
 
 package org.jowidgets.spi.impl.controler;
 
-import org.jowidgets.common.widgets.controler.ITableCellEditEvent;
+import org.jowidgets.common.widgets.controler.ITableColumnResizeEvent;
 
-public class TableCellEditEvent extends TableCellEvent implements ITableCellEditEvent {
+public class TableColumnResizeEvent extends TableColumnEvent implements ITableColumnResizeEvent {
 
-	private final String currentText;
+	private final int width;
 
-	public TableCellEditEvent(final int rowIndex, final int columnIndex, final String currentText) {
-		super(rowIndex, columnIndex);
-		this.currentText = currentText;
+	public TableColumnResizeEvent(final int columnIndex, final int width) {
+		super(columnIndex);
+		this.width = width;
 	}
 
 	@Override
-	public String getCurrentText() {
-		return currentText;
+	public int getWidth() {
+		return width;
 	}
 
 	@Override
 	public String toString() {
-		return "TableCellEditEvent [currentText="
-			+ currentText
-			+ ", rowIndex="
-			+ getRowIndex()
-			+ ", columnIndex="
-			+ getColumnIndex()
-			+ "]";
+		return "TableColumnResizeEvent [width=" + width + ", columnIndex=" + getColumnIndex() + "]";
 	}
 
 }

@@ -28,31 +28,49 @@
 
 package org.jowidgets.spi.impl.controler;
 
-import org.jowidgets.common.widgets.controler.ITableCellEditEvent;
+import java.util.HashSet;
+import java.util.Set;
 
-public class TableCellEditEvent extends TableCellEvent implements ITableCellEditEvent {
+import org.jowidgets.common.widgets.controler.ITableColumnListener;
+import org.jowidgets.common.widgets.controler.ITableColumnMouseEvent;
+import org.jowidgets.common.widgets.controler.ITableColumnObservable;
+import org.jowidgets.common.widgets.controler.ITableColumnResizeEvent;
 
-	private final String currentText;
+public class TableColumnObservable implements ITableColumnObservable {
 
-	public TableCellEditEvent(final int rowIndex, final int columnIndex, final String currentText) {
-		super(rowIndex, columnIndex);
-		this.currentText = currentText;
+	private final Set<ITableColumnListener> listeners;
+
+	public TableColumnObservable() {
+		super();
+		this.listeners = new HashSet<ITableColumnListener>();
 	}
 
 	@Override
-	public String getCurrentText() {
-		return currentText;
+	public void addTableColumnListener(final ITableColumnListener listener) {
+		listeners.add(listener);
 	}
 
 	@Override
-	public String toString() {
-		return "TableCellEditEvent [currentText="
-			+ currentText
-			+ ", rowIndex="
-			+ getRowIndex()
-			+ ", columnIndex="
-			+ getColumnIndex()
-			+ "]";
+	public void removeTableColumnListener(final ITableColumnListener listener) {
+		listeners.remove(listener);
+	}
+
+	public void fireMouseClicked(final ITableColumnMouseEvent event) {
+		for (final ITableColumnListener listener : listeners) {
+			listener.mouseClicked(event);
+		}
+	}
+
+	public void fireColumnResized(final ITableColumnResizeEvent event) {
+		for (final ITableColumnListener listener : listeners) {
+			listener.columnResized(event);
+		}
+	}
+
+	public void fireColumnPermutationChanged() {
+		for (final ITableColumnListener listener : listeners) {
+			listener.columnPermutationChanged();
+		}
 	}
 
 }

@@ -47,7 +47,7 @@ public class TableColumnPopupEvent extends TableColumnEvent implements ITableCol
 
 	@Override
 	public String toString() {
-		return "TableCellEditEvent [position=" + position + ", columnIndex=" + getColumnIndex() + "]";
+		return "TableColumnPopupEvent [position=" + position + ", columnIndex=" + getColumnIndex() + "]";
 	}
 
 }
