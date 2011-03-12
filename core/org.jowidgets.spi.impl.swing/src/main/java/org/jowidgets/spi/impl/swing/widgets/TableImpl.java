@@ -33,6 +33,7 @@ import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -106,8 +107,10 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 		this.columnsResizeable = setup.getColumnsResizeable();
 
-		this.table = (JTable) getUiReference().getViewport().getView();
+		getUiReference().setBorder(BorderFactory.createEmptyBorder());
 
+		this.table = (JTable) getUiReference().getViewport().getView();
+		table.setBorder(BorderFactory.createEmptyBorder());
 		table.setGridColor(new Color(230, 230, 230));
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.getTableHeader().setReorderingAllowed(setup.getColumnsMoveable());
