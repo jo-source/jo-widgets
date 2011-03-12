@@ -39,7 +39,7 @@ public class TableDefaultsCommon implements IDefaultInitializer<ITableSetupBuild
 		builder.setSelectionPolicy(SelectionPolicy.MULTI_SELECTION);
 		builder.setColumnsMoveable(true);
 		builder.setColumnsResizeable(true);
-		builder.setModel(new DefaultTableModel());
+		builder.setTableModel(new DefaultTableModel());
 	}
 
 }

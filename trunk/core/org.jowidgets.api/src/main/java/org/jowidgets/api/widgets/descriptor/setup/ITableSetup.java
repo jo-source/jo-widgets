@@ -32,8 +32,4 @@ import org.jowidgets.common.widgets.descriptor.setup.ITableSetupCommon;
 
 public interface ITableSetup extends IComponentSetup, ITableSetupCommon {
 
-	Integer getColumnCount();
-
-	Integer getRowCount();
-
 }

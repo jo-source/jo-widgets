@@ -26,61 +26,28 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.basic.model;
+package org.jowidgets.common.widgets.model;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.widgets.model.ITableCellModel;
 
-public class DefaultTableCellModel implements ITableCellModel {
+public interface ITableCell {
 
-	private String text;
-	private String toolTipText;
-	private IImageConstant icon;
-	private Markup markup;
-	private IColorConstant foregroundColor;
-	private IColorConstant backgroundColor;
-	private boolean editable;
+	IColorConstant getForegroundColor();
 
-	@Override
-	public IColorConstant getForegroundColor() {
-		return foregroundColor;
-	}
+	IColorConstant getBackgroundColor();
 
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return backgroundColor;
-	}
+	Markup getMarkup();
 
-	@Override
-	public Markup getMarkup() {
-		return markup;
-	}
+	void setText(String text);
 
-	@Override
-	public void setText(final String text) {
-		this.text = text;
-	}
+	String getText();
 
-	@Override
-	public String getText() {
-		return text;
-	}
+	String getToolTipText();
 
-	@Override
-	public String getToolTipText() {
-		return toolTipText;
-	}
+	IImageConstant getIcon();
 
-	@Override
-	public IImageConstant getIcon() {
-		return icon;
-	}
-
-	@Override
-	public boolean isEditable() {
-		return editable;
-	}
+	boolean isEditable();
 
 }

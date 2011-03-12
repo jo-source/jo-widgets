@@ -29,6 +29,7 @@
 package org.jowidgets.common.widgets.builder;
 
 import org.jowidgets.common.types.SelectionPolicy;
+import org.jowidgets.common.widgets.model.ITableColumnModel;
 import org.jowidgets.common.widgets.model.ITableModel;
 
 public interface ITableSetupBuilderCommon<INSTANCE_TYPE extends ITableSetupBuilderCommon<?>> extends
@@ -40,6 +41,8 @@ public interface ITableSetupBuilderCommon<INSTANCE_TYPE extends ITableSetupBuild
 
 	INSTANCE_TYPE setColumnsResizeable(boolean columnsResizeable);
 
-	INSTANCE_TYPE setModel(ITableModel model);
+	INSTANCE_TYPE setTableModel(ITableModel model);
+
+	INSTANCE_TYPE setColumnModel(ITableColumnModel model);
 
 }

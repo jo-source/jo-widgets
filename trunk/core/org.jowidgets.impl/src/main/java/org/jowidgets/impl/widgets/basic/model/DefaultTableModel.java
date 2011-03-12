@@ -29,24 +29,22 @@
 package org.jowidgets.impl.widgets.basic.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import org.jowidgets.common.widgets.model.ITableCellModel;
-import org.jowidgets.common.widgets.model.ITableColumnModel;
+import org.jowidgets.common.widgets.model.ITableCell;
 import org.jowidgets.common.widgets.model.ITableModel;
 import org.jowidgets.common.widgets.model.ITableModelObservable;
 
 public class DefaultTableModel implements ITableModel {
 
 	@Override
-	public ITableColumnModel getColumn(final int columnIndex) {
-		//TODO MG implement defaultTableColumnModel
-		return null;
+	public int getRowCount() {
+		// TODO MG implement getRowCount
+		return 0;
 	}
 
 	@Override
-	public ITableCellModel getCell(final int rowIndex, final int columnIndex) {
-		return new DefaultTableCellModel();
+	public ITableCell getCell(final int rowIndex, final int columnIndex) {
+		return new DefaultTableCell();
 	}
 
 	@Override
@@ -56,7 +54,7 @@ public class DefaultTableModel implements ITableModel {
 	}
 
 	@Override
-	public void setSelection(final List<Integer> selection) {
+	public void setSelection(final ArrayList<Integer> selection) {
 		// TODO MG implement setSelection
 	}
 

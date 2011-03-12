@@ -63,9 +63,12 @@ import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.ITableColumnListener;
 import org.jowidgets.common.widgets.controler.ITableColumnPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.ITableSelectionListener;
-import org.jowidgets.common.widgets.model.ITableCellModel;
+import org.jowidgets.common.widgets.model.ITableCell;
+import org.jowidgets.common.widgets.model.ITableColumn;
 import org.jowidgets.common.widgets.model.ITableColumnModel;
+import org.jowidgets.common.widgets.model.ITableColumnModelListener;
 import org.jowidgets.common.widgets.model.ITableModel;
+import org.jowidgets.common.widgets.model.ITableModelListener;
 import org.jowidgets.spi.impl.controler.TableCellMouseEvent;
 import org.jowidgets.spi.impl.controler.TableCellObservable;
 import org.jowidgets.spi.impl.controler.TableCellPopupDetectionObservable;
@@ -75,6 +78,7 @@ import org.jowidgets.spi.impl.controler.TableColumnObservable;
 import org.jowidgets.spi.impl.controler.TableColumnPopupDetectionObservable;
 import org.jowidgets.spi.impl.controler.TableColumnPopupEvent;
 import org.jowidgets.spi.impl.controler.TableColumnResizeEvent;
+import org.jowidgets.spi.impl.controler.TableSelectionObservable;
 import org.jowidgets.spi.impl.swt.color.ColorCache;
 import org.jowidgets.spi.widgets.ITableSpi;
 import org.jowidgets.spi.widgets.setup.ITableSetupSpi;
@@ -87,13 +91,15 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	private final TableCellPopupDetectionObservable tableCellPopupDetectionObservable;
 	private final TableColumnPopupDetectionObservable tableColumnPopupDetectionObservable;
 	private final TableColumnObservable tableColumnObservable;
+	private final TableSelectionObservable tableSelectionObservable;
 
 	private final ColumnSelectionListener columnSelectionListener;
 	private final ColumnControlListener columnControlListener;
 
 	private final boolean columnsMoveable;
 	private final boolean columnsResizeable;
-	private final ITableModel model;
+	private final ITableModel tableModel;
+	private final ITableColumnModel columnModel;
 
 	private int[] lastColumnOrder;
 
@@ -104,11 +110,13 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		this.tableCellPopupDetectionObservable = new TableCellPopupDetectionObservable();
 		this.tableColumnPopupDetectionObservable = new TableColumnPopupDetectionObservable();
 		this.tableColumnObservable = new TableColumnObservable();
+		this.tableSelectionObservable = new TableSelectionObservable();
 
 		this.columnSelectionListener = new ColumnSelectionListener();
 		this.columnControlListener = new ColumnControlListener();
 
-		this.model = setup.getModel();
+		this.tableModel = setup.getTableModel();
+		this.columnModel = setup.getColumnModel();
 		this.columnsMoveable = setup.getColumnsMoveable();
 		this.columnsResizeable = setup.getColumnsResizeable();
 
@@ -119,6 +127,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		table.addListener(SWT.SetData, new DataListener());
 		table.addMouseListener(new TableCellListener());
 		table.addMenuDetectListener(new TableMenuDetectListener());
+		table.addSelectionListener(new TableSelectionListener());
 	}
 
 	@Override
@@ -127,37 +136,44 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	}
 
 	@Override
-	public void initialize(final int rowsCount, final int columnsCount) {
+	public void initialize() {
+		final int oldColumnCount = table.getColumnCount();
 
 		table.setRedraw(false);
 
-		for (int columnIndex = 0; columnIndex < table.getColumnCount(); columnIndex++) {
+		for (int columnIndex = 0; columnIndex < oldColumnCount; columnIndex++) {
 			removeColumnListener(columnIndex);
 		}
-		for (int columnIndex = 0; columnIndex < table.getColumnCount(); columnIndex++) {
+		for (int columnIndex = 0; columnIndex < oldColumnCount; columnIndex++) {
 			removeColumn(0);
 		}
 
 		table.clearAll();
-		table.setItemCount(rowsCount);
+
+		final int rowsCount = tableModel.getRowCount();
+		final int columnsCount = columnModel.getColumnCount();
 
 		for (int columnIndex = 0; columnIndex < columnsCount; columnIndex++) {
-			addColumn(columnIndex, model.getColumn(columnIndex));
+			addColumn(columnIndex, columnModel.getColumn(columnIndex));
 		}
+
 		for (int columnIndex = 0; columnIndex < columnsCount; columnIndex++) {
 			addColumnListener(columnIndex);
 		}
 
+		table.setItemCount(rowsCount);
+		setSelection(tableModel.getSelection());
+
 		table.setRedraw(true);
 	}
 
-	private void addColumn(final int index, final ITableColumnModel columnModel) {
+	private void addColumn(final int index, final ITableColumn columnModel) {
 		final TableColumn column = new TableColumn(getUiReference(), SWT.NONE, index);
 		column.setMoveable(columnsMoveable);
 		column.setResizable(columnsResizeable);
-		column.setWidth(columnModel.getWidth());
 		column.setText(columnModel.getText());
 		column.setToolTipText(columnModel.getToolTipText());
+		column.setWidth(columnModel.getWidth());
 		//TODO MG support the other attributes of table column model
 	}
 
@@ -225,6 +241,34 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	}
 
 	@Override
+	public ArrayList<Integer> getSelection() {
+		final ArrayList<Integer> result = new ArrayList<Integer>();
+		final int[] selection = table.getSelectionIndices();
+		if (selection != null) {
+			for (final int index : selection) {
+				result.add(Integer.valueOf(index));
+			}
+		}
+		return result;
+	}
+
+	@Override
+	public void setSelection(final ArrayList<Integer> selection) {
+		if (!isSelectionEqualWithView(selection)) {
+			if (selection == null) {
+				table.setSelection(new int[0]);
+			}
+			else {
+				final int[] newSelection = new int[selection.size()];
+				for (int i = 0; i < newSelection.length; i++) {
+					newSelection[i] = selection.get(i).intValue();
+					table.setSelection(newSelection);
+				}
+			}
+		}
+	}
+
+	@Override
 	public void addTableCellListener(final ITableCellListener listener) {
 		tableCellObservable.addTableCellListener(listener);
 	}
@@ -265,16 +309,20 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	}
 
 	@Override
+	public void addTableSelectionListener(final ITableSelectionListener listener) {
+		tableSelectionObservable.addTableSelectionListener(listener);
+	}
+
+	@Override
+	public void removeTableSelectionListener(final ITableSelectionListener listener) {
+		tableSelectionObservable.removeTableSelectionListener(listener);
+	}
+
+	@Override
 	public void addTableCellEditorListener(final ITableCellEditorListener listener) {}
 
 	@Override
 	public void removeTableCellEditorListener(final ITableCellEditorListener listener) {}
-
-	@Override
-	public void addTableSelectionListener(final ITableSelectionListener listener) {}
-
-	@Override
-	public void removeTableSelectionListener(final ITableSelectionListener listener) {}
 
 	private CellIndices getCellIndices(final Point point) {
 		final TableItem item = table.getItem(point);
@@ -302,6 +350,22 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			}
 		}
 		return -1;
+	}
+
+	private boolean isSelectionEqualWithView(final ArrayList<Integer> selection) {
+		final int[] tableSelection = table.getSelectionIndices();
+		if (selection == null && (tableSelection == null || tableSelection.length == 0)) {
+			return true;
+		}
+		if (selection.size() != tableSelection.length) {
+			return false;
+		}
+		for (final int tablesSelected : tableSelection) {
+			if (!selection.contains(Integer.valueOf(tablesSelected))) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private static MouseButton getMouseButton(final MouseEvent event) {
@@ -349,7 +413,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			final TableItem item = (TableItem) event.item;
 			final int rowIndex = getUiReference().indexOf(item);
 			for (int columnIndex = 0; columnIndex < getUiReference().getColumnCount(); columnIndex++) {
-				final ITableCellModel cellModel = model.getCell(rowIndex, columnIndex);
+				final ITableCell cellModel = tableModel.getCell(rowIndex, columnIndex);
 				if (cellModel.getBackgroundColor() != null) {
 					item.setBackground(columnIndex, ColorCache.getInstance().getColor(cellModel.getBackgroundColor()));
 				}
@@ -478,22 +542,26 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 	final class ColumnControlListener implements ControlListener {
 
-		private long lastResizeTime;
+		private long lastResizeTime = 0;
 
 		@Override
 		public void controlResized(final ControlEvent e) {
 			final TableColumn column = (TableColumn) e.widget;
-			lastResizeTime = e.time;
+			final long time = getTime(e);
+			if (time != -1) {
+				lastResizeTime = time;
+			}
 			if (column != null) {
 				final int columnIndex = getColumnIndex(column);
 				final int width = column.getWidth();
+				columnModel.getColumn(columnIndex).setWidth(width);
 				tableColumnObservable.fireColumnResized(new TableColumnResizeEvent(columnIndex, width));
 			}
 		}
 
 		@Override
 		public void controlMoved(final ControlEvent e) {
-			if (e.time != lastResizeTime) {
+			if (getTime(e) != lastResizeTime) {
 				final int[] columnOrder = table.getColumnOrder();
 				if (lastColumnOrder == null || !Arrays.equals(columnOrder, lastColumnOrder)) {
 					lastColumnOrder = columnOrder;
@@ -501,6 +569,80 @@ public class TableImpl extends SwtControl implements ITableSpi {
 				}
 			}
 		}
+
+		private long getTime(final ControlEvent event) {
+			try {
+				return event.time;
+			}
+			catch (final NoSuchFieldError e) {
+				//RWT doesn't support time field :-( 
+			}
+			return -1;
+		}
+	}
+
+	final class TableSelectionListener extends SelectionAdapter {
+		@Override
+		public void widgetSelected(final SelectionEvent e) {
+			tableModel.setSelection(getSelection());
+			tableSelectionObservable.fireSelectionChanged();
+		}
+	}
+
+	final class TableModelListener implements ITableModelListener {
+
+		@Override
+		public void rowsAdded(final int[] rowIndices) {
+			table.clearAll();
+			table.setItemCount(tableModel.getRowCount());
+		}
+
+		@Override
+		public void rowsRemoved(final int[] rowIndices) {
+			table.clearAll();
+			table.setItemCount(tableModel.getRowCount());
+		}
+
+		@Override
+		public void rowsChanged(final int[] rowIndices) {
+			table.clear(rowIndices);
+		}
+
+		@Override
+		public void rowsStructureChanged() {
+			table.clearAll();
+			table.setItemCount(tableModel.getRowCount());
+		}
+
+		@Override
+		public void selectionChanged() {
+			setSelection(tableModel.getSelection());
+		}
+
+	}
+
+	final class TableColumnsModelListener implements ITableColumnModelListener {
+
+		@Override
+		public void columnsAdded(final int[] columnIndices) {
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public void columnsRemoved(final int[] columnIndices) {
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public void columnsChanged(final int[] columnIndices) {
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public void columnsStructureChanged() {
+			// TODO Auto-generated method stub
+		}
+
 	}
 
 	final class CellIndices {

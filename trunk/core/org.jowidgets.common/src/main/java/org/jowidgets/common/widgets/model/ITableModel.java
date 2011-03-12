@@ -29,17 +29,16 @@
 package org.jowidgets.common.widgets.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public interface ITableModel {
 
-	ITableColumnModel getColumn(int columnIndex);
+	int getRowCount();
 
-	ITableCellModel getCell(int rowIndex, int columnIndex);
+	ITableCell getCell(int rowIndex, int columnIndex);
 
 	ArrayList<Integer> getSelection();
 
-	void setSelection(List<Integer> selection);
+	void setSelection(ArrayList<Integer> selection);
 
 	ITableModelObservable getTableModelObservable();
 

@@ -44,6 +44,8 @@ import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.ITableColumnListener;
 import org.jowidgets.common.widgets.controler.ITableColumnPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.ITableSelectionListener;
+import org.jowidgets.common.widgets.model.ITableColumnModel;
+import org.jowidgets.common.widgets.model.ITableModel;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
@@ -53,25 +55,20 @@ import org.jowidgets.spi.widgets.ITableSpi;
 public class TableImpl extends ControlSpiWrapper implements ITable {
 
 	private final ControlDelegate controlDelegate;
-
-	private final int rowCount;
-	private final int columnCount;
+	private final ITableModel tableModel;
+	private final ITableColumnModel columnModel;
 
 	public TableImpl(final ITableSpi widget, final ITableDescriptor setup) {
 		super(widget);
 
 		this.controlDelegate = new ControlDelegate();
+		this.tableModel = setup.getTableModel();
+		this.columnModel = setup.getColumnModel();
 
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
 
-		final Integer rowCountSetup = setup.getRowCount();
-		final Integer columnCountSetup = setup.getColumnCount();
-
-		this.rowCount = rowCountSetup != null ? rowCountSetup.intValue() : 0;
-		this.columnCount = columnCountSetup != null ? columnCountSetup : 1;
-
-		initialize(rowCount, columnCount);
+		initialize();
 	}
 
 	@Override
@@ -101,17 +98,17 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 
 	@Override
 	public int getRowCount() {
-		return rowCount;
+		return tableModel.getRowCount();
 	}
 
 	@Override
 	public int getColumnCount() {
-		return columnCount;
+		return columnModel.getColumnCount();
 	}
 
 	@Override
-	public void initialize(final int rowsCount, final int columnsCount) {
-		getWidget().initialize(rowsCount, columnsCount);
+	public void initialize() {
+		getWidget().initialize();
 	}
 
 	@Override
@@ -137,6 +134,16 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 	@Override
 	public ArrayList<Integer> getColumnPermutation() {
 		return getWidget().getColumnPermutation();
+	}
+
+	@Override
+	public ArrayList<Integer> getSelection() {
+		return getWidget().getSelection();
+	}
+
+	@Override
+	public void setSelection(final ArrayList<Integer> selection) {
+		getWidget().setSelection(selection);
 	}
 
 	@Override

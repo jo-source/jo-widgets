@@ -33,8 +33,4 @@ public interface ITableSetupBuilder<INSTANCE_TYPE extends ITableSetupBuilder<?>>
 		IComponentSetupBuilder<INSTANCE_TYPE>,
 		ITableSetupBuilderCommon<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setColumnCount(final Integer columnCount);
-
-	INSTANCE_TYPE setRowCount(final Integer rowCount);
-
 }
