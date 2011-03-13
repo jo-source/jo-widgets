@@ -599,12 +599,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 					final String newText = getNewText(textField, keyEvent);
 					final TableCellEditEvent editEvent = new TableCellEditEvent(rowIndex, columnIndex, newText);
 					if (keyEvent.character == SWT.CR) {
-						final boolean veto = tableCellEditorObservable.fireEditFinished(editEvent);
-						if (!veto) {
-							item.setText(columnIndex, textField.getText());
-						}
-						textField.dispose();
-						cursor.setVisible(false);
+						editFinished(rowIndex, columnIndex, item, textField, editEvent);
 					}
 					else if (keyEvent.character == SWT.ESC) {
 						tableCellEditorObservable.fireEditCanceled(editEvent);
@@ -623,16 +618,27 @@ public class TableImpl extends SwtControl implements ITableSpi {
 				@Override
 				public void focusLost(final FocusEvent e) {
 					final TableCellEditEvent editEvent = new TableCellEditEvent(rowIndex, columnIndex, textField.getText());
-					final boolean veto = tableCellEditorObservable.fireEditFinished(editEvent);
-					if (!veto) {
-						item.setText(columnIndex, textField.getText());
-					}
-					textField.dispose();
-					cursor.setVisible(false);
+					editFinished(rowIndex, columnIndex, item, textField, editEvent);
 				}
 			});
 			editor.setEditor(textField);
 			textField.setFocus();
+		}
+
+		private void editFinished(
+			final int rowIndex,
+			final int columnIndex,
+			final TableItem item,
+			final Text textField,
+			final TableCellEditEvent editEvent) {
+
+			final boolean veto = tableCellEditorObservable.fireEditFinished(editEvent);
+			if (!veto) {
+				final String newModelText = tableModel.getCell(rowIndex, columnIndex).getText();
+				item.setText(columnIndex, newModelText);
+			}
+			textField.dispose();
+			cursor.setVisible(false);
 		}
 
 		private String getNewText(final Text textField, final KeyEvent keyEvent) {

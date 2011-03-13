@@ -40,11 +40,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultCellEditor;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableColumnModelEvent;
@@ -65,7 +69,9 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.SelectionPolicy;
 import org.jowidgets.common.types.TableColumnPackPolicy;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
+import org.jowidgets.common.widgets.controler.ITableCellEditEvent;
 import org.jowidgets.common.widgets.controler.ITableCellEditorListener;
+import org.jowidgets.common.widgets.controler.ITableCellEvent;
 import org.jowidgets.common.widgets.controler.ITableCellListener;
 import org.jowidgets.common.widgets.controler.ITableCellMouseEvent;
 import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionListener;
@@ -80,7 +86,9 @@ import org.jowidgets.common.widgets.model.ITableColumnModelListener;
 import org.jowidgets.common.widgets.model.ITableModel;
 import org.jowidgets.common.widgets.model.ITableModelListener;
 import org.jowidgets.spi.impl.controler.PopupDetectionObservable;
+import org.jowidgets.spi.impl.controler.TableCellEditEvent;
 import org.jowidgets.spi.impl.controler.TableCellEditorObservable;
+import org.jowidgets.spi.impl.controler.TableCellEvent;
 import org.jowidgets.spi.impl.controler.TableCellMouseEvent;
 import org.jowidgets.spi.impl.controler.TableCellObservable;
 import org.jowidgets.spi.impl.controler.TableCellPopupDetectionObservable;
@@ -106,6 +114,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	private final ITableModel tableModel;
 	private final ITableColumnModel columnModel;
 	private final CellRenderer cellRenderer;
+	private final CellEditor cellEditor;
 
 	private final PopupDetectionObservable popupDetectionObservable;
 	private final TableCellObservable tableCellObservable;
@@ -125,6 +134,9 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 	public TableImpl(final ITableSetupSpi setup) {
 		super(new JScrollPane(new JTable()));
+
+		this.cellRenderer = new CellRenderer();
+		this.cellEditor = new CellEditor();
 
 		this.popupDetectionObservable = new PopupDetectionObservable();
 		this.tableCellObservable = new TableCellObservable();
@@ -169,8 +181,6 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		table.addMouseListener(new TableCellListener());
 		table.addMouseListener(new TableCellMenuDetectListener());
 
-		this.cellRenderer = new CellRenderer();
-
 	}
 
 	@Override
@@ -200,6 +210,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		for (int i = 0; i < columnCount; i++) {
 			final TableColumn column = swingColumnModel.getColumn(i);
 			column.setCellRenderer(cellRenderer);
+			column.setCellEditor(cellEditor);
 			column.setResizable(columnsResizeable);
 			column.addPropertyChangeListener(tableColumnResizeListener);
 			lastColumnPermutation.add(Integer.valueOf(i));
@@ -621,6 +632,11 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			return columnModel.getColumnCount();
 		}
 
+		@Override
+		public boolean isCellEditable(final int rowIndex, final int columnIndex) {
+			return tableModel.getCell(rowIndex, columnIndex).isEditable();
+		}
+
 	}
 
 	class TableHeaderRenderer implements TableCellRenderer {
@@ -722,6 +738,101 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 			return result;
 		}
+	}
+
+	final class CellEditor extends DefaultCellEditor {
+
+		private static final long serialVersionUID = -5014746984033398117L;
+
+		private int currentRow;
+		private int currentColumn;
+
+		public CellEditor() {
+			super(new JTextField());
+		}
+
+		@Override
+		public Component getTableCellEditorComponent(
+			final JTable table,
+			final Object value,
+			final boolean isSelected,
+			final int row,
+			final int column) {
+
+			this.currentRow = row;
+			this.currentColumn = column;
+
+			final JTextField textField = (JTextField) super.getTableCellEditorComponent(table, value, isSelected, row, column);
+
+			final String text = tableModel.getCell(row, column).getText();
+			if (text != null) {
+
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						textField.setText(text);
+						textField.selectAll();
+						textField.getDocument().addDocumentListener(new DocumentListener() {
+
+							@Override
+							public void removeUpdate(final DocumentEvent e) {
+								fireEditEvent(e);
+							}
+
+							@Override
+							public void insertUpdate(final DocumentEvent e) {
+								fireEditEvent(e);
+							}
+
+							@Override
+							public void changedUpdate(final DocumentEvent e) {
+								fireEditEvent(e);
+							}
+
+							private void fireEditEvent(final DocumentEvent e) {
+								final String text = textField.getText();
+								final ITableCellEditEvent editEvent = new TableCellEditEvent(row, column, text);
+								final boolean veto = tableCellEditorObservable.fireOnEdit(editEvent);
+
+								//CHECKSTYLE:OFF
+								if (veto) {
+									//TODO MG handle veto
+								}
+								//CHECKSTYLE:ON
+							}
+
+						});
+					}
+				});
+
+			}
+			else {
+				textField.setText(null);
+			}
+
+			return textField;
+		}
+
+		@Override
+		public int getClickCountToStart() {
+			return 2;
+		}
+
+		@Override
+		public boolean stopCellEditing() {
+			final String text = ((JTextField) getComponent()).getText();
+			final ITableCellEditEvent editEvent = new TableCellEditEvent(currentRow, currentColumn, text);
+			tableCellEditorObservable.fireEditFinished(editEvent);
+			return super.stopCellEditing();
+		}
+
+		@Override
+		public void cancelCellEditing() {
+			final ITableCellEvent event = new TableCellEvent(currentRow, currentColumn);
+			tableCellEditorObservable.fireEditCanceled(event);
+			super.cancelCellEditing();
+		}
+
 	}
 
 	final class CellIndices {
