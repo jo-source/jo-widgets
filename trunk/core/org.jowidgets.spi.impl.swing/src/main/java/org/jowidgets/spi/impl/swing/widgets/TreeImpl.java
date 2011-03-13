@@ -29,6 +29,7 @@
 package org.jowidgets.spi.impl.swing.widgets;
 
 import java.awt.Component;
+import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
@@ -39,6 +40,7 @@ import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
+import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
 import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeExpansionListener;
@@ -54,6 +56,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.SelectionPolicy;
 import org.jowidgets.spi.impl.controler.TreeSelectionObservableSpi;
 import org.jowidgets.spi.impl.swing.util.ColorConvert;
+import org.jowidgets.spi.impl.swing.util.PositionConvert;
 import org.jowidgets.spi.impl.swing.widgets.base.JoTreeNode;
 import org.jowidgets.spi.impl.swing.widgets.base.JoTreeNodeRenderer;
 import org.jowidgets.spi.widgets.ITreeNodeSpi;
@@ -136,7 +139,12 @@ public class TreeImpl extends SwingControl implements ITreeSpi {
 			private void trigger(final MouseEvent e) {
 				if (e.isPopupTrigger()) {
 					final TreePath path = tree.getPathForLocation(e.getX(), e.getY());
-					final Position position = new Position(e.getX(), e.getY());
+
+					//This is necessary when tree is inside a viewport
+					final Point popupPosition = new Point(e.getLocationOnScreen());
+					SwingUtilities.convertPointFromScreen(popupPosition, getUiReference());
+					final Position position = PositionConvert.convert(popupPosition);
+
 					if (path != null) {
 						final JoTreeNode node = (JoTreeNode) path.getLastPathComponent();
 						if (!e.isShiftDown() && !e.isControlDown()) {
