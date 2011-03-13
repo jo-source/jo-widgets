@@ -51,6 +51,7 @@ public class TestToolGui {
 		final IFrame frame = Toolkit.createRootFrame(frameBP);
 		frame.setLayout(new MigLayoutDescriptor("[grow]", "[grow]"));
 		final IMenuBar menuBar = frame.createMenuBar();
+		@SuppressWarnings("unused")
 		final IMainMenu fileMenu = menuBar.addMenu("File");
 		final IToolBar toolBar = frame.add(BPF.toolBar(), "north, wrap");
 		toolBar.addItem(BPF.toolBarButton().setText("play"));

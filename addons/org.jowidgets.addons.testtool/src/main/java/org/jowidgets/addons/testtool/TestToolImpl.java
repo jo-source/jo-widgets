@@ -185,6 +185,7 @@ public final class TestToolImpl implements ITestTool {
 	}
 
 	// TODO LG use this method when id generation is completed
+	@SuppressWarnings("unused")
 	private void registerInternal(final IWidgetCommon widget, final String identifier) {
 		// TODO LG use unique Widget ID, add only new and tested widgets to registry
 		if (!widgetRegistry.containsKey(testToolUtilities.createWidgetID((IWidget) widget, identifier))) {
