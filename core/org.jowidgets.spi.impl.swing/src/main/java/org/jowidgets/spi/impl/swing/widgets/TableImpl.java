@@ -160,11 +160,6 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		return (JScrollPane) super.getUiReference();
 	}
 
-	//	@Override
-	//	public IPopupMenuSpi createPopupMenu() {
-	//		return new PopupMenuImpl(table);
-	//	}
-
 	@Override
 	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
 		popupDetectionObservable.addPopupDetectionListener(listener);
@@ -416,6 +411,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 				int columnIndex = table.getTableHeader().getColumnModel().getColumnIndexAtX(e.getX());
 				columnIndex = table.convertColumnIndexToModel(columnIndex);
+				popupDetectionObservable.firePopupDetected(position);
 				tableColumnPopupDetectionObservable.firePopupDetected(new TableColumnPopupEvent(columnIndex, position));
 			}
 		}
@@ -608,7 +604,6 @@ public class TableImpl extends SwingControl implements ITableSpi {
 						setForeground(null);
 					}
 				}
-
 			}
 
 			return result;
