@@ -33,8 +33,9 @@ import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -44,10 +45,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableColumnModelEvent;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
@@ -65,6 +70,7 @@ import org.jowidgets.common.widgets.controler.ITableCellListener;
 import org.jowidgets.common.widgets.controler.ITableCellMouseEvent;
 import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.ITableColumnListener;
+import org.jowidgets.common.widgets.controler.ITableColumnMouseEvent;
 import org.jowidgets.common.widgets.controler.ITableColumnPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.ITableSelectionListener;
 import org.jowidgets.common.widgets.model.ITableCell;
@@ -79,15 +85,18 @@ import org.jowidgets.spi.impl.controler.TableCellMouseEvent;
 import org.jowidgets.spi.impl.controler.TableCellObservable;
 import org.jowidgets.spi.impl.controler.TableCellPopupDetectionObservable;
 import org.jowidgets.spi.impl.controler.TableCellPopupEvent;
+import org.jowidgets.spi.impl.controler.TableColumnMouseEvent;
 import org.jowidgets.spi.impl.controler.TableColumnObservable;
 import org.jowidgets.spi.impl.controler.TableColumnPopupDetectionObservable;
 import org.jowidgets.spi.impl.controler.TableColumnPopupEvent;
+import org.jowidgets.spi.impl.controler.TableColumnResizeEvent;
 import org.jowidgets.spi.impl.controler.TableSelectionObservable;
 import org.jowidgets.spi.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.spi.impl.swing.util.AlignmentConvert;
 import org.jowidgets.spi.impl.swing.util.ColorConvert;
 import org.jowidgets.spi.impl.swing.util.FontProvider;
 import org.jowidgets.spi.impl.swing.util.PositionConvert;
+import org.jowidgets.spi.impl.swing.widgets.base.TableColumnModelAdapter;
 import org.jowidgets.spi.widgets.ITableSpi;
 import org.jowidgets.spi.widgets.setup.ITableSetupSpi;
 
@@ -106,7 +115,13 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	private final TableSelectionObservable tableSelectionObservable;
 	private final TableCellEditorObservable tableCellEditorObservable;
 
+	private final TableColumnResizeListener tableColumnResizeListener;
+	private final TableSelectionListener tableSelectionListener;
+
 	private final boolean columnsResizeable;
+
+	private ArrayList<Integer> lastColumnPermutation;
+	private boolean columnMoveOccured;
 
 	public TableImpl(final ITableSetupSpi setup) {
 		super(new JScrollPane(new JTable()));
@@ -118,6 +133,11 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		this.tableColumnObservable = new TableColumnObservable();
 		this.tableSelectionObservable = new TableSelectionObservable();
 		this.tableCellEditorObservable = new TableCellEditorObservable();
+
+		this.tableColumnResizeListener = new TableColumnResizeListener();
+		this.tableSelectionListener = new TableSelectionListener();
+
+		this.columnMoveOccured = false;
 
 		this.tableModel = setup.getTableModel();
 		this.columnModel = setup.getColumnModel();
@@ -141,18 +161,16 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 		table.getTableHeader().setDefaultRenderer(new TableHeaderRenderer());
 		table.getTableHeader().addMouseListener(new TableColumnMenuDetectListener());
-		table.setModel(new SwingTableModel(setup.getTableModel(), setup.getColumnModel()));
+		table.getTableHeader().addMouseListener(new TableColumnListener());
+
+		table.getColumnModel().addColumnModelListener(new TableColumnMoveListener());
+		table.getSelectionModel().addListSelectionListener(tableSelectionListener);
+
 		table.addMouseListener(new TableCellListener());
 		table.addMouseListener(new TableCellMenuDetectListener());
 
 		this.cellRenderer = new CellRenderer();
 
-		final Enumeration<TableColumn> columns = table.getColumnModel().getColumns();
-		while (columns.hasMoreElements()) {
-			final TableColumn column = columns.nextElement();
-			column.setCellRenderer(cellRenderer);
-			column.setResizable(columnsResizeable);
-		}
 	}
 
 	@Override
@@ -172,7 +190,24 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 	@Override
 	public void initialize() {
+		table.getSelectionModel().removeListSelectionListener(tableSelectionListener);
 
+		table.setModel(new SwingTableModel(tableModel, columnModel));
+
+		final TableColumnModel swingColumnModel = table.getColumnModel();
+		final int columnCount = swingColumnModel.getColumnCount();
+		lastColumnPermutation = new ArrayList<Integer>(columnCount);
+		for (int i = 0; i < columnCount; i++) {
+			final TableColumn column = swingColumnModel.getColumn(i);
+			column.setCellRenderer(cellRenderer);
+			column.setResizable(columnsResizeable);
+			column.addPropertyChangeListener(tableColumnResizeListener);
+			lastColumnPermutation.add(Integer.valueOf(i));
+		}
+
+		setSelection(tableModel.getSelection());
+
+		table.getSelectionModel().addListSelectionListener(tableSelectionListener);
 	}
 
 	@Override
@@ -198,20 +233,41 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	@Override
 	public ArrayList<Integer> getColumnPermutation() {
 		final ArrayList<Integer> result = new ArrayList<Integer>();
-		//TODO MG implement getColumnPermutation
+		final TableColumnModel swingColumnModel = table.getColumnModel();
+		for (int i = 0; i < swingColumnModel.getColumnCount(); i++) {
+			result.add(Integer.valueOf(swingColumnModel.getColumn(i).getModelIndex()));
+		}
 		return result;
 	}
 
 	@Override
 	public ArrayList<Integer> getSelection() {
 		final ArrayList<Integer> result = new ArrayList<Integer>();
-		//TODO MG implement getSelection
+		final int[] selectedRows = table.getSelectedRows();
+		for (int i = 0; i < selectedRows.length; i++) {
+			result.add(Integer.valueOf(selectedRows[i]));
+		}
 		return result;
 	}
 
 	@Override
 	public void setSelection(final ArrayList<Integer> selection) {
-
+		if (!getSelection().equals(selection)) {
+			final ListSelectionModel selectionModel = table.getSelectionModel();
+			selectionModel.clearSelection();
+			if (selection != null && selection.size() != 0) {
+				for (int i = 0; i < selection.size(); i++) {
+					if (i < selection.size() - 1) {
+						selectionModel.setValueIsAdjusting(true);
+					}
+					else {
+						selectionModel.setValueIsAdjusting(false);
+					}
+					final int selectionIndex = selection.get(i);
+					selectionModel.addSelectionInterval(selectionIndex, selectionIndex);
+				}
+			}
+		}
 	}
 
 	@Override
@@ -392,6 +448,40 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		}
 	}
 
+	final class TableColumnListener extends MouseAdapter {
+
+		@Override
+		public void mouseReleased(final MouseEvent e) {
+			if (columnMoveOccured && SwingUtilities.isLeftMouseButton(e) && e.getClickCount() == 1) {
+				columnMoveOccured = false;
+				final ArrayList<Integer> currentPermutation = getColumnPermutation();
+				if (!currentPermutation.equals(lastColumnPermutation)) {
+					lastColumnPermutation = currentPermutation;
+					tableColumnObservable.fireColumnPermutationChanged();
+				}
+			}
+		}
+
+		@Override
+		public void mouseClicked(final MouseEvent e) {
+			if (SwingUtilities.isLeftMouseButton(e) && e.getClickCount() == 1) {
+				int columnIndex = table.getTableHeader().getColumnModel().getColumnIndexAtX(e.getX());
+				columnIndex = table.convertColumnIndexToModel(columnIndex);
+				final ITableColumnMouseEvent mouseEvent = new TableColumnMouseEvent(columnIndex, getModifier(e));
+				tableColumnObservable.fireMouseClicked(mouseEvent);
+			}
+		}
+	}
+
+	final class TableColumnMoveListener extends TableColumnModelAdapter {
+		@Override
+		public void columnMoved(final TableColumnModelEvent e) {
+			if (e.getFromIndex() != e.getToIndex()) {
+				columnMoveOccured = true;
+			}
+		}
+	}
+
 	final class TableColumnMenuDetectListener extends MouseAdapter {
 
 		@Override
@@ -413,6 +503,30 @@ public class TableImpl extends SwingControl implements ITableSpi {
 				columnIndex = table.convertColumnIndexToModel(columnIndex);
 				popupDetectionObservable.firePopupDetected(position);
 				tableColumnPopupDetectionObservable.firePopupDetected(new TableColumnPopupEvent(columnIndex, position));
+			}
+		}
+	}
+
+	final class TableColumnResizeListener implements PropertyChangeListener {
+		@Override
+		public void propertyChange(final PropertyChangeEvent evt) {
+			final TableColumn column = (TableColumn) evt.getSource();
+			if (column != null) {
+				final Object newObject = evt.getNewValue();
+				if (newObject instanceof Integer) {
+					final int newWidth = ((Integer) newObject).intValue();
+					tableColumnObservable.fireColumnResized(new TableColumnResizeEvent(column.getModelIndex(), newWidth));
+				}
+			}
+		}
+	}
+
+	final class TableSelectionListener implements ListSelectionListener {
+		@Override
+		public void valueChanged(final ListSelectionEvent e) {
+			if (!e.getValueIsAdjusting()) {
+				tableModel.setSelection(getSelection());
+				tableSelectionObservable.fireSelectionChanged();
 			}
 		}
 	}

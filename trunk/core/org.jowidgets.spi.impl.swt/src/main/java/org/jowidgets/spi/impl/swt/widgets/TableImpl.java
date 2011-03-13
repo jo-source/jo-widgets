@@ -320,7 +320,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	@Override
 	public void setSelection(final ArrayList<Integer> selection) {
 		if (!isSelectionEqualWithView(selection)) {
-			if (selection == null) {
+			if (selection == null || selection.size() == 0) {
 				table.setSelection(new int[0]);
 			}
 			else {
