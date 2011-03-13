@@ -377,11 +377,16 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			if (e.isPopupTrigger()) {
 				final Point point = new Point(e.getX(), e.getY());
 				final Position position = PositionConvert.convert(point);
-				popupDetectionObservable.firePopupDetected(new Position(e.getX(), e.getY()));
+
 				final CellIndices indices = getCellIndices(point);
 				if (indices != null) {
 					final int rowIndex = indices.getRowIndex();
 					final int colIndex = indices.getColumnIndex();
+					//add default windows selection behavior
+					if (!table.getSelectionModel().isSelectedIndex(rowIndex) && !e.isControlDown()) {
+						table.getSelectionModel().setSelectionInterval(rowIndex, rowIndex);
+					}
+					popupDetectionObservable.firePopupDetected(position);
 					tableCellPopupDetectionObservable.firePopupDetected(new TableCellPopupEvent(rowIndex, colIndex, position));
 				}
 			}
