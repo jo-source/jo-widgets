@@ -30,14 +30,20 @@ package org.jowidgets.spi.impl.swing.widgets;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
@@ -48,11 +54,15 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Markup;
+import org.jowidgets.common.types.Modifier;
+import org.jowidgets.common.types.MouseButton;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.SelectionPolicy;
 import org.jowidgets.common.types.TableColumnPackPolicy;
+import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.ITableCellEditorListener;
 import org.jowidgets.common.widgets.controler.ITableCellListener;
+import org.jowidgets.common.widgets.controler.ITableCellMouseEvent;
 import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.ITableColumnListener;
 import org.jowidgets.common.widgets.controler.ITableColumnPopupDetectionListener;
@@ -63,9 +73,12 @@ import org.jowidgets.common.widgets.model.ITableColumnModel;
 import org.jowidgets.common.widgets.model.ITableColumnModelListener;
 import org.jowidgets.common.widgets.model.ITableModel;
 import org.jowidgets.common.widgets.model.ITableModelListener;
+import org.jowidgets.spi.impl.controler.PopupDetectionObservable;
 import org.jowidgets.spi.impl.controler.TableCellEditorObservable;
+import org.jowidgets.spi.impl.controler.TableCellMouseEvent;
 import org.jowidgets.spi.impl.controler.TableCellObservable;
 import org.jowidgets.spi.impl.controler.TableCellPopupDetectionObservable;
+import org.jowidgets.spi.impl.controler.TableCellPopupEvent;
 import org.jowidgets.spi.impl.controler.TableColumnObservable;
 import org.jowidgets.spi.impl.controler.TableColumnPopupDetectionObservable;
 import org.jowidgets.spi.impl.controler.TableSelectionObservable;
@@ -73,6 +86,8 @@ import org.jowidgets.spi.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.spi.impl.swing.util.AlignmentConvert;
 import org.jowidgets.spi.impl.swing.util.ColorConvert;
 import org.jowidgets.spi.impl.swing.util.FontProvider;
+import org.jowidgets.spi.impl.swing.util.PositionConvert;
+import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.ITableSpi;
 import org.jowidgets.spi.widgets.setup.ITableSetupSpi;
 
@@ -83,6 +98,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	private final ITableColumnModel columnModel;
 	private final CellRenderer cellRenderer;
 
+	private final PopupDetectionObservable popupDetectionObservable;
 	private final TableCellObservable tableCellObservable;
 	private final TableCellPopupDetectionObservable tableCellPopupDetectionObservable;
 	private final TableColumnPopupDetectionObservable tableColumnPopupDetectionObservable;
@@ -95,6 +111,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	public TableImpl(final ITableSetupSpi setup) {
 		super(new JScrollPane(new JTable()));
 
+		this.popupDetectionObservable = new PopupDetectionObservable();
 		this.tableCellObservable = new TableCellObservable();
 		this.tableCellPopupDetectionObservable = new TableCellPopupDetectionObservable();
 		this.tableColumnPopupDetectionObservable = new TableColumnPopupDetectionObservable();
@@ -123,8 +140,9 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		}
 
 		table.getTableHeader().setDefaultRenderer(new TableHeaderRenderer());
-
 		table.setModel(new SwingTableModel(setup.getTableModel(), setup.getColumnModel()));
+		table.addMouseListener(new TableCellListener());
+		table.addMouseListener(new TableMenuDetectListener());
 
 		this.cellRenderer = new CellRenderer();
 
@@ -139,6 +157,21 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	@Override
 	public JScrollPane getUiReference() {
 		return (JScrollPane) super.getUiReference();
+	}
+
+	@Override
+	public IPopupMenuSpi createPopupMenu() {
+		return new PopupMenuImpl(table);
+	}
+
+	@Override
+	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+		popupDetectionObservable.addPopupDetectionListener(listener);
+	}
+
+	@Override
+	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+		popupDetectionObservable.removePopupDetectionListener(listener);
 	}
 
 	@Override
@@ -243,6 +276,116 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	@Override
 	public void removeTableCellEditorListener(final ITableCellEditorListener listener) {
 		tableCellEditorObservable.removeTableCellEditorListener(listener);
+	}
+
+	private CellIndices getCellIndices(final MouseEvent event) {
+		return getCellIndices(new Point(event.getX(), event.getY()));
+	}
+
+	private CellIndices getCellIndices(final Point point) {
+		final int columnIndex = table.columnAtPoint(point);
+		final int rowIndex = table.rowAtPoint(point);
+		if (columnIndex != -1 && rowIndex != -1) {
+			return new CellIndices(table.convertRowIndexToModel(rowIndex), table.convertColumnIndexToModel(columnIndex));
+		}
+		return null;
+	}
+
+	private static MouseButton getMouseButton(final MouseEvent event) {
+		if (SwingUtilities.isLeftMouseButton(event)) {
+			return MouseButton.LEFT;
+		}
+		else if (SwingUtilities.isRightMouseButton(event)) {
+			return MouseButton.RIGTH;
+		}
+		else {
+			return null;
+		}
+	}
+
+	private static Set<Modifier> getModifier(final MouseEvent event) {
+		final Set<Modifier> modifier = new HashSet<Modifier>();
+		if (event.isShiftDown()) {
+			modifier.add(Modifier.SHIFT);
+		}
+		if (event.isControlDown()) {
+			modifier.add(Modifier.CTRL);
+		}
+		if (event.isAltDown()) {
+			modifier.add(Modifier.ALT);
+		}
+		return modifier;
+	}
+
+	final class TableCellListener extends MouseAdapter {
+
+		@Override
+		public void mouseClicked(final MouseEvent e) {
+			final ITableCellMouseEvent mouseEvent = getMouseEvent(e, 2);
+			if (mouseEvent != null) {
+				tableCellObservable.fireMouseDoubleClicked(mouseEvent);
+			}
+		}
+
+		@Override
+		public void mousePressed(final MouseEvent e) {
+			final ITableCellMouseEvent mouseEvent = getMouseEvent(e, 1);
+			if (mouseEvent != null) {
+				tableCellObservable.fireMousePressed(mouseEvent);
+			}
+		}
+
+		@Override
+		public void mouseReleased(final MouseEvent e) {
+			final ITableCellMouseEvent mouseEvent = getMouseEvent(e, 1);
+			if (mouseEvent != null) {
+				tableCellObservable.fireMouseReleased(mouseEvent);
+			}
+		}
+
+		private ITableCellMouseEvent getMouseEvent(final MouseEvent event, final int clickCount) {
+			if (event.getClickCount() != clickCount) {
+				return null;
+			}
+
+			final MouseButton mouseButton = getMouseButton(event);
+			if (mouseButton == null) {
+				return null;
+			}
+
+			final CellIndices indices = getCellIndices(event);
+			if (indices != null) {
+				return new TableCellMouseEvent(indices.getRowIndex(), indices.getColumnIndex(), mouseButton, getModifier(event));
+			}
+			return null;
+		}
+	}
+
+	final class TableMenuDetectListener extends MouseAdapter {
+
+		@Override
+		public void mouseReleased(final MouseEvent e) {
+			fireMenuDetect(e);
+		}
+
+		@Override
+		public void mousePressed(final MouseEvent e) {
+			fireMenuDetect(e);
+		}
+
+		private void fireMenuDetect(final MouseEvent e) {
+			if (e.isPopupTrigger()) {
+				final Point point = new Point(e.getX(), e.getY());
+				final Position position = PositionConvert.convert(point);
+				popupDetectionObservable.firePopupDetected(new Position(e.getX(), e.getY()));
+				final CellIndices indices = getCellIndices(point);
+				if (indices != null) {
+					final int rowIndex = indices.getRowIndex();
+					final int colIndex = indices.getColumnIndex();
+					tableCellPopupDetectionObservable.firePopupDetected(new TableCellPopupEvent(rowIndex, colIndex, position));
+				}
+			}
+		}
 	}
 
 	final class TableModelListener implements ITableModelListener {
@@ -357,7 +500,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 					row,
 					columnIndex);
 
-			final ITableColumn column = columnModel.getColumn(columnIndex);
+			final ITableColumn column = columnModel.getColumn(table.convertColumnIndexToModel(columnIndex));
 
 			if (column.getIcon() != null) {
 				defaultComponent.setIcon(SwingImageRegistry.getInstance().getImageIcon(column.getIcon()));
@@ -436,6 +579,26 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			}
 
 			return result;
+		}
+	}
+
+	final class CellIndices {
+
+		private final int rowIndex;
+		private final int columnIndex;
+
+		public CellIndices(final int rowIndex, final int columnIndex) {
+			super();
+			this.rowIndex = rowIndex;
+			this.columnIndex = columnIndex;
+		}
+
+		public int getRowIndex() {
+			return rowIndex;
+		}
+
+		public int getColumnIndex() {
+			return columnIndex;
 		}
 	}
 
