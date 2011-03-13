@@ -81,13 +81,13 @@ import org.jowidgets.spi.impl.controler.TableCellPopupDetectionObservable;
 import org.jowidgets.spi.impl.controler.TableCellPopupEvent;
 import org.jowidgets.spi.impl.controler.TableColumnObservable;
 import org.jowidgets.spi.impl.controler.TableColumnPopupDetectionObservable;
+import org.jowidgets.spi.impl.controler.TableColumnPopupEvent;
 import org.jowidgets.spi.impl.controler.TableSelectionObservable;
 import org.jowidgets.spi.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.spi.impl.swing.util.AlignmentConvert;
 import org.jowidgets.spi.impl.swing.util.ColorConvert;
 import org.jowidgets.spi.impl.swing.util.FontProvider;
 import org.jowidgets.spi.impl.swing.util.PositionConvert;
-import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.ITableSpi;
 import org.jowidgets.spi.widgets.setup.ITableSetupSpi;
 
@@ -140,9 +140,10 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		}
 
 		table.getTableHeader().setDefaultRenderer(new TableHeaderRenderer());
+		table.getTableHeader().addMouseListener(new TableColumnMenuDetectListener());
 		table.setModel(new SwingTableModel(setup.getTableModel(), setup.getColumnModel()));
 		table.addMouseListener(new TableCellListener());
-		table.addMouseListener(new TableMenuDetectListener());
+		table.addMouseListener(new TableCellMenuDetectListener());
 
 		this.cellRenderer = new CellRenderer();
 
@@ -159,10 +160,10 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		return (JScrollPane) super.getUiReference();
 	}
 
-	@Override
-	public IPopupMenuSpi createPopupMenu() {
-		return new PopupMenuImpl(table);
-	}
+	//	@Override
+	//	public IPopupMenuSpi createPopupMenu() {
+	//		return new PopupMenuImpl(table);
+	//	}
 
 	@Override
 	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
@@ -361,7 +362,42 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		}
 	}
 
-	final class TableMenuDetectListener extends MouseAdapter {
+	final class TableCellMenuDetectListener extends MouseAdapter {
+
+		@Override
+		public void mouseReleased(final MouseEvent e) {
+			fireMenuDetect(e);
+		}
+
+		@Override
+		public void mousePressed(final MouseEvent e) {
+			fireMenuDetect(e);
+		}
+
+		private void fireMenuDetect(final MouseEvent e) {
+			if (e.isPopupTrigger()) {
+				final Point point = new Point(e.getX(), e.getY());
+
+				final Point popupPosition = new Point(e.getLocationOnScreen());
+				SwingUtilities.convertPointFromScreen(popupPosition, getUiReference());
+				final Position position = PositionConvert.convert(popupPosition);
+
+				final CellIndices indices = getCellIndices(point);
+				if (indices != null) {
+					final int rowIndex = indices.getRowIndex();
+					final int colIndex = indices.getColumnIndex();
+					//add default windows selection behavior
+					if (!table.getSelectionModel().isSelectedIndex(rowIndex) && !e.isControlDown()) {
+						table.getSelectionModel().setSelectionInterval(rowIndex, rowIndex);
+					}
+					popupDetectionObservable.firePopupDetected(position);
+					tableCellPopupDetectionObservable.firePopupDetected(new TableCellPopupEvent(rowIndex, colIndex, position));
+				}
+			}
+		}
+	}
+
+	final class TableColumnMenuDetectListener extends MouseAdapter {
 
 		@Override
 		public void mouseReleased(final MouseEvent e) {
@@ -378,17 +414,9 @@ public class TableImpl extends SwingControl implements ITableSpi {
 				final Point point = new Point(e.getX(), e.getY());
 				final Position position = PositionConvert.convert(point);
 
-				final CellIndices indices = getCellIndices(point);
-				if (indices != null) {
-					final int rowIndex = indices.getRowIndex();
-					final int colIndex = indices.getColumnIndex();
-					//add default windows selection behavior
-					if (!table.getSelectionModel().isSelectedIndex(rowIndex) && !e.isControlDown()) {
-						table.getSelectionModel().setSelectionInterval(rowIndex, rowIndex);
-					}
-					popupDetectionObservable.firePopupDetected(position);
-					tableCellPopupDetectionObservable.firePopupDetected(new TableCellPopupEvent(rowIndex, colIndex, position));
-				}
+				int columnIndex = table.getTableHeader().getColumnModel().getColumnIndexAtX(e.getX());
+				columnIndex = table.convertColumnIndexToModel(columnIndex);
+				tableColumnPopupDetectionObservable.firePopupDetected(new TableColumnPopupEvent(columnIndex, position));
 			}
 		}
 	}
