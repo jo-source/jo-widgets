@@ -26,26 +26,12 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.widgets.model;
+package org.jowidgets.common.model;
 
-import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.Markup;
+public interface ITableModelObservable {
 
-public interface ITableCell {
+	void addTableModelListener(ITableModelListener listener);
 
-	IColorConstant getForegroundColor();
-
-	IColorConstant getBackgroundColor();
-
-	Markup getMarkup();
-
-	String getText();
-
-	String getToolTipText();
-
-	IImageConstant getIcon();
-
-	boolean isEditable();
+	void removeTableModelListener(ITableModelListener listener);
 
 }

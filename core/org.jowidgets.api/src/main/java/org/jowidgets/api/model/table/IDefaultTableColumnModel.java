@@ -29,9 +29,9 @@
 package org.jowidgets.api.model.table;
 
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.model.ITableColumn;
+import org.jowidgets.common.model.ITableColumnModel;
 import org.jowidgets.common.types.AlignmentHorizontal;
-import org.jowidgets.common.widgets.model.ITableColumn;
-import org.jowidgets.common.widgets.model.ITableColumnModel;
 
 public interface IDefaultTableColumnModel extends ITableColumnModel {
 

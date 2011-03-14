@@ -26,20 +26,14 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.widgets.model;
+package org.jowidgets.common.model;
 
-import java.util.ArrayList;
+public interface ITableColumnModel {
 
-public interface ITableModel {
+	int getColumnCount();
 
-	int getRowCount();
+	ITableColumn getColumn(int columnIndex);
 
-	ITableCell getCell(int rowIndex, int columnIndex);
-
-	ArrayList<Integer> getSelection();
-
-	void setSelection(ArrayList<Integer> selection);
-
-	ITableModelObservable getTableModelObservable();
+	ITableColumnModelObservable getTableColumnModelObservable();
 
 }

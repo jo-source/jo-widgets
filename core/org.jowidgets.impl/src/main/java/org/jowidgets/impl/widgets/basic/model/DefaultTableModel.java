@@ -30,9 +30,9 @@ package org.jowidgets.impl.widgets.basic.model;
 
 import java.util.ArrayList;
 
-import org.jowidgets.common.widgets.model.ITableCell;
-import org.jowidgets.common.widgets.model.ITableModel;
-import org.jowidgets.common.widgets.model.ITableModelObservable;
+import org.jowidgets.common.model.ITableCell;
+import org.jowidgets.common.model.ITableModel;
+import org.jowidgets.common.model.ITableModelObservable;
 
 public class DefaultTableModel implements ITableModel {
 

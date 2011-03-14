@@ -26,12 +26,18 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.widgets.model;
+package org.jowidgets.common.model;
 
-public interface ITableModelObservable {
+public interface ITableModelListener {
 
-	void addTableModelListener(ITableModelListener listener);
+	void rowsAdded(int[] rowIndices);
 
-	void removeTableModelListener(ITableModelListener listener);
+	void rowsRemoved(int[] rowIndices);
+
+	void rowsChanged(int[] rowIndices);
+
+	void rowsStructureChanged();
+
+	void selectionChanged();
 
 }

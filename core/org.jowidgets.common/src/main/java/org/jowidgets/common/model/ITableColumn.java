@@ -26,16 +26,23 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.widgets.model;
+package org.jowidgets.common.model;
 
-public interface ITableColumnModelListener {
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.AlignmentHorizontal;
 
-	void columnsAdded(int[] columnIndices);
+public interface ITableColumn {
 
-	void columnsRemoved(int[] columnIndices);
+	String getText();
 
-	void columnsChanged(int[] columnIndices);
+	String getToolTipText();
 
-	void columnsStructureChanged();
+	IImageConstant getIcon();
+
+	void setWidth(int width);
+
+	int getWidth();
+
+	AlignmentHorizontal getAlignment();
 
 }
