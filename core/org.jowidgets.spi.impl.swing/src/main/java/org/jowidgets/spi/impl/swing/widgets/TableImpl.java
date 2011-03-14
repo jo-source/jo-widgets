@@ -133,6 +133,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 	private final boolean columnsResizeable;
 
+	private SwingTableModel swingTableModel;
 	private ArrayList<Integer> lastColumnPermutation;
 	private boolean columnMoveOccured;
 
@@ -218,7 +219,9 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 		table.getSelectionModel().removeListSelectionListener(tableSelectionListener);
 
-		table.setModel(new SwingTableModel(tableModel, columnModel));
+		this.swingTableModel = new SwingTableModel(tableModel, columnModel);
+
+		table.setModel(swingTableModel);
 
 		final TableColumnModel swingColumnModel = table.getColumnModel();
 		final int columnCount = swingColumnModel.getColumnCount();
@@ -570,24 +573,30 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 		@Override
 		public void rowsAdded(final int[] rowIndices) {
-			// TODO MG better implementation of rowsAdded observe
-			rowsStructureChanged();
+			if (swingTableModel != null) {
+				swingTableModel.rowsAdded(rowIndices);
+			}
 		}
 
 		@Override
 		public void rowsRemoved(final int[] rowIndices) {
-			// TODO MG better implementation of rowsRemoved observe
-			rowsStructureChanged();
+			if (swingTableModel != null) {
+				swingTableModel.rowsRemoved(rowIndices);
+			}
 		}
 
 		@Override
 		public void rowsChanged(final int[] rowIndices) {
-			// TODO MG implement rowsChanged observe
+			if (swingTableModel != null) {
+				swingTableModel.rowsChanged(rowIndices);
+			}
 		}
 
 		@Override
 		public void rowsStructureChanged() {
-			// TODO MG implement rowsChanged observe
+			if (swingTableModel != null) {
+				swingTableModel.rowsStructureChanged();
+			}
 		}
 
 		@Override
@@ -613,12 +622,17 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 		@Override
 		public void columnsChanged(final int[] columnIndices) {
-			// TODO MG implement columnsChanged observe
+			// TODO MG better implementation of columnsChanged observe
+			columnsStructureChanged();
 		}
 
 		@Override
 		public void columnsStructureChanged() {
-			// TODO MG implement columnsStructureChanged observe
+			if (swingTableModel != null) {
+				// TODO MG better implementation of columnsStructureChanged observe
+				//just remove and then add all columns
+				swingTableModel.fireTableStructureChanged();
+			}
 		}
 
 	}
@@ -659,6 +673,26 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		@Override
 		public boolean isCellEditable(final int rowIndex, final int columnIndex) {
 			return tableModel.getCell(rowIndex, columnIndex).isEditable();
+		}
+
+		void rowsAdded(final int[] rowIndices) {
+			// TODO MG better implementation of rowsAdded observe
+			rowsStructureChanged();
+		}
+
+		void rowsRemoved(final int[] rowIndices) {
+			// TODO MG better implementation of rowsRemoved observe
+			rowsStructureChanged();
+		}
+
+		void rowsChanged(final int[] rowIndices) {
+			for (int i = 0; i < rowIndices.length; i++) {
+				fireTableRowsUpdated(rowIndices[i], rowIndices[i]);
+			}
+		}
+
+		void rowsStructureChanged() {
+			fireTableStructureChanged();
 		}
 
 	}
@@ -794,38 +828,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 				SwingUtilities.invokeLater(new Runnable() {
 					@Override
 					public void run() {
-						textField.setText(text);
-						textField.selectAll();
-						textField.getDocument().addDocumentListener(new DocumentListener() {
-
-							@Override
-							public void removeUpdate(final DocumentEvent e) {
-								fireEditEvent(e);
-							}
-
-							@Override
-							public void insertUpdate(final DocumentEvent e) {
-								fireEditEvent(e);
-							}
-
-							@Override
-							public void changedUpdate(final DocumentEvent e) {
-								fireEditEvent(e);
-							}
-
-							private void fireEditEvent(final DocumentEvent e) {
-								final String text = textField.getText();
-								final ITableCellEditEvent editEvent = new TableCellEditEvent(row, column, text);
-								final boolean veto = tableCellEditorObservable.fireOnEdit(editEvent);
-
-								//CHECKSTYLE:OFF
-								if (veto) {
-									//TODO MG handle veto
-								}
-								//CHECKSTYLE:ON
-							}
-
-						});
+						startEditing(textField, text, row, column);
 					}
 				});
 
@@ -855,6 +858,41 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			final ITableCellEvent event = new TableCellEvent(currentRow, currentColumn);
 			tableCellEditorObservable.fireEditCanceled(event);
 			super.cancelCellEditing();
+		}
+
+		private void startEditing(final JTextField textField, final String text, final int row, final int column) {
+			textField.setText(text);
+			textField.selectAll();
+			textField.getDocument().addDocumentListener(new DocumentListener() {
+
+				@Override
+				public void removeUpdate(final DocumentEvent e) {
+					fireEditEvent(e);
+				}
+
+				@Override
+				public void insertUpdate(final DocumentEvent e) {
+					fireEditEvent(e);
+				}
+
+				@Override
+				public void changedUpdate(final DocumentEvent e) {
+					fireEditEvent(e);
+				}
+
+				private void fireEditEvent(final DocumentEvent e) {
+					final String text = textField.getText();
+					final ITableCellEditEvent editEvent = new TableCellEditEvent(row, column, text);
+					final boolean veto = tableCellEditorObservable.fireOnEdit(editEvent);
+
+					//CHECKSTYLE:OFF
+					if (veto) {
+						//TODO MG handle veto
+					}
+					//CHECKSTYLE:ON
+				}
+
+			});
 		}
 
 	}
