@@ -28,8 +28,9 @@
 
 package org.jowidgets.api.model.table;
 
+import java.util.ArrayList;
+
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.model.ITableColumn;
 import org.jowidgets.common.model.ITableColumnModel;
 import org.jowidgets.common.types.AlignmentHorizontal;
 
@@ -38,17 +39,23 @@ public interface IDefaultTableColumnModel extends ITableColumnModel {
 	@Override
 	IDefaultTableColumn getColumn(int columnIndex);
 
-	void addColumn(ITableColumn column);
+	ArrayList<IDefaultTableColumn> getColumns();
 
-	void addColumn(final int columnIndex, ITableColumn column);
+	IDefaultTableColumn addColumn();
 
-	ITableColumn addColumn(ITableColumnBuilder columnBuilder);
+	IDefaultTableColumn addColumn(final int columnIndex);
 
-	ITableColumn addColumn(final int columnIndex, ITableColumnBuilder columnBuilder);
+	void addColumn(IDefaultTableColumn column);
 
-	void addColumn(String text);
+	void addColumn(final int columnIndex, IDefaultTableColumn column);
 
-	void addColumn(String text, String toolTipText);
+	IDefaultTableColumn addColumn(IDefaultTableColumnBuilder columnBuilder);
+
+	IDefaultTableColumn addColumn(final int columnIndex, IDefaultTableColumnBuilder columnBuilder);
+
+	IDefaultTableColumn addColumn(String text);
+
+	IDefaultTableColumn addColumn(String text, String toolTipText);
 
 	void removeColumn(final int columnIndex);
 
@@ -62,9 +69,9 @@ public interface IDefaultTableColumnModel extends ITableColumnModel {
 
 	void modifyModelEnd();
 
-	void setColumn(final int columnIndex, final ITableColumn column);
+	void setColumn(final int columnIndex, final IDefaultTableColumn column);
 
-	ITableColumn setColumn(final int columnIndex, final ITableColumnBuilder columnBuilder);
+	IDefaultTableColumn setColumn(final int columnIndex, final IDefaultTableColumnBuilder columnBuilder);
 
 	void setText(final int columnIndex, String text);
 

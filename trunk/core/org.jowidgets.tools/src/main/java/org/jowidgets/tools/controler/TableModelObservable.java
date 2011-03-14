@@ -26,21 +26,60 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.model.table;
+package org.jowidgets.tools.controler;
 
-import org.jowidgets.api.controler.IChangeObservable;
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.model.ITableColumn;
-import org.jowidgets.common.types.AlignmentHorizontal;
+import java.util.HashSet;
+import java.util.Set;
 
-public interface IDefaultTableColumn extends ITableColumn, IChangeObservable {
+import org.jowidgets.common.model.ITableModelListener;
+import org.jowidgets.common.model.ITableModelObservable;
 
-	void setText(String text);
+public class TableModelObservable implements ITableModelObservable {
 
-	void setToolTipText(String tooltipText);
+	private final Set<ITableModelListener> listeners;
 
-	void setIcon(IImageConstant icon);
+	public TableModelObservable() {
+		this.listeners = new HashSet<ITableModelListener>();
+	}
 
-	void setAlignment(AlignmentHorizontal alignment);
+	@Override
+	public void addTableModelListener(final ITableModelListener listener) {
+		listeners.add(listener);
+	}
+
+	@Override
+	public void removeTableModelListener(final ITableModelListener listener) {
+		listeners.remove(listener);
+	}
+
+	public void fireRowsAdded(final int[] rowIndices) {
+		for (final ITableModelListener listener : listeners) {
+			listener.rowsAdded(rowIndices);
+		}
+	}
+
+	public void fireRowsRemoved(final int[] rowIndices) {
+		for (final ITableModelListener listener : listeners) {
+			listener.rowsRemoved(rowIndices);
+		}
+	}
+
+	public void fireRowsChanged(final int[] rowIndices) {
+		for (final ITableModelListener listener : listeners) {
+			listener.rowsChanged(rowIndices);
+		}
+	}
+
+	public void fireRowsStructureChanged() {
+		for (final ITableModelListener listener : listeners) {
+			listener.rowsStructureChanged();
+		}
+	}
+
+	public void fireSelectionChanged() {
+		for (final ITableModelListener listener : listeners) {
+			listener.selectionChanged();
+		}
+	}
 
 }

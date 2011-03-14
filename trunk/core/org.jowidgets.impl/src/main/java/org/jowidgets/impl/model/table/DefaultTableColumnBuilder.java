@@ -26,21 +26,59 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.model.table;
+package org.jowidgets.impl.model.table;
 
-import org.jowidgets.api.controler.IChangeObservable;
+import org.jowidgets.api.model.table.IDefaultTableColumn;
+import org.jowidgets.api.model.table.IDefaultTableColumnBuilder;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.model.ITableColumn;
 import org.jowidgets.common.types.AlignmentHorizontal;
 
-public interface IDefaultTableColumn extends ITableColumn, IChangeObservable {
+class DefaultTableColumnBuilder implements IDefaultTableColumnBuilder {
 
-	void setText(String text);
+	private String text;
+	private String toolTipText;
+	private IImageConstant icon;
+	private int width;
+	private AlignmentHorizontal alignment;
 
-	void setToolTipText(String tooltipText);
+	DefaultTableColumnBuilder() {
+		this.alignment = AlignmentHorizontal.LEFT;
+		this.width = -1;
+	}
 
-	void setIcon(IImageConstant icon);
+	@Override
+	public IDefaultTableColumnBuilder setText(final String text) {
+		this.text = text;
+		return this;
+	}
 
-	void setAlignment(AlignmentHorizontal alignment);
+	@Override
+	public IDefaultTableColumnBuilder setToolTipText(final String toolTipText) {
+		this.toolTipText = toolTipText;
+		return this;
+	}
+
+	@Override
+	public IDefaultTableColumnBuilder setIcon(final IImageConstant icon) {
+		this.icon = icon;
+		return this;
+	}
+
+	@Override
+	public IDefaultTableColumnBuilder setWidth(final int width) {
+		this.width = width;
+		return this;
+	}
+
+	@Override
+	public IDefaultTableColumnBuilder setAlignment(final AlignmentHorizontal alignment) {
+		this.alignment = alignment;
+		return this;
+	}
+
+	@Override
+	public IDefaultTableColumn build() {
+		return new DefaultTableColumn(text, toolTipText, icon, width, alignment);
+	}
 
 }

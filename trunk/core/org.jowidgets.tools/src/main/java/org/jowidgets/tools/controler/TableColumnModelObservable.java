@@ -26,21 +26,54 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.model.table;
+package org.jowidgets.tools.controler;
 
-import org.jowidgets.api.controler.IChangeObservable;
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.model.ITableColumn;
-import org.jowidgets.common.types.AlignmentHorizontal;
+import java.util.HashSet;
+import java.util.Set;
 
-public interface IDefaultTableColumn extends ITableColumn, IChangeObservable {
+import org.jowidgets.common.model.ITableColumnModelListener;
+import org.jowidgets.common.model.ITableColumnModelObservable;
 
-	void setText(String text);
+public class TableColumnModelObservable implements ITableColumnModelObservable {
 
-	void setToolTipText(String tooltipText);
+	private final Set<ITableColumnModelListener> listeners;
 
-	void setIcon(IImageConstant icon);
+	public TableColumnModelObservable() {
+		this.listeners = new HashSet<ITableColumnModelListener>();
+	}
 
-	void setAlignment(AlignmentHorizontal alignment);
+	@Override
+	public void addColumnModelListener(final ITableColumnModelListener listener) {
+		listeners.add(listener);
+	}
+
+	@Override
+	public void removeColumnModelListener(final ITableColumnModelListener listener) {
+		listeners.remove(listener);
+	}
+
+	public void fireColumnsAdded(final int[] columnIndices) {
+		for (final ITableColumnModelListener listener : listeners) {
+			listener.columnsAdded(columnIndices);
+		}
+	}
+
+	public void fireColumnsRemoved(final int[] columnIndices) {
+		for (final ITableColumnModelListener listener : listeners) {
+			listener.columnsRemoved(columnIndices);
+		}
+	}
+
+	public void fireColumnsChanged(final int[] columnIndices) {
+		for (final ITableColumnModelListener listener : listeners) {
+			listener.columnsChanged(columnIndices);
+		}
+	}
+
+	public void fireColumnsStructureChanged() {
+		for (final ITableColumnModelListener listener : listeners) {
+			listener.columnsStructureChanged();
+		}
+	}
 
 }

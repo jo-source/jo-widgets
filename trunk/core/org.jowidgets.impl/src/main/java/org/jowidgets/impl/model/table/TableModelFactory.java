@@ -30,33 +30,29 @@ package org.jowidgets.impl.model.table;
 
 import org.jowidgets.api.model.table.IDefaultTableColumn;
 import org.jowidgets.api.model.table.IDefaultTableColumnModel;
-import org.jowidgets.api.model.table.ITableColumnBuilder;
+import org.jowidgets.api.model.table.IDefaultTableColumnBuilder;
 import org.jowidgets.api.model.table.ITableModelFactory;
 
 public class TableModelFactory implements ITableModelFactory {
 
 	@Override
 	public IDefaultTableColumnModel columnModel() {
-		// TODO Auto-generated method stub
-		return null;
+		return new DefaultTableColumnModel(0);
 	}
 
 	@Override
 	public IDefaultTableColumnModel columnModel(final int columnCount) {
-		// TODO Auto-generated method stub
-		return null;
+		return new DefaultTableColumnModel(columnCount);
 	}
 
 	@Override
-	public ITableColumnBuilder columnBuilder() {
-		// TODO Auto-generated method stub
-		return null;
+	public IDefaultTableColumnBuilder columnBuilder() {
+		return new DefaultTableColumnBuilder();
 	}
 
 	@Override
 	public IDefaultTableColumn column() {
-		// TODO Auto-generated method stub
-		return null;
+		return new DefaultTableColumnBuilder().build();
 	}
 
 }

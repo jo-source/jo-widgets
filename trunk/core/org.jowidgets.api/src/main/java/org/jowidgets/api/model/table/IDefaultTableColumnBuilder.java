@@ -31,17 +31,17 @@ package org.jowidgets.api.model.table;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.AlignmentHorizontal;
 
-public interface ITableColumnBuilder {
+public interface IDefaultTableColumnBuilder {
 
-	ITableColumnBuilder setText(String text);
+	IDefaultTableColumnBuilder setText(String text);
 
-	ITableColumnBuilder setToolTipText(String tooltipText);
+	IDefaultTableColumnBuilder setToolTipText(String tooltipText);
 
-	ITableColumnBuilder setIcon(IImageConstant icon);
+	IDefaultTableColumnBuilder setIcon(IImageConstant icon);
 
-	ITableColumnBuilder setWidth(int width);
+	IDefaultTableColumnBuilder setWidth(int width);
 
-	ITableColumnBuilder setAlignment(AlignmentHorizontal alignment);
+	IDefaultTableColumnBuilder setAlignment(AlignmentHorizontal alignment);
 
 	IDefaultTableColumn build();
 
