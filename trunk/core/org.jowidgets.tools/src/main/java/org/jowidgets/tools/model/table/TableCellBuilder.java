@@ -26,61 +26,73 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.model.table;
+package org.jowidgets.tools.model.table;
 
-import org.jowidgets.api.model.table.IDefaultTableColumn;
-import org.jowidgets.api.model.table.IDefaultTableColumnBuilder;
-import org.jowidgets.api.model.table.IDefaultTableColumnModel;
-import org.jowidgets.api.model.table.ISimpleTableModel;
-import org.jowidgets.api.model.table.ISimpleTableModelBuilder;
 import org.jowidgets.api.model.table.ITableCellBuilder;
-import org.jowidgets.api.model.table.ITableModelFactory;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.model.ITableCell;
+import org.jowidgets.common.types.Markup;
 
-public class TableModelFactory implements ITableModelFactory {
+public class TableCellBuilder implements ITableCellBuilder {
 
-	@Override
-	public IDefaultTableColumnModel columnModel() {
-		return new DefaultTableColumnModel(0);
+	private final ITableCellBuilder builder;
+
+	public TableCellBuilder() {
+		this(Toolkit.getModelFactoryProvider().getTableModelFactory().cellBuilder());
+	}
+
+	public TableCellBuilder(final ITableCellBuilder builder) {
+		super();
+		this.builder = builder;
 	}
 
 	@Override
-	public IDefaultTableColumnModel columnModel(final int columnCount) {
-		return new DefaultTableColumnModel(columnCount);
+	public ITableCellBuilder setText(final String text) {
+		builder.setText(text);
+		return this;
 	}
 
 	@Override
-	public IDefaultTableColumnBuilder columnBuilder() {
-		return new DefaultTableColumnBuilder();
+	public ITableCellBuilder setToolTipText(final String toolTipText) {
+		builder.setToolTipText(toolTipText);
+		return this;
 	}
 
 	@Override
-	public IDefaultTableColumn column() {
-		return new DefaultTableColumnBuilder().build();
+	public ITableCellBuilder setIcon(final IImageConstant icon) {
+		builder.setIcon(icon);
+		return this;
 	}
 
 	@Override
-	public ISimpleTableModel simpleTableModel() {
-		return new SimpleTableModelBuilder().build();
+	public ITableCellBuilder setForegroundColor(final IColorConstant foregroundColor) {
+		builder.setForegroundColor(foregroundColor);
+		return this;
 	}
 
 	@Override
-	public ISimpleTableModel simpleTableModel(final int columnCount) {
-		return new SimpleTableModelBuilder().setColumnCount(columnCount).build();
+	public ITableCellBuilder setBackgroundColor(final IColorConstant backgroundColor) {
+		builder.setBackgroundColor(backgroundColor);
+		return this;
 	}
 
 	@Override
-	public ISimpleTableModel simpleTableModel(final int rowCount, final int columnCount) {
-		return new SimpleTableModelBuilder().setColumnCount(columnCount).setRowCount(rowCount).build();
+	public ITableCellBuilder setMarkup(final Markup markup) {
+		builder.setMarkup(markup);
+		return this;
 	}
 
 	@Override
-	public ISimpleTableModelBuilder simpleTableModelBuilder() {
-		return new SimpleTableModelBuilder();
+	public ITableCellBuilder setEditable(final boolean editable) {
+		builder.setEditable(editable);
+		return this;
 	}
 
 	@Override
-	public ITableCellBuilder cellBuilder() {
-		return new TableCellBuilder();
+	public ITableCell build() {
+		return builder.build();
 	}
 
 }

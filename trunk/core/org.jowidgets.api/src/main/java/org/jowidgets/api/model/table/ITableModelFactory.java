@@ -38,4 +38,14 @@ public interface ITableModelFactory {
 
 	IDefaultTableColumn column();
 
+	ISimpleTableModel simpleTableModel();
+
+	ISimpleTableModel simpleTableModel(int columnCount);
+
+	ISimpleTableModel simpleTableModel(int rowCount, int columnCount);
+
+	ISimpleTableModelBuilder simpleTableModelBuilder();
+
+	ITableCellBuilder cellBuilder();
+
 }

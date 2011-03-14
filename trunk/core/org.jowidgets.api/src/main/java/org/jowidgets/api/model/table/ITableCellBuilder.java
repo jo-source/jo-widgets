@@ -1,22 +1,22 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  * * Redistributions of source code must retain the above copyright
- * notice, this list of conditions and the following disclaimer.
+ *   notice, this list of conditions and the following disclaimer.
  * * Redistributions in binary form must reproduce the above copyright
- * notice, this list of conditions and the following disclaimer in the
- * documentation and/or other materials provided with the distribution.
+ *   notice, this list of conditions and the following disclaimer in the
+ *   documentation and/or other materials provided with the distribution.
  * * Neither the name of the jo-widgets.org nor the
- * names of its contributors may be used to endorse or promote products
- * derived from this software without specific prior written permission.
+ *   names of its contributors may be used to endorse or promote products
+ *   derived from this software without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY
+ * ARE DISCLAIMED. IN NO EVENT SHALL jo-widgets.org BE LIABLE FOR ANY
  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
  * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
@@ -25,29 +25,30 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.color;
 
-import org.jowidgets.common.color.ColorValue;
+package org.jowidgets.api.model.table;
+
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.model.ITableCell;
+import org.jowidgets.common.types.Markup;
 
-public enum Colors implements IColorConstant {
+public interface ITableCellBuilder {
 
-	DEFAULT(new ColorValue(0, 0, 0)),
-	ERROR(new ColorValue(220, 0, 0)),
-	STRONG(new ColorValue(0, 70, 213)),
-	WHITE(new ColorValue(255, 255, 255)),
-	DISABLED(new ColorValue(130, 130, 130)),
-	DEFAULT_TABLE_EVEN_BACKGROUND_COLOR(new ColorValue(222, 235, 235));
+	ITableCellBuilder setForegroundColor(IColorConstant foregroundColor);
 
-	private ColorValue colorValue;
+	ITableCellBuilder setBackgroundColor(IColorConstant backgroundColor);
 
-	private Colors(final ColorValue colorValue) {
-		this.colorValue = colorValue;
-	}
+	ITableCellBuilder setMarkup(Markup markup);
 
-	@Override
-	public ColorValue getDefaultValue() {
-		return colorValue;
-	}
+	ITableCellBuilder setText(String text);
+
+	ITableCellBuilder setToolTipText(String toolTipText);
+
+	ITableCellBuilder setIcon(IImageConstant icon);
+
+	ITableCellBuilder setEditable(boolean editable);
+
+	ITableCell build();
 
 }

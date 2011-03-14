@@ -28,59 +28,72 @@
 
 package org.jowidgets.impl.model.table;
 
-import org.jowidgets.api.model.table.IDefaultTableColumn;
-import org.jowidgets.api.model.table.IDefaultTableColumnBuilder;
-import org.jowidgets.api.model.table.IDefaultTableColumnModel;
-import org.jowidgets.api.model.table.ISimpleTableModel;
-import org.jowidgets.api.model.table.ISimpleTableModelBuilder;
 import org.jowidgets.api.model.table.ITableCellBuilder;
-import org.jowidgets.api.model.table.ITableModelFactory;
+import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.model.ITableCell;
+import org.jowidgets.common.types.Markup;
 
-public class TableModelFactory implements ITableModelFactory {
+final class TableCellBuilder implements ITableCellBuilder {
 
-	@Override
-	public IDefaultTableColumnModel columnModel() {
-		return new DefaultTableColumnModel(0);
+	private String text;
+	private String toolTipText;
+	private IImageConstant icon;
+	private Markup markup;
+	private IColorConstant foregroundColor;
+	private IColorConstant backgroundColor;
+	private boolean editable;
+
+	TableCellBuilder() {
+		this.markup = Markup.DEFAULT;
+		this.editable = false;
 	}
 
 	@Override
-	public IDefaultTableColumnModel columnModel(final int columnCount) {
-		return new DefaultTableColumnModel(columnCount);
+	public ITableCellBuilder setText(final String text) {
+		this.text = text;
+		return this;
 	}
 
 	@Override
-	public IDefaultTableColumnBuilder columnBuilder() {
-		return new DefaultTableColumnBuilder();
+	public ITableCellBuilder setToolTipText(final String toolTipText) {
+		this.toolTipText = toolTipText;
+		return this;
 	}
 
 	@Override
-	public IDefaultTableColumn column() {
-		return new DefaultTableColumnBuilder().build();
+	public ITableCellBuilder setIcon(final IImageConstant icon) {
+		this.icon = icon;
+		return this;
 	}
 
 	@Override
-	public ISimpleTableModel simpleTableModel() {
-		return new SimpleTableModelBuilder().build();
+	public ITableCellBuilder setMarkup(final Markup markup) {
+		this.markup = markup;
+		return this;
 	}
 
 	@Override
-	public ISimpleTableModel simpleTableModel(final int columnCount) {
-		return new SimpleTableModelBuilder().setColumnCount(columnCount).build();
+	public ITableCellBuilder setForegroundColor(final IColorConstant foregroundColor) {
+		this.foregroundColor = foregroundColor;
+		return this;
 	}
 
 	@Override
-	public ISimpleTableModel simpleTableModel(final int rowCount, final int columnCount) {
-		return new SimpleTableModelBuilder().setColumnCount(columnCount).setRowCount(rowCount).build();
+	public ITableCellBuilder setBackgroundColor(final IColorConstant backgroundColor) {
+		this.backgroundColor = backgroundColor;
+		return this;
 	}
 
 	@Override
-	public ISimpleTableModelBuilder simpleTableModelBuilder() {
-		return new SimpleTableModelBuilder();
+	public ITableCellBuilder setEditable(final boolean editable) {
+		this.editable = editable;
+		return this;
 	}
 
 	@Override
-	public ITableCellBuilder cellBuilder() {
-		return new TableCellBuilder();
+	public ITableCell build() {
+		return new TableCell(text, toolTipText, icon, markup, foregroundColor, backgroundColor, editable);
 	}
 
 }
