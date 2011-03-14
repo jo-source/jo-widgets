@@ -103,7 +103,7 @@ public class ViewDemo1 extends AbstractView {
 
 		content.setLayout(MigLayoutFactory.growingInnerCellLayout());
 
-		final int rowCount = 20000;
+		final int rowCount = 2000;
 		final int columnCount = 13;
 
 		final ITableBluePrint tableBp = bpf.table();
@@ -147,6 +147,9 @@ public class ViewDemo1 extends AbstractView {
 
 						@Override
 						public IImageConstant getIcon() {
+							if (columnIndex == 2) {
+								return SilkIcons.ARROW_DOWN;
+							}
 							return null;
 						}
 
@@ -315,7 +318,7 @@ public class ViewDemo1 extends AbstractView {
 			}
 
 			@Override
-			public void editFinished(final IVetoable veto, final ITableCellEditEvent event) {
+			public void editFinished(final ITableCellEditEvent event) {
 				//CHECKSTYLE:OFF
 				System.out.println("editFinished: " + event);
 				//CHECKSTYLE:ON
