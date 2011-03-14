@@ -26,80 +26,113 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.model.table;
+package org.jowidgets.impl.model.table;
 
-import org.jowidgets.api.model.table.ITableCellBuilder;
-import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.model.ITableCell;
 import org.jowidgets.common.types.Markup;
 
-public class TableCell implements ITableCell {
+final class TableCell implements ITableCell {
 
-	private final ITableCell cell;
+	private String text;
+	private String toolTipText;
+	private IImageConstant icon;
+	private Markup markup;
+	private IColorConstant foregroundColor;
+	private IColorConstant backgroundColor;
+	private boolean editable;
 
-	public TableCell() {
-		this(builder());
+	TableCell(final ITableCell cell) {
+		this(
+			cell.getText(),
+			cell.getToolTipText(),
+			cell.getIcon(),
+			cell.getMarkup(),
+			cell.getForegroundColor(),
+			cell.getBackgroundColor(),
+			cell.isEditable());
 	}
 
-	public TableCell(final String text) {
-		this(builder(text));
-	}
+	TableCell(
+		final String text,
+		final String toolTipText,
+		final IImageConstant icon,
+		final Markup markup,
+		final IColorConstant foregroundColor,
+		final IColorConstant backgroundColor,
+		final boolean editable) {
 
-	public TableCell(final String text, final String toolTipText) {
-		this(builder(text, toolTipText));
-	}
-
-	public TableCell(final ITableCellBuilder cellBuilder) {
-		super();
-		this.cell = cellBuilder.build();
+		this.text = text;
+		this.toolTipText = toolTipText;
+		this.icon = icon;
+		this.markup = markup;
+		this.foregroundColor = foregroundColor;
+		this.backgroundColor = backgroundColor;
+		this.editable = editable;
 	}
 
 	@Override
 	public String getText() {
-		return cell.getText();
+		return text;
 	}
 
 	@Override
 	public String getToolTipText() {
-		return cell.getToolTipText();
+		return toolTipText;
 	}
 
 	@Override
 	public IImageConstant getIcon() {
-		return cell.getIcon();
-	}
-
-	@Override
-	public IColorConstant getForegroundColor() {
-		return cell.getForegroundColor();
-	}
-
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return cell.getBackgroundColor();
+		return icon;
 	}
 
 	@Override
 	public Markup getMarkup() {
-		return cell.getMarkup();
+		return markup;
+	}
+
+	@Override
+	public IColorConstant getForegroundColor() {
+		return foregroundColor;
+	}
+
+	@Override
+	public IColorConstant getBackgroundColor() {
+		return backgroundColor;
 	}
 
 	@Override
 	public boolean isEditable() {
-		return cell.isEditable();
+		return editable;
 	}
 
-	public static ITableCellBuilder builder() {
-		return Toolkit.getModelFactoryProvider().getTableModelFactory().cellBuilder();
+	protected void setText(final String text) {
+		this.text = text;
 	}
 
-	public static ITableCellBuilder builder(final String text) {
-		return builder().setText(text);
+	protected void setToolTipText(final String toolTipText) {
+		this.toolTipText = toolTipText;
 	}
 
-	public static ITableCellBuilder builder(final String text, final String toolTipText) {
-		return builder(text).setToolTipText(toolTipText);
+	protected void setIcon(final IImageConstant icon) {
+		this.icon = icon;
 	}
+
+	protected void setMarkup(final Markup markup) {
+		this.markup = markup;
+	}
+
+	protected void setForegroundColor(final IColorConstant foregroundColor) {
+		this.foregroundColor = foregroundColor;
+	}
+
+	protected void setBackgroundColor(final IColorConstant backgroundColor) {
+		this.backgroundColor = backgroundColor;
+	}
+
+	protected void setEditable(final boolean editable) {
+		this.editable = editable;
+	}
+
 }

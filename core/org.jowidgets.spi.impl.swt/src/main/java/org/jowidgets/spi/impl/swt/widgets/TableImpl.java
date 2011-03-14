@@ -262,8 +262,13 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		else {
 			swtColumn.setAlignment(SWT.LEFT);
 		}
+		if (joColumn.getWidth() != -1) {
+			swtColumn.setWidth(joColumn.getWidth());
+		}
+		else {
+			swtColumn.setWidth(100);
+		}
 		swtColumn.setToolTipText(joColumn.getToolTipText());
-		swtColumn.setWidth(joColumn.getWidth());
 	}
 
 	private void addColumnListener(final int index) {

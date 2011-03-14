@@ -26,80 +26,46 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.model.table;
+package org.jowidgets.api.model.table;
 
-import org.jowidgets.api.model.table.ITableCellBuilder;
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.model.ITableCell;
-import org.jowidgets.common.types.Markup;
+import org.jowidgets.common.model.ITableModel;
 
-public class TableCell implements ITableCell {
+public interface ISimpleTableModel extends ITableModel, IDefaultTableColumnModel {
 
-	private final ITableCell cell;
+	void addRow();
 
-	public TableCell() {
-		this(builder());
-	}
+	void addRow(int rowIndex);
 
-	public TableCell(final String text) {
-		this(builder(text));
-	}
+	void addRows(int rowIndex, int rowCount);
 
-	public TableCell(final String text, final String toolTipText) {
-		this(builder(text, toolTipText));
-	}
+	void addRow(ITableCell... cells);
 
-	public TableCell(final ITableCellBuilder cellBuilder) {
-		super();
-		this.cell = cellBuilder.build();
-	}
+	void addRow(int rowIndex, ITableCell... cells);
 
-	@Override
-	public String getText() {
-		return cell.getText();
-	}
+	void addRow(ITableCellBuilder... cellBuilders);
 
-	@Override
-	public String getToolTipText() {
-		return cell.getToolTipText();
-	}
+	void addRow(int rowIndex, ITableCellBuilder... cellBuilders);
 
-	@Override
-	public IImageConstant getIcon() {
-		return cell.getIcon();
-	}
+	void addRow(String... cellTexts);
 
-	@Override
-	public IColorConstant getForegroundColor() {
-		return cell.getForegroundColor();
-	}
+	void addRow(int rowIndex, String... cellTexts);
 
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return cell.getBackgroundColor();
-	}
+	void removeRow(int index);
 
-	@Override
-	public Markup getMarkup() {
-		return cell.getMarkup();
-	}
+	void removeRows(int fromIndex, int toIndex);
 
-	@Override
-	public boolean isEditable() {
-		return cell.isEditable();
-	}
+	void removeAllRows();
 
-	public static ITableCellBuilder builder() {
-		return Toolkit.getModelFactoryProvider().getTableModelFactory().cellBuilder();
-	}
+	void setCell(int rowIndex, int columnIndex, ITableCell cell);
 
-	public static ITableCellBuilder builder(final String text) {
-		return builder().setText(text);
-	}
+	void setCell(int rowIndex, int columnIndex, ITableCellBuilder cellBuilder);
 
-	public static ITableCellBuilder builder(final String text, final String toolTipText) {
-		return builder(text).setToolTipText(toolTipText);
-	}
+	void setCell(int rowIndex, int columnIndex, String text);
+
+	void setCell(int rowIndex, int columnIndex, String text, IImageConstant icon);
+
+	void setCell(int rowIndex, int columnIndex, String text, boolean editable);
+
 }

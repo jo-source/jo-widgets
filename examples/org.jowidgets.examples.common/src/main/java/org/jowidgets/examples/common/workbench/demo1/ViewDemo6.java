@@ -28,11 +28,9 @@
 
 package org.jowidgets.examples.common.workbench.demo1;
 
-import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.model.table.IDefaultTableColumn;
 import org.jowidgets.api.model.table.IDefaultTableColumnModel;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.blueprint.ITableBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
@@ -79,12 +77,6 @@ public class ViewDemo6 extends AbstractView implements IView {
 
 		container.setLayout(MigLayoutFactory.growingInnerCellLayout());
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-
-		final IComposite content = container.add(
-				bpf.composite().setBackgroundColor(Colors.WHITE),
-				MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-
-		content.setLayout(MigLayoutFactory.growingInnerCellLayout());
 
 		final int rowCount = 200;
 		final int columnCount = 10;
@@ -133,6 +125,6 @@ public class ViewDemo6 extends AbstractView implements IView {
 
 		final ITableBluePrint tableBp = bpf.table().setTableModel(tableModel).setColumnModel(columnModel);
 		tableBp.setColumnModel(columnModel);
-		content.add(tableBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+		container.add(tableBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 	}
 }

@@ -28,59 +28,64 @@
 
 package org.jowidgets.impl.model.table;
 
-import org.jowidgets.api.model.table.IDefaultTableColumn;
-import org.jowidgets.api.model.table.IDefaultTableColumnBuilder;
-import org.jowidgets.api.model.table.IDefaultTableColumnModel;
+import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.model.table.ISimpleTableModel;
 import org.jowidgets.api.model.table.ISimpleTableModelBuilder;
-import org.jowidgets.api.model.table.ITableCellBuilder;
-import org.jowidgets.api.model.table.ITableModelFactory;
+import org.jowidgets.common.color.IColorConstant;
 
-public class TableModelFactory implements ITableModelFactory {
+class SimpleTableModelBuilder implements ISimpleTableModelBuilder {
 
-	@Override
-	public IDefaultTableColumnModel columnModel() {
-		return new DefaultTableColumnModel(0);
+	private int rowCount;
+	private int columnCount;
+	private IColorConstant evenBackgroundColor;
+	private IColorConstant oddBackgroundColor;
+
+	SimpleTableModelBuilder() {
+		this.rowCount = 0;
+		this.columnCount = 0;
+		this.evenBackgroundColor = Colors.DEFAULT_TABLE_EVEN_BACKGROUND_COLOR;
 	}
 
 	@Override
-	public IDefaultTableColumnModel columnModel(final int columnCount) {
-		return new DefaultTableColumnModel(columnCount);
+	public ISimpleTableModelBuilder setRowCount(final int rowCount) {
+		this.rowCount = rowCount;
+		return this;
 	}
 
 	@Override
-	public IDefaultTableColumnBuilder columnBuilder() {
-		return new DefaultTableColumnBuilder();
+	public ISimpleTableModelBuilder setColumnCount(final int columnCount) {
+		this.columnCount = columnCount;
+		return this;
 	}
 
 	@Override
-	public IDefaultTableColumn column() {
-		return new DefaultTableColumnBuilder().build();
+	public ISimpleTableModelBuilder setDefaultAlternatingRowColorsEnabled(final boolean enabled) {
+		if (enabled) {
+			this.oddBackgroundColor = null;
+			this.evenBackgroundColor = Colors.DEFAULT_TABLE_EVEN_BACKGROUND_COLOR;
+		}
+		else {
+			this.oddBackgroundColor = null;
+			this.evenBackgroundColor = null;
+		}
+		return this;
 	}
 
 	@Override
-	public ISimpleTableModel simpleTableModel() {
-		return new SimpleTableModelBuilder().build();
+	public ISimpleTableModelBuilder setEvenRowsBackgroundColor(final IColorConstant color) {
+		this.evenBackgroundColor = color;
+		return this;
 	}
 
 	@Override
-	public ISimpleTableModel simpleTableModel(final int columnCount) {
-		return new SimpleTableModelBuilder().setColumnCount(columnCount).build();
+	public ISimpleTableModelBuilder setOddRowsBackgroundColor(final IColorConstant color) {
+		this.oddBackgroundColor = color;
+		return this;
 	}
 
 	@Override
-	public ISimpleTableModel simpleTableModel(final int rowCount, final int columnCount) {
-		return new SimpleTableModelBuilder().setColumnCount(columnCount).setRowCount(rowCount).build();
-	}
-
-	@Override
-	public ISimpleTableModelBuilder simpleTableModelBuilder() {
-		return new SimpleTableModelBuilder();
-	}
-
-	@Override
-	public ITableCellBuilder cellBuilder() {
-		return new TableCellBuilder();
+	public ISimpleTableModel build() {
+		return new SimpleTableModel(rowCount, columnCount, evenBackgroundColor, oddBackgroundColor);
 	}
 
 }
