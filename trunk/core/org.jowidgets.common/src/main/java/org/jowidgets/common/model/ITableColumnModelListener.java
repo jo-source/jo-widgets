@@ -26,18 +26,16 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.widgets.model;
+package org.jowidgets.common.model;
 
-public interface ITableModelListener {
+public interface ITableColumnModelListener {
 
-	void rowsAdded(int[] rowIndices);
+	void columnsAdded(int[] columnIndices);
 
-	void rowsRemoved(int[] rowIndices);
+	void columnsRemoved(int[] columnIndices);
 
-	void rowsChanged(int[] rowIndices);
+	void columnsChanged(int[] columnIndices);
 
-	void rowsStructureChanged();
-
-	void selectionChanged();
+	void columnsStructureChanged();
 
 }

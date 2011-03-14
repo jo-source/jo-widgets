@@ -30,8 +30,8 @@ package org.jowidgets.impl.widgets.basic.model;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.model.ITableCell;
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.widgets.model.ITableCell;
 
 public class DefaultTableCell implements ITableCell {
 

@@ -26,14 +26,26 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.widgets.model;
+package org.jowidgets.common.model;
 
-public interface ITableColumnModel {
+import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Markup;
 
-	int getColumnCount();
+public interface ITableCell {
 
-	ITableColumn getColumn(int columnIndex);
+	IColorConstant getForegroundColor();
 
-	ITableColumnModelObservable getTableColumnModelObservable();
+	IColorConstant getBackgroundColor();
+
+	Markup getMarkup();
+
+	String getText();
+
+	String getToolTipText();
+
+	IImageConstant getIcon();
+
+	boolean isEditable();
 
 }
