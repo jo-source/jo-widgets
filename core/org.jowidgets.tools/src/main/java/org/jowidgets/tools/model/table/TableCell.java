@@ -26,21 +26,48 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.model.table;
+package org.jowidgets.tools.model.table;
 
-import org.jowidgets.api.controler.IChangeObservable;
+import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.model.ITableColumn;
-import org.jowidgets.common.types.AlignmentHorizontal;
+import org.jowidgets.common.model.ITableCell;
+import org.jowidgets.common.types.Markup;
 
-public interface IDefaultTableColumn extends ITableColumn, IChangeObservable {
+public class TableCell implements ITableCell {
 
-	void setText(String text);
+	@Override
+	public String getText() {
+		return null;
+	}
 
-	void setToolTipText(String tooltipText);
+	@Override
+	public String getToolTipText() {
+		return null;
+	}
 
-	void setIcon(IImageConstant icon);
+	@Override
+	public IImageConstant getIcon() {
+		return null;
+	}
 
-	void setAlignment(AlignmentHorizontal alignment);
+	@Override
+	public IColorConstant getForegroundColor() {
+		return null;
+	}
+
+	@Override
+	public IColorConstant getBackgroundColor() {
+		return null;
+	}
+
+	@Override
+	public Markup getMarkup() {
+		return null;
+	}
+
+	@Override
+	public boolean isEditable() {
+		return false;
+	}
 
 }

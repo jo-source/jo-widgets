@@ -34,7 +34,7 @@ public interface ITableModelFactory {
 
 	IDefaultTableColumnModel columnModel(int columnCount);
 
-	ITableColumnBuilder columnBuilder();
+	IDefaultTableColumnBuilder columnBuilder();
 
 	IDefaultTableColumn column();
 
