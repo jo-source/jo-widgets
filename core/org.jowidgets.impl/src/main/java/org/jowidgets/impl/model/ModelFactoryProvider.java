@@ -30,11 +30,14 @@ package org.jowidgets.impl.model;
 
 import org.jowidgets.api.model.IModelFactoryProvider;
 import org.jowidgets.api.model.item.IItemModelFactory;
+import org.jowidgets.api.model.table.ITableModelFactory;
 import org.jowidgets.impl.model.item.ItemModelFactory;
+import org.jowidgets.impl.model.table.TableModelFactory;
 
 public class ModelFactoryProvider implements IModelFactoryProvider {
 
 	private IItemModelFactory itemModelFactory;
+	private ITableModelFactory tableModelFactory;
 
 	@Override
 	public IItemModelFactory getItemModelFactory() {
@@ -42,6 +45,14 @@ public class ModelFactoryProvider implements IModelFactoryProvider {
 			itemModelFactory = new ItemModelFactory();
 		}
 		return itemModelFactory;
+	}
+
+	@Override
+	public ITableModelFactory getTableModelFactory() {
+		if (tableModelFactory == null) {
+			this.tableModelFactory = new TableModelFactory();
+		}
+		return tableModelFactory;
 	}
 
 }
