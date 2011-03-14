@@ -26,15 +26,52 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.model;
+package org.jowidgets.api.model.table;
 
-import org.jowidgets.api.model.item.IItemModelFactory;
-import org.jowidgets.api.model.table.ITableModelFactory;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.AlignmentHorizontal;
+import org.jowidgets.common.widgets.model.ITableColumn;
+import org.jowidgets.common.widgets.model.ITableColumnModel;
 
-public interface IModelFactoryProvider {
+public interface IDefaultTableColumnModel extends ITableColumnModel {
 
-	IItemModelFactory getItemModelFactory();
+	@Override
+	IDefaultTableColumn getColumn(int columnIndex);
 
-	ITableModelFactory getTableModelFactory();
+	void addColumn(ITableColumn column);
+
+	void addColumn(final int columnIndex, ITableColumn column);
+
+	ITableColumn addColumn(ITableColumnBuilder columnBuilder);
+
+	ITableColumn addColumn(final int columnIndex, ITableColumnBuilder columnBuilder);
+
+	void addColumn(String text);
+
+	void addColumn(String text, String toolTipText);
+
+	void removeColumn(final int columnIndex);
+
+	void removeColumns(final int fromColumnIndex, final int toColumnIndex);
+
+	void removeColumns(final int[] columns);
+
+	void removeAllColumns();
+
+	void modifyModelStart();
+
+	void modifyModelEnd();
+
+	void setColumn(final int columnIndex, final ITableColumn column);
+
+	ITableColumn setColumn(final int columnIndex, final ITableColumnBuilder columnBuilder);
+
+	void setText(final int columnIndex, String text);
+
+	void setToolTipText(final int columnIndex, String tooltipText);
+
+	void setIcon(final int columnIndex, IImageConstant icon);
+
+	void setAlignment(final int columnIndex, AlignmentHorizontal alignment);
 
 }

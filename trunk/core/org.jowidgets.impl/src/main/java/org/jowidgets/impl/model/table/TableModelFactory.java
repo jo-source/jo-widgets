@@ -26,15 +26,37 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.model;
+package org.jowidgets.impl.model.table;
 
-import org.jowidgets.api.model.item.IItemModelFactory;
+import org.jowidgets.api.model.table.IDefaultTableColumn;
+import org.jowidgets.api.model.table.IDefaultTableColumnModel;
+import org.jowidgets.api.model.table.ITableColumnBuilder;
 import org.jowidgets.api.model.table.ITableModelFactory;
 
-public interface IModelFactoryProvider {
+public class TableModelFactory implements ITableModelFactory {
 
-	IItemModelFactory getItemModelFactory();
+	@Override
+	public IDefaultTableColumnModel columnModel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-	ITableModelFactory getTableModelFactory();
+	@Override
+	public IDefaultTableColumnModel columnModel(final int columnCount) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ITableColumnBuilder columnBuilder() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public IDefaultTableColumn column() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

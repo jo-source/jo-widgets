@@ -26,15 +26,20 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.model;
+package org.jowidgets.api.model.table;
 
-import org.jowidgets.api.model.item.IItemModelFactory;
-import org.jowidgets.api.model.table.ITableModelFactory;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.AlignmentHorizontal;
+import org.jowidgets.common.widgets.model.ITableColumn;
 
-public interface IModelFactoryProvider {
+public interface IDefaultTableColumn extends ITableColumn {
 
-	IItemModelFactory getItemModelFactory();
+	void setText(String text);
 
-	ITableModelFactory getTableModelFactory();
+	void setToolTipText(String tooltipText);
+
+	void setIcon(IImageConstant icon);
+
+	void setAlignment(AlignmentHorizontal alignment);
 
 }

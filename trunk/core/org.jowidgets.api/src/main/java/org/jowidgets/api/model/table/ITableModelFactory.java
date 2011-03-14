@@ -26,15 +26,16 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.model;
+package org.jowidgets.api.model.table;
 
-import org.jowidgets.api.model.item.IItemModelFactory;
-import org.jowidgets.api.model.table.ITableModelFactory;
+public interface ITableModelFactory {
 
-public interface IModelFactoryProvider {
+	IDefaultTableColumnModel columnModel();
 
-	IItemModelFactory getItemModelFactory();
+	IDefaultTableColumnModel columnModel(int columnCount);
 
-	ITableModelFactory getTableModelFactory();
+	ITableColumnBuilder columnBuilder();
+
+	IDefaultTableColumn column();
 
 }
