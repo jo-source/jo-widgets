@@ -34,7 +34,7 @@ public interface ITableCellEditorListener {
 
 	void onEdit(IVetoable veto, ITableCellEditEvent event);
 
-	void editFinished(IVetoable veto, ITableCellEditEvent event);
+	void editFinished(ITableCellEditEvent event);
 
 	void editCanceled(ITableCellEvent event);
 

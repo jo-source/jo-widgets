@@ -83,8 +83,10 @@ import org.jowidgets.common.widgets.model.ITableCell;
 import org.jowidgets.common.widgets.model.ITableColumn;
 import org.jowidgets.common.widgets.model.ITableColumnModel;
 import org.jowidgets.common.widgets.model.ITableColumnModelListener;
+import org.jowidgets.common.widgets.model.ITableColumnModelObservable;
 import org.jowidgets.common.widgets.model.ITableModel;
 import org.jowidgets.common.widgets.model.ITableModelListener;
+import org.jowidgets.common.widgets.model.ITableModelObservable;
 import org.jowidgets.spi.impl.controler.PopupDetectionObservable;
 import org.jowidgets.spi.impl.controler.TableCellEditEvent;
 import org.jowidgets.spi.impl.controler.TableCellEditorObservable;
@@ -126,6 +128,8 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 	private final TableColumnResizeListener tableColumnResizeListener;
 	private final TableSelectionListener tableSelectionListener;
+	private final TableModelListener tableModelListener;
+	private final TableColumnModelListener tableColumnModelListener;
 
 	private final boolean columnsResizeable;
 
@@ -148,6 +152,8 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 		this.tableColumnResizeListener = new TableColumnResizeListener();
 		this.tableSelectionListener = new TableSelectionListener();
+		this.tableModelListener = new TableModelListener();
+		this.tableColumnModelListener = new TableColumnModelListener();
 
 		this.columnMoveOccured = false;
 
@@ -200,6 +206,16 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 	@Override
 	public void initialize() {
+		final ITableModelObservable tableModelObservable = tableModel.getTableModelObservable();
+		if (tableModelObservable != null) {
+			tableModelObservable.removeTableModelListener(tableModelListener);
+		}
+
+		final ITableColumnModelObservable columnModelObservable = columnModel.getTableColumnModelObservable();
+		if (columnModelObservable != null) {
+			columnModelObservable.removeColumnModelListener(tableColumnModelListener);
+		}
+
 		table.getSelectionModel().removeListSelectionListener(tableSelectionListener);
 
 		table.setModel(new SwingTableModel(tableModel, columnModel));
@@ -217,6 +233,14 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		}
 
 		setSelection(tableModel.getSelection());
+
+		if (tableModelObservable != null) {
+			tableModelObservable.addTableModelListener(tableModelListener);
+		}
+
+		if (columnModelObservable != null) {
+			columnModelObservable.addColumnModelListener(tableColumnModelListener);
+		}
 
 		table.getSelectionModel().addListSelectionListener(tableSelectionListener);
 	}
@@ -573,7 +597,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 	}
 
-	final class TableColumnsModelListener implements ITableColumnModelListener {
+	final class TableColumnModelListener implements ITableColumnModelListener {
 
 		@Override
 		public void columnsAdded(final int[] columnIndices) {

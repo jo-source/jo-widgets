@@ -67,15 +67,10 @@ public class TableCellEditorObservable implements ITableCellEditorObservable {
 		return vetoHolder.hasVeto();
 	}
 
-	public boolean fireEditFinished(final ITableCellEditEvent event) {
-		final VetoHolder vetoHolder = new VetoHolder();
+	public void fireEditFinished(final ITableCellEditEvent event) {
 		for (final ITableCellEditorListener listener : listeners) {
-			listener.editFinished(vetoHolder, event);
-			if (vetoHolder.hasVeto()) {
-				break;
-			}
+			listener.editFinished(event);
 		}
-		return vetoHolder.hasVeto();
 	}
 
 	public void fireEditCanceled(final ITableCellEvent event) {
