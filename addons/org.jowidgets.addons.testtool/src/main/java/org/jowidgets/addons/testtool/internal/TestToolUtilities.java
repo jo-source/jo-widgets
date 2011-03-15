@@ -45,6 +45,10 @@ public final class TestToolUtilities {
 
 	public TestToolUtilities() {}
 
+	public String createWidgetID(final IWidget widget) {
+		return createWidgetID(widget, "");
+	}
+
 	public String createWidgetID(final IWidget widget, final String identifier) {
 		Assert.paramNotNull(widget, "widget");
 		Assert.paramNotNull(identifier, "identifier");

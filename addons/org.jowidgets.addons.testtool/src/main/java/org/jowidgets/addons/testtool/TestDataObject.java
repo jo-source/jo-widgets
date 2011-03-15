@@ -26,13 +26,28 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.testtool.internal;
+package org.jowidgets.addons.testtool;
 
-public enum UserAction {
+import org.jowidgets.addons.testtool.internal.UserAction;
 
-	CLICK,
-	SELECT,
-	EXPAND,
-	COLLAPS,
-	READ;
+public class TestDataObject {
+
+	private String id;
+	private UserAction action;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(final String id) {
+		this.id = id;
+	}
+
+	public UserAction getAction() {
+		return action;
+	}
+
+	public void setAction(final UserAction action) {
+		this.action = action;
+	}
 }
