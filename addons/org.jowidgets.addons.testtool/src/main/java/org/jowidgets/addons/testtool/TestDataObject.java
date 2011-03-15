@@ -34,6 +34,15 @@ public class TestDataObject {
 
 	private String id;
 	private UserAction action;
+	private String type;
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(final String type) {
+		this.type = type;
+	}
 
 	public String getId() {
 		return id;

@@ -49,10 +49,16 @@ import org.jowidgets.api.widgets.ITree;
 import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.common.types.IVetoable;
-import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
-import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
+import org.jowidgets.common.widgets.controler.ITableCellEditEvent;
+import org.jowidgets.common.widgets.controler.ITableCellEditorListener;
+import org.jowidgets.common.widgets.controler.ITableCellEvent;
+import org.jowidgets.common.widgets.controler.ITableCellListener;
+import org.jowidgets.common.widgets.controler.ITableCellMouseEvent;
+import org.jowidgets.common.widgets.controler.ITableColumnListener;
+import org.jowidgets.common.widgets.controler.ITableColumnMouseEvent;
+import org.jowidgets.common.widgets.controler.ITableColumnResizeEvent;
 import org.jowidgets.test.api.widgets.IButtonUi;
 
 public final class TestToolImpl implements ITestTool {
@@ -77,6 +83,7 @@ public final class TestToolImpl implements ITestTool {
 		final TestDataObject obj = new TestDataObject();
 		obj.setId(id);
 		obj.setAction(action);
+		obj.setType(widget.getUiReference().getClass().getSimpleName());
 		testObjects.add(obj);
 		// CHECKSTYLE:OFF
 		System.out.println("Recorded: "
@@ -85,7 +92,7 @@ public final class TestToolImpl implements ITestTool {
 			+ id
 			+ "\nAction was: "
 			+ action.toString());
-		persister.save(testObjects, "test2");
+		//persister.save(testObjects, "test");
 		// CHECKSTYLE:ON
 	}
 
@@ -105,10 +112,14 @@ public final class TestToolImpl implements ITestTool {
 			frame.getMenuBarModel().addListModelListener(new IListModelListener() {
 
 				@Override
-				public void childRemoved(final int index) {}
+				public void childRemoved(final int index) {
+					System.out.println("child removed from menubar at index: " + index);
+				}
 
 				@Override
-				public void childAdded(final int index) {}
+				public void childAdded(final int index) {
+					System.out.println("child added to menubar at index: " + index);
+				}
 			});
 			// TODO LG dock TestToolGui to frame. But first getPosition on frame must work;)
 		}
@@ -129,15 +140,14 @@ public final class TestToolImpl implements ITestTool {
 			toolBar.getModel().addListModelListener(new IListModelListener() {
 
 				@Override
-				public void childRemoved(final int index) {}
+				public void childRemoved(final int index) {
+					System.out.println("child removed from toolbar at index: " + index);
+				}
 
 				@Override
-				public void childAdded(final int index) {}
-			});
-			toolBar.addPopupDetectionListener(new IPopupDetectionListener() {
-
-				@Override
-				public void popupDetected(final Position position) {}
+				public void childAdded(final int index) {
+					System.out.println("child added to toolbar at index: " + index);
+				}
 			});
 		}
 		// TODO LG use ITreeUi instead of ITree
@@ -175,26 +185,85 @@ public final class TestToolImpl implements ITestTool {
 		// TODO LG user ITabFolderUi
 		if (widget instanceof ITabFolder) {
 			final ITabFolder folder = (ITabFolder) widget;
-			folder.addPopupDetectionListener(new IPopupDetectionListener() {
-
-				@Override
-				public void popupDetected(final Position position) {}
-			});
 			for (final ITabItem item : folder.getItems()) {
 				item.addTabItemListener(new ITabItemListener() {
 
 					@Override
-					public void selectionChanged(final boolean selected) {}
+					public void selectionChanged(final boolean selected) {
+						System.out.println("tabItem selected");
+						//record(item, UserAction.SELECT, testToolUtilities.createWidgetID(item));
+					}
 
 					@Override
-					public void onClose(final IVetoable vetoable) {}
+					public void onClose(final IVetoable vetoable) {
+						System.out.println("tabItem closed");
+					}
 				});
 			}
 		}
 		// TODO LG user ITableUi
 		if (widget instanceof ITable) {
 			final ITable table = (ITable) widget;
-			// TODO LG add table listener
+			table.addTableCellEditorListener(new ITableCellEditorListener() {
+
+				@Override
+				public void onEdit(final IVetoable veto, final ITableCellEditEvent event) {
+					// TODO Auto-generated method stub
+					System.out.println("test onedit");
+				}
+
+				@Override
+				public void editFinished(final ITableCellEditEvent event) {
+					// TODO Auto-generated method stub
+					System.out.println("test editfinished");
+				}
+
+				@Override
+				public void editCanceled(final ITableCellEvent event) {
+					// TODO Auto-generated method stub
+					System.out.println("test editcanceled");
+				}
+			});
+			table.addTableCellListener(new ITableCellListener() {
+
+				@Override
+				public void mouseReleased(final ITableCellMouseEvent event) {
+					// TODO Auto-generated method stub
+					System.out.println("test mousereleased");
+				}
+
+				@Override
+				public void mousePressed(final ITableCellMouseEvent event) {
+					// TODO Auto-generated method stub
+					System.out.println("test mousepressed");
+				}
+
+				@Override
+				public void mouseDoubleClicked(final ITableCellMouseEvent event) {
+					// TODO Auto-generated method stub
+					System.out.println("test mousedoubleclicked");
+				}
+			});
+			table.addTableColumnListener(new ITableColumnListener() {
+
+				@Override
+				public void mouseClicked(final ITableColumnMouseEvent event) {
+					// TODO Auto-generated method stub
+					System.out.println("test mouseclicked");
+				}
+
+				@Override
+				public void columnResized(final ITableColumnResizeEvent event) {
+					// TODO Auto-generated method stub
+					System.out.println("test resized");
+				}
+
+				@Override
+				public void columnPermutationChanged() {
+					// TODO Auto-generated method stub
+					System.out.println("test permutation");
+				}
+			});
 		}
 	}
 
