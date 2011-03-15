@@ -55,17 +55,14 @@ public class TestWorkbenchRunner implements IWorkbenchRunner {
 	@Override
 	public void run(final IWorkbench workbench, final IWorkbenchConfigurationService configurationService) {
 		final ITestTool testTool = new TestToolImpl();
+		new TestToolGui();
 		Toolkit.getWidgetFactory().addWidgetFactoryListener(new IWidgetFactoryListener() {
 
 			@Override
 			public void widgetCreated(final IWidgetCommon widget) {
-				// CHECKSTYLE:OFF
-				System.out.println("Register Widget: " + widget);
-				// CHECKSTYLE:ON
 				testTool.register(widget);
 			}
 		});
-		new TestToolGui();
 		runner.run(workbench, configurationService);
 	}
 

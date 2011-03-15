@@ -28,15 +28,16 @@
 
 package org.jowidgets.addons.testtool;
 
+import org.jowidgets.api.model.item.IMenuBarModel;
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IFrame;
-import org.jowidgets.api.widgets.IMainMenu;
-import org.jowidgets.api.widgets.IMenuBar;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.tools.model.item.MenuModel;
 
 public class TestToolGui {
 
@@ -47,17 +48,30 @@ public class TestToolGui {
 	}
 
 	public void createContent() {
-		final IFrameBluePrint frameBP = BPF.frame("TestTool").setSize(new Dimension(500, 400));
+		final IFrameBluePrint frameBP = BPF.frame("TestTool").setSize(new Dimension(200, 400));
 		final IFrame frame = Toolkit.createRootFrame(frameBP);
-		frame.setLayout(new MigLayoutDescriptor("[grow]", "[grow]"));
-		final IMenuBar menuBar = frame.createMenuBar();
-		@SuppressWarnings("unused")
-		final IMainMenu fileMenu = menuBar.addMenu("File");
+		frame.setLayout(new MigLayoutDescriptor("[grow]", "[]"));
+		createMenuBar(frame);
+		createToolBar(frame);
+		frame.add(BPF.label().setText("sdfksdf"), "");
+		frame.setVisible(true);
+	}
+
+	private void createMenuBar(final IFrame frame) {
+		final IMenuBarModel menuBarModel = frame.getMenuBarModel();
+		final IMenuModel fileModel = new MenuModel("File");
+		fileModel.setMnemonic('F');
+		fileModel.addActionItem("export Test...");
+		fileModel.addActionItem("import Test...");
+		fileModel.addSeparator();
+		fileModel.addActionItem("exit");
+		menuBarModel.addMenu(fileModel);
+	}
+
+	private void createToolBar(final IFrame frame) {
 		final IToolBar toolBar = frame.add(BPF.toolBar(), "north, wrap");
 		toolBar.addItem(BPF.toolBarButton().setText("play"));
 		toolBar.addItem(BPF.toolBarButton().setText("stop"));
 		toolBar.addItem(BPF.toolBarButton().setText("record"));
-		frame.add(BPF.label().setText("sdfksdf"), "");
-		frame.setVisible(true);
 	}
 }

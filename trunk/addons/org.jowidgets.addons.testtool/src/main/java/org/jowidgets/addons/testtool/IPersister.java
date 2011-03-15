@@ -26,13 +26,13 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.testtool.internal;
+package org.jowidgets.addons.testtool;
 
-public enum UserAction {
+import java.util.List;
 
-	CLICK,
-	SELECT,
-	EXPAND,
-	COLLAPS,
-	READ;
+public interface IPersister {
+
+	void save(List<TestDataObject> list, String fileName);
+
+	List<TestDataObject> load(String fileName);
 }

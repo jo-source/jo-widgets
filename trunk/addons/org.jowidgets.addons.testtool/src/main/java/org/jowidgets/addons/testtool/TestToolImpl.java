@@ -29,6 +29,7 @@
 package org.jowidgets.addons.testtool;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import org.jowidgets.addons.testtool.internal.TestToolUtilities;
 import org.jowidgets.addons.testtool.internal.UserAction;
@@ -42,6 +43,7 @@ import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.ITabFolder;
 import org.jowidgets.api.widgets.ITabItem;
+import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.ITree;
 import org.jowidgets.api.widgets.ITreeNode;
@@ -57,17 +59,25 @@ public final class TestToolImpl implements ITestTool {
 
 	private final TestToolUtilities testToolUtilities;
 	private final HashMap<String, IWidgetCommon> widgetRegistry;
+	private final IPersister persister;
+	// TODO LG move this to TestToolGui to "save action"
+	private final LinkedList<TestDataObject> testObjects;
 
 	public TestToolImpl() {
-		testToolUtilities = new TestToolUtilities();
-		widgetRegistry = new HashMap<String, IWidgetCommon>();
+		this.testToolUtilities = new TestToolUtilities();
+		this.widgetRegistry = new HashMap<String, IWidgetCommon>();
+		this.testObjects = new LinkedList<TestDataObject>();
+		this.persister = new TestDataXmlPersister();
 	}
 
-	// TODO LG save recorded user actions
 	// TODO LG Remove Checkstyle off/on
 	// TODO LG Add recorded user actions to table in TestToolGui
 	@Override
 	public void record(final IWidgetCommon widget, final UserAction action, final String id) {
+		final TestDataObject obj = new TestDataObject();
+		obj.setId(id);
+		obj.setAction(action);
+		testObjects.add(obj);
 		// CHECKSTYLE:OFF
 		System.out.println("Recorded: "
 			+ widget.getClass().getSimpleName()
@@ -75,6 +85,7 @@ public final class TestToolImpl implements ITestTool {
 			+ id
 			+ "\nAction was: "
 			+ action.toString());
+		persister.save(testObjects, "test2");
 		// CHECKSTYLE:ON
 	}
 
@@ -111,7 +122,7 @@ public final class TestToolImpl implements ITestTool {
 				}
 			});
 		}
-		// TODO LG check why the listener doesnt work on toolbar
+		// TODO LG check why the listener doesn't work on toolbar
 		// TODO LG use IToolBarUi
 		if (widget instanceof IToolBar) {
 			final IToolBar toolBar = (IToolBar) widget;
@@ -137,19 +148,19 @@ public final class TestToolImpl implements ITestTool {
 				@Override
 				public void selectionChanged(final ITreeSelectionEvent event) {
 					final ITreeNode node = event.getSelectedSingle();
-					record(widget, UserAction.SELECT, testToolUtilities.createWidgetID(node, node.getText()));
+					record(widget, UserAction.SELECT, testToolUtilities.createWidgetID(node));
 				}
 			});
 			tree.addTreeListener(new ITreeListener() {
 
 				@Override
 				public void nodeExpanded(final ITreeNode node) {
-					record(widget, UserAction.SELECT, testToolUtilities.createWidgetID(node, node.getText()));
+					record(widget, UserAction.EXPAND, testToolUtilities.createWidgetID(node));
 				}
 
 				@Override
 				public void nodeCollapsed(final ITreeNode node) {
-					record(widget, UserAction.SELECT, testToolUtilities.createWidgetID(node, node.getText()));
+					record(widget, UserAction.COLLAPS, testToolUtilities.createWidgetID(node));
 				}
 			});
 			tree.addTreePopupDetectionListener(new ITreePopupDetectionListener() {
@@ -157,7 +168,7 @@ public final class TestToolImpl implements ITestTool {
 				@Override
 				public void popupDetected(final ITreePopupEvent event) {
 					final ITreeNode node = event.getNode();
-					record(widget, UserAction.CLICK, testToolUtilities.createWidgetID(node, node.getText()));
+					record(widget, UserAction.CLICK, testToolUtilities.createWidgetID(node));
 				}
 			});
 		}
@@ -167,9 +178,7 @@ public final class TestToolImpl implements ITestTool {
 			folder.addPopupDetectionListener(new IPopupDetectionListener() {
 
 				@Override
-				public void popupDetected(final Position position) {
-					record(widget, UserAction.CLICK, "position");
-				}
+				public void popupDetected(final Position position) {}
 			});
 			for (final ITabItem item : folder.getItems()) {
 				item.addTabItemListener(new ITabItemListener() {
@@ -181,6 +190,11 @@ public final class TestToolImpl implements ITestTool {
 					public void onClose(final IVetoable vetoable) {}
 				});
 			}
+		}
+		// TODO LG user ITableUi
+		if (widget instanceof ITable) {
+			final ITable table = (ITable) widget;
+			// TODO LG add table listener
 		}
 	}
 
