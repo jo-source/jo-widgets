@@ -36,6 +36,7 @@ import javax.xml.bind.JAXB;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+// TODO LG maybe its better to use XStream instead of JAXB. Remove workarounds for JAXB.
 @XmlRootElement(name = "UserTestData")
 public class TestDataXmlPersister implements IPersister {
 
