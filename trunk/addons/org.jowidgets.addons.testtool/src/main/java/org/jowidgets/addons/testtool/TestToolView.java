@@ -34,6 +34,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.jowidgets.addons.testtool.internal.IListModelListener;
+import org.jowidgets.addons.testtool.internal.ListModel;
+import org.jowidgets.addons.testtool.internal.TestToolViewUtilities;
 import org.jowidgets.addons.testtool.internal.UserAction;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.IMenuBarModel;
@@ -41,6 +43,7 @@ import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.table.ISimpleTableModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.widgets.IInputDialog;
 import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
@@ -60,26 +63,29 @@ import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.model.table.DefaultTableColumnBuilder;
 
-public class TestToolGui {
+public class TestToolView {
 
 	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 	private ISimpleTableModel tableModel;
 	private final ITestTool testTool;
+	private final TestToolViewUtilities viewUtilities;
+	private IFrame frame;
 
-	public TestToolGui(final ITestTool testTool) {
+	public TestToolView(final ITestTool testTool) {
 		this.testTool = testTool;
+		this.viewUtilities = new TestToolViewUtilities();
 		createContentArea();
 	}
 
 	public void createContentArea() {
 		final IFrameBluePrint frameBP = BPF.frame("TestTool").setSize(new Dimension(100, 400));
-		final IFrame frame = Toolkit.createRootFrame(frameBP);
+		frame = Toolkit.createRootFrame(frameBP);
 		frame.setPosition(new Position(1700, 130));
 		frame.setLayout(new MigLayoutDescriptor("[grow]", "[]"));
 		createMenuBar(frame);
 		createToolBar(frame);
 		createTable(frame);
-		addListenerToTestTool();
+		setupTestTool();
 		frame.pack();
 		frame.setVisible(true);
 	}
@@ -179,18 +185,28 @@ public class TestToolGui {
 			@Override
 			public void actionPerformed() {
 				final List<TestDataObject> list = new LinkedList<TestDataObject>();
-				for (int columnIndex = 0; columnIndex < tableModel.getColumnCount(); columnIndex++) {
-					final TestDataObject obj = new TestDataObject();
-					obj.setType(tableModel.getCell(1, columnIndex).getText());
-					final String action = tableModel.getCell(2, columnIndex).getText();
-					obj.setAction(UserAction.valueOf(action));
-					obj.setId(tableModel.getCell(3, columnIndex).getText());
-					list.add(obj);
+				if (!(tableModel.getRowCount() <= 0)) {
+					for (int rowIndex = 0; rowIndex < tableModel.getRowCount(); rowIndex++) {
+						final TestDataObject obj = new TestDataObject();
+
+						for (int columnIndex = 0; columnIndex < tableModel.getColumnCount(); columnIndex++) {
+							obj.setType(tableModel.getCell(rowIndex, columnIndex).getText());
+							final String action = tableModel.getCell(rowIndex, columnIndex).getText();
+							obj.setAction(UserAction.valueOf(action));
+							obj.setId(tableModel.getCell(rowIndex, columnIndex).getText());
+						}
+						list.add(obj);
+					}
+					final IInputDialog<String> dialog = viewUtilities.createInputDialog(frame, "Enter File Name", "file name");
+					dialog.setVisible(true);
+					if (dialog.isOkPressed()) {
+						testTool.save(list, dialog.getValue());
+					}
+					dialog.dispose();
 				}
-				// TODO LG save TestDataObjects with persister
-				// TODO LG create a dialog and ask for filename
-				//testTool.save(list, fileName);
-				System.out.println("Testdata saved.");
+				else {
+					Toolkit.getMessagePane().showWarning("There is nothing to save.");
+				}
 			}
 		});
 		final IActionItemModel loadActionItem = fileModel.addActionItem("Load Test...");
@@ -215,8 +231,10 @@ public class TestToolGui {
 		toolBar.addItem(BPF.toolBarButton().setText("record"));
 	}
 
-	private void addListenerToTestTool() {
-		testTool.getListModel().setListener(new IListModelListener<TestDataObject>() {
+	private void setupTestTool() {
+		@SuppressWarnings("unchecked")
+		final ListModel<TestDataObject> listModel = (ListModel<TestDataObject>) testTool.getListModel();
+		listModel.setListener(new IListModelListener<TestDataObject>() {
 
 			@Override
 			public void listChanged(final TestDataObject item) {

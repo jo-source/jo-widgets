@@ -44,5 +44,5 @@ public interface ITestTool {
 
 	void save(final List<TestDataObject> list, final String fileName);
 
-	ListModel getListModel();
+	ListModel<?> getListModel();
 }

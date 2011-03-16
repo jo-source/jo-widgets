@@ -29,7 +29,7 @@
 package org.jowidgets.addons.workbench;
 
 import org.jowidgets.addons.testtool.ITestTool;
-import org.jowidgets.addons.testtool.TestToolGui;
+import org.jowidgets.addons.testtool.TestToolView;
 import org.jowidgets.addons.testtool.TestToolImpl;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.widgets.IWidgetCommon;
@@ -55,7 +55,7 @@ public class TestWorkbenchRunner implements IWorkbenchRunner {
 	@Override
 	public void run(final IWorkbench workbench, final IWorkbenchConfigurationService configurationService) {
 		final ITestTool testTool = new TestToolImpl();
-		new TestToolGui(testTool);
+		new TestToolView(testTool);
 		Toolkit.getWidgetFactory().addWidgetFactoryListener(new IWidgetFactoryListener() {
 
 			@Override

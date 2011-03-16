@@ -66,7 +66,7 @@ public final class TestToolImpl implements ITestTool {
 
 	private final TestToolUtilities testToolUtilities;
 	private final HashMap<String, IWidgetCommon> widgetRegistry;
-	private final IPersister persister;
+	private final ITestDataPersister persister;
 	private final ListModel<TestDataObject> listModel;
 
 	public TestToolImpl() {
