@@ -37,6 +37,11 @@ import org.jowidgets.addons.testtool.internal.IListModelListener;
 import org.jowidgets.addons.testtool.internal.ListModel;
 import org.jowidgets.addons.testtool.internal.TestToolViewUtilities;
 import org.jowidgets.addons.testtool.internal.UserAction;
+import org.jowidgets.api.command.EnabledState;
+import org.jowidgets.api.command.IActionBuilder;
+import org.jowidgets.api.command.IActionBuilderFactory;
+import org.jowidgets.api.command.ICommandExecutor;
+import org.jowidgets.api.command.IExecutionContext;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.model.item.IMenuModel;
@@ -46,6 +51,7 @@ import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IInputDialog;
 import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.api.widgets.IToolBar;
+import org.jowidgets.api.widgets.IToolBarButton;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITableBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
@@ -59,6 +65,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.TableColumnPackPolicy;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.tools.command.EnabledChecker;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.model.table.DefaultTableColumnBuilder;
@@ -66,6 +73,7 @@ import org.jowidgets.tools.model.table.DefaultTableColumnBuilder;
 public class TestToolView {
 
 	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
+	private static final IActionBuilderFactory ABF = Toolkit.getActionBuilderFactory();
 	private ISimpleTableModel tableModel;
 	private final ITestTool testTool;
 	private final TestToolViewUtilities viewUtilities;
@@ -226,9 +234,57 @@ public class TestToolView {
 
 	private void createToolBar(final IFrame frame) {
 		final IToolBar toolBar = frame.add(BPF.toolBar(), "north, wrap");
-		toolBar.addItem(BPF.toolBarButton().setText("play"));
-		toolBar.addItem(BPF.toolBarButton().setText("stop"));
-		toolBar.addItem(BPF.toolBarButton().setText("record"));
+		final EnabledChecker playEnabledChecker = new EnabledChecker();
+		final EnabledChecker stopEnabledChecker = new EnabledChecker();
+		final EnabledChecker recordEnabledChecker = new EnabledChecker();
+
+		final IActionBuilder playBuilder = ABF.create();
+		final IToolBarButton playButton = toolBar.addItem(BPF.toolBarButton());
+		playEnabledChecker.setEnabledState(EnabledState.ENABLED);
+		final ICommandExecutor playCommand = new ICommandExecutor() {
+
+			@Override
+			public void execute(final IExecutionContext executionContext) throws Exception {
+				stopEnabledChecker.setEnabledState(EnabledState.ENABLED);
+				recordEnabledChecker.setEnabledState(EnabledState.DISABLED);
+				playEnabledChecker.setEnabledState(EnabledState.DISABLED);
+				// TODO LG replay table content
+			}
+		};
+		playBuilder.setCommand(playCommand, playEnabledChecker);
+		playButton.setAction(playBuilder.setText("play").build());
+
+		final IActionBuilder stopBuilder = ABF.create();
+		final IToolBarButton stopButton = toolBar.addItem(BPF.toolBarButton());
+		stopEnabledChecker.setEnabledState(EnabledState.DISABLED);
+		final ICommandExecutor stopCommand = new ICommandExecutor() {
+
+			@Override
+			public void execute(final IExecutionContext executionContext) throws Exception {
+				playEnabledChecker.setEnabledState(EnabledState.ENABLED);
+				recordEnabledChecker.setEnabledState(EnabledState.ENABLED);
+				stopEnabledChecker.setEnabledState(EnabledState.DISABLED);
+				// TODO LG stop record/play mode in TestTool
+			}
+		};
+		stopBuilder.setCommand(stopCommand, stopEnabledChecker);
+		stopButton.setAction(stopBuilder.setText("stop").build());
+
+		final IActionBuilder recordBuilder = ABF.create();
+		final IToolBarButton recordButton = toolBar.addItem(BPF.toolBarButton());
+		recordEnabledChecker.setEnabledState(EnabledState.ENABLED);
+		final ICommandExecutor recordCommand = new ICommandExecutor() {
+
+			@Override
+			public void execute(final IExecutionContext executionContext) throws Exception {
+				playEnabledChecker.setEnabledState(EnabledState.DISABLED);
+				stopEnabledChecker.setEnabledState(EnabledState.ENABLED);
+				recordEnabledChecker.setEnabledState(EnabledState.DISABLED);
+				// TODO LG activate record mode in TestTool
+			}
+		};
+		recordBuilder.setCommand(recordCommand, recordEnabledChecker);
+		recordButton.setAction(recordBuilder.setText("record").build());
 	}
 
 	private void setupTestTool() {
