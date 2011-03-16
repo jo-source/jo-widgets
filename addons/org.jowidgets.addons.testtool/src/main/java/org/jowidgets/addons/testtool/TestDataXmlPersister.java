@@ -40,7 +40,7 @@ import org.jowidgets.util.Assert;
 
 // TODO LG maybe its better to use XStream instead of JAXB. Remove workarounds for JAXB.
 @XmlRootElement(name = "UserTestData")
-public class TestDataXmlPersister implements IPersister {
+public class TestDataXmlPersister implements ITestDataPersister {
 
 	private static final String DEFAULT_FILEPATH = File.separator + "resources" + File.separator + "test";
 	private static final String FILE_EXTENSION = ".xml";

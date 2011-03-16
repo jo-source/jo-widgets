@@ -30,7 +30,7 @@ package org.jowidgets.addons.testtool;
 
 import java.util.List;
 
-public interface IPersister {
+public interface ITestDataPersister {
 
 	void save(List<TestDataObject> list, String fileName);
 
