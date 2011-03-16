@@ -55,7 +55,7 @@ public class TestWorkbenchRunner implements IWorkbenchRunner {
 	@Override
 	public void run(final IWorkbench workbench, final IWorkbenchConfigurationService configurationService) {
 		final ITestTool testTool = new TestToolImpl();
-		new TestToolGui();
+		new TestToolGui(testTool);
 		Toolkit.getWidgetFactory().addWidgetFactoryListener(new IWidgetFactoryListener() {
 
 			@Override
