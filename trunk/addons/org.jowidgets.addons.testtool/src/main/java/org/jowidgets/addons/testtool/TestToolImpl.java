@@ -29,8 +29,9 @@
 package org.jowidgets.addons.testtool;
 
 import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.List;
 
+import org.jowidgets.addons.testtool.internal.ListModel;
 import org.jowidgets.addons.testtool.internal.TestToolUtilities;
 import org.jowidgets.addons.testtool.internal.UserAction;
 import org.jowidgets.api.controler.ITabItemListener;
@@ -66,14 +67,13 @@ public final class TestToolImpl implements ITestTool {
 	private final TestToolUtilities testToolUtilities;
 	private final HashMap<String, IWidgetCommon> widgetRegistry;
 	private final IPersister persister;
-	// TODO LG move this to TestToolGui to "save action"
-	private final LinkedList<TestDataObject> testObjects;
+	private final ListModel<TestDataObject> listModel;
 
 	public TestToolImpl() {
 		this.testToolUtilities = new TestToolUtilities();
 		this.widgetRegistry = new HashMap<String, IWidgetCommon>();
-		this.testObjects = new LinkedList<TestDataObject>();
 		this.persister = new TestDataXmlPersister();
+		this.listModel = new ListModel<TestDataObject>();
 	}
 
 	// TODO LG Remove Checkstyle off/on
@@ -84,7 +84,7 @@ public final class TestToolImpl implements ITestTool {
 		obj.setId(id);
 		obj.setAction(action);
 		obj.setType(widget.getUiReference().getClass().getSimpleName());
-		testObjects.add(obj);
+		listModel.addItem(obj);
 		// CHECKSTYLE:OFF
 		System.out.println("Recorded: "
 			+ widget.getClass().getSimpleName()
@@ -268,11 +268,20 @@ public final class TestToolImpl implements ITestTool {
 	}
 
 	// TODO LG use this method when id generation is completed
-	@SuppressWarnings("unused")
 	private void registerInternal(final IWidgetCommon widget, final String identifier) {
 		// TODO LG use unique Widget ID, add only new and tested widgets to registry
 		if (!widgetRegistry.containsKey(testToolUtilities.createWidgetID((IWidget) widget, identifier))) {
 			widgetRegistry.put(testToolUtilities.createWidgetID((IWidget) widget, identifier), widget);
 		}
+	}
+
+	@Override
+	public void save(final List<TestDataObject> list, final String fileName) {
+		persister.save(list, fileName);
+	}
+
+	@Override
+	public ListModel<TestDataObject> getListModel() {
+		return listModel;
 	}
 }

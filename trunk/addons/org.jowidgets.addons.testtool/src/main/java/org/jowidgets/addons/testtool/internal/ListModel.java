@@ -26,23 +26,33 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.testtool;
+package org.jowidgets.addons.testtool.internal;
 
+import java.util.LinkedList;
 import java.util.List;
 
-import org.jowidgets.addons.testtool.internal.ListModel;
-import org.jowidgets.addons.testtool.internal.UserAction;
-import org.jowidgets.common.widgets.IWidgetCommon;
+public class ListModel<T> {
 
-public interface ITestTool {
+	private final List<T> list;
+	private IListModelListener<T> listener;
 
-	void register(IWidgetCommon widget);
+	public ListModel() {
+		this.list = new LinkedList<T>();
+		this.listener = null;
+	}
 
-	void record(IWidgetCommon widget, UserAction action, String id);
+	public void addItem(final T item) {
+		list.add(item);
+		if (listener != null) {
+			listener.listChanged(item);
+		}
+	}
 
-	void replay();
+	public List<T> getItems() {
+		return list;
+	}
 
-	void save(final List<TestDataObject> list, final String fileName);
-
-	ListModel getListModel();
+	public void setListener(final IListModelListener<T> listener) {
+		this.listener = listener;
+	}
 }

@@ -28,48 +28,50 @@
 
 package org.jowidgets.addons.testtool;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.jowidgets.addons.testtool.internal.IListModelListener;
 import org.jowidgets.addons.testtool.internal.UserAction;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.api.model.table.ISimpleTableModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITableBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.model.ITableCell;
 import org.jowidgets.common.model.ITableColumn;
 import org.jowidgets.common.model.ITableColumnModel;
 import org.jowidgets.common.model.ITableColumnModelObservable;
-import org.jowidgets.common.model.ITableModel;
-import org.jowidgets.common.model.ITableModelObservable;
 import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.types.TableColumnPackPolicy;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.model.item.MenuModel;
-import org.jowidgets.tools.model.table.TableCellBuilder;
+import org.jowidgets.tools.model.table.DefaultTableColumnBuilder;
 
 public class TestToolGui {
 
 	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
-	private String cellText;
+	private ISimpleTableModel tableModel;
+	private final ITestTool testTool;
 
-	public TestToolGui() {
-		createContent();
+	public TestToolGui(final ITestTool testTool) {
+		this.testTool = testTool;
+		createContentArea();
 	}
 
-	public void createContent() {
+	public void createContentArea() {
 		final IFrameBluePrint frameBP = BPF.frame("TestTool").setSize(new Dimension(100, 400));
 		final IFrame frame = Toolkit.createRootFrame(frameBP);
 		frame.setPosition(new Position(1700, 130));
@@ -77,14 +79,23 @@ public class TestToolGui {
 		createMenuBar(frame);
 		createToolBar(frame);
 		createTable(frame);
+		addListenerToTestTool();
 		frame.pack();
 		frame.setVisible(true);
 	}
 
 	private void createTable(final IFrame frame) {
 		final ITableBluePrint tableBluePrint = BPF.table();
-		final int rowCount = 5;
-		final int columnCount = 4;
+
+		tableModel = Toolkit.getModelFactoryProvider().getTableModelFactory().simpleTableModel();
+		final DefaultTableColumnBuilder colBuilder = new DefaultTableColumnBuilder();
+		tableModel.addColumn(colBuilder.setText("step").build());
+		tableModel.addColumn(colBuilder.setText("Widget").build());
+		tableModel.addColumn(colBuilder.setText("User Action").build());
+		tableModel.addColumn(colBuilder.setText("ID").build());
+		tableBluePrint.setTableModel(tableModel);
+
+		final int columnCount = tableModel.getColumnCount();
 		final Map<Integer, ITableColumn> columns = new HashMap<Integer, ITableColumn>();
 		tableBluePrint.setColumnModel(new ITableColumnModel() {
 
@@ -153,71 +164,8 @@ public class TestToolGui {
 			}
 
 		});
-		tableBluePrint.setTableModel(new ITableModel() {
-
-			private ArrayList<Integer> selection;
-
-			@Override
-			public int getRowCount() {
-				return rowCount;
-			}
-
-			@Override
-			public ITableCell getCell(final int rowIndex, final int columnIndex) {
-				final List<TestDataObject> list = new LinkedList<TestDataObject>();
-				for (int i = 0; i < 5; i++) {
-					final TestDataObject obj = new TestDataObject();
-					obj.setAction(UserAction.CLICK);
-					obj.setId("FrameImpl:test/DialogImpl:test/2_CompositeImpl:test/0_ButtonImpl:buttonText");
-					obj.setType("Button");
-					list.add(obj);
-				}
-				final TestDataObject tmp = list.get(rowIndex);
-				cellText = "";
-				switch (columnIndex) {
-					case 0:
-						cellText = Integer.toString(rowIndex);
-						break;
-					case 1:
-						cellText = tmp.getType();
-						break;
-					case 2:
-						cellText = tmp.getAction().name();
-						break;
-					case 3:
-						cellText = tmp.getId();
-						break;
-					default:
-						cellText = "Cell (" + rowIndex + " / " + columnIndex + ")";
-						break;
-				}
-				final TableCellBuilder builder = new TableCellBuilder();
-				builder.setText(cellText);
-				return builder.build();
-			}
-
-			@Override
-			public ArrayList<Integer> getSelection() {
-				if (selection == null) {
-					selection = new ArrayList<Integer>(2);
-					selection.add(Integer.valueOf(0));
-					selection.add(Integer.valueOf(2));
-				}
-				return selection;
-			}
-
-			@Override
-			public void setSelection(final ArrayList<Integer> selection) {
-				this.selection = selection;
-			}
-
-			@Override
-			public ITableModelObservable getTableModelObservable() {
-				return null;
-			}
-
-		});
-		frame.add(tableBluePrint, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+		final ITable table = frame.add(tableBluePrint, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+		table.pack(TableColumnPackPolicy.HEADER_AND_CONTENT);
 	}
 
 	private void createMenuBar(final IFrame frame) {
@@ -225,16 +173,27 @@ public class TestToolGui {
 		final IMenuModel fileModel = new MenuModel("File");
 		fileModel.setMnemonic('F');
 
-		final IActionItemModel saveActionItem = fileModel.addActionItem("save Test...");
+		final IActionItemModel saveActionItem = fileModel.addActionItem("Save Test As...");
 		saveActionItem.addActionListener(new IActionListener() {
 
 			@Override
 			public void actionPerformed() {
-				// TODO LG save TestDataObjects
+				final List<TestDataObject> list = new LinkedList<TestDataObject>();
+				for (int columnIndex = 0; columnIndex < tableModel.getColumnCount(); columnIndex++) {
+					final TestDataObject obj = new TestDataObject();
+					obj.setType(tableModel.getCell(1, columnIndex).getText());
+					final String action = tableModel.getCell(2, columnIndex).getText();
+					obj.setAction(UserAction.valueOf(action));
+					obj.setId(tableModel.getCell(3, columnIndex).getText());
+					list.add(obj);
+				}
+				// TODO LG save TestDataObjects with persister
+				// TODO LG create a dialog and ask for filename
+				//testTool.save(list, fileName);
 				System.out.println("Testdata saved.");
 			}
 		});
-		final IActionItemModel loadActionItem = fileModel.addActionItem("load Test...");
+		final IActionItemModel loadActionItem = fileModel.addActionItem("Load Test...");
 		loadActionItem.addActionListener(new IActionListener() {
 
 			@Override
@@ -254,5 +213,20 @@ public class TestToolGui {
 		toolBar.addItem(BPF.toolBarButton().setText("play"));
 		toolBar.addItem(BPF.toolBarButton().setText("stop"));
 		toolBar.addItem(BPF.toolBarButton().setText("record"));
+	}
+
+	private void addListenerToTestTool() {
+		testTool.getListModel().setListener(new IListModelListener<TestDataObject>() {
+
+			@Override
+			public void listChanged(final TestDataObject item) {
+				tableModel.addRow(
+						Integer.toString(tableModel.getColumnCount()),
+						item.getType(),
+						item.getAction().name(),
+						item.getId());
+				System.out.println("listChanged!");
+			}
+		});
 	}
 }

@@ -36,6 +36,8 @@ import javax.xml.bind.JAXB;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.jowidgets.util.Assert;
+
 // TODO LG maybe its better to use XStream instead of JAXB. Remove workarounds for JAXB.
 @XmlRootElement(name = "UserTestData")
 public class TestDataXmlPersister implements IPersister {
@@ -52,6 +54,7 @@ public class TestDataXmlPersister implements IPersister {
 	}
 
 	public TestDataXmlPersister(final String filePath) {
+		Assert.paramNotEmpty(filePath, "filePath");
 		this.filePath = filePath;
 		this.testObjects = new LinkedList<TestDataObject>();
 	}
@@ -82,6 +85,7 @@ public class TestDataXmlPersister implements IPersister {
 		return dir;
 	}
 
+	// Needed to get the TestDataObjects from the loaded TestDataXmlPersister class.
 	private List<TestDataObject> getTestData() {
 		return testObjects;
 	}
