@@ -223,6 +223,13 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 	}
 
 	@Override
+	public void setEditable(final int rowIndex, final int columnIndex, final boolean editable) {
+		final TableCell cell = new TableCell(getCell(rowIndex, columnIndex));
+		cell.setEditable(editable);
+		setCell(rowIndex, columnIndex, cell);
+	}
+
+	@Override
 	public void removeAllRows() {
 		removeRows(0, getRowCount() - 1);
 	}
