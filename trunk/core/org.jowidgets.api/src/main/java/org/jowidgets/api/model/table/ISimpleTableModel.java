@@ -68,4 +68,6 @@ public interface ISimpleTableModel extends ITableModel, IDefaultTableColumnModel
 
 	void setCell(int rowIndex, int columnIndex, String text, boolean editable);
 
+	void setEditable(int rowIndex, int columnIndex, boolean editable);
+
 }
