@@ -52,7 +52,11 @@ public interface ISimpleTableModel extends ITableModel, IDefaultTableColumnModel
 
 	void addRow(String... cellTexts);
 
+	void addRow(List<String> cellTexts);
+
 	void addRow(int rowIndex, String... cellTexts);
+
+	void addRow(int rowIndex, List<String> cellTexts);
 
 	void removeRow(int index);
 

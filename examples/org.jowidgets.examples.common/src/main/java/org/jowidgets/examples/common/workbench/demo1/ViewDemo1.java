@@ -93,7 +93,7 @@ public class ViewDemo1 extends AbstractView {
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
 		final int rowCount = 20000;
-		final int columnCount = 13;
+		final int columnCount = 50;
 
 		final ITableBluePrint tableBp = bpf.table();
 

@@ -28,27 +28,34 @@
 
 package org.jowidgets.examples.common.workbench.demo1;
 
+import java.util.List;
+
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.IMenuModel;
-import org.jowidgets.api.model.table.IDefaultTableColumn;
 import org.jowidgets.api.model.table.ISimpleTableModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IInputDialog;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.api.widgets.blueprint.ITableBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controler.ITableCellEditEvent;
+import org.jowidgets.common.widgets.controler.ITableCellEditorListener;
+import org.jowidgets.common.widgets.controler.ITableCellEvent;
 import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.ITableCellPopupEvent;
 import org.jowidgets.common.widgets.controler.ITableColumnPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.ITableColumnPopupEvent;
+import org.jowidgets.examples.common.demo.DemoInputDialog1;
 import org.jowidgets.examples.common.demo.DemoMenuProvider;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractView;
 import org.jowidgets.tools.layout.MigLayoutFactory;
-import org.jowidgets.tools.model.table.SimpleTableModel;
+import org.jowidgets.tools.model.table.SimpleTableModelBuilder;
 import org.jowidgets.util.ValueHolder;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 import org.jowidgets.workbench.api.IView;
@@ -82,22 +89,53 @@ public class ViewDemo6 extends AbstractView implements IView {
 		container.setLayout(MigLayoutFactory.growingInnerCellLayout());
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-		final int rowCount = 2000;
-		final int columnCount = 10;
+		final ISimpleTableModel tableModel = new SimpleTableModelBuilder().setEditableDefault(true).build();
+		tableModel.addColumn("Gender");
+		tableModel.addColumn("Firstname");
+		tableModel.addColumn("Lastname");
+		tableModel.addColumn("Street");
+		tableModel.addColumn("Postal code");
+		tableModel.addColumn("City");
+		tableModel.addColumn("Country");
+		tableModel.addColumn("Phone number");
+		tableModel.addColumn("Email");
 
-		final ISimpleTableModel tableModel = new SimpleTableModel(rowCount, columnCount);
+		tableModel.addRow(
+				"Male",
+				"Pete",
+				"Brown",
+				"Audubon Ave 34",
+				"76453",
+				"New York",
+				"USA",
+				"47634826",
+				"hans.maier@gtzservice.com");
 
-		for (int columnIndex = 0; columnIndex < columnCount; columnIndex++) {
-			final IDefaultTableColumn column = tableModel.getColumn(columnIndex);
-			column.setText("Column " + columnIndex);
-			column.setToolTipText("Tooltip of column " + columnIndex);
-			for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-				tableModel.setCell(rowIndex, columnIndex, "Cell (" + rowIndex + " / " + columnIndex + ")", true);
-			}
-		}
+		tableModel.addRow(
+				"Male",
+				"Steve",
+				"Miller",
+				"Convent Ave 34",
+				"534534",
+				"New York",
+				"USA",
+				"4354354",
+				"steve.miller@gjk.com");
+
+		tableModel.addRow(
+				"Female",
+				"Laura",
+				"Brixton",
+				"West End Ave 34",
+				"534534",
+				"New York",
+				"USA",
+				"435345345",
+				"laura.brixton@gjk.com");
 
 		final ITableBluePrint tableBp = bpf.table().setTableModel(tableModel).setColumnModel(tableModel);
 		final ITable table = container.add(tableBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+		table.pack();
 
 		final ValueHolder<Integer> currentRow = new ValueHolder<Integer>();
 		final ValueHolder<Integer> currentColumn = new ValueHolder<Integer>();
@@ -130,6 +168,17 @@ public class ViewDemo6 extends AbstractView implements IView {
 			}
 		});
 
+		final IActionItemModel addRow = cellPopupMenuModel.addActionItem("Add person");
+		addRow.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final List<String> row = createRow();
+				if (row != null) {
+					tableModel.addRow(currentRow.get().intValue() + 1, row);
+				}
+			}
+		});
+
 		final IPopupMenu columnPopupMenu = table.createPopupMenu();
 		final IMenuModel columnPopupMenuModel = columnPopupMenu.getModel();
 
@@ -148,5 +197,28 @@ public class ViewDemo6 extends AbstractView implements IView {
 				tableModel.removeColumn(currentColumn.get().intValue());
 			}
 		});
+
+		table.addTableCellEditorListener(new ITableCellEditorListener() {
+
+			@Override
+			public void onEdit(final IVetoable veto, final ITableCellEditEvent event) {}
+
+			@Override
+			public void editFinished(final ITableCellEditEvent event) {
+				tableModel.setCell(event.getRowIndex(), event.getColumnIndex(), event.getCurrentText());
+			}
+
+			@Override
+			public void editCanceled(final ITableCellEvent event) {}
+		});
+	}
+
+	private List<String> createRow() {
+		final IInputDialog<List<String>> inputDialog = new DemoInputDialog1().getInputDialog();
+		inputDialog.setVisible(true);
+		if (inputDialog.isOkPressed()) {
+			return inputDialog.getValue();
+		}
+		return null;
 	}
 }

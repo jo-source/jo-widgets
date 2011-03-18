@@ -39,10 +39,12 @@ class SimpleTableModelBuilder implements ISimpleTableModelBuilder {
 	private int columnCount;
 	private IColorConstant evenBackgroundColor;
 	private IColorConstant oddBackgroundColor;
+	private boolean cellsEditableDefault;
 
 	SimpleTableModelBuilder() {
 		this.rowCount = 0;
 		this.columnCount = 0;
+		this.cellsEditableDefault = false;
 		this.evenBackgroundColor = Colors.DEFAULT_TABLE_EVEN_BACKGROUND_COLOR;
 	}
 
@@ -59,15 +61,15 @@ class SimpleTableModelBuilder implements ISimpleTableModelBuilder {
 	}
 
 	@Override
-	public ISimpleTableModelBuilder setDefaultAlternatingRowColorsEnabled(final boolean enabled) {
-		if (enabled) {
-			this.oddBackgroundColor = null;
-			this.evenBackgroundColor = Colors.DEFAULT_TABLE_EVEN_BACKGROUND_COLOR;
-		}
-		else {
-			this.oddBackgroundColor = null;
-			this.evenBackgroundColor = null;
-		}
+	public ISimpleTableModelBuilder setEditableDefault(final boolean editable) {
+		this.cellsEditableDefault = editable;
+		return this;
+	}
+
+	@Override
+	public ISimpleTableModelBuilder setDefaultStripedRenderingColors() {
+		this.oddBackgroundColor = null;
+		this.evenBackgroundColor = Colors.DEFAULT_TABLE_EVEN_BACKGROUND_COLOR;
 		return this;
 	}
 
@@ -85,7 +87,7 @@ class SimpleTableModelBuilder implements ISimpleTableModelBuilder {
 
 	@Override
 	public ISimpleTableModel build() {
-		return new SimpleTableModel(rowCount, columnCount, evenBackgroundColor, oddBackgroundColor);
+		return new SimpleTableModel(rowCount, columnCount, cellsEditableDefault, evenBackgroundColor, oddBackgroundColor);
 	}
 
 }

@@ -130,6 +130,16 @@ public class SimpleTableModel implements ISimpleTableModel {
 	}
 
 	@Override
+	public void addRow(final List<String> cellTexts) {
+		tableModel.addRow(cellTexts);
+	}
+
+	@Override
+	public void addRow(final int rowIndex, final List<String> cellTexts) {
+		tableModel.addRow(rowIndex, cellTexts);
+	}
+
+	@Override
 	public IDefaultTableColumn addColumn() {
 		return tableModel.addColumn();
 	}

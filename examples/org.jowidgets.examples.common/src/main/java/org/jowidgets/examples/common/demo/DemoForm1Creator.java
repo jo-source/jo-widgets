@@ -28,6 +28,8 @@
 
 package org.jowidgets.examples.common.demo;
 
+import java.util.List;
+
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
@@ -40,18 +42,18 @@ public final class DemoForm1Creator {
 
 	private DemoForm1Creator() {}
 
-	public static IInputComposite<String> createDemoForm1(final IContainer parentContainer) {
+	public static IInputComposite<List<String>> createDemoForm1(final IContainer parentContainer) {
 		return createDemoForm1(parentContainer, true);
 	}
 
-	public static IInputComposite<String> createDemoForm1(final IContainer parentContainer, final boolean scrolledContent) {
+	public static IInputComposite<List<String>> createDemoForm1(final IContainer parentContainer, final boolean scrolledContent) {
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
 		//layout for the composite
 		parentContainer.setLayout(new MigLayoutDescriptor("[grow, 0::]", "[grow, 0::]"));
 
 		//define the blue print for the input composite
-		final IInputCompositeBluePrint<String> inputCompositeBp = bpf.inputComposite(new DemoForm1ContentCreator());
+		final IInputCompositeBluePrint<List<String>> inputCompositeBp = bpf.inputComposite(new DemoForm1ContentCreator());
 		inputCompositeBp.setContentScrolled(scrolledContent);
 		inputCompositeBp.setMissingInputText("Please fill out all mandatory (*) fields");
 		inputCompositeBp.setMissingInputIcon(IconsSmall.INFO);
