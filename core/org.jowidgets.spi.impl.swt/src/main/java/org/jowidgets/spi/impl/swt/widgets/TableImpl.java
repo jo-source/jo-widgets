@@ -846,6 +846,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		public void columnsStructureChanged() {
 			table.setRedraw(false);
 
+			table.clearAll();
 			removeAllColumns();
 			addAllColumns();
 

@@ -121,7 +121,7 @@ public class DefaultTableColumnModel implements IDefaultTableColumnModel {
 	}
 
 	@Override
-	public void removeColumns(final int[] columns) {
+	public void removeColumns(final int... columns) {
 		model.removeColumns(columns);
 	}
 

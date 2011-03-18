@@ -28,32 +28,23 @@
 
 package org.jowidgets.examples.common.workbench.demo1;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.model.item.IActionItemModel;
+import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.api.model.table.IDefaultTableColumnBuilder;
+import org.jowidgets.api.model.table.IDefaultTableColumnModel;
+import org.jowidgets.api.model.table.ITableCellBuilder;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.api.widgets.blueprint.ITableBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.color.ColorValue;
-import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.model.ITableCell;
-import org.jowidgets.common.model.ITableColumn;
-import org.jowidgets.common.model.ITableColumnModel;
-import org.jowidgets.common.model.ITableColumnModelObservable;
 import org.jowidgets.common.model.ITableModel;
-import org.jowidgets.common.model.ITableModelObservable;
-import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.IVetoable;
-import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.types.TableColumnPackPolicy;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.ITableCellEditEvent;
@@ -73,6 +64,10 @@ import org.jowidgets.examples.common.demo.DemoMenuProvider;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractView;
 import org.jowidgets.tools.layout.MigLayoutFactory;
+import org.jowidgets.tools.model.table.AbstractTableModel;
+import org.jowidgets.tools.model.table.DefaultTableColumnBuilder;
+import org.jowidgets.tools.model.table.DefaultTableColumnModel;
+import org.jowidgets.tools.model.table.TableCellBuilder;
 import org.jowidgets.util.ValueHolder;
 import org.jowidgets.workbench.api.IViewContext;
 
@@ -97,81 +92,21 @@ public class ViewDemo1 extends AbstractView {
 		container.setLayout(MigLayoutFactory.growingInnerCellLayout());
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-		final IComposite content = container.add(
-				bpf.composite().setBackgroundColor(Colors.WHITE),
-				MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-
-		content.setLayout(MigLayoutFactory.growingInnerCellLayout());
-
 		final int rowCount = 20000;
 		final int columnCount = 13;
 
 		final ITableBluePrint tableBp = bpf.table();
 
-		tableBp.setColumnModel(new ITableColumnModel() {
+		final IDefaultTableColumnModel columnModel = new DefaultTableColumnModel(columnCount);
+		for (int columnIndex = 0; columnIndex < columnModel.getColumnCount(); columnIndex++) {
+			final IDefaultTableColumnBuilder columnBuilder = new DefaultTableColumnBuilder();
+			columnBuilder.setText("Column " + columnIndex);
+			columnBuilder.setToolTipText("Tooltip of column " + columnIndex);
+			columnBuilder.setWidth(100);
+			columnModel.setColumn(columnIndex, columnBuilder);
+		}
 
-			private final Map<Integer, ITableColumn> columns = new HashMap<Integer, ITableColumn>();
-
-			@Override
-			public int getColumnCount() {
-				return columnCount;
-			}
-
-			@Override
-			public ITableColumn getColumn(final int columnIndex) {
-				ITableColumn result = columns.get(Integer.valueOf(columnIndex));
-				if (result == null) {
-					result = new ITableColumn() {
-
-						private int width = 100;
-
-						@Override
-						public void setWidth(final int width) {
-							this.width = width;
-						}
-
-						@Override
-						public int getWidth() {
-							return width;
-						}
-
-						@Override
-						public String getToolTipText() {
-							return "Tooltip of column " + columnIndex;
-						}
-
-						@Override
-						public String getText() {
-							return "Column " + columnIndex;
-						}
-
-						@Override
-						public IImageConstant getIcon() {
-							if (columnIndex == 2) {
-								return SilkIcons.ARROW_DOWN;
-							}
-							return null;
-						}
-
-						@Override
-						public AlignmentHorizontal getAlignment() {
-							return null;
-						}
-					};
-				}
-				columns.put(Integer.valueOf(columnIndex), result);
-				return result;
-			}
-
-			@Override
-			public ITableColumnModelObservable getTableColumnModelObservable() {
-				return null;
-			}
-		});
-
-		tableBp.setTableModel(new ITableModel() {
-
-			private ArrayList<Integer> selection;
+		final ITableModel tableModel = new AbstractTableModel() {
 
 			@Override
 			public int getRowCount() {
@@ -180,76 +115,18 @@ public class ViewDemo1 extends AbstractView {
 
 			@Override
 			public ITableCell getCell(final int rowIndex, final int columnIndex) {
-				//CHECKSTYLE:OFF
-				//System.out.println(rowIndex);
-				//CHECKSTYLE:ON
-
-				return new ITableCell() {
-
-					@Override
-					public boolean isEditable() {
-						return true;
-					}
-
-					@Override
-					public String getToolTipText() {
-						return null;
-					}
-
-					@Override
-					public String getText() {
-						return "Cell (" + rowIndex + " / " + columnIndex + ")";
-					}
-
-					@Override
-					public Markup getMarkup() {
-						return null;
-					}
-
-					@Override
-					public IImageConstant getIcon() {
-						return null;
-					}
-
-					@Override
-					public IColorConstant getForegroundColor() {
-						return null;
-					}
-
-					@Override
-					public IColorConstant getBackgroundColor() {
-						if (rowIndex % 2 == 0) {
-							return new ColorValue(222, 235, 235);
-						}
-						return null;
-					}
-
-				};
-			}
-
-			@Override
-			public ArrayList<Integer> getSelection() {
-				if (selection == null) {
-					selection = new ArrayList<Integer>(2);
-					selection.add(Integer.valueOf(0));
-					selection.add(Integer.valueOf(2));
+				final ITableCellBuilder cellBuilder = new TableCellBuilder();
+				cellBuilder.setText("Cell (" + rowIndex + " / " + columnIndex + ")");
+				if (rowIndex % 2 == 0) {
+					cellBuilder.setBackgroundColor(Colors.DEFAULT_TABLE_EVEN_BACKGROUND_COLOR);
 				}
-				return selection;
+				return cellBuilder.build();
 			}
+		};
 
-			@Override
-			public void setSelection(final ArrayList<Integer> selection) {
-				this.selection = selection;
-			}
+		tableBp.setTableModel(tableModel).setColumnModel(columnModel);
 
-			@Override
-			public ITableModelObservable getTableModelObservable() {
-				return null;
-			}
-
-		});
-
-		final ITable table = content.add(tableBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+		final ITable table = container.add(tableBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
 		table.addTableSelectionListener(new ITableSelectionListener() {
 			@Override
@@ -336,10 +213,11 @@ public class ViewDemo1 extends AbstractView {
 		final ValueHolder<Integer> selectedRow = new ValueHolder<Integer>();
 
 		final IPopupMenu popupMenu = table.createPopupMenu();
-		final IActionItemModel item1 = popupMenu.getModel().addActionItem();
-		final IActionItemModel reloadAction = popupMenu.getModel().addActionItem("Reload", SilkIcons.ARROW_REFRESH_SMALL);
-		final IActionItemModel packTableAction = popupMenu.getModel().addActionItem("Fit all columns", SilkIcons.ARROW_INOUT);
-		final IActionItemModel packColumnAction = popupMenu.getModel().addActionItem("Fit column", SilkIcons.ARROW_INOUT);
+		final IMenuModel popupMenuModel = popupMenu.getModel();
+		final IActionItemModel item1 = popupMenuModel.addActionItem();
+		final IActionItemModel reloadAction = popupMenuModel.addActionItem("Reload", SilkIcons.ARROW_REFRESH_SMALL);
+		final IActionItemModel packTableAction = popupMenuModel.addActionItem("Fit all columns", SilkIcons.ARROW_INOUT);
+		final IActionItemModel packColumnAction = popupMenuModel.addActionItem("Fit column", SilkIcons.ARROW_INOUT);
 
 		reloadAction.addActionListener(new IActionListener() {
 			@Override
