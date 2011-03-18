@@ -103,7 +103,7 @@ public class ViewDemo1 extends AbstractView {
 
 		content.setLayout(MigLayoutFactory.growingInnerCellLayout());
 
-		final int rowCount = 2000;
+		final int rowCount = 20000;
 		final int columnCount = 13;
 
 		final ITableBluePrint tableBp = bpf.table();

@@ -28,24 +28,28 @@
 
 package org.jowidgets.examples.common.workbench.demo1;
 
+import org.jowidgets.api.model.item.IActionItemModel;
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.table.IDefaultTableColumn;
-import org.jowidgets.api.model.table.IDefaultTableColumnModel;
+import org.jowidgets.api.model.table.ISimpleTableModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IPopupMenu;
+import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.api.widgets.blueprint.ITableBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.color.ColorValue;
-import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.model.ITableCell;
-import org.jowidgets.common.model.ITableModel;
+import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionListener;
+import org.jowidgets.common.widgets.controler.ITableCellPopupEvent;
+import org.jowidgets.common.widgets.controler.ITableColumnPopupDetectionListener;
+import org.jowidgets.common.widgets.controler.ITableColumnPopupEvent;
 import org.jowidgets.examples.common.demo.DemoMenuProvider;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractView;
 import org.jowidgets.tools.layout.MigLayoutFactory;
-import org.jowidgets.tools.model.table.AbstractTableModel;
-import org.jowidgets.tools.model.table.DefaultTableColumnModel;
-import org.jowidgets.tools.model.table.TableCell;
+import org.jowidgets.tools.model.table.SimpleTableModel;
+import org.jowidgets.util.ValueHolder;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
@@ -78,53 +82,74 @@ public class ViewDemo6 extends AbstractView implements IView {
 		container.setLayout(MigLayoutFactory.growingInnerCellLayout());
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-		final int rowCount = 200;
+		final int rowCount = 2000;
 		final int columnCount = 10;
 
-		final IDefaultTableColumnModel columnModel = new DefaultTableColumnModel(columnCount);
+		final ISimpleTableModel tableModel = new SimpleTableModel(rowCount, columnCount);
 
-		int columnIndex = 0;
-		for (final IDefaultTableColumn column : columnModel.getColumns()) {
+		for (int columnIndex = 0; columnIndex < columnCount; columnIndex++) {
+			final IDefaultTableColumn column = tableModel.getColumn(columnIndex);
 			column.setText("Column " + columnIndex);
 			column.setToolTipText("Tooltip of column " + columnIndex);
-			columnIndex++;
+			for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+				tableModel.setCell(rowIndex, columnIndex, "Cell (" + rowIndex + " / " + columnIndex + ")", true);
+			}
 		}
 
-		final ITableModel tableModel = new AbstractTableModel() {
+		final ITableBluePrint tableBp = bpf.table().setTableModel(tableModel).setColumnModel(tableModel);
+		final ITable table = container.add(tableBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+
+		final ValueHolder<Integer> currentRow = new ValueHolder<Integer>();
+		final ValueHolder<Integer> currentColumn = new ValueHolder<Integer>();
+
+		final IPopupMenu cellPopupMenu = table.createPopupMenu();
+		final IMenuModel cellPopupMenuModel = cellPopupMenu.getModel();
+
+		table.addTableCellPopupDetectionListener(new ITableCellPopupDetectionListener() {
+			@Override
+			public void popupDetected(final ITableCellPopupEvent event) {
+				currentColumn.set(Integer.valueOf(event.getColumnIndex()));
+				currentRow.set(Integer.valueOf(event.getRowIndex()));
+				cellPopupMenu.show(event.getPosition());
+			}
+		});
+
+		final IActionItemModel deleteRowAction = cellPopupMenuModel.addActionItem("Delete row");
+		deleteRowAction.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				tableModel.removeRow(currentRow.get().intValue());
+			}
+		});
+
+		final IActionItemModel deleteSelectedRows = cellPopupMenuModel.addActionItem("Delete selected rows");
+		deleteSelectedRows.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				for (final Integer selectedRow : table.getSelection()) {
+					tableModel.removeRow(selectedRow.intValue());
+				}
+			}
+		});
+
+		final IPopupMenu columnPopupMenu = table.createPopupMenu();
+		final IMenuModel columnPopupMenuModel = columnPopupMenu.getModel();
+
+		table.addTableColumnPopupDetectionListener(new ITableColumnPopupDetectionListener() {
+			@Override
+			public void popupDetected(final ITableColumnPopupEvent event) {
+				currentColumn.set(Integer.valueOf(event.getColumnIndex()));
+				columnPopupMenu.show(event.getPosition());
+			}
+		});
+
+		final IActionItemModel deleteColumnAction = columnPopupMenuModel.addActionItem("Delete column");
+		deleteColumnAction.addActionListener(new IActionListener() {
 
 			@Override
-			public int getRowCount() {
-				return rowCount;
+			public void actionPerformed() {
+				tableModel.removeColumn(currentColumn.get().intValue());
 			}
-
-			@Override
-			public ITableCell getCell(final int rowIndex, final int columnIndex) {
-				return new TableCell() {
-
-					@Override
-					public String getText() {
-						return "Cell (" + rowIndex + " / " + columnIndex + ")";
-					}
-
-					@Override
-					public IColorConstant getBackgroundColor() {
-						if (rowIndex % 2 == 0) {
-							return new ColorValue(222, 235, 235);
-						}
-						return null;
-					}
-
-					@Override
-					public boolean isEditable() {
-						return true;
-					}
-
-				};
-			}
-		};
-
-		final ITableBluePrint tableBp = bpf.table().setTableModel(tableModel).setColumnModel(columnModel);
-		tableBp.setColumnModel(columnModel);
-		container.add(tableBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+		});
 	}
 }
