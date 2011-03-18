@@ -29,10 +29,10 @@
 package org.jowidgets.impl.model.table;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
+import java.util.Arrays;
 import java.util.List;
 
+import org.jowidgets.api.model.table.IDefaultTableColumn;
 import org.jowidgets.api.model.table.ISimpleTableModel;
 import org.jowidgets.api.model.table.ITableCellBuilder;
 import org.jowidgets.common.color.IColorConstant;
@@ -70,11 +70,12 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 		this.selection = new ArrayList<Integer>();
 
 		this.data = new ArrayList<ArrayList<ITableCell>>();
+		final ITableCellBuilder cellBuilder = new TableCellBuilder();
 		for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
 			final ArrayList<ITableCell> row = new ArrayList<ITableCell>();
 			data.add(row);
 			for (int columnIndex = 0; columnIndex < columnCount; columnIndex++) {
-				row.add(new TableCellBuilder().build());
+				row.add(cellBuilder.build());
 			}
 		}
 	}
@@ -163,22 +164,45 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 		}
 
 		final int[] indices = new int[1 + toIndex - fromIndex];
+		boolean selectionChanged = false;
 		for (int i = 0; i < indices.length; i++) {
 			indices[i] = fromIndex + i;
 			data.remove(fromIndex);
+			selectionChanged = selectionChanged || selection.remove(Integer.valueOf(fromIndex + i));
 		}
 		tableModelObservable.fireRowsRemoved(indices);
+		if (selectionChanged) {
+			tableModelObservable.fireSelectionChanged();
+		}
 	}
 
 	@Override
 	public void removeRows(final int... rows) {
-		// TODO Auto-generated method stub	
+		Assert.paramNotNull(rows, "rows");
+		//If rows is sorted, for each already removed row the
+		//index must be reduced by one
+		Arrays.sort(rows);
+		int removedRowCount = 0;
+		boolean selectionChanged = false;
+		for (final int row : rows) {
+			data.remove(row - removedRowCount);
+			selectionChanged = selection.remove(Integer.valueOf(row)) || selectionChanged;
+			removedRowCount++;
+		}
+		tableModelObservable.fireRowsRemoved(rows);
+		if (selectionChanged) {
+			tableModelObservable.fireSelectionChanged();
+		}
 	}
 
 	@Override
-	public void removeRows(final List<Integer> rows) {
-		final List<Integer> sortedRows = new LinkedList<Integer>(rows);
-		Collections.sort(sortedRows);
+	public void removeAllRows() {
+		final boolean selectionChanged = selection.size() > 0;
+		data.clear();
+		tableModelObservable.fireRowsStructureChanged();
+		if (selectionChanged) {
+			tableModelObservable.fireSelectionChanged();
+		}
 	}
 
 	@Override
@@ -213,6 +237,42 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////
+	//Overridden from column model start 
+	////////////////////////////////////////////////////////////////////////////////////////////////
+
+	@Override
+	public void addColumn(final int columnIndex, final IDefaultTableColumn column) {
+		if (data != null) {
+			final ITableCellBuilder cellBuilder = new TableCellBuilder();
+			for (int rowIndex = 0; rowIndex < data.size(); rowIndex++) {
+				data.get(rowIndex).add(columnIndex, cellBuilder.build());
+			}
+		}
+		super.addColumn(columnIndex, column);
+	}
+
+	@Override
+	public void removeColumns(final int... columnIndices) {
+		Assert.paramNotNull(columnIndices, "columnIndices");
+		//If rows is sorted, for each already removed row the
+		//index must be reduced by one
+		Arrays.sort(columnIndices);
+
+		for (int rowIndex = 0; rowIndex < data.size(); rowIndex++) {
+			int removedColumnCount = 0;
+			for (final int columnIndex : columnIndices) {
+				data.get(rowIndex).remove(columnIndex - removedColumnCount);
+				removedColumnCount++;
+			}
+		}
+		super.removeColumns(columnIndices);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////
+	//Overridden from column model end
+	////////////////////////////////////////////////////////////////////////////////////////////////
+
+	////////////////////////////////////////////////////////////////////////////////////////////////
 	//Convenience methods start
 	////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -244,8 +304,14 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 	}
 
 	@Override
-	public void removeAllRows() {
-		removeRows(0, getRowCount() - 1);
+	public void removeRows(final List<Integer> rows) {
+		final int[] rowsArray = new int[rows.size()];
+		int index = 0;
+		for (final Integer row : rows) {
+			rowsArray[index] = row.intValue();
+			index++;
+		}
+		removeRows(rowsArray);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////

@@ -126,9 +126,7 @@ public class ViewDemo6 extends AbstractView implements IView {
 		deleteSelectedRows.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
-				for (final Integer selectedRow : table.getSelection()) {
-					tableModel.removeRow(selectedRow.intValue());
-				}
+				tableModel.removeRows(table.getSelection());
 			}
 		});
 
@@ -145,7 +143,6 @@ public class ViewDemo6 extends AbstractView implements IView {
 
 		final IActionItemModel deleteColumnAction = columnPopupMenuModel.addActionItem("Delete column");
 		deleteColumnAction.addActionListener(new IActionListener() {
-
 			@Override
 			public void actionPerformed() {
 				tableModel.removeColumn(currentColumn.get().intValue());

@@ -245,7 +245,7 @@ public class SimpleTableModel implements ISimpleTableModel {
 	}
 
 	@Override
-	public void removeColumns(final int[] columns) {
+	public void removeColumns(final int... columns) {
 		tableModel.removeColumns(columns);
 	}
 

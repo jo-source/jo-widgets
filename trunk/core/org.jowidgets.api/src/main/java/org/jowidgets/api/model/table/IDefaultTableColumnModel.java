@@ -61,7 +61,7 @@ public interface IDefaultTableColumnModel extends ITableColumnModel {
 
 	void removeColumns(final int fromColumnIndex, final int toColumnIndex);
 
-	void removeColumns(final int[] columns);
+	void removeColumns(final int... columns);
 
 	void removeAllColumns();
 

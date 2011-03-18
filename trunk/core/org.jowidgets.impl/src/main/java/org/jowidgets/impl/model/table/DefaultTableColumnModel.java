@@ -43,6 +43,7 @@ import org.jowidgets.common.model.ITableColumnModelListener;
 import org.jowidgets.common.model.ITableColumnModelObservable;
 import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.tools.controler.TableColumnModelObservable;
+import org.jowidgets.util.Assert;
 
 public class DefaultTableColumnModel implements IDefaultTableColumnModel, ITableColumnModelObservable {
 
@@ -106,7 +107,8 @@ public class DefaultTableColumnModel implements IDefaultTableColumnModel, ITable
 	}
 
 	@Override
-	public void removeColumns(final int[] columnIndices) {
+	public void removeColumns(final int... columnIndices) {
+		Assert.paramNotNull(columnIndices, "columnIndices");
 
 		//first convert array into a set
 		final Set<Integer> columnsToRemove = new HashSet<Integer>();
