@@ -194,9 +194,25 @@ class ItemModelImpl implements IItemModel {
 	}
 
 	protected final void fireItemChanged() {
+		final Set<IItemModelListener> brokenListeners = new HashSet<IItemModelListener>();
 		for (final IItemModelListener listener : menuItemModelListeners) {
-			listener.itemChanged(this);
+			try {
+				listener.itemChanged(this);
+			}
+			catch (final RuntimeException e) {
+				//This is just a workaround for the case, that widgets will be
+				//disposed in swt directly so the widget api does not get any information about that
+				//If the model changes, an swt exception will be thrown then.
+				//TODO MG fix this workaround
+				if ("org.eclipse.swt.SWTException".equals(e.getClass().getName())) {
+					brokenListeners.add(listener);
+				}
+				else {
+					throw e;
+				}
+			}
 		}
+		menuItemModelListeners.removeAll(brokenListeners);
 	}
 
 	@Override
