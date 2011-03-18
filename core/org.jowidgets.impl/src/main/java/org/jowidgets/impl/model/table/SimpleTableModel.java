@@ -29,6 +29,9 @@
 package org.jowidgets.impl.model.table;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.jowidgets.api.model.table.ISimpleTableModel;
 import org.jowidgets.api.model.table.ITableCellBuilder;
@@ -165,6 +168,17 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 			data.remove(fromIndex);
 		}
 		tableModelObservable.fireRowsRemoved(indices);
+	}
+
+	@Override
+	public void removeRows(final int... rows) {
+		// TODO Auto-generated method stub	
+	}
+
+	@Override
+	public void removeRows(final List<Integer> rows) {
+		final List<Integer> sortedRows = new LinkedList<Integer>(rows);
+		Collections.sort(sortedRows);
 	}
 
 	@Override
