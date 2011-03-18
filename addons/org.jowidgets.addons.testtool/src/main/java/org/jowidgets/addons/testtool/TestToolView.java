@@ -182,6 +182,7 @@ public class TestToolView {
 		table.pack(TableColumnPackPolicy.HEADER_AND_CONTENT);
 	}
 
+	//CHECKSTYLE:OFF
 	private void createMenuBar(final IFrame frame) {
 		final IMenuBarModel menuBarModel = frame.getMenuBarModel();
 		final IMenuModel fileModel = new MenuModel("File");
