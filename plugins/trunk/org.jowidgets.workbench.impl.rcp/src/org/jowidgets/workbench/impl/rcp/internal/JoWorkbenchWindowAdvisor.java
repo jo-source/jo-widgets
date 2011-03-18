@@ -142,7 +142,7 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		final IContainer leftContainer = Toolkit.getWidgetWrapperFactory().createComposite(new Composite(sashForm, SWT.NONE));
 		leftContainer.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
 		applicationFolder = new WorkbenchApplicationFolder((Composite) leftContainer.getUiReference(), workbench, context);
-		applicationFolder.setLayoutData("grow");
+		applicationFolder.setLayoutData("wmin 0, hmin 0, grow");
 		applicationFolder.addDisposeListener(new DisposeListener() {
 			@Override
 			public void widgetDisposed(final DisposeEvent e) {

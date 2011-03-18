@@ -78,6 +78,7 @@ public final class WorkbenchApplicationFolder extends Composite {
 			| SWT.NO_BACKGROUND
 			| SWT.BORDER
 			| (workbench.getApplicationsCloseable() ? SWT.CLOSE : SWT.NONE));
+		tabFolder.setUnselectedCloseVisible(false);
 		setFont();
 		setTabHeight();
 
