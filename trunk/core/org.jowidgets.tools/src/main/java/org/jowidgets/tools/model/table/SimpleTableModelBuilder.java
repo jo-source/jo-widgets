@@ -26,54 +26,54 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.model.table;
+package org.jowidgets.tools.model.table;
 
-import java.util.List;
+import org.jowidgets.api.model.table.ISimpleTableModel;
+import org.jowidgets.api.model.table.ISimpleTableModelBuilder;
+import org.jowidgets.common.color.IColorConstant;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.model.ITableCell;
-import org.jowidgets.common.model.ITableModel;
+public class SimpleTableModelBuilder implements ISimpleTableModelBuilder {
 
-public interface ISimpleTableModel extends ITableModel, IDefaultTableColumnModel {
+	private final ISimpleTableModelBuilder builder;
 
-	void addRow();
+	public SimpleTableModelBuilder(final ISimpleTableModelBuilder builder) {
+		super();
+		this.builder = builder;
+	}
 
-	void addRow(int rowIndex);
+	@Override
+	public ISimpleTableModelBuilder setRowCount(final int rowCount) {
+		builder.setRowCount(rowCount);
+		return this;
+	}
 
-	void addRows(int rowIndex, int rowCount);
+	@Override
+	public ISimpleTableModelBuilder setColumnCount(final int columnCount) {
+		builder.setColumnCount(columnCount);
+		return this;
+	}
 
-	void addRow(ITableCell... cells);
+	@Override
+	public ISimpleTableModelBuilder setDefaultAlternatingRowColorsEnabled(final boolean enabled) {
+		builder.setDefaultAlternatingRowColorsEnabled(enabled);
+		return this;
+	}
 
-	void addRow(int rowIndex, ITableCell... cells);
+	@Override
+	public ISimpleTableModelBuilder setEvenRowsBackgroundColor(final IColorConstant color) {
+		builder.setEvenRowsBackgroundColor(color);
+		return this;
+	}
 
-	void addRow(ITableCellBuilder... cellBuilders);
+	@Override
+	public ISimpleTableModelBuilder setOddRowsBackgroundColor(final IColorConstant color) {
+		builder.setOddRowsBackgroundColor(color);
+		return this;
+	}
 
-	void addRow(int rowIndex, ITableCellBuilder... cellBuilders);
-
-	void addRow(String... cellTexts);
-
-	void addRow(int rowIndex, String... cellTexts);
-
-	void removeRow(int index);
-
-	void removeRows(int fromIndex, int toIndex);
-
-	void removeRows(int... rows);
-
-	void removeRows(List<Integer> rows);
-
-	void removeAllRows();
-
-	void setCell(int rowIndex, int columnIndex, ITableCell cell);
-
-	void setCell(int rowIndex, int columnIndex, ITableCellBuilder cellBuilder);
-
-	void setCell(int rowIndex, int columnIndex, String text);
-
-	void setCell(int rowIndex, int columnIndex, String text, IImageConstant icon);
-
-	void setCell(int rowIndex, int columnIndex, String text, boolean editable);
-
-	void setEditable(int rowIndex, int columnIndex, boolean editable);
+	@Override
+	public ISimpleTableModel build() {
+		return builder.build();
+	}
 
 }

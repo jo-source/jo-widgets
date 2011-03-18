@@ -692,7 +692,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		}
 
 		void rowsStructureChanged() {
-			fireTableStructureChanged();
+			fireTableDataChanged();
 		}
 
 	}
