@@ -50,7 +50,7 @@ public final class SwingWorkbenchDemo1FramesStarter {
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
 
 		SwingOptions.setInternalFramesForTabFolders(true);
-		//SwingOptions.setOneTouchExpandableSplits(true);
+		SwingOptions.setOneTouchExpandableSplits(true);
 
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 		bpf.addDefaultsInitializer(ITabFolderBluePrint.class, createTabDefaults());
