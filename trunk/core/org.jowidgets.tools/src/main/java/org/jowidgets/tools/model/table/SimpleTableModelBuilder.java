@@ -30,11 +30,17 @@ package org.jowidgets.tools.model.table;
 
 import org.jowidgets.api.model.table.ISimpleTableModel;
 import org.jowidgets.api.model.table.ISimpleTableModelBuilder;
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.color.IColorConstant;
 
 public class SimpleTableModelBuilder implements ISimpleTableModelBuilder {
 
 	private final ISimpleTableModelBuilder builder;
+
+	public SimpleTableModelBuilder() {
+		super();
+		this.builder = Toolkit.getModelFactoryProvider().getTableModelFactory().simpleTableModelBuilder();
+	}
 
 	public SimpleTableModelBuilder(final ISimpleTableModelBuilder builder) {
 		super();
@@ -54,8 +60,14 @@ public class SimpleTableModelBuilder implements ISimpleTableModelBuilder {
 	}
 
 	@Override
-	public ISimpleTableModelBuilder setDefaultAlternatingRowColorsEnabled(final boolean enabled) {
-		builder.setDefaultAlternatingRowColorsEnabled(enabled);
+	public ISimpleTableModelBuilder setEditableDefault(final boolean editable) {
+		builder.setEditableDefault(editable);
+		return this;
+	}
+
+	@Override
+	public ISimpleTableModelBuilder setDefaultStripedRenderingColors() {
+		builder.setDefaultStripedRenderingColors();
 		return this;
 	}
 

@@ -36,7 +36,9 @@ public interface ISimpleTableModelBuilder {
 
 	ISimpleTableModelBuilder setColumnCount(int columnCount);
 
-	ISimpleTableModelBuilder setDefaultAlternatingRowColorsEnabled(boolean enabled);
+	ISimpleTableModelBuilder setEditableDefault(boolean editable);
+
+	ISimpleTableModelBuilder setDefaultStripedRenderingColors();
 
 	ISimpleTableModelBuilder setEvenRowsBackgroundColor(IColorConstant color);
 

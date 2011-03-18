@@ -52,11 +52,14 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 	private final IColorConstant evenBackgroundColor;
 	private final IColorConstant oddBackgroundColor;
 
+	private final boolean cellsEditableDefault;
+
 	private ArrayList<Integer> selection;
 
 	SimpleTableModel(
 		final int rowCount,
 		final int columnCount,
+		final boolean cellsEditableDefault,
 		final IColorConstant evenBackgroundColor,
 		final IColorConstant oddBackgroundColor) {
 
@@ -64,13 +67,14 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 
 		this.tableModelObservable = new TableModelObservable();
 
+		this.cellsEditableDefault = cellsEditableDefault;
 		this.evenBackgroundColor = evenBackgroundColor;
 		this.oddBackgroundColor = oddBackgroundColor;
 
 		this.selection = new ArrayList<Integer>();
 
 		this.data = new ArrayList<ArrayList<ITableCell>>();
-		final ITableCellBuilder cellBuilder = new TableCellBuilder();
+		final ITableCellBuilder cellBuilder = cellBuilder();
 		for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
 			final ArrayList<ITableCell> row = new ArrayList<ITableCell>();
 			data.add(row);
@@ -107,54 +111,49 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 	}
 
 	@Override
-	public void addRow() {
-
-	}
-
-	@Override
-	public void addRow(final int rowIndex) {
-
-	}
-
-	@Override
-	public void addRows(final int rowIndex, final int rowCount) {
-
-	}
-
-	@Override
-	public void addRow(final ITableCell... cells) {
-
+	public void addRows(final int startRowIndex, final int rowCount) {
+		final int[] rowIndices = new int[rowCount];
+		final ITableCellBuilder cellBuilder = cellBuilder();
+		final int columnCount = getColumnCount();
+		for (int i = 0; i < rowCount; i++) {
+			rowIndices[i] = startRowIndex + i;
+			final ArrayList<ITableCell> row = new ArrayList<ITableCell>();
+			data.add(startRowIndex, row);
+			for (int columnIndex = 0; columnIndex < columnCount; columnIndex++) {
+				row.add(cellBuilder.build());
+			}
+		}
+		tableModelObservable.fireRowsAdded(rowIndices);
 	}
 
 	@Override
 	public void addRow(final int rowIndex, final ITableCell... cells) {
+		Assert.paramNotNull(cells, "cells");
 
-	}
+		final ITableCellBuilder cellBuilder = cellBuilder();
+		final int columnCount = getColumnCount();
 
-	@Override
-	public void addRow(final ITableCellBuilder... cellBuilders) {
-
-	}
-
-	@Override
-	public void addRow(final int rowIndex, final ITableCellBuilder... cellBuilders) {
-
-	}
-
-	@Override
-	public void addRow(final String... cellTexts) {
-
-	}
-
-	@Override
-	public void addRow(final int rowIndex, final String... cellTexts) {
-
+		final ArrayList<ITableCell> row = new ArrayList<ITableCell>();
+		data.add(rowIndex, row);
+		for (int columnIndex = 0; columnIndex < columnCount; columnIndex++) {
+			if (columnIndex < cells.length) {
+				row.add(cells[columnIndex]);
+			}
+			else {
+				row.add(cellBuilder.build());
+			}
+		}
+		tableModelObservable.fireRowsAdded(new int[] {rowIndex});
 	}
 
 	@Override
 	public void removeRow(final int index) {
 		data.remove(index);
+		final boolean selectionChanged = selection.remove(Integer.valueOf(index));
 		tableModelObservable.fireRowsRemoved(new int[] {index});
+		if (selectionChanged) {
+			tableModelObservable.fireSelectionChanged();
+		}
 	}
 
 	@Override
@@ -216,7 +215,7 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 			selection = new ArrayList<Integer>();
 		}
 		if (!this.selection.equals(selection)) {
-			this.selection = selection;
+			this.selection = new ArrayList<Integer>(selection);
 			tableModelObservable.fireSelectionChanged();
 		}
 	}
@@ -243,7 +242,7 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 	@Override
 	public void addColumn(final int columnIndex, final IDefaultTableColumn column) {
 		if (data != null) {
-			final ITableCellBuilder cellBuilder = new TableCellBuilder();
+			final ITableCellBuilder cellBuilder = cellBuilder();
 			for (int rowIndex = 0; rowIndex < data.size(); rowIndex++) {
 				data.get(rowIndex).add(columnIndex, cellBuilder.build());
 			}
@@ -277,23 +276,85 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 	////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
+	public void addRow() {
+		addRows(getRowCount(), 1);
+	}
+
+	@Override
+	public void addRow(final int rowIndex) {
+		addRows(rowIndex, 1);
+	}
+
+	@Override
+	public void addRow(final ITableCell... cells) {
+		addRow(getRowCount(), cells);
+	}
+
+	@Override
+	public void addRow(final ITableCellBuilder... cellBuilders) {
+		addRow(getRowCount(), cellBuilders);
+	}
+
+	@Override
+	public void addRow(final int rowIndex, final ITableCellBuilder... cellBuilders) {
+		Assert.paramNotNull(cellBuilders, "cellBuilders");
+		final ITableCell[] cells = new ITableCell[cellBuilders.length];
+		for (int i = 0; i < cellBuilders.length; i++) {
+			cells[i] = cellBuilders[i].build();
+		}
+		addRow(rowIndex, cells);
+	}
+
+	@Override
+	public void addRow(final String... cellTexts) {
+		addRow(getRowCount(), cellTexts);
+	}
+
+	@Override
+	public void addRow(final int rowIndex, final String... cellTexts) {
+		Assert.paramNotNull(cellTexts, "cellTexts");
+		final ITableCell[] cells = new ITableCell[cellTexts.length];
+		for (int i = 0; i < cellTexts.length; i++) {
+			cells[i] = cellBuilder().setText(cellTexts[i]).build();
+		}
+		addRow(rowIndex, cells);
+	}
+
+	@Override
+	public void addRow(final List<String> cellTexts) {
+		addRow(getRowCount(), cellTexts);
+	}
+
+	@Override
+	public void addRow(final int rowIndex, final List<String> cellTexts) {
+		Assert.paramNotNull(cellTexts, "cellTexts");
+		final ITableCell[] cells = new ITableCell[cellTexts.size()];
+		int i = 0;
+		for (final String cellText : cellTexts) {
+			cells[i] = cellBuilder().setText(cellText).build();
+			i++;
+		}
+		addRow(rowIndex, cells);
+	}
+
+	@Override
 	public void setCell(final int rowIndex, final int columnIndex, final ITableCellBuilder cellBuilder) {
 		setCell(rowIndex, columnIndex, cellBuilder.build());
 	}
 
 	@Override
 	public void setCell(final int rowIndex, final int columnIndex, final String text) {
-		setCell(rowIndex, columnIndex, new TableCellBuilder().setText(text));
+		setCell(rowIndex, columnIndex, cellBuilder().setText(text));
 	}
 
 	@Override
 	public void setCell(final int rowIndex, final int columnIndex, final String text, final IImageConstant icon) {
-		setCell(rowIndex, columnIndex, new TableCellBuilder().setText(text).setIcon(icon));
+		setCell(rowIndex, columnIndex, cellBuilder().setText(text).setIcon(icon));
 	}
 
 	@Override
 	public void setCell(final int rowIndex, final int columnIndex, final String text, final boolean editable) {
-		setCell(rowIndex, columnIndex, new TableCellBuilder().setText(text).setEditable(editable));
+		setCell(rowIndex, columnIndex, cellBuilder().setText(text).setEditable(editable));
 	}
 
 	@Override
@@ -317,5 +378,9 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	//Convenience methods end
 	////////////////////////////////////////////////////////////////////////////////////////////////
+
+	private ITableCellBuilder cellBuilder() {
+		return new TableCellBuilder().setEditable(cellsEditableDefault);
+	}
 
 }

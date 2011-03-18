@@ -28,6 +28,9 @@
 
 package org.jowidgets.examples.common.demo;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationResult;
@@ -43,7 +46,7 @@ import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
-public class DemoForm1ContentCreator implements IInputContentCreator<String> {
+public class DemoForm1ContentCreator implements IInputContentCreator<List<String>> {
 
 	private IComboBox<String> gender;
 	private IInputComponent<String> lastname;
@@ -157,11 +160,30 @@ public class DemoForm1ContentCreator implements IInputContentCreator<String> {
 	}
 
 	@Override
-	public void setValue(final String value) {}
+	public void setValue(final List<String> value) {}
 
 	@Override
-	public String getValue() {
-		return null;
+	public List<String> getValue() {
+		final List<String> result = new LinkedList<String>();
+		result.add(getStringValue(gender.getValue()));
+		result.add(getStringValue(lastname.getValue()));
+		result.add(getStringValue(firstName.getValue()));
+		result.add(getStringValue(street.getValue()));
+		result.add(getStringValue(postalCode.getValue()));
+		result.add(getStringValue(city.getValue()));
+		result.add(getStringValue(country.getValue()));
+		result.add(getStringValue(phoneNumber.getValue()));
+		result.add(getStringValue(mail.getValue()));
+		return result;
+	}
+
+	private String getStringValue(final Object object) {
+		if (object == null) {
+			return "";
+		}
+		else {
+			return object.toString();
+		}
 	}
 
 	@Override

@@ -112,6 +112,11 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 	}
 
 	@Override
+	public void pack() {
+		pack(TableColumnPackPolicy.HEADER_AND_CONTENT);
+	}
+
+	@Override
 	public void pack(final TableColumnPackPolicy policy) {
 		getWidget().pack(policy);
 	}

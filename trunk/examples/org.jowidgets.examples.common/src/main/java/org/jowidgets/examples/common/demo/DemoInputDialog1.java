@@ -28,9 +28,10 @@
 
 package org.jowidgets.examples.common.demo;
 
+import java.util.List;
+
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IInputDialog;
 import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
@@ -38,18 +39,22 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 
 public class DemoInputDialog1 {
 
-	private final IInputDialog<String> inputDialog;
+	private final IInputDialog<List<String>> inputDialog;
 
-	public DemoInputDialog1(final IContainer parent, final IWindow parentWindow) {
+	public DemoInputDialog1() {
+		this(Toolkit.getActiveWindow());
+	}
+
+	public DemoInputDialog1(final IWindow parentWindow) {
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
-		final IInputDialogBluePrint<String> inputDialogBp = bpF.inputDialog(new DemoForm1ContentCreator());
+		final IInputDialogBluePrint<List<String>> inputDialogBp = bpF.inputDialog(new DemoForm1ContentCreator());
 		inputDialogBp.setTitle("Input dialog demo");
 		inputDialogBp.setMissingInputText("Please fill out all mandatory (*) fields");
 		inputDialogBp.setMissingInputIcon(IconsSmall.INFO);
 		inputDialog = parentWindow.createChildWindow(inputDialogBp);
 	}
 
-	public IInputDialog<String> getInputDialog() {
+	public IInputDialog<List<String>> getInputDialog() {
 		return inputDialog;
 	}
 

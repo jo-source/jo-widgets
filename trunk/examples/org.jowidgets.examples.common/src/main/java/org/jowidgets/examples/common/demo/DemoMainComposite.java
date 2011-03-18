@@ -28,6 +28,8 @@
 
 package org.jowidgets.examples.common.demo;
 
+import java.util.List;
+
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IContainer;
@@ -50,7 +52,7 @@ public final class DemoMainComposite {
 
 		parentContainer.setLayout(new MigLayoutDescriptor("[300::, grow]", "[][][][]"));
 
-		final IInputDialog<String> inputDialog1 = new DemoInputDialog1(parentContainer, getParentWindow()).getInputDialog();
+		final IInputDialog<List<String>> inputDialog1 = new DemoInputDialog1(getParentWindow()).getInputDialog();
 		final IButton inputDialog1Button = parentContainer.add(
 				bpF.button("Input dialog demo", "Shows an simple input dialog"),
 				"grow, sg bg, wrap");

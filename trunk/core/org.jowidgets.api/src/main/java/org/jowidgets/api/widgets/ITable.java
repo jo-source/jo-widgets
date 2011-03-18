@@ -32,6 +32,8 @@ import org.jowidgets.common.widgets.ITableCommon;
 
 public interface ITable extends IControl, ITableCommon {
 
+	void pack();
+
 	int getRowCount();
 
 	int getColumnCount();

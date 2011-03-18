@@ -692,7 +692,10 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		}
 
 		void rowsStructureChanged() {
+			table.getSelectionModel().removeListSelectionListener(tableSelectionListener);
 			fireTableDataChanged();
+			setSelection(tableModel.getSelection());
+			table.getSelectionModel().addListSelectionListener(tableSelectionListener);
 		}
 
 	}
