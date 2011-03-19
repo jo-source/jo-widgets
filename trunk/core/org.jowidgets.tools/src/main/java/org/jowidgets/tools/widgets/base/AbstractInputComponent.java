@@ -82,6 +82,14 @@ public abstract class AbstractInputComponent<VALUE_TYPE> extends ComponentWrappe
 	}
 
 	@Override
+	public void setEnabled(final boolean enabled) {
+		super.setEnabled(enabled);
+		for (final IInputComponent<?> control : inputWidgets) {
+			control.setEnabled(enabled);
+		}
+	}
+
+	@Override
 	public boolean isEmpty() {
 		return EmptyCheck.isEmpty(getValue());
 	}

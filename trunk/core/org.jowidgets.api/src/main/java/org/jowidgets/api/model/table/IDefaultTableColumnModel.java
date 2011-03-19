@@ -32,9 +32,10 @@ import java.util.ArrayList;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.model.ITableColumnModel;
+import org.jowidgets.common.model.ITableColumnModelObservable;
 import org.jowidgets.common.types.AlignmentHorizontal;
 
-public interface IDefaultTableColumnModel extends ITableColumnModel {
+public interface IDefaultTableColumnModel extends ITableColumnModel, ITableColumnModelObservable {
 
 	@Override
 	IDefaultTableColumn getColumn(int columnIndex);

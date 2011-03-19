@@ -277,6 +277,13 @@ public class ValidationLabelImpl implements IValidationLabel {
 
 	@Override
 	public void setEnabled(final boolean enabled) {
+		if (!enabled) {
+			labelWidget.setText(null);
+			labelWidget.setIcon(null);
+		}
+		else {
+			resetValidation();
+		}
 		labelControl.setEnabled(enabled);
 	}
 

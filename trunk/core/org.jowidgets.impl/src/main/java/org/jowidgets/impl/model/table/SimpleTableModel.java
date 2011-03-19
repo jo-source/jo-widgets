@@ -30,6 +30,7 @@ package org.jowidgets.impl.model.table;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.jowidgets.api.model.table.IDefaultTableColumn;
@@ -101,6 +102,24 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public int getFirstSelectedRow() {
+		final ArrayList<Integer> currentSelection = getSelection();
+		if (currentSelection.size() > 0) {
+			return Collections.min(currentSelection).intValue();
+		}
+		return -1;
+	}
+
+	@Override
+	public int getLastSelectedRow() {
+		final ArrayList<Integer> currentSelection = getSelection();
+		if (currentSelection.size() > 0) {
+			return Collections.max(currentSelection).intValue();
+		}
+		return -1;
 	}
 
 	@Override

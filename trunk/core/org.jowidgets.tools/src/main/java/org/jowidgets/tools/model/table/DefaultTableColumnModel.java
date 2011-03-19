@@ -35,6 +35,7 @@ import org.jowidgets.api.model.table.IDefaultTableColumnBuilder;
 import org.jowidgets.api.model.table.IDefaultTableColumnModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.model.ITableColumnModelListener;
 import org.jowidgets.common.model.ITableColumnModelObservable;
 import org.jowidgets.common.types.AlignmentHorizontal;
 
@@ -58,6 +59,16 @@ public class DefaultTableColumnModel implements IDefaultTableColumnModel {
 	@Override
 	public ITableColumnModelObservable getTableColumnModelObservable() {
 		return model.getTableColumnModelObservable();
+	}
+
+	@Override
+	public void addColumnModelListener(final ITableColumnModelListener listener) {
+		model.addColumnModelListener(listener);
+	}
+
+	@Override
+	public void removeColumnModelListener(final ITableColumnModelListener listener) {
+		model.removeColumnModelListener(listener);
 	}
 
 	@Override

@@ -39,7 +39,9 @@ import org.jowidgets.api.model.table.ITableCellBuilder;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.model.ITableCell;
+import org.jowidgets.common.model.ITableColumnModelListener;
 import org.jowidgets.common.model.ITableColumnModelObservable;
+import org.jowidgets.common.model.ITableDataModelListener;
 import org.jowidgets.common.model.ITableDataModelObservable;
 import org.jowidgets.common.types.AlignmentHorizontal;
 
@@ -90,8 +92,38 @@ public class SimpleTableModel implements ISimpleTableModel {
 	}
 
 	@Override
+	public int getFirstSelectedRow() {
+		return tableModel.getFirstSelectedRow();
+	}
+
+	@Override
+	public int getLastSelectedRow() {
+		return tableModel.getLastSelectedRow();
+	}
+
+	@Override
 	public ITableDataModelObservable getTableDataModelObservable() {
 		return tableModel.getTableDataModelObservable();
+	}
+
+	@Override
+	public void addDataModelListener(final ITableDataModelListener listener) {
+		tableModel.addDataModelListener(listener);
+	}
+
+	@Override
+	public void removeDataModelListener(final ITableDataModelListener listener) {
+		tableModel.removeDataModelListener(listener);
+	}
+
+	@Override
+	public void addColumnModelListener(final ITableColumnModelListener listener) {
+		tableModel.addColumnModelListener(listener);
+	}
+
+	@Override
+	public void removeColumnModelListener(final ITableColumnModelListener listener) {
+		tableModel.removeColumnModelListener(listener);
 	}
 
 	@Override
