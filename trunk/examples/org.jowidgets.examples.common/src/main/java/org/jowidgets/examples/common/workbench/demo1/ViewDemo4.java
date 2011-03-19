@@ -130,11 +130,6 @@ public class ViewDemo4 extends AbstractView implements IView {
 		tableModel.addColumnModelListener(new ITableColumnModelListener() {
 
 			@Override
-			public void columnsStructureChanged() {
-				enabledChecker.fireEnabledStateChanged();
-			}
-
-			@Override
 			public void columnsRemoved(final int[] columnIndices) {
 				enabledChecker.fireEnabledStateChanged();
 			}

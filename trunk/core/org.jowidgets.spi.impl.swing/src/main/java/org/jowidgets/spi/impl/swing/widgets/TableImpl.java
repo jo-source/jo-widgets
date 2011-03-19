@@ -621,28 +621,19 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		@Override
 		public void columnsAdded(final int[] columnIndices) {
 			// TODO MG better implementation of columnsAdded observe
-			columnsStructureChanged();
+			swingTableModel.fireTableStructureChanged();
 		}
 
 		@Override
 		public void columnsRemoved(final int[] columnIndices) {
 			// TODO MG better implementation of columnsRemoved observe
-			columnsStructureChanged();
+			swingTableModel.fireTableStructureChanged();
 		}
 
 		@Override
 		public void columnsChanged(final int[] columnIndices) {
 			// TODO MG better implementation of columnsChanged observe
-			columnsStructureChanged();
-		}
-
-		@Override
-		public void columnsStructureChanged() {
-			if (swingTableModel != null) {
-				// TODO MG better implementation of columnsStructureChanged observe
-				//just remove and then add all columns
-				swingTableModel.fireTableStructureChanged();
-			}
+			swingTableModel.fireTableStructureChanged();
 		}
 
 	}

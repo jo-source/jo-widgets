@@ -836,14 +836,32 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 		@Override
 		public void columnsAdded(final int[] columnIndices) {
-			// TODO MG better implementation of columnsAdded observe
-			columnsStructureChanged();
+			table.setRedraw(false);
+			table.clearAll();
+			Arrays.sort(columnIndices);
+			int addedColumnsCount = 0;
+			for (int i = 0; i < columnIndices.length; i++) {
+				final int addedIndex = columnIndices[i] + addedColumnsCount;
+				addColumn(addedIndex, columnModel.getColumn(addedIndex));
+				addColumnListener(addedIndex);
+				addedColumnsCount++;
+			}
+			table.setRedraw(true);
 		}
 
 		@Override
 		public void columnsRemoved(final int[] columnIndices) {
-			// TODO MG better implementation of columnsRemoved observe
-			columnsStructureChanged();
+			table.setRedraw(false);
+			table.clearAll();
+			Arrays.sort(columnIndices);
+			int removedColumnsCount = 0;
+			for (int i = 0; i < columnIndices.length; i++) {
+				final int removedIndex = columnIndices[i] - removedColumnsCount;
+				removeColumnListener(removedIndex);
+				removeColumn(removedIndex);
+				removedColumnsCount++;
+			}
+			table.setRedraw(true);
 		}
 
 		@Override
@@ -853,17 +871,6 @@ public class TableImpl extends SwtControl implements ITableSpi {
 				final int changedIndex = columnIndices[i];
 				setColumnData(columns[changedIndex], columnModel.getColumn(changedIndex));
 			}
-		}
-
-		@Override
-		public void columnsStructureChanged() {
-			table.setRedraw(false);
-
-			table.clearAll();
-			removeAllColumns();
-			addAllColumns();
-
-			table.setRedraw(true);
 		}
 
 	}

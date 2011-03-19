@@ -70,10 +70,4 @@ public class TableColumnModelObservable implements ITableColumnModelObservable {
 		}
 	}
 
-	public void fireColumnsStructureChanged() {
-		for (final ITableColumnModelListener listener : listeners) {
-			listener.columnsStructureChanged();
-		}
-	}
-
 }

@@ -36,6 +36,4 @@ public interface ITableColumnModelListener {
 
 	void columnsChanged(int[] columnIndices);
 
-	void columnsStructureChanged();
-
 }
