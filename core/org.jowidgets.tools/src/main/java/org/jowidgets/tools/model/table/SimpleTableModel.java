@@ -95,6 +95,16 @@ public class SimpleTableModel implements ISimpleTableModel {
 	}
 
 	@Override
+	public ArrayList<ITableCell> getRow(final int rowIndex) {
+		return tableModel.getRow(rowIndex);
+	}
+
+	@Override
+	public ArrayList<String> getRowTexts(final int rowIndex) {
+		return tableModel.getRowTexts(rowIndex);
+	}
+
+	@Override
 	public void addRow() {
 		tableModel.addRow();
 	}
@@ -265,6 +275,41 @@ public class SimpleTableModel implements ISimpleTableModel {
 	}
 
 	@Override
+	public void setRow(final int rowIndex, final ITableCell... cells) {
+		tableModel.setRow(rowIndex, cells);
+	}
+
+	@Override
+	public void setRow(final int rowIndex, final ITableCellBuilder... cellBuilders) {
+		tableModel.setRow(rowIndex, cellBuilders);
+	}
+
+	@Override
+	public void setCellText(final int rowIndex, final int columnIndex, final String text) {
+		tableModel.setCellText(rowIndex, columnIndex, text);
+	}
+
+	@Override
+	public void setCellTooltipText(final int rowIndex, final int columnIndex, final String tooltipText) {
+		tableModel.setCellTooltipText(rowIndex, columnIndex, tooltipText);
+	}
+
+	@Override
+	public void setCellIcon(final int rowIndex, final int columnIndex, final IImageConstant icon) {
+		tableModel.setCellIcon(rowIndex, columnIndex, icon);
+	}
+
+	@Override
+	public void setRowTexts(final int rowIndex, final String... cellTexts) {
+		tableModel.setRowTexts(rowIndex, cellTexts);
+	}
+
+	@Override
+	public void setRowTexts(final int rowIndex, final List<String> cellTexts) {
+		tableModel.setRowTexts(rowIndex, cellTexts);
+	}
+
+	@Override
 	public void removeAllColumns() {
 		tableModel.removeAllColumns();
 	}
@@ -275,8 +320,8 @@ public class SimpleTableModel implements ISimpleTableModel {
 	}
 
 	@Override
-	public void setEditable(final int rowIndex, final int columnIndex, final boolean editable) {
-		tableModel.setEditable(rowIndex, columnIndex, editable);
+	public void setCellEditable(final int rowIndex, final int columnIndex, final boolean editable) {
+		tableModel.setCellEditable(rowIndex, columnIndex, editable);
 	}
 
 	@Override
@@ -295,23 +340,23 @@ public class SimpleTableModel implements ISimpleTableModel {
 	}
 
 	@Override
-	public void setText(final int columnIndex, final String text) {
-		tableModel.setText(columnIndex, text);
+	public void setColumnText(final int columnIndex, final String text) {
+		tableModel.setColumnText(columnIndex, text);
 	}
 
 	@Override
-	public void setToolTipText(final int columnIndex, final String tooltipText) {
-		tableModel.setToolTipText(columnIndex, tooltipText);
+	public void setColumnToolTipText(final int columnIndex, final String tooltipText) {
+		tableModel.setColumnToolTipText(columnIndex, tooltipText);
 	}
 
 	@Override
-	public void setIcon(final int columnIndex, final IImageConstant icon) {
-		tableModel.setIcon(columnIndex, icon);
+	public void setColumnIcon(final int columnIndex, final IImageConstant icon) {
+		tableModel.setColumnIcon(columnIndex, icon);
 	}
 
 	@Override
-	public void setAlignment(final int columnIndex, final AlignmentHorizontal alignment) {
-		tableModel.setAlignment(columnIndex, alignment);
+	public void setColumnAlignment(final int columnIndex, final AlignmentHorizontal alignment) {
+		tableModel.setColumnAlignment(columnIndex, alignment);
 	}
 
 	public static ISimpleTableModelBuilder builder() {

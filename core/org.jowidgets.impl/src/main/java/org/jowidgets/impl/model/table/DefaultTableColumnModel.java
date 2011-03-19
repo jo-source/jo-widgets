@@ -206,25 +206,25 @@ public class DefaultTableColumnModel implements IDefaultTableColumnModel, ITable
 	}
 
 	@Override
-	public void setText(final int columnIndex, final String text) {
+	public void setColumnText(final int columnIndex, final String text) {
 		checkIndex(columnIndex);
 		getColumn(columnIndex).setText(text);
 	}
 
 	@Override
-	public void setToolTipText(final int columnIndex, final String tooltipText) {
+	public void setColumnToolTipText(final int columnIndex, final String tooltipText) {
 		checkIndex(columnIndex);
 		getColumn(columnIndex).setToolTipText(tooltipText);
 	}
 
 	@Override
-	public void setIcon(final int columnIndex, final IImageConstant icon) {
+	public void setColumnIcon(final int columnIndex, final IImageConstant icon) {
 		checkIndex(columnIndex);
 		getColumn(columnIndex).setIcon(icon);
 	}
 
 	@Override
-	public void setAlignment(final int columnIndex, final AlignmentHorizontal alignment) {
+	public void setColumnAlignment(final int columnIndex, final AlignmentHorizontal alignment) {
 		checkIndex(columnIndex);
 		getColumn(columnIndex).setAlignment(alignment);
 	}

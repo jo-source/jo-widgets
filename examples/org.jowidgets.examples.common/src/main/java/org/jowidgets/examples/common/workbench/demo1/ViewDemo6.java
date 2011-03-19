@@ -115,7 +115,7 @@ public class ViewDemo6 extends AbstractView implements IView {
 				"Steve",
 				"Miller",
 				"Convent Ave 34",
-				"534534",
+				"53453",
 				"New York",
 				"USA",
 				"4354354",
@@ -126,7 +126,7 @@ public class ViewDemo6 extends AbstractView implements IView {
 				"Laura",
 				"Brixton",
 				"West End Ave 34",
-				"534534",
+				"53453",
 				"New York",
 				"USA",
 				"435345345",
@@ -150,23 +150,7 @@ public class ViewDemo6 extends AbstractView implements IView {
 			}
 		});
 
-		final IActionItemModel deleteRowAction = cellPopupMenuModel.addActionItem("Delete row");
-		deleteRowAction.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				tableModel.removeRow(currentRow.get().intValue());
-			}
-		});
-
-		final IActionItemModel deleteSelectedRows = cellPopupMenuModel.addActionItem("Delete selected rows");
-		deleteSelectedRows.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				tableModel.removeRows(table.getSelection());
-			}
-		});
-
-		final IActionItemModel addRow = cellPopupMenuModel.addActionItem("Add person");
+		final IActionItemModel addRow = cellPopupMenuModel.addActionItem("Add person", SilkIcons.USER_ADD);
 		addRow.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
@@ -174,6 +158,36 @@ public class ViewDemo6 extends AbstractView implements IView {
 				if (row != null) {
 					tableModel.addRow(currentRow.get().intValue() + 1, row);
 				}
+			}
+		});
+
+		final IActionItemModel editRow = cellPopupMenuModel.addActionItem("Edit person", SilkIcons.USER_EDIT);
+		editRow.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final int rowIndex = currentRow.get().intValue();
+				final List<String> row = editRow(tableModel.getRowTexts(rowIndex));
+				if (row != null) {
+					tableModel.setRowTexts(rowIndex, row);
+				}
+			}
+		});
+
+		final IActionItemModel deleteRowAction = cellPopupMenuModel.addActionItem("Delete person", SilkIcons.USER_DELETE);
+		deleteRowAction.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				tableModel.removeRow(currentRow.get().intValue());
+			}
+		});
+
+		final IActionItemModel deleteSelectedRows = cellPopupMenuModel.addActionItem(
+				"Delete selected persons",
+				SilkIcons.USER_DELETE);
+		deleteSelectedRows.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				tableModel.removeRows(table.getSelection());
 			}
 		});
 
@@ -212,7 +226,17 @@ public class ViewDemo6 extends AbstractView implements IView {
 	}
 
 	private List<String> createRow() {
-		final IInputDialog<List<String>> inputDialog = new DemoInputDialog1().getInputDialog();
+		final IInputDialog<List<String>> inputDialog = new DemoInputDialog1("Add person", SilkIcons.USER_ADD).getInputDialog();
+		inputDialog.setVisible(true);
+		if (inputDialog.isOkPressed()) {
+			return inputDialog.getValue();
+		}
+		return null;
+	}
+
+	private List<String> editRow(final List<String> row) {
+		final IInputDialog<List<String>> inputDialog = new DemoInputDialog1("Edit person", SilkIcons.USER_EDIT).getInputDialog();
+		inputDialog.setValue(row);
 		inputDialog.setVisible(true);
 		if (inputDialog.isOkPressed()) {
 			return inputDialog.getValue();
