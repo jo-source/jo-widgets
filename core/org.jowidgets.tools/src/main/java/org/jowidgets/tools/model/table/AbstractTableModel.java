@@ -29,6 +29,7 @@
 package org.jowidgets.tools.model.table;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.jowidgets.common.model.ITableModel;
 import org.jowidgets.common.model.ITableModelListener;
@@ -52,12 +53,12 @@ public abstract class AbstractTableModel implements ITableModel, ITableModelObse
 	}
 
 	@Override
-	public final void setSelection(ArrayList<Integer> selection) {
+	public final void setSelection(List<Integer> selection) {
 		if (selection == null) {
 			selection = new ArrayList<Integer>();
 		}
 		if (!this.selection.equals(selection)) {
-			this.selection = selection;
+			this.selection = new ArrayList<Integer>(selection);
 			fireSelectionChanged();
 		}
 	}

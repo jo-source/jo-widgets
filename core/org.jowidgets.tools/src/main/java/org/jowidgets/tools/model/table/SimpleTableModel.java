@@ -85,7 +85,7 @@ public class SimpleTableModel implements ISimpleTableModel {
 	}
 
 	@Override
-	public void setSelection(final ArrayList<Integer> selection) {
+	public void setSelection(final List<Integer> selection) {
 		tableModel.setSelection(selection);
 	}
 

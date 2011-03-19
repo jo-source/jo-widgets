@@ -210,7 +210,7 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 	}
 
 	@Override
-	public void setSelection(ArrayList<Integer> selection) {
+	public void setSelection(List<Integer> selection) {
 		if (selection == null) {
 			selection = new ArrayList<Integer>();
 		}

@@ -30,7 +30,6 @@ package org.jowidgets.impl.widgets.common.blueprint.defaults;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.common.types.SelectionPolicy;
 import org.jowidgets.common.widgets.builder.ITableSetupBuilderCommon;
-import org.jowidgets.impl.widgets.basic.model.DefaultTableModel;
 
 public class TableDefaultsCommon implements IDefaultInitializer<ITableSetupBuilderCommon<?>> {
 
@@ -39,7 +38,6 @@ public class TableDefaultsCommon implements IDefaultInitializer<ITableSetupBuild
 		builder.setSelectionPolicy(SelectionPolicy.MULTI_SELECTION);
 		builder.setColumnsMoveable(true);
 		builder.setColumnsResizeable(true);
-		builder.setTableModel(new DefaultTableModel());
 	}
 
 }
