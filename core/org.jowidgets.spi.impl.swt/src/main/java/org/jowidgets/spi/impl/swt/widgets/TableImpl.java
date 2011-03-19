@@ -237,7 +237,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	}
 
 	private void addColumn(final int index, final ITableColumn joColumn) {
-		final TableColumn swtColumn = new TableColumn(getUiReference(), SWT.NONE, index);
+		final TableColumn swtColumn = new TableColumn(table, SWT.NONE, index);
 		swtColumn.setMoveable(columnsMoveable);
 		swtColumn.setResizable(columnsResizeable);
 		setColumnData(swtColumn, joColumn);
@@ -300,13 +300,13 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 	@Override
 	public Position getCellPosition(final int rowIndex, final int columnIndex) {
-		final Rectangle bounds = getUiReference().getItem(rowIndex).getBounds(columnIndex);
+		final Rectangle bounds = table.getItem(rowIndex).getBounds(columnIndex);
 		return new Position(bounds.x, bounds.y);
 	}
 
 	@Override
 	public Dimension getCellSize(final int rowIndex, final int columnIndex) {
-		final Rectangle bounds = getUiReference().getItem(rowIndex).getBounds(columnIndex);
+		final Rectangle bounds = table.getItem(rowIndex).getBounds(columnIndex);
 		return new Dimension(bounds.width, bounds.height);
 	}
 
@@ -325,14 +325,14 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	public void pack(final int columnIndex, final TableColumnPackPolicy policy) {
 		table.setRedraw(false);
 		//TODO MG consider pack policy
-		getUiReference().getColumn(columnIndex).pack();
+		table.getColumn(columnIndex).pack();
 		table.setRedraw(true);
 	}
 
 	@Override
 	public ArrayList<Integer> getColumnPermutation() {
 		final ArrayList<Integer> result = new ArrayList<Integer>();
-		for (final int index : getUiReference().getColumnOrder()) {
+		for (final int index : table.getColumnOrder()) {
 			result.add(Integer.valueOf(index));
 		}
 		return result;
@@ -444,7 +444,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 	private int getColumnIndex(final TableColumn columnOfInterest) {
 		if (columnOfInterest != null) {
-			final TableColumn[] columns = getUiReference().getColumns();
+			final TableColumn[] columns = table.getColumns();
 			for (int columnIndex = 0; columnIndex < columns.length; columnIndex++) {
 				if (columns[columnIndex] == columnOfInterest) {
 					return columnIndex;
@@ -513,7 +513,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		@Override
 		public void handleEvent(final Event event) {
 			final TableItem item = (TableItem) event.item;
-			final int rowIndex = getUiReference().indexOf(item);
+			final int rowIndex = table.indexOf(item);
 			for (int columnIndex = 0; columnIndex < getUiReference().getColumnCount(); columnIndex++) {
 
 				final ITableCell cell = dataModel.getCell(rowIndex, columnIndex);
