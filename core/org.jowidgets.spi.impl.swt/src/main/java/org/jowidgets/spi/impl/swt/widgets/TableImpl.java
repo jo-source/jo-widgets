@@ -122,6 +122,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	private final ColumnControlListener columnControlListener;
 	private final TableModelListener tableModelListener;
 	private final TableColumnModelListener tableColumnModelListener;
+	private final DataListener dataListener;
 
 	private final boolean columnsMoveable;
 	private final boolean columnsResizeable;
@@ -138,6 +139,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		this.tableSelectionObservable = new TableSelectionObservable();
 		this.tableCellEditorObservable = new TableCellEditorObservable();
 
+		this.dataListener = new DataListener();
 		this.columnSelectionListener = new ColumnSelectionListener();
 		this.columnControlListener = new ColumnControlListener();
 		this.tableModelListener = new TableModelListener();
@@ -167,10 +169,11 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			this.editor = null;
 		}
 
-		table.addListener(SWT.SetData, new DataListener());
+		table.addListener(SWT.SetData, dataListener);
 		table.addMouseListener(new TableCellListener());
-		table.addMenuDetectListener(new TableMenuDetectListener());
 		table.addSelectionListener(new TableSelectionListener());
+
+		setMenuDetectListener(new TableMenuDetectListener());
 	}
 
 	@Override
@@ -192,12 +195,12 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			columnModelObservable.removeColumnModelListener(tableColumnModelListener);
 		}
 
-		removeAllColumns();
+		table.setItemCount(dataModel.getRowCount());
 		table.clearAll();
 
+		removeAllColumns();
 		addAllColumns();
 
-		table.setItemCount(dataModel.getRowCount());
 		setSelection(dataModel.getSelection());
 
 		if (dataModelObservable != null) {
@@ -701,19 +704,24 @@ public class TableImpl extends SwtControl implements ITableSpi {
 				}
 			}
 			//Menu detect on header. Table has some item(s)
-			else if (table.getItemCount() > 0) {
+			else if (table.getItemCount() > 0 && point.y < table.getHeaderHeight()) {
 				item = table.getItem(0);
 				fireColumnPopupDetected(item, point, position);
 			}
 			//Menu detect on header but table has no item.
 			//Just temporarily add an item to the table an remove it, after
 			//position was calculated.
-			else {
+			else if (point.y < table.getHeaderHeight()) {
 				table.setRedraw(false);
+				table.removeListener(SWT.SetData, dataListener);
 				final TableItem dummyItem = new TableItem(table, SWT.NONE);
-				fireColumnPopupDetected(item, point, position);
+				fireColumnPopupDetected(dummyItem, point, position);
 				dummyItem.dispose();
+				table.addListener(SWT.SetData, dataListener);
 				table.setRedraw(true);
+			}
+			else {
+				getPopupDetectionObservable().firePopupDetected(position);
 			}
 		}
 
