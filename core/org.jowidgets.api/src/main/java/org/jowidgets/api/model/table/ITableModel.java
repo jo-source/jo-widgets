@@ -26,12 +26,11 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.model;
+package org.jowidgets.api.model.table;
 
-public interface ITableModelObservable {
+import org.jowidgets.common.model.ITableColumnModel;
+import org.jowidgets.common.model.ITableDataModel;
 
-	void addTableModelListener(ITableModelListener listener);
-
-	void removeTableModelListener(ITableModelListener listener);
+public interface ITableModel extends ITableColumnModel, ITableDataModel {
 
 }

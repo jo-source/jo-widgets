@@ -38,7 +38,6 @@ import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IInputDialog;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITable;
-import org.jowidgets.api.widgets.blueprint.ITableBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.IVetoable;
@@ -133,8 +132,7 @@ public class ViewDemo6 extends AbstractView implements IView {
 				"435345345",
 				"laura.brixton@gjk.com");
 
-		final ITableBluePrint tableBp = bpf.table().setTableModel(tableModel).setColumnModel(tableModel);
-		final ITable table = container.add(tableBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+		final ITable table = container.add(bpf.table(tableModel), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 		table.pack();
 
 		final ValueHolder<Integer> currentRow = new ValueHolder<Integer>();

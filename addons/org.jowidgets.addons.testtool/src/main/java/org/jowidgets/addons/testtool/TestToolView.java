@@ -74,7 +74,7 @@ public class TestToolView {
 
 	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 	private static final IActionBuilderFactory ABF = Toolkit.getActionBuilderFactory();
-	private ISimpleTableModel tableModel;
+	private ISimpleTableModel tableDataModel;
 	private final ITestTool testTool;
 	private final TestToolViewUtilities viewUtilities;
 	private IFrame frame;
@@ -99,19 +99,17 @@ public class TestToolView {
 	}
 
 	private void createTable(final IFrame frame) {
-		final ITableBluePrint tableBluePrint = BPF.table();
 
-		tableModel = Toolkit.getModelFactoryProvider().getTableModelFactory().simpleTableModel();
+		tableDataModel = Toolkit.getModelFactoryProvider().getTableModelFactory().simpleTableModel();
 		final DefaultTableColumnBuilder colBuilder = new DefaultTableColumnBuilder();
-		tableModel.addColumn(colBuilder.setText("step").build());
-		tableModel.addColumn(colBuilder.setText("Widget").build());
-		tableModel.addColumn(colBuilder.setText("User Action").build());
-		tableModel.addColumn(colBuilder.setText("ID").build());
-		tableBluePrint.setTableModel(tableModel);
+		tableDataModel.addColumn(colBuilder.setText("step").build());
+		tableDataModel.addColumn(colBuilder.setText("Widget").build());
+		tableDataModel.addColumn(colBuilder.setText("User Action").build());
+		tableDataModel.addColumn(colBuilder.setText("ID").build());
 
-		final int columnCount = tableModel.getColumnCount();
+		final int columnCount = tableDataModel.getColumnCount();
 		final Map<Integer, ITableColumn> columns = new HashMap<Integer, ITableColumn>();
-		tableBluePrint.setColumnModel(new ITableColumnModel() {
+		final ITableColumnModel columnModel = new ITableColumnModel() {
 
 			@Override
 			public int getColumnCount() {
@@ -177,7 +175,9 @@ public class TestToolView {
 				return null;
 			}
 
-		});
+		};
+
+		final ITableBluePrint tableBluePrint = BPF.table(columnModel, tableDataModel);
 		final ITable table = frame.add(tableBluePrint, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 		table.pack(TableColumnPackPolicy.HEADER_AND_CONTENT);
 	}
@@ -194,15 +194,15 @@ public class TestToolView {
 			@Override
 			public void actionPerformed() {
 				final List<TestDataObject> list = new LinkedList<TestDataObject>();
-				if (!(tableModel.getRowCount() <= 0)) {
-					for (int rowIndex = 0; rowIndex < tableModel.getRowCount(); rowIndex++) {
+				if (!(tableDataModel.getRowCount() <= 0)) {
+					for (int rowIndex = 0; rowIndex < tableDataModel.getRowCount(); rowIndex++) {
 						final TestDataObject obj = new TestDataObject();
 
-						for (int columnIndex = 0; columnIndex < tableModel.getColumnCount(); columnIndex++) {
-							obj.setType(tableModel.getCell(rowIndex, columnIndex).getText());
-							final String action = tableModel.getCell(rowIndex, columnIndex).getText();
+						for (int columnIndex = 0; columnIndex < tableDataModel.getColumnCount(); columnIndex++) {
+							obj.setType(tableDataModel.getCell(rowIndex, columnIndex).getText());
+							final String action = tableDataModel.getCell(rowIndex, columnIndex).getText();
 							obj.setAction(UserAction.valueOf(action));
-							obj.setId(tableModel.getCell(rowIndex, columnIndex).getText());
+							obj.setId(tableDataModel.getCell(rowIndex, columnIndex).getText());
 						}
 						list.add(obj);
 					}
@@ -295,8 +295,8 @@ public class TestToolView {
 
 			@Override
 			public void listChanged(final TestDataObject item) {
-				tableModel.addRow(
-						Integer.toString(tableModel.getColumnCount()),
+				tableDataModel.addRow(
+						Integer.toString(tableDataModel.getColumnCount()),
 						item.getType(),
 						item.getAction().name(),
 						item.getId());

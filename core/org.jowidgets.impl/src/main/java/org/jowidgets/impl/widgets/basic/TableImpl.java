@@ -36,7 +36,7 @@ import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.api.widgets.descriptor.ITableDescriptor;
 import org.jowidgets.common.model.ITableColumnModel;
-import org.jowidgets.common.model.ITableModel;
+import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.TableColumnPackPolicy;
@@ -55,14 +55,14 @@ import org.jowidgets.spi.widgets.ITableSpi;
 public class TableImpl extends ControlSpiWrapper implements ITable {
 
 	private final ControlDelegate controlDelegate;
-	private final ITableModel tableModel;
+	private final ITableDataModel dataModel;
 	private final ITableColumnModel columnModel;
 
 	public TableImpl(final ITableSpi widget, final ITableDescriptor setup) {
 		super(widget);
 
 		this.controlDelegate = new ControlDelegate();
-		this.tableModel = setup.getTableModel();
+		this.dataModel = setup.getDataModel();
 		this.columnModel = setup.getColumnModel();
 
 		VisibiliySettingsInvoker.setVisibility(setup, this);
@@ -98,7 +98,7 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 
 	@Override
 	public int getRowCount() {
-		return tableModel.getRowCount();
+		return dataModel.getRowCount();
 	}
 
 	@Override

@@ -32,7 +32,6 @@ import java.util.List;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.model.ITableCell;
-import org.jowidgets.common.model.ITableModel;
 
 public interface ISimpleTableModel extends ITableModel, IDefaultTableColumnModel {
 

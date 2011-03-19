@@ -30,6 +30,7 @@ package org.jowidgets.tools.widgets.blueprint;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.convert.IObjectStringConverter;
+import org.jowidgets.api.model.table.ITableModel;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
@@ -80,6 +81,8 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.model.ITableColumnModel;
+import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.widgets.builder.ISetupBuilder;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.util.Assert;
@@ -610,8 +613,13 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	}
 
 	@Override
-	public ITableBluePrint table() {
-		return bluePrintFactory.table();
+	public ITableBluePrint table(final ITableModel model) {
+		return bluePrintFactory.table(model);
+	}
+
+	@Override
+	public ITableBluePrint table(final ITableColumnModel columnModel, final ITableDataModel dataModel) {
+		return bluePrintFactory.table(columnModel, dataModel);
 	}
 
 }

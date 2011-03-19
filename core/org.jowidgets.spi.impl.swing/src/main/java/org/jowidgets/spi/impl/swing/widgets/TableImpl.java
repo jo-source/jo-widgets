@@ -65,9 +65,9 @@ import org.jowidgets.common.model.ITableColumn;
 import org.jowidgets.common.model.ITableColumnModel;
 import org.jowidgets.common.model.ITableColumnModelListener;
 import org.jowidgets.common.model.ITableColumnModelObservable;
-import org.jowidgets.common.model.ITableModel;
-import org.jowidgets.common.model.ITableModelListener;
-import org.jowidgets.common.model.ITableModelObservable;
+import org.jowidgets.common.model.ITableDataModel;
+import org.jowidgets.common.model.ITableDataModelListener;
+import org.jowidgets.common.model.ITableDataModelObservable;
 import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Markup;
@@ -113,7 +113,7 @@ import org.jowidgets.spi.widgets.setup.ITableSetupSpi;
 public class TableImpl extends SwingControl implements ITableSpi {
 
 	private final JTable table;
-	private final ITableModel tableModel;
+	private final ITableDataModel dataModel;
 	private final ITableColumnModel columnModel;
 	private final CellRenderer cellRenderer;
 	private final CellEditor cellEditor;
@@ -158,7 +158,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 		this.columnMoveOccured = false;
 
-		this.tableModel = setup.getTableModel();
+		this.dataModel = setup.getDataModel();
 		this.columnModel = setup.getColumnModel();
 
 		this.columnsResizeable = setup.getColumnsResizeable();
@@ -207,9 +207,9 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 	@Override
 	public void initialize() {
-		final ITableModelObservable tableModelObservable = tableModel.getTableModelObservable();
-		if (tableModelObservable != null) {
-			tableModelObservable.removeTableModelListener(tableModelListener);
+		final ITableDataModelObservable dataModelObservable = dataModel.getTableDataModelObservable();
+		if (dataModelObservable != null) {
+			dataModelObservable.removeDataModelListener(tableModelListener);
 		}
 
 		final ITableColumnModelObservable columnModelObservable = columnModel.getTableColumnModelObservable();
@@ -219,7 +219,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 		table.getSelectionModel().removeListSelectionListener(tableSelectionListener);
 
-		this.swingTableModel = new SwingTableModel(tableModel, columnModel);
+		this.swingTableModel = new SwingTableModel();
 
 		table.setModel(swingTableModel);
 
@@ -235,10 +235,10 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			lastColumnPermutation.add(Integer.valueOf(i));
 		}
 
-		setSelection(tableModel.getSelection());
+		setSelection(dataModel.getSelection());
 
-		if (tableModelObservable != null) {
-			tableModelObservable.addTableModelListener(tableModelListener);
+		if (dataModelObservable != null) {
+			dataModelObservable.addDataModelListener(tableModelListener);
 		}
 
 		if (columnModelObservable != null) {
@@ -563,13 +563,13 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		@Override
 		public void valueChanged(final ListSelectionEvent e) {
 			if (!e.getValueIsAdjusting()) {
-				tableModel.setSelection(getSelection());
+				dataModel.setSelection(getSelection());
 				tableSelectionObservable.fireSelectionChanged();
 			}
 		}
 	}
 
-	final class TableModelListener implements ITableModelListener {
+	final class TableModelListener implements ITableDataModelListener {
 
 		@Override
 		public void rowsAdded(final int[] rowIndices) {
@@ -601,7 +601,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 		@Override
 		public void selectionChanged() {
-			setSelection(tableModel.getSelection());
+			setSelection(dataModel.getSelection());
 		}
 
 	}
@@ -641,13 +641,8 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 		private static final long serialVersionUID = 6096723765272552285L;
 
-		private final ITableModel tableModel;
-		private final ITableColumnModel columnModel;
-
-		public SwingTableModel(final ITableModel tableModel, final ITableColumnModel columnModel) {
+		public SwingTableModel() {
 			super();
-			this.tableModel = tableModel;
-			this.columnModel = columnModel;
 		}
 
 		@Override
@@ -657,12 +652,12 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 		@Override
 		public Object getValueAt(final int rowIndex, final int columnIndex) {
-			return tableModel.getCell(rowIndex, columnIndex);
+			return dataModel.getCell(rowIndex, columnIndex);
 		}
 
 		@Override
 		public int getRowCount() {
-			return tableModel.getRowCount();
+			return dataModel.getRowCount();
 		}
 
 		@Override
@@ -672,7 +667,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 		@Override
 		public boolean isCellEditable(final int rowIndex, final int columnIndex) {
-			return tableModel.getCell(rowIndex, columnIndex).isEditable();
+			return dataModel.getCell(rowIndex, columnIndex).isEditable();
 		}
 
 		void rowsAdded(final int[] rowIndices) {
@@ -694,7 +689,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		void rowsStructureChanged() {
 			table.getSelectionModel().removeListSelectionListener(tableSelectionListener);
 			fireTableDataChanged();
-			setSelection(tableModel.getSelection());
+			setSelection(dataModel.getSelection());
 			table.getSelectionModel().addListSelectionListener(tableSelectionListener);
 		}
 
@@ -825,7 +820,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 			final JTextField textField = (JTextField) super.getTableCellEditorComponent(table, value, isSelected, row, column);
 
-			final String text = tableModel.getCell(row, column).getText();
+			final String text = dataModel.getCell(row, column).getText();
 			if (text != null) {
 
 				SwingUtilities.invokeLater(new Runnable() {

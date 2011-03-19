@@ -65,9 +65,9 @@ import org.jowidgets.common.model.ITableColumn;
 import org.jowidgets.common.model.ITableColumnModel;
 import org.jowidgets.common.model.ITableColumnModelListener;
 import org.jowidgets.common.model.ITableColumnModelObservable;
-import org.jowidgets.common.model.ITableModel;
-import org.jowidgets.common.model.ITableModelListener;
-import org.jowidgets.common.model.ITableModelObservable;
+import org.jowidgets.common.model.ITableDataModel;
+import org.jowidgets.common.model.ITableDataModelListener;
+import org.jowidgets.common.model.ITableDataModelObservable;
 import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Markup;
@@ -105,7 +105,7 @@ import org.jowidgets.spi.widgets.setup.ITableSetupSpi;
 public class TableImpl extends SwtControl implements ITableSpi {
 
 	private final Table table;
-	private final ITableModel tableModel;
+	private final ITableDataModel dataModel;
 	private final ITableColumnModel columnModel;
 	private TableCursor cursor;
 	private ControlEditor editor;
@@ -142,7 +142,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		this.tableModelListener = new TableModelListener();
 		this.tableColumnModelListener = new TableColumnModelListener();
 
-		this.tableModel = setup.getTableModel();
+		this.dataModel = setup.getDataModel();
 		this.columnModel = setup.getColumnModel();
 
 		this.columnsMoveable = setup.getColumnsMoveable();
@@ -181,9 +181,9 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	public void initialize() {
 		table.setRedraw(false);
 
-		final ITableModelObservable tableModelObservable = tableModel.getTableModelObservable();
-		if (tableModelObservable != null) {
-			tableModelObservable.removeTableModelListener(tableModelListener);
+		final ITableDataModelObservable dataModelObservable = dataModel.getTableDataModelObservable();
+		if (dataModelObservable != null) {
+			dataModelObservable.removeDataModelListener(tableModelListener);
 		}
 
 		final ITableColumnModelObservable columnModelObservable = columnModel.getTableColumnModelObservable();
@@ -196,11 +196,11 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 		addAllColumns();
 
-		table.setItemCount(tableModel.getRowCount());
-		setSelection(tableModel.getSelection());
+		table.setItemCount(dataModel.getRowCount());
+		setSelection(dataModel.getSelection());
 
-		if (tableModelObservable != null) {
-			tableModelObservable.addTableModelListener(tableModelListener);
+		if (dataModelObservable != null) {
+			dataModelObservable.addDataModelListener(tableModelListener);
 		}
 
 		if (columnModelObservable != null) {
@@ -512,7 +512,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			final int rowIndex = getUiReference().indexOf(item);
 			for (int columnIndex = 0; columnIndex < getUiReference().getColumnCount(); columnIndex++) {
 
-				final ITableCell cell = tableModel.getCell(rowIndex, columnIndex);
+				final ITableCell cell = dataModel.getCell(rowIndex, columnIndex);
 
 				final String text = cell.getText();
 				final IImageConstant icon = cell.getIcon();
@@ -603,7 +603,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		public void mouseDoubleClick(final MouseEvent e) {
 			final CellIndices indices = getCellIndices(new Point(e.x, e.y));
 			if (indices != null) {
-				final ITableCell cell = tableModel.getCell(indices.getRowIndex(), indices.getColumnIndex());
+				final ITableCell cell = dataModel.getCell(indices.getRowIndex(), indices.getColumnIndex());
 				if (cell.isEditable()) {
 					activateEditor(indices);
 				}
@@ -662,7 +662,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			final TableCellEditEvent editEvent) {
 
 			tableCellEditorObservable.fireEditFinished(editEvent);
-			final String newModelText = tableModel.getCell(rowIndex, columnIndex).getText();
+			final String newModelText = dataModel.getCell(rowIndex, columnIndex).getText();
 			item.setText(columnIndex, newModelText);
 
 			textField.dispose();
@@ -782,12 +782,12 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	final class TableSelectionListener extends SelectionAdapter {
 		@Override
 		public void widgetSelected(final SelectionEvent e) {
-			tableModel.setSelection(getSelection());
+			dataModel.setSelection(getSelection());
 			tableSelectionObservable.fireSelectionChanged();
 		}
 	}
 
-	final class TableModelListener implements ITableModelListener {
+	final class TableModelListener implements ITableDataModelListener {
 
 		@Override
 		public void rowsAdded(final int[] rowIndices) {
@@ -809,12 +809,12 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		@Override
 		public void rowsStructureChanged() {
 			table.clearAll();
-			table.setItemCount(tableModel.getRowCount());
+			table.setItemCount(dataModel.getRowCount());
 		}
 
 		@Override
 		public void selectionChanged() {
-			setSelection(tableModel.getSelection());
+			setSelection(dataModel.getSelection());
 		}
 
 	}

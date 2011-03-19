@@ -40,7 +40,7 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.model.ITableCell;
 import org.jowidgets.common.model.ITableColumnModelObservable;
-import org.jowidgets.common.model.ITableModelObservable;
+import org.jowidgets.common.model.ITableDataModelObservable;
 import org.jowidgets.common.types.AlignmentHorizontal;
 
 public class SimpleTableModel implements ISimpleTableModel {
@@ -90,8 +90,8 @@ public class SimpleTableModel implements ISimpleTableModel {
 	}
 
 	@Override
-	public ITableModelObservable getTableModelObservable() {
-		return tableModel.getTableModelObservable();
+	public ITableDataModelObservable getTableDataModelObservable() {
+		return tableModel.getTableDataModelObservable();
 	}
 
 	@Override

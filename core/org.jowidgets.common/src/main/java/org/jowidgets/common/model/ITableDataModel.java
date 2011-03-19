@@ -26,60 +26,21 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.controler;
+package org.jowidgets.common.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.jowidgets.common.model.ITableModelListener;
-import org.jowidgets.common.model.ITableModelObservable;
+public interface ITableDataModel {
 
-public class TableModelObservable implements ITableModelObservable {
+	int getRowCount();
 
-	private final Set<ITableModelListener> listeners;
+	ITableCell getCell(int rowIndex, int columnIndex);
 
-	public TableModelObservable() {
-		this.listeners = new HashSet<ITableModelListener>();
-	}
+	ArrayList<Integer> getSelection();
 
-	@Override
-	public void addTableModelListener(final ITableModelListener listener) {
-		listeners.add(listener);
-	}
+	void setSelection(List<Integer> selection);
 
-	@Override
-	public void removeTableModelListener(final ITableModelListener listener) {
-		listeners.remove(listener);
-	}
-
-	public void fireRowsAdded(final int[] rowIndices) {
-		for (final ITableModelListener listener : listeners) {
-			listener.rowsAdded(rowIndices);
-		}
-	}
-
-	public void fireRowsRemoved(final int[] rowIndices) {
-		for (final ITableModelListener listener : listeners) {
-			listener.rowsRemoved(rowIndices);
-		}
-	}
-
-	public void fireRowsChanged(final int[] rowIndices) {
-		for (final ITableModelListener listener : listeners) {
-			listener.rowsChanged(rowIndices);
-		}
-	}
-
-	public void fireRowsStructureChanged() {
-		for (final ITableModelListener listener : listeners) {
-			listener.rowsStructureChanged();
-		}
-	}
-
-	public void fireSelectionChanged() {
-		for (final ITableModelListener listener : listeners) {
-			listener.selectionChanged();
-		}
-	}
+	ITableDataModelObservable getTableDataModelObservable();
 
 }
