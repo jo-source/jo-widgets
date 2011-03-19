@@ -29,6 +29,7 @@
 package org.jowidgets.common.widgets;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
@@ -59,7 +60,7 @@ public interface ITableCommon extends
 
 	ArrayList<Integer> getSelection();
 
-	void setSelection(ArrayList<Integer> selection);
+	void setSelection(List<Integer> selection);
 
 	void pack(TableColumnPackPolicy policy);
 

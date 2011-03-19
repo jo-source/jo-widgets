@@ -29,6 +29,7 @@
 package org.jowidgets.impl.widgets.basic;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
@@ -147,7 +148,7 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 	}
 
 	@Override
-	public void setSelection(final ArrayList<Integer> selection) {
+	public void setSelection(final List<Integer> selection) {
 		getWidget().setSelection(selection);
 	}
 

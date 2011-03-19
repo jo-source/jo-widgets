@@ -37,6 +37,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.swing.BorderFactory;
@@ -289,7 +290,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	}
 
 	@Override
-	public void setSelection(final ArrayList<Integer> selection) {
+	public void setSelection(final List<Integer> selection) {
 		if (!getSelection().equals(selection)) {
 			final ListSelectionModel selectionModel = table.getSelectionModel();
 			selectionModel.clearSelection();
