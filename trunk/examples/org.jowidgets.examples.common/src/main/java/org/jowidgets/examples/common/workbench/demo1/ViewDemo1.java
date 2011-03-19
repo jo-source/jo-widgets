@@ -38,11 +38,10 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITable;
-import org.jowidgets.api.widgets.blueprint.ITableBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.model.ITableCell;
-import org.jowidgets.common.model.ITableModel;
+import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.types.TableColumnPackPolicy;
@@ -64,7 +63,7 @@ import org.jowidgets.examples.common.demo.DemoMenuProvider;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractView;
 import org.jowidgets.tools.layout.MigLayoutFactory;
-import org.jowidgets.tools.model.table.AbstractTableModel;
+import org.jowidgets.tools.model.table.AbstractTableDataModel;
 import org.jowidgets.tools.model.table.DefaultTableColumnBuilder;
 import org.jowidgets.tools.model.table.DefaultTableColumnModel;
 import org.jowidgets.tools.model.table.TableCellBuilder;
@@ -95,8 +94,6 @@ public class ViewDemo1 extends AbstractView {
 		final int rowCount = 20000;
 		final int columnCount = 50;
 
-		final ITableBluePrint tableBp = bpf.table();
-
 		final IDefaultTableColumnModel columnModel = new DefaultTableColumnModel(columnCount);
 		for (int columnIndex = 0; columnIndex < columnModel.getColumnCount(); columnIndex++) {
 			final IDefaultTableColumnBuilder columnBuilder = new DefaultTableColumnBuilder();
@@ -106,7 +103,7 @@ public class ViewDemo1 extends AbstractView {
 			columnModel.setColumn(columnIndex, columnBuilder);
 		}
 
-		final ITableModel tableModel = new AbstractTableModel() {
+		final ITableDataModel dataModel = new AbstractTableDataModel() {
 
 			@Override
 			public int getRowCount() {
@@ -124,9 +121,7 @@ public class ViewDemo1 extends AbstractView {
 			}
 		};
 
-		tableBp.setTableModel(tableModel).setColumnModel(columnModel);
-
-		final ITable table = container.add(tableBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+		final ITable table = container.add(bpf.table(columnModel, dataModel), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
 		table.addTableSelectionListener(new ITableSelectionListener() {
 			@Override

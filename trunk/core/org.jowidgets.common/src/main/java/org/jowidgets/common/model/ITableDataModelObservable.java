@@ -28,19 +28,10 @@
 
 package org.jowidgets.common.model;
 
-import java.util.ArrayList;
-import java.util.List;
+public interface ITableDataModelObservable {
 
-public interface ITableModel {
+	void addDataModelListener(ITableDataModelListener listener);
 
-	int getRowCount();
-
-	ITableCell getCell(int rowIndex, int columnIndex);
-
-	ArrayList<Integer> getSelection();
-
-	void setSelection(List<Integer> selection);
-
-	ITableModelObservable getTableModelObservable();
+	void removeDataModelListener(ITableDataModelListener listener);
 
 }

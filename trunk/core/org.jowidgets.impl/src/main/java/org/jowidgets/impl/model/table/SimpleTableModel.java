@@ -38,14 +38,14 @@ import org.jowidgets.api.model.table.ITableCellBuilder;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.model.ITableCell;
-import org.jowidgets.common.model.ITableModelListener;
-import org.jowidgets.common.model.ITableModelObservable;
-import org.jowidgets.tools.controler.TableModelObservable;
+import org.jowidgets.common.model.ITableDataModelListener;
+import org.jowidgets.common.model.ITableDataModelObservable;
+import org.jowidgets.tools.controler.TableDataModelObservable;
 import org.jowidgets.util.Assert;
 
-public class SimpleTableModel extends DefaultTableColumnModel implements ISimpleTableModel, ITableModelObservable {
+public class SimpleTableModel extends DefaultTableColumnModel implements ISimpleTableModel, ITableDataModelObservable {
 
-	private final TableModelObservable tableModelObservable;
+	private final TableDataModelObservable dataModelObservable;
 
 	private final ArrayList<ArrayList<ITableCell>> data;
 
@@ -65,7 +65,7 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 
 		super(columnCount);
 
-		this.tableModelObservable = new TableModelObservable();
+		this.dataModelObservable = new TableDataModelObservable();
 
 		this.cellsEditableDefault = cellsEditableDefault;
 		this.evenBackgroundColor = evenBackgroundColor;
@@ -107,7 +107,7 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 	public void setCell(final int rowIndex, final int columnIndex, final ITableCell cell) {
 		Assert.paramNotNull(cell, "cell");
 		data.get(rowIndex).set(columnIndex, cell);
-		tableModelObservable.fireRowsChanged(new int[] {rowIndex});
+		dataModelObservable.fireRowsChanged(new int[] {rowIndex});
 	}
 
 	@Override
@@ -123,7 +123,7 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 				row.add(cellBuilder.build());
 			}
 		}
-		tableModelObservable.fireRowsAdded(rowIndices);
+		dataModelObservable.fireRowsAdded(rowIndices);
 	}
 
 	@Override
@@ -143,16 +143,16 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 				row.add(cellBuilder.build());
 			}
 		}
-		tableModelObservable.fireRowsAdded(new int[] {rowIndex});
+		dataModelObservable.fireRowsAdded(new int[] {rowIndex});
 	}
 
 	@Override
 	public void removeRow(final int index) {
 		data.remove(index);
 		final boolean selectionChanged = selection.remove(Integer.valueOf(index));
-		tableModelObservable.fireRowsRemoved(new int[] {index});
+		dataModelObservable.fireRowsRemoved(new int[] {index});
 		if (selectionChanged) {
-			tableModelObservable.fireSelectionChanged();
+			dataModelObservable.fireSelectionChanged();
 		}
 	}
 
@@ -169,9 +169,9 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 			data.remove(fromIndex);
 			selectionChanged = selectionChanged || selection.remove(Integer.valueOf(fromIndex + i));
 		}
-		tableModelObservable.fireRowsRemoved(indices);
+		dataModelObservable.fireRowsRemoved(indices);
 		if (selectionChanged) {
-			tableModelObservable.fireSelectionChanged();
+			dataModelObservable.fireSelectionChanged();
 		}
 	}
 
@@ -188,9 +188,9 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 			selectionChanged = selection.remove(Integer.valueOf(row)) || selectionChanged;
 			removedRowCount++;
 		}
-		tableModelObservable.fireRowsRemoved(rows);
+		dataModelObservable.fireRowsRemoved(rows);
 		if (selectionChanged) {
-			tableModelObservable.fireSelectionChanged();
+			dataModelObservable.fireSelectionChanged();
 		}
 	}
 
@@ -198,9 +198,9 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 	public void removeAllRows() {
 		final boolean selectionChanged = selection.size() > 0;
 		data.clear();
-		tableModelObservable.fireRowsStructureChanged();
+		dataModelObservable.fireRowsStructureChanged();
 		if (selectionChanged) {
-			tableModelObservable.fireSelectionChanged();
+			dataModelObservable.fireSelectionChanged();
 		}
 	}
 
@@ -216,23 +216,23 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 		}
 		if (!this.selection.equals(selection)) {
 			this.selection = new ArrayList<Integer>(selection);
-			tableModelObservable.fireSelectionChanged();
+			dataModelObservable.fireSelectionChanged();
 		}
 	}
 
 	@Override
-	public ITableModelObservable getTableModelObservable() {
+	public ITableDataModelObservable getTableDataModelObservable() {
 		return this;
 	}
 
 	@Override
-	public void addTableModelListener(final ITableModelListener listener) {
-		tableModelObservable.addTableModelListener(listener);
+	public void addDataModelListener(final ITableDataModelListener listener) {
+		dataModelObservable.addDataModelListener(listener);
 	}
 
 	@Override
-	public void removeTableModelListener(final ITableModelListener listener) {
-		tableModelObservable.removeTableModelListener(listener);
+	public void removeDataModelListener(final ITableDataModelListener listener) {
+		dataModelObservable.removeDataModelListener(listener);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////

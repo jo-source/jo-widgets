@@ -31,19 +31,19 @@ package org.jowidgets.tools.model.table;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jowidgets.common.model.ITableModel;
-import org.jowidgets.common.model.ITableModelListener;
-import org.jowidgets.common.model.ITableModelObservable;
-import org.jowidgets.tools.controler.TableModelObservable;
+import org.jowidgets.common.model.ITableDataModel;
+import org.jowidgets.common.model.ITableDataModelListener;
+import org.jowidgets.common.model.ITableDataModelObservable;
+import org.jowidgets.tools.controler.TableDataModelObservable;
 
-public abstract class AbstractTableModel implements ITableModel, ITableModelObservable {
+public abstract class AbstractTableDataModel implements ITableDataModel, ITableDataModelObservable {
 
-	private final TableModelObservable tableModelObservable;
+	private final TableDataModelObservable dataModelObservable;
 
 	private ArrayList<Integer> selection;
 
-	public AbstractTableModel() {
-		this.tableModelObservable = new TableModelObservable();
+	public AbstractTableDataModel() {
+		this.dataModelObservable = new TableDataModelObservable();
 		this.selection = new ArrayList<Integer>();
 	}
 
@@ -64,38 +64,38 @@ public abstract class AbstractTableModel implements ITableModel, ITableModelObse
 	}
 
 	@Override
-	public final ITableModelObservable getTableModelObservable() {
+	public final ITableDataModelObservable getTableDataModelObservable() {
 		return this;
 	}
 
 	@Override
-	public final void addTableModelListener(final ITableModelListener listener) {
-		tableModelObservable.addTableModelListener(listener);
+	public final void addDataModelListener(final ITableDataModelListener listener) {
+		dataModelObservable.addDataModelListener(listener);
 	}
 
 	@Override
-	public final void removeTableModelListener(final ITableModelListener listener) {
-		tableModelObservable.removeTableModelListener(listener);
+	public final void removeDataModelListener(final ITableDataModelListener listener) {
+		dataModelObservable.removeDataModelListener(listener);
 	}
 
 	protected final void fireRowsAdded(final int[] rowIndices) {
-		tableModelObservable.fireRowsAdded(rowIndices);
+		dataModelObservable.fireRowsAdded(rowIndices);
 	}
 
 	protected final void fireRowsRemoved(final int[] rowIndices) {
-		tableModelObservable.fireRowsRemoved(rowIndices);
+		dataModelObservable.fireRowsRemoved(rowIndices);
 	}
 
 	protected final void fireRowsChanged(final int[] rowIndices) {
-		tableModelObservable.fireRowsChanged(rowIndices);
+		dataModelObservable.fireRowsChanged(rowIndices);
 	}
 
 	protected final void fireRowsStructureChanged() {
-		tableModelObservable.fireRowsStructureChanged();
+		dataModelObservable.fireRowsStructureChanged();
 	}
 
 	private void fireSelectionChanged() {
-		tableModelObservable.fireSelectionChanged();
+		dataModelObservable.fireSelectionChanged();
 	}
 
 }

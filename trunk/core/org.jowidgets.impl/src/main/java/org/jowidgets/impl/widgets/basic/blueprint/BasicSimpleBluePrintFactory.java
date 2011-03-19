@@ -29,6 +29,7 @@ package org.jowidgets.impl.widgets.basic.blueprint;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.convert.IObjectStringConverter;
+import org.jowidgets.api.model.table.ITableModel;
 import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICheckBoxBluePrint;
@@ -64,7 +65,10 @@ import org.jowidgets.api.widgets.blueprint.ITreeNodeBluePrint;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.api.widgets.blueprint.factory.IBasicSimpleBluePrintFactory;
+import org.jowidgets.common.model.ITableColumnModel;
+import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.impl.base.blueprint.factory.AbstractBluePrintFactory;
+import org.jowidgets.util.Assert;
 
 public class BasicSimpleBluePrintFactory extends AbstractBluePrintFactory implements IBasicSimpleBluePrintFactory {
 
@@ -237,8 +241,18 @@ public class BasicSimpleBluePrintFactory extends AbstractBluePrintFactory implem
 	}
 
 	@Override
-	public ITableBluePrint table() {
-		return createProxy(ITableBluePrint.class);
+	public ITableBluePrint table(final ITableModel model) {
+		Assert.paramNotNull(model, "model");
+		return table(model, model);
+	}
+
+	@Override
+	public ITableBluePrint table(final ITableColumnModel columnModel, final ITableDataModel dataModel) {
+		Assert.paramNotNull(columnModel, "columnModel");
+		Assert.paramNotNull(dataModel, "dataModel");
+		final ITableBluePrint result = createProxy(ITableBluePrint.class);
+		result.setColumnModel(columnModel).setDataModel(dataModel);
+		return result;
 	}
 
 }

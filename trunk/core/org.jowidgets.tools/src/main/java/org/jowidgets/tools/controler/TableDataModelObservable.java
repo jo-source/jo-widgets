@@ -26,28 +26,60 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.widgets.descriptor.setup;
+package org.jowidgets.tools.controler;
 
-import org.jowidgets.common.model.ITableColumnModel;
-import org.jowidgets.common.model.ITableDataModel;
-import org.jowidgets.common.types.SelectionPolicy;
-import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
+import java.util.HashSet;
+import java.util.Set;
 
-public interface ITableSetupCommon extends IComponentSetupCommon {
+import org.jowidgets.common.model.ITableDataModelListener;
+import org.jowidgets.common.model.ITableDataModelObservable;
 
-	@Mandatory
-	SelectionPolicy getSelectionPolicy();
+public class TableDataModelObservable implements ITableDataModelObservable {
 
-	@Mandatory
-	boolean getColumnsMoveable();
+	private final Set<ITableDataModelListener> listeners;
 
-	@Mandatory
-	boolean getColumnsResizeable();
+	public TableDataModelObservable() {
+		this.listeners = new HashSet<ITableDataModelListener>();
+	}
 
-	@Mandatory
-	ITableDataModel getDataModel();
+	@Override
+	public void addDataModelListener(final ITableDataModelListener listener) {
+		listeners.add(listener);
+	}
 
-	@Mandatory
-	ITableColumnModel getColumnModel();
+	@Override
+	public void removeDataModelListener(final ITableDataModelListener listener) {
+		listeners.remove(listener);
+	}
+
+	public void fireRowsAdded(final int[] rowIndices) {
+		for (final ITableDataModelListener listener : listeners) {
+			listener.rowsAdded(rowIndices);
+		}
+	}
+
+	public void fireRowsRemoved(final int[] rowIndices) {
+		for (final ITableDataModelListener listener : listeners) {
+			listener.rowsRemoved(rowIndices);
+		}
+	}
+
+	public void fireRowsChanged(final int[] rowIndices) {
+		for (final ITableDataModelListener listener : listeners) {
+			listener.rowsChanged(rowIndices);
+		}
+	}
+
+	public void fireRowsStructureChanged() {
+		for (final ITableDataModelListener listener : listeners) {
+			listener.rowsStructureChanged();
+		}
+	}
+
+	public void fireSelectionChanged() {
+		for (final ITableDataModelListener listener : listeners) {
+			listener.selectionChanged();
+		}
+	}
 
 }

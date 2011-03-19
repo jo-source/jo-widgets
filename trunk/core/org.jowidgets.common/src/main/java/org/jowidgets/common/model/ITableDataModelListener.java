@@ -28,7 +28,7 @@
 
 package org.jowidgets.common.model;
 
-public interface ITableModelListener {
+public interface ITableDataModelListener {
 
 	void rowsAdded(int[] rowIndices);
 
