@@ -131,6 +131,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	private final TableSelectionListener tableSelectionListener;
 	private final TableModelListener tableModelListener;
 	private final TableColumnModelListener tableColumnModelListener;
+	private final TableCellMenuDetectListener tableCellMenuDetectListener;
 
 	private final boolean columnsResizeable;
 
@@ -156,6 +157,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		this.tableSelectionListener = new TableSelectionListener();
 		this.tableModelListener = new TableModelListener();
 		this.tableColumnModelListener = new TableColumnModelListener();
+		this.tableCellMenuDetectListener = new TableCellMenuDetectListener();
 
 		this.columnMoveOccured = false;
 
@@ -187,8 +189,8 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		table.getSelectionModel().addListSelectionListener(tableSelectionListener);
 
 		table.addMouseListener(new TableCellListener());
-		table.addMouseListener(new TableCellMenuDetectListener());
-
+		table.addMouseListener(tableCellMenuDetectListener);
+		getUiReference().addMouseListener(tableCellMenuDetectListener);
 	}
 
 	@Override
@@ -480,8 +482,10 @@ public class TableImpl extends SwingControl implements ITableSpi {
 					if (!table.getSelectionModel().isSelectedIndex(rowIndex) && !e.isControlDown()) {
 						table.getSelectionModel().setSelectionInterval(rowIndex, rowIndex);
 					}
-					popupDetectionObservable.firePopupDetected(position);
 					tableCellPopupDetectionObservable.firePopupDetected(new TableCellPopupEvent(rowIndex, colIndex, position));
+				}
+				else {
+					popupDetectionObservable.firePopupDetected(position);
 				}
 			}
 		}
@@ -540,8 +544,13 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 				int columnIndex = table.getTableHeader().getColumnModel().getColumnIndexAtX(e.getX());
 				columnIndex = table.convertColumnIndexToModel(columnIndex);
-				popupDetectionObservable.firePopupDetected(position);
-				tableColumnPopupDetectionObservable.firePopupDetected(new TableColumnPopupEvent(columnIndex, position));
+				if (columnIndex != -1) {
+					tableColumnPopupDetectionObservable.firePopupDetected(new TableColumnPopupEvent(columnIndex, position));
+				}
+				else {
+					popupDetectionObservable.firePopupDetected(position);
+				}
+
 			}
 		}
 	}
