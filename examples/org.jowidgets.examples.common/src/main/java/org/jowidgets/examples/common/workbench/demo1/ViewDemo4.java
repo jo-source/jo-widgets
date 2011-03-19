@@ -40,6 +40,7 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IInputComposite;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.model.ITableColumnModelListener;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.examples.common.demo.DemoForm1Creator;
 import org.jowidgets.examples.common.icons.SilkIcons;
@@ -66,7 +67,7 @@ public class ViewDemo4 extends AbstractView implements IView {
 			@Override
 			public void selectionChanged() {
 				final int selectedRow = tableModel.getFirstSelectedRow();
-				if (selectedRow != -1) {
+				if (selectedRow != -1 && tableModel.getRowTexts(selectedRow).size() == 9) {
 					form.setValue(tableModel.getRowTexts(selectedRow));
 					form.setEditable(true);
 				}
@@ -99,6 +100,9 @@ public class ViewDemo4 extends AbstractView implements IView {
 
 			@Override
 			public IEnabledState getEnabledState() {
+				if (tableModel.getColumnCount() != 9) {
+					return EnabledState.disabled("This demo dialog only works, if all columns are shown in the table");
+				}
 				if (tableModel.getFirstSelectedRow() == -1) {
 					return EnabledState.disabled("There is nothing selected");
 				}
@@ -121,6 +125,27 @@ public class ViewDemo4 extends AbstractView implements IView {
 			public void inputChanged(final Object source) {
 				enabledChecker.fireEnabledStateChanged();
 			}
+		});
+
+		tableModel.addColumnModelListener(new ITableColumnModelListener() {
+
+			@Override
+			public void columnsStructureChanged() {
+				enabledChecker.fireEnabledStateChanged();
+			}
+
+			@Override
+			public void columnsRemoved(final int[] columnIndices) {
+				enabledChecker.fireEnabledStateChanged();
+			}
+
+			@Override
+			public void columnsAdded(final int[] columnIndices) {
+				enabledChecker.fireEnabledStateChanged();
+			}
+
+			@Override
+			public void columnsChanged(final int[] columnIndices) {}
 		});
 
 		tableModel.addDataModelListener(new TableDataModelAdapter() {

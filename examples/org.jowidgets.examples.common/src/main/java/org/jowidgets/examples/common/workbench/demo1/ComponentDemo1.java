@@ -188,13 +188,13 @@ public class ComponentDemo1 extends AbstractComponent implements IComponent {
 				"47634826",
 				"hans.maier@gtzservice.com");
 
-		result.addRow("Male", "Steve", "Miller", "Convent Ave 34", "53453", "New York", "USA", "4354354", "steve.miller@gjk.com");
+		result.addRow("Male", "Steve", "Miller", "Convent Ave 25", "53453", "New York", "USA", "4354354", "steve.miller@gjk.com");
 
 		result.addRow(
 				"Female",
 				"Laura",
 				"Brixton",
-				"West End Ave 34",
+				"West End Ave 2",
 				"53453",
 				"New York",
 				"USA",

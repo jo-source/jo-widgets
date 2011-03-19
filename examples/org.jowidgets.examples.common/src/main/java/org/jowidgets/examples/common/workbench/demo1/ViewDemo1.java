@@ -166,6 +166,17 @@ public class ViewDemo1 extends AbstractView {
 			}
 		});
 
+		final IActionItemModel fitColumnsAction = columnPopupMenuModel.addActionItem("Fit all columns", SilkIcons.ARROW_INOUT);
+		fitColumnsAction.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				table.pack();
+			}
+		});
+
+		popupMenuModel.addItem(fitColumnsAction);
+		cellPopupMenuModel.addItem(fitColumnsAction);
+
 		table.addTableCellEditorListener(new ITableCellEditorListener() {
 
 			@Override
