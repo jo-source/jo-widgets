@@ -35,18 +35,9 @@ import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.command.IActionBuilder;
 import org.jowidgets.api.command.ICommandExecutor;
 import org.jowidgets.api.command.IExecutionContext;
-import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.validation.ValidationResult;
-import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.IInputDialog;
-import org.jowidgets.api.widgets.IWindow;
-import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.api.widgets.content.IInputContentContainer;
-import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.tools.command.EnabledChecker;
 import org.jowidgets.workbench.api.IComponentContext;
@@ -61,6 +52,8 @@ import org.jowidgets.workbench.toolkit.api.IViewLayoutBuilder;
 import org.jowidgets.workbench.tools.ViewLayoutBuilder;
 
 public class ActionFactory {
+
+	private final InputDialogFactory inputDialogFactory = new InputDialogFactory();
 
 	public IAction createAddFolderAction(final IWorkbenchApplicationContext context) {
 		final IActionBuilder actionBuilder = Toolkit.getActionBuilderFactory().create();
@@ -164,61 +157,6 @@ public class ActionFactory {
 		});
 
 		return actionBuilder.build();
-	}
-
-	private IInputDialog<String> createInputDialog(final IExecutionContext executionContext, final String inputName) {
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-		final IInputDialogBluePrint<String> inputDialogBp = bpf.inputDialog(createLabelDialogCreator(inputName));
-		inputDialogBp.setValidationLabel(bpf.validationLabel().setOkIcon(SilkIcons.ACCEPT));
-		inputDialogBp.setTitle(executionContext.getAction().getText());
-		inputDialogBp.setIcon(executionContext.getAction().getIcon());
-		inputDialogBp.setMissingInputText("Please enter the " + inputName);
-		inputDialogBp.setMissingInputIcon(IconsSmall.INFO);
-		inputDialogBp.setCloseable(true);
-		inputDialogBp.setResizable(false);
-
-		final IWindow windowAncestor = Toolkit.getWidgetUtils().getWindowAncestor(executionContext.getSource());
-		if (windowAncestor != null) {
-			return windowAncestor.createChildWindow(inputDialogBp);
-		}
-		return Toolkit.getWidgetFactory().create(inputDialogBp);
-	}
-
-	private IInputContentCreator<String> createLabelDialogCreator(final String inputName) {
-		return new IInputContentCreator<String>() {
-
-			private IInputControl<String> inputField;
-
-			@Override
-			public void createContent(final IInputContentContainer contentContainer) {
-				final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-				contentContainer.setLayout(new MigLayoutDescriptor("[][grow]", "[]"));
-				contentContainer.add(bpf.textLabel(inputName), "");
-				inputField = contentContainer.add(bpf.inputFieldString(), "growx, w 180:180:180");
-
-				contentContainer.registerInputWidget(inputName, inputField);
-			}
-
-			@Override
-			public void setValue(final String value) {
-				inputField.setValue(value);
-			}
-
-			@Override
-			public String getValue() {
-				return inputField.getValue();
-			}
-
-			@Override
-			public ValidationResult validate() {
-				return new ValidationResult();
-			}
-
-			@Override
-			public boolean isMandatory() {
-				return true;
-			}
-		};
 	}
 
 	public IAction createAddViewAction(final IFolderContext context) {
@@ -370,5 +308,9 @@ public class ActionFactory {
 		});
 
 		return actionBuilder.build();
+	}
+
+	private IInputDialog<String> createInputDialog(final IExecutionContext executionContext, final String inputName) {
+		return inputDialogFactory.createInputDialog(executionContext, inputName);
 	}
 }

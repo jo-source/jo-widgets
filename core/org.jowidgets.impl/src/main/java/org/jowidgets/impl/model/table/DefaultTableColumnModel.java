@@ -261,7 +261,7 @@ public class DefaultTableColumnModel implements IDefaultTableColumnModel, ITable
 	////////////////////////////////////////////////////////////////////////////////////////////////
 
 	private void columnAdded(final int columnIndex, final IDefaultTableColumn column) {
-		final ColumnChangeListener changeListener = new ColumnChangeListener();
+		final ColumnChangeListener changeListener = new ColumnChangeListener(columnIndex);
 		columnChangeListeners.put(Integer.valueOf(columnIndex), changeListener);
 		column.addChangeListener(changeListener);
 		tableColumnModelObservable.fireColumnsAdded(new int[] {columnIndex});
@@ -292,7 +292,13 @@ public class DefaultTableColumnModel implements IDefaultTableColumnModel, ITable
 	}
 
 	class ColumnChangeListener implements IChangeListener {
-		private int columnIndex;
+
+		private final int columnIndex;
+
+		public ColumnChangeListener(final int columnIndex) {
+			super();
+			this.columnIndex = columnIndex;
+		}
 
 		@Override
 		public void changedEvent() {

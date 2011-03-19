@@ -66,8 +66,11 @@ public class ViewDemo1 extends AbstractView {
 	public static final String DEFAULT_TOOLTIP = "Shows all person";
 	public static final IImageConstant DEFAULT_ICON = SilkIcons.USER;
 
+	private final InputDialogFactory inputDialogFactory;
+
 	public ViewDemo1(final IViewContext context, final DemoMenuProvider menuProvider, final ISimpleTableModel tableModel) {
 		super(ID);
+		this.inputDialogFactory = new InputDialogFactory();
 
 		context.getToolBar().addItemsOfModel(menuProvider.getToolBarModel());
 		context.getToolBarMenu().addItemsOfModel(menuProvider.getMenuModel());
@@ -167,6 +170,27 @@ public class ViewDemo1 extends AbstractView {
 				currentColumn.set(Integer.valueOf(event.getColumnIndex()));
 				currentRow.set(null);
 				columnPopupMenu.show(event.getPosition());
+			}
+		});
+
+		final IActionItemModel renameColumnAction = columnPopupMenuModel.addActionItem("Rename column");
+		renameColumnAction.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final IInputDialog<String> inputDialog = inputDialogFactory.createInputDialog("rename column", "Column name");
+				inputDialog.setValue(tableModel.getColumn(currentColumn.get()).getText());
+				inputDialog.setVisible(true);
+				if (inputDialog.isOkPressed()) {
+					tableModel.setColumnText(currentColumn.get().intValue(), inputDialog.getValue());
+				}
+			}
+		});
+
+		final IActionItemModel resizeColumnAction = columnPopupMenuModel.addActionItem("Resize column");
+		resizeColumnAction.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				tableModel.getColumn(currentColumn.get().intValue()).setWidth(200);
 			}
 		});
 

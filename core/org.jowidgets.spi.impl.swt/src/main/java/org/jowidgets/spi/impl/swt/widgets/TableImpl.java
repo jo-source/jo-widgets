@@ -129,9 +129,12 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	private final boolean columnsResizeable;
 
 	private int[] lastColumnOrder;
+	private boolean setWidthInvokedOnModel;
 
 	public TableImpl(final Object parentUiReference, final ITableSetupSpi setup) {
 		super(new Table((Composite) parentUiReference, getStyle(setup)));
+
+		this.setWidthInvokedOnModel = false;
 
 		this.tableCellObservable = new TableCellObservable();
 		this.tableCellPopupDetectionObservable = new TableCellPopupDetectionObservable();
@@ -766,7 +769,9 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			if (column != null) {
 				final int columnIndex = getColumnIndex(column);
 				final int width = column.getWidth();
+				setWidthInvokedOnModel = true;
 				columnModel.getColumn(columnIndex).setWidth(width);
+				setWidthInvokedOnModel = false;
 				tableColumnObservable.fireColumnResized(new TableColumnResizeEvent(columnIndex, width));
 			}
 		}
@@ -872,10 +877,12 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 		@Override
 		public void columnsChanged(final int[] columnIndices) {
-			final TableColumn[] columns = table.getColumns();
-			for (int i = 0; i < columnIndices.length; i++) {
-				final int changedIndex = columnIndices[i];
-				setColumnData(columns[changedIndex], columnModel.getColumn(changedIndex));
+			if (!setWidthInvokedOnModel) {
+				final TableColumn[] columns = table.getColumns();
+				for (int i = 0; i < columnIndices.length; i++) {
+					final int changedIndex = columnIndices[i];
+					setColumnData(columns[changedIndex], columnModel.getColumn(changedIndex));
+				}
 			}
 		}
 
