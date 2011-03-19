@@ -166,6 +166,17 @@ public class ViewDemo1 extends AbstractView {
 			}
 		});
 
+		final IActionItemModel deleteColumnsAction = columnPopupMenuModel.addActionItem("Delete columns 0, 6, 5");
+		deleteColumnsAction.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final int[] columnsToRemove = getColumnsToRemove();
+				if (columnsToRemove.length > 0) {
+					tableModel.removeColumns(columnsToRemove);
+				}
+			}
+		});
+
 		final IActionItemModel fitColumnsAction = columnPopupMenuModel.addActionItem("Fit all columns", SilkIcons.ARROW_INOUT);
 		fitColumnsAction.addActionListener(new IActionListener() {
 			@Override
@@ -209,5 +220,9 @@ public class ViewDemo1 extends AbstractView {
 			return inputDialog.getValue();
 		}
 		return null;
+	}
+
+	private int[] getColumnsToRemove() {
+		return new int[] {4, 2, 0};
 	}
 }
