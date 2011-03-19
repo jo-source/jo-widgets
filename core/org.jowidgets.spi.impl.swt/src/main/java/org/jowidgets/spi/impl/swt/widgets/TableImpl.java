@@ -809,8 +809,8 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 		@Override
 		public void rowsStructureChanged() {
-			table.clearAll();
 			table.setItemCount(dataModel.getRowCount());
+			table.clearAll();
 		}
 
 		@Override
