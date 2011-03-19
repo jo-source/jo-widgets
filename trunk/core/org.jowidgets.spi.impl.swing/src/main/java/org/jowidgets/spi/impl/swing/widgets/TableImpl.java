@@ -36,6 +36,7 @@ import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -110,6 +111,7 @@ import org.jowidgets.spi.impl.swing.util.PositionConvert;
 import org.jowidgets.spi.impl.swing.widgets.base.TableColumnModelAdapter;
 import org.jowidgets.spi.widgets.ITableSpi;
 import org.jowidgets.spi.widgets.setup.ITableSetupSpi;
+import org.jowidgets.util.ArrayUtils;
 
 public class TableImpl extends SwingControl implements ITableSpi {
 
@@ -118,6 +120,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	private final ITableColumnModel columnModel;
 	private final CellRenderer cellRenderer;
 	private final CellEditor cellEditor;
+	private final TableCellRenderer headerRenderer;
 
 	private final PopupDetectionObservable popupDetectionObservable;
 	private final TableCellObservable tableCellObservable;
@@ -169,6 +172,9 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		getUiReference().setBorder(BorderFactory.createEmptyBorder());
 
 		this.table = (JTable) getUiReference().getViewport().getView();
+		table.setAutoCreateColumnsFromModel(false);
+		this.headerRenderer = new TableHeaderRenderer();
+
 		table.setBorder(BorderFactory.createEmptyBorder());
 		table.setGridColor(new Color(230, 230, 230));
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -181,7 +187,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		}
 
-		table.getTableHeader().setDefaultRenderer(new TableHeaderRenderer());
+		table.getTableHeader().setDefaultRenderer(headerRenderer);
 		table.getTableHeader().addMouseListener(new TableColumnMenuDetectListener());
 		table.getTableHeader().addMouseListener(new TableColumnListener());
 
@@ -226,16 +232,17 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 		table.setModel(swingTableModel);
 
-		final TableColumnModel swingColumnModel = table.getColumnModel();
-		final int columnCount = swingColumnModel.getColumnCount();
+		final int columnCount = columnModel.getColumnCount();
 		lastColumnPermutation = new ArrayList<Integer>(columnCount);
-		for (int i = 0; i < columnCount; i++) {
-			final TableColumn column = swingColumnModel.getColumn(i);
+		for (int columnIndex = 0; columnIndex < columnCount; columnIndex++) {
+			final TableColumn column = new TableColumn();
 			column.setCellRenderer(cellRenderer);
 			column.setCellEditor(cellEditor);
 			column.setResizable(columnsResizeable);
 			column.addPropertyChangeListener(tableColumnResizeListener);
-			lastColumnPermutation.add(Integer.valueOf(i));
+			column.setModelIndex(columnIndex);
+			table.getColumnModel().addColumn(column);
+			lastColumnPermutation.add(Integer.valueOf(columnIndex));
 		}
 
 		setSelection(dataModel.getSelection());
@@ -249,6 +256,8 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		}
 
 		table.getSelectionModel().addListSelectionListener(tableSelectionListener);
+
+		table.repaint();
 	}
 
 	@Override
@@ -605,7 +614,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		@Override
 		public void dataChanged() {
 			if (swingTableModel != null) {
-				swingTableModel.rowsStructureChanged();
+				swingTableModel.dataChanged();
 			}
 		}
 
@@ -626,14 +635,29 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 		@Override
 		public void columnsRemoved(final int[] columnIndices) {
-			// TODO MG better implementation of columnsRemoved observe
-			swingTableModel.fireTableStructureChanged();
+			Arrays.sort(columnIndices);
+			int removedColumnsCount = 0;
+			for (int i = 0; i < columnIndices.length; i++) {
+				final int removedIndex = table.convertColumnIndexToView(columnIndices[i] - removedColumnsCount);
+				final TableColumn swingColumn = table.getColumnModel().getColumn(removedIndex);
+				swingColumn.removePropertyChangeListener(tableColumnResizeListener);
+				table.getColumnModel().removeColumn(swingColumn);
+				removedColumnsCount++;
+			}
 		}
 
 		@Override
 		public void columnsChanged(final int[] columnIndices) {
-			// TODO MG better implementation of columnsChanged observe
-			swingTableModel.fireTableStructureChanged();
+			table.getTableHeader().repaint();
+			for (int i = 0; i < columnIndices.length; i++) {
+				final int columnIndex = columnIndices[i];
+				final int modelIndex = table.convertColumnIndexToView(columnIndex);
+				final int viewWidth = table.getColumnModel().getColumn(modelIndex).getWidth();
+				final int modelWidth = columnModel.getColumn(columnIndex).getWidth();
+				if (viewWidth != modelWidth) {
+					table.getColumnModel().getColumn(modelIndex).setPreferredWidth(modelWidth);
+				}
+			}
 		}
 
 	}
@@ -672,22 +696,28 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		}
 
 		void rowsAdded(final int[] rowIndices) {
-			// TODO MG better implementation of rowsAdded observe
-			rowsStructureChanged();
-		}
-
-		void rowsRemoved(final int[] rowIndices) {
-			// TODO MG better implementation of rowsRemoved observe
-			rowsStructureChanged();
-		}
-
-		void rowsChanged(final int[] rowIndices) {
-			for (int i = 0; i < rowIndices.length; i++) {
-				fireTableRowsUpdated(rowIndices[i], rowIndices[i]);
+			if (rowIndices.length == 1) {
+				fireTableRowsInserted(rowIndices[0], rowIndices[0]);
+			}
+			else {
+				dataChanged();
 			}
 		}
 
-		void rowsStructureChanged() {
+		void rowsRemoved(final int[] rowIndices) {
+			if (rowIndices.length == 1) {
+				fireTableRowsDeleted(rowIndices[0], rowIndices[0]);
+			}
+			else {
+				dataChanged();
+			}
+		}
+
+		void rowsChanged(final int[] rowIndices) {
+			fireTableRowsUpdated(ArrayUtils.getMin(rowIndices), ArrayUtils.getMax(rowIndices));
+		}
+
+		void dataChanged() {
 			table.getSelectionModel().removeListSelectionListener(tableSelectionListener);
 			fireTableDataChanged();
 			setSelection(dataModel.getSelection());
@@ -721,6 +751,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			if (column.getIcon() != null) {
 				defaultComponent.setIcon(SwingImageRegistry.getInstance().getImageIcon(column.getIcon()));
 			}
+			defaultComponent.setText(column.getText());
 			defaultComponent.setToolTipText(column.getToolTipText());
 
 			return defaultComponent;
