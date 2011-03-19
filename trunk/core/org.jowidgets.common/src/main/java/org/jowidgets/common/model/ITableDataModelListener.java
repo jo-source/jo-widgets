@@ -36,7 +36,7 @@ public interface ITableDataModelListener {
 
 	void rowsChanged(int[] rowIndices);
 
-	void rowsStructureChanged();
+	void dataChanged();
 
 	void selectionChanged();
 

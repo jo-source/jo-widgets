@@ -603,7 +603,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		}
 
 		@Override
-		public void rowsStructureChanged() {
+		public void dataChanged() {
 			if (swingTableModel != null) {
 				swingTableModel.rowsStructureChanged();
 			}

@@ -102,6 +102,7 @@ import org.jowidgets.spi.impl.swt.util.AlignmentConvert;
 import org.jowidgets.spi.impl.swt.util.FontProvider;
 import org.jowidgets.spi.widgets.ITableSpi;
 import org.jowidgets.spi.widgets.setup.ITableSetupSpi;
+import org.jowidgets.util.ArrayUtils;
 
 public class TableImpl extends SwtControl implements ITableSpi {
 
@@ -804,14 +805,12 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 		@Override
 		public void rowsAdded(final int[] rowIndices) {
-			// TODO MG better implementation of rowsAdded observe
-			rowsStructureChanged();
+			updateRows(rowIndices);
 		}
 
 		@Override
 		public void rowsRemoved(final int[] rowIndices) {
-			// TODO MG better implementation of rowsRemoved observe
-			rowsStructureChanged();
+			updateRows(rowIndices);
 		}
 
 		@Override
@@ -820,7 +819,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		}
 
 		@Override
-		public void rowsStructureChanged() {
+		public void dataChanged() {
 			table.setItemCount(dataModel.getRowCount());
 			table.clearAll();
 		}
@@ -828,6 +827,13 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		@Override
 		public void selectionChanged() {
 			setSelection(dataModel.getSelection());
+		}
+
+		private void updateRows(final int[] rowIndices) {
+			if (rowIndices != null && rowIndices.length > 0) {
+				table.setItemCount(dataModel.getRowCount());
+				table.clear(ArrayUtils.getMin(rowIndices), dataModel.getRowCount() - 1);
+			}
 		}
 
 	}

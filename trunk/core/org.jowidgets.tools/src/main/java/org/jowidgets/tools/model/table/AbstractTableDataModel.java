@@ -90,8 +90,8 @@ public abstract class AbstractTableDataModel implements ITableDataModel, ITableD
 		dataModelObservable.fireRowsChanged(rowIndices);
 	}
 
-	protected final void fireRowsStructureChanged() {
-		dataModelObservable.fireRowsStructureChanged();
+	protected final void fireDataChanged() {
+		dataModelObservable.fireDataChanged();
 	}
 
 	private void fireSelectionChanged() {
