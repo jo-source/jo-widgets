@@ -70,9 +70,9 @@ public class TableDataModelObservable implements ITableDataModelObservable {
 		}
 	}
 
-	public void fireRowsStructureChanged() {
+	public void fireDataChanged() {
 		for (final ITableDataModelListener listener : listeners) {
-			listener.rowsStructureChanged();
+			listener.dataChanged();
 		}
 	}
 

@@ -174,7 +174,12 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 	public void setValue(final List<String> value) {
 		if (value != null) {
 			final ArrayList<String> values = new ArrayList<String>(value);
-			gender.setValue(values.get(0));
+			try {
+				gender.setValue(values.get(0));
+			}
+			catch (final Exception e1) {
+				//DO NOTHING
+			}
 			firstName.setValue(values.get(1));
 			lastname.setValue(value.get(2));
 			street.setValue(values.get(3));

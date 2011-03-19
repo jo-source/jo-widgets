@@ -26,25 +26,36 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.controler;
+package org.jowidgets.util;
 
-import org.jowidgets.common.model.ITableDataModelListener;
+public final class ArrayUtils {
 
-public class TableDataModelAdapter implements ITableDataModelListener {
+	private ArrayUtils() {}
 
-	@Override
-	public void rowsAdded(final int[] rowIndices) {}
+	public static int getMin(final int[] array) {
+		if (array == null || array.length == 0) {
+			throw new IllegalArgumentException("Parameter 'array' must not be null or empty.");
+		}
+		int min = array[0];
+		for (int i = 1; i < array.length; i++) {
+			if (array[i] < min) {
+				min = array[i];
+			}
+		}
+		return min;
+	}
 
-	@Override
-	public void rowsRemoved(final int[] rowIndices) {}
-
-	@Override
-	public void rowsChanged(final int[] rowIndices) {}
-
-	@Override
-	public void dataChanged() {}
-
-	@Override
-	public void selectionChanged() {}
+	public static int getMax(final int[] array) {
+		if (array == null || array.length == 0) {
+			throw new IllegalArgumentException("Parameter 'array' must not be null or empty.");
+		}
+		int max = array[0];
+		for (int i = 1; i < array.length; i++) {
+			if (array[i] > max) {
+				max = array[i];
+			}
+		}
+		return max;
+	}
 
 }

@@ -41,7 +41,9 @@ import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.ITableCellEditEvent;
 import org.jowidgets.common.widgets.controler.ITableCellEditorListener;
 import org.jowidgets.common.widgets.controler.ITableCellEvent;
@@ -54,7 +56,6 @@ import org.jowidgets.examples.common.demo.DemoMenuProvider;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractView;
 import org.jowidgets.tools.layout.MigLayoutFactory;
-import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.util.ValueHolder;
 import org.jowidgets.workbench.api.IViewContext;
 
@@ -87,8 +88,18 @@ public class ViewDemo1 extends AbstractView {
 
 		final IPopupMenu cellPopupMenu = table.createPopupMenu();
 		final IMenuModel cellPopupMenuModel = cellPopupMenu.getModel();
-		final IMenuModel popupMenuModel = new MenuModel();
-		table.setPopupMenu(popupMenuModel);
+
+		final IPopupMenu popupMenu = table.createPopupMenu();
+		final IMenuModel popupMenuModel = popupMenu.getModel();
+
+		table.addPopupDetectionListener(new IPopupDetectionListener() {
+			@Override
+			public void popupDetected(final Position position) {
+				currentColumn.set(null);
+				currentRow.set(null);
+				popupMenu.show(position);
+			}
+		});
 
 		table.addTableCellPopupDetectionListener(new ITableCellPopupDetectionListener() {
 			@Override
@@ -154,6 +165,7 @@ public class ViewDemo1 extends AbstractView {
 			@Override
 			public void popupDetected(final ITableColumnPopupEvent event) {
 				currentColumn.set(Integer.valueOf(event.getColumnIndex()));
+				currentRow.set(null);
 				columnPopupMenu.show(event.getPosition());
 			}
 		});

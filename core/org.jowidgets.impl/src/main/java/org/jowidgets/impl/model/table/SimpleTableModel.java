@@ -244,7 +244,7 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 	public void removeAllRows() {
 		final boolean selectionChanged = selection.size() > 0;
 		data.clear();
-		dataModelObservable.fireRowsStructureChanged();
+		dataModelObservable.fireDataChanged();
 		if (selectionChanged) {
 			dataModelObservable.fireSelectionChanged();
 		}
