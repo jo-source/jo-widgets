@@ -267,10 +267,14 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			swtColumn.setAlignment(SWT.LEFT);
 		}
 		if (joColumn.getWidth() != -1) {
-			swtColumn.setWidth(joColumn.getWidth());
+			if (swtColumn.getWidth() != joColumn.getWidth()) {
+				swtColumn.setWidth(joColumn.getWidth());
+			}
 		}
 		else {
-			swtColumn.setWidth(100);
+			if (swtColumn.getWidth() != 100) {
+				swtColumn.setWidth(100);
+			}
 		}
 		swtColumn.setToolTipText(joColumn.getToolTipText());
 	}
