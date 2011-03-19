@@ -31,6 +31,7 @@ package org.jowidgets.spi.impl.swt.widgets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.swt.SWT;
@@ -347,7 +348,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	}
 
 	@Override
-	public void setSelection(final ArrayList<Integer> selection) {
+	public void setSelection(final List<Integer> selection) {
 		if (!isSelectionEqualWithView(selection)) {
 			if (selection == null || selection.size() == 0) {
 				table.setSelection(new int[0]);
@@ -450,7 +451,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		return -1;
 	}
 
-	private boolean isSelectionEqualWithView(final ArrayList<Integer> selection) {
+	private boolean isSelectionEqualWithView(final List<Integer> selection) {
 		final int[] tableSelection = table.getSelectionIndices();
 		if (selection == null && (tableSelection == null || tableSelection.length == 0)) {
 			return true;
