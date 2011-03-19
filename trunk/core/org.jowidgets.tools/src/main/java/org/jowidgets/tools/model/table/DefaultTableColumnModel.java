@@ -151,22 +151,22 @@ public class DefaultTableColumnModel implements IDefaultTableColumnModel {
 	}
 
 	@Override
-	public void setText(final int columnIndex, final String text) {
-		model.setText(columnIndex, text);
+	public void setColumnText(final int columnIndex, final String text) {
+		model.setColumnText(columnIndex, text);
 	}
 
 	@Override
-	public void setToolTipText(final int columnIndex, final String tooltipText) {
-		model.setToolTipText(columnIndex, tooltipText);
+	public void setColumnToolTipText(final int columnIndex, final String tooltipText) {
+		model.setColumnToolTipText(columnIndex, tooltipText);
 	}
 
 	@Override
-	public void setIcon(final int columnIndex, final IImageConstant icon) {
-		model.setIcon(columnIndex, icon);
+	public void setColumnIcon(final int columnIndex, final IImageConstant icon) {
+		model.setColumnIcon(columnIndex, icon);
 	}
 
 	@Override
-	public void setAlignment(final int columnIndex, final AlignmentHorizontal alignment) {
-		model.setAlignment(columnIndex, alignment);
+	public void setColumnAlignment(final int columnIndex, final AlignmentHorizontal alignment) {
+		model.setColumnAlignment(columnIndex, alignment);
 	}
 }

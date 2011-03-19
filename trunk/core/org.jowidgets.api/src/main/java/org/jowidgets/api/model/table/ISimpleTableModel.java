@@ -28,12 +28,17 @@
 
 package org.jowidgets.api.model.table;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.model.ITableCell;
 
 public interface ISimpleTableModel extends ITableModel, IDefaultTableColumnModel {
+
+	ArrayList<ITableCell> getRow(int rowIndex);
+
+	ArrayList<String> getRowTexts(int rowIndex);
 
 	void addRow();
 
@@ -77,6 +82,20 @@ public interface ISimpleTableModel extends ITableModel, IDefaultTableColumnModel
 
 	void setCell(int rowIndex, int columnIndex, String text, boolean editable);
 
-	void setEditable(int rowIndex, int columnIndex, boolean editable);
+	void setRow(int rowIndex, ITableCell... cells);
+
+	void setRow(int rowIndex, ITableCellBuilder... cellBuilders);
+
+	void setCellText(int rowIndex, int columnIndex, String text);
+
+	void setCellTooltipText(int rowIndex, int columnIndex, String tooltipText);
+
+	void setCellIcon(int rowIndex, int columnIndex, IImageConstant icon);
+
+	void setCellEditable(int rowIndex, int columnIndex, boolean editable);
+
+	void setRowTexts(int rowIndex, String... cellTexts);
+
+	void setRowTexts(int rowIndex, List<String> cellTexts);
 
 }

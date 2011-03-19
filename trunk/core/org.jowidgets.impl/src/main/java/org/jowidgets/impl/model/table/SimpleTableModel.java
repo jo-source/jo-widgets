@@ -104,9 +104,36 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 	}
 
 	@Override
+	public ArrayList<ITableCell> getRow(final int rowIndex) {
+		final ArrayList<ITableCell> result = new ArrayList<ITableCell>();
+		for (int columnIndex = 0; columnIndex < getColumnCount(); columnIndex++) {
+			result.add(data.get(rowIndex).get(columnIndex));
+		}
+		return result;
+	}
+
+	@Override
+	public ArrayList<String> getRowTexts(final int rowIndex) {
+		final ArrayList<String> result = new ArrayList<String>();
+		for (int columnIndex = 0; columnIndex < getColumnCount(); columnIndex++) {
+			result.add(data.get(rowIndex).get(columnIndex).getText());
+		}
+		return result;
+	}
+
+	@Override
 	public void setCell(final int rowIndex, final int columnIndex, final ITableCell cell) {
 		Assert.paramNotNull(cell, "cell");
 		data.get(rowIndex).set(columnIndex, cell);
+		dataModelObservable.fireRowsChanged(new int[] {rowIndex});
+	}
+
+	@Override
+	public void setRow(final int rowIndex, final ITableCell... cells) {
+		Assert.paramNotNull(cells, "cells");
+		for (int i = 0; i < cells.length; i++) {
+			data.get(rowIndex).set(i, cells[i]);
+		}
 		dataModelObservable.fireRowsChanged(new int[] {rowIndex});
 	}
 
@@ -358,10 +385,66 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 	}
 
 	@Override
-	public void setEditable(final int rowIndex, final int columnIndex, final boolean editable) {
+	public void setRow(final int rowIndex, final ITableCellBuilder... cellBuilders) {
+		Assert.paramNotNull(cellBuilders, "cellBuilders");
+		final ITableCell[] cells = new ITableCell[cellBuilders.length];
+		for (int columnIndex = 0; columnIndex < getColumnCount(); columnIndex++) {
+			cells[columnIndex] = cellBuilders[columnIndex].build();
+		}
+	}
+
+	@Override
+	public void setCellEditable(final int rowIndex, final int columnIndex, final boolean editable) {
 		final TableCell cell = new TableCell(getCell(rowIndex, columnIndex));
 		cell.setEditable(editable);
 		setCell(rowIndex, columnIndex, cell);
+	}
+
+	@Override
+	public void setCellText(final int rowIndex, final int columnIndex, final String text) {
+		final TableCell cell = new TableCell(getCell(rowIndex, columnIndex));
+		cell.setText(text);
+		setCell(rowIndex, columnIndex, cell);
+	}
+
+	@Override
+	public void setCellTooltipText(final int rowIndex, final int columnIndex, final String tooltipText) {
+		final TableCell cell = new TableCell(getCell(rowIndex, columnIndex));
+		cell.setToolTipText(tooltipText);
+		setCell(rowIndex, columnIndex, cell);
+	}
+
+	@Override
+	public void setCellIcon(final int rowIndex, final int columnIndex, final IImageConstant icon) {
+		final TableCell cell = new TableCell(getCell(rowIndex, columnIndex));
+		cell.setIcon(icon);
+		setCell(rowIndex, columnIndex, cell);
+	}
+
+	@Override
+	public void setRowTexts(final int rowIndex, final String... cellTexts) {
+		Assert.paramNotNull(cellTexts, "cellTexts");
+		final ITableCell[] cells = new ITableCell[cellTexts.length];
+		for (int columnIndex = 0; columnIndex < getColumnCount(); columnIndex++) {
+			final TableCell cell = new TableCell(getCell(rowIndex, columnIndex));
+			cell.setText(cellTexts[columnIndex]);
+			cells[columnIndex] = cell;
+		}
+		setRow(rowIndex, cells);
+	}
+
+	@Override
+	public void setRowTexts(final int rowIndex, final List<String> cellTexts) {
+		Assert.paramNotNull(cellTexts, "cellTexts");
+		final ITableCell[] cells = new ITableCell[cellTexts.size()];
+		int columnIndex = 0;
+		for (final String cellText : cellTexts) {
+			final TableCell cell = new TableCell(getCell(rowIndex, columnIndex));
+			cell.setText(cellText);
+			cells[columnIndex] = cell;
+			columnIndex++;
+		}
+		setRow(rowIndex, cells);
 	}
 
 	@Override

@@ -73,12 +73,12 @@ public interface IDefaultTableColumnModel extends ITableColumnModel {
 
 	IDefaultTableColumn setColumn(final int columnIndex, final IDefaultTableColumnBuilder columnBuilder);
 
-	void setText(final int columnIndex, String text);
+	void setColumnText(final int columnIndex, String text);
 
-	void setToolTipText(final int columnIndex, String tooltipText);
+	void setColumnToolTipText(final int columnIndex, String tooltipText);
 
-	void setIcon(final int columnIndex, IImageConstant icon);
+	void setColumnIcon(final int columnIndex, IImageConstant icon);
 
-	void setAlignment(final int columnIndex, AlignmentHorizontal alignment);
+	void setColumnAlignment(final int columnIndex, AlignmentHorizontal alignment);
 
 }

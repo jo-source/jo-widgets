@@ -28,6 +28,7 @@
 
 package org.jowidgets.examples.common.demo;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -160,14 +161,43 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 	}
 
 	@Override
-	public void setValue(final List<String> value) {}
+	public void setValue(final List<String> value) {
+		if (value != null) {
+			final ArrayList<String> values = new ArrayList<String>(value);
+			gender.setValue(values.get(0));
+			firstName.setValue(values.get(1));
+			lastname.setValue(value.get(2));
+			street.setValue(values.get(3));
+			try {
+				postalCode.setValue(Integer.valueOf(values.get(4)));
+			}
+			catch (final NumberFormatException e) {
+				//DO NOTHING
+			}
+			city.setValue(values.get(5));
+			country.setValue(values.get(6));
+			phoneNumber.setValue(values.get(7));
+			mail.setValue(values.get(8));
+		}
+		else {
+			gender.setValue(null);
+			lastname.setValue(null);
+			firstName.setValue(null);
+			street.setValue(null);
+			postalCode.setValue(null);
+			city.setValue(null);
+			country.setValue(null);
+			phoneNumber.setValue(null);
+			mail.setValue(null);
+		}
+	}
 
 	@Override
 	public List<String> getValue() {
 		final List<String> result = new LinkedList<String>();
 		result.add(getStringValue(gender.getValue()));
-		result.add(getStringValue(lastname.getValue()));
 		result.add(getStringValue(firstName.getValue()));
+		result.add(getStringValue(lastname.getValue()));
 		result.add(getStringValue(street.getValue()));
 		result.add(getStringValue(postalCode.getValue()));
 		result.add(getStringValue(city.getValue()));
