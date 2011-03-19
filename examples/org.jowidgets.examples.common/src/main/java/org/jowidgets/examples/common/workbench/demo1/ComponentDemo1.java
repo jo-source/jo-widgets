@@ -29,8 +29,10 @@
 package org.jowidgets.examples.common.workbench.demo1;
 
 import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.api.model.table.ISimpleTableModel;
 import org.jowidgets.examples.common.demo.DemoMenuProvider;
 import org.jowidgets.examples.common.workbench.base.AbstractComponent;
+import org.jowidgets.tools.model.table.SimpleTableModelBuilder;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IFolderContext;
@@ -52,11 +54,14 @@ public class ComponentDemo1 extends AbstractComponent implements IComponent {
 	public static final String MAIL_FOLDER_ID = "DETAIL3_FOLDER_ID";
 
 	private final DemoMenuProvider menuProvider;
+	private ISimpleTableModel tableModel;
 
 	public ComponentDemo1(final IComponentContext componentContext) {
+		this.menuProvider = new DemoMenuProvider(true);
+
 		final ILayout defaultLayout = new Layout(DEFAULT_LAYOUT_ID, createMainSplit());
 		componentContext.setLayout(defaultLayout);
-		menuProvider = new DemoMenuProvider(true);
+
 		final IMenuModel popupMenu = componentContext.getComponentTreeNodeContext().getPopupMenu();
 		popupMenu.addSeparator();
 		popupMenu.addAction(new ActionFactory().createResetLayoutAction(componentContext, defaultLayout));
@@ -65,7 +70,7 @@ public class ComponentDemo1 extends AbstractComponent implements IComponent {
 	@Override
 	public IView createView(final String viewId, final IViewContext context) {
 		if (ViewDemo1.ID.equals(viewId)) {
-			return new ViewDemo6(context, menuProvider);
+			return new ViewDemo1(context, menuProvider, getTableModelLazy());
 		}
 		else if (ViewDemo2.ID.equals(viewId)) {
 			return new ViewDemo2(context, menuProvider);
@@ -74,13 +79,13 @@ public class ComponentDemo1 extends AbstractComponent implements IComponent {
 			return new ViewDemo3(context);
 		}
 		else if (ViewDemo4.ID.equals(viewId)) {
-			return new ViewDemo4(context);
+			return new ViewDemo4(context, getTableModelLazy());
 		}
 		else if (ViewDemo5.ID.equals(viewId)) {
 			return new ViewDemo5(context);
 		}
 		else if (ViewDemo6.ID.equals(viewId)) {
-			return new ViewDemo1(context, menuProvider);
+			return new ViewDemo6(context, menuProvider);
 		}
 		else if (ViewDemo7.ID.equals(viewId)) {
 			return new ViewDemo7(context);
@@ -90,6 +95,14 @@ public class ComponentDemo1 extends AbstractComponent implements IComponent {
 		}
 		else {
 			throw new IllegalArgumentException("View id '" + viewId + "' is not known.");
+		}
+	}
+
+	@Override
+	public void onFolderCreated(final IFolderContext folderContext) {
+		if (DETAIL2_FOLDER_ID.equals(folderContext.getOriginalFolderId())) {
+			final ActionFactory actionFactory = new ActionFactory();
+			folderContext.getPopupMenu().addAction(actionFactory.createAddViewAction(folderContext));
 		}
 	}
 
@@ -144,11 +157,51 @@ public class ComponentDemo1 extends AbstractComponent implements IComponent {
 		return result;
 	}
 
-	@Override
-	public void onFolderCreated(final IFolderContext folderContext) {
-		if (DETAIL2_FOLDER_ID.equals(folderContext.getOriginalFolderId())) {
-			final ActionFactory actionFactory = new ActionFactory();
-			folderContext.getPopupMenu().addAction(actionFactory.createAddViewAction(folderContext));
+	private ISimpleTableModel getTableModelLazy() {
+		if (tableModel == null) {
+			tableModel = createTableModel();
 		}
+		return tableModel;
 	}
+
+	private ISimpleTableModel createTableModel() {
+
+		final ISimpleTableModel result = new SimpleTableModelBuilder().setEditableDefault(true).build();
+		result.addColumn("Gender");
+		result.addColumn("Firstname");
+		result.addColumn("Lastname");
+		result.addColumn("Street");
+		result.addColumn("Postal code");
+		result.addColumn("City");
+		result.addColumn("Country");
+		result.addColumn("Phone number");
+		result.addColumn("Email");
+
+		result.addRow(
+				"Male",
+				"Pete",
+				"Brown",
+				"Audubon Ave 34",
+				"76453",
+				"New York",
+				"USA",
+				"47634826",
+				"hans.maier@gtzservice.com");
+
+		result.addRow("Male", "Steve", "Miller", "Convent Ave 34", "53453", "New York", "USA", "4354354", "steve.miller@gjk.com");
+
+		result.addRow(
+				"Female",
+				"Laura",
+				"Brixton",
+				"West End Ave 34",
+				"53453",
+				"New York",
+				"USA",
+				"435345345",
+				"laura.brixton@gjk.com");
+
+		return result;
+	}
+
 }

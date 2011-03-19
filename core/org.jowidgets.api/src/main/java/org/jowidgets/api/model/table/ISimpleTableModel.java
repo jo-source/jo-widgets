@@ -33,12 +33,17 @@ import java.util.List;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.model.ITableCell;
+import org.jowidgets.common.model.ITableDataModelObservable;
 
-public interface ISimpleTableModel extends ITableModel, IDefaultTableColumnModel {
+public interface ISimpleTableModel extends ITableModel, IDefaultTableColumnModel, ITableDataModelObservable {
 
 	ArrayList<ITableCell> getRow(int rowIndex);
 
 	ArrayList<String> getRowTexts(int rowIndex);
+
+	int getFirstSelectedRow();
+
+	int getLastSelectedRow();
 
 	void addRow();
 

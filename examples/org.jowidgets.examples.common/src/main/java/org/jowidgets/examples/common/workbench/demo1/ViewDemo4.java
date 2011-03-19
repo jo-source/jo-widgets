@@ -28,11 +28,24 @@
 
 package org.jowidgets.examples.common.workbench.demo1;
 
-import org.jowidgets.api.widgets.IContainer;
+import java.util.List;
+
+import org.jowidgets.api.command.EnabledState;
+import org.jowidgets.api.command.IActionBuilder;
+import org.jowidgets.api.command.ICommandExecutor;
+import org.jowidgets.api.command.IEnabledState;
+import org.jowidgets.api.command.IExecutionContext;
+import org.jowidgets.api.model.table.ISimpleTableModel;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.validation.ValidationResult;
+import org.jowidgets.api.widgets.IInputComposite;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.examples.common.demo.DemoForm1Creator;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractView;
+import org.jowidgets.tools.command.EnabledChecker;
+import org.jowidgets.tools.controler.TableDataModelAdapter;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
 
@@ -43,10 +56,80 @@ public class ViewDemo4 extends AbstractView implements IView {
 	public static final String DEFAULT_TOOLTIP = "Person View";
 	public static final IImageConstant DEFAULT_ICON = SilkIcons.APPLICATION_FORM;
 
-	public ViewDemo4(final IViewContext context) {
+	public ViewDemo4(final IViewContext context, final ISimpleTableModel tableModel) {
 		super(ID);
-		final IContainer container = context.getContainer();
-		DemoForm1Creator.createDemoForm1(container);
-	}
 
+		final IInputComposite<List<String>> form = DemoForm1Creator.createDemoForm1(context.getContainer());
+		form.setEditable(false);
+
+		tableModel.addDataModelListener(new TableDataModelAdapter() {
+			@Override
+			public void selectionChanged() {
+				final int selectedRow = tableModel.getFirstSelectedRow();
+				if (selectedRow != -1) {
+					form.setValue(tableModel.getRowTexts(selectedRow));
+					form.setEditable(true);
+				}
+				else {
+					form.setValue(null);
+					form.setEditable(false);
+				}
+			}
+
+		});
+
+		final IActionBuilder actionBuilder = Toolkit.getActionBuilderFactory().create();
+
+		actionBuilder.setText("Save").setIcon(SilkIcons.DISK);
+
+		final ICommandExecutor executor = new ICommandExecutor() {
+
+			@Override
+			public void execute(final IExecutionContext executionContext) throws Exception {
+				final int selectedIndex = tableModel.getFirstSelectedRow();
+				final List<String> formValue = form.getValue();
+				if (form.validate().isOk() && !form.isEmpty() && selectedIndex > -1) {
+					tableModel.setRowTexts(selectedIndex, formValue);
+					form.setValue(formValue);
+				}
+			}
+		};
+
+		final EnabledChecker enabledChecker = new EnabledChecker() {
+
+			@Override
+			public IEnabledState getEnabledState() {
+				if (tableModel.getFirstSelectedRow() == -1) {
+					return EnabledState.disabled("There is nothing selected");
+				}
+				final ValidationResult validationResult = form.validate();
+				if (!validationResult.isOk()) {
+					return EnabledState.disabled(validationResult.getWorstFirstMessage().getMessageText());
+				}
+				if (form.isEmpty()) {
+					return EnabledState.disabled("Form is not filled out completely!");
+				}
+				return EnabledState.ENABLED;
+			}
+
+		};
+
+		actionBuilder.setCommand(executor, enabledChecker);
+
+		form.addInputListener(new IInputListener() {
+			@Override
+			public void inputChanged(final Object source) {
+				enabledChecker.fireEnabledStateChanged();
+			}
+		});
+
+		tableModel.addDataModelListener(new TableDataModelAdapter() {
+			@Override
+			public void selectionChanged() {
+				enabledChecker.fireEnabledStateChanged();
+			}
+		});
+
+		context.getToolBar().addAction(actionBuilder.build());
+	}
 }

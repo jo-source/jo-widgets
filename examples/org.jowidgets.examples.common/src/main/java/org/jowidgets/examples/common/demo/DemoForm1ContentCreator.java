@@ -59,6 +59,16 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 	private IInputComponent<String> phoneNumber;
 	private IInputComponent<String> mail;
 
+	private IValidationLabel genderValidationWidget;
+	private IValidationLabel firstnameValidationWidget;
+	private IValidationLabel lastnameValidationWidget;
+	private IValidationLabel streetValidationWidget;
+	private IValidationLabel postalCodeValidationWidget;
+	private IValidationLabel cityValidationWidget;
+	private IValidationLabel countryValidationWidget;
+	private IValidationLabel phoneValidationWidget;
+	private IValidationLabel mailValidationWidget;
+
 	@Override
 	public void createContent(final IInputContentContainer container) {
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
@@ -103,50 +113,50 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 
 		container.add(textLabelBp.setText("Gender"), "right, sg lg");
 		gender = container.add(bpF.comboBoxSelection("Male", "Female", " ").setMandatory(false), inputWidgetConstraints);
-		final IValidationLabel genderValidationWidget = container.add(validationLabelBp, "wrap");
+		genderValidationWidget = container.add(validationLabelBp, "wrap");
 		genderValidationWidget.registerInputWidget(gender);
 
 		container.add(textLabelBp.setText("Firstname*"), "right, sg lg");
 		firstName = container.add(stringMandatoryFieldBp, inputWidgetConstraints);
-		final IValidationLabel firstnameValidationWidget = container.add(validationLabelBp, "wrap");
+		firstnameValidationWidget = container.add(validationLabelBp, "wrap");
 		firstnameValidationWidget.registerInputWidget(firstName);
 
 		container.add(textLabelBp.setText("Lastname*"), "right, sg lg");
 		lastname = container.add(stringMandatoryFieldBp, inputWidgetConstraints);
-		final IValidationLabel lastnameValidationWidget = container.add(validationLabelBp, "wrap");
+		lastnameValidationWidget = container.add(validationLabelBp, "wrap");
 		lastnameValidationWidget.registerInputWidget(lastname);
 
 		container.add(textLabelBp.setText("Street*"), "right, sg lg");
 		street = container.add(stringMandatoryFieldBp, inputWidgetConstraints);
-		final IValidationLabel streetValidationWidget = container.add(validationLabelBp, "wrap");
+		streetValidationWidget = container.add(validationLabelBp, "wrap");
 		streetValidationWidget.registerInputWidget(street);
 
 		container.add(textLabelBp.setText("Postal code*"), "right, sg lg");
 		postalCode = container.add(bpF.inputFieldIntegerNumber().setMaxLength(5).setMandatory(true), inputWidgetConstraints);
-		final IValidationLabel postalCodeValidationWidget = container.add(validationLabelBp, "wrap");
+		postalCodeValidationWidget = container.add(validationLabelBp, "wrap");
 		postalCodeValidationWidget.registerInputWidget(postalCode);
 
 		container.add(textLabelBp.setText("City*"), "right, sg lg");
 		city = container.add(stringMandatoryFieldBp, inputWidgetConstraints);
-		final IValidationLabel cityValidationWidget = container.add(validationLabelBp, "wrap");
+		cityValidationWidget = container.add(validationLabelBp, "wrap");
 		cityValidationWidget.registerInputWidget(city);
 
 		container.add(textLabelBp.setText("Country*"), "right, sg lg");
 		final IComboBoxBluePrint<String> countryBp = bpF.comboBox("Germany", "Spain", "Italy", "United States");
 		countryBp.setMandatory(true).setValidator(maxLengthValidator);
 		country = container.add(countryBp, inputWidgetConstraints);
-		final IValidationLabel countryValidationWidget = container.add(validationLabelBp, "wrap");
+		countryValidationWidget = container.add(validationLabelBp, "wrap");
 		countryValidationWidget.registerInputWidget(country);
 
 		container.add(textLabelBp.setText("Phone number"), "right, sg lg");
 		phoneNumber = container.add(stringFieldBp, inputWidgetConstraints);
-		final IValidationLabel phoneValidationWidget = container.add(validationLabelBp, "wrap");
+		phoneValidationWidget = container.add(validationLabelBp, "wrap");
 		phoneValidationWidget.registerInputWidget(phoneNumber);
 
 		container.add(textLabelBp.setText("Email"), "right, sg lg");
 		mail = container.add(stringFieldBp, inputWidgetConstraints);
 		mail.addValidator(moreThanOneWordValidator);
-		final IValidationLabel mailValidationWidget = container.add(validationLabelBp, "wrap");
+		mailValidationWidget = container.add(validationLabelBp, "wrap");
 		mailValidationWidget.registerInputWidget(mail);
 
 		container.registerInputWidget("Gender", gender);
@@ -180,7 +190,7 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 			mail.setValue(values.get(8));
 		}
 		else {
-			gender.setValue(null);
+			gender.setValue(" ");
 			lastname.setValue(null);
 			firstName.setValue(null);
 			street.setValue(null);
@@ -190,6 +200,16 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 			phoneNumber.setValue(null);
 			mail.setValue(null);
 		}
+
+		genderValidationWidget.resetValidation();
+		firstnameValidationWidget.resetValidation();
+		lastnameValidationWidget.resetValidation();
+		streetValidationWidget.resetValidation();
+		postalCodeValidationWidget.resetValidation();
+		cityValidationWidget.resetValidation();
+		countryValidationWidget.resetValidation();
+		phoneValidationWidget.resetValidation();
+		mailValidationWidget.resetValidation();
 	}
 
 	@Override

@@ -91,6 +91,9 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputComposite<INPUT_T
 	@Override
 	public void setEditable(final boolean editable) {
 		contentContainer.setEditable(editable);
+		if (isAutoResetValidation && validationLabel != null) {
+			validationLabel.setEnabled(editable);
+		}
 	}
 
 	@Override

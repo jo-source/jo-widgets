@@ -28,33 +28,45 @@
 
 package org.jowidgets.examples.common.workbench.demo1;
 
-import java.util.List;
-
+import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.IMenuModel;
-import org.jowidgets.api.model.table.ISimpleTableModel;
+import org.jowidgets.api.model.table.IDefaultTableColumnBuilder;
+import org.jowidgets.api.model.table.IDefaultTableColumnModel;
+import org.jowidgets.api.model.table.ITableCellBuilder;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.IInputDialog;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.model.ITableCell;
+import org.jowidgets.common.model.ITableDataModel;
+import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.common.types.TableColumnPackPolicy;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.ITableCellEditEvent;
 import org.jowidgets.common.widgets.controler.ITableCellEditorListener;
 import org.jowidgets.common.widgets.controler.ITableCellEvent;
+import org.jowidgets.common.widgets.controler.ITableCellListener;
+import org.jowidgets.common.widgets.controler.ITableCellMouseEvent;
 import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.ITableCellPopupEvent;
+import org.jowidgets.common.widgets.controler.ITableColumnListener;
+import org.jowidgets.common.widgets.controler.ITableColumnMouseEvent;
 import org.jowidgets.common.widgets.controler.ITableColumnPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.ITableColumnPopupEvent;
-import org.jowidgets.examples.common.demo.DemoInputDialog1;
+import org.jowidgets.common.widgets.controler.ITableColumnResizeEvent;
+import org.jowidgets.common.widgets.controler.ITableSelectionListener;
 import org.jowidgets.examples.common.demo.DemoMenuProvider;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractView;
 import org.jowidgets.tools.layout.MigLayoutFactory;
-import org.jowidgets.tools.model.table.SimpleTableModelBuilder;
+import org.jowidgets.tools.model.table.AbstractTableDataModel;
+import org.jowidgets.tools.model.table.DefaultTableColumnBuilder;
+import org.jowidgets.tools.model.table.DefaultTableColumnModel;
+import org.jowidgets.tools.model.table.TableCellBuilder;
 import org.jowidgets.util.ValueHolder;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 import org.jowidgets.workbench.api.IView;
@@ -88,159 +100,174 @@ public class ViewDemo6 extends AbstractView implements IView {
 		container.setLayout(MigLayoutFactory.growingInnerCellLayout());
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-		final ISimpleTableModel tableModel = new SimpleTableModelBuilder().setEditableDefault(true).build();
-		tableModel.addColumn("Gender");
-		tableModel.addColumn("Firstname");
-		tableModel.addColumn("Lastname");
-		tableModel.addColumn("Street");
-		tableModel.addColumn("Postal code");
-		tableModel.addColumn("City");
-		tableModel.addColumn("Country");
-		tableModel.addColumn("Phone number");
-		tableModel.addColumn("Email");
+		final int rowCount = 20000;
+		final int columnCount = 50;
 
-		tableModel.addRow(
-				"Male",
-				"Pete",
-				"Brown",
-				"Audubon Ave 34",
-				"76453",
-				"New York",
-				"USA",
-				"47634826",
-				"hans.maier@gtzservice.com");
+		final IDefaultTableColumnModel columnModel = new DefaultTableColumnModel(columnCount);
+		for (int columnIndex = 0; columnIndex < columnModel.getColumnCount(); columnIndex++) {
+			final IDefaultTableColumnBuilder columnBuilder = new DefaultTableColumnBuilder();
+			columnBuilder.setText("Column " + columnIndex);
+			columnBuilder.setToolTipText("Tooltip of column " + columnIndex);
+			columnBuilder.setWidth(100);
+			columnModel.setColumn(columnIndex, columnBuilder);
+		}
 
-		tableModel.addRow(
-				"Male",
-				"Steve",
-				"Miller",
-				"Convent Ave 34",
-				"53453",
-				"New York",
-				"USA",
-				"4354354",
-				"steve.miller@gjk.com");
+		final ITableDataModel dataModel = new AbstractTableDataModel() {
 
-		tableModel.addRow(
-				"Female",
-				"Laura",
-				"Brixton",
-				"West End Ave 34",
-				"53453",
-				"New York",
-				"USA",
-				"435345345",
-				"laura.brixton@gjk.com");
-
-		final ITable table = container.add(bpf.table(tableModel), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-		table.pack();
-
-		final ValueHolder<Integer> currentRow = new ValueHolder<Integer>();
-		final ValueHolder<Integer> currentColumn = new ValueHolder<Integer>();
-
-		final IPopupMenu cellPopupMenu = table.createPopupMenu();
-		final IMenuModel cellPopupMenuModel = cellPopupMenu.getModel();
-
-		table.addTableCellPopupDetectionListener(new ITableCellPopupDetectionListener() {
 			@Override
-			public void popupDetected(final ITableCellPopupEvent event) {
-				currentColumn.set(Integer.valueOf(event.getColumnIndex()));
-				currentRow.set(Integer.valueOf(event.getRowIndex()));
-				cellPopupMenu.show(event.getPosition());
+			public int getRowCount() {
+				return rowCount;
 			}
-		});
 
-		final IActionItemModel addRow = cellPopupMenuModel.addActionItem("Add person", SilkIcons.USER_ADD);
-		addRow.addActionListener(new IActionListener() {
 			@Override
-			public void actionPerformed() {
-				final List<String> row = createRow();
-				if (row != null) {
-					tableModel.addRow(currentRow.get().intValue() + 1, row);
+			public ITableCell getCell(final int rowIndex, final int columnIndex) {
+				final ITableCellBuilder cellBuilder = new TableCellBuilder();
+				cellBuilder.setText("Cell (" + rowIndex + " / " + columnIndex + ")");
+				if (rowIndex % 2 == 0) {
+					cellBuilder.setBackgroundColor(Colors.DEFAULT_TABLE_EVEN_BACKGROUND_COLOR);
 				}
+				return cellBuilder.build();
+			}
+		};
+
+		final ITable table = container.add(bpf.table(columnModel, dataModel), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+
+		table.addTableSelectionListener(new ITableSelectionListener() {
+			@Override
+			public void selectionChanged() {
+				//CHECKSTYLE:OFF
+				System.out.println("New selection: " + table.getSelection());
+				//CHECKSTYLE:ON
 			}
 		});
 
-		final IActionItemModel editRow = cellPopupMenuModel.addActionItem("Edit person", SilkIcons.USER_EDIT);
-		editRow.addActionListener(new IActionListener() {
+		table.addTableCellListener(new ITableCellListener() {
+
 			@Override
-			public void actionPerformed() {
-				final int rowIndex = currentRow.get().intValue();
-				final List<String> row = editRow(tableModel.getRowTexts(rowIndex));
-				if (row != null) {
-					tableModel.setRowTexts(rowIndex, row);
-				}
+			public void mouseReleased(final ITableCellMouseEvent event) {
+				//CHECKSTYLE:OFF
+				System.out.println("mouseReleased: " + event);
+				//CHECKSTYLE:ON
+			}
+
+			@Override
+			public void mousePressed(final ITableCellMouseEvent event) {
+				//CHECKSTYLE:OFF
+				System.out.println("mousePressed: " + event);
+				//CHECKSTYLE:ON
+			}
+
+			@Override
+			public void mouseDoubleClicked(final ITableCellMouseEvent event) {
+				//CHECKSTYLE:OFF
+				System.out.println("mouseDoubleClicked: " + event);
+				//CHECKSTYLE:ON
 			}
 		});
 
-		final IActionItemModel deleteRowAction = cellPopupMenuModel.addActionItem("Delete person", SilkIcons.USER_DELETE);
-		deleteRowAction.addActionListener(new IActionListener() {
+		table.addTableColumnListener(new ITableColumnListener() {
+
 			@Override
-			public void actionPerformed() {
-				tableModel.removeRow(currentRow.get().intValue());
+			public void mouseClicked(final ITableColumnMouseEvent event) {
+				//CHECKSTYLE:OFF
+				System.out.println("mouseClicked: " + event);
+				//CHECKSTYLE:ON
 			}
-		});
 
-		final IActionItemModel deleteSelectedRows = cellPopupMenuModel.addActionItem(
-				"Delete selected persons",
-				SilkIcons.USER_DELETE);
-		deleteSelectedRows.addActionListener(new IActionListener() {
 			@Override
-			public void actionPerformed() {
-				tableModel.removeRows(table.getSelection());
+			public void columnResized(final ITableColumnResizeEvent event) {
+				//CHECKSTYLE:OFF
+				System.out.println("columnResized: " + event);
+				//CHECKSTYLE:ON
 			}
-		});
 
-		final IPopupMenu columnPopupMenu = table.createPopupMenu();
-		final IMenuModel columnPopupMenuModel = columnPopupMenu.getModel();
-
-		table.addTableColumnPopupDetectionListener(new ITableColumnPopupDetectionListener() {
 			@Override
-			public void popupDetected(final ITableColumnPopupEvent event) {
-				currentColumn.set(Integer.valueOf(event.getColumnIndex()));
-				columnPopupMenu.show(event.getPosition());
-			}
-		});
-
-		final IActionItemModel deleteColumnAction = columnPopupMenuModel.addActionItem("Delete column");
-		deleteColumnAction.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				tableModel.removeColumn(currentColumn.get().intValue());
+			public void columnPermutationChanged() {
+				//CHECKSTYLE:OFF
+				System.out.println("columnPermutationChanged: " + table.getColumnPermutation());
+				//CHECKSTYLE:ON
 			}
 		});
 
 		table.addTableCellEditorListener(new ITableCellEditorListener() {
 
 			@Override
-			public void onEdit(final IVetoable veto, final ITableCellEditEvent event) {}
-
-			@Override
-			public void editFinished(final ITableCellEditEvent event) {
-				tableModel.setCell(event.getRowIndex(), event.getColumnIndex(), event.getCurrentText());
+			public void onEdit(final IVetoable veto, final ITableCellEditEvent event) {
+				//CHECKSTYLE:OFF
+				System.out.println("onEdit: " + event);
+				//CHECKSTYLE:ON
 			}
 
 			@Override
-			public void editCanceled(final ITableCellEvent event) {}
+			public void editFinished(final ITableCellEditEvent event) {
+				//CHECKSTYLE:OFF
+				System.out.println("editFinished: " + event);
+				//CHECKSTYLE:ON
+			}
+
+			@Override
+			public void editCanceled(final ITableCellEvent event) {
+				//CHECKSTYLE:OFF
+				System.out.println("editCanceled: " + event);
+				//CHECKSTYLE:ON
+			}
+		});
+
+		final ValueHolder<Integer> selectedColumn = new ValueHolder<Integer>();
+		final ValueHolder<Integer> selectedRow = new ValueHolder<Integer>();
+
+		final IPopupMenu popupMenu = table.createPopupMenu();
+		final IMenuModel popupMenuModel = popupMenu.getModel();
+		final IActionItemModel item1 = popupMenuModel.addActionItem();
+		final IActionItemModel reloadAction = popupMenuModel.addActionItem("Reload", SilkIcons.ARROW_REFRESH_SMALL);
+		final IActionItemModel packTableAction = popupMenuModel.addActionItem("Fit all columns", SilkIcons.ARROW_INOUT);
+		final IActionItemModel packColumnAction = popupMenuModel.addActionItem("Fit column", SilkIcons.ARROW_INOUT);
+
+		reloadAction.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				table.setCursor(Cursor.WAIT);
+				table.initialize();
+				table.setCursor(Cursor.DEFAULT);
+			}
+		});
+
+		packTableAction.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				table.setCursor(Cursor.WAIT);
+				table.pack(TableColumnPackPolicy.HEADER_AND_CONTENT);
+				table.setCursor(Cursor.DEFAULT);
+			}
+		});
+
+		packColumnAction.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				table.setCursor(Cursor.WAIT);
+				table.pack(selectedColumn.get().intValue(), TableColumnPackPolicy.HEADER_AND_CONTENT);
+				table.setCursor(Cursor.DEFAULT);
+			}
+		});
+
+		table.addTableCellPopupDetectionListener(new ITableCellPopupDetectionListener() {
+			@Override
+			public void popupDetected(final ITableCellPopupEvent event) {
+				selectedColumn.set(Integer.valueOf(event.getColumnIndex()));
+				selectedRow.set(Integer.valueOf(event.getRowIndex()));
+				item1.setText("Item1 (" + event.getRowIndex() + " / " + event.getColumnIndex() + ")");
+				popupMenu.show(event.getPosition());
+			}
+		});
+
+		table.addTableColumnPopupDetectionListener(new ITableColumnPopupDetectionListener() {
+			@Override
+			public void popupDetected(final ITableColumnPopupEvent event) {
+				selectedColumn.set(Integer.valueOf(event.getColumnIndex()));
+				item1.setText("Item1 (" + event.getColumnIndex() + ")");
+				popupMenu.show(event.getPosition());
+			}
 		});
 	}
 
-	private List<String> createRow() {
-		final IInputDialog<List<String>> inputDialog = new DemoInputDialog1("Add person", SilkIcons.USER_ADD).getInputDialog();
-		inputDialog.setVisible(true);
-		if (inputDialog.isOkPressed()) {
-			return inputDialog.getValue();
-		}
-		return null;
-	}
-
-	private List<String> editRow(final List<String> row) {
-		final IInputDialog<List<String>> inputDialog = new DemoInputDialog1("Edit person", SilkIcons.USER_EDIT).getInputDialog();
-		inputDialog.setValue(row);
-		inputDialog.setVisible(true);
-		if (inputDialog.isOkPressed()) {
-			return inputDialog.getValue();
-		}
-		return null;
-	}
 }

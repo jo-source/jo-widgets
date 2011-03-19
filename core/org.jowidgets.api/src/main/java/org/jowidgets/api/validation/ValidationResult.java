@@ -120,7 +120,8 @@ public final class ValidationResult {
 	}
 
 	public boolean isOk() {
-		return ValidationMessageType.OK.equals(getWorstFirstMessage().getType());
+		final ValidationMessageType firstWorstType = getWorstFirstMessage().getType();
+		return ValidationMessageType.OK.equals(firstWorstType) || ValidationMessageType.WARNING.equals(firstWorstType);
 	}
 
 	public ValidationResult copyAndSetContext(final String context) {

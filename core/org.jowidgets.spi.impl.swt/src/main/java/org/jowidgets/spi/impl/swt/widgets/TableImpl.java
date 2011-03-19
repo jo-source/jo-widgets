@@ -514,7 +514,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		public void handleEvent(final Event event) {
 			final TableItem item = (TableItem) event.item;
 			final int rowIndex = table.indexOf(item);
-			for (int columnIndex = 0; columnIndex < getUiReference().getColumnCount(); columnIndex++) {
+			for (int columnIndex = 0; columnIndex < table.getColumnCount(); columnIndex++) {
 
 				final ITableCell cell = dataModel.getCell(rowIndex, columnIndex);
 
