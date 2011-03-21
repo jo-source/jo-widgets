@@ -628,7 +628,6 @@ public class TableImpl extends SwingControl implements ITableSpi {
 				else {
 					popupDetectionObservable.firePopupDetected(position);
 				}
-
 			}
 		}
 	}
