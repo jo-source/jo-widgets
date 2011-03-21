@@ -281,35 +281,26 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 	@Override
 	public void pack(final TableColumnPackPolicy policy) {
-		final Rectangle viewRect = getUiReference().getViewport().getViewRect();
-		final int firstVisibleRowIndex = table.rowAtPoint(new Point(0, viewRect.y));
-		int lastVisibleRowIndex = table.rowAtPoint(new Point(0, viewRect.y + viewRect.height - 1));
-		if (lastVisibleRowIndex == -1) {
-			lastVisibleRowIndex = table.getRowCount() - 1;
-		}
 		for (int columnIndex = 0; columnIndex < table.getColumnCount(); columnIndex++) {
-			pack(columnIndex, firstVisibleRowIndex, lastVisibleRowIndex, policy);
+			pack(columnIndex, getRowRange(policy), policy);
 		}
 	}
 
 	@Override
 	public void pack(final int columnIndex, final TableColumnPackPolicy policy) {
-		final Rectangle viewRect = getUiReference().getViewport().getViewRect();
-		final int firstVisibleRowIndex = table.rowAtPoint(new Point(0, viewRect.y));
-		int lastVisibleRowIndex = table.rowAtPoint(new Point(0, viewRect.y + viewRect.height - 1));
-		if (lastVisibleRowIndex == -1) {
-			lastVisibleRowIndex = table.getRowCount() - 1;
-		}
-		pack(columnIndex, firstVisibleRowIndex, lastVisibleRowIndex, policy);
+		pack(columnIndex, getRowRange(policy), policy);
 	}
 
-	private void pack(final int columnIndex, final int firstRow, final int lastRow, final TableColumnPackPolicy policy) {
+	private void pack(final int columnIndex, final RowRange rowRange, final TableColumnPackPolicy policy) {
+
 		final TableColumn column = table.getColumnModel().getColumn(table.convertColumnIndexToView(columnIndex));
+
 		final boolean header = TableColumnPackPolicy.HEADER == policy || TableColumnPackPolicy.HEADER_AND_CONTENT == policy;
 		final boolean data = TableColumnPackPolicy.CONTENT == policy || TableColumnPackPolicy.HEADER_AND_CONTENT == policy;
 		int maxWidth = 0;
+
 		if (data) {
-			for (int rowIndex = firstRow; rowIndex <= lastRow; rowIndex++) {
+			for (int rowIndex = rowRange.getStartIndex(); rowIndex <= rowRange.getEndIndex(); rowIndex++) {
 				final Object value = table.getValueAt(rowIndex, columnIndex);
 				final TableCellRenderer renderer = table.getCellRenderer(rowIndex, columnIndex);
 				final Component comp = renderer.getTableCellRendererComponent(table, value, false, false, rowIndex, columnIndex);
@@ -325,6 +316,16 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		}
 
 		column.setPreferredWidth(maxWidth + 5);
+	}
+
+	private RowRange getRowRange(final TableColumnPackPolicy policy) {
+		final Rectangle viewRect = getUiReference().getViewport().getViewRect();
+		final int firstVisibleRowIndex = table.rowAtPoint(new Point(0, viewRect.y));
+		int lastVisibleRowIndex = table.rowAtPoint(new Point(0, viewRect.y + viewRect.height - 1));
+		if (lastVisibleRowIndex == -1) {
+			lastVisibleRowIndex = table.getRowCount() - 1;
+		}
+		return new RowRange(firstVisibleRowIndex, lastVisibleRowIndex);
 	}
 
 	@Override
@@ -1083,6 +1084,27 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		public int getColumnIndex() {
 			return columnIndex;
 		}
+	}
+
+	final class RowRange {
+
+		private final int startIndex;
+		private final int endIndex;
+
+		public RowRange(final int startIndex, final int endIndex) {
+			super();
+			this.startIndex = startIndex;
+			this.endIndex = endIndex;
+		}
+
+		public int getStartIndex() {
+			return startIndex;
+		}
+
+		public int getEndIndex() {
+			return endIndex;
+		}
+
 	}
 
 }
