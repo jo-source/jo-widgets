@@ -69,6 +69,7 @@ import org.jowidgets.tools.command.EnabledChecker;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.model.table.DefaultTableColumnBuilder;
+import org.jowidgets.util.Assert;
 
 public class TestToolView {
 
@@ -78,6 +79,7 @@ public class TestToolView {
 	private final ITestTool testTool;
 	private final TestToolViewUtilities viewUtilities;
 	private IFrame frame;
+	private ITable table;
 
 	public TestToolView(final ITestTool testTool) {
 		this.testTool = testTool;
@@ -178,11 +180,10 @@ public class TestToolView {
 		};
 
 		final ITableBluePrint tableBluePrint = BPF.table(columnModel, tableDataModel);
-		final ITable table = frame.add(tableBluePrint, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+		table = frame.add(tableBluePrint, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 		table.pack(TableColumnPackPolicy.HEADER_AND_CONTENT);
 	}
 
-	//CHECKSTYLE:OFF
 	private void createMenuBar(final IFrame frame) {
 		final IMenuBarModel menuBarModel = frame.getMenuBarModel();
 		final IMenuModel fileModel = new MenuModel("File");
@@ -197,13 +198,10 @@ public class TestToolView {
 				if (!(tableDataModel.getRowCount() <= 0)) {
 					for (int rowIndex = 0; rowIndex < tableDataModel.getRowCount(); rowIndex++) {
 						final TestDataObject obj = new TestDataObject();
-
-						for (int columnIndex = 0; columnIndex < tableDataModel.getColumnCount(); columnIndex++) {
-							obj.setType(tableDataModel.getCell(rowIndex, columnIndex).getText());
-							final String action = tableDataModel.getCell(rowIndex, columnIndex).getText();
-							obj.setAction(UserAction.valueOf(action));
-							obj.setId(tableDataModel.getCell(rowIndex, columnIndex).getText());
-						}
+						obj.setType(tableDataModel.getCell(rowIndex, 1).getText());
+						final String action = tableDataModel.getCell(rowIndex, 2).getText();
+						obj.setAction(UserAction.valueOf(action));
+						obj.setId(tableDataModel.getCell(rowIndex, 3).getText());
 						list.add(obj);
 					}
 					final IInputDialog<String> dialog = viewUtilities.createInputDialog(frame, "Enter File Name", "file name");
@@ -212,6 +210,7 @@ public class TestToolView {
 						testTool.save(list, dialog.getValue());
 					}
 					dialog.dispose();
+					Toolkit.getMessagePane().showInfo("Test successfully saved!");
 				}
 				else {
 					Toolkit.getMessagePane().showWarning("There is nothing to save.");
@@ -224,7 +223,6 @@ public class TestToolView {
 			@Override
 			public void actionPerformed() {
 				// TODO LG load TestDataObjects
-				System.out.println("Testdata loaded.");
 			}
 		});
 
@@ -295,12 +293,13 @@ public class TestToolView {
 
 			@Override
 			public void listChanged(final TestDataObject item) {
+				Assert.paramNotNull(item, "item");
 				tableDataModel.addRow(
 						Integer.toString(tableDataModel.getColumnCount()),
 						item.getType(),
 						item.getAction().name(),
 						item.getId());
-				System.out.println("listChanged!");
+				table.pack(TableColumnPackPolicy.HEADER_AND_CONTENT);
 			}
 		});
 	}
