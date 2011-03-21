@@ -657,8 +657,42 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 		@Override
 		public void columnsAdded(final int[] columnIndices) {
-			// TODO MG better implementation of columnsAdded observe
-			swingTableModel.fireTableStructureChanged();
+
+			if (columnIndices.length == 0) {
+				return;
+			}
+
+			//first sort the columns by model index
+			final TableColumn[] columns = getColumnsSortedByModelIndex();
+
+			//fix the model indices and add the new columns to the proper position
+			Arrays.sort(columnIndices);
+
+			int addedColumns = 0;
+			int nextIndexToAdd = columnIndices[0];
+			for (int columnIndex = 0; columnIndex <= columns.length; columnIndex++) {
+				if (columnIndex == nextIndexToAdd) {
+					final TableColumn column = new TableColumn();
+					column.setHeaderValue(columnModel.getColumn(columnIndex));
+					column.setCellRenderer(cellRenderer);
+					column.setCellEditor(cellEditor);
+					column.setResizable(columnsResizeable);
+					column.addPropertyChangeListener(tableColumnResizeListener);
+					column.setModelIndex(columnIndex);
+					addedColumns++;
+					if (addedColumns < columnIndices.length) {
+						nextIndexToAdd = columnIndices[addedColumns];
+					}
+					table.addColumn(column);
+					table.moveColumn(table.getColumnCount() - 1, columnIndex);
+				}
+				//fix the index in the model, for each previously added row, the
+				//index must be increased by one
+				if (columnIndex < columns.length) {
+					final TableColumn swingColumn = columns[columnIndex];
+					swingColumn.setModelIndex(swingColumn.getModelIndex() + addedColumns);
+				}
+			}
 			table.getTableHeader().repaint();
 		}
 
@@ -670,11 +704,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			}
 
 			//first sort the columns by model index
-			final TableColumn[] columns = new TableColumn[table.getColumnCount()];
-			for (int columnIndex = 0; columnIndex < table.getColumnCount(); columnIndex++) {
-				final int modelIndex = table.convertColumnIndexToModel(columnIndex);
-				columns[modelIndex] = table.getColumnModel().getColumn(columnIndex);
-			}
+			final TableColumn[] columns = getColumnsSortedByModelIndex();
 
 			//fix the model indices and determine the columns to remove
 			Arrays.sort(columnIndices);
@@ -719,6 +749,15 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			table.getTableHeader().repaint();
 		}
 
+		private TableColumn[] getColumnsSortedByModelIndex() {
+			final TableColumn[] columns = new TableColumn[table.getColumnCount()];
+			for (int columnIndex = 0; columnIndex < table.getColumnCount(); columnIndex++) {
+				final int modelIndex = table.convertColumnIndexToModel(columnIndex);
+				columns[modelIndex] = table.getColumnModel().getColumn(columnIndex);
+			}
+			return columns;
+		}
+
 	}
 
 	class SwingTableModel extends AbstractTableModel {
@@ -746,7 +785,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 		@Override
 		public int getColumnCount() {
-			return columnModel.getColumnCount();
+			return table.getColumnModel().getColumnCount();
 		}
 
 		@Override
