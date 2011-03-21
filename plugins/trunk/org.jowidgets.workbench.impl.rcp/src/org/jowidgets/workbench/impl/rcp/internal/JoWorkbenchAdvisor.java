@@ -70,6 +70,9 @@ public final class JoWorkbenchAdvisor extends WorkbenchAdvisor {
 		if (folderRatio != null) {
 			workbenchWindowAdvisor.setFolderRatio(folderRatio);
 		}
+		else if (workbench.getInitialSplitWeight() > 0) {
+			workbenchWindowAdvisor.setFolderRatio(workbench.getInitialSplitWeight());
+		}
 		return workbenchWindowAdvisor;
 	}
 
