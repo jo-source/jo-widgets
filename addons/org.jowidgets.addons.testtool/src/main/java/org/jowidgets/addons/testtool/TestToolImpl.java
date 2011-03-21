@@ -32,6 +32,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.jowidgets.addons.testtool.internal.ListModel;
+import org.jowidgets.addons.testtool.internal.TestDataObject;
+import org.jowidgets.addons.testtool.internal.TestDataXmlPersister;
 import org.jowidgets.addons.testtool.internal.TestToolUtilities;
 import org.jowidgets.addons.testtool.internal.UserAction;
 import org.jowidgets.api.controler.ITabItemListener;
@@ -67,50 +69,49 @@ import org.jowidgets.common.widgets.controler.ITableColumnResizeEvent;
 import org.jowidgets.common.widgets.controler.IWindowListener;
 import org.jowidgets.test.api.widgets.IButtonUi;
 
+//CHECKSTYLE:OFF
 public final class TestToolImpl implements ITestTool {
 
 	private final TestToolUtilities testToolUtilities;
 	private final HashMap<String, IWidgetCommon> widgetRegistry;
 	private final ITestDataPersister persister;
 	private final ListModel<TestDataObject> listModel;
+	private boolean record;
+	private boolean replay;
 
 	public TestToolImpl() {
 		this.testToolUtilities = new TestToolUtilities();
 		this.widgetRegistry = new HashMap<String, IWidgetCommon>();
 		this.persister = new TestDataXmlPersister();
 		this.listModel = new ListModel<TestDataObject>();
+		record = false;
+		replay = false;
 	}
 
-	// TODO LG Remove Checkstyle off/on
-	// TODO LG Add recorded user actions to table in TestToolGui
 	@Override
 	public void record(final IWidgetCommon widget, final UserAction action, final String id) {
-		final TestDataObject obj = new TestDataObject();
-		obj.setId(id);
-		obj.setAction(action);
-		obj.setType(widget.getUiReference().getClass().getSimpleName());
-		listModel.addItem(obj);
-		// CHECKSTYLE:OFF
-		System.out.println("Recorded: "
-			+ widget.getClass().getSimpleName()
-			+ "\nwith ID : "
-			+ id
-			+ "\nAction was: "
-			+ action.toString());
-		//persister.save(testObjects, "test");
-		// CHECKSTYLE:ON
+		if (record) {
+			final TestDataObject obj = new TestDataObject();
+			obj.setId(id);
+			obj.setAction(action);
+			obj.setType(widget.getUiReference().getClass().getSimpleName());
+			listModel.addItem(obj);
+		}
 	}
 
-	// TODO LG implement
 	@Override
-	public void replay() {}
+	public void replay() {
+		if (replay) {
+			System.out.println("replay test...");
+			// TODO LG implement
+		}
+	}
 
 	@Override
 	public void register(final IWidgetCommon widget) {
 		addListener(widget);
 	}
 
-	//CHECKSTYLE:OFF
 	private void addListener(final IWidgetCommon widget) {
 		// TODO LG use IFrameUi
 		if (widget instanceof IFrame) {
@@ -336,5 +337,23 @@ public final class TestToolImpl implements ITestTool {
 	@Override
 	public ListModel<TestDataObject> getListModel() {
 		return listModel;
+	}
+
+	@Override
+	public void activateRecordMode() {
+		this.record = true;
+		this.replay = false;
+	}
+
+	@Override
+	public void activateReplayMode() {
+		this.record = false;
+		this.replay = true;
+	}
+
+	@Override
+	public void deactivateReplayAndRecord() {
+		this.record = false;
+		this.replay = false;
 	}
 }
