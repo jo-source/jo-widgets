@@ -576,8 +576,9 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 		private void fireMenuDetect(final MouseEvent e) {
 			if (e.isPopupTrigger()) {
-				final Point point = new Point(e.getX(), e.getY());
-				final Position position = PositionConvert.convert(point);
+				final Point popupPosition = new Point(e.getLocationOnScreen());
+				SwingUtilities.convertPointFromScreen(popupPosition, getUiReference());
+				final Position position = PositionConvert.convert(popupPosition);
 
 				int columnIndex = table.getTableHeader().getColumnModel().getColumnIndexAtX(e.getX());
 				columnIndex = table.convertColumnIndexToModel(columnIndex);
