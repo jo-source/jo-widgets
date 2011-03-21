@@ -58,6 +58,8 @@ public interface ITableCommon extends
 
 	ArrayList<Integer> getColumnPermutation();
 
+	void setColumnPermutation(List<Integer> permutation);
+
 	ArrayList<Integer> getSelection();
 
 	void setSelection(List<Integer> selection);
