@@ -26,9 +26,8 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.testtool;
+package org.jowidgets.addons.testtool.internal;
 
-import org.jowidgets.addons.testtool.internal.UserAction;
 
 public class TestDataObject {
 

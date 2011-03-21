@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.testtool;
+package org.jowidgets.addons.testtool.internal;
 
 import java.io.File;
 import java.util.LinkedList;
@@ -36,6 +36,7 @@ import javax.xml.bind.JAXB;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.jowidgets.addons.testtool.ITestDataPersister;
 import org.jowidgets.util.Assert;
 
 // TODO LG maybe its better to use XStream instead of JAXB. Remove workarounds for JAXB.

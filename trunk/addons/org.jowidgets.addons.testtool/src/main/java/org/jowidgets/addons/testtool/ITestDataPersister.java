@@ -30,6 +30,8 @@ package org.jowidgets.addons.testtool;
 
 import java.util.List;
 
+import org.jowidgets.addons.testtool.internal.TestDataObject;
+
 public interface ITestDataPersister {
 
 	void save(List<TestDataObject> list, String fileName);

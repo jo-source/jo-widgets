@@ -26,30 +26,14 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.testtool;
+package org.jowidgets.addons.testtool.internal;
 
-import java.util.List;
-
-import org.jowidgets.addons.testtool.internal.ListModel;
-import org.jowidgets.addons.testtool.internal.TestDataObject;
-import org.jowidgets.addons.testtool.internal.UserAction;
 import org.jowidgets.common.widgets.IWidgetCommon;
 
-public interface ITestTool {
+public class WidgetFinder {
 
-	void register(IWidgetCommon widget);
-
-	void record(IWidgetCommon widget, UserAction action, String id);
-
-	void replay();
-
-	void save(final List<TestDataObject> list, final String fileName);
-
-	ListModel<?> getListModel();
-
-	void activateRecordMode();
-
-	void activateReplayMode();
-
-	void deactivateReplayAndRecord();
+	public IWidgetCommon findWidgetWithID(final String id) {
+		// TODO LG implement
+		return null;
+	}
 }

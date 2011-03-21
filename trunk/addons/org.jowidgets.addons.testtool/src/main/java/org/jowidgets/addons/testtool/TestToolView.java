@@ -35,6 +35,7 @@ import java.util.Map;
 
 import org.jowidgets.addons.testtool.internal.IListModelListener;
 import org.jowidgets.addons.testtool.internal.ListModel;
+import org.jowidgets.addons.testtool.internal.TestDataObject;
 import org.jowidgets.addons.testtool.internal.TestToolViewUtilities;
 import org.jowidgets.addons.testtool.internal.UserAction;
 import org.jowidgets.api.command.EnabledState;
@@ -101,7 +102,6 @@ public class TestToolView {
 	}
 
 	private void createTable(final IFrame frame) {
-
 		tableDataModel = Toolkit.getModelFactoryProvider().getTableModelFactory().simpleTableModel();
 		final DefaultTableColumnBuilder colBuilder = new DefaultTableColumnBuilder();
 		tableDataModel.addColumn(colBuilder.setText("step").build());
@@ -247,6 +247,7 @@ public class TestToolView {
 				stopEnabledChecker.setEnabledState(EnabledState.ENABLED);
 				recordEnabledChecker.setEnabledState(EnabledState.DISABLED);
 				playEnabledChecker.setEnabledState(EnabledState.DISABLED);
+				testTool.activateReplayMode();
 				// TODO LG replay table content
 			}
 		};
@@ -263,7 +264,7 @@ public class TestToolView {
 				playEnabledChecker.setEnabledState(EnabledState.ENABLED);
 				recordEnabledChecker.setEnabledState(EnabledState.ENABLED);
 				stopEnabledChecker.setEnabledState(EnabledState.DISABLED);
-				// TODO LG stop record/play mode in TestTool
+				testTool.deactivateReplayAndRecord();
 			}
 		};
 		stopBuilder.setCommand(stopCommand, stopEnabledChecker);
@@ -279,7 +280,7 @@ public class TestToolView {
 				playEnabledChecker.setEnabledState(EnabledState.DISABLED);
 				stopEnabledChecker.setEnabledState(EnabledState.ENABLED);
 				recordEnabledChecker.setEnabledState(EnabledState.DISABLED);
-				// TODO LG activate record mode in TestTool
+				testTool.activateRecordMode();
 			}
 		};
 		recordBuilder.setCommand(recordCommand, recordEnabledChecker);
@@ -295,11 +296,12 @@ public class TestToolView {
 			public void listChanged(final TestDataObject item) {
 				Assert.paramNotNull(item, "item");
 				tableDataModel.addRow(
-						Integer.toString(tableDataModel.getColumnCount()),
+						Integer.toString(tableDataModel.getRowCount()),
 						item.getType(),
 						item.getAction().name(),
 						item.getId());
 				table.pack(TableColumnPackPolicy.HEADER_AND_CONTENT);
+				table.redraw();
 			}
 		});
 	}
