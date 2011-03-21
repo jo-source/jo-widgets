@@ -28,12 +28,48 @@
 
 package org.jowidgets.addons.testtool.internal;
 
+import java.util.Collection;
+import java.util.Iterator;
+
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.common.widgets.IWidgetCommon;
 
+// TODO LG use Property to identify widget
+// TODO LG remove supressWarnings
 public class WidgetFinder {
 
-	public IWidgetCommon findWidgetWithID(final String id) {
-		// TODO LG implement
+	private final TestToolUtilities utilities;
+
+	public WidgetFinder() {
+		this.utilities = new TestToolUtilities();
+	}
+
+	@SuppressWarnings("unused")
+	public IWidgetCommon findWidgetByID(final Collection<IWidgetCommon> widgets, final String id) {
+		final String[] elements = id.split(TestToolUtilities.ELEMENT_SEPARATOR);
+		final String e = elements[elements.length - 1];
+		String clazz = "";
+		String property = "";
+		if (e.contains(TestToolUtilities.CHILD_INDEX_SEPARATOR)) {
+			clazz = e.substring(
+					e.indexOf(TestToolUtilities.CHILD_INDEX_SEPARATOR) + 1,
+					e.indexOf(TestToolUtilities.PROPERTY_SEPARATOR));
+		}
+		else {
+			clazz = e.substring(0, e.indexOf(TestToolUtilities.PROPERTY_SEPARATOR));
+		}
+		property = e.substring(e.indexOf(TestToolUtilities.PROPERTY_SEPARATOR) + 1, e.length());
+		final Iterator<IWidgetCommon> iterator = widgets.iterator();
+		while (iterator.hasNext()) {
+			final IWidgetCommon item = iterator.next();
+			if (clazz.equals(item.getClass().getSimpleName())) {
+				if (utilities.createWidgetID((IWidget) item).equals(id)) {
+					return item;
+				}
+			}
+		}
+		Toolkit.getMessagePane().showWarning("No Widget found! Please select the missing Widget.");
 		return null;
 	}
 }

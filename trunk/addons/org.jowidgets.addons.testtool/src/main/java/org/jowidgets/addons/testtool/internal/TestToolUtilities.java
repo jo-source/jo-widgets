@@ -38,10 +38,10 @@ import org.jowidgets.util.Assert;
 // TODO LG generate unique id
 public final class TestToolUtilities {
 
-	private static final String ELEMENT_SEPARATOR = "/";
-	private static final String PROPERTY_SEPARATOR = ":";
-	private static final String CHILD_INDEX_SEPARATOR = "_";
-	private static final String DEFAULT_IDENTIFIER = "test";
+	public static final String ELEMENT_SEPARATOR = "/";
+	public static final String PROPERTY_SEPARATOR = ":";
+	public static final String CHILD_INDEX_SEPARATOR = "_";
+	public static final String DEFAULT_IDENTIFIER = "test";
 
 	public TestToolUtilities() {}
 

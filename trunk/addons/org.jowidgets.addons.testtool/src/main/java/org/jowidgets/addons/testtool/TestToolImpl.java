@@ -28,7 +28,7 @@
 
 package org.jowidgets.addons.testtool;
 
-import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.addons.testtool.internal.ListModel;
@@ -36,6 +36,7 @@ import org.jowidgets.addons.testtool.internal.TestDataObject;
 import org.jowidgets.addons.testtool.internal.TestDataXmlPersister;
 import org.jowidgets.addons.testtool.internal.TestToolUtilities;
 import org.jowidgets.addons.testtool.internal.UserAction;
+import org.jowidgets.addons.testtool.internal.WidgetFinder;
 import org.jowidgets.api.controler.ITabItemListener;
 import org.jowidgets.api.controler.ITreeListener;
 import org.jowidgets.api.controler.ITreePopupDetectionListener;
@@ -51,7 +52,6 @@ import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.ITree;
 import org.jowidgets.api.widgets.ITreeNode;
-import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IWidgetCommon;
@@ -73,19 +73,21 @@ import org.jowidgets.test.api.widgets.IButtonUi;
 public final class TestToolImpl implements ITestTool {
 
 	private final TestToolUtilities testToolUtilities;
-	private final HashMap<String, IWidgetCommon> widgetRegistry;
+	private final List<IWidgetCommon> widgetRegistry;
 	private final ITestDataPersister persister;
 	private final ListModel<TestDataObject> listModel;
+	private final WidgetFinder finder;
 	private boolean record;
 	private boolean replay;
 
 	public TestToolImpl() {
 		this.testToolUtilities = new TestToolUtilities();
-		this.widgetRegistry = new HashMap<String, IWidgetCommon>();
+		this.widgetRegistry = new LinkedList<IWidgetCommon>();
 		this.persister = new TestDataXmlPersister();
 		this.listModel = new ListModel<TestDataObject>();
-		record = false;
-		replay = false;
+		this.finder = new WidgetFinder();
+		this.record = false;
+		this.replay = false;
 	}
 
 	@Override
@@ -110,6 +112,7 @@ public final class TestToolImpl implements ITestTool {
 	@Override
 	public void register(final IWidgetCommon widget) {
 		addListener(widget);
+		widgetRegistry.add(widget);
 	}
 
 	private void addListener(final IWidgetCommon widget) {
@@ -120,12 +123,12 @@ public final class TestToolImpl implements ITestTool {
 
 				@Override
 				public void childRemoved(final int index) {
-					System.out.println("TT: child removed from menubar at index: " + index);
+					//System.out.println("TT: child removed from menubar at index: " + index);
 				}
 
 				@Override
 				public void childAdded(final int index) {
-					System.out.println("TT: child added to menubar at index: " + index);
+					//System.out.println("TT: child added to menubar at index: " + index);
 				}
 			});
 			// TODO LG dock TestToolGui to frame. But first somthing like getPosition.toDisplay must be added to Jo Widgets;)
@@ -133,32 +136,32 @@ public final class TestToolImpl implements ITestTool {
 
 				@Override
 				public void windowIconified() {
-					System.out.println("TT: window iconified!");
+					//System.out.println("TT: window iconified!");
 				}
 
 				@Override
 				public void windowDeiconified() {
-					System.out.println("TT: window deiconified!");
+					//System.out.println("TT: window deiconified!");
 				}
 
 				@Override
 				public void windowDeactivated() {
-					System.out.println("TT: window deactivated!");
+					//System.out.println("TT: window deactivated!");
 				}
 
 				@Override
 				public void windowClosing(final IVetoable vetoable) {
-					System.out.println("TT: window closing vetoable: " + vetoable.toString());
+					//System.out.println("TT: window closing vetoable: " + vetoable.toString());
 				}
 
 				@Override
 				public void windowClosed() {
-					System.out.println("TT: Window closed!");
+					//System.out.println("TT: Window closed!");
 				}
 
 				@Override
 				public void windowActivated() {
-					System.out.println("TT: Window activated!");
+					//System.out.println("TT: Window activated!");
 				}
 			});
 		}
@@ -168,7 +171,14 @@ public final class TestToolImpl implements ITestTool {
 
 				@Override
 				public void actionPerformed() {
-					record(widget, UserAction.CLICK, testToolUtilities.createWidgetID(button, "buttonText"));
+					record(widget, UserAction.CLICK, testToolUtilities.createWidgetID(button));
+					System.out.println("searched Widget: " + widget);
+					final IWidgetCommon foundWidget = finder.findWidgetByID(
+							widgetRegistry,
+							testToolUtilities.createWidgetID(button));
+					if (foundWidget != null) {
+						System.out.println("Found widget: " + foundWidget);
+					}
 				}
 			});
 		}
@@ -180,12 +190,12 @@ public final class TestToolImpl implements ITestTool {
 
 				@Override
 				public void childRemoved(final int index) {
-					System.out.println("TT: child removed from toolbar at index: " + index);
+					//System.out.println("TT: child removed from toolbar at index: " + index);
 				}
 
 				@Override
 				public void childAdded(final int index) {
-					System.out.println("TT: child added to toolbar at index: " + index);
+					//System.out.println("TT: child added to toolbar at index: " + index);
 				}
 			});
 		}
@@ -229,13 +239,13 @@ public final class TestToolImpl implements ITestTool {
 
 					@Override
 					public void selectionChanged(final boolean selected) {
-						System.out.println("TT: tabItem selected");
+						//System.out.println("TT: tabItem selected");
 						//record(item, UserAction.SELECT, testToolUtilities.createWidgetID(item));
 					}
 
 					@Override
 					public void onClose(final IVetoable vetoable) {
-						System.out.println("TT: tabItem closed");
+						//System.out.println("TT: tabItem closed");
 					}
 				});
 			}
@@ -243,7 +253,7 @@ public final class TestToolImpl implements ITestTool {
 
 				@Override
 				public void popupDetected(final Position position) {
-					System.out.println("TT: popup detected at: " + position);
+					//System.out.println("TT: popup detected at: " + position);
 
 				}
 			});
@@ -254,12 +264,12 @@ public final class TestToolImpl implements ITestTool {
 
 				@Override
 				public void menuDeactivated() {
-					System.out.println("TT: Menu deactivated!");
+					//System.out.println("TT: Menu deactivated!");
 				}
 
 				@Override
 				public void menuActivated() {
-					System.out.println("TT: Menu activated!");
+					//System.out.println("TT: Menu activated!");
 				}
 			});
 		}
@@ -270,62 +280,53 @@ public final class TestToolImpl implements ITestTool {
 
 				@Override
 				public void onEdit(final IVetoable veto, final ITableCellEditEvent event) {
-					System.out.println("TT: test onedit");
+					//System.out.println("TT: test onedit");
 				}
 
 				@Override
 				public void editFinished(final ITableCellEditEvent event) {
-					System.out.println("TT: test editfinished");
+					//System.out.println("TT: test editfinished");
 				}
 
 				@Override
 				public void editCanceled(final ITableCellEvent event) {
-					System.out.println("TT: test editcanceled");
+					//System.out.println("TT: test editcanceled");
 				}
 			});
 			table.addTableCellListener(new ITableCellListener() {
 
 				@Override
 				public void mouseReleased(final ITableCellMouseEvent event) {
-					System.out.println("TT: test mousereleased");
+					//System.out.println("TT: test mousereleased");
 				}
 
 				@Override
 				public void mousePressed(final ITableCellMouseEvent event) {
-					System.out.println("TT: test mousepressed");
+					//System.out.println("TT: test mousepressed");
 				}
 
 				@Override
 				public void mouseDoubleClicked(final ITableCellMouseEvent event) {
-					System.out.println("TT: test mousedoubleclicked");
+					//System.out.println("TT: test mousedoubleclicked");
 				}
 			});
 			table.addTableColumnListener(new ITableColumnListener() {
 
 				@Override
 				public void mouseClicked(final ITableColumnMouseEvent event) {
-					System.out.println("TT: test mouseclicked");
+					//System.out.println("TT: test mouseclicked");
 				}
 
 				@Override
 				public void columnResized(final ITableColumnResizeEvent event) {
-					System.out.println("TT: test resized");
+					//System.out.println("TT: test resized");
 				}
 
 				@Override
 				public void columnPermutationChanged() {
-					System.out.println("TT: test permutation");
+					//System.out.println("TT: test permutation");
 				}
 			});
-		}
-	}
-
-	// TODO LG use this method when id generation is completed
-	@SuppressWarnings("unused")
-	private void registerInternal(final IWidgetCommon widget, final String identifier) {
-		// TODO LG use unique Widget ID, add only new and tested widgets to registry
-		if (!widgetRegistry.containsKey(testToolUtilities.createWidgetID((IWidget) widget, identifier))) {
-			widgetRegistry.put(testToolUtilities.createWidgetID((IWidget) widget, identifier), widget);
 		}
 	}
 
