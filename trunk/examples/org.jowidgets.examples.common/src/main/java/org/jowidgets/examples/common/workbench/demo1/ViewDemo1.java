@@ -202,7 +202,7 @@ public class ViewDemo1 extends AbstractView {
 			}
 		});
 
-		final IActionItemModel deleteColumnsAction = columnPopupMenuModel.addActionItem("Delete columns 0, 6, 5");
+		final IActionItemModel deleteColumnsAction = columnPopupMenuModel.addActionItem("Delete columns 0, 2, 4");
 		deleteColumnsAction.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
