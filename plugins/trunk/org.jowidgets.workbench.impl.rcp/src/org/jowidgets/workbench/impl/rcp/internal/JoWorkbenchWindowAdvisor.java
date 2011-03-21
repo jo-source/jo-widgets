@@ -118,7 +118,12 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		frame = Toolkit.getWidgetWrapperFactory().createFrame(shell);
 
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-		frame.setLayout(new MigLayoutDescriptor("3[grow]3", "0[]0[][grow][]0"));
+		if (workbench.hasApplicationNavigator()) {
+			frame.setLayout(new MigLayoutDescriptor("3[grow]3", "0[]0[][grow][]0"));
+		}
+		else {
+			frame.setLayout(new MigLayoutDescriptor("3[grow]3", "0[]0[][]0[grow][]0"));
+		}
 
 		// dummy coolbar control
 		final Control coolBar = getWindowConfigurer().createCoolBarControl(shell);
@@ -129,20 +134,40 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		toolBar = frame.add(bpf.toolBar(), "hidemode 2, wrap");
 		toolBar.setVisible(false);
 
-		final SashForm sashForm = new SashForm(shell, SWT.HORIZONTAL);
-		sashForm.setLayoutData("wmin 0, hmin 0, grow, wrap");
-		sashForm.addDisposeListener(new DisposeListener() {
-			@Override
-			public void widgetDisposed(final DisposeEvent e) {
-				// save sash weight before it is disposed
-				folderRatio = sashForm.getWeights()[0] / 1000.0;
-			}
-		});
+		final IContainer appFolderContainer;
+		final IContainer pageContainer;
+		final SashForm sashForm;
+		if (workbench.hasApplicationNavigator()) {
+			sashForm = new SashForm(shell, SWT.HORIZONTAL);
+			sashForm.setLayoutData("wmin 0, hmin 0, grow, wrap");
+			sashForm.addDisposeListener(new DisposeListener() {
+				@Override
+				public void widgetDisposed(final DisposeEvent e) {
+					// save sash weight before it is disposed
+					folderRatio = sashForm.getWeights()[0] / 1000.0;
+				}
+			});
 
-		final IContainer leftContainer = Toolkit.getWidgetWrapperFactory().createComposite(new Composite(sashForm, SWT.NONE));
-		leftContainer.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
-		applicationFolder = new WorkbenchApplicationFolder((Composite) leftContainer.getUiReference(), workbench, context);
-		applicationFolder.setLayoutData("wmin 0, hmin 0, grow");
+			appFolderContainer = Toolkit.getWidgetWrapperFactory().createComposite(new Composite(sashForm, SWT.NONE));
+			appFolderContainer.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
+			pageContainer = Toolkit.getWidgetWrapperFactory().createComposite(new Composite(sashForm, SWT.NONE));
+			pageContainer.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
+
+		}
+		else {
+			appFolderContainer = frame;
+			pageContainer = frame;
+			sashForm = null;
+		}
+
+		applicationFolder = new WorkbenchApplicationFolder((Composite) appFolderContainer.getUiReference(), workbench, context);
+		if (workbench.hasApplicationNavigator()) {
+			applicationFolder.setLayoutData("wmin 0, hmin 0, grow");
+		}
+		else {
+			applicationFolder.setLayoutData("hidemode 2, wrap");
+			applicationFolder.setVisible(false);
+		}
 		applicationFolder.addDisposeListener(new DisposeListener() {
 			@Override
 			public void widgetDisposed(final DisposeEvent e) {
@@ -150,12 +175,12 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 			}
 		});
 
-		final IContainer rightContainer = Toolkit.getWidgetWrapperFactory().createComposite(new Composite(sashForm, SWT.NONE));
-		rightContainer.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
-		final Control pageComposite = getWindowConfigurer().createPageComposite((Composite) rightContainer.getUiReference());
+		final Control pageComposite = getWindowConfigurer().createPageComposite((Composite) pageContainer.getUiReference());
 		pageComposite.setLayoutData("wmin 0, hmin 0, grow");
 
-		sashForm.setWeights(new int[] {(int) (folderRatio * 1000), (int) ((1 - folderRatio) * 1000)});
+		if (sashForm != null) {
+			sashForm.setWeights(new int[] {(int) (folderRatio * 1000), (int) ((1 - folderRatio) * 1000)});
+		}
 	}
 
 	public double getFolderRatio() {
