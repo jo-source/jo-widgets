@@ -100,7 +100,7 @@ public class ViewDemo6 extends AbstractView implements IView {
 		container.setLayout(MigLayoutFactory.growingInnerCellLayout());
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-		final int rowCount = 20000;
+		final int rowCount = 2000000;
 		final int columnCount = 50;
 
 		final IDefaultTableColumnModel columnModel = new DefaultTableColumnModel(columnCount);

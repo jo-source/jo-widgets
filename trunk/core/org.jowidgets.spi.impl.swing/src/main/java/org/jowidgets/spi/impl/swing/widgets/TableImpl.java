@@ -639,16 +639,15 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			int removedColumnsCount = 0;
 			for (int i = 0; i < columnIndices.length; i++) {
 				final int removedIndex = table.convertColumnIndexToView(columnIndices[i] - removedColumnsCount);
-				final TableColumn swingColumn = table.getColumnModel().getColumn(removedIndex);
+				final TableColumn swingColumn = table.getTableHeader().getColumnModel().getColumn(removedIndex);
 				swingColumn.removePropertyChangeListener(tableColumnResizeListener);
-				table.getColumnModel().removeColumn(swingColumn);
+				table.getTableHeader().getColumnModel().removeColumn(swingColumn);
 				removedColumnsCount++;
 			}
 		}
 
 		@Override
 		public void columnsChanged(final int[] columnIndices) {
-			table.getTableHeader().repaint();
 			for (int i = 0; i < columnIndices.length; i++) {
 				final int columnIndex = columnIndices[i];
 				final int modelIndex = table.convertColumnIndexToView(columnIndex);
@@ -658,6 +657,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 					table.getColumnModel().getColumn(modelIndex).setPreferredWidth(modelWidth);
 				}
 			}
+			table.getTableHeader().repaint();
 		}
 
 	}
