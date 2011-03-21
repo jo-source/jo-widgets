@@ -113,6 +113,26 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 	}
 
 	@Override
+	public int convertColumnIndexToView(final int modelIndex) {
+		final ArrayList<Integer> permutation = getColumnPermutation();
+		return permutation.indexOf(Integer.valueOf(modelIndex));
+	}
+
+	@Override
+	public int convertColumnIndexToModel(final int viewIndex) {
+		return getColumnPermutation().get(viewIndex).intValue();
+	}
+
+	@Override
+	public void moveColumn(final int oldViewIndex, final int newViewIndex) {
+		final ArrayList<Integer> permutation = getColumnPermutation();
+		final int oldPermutationValue = permutation.get(oldViewIndex).intValue();
+		permutation.remove(oldViewIndex);
+		permutation.add(newViewIndex, oldPermutationValue);
+		setColumnPermutation(permutation);
+	}
+
+	@Override
 	public void pack() {
 		pack(TableColumnPackPolicy.HEADER_AND_CONTENT);
 	}
@@ -140,6 +160,11 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 	@Override
 	public ArrayList<Integer> getColumnPermutation() {
 		return getWidget().getColumnPermutation();
+	}
+
+	@Override
+	public void setColumnPermutation(final List<Integer> permutation) {
+		getWidget().setColumnPermutation(permutation);
 	}
 
 	@Override

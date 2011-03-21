@@ -28,6 +28,7 @@
 
 package org.jowidgets.examples.common.workbench.demo1;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jowidgets.api.model.item.IActionItemModel;
@@ -56,6 +57,7 @@ import org.jowidgets.examples.common.demo.DemoMenuProvider;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractView;
 import org.jowidgets.tools.layout.MigLayoutFactory;
+import org.jowidgets.tools.model.table.DefaultTableColumn;
 import org.jowidgets.util.ValueHolder;
 import org.jowidgets.workbench.api.IViewContext;
 
@@ -183,6 +185,47 @@ public class ViewDemo1 extends AbstractView {
 				if (inputDialog.isOkPressed()) {
 					tableModel.setColumnText(currentColumn.get().intValue(), inputDialog.getValue());
 				}
+			}
+		});
+
+		final IActionItemModel addColumnAction = columnPopupMenuModel.addActionItem("Add column");
+		addColumnAction.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final IInputDialog<String> inputDialog = inputDialogFactory.createInputDialog("add column", "Column name");
+				inputDialog.setVisible(true);
+				if (inputDialog.isOkPressed()) {
+					final int newModelIndex = currentColumn.get() + 1;
+					final int newViewIndex = table.convertColumnIndexToView(currentColumn.get()) + 1;
+					tableModel.addColumn(newModelIndex, new DefaultTableColumn(inputDialog.getValue()));
+					table.moveColumn(newModelIndex, newViewIndex);
+				}
+			}
+		});
+
+		final IActionItemModel invertColumnPermutationAction = columnPopupMenuModel.addActionItem("Invert column order");
+		invertColumnPermutationAction.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final ArrayList<Integer> permutation = table.getColumnPermutation();
+				final ArrayList<Integer> newPermutation = new ArrayList<Integer>(permutation.size());
+
+				for (int i = 0; i < permutation.size(); i++) {
+					newPermutation.add(permutation.get(permutation.size() - 1 - i));
+				}
+				table.setColumnPermutation(newPermutation);
+			}
+		});
+
+		final IActionItemModel resetColumnPermutationAction = columnPopupMenuModel.addActionItem("Reset column order");
+		resetColumnPermutationAction.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final ArrayList<Integer> newPermutation = new ArrayList<Integer>(table.getColumnCount());
+				for (int i = 0; i < table.getColumnCount(); i++) {
+					newPermutation.add(Integer.valueOf(i));
+				}
+				table.setColumnPermutation(newPermutation);
 			}
 		});
 

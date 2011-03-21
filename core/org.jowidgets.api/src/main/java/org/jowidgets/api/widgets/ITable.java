@@ -38,4 +38,10 @@ public interface ITable extends IControl, ITableCommon {
 
 	int getColumnCount();
 
+	int convertColumnIndexToView(int modelIndex);
+
+	int convertColumnIndexToModel(int viewIndex);
+
+	void moveColumn(int oldViewIndex, int newViewIndex);
+
 }

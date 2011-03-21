@@ -112,6 +112,7 @@ import org.jowidgets.spi.impl.swing.widgets.base.TableColumnModelAdapter;
 import org.jowidgets.spi.widgets.ITableSpi;
 import org.jowidgets.spi.widgets.setup.ITableSetupSpi;
 import org.jowidgets.util.ArrayUtils;
+import org.jowidgets.util.Assert;
 
 public class TableImpl extends SwingControl implements ITableSpi {
 
@@ -135,6 +136,8 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	private final TableModelListener tableModelListener;
 	private final TableColumnModelListener tableColumnModelListener;
 	private final TableCellMenuDetectListener tableCellMenuDetectListener;
+	private final TableColumnListener tableColumnListener;
+	private final TableColumnMoveListener tableColumnMoveListener;
 
 	private final boolean columnsResizeable;
 
@@ -161,6 +164,8 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		this.tableModelListener = new TableModelListener();
 		this.tableColumnModelListener = new TableColumnModelListener();
 		this.tableCellMenuDetectListener = new TableCellMenuDetectListener();
+		this.tableColumnListener = new TableColumnListener();
+		this.tableColumnMoveListener = new TableColumnMoveListener();
 
 		this.columnMoveOccured = false;
 
@@ -188,10 +193,10 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		}
 
 		table.getTableHeader().setDefaultRenderer(headerRenderer);
+		table.getTableHeader().addMouseListener(tableColumnListener);
 		table.getTableHeader().addMouseListener(new TableColumnMenuDetectListener());
-		table.getTableHeader().addMouseListener(new TableColumnListener());
 
-		table.getColumnModel().addColumnModelListener(new TableColumnMoveListener());
+		table.getColumnModel().addColumnModelListener(tableColumnMoveListener);
 		table.getSelectionModel().addListSelectionListener(tableSelectionListener);
 
 		table.addMouseListener(new TableCellListener());
@@ -236,6 +241,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		lastColumnPermutation = new ArrayList<Integer>(columnCount);
 		for (int columnIndex = 0; columnIndex < columnCount; columnIndex++) {
 			final TableColumn column = new TableColumn();
+			column.setHeaderValue(columnModel.getColumn(columnIndex));
 			column.setCellRenderer(cellRenderer);
 			column.setCellEditor(cellEditor);
 			column.setResizable(columnsResizeable);
@@ -262,22 +268,24 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 	@Override
 	public Position getCellPosition(final int rowIndex, final int columnIndex) {
+		//TODO MG implement getCellPosition
 		return null;
 	}
 
 	@Override
 	public Dimension getCellSize(final int rowIndex, final int columnIndex) {
+		//TODO MG implement getCellSize
 		return null;
 	}
 
 	@Override
 	public void pack(final TableColumnPackPolicy policy) {
-
+		//TODO MG implement pack
 	}
 
 	@Override
 	public void pack(final int columnIndex, final TableColumnPackPolicy policy) {
-
+		//TODO MG implement pack
 	}
 
 	@Override
@@ -288,6 +296,26 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			result.add(Integer.valueOf(swingColumnModel.getColumn(i).getModelIndex()));
 		}
 		return result;
+	}
+
+	@Override
+	public void setColumnPermutation(final List<Integer> permutation) {
+		Assert.paramNotNull(permutation, "permutation");
+		table.getColumnModel().removeColumnModelListener(tableColumnMoveListener);
+
+		int columnIndex = 0;
+		for (final Integer permutatedIndex : permutation) {
+			table.getColumnModel().moveColumn(table.convertColumnIndexToView(permutatedIndex.intValue()), columnIndex);
+			columnIndex++;
+		}
+
+		table.getTableHeader().repaint();
+		final ArrayList<Integer> newPermutation = getColumnPermutation();
+		if (!newPermutation.equals(lastColumnPermutation)) {
+			lastColumnPermutation = newPermutation;
+			tableColumnObservable.fireColumnPermutationChanged();
+		}
+		table.getColumnModel().addColumnModelListener(tableColumnMoveListener);
 	}
 
 	@Override
@@ -631,6 +659,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		public void columnsAdded(final int[] columnIndices) {
 			// TODO MG better implementation of columnsAdded observe
 			swingTableModel.fireTableStructureChanged();
+			table.getTableHeader().repaint();
 		}
 
 		@Override
@@ -776,7 +805,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 					row,
 					columnIndex);
 
-			final ITableColumn column = columnModel.getColumn(table.convertColumnIndexToModel(columnIndex));
+			final ITableColumn column = (ITableColumn) value;
 
 			if (column.getIcon() != null) {
 				defaultComponent.setIcon(SwingImageRegistry.getInstance().getImageIcon(column.getIcon()));

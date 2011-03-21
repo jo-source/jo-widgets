@@ -347,6 +347,20 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	}
 
 	@Override
+	public void setColumnPermutation(final List<Integer> permutation) {
+
+		final int[] columnOrder = new int[permutation.size()];
+		int i = 0;
+		for (final Integer permutatedIndex : permutation) {
+			columnOrder[i] = permutatedIndex.intValue();
+			i++;
+		}
+		table.setRedraw(false);
+		table.setColumnOrder(columnOrder);
+		table.setRedraw(true);
+	}
+
+	@Override
 	public ArrayList<Integer> getSelection() {
 		final ArrayList<Integer> result = new ArrayList<Integer>();
 		final int[] selection = table.getSelectionIndices();
