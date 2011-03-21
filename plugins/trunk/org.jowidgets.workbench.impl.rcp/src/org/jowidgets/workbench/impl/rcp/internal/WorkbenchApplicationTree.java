@@ -267,4 +267,33 @@ public final class WorkbenchApplicationTree extends Composite {
 		treeViewer.collapseToLevel(componentTreeNodeContext, 1);
 	}
 
+	public boolean selectDefault() {
+		return selectDefault(null);
+	}
+
+	private boolean selectDefault(final TreeItem parent) {
+		final TreeItem[] items;
+		if (parent == null) {
+			items = treeViewer.getTree().getItems();
+		}
+		else {
+			items = parent.getItems();
+		}
+		if (items.length == 0 && parent != null) {
+			final ComponentTreeNodeContext context = (ComponentTreeNodeContext) parent.getData();
+			treeViewer.setSelection(new StructuredSelection(context));
+			return true;
+		}
+		for (final TreeItem item : items) {
+			final ComponentTreeNodeContext context = (ComponentTreeNodeContext) item.getData();
+			if (context != null) {
+				treeViewer.expandToLevel(context, 1);
+				if (selectDefault(item)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 }

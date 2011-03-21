@@ -305,4 +305,15 @@ public final class WorkbenchApplicationFolder extends Composite {
 		newControl.setVisible(true);
 	}
 
+	public void selectDefault() {
+		for (final CTabItem item : tabFolder.getItems()) {
+			final WorkbenchApplicationTree tree = (WorkbenchApplicationTree) item.getControl();
+			if (tree.selectDefault()) {
+				updateTopRightComposite(tree.getFolderComposite());
+				tabFolder.setSelection(item);
+				break;
+			}
+		}
+	}
+
 }

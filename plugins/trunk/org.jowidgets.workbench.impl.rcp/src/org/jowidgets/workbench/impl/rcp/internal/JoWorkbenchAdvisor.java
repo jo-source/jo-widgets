@@ -84,7 +84,12 @@ public final class JoWorkbenchAdvisor extends WorkbenchAdvisor {
 	@Override
 	public void postStartup() {
 		workbench.onContextInitialize(context);
-		workbenchWindowAdvisor.selectTreeNode(selectedTreeNode);
+		if (!workbench.hasApplicationNavigator()) {
+			workbenchWindowAdvisor.getApplicationFolder().selectDefault();
+		}
+		else {
+			workbenchWindowAdvisor.selectTreeNode(selectedTreeNode);
+		}
 	}
 
 	@Override
