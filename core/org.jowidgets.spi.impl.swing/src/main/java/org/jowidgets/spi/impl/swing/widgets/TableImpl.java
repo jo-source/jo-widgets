@@ -281,12 +281,50 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 	@Override
 	public void pack(final TableColumnPackPolicy policy) {
-		//TODO MG implement pack
+		final Rectangle viewRect = getUiReference().getViewport().getViewRect();
+		final int firstVisibleRowIndex = table.rowAtPoint(new Point(0, viewRect.y));
+		int lastVisibleRowIndex = table.rowAtPoint(new Point(0, viewRect.y + viewRect.height - 1));
+		if (lastVisibleRowIndex == -1) {
+			lastVisibleRowIndex = table.getRowCount() - 1;
+		}
+		for (int columnIndex = 0; columnIndex < table.getColumnCount(); columnIndex++) {
+			pack(columnIndex, firstVisibleRowIndex, lastVisibleRowIndex, policy);
+		}
 	}
 
 	@Override
 	public void pack(final int columnIndex, final TableColumnPackPolicy policy) {
-		//TODO MG implement pack
+		final Rectangle viewRect = getUiReference().getViewport().getViewRect();
+		final int firstVisibleRowIndex = table.rowAtPoint(new Point(0, viewRect.y));
+		int lastVisibleRowIndex = table.rowAtPoint(new Point(0, viewRect.y + viewRect.height - 1));
+		if (lastVisibleRowIndex == -1) {
+			lastVisibleRowIndex = table.getRowCount() - 1;
+		}
+		pack(columnIndex, firstVisibleRowIndex, lastVisibleRowIndex, policy);
+	}
+
+	private void pack(final int columnIndex, final int firstRow, final int lastRow, final TableColumnPackPolicy policy) {
+		final TableColumn column = table.getColumnModel().getColumn(table.convertColumnIndexToView(columnIndex));
+		final boolean header = TableColumnPackPolicy.HEADER == policy || TableColumnPackPolicy.HEADER_AND_CONTENT == policy;
+		final boolean data = TableColumnPackPolicy.CONTENT == policy || TableColumnPackPolicy.HEADER_AND_CONTENT == policy;
+		int maxWidth = 0;
+		if (data) {
+			for (int rowIndex = firstRow; rowIndex <= lastRow; rowIndex++) {
+				final Object value = table.getValueAt(rowIndex, columnIndex);
+				final TableCellRenderer renderer = table.getCellRenderer(rowIndex, columnIndex);
+				final Component comp = renderer.getTableCellRendererComponent(table, value, false, false, rowIndex, columnIndex);
+				maxWidth = Math.max(maxWidth, (int) comp.getPreferredSize().getWidth());
+			}
+		}
+
+		if (header) {
+			final Object value = column.getHeaderValue();
+			final TableCellRenderer renderer = table.getTableHeader().getDefaultRenderer();
+			final Component comp = renderer.getTableCellRendererComponent(table, value, false, false, 0, columnIndex);
+			maxWidth = Math.max(maxWidth, (int) comp.getPreferredSize().getWidth());
+		}
+
+		column.setPreferredWidth(maxWidth + 5);
 	}
 
 	@Override
