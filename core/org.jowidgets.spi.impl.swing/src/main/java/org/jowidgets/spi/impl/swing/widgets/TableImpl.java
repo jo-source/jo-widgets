@@ -635,15 +635,45 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 		@Override
 		public void columnsRemoved(final int[] columnIndices) {
-			Arrays.sort(columnIndices);
-			int removedColumnsCount = 0;
-			for (int i = 0; i < columnIndices.length; i++) {
-				final int removedIndex = table.convertColumnIndexToView(columnIndices[i] - removedColumnsCount);
-				final TableColumn swingColumn = table.getTableHeader().getColumnModel().getColumn(removedIndex);
-				swingColumn.removePropertyChangeListener(tableColumnResizeListener);
-				table.getTableHeader().getColumnModel().removeColumn(swingColumn);
-				removedColumnsCount++;
+
+			if (columnIndices.length == 0) {
+				return;
 			}
+
+			//first sort the columns by model index
+			final TableColumn[] columns = new TableColumn[table.getColumnCount()];
+			for (int columnIndex = 0; columnIndex < table.getColumnCount(); columnIndex++) {
+				final int modelIndex = table.convertColumnIndexToModel(columnIndex);
+				columns[modelIndex] = table.getColumnModel().getColumn(columnIndex);
+			}
+
+			//fix the model indices and determine the columns to remove
+			Arrays.sort(columnIndices);
+			final Set<TableColumn> columnsToRemove = new HashSet<TableColumn>();
+			int removedColumns = 0;
+			int nextIndexToRemove = columnIndices[0];
+			for (int columnIndex = 0; columnIndex < columns.length; columnIndex++) {
+				final TableColumn swingColumn = columns[columnIndex];
+				if (columnIndex == nextIndexToRemove) {
+					columnsToRemove.add(columns[columnIndex]);
+					swingColumn.removePropertyChangeListener(tableColumnResizeListener);
+					removedColumns++;
+					if (removedColumns < columnIndices.length) {
+						nextIndexToRemove = columnIndices[removedColumns];
+					}
+				}
+				else {
+					//fix the index in the model, for each previously removed row, the
+					//index must be decreased by one
+					swingColumn.setModelIndex(swingColumn.getModelIndex() - removedColumns);
+				}
+			}
+
+			//now remove the columns from the model
+			for (final TableColumn column : columnsToRemove) {
+				table.removeColumn(column);
+			}
+
 		}
 
 		@Override
