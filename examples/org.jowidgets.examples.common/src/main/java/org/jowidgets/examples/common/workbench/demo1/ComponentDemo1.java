@@ -69,7 +69,7 @@ public class ComponentDemo1 extends AbstractComponent implements IComponent {
 
 	@Override
 	public IView createView(final String viewId, final IViewContext context) {
-		if (ViewDemo6.ID.equals(viewId)) {
+		if (ViewDemo1.ID.equals(viewId)) {
 			return new ViewDemo1(context, menuProvider, getTableModelLazy());
 		}
 		else if (ViewDemo2.ID.equals(viewId)) {
@@ -84,7 +84,7 @@ public class ComponentDemo1 extends AbstractComponent implements IComponent {
 		else if (ViewDemo5.ID.equals(viewId)) {
 			return new ViewDemo5(context);
 		}
-		else if (ViewDemo1.ID.equals(viewId)) {
+		else if (ViewDemo6.ID.equals(viewId)) {
 			return new ViewDemo6(context, menuProvider);
 		}
 		else if (ViewDemo7.ID.equals(viewId)) {
