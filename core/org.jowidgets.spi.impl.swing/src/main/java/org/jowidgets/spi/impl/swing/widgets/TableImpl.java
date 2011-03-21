@@ -31,6 +31,7 @@ package org.jowidgets.spi.impl.swing.widgets;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
@@ -268,14 +269,14 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 	@Override
 	public Position getCellPosition(final int rowIndex, final int columnIndex) {
-		//TODO MG implement getCellPosition
-		return null;
+		final Rectangle cellRect = table.getCellRect(rowIndex, columnIndex, true);
+		return PositionConvert.convert(SwingUtilities.convertPoint(table, cellRect.getLocation(), getUiReference()));
 	}
 
 	@Override
 	public Dimension getCellSize(final int rowIndex, final int columnIndex) {
-		//TODO MG implement getCellSize
-		return null;
+		final Rectangle cellRect = table.getCellRect(rowIndex, columnIndex, true);
+		return new Dimension(cellRect.width, cellRect.height);
 	}
 
 	@Override
