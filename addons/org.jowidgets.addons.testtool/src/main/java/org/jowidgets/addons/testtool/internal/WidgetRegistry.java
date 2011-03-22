@@ -28,66 +28,28 @@
 
 package org.jowidgets.addons.testtool.internal;
 
+import java.util.LinkedList;
 import java.util.List;
 
-import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.widgets.IWidgetCommon;
-import org.jowidgets.test.api.widgets.IButtonUi;
 
-//CHECKSTYLE:OFF
-public class TestPlayer {
+public final class WidgetRegistry {
+	private static WidgetRegistry instance = new WidgetRegistry();
+	private final List<IWidgetCommon> widgetRegistry;
 
-	private final WidgetFinder finder;
-
-	public TestPlayer() {
-		this.finder = new WidgetFinder();
+	private WidgetRegistry() {
+		this.widgetRegistry = new LinkedList<IWidgetCommon>();
 	}
 
-	public void replayTest(final List<TestDataObject> list, final boolean headlessEnv) {
-		if (headlessEnv) {
-			for (final TestDataObject obj : list) {
-				final IWidgetCommon widget = finder.findWidgetByID(WidgetRegistry.getInstance().getWidgets(), obj.getId());
-				executeAction(widget, obj.getAction());
-			}
-		}
-		else {
-			for (final TestDataObject obj : list) {
-				final Thread thread = new Thread() {
-					@Override
-					public void run() {
-						final IWidgetCommon widget = finder.findWidgetByID(WidgetRegistry.getInstance().getWidgets(), obj.getId());
-						moveMouseToWidget(widget);
-						executeAction(widget, obj.getAction());
-						try {
-							Thread.sleep(1000);
-						}
-						catch (final InterruptedException e) {
-						}
-						super.run();
-					}
-				};
-				Toolkit.getUiThreadAccess().invokeLater(thread);
-			}
-		}
+	public static WidgetRegistry getInstance() {
+		return instance;
 	}
 
-	private void executeAction(final IWidgetCommon widget, final UserAction action) {
-		if (widget instanceof IButtonUi) {
-			final IButtonUi button = (IButtonUi) widget;
-			switch (action) {
-				case CLICK:
-					System.out.println("Clicke Button");
-					button.push();
-					break;
-				default:
-					System.out.println("Führe Aktion für unbekanntes Widget durch.");
-					break;
-			}
-		}
+	public synchronized List<IWidgetCommon> getWidgets() {
+		return widgetRegistry;
 	}
 
-	private void moveMouseToWidget(final IWidgetCommon targetWidget) {
-		// TODO LG calculate target position and move mouse
-		System.out.println("Bewege Maus zu Widget");
+	public synchronized void addWidget(final IWidgetCommon widget) {
+		widgetRegistry.add(widget);
 	}
 }

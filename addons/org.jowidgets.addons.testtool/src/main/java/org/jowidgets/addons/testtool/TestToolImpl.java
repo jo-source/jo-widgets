@@ -28,8 +28,6 @@
 
 package org.jowidgets.addons.testtool;
 
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.addons.testtool.internal.ListModel;
@@ -39,6 +37,7 @@ import org.jowidgets.addons.testtool.internal.TestPlayer;
 import org.jowidgets.addons.testtool.internal.TestToolUtilities;
 import org.jowidgets.addons.testtool.internal.UserAction;
 import org.jowidgets.addons.testtool.internal.WidgetFinder;
+import org.jowidgets.addons.testtool.internal.WidgetRegistry;
 import org.jowidgets.api.controler.ITabItemListener;
 import org.jowidgets.api.controler.ITreeListener;
 import org.jowidgets.api.controler.ITreePopupDetectionListener;
@@ -85,7 +84,7 @@ public final class TestToolImpl implements ITestTool {
 
 	public TestToolImpl() {
 		this.testToolUtilities = new TestToolUtilities();
-		this.widgetRegistry = Collections.synchronizedList(new LinkedList<IWidgetCommon>());
+		this.widgetRegistry = WidgetRegistry.getInstance().getWidgets();
 		this.persister = new TestDataXmlPersister();
 		this.listModel = new ListModel<TestDataObject>();
 		this.finder = new WidgetFinder();
@@ -215,7 +214,7 @@ public final class TestToolImpl implements ITestTool {
 
 				@Override
 				public void nodeCollapsed(final ITreeNode node) {
-					record(widget, UserAction.COLLAPS, testToolUtilities.createWidgetID(node));
+					record(widget, UserAction.COLLAPSE, testToolUtilities.createWidgetID(node));
 				}
 			});
 			tree.addTreePopupDetectionListener(new ITreePopupDetectionListener() {
