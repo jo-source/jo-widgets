@@ -48,7 +48,7 @@ import org.jowidgets.tools.controler.TableColumnModelObservable;
 import org.jowidgets.util.ArrayUtils;
 import org.jowidgets.util.Assert;
 
-public class DefaultTableColumnModel implements IDefaultTableColumnModel, ITableColumnModelObservable {
+class DefaultTableColumnModel implements IDefaultTableColumnModel, ITableColumnModelObservable {
 
 	private final TableColumnModelObservable tableColumnModelObservable;
 	private final ArrayList<IDefaultTableColumn> columns;
