@@ -28,12 +28,14 @@
 
 package org.jowidgets.addons.testtool;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.addons.testtool.internal.ListModel;
 import org.jowidgets.addons.testtool.internal.TestDataObject;
 import org.jowidgets.addons.testtool.internal.TestDataXmlPersister;
+import org.jowidgets.addons.testtool.internal.TestPlayer;
 import org.jowidgets.addons.testtool.internal.TestToolUtilities;
 import org.jowidgets.addons.testtool.internal.UserAction;
 import org.jowidgets.addons.testtool.internal.WidgetFinder;
@@ -77,15 +79,17 @@ public final class TestToolImpl implements ITestTool {
 	private final ITestDataPersister persister;
 	private final ListModel<TestDataObject> listModel;
 	private final WidgetFinder finder;
+	private final TestPlayer player;
 	private boolean record;
 	private boolean replay;
 
 	public TestToolImpl() {
 		this.testToolUtilities = new TestToolUtilities();
-		this.widgetRegistry = new LinkedList<IWidgetCommon>();
+		this.widgetRegistry = Collections.synchronizedList(new LinkedList<IWidgetCommon>());
 		this.persister = new TestDataXmlPersister();
 		this.listModel = new ListModel<TestDataObject>();
 		this.finder = new WidgetFinder();
+		this.player = new TestPlayer();
 		this.record = false;
 		this.replay = false;
 	}
@@ -98,14 +102,6 @@ public final class TestToolImpl implements ITestTool {
 			obj.setAction(action);
 			obj.setType(widget.getUiReference().getClass().getSimpleName());
 			listModel.addItem(obj);
-		}
-	}
-
-	@Override
-	public void replay() {
-		if (replay) {
-			System.out.println("replay test...");
-			// TODO LG implement
 		}
 	}
 
@@ -131,7 +127,6 @@ public final class TestToolImpl implements ITestTool {
 					//System.out.println("TT: child added to menubar at index: " + index);
 				}
 			});
-			// TODO LG dock TestToolGui to frame. But first somthing like getPosition.toDisplay must be added to Jo Widgets;)
 			frame.addWindowListener(new IWindowListener() {
 
 				@Override
@@ -168,7 +163,7 @@ public final class TestToolImpl implements ITestTool {
 		if (widget instanceof IButtonUi) {
 			final IButtonUi button = (IButtonUi) widget;
 			button.addActionListener(new IActionListener() {
-
+				// TODO LG remove syso's
 				@Override
 				public void actionPerformed() {
 					record(widget, UserAction.CLICK, testToolUtilities.createWidgetID(button));
@@ -206,8 +201,9 @@ public final class TestToolImpl implements ITestTool {
 
 				@Override
 				public void selectionChanged(final ITreeSelectionEvent event) {
-					final ITreeNode node = event.getSelectedSingle();
-					record(widget, UserAction.SELECT, testToolUtilities.createWidgetID(node));
+					for (final ITreeNode node : event.getSelected()) {
+						record(widget, UserAction.SELECT, testToolUtilities.createWidgetID(node));
+					}
 				}
 			});
 			tree.addTreeListener(new ITreeListener() {
@@ -356,5 +352,12 @@ public final class TestToolImpl implements ITestTool {
 	public void deactivateReplayAndRecord() {
 		this.record = false;
 		this.replay = false;
+	}
+
+	@Override
+	public void replay(final List<TestDataObject> list, final boolean headlessEnv) {
+		if (replay) {
+			player.replayTest(list, headlessEnv);
+		}
 	}
 }

@@ -30,6 +30,7 @@ package org.jowidgets.addons.testtool.internal;
 
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.validation.ValidationMessage;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IInputControl;
@@ -38,9 +39,16 @@ import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
+import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.IWidgetCommon;
+import org.jowidgets.common.widgets.controler.IWindowListener;
+import org.jowidgets.common.widgets.factory.IWidgetFactoryListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
 public class TestToolViewUtilities {
+
+	private boolean mainWindowFound;
 
 	public IInputDialog<String> createInputDialog(final IFrame parent, final String title, final String inputName) {
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
@@ -81,7 +89,7 @@ public class TestToolViewUtilities {
 
 			@Override
 			public ValidationResult validate() {
-				return new ValidationResult();
+				return new ValidationResult(ValidationMessage.OK_MESSAGE);
 			}
 
 			@Override
@@ -89,5 +97,49 @@ public class TestToolViewUtilities {
 				return true;
 			}
 		};
+	}
+
+	// TODO LG when supported add a resize and move window listener to dock TestToolView permanent to main window.
+	public void setPositionRelativeToMainWindow(final IFrame frame) {
+		mainWindowFound = false;
+		Toolkit.getWidgetFactory().addWidgetFactoryListener(new IWidgetFactoryListener() {
+
+			@Override
+			public void widgetCreated(final IWidgetCommon widget) {
+				if (widget instanceof IFrame) {
+					final IFrame main = (IFrame) widget;
+					main.addWindowListener(new IWindowListener() {
+
+						@Override
+						public void windowIconified() {}
+
+						@Override
+						public void windowDeiconified() {}
+
+						@Override
+						public void windowDeactivated() {}
+
+						@Override
+						public void windowClosing(final IVetoable vetoable) {}
+
+						@Override
+						public void windowClosed() {}
+
+						@Override
+						public void windowActivated() {
+							if (!mainWindowFound) {
+								final Position mainWinPos = main.getPosition();
+								final Position childWinPos = new Position(
+									mainWinPos.getX() + main.getSize().getWidth(),
+									mainWinPos.getY());
+								frame.setPosition(childWinPos);
+								frame.setVisible(true);
+								mainWindowFound = true;
+							}
+						}
+					});
+				}
+			}
+		});
 	}
 }

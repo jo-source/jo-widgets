@@ -26,30 +26,52 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.testtool;
+package org.jowidgets.addons.testtool.internal;
 
 import java.util.List;
 
-import org.jowidgets.addons.testtool.internal.ListModel;
-import org.jowidgets.addons.testtool.internal.TestDataObject;
-import org.jowidgets.addons.testtool.internal.UserAction;
-import org.jowidgets.common.widgets.IWidgetCommon;
+//CHECKSTYLE:OFF
+public class TestPlayer {
 
-public interface ITestTool {
+	//private final WidgetFinder finder;
 
-	void register(IWidgetCommon widget);
+	public TestPlayer() {
+		//this.finder = new WidgetFinder();
+	}
 
-	void record(IWidgetCommon widget, UserAction action, String id);
+	public void replayTest(final List<TestDataObject> list, final boolean headlessEnv) {
+		//		if (headlessEnv) {
+		//			for (final TestDataObject obj : list) {
+		//				final IWidgetCommon widget = finder.findWidgetByID(widgetRegistry, obj.getId());
+		//								executeAction(widget, obj.getAction());
+		//			}
+		//		}
+		//		else {
+		//			// TODO LG what needs to be thread safe?
+		//			for (final TestDataObject obj : list) {
+		//				final IWidgetCommon widget = finder.findWidgetByID(widgetRegistry, obj.getId());
+		//				// TODO LG create Thread and execute Action!
+		//								moveMouseToWidget(widget);
+		//								executeAction(widget, obj.getAction());
+		//				 Toolkit.getUiThreadAccess().invokeLater(runnable);
+		//			}
+		//		}
+	}
 
-	void replay(List<TestDataObject> list, boolean headlessEnv);
-
-	void save(final List<TestDataObject> list, final String fileName);
-
-	ListModel<?> getListModel();
-
-	void activateRecordMode();
-
-	void activateReplayMode();
-
-	void deactivateReplayAndRecord();
+	//	private void executeAction(final IWidgetCommon widget, final UserAction action) {
+	//		if (widget instanceof IButtonUi) {
+	//			final IButtonUi button = (IButtonUi) widget;
+	//			switch (action) {
+	//				case CLICK:
+	//					button.push();
+	//					break;
+	//				default:
+	//					break;
+	//			}
+	//		}
+	//	}
+	//
+	//	private void moveMouseToWidget(final IWidgetCommon targetWidget) {
+	//		// TODO LG calculate target position and move mouse
+	//	}
 }
