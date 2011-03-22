@@ -28,6 +28,8 @@
 
 package org.jowidgets.util;
 
+import java.util.Collection;
+
 public final class ArrayUtils {
 
 	private ArrayUtils() {}
@@ -56,6 +58,19 @@ public final class ArrayUtils {
 			}
 		}
 		return max;
+	}
+
+	public static int[] toArray(final Collection<Integer> collection) {
+		if (collection == null || collection.isEmpty()) {
+			return new int[0];
+		}
+		final int[] result = new int[collection.size()];
+		int index = 0;
+		for (final Integer integer : collection) {
+			result[index] = integer.intValue();
+			index++;
+		}
+		return result;
 	}
 
 }

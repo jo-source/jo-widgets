@@ -29,8 +29,10 @@
 package org.jowidgets.impl.model.table;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -43,6 +45,7 @@ import org.jowidgets.common.model.ITableColumnModelListener;
 import org.jowidgets.common.model.ITableColumnModelObservable;
 import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.tools.controler.TableColumnModelObservable;
+import org.jowidgets.util.ArrayUtils;
 import org.jowidgets.util.Assert;
 
 public class DefaultTableColumnModel implements IDefaultTableColumnModel, ITableColumnModelObservable {
@@ -52,7 +55,13 @@ public class DefaultTableColumnModel implements IDefaultTableColumnModel, ITable
 
 	private final Map<Integer, IChangeListener> columnChangeListeners;
 
+	private boolean eventsFreezed;
+	private ArrayList<IDefaultTableColumn> freezedColumns;
+	private Set<IDefaultTableColumn> modifiedColumns;
+
 	DefaultTableColumnModel(final int columnCount) {
+		this.eventsFreezed = false;
+
 		if (columnCount < 0) {
 			throw new IllegalArgumentException("Column count must be a positive number.");
 		}
@@ -68,12 +77,69 @@ public class DefaultTableColumnModel implements IDefaultTableColumnModel, ITable
 
 	@Override
 	public void modifyModelStart() {
-		//TODO MG implement modifyModelStart
+		if (eventsFreezed) {
+			throw new IllegalStateException("The method 'modifyModelStart()' was already invoked.");
+		}
+		this.freezedColumns = new ArrayList<IDefaultTableColumn>(columns);
+		this.modifiedColumns = new HashSet<IDefaultTableColumn>();
+		this.eventsFreezed = true;
 	}
 
 	@Override
 	public void modifyModelEnd() {
-		//TODO MG implement modifyModelEnd
+		if (!eventsFreezed) {
+			throw new IllegalStateException("The method 'modifyModelStart()' must be invoked first.");
+		}
+
+		//determine the added columns
+		final List<Integer> addedColumnsIndices = new ArrayList<Integer>();
+		for (int columnIndex = 0; columnIndex < columns.size(); columnIndex++) {
+			if (!freezedColumns.contains(columns.get(columnIndex))) {
+				addedColumnsIndices.add(Integer.valueOf(columnIndex));
+			}
+		}
+
+		//determine the removed columns
+		final List<Integer> removedColumnsIndices = new ArrayList<Integer>();
+		for (int columnIndex = 0; columnIndex < freezedColumns.size(); columnIndex++) {
+			if (!columns.contains(freezedColumns.get(columnIndex))) {
+				removedColumnsIndices.add(Integer.valueOf(columnIndex));
+			}
+		}
+
+		//determine the (residual) modified columns
+		final List<Integer> modifiedColumnIndices = new ArrayList<Integer>();
+		for (final IDefaultTableColumn column : modifiedColumns) {
+			if (!addedColumnsIndices.contains(column) && !removedColumnsIndices.contains(column)) {
+				final int modifiedColumnIndex = columns.indexOf(column);
+				if (modifiedColumnIndex != -1) {
+					modifiedColumnIndices.add(Integer.valueOf(modifiedColumnIndex));
+				}
+			}
+		}
+
+		//now fire the events
+		Collections.sort(addedColumnsIndices);
+		Collections.sort(removedColumnsIndices);
+		Collections.sort(modifiedColumnIndices);
+
+		final int[] added = ArrayUtils.toArray(addedColumnsIndices);
+		final int[] removed = ArrayUtils.toArray(removedColumnsIndices);
+		final int[] modified = ArrayUtils.toArray(modifiedColumnIndices);
+
+		if (removed.length > 0) {
+			tableColumnModelObservable.fireColumnsRemoved(removed);
+		}
+		if (added.length > 0) {
+			tableColumnModelObservable.fireColumnsAdded(added);
+		}
+		if (modified.length > 0) {
+			tableColumnModelObservable.fireColumnsAdded(modified);
+		}
+
+		this.eventsFreezed = false;
+		this.freezedColumns = null;
+		this.modifiedColumns = null;
 	}
 
 	@Override
@@ -136,7 +202,7 @@ public class DefaultTableColumnModel implements IDefaultTableColumnModel, ITable
 
 		columns.clear();
 		columns.addAll(newColumns);
-		tableColumnModelObservable.fireColumnsRemoved(columnIndices);
+		columnsRemoved(columnIndices);
 	}
 
 	@Override
@@ -264,11 +330,28 @@ public class DefaultTableColumnModel implements IDefaultTableColumnModel, ITable
 		final ColumnChangeListener changeListener = new ColumnChangeListener(columnIndex);
 		columnChangeListeners.put(Integer.valueOf(columnIndex), changeListener);
 		column.addChangeListener(changeListener);
-		tableColumnModelObservable.fireColumnsAdded(new int[] {columnIndex});
+		if (!eventsFreezed) {
+			tableColumnModelObservable.fireColumnsAdded(new int[] {columnIndex});
+		}
+	}
+
+	protected boolean isEventsFreezed() {
+		return eventsFreezed;
 	}
 
 	private void columnChanged(final int columnIndex) {
-		tableColumnModelObservable.fireColumnsChanged(new int[] {columnIndex});
+		if (!eventsFreezed) {
+			tableColumnModelObservable.fireColumnsChanged(new int[] {columnIndex});
+		}
+		else {
+			modifiedColumns.add(columns.get(columnIndex));
+		}
+	}
+
+	private void columnsRemoved(final int[] columnIndices) {
+		if (!eventsFreezed) {
+			tableColumnModelObservable.fireColumnsRemoved(columnIndices);
+		}
 	}
 
 	private void checkIndexForAdd(final int columnIndex) {

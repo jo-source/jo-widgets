@@ -926,12 +926,10 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			table.setRedraw(false);
 			table.clearAll();
 			Arrays.sort(columnIndices);
-			int addedColumnsCount = 0;
 			for (int i = 0; i < columnIndices.length; i++) {
-				final int addedIndex = columnIndices[i] + addedColumnsCount;
+				final int addedIndex = columnIndices[i];
 				addColumn(addedIndex, columnModel.getColumn(addedIndex));
 				addColumnListener(addedIndex);
-				addedColumnsCount++;
 			}
 			table.setRedraw(true);
 		}

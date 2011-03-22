@@ -41,6 +41,7 @@ import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.TablePackPolicy;
@@ -190,6 +191,32 @@ public class ViewDemo1 extends AbstractView {
 			}
 		});
 
+		final IMenuModel alignmentMenu = columnPopupMenuModel.addMenu("Alignment");
+		final IActionItemModel leftItem = alignmentMenu.addActionItem("Left");
+		final IActionItemModel centerItem = alignmentMenu.addActionItem("Center");
+		final IActionItemModel rightItem = alignmentMenu.addActionItem("Right");
+
+		leftItem.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				tableModel.setColumnAlignment(currentColumn.get().intValue(), AlignmentHorizontal.LEFT);
+			}
+		});
+
+		centerItem.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				tableModel.setColumnAlignment(currentColumn.get().intValue(), AlignmentHorizontal.CENTER);
+			}
+		});
+
+		rightItem.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				tableModel.setColumnAlignment(currentColumn.get().intValue(), AlignmentHorizontal.RIGHT);
+			}
+		});
+
 		final IActionItemModel addColumnAction = columnPopupMenuModel.addActionItem("Add column");
 		addColumnAction.addActionListener(new IActionListener() {
 			@Override
@@ -199,7 +226,9 @@ public class ViewDemo1 extends AbstractView {
 				if (inputDialog.isOkPressed()) {
 					final int newModelIndex = currentColumn.get() + 1;
 					final int newViewIndex = table.convertColumnIndexToView(currentColumn.get()) + 1;
-					tableModel.addColumn(newModelIndex, new DefaultTableColumn(inputDialog.getValue()));
+					final DefaultTableColumn column = new DefaultTableColumn(inputDialog.getValue());
+					column.setWidth(100);
+					tableModel.addColumn(newModelIndex, column);
 					table.moveColumn(newModelIndex, newViewIndex);
 				}
 			}
