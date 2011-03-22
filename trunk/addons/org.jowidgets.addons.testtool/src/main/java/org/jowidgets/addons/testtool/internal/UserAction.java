@@ -33,6 +33,6 @@ public enum UserAction {
 	CLICK,
 	SELECT,
 	EXPAND,
-	COLLAPS,
+	COLLAPSE,
 	READ;
 }

@@ -246,7 +246,7 @@ public class TestToolView {
 				recordEnabledChecker.setEnabledState(EnabledState.DISABLED);
 				playEnabledChecker.setEnabledState(EnabledState.DISABLED);
 				testTool.activateReplayMode();
-				// TODO LG replay table content
+				testTool.replay(getTableContent(), false);
 			}
 		};
 		playBuilder.setCommand(playCommand, playEnabledChecker);
@@ -283,6 +283,20 @@ public class TestToolView {
 		};
 		recordBuilder.setCommand(recordCommand, recordEnabledChecker);
 		recordButton.setAction(recordBuilder.setText("record").build());
+
+		toolBar.addSeparator();
+
+		final IActionBuilder deleteAllBuilder = ABF.create();
+		final IToolBarButton deleteAllButton = toolBar.addItem(BPF.toolBarButton());
+		final ICommandExecutor deleteAllCommand = new ICommandExecutor() {
+
+			@Override
+			public void execute(final IExecutionContext executionContext) throws Exception {
+				tableDataModel.removeAllRows();
+			}
+		};
+		deleteAllBuilder.setCommand(deleteAllCommand);
+		deleteAllButton.setAction(deleteAllBuilder.setText("delete all").build());
 	}
 
 	private void setupTestTool() {
@@ -301,5 +315,18 @@ public class TestToolView {
 				table.pack();
 			}
 		});
+	}
+
+	private List<TestDataObject> getTableContent() {
+		final List<TestDataObject> result = new LinkedList<TestDataObject>();
+		for (int rowIndex = 0; rowIndex < tableDataModel.getRowCount(); rowIndex++) {
+			final TestDataObject obj = new TestDataObject();
+			obj.setType(tableDataModel.getCell(rowIndex, 1).getText());
+			final String action = tableDataModel.getCell(rowIndex, 2).getText();
+			obj.setAction(UserAction.valueOf(action));
+			obj.setId(tableDataModel.getCell(rowIndex, 3).getText());
+			result.add(obj);
+		}
+		return result;
 	}
 }
