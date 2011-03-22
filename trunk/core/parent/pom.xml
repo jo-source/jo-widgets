@@ -22,7 +22,6 @@
 		<module>../org.jowidgets.workbench.api</module>
 		<module>../org.jowidgets.workbench.impl</module>
 		<module>../org.jowidgets.workbench.toolkit.api</module>
-        <module>../org.jowidgets.workbench.toolkit.impl</module>
 		<module>../org.jowidgets.workbench.tools</module>
 		<module>../org.jowidgets.impl</module>
 		<module>../org.jowidgets.spi</module>

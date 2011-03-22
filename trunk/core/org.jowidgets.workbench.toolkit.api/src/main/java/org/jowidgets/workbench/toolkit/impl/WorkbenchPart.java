@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,46 +26,37 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.toolkit.api;
+package org.jowidgets.workbench.toolkit.impl;
 
-import org.jowidgets.util.Assert;
-import org.jowidgets.workbench.toolkit.impl.DefaultWorkbenchToolkit;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.workbench.api.IWorkbenchPart;
 
-public final class WorkbenchToolkit {
+class WorkbenchPart implements IWorkbenchPart {
 
-	private static IWorkbenchToolkit workbenchToolkit;
+	private final String label;
+	private final String tooltip;
+	private final IImageConstant icon;
 
-	private WorkbenchToolkit() {}
+	WorkbenchPart(final String label, final String tooltip, final IImageConstant icon) {
 
-	public static void initialize(final IWorkbenchToolkit workbenchToolkit) {
-		Assert.paramNotNull(workbenchToolkit, "workbenchTools");
-		if (WorkbenchToolkit.workbenchToolkit != null) {
-			throw new IllegalStateException("Workbench toolkit is already initialized");
-		}
-		WorkbenchToolkit.workbenchToolkit = workbenchToolkit;
+		this.label = label;
+		this.tooltip = tooltip;
+		this.icon = icon;
 	}
 
-	public static boolean isInitialized() {
-		return workbenchToolkit != null;
+	@Override
+	public String getLabel() {
+		return label;
 	}
 
-	public static synchronized IWorkbenchToolkit getInstance() {
-		if (workbenchToolkit == null) {
-			workbenchToolkit = new DefaultWorkbenchToolkit();
-		}
-		return workbenchToolkit;
+	@Override
+	public String getTooltip() {
+		return tooltip;
 	}
 
-	public static ILayoutBuilderFactory getLayoutBuilderFactory() {
-		return getInstance().getLayoutBuilderFactory();
-	}
-
-	public static IWorkbenchPartBuilderFactory getWorkbenchPartBuilderFactory() {
-		return getInstance().getWorkbenchPartBuilderFactory();
-	}
-
-	public static IWorkbenchPartFactory getWorkbenchPartFactory() {
-		return getInstance().getWorkbenchPartFactory();
+	@Override
+	public IImageConstant getIcon() {
+		return icon;
 	}
 
 }

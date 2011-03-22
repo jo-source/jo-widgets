@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,46 +26,50 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.toolkit.api;
+package org.jowidgets.workbench.toolkit.impl;
 
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.util.Assert;
-import org.jowidgets.workbench.toolkit.impl.DefaultWorkbenchToolkit;
+import org.jowidgets.workbench.api.ILayout;
+import org.jowidgets.workbench.api.ILayoutContainer;
+import org.jowidgets.workbench.api.LayoutScope;
 
-public final class WorkbenchToolkit {
+final class Layout extends WorkbenchPart implements ILayout {
 
-	private static IWorkbenchToolkit workbenchToolkit;
+	private final String id;
+	private final LayoutScope scope;
+	private final ILayoutContainer layoutContainer;
 
-	private WorkbenchToolkit() {}
+	Layout(
+		final String id,
+		final LayoutScope scope,
+		final String label,
+		final String tooltip,
+		final IImageConstant icon,
+		final ILayoutContainer layoutContainer) {
+		super(label, tooltip, icon);
 
-	public static void initialize(final IWorkbenchToolkit workbenchToolkit) {
-		Assert.paramNotNull(workbenchToolkit, "workbenchTools");
-		if (WorkbenchToolkit.workbenchToolkit != null) {
-			throw new IllegalStateException("Workbench toolkit is already initialized");
-		}
-		WorkbenchToolkit.workbenchToolkit = workbenchToolkit;
+		Assert.paramNotEmpty(id, "id");
+		Assert.paramNotNull(layoutContainer, "layoutContainer");
+
+		this.id = id;
+		this.scope = scope;
+		this.layoutContainer = layoutContainer;
 	}
 
-	public static boolean isInitialized() {
-		return workbenchToolkit != null;
+	@Override
+	public String getId() {
+		return id;
 	}
 
-	public static synchronized IWorkbenchToolkit getInstance() {
-		if (workbenchToolkit == null) {
-			workbenchToolkit = new DefaultWorkbenchToolkit();
-		}
-		return workbenchToolkit;
+	@Override
+	public LayoutScope getScope() {
+		return scope;
 	}
 
-	public static ILayoutBuilderFactory getLayoutBuilderFactory() {
-		return getInstance().getLayoutBuilderFactory();
-	}
-
-	public static IWorkbenchPartBuilderFactory getWorkbenchPartBuilderFactory() {
-		return getInstance().getWorkbenchPartBuilderFactory();
-	}
-
-	public static IWorkbenchPartFactory getWorkbenchPartFactory() {
-		return getInstance().getWorkbenchPartFactory();
+	@Override
+	public ILayoutContainer getLayoutContainer() {
+		return layoutContainer;
 	}
 
 }

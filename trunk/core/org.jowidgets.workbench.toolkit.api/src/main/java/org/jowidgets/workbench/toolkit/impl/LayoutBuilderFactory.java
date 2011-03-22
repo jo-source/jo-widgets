@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,46 +26,34 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.toolkit.api;
+package org.jowidgets.workbench.toolkit.impl;
 
-import org.jowidgets.util.Assert;
-import org.jowidgets.workbench.toolkit.impl.DefaultWorkbenchToolkit;
+import org.jowidgets.workbench.toolkit.api.IFolderLayoutBuilder;
+import org.jowidgets.workbench.toolkit.api.ILayoutBuilder;
+import org.jowidgets.workbench.toolkit.api.ILayoutBuilderFactory;
+import org.jowidgets.workbench.toolkit.api.ISplitLayoutBuilder;
+import org.jowidgets.workbench.toolkit.api.IViewLayoutBuilder;
 
-public final class WorkbenchToolkit {
+class LayoutBuilderFactory implements ILayoutBuilderFactory {
 
-	private static IWorkbenchToolkit workbenchToolkit;
-
-	private WorkbenchToolkit() {}
-
-	public static void initialize(final IWorkbenchToolkit workbenchToolkit) {
-		Assert.paramNotNull(workbenchToolkit, "workbenchTools");
-		if (WorkbenchToolkit.workbenchToolkit != null) {
-			throw new IllegalStateException("Workbench toolkit is already initialized");
-		}
-		WorkbenchToolkit.workbenchToolkit = workbenchToolkit;
+	@Override
+	public ILayoutBuilder layout() {
+		return new LayoutBuilder();
 	}
 
-	public static boolean isInitialized() {
-		return workbenchToolkit != null;
+	@Override
+	public IFolderLayoutBuilder folder() {
+		return new FolderLayoutBuilder();
 	}
 
-	public static synchronized IWorkbenchToolkit getInstance() {
-		if (workbenchToolkit == null) {
-			workbenchToolkit = new DefaultWorkbenchToolkit();
-		}
-		return workbenchToolkit;
+	@Override
+	public ISplitLayoutBuilder split() {
+		return new SplitLayoutBuilder();
 	}
 
-	public static ILayoutBuilderFactory getLayoutBuilderFactory() {
-		return getInstance().getLayoutBuilderFactory();
-	}
-
-	public static IWorkbenchPartBuilderFactory getWorkbenchPartBuilderFactory() {
-		return getInstance().getWorkbenchPartBuilderFactory();
-	}
-
-	public static IWorkbenchPartFactory getWorkbenchPartFactory() {
-		return getInstance().getWorkbenchPartFactory();
+	@Override
+	public IViewLayoutBuilder view() {
+		return new ViewLayoutBuilder();
 	}
 
 }
