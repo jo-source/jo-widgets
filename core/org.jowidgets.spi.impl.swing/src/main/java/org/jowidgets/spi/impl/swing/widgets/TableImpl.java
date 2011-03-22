@@ -326,8 +326,8 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 		if (policy.considerData()) {
 			for (int rowIndex = rowRange.getStartIndex(); rowIndex <= rowRange.getEndIndex(); rowIndex++) {
-				final Object value = table.getValueAt(rowIndex, columnIndex);
-				final TableCellRenderer renderer = table.getCellRenderer(rowIndex, columnIndex);
+				final Object value = table.getValueAt(rowIndex, table.convertColumnIndexToView(columnIndex));
+				final TableCellRenderer renderer = column.getCellRenderer();
 				final Component comp = renderer.getTableCellRendererComponent(table, value, false, false, rowIndex, columnIndex);
 				maxWidth = Math.max(maxWidth, (int) comp.getPreferredSize().getWidth());
 			}
