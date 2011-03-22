@@ -26,31 +26,14 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.widgets.descriptor.setup;
+package org.jowidgets.common.types;
 
-import org.jowidgets.common.model.ITableColumnModel;
-import org.jowidgets.common.model.ITableDataModel;
-import org.jowidgets.common.types.TableSelectionPolicy;
-import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
+public enum TableSelectionPolicy {
 
-public interface ITableSetupCommon extends IComponentSetupCommon {
+	SINGLE_ROW_SELECTION,
 
-	@Mandatory
-	TableSelectionPolicy getSelectionPolicy();
+	MULTI_ROW_SELECTION,
 
-	@Mandatory
-	boolean getColumnsMoveable();
-
-	@Mandatory
-	boolean getColumnsResizeable();
-
-	@Mandatory
-	boolean isHeaderVisible();
-
-	@Mandatory
-	ITableDataModel getDataModel();
-
-	@Mandatory
-	ITableColumnModel getColumnModel();
+	NO_SELECTION;
 
 }

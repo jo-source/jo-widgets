@@ -75,8 +75,8 @@ import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.types.Modifier;
 import org.jowidgets.common.types.MouseButton;
 import org.jowidgets.common.types.Position;
-import org.jowidgets.common.types.SelectionPolicy;
 import org.jowidgets.common.types.TableColumnPackPolicy;
+import org.jowidgets.common.types.TableSelectionPolicy;
 import org.jowidgets.common.widgets.controler.ITableCellEditorListener;
 import org.jowidgets.common.widgets.controler.ITableCellListener;
 import org.jowidgets.common.widgets.controler.ITableCellMouseEvent;
@@ -158,6 +158,14 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		this.table = getUiReference();
 		table.setLinesVisible(true);
 		table.setHeaderVisible(setup.isHeaderVisible());
+
+		//TODO MG use fake column because of windows table bug
+		//and to support no selection
+		//final TableColumn fakeColumn = new TableColumn(table, SWT.NONE);
+		//fakeColumn.setResizable(false);
+		//fakeColumn.setMoveable(false);
+		//fakeColumn.setWidth(0);
+		//fakeColumn.setText("FAKE");
 
 		try {
 			this.cursor = new TableCursor(table, SWT.NONE);
@@ -519,12 +527,18 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	}
 
 	private static int getStyle(final ITableSetupSpi setup) {
-		int result = SWT.FULL_SELECTION | SWT.VIRTUAL;
+		int result = SWT.VIRTUAL;
 
-		if (SelectionPolicy.MULTI_SELECTION == setup.getSelectionPolicy()) {
-			result = result | SWT.MULTI;
+		if (TableSelectionPolicy.MULTI_ROW_SELECTION == setup.getSelectionPolicy()) {
+			result = result | SWT.FULL_SELECTION | SWT.MULTI;
 		}
-		else if (SelectionPolicy.SINGLE_SELECTION != setup.getSelectionPolicy()) {
+		else if (TableSelectionPolicy.SINGLE_ROW_SELECTION == setup.getSelectionPolicy()) {
+			result = result | SWT.FULL_SELECTION;
+		}
+		else if (TableSelectionPolicy.NO_SELECTION == setup.getSelectionPolicy()) {
+			result = result | SWT.HIDE_SELECTION;
+		}
+		else {
 			throw new IllegalArgumentException("SelectionPolicy '" + setup.getSelectionPolicy() + "' is not known");
 		}
 

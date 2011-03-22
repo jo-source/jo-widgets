@@ -30,12 +30,12 @@ package org.jowidgets.common.widgets.builder;
 
 import org.jowidgets.common.model.ITableColumnModel;
 import org.jowidgets.common.model.ITableDataModel;
-import org.jowidgets.common.types.SelectionPolicy;
+import org.jowidgets.common.types.TableSelectionPolicy;
 
 public interface ITableSetupBuilderCommon<INSTANCE_TYPE extends ITableSetupBuilderCommon<?>> extends
 		IComponentSetupBuilderCommon<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setSelectionPolicy(SelectionPolicy selectionPolicy);
+	INSTANCE_TYPE setSelectionPolicy(TableSelectionPolicy selectionPolicy);
 
 	INSTANCE_TYPE setColumnsMoveable(boolean columnsMoveable);
 
