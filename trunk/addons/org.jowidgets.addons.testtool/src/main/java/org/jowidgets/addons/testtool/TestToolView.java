@@ -62,8 +62,6 @@ import org.jowidgets.common.model.ITableColumnModel;
 import org.jowidgets.common.model.ITableColumnModelObservable;
 import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.types.Position;
-import org.jowidgets.common.types.TablePackPolicy;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.command.EnabledChecker;
@@ -89,16 +87,16 @@ public class TestToolView {
 	}
 
 	public void createContentArea() {
-		final IFrameBluePrint frameBP = BPF.frame("TestTool").setSize(new Dimension(100, 400));
+		final IFrameBluePrint frameBP = BPF.frame("TestTool");
 		frame = Toolkit.createRootFrame(frameBP);
-		frame.setPosition(new Position(1700, 130));
-		frame.setLayout(new MigLayoutDescriptor("[grow]", "[]"));
+		frame.setLayout(new MigLayoutDescriptor("[grow]", "[grow]"));
 		createMenuBar(frame);
 		createToolBar(frame);
 		createTable(frame);
 		setupTestTool();
 		frame.pack();
-		frame.setVisible(true);
+		frame.setSize(new Dimension(800, 400));
+		viewUtilities.setPositionRelativeToMainWindow(frame);
 	}
 
 	private void createTable(final IFrame frame) {
@@ -181,7 +179,7 @@ public class TestToolView {
 
 		final ITableBluePrint tableBluePrint = BPF.table(columnModel, tableDataModel);
 		table = frame.add(tableBluePrint, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-		table.pack(TablePackPolicy.HEADER_AND_DATA_VISIBLE);
+		table.pack();
 	}
 
 	private void createMenuBar(final IFrame frame) {
@@ -208,9 +206,9 @@ public class TestToolView {
 					dialog.setVisible(true);
 					if (dialog.isOkPressed()) {
 						testTool.save(list, dialog.getValue());
+						Toolkit.getMessagePane().showInfo("Test successfully saved!");
 					}
 					dialog.dispose();
-					Toolkit.getMessagePane().showInfo("Test successfully saved!");
 				}
 				else {
 					Toolkit.getMessagePane().showWarning("There is nothing to save.");
@@ -300,8 +298,7 @@ public class TestToolView {
 						item.getType(),
 						item.getAction().name(),
 						item.getId());
-				table.pack(TablePackPolicy.HEADER_AND_DATA_VISIBLE);
-				table.redraw();
+				table.pack();
 			}
 		});
 	}
