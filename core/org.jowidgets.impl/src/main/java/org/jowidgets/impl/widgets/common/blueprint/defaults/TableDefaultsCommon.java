@@ -35,7 +35,7 @@ public class TableDefaultsCommon implements IDefaultInitializer<ITableSetupBuild
 
 	@Override
 	public void initialize(final ITableSetupBuilderCommon<?> builder) {
-		builder.setSelectionPolicy(TableSelectionPolicy.SINGLE_ROW_SELECTION);
+		builder.setSelectionPolicy(TableSelectionPolicy.MULTI_ROW_SELECTION);
 		builder.setColumnsMoveable(true);
 		builder.setColumnsResizeable(true);
 		builder.setHeaderVisible(true);

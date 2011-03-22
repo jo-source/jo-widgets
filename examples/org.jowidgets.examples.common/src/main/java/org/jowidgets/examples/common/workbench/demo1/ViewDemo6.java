@@ -28,6 +28,8 @@
 
 package org.jowidgets.examples.common.workbench.demo1;
 
+import java.util.ArrayList;
+
 import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.IMenuModel;
@@ -226,7 +228,9 @@ public class ViewDemo6 extends AbstractView implements IView {
 			@Override
 			public void actionPerformed() {
 				table.setCursor(Cursor.WAIT);
+				final ArrayList<Integer> permutation = table.getColumnPermutation();
 				table.resetFromModel();
+				table.setColumnPermutation(permutation);
 				table.setCursor(Cursor.DEFAULT);
 			}
 		});

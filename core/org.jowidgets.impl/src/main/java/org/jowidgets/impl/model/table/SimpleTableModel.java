@@ -57,6 +57,9 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 
 	private ArrayList<Integer> selection;
 
+	private boolean fireDataChanged;
+	private boolean fireSelectionChanged;
+
 	SimpleTableModel(
 		final int rowCount,
 		final int columnCount,
@@ -83,6 +86,27 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 				row.add(cellBuilder.build());
 			}
 		}
+
+		this.fireDataChanged = false;
+		this.fireSelectionChanged = false;
+	}
+
+	@Override
+	public void modifyModelStart() {
+		super.modifyModelStart();
+	}
+
+	@Override
+	public void modifyModelEnd() {
+		super.modifyModelEnd();
+		if (fireDataChanged) {
+			dataModelObservable.fireDataChanged();
+		}
+		if (fireSelectionChanged) {
+			dataModelObservable.fireSelectionChanged();
+		}
+		fireDataChanged = false;
+		fireSelectionChanged = false;
 	}
 
 	@Override
@@ -144,7 +168,12 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 	public void setCell(final int rowIndex, final int columnIndex, final ITableCell cell) {
 		Assert.paramNotNull(cell, "cell");
 		data.get(rowIndex).set(columnIndex, cell);
-		dataModelObservable.fireRowsChanged(new int[] {rowIndex});
+		if (isEventsFreezed()) {
+			fireDataChanged = true;
+		}
+		else {
+			dataModelObservable.fireRowsChanged(new int[] {rowIndex});
+		}
 	}
 
 	@Override
@@ -153,7 +182,12 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 		for (int i = 0; i < cells.length; i++) {
 			data.get(rowIndex).set(i, cells[i]);
 		}
-		dataModelObservable.fireRowsChanged(new int[] {rowIndex});
+		if (isEventsFreezed()) {
+			fireDataChanged = true;
+		}
+		else {
+			dataModelObservable.fireRowsChanged(new int[] {rowIndex});
+		}
 	}
 
 	@Override
@@ -169,7 +203,12 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 				row.add(cellBuilder.build());
 			}
 		}
-		dataModelObservable.fireRowsAdded(rowIndices);
+		if (isEventsFreezed()) {
+			fireDataChanged = true;
+		}
+		else {
+			dataModelObservable.fireRowsAdded(rowIndices);
+		}
 	}
 
 	@Override
@@ -189,16 +228,31 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 				row.add(cellBuilder.build());
 			}
 		}
-		dataModelObservable.fireRowsAdded(new int[] {rowIndex});
+		if (isEventsFreezed()) {
+			fireDataChanged = true;
+		}
+		else {
+			dataModelObservable.fireRowsAdded(new int[] {rowIndex});
+		}
 	}
 
 	@Override
 	public void removeRow(final int index) {
 		data.remove(index);
 		final boolean selectionChanged = selection.remove(Integer.valueOf(index));
-		dataModelObservable.fireRowsRemoved(new int[] {index});
+		if (isEventsFreezed()) {
+			fireDataChanged = true;
+		}
+		else {
+			dataModelObservable.fireRowsRemoved(new int[] {index});
+		}
 		if (selectionChanged) {
-			dataModelObservable.fireSelectionChanged();
+			if (isEventsFreezed()) {
+				fireSelectionChanged = true;
+			}
+			else {
+				dataModelObservable.fireSelectionChanged();
+			}
 		}
 	}
 
@@ -215,9 +269,19 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 			data.remove(fromIndex);
 			selectionChanged = selectionChanged || selection.remove(Integer.valueOf(fromIndex + i));
 		}
-		dataModelObservable.fireRowsRemoved(indices);
+		if (isEventsFreezed()) {
+			fireDataChanged = true;
+		}
+		else {
+			dataModelObservable.fireRowsRemoved(indices);
+		}
 		if (selectionChanged) {
-			dataModelObservable.fireSelectionChanged();
+			if (isEventsFreezed()) {
+				fireSelectionChanged = true;
+			}
+			else {
+				dataModelObservable.fireSelectionChanged();
+			}
 		}
 	}
 
@@ -234,9 +298,19 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 			selectionChanged = selection.remove(Integer.valueOf(row)) || selectionChanged;
 			removedRowCount++;
 		}
-		dataModelObservable.fireRowsRemoved(rows);
+		if (isEventsFreezed()) {
+			fireDataChanged = true;
+		}
+		else {
+			dataModelObservable.fireRowsRemoved(rows);
+		}
 		if (selectionChanged) {
-			dataModelObservable.fireSelectionChanged();
+			if (isEventsFreezed()) {
+				fireSelectionChanged = true;
+			}
+			else {
+				dataModelObservable.fireSelectionChanged();
+			}
 		}
 	}
 
@@ -244,9 +318,19 @@ public class SimpleTableModel extends DefaultTableColumnModel implements ISimple
 	public void removeAllRows() {
 		final boolean selectionChanged = selection.size() > 0;
 		data.clear();
-		dataModelObservable.fireDataChanged();
+		if (isEventsFreezed()) {
+			fireDataChanged = true;
+		}
+		else {
+			dataModelObservable.fireDataChanged();
+		}
 		if (selectionChanged) {
-			dataModelObservable.fireSelectionChanged();
+			if (isEventsFreezed()) {
+				fireSelectionChanged = true;
+			}
+			else {
+				dataModelObservable.fireSelectionChanged();
+			}
 		}
 	}
 

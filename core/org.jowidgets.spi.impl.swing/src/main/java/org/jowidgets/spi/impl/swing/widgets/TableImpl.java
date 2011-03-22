@@ -145,6 +145,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	private SwingTableModel swingTableModel;
 	private ArrayList<Integer> lastColumnPermutation;
 	private boolean columnMoveOccured;
+	private boolean setWidthInvokedOnModel;
 
 	public TableImpl(final ITableSetupSpi setup) {
 		super(new JScrollPane(new JTable()));
@@ -169,6 +170,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		this.tableColumnMoveListener = new TableColumnMoveListener();
 
 		this.columnMoveOccured = false;
+		this.setWidthInvokedOnModel = false;
 
 		this.dataModel = setup.getDataModel();
 		this.columnModel = setup.getColumnModel();
@@ -260,14 +262,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		final int columnCount = columnModel.getColumnCount();
 		lastColumnPermutation = new ArrayList<Integer>(columnCount);
 		for (int columnIndex = 0; columnIndex < columnCount; columnIndex++) {
-			final TableColumn column = new TableColumn();
-			column.setHeaderValue(columnModel.getColumn(columnIndex));
-			column.setCellRenderer(cellRenderer);
-			column.setCellEditor(cellEditor);
-			column.setResizable(columnsResizeable);
-			column.addPropertyChangeListener(tableColumnResizeListener);
-			column.setModelIndex(columnIndex);
-			table.getColumnModel().addColumn(column);
+			table.getColumnModel().addColumn(createColumn(columnIndex));
 			lastColumnPermutation.add(Integer.valueOf(columnIndex));
 		}
 
@@ -285,6 +280,18 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 		//make changes appear in table view
 		table.repaint();
+	}
+
+	private TableColumn createColumn(final int modelIndex) {
+		final TableColumn column = new TableColumn();
+		column.setHeaderValue(columnModel.getColumn(modelIndex));
+		column.setCellRenderer(cellRenderer);
+		column.setCellEditor(cellEditor);
+		column.setResizable(columnsResizeable);
+		column.addPropertyChangeListener(tableColumnResizeListener);
+		column.setPreferredWidth(columnModel.getColumn(modelIndex).getWidth());
+		column.setModelIndex(modelIndex);
+		return column;
 	}
 
 	@Override
@@ -663,6 +670,9 @@ public class TableImpl extends SwingControl implements ITableSpi {
 				final Object newObject = evt.getNewValue();
 				if (newObject instanceof Integer) {
 					final int newWidth = ((Integer) newObject).intValue();
+					setWidthInvokedOnModel = true;
+					columnModel.getColumn(column.getModelIndex()).setWidth(newWidth);
+					setWidthInvokedOnModel = false;
 					tableColumnObservable.fireColumnResized(new TableColumnResizeEvent(column.getModelIndex(), newWidth));
 				}
 			}
@@ -721,41 +731,50 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		@Override
 		public void columnsAdded(final int[] columnIndices) {
 
+			//Trivial case. If nothing added return
 			if (columnIndices.length == 0) {
 				return;
 			}
 
-			//first sort the columns by model index
-			final TableColumn[] columns = getColumnsSortedByModelIndex();
-
-			//fix the model indices and add the new columns to the proper position
+			//Sort the indices to add
 			Arrays.sort(columnIndices);
 
+			//Merge the new columns into the current columns
 			int addedColumns = 0;
 			int nextIndexToAdd = columnIndices[0];
-			for (int columnIndex = 0; columnIndex <= columns.length; columnIndex++) {
+			final TableColumn[] columns = getColumnsSortedByModelIndex();
+			for (int columnIndex = 0; columnIndex < columns.length; columnIndex++) {
 				if (columnIndex == nextIndexToAdd) {
-					final TableColumn column = new TableColumn();
-					column.setHeaderValue(columnModel.getColumn(columnIndex));
-					column.setCellRenderer(cellRenderer);
-					column.setCellEditor(cellEditor);
-					column.setResizable(columnsResizeable);
-					column.addPropertyChangeListener(tableColumnResizeListener);
-					column.setModelIndex(columnIndex);
+					final TableColumn column = createColumn(columnIndex);
 					addedColumns++;
+					table.addColumn(column);
+					table.moveColumn(table.getColumnCount() - 1, columnIndex);
 					if (addedColumns < columnIndices.length) {
 						nextIndexToAdd = columnIndices[addedColumns];
 					}
-					table.addColumn(column);
-					table.moveColumn(table.getColumnCount() - 1, columnIndex);
+					else {
+						nextIndexToAdd = -1;
+					}
 				}
-				//fix the index in the model, for each previously added row, the
-				//index must be increased by one
-				if (columnIndex < columns.length) {
-					final TableColumn swingColumn = columns[columnIndex];
-					swingColumn.setModelIndex(swingColumn.getModelIndex() + addedColumns);
+				//Fix the index in the model. For each previously added row, the
+				//index must be increased by one.
+				final TableColumn swingColumn = columns[columnIndex];
+				swingColumn.setModelIndex(swingColumn.getModelIndex() + addedColumns);
+			}
+			//Then append the residual columns
+			while (nextIndexToAdd != -1) {
+				final TableColumn column = createColumn(nextIndexToAdd);
+				addedColumns++;
+				table.addColumn(column);
+				if (addedColumns < columnIndices.length) {
+					nextIndexToAdd = columnIndices[addedColumns];
+				}
+				else {
+					nextIndexToAdd = -1;
 				}
 			}
+
+			//Make changes appear on table
 			table.getTableHeader().repaint();
 		}
 
@@ -800,16 +819,18 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 		@Override
 		public void columnsChanged(final int[] columnIndices) {
-			for (int i = 0; i < columnIndices.length; i++) {
-				final int columnIndex = columnIndices[i];
-				final int modelIndex = table.convertColumnIndexToView(columnIndex);
-				final int viewWidth = table.getColumnModel().getColumn(modelIndex).getWidth();
-				final int modelWidth = columnModel.getColumn(columnIndex).getWidth();
-				if (viewWidth != modelWidth) {
-					table.getColumnModel().getColumn(modelIndex).setPreferredWidth(modelWidth);
+			if (!setWidthInvokedOnModel) {
+				for (int i = 0; i < columnIndices.length; i++) {
+					final int columnIndex = columnIndices[i];
+					final int modelIndex = table.convertColumnIndexToView(columnIndex);
+					final int viewWidth = table.getColumnModel().getColumn(modelIndex).getWidth();
+					final int modelWidth = columnModel.getColumn(columnIndex).getWidth();
+					if (viewWidth != modelWidth) {
+						table.getColumnModel().getColumn(modelIndex).setPreferredWidth(modelWidth);
+					}
 				}
+				table.getTableHeader().repaint();
 			}
-			table.getTableHeader().repaint();
 		}
 
 		private TableColumn[] getColumnsSortedByModelIndex() {
@@ -942,7 +963,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 				final IColorConstant backgroundColor = cell.getBackgroundColor();
 				final IColorConstant foregroundColor = cell.getForegroundColor();
 				final Markup markup = cell.getMarkup();
-				final AlignmentHorizontal alignment = columnModel.getColumn(column).getAlignment();
+				final AlignmentHorizontal alignment = columnModel.getColumn(table.convertColumnIndexToModel(column)).getAlignment();
 
 				setText(cell.getText());
 				setToolTipText(cell.getToolTipText());
