@@ -77,8 +77,8 @@ import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.types.Modifier;
 import org.jowidgets.common.types.MouseButton;
 import org.jowidgets.common.types.Position;
-import org.jowidgets.common.types.SelectionPolicy;
 import org.jowidgets.common.types.TableColumnPackPolicy;
+import org.jowidgets.common.types.TableSelectionPolicy;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.ITableCellEditEvent;
 import org.jowidgets.common.widgets.controler.ITableCellEditorListener;
@@ -186,11 +186,18 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.getTableHeader().setReorderingAllowed(setup.getColumnsMoveable());
 
-		if (setup.getSelectionPolicy() == SelectionPolicy.SINGLE_SELECTION) {
-			table.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		if (setup.getSelectionPolicy() == TableSelectionPolicy.SINGLE_ROW_SELECTION) {
+			table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		}
+		else if (setup.getSelectionPolicy() == TableSelectionPolicy.MULTI_ROW_SELECTION) {
+			table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		}
+		else if (setup.getSelectionPolicy() == TableSelectionPolicy.NO_SELECTION) {
+			table.setRowSelectionAllowed(false);
+			table.setColumnSelectionAllowed(false);
 		}
 		else {
-			table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+			throw new IllegalArgumentException("SelectionPolicy '" + setup.getSelectionPolicy() + "' is not known");
 		}
 
 		if (!setup.isHeaderVisible()) {

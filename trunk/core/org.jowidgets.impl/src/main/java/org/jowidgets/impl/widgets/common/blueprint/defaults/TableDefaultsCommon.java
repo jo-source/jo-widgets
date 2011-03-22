@@ -28,14 +28,14 @@
 package org.jowidgets.impl.widgets.common.blueprint.defaults;
 
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
-import org.jowidgets.common.types.SelectionPolicy;
+import org.jowidgets.common.types.TableSelectionPolicy;
 import org.jowidgets.common.widgets.builder.ITableSetupBuilderCommon;
 
 public class TableDefaultsCommon implements IDefaultInitializer<ITableSetupBuilderCommon<?>> {
 
 	@Override
 	public void initialize(final ITableSetupBuilderCommon<?> builder) {
-		builder.setSelectionPolicy(SelectionPolicy.MULTI_SELECTION);
+		builder.setSelectionPolicy(TableSelectionPolicy.SINGLE_ROW_SELECTION);
 		builder.setColumnsMoveable(true);
 		builder.setColumnsResizeable(true);
 		builder.setHeaderVisible(true);
