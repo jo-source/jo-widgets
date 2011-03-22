@@ -221,7 +221,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	}
 
 	@Override
-	public void initialize() {
+	public void resetFromModel() {
 		//unregister listeners
 		final ITableDataModelObservable dataModelObservable = dataModel.getTableDataModelObservable();
 		if (dataModelObservable != null) {

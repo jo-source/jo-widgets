@@ -186,7 +186,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	}
 
 	@Override
-	public void initialize() {
+	public void resetFromModel() {
 		table.setRedraw(false);
 
 		final ITableDataModelObservable dataModelObservable = dataModel.getTableDataModelObservable();
