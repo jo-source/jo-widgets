@@ -44,7 +44,7 @@ import org.jowidgets.common.model.ITableDataModelObservable;
 import org.jowidgets.tools.controler.TableDataModelObservable;
 import org.jowidgets.util.Assert;
 
-public class SimpleTableModel extends DefaultTableColumnModel implements ISimpleTableModel, ITableDataModelObservable {
+class SimpleTableModel extends DefaultTableColumnModel implements ISimpleTableModel, ITableDataModelObservable {
 
 	private final TableDataModelObservable dataModelObservable;
 
