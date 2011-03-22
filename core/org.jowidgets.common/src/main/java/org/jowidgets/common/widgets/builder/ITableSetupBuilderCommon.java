@@ -41,6 +41,8 @@ public interface ITableSetupBuilderCommon<INSTANCE_TYPE extends ITableSetupBuild
 
 	INSTANCE_TYPE setColumnsResizeable(boolean columnsResizeable);
 
+	INSTANCE_TYPE setHeaderVisible(boolean visible);
+
 	INSTANCE_TYPE setDataModel(ITableDataModel model);
 
 	INSTANCE_TYPE setColumnModel(ITableColumnModel model);

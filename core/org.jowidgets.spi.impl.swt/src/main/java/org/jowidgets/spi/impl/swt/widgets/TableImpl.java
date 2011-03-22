@@ -157,7 +157,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 		this.table = getUiReference();
 		table.setLinesVisible(true);
-		table.setHeaderVisible(true);
+		table.setHeaderVisible(setup.isHeaderVisible());
 
 		try {
 			this.cursor = new TableCursor(table, SWT.NONE);

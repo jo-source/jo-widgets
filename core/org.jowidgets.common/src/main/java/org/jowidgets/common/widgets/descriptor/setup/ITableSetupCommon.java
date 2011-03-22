@@ -45,6 +45,9 @@ public interface ITableSetupCommon extends IComponentSetupCommon {
 	boolean getColumnsResizeable();
 
 	@Mandatory
+	boolean isHeaderVisible();
+
+	@Mandatory
 	ITableDataModel getDataModel();
 
 	@Mandatory

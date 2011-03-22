@@ -193,6 +193,11 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		}
 
+		if (!setup.isHeaderVisible()) {
+			table.getTableHeader().setVisible(false);
+			table.getTableHeader().setPreferredSize(new java.awt.Dimension(-1, 0));
+		}
+
 		table.getTableHeader().setDefaultRenderer(headerRenderer);
 		table.getTableHeader().addMouseListener(tableColumnListener);
 		table.getTableHeader().addMouseListener(new TableColumnMenuDetectListener());
