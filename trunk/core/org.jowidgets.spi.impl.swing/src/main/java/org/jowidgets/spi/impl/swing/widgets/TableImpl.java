@@ -222,22 +222,29 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 	@Override
 	public void initialize() {
+		//unregister listeners
 		final ITableDataModelObservable dataModelObservable = dataModel.getTableDataModelObservable();
 		if (dataModelObservable != null) {
 			dataModelObservable.removeDataModelListener(tableModelListener);
 		}
-
 		final ITableColumnModelObservable columnModelObservable = columnModel.getTableColumnModelObservable();
 		if (columnModelObservable != null) {
 			columnModelObservable.removeColumnModelListener(tableColumnModelListener);
 		}
-
 		table.getSelectionModel().removeListSelectionListener(tableSelectionListener);
 
-		this.swingTableModel = new SwingTableModel();
+		//remove all old columns
+		final TableColumnModel swingColumnModel = table.getColumnModel();
+		final int oldColumnCount = swingColumnModel.getColumnCount();
+		for (int columnIndex = 0; columnIndex < oldColumnCount; columnIndex++) {
+			swingColumnModel.removeColumn(swingColumnModel.getColumn(0));
+		}
 
+		//set a new model
+		this.swingTableModel = new SwingTableModel();
 		table.setModel(swingTableModel);
 
+		//add all new columns
 		final int columnCount = columnModel.getColumnCount();
 		lastColumnPermutation = new ArrayList<Integer>(columnCount);
 		for (int columnIndex = 0; columnIndex < columnCount; columnIndex++) {
@@ -252,18 +259,19 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			lastColumnPermutation.add(Integer.valueOf(columnIndex));
 		}
 
+		//set the current selection
 		setSelection(dataModel.getSelection());
 
+		//register listeners
 		if (dataModelObservable != null) {
 			dataModelObservable.addDataModelListener(tableModelListener);
 		}
-
 		if (columnModelObservable != null) {
 			columnModelObservable.addColumnModelListener(tableColumnModelListener);
 		}
-
 		table.getSelectionModel().addListSelectionListener(tableSelectionListener);
 
+		//make changes appear in table view
 		table.repaint();
 	}
 
