@@ -63,7 +63,7 @@ import org.jowidgets.common.model.ITableColumnModelObservable;
 import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
-import org.jowidgets.common.types.TableColumnPackPolicy;
+import org.jowidgets.common.types.TablePackPolicy;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.command.EnabledChecker;
@@ -181,7 +181,7 @@ public class TestToolView {
 
 		final ITableBluePrint tableBluePrint = BPF.table(columnModel, tableDataModel);
 		table = frame.add(tableBluePrint, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-		table.pack(TableColumnPackPolicy.HEADER_AND_CONTENT);
+		table.pack(TablePackPolicy.HEADER_AND_DATA_VISIBLE);
 	}
 
 	private void createMenuBar(final IFrame frame) {
@@ -300,7 +300,7 @@ public class TestToolView {
 						item.getType(),
 						item.getAction().name(),
 						item.getId());
-				table.pack(TableColumnPackPolicy.HEADER_AND_CONTENT);
+				table.pack(TablePackPolicy.HEADER_AND_DATA_VISIBLE);
 				table.redraw();
 			}
 		});

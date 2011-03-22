@@ -40,7 +40,7 @@ import org.jowidgets.common.model.ITableColumnModel;
 import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
-import org.jowidgets.common.types.TableColumnPackPolicy;
+import org.jowidgets.common.types.TablePackPolicy;
 import org.jowidgets.common.widgets.controler.ITableCellEditorListener;
 import org.jowidgets.common.widgets.controler.ITableCellListener;
 import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionListener;
@@ -54,6 +54,8 @@ import org.jowidgets.impl.widgets.common.wrapper.ControlSpiWrapper;
 import org.jowidgets.spi.widgets.ITableSpi;
 
 public class TableImpl extends ControlSpiWrapper implements ITable {
+
+	private static final TablePackPolicy DEFAULT_PACK_POLICY = TablePackPolicy.HEADER_AND_DATA_VISIBLE;
 
 	private final ControlDelegate controlDelegate;
 	private final ITableDataModel dataModel;
@@ -134,16 +136,21 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 
 	@Override
 	public void pack() {
-		pack(TableColumnPackPolicy.HEADER_AND_CONTENT);
+		pack(DEFAULT_PACK_POLICY);
 	}
 
 	@Override
-	public void pack(final TableColumnPackPolicy policy) {
+	public void pack(final int columnIndex) {
+		pack(columnIndex, DEFAULT_PACK_POLICY);
+	}
+
+	@Override
+	public void pack(final TablePackPolicy policy) {
 		getWidget().pack(policy);
 	}
 
 	@Override
-	public void pack(final int columnIndex, final TableColumnPackPolicy policy) {
+	public void pack(final int columnIndex, final TablePackPolicy policy) {
 		getWidget().pack(columnIndex, policy);
 	}
 

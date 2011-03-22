@@ -33,7 +33,7 @@ import java.util.List;
 
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
-import org.jowidgets.common.types.TableColumnPackPolicy;
+import org.jowidgets.common.types.TablePackPolicy;
 import org.jowidgets.common.widgets.controler.ITableCellEditorObservable;
 import org.jowidgets.common.widgets.controler.ITableCellObservable;
 import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionObservable;
@@ -64,8 +64,8 @@ public interface ITableCommon extends
 
 	void setSelection(List<Integer> selection);
 
-	void pack(TableColumnPackPolicy policy);
+	void pack(TablePackPolicy policy);
 
-	void pack(int columnIndex, TableColumnPackPolicy policy);
+	void pack(int columnIndex, TablePackPolicy policy);
 
 }
