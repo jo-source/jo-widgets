@@ -44,7 +44,6 @@ import org.jowidgets.common.model.ITableCell;
 import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.IVetoable;
-import org.jowidgets.common.types.TableColumnPackPolicy;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.ITableCellEditEvent;
 import org.jowidgets.common.widgets.controler.ITableCellEditorListener;
@@ -236,7 +235,7 @@ public class ViewDemo6 extends AbstractView implements IView {
 			@Override
 			public void actionPerformed() {
 				table.setCursor(Cursor.WAIT);
-				table.pack(TableColumnPackPolicy.HEADER_AND_CONTENT);
+				table.pack();
 				table.setCursor(Cursor.DEFAULT);
 			}
 		});
@@ -245,7 +244,7 @@ public class ViewDemo6 extends AbstractView implements IView {
 			@Override
 			public void actionPerformed() {
 				table.setCursor(Cursor.WAIT);
-				table.pack(selectedColumn.get().intValue(), TableColumnPackPolicy.HEADER_AND_CONTENT);
+				table.pack(selectedColumn.get().intValue());
 				table.setCursor(Cursor.DEFAULT);
 			}
 		});

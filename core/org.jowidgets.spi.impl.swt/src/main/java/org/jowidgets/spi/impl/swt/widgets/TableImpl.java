@@ -50,10 +50,12 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -75,7 +77,7 @@ import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.types.Modifier;
 import org.jowidgets.common.types.MouseButton;
 import org.jowidgets.common.types.Position;
-import org.jowidgets.common.types.TableColumnPackPolicy;
+import org.jowidgets.common.types.TablePackPolicy;
 import org.jowidgets.common.types.TableSelectionPolicy;
 import org.jowidgets.common.widgets.controler.ITableCellEditorListener;
 import org.jowidgets.common.widgets.controler.ITableCellListener;
@@ -327,22 +329,69 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	}
 
 	@Override
-	public void pack(final TableColumnPackPolicy policy) {
+	public void pack(final TablePackPolicy policy) {
 		table.setRedraw(false);
-		final TableColumn[] columns = table.getColumns();
 		for (int columnIndex = 0; columnIndex < table.getColumnCount(); columnIndex++) {
-			//TODO MG consider pack policy
-			columns[columnIndex].pack();
+			packColumn(columnIndex, policy);
 		}
 		table.setRedraw(true);
 	}
 
 	@Override
-	public void pack(final int columnIndex, final TableColumnPackPolicy policy) {
+	public void pack(final int columnIndex, final TablePackPolicy policy) {
 		table.setRedraw(false);
-		//TODO MG consider pack policy
-		table.getColumn(columnIndex).pack();
+		packColumn(columnIndex, policy);
 		table.setRedraw(true);
+	}
+
+	private void packColumn(final int columnIndex, final TablePackPolicy policy) {
+		final Label textLabel = new Label(table, SWT.NONE);
+		final GC context = new GC(textLabel);
+
+		final TableColumn[] columns = table.getColumns();
+		final TableColumn column = columns[columnIndex];
+		boolean packed = false;
+
+		int max = 10;
+
+		if (policy.considerHeader()) {
+			context.setFont(table.getFont());
+			textLabel.setFont(table.getFont());
+			int width = context.textExtent(column.getText()).x;
+			if (column.getImage() != null) {
+				width += column.getImage().getBounds().width;
+			}
+			max = Math.max(max, width);
+		}
+
+		if (policy.considerData() && policy.considerAllData()) {
+			for (int i = 0; i < table.getItemCount(); i++) {
+				final TableItem item = table.getItem(i);
+
+				context.setFont(item.getFont(columnIndex));
+				textLabel.setFont(item.getFont(columnIndex));
+
+				int width = context.textExtent(item.getText(columnIndex)).x;
+				if (item.getImage(columnIndex) != null) {
+					width += item.getImage(columnIndex).getBounds().width + 5;
+				}
+				max = Math.max(max, width);
+			}
+		}
+		else if (policy.considerData()) {
+			packed = true;
+			column.pack();
+		}
+
+		if (packed) {
+			column.setWidth(Math.max(max + 15, column.getWidth()));
+		}
+		else {
+			column.setWidth(max + 15);
+		}
+
+		context.dispose();
+		textLabel.dispose();
 	}
 
 	@Override
@@ -356,7 +405,6 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 	@Override
 	public void setColumnPermutation(final List<Integer> permutation) {
-
 		final int[] columnOrder = new int[permutation.size()];
 		int i = 0;
 		for (final Integer permutatedIndex : permutation) {

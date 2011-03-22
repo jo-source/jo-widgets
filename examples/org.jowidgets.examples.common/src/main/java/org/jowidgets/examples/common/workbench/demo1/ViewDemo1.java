@@ -43,6 +43,7 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.types.TablePackPolicy;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.ITableCellEditEvent;
@@ -69,6 +70,7 @@ public class ViewDemo1 extends AbstractView {
 	public static final IImageConstant DEFAULT_ICON = SilkIcons.USER;
 
 	private final InputDialogFactory inputDialogFactory;
+	private ITable table;
 
 	public ViewDemo1(final IViewContext context, final DemoMenuProvider menuProvider, final ISimpleTableModel tableModel) {
 		super(ID);
@@ -85,8 +87,8 @@ public class ViewDemo1 extends AbstractView {
 		container.setLayout(MigLayoutFactory.growingInnerCellLayout());
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-		final ITable table = container.add(bpf.table(tableModel), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-		table.pack();
+		table = container.add(bpf.table(tableModel), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+		table.pack(TablePackPolicy.HEADER_AND_DATA_ALL);
 
 		final ValueHolder<Integer> currentRow = new ValueHolder<Integer>();
 		final ValueHolder<Integer> currentColumn = new ValueHolder<Integer>();

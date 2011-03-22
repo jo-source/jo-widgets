@@ -34,6 +34,8 @@ public interface ITable extends IControl, ITableCommon {
 
 	void pack();
 
+	void pack(int columnIndex);
+
 	int getRowCount();
 
 	int getColumnCount();

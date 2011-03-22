@@ -77,7 +77,7 @@ import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.types.Modifier;
 import org.jowidgets.common.types.MouseButton;
 import org.jowidgets.common.types.Position;
-import org.jowidgets.common.types.TableColumnPackPolicy;
+import org.jowidgets.common.types.TablePackPolicy;
 import org.jowidgets.common.types.TableSelectionPolicy;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.ITableCellEditEvent;
@@ -300,26 +300,24 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	}
 
 	@Override
-	public void pack(final TableColumnPackPolicy policy) {
+	public void pack(final TablePackPolicy policy) {
 		for (int columnIndex = 0; columnIndex < table.getColumnCount(); columnIndex++) {
 			pack(columnIndex, getRowRange(policy), policy);
 		}
 	}
 
 	@Override
-	public void pack(final int columnIndex, final TableColumnPackPolicy policy) {
+	public void pack(final int columnIndex, final TablePackPolicy policy) {
 		pack(columnIndex, getRowRange(policy), policy);
 	}
 
-	private void pack(final int columnIndex, final RowRange rowRange, final TableColumnPackPolicy policy) {
+	private void pack(final int columnIndex, final RowRange rowRange, final TablePackPolicy policy) {
 
 		final TableColumn column = table.getColumnModel().getColumn(table.convertColumnIndexToView(columnIndex));
 
-		final boolean header = TableColumnPackPolicy.HEADER == policy || TableColumnPackPolicy.HEADER_AND_CONTENT == policy;
-		final boolean data = TableColumnPackPolicy.CONTENT == policy || TableColumnPackPolicy.HEADER_AND_CONTENT == policy;
 		int maxWidth = 0;
 
-		if (data) {
+		if (policy.considerData()) {
 			for (int rowIndex = rowRange.getStartIndex(); rowIndex <= rowRange.getEndIndex(); rowIndex++) {
 				final Object value = table.getValueAt(rowIndex, columnIndex);
 				final TableCellRenderer renderer = table.getCellRenderer(rowIndex, columnIndex);
@@ -328,7 +326,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			}
 		}
 
-		if (header) {
+		if (policy.considerHeader()) {
 			final Object value = column.getHeaderValue();
 			final TableCellRenderer renderer = table.getTableHeader().getDefaultRenderer();
 			final Component comp = renderer.getTableCellRendererComponent(table, value, false, false, 0, columnIndex);
@@ -338,14 +336,19 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		column.setPreferredWidth(maxWidth + 5);
 	}
 
-	private RowRange getRowRange(final TableColumnPackPolicy policy) {
-		final Rectangle viewRect = getUiReference().getViewport().getViewRect();
-		final int firstVisibleRowIndex = table.rowAtPoint(new Point(0, viewRect.y));
-		int lastVisibleRowIndex = table.rowAtPoint(new Point(0, viewRect.y + viewRect.height - 1));
-		if (lastVisibleRowIndex == -1) {
-			lastVisibleRowIndex = table.getRowCount() - 1;
+	private RowRange getRowRange(final TablePackPolicy policy) {
+		if (policy.considerAllData()) {
+			return new RowRange(0, table.getRowCount() - 1);
 		}
-		return new RowRange(firstVisibleRowIndex, lastVisibleRowIndex);
+		else {
+			final Rectangle viewRect = getUiReference().getViewport().getViewRect();
+			final int firstVisibleRowIndex = table.rowAtPoint(new Point(0, viewRect.y));
+			int lastVisibleRowIndex = table.rowAtPoint(new Point(0, viewRect.y + viewRect.height - 1));
+			if (lastVisibleRowIndex == -1) {
+				lastVisibleRowIndex = table.getRowCount() - 1;
+			}
+			return new RowRange(firstVisibleRowIndex, lastVisibleRowIndex);
+		}
 	}
 
 	@Override
