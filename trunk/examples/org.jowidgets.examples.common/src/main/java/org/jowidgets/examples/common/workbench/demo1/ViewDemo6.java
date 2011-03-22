@@ -227,7 +227,7 @@ public class ViewDemo6 extends AbstractView implements IView {
 			@Override
 			public void actionPerformed() {
 				table.setCursor(Cursor.WAIT);
-				table.initialize();
+				table.resetFromModel();
 				table.setCursor(Cursor.DEFAULT);
 			}
 		});

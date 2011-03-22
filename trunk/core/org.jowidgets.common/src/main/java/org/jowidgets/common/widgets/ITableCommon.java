@@ -50,7 +50,7 @@ public interface ITableCommon extends
 		ITableColumnPopupDetectionObservable,
 		IControlCommon {
 
-	void initialize();
+	void resetFromModel();
 
 	Position getCellPosition(int rowIndex, int columnIndex);
 

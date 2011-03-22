@@ -69,7 +69,7 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
 
-		initialize();
+		resetFromModel();
 	}
 
 	@Override
@@ -108,8 +108,8 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 	}
 
 	@Override
-	public void initialize() {
-		getWidget().initialize();
+	public void resetFromModel() {
+		getWidget().resetFromModel();
 	}
 
 	@Override
