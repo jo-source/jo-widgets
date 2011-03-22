@@ -107,9 +107,11 @@ public final class TestToolImpl implements ITestTool {
 	@Override
 	public void register(final IWidgetCommon widget) {
 		addListener(widget);
+		// TODO LG remove disposed widgets
 		widgetRegistry.add(widget);
 	}
 
+	// TODO LG remove unused listeners
 	private void addListener(final IWidgetCommon widget) {
 		// TODO LG use IFrameUi
 		if (widget instanceof IFrame) {
