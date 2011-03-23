@@ -42,7 +42,7 @@ class WorkbenchPartBuilderFactory implements IWorkbenchPartBuilderFactory {
 
 	@Override
 	public IWorkbenchApplicationModelBuilder application() {
-		return null;
+		return new WorkbenchApplicationModelBuilder();
 	}
 
 	@Override
