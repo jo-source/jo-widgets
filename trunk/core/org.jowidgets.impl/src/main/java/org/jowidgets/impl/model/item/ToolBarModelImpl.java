@@ -28,8 +28,10 @@
 
 package org.jowidgets.impl.model.item;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.model.IListModelListener;
@@ -49,10 +51,29 @@ import org.jowidgets.util.Assert;
 class ToolBarModelImpl implements IToolBarModel {
 
 	private final ListModelDelegate listModelDelegate;
+	private final Set<IToolBarModel> boundModels;
 
 	protected ToolBarModelImpl() {
 		super();
 		this.listModelDelegate = new ListModelDelegate();
+		this.boundModels = new HashSet<IToolBarModel>();
+
+		this.addListModelListener(new IListModelListener() {
+
+			@Override
+			public void childRemoved(final int index) {
+				for (final IToolBarModel boundModel : boundModels) {
+					boundModel.removeItem(index);
+				}
+			}
+
+			@Override
+			public void childAdded(final int index) {
+				for (final IToolBarModel boundModel : boundModels) {
+					boundModel.addItem(getItems().get(index));
+				}
+			}
+		});
 	}
 
 	@Override
@@ -60,6 +81,20 @@ class ToolBarModelImpl implements IToolBarModel {
 		final ToolBarModelImpl result = new ToolBarModelImpl();
 		result.setContent(this);
 		return result;
+	}
+
+	@Override
+	public void bind(final IToolBarModel model) {
+		Assert.paramNotNull(model, "model");
+		model.removeAllItems();
+		model.addItemsOfModel(this);
+		boundModels.add(model);
+	}
+
+	@Override
+	public void unbind(final IToolBarModel model) {
+		Assert.paramNotNull(model, "model");
+		boundModels.remove(model);
 	}
 
 	@Override

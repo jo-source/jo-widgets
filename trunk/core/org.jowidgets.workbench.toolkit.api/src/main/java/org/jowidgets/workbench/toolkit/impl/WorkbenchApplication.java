@@ -28,15 +28,22 @@
 
 package org.jowidgets.workbench.toolkit.impl;
 
+import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
+import org.jowidgets.workbench.toolkit.api.IWorkbenchPartModelListener;
 
 class WorkbenchApplication extends ComponentNodeContainer implements IWorkbenchApplication {
 
 	private final IWorkbenchApplicationModel model;
+
+	private IToolBarModel toolBar;
+	private IMenuModel popupMenu;
+	private IMenuModel toolBarMenu;
 
 	WorkbenchApplication(final IWorkbenchApplicationModel model) {
 		super(model);
@@ -46,6 +53,15 @@ class WorkbenchApplication extends ComponentNodeContainer implements IWorkbenchA
 	@Override
 	public void onContextInitialize(final IWorkbenchApplicationContext context) {
 		super.initialize(context);
+
+		model.addWorkbenchPartModelListener(new IWorkbenchPartModelListener() {
+			@Override
+			public void modelChanged() {
+				onModelChanged(context);
+			}
+		});
+
+		onModelChanged(context);
 	}
 
 	@Override
@@ -87,6 +103,57 @@ class WorkbenchApplication extends ComponentNodeContainer implements IWorkbenchA
 		if (model.getLifecycleCallback() != null) {
 			model.getLifecycleCallback().onClose(vetoable);
 		}
+	}
+
+	private void onModelChanged(final IWorkbenchApplicationContext context) {
+		if (toolBar != model.getToolBar()) {
+			onToolBarChanged(context);
+		}
+		if (popupMenu != model.getPopupMenu()) {
+			onPopupMenuChanged(context);
+		}
+		if (toolBarMenu != model.getToolBarMenu()) {
+			onToolBarMenuChanged(context);
+		}
+	}
+
+	private void onToolBarChanged(final IWorkbenchApplicationContext context) {
+		if (toolBar != null) {
+			toolBar.unbind(context.getToolBar());
+		}
+		if (model.getToolBar() != null) {
+			model.getToolBar().bind(context.getToolBar());
+		}
+		else {
+			context.getToolBar().removeAllItems();
+		}
+		toolBar = model.getToolBar();
+	}
+
+	private void onPopupMenuChanged(final IWorkbenchApplicationContext context) {
+		if (popupMenu != null) {
+			popupMenu.unbind(context.getPopupMenu());
+		}
+		if (model.getPopupMenu() != null) {
+			model.getPopupMenu().bind(context.getPopupMenu());
+		}
+		else {
+			context.getPopupMenu().removeAllItems();
+		}
+		popupMenu = model.getPopupMenu();
+	}
+
+	private void onToolBarMenuChanged(final IWorkbenchApplicationContext context) {
+		if (toolBarMenu != null) {
+			toolBarMenu.unbind(context.getToolBarMenu());
+		}
+		if (model.getToolBarMenu() != null) {
+			model.getToolBarMenu().bind(context.getToolBarMenu());
+		}
+		else {
+			context.getToolBarMenu().removeAllItems();
+		}
+		toolBarMenu = model.getToolBarMenu();
 	}
 
 }

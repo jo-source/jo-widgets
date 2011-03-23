@@ -28,8 +28,10 @@
 
 package org.jowidgets.impl.model.item;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IMenuBarModel;
@@ -41,10 +43,29 @@ import org.jowidgets.util.Assert;
 class MenuBarModelImpl implements IMenuBarModel {
 
 	private final ListModelDelegate listModelDelegate;
+	private final Set<IMenuBarModel> boundModels;
 
 	protected MenuBarModelImpl() {
 		super();
 		this.listModelDelegate = new ListModelDelegate();
+		this.boundModels = new HashSet<IMenuBarModel>();
+
+		this.addListModelListener(new IListModelListener() {
+
+			@Override
+			public void childRemoved(final int index) {
+				for (final IMenuBarModel boundModel : boundModels) {
+					boundModel.removeMenu(index);
+				}
+			}
+
+			@Override
+			public void childAdded(final int index) {
+				for (final IMenuBarModel boundModel : boundModels) {
+					boundModel.addMenu(getMenus().get(index));
+				}
+			}
+		});
 	}
 
 	@Override
@@ -66,6 +87,20 @@ class MenuBarModelImpl implements IMenuBarModel {
 	@Override
 	public void addBefore(final IMenuModel newMenu, final String id) {
 		listModelDelegate.addBefore(newMenu, id);
+	}
+
+	@Override
+	public void bind(final IMenuBarModel model) {
+		Assert.paramNotNull(model, "model");
+		model.removeAllMenus();
+		model.addMenusOfModel(this);
+		boundModels.add(model);
+	}
+
+	@Override
+	public void unbind(final IMenuBarModel model) {
+		Assert.paramNotNull(model, "model");
+		boundModels.remove(model);
 	}
 
 	@Override
