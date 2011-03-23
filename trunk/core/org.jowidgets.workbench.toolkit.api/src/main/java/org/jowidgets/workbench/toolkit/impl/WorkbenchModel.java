@@ -47,7 +47,7 @@ import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModelBuilder;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchModel;
 import org.jowidgets.workbench.toolkit.api.WorkbenchToolkit;
 
-public class WorkbenchModel extends WorkbenchPartModel implements IWorkbenchModel {
+class WorkbenchModel extends WorkbenchPartModel implements IWorkbenchModel {
 
 	private final ListModelObservable listModelObservable;
 

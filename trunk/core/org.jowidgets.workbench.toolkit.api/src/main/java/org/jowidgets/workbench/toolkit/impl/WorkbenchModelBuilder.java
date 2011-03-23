@@ -44,7 +44,7 @@ import org.jowidgets.workbench.toolkit.api.IWorkbenchModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchModelBuilder;
 import org.jowidgets.workbench.toolkit.api.WorkbenchToolkit;
 
-public class WorkbenchModelBuilder extends WorkbenchPartBuilder<IWorkbenchModelBuilder> implements IWorkbenchModelBuilder {
+class WorkbenchModelBuilder extends WorkbenchPartBuilder<IWorkbenchModelBuilder> implements IWorkbenchModelBuilder {
 
 	private Dimension initialDimension;
 	private Position initialPosition;
