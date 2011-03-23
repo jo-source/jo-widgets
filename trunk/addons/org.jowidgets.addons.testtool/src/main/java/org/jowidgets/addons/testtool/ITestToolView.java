@@ -26,44 +26,8 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.workbench;
+package org.jowidgets.addons.testtool;
 
-import org.jowidgets.addons.testtool.ITestTool;
-import org.jowidgets.addons.testtool.TestToolView;
-import org.jowidgets.addons.testtool.TestToolImpl;
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.common.widgets.IWidgetCommon;
-import org.jowidgets.common.widgets.factory.IWidgetFactoryListener;
-import org.jowidgets.workbench.api.IWorkbench;
-import org.jowidgets.workbench.api.IWorkbenchConfigurationService;
-import org.jowidgets.workbench.api.IWorkbenchRunner;
-import org.jowidgets.workbench.impl.WorkbenchRunner;
-
-public class TestWorkbenchRunner implements IWorkbenchRunner {
-
-	private final IWorkbenchRunner runner;
-
-	public TestWorkbenchRunner() {
-		runner = new WorkbenchRunnerWrapper(new WorkbenchRunner());
-	}
-
-	@Override
-	public void run(final IWorkbench workbench) {
-		run(workbench, null);
-	}
-
-	@Override
-	public void run(final IWorkbench workbench, final IWorkbenchConfigurationService configurationService) {
-		final ITestTool testTool = new TestToolImpl();
-		new TestToolView(testTool);
-		Toolkit.getWidgetFactory().addWidgetFactoryListener(new IWidgetFactoryListener() {
-
-			@Override
-			public void widgetCreated(final IWidgetCommon widget) {
-				testTool.register(widget);
-			}
-		});
-		runner.run(workbench, configurationService);
-	}
+public interface ITestToolView {
 
 }

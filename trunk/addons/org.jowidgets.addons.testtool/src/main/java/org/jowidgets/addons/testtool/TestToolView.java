@@ -70,7 +70,7 @@ import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.model.table.DefaultTableColumnBuilder;
 import org.jowidgets.util.Assert;
 
-public class TestToolView {
+public class TestToolView implements ITestToolView {
 
 	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 	private static final IActionBuilderFactory ABF = Toolkit.getActionBuilderFactory();
