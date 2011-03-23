@@ -41,7 +41,7 @@ public interface ITestTool {
 
 	void record(IWidgetCommon widget, UserAction action, String id);
 
-	void replay(List<TestDataObject> list, boolean headlessEnv);
+	void replay(List<TestDataObject> list, int delay);
 
 	void save(final List<TestDataObject> list, final String fileName);
 

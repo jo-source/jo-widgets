@@ -31,7 +31,6 @@ package org.jowidgets.addons.testtool.internal;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.common.widgets.IWidgetCommon;
 
@@ -69,7 +68,6 @@ public class WidgetFinder {
 				}
 			}
 		}
-		Toolkit.getMessagePane().showWarning("No Widget found! Please select the missing Widget.");
 		return null;
 	}
 }
