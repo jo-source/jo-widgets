@@ -31,6 +31,6 @@ package org.jowidgets.common.types;
 public enum MouseButton {
 
 	LEFT,
-	RIGTH;
+	RIGHT;
 
 }

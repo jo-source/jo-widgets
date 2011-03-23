@@ -54,6 +54,6 @@ public interface IWorkbenchApplicationModel extends
 
 	void setLifecycleCallback(ILifecycleCallback lifecycleCallback);
 
-	IWorkbenchModel getWorkbenchModel();
+	IWorkbenchModel getWorkbench();
 
 }

@@ -34,10 +34,8 @@ import org.jowidgets.workbench.api.ILifecycleCallback;
 import org.jowidgets.workbench.api.IWorkbenchApplicationDescriptor;
 
 public interface IWorkbenchApplicationModelBuilder extends
-		IComponentNodeContainerModelBuilder<IComponentNodeModelBuilder>,
+		IComponentNodeContainerModelBuilder<IWorkbenchApplicationModelBuilder>,
 		IWorkbenchPartBuilder<IWorkbenchApplicationModelBuilder> {
-
-	IWorkbenchApplicationModelBuilder setId(String id);
 
 	IWorkbenchApplicationModelBuilder setPopupMenu(IMenuModel menuModel);
 

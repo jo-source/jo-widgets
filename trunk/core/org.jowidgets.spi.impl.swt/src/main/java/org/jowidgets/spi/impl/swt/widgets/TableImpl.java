@@ -553,7 +553,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			return MouseButton.LEFT;
 		}
 		else if (event.button == 3) {
-			return MouseButton.RIGTH;
+			return MouseButton.RIGHT;
 		}
 		else {
 			return null;
