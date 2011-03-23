@@ -42,6 +42,8 @@ public interface IComponentNodeModelBuilder extends
 
 	IComponentNodeModelBuilder setComponentFactory(IComponentFactory componentFactory);
 
+	IComponentNodeModelBuilder setInitializeCallback(IComponentNodeInitializeCallback initializeCallback);
+
 	IComponentNodeModel build();
 
 }

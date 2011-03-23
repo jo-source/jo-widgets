@@ -34,6 +34,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.ILifecycleCallback;
 import org.jowidgets.workbench.api.IWorkbenchApplicationDescriptor;
+import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationInitializeCallback;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModelBuilder;
 
@@ -47,6 +48,7 @@ class WorkbenchApplicationModelBuilder extends ComponentNodeContainerModelBuilde
 	private IToolBarModel toolBarModel;
 	private IMenuModel toolBarMenu;
 	private ILifecycleCallback lifecycleCallback;
+	private IWorkbenchApplicationInitializeCallback initializeCallback;
 
 	WorkbenchApplicationModelBuilder() {
 		super();
@@ -103,6 +105,13 @@ class WorkbenchApplicationModelBuilder extends ComponentNodeContainerModelBuilde
 	}
 
 	@Override
+	public IWorkbenchApplicationModelBuilder setInitializeCallback(
+		final IWorkbenchApplicationInitializeCallback initializeCallback) {
+		this.initializeCallback = initializeCallback;
+		return this;
+	}
+
+	@Override
 	public IWorkbenchApplicationModel build() {
 		return new WorkbenchApplicationModel(
 			getId(),
@@ -113,6 +122,7 @@ class WorkbenchApplicationModelBuilder extends ComponentNodeContainerModelBuilde
 			toolBarModel,
 			toolBarMenu,
 			lifecycleCallback,
+			initializeCallback,
 			getChildren());
 	}
 

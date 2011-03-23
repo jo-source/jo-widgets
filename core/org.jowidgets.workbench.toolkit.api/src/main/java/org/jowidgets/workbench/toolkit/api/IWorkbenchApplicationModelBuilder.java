@@ -45,6 +45,8 @@ public interface IWorkbenchApplicationModelBuilder extends
 
 	IWorkbenchApplicationModelBuilder setLifecycleCallback(ILifecycleCallback lifecycleCallback);
 
+	IWorkbenchApplicationModelBuilder setInitializeCallback(IWorkbenchApplicationInitializeCallback initializeCallback);
+
 	IWorkbenchApplicationModelBuilder setDescriptor(IWorkbenchApplicationDescriptor descriptor);
 
 	IWorkbenchApplicationModel build();
