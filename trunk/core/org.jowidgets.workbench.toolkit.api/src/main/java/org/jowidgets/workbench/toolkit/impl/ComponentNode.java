@@ -73,6 +73,10 @@ class ComponentNode extends ComponentNodeContainer implements IComponentTreeNode
 		model.addWorkbenchPartModelListener(workbenchPartModelListener);
 
 		onModelChanged(context);
+
+		if (model.getInitializeCallback() != null) {
+			model.getInitializeCallback().onContextInitialize(new ModelBasedComponentNodeContext(context, model));
+		}
 	}
 
 	@Override
@@ -98,7 +102,7 @@ class ComponentNode extends ComponentNodeContainer implements IComponentTreeNode
 	@Override
 	public IComponent createComponent(final IComponentContext context) {
 		if (model.getComponentFactory() != null) {
-			return model.getComponentFactory().createComponent(model, context);
+			return model.getComponentFactory().createComponent(model, new ModelBasedComponentContext(context, model));
 		}
 		return null;
 	}

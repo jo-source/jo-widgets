@@ -69,6 +69,10 @@ class WorkbenchApplication extends ComponentNodeContainer implements IWorkbenchA
 		model.addWorkbenchPartModelListener(workbenchPartModelListener);
 
 		onModelChanged(context);
+
+		if (model.getInitializeCallback() != null) {
+			model.getInitializeCallback().onContextInitialize(new ModelBasedWorkbenchApplicationContext(context, model));
+		}
 	}
 
 	@Override

@@ -38,6 +38,8 @@ public interface IWorkbenchApplicationModel extends
 		IComponentNodeContainerModel,
 		IWorkbenchPartModel {
 
+	IWorkbenchApplicationInitializeCallback getInitializeCallback();
+
 	IMenuModel getPopupMenu();
 
 	IToolBarModel getToolBar();

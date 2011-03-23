@@ -35,6 +35,7 @@ import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.workbench.api.ILifecycleCallback;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
+import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationInitializeCallback;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchPartModelListener;
@@ -46,6 +47,8 @@ public class WorkbenchApplicationModel extends ComponentNodeContainerModel imple
 	private final String label;
 	private final String tooltip;
 	private final IImageConstant icon;
+	private final IWorkbenchApplicationInitializeCallback initializeCallback;
+
 	private IMenuModel popupMenu;
 	private IToolBarModel toolBarModel;
 	private IMenuModel toolBarMenu;
@@ -62,6 +65,7 @@ public class WorkbenchApplicationModel extends ComponentNodeContainerModel imple
 		final IToolBarModel toolBarModel,
 		final IMenuModel toolBarMenu,
 		final ILifecycleCallback lifecycleCallback,
+		final IWorkbenchApplicationInitializeCallback initializeCallback,
 		final List<IComponentNodeModel> children) {
 		super(id, children);
 
@@ -73,6 +77,7 @@ public class WorkbenchApplicationModel extends ComponentNodeContainerModel imple
 		this.toolBarModel = toolBarModel;
 		this.toolBarMenu = toolBarMenu;
 		this.lifecycleCallback = lifecycleCallback;
+		this.initializeCallback = initializeCallback;
 	}
 
 	@Override
@@ -108,6 +113,11 @@ public class WorkbenchApplicationModel extends ComponentNodeContainerModel imple
 	@Override
 	public ILifecycleCallback getLifecycleCallback() {
 		return lifecycleCallback;
+	}
+
+	@Override
+	public IWorkbenchApplicationInitializeCallback getInitializeCallback() {
+		return initializeCallback;
 	}
 
 	@Override

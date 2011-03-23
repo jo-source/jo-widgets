@@ -31,6 +31,7 @@ package org.jowidgets.workbench.toolkit.impl;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.workbench.toolkit.api.IComponentFactory;
+import org.jowidgets.workbench.toolkit.api.IComponentNodeInitializeCallback;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeModelBuilder;
 
@@ -44,6 +45,7 @@ class ComponentNodeModelBuilder extends ComponentNodeContainerModelBuilder<IComp
 	private boolean expanded;
 	private IMenuModel popupMenu;
 	private IComponentFactory componentFactory;
+	private IComponentNodeInitializeCallback initializeCallback;
 
 	ComponentNodeModelBuilder() {
 		super();
@@ -94,6 +96,12 @@ class ComponentNodeModelBuilder extends ComponentNodeContainerModelBuilder<IComp
 	}
 
 	@Override
+	public IComponentNodeModelBuilder setInitializeCallback(final IComponentNodeInitializeCallback initializeCallback) {
+		this.initializeCallback = initializeCallback;
+		return this;
+	}
+
+	@Override
 	public IComponentNodeModel build() {
 		return new ComponentNodeModel(
 			getId(),
@@ -104,6 +112,7 @@ class ComponentNodeModelBuilder extends ComponentNodeContainerModelBuilder<IComp
 			expanded,
 			popupMenu,
 			componentFactory,
+			initializeCallback,
 			getChildren());
 	}
 

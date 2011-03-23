@@ -35,6 +35,7 @@ import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.workbench.toolkit.api.IComponentFactory;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeContainerModel;
+import org.jowidgets.workbench.toolkit.api.IComponentNodeInitializeCallback;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchModel;
@@ -51,6 +52,7 @@ class ComponentNodeModel extends ComponentNodeContainerModel implements ICompone
 	private boolean expanded;
 	private IMenuModel popupMenu;
 	private final IComponentFactory componentFactory;
+	private final IComponentNodeInitializeCallback initializeCallback;
 
 	private IComponentNodeContainerModel parentContainer;
 
@@ -63,6 +65,7 @@ class ComponentNodeModel extends ComponentNodeContainerModel implements ICompone
 		final boolean expanded,
 		final IMenuModel popupMenu,
 		final IComponentFactory componentFactory,
+		final IComponentNodeInitializeCallback initializeCallback,
 		final List<IComponentNodeModel> children) {
 		super(id, children);
 
@@ -74,6 +77,7 @@ class ComponentNodeModel extends ComponentNodeContainerModel implements ICompone
 		this.expanded = expanded;
 		this.popupMenu = popupMenu;
 		this.componentFactory = componentFactory;
+		this.initializeCallback = initializeCallback;
 	}
 
 	@Override
@@ -109,6 +113,11 @@ class ComponentNodeModel extends ComponentNodeContainerModel implements ICompone
 	@Override
 	public IComponentFactory getComponentFactory() {
 		return componentFactory;
+	}
+
+	@Override
+	public IComponentNodeInitializeCallback getInitializeCallback() {
+		return initializeCallback;
 	}
 
 	@Override
