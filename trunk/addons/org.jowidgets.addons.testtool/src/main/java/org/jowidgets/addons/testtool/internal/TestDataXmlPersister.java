@@ -43,7 +43,7 @@ import org.jowidgets.util.Assert;
 @XmlRootElement(name = "UserTestData")
 public class TestDataXmlPersister implements ITestDataPersister {
 
-	private static final String DEFAULT_FILEPATH = File.separator + "resources" + File.separator + "test";
+	private static final String DEFAULT_FILEPATH = File.separator + "resources" + File.separator + "testtool";
 	private static final String FILE_EXTENSION = ".xml";
 	private final String filePath;
 	@XmlElement
