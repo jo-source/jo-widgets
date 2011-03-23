@@ -28,37 +28,19 @@
 
 package org.jowidgets.workbench.toolkit.impl;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchPartModel;
-import org.jowidgets.workbench.toolkit.api.IWorkbenchPartModelListener;
 
-public class WorkbenchPartModel implements IWorkbenchPartModel {
-
-	private final Set<IWorkbenchPartModelListener> listeners;
+public class WorkbenchPartModel extends WorkbenchPartModelObservable implements IWorkbenchPartModel {
 
 	private final String label;
 	private final String toolTip;
 	private final IImageConstant icon;
 
 	WorkbenchPartModel(final String label, final String tooltip, final IImageConstant icon) {
-		this.listeners = new HashSet<IWorkbenchPartModelListener>();
-
 		this.label = label;
 		this.toolTip = tooltip;
 		this.icon = icon;
-	}
-
-	@Override
-	public void addWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
-		listeners.add(listener);
-	}
-
-	@Override
-	public void removeWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
-		listeners.remove(listener);
 	}
 
 	@Override
@@ -74,12 +56,6 @@ public class WorkbenchPartModel implements IWorkbenchPartModel {
 	@Override
 	public IImageConstant getIcon() {
 		return icon;
-	}
-
-	protected void fireModelChanged() {
-		for (final IWorkbenchPartModelListener listener : listeners) {
-			listener.modelChanged();
-		}
 	}
 
 }

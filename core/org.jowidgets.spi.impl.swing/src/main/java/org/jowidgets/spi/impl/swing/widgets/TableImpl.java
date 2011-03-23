@@ -496,7 +496,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			return MouseButton.LEFT;
 		}
 		else if (SwingUtilities.isRightMouseButton(event)) {
-			return MouseButton.RIGTH;
+			return MouseButton.RIGHT;
 		}
 		else {
 			return null;

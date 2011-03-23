@@ -39,6 +39,7 @@ import org.jowidgets.api.widgets.content.IContentCreator;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.ICloseCallback;
 import org.jowidgets.workbench.api.IWorkbenchApplicationDescriptor;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
@@ -92,8 +93,13 @@ public class WorkbenchModel extends WorkbenchPartModel implements IWorkbenchMode
 		this.menuBar = menuBar;
 		this.statusBarCreator = statusBarCreator;
 		this.closeCallback = closeCallback;
-		this.applications = new LinkedList<IWorkbenchApplicationModel>(applications);
+		this.applications = new LinkedList<IWorkbenchApplicationModel>();
 		this.shutdownHooks = new LinkedList<Runnable>(shutdownHooks);
+
+		for (final IWorkbenchApplicationModel application : applications) {
+			//Add the children that way to ensure that the parents will be set correctly
+			addApplication(application);
+		}
 	}
 
 	@Override
@@ -191,6 +197,7 @@ public class WorkbenchModel extends WorkbenchPartModel implements IWorkbenchMode
 
 	@Override
 	public IWorkbenchApplicationModel addApplication(final int index, final IWorkbenchApplicationModel applicationModel) {
+		Assert.paramNotNull(applicationModel, "applicationModel");
 		applications.add(index, applicationModel);
 		listModelObservable.fireChildAdded(index);
 		return applicationModel;
@@ -209,13 +216,14 @@ public class WorkbenchModel extends WorkbenchPartModel implements IWorkbenchMode
 
 	@Override
 	public IWorkbenchApplicationModel addApplication(final IWorkbenchApplicationModelBuilder applicationModelBuilder) {
-		return addApplication(applicationModelBuilder.build());
+		return addApplication(applications.size(), applicationModelBuilder);
 	}
 
 	@Override
 	public IWorkbenchApplicationModel addApplication(
 		final int index,
 		final IWorkbenchApplicationModelBuilder applicationModelBuilder) {
+		Assert.paramNotNull(applicationModelBuilder, "applicationModelBuilder");
 		return addApplication(index, applicationModelBuilder.build());
 	}
 
@@ -270,7 +278,7 @@ public class WorkbenchModel extends WorkbenchPartModel implements IWorkbenchMode
 	public void removeAllApplications() {
 		final int applicationCount = applications.size();
 		for (int i = 0; i < applicationCount; i++) {
-			removeApplication(i);
+			removeApplication(0);
 		}
 	}
 

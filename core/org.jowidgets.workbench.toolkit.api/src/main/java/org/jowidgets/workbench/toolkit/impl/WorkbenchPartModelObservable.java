@@ -26,30 +26,36 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.toolkit.api;
+package org.jowidgets.workbench.toolkit.impl;
 
-import org.jowidgets.common.image.IImageConstant;
+import java.util.HashSet;
+import java.util.Set;
 
-public interface IComponentNodeContainerModelBuilder<BUILDER_INSTANCE_TYPE> {
+import org.jowidgets.workbench.toolkit.api.IWorkbenchPartModelListener;
+import org.jowidgets.workbench.toolkit.api.IWorkbenchPartModelObservable;
 
-	BUILDER_INSTANCE_TYPE setId(String id);
+public class WorkbenchPartModelObservable implements IWorkbenchPartModelObservable {
 
-	BUILDER_INSTANCE_TYPE addChild(IComponentNodeModel childModel);
+	private final Set<IWorkbenchPartModelListener> listeners;
 
-	BUILDER_INSTANCE_TYPE addChild(int index, IComponentNodeModel childModel);
+	WorkbenchPartModelObservable() {
+		this.listeners = new HashSet<IWorkbenchPartModelListener>();
+	}
 
-	BUILDER_INSTANCE_TYPE addChild(IComponentNodeModelBuilder childModel);
+	@Override
+	public void addWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
+		listeners.add(listener);
+	}
 
-	BUILDER_INSTANCE_TYPE addChild(int index, IComponentNodeModelBuilder childModel);
+	@Override
+	public void removeWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
+		listeners.remove(listener);
+	}
 
-	BUILDER_INSTANCE_TYPE addChild(String id, String label, String tooltip, IImageConstant icon);
-
-	BUILDER_INSTANCE_TYPE addChild(String id, String label, IImageConstant icon);
-
-	BUILDER_INSTANCE_TYPE addChild(String id, String label, String tooltip);
-
-	BUILDER_INSTANCE_TYPE addChild(String id, String label);
-
-	BUILDER_INSTANCE_TYPE addChild(String id);
+	protected void fireModelChanged() {
+		for (final IWorkbenchPartModelListener listener : listeners) {
+			listener.modelChanged();
+		}
+	}
 
 }

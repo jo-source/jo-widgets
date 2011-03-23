@@ -28,14 +28,18 @@
 
 package org.jowidgets.workbench.toolkit.api;
 
+import java.util.List;
+
 import org.jowidgets.api.model.IListModelObservable;
 import org.jowidgets.common.image.IImageConstant;
 
 public interface IComponentNodeContainerModel extends IListModelObservable {
 
+	String getId();
+
 	IComponentNodeContainerModel getParentContainer();
 
-	IComponentNodeModel getChildren();
+	List<IComponentNodeModel> getChildren();
 
 	int getChildrenCount();
 
