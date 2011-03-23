@@ -40,6 +40,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.ICloseCallback;
 import org.jowidgets.workbench.api.IWorkbench;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
@@ -64,9 +65,9 @@ class Workbench implements IWorkbench {
 	private IMenuBarModel menuBar;
 
 	Workbench(final IWorkbenchModel model) {
-		super();
-		this.model = model;
+		Assert.paramNotNull(model, "model");
 
+		this.model = model;
 		this.createdApplications = new LinkedList<IWorkbenchApplication>();
 
 		this.shutdownHook = new Runnable() {

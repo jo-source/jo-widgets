@@ -28,52 +28,66 @@
 
 package org.jowidgets.workbench.toolkit.impl;
 
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.util.Assert;
-import org.jowidgets.workbench.api.IComponentTreeNode;
-import org.jowidgets.workbench.api.IWorkbench;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
-import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
-import org.jowidgets.workbench.toolkit.api.IComponentNodeModelBuilder;
+import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
-import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModelBuilder;
-import org.jowidgets.workbench.toolkit.api.IWorkbenchModel;
-import org.jowidgets.workbench.toolkit.api.IWorkbenchModelBuilder;
-import org.jowidgets.workbench.toolkit.api.IWorkbenchPartFactory;
 
-class WorkbenchPartFactory implements IWorkbenchPartFactory {
+class WorkbenchApplication implements IWorkbenchApplication {
 
-	@Override
-	public IWorkbench workbench(final IWorkbenchModel model) {
+	private final IWorkbenchApplicationModel model;
+
+	WorkbenchApplication(final IWorkbenchApplicationModel model) {
 		Assert.paramNotNull(model, "model");
-		return new Workbench(model);
+		this.model = model;
 	}
 
 	@Override
-	public IWorkbench workbench(final IWorkbenchModelBuilder modelBuilder) {
-		Assert.paramNotNull(modelBuilder, "modelBuilder");
-		return workbench(modelBuilder.build());
+	public void onContextInitialize(final IWorkbenchApplicationContext context) {
+		//TODO MG implement onContextInitialize 
 	}
 
 	@Override
-	public IWorkbenchApplication application(final IWorkbenchApplicationModel model) {
-		return new WorkbenchApplication(model);
+	public String getId() {
+		return model.getId();
 	}
 
 	@Override
-	public IWorkbenchApplication application(final IWorkbenchApplicationModelBuilder modelBuilder) {
-		Assert.paramNotNull(modelBuilder, "modelBuilder");
-		return application(modelBuilder.build());
+	public String getLabel() {
+		return model.getLabel();
 	}
 
 	@Override
-	public IComponentTreeNode componentNode(final IComponentNodeModel model) {
-		return new ComponentNode(model);
+	public String getTooltip() {
+		return model.getTooltip();
 	}
 
 	@Override
-	public IComponentTreeNode componentNode(final IComponentNodeModelBuilder modelBuilder) {
-		Assert.paramNotNull(modelBuilder, "modelBuilder");
-		return componentNode(modelBuilder.build());
+	public IImageConstant getIcon() {
+		return model.getIcon();
+	}
+
+	@Override
+	public void onActiveStateChanged(final boolean active) {
+		if (model.getLifecycleCallback() != null) {
+			model.getLifecycleCallback().onActiveStateChanged(active);
+		}
+	}
+
+	@Override
+	public void onVisibleStateChanged(final boolean visible) {
+		if (model.getLifecycleCallback() != null) {
+			model.getLifecycleCallback().onVisibleStateChanged(visible);
+		}
+	}
+
+	@Override
+	public void onClose(final IVetoable vetoable) {
+		if (model.getLifecycleCallback() != null) {
+			model.getLifecycleCallback().onClose(vetoable);
+		}
 	}
 
 }
