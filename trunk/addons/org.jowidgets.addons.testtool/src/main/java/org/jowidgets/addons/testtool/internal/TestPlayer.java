@@ -44,31 +44,23 @@ public class TestPlayer {
 		this.finder = new WidgetFinder();
 	}
 
-	public void replayTest(final List<TestDataObject> list, final boolean headlessEnv) {
-		if (headlessEnv) {
-			for (final TestDataObject obj : list) {
-				final IWidgetCommon widget = finder.findWidgetByID(WidgetRegistry.getInstance().getWidgets(), obj.getId());
-				executeAction(widget, obj.getAction());
-			}
-		}
-		else {
-			for (final TestDataObject obj : list) {
-				final Thread thread = new Thread() {
-					@Override
-					public void run() {
-						final IWidgetCommon widget = finder.findWidgetByID(WidgetRegistry.getInstance().getWidgets(), obj.getId());
-						moveMouseToWidget(widget);
-						executeAction(widget, obj.getAction());
-						try {
-							Thread.sleep(500);
-						}
-						catch (final InterruptedException e) {
-						}
-						super.run();
+	public void replayTest(final List<TestDataObject> list, final int delay) {
+		for (final TestDataObject obj : list) {
+			final Thread thread = new Thread() {
+				@Override
+				public void run() {
+					final IWidgetCommon widget = finder.findWidgetByID(WidgetRegistry.getInstance().getWidgets(), obj.getId());
+					moveMouseToWidget(widget);
+					executeAction(widget, obj.getAction());
+					try {
+						Thread.sleep(delay);
 					}
-				};
-				Toolkit.getUiThreadAccess().invokeLater(thread);
-			}
+					catch (final InterruptedException e) {
+					}
+					super.run();
+				}
+			};
+			Toolkit.getUiThreadAccess().invokeLater(thread);
 		}
 	}
 

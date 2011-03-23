@@ -36,7 +36,6 @@ import org.jowidgets.addons.testtool.internal.TestDataXmlPersister;
 import org.jowidgets.addons.testtool.internal.TestPlayer;
 import org.jowidgets.addons.testtool.internal.TestToolUtilities;
 import org.jowidgets.addons.testtool.internal.UserAction;
-import org.jowidgets.addons.testtool.internal.WidgetFinder;
 import org.jowidgets.addons.testtool.internal.WidgetRegistry;
 import org.jowidgets.api.controler.ITabItemListener;
 import org.jowidgets.api.controler.ITreeListener;
@@ -80,7 +79,6 @@ public final class TestToolImpl implements ITestTool {
 	private final List<IWidgetCommon> widgetRegistry;
 	private final ITestDataPersister persister;
 	private final ListModel<TestDataObject> listModel;
-	private final WidgetFinder finder;
 	private final TestPlayer player;
 	private boolean record;
 	private boolean replay;
@@ -90,7 +88,6 @@ public final class TestToolImpl implements ITestTool {
 		this.widgetRegistry = WidgetRegistry.getInstance().getWidgets();
 		this.persister = new TestDataXmlPersister();
 		this.listModel = new ListModel<TestDataObject>();
-		this.finder = new WidgetFinder();
 		this.player = new TestPlayer();
 		this.record = false;
 		this.replay = false;
@@ -167,17 +164,10 @@ public final class TestToolImpl implements ITestTool {
 		if (widget instanceof IButtonUi) {
 			final IButtonUi button = (IButtonUi) widget;
 			button.addActionListener(new IActionListener() {
-				// TODO LG remove syso's
+
 				@Override
 				public void actionPerformed() {
 					record(widget, UserAction.CLICK, testToolUtilities.createWidgetID(button));
-					System.out.println("searched Widget: " + widget);
-					final IWidgetCommon foundWidget = finder.findWidgetByID(
-							widgetRegistry,
-							testToolUtilities.createWidgetID(button));
-					if (foundWidget != null) {
-						System.out.println("Found widget: " + foundWidget);
-					}
 				}
 			});
 		}
@@ -380,9 +370,9 @@ public final class TestToolImpl implements ITestTool {
 	}
 
 	@Override
-	public void replay(final List<TestDataObject> list, final boolean headlessEnv) {
+	public void replay(final List<TestDataObject> list, final int delay) {
 		if (replay) {
-			player.replayTest(list, headlessEnv);
+			player.replayTest(list, 500);
 		}
 	}
 }

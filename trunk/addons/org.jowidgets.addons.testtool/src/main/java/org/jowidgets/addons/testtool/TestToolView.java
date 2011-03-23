@@ -246,7 +246,7 @@ public class TestToolView {
 				recordEnabledChecker.setEnabledState(EnabledState.DISABLED);
 				playEnabledChecker.setEnabledState(EnabledState.DISABLED);
 				testTool.activateReplayMode();
-				testTool.replay(getTableContent(), false);
+				testTool.replay(getTableContent(), 500);
 			}
 		};
 		playBuilder.setCommand(playCommand, playEnabledChecker);
