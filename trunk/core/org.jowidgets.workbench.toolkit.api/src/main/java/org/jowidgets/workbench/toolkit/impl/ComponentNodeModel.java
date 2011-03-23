@@ -40,7 +40,7 @@ import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchPartModelListener;
 
-public class ComponentNodeModel extends ComponentNodeContainerModel implements IComponentNodeModel {
+class ComponentNodeModel extends ComponentNodeContainerModel implements IComponentNodeModel {
 
 	private final WorkbenchPartModelObservable workbenchPartModelObservable;
 

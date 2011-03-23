@@ -47,7 +47,7 @@ class WorkbenchPartBuilderFactory implements IWorkbenchPartBuilderFactory {
 
 	@Override
 	public IComponentNodeModelBuilder componentNode() {
-		return null;
+		return new ComponentNodeModelBuilder();
 	}
 
 }
