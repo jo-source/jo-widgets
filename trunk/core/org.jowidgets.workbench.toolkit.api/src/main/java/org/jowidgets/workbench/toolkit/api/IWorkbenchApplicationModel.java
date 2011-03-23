@@ -56,4 +56,20 @@ public interface IWorkbenchApplicationModel extends
 
 	IWorkbenchModel getWorkbench();
 
+	/**
+	 * Sets the workbench of this application. This method will be invoked
+	 * by the API implementation, when this application will be added as a child to an workbench or
+	 * when it was removed from its workbench.
+	 * 
+	 * If this method will be invoked by the API user (client code) the following happens:
+	 * 
+	 * 1. If this application is already associated with a workbench, it will be removed from it.
+	 * 
+	 * 2. If the given workbench is not null and this application is not already a child of the given workbench,
+	 * this application will be appended to the given workbench.
+	 * 
+	 * @param workbench The workbench to set or null if the application was/should be removed from its workbench
+	 */
+	void setWorkbench(IWorkbenchModel workbench);
+
 }

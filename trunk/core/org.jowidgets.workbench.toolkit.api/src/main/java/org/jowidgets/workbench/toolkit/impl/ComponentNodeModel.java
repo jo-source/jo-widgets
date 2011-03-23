@@ -50,13 +50,30 @@ public class ComponentNodeModel extends ComponentNodeContainerModel implements I
 	private boolean selected;
 	private boolean expanded;
 	private IMenuModel popupMenu;
-	private IComponentFactory componentFactory;
+	private final IComponentFactory componentFactory;
 
 	private IComponentNodeContainerModel parentContainer;
 
-	ComponentNodeModel(final String id, final List<IComponentNodeModel> children) {
+	ComponentNodeModel(
+		final String id,
+		final String label,
+		final String tooltip,
+		final IImageConstant icon,
+		final boolean selected,
+		final boolean expanded,
+		final IMenuModel popupMenu,
+		final IComponentFactory componentFactory,
+		final List<IComponentNodeModel> children) {
 		super(id, children);
+
 		this.workbenchPartModelObservable = new WorkbenchPartModelObservable();
+		this.label = label;
+		this.tooltip = tooltip;
+		this.icon = icon;
+		this.selected = selected;
+		this.expanded = expanded;
+		this.popupMenu = popupMenu;
+		this.componentFactory = componentFactory;
 	}
 
 	@Override
