@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2011, M. Grossmann, H. Westphal
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,56 +25,17 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
+package org.jowidgets.workbench.api;
 
-package org.jowidgets.workbench.toolkit.impl;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.workbench.api.IComponent;
-import org.jowidgets.workbench.api.IComponentContext;
-import org.jowidgets.workbench.api.IComponentTreeNode;
-import org.jowidgets.workbench.api.IComponentTreeNodeContext;
-import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
+public interface IComponentTreeNodeContainerContext {
 
-class ComponentNode extends ComponentNodeContainer implements IComponentTreeNode {
+	void add(IComponentTreeNode componentTreeNode);
 
-	private final IComponentNodeModel model;
+	void add(int index, IComponentTreeNode componentTreeNode);
 
-	ComponentNode(final IComponentNodeModel model) {
-		super(model);
-		this.model = model;
-	}
+	void remove(IComponentTreeNode componentTreeNode);
 
-	@Override
-	public void onContextInitialize(final IComponentTreeNodeContext context) {
-		super.initialize(context);
-	}
-
-	@Override
-	public String getId() {
-		return model.getId();
-	}
-
-	@Override
-	public String getLabel() {
-		return model.getLabel();
-	}
-
-	@Override
-	public String getTooltip() {
-		return model.getTooltip();
-	}
-
-	@Override
-	public IImageConstant getIcon() {
-		return model.getIcon();
-	}
-
-	@Override
-	public IComponent createComponent(final IComponentContext context) {
-		if (model.getComponentFactory() != null) {
-			return model.getComponentFactory().createComponent(model, context);
-		}
-		return null;
-	}
+	IWorkbenchContext getWorkbenchContext();
 
 }

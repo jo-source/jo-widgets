@@ -28,53 +28,57 @@
 
 package org.jowidgets.workbench.toolkit.impl;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.workbench.api.IComponent;
-import org.jowidgets.workbench.api.IComponentContext;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.jowidgets.api.model.IListModelListener;
+import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.IComponentTreeNode;
-import org.jowidgets.workbench.api.IComponentTreeNodeContext;
+import org.jowidgets.workbench.api.IComponentTreeNodeContainerContext;
+import org.jowidgets.workbench.toolkit.api.IComponentNodeContainerModel;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
+import org.jowidgets.workbench.toolkit.api.WorkbenchToolkit;
 
-class ComponentNode extends ComponentNodeContainer implements IComponentTreeNode {
+class ComponentNodeContainer {
 
-	private final IComponentNodeModel model;
+	private final IComponentNodeContainerModel model;
+	private final List<IComponentTreeNode> createdChildren;
 
-	ComponentNode(final IComponentNodeModel model) {
-		super(model);
+	ComponentNodeContainer(final IComponentNodeContainerModel model) {
+		Assert.paramNotNull(model, "model");
+		this.createdChildren = new LinkedList<IComponentTreeNode>();
+
 		this.model = model;
 	}
 
-	@Override
-	public void onContextInitialize(final IComponentTreeNodeContext context) {
-		super.initialize(context);
-	}
-
-	@Override
-	public String getId() {
-		return model.getId();
-	}
-
-	@Override
-	public String getLabel() {
-		return model.getLabel();
-	}
-
-	@Override
-	public String getTooltip() {
-		return model.getTooltip();
-	}
-
-	@Override
-	public IImageConstant getIcon() {
-		return model.getIcon();
-	}
-
-	@Override
-	public IComponent createComponent(final IComponentContext context) {
-		if (model.getComponentFactory() != null) {
-			return model.getComponentFactory().createComponent(model, context);
+	void initialize(final IComponentTreeNodeContainerContext context) {
+		for (final IComponentNodeModel nodeModel : model.getChildren()) {
+			final IComponentTreeNode componentNode = WorkbenchToolkit.getWorkbenchPartFactory().componentNode(nodeModel);
+			context.add(componentNode);
+			createdChildren.add(componentNode);
 		}
-		return null;
+
+		model.addListModelListener(new IListModelListener() {
+			@Override
+			public void childRemoved(final int index) {
+				final IComponentTreeNode componentNode = createdChildren.remove(index);
+				if (componentNode != null) {
+					context.remove(componentNode);
+				}
+			}
+
+			@Override
+			public void childAdded(final int index) {
+				final IComponentNodeModel nodeModel = model.getChildren().get(index);
+				final IComponentTreeNode componentNode = WorkbenchToolkit.getWorkbenchPartFactory().componentNode(nodeModel);
+				context.add(index, componentNode);
+				createdChildren.add(index, componentNode);
+			}
+		});
+	}
+
+	protected IComponentNodeContainerModel getModel() {
+		return model;
 	}
 
 }

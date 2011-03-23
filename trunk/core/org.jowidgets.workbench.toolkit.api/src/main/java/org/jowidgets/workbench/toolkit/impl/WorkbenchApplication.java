@@ -30,23 +30,22 @@ package org.jowidgets.workbench.toolkit.impl;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.IVetoable;
-import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
 
-class WorkbenchApplication implements IWorkbenchApplication {
+class WorkbenchApplication extends ComponentNodeContainer implements IWorkbenchApplication {
 
 	private final IWorkbenchApplicationModel model;
 
 	WorkbenchApplication(final IWorkbenchApplicationModel model) {
-		Assert.paramNotNull(model, "model");
+		super(model);
 		this.model = model;
 	}
 
 	@Override
 	public void onContextInitialize(final IWorkbenchApplicationContext context) {
-		//TODO MG implement onContextInitialize 
+		super.initialize(context);
 	}
 
 	@Override
