@@ -34,9 +34,7 @@ public interface IComponentNodeModelBuilder extends
 		IComponentNodeContainerModelBuilder<IComponentNodeModelBuilder>,
 		IWorkbenchPartBuilder<IComponentNodeModelBuilder> {
 
-	IComponentNodeModelBuilder setId(String id);
-
-	IComponentNodeModelBuilder select();
+	IComponentNodeModelBuilder setSelected(boolean selected);
 
 	IComponentNodeModelBuilder setExpanded(boolean expanded);
 

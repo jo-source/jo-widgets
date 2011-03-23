@@ -198,15 +198,23 @@ public class WorkbenchModel extends WorkbenchPartModel implements IWorkbenchMode
 	@Override
 	public IWorkbenchApplicationModel addApplication(final int index, final IWorkbenchApplicationModel applicationModel) {
 		Assert.paramNotNull(applicationModel, "applicationModel");
+		if (applicationModel.getWorkbench() != null) {
+			throw new IllegalArgumentException("The given model was alreay added to another workbench. "
+				+ "To add the model to this workbench, it must be removed from its current workbench first.");
+		}
 		applications.add(index, applicationModel);
+		applicationModel.setWorkbench(this);
 		listModelObservable.fireChildAdded(index);
 		return applicationModel;
 	}
 
 	@Override
 	public void removeApplication(final int index) {
-		applications.remove(index);
-		listModelObservable.fireChildRemoved(index);
+		final IWorkbenchApplicationModel applicationModel = applications.remove(index);
+		if (applicationModel != null) {
+			applicationModel.setWorkbench(null);
+			listModelObservable.fireChildRemoved(index);
+		}
 	}
 
 	@Override
