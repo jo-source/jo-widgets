@@ -36,7 +36,7 @@ import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 import org.jowidgets.workbench.api.IWorkbenchContext;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
 
-public class ModelBasedComponentContext implements IComponentContext {
+class ModelBasedComponentContext implements IComponentContext {
 
 	private final IComponentContext componentContext;
 	private final IComponentNodeModel componentNodeModel;

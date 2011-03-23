@@ -34,7 +34,7 @@ import java.util.Set;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchPartModelListener;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchPartModelObservable;
 
-public class WorkbenchPartModelObservable implements IWorkbenchPartModelObservable {
+class WorkbenchPartModelObservable implements IWorkbenchPartModelObservable {
 
 	private final Set<IWorkbenchPartModelListener> listeners;
 

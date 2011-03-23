@@ -31,7 +31,7 @@ package org.jowidgets.workbench.toolkit.impl;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchPartModel;
 
-public class WorkbenchPartModel extends WorkbenchPartModelObservable implements IWorkbenchPartModel {
+class WorkbenchPartModel extends WorkbenchPartModelObservable implements IWorkbenchPartModel {
 
 	private final String label;
 	private final String toolTip;
