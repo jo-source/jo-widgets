@@ -26,7 +26,10 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.tools;
+package org.jowidgets.workbench.toolkit.impl;
+
+import java.util.LinkedList;
+import java.util.List;
 
 import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.model.item.IToolBarModel;
@@ -41,127 +44,108 @@ import org.jowidgets.workbench.toolkit.api.IWorkbenchModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchModelBuilder;
 import org.jowidgets.workbench.toolkit.api.WorkbenchToolkit;
 
-public class WorkbenchModelBuilder implements IWorkbenchModelBuilder {
+public class WorkbenchModelBuilder extends WorkbenchPartBuilder<IWorkbenchModelBuilder> implements IWorkbenchModelBuilder {
 
-	private final IWorkbenchModelBuilder builder;
+	private Dimension initialDimension;
+	private Position initialPosition;
+	private double initialSplitWeight;
+	private boolean hasApplicationNavigator;
+	private boolean applicationsCloseable;
+	private IToolBarModel toolBar;
+	private IMenuBarModel menuBar;
+	private IContentCreator statusBarCreator;
+	private ICloseCallback closeCallback;
 
-	public WorkbenchModelBuilder() {
-		this(builder());
-	}
+	private final List<Runnable> shutdownHooks;
+	private final List<IWorkbenchApplicationModel> applications;
 
-	public WorkbenchModelBuilder(final String label) {
-		this(builder(label));
-	}
-
-	public WorkbenchModelBuilder(final String label, final IImageConstant icon) {
-		this(builder(label, icon));
-	}
-
-	public WorkbenchModelBuilder(final IWorkbenchModelBuilder builder) {
-		super();
-		this.builder = builder;
-	}
-
-	@Override
-	public IWorkbenchModelBuilder setLabel(final String label) {
-		this.builder.setLabel(label);
-		return this;
-	}
-
-	@Override
-	public IWorkbenchModelBuilder setTooltip(final String toolTiptext) {
-		this.builder.setTooltip(toolTiptext);
-		return this;
-	}
-
-	@Override
-	public IWorkbenchModelBuilder setIcon(final IImageConstant icon) {
-		this.builder.setIcon(icon);
-		return this;
+	WorkbenchModelBuilder() {
+		this.applications = new LinkedList<IWorkbenchApplicationModel>();
+		this.shutdownHooks = new LinkedList<Runnable>();
+		this.initialSplitWeight = 0.25;
+		this.hasApplicationNavigator = true;
+		this.applicationsCloseable = false;
 	}
 
 	@Override
 	public IWorkbenchModelBuilder setInitialDimension(final Dimension initialDimension) {
-		this.builder.setInitialDimension(initialDimension);
+		this.initialDimension = initialDimension;
 		return this;
 	}
 
 	@Override
-	public IWorkbenchModelBuilder setInitialPosition(final Position initialiPosition) {
-		this.builder.setInitialPosition(initialiPosition);
+	public IWorkbenchModelBuilder setInitialPosition(final Position initialPosition) {
+		this.initialPosition = initialPosition;
 		return this;
 	}
 
 	@Override
 	public IWorkbenchModelBuilder setInitialSplitWeight(final double initialSplitWeigth) {
-		this.builder.setInitialSplitWeight(initialSplitWeigth);
+		this.initialSplitWeight = initialSplitWeigth;
 		return this;
 	}
 
 	@Override
 	public IWorkbenchModelBuilder setApplicationNavigator(final boolean hasApplicationNavigator) {
-		this.builder.setApplicationNavigator(hasApplicationNavigator);
+		this.hasApplicationNavigator = hasApplicationNavigator;
 		return this;
 	}
 
 	@Override
 	public IWorkbenchModelBuilder setApplicationsCloseable(final boolean applicationsCloseable) {
-		this.builder.setApplicationsCloseable(applicationsCloseable);
+		this.applicationsCloseable = applicationsCloseable;
 		return this;
 	}
 
 	@Override
 	public IWorkbenchModelBuilder setToolBar(final IToolBarModel toolBarModel) {
-		this.builder.setToolBar(toolBarModel);
+		this.toolBar = toolBarModel;
 		return this;
 	}
 
 	@Override
 	public IWorkbenchModelBuilder setMenuBar(final IMenuBarModel menuBarModel) {
-		this.builder.setMenuBar(menuBarModel);
+		this.menuBar = menuBarModel;
 		return this;
 	}
 
 	@Override
 	public IWorkbenchModelBuilder setStatusBarCreator(final IContentCreator statusBarContentCreator) {
-		this.builder.setStatusBarCreator(statusBarContentCreator);
+		this.statusBarCreator = statusBarContentCreator;
 		return this;
 	}
 
 	@Override
 	public IWorkbenchModelBuilder setCloseCallback(final ICloseCallback closeCallback) {
-		this.builder.setCloseCallback(closeCallback);
+		this.closeCallback = closeCallback;
 		return this;
 	}
 
 	@Override
 	public IWorkbenchModelBuilder addShutdownHook(final Runnable shutdownHook) {
-		this.builder.addShutdownHook(shutdownHook);
-		return this;
-	}
-
-	@Override
-	public IWorkbenchModelBuilder addApplication(final IWorkbenchApplicationModel applicationModel) {
-		this.builder.addApplication(applicationModel);
+		shutdownHooks.add(shutdownHook);
 		return this;
 	}
 
 	@Override
 	public IWorkbenchModelBuilder addApplication(final int index, final IWorkbenchApplicationModel applicationModel) {
-		this.builder.addApplication(index, applicationModel);
+		applications.add(index, applicationModel);
 		return this;
+	}
+
+	@Override
+	public IWorkbenchModelBuilder addApplication(final IWorkbenchApplicationModel applicationModel) {
+		return addApplication(applications.size(), applicationModel);
 	}
 
 	@Override
 	public IWorkbenchModelBuilder addApplication(final IWorkbenchApplicationModelBuilder applicationModelBuilder) {
-		this.builder.addApplication(applicationModelBuilder);
-		return this;
+		return addApplication(applicationModelBuilder.build());
 	}
 
 	@Override
 	public IWorkbenchModelBuilder addApplication(final int index, final IWorkbenchApplicationModelBuilder applicationModelBuilder) {
-		this.builder.addApplication(index, applicationModelBuilder);
-		return this;
+		return addApplication(index, applicationModelBuilder.build());
 	}
 
 	@Override
@@ -170,49 +154,50 @@ public class WorkbenchModelBuilder implements IWorkbenchModelBuilder {
 		final String label,
 		final String tooltip,
 		final IImageConstant icon) {
-		this.builder.addApplication(id, label, tooltip, icon);
-		return this;
+		return addApplication(applicationBuilder().setId(id).setLabel(label).setTooltip(tooltip).setIcon(icon));
 	}
 
 	@Override
 	public IWorkbenchModelBuilder addApplication(final String id, final String label, final IImageConstant icon) {
-		this.builder.addApplication(id, label, icon);
-		return this;
+		return addApplication(applicationBuilder().setId(id).setLabel(label).setIcon(icon));
 	}
 
 	@Override
 	public IWorkbenchModelBuilder addApplication(final String id, final String label, final String tooltip) {
-		this.builder.addApplication(id, label, tooltip);
-		return this;
+		return addApplication(applicationBuilder().setId(id).setLabel(label).setTooltip(tooltip));
 	}
 
 	@Override
 	public IWorkbenchModelBuilder addApplication(final String id, final String label) {
-		this.builder.addApplication(id, label);
-		return this;
+		return addApplication(applicationBuilder().setId(id).setLabel(label));
 	}
 
 	@Override
 	public IWorkbenchModelBuilder addApplication(final String id) {
-		this.builder.addApplication(id);
-		return this;
+		return addApplication(applicationBuilder().setId(id));
 	}
 
 	@Override
 	public IWorkbenchModel build() {
-		return builder.build();
+		return new WorkbenchModel(
+			getLabel(),
+			getTooltip(),
+			getIcon(),
+			initialDimension,
+			initialPosition,
+			initialSplitWeight,
+			hasApplicationNavigator,
+			applicationsCloseable,
+			toolBar,
+			menuBar,
+			statusBarCreator,
+			closeCallback,
+			applications,
+			shutdownHooks);
 	}
 
-	public static IWorkbenchModelBuilder builder() {
-		return WorkbenchToolkit.getWorkbenchPartBuilderFactory().workbench();
-	}
-
-	public static IWorkbenchModelBuilder builder(final String label, final IImageConstant icon) {
-		return builder().setLabel(label).setIcon(icon);
-	}
-
-	public static IWorkbenchModelBuilder builder(final String label) {
-		return builder().setLabel(label);
+	private IWorkbenchApplicationModelBuilder applicationBuilder() {
+		return WorkbenchToolkit.getWorkbenchPartBuilderFactory().application();
 	}
 
 }

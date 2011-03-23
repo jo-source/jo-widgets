@@ -31,6 +31,7 @@ package org.jowidgets.workbench.toolkit.api;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.workbench.api.ILifecycleCallback;
+import org.jowidgets.workbench.api.IWorkbenchApplicationDescriptor;
 
 public interface IWorkbenchApplicationModelBuilder extends
 		IComponentNodeContainerModelBuilder<IComponentNodeModelBuilder>,
@@ -45,6 +46,8 @@ public interface IWorkbenchApplicationModelBuilder extends
 	IWorkbenchApplicationModelBuilder setToolBarMenu(IMenuModel toolBarMenu);
 
 	IWorkbenchApplicationModelBuilder setLifecycleCallback(ILifecycleCallback lifecycleCallback);
+
+	IWorkbenchApplicationModelBuilder setDescriptor(IWorkbenchApplicationDescriptor descriptor);
 
 	IWorkbenchApplicationModel build();
 

@@ -34,12 +34,13 @@ import org.jowidgets.api.widgets.content.IContentCreator;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.workbench.api.ICloseCallback;
 
 public interface IWorkbenchModelBuilder extends IWorkbenchPartBuilder<IWorkbenchModelBuilder> {
 
 	IWorkbenchModelBuilder setInitialDimension(Dimension initialDimension);
 
-	IWorkbenchModelBuilder setInitialPosition(Position initialiPosition);
+	IWorkbenchModelBuilder setInitialPosition(Position initialPosition);
 
 	IWorkbenchModelBuilder setInitialSplitWeight(double initialSplitWeigth);
 
@@ -52,6 +53,8 @@ public interface IWorkbenchModelBuilder extends IWorkbenchPartBuilder<IWorkbench
 	IWorkbenchModelBuilder setMenuBar(IMenuBarModel menuBarModel);
 
 	IWorkbenchModelBuilder setStatusBarCreator(IContentCreator statusBarContentCreator);
+
+	IWorkbenchModelBuilder setCloseCallback(ICloseCallback closeCallback);
 
 	IWorkbenchModelBuilder addShutdownHook(Runnable shutdownHook);
 

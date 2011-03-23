@@ -26,42 +26,28 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.toolkit.api;
+package org.jowidgets.workbench.toolkit.impl;
 
-import org.jowidgets.api.model.item.IMenuModel;
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.workbench.api.IComponentTreeNodeDescriptor;
+import org.jowidgets.workbench.toolkit.api.IComponentNodeModelBuilder;
+import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModelBuilder;
+import org.jowidgets.workbench.toolkit.api.IWorkbenchModelBuilder;
+import org.jowidgets.workbench.toolkit.api.IWorkbenchPartBuilderFactory;
 
-public interface IComponentNodeModel extends IComponentTreeNodeDescriptor, IComponentNodeContainerModel, IWorkbenchPartModel {
+class WorkbenchPartBuilderFactory implements IWorkbenchPartBuilderFactory {
 
-	boolean isSelected();
+	@Override
+	public IWorkbenchModelBuilder workbench() {
+		return new WorkbenchModelBuilder();
+	}
 
-	boolean isExpanded();
+	@Override
+	public IWorkbenchApplicationModelBuilder application() {
+		return null;
+	}
 
-	IMenuModel getPopupMenu();
-
-	IComponentFactory getComponentFactory();
-
-	void setLabel(String label);
-
-	void setTooltip(String toolTip);
-
-	void setIcon(IImageConstant icon);
-
-	void select();
-
-	void setExpanded(boolean expanded);
-
-	void setPopupMenu(IMenuModel popupMenu);
-
-	void setComponentFactory(IComponentFactory componentFactory);
-
-	String getPathId();
-
-	IComponentNodeModel getParent();
-
-	IWorkbenchApplicationModel getApplication();
-
-	IWorkbenchModel getWorkbench();
+	@Override
+	public IComponentNodeModelBuilder componentNode() {
+		return null;
+	}
 
 }

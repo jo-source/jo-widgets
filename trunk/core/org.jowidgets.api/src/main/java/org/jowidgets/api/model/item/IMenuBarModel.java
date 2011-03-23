@@ -39,6 +39,8 @@ public interface IMenuBarModel extends IListModelObservable {
 
 	void addBefore(IMenuModel newMenu, String id);
 
+	void addMenusOfModel(IMenuBarModel model);
+
 	IMenuModel addMenu(IMenuModel menu);
 
 	IMenuModel addMenu(int index, IMenuModel menu);

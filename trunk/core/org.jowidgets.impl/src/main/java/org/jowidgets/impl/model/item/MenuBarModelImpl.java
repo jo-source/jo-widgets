@@ -36,6 +36,7 @@ import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IMenuModelBuilder;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.util.Assert;
 
 class MenuBarModelImpl implements IMenuBarModel {
 
@@ -65,6 +66,14 @@ class MenuBarModelImpl implements IMenuBarModel {
 	@Override
 	public void addBefore(final IMenuModel newMenu, final String id) {
 		listModelDelegate.addBefore(newMenu, id);
+	}
+
+	@Override
+	public void addMenusOfModel(final IMenuBarModel model) {
+		Assert.paramNotNull(model, "model");
+		for (final IMenuModel menu : model.getMenus()) {
+			addMenu(menu);
+		}
 	}
 
 	@Override

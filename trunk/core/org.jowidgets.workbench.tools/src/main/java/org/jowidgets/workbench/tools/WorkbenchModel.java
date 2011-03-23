@@ -39,7 +39,6 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.workbench.api.ICloseCallback;
 import org.jowidgets.workbench.api.IWorkbenchApplicationDescriptor;
-import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModelBuilder;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchModel;
@@ -108,21 +107,6 @@ public class WorkbenchModel implements IWorkbenchModel {
 	}
 
 	@Override
-	public void setLabel(final String label) {
-		model.setLabel(label);
-	}
-
-	@Override
-	public void setTooltip(final String toolTiptext) {
-		model.setTooltip(toolTiptext);
-	}
-
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		model.setIcon(icon);
-	}
-
-	@Override
 	public void addWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
 		model.addWorkbenchPartModelListener(listener);
 	}
@@ -168,7 +152,7 @@ public class WorkbenchModel implements IWorkbenchModel {
 	}
 
 	@Override
-	public IWorkbenchApplicationModel getApplications() {
+	public List<IWorkbenchApplicationModel> getApplications() {
 		return model.getApplications();
 	}
 
@@ -274,7 +258,7 @@ public class WorkbenchModel implements IWorkbenchModel {
 	}
 
 	@Override
-	public void removeApplication(final IComponentNodeModel childModel) {
+	public void removeApplication(final IWorkbenchApplicationModel childModel) {
 		model.removeApplication(childModel);
 	}
 

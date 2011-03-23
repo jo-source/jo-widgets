@@ -28,14 +28,8 @@
 
 package org.jowidgets.workbench.toolkit.api;
 
-import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.workbench.api.IWorkbenchPart;
 
-public interface IWorkbenchPartModel extends IWorkbenchPartModelObservable {
-
-	void setLabel(String label);
-
-	void setTooltip(String toolTiptext);
-
-	void setIcon(IImageConstant icon);
+public interface IWorkbenchPartModel extends IWorkbenchPart, IWorkbenchPartModelObservable {
 
 }
