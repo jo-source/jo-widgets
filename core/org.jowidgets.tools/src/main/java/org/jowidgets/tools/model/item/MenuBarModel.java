@@ -72,6 +72,11 @@ public class MenuBarModel implements IMenuBarModel {
 	}
 
 	@Override
+	public void addMenusOfModel(final IMenuBarModel model) {
+		model.addMenusOfModel(model);
+	}
+
+	@Override
 	public IMenuModel addMenu(final IMenuModel menu) {
 		return model.addMenu(menu);
 	}

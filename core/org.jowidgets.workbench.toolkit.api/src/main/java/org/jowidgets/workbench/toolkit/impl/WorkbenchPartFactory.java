@@ -28,39 +28,50 @@
 
 package org.jowidgets.workbench.toolkit.impl;
 
-import org.jowidgets.workbench.toolkit.api.ILayoutBuilderFactory;
-import org.jowidgets.workbench.toolkit.api.IWorkbenchPartBuilderFactory;
+import org.jowidgets.util.Assert;
+import org.jowidgets.workbench.api.IComponentTreeNode;
+import org.jowidgets.workbench.api.IWorkbench;
+import org.jowidgets.workbench.api.IWorkbenchApplication;
+import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
+import org.jowidgets.workbench.toolkit.api.IComponentNodeModelBuilder;
+import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
+import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModelBuilder;
+import org.jowidgets.workbench.toolkit.api.IWorkbenchModel;
+import org.jowidgets.workbench.toolkit.api.IWorkbenchModelBuilder;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchPartFactory;
-import org.jowidgets.workbench.toolkit.api.IWorkbenchToolkit;
 
-public class DefaultWorkbenchToolkit implements IWorkbenchToolkit {
-
-	private ILayoutBuilderFactory layoutBuilderFactory;
-	private IWorkbenchPartBuilderFactory workbenchPartBuilderFactory;
-	private IWorkbenchPartFactory workbenchPartFactory;
+class WorkbenchPartFactory implements IWorkbenchPartFactory {
 
 	@Override
-	public ILayoutBuilderFactory getLayoutBuilderFactory() {
-		if (layoutBuilderFactory == null) {
-			this.layoutBuilderFactory = new LayoutBuilderFactory();
-		}
-		return layoutBuilderFactory;
+	public IWorkbench workbench(final IWorkbenchModel model) {
+		Assert.paramNotNull(model, "model");
+		return new Workbench(model);
 	}
 
 	@Override
-	public IWorkbenchPartBuilderFactory getWorkbenchPartBuilderFactory() {
-		if (workbenchPartBuilderFactory == null) {
-			workbenchPartBuilderFactory = new WorkbenchPartBuilderFactory();
-		}
-		return workbenchPartBuilderFactory;
+	public IWorkbench workbench(final IWorkbenchModelBuilder modelBuilder) {
+		Assert.paramNotNull(modelBuilder, "modelBuilder");
+		return workbench(modelBuilder.build());
 	}
 
 	@Override
-	public IWorkbenchPartFactory getWorkbenchPartFactory() {
-		if (workbenchPartFactory == null) {
-			workbenchPartFactory = new WorkbenchPartFactory();
-		}
-		return workbenchPartFactory;
+	public IWorkbenchApplication application(final IWorkbenchApplicationModel model) {
+		return null;
+	}
+
+	@Override
+	public IWorkbenchApplication application(final IWorkbenchApplicationModelBuilder modelBuilder) {
+		return null;
+	}
+
+	@Override
+	public IComponentTreeNode componentNode(final IComponentNodeModel model) {
+		return null;
+	}
+
+	@Override
+	public IComponentTreeNode componentNode(final IComponentNodeModelBuilder modelBuilder) {
+		return null;
 	}
 
 }

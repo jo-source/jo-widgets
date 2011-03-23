@@ -26,42 +26,60 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.toolkit.api;
+package org.jowidgets.workbench.toolkit.impl;
 
-import org.jowidgets.api.model.item.IMenuModel;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.workbench.api.IComponentTreeNodeDescriptor;
+import org.jowidgets.workbench.toolkit.api.IWorkbenchPartModel;
+import org.jowidgets.workbench.toolkit.api.IWorkbenchPartModelListener;
 
-public interface IComponentNodeModel extends IComponentTreeNodeDescriptor, IComponentNodeContainerModel, IWorkbenchPartModel {
+public class WorkbenchPartModel implements IWorkbenchPartModel {
 
-	boolean isSelected();
+	private final Set<IWorkbenchPartModelListener> listeners;
 
-	boolean isExpanded();
+	private final String label;
+	private final String toolTip;
+	private final IImageConstant icon;
 
-	IMenuModel getPopupMenu();
+	WorkbenchPartModel(final String label, final String tooltip, final IImageConstant icon) {
+		this.listeners = new HashSet<IWorkbenchPartModelListener>();
 
-	IComponentFactory getComponentFactory();
+		this.label = label;
+		this.toolTip = tooltip;
+		this.icon = icon;
+	}
 
-	void setLabel(String label);
+	@Override
+	public void addWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
+		listeners.add(listener);
+	}
 
-	void setTooltip(String toolTip);
+	@Override
+	public void removeWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
+		listeners.remove(listener);
+	}
 
-	void setIcon(IImageConstant icon);
+	@Override
+	public String getLabel() {
+		return label;
+	}
 
-	void select();
+	@Override
+	public String getTooltip() {
+		return toolTip;
+	}
 
-	void setExpanded(boolean expanded);
+	@Override
+	public IImageConstant getIcon() {
+		return icon;
+	}
 
-	void setPopupMenu(IMenuModel popupMenu);
-
-	void setComponentFactory(IComponentFactory componentFactory);
-
-	String getPathId();
-
-	IComponentNodeModel getParent();
-
-	IWorkbenchApplicationModel getApplication();
-
-	IWorkbenchModel getWorkbench();
+	protected void fireModelChanged() {
+		for (final IWorkbenchPartModelListener listener : listeners) {
+			listener.modelChanged();
+		}
+	}
 
 }

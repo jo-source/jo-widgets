@@ -26,42 +26,42 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.toolkit.api;
+package org.jowidgets.workbench.toolkit.impl;
 
-import org.jowidgets.api.model.item.IMenuModel;
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.workbench.api.IComponentTreeNodeDescriptor;
+import java.util.HashSet;
+import java.util.Set;
 
-public interface IComponentNodeModel extends IComponentTreeNodeDescriptor, IComponentNodeContainerModel, IWorkbenchPartModel {
+import org.jowidgets.api.model.IListModelListener;
+import org.jowidgets.api.model.IListModelObservable;
 
-	boolean isSelected();
+class ListModelObservable implements IListModelObservable {
 
-	boolean isExpanded();
+	private final Set<IListModelListener> listeners;
 
-	IMenuModel getPopupMenu();
+	ListModelObservable() {
+		this.listeners = new HashSet<IListModelListener>();
+	}
 
-	IComponentFactory getComponentFactory();
+	@Override
+	public void addListModelListener(final IListModelListener listener) {
+		listeners.add(listener);
+	}
 
-	void setLabel(String label);
+	@Override
+	public void removeListModelListener(final IListModelListener listener) {
+		listeners.remove(listener);
+	}
 
-	void setTooltip(String toolTip);
+	public void fireChildAdded(final int index) {
+		for (final IListModelListener listener : listeners) {
+			listener.childAdded(index);
+		}
+	}
 
-	void setIcon(IImageConstant icon);
-
-	void select();
-
-	void setExpanded(boolean expanded);
-
-	void setPopupMenu(IMenuModel popupMenu);
-
-	void setComponentFactory(IComponentFactory componentFactory);
-
-	String getPathId();
-
-	IComponentNodeModel getParent();
-
-	IWorkbenchApplicationModel getApplication();
-
-	IWorkbenchModel getWorkbench();
+	public void fireChildRemoved(final int index) {
+		for (final IListModelListener listener : listeners) {
+			listener.childRemoved(index);
+		}
+	}
 
 }

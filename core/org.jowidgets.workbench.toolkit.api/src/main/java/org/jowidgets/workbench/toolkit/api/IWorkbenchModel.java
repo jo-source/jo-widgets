@@ -51,7 +51,7 @@ public interface IWorkbenchModel extends IWorkbenchDescriptor, IWorkbenchPartMod
 
 	ICloseCallback getCloseCallback();
 
-	IWorkbenchApplicationModel getApplications();
+	List<IWorkbenchApplicationModel> getApplications();
 
 	int getApplicationCount();
 
@@ -91,7 +91,7 @@ public interface IWorkbenchModel extends IWorkbenchDescriptor, IWorkbenchPartMod
 
 	void removeApplication(int index);
 
-	void removeApplication(IComponentNodeModel childModel);
+	void removeApplication(IWorkbenchApplicationModel childModel);
 
 	void removeAllApplications();
 

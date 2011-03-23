@@ -30,6 +30,6 @@ package org.jowidgets.workbench.toolkit.api;
 
 public interface IWorkbenchPartModelListener {
 
-	void modelChanged(IWorkbenchPartModel model);
+	void modelChanged();
 
 }
