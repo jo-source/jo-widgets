@@ -33,48 +33,64 @@ import java.util.List;
 
 import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.util.Assert;
-import org.jowidgets.workbench.api.IComponentTreeNode;
 import org.jowidgets.workbench.api.IComponentTreeNodeContainerContext;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeContainerModel;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
-import org.jowidgets.workbench.toolkit.api.WorkbenchToolkit;
 
 class ComponentNodeContainer {
 
 	private final IComponentNodeContainerModel model;
-	private final List<IComponentTreeNode> createdChildren;
+	private final List<ComponentNode> createdChildren;
+
+	private IListModelListener listModelListener;
+	private IComponentTreeNodeContainerContext context;
 
 	ComponentNodeContainer(final IComponentNodeContainerModel model) {
 		Assert.paramNotNull(model, "model");
-		this.createdChildren = new LinkedList<IComponentTreeNode>();
+		this.createdChildren = new LinkedList<ComponentNode>();
 
 		this.model = model;
 	}
 
 	void initialize(final IComponentTreeNodeContainerContext context) {
+		if (this.context != null) {
+			throw new IllegalStateException("Container already initialized!");
+		}
+		this.context = context;
+
 		for (final IComponentNodeModel nodeModel : model.getChildren()) {
-			final IComponentTreeNode componentNode = WorkbenchToolkit.getWorkbenchPartFactory().componentNode(nodeModel);
+			final ComponentNode componentNode = new ComponentNode(nodeModel);
 			context.add(componentNode);
 			createdChildren.add(componentNode);
 		}
 
-		model.addListModelListener(new IListModelListener() {
+		listModelListener = new IListModelListener() {
 			@Override
 			public void childRemoved(final int index) {
-				final IComponentTreeNode componentNode = createdChildren.remove(index);
+				final ComponentNode componentNode = createdChildren.remove(index);
 				if (componentNode != null) {
 					context.remove(componentNode);
+					componentNode.dispose();
 				}
 			}
 
 			@Override
 			public void childAdded(final int index) {
 				final IComponentNodeModel nodeModel = model.getChildren().get(index);
-				final IComponentTreeNode componentNode = WorkbenchToolkit.getWorkbenchPartFactory().componentNode(nodeModel);
+				final ComponentNode componentNode = new ComponentNode(nodeModel);
 				context.add(index, componentNode);
 				createdChildren.add(index, componentNode);
 			}
-		});
+		};
+
+		model.addListModelListener(listModelListener);
+	}
+
+	void dispose() {
+		for (final ComponentNode childNode : createdChildren) {
+			childNode.dispose();
+		}
+		model.removeListModelListener(listModelListener);
 	}
 
 	protected IComponentNodeContainerModel getModel() {

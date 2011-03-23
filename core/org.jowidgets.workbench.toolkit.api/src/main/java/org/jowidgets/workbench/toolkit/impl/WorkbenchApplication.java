@@ -45,6 +45,9 @@ class WorkbenchApplication extends ComponentNodeContainer implements IWorkbenchA
 	private IMenuModel popupMenu;
 	private IMenuModel toolBarMenu;
 
+	private IWorkbenchApplicationContext context;
+	private IWorkbenchPartModelListener workbenchPartModelListener;
+
 	WorkbenchApplication(final IWorkbenchApplicationModel model) {
 		super(model);
 		this.model = model;
@@ -54,12 +57,16 @@ class WorkbenchApplication extends ComponentNodeContainer implements IWorkbenchA
 	public void onContextInitialize(final IWorkbenchApplicationContext context) {
 		super.initialize(context);
 
-		model.addWorkbenchPartModelListener(new IWorkbenchPartModelListener() {
+		this.context = context;
+
+		this.workbenchPartModelListener = new IWorkbenchPartModelListener() {
 			@Override
 			public void modelChanged() {
 				onModelChanged(context);
 			}
-		});
+		};
+
+		model.addWorkbenchPartModelListener(workbenchPartModelListener);
 
 		onModelChanged(context);
 	}
@@ -154,6 +161,25 @@ class WorkbenchApplication extends ComponentNodeContainer implements IWorkbenchA
 			context.getToolBarMenu().removeAllItems();
 		}
 		toolBarMenu = model.getToolBarMenu();
+	}
+
+	@Override
+	void dispose() {
+		super.dispose();
+		if (context != null) {
+			if (toolBar != null) {
+				toolBar.unbind(context.getToolBar());
+			}
+			if (popupMenu != null) {
+				popupMenu.unbind(context.getPopupMenu());
+			}
+			if (toolBarMenu != null) {
+				toolBarMenu.unbind(context.getToolBarMenu());
+			}
+			if (workbenchPartModelListener != null) {
+				model.removeWorkbenchPartModelListener(workbenchPartModelListener);
+			}
+		}
 	}
 
 }

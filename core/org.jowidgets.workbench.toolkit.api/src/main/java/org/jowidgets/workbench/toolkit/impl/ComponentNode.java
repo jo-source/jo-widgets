@@ -41,23 +41,36 @@ class ComponentNode extends ComponentNodeContainer implements IComponentTreeNode
 
 	private final IComponentNodeModel model;
 
+	private String label;
+	private String tooltip;
+	private IImageConstant icon;
 	private IMenuModel popupMenu;
+
+	private boolean selected;
+	private boolean expanded;
+
+	private IWorkbenchPartModelListener workbenchPartModelListener;
+	private IComponentTreeNodeContext context;
 
 	ComponentNode(final IComponentNodeModel model) {
 		super(model);
 		this.model = model;
+		this.selected = false;
+		this.expanded = false;
 	}
 
 	@Override
 	public void onContextInitialize(final IComponentTreeNodeContext context) {
 		super.initialize(context);
 
-		model.addWorkbenchPartModelListener(new IWorkbenchPartModelListener() {
+		this.workbenchPartModelListener = new IWorkbenchPartModelListener() {
 			@Override
 			public void modelChanged() {
 				onModelChanged(context);
 			}
-		});
+		};
+
+		model.addWorkbenchPartModelListener(workbenchPartModelListener);
 
 		onModelChanged(context);
 	}
@@ -94,7 +107,26 @@ class ComponentNode extends ComponentNodeContainer implements IComponentTreeNode
 		if (popupMenu != model.getPopupMenu()) {
 			onPopupMenuChanged(context);
 		}
-		//TODO MG bind the residual model parameter
+		if (label != model.getLabel()) {
+			context.setLabel(model.getLabel());
+			label = model.getLabel();
+		}
+		if (tooltip != model.getTooltip()) {
+			context.setTooltip(model.getTooltip());
+			tooltip = model.getTooltip();
+		}
+		if (icon != model.getIcon()) {
+			context.setIcon(model.getIcon());
+			icon = model.getIcon();
+		}
+		if (expanded != model.isExpanded()) {
+			context.setExpanded(expanded);
+			expanded = model.isExpanded();
+		}
+		if (selected != model.isSelected() && model.isSelected()) {
+			context.select();
+			selected = model.isSelected();
+		}
 	}
 
 	private void onPopupMenuChanged(final IComponentTreeNodeContext context) {
@@ -108,6 +140,17 @@ class ComponentNode extends ComponentNodeContainer implements IComponentTreeNode
 			context.getPopupMenu().removeAllItems();
 		}
 		popupMenu = model.getPopupMenu();
+	}
+
+	@Override
+	void dispose() {
+		super.dispose();
+		if (context != null) {
+			if (popupMenu != null) {
+				popupMenu.unbind(context.getPopupMenu());
+			}
+			model.removeWorkbenchPartModelListener(workbenchPartModelListener);
+		}
 	}
 
 }
