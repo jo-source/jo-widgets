@@ -252,6 +252,16 @@ public class MenuModel extends AbstractItemModelWrapper implements IMenuModel {
 	}
 
 	@Override
+	public void bind(final IMenuModel model) {
+		getItemModel().bind(model);
+	}
+
+	@Override
+	public void unbind(final IMenuModel model) {
+		getItemModel().unbind(model);
+	}
+
+	@Override
 	public void removeItem(final IMenuItemModel item) {
 		getItemModel().removeItem(item);
 	}

@@ -57,9 +57,6 @@ class Workbench implements IWorkbench {
 
 	private final List<IWorkbenchApplication> createdApplications;
 
-	private IListModelListener toolBarListener;
-	private IListModelListener menuBarListener;
-
 	private IContentCreator statusBarCreator;
 	private IToolBarModel toolBar;
 	private IMenuBarModel menuBar;
@@ -109,34 +106,7 @@ class Workbench implements IWorkbench {
 			}
 		});
 
-		this.toolBarListener = new IListModelListener() {
-
-			@Override
-			public void childRemoved(final int index) {
-				context.getToolBar().removeItem(index);
-			}
-
-			@Override
-			public void childAdded(final int index) {
-				context.getToolBar().addItem(index, toolBar.getItems().get(index));
-			}
-		};
-
-		this.menuBarListener = new IListModelListener() {
-
-			@Override
-			public void childRemoved(final int index) {
-				context.getMenuBar().removeMenu(index);
-			}
-
-			@Override
-			public void childAdded(final int index) {
-				context.getMenuBar().addMenu(index, menuBar.getMenus().get(index));
-			}
-		};
-
 		model.addWorkbenchPartModelListener(new IWorkbenchPartModelListener() {
-
 			@Override
 			public void modelChanged() {
 				onModelChanged(context);
@@ -196,56 +166,55 @@ class Workbench implements IWorkbench {
 
 	private void onModelChanged(final IWorkbenchContext context) {
 		if (statusBarCreator != model.getStatusBarCreator()) {
-			//Do not create the status bar for the context, if model never had
-			//a status bar	
-			if (model.getStatusBarCreator() != null || statusBarCreator != null) {
-				statusBarCreator = model.getStatusBarCreator();
-				createStatusBar(context);
-			}
-			else {
-				statusBarCreator = model.getStatusBarCreator();
-			}
+			onStatusBarChanged(context);
 		}
 		if (toolBar != model.getToolBar()) {
-			if (toolBar != null) {
-				toolBar.removeListModelListener(toolBarListener);
-			}
-			toolBar = model.getToolBar();
-			createToolBar(context);
+			onToolBarChanged(context);
 		}
 		if (menuBar != model.getMenuBar()) {
-			if (menuBar != null) {
-				menuBar.removeListModelListener(menuBarListener);
+			onMenuBarChanged(context);
+		}
+	}
+
+	private void onStatusBarChanged(final IWorkbenchContext context) {
+		//Do not create the status bar for the context, if model never had
+		//a status bar	
+		if (model.getStatusBarCreator() != null || statusBarCreator != null) {
+			final IContainer statusBar = context.getStatusBar();
+			statusBar.layoutBegin();
+			statusBar.removeAll();
+			if (model.getStatusBarCreator() != null) {
+				model.getStatusBarCreator().createContent(statusBar);
 			}
-			menuBar = model.getMenuBar();
-			createMenuBar(context);
+			statusBar.layoutEnd();
 		}
+		statusBarCreator = model.getStatusBarCreator();
 	}
 
-	private void createToolBar(final IWorkbenchContext context) {
-		context.getToolBar().removeAllItems();
+	private void onToolBarChanged(final IWorkbenchContext context) {
 		if (toolBar != null) {
-			context.getToolBar().addItemsOfModel(toolBar);
-			toolBar.addListModelListener(toolBarListener);
+			toolBar.unbind(context.getToolBar());
 		}
+		if (model.getToolBar() != null) {
+			model.getToolBar().bind(context.getToolBar());
+		}
+		else {
+			context.getToolBar().removeAllItems();
+		}
+		toolBar = model.getToolBar();
 	}
 
-	private void createMenuBar(final IWorkbenchContext context) {
-		context.getMenuBar().removeAllMenus();
+	private void onMenuBarChanged(final IWorkbenchContext context) {
 		if (menuBar != null) {
-			context.getMenuBar().addMenusOfModel(menuBar);
-			menuBar.addListModelListener(menuBarListener);
+			menuBar.unbind(context.getMenuBar());
 		}
-	}
-
-	private void createStatusBar(final IWorkbenchContext context) {
-		final IContainer statusBar = context.getStatusBar();
-		statusBar.layoutBegin();
-		statusBar.removeAll();
-		if (statusBarCreator != null) {
-			statusBarCreator.createContent(statusBar);
+		if (model.getMenuBar() != null) {
+			model.getMenuBar().bind(context.getMenuBar());
 		}
-		statusBar.layoutEnd();
+		else {
+			context.getToolBar().removeAllItems();
+		}
+		menuBar = model.getMenuBar();
 	}
 
 }

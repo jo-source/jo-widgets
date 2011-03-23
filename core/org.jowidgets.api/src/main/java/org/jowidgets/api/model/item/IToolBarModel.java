@@ -38,6 +38,29 @@ public interface IToolBarModel extends IListModelObservable {
 
 	void addItemsOfModel(IToolBarModel model);
 
+	/**
+	 * Binds the given model to this model with the following manner:
+	 * 
+	 * 1. All items of the given model will be removed.
+	 * 2. All items of this model will be added to the given model.
+	 * 3. All changes on this model will be done on the given model.
+	 * 
+	 * @param model The model to bind this model to
+	 * 
+	 * @throws IllegalArgumentException if the given model is null
+	 */
+	void bind(IToolBarModel model);
+
+	/**
+	 * Unbind the given model. Changes on this model will no longer be propagated
+	 * to the given model.
+	 * 
+	 * @param model the model to unbind, may be not bound already but must not be null
+	 * 
+	 * @throws IllegalArgumentException if the given model is null
+	 */
+	void unbind(IToolBarModel model);
+
 	<MODEL_TYPE extends IToolBarItemModel> MODEL_TYPE addItem(final MODEL_TYPE item);
 
 	<MODEL_TYPE extends IToolBarItemModel> MODEL_TYPE addItem(final int index, final MODEL_TYPE item);

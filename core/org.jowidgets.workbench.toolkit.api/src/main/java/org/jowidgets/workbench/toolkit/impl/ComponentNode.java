@@ -28,16 +28,20 @@
 
 package org.jowidgets.workbench.toolkit.impl;
 
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IComponentTreeNode;
 import org.jowidgets.workbench.api.IComponentTreeNodeContext;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
+import org.jowidgets.workbench.toolkit.api.IWorkbenchPartModelListener;
 
 class ComponentNode extends ComponentNodeContainer implements IComponentTreeNode {
 
 	private final IComponentNodeModel model;
+
+	private IMenuModel popupMenu;
 
 	ComponentNode(final IComponentNodeModel model) {
 		super(model);
@@ -47,6 +51,15 @@ class ComponentNode extends ComponentNodeContainer implements IComponentTreeNode
 	@Override
 	public void onContextInitialize(final IComponentTreeNodeContext context) {
 		super.initialize(context);
+
+		model.addWorkbenchPartModelListener(new IWorkbenchPartModelListener() {
+			@Override
+			public void modelChanged() {
+				onModelChanged(context);
+			}
+		});
+
+		onModelChanged(context);
 	}
 
 	@Override
@@ -75,6 +88,26 @@ class ComponentNode extends ComponentNodeContainer implements IComponentTreeNode
 			return model.getComponentFactory().createComponent(model, context);
 		}
 		return null;
+	}
+
+	private void onModelChanged(final IComponentTreeNodeContext context) {
+		if (popupMenu != model.getPopupMenu()) {
+			onPopupMenuChanged(context);
+		}
+		//TODO MG bind the residual model parameter
+	}
+
+	private void onPopupMenuChanged(final IComponentTreeNodeContext context) {
+		if (popupMenu != null) {
+			popupMenu.unbind(context.getPopupMenu());
+		}
+		if (model.getPopupMenu() != null) {
+			model.getPopupMenu().bind(context.getPopupMenu());
+		}
+		else {
+			context.getPopupMenu().removeAllItems();
+		}
+		popupMenu = model.getPopupMenu();
 	}
 
 }

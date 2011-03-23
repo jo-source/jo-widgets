@@ -70,6 +70,16 @@ public class ToolBarModel implements IToolBarModel {
 	}
 
 	@Override
+	public void bind(final IToolBarModel model) {
+		model.bind(model);
+	}
+
+	@Override
+	public void unbind(final IToolBarModel model) {
+		model.unbind(model);
+	}
+
+	@Override
 	public void addItemsOfModel(final IToolBarModel model) {
 		this.model.addItemsOfModel(model);
 	}

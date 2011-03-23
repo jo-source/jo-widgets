@@ -28,8 +28,10 @@
 
 package org.jowidgets.impl.model.item;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.model.IListModelListener;
@@ -48,6 +50,7 @@ import org.jowidgets.util.Assert;
 class MenuModelImpl extends ItemModelImpl implements IMenuModel {
 
 	private final ListModelDelegate listModelDelegate;
+	private final Set<IMenuModel> boundModels;
 
 	protected MenuModelImpl() {
 		this(null, null, null, null, null, null, true);
@@ -64,6 +67,24 @@ class MenuModelImpl extends ItemModelImpl implements IMenuModel {
 		super(id, text, toolTipText, icon, accelerator, mnemonic, enabled);
 
 		this.listModelDelegate = new ListModelDelegate();
+		this.boundModels = new HashSet<IMenuModel>();
+
+		this.addListModelListener(new IListModelListener() {
+
+			@Override
+			public void childRemoved(final int index) {
+				for (final IMenuModel boundModel : boundModels) {
+					boundModel.removeItem(index);
+				}
+			}
+
+			@Override
+			public void childAdded(final int index) {
+				for (final IMenuModel boundModel : boundModels) {
+					boundModel.addItem(getChildren().get(index));
+				}
+			}
+		});
 	}
 
 	@Override
@@ -71,6 +92,20 @@ class MenuModelImpl extends ItemModelImpl implements IMenuModel {
 		final MenuModelImpl result = new MenuModelImpl();
 		result.setContent(this);
 		return result;
+	}
+
+	@Override
+	public void bind(final IMenuModel model) {
+		Assert.paramNotNull(model, "model");
+		model.removeAllItems();
+		model.addItemsOfModel(this);
+		boundModels.add(model);
+	}
+
+	@Override
+	public void unbind(final IMenuModel model) {
+		Assert.paramNotNull(model, "model");
+		boundModels.remove(model);
 	}
 
 	protected void setContent(final IMenuModel source) {
