@@ -30,13 +30,7 @@ package org.jowidgets.workbench.api;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IToolBarModel;
 
-public interface IWorkbenchApplicationContext {
-
-	void add(IComponentTreeNode componentTreeNode);
-
-	void add(int index, IComponentTreeNode componentTreeNode);
-
-	void remove(IComponentTreeNode componentTreeNode);
+public interface IWorkbenchApplicationContext extends IComponentTreeNodeContainerContext {
 
 	/**
 	 * Gets the toolBar model. If no toolBar already exists, a toolBar will be created
@@ -58,7 +52,5 @@ public interface IWorkbenchApplicationContext {
 	 * @return the popup menu model
 	 */
 	IMenuModel getPopupMenu();
-
-	IWorkbenchContext getWorkbenchContext();
 
 }

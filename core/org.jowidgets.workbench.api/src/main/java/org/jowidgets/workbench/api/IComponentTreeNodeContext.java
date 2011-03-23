@@ -30,13 +30,7 @@ package org.jowidgets.workbench.api;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.image.IImageConstant;
 
-public interface IComponentTreeNodeContext {
-
-	void add(IComponentTreeNode componentTreeNode);
-
-	void add(int index, IComponentTreeNode componentTreeNode);
-
-	void remove(IComponentTreeNode componentTreeNode);
+public interface IComponentTreeNodeContext extends IComponentTreeNodeContainerContext {
 
 	void select();
 
@@ -58,7 +52,5 @@ public interface IComponentTreeNodeContext {
 	IComponentTreeNodeContext getParent();
 
 	IWorkbenchApplicationContext getWorkbenchApplicationContext();
-
-	IWorkbenchContext getWorkbenchContext();
 
 }
