@@ -43,19 +43,17 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.ICloseCallback;
 import org.jowidgets.workbench.api.IWorkbench;
-import org.jowidgets.workbench.api.IWorkbenchApplication;
 import org.jowidgets.workbench.api.IWorkbenchContext;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchPartModelListener;
-import org.jowidgets.workbench.toolkit.api.WorkbenchToolkit;
 
 class Workbench implements IWorkbench {
 
 	private final IWorkbenchModel model;
 	private final Runnable shutdownHook;
 
-	private final List<IWorkbenchApplication> createdApplications;
+	private final List<WorkbenchApplication> createdApplications;
 
 	private IContentCreator statusBarCreator;
 	private IToolBarModel toolBar;
@@ -65,7 +63,7 @@ class Workbench implements IWorkbench {
 		Assert.paramNotNull(model, "model");
 
 		this.model = model;
-		this.createdApplications = new LinkedList<IWorkbenchApplication>();
+		this.createdApplications = new LinkedList<WorkbenchApplication>();
 
 		this.shutdownHook = new Runnable() {
 			@Override
@@ -83,7 +81,7 @@ class Workbench implements IWorkbench {
 	public void onContextInitialize(final IWorkbenchContext context) {
 		context.addShutdownHook(shutdownHook);
 		for (final IWorkbenchApplicationModel applicationModel : model.getApplications()) {
-			final IWorkbenchApplication application = WorkbenchToolkit.getWorkbenchPartFactory().application(applicationModel);
+			final WorkbenchApplication application = new WorkbenchApplication(applicationModel);
 			context.add(application);
 			createdApplications.add(application);
 		}
@@ -91,16 +89,17 @@ class Workbench implements IWorkbench {
 		model.addListModelListener(new IListModelListener() {
 			@Override
 			public void childRemoved(final int index) {
-				final IWorkbenchApplication application = createdApplications.remove(index);
+				final WorkbenchApplication application = createdApplications.remove(index);
 				if (application != null) {
 					context.remove(application);
+					application.dispose();
 				}
 			}
 
 			@Override
 			public void childAdded(final int index) {
 				final IWorkbenchApplicationModel applicationModel = model.getApplications().get(index);
-				final IWorkbenchApplication application = WorkbenchToolkit.getWorkbenchPartFactory().application(applicationModel);
+				final WorkbenchApplication application = new WorkbenchApplication(applicationModel);
 				context.add(index, application);
 				createdApplications.add(index, application);
 			}
