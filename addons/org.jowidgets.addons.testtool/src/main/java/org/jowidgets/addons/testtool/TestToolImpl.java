@@ -45,8 +45,11 @@ import org.jowidgets.api.controler.ITreePopupEvent;
 import org.jowidgets.api.controler.ITreeSelectionEvent;
 import org.jowidgets.api.controler.ITreeSelectionListener;
 import org.jowidgets.api.model.IListModelListener;
+import org.jowidgets.api.model.item.IItemModel;
+import org.jowidgets.api.model.item.IItemModelListener;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IMainMenu;
+import org.jowidgets.api.widgets.IMenuItem;
 import org.jowidgets.api.widgets.ITabFolder;
 import org.jowidgets.api.widgets.ITabItem;
 import org.jowidgets.api.widgets.ITable;
@@ -203,6 +206,9 @@ public final class TestToolImpl implements ITestTool {
 				@Override
 				public void selectionChanged(final ITreeSelectionEvent event) {
 					for (final ITreeNode node : event.getSelected()) {
+						if (!widgetRegistry.contains(node)) {
+							widgetRegistry.add(node);
+						}
 						record(widget, UserAction.SELECT, testToolUtilities.createWidgetID(node));
 					}
 				}
@@ -211,11 +217,17 @@ public final class TestToolImpl implements ITestTool {
 
 				@Override
 				public void nodeExpanded(final ITreeNode node) {
+					if (!widgetRegistry.contains(node)) {
+						widgetRegistry.add(node);
+					}
 					record(widget, UserAction.EXPAND, testToolUtilities.createWidgetID(node));
 				}
 
 				@Override
 				public void nodeCollapsed(final ITreeNode node) {
+					if (!widgetRegistry.contains(node)) {
+						widgetRegistry.add(node);
+					}
 					record(widget, UserAction.COLLAPSE, testToolUtilities.createWidgetID(node));
 				}
 			});
@@ -224,6 +236,9 @@ public final class TestToolImpl implements ITestTool {
 				@Override
 				public void popupDetected(final ITreePopupEvent event) {
 					final ITreeNode node = event.getNode();
+					if (!widgetRegistry.contains(node)) {
+						widgetRegistry.add(node);
+					}
 					record(widget, UserAction.CLICK, testToolUtilities.createWidgetID(node));
 				}
 			});
@@ -269,6 +284,15 @@ public final class TestToolImpl implements ITestTool {
 					//System.out.println("TT: Menu activated!");
 				}
 			});
+			for (final IMenuItem item : menu.getChildren()) {
+				item.getModel().addItemModelListener(new IItemModelListener() {
+
+					@Override
+					public void itemChanged(final IItemModel item) {
+						System.out.println("item changed: ");
+					}
+				});
+			}
 		}
 		// TODO LG user ITableUi
 		if (widget instanceof ITable) {

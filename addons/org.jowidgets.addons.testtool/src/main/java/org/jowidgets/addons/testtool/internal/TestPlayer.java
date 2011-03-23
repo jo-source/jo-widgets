@@ -31,6 +31,7 @@ package org.jowidgets.addons.testtool.internal;
 import java.util.List;
 
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.test.api.widgets.IButtonUi;
 
@@ -59,7 +60,7 @@ public class TestPlayer {
 						moveMouseToWidget(widget);
 						executeAction(widget, obj.getAction());
 						try {
-							Thread.sleep(1000);
+							Thread.sleep(500);
 						}
 						catch (final InterruptedException e) {
 						}
@@ -76,18 +77,39 @@ public class TestPlayer {
 			final IButtonUi button = (IButtonUi) widget;
 			switch (action) {
 				case CLICK:
-					System.out.println("Clicke Button");
+					System.out.println("press Button");
 					button.push();
 					break;
 				default:
-					System.out.println("Führe Aktion für unbekanntes Widget durch.");
+					System.out.println("the given user action is not supported for this widget.");
 					break;
 			}
+		}
+		if (widget instanceof ITreeNode) {
+			final ITreeNode node = (ITreeNode) widget;
+			switch (action) {
+				case EXPAND:
+					node.setSelected(true);
+					node.setExpanded(true);
+					break;
+				case COLLAPSE:
+					node.setSelected(true);
+					node.setExpanded(false);
+					break;
+				case SELECT:
+					node.setSelected(true);
+					break;
+				default:
+					break;
+			}
+		}
+		else {
+			System.out.println("the given user action is not supported for this widget.");
 		}
 	}
 
 	private void moveMouseToWidget(final IWidgetCommon targetWidget) {
 		// TODO LG calculate target position and move mouse
-		System.out.println("Bewege Maus zu Widget");
+		System.out.println("moving mouse to target widget");
 	}
 }
