@@ -110,8 +110,21 @@ public class Workbench implements IWorkbench {
 		return workbench.getIcon();
 	}
 
+	/**
+	 * This method is final, because the given context does not support WorkbenchModels.
+	 * To use the workbench context, it's possible to do the following on the builder
+	 * of this workbench model:
+	 * 
+	 * workbenchModelBuilder.setInitializeCallback(new IWorkbenchInitializeCallback() {
+	 * 
+	 * public void onContextInitialize(IWorkbenchContext context) {
+	 * // Do something with the context
+	 * // The given context will be synchronized with the model
+	 * }
+	 * }
+	 */
 	@Override
-	public void onContextInitialize(final IWorkbenchContext context) {
+	public final void onContextInitialize(final IWorkbenchContext context) {
 		workbench.onContextInitialize(context);
 	}
 

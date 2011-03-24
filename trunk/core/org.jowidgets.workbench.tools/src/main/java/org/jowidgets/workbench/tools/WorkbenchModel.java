@@ -41,6 +41,7 @@ import org.jowidgets.workbench.api.ICloseCallback;
 import org.jowidgets.workbench.api.IWorkbenchApplicationDescriptor;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModelBuilder;
+import org.jowidgets.workbench.toolkit.api.IWorkbenchInitializeCallback;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchModelBuilder;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchPartModelListener;
@@ -149,6 +150,11 @@ public class WorkbenchModel implements IWorkbenchModel {
 	@Override
 	public ICloseCallback getCloseCallback() {
 		return model.getCloseCallback();
+	}
+
+	@Override
+	public IWorkbenchInitializeCallback getInitializeCallback() {
+		return model.getInitializeCallback();
 	}
 
 	@Override

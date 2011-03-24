@@ -37,6 +37,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.workbench.api.ICloseCallback;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModelBuilder;
+import org.jowidgets.workbench.toolkit.api.IWorkbenchInitializeCallback;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchModelBuilder;
 import org.jowidgets.workbench.toolkit.api.WorkbenchToolkit;
@@ -131,6 +132,12 @@ public class WorkbenchModelBuilder implements IWorkbenchModelBuilder {
 	@Override
 	public IWorkbenchModelBuilder setCloseCallback(final ICloseCallback closeCallback) {
 		this.builder.setCloseCallback(closeCallback);
+		return this;
+	}
+
+	@Override
+	public IWorkbenchModelBuilder setInitializeCallback(final IWorkbenchInitializeCallback initializeCallback) {
+		this.builder.setInitializeCallback(initializeCallback);
 		return this;
 	}
 

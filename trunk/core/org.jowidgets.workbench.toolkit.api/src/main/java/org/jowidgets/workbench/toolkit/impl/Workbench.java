@@ -113,6 +113,10 @@ class Workbench implements IWorkbench {
 		});
 
 		onModelChanged(context);
+
+		if (model.getInitializeCallback() != null) {
+			model.getInitializeCallback().onContextInitialize(new ModelBasedWorkbenchContext(model, context));
+		}
 	}
 
 	@Override
