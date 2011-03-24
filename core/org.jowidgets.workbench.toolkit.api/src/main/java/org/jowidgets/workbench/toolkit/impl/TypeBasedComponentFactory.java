@@ -28,8 +28,6 @@
 
 package org.jowidgets.workbench.toolkit.impl;
 
-import java.lang.reflect.Constructor;
-
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
@@ -48,14 +46,17 @@ class TypeBasedComponentFactory implements IComponentFactory {
 	@Override
 	public IComponent createComponent(final IComponentNodeModel nodeModel, final IComponentContext context) {
 		try {
-			final Constructor<? extends IComponent> constructor = componentType.getConstructor(
-					IComponentNodeModel.class,
-					IComponentContext.class);
-
-			return constructor.newInstance(nodeModel, context);
+			return componentType.getConstructor(IComponentNodeModel.class, IComponentContext.class).newInstance(
+					nodeModel,
+					context);
 		}
-		catch (final Exception e) {
-			throw new RuntimeException("Exception while creating component from class. ", e);
+		catch (final Exception exception) {
+			try {
+				return componentType.getConstructor(IComponentContext.class).newInstance(context);
+			}
+			catch (final Exception e) {
+				throw new RuntimeException("Exception while creating component from class. ", e);
+			}
 		}
 
 	}
