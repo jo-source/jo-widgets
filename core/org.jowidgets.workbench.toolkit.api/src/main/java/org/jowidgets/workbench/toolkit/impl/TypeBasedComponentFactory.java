@@ -28,46 +28,35 @@
 
 package org.jowidgets.workbench.toolkit.impl;
 
+import java.lang.reflect.Constructor;
+
+import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.IComponent;
+import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.toolkit.api.IComponentFactory;
-import org.jowidgets.workbench.toolkit.api.ILayoutBuilderFactory;
-import org.jowidgets.workbench.toolkit.api.IWorkbenchPartBuilderFactory;
-import org.jowidgets.workbench.toolkit.api.IWorkbenchPartFactory;
-import org.jowidgets.workbench.toolkit.api.IWorkbenchToolkit;
+import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
 
-public class DefaultWorkbenchToolkit implements IWorkbenchToolkit {
+class TypeBasedComponentFactory implements IComponentFactory {
 
-	private ILayoutBuilderFactory layoutBuilderFactory;
-	private IWorkbenchPartBuilderFactory workbenchPartBuilderFactory;
-	private IWorkbenchPartFactory workbenchPartFactory;
+	private final Class<? extends IComponent> componentType;
+
+	public TypeBasedComponentFactory(final Class<? extends IComponent> componentType) {
+		Assert.paramNotNull(componentType, "componentType");
+		this.componentType = componentType;
+	}
 
 	@Override
-	public ILayoutBuilderFactory getLayoutBuilderFactory() {
-		if (layoutBuilderFactory == null) {
-			this.layoutBuilderFactory = new LayoutBuilderFactory();
+	public IComponent createComponent(final IComponentNodeModel nodeModel, final IComponentContext context) {
+		try {
+			final Constructor<? extends IComponent> constructor = componentType.getConstructor(
+					IComponentNodeModel.class,
+					IComponentContext.class);
+
+			return constructor.newInstance(nodeModel, context);
 		}
-		return layoutBuilderFactory;
-	}
-
-	@Override
-	public IWorkbenchPartBuilderFactory getWorkbenchPartBuilderFactory() {
-		if (workbenchPartBuilderFactory == null) {
-			workbenchPartBuilderFactory = new WorkbenchPartBuilderFactory();
+		catch (final Exception e) {
+			throw new RuntimeException("Exception while creating component from class. ", e);
 		}
-		return workbenchPartBuilderFactory;
-	}
 
-	@Override
-	public IWorkbenchPartFactory getWorkbenchPartFactory() {
-		if (workbenchPartFactory == null) {
-			workbenchPartFactory = new WorkbenchPartFactory();
-		}
-		return workbenchPartFactory;
 	}
-
-	@Override
-	public IComponentFactory createComponentFactory(final Class<? extends IComponent> componentType) {
-		return new TypeBasedComponentFactory(componentType);
-	}
-
 }

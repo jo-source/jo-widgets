@@ -30,6 +30,7 @@ package org.jowidgets.workbench.toolkit.impl;
 
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.toolkit.api.IComponentFactory;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeInitializeCallback;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
@@ -92,6 +93,12 @@ class ComponentNodeModelBuilder extends ComponentNodeContainerModelBuilder<IComp
 	@Override
 	public IComponentNodeModelBuilder setComponentFactory(final IComponentFactory componentFactory) {
 		this.componentFactory = componentFactory;
+		return this;
+	}
+
+	@Override
+	public IComponentNodeModelBuilder setComponentFactory(final Class<? extends IComponent> componentType) {
+		this.componentFactory = new TypeBasedComponentFactory(componentType);
 		return this;
 	}
 

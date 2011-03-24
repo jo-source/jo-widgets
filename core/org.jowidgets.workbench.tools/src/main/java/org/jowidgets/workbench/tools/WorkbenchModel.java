@@ -45,21 +45,22 @@ import org.jowidgets.workbench.toolkit.api.IWorkbenchInitializeCallback;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchModelBuilder;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchPartModelListener;
+import org.jowidgets.workbench.toolkit.api.WorkbenchToolkit;
 
 public class WorkbenchModel implements IWorkbenchModel {
 
 	private final IWorkbenchModel model;
 
 	public WorkbenchModel() {
-		this(new WorkbenchModelBuilder());
+		this(builder());
 	}
 
 	public WorkbenchModel(final String label) {
-		this(new WorkbenchModelBuilder(label));
+		this(builder(label));
 	}
 
 	public WorkbenchModel(final String label, final IImageConstant icon) {
-		this(new WorkbenchModelBuilder(label, icon));
+		this(builder(label, icon));
 	}
 
 	public WorkbenchModel(final IWorkbenchModelBuilder modelBuilder) {
@@ -271,6 +272,18 @@ public class WorkbenchModel implements IWorkbenchModel {
 	@Override
 	public void removeAllApplications() {
 		model.removeAllApplications();
+	}
+
+	public static IWorkbenchModelBuilder builder() {
+		return WorkbenchToolkit.getWorkbenchPartBuilderFactory().workbench();
+	}
+
+	public static IWorkbenchModelBuilder builder(final String label) {
+		return builder().setLabel(label);
+	}
+
+	public static IWorkbenchModelBuilder builder(final String label, final IImageConstant icon) {
+		return builder(label).setIcon(icon);
 	}
 
 }
