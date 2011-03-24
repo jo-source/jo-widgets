@@ -26,56 +26,33 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.testtool;
+package org.jowidgets.addons.testtool.internal;
 
+import java.util.LinkedList;
 import java.util.List;
 
-import org.jowidgets.addons.testtool.internal.TestDataObject;
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.common.application.IApplication;
-import org.jowidgets.common.widgets.IWidgetCommon;
-import org.jowidgets.common.widgets.factory.IWidgetFactoryListener;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
-public class TestToolRunner {
+@XmlRootElement
+public class UserTestData {
 
-	private ITestTool testTool;
-	private final IApplication app;
+	@XmlElement(name = "TestData")
+	private final LinkedList<TestDataObject> testObjects;
 
-	public TestToolRunner() {
-		this(null);
+	public UserTestData() {
+		testObjects = new LinkedList<TestDataObject>();
 	}
 
-	public TestToolRunner(final IApplication app) {
-		init();
-		this.app = app;
+	public void addTestData(final List<TestDataObject> testDataObjects) {
+		testObjects.addAll(testDataObjects);
 	}
 
-	public void run() {
-		new TestToolView(testTool);
-		runApplication();
+	public void removeTestData(final List<TestDataObject> testDataObjects) {
+		testObjects.removeAll(testDataObjects);
 	}
 
-	public void runAsUnitTest(final String fileName) {
-		final List<TestDataObject> tests = testTool.load(fileName);
-		testTool.activateReplayMode();
-		testTool.replay(tests, 3000);
-		runApplication();
-	}
-
-	private void init() {
-		testTool = new TestToolImpl();
-		Toolkit.getWidgetFactory().addWidgetFactoryListener(new IWidgetFactoryListener() {
-
-			@Override
-			public void widgetCreated(final IWidgetCommon widget) {
-				testTool.register(widget);
-			}
-		});
-	}
-
-	private void runApplication() {
-		if (app != null) {
-			Toolkit.getInstance().getApplicationRunner().run(app);
-		}
+	public List<TestDataObject> getTestData() {
+		return testObjects;
 	}
 }
