@@ -45,10 +45,10 @@ public class TestPlayer {
 	}
 
 	public void replayTest(final List<TestDataObject> list, final int delay) {
-		final Thread thread = new Thread() {
-			@Override
-			public void run() {
-				for (final TestDataObject obj : list) {
+		for (final TestDataObject obj : list) {
+			final Thread thread = new Thread() {
+				@Override
+				public void run() {
 					final IWidgetCommon widget = finder.findWidgetByID(WidgetRegistry.getInstance().getWidgets(), obj.getId());
 					moveMouseToWidget(widget);
 					executeAction(widget, obj.getAction());
@@ -57,11 +57,11 @@ public class TestPlayer {
 					}
 					catch (final InterruptedException e) {
 					}
+					super.run();
 				}
-				super.run();
-			}
-		};
-		Toolkit.getUiThreadAccess().invokeLater(thread);
+			};
+			Toolkit.getUiThreadAccess().invokeLater(thread);
+		}
 	}
 
 	private void executeAction(final IWidgetCommon widget, final UserAction action) {

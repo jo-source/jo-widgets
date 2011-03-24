@@ -88,12 +88,7 @@ public final class TestToolImpl implements ITestTool {
 	}
 
 	public TestToolImpl(final String filePath) {
-		if (filePath.isEmpty()) {
-			this.persister = new TestDataXmlPersister();
-		}
-		else {
-			this.persister = new TestDataXmlPersister(filePath);
-		}
+		this.persister = new TestDataXmlPersister(filePath);
 		this.testToolUtilities = new TestToolUtilities();
 		this.widgetRegistry = WidgetRegistry.getInstance().getWidgets();
 		this.listModel = new ListModel<TestDataObject>();

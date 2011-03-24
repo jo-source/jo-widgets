@@ -33,25 +33,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.xml.bind.JAXB;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import org.jowidgets.addons.testtool.ITestDataPersister;
 
-// TODO LG maybe its better to use XStream instead of JAXB. Remove workarounds for JAXB.
-@XmlRootElement(name = "UserTestData")
 public class TestDataXmlPersister implements ITestDataPersister {
 
 	private static final String DEFAULT_FILEPATH = File.separator + "resources" + File.separator + "testtool";
 	private static final String FILE_EXTENSION = ".xml";
 	private final String filePath;
-	@XmlElement
-	private final LinkedList<TestDataObject> testObjects;
-
-	// This constructor is necessary for JAXB
-	public TestDataXmlPersister() {
-		this("");
-	}
 
 	public TestDataXmlPersister(final String filePath) {
 		if (filePath.isEmpty()) {
@@ -60,7 +49,6 @@ public class TestDataXmlPersister implements ITestDataPersister {
 		else {
 			this.filePath = filePath;
 		}
-		this.testObjects = new LinkedList<TestDataObject>();
 	}
 
 	@Override
@@ -70,12 +58,12 @@ public class TestDataXmlPersister implements ITestDataPersister {
 		if (file.isDirectory()) {
 			final File[] files = file.listFiles();
 			for (final File tmp : files) {
-				final TestDataXmlPersister result = JAXB.unmarshal(tmp, this.getClass());
+				final UserTestData result = JAXB.unmarshal(tmp, UserTestData.class);
 				results.add(result.getTestData());
 			}
 		}
 		else {
-			final TestDataXmlPersister result = JAXB.unmarshal(file, this.getClass());
+			final UserTestData result = JAXB.unmarshal(file, UserTestData.class);
 			results.add(result.getTestData());
 		}
 		return results;
@@ -85,7 +73,7 @@ public class TestDataXmlPersister implements ITestDataPersister {
 	public List<TestDataObject> load(final String fileName) {
 		final File file = new File(getDirectory() + File.separator + fileName + FILE_EXTENSION);
 		if (file.exists()) {
-			final TestDataXmlPersister result = JAXB.unmarshal(file, this.getClass());
+			final UserTestData result = JAXB.unmarshal(file, UserTestData.class);
 			return result.getTestData();
 		}
 		else {
@@ -95,10 +83,10 @@ public class TestDataXmlPersister implements ITestDataPersister {
 
 	@Override
 	public void save(final List<TestDataObject> list, final String fileName) {
-		// Workaround for JAXB to save the given list with its children.
-		testObjects.addAll(list);
-		JAXB.marshal(this, new File(getDirectory() + File.separator + fileName + FILE_EXTENSION));
-		testObjects.removeAll(testObjects);
+		final UserTestData userTestData = new UserTestData();
+		userTestData.addTestData(list);
+		JAXB.marshal(userTestData, new File(getDirectory() + File.separator + fileName + FILE_EXTENSION));
+		userTestData.removeTestData(list);
 	}
 
 	private File getDirectory() {
@@ -109,10 +97,5 @@ public class TestDataXmlPersister implements ITestDataPersister {
 			}
 		}
 		return dir;
-	}
-
-	// Needed to get the TestDataObjects from the loaded TestDataXmlPersister class.
-	private List<TestDataObject> getTestData() {
-		return testObjects;
 	}
 }
