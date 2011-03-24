@@ -257,7 +257,7 @@ public final class WorkbenchApplicationFolder extends Composite {
 			currentComponent.onDeactivation(vetoHolder);
 			if (vetoHolder.hasVeto()) {
 				tree.clearSelection(false);
-				this.selectedComponentTreeNodeContext.select();
+				this.selectedComponentTreeNodeContext.setSelected(true);
 				return;
 			}
 		}

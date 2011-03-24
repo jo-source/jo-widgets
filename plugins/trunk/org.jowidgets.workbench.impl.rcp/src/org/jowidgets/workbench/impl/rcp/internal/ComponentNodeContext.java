@@ -85,11 +85,7 @@ public final class ComponentNodeContext implements IComponentNodeContext, IWorkb
 
 	@Override
 	public void add(final int index, final IComponentNode componentTreeNode) {
-		final ComponentNodeContext treeNodeContext = new ComponentNodeContext(
-			applicationContext,
-			this,
-			componentTreeNode,
-			tree);
+		final ComponentNodeContext treeNodeContext = new ComponentNodeContext(applicationContext, this, componentTreeNode, tree);
 		childContexts.add(index, treeNodeContext);
 		nodeMap.put(componentTreeNode, treeNodeContext);
 		componentTreeNode.onContextInitialize(treeNodeContext);
@@ -155,15 +151,20 @@ public final class ComponentNodeContext implements IComponentNodeContext, IWorkb
 	}
 
 	@Override
-	public void select() {
-		final List<String> result = new LinkedList<String>();
-		ComponentNodeContext context = this;
-		while (context != null) {
-			result.add(0, context.getId());
-			context = (ComponentNodeContext) context.getParent();
+	public void setSelected(final boolean selected) {
+		if (selected) {
+			final List<String> result = new LinkedList<String>();
+			ComponentNodeContext context = this;
+			while (context != null) {
+				result.add(0, context.getId());
+				context = (ComponentNodeContext) context.getParent();
+			}
+			result.add(0, applicationContext.getId());
+			((WorkbenchContext) getWorkbenchContext()).selectTreeNode(result.toArray(new String[0]));
 		}
-		result.add(0, applicationContext.getId());
-		((WorkbenchContext) getWorkbenchContext()).selectTreeNode(result.toArray(new String[0]));
+		//		else {
+		//TODO HW changed from select() to setSelected()
+		//		}
 	}
 
 	@Override
