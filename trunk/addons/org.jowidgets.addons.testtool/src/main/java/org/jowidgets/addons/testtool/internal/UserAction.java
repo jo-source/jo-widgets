@@ -31,6 +31,7 @@ package org.jowidgets.addons.testtool.internal;
 public enum UserAction {
 
 	CLICK,
+	CLOSE,
 	SELECT,
 	EXPAND,
 	COLLAPSE,

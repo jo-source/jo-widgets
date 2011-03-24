@@ -31,6 +31,7 @@ package org.jowidgets.addons.testtool.internal;
 import java.util.List;
 
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.test.api.widgets.IButtonUi;
@@ -56,6 +57,7 @@ public class TestPlayer {
 						Thread.sleep(delay);
 					}
 					catch (final InterruptedException e) {
+						// do nothing when Thread.sleep fails 
 					}
 					super.run();
 				}
@@ -90,6 +92,21 @@ public class TestPlayer {
 					break;
 				case SELECT:
 					node.setSelected(true);
+					break;
+				default:
+					System.out.println("the given user action is not supported for this widget.");
+					break;
+			}
+		}
+		else if (widget instanceof IFrame) {
+			final IFrame frame = (IFrame) widget;
+			switch (action) {
+				case CLOSE:
+					WidgetRegistry.getInstance().getWidgets().remove(frame);
+					System.out.println("closing frame");
+					System.out.println(frame);
+					frame.setVisible(false);
+					frame.dispose();
 					break;
 				default:
 					System.out.println("the given user action is not supported for this widget.");
