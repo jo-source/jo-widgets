@@ -71,12 +71,12 @@ public class ToolBarModel implements IToolBarModel {
 
 	@Override
 	public void bind(final IToolBarModel model) {
-		model.bind(model);
+		this.model.bind(model);
 	}
 
 	@Override
 	public void unbind(final IToolBarModel model) {
-		model.unbind(model);
+		this.model.unbind(model);
 	}
 
 	@Override
@@ -153,6 +153,11 @@ public class ToolBarModel implements IToolBarModel {
 	}
 
 	@Override
+	public IActionItemModel addActionItem(final IImageConstant icon, final String toolTipText) {
+		return model.addActionItem(icon, toolTipText);
+	}
+
+	@Override
 	public IPopupActionItemModel addPopupActionItem() {
 		return model.addPopupActionItem();
 	}
@@ -175,6 +180,11 @@ public class ToolBarModel implements IToolBarModel {
 	@Override
 	public IPopupActionItemModel addPopupActionItem(final String text, final String toolTipText, final IImageConstant icon) {
 		return model.addPopupActionItem(text, toolTipText, icon);
+	}
+
+	@Override
+	public IPopupActionItemModel addPopupActionItem(final IImageConstant icon, final String toolTipText) {
+		return model.addPopupActionItem(icon, toolTipText);
 	}
 
 	@Override
@@ -220,6 +230,11 @@ public class ToolBarModel implements IToolBarModel {
 	@Override
 	public ICheckedItemModel addCheckedItem(final String text, final String toolTipText, final IImageConstant icon) {
 		return model.addCheckedItem(text, toolTipText, icon);
+	}
+
+	@Override
+	public ICheckedItemModel addCheckedItem(final IImageConstant icon, final String toolTipText) {
+		return model.addCheckedItem(icon, toolTipText);
 	}
 
 	@Override

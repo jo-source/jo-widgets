@@ -41,6 +41,10 @@ import org.jowidgets.workbench.api.IWorkbenchDescriptor;
 
 public interface IWorkbenchModel extends IWorkbenchDescriptor, IWorkbenchPartModel, IListModelObservable {
 
+	boolean isFinished();
+
+	void finish();
+
 	IToolBarModel getToolBar();
 
 	IMenuBarModel getMenuBar();

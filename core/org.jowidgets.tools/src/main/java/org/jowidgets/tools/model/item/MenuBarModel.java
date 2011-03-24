@@ -73,17 +73,17 @@ public class MenuBarModel implements IMenuBarModel {
 
 	@Override
 	public void bind(final IMenuBarModel model) {
-		model.bind(model);
+		this.model.bind(model);
 	}
 
 	@Override
 	public void unbind(final IMenuBarModel model) {
-		model.unbind(model);
+		this.model.unbind(model);
 	}
 
 	@Override
 	public void addMenusOfModel(final IMenuBarModel model) {
-		model.addMenusOfModel(model);
+		this.model.addMenusOfModel(model);
 	}
 
 	@Override

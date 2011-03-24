@@ -403,7 +403,9 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 
 		public void setText(final String text) {
 			label.setText(text);
-			tabButton.setText(text);
+			if (tabButton != null) {
+				tabButton.setText(text);
+			}
 		}
 
 		@Override

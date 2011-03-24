@@ -183,7 +183,6 @@ class ComponentNodeModel extends ComponentNodeContainerModel implements ICompone
 	@Override
 	public void setParentContainer(final IComponentNodeContainerModel parentContainer) {
 		if (this.parentContainer != parentContainer) {
-			this.parentContainer = parentContainer;
 			if (this.parentContainer != null) {
 				this.parentContainer.remove(this);
 			}
@@ -192,6 +191,7 @@ class ComponentNodeModel extends ComponentNodeContainerModel implements ICompone
 					parentContainer.addChild(this);
 				}
 			}
+			this.parentContainer = parentContainer;
 		}
 	}
 

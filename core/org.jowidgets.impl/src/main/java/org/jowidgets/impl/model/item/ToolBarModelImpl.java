@@ -198,6 +198,11 @@ class ToolBarModelImpl implements IToolBarModel {
 	}
 
 	@Override
+	public IActionItemModel addActionItem(final IImageConstant icon, final String toolTipText) {
+		return listModelDelegate.addActionItem(icon, toolTipText);
+	}
+
+	@Override
 	public ICheckedItemModel addCheckedItem() {
 		return listModelDelegate.addCheckedItem();
 	}
@@ -220,6 +225,11 @@ class ToolBarModelImpl implements IToolBarModel {
 	@Override
 	public ICheckedItemModel addCheckedItem(final String text, final String toolTipText, final IImageConstant icon) {
 		return listModelDelegate.addCheckedItem(text, toolTipText, icon);
+	}
+
+	@Override
+	public ICheckedItemModel addCheckedItem(final IImageConstant icon, final String toolTipText) {
+		return listModelDelegate.addCheckedItem(icon, toolTipText);
 	}
 
 	@Override
@@ -283,6 +293,11 @@ class ToolBarModelImpl implements IToolBarModel {
 	@Override
 	public IPopupActionItemModel addPopupActionItem(final String text, final String toolTipText, final IImageConstant icon) {
 		return addItem(new PopupActionItemModelBuilder().setText(text).setToolTipText(toolTipText).setIcon(icon));
+	}
+
+	@Override
+	public IPopupActionItemModel addPopupActionItem(final IImageConstant icon, final String toolTipText) {
+		return addItem(new PopupActionItemModelBuilder().setToolTipText(toolTipText).setIcon(icon));
 	}
 
 	@Override
