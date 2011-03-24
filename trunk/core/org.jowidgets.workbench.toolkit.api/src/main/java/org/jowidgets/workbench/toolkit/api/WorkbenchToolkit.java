@@ -29,6 +29,7 @@
 package org.jowidgets.workbench.toolkit.api;
 
 import org.jowidgets.util.Assert;
+import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.toolkit.impl.DefaultWorkbenchToolkit;
 
 public final class WorkbenchToolkit {
@@ -66,6 +67,10 @@ public final class WorkbenchToolkit {
 
 	public static IWorkbenchPartFactory getWorkbenchPartFactory() {
 		return getInstance().getWorkbenchPartFactory();
+	}
+
+	public static IComponentFactory createComponentFactory(final Class<? extends IComponent> componentType) {
+		return getInstance().createComponentFactory(componentType);
 	}
 
 }

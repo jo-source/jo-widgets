@@ -33,6 +33,6 @@ import org.jowidgets.workbench.api.IComponentContext;
 
 public interface IComponentFactory {
 
-	IComponent createComponent(IComponentNodeModel treeNodeModel, IComponentContext context);
+	IComponent createComponent(IComponentNodeModel nodeModel, IComponentContext context);
 
 }

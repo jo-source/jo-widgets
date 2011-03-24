@@ -45,19 +45,19 @@ public class Workbench implements IWorkbench {
 	private final IWorkbenchModel model;
 
 	public Workbench() {
-		this(new WorkbenchModelBuilder());
+		this(builder());
 	}
 
 	public Workbench(final String label) {
-		this(new WorkbenchModelBuilder(label));
+		this(builder(label));
 	}
 
 	public Workbench(final String label, final IImageConstant icon) {
-		this(new WorkbenchModelBuilder(label, icon));
+		this(builder(label, icon));
 	}
 
-	public Workbench(final IWorkbenchModelBuilder workbenchModelBuilder) {
-		this(workbenchModelBuilder.build());
+	public Workbench(final IWorkbenchModelBuilder builder) {
+		this(build(builder));
 	}
 
 	public Workbench(final IWorkbenchModel model) {
@@ -131,6 +131,23 @@ public class Workbench implements IWorkbench {
 	@Override
 	public void onClose(final IVetoable vetoable) {
 		workbench.onClose(vetoable);
+	}
+
+	public static IWorkbenchModelBuilder builder() {
+		return WorkbenchToolkit.getWorkbenchPartBuilderFactory().workbench();
+	}
+
+	public static IWorkbenchModelBuilder builder(final String label) {
+		return builder().setLabel(label);
+	}
+
+	public static IWorkbenchModelBuilder builder(final String label, final IImageConstant icon) {
+		return builder(label).setIcon(icon);
+	}
+
+	private static IWorkbenchModel build(final IWorkbenchModelBuilder builder) {
+		Assert.paramNotNull(builder, "builder");
+		return builder.build();
 	}
 
 }

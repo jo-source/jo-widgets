@@ -29,6 +29,7 @@
 package org.jowidgets.workbench.toolkit.api;
 
 import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.workbench.api.IComponent;
 
 public interface IComponentNodeModelBuilder extends
 		IComponentNodeContainerModelBuilder<IComponentNodeModelBuilder>,
@@ -41,6 +42,8 @@ public interface IComponentNodeModelBuilder extends
 	IComponentNodeModelBuilder setPopupMenu(IMenuModel popupMenu);
 
 	IComponentNodeModelBuilder setComponentFactory(IComponentFactory componentFactory);
+
+	IComponentNodeModelBuilder setComponentFactory(Class<? extends IComponent> componentType);
 
 	IComponentNodeModelBuilder setInitializeCallback(IComponentNodeInitializeCallback initializeCallback);
 
