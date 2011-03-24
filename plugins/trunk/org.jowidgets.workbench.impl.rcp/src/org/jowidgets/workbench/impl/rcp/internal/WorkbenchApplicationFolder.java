@@ -66,7 +66,7 @@ public final class WorkbenchApplicationFolder extends Composite {
 	private final CTabFolder tabFolder;
 	private final WorkbenchContext workbenchContext;
 	private WorkbenchApplicationTree selectedApplicationTree;
-	private ComponentTreeNodeContext selectedComponentTreeNodeContext;
+	private ComponentNodeContext selectedComponentTreeNodeContext;
 
 	public WorkbenchApplicationFolder(final Composite parent, final IWorkbench workbench, final WorkbenchContext workbenchContext) {
 		super(parent, SWT.NONE);
@@ -241,7 +241,7 @@ public final class WorkbenchApplicationFolder extends Composite {
 
 	public void onTreeNodeSelectionChange(
 		final WorkbenchApplicationTree tree,
-		final ComponentTreeNodeContext selectedComponentTreeNodeContext) {
+		final ComponentNodeContext selectedComponentTreeNodeContext) {
 
 		if (selectedComponentTreeNodeContext == this.selectedComponentTreeNodeContext) {
 			return;
@@ -287,10 +287,10 @@ public final class WorkbenchApplicationFolder extends Composite {
 			return null;
 		}
 		final List<String> result = new LinkedList<String>();
-		ComponentTreeNodeContext context = selectedComponentTreeNodeContext;
+		ComponentNodeContext context = selectedComponentTreeNodeContext;
 		while (context != null) {
 			result.add(0, context.getId());
-			context = (ComponentTreeNodeContext) context.getParent();
+			context = (ComponentNodeContext) context.getParent();
 		}
 		result.add(0, selectedApplicationTree.getApplication().getId());
 		return result.toArray(new String[0]);

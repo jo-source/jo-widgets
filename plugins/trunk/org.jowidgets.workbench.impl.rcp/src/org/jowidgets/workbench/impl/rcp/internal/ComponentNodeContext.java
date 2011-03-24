@@ -41,32 +41,32 @@ import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.workbench.api.IComponent;
-import org.jowidgets.workbench.api.IComponentTreeNode;
-import org.jowidgets.workbench.api.IComponentTreeNodeContext;
+import org.jowidgets.workbench.api.IComponentNode;
+import org.jowidgets.workbench.api.IComponentNodeContext;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 import org.jowidgets.workbench.api.IWorkbenchContext;
 import org.jowidgets.workbench.api.IWorkbenchPart;
 
-public final class ComponentTreeNodeContext implements IComponentTreeNodeContext, IWorkbenchPart {
+public final class ComponentNodeContext implements IComponentNodeContext, IWorkbenchPart {
 
 	private final WorkbenchApplicationContext applicationContext;
-	private final ComponentTreeNodeContext parentContext;
-	private final IComponentTreeNode treeNode;
+	private final ComponentNodeContext parentContext;
+	private final IComponentNode treeNode;
 	private final WorkbenchApplicationTree tree;
 	private final IComposite joTree;
 	private IPopupMenu popupMenu;
 	private IMenuModel popupMenuModel;
-	private final List<ComponentTreeNodeContext> childContexts = new ArrayList<ComponentTreeNodeContext>();
-	private final Map<IComponentTreeNode, ComponentTreeNodeContext> nodeMap = new HashMap<IComponentTreeNode, ComponentTreeNodeContext>();
+	private final List<ComponentNodeContext> childContexts = new ArrayList<ComponentNodeContext>();
+	private final Map<IComponentNode, ComponentNodeContext> nodeMap = new HashMap<IComponentNode, ComponentNodeContext>();
 	private AtomicReference<ComponentContext> componentContextReference;
 	private String label;
 	private String tooltip;
 	private IImageConstant icon;
 
-	public ComponentTreeNodeContext(
+	public ComponentNodeContext(
 		final WorkbenchApplicationContext applicationContext,
-		final ComponentTreeNodeContext parentContext,
-		final IComponentTreeNode treeNode,
+		final ComponentNodeContext parentContext,
+		final IComponentNode treeNode,
 		final WorkbenchApplicationTree tree) {
 		this.applicationContext = applicationContext;
 		this.parentContext = parentContext;
@@ -79,13 +79,13 @@ public final class ComponentTreeNodeContext implements IComponentTreeNodeContext
 	}
 
 	@Override
-	public void add(final IComponentTreeNode componentTreeNode) {
+	public void add(final IComponentNode componentTreeNode) {
 		add(childContexts.size(), componentTreeNode);
 	}
 
 	@Override
-	public void add(final int index, final IComponentTreeNode componentTreeNode) {
-		final ComponentTreeNodeContext treeNodeContext = new ComponentTreeNodeContext(
+	public void add(final int index, final IComponentNode componentTreeNode) {
+		final ComponentNodeContext treeNodeContext = new ComponentNodeContext(
 			applicationContext,
 			this,
 			componentTreeNode,
@@ -97,8 +97,8 @@ public final class ComponentTreeNodeContext implements IComponentTreeNodeContext
 	}
 
 	@Override
-	public void remove(final IComponentTreeNode componentTreeNode) {
-		final ComponentTreeNodeContext treeNodeContext = nodeMap.get(componentTreeNode);
+	public void remove(final IComponentNode componentTreeNode) {
+		final ComponentNodeContext treeNodeContext = nodeMap.get(componentTreeNode);
 		if (treeNodeContext != null) {
 			childContexts.remove(treeNodeContext);
 			nodeMap.remove(componentTreeNode);
@@ -106,8 +106,8 @@ public final class ComponentTreeNodeContext implements IComponentTreeNodeContext
 		}
 	}
 
-	public ComponentTreeNodeContext[] getComponentTreeNodeContexts() {
-		return childContexts.toArray(new ComponentTreeNodeContext[0]);
+	public ComponentNodeContext[] getComponentTreeNodeContexts() {
+		return childContexts.toArray(new ComponentNodeContext[0]);
 	}
 
 	public ComponentContext getComponentContext() {
@@ -130,7 +130,7 @@ public final class ComponentTreeNodeContext implements IComponentTreeNodeContext
 	}
 
 	@Override
-	public IComponentTreeNodeContext getParent() {
+	public IComponentNodeContext getParent() {
 		return parentContext;
 	}
 
@@ -157,10 +157,10 @@ public final class ComponentTreeNodeContext implements IComponentTreeNodeContext
 	@Override
 	public void select() {
 		final List<String> result = new LinkedList<String>();
-		ComponentTreeNodeContext context = this;
+		ComponentNodeContext context = this;
 		while (context != null) {
 			result.add(0, context.getId());
-			context = (ComponentTreeNodeContext) context.getParent();
+			context = (ComponentNodeContext) context.getParent();
 		}
 		result.add(0, applicationContext.getId());
 		((WorkbenchContext) getWorkbenchContext()).selectTreeNode(result.toArray(new String[0]));

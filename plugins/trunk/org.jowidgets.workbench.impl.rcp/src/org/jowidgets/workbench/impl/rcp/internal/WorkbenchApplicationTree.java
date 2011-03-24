@@ -55,7 +55,7 @@ import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.common.types.Position;
-import org.jowidgets.workbench.api.IComponentTreeNodeContext;
+import org.jowidgets.workbench.api.IComponentNodeContext;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
 import org.jowidgets.workbench.api.IWorkbenchPart;
 import org.jowidgets.workbench.impl.rcp.internal.util.FolderToolBarHelper;
@@ -151,8 +151,8 @@ public final class WorkbenchApplicationTree extends Composite {
 				if (parentElement instanceof WorkbenchApplicationContext) {
 					return ((WorkbenchApplicationContext) parentElement).getComponentTreeNodeContexts();
 				}
-				if (parentElement instanceof IComponentTreeNodeContext) {
-					return ((ComponentTreeNodeContext) parentElement).getComponentTreeNodeContexts();
+				if (parentElement instanceof IComponentNodeContext) {
+					return ((ComponentNodeContext) parentElement).getComponentTreeNodeContexts();
 				}
 				return new Object[0];
 			}
@@ -166,7 +166,7 @@ public final class WorkbenchApplicationTree extends Composite {
 				final Point position = WorkbenchApplicationTree.this.toControl(e.x, e.y);
 				final TreeItem item = tree.getItem(position);
 				if (item != null) {
-					final ComponentTreeNodeContext context = (ComponentTreeNodeContext) item.getData();
+					final ComponentNodeContext context = (ComponentNodeContext) item.getData();
 					final IPopupMenu nodeMenu = context.getJoPopupMenu();
 					if (nodeMenu != null) {
 						nodeMenu.show(new Position(position.x, position.y));
@@ -182,7 +182,7 @@ public final class WorkbenchApplicationTree extends Composite {
 			@Override
 			public void selectionChanged(final SelectionChangedEvent event) {
 				if (!event.getSelection().isEmpty()) {
-					final ComponentTreeNodeContext context = (ComponentTreeNodeContext) ((ITreeSelection) treeViewer.getSelection()).getFirstElement();
+					final ComponentNodeContext context = (ComponentNodeContext) ((ITreeSelection) treeViewer.getSelection()).getFirstElement();
 					folder.onTreeNodeSelectionChange(WorkbenchApplicationTree.this, context);
 				}
 				else if (notifyUnselection) {
@@ -212,7 +212,7 @@ public final class WorkbenchApplicationTree extends Composite {
 	private void selectTreeNode(final List<String> nodes, final TreeItem parent) {
 		if (nodes.isEmpty()) {
 			if (parent != null) {
-				final ComponentTreeNodeContext context = (ComponentTreeNodeContext) parent.getData();
+				final ComponentNodeContext context = (ComponentNodeContext) parent.getData();
 				treeViewer.setSelection(new StructuredSelection(context));
 			}
 			return;
@@ -227,7 +227,7 @@ public final class WorkbenchApplicationTree extends Composite {
 		}
 		final String id = nodes.remove(0);
 		for (final TreeItem item : items) {
-			final ComponentTreeNodeContext context = (ComponentTreeNodeContext) item.getData();
+			final ComponentNodeContext context = (ComponentNodeContext) item.getData();
 			if (context != null && context.getId().equals(id)) {
 				treeViewer.expandToLevel(context, 1);
 				selectTreeNode(nodes, item);
@@ -259,11 +259,11 @@ public final class WorkbenchApplicationTree extends Composite {
 		return popupMenuModel;
 	}
 
-	public void expand(final ComponentTreeNodeContext componentTreeNodeContext) {
+	public void expand(final ComponentNodeContext componentTreeNodeContext) {
 		treeViewer.expandToLevel(componentTreeNodeContext, 1);
 	}
 
-	public void collapse(final ComponentTreeNodeContext componentTreeNodeContext) {
+	public void collapse(final ComponentNodeContext componentTreeNodeContext) {
 		treeViewer.collapseToLevel(componentTreeNodeContext, 1);
 	}
 
@@ -280,12 +280,12 @@ public final class WorkbenchApplicationTree extends Composite {
 			items = parent.getItems();
 		}
 		if (items.length == 0 && parent != null) {
-			final ComponentTreeNodeContext context = (ComponentTreeNodeContext) parent.getData();
+			final ComponentNodeContext context = (ComponentNodeContext) parent.getData();
 			treeViewer.setSelection(new StructuredSelection(context));
 			return true;
 		}
 		for (final TreeItem item : items) {
-			final ComponentTreeNodeContext context = (ComponentTreeNodeContext) item.getData();
+			final ComponentNodeContext context = (ComponentNodeContext) item.getData();
 			if (context != null) {
 				treeViewer.expandToLevel(context, 1);
 				if (selectDefault(item)) {

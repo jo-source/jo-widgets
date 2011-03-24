@@ -31,7 +31,7 @@ package org.jowidgets.workbench.impl.rcp.internal;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.workbench.api.IComponentContext;
-import org.jowidgets.workbench.api.IComponentTreeNodeContext;
+import org.jowidgets.workbench.api.IComponentNodeContext;
 import org.jowidgets.workbench.api.IFolderContext;
 import org.jowidgets.workbench.api.IViewLayout;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
@@ -80,13 +80,13 @@ public final class FolderContext implements IFolderContext {
 	}
 
 	@Override
-	public IComponentTreeNodeContext getComponentTreeNodeContext() {
-		return getComponentContext().getComponentTreeNodeContext();
+	public IComponentNodeContext getComponentNodeContext() {
+		return getComponentContext().getComponentNodeContext();
 	}
 
 	@Override
 	public IWorkbenchApplicationContext getWorkbenchApplicationContext() {
-		return getComponentTreeNodeContext().getWorkbenchApplicationContext();
+		return getComponentNodeContext().getWorkbenchApplicationContext();
 	}
 
 	@Override

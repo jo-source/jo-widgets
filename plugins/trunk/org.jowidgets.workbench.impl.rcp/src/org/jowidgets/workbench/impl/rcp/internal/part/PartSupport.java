@@ -63,7 +63,7 @@ import org.jowidgets.workbench.api.LayoutScope;
 import org.jowidgets.workbench.impl.rcp.RcpView;
 import org.jowidgets.workbench.impl.rcp.internal.Activator;
 import org.jowidgets.workbench.impl.rcp.internal.ComponentContext;
-import org.jowidgets.workbench.impl.rcp.internal.ComponentTreeNodeContext;
+import org.jowidgets.workbench.impl.rcp.internal.ComponentNodeContext;
 import org.jowidgets.workbench.impl.rcp.internal.FolderContext;
 import org.jowidgets.workbench.impl.rcp.internal.ViewContext;
 import org.jowidgets.workbench.impl.rcp.internal.WorkbenchApplicationContext;
@@ -122,7 +122,7 @@ public final class PartSupport {
 	}
 
 	public void showPerspective(
-		final ComponentTreeNodeContext componentTreeNodeContext,
+		final ComponentNodeContext componentTreeNodeContext,
 		final ComponentContext componentContext,
 		final ILayout perspective) {
 		if (perspective == null) {
@@ -149,7 +149,7 @@ public final class PartSupport {
 		initializeViews();
 	}
 
-	private String getPerspectiveId(final ILayout layout, ComponentTreeNodeContext componentTreeNodeContext) {
+	private String getPerspectiveId(final ILayout layout, ComponentNodeContext componentTreeNodeContext) {
 		final LayoutScope scope = layout.getScope();
 
 		if (scope == LayoutScope.WORKBENCH) {
@@ -164,7 +164,7 @@ public final class PartSupport {
 		final StringBuilder id = new StringBuilder();
 		while (componentTreeNodeContext != null) {
 			id.insert(0, "." + componentTreeNodeContext.getId());
-			componentTreeNodeContext = (ComponentTreeNodeContext) componentTreeNodeContext.getParent();
+			componentTreeNodeContext = (ComponentNodeContext) componentTreeNodeContext.getParent();
 		}
 		id.insert(0, appId);
 		id.append(".");
@@ -382,7 +382,7 @@ public final class PartSupport {
 	}
 
 	public void resetPerspective(
-		final ComponentTreeNodeContext componentTreeNodeContext,
+		final ComponentNodeContext componentTreeNodeContext,
 		final ComponentContext componentContext,
 		final ILayout layout) {
 		final IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();

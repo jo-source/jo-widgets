@@ -36,7 +36,7 @@ import java.util.Map;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.workbench.api.IComponentTreeNode;
+import org.jowidgets.workbench.api.IComponentNode;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 import org.jowidgets.workbench.api.IWorkbenchContext;
@@ -47,8 +47,8 @@ public final class WorkbenchApplicationContext implements IWorkbenchApplicationC
 	private final IWorkbenchContext workbenchContext;
 	private final IWorkbenchApplication application;
 	private final WorkbenchApplicationTree tree;
-	private final List<ComponentTreeNodeContext> childContexts = new ArrayList<ComponentTreeNodeContext>();
-	private final Map<IComponentTreeNode, ComponentTreeNodeContext> nodeMap = new HashMap<IComponentTreeNode, ComponentTreeNodeContext>();
+	private final List<ComponentNodeContext> childContexts = new ArrayList<ComponentNodeContext>();
+	private final Map<IComponentNode, ComponentNodeContext> nodeMap = new HashMap<IComponentNode, ComponentNodeContext>();
 
 	public WorkbenchApplicationContext(
 		final IWorkbenchContext workbenchContext,
@@ -61,13 +61,13 @@ public final class WorkbenchApplicationContext implements IWorkbenchApplicationC
 	}
 
 	@Override
-	public void add(final IComponentTreeNode componentTreeNode) {
+	public void add(final IComponentNode componentTreeNode) {
 		add(childContexts.size(), componentTreeNode);
 	}
 
 	@Override
-	public void add(final int index, final IComponentTreeNode componentTreeNode) {
-		final ComponentTreeNodeContext treeNodeContext = new ComponentTreeNodeContext(this, null, componentTreeNode, tree);
+	public void add(final int index, final IComponentNode componentTreeNode) {
+		final ComponentNodeContext treeNodeContext = new ComponentNodeContext(this, null, componentTreeNode, tree);
 		childContexts.add(index, treeNodeContext);
 		nodeMap.put(componentTreeNode, treeNodeContext);
 		componentTreeNode.onContextInitialize(treeNodeContext);
@@ -75,8 +75,8 @@ public final class WorkbenchApplicationContext implements IWorkbenchApplicationC
 	}
 
 	@Override
-	public void remove(final IComponentTreeNode componentTreeNode) {
-		final ComponentTreeNodeContext treeNodeContext = nodeMap.get(componentTreeNode);
+	public void remove(final IComponentNode componentTreeNode) {
+		final ComponentNodeContext treeNodeContext = nodeMap.get(componentTreeNode);
 		if (treeNodeContext != null) {
 			childContexts.remove(treeNodeContext);
 			nodeMap.remove(componentTreeNode);
@@ -84,8 +84,8 @@ public final class WorkbenchApplicationContext implements IWorkbenchApplicationC
 		}
 	}
 
-	public ComponentTreeNodeContext[] getComponentTreeNodeContexts() {
-		return childContexts.toArray(new ComponentTreeNodeContext[0]);
+	public ComponentNodeContext[] getComponentTreeNodeContexts() {
+		return childContexts.toArray(new ComponentNodeContext[0]);
 	}
 
 	public String getId() {

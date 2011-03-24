@@ -36,7 +36,7 @@ import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.workbench.api.IComponentContext;
-import org.jowidgets.workbench.api.IComponentTreeNodeContext;
+import org.jowidgets.workbench.api.IComponentNodeContext;
 import org.jowidgets.workbench.api.IViewContext;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 import org.jowidgets.workbench.api.IWorkbenchContext;
@@ -111,13 +111,13 @@ public final class ViewContext implements IViewContext {
 	}
 
 	@Override
-	public IComponentTreeNodeContext getComponentTreeNodeContext() {
-		return getComponentContext().getComponentTreeNodeContext();
+	public IComponentNodeContext getComponentNodeContext() {
+		return getComponentContext().getComponentNodeContext();
 	}
 
 	@Override
 	public IWorkbenchApplicationContext getWorkbenchApplicationContext() {
-		return getComponentTreeNodeContext().getWorkbenchApplicationContext();
+		return getComponentNodeContext().getWorkbenchApplicationContext();
 	}
 
 	@Override

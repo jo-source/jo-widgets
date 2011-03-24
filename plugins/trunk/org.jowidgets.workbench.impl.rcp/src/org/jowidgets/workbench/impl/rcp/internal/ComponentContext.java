@@ -30,7 +30,7 @@ package org.jowidgets.workbench.impl.rcp.internal;
 
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
-import org.jowidgets.workbench.api.IComponentTreeNodeContext;
+import org.jowidgets.workbench.api.IComponentNodeContext;
 import org.jowidgets.workbench.api.ILayout;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
@@ -39,16 +39,16 @@ import org.jowidgets.workbench.impl.rcp.internal.part.PartSupport;
 
 public final class ComponentContext implements IComponentContext {
 
-	private final IComponentTreeNodeContext componentTreeNodeContext;
+	private final IComponentNodeContext componentTreeNodeContext;
 	private ILayout perspective;
 	private IComponent component;
 
-	public ComponentContext(final IComponentTreeNodeContext componentTreeNodeContext) {
+	public ComponentContext(final IComponentNodeContext componentTreeNodeContext) {
 		this.componentTreeNodeContext = componentTreeNodeContext;
 	}
 
 	@Override
-	public IComponentTreeNodeContext getComponentTreeNodeContext() {
+	public IComponentNodeContext getComponentNodeContext() {
 		return componentTreeNodeContext;
 	}
 
@@ -67,7 +67,7 @@ public final class ComponentContext implements IComponentContext {
 					PartSupport.getInstance().showEmptyPerspective();
 				}
 				else {
-					PartSupport.getInstance().showPerspective((ComponentTreeNodeContext) componentTreeNodeContext, this, layout);
+					PartSupport.getInstance().showPerspective((ComponentNodeContext) componentTreeNodeContext, this, layout);
 				}
 			}
 		}
@@ -75,7 +75,7 @@ public final class ComponentContext implements IComponentContext {
 
 	@Override
 	public void resetLayout(final ILayout layout) {
-		PartSupport.getInstance().resetPerspective((ComponentTreeNodeContext) componentTreeNodeContext, this, layout);
+		PartSupport.getInstance().resetPerspective((ComponentNodeContext) componentTreeNodeContext, this, layout);
 	}
 
 	@Override
