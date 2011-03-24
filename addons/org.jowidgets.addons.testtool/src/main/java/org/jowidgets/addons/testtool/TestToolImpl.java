@@ -84,9 +84,18 @@ public final class TestToolImpl implements ITestTool {
 	private boolean replay;
 
 	public TestToolImpl() {
+		this("");
+	}
+
+	public TestToolImpl(final String filePath) {
+		if (filePath.isEmpty()) {
+			this.persister = new TestDataXmlPersister();
+		}
+		else {
+			this.persister = new TestDataXmlPersister(filePath);
+		}
 		this.testToolUtilities = new TestToolUtilities();
 		this.widgetRegistry = WidgetRegistry.getInstance().getWidgets();
-		this.persister = new TestDataXmlPersister();
 		this.listModel = new ListModel<TestDataObject>();
 		this.player = new TestPlayer();
 		this.record = false;
@@ -279,7 +288,7 @@ public final class TestToolImpl implements ITestTool {
 
 					@Override
 					public void itemChanged(final IItemModel item) {
-						System.out.println("item changed: ");
+						//System.out.println("item changed: ");
 					}
 				});
 			}
@@ -344,6 +353,11 @@ public final class TestToolImpl implements ITestTool {
 	@Override
 	public void save(final List<TestDataObject> list, final String fileName) {
 		persister.save(list, fileName);
+	}
+
+	@Override
+	public List<TestDataObject> load(final String fileName) {
+		return persister.load(fileName);
 	}
 
 	@Override

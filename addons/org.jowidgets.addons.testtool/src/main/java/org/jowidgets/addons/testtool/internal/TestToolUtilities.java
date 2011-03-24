@@ -53,13 +53,8 @@ public final class TestToolUtilities {
 		Assert.paramNotNull(widget, "widget");
 		Assert.paramNotNull(identifier, "identifier");
 
-		final LinkedList<IWidget> widgetList = new LinkedList<IWidget>();
-		widgetList.add(widget);
-		IWidget parent = widget.getParent();
-		while (parent != null) {
-			widgetList.add(parent);
-			parent = parent.getParent();
-		}
+		final LinkedList<IWidget> widgetList = getWidgetHierarchy(widget);
+
 		final StringBuilder sb = new StringBuilder();
 		while (!widgetList.isEmpty()) {
 			if (widgetList.size() > 1) {
@@ -99,6 +94,22 @@ public final class TestToolUtilities {
 			}
 		}
 		return sb.toString();
+	}
+
+	private LinkedList<IWidget> getWidgetHierarchy(final IWidget widget) {
+		final LinkedList<IWidget> results = new LinkedList<IWidget>();
+		results.add(widget);
+		IWidget parent = widget.getParent();
+
+		if (widget instanceof ITreeNode) {
+			final ITreeNode node = (ITreeNode) widget;
+			parent = node.getTree();
+		}
+		while (parent != null) {
+			results.add(parent);
+			parent = parent.getParent();
+		}
+		return results;
 	}
 
 	// TODO LG add IButtonUi, IFrameUi... 

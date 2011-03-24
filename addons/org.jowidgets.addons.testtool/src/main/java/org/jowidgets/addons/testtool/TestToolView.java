@@ -202,6 +202,7 @@ public class TestToolView implements ITestToolView {
 						obj.setId(tableDataModel.getCell(rowIndex, 3).getText());
 						list.add(obj);
 					}
+					// TODO LG use file chooser
 					final IInputDialog<String> dialog = viewUtilities.createInputDialog(frame, "Enter File Name", "file name");
 					dialog.setVisible(true);
 					if (dialog.isOkPressed()) {
@@ -220,12 +221,39 @@ public class TestToolView implements ITestToolView {
 
 			@Override
 			public void actionPerformed() {
-				// TODO LG load TestDataObjects
+				final IInputDialog<String> dialog = viewUtilities.createInputDialog(frame, "Enter File Name", "file name");
+				dialog.setVisible(true);
+				if (dialog.isOkPressed()) {
+					// TODO LG use file chooser
+					final List<TestDataObject> results = testTool.load(dialog.getValue());
+					if (results != null) {
+						for (final TestDataObject item : results) {
+							tableDataModel.addRow(
+									Integer.toString(tableDataModel.getRowCount()),
+									item.getType(),
+									item.getAction().name(),
+									item.getId());
+						}
+						table.pack();
+						Toolkit.getMessagePane().showInfo("Loading tests was successfull!");
+					}
+					else {
+						Toolkit.getMessagePane().showError("couldn't find tests for the given filename");
+					}
+				}
+				dialog.dispose();
 			}
 		});
 
 		fileModel.addSeparator();
-		fileModel.addActionItem("exit");
+		final IActionItemModel exitActionItem = fileModel.addActionItem("Exit");
+		exitActionItem.addActionListener(new IActionListener() {
+
+			@Override
+			public void actionPerformed() {
+				System.exit(0);
+			}
+		});
 		menuBarModel.addMenu(fileModel);
 	}
 

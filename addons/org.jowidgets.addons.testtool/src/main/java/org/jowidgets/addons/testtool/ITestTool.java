@@ -45,6 +45,8 @@ public interface ITestTool {
 
 	void save(final List<TestDataObject> list, final String fileName);
 
+	List<TestDataObject> load(String fileName);
+
 	ListModel<?> getListModel();
 
 	void activateRecordMode();

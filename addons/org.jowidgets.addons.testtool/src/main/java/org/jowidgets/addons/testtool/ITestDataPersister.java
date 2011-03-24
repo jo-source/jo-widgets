@@ -36,5 +36,7 @@ public interface ITestDataPersister {
 
 	void save(List<TestDataObject> list, String fileName);
 
+	List<List<TestDataObject>> loadAll();
+
 	List<TestDataObject> load(String fileName);
 }
