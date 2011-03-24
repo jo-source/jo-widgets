@@ -339,13 +339,13 @@ class ListModelDelegate {
 	}
 
 	private void fireChildAdded(final int index) {
-		for (final IListModelListener listener : listModelListeners) {
+		for (final IListModelListener listener : new LinkedList<IListModelListener>(listModelListeners)) {
 			listener.childAdded(index);
 		}
 	}
 
 	private void fireChildRemoved(final int index) {
-		for (final IListModelListener listener : listModelListeners) {
+		for (final IListModelListener listener : new LinkedList<IListModelListener>(listModelListeners)) {
 			listener.childRemoved(index);
 		}
 	}
