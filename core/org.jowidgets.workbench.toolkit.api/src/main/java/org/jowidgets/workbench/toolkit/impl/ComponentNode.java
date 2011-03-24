@@ -127,8 +127,8 @@ class ComponentNode extends ComponentNodeContainer implements IComponentNode {
 			context.setExpanded(expanded);
 			expanded = model.isExpanded();
 		}
-		if (selected != model.isSelected() && model.isSelected()) {
-			context.select();
+		if (selected != model.isSelected()) {
+			context.setSelected(model.isSelected());
 			selected = model.isSelected();
 		}
 	}

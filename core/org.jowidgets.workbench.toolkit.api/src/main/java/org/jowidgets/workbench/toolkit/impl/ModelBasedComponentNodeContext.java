@@ -54,8 +54,8 @@ class ModelBasedComponentNodeContext extends ModelBasedComponentNodeContainerCon
 	}
 
 	@Override
-	public void select() {
-		nodeModel.setSelected(true);
+	public void setSelected(final boolean selected) {
+		nodeModel.setSelected(selected);
 	}
 
 	@Override

@@ -66,9 +66,7 @@ public class ActionFactory {
 				final IInputDialog<String> inputDialog = createInputDialog(executionContext, "Folder name");
 				inputDialog.setVisible(true);
 				if (inputDialog.isOkPressed()) {
-					final IComponentNode componentNode = new FolderNodeDemo(
-						UUID.randomUUID().toString(),
-						inputDialog.getValue());
+					final IComponentNode componentNode = new FolderNodeDemo(UUID.randomUUID().toString(), inputDialog.getValue());
 					context.add(componentNode);
 				}
 			}
@@ -113,9 +111,7 @@ public class ActionFactory {
 				final IInputDialog<String> inputDialog = createInputDialog(executionContext, "Folder name");
 				inputDialog.setVisible(true);
 				if (inputDialog.isOkPressed()) {
-					final IComponentNode componentNode = new FolderNodeDemo(
-						UUID.randomUUID().toString(),
-						inputDialog.getValue());
+					final IComponentNode componentNode = new FolderNodeDemo(UUID.randomUUID().toString(), inputDialog.getValue());
 
 					final IComponentNodeContext parentTreeNode = context.getParent();
 					if (parentTreeNode == null) {
@@ -275,7 +271,7 @@ public class ActionFactory {
 		actionBuilder.setCommand(new ICommandExecutor() {
 			@Override
 			public void execute(final IExecutionContext executionContext) throws Exception {
-				context.getParent().select();
+				context.getParent().setSelected(true);
 			}
 		}, enabledChecker);
 

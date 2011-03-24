@@ -140,8 +140,8 @@ public class ComponentNodeContext implements IComponentNodeContext {
 	}
 
 	@Override
-	public void select() {
-		treeNode.setSelected(true);
+	public void setSelected(final boolean selected) {
+		treeNode.setSelected(selected);
 	}
 
 	@Override
