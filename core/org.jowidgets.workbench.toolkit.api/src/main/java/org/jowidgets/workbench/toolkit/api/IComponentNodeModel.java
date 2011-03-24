@@ -30,9 +30,9 @@ package org.jowidgets.workbench.toolkit.api;
 
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.workbench.api.IComponentTreeNodeDescriptor;
+import org.jowidgets.workbench.api.IComponentNodeDescriptor;
 
-public interface IComponentNodeModel extends IComponentTreeNodeDescriptor, IComponentNodeContainerModel, IWorkbenchPartModel {
+public interface IComponentNodeModel extends IComponentNodeDescriptor, IComponentNodeContainerModel, IWorkbenchPartModel {
 
 	boolean isSelected();
 

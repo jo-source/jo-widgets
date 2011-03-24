@@ -50,7 +50,7 @@ import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.util.Assert;
-import org.jowidgets.workbench.api.IComponentTreeNode;
+import org.jowidgets.workbench.api.IComponentNode;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 
@@ -63,8 +63,8 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 	private final IMenuModel popupMenuModel;
 	private final IToolBarModel toolBarModel;
 	private final IMenuModel toolBarMenuModel;
-	private final Map<IComponentTreeNode, ITreeNode> createdNodes;
-	private final Map<ITreeNode, ComponentTreeNodeContext> registeredNodes;
+	private final Map<IComponentNode, ITreeNode> createdNodes;
+	private final Map<ITreeNode, ComponentNodeContext> registeredNodes;
 
 	private ITreeNode selectedNode;
 
@@ -75,8 +75,8 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 		final IWorkbenchApplication application) {
 
 		this.workbenchContext = workbenchContext;
-		this.createdNodes = new HashMap<IComponentTreeNode, ITreeNode>();
-		this.registeredNodes = new HashMap<ITreeNode, ComponentTreeNodeContext>();
+		this.createdNodes = new HashMap<IComponentNode, ITreeNode>();
+		this.registeredNodes = new HashMap<ITreeNode, ComponentNodeContext>();
 
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
@@ -117,8 +117,8 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 				final ITreeNode wasSelected = selectedNode;
 				final ITreeNode isSelected = event.getSelectedSingle();
 
-				final ComponentTreeNodeContext wasSelectedContext = registeredNodes.get(wasSelected);
-				final ComponentTreeNodeContext isSelectedContext = registeredNodes.get(isSelected);
+				final ComponentNodeContext wasSelectedContext = registeredNodes.get(wasSelected);
+				final ComponentNodeContext isSelectedContext = registeredNodes.get(isSelected);
 
 				workbenchContentContainer.layoutBegin();
 				if (wasSelectedContext != null) {
@@ -170,22 +170,22 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 	}
 
 	@Override
-	public void add(final IComponentTreeNode componentTreeNode) {
-		add(tree.getChildren().size(), componentTreeNode);
+	public void add(final IComponentNode componentNode) {
+		add(tree.getChildren().size(), componentNode);
 	}
 
 	@Override
-	public void add(final int index, final IComponentTreeNode componentTreeNode) {
-		Assert.paramNotNull(componentTreeNode, "componentTreeNode");
+	public void add(final int index, final IComponentNode componentNode) {
+		Assert.paramNotNull(componentNode, "componentNode");
 		final ITreeNode node = tree.addNode(index);
-		createdNodes.put(componentTreeNode, node);
-		registerNodeContext(new ComponentTreeNodeContext(componentTreeNode, node, null, this, workbenchContext));
+		createdNodes.put(componentNode, node);
+		registerNodeContext(new ComponentNodeContext(componentNode, node, null, this, workbenchContext));
 	}
 
 	@Override
-	public void remove(final IComponentTreeNode componentTreeNode) {
-		Assert.paramNotNull(componentTreeNode, "componentTreeNode");
-		final ITreeNode node = createdNodes.remove(componentTreeNode);
+	public void remove(final IComponentNode componentNode) {
+		Assert.paramNotNull(componentNode, "componentNode");
+		final ITreeNode node = createdNodes.remove(componentNode);
 		if (node != null) {
 			node.setSelected(false);
 			tree.removeNode(node);
@@ -213,7 +213,7 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 		return workbenchContext;
 	}
 
-	protected void registerNodeContext(final ComponentTreeNodeContext nodeContext) {
+	protected void registerNodeContext(final ComponentNodeContext nodeContext) {
 		registeredNodes.put(nodeContext.getTreeNode(), nodeContext);
 	}
 

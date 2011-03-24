@@ -69,7 +69,7 @@ import org.jowidgets.tools.model.table.DefaultTableColumnBuilder;
 import org.jowidgets.tools.model.table.DefaultTableColumnModel;
 import org.jowidgets.tools.model.table.TableCellBuilder;
 import org.jowidgets.util.ValueHolder;
-import org.jowidgets.workbench.api.IComponentTreeNodeContext;
+import org.jowidgets.workbench.api.IComponentNodeContext;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
 
@@ -86,7 +86,7 @@ public class ViewDemo6 extends AbstractView implements IView {
 		context.getToolBarMenu().addItemsOfModel(menuProvider.getMenuModel());
 
 		final ActionFactory actionFactory = new ActionFactory();
-		final IComponentTreeNodeContext treeNodeContent = context.getComponentTreeNodeContext();
+		final IComponentNodeContext treeNodeContent = context.getComponentNodeContext();
 		treeNodeContent.getPopupMenu().addSeparator();
 		treeNodeContent.getPopupMenu().addAction(actionFactory.createActivateViewAction(context, DEFAULT_LABEL));
 		treeNodeContent.getPopupMenu().addAction(actionFactory.createUnHideViewAction(context, DEFAULT_LABEL));

@@ -32,12 +32,12 @@ import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
-import org.jowidgets.workbench.api.IComponentTreeNode;
-import org.jowidgets.workbench.api.IComponentTreeNodeContext;
+import org.jowidgets.workbench.api.IComponentNode;
+import org.jowidgets.workbench.api.IComponentNodeContext;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchPartModelListener;
 
-class ComponentNode extends ComponentNodeContainer implements IComponentTreeNode {
+class ComponentNode extends ComponentNodeContainer implements IComponentNode {
 
 	private final IComponentNodeModel model;
 
@@ -50,7 +50,7 @@ class ComponentNode extends ComponentNodeContainer implements IComponentTreeNode
 	private boolean expanded;
 
 	private IWorkbenchPartModelListener workbenchPartModelListener;
-	private IComponentTreeNodeContext context;
+	private IComponentNodeContext context;
 
 	ComponentNode(final IComponentNodeModel model) {
 		super(model);
@@ -60,7 +60,7 @@ class ComponentNode extends ComponentNodeContainer implements IComponentTreeNode
 	}
 
 	@Override
-	public void onContextInitialize(final IComponentTreeNodeContext context) {
+	public void onContextInitialize(final IComponentNodeContext context) {
 		super.initialize(context);
 
 		this.workbenchPartModelListener = new IWorkbenchPartModelListener() {
@@ -107,7 +107,7 @@ class ComponentNode extends ComponentNodeContainer implements IComponentTreeNode
 		return null;
 	}
 
-	private void onModelChanged(final IComponentTreeNodeContext context) {
+	private void onModelChanged(final IComponentNodeContext context) {
 		if (popupMenu != model.getPopupMenu()) {
 			onPopupMenuChanged(context);
 		}
@@ -133,7 +133,7 @@ class ComponentNode extends ComponentNodeContainer implements IComponentTreeNode
 		}
 	}
 
-	private void onPopupMenuChanged(final IComponentTreeNodeContext context) {
+	private void onPopupMenuChanged(final IComponentNodeContext context) {
 		if (popupMenu != null) {
 			popupMenu.unbind(context.getPopupMenu());
 		}

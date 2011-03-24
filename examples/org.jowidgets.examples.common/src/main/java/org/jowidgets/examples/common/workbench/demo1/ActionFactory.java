@@ -41,8 +41,8 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.tools.command.EnabledChecker;
 import org.jowidgets.workbench.api.IComponentContext;
-import org.jowidgets.workbench.api.IComponentTreeNode;
-import org.jowidgets.workbench.api.IComponentTreeNodeContext;
+import org.jowidgets.workbench.api.IComponentNode;
+import org.jowidgets.workbench.api.IComponentNodeContext;
 import org.jowidgets.workbench.api.IFolderContext;
 import org.jowidgets.workbench.api.ILayout;
 import org.jowidgets.workbench.api.IView;
@@ -66,10 +66,10 @@ public class ActionFactory {
 				final IInputDialog<String> inputDialog = createInputDialog(executionContext, "Folder name");
 				inputDialog.setVisible(true);
 				if (inputDialog.isOkPressed()) {
-					final IComponentTreeNode componentTreeNode = new FolderTreeNodeDemo(
+					final IComponentNode componentNode = new FolderNodeDemo(
 						UUID.randomUUID().toString(),
 						inputDialog.getValue());
-					context.add(componentTreeNode);
+					context.add(componentNode);
 				}
 			}
 
@@ -78,7 +78,7 @@ public class ActionFactory {
 		return actionBuilder.build();
 	}
 
-	public IAction createAddComponentAction(final IComponentTreeNodeContext context) {
+	public IAction createAddComponentAction(final IComponentNodeContext context) {
 		final IActionBuilder actionBuilder = Toolkit.getActionBuilderFactory().create();
 		actionBuilder.setText("Add new Component");
 		actionBuilder.setIcon(SilkIcons.APPLICATION_ADD);
@@ -89,10 +89,10 @@ public class ActionFactory {
 				final IInputDialog<String> inputDialog = createInputDialog(executionContext, "Component name");
 				inputDialog.setVisible(true);
 				if (inputDialog.isOkPressed()) {
-					final IComponentTreeNode componentTreeNode = new ComponentTreeNodeDemo1(
+					final IComponentNode componentNode = new ComponentNodeDemo1(
 						UUID.randomUUID().toString(),
 						inputDialog.getValue());
-					context.add(componentTreeNode);
+					context.add(componentNode);
 					context.setExpanded(true);
 				}
 			}
@@ -102,7 +102,7 @@ public class ActionFactory {
 		return actionBuilder.build();
 	}
 
-	public IAction createAddFolderAction(final IComponentTreeNodeContext context) {
+	public IAction createAddFolderAction(final IComponentNodeContext context) {
 		final IActionBuilder actionBuilder = Toolkit.getActionBuilderFactory().create();
 		actionBuilder.setText("Add new Folder");
 		actionBuilder.setIcon(SilkIcons.FOLDER_ADD);
@@ -113,16 +113,16 @@ public class ActionFactory {
 				final IInputDialog<String> inputDialog = createInputDialog(executionContext, "Folder name");
 				inputDialog.setVisible(true);
 				if (inputDialog.isOkPressed()) {
-					final IComponentTreeNode componentTreeNode = new FolderTreeNodeDemo(
+					final IComponentNode componentNode = new FolderNodeDemo(
 						UUID.randomUUID().toString(),
 						inputDialog.getValue());
 
-					final IComponentTreeNodeContext parentTreeNode = context.getParent();
+					final IComponentNodeContext parentTreeNode = context.getParent();
 					if (parentTreeNode == null) {
-						context.getWorkbenchApplicationContext().add(componentTreeNode);
+						context.getWorkbenchApplicationContext().add(componentNode);
 					}
 					else {
-						parentTreeNode.add(componentTreeNode);
+						parentTreeNode.add(componentNode);
 					}
 				}
 			}
@@ -133,8 +133,8 @@ public class ActionFactory {
 	}
 
 	public IAction createDeleteAction(
-		final IComponentTreeNodeContext context,
-		final IComponentTreeNode treeNode,
+		final IComponentNodeContext context,
+		final IComponentNode componentNode,
 		final String text,
 		final IImageConstant icon) {
 
@@ -145,12 +145,12 @@ public class ActionFactory {
 
 			@Override
 			public void execute(final IExecutionContext executionContext) throws Exception {
-				final IComponentTreeNodeContext parentTreeNode = context.getParent();
+				final IComponentNodeContext parentTreeNode = context.getParent();
 				if (parentTreeNode == null) {
-					context.getWorkbenchApplicationContext().remove(treeNode);
+					context.getWorkbenchApplicationContext().remove(componentNode);
 				}
 				else {
-					parentTreeNode.remove(treeNode);
+					parentTreeNode.remove(componentNode);
 				}
 			}
 
@@ -246,7 +246,7 @@ public class ActionFactory {
 		return actionBuilder.build();
 	}
 
-	public IAction createRenameComponentTreeNode(final IComponentTreeNodeContext context) {
+	public IAction createRenameComponentTreeNode(final IComponentNodeContext context) {
 		final IActionBuilder actionBuilder = Toolkit.getActionBuilderFactory().create();
 		actionBuilder.setText("Rename...");
 		actionBuilder.setIcon(SilkIcons.BOOK_EDIT);
@@ -265,7 +265,7 @@ public class ActionFactory {
 		return actionBuilder.build();
 	}
 
-	public IAction createSelectParentNode(final IComponentTreeNodeContext context) {
+	public IAction createSelectParentNode(final IComponentNodeContext context) {
 		final IActionBuilder actionBuilder = Toolkit.getActionBuilderFactory().create();
 		actionBuilder.setText("Select parent Component");
 		actionBuilder.setIcon(SilkIcons.TABLE_GO);
@@ -282,7 +282,7 @@ public class ActionFactory {
 		return actionBuilder.build();
 	}
 
-	public IAction createExpandNode(final IComponentTreeNodeContext context) {
+	public IAction createExpandNode(final IComponentNodeContext context) {
 		final IActionBuilder actionBuilder = Toolkit.getActionBuilderFactory().create();
 		actionBuilder.setText("Expand");
 		actionBuilder.setIcon(SilkIcons.PLUGIN_ADD);
@@ -296,7 +296,7 @@ public class ActionFactory {
 		return actionBuilder.build();
 	}
 
-	public IAction createCollapseNode(final IComponentTreeNodeContext context) {
+	public IAction createCollapseNode(final IComponentNodeContext context) {
 		final IActionBuilder actionBuilder = Toolkit.getActionBuilderFactory().create();
 		actionBuilder.setText("Collapse");
 		actionBuilder.setIcon(SilkIcons.PLUGIN_DELETE);

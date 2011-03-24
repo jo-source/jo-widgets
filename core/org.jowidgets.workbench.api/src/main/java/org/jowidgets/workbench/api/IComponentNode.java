@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2011, M. Grossmann, H. Westphal
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,56 +25,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
+package org.jowidgets.workbench.api;
 
-package org.jowidgets.examples.common.workbench.base;
+public interface IComponentNode extends IComponentNodeDescriptor {
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.util.Assert;
-import org.jowidgets.workbench.api.IComponentTreeNode;
-import org.jowidgets.workbench.api.IComponentTreeNodeContext;
+	void onContextInitialize(IComponentNodeContext context);
 
-public abstract class AbstractComponentTreeNode implements IComponentTreeNode {
-
-	private final String id;
-	private final String label;
-	private final String tooltip;
-	private final IImageConstant icon;
-
-	public AbstractComponentTreeNode(final String id, final String label) {
-		this(id, label, null, null);
-	}
-
-	public AbstractComponentTreeNode(final String id, final String label, final String tooltip, final IImageConstant icon) {
-		Assert.paramNotEmpty(id, "id");
-		Assert.paramNotEmpty(label, "label");
-
-		this.id = id;
-		this.label = label;
-		this.tooltip = tooltip;
-		this.icon = icon;
-	}
-
-	@Override
-	public void onContextInitialize(final IComponentTreeNodeContext context) {}
-
-	@Override
-	public final String getId() {
-		return id;
-	}
-
-	@Override
-	public String getLabel() {
-		return label;
-	}
-
-	@Override
-	public String getTooltip() {
-		return tooltip;
-	}
-
-	@Override
-	public IImageConstant getIcon() {
-		return icon;
-	}
+	IComponent createComponent(IComponentContext context);
 
 }

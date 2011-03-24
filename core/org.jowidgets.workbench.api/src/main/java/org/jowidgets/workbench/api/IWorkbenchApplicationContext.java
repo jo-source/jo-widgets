@@ -30,24 +30,24 @@ package org.jowidgets.workbench.api;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IToolBarModel;
 
-public interface IWorkbenchApplicationContext extends IComponentTreeNodeContainerContext {
+public interface IWorkbenchApplicationContext extends IComponentNodeContainerContext {
 
 	/**
-	 * Gets the toolBar model. If no toolBar already exists, a toolBar will be created
+	 * Gets the toolBar model.
 	 * 
 	 * @return the toolBar model
 	 */
 	IToolBarModel getToolBar();
 
 	/**
-	 * Gets the toolBar menu model. If no toolBar menu model already exists, a toolBar menu model will be created
+	 * Gets the toolBar menu model.
 	 * 
 	 * @return the toolBar menu model
 	 */
 	IMenuModel getToolBarMenu();
 
 	/**
-	 * Gets the popup menu. If no popup menu already exists, a popup menu will be created
+	 * Gets the popup menu.
 	 * 
 	 * @return the popup menu model
 	 */

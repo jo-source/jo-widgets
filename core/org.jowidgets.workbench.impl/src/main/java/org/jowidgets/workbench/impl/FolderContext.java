@@ -43,7 +43,7 @@ import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.IComponentContext;
-import org.jowidgets.workbench.api.IComponentTreeNodeContext;
+import org.jowidgets.workbench.api.IComponentNodeContext;
 import org.jowidgets.workbench.api.IFolderContext;
 import org.jowidgets.workbench.api.IFolderLayout;
 import org.jowidgets.workbench.api.IView;
@@ -153,8 +153,8 @@ public class FolderContext implements IFolderContext {
 	}
 
 	@Override
-	public IComponentTreeNodeContext getComponentTreeNodeContext() {
-		return layoutContext.getComponentContext().getComponentTreeNodeContext();
+	public IComponentNodeContext getComponentNodeContext() {
+		return layoutContext.getComponentContext().getComponentNodeContext();
 	}
 
 	@Override

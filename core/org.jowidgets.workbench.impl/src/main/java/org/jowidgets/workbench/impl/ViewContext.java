@@ -34,7 +34,7 @@ import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.ITabFolder;
 import org.jowidgets.api.widgets.ITabItem;
 import org.jowidgets.workbench.api.IComponentContext;
-import org.jowidgets.workbench.api.IComponentTreeNodeContext;
+import org.jowidgets.workbench.api.IComponentNodeContext;
 import org.jowidgets.workbench.api.IViewContext;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 import org.jowidgets.workbench.api.IWorkbenchContext;
@@ -87,8 +87,8 @@ public class ViewContext implements IViewContext {
 	}
 
 	@Override
-	public IComponentTreeNodeContext getComponentTreeNodeContext() {
-		return componentContext.getComponentTreeNodeContext();
+	public IComponentNodeContext getComponentNodeContext() {
+		return componentContext.getComponentNodeContext();
 	}
 
 	@Override

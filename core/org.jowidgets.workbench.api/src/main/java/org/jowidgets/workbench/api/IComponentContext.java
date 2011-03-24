@@ -50,7 +50,7 @@ public interface IComponentContext {
 
 	void removeView(IView view);
 
-	IComponentTreeNodeContext getComponentTreeNodeContext();
+	IComponentNodeContext getComponentNodeContext();
 
 	IWorkbenchApplicationContext getWorkbenchApplicationContext();
 

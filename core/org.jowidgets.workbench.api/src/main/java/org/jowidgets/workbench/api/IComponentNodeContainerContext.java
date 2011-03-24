@@ -27,30 +27,14 @@
  */
 package org.jowidgets.workbench.api;
 
-import org.jowidgets.api.model.item.IMenuModel;
-import org.jowidgets.common.image.IImageConstant;
+public interface IComponentNodeContainerContext {
 
-public interface IComponentTreeNodeContext extends IComponentTreeNodeContainerContext {
+	void add(IComponentNode componentNode);
 
-	void select();
+	void add(int index, IComponentNode componentNode);
 
-	void setExpanded(boolean expanded);
+	void remove(IComponentNode componentNode);
 
-	void setLabel(String label);
-
-	void setTooltip(String tooltip);
-
-	void setIcon(IImageConstant icon);
-
-	/**
-	 * Gets the popup menu. If no popup menu already exists, a popup menu will be created
-	 * 
-	 * @return the popup menu model
-	 */
-	IMenuModel getPopupMenu();
-
-	IComponentTreeNodeContext getParent();
-
-	IWorkbenchApplicationContext getWorkbenchApplicationContext();
+	IWorkbenchContext getWorkbenchContext();
 
 }

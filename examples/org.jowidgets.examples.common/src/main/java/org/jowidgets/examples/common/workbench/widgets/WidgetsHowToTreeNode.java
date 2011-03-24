@@ -29,12 +29,12 @@
 package org.jowidgets.examples.common.workbench.widgets;
 
 import org.jowidgets.examples.common.icons.SilkIcons;
-import org.jowidgets.examples.common.workbench.base.AbstractComponentTreeNode;
+import org.jowidgets.examples.common.workbench.base.AbstractComponentNode;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
-import org.jowidgets.workbench.api.IComponentTreeNodeContext;
+import org.jowidgets.workbench.api.IComponentNodeContext;
 
-public class WidgetsHowToTreeNode extends AbstractComponentTreeNode {
+public class WidgetsHowToTreeNode extends AbstractComponentNode {
 
 	public static final String ID = WidgetsHowToTreeNode.class.getName();
 
@@ -43,7 +43,7 @@ public class WidgetsHowToTreeNode extends AbstractComponentTreeNode {
 	}
 
 	@Override
-	public void onContextInitialize(final IComponentTreeNodeContext context) {
+	public void onContextInitialize(final IComponentNodeContext context) {
 		context.add(new LabelsHowToTreeNode());
 	}
 

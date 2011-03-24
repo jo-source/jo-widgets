@@ -30,12 +30,12 @@ package org.jowidgets.examples.common.workbench.widgets;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.examples.common.icons.SilkIcons;
-import org.jowidgets.examples.common.workbench.base.AbstractComponentTreeNode;
+import org.jowidgets.examples.common.workbench.base.AbstractComponentNode;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IView;
 
-public class SingleViewTreeNode extends AbstractComponentTreeNode {
+public class SingleViewTreeNode extends AbstractComponentNode {
 
 	private final Class<? extends IView> viewClass;
 	private final String id;

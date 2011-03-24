@@ -28,8 +28,8 @@
 
 package org.jowidgets.workbench.toolkit.api;
 
-import org.jowidgets.workbench.api.IComponentTreeNodeContext;
+import org.jowidgets.workbench.api.IComponentNodeContext;
 
 public interface IComponentNodeInitializeCallback {
-	void onContextInitialize(IComponentTreeNodeContext context);
+	void onContextInitialize(IComponentNodeContext context);
 }
