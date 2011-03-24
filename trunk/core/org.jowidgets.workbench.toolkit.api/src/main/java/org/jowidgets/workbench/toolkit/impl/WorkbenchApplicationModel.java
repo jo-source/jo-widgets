@@ -151,7 +151,6 @@ class WorkbenchApplicationModel extends ComponentNodeContainerModel implements I
 	@Override
 	public void setWorkbench(final IWorkbenchModel workbench) {
 		if (this.workbench != workbench) {
-			this.workbench = workbench;
 			if (this.workbench != null) {
 				this.workbench.removeApplication(this);
 			}
@@ -160,6 +159,7 @@ class WorkbenchApplicationModel extends ComponentNodeContainerModel implements I
 					workbench.addApplication(this);
 				}
 			}
+			this.workbench = workbench;
 		}
 	}
 

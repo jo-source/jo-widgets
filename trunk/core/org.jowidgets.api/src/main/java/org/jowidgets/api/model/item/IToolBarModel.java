@@ -92,6 +92,8 @@ public interface IToolBarModel extends IListModelObservable {
 
 	IActionItemModel addActionItem(String text, IImageConstant icon);
 
+	IActionItemModel addActionItem(IImageConstant icon, String toolTipText);
+
 	IActionItemModel addActionItem(String text, String toolTipText, IImageConstant icon);
 
 	IPopupActionItemModel addPopupActionItem();
@@ -102,6 +104,8 @@ public interface IToolBarModel extends IListModelObservable {
 
 	IPopupActionItemModel addPopupActionItem(String text, IImageConstant icon);
 
+	IPopupActionItemModel addPopupActionItem(IImageConstant icon, String toolTipText);
+
 	IPopupActionItemModel addPopupActionItem(String text, String toolTipText, IImageConstant icon);
 
 	ICheckedItemModel addCheckedItem();
@@ -111,6 +115,8 @@ public interface IToolBarModel extends IListModelObservable {
 	ICheckedItemModel addCheckedItem(String text, String toolTipText);
 
 	ICheckedItemModel addCheckedItem(String text, IImageConstant icon);
+
+	ICheckedItemModel addCheckedItem(IImageConstant icon, String toolTipText);
 
 	ICheckedItemModel addCheckedItem(String text, String toolTipText, IImageConstant icon);
 

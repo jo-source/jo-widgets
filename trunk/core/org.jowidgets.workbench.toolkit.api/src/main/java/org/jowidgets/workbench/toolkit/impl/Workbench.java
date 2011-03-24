@@ -177,6 +177,9 @@ class Workbench implements IWorkbench {
 		if (menuBar != model.getMenuBar()) {
 			onMenuBarChanged(context);
 		}
+		if (model.isFinished()) {
+			context.finish();
+		}
 	}
 
 	private void onStatusBarChanged(final IWorkbenchContext context) {

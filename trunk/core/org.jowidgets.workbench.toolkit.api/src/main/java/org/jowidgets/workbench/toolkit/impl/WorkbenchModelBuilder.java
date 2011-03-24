@@ -37,7 +37,9 @@ import org.jowidgets.api.widgets.content.IContentCreator;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.ICloseCallback;
+import org.jowidgets.workbench.api.IWorkbenchDescriptor;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModelBuilder;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchInitializeCallback;
@@ -67,6 +69,20 @@ class WorkbenchModelBuilder extends WorkbenchPartBuilder<IWorkbenchModelBuilder>
 		this.initialSplitWeight = 0.25;
 		this.hasApplicationNavigator = true;
 		this.applicationsCloseable = false;
+	}
+
+	@Override
+	public IWorkbenchModelBuilder setDescriptor(final IWorkbenchDescriptor descriptor) {
+		Assert.paramNotNull(descriptor, "descriptor");
+		setLabel(descriptor.getLabel());
+		setTooltip(descriptor.getTooltip());
+		setIcon(descriptor.getIcon());
+		setInitialDimension(descriptor.getInitialDimension());
+		setInitialPosition(descriptor.getInitialPosition());
+		setInitialSplitWeight(descriptor.getInitialSplitWeight());
+		setApplicationNavigator(descriptor.hasApplicationNavigator());
+		setApplicationsCloseable(descriptor.getApplicationsCloseable());
+		return this;
 	}
 
 	@Override

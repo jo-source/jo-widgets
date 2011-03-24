@@ -35,8 +35,11 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.workbench.api.ICloseCallback;
+import org.jowidgets.workbench.api.IWorkbenchDescriptor;
 
 public interface IWorkbenchModelBuilder extends IWorkbenchPartBuilder<IWorkbenchModelBuilder> {
+
+	IWorkbenchModelBuilder setDescriptor(IWorkbenchDescriptor descriptor);
 
 	IWorkbenchModelBuilder setInitialDimension(Dimension initialDimension);
 

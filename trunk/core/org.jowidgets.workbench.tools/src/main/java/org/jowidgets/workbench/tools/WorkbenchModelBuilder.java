@@ -35,6 +35,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.workbench.api.ICloseCallback;
+import org.jowidgets.workbench.api.IWorkbenchDescriptor;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModelBuilder;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchInitializeCallback;
@@ -50,6 +51,10 @@ public class WorkbenchModelBuilder implements IWorkbenchModelBuilder {
 		this(builder());
 	}
 
+	public WorkbenchModelBuilder(final IWorkbenchDescriptor descriptor) {
+		this(builder(descriptor));
+	}
+
 	public WorkbenchModelBuilder(final String label) {
 		this(builder(label));
 	}
@@ -61,6 +66,12 @@ public class WorkbenchModelBuilder implements IWorkbenchModelBuilder {
 	public WorkbenchModelBuilder(final IWorkbenchModelBuilder builder) {
 		super();
 		this.builder = builder;
+	}
+
+	@Override
+	public IWorkbenchModelBuilder setDescriptor(final IWorkbenchDescriptor descriptor) {
+		this.builder.setDescriptor(descriptor);
+		return this;
 	}
 
 	@Override
@@ -220,6 +231,10 @@ public class WorkbenchModelBuilder implements IWorkbenchModelBuilder {
 
 	public static IWorkbenchModelBuilder builder(final String label) {
 		return builder().setLabel(label);
+	}
+
+	public static IWorkbenchModelBuilder builder(final IWorkbenchDescriptor descriptor) {
+		return builder().setDescriptor(descriptor);
 	}
 
 }

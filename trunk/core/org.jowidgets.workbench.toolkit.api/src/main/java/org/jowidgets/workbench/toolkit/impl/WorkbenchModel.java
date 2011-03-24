@@ -66,6 +66,7 @@ class WorkbenchModel extends WorkbenchPartModel implements IWorkbenchModel {
 	private IMenuBarModel menuBar;
 	private IContentCreator statusBarCreator;
 	private ICloseCallback closeCallback;
+	private boolean finished;
 
 	WorkbenchModel(
 		final String label,
@@ -87,6 +88,7 @@ class WorkbenchModel extends WorkbenchPartModel implements IWorkbenchModel {
 
 		this.listModelObservable = new ListModelObservable();
 
+		this.finished = false;
 		this.initialDimension = initialDimension;
 		this.initialPosition = initialPosition;
 		this.initialSplitWeight = initialSplitWeight;
@@ -192,6 +194,17 @@ class WorkbenchModel extends WorkbenchPartModel implements IWorkbenchModel {
 	@Override
 	public void removeShutdownHook(final Runnable shutdownHook) {
 		shutdownHooks.remove(shutdownHook);
+	}
+
+	@Override
+	public boolean isFinished() {
+		return finished;
+	}
+
+	@Override
+	public void finish() {
+		this.finished = true;
+		fireModelChanged();
 	}
 
 	@Override

@@ -114,6 +114,10 @@ class ListModelDelegate {
 		return addItem(new ActionItemModelBuilder().setText(text).setToolTipText(toolTipText).setIcon(icon));
 	}
 
+	protected IActionItemModel addActionItem(final IImageConstant icon, final String toolTipText) {
+		return addItem(new ActionItemModelBuilder().setToolTipText(toolTipText).setIcon(icon));
+	}
+
 	protected ICheckedItemModel addCheckedItem() {
 		return addItem(new CheckedItemModelBuilder());
 	}
@@ -132,6 +136,10 @@ class ListModelDelegate {
 
 	protected ICheckedItemModel addCheckedItem(final String text, final String toolTipText, final IImageConstant icon) {
 		return addItem(new CheckedItemModelBuilder().setText(text).setToolTipText(toolTipText).setIcon(icon));
+	}
+
+	protected ICheckedItemModel addCheckedItem(final IImageConstant icon, final String toolTipText) {
+		return addItem(new CheckedItemModelBuilder().setToolTipText(toolTipText).setIcon(icon));
 	}
 
 	protected IRadioItemModel addRadioItem() {
