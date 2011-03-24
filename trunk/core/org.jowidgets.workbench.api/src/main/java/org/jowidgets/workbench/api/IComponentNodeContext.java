@@ -32,7 +32,7 @@ import org.jowidgets.common.image.IImageConstant;
 
 public interface IComponentNodeContext extends IComponentNodeContainerContext {
 
-	void select();
+	void setSelected(boolean selected);
 
 	void setExpanded(boolean expanded);
 
