@@ -35,24 +35,32 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.factory.IWidgetFactoryListener;
+import org.jowidgets.workbench.api.IWorkbench;
+import org.jowidgets.workbench.api.IWorkbenchRunner;
 
 public class TestToolRunner {
 
 	private ITestTool testTool;
 	private final IApplication app;
-
-	public TestToolRunner() {
-		this(null);
-	}
+	private IWorkbenchRunner workbenchRunner;
+	private IWorkbench workbench;
 
 	public TestToolRunner(final IApplication app) {
 		init();
 		this.app = app;
 	}
 
+	public TestToolRunner(final IWorkbenchRunner workbenchRunner, final IWorkbench workbench) {
+		init();
+		this.app = null;
+		this.workbenchRunner = workbenchRunner;
+		this.workbench = workbench;
+	}
+
 	public void run() {
 		new TestToolView(testTool);
 		runApplication();
+		runWorkbench();
 	}
 
 	public void runAsUnitTest(final String fileName) {
@@ -60,6 +68,7 @@ public class TestToolRunner {
 		testTool.activateReplayMode();
 		testTool.replay(tests, 3000);
 		runApplication();
+		runWorkbench();
 	}
 
 	private void init() {
@@ -76,6 +85,14 @@ public class TestToolRunner {
 	private void runApplication() {
 		if (app != null) {
 			Toolkit.getInstance().getApplicationRunner().run(app);
+		}
+	}
+
+	private void runWorkbench() {
+		if (workbenchRunner != null) {
+			if (workbench != null) {
+				workbenchRunner.run(workbench);
+			}
 		}
 	}
 }
