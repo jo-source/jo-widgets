@@ -30,6 +30,7 @@ package org.jowidgets.workbench.toolkit.impl;
 
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.widgets.controler.ITreeNodeListener;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IComponentNode;
@@ -71,6 +72,22 @@ class ComponentNode extends ComponentNodeContainer implements IComponentNode {
 		};
 
 		model.addWorkbenchPartModelListener(workbenchPartModelListener);
+
+		context.addTreeNodeListener(new ITreeNodeListener() {
+			@Override
+			public void selectionChanged(final boolean selected) {
+				model.removeWorkbenchPartModelListener(workbenchPartModelListener);
+				model.setSelected(selected);
+				model.addWorkbenchPartModelListener(workbenchPartModelListener);
+			}
+
+			@Override
+			public void expandedChanged(final boolean expanded) {
+				model.removeWorkbenchPartModelListener(workbenchPartModelListener);
+				model.setExpanded(expanded);
+				model.addWorkbenchPartModelListener(workbenchPartModelListener);
+			}
+		});
 
 		onModelChanged(context);
 

@@ -30,6 +30,7 @@ package org.jowidgets.workbench.toolkit.impl;
 
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.widgets.controler.ITreeNodeListener;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.IComponentNodeContext;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
@@ -106,6 +107,16 @@ class ModelBasedComponentNodeContext extends ModelBasedComponentNodeContainerCon
 	@Override
 	public IWorkbenchContext getWorkbenchContext() {
 		return getWorkbenchApplicationContext().getWorkbenchContext();
+	}
+
+	@Override
+	public void addTreeNodeListener(final ITreeNodeListener listener) {
+		nodeContext.addTreeNodeListener(listener);
+	}
+
+	@Override
+	public void removeTreeNodeListener(final ITreeNodeListener listener) {
+		nodeContext.removeTreeNodeListener(listener);
 	}
 
 }

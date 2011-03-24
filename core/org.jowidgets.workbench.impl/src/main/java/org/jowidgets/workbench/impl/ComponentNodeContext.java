@@ -35,6 +35,8 @@ import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.widgets.controler.ITreeNodeListener;
+import org.jowidgets.tools.controler.TreeNodeObservable;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.util.Assert;
@@ -46,6 +48,7 @@ public class ComponentNodeContext implements IComponentNodeContext {
 	private final ComponentNodeContext parentNodeContext;
 	private final WorkbenchContext workbenchContext;
 	private final WorkbenchApplicationContext applicationContext;
+	private final TreeNodeObservable treeNodeObservable;
 
 	private final IComponentNode componentNode;
 	private final ITreeNode treeNode;
@@ -62,6 +65,7 @@ public class ComponentNodeContext implements IComponentNodeContext {
 		final WorkbenchApplicationContext workbenchApplicationContext,
 		final WorkbenchContext workbenchContext) {
 
+		this.treeNodeObservable = new TreeNodeObservable();
 		this.parentNodeContext = parentTreeNodeContext;
 		this.workbenchContext = workbenchContext;
 		this.applicationContext = workbenchApplicationContext;
@@ -74,6 +78,18 @@ public class ComponentNodeContext implements IComponentNodeContext {
 		if (componentNode.getIcon() != null) {
 			this.treeNode.setIcon(componentNode.getIcon());
 		}
+
+		this.treeNode.addTreeNodeListener(new ITreeNodeListener() {
+			@Override
+			public void selectionChanged(final boolean selected) {
+				treeNodeObservable.fireSelectionChanged(selected);
+			}
+
+			@Override
+			public void expandedChanged(final boolean expanded) {
+				treeNodeObservable.fireExpandedChanged(expanded);
+			}
+		});
 
 		this.listModelListener = new IListModelListener() {
 
@@ -182,6 +198,16 @@ public class ComponentNodeContext implements IComponentNodeContext {
 	@Override
 	public WorkbenchContext getWorkbenchContext() {
 		return applicationContext.getWorkbenchContext();
+	}
+
+	@Override
+	public void addTreeNodeListener(final ITreeNodeListener listener) {
+		treeNodeObservable.addTreeNodeListener(listener);
+	}
+
+	@Override
+	public void removeTreeNodeListener(final ITreeNodeListener listener) {
+		treeNodeObservable.removeTreeNodeListener(listener);
 	}
 
 	protected ITreeNode getTreeNode() {

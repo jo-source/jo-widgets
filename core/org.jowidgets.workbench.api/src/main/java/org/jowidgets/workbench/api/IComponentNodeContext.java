@@ -29,8 +29,9 @@ package org.jowidgets.workbench.api;
 
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.widgets.controler.ITreeNodeObservable;
 
-public interface IComponentNodeContext extends IComponentNodeContainerContext {
+public interface IComponentNodeContext extends IComponentNodeContainerContext, ITreeNodeObservable {
 
 	void setSelected(boolean selected);
 
