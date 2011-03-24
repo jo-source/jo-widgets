@@ -69,8 +69,8 @@ import org.jowidgets.common.widgets.controler.ITableCellMouseEvent;
 import org.jowidgets.common.widgets.controler.ITableColumnListener;
 import org.jowidgets.common.widgets.controler.ITableColumnMouseEvent;
 import org.jowidgets.common.widgets.controler.ITableColumnResizeEvent;
-import org.jowidgets.common.widgets.controler.IWindowListener;
 import org.jowidgets.test.api.widgets.IButtonUi;
+import org.jowidgets.tools.controler.WindowAdapter;
 
 //CHECKSTYLE:OFF
 public final class TestToolImpl implements ITestTool {
@@ -132,35 +132,16 @@ public final class TestToolImpl implements ITestTool {
 					//System.out.println("TT: child added to menubar at index: " + index);
 				}
 			});
-			frame.addWindowListener(new IWindowListener() {
-
-				@Override
-				public void windowIconified() {
-					//System.out.println("TT: window iconified!");
-				}
-
-				@Override
-				public void windowDeiconified() {
-					//System.out.println("TT: window deiconified!");
-				}
-
-				@Override
-				public void windowDeactivated() {
-					//System.out.println("TT: window deactivated!");
-				}
-
-				@Override
-				public void windowClosing(final IVetoable vetoable) {
-					//System.out.println("TT: window closing vetoable: " + vetoable.toString());
-				}
+			frame.addWindowListener(new WindowAdapter() {
 
 				@Override
 				public void windowClosed() {
-					//System.out.println("TT: Window closed!");
+					record(frame, UserAction.CLOSE, testToolUtilities.createWidgetID(frame));
 				}
 
 				@Override
 				public void windowActivated() {
+					System.out.println("open frame : " + frame);
 					//System.out.println("TT: Window activated!");
 				}
 			});
