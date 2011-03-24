@@ -45,10 +45,10 @@ public class TestPlayer {
 	}
 
 	public void replayTest(final List<TestDataObject> list, final int delay) {
-		for (final TestDataObject obj : list) {
-			final Thread thread = new Thread() {
-				@Override
-				public void run() {
+		final Thread thread = new Thread() {
+			@Override
+			public void run() {
+				for (final TestDataObject obj : list) {
 					final IWidgetCommon widget = finder.findWidgetByID(WidgetRegistry.getInstance().getWidgets(), obj.getId());
 					moveMouseToWidget(widget);
 					executeAction(widget, obj.getAction());
@@ -57,11 +57,11 @@ public class TestPlayer {
 					}
 					catch (final InterruptedException e) {
 					}
-					super.run();
 				}
-			};
-			Toolkit.getUiThreadAccess().invokeLater(thread);
-		}
+				super.run();
+			}
+		};
+		Toolkit.getUiThreadAccess().invokeLater(thread);
 	}
 
 	private void executeAction(final IWidgetCommon widget, final UserAction action) {
@@ -77,7 +77,7 @@ public class TestPlayer {
 					break;
 			}
 		}
-		if (widget instanceof ITreeNode) {
+		else if (widget instanceof ITreeNode) {
 			final ITreeNode node = (ITreeNode) widget;
 			switch (action) {
 				case EXPAND:
@@ -92,11 +92,12 @@ public class TestPlayer {
 					node.setSelected(true);
 					break;
 				default:
+					System.out.println("the given user action is not supported for this widget.");
 					break;
 			}
 		}
 		else {
-			System.out.println("the given user action is not supported for this widget.");
+			System.out.println("the given widget is not supported.");
 		}
 	}
 
