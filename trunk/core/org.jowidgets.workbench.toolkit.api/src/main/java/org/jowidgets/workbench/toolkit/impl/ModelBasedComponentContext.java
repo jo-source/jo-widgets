@@ -29,7 +29,7 @@
 package org.jowidgets.workbench.toolkit.impl;
 
 import org.jowidgets.workbench.api.IComponentContext;
-import org.jowidgets.workbench.api.IComponentTreeNodeContext;
+import org.jowidgets.workbench.api.IComponentNodeContext;
 import org.jowidgets.workbench.api.ILayout;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
@@ -40,7 +40,7 @@ class ModelBasedComponentContext implements IComponentContext {
 
 	private final IComponentContext componentContext;
 	private final IComponentNodeModel componentNodeModel;
-	private IComponentTreeNodeContext componentNodeContext;
+	private IComponentNodeContext componentNodeContext;
 
 	ModelBasedComponentContext(final IComponentContext context, final IComponentNodeModel componentNodeModel) {
 		super();
@@ -64,10 +64,10 @@ class ModelBasedComponentContext implements IComponentContext {
 	}
 
 	@Override
-	public IComponentTreeNodeContext getComponentTreeNodeContext() {
+	public IComponentNodeContext getComponentNodeContext() {
 		if (componentNodeContext == null) {
 			componentNodeContext = new ModelBasedComponentNodeContext(
-				componentContext.getComponentTreeNodeContext(),
+				componentContext.getComponentNodeContext(),
 				componentNodeModel);
 		}
 		return componentNodeContext;
@@ -75,7 +75,7 @@ class ModelBasedComponentContext implements IComponentContext {
 
 	@Override
 	public IWorkbenchApplicationContext getWorkbenchApplicationContext() {
-		return getComponentTreeNodeContext().getWorkbenchApplicationContext();
+		return getComponentNodeContext().getWorkbenchApplicationContext();
 	}
 
 	@Override

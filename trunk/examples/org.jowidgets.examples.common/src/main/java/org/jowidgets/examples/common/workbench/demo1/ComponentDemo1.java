@@ -62,7 +62,7 @@ public class ComponentDemo1 extends AbstractComponent implements IComponent {
 		final ILayout defaultLayout = new Layout(DEFAULT_LAYOUT_ID, createMainSplit());
 		componentContext.setLayout(defaultLayout);
 
-		final IMenuModel popupMenu = componentContext.getComponentTreeNodeContext().getPopupMenu();
+		final IMenuModel popupMenu = componentContext.getComponentNodeContext().getPopupMenu();
 		popupMenu.addSeparator();
 		popupMenu.addAction(new ActionFactory().createResetLayoutAction(componentContext, defaultLayout));
 	}

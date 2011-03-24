@@ -51,7 +51,7 @@ public class ImportantComponentDemo1 extends AbstractComponent implements ICompo
 	public ImportantComponentDemo1(final IComponentContext context) {
 		final ILayout defaultLayout = new Layout(DEFAULT_LAYOUT_ID, createMasterFolder());
 		context.setLayout(defaultLayout);
-		final IMenuModel popupMenu = context.getComponentTreeNodeContext().getPopupMenu();
+		final IMenuModel popupMenu = context.getComponentNodeContext().getPopupMenu();
 		popupMenu.addSeparator();
 		popupMenu.addAction(new ActionFactory().createResetLayoutAction(context, defaultLayout));
 	}

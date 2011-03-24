@@ -34,30 +34,30 @@ import java.util.List;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.examples.common.icons.SilkIcons;
-import org.jowidgets.examples.common.workbench.base.AbstractComponentTreeNode;
+import org.jowidgets.examples.common.workbench.base.AbstractComponentNode;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
-import org.jowidgets.workbench.api.IComponentTreeNode;
-import org.jowidgets.workbench.api.IComponentTreeNodeContext;
+import org.jowidgets.workbench.api.IComponentNode;
+import org.jowidgets.workbench.api.IComponentNodeContext;
 
-public class FolderTreeNodeDemo extends AbstractComponentTreeNode {
+public class FolderNodeDemo extends AbstractComponentNode {
 
-	private final List<IComponentTreeNode> children;
+	private final List<IComponentNode> children;
 
-	public FolderTreeNodeDemo(final String id, final String label) {
-		this(id, label, null, SilkIcons.FOLDER, new LinkedList<IComponentTreeNode>());
+	public FolderNodeDemo(final String id, final String label) {
+		this(id, label, null, SilkIcons.FOLDER, new LinkedList<IComponentNode>());
 	}
 
-	public FolderTreeNodeDemo(final String id, final String label, final List<IComponentTreeNode> children) {
+	public FolderNodeDemo(final String id, final String label, final List<IComponentNode> children) {
 		this(id, label, null, SilkIcons.FOLDER, children);
 	}
 
-	public FolderTreeNodeDemo(
+	public FolderNodeDemo(
 		final String id,
 		final String label,
 		final String tooltip,
 		final IImageConstant icon,
-		final List<IComponentTreeNode> children) {
+		final List<IComponentNode> children) {
 
 		super(id, label, tooltip, icon);
 
@@ -65,7 +65,7 @@ public class FolderTreeNodeDemo extends AbstractComponentTreeNode {
 	}
 
 	@Override
-	public void onContextInitialize(final IComponentTreeNodeContext context) {
+	public void onContextInitialize(final IComponentNodeContext context) {
 		//create menus
 		final ActionFactory actionFactory = new ActionFactory();
 		final IMenuModel popupMenu = context.getPopupMenu();
@@ -80,7 +80,7 @@ public class FolderTreeNodeDemo extends AbstractComponentTreeNode {
 		popupMenu.addAction(actionFactory.createCollapseNode(context));
 
 		//add children
-		for (final IComponentTreeNode componentTreeNode : children) {
+		for (final IComponentNode componentTreeNode : children) {
 			context.add(componentTreeNode);
 		}
 	}

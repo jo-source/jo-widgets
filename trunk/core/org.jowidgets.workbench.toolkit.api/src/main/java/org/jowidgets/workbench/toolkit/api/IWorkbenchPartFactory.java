@@ -28,7 +28,7 @@
 
 package org.jowidgets.workbench.toolkit.api;
 
-import org.jowidgets.workbench.api.IComponentTreeNode;
+import org.jowidgets.workbench.api.IComponentNode;
 import org.jowidgets.workbench.api.IWorkbench;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
 
@@ -38,12 +38,12 @@ public interface IWorkbenchPartFactory {
 
 	IWorkbenchApplication application(IWorkbenchApplicationModel model);
 
-	IComponentTreeNode componentNode(IComponentNodeModel model);
+	IComponentNode componentNode(IComponentNodeModel model);
 
 	IWorkbench workbench(IWorkbenchModelBuilder modelBuilder);
 
 	IWorkbenchApplication application(IWorkbenchApplicationModelBuilder modelBuilder);
 
-	IComponentTreeNode componentNode(IComponentNodeModelBuilder modelBuilder);
+	IComponentNode componentNode(IComponentNodeModelBuilder modelBuilder);
 
 }

@@ -38,7 +38,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractApplication;
-import org.jowidgets.workbench.api.IComponentTreeNode;
+import org.jowidgets.workbench.api.IComponentNode;
 import org.jowidgets.workbench.api.ITrayItem;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 
@@ -62,9 +62,9 @@ public class ApplicationDemo2 extends AbstractApplication {
 		//create menus
 		context.getPopupMenu().addAction(addFolderAction);
 
-		final List<IComponentTreeNode> componentList3 = new LinkedList<IComponentTreeNode>();
+		final List<IComponentNode> componentList3 = new LinkedList<IComponentNode>();
 		componentList3.add(new ImportantComponentTreeNodeDemo1("IMPORTANT1", "Important"));
-		final FolderTreeNodeDemo folderNode2 = new FolderTreeNodeDemo("MISC", "Misc", componentList3);
+		final FolderNodeDemo folderNode2 = new FolderNodeDemo("MISC", "Misc", componentList3);
 		context.add(folderNode2);
 	}
 

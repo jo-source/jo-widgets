@@ -38,41 +38,41 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.util.Assert;
-import org.jowidgets.workbench.api.IComponentTreeNode;
-import org.jowidgets.workbench.api.IComponentTreeNodeContext;
+import org.jowidgets.workbench.api.IComponentNode;
+import org.jowidgets.workbench.api.IComponentNodeContext;
 
-public class ComponentTreeNodeContext implements IComponentTreeNodeContext {
+public class ComponentNodeContext implements IComponentNodeContext {
 
-	private final ComponentTreeNodeContext parentTreeNodeContext;
+	private final ComponentNodeContext parentNodeContext;
 	private final WorkbenchContext workbenchContext;
 	private final WorkbenchApplicationContext applicationContext;
 
-	private final IComponentTreeNode componentTreeNode;
+	private final IComponentNode componentNode;
 	private final ITreeNode treeNode;
 	private final IListModelListener listModelListener;
 	private final IMenuModel popupMenuModel;
-	private final Map<IComponentTreeNode, ITreeNode> createdNodes;
+	private final Map<IComponentNode, ITreeNode> createdNodes;
 
 	private ComponentContext componentContext;
 
-	public ComponentTreeNodeContext(
-		final IComponentTreeNode componentTreeNode,
+	public ComponentNodeContext(
+		final IComponentNode componentNode,
 		final ITreeNode treeNode,
-		final ComponentTreeNodeContext parentTreeNodeContext,
+		final ComponentNodeContext parentTreeNodeContext,
 		final WorkbenchApplicationContext workbenchApplicationContext,
 		final WorkbenchContext workbenchContext) {
 
-		this.parentTreeNodeContext = parentTreeNodeContext;
+		this.parentNodeContext = parentTreeNodeContext;
 		this.workbenchContext = workbenchContext;
 		this.applicationContext = workbenchApplicationContext;
-		this.createdNodes = new HashMap<IComponentTreeNode, ITreeNode>();
+		this.createdNodes = new HashMap<IComponentNode, ITreeNode>();
 
-		this.componentTreeNode = componentTreeNode;
+		this.componentNode = componentNode;
 		this.treeNode = treeNode;
-		this.treeNode.setText(componentTreeNode.getLabel());
-		this.treeNode.setToolTipText(componentTreeNode.getTooltip());
-		if (componentTreeNode.getIcon() != null) {
-			this.treeNode.setIcon(componentTreeNode.getIcon());
+		this.treeNode.setText(componentNode.getLabel());
+		this.treeNode.setToolTipText(componentNode.getTooltip());
+		if (componentNode.getIcon() != null) {
+			this.treeNode.setIcon(componentNode.getIcon());
 		}
 
 		this.listModelListener = new IListModelListener() {
@@ -98,7 +98,7 @@ public class ComponentTreeNodeContext implements IComponentTreeNodeContext {
 			treeNode.setPopupMenu(popupMenuModel);
 		}
 
-		componentTreeNode.onContextInitialize(this);
+		componentNode.onContextInitialize(this);
 	}
 
 	public void activate() {
@@ -110,17 +110,17 @@ public class ComponentTreeNodeContext implements IComponentTreeNodeContext {
 	}
 
 	@Override
-	public void add(final IComponentTreeNode componentTreeNode) {
-		add(treeNode.getChildren().size(), componentTreeNode);
+	public void add(final IComponentNode componentNode) {
+		add(treeNode.getChildren().size(), componentNode);
 	}
 
 	@Override
-	public void add(final int index, final IComponentTreeNode componentTreeNode) {
-		Assert.paramNotNull(componentTreeNode, "componentTreeNode");
+	public void add(final int index, final IComponentNode componentNode) {
+		Assert.paramNotNull(componentNode, "componentNode");
 		final ITreeNode node = treeNode.addNode(index);
-		createdNodes.put(componentTreeNode, node);
-		final ComponentTreeNodeContext nodeContext = new ComponentTreeNodeContext(
-			componentTreeNode,
+		createdNodes.put(componentNode, node);
+		final ComponentNodeContext nodeContext = new ComponentNodeContext(
+			componentNode,
 			node,
 			this,
 			applicationContext,
@@ -129,9 +129,9 @@ public class ComponentTreeNodeContext implements IComponentTreeNodeContext {
 	}
 
 	@Override
-	public void remove(final IComponentTreeNode componentTreeNode) {
-		Assert.paramNotNull(componentTreeNode, "componentTreeNode");
-		final ITreeNode node = createdNodes.remove(componentTreeNode);
+	public void remove(final IComponentNode componentNode) {
+		Assert.paramNotNull(componentNode, "componentNode");
+		final ITreeNode node = createdNodes.remove(componentNode);
 		if (node != null) {
 			node.setSelected(false);
 			treeNode.removeNode(node);
@@ -165,8 +165,8 @@ public class ComponentTreeNodeContext implements IComponentTreeNodeContext {
 	}
 
 	@Override
-	public IComponentTreeNodeContext getParent() {
-		return parentTreeNodeContext;
+	public IComponentNodeContext getParent() {
+		return parentNodeContext;
 	}
 
 	@Override
@@ -190,7 +190,7 @@ public class ComponentTreeNodeContext implements IComponentTreeNodeContext {
 
 	private ComponentContext getComponentContextLazy() {
 		if (componentContext == null) {
-			componentContext = new ComponentContext(componentTreeNode, ComponentTreeNodeContext.this);
+			componentContext = new ComponentContext(componentNode, ComponentNodeContext.this);
 		}
 		return componentContext;
 	}

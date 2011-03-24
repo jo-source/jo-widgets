@@ -33,7 +33,7 @@ import java.util.List;
 
 import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.util.Assert;
-import org.jowidgets.workbench.api.IComponentTreeNodeContainerContext;
+import org.jowidgets.workbench.api.IComponentNodeContainerContext;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeContainerModel;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
 
@@ -43,7 +43,7 @@ class ComponentNodeContainer {
 	private final List<ComponentNode> createdChildren;
 
 	private IListModelListener listModelListener;
-	private IComponentTreeNodeContainerContext context;
+	private IComponentNodeContainerContext context;
 
 	ComponentNodeContainer(final IComponentNodeContainerModel model) {
 		Assert.paramNotNull(model, "model");
@@ -52,7 +52,7 @@ class ComponentNodeContainer {
 		this.model = model;
 	}
 
-	void initialize(final IComponentTreeNodeContainerContext context) {
+	void initialize(final IComponentNodeContainerContext context) {
 		if (this.context != null) {
 			throw new IllegalStateException("Container already initialized!");
 		}

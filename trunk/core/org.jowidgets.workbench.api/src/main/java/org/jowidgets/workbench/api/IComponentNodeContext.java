@@ -27,15 +27,25 @@
  */
 package org.jowidgets.workbench.api;
 
+import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.common.image.IImageConstant;
 
-public interface IComponentTreeNodeContainerContext {
+public interface IComponentNodeContext extends IComponentNodeContainerContext {
 
-	void add(IComponentTreeNode componentTreeNode);
+	void select();
 
-	void add(int index, IComponentTreeNode componentTreeNode);
+	void setExpanded(boolean expanded);
 
-	void remove(IComponentTreeNode componentTreeNode);
+	void setLabel(String label);
 
-	IWorkbenchContext getWorkbenchContext();
+	void setTooltip(String tooltip);
+
+	void setIcon(IImageConstant icon);
+
+	IMenuModel getPopupMenu();
+
+	IComponentNodeContext getParent();
+
+	IWorkbenchApplicationContext getWorkbenchApplicationContext();
 
 }

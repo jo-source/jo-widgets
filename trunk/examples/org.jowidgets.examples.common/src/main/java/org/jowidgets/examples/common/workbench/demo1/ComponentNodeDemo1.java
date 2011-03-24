@@ -34,34 +34,34 @@ import java.util.List;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.examples.common.icons.SilkIcons;
-import org.jowidgets.examples.common.workbench.base.AbstractComponentTreeNode;
+import org.jowidgets.examples.common.workbench.base.AbstractComponentNode;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
-import org.jowidgets.workbench.api.IComponentTreeNode;
-import org.jowidgets.workbench.api.IComponentTreeNodeContext;
+import org.jowidgets.workbench.api.IComponentNode;
+import org.jowidgets.workbench.api.IComponentNodeContext;
 
-public class ComponentTreeNodeDemo1 extends AbstractComponentTreeNode {
+public class ComponentNodeDemo1 extends AbstractComponentNode {
 
-	public ComponentTreeNodeDemo1(final String id, final String label) {
-		this(id, label, "Tooltip for " + label, SilkIcons.PAGE_WHITE, new LinkedList<IComponentTreeNode>());
+	public ComponentNodeDemo1(final String id, final String label) {
+		this(id, label, "Tooltip for " + label, SilkIcons.PAGE_WHITE, new LinkedList<IComponentNode>());
 	}
 
-	public ComponentTreeNodeDemo1(final String id, final String label, final List<IComponentTreeNode> children) {
+	public ComponentNodeDemo1(final String id, final String label, final List<IComponentNode> children) {
 		this(id, label, "Tooltip for " + label, SilkIcons.PAGE_WHITE, children);
 	}
 
-	public ComponentTreeNodeDemo1(
+	public ComponentNodeDemo1(
 		final String id,
 		final String label,
 		final String tooltip,
 		final IImageConstant icon,
-		final List<IComponentTreeNode> children) {
+		final List<IComponentNode> children) {
 
 		super(id, label, tooltip, icon);
 	}
 
 	@Override
-	public void onContextInitialize(final IComponentTreeNodeContext context) {
+	public void onContextInitialize(final IComponentNodeContext context) {
 		final ActionFactory actionFactory = new ActionFactory();
 		final IMenuModel popupMenu = context.getPopupMenu();
 		popupMenu.addAction(actionFactory.createAddComponentAction(context.getParent()));

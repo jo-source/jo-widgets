@@ -65,7 +65,7 @@ public interface IViewContext {
 
 	IComponentContext getComponentContext();
 
-	IComponentTreeNodeContext getComponentTreeNodeContext();
+	IComponentNodeContext getComponentNodeContext();
 
 	IWorkbenchApplicationContext getWorkbenchApplicationContext();
 

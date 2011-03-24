@@ -29,7 +29,7 @@
 package org.jowidgets.workbench.toolkit.impl;
 
 import org.jowidgets.util.Assert;
-import org.jowidgets.workbench.api.IComponentTreeNode;
+import org.jowidgets.workbench.api.IComponentNode;
 import org.jowidgets.workbench.api.IWorkbench;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
@@ -66,12 +66,12 @@ class WorkbenchPartFactory implements IWorkbenchPartFactory {
 	}
 
 	@Override
-	public IComponentTreeNode componentNode(final IComponentNodeModel model) {
+	public IComponentNode componentNode(final IComponentNodeModel model) {
 		return new ComponentNode(model);
 	}
 
 	@Override
-	public IComponentTreeNode componentNode(final IComponentNodeModelBuilder modelBuilder) {
+	public IComponentNode componentNode(final IComponentNodeModelBuilder modelBuilder) {
 		Assert.paramNotNull(modelBuilder, "modelBuilder");
 		return componentNode(modelBuilder.build());
 	}

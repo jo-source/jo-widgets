@@ -31,21 +31,21 @@ package org.jowidgets.workbench.toolkit.impl;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.util.Assert;
-import org.jowidgets.workbench.api.IComponentTreeNodeContext;
+import org.jowidgets.workbench.api.IComponentNodeContext;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 import org.jowidgets.workbench.api.IWorkbenchContext;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
 
-class ModelBasedComponentNodeContext extends ModelBasedComponentNodeContainerContext implements IComponentTreeNodeContext {
+class ModelBasedComponentNodeContext extends ModelBasedComponentNodeContainerContext implements IComponentNodeContext {
 
-	private final IComponentTreeNodeContext nodeContext;
+	private final IComponentNodeContext nodeContext;
 	private final IComponentNodeModel nodeModel;
 
-	private IComponentTreeNodeContext parentNodeContext;
+	private IComponentNodeContext parentNodeContext;
 	private IWorkbenchApplicationContext workbenchApplicationContext;
 
-	ModelBasedComponentNodeContext(final IComponentTreeNodeContext nodeContext, final IComponentNodeModel nodeModel) {
+	ModelBasedComponentNodeContext(final IComponentNodeContext nodeContext, final IComponentNodeModel nodeModel) {
 		super(nodeModel);
 		Assert.paramNotNull(nodeContext, "nodeContext");
 		Assert.paramNotNull(nodeModel, "nodeModel");
@@ -84,7 +84,7 @@ class ModelBasedComponentNodeContext extends ModelBasedComponentNodeContainerCon
 	}
 
 	@Override
-	public IComponentTreeNodeContext getParent() {
+	public IComponentNodeContext getParent() {
 		if (nodeContext.getParent() != null) {
 			if (parentNodeContext == null) {
 				parentNodeContext = new ModelBasedComponentNodeContext(nodeContext.getParent(), nodeModel.getParent());

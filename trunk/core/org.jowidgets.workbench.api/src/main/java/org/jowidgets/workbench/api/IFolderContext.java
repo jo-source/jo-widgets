@@ -59,7 +59,7 @@ public interface IFolderContext {
 
 	IComponentContext getComponentContext();
 
-	IComponentTreeNodeContext getComponentTreeNodeContext();
+	IComponentNodeContext getComponentNodeContext();
 
 	IWorkbenchApplicationContext getWorkbenchApplicationContext();
 

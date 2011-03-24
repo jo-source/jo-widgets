@@ -34,7 +34,7 @@ import java.util.Map;
 import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
-import org.jowidgets.workbench.api.IComponentTreeNode;
+import org.jowidgets.workbench.api.IComponentNode;
 import org.jowidgets.workbench.api.ILayout;
 import org.jowidgets.workbench.api.IView;
 
@@ -43,14 +43,14 @@ public final class ComponentContext implements IComponentContext {
 	private final Map<String, LayoutContext> layoutContexts;
 	private final Map<String, ILayout> layouts;
 
-	private final ComponentTreeNodeContext treeNodeContext;
+	private final ComponentNodeContext treeNodeContext;
 	private final IComponent component;
 
 	private LayoutContext currentLayoutContext;
 	private String currentLayout;
 	private boolean active;
 
-	public ComponentContext(final IComponentTreeNode treeNode, final ComponentTreeNodeContext treeNodeContext) {
+	public ComponentContext(final IComponentNode componentNode, final ComponentNodeContext treeNodeContext) {
 
 		this.layoutContexts = new HashMap<String, LayoutContext>();
 		this.layouts = new HashMap<String, ILayout>();
@@ -60,7 +60,7 @@ public final class ComponentContext implements IComponentContext {
 
 		//this must be the last invocation in constructor
 		//remark that component may be null for empty tree nodes (e.g folders)
-		this.component = treeNode.createComponent(this);
+		this.component = componentNode.createComponent(this);
 	}
 
 	@Override
@@ -149,7 +149,7 @@ public final class ComponentContext implements IComponentContext {
 	}
 
 	@Override
-	public ComponentTreeNodeContext getComponentTreeNodeContext() {
+	public ComponentNodeContext getComponentNodeContext() {
 		return treeNodeContext;
 	}
 
