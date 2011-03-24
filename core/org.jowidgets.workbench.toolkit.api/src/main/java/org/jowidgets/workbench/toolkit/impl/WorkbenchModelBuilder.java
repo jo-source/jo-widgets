@@ -40,6 +40,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.workbench.api.ICloseCallback;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModelBuilder;
+import org.jowidgets.workbench.toolkit.api.IWorkbenchInitializeCallback;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchModelBuilder;
 import org.jowidgets.workbench.toolkit.api.WorkbenchToolkit;
@@ -55,6 +56,7 @@ class WorkbenchModelBuilder extends WorkbenchPartBuilder<IWorkbenchModelBuilder>
 	private IMenuBarModel menuBar;
 	private IContentCreator statusBarCreator;
 	private ICloseCallback closeCallback;
+	private IWorkbenchInitializeCallback initializeCallback;
 
 	private final List<Runnable> shutdownHooks;
 	private final List<IWorkbenchApplicationModel> applications;
@@ -118,6 +120,12 @@ class WorkbenchModelBuilder extends WorkbenchPartBuilder<IWorkbenchModelBuilder>
 	@Override
 	public IWorkbenchModelBuilder setCloseCallback(final ICloseCallback closeCallback) {
 		this.closeCallback = closeCallback;
+		return this;
+	}
+
+	@Override
+	public IWorkbenchModelBuilder setInitializeCallback(final IWorkbenchInitializeCallback initializeCallback) {
+		this.initializeCallback = initializeCallback;
 		return this;
 	}
 
@@ -192,6 +200,7 @@ class WorkbenchModelBuilder extends WorkbenchPartBuilder<IWorkbenchModelBuilder>
 			menuBar,
 			statusBarCreator,
 			closeCallback,
+			initializeCallback,
 			applications,
 			shutdownHooks);
 	}
