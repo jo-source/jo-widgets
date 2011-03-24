@@ -28,11 +28,14 @@
 
 package org.jowidgets.workbench.toolkit.impl;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.widgets.controler.ITreeNodeListener;
 import org.jowidgets.workbench.toolkit.api.IComponentFactory;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeContainerModel;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeInitializeCallback;
@@ -44,6 +47,7 @@ import org.jowidgets.workbench.toolkit.api.IWorkbenchPartModelListener;
 class ComponentNodeModel extends ComponentNodeContainerModel implements IComponentNodeModel {
 
 	private final WorkbenchPartModelObservable workbenchPartModelObservable;
+	private final Set<ITreeNodeListener> treeNodeListeners;
 
 	private String label;
 	private String tooltip;
@@ -70,6 +74,8 @@ class ComponentNodeModel extends ComponentNodeContainerModel implements ICompone
 		super(id, children);
 
 		this.workbenchPartModelObservable = new WorkbenchPartModelObservable();
+		this.treeNodeListeners = new HashSet<ITreeNodeListener>();
+
 		this.label = label;
 		this.tooltip = tooltip;
 		this.icon = icon;
@@ -142,12 +148,14 @@ class ComponentNodeModel extends ComponentNodeContainerModel implements ICompone
 	public void setSelected(final boolean selected) {
 		this.selected = selected;
 		fireModelChanged();
+		fireSelectionChanged(selected);
 	}
 
 	@Override
 	public void setExpanded(final boolean expanded) {
 		this.expanded = expanded;
 		fireModelChanged();
+		fireExpandedChanged(expanded);
 	}
 
 	@Override
@@ -230,6 +238,28 @@ class ComponentNodeModel extends ComponentNodeContainerModel implements ICompone
 	@Override
 	public void removeWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
 		workbenchPartModelObservable.removeWorkbenchPartModelListener(listener);
+	}
+
+	@Override
+	public void addTreeNodeListener(final ITreeNodeListener listener) {
+		treeNodeListeners.add(listener);
+	}
+
+	@Override
+	public void removeTreeNodeListener(final ITreeNodeListener listener) {
+		treeNodeListeners.remove(listener);
+	}
+
+	private void fireSelectionChanged(final boolean selected) {
+		for (final ITreeNodeListener listener : treeNodeListeners) {
+			listener.selectionChanged(selected);
+		}
+	}
+
+	private void fireExpandedChanged(final boolean expanded) {
+		for (final ITreeNodeListener listener : treeNodeListeners) {
+			listener.expandedChanged(expanded);
+		}
 	}
 
 	private void fireModelChanged() {
