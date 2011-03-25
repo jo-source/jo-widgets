@@ -96,7 +96,7 @@ public class TestToolView implements ITestToolView {
 		createTable(frame);
 		setupTestTool();
 		frame.pack();
-		frame.setSize(new Dimension(800, 400));
+		frame.setSize(new Dimension(600, 400));
 		viewUtilities.setPositionRelativeToMainWindow(frame);
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
