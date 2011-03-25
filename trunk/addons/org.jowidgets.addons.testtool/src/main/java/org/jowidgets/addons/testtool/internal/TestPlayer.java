@@ -32,6 +32,7 @@ import java.util.List;
 
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.widgets.ITabItem;
 import org.jowidgets.api.widgets.IToolBarItem;
 import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.common.widgets.IWidgetCommon;
@@ -117,6 +118,16 @@ public class TestPlayer {
 			switch (action) {
 				case CLICK:
 					System.out.println("ToolBarButton pushed.");
+					break;
+
+				default:
+					break;
+			}
+		}
+		else if (widget instanceof ITabItem) {
+			switch (action) {
+				case CLICK:
+					System.out.println("changing tab item selection");
 					break;
 
 				default:

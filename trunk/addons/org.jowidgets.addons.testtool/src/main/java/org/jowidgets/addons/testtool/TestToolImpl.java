@@ -38,24 +38,27 @@ import org.jowidgets.addons.testtool.internal.TestPlayer;
 import org.jowidgets.addons.testtool.internal.TestToolUtilities;
 import org.jowidgets.addons.testtool.internal.UserAction;
 import org.jowidgets.addons.testtool.internal.WidgetRegistry;
+import org.jowidgets.api.controler.ITabItemListener;
 import org.jowidgets.api.controler.ITreeListener;
 import org.jowidgets.api.controler.ITreePopupDetectionListener;
 import org.jowidgets.api.controler.ITreePopupEvent;
 import org.jowidgets.api.controler.ITreeSelectionEvent;
 import org.jowidgets.api.controler.ITreeSelectionListener;
-import org.jowidgets.api.model.item.IItemModel;
-import org.jowidgets.api.model.item.IItemModelListener;
+import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.model.item.IMenuItemModel;
 import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.api.model.item.ISeparatorItemModel;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.ITabFolder;
+import org.jowidgets.api.widgets.ITabItem;
 import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.IToolBarButton;
 import org.jowidgets.api.widgets.IToolBarItem;
 import org.jowidgets.api.widgets.ITree;
 import org.jowidgets.api.widgets.ITreeNode;
+import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.test.api.widgets.IButtonUi;
@@ -72,6 +75,8 @@ public final class TestToolImpl implements ITestTool {
 	private boolean replay;
 	private boolean applicationStarted;
 	private final List<IToolBar> toolBars;
+	private final List<ITree> trees;
+	private final List<ITabFolder> tabFolders;
 
 	public TestToolImpl() {
 		this("");
@@ -86,6 +91,8 @@ public final class TestToolImpl implements ITestTool {
 		this.replay = false;
 		this.applicationStarted = false;
 		this.toolBars = new LinkedList<IToolBar>();
+		this.trees = new LinkedList<ITree>();
+		this.tabFolders = new LinkedList<ITabFolder>();
 	}
 
 	@Override
@@ -106,7 +113,6 @@ public final class TestToolImpl implements ITestTool {
 		addListener(widget);
 	}
 
-	// TODO LG remove unused listeners
 	private void addListener(final IWidgetCommon widget) {
 		// TODO LG use IFrameUi
 		if (widget instanceof IFrame) {
@@ -124,6 +130,7 @@ public final class TestToolImpl implements ITestTool {
 						registerToolBarItems();
 						registerTreeItems();
 						registerMenuItems(frame);
+						registerTabFolderItems();
 						applicationStarted = true;
 					}
 				}
@@ -147,6 +154,7 @@ public final class TestToolImpl implements ITestTool {
 		// TODO LG use ITreeUi instead of ITree
 		if (widget instanceof ITree) {
 			final ITree tree = (ITree) widget;
+			trees.add(tree);
 			tree.addTreeSelectionListener(new ITreeSelectionListener() {
 
 				@Override
@@ -191,6 +199,8 @@ public final class TestToolImpl implements ITestTool {
 		}
 		// TODO LG user ITabFolderUi
 		if (widget instanceof ITabFolder) {
+			final ITabFolder tab = (ITabFolder) widget;
+			tabFolders.add(tab);
 			// TODO LG support recording/replay of TabFolder
 		}
 		// TODO LG user ITableUi
@@ -258,27 +268,49 @@ public final class TestToolImpl implements ITestTool {
 	}
 
 	private void registerTreeItems() {
+		for (final ITree tree : trees) {
+			for (final ITreeNode node : tree.getChildren()) {
+				WidgetRegistry.getInstance().addWidget(node);
+			}
+		}
+	}
 
+	private void registerTabFolderItems() {
+		for (final ITabFolder folder : tabFolders) {
+			for (final ITabItem item : folder.getItems()) {
+				WidgetRegistry.getInstance().addWidget(item);
+				item.addTabItemListener(new ITabItemListener() {
+
+					@Override
+					public void selectionChanged(final boolean selected) {
+						if (item.isVisible()) {
+							record(item, UserAction.CLICK, testToolUtilities.createWidgetID(item));
+						}
+					}
+
+					@Override
+					public void onClose(final IVetoable vetoable) {
+						System.out.println("closing tab item... ");
+					}
+				});
+			}
+		}
 	}
 
 	private void registerMenuItems(final IFrame frame) {
 		final IMenuBarModel menuBarModel = frame.getMenuBarModel();
 		for (final IMenuModel menu : menuBarModel.getMenus()) {
-			menu.addItemModelListener(new IItemModelListener() {
-
-				@Override
-				public void itemChanged(final IItemModel item) {
-					System.out.println("menu changed: " + item.getText());
-				}
-			});
 			for (final IMenuItemModel item : menu.getChildren()) {
-				item.addItemModelListener(new IItemModelListener() {
+				if (!(item instanceof ISeparatorItemModel)) {
+					final IActionItemModel actionItem = (IActionItemModel) item;
+					actionItem.addActionListener(new IActionListener() {
 
-					@Override
-					public void itemChanged(final IItemModel item) {
-						System.out.println("menuitem changed" + item);
-					}
-				});
+						@Override
+						public void actionPerformed() {
+							System.out.println("Menu Item pressed!");
+						}
+					});
+				}
 			}
 		}
 	}
