@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2010, Michael Grossmann, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -46,6 +46,10 @@ public final class Position {
 		return y;
 	}
 
+	public int getAbsoluteValue() {
+		return (int) (Math.sqrt(x * x + y * y));
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -79,6 +83,24 @@ public final class Position {
 	@Override
 	public String toString() {
 		return "(x=" + x + " / y=" + y + ")";
+	}
+
+	public static Position subtract(final Position minuend, final Position subtrahend) {
+		return new Position(minuend.x - subtrahend.x, minuend.y - subtrahend.y);
+	}
+
+	public static Position add(final Position... addends) {
+		int x = 0;
+		int y = 0;
+		for (final Position addend : addends) {
+			x = x + addend.x;
+			y = y + addend.y;
+		}
+		return new Position(x, y);
+	}
+
+	public static Position convert(final Dimension dimension) {
+		return new Position(dimension.getWidth(), dimension.getHeight());
 	}
 
 }

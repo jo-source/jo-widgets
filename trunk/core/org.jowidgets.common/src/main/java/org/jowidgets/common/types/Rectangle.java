@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2010, Michael Grossmann, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -45,6 +45,17 @@ public class Rectangle {
 
 	public Dimension getSize() {
 		return size;
+	}
+
+	public boolean contains(final Position point) {
+		if ((position == null) || (size == null)) {
+			return false;
+		}
+
+		return (point.getX() >= position.getX())
+			&& (point.getY() >= position.getY())
+			&& (point.getX() <= position.getX() + size.getWidth())
+			&& (point.getY() <= position.getY() + size.getHeight());
 	}
 
 	@Override

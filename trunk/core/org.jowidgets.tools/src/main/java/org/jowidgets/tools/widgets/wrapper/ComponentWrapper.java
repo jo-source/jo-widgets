@@ -34,6 +34,8 @@ import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 
 public class ComponentWrapper extends WidgetWrapper implements IComponent {
@@ -90,6 +92,41 @@ public class ComponentWrapper extends WidgetWrapper implements IComponent {
 	@Override
 	public Dimension getSize() {
 		return getWidget().getSize();
+	}
+
+	@Override
+	public void setSize(final Dimension size) {
+		getWidget().setSize(size);
+	}
+
+	@Override
+	public Position getPosition() {
+		return getWidget().getPosition();
+	}
+
+	@Override
+	public void setPosition(final Position position) {
+		getWidget().setPosition(position);
+	}
+
+	@Override
+	public Position toScreen(final Position localPosition) {
+		return getWidget().toScreen(localPosition);
+	}
+
+	@Override
+	public Position toLocal(final Position screenPosition) {
+		return getWidget().toLocal(screenPosition);
+	}
+
+	@Override
+	public Position fromComponent(final IComponentCommon component, final Position componentPosition) {
+		return getWidget().fromComponent(component, componentPosition);
+	}
+
+	@Override
+	public Position toComponent(final Position componentPosition, final IComponentCommon component) {
+		return getWidget().toComponent(componentPosition, component);
 	}
 
 	@Override

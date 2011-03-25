@@ -42,6 +42,8 @@ import org.jowidgets.api.widgets.descriptor.setup.IInputCompositeSetup;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
@@ -176,6 +178,41 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputComposite<INPUT_T
 	@Override
 	public Dimension getSize() {
 		return parentComposite.getSize();
+	}
+
+	@Override
+	public void setSize(final Dimension size) {
+		parentComposite.setSize(size);
+	}
+
+	@Override
+	public Position getPosition() {
+		return parentComposite.getPosition();
+	}
+
+	@Override
+	public void setPosition(final Position position) {
+		parentComposite.setPosition(position);
+	}
+
+	@Override
+	public Position toScreen(final Position localPosition) {
+		return composite.toScreen(localPosition);
+	}
+
+	@Override
+	public Position toLocal(final Position screenPosition) {
+		return composite.toLocal(screenPosition);
+	}
+
+	@Override
+	public Position fromComponent(final IComponentCommon component, final Position componentPosition) {
+		return composite.fromComponent(component, componentPosition);
+	}
+
+	@Override
+	public Position toComponent(final Position componentPosition, final IComponentCommon component) {
+		return composite.toComponent(componentPosition, component);
 	}
 
 	@Override

@@ -30,6 +30,7 @@ package org.jowidgets.spi.impl.dummy.widgets;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
 import org.jowidgets.spi.widgets.IComponentSpi;
@@ -79,6 +80,22 @@ public class DummyComponent extends DummyWidget implements IComponentSpi {
 	@Override
 	public Dimension getSize() {
 		return getUiReference().getSize();
+	}
+
+	@Override
+	public void setSize(final Dimension size) {
+		// TODO NM implement
+	}
+
+	@Override
+	public Position getPosition() {
+		// TODO NM implement
+		return new Position(0, 0);
+	}
+
+	@Override
+	public void setPosition(final Position position) {
+		// TODO NM implement
 	}
 
 	@Override

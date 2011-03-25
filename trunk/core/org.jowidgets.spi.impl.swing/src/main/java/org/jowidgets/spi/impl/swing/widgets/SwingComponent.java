@@ -43,6 +43,7 @@ import org.jowidgets.spi.impl.controler.PopupDetectionObservable;
 import org.jowidgets.spi.impl.swing.util.ColorConvert;
 import org.jowidgets.spi.impl.swing.util.CursorConvert;
 import org.jowidgets.spi.impl.swing.util.DimensionConvert;
+import org.jowidgets.spi.impl.swing.util.PositionConvert;
 import org.jowidgets.spi.widgets.IComponentSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
@@ -140,6 +141,21 @@ public class SwingComponent extends SwingWidget implements IComponentSpi {
 	@Override
 	public Dimension getSize() {
 		return DimensionConvert.convert(getUiReference().getSize());
+	}
+
+	@Override
+	public void setSize(final Dimension size) {
+		getUiReference().setSize(DimensionConvert.convert(size));
+	}
+
+	@Override
+	public Position getPosition() {
+		return PositionConvert.convert(getUiReference().getLocation());
+	}
+
+	@Override
+	public void setPosition(final Position position) {
+		getUiReference().setLocation(PositionConvert.convert(position));
 	}
 
 	@Override

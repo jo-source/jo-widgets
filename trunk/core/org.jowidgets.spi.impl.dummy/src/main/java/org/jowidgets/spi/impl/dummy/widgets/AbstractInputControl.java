@@ -30,6 +30,7 @@ package org.jowidgets.spi.impl.dummy.widgets;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.spi.impl.controler.InputObservable;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
@@ -113,6 +114,21 @@ public abstract class AbstractInputControl extends InputObservable implements II
 	@Override
 	public Dimension getSize() {
 		return mockControlDelegate.getSize();
+	}
+
+	@Override
+	public void setSize(final Dimension size) {
+		mockControlDelegate.setSize(size);
+	}
+
+	@Override
+	public Position getPosition() {
+		return mockControlDelegate.getPosition();
+	}
+
+	@Override
+	public void setPosition(final Position position) {
+		mockControlDelegate.setPosition(position);
 	}
 
 	@Override

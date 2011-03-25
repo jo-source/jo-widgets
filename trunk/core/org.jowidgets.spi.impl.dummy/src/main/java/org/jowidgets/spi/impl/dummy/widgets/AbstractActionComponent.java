@@ -30,6 +30,7 @@ package org.jowidgets.spi.impl.dummy.widgets;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
 import org.jowidgets.spi.widgets.IActionWidgetSpi;
@@ -88,6 +89,21 @@ public abstract class AbstractActionComponent extends AbstractActionWidget imple
 	@Override
 	public Dimension getSize() {
 		return mockComponentDelegate.getSize();
+	}
+
+	@Override
+	public void setSize(final Dimension size) {
+		mockComponentDelegate.setSize(size);
+	}
+
+	@Override
+	public Position getPosition() {
+		return mockComponentDelegate.getPosition();
+	}
+
+	@Override
+	public void setPosition(final Position position) {
+		mockComponentDelegate.setPosition(position);
 	}
 
 	@Override

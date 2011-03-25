@@ -41,6 +41,8 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Markup;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.IIconCommon;
 import org.jowidgets.common.widgets.ITextLabelCommon;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
@@ -169,6 +171,41 @@ public class LabelImpl implements ILabel {
 	@Override
 	public Dimension getSize() {
 		return compositeWidget.getSize();
+	}
+
+	@Override
+	public void setSize(final Dimension size) {
+		compositeWidget.setSize(size);
+	}
+
+	@Override
+	public Position getPosition() {
+		return compositeWidget.getPosition();
+	}
+
+	@Override
+	public void setPosition(final Position position) {
+		compositeWidget.setPosition(position);
+	}
+
+	@Override
+	public Position toScreen(final Position localPosition) {
+		return compositeWidget.toScreen(localPosition);
+	}
+
+	@Override
+	public Position toLocal(final Position screenPosition) {
+		return compositeWidget.toLocal(screenPosition);
+	}
+
+	@Override
+	public Position fromComponent(final IComponentCommon component, final Position componentPosition) {
+		return compositeWidget.fromComponent(component, componentPosition);
+	}
+
+	@Override
+	public Position toComponent(final Position componentPosition, final IComponentCommon component) {
+		return compositeWidget.toComponent(componentPosition, component);
 	}
 
 	@Override

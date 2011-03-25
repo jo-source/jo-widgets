@@ -33,6 +33,8 @@ import java.util.List;
 import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.threads.IUiThreadAccessCommon;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.spi.image.IImageHandleFactorySpi;
 
 public interface IWidgetsServiceProvider {
@@ -60,5 +62,23 @@ public interface IWidgetsServiceProvider {
 	 * @return The UI reference for all known windows or an empty list
 	 */
 	List<Object> getAllWindowsUiReference();
+
+	/**
+	 * Transforms a local component position to a screen position
+	 * 
+	 * @param localPosition Local position relative to the component
+	 * @param component The component
+	 * @return screen position
+	 */
+	Position toScreen(final Position localPosition, final IComponentCommon component);
+
+	/**
+	 * Transforms a screen position to a local component position
+	 * 
+	 * @param screenPosition Screen position
+	 * @param component The component
+	 * @return local position relative to the component
+	 */
+	Position toLocal(final Position screenPosition, final IComponentCommon component);
 
 }

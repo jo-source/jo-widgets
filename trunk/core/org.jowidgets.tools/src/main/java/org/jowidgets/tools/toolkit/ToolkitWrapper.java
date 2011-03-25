@@ -39,6 +39,7 @@ import org.jowidgets.api.toolkit.IQuestionPane;
 import org.jowidgets.api.toolkit.IToolkit;
 import org.jowidgets.api.toolkit.IWidgetWrapperFactory;
 import org.jowidgets.api.utils.IWidgetUtils;
+import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
@@ -46,6 +47,7 @@ import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.util.Assert;
 
@@ -140,6 +142,16 @@ public class ToolkitWrapper implements IToolkit {
 	@Override
 	public IFrame createRootFrame(final IFrameDescriptor descriptor, final IApplicationLifecycle lifecycle) {
 		return toolkit.createRootFrame(descriptor, lifecycle);
+	}
+
+	@Override
+	public Position toScreen(final Position localPosition, final IComponent component) {
+		return toolkit.toScreen(localPosition, component);
+	}
+
+	@Override
+	public Position toLocal(final Position screenPosition, final IComponent component) {
+		return toolkit.toLocal(screenPosition, component);
 	}
 
 }

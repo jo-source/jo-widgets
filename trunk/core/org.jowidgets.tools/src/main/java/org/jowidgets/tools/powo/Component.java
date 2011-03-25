@@ -38,6 +38,8 @@ import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
@@ -186,6 +188,48 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 	public Dimension getSize() {
 		checkInitialized();
 		return getWidget().getSize();
+	}
+
+	@Override
+	public void setSize(final Dimension size) {
+		checkInitialized();
+		getWidget().setSize(size);
+	}
+
+	@Override
+	public Position getPosition() {
+		checkInitialized();
+		return getWidget().getPosition();
+	}
+
+	@Override
+	public void setPosition(final Position position) {
+		checkInitialized();
+		getWidget().setPosition(position);
+	}
+
+	@Override
+	public Position toScreen(final Position localPosition) {
+		checkInitialized();
+		return getWidget().toScreen(localPosition);
+	}
+
+	@Override
+	public Position toLocal(final Position screenPosition) {
+		checkInitialized();
+		return getWidget().toLocal(screenPosition);
+	}
+
+	@Override
+	public Position fromComponent(final IComponentCommon component, final Position componentPosition) {
+		checkInitialized();
+		return getWidget().fromComponent(component, componentPosition);
+	}
+
+	@Override
+	public Position toComponent(final Position componentPosition, final IComponentCommon component) {
+		checkInitialized();
+		return getWidget().toComponent(componentPosition, component);
 	}
 
 	@Override

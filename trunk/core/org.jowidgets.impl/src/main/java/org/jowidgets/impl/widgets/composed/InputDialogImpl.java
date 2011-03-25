@@ -50,6 +50,7 @@ import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
+import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
@@ -156,6 +157,26 @@ public class InputDialogImpl<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 	@Override
 	public Dimension getSize() {
 		return dialogWidget.getSize();
+	}
+
+	@Override
+	public Position toScreen(final Position localPosition) {
+		return dialogWidget.toScreen(localPosition);
+	}
+
+	@Override
+	public Position toLocal(final Position screenPosition) {
+		return dialogWidget.toLocal(screenPosition);
+	}
+
+	@Override
+	public Position fromComponent(final IComponentCommon component, final Position componentPosition) {
+		return dialogWidget.fromComponent(component, componentPosition);
+	}
+
+	@Override
+	public Position toComponent(final Position componentPosition, final IComponentCommon component) {
+		return dialogWidget.toComponent(componentPosition, component);
 	}
 
 	@Override

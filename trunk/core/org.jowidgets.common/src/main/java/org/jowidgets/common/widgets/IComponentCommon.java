@@ -30,6 +30,7 @@ package org.jowidgets.common.widgets;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IPopupDetectionObservable;
 
 public interface IComponentCommon extends IWidgetCommon, IPopupDetectionObservable {
@@ -47,12 +48,18 @@ public interface IComponentCommon extends IWidgetCommon, IPopupDetectionObservab
 
 	IColorConstant getBackgroundColor();
 
-	void setCursor(Cursor cursor);
+	void setCursor(final Cursor cursor);
 
-	void setVisible(boolean visible);
+	void setVisible(final boolean visible);
 
 	boolean isVisible();
 
 	Dimension getSize();
+
+	void setSize(final Dimension size);
+
+	Position getPosition();
+
+	void setPosition(final Position position);
 
 }

@@ -34,6 +34,8 @@ import java.util.List;
 import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.threads.IUiThreadAccessCommon;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.image.IImageHandleFactorySpi;
@@ -90,6 +92,18 @@ public class DummyWidgetsServiceProvider implements IWidgetsServiceProvider {
 	@Override
 	public List<Object> getAllWindowsUiReference() {
 		return Collections.emptyList();
+	}
+
+	@Override
+	public Position toScreen(final Position localPosition, final IComponentCommon component) {
+		// TODO NM implement
+		return null;
+	}
+
+	@Override
+	public Position toLocal(final Position screenPosition, final IComponentCommon component) {
+		// TODO NM implement
+		return null;
 	}
 
 }

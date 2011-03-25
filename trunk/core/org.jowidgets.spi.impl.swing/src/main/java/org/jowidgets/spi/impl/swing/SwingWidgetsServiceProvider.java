@@ -28,6 +28,7 @@
 
 package org.jowidgets.spi.impl.swing;
 
+import java.awt.Component;
 import java.awt.Window;
 import java.util.LinkedList;
 import java.util.List;
@@ -35,6 +36,8 @@ import java.util.List;
 import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.threads.IUiThreadAccessCommon;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.image.IImageHandleFactorySpi;
@@ -42,6 +45,7 @@ import org.jowidgets.spi.impl.swing.application.SwingApplicationRunner;
 import org.jowidgets.spi.impl.swing.image.SwingImageHandleFactorySpi;
 import org.jowidgets.spi.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.spi.impl.swing.threads.SwingUiThreadAccess;
+import org.jowidgets.spi.impl.swing.util.PositionConvert;
 
 public class SwingWidgetsServiceProvider implements IWidgetsServiceProvider {
 
@@ -102,4 +106,25 @@ public class SwingWidgetsServiceProvider implements IWidgetsServiceProvider {
 		return result;
 	}
 
+	@Override
+	public Position toScreen(final Position localPosition, final IComponentCommon component) {
+		if (!(component.getUiReference() instanceof Component)) {
+			throw new IllegalArgumentException("UiReference of component must be instance of '" + Component.class.getName() + "'");
+		}
+
+		final Component uiReference = (Component) component.getUiReference();
+		final Position componentScreenPosition = PositionConvert.convert(uiReference.getLocationOnScreen());
+		return Position.add(componentScreenPosition, localPosition);
+	}
+
+	@Override
+	public Position toLocal(final Position screenPosition, final IComponentCommon component) {
+		if (!(component.getUiReference() instanceof Component)) {
+			throw new IllegalArgumentException("UiReference of component must be instance of '" + Component.class.getName() + "'");
+		}
+
+		final Component uiReference = (Component) component.getUiReference();
+		final Position componentScreenPosition = PositionConvert.convert(uiReference.getLocationOnScreen());
+		return Position.subtract(screenPosition, componentScreenPosition);
+	}
 }

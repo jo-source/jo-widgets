@@ -45,6 +45,8 @@ import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
@@ -295,6 +297,41 @@ public class ValidationLabelImpl implements IValidationLabel {
 	@Override
 	public Dimension getSize() {
 		return labelControl.getSize();
+	}
+
+	@Override
+	public void setSize(final Dimension size) {
+		labelControl.setSize(size);
+	}
+
+	@Override
+	public Position getPosition() {
+		return labelControl.getPosition();
+	}
+
+	@Override
+	public void setPosition(final Position position) {
+		labelControl.setPosition(position);
+	}
+
+	@Override
+	public Position toScreen(final Position localPosition) {
+		return labelControl.toScreen(localPosition);
+	}
+
+	@Override
+	public Position toLocal(final Position screenPosition) {
+		return labelControl.toLocal(screenPosition);
+	}
+
+	@Override
+	public Position fromComponent(final IComponentCommon component, final Position componentPosition) {
+		return labelControl.fromComponent(component, componentPosition);
+	}
+
+	@Override
+	public Position toComponent(final Position componentPosition, final IComponentCommon component) {
+		return labelControl.toComponent(componentPosition, component);
 	}
 
 	@Override

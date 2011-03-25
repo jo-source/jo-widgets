@@ -37,6 +37,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
@@ -137,6 +138,21 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 	@Override
 	public Dimension getSize() {
 		return outerContainer.getSize();
+	}
+
+	@Override
+	public void setSize(final Dimension size) {
+		outerContainer.setSize(size);
+	}
+
+	@Override
+	public Position getPosition() {
+		return outerContainer.getPosition();
+	}
+
+	@Override
+	public void setPosition(final Position position) {
+		outerContainer.setPosition(position);
 	}
 
 	@Override
