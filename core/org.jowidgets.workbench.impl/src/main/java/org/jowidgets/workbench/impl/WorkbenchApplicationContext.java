@@ -45,6 +45,7 @@ import org.jowidgets.api.widgets.ITree;
 import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.model.item.MenuModel;
@@ -120,6 +121,8 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 				final ComponentNodeContext wasSelectedContext = registeredNodes.get(wasSelected);
 				final ComponentNodeContext isSelectedContext = registeredNodes.get(isSelected);
 
+				workbenchContext.getToolBarContainer().layoutBegin();
+				workbenchContext.getRootFrame().setCursor(Cursor.WAIT);
 				workbenchContentContainer.layoutBegin();
 				if (wasSelectedContext != null) {
 					final VetoHolder veto = wasSelectedContext.deactivate();
@@ -139,6 +142,8 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 					workbenchContext.setEmptyContentVisible(true);
 				}
 				workbenchContentContainer.layoutEnd();
+				workbenchContext.getToolBarContainer().layoutEnd();
+				workbenchContext.getRootFrame().setCursor(Cursor.DEFAULT);
 			}
 		};
 		this.tree.addTreeSelectionListener(treeSelectionListener);

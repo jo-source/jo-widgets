@@ -46,4 +46,6 @@ public interface ITable extends IControl, ITableCommon {
 
 	void moveColumn(int oldViewIndex, int newViewIndex);
 
+	void resetColumnPermutation();
+
 }

@@ -268,6 +268,11 @@ public class ToolBarModel implements IToolBarModel {
 	}
 
 	@Override
+	public void removeAction(final IAction action) {
+		model.removeAction(action);
+	}
+
+	@Override
 	public void removeItemsOfModel(final IToolBarModel toolBarModel) {
 		model.removeItemsOfModel(toolBarModel);
 	}

@@ -263,6 +263,20 @@ class ToolBarModelImpl implements IToolBarModel {
 	}
 
 	@Override
+	public void removeAction(final IAction action) {
+		Assert.paramNotNull(action, "action");
+		for (final IToolBarItemModel childModel : getItems()) {
+			if (childModel instanceof IActionItemModel) {
+				if (((IActionItemModel) childModel).getAction() == action) {
+					removeItem(childModel);
+					break;
+				}
+			}
+		}
+
+	}
+
+	@Override
 	public void removeItemsOfModel(final IToolBarModel toolBarModel) {
 		Assert.paramNotNull(toolBarModel, "toolBarModel");
 		for (final IToolBarItemModel childModel : toolBarModel.getItems()) {

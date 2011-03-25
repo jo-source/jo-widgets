@@ -139,4 +139,11 @@ public class TreeContainerDelegate implements ITreeContainer {
 		return new LinkedList<ITreeNode>(children);
 	}
 
+	@Override
+	public void setAllChildrenExpanded(final boolean expanded) {
+		for (final ITreeNode childNode : children) {
+			childNode.setAllChildrenExpanded(expanded);
+		}
+	}
+
 }

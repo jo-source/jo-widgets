@@ -205,6 +205,12 @@ public class TreeNodeImpl extends TreeNodeSpiWrapper implements ITreeNode {
 	}
 
 	@Override
+	public void setAllChildrenExpanded(final boolean expanded) {
+		setExpanded(expanded);
+		treeContainerDelegate.setAllChildrenExpanded(expanded);
+	}
+
+	@Override
 	public boolean isLeaf() {
 		return getChildren().size() == 0;
 	}

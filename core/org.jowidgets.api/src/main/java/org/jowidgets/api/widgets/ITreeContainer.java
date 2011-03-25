@@ -52,4 +52,6 @@ public interface ITreeContainer {
 
 	ITreeContainer getParentContainer();
 
+	void setAllChildrenExpanded(boolean expanded);
+
 }

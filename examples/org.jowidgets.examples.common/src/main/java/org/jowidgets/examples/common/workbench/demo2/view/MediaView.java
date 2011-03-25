@@ -28,16 +28,22 @@
 
 package org.jowidgets.examples.common.workbench.demo2.view;
 
+import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.command.IActionBuilder;
+import org.jowidgets.api.command.ICommandExecutor;
+import org.jowidgets.api.command.IExecutionContext;
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.ITree;
 import org.jowidgets.api.widgets.ITreeNode;
-import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractView;
+import org.jowidgets.tools.command.ActionBuilder;
 import org.jowidgets.tools.layout.MigLayoutFactory;
+import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
 
@@ -48,6 +54,10 @@ public class MediaView extends AbstractView implements IView {
 	public static final String DEFAULT_TOOLTIP = "Media View";
 	public static final IImageConstant DEFAULT_ICON = SilkIcons.ATTACH;
 
+	private final ITree tree;
+	private final IAction collapseTreeAction;
+	private final IAction expandTreeAction;
+
 	public MediaView(final IViewContext context) {
 		super(ID);
 
@@ -56,10 +66,21 @@ public class MediaView extends AbstractView implements IView {
 
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-		final ITreeBluePrint treeBp = bpf.tree();
-
-		final ITree tree = container.add(treeBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+		this.tree = container.add(bpf.tree(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 		container.setBackgroundColor(tree.getBackgroundColor());
+		createTreeContext(tree);
+
+		this.collapseTreeAction = createCollapseTreeAction();
+		this.expandTreeAction = createExpandTreeAction();
+
+		tree.setPopupMenu(createPopupMenu());
+
+		context.getToolBar().addAction(expandTreeAction);
+		context.getToolBar().addAction(collapseTreeAction);
+	}
+
+	private void createTreeContext(final ITree tree) {
+		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
 		final ITreeNode cdNode = tree.addNode(bpf.treeNode().setText("CD").setIcon(SilkIcons.CD));
 		final ITreeNode dvdNode = tree.addNode(bpf.treeNode().setText("DVD").setIcon(SilkIcons.DVD));
@@ -87,6 +108,43 @@ public class MediaView extends AbstractView implements IView {
 		floppyNode.addNode(bpf.treeNode().setText("Organization").setIcon(SilkIcons.CHART_ORGANISATION));
 
 		diskNode.setExpanded(true);
+	}
+
+	private IMenuModel createPopupMenu() {
+		final IMenuModel result = new MenuModel();
+		result.addAction(expandTreeAction);
+		result.addAction(collapseTreeAction);
+		return result;
+	}
+
+	private IAction createExpandTreeAction() {
+		final IActionBuilder builder = new ActionBuilder();
+		builder.setText("Expand tree");
+		builder.setToolTipText("Expands all nodes of the tree");
+		builder.setIcon(SilkIcons.MAGNIFIER_ZOOM_IN);
+
+		builder.setCommand(new ICommandExecutor() {
+			@Override
+			public void execute(final IExecutionContext executionContext) throws Exception {
+				tree.setAllChildrenExpanded(true);
+			}
+		});
+		return builder.build();
+	}
+
+	private IAction createCollapseTreeAction() {
+		final IActionBuilder builder = new ActionBuilder();
+		builder.setText("Collapse tree");
+		builder.setToolTipText("Collapses all nodes of the tree");
+		builder.setIcon(SilkIcons.MAGIFIER_ZOOM_OUT);
+
+		builder.setCommand(new ICommandExecutor() {
+			@Override
+			public void execute(final IExecutionContext executionContext) throws Exception {
+				tree.setAllChildrenExpanded(false);
+			}
+		});
+		return builder.build();
 	}
 
 }

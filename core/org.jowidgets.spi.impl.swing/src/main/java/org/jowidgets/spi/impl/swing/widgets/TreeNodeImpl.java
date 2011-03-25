@@ -28,7 +28,6 @@
 
 package org.jowidgets.spi.impl.swing.widgets;
 
-import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -132,18 +131,7 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 
 	@Override
 	public boolean isExpanded() {
-		final TreePath rootPath = new TreePath(parentTree.getMutableRootNode());
-		final TreePath thisPath = new TreePath(node);
-		final Enumeration<TreePath> expandedPaths = parentTree.getTree().getExpandedDescendants(rootPath);
-		if (expandedPaths != null) {
-			while (expandedPaths.hasMoreElements()) {
-				final TreePath expandedPath = expandedPaths.nextElement();
-				if (expandedPath.isDescendant(thisPath)) {
-					return true;
-				}
-			}
-		}
-		return false;
+		return parentTree.getTree().isExpanded(new TreePath(node.getPath()));
 	}
 
 	@Override
@@ -153,7 +141,7 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 
 	@Override
 	public boolean isSelected() {
-		final TreePath thisPath = new TreePath(node);
+		final TreePath thisPath = new TreePath(node.getPath());
 		final TreePath[] selectedPaths = parentTree.getTree().getSelectionPaths();
 		if (selectedPaths != null) {
 			for (final TreePath selectedPath : selectedPaths) {
