@@ -52,7 +52,6 @@ import org.jowidgets.api.model.item.ISeparatorItemModel;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.ITabFolder;
 import org.jowidgets.api.widgets.ITabItem;
-import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.IToolBarButton;
 import org.jowidgets.api.widgets.IToolBarItem;
@@ -64,7 +63,6 @@ import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.test.api.widgets.IButtonUi;
 import org.jowidgets.tools.controler.WindowAdapter;
 
-//CHECKSTYLE:OFF
 public final class TestToolImpl implements ITestTool {
 
 	private final TestToolUtilities testToolUtilities;
@@ -203,10 +201,8 @@ public final class TestToolImpl implements ITestTool {
 			tabFolders.add(tab);
 			// TODO LG support recording/replay of TabFolder
 		}
-		// TODO LG user ITableUi
-		if (widget instanceof ITable) {
-			// TODO LG support recording/replay of table
-		}
+		// TODO LG use ITableUi
+		// TODO LG support recording/replay of table
 	}
 
 	@Override
@@ -289,9 +285,7 @@ public final class TestToolImpl implements ITestTool {
 					}
 
 					@Override
-					public void onClose(final IVetoable vetoable) {
-						System.out.println("closing tab item... ");
-					}
+					public void onClose(final IVetoable vetoable) {}
 				});
 			}
 		}
@@ -306,9 +300,7 @@ public final class TestToolImpl implements ITestTool {
 					actionItem.addActionListener(new IActionListener() {
 
 						@Override
-						public void actionPerformed() {
-							System.out.println("Menu Item pressed!");
-						}
+						public void actionPerformed() {}
 					});
 				}
 			}
