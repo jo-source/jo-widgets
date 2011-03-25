@@ -34,8 +34,6 @@ import org.jowidgets.tools.command.CommandAction;
 
 public class PrintAction extends CommandAction {
 
-	public static final String ID = PrintAction.class.getName();
-
 	public PrintAction() {
 		super(new ActionBuilder() {
 			{

@@ -35,8 +35,6 @@ import org.jowidgets.tools.command.CommandAction;
 
 public class PasteAction extends CommandAction {
 
-	public static final String ID = PasteAction.class.getName();
-
 	public PasteAction() {
 		super(new ActionBuilder() {
 			{

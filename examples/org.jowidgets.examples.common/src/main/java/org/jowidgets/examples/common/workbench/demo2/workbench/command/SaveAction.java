@@ -35,8 +35,6 @@ import org.jowidgets.tools.command.CommandAction;
 
 public class SaveAction extends CommandAction {
 
-	public static final String ID = SaveAction.class.getName();
-
 	public SaveAction() {
 		super(new ActionBuilder() {
 			{
