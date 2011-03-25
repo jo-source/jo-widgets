@@ -28,6 +28,7 @@
 
 package org.jowidgets.addons.testtool;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.addons.testtool.internal.ListModel;
@@ -37,42 +38,26 @@ import org.jowidgets.addons.testtool.internal.TestPlayer;
 import org.jowidgets.addons.testtool.internal.TestToolUtilities;
 import org.jowidgets.addons.testtool.internal.UserAction;
 import org.jowidgets.addons.testtool.internal.WidgetRegistry;
-import org.jowidgets.api.controler.ITabItemListener;
 import org.jowidgets.api.controler.ITreeListener;
 import org.jowidgets.api.controler.ITreePopupDetectionListener;
 import org.jowidgets.api.controler.ITreePopupEvent;
 import org.jowidgets.api.controler.ITreeSelectionEvent;
 import org.jowidgets.api.controler.ITreeSelectionListener;
-import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IItemModel;
 import org.jowidgets.api.model.item.IItemModelListener;
+import org.jowidgets.api.model.item.IMenuBarModel;
+import org.jowidgets.api.model.item.IMenuItemModel;
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.widgets.IFrame;
-import org.jowidgets.api.widgets.IMainMenu;
-import org.jowidgets.api.widgets.IMenuItem;
 import org.jowidgets.api.widgets.ITabFolder;
-import org.jowidgets.api.widgets.ITabItem;
 import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.IToolBarButton;
 import org.jowidgets.api.widgets.IToolBarItem;
-import org.jowidgets.api.widgets.IToolBarToggleButton;
 import org.jowidgets.api.widgets.ITree;
 import org.jowidgets.api.widgets.ITreeNode;
-import org.jowidgets.common.types.IVetoable;
-import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
-import org.jowidgets.common.widgets.controler.IItemStateListener;
-import org.jowidgets.common.widgets.controler.IMenuListener;
-import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
-import org.jowidgets.common.widgets.controler.ITableCellEditEvent;
-import org.jowidgets.common.widgets.controler.ITableCellEditorListener;
-import org.jowidgets.common.widgets.controler.ITableCellEvent;
-import org.jowidgets.common.widgets.controler.ITableCellListener;
-import org.jowidgets.common.widgets.controler.ITableCellMouseEvent;
-import org.jowidgets.common.widgets.controler.ITableColumnListener;
-import org.jowidgets.common.widgets.controler.ITableColumnMouseEvent;
-import org.jowidgets.common.widgets.controler.ITableColumnResizeEvent;
 import org.jowidgets.test.api.widgets.IButtonUi;
 import org.jowidgets.tools.controler.WindowAdapter;
 
@@ -85,6 +70,8 @@ public final class TestToolImpl implements ITestTool {
 	private final TestPlayer player;
 	private boolean record;
 	private boolean replay;
+	private boolean applicationStarted;
+	private final List<IToolBar> toolBars;
 
 	public TestToolImpl() {
 		this("");
@@ -97,6 +84,8 @@ public final class TestToolImpl implements ITestTool {
 		this.player = new TestPlayer();
 		this.record = false;
 		this.replay = false;
+		this.applicationStarted = false;
+		this.toolBars = new LinkedList<IToolBar>();
 	}
 
 	@Override
@@ -122,18 +111,6 @@ public final class TestToolImpl implements ITestTool {
 		// TODO LG use IFrameUi
 		if (widget instanceof IFrame) {
 			final IFrame frame = (IFrame) widget;
-			frame.getMenuBarModel().addListModelListener(new IListModelListener() {
-
-				@Override
-				public void childRemoved(final int index) {
-					System.out.println("TT: child removed from menubar at index: " + index);
-				}
-
-				@Override
-				public void childAdded(final int index) {
-					System.out.println("TT: child added to menubar at index: " + index);
-				}
-			});
 			frame.addWindowListener(new WindowAdapter() {
 
 				@Override
@@ -143,7 +120,12 @@ public final class TestToolImpl implements ITestTool {
 
 				@Override
 				public void windowActivated() {
-					System.out.println("TT: Window activated!");
+					if (!applicationStarted) {
+						registerToolBarItems();
+						registerTreeItems();
+						registerMenuItems(frame);
+						applicationStarted = true;
+					}
 				}
 			});
 		}
@@ -157,46 +139,10 @@ public final class TestToolImpl implements ITestTool {
 				}
 			});
 		}
-		// TODO LG check why the listener doesn't work on toolbar
 		// TODO LG use IToolBarUi
 		if (widget instanceof IToolBar) {
 			final IToolBar toolBar = (IToolBar) widget;
-			System.out.println(toolBar);
-			toolBar.getModel().addListModelListener(new IListModelListener() {
-
-				@Override
-				public void childRemoved(final int index) {
-					WidgetRegistry.getInstance().removeWidget(toolBar.getChildren().get(index));
-					System.out.println("TT: child removed from toolbar at index: " + index);
-				}
-
-				@Override
-				public void childAdded(final int index) {
-					final IToolBarItem item = toolBar.getChildren().get(index);
-					WidgetRegistry.getInstance().addWidget(item);
-					if (item instanceof IToolBarButton) {
-						final IToolBarButton tButton = (IToolBarButton) item;
-						tButton.addActionListener(new IActionListener() {
-
-							@Override
-							public void actionPerformed() {
-								record(tButton, UserAction.CLICK, testToolUtilities.createWidgetID(item));
-							}
-						});
-					}
-					if (item instanceof IToolBarToggleButton) {
-						final IToolBarToggleButton tButton = (IToolBarToggleButton) item;
-						tButton.addItemListener(new IItemStateListener() {
-
-							@Override
-							public void itemStateChanged() {
-								System.out.println("TT: ToggleButton item state changed");
-							}
-						});
-					}
-					System.out.println("TT: child added to toolbar at index: " + index);
-				}
-			});
+			toolBars.add(toolBar);
 		}
 		// TODO LG use ITreeUi instead of ITree
 		if (widget instanceof ITree) {
@@ -245,110 +191,11 @@ public final class TestToolImpl implements ITestTool {
 		}
 		// TODO LG user ITabFolderUi
 		if (widget instanceof ITabFolder) {
-			final ITabFolder folder = (ITabFolder) widget;
-			for (final ITabItem item : folder.getItems()) {
-				item.addTabItemListener(new ITabItemListener() {
-
-					@Override
-					public void selectionChanged(final boolean selected) {
-						System.out.println("TT: tabItem selected");
-						//record(item, UserAction.SELECT, testToolUtilities.createWidgetID(item));
-					}
-
-					@Override
-					public void onClose(final IVetoable vetoable) {
-						System.out.println("TT: tabItem closed");
-					}
-				});
-			}
-			folder.addPopupDetectionListener(new IPopupDetectionListener() {
-
-				@Override
-				public void popupDetected(final Position position) {
-					System.out.println("TT: popup detected at: " + position);
-
-				}
-			});
-		}
-		if (widget instanceof IMainMenu) {
-			final IMainMenu menu = (IMainMenu) widget;
-			System.out.println(menu);
-			menu.addMenuListener(new IMenuListener() {
-
-				@Override
-				public void menuDeactivated() {
-					System.out.println("TT: Menu deactivated!");
-				}
-
-				@Override
-				public void menuActivated() {
-					System.out.println("TT: Menu activated!");
-				}
-			});
-			for (final IMenuItem item : menu.getChildren()) {
-				item.getModel().addItemModelListener(new IItemModelListener() {
-
-					@Override
-					public void itemChanged(final IItemModel item) {
-						System.out.println("item changed: ");
-					}
-				});
-			}
+			// TODO LG support recording/replay of TabFolder
 		}
 		// TODO LG user ITableUi
 		if (widget instanceof ITable) {
-			final ITable table = (ITable) widget;
-			table.addTableCellEditorListener(new ITableCellEditorListener() {
-
-				@Override
-				public void onEdit(final IVetoable veto, final ITableCellEditEvent event) {
-					System.out.println("TT: test onedit");
-				}
-
-				@Override
-				public void editFinished(final ITableCellEditEvent event) {
-					System.out.println("TT: test editfinished");
-				}
-
-				@Override
-				public void editCanceled(final ITableCellEvent event) {
-					System.out.println("TT: test editcanceled");
-				}
-			});
-			table.addTableCellListener(new ITableCellListener() {
-
-				@Override
-				public void mouseReleased(final ITableCellMouseEvent event) {
-					System.out.println("TT: test mousereleased");
-				}
-
-				@Override
-				public void mousePressed(final ITableCellMouseEvent event) {
-					System.out.println("TT: test mousepressed");
-				}
-
-				@Override
-				public void mouseDoubleClicked(final ITableCellMouseEvent event) {
-					System.out.println("TT: test mousedoubleclicked");
-				}
-			});
-			table.addTableColumnListener(new ITableColumnListener() {
-
-				@Override
-				public void mouseClicked(final ITableColumnMouseEvent event) {
-					System.out.println("TT: test mouseclicked");
-				}
-
-				@Override
-				public void columnResized(final ITableColumnResizeEvent event) {
-					System.out.println("TT: test resized");
-				}
-
-				@Override
-				public void columnPermutationChanged() {
-					System.out.println("TT: test permutation");
-				}
-			});
+			// TODO LG support recording/replay of table
 		}
 	}
 
@@ -389,6 +236,50 @@ public final class TestToolImpl implements ITestTool {
 	public void replay(final List<TestDataObject> list, final int delay) {
 		if (replay) {
 			player.replayTest(list, delay);
+		}
+	}
+
+	private void registerToolBarItems() {
+		for (final IToolBar bar : toolBars) {
+			for (final IToolBarItem item : bar.getChildren()) {
+				WidgetRegistry.getInstance().addWidget(item);
+				if (item instanceof IToolBarButton) {
+					final IToolBarButton button = (IToolBarButton) item;
+					button.addActionListener(new IActionListener() {
+
+						@Override
+						public void actionPerformed() {
+							record(button, UserAction.CLICK, testToolUtilities.createWidgetID(button));
+						}
+					});
+				}
+			}
+		}
+	}
+
+	private void registerTreeItems() {
+
+	}
+
+	private void registerMenuItems(final IFrame frame) {
+		final IMenuBarModel menuBarModel = frame.getMenuBarModel();
+		for (final IMenuModel menu : menuBarModel.getMenus()) {
+			menu.addItemModelListener(new IItemModelListener() {
+
+				@Override
+				public void itemChanged(final IItemModel item) {
+					System.out.println("menu changed: " + item.getText());
+				}
+			});
+			for (final IMenuItemModel item : menu.getChildren()) {
+				item.addItemModelListener(new IItemModelListener() {
+
+					@Override
+					public void itemChanged(final IItemModel item) {
+						System.out.println("menuitem changed" + item);
+					}
+				});
+			}
 		}
 	}
 }
