@@ -180,6 +180,7 @@ class CommandActionImpl implements ICommandAction, IActionChangeObservable {
 			this.command.getEnabledChecker().addChangeListener(enabledStateListener);
 		}
 
+		enabledState = null;
 		fireEnabledChanged();
 		fireToolTipTextChanged();
 	}

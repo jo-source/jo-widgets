@@ -47,6 +47,8 @@ public class CopyAction extends CommandAction {
 				setMnemonic('C');
 			}
 		});
+
+		setCommand(new DummyCommandExecuter());
 	}
 
 }

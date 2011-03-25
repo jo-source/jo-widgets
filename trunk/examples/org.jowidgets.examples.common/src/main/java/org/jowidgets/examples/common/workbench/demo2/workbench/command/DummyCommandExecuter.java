@@ -28,26 +28,17 @@
 
 package org.jowidgets.examples.common.workbench.demo2.workbench.command;
 
-import org.jowidgets.common.types.Modifier;
-import org.jowidgets.examples.common.icons.SilkIcons;
-import org.jowidgets.tools.command.ActionBuilder;
-import org.jowidgets.tools.command.CommandAction;
+import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.command.ICommandExecutor;
+import org.jowidgets.api.command.IExecutionContext;
+import org.jowidgets.api.toolkit.Toolkit;
 
-public class SaveAction extends CommandAction {
+public class DummyCommandExecuter implements ICommandExecutor {
 
-	public static final String ID = SaveAction.class.getName();
-
-	public SaveAction() {
-		super(new ActionBuilder() {
-			{
-				setText("Save");
-				setToolTipText("Save the modified data");
-				setIcon(SilkIcons.DISK);
-				setAccelerator('S', Modifier.CTRL);
-				setMnemonic('S');
-			}
-		});
+	@Override
+	public void execute(final IExecutionContext executionContext) throws Exception {
+		final IAction action = executionContext.getAction();
+		Toolkit.getMessagePane().showInfo(action.getText(), action.getIcon(), "Invoked the command: " + action.getText());
 
 	}
-
 }

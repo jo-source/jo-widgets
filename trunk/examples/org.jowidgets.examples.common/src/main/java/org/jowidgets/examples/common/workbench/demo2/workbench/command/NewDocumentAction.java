@@ -44,6 +44,8 @@ public class NewDocumentAction extends CommandAction {
 				setAccelerator('N', Modifier.CTRL);
 			}
 		});
+
+		setCommand(new DummyCommandExecuter());
 	}
 
 }

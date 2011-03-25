@@ -44,6 +44,8 @@ public class SaveAsAction extends CommandAction {
 				setIcon(SilkIcons.DISK);
 			}
 		});
+
+		setCommand(new DummyCommandExecuter());
 	}
 
 }
