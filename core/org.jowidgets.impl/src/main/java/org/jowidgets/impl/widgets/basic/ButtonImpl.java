@@ -124,4 +124,5 @@ public class ButtonImpl extends ButtonSpiWrapper implements IButtonUi, IActionWi
 	public boolean isTestable() {
 		return true;
 	}
+
 }

@@ -298,6 +298,21 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 	}
 
 	@Override
+	public void setSize(final Dimension size) {
+		swingContainer.setSize(size);
+	}
+
+	@Override
+	public Position getPosition() {
+		return swingContainer.getPosition();
+	}
+
+	@Override
+	public void setPosition(final Position position) {
+		swingContainer.setPosition(position);
+	}
+
+	@Override
 	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
 		swingContainer.addPopupDetectionListener(listener);
 	}

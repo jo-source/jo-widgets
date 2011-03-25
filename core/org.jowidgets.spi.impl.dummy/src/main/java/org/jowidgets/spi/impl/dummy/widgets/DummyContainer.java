@@ -30,6 +30,7 @@ package org.jowidgets.spi.impl.dummy.widgets;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
@@ -131,6 +132,21 @@ public class DummyContainer implements IContainerSpi {
 	@Override
 	public Dimension getSize() {
 		return mockComponentDelegate.getSize();
+	}
+
+	@Override
+	public void setSize(final Dimension size) {
+		mockComponentDelegate.setSize(size);
+	}
+
+	@Override
+	public Position getPosition() {
+		return mockComponentDelegate.getPosition();
+	}
+
+	@Override
+	public void setPosition(final Position position) {
+		mockComponentDelegate.setPosition(position);
 	}
 
 	@Override

@@ -35,6 +35,7 @@ import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.model.IModelFactoryProvider;
 import org.jowidgets.api.threads.IUiThreadAccess;
 import org.jowidgets.api.utils.IWidgetUtils;
+import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
@@ -42,6 +43,7 @@ import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 
 public interface IToolkit {
@@ -85,5 +87,23 @@ public interface IToolkit {
 	 * @return the created frame
 	 */
 	IFrame createRootFrame(IFrameDescriptor descriptor, IApplicationLifecycle lifecycle);
+
+	/**
+	 * Transforms a local component position to a screen position
+	 * 
+	 * @param localPosition Local position relative to the component
+	 * @param component The component
+	 * @return screen position
+	 */
+	Position toScreen(final Position localPosition, final IComponent component);
+
+	/**
+	 * Transforms a screen position to a local component position
+	 * 
+	 * @param screenPosition Screen position
+	 * @param component The component
+	 * @return local position relative to the component
+	 */
+	Position toLocal(final Position screenPosition, final IComponent component);
 
 }

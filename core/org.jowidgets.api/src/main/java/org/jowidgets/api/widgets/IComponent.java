@@ -29,6 +29,7 @@
 package org.jowidgets.api.widgets;
 
 import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IComponentCommon;
 
 public interface IComponent extends IWidget, IComponentCommon {
@@ -50,5 +51,27 @@ public interface IComponent extends IWidget, IComponentCommon {
 
 	@Override
 	IComponent getParent();
+
+	Position toScreen(final Position localPosition);
+
+	Position toLocal(final Position screenPosition);
+
+	/**
+	 * Transforms a position from another component to the current component
+	 * 
+	 * @param component Component, which the position is relative to
+	 * @param componentPosition Position
+	 * @return transformed local position
+	 */
+	Position fromComponent(final IComponentCommon component, final Position componentPosition);
+
+	/**
+	 * Transforms a local position to another component
+	 * 
+	 * @param componentPosition Local position
+	 * @param component Component, which the position is transformed to
+	 * @return transformed position
+	 */
+	Position toComponent(final Position componentPosition, final IComponentCommon component);
 
 }

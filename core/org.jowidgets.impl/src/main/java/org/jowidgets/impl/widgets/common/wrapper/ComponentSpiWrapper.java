@@ -29,6 +29,7 @@
 package org.jowidgets.impl.widgets.common.wrapper;
 
 import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.common.color.IColorConstant;
@@ -116,6 +117,21 @@ public class ComponentSpiWrapper extends WidgetSpiWrapper implements IComponentC
 	}
 
 	@Override
+	public void setSize(final Dimension size) {
+		getWidget().setSize(size);
+	}
+
+	@Override
+	public Position getPosition() {
+		return getWidget().getPosition();
+	}
+
+	@Override
+	public void setPosition(final Position position) {
+		getWidget().setPosition(position);
+	}
+
+	@Override
 	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
 		getWidget().addPopupDetectionListener(listener);
 	}
@@ -135,4 +151,21 @@ public class ComponentSpiWrapper extends WidgetSpiWrapper implements IComponentC
 		this.popupMenuModel = popupMenuModel;
 	}
 
+	public Position toScreen(final Position localPosition) {
+		return Toolkit.toScreen(localPosition, (IComponent) this);
+	}
+
+	public Position toLocal(final Position screenPosition) {
+		return Toolkit.toLocal(screenPosition, (IComponent) this);
+	}
+
+	public Position fromComponent(final IComponentCommon component, final Position componentPosition) {
+		final Position screenPosition = Toolkit.toScreen(componentPosition, (IComponent) component);
+		return Toolkit.toLocal(screenPosition, (IComponent) this);
+	}
+
+	public Position toComponent(final Position componentPosition, final IComponentCommon component) {
+		final Position screenPosition = Toolkit.toScreen(componentPosition, (IComponent) this);
+		return Toolkit.toLocal(screenPosition, (IComponent) component);
+	}
 }

@@ -264,6 +264,21 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 	}
 
 	@Override
+	public void setSize(final Dimension size) {
+		swtContainer.setSize(size);
+	}
+
+	@Override
+	public Position getPosition() {
+		return swtContainer.getPosition();
+	}
+
+	@Override
+	public void setPosition(final Position position) {
+		swtContainer.setPosition(position);
+	}
+
+	@Override
 	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
 		swtContainer.addPopupDetectionListener(listener);
 	}

@@ -31,11 +31,14 @@ package org.jowidgets.spi.impl.swt;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.threads.IUiThreadAccessCommon;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.image.IImageHandleFactorySpi;
@@ -43,6 +46,7 @@ import org.jowidgets.spi.impl.swt.application.SwtApplicationRunner;
 import org.jowidgets.spi.impl.swt.image.SwtImageHandleFactorySpi;
 import org.jowidgets.spi.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.threads.SwtUiThreadAccess;
+import org.jowidgets.spi.impl.swt.util.PositionConvert;
 
 public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider {
 
@@ -101,6 +105,26 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider {
 			result.add(shell);
 		}
 		return result;
+	}
+
+	@Override
+	public Position toScreen(final Position localPosition, final IComponentCommon component) {
+		if (!(component.getUiReference() instanceof Control)) {
+			throw new IllegalArgumentException("UiReference of component must be instance of '" + Control.class.getName() + "'");
+		}
+
+		final Control control = (Control) component.getUiReference();
+		return PositionConvert.convert(control.toDisplay(PositionConvert.convert(localPosition)));
+	}
+
+	@Override
+	public Position toLocal(final Position screenPosition, final IComponentCommon component) {
+		if (!(component.getUiReference() instanceof Control)) {
+			throw new IllegalArgumentException("UiReference of component must be instance of '" + Control.class.getName() + "'");
+		}
+
+		final Control control = (Control) component.getUiReference();
+		return PositionConvert.convert(control.toControl(PositionConvert.convert(screenPosition)));
 	}
 
 }

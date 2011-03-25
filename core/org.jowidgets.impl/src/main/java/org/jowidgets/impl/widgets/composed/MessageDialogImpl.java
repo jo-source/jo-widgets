@@ -41,6 +41,7 @@ import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IButtonCommon;
+import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
@@ -186,13 +187,43 @@ public class MessageDialogImpl implements IMessageDialog {
 	}
 
 	@Override
+	public Dimension getSize() {
+		return dialogWidget.getSize();
+	}
+
+	@Override
+	public void setSize(final Dimension size) {
+		dialogWidget.setSize(size);
+	}
+
+	@Override
 	public Position getPosition() {
 		return dialogWidget.getPosition();
 	}
 
 	@Override
-	public Dimension getSize() {
-		return dialogWidget.getSize();
+	public void setPosition(final Position position) {
+		dialogWidget.setPosition(position);
+	}
+
+	@Override
+	public Position toScreen(final Position localPosition) {
+		return dialogWidget.toScreen(localPosition);
+	}
+
+	@Override
+	public Position toLocal(final Position screenPosition) {
+		return dialogWidget.toLocal(screenPosition);
+	}
+
+	@Override
+	public Position fromComponent(final IComponentCommon component, final Position componentPosition) {
+		return dialogWidget.fromComponent(component, componentPosition);
+	}
+
+	@Override
+	public Position toComponent(final Position componentPosition, final IComponentCommon component) {
+		return dialogWidget.toComponent(componentPosition, component);
 	}
 
 	@Override

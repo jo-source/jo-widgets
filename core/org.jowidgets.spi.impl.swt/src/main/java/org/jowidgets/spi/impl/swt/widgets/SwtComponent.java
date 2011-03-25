@@ -42,6 +42,7 @@ import org.jowidgets.spi.impl.controler.PopupDetectionObservable;
 import org.jowidgets.spi.impl.swt.color.ColorCache;
 import org.jowidgets.spi.impl.swt.cursor.CursorCache;
 import org.jowidgets.spi.impl.swt.util.DimensionConvert;
+import org.jowidgets.spi.impl.swt.util.PositionConvert;
 import org.jowidgets.spi.widgets.IComponentSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
@@ -136,6 +137,21 @@ public class SwtComponent extends SwtWidget implements IComponentSpi {
 	@Override
 	public Dimension getSize() {
 		return DimensionConvert.convert(getUiReference().getSize());
+	}
+
+	@Override
+	public void setSize(final Dimension size) {
+		getUiReference().setSize(DimensionConvert.convert(size));
+	}
+
+	@Override
+	public Position getPosition() {
+		return PositionConvert.convert(getUiReference().getLocation());
+	}
+
+	@Override
+	public void setPosition(final Position position) {
+		getUiReference().setLocation(PositionConvert.convert(position));
 	}
 
 	@Override

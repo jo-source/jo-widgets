@@ -37,6 +37,7 @@ import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.model.IModelFactoryProvider;
 import org.jowidgets.api.threads.IUiThreadAccess;
 import org.jowidgets.api.utils.IWidgetUtils;
+import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
@@ -44,6 +45,7 @@ import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.util.Assert;
 
@@ -148,5 +150,13 @@ public final class Toolkit {
 
 	public static IFrame createRootFrame(final IFrameDescriptor descriptor, final IApplicationLifecycle lifecycle) {
 		return getInstance().createRootFrame(descriptor, lifecycle);
+	}
+
+	public static Position toScreen(final Position localPosition, final IComponent component) {
+		return getInstance().toScreen(localPosition, component);
+	}
+
+	public static Position toLocal(final Position screenPosition, final IComponent component) {
+		return getInstance().toLocal(screenPosition, component);
 	}
 }
