@@ -53,12 +53,16 @@ import org.jowidgets.api.widgets.ITabFolder;
 import org.jowidgets.api.widgets.ITabItem;
 import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.api.widgets.IToolBar;
+import org.jowidgets.api.widgets.IToolBarButton;
+import org.jowidgets.api.widgets.IToolBarItem;
+import org.jowidgets.api.widgets.IToolBarToggleButton;
 import org.jowidgets.api.widgets.ITree;
 import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controler.IItemStateListener;
 import org.jowidgets.common.widgets.controler.IMenuListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.ITableCellEditEvent;
@@ -76,7 +80,6 @@ import org.jowidgets.tools.controler.WindowAdapter;
 public final class TestToolImpl implements ITestTool {
 
 	private final TestToolUtilities testToolUtilities;
-	private final List<IWidgetCommon> widgetRegistry;
 	private final ITestDataPersister persister;
 	private final ListModel<TestDataObject> listModel;
 	private final TestPlayer player;
@@ -90,7 +93,6 @@ public final class TestToolImpl implements ITestTool {
 	public TestToolImpl(final String filePath) {
 		this.persister = new TestDataXmlPersister(filePath);
 		this.testToolUtilities = new TestToolUtilities();
-		this.widgetRegistry = WidgetRegistry.getInstance().getWidgets();
 		this.listModel = new ListModel<TestDataObject>();
 		this.player = new TestPlayer();
 		this.record = false;
@@ -110,9 +112,9 @@ public final class TestToolImpl implements ITestTool {
 
 	@Override
 	public void register(final IWidgetCommon widget) {
-		addListener(widget);
 		// TODO LG remove disposed widgets
-		widgetRegistry.add(widget);
+		WidgetRegistry.getInstance().addWidget(widget);
+		addListener(widget);
 	}
 
 	// TODO LG remove unused listeners
@@ -124,12 +126,12 @@ public final class TestToolImpl implements ITestTool {
 
 				@Override
 				public void childRemoved(final int index) {
-					//System.out.println("TT: child removed from menubar at index: " + index);
+					System.out.println("TT: child removed from menubar at index: " + index);
 				}
 
 				@Override
 				public void childAdded(final int index) {
-					//System.out.println("TT: child added to menubar at index: " + index);
+					System.out.println("TT: child added to menubar at index: " + index);
 				}
 			});
 			frame.addWindowListener(new WindowAdapter() {
@@ -141,8 +143,7 @@ public final class TestToolImpl implements ITestTool {
 
 				@Override
 				public void windowActivated() {
-					System.out.println("open frame : " + frame);
-					//System.out.println("TT: Window activated!");
+					System.out.println("TT: Window activated!");
 				}
 			});
 		}
@@ -160,16 +161,40 @@ public final class TestToolImpl implements ITestTool {
 		// TODO LG use IToolBarUi
 		if (widget instanceof IToolBar) {
 			final IToolBar toolBar = (IToolBar) widget;
+			System.out.println(toolBar);
 			toolBar.getModel().addListModelListener(new IListModelListener() {
 
 				@Override
 				public void childRemoved(final int index) {
-					//System.out.println("TT: child removed from toolbar at index: " + index);
+					WidgetRegistry.getInstance().removeWidget(toolBar.getChildren().get(index));
+					System.out.println("TT: child removed from toolbar at index: " + index);
 				}
 
 				@Override
 				public void childAdded(final int index) {
-					//System.out.println("TT: child added to toolbar at index: " + index);
+					final IToolBarItem item = toolBar.getChildren().get(index);
+					WidgetRegistry.getInstance().addWidget(item);
+					if (item instanceof IToolBarButton) {
+						final IToolBarButton tButton = (IToolBarButton) item;
+						tButton.addActionListener(new IActionListener() {
+
+							@Override
+							public void actionPerformed() {
+								record(tButton, UserAction.CLICK, testToolUtilities.createWidgetID(item));
+							}
+						});
+					}
+					if (item instanceof IToolBarToggleButton) {
+						final IToolBarToggleButton tButton = (IToolBarToggleButton) item;
+						tButton.addItemListener(new IItemStateListener() {
+
+							@Override
+							public void itemStateChanged() {
+								System.out.println("TT: ToggleButton item state changed");
+							}
+						});
+					}
+					System.out.println("TT: child added to toolbar at index: " + index);
 				}
 			});
 		}
@@ -181,8 +206,8 @@ public final class TestToolImpl implements ITestTool {
 				@Override
 				public void selectionChanged(final ITreeSelectionEvent event) {
 					for (final ITreeNode node : event.getSelected()) {
-						if (!widgetRegistry.contains(node)) {
-							widgetRegistry.add(node);
+						if (!WidgetRegistry.getInstance().getWidgets().contains(node)) {
+							WidgetRegistry.getInstance().addWidget(node);
 						}
 						record(widget, UserAction.SELECT, testToolUtilities.createWidgetID(node));
 					}
@@ -192,16 +217,16 @@ public final class TestToolImpl implements ITestTool {
 
 				@Override
 				public void nodeExpanded(final ITreeNode node) {
-					if (!widgetRegistry.contains(node)) {
-						widgetRegistry.add(node);
+					if (!WidgetRegistry.getInstance().getWidgets().contains(node)) {
+						WidgetRegistry.getInstance().addWidget(node);
 					}
 					record(widget, UserAction.EXPAND, testToolUtilities.createWidgetID(node));
 				}
 
 				@Override
 				public void nodeCollapsed(final ITreeNode node) {
-					if (!widgetRegistry.contains(node)) {
-						widgetRegistry.add(node);
+					if (!WidgetRegistry.getInstance().getWidgets().contains(node)) {
+						WidgetRegistry.getInstance().addWidget(node);
 					}
 					record(widget, UserAction.COLLAPSE, testToolUtilities.createWidgetID(node));
 				}
@@ -211,8 +236,8 @@ public final class TestToolImpl implements ITestTool {
 				@Override
 				public void popupDetected(final ITreePopupEvent event) {
 					final ITreeNode node = event.getNode();
-					if (!widgetRegistry.contains(node)) {
-						widgetRegistry.add(node);
+					if (!WidgetRegistry.getInstance().getWidgets().contains(node)) {
+						WidgetRegistry.getInstance().addWidget(node);
 					}
 					record(widget, UserAction.CLICK, testToolUtilities.createWidgetID(node));
 				}
@@ -226,13 +251,13 @@ public final class TestToolImpl implements ITestTool {
 
 					@Override
 					public void selectionChanged(final boolean selected) {
-						//System.out.println("TT: tabItem selected");
+						System.out.println("TT: tabItem selected");
 						//record(item, UserAction.SELECT, testToolUtilities.createWidgetID(item));
 					}
 
 					@Override
 					public void onClose(final IVetoable vetoable) {
-						//System.out.println("TT: tabItem closed");
+						System.out.println("TT: tabItem closed");
 					}
 				});
 			}
@@ -240,23 +265,24 @@ public final class TestToolImpl implements ITestTool {
 
 				@Override
 				public void popupDetected(final Position position) {
-					//System.out.println("TT: popup detected at: " + position);
+					System.out.println("TT: popup detected at: " + position);
 
 				}
 			});
 		}
 		if (widget instanceof IMainMenu) {
 			final IMainMenu menu = (IMainMenu) widget;
+			System.out.println(menu);
 			menu.addMenuListener(new IMenuListener() {
 
 				@Override
 				public void menuDeactivated() {
-					//System.out.println("TT: Menu deactivated!");
+					System.out.println("TT: Menu deactivated!");
 				}
 
 				@Override
 				public void menuActivated() {
-					//System.out.println("TT: Menu activated!");
+					System.out.println("TT: Menu activated!");
 				}
 			});
 			for (final IMenuItem item : menu.getChildren()) {
@@ -264,7 +290,7 @@ public final class TestToolImpl implements ITestTool {
 
 					@Override
 					public void itemChanged(final IItemModel item) {
-						//System.out.println("item changed: ");
+						System.out.println("item changed: ");
 					}
 				});
 			}
@@ -276,51 +302,51 @@ public final class TestToolImpl implements ITestTool {
 
 				@Override
 				public void onEdit(final IVetoable veto, final ITableCellEditEvent event) {
-					//System.out.println("TT: test onedit");
+					System.out.println("TT: test onedit");
 				}
 
 				@Override
 				public void editFinished(final ITableCellEditEvent event) {
-					//System.out.println("TT: test editfinished");
+					System.out.println("TT: test editfinished");
 				}
 
 				@Override
 				public void editCanceled(final ITableCellEvent event) {
-					//System.out.println("TT: test editcanceled");
+					System.out.println("TT: test editcanceled");
 				}
 			});
 			table.addTableCellListener(new ITableCellListener() {
 
 				@Override
 				public void mouseReleased(final ITableCellMouseEvent event) {
-					//System.out.println("TT: test mousereleased");
+					System.out.println("TT: test mousereleased");
 				}
 
 				@Override
 				public void mousePressed(final ITableCellMouseEvent event) {
-					//System.out.println("TT: test mousepressed");
+					System.out.println("TT: test mousepressed");
 				}
 
 				@Override
 				public void mouseDoubleClicked(final ITableCellMouseEvent event) {
-					//System.out.println("TT: test mousedoubleclicked");
+					System.out.println("TT: test mousedoubleclicked");
 				}
 			});
 			table.addTableColumnListener(new ITableColumnListener() {
 
 				@Override
 				public void mouseClicked(final ITableColumnMouseEvent event) {
-					//System.out.println("TT: test mouseclicked");
+					System.out.println("TT: test mouseclicked");
 				}
 
 				@Override
 				public void columnResized(final ITableColumnResizeEvent event) {
-					//System.out.println("TT: test resized");
+					System.out.println("TT: test resized");
 				}
 
 				@Override
 				public void columnPermutationChanged() {
-					//System.out.println("TT: test permutation");
+					System.out.println("TT: test permutation");
 				}
 			});
 		}
@@ -362,7 +388,7 @@ public final class TestToolImpl implements ITestTool {
 	@Override
 	public void replay(final List<TestDataObject> list, final int delay) {
 		if (replay) {
-			player.replayTest(list, 500);
+			player.replayTest(list, delay);
 		}
 	}
 }

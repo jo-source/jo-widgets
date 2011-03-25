@@ -40,39 +40,25 @@ import org.jowidgets.workbench.api.IWorkbenchRunner;
 
 public class TestToolRunner {
 
-	private ITestTool testTool;
 	private final IApplication app;
-	private IWorkbenchRunner workbenchRunner;
-	private IWorkbench workbench;
+	private final IWorkbenchRunner workbenchRunner;
+	private final IWorkbench workbench;
 
 	public TestToolRunner(final IApplication app) {
-		init();
 		this.app = app;
+		this.workbench = null;
+		this.workbenchRunner = null;
 	}
 
 	public TestToolRunner(final IWorkbenchRunner workbenchRunner, final IWorkbench workbench) {
-		init();
 		this.app = null;
 		this.workbenchRunner = workbenchRunner;
 		this.workbench = workbench;
 	}
 
 	public void run() {
+		final ITestTool testTool = new TestToolImpl();
 		new TestToolView(testTool);
-		runApplication();
-		runWorkbench();
-	}
-
-	public void runAsUnitTest(final String fileName) {
-		final List<TestDataObject> tests = testTool.load(fileName);
-		testTool.activateReplayMode();
-		testTool.replay(tests, 3000);
-		runApplication();
-		runWorkbench();
-	}
-
-	private void init() {
-		testTool = new TestToolImpl();
 		Toolkit.getWidgetFactory().addWidgetFactoryListener(new IWidgetFactoryListener() {
 
 			@Override
@@ -80,6 +66,24 @@ public class TestToolRunner {
 				testTool.register(widget);
 			}
 		});
+		runApplication();
+		runWorkbench();
+	}
+
+	public void runAsUnitTest(final String fileName) {
+		final ITestTool testTool = new TestToolImpl();
+		Toolkit.getWidgetFactory().addWidgetFactoryListener(new IWidgetFactoryListener() {
+
+			@Override
+			public void widgetCreated(final IWidgetCommon widget) {
+				testTool.register(widget);
+			}
+		});
+		final List<TestDataObject> tests = testTool.load(fileName);
+		testTool.activateReplayMode();
+		testTool.replay(tests, 200);
+		runApplication();
+		runWorkbench();
 	}
 
 	private void runApplication() {
