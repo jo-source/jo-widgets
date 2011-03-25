@@ -80,7 +80,7 @@ public class WorkbenchDemo2 {
 		model = builder.build();
 		model.setToolBar(createToolBar());
 		model.setMenuBar(createMenuBar());
-		model.addApplication(new Application1(model).getModel());
+		model.addApplication(new Application1().getModel());
 	}
 
 	public IWorkbenchModel getModel() {
