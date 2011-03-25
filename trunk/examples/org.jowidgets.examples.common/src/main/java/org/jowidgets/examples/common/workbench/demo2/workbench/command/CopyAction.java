@@ -35,8 +35,6 @@ import org.jowidgets.tools.command.CommandAction;
 
 public class CopyAction extends CommandAction {
 
-	public static final String ID = CopyAction.class.getName();
-
 	public CopyAction() {
 		super(new ActionBuilder() {
 			{

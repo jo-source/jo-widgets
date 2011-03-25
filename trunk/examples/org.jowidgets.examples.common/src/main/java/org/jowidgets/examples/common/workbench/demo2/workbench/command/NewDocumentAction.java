@@ -34,8 +34,6 @@ import org.jowidgets.tools.command.CommandAction;
 
 public class NewDocumentAction extends CommandAction {
 
-	public static final String ID = NewDocumentAction.class.getName();
-
 	public NewDocumentAction() {
 		super(new ActionBuilder() {
 			{

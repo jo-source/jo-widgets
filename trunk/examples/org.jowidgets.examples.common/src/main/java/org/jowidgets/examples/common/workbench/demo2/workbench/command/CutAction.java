@@ -35,8 +35,6 @@ import org.jowidgets.tools.command.CommandAction;
 
 public class CutAction extends CommandAction {
 
-	public static final String ID = CutAction.class.getName();
-
 	public CutAction() {
 		super(new ActionBuilder() {
 			{

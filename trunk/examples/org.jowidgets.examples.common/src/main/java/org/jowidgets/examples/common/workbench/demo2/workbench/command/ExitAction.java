@@ -33,8 +33,6 @@ import org.jowidgets.tools.command.CommandAction;
 
 public class ExitAction extends CommandAction {
 
-	public static final String ID = ExitAction.class.getName();
-
 	public ExitAction() {
 		super(new ActionBuilder() {
 			{
