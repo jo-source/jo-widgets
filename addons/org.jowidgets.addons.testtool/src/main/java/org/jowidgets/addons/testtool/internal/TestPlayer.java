@@ -32,6 +32,7 @@ import java.util.List;
 
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.widgets.IToolBarItem;
 import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.test.api.widgets.IButtonUi;
@@ -109,6 +110,16 @@ public class TestPlayer {
 					break;
 				default:
 					System.out.println("the given user action is not supported for this widget.");
+					break;
+			}
+		}
+		else if (widget instanceof IToolBarItem) {
+			switch (action) {
+				case CLICK:
+					System.out.println("ToolBarButton pushed.");
+					break;
+
+				default:
 					break;
 			}
 		}

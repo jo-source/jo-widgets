@@ -31,6 +31,7 @@ package org.jowidgets.addons.testtool.internal;
 import java.util.LinkedList;
 
 import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IToolBarItem;
 import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.util.Assert;
@@ -117,6 +118,9 @@ public final class TestToolUtilities {
 	private String getIdentifier(final IWidget widget) {
 		if (widget instanceof ITreeNode) {
 			return ((ITreeNode) widget).getText();
+		}
+		if (widget instanceof IToolBarItem) {
+			return ((IToolBarItem) widget).getToolTipText();
 		}
 		return DEFAULT_IDENTIFIER;
 	}

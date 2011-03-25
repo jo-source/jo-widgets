@@ -65,6 +65,7 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.command.EnabledChecker;
+import org.jowidgets.tools.controler.WindowAdapter;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.model.table.DefaultTableColumnBuilder;
@@ -97,6 +98,12 @@ public class TestToolView implements ITestToolView {
 		frame.pack();
 		frame.setSize(new Dimension(800, 400));
 		viewUtilities.setPositionRelativeToMainWindow(frame);
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed() {
+				testTool.deactivateReplayAndRecord();
+			}
+		});
 	}
 
 	private void createTable(final IFrame frame) {
