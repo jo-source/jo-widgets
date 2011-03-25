@@ -152,11 +152,11 @@ class WorkbenchApplicationModel extends ComponentNodeContainerModel implements I
 	public void setWorkbench(final IWorkbenchModel workbench) {
 		if (this.workbench != workbench) {
 			if (this.workbench != null) {
-				this.workbench.removeApplication(this);
+				this.workbench.removeApplication(getUnwrappedThis());
 			}
 			if (workbench != null) {
-				if (!workbench.getApplications().contains(this)) {
-					workbench.addApplication(this);
+				if (!workbench.getApplications().contains(getUnwrappedThis())) {
+					workbench.addApplication(getUnwrappedThis());
 				}
 			}
 			this.workbench = workbench;
@@ -171,6 +171,11 @@ class WorkbenchApplicationModel extends ComponentNodeContainerModel implements I
 	@Override
 	public void removeWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
 		workbenchPartModelObservable.removeWorkbenchPartModelListener(listener);
+	}
+
+	@Override
+	public IWorkbenchApplicationModel getUnwrappedThis() {
+		return this;
 	}
 
 	private void fireModelChanged() {

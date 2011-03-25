@@ -245,6 +245,11 @@ public class WorkbenchApplicationModel implements IWorkbenchApplicationModel {
 		model.removeWorkbenchPartModelListener(listener);
 	}
 
+	@Override
+	public IWorkbenchApplicationModel getUnwrappedThis() {
+		return model.getUnwrappedThis();
+	}
+
 	public static IWorkbenchApplicationModelBuilder builder() {
 		return WorkbenchToolkit.getWorkbenchPartBuilderFactory().application();
 	}

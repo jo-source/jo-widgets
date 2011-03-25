@@ -184,11 +184,11 @@ class ComponentNodeModel extends ComponentNodeContainerModel implements ICompone
 	public void setParentContainer(final IComponentNodeContainerModel parentContainer) {
 		if (this.parentContainer != parentContainer) {
 			if (this.parentContainer != null) {
-				this.parentContainer.remove(this);
+				this.parentContainer.remove(getUnwrappedThis());
 			}
 			if (parentContainer != null) {
-				if (!parentContainer.getChildren().contains(this)) {
-					parentContainer.addChild(this);
+				if (!parentContainer.getChildren().contains(getUnwrappedThis())) {
+					parentContainer.addChild(getUnwrappedThis());
 				}
 			}
 			this.parentContainer = parentContainer;
@@ -248,6 +248,11 @@ class ComponentNodeModel extends ComponentNodeContainerModel implements ICompone
 	@Override
 	public void removeTreeNodeListener(final ITreeNodeListener listener) {
 		treeNodeListeners.remove(listener);
+	}
+
+	@Override
+	public IComponentNodeModel getUnwrappedThis() {
+		return this;
 	}
 
 	private void fireSelectionChanged(final boolean selected) {

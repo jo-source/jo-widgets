@@ -29,6 +29,7 @@
 package org.jowidgets.workbench.toolkit.impl;
 
 import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.toolkit.api.IComponentFactory;
@@ -52,6 +53,7 @@ class ComponentNodeModelBuilder extends ComponentNodeContainerModelBuilder<IComp
 		super();
 		this.selected = false;
 		this.expanded = false;
+		this.popupMenu = Toolkit.getModelFactoryProvider().getItemModelFactory().menu();
 	}
 
 	@Override

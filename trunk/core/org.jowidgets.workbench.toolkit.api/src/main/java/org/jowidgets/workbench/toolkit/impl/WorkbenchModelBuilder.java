@@ -33,6 +33,7 @@ import java.util.List;
 
 import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.model.item.IToolBarModel;
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.content.IContentCreator;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
@@ -69,6 +70,8 @@ class WorkbenchModelBuilder extends WorkbenchPartBuilder<IWorkbenchModelBuilder>
 		this.initialSplitWeight = 0.25;
 		this.hasApplicationNavigator = true;
 		this.applicationsCloseable = false;
+		this.toolBar = Toolkit.getModelFactoryProvider().getItemModelFactory().toolBar();
+		this.menuBar = Toolkit.getModelFactoryProvider().getItemModelFactory().menuBar();
 	}
 
 	@Override
