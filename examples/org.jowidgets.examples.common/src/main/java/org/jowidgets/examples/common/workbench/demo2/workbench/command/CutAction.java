@@ -46,6 +46,8 @@ public class CutAction extends CommandAction {
 				setAccelerator('X', Modifier.CTRL);
 			}
 		});
+
+		setCommand(new DummyCommandExecuter());
 	}
 
 }

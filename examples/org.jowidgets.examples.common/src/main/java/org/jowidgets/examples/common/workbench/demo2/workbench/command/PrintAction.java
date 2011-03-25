@@ -44,6 +44,8 @@ public class PrintAction extends CommandAction {
 				setIcon(SilkIcons.PRINTER);
 			}
 		});
+
+		setCommand(new DummyCommandExecuter());
 	}
 
 }

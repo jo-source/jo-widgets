@@ -28,9 +28,11 @@
 
 package org.jowidgets.examples.common.workbench.demo2.component;
 
+import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.command.ICommand;
 import org.jowidgets.api.command.ICommandExecutor;
 import org.jowidgets.api.command.IExecutionContext;
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.examples.common.workbench.base.AbstractComponent;
 import org.jowidgets.examples.common.workbench.demo2.view.BigTableView;
@@ -159,11 +161,12 @@ public class ComponentDemo2 extends AbstractComponent implements IComponent {
 		return new ICommandExecutor() {
 			@Override
 			public void execute(final IExecutionContext executionContext) throws Exception {
-				//CHECKSTYLE:OFF
-				System.out.println("Saved data of component: " + nodeModel.getLabel());
-				//CHECKSTYLE:ON
+				final IAction action = executionContext.getAction();
+				Toolkit.getMessagePane().showInfo(
+						action.getText(),
+						action.getIcon(),
+						"Saved data of component: " + nodeModel.getLabel());
 			}
 		};
 	}
-
 }

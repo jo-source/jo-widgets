@@ -46,6 +46,8 @@ public class PasteAction extends CommandAction {
 				setAccelerator('V', Modifier.CTRL);
 			}
 		});
+
+		setCommand(new DummyCommandExecuter());
 	}
 
 }
