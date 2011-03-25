@@ -240,6 +240,11 @@ public class TreeImpl extends ControlSpiWrapper implements ITree {
 		return treeContainerDelegate.getChildren();
 	}
 
+	@Override
+	public void setAllChildrenExpanded(final boolean expanded) {
+		treeContainerDelegate.setAllChildrenExpanded(expanded);
+	}
+
 	public void registerNode(final TreeNodeImpl node) {
 		nodes.put(node.getWidget(), node);
 	}

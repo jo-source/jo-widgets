@@ -44,13 +44,12 @@ public class Application1 {
 
 	public Application1() {
 		final IWorkbenchApplicationModelBuilder builder = new WorkbenchApplicationModelBuilder();
-
 		builder.setId(Application1.class.getName());
 		builder.setLabel("App 1");
 		builder.setTooltip("Application 1");
 		builder.setIcon(SilkIcons.USER_GREEN);
-
 		this.model = builder.build();
+
 		createComponentTree(model);
 	}
 

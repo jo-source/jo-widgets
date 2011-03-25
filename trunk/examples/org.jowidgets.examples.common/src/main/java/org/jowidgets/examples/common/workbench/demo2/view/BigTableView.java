@@ -29,19 +29,30 @@
 package org.jowidgets.examples.common.workbench.demo2.view;
 
 import org.jowidgets.api.color.Colors;
+import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.command.IActionBuilder;
+import org.jowidgets.api.command.ICommandExecutor;
+import org.jowidgets.api.command.IExecutionContext;
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.table.IDefaultTableColumnBuilder;
 import org.jowidgets.api.model.table.IDefaultTableColumnModel;
 import org.jowidgets.api.model.table.ITableCellBuilder;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IPopupMenu;
+import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.model.ITableCell;
 import org.jowidgets.common.model.ITableColumnModel;
 import org.jowidgets.common.model.ITableDataModel;
+import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionListener;
+import org.jowidgets.common.widgets.controler.ITableCellPopupEvent;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractView;
+import org.jowidgets.tools.command.ActionBuilder;
 import org.jowidgets.tools.layout.MigLayoutFactory;
+import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.model.table.AbstractTableDataModel;
 import org.jowidgets.tools.model.table.DefaultTableColumnBuilder;
 import org.jowidgets.tools.model.table.DefaultTableColumnModel;
@@ -59,18 +70,28 @@ public class BigTableView extends AbstractView implements IView {
 	private static final int ROW_COUNT = 2000000;
 	private static final int COLUMN_COUNT = 50;
 
+	private final ITable table;
+	private final IAction fitColumnsAction;
+	private final IAction resetPermutationAction;
+
 	public BigTableView(final IViewContext context) {
 		super(ID);
 
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+		this.fitColumnsAction = createFitColumnsAction();
+		this.resetPermutationAction = createResetPermutationAction();
 
+		context.getToolBar().addAction(resetPermutationAction);
+		context.getToolBar().addAction(fitColumnsAction);
+
+		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 		final IContainer container = context.getContainer();
 		container.setLayout(MigLayoutFactory.growingInnerCellLayout());
 
 		final ITableColumnModel columnModel = createColumnModel();
 		final ITableDataModel dataModel = createDataModel();
 
-		container.add(bpf.table(columnModel, dataModel), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+		this.table = container.add(bpf.table(columnModel, dataModel), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+		addPopupMenu(table);
 	}
 
 	private ITableColumnModel createColumnModel() {
@@ -105,4 +126,49 @@ public class BigTableView extends AbstractView implements IView {
 		};
 	}
 
+	private void addPopupMenu(final ITable table) {
+		final IMenuModel menuModel = new MenuModel();
+		menuModel.addAction(fitColumnsAction);
+		menuModel.addAction(resetPermutationAction);
+
+		final IPopupMenu popupMenu = table.createPopupMenu();
+		popupMenu.setModel(menuModel);
+
+		table.addTableCellPopupDetectionListener(new ITableCellPopupDetectionListener() {
+			@Override
+			public void popupDetected(final ITableCellPopupEvent event) {
+				popupMenu.show(event.getPosition());
+			}
+		});
+	}
+
+	private IAction createFitColumnsAction() {
+		final IActionBuilder builder = new ActionBuilder();
+		builder.setText("Fit columns");
+		builder.setToolTipText("Fits all columns of the table");
+		builder.setIcon(SilkIcons.ARROW_INOUT);
+
+		builder.setCommand(new ICommandExecutor() {
+			@Override
+			public void execute(final IExecutionContext executionContext) throws Exception {
+				table.pack();
+			}
+		});
+		return builder.build();
+	}
+
+	private IAction createResetPermutationAction() {
+		final IActionBuilder builder = new ActionBuilder();
+		builder.setText("Reset column order");
+		builder.setToolTipText("Sets all columns to its origin position");
+		builder.setIcon(SilkIcons.ARROW_UNDO);
+
+		builder.setCommand(new ICommandExecutor() {
+			@Override
+			public void execute(final IExecutionContext executionContext) throws Exception {
+				table.resetColumnPermutation();
+			}
+		});
+		return builder.build();
+	}
 }

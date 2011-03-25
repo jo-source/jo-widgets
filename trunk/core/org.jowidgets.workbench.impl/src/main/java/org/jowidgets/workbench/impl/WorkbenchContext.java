@@ -67,6 +67,7 @@ public class WorkbenchContext implements IWorkbenchContext {
 
 	private final IFrame rootFrame;
 	private final IContainer statusBar;
+	private final IContainer toolBarContainer;
 	private final IMenuBarModel menuBarModel;
 	private final IToolBarModel toolBarModel;
 	private final ITabFolder applicationTabFolder;
@@ -111,7 +112,11 @@ public class WorkbenchContext implements IWorkbenchContext {
 
 		rootFrame.setMenuBar(menuBarModel);
 		rootFrame.setLayout(new MigLayoutDescriptor("3[grow]3", "3[]3[grow][]"));
-		final IToolBar toolBar = rootFrame.add(bpf.toolBar(), "grow, wrap");
+
+		toolBarContainer = rootFrame.add(bpf.composite(), "grow ,wrap");
+		toolBarContainer.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow]0"));
+
+		final IToolBar toolBar = toolBarContainer.add(bpf.toolBar(), "grow");
 		toolBar.setModel(toolBarModel);
 
 		final IComposite rootComposite = rootFrame.add(bpf.composite(), "growx, growy, w 0::, h 0::, wrap");
@@ -189,6 +194,14 @@ public class WorkbenchContext implements IWorkbenchContext {
 	@Override
 	public IMenuBarModel getMenuBar() {
 		return menuBarModel;
+	}
+
+	protected IFrame getRootFrame() {
+		return rootFrame;
+	}
+
+	protected IContainer getToolBarContainer() {
+		return toolBarContainer;
 	}
 
 	@Override

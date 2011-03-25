@@ -28,18 +28,22 @@
 
 package org.jowidgets.examples.common.workbench.demo2.component;
 
+import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.command.IActionBuilder;
 import org.jowidgets.api.command.ICommand;
 import org.jowidgets.api.command.ICommandExecutor;
 import org.jowidgets.api.command.IExecutionContext;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractComponent;
 import org.jowidgets.examples.common.workbench.demo2.view.BigTableView;
 import org.jowidgets.examples.common.workbench.demo2.view.EmptyView;
 import org.jowidgets.examples.common.workbench.demo2.view.MediaView;
-import org.jowidgets.examples.common.workbench.demo2.view.UserTableView;
 import org.jowidgets.examples.common.workbench.demo2.view.ReportsView;
+import org.jowidgets.examples.common.workbench.demo2.view.UserTableView;
 import org.jowidgets.examples.common.workbench.demo2.workbench.command.WorkbenchActions;
+import org.jowidgets.tools.command.ActionBuilder;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IView;
@@ -48,18 +52,16 @@ import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
 
 public class ComponentDemo2 extends AbstractComponent implements IComponent {
 
-	public static final String DEFAULT_LAYOUT_ID = "DEFAULT_LAYOUT_ID";
-	public static final String MASTER_FOLDER_ID = "MASTER_FOLDER_ID";
-	public static final String MEDIA_FOLDER_ID = "MEDIA_FOLDER_ID";
-	public static final String DETAIL_FOLDER_ID = "DETAIL_FOLDER_ID";
-	public static final String REPORTS_FOLDER_ID = "REPORTS_FOLDER_ID";
+	private final IComponentNodeModel componentNodeModel;
 
 	private final ICommandExecutor saveCommand;
+	private final IAction addUserAction;
 
-	public ComponentDemo2(final IComponentNodeModel nodeModel, final IComponentContext componentContext) {
+	public ComponentDemo2(final IComponentNodeModel componentNodeModel, final IComponentContext componentContext) {
+		this.componentNodeModel = componentNodeModel;
 
-		this.saveCommand = createSaveCommand(nodeModel);
-
+		this.addUserAction = createAddUserAction(componentNodeModel);
+		this.saveCommand = createSaveCommand(componentNodeModel);
 		componentContext.setLayout(new ComponentDemo2Layout().getLayout());
 	}
 
@@ -89,11 +91,13 @@ public class ComponentDemo2 extends AbstractComponent implements IComponent {
 	public void onActivation() {
 		super.onActivation();
 		WorkbenchActions.SAVE_ACTION.setCommand(saveCommand);
+		componentNodeModel.getWorkbench().getToolBar().addAction(addUserAction);
 	}
 
 	@Override
 	public void onDeactivation(final IVetoable vetoable) {
 		WorkbenchActions.SAVE_ACTION.setCommand((ICommand) null);
+		componentNodeModel.getWorkbench().getToolBar().removeAction(addUserAction);
 	}
 
 	private ICommandExecutor createSaveCommand(final IComponentNodeModel nodeModel) {
@@ -103,5 +107,19 @@ public class ComponentDemo2 extends AbstractComponent implements IComponent {
 				Toolkit.getMessagePane().showInfo(executionContext, "Saved data of component: " + nodeModel.getLabel());
 			}
 		};
+	}
+
+	private IAction createAddUserAction(final IComponentNodeModel nodeModel) {
+		final IActionBuilder builder = new ActionBuilder();
+		builder.setText("Add user");
+		builder.setIcon(SilkIcons.USER_ADD);
+
+		builder.setCommand(new ICommandExecutor() {
+			@Override
+			public void execute(final IExecutionContext executionContext) throws Exception {
+				Toolkit.getMessagePane().showInfo(executionContext, "Add user action of component: " + nodeModel.getLabel());
+			}
+		});
+		return builder.build();
 	}
 }

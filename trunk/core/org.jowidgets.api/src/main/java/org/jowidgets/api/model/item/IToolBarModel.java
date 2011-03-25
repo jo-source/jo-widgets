@@ -132,6 +132,8 @@ public interface IToolBarModel extends IListModelObservable {
 
 	void removeItem(final IToolBarItemModel item);
 
+	void removeAction(final IAction action);
+
 	void removeItem(int index);
 
 	void removeAllItems();

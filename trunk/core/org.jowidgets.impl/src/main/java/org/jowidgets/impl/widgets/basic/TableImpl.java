@@ -145,6 +145,15 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 	}
 
 	@Override
+	public void resetColumnPermutation() {
+		final List<Integer> permutation = new ArrayList<Integer>(getColumnCount());
+		for (int i = 0; i < getColumnCount(); i++) {
+			permutation.add(Integer.valueOf(i));
+		}
+		setColumnPermutation(permutation);
+	}
+
+	@Override
 	public void pack(final TablePackPolicy policy) {
 		getWidget().pack(policy);
 	}
