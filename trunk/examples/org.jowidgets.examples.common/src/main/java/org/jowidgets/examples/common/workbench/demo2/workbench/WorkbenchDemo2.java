@@ -66,14 +66,7 @@ public class WorkbenchDemo2 {
 		builder.setIcon(SilkIcons.EMOTICON_SMILE);
 		builder.setInitialDimension(new Dimension(1280, 900));
 		builder.setInitialSplitWeight(0.18);
-		builder.setCloseCallback(new ICloseCallback() {
-			@Override
-			public void onClose(final IVetoable vetoable) {
-				if (!shouldWorkbenchFinished()) {
-					vetoable.veto();
-				}
-			}
-		});
+		builder.setCloseCallback(createCloseCallback());
 
 		exitAction = createExitAction();
 
@@ -122,6 +115,17 @@ public class WorkbenchDemo2 {
 		menuBarModel.addMenu(editMenu);
 
 		return menuBarModel;
+	}
+
+	private ICloseCallback createCloseCallback() {
+		return new ICloseCallback() {
+			@Override
+			public void onClose(final IVetoable vetoable) {
+				if (!shouldWorkbenchFinished()) {
+					vetoable.veto();
+				}
+			}
+		};
 	}
 
 	private IAction createExitAction() {
