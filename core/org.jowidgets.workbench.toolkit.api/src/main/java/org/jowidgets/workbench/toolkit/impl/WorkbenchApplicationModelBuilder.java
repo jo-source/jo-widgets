@@ -30,6 +30,7 @@ package org.jowidgets.workbench.toolkit.impl;
 
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IToolBarModel;
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.ILifecycleCallback;
@@ -52,6 +53,9 @@ class WorkbenchApplicationModelBuilder extends ComponentNodeContainerModelBuilde
 
 	WorkbenchApplicationModelBuilder() {
 		super();
+		this.popupMenu = Toolkit.getModelFactoryProvider().getItemModelFactory().menu();
+		this.toolBarMenu = Toolkit.getModelFactoryProvider().getItemModelFactory().menu();
+		this.toolBarModel = Toolkit.getModelFactoryProvider().getItemModelFactory().toolBar();
 	}
 
 	@Override

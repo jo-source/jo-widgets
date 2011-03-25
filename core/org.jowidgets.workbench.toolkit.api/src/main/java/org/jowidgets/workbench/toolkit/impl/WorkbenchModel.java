@@ -224,7 +224,7 @@ class WorkbenchModel extends WorkbenchPartModel implements IWorkbenchModel {
 			throw new IllegalArgumentException("The given model was alreay added to another workbench. "
 				+ "To add the model to this workbench, it must be removed from its current workbench first.");
 		}
-		applications.add(index, applicationModel);
+		applications.add(index, applicationModel.getUnwrappedThis());
 		applicationModel.setWorkbench(this);
 		listModelObservable.fireChildAdded(index);
 		return applicationModel;
@@ -298,7 +298,7 @@ class WorkbenchModel extends WorkbenchPartModel implements IWorkbenchModel {
 
 	@Override
 	public void removeApplication(final IWorkbenchApplicationModel childModel) {
-		final int index = applications.indexOf(childModel);
+		final int index = applications.indexOf(childModel.getUnwrappedThis());
 		if (index != -1) {
 			removeApplication(index);
 		}

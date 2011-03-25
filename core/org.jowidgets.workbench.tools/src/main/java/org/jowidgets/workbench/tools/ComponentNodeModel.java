@@ -332,6 +332,11 @@ public class ComponentNodeModel implements IComponentNodeModel {
 		return model.getWorkbench();
 	}
 
+	@Override
+	public IComponentNodeModel getUnwrappedThis() {
+		return model.getUnwrappedThis();
+	}
+
 	public static IComponentNodeModelBuilder builder() {
 		return WorkbenchToolkit.getWorkbenchPartBuilderFactory().componentNode();
 	}

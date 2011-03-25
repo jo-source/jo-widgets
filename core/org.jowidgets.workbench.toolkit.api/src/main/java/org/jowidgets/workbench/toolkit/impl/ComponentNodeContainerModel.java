@@ -95,7 +95,7 @@ class ComponentNodeContainerModel implements IComponentNodeContainerModel {
 			throw new IllegalArgumentException("The given model was alreay added to another container. "
 				+ "To add this model to this container, it must be removed from its current container first.");
 		}
-		children.add(index, childModel);
+		children.add(index, childModel.getUnwrappedThis());
 		childModel.setParentContainer(this);
 
 		listModelObservable.fireChildAdded(index);
@@ -154,7 +154,7 @@ class ComponentNodeContainerModel implements IComponentNodeContainerModel {
 
 	@Override
 	public void remove(final IComponentNodeModel childModel) {
-		final int index = children.indexOf(childModel);
+		final int index = children.indexOf(childModel.getUnwrappedThis());
 		if (index != -1) {
 			remove(index);
 		}
