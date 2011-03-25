@@ -42,14 +42,14 @@ import org.jowidgets.tools.model.table.SimpleTableModelBuilder;
 import org.jowidgets.workbench.api.IViewContext;
 import org.jowidgets.workbench.tools.AbstractView;
 
-public class PersonTableView extends AbstractView {
+public class UserTableView extends AbstractView {
 
-	public static final String ID = PersonTableView.class.getName();
+	public static final String ID = UserTableView.class.getName();
 	public static final String DEFAULT_LABEL = "Persons";
 	public static final String DEFAULT_TOOLTIP = "Shows all person";
 	public static final IImageConstant DEFAULT_ICON = SilkIcons.USER;
 
-	public PersonTableView(final IViewContext context) {
+	public UserTableView(final IViewContext context) {
 		final IContainer container = context.getContainer();
 
 		container.setLayout(MigLayoutFactory.growingInnerCellLayout());

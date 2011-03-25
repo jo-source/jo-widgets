@@ -28,7 +28,6 @@
 
 package org.jowidgets.examples.common.workbench.demo2.component;
 
-import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.command.ICommand;
 import org.jowidgets.api.command.ICommandExecutor;
 import org.jowidgets.api.command.IExecutionContext;
@@ -38,20 +37,14 @@ import org.jowidgets.examples.common.workbench.base.AbstractComponent;
 import org.jowidgets.examples.common.workbench.demo2.view.BigTableView;
 import org.jowidgets.examples.common.workbench.demo2.view.EmptyView;
 import org.jowidgets.examples.common.workbench.demo2.view.MediaView;
-import org.jowidgets.examples.common.workbench.demo2.view.PersonTableView;
+import org.jowidgets.examples.common.workbench.demo2.view.UserTableView;
 import org.jowidgets.examples.common.workbench.demo2.view.ReportsView;
 import org.jowidgets.examples.common.workbench.demo2.workbench.command.WorkbenchActions;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
-import org.jowidgets.workbench.api.ILayout;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
-import org.jowidgets.workbench.toolkit.api.IFolderLayoutBuilder;
-import org.jowidgets.workbench.toolkit.api.ISplitLayoutBuilder;
-import org.jowidgets.workbench.tools.FolderLayoutBuilder;
-import org.jowidgets.workbench.tools.Layout;
-import org.jowidgets.workbench.tools.SplitLayoutBuilder;
 
 public class ComponentDemo2 extends AbstractComponent implements IComponent {
 
@@ -67,8 +60,7 @@ public class ComponentDemo2 extends AbstractComponent implements IComponent {
 
 		this.saveCommand = createSaveCommand(nodeModel);
 
-		final ILayout defaultLayout = new Layout(DEFAULT_LAYOUT_ID, createMainSplit());
-		componentContext.setLayout(defaultLayout);
+		componentContext.setLayout(new ComponentDemo2Layout().getLayout());
 	}
 
 	@Override
@@ -79,8 +71,8 @@ public class ComponentDemo2 extends AbstractComponent implements IComponent {
 		else if (MediaView.ID.equals(viewId)) {
 			return new MediaView(context);
 		}
-		else if (PersonTableView.ID.equals(viewId)) {
-			return new PersonTableView(context);
+		else if (UserTableView.ID.equals(viewId)) {
+			return new UserTableView(context);
 		}
 		else if (EmptyView.ID.equals(viewId)) {
 			return new EmptyView(context);
@@ -104,68 +96,11 @@ public class ComponentDemo2 extends AbstractComponent implements IComponent {
 		WorkbenchActions.SAVE_ACTION.setCommand((ICommand) null);
 	}
 
-	private ISplitLayoutBuilder createMainSplit() {
-		final ISplitLayoutBuilder result = new SplitLayoutBuilder();
-		result.setHorizontal().setWeight(0.78).setResizeFirst();
-		result.setFirstContainer(createMasterDetailSplit());
-		result.setSecondContainer(createReportsFolder());
-		return result;
-	}
-
-	private ISplitLayoutBuilder createMasterDetailSplit() {
-		final ISplitLayoutBuilder result = new SplitLayoutBuilder();
-		result.setVertical().setWeight(0.55).setResizeFirst();
-		result.setFirstContainer(createMasterFolder());
-		result.setSecondContainer(createDetailSplit());
-		return result;
-	}
-
-	private IFolderLayoutBuilder createMasterFolder() {
-		final IFolderLayoutBuilder result = new FolderLayoutBuilder(MASTER_FOLDER_ID);
-		result.addView(BigTableView.ID, BigTableView.DEFAULT_LABEL, BigTableView.DEFAULT_TOOLTIP, BigTableView.DEFAULT_ICON);
-		return result;
-	}
-
-	private ISplitLayoutBuilder createDetailSplit() {
-		final ISplitLayoutBuilder result = new SplitLayoutBuilder();
-		result.setHorizontal().setWeight(0.28).setResizeSecond();
-		result.setFirstContainer(createMediaFolder());
-		result.setSecondContainer(createDetailFolder());
-		return result;
-	}
-
-	private IFolderLayoutBuilder createMediaFolder() {
-		final IFolderLayoutBuilder result = new FolderLayoutBuilder(MEDIA_FOLDER_ID);
-		result.addView(MediaView.ID, MediaView.DEFAULT_LABEL, MediaView.DEFAULT_TOOLTIP, MediaView.DEFAULT_ICON);
-		return result;
-	}
-
-	private IFolderLayoutBuilder createDetailFolder() {
-		final IFolderLayoutBuilder result = new FolderLayoutBuilder(DETAIL_FOLDER_ID);
-		result.addView(
-				PersonTableView.ID,
-				PersonTableView.DEFAULT_LABEL,
-				PersonTableView.DEFAULT_TOOLTIP,
-				PersonTableView.DEFAULT_ICON);
-		result.addView(EmptyView.ID, EmptyView.DEFAULT_LABEL, EmptyView.DEFAULT_TOOLTIP, EmptyView.DEFAULT_ICON);
-		return result;
-	}
-
-	private IFolderLayoutBuilder createReportsFolder() {
-		final IFolderLayoutBuilder result = new FolderLayoutBuilder(REPORTS_FOLDER_ID);
-		result.addView(ReportsView.ID, ReportsView.DEFAULT_LABEL, ReportsView.DEFAULT_TOOLTIP, ReportsView.DEFAULT_ICON);
-		return result;
-	}
-
 	private ICommandExecutor createSaveCommand(final IComponentNodeModel nodeModel) {
 		return new ICommandExecutor() {
 			@Override
 			public void execute(final IExecutionContext executionContext) throws Exception {
-				final IAction action = executionContext.getAction();
-				Toolkit.getMessagePane().showInfo(
-						action.getText(),
-						action.getIcon(),
-						"Saved data of component: " + nodeModel.getLabel());
+				Toolkit.getMessagePane().showInfo(executionContext, "Saved data of component: " + nodeModel.getLabel());
 			}
 		};
 	}
