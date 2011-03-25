@@ -28,12 +28,14 @@
 
 package org.jowidgets.impl.toolkit;
 
+import org.jowidgets.api.command.IExecutionContext;
 import org.jowidgets.api.toolkit.IMessagePane;
 import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.util.Assert;
 
 public class DefaultMessagePane implements IMessagePane {
 
@@ -112,6 +114,30 @@ public class DefaultMessagePane implements IMessagePane {
 	public void showMessage(final String title, final String message, final IImageConstant icon) {
 		final IMessageDialogBluePrint bp = bluePrintFactory.messageDialog().setTitle(title).setText(message).setIcon(icon);
 		showMessage(bp);
+	}
+
+	@Override
+	public void showInfo(final IExecutionContext executionContext, final String message) {
+		Assert.paramNotNull(executionContext, "executionContext");
+		showInfo(executionContext.getAction().getText(), executionContext.getAction().getIcon(), message);
+	}
+
+	@Override
+	public void showWarning(final IExecutionContext executionContext, final String message) {
+		Assert.paramNotNull(executionContext, "executionContext");
+		showWarning(executionContext.getAction().getText(), executionContext.getAction().getIcon(), message);
+	}
+
+	@Override
+	public void showError(final IExecutionContext executionContext, final String message) {
+		Assert.paramNotNull(executionContext, "executionContext");
+		showError(executionContext.getAction().getText(), executionContext.getAction().getIcon(), message);
+	}
+
+	@Override
+	public void showMessage(final IExecutionContext executionContext, final String message, final IImageConstant messageIcon) {
+		Assert.paramNotNull(executionContext, "executionContext");
+		showMessage(executionContext.getAction().getText(), executionContext.getAction().getIcon(), message, messageIcon);
 	}
 
 	@Override
