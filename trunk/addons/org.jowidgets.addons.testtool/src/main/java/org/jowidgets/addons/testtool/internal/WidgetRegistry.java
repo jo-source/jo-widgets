@@ -52,4 +52,8 @@ public final class WidgetRegistry {
 	public synchronized void addWidget(final IWidgetCommon widget) {
 		widgetRegistry.add(widget);
 	}
+
+	public synchronized void removeWidget(final IWidgetCommon widget) {
+		widgetRegistry.remove(widget);
+	}
 }

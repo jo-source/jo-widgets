@@ -57,7 +57,6 @@ public class TestPlayer {
 						Thread.sleep(delay);
 					}
 					catch (final InterruptedException e) {
-						// do nothing when Thread.sleep fails 
 					}
 					super.run();
 				}
@@ -102,7 +101,7 @@ public class TestPlayer {
 			final IFrame frame = (IFrame) widget;
 			switch (action) {
 				case CLOSE:
-					WidgetRegistry.getInstance().getWidgets().remove(frame);
+					WidgetRegistry.getInstance().removeWidget(frame);
 					System.out.println("closing frame");
 					System.out.println(frame);
 					frame.setVisible(false);
