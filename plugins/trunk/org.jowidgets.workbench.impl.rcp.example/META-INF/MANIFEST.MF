@@ -14,7 +14,8 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.6.0",
  org.jowidgets.spi,
  org.jowidgets.spi.impl.swt,
  org.jowidgets.workbench.toolkit.api,
- org.jowidgets.workbench.impl.rcp
+ org.jowidgets.workbench.impl.rcp,
+ org.jowidgets.workbench.tools;bundle-version="0.0.18"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: miglayout-3.7.3.1-swt.jar,
  easymock-3.0.jar,
