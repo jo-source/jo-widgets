@@ -35,7 +35,7 @@ import org.jowidgets.api.validation.ValidationMessage;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.util.Assert;
 
-public class Converter<TYPE> implements IConverter<TYPE> {
+public final class Converter<TYPE> implements IConverter<TYPE> {
 
 	private final IObjectStringConverter<TYPE> objectStringConverter;
 	private final IStringObjectConverter<TYPE> stringObjectConverter;

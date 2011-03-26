@@ -43,22 +43,22 @@ abstract class AbstractSelectableItemModelWrapper extends AbstractItemModelWrapp
 	}
 
 	@Override
-	public void addItemListener(final IItemStateListener listener) {
+	public final void addItemListener(final IItemStateListener listener) {
 		getItemModel().addItemListener(listener);
 	}
 
 	@Override
-	public void removeItemListener(final IItemStateListener listener) {
+	public final void removeItemListener(final IItemStateListener listener) {
 		getItemModel().removeItemListener(listener);
 	}
 
 	@Override
-	public boolean isSelected() {
+	public final boolean isSelected() {
 		return getItemModel().isSelected();
 	}
 
 	@Override
-	public void setSelected(final boolean selected) {
+	public final void setSelected(final boolean selected) {
 		getItemModel().setSelected(selected);
 	}
 

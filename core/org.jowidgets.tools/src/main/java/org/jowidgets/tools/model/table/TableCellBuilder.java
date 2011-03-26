@@ -49,49 +49,49 @@ public class TableCellBuilder implements ITableCellBuilder {
 	}
 
 	@Override
-	public ITableCellBuilder setText(final String text) {
+	public final ITableCellBuilder setText(final String text) {
 		builder.setText(text);
 		return this;
 	}
 
 	@Override
-	public ITableCellBuilder setToolTipText(final String toolTipText) {
+	public final ITableCellBuilder setToolTipText(final String toolTipText) {
 		builder.setToolTipText(toolTipText);
 		return this;
 	}
 
 	@Override
-	public ITableCellBuilder setIcon(final IImageConstant icon) {
+	public final ITableCellBuilder setIcon(final IImageConstant icon) {
 		builder.setIcon(icon);
 		return this;
 	}
 
 	@Override
-	public ITableCellBuilder setForegroundColor(final IColorConstant foregroundColor) {
+	public final ITableCellBuilder setForegroundColor(final IColorConstant foregroundColor) {
 		builder.setForegroundColor(foregroundColor);
 		return this;
 	}
 
 	@Override
-	public ITableCellBuilder setBackgroundColor(final IColorConstant backgroundColor) {
+	public final ITableCellBuilder setBackgroundColor(final IColorConstant backgroundColor) {
 		builder.setBackgroundColor(backgroundColor);
 		return this;
 	}
 
 	@Override
-	public ITableCellBuilder setMarkup(final Markup markup) {
+	public final ITableCellBuilder setMarkup(final Markup markup) {
 		builder.setMarkup(markup);
 		return this;
 	}
 
 	@Override
-	public ITableCellBuilder setEditable(final boolean editable) {
+	public final ITableCellBuilder setEditable(final boolean editable) {
 		builder.setEditable(editable);
 		return this;
 	}
 
 	@Override
-	public ITableCell build() {
+	public final ITableCell build() {
 		return builder.build();
 	}
 

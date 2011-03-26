@@ -57,37 +57,37 @@ public class TableCell implements ITableCell {
 	}
 
 	@Override
-	public String getText() {
+	public final String getText() {
 		return cell.getText();
 	}
 
 	@Override
-	public String getToolTipText() {
+	public final String getToolTipText() {
 		return cell.getToolTipText();
 	}
 
 	@Override
-	public IImageConstant getIcon() {
+	public final IImageConstant getIcon() {
 		return cell.getIcon();
 	}
 
 	@Override
-	public IColorConstant getForegroundColor() {
+	public final IColorConstant getForegroundColor() {
 		return cell.getForegroundColor();
 	}
 
 	@Override
-	public IColorConstant getBackgroundColor() {
+	public final IColorConstant getBackgroundColor() {
 		return cell.getBackgroundColor();
 	}
 
 	@Override
-	public Markup getMarkup() {
+	public final Markup getMarkup() {
 		return cell.getMarkup();
 	}
 
 	@Override
-	public boolean isEditable() {
+	public final boolean isEditable() {
 		return cell.isEditable();
 	}
 

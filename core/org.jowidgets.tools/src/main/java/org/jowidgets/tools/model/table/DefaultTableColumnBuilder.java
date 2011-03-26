@@ -48,37 +48,37 @@ public class DefaultTableColumnBuilder implements IDefaultTableColumnBuilder {
 	}
 
 	@Override
-	public IDefaultTableColumnBuilder setText(final String text) {
+	public final IDefaultTableColumnBuilder setText(final String text) {
 		builder.setText(text);
 		return this;
 	}
 
 	@Override
-	public IDefaultTableColumnBuilder setToolTipText(final String tooltipText) {
+	public final IDefaultTableColumnBuilder setToolTipText(final String tooltipText) {
 		builder.setToolTipText(tooltipText);
 		return this;
 	}
 
 	@Override
-	public IDefaultTableColumnBuilder setIcon(final IImageConstant icon) {
+	public final IDefaultTableColumnBuilder setIcon(final IImageConstant icon) {
 		builder.setIcon(icon);
 		return this;
 	}
 
 	@Override
-	public IDefaultTableColumnBuilder setWidth(final int width) {
+	public final IDefaultTableColumnBuilder setWidth(final int width) {
 		builder.setWidth(width);
 		return this;
 	}
 
 	@Override
-	public IDefaultTableColumnBuilder setAlignment(final AlignmentHorizontal alignment) {
+	public final IDefaultTableColumnBuilder setAlignment(final AlignmentHorizontal alignment) {
 		builder.setAlignment(alignment);
 		return this;
 	}
 
 	@Override
-	public IDefaultTableColumn build() {
+	public final IDefaultTableColumn build() {
 		return builder.build();
 	}
 

@@ -52,132 +52,132 @@ public class DefaultTableColumnModel implements IDefaultTableColumnModel {
 	}
 
 	@Override
-	public int getColumnCount() {
+	public final int getColumnCount() {
 		return model.getColumnCount();
 	}
 
 	@Override
-	public ITableColumnModelObservable getTableColumnModelObservable() {
+	public final ITableColumnModelObservable getTableColumnModelObservable() {
 		return model.getTableColumnModelObservable();
 	}
 
 	@Override
-	public void addColumnModelListener(final ITableColumnModelListener listener) {
+	public final void addColumnModelListener(final ITableColumnModelListener listener) {
 		model.addColumnModelListener(listener);
 	}
 
 	@Override
-	public void removeColumnModelListener(final ITableColumnModelListener listener) {
+	public final void removeColumnModelListener(final ITableColumnModelListener listener) {
 		model.removeColumnModelListener(listener);
 	}
 
 	@Override
-	public IDefaultTableColumn getColumn(final int columnIndex) {
+	public final IDefaultTableColumn getColumn(final int columnIndex) {
 		return model.getColumn(columnIndex);
 	}
 
 	@Override
-	public ArrayList<IDefaultTableColumn> getColumns() {
+	public final ArrayList<IDefaultTableColumn> getColumns() {
 		return model.getColumns();
 	}
 
 	@Override
-	public IDefaultTableColumn addColumn() {
+	public final IDefaultTableColumn addColumn() {
 		return model.addColumn();
 	}
 
 	@Override
-	public IDefaultTableColumn addColumn(final int columnIndex) {
+	public final IDefaultTableColumn addColumn(final int columnIndex) {
 		return model.addColumn(columnIndex);
 	}
 
 	@Override
-	public void addColumn(final IDefaultTableColumn column) {
+	public final void addColumn(final IDefaultTableColumn column) {
 		model.addColumn(column);
 	}
 
 	@Override
-	public void addColumn(final int columnIndex, final IDefaultTableColumn column) {
+	public final void addColumn(final int columnIndex, final IDefaultTableColumn column) {
 		model.addColumn(columnIndex, column);
 	}
 
 	@Override
-	public IDefaultTableColumn addColumn(final IDefaultTableColumnBuilder columnBuilder) {
+	public final IDefaultTableColumn addColumn(final IDefaultTableColumnBuilder columnBuilder) {
 		return model.addColumn(columnBuilder);
 	}
 
 	@Override
-	public IDefaultTableColumn addColumn(final int columnIndex, final IDefaultTableColumnBuilder columnBuilder) {
+	public final IDefaultTableColumn addColumn(final int columnIndex, final IDefaultTableColumnBuilder columnBuilder) {
 		return model.addColumn(columnIndex, columnBuilder);
 	}
 
 	@Override
-	public IDefaultTableColumn addColumn(final String text) {
+	public final IDefaultTableColumn addColumn(final String text) {
 		return model.addColumn(text);
 	}
 
 	@Override
-	public IDefaultTableColumn addColumn(final String text, final String toolTipText) {
+	public final IDefaultTableColumn addColumn(final String text, final String toolTipText) {
 		return model.addColumn(text, toolTipText);
 	}
 
 	@Override
-	public void removeColumn(final int columnIndex) {
+	public final void removeColumn(final int columnIndex) {
 		model.removeColumn(columnIndex);
 	}
 
 	@Override
-	public void removeColumns(final int fromColumnIndex, final int toColumnIndex) {
+	public final void removeColumns(final int fromColumnIndex, final int toColumnIndex) {
 		model.removeColumns(fromColumnIndex, toColumnIndex);
 	}
 
 	@Override
-	public void removeColumns(final int... columns) {
+	public final void removeColumns(final int... columns) {
 		model.removeColumns(columns);
 	}
 
 	@Override
-	public void removeAllColumns() {
+	public final void removeAllColumns() {
 		model.removeAllColumns();
 	}
 
 	@Override
-	public void modifyModelStart() {
+	public final void modifyModelStart() {
 		model.modifyModelStart();
 	}
 
 	@Override
-	public void modifyModelEnd() {
+	public final void modifyModelEnd() {
 		model.modifyModelEnd();
 	}
 
 	@Override
-	public void setColumn(final int columnIndex, final IDefaultTableColumn column) {
+	public final void setColumn(final int columnIndex, final IDefaultTableColumn column) {
 		model.setColumn(columnIndex, column);
 	}
 
 	@Override
-	public IDefaultTableColumn setColumn(final int columnIndex, final IDefaultTableColumnBuilder columnBuilder) {
+	public final IDefaultTableColumn setColumn(final int columnIndex, final IDefaultTableColumnBuilder columnBuilder) {
 		return model.setColumn(columnIndex, columnBuilder);
 	}
 
 	@Override
-	public void setColumnText(final int columnIndex, final String text) {
+	public final void setColumnText(final int columnIndex, final String text) {
 		model.setColumnText(columnIndex, text);
 	}
 
 	@Override
-	public void setColumnToolTipText(final int columnIndex, final String tooltipText) {
+	public final void setColumnToolTipText(final int columnIndex, final String tooltipText) {
 		model.setColumnToolTipText(columnIndex, tooltipText);
 	}
 
 	@Override
-	public void setColumnIcon(final int columnIndex, final IImageConstant icon) {
+	public final void setColumnIcon(final int columnIndex, final IImageConstant icon) {
 		model.setColumnIcon(columnIndex, icon);
 	}
 
 	@Override
-	public void setColumnAlignment(final int columnIndex, final AlignmentHorizontal alignment) {
+	public final void setColumnAlignment(final int columnIndex, final AlignmentHorizontal alignment) {
 		model.setColumnAlignment(columnIndex, alignment);
 	}
 }

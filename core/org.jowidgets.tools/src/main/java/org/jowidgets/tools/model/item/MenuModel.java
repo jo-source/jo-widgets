@@ -79,210 +79,210 @@ public class MenuModel extends AbstractItemModelWrapper implements IMenuModel {
 	}
 
 	@Override
-	public List<IMenuItemModel> getChildren() {
+	public final List<IMenuItemModel> getChildren() {
 		return getItemModel().getChildren();
 	}
 
 	@Override
-	public IMenuItemModel findItemByPath(final String... idPath) {
+	public final IMenuItemModel findItemByPath(final String... idPath) {
 		return getItemModel().findItemByPath(idPath);
 	}
 
 	@Override
-	public IActionItemModel addAction(final IAction action) {
+	public final IActionItemModel addAction(final IAction action) {
 		return getItemModel().addAction(action);
 	}
 
 	@Override
-	public IActionItemModel addAction(final int index, final IAction action) {
+	public final IActionItemModel addAction(final int index, final IAction action) {
 		return getItemModel().addAction(index, action);
 	}
 
 	@Override
-	public IMenuModel addMenu() {
+	public final IMenuModel addMenu() {
 		return getItemModel().addMenu();
 	}
 
 	@Override
-	public ISeparatorItemModel addSeparator() {
+	public final ISeparatorItemModel addSeparator() {
 		return getItemModel().addSeparator();
 	}
 
 	@Override
-	public ISeparatorItemModel addSeparator(final int index) {
+	public final ISeparatorItemModel addSeparator(final int index) {
 		return getItemModel().addSeparator();
 	}
 
 	@Override
-	public void addBefore(final IMenuItemModel newItem, final String... idPath) {
+	public final void addBefore(final IMenuItemModel newItem, final String... idPath) {
 		getItemModel().addBefore(newItem, idPath);
 	}
 
 	@Override
-	public void addAfter(final IMenuItemModel newItem, final String... idPath) {
+	public final void addAfter(final IMenuItemModel newItem, final String... idPath) {
 		getItemModel().addAfter(newItem, idPath);
 	}
 
 	@Override
-	public <MODEL_TYPE extends IMenuItemModel> MODEL_TYPE addItem(final MODEL_TYPE item) {
+	public final <MODEL_TYPE extends IMenuItemModel> MODEL_TYPE addItem(final MODEL_TYPE item) {
 		return getItemModel().addItem(item);
 	}
 
 	@Override
-	public <MODEL_TYPE extends IMenuItemModel> MODEL_TYPE addItem(final int index, final MODEL_TYPE item) {
+	public final <MODEL_TYPE extends IMenuItemModel> MODEL_TYPE addItem(final int index, final MODEL_TYPE item) {
 		return getItemModel().addItem(index, item);
 	}
 
 	@Override
-	public <MODEL_TYPE extends IMenuItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
+	public final <MODEL_TYPE extends IMenuItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
 		final BUILDER_TYPE itemBuilder) {
 		return getItemModel().addItem(itemBuilder);
 	}
 
 	@Override
-	public <MODEL_TYPE extends IMenuItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
+	public final <MODEL_TYPE extends IMenuItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
 		final int index,
 		final BUILDER_TYPE itemBuilder) {
 		return getItemModel().addItem(index, itemBuilder);
 	}
 
 	@Override
-	public IActionItemModel addActionItem() {
+	public final IActionItemModel addActionItem() {
 		return getItemModel().addActionItem();
 	}
 
 	@Override
-	public IActionItemModel addActionItem(final String text) {
+	public final IActionItemModel addActionItem(final String text) {
 		return getItemModel().addActionItem(text);
 	}
 
 	@Override
-	public IActionItemModel addActionItem(final String text, final String toolTipText) {
+	public final IActionItemModel addActionItem(final String text, final String toolTipText) {
 		return getItemModel().addActionItem(text, toolTipText);
 	}
 
 	@Override
-	public IActionItemModel addActionItem(final String text, final IImageConstant icon) {
+	public final IActionItemModel addActionItem(final String text, final IImageConstant icon) {
 		return getItemModel().addActionItem(text, icon);
 	}
 
 	@Override
-	public IActionItemModel addActionItem(final String text, final String toolTipText, final IImageConstant icon) {
+	public final IActionItemModel addActionItem(final String text, final String toolTipText, final IImageConstant icon) {
 		return getItemModel().addActionItem(text, toolTipText, icon);
 	}
 
 	@Override
-	public ICheckedItemModel addCheckedItem() {
+	public final ICheckedItemModel addCheckedItem() {
 		return getItemModel().addCheckedItem();
 	}
 
 	@Override
-	public ICheckedItemModel addCheckedItem(final String text) {
+	public final ICheckedItemModel addCheckedItem(final String text) {
 		return getItemModel().addCheckedItem(text);
 	}
 
 	@Override
-	public ICheckedItemModel addCheckedItem(final String text, final String toolTipText) {
+	public final ICheckedItemModel addCheckedItem(final String text, final String toolTipText) {
 		return getItemModel().addCheckedItem(text, toolTipText);
 	}
 
 	@Override
-	public ICheckedItemModel addCheckedItem(final String text, final IImageConstant icon) {
+	public final ICheckedItemModel addCheckedItem(final String text, final IImageConstant icon) {
 		return getItemModel().addCheckedItem(text, icon);
 	}
 
 	@Override
-	public ICheckedItemModel addCheckedItem(final String text, final String toolTipText, final IImageConstant icon) {
+	public final ICheckedItemModel addCheckedItem(final String text, final String toolTipText, final IImageConstant icon) {
 		return getItemModel().addCheckedItem(text, toolTipText, icon);
 	}
 
 	@Override
-	public IRadioItemModel addRadioItem() {
+	public final IRadioItemModel addRadioItem() {
 		return getItemModel().addRadioItem();
 	}
 
 	@Override
-	public IRadioItemModel addRadioItem(final String text) {
+	public final IRadioItemModel addRadioItem(final String text) {
 		return getItemModel().addRadioItem(text);
 	}
 
 	@Override
-	public IRadioItemModel addRadioItem(final String text, final String toolTipText) {
+	public final IRadioItemModel addRadioItem(final String text, final String toolTipText) {
 		return getItemModel().addRadioItem(text, toolTipText);
 	}
 
 	@Override
-	public IRadioItemModel addRadioItem(final String text, final IImageConstant icon) {
+	public final IRadioItemModel addRadioItem(final String text, final IImageConstant icon) {
 		return getItemModel().addRadioItem(text, icon);
 	}
 
 	@Override
-	public IRadioItemModel addRadioItem(final String text, final String toolTipText, final IImageConstant icon) {
+	public final IRadioItemModel addRadioItem(final String text, final String toolTipText, final IImageConstant icon) {
 		return getItemModel().addRadioItem(text, toolTipText, icon);
 	}
 
 	@Override
-	public ISeparatorItemModel addSeparator(final String id) {
+	public final ISeparatorItemModel addSeparator(final String id) {
 		return getItemModel().addSeparator(id);
 	}
 
 	@Override
-	public IMenuModel addMenu(final String text) {
+	public final IMenuModel addMenu(final String text) {
 		return getItemModel().addMenu(text);
 	}
 
 	@Override
-	public IMenuModel addMenu(final String text, final String toolTipText) {
+	public final IMenuModel addMenu(final String text, final String toolTipText) {
 		return getItemModel().addMenu(text, toolTipText);
 	}
 
 	@Override
-	public IMenuModel addMenu(final String text, final IImageConstant icon) {
+	public final IMenuModel addMenu(final String text, final IImageConstant icon) {
 		return getItemModel().addMenu(text, icon);
 	}
 
 	@Override
-	public IMenuModel addMenu(final String text, final String toolTipText, final IImageConstant icon) {
+	public final IMenuModel addMenu(final String text, final String toolTipText, final IImageConstant icon) {
 		return getItemModel().addMenu(text, toolTipText, icon);
 	}
 
 	@Override
-	public void addItemsOfModel(final IMenuModel menuModel) {
+	public final void addItemsOfModel(final IMenuModel menuModel) {
 		getItemModel().addItemsOfModel(menuModel);
 	}
 
 	@Override
-	public void bind(final IMenuModel model) {
+	public final void bind(final IMenuModel model) {
 		getItemModel().bind(model);
 	}
 
 	@Override
-	public void unbind(final IMenuModel model) {
+	public final void unbind(final IMenuModel model) {
 		getItemModel().unbind(model);
 	}
 
 	@Override
-	public void removeItem(final IMenuItemModel item) {
+	public final void removeItem(final IMenuItemModel item) {
 		getItemModel().removeItem(item);
 	}
 
 	@Override
-	public void removeItem(final int index) {
+	public final void removeItem(final int index) {
 		getItemModel().removeItem(index);
 	}
 
 	@Override
-	public void removeAllItems() {
+	public final void removeAllItems() {
 		getItemModel().removeAllItems();
 	}
 
 	@Override
-	public void addListModelListener(final IListModelListener listener) {
+	public final void addListModelListener(final IListModelListener listener) {
 		getItemModel().addListModelListener(listener);
 	}
 
 	@Override
-	public void removeListModelListener(final IListModelListener listener) {
+	public final void removeListModelListener(final IListModelListener listener) {
 		getItemModel().removeListModelListener(listener);
 	}
 

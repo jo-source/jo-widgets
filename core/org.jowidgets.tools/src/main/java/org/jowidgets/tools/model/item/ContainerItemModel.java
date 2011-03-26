@@ -49,12 +49,12 @@ public class ContainerItemModel extends AbstractItemModelWrapper implements ICon
 	}
 
 	@Override
-	public IContainerContentCreator getContentCreator() {
+	public final IContainerContentCreator getContentCreator() {
 		return getItemModel().getContentCreator();
 	}
 
 	@Override
-	public void setContentCreator(final IContainerContentCreator contentCreator) {
+	public final void setContentCreator(final IContainerContentCreator contentCreator) {
 		getItemModel().setContentCreator(contentCreator);
 	}
 
