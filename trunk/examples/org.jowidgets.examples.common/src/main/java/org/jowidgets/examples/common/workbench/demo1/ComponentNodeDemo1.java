@@ -34,13 +34,13 @@ import java.util.List;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.examples.common.icons.SilkIcons;
-import org.jowidgets.examples.common.workbench.base.AbstractComponentNode;
+import org.jowidgets.examples.common.workbench.base.AbstractDemoComponentNode;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IComponentNode;
 import org.jowidgets.workbench.api.IComponentNodeContext;
 
-public class ComponentNodeDemo1 extends AbstractComponentNode {
+public class ComponentNodeDemo1 extends AbstractDemoComponentNode {
 
 	public ComponentNodeDemo1(final String id, final String label) {
 		this(id, label, "Tooltip for " + label, SilkIcons.PAGE_WHITE, new LinkedList<IComponentNode>());

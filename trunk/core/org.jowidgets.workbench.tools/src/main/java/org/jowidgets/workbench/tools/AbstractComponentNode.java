@@ -26,34 +26,32 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.workbench.widgets.views;
+package org.jowidgets.workbench.tools;
 
-import org.jowidgets.api.image.IconsSmall;
-import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.workbench.api.IView;
-import org.jowidgets.workbench.api.IViewContext;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.workbench.api.IComponent;
+import org.jowidgets.workbench.api.IComponentContext;
+import org.jowidgets.workbench.api.IComponentNode;
+import org.jowidgets.workbench.api.IComponentNodeContext;
 
-public class LabelWithTextAndIconView extends AbstractHowToView implements IView {
+public abstract class AbstractComponentNode implements IComponentNode {
 
-	public static final String ID = LabelWithTextAndIconView.class.getName();
-	public static final String DEFAULT_LABEL = "Label with icon and text";
-
-	public LabelWithTextAndIconView(final IViewContext context) {
-		super(context);
+	@Override
+	public String getTooltip() {
+		return null;
 	}
 
 	@Override
-	public void createViewContent(final IContainer container, final IBluePrintFactory bpFactory) {
-		//set the layout
-		container.setLayout(new MigLayoutDescriptor("[]", "[]"));
-
-		//create the labels blue print
-		final ILabelBluePrint labelBp = bpFactory.label().setText("The label text").setIcon(IconsSmall.QUESTION);
-
-		//add the label blue print to the container
-		container.add(labelBp, "");
+	public IImageConstant getIcon() {
+		return null;
 	}
+
+	@Override
+	public void onContextInitialize(final IComponentNodeContext context) {}
+
+	@Override
+	public IComponent createComponent(final IComponentContext context) {
+		return null;
+	}
+
 }

@@ -26,34 +26,21 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.workbench.widgets.views;
+package org.jowidgets.workbench.tools;
 
-import org.jowidgets.api.image.IconsSmall;
-import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.workbench.api.IView;
-import org.jowidgets.workbench.api.IViewContext;
+import org.jowidgets.common.types.SplitResizePolicy;
+import org.jowidgets.workbench.api.ISplitLayout;
 
-public class LabelWithTextAndIconView extends AbstractHowToView implements IView {
+public abstract class AbstractSplitLayout implements ISplitLayout {
 
-	public static final String ID = LabelWithTextAndIconView.class.getName();
-	public static final String DEFAULT_LABEL = "Label with icon and text";
-
-	public LabelWithTextAndIconView(final IViewContext context) {
-		super(context);
+	@Override
+	public double getWeight() {
+		return 0.5;
 	}
 
 	@Override
-	public void createViewContent(final IContainer container, final IBluePrintFactory bpFactory) {
-		//set the layout
-		container.setLayout(new MigLayoutDescriptor("[]", "[]"));
-
-		//create the labels blue print
-		final ILabelBluePrint labelBp = bpFactory.label().setText("The label text").setIcon(IconsSmall.QUESTION);
-
-		//add the label blue print to the container
-		container.add(labelBp, "");
+	public SplitResizePolicy getResizePolicy() {
+		return SplitResizePolicy.RESIZE_BOTH;
 	}
+
 }

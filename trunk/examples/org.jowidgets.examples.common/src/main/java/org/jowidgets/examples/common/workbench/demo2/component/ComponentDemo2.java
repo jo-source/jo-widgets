@@ -36,7 +36,7 @@ import org.jowidgets.api.command.IExecutionContext;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.examples.common.icons.SilkIcons;
-import org.jowidgets.examples.common.workbench.base.AbstractComponent;
+import org.jowidgets.examples.common.workbench.base.AbstractDemoComponent;
 import org.jowidgets.examples.common.workbench.demo2.view.BigTableView;
 import org.jowidgets.examples.common.workbench.demo2.view.EmptyView;
 import org.jowidgets.examples.common.workbench.demo2.view.MediaView;
@@ -50,7 +50,7 @@ import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
 
-public class ComponentDemo2 extends AbstractComponent implements IComponent {
+public class ComponentDemo2 extends AbstractDemoComponent implements IComponent {
 
 	private final IComponentNodeModel componentNodeModel;
 

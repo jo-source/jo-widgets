@@ -42,6 +42,10 @@ public class ComponentNodeModelBuilder implements IComponentNodeModelBuilder {
 
 	private final IComponentNodeModelBuilder builder;
 
+	public ComponentNodeModelBuilder() {
+		this(builder());
+	}
+
 	public ComponentNodeModelBuilder(final IComponentFactory componentFactory) {
 		this(builder(componentFactory));
 	}
@@ -93,10 +97,6 @@ public class ComponentNodeModelBuilder implements IComponentNodeModelBuilder {
 		this(builder(componentType, label, tooltip, icon));
 	}
 
-	public ComponentNodeModelBuilder() {
-		this(builder());
-	}
-
 	public ComponentNodeModelBuilder(final String label) {
 		this(builder(label));
 	}
@@ -119,79 +119,79 @@ public class ComponentNodeModelBuilder implements IComponentNodeModelBuilder {
 	}
 
 	@Override
-	public IComponentNodeModelBuilder setLabel(final String label) {
+	public final IComponentNodeModelBuilder setLabel(final String label) {
 		builder.setLabel(label);
 		return this;
 	}
 
 	@Override
-	public IComponentNodeModelBuilder setId(final String id) {
+	public final IComponentNodeModelBuilder setId(final String id) {
 		builder.setId(id);
 		return this;
 	}
 
 	@Override
-	public IComponentNodeModelBuilder setTooltip(final String toolTiptext) {
+	public final IComponentNodeModelBuilder setTooltip(final String toolTiptext) {
 		builder.setTooltip(toolTiptext);
 		return this;
 	}
 
 	@Override
-	public IComponentNodeModelBuilder addChild(final IComponentNodeModel childModel) {
+	public final IComponentNodeModelBuilder addChild(final IComponentNodeModel childModel) {
 		builder.addChild(childModel);
 		return this;
 	}
 
 	@Override
-	public IComponentNodeModelBuilder setIcon(final IImageConstant icon) {
+	public final IComponentNodeModelBuilder setIcon(final IImageConstant icon) {
 		builder.setIcon(icon);
 		return this;
 	}
 
 	@Override
-	public IComponentNodeModelBuilder addChild(final int index, final IComponentNodeModel childModel) {
+	public final IComponentNodeModelBuilder addChild(final int index, final IComponentNodeModel childModel) {
 		builder.addChild(index, childModel);
 		return this;
 	}
 
 	@Override
-	public IComponentNodeModelBuilder setSelected(final boolean selected) {
+	public final IComponentNodeModelBuilder setSelected(final boolean selected) {
 		builder.setSelected(selected);
 		return this;
 	}
 
 	@Override
-	public IComponentNodeModelBuilder addChild(final IComponentNodeModelBuilder childModel) {
+	public final IComponentNodeModelBuilder addChild(final IComponentNodeModelBuilder childModel) {
 		builder.addChild(childModel);
 		return this;
 	}
 
 	@Override
-	public IComponentNodeModelBuilder setExpanded(final boolean expanded) {
+	public final IComponentNodeModelBuilder setExpanded(final boolean expanded) {
 		builder.setExpanded(expanded);
 		return this;
 	}
 
 	@Override
-	public IComponentNodeModelBuilder addChild(final int index, final IComponentNodeModelBuilder childModel) {
+	public final IComponentNodeModelBuilder addChild(final int index, final IComponentNodeModelBuilder childModel) {
 		builder.addChild(index, childModel);
 		return this;
 	}
 
 	@Override
-	public IComponentNodeModelBuilder setPopupMenu(final IMenuModel popupMenu) {
+	public final IComponentNodeModelBuilder setPopupMenu(final IMenuModel popupMenu) {
 		builder.setPopupMenu(popupMenu);
 		return this;
 	}
 
 	@Override
-	public IComponentNodeModelBuilder setComponentFactory(final IComponentFactory componentFactory) {
+	public final IComponentNodeModelBuilder setComponentFactory(final IComponentFactory componentFactory) {
 		builder.setComponentFactory(componentFactory);
 		return this;
 	}
 
 	@Override
-	public IComponentNodeModelBuilder addChild(
+	public final IComponentNodeModelBuilder addChild(
 		final String id,
 		final String label,
 		final String tooltip,
@@ -201,43 +201,43 @@ public class ComponentNodeModelBuilder implements IComponentNodeModelBuilder {
 	}
 
 	@Override
-	public IComponentNodeModelBuilder setComponentFactory(final Class<? extends IComponent> componentType) {
+	public final IComponentNodeModelBuilder setComponentFactory(final Class<? extends IComponent> componentType) {
 		builder.setComponentFactory(componentType);
 		return this;
 	}
 
 	@Override
-	public IComponentNodeModelBuilder addChild(final String id, final String label, final IImageConstant icon) {
+	public final IComponentNodeModelBuilder addChild(final String id, final String label, final IImageConstant icon) {
 		builder.addChild(id, label, icon);
 		return this;
 	}
 
 	@Override
-	public IComponentNodeModelBuilder setInitializeCallback(final IComponentNodeInitializeCallback initializeCallback) {
+	public final IComponentNodeModelBuilder setInitializeCallback(final IComponentNodeInitializeCallback initializeCallback) {
 		builder.setInitializeCallback(initializeCallback);
 		return this;
 	}
 
 	@Override
-	public IComponentNodeModelBuilder addChild(final String id, final String label, final String tooltip) {
+	public final IComponentNodeModelBuilder addChild(final String id, final String label, final String tooltip) {
 		builder.addChild(id, label, tooltip);
 		return this;
 	}
 
 	@Override
-	public IComponentNodeModelBuilder addChild(final String id, final String label) {
+	public final IComponentNodeModelBuilder addChild(final String id, final String label) {
 		builder.addChild(id, label);
 		return this;
 	}
 
 	@Override
-	public IComponentNodeModelBuilder addChild(final String id) {
+	public final IComponentNodeModelBuilder addChild(final String id) {
 		builder.addChild(id);
 		return this;
 	}
 
 	@Override
-	public IComponentNodeModel build() {
+	public final IComponentNodeModel build() {
 		return builder.build();
 	}
 

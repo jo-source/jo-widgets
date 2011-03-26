@@ -30,54 +30,30 @@ package org.jowidgets.examples.common.workbench.base;
 
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.types.QuestionResult;
-import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.IVetoable;
-import org.jowidgets.workbench.api.IWorkbenchApplication;
+import org.jowidgets.workbench.api.IWorkbench;
+import org.jowidgets.workbench.tools.AbstractWorkbench;
 
-public abstract class AbstractApplication implements IWorkbenchApplication {
-
-	private final String id;
-
-	public AbstractApplication(final String id) {
-		super();
-		this.id = id;
-	}
+public abstract class AbstractDemoWorkbench extends AbstractWorkbench implements IWorkbench {
 
 	@Override
-	public final String getId() {
-		return id;
-	}
-
-	@Override
-	public String getTooltip() {
-		return null;
-	}
-
-	@Override
-	public IImageConstant getIcon() {
-		return null;
-	}
-
-	@Override
-	public void onActiveStateChanged(final boolean active) {
-		// CHECKSTYLE:OFF
-		System.out.println("activated= " + active + ", " + id);
-		// CHECKSTYLE:ON
-	}
-
-	@Override
-	public void onVisibleStateChanged(final boolean visible) {
-		// CHECKSTYLE:OFF
-		System.out.println("visibility= " + visible + ", " + id);
-		// CHECKSTYLE:ON
+	public boolean getApplicationsCloseable() {
+		return true;
 	}
 
 	@Override
 	public void onClose(final IVetoable vetoable) {
-		final QuestionResult result = Toolkit.getQuestionPane().askYesNoQuestion("Would you really like to quit the application?");
-		if (result != QuestionResult.YES) {
+		if (!shouldWorkbenchFinished()) {
 			vetoable.veto();
 		}
+	}
+
+	protected final boolean shouldWorkbenchFinished() {
+		final QuestionResult result = Toolkit.getQuestionPane().askYesNoQuestion("Would you really like to quit the workbench?");
+		if (result != QuestionResult.YES) {
+			return false;
+		}
+		return true;
 	}
 
 }

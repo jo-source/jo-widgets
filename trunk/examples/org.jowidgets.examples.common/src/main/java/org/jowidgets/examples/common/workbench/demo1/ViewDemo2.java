@@ -37,12 +37,12 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.examples.common.demo.DemoMenuProvider;
 import org.jowidgets.examples.common.icons.SilkIcons;
-import org.jowidgets.examples.common.workbench.base.AbstractView;
+import org.jowidgets.examples.common.workbench.base.AbstractDemoView;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
 
-public class ViewDemo2 extends AbstractView implements IView {
+public class ViewDemo2 extends AbstractDemoView implements IView {
 
 	public static final String ID = ViewDemo2.class.getName();
 	public static final String DEFAULT_LABEL = "Media";

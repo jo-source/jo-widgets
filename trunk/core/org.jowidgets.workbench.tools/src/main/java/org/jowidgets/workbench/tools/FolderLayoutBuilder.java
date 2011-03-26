@@ -55,109 +55,109 @@ public class FolderLayoutBuilder implements IFolderLayoutBuilder {
 	}
 
 	@Override
-	public IFolderLayoutBuilder setId(final String id) {
+	public final IFolderLayoutBuilder setId(final String id) {
 		builder.setId(id);
 		return this;
 	}
 
 	@Override
-	public IFolderLayoutBuilder setLabel(final String label) {
+	public final IFolderLayoutBuilder setLabel(final String label) {
 		builder.setLabel(label);
 		return this;
 	}
 
 	@Override
-	public IFolderLayoutBuilder setTooltip(final String toolTiptext) {
+	public final IFolderLayoutBuilder setTooltip(final String toolTiptext) {
 		builder.setTooltip(toolTiptext);
 		return this;
 	}
 
 	@Override
-	public IFolderLayoutBuilder setIcon(final IImageConstant icon) {
+	public final IFolderLayoutBuilder setIcon(final IImageConstant icon) {
 		builder.setIcon(icon);
 		return this;
 	}
 
 	@Override
-	public IFolderLayoutBuilder setGroupId(final String groupId) {
+	public final IFolderLayoutBuilder setGroupId(final String groupId) {
 		builder.setGroupId(groupId);
 		return this;
 	}
 
 	@Override
-	public IFolderLayoutBuilder setDetachable(final boolean detachable) {
+	public final IFolderLayoutBuilder setDetachable(final boolean detachable) {
 		builder.setDetachable(detachable);
 		return this;
 	}
 
 	@Override
-	public IFolderLayoutBuilder setViewsCloseable(final boolean viewsCloseable) {
+	public final IFolderLayoutBuilder setViewsCloseable(final boolean viewsCloseable) {
 		builder.setViewsCloseable(viewsCloseable);
 		return this;
 	}
 
 	@Override
-	public IFolderLayoutBuilder setViews(final List<? extends IViewLayout> views) {
+	public final IFolderLayoutBuilder setViews(final List<? extends IViewLayout> views) {
 		builder.setViews(views);
 		return this;
 	}
 
 	@Override
-	public IFolderLayoutBuilder setViews(final IViewLayout... views) {
+	public final IFolderLayoutBuilder setViews(final IViewLayout... views) {
 		builder.setViews(views);
 		return this;
 	}
 
 	@Override
-	public IFolderLayoutBuilder addView(final IViewLayout view) {
+	public final IFolderLayoutBuilder addView(final IViewLayout view) {
 		builder.addView(view);
 		return this;
 	}
 
 	@Override
-	public IFolderLayoutBuilder setViews(final IViewLayoutBuilder... viewsBuilder) {
+	public final IFolderLayoutBuilder setViews(final IViewLayoutBuilder... viewsBuilder) {
 		builder.setViews(viewsBuilder);
 		return this;
 	}
 
 	@Override
-	public IFolderLayoutBuilder addView(final IViewLayoutBuilder viewBuilder) {
+	public final IFolderLayoutBuilder addView(final IViewLayoutBuilder viewBuilder) {
 		builder.addView(viewBuilder);
 		return this;
 	}
 
 	@Override
-	public IFolderLayoutBuilder addView(final String id, final String label, final String tooltip, final IImageConstant icon) {
+	public final IFolderLayoutBuilder addView(final String id, final String label, final String tooltip, final IImageConstant icon) {
 		builder.addView(id, label, tooltip, icon);
 		return this;
 	}
 
 	@Override
-	public IFolderLayoutBuilder addView(final String id, final String label, final IImageConstant icon) {
+	public final IFolderLayoutBuilder addView(final String id, final String label, final IImageConstant icon) {
 		builder.addView(id, label, icon);
 		return this;
 	}
 
 	@Override
-	public IFolderLayoutBuilder addView(final String id, final String label, final String tooltip) {
+	public final IFolderLayoutBuilder addView(final String id, final String label, final String tooltip) {
 		builder.addView(id, label, tooltip);
 		return this;
 	}
 
 	@Override
-	public IFolderLayoutBuilder addView(final String id, final String label) {
+	public final IFolderLayoutBuilder addView(final String id, final String label) {
 		builder.addView(id, label);
 		return this;
 	}
 
 	@Override
-	public IFolderLayoutBuilder addView(final String id, final IImageConstant icon) {
+	public final IFolderLayoutBuilder addView(final String id, final IImageConstant icon) {
 		builder.addView(id, icon);
 		return this;
 	}
 
 	@Override
-	public IFolderLayout build() {
+	public final IFolderLayout build() {
 		return builder.build();
 	}
 

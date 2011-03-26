@@ -62,7 +62,7 @@ import org.jowidgets.common.widgets.controler.ITableColumnResizeEvent;
 import org.jowidgets.common.widgets.controler.ITableSelectionListener;
 import org.jowidgets.examples.common.demo.DemoMenuProvider;
 import org.jowidgets.examples.common.icons.SilkIcons;
-import org.jowidgets.examples.common.workbench.base.AbstractView;
+import org.jowidgets.examples.common.workbench.base.AbstractDemoView;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.model.table.AbstractTableDataModel;
 import org.jowidgets.tools.model.table.DefaultTableColumnBuilder;
@@ -73,7 +73,7 @@ import org.jowidgets.workbench.api.IComponentNodeContext;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
 
-public class ViewDemo6 extends AbstractView implements IView {
+public class ViewDemo6 extends AbstractDemoView implements IView {
 
 	public static final String ID = ViewDemo6.class.getName();
 	public static final String DEFAULT_LABEL = "View6";

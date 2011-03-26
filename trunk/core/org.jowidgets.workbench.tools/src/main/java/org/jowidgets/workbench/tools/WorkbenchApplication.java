@@ -42,10 +42,6 @@ public class WorkbenchApplication implements IWorkbenchApplication {
 	private final IWorkbenchApplication application;
 	private final IWorkbenchApplicationModel model;
 
-	public WorkbenchApplication() {
-		this(builder());
-	}
-
 	public WorkbenchApplication(final String label) {
 		this(builder(label));
 	}
@@ -72,57 +68,45 @@ public class WorkbenchApplication implements IWorkbenchApplication {
 		this.model = model;
 	}
 
-	public IWorkbenchApplicationModel getModel() {
+	public final IWorkbenchApplicationModel getModel() {
 		return model;
 	}
 
 	@Override
-	public String getId() {
+	public final String getId() {
 		return application.getId();
 	}
 
 	@Override
-	public String getLabel() {
+	public final String getLabel() {
 		return application.getLabel();
 	}
 
 	@Override
-	public IImageConstant getIcon() {
+	public final IImageConstant getIcon() {
 		return application.getIcon();
 	}
 
 	@Override
-	public String getTooltip() {
+	public final String getTooltip() {
 		return application.getTooltip();
 	}
 
 	@Override
-	public void onClose(final IVetoable vetoable) {
+	public final void onClose(final IVetoable vetoable) {
 		application.onClose(vetoable);
 	}
 
 	@Override
-	public void onActiveStateChanged(final boolean active) {
+	public final void onActiveStateChanged(final boolean active) {
 		application.onActiveStateChanged(active);
 	}
 
 	@Override
-	public void onVisibleStateChanged(final boolean visible) {
+	public final void onVisibleStateChanged(final boolean visible) {
 		application.onVisibleStateChanged(visible);
 	}
 
-	/**
-	 * This method is final, because the given context does not support WorkbenchApplicationModels.
-	 * To use the IWorkbenchApplicationContext, it's possible to do the following on the builder
-	 * of this workbench application model:
-	 * 
-	 * builder.setInitializeCallback(new IWorkbenchApplicationInitializeCallback() {
-	 * 
-	 * public void onContextInitialize(IWorkbenchApplicationContext context) {
-	 * // Do something with the context
-	 * // The given context will be synchronized with the model
-	 * }
-	 */
 	@Override
 	public final void onContextInitialize(final IWorkbenchApplicationContext context) {
 		application.onContextInitialize(context);

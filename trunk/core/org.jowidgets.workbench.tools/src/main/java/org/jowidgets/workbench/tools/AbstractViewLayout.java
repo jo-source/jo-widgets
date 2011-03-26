@@ -26,17 +26,15 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.workbench.base;
+package org.jowidgets.workbench.tools;
 
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.types.QuestionResult;
+import java.util.Collections;
+import java.util.List;
+
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.types.IVetoable;
-import org.jowidgets.common.types.Position;
-import org.jowidgets.workbench.api.IWorkbench;
+import org.jowidgets.workbench.api.IViewLayout;
 
-public abstract class AbstractWorkbench implements IWorkbench {
+public abstract class AbstractViewLayout implements IViewLayout {
 
 	@Override
 	public String getTooltip() {
@@ -49,43 +47,23 @@ public abstract class AbstractWorkbench implements IWorkbench {
 	}
 
 	@Override
-	public Dimension getInitialDimension() {
-		return null;
+	public boolean isHidden() {
+		return false;
 	}
 
 	@Override
-	public Position getInitialPosition() {
-		return null;
-	}
-
-	@Override
-	public double getInitialSplitWeight() {
-		return 0.2;
-	}
-
-	@Override
-	public boolean hasApplicationNavigator() {
+	public boolean isDetachable() {
 		return true;
 	}
 
 	@Override
-	public boolean getApplicationsCloseable() {
-		return true;
+	public List<String> getFolderWhitelist() {
+		return Collections.emptyList();
 	}
 
 	@Override
-	public void onClose(final IVetoable vetoable) {
-		if (!shouldWorkbenchFinished()) {
-			vetoable.veto();
-		}
-	}
-
-	protected final boolean shouldWorkbenchFinished() {
-		final QuestionResult result = Toolkit.getQuestionPane().askYesNoQuestion("Would you really like to quit the workbench?");
-		if (result != QuestionResult.YES) {
-			return false;
-		}
-		return true;
+	public List<String> getFolderBlacklist() {
+		return Collections.emptyList();
 	}
 
 }

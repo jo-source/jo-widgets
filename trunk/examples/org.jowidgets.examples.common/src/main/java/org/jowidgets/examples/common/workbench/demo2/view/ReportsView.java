@@ -36,12 +36,12 @@ import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.examples.common.icons.SilkIcons;
-import org.jowidgets.examples.common.workbench.base.AbstractView;
+import org.jowidgets.examples.common.workbench.base.AbstractDemoView;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
 
-public class ReportsView extends AbstractView implements IView {
+public class ReportsView extends AbstractDemoView implements IView {
 
 	public static final String ID = ReportsView.class.getName();
 	public static final String DEFAULT_LABEL = "Reports";

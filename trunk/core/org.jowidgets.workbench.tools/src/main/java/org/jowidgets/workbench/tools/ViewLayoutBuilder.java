@@ -53,79 +53,79 @@ public class ViewLayoutBuilder implements IViewLayoutBuilder {
 	}
 
 	@Override
-	public IViewLayoutBuilder setLabel(final String label) {
+	public final IViewLayoutBuilder setLabel(final String label) {
 		builder.setLabel(label);
 		return this;
 	}
 
 	@Override
-	public IViewLayoutBuilder setTooltip(final String toolTiptext) {
+	public final IViewLayoutBuilder setTooltip(final String toolTiptext) {
 		builder.setTooltip(toolTiptext);
 		return this;
 	}
 
 	@Override
-	public IViewLayoutBuilder setIcon(final IImageConstant icon) {
+	public final IViewLayoutBuilder setIcon(final IImageConstant icon) {
 		builder.setIcon(icon);
 		return this;
 	}
 
 	@Override
-	public IViewLayoutBuilder setId(final String id) {
+	public final IViewLayoutBuilder setId(final String id) {
 		builder.setId(id);
 		return this;
 	}
 
 	@Override
-	public IViewLayoutBuilder setHidden(final boolean hidden) {
+	public final IViewLayoutBuilder setHidden(final boolean hidden) {
 		builder.setHidden(hidden);
 		return this;
 	}
 
 	@Override
-	public IViewLayoutBuilder setDetachable(final boolean detachable) {
+	public final IViewLayoutBuilder setDetachable(final boolean detachable) {
 		builder.setDetachable(detachable);
 		return this;
 	}
 
 	@Override
-	public IViewLayoutBuilder setFolderWhitelist(final List<String> folderWhiteList) {
+	public final IViewLayoutBuilder setFolderWhitelist(final List<String> folderWhiteList) {
 		builder.setFolderWhitelist(folderWhiteList);
 		return this;
 	}
 
 	@Override
-	public IViewLayoutBuilder setFolderWhitelist(final String... folderWhiteList) {
+	public final IViewLayoutBuilder setFolderWhitelist(final String... folderWhiteList) {
 		builder.setFolderWhitelist(folderWhiteList);
 		return this;
 	}
 
 	@Override
-	public IViewLayoutBuilder addToFolderWhitelist(final String folder) {
+	public final IViewLayoutBuilder addToFolderWhitelist(final String folder) {
 		builder.addToFolderWhitelist(folder);
 		return this;
 	}
 
 	@Override
-	public IViewLayoutBuilder setFolderBlacklist(final List<String> folderBlackList) {
+	public final IViewLayoutBuilder setFolderBlacklist(final List<String> folderBlackList) {
 		builder.setFolderBlacklist(folderBlackList);
 		return this;
 	}
 
 	@Override
-	public IViewLayoutBuilder setFolderBlacklist(final String... folderBlackList) {
+	public final IViewLayoutBuilder setFolderBlacklist(final String... folderBlackList) {
 		builder.setFolderBlacklist(folderBlackList);
 		return this;
 	}
 
 	@Override
-	public IViewLayoutBuilder addToFolderBlacklist(final String folder) {
+	public final IViewLayoutBuilder addToFolderBlacklist(final String folder) {
 		builder.addToFolderBlacklist(folder);
 		return this;
 	}
 
 	@Override
-	public IViewLayout build() {
+	public final IViewLayout build() {
 		return builder.build();
 	}
 

@@ -69,121 +69,123 @@ public class WorkbenchModelBuilder implements IWorkbenchModelBuilder {
 	}
 
 	@Override
-	public IWorkbenchModelBuilder setDescriptor(final IWorkbenchDescriptor descriptor) {
+	public final IWorkbenchModelBuilder setDescriptor(final IWorkbenchDescriptor descriptor) {
 		this.builder.setDescriptor(descriptor);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchModelBuilder setLabel(final String label) {
+	public final IWorkbenchModelBuilder setLabel(final String label) {
 		this.builder.setLabel(label);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchModelBuilder setTooltip(final String toolTiptext) {
+	public final IWorkbenchModelBuilder setTooltip(final String toolTiptext) {
 		this.builder.setTooltip(toolTiptext);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchModelBuilder setIcon(final IImageConstant icon) {
+	public final IWorkbenchModelBuilder setIcon(final IImageConstant icon) {
 		this.builder.setIcon(icon);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchModelBuilder setInitialDimension(final Dimension initialDimension) {
+	public final IWorkbenchModelBuilder setInitialDimension(final Dimension initialDimension) {
 		this.builder.setInitialDimension(initialDimension);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchModelBuilder setInitialPosition(final Position initialiPosition) {
+	public final IWorkbenchModelBuilder setInitialPosition(final Position initialiPosition) {
 		this.builder.setInitialPosition(initialiPosition);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchModelBuilder setInitialSplitWeight(final double initialSplitWeigth) {
+	public final IWorkbenchModelBuilder setInitialSplitWeight(final double initialSplitWeigth) {
 		this.builder.setInitialSplitWeight(initialSplitWeigth);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchModelBuilder setApplicationNavigator(final boolean hasApplicationNavigator) {
+	public final IWorkbenchModelBuilder setApplicationNavigator(final boolean hasApplicationNavigator) {
 		this.builder.setApplicationNavigator(hasApplicationNavigator);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchModelBuilder setApplicationsCloseable(final boolean applicationsCloseable) {
+	public final IWorkbenchModelBuilder setApplicationsCloseable(final boolean applicationsCloseable) {
 		this.builder.setApplicationsCloseable(applicationsCloseable);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchModelBuilder setToolBar(final IToolBarModel toolBarModel) {
+	public final IWorkbenchModelBuilder setToolBar(final IToolBarModel toolBarModel) {
 		this.builder.setToolBar(toolBarModel);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchModelBuilder setMenuBar(final IMenuBarModel menuBarModel) {
+	public final IWorkbenchModelBuilder setMenuBar(final IMenuBarModel menuBarModel) {
 		this.builder.setMenuBar(menuBarModel);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchModelBuilder setStatusBarCreator(final IContentCreator statusBarContentCreator) {
+	public final IWorkbenchModelBuilder setStatusBarCreator(final IContentCreator statusBarContentCreator) {
 		this.builder.setStatusBarCreator(statusBarContentCreator);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchModelBuilder setCloseCallback(final ICloseCallback closeCallback) {
+	public final IWorkbenchModelBuilder setCloseCallback(final ICloseCallback closeCallback) {
 		this.builder.setCloseCallback(closeCallback);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchModelBuilder setInitializeCallback(final IWorkbenchInitializeCallback initializeCallback) {
+	public final IWorkbenchModelBuilder setInitializeCallback(final IWorkbenchInitializeCallback initializeCallback) {
 		this.builder.setInitializeCallback(initializeCallback);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchModelBuilder addShutdownHook(final Runnable shutdownHook) {
+	public final IWorkbenchModelBuilder addShutdownHook(final Runnable shutdownHook) {
 		this.builder.addShutdownHook(shutdownHook);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchModelBuilder addApplication(final IWorkbenchApplicationModel applicationModel) {
+	public final IWorkbenchModelBuilder addApplication(final IWorkbenchApplicationModel applicationModel) {
 		this.builder.addApplication(applicationModel);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchModelBuilder addApplication(final int index, final IWorkbenchApplicationModel applicationModel) {
+	public final IWorkbenchModelBuilder addApplication(final int index, final IWorkbenchApplicationModel applicationModel) {
 		this.builder.addApplication(index, applicationModel);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchModelBuilder addApplication(final IWorkbenchApplicationModelBuilder applicationModelBuilder) {
+	public final IWorkbenchModelBuilder addApplication(final IWorkbenchApplicationModelBuilder applicationModelBuilder) {
 		this.builder.addApplication(applicationModelBuilder);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchModelBuilder addApplication(final int index, final IWorkbenchApplicationModelBuilder applicationModelBuilder) {
+	public final IWorkbenchModelBuilder addApplication(
+		final int index,
+		final IWorkbenchApplicationModelBuilder applicationModelBuilder) {
 		this.builder.addApplication(index, applicationModelBuilder);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchModelBuilder addApplication(
+	public final IWorkbenchModelBuilder addApplication(
 		final String id,
 		final String label,
 		final String tooltip,
@@ -193,31 +195,31 @@ public class WorkbenchModelBuilder implements IWorkbenchModelBuilder {
 	}
 
 	@Override
-	public IWorkbenchModelBuilder addApplication(final String id, final String label, final IImageConstant icon) {
+	public final IWorkbenchModelBuilder addApplication(final String id, final String label, final IImageConstant icon) {
 		this.builder.addApplication(id, label, icon);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchModelBuilder addApplication(final String id, final String label, final String tooltip) {
+	public final IWorkbenchModelBuilder addApplication(final String id, final String label, final String tooltip) {
 		this.builder.addApplication(id, label, tooltip);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchModelBuilder addApplication(final String id, final String label) {
+	public final IWorkbenchModelBuilder addApplication(final String id, final String label) {
 		this.builder.addApplication(id, label);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchModelBuilder addApplication(final String id) {
+	public final IWorkbenchModelBuilder addApplication(final String id) {
 		this.builder.addApplication(id);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchModel build() {
+	public final IWorkbenchModel build() {
 		return builder.build();
 	}
 

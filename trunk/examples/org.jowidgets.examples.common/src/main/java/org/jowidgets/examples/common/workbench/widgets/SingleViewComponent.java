@@ -30,7 +30,7 @@ package org.jowidgets.examples.common.workbench.widgets;
 
 import java.lang.reflect.Constructor;
 
-import org.jowidgets.examples.common.workbench.base.AbstractComponent;
+import org.jowidgets.examples.common.workbench.base.AbstractDemoComponent;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IView;
@@ -39,7 +39,7 @@ import org.jowidgets.workbench.toolkit.api.IFolderLayoutBuilder;
 import org.jowidgets.workbench.tools.FolderLayoutBuilder;
 import org.jowidgets.workbench.tools.Layout;
 
-public class SingleViewComponent extends AbstractComponent implements IComponent {
+public class SingleViewComponent extends AbstractDemoComponent implements IComponent {
 
 	public static final String DEFAULT_LAYOUT_ID = "DEFAULT_LAYOUT_ID";
 	public static final String MASTER_FOLDER_ID = "MASTER_FOLDER_ID";

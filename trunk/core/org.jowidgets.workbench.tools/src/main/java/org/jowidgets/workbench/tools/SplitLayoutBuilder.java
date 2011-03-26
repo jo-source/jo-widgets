@@ -50,79 +50,79 @@ public class SplitLayoutBuilder implements ISplitLayoutBuilder {
 	}
 
 	@Override
-	public ISplitLayoutBuilder setOrientation(final Orientation orientation) {
+	public final ISplitLayoutBuilder setOrientation(final Orientation orientation) {
 		builder.setOrientation(orientation);
 		return this;
 	}
 
 	@Override
-	public ISplitLayoutBuilder setHorizontal() {
+	public final ISplitLayoutBuilder setHorizontal() {
 		builder.setHorizontal();
 		return this;
 	}
 
 	@Override
-	public ISplitLayoutBuilder setVertical() {
+	public final ISplitLayoutBuilder setVertical() {
 		builder.setVertical();
 		return this;
 	}
 
 	@Override
-	public ISplitLayoutBuilder setWeight(final double weigth) {
+	public final ISplitLayoutBuilder setWeight(final double weigth) {
 		builder.setWeight(weigth);
 		return this;
 	}
 
 	@Override
-	public ISplitLayoutBuilder setResizePolicy(final SplitResizePolicy splitResizePolicy) {
+	public final ISplitLayoutBuilder setResizePolicy(final SplitResizePolicy splitResizePolicy) {
 		builder.setResizePolicy(splitResizePolicy);
 		return this;
 	}
 
 	@Override
-	public ISplitLayoutBuilder setResizeFirst() {
+	public final ISplitLayoutBuilder setResizeFirst() {
 		builder.setResizeFirst();
 		return this;
 	}
 
 	@Override
-	public ISplitLayoutBuilder setResizeSecond() {
+	public final ISplitLayoutBuilder setResizeSecond() {
 		builder.setResizeSecond();
 		return this;
 	}
 
 	@Override
-	public ISplitLayoutBuilder setResizeBoth() {
+	public final ISplitLayoutBuilder setResizeBoth() {
 		builder.setResizeBoth();
 		return this;
 	}
 
 	@Override
-	public ISplitLayoutBuilder setFirstContainer(final ILayoutContainer firstContainer) {
+	public final ISplitLayoutBuilder setFirstContainer(final ILayoutContainer firstContainer) {
 		builder.setFirstContainer(firstContainer);
 		return this;
 	}
 
 	@Override
-	public ISplitLayoutBuilder setFirstContainer(final ILayoutContainerBuilder firstContainerBuilder) {
+	public final ISplitLayoutBuilder setFirstContainer(final ILayoutContainerBuilder firstContainerBuilder) {
 		builder.setFirstContainer(firstContainerBuilder);
 		return this;
 	}
 
 	@Override
-	public ISplitLayoutBuilder setSecondContainer(final ILayoutContainer secondContainer) {
+	public final ISplitLayoutBuilder setSecondContainer(final ILayoutContainer secondContainer) {
 		builder.setSecondContainer(secondContainer);
 		return this;
 	}
 
 	@Override
-	public ISplitLayoutBuilder setSecondContainer(final ILayoutContainerBuilder secondContainerBuilder) {
+	public final ISplitLayoutBuilder setSecondContainer(final ILayoutContainerBuilder secondContainerBuilder) {
 		builder.setSecondContainer(secondContainerBuilder);
 		return this;
 	}
 
 	@Override
-	public ISplitLayout build() {
+	public final ISplitLayout build() {
 		return builder.build();
 	}
 

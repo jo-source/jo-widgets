@@ -50,10 +50,6 @@ public class WorkbenchApplicationModel implements IWorkbenchApplicationModel {
 
 	private final IWorkbenchApplicationModel model;
 
-	public WorkbenchApplicationModel() {
-		this(builder());
-	}
-
 	public WorkbenchApplicationModel(final String label) {
 		this(builder(label));
 	}
@@ -76,177 +72,177 @@ public class WorkbenchApplicationModel implements IWorkbenchApplicationModel {
 	}
 
 	@Override
-	public String getId() {
+	public final String getId() {
 		return model.getId();
 	}
 
 	@Override
-	public String getLabel() {
+	public final String getLabel() {
 		return model.getLabel();
 	}
 
 	@Override
-	public String getTooltip() {
+	public final String getTooltip() {
 		return model.getTooltip();
 	}
 
 	@Override
-	public IImageConstant getIcon() {
+	public final IImageConstant getIcon() {
 		return model.getIcon();
 	}
 
 	@Override
-	public IComponentNodeContainerModel getParentContainer() {
+	public final IComponentNodeContainerModel getParentContainer() {
 		return model.getParentContainer();
 	}
 
 	@Override
-	public List<IComponentNodeModel> getChildren() {
+	public final List<IComponentNodeModel> getChildren() {
 		return model.getChildren();
 	}
 
 	@Override
-	public int getChildrenCount() {
+	public final int getChildrenCount() {
 		return model.getChildrenCount();
 	}
 
 	@Override
-	public IComponentNodeModel addChild(final IComponentNodeModel childModel) {
+	public final IComponentNodeModel addChild(final IComponentNodeModel childModel) {
 		return model.addChild(childModel);
 	}
 
 	@Override
-	public IWorkbenchApplicationInitializeCallback getInitializeCallback() {
+	public final IWorkbenchApplicationInitializeCallback getInitializeCallback() {
 		return model.getInitializeCallback();
 	}
 
 	@Override
-	public IComponentNodeModel addChild(final int index, final IComponentNodeModel childModel) {
+	public final IComponentNodeModel addChild(final int index, final IComponentNodeModel childModel) {
 		return model.addChild(index, childModel);
 	}
 
 	@Override
-	public IMenuModel getPopupMenu() {
+	public final IMenuModel getPopupMenu() {
 		return model.getPopupMenu();
 	}
 
 	@Override
-	public IToolBarModel getToolBar() {
+	public final IToolBarModel getToolBar() {
 		return model.getToolBar();
 	}
 
 	@Override
-	public IComponentNodeModel addChild(final IComponentNodeModelBuilder childModelBuilder) {
+	public final IComponentNodeModel addChild(final IComponentNodeModelBuilder childModelBuilder) {
 		return model.addChild(childModelBuilder);
 	}
 
 	@Override
-	public IMenuModel getToolBarMenu() {
+	public final IMenuModel getToolBarMenu() {
 		return model.getToolBarMenu();
 	}
 
 	@Override
-	public ILifecycleCallback getLifecycleCallback() {
+	public final ILifecycleCallback getLifecycleCallback() {
 		return model.getLifecycleCallback();
 	}
 
 	@Override
-	public IComponentNodeModel addChild(final int index, final IComponentNodeModelBuilder childModelBuilder) {
+	public final IComponentNodeModel addChild(final int index, final IComponentNodeModelBuilder childModelBuilder) {
 		return model.addChild(index, childModelBuilder);
 	}
 
 	@Override
-	public void setPopupMenu(final IMenuModel menuModel) {
+	public final void setPopupMenu(final IMenuModel menuModel) {
 		model.setPopupMenu(menuModel);
 	}
 
 	@Override
-	public void setToolBar(final IToolBarModel toolBarModel) {
+	public final void setToolBar(final IToolBarModel toolBarModel) {
 		model.setToolBar(toolBarModel);
 	}
 
 	@Override
-	public IComponentNodeModel addChild(final String id, final String label, final String tooltip, final IImageConstant icon) {
+	public final IComponentNodeModel addChild(final String id, final String label, final String tooltip, final IImageConstant icon) {
 		return model.addChild(id, label, tooltip, icon);
 	}
 
 	@Override
-	public void setToolBarMenu(final IMenuModel toolBarMenu) {
+	public final void setToolBarMenu(final IMenuModel toolBarMenu) {
 		model.setToolBarMenu(toolBarMenu);
 	}
 
 	@Override
-	public void setLifecycleCallback(final ILifecycleCallback lifecycleCallback) {
+	public final void setLifecycleCallback(final ILifecycleCallback lifecycleCallback) {
 		model.setLifecycleCallback(lifecycleCallback);
 	}
 
 	@Override
-	public IComponentNodeModel addChild(final String id, final String label, final IImageConstant icon) {
+	public final IComponentNodeModel addChild(final String id, final String label, final IImageConstant icon) {
 		return model.addChild(id, label, icon);
 	}
 
 	@Override
-	public IWorkbenchModel getWorkbench() {
+	public final IWorkbenchModel getWorkbench() {
 		return model.getWorkbench();
 	}
 
 	@Override
-	public void setWorkbench(final IWorkbenchModel workbench) {
+	public final void setWorkbench(final IWorkbenchModel workbench) {
 		model.setWorkbench(workbench);
 	}
 
 	@Override
-	public IComponentNodeModel addChild(final String id, final String label, final String tooltip) {
+	public final IComponentNodeModel addChild(final String id, final String label, final String tooltip) {
 		return model.addChild(id, label, tooltip);
 	}
 
 	@Override
-	public IComponentNodeModel addChild(final String id, final String label) {
+	public final IComponentNodeModel addChild(final String id, final String label) {
 		return model.addChild(id, label);
 	}
 
 	@Override
-	public IComponentNodeModel addChild(final String id) {
+	public final IComponentNodeModel addChild(final String id) {
 		return model.addChild(id);
 	}
 
 	@Override
-	public void remove(final int index) {
+	public final void remove(final int index) {
 		model.remove(index);
 	}
 
 	@Override
-	public void remove(final IComponentNodeModel childModel) {
+	public final void remove(final IComponentNodeModel childModel) {
 		model.remove(childModel);
 	}
 
 	@Override
-	public void removeAll() {
+	public final void removeAll() {
 		model.removeAll();
 	}
 
 	@Override
-	public void addListModelListener(final IListModelListener listener) {
+	public final void addListModelListener(final IListModelListener listener) {
 		model.addListModelListener(listener);
 	}
 
 	@Override
-	public void removeListModelListener(final IListModelListener listener) {
+	public final void removeListModelListener(final IListModelListener listener) {
 		model.removeListModelListener(listener);
 	}
 
 	@Override
-	public void addWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
+	public final void addWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
 		model.addWorkbenchPartModelListener(listener);
 	}
 
 	@Override
-	public void removeWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
+	public final void removeWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
 		model.removeWorkbenchPartModelListener(listener);
 	}
 
 	@Override
-	public IWorkbenchApplicationModel getUnwrappedThis() {
+	public final IWorkbenchApplicationModel getUnwrappedThis() {
 		return model.getUnwrappedThis();
 	}
 

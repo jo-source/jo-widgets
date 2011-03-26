@@ -26,34 +26,45 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.workbench.widgets.views;
+package org.jowidgets.workbench.tools;
 
-import org.jowidgets.api.image.IconsSmall;
-import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.workbench.api.IView;
-import org.jowidgets.workbench.api.IViewContext;
+import java.util.Collections;
+import java.util.List;
 
-public class LabelWithTextAndIconView extends AbstractHowToView implements IView {
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.workbench.api.IFolderLayout;
+import org.jowidgets.workbench.api.IViewLayout;
 
-	public static final String ID = LabelWithTextAndIconView.class.getName();
-	public static final String DEFAULT_LABEL = "Label with icon and text";
+public abstract class AbstractFolderLayout implements IFolderLayout {
 
-	public LabelWithTextAndIconView(final IViewContext context) {
-		super(context);
+	@Override
+	public String getTooltip() {
+		return null;
 	}
 
 	@Override
-	public void createViewContent(final IContainer container, final IBluePrintFactory bpFactory) {
-		//set the layout
-		container.setLayout(new MigLayoutDescriptor("[]", "[]"));
-
-		//create the labels blue print
-		final ILabelBluePrint labelBp = bpFactory.label().setText("The label text").setIcon(IconsSmall.QUESTION);
-
-		//add the label blue print to the container
-		container.add(labelBp, "");
+	public IImageConstant getIcon() {
+		return null;
 	}
+
+	@Override
+	public String getGroupId() {
+		return null;
+	}
+
+	@Override
+	public List<? extends IViewLayout> getViews() {
+		return Collections.emptyList();
+	}
+
+	@Override
+	public boolean isDetachable() {
+		return true;
+	}
+
+	@Override
+	public boolean getViewsCloseable() {
+		return true;
+	}
+
 }

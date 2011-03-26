@@ -29,12 +29,12 @@
 package org.jowidgets.examples.common.workbench.widgets;
 
 import org.jowidgets.examples.common.icons.SilkIcons;
-import org.jowidgets.examples.common.workbench.base.AbstractComponentNode;
+import org.jowidgets.examples.common.workbench.base.AbstractDemoComponentNode;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IComponentNodeContext;
 
-public class WidgetsHowToTreeNode extends AbstractComponentNode {
+public class WidgetsHowToTreeNode extends AbstractDemoComponentNode {
 
 	public static final String ID = WidgetsHowToTreeNode.class.getName();
 
