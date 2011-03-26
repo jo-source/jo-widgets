@@ -48,92 +48,92 @@ abstract class AbstractItemModelWrapper implements IItemModel {
 	}
 
 	@Override
-	public String getId() {
+	public final String getId() {
 		return itemModel.getId();
 	}
 
 	@Override
-	public String getText() {
+	public final String getText() {
 		return itemModel.getText();
 	}
 
 	@Override
-	public String getToolTipText() {
+	public final String getToolTipText() {
 		return itemModel.getToolTipText();
 	}
 
 	@Override
-	public IImageConstant getIcon() {
+	public final IImageConstant getIcon() {
 		return itemModel.getIcon();
 	}
 
 	@Override
-	public Accelerator getAccelerator() {
+	public final Accelerator getAccelerator() {
 		return itemModel.getAccelerator();
 	}
 
 	@Override
-	public Character getMnemonic() {
+	public final Character getMnemonic() {
 		return itemModel.getMnemonic();
 	}
 
 	@Override
-	public boolean isEnabled() {
+	public final boolean isEnabled() {
 		return itemModel.isEnabled();
 	}
 
 	@Override
-	public void setId(final String id) {
+	public final void setId(final String id) {
 		itemModel.setId(id);
 	}
 
 	@Override
-	public void setText(final String text) {
+	public final void setText(final String text) {
 		itemModel.setText(text);
 	}
 
 	@Override
-	public void setToolTipText(final String toolTipText) {
+	public final void setToolTipText(final String toolTipText) {
 		itemModel.setToolTipText(toolTipText);
 	}
 
 	@Override
-	public void setIcon(final IImageConstant icon) {
+	public final void setIcon(final IImageConstant icon) {
 		itemModel.setIcon(icon);
 	}
 
 	@Override
-	public void setAccelerator(final Accelerator accelerator) {
+	public final void setAccelerator(final Accelerator accelerator) {
 		itemModel.setAccelerator(accelerator);
 	}
 
 	@Override
-	public void setAccelerator(final char key, final Modifier... modifier) {
+	public final void setAccelerator(final char key, final Modifier... modifier) {
 		itemModel.setAccelerator(key, modifier);
 	}
 
 	@Override
-	public void setMnemonic(final Character mnemonic) {
+	public final void setMnemonic(final Character mnemonic) {
 		itemModel.setMnemonic(mnemonic);
 	}
 
 	@Override
-	public void setMnemonic(final char mnemonic) {
+	public final void setMnemonic(final char mnemonic) {
 		itemModel.setMnemonic(mnemonic);
 	}
 
 	@Override
-	public void setEnabled(final boolean enabled) {
+	public final void setEnabled(final boolean enabled) {
 		itemModel.setEnabled(enabled);
 	}
 
 	@Override
-	public void addItemModelListener(final IItemModelListener listener) {
+	public final void addItemModelListener(final IItemModelListener listener) {
 		itemModel.addItemModelListener(listener);
 	}
 
 	@Override
-	public void removeItemModelListener(final IItemModelListener listener) {
+	public final void removeItemModelListener(final IItemModelListener listener) {
 		itemModel.removeItemModelListener(listener);
 	}
 

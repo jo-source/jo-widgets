@@ -75,27 +75,27 @@ public class ActionItemModel extends AbstractItemModelWrapper implements IAction
 	}
 
 	@Override
-	public void addActionListener(final IActionListener actionListener) {
+	public final void addActionListener(final IActionListener actionListener) {
 		getItemModel().addActionListener(actionListener);
 	}
 
 	@Override
-	public void removeActionListener(final IActionListener actionListener) {
+	public final void removeActionListener(final IActionListener actionListener) {
 		getItemModel().removeActionListener(actionListener);
 	}
 
 	@Override
-	public IAction getAction() {
+	public final IAction getAction() {
 		return getItemModel().getAction();
 	}
 
 	@Override
-	public void setAction(final IAction action) {
+	public final void setAction(final IAction action) {
 		getItemModel().setAction(action);
 	}
 
 	@Override
-	public void actionPerformed() {
+	public final void actionPerformed() {
 		getItemModel().actionPerformed();
 	}
 

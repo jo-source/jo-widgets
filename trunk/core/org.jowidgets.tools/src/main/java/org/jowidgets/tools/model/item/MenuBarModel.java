@@ -52,107 +52,107 @@ public class MenuBarModel implements IMenuBarModel {
 	}
 
 	@Override
-	public void addListModelListener(final IListModelListener listener) {
+	public final void addListModelListener(final IListModelListener listener) {
 		model.addListModelListener(listener);
 	}
 
 	@Override
-	public void removeListModelListener(final IListModelListener listener) {
+	public final void removeListModelListener(final IListModelListener listener) {
 		model.removeListModelListener(listener);
 	}
 
 	@Override
-	public void addAfter(final IMenuModel newMenu, final String id) {
+	public final void addAfter(final IMenuModel newMenu, final String id) {
 		model.addAfter(newMenu, id);
 	}
 
 	@Override
-	public void addBefore(final IMenuModel newMenu, final String id) {
+	public final void addBefore(final IMenuModel newMenu, final String id) {
 		model.addBefore(newMenu, id);
 	}
 
 	@Override
-	public void bind(final IMenuBarModel model) {
+	public final void bind(final IMenuBarModel model) {
 		this.model.bind(model);
 	}
 
 	@Override
-	public void unbind(final IMenuBarModel model) {
+	public final void unbind(final IMenuBarModel model) {
 		this.model.unbind(model);
 	}
 
 	@Override
-	public void addMenusOfModel(final IMenuBarModel model) {
+	public final void addMenusOfModel(final IMenuBarModel model) {
 		this.model.addMenusOfModel(model);
 	}
 
 	@Override
-	public IMenuModel addMenu(final IMenuModel menu) {
+	public final IMenuModel addMenu(final IMenuModel menu) {
 		return model.addMenu(menu);
 	}
 
 	@Override
-	public IMenuModel addMenu(final int index, final IMenuModel menu) {
+	public final IMenuModel addMenu(final int index, final IMenuModel menu) {
 		return model.addMenu(index, menu);
 	}
 
 	@Override
-	public IMenuModel addMenu(final IMenuModelBuilder menuBuilder) {
+	public final IMenuModel addMenu(final IMenuModelBuilder menuBuilder) {
 		return model.addMenu(menuBuilder);
 	}
 
 	@Override
-	public IMenuModel addMenu(final int index, final IMenuModelBuilder menuBuilder) {
+	public final IMenuModel addMenu(final int index, final IMenuModelBuilder menuBuilder) {
 		return model.addMenu(index, menuBuilder);
 	}
 
 	@Override
-	public IMenuModel addMenu() {
+	public final IMenuModel addMenu() {
 		return model.addMenu();
 	}
 
 	@Override
-	public IMenuModel addMenu(final String text) {
+	public final IMenuModel addMenu(final String text) {
 		return model.addMenu(text);
 	}
 
 	@Override
-	public IMenuModel addMenu(final String text, final String toolTipText) {
+	public final IMenuModel addMenu(final String text, final String toolTipText) {
 		return model.addMenu(text, toolTipText);
 	}
 
 	@Override
-	public IMenuModel addMenu(final String text, final IImageConstant icon) {
+	public final IMenuModel addMenu(final String text, final IImageConstant icon) {
 		return model.addMenu(text, icon);
 	}
 
 	@Override
-	public IMenuModel addMenu(final String text, final String toolTipText, final IImageConstant icon) {
+	public final IMenuModel addMenu(final String text, final String toolTipText, final IImageConstant icon) {
 		return model.addMenu(text, toolTipText, icon);
 	}
 
 	@Override
-	public void removeMenu(final IMenuModel item) {
+	public final void removeMenu(final IMenuModel item) {
 		model.removeMenu(item);
 	}
 
 	@Override
-	public void removeMenu(final int index) {
+	public final void removeMenu(final int index) {
 		model.removeMenu(index);
 	}
 
 	@Override
-	public void removeAllMenus() {
+	public final void removeAllMenus() {
 		model.removeAllMenus();
 	}
 
 	@Override
-	public IMenuModel findMenuById(final String id) {
+	public final IMenuModel findMenuById(final String id) {
 		return model.findMenuById(id);
 	}
 
 	@Override
-	public List<IMenuModel> getMenus() {
+	public final List<IMenuModel> getMenus() {
 		return model.getMenus();
 	}
 

@@ -62,332 +62,332 @@ public class SimpleTableModel implements ISimpleTableModel {
 	}
 
 	@Override
-	public int getColumnCount() {
+	public final int getColumnCount() {
 		return tableModel.getColumnCount();
 	}
 
 	@Override
-	public int getRowCount() {
+	public final int getRowCount() {
 		return tableModel.getRowCount();
 	}
 
 	@Override
-	public ITableCell getCell(final int rowIndex, final int columnIndex) {
+	public final ITableCell getCell(final int rowIndex, final int columnIndex) {
 		return tableModel.getCell(rowIndex, columnIndex);
 	}
 
 	@Override
-	public ITableColumnModelObservable getTableColumnModelObservable() {
+	public final ITableColumnModelObservable getTableColumnModelObservable() {
 		return tableModel.getTableColumnModelObservable();
 	}
 
 	@Override
-	public ArrayList<Integer> getSelection() {
+	public final ArrayList<Integer> getSelection() {
 		return tableModel.getSelection();
 	}
 
 	@Override
-	public void setSelection(final List<Integer> selection) {
+	public final void setSelection(final List<Integer> selection) {
 		tableModel.setSelection(selection);
 	}
 
 	@Override
-	public int getFirstSelectedRow() {
+	public final int getFirstSelectedRow() {
 		return tableModel.getFirstSelectedRow();
 	}
 
 	@Override
-	public int getLastSelectedRow() {
+	public final int getLastSelectedRow() {
 		return tableModel.getLastSelectedRow();
 	}
 
 	@Override
-	public ITableDataModelObservable getTableDataModelObservable() {
+	public final ITableDataModelObservable getTableDataModelObservable() {
 		return tableModel.getTableDataModelObservable();
 	}
 
 	@Override
-	public void addDataModelListener(final ITableDataModelListener listener) {
+	public final void addDataModelListener(final ITableDataModelListener listener) {
 		tableModel.addDataModelListener(listener);
 	}
 
 	@Override
-	public void removeDataModelListener(final ITableDataModelListener listener) {
+	public final void removeDataModelListener(final ITableDataModelListener listener) {
 		tableModel.removeDataModelListener(listener);
 	}
 
 	@Override
-	public void addColumnModelListener(final ITableColumnModelListener listener) {
+	public final void addColumnModelListener(final ITableColumnModelListener listener) {
 		tableModel.addColumnModelListener(listener);
 	}
 
 	@Override
-	public void removeColumnModelListener(final ITableColumnModelListener listener) {
+	public final void removeColumnModelListener(final ITableColumnModelListener listener) {
 		tableModel.removeColumnModelListener(listener);
 	}
 
 	@Override
-	public ArrayList<ITableCell> getRow(final int rowIndex) {
+	public final ArrayList<ITableCell> getRow(final int rowIndex) {
 		return tableModel.getRow(rowIndex);
 	}
 
 	@Override
-	public ArrayList<String> getRowTexts(final int rowIndex) {
+	public final ArrayList<String> getRowTexts(final int rowIndex) {
 		return tableModel.getRowTexts(rowIndex);
 	}
 
 	@Override
-	public void addRow() {
+	public final void addRow() {
 		tableModel.addRow();
 	}
 
 	@Override
-	public void addRow(final int rowIndex) {
+	public final void addRow(final int rowIndex) {
 		tableModel.addRow(rowIndex);
 	}
 
 	@Override
-	public IDefaultTableColumn getColumn(final int columnIndex) {
+	public final IDefaultTableColumn getColumn(final int columnIndex) {
 		return tableModel.getColumn(columnIndex);
 	}
 
 	@Override
-	public void addRows(final int rowIndex, final int rowCount) {
+	public final void addRows(final int rowIndex, final int rowCount) {
 		tableModel.addRows(rowIndex, rowCount);
 	}
 
 	@Override
-	public void addRow(final ITableCell... cells) {
+	public final void addRow(final ITableCell... cells) {
 		tableModel.addRow(cells);
 	}
 
 	@Override
-	public ArrayList<IDefaultTableColumn> getColumns() {
+	public final ArrayList<IDefaultTableColumn> getColumns() {
 		return tableModel.getColumns();
 	}
 
 	@Override
-	public void addRow(final int rowIndex, final ITableCell... cells) {
+	public final void addRow(final int rowIndex, final ITableCell... cells) {
 		tableModel.addRow(rowIndex, cells);
 	}
 
 	@Override
-	public void addRow(final List<String> cellTexts) {
+	public final void addRow(final List<String> cellTexts) {
 		tableModel.addRow(cellTexts);
 	}
 
 	@Override
-	public void addRow(final int rowIndex, final List<String> cellTexts) {
+	public final void addRow(final int rowIndex, final List<String> cellTexts) {
 		tableModel.addRow(rowIndex, cellTexts);
 	}
 
 	@Override
-	public IDefaultTableColumn addColumn() {
+	public final IDefaultTableColumn addColumn() {
 		return tableModel.addColumn();
 	}
 
 	@Override
-	public IDefaultTableColumn addColumn(final int columnIndex) {
+	public final IDefaultTableColumn addColumn(final int columnIndex) {
 		return tableModel.addColumn(columnIndex);
 	}
 
 	@Override
-	public void addRow(final ITableCellBuilder... cellBuilders) {
+	public final void addRow(final ITableCellBuilder... cellBuilders) {
 		tableModel.addRow(cellBuilders);
 	}
 
 	@Override
-	public void addRow(final int rowIndex, final ITableCellBuilder... cellBuilders) {
+	public final void addRow(final int rowIndex, final ITableCellBuilder... cellBuilders) {
 		tableModel.addRow(rowIndex, cellBuilders);
 	}
 
 	@Override
-	public void addColumn(final IDefaultTableColumn column) {
+	public final void addColumn(final IDefaultTableColumn column) {
 		tableModel.addColumn(column);
 	}
 
 	@Override
-	public void addColumn(final int columnIndex, final IDefaultTableColumn column) {
+	public final void addColumn(final int columnIndex, final IDefaultTableColumn column) {
 		tableModel.addColumn(columnIndex, column);
 	}
 
 	@Override
-	public void addRow(final String... cellTexts) {
+	public final void addRow(final String... cellTexts) {
 		tableModel.addRow(cellTexts);
 	}
 
 	@Override
-	public void addRow(final int rowIndex, final String... cellTexts) {
+	public final void addRow(final int rowIndex, final String... cellTexts) {
 		tableModel.addRow(rowIndex, cellTexts);
 	}
 
 	@Override
-	public IDefaultTableColumn addColumn(final IDefaultTableColumnBuilder columnBuilder) {
+	public final IDefaultTableColumn addColumn(final IDefaultTableColumnBuilder columnBuilder) {
 		return tableModel.addColumn(columnBuilder);
 	}
 
 	@Override
-	public void removeRow(final int index) {
+	public final void removeRow(final int index) {
 		tableModel.removeRow(index);
 	}
 
 	@Override
-	public void removeRows(final int fromIndex, final int toIndex) {
+	public final void removeRows(final int fromIndex, final int toIndex) {
 		tableModel.removeRows(fromIndex, toIndex);
 	}
 
 	@Override
-	public void removeRows(final int... rows) {
+	public final void removeRows(final int... rows) {
 		tableModel.removeRows(rows);
 	}
 
 	@Override
-	public void removeRows(final List<Integer> rows) {
+	public final void removeRows(final List<Integer> rows) {
 		tableModel.removeRows(rows);
 	}
 
 	@Override
-	public IDefaultTableColumn addColumn(final int columnIndex, final IDefaultTableColumnBuilder columnBuilder) {
+	public final IDefaultTableColumn addColumn(final int columnIndex, final IDefaultTableColumnBuilder columnBuilder) {
 		return tableModel.addColumn(columnIndex, columnBuilder);
 	}
 
 	@Override
-	public void removeAllRows() {
+	public final void removeAllRows() {
 		tableModel.removeAllRows();
 	}
 
 	@Override
-	public void setCell(final int rowIndex, final int columnIndex, final ITableCell cell) {
+	public final void setCell(final int rowIndex, final int columnIndex, final ITableCell cell) {
 		tableModel.setCell(rowIndex, columnIndex, cell);
 	}
 
 	@Override
-	public IDefaultTableColumn addColumn(final String text) {
+	public final IDefaultTableColumn addColumn(final String text) {
 		return tableModel.addColumn(text);
 	}
 
 	@Override
-	public void setCell(final int rowIndex, final int columnIndex, final ITableCellBuilder cellBuilder) {
+	public final void setCell(final int rowIndex, final int columnIndex, final ITableCellBuilder cellBuilder) {
 		tableModel.setCell(rowIndex, columnIndex, cellBuilder);
 	}
 
 	@Override
-	public IDefaultTableColumn addColumn(final String text, final String toolTipText) {
+	public final IDefaultTableColumn addColumn(final String text, final String toolTipText) {
 		return tableModel.addColumn(text, toolTipText);
 	}
 
 	@Override
-	public void setCell(final int rowIndex, final int columnIndex, final String text) {
+	public final void setCell(final int rowIndex, final int columnIndex, final String text) {
 		tableModel.setCell(rowIndex, columnIndex, text);
 	}
 
 	@Override
-	public void removeColumn(final int columnIndex) {
+	public final void removeColumn(final int columnIndex) {
 		tableModel.removeColumn(columnIndex);
 	}
 
 	@Override
-	public void removeColumns(final int fromColumnIndex, final int toColumnIndex) {
+	public final void removeColumns(final int fromColumnIndex, final int toColumnIndex) {
 		tableModel.removeColumns(fromColumnIndex, toColumnIndex);
 	}
 
 	@Override
-	public void setCell(final int rowIndex, final int columnIndex, final String text, final IImageConstant icon) {
+	public final void setCell(final int rowIndex, final int columnIndex, final String text, final IImageConstant icon) {
 		tableModel.setCell(rowIndex, columnIndex, text, icon);
 	}
 
 	@Override
-	public void removeColumns(final int... columns) {
+	public final void removeColumns(final int... columns) {
 		tableModel.removeColumns(columns);
 	}
 
 	@Override
-	public void setCell(final int rowIndex, final int columnIndex, final String text, final boolean editable) {
+	public final void setCell(final int rowIndex, final int columnIndex, final String text, final boolean editable) {
 		tableModel.setCell(rowIndex, columnIndex, text, editable);
 	}
 
 	@Override
-	public void setRow(final int rowIndex, final ITableCell... cells) {
+	public final void setRow(final int rowIndex, final ITableCell... cells) {
 		tableModel.setRow(rowIndex, cells);
 	}
 
 	@Override
-	public void setRow(final int rowIndex, final ITableCellBuilder... cellBuilders) {
+	public final void setRow(final int rowIndex, final ITableCellBuilder... cellBuilders) {
 		tableModel.setRow(rowIndex, cellBuilders);
 	}
 
 	@Override
-	public void setCellText(final int rowIndex, final int columnIndex, final String text) {
+	public final void setCellText(final int rowIndex, final int columnIndex, final String text) {
 		tableModel.setCellText(rowIndex, columnIndex, text);
 	}
 
 	@Override
-	public void setCellTooltipText(final int rowIndex, final int columnIndex, final String tooltipText) {
+	public final void setCellTooltipText(final int rowIndex, final int columnIndex, final String tooltipText) {
 		tableModel.setCellTooltipText(rowIndex, columnIndex, tooltipText);
 	}
 
 	@Override
-	public void setCellIcon(final int rowIndex, final int columnIndex, final IImageConstant icon) {
+	public final void setCellIcon(final int rowIndex, final int columnIndex, final IImageConstant icon) {
 		tableModel.setCellIcon(rowIndex, columnIndex, icon);
 	}
 
 	@Override
-	public void setRowTexts(final int rowIndex, final String... cellTexts) {
+	public final void setRowTexts(final int rowIndex, final String... cellTexts) {
 		tableModel.setRowTexts(rowIndex, cellTexts);
 	}
 
 	@Override
-	public void setRowTexts(final int rowIndex, final List<String> cellTexts) {
+	public final void setRowTexts(final int rowIndex, final List<String> cellTexts) {
 		tableModel.setRowTexts(rowIndex, cellTexts);
 	}
 
 	@Override
-	public void removeAllColumns() {
+	public final void removeAllColumns() {
 		tableModel.removeAllColumns();
 	}
 
 	@Override
-	public void modifyModelStart() {
+	public final void modifyModelStart() {
 		tableModel.modifyModelStart();
 	}
 
 	@Override
-	public void setCellEditable(final int rowIndex, final int columnIndex, final boolean editable) {
+	public final void setCellEditable(final int rowIndex, final int columnIndex, final boolean editable) {
 		tableModel.setCellEditable(rowIndex, columnIndex, editable);
 	}
 
 	@Override
-	public void modifyModelEnd() {
+	public final void modifyModelEnd() {
 		tableModel.modifyModelEnd();
 	}
 
 	@Override
-	public void setColumn(final int columnIndex, final IDefaultTableColumn column) {
+	public final void setColumn(final int columnIndex, final IDefaultTableColumn column) {
 		tableModel.setColumn(columnIndex, column);
 	}
 
 	@Override
-	public IDefaultTableColumn setColumn(final int columnIndex, final IDefaultTableColumnBuilder columnBuilder) {
+	public final IDefaultTableColumn setColumn(final int columnIndex, final IDefaultTableColumnBuilder columnBuilder) {
 		return tableModel.setColumn(columnIndex, columnBuilder);
 	}
 
 	@Override
-	public void setColumnText(final int columnIndex, final String text) {
+	public final void setColumnText(final int columnIndex, final String text) {
 		tableModel.setColumnText(columnIndex, text);
 	}
 
 	@Override
-	public void setColumnToolTipText(final int columnIndex, final String tooltipText) {
+	public final void setColumnToolTipText(final int columnIndex, final String tooltipText) {
 		tableModel.setColumnToolTipText(columnIndex, tooltipText);
 	}
 
 	@Override
-	public void setColumnIcon(final int columnIndex, final IImageConstant icon) {
+	public final void setColumnIcon(final int columnIndex, final IImageConstant icon) {
 		tableModel.setColumnIcon(columnIndex, icon);
 	}
 
 	@Override
-	public void setColumnAlignment(final int columnIndex, final AlignmentHorizontal alignment) {
+	public final void setColumnAlignment(final int columnIndex, final AlignmentHorizontal alignment) {
 		tableModel.setColumnAlignment(columnIndex, alignment);
 	}
 

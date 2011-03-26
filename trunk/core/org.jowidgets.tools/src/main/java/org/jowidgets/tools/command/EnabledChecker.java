@@ -48,7 +48,7 @@ public class EnabledChecker implements IEnabledChecker {
 		this.enabledState = EnabledState.ENABLED;
 	}
 
-	public void setEnabledState(final IEnabledState enabledState) {
+	public final void setEnabledState(final IEnabledState enabledState) {
 		Assert.paramNotNull(enabledState, "enabledState");
 
 		final boolean stateChanged = !this.enabledState.equals(enabledState);
@@ -60,7 +60,7 @@ public class EnabledChecker implements IEnabledChecker {
 	}
 
 	@Override
-	public IEnabledState getEnabledState() {
+	public final IEnabledState getEnabledState() {
 		return enabledState;
 	}
 

@@ -70,87 +70,87 @@ public class CommandAction implements ICommandAction {
 	}
 
 	@Override
-	public void setText(final String text) {
+	public final void setText(final String text) {
 		action.setText(text);
 	}
 
 	@Override
-	public String getText() {
+	public final String getText() {
 		return action.getText();
 	}
 
 	@Override
-	public void setToolTipText(final String toolTipText) {
+	public final void setToolTipText(final String toolTipText) {
 		action.setToolTipText(toolTipText);
 	}
 
 	@Override
-	public String getToolTipText() {
+	public final String getToolTipText() {
 		return action.getToolTipText();
 	}
 
 	@Override
-	public IImageConstant getIcon() {
+	public final IImageConstant getIcon() {
 		return action.getIcon();
 	}
 
 	@Override
-	public void setIcon(final IImageConstant icon) {
+	public final void setIcon(final IImageConstant icon) {
 		action.setIcon(icon);
 	}
 
 	@Override
-	public Character getMnemonic() {
+	public final Character getMnemonic() {
 		return action.getMnemonic();
 	}
 
 	@Override
-	public void setEnabled(final boolean enabled) {
+	public final void setEnabled(final boolean enabled) {
 		action.setEnabled(enabled);
 	}
 
 	@Override
-	public Accelerator getAccelerator() {
+	public final Accelerator getAccelerator() {
 		return action.getAccelerator();
 	}
 
 	@Override
-	public void setCommand(final ICommand command) {
+	public final void setCommand(final ICommand command) {
 		action.setCommand(command);
 	}
 
 	@Override
-	public boolean isEnabled() {
+	public final boolean isEnabled() {
 		return action.isEnabled();
 	}
 
 	@Override
-	public void execute(final IExecutionContext actionEvent) throws Exception {
+	public final void execute(final IExecutionContext actionEvent) throws Exception {
 		action.execute(actionEvent);
 	}
 
 	@Override
-	public void setCommand(final ICommandExecutor command) {
+	public final void setCommand(final ICommandExecutor command) {
 		action.setCommand(command);
 	}
 
 	@Override
-	public void setCommand(final ICommandExecutor command, final IEnabledChecker enabledChecker) {
+	public final void setCommand(final ICommandExecutor command, final IEnabledChecker enabledChecker) {
 		action.setCommand(command, enabledChecker);
 	}
 
 	@Override
-	public IExceptionHandler getExceptionHandler() {
+	public final IExceptionHandler getExceptionHandler() {
 		return action.getExceptionHandler();
 	}
 
 	@Override
-	public void setCommand(final ICommandExecutor command, final IExceptionHandler exceptionHandler) {
+	public final void setCommand(final ICommandExecutor command, final IExceptionHandler exceptionHandler) {
 		action.setCommand(command, exceptionHandler);
 	}
 
 	@Override
-	public void setCommand(
+	public final void setCommand(
 		final ICommandExecutor command,
 		final IEnabledChecker enabledChecker,
 		final IExceptionHandler exceptionHandler) {
@@ -158,12 +158,12 @@ public class CommandAction implements ICommandAction {
 	}
 
 	@Override
-	public void setActionExceptionHandler(final IExceptionHandler exceptionHandler) {
+	public final void setActionExceptionHandler(final IExceptionHandler exceptionHandler) {
 		action.setActionExceptionHandler(exceptionHandler);
 	}
 
 	@Override
-	public IActionChangeObservable getActionChangeObservable() {
+	public final IActionChangeObservable getActionChangeObservable() {
 		return action.getActionChangeObservable();
 	}
 

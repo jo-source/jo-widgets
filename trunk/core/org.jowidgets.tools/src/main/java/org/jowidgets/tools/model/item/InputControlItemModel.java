@@ -102,20 +102,20 @@ public class InputControlItemModel<VALUE_TYPE> extends AbstractItemModelWrapper 
 	}
 
 	@Override
-	public IContainerContentCreator getContentCreator() {
+	public final IContainerContentCreator getContentCreator() {
 		return contentCreator;
 	}
 
 	@Override
-	public void setContentCreator(final IContainerContentCreator contentCreator) {
+	public final void setContentCreator(final IContainerContentCreator contentCreator) {
 		throw new UnsupportedOperationException("The content creator of this model is imutable");
 	}
 
-	public VALUE_TYPE getValue() {
+	public final VALUE_TYPE getValue() {
 		return value;
 	}
 
-	public void setValue(final VALUE_TYPE value) {
+	public final void setValue(final VALUE_TYPE value) {
 		this.value = value;
 		changeValues(value, null);
 	}
@@ -162,12 +162,12 @@ public class InputControlItemModel<VALUE_TYPE> extends AbstractItemModelWrapper 
 	}
 
 	@Override
-	public void addInputListener(final IInputListener listener) {
+	public final void addInputListener(final IInputListener listener) {
 		inputObservable.addInputListener(listener);
 	}
 
 	@Override
-	public void removeInputListener(final IInputListener listener) {
+	public final void removeInputListener(final IInputListener listener) {
 		inputObservable.removeInputListener(listener);
 	}
 }

@@ -66,62 +66,62 @@ public class DefaultTableColumn implements IDefaultTableColumn {
 	}
 
 	@Override
-	public String getText() {
+	public final String getText() {
 		return column.getText();
 	}
 
 	@Override
-	public String getToolTipText() {
+	public final String getToolTipText() {
 		return column.getToolTipText();
 	}
 
 	@Override
-	public IImageConstant getIcon() {
+	public final IImageConstant getIcon() {
 		return column.getIcon();
 	}
 
 	@Override
-	public void setWidth(final int width) {
+	public final void setWidth(final int width) {
 		column.setWidth(width);
 	}
 
 	@Override
-	public int getWidth() {
+	public final int getWidth() {
 		return column.getWidth();
 	}
 
 	@Override
-	public AlignmentHorizontal getAlignment() {
+	public final AlignmentHorizontal getAlignment() {
 		return column.getAlignment();
 	}
 
 	@Override
-	public void setText(final String text) {
+	public final void setText(final String text) {
 		column.setText(text);
 	}
 
 	@Override
-	public void setToolTipText(final String tooltipText) {
+	public final void setToolTipText(final String tooltipText) {
 		column.setToolTipText(tooltipText);
 	}
 
 	@Override
-	public void setIcon(final IImageConstant icon) {
+	public final void setIcon(final IImageConstant icon) {
 		column.setIcon(icon);
 	}
 
 	@Override
-	public void setAlignment(final AlignmentHorizontal alignment) {
+	public final void setAlignment(final AlignmentHorizontal alignment) {
 		column.setAlignment(alignment);
 	}
 
 	@Override
-	public void addChangeListener(final IChangeListener listener) {
+	public final void addChangeListener(final IChangeListener listener) {
 		column.addChangeListener(listener);
 	}
 
 	@Override
-	public void removeChangeListener(final IChangeListener listener) {
+	public final void removeChangeListener(final IChangeListener listener) {
 		column.removeChangeListener(listener);
 	}
 

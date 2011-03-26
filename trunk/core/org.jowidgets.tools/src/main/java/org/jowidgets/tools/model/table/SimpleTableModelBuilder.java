@@ -48,43 +48,43 @@ public class SimpleTableModelBuilder implements ISimpleTableModelBuilder {
 	}
 
 	@Override
-	public ISimpleTableModelBuilder setRowCount(final int rowCount) {
+	public final ISimpleTableModelBuilder setRowCount(final int rowCount) {
 		builder.setRowCount(rowCount);
 		return this;
 	}
 
 	@Override
-	public ISimpleTableModelBuilder setColumnCount(final int columnCount) {
+	public final ISimpleTableModelBuilder setColumnCount(final int columnCount) {
 		builder.setColumnCount(columnCount);
 		return this;
 	}
 
 	@Override
-	public ISimpleTableModelBuilder setEditableDefault(final boolean editable) {
+	public final ISimpleTableModelBuilder setEditableDefault(final boolean editable) {
 		builder.setEditableDefault(editable);
 		return this;
 	}
 
 	@Override
-	public ISimpleTableModelBuilder setDefaultStripedRenderingColors() {
+	public final ISimpleTableModelBuilder setDefaultStripedRenderingColors() {
 		builder.setDefaultStripedRenderingColors();
 		return this;
 	}
 
 	@Override
-	public ISimpleTableModelBuilder setEvenRowsBackgroundColor(final IColorConstant color) {
+	public final ISimpleTableModelBuilder setEvenRowsBackgroundColor(final IColorConstant color) {
 		builder.setEvenRowsBackgroundColor(color);
 		return this;
 	}
 
 	@Override
-	public ISimpleTableModelBuilder setOddRowsBackgroundColor(final IColorConstant color) {
+	public final ISimpleTableModelBuilder setOddRowsBackgroundColor(final IColorConstant color) {
 		builder.setOddRowsBackgroundColor(color);
 		return this;
 	}
 
 	@Override
-	public ISimpleTableModel build() {
+	public final ISimpleTableModel build() {
 		return builder.build();
 	}
 
