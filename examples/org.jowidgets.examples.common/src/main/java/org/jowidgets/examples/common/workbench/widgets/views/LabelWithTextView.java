@@ -35,7 +35,7 @@ import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
 
-public class LabelWithTextView extends AbstractDemoView implements IView {
+public class LabelWithTextView extends AbstractHowToView implements IView {
 
 	public static final String ID = LabelWithTextView.class.getName();
 	public static final String DEFAULT_LABEL = "Label with text";

@@ -71,61 +71,61 @@ public class WorkbenchApplicationModelBuilder implements IWorkbenchApplicationMo
 	}
 
 	@Override
-	public IWorkbenchApplicationModelBuilder setLabel(final String label) {
+	public final IWorkbenchApplicationModelBuilder setLabel(final String label) {
 		builder.setLabel(label);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchApplicationModelBuilder setId(final String id) {
+	public final IWorkbenchApplicationModelBuilder setId(final String id) {
 		builder.setId(id);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchApplicationModelBuilder setTooltip(final String toolTiptext) {
+	public final IWorkbenchApplicationModelBuilder setTooltip(final String toolTiptext) {
 		builder.setTooltip(toolTiptext);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchApplicationModelBuilder addChild(final IComponentNodeModel childModel) {
+	public final IWorkbenchApplicationModelBuilder addChild(final IComponentNodeModel childModel) {
 		builder.addChild(childModel);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchApplicationModelBuilder setIcon(final IImageConstant icon) {
+	public final IWorkbenchApplicationModelBuilder setIcon(final IImageConstant icon) {
 		builder.setIcon(icon);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchApplicationModelBuilder addChild(final int index, final IComponentNodeModel childModel) {
+	public final IWorkbenchApplicationModelBuilder addChild(final int index, final IComponentNodeModel childModel) {
 		builder.addChild(index, childModel);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchApplicationModelBuilder addChild(final IComponentNodeModelBuilder childModel) {
+	public final IWorkbenchApplicationModelBuilder addChild(final IComponentNodeModelBuilder childModel) {
 		builder.addChild(childModel);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchApplicationModelBuilder addChild(final int index, final IComponentNodeModelBuilder childModel) {
+	public final IWorkbenchApplicationModelBuilder addChild(final int index, final IComponentNodeModelBuilder childModel) {
 		builder.addChild(index, childModel);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchApplicationModelBuilder setPopupMenu(final IMenuModel menuModel) {
+	public final IWorkbenchApplicationModelBuilder setPopupMenu(final IMenuModel menuModel) {
 		builder.setPopupMenu(menuModel);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchApplicationModelBuilder addChild(
+	public final IWorkbenchApplicationModelBuilder addChild(
 		final String id,
 		final String label,
 		final String tooltip,
@@ -135,62 +135,62 @@ public class WorkbenchApplicationModelBuilder implements IWorkbenchApplicationMo
 	}
 
 	@Override
-	public IWorkbenchApplicationModelBuilder setToolBar(final IToolBarModel toolBarModel) {
+	public final IWorkbenchApplicationModelBuilder setToolBar(final IToolBarModel toolBarModel) {
 		builder.setToolBar(toolBarModel);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchApplicationModelBuilder setToolBarMenu(final IMenuModel toolBarMenu) {
+	public final IWorkbenchApplicationModelBuilder setToolBarMenu(final IMenuModel toolBarMenu) {
 		builder.setToolBarMenu(toolBarMenu);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchApplicationModelBuilder addChild(final String id, final String label, final IImageConstant icon) {
+	public final IWorkbenchApplicationModelBuilder addChild(final String id, final String label, final IImageConstant icon) {
 		builder.addChild(id, label, icon);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchApplicationModelBuilder setLifecycleCallback(final ILifecycleCallback lifecycleCallback) {
+	public final IWorkbenchApplicationModelBuilder setLifecycleCallback(final ILifecycleCallback lifecycleCallback) {
 		builder.setLifecycleCallback(lifecycleCallback);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchApplicationModelBuilder addChild(final String id, final String label, final String tooltip) {
+	public final IWorkbenchApplicationModelBuilder addChild(final String id, final String label, final String tooltip) {
 		builder.addChild(id, label, tooltip);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchApplicationModelBuilder addChild(final String id, final String label) {
+	public final IWorkbenchApplicationModelBuilder addChild(final String id, final String label) {
 		builder.addChild(id, label);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchApplicationModelBuilder setInitializeCallback(
+	public final IWorkbenchApplicationModelBuilder setInitializeCallback(
 		final IWorkbenchApplicationInitializeCallback initializeCallback) {
 		builder.setInitializeCallback(initializeCallback);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchApplicationModelBuilder addChild(final String id) {
+	public final IWorkbenchApplicationModelBuilder addChild(final String id) {
 		builder.addChild(id);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchApplicationModelBuilder setDescriptor(final IWorkbenchApplicationDescriptor descriptor) {
+	public final IWorkbenchApplicationModelBuilder setDescriptor(final IWorkbenchApplicationDescriptor descriptor) {
 		builder.setDescriptor(descriptor);
 		return this;
 	}
 
 	@Override
-	public IWorkbenchApplicationModel build() {
+	public final IWorkbenchApplicationModel build() {
 		return builder.build();
 	}
 

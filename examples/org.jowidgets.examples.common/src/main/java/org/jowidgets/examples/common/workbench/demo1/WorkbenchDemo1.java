@@ -37,12 +37,12 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.examples.common.icons.DemoIconsInitializer;
 import org.jowidgets.examples.common.icons.SilkIcons;
-import org.jowidgets.examples.common.workbench.base.AbstractWorkbench;
+import org.jowidgets.examples.common.workbench.base.AbstractDemoWorkbench;
 import org.jowidgets.tools.model.item.ActionItemModel;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.workbench.api.IWorkbenchContext;
 
-public class WorkbenchDemo1 extends AbstractWorkbench {
+public class WorkbenchDemo1 extends AbstractDemoWorkbench {
 
 	private final Dimension initialDimension;
 

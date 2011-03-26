@@ -92,10 +92,6 @@ public class ComponentNode implements IComponentNode {
 		this(builder(componentType, label, tooltip, icon));
 	}
 
-	public ComponentNode() {
-		this(builder());
-	}
-
 	public ComponentNode(final String label) {
 		this(builder(label));
 	}
@@ -122,27 +118,27 @@ public class ComponentNode implements IComponentNode {
 		this.model = model;
 	}
 
-	public IComponentNodeModel getModel() {
+	public final IComponentNodeModel getModel() {
 		return model;
 	}
 
 	@Override
-	public String getId() {
+	public final String getId() {
 		return node.getId();
 	}
 
 	@Override
-	public String getLabel() {
+	public final String getLabel() {
 		return node.getLabel();
 	}
 
 	@Override
-	public String getTooltip() {
+	public final String getTooltip() {
 		return node.getTooltip();
 	}
 
 	@Override
-	public IImageConstant getIcon() {
+	public final IImageConstant getIcon() {
 		return node.getIcon();
 	}
 

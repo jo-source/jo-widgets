@@ -35,6 +35,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.IWorkbench;
 import org.jowidgets.workbench.api.IWorkbenchContext;
+import org.jowidgets.workbench.api.IWorkbenchDescriptor;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchModelBuilder;
 import org.jowidgets.workbench.toolkit.api.WorkbenchToolkit;
@@ -44,8 +45,8 @@ public class Workbench implements IWorkbench {
 	private final IWorkbench workbench;
 	private final IWorkbenchModel model;
 
-	public Workbench() {
-		this(builder());
+	public Workbench(final IWorkbenchDescriptor descriptor) {
+		this(builder(descriptor));
 	}
 
 	public Workbench(final String label) {
@@ -71,65 +72,52 @@ public class Workbench implements IWorkbench {
 	}
 
 	@Override
-	public Dimension getInitialDimension() {
+	public final Dimension getInitialDimension() {
 		return workbench.getInitialDimension();
 	}
 
 	@Override
-	public Position getInitialPosition() {
+	public final Position getInitialPosition() {
 		return workbench.getInitialPosition();
 	}
 
 	@Override
-	public double getInitialSplitWeight() {
+	public final double getInitialSplitWeight() {
 		return workbench.getInitialSplitWeight();
 	}
 
 	@Override
-	public boolean hasApplicationNavigator() {
+	public final boolean hasApplicationNavigator() {
 		return workbench.hasApplicationNavigator();
 	}
 
 	@Override
-	public boolean getApplicationsCloseable() {
+	public final boolean getApplicationsCloseable() {
 		return workbench.getApplicationsCloseable();
 	}
 
 	@Override
-	public String getLabel() {
+	public final String getLabel() {
 		return workbench.getLabel();
 	}
 
 	@Override
-	public String getTooltip() {
+	public final String getTooltip() {
 		return workbench.getTooltip();
 	}
 
 	@Override
-	public IImageConstant getIcon() {
+	public final IImageConstant getIcon() {
 		return workbench.getIcon();
 	}
 
-	/**
-	 * This method is final, because the given context does not support WorkbenchModels.
-	 * To use the workbench context, it's possible to do the following on the builder
-	 * of this workbench model:
-	 * 
-	 * workbenchModelBuilder.setInitializeCallback(new IWorkbenchInitializeCallback() {
-	 * 
-	 * public void onContextInitialize(IWorkbenchContext context) {
-	 * // Do something with the context
-	 * // The given context will be synchronized with the model
-	 * }
-	 * }
-	 */
 	@Override
 	public final void onContextInitialize(final IWorkbenchContext context) {
 		workbench.onContextInitialize(context);
 	}
 
 	@Override
-	public void onClose(final IVetoable vetoable) {
+	public final void onClose(final IVetoable vetoable) {
 		workbench.onClose(vetoable);
 	}
 
@@ -143,6 +131,11 @@ public class Workbench implements IWorkbench {
 
 	public static IWorkbenchModelBuilder builder(final String label, final IImageConstant icon) {
 		return builder(label).setIcon(icon);
+	}
+
+	public static IWorkbenchModelBuilder builder(final IWorkbenchDescriptor descriptor) {
+		Assert.paramNotNull(descriptor, "descriptor");
+		return builder().setDescriptor(descriptor);
 	}
 
 	private static IWorkbenchModel build(final IWorkbenchModelBuilder builder) {

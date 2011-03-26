@@ -31,7 +31,7 @@ package org.jowidgets.examples.common.workbench.demo1;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.table.ISimpleTableModel;
 import org.jowidgets.examples.common.demo.DemoMenuProvider;
-import org.jowidgets.examples.common.workbench.base.AbstractComponent;
+import org.jowidgets.examples.common.workbench.base.AbstractDemoComponent;
 import org.jowidgets.tools.model.table.SimpleTableModelBuilder;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
@@ -45,7 +45,7 @@ import org.jowidgets.workbench.tools.FolderLayoutBuilder;
 import org.jowidgets.workbench.tools.Layout;
 import org.jowidgets.workbench.tools.SplitLayoutBuilder;
 
-public class ComponentDemo1 extends AbstractComponent implements IComponent {
+public class ComponentDemo1 extends AbstractDemoComponent implements IComponent {
 
 	public static final String DEFAULT_LAYOUT_ID = "DEFAULT_LAYOUT_ID";
 	public static final String MASTER_FOLDER_ID = "MASTER_FOLDER_ID";

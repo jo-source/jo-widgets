@@ -29,6 +29,7 @@
 package org.jowidgets.workbench.tools;
 
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.ILayout;
 import org.jowidgets.workbench.api.ILayoutContainer;
 import org.jowidgets.workbench.api.LayoutScope;
@@ -85,37 +86,37 @@ public class Layout implements ILayout {
 	}
 
 	public Layout(final ILayoutBuilder builder) {
-		super();
+		Assert.paramNotNull(builder, "builder");
 		this.layout = builder.build();
 	}
 
 	@Override
-	public String getLabel() {
+	public final String getLabel() {
 		return layout.getLabel();
 	}
 
 	@Override
-	public String getTooltip() {
+	public final String getTooltip() {
 		return layout.getTooltip();
 	}
 
 	@Override
-	public IImageConstant getIcon() {
+	public final IImageConstant getIcon() {
 		return layout.getIcon();
 	}
 
 	@Override
-	public String getId() {
+	public final String getId() {
 		return layout.getId();
 	}
 
 	@Override
-	public LayoutScope getScope() {
+	public final LayoutScope getScope() {
 		return layout.getScope();
 	}
 
 	@Override
-	public ILayoutContainer getLayoutContainer() {
+	public final ILayoutContainer getLayoutContainer() {
 		return layout.getLayoutContainer();
 	}
 

@@ -34,13 +34,13 @@ import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.examples.common.icons.SilkIcons;
-import org.jowidgets.examples.common.workbench.base.AbstractComponentNode;
+import org.jowidgets.examples.common.workbench.base.AbstractDemoComponentNode;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IComponentNode;
 import org.jowidgets.workbench.api.IComponentNodeContext;
 
-public class ImportantComponentTreeNodeDemo1 extends AbstractComponentNode {
+public class ImportantComponentTreeNodeDemo1 extends AbstractDemoComponentNode {
 
 	public ImportantComponentTreeNodeDemo1(final String id, final String label) {
 		super(id, label, "Component that ask user to be deactivated", IconsSmall.WARNING);

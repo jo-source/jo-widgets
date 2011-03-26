@@ -29,7 +29,7 @@
 package org.jowidgets.examples.common.workbench.widgets;
 
 import org.jowidgets.examples.common.icons.SilkIcons;
-import org.jowidgets.examples.common.workbench.base.AbstractComponentNode;
+import org.jowidgets.examples.common.workbench.base.AbstractDemoComponentNode;
 import org.jowidgets.examples.common.workbench.widgets.views.LabelKitchensinkView;
 import org.jowidgets.examples.common.workbench.widgets.views.LabelWithIconView;
 import org.jowidgets.examples.common.workbench.widgets.views.LabelWithTextAndIconView;
@@ -38,7 +38,7 @@ import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IComponentNodeContext;
 
-public class LabelsHowToTreeNode extends AbstractComponentNode {
+public class LabelsHowToTreeNode extends AbstractDemoComponentNode {
 
 	public static final String ID = LabelsHowToTreeNode.class.getName();
 

@@ -28,34 +28,20 @@
 
 package org.jowidgets.examples.common.workbench.base;
 
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.types.QuestionResult;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.util.Assert;
-import org.jowidgets.workbench.api.IComponentNode;
-import org.jowidgets.workbench.api.IComponentNodeContext;
+import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.workbench.api.IWorkbenchApplication;
 
-public abstract class AbstractComponentNode implements IComponentNode {
+public abstract class AbstractDemoApplication implements IWorkbenchApplication {
 
 	private final String id;
-	private final String label;
-	private final String tooltip;
-	private final IImageConstant icon;
 
-	public AbstractComponentNode(final String id, final String label) {
-		this(id, label, null, null);
-	}
-
-	public AbstractComponentNode(final String id, final String label, final String tooltip, final IImageConstant icon) {
-		Assert.paramNotEmpty(id, "id");
-		Assert.paramNotEmpty(label, "label");
-
+	public AbstractDemoApplication(final String id) {
+		super();
 		this.id = id;
-		this.label = label;
-		this.tooltip = tooltip;
-		this.icon = icon;
 	}
-
-	@Override
-	public void onContextInitialize(final IComponentNodeContext context) {}
 
 	@Override
 	public final String getId() {
@@ -63,18 +49,35 @@ public abstract class AbstractComponentNode implements IComponentNode {
 	}
 
 	@Override
-	public String getLabel() {
-		return label;
-	}
-
-	@Override
 	public String getTooltip() {
-		return tooltip;
+		return null;
 	}
 
 	@Override
 	public IImageConstant getIcon() {
-		return icon;
+		return null;
+	}
+
+	@Override
+	public void onActiveStateChanged(final boolean active) {
+		// CHECKSTYLE:OFF
+		System.out.println("activated= " + active + ", " + id);
+		// CHECKSTYLE:ON
+	}
+
+	@Override
+	public void onVisibleStateChanged(final boolean visible) {
+		// CHECKSTYLE:OFF
+		System.out.println("visibility= " + visible + ", " + id);
+		// CHECKSTYLE:ON
+	}
+
+	@Override
+	public void onClose(final IVetoable vetoable) {
+		final QuestionResult result = Toolkit.getQuestionPane().askYesNoQuestion("Would you really like to quit the application?");
+		if (result != QuestionResult.YES) {
+			vetoable.veto();
+		}
 	}
 
 }

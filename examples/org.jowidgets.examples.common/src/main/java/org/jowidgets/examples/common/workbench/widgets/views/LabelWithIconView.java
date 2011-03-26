@@ -36,7 +36,7 @@ import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
 
-public class LabelWithIconView extends AbstractDemoView implements IView {
+public class LabelWithIconView extends AbstractHowToView implements IView {
 
 	public static final String ID = LabelWithIconView.class.getName();
 	public static final String DEFAULT_LABEL = "Label with icon";

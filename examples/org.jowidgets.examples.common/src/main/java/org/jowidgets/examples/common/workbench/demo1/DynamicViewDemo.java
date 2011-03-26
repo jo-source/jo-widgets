@@ -31,11 +31,11 @@ package org.jowidgets.examples.common.workbench.demo1;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.examples.common.workbench.base.AbstractView;
+import org.jowidgets.examples.common.workbench.base.AbstractDemoView;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
 
-public class DynamicViewDemo extends AbstractView implements IView {
+public class DynamicViewDemo extends AbstractDemoView implements IView {
 
 	public static final String ID_PREFIX = DynamicViewDemo.class.getName() + "_";
 

@@ -37,12 +37,12 @@ import org.jowidgets.api.types.QuestionResult;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.examples.common.icons.SilkIcons;
-import org.jowidgets.examples.common.workbench.base.AbstractApplication;
+import org.jowidgets.examples.common.workbench.base.AbstractDemoApplication;
 import org.jowidgets.workbench.api.IComponentNode;
 import org.jowidgets.workbench.api.ITrayItem;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 
-public class ApplicationDemo2 extends AbstractApplication {
+public class ApplicationDemo2 extends AbstractDemoApplication {
 
 	private static final String ID = ApplicationDemo2.class.getName();
 

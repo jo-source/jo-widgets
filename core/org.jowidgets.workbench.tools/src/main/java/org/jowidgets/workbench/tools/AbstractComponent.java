@@ -26,53 +26,21 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.workbench.base;
+package org.jowidgets.workbench.tools;
 
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.types.QuestionResult;
 import org.jowidgets.common.types.IVetoable;
-import org.jowidgets.workbench.api.IView;
+import org.jowidgets.workbench.api.IComponent;
+import org.jowidgets.workbench.api.IFolderContext;
 
-public abstract class AbstractView implements IView {
-
-	private final String id;
-
-	public AbstractView(final String id) {
-		super();
-		this.id = id;
-	}
-
-	public final String getId() {
-		return id;
-	}
+public abstract class AbstractComponent implements IComponent {
 
 	@Override
-	public void onActiveStateChanged(final boolean active) {
-		// CHECKSTYLE:OFF
-		System.out.println(getId() + " onActiveStateChanged, active= " + active);
-		// CHECKSTYLE:ON
-	}
+	public void onActivation() {}
 
 	@Override
-	public void onVisibleStateChanged(final boolean visible) {
-		// CHECKSTYLE:OFF
-		System.out.println(getId() + " onVisibleStateChanged, visible= " + visible);
-		// CHECKSTYLE:ON
-	}
+	public void onDeactivation(final IVetoable vetoable) {}
 
 	@Override
-	public void onHiddenStateChanged(final boolean hidden) {
-		// CHECKSTYLE:OFF
-		System.out.println(getId() + " onHiddenStateChanged, hidden= " + hidden);
-		// CHECKSTYLE:ON
-	}
-
-	@Override
-	public void onClose(final IVetoable vetoable) {
-		final QuestionResult result = Toolkit.getQuestionPane().askYesNoQuestion("Would you really like to close the view?");
-		if (result != QuestionResult.YES) {
-			vetoable.veto();
-		}
-	}
+	public void onFolderCreated(final IFolderContext folderContext) {}
 
 }

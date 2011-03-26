@@ -30,11 +30,11 @@ package org.jowidgets.examples.common.workbench.demo2.view;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.examples.common.icons.SilkIcons;
-import org.jowidgets.examples.common.workbench.base.AbstractView;
+import org.jowidgets.examples.common.workbench.base.AbstractDemoView;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
 
-public class EmptyView extends AbstractView implements IView {
+public class EmptyView extends AbstractDemoView implements IView {
 
 	public static final String ID = EmptyView.class.getName();
 	public static final String DEFAULT_LABEL = "Empty";

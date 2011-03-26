@@ -26,34 +26,55 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.workbench.widgets.views;
+package org.jowidgets.examples.common.workbench.base;
 
-import org.jowidgets.api.image.IconsSmall;
-import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.workbench.api.IView;
-import org.jowidgets.workbench.api.IViewContext;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.util.Assert;
+import org.jowidgets.workbench.api.IComponentNode;
+import org.jowidgets.workbench.api.IComponentNodeContext;
 
-public class LabelWithTextAndIconView extends AbstractHowToView implements IView {
+public abstract class AbstractDemoComponentNode implements IComponentNode {
 
-	public static final String ID = LabelWithTextAndIconView.class.getName();
-	public static final String DEFAULT_LABEL = "Label with icon and text";
+	private final String id;
+	private final String label;
+	private final String tooltip;
+	private final IImageConstant icon;
 
-	public LabelWithTextAndIconView(final IViewContext context) {
-		super(context);
+	public AbstractDemoComponentNode(final String id, final String label) {
+		this(id, label, null, null);
+	}
+
+	public AbstractDemoComponentNode(final String id, final String label, final String tooltip, final IImageConstant icon) {
+		Assert.paramNotEmpty(id, "id");
+		Assert.paramNotEmpty(label, "label");
+
+		this.id = id;
+		this.label = label;
+		this.tooltip = tooltip;
+		this.icon = icon;
 	}
 
 	@Override
-	public void createViewContent(final IContainer container, final IBluePrintFactory bpFactory) {
-		//set the layout
-		container.setLayout(new MigLayoutDescriptor("[]", "[]"));
+	public void onContextInitialize(final IComponentNodeContext context) {}
 
-		//create the labels blue print
-		final ILabelBluePrint labelBp = bpFactory.label().setText("The label text").setIcon(IconsSmall.QUESTION);
-
-		//add the label blue print to the container
-		container.add(labelBp, "");
+	@Override
+	public final String getId() {
+		return id;
 	}
+
+	@Override
+	public String getLabel() {
+		return label;
+	}
+
+	@Override
+	public String getTooltip() {
+		return tooltip;
+	}
+
+	@Override
+	public IImageConstant getIcon() {
+		return icon;
+	}
+
 }

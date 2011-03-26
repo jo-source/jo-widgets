@@ -26,34 +26,36 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.workbench.widgets.views;
+package org.jowidgets.examples.common.workbench.base;
 
-import org.jowidgets.api.image.IconsSmall;
-import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.workbench.api.IView;
-import org.jowidgets.workbench.api.IViewContext;
+import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.workbench.api.IComponent;
+import org.jowidgets.workbench.api.IFolderContext;
 
-public class LabelWithTextAndIconView extends AbstractHowToView implements IView {
+public abstract class AbstractDemoComponent implements IComponent {
 
-	public static final String ID = LabelWithTextAndIconView.class.getName();
-	public static final String DEFAULT_LABEL = "Label with icon and text";
-
-	public LabelWithTextAndIconView(final IViewContext context) {
-		super(context);
+	@Override
+	public void onActivation() {
+		// CHECKSTYLE:OFF
+		System.out.println("onActivation");
+		// CHECKSTYLE:ON
 	}
 
 	@Override
-	public void createViewContent(final IContainer container, final IBluePrintFactory bpFactory) {
-		//set the layout
-		container.setLayout(new MigLayoutDescriptor("[]", "[]"));
-
-		//create the labels blue print
-		final ILabelBluePrint labelBp = bpFactory.label().setText("The label text").setIcon(IconsSmall.QUESTION);
-
-		//add the label blue print to the container
-		container.add(labelBp, "");
+	public void onDeactivation(final IVetoable vetoable) {
+		// CHECKSTYLE:OFF
+		System.out.println("onDeactivation");
+		// CHECKSTYLE:ON
 	}
+
+	@Override
+	public void onFolderCreated(final IFolderContext folderContext) {
+		// CHECKSTYLE:OFF
+		System.out.println("onFolderCreated, originalID: "
+			+ folderContext.getOriginalFolderId()
+			+ " , newID: "
+			+ folderContext.getFolderId());
+		// CHECKSTYLE:ON	
+	}
+
 }

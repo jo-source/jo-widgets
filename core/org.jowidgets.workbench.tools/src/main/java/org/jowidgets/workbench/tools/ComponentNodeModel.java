@@ -50,6 +50,10 @@ public class ComponentNodeModel implements IComponentNodeModel {
 
 	private final IComponentNodeModel model;
 
+	public ComponentNodeModel() {
+		this(builder());
+	}
+
 	public ComponentNodeModel(final IComponentFactory componentFactory) {
 		this(builder(componentFactory));
 	}
@@ -98,10 +102,6 @@ public class ComponentNodeModel implements IComponentNodeModel {
 		this(builder(componentType, label, tooltip, icon));
 	}
 
-	public ComponentNodeModel() {
-		this(builder());
-	}
-
 	public ComponentNodeModel(final String label) {
 		this(builder(label));
 	}
@@ -128,212 +128,212 @@ public class ComponentNodeModel implements IComponentNodeModel {
 	}
 
 	@Override
-	public void addListModelListener(final IListModelListener listener) {
+	public final void addListModelListener(final IListModelListener listener) {
 		model.addListModelListener(listener);
 	}
 
 	@Override
-	public void addTreeNodeListener(final ITreeNodeListener listener) {
+	public final void addTreeNodeListener(final ITreeNodeListener listener) {
 		model.addTreeNodeListener(listener);
 	}
 
 	@Override
-	public void addWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
+	public final void addWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
 		model.addWorkbenchPartModelListener(listener);
 	}
 
 	@Override
-	public String getId() {
+	public final String getId() {
 		return model.getId();
 	}
 
 	@Override
-	public void removeListModelListener(final IListModelListener listener) {
+	public final void removeListModelListener(final IListModelListener listener) {
 		model.removeListModelListener(listener);
 	}
 
 	@Override
-	public String getLabel() {
+	public final String getLabel() {
 		return model.getLabel();
 	}
 
 	@Override
-	public void removeTreeNodeListener(final ITreeNodeListener listener) {
+	public final void removeTreeNodeListener(final ITreeNodeListener listener) {
 		model.removeTreeNodeListener(listener);
 	}
 
 	@Override
-	public String getTooltip() {
+	public final String getTooltip() {
 		return model.getTooltip();
 	}
 
 	@Override
-	public void removeWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
+	public final void removeWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
 		model.removeWorkbenchPartModelListener(listener);
 	}
 
 	@Override
-	public IImageConstant getIcon() {
+	public final IImageConstant getIcon() {
 		return model.getIcon();
 	}
 
 	@Override
-	public IComponentNodeContainerModel getParentContainer() {
+	public final IComponentNodeContainerModel getParentContainer() {
 		return model.getParentContainer();
 	}
 
 	@Override
-	public List<IComponentNodeModel> getChildren() {
+	public final List<IComponentNodeModel> getChildren() {
 		return model.getChildren();
 	}
 
 	@Override
-	public int getChildrenCount() {
+	public final int getChildrenCount() {
 		return model.getChildrenCount();
 	}
 
 	@Override
-	public IComponentNodeModel addChild(final IComponentNodeModel childModel) {
+	public final IComponentNodeModel addChild(final IComponentNodeModel childModel) {
 		return model.addChild(childModel);
 	}
 
 	@Override
-	public boolean isSelected() {
+	public final boolean isSelected() {
 		return model.isSelected();
 	}
 
 	@Override
-	public boolean isExpanded() {
+	public final boolean isExpanded() {
 		return model.isExpanded();
 	}
 
 	@Override
-	public IComponentNodeModel addChild(final int index, final IComponentNodeModel childModel) {
+	public final IComponentNodeModel addChild(final int index, final IComponentNodeModel childModel) {
 		return model.addChild(index, childModel);
 	}
 
 	@Override
-	public IMenuModel getPopupMenu() {
+	public final IMenuModel getPopupMenu() {
 		return model.getPopupMenu();
 	}
 
 	@Override
-	public IComponentFactory getComponentFactory() {
+	public final IComponentFactory getComponentFactory() {
 		return model.getComponentFactory();
 	}
 
 	@Override
-	public IComponentNodeModel addChild(final IComponentNodeModelBuilder childModelBuilder) {
+	public final IComponentNodeModel addChild(final IComponentNodeModelBuilder childModelBuilder) {
 		return model.addChild(childModelBuilder);
 	}
 
 	@Override
-	public IComponentNodeInitializeCallback getInitializeCallback() {
+	public final IComponentNodeInitializeCallback getInitializeCallback() {
 		return model.getInitializeCallback();
 	}
 
 	@Override
-	public void setLabel(final String label) {
+	public final void setLabel(final String label) {
 		model.setLabel(label);
 	}
 
 	@Override
-	public IComponentNodeModel addChild(final int index, final IComponentNodeModelBuilder childModelBuilder) {
+	public final IComponentNodeModel addChild(final int index, final IComponentNodeModelBuilder childModelBuilder) {
 		return model.addChild(index, childModelBuilder);
 	}
 
 	@Override
-	public void setTooltip(final String toolTip) {
+	public final void setTooltip(final String toolTip) {
 		model.setTooltip(toolTip);
 	}
 
 	@Override
-	public void setIcon(final IImageConstant icon) {
+	public final void setIcon(final IImageConstant icon) {
 		model.setIcon(icon);
 	}
 
 	@Override
-	public IComponentNodeModel addChild(final String id, final String label, final String tooltip, final IImageConstant icon) {
+	public final IComponentNodeModel addChild(final String id, final String label, final String tooltip, final IImageConstant icon) {
 		return model.addChild(id, label, tooltip, icon);
 	}
 
 	@Override
-	public void setSelected(final boolean selected) {
+	public final void setSelected(final boolean selected) {
 		model.setSelected(selected);
 	}
 
 	@Override
-	public void setExpanded(final boolean expanded) {
+	public final void setExpanded(final boolean expanded) {
 		model.setExpanded(expanded);
 	}
 
 	@Override
-	public void setPopupMenu(final IMenuModel popupMenu) {
+	public final void setPopupMenu(final IMenuModel popupMenu) {
 		model.setPopupMenu(popupMenu);
 	}
 
 	@Override
-	public IComponentNodeModel addChild(final String id, final String label, final IImageConstant icon) {
+	public final IComponentNodeModel addChild(final String id, final String label, final IImageConstant icon) {
 		return model.addChild(id, label, icon);
 	}
 
 	@Override
-	public String getPathId() {
+	public final String getPathId() {
 		return model.getPathId();
 	}
 
 	@Override
-	public void setParentContainer(final IComponentNodeContainerModel parentContainer) {
+	public final void setParentContainer(final IComponentNodeContainerModel parentContainer) {
 		model.setParentContainer(parentContainer);
 	}
 
 	@Override
-	public IComponentNodeModel addChild(final String id, final String label, final String tooltip) {
+	public final IComponentNodeModel addChild(final String id, final String label, final String tooltip) {
 		return model.addChild(id, label, tooltip);
 	}
 
 	@Override
-	public IComponentNodeModel addChild(final String id, final String label) {
+	public final IComponentNodeModel addChild(final String id, final String label) {
 		return model.addChild(id, label);
 	}
 
 	@Override
-	public IComponentNodeModel addChild(final String id) {
+	public final IComponentNodeModel addChild(final String id) {
 		return model.addChild(id);
 	}
 
 	@Override
-	public void remove(final int index) {
+	public final void remove(final int index) {
 		model.remove(index);
 	}
 
 	@Override
-	public void remove(final IComponentNodeModel childModel) {
+	public final void remove(final IComponentNodeModel childModel) {
 		model.remove(childModel);
 	}
 
 	@Override
-	public void removeAll() {
+	public final void removeAll() {
 		model.removeAll();
 	}
 
 	@Override
-	public IComponentNodeModel getParent() {
+	public final IComponentNodeModel getParent() {
 		return model.getParent();
 	}
 
 	@Override
-	public IWorkbenchApplicationModel getApplication() {
+	public final IWorkbenchApplicationModel getApplication() {
 		return model.getApplication();
 	}
 
 	@Override
-	public IWorkbenchModel getWorkbench() {
+	public final IWorkbenchModel getWorkbench() {
 		return model.getWorkbench();
 	}
 
 	@Override
-	public IComponentNodeModel getUnwrappedThis() {
+	public final IComponentNodeModel getUnwrappedThis() {
 		return model.getUnwrappedThis();
 	}
 

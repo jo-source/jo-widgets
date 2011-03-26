@@ -31,11 +31,11 @@ package org.jowidgets.examples.common.workbench.demo1;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.examples.common.demo.DemoTreeComposite;
 import org.jowidgets.examples.common.icons.SilkIcons;
-import org.jowidgets.examples.common.workbench.base.AbstractView;
+import org.jowidgets.examples.common.workbench.base.AbstractDemoView;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
 
-public class ViewDemo3 extends AbstractView implements IView {
+public class ViewDemo3 extends AbstractDemoView implements IView {
 
 	public static final String ID = ViewDemo3.class.getName();
 	public static final String DEFAULT_LABEL = "View3";

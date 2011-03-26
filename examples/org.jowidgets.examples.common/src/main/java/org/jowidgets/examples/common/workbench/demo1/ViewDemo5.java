@@ -32,11 +32,11 @@ import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.examples.common.demo.DemoMainComposite;
 import org.jowidgets.examples.common.icons.SilkIcons;
-import org.jowidgets.examples.common.workbench.base.AbstractView;
+import org.jowidgets.examples.common.workbench.base.AbstractDemoView;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
 
-public class ViewDemo5 extends AbstractView implements IView {
+public class ViewDemo5 extends AbstractDemoView implements IView {
 
 	public static final String ID = ViewDemo5.class.getName();
 	public static final String DEFAULT_LABEL = "Demos";

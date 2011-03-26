@@ -37,13 +37,13 @@ import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.examples.common.icons.SilkIcons;
-import org.jowidgets.examples.common.workbench.base.AbstractView;
+import org.jowidgets.examples.common.workbench.base.AbstractDemoView;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
 
-public abstract class AbstractDemoView extends AbstractView implements IView {
+public abstract class AbstractHowToView extends AbstractDemoView implements IView {
 
-	public static final String ID = AbstractDemoView.class.getName();
+	public static final String ID = AbstractHowToView.class.getName();
 	public static final String DEFAULT_LABEL = "Labels";
 
 	private static final String URL_PREFIX = "http://code.google.com/p/jo-widgets/"
@@ -54,7 +54,7 @@ public abstract class AbstractDemoView extends AbstractView implements IView {
 	private URI migLayoutUri;
 	private Desktop desktop;
 
-	public AbstractDemoView(final IViewContext context) {
+	public AbstractHowToView(final IViewContext context) {
 		super(ID);
 
 		if (Desktop.isDesktopSupported()) {
@@ -70,7 +70,7 @@ public abstract class AbstractDemoView extends AbstractView implements IView {
 			}
 		}
 
-		final IActionItemModel sourceAction = context.getToolBar().addActionItem("View Source", null, SilkIcons.PAGE_WHITE_TEXT);
+		final IActionItemModel sourceAction = context.getToolBar().addActionItem(SilkIcons.PAGE_WHITE_TEXT, "View Source");
 		sourceAction.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
@@ -88,7 +88,7 @@ public abstract class AbstractDemoView extends AbstractView implements IView {
 			}
 		});
 
-		final IActionItemModel migLayout = context.getToolBar().addActionItem("MiGLayout Layout Manager", null, SilkIcons.WORLD);
+		final IActionItemModel migLayout = context.getToolBar().addActionItem(SilkIcons.WORLD, "MiGLayout Layout Manager");
 		migLayout.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {

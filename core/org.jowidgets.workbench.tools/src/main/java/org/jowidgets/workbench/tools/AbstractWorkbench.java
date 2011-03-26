@@ -26,36 +26,14 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.workbench.base;
+package org.jowidgets.workbench.tools;
 
 import org.jowidgets.common.types.IVetoable;
-import org.jowidgets.workbench.api.IComponent;
-import org.jowidgets.workbench.api.IFolderContext;
+import org.jowidgets.workbench.api.IWorkbench;
 
-public abstract class AbstractComponent implements IComponent {
-
-	@Override
-	public void onActivation() {
-		// CHECKSTYLE:OFF
-		System.out.println("onActivation");
-		// CHECKSTYLE:ON
-	}
+public abstract class AbstractWorkbench extends AbstractWorkbenchDescriptor implements IWorkbench {
 
 	@Override
-	public void onDeactivation(final IVetoable vetoable) {
-		// CHECKSTYLE:OFF
-		System.out.println("onDeactivation");
-		// CHECKSTYLE:ON
-	}
-
-	@Override
-	public void onFolderCreated(final IFolderContext folderContext) {
-		// CHECKSTYLE:OFF
-		System.out.println("onFolderCreated, originalID: "
-			+ folderContext.getOriginalFolderId()
-			+ " , newID: "
-			+ folderContext.getFolderId());
-		// CHECKSTYLE:ON	
-	}
+	public void onClose(final IVetoable vetoable) {}
 
 }

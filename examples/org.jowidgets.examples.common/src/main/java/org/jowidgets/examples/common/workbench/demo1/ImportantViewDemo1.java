@@ -35,11 +35,11 @@ import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.examples.common.workbench.base.AbstractView;
+import org.jowidgets.examples.common.workbench.base.AbstractDemoView;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.workbench.api.IViewContext;
 
-public class ImportantViewDemo1 extends AbstractView {
+public class ImportantViewDemo1 extends AbstractDemoView {
 
 	public static final String ID = ImportantViewDemo1.class.getName();
 	public static final String DEFAULT_LABEL = "View";

@@ -49,7 +49,7 @@ import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.ITableCellPopupEvent;
 import org.jowidgets.examples.common.icons.SilkIcons;
-import org.jowidgets.examples.common.workbench.base.AbstractView;
+import org.jowidgets.examples.common.workbench.base.AbstractDemoView;
 import org.jowidgets.tools.command.ActionBuilder;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.model.item.MenuModel;
@@ -60,7 +60,7 @@ import org.jowidgets.tools.model.table.TableCellBuilder;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
 
-public class BigTableView extends AbstractView implements IView {
+public class BigTableView extends AbstractDemoView implements IView {
 
 	public static final String ID = BigTableView.class.getName();
 	public static final String DEFAULT_LABEL = "Big table";

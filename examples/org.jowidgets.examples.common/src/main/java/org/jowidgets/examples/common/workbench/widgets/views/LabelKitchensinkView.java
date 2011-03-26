@@ -38,7 +38,7 @@ import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
 
-public class LabelKitchensinkView extends AbstractDemoView implements IView {
+public class LabelKitchensinkView extends AbstractHowToView implements IView {
 
 	public static final String ID = LabelKitchensinkView.class.getName();
 	public static final String DEFAULT_LABEL = "Labels Kitchensink";

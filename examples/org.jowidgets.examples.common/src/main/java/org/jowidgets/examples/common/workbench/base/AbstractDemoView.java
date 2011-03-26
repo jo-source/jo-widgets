@@ -26,34 +26,53 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.workbench.widgets.views;
+package org.jowidgets.examples.common.workbench.base;
 
-import org.jowidgets.api.image.IconsSmall;
-import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.types.QuestionResult;
+import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.workbench.api.IView;
-import org.jowidgets.workbench.api.IViewContext;
 
-public class LabelWithTextAndIconView extends AbstractHowToView implements IView {
+public abstract class AbstractDemoView implements IView {
 
-	public static final String ID = LabelWithTextAndIconView.class.getName();
-	public static final String DEFAULT_LABEL = "Label with icon and text";
+	private final String id;
 
-	public LabelWithTextAndIconView(final IViewContext context) {
-		super(context);
+	public AbstractDemoView(final String id) {
+		super();
+		this.id = id;
+	}
+
+	public final String getId() {
+		return id;
 	}
 
 	@Override
-	public void createViewContent(final IContainer container, final IBluePrintFactory bpFactory) {
-		//set the layout
-		container.setLayout(new MigLayoutDescriptor("[]", "[]"));
-
-		//create the labels blue print
-		final ILabelBluePrint labelBp = bpFactory.label().setText("The label text").setIcon(IconsSmall.QUESTION);
-
-		//add the label blue print to the container
-		container.add(labelBp, "");
+	public void onActiveStateChanged(final boolean active) {
+		// CHECKSTYLE:OFF
+		System.out.println(getId() + " onActiveStateChanged, active= " + active);
+		// CHECKSTYLE:ON
 	}
+
+	@Override
+	public void onVisibleStateChanged(final boolean visible) {
+		// CHECKSTYLE:OFF
+		System.out.println(getId() + " onVisibleStateChanged, visible= " + visible);
+		// CHECKSTYLE:ON
+	}
+
+	@Override
+	public void onHiddenStateChanged(final boolean hidden) {
+		// CHECKSTYLE:OFF
+		System.out.println(getId() + " onHiddenStateChanged, hidden= " + hidden);
+		// CHECKSTYLE:ON
+	}
+
+	@Override
+	public void onClose(final IVetoable vetoable) {
+		final QuestionResult result = Toolkit.getQuestionPane().askYesNoQuestion("Would you really like to close the view?");
+		if (result != QuestionResult.YES) {
+			vetoable.veto();
+		}
+	}
+
 }

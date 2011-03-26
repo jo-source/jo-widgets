@@ -57,13 +57,13 @@ import org.jowidgets.common.widgets.controler.ITableColumnPopupEvent;
 import org.jowidgets.examples.common.demo.DemoInputDialog1;
 import org.jowidgets.examples.common.demo.DemoMenuProvider;
 import org.jowidgets.examples.common.icons.SilkIcons;
-import org.jowidgets.examples.common.workbench.base.AbstractView;
+import org.jowidgets.examples.common.workbench.base.AbstractDemoView;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.model.table.DefaultTableColumn;
 import org.jowidgets.util.ValueHolder;
 import org.jowidgets.workbench.api.IViewContext;
 
-public class ViewDemo1 extends AbstractView {
+public class ViewDemo1 extends AbstractDemoView {
 
 	public static final String ID = ViewDemo1.class.getName();
 	public static final String DEFAULT_LABEL = "Persons";
