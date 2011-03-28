@@ -39,8 +39,13 @@ import org.jowidgets.common.types.SplitResizePolicy;
 
 class JoSashFormLayout extends Layout {
 
+	private boolean initialized;
 	private Point oldSize = null;
 	private int save = 0;
+
+	JoSashFormLayout() {
+		initialized = false;
+	}
 
 	@Override
 	protected Point computeSize(final Composite composite, final int wHint, final int hHint, final boolean flushCache) {
@@ -60,46 +65,28 @@ class JoSashFormLayout extends Layout {
 			return;
 		}
 
-		sashForm.initializeControls(true);
-
 		final Control first = sashForm.getFirst();
 		final Control second = sashForm.getSecond();
 
-		if (sashForm.getMaxControl() != null && !sashForm.getMaxControl().isDisposed()) {
-			if (first != null) {
-				if (first != sashForm.getMaxControl()) {
-					first.setBounds(-200, -200, 0, 0);
-				}
-				else {
-					first.setBounds(area);
-				}
-			}
-			if (second != null) {
-				if (second != sashForm.getMaxControl()) {
-					second.setBounds(-200, -200, 0, 0);
-				}
-				else {
-					second.setBounds(area);
-				}
-			}
+		if (first == null && second == null) {
 			return;
 		}
 
-		if (first != null && second == null) {
+		else if (first != null && second == null) {
 			first.setBounds(area);
 			return;
 		}
 
-		if (!sashForm.isInitialized()) {
+		if (!initialized) {
 			initialize(sashForm);
-			sashForm.setInitialized(true);
+			initialized = true;
 			return;
 		}
 
-		if (sashForm.getStretchFactor() == SplitResizePolicy.RESIZE_FIRST) {
+		if (sashForm.getResizePolicy() == SplitResizePolicy.RESIZE_FIRST) {
 			stretchFirst(sashForm);
 		}
-		else if (sashForm.getStretchFactor() == SplitResizePolicy.RESIZE_SECOND) {
+		else if (sashForm.getResizePolicy() == SplitResizePolicy.RESIZE_SECOND) {
 			stretchSecond(sashForm);
 		}
 		else {
