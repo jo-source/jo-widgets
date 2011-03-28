@@ -84,18 +84,18 @@ public class DummyComponent extends DummyWidget implements IComponentSpi {
 
 	@Override
 	public void setSize(final Dimension size) {
-		// TODO NM implement
+		// TODO LG implement
 	}
 
 	@Override
 	public Position getPosition() {
-		// TODO NM implement
-		return new Position(0, 0);
+		// TODO LG implement
+		return null;
 	}
 
 	@Override
 	public void setPosition(final Position position) {
-		// TODO NM implement
+		// TODO LG implement
 	}
 
 	@Override
