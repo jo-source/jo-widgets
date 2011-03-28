@@ -96,13 +96,13 @@ public class DummyWidgetsServiceProvider implements IWidgetsServiceProvider {
 
 	@Override
 	public Position toScreen(final Position localPosition, final IComponentCommon component) {
-		// TODO NM implement
+		// TODO LG implement
 		return null;
 	}
 
 	@Override
 	public Position toLocal(final Position screenPosition, final IComponentCommon component) {
-		// TODO NM implement
+		// TODO LG implement
 		return null;
 	}
 
