@@ -78,19 +78,19 @@ public abstract class AbstractTableDataModel implements ITableDataModel, ITableD
 		dataModelObservable.removeDataModelListener(listener);
 	}
 
-	protected final void fireRowsAdded(final int[] rowIndices) {
+	public final void fireRowsAdded(final int[] rowIndices) {
 		dataModelObservable.fireRowsAdded(rowIndices);
 	}
 
-	protected final void fireRowsRemoved(final int[] rowIndices) {
+	public final void fireRowsRemoved(final int[] rowIndices) {
 		dataModelObservable.fireRowsRemoved(rowIndices);
 	}
 
-	protected final void fireRowsChanged(final int[] rowIndices) {
+	public final void fireRowsChanged(final int[] rowIndices) {
 		dataModelObservable.fireRowsChanged(rowIndices);
 	}
 
-	protected final void fireDataChanged() {
+	public final void fireDataChanged() {
 		dataModelObservable.fireDataChanged();
 	}
 
