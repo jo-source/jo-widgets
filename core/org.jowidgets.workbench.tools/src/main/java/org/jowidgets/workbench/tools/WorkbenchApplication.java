@@ -31,6 +31,8 @@ package org.jowidgets.workbench.tools;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.util.Assert;
+import org.jowidgets.workbench.api.IView;
+import org.jowidgets.workbench.api.IViewContext;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
@@ -110,6 +112,11 @@ public class WorkbenchApplication implements IWorkbenchApplication {
 	@Override
 	public final void onContextInitialize(final IWorkbenchApplicationContext context) {
 		application.onContextInitialize(context);
+	}
+
+	@Override
+	public final IView createView(final String viewId, final IViewContext viewContext) {
+		return application.createView(viewId, viewContext);
 	}
 
 	public static IWorkbenchApplicationModelBuilder builder() {

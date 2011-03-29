@@ -31,6 +31,8 @@ package org.jowidgets.examples.common.workbench.base;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.types.QuestionResult;
 import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.workbench.api.IView;
+import org.jowidgets.workbench.api.IViewContext;
 import org.jowidgets.workbench.api.IWorkbench;
 import org.jowidgets.workbench.tools.AbstractWorkbench;
 
@@ -46,6 +48,11 @@ public abstract class AbstractDemoWorkbench extends AbstractWorkbench implements
 		if (!shouldWorkbenchFinished()) {
 			vetoable.veto();
 		}
+	}
+
+	@Override
+	public IView createView(final String viewId, final IViewContext viewContext) {
+		return null;
 	}
 
 	protected final boolean shouldWorkbenchFinished() {

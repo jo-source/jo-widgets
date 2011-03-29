@@ -43,6 +43,8 @@ public interface IWorkbenchApplicationModelBuilder extends
 
 	IWorkbenchApplicationModelBuilder setToolBarMenu(IMenuModel toolBarMenu);
 
+	IWorkbenchApplicationModelBuilder setViewFactoy(IViewFactory viewFactory);
+
 	IWorkbenchApplicationModelBuilder setLifecycleCallback(ILifecycleCallback lifecycleCallback);
 
 	IWorkbenchApplicationModelBuilder setInitializeCallback(IWorkbenchApplicationInitializeCallback initializeCallback);

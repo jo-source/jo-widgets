@@ -42,6 +42,8 @@ import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.ICloseCallback;
+import org.jowidgets.workbench.api.IView;
+import org.jowidgets.workbench.api.IViewContext;
 import org.jowidgets.workbench.api.IWorkbench;
 import org.jowidgets.workbench.api.IWorkbenchContext;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
@@ -117,6 +119,14 @@ class Workbench implements IWorkbench {
 		if (model.getInitializeCallback() != null) {
 			model.getInitializeCallback().onContextInitialize(new ModelBasedWorkbenchContext(model, context));
 		}
+	}
+
+	@Override
+	public IView createView(final String viewId, final IViewContext viewContext) {
+		if (model.getViewFactory() != null) {
+			return model.getViewFactory().createView(viewId, viewContext);
+		}
+		return null;
 	}
 
 	@Override

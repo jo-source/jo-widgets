@@ -36,6 +36,7 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.workbench.api.ICloseCallback;
 import org.jowidgets.workbench.api.IWorkbenchDescriptor;
+import org.jowidgets.workbench.toolkit.api.IViewFactory;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModelBuilder;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchInitializeCallback;
@@ -149,6 +150,12 @@ public class WorkbenchModelBuilder implements IWorkbenchModelBuilder {
 	@Override
 	public final IWorkbenchModelBuilder setInitializeCallback(final IWorkbenchInitializeCallback initializeCallback) {
 		this.builder.setInitializeCallback(initializeCallback);
+		return this;
+	}
+
+	@Override
+	public IWorkbenchModelBuilder setViewFactoy(final IViewFactory viewFactory) {
+		this.builder.setViewFactoy(viewFactory);
 		return this;
 	}
 

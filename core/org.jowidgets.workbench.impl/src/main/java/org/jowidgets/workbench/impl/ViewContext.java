@@ -38,6 +38,7 @@ import org.jowidgets.workbench.api.IComponentNodeContext;
 import org.jowidgets.workbench.api.IViewContext;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 import org.jowidgets.workbench.api.IWorkbenchContext;
+import org.jowidgets.workbench.api.ViewScope;
 
 public class ViewContext implements IViewContext {
 
@@ -79,6 +80,12 @@ public class ViewContext implements IViewContext {
 	@Override
 	public IMenuModel getToolBarMenu() {
 		return toolBarHelper.getToolBarMenuModel();
+	}
+
+	@Override
+	public ViewScope getScope() {
+		//TODO MG implement getScope()
+		return null;
 	}
 
 	@Override

@@ -39,6 +39,7 @@ import org.jowidgets.workbench.api.ILifecycleCallback;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeContainerModel;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeModelBuilder;
+import org.jowidgets.workbench.toolkit.api.IViewFactory;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationInitializeCallback;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModelBuilder;
@@ -144,6 +145,11 @@ public class WorkbenchApplicationModel implements IWorkbenchApplicationModel {
 	@Override
 	public final ILifecycleCallback getLifecycleCallback() {
 		return model.getLifecycleCallback();
+	}
+
+	@Override
+	public final IViewFactory getViewFactory() {
+		return model.getViewFactory();
 	}
 
 	@Override

@@ -32,6 +32,8 @@ import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.workbench.api.IView;
+import org.jowidgets.workbench.api.IViewContext;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
@@ -73,6 +75,14 @@ class WorkbenchApplication extends ComponentNodeContainer implements IWorkbenchA
 		if (model.getInitializeCallback() != null) {
 			model.getInitializeCallback().onContextInitialize(new ModelBasedWorkbenchApplicationContext(context, model));
 		}
+	}
+
+	@Override
+	public IView createView(final String viewId, final IViewContext viewContext) {
+		if (model.getViewFactory() != null) {
+			return model.getViewFactory().createView(viewId, viewContext);
+		}
+		return null;
 	}
 
 	@Override

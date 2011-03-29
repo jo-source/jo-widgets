@@ -63,12 +63,45 @@ public interface IViewContext {
 	 */
 	IMenuModel getToolBarMenu();
 
+	/**
+	 * Gets the scope of the view.
+	 * If the scope is COMPONENT, the view will be created by its component.
+	 * If the scope is WORKBENCH_APPLICATION, the view will be created by its workbench application.
+	 * If the scope is WORKBENCH, the view will be created by the workbench.
+	 * 
+	 * @return The scope of the view
+	 */
+	ViewScope getScope();
+
+	/**
+	 * Gets the component context if the scope of the view is COMPONENT,
+	 * else null will be returned.
+	 * 
+	 * @return The component context or null
+	 */
 	IComponentContext getComponentContext();
 
+	/**
+	 * Gets the component node context if the scope of the view is COMPONENT,
+	 * else null will be returned.
+	 * 
+	 * @return The component node context or null
+	 */
 	IComponentNodeContext getComponentNodeContext();
 
+	/**
+	 * Gets the workbench application context if the scope of the view is
+	 * COMPONENT or WORKBENCH_APPLICATION, else null will be returned.
+	 * 
+	 * @return The workbench application context or null
+	 */
 	IWorkbenchApplicationContext getWorkbenchApplicationContext();
 
+	/**
+	 * Gets the workbench context.
+	 * 
+	 * @return The workbench context (never null)
+	 */
 	IWorkbenchContext getWorkbenchContext();
 
 }

@@ -37,6 +37,14 @@ public interface IComponent {
 
 	void onFolderCreated(IFolderContext folderContext);
 
+	/**
+	 * Creates a view for a given ID.
+	 * The scope of the view is COMPONENT.
+	 * 
+	 * @param viewId The id to get the view for
+	 * @param viewContext The view context
+	 * @return The created view
+	 */
 	IView createView(String viewId, IViewContext viewContext);
 
 }

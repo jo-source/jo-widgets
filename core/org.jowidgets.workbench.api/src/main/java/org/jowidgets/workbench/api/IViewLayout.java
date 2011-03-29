@@ -37,6 +37,14 @@ public interface IViewLayout extends IWorkbenchPart {
 	 */
 	String getId();
 
+	/**
+	 * Gets the scope of the view.
+	 * If the scope is COMPONENT, the view will be created by its component.
+	 * If the scope is WORKBENCH_APPLICATION, the view will be created by its workbench application.
+	 * If the scope is WORKBENCH, the view will be created by the workbench.
+	 * 
+	 * @return The scope of the view.
+	 */
 	ViewScope getScope();
 
 	boolean isHidden();

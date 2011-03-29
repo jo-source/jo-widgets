@@ -46,6 +46,8 @@ public interface IWorkbenchApplicationModel extends
 
 	IMenuModel getToolBarMenu();
 
+	IViewFactory getViewFactory();
+
 	ILifecycleCallback getLifecycleCallback();
 
 	void setPopupMenu(IMenuModel menuModel);

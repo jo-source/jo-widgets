@@ -26,61 +26,13 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.workbench.base;
+package org.jowidgets.workbench.toolkit.impl;
 
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.types.QuestionResult;
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
-import org.jowidgets.workbench.api.IWorkbenchApplication;
+import org.jowidgets.workbench.toolkit.api.IViewFactory;
 
-public abstract class AbstractDemoApplication implements IWorkbenchApplication {
-
-	private final String id;
-
-	public AbstractDemoApplication(final String id) {
-		super();
-		this.id = id;
-	}
-
-	@Override
-	public final String getId() {
-		return id;
-	}
-
-	@Override
-	public String getTooltip() {
-		return null;
-	}
-
-	@Override
-	public IImageConstant getIcon() {
-		return null;
-	}
-
-	@Override
-	public void onActiveStateChanged(final boolean active) {
-		// CHECKSTYLE:OFF
-		System.out.println("activated= " + active + ", " + id);
-		// CHECKSTYLE:ON
-	}
-
-	@Override
-	public void onVisibleStateChanged(final boolean visible) {
-		// CHECKSTYLE:OFF
-		System.out.println("visibility= " + visible + ", " + id);
-		// CHECKSTYLE:ON
-	}
-
-	@Override
-	public void onClose(final IVetoable vetoable) {
-		final QuestionResult result = Toolkit.getQuestionPane().askYesNoQuestion("Would you really like to quit the application?");
-		if (result != QuestionResult.YES) {
-			vetoable.veto();
-		}
-	}
+public class DummyViewFactory implements IViewFactory {
 
 	@Override
 	public IView createView(final String viewId, final IViewContext viewContext) {
