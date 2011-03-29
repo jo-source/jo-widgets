@@ -41,6 +41,7 @@ import org.jowidgets.workbench.api.IWorkbenchApplication;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 import org.jowidgets.workbench.api.IWorkbenchContext;
 import org.jowidgets.workbench.api.IWorkbenchPart;
+import org.jowidgets.workbench.impl.rcp.internal.part.PartSupport;
 
 public final class WorkbenchApplicationContext implements IWorkbenchApplicationContext, IWorkbenchPart {
 
@@ -81,6 +82,12 @@ public final class WorkbenchApplicationContext implements IWorkbenchApplicationC
 			childContexts.remove(treeNodeContext);
 			nodeMap.remove(componentTreeNode);
 			tree.refresh(this);
+		}
+		final ComponentContext componentContext = treeNodeContext.getComponentContext();
+		if (componentContext != null
+			&& componentContext.getComponent() == ((WorkbenchContext) getWorkbenchContext()).getCurrentComponent()) {
+			((WorkbenchContext) getWorkbenchContext()).setCurrentComponent(null);
+			PartSupport.getInstance().showEmptyPerspective();
 		}
 	}
 
