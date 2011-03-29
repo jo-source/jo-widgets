@@ -33,25 +33,18 @@ import java.util.List;
 
 import org.jowidgets.api.controler.ITreeSelectionEvent;
 import org.jowidgets.api.widgets.ITreeNode;
-import org.jowidgets.common.types.SelectionPolicy;
 import org.jowidgets.util.Assert;
 
 public final class TreeSelectionEvent implements ITreeSelectionEvent {
 
-	private final SelectionPolicy selectionPolicy;
 	private final List<ITreeNode> selected;
 	private final List<ITreeNode> unselected;
 
-	public TreeSelectionEvent(
-		final SelectionPolicy selectionPolicy,
-		final List<ITreeNode> selected,
-		final List<ITreeNode> unselected) {
+	public TreeSelectionEvent(final List<ITreeNode> selected, final List<ITreeNode> unselected) {
 
-		Assert.paramNotNull(selectionPolicy, "selectionPolicy");
 		Assert.paramNotNull(selected, "selected");
 		Assert.paramNotNull(unselected, "unselected");
 
-		this.selectionPolicy = selectionPolicy;
 		this.selected = selected;
 		this.unselected = unselected;
 	}
@@ -67,8 +60,7 @@ public final class TreeSelectionEvent implements ITreeSelectionEvent {
 	}
 
 	@Override
-	public ITreeNode getSelectedSingle() {
-		checkSelectionPolicy();
+	public ITreeNode getFirstSelected() {
 		if (selected.size() > 0) {
 			return selected.get(0);
 		}
@@ -76,18 +68,11 @@ public final class TreeSelectionEvent implements ITreeSelectionEvent {
 	}
 
 	@Override
-	public ITreeNode getUnselectedSingle() {
-		checkSelectionPolicy();
+	public ITreeNode getFirstUnselected() {
 		if (unselected.size() > 0) {
 			return unselected.get(0);
 		}
 		return null;
-	}
-
-	private void checkSelectionPolicy() {
-		if (selectionPolicy != SelectionPolicy.SINGLE_SELECTION) {
-			throw new UnsupportedOperationException("getSelectedSingle() is only supported for 'SingleSelectionPolicy'");
-		}
 	}
 
 	@Override

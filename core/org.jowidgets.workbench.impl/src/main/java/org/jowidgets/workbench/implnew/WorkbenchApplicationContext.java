@@ -31,6 +31,7 @@ package org.jowidgets.workbench.implnew;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jowidgets.api.controler.ITabItemListener;
 import org.jowidgets.api.controler.ITreeSelectionEvent;
 import org.jowidgets.api.controler.ITreeSelectionListener;
 import org.jowidgets.api.model.IListModelListener;
@@ -43,6 +44,8 @@ import org.jowidgets.api.widgets.ITree;
 import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.tools.controler.TabItemAdapter;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.types.VetoHolder;
@@ -66,6 +69,7 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 	private final ITree tree;
 	private final ITreeSelectionListener treeSelectionListener;
 	private final IListModelListener popupMenuModelListener;
+	private final ITabItemListener tabItemListener;
 
 	private ITreeNode selectedNode;
 
@@ -99,6 +103,9 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 
 		this.popupMenuModelListener = createPopupMenuModelListener();
 		popupMenuModel.addListModelListener(popupMenuModelListener);
+
+		this.tabItemListener = createTabItemListener();
+		tabItem.addTabItemListener(tabItemListener);
 
 		application.onContextInitialize(this);
 	}
@@ -147,6 +154,10 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 		return workbenchContext;
 	}
 
+	protected IWorkbenchApplication getApplication() {
+		return application;
+	}
+
 	protected void registerNodeContext(final ComponentNodeContext nodeContext) {
 		registeredNodes.put(nodeContext.getTreeNode(), nodeContext);
 	}
@@ -158,33 +169,64 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 		}
 	}
 
-	protected void dispose() {
-		// TODO Auto-generated method stub
-
+	protected ComponentNodeContext getSelectedNodeContext() {
+		if (selectedNode != null) {
+			return registeredNodes.get(selectedNode);
+		}
+		return null;
 	}
 
 	private ITreeSelectionListener createTreeSelectionListener() {
 		return new ITreeSelectionListener() {
 			@Override
 			public void selectionChanged(final ITreeSelectionEvent event) {
-				final ITreeNode wasSelected = selectedNode;
-				final ITreeNode isSelected = event.getSelectedSingle();
 
-				final ComponentNodeContext wasSelectedContext = registeredNodes.get(wasSelected);
-				final ComponentNodeContext isSelectedContext = registeredNodes.get(isSelected);
+				final ITreeNode newSelectedNode = event.getFirstSelected();
 
-				if (wasSelectedContext != null) {
-					final VetoHolder veto = wasSelectedContext.deactivate();
-					if (veto.hasVeto()) {
-						tree.removeTreeSelectionListener(treeSelectionListener);
-						wasSelected.setSelected(true);
-						tree.addTreeSelectionListener(treeSelectionListener);
-						return;
+				ComponentNodeContext wasSelectedContext = null;
+				ComponentNodeContext isSelectedContext = null;
+
+				if (newSelectedNode != selectedNode) {
+					if (selectedNode != null) {
+						wasSelectedContext = registeredNodes.get(selectedNode);
+						if (wasSelectedContext != null && wasSelectedContext.isActive()) {
+							final VetoHolder veto = wasSelectedContext.deactivate();
+							if (veto.hasVeto()) {
+								tree.removeTreeSelectionListener(treeSelectionListener);
+								selectedNode.setSelected(true);
+								tree.addTreeSelectionListener(treeSelectionListener);
+								return;
+							}
+						}
 					}
-				}
-				workbenchContext.selectComponentNode(isSelectedContext);
 
+					if (newSelectedNode != null) {
+						isSelectedContext = registeredNodes.get(newSelectedNode);
+					}
+
+					selectedNode = newSelectedNode;
+					workbenchContext.selectComponentNode(isSelectedContext);
+				}
 			}
+		};
+	}
+
+	private ITabItemListener createTabItemListener() {
+		return new TabItemAdapter() {
+			@Override
+			public void onClose(final IVetoable vetoable) {
+				final VetoHolder vetoHolder = new VetoHolder();
+				application.onClose(vetoHolder);
+				if (vetoHolder.hasVeto()) {
+					vetoable.veto();
+				}
+			}
+
+			@Override
+			public void closed() {
+				workbenchContext.onApplicationRemove();
+			}
+
 		};
 	}
 

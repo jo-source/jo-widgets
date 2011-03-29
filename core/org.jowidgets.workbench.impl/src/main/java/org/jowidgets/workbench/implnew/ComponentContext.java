@@ -77,7 +77,7 @@ public final class ComponentContext implements IComponentContext {
 
 	public VetoHolder deactivate() {
 		// TODO Auto-generated method stub
-		return null;
+		return new VetoHolder();
 	}
 
 }

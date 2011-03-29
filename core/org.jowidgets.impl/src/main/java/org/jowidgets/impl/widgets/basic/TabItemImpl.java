@@ -55,8 +55,8 @@ import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsI
 import org.jowidgets.impl.widgets.common.wrapper.AbstractContainerSpiWrapper;
 import org.jowidgets.spi.widgets.ITabItemSpi;
 import org.jowidgets.spi.widgets.controler.ITabItemListenerSpi;
+import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.util.TypeCast;
-import org.jowidgets.util.ValueHolder;
 
 public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem {
 
@@ -104,27 +104,13 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 
 			@Override
 			public void onClose(final IVetoable vetoable) {
-				final ValueHolder<Boolean> veto = new ValueHolder<Boolean>(false);
-
-				final IVetoable innerVetoable = new IVetoable() {
-					@Override
-					public void veto() {
-						veto.set(Boolean.TRUE);
-					}
-				};
+				final VetoHolder vetoHolder = new VetoHolder();
 
 				for (final ITabItemListener listener : itemListeners) {
-					listener.onClose(innerVetoable);
-					if (veto.get().booleanValue()) {
+					listener.onClose(vetoHolder);
+					if (vetoHolder.hasVeto()) {
 						vetoable.veto();
 						break;
-					}
-				}
-
-				if (!veto.get().booleanValue()) {
-					getWidget().removeTabItemListener(tabItemListenerSpi);
-					if (selected) {
-						setSelected(false);
 					}
 				}
 
@@ -132,6 +118,11 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 
 			@Override
 			public void closed() {
+				getWidget().removeTabItemListener(tabItemListenerSpi);
+				if (selected) {
+					setSelected(false);
+				}
+				tabFolderImpl.itemClosed(TabItemImpl.this);
 				for (final ITabItemListener listener : itemListeners) {
 					listener.closed();
 				}
@@ -176,6 +167,23 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 		return selected;
 	}
 
+	protected boolean onDeselection(final ITabItem newSelected) {
+		final VetoHolder vetoHolder = new VetoHolder();
+		for (final ITabItemListener listener : itemListeners) {
+			listener.onDeselection(vetoHolder);
+		}
+		tabFolderImpl.fireOnDeselection(vetoHolder, this, newSelected);
+		if (vetoHolder.hasVeto()) {
+			getWidget().removeTabItemListener(tabItemListenerSpi);
+			tabFolderImpl.setSelectedItem(this);
+			getWidget().addTabItemListener(tabItemListenerSpi);
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	protected void setSelected(final boolean selected) {
 		if (this.isSelected() != selected) {
 			this.selected = selected;
@@ -183,7 +191,14 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 				//un-select other items if this item is selected 
 				for (final TabItemImpl item : tabFolderImpl.getItemsImpl()) {
 					if (item != this && item.isSelected()) {
-						item.setSelected(false);
+						final boolean veto = item.onDeselection(this);
+						if (veto) {
+							this.selected = false;
+							return;
+						}
+						else {
+							item.setSelected(false);
+						}
 					}
 				}
 				tabFolderImpl.fireItemSelected(this);

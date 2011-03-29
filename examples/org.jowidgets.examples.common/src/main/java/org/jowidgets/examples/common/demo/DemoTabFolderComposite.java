@@ -151,6 +151,17 @@ public final class DemoTabFolderComposite {
 		tabItemBp.setText("Tab4").setToolTipText("Tooltip of tab4").setIcon(SilkIcons.ROSETTE);
 		final ITabItem tabItem4 = tabFolder.addItem(tabItemBp);
 		addTabContent(tabItem4);
+		tabItem4.addTabItemListener(new TabItemAdapter() {
+
+			@Override
+			public void onDeselection(final IVetoable vetoable) {
+				final QuestionResult questionResult = Toolkit.getQuestionPane().askYesNoQuestion("Should tab4 be deselected?");
+				if (questionResult != QuestionResult.YES) {
+					vetoable.veto();
+				}
+			}
+
+		});
 
 		tabItemBp = bpF.tabItem();
 		tabItemBp.setText("Tab5").setToolTipText("Tooltip of tab5").setIcon(SilkIcons.CHART_PIE);

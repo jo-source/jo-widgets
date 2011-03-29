@@ -32,7 +32,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.api.controler.ITabFolderListener;
-import org.jowidgets.api.controler.ITabItemListener;
+import org.jowidgets.api.controler.ITabSelectionEvent;
 import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
@@ -53,7 +53,6 @@ import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.types.SplitResizePolicy;
 import org.jowidgets.common.widgets.controler.IWindowListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.tools.controler.TabItemAdapter;
 import org.jowidgets.tools.controler.WindowAdapter;
 import org.jowidgets.tools.model.item.MenuBarModel;
 import org.jowidgets.tools.types.VetoHolder;
@@ -72,7 +71,7 @@ public class WorkbenchContext implements IWorkbenchContext {
 
 	private final List<IWorkbenchApplication> addedApplications;
 	private final List<WorkbenchApplicationContext> addedApplicationContexts;
-	private final List<ITabItemListener> addedTabItemListeners;
+	private final List<ITabItem> addedTabItems;
 
 	private final IFrame rootFrame;
 	private final IContainer statusBar;
@@ -89,7 +88,7 @@ public class WorkbenchContext implements IWorkbenchContext {
 		this.bpf = Toolkit.getBluePrintFactory();
 		this.addedApplications = new LinkedList<IWorkbenchApplication>();
 		this.addedApplicationContexts = new LinkedList<WorkbenchApplicationContext>();
-		this.addedTabItemListeners = new LinkedList<ITabItemListener>();
+		this.addedTabItems = new LinkedList<ITabItem>();
 
 		this.lifecycle = lifecycle;
 		this.shutdownHooks = new LinkedList<Runnable>();
@@ -107,17 +106,7 @@ public class WorkbenchContext implements IWorkbenchContext {
 
 		this.statusBar = createStatusBar();
 
-		applicationTabFolder.addTabFolderListener(new ITabFolderListener() {
-
-			@Override
-			public void itemSelected(final ITabItem selectedItem) {
-				final int selectedIndex = applicationTabFolder.getIndex(selectedItem);
-				if (selectedIndex != -1) {
-					//final WorkbenchApplicationContext applicationContext = addedApplicationContexts.get(selectedIndex);
-				}
-				System.out.println("Selected: " + selectedItem.getText());
-			}
-		});
+		applicationTabFolder.addTabFolderListener(createTabFolderListener());
 
 		workbench.onContextInitialize(this);
 	}
@@ -150,15 +139,13 @@ public class WorkbenchContext implements IWorkbenchContext {
 		tabItemBp.setText(application.getLabel());
 		tabItemBp.setToolTipText(application.getTooltip());
 		tabItemBp.setIcon(application.getIcon());
-		final ITabItem tabItem = applicationTabFolder.addItem(index, tabItemBp);
 
+		final ITabItem tabItem = applicationTabFolder.addItem(index, tabItemBp);
 		final WorkbenchApplicationContext applicationContext = new WorkbenchApplicationContext(this, tabItem, application);
 
+		addedTabItems.add(tabItem);
 		addedApplications.add(index, application);
 		addedApplicationContexts.add(index, applicationContext);
-		final ITabItemListener tabItemListener = createTabItemListener(application);
-		tabItem.addTabItemListener(tabItemListener);
-		addedTabItemListeners.add(index, tabItemListener);
 	}
 
 	@Override
@@ -166,10 +153,13 @@ public class WorkbenchContext implements IWorkbenchContext {
 		Assert.paramNotNull(workbenchApplication, "workbenchApplication");
 		final int index = addedApplications.indexOf(workbenchApplication);
 		if (index != -1) {
-			final WorkbenchApplicationContext workbenchApplicationContext = addedApplicationContexts.get(index);
-			workbenchApplicationContext.dispose();
-		}
+			addedApplications.remove(index);
+			addedApplicationContexts.remove(index);
+			final ITabItem tabItem = addedTabItems.remove(index);
+			applicationTabFolder.removeItem(tabItem);
 
+			onApplicationRemove();
+		}
 	}
 
 	@Override
@@ -204,40 +194,37 @@ public class WorkbenchContext implements IWorkbenchContext {
 		}
 	}
 
-	protected void unselectComponentNode(final ComponentNodeContext componentNode) {
-		if (componentNode != null) {
-			workbenchContentContainer.layoutBegin();
-			toolBar.layoutBegin();
-			rootFrame.setCursor(Cursor.WAIT);
-
-			emptyContent.setVisible(false);
-			componentNode.activate();
-
-			workbenchContentContainer.layoutEnd();
-			toolBar.layoutEnd();
-			rootFrame.setCursor(Cursor.DEFAULT);
-		}
-		else {
-			emptyContent.setVisible(true);
+	protected void onApplicationRemove() {
+		if (applicationTabFolder.getItems().size() == 0) {
+			selectComponentNode(null);
 		}
 	}
 
-	protected void selectComponentNode(final ComponentNodeContext componentNode) {
-		if (componentNode != null) {
-			workbenchContentContainer.layoutBegin();
-			toolBar.layoutBegin();
-			rootFrame.setCursor(Cursor.WAIT);
+	protected void selectComponentNode(final ComponentNodeContext newComponentNode) {
+		workbenchContentContainer.layoutBegin();
+		toolBar.layoutBegin();
+		rootFrame.setCursor(Cursor.WAIT);
 
-			emptyContent.setVisible(false);
-			componentNode.activate();
-
-			workbenchContentContainer.layoutEnd();
-			toolBar.layoutEnd();
-			rootFrame.setCursor(Cursor.DEFAULT);
+		if (newComponentNode != null) {
+			if (!newComponentNode.isActive()) {
+				newComponentNode.activate();
+				//CHECKSTYLE:OFF
+				//TODO MG remove sysout
+				System.out.println("SELECT NODE: " + newComponentNode.getTreeNode().getText());
+				//CHECKSTYLE:ON
+			}
 		}
 		else {
+			//CHECKSTYLE:OFF
+			//TODO MG remove sysout
+			System.out.println("SELECT EMPTY NODE ");
+			//CHECKSTYLE:ON
 			emptyContent.setVisible(true);
 		}
+
+		workbenchContentContainer.layoutEnd();
+		toolBar.layoutEnd();
+		rootFrame.setCursor(Cursor.DEFAULT);
 	}
 
 	private IFrame createRootFrame(final IWorkbench workbench) {
@@ -299,23 +286,43 @@ public class WorkbenchContext implements IWorkbenchContext {
 		return new WorkbenchStatusBar(rootFrame.add(bpf.composite(), "hidemode 2, growx"));
 	}
 
-	private ITabItemListener createTabItemListener(final IWorkbenchApplication application) {
-		return new TabItemAdapter() {
+	private ITabFolderListener createTabFolderListener() {
+		return new ITabFolderListener() {
 
 			@Override
-			public void selectionChanged(final boolean selected) {
-				//TODO MG set the selection
-			}
-
-			@Override
-			public void onClose(final IVetoable vetoable) {
-				System.out.println("ON CLOSE");
-				final VetoHolder vetoHolder = new VetoHolder();
-				application.onClose(vetoHolder);
-				if (vetoHolder.hasVeto()) {
-					vetoable.veto();
+			public void itemSelected(final ITabSelectionEvent selectionEvent) {
+				final ITabItem selectedTab = selectionEvent.getNewSelected();
+				if (selectedTab != null) {
+					final int selectedIndex = addedTabItems.indexOf(selectedTab);
+					if (selectedIndex != -1) {
+						final WorkbenchApplicationContext applicationContext = addedApplicationContexts.get(selectedIndex);
+						applicationContext.getApplication().onVisibleStateChanged(true);
+						selectComponentNode(applicationContext.getSelectedNodeContext());
+					}
+					//else{this could happen if the application was just added}
 				}
 			}
+
+			@Override
+			public void onDeselection(final IVetoable vetoable, final ITabSelectionEvent selectionEvent) {
+				final ITabItem selectedTab = selectionEvent.getLastSelected();
+				if (selectedTab != null) {
+					final int selectedIndex = addedTabItems.indexOf(selectedTab);
+					if (selectedIndex != -1) {
+						final WorkbenchApplicationContext applicationContext = addedApplicationContexts.get(selectedIndex);
+						final ComponentNodeContext selectedNodeContext = applicationContext.getSelectedNodeContext();
+						if (selectedNodeContext != null && selectedNodeContext.isActive()) {
+							final VetoHolder vetoHolder = selectedNodeContext.deactivate();
+							if (vetoHolder.hasVeto()) {
+								vetoable.veto();
+								return;
+							}
+						}
+						applicationContext.getApplication().onVisibleStateChanged(false);
+					}
+				}
+			}
+
 		};
 	}
 

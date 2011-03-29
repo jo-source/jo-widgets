@@ -57,6 +57,7 @@ public class ComponentNodeContext implements IComponentNodeContext {
 	private final Map<IComponentNode, ITreeNode> createdNodes;
 
 	private ComponentContext componentContext;
+	private boolean active;
 
 	public ComponentNodeContext(
 		final IComponentNode componentNode,
@@ -64,6 +65,8 @@ public class ComponentNodeContext implements IComponentNodeContext {
 		final ComponentNodeContext parentTreeNodeContext,
 		final WorkbenchApplicationContext workbenchApplicationContext,
 		final WorkbenchContext workbenchContext) {
+
+		this.active = false;
 
 		this.treeNodeObservable = new TreeNodeObservable();
 		this.parentNodeContext = parentTreeNodeContext;
@@ -118,11 +121,20 @@ public class ComponentNodeContext implements IComponentNodeContext {
 	}
 
 	public void activate() {
+		this.active = true;
 		getComponentContextLazy().activate();
 	}
 
+	public boolean isActive() {
+		return active;
+	}
+
 	public VetoHolder deactivate() {
-		return getComponentContextLazy().deactivate();
+		final VetoHolder vetoHolder = getComponentContextLazy().deactivate();
+		if (!vetoHolder.hasVeto()) {
+			this.active = false;
+		}
+		return vetoHolder;
 	}
 
 	@Override

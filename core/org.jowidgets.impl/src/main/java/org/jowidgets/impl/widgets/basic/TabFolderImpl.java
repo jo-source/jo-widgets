@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.jowidgets.api.controler.ITabFolderListener;
+import org.jowidgets.api.controler.ITabSelectionEvent;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
@@ -42,6 +43,7 @@ import org.jowidgets.api.widgets.ITabItem;
 import org.jowidgets.api.widgets.descriptor.ITabFolderDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITabItemDescriptor;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
+import org.jowidgets.impl.event.TabSelectionEvent;
 import org.jowidgets.impl.spi.SpiBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.ITabItemBluePrintSpi;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
@@ -49,6 +51,7 @@ import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsI
 import org.jowidgets.impl.widgets.common.wrapper.TabFolderSpiWrapper;
 import org.jowidgets.spi.widgets.ITabFolderSpi;
 import org.jowidgets.spi.widgets.ITabItemSpi;
+import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.TypeCast;
 
@@ -58,6 +61,8 @@ public class TabFolderImpl extends TabFolderSpiWrapper implements ITabFolder {
 	private final ControlDelegate controlDelegate;
 	private final Set<ITabFolderListener> tabFolderListeners;
 	private final List<TabItemImpl> items;
+
+	private ITabItem lastSelectedItem;
 
 	public TabFolderImpl(final ITabFolderSpi widget, final ITabFolderDescriptor descriptor) {
 		super(widget);
@@ -128,6 +133,10 @@ public class TabFolderImpl extends TabFolderSpiWrapper implements ITabFolder {
 				itemImpl.setSelected(false);
 			}
 		}
+	}
+
+	protected void itemClosed(final TabItemImpl tabItemImpl) {
+		items.remove(tabItemImpl);
 	}
 
 	@Override
@@ -250,10 +259,21 @@ public class TabFolderImpl extends TabFolderSpiWrapper implements ITabFolder {
 		tabFolderListeners.remove(listener);
 	}
 
-	protected void fireItemSelected(final ITabItem item) {
-		for (final ITabFolderListener listener : tabFolderListeners) {
-			listener.itemSelected(item);
+	protected void fireOnDeselection(final VetoHolder vetoHolder, final ITabItem deselectedItem, final ITabItem newSelectedItem) {
+		if (items.contains(deselectedItem)) {
+			final ITabSelectionEvent selectionEvent = new TabSelectionEvent(deselectedItem, newSelectedItem);
+			for (final ITabFolderListener listener : tabFolderListeners) {
+				listener.onDeselection(vetoHolder, selectionEvent);
+			}
 		}
+	}
+
+	protected void fireItemSelected(final ITabItem newSelectedItem) {
+		final ITabSelectionEvent selectionEvent = new TabSelectionEvent(lastSelectedItem, newSelectedItem);
+		for (final ITabFolderListener listener : tabFolderListeners) {
+			listener.itemSelected(selectionEvent);
+		}
+		lastSelectedItem = newSelectedItem;
 	}
 
 	protected List<TabItemImpl> getItemsImpl() {
