@@ -57,6 +57,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewLayout;
+import org.jowidgets.workbench.api.ViewScope;
 import org.jowidgets.workbench.impl.rcp.internal.ComponentContext;
 import org.jowidgets.workbench.impl.rcp.internal.ViewContext;
 import org.jowidgets.workbench.impl.rcp.internal.util.ImageHelper;
@@ -188,7 +189,13 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 
 				private void init() {
 					viewContext = new ViewContext(getViewSite().getId(), parent, componentContext);
-					view = componentContext.getComponent().createView(viewLayout.getId(), viewContext);
+					// TODO HW evaluate IViewLayout#getScope
+					if (viewLayout.getScope() == ViewScope.COMPONENT) {
+						view = componentContext.getComponent().createView(viewLayout.getId(), viewContext);
+					}
+					else {
+						throw new IllegalStateException("unsupported view layout scope: " + viewLayout.getScope());
+					}
 					PartSupport.getInstance().setViewAndContext(viewId, view, viewContext);
 					final IWorkbenchPage page = getViewSite().getPage();
 					page.removePartListener(this);
