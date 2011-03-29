@@ -35,6 +35,7 @@ import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.workbench.api.ILifecycleCallback;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
+import org.jowidgets.workbench.toolkit.api.IViewFactory;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationInitializeCallback;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchModel;
@@ -48,6 +49,7 @@ class WorkbenchApplicationModel extends ComponentNodeContainerModel implements I
 	private final String tooltip;
 	private final IImageConstant icon;
 	private final IWorkbenchApplicationInitializeCallback initializeCallback;
+	private final IViewFactory viewFactory;
 
 	private IMenuModel popupMenu;
 	private IToolBarModel toolBarModel;
@@ -66,6 +68,7 @@ class WorkbenchApplicationModel extends ComponentNodeContainerModel implements I
 		final IMenuModel toolBarMenu,
 		final ILifecycleCallback lifecycleCallback,
 		final IWorkbenchApplicationInitializeCallback initializeCallback,
+		final IViewFactory viewFactory,
 		final List<IComponentNodeModel> children) {
 		super(id, children);
 
@@ -78,6 +81,7 @@ class WorkbenchApplicationModel extends ComponentNodeContainerModel implements I
 		this.toolBarMenu = toolBarMenu;
 		this.lifecycleCallback = lifecycleCallback;
 		this.initializeCallback = initializeCallback;
+		this.viewFactory = viewFactory;
 	}
 
 	@Override
@@ -118,6 +122,11 @@ class WorkbenchApplicationModel extends ComponentNodeContainerModel implements I
 	@Override
 	public IWorkbenchApplicationInitializeCallback getInitializeCallback() {
 		return initializeCallback;
+	}
+
+	@Override
+	public IViewFactory getViewFactory() {
+		return viewFactory;
 	}
 
 	@Override

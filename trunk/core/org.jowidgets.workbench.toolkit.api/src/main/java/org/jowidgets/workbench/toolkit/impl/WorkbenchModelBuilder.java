@@ -41,6 +41,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.ICloseCallback;
 import org.jowidgets.workbench.api.IWorkbenchDescriptor;
+import org.jowidgets.workbench.toolkit.api.IViewFactory;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModelBuilder;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchInitializeCallback;
@@ -60,6 +61,7 @@ class WorkbenchModelBuilder extends WorkbenchPartBuilder<IWorkbenchModelBuilder>
 	private IContentCreator statusBarCreator;
 	private ICloseCallback closeCallback;
 	private IWorkbenchInitializeCallback initializeCallback;
+	private IViewFactory viewFactory;
 
 	private final List<Runnable> shutdownHooks;
 	private final List<IWorkbenchApplicationModel> applications;
@@ -72,6 +74,7 @@ class WorkbenchModelBuilder extends WorkbenchPartBuilder<IWorkbenchModelBuilder>
 		this.applicationsCloseable = false;
 		this.toolBar = Toolkit.getModelFactoryProvider().getItemModelFactory().toolBar();
 		this.menuBar = Toolkit.getModelFactoryProvider().getItemModelFactory().menuBar();
+		this.viewFactory = new DummyViewFactory();
 	}
 
 	@Override
@@ -139,6 +142,13 @@ class WorkbenchModelBuilder extends WorkbenchPartBuilder<IWorkbenchModelBuilder>
 	@Override
 	public IWorkbenchModelBuilder setCloseCallback(final ICloseCallback closeCallback) {
 		this.closeCallback = closeCallback;
+		return this;
+	}
+
+	@Override
+	public IWorkbenchModelBuilder setViewFactoy(final IViewFactory viewFactory) {
+		Assert.paramNotNull(viewFactory, "viewFactory");
+		this.viewFactory = viewFactory;
 		return this;
 	}
 
@@ -220,6 +230,7 @@ class WorkbenchModelBuilder extends WorkbenchPartBuilder<IWorkbenchModelBuilder>
 			statusBarCreator,
 			closeCallback,
 			initializeCallback,
+			viewFactory,
 			applications,
 			shutdownHooks);
 	}

@@ -42,6 +42,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.ICloseCallback;
 import org.jowidgets.workbench.api.IWorkbenchApplicationDescriptor;
+import org.jowidgets.workbench.toolkit.api.IViewFactory;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModelBuilder;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchInitializeCallback;
@@ -58,6 +59,7 @@ class WorkbenchModel extends WorkbenchPartModel implements IWorkbenchModel {
 	private final boolean hasApplicationNavigator;
 	private final boolean applicationsCloseable;
 	private final IWorkbenchInitializeCallback initializeCallback;
+	private final IViewFactory viewFactory;
 
 	private final List<Runnable> shutdownHooks;
 	private final List<IWorkbenchApplicationModel> applications;
@@ -82,6 +84,7 @@ class WorkbenchModel extends WorkbenchPartModel implements IWorkbenchModel {
 		final IContentCreator statusBarCreator,
 		final ICloseCallback closeCallback,
 		final IWorkbenchInitializeCallback initializeCallback,
+		final IViewFactory viewFactory,
 		final List<IWorkbenchApplicationModel> applications,
 		final List<Runnable> shutdownHooks) {
 		super(label, tooltip, icon);
@@ -99,6 +102,7 @@ class WorkbenchModel extends WorkbenchPartModel implements IWorkbenchModel {
 		this.statusBarCreator = statusBarCreator;
 		this.closeCallback = closeCallback;
 		this.initializeCallback = initializeCallback;
+		this.viewFactory = viewFactory;
 		this.applications = new LinkedList<IWorkbenchApplicationModel>();
 		this.shutdownHooks = new LinkedList<Runnable>(shutdownHooks);
 
@@ -156,6 +160,11 @@ class WorkbenchModel extends WorkbenchPartModel implements IWorkbenchModel {
 	@Override
 	public IWorkbenchInitializeCallback getInitializeCallback() {
 		return initializeCallback;
+	}
+
+	@Override
+	public IViewFactory getViewFactory() {
+		return viewFactory;
 	}
 
 	@Override

@@ -35,6 +35,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.ILifecycleCallback;
 import org.jowidgets.workbench.api.IWorkbenchApplicationDescriptor;
+import org.jowidgets.workbench.toolkit.api.IViewFactory;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationInitializeCallback;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModelBuilder;
@@ -50,12 +51,14 @@ class WorkbenchApplicationModelBuilder extends ComponentNodeContainerModelBuilde
 	private IMenuModel toolBarMenu;
 	private ILifecycleCallback lifecycleCallback;
 	private IWorkbenchApplicationInitializeCallback initializeCallback;
+	private IViewFactory viewFactory;
 
 	WorkbenchApplicationModelBuilder() {
 		super();
 		this.popupMenu = Toolkit.getModelFactoryProvider().getItemModelFactory().menu();
 		this.toolBarMenu = Toolkit.getModelFactoryProvider().getItemModelFactory().menu();
 		this.toolBarModel = Toolkit.getModelFactoryProvider().getItemModelFactory().toolBar();
+		this.viewFactory = new DummyViewFactory();
 	}
 
 	@Override
@@ -103,6 +106,13 @@ class WorkbenchApplicationModelBuilder extends ComponentNodeContainerModelBuilde
 	}
 
 	@Override
+	public IWorkbenchApplicationModelBuilder setViewFactoy(final IViewFactory viewFactory) {
+		Assert.paramNotNull(viewFactory, "viewFactory");
+		this.viewFactory = viewFactory;
+		return this;
+	}
+
+	@Override
 	public IWorkbenchApplicationModelBuilder setLifecycleCallback(final ILifecycleCallback lifecycleCallback) {
 		this.lifecycleCallback = lifecycleCallback;
 		return this;
@@ -127,6 +137,7 @@ class WorkbenchApplicationModelBuilder extends ComponentNodeContainerModelBuilde
 			toolBarMenu,
 			lifecycleCallback,
 			initializeCallback,
+			viewFactory,
 			getChildren());
 	}
 

@@ -33,6 +33,8 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.util.Assert;
+import org.jowidgets.workbench.api.IView;
+import org.jowidgets.workbench.api.IViewContext;
 import org.jowidgets.workbench.api.IWorkbench;
 import org.jowidgets.workbench.api.IWorkbenchContext;
 import org.jowidgets.workbench.api.IWorkbenchDescriptor;
@@ -114,6 +116,11 @@ public class Workbench implements IWorkbench {
 	@Override
 	public final void onContextInitialize(final IWorkbenchContext context) {
 		workbench.onContextInitialize(context);
+	}
+
+	@Override
+	public final IView createView(final String viewId, final IViewContext viewContext) {
+		return workbench.createView(viewId, viewContext);
 	}
 
 	@Override

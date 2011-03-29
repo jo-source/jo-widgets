@@ -55,6 +55,8 @@ public interface IWorkbenchModel extends IWorkbenchDescriptor, IWorkbenchPartMod
 
 	ICloseCallback getCloseCallback();
 
+	IViewFactory getViewFactory();
+
 	IWorkbenchInitializeCallback getInitializeCallback();
 
 	List<IWorkbenchApplicationModel> getApplications();
