@@ -32,6 +32,7 @@ import java.util.List;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.workbench.api.IViewLayout;
+import org.jowidgets.workbench.api.ViewScope;
 import org.jowidgets.workbench.toolkit.api.IViewLayoutBuilder;
 import org.jowidgets.workbench.toolkit.api.WorkbenchToolkit;
 
@@ -85,6 +86,12 @@ public class ViewLayoutBuilder implements IViewLayoutBuilder {
 	@Override
 	public final IViewLayoutBuilder setDetachable(final boolean detachable) {
 		builder.setDetachable(detachable);
+		return this;
+	}
+
+	@Override
+	public IViewLayoutBuilder setScope(final ViewScope scope) {
+		builder.setScope(scope);
 		return this;
 	}
 
