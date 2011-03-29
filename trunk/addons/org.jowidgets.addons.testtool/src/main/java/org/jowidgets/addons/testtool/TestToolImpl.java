@@ -38,7 +38,6 @@ import org.jowidgets.addons.testtool.internal.TestPlayer;
 import org.jowidgets.addons.testtool.internal.TestToolUtilities;
 import org.jowidgets.addons.testtool.internal.UserAction;
 import org.jowidgets.addons.testtool.internal.WidgetRegistry;
-import org.jowidgets.api.controler.ITabItemListener;
 import org.jowidgets.api.controler.ITreeListener;
 import org.jowidgets.api.controler.ITreePopupDetectionListener;
 import org.jowidgets.api.controler.ITreePopupEvent;
@@ -61,6 +60,7 @@ import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.test.api.widgets.IButtonUi;
+import org.jowidgets.tools.controler.TabItemAdapter;
 import org.jowidgets.tools.controler.WindowAdapter;
 
 public final class TestToolImpl implements ITestTool {
@@ -275,7 +275,7 @@ public final class TestToolImpl implements ITestTool {
 		for (final ITabFolder folder : tabFolders) {
 			for (final ITabItem item : folder.getItems()) {
 				WidgetRegistry.getInstance().addWidget(item);
-				item.addTabItemListener(new ITabItemListener() {
+				item.addTabItemListener(new TabItemAdapter() {
 
 					@Override
 					public void selectionChanged(final boolean selected) {

@@ -31,7 +31,6 @@ package org.jowidgets.workbench.impl;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jowidgets.api.controler.ITabItemListener;
 import org.jowidgets.api.controler.ITreeSelectionEvent;
 import org.jowidgets.api.controler.ITreeSelectionListener;
 import org.jowidgets.api.model.IListModelListener;
@@ -47,6 +46,7 @@ import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.tools.controler.TabItemAdapter;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.types.VetoHolder;
@@ -85,12 +85,7 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 		tabItem.setToolTipText(application.getTooltip());
 		tabItem.setIcon(application.getIcon());
 
-		tabItem.addTabItemListener(new ITabItemListener() {
-
-			@Override
-			public void selectionChanged(final boolean selected) {
-				//TODO MG set the selection
-			}
+		tabItem.addTabItemListener(new TabItemAdapter() {
 
 			@Override
 			public void onClose(final IVetoable vetoable) {

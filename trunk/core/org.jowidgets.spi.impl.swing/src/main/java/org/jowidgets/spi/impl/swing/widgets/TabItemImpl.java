@@ -467,6 +467,7 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 					if (i != -1) {
 						final boolean veto = fireOnClose();
 						if (!veto) {
+							fireClosed();
 							parentTabbedPane.remove(i);
 						}
 						//else{do nothing}

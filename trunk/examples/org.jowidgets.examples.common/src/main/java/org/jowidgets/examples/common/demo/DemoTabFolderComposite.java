@@ -29,7 +29,6 @@
 package org.jowidgets.examples.common.demo;
 
 import org.jowidgets.api.color.Colors;
-import org.jowidgets.api.controler.ITabItemListener;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
@@ -51,6 +50,7 @@ import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.examples.common.icons.SilkIcons;
+import org.jowidgets.tools.controler.TabItemAdapter;
 import org.jowidgets.tools.model.item.MenuModel;
 
 public final class DemoTabFolderComposite {
@@ -169,7 +169,7 @@ public final class DemoTabFolderComposite {
 	}
 
 	private void addTabContent(final ITabItem tabItem) {
-		tabItem.addTabItemListener(new ITabItemListener() {
+		tabItem.addTabItemListener(new TabItemAdapter() {
 
 			@Override
 			public void selectionChanged(final boolean selected) {
