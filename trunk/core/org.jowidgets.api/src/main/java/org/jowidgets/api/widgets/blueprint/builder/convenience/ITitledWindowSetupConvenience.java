@@ -25,14 +25,18 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.blueprint.builder;
+package org.jowidgets.api.widgets.blueprint.builder.convenience;
 
-import org.jowidgets.api.widgets.blueprint.builder.convenience.ITitledWindowSetupConvenience;
-import org.jowidgets.common.widgets.builder.ITitledWindowSetupBuilderCommon;
+import org.jowidgets.api.command.IExecutionContext;
 
-public interface ITitledWindowSetupBuilder<INSTANCE_TYPE extends ITitledWindowSetupBuilder<?>> extends
-		IWindowSetupBuilder<INSTANCE_TYPE>,
-		ITitledWindowSetupBuilderCommon<INSTANCE_TYPE>,
-		ITitledWindowSetupConvenience<INSTANCE_TYPE> {
+public interface ITitledWindowSetupConvenience<INSTANCE_TYPE> {
+
+	/**
+	 * Sets the title and the icon to those of the execution context
+	 * 
+	 * @param executionContext the context to set
+	 * @return The builder instance
+	 */
+	INSTANCE_TYPE setExecutionContext(IExecutionContext executionContext);
 
 }

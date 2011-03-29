@@ -57,7 +57,8 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractInputComponent<IN
 		final IContainer parent,
 		final IInputContentCreator<INPUT_TYPE> content,
 		final boolean scrollableContent,
-		final Border border) {
+		final Border border,
+		final INPUT_TYPE value) {
 		super(createCompositeWidget(parent, scrollableContent, border), true);
 
 		compositeWidget = (IComposite) getWidget();
@@ -73,6 +74,9 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractInputComponent<IN
 		});
 
 		content.createContent(this);
+		if (value != null) {
+			content.setValue(value);
+		}
 		// do not add initialization after this, because this is given to the
 		// create content method
 	}

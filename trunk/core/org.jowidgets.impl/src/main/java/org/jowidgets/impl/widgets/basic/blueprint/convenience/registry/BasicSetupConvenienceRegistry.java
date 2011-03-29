@@ -31,10 +31,12 @@ package org.jowidgets.impl.widgets.basic.blueprint.convenience.registry;
 import org.jowidgets.api.widgets.blueprint.builder.IComboBoxSelectionSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.ISplitCompositeSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.builder.ITitledWindowSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.ITreeSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IWindowSetupBuilder;
 import org.jowidgets.impl.widgets.basic.blueprint.convenience.ComboBoxSelectionSetupConvenience;
 import org.jowidgets.impl.widgets.basic.blueprint.convenience.SplitCompositeSetupConvenience;
+import org.jowidgets.impl.widgets.basic.blueprint.convenience.TitledWindowSetupConvenience;
 import org.jowidgets.impl.widgets.basic.blueprint.convenience.TreeSetupConvenience;
 import org.jowidgets.impl.widgets.basic.blueprint.convenience.WidgetSetupConvenience;
 import org.jowidgets.impl.widgets.basic.blueprint.convenience.WindowSetupConvenience;
@@ -49,6 +51,6 @@ public class BasicSetupConvenienceRegistry extends CommonSetupConvenienceRegistr
 		register(IComponentSetupBuilder.class, new WidgetSetupConvenience());
 		register(ISplitCompositeSetupBuilder.class, new SplitCompositeSetupConvenience());
 		register(ITreeSetupBuilder.class, new TreeSetupConvenience());
-
+		register(ITitledWindowSetupBuilder.class, new TitledWindowSetupConvenience());
 	}
 }

@@ -43,6 +43,7 @@ import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.api.widgets.content.IInputContentCreatorFactory;
 import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.application.IApplicationRunner;
@@ -107,6 +108,11 @@ public class ToolkitWrapper implements IToolkit {
 	@Override
 	public IConverterProvider getConverterProvider() {
 		return toolkit.getConverterProvider();
+	}
+
+	@Override
+	public IInputContentCreatorFactory getInputContentCreatorFactory() {
+		return toolkit.getInputContentCreatorFactory();
 	}
 
 	@Override
