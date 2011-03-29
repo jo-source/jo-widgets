@@ -45,19 +45,17 @@ public interface ITreeSelectionEvent {
 	List<ITreeNode> getUnselected();
 
 	/**
-	 * Gets the (single) node that was selected by this event.
-	 * Remark: This operation is only supported for a single selection tree!!
+	 * Gets the first node that was selected by this event.
 	 * 
 	 * @return The node that was selected by this event or null if nothing was selected
 	 */
-	ITreeNode getSelectedSingle();
+	ITreeNode getFirstSelected();
 
 	/**
-	 * Gets the (single) node that was unselected by this event.
-	 * Remark: This operation is only supported for a single selection tree!!
+	 * Gets the first node that was unselected by this event.
 	 * 
 	 * @return The node that was unselected by this event or null if nothing was unselected
 	 */
-	ITreeNode getUnselectedSingle();
+	ITreeNode getFirstUnselected();
 
 }

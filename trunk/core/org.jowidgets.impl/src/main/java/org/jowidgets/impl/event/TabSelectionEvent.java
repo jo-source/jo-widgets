@@ -26,18 +26,30 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.controler;
+package org.jowidgets.impl.event;
 
-import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.api.controler.ITabSelectionEvent;
+import org.jowidgets.api.widgets.ITabItem;
 
-public interface ITabItemListener {
+public class TabSelectionEvent implements ITabSelectionEvent {
 
-	void onDeselection(IVetoable vetoable);
+	private final ITabItem lastSelected;
+	private final ITabItem newSelected;
 
-	void selectionChanged(boolean selected);
+	public TabSelectionEvent(final ITabItem lastSelected, final ITabItem newSelected) {
+		super();
+		this.lastSelected = lastSelected;
+		this.newSelected = newSelected;
+	}
 
-	void onClose(IVetoable vetoable);
+	@Override
+	public ITabItem getLastSelected() {
+		return lastSelected;
+	}
 
-	void closed();
+	@Override
+	public ITabItem getNewSelected() {
+		return newSelected;
+	}
 
 }

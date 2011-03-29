@@ -111,7 +111,7 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 			@Override
 			public void selectionChanged(final ITreeSelectionEvent event) {
 				final ITreeNode wasSelected = selectedNode;
-				final ITreeNode isSelected = event.getSelectedSingle();
+				final ITreeNode isSelected = event.getFirstSelected();
 
 				final ComponentNodeContext wasSelectedContext = registeredNodes.get(wasSelected);
 				final ComponentNodeContext isSelectedContext = registeredNodes.get(isSelected);

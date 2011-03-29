@@ -39,6 +39,7 @@ import org.eclipse.swt.events.MenuDetectEvent;
 import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.TreeEvent;
 import org.eclipse.swt.events.TreeListener;
 import org.eclipse.swt.graphics.Point;
@@ -114,12 +115,31 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi {
 
 		});
 
-		getUiReference().addSelectionListener(new SelectionAdapter() {
+		final SelectionListener selectionListener = new SelectionAdapter() {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
+				if (!multiSelection) {
+					getUiReference().removeSelectionListener(this);
+					if ((e.stateMask & SWT.CTRL) > 0) {
+						final TreeItem[] selection = getUiReference().getSelection();
+						if (selection != null && selection.length > 1) {
+							getUiReference().setSelection(new TreeItem[] {(TreeItem) e.item});
+						}
+						else {
+							getUiReference().setSelection(new TreeItem[] {});
+						}
+					}
+					else {
+						getUiReference().setSelection(new TreeItem[] {(TreeItem) e.item});
+					}
+					getUiReference().addSelectionListener(this);
+				}
+
 				fireSelectionChange(getUiReference().getSelection());
 			}
-		});
+		};
+
+		getUiReference().addSelectionListener(selectionListener);
 
 	}
 
@@ -276,10 +296,13 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi {
 	private void fireSelectionChange(final TreeItem[] newSelection) {
 		final List<TreeItem> newSelectionList = Arrays.asList(newSelection);
 
+		boolean selectionChanged = false;
+
 		for (final TreeItem wasSelected : lastSelection) {
 			if (!newSelectionList.contains(wasSelected)) {
 				final TreeNodeImpl treeNodeImpl = items.get(wasSelected);
 				if (treeNodeImpl != null) {
+					selectionChanged = true;
 					treeNodeImpl.fireSelectionChanged(false);
 				}
 			}
@@ -289,25 +312,29 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi {
 			if (!lastSelection.contains(isSelected)) {
 				final TreeNodeImpl treeNodeImpl = items.get(isSelected);
 				if (treeNodeImpl != null) {
+					selectionChanged = true;
 					treeNodeImpl.fireSelectionChanged(true);
 				}
 			}
 		}
 
 		lastSelection = newSelectionList;
-		treeObservable.fireSelectionChanged();
+		if (selectionChanged) {
+			treeObservable.fireSelectionChanged();
+		}
 	}
 
 	private static int getStyle(final ITreeSetupSpi setup) {
-		int result = SWT.NONE;
+		//do not use the single selection mode of SWT, it behaves strange!!!
+		//e.g. tree get auto selected when it get the focus
+		//selection could no disabled with clicking on item together with CTRL
+		//single selection will be simulated by selection listener
+		int result = SWT.NONE | SWT.MULTI;
 
 		if (setup.isContentScrolled()) {
 			result = result | SWT.V_SCROLL | SWT.H_SCROLL;
 		}
 
-		if (SelectionPolicy.MULTI_SELECTION == setup.getSelectionPolicy()) {
-			result = result | SWT.MULTI;
-		}
 		else if (SelectionPolicy.SINGLE_SELECTION != setup.getSelectionPolicy()) {
 			throw new IllegalArgumentException("SelectionPolicy '" + setup.getSelectionPolicy() + "' is not known");
 		}

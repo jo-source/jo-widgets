@@ -28,16 +28,12 @@
 
 package org.jowidgets.api.controler;
 
-import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.api.widgets.ITabItem;
 
-public interface ITabItemListener {
+public interface ITabSelectionEvent {
 
-	void onDeselection(IVetoable vetoable);
+	ITabItem getLastSelected();
 
-	void selectionChanged(boolean selected);
-
-	void onClose(IVetoable vetoable);
-
-	void closed();
+	ITabItem getNewSelected();
 
 }

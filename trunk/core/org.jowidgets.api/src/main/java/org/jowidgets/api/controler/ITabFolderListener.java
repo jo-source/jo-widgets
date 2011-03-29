@@ -28,10 +28,12 @@
 
 package org.jowidgets.api.controler;
 
-import org.jowidgets.api.widgets.ITabItem;
+import org.jowidgets.common.types.IVetoable;
 
 public interface ITabFolderListener {
 
-	void itemSelected(ITabItem selectedItem);
+	void itemSelected(ITabSelectionEvent selectionEvent);
+
+	void onDeselection(IVetoable vetoable, ITabSelectionEvent item);
 
 }

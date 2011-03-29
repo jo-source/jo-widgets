@@ -120,10 +120,7 @@ public class TreeImpl extends ControlSpiWrapper implements ITree {
 					}
 				}
 
-				treeSelectionObservable.fireSelectionChanged(new TreeSelectionEvent(
-					descriptor.getSelectionPolicy(),
-					selected,
-					unselected));
+				treeSelectionObservable.fireSelectionChanged(new TreeSelectionEvent(selected, unselected));
 
 				lastSelection = newSelection;
 			}
