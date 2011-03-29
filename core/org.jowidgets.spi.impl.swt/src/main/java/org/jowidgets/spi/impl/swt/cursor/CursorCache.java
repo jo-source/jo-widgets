@@ -46,7 +46,7 @@ public final class CursorCache {
 		final org.eclipse.swt.graphics.Cursor result = getMap().get(cursor);
 
 		if (result == null && cursor != Cursor.DEFAULT) {
-			throw new IllegalArgumentException("Cursor '" + cursor + "' is unkwon");
+			throw new IllegalArgumentException("Cursor '" + cursor + "' is unkown");
 		}
 
 		return result;
