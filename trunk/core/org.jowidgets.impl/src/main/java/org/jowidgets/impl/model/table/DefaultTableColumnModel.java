@@ -55,6 +55,7 @@ class DefaultTableColumnModel implements IDefaultTableColumnModel, ITableColumnM
 
 	private final Map<Integer, IChangeListener> columnChangeListeners;
 
+	private boolean fireEvents;
 	private boolean eventsFreezed;
 	private ArrayList<IDefaultTableColumn> freezedColumns;
 	private Set<IDefaultTableColumn> modifiedColumns;
@@ -127,19 +128,28 @@ class DefaultTableColumnModel implements IDefaultTableColumnModel, ITableColumnM
 		final int[] removed = ArrayUtils.toArray(removedColumnsIndices);
 		final int[] modified = ArrayUtils.toArray(modifiedColumnIndices);
 
-		if (removed.length > 0) {
+		if (removed.length > 0 && fireEvents) {
 			tableColumnModelObservable.fireColumnsRemoved(removed);
 		}
-		if (added.length > 0) {
+		if (added.length > 0 && fireEvents) {
 			tableColumnModelObservable.fireColumnsAdded(added);
 		}
-		if (modified.length > 0) {
+		if (modified.length > 0 && fireEvents) {
 			tableColumnModelObservable.fireColumnsAdded(modified);
 		}
 
 		this.eventsFreezed = false;
 		this.freezedColumns = null;
 		this.modifiedColumns = null;
+	}
+
+	@Override
+	public void setFireEvents(final boolean fireEvents) {
+		this.fireEvents = fireEvents;
+	}
+
+	protected boolean isFireEvents() {
+		return fireEvents;
 	}
 
 	@Override
@@ -330,7 +340,7 @@ class DefaultTableColumnModel implements IDefaultTableColumnModel, ITableColumnM
 		final ColumnChangeListener changeListener = new ColumnChangeListener(columnIndex);
 		columnChangeListeners.put(Integer.valueOf(columnIndex), changeListener);
 		column.addChangeListener(changeListener);
-		if (!eventsFreezed) {
+		if (!eventsFreezed && fireEvents) {
 			tableColumnModelObservable.fireColumnsAdded(new int[] {columnIndex});
 		}
 	}
@@ -340,16 +350,16 @@ class DefaultTableColumnModel implements IDefaultTableColumnModel, ITableColumnM
 	}
 
 	private void columnChanged(final int columnIndex) {
-		if (!eventsFreezed) {
+		if (!eventsFreezed && fireEvents) {
 			tableColumnModelObservable.fireColumnsChanged(new int[] {columnIndex});
 		}
-		else {
+		else if (eventsFreezed) {
 			modifiedColumns.add(columns.get(columnIndex));
 		}
 	}
 
 	private void columnsRemoved(final int[] columnIndices) {
-		if (!eventsFreezed) {
+		if (!eventsFreezed && fireEvents) {
 			tableColumnModelObservable.fireColumnsRemoved(columnIndices);
 		}
 	}

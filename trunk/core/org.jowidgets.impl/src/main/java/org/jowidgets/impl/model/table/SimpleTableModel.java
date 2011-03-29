@@ -99,10 +99,10 @@ class SimpleTableModel extends DefaultTableColumnModel implements ISimpleTableMo
 	@Override
 	public void modifyModelEnd() {
 		super.modifyModelEnd();
-		if (fireDataChanged) {
+		if (fireDataChanged && isFireEvents()) {
 			dataModelObservable.fireDataChanged();
 		}
-		if (fireSelectionChanged) {
+		if (fireSelectionChanged && isFireEvents()) {
 			dataModelObservable.fireSelectionChanged();
 		}
 		fireDataChanged = false;
@@ -171,7 +171,7 @@ class SimpleTableModel extends DefaultTableColumnModel implements ISimpleTableMo
 		if (isEventsFreezed()) {
 			fireDataChanged = true;
 		}
-		else {
+		else if (isFireEvents()) {
 			dataModelObservable.fireRowsChanged(new int[] {rowIndex});
 		}
 	}
@@ -185,7 +185,7 @@ class SimpleTableModel extends DefaultTableColumnModel implements ISimpleTableMo
 		if (isEventsFreezed()) {
 			fireDataChanged = true;
 		}
-		else {
+		else if (isFireEvents()) {
 			dataModelObservable.fireRowsChanged(new int[] {rowIndex});
 		}
 	}
@@ -206,7 +206,7 @@ class SimpleTableModel extends DefaultTableColumnModel implements ISimpleTableMo
 		if (isEventsFreezed()) {
 			fireDataChanged = true;
 		}
-		else {
+		else if (isFireEvents()) {
 			dataModelObservable.fireRowsAdded(rowIndices);
 		}
 	}
@@ -231,7 +231,7 @@ class SimpleTableModel extends DefaultTableColumnModel implements ISimpleTableMo
 		if (isEventsFreezed()) {
 			fireDataChanged = true;
 		}
-		else {
+		else if (isFireEvents()) {
 			dataModelObservable.fireRowsAdded(new int[] {rowIndex});
 		}
 	}
@@ -243,14 +243,14 @@ class SimpleTableModel extends DefaultTableColumnModel implements ISimpleTableMo
 		if (isEventsFreezed()) {
 			fireDataChanged = true;
 		}
-		else {
+		else if (isFireEvents()) {
 			dataModelObservable.fireRowsRemoved(new int[] {index});
 		}
 		if (selectionChanged) {
 			if (isEventsFreezed()) {
 				fireSelectionChanged = true;
 			}
-			else {
+			else if (isFireEvents()) {
 				dataModelObservable.fireSelectionChanged();
 			}
 		}
@@ -272,14 +272,14 @@ class SimpleTableModel extends DefaultTableColumnModel implements ISimpleTableMo
 		if (isEventsFreezed()) {
 			fireDataChanged = true;
 		}
-		else {
+		else if (isFireEvents()) {
 			dataModelObservable.fireRowsRemoved(indices);
 		}
 		if (selectionChanged) {
 			if (isEventsFreezed()) {
 				fireSelectionChanged = true;
 			}
-			else {
+			else if (isFireEvents()) {
 				dataModelObservable.fireSelectionChanged();
 			}
 		}
@@ -301,14 +301,14 @@ class SimpleTableModel extends DefaultTableColumnModel implements ISimpleTableMo
 		if (isEventsFreezed()) {
 			fireDataChanged = true;
 		}
-		else {
+		else if (isFireEvents()) {
 			dataModelObservable.fireRowsRemoved(rows);
 		}
 		if (selectionChanged) {
 			if (isEventsFreezed()) {
 				fireSelectionChanged = true;
 			}
-			else {
+			else if (isFireEvents()) {
 				dataModelObservable.fireSelectionChanged();
 			}
 		}
@@ -321,14 +321,14 @@ class SimpleTableModel extends DefaultTableColumnModel implements ISimpleTableMo
 		if (isEventsFreezed()) {
 			fireDataChanged = true;
 		}
-		else {
+		else if (isFireEvents()) {
 			dataModelObservable.fireDataChanged();
 		}
 		if (selectionChanged) {
 			if (isEventsFreezed()) {
 				fireSelectionChanged = true;
 			}
-			else {
+			else if (isFireEvents()) {
 				dataModelObservable.fireSelectionChanged();
 			}
 		}
@@ -346,7 +346,9 @@ class SimpleTableModel extends DefaultTableColumnModel implements ISimpleTableMo
 		}
 		if (!this.selection.equals(selection)) {
 			this.selection = new ArrayList<Integer>(selection);
-			dataModelObservable.fireSelectionChanged();
+			if (isFireEvents()) {
+				dataModelObservable.fireSelectionChanged();
+			}
 		}
 	}
 
