@@ -26,40 +26,12 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.api.controler;
 
-import java.util.List;
+import org.jowidgets.api.widgets.ITabItem;
 
-import org.jowidgets.api.controler.ITabFolderObservable;
-import org.jowidgets.api.widgets.descriptor.ITabItemDescriptor;
-import org.jowidgets.common.widgets.ITabFolderCommon;
+public interface ITabFolderListener {
 
-public interface ITabFolder extends IControl, ITabFolderCommon, ITabFolderObservable {
-
-	ITabItem addItem(final ITabItemDescriptor descriptor);
-
-	ITabItem addItem(int index, final ITabItemDescriptor descriptor);
-
-	void removeItem(ITabItem item);
-
-	void removeAllItems();
-
-	ITabItem getItem(int index);
-
-	int getIndex(ITabItem item);
-
-	List<ITabItem> getItems();
-
-	void setSelectedItem(ITabItem item);
-
-	ITabItem getSelectedItem();
-
-	void detachItem(ITabItem item);
-
-	void attachItem(ITabItem item);
-
-	void attachItem(int index, ITabItem item);
-
-	void changeItemIndex(ITabItem tabItem, int newIndex);
+	void itemSelected(ITabItem selectedItem);
 
 }
