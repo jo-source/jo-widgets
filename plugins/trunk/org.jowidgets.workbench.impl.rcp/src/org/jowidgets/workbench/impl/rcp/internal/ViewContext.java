@@ -40,6 +40,7 @@ import org.jowidgets.workbench.api.IComponentNodeContext;
 import org.jowidgets.workbench.api.IViewContext;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 import org.jowidgets.workbench.api.IWorkbenchContext;
+import org.jowidgets.workbench.api.ViewScope;
 import org.jowidgets.workbench.impl.rcp.internal.part.PartSupport;
 import org.jowidgets.workbench.impl.rcp.internal.util.ViewToolBarHelper;
 
@@ -130,6 +131,12 @@ public final class ViewContext implements IViewContext {
 	 */
 	public void unsetHidden() {
 		hidden = false;
+	}
+
+	@Override
+	public ViewScope getScope() {
+		//TODO HR implement getScope()
+		return null;
 	}
 
 }
