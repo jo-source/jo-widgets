@@ -105,7 +105,9 @@ public class TabFolderImpl extends SwtControl implements ITabFolderSpi {
 					if (veto) {
 						event.doit = false;
 					}
-					//else{do nothing}
+					else {
+						itemImpl.fireClosed();
+					}
 				}
 				else {
 					throw new IllegalStateException("CloseEvent for item '"

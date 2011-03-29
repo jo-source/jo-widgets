@@ -26,66 +26,20 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.controler;
+package org.jowidgets.tools.controler;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import org.jowidgets.api.controler.ITabItemListener;
 import org.jowidgets.common.types.IVetoable;
-import org.jowidgets.spi.widgets.controler.ITabItemListenerSpi;
-import org.jowidgets.spi.widgets.controler.ITabItemObservableSpi;
-import org.jowidgets.util.ValueHolder;
 
-public class TabItemObservableSpi implements ITabItemObservableSpi {
-
-	private final Set<ITabItemListenerSpi> listeners;
-
-	public TabItemObservableSpi() {
-		this.listeners = new HashSet<ITabItemListenerSpi>();
-	}
+public class TabItemAdapter implements ITabItemListener {
 
 	@Override
-	public void addTabItemListener(final ITabItemListenerSpi listener) {
-		listeners.add(listener);
-	}
+	public void selectionChanged(final boolean selected) {}
 
 	@Override
-	public void removeTabItemListener(final ITabItemListenerSpi listener) {
-		listeners.remove(listener);
-	}
+	public void onClose(final IVetoable vetoable) {}
 
-	public void fireSelected() {
-		for (final ITabItemListenerSpi listener : listeners) {
-			listener.selected();
-		}
-	}
-
-	public void fireOnClose(final IVetoable vetoable) {
-		for (final ITabItemListenerSpi listener : listeners) {
-			listener.onClose(vetoable);
-		}
-	}
-
-	public boolean fireOnClose() {
-		final ValueHolder<Boolean> veto = new ValueHolder<Boolean>(Boolean.FALSE);
-		for (final ITabItemListenerSpi listener : listeners) {
-			listener.onClose(new IVetoable() {
-				@Override
-				public void veto() {
-					veto.set(Boolean.TRUE);
-				}
-			});
-			if (veto.get().booleanValue()) {
-				break;
-			}
-		}
-		return veto.get().booleanValue();
-	}
-
-	public void fireClosed() {
-		for (final ITabItemListenerSpi listener : listeners) {
-			listener.closed();
-		}
-	}
+	@Override
+	public void closed() {}
 
 }

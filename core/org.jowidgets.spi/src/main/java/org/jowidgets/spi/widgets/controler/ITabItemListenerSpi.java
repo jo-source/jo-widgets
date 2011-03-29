@@ -36,4 +36,6 @@ public interface ITabItemListenerSpi {
 
 	void onClose(IVetoable vetoable);
 
+	void closed();
+
 }

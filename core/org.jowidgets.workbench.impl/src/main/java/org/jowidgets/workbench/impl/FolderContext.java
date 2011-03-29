@@ -28,7 +28,6 @@
 
 package org.jowidgets.workbench.impl;
 
-import org.jowidgets.api.controler.ITabItemListener;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
@@ -38,6 +37,7 @@ import org.jowidgets.api.widgets.blueprint.ITabFolderBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITabItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.tools.controler.TabItemAdapter;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.types.VetoHolder;
@@ -124,7 +124,7 @@ public class FolderContext implements IFolderContext {
 		final ViewContext viewContext = new ViewContext(tabFolder, tabItem, layoutContext.getComponentContext());
 		final IView view = layoutContext.getComponent().createView(viewLayout.getId(), viewContext);
 
-		tabItem.addTabItemListener(new ITabItemListener() {
+		tabItem.addTabItemListener(new TabItemAdapter() {
 
 			@Override
 			public void selectionChanged(final boolean selected) {

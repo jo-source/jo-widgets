@@ -42,6 +42,7 @@ import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.examples.common.icons.DemoIconsInitializer;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.demo2.application.Application1;
+import org.jowidgets.examples.common.workbench.demo2.application.Application2;
 import org.jowidgets.examples.common.workbench.demo2.workbench.command.ExitAction;
 import org.jowidgets.examples.common.workbench.demo2.workbench.command.WorkbenchActions;
 import org.jowidgets.tools.model.item.MenuBarModel;
@@ -73,7 +74,9 @@ public class WorkbenchDemo2 {
 		model = builder.build();
 		model.setToolBar(createToolBar());
 		model.setMenuBar(createMenuBar());
+
 		model.addApplication(new Application1().getModel());
+		model.addApplication(new Application2().getModel());
 	}
 
 	public IWorkbenchModel getModel() {

@@ -129,6 +129,14 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 				}
 
 			}
+
+			@Override
+			public void closed() {
+				for (final ITabItemListener listener : itemListeners) {
+					listener.closed();
+				}
+			}
+
 		};
 		widgetSpi.addTabItemListener(tabItemListenerSpi);
 
