@@ -49,7 +49,7 @@ public final class AlignmentConvert {
 			return SwingConstants.CENTER;
 		}
 		else {
-			throw new IllegalArgumentException("Alignment '" + alignmentHorizontal + "' is unkwon");
+			throw new IllegalArgumentException("Alignment '" + alignmentHorizontal + "' is unknown");
 		}
 
 	}

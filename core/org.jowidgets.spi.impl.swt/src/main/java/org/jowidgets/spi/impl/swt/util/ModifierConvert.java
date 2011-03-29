@@ -68,7 +68,7 @@ public final class ModifierConvert {
 		}
 
 		else {
-			throw new IllegalArgumentException("Modifier '" + modifier + "' is unkwon");
+			throw new IllegalArgumentException("Modifier '" + modifier + "' is unknown");
 		}
 
 	}
@@ -88,7 +88,7 @@ public final class ModifierConvert {
 		}
 
 		else {
-			throw new IllegalArgumentException("Modifier '" + modifier + "' is unkwon");
+			throw new IllegalArgumentException("Modifier '" + modifier + "' is unknown");
 		}
 
 	}
