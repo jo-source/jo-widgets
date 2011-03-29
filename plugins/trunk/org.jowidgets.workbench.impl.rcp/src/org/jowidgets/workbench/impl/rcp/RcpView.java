@@ -80,8 +80,7 @@ public final class RcpView implements IViewLayout {
 
 	@Override
 	public ViewScope getScope() {
-		//TODO HW implement getScope()
-		return ViewScope.COMPONENT;
+		return ViewScope.WORKBENCH;
 	}
 
 	@Override
