@@ -28,9 +28,12 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
+import org.jowidgets.api.controler.ITabFolderListener;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
@@ -53,13 +56,13 @@ public class TabFolderImpl extends TabFolderSpiWrapper implements ITabFolder {
 
 	private static final SpiBluePrintFactory SPI_BPF = new SpiBluePrintFactory();
 	private final ControlDelegate controlDelegate;
-
+	private final Set<ITabFolderListener> tabFolderListeners;
 	private final List<TabItemImpl> items;
 
 	public TabFolderImpl(final ITabFolderSpi widget, final ITabFolderDescriptor descriptor) {
 		super(widget);
 		this.controlDelegate = new ControlDelegate();
-
+		this.tabFolderListeners = new HashSet<ITabFolderListener>();
 		this.items = new LinkedList<TabItemImpl>();
 
 		VisibiliySettingsInvoker.setVisibility(descriptor, this);
@@ -235,6 +238,22 @@ public class TabFolderImpl extends TabFolderSpiWrapper implements ITabFolder {
 	@Override
 	public List<ITabItem> getItems() {
 		return new LinkedList<ITabItem>(items);
+	}
+
+	@Override
+	public void addTabFolderListener(final ITabFolderListener listener) {
+		tabFolderListeners.add(listener);
+	}
+
+	@Override
+	public void removeTabFolderListener(final ITabFolderListener listener) {
+		tabFolderListeners.remove(listener);
+	}
+
+	protected void fireItemSelected(final ITabItem item) {
+		for (final ITabFolderListener listener : tabFolderListeners) {
+			listener.itemSelected(item);
+		}
 	}
 
 	protected List<TabItemImpl> getItemsImpl() {

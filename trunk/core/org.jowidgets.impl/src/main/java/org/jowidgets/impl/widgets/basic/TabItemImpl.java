@@ -178,6 +178,7 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 						item.setSelected(false);
 					}
 				}
+				tabFolderImpl.fireItemSelected(this);
 			}
 			for (final ITabItemListener listener : itemListeners) {
 				listener.selectionChanged(selected);
