@@ -47,7 +47,7 @@ public final class OrientationConvert {
 		}
 
 		else {
-			throw new IllegalArgumentException("Orientation '" + orientation + "' is unkwon");
+			throw new IllegalArgumentException("Orientation '" + orientation + "' is unknown");
 		}
 
 	}

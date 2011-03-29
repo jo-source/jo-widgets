@@ -47,7 +47,7 @@ public final class CursorConvert {
 			return java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR);
 		}
 		else {
-			throw new IllegalArgumentException("Cursor '" + cursor + "' is unkwon");
+			throw new IllegalArgumentException("Cursor '" + cursor + "' is unknown");
 		}
 
 	}
