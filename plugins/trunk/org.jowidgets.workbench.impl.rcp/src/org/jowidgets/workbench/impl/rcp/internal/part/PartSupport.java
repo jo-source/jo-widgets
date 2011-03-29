@@ -226,6 +226,7 @@ public final class PartSupport {
 	}
 
 	public void showView(final IViewLayout viewLayout, final ComponentContext componentContext, final IFolderContext folderContext) {
+		// TODO HW evaluate IViewLayout#getScope
 		final String viewId = viewLayout.getId();
 
 		try {
