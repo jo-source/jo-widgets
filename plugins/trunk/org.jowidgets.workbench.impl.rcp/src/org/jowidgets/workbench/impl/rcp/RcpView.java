@@ -33,6 +33,7 @@ import java.util.List;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.workbench.api.IViewLayout;
+import org.jowidgets.workbench.api.ViewScope;
 
 public final class RcpView implements IViewLayout {
 
@@ -75,6 +76,12 @@ public final class RcpView implements IViewLayout {
 	@Override
 	public IImageConstant getIcon() {
 		return null;
+	}
+
+	@Override
+	public ViewScope getScope() {
+		//TODO HW implement getScope()
+		return ViewScope.COMPONENT;
 	}
 
 	@Override
