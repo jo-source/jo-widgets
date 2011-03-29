@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, M. Grossmann, H. Westphal
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,23 +28,21 @@
 
 package org.jowidgets.workbench.api;
 
-import java.util.List;
-
-public interface IViewLayout extends IWorkbenchPart {
+public enum ViewScope {
 
 	/**
-	 * @return The id of the referenced view
+	 * The view will be created by the component
 	 */
-	String getId();
+	COMPONENT,
 
-	ViewScope getScope();
+	/**
+	 * The view will be created by the workbench application
+	 */
+	WORKBENCH_APPLICATION,
 
-	boolean isHidden();
-
-	boolean isDetachable();
-
-	List<String> getFolderWhitelist();
-
-	List<String> getFolderBlacklist();
+	/**
+	 * The view will be created by the workbench
+	 */
+	WORKBENCH;
 
 }

@@ -31,6 +31,7 @@ package org.jowidgets.workbench.toolkit.api;
 import java.util.List;
 
 import org.jowidgets.workbench.api.IViewLayout;
+import org.jowidgets.workbench.api.ViewScope;
 
 public interface IViewLayoutBuilder extends IWorkbenchPartBuilder<IViewLayoutBuilder> {
 
@@ -39,6 +40,8 @@ public interface IViewLayoutBuilder extends IWorkbenchPartBuilder<IViewLayoutBui
 	IViewLayoutBuilder setHidden(boolean hidden);
 
 	IViewLayoutBuilder setDetachable(boolean detachable);
+
+	IViewLayoutBuilder setScope(ViewScope scope);
 
 	IViewLayoutBuilder setFolderWhitelist(List<String> folderWhiteList);
 

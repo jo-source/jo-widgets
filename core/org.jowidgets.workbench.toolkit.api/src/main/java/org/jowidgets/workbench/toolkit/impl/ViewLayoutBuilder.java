@@ -34,6 +34,7 @@ import java.util.List;
 
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.IViewLayout;
+import org.jowidgets.workbench.api.ViewScope;
 import org.jowidgets.workbench.toolkit.api.IViewLayoutBuilder;
 
 class ViewLayoutBuilder extends WorkbenchPartBuilder<IViewLayoutBuilder> implements IViewLayoutBuilder {
@@ -41,6 +42,7 @@ class ViewLayoutBuilder extends WorkbenchPartBuilder<IViewLayoutBuilder> impleme
 	private String id;
 	private boolean hidden;
 	private boolean detachable;
+	private ViewScope scope;
 	private final List<String> folderWhiteList;
 	private final List<String> folderBlackList;
 
@@ -48,6 +50,7 @@ class ViewLayoutBuilder extends WorkbenchPartBuilder<IViewLayoutBuilder> impleme
 		super();
 		this.hidden = false;
 		this.detachable = true;
+		this.scope = ViewScope.COMPONENT;
 		this.folderWhiteList = new LinkedList<String>();
 		this.folderBlackList = new LinkedList<String>();
 	}
@@ -68,6 +71,13 @@ class ViewLayoutBuilder extends WorkbenchPartBuilder<IViewLayoutBuilder> impleme
 	@Override
 	public IViewLayoutBuilder setDetachable(final boolean detachable) {
 		this.detachable = detachable;
+		return this;
+	}
+
+	@Override
+	public IViewLayoutBuilder setScope(final ViewScope scope) {
+		Assert.paramNotNull(scope, "scope");
+		this.scope = scope;
 		return this;
 	}
 
@@ -115,7 +125,16 @@ class ViewLayoutBuilder extends WorkbenchPartBuilder<IViewLayoutBuilder> impleme
 
 	@Override
 	public IViewLayout build() {
-		return new ViewLayout(id, getLabel(), getTooltip(), getIcon(), hidden, detachable, folderWhiteList, folderBlackList);
+		return new ViewLayout(
+			id,
+			getLabel(),
+			getTooltip(),
+			getIcon(),
+			hidden,
+			detachable,
+			scope,
+			folderWhiteList,
+			folderBlackList);
 	}
 
 }

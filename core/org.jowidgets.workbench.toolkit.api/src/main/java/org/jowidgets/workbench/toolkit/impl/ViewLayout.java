@@ -34,12 +34,14 @@ import java.util.List;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.IViewLayout;
+import org.jowidgets.workbench.api.ViewScope;
 
 final class ViewLayout extends WorkbenchPart implements IViewLayout {
 
 	private final String id;
 	private final boolean hidden;
 	private final boolean detachable;
+	private final ViewScope scope;
 	private final List<String> folderWhitelist;
 	private final List<String> folderBlacklist;
 
@@ -50,6 +52,7 @@ final class ViewLayout extends WorkbenchPart implements IViewLayout {
 		final IImageConstant icon,
 		final boolean hidden,
 		final boolean detachable,
+		final ViewScope scope,
 		final List<String> folderWhitelist,
 		final List<String> folderBlacklist) {
 
@@ -62,6 +65,7 @@ final class ViewLayout extends WorkbenchPart implements IViewLayout {
 		this.id = id;
 		this.hidden = hidden;
 		this.detachable = detachable;
+		this.scope = scope;
 		this.folderWhitelist = folderWhitelist;
 		this.folderBlacklist = folderBlacklist;
 	}
@@ -79,6 +83,11 @@ final class ViewLayout extends WorkbenchPart implements IViewLayout {
 	@Override
 	public boolean isDetachable() {
 		return detachable;
+	}
+
+	@Override
+	public ViewScope getScope() {
+		return scope;
 	}
 
 	@Override
