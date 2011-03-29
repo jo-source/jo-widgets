@@ -152,6 +152,11 @@ public class DefaultTableColumnModel implements IDefaultTableColumnModel {
 	}
 
 	@Override
+	public void setFireEvents(final boolean fireEvents) {
+		model.setFireEvents(fireEvents);
+	}
+
+	@Override
 	public final void setColumn(final int columnIndex, final IDefaultTableColumn column) {
 		model.setColumn(columnIndex, column);
 	}

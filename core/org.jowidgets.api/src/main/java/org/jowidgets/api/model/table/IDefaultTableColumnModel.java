@@ -70,6 +70,8 @@ public interface IDefaultTableColumnModel extends ITableColumnModel, ITableColum
 
 	void modifyModelEnd();
 
+	void setFireEvents(boolean fireEvents);
+
 	void setColumn(final int columnIndex, final IDefaultTableColumn column);
 
 	IDefaultTableColumn setColumn(final int columnIndex, final IDefaultTableColumnBuilder columnBuilder);

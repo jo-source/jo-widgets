@@ -362,6 +362,11 @@ public class SimpleTableModel implements ISimpleTableModel {
 	}
 
 	@Override
+	public void setFireEvents(final boolean fireEvents) {
+		tableModel.setFireEvents(fireEvents);
+	}
+
+	@Override
 	public final void setColumn(final int columnIndex, final IDefaultTableColumn column) {
 		tableModel.setColumn(columnIndex, column);
 	}
