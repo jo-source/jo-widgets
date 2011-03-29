@@ -53,21 +53,20 @@ public class TestPlayer {
 				@Override
 				public void run() {
 					final IWidgetCommon widget = finder.findWidgetByID(WidgetRegistry.getInstance().getWidgets(), obj.getId());
-					moveMouseToWidget(widget);
 					executeAction(widget, obj.getAction());
 					try {
 						Thread.sleep(delay);
 					}
 					catch (final InterruptedException e) {
 					}
-					super.run();
 				}
 			};
 			Toolkit.getUiThreadAccess().invokeLater(thread);
 		}
 	}
 
-	private void executeAction(final IWidgetCommon widget, final UserAction action) {
+	private synchronized void executeAction(final IWidgetCommon widget, final UserAction action) {
+		moveMouseToWidget(widget);
 		if (widget instanceof IButtonUi) {
 			final IButtonUi button = (IButtonUi) widget;
 			switch (action) {
@@ -104,8 +103,6 @@ public class TestPlayer {
 			switch (action) {
 				case CLOSE:
 					WidgetRegistry.getInstance().removeWidget(frame);
-					System.out.println("closing frame");
-					System.out.println(frame);
 					frame.setVisible(false);
 					frame.dispose();
 					break;
@@ -119,7 +116,6 @@ public class TestPlayer {
 				case CLICK:
 					System.out.println("ToolBarButton pushed.");
 					break;
-
 				default:
 					break;
 			}
@@ -129,7 +125,6 @@ public class TestPlayer {
 				case CLICK:
 					System.out.println("changing tab item selection");
 					break;
-
 				default:
 					break;
 			}
