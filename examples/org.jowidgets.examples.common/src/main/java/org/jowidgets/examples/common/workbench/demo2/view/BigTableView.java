@@ -41,23 +41,20 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.IInputDialog;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.api.widgets.content.IInputContentContainer;
-import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.model.ITableCell;
 import org.jowidgets.common.model.ITableColumnModel;
 import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.ITableCellPopupEvent;
-import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractDemoView;
 import org.jowidgets.tools.command.ActionBuilder;
+import org.jowidgets.tools.content.SingleControlContent;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.model.table.AbstractTableDataModel;
@@ -197,64 +194,45 @@ public class BigTableView extends AbstractDemoView implements IView {
 		builder.setCommand(new ICommandExecutor() {
 			@Override
 			public void execute(final IExecutionContext executionContext) throws Exception {
-				final IInputDialog<Integer> inputDialog = createRowCountInputDialog();
-				inputDialog.addValidator(new IValidator<Integer>() {
-					@Override
-					public ValidationResult validate(final Integer validationInput) {
-						final ValidationResult result = new ValidationResult();
-						if (validationInput != null && validationInput > 100000000) {
-							result.addValidationError("Row count must be less than '" + 100000000);
-						}
-						return result;
-					}
-				});
-				inputDialog.setValue(rowCount);
+				final IInputDialog<Integer> inputDialog = createRowCountInputDialog(executionContext);
 				inputDialog.setVisible(true);
 				if (inputDialog.isOkPressed()) {
 					rowCount = inputDialog.getValue();
 					dataModel.fireDataChanged();
 				}
+				inputDialog.dispose();
 			}
 		});
 		return builder.build();
 	}
 
-	private IInputDialog<Integer> createRowCountInputDialog() {
+	private IInputDialog<Integer> createRowCountInputDialog(final IExecutionContext executionContext) {
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-		final IInputDialogBluePrint<Integer> inputDialogBp = bpf.inputDialog(new IInputContentCreator<Integer>() {
 
-			private IInputControl<Integer> inputField;
+		final SingleControlContent<Integer> content = new SingleControlContent<Integer>(
+			"Row count",
+			bpf.inputFieldIntegerNumber(),
+			200);
 
+		final IInputDialogBluePrint<Integer> inputDialogBp = bpf.inputDialog(content).setExecutionContext(executionContext);
+
+		inputDialogBp.setValidator(new IValidator<Integer>() {
 			@Override
-			public void createContent(final IInputContentContainer contentContainer) {
-				contentContainer.setLayout(new MigLayoutDescriptor("[][grow]", "[]"));
-				contentContainer.add(bpf.textLabel("Row count"), "");
-				inputField = contentContainer.add(bpf.inputFieldIntegerNumber(), "w 200::, grow");
-				contentContainer.registerInputWidget(null, inputField);
-			}
-
-			@Override
-			public void setValue(final Integer value) {
-				inputField.setValue(value);
-			}
-
-			@Override
-			public Integer getValue() {
-				return inputField.getValue();
-			}
-
-			@Override
-			public ValidationResult validate() {
+			public ValidationResult validate(final Integer validationInput) {
 				final ValidationResult result = new ValidationResult();
+				if (validationInput != null && validationInput > 100000000) {
+					result.addValidationError("Row count must be less than '" + 100000000 + "'");
+				}
+				if (validationInput != null && validationInput < 0) {
+					result.addValidationError("Row count must be greater than '" + 0 + "'");
+				}
 				return result;
 			}
-
-			@Override
-			public boolean isMandatory() {
-				return true;
-			}
-
 		});
+
+		inputDialogBp.setMissingInputText("Please input the new row count!");
+		inputDialogBp.setResizable(false);
+		inputDialogBp.setValue(rowCount);
 		return Toolkit.getActiveWindow().createChildWindow(inputDialogBp);
 	}
 }

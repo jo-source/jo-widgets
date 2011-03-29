@@ -45,6 +45,7 @@ import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.api.widgets.content.IInputContentCreatorFactory;
 import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.application.IApplicationRunner;
@@ -53,6 +54,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.application.ApplicationRunner;
 import org.jowidgets.impl.command.ActionBuilderFactory;
+import org.jowidgets.impl.content.InputContentCreatorFactory;
 import org.jowidgets.impl.convert.DefaultConverterProvider;
 import org.jowidgets.impl.image.DefaultIconsRegisterService;
 import org.jowidgets.impl.model.ModelFactoryProvider;
@@ -74,6 +76,7 @@ public class DefaultToolkit implements IToolkit {
 	private final IActionBuilderFactory actionBuilderFactory;
 	private final IModelFactoryProvider modelFactoryProvider;
 	private final IConverterProvider converterProvider;
+	private final IInputContentCreatorFactory inputContentCreatorFactory;
 	private final WindowProvider windowProvider;
 	private final IMessagePane messagePane;
 	private final IQuestionPane questionPane;
@@ -91,6 +94,7 @@ public class DefaultToolkit implements IToolkit {
 		this.actionBuilderFactory = new ActionBuilderFactory();
 		this.modelFactoryProvider = new ModelFactoryProvider();
 		this.converterProvider = new DefaultConverterProvider();
+		this.inputContentCreatorFactory = new InputContentCreatorFactory();
 		this.windowProvider = new WindowProvider(genericWidgetFactory, toolkitSpi);
 		this.messagePane = new DefaultMessagePane(genericWidgetFactory, bluePrintFactory, windowProvider);
 		this.questionPane = new DefaultQuestionPane(genericWidgetFactory, bluePrintFactory, windowProvider);
@@ -141,6 +145,11 @@ public class DefaultToolkit implements IToolkit {
 	@Override
 	public IModelFactoryProvider getModelFactoryProvider() {
 		return modelFactoryProvider;
+	}
+
+	@Override
+	public IInputContentCreatorFactory getInputContentCreatorFactory() {
+		return inputContentCreatorFactory;
 	}
 
 	@Override

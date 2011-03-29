@@ -82,7 +82,12 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputComposite<INPUT_T
 			this.composite,
 			setup.getContentCreator(),
 			setup.isContentScrolled(),
-			setup.getContentBorder());
+			setup.getContentBorder(),
+			setup.getValue());
+
+		if (setup.getValidator() != null) {
+			contentContainer.addValidator(setup.getValidator());
+		}
 
 		if (validationLabel != null) {
 			validationLabel.registerInputWidget(contentContainer);
