@@ -38,16 +38,23 @@ import org.jowidgets.api.model.table.IDefaultTableColumnBuilder;
 import org.jowidgets.api.model.table.IDefaultTableColumnModel;
 import org.jowidgets.api.model.table.ITableCellBuilder;
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.validation.IValidator;
+import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IInputControl;
+import org.jowidgets.api.widgets.IInputDialog;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITable;
+import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.api.widgets.content.IInputContentContainer;
+import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.model.ITableCell;
 import org.jowidgets.common.model.ITableColumnModel;
-import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.ITableCellPopupEvent;
+import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractDemoView;
 import org.jowidgets.tools.command.ActionBuilder;
@@ -67,19 +74,27 @@ public class BigTableView extends AbstractDemoView implements IView {
 	public static final String DEFAULT_TOOLTIP = "Table with a lot of data";
 	public static final IImageConstant DEFAULT_ICON = SilkIcons.TABLE;
 
-	private static final int ROW_COUNT = 2000000;
-	private static final int COLUMN_COUNT = 50;
+	private int rowCount;
+	private final int columnCount;
 
 	private final ITable table;
+	private final AbstractTableDataModel dataModel;
+
 	private final IAction fitColumnsAction;
 	private final IAction resetPermutationAction;
+	private final IAction changeRowCountAction;
 
 	public BigTableView(final IViewContext context) {
 		super(ID);
 
+		this.rowCount = 2000000;
+		this.columnCount = 50;
+
 		this.fitColumnsAction = createFitColumnsAction();
 		this.resetPermutationAction = createResetPermutationAction();
+		this.changeRowCountAction = createSetRowCountAction();
 
+		context.getToolBar().addAction(changeRowCountAction);
 		context.getToolBar().addAction(resetPermutationAction);
 		context.getToolBar().addAction(fitColumnsAction);
 
@@ -88,14 +103,14 @@ public class BigTableView extends AbstractDemoView implements IView {
 		container.setLayout(MigLayoutFactory.growingInnerCellLayout());
 
 		final ITableColumnModel columnModel = createColumnModel();
-		final ITableDataModel dataModel = createDataModel();
+		dataModel = createDataModel();
 
 		this.table = container.add(bpf.table(columnModel, dataModel), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 		addPopupMenu(table);
 	}
 
 	private ITableColumnModel createColumnModel() {
-		final IDefaultTableColumnModel columnModel = new DefaultTableColumnModel(COLUMN_COUNT);
+		final IDefaultTableColumnModel columnModel = new DefaultTableColumnModel(columnCount);
 		for (int columnIndex = 0; columnIndex < columnModel.getColumnCount(); columnIndex++) {
 			final IDefaultTableColumnBuilder columnBuilder = new DefaultTableColumnBuilder();
 			columnBuilder.setText("Column " + columnIndex);
@@ -106,12 +121,12 @@ public class BigTableView extends AbstractDemoView implements IView {
 		return columnModel;
 	}
 
-	private ITableDataModel createDataModel() {
+	private AbstractTableDataModel createDataModel() {
 		return new AbstractTableDataModel() {
 
 			@Override
 			public int getRowCount() {
-				return ROW_COUNT;
+				return rowCount;
 			}
 
 			@Override
@@ -130,6 +145,7 @@ public class BigTableView extends AbstractDemoView implements IView {
 		final IMenuModel menuModel = new MenuModel();
 		menuModel.addAction(fitColumnsAction);
 		menuModel.addAction(resetPermutationAction);
+		menuModel.addAction(changeRowCountAction);
 
 		final IPopupMenu popupMenu = table.createPopupMenu();
 		popupMenu.setModel(menuModel);
@@ -170,5 +186,75 @@ public class BigTableView extends AbstractDemoView implements IView {
 			}
 		});
 		return builder.build();
+	}
+
+	private IAction createSetRowCountAction() {
+		final IActionBuilder builder = new ActionBuilder();
+		builder.setText("Set row count");
+		builder.setToolTipText("Sets the row count to a new value");
+		builder.setIcon(SilkIcons.TABLE_EDIT);
+
+		builder.setCommand(new ICommandExecutor() {
+			@Override
+			public void execute(final IExecutionContext executionContext) throws Exception {
+				final IInputDialog<Integer> inputDialog = createRowCountInputDialog();
+				inputDialog.addValidator(new IValidator<Integer>() {
+					@Override
+					public ValidationResult validate(final Integer validationInput) {
+						final ValidationResult result = new ValidationResult();
+						if (validationInput != null && validationInput > 100000000) {
+							result.addValidationError("Row count must be less than '" + 100000000);
+						}
+						return result;
+					}
+				});
+				inputDialog.setValue(rowCount);
+				inputDialog.setVisible(true);
+				if (inputDialog.isOkPressed()) {
+					rowCount = inputDialog.getValue();
+					dataModel.fireDataChanged();
+				}
+			}
+		});
+		return builder.build();
+	}
+
+	private IInputDialog<Integer> createRowCountInputDialog() {
+		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+		final IInputDialogBluePrint<Integer> inputDialogBp = bpf.inputDialog(new IInputContentCreator<Integer>() {
+
+			private IInputControl<Integer> inputField;
+
+			@Override
+			public void createContent(final IInputContentContainer contentContainer) {
+				contentContainer.setLayout(new MigLayoutDescriptor("[][grow]", "[]"));
+				contentContainer.add(bpf.textLabel("Row count"), "");
+				inputField = contentContainer.add(bpf.inputFieldIntegerNumber(), "w 200::, grow");
+				contentContainer.registerInputWidget(null, inputField);
+			}
+
+			@Override
+			public void setValue(final Integer value) {
+				inputField.setValue(value);
+			}
+
+			@Override
+			public Integer getValue() {
+				return inputField.getValue();
+			}
+
+			@Override
+			public ValidationResult validate() {
+				final ValidationResult result = new ValidationResult();
+				return result;
+			}
+
+			@Override
+			public boolean isMandatory() {
+				return true;
+			}
+
+		});
+		return Toolkit.getActiveWindow().createChildWindow(inputDialogBp);
 	}
 }
