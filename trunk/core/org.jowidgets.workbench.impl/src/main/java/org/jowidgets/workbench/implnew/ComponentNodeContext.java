@@ -81,8 +81,6 @@ public class ComponentNodeContext extends ComponentNodeContainerContext implemen
 		this.popupMenuModel = new MenuModel();
 		this.popupMenuListener = createPopupMenuListener();
 		popupMenuModel.addListModelListener(popupMenuListener);
-
-		componentNode.onContextInitialize(this);
 	}
 
 	public void activate() {

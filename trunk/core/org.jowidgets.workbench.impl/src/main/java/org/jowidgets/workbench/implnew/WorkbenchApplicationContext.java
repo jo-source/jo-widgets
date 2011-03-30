@@ -109,8 +109,6 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 		tabItem.addTabItemListener(tabItemListener);
 
 		this.componentNodeContainerContext = new ComponentNodeContainerContext(tree, this, workbenchContext);
-
-		application.onContextInitialize(this);
 	}
 
 	@Override
