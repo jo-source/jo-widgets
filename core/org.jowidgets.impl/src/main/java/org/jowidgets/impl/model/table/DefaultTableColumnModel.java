@@ -62,6 +62,7 @@ class DefaultTableColumnModel implements IDefaultTableColumnModel, ITableColumnM
 
 	DefaultTableColumnModel(final int columnCount) {
 		this.eventsFreezed = false;
+		this.fireEvents = true;
 
 		if (columnCount < 0) {
 			throw new IllegalArgumentException("Column count must be a positive number.");
