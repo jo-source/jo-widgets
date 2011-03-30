@@ -45,7 +45,6 @@ import org.jowidgets.workbench.api.IComponentNode;
 import org.jowidgets.workbench.api.IComponentNodeContext;
 import org.jowidgets.workbench.api.IFolderContext;
 import org.jowidgets.workbench.api.ILayout;
-import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 import org.jowidgets.workbench.toolkit.api.IViewLayoutBuilder;
@@ -177,14 +176,14 @@ public class ActionFactory {
 		return actionBuilder.build();
 	}
 
-	public IAction createRemoveViewAction(final IComponentContext context, final IView view) {
+	public IAction createRemoveViewAction(final IViewContext context) {
 		final IActionBuilder actionBuilder = Toolkit.getActionBuilderFactory().create();
 		actionBuilder.setText("Remove this View");
 		actionBuilder.setIcon(SilkIcons.DELETE);
 		actionBuilder.setCommand(new ICommandExecutor() {
 			@Override
 			public void execute(final IExecutionContext executionContext) throws Exception {
-				context.removeView(view);
+				context.dispose();
 			}
 		});
 		return actionBuilder.build();

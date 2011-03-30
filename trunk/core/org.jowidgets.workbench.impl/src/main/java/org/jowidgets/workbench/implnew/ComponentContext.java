@@ -33,7 +33,6 @@ import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IComponentNode;
 import org.jowidgets.workbench.api.ILayout;
-import org.jowidgets.workbench.api.IView;
 
 public final class ComponentContext implements IComponentContext {
 
@@ -77,11 +76,6 @@ public final class ComponentContext implements IComponentContext {
 	@Override
 	public void resetLayout(final ILayout layout) {
 		//TODO MG implement reset
-	}
-
-	@Override
-	public void removeView(final IView view) {
-		// TODO MG implement remove view
 	}
 
 	@Override

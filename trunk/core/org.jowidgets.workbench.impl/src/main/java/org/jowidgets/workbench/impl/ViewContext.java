@@ -68,6 +68,11 @@ public class ViewContext implements IViewContext {
 	}
 
 	@Override
+	public void dispose() {
+		// TODO MG implement dispose
+	}
+
+	@Override
 	public IContainer getContainer() {
 		return toolBarHelper.getContent();
 	}

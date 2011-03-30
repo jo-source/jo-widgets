@@ -46,7 +46,7 @@ public class ViewDemo3 extends AbstractDemoView implements IView {
 		super(ID);
 		new DemoTreeComposite(context.getContainer());
 		final ActionFactory actionFactory = new ActionFactory();
-		context.getToolBarMenu().addAction(actionFactory.createRemoveViewAction(context.getComponentContext(), this));
+		context.getToolBarMenu().addAction(actionFactory.createRemoveViewAction(context));
 	}
 
 }
