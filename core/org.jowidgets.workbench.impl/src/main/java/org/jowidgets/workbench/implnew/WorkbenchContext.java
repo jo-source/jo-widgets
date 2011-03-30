@@ -38,7 +38,6 @@ import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.ISplitComposite;
 import org.jowidgets.api.widgets.ITabFolder;
@@ -79,7 +78,7 @@ public class WorkbenchContext implements IWorkbenchContext {
 	private final IMenuBarModel menuBarModel;
 	private final IToolBarModel toolBarModel;
 	private final IContainer workbenchContentContainer;
-	private final IControl emptyContent;
+	private final WorkbenchContentPanel workbenchContentPanel;
 
 	private ITabFolder applicationTabFolder;
 	private boolean disposed;
@@ -105,7 +104,7 @@ public class WorkbenchContext implements IWorkbenchContext {
 		this.toolBarModel = toolBar.getToolBarModel();
 
 		this.workbenchContentContainer = createWorkbenchContentContainer(workbench);
-		this.emptyContent = createEmptyContent();
+		this.workbenchContentPanel = new WorkbenchContentPanel(workbenchContentContainer);
 
 		this.statusBar = createStatusBar();
 
@@ -183,7 +182,6 @@ public class WorkbenchContext implements IWorkbenchContext {
 	public void finish() {
 		if (!disposed) {
 			dispose();
-			this.rootFrame.dispose();
 		}
 	}
 
@@ -219,23 +217,19 @@ public class WorkbenchContext implements IWorkbenchContext {
 		if (newComponentNode != null) {
 			if (!newComponentNode.isActive()) {
 				newComponentNode.activate();
-				//CHECKSTYLE:OFF
-				//TODO MG remove sysout
-				System.out.println("SELECT NODE: " + newComponentNode.getTreeNode().getText());
-				//CHECKSTYLE:ON
 			}
 		}
 		else {
-			//CHECKSTYLE:OFF
-			//TODO MG remove sysout
-			System.out.println("SELECT EMPTY NODE ");
-			//CHECKSTYLE:ON
-			emptyContent.setVisible(true);
+			workbenchContentPanel.setEmptyContent();
 		}
 
 		workbenchContentContainer.layoutEnd();
 		toolBar.layoutEnd();
 		rootFrame.setCursor(Cursor.DEFAULT);
+	}
+
+	protected WorkbenchContentPanel getWorkbenchContentPanel() {
+		return workbenchContentPanel;
 	}
 
 	private IFrame createRootFrame(final IWorkbench workbench) {
@@ -284,13 +278,7 @@ public class WorkbenchContext implements IWorkbenchContext {
 			applicationTabFolder.setVisible(false);
 			result = rootComposite;
 		}
-
-		result.setLayout(new MigLayoutDescriptor("hidemode 3", "0[grow, 0::]0", "0[grow, 0::]0"));
 		return result;
-	}
-
-	private IControl createEmptyContent() {
-		return workbenchContentContainer.add(bpf.tabFolder(), "hidemode 3, growx, growy");
 	}
 
 	private IContainer createStatusBar() {

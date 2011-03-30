@@ -48,6 +48,7 @@ import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
+import org.jowidgets.workbench.api.LayoutScope;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
 
 public class ComponentDemo2 extends AbstractDemoComponent implements IComponent {
@@ -62,7 +63,7 @@ public class ComponentDemo2 extends AbstractDemoComponent implements IComponent 
 
 		this.addUserAction = createAddUserAction(componentNodeModel);
 		this.saveCommand = createSaveCommand(componentNodeModel);
-		componentContext.setLayout(new ComponentDemo2Layout().getLayout());
+		componentContext.setLayout(new ComponentDemo2Layout(LayoutScope.WORKBENCH_APPLICATION).getLayout());
 	}
 
 	@Override

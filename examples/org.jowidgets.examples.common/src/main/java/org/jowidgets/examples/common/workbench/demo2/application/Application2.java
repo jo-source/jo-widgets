@@ -30,6 +30,7 @@ package org.jowidgets.examples.common.workbench.demo2.application;
 
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.demo1.ComponentDemo1;
+import org.jowidgets.examples.common.workbench.demo2.component.ComponentDemo2;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeModelBuilder;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
@@ -70,9 +71,9 @@ public class Application2 {
 		final IComponentNodeModel folder2 = model.addChild("FOLDER_2_ID", "Folder 2", SilkIcons.FOLDER);
 		for (int i = 0; i < 5; i++) {
 			final IComponentNodeModelBuilder nodeModelBuilder = new ComponentNodeModelBuilder();
-			nodeModelBuilder.setId(ComponentDemo1.class.getName() + i);
-			nodeModelBuilder.setLabel("Component " + (i + 1));
-			nodeModelBuilder.setComponentFactory(ComponentDemo1.class);
+			nodeModelBuilder.setId(ComponentDemo2.class.getName() + i);
+			nodeModelBuilder.setLabel("Simple Component " + (i + 1));
+			nodeModelBuilder.setComponentFactory(ComponentDemo2.class);
 			folder2.addChild(nodeModelBuilder.build());
 		}
 	}

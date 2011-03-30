@@ -158,6 +158,10 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 		}
 	}
 
+	protected String getId() {
+		return application.getId();
+	}
+
 	protected IWorkbenchApplication getApplication() {
 		return application;
 	}

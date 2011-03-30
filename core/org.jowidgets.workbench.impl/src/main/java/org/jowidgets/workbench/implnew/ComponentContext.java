@@ -37,14 +37,18 @@ import org.jowidgets.workbench.api.ILayout;
 public final class ComponentContext implements IComponentContext {
 
 	private final ComponentNodeContext nodeContext;
+	private final WorkbenchContentPanel workbenchContentPanel;
 	private final IComponent component;
 
 	private boolean active;
+	private boolean layoutReset;
+	private ILayout currentLayout;
 
 	public ComponentContext(final IComponentNode componentNode, final ComponentNodeContext nodeContext) {
 		this.active = false;
+		this.layoutReset = false;
 		this.nodeContext = nodeContext;
-
+		this.workbenchContentPanel = nodeContext.getWorkbenchContext().getWorkbenchContentPanel();
 		this.component = componentNode.createComponent(this);
 	}
 
@@ -52,7 +56,19 @@ public final class ComponentContext implements IComponentContext {
 		if (!active) {
 			this.active = true;
 			if (component != null) {
+				if (currentLayout != null && layoutReset) {
+					workbenchContentPanel.resetLayout(this, currentLayout);
+				}
+				if (currentLayout != null) {
+					workbenchContentPanel.setLayout(this, currentLayout);
+				}
+				else {
+					workbenchContentPanel.setEmptyContent();
+				}
 				component.onActivation();
+			}
+			else {
+				workbenchContentPanel.setEmptyContent();
 			}
 		}
 	}
@@ -75,16 +91,32 @@ public final class ComponentContext implements IComponentContext {
 		if (component != null) {
 			component.onDispose();
 		}
+		workbenchContentPanel.disposeComponent(this);
 	}
 
 	@Override
 	public void setLayout(final ILayout layout) {
-
+		this.currentLayout = layout;
+		if (active && currentLayout != null) {
+			workbenchContentPanel.setLayout(this, currentLayout);
+		}
+		else if (active) {
+			workbenchContentPanel.setEmptyContent();
+		}
 	}
 
 	@Override
 	public void resetLayout(final ILayout layout) {
-		//TODO MG implement reset
+		this.currentLayout = layout;
+		if (active && currentLayout != null) {
+			workbenchContentPanel.resetLayout(this, currentLayout);
+		}
+		else if (active) {
+			workbenchContentPanel.setEmptyContent();
+		}
+		else {
+			layoutReset = true;
+		}
 	}
 
 	@Override

@@ -34,6 +34,7 @@ import org.jowidgets.examples.common.workbench.demo2.view.MediaView;
 import org.jowidgets.examples.common.workbench.demo2.view.ReportsView;
 import org.jowidgets.examples.common.workbench.demo2.view.UserTableView;
 import org.jowidgets.workbench.api.ILayout;
+import org.jowidgets.workbench.api.LayoutScope;
 import org.jowidgets.workbench.toolkit.api.IFolderLayoutBuilder;
 import org.jowidgets.workbench.toolkit.api.ILayoutBuilder;
 import org.jowidgets.workbench.toolkit.api.ISplitLayoutBuilder;
@@ -51,9 +52,9 @@ public class ComponentDemo2Layout {
 
 	private final ILayout layout;
 
-	public ComponentDemo2Layout() {
+	public ComponentDemo2Layout(final LayoutScope scope) {
 		final ILayoutBuilder builder = new LayoutBuilder();
-		builder.setId(DEFAULT_LAYOUT_ID).setLayoutContainer(createMainSplit());
+		builder.setId(DEFAULT_LAYOUT_ID).setScope(scope).setLayoutContainer(createMainSplit());
 		this.layout = builder.build();
 	}
 
