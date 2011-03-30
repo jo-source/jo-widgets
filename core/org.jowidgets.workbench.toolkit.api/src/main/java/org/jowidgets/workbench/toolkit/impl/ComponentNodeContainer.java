@@ -60,8 +60,8 @@ class ComponentNodeContainer {
 
 		for (final IComponentNodeModel nodeModel : model.getChildren()) {
 			final ComponentNode componentNode = new ComponentNode(nodeModel);
-			context.add(componentNode);
 			createdChildren.add(componentNode);
+			context.add(componentNode);
 		}
 
 		listModelListener = new IListModelListener() {
@@ -78,8 +78,8 @@ class ComponentNodeContainer {
 			public void childAdded(final int index) {
 				final IComponentNodeModel nodeModel = model.getChildren().get(index);
 				final ComponentNode componentNode = new ComponentNode(nodeModel);
-				context.add(index, componentNode);
 				createdChildren.add(index, componentNode);
+				context.add(index, componentNode);
 			}
 		};
 

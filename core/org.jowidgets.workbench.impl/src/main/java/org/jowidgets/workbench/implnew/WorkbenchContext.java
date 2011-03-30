@@ -149,6 +149,8 @@ public class WorkbenchContext implements IWorkbenchContext {
 		addedTabItems.add(tabItem);
 		addedApplications.add(index, application);
 		addedApplicationContexts.add(index, applicationContext);
+
+		application.onContextInitialize(applicationContext);
 	}
 
 	@Override

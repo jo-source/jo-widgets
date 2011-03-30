@@ -73,6 +73,7 @@ public class ComponentNodeContainerContext implements IComponentNodeContainerCon
 			applicationContext,
 			workbenchContext);
 		applicationContext.registerNodeContext(nodeContext);
+		componentNode.onContextInitialize(nodeContext);
 	}
 
 	@Override
