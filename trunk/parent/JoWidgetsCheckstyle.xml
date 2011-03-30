@@ -12,7 +12,10 @@
   <property name="severity" value="warning"/>
   <module name="TreeWalker">
     <module name="FileContentsHolder"/>
-    <module name="AbstractClassName"/>
+    <module name="AbstractClassName">
+	<property name="format"
+              value="^Abstract.*$"/>
+	</module>
     <module name="ConstantName"/>
     <module name="LocalFinalVariableName"/>
     <module name="LocalVariableName"/>
@@ -78,7 +81,6 @@
     </module>
     <module name="PackageDeclaration"/>
     <module name="RedundantThrows">
-      <property name="logLoadErrors" value="true"/>
       <property name="suppressLoadErrors" value="true"/>
     </module>
     <module name="StringLiteralEquality">
@@ -108,6 +110,9 @@
     <module name="Regexp">
       <property name="format" value="System.(out|err).print(ln){0,1}\(.*\)"/>
       <property name="illegalPattern" value="true"/>
+    </module>
+    <module name="AbstractClassName">
+      <property name="format" value="^Abstract.*$"/>
     </module>
   </module>
   <module name="SuppressionFilter">
