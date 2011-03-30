@@ -81,9 +81,12 @@ public class ComponentNodeContainerContext implements IComponentNodeContainerCon
 		Assert.paramNotNull(componentNode, "componentNode");
 		final ITreeNode node = createdNodes.remove(componentNode);
 		if (node != null) {
-			node.setSelected(false);
+			final boolean selected = node.isSelected();
 			treeContainer.removeNode(node);
 			applicationContext.unRegisterNodeContext(node);
+			if (selected) {
+				workbenchContext.selectComponentNode(null);
+			}
 		}
 	}
 
