@@ -63,6 +63,9 @@ public final class ComponentContext implements IComponentContext {
 			this.active = false;
 			if (component != null) {
 				component.onDeactivation(result);
+				if (result.hasVeto()) {
+					this.active = true;
+				}
 			}
 		}
 		return result;
