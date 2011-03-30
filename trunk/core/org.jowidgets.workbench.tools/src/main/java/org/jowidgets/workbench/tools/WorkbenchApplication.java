@@ -100,6 +100,11 @@ public class WorkbenchApplication implements IWorkbenchApplication {
 	}
 
 	@Override
+	public void onDispose() {
+		application.onDispose();
+	}
+
+	@Override
 	public final void onActiveStateChanged(final boolean active) {
 		application.onActiveStateChanged(active);
 	}

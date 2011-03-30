@@ -32,6 +32,7 @@ import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.IComponent;
+import org.jowidgets.workbench.api.IDisposeCallback;
 import org.jowidgets.workbench.toolkit.api.IComponentFactory;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeInitializeCallback;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
@@ -215,6 +216,12 @@ public class ComponentNodeModelBuilder implements IComponentNodeModelBuilder {
 	@Override
 	public final IComponentNodeModelBuilder setInitializeCallback(final IComponentNodeInitializeCallback initializeCallback) {
 		builder.setInitializeCallback(initializeCallback);
+		return this;
+	}
+
+	@Override
+	public final IComponentNodeModelBuilder setDisposeCallback(final IDisposeCallback disposeCallback) {
+		builder.setDisposeCallback(disposeCallback);
 		return this;
 	}
 

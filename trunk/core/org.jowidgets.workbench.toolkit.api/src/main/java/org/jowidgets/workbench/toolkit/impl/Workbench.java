@@ -177,6 +177,14 @@ class Workbench implements IWorkbench {
 		}
 	}
 
+	@Override
+	public void onDispose() {
+		final ICloseCallback closeCallback = model.getCloseCallback();
+		if (closeCallback != null) {
+			closeCallback.onDispose();
+		}
+	}
+
 	private void onModelChanged(final IWorkbenchContext context) {
 		if (statusBarCreator != model.getStatusBarCreator()) {
 			onStatusBarChanged(context);

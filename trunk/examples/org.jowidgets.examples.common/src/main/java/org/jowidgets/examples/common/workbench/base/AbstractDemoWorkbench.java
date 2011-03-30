@@ -51,6 +51,13 @@ public abstract class AbstractDemoWorkbench extends AbstractWorkbench implements
 	}
 
 	@Override
+	public void onDispose() {
+		// CHECKSTYLE:OFF
+		System.out.println("Workbench: onDispose");
+		// CHECKSTYLE:ON
+	}
+
+	@Override
 	public IView createView(final String viewId, final IViewContext viewContext) {
 		return null;
 	}

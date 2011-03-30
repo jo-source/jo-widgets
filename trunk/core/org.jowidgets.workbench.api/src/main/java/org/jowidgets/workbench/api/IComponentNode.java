@@ -27,7 +27,7 @@
  */
 package org.jowidgets.workbench.api;
 
-public interface IComponentNode extends IComponentNodeDescriptor {
+public interface IComponentNode extends IComponentNodeDescriptor, IDisposeCallback {
 
 	void onContextInitialize(IComponentNodeContext context);
 

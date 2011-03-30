@@ -82,6 +82,11 @@ class ModelBasedWorkbenchContext implements IWorkbenchContext {
 			}
 
 			@Override
+			public void onDispose() {
+				workbenchApplication.onDispose();
+			}
+
+			@Override
 			public void onVisibleStateChanged(final boolean visible) {
 				workbenchApplication.onVisibleStateChanged(visible);
 			}

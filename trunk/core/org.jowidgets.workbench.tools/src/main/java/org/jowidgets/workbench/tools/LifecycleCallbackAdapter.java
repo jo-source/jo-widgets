@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, M. Grossmann, H. Westphal
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,21 +25,17 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.workbench.api;
 
+package org.jowidgets.workbench.tools;
 
-public interface IWorkbench extends IWorkbenchDescriptor, ICloseCallback {
+import org.jowidgets.workbench.api.ILifecycleCallback;
 
-	void onContextInitialize(IWorkbenchContext context);
+public class LifecycleCallbackAdapter extends CloseCallbackAdapter implements ILifecycleCallback {
 
-	/**
-	 * Creates a view for a given ID.
-	 * The scope of the view is WORKBENCH.
-	 * 
-	 * @param viewId The id to get the view for
-	 * @param viewContext The view context
-	 * @return The created view
-	 */
-	IView createView(String viewId, IViewContext viewContext);
+	@Override
+	public void onActiveStateChanged(final boolean active) {}
+
+	@Override
+	public void onVisibleStateChanged(final boolean visible) {}
 
 }

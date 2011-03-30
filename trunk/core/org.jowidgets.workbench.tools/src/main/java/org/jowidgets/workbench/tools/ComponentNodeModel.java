@@ -36,6 +36,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.controler.ITreeNodeListener;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.IComponent;
+import org.jowidgets.workbench.api.IDisposeCallback;
 import org.jowidgets.workbench.toolkit.api.IComponentFactory;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeContainerModel;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeInitializeCallback;
@@ -230,6 +231,11 @@ public class ComponentNodeModel implements IComponentNodeModel {
 	@Override
 	public final IComponentNodeInitializeCallback getInitializeCallback() {
 		return model.getInitializeCallback();
+	}
+
+	@Override
+	public IDisposeCallback getDisposeCallback() {
+		return model.getDisposeCallback();
 	}
 
 	@Override

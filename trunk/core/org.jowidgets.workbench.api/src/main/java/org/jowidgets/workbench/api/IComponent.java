@@ -29,7 +29,7 @@ package org.jowidgets.workbench.api;
 
 import org.jowidgets.common.types.IVetoable;
 
-public interface IComponent {
+public interface IComponent extends IDisposeCallback {
 
 	void onActivation();
 

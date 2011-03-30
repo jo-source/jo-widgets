@@ -49,6 +49,13 @@ public abstract class AbstractDemoComponent implements IComponent {
 	}
 
 	@Override
+	public void onDispose() {
+		// CHECKSTYLE:OFF
+		System.out.println(" onDispose");
+		// CHECKSTYLE:ON
+	}
+
+	@Override
 	public void onFolderCreated(final IFolderContext folderContext) {
 		// CHECKSTYLE:OFF
 		System.out.println("onFolderCreated, originalID: "

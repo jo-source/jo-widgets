@@ -128,6 +128,11 @@ public class Workbench implements IWorkbench {
 		workbench.onClose(vetoable);
 	}
 
+	@Override
+	public void onDispose() {
+		workbench.onDispose();
+	}
+
 	public static IWorkbenchModelBuilder builder() {
 		return WorkbenchToolkit.getWorkbenchPartBuilderFactory().workbench();
 	}

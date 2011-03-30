@@ -68,6 +68,13 @@ public abstract class AbstractDemoView implements IView {
 	}
 
 	@Override
+	public void onDispose() {
+		// CHECKSTYLE:OFF
+		System.out.println(getId() + " onDispose");
+		// CHECKSTYLE:ON
+	}
+
+	@Override
 	public void onClose(final IVetoable vetoable) {
 		final QuestionResult result = Toolkit.getQuestionPane().askYesNoQuestion("Would you really like to close the view?");
 		if (result != QuestionResult.YES) {

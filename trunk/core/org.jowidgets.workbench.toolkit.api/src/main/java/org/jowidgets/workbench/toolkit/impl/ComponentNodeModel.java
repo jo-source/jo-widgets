@@ -36,6 +36,7 @@ import java.util.Set;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.controler.ITreeNodeListener;
+import org.jowidgets.workbench.api.IDisposeCallback;
 import org.jowidgets.workbench.toolkit.api.IComponentFactory;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeContainerModel;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeInitializeCallback;
@@ -57,6 +58,7 @@ class ComponentNodeModel extends ComponentNodeContainerModel implements ICompone
 	private IMenuModel popupMenu;
 	private final IComponentFactory componentFactory;
 	private final IComponentNodeInitializeCallback initializeCallback;
+	private final IDisposeCallback disposeCallback;
 
 	private IComponentNodeContainerModel parentContainer;
 
@@ -70,6 +72,7 @@ class ComponentNodeModel extends ComponentNodeContainerModel implements ICompone
 		final IMenuModel popupMenu,
 		final IComponentFactory componentFactory,
 		final IComponentNodeInitializeCallback initializeCallback,
+		final IDisposeCallback disposeCallback,
 		final List<IComponentNodeModel> children) {
 		super(id, children);
 
@@ -84,6 +87,7 @@ class ComponentNodeModel extends ComponentNodeContainerModel implements ICompone
 		this.popupMenu = popupMenu;
 		this.componentFactory = componentFactory;
 		this.initializeCallback = initializeCallback;
+		this.disposeCallback = disposeCallback;
 	}
 
 	@Override
@@ -124,6 +128,11 @@ class ComponentNodeModel extends ComponentNodeContainerModel implements ICompone
 	@Override
 	public IComponentNodeInitializeCallback getInitializeCallback() {
 		return initializeCallback;
+	}
+
+	@Override
+	public IDisposeCallback getDisposeCallback() {
+		return disposeCallback;
 	}
 
 	@Override

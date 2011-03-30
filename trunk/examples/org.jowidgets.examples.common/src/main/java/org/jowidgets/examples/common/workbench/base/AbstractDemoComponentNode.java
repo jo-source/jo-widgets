@@ -58,6 +58,13 @@ public abstract class AbstractDemoComponentNode implements IComponentNode {
 	public void onContextInitialize(final IComponentNodeContext context) {}
 
 	@Override
+	public void onDispose() {
+		// CHECKSTYLE:OFF
+		System.out.println(getId() + " onDispose");
+		// CHECKSTYLE:ON
+	}
+
+	@Override
 	public final String getId() {
 		return id;
 	}
