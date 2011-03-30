@@ -28,9 +28,6 @@
 
 package org.jowidgets.workbench.implnew;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.widgets.ITreeNode;
@@ -39,22 +36,19 @@ import org.jowidgets.common.widgets.controler.ITreeNodeListener;
 import org.jowidgets.tools.controler.TreeNodeObservable;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.types.VetoHolder;
-import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.IComponentNode;
 import org.jowidgets.workbench.api.IComponentNodeContext;
 
-public class ComponentNodeContext implements IComponentNodeContext {
+public class ComponentNodeContext extends ComponentNodeContainerContext implements IComponentNodeContext {
 
 	private final ComponentNodeContext parentNodeContext;
-	private final WorkbenchContext workbenchContext;
-	private final WorkbenchApplicationContext applicationContext;
 	private final TreeNodeObservable treeNodeObservable;
 
 	private final IComponentNode componentNode;
 	private final ITreeNode treeNode;
-	private final IListModelListener listModelListener;
+	private final IListModelListener popupMenuListener;
+	private final ITreeNodeListener treeNodeListener;
 	private final IMenuModel popupMenuModel;
-	private final Map<IComponentNode, ITreeNode> createdNodes;
 
 	private ComponentContext componentContext;
 	private boolean active;
@@ -62,19 +56,18 @@ public class ComponentNodeContext implements IComponentNodeContext {
 	public ComponentNodeContext(
 		final IComponentNode componentNode,
 		final ITreeNode treeNode,
-		final ComponentNodeContext parentTreeNodeContext,
-		final WorkbenchApplicationContext workbenchApplicationContext,
+		final ComponentNodeContext parentNodeContext,
+		final WorkbenchApplicationContext applicationContext,
 		final WorkbenchContext workbenchContext) {
+
+		super(treeNode, applicationContext, workbenchContext);
 
 		this.active = false;
 
 		this.treeNodeObservable = new TreeNodeObservable();
-		this.parentNodeContext = parentTreeNodeContext;
-		this.workbenchContext = workbenchContext;
-		this.applicationContext = workbenchApplicationContext;
-		this.createdNodes = new HashMap<IComponentNode, ITreeNode>();
-
+		this.parentNodeContext = parentNodeContext;
 		this.componentNode = componentNode;
+
 		this.treeNode = treeNode;
 		this.treeNode.setText(componentNode.getLabel());
 		this.treeNode.setToolTipText(componentNode.getTooltip());
@@ -82,40 +75,12 @@ public class ComponentNodeContext implements IComponentNodeContext {
 			this.treeNode.setIcon(componentNode.getIcon());
 		}
 
-		this.treeNode.addTreeNodeListener(new ITreeNodeListener() {
-			@Override
-			public void selectionChanged(final boolean selected) {
-				treeNodeObservable.fireSelectionChanged(selected);
-			}
-
-			@Override
-			public void expandedChanged(final boolean expanded) {
-				treeNodeObservable.fireExpandedChanged(expanded);
-			}
-		});
-
-		this.listModelListener = new IListModelListener() {
-
-			@Override
-			public void childRemoved(final int index) {
-				if (popupMenuModel.getChildren().size() == 0) {
-					treeNode.setPopupMenu(null);
-				}
-			}
-
-			@Override
-			public void childAdded(final int index) {
-				if (popupMenuModel.getChildren().size() == 1) {
-					treeNode.setPopupMenu(popupMenuModel);
-				}
-			}
-		};
+		this.treeNodeListener = createTreeNodeListener();
+		treeNode.addTreeNodeListener(treeNodeListener);
 
 		this.popupMenuModel = new MenuModel();
-		this.popupMenuModel.addListModelListener(listModelListener);
-		if (popupMenuModel.getChildren().size() > 0) {
-			treeNode.setPopupMenu(popupMenuModel);
-		}
+		this.popupMenuListener = createPopupMenuListener();
+		popupMenuModel.addListModelListener(popupMenuListener);
 
 		componentNode.onContextInitialize(this);
 	}
@@ -129,42 +94,12 @@ public class ComponentNodeContext implements IComponentNodeContext {
 		return active;
 	}
 
-	public VetoHolder deactivate() {
+	public VetoHolder tryDeactivate() {
 		final VetoHolder vetoHolder = getComponentContextLazy().deactivate();
 		if (!vetoHolder.hasVeto()) {
 			this.active = false;
 		}
 		return vetoHolder;
-	}
-
-	@Override
-	public void add(final IComponentNode componentNode) {
-		add(treeNode.getChildren().size(), componentNode);
-	}
-
-	@Override
-	public void add(final int index, final IComponentNode componentNode) {
-		Assert.paramNotNull(componentNode, "componentNode");
-		final ITreeNode node = treeNode.addNode(index);
-		createdNodes.put(componentNode, node);
-		final ComponentNodeContext nodeContext = new ComponentNodeContext(
-			componentNode,
-			node,
-			this,
-			applicationContext,
-			workbenchContext);
-		applicationContext.registerNodeContext(nodeContext);
-	}
-
-	@Override
-	public void remove(final IComponentNode componentNode) {
-		Assert.paramNotNull(componentNode, "componentNode");
-		final ITreeNode node = createdNodes.remove(componentNode);
-		if (node != null) {
-			node.setSelected(false);
-			treeNode.removeNode(node);
-			applicationContext.unRegisterNodeContext(node);
-		}
 	}
 
 	@Override
@@ -203,16 +138,6 @@ public class ComponentNodeContext implements IComponentNodeContext {
 	}
 
 	@Override
-	public WorkbenchApplicationContext getWorkbenchApplicationContext() {
-		return applicationContext;
-	}
-
-	@Override
-	public WorkbenchContext getWorkbenchContext() {
-		return applicationContext.getWorkbenchContext();
-	}
-
-	@Override
 	public void addTreeNodeListener(final ITreeNodeListener listener) {
 		treeNodeObservable.addTreeNodeListener(listener);
 	}
@@ -226,9 +151,47 @@ public class ComponentNodeContext implements IComponentNodeContext {
 		return treeNode;
 	}
 
+	protected void dispose() {
+		popupMenuModel.removeListModelListener(popupMenuListener);
+		treeNode.removeTreeNodeListener(treeNodeListener);
+	}
+
+	private IListModelListener createPopupMenuListener() {
+		return new IListModelListener() {
+
+			@Override
+			public void childRemoved(final int index) {
+				if (popupMenuModel.getChildren().size() == 0) {
+					treeNode.setPopupMenu(null);
+				}
+			}
+
+			@Override
+			public void childAdded(final int index) {
+				if (popupMenuModel.getChildren().size() == 1) {
+					treeNode.setPopupMenu(popupMenuModel);
+				}
+			}
+		};
+	}
+
+	private ITreeNodeListener createTreeNodeListener() {
+		return new ITreeNodeListener() {
+			@Override
+			public void selectionChanged(final boolean selected) {
+				treeNodeObservable.fireSelectionChanged(selected);
+			}
+
+			@Override
+			public void expandedChanged(final boolean expanded) {
+				treeNodeObservable.fireExpandedChanged(expanded);
+			}
+		};
+	}
+
 	private ComponentContext getComponentContextLazy() {
 		if (componentContext == null) {
-			componentContext = new ComponentContext(componentNode, ComponentNodeContext.this);
+			componentContext = new ComponentContext(componentNode, this);
 		}
 		return componentContext;
 	}
