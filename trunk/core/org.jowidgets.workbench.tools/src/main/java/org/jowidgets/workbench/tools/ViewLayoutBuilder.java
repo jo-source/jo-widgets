@@ -31,6 +31,7 @@ package org.jowidgets.workbench.tools;
 import java.util.List;
 
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.workbench.api.ClosePolicy;
 import org.jowidgets.workbench.api.IViewLayout;
 import org.jowidgets.workbench.api.ViewScope;
 import org.jowidgets.workbench.toolkit.api.IViewLayoutBuilder;
@@ -92,6 +93,12 @@ public class ViewLayoutBuilder implements IViewLayoutBuilder {
 	@Override
 	public IViewLayoutBuilder setScope(final ViewScope scope) {
 		builder.setScope(scope);
+		return this;
+	}
+
+	@Override
+	public IViewLayoutBuilder setClosePolicy(final ClosePolicy closePolicy) {
+		builder.setClosePolicy(closePolicy);
 		return this;
 	}
 
