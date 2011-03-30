@@ -32,6 +32,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.workbench.api.ClosePolicy;
 import org.jowidgets.workbench.api.IViewLayout;
 import org.jowidgets.workbench.api.ViewScope;
 
@@ -81,6 +82,12 @@ public final class RcpView implements IViewLayout {
 	@Override
 	public ViewScope getScope() {
 		return ViewScope.WORKBENCH;
+	}
+
+	@Override
+	public ClosePolicy getClosePolicy() {
+		//TODO HW implement getClosePolicy()
+		return ClosePolicy.DISPOSE;
 	}
 
 	@Override
