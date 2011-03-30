@@ -152,6 +152,10 @@ public class ComponentNodeContext extends ComponentNodeContainerContext implemen
 	}
 
 	protected void dispose() {
+		componentNode.onDispose();
+		if (componentContext != null) {
+			componentContext.onDispose();
+		}
 		popupMenuModel.removeListModelListener(popupMenuListener);
 		treeNode.removeTreeNodeListener(treeNodeListener);
 	}

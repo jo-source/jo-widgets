@@ -60,7 +60,7 @@ public abstract class AbstractDemoComponentNode implements IComponentNode {
 	@Override
 	public void onDispose() {
 		// CHECKSTYLE:OFF
-		System.out.println(getId() + " onDispose");
+		System.out.println("ComponentNode: onDispose() " + getId());
 		// CHECKSTYLE:ON
 	}
 

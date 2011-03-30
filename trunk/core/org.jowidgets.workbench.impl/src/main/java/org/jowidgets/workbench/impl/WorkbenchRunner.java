@@ -47,8 +47,8 @@ public class WorkbenchRunner implements IWorkbenchRunner {
 		Toolkit.getApplicationRunner().run(new IApplication() {
 			@Override
 			public void start(final IApplicationLifecycle lifecycle) {
-				new WorkbenchContext(workbench, lifecycle).run();
-				//new org.jowidgets.workbench.implnew.WorkbenchContext(workbench, lifecycle).run();
+				//new WorkbenchContext(workbench, lifecycle).run();
+				new org.jowidgets.workbench.implnew.WorkbenchContext(workbench, lifecycle).run();
 			}
 		});
 	}

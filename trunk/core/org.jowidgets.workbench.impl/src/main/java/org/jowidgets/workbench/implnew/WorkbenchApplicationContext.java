@@ -149,6 +149,8 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 	}
 
 	protected void dispose() {
+		application.onDispose();
+
 		popupMenuModel.removeListModelListener(popupMenuModelListener);
 		tree.removeTreeSelectionListener(treeSelectionListener);
 		tabItem.removeTabItemListener(tabItemListener);
@@ -232,7 +234,7 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 				}
 				else {
 					dispose();
-					workbenchContext.onApplicationRemove(tabItem);
+					workbenchContext.unregsiterApplication(tabItem);
 				}
 			}
 
