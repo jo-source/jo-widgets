@@ -90,6 +90,11 @@ public final class ViewContext implements IViewContext {
 	}
 
 	@Override
+	public void dispose() {
+		//TODO HW implement dispose()	
+	}
+
+	@Override
 	public void setHidden(final boolean newHidden) {
 		if (hidden && !newHidden) {
 			PartSupport.getInstance().unhideView(this);

@@ -32,7 +32,6 @@ import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IComponentNodeContext;
 import org.jowidgets.workbench.api.ILayout;
-import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 import org.jowidgets.workbench.api.IWorkbenchContext;
 import org.jowidgets.workbench.impl.rcp.internal.part.PartSupport;
@@ -78,10 +77,11 @@ public final class ComponentContext implements IComponentContext {
 		PartSupport.getInstance().resetPerspective((ComponentNodeContext) componentTreeNodeContext, this, layout);
 	}
 
-	@Override
-	public void removeView(final IView view) {
-		PartSupport.getInstance().closeView(view);
-	}
+	//TODO HW removeView() method was removed
+	//	@Override
+	//	public void removeView(final IView view) {
+	//		PartSupport.getInstance().closeView(view);
+	//	}
 
 	@Override
 	public IWorkbenchApplicationContext getWorkbenchApplicationContext() {
