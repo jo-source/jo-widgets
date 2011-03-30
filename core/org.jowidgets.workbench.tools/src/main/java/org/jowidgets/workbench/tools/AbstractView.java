@@ -45,4 +45,7 @@ public abstract class AbstractView implements IView {
 	@Override
 	public void onClose(final IVetoable vetoable) {}
 
+	@Override
+	public void onDispose() {}
+
 }

@@ -35,6 +35,7 @@ import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IComponentNode;
 import org.jowidgets.workbench.api.IComponentNodeContext;
+import org.jowidgets.workbench.api.IDisposeCallback;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchPartModelListener;
 
@@ -93,6 +94,14 @@ class ComponentNode extends ComponentNodeContainer implements IComponentNode {
 
 		if (model.getInitializeCallback() != null) {
 			model.getInitializeCallback().onContextInitialize(new ModelBasedComponentNodeContext(context, model));
+		}
+	}
+
+	@Override
+	public void onDispose() {
+		final IDisposeCallback disposeCallback = model.getDisposeCallback();
+		if (disposeCallback != null) {
+			disposeCallback.onDispose();
 		}
 	}
 

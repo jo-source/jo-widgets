@@ -29,7 +29,7 @@ package org.jowidgets.workbench.api;
 
 import org.jowidgets.common.types.IVetoable;
 
-public interface ICloseCallback {
+public interface ICloseCallback extends IDisposeCallback {
 
 	void onClose(IVetoable vetoable);
 

@@ -126,6 +126,13 @@ class WorkbenchApplication extends ComponentNodeContainer implements IWorkbenchA
 		}
 	}
 
+	@Override
+	public void onDispose() {
+		if (model.getLifecycleCallback() != null) {
+			model.getLifecycleCallback().onDispose();
+		}
+	}
+
 	private void onModelChanged(final IWorkbenchApplicationContext context) {
 		if (toolBar != model.getToolBar()) {
 			onToolBarChanged(context);

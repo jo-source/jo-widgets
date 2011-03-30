@@ -75,6 +75,13 @@ public abstract class AbstractDemoApplication implements IWorkbenchApplication {
 	}
 
 	@Override
+	public void onDispose() {
+		// CHECKSTYLE:OFF
+		System.out.println(getId() + " onDispose");
+		// CHECKSTYLE:ON
+	}
+
+	@Override
 	public void onClose(final IVetoable vetoable) {
 		final QuestionResult result = Toolkit.getQuestionPane().askYesNoQuestion("Would you really like to quit the application?");
 		if (result != QuestionResult.YES) {

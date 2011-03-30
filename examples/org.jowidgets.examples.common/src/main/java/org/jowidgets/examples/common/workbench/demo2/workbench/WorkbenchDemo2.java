@@ -52,6 +52,7 @@ import org.jowidgets.workbench.api.ICloseCallback;
 import org.jowidgets.workbench.api.IWorkbench;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchModel;
 import org.jowidgets.workbench.toolkit.api.WorkbenchToolkit;
+import org.jowidgets.workbench.tools.CloseCallbackAdapter;
 import org.jowidgets.workbench.tools.WorkbenchModelBuilder;
 
 public class WorkbenchDemo2 {
@@ -121,7 +122,7 @@ public class WorkbenchDemo2 {
 	}
 
 	private ICloseCallback createCloseCallback() {
-		return new ICloseCallback() {
+		return new CloseCallbackAdapter() {
 			@Override
 			public void onClose(final IVetoable vetoable) {
 				if (!shouldWorkbenchFinished()) {

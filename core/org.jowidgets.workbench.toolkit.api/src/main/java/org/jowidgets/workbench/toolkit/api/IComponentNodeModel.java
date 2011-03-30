@@ -32,6 +32,7 @@ import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.controler.ITreeNodeObservable;
 import org.jowidgets.workbench.api.IComponentNodeDescriptor;
+import org.jowidgets.workbench.api.IDisposeCallback;
 
 public interface IComponentNodeModel extends
 		IComponentNodeDescriptor,
@@ -48,6 +49,8 @@ public interface IComponentNodeModel extends
 	IComponentFactory getComponentFactory();
 
 	IComponentNodeInitializeCallback getInitializeCallback();
+
+	IDisposeCallback getDisposeCallback();
 
 	void setLabel(String label);
 

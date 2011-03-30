@@ -152,6 +152,11 @@ public class ComponentNode implements IComponentNode {
 		node.onContextInitialize(context);
 	}
 
+	@Override
+	public void onDispose() {
+		node.onDispose();
+	}
+
 	public static IComponentNodeModelBuilder builder() {
 		return WorkbenchToolkit.getWorkbenchPartBuilderFactory().componentNode();
 	}

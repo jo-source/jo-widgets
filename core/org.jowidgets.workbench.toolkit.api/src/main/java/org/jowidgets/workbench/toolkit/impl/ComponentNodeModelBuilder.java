@@ -32,6 +32,7 @@ import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.workbench.api.IComponent;
+import org.jowidgets.workbench.api.IDisposeCallback;
 import org.jowidgets.workbench.toolkit.api.IComponentFactory;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeInitializeCallback;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
@@ -48,6 +49,7 @@ class ComponentNodeModelBuilder extends ComponentNodeContainerModelBuilder<IComp
 	private IMenuModel popupMenu;
 	private IComponentFactory componentFactory;
 	private IComponentNodeInitializeCallback initializeCallback;
+	private IDisposeCallback disposeCallback;
 
 	ComponentNodeModelBuilder() {
 		super();
@@ -111,6 +113,12 @@ class ComponentNodeModelBuilder extends ComponentNodeContainerModelBuilder<IComp
 	}
 
 	@Override
+	public IComponentNodeModelBuilder setDisposeCallback(final IDisposeCallback disposeCallback) {
+		this.disposeCallback = disposeCallback;
+		return this;
+	}
+
+	@Override
 	public IComponentNodeModel build() {
 		return new ComponentNodeModel(
 			getId(),
@@ -122,6 +130,7 @@ class ComponentNodeModelBuilder extends ComponentNodeContainerModelBuilder<IComp
 			popupMenu,
 			componentFactory,
 			initializeCallback,
+			disposeCallback,
 			getChildren());
 	}
 
