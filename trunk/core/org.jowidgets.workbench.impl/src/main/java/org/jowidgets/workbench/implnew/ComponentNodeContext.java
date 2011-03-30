@@ -126,7 +126,7 @@ public class ComponentNodeContext extends ComponentNodeContainerContext implemen
 	}
 
 	@Override
-	public IComponentNodeContext getParent() {
+	public ComponentNodeContext getParent() {
 		return parentNodeContext;
 	}
 
@@ -143,6 +143,15 @@ public class ComponentNodeContext extends ComponentNodeContainerContext implemen
 	@Override
 	public void removeTreeNodeListener(final ITreeNodeListener listener) {
 		treeNodeObservable.removeTreeNodeListener(listener);
+	}
+
+	protected String getGlobalId() {
+		if (getParent() != null) {
+			return getParent().getGlobalId() + "#" + componentNode.getId();
+		}
+		else {
+			return componentNode.getId();
+		}
 	}
 
 	protected ITreeNode getTreeNode() {
