@@ -33,6 +33,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.util.Assert;
+import org.jowidgets.workbench.api.ClosePolicy;
 import org.jowidgets.workbench.api.IViewLayout;
 import org.jowidgets.workbench.api.ViewScope;
 import org.jowidgets.workbench.toolkit.api.IViewLayoutBuilder;
@@ -43,6 +44,7 @@ class ViewLayoutBuilder extends WorkbenchPartBuilder<IViewLayoutBuilder> impleme
 	private boolean hidden;
 	private boolean detachable;
 	private ViewScope scope;
+	private ClosePolicy closePolicy;
 	private final List<String> folderWhiteList;
 	private final List<String> folderBlackList;
 
@@ -51,6 +53,7 @@ class ViewLayoutBuilder extends WorkbenchPartBuilder<IViewLayoutBuilder> impleme
 		this.hidden = false;
 		this.detachable = true;
 		this.scope = ViewScope.COMPONENT;
+		this.closePolicy = ClosePolicy.HIDE;
 		this.folderWhiteList = new LinkedList<String>();
 		this.folderBlackList = new LinkedList<String>();
 	}
@@ -78,6 +81,13 @@ class ViewLayoutBuilder extends WorkbenchPartBuilder<IViewLayoutBuilder> impleme
 	public IViewLayoutBuilder setScope(final ViewScope scope) {
 		Assert.paramNotNull(scope, "scope");
 		this.scope = scope;
+		return this;
+	}
+
+	@Override
+	public IViewLayoutBuilder setClosePolicy(final ClosePolicy closePolicy) {
+		Assert.paramNotNull(closePolicy, "closePolicy");
+		this.closePolicy = closePolicy;
 		return this;
 	}
 
@@ -133,6 +143,7 @@ class ViewLayoutBuilder extends WorkbenchPartBuilder<IViewLayoutBuilder> impleme
 			hidden,
 			detachable,
 			scope,
+			closePolicy,
 			folderWhiteList,
 			folderBlackList);
 	}

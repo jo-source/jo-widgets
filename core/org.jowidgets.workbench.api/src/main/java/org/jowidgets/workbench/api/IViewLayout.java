@@ -47,6 +47,18 @@ public interface IViewLayout extends IWorkbenchPart {
 	 */
 	ViewScope getScope();
 
+	/**
+	 * Gets the close policy for the view.
+	 * 
+	 * If the policy is HIDE, the view will be hidden if the views close button was pressed.
+	 * If the policy is DISPOSE, the view will be disposed if the views close button was pressed.
+	 * 
+	 * Remark: In both cases, the onClose(IVetoable vetoable) method will be invoked!
+	 * 
+	 * @return The close policy
+	 */
+	ClosePolicy getClosePolicy();
+
 	boolean isHidden();
 
 	boolean isDetachable();

@@ -26,38 +26,14 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.toolkit.api;
+package org.jowidgets.workbench.api;
 
-import java.util.List;
+public enum ClosePolicy {
 
-import org.jowidgets.workbench.api.ClosePolicy;
-import org.jowidgets.workbench.api.IViewLayout;
-import org.jowidgets.workbench.api.ViewScope;
+	/** Hides the workbench part when close button is pressed */
+	HIDE,
 
-public interface IViewLayoutBuilder extends IWorkbenchPartBuilder<IViewLayoutBuilder> {
-
-	IViewLayoutBuilder setId(String id);
-
-	IViewLayoutBuilder setHidden(boolean hidden);
-
-	IViewLayoutBuilder setDetachable(boolean detachable);
-
-	IViewLayoutBuilder setScope(ViewScope scope);
-
-	IViewLayoutBuilder setClosePolicy(ClosePolicy closePolicy);
-
-	IViewLayoutBuilder setFolderWhitelist(List<String> folderWhiteList);
-
-	IViewLayoutBuilder setFolderWhitelist(String... folderWhiteList);
-
-	IViewLayoutBuilder addToFolderWhitelist(String folder);
-
-	IViewLayoutBuilder setFolderBlacklist(List<String> folderBlackList);
-
-	IViewLayoutBuilder setFolderBlacklist(String... folderBlackList);
-
-	IViewLayoutBuilder addToFolderBlacklist(String folder);
-
-	IViewLayout build();
+	/** Disposes the workbench part when close button is pressed */
+	DISPOSE;
 
 }

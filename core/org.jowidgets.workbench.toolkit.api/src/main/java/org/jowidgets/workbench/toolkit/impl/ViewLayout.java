@@ -33,6 +33,7 @@ import java.util.List;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.util.Assert;
+import org.jowidgets.workbench.api.ClosePolicy;
 import org.jowidgets.workbench.api.IViewLayout;
 import org.jowidgets.workbench.api.ViewScope;
 
@@ -42,6 +43,7 @@ final class ViewLayout extends WorkbenchPart implements IViewLayout {
 	private final boolean hidden;
 	private final boolean detachable;
 	private final ViewScope scope;
+	private final ClosePolicy closePolicy;
 	private final List<String> folderWhitelist;
 	private final List<String> folderBlacklist;
 
@@ -53,6 +55,7 @@ final class ViewLayout extends WorkbenchPart implements IViewLayout {
 		final boolean hidden,
 		final boolean detachable,
 		final ViewScope scope,
+		final ClosePolicy closePolicy,
 		final List<String> folderWhitelist,
 		final List<String> folderBlacklist) {
 
@@ -66,6 +69,7 @@ final class ViewLayout extends WorkbenchPart implements IViewLayout {
 		this.hidden = hidden;
 		this.detachable = detachable;
 		this.scope = scope;
+		this.closePolicy = closePolicy;
 		this.folderWhitelist = folderWhitelist;
 		this.folderBlacklist = folderBlacklist;
 	}
@@ -88,6 +92,11 @@ final class ViewLayout extends WorkbenchPart implements IViewLayout {
 	@Override
 	public ViewScope getScope() {
 		return scope;
+	}
+
+	@Override
+	public ClosePolicy getClosePolicy() {
+		return closePolicy;
 	}
 
 	@Override
