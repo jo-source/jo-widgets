@@ -42,6 +42,8 @@ public interface IViewContext {
 	 */
 	void setHidden(boolean hidden);
 
+	void dispose();
+
 	/**
 	 * Gets the container this view could paint into
 	 * 

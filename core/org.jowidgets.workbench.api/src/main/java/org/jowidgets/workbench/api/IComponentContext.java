@@ -48,8 +48,6 @@ public interface IComponentContext {
 	 */
 	void resetLayout(final ILayout layout);
 
-	void removeView(IView view);
-
 	IComponentNodeContext getComponentNodeContext();
 
 	IWorkbenchApplicationContext getWorkbenchApplicationContext();

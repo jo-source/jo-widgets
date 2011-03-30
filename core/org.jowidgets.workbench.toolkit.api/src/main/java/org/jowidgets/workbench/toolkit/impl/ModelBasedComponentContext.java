@@ -31,7 +31,6 @@ package org.jowidgets.workbench.toolkit.impl;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IComponentNodeContext;
 import org.jowidgets.workbench.api.ILayout;
-import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 import org.jowidgets.workbench.api.IWorkbenchContext;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
@@ -56,11 +55,6 @@ class ModelBasedComponentContext implements IComponentContext {
 	@Override
 	public void resetLayout(final ILayout layout) {
 		componentContext.resetLayout(layout);
-	}
-
-	@Override
-	public void removeView(final IView view) {
-		componentContext.removeView(view);
 	}
 
 	@Override
