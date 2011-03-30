@@ -37,21 +37,21 @@ public abstract class AbstractDemoComponent implements IComponent {
 	@Override
 	public void onActivation() {
 		// CHECKSTYLE:OFF
-		System.out.println("onActivation");
+		System.out.println("onActivation() " + getClass().getName());
 		// CHECKSTYLE:ON
 	}
 
 	@Override
 	public void onDeactivation(final IVetoable vetoable) {
 		// CHECKSTYLE:OFF
-		System.out.println("onDeactivation");
+		System.out.println("onDeactivation() " + getClass().getName());
 		// CHECKSTYLE:ON
 	}
 
 	@Override
 	public void onDispose() {
 		// CHECKSTYLE:OFF
-		System.out.println(" onDispose");
+		System.out.println("onDispose() " + getClass().getName());
 		// CHECKSTYLE:ON
 	}
 

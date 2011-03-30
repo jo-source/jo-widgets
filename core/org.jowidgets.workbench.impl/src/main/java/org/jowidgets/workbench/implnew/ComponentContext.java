@@ -68,6 +68,12 @@ public final class ComponentContext implements IComponentContext {
 		return result;
 	}
 
+	public void onDispose() {
+		if (component != null) {
+			component.onDispose();
+		}
+	}
+
 	@Override
 	public void setLayout(final ILayout layout) {
 

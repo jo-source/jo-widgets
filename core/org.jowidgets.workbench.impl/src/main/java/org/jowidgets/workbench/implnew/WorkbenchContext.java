@@ -82,8 +82,11 @@ public class WorkbenchContext implements IWorkbenchContext {
 	private final IControl emptyContent;
 
 	private ITabFolder applicationTabFolder;
+	private boolean disposed;
 
 	public WorkbenchContext(final IWorkbench workbench, final IApplicationLifecycle lifecycle) {
+
+		this.disposed = false;
 
 		this.bpf = Toolkit.getBluePrintFactory();
 		this.addedApplications = new LinkedList<IWorkbenchApplication>();
@@ -158,7 +161,9 @@ public class WorkbenchContext implements IWorkbenchContext {
 			applicationContext.dispose();
 			final ITabItem tabItem = addedTabItems.remove(index);
 			applicationTabFolder.removeItem(tabItem);
-			onApplicationRemove(tabItem);
+			if (addedTabItems.size() == 0) {
+				selectComponentNode(null);
+			}
 		}
 	}
 
@@ -174,11 +179,9 @@ public class WorkbenchContext implements IWorkbenchContext {
 
 	@Override
 	public void finish() {
-		if (this.rootFrame.isVisible()) {
-			rootFrame.removeWindowListener(windowListener);
+		if (!disposed) {
+			dispose();
 			this.rootFrame.dispose();
-			runShutdownHooks();
-			lifecycle.finish();
 		}
 	}
 
@@ -194,11 +197,14 @@ public class WorkbenchContext implements IWorkbenchContext {
 		}
 	}
 
-	protected void onApplicationRemove(final ITabItem item) {
-		if (applicationTabFolder.getItems().size() == 0) {
-			selectComponentNode(null);
+	protected void unregsiterApplication(final ITabItem item) {
+		final int index = addedTabItems.indexOf(item);
+		if (index != -1) {
+			addedApplications.remove(index);
+			addedTabItems.remove(index);
+			addedApplicationContexts.remove(index);
 		}
-		else if (applicationTabFolder.getItems().size() == 1 && applicationTabFolder.getItems().contains(item)) {
+		if (addedTabItems.size() == 0) {
 			selectComponentNode(null);
 		}
 	}
@@ -341,12 +347,27 @@ public class WorkbenchContext implements IWorkbenchContext {
 					windowCloseVetoable.veto();
 				}
 				else {
-					runShutdownHooks();
-					lifecycle.finish();
+					dispose();
 				}
 			}
 
 		};
+	}
+
+	private void dispose() {
+		if (!disposed) {
+			disposed = true;
+
+			rootFrame.removeWindowListener(windowListener);
+
+			//dispose the application
+			for (final WorkbenchApplicationContext applicationContext : addedApplicationContexts) {
+				applicationContext.dispose();
+			}
+
+			runShutdownHooks();
+			lifecycle.finish();
+		}
 	}
 
 	private void runShutdownHooks() {
