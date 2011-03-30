@@ -49,7 +49,6 @@ import org.jowidgets.tools.controler.TabItemAdapter;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.types.VetoHolder;
-import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.IComponentNode;
 import org.jowidgets.workbench.api.IWorkbenchApplication;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
@@ -63,9 +62,11 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 	private final IToolBarModel toolBarModel;
 	private final IMenuModel toolBarMenuModel;
 
-	private final Map<IComponentNode, ITreeNode> createdNodes;
+	private final ComponentNodeContainerContext componentNodeContainerContext;
+
 	private final Map<ITreeNode, ComponentNodeContext> registeredNodes;
 
+	private final ITabItem tabItem;
 	private final ITree tree;
 	private final ITreeSelectionListener treeSelectionListener;
 	private final IListModelListener popupMenuModelListener;
@@ -79,9 +80,9 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 		final IWorkbenchApplication application) {
 
 		this.workbenchContext = workbenchContext;
+		this.tabItem = tabItem;
 		this.application = application;
 
-		this.createdNodes = new HashMap<IComponentNode, ITreeNode>();
 		this.registeredNodes = new HashMap<ITreeNode, ComponentNodeContext>();
 
 		this.popupMenuModel = new MenuModel();
@@ -107,31 +108,24 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 		this.tabItemListener = createTabItemListener();
 		tabItem.addTabItemListener(tabItemListener);
 
+		this.componentNodeContainerContext = new ComponentNodeContainerContext(tree, this, workbenchContext);
+
 		application.onContextInitialize(this);
 	}
 
 	@Override
 	public void add(final IComponentNode componentNode) {
-		add(tree.getChildren().size(), componentNode);
+		componentNodeContainerContext.add(componentNode);
 	}
 
 	@Override
 	public void add(final int index, final IComponentNode componentNode) {
-		Assert.paramNotNull(componentNode, "componentNode");
-		final ITreeNode node = tree.addNode(index);
-		createdNodes.put(componentNode, node);
-		registerNodeContext(new ComponentNodeContext(componentNode, node, null, this, workbenchContext));
+		componentNodeContainerContext.add(index, componentNode);
 	}
 
 	@Override
 	public void remove(final IComponentNode componentNode) {
-		Assert.paramNotNull(componentNode, "componentNode");
-		final ITreeNode node = createdNodes.remove(componentNode);
-		if (node != null) {
-			node.setSelected(false);
-			tree.removeNode(node);
-			unRegisterNodeContext(node);
-		}
+		componentNodeContainerContext.remove(componentNode);
 	}
 
 	@Override
@@ -154,6 +148,16 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 		return workbenchContext;
 	}
 
+	protected void dispose() {
+		popupMenuModel.removeListModelListener(popupMenuModelListener);
+		tree.removeTreeSelectionListener(treeSelectionListener);
+		tabItem.removeTabItemListener(tabItemListener);
+
+		for (final ITreeNode childNode : tree.getChildren()) {
+			unRegisterNodeContext(childNode);
+		}
+	}
+
 	protected IWorkbenchApplication getApplication() {
 		return application;
 	}
@@ -163,7 +167,13 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 	}
 
 	protected void unRegisterNodeContext(final ITreeNode node) {
-		registeredNodes.remove(node);
+		final ComponentNodeContext nodeContext = registeredNodes.remove(node);
+		if (nodeContext != null) {
+			nodeContext.dispose();
+		}
+		if (selectedNode == node) {
+			selectedNode = null;
+		}
 		for (final ITreeNode childNode : node.getChildren()) {
 			unRegisterNodeContext(childNode);
 		}
@@ -190,7 +200,7 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 					if (selectedNode != null) {
 						wasSelectedContext = registeredNodes.get(selectedNode);
 						if (wasSelectedContext != null && wasSelectedContext.isActive()) {
-							final VetoHolder veto = wasSelectedContext.deactivate();
+							final VetoHolder veto = wasSelectedContext.tryDeactivate();
 							if (veto.hasVeto()) {
 								tree.removeTreeSelectionListener(treeSelectionListener);
 								selectedNode.setSelected(true);
@@ -220,11 +230,15 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 				if (vetoHolder.hasVeto()) {
 					vetoable.veto();
 				}
+				else {
+					dispose();
+					workbenchContext.onApplicationRemove(tabItem);
+				}
 			}
 
 			@Override
 			public void closed() {
-				workbenchContext.onApplicationRemove();
+
 			}
 
 		};

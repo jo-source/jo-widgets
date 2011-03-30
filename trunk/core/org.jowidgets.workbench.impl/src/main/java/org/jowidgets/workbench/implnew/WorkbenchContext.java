@@ -154,11 +154,11 @@ public class WorkbenchContext implements IWorkbenchContext {
 		final int index = addedApplications.indexOf(workbenchApplication);
 		if (index != -1) {
 			addedApplications.remove(index);
-			addedApplicationContexts.remove(index);
+			final WorkbenchApplicationContext applicationContext = addedApplicationContexts.remove(index);
+			applicationContext.dispose();
 			final ITabItem tabItem = addedTabItems.remove(index);
 			applicationTabFolder.removeItem(tabItem);
-
-			onApplicationRemove();
+			onApplicationRemove(tabItem);
 		}
 	}
 
@@ -194,8 +194,11 @@ public class WorkbenchContext implements IWorkbenchContext {
 		}
 	}
 
-	protected void onApplicationRemove() {
+	protected void onApplicationRemove(final ITabItem item) {
 		if (applicationTabFolder.getItems().size() == 0) {
+			selectComponentNode(null);
+		}
+		else if (applicationTabFolder.getItems().size() == 1 && applicationTabFolder.getItems().contains(item)) {
 			selectComponentNode(null);
 		}
 	}
@@ -312,7 +315,7 @@ public class WorkbenchContext implements IWorkbenchContext {
 						final WorkbenchApplicationContext applicationContext = addedApplicationContexts.get(selectedIndex);
 						final ComponentNodeContext selectedNodeContext = applicationContext.getSelectedNodeContext();
 						if (selectedNodeContext != null && selectedNodeContext.isActive()) {
-							final VetoHolder vetoHolder = selectedNodeContext.deactivate();
+							final VetoHolder vetoHolder = selectedNodeContext.tryDeactivate();
 							if (vetoHolder.hasVeto()) {
 								vetoable.veto();
 								return;
