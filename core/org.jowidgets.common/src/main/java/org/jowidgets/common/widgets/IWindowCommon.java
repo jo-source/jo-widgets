@@ -27,16 +27,10 @@
  */
 package org.jowidgets.common.widgets;
 
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.controler.IWindowObservable;
 
 public interface IWindowCommon extends IDisplayCommon, IWindowObservable {
-
-	void setPosition(Position position);
-
-	void setSize(Dimension size);
 
 	Rectangle getParentBounds();
 
