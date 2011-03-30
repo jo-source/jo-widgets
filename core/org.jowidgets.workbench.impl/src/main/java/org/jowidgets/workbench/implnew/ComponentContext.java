@@ -29,6 +29,7 @@
 package org.jowidgets.workbench.implnew;
 
 import org.jowidgets.tools.types.VetoHolder;
+import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IComponentNode;
 import org.jowidgets.workbench.api.ILayout;
@@ -36,8 +37,36 @@ import org.jowidgets.workbench.api.IView;
 
 public final class ComponentContext implements IComponentContext {
 
-	public ComponentContext(final IComponentNode componentNode, final ComponentNodeContext treeNodeContext) {
+	private final ComponentNodeContext nodeContext;
+	private final IComponent component;
 
+	private boolean active;
+
+	public ComponentContext(final IComponentNode componentNode, final ComponentNodeContext nodeContext) {
+		this.active = false;
+		this.nodeContext = nodeContext;
+
+		this.component = componentNode.createComponent(this);
+	}
+
+	public void activate() {
+		if (!active) {
+			this.active = true;
+			if (component != null) {
+				component.onActivation();
+			}
+		}
+	}
+
+	public VetoHolder deactivate() {
+		final VetoHolder result = new VetoHolder();
+		if (active) {
+			this.active = false;
+			if (component != null) {
+				component.onDeactivation(result);
+			}
+		}
+		return result;
 	}
 
 	@Override
@@ -57,27 +86,17 @@ public final class ComponentContext implements IComponentContext {
 
 	@Override
 	public ComponentNodeContext getComponentNodeContext() {
-		return null;
+		return nodeContext;
 	}
 
 	@Override
 	public WorkbenchApplicationContext getWorkbenchApplicationContext() {
-		return null;
+		return getComponentNodeContext().getWorkbenchApplicationContext();
 	}
 
 	@Override
 	public WorkbenchContext getWorkbenchContext() {
-		return null;
-	}
-
-	public void activate() {
-		// TODO Auto-generated method stub
-
-	}
-
-	public VetoHolder deactivate() {
-		// TODO Auto-generated method stub
-		return new VetoHolder();
+		return getWorkbenchApplicationContext().getWorkbenchContext();
 	}
 
 }
