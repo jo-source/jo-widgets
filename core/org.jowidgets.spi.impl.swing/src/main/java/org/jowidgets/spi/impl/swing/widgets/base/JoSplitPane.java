@@ -61,9 +61,13 @@ public class JoSplitPane extends JSplitPane {
 	@Override
 	public void doLayout() {
 		if (!initialized && this.isDisplayable()) {
-			initialized = true;
-			setDividerLocation(dividerWeight);
-			setResizeWeight(resizeWeight);
+			final boolean horizontalInitialized = getOrientation() == JSplitPane.HORIZONTAL_SPLIT && getSize().width != 0;
+			final boolean verticalInitialized = getOrientation() == JSplitPane.VERTICAL_SPLIT && getSize().height != 0;
+			if (horizontalInitialized || verticalInitialized) {
+				initialized = true;
+				setDividerLocation(dividerWeight);
+				setResizeWeight(resizeWeight);
+			}
 		}
 		super.doLayout();
 	}
