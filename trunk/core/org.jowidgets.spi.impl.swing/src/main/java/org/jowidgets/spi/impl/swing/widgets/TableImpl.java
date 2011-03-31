@@ -308,9 +308,8 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 	@Override
 	public void pack(final TablePackPolicy policy) {
-		final RowRange rowRange = getRowRange(policy);
 		for (int columnIndex = 0; columnIndex < table.getColumnCount(); columnIndex++) {
-			pack(columnIndex, rowRange, policy);
+			pack(columnIndex, getRowRange(policy), policy);
 		}
 	}
 
@@ -351,12 +350,12 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		}
 		else {
 			final Rectangle viewRect = getUiReference().getViewport().getViewRect();
-			final int firstVisibleRowIndex = table.rowAtPoint(new Point(0, viewRect.y));
+			final int firstVisibleRowIndex = Math.max(table.rowAtPoint(new Point(0, viewRect.y)), 0);
 			int lastVisibleRowIndex = table.rowAtPoint(new Point(0, viewRect.y + viewRect.height - 1));
 			if (lastVisibleRowIndex == -1) {
 				lastVisibleRowIndex = table.getRowCount() - 1;
 			}
-			return new RowRange(Math.min(0, firstVisibleRowIndex), lastVisibleRowIndex);
+			return new RowRange(firstVisibleRowIndex, lastVisibleRowIndex);
 		}
 	}
 
@@ -1029,20 +1028,20 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			final Object value,
 			final boolean isSelected,
 			final int row,
-			final int viewColumn) {
+			final int column) {
 
 			this.currentRow = row;
-			this.currentColumn = table.convertColumnIndexToModel(viewColumn);
+			this.currentColumn = column;
 
-			final JTextField textField = (JTextField) super.getTableCellEditorComponent(table, value, isSelected, row, viewColumn);
+			final JTextField textField = (JTextField) super.getTableCellEditorComponent(table, value, isSelected, row, column);
 
-			final String text = dataModel.getCell(row, currentColumn).getText();
+			final String text = dataModel.getCell(row, column).getText();
 			if (text != null) {
 
 				SwingUtilities.invokeLater(new Runnable() {
 					@Override
 					public void run() {
-						startEditing(textField, text, row, currentColumn);
+						startEditing(textField, text, row, column);
 					}
 				});
 
