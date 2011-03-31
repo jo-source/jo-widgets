@@ -84,8 +84,8 @@ public class BigTableView extends AbstractDemoView implements IView {
 	public BigTableView(final IViewContext context) {
 		super(ID);
 
-		this.rowCount = 2000000;
-		this.columnCount = 50;
+		this.rowCount = 2000;
+		this.columnCount = 20;
 
 		this.fitColumnsAction = createFitColumnsAction();
 		this.resetPermutationAction = createResetPermutationAction();
