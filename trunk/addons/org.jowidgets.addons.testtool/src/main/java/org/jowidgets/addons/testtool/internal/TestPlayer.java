@@ -53,14 +53,21 @@ public class TestPlayer {
 				@Override
 				public void run() {
 					final IWidgetCommon widget = finder.findWidgetByID(WidgetRegistry.getInstance().getWidgets(), obj.getId());
-					executeAction(widget, obj.getAction());
-					try {
-						Thread.sleep(delay);
+					if (widget != null) {
+						executeAction(widget, obj.getAction());
+						try {
+							Thread.sleep(delay);
+						}
+						catch (final InterruptedException e) {
+						}
 					}
-					catch (final InterruptedException e) {
+					else {
+						// TODO LG maybe a nice feature, when the user could select the missing widget.
+						System.out.println("couldn't find widget with id: " + obj.getId());
 					}
 				}
 			};
+			// TODO LG stop threads when they are finished
 			Toolkit.getUiThreadAccess().invokeLater(thread);
 		}
 	}
