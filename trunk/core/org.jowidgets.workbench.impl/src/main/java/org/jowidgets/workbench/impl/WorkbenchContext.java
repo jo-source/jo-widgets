@@ -82,10 +82,12 @@ public class WorkbenchContext implements IWorkbenchContext {
 
 	private ITabFolder applicationTabFolder;
 	private boolean disposed;
+	private boolean onLayout;
 
 	public WorkbenchContext(final IWorkbench workbench, final IApplicationLifecycle lifecycle) {
 
 		this.disposed = false;
+		this.onLayout = false;
 
 		this.bpf = Toolkit.getBluePrintFactory();
 		this.addedApplications = new LinkedList<IWorkbenchApplication>();
@@ -209,10 +211,17 @@ public class WorkbenchContext implements IWorkbenchContext {
 		}
 	}
 
+	protected void layoutBegin() {
+		if (!onLayout) {
+			workbenchContentContainer.layoutBegin();
+			toolBar.layoutBegin();
+			rootFrame.setCursor(Cursor.WAIT);
+			onLayout = true;
+		}
+	}
+
 	protected void selectComponentNode(final ComponentNodeContext newComponentNode) {
-		workbenchContentContainer.layoutBegin();
-		toolBar.layoutBegin();
-		rootFrame.setCursor(Cursor.WAIT);
+		layoutBegin();
 
 		if (newComponentNode != null) {
 			if (!newComponentNode.isActive()) {
@@ -223,9 +232,16 @@ public class WorkbenchContext implements IWorkbenchContext {
 			workbenchContentPanel.setEmptyContent();
 		}
 
-		workbenchContentContainer.layoutEnd();
-		toolBar.layoutEnd();
-		rootFrame.setCursor(Cursor.DEFAULT);
+		layoutEnd();
+	}
+
+	protected void layoutEnd() {
+		if (onLayout) {
+			workbenchContentContainer.layoutEnd();
+			toolBar.layoutEnd();
+			rootFrame.setCursor(Cursor.DEFAULT);
+			onLayout = false;
+		}
 	}
 
 	protected WorkbenchContentPanel getWorkbenchContentPanel() {

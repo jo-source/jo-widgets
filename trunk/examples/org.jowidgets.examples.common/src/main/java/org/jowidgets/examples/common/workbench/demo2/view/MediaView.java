@@ -39,6 +39,7 @@ import org.jowidgets.api.widgets.ITree;
 import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractDemoView;
 import org.jowidgets.tools.command.ActionBuilder;
@@ -62,7 +63,7 @@ public class MediaView extends AbstractDemoView implements IView {
 		super(ID);
 
 		final IContainer container = context.getContainer();
-		container.setLayout(MigLayoutFactory.growingCellLayout());
+		container.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "[grow, 0::]"));
 
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
