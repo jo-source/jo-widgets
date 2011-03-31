@@ -56,31 +56,31 @@ public class WindowObservable implements IWindowObservable {
 	}
 
 	public final void fireWindowActivated() {
-		for (final IWindowListener windowListener : windowListeners) {
+		for (final IWindowListener windowListener : getWindowListeners()) {
 			windowListener.windowActivated();
 		}
 	}
 
 	public final void fireWindowDeactivated() {
-		for (final IWindowListener windowListener : windowListeners) {
+		for (final IWindowListener windowListener : getWindowListeners()) {
 			windowListener.windowDeactivated();
 		}
 	}
 
 	public final void fireWindowIconified() {
-		for (final IWindowListener windowListener : windowListeners) {
+		for (final IWindowListener windowListener : getWindowListeners()) {
 			windowListener.windowIconified();
 		}
 	}
 
 	public final void fireWindowDeiconified() {
-		for (final IWindowListener windowListener : windowListeners) {
+		for (final IWindowListener windowListener : getWindowListeners()) {
 			windowListener.windowDeiconified();
 		}
 	}
 
 	public final void fireWindowClosed() {
-		for (final IWindowListener windowListener : windowListeners) {
+		for (final IWindowListener windowListener : getWindowListeners()) {
 			windowListener.windowClosed();
 		}
 	}
@@ -93,7 +93,7 @@ public class WindowObservable implements IWindowObservable {
 				veto.set(Boolean.TRUE);
 			}
 		};
-		for (final IWindowListener windowListener : windowListeners) {
+		for (final IWindowListener windowListener : getWindowListeners()) {
 			windowListener.windowClosing(innerVetoable);
 			if (veto.get().booleanValue()) {
 				vetoable.veto();
@@ -110,7 +110,7 @@ public class WindowObservable implements IWindowObservable {
 				veto.set(Boolean.TRUE);
 			}
 		};
-		for (final IWindowListener windowListener : windowListeners) {
+		for (final IWindowListener windowListener : getWindowListeners()) {
 			windowListener.windowClosing(vetoable);
 			if (veto.get().booleanValue()) {
 				return true;
@@ -119,4 +119,7 @@ public class WindowObservable implements IWindowObservable {
 		return false;
 	}
 
+	private Set<IWindowListener> getWindowListeners() {
+		return new HashSet<IWindowListener>(windowListeners);
+	}
 }
