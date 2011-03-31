@@ -308,8 +308,9 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 	@Override
 	public void pack(final TablePackPolicy policy) {
+		final RowRange rowRange = getRowRange(policy);
 		for (int columnIndex = 0; columnIndex < table.getColumnCount(); columnIndex++) {
-			pack(columnIndex, getRowRange(policy), policy);
+			pack(columnIndex, rowRange, policy);
 		}
 	}
 
@@ -355,7 +356,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			if (lastVisibleRowIndex == -1) {
 				lastVisibleRowIndex = table.getRowCount() - 1;
 			}
-			return new RowRange(firstVisibleRowIndex, lastVisibleRowIndex);
+			return new RowRange(Math.min(0, firstVisibleRowIndex), lastVisibleRowIndex);
 		}
 	}
 
