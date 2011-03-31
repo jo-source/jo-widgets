@@ -1028,20 +1028,20 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			final Object value,
 			final boolean isSelected,
 			final int row,
-			final int column) {
+			final int viewColumn) {
 
 			this.currentRow = row;
-			this.currentColumn = column;
+			this.currentColumn = table.convertColumnIndexToModel(viewColumn);
 
-			final JTextField textField = (JTextField) super.getTableCellEditorComponent(table, value, isSelected, row, column);
+			final JTextField textField = (JTextField) super.getTableCellEditorComponent(table, value, isSelected, row, viewColumn);
 
-			final String text = dataModel.getCell(row, column).getText();
+			final String text = dataModel.getCell(row, currentColumn).getText();
 			if (text != null) {
 
 				SwingUtilities.invokeLater(new Runnable() {
 					@Override
 					public void run() {
-						startEditing(textField, text, row, column);
+						startEditing(textField, text, row, currentColumn);
 					}
 				});
 
