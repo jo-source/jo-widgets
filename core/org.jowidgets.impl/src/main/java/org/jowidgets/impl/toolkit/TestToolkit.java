@@ -28,8 +28,24 @@
 
 package org.jowidgets.impl.toolkit;
 
+import java.util.List;
+
+import org.jowidgets.api.command.IActionBuilderFactory;
+import org.jowidgets.api.convert.IConverterProvider;
+import org.jowidgets.api.model.IModelFactoryProvider;
+import org.jowidgets.api.threads.IUiThreadAccess;
+import org.jowidgets.api.toolkit.IMessagePane;
+import org.jowidgets.api.toolkit.IQuestionPane;
+import org.jowidgets.api.toolkit.IWidgetWrapperFactory;
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.utils.IWidgetUtils;
+import org.jowidgets.api.widgets.IComponent;
+import org.jowidgets.api.widgets.IWindow;
+import org.jowidgets.api.widgets.content.IInputContentCreatorFactory;
 import org.jowidgets.common.application.IApplicationLifecycle;
+import org.jowidgets.common.application.IApplicationRunner;
+import org.jowidgets.common.image.IImageRegistry;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.widgets.basic.blueprint.BasicSimpleTestBluePrintFactory;
 import org.jowidgets.test.api.toolkit.ITestToolkit;
@@ -40,16 +56,95 @@ import org.jowidgets.tools.controler.WindowAdapter;
 
 public final class TestToolkit implements ITestToolkit {
 
-	public TestToolkit() {}
+	private final IBasicSimpleTestBluePrintFactory bpf;
+
+	public TestToolkit() {
+		bpf = new BasicSimpleTestBluePrintFactory();
+	}
 
 	@Override
 	public IBasicSimpleTestBluePrintFactory getBluePrintFactory() {
-		return new BasicSimpleTestBluePrintFactory();
+		return bpf;
 	}
 
 	@Override
 	public IGenericWidgetFactory getWidgetFactory() {
 		return Toolkit.getWidgetFactory();
+	}
+
+	@Override
+	public IImageRegistry getImageRegistry() {
+		return Toolkit.getImageRegistry();
+	}
+
+	@Override
+	public IMessagePane getMessagePane() {
+		return Toolkit.getMessagePane();
+	}
+
+	@Override
+	public IQuestionPane getQuestionPane() {
+		return Toolkit.getQuestionPane();
+	}
+
+	@Override
+	public IWidgetWrapperFactory getWidgetWrapperFactory() {
+		return Toolkit.getWidgetWrapperFactory();
+	}
+
+	@Override
+	public IInputContentCreatorFactory getInputContentCreatorFactory() {
+		return Toolkit.getInputContentCreatorFactory();
+	}
+
+	@Override
+	public IConverterProvider getConverterProvider() {
+		return Toolkit.getConverterProvider();
+	}
+
+	@Override
+	public IActionBuilderFactory getActionBuilderFactory() {
+		return Toolkit.getActionBuilderFactory();
+	}
+
+	@Override
+	public IModelFactoryProvider getModelFactoryProvider() {
+		return Toolkit.getModelFactoryProvider();
+	}
+
+	@Override
+	public IApplicationRunner getApplicationRunner() {
+		return Toolkit.getApplicationRunner();
+	}
+
+	@Override
+	public IUiThreadAccess getUiThreadAccess() {
+		return Toolkit.getUiThreadAccess();
+	}
+
+	@Override
+	public IWidgetUtils getWidgetUtils() {
+		return Toolkit.getWidgetUtils();
+	}
+
+	@Override
+	public IWindow getActiveWindow() {
+		return Toolkit.getActiveWindow();
+	}
+
+	@Override
+	public List<IWindow> getAllWindows() {
+		return Toolkit.getAllWindows();
+	}
+
+	@Override
+	public Position toScreen(final Position localPosition, final IComponent component) {
+		return Toolkit.toScreen(localPosition, component);
+	}
+
+	@Override
+	public Position toLocal(final Position screenPosition, final IComponent component) {
+		return Toolkit.toLocal(screenPosition, component);
 	}
 
 	@Override
@@ -70,5 +165,4 @@ public final class TestToolkit implements ITestToolkit {
 		});
 		return result;
 	}
-
 }
