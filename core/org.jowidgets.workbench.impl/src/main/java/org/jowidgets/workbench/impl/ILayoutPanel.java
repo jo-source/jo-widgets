@@ -28,37 +28,8 @@
 
 package org.jowidgets.workbench.impl;
 
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IComposite;
-import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.tools.layout.MigLayoutFactory;
-import org.jowidgets.workbench.api.IComponent;
-import org.jowidgets.workbench.api.ILayout;
+public interface ILayoutPanel {
 
-public class LayoutContext {
-
-	private final IComposite composite;
-	private final ComponentContext componentContext;
-
-	public LayoutContext(final IContainer parentContainer, final ILayout layout, final ComponentContext componentContext) {
-		this.componentContext = componentContext;
-
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-		composite = parentContainer.add(bpf.composite(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS + ", hidemode 3");
-		LayoutContextCreationHelper.createLayout(layout.getLayoutContainer(), composite, this);
-	}
-
-	public void setVisible(final boolean visible) {
-		this.composite.setVisible(visible);
-	}
-
-	protected IComponent getComponent() {
-		return componentContext.getComponent();
-	}
-
-	protected ComponentContext getComponentContext() {
-		return componentContext;
-	}
+	void setComponent(final ComponentContext component);
 
 }

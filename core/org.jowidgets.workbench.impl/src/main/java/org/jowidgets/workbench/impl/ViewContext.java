@@ -44,17 +44,23 @@ public class ViewContext implements IViewContext {
 
 	private final ITabFolder tabFolder;
 	private final ITabItem tabItem;
-	private final ToolBarHelper toolBarHelper;;
+	private final ViewScope viewScope;
+	private final ViewWithToolBar viewWithToolBar;
 
 	private final IComponentContext componentContext;
 
-	public ViewContext(final ITabFolder tabFolder, final ITabItem tabItem, final IComponentContext componentContext) {
+	public ViewContext(
+		final ITabFolder tabFolder,
+		final ITabItem tabItem,
+		final ViewScope viewScope,
+		final IComponentContext componentContext) {
 		super();
 		this.tabFolder = tabFolder;
 		this.tabItem = tabItem;
+		this.viewScope = viewScope;
 		this.componentContext = componentContext;
 
-		this.toolBarHelper = new ToolBarHelper(tabItem);
+		this.viewWithToolBar = new ViewWithToolBar(tabItem);
 	}
 
 	@Override
@@ -74,23 +80,22 @@ public class ViewContext implements IViewContext {
 
 	@Override
 	public IContainer getContainer() {
-		return toolBarHelper.getContent();
+		return viewWithToolBar.getViewContent();
 	}
 
 	@Override
 	public IToolBarModel getToolBar() {
-		return toolBarHelper.getToolBarModel();
+		return viewWithToolBar.getToolBarModel();
 	}
 
 	@Override
 	public IMenuModel getToolBarMenu() {
-		return toolBarHelper.getToolBarMenuModel();
+		return viewWithToolBar.getToolBarMenuModel();
 	}
 
 	@Override
 	public ViewScope getScope() {
-		//TODO MG implement getScope()
-		return null;
+		return viewScope;
 	}
 
 	@Override
@@ -114,7 +119,7 @@ public class ViewContext implements IViewContext {
 	}
 
 	public void packToolBar() {
-		toolBarHelper.pack();
+		viewWithToolBar.pack();
 	}
 
 }

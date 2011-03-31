@@ -29,26 +29,56 @@
 package org.jowidgets.workbench.impl;
 
 import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.workbench.api.IFolderLayout;
-import org.jowidgets.workbench.api.ILayoutContainer;
-import org.jowidgets.workbench.api.ISplitLayout;
+import org.jowidgets.api.widgets.IControl;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
+import org.jowidgets.tools.widgets.wrapper.ContainerWrapper;
 
-public final class LayoutContextCreationHelper {
+public class WorkbenchStatusBar extends ContainerWrapper {
 
-	private LayoutContextCreationHelper() {}
+	public WorkbenchStatusBar(final IContainer widget) {
+		super(widget);
+		checkVisibility();
+	}
 
-	public static void createLayout(
-		final ILayoutContainer layout,
-		final IContainer parentContainer,
-		final LayoutContext layoutContext) {
+	@Override
+	public void removeAll() {
+		super.removeAll();
+		checkVisibility();
+	}
 
-		if (layout instanceof ISplitLayout) {
-			new SplitContext(parentContainer, (ISplitLayout) layout, layoutContext);
+	@Override
+	public boolean remove(final IControl control) {
+		final boolean result = super.remove(control);
+		checkVisibility();
+		return result;
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+		final Object layoutConstraints) {
+		final WIDGET_TYPE result = super.add(descriptor, layoutConstraints);
+		checkVisibility();
+		return result;
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+		final ICustomWidgetFactory<WIDGET_TYPE> factory,
+		final Object layoutConstraints) {
+		final WIDGET_TYPE result = super.add(factory, layoutConstraints);
+		checkVisibility();
+		return result;
+	}
+
+	private void checkVisibility() {
+		if (getChildren().size() == 0) {
+			setVisible(false);
 		}
-		else if (layout instanceof IFolderLayout) {
-			new FolderContext(parentContainer, (IFolderLayout) layout, layoutContext);
+		else {
+			setVisible(true);
 		}
-
 	}
 
 }

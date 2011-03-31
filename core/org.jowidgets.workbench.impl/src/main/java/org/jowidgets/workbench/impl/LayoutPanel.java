@@ -26,58 +26,42 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.implnew;
+package org.jowidgets.workbench.impl;
 
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
-import org.jowidgets.tools.widgets.wrapper.ContainerWrapper;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.tools.layout.MigLayoutFactory;
+import org.jowidgets.workbench.api.ILayout;
 
-public class WorkbenchStatusBar extends ContainerWrapper {
+public class LayoutPanel implements ILayoutPanel {
 
-	public WorkbenchStatusBar(final IContainer widget) {
-		super(widget);
-		checkVisibility();
+	private final IBluePrintFactory bpf;
+	private final IComposite contentPane;
+
+	private ComponentContext currentComponent;
+	private final LayoutContainerContext childContainerContext;
+
+	public LayoutPanel(final IContainer mainContainer, final ComponentContext currentComponent, final ILayout layout) {
+		super();
+		this.bpf = Toolkit.getBluePrintFactory();
+		this.currentComponent = currentComponent;
+
+		contentPane = mainContainer.add(bpf.composite(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS + ", hidemode 3");
+
+		childContainerContext = new LayoutContainerContext(layout.getLayoutContainer(), contentPane, currentComponent);
+	}
+
+	public IComposite getContentPane() {
+		return contentPane;
 	}
 
 	@Override
-	public void removeAll() {
-		super.removeAll();
-		checkVisibility();
-	}
-
-	@Override
-	public boolean remove(final IControl control) {
-		final boolean result = super.remove(control);
-		checkVisibility();
-		return result;
-	}
-
-	@Override
-	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
-		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
-		final Object layoutConstraints) {
-		final WIDGET_TYPE result = super.add(descriptor, layoutConstraints);
-		checkVisibility();
-		return result;
-	}
-
-	@Override
-	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
-		final ICustomWidgetFactory<WIDGET_TYPE> factory,
-		final Object layoutConstraints) {
-		final WIDGET_TYPE result = super.add(factory, layoutConstraints);
-		checkVisibility();
-		return result;
-	}
-
-	private void checkVisibility() {
-		if (getChildren().size() == 0) {
-			setVisible(false);
-		}
-		else {
-			setVisible(true);
+	public void setComponent(final ComponentContext component) {
+		if (currentComponent != component) {
+			childContainerContext.setComponent(component);
+			currentComponent = component;
 		}
 	}
 
