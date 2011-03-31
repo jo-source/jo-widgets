@@ -28,7 +28,23 @@
 
 package org.jowidgets.test.api.toolkit;
 
+import java.util.List;
+
+import org.jowidgets.api.command.IActionBuilderFactory;
+import org.jowidgets.api.convert.IConverterProvider;
+import org.jowidgets.api.model.IModelFactoryProvider;
+import org.jowidgets.api.threads.IUiThreadAccess;
+import org.jowidgets.api.toolkit.IMessagePane;
+import org.jowidgets.api.toolkit.IQuestionPane;
+import org.jowidgets.api.toolkit.IWidgetWrapperFactory;
+import org.jowidgets.api.utils.IWidgetUtils;
+import org.jowidgets.api.widgets.IComponent;
+import org.jowidgets.api.widgets.IWindow;
+import org.jowidgets.api.widgets.content.IInputContentCreatorFactory;
 import org.jowidgets.common.application.IApplicationLifecycle;
+import org.jowidgets.common.application.IApplicationRunner;
+import org.jowidgets.common.image.IImageRegistry;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.test.api.widgets.IFrameUi;
 import org.jowidgets.test.api.widgets.blueprint.factory.IBasicSimpleTestBluePrintFactory;
@@ -39,6 +55,32 @@ public interface ITestToolkit {
 	IBasicSimpleTestBluePrintFactory getBluePrintFactory();
 
 	IGenericWidgetFactory getWidgetFactory();
+
+	IImageRegistry getImageRegistry();
+
+	IMessagePane getMessagePane();
+
+	IQuestionPane getQuestionPane();
+
+	IWidgetWrapperFactory getWidgetWrapperFactory();
+
+	IInputContentCreatorFactory getInputContentCreatorFactory();
+
+	IConverterProvider getConverterProvider();
+
+	IActionBuilderFactory getActionBuilderFactory();
+
+	IModelFactoryProvider getModelFactoryProvider();
+
+	IApplicationRunner getApplicationRunner();
+
+	IUiThreadAccess getUiThreadAccess();
+
+	IWidgetUtils getWidgetUtils();
+
+	IWindow getActiveWindow();
+
+	List<IWindow> getAllWindows();
 
 	IFrameUi createRootFrame(IFrameDescriptorUi descriptor);
 
@@ -51,4 +93,22 @@ public interface ITestToolkit {
 	 * @return the created frame
 	 */
 	IFrameUi createRootFrame(IFrameDescriptorUi descriptor, IApplicationLifecycle lifecycle);
+
+	/**
+	 * Transforms a local component position to a screen position
+	 * 
+	 * @param localPosition Local position relative to the component
+	 * @param component The component
+	 * @return screen position
+	 */
+	Position toScreen(final Position localPosition, final IComponent component);
+
+	/**
+	 * Transforms a screen position to a local component position
+	 * 
+	 * @param screenPosition Screen position
+	 * @param component The component
+	 * @return local position relative to the component
+	 */
+	Position toLocal(final Position screenPosition, final IComponent component);
 }
