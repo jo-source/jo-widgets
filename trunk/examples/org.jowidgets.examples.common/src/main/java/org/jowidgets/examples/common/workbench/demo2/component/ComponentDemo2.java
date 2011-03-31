@@ -63,7 +63,7 @@ public class ComponentDemo2 extends AbstractDemoComponent implements IComponent 
 
 		this.addUserAction = createAddUserAction(componentNodeModel);
 		this.saveCommand = createSaveCommand(componentNodeModel);
-		componentContext.setLayout(new ComponentDemo2Layout(LayoutScope.WORKBENCH_APPLICATION).getLayout());
+		componentContext.setLayout(new ComponentDemo2Layout(LayoutScope.COMPONENT).getLayout());
 	}
 
 	@Override

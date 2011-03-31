@@ -28,9 +28,6 @@
 
 package org.jowidgets.workbench.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentContext;
@@ -39,122 +36,106 @@ import org.jowidgets.workbench.api.ILayout;
 
 public final class ComponentContext implements IComponentContext {
 
-	private final Map<String, LayoutContext> layoutContexts;
-	private final Map<String, ILayout> layouts;
-
-	private final ComponentNodeContext treeNodeContext;
+	private final ComponentNodeContext nodeContext;
+	private final WorkbenchContentPanel workbenchContentPanel;
 	private final IComponent component;
 
-	private LayoutContext currentLayoutContext;
-	private String currentLayout;
 	private boolean active;
+	private boolean layoutReset;
+	private ILayout currentLayout;
 
-	public ComponentContext(final IComponentNode componentNode, final ComponentNodeContext treeNodeContext) {
-
-		this.layoutContexts = new HashMap<String, LayoutContext>();
-		this.layouts = new HashMap<String, ILayout>();
-
-		this.treeNodeContext = treeNodeContext;
+	public ComponentContext(final IComponentNode componentNode, final ComponentNodeContext nodeContext) {
 		this.active = false;
-
-		//this must be the last invocation in constructor
-		//remark that component may be null for empty tree nodes (e.g folders)
+		this.layoutReset = false;
+		this.nodeContext = nodeContext;
+		this.workbenchContentPanel = nodeContext.getWorkbenchContext().getWorkbenchContentPanel();
 		this.component = componentNode.createComponent(this);
+	}
+
+	public void activate() {
+		if (!active) {
+			this.active = true;
+			if (component != null) {
+				if (currentLayout != null && layoutReset) {
+					workbenchContentPanel.resetLayout(this, currentLayout);
+				}
+				if (currentLayout != null) {
+					workbenchContentPanel.setLayout(this, currentLayout);
+				}
+				else {
+					workbenchContentPanel.setEmptyContent();
+				}
+				component.onActivation();
+			}
+			else {
+				workbenchContentPanel.setEmptyContent();
+			}
+		}
+	}
+
+	public VetoHolder deactivate() {
+		final VetoHolder result = new VetoHolder();
+		if (active) {
+			this.active = false;
+			if (component != null) {
+				component.onDeactivation(result);
+				if (result.hasVeto()) {
+					this.active = true;
+				}
+			}
+		}
+		return result;
+	}
+
+	public void onDispose() {
+		if (component != null) {
+			component.onDispose();
+		}
+		workbenchContentPanel.disposeComponent(this);
 	}
 
 	@Override
 	public void setLayout(final ILayout layout) {
-		if (layout != null) {
-			currentLayout = layout.getId();
-			layouts.put(layout.getId(), layout);
+		this.currentLayout = layout;
+		if (active && currentLayout != null) {
+			workbenchContentPanel.setLayout(this, currentLayout);
 		}
-		else {
-			currentLayout = null;
-		}
-		if (active) {
-			showCurrentLayout();
+		else if (active) {
+			workbenchContentPanel.setEmptyContent();
 		}
 	}
 
 	@Override
 	public void resetLayout(final ILayout layout) {
-		//TODO MG implement reset
-	}
-
-	public void activate() {
-		active = true;
-		showCurrentLayout();
-		if (component != null) {
-			component.onActivation();
+		this.currentLayout = layout;
+		if (active && currentLayout != null) {
+			workbenchContentPanel.resetLayout(this, currentLayout);
 		}
-	}
-
-	private void showCurrentLayout() {
-		if (currentLayout != null) {
-			getCurrentControlLazy().setVisible(true);
+		else if (active) {
+			workbenchContentPanel.setEmptyContent();
 		}
 		else {
-			if (currentLayoutContext != null) {
-				currentLayoutContext.setVisible(false);
-			}
-			getWorkbenchContext().setEmptyContentVisible(true);
+			layoutReset = true;
 		}
-	}
-
-	private LayoutContext getCurrentControlLazy() {
-		if (currentLayoutContext == null) {
-			if (currentLayout != null) {
-				currentLayoutContext = layoutContexts.get(currentLayout);
-				if (currentLayoutContext == null) {
-					currentLayoutContext = new LayoutContext(
-						getWorkbenchContext().getWorkbenchContentContainer(),
-						layouts.get(currentLayout),
-						this);
-					layoutContexts.put(currentLayout, currentLayoutContext);
-				}
-			}
-		}
-		return currentLayoutContext;
-	}
-
-	public VetoHolder deactivate() {
-		final VetoHolder vetoHolder = new VetoHolder();
-		if (component != null) {
-			component.onDeactivation(vetoHolder);
-			if (!vetoHolder.hasVeto()) {
-				hideCurrentLayout();
-				active = false;
-			}
-		}
-		return vetoHolder;
-	}
-
-	private void hideCurrentLayout() {
-		if (currentLayoutContext != null) {
-			currentLayoutContext.setVisible(false);
-		}
-		else {
-			getWorkbenchContext().setEmptyContentVisible(false);
-		}
-	}
-
-	protected IComponent getComponent() {
-		return component;
 	}
 
 	@Override
 	public ComponentNodeContext getComponentNodeContext() {
-		return treeNodeContext;
+		return nodeContext;
 	}
 
 	@Override
 	public WorkbenchApplicationContext getWorkbenchApplicationContext() {
-		return treeNodeContext.getWorkbenchApplicationContext();
+		return getComponentNodeContext().getWorkbenchApplicationContext();
 	}
 
 	@Override
 	public WorkbenchContext getWorkbenchContext() {
 		return getWorkbenchApplicationContext().getWorkbenchContext();
+	}
+
+	protected IComponent getComponent() {
+		return component;
 	}
 
 }

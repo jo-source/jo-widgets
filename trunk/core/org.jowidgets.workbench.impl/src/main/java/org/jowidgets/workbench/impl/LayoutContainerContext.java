@@ -26,30 +26,42 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.implnew;
+package org.jowidgets.workbench.impl;
 
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.common.application.IApplication;
-import org.jowidgets.common.application.IApplicationLifecycle;
-import org.jowidgets.workbench.api.IWorkbench;
-import org.jowidgets.workbench.api.IWorkbenchConfigurationService;
-import org.jowidgets.workbench.api.IWorkbenchRunner;
+import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.util.Assert;
+import org.jowidgets.workbench.api.IFolderLayout;
+import org.jowidgets.workbench.api.ILayoutContainer;
+import org.jowidgets.workbench.api.ISplitLayout;
 
-public class WorkbenchRunner implements IWorkbenchRunner {
+public class LayoutContainerContext implements ILayoutPanel {
 
-	@Override
-	public void run(final IWorkbench workbench) {
-		run(workbench, new DefaultConfigurationService());
+	private final ILayoutPanel childContext;
+
+	public LayoutContainerContext(
+		final ILayoutContainer layoutContainer,
+		final IContainer parentContainer,
+		final ComponentContext component) {
+
+		Assert.paramNotNull(layoutContainer, "layoutContainer");
+
+		if (layoutContainer instanceof ISplitLayout) {
+			this.childContext = new SplitPanel((ISplitLayout) layoutContainer, parentContainer, component);
+		}
+		else if (layoutContainer instanceof IFolderLayout) {
+			this.childContext = new FolderPanel((IFolderLayout) layoutContainer, parentContainer, component);
+		}
+		else {
+			throw new IllegalArgumentException("Layout container type '"
+				+ layoutContainer.getClass().getName()
+				+ "' is not supported");
+		}
+
 	}
 
 	@Override
-	public void run(final IWorkbench workbench, final IWorkbenchConfigurationService configurationService) {
-		Toolkit.getApplicationRunner().run(new IApplication() {
-			@Override
-			public void start(final IApplicationLifecycle lifecycle) {
-				new WorkbenchContext(workbench, lifecycle).run();
-			}
-		});
+	public void setComponent(final ComponentContext component) {
+		childContext.setComponent(component);
 	}
 
 }

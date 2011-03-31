@@ -26,42 +26,48 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.implnew;
+package org.jowidgets.workbench.impl;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.ISplitComposite;
+import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.tools.layout.MigLayoutFactory;
-import org.jowidgets.workbench.api.ILayout;
+import org.jowidgets.workbench.api.ISplitLayout;
 
-public class LayoutPanel {
+public class SplitPanel implements ILayoutPanel {
 
-	private final IBluePrintFactory bpf;
-	private final IComposite contentPane;
+	private final ILayoutPanel firstContainerContext;
+	private final ILayoutPanel secondContainerContext;
 
-	private ComponentContext currentComponent;
+	public SplitPanel(final ISplitLayout splitLayout, final IContainer parentContainer, final ComponentContext component) {
+		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+		parentContainer.setLayout(MigLayoutFactory.growingInnerCellLayout());
 
-	public LayoutPanel(final IContainer mainContainer, final ComponentContext currentComponent, final ILayout layout) {
-		super();
-		this.bpf = Toolkit.getBluePrintFactory();
-		this.currentComponent = currentComponent;
-
-		contentPane = mainContainer.add(bpf.composite(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-		contentPane.add(bpf.textLabel(currentComponent.getComponentNodeContext().getGlobalId()), "");
-	}
-
-	public IComposite getContentPane() {
-		return contentPane;
-	}
-
-	public void setComponent(final ComponentContext component) {
-		//TODO MG remove this code later
-		if (currentComponent != component) {
-			contentPane.removeAll();
-			currentComponent = component;
-			contentPane.add(bpf.textLabel(currentComponent.getComponentNodeContext().getGlobalId()), "");
+		final ISplitCompositeBluePrint splitCompositeBp = bpf.splitComposite();
+		splitCompositeBp.disableBorders();
+		splitCompositeBp.setOrientation(splitLayout.getOrientation());
+		if (splitLayout.getResizePolicy() != null) {
+			splitCompositeBp.setResizePolicy(splitLayout.getResizePolicy());
 		}
+		splitCompositeBp.setWeight(splitLayout.getWeight());
+
+		final ISplitComposite splitComposite = parentContainer.add(splitCompositeBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+
+		firstContainerContext = new LayoutContainerContext(splitLayout.getFirstContainer(), splitComposite.getFirst(), component);
+
+		secondContainerContext = new LayoutContainerContext(
+			splitLayout.getSecondContainer(),
+			splitComposite.getSecond(),
+			component);
+
+	}
+
+	@Override
+	public void setComponent(final ComponentContext component) {
+		firstContainerContext.setComponent(component);
+		secondContainerContext.setComponent(component);
 	}
 
 }

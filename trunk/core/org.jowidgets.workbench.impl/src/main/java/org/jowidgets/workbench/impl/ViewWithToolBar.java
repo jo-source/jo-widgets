@@ -42,15 +42,15 @@ import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.model.item.ToolBarModel;
 
-public class ToolBarHelper {
+public class ViewWithToolBar {
 
-	private final IComposite content;
+	private final IComposite viewContent;
 
 	private final IToolBar toolBar;
 	private final IToolBarModel toolBarModel;
 	private final IMenuModel toolBarMenuModel;
 
-	public ToolBarHelper(final IContainer container) {
+	public ViewWithToolBar(final IContainer container) {
 		final IToolBarModel innerToolBarModel = new ToolBarModel();
 		this.toolBarModel = new ToolBarModel();
 		this.toolBarMenuModel = new MenuModel();
@@ -118,11 +118,12 @@ public class ToolBarHelper {
 
 		});
 
-		content = container.add(bpf.composite(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+		viewContent = container.add(bpf.composite(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+		viewContent.setLayout(MigLayoutFactory.growingInnerCellLayout());
 	}
 
-	public IComposite getContent() {
-		return content;
+	public IComposite getViewContent() {
+		return viewContent;
 	}
 
 	public IToolBarModel getToolBarModel() {
