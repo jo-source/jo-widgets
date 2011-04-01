@@ -35,6 +35,7 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.workbench.api.ILayout;
 import org.jowidgets.workbench.api.LayoutScope;
@@ -68,11 +69,15 @@ public class WorkbenchContentPanel {
 		//CHECKSTYLE:OFF
 		System.out.println("SET EMPTY CONTENT: ");
 		//CHECKSTYLE:ON
-
+		Dimension lastSize = null;
 		if (lastContent != null && lastContent != emptyContent) {
+			lastSize = lastContent.getSize();
 			lastContent.setVisible(false);
 		}
 		if (!emptyContent.isVisible()) {
+			if (!lastContent.getSize().equals(lastSize)) {
+				emptyContent.setSize(lastSize);
+			}
 			emptyContent.setVisible(true);
 		}
 		lastContent = emptyContent;
@@ -86,10 +91,15 @@ public class WorkbenchContentPanel {
 		final LayoutPanel layoutPanel = getLayoutPanel(componentContext, layout);
 
 		if (lastContent != layoutPanel.getContentPane()) {
+			Dimension lastSize = null;
 			if (lastContent != null) {
+				lastSize = lastContent.getSize();
 				lastContent.setVisible(false);
 			}
 			lastContent = layoutPanel.getContentPane();
+			if (!lastContent.getSize().equals(lastSize)) {
+				lastContent.setSize(lastSize);
+			}
 			lastContent.setVisible(true);
 		}
 	}
