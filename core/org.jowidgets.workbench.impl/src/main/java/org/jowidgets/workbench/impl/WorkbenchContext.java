@@ -216,7 +216,7 @@ public class WorkbenchContext implements IWorkbenchContext {
 
 	protected void layoutBegin() {
 		if (!onLayout) {
-			rootContainer.layoutBegin();
+			rootContainer.setRedrawEnabled(false);
 			rootFrame.setCursor(Cursor.WAIT);
 			onLayout = true;
 		}
@@ -239,7 +239,7 @@ public class WorkbenchContext implements IWorkbenchContext {
 
 	protected void layoutEnd() {
 		if (onLayout) {
-			rootContainer.layoutEnd();
+			rootContainer.setRedrawEnabled(true);
 			rootFrame.setCursor(Cursor.DEFAULT);
 			onLayout = false;
 		}

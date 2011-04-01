@@ -258,6 +258,11 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 	}
 
 	@Override
+	public void setRedrawEnabled(final boolean enabled) {
+		swingContainer.setRedrawEnabled(enabled);
+	}
+
+	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
 		swingContainer.setForegroundColor(colorValue);
 	}

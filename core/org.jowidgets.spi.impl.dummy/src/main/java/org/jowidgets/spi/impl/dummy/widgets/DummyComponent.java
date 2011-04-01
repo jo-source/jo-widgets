@@ -48,6 +48,11 @@ public class DummyComponent extends DummyWidget implements IComponentSpi {
 	}
 
 	@Override
+	public void setRedrawEnabled(final boolean enabled) {
+		getUiReference().setRedrawEnabled(enabled);
+	}
+
+	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
 		getUiReference().setForegroundColor(colorValue);
 	}

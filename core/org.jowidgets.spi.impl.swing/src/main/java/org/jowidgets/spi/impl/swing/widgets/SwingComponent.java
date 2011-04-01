@@ -104,6 +104,13 @@ public class SwingComponent extends SwingWidget implements IComponentSpi {
 	}
 
 	@Override
+	public void setRedrawEnabled(final boolean enabled) {
+		if (enabled) {
+			redraw();
+		}
+	}
+
+	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
 		getUiReference().setForeground(ColorConvert.convert(colorValue));
 	}

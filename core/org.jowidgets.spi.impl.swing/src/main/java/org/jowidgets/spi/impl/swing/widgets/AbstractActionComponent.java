@@ -53,6 +53,11 @@ public abstract class AbstractActionComponent extends AbstractActionWidget imple
 	}
 
 	@Override
+	public void setRedrawEnabled(final boolean enabled) {
+		swingComponentDelegate.setRedrawEnabled(enabled);
+	}
+
+	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
 		swingComponentDelegate.setForegroundColor(colorValue);
 	}

@@ -96,6 +96,11 @@ public class SwtComponent extends SwtWidget implements IComponentSpi {
 	}
 
 	@Override
+	public void setRedrawEnabled(final boolean enabled) {
+		getUiReference().setRedraw(enabled);
+	}
+
+	@Override
 	public void setCursor(final Cursor cursor) {
 		getUiReference().setCursor(CursorCache.getCursor(cursor));
 	}

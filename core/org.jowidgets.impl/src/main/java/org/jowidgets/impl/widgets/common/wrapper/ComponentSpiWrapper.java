@@ -72,6 +72,11 @@ public class ComponentSpiWrapper extends WidgetSpiWrapper implements IComponentC
 	}
 
 	@Override
+	public void setRedrawEnabled(final boolean enabled) {
+		getWidget().setRedrawEnabled(enabled);
+	}
+
+	@Override
 	public IComponentSpi getWidget() {
 		return (IComponentSpi) super.getWidget();
 	}

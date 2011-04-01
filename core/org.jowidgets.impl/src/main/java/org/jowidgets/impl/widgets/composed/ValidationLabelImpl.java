@@ -243,6 +243,11 @@ public class ValidationLabelImpl implements IValidationLabel {
 	}
 
 	@Override
+	public void setRedrawEnabled(final boolean enabled) {
+		labelControl.setRedrawEnabled(enabled);
+	}
+
+	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
 		labelControl.setForegroundColor(colorValue);
 	}

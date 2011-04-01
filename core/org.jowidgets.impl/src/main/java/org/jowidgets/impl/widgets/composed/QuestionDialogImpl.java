@@ -157,6 +157,11 @@ public class QuestionDialogImpl implements IQuestionDialog {
 	}
 
 	@Override
+	public void setRedrawEnabled(final boolean enabled) {
+		dialogWidget.setRedrawEnabled(enabled);
+	}
+
+	@Override
 	public IDisplay getParent() {
 		return dialogWidget.getParent();
 	}

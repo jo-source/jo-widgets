@@ -40,6 +40,18 @@ public interface IComponentCommon extends IWidgetCommon, IPopupDetectionObservab
 	 */
 	void redraw();
 
+	/**
+	 * Enables or disabled the redraw of a component and its children.
+	 * 
+	 * If redraw is disabled, all changes of the component will not be made visible until
+	 * redraw will be enabled again.
+	 * 
+	 * REMARK: This is a hint and will not work for all platforms
+	 * 
+	 * @param enabled The enabled state
+	 */
+	void setRedrawEnabled(boolean enabled);
+
 	void setForegroundColor(final IColorConstant colorValue);
 
 	void setBackgroundColor(final IColorConstant colorValue);

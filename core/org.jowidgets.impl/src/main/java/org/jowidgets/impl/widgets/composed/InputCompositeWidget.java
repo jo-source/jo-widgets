@@ -226,6 +226,11 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputComposite<INPUT_T
 	}
 
 	@Override
+	public void setRedrawEnabled(final boolean enabled) {
+		contentContainer.setRedrawEnabled(enabled);
+	}
+
+	@Override
 	public void setCursor(final Cursor cursor) {
 		contentContainer.setCursor(cursor);
 	}
