@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,42 +26,42 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.common.wrapper;
+package org.jowidgets.spi.impl.controler;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.IButtonCommon;
-import org.jowidgets.common.widgets.controler.IActionListener;
-import org.jowidgets.spi.widgets.IButtonSpi;
+import java.util.HashSet;
+import java.util.Set;
 
-public class ButtonSpiWrapper extends TextLabelSpiWrapper implements IButtonCommon {
+import org.jowidgets.common.widgets.controler.IFocusListener;
+import org.jowidgets.common.widgets.controler.IFocusObservable;
 
-	public ButtonSpiWrapper(final IButtonSpi widget) {
-		super(widget);
+public class FocusObservable implements IFocusObservable {
+
+	private final Set<IFocusListener> listeners;
+
+	public FocusObservable() {
+		this.listeners = new HashSet<IFocusListener>();
 	}
 
 	@Override
-	public IButtonSpi getWidget() {
-		return (IButtonSpi) super.getWidget();
+	public void addFocusListener(final IFocusListener listener) {
+		listeners.add(listener);
 	}
 
 	@Override
-	public void setIcon(final IImageConstant icon) {
-		getWidget().setIcon(icon);
+	public void removeFocusListener(final IFocusListener listener) {
+		listeners.remove(listener);
 	}
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		getWidget().setEnabled(enabled);
+	public void focusGained() {
+		for (final IFocusListener listener : listeners) {
+			listener.focusGained();
+		}
 	}
 
-	@Override
-	public void addActionListener(final IActionListener actionListener) {
-		getWidget().addActionListener(actionListener);
-	}
-
-	@Override
-	public void removeActionListener(final IActionListener actionListener) {
-		getWidget().removeActionListener(actionListener);
+	public void focusLost() {
+		for (final IFocusListener listener : listeners) {
+			listener.focusLost();
+		}
 	}
 
 }

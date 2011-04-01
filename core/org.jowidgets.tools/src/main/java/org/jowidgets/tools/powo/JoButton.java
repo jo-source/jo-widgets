@@ -158,12 +158,6 @@ public class JoButton extends Control<IButton, IButtonBluePrint> implements IBut
 		}
 	}
 
-	@Override
-	public void requestFocus() {
-		checkInitialized();
-		getWidget().requestFocus();
-	}
-
 	public static IButtonBluePrint bluePrint() {
 		return Toolkit.getBluePrintFactory().button();
 	}

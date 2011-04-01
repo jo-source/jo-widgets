@@ -31,6 +31,7 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.spi.impl.controler.InputObservable;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
@@ -139,6 +140,21 @@ public abstract class AbstractInputControl extends InputObservable implements II
 	@Override
 	public IPopupMenuSpi createPopupMenu() {
 		return dummyControlDelegate.createPopupMenu();
+	}
+
+	@Override
+	public boolean requestFocus() {
+		return dummyControlDelegate.requestFocus();
+	}
+
+	@Override
+	public void addFocusListener(final IFocusListener listener) {
+		dummyControlDelegate.addFocusListener(listener);
+	}
+
+	@Override
+	public void removeFocusListener(final IFocusListener listener) {
+		dummyControlDelegate.removeFocusListener(listener);
 	}
 
 	@Override

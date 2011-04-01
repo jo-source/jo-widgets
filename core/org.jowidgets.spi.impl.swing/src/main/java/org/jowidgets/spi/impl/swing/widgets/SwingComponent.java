@@ -28,6 +28,8 @@
 package org.jowidgets.spi.impl.swing.widgets;
 
 import java.awt.Component;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -38,7 +40,9 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
+import org.jowidgets.spi.impl.controler.FocusObservable;
 import org.jowidgets.spi.impl.controler.PopupDetectionObservable;
 import org.jowidgets.spi.impl.swing.util.ColorConvert;
 import org.jowidgets.spi.impl.swing.util.CursorConvert;
@@ -50,11 +54,13 @@ import org.jowidgets.spi.widgets.IPopupMenuSpi;
 public class SwingComponent extends SwingWidget implements IComponentSpi {
 
 	private final PopupDetectionObservable popupDetectionObservable;
+	private final FocusObservable focusObservable;
 	private MouseListener mouseListener;
 
 	public SwingComponent(final Component component) {
 		super(component);
 		this.popupDetectionObservable = new PopupDetectionObservable();
+		this.focusObservable = new FocusObservable();
 
 		this.mouseListener = new MouseAdapter() {
 			@Override
@@ -71,8 +77,19 @@ public class SwingComponent extends SwingWidget implements IComponentSpi {
 				}
 			}
 		};
-
 		component.addMouseListener(mouseListener);
+
+		getUiReference().addFocusListener(new FocusListener() {
+			@Override
+			public void focusLost(final FocusEvent e) {
+				focusObservable.focusLost();
+			}
+
+			@Override
+			public void focusGained(final FocusEvent e) {
+				focusObservable.focusGained();
+			}
+		});
 	}
 
 	protected PopupDetectionObservable getPopupDetectionObservable() {
@@ -168,6 +185,21 @@ public class SwingComponent extends SwingWidget implements IComponentSpi {
 	@Override
 	public IPopupMenuSpi createPopupMenu() {
 		return new PopupMenuImpl(getUiReference());
+	}
+
+	@Override
+	public boolean requestFocus() {
+		return getUiReference().requestFocusInWindow();
+	}
+
+	@Override
+	public void addFocusListener(final IFocusListener listener) {
+		this.focusObservable.addFocusListener(listener);
+	}
+
+	@Override
+	public void removeFocusListener(final IFocusListener listener) {
+		this.focusObservable.removeFocusListener(listener);
 	}
 
 	@Override

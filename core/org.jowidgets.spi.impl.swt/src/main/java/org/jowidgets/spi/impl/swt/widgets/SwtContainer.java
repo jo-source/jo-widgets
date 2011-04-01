@@ -38,6 +38,7 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.IWidgetCommon;
+import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
@@ -171,6 +172,21 @@ public class SwtContainer implements IContainerSpi {
 	@Override
 	public IPopupMenuSpi createPopupMenu() {
 		return swtComponentDelegate.createPopupMenu();
+	}
+
+	@Override
+	public boolean requestFocus() {
+		return swtComponentDelegate.requestFocus();
+	}
+
+	@Override
+	public void addFocusListener(final IFocusListener listener) {
+		swtComponentDelegate.addFocusListener(listener);
+	}
+
+	@Override
+	public void removeFocusListener(final IFocusListener listener) {
+		swtComponentDelegate.removeFocusListener(listener);
 	}
 
 	@Override

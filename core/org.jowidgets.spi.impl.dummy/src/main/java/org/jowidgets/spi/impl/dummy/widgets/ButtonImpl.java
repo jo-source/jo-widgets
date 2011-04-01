@@ -84,11 +84,6 @@ public class ButtonImpl extends AbstractActionControl implements IButtonUiSpi {
 	}
 
 	@Override
-	public void requestFocus() {
-		getUiReference().requestFocusInWindow();
-	}
-
-	@Override
 	public boolean isTestable() {
 		return true;
 	}

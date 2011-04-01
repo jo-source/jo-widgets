@@ -39,6 +39,7 @@ import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IControlCommon;
+import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
@@ -190,6 +191,21 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 	@Override
 	public IColorConstant getBackgroundColor() {
 		return innerContainer.getBackgroundColor();
+	}
+
+	@Override
+	public boolean requestFocus() {
+		return innerContainer.requestFocus();
+	}
+
+	@Override
+	public void addFocusListener(final IFocusListener listener) {
+		innerContainer.addFocusListener(listener);
+	}
+
+	@Override
+	public void removeFocusListener(final IFocusListener listener) {
+		innerContainer.removeFocusListener(listener);
 	}
 
 	@Override

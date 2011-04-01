@@ -37,6 +37,7 @@ import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IComponentCommon;
+import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.impl.widgets.basic.PopupMenuImpl;
 import org.jowidgets.spi.widgets.IComponentSpi;
@@ -134,6 +135,21 @@ public class ComponentSpiWrapper extends WidgetSpiWrapper implements IComponentC
 	@Override
 	public void setPosition(final Position position) {
 		getWidget().setPosition(position);
+	}
+
+	@Override
+	public void addFocusListener(final IFocusListener listener) {
+		getWidget().addFocusListener(listener);
+	}
+
+	@Override
+	public void removeFocusListener(final IFocusListener listener) {
+		getWidget().removeFocusListener(listener);
+	}
+
+	@Override
+	public boolean requestFocus() {
+		return getWidget().requestFocus();
 	}
 
 	@Override

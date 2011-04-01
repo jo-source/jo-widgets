@@ -43,6 +43,7 @@ import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IComponentCommon;
+import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
@@ -247,6 +248,21 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 	@Override
 	public IPopupMenu createPopupMenu() {
 		return compositeWidget.createPopupMenu();
+	}
+
+	@Override
+	public boolean requestFocus() {
+		return compositeWidget.requestFocus();
+	}
+
+	@Override
+	public void addFocusListener(final IFocusListener listener) {
+		compositeWidget.addFocusListener(listener);
+	}
+
+	@Override
+	public void removeFocusListener(final IFocusListener listener) {
+		compositeWidget.removeFocusListener(listener);
 	}
 
 	@Override

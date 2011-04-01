@@ -56,6 +56,7 @@ import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IControlCommon;
+import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
@@ -315,6 +316,21 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 	@Override
 	public void setPosition(final Position position) {
 		swingContainer.setPosition(position);
+	}
+
+	@Override
+	public boolean requestFocus() {
+		return swingContainer.requestFocus();
+	}
+
+	@Override
+	public void addFocusListener(final IFocusListener listener) {
+		swingContainer.addFocusListener(listener);
+	}
+
+	@Override
+	public void removeFocusListener(final IFocusListener listener) {
+		swingContainer.removeFocusListener(listener);
 	}
 
 	@Override

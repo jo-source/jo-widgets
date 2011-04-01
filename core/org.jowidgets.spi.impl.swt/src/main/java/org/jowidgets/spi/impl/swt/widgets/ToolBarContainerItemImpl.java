@@ -39,6 +39,7 @@ import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IControlCommon;
+import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
@@ -152,6 +153,21 @@ public class ToolBarContainerItemImpl extends ToolBarItemImpl implements IToolBa
 	@Override
 	public void setPosition(final Position position) {
 		swtComposite.setPosition(position);
+	}
+
+	@Override
+	public boolean requestFocus() {
+		return swtComposite.requestFocus();
+	}
+
+	@Override
+	public void addFocusListener(final IFocusListener listener) {
+		swtComposite.addFocusListener(listener);
+	}
+
+	@Override
+	public void removeFocusListener(final IFocusListener listener) {
+		swtComposite.removeFocusListener(listener);
 	}
 
 	@Override

@@ -33,6 +33,7 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.spi.impl.controler.InputObservable;
 import org.jowidgets.spi.widgets.IInputControlSpi;
@@ -137,6 +138,21 @@ public abstract class AbstractInputControl extends InputObservable implements II
 	@Override
 	public void setPosition(final Position position) {
 		swingComponentDelegate.setPosition(position);
+	}
+
+	@Override
+	public boolean requestFocus() {
+		return swingComponentDelegate.requestFocus();
+	}
+
+	@Override
+	public void addFocusListener(final IFocusListener listener) {
+		swingComponentDelegate.addFocusListener(listener);
+	}
+
+	@Override
+	public void removeFocusListener(final IFocusListener listener) {
+		swingComponentDelegate.removeFocusListener(listener);
 	}
 
 	@Override

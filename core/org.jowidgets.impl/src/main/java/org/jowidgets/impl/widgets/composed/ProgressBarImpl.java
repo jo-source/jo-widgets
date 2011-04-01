@@ -41,6 +41,7 @@ import org.jowidgets.common.types.Orientation;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.IProgressBarCommon;
+import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
@@ -359,6 +360,21 @@ public class ProgressBarImpl implements IProgressBar {
 	public void setCursor(final Cursor cursor) {
 		indeterminateProgressBar.setCursor(cursor);
 		progressBar.setCursor(cursor);
+	}
+
+	@Override
+	public boolean requestFocus() {
+		return compositeWidget.requestFocus();
+	}
+
+	@Override
+	public void addFocusListener(final IFocusListener listener) {
+		compositeWidget.addFocusListener(listener);
+	}
+
+	@Override
+	public void removeFocusListener(final IFocusListener listener) {
+		compositeWidget.removeFocusListener(listener);
 	}
 
 	@Override

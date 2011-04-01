@@ -34,6 +34,8 @@ import java.util.Set;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IActionObservable;
+import org.jowidgets.common.widgets.controler.IFocusListener;
+import org.jowidgets.common.widgets.controler.IFocusObservable;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.controler.IInputObservable;
 import org.jowidgets.common.widgets.controler.IItemStateListener;
@@ -54,7 +56,8 @@ public class UIDObservable implements
 		IItemStateObservable,
 		IMenuObservable,
 		IPopupDetectionObservable,
-		ITabItemObservableSpi {
+		ITabItemObservableSpi,
+		IFocusObservable {
 
 	private final Set<IInputListener> inputListeners;
 	private final Set<IActionListener> actionListeners;
@@ -63,6 +66,7 @@ public class UIDObservable implements
 	private final Set<IMenuListener> menuListeners;
 	private final Set<IPopupDetectionListener> popupListeners;
 	private final Set<ITabItemListenerSpi> tabItemListeners;
+	private final Set<IFocusListener> focusListeners;
 
 	public UIDObservable() {
 		super();
@@ -73,6 +77,7 @@ public class UIDObservable implements
 		this.menuListeners = new HashSet<IMenuListener>();
 		this.popupListeners = new HashSet<IPopupDetectionListener>();
 		this.tabItemListeners = new HashSet<ITabItemListenerSpi>();
+		this.focusListeners = new HashSet<IFocusListener>();
 	}
 
 	@Override
@@ -145,6 +150,16 @@ public class UIDObservable implements
 		tabItemListeners.remove(listener);
 	}
 
+	@Override
+	public void addFocusListener(final IFocusListener listener) {
+		focusListeners.add(listener);
+	}
+
+	@Override
+	public void removeFocusListener(final IFocusListener listener) {
+		focusListeners.remove(listener);
+	}
+
 	public void fireActionPerformed() {
 		for (final IActionListener listener : actionListeners) {
 			listener.actionPerformed();
@@ -208,6 +223,18 @@ public class UIDObservable implements
 	void fireMenuDeactivated() {
 		for (final IMenuListener listener : menuListeners) {
 			listener.menuDeactivated();
+		}
+	}
+
+	void fireFocusGained() {
+		for (final IFocusListener listener : focusListeners) {
+			listener.focusGained();
+		}
+	}
+
+	void fireFocusLost() {
+		for (final IFocusListener listener : focusListeners) {
+			listener.focusLost();
 		}
 	}
 }

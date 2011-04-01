@@ -33,6 +33,7 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.spi.widgets.IActionWidgetSpi;
 import org.jowidgets.spi.widgets.IComponentSpi;
@@ -115,6 +116,21 @@ public abstract class AbstractActionComponent extends AbstractActionWidget imple
 	@Override
 	public IPopupMenuSpi createPopupMenu() {
 		return swingComponentDelegate.createPopupMenu();
+	}
+
+	@Override
+	public boolean requestFocus() {
+		return swingComponentDelegate.requestFocus();
+	}
+
+	@Override
+	public void addFocusListener(final IFocusListener listener) {
+		swingComponentDelegate.addFocusListener(listener);
+	}
+
+	@Override
+	public void removeFocusListener(final IFocusListener listener) {
+		swingComponentDelegate.removeFocusListener(listener);
 	}
 
 	@Override

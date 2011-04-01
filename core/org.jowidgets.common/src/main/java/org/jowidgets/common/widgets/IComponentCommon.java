@@ -31,9 +31,10 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.controler.IFocusObservable;
 import org.jowidgets.common.widgets.controler.IPopupDetectionObservable;
 
-public interface IComponentCommon extends IWidgetCommon, IPopupDetectionObservable {
+public interface IComponentCommon extends IWidgetCommon, IFocusObservable, IPopupDetectionObservable {
 
 	/**
 	 * Marks the widget that a redraw is necessary
@@ -51,6 +52,17 @@ public interface IComponentCommon extends IWidgetCommon, IPopupDetectionObservab
 	 * @param enabled The enabled state
 	 */
 	void setRedrawEnabled(boolean enabled);
+
+	/**
+	 * Try's to get the focus for the component. This is not always possible.
+	 * 
+	 * Developers must not assume that requesting the focus guarantee's that the
+	 * component gets the focus. Only if the focusGained event was fired, the component
+	 * has the focus.
+	 * 
+	 * @return false if the request definitively fails, true if it may succeed.
+	 */
+	boolean requestFocus();
 
 	void setForegroundColor(final IColorConstant colorValue);
 
