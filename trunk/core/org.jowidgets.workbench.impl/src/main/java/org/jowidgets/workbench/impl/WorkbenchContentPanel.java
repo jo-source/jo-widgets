@@ -66,42 +66,11 @@ public class WorkbenchContentPanel {
 	}
 
 	public void setEmptyContent() {
-		//CHECKSTYLE:OFF
-		System.out.println("SET EMPTY CONTENT: ");
-		//CHECKSTYLE:ON
-		Dimension lastSize = null;
-		if (lastContent != null && lastContent != emptyContent) {
-			lastSize = lastContent.getSize();
-			lastContent.setVisible(false);
-		}
-		if (!emptyContent.isVisible()) {
-			if (!lastContent.getSize().equals(lastSize)) {
-				emptyContent.setSize(lastSize);
-			}
-			emptyContent.setVisible(true);
-		}
-		lastContent = emptyContent;
+		switchContent(emptyContent);
 	}
 
 	public void setLayout(final ComponentContext componentContext, final ILayout layout) {
-		//CHECKSTYLE:OFF
-		System.out.println("SET LAYOUT: " + getGlobalLayoutId(componentContext, layout));
-		//CHECKSTYLE:ON
-
-		final LayoutPanel layoutPanel = getLayoutPanel(componentContext, layout);
-
-		if (lastContent != layoutPanel.getContentPane()) {
-			Dimension lastSize = null;
-			if (lastContent != null) {
-				lastSize = lastContent.getSize();
-				lastContent.setVisible(false);
-			}
-			lastContent = layoutPanel.getContentPane();
-			if (!lastContent.getSize().equals(lastSize)) {
-				lastContent.setSize(lastSize);
-			}
-			lastContent.setVisible(true);
-		}
+		switchContent(getLayoutPanel(componentContext, layout).getContentPane());
 	}
 
 	public void resetLayout(final ComponentContext componentContext, final ILayout layout) {
@@ -116,10 +85,29 @@ public class WorkbenchContentPanel {
 		//CHECKSTYLE:ON
 	}
 
+	private void switchContent(final IControl newContent) {
+		if (lastContent != newContent) {
+			Dimension lastSize = null;
+			if (lastContent != null) {
+				lastSize = lastContent.getSize();
+				lastContent.setVisible(false);
+			}
+
+			if (!newContent.getSize().equals(lastSize)) {
+				newContent.setSize(lastSize);
+			}
+			newContent.setVisible(true);
+
+			lastContent = newContent;
+		}
+	}
+
 	private LayoutPanel getLayoutPanel(final ComponentContext componentContext, final ILayout layout) {
 		LayoutPanel result = null;
+		final String gloabId = getGlobalLayoutId(componentContext, layout);
+
 		if (layout.getScope() == LayoutScope.COMPONENT) {
-			final String gloabId = getGlobalLayoutId(componentContext, layout);
+
 			result = componentScopeLayouts.get(gloabId);
 			if (result == null) {
 				result = new LayoutPanel(mainContainer, componentContext, layout);
@@ -127,7 +115,6 @@ public class WorkbenchContentPanel {
 			}
 		}
 		else if (layout.getScope() == LayoutScope.WORKBENCH_APPLICATION) {
-			final String gloabId = getGlobalLayoutId(componentContext, layout);
 			result = applicationScopeLayouts.get(gloabId);
 			if (result == null) {
 				result = new LayoutPanel(mainContainer, componentContext, layout);
@@ -138,7 +125,6 @@ public class WorkbenchContentPanel {
 			}
 		}
 		else if (layout.getScope() == LayoutScope.WORKBENCH) {
-			final String gloabId = getGlobalLayoutId(componentContext, layout);
 			result = workbenchScopeLayouts.get(gloabId);
 			if (result == null) {
 				result = new LayoutPanel(mainContainer, componentContext, layout);
