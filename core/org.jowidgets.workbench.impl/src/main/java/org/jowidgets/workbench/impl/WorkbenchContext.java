@@ -53,6 +53,7 @@ import org.jowidgets.common.types.SplitResizePolicy;
 import org.jowidgets.common.widgets.controler.IWindowListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.controler.WindowAdapter;
+import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.model.item.MenuBarModel;
 import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.util.Assert;
@@ -73,6 +74,7 @@ public class WorkbenchContext implements IWorkbenchContext {
 	private final List<ITabItem> addedTabItems;
 
 	private final IFrame rootFrame;
+	private final IContainer rootContainer;
 	private final IContainer statusBar;
 	private final WorkbenchToolbar toolBar;
 	private final IMenuBarModel menuBarModel;
@@ -98,6 +100,7 @@ public class WorkbenchContext implements IWorkbenchContext {
 		this.shutdownHooks = new LinkedList<Runnable>();
 		this.windowListener = createWindowListener(workbench);
 		this.rootFrame = createRootFrame(workbench);
+		this.rootContainer = createRootContainer();
 
 		this.menuBarModel = new MenuBarModel();
 		rootFrame.setMenuBar(menuBarModel);
@@ -213,8 +216,7 @@ public class WorkbenchContext implements IWorkbenchContext {
 
 	protected void layoutBegin() {
 		if (!onLayout) {
-			workbenchContentContainer.layoutBegin();
-			toolBar.layoutBegin();
+			rootContainer.layoutBegin();
 			rootFrame.setCursor(Cursor.WAIT);
 			onLayout = true;
 		}
@@ -237,8 +239,7 @@ public class WorkbenchContext implements IWorkbenchContext {
 
 	protected void layoutEnd() {
 		if (onLayout) {
-			workbenchContentContainer.layoutEnd();
-			toolBar.layoutEnd();
+			rootContainer.layoutEnd();
 			rootFrame.setCursor(Cursor.DEFAULT);
 			onLayout = false;
 		}
@@ -255,13 +256,19 @@ public class WorkbenchContext implements IWorkbenchContext {
 		rootFrameBp.setPosition(workbench.getInitialPosition());
 		rootFrameBp.setSize(workbench.getInitialDimension());
 		final IFrame result = Toolkit.createRootFrame(rootFrameBp);
-		result.setLayout(new MigLayoutDescriptor("3[grow]3", "3[]3[grow]3[]3"));
+		result.setLayout(MigLayoutFactory.growingInnerCellLayout());
 		result.addWindowListener(windowListener);
 		return result;
 	}
 
+	private IContainer createRootContainer() {
+		final IContainer result = rootFrame.add(bpf.composite(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+		result.setLayout(new MigLayoutDescriptor("3[grow]3", "3[]3[grow]3[]3"));
+		return result;
+	}
+
 	private WorkbenchToolbar createToolBar() {
-		final IContainer toolBarContainer = rootFrame.add(bpf.composite(), "grow ,wrap");
+		final IContainer toolBarContainer = rootContainer.add(bpf.composite(), "grow ,wrap");
 		toolBarContainer.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow]0"));
 		return new WorkbenchToolbar(toolBarContainer);
 	}
@@ -269,14 +276,14 @@ public class WorkbenchContext implements IWorkbenchContext {
 	private IContainer createWorkbenchContentContainer(final IWorkbench workbench) {
 		IContainer result;
 
-		final IComposite rootComposite = rootFrame.add(bpf.composite(), "growx, growy, w 0::, h 0::, wrap");
-		rootComposite.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));
+		final IComposite contentComposite = rootContainer.add(bpf.composite(), "growx, growy, w 0::, h 0::, wrap");
+		contentComposite.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));
 
 		if (workbench.hasApplicationNavigator()) {
 			final ISplitCompositeBluePrint splitCompositeBp = bpf.splitHorizontal().disableBorders();
 			splitCompositeBp.setResizePolicy(SplitResizePolicy.RESIZE_SECOND);
 			splitCompositeBp.setWeight(workbench.getInitialSplitWeight());
-			final ISplitComposite splitComposite = rootComposite.add(splitCompositeBp, "growx, growy, h 0::, w 0::");
+			final ISplitComposite splitComposite = contentComposite.add(splitCompositeBp, "growx, growy, h 0::, w 0::");
 
 			final IContainer applicationsContainer = splitComposite.getFirst();
 			applicationsContainer.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));
@@ -288,17 +295,17 @@ public class WorkbenchContext implements IWorkbenchContext {
 			result = splitComposite.getSecond();
 		}
 		else {
-			applicationTabFolder = rootComposite.add(
+			applicationTabFolder = contentComposite.add(
 					bpf.tabFolder().setTabsCloseable(workbench.getApplicationsCloseable()),
 					"hidemode 3, growx, growy, h 0::, w 0::");
 			applicationTabFolder.setVisible(false);
-			result = rootComposite;
+			result = contentComposite;
 		}
 		return result;
 	}
 
 	private IContainer createStatusBar() {
-		return new WorkbenchStatusBar(rootFrame.add(bpf.composite(), "hidemode 2, growx"));
+		return new WorkbenchStatusBar(rootContainer.add(bpf.composite(), "hidemode 2, growx"));
 	}
 
 	private ITabFolderListener createTabFolderListener() {
