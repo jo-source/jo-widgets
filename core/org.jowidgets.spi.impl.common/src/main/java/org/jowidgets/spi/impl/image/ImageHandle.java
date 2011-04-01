@@ -40,6 +40,7 @@ public final class ImageHandle<IMAGE_TYPE> implements IImageHandle {
 		this.imageFactory = imageFactory;
 	}
 
+	@Override
 	public synchronized IMAGE_TYPE getImage() {
 		if (image == null) {
 			image = imageFactory.createImage();
