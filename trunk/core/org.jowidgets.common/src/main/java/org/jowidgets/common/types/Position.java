@@ -82,7 +82,7 @@ public final class Position {
 
 	@Override
 	public String toString() {
-		return "(x=" + x + " / y=" + y + ")";
+		return "Position [x=" + x + ", y=" + y + "]";
 	}
 
 	public static Position subtract(final Position minuend, final Position subtrahend) {

@@ -204,13 +204,13 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 					if (selectedNode != null) {
 						wasSelectedContext = registeredNodes.get(selectedNode);
 						if (wasSelectedContext != null && wasSelectedContext.isActive()) {
-							workbenchContext.layoutBegin();
+							workbenchContext.beforeComponentChange();
 							final VetoHolder veto = wasSelectedContext.tryDeactivate();
 							if (veto.hasVeto()) {
 								tree.removeTreeSelectionListener(treeSelectionListener);
 								selectedNode.setSelected(true);
 								tree.addTreeSelectionListener(treeSelectionListener);
-								workbenchContext.layoutEnd();
+								workbenchContext.afterComponentChange();
 								return;
 							}
 						}

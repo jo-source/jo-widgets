@@ -84,12 +84,13 @@ public class WorkbenchContext implements IWorkbenchContext {
 
 	private ITabFolder applicationTabFolder;
 	private boolean disposed;
-	private boolean onLayout;
+	private boolean onComponentChange;
+	private boolean lastToolbarVisible;
 
 	public WorkbenchContext(final IWorkbench workbench, final IApplicationLifecycle lifecycle) {
 
 		this.disposed = false;
-		this.onLayout = false;
+		this.onComponentChange = false;
 
 		this.bpf = Toolkit.getBluePrintFactory();
 		this.addedApplications = new LinkedList<IWorkbenchApplication>();
@@ -214,16 +215,17 @@ public class WorkbenchContext implements IWorkbenchContext {
 		}
 	}
 
-	protected void layoutBegin() {
-		if (!onLayout) {
+	protected void beforeComponentChange() {
+		if (!onComponentChange) {
+			lastToolbarVisible = toolBar.isVisible();
 			rootContainer.setRedrawEnabled(false);
 			rootFrame.setCursor(Cursor.WAIT);
-			onLayout = true;
+			onComponentChange = true;
 		}
 	}
 
 	protected void selectComponentNode(final ComponentNodeContext newComponentNode) {
-		layoutBegin();
+		beforeComponentChange();
 
 		if (newComponentNode != null) {
 			if (!newComponentNode.isActive()) {
@@ -234,14 +236,17 @@ public class WorkbenchContext implements IWorkbenchContext {
 			workbenchContentPanel.setEmptyContent();
 		}
 
-		layoutEnd();
+		afterComponentChange();
 	}
 
-	protected void layoutEnd() {
-		if (onLayout) {
+	protected void afterComponentChange() {
+		if (onComponentChange) {
+			if (lastToolbarVisible != toolBar.isVisible()) {
+				rootContainer.layoutEnd();
+			}
 			rootContainer.setRedrawEnabled(true);
 			rootFrame.setCursor(Cursor.DEFAULT);
-			onLayout = false;
+			onComponentChange = false;
 		}
 	}
 
@@ -263,13 +268,13 @@ public class WorkbenchContext implements IWorkbenchContext {
 
 	private IContainer createRootContainer() {
 		final IContainer result = rootFrame.add(bpf.composite(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-		result.setLayout(new MigLayoutDescriptor("3[grow]3", "3[]3[grow]3[]3"));
+		result.setLayout(new MigLayoutDescriptor("2[grow]2", "1[]1[grow]1[]1"));
 		return result;
 	}
 
 	private WorkbenchToolbar createToolBar() {
-		final IContainer toolBarContainer = rootContainer.add(bpf.composite(), "grow ,wrap");
-		toolBarContainer.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow]0"));
+		final IContainer toolBarContainer = rootContainer.add(bpf.composite(), "hidemode 2, w 0::, grow, wrap");
+		toolBarContainer.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));
 		return new WorkbenchToolbar(toolBarContainer);
 	}
 
