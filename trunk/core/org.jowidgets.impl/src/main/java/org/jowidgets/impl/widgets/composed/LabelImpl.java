@@ -123,6 +123,11 @@ public class LabelImpl implements ILabel {
 	}
 
 	@Override
+	public void setRedrawEnabled(final boolean enabled) {
+		compositeWidget.setRedrawEnabled(enabled);
+	}
+
+	@Override
 	public void setCursor(final Cursor cursor) {
 		compositeWidget.setCursor(cursor);
 	}

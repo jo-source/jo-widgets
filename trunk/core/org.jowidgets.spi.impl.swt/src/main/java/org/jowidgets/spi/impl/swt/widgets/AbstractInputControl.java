@@ -69,6 +69,11 @@ public abstract class AbstractInputControl extends InputObservable implements II
 	}
 
 	@Override
+	public void setRedrawEnabled(final boolean enabled) {
+		swtControlDelegate.setRedrawEnabled(enabled);
+	}
+
+	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
 		swtControlDelegate.setForegroundColor(colorValue);
 	}

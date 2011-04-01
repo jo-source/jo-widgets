@@ -39,86 +39,91 @@ import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
 public abstract class AbstractActionComponent extends AbstractActionWidget implements IActionWidgetSpi, IComponentSpi {
 
-	private final DummyComponent mockComponentDelegate;
+	private final DummyComponent dummyComponentDelegate;
 
 	public AbstractActionComponent(final UIDComponent component) {
 		super(component);
-		this.mockComponentDelegate = new DummyComponent(component);
+		this.dummyComponentDelegate = new DummyComponent(component);
 	}
 
 	@Override
 	public void redraw() {
-		mockComponentDelegate.redraw();
+		dummyComponentDelegate.redraw();
+	}
+
+	@Override
+	public void setRedrawEnabled(final boolean enabled) {
+		dummyComponentDelegate.setRedrawEnabled(enabled);
 	}
 
 	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
-		mockComponentDelegate.setForegroundColor(colorValue);
+		dummyComponentDelegate.setForegroundColor(colorValue);
 	}
 
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
-		mockComponentDelegate.setBackgroundColor(colorValue);
+		dummyComponentDelegate.setBackgroundColor(colorValue);
 	}
 
 	@Override
 	public IColorConstant getForegroundColor() {
-		return mockComponentDelegate.getForegroundColor();
+		return dummyComponentDelegate.getForegroundColor();
 	}
 
 	@Override
 	public IColorConstant getBackgroundColor() {
-		return mockComponentDelegate.getBackgroundColor();
+		return dummyComponentDelegate.getBackgroundColor();
 	}
 
 	@Override
 	public void setCursor(final Cursor cursor) {
-		mockComponentDelegate.setCursor(cursor);
+		dummyComponentDelegate.setCursor(cursor);
 	}
 
 	@Override
 	public void setVisible(final boolean visible) {
-		mockComponentDelegate.setVisible(visible);
+		dummyComponentDelegate.setVisible(visible);
 	}
 
 	@Override
 	public boolean isVisible() {
-		return mockComponentDelegate.isVisible();
+		return dummyComponentDelegate.isVisible();
 	}
 
 	@Override
 	public Dimension getSize() {
-		return mockComponentDelegate.getSize();
+		return dummyComponentDelegate.getSize();
 	}
 
 	@Override
 	public void setSize(final Dimension size) {
-		mockComponentDelegate.setSize(size);
+		dummyComponentDelegate.setSize(size);
 	}
 
 	@Override
 	public Position getPosition() {
-		return mockComponentDelegate.getPosition();
+		return dummyComponentDelegate.getPosition();
 	}
 
 	@Override
 	public void setPosition(final Position position) {
-		mockComponentDelegate.setPosition(position);
+		dummyComponentDelegate.setPosition(position);
 	}
 
 	@Override
 	public IPopupMenuSpi createPopupMenu() {
-		return mockComponentDelegate.createPopupMenu();
+		return dummyComponentDelegate.createPopupMenu();
 	}
 
 	@Override
 	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		mockComponentDelegate.addPopupDetectionListener(listener);
+		dummyComponentDelegate.addPopupDetectionListener(listener);
 	}
 
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		mockComponentDelegate.removePopupDetectionListener(listener);
+		dummyComponentDelegate.removePopupDetectionListener(listener);
 	}
 
 }

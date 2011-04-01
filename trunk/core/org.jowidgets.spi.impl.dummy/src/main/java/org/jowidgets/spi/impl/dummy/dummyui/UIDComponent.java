@@ -120,4 +120,8 @@ public class UIDComponent extends UIDObservable {
 		return layoutConstraints;
 	}
 
+	public void setRedrawEnabled(final boolean enabled2) {
+		//Do nothing
+	}
+
 }

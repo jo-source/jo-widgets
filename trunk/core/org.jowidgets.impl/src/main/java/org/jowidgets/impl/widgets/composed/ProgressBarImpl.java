@@ -177,6 +177,11 @@ public class ProgressBarImpl implements IProgressBar {
 	}
 
 	@Override
+	public void setRedrawEnabled(final boolean enabled) {
+		compositeWidget.setRedrawEnabled(enabled);
+	}
+
+	@Override
 	public void setVisible(final boolean visible) {
 		compositeWidget.setVisible(visible);
 	}

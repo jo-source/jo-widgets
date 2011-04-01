@@ -167,6 +167,20 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 	}
 
 	@Override
+	public final void redraw() {
+		if (isInitialized()) {
+			getWidget().redraw();
+		}
+	}
+
+	@Override
+	public void setRedrawEnabled(final boolean enabled) {
+		if (isInitialized()) {
+			getWidget().setRedrawEnabled(enabled);
+		}
+	}
+
+	@Override
 	public final boolean isVisible() {
 		checkInitialized();
 		return getWidget().isVisible();
@@ -230,12 +244,6 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 	public Position toComponent(final Position componentPosition, final IComponentCommon component) {
 		checkInitialized();
 		return getWidget().toComponent(componentPosition, component);
-	}
-
-	@Override
-	public final void redraw() {
-		checkInitialized();
-		getWidget().redraw();
 	}
 
 	@Override

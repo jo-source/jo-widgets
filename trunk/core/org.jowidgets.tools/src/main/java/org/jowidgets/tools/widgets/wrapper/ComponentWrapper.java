@@ -55,6 +55,11 @@ public class ComponentWrapper extends WidgetWrapper implements IComponent {
 	}
 
 	@Override
+	public void setRedrawEnabled(final boolean enabled) {
+		getWidget().setRedrawEnabled(enabled);
+	}
+
+	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
 		getWidget().setForegroundColor(colorValue);
 	}

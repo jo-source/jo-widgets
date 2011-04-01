@@ -99,6 +99,11 @@ public class SwtContainer implements IContainerSpi {
 	}
 
 	@Override
+	public void setRedrawEnabled(final boolean enabled) {
+		swtComponentDelegate.setRedrawEnabled(enabled);
+	}
+
+	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
 		swtComponentDelegate.setForegroundColor(colorValue);
 	}

@@ -100,6 +100,11 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 	}
 
 	@Override
+	public void setRedrawEnabled(final boolean enabled) {
+		outerContainer.setRedrawEnabled(enabled);
+	}
+
+	@Override
 	public void setVisible(final boolean visible) {
 		outerContainer.setVisible(visible);
 	}

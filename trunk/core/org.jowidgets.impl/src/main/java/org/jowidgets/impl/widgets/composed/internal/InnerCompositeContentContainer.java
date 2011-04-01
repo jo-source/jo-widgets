@@ -192,6 +192,11 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 	}
 
 	@Override
+	public void setRedrawEnabled(final boolean enabled) {
+		compositeWidget.setRedrawEnabled(enabled);
+	}
+
+	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
 		compositeWidget.setForegroundColor(colorValue);
 	}

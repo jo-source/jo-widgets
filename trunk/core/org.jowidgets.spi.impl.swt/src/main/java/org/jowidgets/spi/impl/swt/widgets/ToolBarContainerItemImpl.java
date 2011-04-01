@@ -95,6 +95,11 @@ public class ToolBarContainerItemImpl extends ToolBarItemImpl implements IToolBa
 	}
 
 	@Override
+	public void setRedrawEnabled(final boolean enabled) {
+		swtComposite.setRedrawEnabled(enabled);
+	}
+
+	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
 		swtComposite.setForegroundColor(colorValue);
 	}

@@ -247,6 +247,11 @@ public class InputDialogImpl<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 	}
 
 	@Override
+	public void setRedrawEnabled(final boolean enabled) {
+		dialogWidget.setRedrawEnabled(enabled);
+	}
+
+	@Override
 	public IDisplay getParent() {
 		return dialogWidget.getParent();
 	}

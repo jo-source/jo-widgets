@@ -161,6 +161,11 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 	}
 
 	@Override
+	public void setRedrawEnabled(final boolean enabled) {
+		outerContainer.setRedrawEnabled(enabled);
+	}
+
+	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
 		outerContainer.setForegroundColor(colorValue);
 		innerContainer.setForegroundColor(colorValue);
