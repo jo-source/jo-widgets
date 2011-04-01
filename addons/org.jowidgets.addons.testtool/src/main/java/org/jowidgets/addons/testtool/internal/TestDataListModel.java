@@ -31,28 +31,28 @@ package org.jowidgets.addons.testtool.internal;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ListModel<T> {
+public class TestDataListModel {
 
-	private final List<T> list;
-	private IListModelListener<T> listener;
+	private final List<TestDataObject> list;
+	private final List<IListModelListener> listeners;
 
-	public ListModel() {
-		this.list = new LinkedList<T>();
-		this.listener = null;
+	public TestDataListModel() {
+		this.list = new LinkedList<TestDataObject>();
+		this.listeners = new LinkedList<IListModelListener>();
 	}
 
-	public void addItem(final T item) {
+	public void addItem(final TestDataObject item) {
 		list.add(item);
-		if (listener != null) {
+		for (final IListModelListener listener : listeners) {
 			listener.listChanged(item);
 		}
 	}
 
-	public List<T> getItems() {
+	public List<TestDataObject> getItems() {
 		return list;
 	}
 
-	public void setListener(final IListModelListener<T> listener) {
-		this.listener = listener;
+	public void addListener(final IListModelListener listener) {
+		this.listeners.add(listener);
 	}
 }

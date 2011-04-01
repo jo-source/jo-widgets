@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jowidgets.addons.testtool.internal.IListModelListener;
-import org.jowidgets.addons.testtool.internal.ListModel;
+import org.jowidgets.addons.testtool.internal.TestDataListModel;
 import org.jowidgets.addons.testtool.internal.TestDataObject;
 import org.jowidgets.addons.testtool.internal.TestToolViewUtilities;
 import org.jowidgets.addons.testtool.internal.UserAction;
@@ -335,9 +335,8 @@ public class TestToolView implements ITestToolView {
 	}
 
 	private void setupTestTool() {
-		@SuppressWarnings("unchecked")
-		final ListModel<TestDataObject> listModel = (ListModel<TestDataObject>) testTool.getListModel();
-		listModel.setListener(new IListModelListener<TestDataObject>() {
+		final TestDataListModel listModel = testTool.getListModel();
+		listModel.addListener(new IListModelListener() {
 
 			@Override
 			public void listChanged(final TestDataObject item) {

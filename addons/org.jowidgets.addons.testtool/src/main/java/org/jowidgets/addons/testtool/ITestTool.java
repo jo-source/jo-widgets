@@ -30,7 +30,7 @@ package org.jowidgets.addons.testtool;
 
 import java.util.List;
 
-import org.jowidgets.addons.testtool.internal.ListModel;
+import org.jowidgets.addons.testtool.internal.TestDataListModel;
 import org.jowidgets.addons.testtool.internal.TestDataObject;
 import org.jowidgets.addons.testtool.internal.UserAction;
 import org.jowidgets.common.widgets.IWidgetCommon;
@@ -47,7 +47,7 @@ public interface ITestTool {
 
 	List<TestDataObject> load(String fileName);
 
-	ListModel<?> getListModel();
+	TestDataListModel getListModel();
 
 	void activateRecordMode();
 

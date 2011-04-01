@@ -31,7 +31,7 @@ package org.jowidgets.addons.testtool;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.jowidgets.addons.testtool.internal.ListModel;
+import org.jowidgets.addons.testtool.internal.TestDataListModel;
 import org.jowidgets.addons.testtool.internal.TestDataObject;
 import org.jowidgets.addons.testtool.internal.TestDataXmlPersister;
 import org.jowidgets.addons.testtool.internal.TestPlayer;
@@ -67,7 +67,7 @@ public final class TestToolImpl implements ITestTool {
 
 	private final TestToolUtilities testToolUtilities;
 	private final ITestDataPersister persister;
-	private final ListModel<TestDataObject> listModel;
+	private final TestDataListModel listModel;
 	private final TestPlayer player;
 	private boolean record;
 	private boolean replay;
@@ -83,7 +83,7 @@ public final class TestToolImpl implements ITestTool {
 	public TestToolImpl(final String filePath) {
 		this.persister = new TestDataXmlPersister(filePath);
 		this.testToolUtilities = new TestToolUtilities();
-		this.listModel = new ListModel<TestDataObject>();
+		this.listModel = new TestDataListModel();
 		this.player = new TestPlayer();
 		this.record = false;
 		this.replay = false;
@@ -216,7 +216,7 @@ public final class TestToolImpl implements ITestTool {
 	}
 
 	@Override
-	public ListModel<TestDataObject> getListModel() {
+	public TestDataListModel getListModel() {
 		return listModel;
 	}
 

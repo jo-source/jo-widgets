@@ -28,8 +28,7 @@
 
 package org.jowidgets.addons.testtool.internal;
 
+public interface IListModelListener {
 
-public interface IListModelListener<T> {
-
-	void listChanged(T item);
+	void listChanged(TestDataObject item);
 }
