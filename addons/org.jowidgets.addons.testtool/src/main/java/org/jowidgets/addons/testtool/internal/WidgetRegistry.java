@@ -33,6 +33,7 @@ import java.util.List;
 
 import org.jowidgets.common.widgets.IWidgetCommon;
 
+// TODO LG Use a set instead a list?
 public final class WidgetRegistry {
 	private static WidgetRegistry instance = new WidgetRegistry();
 	private final List<IWidgetCommon> widgetRegistry;
