@@ -47,6 +47,11 @@ public final class Dimension {
 	}
 
 	@Override
+	public String toString() {
+		return "Dimension [width=" + width + ", height=" + height + "]";
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;

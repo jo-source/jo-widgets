@@ -48,26 +48,26 @@ public class WorkbenchToolbar {
 		this.container = container;
 
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-		container.setLayout(new MigLayoutDescriptor("hidemode 2", "0[grow, 0::]0", "0[]0"));
+		container.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[]0"));
 
 		toolBarModel = new ToolBarModel();
-		toolBar = container.add(bpf.toolBar(), "w 0::, hidemode 2");
+		toolBar = container.add(bpf.toolBar(), "w 0::");
 		toolBar.setModel(toolBarModel);
-		toolBar.setVisible(false);
+		container.setVisible(false);
 
 		toolBarModel.addListModelListener(new IListModelListener() {
 
 			@Override
 			public void childAdded(final int index) {
 				if (toolBarModel.getItems().size() == 1) {
-					toolBar.setVisible(true);
+					container.setVisible(true);
 				}
 			}
 
 			@Override
 			public void childRemoved(final int index) {
 				if (toolBarModel.getItems().size() == 0) {
-					toolBar.setVisible(false);
+					container.setVisible(false);
 				}
 			}
 		});
@@ -78,15 +78,12 @@ public class WorkbenchToolbar {
 		return toolBarModel;
 	}
 
-	public void layoutBegin() {
-		container.layoutBegin();
-	}
-
-	public void layoutEnd() {
-		container.layoutEnd();
+	public boolean isVisible() {
+		return container.isVisible();
 	}
 
 	public void pack() {
 		toolBar.pack();
 	}
+
 }
