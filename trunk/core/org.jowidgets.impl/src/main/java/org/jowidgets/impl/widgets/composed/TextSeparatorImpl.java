@@ -44,6 +44,7 @@ import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.ITextLabelCommon;
+import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
@@ -228,6 +229,21 @@ public class TextSeparatorImpl implements ITextLabel {
 	@Override
 	public void setMarkup(final Markup markup) {
 		textLabelWidget.setMarkup(markup);
+	}
+
+	@Override
+	public boolean requestFocus() {
+		return compositeWidget.requestFocus();
+	}
+
+	@Override
+	public void addFocusListener(final IFocusListener listener) {
+		compositeWidget.addFocusListener(listener);
+	}
+
+	@Override
+	public void removeFocusListener(final IFocusListener listener) {
+		compositeWidget.removeFocusListener(listener);
 	}
 
 	@Override

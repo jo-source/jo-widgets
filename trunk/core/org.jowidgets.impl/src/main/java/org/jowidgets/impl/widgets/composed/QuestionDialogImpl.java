@@ -44,6 +44,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IButtonCommon;
 import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
@@ -280,6 +281,21 @@ public class QuestionDialogImpl implements IQuestionDialog {
 	@Override
 	public Position toComponent(final Position componentPosition, final IComponentCommon component) {
 		return dialogWidget.toComponent(componentPosition, component);
+	}
+
+	@Override
+	public boolean requestFocus() {
+		return dialogWidget.requestFocus();
+	}
+
+	@Override
+	public void addFocusListener(final IFocusListener listener) {
+		dialogWidget.addFocusListener(listener);
+	}
+
+	@Override
+	public void removeFocusListener(final IFocusListener listener) {
+		dialogWidget.removeFocusListener(listener);
 	}
 
 	@Override

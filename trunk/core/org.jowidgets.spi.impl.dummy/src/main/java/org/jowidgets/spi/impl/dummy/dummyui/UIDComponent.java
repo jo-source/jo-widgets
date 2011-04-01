@@ -124,4 +124,9 @@ public class UIDComponent extends UIDObservable {
 		//Do nothing
 	}
 
+	public boolean requestFocus() {
+		//TODO LG implement requestFocus 
+		return false;
+	}
+
 }

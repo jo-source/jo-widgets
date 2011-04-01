@@ -47,6 +47,7 @@ import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IComponentCommon;
+import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
@@ -337,6 +338,21 @@ public class ValidationLabelImpl implements IValidationLabel {
 	@Override
 	public Position toComponent(final Position componentPosition, final IComponentCommon component) {
 		return labelControl.toComponent(componentPosition, component);
+	}
+
+	@Override
+	public boolean requestFocus() {
+		return labelControl.requestFocus();
+	}
+
+	@Override
+	public void addFocusListener(final IFocusListener listener) {
+		labelControl.addFocusListener(listener);
+	}
+
+	@Override
+	public void removeFocusListener(final IFocusListener listener) {
+		labelControl.removeFocusListener(listener);
 	}
 
 	@Override

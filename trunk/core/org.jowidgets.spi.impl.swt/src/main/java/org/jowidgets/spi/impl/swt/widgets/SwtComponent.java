@@ -27,6 +27,8 @@
  */
 package org.jowidgets.spi.impl.swt.widgets;
 
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.MenuDetectEvent;
 import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.graphics.Color;
@@ -37,7 +39,9 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
+import org.jowidgets.spi.impl.controler.FocusObservable;
 import org.jowidgets.spi.impl.controler.PopupDetectionObservable;
 import org.jowidgets.spi.impl.swt.color.ColorCache;
 import org.jowidgets.spi.impl.swt.cursor.CursorCache;
@@ -49,11 +53,13 @@ import org.jowidgets.spi.widgets.IPopupMenuSpi;
 public class SwtComponent extends SwtWidget implements IComponentSpi {
 
 	private final PopupDetectionObservable popupDetectionObservable;
+	private final FocusObservable focusObservable;
 	private MenuDetectListener menuDetectListener;
 
 	public SwtComponent(final Control control) {
 		super(control);
-		popupDetectionObservable = new PopupDetectionObservable();
+		this.popupDetectionObservable = new PopupDetectionObservable();
+		this.focusObservable = new FocusObservable();
 
 		this.menuDetectListener = new MenuDetectListener() {
 
@@ -65,6 +71,19 @@ public class SwtComponent extends SwtWidget implements IComponentSpi {
 		};
 
 		getUiReference().addMenuDetectListener(menuDetectListener);
+
+		getUiReference().addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(final FocusEvent e) {
+				focusObservable.focusLost();
+			}
+
+			@Override
+			public void focusGained(final FocusEvent e) {
+				focusObservable.focusGained();
+			}
+		});
 	}
 
 	protected PopupDetectionObservable getPopupDetectionObservable() {
@@ -162,6 +181,21 @@ public class SwtComponent extends SwtWidget implements IComponentSpi {
 	@Override
 	public IPopupMenuSpi createPopupMenu() {
 		return new PopupMenuImpl(getUiReference());
+	}
+
+	@Override
+	public boolean requestFocus() {
+		return getUiReference().forceFocus();
+	}
+
+	@Override
+	public void addFocusListener(final IFocusListener listener) {
+		focusObservable.addFocusListener(listener);
+	}
+
+	@Override
+	public void removeFocusListener(final IFocusListener listener) {
+		focusObservable.removeFocusListener(listener);
 	}
 
 	@Override

@@ -52,6 +52,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.IWindowListener;
@@ -357,6 +358,21 @@ public class InputDialogImpl<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 	@Override
 	public void addValidator(final IValidator<INPUT_TYPE> validator) {
 		inputCompositeWidget.addValidator(validator);
+	}
+
+	@Override
+	public boolean requestFocus() {
+		return inputCompositeWidget.requestFocus();
+	}
+
+	@Override
+	public void addFocusListener(final IFocusListener listener) {
+		inputCompositeWidget.addFocusListener(listener);
+	}
+
+	@Override
+	public void removeFocusListener(final IFocusListener listener) {
+		inputCompositeWidget.removeFocusListener(listener);
 	}
 
 	@Override

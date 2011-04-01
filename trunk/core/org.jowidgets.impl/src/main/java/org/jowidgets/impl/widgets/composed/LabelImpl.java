@@ -45,6 +45,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.IIconCommon;
 import org.jowidgets.common.widgets.ITextLabelCommon;
+import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
@@ -211,6 +212,21 @@ public class LabelImpl implements ILabel {
 	@Override
 	public Position toComponent(final Position componentPosition, final IComponentCommon component) {
 		return compositeWidget.toComponent(componentPosition, component);
+	}
+
+	@Override
+	public boolean requestFocus() {
+		return compositeWidget.requestFocus();
+	}
+
+	@Override
+	public void addFocusListener(final IFocusListener listener) {
+		compositeWidget.addFocusListener(listener);
+	}
+
+	@Override
+	public void removeFocusListener(final IFocusListener listener) {
+		compositeWidget.removeFocusListener(listener);
 	}
 
 	@Override

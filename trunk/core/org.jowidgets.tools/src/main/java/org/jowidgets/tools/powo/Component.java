@@ -40,6 +40,7 @@ import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IComponentCommon;
+import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
@@ -48,6 +49,7 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 
 	private Cursor cursor;
 	private final Set<IPopupDetectionListener> popupDetectionListeners;
+	private final Set<IFocusListener> focusListeners;
 	private final Set<JoPopupMenu> popupMenus;
 
 	private IMenuModel popupMenu;
@@ -55,6 +57,7 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 	Component(final BLUE_PRINT_TYPE bluePrint) {
 		super(bluePrint);
 		this.popupDetectionListeners = new HashSet<IPopupDetectionListener>();
+		this.focusListeners = new HashSet<IFocusListener>();
 		this.popupMenus = new HashSet<JoPopupMenu>();
 	}
 
@@ -72,6 +75,9 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 		}
 		for (final IPopupDetectionListener listener : popupDetectionListeners) {
 			widget.addPopupDetectionListener(listener);
+		}
+		for (final IFocusListener focusListener : focusListeners) {
+			widget.addFocusListener(focusListener);
 		}
 	}
 
@@ -141,6 +147,36 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 		}
 		else {
 			popupDetectionListeners.remove(listener);
+		}
+	}
+
+	@Override
+	public boolean requestFocus() {
+		if (isInitialized()) {
+			return getWidget().requestFocus();
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public void addFocusListener(final IFocusListener listener) {
+		if (isInitialized()) {
+			getWidget().addFocusListener(listener);
+		}
+		else {
+			focusListeners.add(listener);
+		}
+	}
+
+	@Override
+	public void removeFocusListener(final IFocusListener listener) {
+		if (isInitialized()) {
+			getWidget().removeFocusListener(listener);
+		}
+		else {
+			focusListeners.remove(listener);
 		}
 	}
 

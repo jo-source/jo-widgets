@@ -31,6 +31,7 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
 import org.jowidgets.spi.widgets.IActionWidgetSpi;
@@ -109,6 +110,21 @@ public abstract class AbstractActionComponent extends AbstractActionWidget imple
 	@Override
 	public void setPosition(final Position position) {
 		dummyComponentDelegate.setPosition(position);
+	}
+
+	@Override
+	public boolean requestFocus() {
+		return dummyComponentDelegate.requestFocus();
+	}
+
+	@Override
+	public void addFocusListener(final IFocusListener listener) {
+		dummyComponentDelegate.addFocusListener(listener);
+	}
+
+	@Override
+	public void removeFocusListener(final IFocusListener listener) {
+		dummyComponentDelegate.removeFocusListener(listener);
 	}
 
 	@Override
