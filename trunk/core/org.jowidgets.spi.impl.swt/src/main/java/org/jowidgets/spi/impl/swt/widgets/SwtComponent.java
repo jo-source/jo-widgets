@@ -95,12 +95,12 @@ public class SwtComponent extends SwtWidget implements IComponentSpi {
 		getUiReference().addKeyListener(new KeyListener() {
 			@Override
 			public void keyReleased(final KeyEvent e) {
-				keyObservable.fireKeyPressed(new LazyKeyEventContentFactory(e));
+				keyObservable.fireKeyReleased(new LazyKeyEventContentFactory(e));
 			}
 
 			@Override
 			public void keyPressed(final KeyEvent e) {
-				keyObservable.fireKeyReleased(new LazyKeyEventContentFactory(e));
+				keyObservable.fireKeyPressed(new LazyKeyEventContentFactory(e));
 			}
 		});
 	}

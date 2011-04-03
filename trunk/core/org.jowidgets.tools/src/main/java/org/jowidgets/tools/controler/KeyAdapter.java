@@ -26,65 +26,17 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.swt.widgets.event;
+package org.jowidgets.tools.controler;
 
-import java.util.HashSet;
-import java.util.Set;
+import org.jowidgets.common.widgets.controler.IKeyEvent;
+import org.jowidgets.common.widgets.controler.IKeyListener;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.KeyEvent;
-import org.jowidgets.common.types.Modifier;
-import org.jowidgets.common.types.VirtualKey;
-import org.jowidgets.spi.impl.controler.ILazyKeyEventContentFactory;
-import org.jowidgets.spi.impl.swt.util.VirtualKeyConvert;
-
-public class LazyKeyEventContentFactory implements ILazyKeyEventContentFactory {
-
-	private final KeyEvent keyEvent;
-
-	public LazyKeyEventContentFactory(final KeyEvent keyEvent) {
-		super();
-		this.keyEvent = keyEvent;
-	}
+public class KeyAdapter implements IKeyListener {
 
 	@Override
-	public VirtualKey createVirtualKey() {
-		return VirtualKeyConvert.convert(keyEvent.keyCode);
-	}
+	public void keyPressed(final IKeyEvent event) {}
 
 	@Override
-	public Character createCharacter() {
-		if (keyEvent.character != 0) {
-			return Character.valueOf((char) keyEvent.keyCode);
-		}
-		else {
-			return null;
-		}
-	}
-
-	@Override
-	public Character createResultingCharacter() {
-		if (keyEvent.character != 0) {
-			return Character.valueOf(keyEvent.character);
-		}
-		else {
-			return null;
-		}
-	}
-
-	@Override
-	public Set<Modifier> createModifier() {
-		final Set<Modifier> result = new HashSet<Modifier>();
-		if ((keyEvent.stateMask & SWT.SHIFT) > 0) {
-			result.add(Modifier.SHIFT);
-		}
-		if ((keyEvent.stateMask & SWT.CTRL) > 0) {
-			result.add(Modifier.CTRL);
-		}
-		if ((keyEvent.stateMask & SWT.ALT) > 0) {
-			result.add(Modifier.ALT);
-		}
-		return result;
-	}
+	public void keyReleased(final IKeyEvent event) {}
 
 }

@@ -55,7 +55,7 @@ public class KeyObservable implements IKeyObservable {
 
 	public void fireKeyPressed(final ILazyKeyEventContentFactory contentFactory) {
 		if (listeners.size() > 0) {
-			final IKeyEvent event = new LazyKeyEvent(contentFactory);
+			final IKeyEvent event = new KeyEvent(contentFactory);
 			for (final IKeyListener listener : listeners) {
 				listener.keyPressed(event);
 			}
@@ -65,7 +65,7 @@ public class KeyObservable implements IKeyObservable {
 
 	public void fireKeyReleased(final ILazyKeyEventContentFactory contentFactory) {
 		if (listeners.size() > 0) {
-			final IKeyEvent event = new LazyKeyEvent(contentFactory);
+			final IKeyEvent event = new KeyEvent(contentFactory);
 			for (final IKeyListener listener : listeners) {
 				listener.keyReleased(event);
 			}
