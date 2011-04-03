@@ -28,6 +28,8 @@
 
 package org.jowidgets.examples.common.workbench.demo2.workbench.command;
 
+import org.jowidgets.common.types.Modifier;
+import org.jowidgets.common.types.VirtualKey;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.tools.command.ActionBuilder;
 import org.jowidgets.tools.command.CommandAction;
@@ -40,6 +42,7 @@ public class PrintAction extends CommandAction {
 				setText("Print");
 				setToolTipText("Prints the document");
 				setIcon(SilkIcons.PRINTER);
+				setAccelerator(VirtualKey.F1, Modifier.SHIFT);
 			}
 		});
 

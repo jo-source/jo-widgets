@@ -27,28 +27,43 @@
  */
 package org.jowidgets.spi.impl.swt.util;
 
-import java.util.List;
-
 import org.eclipse.swt.SWT;
+import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.common.types.Modifier;
 import org.jowidgets.util.Assert;
 
-public final class ModifierConvert {
+public final class AcceleratorConvert {
 
-	private ModifierConvert() {};
+	private AcceleratorConvert() {};
 
-	public static String acceleratorText(final List<Modifier> modifiers) {
+	public static String acceleratorText(final Accelerator accelerator) {
 		final StringBuilder result = new StringBuilder();
-		for (final Modifier modifier : modifiers) {
+		for (final Modifier modifier : accelerator.getModifier()) {
 			result.append(acceleratorText(modifier));
 			result.append("+");
+		}
+		final Character character = accelerator.getCharacter();
+		if (character != null) {
+			result.append(character.charValue());
+		}
+		else {
+			result.append(accelerator.getVirtualKey().getLabel());
 		}
 		return result.toString();
 	}
 
-	public static int convert(final List<Modifier> modifiers) {
-		int result = 0;
-		for (final Modifier modifier : modifiers) {
+	public static int convert(final Accelerator accelerator) {
+		int result;
+
+		final Character character = accelerator.getCharacter();
+		if (character != null) {
+			result = character.charValue();
+		}
+		else {
+			result = VirtualKeyConvert.convert(accelerator.getVirtualKey());
+		}
+
+		for (final Modifier modifier : accelerator.getModifier()) {
 			result += convert(modifier);
 		}
 		return result;
@@ -74,7 +89,7 @@ public final class ModifierConvert {
 	}
 
 	//TODO I18N
-	public static String acceleratorText(final Modifier modifier) {
+	private static String acceleratorText(final Modifier modifier) {
 		Assert.paramNotNull(modifier, "modifier");
 
 		if (modifier == Modifier.ALT) {

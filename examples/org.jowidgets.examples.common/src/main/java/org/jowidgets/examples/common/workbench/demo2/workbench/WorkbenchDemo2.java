@@ -107,6 +107,7 @@ public class WorkbenchDemo2 {
 		fileMenu.addAction(WorkbenchActions.NEW_DOCUMENT_ACTION);
 		fileMenu.addAction(WorkbenchActions.SAVE_ACTION);
 		fileMenu.addAction(WorkbenchActions.SAVE_AS_ACTION);
+		fileMenu.addAction(WorkbenchActions.PRINT_ACTION);
 		fileMenu.addAction(exitAction);
 
 		final IMenuModel editMenu = new MenuModel("Edit");

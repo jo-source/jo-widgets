@@ -34,6 +34,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.spi.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.spi.impl.swing.util.ModifierConvert;
+import org.jowidgets.spi.impl.swing.util.VirtualKeyConvert;
 import org.jowidgets.spi.widgets.IMenuItemSpi;
 
 public class MenuItemImpl extends SwingWidget implements IMenuItemSpi {
@@ -72,8 +73,16 @@ public class MenuItemImpl extends SwingWidget implements IMenuItemSpi {
 	}
 
 	public void setAccelerator(final Accelerator accelerator) {
-		final int modfifier = ModifierConvert.convert(accelerator.getModifier());
-		getUiReference().setAccelerator(KeyStroke.getKeyStroke(accelerator.getKey(), modfifier));
+		getUiReference().setAccelerator(getKeyStroke(accelerator));
 	}
 
+	private KeyStroke getKeyStroke(final Accelerator accelerator) {
+		final int modfifier = ModifierConvert.convert(accelerator.getModifier());
+		if (accelerator.getCharacter() != null) {
+			return KeyStroke.getKeyStroke(accelerator.getCharacter(), modfifier);
+		}
+		else {
+			return KeyStroke.getKeyStroke(VirtualKeyConvert.convert(accelerator.getVirtualKey()), modfifier);
+		}
+	}
 }

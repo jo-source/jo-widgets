@@ -29,29 +29,68 @@
 package org.jowidgets.common.types;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.jowidgets.util.Assert;
 
-public class Accelerator {
+public final class Accelerator {
 
-	private final char key;
+	private final Character character;
+	private final VirtualKey virtualKey;
 	private final List<Modifier> modifier;
+
+	public Accelerator(final VirtualKey virtualKey, final Modifier... modifier) {
+		this(virtualKey, Arrays.asList(modifier));
+	}
+
+	public Accelerator(final VirtualKey virtualKey, final List<Modifier> modifier) {
+		this(null, virtualKey, modifier);
+		Assert.paramNotNull(virtualKey, "virtualKey");
+	}
 
 	public Accelerator(final char key, final Modifier... modifier) {
 		this(key, Arrays.asList(modifier));
 	}
 
 	public Accelerator(final char key, final List<Modifier> modifier) {
-		Assert.paramNotEmpty(modifier, "modifier");
-		this.key = key;
-		this.modifier = modifier;
+		this(key, null, modifier);
 	}
 
-	public char getKey() {
-		return key;
+	private Accelerator(final Character character, final VirtualKey virtualKey, final List<Modifier> modifier) {
+		Assert.paramNotNull(modifier, "modifier");
+		this.character = character;
+		this.virtualKey = virtualKey;
+		this.modifier = Collections.unmodifiableList(modifier);
 	}
 
+	/**
+	 * Gets the accelerators character or null if the accelerator is defined with a virtual key.
+	 * 
+	 * Remark: If the character is null, the virtual key is not null and vice versa
+	 * 
+	 * @return The character or null
+	 */
+	public Character getCharacter() {
+		return character;
+	}
+
+	/**
+	 * Gets the accelerators virtual key or null if the accelerator is defined with a character.
+	 * 
+	 * Remark: If the character is null, the virtual key is not null and vice versa
+	 * 
+	 * @return The virtual key or null
+	 */
+	public VirtualKey getVirtualKey() {
+		return virtualKey;
+	}
+
+	/**
+	 * The modifiers or an empty list if no modifiers are defined
+	 * 
+	 * @return The odifers or an empry list
+	 */
 	public List<Modifier> getModifier() {
 		return modifier;
 	}
@@ -60,8 +99,9 @@ public class Accelerator {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + key;
+		result = prime * result + ((character == null) ? 0 : character.hashCode());
 		result = prime * result + ((modifier == null) ? 0 : modifier.hashCode());
+		result = prime * result + ((virtualKey == null) ? 0 : virtualKey.hashCode());
 		return result;
 	}
 
@@ -77,7 +117,12 @@ public class Accelerator {
 			return false;
 		}
 		final Accelerator other = (Accelerator) obj;
-		if (key != other.key) {
+		if (character == null) {
+			if (other.character != null) {
+				return false;
+			}
+		}
+		else if (!character.equals(other.character)) {
 			return false;
 		}
 		if (modifier == null) {
@@ -86,6 +131,9 @@ public class Accelerator {
 			}
 		}
 		else if (!modifier.equals(other.modifier)) {
+			return false;
+		}
+		if (virtualKey != other.virtualKey) {
 			return false;
 		}
 		return true;

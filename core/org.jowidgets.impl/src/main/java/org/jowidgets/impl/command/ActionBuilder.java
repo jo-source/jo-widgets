@@ -37,6 +37,7 @@ import org.jowidgets.api.command.IExceptionHandler;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.common.types.Modifier;
+import org.jowidgets.common.types.VirtualKey;
 
 public class ActionBuilder implements IActionBuilder {
 
@@ -94,6 +95,11 @@ public class ActionBuilder implements IActionBuilder {
 	@Override
 	public IActionBuilder setAccelerator(final char key, final Modifier... modifier) {
 		return setAccelerator(new Accelerator(key, modifier));
+	}
+
+	@Override
+	public IActionBuilder setAccelerator(final VirtualKey virtualKey, final Modifier... modifier) {
+		return setAccelerator(new Accelerator(virtualKey, modifier));
 	}
 
 	@Override
