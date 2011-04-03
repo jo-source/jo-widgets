@@ -38,6 +38,7 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.common.types.Modifier;
+import org.jowidgets.common.types.VirtualKey;
 
 public class ActionBuilder implements IActionBuilder {
 
@@ -91,6 +92,12 @@ public class ActionBuilder implements IActionBuilder {
 	@Override
 	public IActionBuilder setAccelerator(final char key, final Modifier... modifier) {
 		builder.setAccelerator(key, modifier);
+		return this;
+	}
+
+	@Override
+	public IActionBuilder setAccelerator(final VirtualKey virtualKey, final Modifier... modifier) {
+		builder.setAccelerator(virtualKey, modifier);
 		return this;
 	}
 

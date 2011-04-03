@@ -32,7 +32,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.spi.impl.controler.ActionObservable;
 import org.jowidgets.spi.impl.swt.image.SwtImageRegistry;
-import org.jowidgets.spi.impl.swt.util.ModifierConvert;
+import org.jowidgets.spi.impl.swt.util.AcceleratorConvert;
 import org.jowidgets.spi.widgets.IMenuItemSpi;
 
 public class MenuItemImpl extends ActionObservable implements IMenuItemSpi, IToolTipTextProvider {
@@ -75,14 +75,13 @@ public class MenuItemImpl extends ActionObservable implements IMenuItemSpi, IToo
 
 	public void setAccelerator(final Accelerator accelerator) {
 		try {
-			final int modfifier = ModifierConvert.convert(accelerator.getModifier());
-			getUiReference().setAccelerator(accelerator.getKey() + modfifier);
+			getUiReference().setAccelerator(AcceleratorConvert.convert(accelerator));
 		}
 		catch (final NoSuchMethodError error) {
 			//RWT does not support accelerators
 			return;
 		}
-		this.acceleratorText = ModifierConvert.acceleratorText(accelerator.getModifier()) + accelerator.getKey();
+		this.acceleratorText = AcceleratorConvert.acceleratorText(accelerator);
 		setCombinedText();
 
 	}
