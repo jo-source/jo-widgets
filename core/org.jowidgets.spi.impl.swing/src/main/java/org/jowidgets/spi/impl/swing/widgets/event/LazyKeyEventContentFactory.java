@@ -29,65 +29,61 @@
 package org.jowidgets.spi.impl.swing.widgets.event;
 
 import java.awt.event.KeyEvent;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.jowidgets.common.types.Modifier;
 import org.jowidgets.common.types.VirtualKey;
 import org.jowidgets.spi.impl.controler.ILazyKeyEventContentFactory;
+import org.jowidgets.spi.impl.swing.util.VirtualKeyConvert;
 
 public class LazyKeyEventContentFactory implements ILazyKeyEventContentFactory {
 
-	@SuppressWarnings("unused")
 	private final KeyEvent keyEvent;
 
 	public LazyKeyEventContentFactory(final KeyEvent keyEvent) {
 		super();
 		this.keyEvent = keyEvent;
-
-		//CHECKSTYLE:OFF
-		if (KeyEvent.CHAR_UNDEFINED == keyEvent.getKeyChar()) {
-			System.out.println(keyEvent.getKeyCode()
-				+ " / "
-				+ (char) keyEvent.getKeyCode()
-				+ " / "
-				+ "undefined"
-				+ " / "
-				+ keyEvent.getModifiers());
-		}
-		else {
-			System.out.println(keyEvent.getKeyCode()
-				+ " / "
-				+ (char) keyEvent.getKeyCode()
-				+ " / "
-				+ keyEvent.getKeyChar()
-				+ " / "
-				+ keyEvent.getModifiers());
-		}
-		//CHECKSTYLE:ON
 	}
 
 	@Override
 	public VirtualKey createVirtualKey() {
-		// TODO MG implement createVirtualKey()
-		return null;
+		return VirtualKeyConvert.convert(keyEvent.getKeyCode());
 	}
 
 	@Override
 	public Character createCharacter() {
-		// TODO MG implement createCharacter()
-		return null;
+		if (KeyEvent.CHAR_UNDEFINED != keyEvent.getKeyChar()) {
+			return Character.valueOf((char) keyEvent.getKeyCode());
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Override
 	public Character createResultingCharacter() {
-		// TODO MG implement createResultingCharacter()
-		return null;
+		if (KeyEvent.CHAR_UNDEFINED != keyEvent.getKeyChar()) {
+			return Character.valueOf(keyEvent.getKeyChar());
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Override
 	public Set<Modifier> createModifier() {
-		// TODO MG implement createModifier()
-		return null;
+		final Set<Modifier> result = new HashSet<Modifier>();
+		if (keyEvent.isAltDown() && keyEvent.getKeyCode() != KeyEvent.VK_ALT) {
+			result.add(Modifier.ALT);
+		}
+		if (keyEvent.isShiftDown() && keyEvent.getKeyCode() != KeyEvent.VK_SHIFT) {
+			result.add(Modifier.SHIFT);
+		}
+		if (keyEvent.isControlDown() && keyEvent.getKeyCode() != KeyEvent.VK_CONTROL) {
+			result.add(Modifier.CTRL);
+		}
+		return result;
 	}
 
 }

@@ -28,6 +28,7 @@
 
 package org.jowidgets.spi.impl.controler;
 
+import java.util.Collections;
 import java.util.Set;
 
 import org.jowidgets.common.types.Modifier;
@@ -35,7 +36,7 @@ import org.jowidgets.common.types.VirtualKey;
 import org.jowidgets.common.widgets.controler.IKeyEvent;
 import org.jowidgets.util.Assert;
 
-public class LazyKeyEvent implements IKeyEvent {
+public class KeyEvent implements IKeyEvent {
 
 	private final ILazyKeyEventContentFactory contentFactory;
 
@@ -49,7 +50,7 @@ public class LazyKeyEvent implements IKeyEvent {
 	private boolean resultingCharacterInitialized;
 	private boolean modifierInitialized;
 
-	public LazyKeyEvent(final ILazyKeyEventContentFactory contentFactory) {
+	public KeyEvent(final ILazyKeyEventContentFactory contentFactory) {
 		Assert.paramNotNull(contentFactory, "contentFactory");
 		this.contentFactory = contentFactory;
 
@@ -89,10 +90,29 @@ public class LazyKeyEvent implements IKeyEvent {
 	@Override
 	public Set<Modifier> getModifier() {
 		if (!modifierInitialized) {
-			modifier = contentFactory.createModifier();
+			final Set<Modifier> createdModifier = contentFactory.createModifier();
+			if (createdModifier != null) {
+				modifier = Collections.unmodifiableSet(contentFactory.createModifier());
+			}
+			else {
+				modifier = Collections.emptySet();
+			}
 			modifierInitialized = true;
 		}
 		return modifier;
+	}
+
+	@Override
+	public String toString() {
+		return "LazyKeyEvent [virtualKey="
+			+ getVirtualKey()
+			+ ", character="
+			+ getCharacter()
+			+ ", resultingCharacter="
+			+ getResultingCharacter()
+			+ ", modifier="
+			+ getModifier()
+			+ "]";
 	}
 
 }

@@ -110,7 +110,7 @@ public enum VirtualKey {
 	 */
 	UNDEFINED(null, "Undefined");
 
-	private static Map<Character, VirtualKey> characterToVirtualKey = new HashMap<Character, VirtualKey>();
+	private static Map<Character, VirtualKey> characterToVirtualKey;
 
 	private final Character character;
 	private final String label;
@@ -159,6 +159,7 @@ public enum VirtualKey {
 
 	private static Map<Character, VirtualKey> getCharacterToVirtualKey() {
 		if (characterToVirtualKey == null) {
+			characterToVirtualKey = new HashMap<Character, VirtualKey>();
 			characterToVirtualKey.put(Character.valueOf('0'), VirtualKey.DIGIT_0);
 			characterToVirtualKey.put(Character.valueOf('1'), VirtualKey.DIGIT_1);
 			characterToVirtualKey.put(Character.valueOf('2'), VirtualKey.DIGIT_2);

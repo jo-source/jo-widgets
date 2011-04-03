@@ -45,7 +45,9 @@ import org.jowidgets.api.widgets.blueprint.IValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
+import org.jowidgets.common.widgets.controler.IKeyEvent;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.tools.controler.KeyAdapter;
 
 public class DemoForm1ContentCreator implements IInputContentCreator<List<String>> {
 
@@ -120,6 +122,14 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 		firstName = container.add(stringMandatoryFieldBp, inputWidgetConstraints);
 		firstnameValidationWidget = container.add(validationLabelBp, "wrap");
 		firstnameValidationWidget.registerInputWidget(firstName);
+		firstName.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(final IKeyEvent event) {
+				//CHECKSTYLE:OFF
+				System.out.println(event);
+				//CHECKSTYLE:ON
+			}
+		});
 
 		container.add(textLabelBp.setText("Lastname*"), "right, sg lg");
 		lastname = container.add(stringMandatoryFieldBp, inputWidgetConstraints);
