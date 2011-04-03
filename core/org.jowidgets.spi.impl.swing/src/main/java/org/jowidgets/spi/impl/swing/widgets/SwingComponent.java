@@ -30,6 +30,8 @@ package org.jowidgets.spi.impl.swing.widgets;
 import java.awt.Component;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -41,13 +43,16 @@ import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IFocusListener;
+import org.jowidgets.common.widgets.controler.IKeyListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.spi.impl.controler.FocusObservable;
+import org.jowidgets.spi.impl.controler.KeyObservable;
 import org.jowidgets.spi.impl.controler.PopupDetectionObservable;
 import org.jowidgets.spi.impl.swing.util.ColorConvert;
 import org.jowidgets.spi.impl.swing.util.CursorConvert;
 import org.jowidgets.spi.impl.swing.util.DimensionConvert;
 import org.jowidgets.spi.impl.swing.util.PositionConvert;
+import org.jowidgets.spi.impl.swing.widgets.event.LazyKeyEventContentFactory;
 import org.jowidgets.spi.widgets.IComponentSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
@@ -55,12 +60,14 @@ public class SwingComponent extends SwingWidget implements IComponentSpi {
 
 	private final PopupDetectionObservable popupDetectionObservable;
 	private final FocusObservable focusObservable;
+	private final KeyObservable keyObservable;
 	private MouseListener mouseListener;
 
 	public SwingComponent(final Component component) {
 		super(component);
 		this.popupDetectionObservable = new PopupDetectionObservable();
 		this.focusObservable = new FocusObservable();
+		this.keyObservable = new KeyObservable();
 
 		this.mouseListener = new MouseAdapter() {
 			@Override
@@ -88,6 +95,18 @@ public class SwingComponent extends SwingWidget implements IComponentSpi {
 			@Override
 			public void focusGained(final FocusEvent e) {
 				focusObservable.focusGained();
+			}
+		});
+
+		getUiReference().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(final KeyEvent e) {
+				keyObservable.fireKeyPressed(new LazyKeyEventContentFactory(e));
+			}
+
+			@Override
+			public void keyPressed(final KeyEvent e) {
+				keyObservable.fireKeyReleased(new LazyKeyEventContentFactory(e));
 			}
 		});
 	}
@@ -190,6 +209,16 @@ public class SwingComponent extends SwingWidget implements IComponentSpi {
 	@Override
 	public boolean requestFocus() {
 		return getUiReference().requestFocusInWindow();
+	}
+
+	@Override
+	public void addKeyListener(final IKeyListener listener) {
+		keyObservable.addKeyListener(listener);
+	}
+
+	@Override
+	public void removeKeyListener(final IKeyListener listener) {
+		keyObservable.removeKeyListener(listener);
 	}
 
 	@Override

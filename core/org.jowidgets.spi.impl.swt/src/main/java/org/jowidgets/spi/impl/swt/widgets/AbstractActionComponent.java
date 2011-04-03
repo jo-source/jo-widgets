@@ -33,6 +33,7 @@ import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IFocusListener;
+import org.jowidgets.common.widgets.controler.IKeyListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.spi.widgets.IActionWidgetSpi;
 import org.jowidgets.spi.widgets.IComponentSpi;
@@ -130,6 +131,16 @@ public abstract class AbstractActionComponent extends AbstractActionWidget imple
 	@Override
 	public void removeFocusListener(final IFocusListener listener) {
 		swtComponentDelegate.removeFocusListener(listener);
+	}
+
+	@Override
+	public void addKeyListener(final IKeyListener listener) {
+		swtComponentDelegate.addKeyListener(listener);
+	}
+
+	@Override
+	public void removeKeyListener(final IKeyListener listener) {
+		swtComponentDelegate.removeKeyListener(listener);
 	}
 
 	@Override

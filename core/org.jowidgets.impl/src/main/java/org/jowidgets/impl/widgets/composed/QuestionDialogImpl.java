@@ -45,6 +45,7 @@ import org.jowidgets.common.widgets.IButtonCommon;
 import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IFocusListener;
+import org.jowidgets.common.widgets.controler.IKeyListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
@@ -296,6 +297,16 @@ public class QuestionDialogImpl implements IQuestionDialog {
 	@Override
 	public void removeFocusListener(final IFocusListener listener) {
 		dialogWidget.removeFocusListener(listener);
+	}
+
+	@Override
+	public void addKeyListener(final IKeyListener listener) {
+		dialogWidget.addKeyListener(listener);
+	}
+
+	@Override
+	public void removeKeyListener(final IKeyListener listener) {
+		dialogWidget.removeKeyListener(listener);
 	}
 
 	@Override

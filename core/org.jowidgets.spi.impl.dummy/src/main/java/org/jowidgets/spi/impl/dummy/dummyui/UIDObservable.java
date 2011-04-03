@@ -40,6 +40,8 @@ import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.controler.IInputObservable;
 import org.jowidgets.common.widgets.controler.IItemStateListener;
 import org.jowidgets.common.widgets.controler.IItemStateObservable;
+import org.jowidgets.common.widgets.controler.IKeyListener;
+import org.jowidgets.common.widgets.controler.IKeyObservable;
 import org.jowidgets.common.widgets.controler.IMenuListener;
 import org.jowidgets.common.widgets.controler.IMenuObservable;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
@@ -57,7 +59,8 @@ public class UIDObservable implements
 		IMenuObservable,
 		IPopupDetectionObservable,
 		ITabItemObservableSpi,
-		IFocusObservable {
+		IFocusObservable,
+		IKeyObservable {
 
 	private final Set<IInputListener> inputListeners;
 	private final Set<IActionListener> actionListeners;
@@ -67,6 +70,7 @@ public class UIDObservable implements
 	private final Set<IPopupDetectionListener> popupListeners;
 	private final Set<ITabItemListenerSpi> tabItemListeners;
 	private final Set<IFocusListener> focusListeners;
+	private final Set<IKeyListener> keyListeners;
 
 	public UIDObservable() {
 		super();
@@ -78,6 +82,7 @@ public class UIDObservable implements
 		this.popupListeners = new HashSet<IPopupDetectionListener>();
 		this.tabItemListeners = new HashSet<ITabItemListenerSpi>();
 		this.focusListeners = new HashSet<IFocusListener>();
+		this.keyListeners = new HashSet<IKeyListener>();
 	}
 
 	@Override
@@ -158,6 +163,16 @@ public class UIDObservable implements
 	@Override
 	public void removeFocusListener(final IFocusListener listener) {
 		focusListeners.remove(listener);
+	}
+
+	@Override
+	public void addKeyListener(final IKeyListener listener) {
+		keyListeners.add(listener);
+	}
+
+	@Override
+	public void removeKeyListener(final IKeyListener listener) {
+		keyListeners.remove(listener);
 	}
 
 	public void fireActionPerformed() {

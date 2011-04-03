@@ -45,6 +45,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.ITextLabelCommon;
 import org.jowidgets.common.widgets.controler.IFocusListener;
+import org.jowidgets.common.widgets.controler.IKeyListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
@@ -244,6 +245,16 @@ public class TextSeparatorImpl implements ITextLabel {
 	@Override
 	public void removeFocusListener(final IFocusListener listener) {
 		compositeWidget.removeFocusListener(listener);
+	}
+
+	@Override
+	public void addKeyListener(final IKeyListener listener) {
+		compositeWidget.addKeyListener(listener);
+	}
+
+	@Override
+	public void removeKeyListener(final IKeyListener listener) {
+		compositeWidget.removeKeyListener(listener);
 	}
 
 	@Override
