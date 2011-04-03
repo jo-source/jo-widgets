@@ -58,6 +58,9 @@ public final class VirtualKeyConvert {
 		if (result == null) {
 			result = VirtualKey.toVirtualKey((char) keyCode);
 		}
+		if (result == null) {
+			result = VirtualKey.UNDEFINED;
+		}
 		return result;
 	}
 

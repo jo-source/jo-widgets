@@ -102,7 +102,13 @@ public enum VirtualKey {
 	W(Character.valueOf('W'), "W"),
 	X(Character.valueOf('X'), "X"),
 	Y(Character.valueOf('Y'), "Y"),
-	Z(Character.valueOf('Z'), "Z");
+	Z(Character.valueOf('Z'), "Z"),
+
+	/**
+	 * The key pressed or released is not defined as a virtual key.
+	 * This must not be used to define accelerators.
+	 */
+	UNDEFINED(null, "Undefined");
 
 	private static Map<Character, VirtualKey> characterToVirtualKey = new HashMap<Character, VirtualKey>();
 
