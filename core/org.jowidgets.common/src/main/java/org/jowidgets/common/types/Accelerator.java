@@ -59,6 +59,12 @@ public final class Accelerator {
 
 	private Accelerator(final Character character, final VirtualKey virtualKey, final List<Modifier> modifier) {
 		Assert.paramNotNull(modifier, "modifier");
+		if (virtualKey == VirtualKey.UNDEFINED) {
+			throw new IllegalArgumentException("The virtual key '"
+				+ VirtualKey.UNDEFINED
+				+ "' must not be used "
+				+ "for accelerators.");
+		}
 		this.character = character;
 		this.virtualKey = virtualKey;
 		this.modifier = Collections.unmodifiableList(modifier);
