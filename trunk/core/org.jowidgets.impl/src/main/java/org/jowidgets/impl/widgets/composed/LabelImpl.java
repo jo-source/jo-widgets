@@ -46,6 +46,7 @@ import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.IIconCommon;
 import org.jowidgets.common.widgets.ITextLabelCommon;
 import org.jowidgets.common.widgets.controler.IFocusListener;
+import org.jowidgets.common.widgets.controler.IKeyListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
@@ -227,6 +228,16 @@ public class LabelImpl implements ILabel {
 	@Override
 	public void removeFocusListener(final IFocusListener listener) {
 		compositeWidget.removeFocusListener(listener);
+	}
+
+	@Override
+	public void addKeyListener(final IKeyListener listener) {
+		compositeWidget.addKeyListener(listener);
+	}
+
+	@Override
+	public void removeKeyListener(final IKeyListener listener) {
+		compositeWidget.removeKeyListener(listener);
 	}
 
 	@Override

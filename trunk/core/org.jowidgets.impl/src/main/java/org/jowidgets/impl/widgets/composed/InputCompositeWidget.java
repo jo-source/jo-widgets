@@ -46,6 +46,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IInputListener;
+import org.jowidgets.common.widgets.controler.IKeyListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.composed.internal.InputContentContainer;
@@ -297,6 +298,16 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputComposite<INPUT_T
 	@Override
 	public void removeFocusListener(final IFocusListener listener) {
 		composite.removeFocusListener(listener);
+	}
+
+	@Override
+	public void addKeyListener(final IKeyListener listener) {
+		composite.addKeyListener(listener);
+	}
+
+	@Override
+	public void removeKeyListener(final IKeyListener listener) {
+		composite.removeKeyListener(listener);
 	}
 
 	@Override

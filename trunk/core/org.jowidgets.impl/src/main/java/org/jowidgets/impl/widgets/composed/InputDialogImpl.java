@@ -54,6 +54,7 @@ import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IInputListener;
+import org.jowidgets.common.widgets.controler.IKeyListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.IWindowListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
@@ -373,6 +374,16 @@ public class InputDialogImpl<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 	@Override
 	public void removeFocusListener(final IFocusListener listener) {
 		inputCompositeWidget.removeFocusListener(listener);
+	}
+
+	@Override
+	public void addKeyListener(final IKeyListener listener) {
+		inputCompositeWidget.addKeyListener(listener);
+	}
+
+	@Override
+	public void removeKeyListener(final IKeyListener listener) {
+		inputCompositeWidget.removeKeyListener(listener);
 	}
 
 	@Override

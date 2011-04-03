@@ -41,6 +41,7 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.controler.IFocusListener;
+import org.jowidgets.common.widgets.controler.IKeyListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
@@ -50,6 +51,7 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 	private Cursor cursor;
 	private final Set<IPopupDetectionListener> popupDetectionListeners;
 	private final Set<IFocusListener> focusListeners;
+	private final Set<IKeyListener> keyListeners;
 	private final Set<JoPopupMenu> popupMenus;
 
 	private IMenuModel popupMenu;
@@ -58,6 +60,7 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 		super(bluePrint);
 		this.popupDetectionListeners = new HashSet<IPopupDetectionListener>();
 		this.focusListeners = new HashSet<IFocusListener>();
+		this.keyListeners = new HashSet<IKeyListener>();
 		this.popupMenus = new HashSet<JoPopupMenu>();
 	}
 
@@ -78,6 +81,9 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 		}
 		for (final IFocusListener focusListener : focusListeners) {
 			widget.addFocusListener(focusListener);
+		}
+		for (final IKeyListener keyListener : keyListeners) {
+			widget.addKeyListener(keyListener);
 		}
 	}
 
@@ -177,6 +183,26 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 		}
 		else {
 			focusListeners.remove(listener);
+		}
+	}
+
+	@Override
+	public void addKeyListener(final IKeyListener listener) {
+		if (isInitialized()) {
+			getWidget().addKeyListener(listener);
+		}
+		else {
+			keyListeners.add(listener);
+		}
+	}
+
+	@Override
+	public void removeKeyListener(final IKeyListener listener) {
+		if (isInitialized()) {
+			getWidget().removeKeyListener(listener);
+		}
+		else {
+			keyListeners.remove(listener);
 		}
 	}
 

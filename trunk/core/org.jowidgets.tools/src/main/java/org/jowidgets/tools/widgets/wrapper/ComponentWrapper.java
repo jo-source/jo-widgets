@@ -37,6 +37,7 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.controler.IFocusListener;
+import org.jowidgets.common.widgets.controler.IKeyListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 
 public class ComponentWrapper extends WidgetWrapper implements IComponent {
@@ -153,6 +154,16 @@ public class ComponentWrapper extends WidgetWrapper implements IComponent {
 	@Override
 	public boolean requestFocus() {
 		return getWidget().requestFocus();
+	}
+
+	@Override
+	public void addKeyListener(final IKeyListener listener) {
+		getWidget().addKeyListener(listener);
+	}
+
+	@Override
+	public void removeKeyListener(final IKeyListener listener) {
+		getWidget().removeKeyListener(listener);
 	}
 
 	@Override

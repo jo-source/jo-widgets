@@ -34,6 +34,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.controler.IFocusListener;
+import org.jowidgets.common.widgets.controler.IKeyListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
@@ -173,6 +174,16 @@ public class DummyContainer implements IContainerSpi {
 	@Override
 	public void removeFocusListener(final IFocusListener listener) {
 		dummyComponentDelegate.removeFocusListener(listener);
+	}
+
+	@Override
+	public void addKeyListener(final IKeyListener listener) {
+		dummyComponentDelegate.addKeyListener(listener);
+	}
+
+	@Override
+	public void removeKeyListener(final IKeyListener listener) {
+		dummyComponentDelegate.removeKeyListener(listener);
 	}
 
 	@Override

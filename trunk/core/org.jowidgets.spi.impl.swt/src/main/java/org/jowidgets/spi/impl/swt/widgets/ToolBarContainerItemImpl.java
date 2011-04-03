@@ -40,6 +40,7 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.controler.IFocusListener;
+import org.jowidgets.common.widgets.controler.IKeyListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
@@ -168,6 +169,16 @@ public class ToolBarContainerItemImpl extends ToolBarItemImpl implements IToolBa
 	@Override
 	public void removeFocusListener(final IFocusListener listener) {
 		swtComposite.removeFocusListener(listener);
+	}
+
+	@Override
+	public void addKeyListener(final IKeyListener listener) {
+		swtComposite.addKeyListener(listener);
+	}
+
+	@Override
+	public void removeKeyListener(final IKeyListener listener) {
+		swtComposite.removeKeyListener(listener);
 	}
 
 	@Override
