@@ -44,7 +44,7 @@ public abstract class AbstractTextInputControl extends AbstractInputControl impl
 
 			@Override
 			public void modifyText(final ModifyEvent e) {
-				fireInputChanged(textControl);
+				fireInputChanged();
 			}
 		});
 	}

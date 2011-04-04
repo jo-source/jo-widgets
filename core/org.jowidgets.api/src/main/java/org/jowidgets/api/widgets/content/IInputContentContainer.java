@@ -39,6 +39,6 @@ public interface IInputContentContainer extends IContainer, IContainerCommon {
 
 	void unRegisterInputWidget(IInputComponent<?> inputWidget);
 
-	void fireInputChanged(Object source);
+	void fireInputChanged();
 
 }

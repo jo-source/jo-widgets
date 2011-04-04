@@ -143,7 +143,7 @@ public class InputControlItemModel<VALUE_TYPE> extends AbstractItemModelWrapper 
 				childControl.addInputListener(listener);
 			}
 		}
-		inputObservable.fireInputChanged(sourceControl);
+		inputObservable.fireInputChanged();
 	}
 
 	private class InputListener implements IInputListener {
@@ -155,7 +155,7 @@ public class InputControlItemModel<VALUE_TYPE> extends AbstractItemModelWrapper 
 		}
 
 		@Override
-		public void inputChanged(final Object source) {
+		public void inputChanged() {
 			value = control.getValue();
 			changeValues(value, control);
 		}

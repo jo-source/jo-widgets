@@ -187,9 +187,9 @@ public class UIDObservable implements
 		}
 	}
 
-	public void fireInputChanged(final Object source) {
+	public void fireInputChanged() {
 		for (final IInputListener listener : inputListeners) {
-			listener.inputChanged(source);
+			listener.inputChanged();
 		}
 	}
 

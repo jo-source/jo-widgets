@@ -58,7 +58,7 @@ public class CheckBoxImpl extends AbstractInputControl implements ICheckBoxSpi {
 		getUiReference().addListener(SWT.Selection, new Listener() {
 			@Override
 			public void handleEvent(final Event event) {
-				fireInputChanged(this);
+				fireInputChanged();
 			}
 		});
 	}

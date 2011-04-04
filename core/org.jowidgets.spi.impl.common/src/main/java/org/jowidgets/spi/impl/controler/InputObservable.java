@@ -53,9 +53,9 @@ public class InputObservable implements IInputObservable {
 		this.inputListeners.remove(listener);
 	}
 
-	public final void fireInputChanged(final Object source) {
+	public final void fireInputChanged() {
 		for (final IInputListener inputListener : inputListeners) {
-			inputListener.inputChanged(source);
+			inputListener.inputChanged();
 		}
 	}
 

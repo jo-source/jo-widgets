@@ -89,21 +89,21 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 				@Override
 				public void removeUpdate(final DocumentEvent e) {
 					if (!setItemInvoked) {
-						fireInputChanged(textField);
+						fireInputChanged();
 					}
 				}
 
 				@Override
 				public void insertUpdate(final DocumentEvent e) {
 					if (!setItemInvoked) {
-						fireInputChanged(textField);
+						fireInputChanged();
 					}
 				}
 
 				@Override
 				public void changedUpdate(final DocumentEvent e) {
 					if (!setItemInvoked) {
-						fireInputChanged(textField);
+						fireInputChanged();
 					}
 				}
 

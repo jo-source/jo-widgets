@@ -92,7 +92,7 @@ public class ComboBoxSelectionImpl extends AbstractInputControl implements IComb
 			@Override
 			public void itemStateChanged(final ItemEvent e) {
 				if (e.getID() == ItemEvent.ITEM_STATE_CHANGED && e.getStateChange() == ItemEvent.SELECTED) {
-					fireInputChanged(getUiReference());
+					fireInputChanged();
 				}
 			}
 		});

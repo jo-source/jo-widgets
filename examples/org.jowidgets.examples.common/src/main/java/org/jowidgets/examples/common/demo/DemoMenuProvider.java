@@ -271,7 +271,7 @@ public class DemoMenuProvider {
 	private void addInputListener(final InputControlItemModel<?> inputComponent) {
 		inputComponent.addInputListener(new IInputListener() {
 			@Override
-			public void inputChanged(final Object source) {
+			public void inputChanged() {
 				// CHECKSTYLE:OFF
 				System.out.println("Input changed: " + inputComponent.getValue());
 				// CHECKSTYLE:ON

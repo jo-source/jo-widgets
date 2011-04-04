@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,37 +26,61 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.controler;
+package org.jowidgets.examples.swing;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.awt.BorderLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-import org.jowidgets.common.widgets.controler.IInputListener;
-import org.jowidgets.common.widgets.controler.IInputObservable;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 
-public class InputObservable implements IInputObservable {
+public class TextAreaTest {
 
-	private final Set<IInputListener> inputListeners;
+	public static void main(final String[] args) {
+		SwingUtilities.invokeLater(new Runnable() {
 
-	public InputObservable() {
-		super();
-		this.inputListeners = new HashSet<IInputListener>();
-	}
+			@Override
+			public void run() {
+				final JFrame frame = new JFrame();
+				frame.setSize(1024, 768);
+				frame.setLayout(new BorderLayout());
 
-	@Override
-	public final void addInputListener(final IInputListener listener) {
-		this.inputListeners.add(listener);
-	}
+				final JTextArea textArea = new JTextArea("This is a very long text with some cr \n Noew the new text comes ahead");
 
-	@Override
-	public final void removeInputListener(final IInputListener listener) {
-		this.inputListeners.remove(listener);
-	}
+				textArea.setAutoscrolls(true);
 
-	public final void fireInputChanged() {
-		for (final IInputListener inputListener : inputListeners) {
-			inputListener.inputChanged();
-		}
+				frame.getContentPane().add(new JScrollPane(textArea), BorderLayout.CENTER);
+
+				textArea.addKeyListener(new KeyListener() {
+
+					@Override
+					public void keyTyped(final KeyEvent e) {
+						System.out.println(textArea.getRows());
+
+					}
+
+					@Override
+					public void keyReleased(final KeyEvent e) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void keyPressed(final KeyEvent e) {
+						// TODO Auto-generated method stub
+
+					}
+				});
+
+				textArea.getColumns();
+
+				frame.setVisible(true);
+
+			}
+		});
 	}
 
 }

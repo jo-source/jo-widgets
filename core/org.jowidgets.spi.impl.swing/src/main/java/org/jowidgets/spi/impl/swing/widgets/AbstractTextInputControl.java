@@ -46,17 +46,17 @@ public abstract class AbstractTextInputControl extends AbstractInputControl impl
 
 			@Override
 			public void removeUpdate(final DocumentEvent e) {
-				fireInputChanged(textComponent);
+				fireInputChanged();
 			}
 
 			@Override
 			public void insertUpdate(final DocumentEvent e) {
-				fireInputChanged(textComponent);
+				fireInputChanged();
 			}
 
 			@Override
 			public void changedUpdate(final DocumentEvent e) {
-				fireInputChanged(textComponent);
+				fireInputChanged();
 			}
 
 		});
