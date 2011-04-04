@@ -32,6 +32,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.model.IListItemListener;
+import org.jowidgets.api.model.IListItemObservable;
 import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.ICheckedItemModel;
@@ -64,6 +66,7 @@ import org.jowidgets.api.widgets.descriptor.setup.IItemSetup;
 import org.jowidgets.api.widgets.descriptor.setup.IToolBarSetup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
+import org.jowidgets.impl.event.ListItemObservable;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.ToolBarSpiWrapper;
@@ -75,11 +78,12 @@ import org.jowidgets.spi.widgets.IToolBarSpi;
 import org.jowidgets.spi.widgets.IToolBarToggleButtonSpi;
 import org.jowidgets.util.Assert;
 
-public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar {
+public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar, IListItemObservable {
 
 	private final ControlDelegate controlDelegate;
 	private final List<IToolBarItem> children;
 	private final IListModelListener listModelListener;
+	private final ListItemObservable itemObs;
 	private IToolBarModel model;
 
 	public ToolBarImpl(final IToolBarSpi widget, final IToolBarSetup setup) {
@@ -91,6 +95,7 @@ public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar {
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
 
+		this.itemObs = new ListItemObservable();
 		this.listModelListener = new IListModelListener() {
 
 			@Override
@@ -293,7 +298,7 @@ public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar {
 		}
 
 		addToChildren(index, result);
-
+		itemObs.fireItemAdded(result);
 		return result;
 	}
 
@@ -343,4 +348,13 @@ public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar {
 		model.addListModelListener(listModelListener);
 	}
 
+	@Override
+	public void addItemContainerListener(final IListItemListener listener) {
+		itemObs.addItemContainerListener(listener);
+	}
+
+	@Override
+	public void removeItemContainerListener(final IListItemListener listener) {
+		itemObs.removeItemContainerListener(listener);
+	}
 }

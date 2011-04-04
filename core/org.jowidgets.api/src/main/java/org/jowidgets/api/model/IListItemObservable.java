@@ -28,9 +28,9 @@
 
 package org.jowidgets.api.model;
 
-import org.jowidgets.api.model.item.IItemModel;
+public interface IListItemObservable {
 
-public interface IItemContainerListener {
+	void addItemContainerListener(IListItemListener listener);
 
-	void modelChanged(IItemModel model);
+	void removeItemContainerListener(IListItemListener listener);
 }
