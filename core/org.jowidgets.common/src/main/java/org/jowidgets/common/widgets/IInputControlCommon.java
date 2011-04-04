@@ -28,8 +28,7 @@
 
 package org.jowidgets.common.widgets;
 
-import org.jowidgets.common.widgets.controler.IInputObservable;
 
-public interface IInputControlCommon extends IInputComponentCommon, IControlCommon, IInputObservable {
+public interface IInputControlCommon extends IInputComponentCommon, IControlCommon {
 
 }
