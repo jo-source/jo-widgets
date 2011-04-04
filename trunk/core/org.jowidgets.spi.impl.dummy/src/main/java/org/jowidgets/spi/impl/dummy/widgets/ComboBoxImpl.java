@@ -52,4 +52,9 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 		getUiReference().setText(text);
 	}
 
+	@Override
+	public void setSelection(final int start, final int end) {
+		getUiReference().setSelection(start, end);
+	}
+
 }

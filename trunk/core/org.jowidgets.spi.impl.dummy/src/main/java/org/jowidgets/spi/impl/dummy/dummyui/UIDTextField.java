@@ -68,4 +68,8 @@ public class UIDTextField extends UIDTextComponent {
 		return false;
 	}
 
+	public void setSelection(final int start, final int end) {
+		//TODO LG implement setSelection()
+	}
+
 }

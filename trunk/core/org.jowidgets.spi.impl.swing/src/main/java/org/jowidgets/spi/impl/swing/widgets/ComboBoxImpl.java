@@ -71,6 +71,12 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 		comboBoxEditor.setItem(text);
 	}
 
+	@Override
+	public void setSelection(final int start, final int end) {
+		comboBoxEditor.setSelection(start, end);
+
+	}
+
 	private class ComboBoxEditorImpl implements ComboBoxEditor {
 
 		private boolean setItemInvoked;
@@ -108,6 +114,11 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 				}
 
 			});
+		}
+
+		public void setSelection(final int start, final int end) {
+			textField.setSelectionStart(start);
+			textField.setSelectionEnd(end);
 		}
 
 		@Override

@@ -83,6 +83,11 @@ public class TextFieldImpl extends AbstractTextInputControl {
 	}
 
 	@Override
+	public void setSelection(final int start, final int end) {
+		getUiReference().setSelection(start, end);
+	}
+
+	@Override
 	public void setEditable(final boolean editable) {
 		getUiReference().setEditable(editable);
 	}
