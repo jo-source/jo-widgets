@@ -6,4 +6,4 @@
 
 ===Widget Hierarchy===
 
-[http://jowidgets.org/pics/widgets_hierarchy.gif Widget hierarchy (includes not all widgets]
+  [http://jowidgets.org/pics/widgets_hierarchy.gif Widget hierarchy (includes not all widgets]
