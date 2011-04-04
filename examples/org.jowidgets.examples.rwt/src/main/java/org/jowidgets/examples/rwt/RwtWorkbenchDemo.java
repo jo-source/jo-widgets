@@ -31,6 +31,7 @@ import java.util.UUID;
 
 import org.eclipse.rwt.lifecycle.IEntryPoint;
 import org.eclipse.rwt.lifecycle.UICallBack;
+import org.eclipse.swt.widgets.Display;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1;
@@ -40,18 +41,27 @@ public final class RwtWorkbenchDemo implements IEntryPoint {
 
 	@Override
 	public int createUI() {
-		final String uuid = UUID.randomUUID().toString();
+		try {
+			if (!Toolkit.isInitialized()) {
+				Toolkit.initialize(new RwtToolkitProvider());
+			}
 
-		UICallBack.activate(uuid);
+			final String uuid = UUID.randomUUID().toString();
+			UICallBack.activate(uuid);
 
-		if (!Toolkit.isInitialized()) {
-			Toolkit.initialize(new RwtToolkitProvider());
+			try {
+				new WorkbenchRunner().run(new WorkbenchDemo1(new Dimension(1024, 768)));
+			}
+
+			finally {
+				UICallBack.deactivate(uuid);
+			}
+
+			return 0;
 		}
 
-		new WorkbenchRunner().run(new WorkbenchDemo1(new Dimension(1024, 768)));
-
-		UICallBack.deactivate(uuid);
-
-		return 0;
+		finally {
+			Display.getDefault().dispose();
+		}
 	}
 }
