@@ -1,9 +1,9 @@
-==Modules==
+===Modules===
 
   [http://jowidgets.org/pics/jowidgets_modules_no_workbench.gif Modules]
 
   [http://jowidgets.org/pics/jowidgets_modules_with_workbench.gif Modules with workbench]
 
-==Widget Hierarchy==
+===Widget Hierarchy===
 
 [http://jowidgets.org/pics/widgets_hierarchy.gif Widget hierarchy (includes not all widgets]
