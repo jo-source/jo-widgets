@@ -45,11 +45,11 @@ import org.jowidgets.api.controler.ITreeSelectionEvent;
 import org.jowidgets.api.controler.ITreeSelectionListener;
 import org.jowidgets.api.model.IListItemListener;
 import org.jowidgets.api.model.IListItemObservable;
-import org.jowidgets.api.model.item.IActionItemModel;
+import org.jowidgets.api.model.item.IItemModel;
+import org.jowidgets.api.model.item.IItemModelListener;
 import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.model.item.IMenuItemModel;
 import org.jowidgets.api.model.item.IMenuModel;
-import org.jowidgets.api.model.item.ISeparatorItemModel;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITabFolder;
@@ -333,14 +333,14 @@ public final class TestToolImpl implements ITestTool {
 		final IMenuBarModel menuBarModel = frame.getMenuBarModel();
 		for (final IMenuModel menu : menuBarModel.getMenus()) {
 			for (final IMenuItemModel item : menu.getChildren()) {
-				if (!(item instanceof ISeparatorItemModel)) {
-					final IActionItemModel actionItem = (IActionItemModel) item;
-					actionItem.addActionListener(new IActionListener() {
+				// TODO LG add listeners to menu items
+				item.addItemModelListener(new IItemModelListener() {
 
-						@Override
-						public void actionPerformed() {}
-					});
-				}
+					@Override
+					public void itemChanged(final IItemModel item) {
+
+					}
+				});
 			}
 		}
 	}

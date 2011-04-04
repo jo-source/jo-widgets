@@ -38,6 +38,7 @@ import org.jowidgets.addons.testtool.internal.TestDataListModel;
 import org.jowidgets.addons.testtool.internal.TestDataObject;
 import org.jowidgets.addons.testtool.internal.TestToolViewUtilities;
 import org.jowidgets.addons.testtool.internal.UserAction;
+import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.command.EnabledState;
 import org.jowidgets.api.command.IActionBuilder;
 import org.jowidgets.api.command.IActionBuilderFactory;
@@ -50,11 +51,16 @@ import org.jowidgets.api.model.table.ISimpleTableModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IInputDialog;
+import org.jowidgets.api.widgets.ITabFolder;
+import org.jowidgets.api.widgets.ITabItem;
 import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.IToolBarButton;
+import org.jowidgets.api.widgets.ITree;
+import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITableBluePrint;
+import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.model.ITableColumn;
@@ -90,13 +96,14 @@ public class TestToolView implements ITestToolView {
 	public void createContentArea() {
 		final IFrameBluePrint frameBP = BPF.frame("TestTool");
 		frame = Toolkit.createRootFrame(frameBP);
-		frame.setLayout(new MigLayoutDescriptor("[grow]", "[grow]"));
+		frame.setLayout(new MigLayoutDescriptor("[][grow]", "[grow]"));
 		createMenuBar(frame);
 		createToolBar(frame);
+		createFileTree(frame);
 		createTable(frame);
 		setupTestTool();
 		frame.pack();
-		frame.setSize(new Dimension(600, 400));
+		frame.setSize(new Dimension(700, 500));
 		viewUtilities.setPositionRelativeToMainWindow(frame);
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
@@ -106,7 +113,45 @@ public class TestToolView implements ITestToolView {
 		});
 	}
 
+	private void createFileTree(final IFrame frame) {
+		final ITabFolder folder = frame.add(BPF.tabFolder(), "growy, h 0::");
+		final ITabItem item = folder.addItem(BPF.tabItem().setText("Available Tests"));
+
+		final ITreeBluePrint treeBp = BPF.tree();
+		final ITree tree = item.add(treeBp, "growy, h 0::");
+		item.setBackgroundColor(tree.getBackgroundColor());
+
+		final ITreeNode treeNode = tree.addNode(BPF.treeNode().setText("Tree_Tests"));
+		final ITreeNode buttonNode = tree.addNode(BPF.treeNode().setText("Button_Tests"));
+		final ITreeNode toolBarNode = tree.addNode(BPF.treeNode().setText("ToolBar_Tests"));
+		final ITreeNode menuNode = tree.addNode(BPF.treeNode().setText("Menu_Tests"));
+
+		treeNode.addNode(BPF.treeNode().setText("Tree_Selection_Test"));
+		treeNode.addNode(BPF.treeNode().setText("Tree_Expand_Test"));
+		treeNode.addNode(BPF.treeNode().setText("Tree_Test_1"));
+
+		buttonNode.addNode(BPF.treeNode().setText("Button_Test_1"));
+		buttonNode.addNode(BPF.treeNode().setText("Button_Test_2"));
+		buttonNode.addNode(BPF.treeNode().setText("Toggle_Button_test"));
+
+		toolBarNode.addNode(BPF.treeNode().setText("Toolbar_Button_Test"));
+		toolBarNode.addNode(BPF.treeNode().setText("Toolbar_Toggle_Button_Test"));
+		toolBarNode.addNode(BPF.treeNode().setText("ToolBar_Menu_Test"));
+		toolBarNode.addNode(BPF.treeNode().setText("ToolBar_Popup_Menu_Test"));
+
+		menuNode.addNode(BPF.treeNode().setText("Menu_Test_1"));
+		menuNode.addNode(BPF.treeNode().setText("Menu_Test_2"));
+		menuNode.addNode(BPF.treeNode().setText("Menu_Test_3"));
+		menuNode.addNode(BPF.treeNode().setText("Menu_Test_4"));
+
+		treeNode.setExpanded(true);
+	}
+
 	private void createTable(final IFrame frame) {
+		final ITabFolder folder = frame.add(BPF.tabFolder(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+		folder.setSize(new Dimension(200, 300));
+		final ITabItem item = folder.addItem(BPF.tabItem().setText("Test Data"));
+
 		tableDataModel = Toolkit.getModelFactoryProvider().getTableModelFactory().simpleTableModel();
 		final DefaultTableColumnBuilder colBuilder = new DefaultTableColumnBuilder();
 		tableDataModel.addColumn(colBuilder.setText("step").build());
@@ -185,7 +230,10 @@ public class TestToolView implements ITestToolView {
 		};
 
 		final ITableBluePrint tableBluePrint = BPF.table(columnModel, tableDataModel);
-		table = frame.add(tableBluePrint, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+		item.setLayout(MigLayoutFactory.growingInnerCellLayout());
+		table = item.add(tableBluePrint, "grow");
+		item.setBackgroundColor(Colors.WHITE);
+		table.createPopupMenu();
 		table.pack();
 	}
 
@@ -321,6 +369,20 @@ public class TestToolView implements ITestToolView {
 
 		toolBar.addSeparator();
 
+		final IActionBuilder deleteBuilder = ABF.create();
+		final IToolBarButton deleteButton = toolBar.addItem(BPF.toolBarButton());
+		final ICommandExecutor deleteCommand = new ICommandExecutor() {
+
+			@Override
+			public void execute(final IExecutionContext executionContext) throws Exception {
+				for (final Integer value : tableDataModel.getSelection()) {
+					tableDataModel.removeRow(value.intValue());
+				}
+			}
+		};
+		deleteBuilder.setCommand(deleteCommand);
+		deleteButton.setAction(deleteBuilder.setText("delete").build());
+
 		final IActionBuilder deleteAllBuilder = ABF.create();
 		final IToolBarButton deleteAllButton = toolBar.addItem(BPF.toolBarButton());
 		final ICommandExecutor deleteAllCommand = new ICommandExecutor() {
@@ -332,6 +394,11 @@ public class TestToolView implements ITestToolView {
 		};
 		deleteAllBuilder.setCommand(deleteAllCommand);
 		deleteAllButton.setAction(deleteAllBuilder.setText("delete all").build());
+
+		toolBar.addSeparator();
+
+		// TODO LG show the current widget, when a table item is selected
+		toolBar.addItem(BPF.toolBarButton().setText("show"));
 	}
 
 	private void setupTestTool() {
