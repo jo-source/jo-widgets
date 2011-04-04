@@ -32,4 +32,6 @@ import org.jowidgets.common.widgets.ITextControlCommon;
 
 public interface ITextControl extends IControl, ITextControlCommon {
 
+	void selectAll();
+
 }
