@@ -1,3 +1,3 @@
 Shows the main jowidgets modules and its dependencies 
 
-[Image:"http://jowidgets.org/pics/jowidgets_modules_with_workbench.gif"|1024px] 
+[http://jowidgets.org/pics/jowidgets_modules_with_workbench.gif"|1024px] 
