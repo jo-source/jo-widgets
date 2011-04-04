@@ -29,9 +29,9 @@ package org.jowidgets.examples.rwt;
 
 import java.util.UUID;
 
+import org.eclipse.rwt.RWT;
 import org.eclipse.rwt.lifecycle.IEntryPoint;
 import org.eclipse.rwt.lifecycle.UICallBack;
-import org.eclipse.swt.widgets.Display;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1;
@@ -50,7 +50,7 @@ public final class RwtWorkbenchDemo implements IEntryPoint {
 			UICallBack.activate(uuid);
 
 			try {
-				new WorkbenchRunner().run(new WorkbenchDemo1(new Dimension(1024, 768)));
+				new WorkbenchRunner().run(new WorkbenchDemo1(new Dimension(1024, 650)));
 			}
 
 			finally {
@@ -61,7 +61,7 @@ public final class RwtWorkbenchDemo implements IEntryPoint {
 		}
 
 		finally {
-			Display.getDefault().dispose();
+			RWT.getRequest().getSession().invalidate();
 		}
 	}
 }
