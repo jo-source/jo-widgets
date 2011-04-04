@@ -76,4 +76,8 @@ public class UIDComboBox extends UIDComponent {
 		this.text = text;
 	}
 
+	public void setSelection(final int start, final int end) {
+		// TODO LG implement setSelection()
+	}
+
 }

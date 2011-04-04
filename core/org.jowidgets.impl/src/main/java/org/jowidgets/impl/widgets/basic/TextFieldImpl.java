@@ -98,4 +98,9 @@ public class TextFieldImpl extends InputControlSpiWrapper implements ITextContro
 		getWidget().setTooltipText(tooltipText);
 	}
 
+	@Override
+	public void setSelection(final int start, final int end) {
+		getWidget().setSelection(start, end);
+	}
+
 }

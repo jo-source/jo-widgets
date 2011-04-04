@@ -30,6 +30,7 @@ package org.jowidgets.spi.impl.swt.widgets;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
@@ -62,6 +63,11 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 	@Override
 	public void setText(final String text) {
 		getUiReference().setText(text);
+	}
+
+	@Override
+	public void setSelection(final int start, final int end) {
+		getUiReference().setSelection(new Point(start, end));
 	}
 
 }
