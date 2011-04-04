@@ -1,3 +1,0 @@
-Shows the main jowidgets modules and its dependencies 
-
-http://jowidgets.org/pics/jowidgets_modules_no_workbench.gif
