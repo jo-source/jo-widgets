@@ -90,14 +90,17 @@ public class TestPlayer {
 			final ITreeNode node = (ITreeNode) widget;
 			switch (action) {
 				case EXPAND:
+					System.out.println("expand tree item: " + node.getText());
 					node.setSelected(true);
 					node.setExpanded(true);
 					break;
 				case COLLAPSE:
+					System.out.println("collapse tree item: " + node.getText());
 					node.setSelected(true);
 					node.setExpanded(false);
 					break;
 				case SELECT:
+					System.out.println("select tree item: " + node.getText());
 					node.setSelected(true);
 					break;
 				default:
@@ -112,6 +115,7 @@ public class TestPlayer {
 					WidgetRegistry.getInstance().removeWidget(frame);
 					frame.setVisible(false);
 					frame.dispose();
+					System.out.println("frame closed");
 					break;
 				default:
 					System.out.println("the given user action is not supported for this widget.");
