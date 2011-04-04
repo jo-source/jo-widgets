@@ -103,4 +103,12 @@ public class TextFieldImpl extends InputControlSpiWrapper implements ITextContro
 		getWidget().setSelection(start, end);
 	}
 
+	@Override
+	public void selectAll() {
+		final String text = getText();
+		if (text != null) {
+			setSelection(0, text.length());
+		}
+	}
+
 }

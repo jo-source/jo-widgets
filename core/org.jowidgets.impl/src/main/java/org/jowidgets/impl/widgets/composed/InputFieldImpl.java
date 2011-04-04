@@ -30,7 +30,7 @@ package org.jowidgets.impl.widgets.composed;
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.validation.IValidateable;
 import org.jowidgets.api.validation.ValidationResult;
-import org.jowidgets.api.widgets.IInputControl;
+import org.jowidgets.api.widgets.IInputField;
 import org.jowidgets.api.widgets.ITextControl;
 import org.jowidgets.api.widgets.descriptor.setup.IInputFieldSetup;
 import org.jowidgets.common.widgets.controler.IInputListener;
@@ -38,7 +38,7 @@ import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvok
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.tools.widgets.base.AbstractInputControl;
 
-public class InputFieldImpl<VALUE_TYPE> extends AbstractInputControl<VALUE_TYPE> implements IInputControl<VALUE_TYPE> {
+public class InputFieldImpl<VALUE_TYPE> extends AbstractInputControl<VALUE_TYPE> implements IInputField<VALUE_TYPE> {
 
 	private final ITextControl textField;
 	private final IConverter<VALUE_TYPE> converter;
@@ -83,6 +83,21 @@ public class InputFieldImpl<VALUE_TYPE> extends AbstractInputControl<VALUE_TYPE>
 	@Override
 	public void setValue(final VALUE_TYPE value) {
 		textField.setText(converter.convertToString(value));
+	}
+
+	@Override
+	public void selectAll() {
+		textField.selectAll();
+	}
+
+	@Override
+	public void setSelection(final int start, final int end) {
+		textField.setSelection(start, end);
+	}
+
+	@Override
+	public String getText() {
+		return textField.getText();
 	}
 
 }
