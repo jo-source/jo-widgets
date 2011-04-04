@@ -27,7 +27,7 @@
 		</dependency>
 		<dependency>
             <groupId>org.jowidgets</groupId>
-            <artifactId>org.jowidgets.workbench.toolkit.impl</artifactId>
+            <artifactId>org.jowidgets.workbench.toolkit.api</artifactId>
             <version>0.0.18-SNAPSHOT</version>
         </dependency>
 		<dependency>
