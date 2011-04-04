@@ -28,19 +28,18 @@
 
 package org.jowidgets.impl.widgets.basic.factory.internal;
 
-import org.jowidgets.api.widgets.IInputComponent;
+import org.jowidgets.api.widgets.ITextControl;
 import org.jowidgets.api.widgets.descriptor.ITextFieldDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.ITextFieldBluePrintSpi;
-import org.jowidgets.impl.widgets.basic.TextInputControl;
+import org.jowidgets.impl.widgets.basic.TextFieldImpl;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.InputVerifier;
 import org.jowidgets.spi.IWidgetFactorySpi;
-import org.jowidgets.spi.widgets.ITextFieldSpi;
+import org.jowidgets.spi.widgets.ITextControlSpi;
 
-public class TextFieldFactory extends AbstractWidgetFactory implements
-		IWidgetFactory<IInputComponent<String>, ITextFieldDescriptor> {
+public class TextFieldFactory extends AbstractWidgetFactory implements IWidgetFactory<ITextControl, ITextFieldDescriptor> {
 
 	public TextFieldFactory(
 		final IGenericWidgetFactory genericWidgetFactory,
@@ -51,15 +50,14 @@ public class TextFieldFactory extends AbstractWidgetFactory implements
 	}
 
 	@Override
-	public IInputComponent<String> create(final Object parentUiReference, final ITextFieldDescriptor descriptor) {
+	public ITextControl create(final Object parentUiReference, final ITextFieldDescriptor descriptor) {
 		final ITextFieldBluePrintSpi bp = getSpiBluePrintFactory().textField().setSetup(descriptor);
 
-		bp.setInputVerifier(new InputVerifier(descriptor.getTextInputValidator()));
+		bp.setInputVerifier(new InputVerifier(descriptor.getTextInputVerifier()));
 
-		final ITextFieldSpi textFieldSpi = getSpiWidgetFactory().createTextField(parentUiReference, bp);
+		final ITextControlSpi textFieldSpi = getSpiWidgetFactory().createTextField(parentUiReference, bp);
 
-		final IInputComponent<String> result = new TextInputControl(textFieldSpi, descriptor);
-		result.addValidator(descriptor.getTextInputValidator());
+		final ITextControl result = new TextFieldImpl(textFieldSpi, descriptor);
 		return result;
 	}
 }

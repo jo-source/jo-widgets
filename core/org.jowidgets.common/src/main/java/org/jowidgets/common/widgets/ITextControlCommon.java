@@ -26,40 +26,14 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.basic;
+package org.jowidgets.common.widgets;
 
-import org.jowidgets.api.widgets.IInputControl;
-import org.jowidgets.api.widgets.descriptor.setup.IInputComponentSetup;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.spi.widgets.ITextFieldSpi;
+public interface ITextControlCommon extends IInputControlCommon {
 
-public class TextInputControl extends AbstractBasicInputControl<String> implements IInputControl<String> {
+	String getText();
 
-	private final ITextFieldSpi inputWidgetSpi;
+	void setText(String text);
 
-	public TextInputControl(final ITextFieldSpi textInputWidgetSpi, final IInputComponentSetup<String> setup) {
-		super(textInputWidgetSpi, setup);
-		this.inputWidgetSpi = textInputWidgetSpi;
-
-		if (setup.getValue() != null) {
-			setValue(setup.getValue());
-		}
-
-		setEditable(setup.isEditable());
-
-		VisibiliySettingsInvoker.setVisibility(setup, this);
-		ColorSettingsInvoker.setColors(setup, this);
-	}
-
-	@Override
-	public void setValue(final String value) {
-		inputWidgetSpi.setText(value);
-	}
-
-	@Override
-	public String getValue() {
-		return inputWidgetSpi.getText();
-	}
+	void setTooltipText(String tooltipText);
 
 }

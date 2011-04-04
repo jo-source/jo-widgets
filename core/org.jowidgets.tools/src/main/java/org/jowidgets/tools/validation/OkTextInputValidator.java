@@ -28,7 +28,6 @@
 package org.jowidgets.tools.validation;
 
 import org.jowidgets.api.validation.ITextInputValidator;
-import org.jowidgets.api.validation.ValidationMessage;
 import org.jowidgets.api.validation.ValidationResult;
 
 public class OkTextInputValidator implements ITextInputValidator {
@@ -36,11 +35,6 @@ public class OkTextInputValidator implements ITextInputValidator {
 	@Override
 	public ValidationResult validate(final String validationInput) {
 		return new ValidationResult();
-	}
-
-	@Override
-	public ValidationMessage isCompletableToValid(final String string) {
-		return OkMessage.getInstance();
 	}
 
 }

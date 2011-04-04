@@ -28,13 +28,8 @@
 
 package org.jowidgets.spi.widgets;
 
+import org.jowidgets.common.widgets.ITextControlCommon;
 
-public interface ITextFieldSpi extends IControlSpi, IInputControlSpi {
-
-	String getText();
-
-	void setText(String text);
-
-	void setTooltipText(String tooltipText);
+public interface ITextControlSpi extends IControlSpi, IInputControlSpi, ITextControlCommon {
 
 }

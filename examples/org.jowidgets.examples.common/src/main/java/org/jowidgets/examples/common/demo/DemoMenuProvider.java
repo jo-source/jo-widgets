@@ -227,7 +227,7 @@ public class DemoMenuProvider {
 			final InputControlItemModel<String> comboBox = new InputControlItemModel<String>(comboBoxBp, 80);
 			toolBarModel.addItem(comboBox);
 
-			final InputControlItemModel<String> textField = new InputControlItemModel<String>(BPF.textField(), 150);
+			final InputControlItemModel<String> textField = new InputControlItemModel<String>(BPF.inputFieldString(), 150);
 			toolBarModel.addItem(textField);
 
 			toolBarModel.addItem(getMenuModel());

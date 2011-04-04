@@ -41,7 +41,7 @@ import org.jowidgets.spi.widgets.IScrollCompositeSpi;
 import org.jowidgets.spi.widgets.ISplitCompositeSpi;
 import org.jowidgets.spi.widgets.ITabFolderSpi;
 import org.jowidgets.spi.widgets.ITableSpi;
-import org.jowidgets.spi.widgets.ITextFieldSpi;
+import org.jowidgets.spi.widgets.ITextControlSpi;
 import org.jowidgets.spi.widgets.ITextLabelSpi;
 import org.jowidgets.spi.widgets.IToggleButtonSpi;
 import org.jowidgets.spi.widgets.IToolBarSpi;
@@ -92,7 +92,7 @@ public interface IWidgetFactorySpi {
 		Object parentUiReference,
 		IScrollCompositeSetupSpi setup);
 
-	ITextFieldSpi createTextField(Object parentUiReference, ITextFieldSetupSpi setup);
+	ITextControlSpi createTextField(Object parentUiReference, ITextFieldSetupSpi setup);
 
 	ITextLabelSpi createTextLabel(Object parentUiReference, ITextLabelSetupSpi setup);
 

@@ -27,6 +27,6 @@
  */
 package org.jowidgets.spi.widgets;
 
-public interface IComboBoxSpi extends IComboBoxSelectionSpi, ITextFieldSpi {
+public interface IComboBoxSpi extends IComboBoxSelectionSpi, ITextControlSpi {
 
 }

@@ -28,8 +28,8 @@
 
 package org.jowidgets.test.spi.widgets;
 
-import org.jowidgets.spi.widgets.ITextFieldSpi;
+import org.jowidgets.spi.widgets.ITextControlSpi;
 
-public interface ITextFieldUiSpi extends IControlUiSpi, IInputControlUiSpi, ITextFieldSpi {
+public interface ITextFieldUiSpi extends IControlUiSpi, IInputControlUiSpi, ITextControlSpi {
 
 }

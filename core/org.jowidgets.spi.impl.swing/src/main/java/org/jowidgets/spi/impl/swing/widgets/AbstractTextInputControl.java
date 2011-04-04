@@ -33,9 +33,9 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.JTextComponent;
 
-import org.jowidgets.spi.widgets.ITextFieldSpi;
+import org.jowidgets.spi.widgets.ITextControlSpi;
 
-public abstract class AbstractTextInputControl extends AbstractInputControl implements ITextFieldSpi {
+public abstract class AbstractTextInputControl extends AbstractInputControl implements ITextControlSpi {
 
 	public AbstractTextInputControl(final Component component) {
 		super(component);

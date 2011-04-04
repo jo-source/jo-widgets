@@ -27,6 +27,6 @@
  */
 package org.jowidgets.api.validation;
 
-public interface ITextInputValidator extends ITextInputVerifier, IValidator<String> {
+public interface ITextInputValidator extends IValidator<String> {
 
 }

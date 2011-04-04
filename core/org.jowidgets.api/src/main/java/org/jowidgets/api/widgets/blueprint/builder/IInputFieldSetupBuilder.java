@@ -34,5 +34,7 @@ public interface IInputFieldSetupBuilder<INSTANCE_TYPE extends IInputFieldSetupB
 
 	INSTANCE_TYPE setConverter(IConverter<INPUT_TYPE> converter);
 
+	INSTANCE_TYPE setPasswordPresentation(boolean passwordPresentation);
+
 	INSTANCE_TYPE setMaxLength(int maxLength);
 }

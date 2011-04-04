@@ -28,8 +28,9 @@
 package org.jowidgets.api.convert;
 
 import org.jowidgets.api.validation.ITextInputValidator;
+import org.jowidgets.api.validation.ITextInputVerifier;
 
-public interface IStringObjectConverter<TO_TYPE> extends ITextInputValidator {
+public interface IStringObjectConverter<TO_TYPE> extends ITextInputValidator, ITextInputVerifier {
 
 	TO_TYPE convertToObject(String string);
 

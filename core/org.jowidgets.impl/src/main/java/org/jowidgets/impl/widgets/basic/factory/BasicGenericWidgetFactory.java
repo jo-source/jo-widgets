@@ -102,7 +102,6 @@ import org.jowidgets.test.api.widgets.descriptor.IIconDescriptorUi;
 import org.jowidgets.test.api.widgets.descriptor.IScrollCompositeDescriptorUi;
 import org.jowidgets.test.api.widgets.descriptor.ISeparatorDescriptorUi;
 import org.jowidgets.test.api.widgets.descriptor.ISplitCompositeDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.ITextFieldDescriptorUi;
 import org.jowidgets.test.api.widgets.descriptor.ITextLabelDescriptorUi;
 import org.jowidgets.test.api.widgets.descriptor.IToggleButtonDescriptorUi;
 import org.jowidgets.test.api.widgets.descriptor.IToolBarDescriptorUi;
@@ -138,8 +137,11 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 		register(ITabFolderDescriptor.class, new TabFolderFactory(this, spiWidgetFactory, bpF));
 		register(ITreeDescriptor.class, new TreeFactory(this, spiWidgetFactory, bpF));
 		register(ITableDescriptor.class, new TableFactory(this, spiWidgetFactory, bpF));
+
+		//TODO LG move this to register UI widgets
 		register(IDialogDescriptorUi.class, new DialogFactory(this, spiWidgetFactory, bpF));
-		register(ITextFieldDescriptorUi.class, new TextFieldFactory(this, spiWidgetFactory, bpF));
+		//TODO LG this must be fixed, ITextFieldDescriptor does not yield an IInputControl but an ITextControl
+		//register(ITextFieldDescriptorUi.class, new TextFieldFactory(this, spiWidgetFactory, bpF));
 		register(ISeparatorDescriptorUi.class, new SeparatorFactory(this, spiWidgetFactory, bpF));
 		register(IComboBoxSelectionDescriptorUi.class, new ComboBoxSelectionFactory(this, spiWidgetFactory, bpF));
 	}
