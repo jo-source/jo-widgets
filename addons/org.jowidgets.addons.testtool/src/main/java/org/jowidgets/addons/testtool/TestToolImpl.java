@@ -43,22 +43,30 @@ import org.jowidgets.api.controler.ITreePopupDetectionListener;
 import org.jowidgets.api.controler.ITreePopupEvent;
 import org.jowidgets.api.controler.ITreeSelectionEvent;
 import org.jowidgets.api.controler.ITreeSelectionListener;
+import org.jowidgets.api.model.IListItemListener;
+import org.jowidgets.api.model.IListItemObservable;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.model.item.IMenuItemModel;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.ISeparatorItemModel;
 import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITabFolder;
 import org.jowidgets.api.widgets.ITabItem;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.IToolBarButton;
-import org.jowidgets.api.widgets.IToolBarItem;
+import org.jowidgets.api.widgets.IToolBarMenu;
+import org.jowidgets.api.widgets.IToolBarPopupButton;
+import org.jowidgets.api.widgets.IToolBarToggleButton;
 import org.jowidgets.api.widgets.ITree;
 import org.jowidgets.api.widgets.ITreeNode;
+import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controler.IItemStateListener;
+import org.jowidgets.common.widgets.controler.IMenuListener;
 import org.jowidgets.test.api.widgets.IButtonUi;
 import org.jowidgets.tools.controler.TabItemAdapter;
 import org.jowidgets.tools.controler.WindowAdapter;
@@ -71,8 +79,6 @@ public final class TestToolImpl implements ITestTool {
 	private final TestPlayer player;
 	private boolean record;
 	private boolean replay;
-	private boolean applicationStarted;
-	private final List<IToolBar> toolBars;
 	private final List<ITree> trees;
 	private final List<ITabFolder> tabFolders;
 
@@ -87,8 +93,6 @@ public final class TestToolImpl implements ITestTool {
 		this.player = new TestPlayer();
 		this.record = false;
 		this.replay = false;
-		this.applicationStarted = false;
-		this.toolBars = new LinkedList<IToolBar>();
 		this.trees = new LinkedList<ITree>();
 		this.tabFolders = new LinkedList<ITabFolder>();
 	}
@@ -124,13 +128,9 @@ public final class TestToolImpl implements ITestTool {
 
 				@Override
 				public void windowActivated() {
-					if (!applicationStarted) {
-						registerToolBarItems();
-						registerTreeItems();
-						registerMenuItems(frame);
-						registerTabFolderItems();
-						applicationStarted = true;
-					}
+					registerTreeItems();
+					registerMenuItems(frame);
+					registerTabFolderItems();
 				}
 			});
 		}
@@ -146,8 +146,64 @@ public final class TestToolImpl implements ITestTool {
 		}
 		// TODO LG use IToolBarUi
 		if (widget instanceof IToolBar) {
-			final IToolBar toolBar = (IToolBar) widget;
-			toolBars.add(toolBar);
+			final IListItemObservable toolBarObs = (IListItemObservable) widget;
+			toolBarObs.addItemContainerListener(new IListItemListener() {
+
+				@Override
+				public void itemAdded(final IWidget item) {
+					WidgetRegistry.getInstance().addWidget(item);
+					if (item instanceof IToolBarButton) {
+						final IToolBarButton button = (IToolBarButton) item;
+						button.addActionListener(new IActionListener() {
+							@Override
+							public void actionPerformed() {
+								record(button, UserAction.CLICK, testToolUtilities.createWidgetID(button));
+							}
+						});
+					}
+					else if (item instanceof IToolBarToggleButton) {
+						final IToolBarToggleButton button = (IToolBarToggleButton) item;
+						button.addItemListener(new IItemStateListener() {
+
+							@Override
+							public void itemStateChanged() {
+								record(button, UserAction.CLICK, testToolUtilities.createWidgetID(button));
+							}
+						});
+					}
+					else if (item instanceof IToolBarPopupButton) {
+						final IToolBarPopupButton button = (IToolBarPopupButton) item;
+						button.addActionListener(new IActionListener() {
+							@Override
+							public void actionPerformed() {
+								record(button, UserAction.CLICK, testToolUtilities.createWidgetID(button));
+							}
+						});
+					}
+					else if (item instanceof IToolBarMenu) {
+						final IToolBarMenu menu = (IToolBarMenu) item;
+						final IPopupMenu popupMenu = menu.getPopupMenu();
+						WidgetRegistry.getInstance().addWidget(popupMenu);
+						popupMenu.addMenuListener(new IMenuListener() {
+
+							@Override
+							public void menuDeactivated() {
+								record(popupMenu, UserAction.CLICK, testToolUtilities.createWidgetID(popupMenu));
+							}
+
+							@Override
+							public void menuActivated() {
+								record(popupMenu, UserAction.CLICK, testToolUtilities.createWidgetID(popupMenu));
+							}
+						});
+					}
+				}
+
+				@Override
+				public void itemRemoved(final IWidget item) {
+					WidgetRegistry.getInstance().removeWidget(item);
+				}
+			});
 		}
 		// TODO LG use ITreeUi instead of ITree
 		if (widget instanceof ITree) {
@@ -242,24 +298,6 @@ public final class TestToolImpl implements ITestTool {
 	public void replay(final List<TestDataObject> list, final int delay) {
 		if (replay) {
 			player.replayTest(list, delay);
-		}
-	}
-
-	private void registerToolBarItems() {
-		for (final IToolBar bar : toolBars) {
-			for (final IToolBarItem item : bar.getChildren()) {
-				WidgetRegistry.getInstance().addWidget(item);
-				if (item instanceof IToolBarButton) {
-					final IToolBarButton button = (IToolBarButton) item;
-					button.addActionListener(new IActionListener() {
-
-						@Override
-						public void actionPerformed() {
-							record(button, UserAction.CLICK, testToolUtilities.createWidgetID(button));
-						}
-					});
-				}
-			}
 		}
 	}
 
