@@ -28,25 +28,25 @@
 
 package org.jowidgets.addons.testtool.internal;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.jowidgets.common.widgets.IWidgetCommon;
 
 // TODO LG Use a set instead a list?
 public final class WidgetRegistry {
 	private static WidgetRegistry instance = new WidgetRegistry();
-	private final List<IWidgetCommon> widgetRegistry;
+	private final Set<IWidgetCommon> widgetRegistry;
 
 	private WidgetRegistry() {
-		this.widgetRegistry = new LinkedList<IWidgetCommon>();
+		this.widgetRegistry = new HashSet<IWidgetCommon>();
 	}
 
 	public static WidgetRegistry getInstance() {
 		return instance;
 	}
 
-	public synchronized List<IWidgetCommon> getWidgets() {
+	public synchronized Set<IWidgetCommon> getWidgets() {
 		return widgetRegistry;
 	}
 
