@@ -42,8 +42,8 @@ public abstract class AbstractTextInputControl extends AbstractInputControl impl
 		textComponent.addInputListener(new IInputListener() {
 
 			@Override
-			public void inputChanged(final Object source) {
-				fireInputChanged(source);
+			public void inputChanged() {
+				fireInputChanged();
 			}
 		});
 	}

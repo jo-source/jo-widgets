@@ -102,8 +102,8 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractInputComponent<IN
 	}
 
 	@Override
-	public void fireInputChanged(final Object source) {
-		super.fireInputChanged(source);
+	public void fireInputChanged() {
+		super.fireInputChanged();
 	}
 
 	@Override

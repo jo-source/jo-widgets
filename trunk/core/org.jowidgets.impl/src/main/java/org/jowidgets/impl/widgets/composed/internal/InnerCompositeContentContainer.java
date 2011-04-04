@@ -242,8 +242,8 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 	}
 
 	@Override
-	public void fireInputChanged(final Object source) {
-		outerContainer.fireInputChanged(source);
+	public void fireInputChanged() {
+		outerContainer.fireInputChanged();
 	}
 
 	@Override

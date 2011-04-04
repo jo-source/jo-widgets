@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,37 +26,33 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.controler;
+package org.jowidgets.examples.swt;
 
-import java.util.HashSet;
-import java.util.Set;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
-import org.jowidgets.common.widgets.controler.IInputListener;
-import org.jowidgets.common.widgets.controler.IInputObservable;
+public class TextAreaTest {
 
-public class InputObservable implements IInputObservable {
+	public static void main(final String[] args) {
+		final Display display = new Display();
+		final Shell shell = new Shell(display);
+		shell.setSize(800, 600);
+		shell.setLayout(new FillLayout());
 
-	private final Set<IInputListener> inputListeners;
+		final Text text = new Text(shell, SWT.BORDER);
+		text.setText("Hello World SWT");
 
-	public InputObservable() {
-		super();
-		this.inputListeners = new HashSet<IInputListener>();
-	}
-
-	@Override
-	public final void addInputListener(final IInputListener listener) {
-		this.inputListeners.add(listener);
-	}
-
-	@Override
-	public final void removeInputListener(final IInputListener listener) {
-		this.inputListeners.remove(listener);
-	}
-
-	public final void fireInputChanged() {
-		for (final IInputListener inputListener : inputListeners) {
-			inputListener.inputChanged();
+		shell.open();
+		while (!shell.isDisposed()) {
+			if (!display.readAndDispatch()) {
+				display.sleep();
+			}
 		}
+		display.dispose();
+
 	}
 
 }

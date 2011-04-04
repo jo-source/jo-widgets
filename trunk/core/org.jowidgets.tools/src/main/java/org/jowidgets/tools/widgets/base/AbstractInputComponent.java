@@ -68,8 +68,8 @@ public abstract class AbstractInputComponent<VALUE_TYPE> extends ComponentWrappe
 		this.inputListener = new IInputListener() {
 
 			@Override
-			public void inputChanged(final Object source) {
-				fireInputChanged(source);
+			public void inputChanged() {
+				fireInputChanged();
 			}
 		};
 	}
@@ -136,8 +136,8 @@ public abstract class AbstractInputComponent<VALUE_TYPE> extends ComponentWrappe
 		inputObservable.removeInputListener(listener);
 	}
 
-	protected void fireInputChanged(final Object source) {
-		inputObservable.fireInputChanged(source);
+	protected void fireInputChanged() {
+		inputObservable.fireInputChanged();
 	}
 
 	protected void registerInputWidget(final IInputComponent<?> inputWidget) {

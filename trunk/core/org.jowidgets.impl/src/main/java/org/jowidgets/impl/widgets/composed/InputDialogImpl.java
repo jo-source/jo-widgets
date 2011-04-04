@@ -428,7 +428,7 @@ public class InputDialogImpl<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 			inputCompositeWidget.addInputListener(new IInputListener() {
 
 				@Override
-				public void inputChanged(final Object source) {
+				public void inputChanged() {
 					onInputChanged();
 				}
 			});

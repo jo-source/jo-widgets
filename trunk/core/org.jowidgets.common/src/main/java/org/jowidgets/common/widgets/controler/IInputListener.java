@@ -29,6 +29,6 @@ package org.jowidgets.common.widgets.controler;
 
 public interface IInputListener {
 
-	void inputChanged(Object source);
+	void inputChanged();
 
 }

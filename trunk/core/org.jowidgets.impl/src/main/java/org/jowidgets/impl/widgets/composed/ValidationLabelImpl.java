@@ -79,7 +79,7 @@ public class ValidationLabelImpl implements IValidationLabel {
 		this.inputListener = new IInputListener() {
 
 			@Override
-			public void inputChanged(final Object source) {
+			public void inputChanged() {
 				hasInput = true;
 				onInputChanged();
 			}
