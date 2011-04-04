@@ -104,9 +104,7 @@ public class ButtonImpl extends AbstractActionControl implements IButtonUiSpi {
 	@Override
 	public void push() {
 		final Event e = new Event();
-		boolean focus = getUiReference().forceFocus();
-		// TODO LG remove this after testing
-		focus = false;
+		final boolean focus = getUiReference().forceFocus();
 		if (focus) {
 			e.type = SWT.KeyDown;
 			e.keyCode = SWT.CR;
@@ -114,13 +112,13 @@ public class ButtonImpl extends AbstractActionControl implements IButtonUiSpi {
 			Display.getCurrent().post(e);
 		}
 		else {
+			// TODO LG exception handling
 			e.type = SWT.MouseMove;
 			final Point widgetPos = getUiReference().toDisplay(getUiReference().getLocation().x, getUiReference().getLocation().y);
 			e.x = widgetPos.x;
 			e.y = widgetPos.y;
 			Display.getCurrent().post(e);
 
-			// TODO LG exception handling when mouse couldn't be pressed/released
 			e.type = SWT.MouseDown;
 			e.button = 1;
 			Display.getCurrent().post(e);
