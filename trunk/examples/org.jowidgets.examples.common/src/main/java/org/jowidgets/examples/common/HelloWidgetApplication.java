@@ -99,7 +99,7 @@ public class HelloWidgetApplication implements IApplication {
 
 		// row3
 		group.add(labelBp.setText("String").setToolTipText("Very special input here"), "sg lg");
-		final IInputComponent<String> widget3 = group.add(bpF.textField(), "growx");
+		final IInputComponent<String> widget3 = group.add(bpF.inputFieldString(), "growx");
 		final IValidationLabel valLabel3 = group.add(validationLabelBp, "wrap");
 		valLabel3.registerInputWidget(widget3);
 

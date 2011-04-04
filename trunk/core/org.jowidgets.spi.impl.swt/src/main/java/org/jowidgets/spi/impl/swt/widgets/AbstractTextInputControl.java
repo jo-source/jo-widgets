@@ -31,9 +31,9 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
-import org.jowidgets.spi.widgets.ITextFieldSpi;
+import org.jowidgets.spi.widgets.ITextControlSpi;
 
-public abstract class AbstractTextInputControl extends AbstractInputControl implements ITextFieldSpi {
+public abstract class AbstractTextInputControl extends AbstractInputControl implements ITextControlSpi {
 
 	public AbstractTextInputControl(final Control control) {
 		super(control);

@@ -30,9 +30,9 @@ package org.jowidgets.spi.impl.dummy.widgets;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDTextComponent;
-import org.jowidgets.spi.widgets.ITextFieldSpi;
+import org.jowidgets.spi.widgets.ITextControlSpi;
 
-public abstract class AbstractTextInputControl extends AbstractInputControl implements ITextFieldSpi {
+public abstract class AbstractTextInputControl extends AbstractInputControl implements ITextControlSpi {
 
 	public AbstractTextInputControl(final UIDComponent component) {
 		super(component);

@@ -36,7 +36,7 @@ import org.jowidgets.tools.validation.OkMessage;
 
 public class DefaultLongConverter extends AbstractObjectStringConverter<Long> implements IConverter<Long> {
 
-	private static final String NO_VALID_INTEGER_MESSAGE = "No valid integer number";
+	private static final String NO_VALID_INTEGER_MESSAGE = "No valid long number";
 
 	@Override
 	public Long convertToObject(final String string) {

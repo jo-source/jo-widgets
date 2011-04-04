@@ -25,10 +25,16 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.spi.descriptor;
+package org.jowidgets.tools.validation;
 
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.spi.widgets.ITextControlSpi;
-import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
+import org.jowidgets.api.validation.ITextInputVerifier;
+import org.jowidgets.api.validation.ValidationMessage;
 
-public interface ITextFieldDescriptorSpi extends ITextFieldSetupSpi, IWidgetDescriptor<ITextControlSpi> {}
+public class OkTextInputVerifier implements ITextInputVerifier {
+
+	@Override
+	public ValidationMessage isCompletableToValid(final String string) {
+		return OkMessage.getInstance();
+	}
+
+}

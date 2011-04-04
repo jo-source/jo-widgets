@@ -35,6 +35,9 @@ public interface IInputFieldSetup<INPUT_TYPE> extends IInputComponentSetup<INPUT
 	@Mandatory
 	IConverter<INPUT_TYPE> getConverter();
 
+	@Mandatory
+	boolean isPasswordPresentation();
+
 	int getMaxLength();
 
 }

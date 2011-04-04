@@ -27,12 +27,11 @@
  */
 package org.jowidgets.impl.widgets.composed.factory.internal;
 
-import org.jowidgets.api.validation.ITextInputValidator;
+import org.jowidgets.api.validation.ITextInputVerifier;
 import org.jowidgets.api.validation.ValidationMessage;
 import org.jowidgets.api.validation.ValidationMessageType;
-import org.jowidgets.api.validation.ValidationResult;
-import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.IInputComponent;
+import org.jowidgets.api.widgets.ITextControl;
 import org.jowidgets.api.widgets.blueprint.ITextFieldBluePrint;
 import org.jowidgets.api.widgets.descriptor.IInputFieldDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.ITextFieldSetup;
@@ -57,15 +56,10 @@ public class InputFieldFactory<VALUE_TYPE> implements
 
 		final BluePrintFactory bpF = new BluePrintFactory();
 
-		final ITextInputValidator inputValidator = descriptor.getConverter();
+		final ITextInputVerifier inputVerifier = descriptor.getConverter();
 
 		final ITextFieldBluePrint textFieldBluePrint = bpF.textField();
-		textFieldBluePrint.setTextInputValidator(new ITextInputValidator() {
-
-			@Override
-			public ValidationResult validate(final String validationInput) {
-				return inputValidator.validate(validationInput);
-			}
+		textFieldBluePrint.setTextInputVerifier(new ITextInputVerifier() {
 
 			@Override
 			public ValidationMessage isCompletableToValid(final String string) {
@@ -74,13 +68,14 @@ public class InputFieldFactory<VALUE_TYPE> implements
 						+ descriptor.getMaxLength()
 						+ "' are allowed");
 				}
-				return inputValidator.isCompletableToValid(string);
+				return inputVerifier.isCompletableToValid(string);
 			}
 		});
+		textFieldBluePrint.setPasswordPresentation(descriptor.isPasswordPresentation());
 
-		final IInputControl<String> textFieldWidget = genericFactory.create(parentUiReference, textFieldBluePrint);
+		final ITextControl textField = genericFactory.create(parentUiReference, textFieldBluePrint);
 
-		if (textFieldWidget == null) {
+		if (textField == null) {
 			throw new IllegalStateException("Could not create widget with descriptor interface class '"
 				+ ITextFieldSetup.class
 				+ "' from '"
@@ -88,6 +83,6 @@ public class InputFieldFactory<VALUE_TYPE> implements
 				+ "'");
 		}
 
-		return new InputFieldImpl<VALUE_TYPE>(textFieldWidget, descriptor);
+		return new InputFieldImpl<VALUE_TYPE>(textField, descriptor);
 	}
 }

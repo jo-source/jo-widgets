@@ -28,25 +28,43 @@
 package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.convert.IConverter;
+import org.jowidgets.api.validation.IValidateable;
+import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IInputControl;
+import org.jowidgets.api.widgets.ITextControl;
 import org.jowidgets.api.widgets.descriptor.setup.IInputFieldSetup;
+import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.tools.widgets.base.AbstractInputControl;
 
 public class InputFieldImpl<VALUE_TYPE> extends AbstractInputControl<VALUE_TYPE> implements IInputControl<VALUE_TYPE> {
 
-	private final IInputControl<String> textFieldWidget;
+	private final ITextControl textField;
 	private final IConverter<VALUE_TYPE> converter;
 
-	public InputFieldImpl(final IInputControl<String> textFieldWidget, final IInputFieldSetup<VALUE_TYPE> setup) {
+	public InputFieldImpl(final ITextControl textField, final IInputFieldSetup<VALUE_TYPE> setup) {
 
-		super(textFieldWidget, setup);
+		super(textField, setup);
 
-		this.textFieldWidget = textFieldWidget;
+		this.textField = textField;
 		this.converter = setup.getConverter();
 
-		registerInputWidget(textFieldWidget);
+		addValidatable(new IValidateable() {
+			@Override
+			public ValidationResult validate() {
+				return converter.validate(textField.getText());
+			}
+		});
+
+		textField.addInputListener(new IInputListener() {
+			@Override
+			public void inputChanged() {
+				fireInputChanged();
+			}
+		});
+
+		addValidator(setup.getValidator());
 
 		setEditable(setup.isEditable());
 		VisibiliySettingsInvoker.setVisibility(setup, this);
@@ -59,12 +77,12 @@ public class InputFieldImpl<VALUE_TYPE> extends AbstractInputControl<VALUE_TYPE>
 
 	@Override
 	public VALUE_TYPE getValue() {
-		return converter.convertToObject(textFieldWidget.getValue());
+		return converter.convertToObject(textField.getText());
 	}
 
 	@Override
 	public void setValue(final VALUE_TYPE value) {
-		textFieldWidget.setValue(converter.convertToString(value));
+		textField.setText(converter.convertToString(value));
 	}
 
 }

@@ -28,18 +28,18 @@
 
 package org.jowidgets.impl.widgets.basic.factory.internal.util;
 
-import org.jowidgets.api.validation.ITextInputValidator;
+import org.jowidgets.api.validation.ITextInputVerifier;
 import org.jowidgets.api.validation.ValidationMessage;
 import org.jowidgets.api.validation.ValidationMessageType;
 import org.jowidgets.spi.verify.IInputVerifier;
 
 public class InputVerifier implements IInputVerifier {
 
-	private final ITextInputValidator textInputValidator;
+	private final ITextInputVerifier textInputVerifier;
 
-	public InputVerifier(final ITextInputValidator textInputValidator) {
+	public InputVerifier(final ITextInputVerifier textInputVerifier) {
 		super();
-		this.textInputValidator = textInputValidator;
+		this.textInputVerifier = textInputVerifier;
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class InputVerifier implements IInputVerifier {
 
 		final String newValue = first + input + second;
 
-		final ValidationMessage validationMessage = textInputValidator.isCompletableToValid(newValue);
+		final ValidationMessage validationMessage = textInputVerifier.isCompletableToValid(newValue);
 		return validationMessage.getType() == ValidationMessageType.OK;
 	}
 
