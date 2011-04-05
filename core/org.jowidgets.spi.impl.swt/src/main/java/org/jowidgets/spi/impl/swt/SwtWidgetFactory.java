@@ -48,6 +48,7 @@ import org.jowidgets.spi.impl.swt.widgets.SeparatorImpl;
 import org.jowidgets.spi.impl.swt.widgets.SplitCompositeImpl;
 import org.jowidgets.spi.impl.swt.widgets.TabFolderImpl;
 import org.jowidgets.spi.impl.swt.widgets.TableImpl;
+import org.jowidgets.spi.impl.swt.widgets.TextAreaImpl;
 import org.jowidgets.spi.impl.swt.widgets.TextFieldImpl;
 import org.jowidgets.spi.impl.swt.widgets.TextLabelImpl;
 import org.jowidgets.spi.impl.swt.widgets.ToggleButtonImpl;
@@ -66,6 +67,7 @@ import org.jowidgets.spi.widgets.IScrollCompositeSpi;
 import org.jowidgets.spi.widgets.ISplitCompositeSpi;
 import org.jowidgets.spi.widgets.ITabFolderSpi;
 import org.jowidgets.spi.widgets.ITableSpi;
+import org.jowidgets.spi.widgets.ITextAreaSpi;
 import org.jowidgets.spi.widgets.ITextControlSpi;
 import org.jowidgets.spi.widgets.ITextLabelSpi;
 import org.jowidgets.spi.widgets.IToggleButtonSpi;
@@ -85,6 +87,7 @@ import org.jowidgets.spi.widgets.setup.ISeparatorSetupSpi;
 import org.jowidgets.spi.widgets.setup.ISplitCompositeSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITabFolderSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITableSetupSpi;
+import org.jowidgets.spi.widgets.setup.ITextAreaSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;
@@ -162,6 +165,11 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 	@Override
 	public ITextControlSpi createTextField(final Object parentUiReference, final ITextFieldSetupSpi setup) {
 		return new TextFieldImpl(parentUiReference, setup);
+	}
+
+	@Override
+	public ITextAreaSpi createTextArea(final Object parentUiReference, final ITextAreaSetupSpi setup) {
+		return new TextAreaImpl(parentUiReference, setup);
 	}
 
 	@Override

@@ -42,6 +42,7 @@ import org.jowidgets.impl.spi.blueprint.ISplitCompositeBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITabFolderBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITabItemBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITableBluePrintSpi;
+import org.jowidgets.impl.spi.blueprint.ITextAreaBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITextFieldBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITextLabelBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IToggleButtonBluePrintSpi;
@@ -66,6 +67,8 @@ public interface ISpiBluePrintFactory {
 	ISeparatorBluePrintSpi separator();
 
 	ITextFieldBluePrintSpi textField();
+
+	ITextAreaBluePrintSpi textArea();
 
 	IButtonBluePrintSpi button();
 

@@ -41,6 +41,7 @@ import org.jowidgets.spi.widgets.IScrollCompositeSpi;
 import org.jowidgets.spi.widgets.ISplitCompositeSpi;
 import org.jowidgets.spi.widgets.ITabFolderSpi;
 import org.jowidgets.spi.widgets.ITableSpi;
+import org.jowidgets.spi.widgets.ITextAreaSpi;
 import org.jowidgets.spi.widgets.ITextControlSpi;
 import org.jowidgets.spi.widgets.ITextLabelSpi;
 import org.jowidgets.spi.widgets.IToggleButtonSpi;
@@ -60,6 +61,7 @@ import org.jowidgets.spi.widgets.setup.ISeparatorSetupSpi;
 import org.jowidgets.spi.widgets.setup.ISplitCompositeSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITabFolderSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITableSetupSpi;
+import org.jowidgets.spi.widgets.setup.ITextAreaSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;
@@ -93,6 +95,8 @@ public interface IWidgetFactorySpi {
 		IScrollCompositeSetupSpi setup);
 
 	ITextControlSpi createTextField(Object parentUiReference, ITextFieldSetupSpi setup);
+
+	ITextAreaSpi createTextArea(Object parentUiReference, ITextAreaSetupSpi setup);
 
 	ITextLabelSpi createTextLabel(Object parentUiReference, ITextLabelSetupSpi setup);
 

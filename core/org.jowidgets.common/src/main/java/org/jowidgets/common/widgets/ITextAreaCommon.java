@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2010, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,61 +26,10 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.swing;
+package org.jowidgets.common.widgets;
 
-import java.awt.BorderLayout;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+public interface ITextAreaCommon extends ITextControlCommon {
 
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.SwingUtilities;
-
-public class TextAreaTest {
-
-	public static void main(final String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-
-			@Override
-			public void run() {
-				final JFrame frame = new JFrame();
-				frame.setSize(1024, 768);
-				frame.setLayout(new BorderLayout());
-
-				final JTextArea textArea = new JTextArea("This is a very long text with some cr \n Noew the new text comes ahead");
-
-				textArea.setAutoscrolls(true);
-
-				frame.getContentPane().add(new JScrollPane(textArea), BorderLayout.CENTER);
-
-				textArea.addKeyListener(new KeyListener() {
-
-					@Override
-					public void keyTyped(final KeyEvent e) {
-						System.out.println(textArea.getRows());
-
-					}
-
-					@Override
-					public void keyReleased(final KeyEvent e) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void keyPressed(final KeyEvent e) {
-						// TODO Auto-generated method stub
-
-					}
-				});
-
-				textArea.getColumns();
-
-				frame.setVisible(true);
-
-			}
-		});
-	}
+	void scrollToCaretPosition();
 
 }

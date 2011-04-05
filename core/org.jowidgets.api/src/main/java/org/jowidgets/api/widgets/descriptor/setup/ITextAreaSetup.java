@@ -25,18 +25,16 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.blueprint.builder;
+package org.jowidgets.api.widgets.descriptor.setup;
 
-import org.jowidgets.api.validation.ITextInputVerifier;
-import org.jowidgets.common.widgets.builder.ITextFieldSetupBuilderCommon;
+import org.jowidgets.common.widgets.descriptor.setup.ITextAreaSetupCommon;
+import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
-public interface ITextFieldSetupBuilder<INSTANCE_TYPE extends ITextFieldSetupBuilder<?>> extends
-		ITextFieldSetupBuilderCommon<INSTANCE_TYPE> {
+public interface ITextAreaSetup extends IComponentSetup, ITextAreaSetupCommon {
 
-	INSTANCE_TYPE setTextInputVerifier(ITextInputVerifier textInputVerifier);
+	@Mandatory
+	boolean isEditable();
 
-	INSTANCE_TYPE setEditable(boolean editable);
-
-	INSTANCE_TYPE setText(String text);
+	String getText();
 
 }

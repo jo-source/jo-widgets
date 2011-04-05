@@ -25,18 +25,18 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.blueprint.builder;
+package org.jowidgets.impl.widgets.common.blueprint.defaults;
 
-import org.jowidgets.api.validation.ITextInputVerifier;
-import org.jowidgets.common.widgets.builder.ITextFieldSetupBuilderCommon;
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
+import org.jowidgets.common.widgets.builder.ITextAreaSetupBuilderCommon;
 
-public interface ITextFieldSetupBuilder<INSTANCE_TYPE extends ITextFieldSetupBuilder<?>> extends
-		ITextFieldSetupBuilderCommon<INSTANCE_TYPE> {
+public class TextAreaDefaultsCommon implements IDefaultInitializer<ITextAreaSetupBuilderCommon<?>> {
 
-	INSTANCE_TYPE setTextInputVerifier(ITextInputVerifier textInputVerifier);
-
-	INSTANCE_TYPE setEditable(boolean editable);
-
-	INSTANCE_TYPE setText(String text);
+	@Override
+	public void initialize(final ITextAreaSetupBuilderCommon<?> builder) {
+		builder.setAlwaysShowBars(true);
+		builder.setLineWrap(true);
+		builder.setBorder(true);
+	}
 
 }

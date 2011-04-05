@@ -43,6 +43,7 @@ import org.jowidgets.impl.spi.blueprint.ISplitCompositeBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITabFolderBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITabItemBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITableBluePrintSpi;
+import org.jowidgets.impl.spi.blueprint.ITextAreaBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITextFieldBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITextLabelBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IToggleButtonBluePrintSpi;
@@ -99,6 +100,11 @@ public class SpiBluePrintFactory extends AbstractBluePrintFactory implements ISp
 	@Override
 	public ITextFieldBluePrintSpi textField() {
 		return createProxy(ITextFieldBluePrintSpi.class);
+	}
+
+	@Override
+	public ITextAreaBluePrintSpi textArea() {
+		return createProxy(ITextAreaBluePrintSpi.class);
 	}
 
 	@Override

@@ -26,10 +26,29 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.widgets;
+package org.jowidgets.examples.common.demo;
 
-import org.jowidgets.common.widgets.ITextControlCommon;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.ITextArea;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.tools.layout.MigLayoutFactory;
+import org.jowidgets.tools.powo.JoFrame;
 
-public interface ITextControlSpi extends IInputControlSpi, ITextControlCommon {
+public class DemoTextAreaFrame extends JoFrame {
+
+	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
+
+	public DemoTextAreaFrame() {
+		super("Text area demo");
+
+		setLayout(MigLayoutFactory.growingInnerCellLayout());
+		final ITextArea textArea = add(BPF.textArea(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+
+		final StringBuilder textBuilder = new StringBuilder();
+		for (int i = 0; i < 30; i++) {
+			textBuilder.append("Demonstration of an text area ");
+		}
+		textArea.setText(textBuilder.toString());
+	}
 
 }
