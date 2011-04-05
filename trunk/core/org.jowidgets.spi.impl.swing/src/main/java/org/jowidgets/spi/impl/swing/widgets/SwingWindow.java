@@ -85,7 +85,6 @@ public class SwingWindow extends SwingContainer implements IWindowSpi {
 				final boolean veto = windowObservableDelegate.fireWindowClosing();
 				if (!veto && closeable) {
 					setVisible(false);
-					windowObservableDelegate.fireWindowClosed();
 				}
 			}
 
@@ -94,6 +93,14 @@ public class SwingWindow extends SwingContainer implements IWindowSpi {
 
 		});
 
+	}
+
+	@Override
+	public void setVisible(final boolean visible) {
+		super.setVisible(visible);
+		if (!visible) {
+			windowObservableDelegate.fireWindowClosed();
+		}
 	}
 
 	@Override
@@ -162,6 +169,7 @@ public class SwingWindow extends SwingContainer implements IWindowSpi {
 
 	@Override
 	public void dispose() {
+		setVisible(false);
 		getUiReference().dispose();
 	}
 

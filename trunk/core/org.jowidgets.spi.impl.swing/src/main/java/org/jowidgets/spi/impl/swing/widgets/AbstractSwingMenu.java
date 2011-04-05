@@ -118,6 +118,11 @@ public abstract class AbstractSwingMenu extends SwingWidget implements IMenuSpi 
 
 	private ButtonGroup findRadioGroup(final Integer index) {
 		ButtonGroup result = radioGroups.get(0).getButtonGroup();
+		if (index == null) {
+			// TODO MG check behavior for null index due to auto-unboxing in comparison
+			return result;
+		}
+
 		if (radioGroups.size() != 1) {
 			for (final JoSwingButtonGroup joButtonGroup : radioGroups) {
 				final SeparatorMenuItemImpl separator = joButtonGroup.getSeparator();
