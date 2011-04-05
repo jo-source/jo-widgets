@@ -53,6 +53,7 @@ public class TabFolderTest {
 			@Override
 			public void start(final IApplicationLifecycle lifecycle) {
 				final IFrame rootFrame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
+				rootFrame.setVisible(true);
 
 				final ITabFolder tabFolder = rootFrame.add(BPF.tabFolder().setTabsCloseable(true), "");
 
