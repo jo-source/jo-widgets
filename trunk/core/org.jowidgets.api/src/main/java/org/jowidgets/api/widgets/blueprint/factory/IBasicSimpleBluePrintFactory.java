@@ -51,6 +51,7 @@ import org.jowidgets.api.widgets.blueprint.ISubMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITabFolderBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITabItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITableBluePrint;
+import org.jowidgets.api.widgets.blueprint.ITextAreaBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToggleButtonBluePrint;
@@ -84,6 +85,8 @@ public interface IBasicSimpleBluePrintFactory extends IBaseBluePrintFactory {
 	ISeparatorBluePrint separator();
 
 	ITextFieldBluePrint textField();
+
+	ITextAreaBluePrint textArea();
 
 	IButtonBluePrint button();
 

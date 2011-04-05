@@ -37,6 +37,7 @@ import org.jowidgets.common.widgets.builder.IScrollCompositeSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ISeparatorSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITabFolderSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITableSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.ITextAreaSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITextFieldSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITextLabelSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITreeSetupBuilderCommon;
@@ -50,6 +51,7 @@ import org.jowidgets.impl.widgets.common.blueprint.defaults.ScrolledCompositeDef
 import org.jowidgets.impl.widgets.common.blueprint.defaults.SeparatorDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.TabFolderDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.TableDefaultsCommon;
+import org.jowidgets.impl.widgets.common.blueprint.defaults.TextAreaDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.TextFieldDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.TextLabelDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.TreeDefaultsCommon;
@@ -70,6 +72,7 @@ public class CommonDefaultsInitializerRegistry extends DefaultsInitializerRegist
 		register(ISeparatorSetupBuilderCommon.class, new SeparatorDefaultsCommon());
 		register(ITextLabelSetupBuilderCommon.class, new TextLabelDefaultsCommon());
 		register(ITextFieldSetupBuilderCommon.class, new TextFieldDefaultsCommon());
+		register(ITextAreaSetupBuilderCommon.class, new TextAreaDefaultsCommon());
 		register(ITabFolderSetupBuilderCommon.class, new TabFolderDefaultsCommon());
 		register(ITreeSetupBuilderCommon.class, new TreeDefaultsCommon());
 		register(ITableSetupBuilderCommon.class, new TableDefaultsCommon());

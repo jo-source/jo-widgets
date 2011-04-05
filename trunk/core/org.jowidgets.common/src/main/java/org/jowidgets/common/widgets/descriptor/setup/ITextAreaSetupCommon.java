@@ -25,18 +25,21 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.blueprint.builder;
+package org.jowidgets.common.widgets.descriptor.setup;
 
-import org.jowidgets.api.validation.ITextInputVerifier;
-import org.jowidgets.common.widgets.builder.ITextFieldSetupBuilderCommon;
+import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
-public interface ITextFieldSetupBuilder<INSTANCE_TYPE extends ITextFieldSetupBuilder<?>> extends
-		ITextFieldSetupBuilderCommon<INSTANCE_TYPE> {
+public interface ITextAreaSetupCommon extends IComponentSetupCommon {
 
-	INSTANCE_TYPE setTextInputVerifier(ITextInputVerifier textInputVerifier);
+	@Mandatory
+	boolean isLineWrap();
 
-	INSTANCE_TYPE setEditable(boolean editable);
+	@Mandatory
+	boolean isAlwaysShowBars();
 
-	INSTANCE_TYPE setText(String text);
+	@Mandatory
+	boolean hasBorder();
+
+	Integer getMaxLength();
 
 }

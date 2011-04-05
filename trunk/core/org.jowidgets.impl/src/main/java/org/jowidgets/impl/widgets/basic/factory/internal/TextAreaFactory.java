@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2010, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,33 +26,33 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.swt;
+package org.jowidgets.impl.widgets.basic.factory.internal;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
+import org.jowidgets.api.widgets.ITextArea;
+import org.jowidgets.api.widgets.descriptor.ITextAreaDescriptor;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.widgets.factory.IWidgetFactory;
+import org.jowidgets.impl.spi.ISpiBluePrintFactory;
+import org.jowidgets.impl.spi.blueprint.ITextAreaBluePrintSpi;
+import org.jowidgets.impl.widgets.basic.TextAreaImpl;
+import org.jowidgets.spi.IWidgetFactorySpi;
+import org.jowidgets.spi.widgets.ITextAreaSpi;
 
-public class TextAreaTest {
+public class TextAreaFactory extends AbstractWidgetFactory implements IWidgetFactory<ITextArea, ITextAreaDescriptor> {
 
-	public static void main(final String[] args) {
-		final Display display = new Display();
-		final Shell shell = new Shell(display);
-		shell.setSize(800, 600);
-		shell.setLayout(new FillLayout());
+	public TextAreaFactory(
+		final IGenericWidgetFactory genericWidgetFactory,
+		final IWidgetFactorySpi spiWidgetFactory,
+		final ISpiBluePrintFactory bpF) {
 
-		final Text text = new Text(shell, SWT.BORDER);
-		text.setText("Hello World SWT");
-
-		shell.open();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}
-		display.dispose();
-
+		super(genericWidgetFactory, spiWidgetFactory, bpF);
 	}
 
+	@Override
+	public ITextArea create(final Object parentUiReference, final ITextAreaDescriptor descriptor) {
+		final ITextAreaBluePrintSpi bp = getSpiBluePrintFactory().textArea().setSetup(descriptor);
+		final ITextAreaSpi textAreaSpi = getSpiWidgetFactory().createTextArea(parentUiReference, bp);
+
+		return new TextAreaImpl(textAreaSpi, descriptor);
+	}
 }

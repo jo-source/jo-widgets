@@ -51,6 +51,7 @@ import org.jowidgets.api.widgets.blueprint.ISubMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITabFolderBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITabItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITableBluePrint;
+import org.jowidgets.api.widgets.blueprint.ITextAreaBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToggleButtonBluePrint;
@@ -121,6 +122,11 @@ public class BasicSimpleBluePrintFactory extends AbstractBluePrintFactory implem
 	@Override
 	public final ITextFieldBluePrint textField() {
 		return createProxy(ITextFieldBluePrint.class);
+	}
+
+	@Override
+	public ITextAreaBluePrint textArea() {
+		return createProxy(ITextAreaBluePrint.class);
 	}
 
 	@Override
