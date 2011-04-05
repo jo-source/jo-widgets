@@ -68,8 +68,6 @@ public class WidgetFactoryTest {
 
 	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
-	//	private boolean invoked;
-
 	@Test
 	public void createWidgetsTest() {
 		Toolkit.getApplicationRunner().run(new IApplication() {
