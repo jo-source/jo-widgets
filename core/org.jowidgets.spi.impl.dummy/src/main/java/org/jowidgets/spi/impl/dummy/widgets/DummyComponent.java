@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2010, Michael Grossmann, Lukas Gross
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -91,23 +91,22 @@ public class DummyComponent extends DummyWidget implements IComponentSpi {
 
 	@Override
 	public void setSize(final Dimension size) {
-		// TODO LG implement
+		getUiReference().setSize(size);
 	}
 
 	@Override
 	public Position getPosition() {
-		// TODO LG implement
-		return null;
+		return getUiReference().getPosition();
 	}
 
 	@Override
 	public void setPosition(final Position position) {
-		// TODO LG implement
+		getUiReference().setPosition(position);
 	}
 
 	@Override
 	public void setCursor(final Cursor cursor) {
-
+		getUiReference().setCursor(cursor);
 	}
 
 	@Override
@@ -137,12 +136,12 @@ public class DummyComponent extends DummyWidget implements IComponentSpi {
 
 	@Override
 	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-
+		getUiReference().addPopupDetectionListener(listener);
 	}
 
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-
+		getUiReference().removePopupDetectionListener(listener);
 	}
 
 	@Override
