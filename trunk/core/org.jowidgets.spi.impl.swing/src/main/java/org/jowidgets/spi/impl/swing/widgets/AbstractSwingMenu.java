@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2010, grossmann, Benjamin Marstaller, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -117,11 +117,14 @@ public abstract class AbstractSwingMenu extends SwingWidget implements IMenuSpi 
 	}
 
 	private ButtonGroup findRadioGroup(final Integer index) {
-		ButtonGroup result = radioGroups.get(0).getButtonGroup();
-		if (index == null) {
-			// TODO MG check behavior for null index due to auto-unboxing in comparison
-			return result;
+		final int safeIndex;
+		if (index != null) {
+			safeIndex = index.intValue();
 		}
+		else {
+			safeIndex = getUiReference().getComponentCount();
+		}
+		ButtonGroup result = radioGroups.get(0).getButtonGroup();
 
 		if (radioGroups.size() != 1) {
 			for (final JoSwingButtonGroup joButtonGroup : radioGroups) {
@@ -137,7 +140,7 @@ public abstract class AbstractSwingMenu extends SwingWidget implements IMenuSpi 
 						break;
 					}
 				}
-				if (componentIndex >= index) {
+				if (componentIndex >= safeIndex) {
 					break;
 				}
 				result = joButtonGroup.getButtonGroup();
