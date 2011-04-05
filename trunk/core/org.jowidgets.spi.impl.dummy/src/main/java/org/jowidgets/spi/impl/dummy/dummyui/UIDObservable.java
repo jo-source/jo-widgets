@@ -46,10 +46,14 @@ import org.jowidgets.common.widgets.controler.IMenuListener;
 import org.jowidgets.common.widgets.controler.IMenuObservable;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionObservable;
+import org.jowidgets.common.widgets.controler.ITreeNodeListener;
+import org.jowidgets.common.widgets.controler.ITreeNodeObservable;
 import org.jowidgets.common.widgets.controler.IWindowListener;
 import org.jowidgets.common.widgets.controler.IWindowObservable;
 import org.jowidgets.spi.widgets.controler.ITabItemListenerSpi;
 import org.jowidgets.spi.widgets.controler.ITabItemObservableSpi;
+import org.jowidgets.spi.widgets.controler.ITreeSelectionListenerSpi;
+import org.jowidgets.spi.widgets.controler.ITreeSelectionObservableSpi;
 
 public class UIDObservable implements
 		IActionObservable,
@@ -58,6 +62,8 @@ public class UIDObservable implements
 		IItemStateObservable,
 		IMenuObservable,
 		IPopupDetectionObservable,
+		ITreeNodeObservable,
+		ITreeSelectionObservableSpi,
 		ITabItemObservableSpi,
 		IFocusObservable,
 		IKeyObservable {
@@ -69,6 +75,8 @@ public class UIDObservable implements
 	private final Set<IMenuListener> menuListeners;
 	private final Set<IPopupDetectionListener> popupListeners;
 	private final Set<ITabItemListenerSpi> tabItemListeners;
+	private final Set<ITreeNodeListener> treeNodeListeners;
+	private final Set<ITreeSelectionListenerSpi> treeSelectionListeners;
 	private final Set<IFocusListener> focusListeners;
 	private final Set<IKeyListener> keyListeners;
 
@@ -81,6 +89,8 @@ public class UIDObservable implements
 		this.menuListeners = new HashSet<IMenuListener>();
 		this.popupListeners = new HashSet<IPopupDetectionListener>();
 		this.tabItemListeners = new HashSet<ITabItemListenerSpi>();
+		this.treeNodeListeners = new HashSet<ITreeNodeListener>();
+		this.treeSelectionListeners = new HashSet<ITreeSelectionListenerSpi>();
 		this.focusListeners = new HashSet<IFocusListener>();
 		this.keyListeners = new HashSet<IKeyListener>();
 	}
@@ -153,6 +163,26 @@ public class UIDObservable implements
 	@Override
 	public void removeTabItemListener(final ITabItemListenerSpi listener) {
 		tabItemListeners.remove(listener);
+	}
+
+	@Override
+	public void addTreeNodeListener(final ITreeNodeListener listener) {
+		treeNodeListeners.add(listener);
+	}
+
+	@Override
+	public void removeTreeNodeListener(final ITreeNodeListener listener) {
+		treeNodeListeners.remove(listener);
+	}
+
+	@Override
+	public void addTreeSelectionListener(final ITreeSelectionListenerSpi listener) {
+		treeSelectionListeners.add(listener);
+	}
+
+	@Override
+	public void removeTreeSelectionListener(final ITreeSelectionListenerSpi listener) {
+		treeSelectionListeners.remove(listener);
 	}
 
 	@Override
@@ -238,6 +268,24 @@ public class UIDObservable implements
 	void fireMenuDeactivated() {
 		for (final IMenuListener listener : menuListeners) {
 			listener.menuDeactivated();
+		}
+	}
+
+	void fireTreeNodeSelectionChanged(final boolean selected) {
+		for (final ITreeNodeListener listener : treeNodeListeners) {
+			listener.selectionChanged(selected);
+		}
+	}
+
+	void fireTreeNodeExpanded(final boolean expanded) {
+		for (final ITreeNodeListener listener : treeNodeListeners) {
+			listener.expandedChanged(expanded);
+		}
+	}
+
+	void fireTreeSelectionChanged() {
+		for (final ITreeSelectionListenerSpi listener : treeSelectionListeners) {
+			listener.selectionChanged();
 		}
 	}
 

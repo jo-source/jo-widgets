@@ -51,6 +51,7 @@ import org.jowidgets.spi.impl.dummy.widgets.TextFieldImpl;
 import org.jowidgets.spi.impl.dummy.widgets.TextLabelImpl;
 import org.jowidgets.spi.impl.dummy.widgets.ToggleButtonImpl;
 import org.jowidgets.spi.impl.dummy.widgets.ToolBarImpl;
+import org.jowidgets.spi.impl.dummy.widgets.TreeImpl;
 import org.jowidgets.spi.widgets.IButtonSpi;
 import org.jowidgets.spi.widgets.ICheckBoxSpi;
 import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
@@ -225,8 +226,7 @@ public final class DummyWidgetFactory implements IWidgetFactorySpi {
 
 	@Override
 	public ITreeSpi createTree(final Object parentUiReference, final ITreeSetupSpi setup) {
-		// TODO LG Dummy Tree must be implemented
-		return null;
+		return new TreeImpl(setup);
 	}
 
 	@Override
