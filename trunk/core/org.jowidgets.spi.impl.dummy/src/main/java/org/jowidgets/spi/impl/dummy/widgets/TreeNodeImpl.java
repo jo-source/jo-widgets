@@ -106,7 +106,7 @@ public class TreeNodeImpl implements ITreeNodeSpi {
 
 	@Override
 	public void setExpanded(final boolean expanded) {
-		item.setExpanded(expanded);
+		item.setExpanded(!expanded);
 	}
 
 	@Override
