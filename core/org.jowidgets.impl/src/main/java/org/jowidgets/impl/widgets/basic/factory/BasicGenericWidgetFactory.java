@@ -100,8 +100,8 @@ import org.jowidgets.test.api.widgets.descriptor.IDialogDescriptorUi;
 import org.jowidgets.test.api.widgets.descriptor.IFrameDescriptorUi;
 import org.jowidgets.test.api.widgets.descriptor.IIconDescriptorUi;
 import org.jowidgets.test.api.widgets.descriptor.IScrollCompositeDescriptorUi;
-import org.jowidgets.test.api.widgets.descriptor.ISeparatorDescriptorUi;
 import org.jowidgets.test.api.widgets.descriptor.ISplitCompositeDescriptorUi;
+import org.jowidgets.test.api.widgets.descriptor.ITextFieldDescriptorUi;
 import org.jowidgets.test.api.widgets.descriptor.ITextLabelDescriptorUi;
 import org.jowidgets.test.api.widgets.descriptor.IToggleButtonDescriptorUi;
 import org.jowidgets.test.api.widgets.descriptor.IToolBarDescriptorUi;
@@ -113,8 +113,9 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 	public BasicGenericWidgetFactory(final IWidgetFactorySpi spiWidgetFactory) {
 		super(new DefaultGenericWidgetFactory());
 		this.spiWidgetFactory = spiWidgetFactory;
-		registerBaseWidgets(spiWidgetFactory, new SpiBluePrintFactory());
-		registerUiWidgets();
+		final SpiBluePrintFactory spiBbf = new SpiBluePrintFactory();
+		registerBaseWidgets(spiWidgetFactory, spiBbf);
+		registerUiWidgets(spiWidgetFactory, spiBbf);
 	}
 
 	@SuppressWarnings({"unchecked"})
@@ -137,16 +138,10 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 		register(ITabFolderDescriptor.class, new TabFolderFactory(this, spiWidgetFactory, bpF));
 		register(ITreeDescriptor.class, new TreeFactory(this, spiWidgetFactory, bpF));
 		register(ITableDescriptor.class, new TableFactory(this, spiWidgetFactory, bpF));
-
-		//TODO LG move this to register UI widgets
-		register(IDialogDescriptorUi.class, new DialogFactory(this, spiWidgetFactory, bpF));
-		//TODO LG this must be fixed, ITextFieldDescriptor does not yield an IInputControl but an ITextControl
-		//register(ITextFieldDescriptorUi.class, new TextFieldFactory(this, spiWidgetFactory, bpF));
-		register(ISeparatorDescriptorUi.class, new SeparatorFactory(this, spiWidgetFactory, bpF));
-		register(IComboBoxSelectionDescriptorUi.class, new ComboBoxSelectionFactory(this, spiWidgetFactory, bpF));
 	}
 
-	private void registerUiWidgets() {
+	@SuppressWarnings("unchecked")
+	private void registerUiWidgets(final IWidgetFactorySpi spiWidgetFactory, final ISpiBluePrintFactory bpF) {
 		registerUiWidget(IFrameDescriptorUi.class, IFrameUi.class, IFrameBluePrint.class);
 		registerUiWidget(IButtonDescriptorUi.class, IButtonUi.class, IButtonBluePrint.class);
 		registerUiWidget(IToolBarDescriptorUi.class, IToolBarUi.class, IToolBarBluePrint.class);
@@ -158,6 +153,9 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 		registerUiWidget(ISplitCompositeDescriptorUi.class, ISplitCompositeUi.class, ISplitCompositeBluePrint.class);
 		registerUiWidget(IScrollCompositeDescriptorUi.class, IScrollCompositeUi.class, IScrollCompositeBluePrint.class);
 		registerUiWidget(ICompositeDescriptorUi.class, ICompositeUi.class, ICompositeBluePrint.class);
+		register(IComboBoxSelectionDescriptorUi.class, new ComboBoxSelectionFactory(this, spiWidgetFactory, bpF));
+		register(IDialogDescriptorUi.class, new DialogFactory(this, spiWidgetFactory, bpF));
+		register(ITextFieldDescriptorUi.class, new TextFieldFactory(this, spiWidgetFactory, bpF));
 	}
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
