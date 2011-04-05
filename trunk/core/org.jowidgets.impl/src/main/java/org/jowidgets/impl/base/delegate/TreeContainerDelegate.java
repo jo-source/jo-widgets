@@ -129,7 +129,8 @@ public class TreeContainerDelegate implements ITreeContainer {
 
 	@Override
 	public void removeAllNodes() {
-		for (int i = 0; i < children.size(); i++) {
+		final int tmpChildrenSize = children.size();
+		for (int i = 0; i < tmpChildrenSize; i++) {
 			removeNode(0);
 		}
 	}
