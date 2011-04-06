@@ -31,19 +31,19 @@ package org.jowidgets.workbench.api;
 public enum LayoutScope {
 
 	/**
-	 * One separate instance of the layout for each component its used for.
+	 * One separate instance of the layout for each component it is used for.
 	 */
 	COMPONENT,
 
 	/**
-	 * One separate instance of the layout for each workbench application its used for.
-	 * Components so may share layout instances with same id's.
+	 * One separate instance of the layout for each workbench application it is used for.
+	 * Components so may share layout instances with same ids.
 	 */
 	WORKBENCH_APPLICATION,
 
 	/**
-	 * One separate instance of the layout for each workbench its used for.
-	 * Components so may share layout instances with same id's.
+	 * One separate instance of the layout for each workbench it is used for.
+	 * Components so may share layout instances with same ids.
 	 */
 	WORKBENCH;
 
