@@ -76,6 +76,7 @@ public class ViewContext implements IViewContext {
 	@Override
 	public void dispose() {
 		// TODO MG implement dispose
+		tabFolder.removeItem(tabItem);
 	}
 
 	@Override

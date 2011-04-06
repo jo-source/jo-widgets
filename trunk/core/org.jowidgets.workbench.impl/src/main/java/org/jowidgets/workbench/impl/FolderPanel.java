@@ -28,6 +28,7 @@
 
 package org.jowidgets.workbench.impl;
 
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.ITabFolder;
@@ -38,20 +39,23 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.tools.controler.TabItemAdapter;
 import org.jowidgets.tools.layout.MigLayoutFactory;
+import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.types.VetoHolder;
+import org.jowidgets.workbench.api.IComponentContext;
+import org.jowidgets.workbench.api.IComponentNodeContext;
+import org.jowidgets.workbench.api.IFolderContext;
 import org.jowidgets.workbench.api.IFolderLayout;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewLayout;
+import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
+import org.jowidgets.workbench.api.IWorkbenchContext;
 
 public class FolderPanel implements ILayoutPanel {
 
 	private final ITabFolder tabFolder;
 	private ComponentContext currentComponent;
 
-	public FolderPanel(
-		final IFolderLayout folderLayout,
-		final IContainer parentContainer,
-		final ComponentContext component) {
+	public FolderPanel(final IFolderLayout folderLayout, final IContainer parentContainer, final ComponentContext component) {
 		super();
 
 		this.currentComponent = component;
@@ -68,6 +72,62 @@ public class FolderPanel implements ILayoutPanel {
 		for (final IViewLayout viewLayout : folderLayout.getViews()) {
 			createTabItem(null, viewLayout);
 		}
+
+		//TODO MG onFolderCreated must be implemented better later
+		currentComponent.getComponent().onFolderCreated(new IFolderContext() {
+
+			private final IMenuModel popupMenu;
+
+			{
+				popupMenu = new MenuModel();
+				tabFolder.setPopupMenu(popupMenu);
+			}
+
+			@Override
+			public IWorkbenchContext getWorkbenchContext() {
+				return getWorkbenchContext();
+			}
+
+			@Override
+			public IWorkbenchApplicationContext getWorkbenchApplicationContext() {
+				return getWorkbenchApplicationContext();
+			}
+
+			@Override
+			public IMenuModel getPopupMenu() {
+				return popupMenu;
+			}
+
+			@Override
+			public String getOriginalFolderId() {
+				return folderLayout.getId();
+			}
+
+			@Override
+			public String getFolderId() {
+				return folderLayout.getId();
+			}
+
+			@Override
+			public IComponentNodeContext getComponentNodeContext() {
+				return getComponentNodeContext();
+			}
+
+			@Override
+			public IComponentContext getComponentContext() {
+				return getComponentContext();
+			}
+
+			@Override
+			public void addView(final boolean addToFront, final IViewLayout viewLayout) {
+				createTabItem(Integer.valueOf(0), viewLayout);
+			}
+
+			@Override
+			public void addView(final IViewLayout viewLayout) {
+				createTabItem(Integer.valueOf(tabFolder.getItems().size()), viewLayout);
+			}
+		});
 
 	}
 
