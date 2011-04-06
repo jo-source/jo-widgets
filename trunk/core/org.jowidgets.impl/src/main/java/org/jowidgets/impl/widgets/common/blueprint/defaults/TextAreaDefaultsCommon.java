@@ -34,7 +34,7 @@ public class TextAreaDefaultsCommon implements IDefaultInitializer<ITextAreaSetu
 
 	@Override
 	public void initialize(final ITextAreaSetupBuilderCommon<?> builder) {
-		builder.setAlwaysShowBars(true);
+		builder.setAlwaysShowBars(false);
 		builder.setLineWrap(true);
 		builder.setBorder(true);
 	}
