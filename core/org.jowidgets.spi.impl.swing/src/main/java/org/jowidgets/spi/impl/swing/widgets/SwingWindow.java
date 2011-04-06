@@ -97,8 +97,9 @@ public class SwingWindow extends SwingContainer implements IWindowSpi {
 
 	@Override
 	public void setVisible(final boolean visible) {
+		final boolean wasVisible = isVisible();
 		super.setVisible(visible);
-		if (!visible) {
+		if (wasVisible && !visible) {
 			windowObservableDelegate.fireWindowClosed();
 		}
 	}
