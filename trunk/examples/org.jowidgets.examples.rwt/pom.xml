@@ -43,12 +43,12 @@
 		<dependency>
 			<groupId>org.eclipse</groupId>
 			<artifactId>org.eclipse.rap.rwt</artifactId>
-			<version>1.4.0</version>
+			<version>1.4.0.20110315-1602</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse</groupId>
 			<artifactId>org.eclipse.rap.rwt.q07</artifactId>
-			<version>1.4.0</version>
+			<version>1.4.0.20110315-1602</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
