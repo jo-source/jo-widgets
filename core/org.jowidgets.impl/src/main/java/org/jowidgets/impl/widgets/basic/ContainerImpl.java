@@ -101,7 +101,6 @@ public class ContainerImpl extends AbstractContainerSpiWrapper implements IConta
 		return componentDelegate.getParent();
 	}
 
-	@Override
 	public void setParent(final IComponent parent) {
 		componentDelegate.setParent(parent);
 	}

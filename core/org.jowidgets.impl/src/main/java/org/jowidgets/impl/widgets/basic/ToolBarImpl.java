@@ -44,7 +44,6 @@ import org.jowidgets.api.model.item.ISeparatorItemModel;
 import org.jowidgets.api.model.item.IToolBarItemModel;
 import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.IToolBar;
@@ -140,7 +139,7 @@ public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar, IListIte
 	}
 
 	@Override
-	public void setParent(final IComponent parent) {
+	public void setParent(final IContainer parent) {
 		controlDelegate.setParent(parent);
 	}
 

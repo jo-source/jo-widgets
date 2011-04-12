@@ -29,7 +29,6 @@ package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.model.item.IMenuModel;
-import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
@@ -108,7 +107,7 @@ public class TextSeparatorImpl implements ITextLabel {
 	}
 
 	@Override
-	public void setParent(final IComponent parent) {
+	public void setParent(final IContainer parent) {
 		compositeWidget.setParent(parent);
 	}
 

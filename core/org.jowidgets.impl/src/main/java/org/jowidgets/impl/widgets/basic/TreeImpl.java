@@ -36,7 +36,6 @@ import java.util.Map;
 import org.jowidgets.api.controler.ITreeListener;
 import org.jowidgets.api.controler.ITreePopupDetectionListener;
 import org.jowidgets.api.controler.ITreeSelectionListener;
-import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITree;
@@ -148,7 +147,7 @@ public class TreeImpl extends ControlSpiWrapper implements ITree {
 	}
 
 	@Override
-	public void setParent(final IComponent parent) {
+	public void setParent(final IContainer parent) {
 		controlDelegate.setParent(parent);
 	}
 

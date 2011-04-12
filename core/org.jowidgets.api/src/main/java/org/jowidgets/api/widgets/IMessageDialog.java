@@ -28,7 +28,7 @@
 
 package org.jowidgets.api.widgets;
 
-public interface IMessageDialog extends IDisplay {
+public interface IMessageDialog extends IDisplay, IComponent {
 
 	/**
 	 * Shows the message of the dialog and blocks until the user pressed the OK button. After that, the

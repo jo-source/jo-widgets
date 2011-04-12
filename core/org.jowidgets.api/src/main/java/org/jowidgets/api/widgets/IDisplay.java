@@ -30,9 +30,11 @@ package org.jowidgets.api.widgets;
 
 import org.jowidgets.common.widgets.IDisplayCommon;
 
-public interface IDisplay extends IComponent, IDisplayCommon {
+public interface IDisplay extends IWidget, IDisplayCommon {
+
+	void setParent(IWindow parent);
 
 	@Override
-	IDisplay getParent();
+	IWindow getParent();
 
 }

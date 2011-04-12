@@ -33,7 +33,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.jowidgets.api.controler.ITabItemListener;
-import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITabFolder;
@@ -56,7 +55,6 @@ import org.jowidgets.impl.widgets.common.wrapper.AbstractContainerSpiWrapper;
 import org.jowidgets.spi.widgets.ITabItemSpi;
 import org.jowidgets.spi.widgets.controler.ITabItemListenerSpi;
 import org.jowidgets.tools.types.VetoHolder;
-import org.jowidgets.util.TypeCast;
 
 public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem {
 
@@ -278,8 +276,8 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 	}
 
 	@Override
-	public void setParent(final IComponent parent) {
-		this.parent = TypeCast.toType(parent, ITabFolder.class);
+	public void setParent(final ITabFolder parent) {
+		this.parent = parent;
 	}
 
 	@Override

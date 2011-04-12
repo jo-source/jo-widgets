@@ -30,12 +30,11 @@ package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.types.QuestionResult;
-import org.jowidgets.api.widgets.IDisplay;
 import org.jowidgets.api.widgets.IQuestionDialog;
+import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
 import org.jowidgets.api.widgets.descriptor.IQuestionDialogDescriptor;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IWindowCommon;
 import org.jowidgets.util.Assert;
 
@@ -79,13 +78,13 @@ public class JoQuestionDialog extends Component<IQuestionDialog, IQuestionDialog
 	}
 
 	@Override
-	public IDisplay getParent() {
+	public IWindow getParent() {
 		return getWidget().getParent();
 	}
 
 	@Override
-	public Position getPosition() {
-		return getPosition();
+	public void setParent(final IWindow parent) {
+		getWidget().setParent(parent);
 	}
 
 	public static IQuestionDialogBluePrint bluePrint() {

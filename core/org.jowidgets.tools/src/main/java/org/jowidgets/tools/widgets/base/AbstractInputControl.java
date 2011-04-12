@@ -46,6 +46,11 @@ public abstract class AbstractInputControl<VALUE_TYPE> extends AbstractInputComp
 	}
 
 	@Override
+	public void setParent(final IContainer parent) {
+		getWidget().setParent(parent);
+	}
+
+	@Override
 	public IContainer getParent() {
 		return getWidget().getParent();
 	}

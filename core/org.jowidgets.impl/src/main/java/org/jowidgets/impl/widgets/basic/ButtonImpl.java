@@ -29,7 +29,6 @@
 package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.command.IAction;
-import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
@@ -75,7 +74,7 @@ public class ButtonImpl extends ButtonSpiWrapper implements IButtonUi, IActionWi
 	}
 
 	@Override
-	public void setParent(final IComponent parent) {
+	public void setParent(final IContainer parent) {
 		controlDelegate.setParent(parent);
 	}
 

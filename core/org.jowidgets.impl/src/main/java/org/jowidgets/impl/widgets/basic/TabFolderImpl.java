@@ -35,7 +35,6 @@ import java.util.Set;
 
 import org.jowidgets.api.controler.ITabFolderListener;
 import org.jowidgets.api.controler.ITabSelectionEvent;
-import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITabFolder;
@@ -80,7 +79,7 @@ public class TabFolderImpl extends TabFolderSpiWrapper implements ITabFolder {
 	}
 
 	@Override
-	public void setParent(final IComponent parent) {
+	public void setParent(final IContainer parent) {
 		controlDelegate.setParent(parent);
 	}
 

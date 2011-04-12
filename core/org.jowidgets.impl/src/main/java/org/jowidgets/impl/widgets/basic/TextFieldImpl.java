@@ -28,7 +28,6 @@
 
 package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITextControl;
@@ -69,7 +68,7 @@ public class TextFieldImpl extends InputControlSpiWrapper implements ITextContro
 	}
 
 	@Override
-	public void setParent(final IComponent parent) {
+	public void setParent(final IContainer parent) {
 		controlDelegate.setParent(parent);
 	}
 

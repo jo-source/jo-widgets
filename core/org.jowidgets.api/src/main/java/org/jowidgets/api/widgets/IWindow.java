@@ -32,7 +32,7 @@ import java.util.List;
 import org.jowidgets.common.widgets.IWindowCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-public interface IWindow extends IDisplay, IWindowCommon {
+public interface IWindow extends IDisplay, IComponent, IWindowCommon {
 
 	/**
 	 * Centers the location relative to the parent display

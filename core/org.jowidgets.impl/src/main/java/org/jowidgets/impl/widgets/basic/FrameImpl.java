@@ -32,11 +32,11 @@ import java.util.List;
 
 import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.widgets.IButton;
-import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IDisplay;
 import org.jowidgets.api.widgets.IMenuBar;
 import org.jowidgets.api.widgets.IPopupMenu;
+import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.descriptor.setup.IFrameSetup;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
@@ -97,12 +97,12 @@ public class FrameImpl extends AbstractFrameSpiWrapper implements IFrameUi {
 	}
 
 	@Override
-	public IDisplay getParent() {
+	public IWindow getParent() {
 		return displayDelegate.getParent();
 	}
 
 	@Override
-	public void setParent(final IComponent parent) {
+	public void setParent(final IWindow parent) {
 		displayDelegate.setParent(parent);
 	}
 

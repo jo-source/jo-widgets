@@ -31,7 +31,6 @@ package org.jowidgets.impl.widgets.basic;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITable;
@@ -85,7 +84,7 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 	}
 
 	@Override
-	public void setParent(final IComponent parent) {
+	public void setParent(final IContainer parent) {
 		controlDelegate.setParent(parent);
 	}
 

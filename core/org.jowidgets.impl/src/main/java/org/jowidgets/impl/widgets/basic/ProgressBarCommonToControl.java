@@ -28,7 +28,6 @@
 
 package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IPopupMenu;
@@ -52,7 +51,7 @@ public class ProgressBarCommonToControl extends ProgressBarSpiWrapper implements
 	}
 
 	@Override
-	public void setParent(final IComponent parent) {
+	public void setParent(final IContainer parent) {
 		controlDelegate.setParent(parent);
 	}
 

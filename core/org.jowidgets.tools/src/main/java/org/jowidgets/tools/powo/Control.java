@@ -57,6 +57,12 @@ class Control<WIDGET_TYPE extends IControl, BLUE_PRINT_TYPE extends IWidgetDescr
 	}
 
 	@Override
+	public void setParent(final IContainer parent) {
+		checkInitialized();
+		getWidget().setParent(parent);
+	}
+
+	@Override
 	public void setLayoutConstraints(final Object layoutConstraints) {
 		if (isInitialized()) {
 			getWidget().setLayoutConstraints(layoutConstraints);

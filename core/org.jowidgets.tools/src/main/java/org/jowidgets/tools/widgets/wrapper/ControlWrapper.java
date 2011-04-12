@@ -43,6 +43,11 @@ public class ControlWrapper extends ComponentWrapper implements IControl {
 	}
 
 	@Override
+	public void setParent(final IContainer parent) {
+		getWidget().setParent(parent);
+	}
+
+	@Override
 	public IContainer getParent() {
 		return getWidget().getParent();
 	}

@@ -29,12 +29,11 @@ package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.types.QuestionResult;
-import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IComposite;
-import org.jowidgets.api.widgets.IDisplay;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.IQuestionDialog;
+import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.setup.IQuestionDialogSetup;
 import org.jowidgets.common.color.IColorConstant;
@@ -164,12 +163,12 @@ public class QuestionDialogImpl implements IQuestionDialog {
 	}
 
 	@Override
-	public IDisplay getParent() {
+	public IWindow getParent() {
 		return dialogWidget.getParent();
 	}
 
 	@Override
-	public void setParent(final IComponent parent) {
+	public void setParent(final IWindow parent) {
 		dialogWidget.setParent(parent);
 	}
 

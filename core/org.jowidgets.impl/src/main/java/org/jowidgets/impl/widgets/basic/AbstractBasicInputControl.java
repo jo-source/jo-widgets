@@ -31,7 +31,6 @@ package org.jowidgets.impl.widgets.basic;
 import org.jowidgets.api.validation.IValidateable;
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationResult;
-import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.IPopupMenu;
@@ -60,7 +59,7 @@ public abstract class AbstractBasicInputControl<VALUE_TYPE> extends InputControl
 	}
 
 	@Override
-	public void setParent(final IComponent parent) {
+	public void setParent(final IContainer parent) {
 		controlDelegate.setParent(parent);
 	}
 

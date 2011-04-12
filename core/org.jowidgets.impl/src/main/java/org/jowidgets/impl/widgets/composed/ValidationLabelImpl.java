@@ -34,7 +34,6 @@ import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.validation.ValidationMessage;
 import org.jowidgets.api.validation.ValidationMessageType;
 import org.jowidgets.api.validation.ValidationResult;
-import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IInputComponent;
@@ -225,7 +224,7 @@ public class ValidationLabelImpl implements IValidationLabel {
 	}
 
 	@Override
-	public void setParent(final IComponent parent) {
+	public void setParent(final IContainer parent) {
 		labelControl.setParent(parent);
 	}
 

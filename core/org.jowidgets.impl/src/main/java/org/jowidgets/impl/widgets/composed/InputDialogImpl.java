@@ -35,13 +35,13 @@ import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationMessage;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IButton;
-import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IDisplay;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IInputDialog;
 import org.jowidgets.api.widgets.IPopupMenu;
+import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.IInputDialogSetup;
@@ -254,12 +254,12 @@ public class InputDialogImpl<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 	}
 
 	@Override
-	public IDisplay getParent() {
+	public IWindow getParent() {
 		return dialogWidget.getParent();
 	}
 
 	@Override
-	public void setParent(final IComponent parent) {
+	public void setParent(final IWindow parent) {
 		dialogWidget.setParent(parent);
 	}
 

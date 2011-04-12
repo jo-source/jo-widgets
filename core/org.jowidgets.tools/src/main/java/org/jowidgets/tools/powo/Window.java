@@ -31,7 +31,6 @@ package org.jowidgets.tools.powo;
 import java.util.List;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IDisplay;
 import org.jowidgets.api.widgets.IWindow;
@@ -119,12 +118,12 @@ class Window<WIDGET_TYPE extends IWindow & IContainer, BLUE_PRINT_TYPE extends I
 	}
 
 	@Override
-	public final IDisplay getParent() {
+	public final IWindow getParent() {
 		return getWidget().getParent();
 	}
 
 	@Override
-	public void setParent(final IComponent parent) {
+	public void setParent(final IWindow parent) {
 		getWidget().setParent(parent);
 	}
 
