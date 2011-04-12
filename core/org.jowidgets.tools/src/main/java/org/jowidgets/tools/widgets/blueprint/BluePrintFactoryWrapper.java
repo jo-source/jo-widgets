@@ -40,6 +40,7 @@ import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
+import org.jowidgets.api.widgets.blueprint.IFileChooserBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.IIconBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
@@ -164,6 +165,11 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	@Override
 	public IQuestionDialogBluePrint questionDialog() {
 		return bluePrintFactory.questionDialog();
+	}
+
+	@Override
+	public IFileChooserBluePrint fileChooser() {
+		return bluePrintFactory.fileChooser();
 	}
 
 	@Override

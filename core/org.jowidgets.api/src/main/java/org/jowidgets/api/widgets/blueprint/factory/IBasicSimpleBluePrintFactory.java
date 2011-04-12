@@ -38,6 +38,7 @@ import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
+import org.jowidgets.api.widgets.blueprint.IFileChooserBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.IIconBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMainMenuBluePrint;
@@ -71,6 +72,8 @@ public interface IBasicSimpleBluePrintFactory extends IBaseBluePrintFactory {
 	IFrameBluePrint frame();
 
 	IDialogBluePrint dialog();
+
+	IFileChooserBluePrint fileChooser();
 
 	ICompositeBluePrint composite();
 
