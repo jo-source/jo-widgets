@@ -101,15 +101,28 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 	}
 
 	private void checkScrollBars() {
-		if (lastLineCount != textArea.getLineCount() || !isLineWrap) {
+		if (!isLineWrap && lineCountChanged()) {
 			scrolledComposite.setRedraw(false);
 			scrolledComposite.setMinSize(calcMinSize());
-			lastLineCount = textArea.getLineCount();
 
 			//TODO MG only scroll if its is really necessary
 			scrollToCaretPosition();
 			scrolledComposite.setRedraw(true);
 		}
+	}
+
+	private boolean lineCountChanged() {
+		try {
+			if (lastLineCount != textArea.getLineCount()) {
+				lastLineCount = textArea.getLineCount();
+				return true;
+			}
+		}
+		catch (final NoSuchMethodError e) {
+			//RWT does not support getLineCount()
+			return true;
+		}
+		return false;
 	}
 
 	@Override
