@@ -34,8 +34,6 @@ import org.jowidgets.common.widgets.IComponentCommon;
 
 public interface IComponent extends IWidget, IComponentCommon {
 
-	void setParent(IComponent parent);
-
 	boolean isReparentable();
 
 	IPopupMenu createPopupMenu();
@@ -48,9 +46,6 @@ public interface IComponent extends IWidget, IComponentCommon {
 	 *            The model of the popup menu or null, if no popup should be shown on popup events
 	 */
 	void setPopupMenu(IMenuModel popupMenu);
-
-	@Override
-	IComponent getParent();
 
 	Position toScreen(final Position localPosition);
 

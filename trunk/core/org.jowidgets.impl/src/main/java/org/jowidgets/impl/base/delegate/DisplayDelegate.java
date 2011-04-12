@@ -28,28 +28,28 @@
 
 package org.jowidgets.impl.base.delegate;
 
-import org.jowidgets.api.widgets.IDisplay;
 import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.api.widgets.IWindow;
 
 public class DisplayDelegate {
 
-	private IDisplay parent;
+	private IWindow parent;
 
 	public DisplayDelegate() {
 		super();
 	}
 
-	public IDisplay getParent() {
+	public IWindow getParent() {
 		return parent;
 	}
 
 	public void setParent(final IWidget parent) {
 		if (this.parent == null) {
-			if (parent instanceof IDisplay) {
-				this.parent = (IDisplay) parent;
+			if (parent instanceof IWindow) {
+				this.parent = (IWindow) parent;
 			}
 			else {
-				throw new IllegalArgumentException("Parent must be instance of '" + IDisplay.class.getName() + "'");
+				throw new IllegalArgumentException("Parent must be instance of '" + IWindow.class.getName() + "'");
 			}
 		}
 		else if (!isReparentable()) {

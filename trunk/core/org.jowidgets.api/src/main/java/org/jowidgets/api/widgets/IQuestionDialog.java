@@ -30,7 +30,7 @@ package org.jowidgets.api.widgets;
 
 import org.jowidgets.api.types.QuestionResult;
 
-public interface IQuestionDialog extends IDisplay {
+public interface IQuestionDialog extends IDisplay, IComponent {
 
 	/**
 	 * Shows the question dialog and blocks until the user pressed any button. After that, the

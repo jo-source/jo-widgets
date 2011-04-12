@@ -28,7 +28,6 @@
 
 package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.descriptor.setup.ICompositeSetup;
@@ -57,7 +56,7 @@ public class CompositeImpl extends ContainerImpl implements IComposite {
 	}
 
 	@Override
-	public void setParent(final IComponent parent) {
+	public void setParent(final IContainer parent) {
 		controlDelegate.setParent(parent);
 	}
 

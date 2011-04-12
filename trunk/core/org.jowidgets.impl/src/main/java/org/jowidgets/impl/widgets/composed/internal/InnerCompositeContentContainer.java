@@ -109,11 +109,6 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 	}
 
 	@Override
-	public void setParent(final IComponent parent) {
-		compositeWidget.setParent(parent);
-	}
-
-	@Override
 	public boolean isReparentable() {
 		return compositeWidget.isReparentable();
 	}

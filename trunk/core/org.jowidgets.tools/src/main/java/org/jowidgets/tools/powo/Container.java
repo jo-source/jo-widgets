@@ -179,18 +179,6 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 	}
 
 	@Override
-	public IComponent getParent() {
-		checkInitialized();
-		return getWidget().getParent();
-	}
-
-	@Override
-	public void setParent(final IComponent parent) {
-		checkInitialized();
-		getWidget().setParent(parent);
-	}
-
-	@Override
 	public boolean isReparentable() {
 		checkInitialized();
 		return getWidget().isReparentable();

@@ -28,7 +28,6 @@
 
 package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ISplitComposite;
@@ -42,8 +41,8 @@ import org.jowidgets.spi.widgets.ISplitCompositeSpi;
 public class SplitCompositeImpl extends AbstractSplitCompositeSpiWrapper implements ISplitComposite {
 
 	private final ControlDelegate controlDelegate;
-	private final IContainer first;
-	private final IContainer second;
+	private final ContainerImpl first;
+	private final ContainerImpl second;
 
 	public SplitCompositeImpl(final ISplitCompositeSpi containerWidgetSpi, final ISplitCompositeSetup setup) {
 		super(containerWidgetSpi);
@@ -62,7 +61,7 @@ public class SplitCompositeImpl extends AbstractSplitCompositeSpiWrapper impleme
 	}
 
 	@Override
-	public void setParent(final IComponent parent) {
+	public void setParent(final IContainer parent) {
 		controlDelegate.setParent(parent);
 	}
 

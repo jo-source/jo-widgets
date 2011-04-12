@@ -32,6 +32,8 @@ import org.jowidgets.common.widgets.IControlCommon;
 
 public interface IControl extends IComponent, IControlCommon {
 
+	void setParent(IContainer parent);
+
 	@Override
 	IContainer getParent();
 

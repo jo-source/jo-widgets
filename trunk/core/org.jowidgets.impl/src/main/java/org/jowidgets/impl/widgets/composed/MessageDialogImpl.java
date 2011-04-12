@@ -28,12 +28,11 @@
 package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.model.item.IMenuModel;
-import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IComposite;
-import org.jowidgets.api.widgets.IDisplay;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IMessageDialog;
 import org.jowidgets.api.widgets.IPopupMenu;
+import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.setup.IMessageDialogSetup;
 import org.jowidgets.common.color.IColorConstant;
@@ -114,12 +113,12 @@ public class MessageDialogImpl implements IMessageDialog {
 	}
 
 	@Override
-	public IDisplay getParent() {
+	public IWindow getParent() {
 		return dialogWidget.getParent();
 	}
 
 	@Override
-	public void setParent(final IComponent parent) {
+	public void setParent(final IWindow parent) {
 		dialogWidget.setParent(parent);
 	}
 

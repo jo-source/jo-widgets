@@ -186,9 +186,6 @@ public class WidgetFactoryTest {
 	private void testChildDisplay(final IWindow parent, final IDisplay widget) {
 		Assert.assertNotNull(widget);
 
-		Assert.assertTrue(DEFAULT_FOREGROUND.equals(widget.getForegroundColor()));
-		Assert.assertTrue(DEFAULT_BACKGROUND.equals(widget.getBackgroundColor()));
-
 		Assert.assertNotNull(widget.getUiReference());
 		testParent(parent, widget);
 

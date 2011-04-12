@@ -137,18 +137,8 @@ public class ComponentWrapper extends WidgetWrapper implements IComponent {
 	}
 
 	@Override
-	public void setParent(final IComponent parent) {
-		getWidget().setParent(parent);
-	}
-
-	@Override
 	public boolean isReparentable() {
 		return getWidget().isReparentable();
-	}
-
-	@Override
-	public IComponent getParent() {
-		return getWidget().getParent();
 	}
 
 	@Override

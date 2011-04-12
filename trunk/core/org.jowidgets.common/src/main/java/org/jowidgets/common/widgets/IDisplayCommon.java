@@ -28,7 +28,6 @@
 
 package org.jowidgets.common.widgets;
 
-
-public interface IDisplayCommon extends IComponentCommon {
+public interface IDisplayCommon extends IWidgetCommon {
 
 }

@@ -40,4 +40,6 @@ public interface ITabItem extends IItem, IContainer, ITabItemObservable, ITabIte
 	@Override
 	ITabFolder getParent();
 
+	void setParent(ITabFolder folder);
+
 }

@@ -29,12 +29,11 @@
 package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IDisplay;
 import org.jowidgets.api.widgets.IMessageDialog;
+import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
 import org.jowidgets.api.widgets.descriptor.IMessageDialogDescriptor;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IWindowCommon;
 
 public class JoMessageDialog extends Component<IMessageDialog, IMessageDialogBluePrint> implements IMessageDialog {
@@ -67,13 +66,13 @@ public class JoMessageDialog extends Component<IMessageDialog, IMessageDialogBlu
 	}
 
 	@Override
-	public IDisplay getParent() {
+	public IWindow getParent() {
 		return getWidget().getParent();
 	}
 
 	@Override
-	public Position getPosition() {
-		return getPosition();
+	public void setParent(final IWindow parent) {
+		getWidget().setParent(parent);
 	}
 
 	public static IMessageDialogBluePrint bluePrint() {

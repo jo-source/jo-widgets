@@ -75,6 +75,11 @@ public abstract class AbstractInputComponent<VALUE_TYPE> extends ComponentWrappe
 	}
 
 	@Override
+	public IComponent getParent() {
+		return (IComponent) super.getParent();
+	}
+
+	@Override
 	public void setEditable(final boolean editable) {
 		for (final IInputComponent<?> inputWidget : inputWidgets) {
 			inputWidget.setEditable(editable);
