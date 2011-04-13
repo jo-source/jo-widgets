@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2010, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,35 +26,37 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.swing;
+package org.jowidgets.impl.widgets.basic.factory.internal;
 
-import org.jowidgets.spi.IOptionalWidgetsFactorySpi;
-import org.jowidgets.spi.impl.swing.widgets.FileChooserImpl;
+import org.jowidgets.api.widgets.IDirectoryChooser;
+import org.jowidgets.api.widgets.descriptor.IDirectoryChooserDescriptor;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.widgets.factory.IWidgetFactory;
+import org.jowidgets.impl.spi.ISpiBluePrintFactory;
+import org.jowidgets.impl.spi.blueprint.IDirectoryChooserBluePrintSpi;
+import org.jowidgets.impl.widgets.basic.DirectoryChooserImpl;
+import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.widgets.IDirectoryChooserSpi;
-import org.jowidgets.spi.widgets.IFileChooserSpi;
-import org.jowidgets.spi.widgets.setup.IDirectoryChooserSetupSpi;
-import org.jowidgets.spi.widgets.setup.IFileChooserSetupSpi;
 
-public class SwingOptionalWidgetsFactory implements IOptionalWidgetsFactorySpi {
+public final class DirectoryChooserFactory extends AbstractWidgetFactory implements
+		IWidgetFactory<IDirectoryChooser, IDirectoryChooserDescriptor> {
 
-	@Override
-	public boolean hasFileChooser() {
-		return true;
+	public DirectoryChooserFactory(
+		final IGenericWidgetFactory genericWidgetFactory,
+		final IWidgetsServiceProvider widgetsServiceProvider,
+		final ISpiBluePrintFactory bpF) {
+
+		super(genericWidgetFactory, widgetsServiceProvider, bpF);
 	}
 
 	@Override
-	public IFileChooserSpi createFileChooser(final Object parentUiReference, final IFileChooserSetupSpi setup) {
-		return new FileChooserImpl(parentUiReference, setup);
-	}
+	public IDirectoryChooser create(final Object parentUiReference, final IDirectoryChooserDescriptor descriptor) {
+		final IDirectoryChooserBluePrintSpi bpSpi = getSpiBluePrintFactory().directoryChooser();
+		bpSpi.setSetup(descriptor);
 
-	@Override
-	public boolean hasDirectoryChooser() {
-		return false;
-	}
+		final IDirectoryChooserSpi widget = getOptionalSpiWidgetsFactory().createDirectoryChooser(parentUiReference, bpSpi);
 
-	@Override
-	public IDirectoryChooserSpi createDirectoryChooser(final Object parentUiReference, final IDirectoryChooserSetupSpi setup) {
-		return null;
+		return new DirectoryChooserImpl(widget);
 	}
 
 }

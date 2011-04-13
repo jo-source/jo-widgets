@@ -25,36 +25,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi;
+package org.jowidgets.impl.spi.descriptor;
 
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.spi.widgets.IDirectoryChooserSpi;
-import org.jowidgets.spi.widgets.IFileChooserSpi;
 import org.jowidgets.spi.widgets.setup.IDirectoryChooserSetupSpi;
-import org.jowidgets.spi.widgets.setup.IFileChooserSetupSpi;
 
-public interface IOptionalWidgetsFactorySpi {
-
-	//create widgets from setup
-
-	/**
-	 * @return true, if this spi supports a file chooser
-	 */
-	boolean hasFileChooser();
-
-	/**
-	 * @param parentUiReference
-	 * @param setup
-	 * @return The file chooser or null if {@link IOptionalWidgetsFactorySpi#hasFileChooser()} returns true
-	 */
-	IFileChooserSpi createFileChooser(Object parentUiReference, IFileChooserSetupSpi setup);
-
-	boolean hasDirectoryChooser();
-
-	/**
-	 * @param parentUiReference
-	 * @param setup
-	 * @return The directory chooser or null if {@link IOptionalWidgetsFactorySpi#hasDirectoryChooser()} returns true
-	 */
-	IDirectoryChooserSpi createDirectoryChooser(Object parentUiReference, IDirectoryChooserSetupSpi setup);
-
-}
+public interface IDirectoryChooserDescriptorSpi extends IDirectoryChooserSetupSpi, IWidgetDescriptor<IDirectoryChooserSpi> {}

@@ -26,35 +26,34 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.swing;
+package org.jowidgets.common.widgets;
 
-import org.jowidgets.spi.IOptionalWidgetsFactorySpi;
-import org.jowidgets.spi.impl.swing.widgets.FileChooserImpl;
-import org.jowidgets.spi.widgets.IDirectoryChooserSpi;
-import org.jowidgets.spi.widgets.IFileChooserSpi;
-import org.jowidgets.spi.widgets.setup.IDirectoryChooserSetupSpi;
-import org.jowidgets.spi.widgets.setup.IFileChooserSetupSpi;
+import java.io.File;
 
-public class SwingOptionalWidgetsFactory implements IOptionalWidgetsFactorySpi {
+import org.jowidgets.common.types.DialogResult;
 
-	@Override
-	public boolean hasFileChooser() {
-		return true;
-	}
+public interface IDirectoryChooserCommon extends IDisplayCommon {
 
-	@Override
-	public IFileChooserSpi createFileChooser(final Object parentUiReference, final IFileChooserSetupSpi setup) {
-		return new FileChooserImpl(parentUiReference, setup);
-	}
+	/**
+	 * Sets the directory of the chooser that will be shown
+	 * when the chooser will be opened the first time.
+	 * 
+	 * @param file The file or directory to set
+	 */
+	void setDirectory(File file);
 
-	@Override
-	public boolean hasDirectoryChooser() {
-		return false;
-	}
+	/**
+	 * Opens the chooser and blocks until the user has pressed OK or CANCEL
+	 * 
+	 * @return DialogResult.OK or DialogResult.CANCEL
+	 */
+	DialogResult open();
 
-	@Override
-	public IDirectoryChooserSpi createDirectoryChooser(final Object parentUiReference, final IDirectoryChooserSetupSpi setup) {
-		return null;
-	}
+	/**
+	 * Gets the directory that was selected by the user.
+	 * 
+	 * @return The directory that was selected by the user or an empty list.
+	 */
+	File getDirectory();
 
 }

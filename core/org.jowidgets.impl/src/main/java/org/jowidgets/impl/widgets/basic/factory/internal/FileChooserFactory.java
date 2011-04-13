@@ -38,7 +38,8 @@ import org.jowidgets.impl.widgets.basic.FileChooserImpl;
 import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.widgets.IFileChooserSpi;
 
-public class FileChooserFactory extends AbstractWidgetFactory implements IWidgetFactory<IFileChooser, IFileChooserDescriptor> {
+public final class FileChooserFactory extends AbstractWidgetFactory implements
+		IWidgetFactory<IFileChooser, IFileChooserDescriptor> {
 
 	public FileChooserFactory(
 		final IGenericWidgetFactory genericWidgetFactory,

@@ -33,6 +33,7 @@ import org.jowidgets.impl.spi.blueprint.IComboBoxBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IComboBoxSelectionBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ICompositeBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IDialogBluePrintSpi;
+import org.jowidgets.impl.spi.blueprint.IDirectoryChooserBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IFileChooserBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IFrameBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IIconBluePrintSpi;
@@ -56,6 +57,8 @@ public interface ISpiBluePrintFactory {
 	IDialogBluePrintSpi dialog();
 
 	IFileChooserBluePrintSpi fileChooser();
+
+	IDirectoryChooserBluePrintSpi directoryChooser();
 
 	ICompositeBluePrintSpi composite();
 

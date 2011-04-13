@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2011, Michael Grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,36 +25,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi;
+package org.jowidgets.api.widgets.descriptor;
 
-import org.jowidgets.spi.widgets.IDirectoryChooserSpi;
-import org.jowidgets.spi.widgets.IFileChooserSpi;
-import org.jowidgets.spi.widgets.setup.IDirectoryChooserSetupSpi;
-import org.jowidgets.spi.widgets.setup.IFileChooserSetupSpi;
+import org.jowidgets.api.widgets.IDirectoryChooser;
+import org.jowidgets.api.widgets.descriptor.setup.IDirectoryChooserSetup;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-public interface IOptionalWidgetsFactorySpi {
-
-	//create widgets from setup
-
-	/**
-	 * @return true, if this spi supports a file chooser
-	 */
-	boolean hasFileChooser();
-
-	/**
-	 * @param parentUiReference
-	 * @param setup
-	 * @return The file chooser or null if {@link IOptionalWidgetsFactorySpi#hasFileChooser()} returns true
-	 */
-	IFileChooserSpi createFileChooser(Object parentUiReference, IFileChooserSetupSpi setup);
-
-	boolean hasDirectoryChooser();
-
-	/**
-	 * @param parentUiReference
-	 * @param setup
-	 * @return The directory chooser or null if {@link IOptionalWidgetsFactorySpi#hasDirectoryChooser()} returns true
-	 */
-	IDirectoryChooserSpi createDirectoryChooser(Object parentUiReference, IDirectoryChooserSetupSpi setup);
+public interface IDirectoryChooserDescriptor extends IDirectoryChooserSetup, IWidgetDescriptor<IDirectoryChooser> {
 
 }

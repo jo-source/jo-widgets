@@ -31,7 +31,9 @@ package org.jowidgets.spi.impl.swt;
 import org.eclipse.swt.widgets.FileDialog;
 import org.jowidgets.spi.IOptionalWidgetsFactorySpi;
 import org.jowidgets.spi.impl.swt.widgets.FileChooserImpl;
+import org.jowidgets.spi.widgets.IDirectoryChooserSpi;
 import org.jowidgets.spi.widgets.IFileChooserSpi;
+import org.jowidgets.spi.widgets.setup.IDirectoryChooserSetupSpi;
 import org.jowidgets.spi.widgets.setup.IFileChooserSetupSpi;
 
 public class SwtOptionalWidgetsFactory implements IOptionalWidgetsFactorySpi {
@@ -55,6 +57,11 @@ public class SwtOptionalWidgetsFactory implements IOptionalWidgetsFactorySpi {
 	@Override
 	public boolean hasDirectoryChooser() {
 		return false;
+	}
+
+	@Override
+	public IDirectoryChooserSpi createDirectoryChooser(final Object parentUiReference, final IDirectoryChooserSetupSpi setup) {
+		return null;
 	}
 
 }

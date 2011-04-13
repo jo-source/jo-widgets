@@ -26,35 +26,11 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.swing;
+package org.jowidgets.common.widgets.descriptor.setup;
 
-import org.jowidgets.spi.IOptionalWidgetsFactorySpi;
-import org.jowidgets.spi.impl.swing.widgets.FileChooserImpl;
-import org.jowidgets.spi.widgets.IDirectoryChooserSpi;
-import org.jowidgets.spi.widgets.IFileChooserSpi;
-import org.jowidgets.spi.widgets.setup.IDirectoryChooserSetupSpi;
-import org.jowidgets.spi.widgets.setup.IFileChooserSetupSpi;
 
-public class SwingOptionalWidgetsFactory implements IOptionalWidgetsFactorySpi {
+public interface IDirectoryChooserSetupCommon {
 
-	@Override
-	public boolean hasFileChooser() {
-		return true;
-	}
-
-	@Override
-	public IFileChooserSpi createFileChooser(final Object parentUiReference, final IFileChooserSetupSpi setup) {
-		return new FileChooserImpl(parentUiReference, setup);
-	}
-
-	@Override
-	public boolean hasDirectoryChooser() {
-		return false;
-	}
-
-	@Override
-	public IDirectoryChooserSpi createDirectoryChooser(final Object parentUiReference, final IDirectoryChooserSetupSpi setup) {
-		return null;
-	}
+	String getTitle();
 
 }
