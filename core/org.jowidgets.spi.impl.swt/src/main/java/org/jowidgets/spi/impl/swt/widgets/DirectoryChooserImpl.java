@@ -26,50 +26,66 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.swt;
+package org.jowidgets.spi.impl.swt.widgets;
 
+import java.io.File;
+
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.DirectoryDialog;
-import org.eclipse.swt.widgets.FileDialog;
-import org.jowidgets.spi.IOptionalWidgetsFactorySpi;
-import org.jowidgets.spi.impl.swt.widgets.DirectoryChooserImpl;
-import org.jowidgets.spi.impl.swt.widgets.FileChooserImpl;
+import org.eclipse.swt.widgets.Shell;
+import org.jowidgets.common.types.DialogResult;
 import org.jowidgets.spi.widgets.IDirectoryChooserSpi;
-import org.jowidgets.spi.widgets.IFileChooserSpi;
 import org.jowidgets.spi.widgets.setup.IDirectoryChooserSetupSpi;
-import org.jowidgets.spi.widgets.setup.IFileChooserSetupSpi;
+import org.jowidgets.util.Assert;
 
-public class SwtOptionalWidgetsFactory implements IOptionalWidgetsFactorySpi {
+public class DirectoryChooserImpl implements IDirectoryChooserSpi {
+
+	private final DirectoryDialog directoryDialog;
+	private String directoryName;
+
+	public DirectoryChooserImpl(final Object parentUiReference, final IDirectoryChooserSetupSpi setup) {
+		directoryDialog = new DirectoryDialog((Shell) parentUiReference, SWT.NONE);
+		if (setup.getTitle() != null) {
+			directoryDialog.setText(setup.getTitle());
+		}
+	}
 
 	@Override
-	public boolean hasFileChooser() {
-		try {
-			FileDialog.class.getName();
+	public Object getUiReference() {
+		return directoryDialog;
+	}
+
+	@Override
+	public void setDirectory(final File file) {
+		Assert.paramNotNull(file, "file");
+		directoryDialog.setFilterPath(file.getAbsolutePath());
+	}
+
+	@Override
+	public DialogResult open() {
+		directoryName = directoryDialog.open();
+		if (directoryName != null) {
+			return DialogResult.OK;
 		}
-		catch (final NoClassDefFoundError error) {
-			return false;
+		else {
+			return DialogResult.CANCEL;
 		}
+	}
+
+	@Override
+	public File getDirectory() {
+		return new File(directoryName);
+	}
+
+	@Override
+	public void setEnabled(final boolean enabled) {
+		if (!enabled) {
+			throw new IllegalArgumentException("Could not disable a file chooser");
+		}
+	}
+
+	@Override
+	public boolean isEnabled() {
 		return true;
 	}
-
-	@Override
-	public IFileChooserSpi createFileChooser(final Object parentUiReference, final IFileChooserSetupSpi setup) {
-		return new FileChooserImpl(parentUiReference, setup);
-	}
-
-	@Override
-	public boolean hasDirectoryChooser() {
-		try {
-			DirectoryDialog.class.getName();
-		}
-		catch (final NoClassDefFoundError error) {
-			return false;
-		}
-		return true;
-	}
-
-	@Override
-	public IDirectoryChooserSpi createDirectoryChooser(final Object parentUiReference, final IDirectoryChooserSetupSpi setup) {
-		return new DirectoryChooserImpl(parentUiReference, setup);
-	}
-
 }

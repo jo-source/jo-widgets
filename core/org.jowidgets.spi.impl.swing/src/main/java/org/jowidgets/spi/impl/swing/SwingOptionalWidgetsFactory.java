@@ -29,6 +29,7 @@
 package org.jowidgets.spi.impl.swing;
 
 import org.jowidgets.spi.IOptionalWidgetsFactorySpi;
+import org.jowidgets.spi.impl.swing.widgets.DirectoryChooserImpl;
 import org.jowidgets.spi.impl.swing.widgets.FileChooserImpl;
 import org.jowidgets.spi.widgets.IDirectoryChooserSpi;
 import org.jowidgets.spi.widgets.IFileChooserSpi;
@@ -49,12 +50,12 @@ public class SwingOptionalWidgetsFactory implements IOptionalWidgetsFactorySpi {
 
 	@Override
 	public boolean hasDirectoryChooser() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public IDirectoryChooserSpi createDirectoryChooser(final Object parentUiReference, final IDirectoryChooserSetupSpi setup) {
-		return null;
+		return new DirectoryChooserImpl(parentUiReference, setup);
 	}
 
 }

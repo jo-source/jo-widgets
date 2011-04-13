@@ -133,7 +133,6 @@ public final class DemoFileChooserComposite {
 
 			final IDirectoryChooserBluePrint directoryChooserBp = bpf.directoryChooser().setTitle("Open directory demo");
 			final IDirectoryChooser directoryChooser = Toolkit.getActiveWindow().createChildWindow(directoryChooserBp);
-			directoryChooser.setDirectory(new File("C:/projects/jo-widgets"));
 			final DialogResult result = directoryChooser.open();
 			if (result == DialogResult.OK) {
 				//CHECKSTYLE:OFF
