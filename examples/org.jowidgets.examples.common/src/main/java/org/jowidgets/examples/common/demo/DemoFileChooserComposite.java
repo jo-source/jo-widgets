@@ -93,9 +93,9 @@ public final class DemoFileChooserComposite {
 			final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
 			final List<IFileChooserFilter> filterList = new LinkedList<IFileChooserFilter>();
-			filterList.add(new FileChooserFilter("All", "*"));
-			filterList.add(new FileChooserFilter("Batch", "bat"));
-			filterList.add(new FileChooserFilter("Image", "jpg", "gif", "png"));
+			filterList.add(new FileChooserFilter("All Files (*.*)", "*"));
+			filterList.add(new FileChooserFilter("Batch Files (*.bat)", "bat"));
+			filterList.add(new FileChooserFilter("Image Files (*.jpg; *.gif; *.png; *.bpm)", "jpg", "gif", "png", "bpm"));
 
 			final IFileChooserBluePrint fileChooserBp = bpf.fileChooser(type).setFilterList(filterList).setTitle(title);
 			final IFileChooser fileChooser = Toolkit.getActiveWindow().createChildWindow(fileChooserBp);

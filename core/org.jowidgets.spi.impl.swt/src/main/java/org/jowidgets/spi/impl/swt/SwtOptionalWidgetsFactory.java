@@ -28,6 +28,7 @@
 
 package org.jowidgets.spi.impl.swt;
 
+import org.eclipse.swt.widgets.FileDialog;
 import org.jowidgets.spi.IOptionalWidgetsFactorySpi;
 import org.jowidgets.spi.impl.swt.widgets.FileChooserImpl;
 import org.jowidgets.spi.widgets.IFileChooserSpi;
@@ -37,6 +38,12 @@ public class SwtOptionalWidgetsFactory implements IOptionalWidgetsFactorySpi {
 
 	@Override
 	public boolean hasFileChooser() {
+		try {
+			FileDialog.class.getName();
+		}
+		catch (final NoClassDefFoundError error) {
+			return false;
+		}
 		return true;
 	}
 

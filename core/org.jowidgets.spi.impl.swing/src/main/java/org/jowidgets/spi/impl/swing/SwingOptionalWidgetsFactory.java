@@ -29,6 +29,7 @@
 package org.jowidgets.spi.impl.swing;
 
 import org.jowidgets.spi.IOptionalWidgetsFactorySpi;
+import org.jowidgets.spi.impl.swing.widgets.FileChooserImpl;
 import org.jowidgets.spi.widgets.IFileChooserSpi;
 import org.jowidgets.spi.widgets.setup.IFileChooserSetupSpi;
 
@@ -36,12 +37,12 @@ public class SwingOptionalWidgetsFactory implements IOptionalWidgetsFactorySpi {
 
 	@Override
 	public boolean hasFileChooser() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public IFileChooserSpi createFileChooser(final Object parentUiReference, final IFileChooserSetupSpi setup) {
-		return null;
+		return new FileChooserImpl(parentUiReference, setup);
 	}
 
 	@Override
