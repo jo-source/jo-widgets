@@ -31,6 +31,7 @@ package org.jowidgets.spi.impl.swing.widgets;
 import java.awt.Component;
 import java.io.File;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JFileChooser;
@@ -76,11 +77,33 @@ public class FileChooserImpl implements IFileChooserSpi {
 
 				final String[] extensions = new String[filter.getExtensions().size()];
 				int index = 0;
+				boolean acceptAllFilter = false;
 				for (final String extension : filter.getExtensions()) {
 					extensions[index] = extension;
+					if ("*".equals(extension)) {
+						acceptAllFilter = true;
+					}
 					index++;
 				}
-				final FileFilter fileFilter = new FileNameExtensionFilter(filter.getFilterName(), extensions);
+				final FileFilter fileFilter;
+				if (acceptAllFilter) {
+					fileFilter = new FileFilter() {
+
+						@Override
+						public String getDescription() {
+							return filter.getFilterName();
+						}
+
+						@Override
+						public boolean accept(final File f) {
+							return true;
+						}
+					};
+				}
+				else {
+					fileFilter = new FileNameExtensionFilter(filter.getFilterName(), extensions);
+				}
+
 				fileChooser.addChoosableFileFilter(fileFilter);
 				if (firstFileFilter == null) {
 					firstFileFilter = fileFilter;
@@ -115,7 +138,7 @@ public class FileChooserImpl implements IFileChooserSpi {
 			throw new IllegalStateException("The file chooser type '" + fileChooserType + "' is not supported");
 		}
 
-		if (result != JFileChooser.APPROVE_OPTION) {
+		if (result == JFileChooser.APPROVE_OPTION) {
 			return DialogResult.OK;
 		}
 		else {
@@ -125,7 +148,12 @@ public class FileChooserImpl implements IFileChooserSpi {
 
 	@Override
 	public List<File> getSelectedFiles() {
-		return Arrays.asList(fileChooser.getSelectedFiles());
+		if (fileChooserType == FileChooserType.OPEN_FILE_LIST) {
+			return Arrays.asList(fileChooser.getSelectedFiles());
+		}
+		else {
+			return Collections.singletonList(fileChooser.getSelectedFile());
+		}
 	}
 
 	@Override
