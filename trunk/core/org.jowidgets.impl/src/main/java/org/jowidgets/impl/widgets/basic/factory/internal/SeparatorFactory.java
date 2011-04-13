@@ -36,17 +36,17 @@ import org.jowidgets.impl.spi.ISpiBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.ISeparatorBluePrintSpi;
 import org.jowidgets.impl.widgets.basic.ControlImpl;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
-import org.jowidgets.spi.IWidgetFactorySpi;
+import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.widgets.IControlSpi;
 
 public class SeparatorFactory extends AbstractWidgetFactory implements IWidgetFactory<IWidget, ISeparatorDescriptor> {
 
 	public SeparatorFactory(
 		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetFactorySpi spiWidgetFactory,
+		final IWidgetsServiceProvider widgetsServiceProvider,
 		final ISpiBluePrintFactory bpF) {
 
-		super(genericWidgetFactory, spiWidgetFactory, bpF);
+		super(genericWidgetFactory, widgetsServiceProvider, bpF);
 	}
 
 	@Override

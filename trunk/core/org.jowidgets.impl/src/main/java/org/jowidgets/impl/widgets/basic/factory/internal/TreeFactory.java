@@ -35,17 +35,17 @@ import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.ITreeBluePrintSpi;
 import org.jowidgets.impl.widgets.basic.TreeImpl;
-import org.jowidgets.spi.IWidgetFactorySpi;
+import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.widgets.ITreeSpi;
 
 public class TreeFactory extends AbstractWidgetFactory implements IWidgetFactory<ITree, ITreeDescriptor> {
 
 	public TreeFactory(
 		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetFactorySpi spiWidgetFactory,
+		final IWidgetsServiceProvider widgetsServiceProvider,
 		final ISpiBluePrintFactory bpF) {
 
-		super(genericWidgetFactory, spiWidgetFactory, bpF);
+		super(genericWidgetFactory, widgetsServiceProvider, bpF);
 	}
 
 	@Override

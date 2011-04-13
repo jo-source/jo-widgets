@@ -57,9 +57,4 @@ public interface IFileChooserCommon extends IDisplayCommon {
 	 */
 	List<File> getSelectedFiles();
 
-	/**
-	 * Disposes the chooser.
-	 */
-	void dispose();
-
 }

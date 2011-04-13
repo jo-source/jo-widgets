@@ -27,8 +27,8 @@
  */
 package org.jowidgets.spi.widgets.setup;
 
-import org.jowidgets.common.widgets.descriptor.setup.IFrameSetupCommon;
+import org.jowidgets.common.widgets.descriptor.setup.IFileChooserSetupCommon;
 
-public interface IFileChooserSetupSpi extends IFrameSetupCommon {
+public interface IFileChooserSetupSpi extends IFileChooserSetupCommon {
 
 }

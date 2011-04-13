@@ -35,17 +35,17 @@ import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.IButtonBluePrintSpi;
 import org.jowidgets.impl.widgets.basic.ButtonImpl;
-import org.jowidgets.spi.IWidgetFactorySpi;
+import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.widgets.IButtonSpi;
 
 public class ButtonFactory extends AbstractWidgetFactory implements IWidgetFactory<IButton, IButtonDescriptor> {
 
 	public ButtonFactory(
 		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetFactorySpi spiWidgetFactory,
+		final IWidgetsServiceProvider widgetsServiceProvider,
 		final ISpiBluePrintFactory bpF) {
 
-		super(genericWidgetFactory, spiWidgetFactory, bpF);
+		super(genericWidgetFactory, widgetsServiceProvider, bpF);
 	}
 
 	@Override

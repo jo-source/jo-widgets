@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,33 +26,55 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.basic.factory.internal;
+package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.api.widgets.IFrame;
-import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.common.widgets.factory.IWidgetFactory;
-import org.jowidgets.impl.spi.ISpiBluePrintFactory;
-import org.jowidgets.impl.spi.blueprint.IFrameBluePrintSpi;
-import org.jowidgets.impl.widgets.basic.FrameImpl;
-import org.jowidgets.spi.IWidgetsServiceProvider;
-import org.jowidgets.spi.widgets.IFrameSpi;
+import java.io.File;
+import java.util.List;
 
-public class FrameFactory extends AbstractWidgetFactory implements IWidgetFactory<IFrame, IFrameDescriptor> {
+import org.jowidgets.api.widgets.IFileChooser;
+import org.jowidgets.api.widgets.IWindow;
+import org.jowidgets.common.types.DialogResult;
+import org.jowidgets.impl.base.delegate.DisplayDelegate;
+import org.jowidgets.impl.widgets.common.wrapper.WidgetSpiWrapper;
+import org.jowidgets.spi.widgets.IFileChooserSpi;
 
-	public FrameFactory(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetsServiceProvider widgetsServiceProvider,
-		final ISpiBluePrintFactory bpF) {
+public class FileChooserImpl extends WidgetSpiWrapper implements IFileChooser {
 
-		super(genericWidgetFactory, widgetsServiceProvider, bpF);
+	private final DisplayDelegate displayDelegate;
+
+	public FileChooserImpl(final IFileChooserSpi widget) {
+		super(widget);
+		this.displayDelegate = new DisplayDelegate();
 	}
 
 	@Override
-	public IFrame create(final Object parentUiReference, final IFrameDescriptor descriptor) {
-		final IFrameBluePrintSpi bp = getSpiBluePrintFactory().frame().setSetup(descriptor);
-		final IFrameSpi frameSpi = getSpiWidgetFactory().createFrame(getGenericWidgetFactory(), bp);
-		return new FrameImpl(frameSpi, descriptor);
+	public IFileChooserSpi getWidget() {
+		return (IFileChooserSpi) super.getWidget();
+	}
+
+	@Override
+	public void setParent(final IWindow parent) {
+		displayDelegate.setParent(parent);
+	}
+
+	@Override
+	public IWindow getParent() {
+		return displayDelegate.getParent();
+	}
+
+	@Override
+	public void setSelectedFile(final File file) {
+		getWidget().setSelectedFile(file);
+	}
+
+	@Override
+	public DialogResult open() {
+		return getWidget().open();
+	}
+
+	@Override
+	public List<File> getSelectedFiles() {
+		return getWidget().getSelectedFiles();
 	}
 
 }

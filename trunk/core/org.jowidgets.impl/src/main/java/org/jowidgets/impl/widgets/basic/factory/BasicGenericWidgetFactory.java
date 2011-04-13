@@ -44,6 +44,7 @@ import org.jowidgets.api.widgets.descriptor.IComboBoxDescriptor;
 import org.jowidgets.api.widgets.descriptor.IComboBoxSelectionDescriptor;
 import org.jowidgets.api.widgets.descriptor.ICompositeDescriptor;
 import org.jowidgets.api.widgets.descriptor.IDialogDescriptor;
+import org.jowidgets.api.widgets.descriptor.IFileChooserDescriptor;
 import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
 import org.jowidgets.api.widgets.descriptor.IIconDescriptor;
 import org.jowidgets.api.widgets.descriptor.IScrollCompositeDescriptor;
@@ -67,6 +68,7 @@ import org.jowidgets.impl.widgets.basic.factory.internal.ComboBoxFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.ComboBoxSelectionFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.CompositeFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.DialogFactory;
+import org.jowidgets.impl.widgets.basic.factory.internal.FileChooserFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.FrameFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.IconFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.ScrollCompositeFactory;
@@ -82,6 +84,7 @@ import org.jowidgets.impl.widgets.basic.factory.internal.ToolBarFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.TreeFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.UiWidgetFactory;
 import org.jowidgets.spi.IWidgetFactorySpi;
+import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.test.api.widgets.IButtonUi;
 import org.jowidgets.test.api.widgets.ICheckBoxUi;
 import org.jowidgets.test.api.widgets.IComboBoxUi;
@@ -110,41 +113,42 @@ import org.jowidgets.test.api.widgets.descriptor.IToolBarDescriptorUi;
 
 public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 
-	private final IWidgetFactorySpi spiWidgetFactory;
+	private final IWidgetsServiceProvider widgetsServiceProvider;
 
-	public BasicGenericWidgetFactory(final IWidgetFactorySpi spiWidgetFactory) {
+	public BasicGenericWidgetFactory(final IWidgetsServiceProvider widgetsServiceProvider) {
 		super(new DefaultGenericWidgetFactory());
-		this.spiWidgetFactory = spiWidgetFactory;
+		this.widgetsServiceProvider = widgetsServiceProvider;
 		final SpiBluePrintFactory spiBbf = new SpiBluePrintFactory();
-		registerBaseWidgets(spiWidgetFactory, spiBbf);
-		registerUiWidgets(spiWidgetFactory, spiBbf);
+		registerBaseWidgets(widgetsServiceProvider, spiBbf);
+		registerUiWidgets(widgetsServiceProvider, spiBbf);
 	}
 
 	@SuppressWarnings({"unchecked"})
-	private void registerBaseWidgets(final IWidgetFactorySpi spiWidgetFactory, final ISpiBluePrintFactory bpF) {
-		register(IFrameDescriptor.class, new FrameFactory(this, spiWidgetFactory, bpF));
-		register(IDialogDescriptor.class, new DialogFactory(this, spiWidgetFactory, bpF));
-		register(ICompositeDescriptor.class, new CompositeFactory(this, spiWidgetFactory, bpF));
-		register(IScrollCompositeDescriptor.class, new ScrollCompositeFactory(this, spiWidgetFactory, bpF));
-		register(ISplitCompositeDescriptor.class, new SplitCompositeFactory(this, spiWidgetFactory, bpF));
-		register(ITextFieldDescriptor.class, new TextFieldFactory(this, spiWidgetFactory, bpF));
-		register(ITextAreaDescriptor.class, new TextAreaFactory(this, spiWidgetFactory, bpF));
-		register(IIconDescriptor.class, new IconFactory(this, spiWidgetFactory, bpF));
-		register(ITextLabelDescriptor.class, new TextLabelFactory(this, spiWidgetFactory, bpF));
-		register(IButtonDescriptor.class, new ButtonFactory(this, spiWidgetFactory, bpF));
-		register(ISeparatorDescriptor.class, new SeparatorFactory(this, spiWidgetFactory, bpF));
-		register(IToggleButtonDescriptor.class, new ToggleButtonFactory(this, spiWidgetFactory, bpF));
-		register(ICheckBoxDescriptor.class, new CheckBoxFactory(this, spiWidgetFactory, bpF));
-		register(IComboBoxSelectionDescriptor.class, new ComboBoxSelectionFactory(this, spiWidgetFactory, bpF));
-		register(IComboBoxDescriptor.class, new ComboBoxFactory(this, spiWidgetFactory, bpF));
-		register(IToolBarDescriptor.class, new ToolBarFactory(this, spiWidgetFactory, bpF));
-		register(ITabFolderDescriptor.class, new TabFolderFactory(this, spiWidgetFactory, bpF));
-		register(ITreeDescriptor.class, new TreeFactory(this, spiWidgetFactory, bpF));
-		register(ITableDescriptor.class, new TableFactory(this, spiWidgetFactory, bpF));
+	private void registerBaseWidgets(final IWidgetsServiceProvider widgetsServiceProvider, final ISpiBluePrintFactory bpF) {
+		register(IFrameDescriptor.class, new FrameFactory(this, widgetsServiceProvider, bpF));
+		register(IDialogDescriptor.class, new DialogFactory(this, widgetsServiceProvider, bpF));
+		register(IFileChooserDescriptor.class, new FileChooserFactory(this, widgetsServiceProvider, bpF));
+		register(ICompositeDescriptor.class, new CompositeFactory(this, widgetsServiceProvider, bpF));
+		register(IScrollCompositeDescriptor.class, new ScrollCompositeFactory(this, widgetsServiceProvider, bpF));
+		register(ISplitCompositeDescriptor.class, new SplitCompositeFactory(this, widgetsServiceProvider, bpF));
+		register(ITextFieldDescriptor.class, new TextFieldFactory(this, widgetsServiceProvider, bpF));
+		register(ITextAreaDescriptor.class, new TextAreaFactory(this, widgetsServiceProvider, bpF));
+		register(IIconDescriptor.class, new IconFactory(this, widgetsServiceProvider, bpF));
+		register(ITextLabelDescriptor.class, new TextLabelFactory(this, widgetsServiceProvider, bpF));
+		register(IButtonDescriptor.class, new ButtonFactory(this, widgetsServiceProvider, bpF));
+		register(ISeparatorDescriptor.class, new SeparatorFactory(this, widgetsServiceProvider, bpF));
+		register(IToggleButtonDescriptor.class, new ToggleButtonFactory(this, widgetsServiceProvider, bpF));
+		register(ICheckBoxDescriptor.class, new CheckBoxFactory(this, widgetsServiceProvider, bpF));
+		register(IComboBoxSelectionDescriptor.class, new ComboBoxSelectionFactory(this, widgetsServiceProvider, bpF));
+		register(IComboBoxDescriptor.class, new ComboBoxFactory(this, widgetsServiceProvider, bpF));
+		register(IToolBarDescriptor.class, new ToolBarFactory(this, widgetsServiceProvider, bpF));
+		register(ITabFolderDescriptor.class, new TabFolderFactory(this, widgetsServiceProvider, bpF));
+		register(ITreeDescriptor.class, new TreeFactory(this, widgetsServiceProvider, bpF));
+		register(ITableDescriptor.class, new TableFactory(this, widgetsServiceProvider, bpF));
 	}
 
 	@SuppressWarnings("unchecked")
-	private void registerUiWidgets(final IWidgetFactorySpi spiWidgetFactory, final ISpiBluePrintFactory bpF) {
+	private void registerUiWidgets(final IWidgetsServiceProvider widgetsServiceProvider, final ISpiBluePrintFactory bpF) {
 		registerUiWidget(IFrameDescriptorUi.class, IFrameUi.class, IFrameBluePrint.class);
 		registerUiWidget(IButtonDescriptorUi.class, IButtonUi.class, IButtonBluePrint.class);
 		registerUiWidget(IToolBarDescriptorUi.class, IToolBarUi.class, IToolBarBluePrint.class);
@@ -156,9 +160,9 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 		registerUiWidget(ISplitCompositeDescriptorUi.class, ISplitCompositeUi.class, ISplitCompositeBluePrint.class);
 		registerUiWidget(IScrollCompositeDescriptorUi.class, IScrollCompositeUi.class, IScrollCompositeBluePrint.class);
 		registerUiWidget(ICompositeDescriptorUi.class, ICompositeUi.class, ICompositeBluePrint.class);
-		register(IComboBoxSelectionDescriptorUi.class, new ComboBoxSelectionFactory(this, spiWidgetFactory, bpF));
-		register(IDialogDescriptorUi.class, new DialogFactory(this, spiWidgetFactory, bpF));
-		register(ITextFieldDescriptorUi.class, new TextFieldFactory(this, spiWidgetFactory, bpF));
+		register(IComboBoxSelectionDescriptorUi.class, new ComboBoxSelectionFactory(this, widgetsServiceProvider, bpF));
+		register(IDialogDescriptorUi.class, new DialogFactory(this, widgetsServiceProvider, bpF));
+		register(ITextFieldDescriptorUi.class, new TextFieldFactory(this, widgetsServiceProvider, bpF));
 	}
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
@@ -167,7 +171,7 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 	}
 
 	protected IWidgetFactorySpi getSpiWidgetFactory() {
-		return spiWidgetFactory;
+		return widgetsServiceProvider.getWidgetFactory();
 	}
 
 }

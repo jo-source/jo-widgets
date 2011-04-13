@@ -34,17 +34,17 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
 import org.jowidgets.impl.widgets.basic.ToolBarImpl;
-import org.jowidgets.spi.IWidgetFactorySpi;
+import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.widgets.IToolBarSpi;
 
 public class ToolBarFactory extends AbstractWidgetFactory implements IWidgetFactory<IToolBar, IToolBarDescriptor> {
 
 	public ToolBarFactory(
 		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetFactorySpi spiWidgetFactory,
+		final IWidgetsServiceProvider widgetsServiceProvider,
 		final ISpiBluePrintFactory bpF) {
 
-		super(genericWidgetFactory, spiWidgetFactory, bpF);
+		super(genericWidgetFactory, widgetsServiceProvider, bpF);
 	}
 
 	@Override

@@ -35,17 +35,17 @@ import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.IToggleButtonBluePrintSpi;
 import org.jowidgets.impl.widgets.basic.ToggleButtonImpl;
-import org.jowidgets.spi.IWidgetFactorySpi;
+import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.widgets.IToggleButtonSpi;
 
 public class ToggleButtonFactory extends AbstractWidgetFactory implements IWidgetFactory<IToggleButton, IToggleButtonDescriptor> {
 
 	public ToggleButtonFactory(
 		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetFactorySpi spiWidgetFactory,
+		final IWidgetsServiceProvider widgetsServiceProvider,
 		final ISpiBluePrintFactory bpF) {
 
-		super(genericWidgetFactory, spiWidgetFactory, bpF);
+		super(genericWidgetFactory, widgetsServiceProvider, bpF);
 	}
 
 	@Override

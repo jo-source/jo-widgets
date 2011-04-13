@@ -90,7 +90,7 @@ public class DefaultToolkit implements IToolkit {
 	public DefaultToolkit(final IWidgetsServiceProvider toolkitSpi) {
 		Assert.paramNotNull(toolkitSpi, "toolkitSpi");
 		this.widgetsServiceProvider = toolkitSpi;
-		this.genericWidgetFactory = new GenericWidgetFactory(toolkitSpi.getWidgetFactory());
+		this.genericWidgetFactory = new GenericWidgetFactory(toolkitSpi);
 		this.widgetWrapperFactory = new DefaultWidgetWrapperFactory(genericWidgetFactory, toolkitSpi.getWidgetFactory());
 		this.bluePrintFactory = new BluePrintFactory();
 		this.actionBuilderFactory = new ActionBuilderFactory();
