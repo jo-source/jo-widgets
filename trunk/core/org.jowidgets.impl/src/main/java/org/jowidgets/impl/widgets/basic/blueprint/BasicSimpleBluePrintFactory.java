@@ -69,6 +69,7 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry
 import org.jowidgets.api.widgets.blueprint.factory.IBasicSimpleBluePrintFactory;
 import org.jowidgets.common.model.ITableColumnModel;
 import org.jowidgets.common.model.ITableDataModel;
+import org.jowidgets.common.types.FileChooserType;
 import org.jowidgets.impl.base.blueprint.factory.AbstractBluePrintFactory;
 import org.jowidgets.util.Assert;
 
@@ -91,8 +92,11 @@ public class BasicSimpleBluePrintFactory extends AbstractBluePrintFactory implem
 	}
 
 	@Override
-	public IFileChooserBluePrint fileChooser() {
-		return createProxy(IFileChooserBluePrint.class);
+	public IFileChooserBluePrint fileChooser(final FileChooserType type) {
+		Assert.paramNotNull(type, "type");
+		final IFileChooserBluePrint result = createProxy(IFileChooserBluePrint.class);
+		result.setType(type);
+		return result;
 	}
 
 	@Override

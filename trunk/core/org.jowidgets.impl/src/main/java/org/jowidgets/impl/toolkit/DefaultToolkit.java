@@ -38,6 +38,7 @@ import org.jowidgets.api.model.IModelFactoryProvider;
 import org.jowidgets.api.threads.IUiThreadAccess;
 import org.jowidgets.api.toolkit.IMessagePane;
 import org.jowidgets.api.toolkit.IQuestionPane;
+import org.jowidgets.api.toolkit.ISupportedWidgets;
 import org.jowidgets.api.toolkit.IToolkit;
 import org.jowidgets.api.toolkit.IWidgetWrapperFactory;
 import org.jowidgets.api.utils.IWidgetUtils;
@@ -73,6 +74,7 @@ public class DefaultToolkit implements IToolkit {
 	private final IGenericWidgetFactory genericWidgetFactory;
 	private final IWidgetWrapperFactory widgetWrapperFactory;
 	private final IBluePrintFactory bluePrintFactory;
+	private ISupportedWidgets supportedWidgets;
 	private final IActionBuilderFactory actionBuilderFactory;
 	private final IModelFactoryProvider modelFactoryProvider;
 	private final IConverterProvider converterProvider;
@@ -135,6 +137,14 @@ public class DefaultToolkit implements IToolkit {
 	@Override
 	public IBluePrintFactory getBluePrintFactory() {
 		return bluePrintFactory;
+	}
+
+	@Override
+	public ISupportedWidgets getSupportedWidgets() {
+		if (supportedWidgets == null) {
+			supportedWidgets = new SupportedWidgets(widgetsServiceProvider.getOptionalWidgetFactory());
+		}
+		return supportedWidgets;
 	}
 
 	@Override

@@ -45,6 +45,13 @@ public interface IWidgetsServiceProvider {
 
 	IWidgetFactorySpi getWidgetFactory();
 
+	/**
+	 * These widgets are optional and may be not supported on all platforms
+	 * 
+	 * @return The optional widgets factory or null if no optional widgets are supported
+	 */
+	IOptionalWidgetsFactorySpi getOptionalWidgetFactory();
+
 	IUiThreadAccessCommon createUiThreadAccess();
 
 	IApplicationRunner createApplicationRunner();

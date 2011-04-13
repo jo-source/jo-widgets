@@ -36,6 +36,7 @@ import org.jowidgets.api.model.IModelFactoryProvider;
 import org.jowidgets.api.threads.IUiThreadAccess;
 import org.jowidgets.api.toolkit.IMessagePane;
 import org.jowidgets.api.toolkit.IQuestionPane;
+import org.jowidgets.api.toolkit.ISupportedWidgets;
 import org.jowidgets.api.toolkit.IToolkit;
 import org.jowidgets.api.toolkit.IWidgetWrapperFactory;
 import org.jowidgets.api.utils.IWidgetUtils;
@@ -83,6 +84,11 @@ public class ToolkitWrapper implements IToolkit {
 	@Override
 	public IGenericWidgetFactory getWidgetFactory() {
 		return toolkit.getWidgetFactory();
+	}
+
+	@Override
+	public ISupportedWidgets getSupportedWidgets() {
+		return toolkit.getSupportedWidgets();
 	}
 
 	@Override

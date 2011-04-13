@@ -25,15 +25,29 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.widgets;
+package org.jowidgets.spi;
 
-import org.jowidgets.common.widgets.IDisplayCommon;
-import org.jowidgets.common.widgets.IWindowCommon;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.spi.widgets.IFileChooserSpi;
+import org.jowidgets.spi.widgets.setup.IFileChooserSetupSpi;
 
-public interface IWindowSpi extends IDisplaySpi, IComponentSpi, IWindowCommon {
+public interface IOptionalWidgetsFactorySpi {
 
-	<WIDGET_TYPE extends IDisplayCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
-		final DESCRIPTOR_TYPE descriptor);
+	//create widgets from setup
+
+	/**
+	 * @return true, if this spi supports a file chooser
+	 */
+	boolean hasFileChooser();
+
+	/**
+	 * @param factory
+	 * @param parentUiReference
+	 * @param setup
+	 * @return The file chooser or null if {@link IOptionalWidgetsFactorySpi#hasFileChooser()} returns true
+	 */
+	IFileChooserSpi createFileChooser(IGenericWidgetFactory factory, Object parentUiReference, IFileChooserSetupSpi setup);
+
+	boolean hasDirectoryChooser();
 
 }

@@ -66,6 +66,7 @@ import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeNodeBluePrint;
 import org.jowidgets.common.model.ITableColumnModel;
 import org.jowidgets.common.model.ITableDataModel;
+import org.jowidgets.common.types.FileChooserType;
 
 public interface IBasicSimpleBluePrintFactory extends IBaseBluePrintFactory {
 
@@ -73,7 +74,7 @@ public interface IBasicSimpleBluePrintFactory extends IBaseBluePrintFactory {
 
 	IDialogBluePrint dialog();
 
-	IFileChooserBluePrint fileChooser();
+	IFileChooserBluePrint fileChooser(FileChooserType type);
 
 	ICompositeBluePrint composite();
 

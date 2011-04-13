@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,10 +26,27 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.widgets;
+package org.jowidgets.impl.toolkit;
 
-import org.jowidgets.common.widgets.IDisplayCommon;
+import org.jowidgets.api.toolkit.ISupportedWidgets;
+import org.jowidgets.spi.IOptionalWidgetsFactorySpi;
 
-public interface IDisplaySpi extends IWidgetSpi, IDisplayCommon {
+final class SupportedWidgets implements ISupportedWidgets {
+
+	private final IOptionalWidgetsFactorySpi optionalWidgetsFactorySpi;
+
+	SupportedWidgets(final IOptionalWidgetsFactorySpi optionalWidgetsFactorySpi) {
+		this.optionalWidgetsFactorySpi = optionalWidgetsFactorySpi;
+	}
+
+	@Override
+	public boolean hasFileChooser() {
+		return optionalWidgetsFactorySpi == null ? false : optionalWidgetsFactorySpi.hasFileChooser();
+	}
+
+	@Override
+	public boolean hasDirectoryChooser() {
+		return optionalWidgetsFactorySpi == null ? false : optionalWidgetsFactorySpi.hasDirectoryChooser();
+	}
 
 }

@@ -61,6 +61,8 @@ public interface IToolkit {
 
 	IBluePrintFactory getBluePrintFactory();
 
+	ISupportedWidgets getSupportedWidgets();
+
 	IInputContentCreatorFactory getInputContentCreatorFactory();
 
 	IConverterProvider getConverterProvider();
