@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,33 +26,40 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.basic.factory.internal;
+package org.jowidgets.tools.types;
 
-import org.jowidgets.api.widgets.IFrame;
-import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.common.widgets.factory.IWidgetFactory;
-import org.jowidgets.impl.spi.ISpiBluePrintFactory;
-import org.jowidgets.impl.spi.blueprint.IFrameBluePrintSpi;
-import org.jowidgets.impl.widgets.basic.FrameImpl;
-import org.jowidgets.spi.IWidgetsServiceProvider;
-import org.jowidgets.spi.widgets.IFrameSpi;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
-public class FrameFactory extends AbstractWidgetFactory implements IWidgetFactory<IFrame, IFrameDescriptor> {
+import org.jowidgets.common.types.IFileChooserFilter;
 
-	public FrameFactory(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetsServiceProvider widgetsServiceProvider,
-		final ISpiBluePrintFactory bpF) {
+public final class FileChooserFilter implements IFileChooserFilter {
 
-		super(genericWidgetFactory, widgetsServiceProvider, bpF);
+	private final String name;
+	private final List<String> extensions;
+
+	public FileChooserFilter(final String name, final String extension, final String... extensions) {
+		this.name = name;
+
+		final List<String> extensionList = new LinkedList<String>();
+		extensionList.add(extension);
+
+		for (final String additionalExtension : extensions) {
+			extensionList.add(additionalExtension);
+		}
+
+		this.extensions = Collections.unmodifiableList(extensionList);
 	}
 
 	@Override
-	public IFrame create(final Object parentUiReference, final IFrameDescriptor descriptor) {
-		final IFrameBluePrintSpi bp = getSpiBluePrintFactory().frame().setSetup(descriptor);
-		final IFrameSpi frameSpi = getSpiWidgetFactory().createFrame(getGenericWidgetFactory(), bp);
-		return new FrameImpl(frameSpi, descriptor);
+	public String getFilterName() {
+		return name;
+	}
+
+	@Override
+	public List<String> getExtensions() {
+		return extensions;
 	}
 
 }

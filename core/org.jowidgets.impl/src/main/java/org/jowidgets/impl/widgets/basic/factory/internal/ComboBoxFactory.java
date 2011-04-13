@@ -37,17 +37,17 @@ import org.jowidgets.impl.spi.blueprint.IComboBoxBluePrintSpi;
 import org.jowidgets.impl.widgets.basic.ComboBoxImpl;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ComboBoxBuilderConverter;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.InputVerifier;
-import org.jowidgets.spi.IWidgetFactorySpi;
+import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
 
 public class ComboBoxFactory extends AbstractWidgetFactory implements IWidgetFactory<IComboBox<?>, IComboBoxDescriptor<?>> {
 
 	public ComboBoxFactory(
 		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetFactorySpi spiWidgetFactory,
+		final IWidgetsServiceProvider widgetsServiceProvider,
 		final ISpiBluePrintFactory bpF) {
 
-		super(genericWidgetFactory, spiWidgetFactory, bpF);
+		super(genericWidgetFactory, widgetsServiceProvider, bpF);
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})

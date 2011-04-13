@@ -46,12 +46,12 @@ import org.jowidgets.impl.widgets.composed.factory.internal.ProgressBarFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.QuestionDialogFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.TextSeparatorFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.ValidationLabelFactory;
-import org.jowidgets.spi.IWidgetFactorySpi;
+import org.jowidgets.spi.IWidgetsServiceProvider;
 
 public class GenericWidgetFactory extends BasicGenericWidgetFactory {
 
-	public GenericWidgetFactory(final IWidgetFactorySpi spiWidgetsFactory) {
-		super(spiWidgetsFactory);
+	public GenericWidgetFactory(final IWidgetsServiceProvider widgetsServiceProvider) {
+		super(widgetsServiceProvider);
 		registerCustomWidgetFactories();
 	}
 

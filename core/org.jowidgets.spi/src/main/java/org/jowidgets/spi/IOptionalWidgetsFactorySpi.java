@@ -27,7 +27,6 @@
  */
 package org.jowidgets.spi;
 
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.widgets.IFileChooserSpi;
 import org.jowidgets.spi.widgets.setup.IFileChooserSetupSpi;
 
@@ -41,12 +40,11 @@ public interface IOptionalWidgetsFactorySpi {
 	boolean hasFileChooser();
 
 	/**
-	 * @param factory
 	 * @param parentUiReference
 	 * @param setup
 	 * @return The file chooser or null if {@link IOptionalWidgetsFactorySpi#hasFileChooser()} returns true
 	 */
-	IFileChooserSpi createFileChooser(IGenericWidgetFactory factory, Object parentUiReference, IFileChooserSetupSpi setup);
+	IFileChooserSpi createFileChooser(Object parentUiReference, IFileChooserSetupSpi setup);
 
 	boolean hasDirectoryChooser();
 

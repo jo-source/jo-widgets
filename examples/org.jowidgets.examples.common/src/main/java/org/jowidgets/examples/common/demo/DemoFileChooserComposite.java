@@ -28,6 +28,10 @@
 
 package org.jowidgets.examples.common.demo;
 
+import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IContainer;
@@ -36,8 +40,10 @@ import org.jowidgets.api.widgets.blueprint.IFileChooserBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.DialogResult;
 import org.jowidgets.common.types.FileChooserType;
+import org.jowidgets.common.types.IFileChooserFilter;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.tools.types.FileChooserFilter;
 
 public final class DemoFileChooserComposite {
 
@@ -54,7 +60,7 @@ public final class DemoFileChooserComposite {
 		openFileButton.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
-				openFileChooser(FileChooserType.OPEN_FILE);
+				openFileChooser(FileChooserType.OPEN_FILE, "open file demo");
 			}
 		});
 
@@ -65,7 +71,7 @@ public final class DemoFileChooserComposite {
 		openFilesButton.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
-				openFileChooser(FileChooserType.OPEN_FILE_LIST);
+				openFileChooser(FileChooserType.OPEN_FILE_LIST, "Open files demo");
 			}
 		});
 
@@ -76,23 +82,30 @@ public final class DemoFileChooserComposite {
 		saveFileButton.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
-				openFileChooser(FileChooserType.SAVE);
+				openFileChooser(FileChooserType.SAVE, "Save a file demo");
 			}
 		});
 
 	}
 
-	private void openFileChooser(final FileChooserType type) {
+	private void openFileChooser(final FileChooserType type, final String title) {
 		if (Toolkit.getSupportedWidgets().hasFileChooser()) {
 			final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-			final IFileChooserBluePrint fileChooserBp = bpf.fileChooser(type);
-			final IFileChooser fileChooser = Toolkit.getActiveWindow().createChildWindow(fileChooserBp);
+			final List<IFileChooserFilter> filterList = new LinkedList<IFileChooserFilter>();
+			filterList.add(new FileChooserFilter("All", "*"));
+			filterList.add(new FileChooserFilter("Batch", "bat"));
+			filterList.add(new FileChooserFilter("Image", "jpg", "gif", "png"));
 
+			final IFileChooserBluePrint fileChooserBp = bpf.fileChooser(type).setFilterList(filterList).setTitle(title);
+			final IFileChooser fileChooser = Toolkit.getActiveWindow().createChildWindow(fileChooserBp);
+			fileChooser.setSelectedFile(new File("C:/projects/jo-widgets"));
 			final DialogResult result = fileChooser.open();
 			if (result == DialogResult.OK) {
 				//CHECKSTYLE:OFF
-				System.out.println(fileChooser.getSelectedFiles());
+				for (final File file : fileChooser.getSelectedFiles()) {
+					System.out.println(file.getAbsolutePath());
+				}
 				//CHECKSTYLE:ON
 			}
 		}

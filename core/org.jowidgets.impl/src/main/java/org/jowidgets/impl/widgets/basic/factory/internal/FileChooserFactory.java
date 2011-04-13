@@ -28,19 +28,19 @@
 
 package org.jowidgets.impl.widgets.basic.factory.internal;
 
-import org.jowidgets.api.widgets.IFrame;
-import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
+import org.jowidgets.api.widgets.IFileChooser;
+import org.jowidgets.api.widgets.descriptor.IFileChooserDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
-import org.jowidgets.impl.spi.blueprint.IFrameBluePrintSpi;
-import org.jowidgets.impl.widgets.basic.FrameImpl;
+import org.jowidgets.impl.spi.blueprint.IFileChooserBluePrintSpi;
+import org.jowidgets.impl.widgets.basic.FileChooserImpl;
 import org.jowidgets.spi.IWidgetsServiceProvider;
-import org.jowidgets.spi.widgets.IFrameSpi;
+import org.jowidgets.spi.widgets.IFileChooserSpi;
 
-public class FrameFactory extends AbstractWidgetFactory implements IWidgetFactory<IFrame, IFrameDescriptor> {
+public class FileChooserFactory extends AbstractWidgetFactory implements IWidgetFactory<IFileChooser, IFileChooserDescriptor> {
 
-	public FrameFactory(
+	public FileChooserFactory(
 		final IGenericWidgetFactory genericWidgetFactory,
 		final IWidgetsServiceProvider widgetsServiceProvider,
 		final ISpiBluePrintFactory bpF) {
@@ -49,10 +49,13 @@ public class FrameFactory extends AbstractWidgetFactory implements IWidgetFactor
 	}
 
 	@Override
-	public IFrame create(final Object parentUiReference, final IFrameDescriptor descriptor) {
-		final IFrameBluePrintSpi bp = getSpiBluePrintFactory().frame().setSetup(descriptor);
-		final IFrameSpi frameSpi = getSpiWidgetFactory().createFrame(getGenericWidgetFactory(), bp);
-		return new FrameImpl(frameSpi, descriptor);
+	public IFileChooser create(final Object parentUiReference, final IFileChooserDescriptor descriptor) {
+		final IFileChooserBluePrintSpi bpSpi = getSpiBluePrintFactory().fileChooser();
+		bpSpi.setSetup(descriptor);
+
+		final IFileChooserSpi widget = getOptionalSpiWidgetsFactory().createFileChooser(parentUiReference, bpSpi);
+
+		return new FileChooserImpl(widget);
 	}
 
 }

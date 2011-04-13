@@ -36,7 +36,7 @@ import org.jowidgets.impl.spi.ISpiBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.IComboBoxSelectionBluePrintSpi;
 import org.jowidgets.impl.widgets.basic.ComboBoxSelectionImpl;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ComboBoxBuilderConverter;
-import org.jowidgets.spi.IWidgetFactorySpi;
+import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
 
 public class ComboBoxSelectionFactory extends AbstractWidgetFactory implements
@@ -44,10 +44,10 @@ public class ComboBoxSelectionFactory extends AbstractWidgetFactory implements
 
 	public ComboBoxSelectionFactory(
 		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetFactorySpi spiWidgetFactory,
+		final IWidgetsServiceProvider widgetsServiceProvider,
 		final ISpiBluePrintFactory bpF) {
 
-		super(genericWidgetFactory, spiWidgetFactory, bpF);
+		super(genericWidgetFactory, widgetsServiceProvider, bpF);
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})

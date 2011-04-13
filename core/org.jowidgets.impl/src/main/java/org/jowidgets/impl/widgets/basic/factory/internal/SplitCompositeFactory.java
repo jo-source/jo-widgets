@@ -35,7 +35,7 @@ import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.ISplitCompositeBluePrintSpi;
 import org.jowidgets.impl.widgets.basic.SplitCompositeImpl;
-import org.jowidgets.spi.IWidgetFactorySpi;
+import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.widgets.ISplitCompositeSpi;
 
 public class SplitCompositeFactory extends AbstractWidgetFactory implements
@@ -43,10 +43,10 @@ public class SplitCompositeFactory extends AbstractWidgetFactory implements
 
 	public SplitCompositeFactory(
 		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetFactorySpi spiWidgetFactory,
+		final IWidgetsServiceProvider widgetsServiceProvider,
 		final ISpiBluePrintFactory bpF) {
 
-		super(genericWidgetFactory, spiWidgetFactory, bpF);
+		super(genericWidgetFactory, widgetsServiceProvider, bpF);
 	}
 
 	@Override

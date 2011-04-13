@@ -25,22 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.common.widgets.builder;
+package org.jowidgets.impl.spi.blueprint.builder;
 
-import java.util.List;
+import org.jowidgets.common.widgets.builder.IFileChooserSetupBuilderCommon;
 
-import org.jowidgets.common.types.FileChooserType;
-import org.jowidgets.common.types.IFileChooserFilter;
-import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
-
-public interface IFileChooserSetupBuilderCommon<INSTANCE_TYPE extends IFileChooserSetupBuilderCommon<?>> extends
-		ISetupBuilder<INSTANCE_TYPE> {
-
-	@Mandatory
-	INSTANCE_TYPE setType(FileChooserType type);
-
-	INSTANCE_TYPE setTitle(String title);
-
-	INSTANCE_TYPE setFilterList(List<IFileChooserFilter> filterList);
+public interface IFileChooserSetupBuilderSpi<INSTANCE_TYPE extends IFileChooserSetupBuilderSpi<?>> extends
+		IFileChooserSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

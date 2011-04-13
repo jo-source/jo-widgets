@@ -28,7 +28,6 @@
 
 package org.jowidgets.spi.impl.dummy;
 
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.IOptionalWidgetsFactorySpi;
 import org.jowidgets.spi.widgets.IFileChooserSpi;
 import org.jowidgets.spi.widgets.setup.IFileChooserSetupSpi;
@@ -41,10 +40,7 @@ public class DummyOptionalWidgetsFactory implements IOptionalWidgetsFactorySpi {
 	}
 
 	@Override
-	public IFileChooserSpi createFileChooser(
-		final IGenericWidgetFactory factory,
-		final Object parentUiReference,
-		final IFileChooserSetupSpi setup) {
+	public IFileChooserSpi createFileChooser(final Object parentUiReference, final IFileChooserSetupSpi setup) {
 		return null;
 	}
 

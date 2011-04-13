@@ -39,6 +39,8 @@ public interface IFileChooserSetupCommon {
 	@Mandatory
 	FileChooserType getType();
 
+	String getTitle();
+
 	List<IFileChooserFilter> getFilterList();
 
 }

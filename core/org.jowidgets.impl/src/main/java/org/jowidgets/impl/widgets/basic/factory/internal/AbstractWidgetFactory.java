@@ -30,21 +30,23 @@ package org.jowidgets.impl.widgets.basic.factory.internal;
 
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
+import org.jowidgets.spi.IOptionalWidgetsFactorySpi;
 import org.jowidgets.spi.IWidgetFactorySpi;
+import org.jowidgets.spi.IWidgetsServiceProvider;
 
 public abstract class AbstractWidgetFactory {
 
 	private final IGenericWidgetFactory genericWidgetFactory;
-	private final IWidgetFactorySpi spiWidgetFactory;
+	private final IWidgetsServiceProvider widgetsServiceProvider;
 	private final ISpiBluePrintFactory bpF;
 
 	public AbstractWidgetFactory(
 		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetFactorySpi spiWidgetFactory,
+		final IWidgetsServiceProvider widgetsServiceProvider,
 		final ISpiBluePrintFactory bpF) {
 		super();
 		this.genericWidgetFactory = genericWidgetFactory;
-		this.spiWidgetFactory = spiWidgetFactory;
+		this.widgetsServiceProvider = widgetsServiceProvider;
 		this.bpF = bpF;
 	}
 
@@ -53,7 +55,11 @@ public abstract class AbstractWidgetFactory {
 	}
 
 	protected IWidgetFactorySpi getSpiWidgetFactory() {
-		return spiWidgetFactory;
+		return widgetsServiceProvider.getWidgetFactory();
+	}
+
+	protected IOptionalWidgetsFactorySpi getOptionalSpiWidgetsFactory() {
+		return widgetsServiceProvider.getOptionalWidgetFactory();
 	}
 
 	protected ISpiBluePrintFactory getSpiBluePrintFactory() {

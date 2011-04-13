@@ -36,17 +36,17 @@ import org.jowidgets.impl.spi.ISpiBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.ITextFieldBluePrintSpi;
 import org.jowidgets.impl.widgets.basic.TextFieldImpl;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.InputVerifier;
-import org.jowidgets.spi.IWidgetFactorySpi;
+import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.widgets.ITextControlSpi;
 
 public class TextFieldFactory extends AbstractWidgetFactory implements IWidgetFactory<ITextControl, ITextFieldDescriptor> {
 
 	public TextFieldFactory(
 		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetFactorySpi spiWidgetFactory,
+		final IWidgetsServiceProvider widgetsServiceProvider,
 		final ISpiBluePrintFactory bpF) {
 
-		super(genericWidgetFactory, spiWidgetFactory, bpF);
+		super(genericWidgetFactory, widgetsServiceProvider, bpF);
 	}
 
 	@Override
