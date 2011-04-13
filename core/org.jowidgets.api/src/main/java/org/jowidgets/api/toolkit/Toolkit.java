@@ -105,6 +105,10 @@ public final class Toolkit {
 		return getInstance().getBluePrintFactory();
 	}
 
+	public static ISupportedWidgets getSupportedWidgets() {
+		return getInstance().getSupportedWidgets();
+	}
+
 	public static IActionBuilderFactory getActionBuilderFactory() {
 		return getInstance().getActionBuilderFactory();
 	}

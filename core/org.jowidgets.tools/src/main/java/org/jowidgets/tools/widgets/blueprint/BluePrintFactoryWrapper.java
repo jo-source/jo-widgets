@@ -85,6 +85,7 @@ import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.model.ITableColumnModel;
 import org.jowidgets.common.model.ITableDataModel;
+import org.jowidgets.common.types.FileChooserType;
 import org.jowidgets.common.widgets.builder.ISetupBuilder;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.util.Assert;
@@ -168,8 +169,8 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	}
 
 	@Override
-	public IFileChooserBluePrint fileChooser() {
-		return bluePrintFactory.fileChooser();
+	public IFileChooserBluePrint fileChooser(final FileChooserType type) {
+		return bluePrintFactory.fileChooser(type);
 	}
 
 	@Override

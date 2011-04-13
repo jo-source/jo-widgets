@@ -25,15 +25,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.widgets;
+package org.jowidgets.spi.widgets.setup;
 
-import org.jowidgets.common.widgets.IDisplayCommon;
-import org.jowidgets.common.widgets.IWindowCommon;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.descriptor.setup.IFrameSetupCommon;
 
-public interface IWindowSpi extends IDisplaySpi, IComponentSpi, IWindowCommon {
-
-	<WIDGET_TYPE extends IDisplayCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
-		final DESCRIPTOR_TYPE descriptor);
+public interface IFileChooserSetupSpi extends IFrameSetupCommon {
 
 }

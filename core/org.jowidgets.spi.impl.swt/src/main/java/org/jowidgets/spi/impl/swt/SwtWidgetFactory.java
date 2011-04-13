@@ -31,7 +31,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.IWidgetFactorySpi;
-import org.jowidgets.spi.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.widgets.ButtonImpl;
 import org.jowidgets.spi.impl.swt.widgets.CheckBoxImpl;
 import org.jowidgets.spi.impl.swt.widgets.ComboBoxImpl;
@@ -96,7 +95,7 @@ import org.jowidgets.util.Assert;
 
 public final class SwtWidgetFactory implements IWidgetFactorySpi {
 
-	public SwtWidgetFactory(final SwtImageRegistry imageRegistry) {
+	public SwtWidgetFactory() {
 		super();
 	}
 
