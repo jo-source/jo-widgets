@@ -38,6 +38,7 @@ import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
+import org.jowidgets.api.widgets.blueprint.IDirectoryChooserBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFileChooserBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.IIconBluePrint;
@@ -97,6 +98,11 @@ public class BasicSimpleBluePrintFactory extends AbstractBluePrintFactory implem
 		final IFileChooserBluePrint result = createProxy(IFileChooserBluePrint.class);
 		result.setType(type);
 		return result;
+	}
+
+	@Override
+	public IDirectoryChooserBluePrint directoryChooser() {
+		return createProxy(IDirectoryChooserBluePrint.class);
 	}
 
 	@Override

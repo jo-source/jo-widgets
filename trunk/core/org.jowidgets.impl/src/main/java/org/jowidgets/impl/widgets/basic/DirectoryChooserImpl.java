@@ -26,35 +26,54 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.swing;
+package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.spi.IOptionalWidgetsFactorySpi;
-import org.jowidgets.spi.impl.swing.widgets.FileChooserImpl;
+import java.io.File;
+
+import org.jowidgets.api.widgets.IDirectoryChooser;
+import org.jowidgets.api.widgets.IWindow;
+import org.jowidgets.common.types.DialogResult;
+import org.jowidgets.impl.base.delegate.DisplayDelegate;
+import org.jowidgets.impl.widgets.common.wrapper.WidgetSpiWrapper;
 import org.jowidgets.spi.widgets.IDirectoryChooserSpi;
-import org.jowidgets.spi.widgets.IFileChooserSpi;
-import org.jowidgets.spi.widgets.setup.IDirectoryChooserSetupSpi;
-import org.jowidgets.spi.widgets.setup.IFileChooserSetupSpi;
 
-public class SwingOptionalWidgetsFactory implements IOptionalWidgetsFactorySpi {
+public class DirectoryChooserImpl extends WidgetSpiWrapper implements IDirectoryChooser {
 
-	@Override
-	public boolean hasFileChooser() {
-		return true;
+	private final DisplayDelegate displayDelegate;
+
+	public DirectoryChooserImpl(final IDirectoryChooserSpi widget) {
+		super(widget);
+		this.displayDelegate = new DisplayDelegate();
 	}
 
 	@Override
-	public IFileChooserSpi createFileChooser(final Object parentUiReference, final IFileChooserSetupSpi setup) {
-		return new FileChooserImpl(parentUiReference, setup);
+	public IDirectoryChooserSpi getWidget() {
+		return (IDirectoryChooserSpi) super.getWidget();
 	}
 
 	@Override
-	public boolean hasDirectoryChooser() {
-		return false;
+	public void setParent(final IWindow parent) {
+		displayDelegate.setParent(parent);
 	}
 
 	@Override
-	public IDirectoryChooserSpi createDirectoryChooser(final Object parentUiReference, final IDirectoryChooserSetupSpi setup) {
-		return null;
+	public IWindow getParent() {
+		return displayDelegate.getParent();
+	}
+
+	@Override
+	public DialogResult open() {
+		return getWidget().open();
+	}
+
+	@Override
+	public void setDirectory(final File file) {
+		getWidget().setDirectory(file);
+	}
+
+	@Override
+	public File getDirectory() {
+		return getWidget().getDirectory();
 	}
 
 }

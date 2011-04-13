@@ -25,36 +25,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi;
+package org.jowidgets.api.widgets.blueprint;
 
-import org.jowidgets.spi.widgets.IDirectoryChooserSpi;
-import org.jowidgets.spi.widgets.IFileChooserSpi;
-import org.jowidgets.spi.widgets.setup.IDirectoryChooserSetupSpi;
-import org.jowidgets.spi.widgets.setup.IFileChooserSetupSpi;
+import org.jowidgets.api.widgets.blueprint.builder.IDirectoryChooserSetupBuilder;
+import org.jowidgets.api.widgets.descriptor.IDirectoryChooserDescriptor;
 
-public interface IOptionalWidgetsFactorySpi {
-
-	//create widgets from setup
-
-	/**
-	 * @return true, if this spi supports a file chooser
-	 */
-	boolean hasFileChooser();
-
-	/**
-	 * @param parentUiReference
-	 * @param setup
-	 * @return The file chooser or null if {@link IOptionalWidgetsFactorySpi#hasFileChooser()} returns true
-	 */
-	IFileChooserSpi createFileChooser(Object parentUiReference, IFileChooserSetupSpi setup);
-
-	boolean hasDirectoryChooser();
-
-	/**
-	 * @param parentUiReference
-	 * @param setup
-	 * @return The directory chooser or null if {@link IOptionalWidgetsFactorySpi#hasDirectoryChooser()} returns true
-	 */
-	IDirectoryChooserSpi createDirectoryChooser(Object parentUiReference, IDirectoryChooserSetupSpi setup);
+public interface IDirectoryChooserBluePrint extends
+		IDirectoryChooserSetupBuilder<IDirectoryChooserBluePrint>,
+		IDirectoryChooserDescriptor {
 
 }

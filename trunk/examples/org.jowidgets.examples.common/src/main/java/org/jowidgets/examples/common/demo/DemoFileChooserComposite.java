@@ -35,7 +35,9 @@ import java.util.List;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IDirectoryChooser;
 import org.jowidgets.api.widgets.IFileChooser;
+import org.jowidgets.api.widgets.blueprint.IDirectoryChooserBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFileChooserBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.DialogResult;
@@ -86,6 +88,17 @@ public final class DemoFileChooserComposite {
 			}
 		});
 
+		final IButton openDirectoryButton = parentContainer.add(
+				bpf.button("Select directory demo", "Allows to select an directory"),
+				"grow, sg bg, wrap");
+
+		openDirectoryButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				openDirectoryChooser();
+			}
+		});
+
 	}
 
 	private void openFileChooser(final FileChooserType type, final String title) {
@@ -111,6 +124,25 @@ public final class DemoFileChooserComposite {
 		}
 		else {
 			Toolkit.getMessagePane().showInfo("File chooser is not supported by the spi implementation");
+		}
+	}
+
+	private void openDirectoryChooser() {
+		if (Toolkit.getSupportedWidgets().hasDirectoryChooser()) {
+			final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+
+			final IDirectoryChooserBluePrint directoryChooserBp = bpf.directoryChooser().setTitle("Open directory demo");
+			final IDirectoryChooser directoryChooser = Toolkit.getActiveWindow().createChildWindow(directoryChooserBp);
+			directoryChooser.setDirectory(new File("C:/projects/jo-widgets"));
+			final DialogResult result = directoryChooser.open();
+			if (result == DialogResult.OK) {
+				//CHECKSTYLE:OFF
+				System.out.println(directoryChooser.getDirectory().getAbsolutePath());
+				//CHECKSTYLE:ON
+			}
+		}
+		else {
+			Toolkit.getMessagePane().showInfo("Directory chooser is not supported by the spi implementation");
 		}
 	}
 

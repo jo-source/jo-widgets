@@ -154,7 +154,7 @@ public final class DemoMainComposite {
 		final IFrame fileChooserDialog = getParentWindow().createChildWindow(bpF.dialog("File chooser demo"));
 		new DemoFileChooserComposite(fileChooserDialog);
 		final IButton fileChooserDialogButton = parentContainer.add(
-				bpF.button("File chooser demo", "Opens the file chooser demo"),
+				bpF.button("File / Directory chooser demo", "Opens the file / directory chooser demo"),
 				"grow, sg bg, wrap");
 		fileChooserDialogButton.addActionListener(new IActionListener() {
 			@Override

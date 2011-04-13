@@ -29,7 +29,9 @@
 package org.jowidgets.spi.impl.dummy;
 
 import org.jowidgets.spi.IOptionalWidgetsFactorySpi;
+import org.jowidgets.spi.widgets.IDirectoryChooserSpi;
 import org.jowidgets.spi.widgets.IFileChooserSpi;
+import org.jowidgets.spi.widgets.setup.IDirectoryChooserSetupSpi;
 import org.jowidgets.spi.widgets.setup.IFileChooserSetupSpi;
 
 public class DummyOptionalWidgetsFactory implements IOptionalWidgetsFactorySpi {
@@ -47,6 +49,11 @@ public class DummyOptionalWidgetsFactory implements IOptionalWidgetsFactorySpi {
 	@Override
 	public boolean hasDirectoryChooser() {
 		return false;
+	}
+
+	@Override
+	public IDirectoryChooserSpi createDirectoryChooser(final Object parentUiReference, final IDirectoryChooserSetupSpi setup) {
+		return null;
 	}
 
 }
