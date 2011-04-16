@@ -43,7 +43,7 @@ import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IKeyListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
+import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.spi.impl.swt.util.BorderToComposite;
@@ -244,9 +244,9 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 
 	@Override
 	public final <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
-		final ICustomWidgetFactory<WIDGET_TYPE> factory,
+		final ICustomWidgetCreator<WIDGET_TYPE> creator,
 		final Object cellConstraints) {
-		return innerContainer.add(factory, cellConstraints);
+		return innerContainer.add(creator, cellConstraints);
 	}
 
 	@Override

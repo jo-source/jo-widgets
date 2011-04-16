@@ -31,7 +31,7 @@ package org.jowidgets.workbench.impl;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
+import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.tools.widgets.wrapper.ContainerWrapper;
 
 public class WorkbenchStatusBar extends ContainerWrapper {
@@ -65,9 +65,9 @@ public class WorkbenchStatusBar extends ContainerWrapper {
 
 	@Override
 	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
-		final ICustomWidgetFactory<WIDGET_TYPE> factory,
+		final ICustomWidgetCreator<WIDGET_TYPE> creator,
 		final Object layoutConstraints) {
-		final WIDGET_TYPE result = super.add(factory, layoutConstraints);
+		final WIDGET_TYPE result = super.add(creator, layoutConstraints);
 		checkVisibility();
 		return result;
 	}

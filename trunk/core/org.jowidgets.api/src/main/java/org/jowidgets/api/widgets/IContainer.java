@@ -32,7 +32,7 @@ import java.util.List;
 
 import org.jowidgets.common.widgets.IContainerCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
+import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 
 public interface IContainer extends IComponent, IContainerCommon {
 
@@ -69,10 +69,10 @@ public interface IContainer extends IComponent, IContainerCommon {
 	 * Creates and adds an control to this container
 	 * 
 	 * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
-	 * @param factory The factory that can create the control
+	 * @param creator The creator that creates the control
 	 * @param layoutConstraints The layout constraints / data for the added control
 	 * @return the created and added control
 	 */
-	<WIDGET_TYPE extends IControl> WIDGET_TYPE add(ICustomWidgetFactory<WIDGET_TYPE> factory, Object layoutConstraints);
+	<WIDGET_TYPE extends IControl> WIDGET_TYPE add(ICustomWidgetCreator<WIDGET_TYPE> creator, Object layoutConstraints);
 
 }

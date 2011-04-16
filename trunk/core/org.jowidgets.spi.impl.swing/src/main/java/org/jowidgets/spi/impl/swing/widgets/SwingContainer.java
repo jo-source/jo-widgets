@@ -42,9 +42,9 @@ import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IKeyListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.spi.impl.swing.widgets.util.ChildRemover;
@@ -222,19 +222,24 @@ public class SwingContainer implements IContainerSpi {
 
 	@Override
 	public final <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
-		final ICustomWidgetFactory<WIDGET_TYPE> customFactory,
+		final ICustomWidgetCreator<WIDGET_TYPE> customWidgetCreator,
 		final Object cellConstraints) {
 
-		final IWidgetFactory<WIDGET_TYPE, IWidgetDescriptor<? extends WIDGET_TYPE>> widgetFactory = new IWidgetFactory<WIDGET_TYPE, IWidgetDescriptor<? extends WIDGET_TYPE>>() {
-			@Override
-			public WIDGET_TYPE create(final Object parent, final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
-				return factory.create(parent, descriptor);
-			}
-		};
+		final ICustomWidgetFactory<WIDGET_TYPE> customWidgetFactory = createCustomWidgetFactory();
 
-		final WIDGET_TYPE result = customFactory.create(getUiReference(), widgetFactory);
+		final WIDGET_TYPE result = customWidgetCreator.create(customWidgetFactory);
 		addToContainer(result, cellConstraints);
 		return result;
+	}
+
+	private <WIDGET_TYPE extends IControlCommon> ICustomWidgetFactory<WIDGET_TYPE> createCustomWidgetFactory() {
+		return new ICustomWidgetFactory<WIDGET_TYPE>() {
+			@Override
+			public <DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE create(
+				final DESCRIPTOR_TYPE descriptor) {
+				return factory.create(getUiReference(), descriptor);
+			}
+		};
 	}
 
 	@Override

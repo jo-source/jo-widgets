@@ -25,21 +25,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.widgets;
+package org.jowidgets.common.widgets.factory;
 
-import org.jowidgets.common.widgets.IContainerCommon;
-import org.jowidgets.common.widgets.IControlCommon;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
+import org.jowidgets.common.widgets.IWidgetCommon;
 
-public interface IContainerSpi extends IComponentSpi, IContainerCommon {
+public interface ICustomWidgetCreator<WIDGET_TYPE extends IWidgetCommon> {
 
-	<WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
-		IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
-		Object layoutConstraints);
-
-	<WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(ICustomWidgetCreator<WIDGET_TYPE> creator, Object layoutConstraints);
-
-	boolean remove(IControlCommon control);
+	WIDGET_TYPE create(ICustomWidgetFactory<WIDGET_TYPE> widgetFactory);
 
 }

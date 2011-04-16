@@ -41,7 +41,7 @@ import org.jowidgets.api.widgets.descriptor.setup.IFrameSetup;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
+import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.impl.base.delegate.ContainerDelegate;
 import org.jowidgets.impl.base.delegate.DisplayDelegate;
 import org.jowidgets.impl.base.delegate.WindowDelegate;
@@ -76,9 +76,9 @@ public class FrameImpl extends AbstractFrameSpiWrapper implements IFrameUi {
 
 	@Override
 	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
-		final ICustomWidgetFactory<WIDGET_TYPE> factory,
+		final ICustomWidgetCreator<WIDGET_TYPE> creator,
 		final Object layoutConstraints) {
-		return containerDelegate.add(factory, layoutConstraints);
+		return containerDelegate.add(creator, layoutConstraints);
 	}
 
 	@Override
