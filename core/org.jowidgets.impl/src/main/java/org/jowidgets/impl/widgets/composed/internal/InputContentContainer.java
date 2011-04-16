@@ -43,7 +43,7 @@ import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.types.Border;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
+import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 import org.jowidgets.tools.widgets.base.AbstractInputComponent;
@@ -139,9 +139,9 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractInputComponent<IN
 
 	@Override
 	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
-		final ICustomWidgetFactory<WIDGET_TYPE> factory,
+		final ICustomWidgetCreator<WIDGET_TYPE> creator,
 		final Object layoutConstraints) {
-		return compositeWidget.add(factory, layoutConstraints);
+		return compositeWidget.add(creator, layoutConstraints);
 	}
 
 	@Override

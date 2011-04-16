@@ -46,7 +46,7 @@ import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
+import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.impl.base.delegate.ContainerDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
@@ -302,10 +302,10 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 
 	@Override
 	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
-		final ICustomWidgetFactory<WIDGET_TYPE> factory,
+		final ICustomWidgetCreator<WIDGET_TYPE> creator,
 		final Object layoutConstraints) {
 		checkDetached();
-		return containerDelegate.add(factory, layoutConstraints);
+		return containerDelegate.add(creator, layoutConstraints);
 	}
 
 	@Override

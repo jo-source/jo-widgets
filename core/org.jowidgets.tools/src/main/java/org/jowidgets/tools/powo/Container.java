@@ -37,7 +37,7 @@ import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.blueprint.builder.IContainerSetupBuilder;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
+import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.Tuple;
@@ -218,10 +218,10 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 
 	@Override
 	public final <M_WIDGET_TYPE extends IControl> M_WIDGET_TYPE add(
-		final ICustomWidgetFactory<M_WIDGET_TYPE> factory,
+		final ICustomWidgetCreator<M_WIDGET_TYPE> creator,
 		final Object layoutConstraints) {
 		checkInitialized();
-		return getWidget().add(factory, layoutConstraints);
+		return getWidget().add(creator, layoutConstraints);
 	}
 
 }

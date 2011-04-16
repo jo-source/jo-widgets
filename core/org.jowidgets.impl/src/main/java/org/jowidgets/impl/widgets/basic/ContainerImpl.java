@@ -36,7 +36,7 @@ import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.descriptor.setup.IContainerSetup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
+import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.impl.base.delegate.ComponentDelegate;
 import org.jowidgets.impl.base.delegate.ContainerDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
@@ -76,9 +76,9 @@ public class ContainerImpl extends AbstractContainerSpiWrapper implements IConta
 
 	@Override
 	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
-		final ICustomWidgetFactory<WIDGET_TYPE> factory,
+		final ICustomWidgetCreator<WIDGET_TYPE> creator,
 		final Object layoutConstraints) {
-		return containerDelegate.add(factory, layoutConstraints);
+		return containerDelegate.add(creator, layoutConstraints);
 	}
 
 	@Override

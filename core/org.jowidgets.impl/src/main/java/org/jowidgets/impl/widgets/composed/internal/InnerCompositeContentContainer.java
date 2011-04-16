@@ -47,7 +47,7 @@ import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IKeyListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
+import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 import org.jowidgets.util.Assert;
@@ -93,9 +93,9 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 
 	@Override
 	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
-		final ICustomWidgetFactory<WIDGET_TYPE> factory,
+		final ICustomWidgetCreator<WIDGET_TYPE> creator,
 		final Object layoutConstraints) {
-		return compositeWidget.add(factory, layoutConstraints);
+		return compositeWidget.add(creator, layoutConstraints);
 	}
 
 	@Override

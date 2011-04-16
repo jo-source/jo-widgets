@@ -43,9 +43,8 @@ import org.jowidgets.common.widgets.IProgressBarCommon;
 import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IKeyListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
-import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
@@ -101,31 +100,24 @@ public class ProgressBarImpl implements IProgressBar {
 		final IProgressBarBluePrintSpi progressBarBp = spiBpf.progressBar();
 		progressBarBp.setSetup(setup).setIndeterminate(false);
 
-		this.indeterminateProgressBar = compositeWidget.add(new ICustomWidgetFactory<ProgressBarCommonToControl>() {
-
+		this.indeterminateProgressBar = compositeWidget.add(new ICustomWidgetCreator<ProgressBarCommonToControl>() {
 			@Override
-			public ProgressBarCommonToControl create(
-				final Object parentUiReference,
-				final IWidgetFactory<ProgressBarCommonToControl, IWidgetDescriptor<? extends ProgressBarCommonToControl>> widgetFactory) {
+			public ProgressBarCommonToControl create(final ICustomWidgetFactory<ProgressBarCommonToControl> widgetFactory) {
 				final IProgressBarSpi progressBarSpi = widgetsFactorySpi.createProgressBar(
-						parentUiReference,
+						getUiReference(),
 						intermediateProgressBarBp);
 				return new ProgressBarCommonToControl(progressBarSpi);
 			}
 		},
 				componentLayoutConstraints);
 
-		this.progressBar = compositeWidget.add(new ICustomWidgetFactory<ProgressBarCommonToControl>() {
-
+		this.progressBar = compositeWidget.add(new ICustomWidgetCreator<ProgressBarCommonToControl>() {
 			@Override
-			public ProgressBarCommonToControl create(
-				final Object parentUiReference,
-				final IWidgetFactory<ProgressBarCommonToControl, IWidgetDescriptor<? extends ProgressBarCommonToControl>> widgetFactory) {
-				final IProgressBarSpi progressBarSpi = widgetsFactorySpi.createProgressBar(parentUiReference, progressBarBp);
+			public ProgressBarCommonToControl create(final ICustomWidgetFactory<ProgressBarCommonToControl> widgetFactory) {
+				final IProgressBarSpi progressBarSpi = widgetsFactorySpi.createProgressBar(getUiReference(), progressBarBp);
 				return new ProgressBarCommonToControl(progressBarSpi);
 			}
-		},
-				componentLayoutConstraints);
+		}, componentLayoutConstraints);
 
 		this.minimum = setup.getMinimum();
 		progressBar.setMinimum(this.minimum);
