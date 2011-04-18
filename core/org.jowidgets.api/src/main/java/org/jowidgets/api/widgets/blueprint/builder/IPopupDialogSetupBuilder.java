@@ -33,4 +33,6 @@ public interface IPopupDialogSetupBuilder<INSTANCE_TYPE extends IPopupDialogSetu
 		IContainerSetupBuilder<INSTANCE_TYPE>,
 		IPopupDialogSetupBuilderCommon<INSTANCE_TYPE> {
 
+	INSTANCE_TYPE setAutoDispose(boolean autoDispose);
+
 }
