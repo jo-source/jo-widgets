@@ -25,14 +25,16 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.descriptor.setup;
+package org.jowidgets.impl.widgets.basic.blueprint.defaults;
 
-import org.jowidgets.common.widgets.descriptor.setup.IPopupDialogSetupCommon;
-import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
+import org.jowidgets.api.widgets.blueprint.builder.IPopupDialogSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
-public interface IPopupDialogSetup extends IContainerSetup, IPopupDialogSetupCommon {
+public class PopupDialogDefaults implements IDefaultInitializer<IPopupDialogSetupBuilder<?>> {
 
-	@Mandatory
-	boolean isAutoDispose();
+	@Override
+	public void initialize(final IPopupDialogSetupBuilder<?> builder) {
+		builder.setAutoDispose(true);
+	}
 
 }

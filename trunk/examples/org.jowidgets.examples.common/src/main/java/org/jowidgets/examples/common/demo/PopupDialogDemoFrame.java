@@ -36,7 +36,6 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.tools.controler.WindowAdapter;
 import org.jowidgets.tools.powo.JoFrame;
 
 public class PopupDialogDemoFrame extends JoFrame {
@@ -58,12 +57,6 @@ public class PopupDialogDemoFrame extends JoFrame {
 				popupDialog.setBackgroundColor(Colors.WHITE);
 				popupDialog.setSize(new Dimension(buttonSize.getWidth(), 200));
 				popupDialog.setPosition(Toolkit.toScreen(button.getPosition(), PopupDialogDemoFrame.this));
-				popupDialog.addWindowListener(new WindowAdapter() {
-					@Override
-					public void windowDeactivated() {
-						popupDialog.dispose();
-					}
-				});
 				popupDialog.setVisible(true);
 			}
 		});

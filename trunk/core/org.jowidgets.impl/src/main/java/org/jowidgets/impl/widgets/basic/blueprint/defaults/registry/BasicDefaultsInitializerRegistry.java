@@ -33,6 +33,7 @@ import org.jowidgets.api.widgets.blueprint.builder.IButtonSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IComboBoxSelectionSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IInputComponentSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.builder.IPopupDialogSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.ISelectableItemSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.ISplitCompositeSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.ITextAreaSetupBuilder;
@@ -42,6 +43,7 @@ import org.jowidgets.api.widgets.blueprint.builder.IWindowSetupBuilder;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.ButtonDefaults;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.ComboBoxSelectionDefaults;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.InputWidgetDefaults;
+import org.jowidgets.impl.widgets.basic.blueprint.defaults.PopupDialogDefaults;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.SelectableItemDefaults;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.SplitCompositeWidgetDefaults;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.TextAreaDefaults;
@@ -67,5 +69,6 @@ public class BasicDefaultsInitializerRegistry extends CommonDefaultsInitializerR
 		register(ISelectableItemSetupBuilder.class, new SelectableItemDefaults());
 		register(ITreeNodeSetupBuilder.class, new TreeNodeDefaults());
 		register(IToolBarMenuBluePrint.class, new ToolBarMenuDefaults());
+		register(IPopupDialogSetupBuilder.class, new PopupDialogDefaults());
 	}
 }
