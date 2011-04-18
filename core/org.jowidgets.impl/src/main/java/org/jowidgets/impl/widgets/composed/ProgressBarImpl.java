@@ -42,6 +42,7 @@ import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.IProgressBarCommon;
 import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IKeyListener;
+import org.jowidgets.common.widgets.controler.IMouseListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
@@ -377,6 +378,16 @@ public class ProgressBarImpl implements IProgressBar {
 	@Override
 	public void removeKeyListener(final IKeyListener listener) {
 		compositeWidget.removeKeyListener(listener);
+	}
+
+	@Override
+	public void addMouseListener(final IMouseListener mouseListener) {
+		compositeWidget.addMouseListener(mouseListener);
+	}
+
+	@Override
+	public void removeMouseListener(final IMouseListener mouseListener) {
+		compositeWidget.removeMouseListener(mouseListener);
 	}
 
 	@Override

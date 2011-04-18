@@ -26,55 +26,50 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.widgets.controler;
+package org.jowidgets.spi.impl.controler;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.jowidgets.common.types.Modifier;
-import org.jowidgets.common.types.VirtualKey;
+import org.jowidgets.common.types.MouseButton;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.controler.IMouseButtonEvent;
+import org.jowidgets.util.Assert;
 
-public interface IKeyEvent {
+public class MouseButtonEvent extends MouseEvent implements IMouseButtonEvent {
 
-	/**
-	 * Gets the virtual key that was typed.
-	 * 
-	 * If the typed key is not defined in the virtual key enumeration,
-	 * VirtualKey.UNKOWN will be returned.
-	 * 
-	 * @return The virtual key of the event, may be VirtualKey.UNKNOWN
-	 */
-	VirtualKey getVirtualKey();
+	private final MouseButton mouseButton;
+	private final Set<Modifier> modifiers;
 
-	/**
-	 * Gets the character representation of the typed key if the key is representable
-	 * by an character.
-	 * 
-	 * Remark: Modifiers have not applied on this character.
-	 * i.e.: On a German Keyboard 'SHIFT + 1' will return '1' and not '!'. To get the resulting
-	 * Character use the method 'IKeyEvent#getResultingCharacter()'.
-	 * 
-	 * @return The character representation or null, if the key has no character representation.
-	 * @see IKeyEvent#getResultingCharacter()
-	 */
-	Character getCharacter();
+	public MouseButtonEvent(final Position position, final MouseButton mouseButton, final Set<Modifier> modifiers) {
+		super(position);
+		Assert.paramNotNull(mouseButton, "mouseButton");
+		Assert.paramNotNull(modifiers, "modifiers");
+		this.mouseButton = mouseButton;
+		this.modifiers = Collections.unmodifiableSet(new HashSet<Modifier>(modifiers));
+	}
 
-	/**
-	 * Gets the character representation of the typed key after all modifiers have been applied.
-	 * 
-	 * Remark: Modifiers have applied on this character.
-	 * i.e.: On a German Keyboard 'SHIFT + 1' will return '!' and not '1'. To get the character
-	 * representation of the typed key use the method 'IKeyEvent#getCharacter()'.
-	 * 
-	 * @return The character representation or null, if the key has no character representation.
-	 * @see IKeyEvent#getCharacter()
-	 */
-	Character getResultingCharacter();
+	@Override
+	public MouseButton getMouseButton() {
+		return mouseButton;
+	}
 
-	/**
-	 * Gets the modifiers of the key event.
-	 * 
-	 * @return The set of the applied modifiers. May be empty but is never null
-	 */
-	Set<Modifier> getModifier();
+	@Override
+	public Set<Modifier> getModifiers() {
+		return modifiers;
+	}
+
+	@Override
+	public String toString() {
+		return "MouseButtonEvent [mouseButton="
+			+ mouseButton
+			+ ", modifiers="
+			+ modifiers
+			+ ", getPosition()="
+			+ getPosition()
+			+ "]";
+	}
 
 }

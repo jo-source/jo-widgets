@@ -49,6 +49,7 @@ import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.controler.IKeyListener;
+import org.jowidgets.common.widgets.controler.IMouseListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
@@ -363,6 +364,16 @@ public class ValidationLabelImpl implements IValidationLabel {
 	@Override
 	public void removeKeyListener(final IKeyListener listener) {
 		labelControl.removeKeyListener(listener);
+	}
+
+	@Override
+	public void addMouseListener(final IMouseListener mouseListener) {
+		labelControl.addMouseListener(mouseListener);
+	}
+
+	@Override
+	public void removeMouseListener(final IMouseListener mouseListener) {
+		labelControl.removeMouseListener(mouseListener);
 	}
 
 	@Override

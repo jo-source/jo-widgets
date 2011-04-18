@@ -30,7 +30,6 @@ package org.jowidgets.spi.impl.swt.widgets;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -102,6 +101,7 @@ import org.jowidgets.spi.impl.swt.color.ColorCache;
 import org.jowidgets.spi.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.util.AlignmentConvert;
 import org.jowidgets.spi.impl.swt.util.FontProvider;
+import org.jowidgets.spi.impl.swt.util.MouseUtil;
 import org.jowidgets.spi.widgets.ITableSpi;
 import org.jowidgets.spi.widgets.setup.ITableSetupSpi;
 import org.jowidgets.util.ArrayUtils;
@@ -548,32 +548,6 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		return true;
 	}
 
-	private static MouseButton getMouseButton(final MouseEvent event) {
-		if (event.button == 1) {
-			return MouseButton.LEFT;
-		}
-		else if (event.button == 3) {
-			return MouseButton.RIGHT;
-		}
-		else {
-			return null;
-		}
-	}
-
-	private static Set<Modifier> getModifier(final int stateMask) {
-		final Set<Modifier> modifier = new HashSet<Modifier>();
-		if ((stateMask & SWT.SHIFT) > 0) {
-			modifier.add(Modifier.SHIFT);
-		}
-		if ((stateMask & SWT.CTRL) > 0) {
-			modifier.add(Modifier.CTRL);
-		}
-		if ((stateMask & SWT.ALT) > 0) {
-			modifier.add(Modifier.ALT);
-		}
-		return modifier;
-	}
-
 	private static int getStyle(final ITableSetupSpi setup) {
 		int result = SWT.VIRTUAL;
 
@@ -668,7 +642,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 				//RWT doesn't support count field :-( 
 				//so the mouse down and mouse up may be fired twice at double clicks :-(
 			}
-			final MouseButton mouseButton = getMouseButton(event);
+			final MouseButton mouseButton = MouseUtil.getMouseButton(event);
 			if (mouseButton == null) {
 				return null;
 			}
@@ -679,7 +653,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 					indices.getRowIndex(),
 					indices.getColumnIndex(),
 					mouseButton,
-					getModifier(event.stateMask));
+					MouseUtil.getModifier(event.stateMask));
 			}
 			return null;
 		}
@@ -825,7 +799,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			final TableColumn column = (TableColumn) e.widget;
 			if (column != null) {
 				final int columnIndex = getColumnIndex(column);
-				final Set<Modifier> modifier = getModifier(e.stateMask);
+				final Set<Modifier> modifier = MouseUtil.getModifier(e.stateMask);
 				tableColumnObservable.fireMouseClicked(new TableColumnMouseEvent(columnIndex, modifier));
 			}
 		}

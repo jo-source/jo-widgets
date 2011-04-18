@@ -47,6 +47,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IKeyListener;
+import org.jowidgets.common.widgets.controler.IMouseListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
@@ -313,6 +314,16 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 	@Override
 	public void removeKeyListener(final IKeyListener listener) {
 		swtContainer.removeKeyListener(listener);
+	}
+
+	@Override
+	public void addMouseListener(final IMouseListener mouseListener) {
+		swtContainer.addMouseListener(mouseListener);
+	}
+
+	@Override
+	public void removeMouseListener(final IMouseListener mouseListener) {
+		swtContainer.removeMouseListener(mouseListener);
 	}
 
 	@Override

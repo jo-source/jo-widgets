@@ -33,9 +33,15 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IFocusObservable;
 import org.jowidgets.common.widgets.controler.IKeyObservable;
+import org.jowidgets.common.widgets.controler.IMouseObservable;
 import org.jowidgets.common.widgets.controler.IPopupDetectionObservable;
 
-public interface IComponentCommon extends IWidgetCommon, IFocusObservable, IKeyObservable, IPopupDetectionObservable {
+public interface IComponentCommon extends
+		IWidgetCommon,
+		IFocusObservable,
+		IKeyObservable,
+		IMouseObservable,
+		IPopupDetectionObservable {
 
 	/**
 	 * Marks the widget that a redraw is necessary

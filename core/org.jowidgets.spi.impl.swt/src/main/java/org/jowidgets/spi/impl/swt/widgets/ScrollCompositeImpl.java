@@ -41,6 +41,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IKeyListener;
+import org.jowidgets.common.widgets.controler.IMouseListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
@@ -217,6 +218,16 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 	@Override
 	public void removeKeyListener(final IKeyListener listener) {
 		innerContainer.removeKeyListener(listener);
+	}
+
+	@Override
+	public void addMouseListener(final IMouseListener mouseListener) {
+		innerContainer.addMouseListener(mouseListener);
+	}
+
+	@Override
+	public void removeMouseListener(final IMouseListener mouseListener) {
+		innerContainer.removeMouseListener(mouseListener);
 	}
 
 	@Override

@@ -41,16 +41,22 @@ import javax.swing.JComponent;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.MouseButton;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IKeyListener;
+import org.jowidgets.common.widgets.controler.IMouseButtonEvent;
+import org.jowidgets.common.widgets.controler.IMouseListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.spi.impl.controler.FocusObservable;
 import org.jowidgets.spi.impl.controler.KeyObservable;
+import org.jowidgets.spi.impl.controler.MouseButtonEvent;
+import org.jowidgets.spi.impl.controler.MouseObservable;
 import org.jowidgets.spi.impl.controler.PopupDetectionObservable;
 import org.jowidgets.spi.impl.swing.util.ColorConvert;
 import org.jowidgets.spi.impl.swing.util.CursorConvert;
 import org.jowidgets.spi.impl.swing.util.DimensionConvert;
+import org.jowidgets.spi.impl.swing.util.MouseUtil;
 import org.jowidgets.spi.impl.swing.util.PositionConvert;
 import org.jowidgets.spi.impl.swing.widgets.event.LazyKeyEventContentFactory;
 import org.jowidgets.spi.widgets.IComponentSpi;
@@ -61,6 +67,7 @@ public class SwingComponent extends SwingWidget implements IComponentSpi {
 	private final PopupDetectionObservable popupDetectionObservable;
 	private final FocusObservable focusObservable;
 	private final KeyObservable keyObservable;
+	private final MouseObservable mouseObservable;
 	private MouseListener mouseListener;
 
 	public SwingComponent(final Component component) {
@@ -68,6 +75,7 @@ public class SwingComponent extends SwingWidget implements IComponentSpi {
 		this.popupDetectionObservable = new PopupDetectionObservable();
 		this.focusObservable = new FocusObservable();
 		this.keyObservable = new KeyObservable();
+		this.mouseObservable = new MouseObservable();
 
 		this.mouseListener = new MouseAdapter() {
 			@Override
@@ -107,6 +115,56 @@ public class SwingComponent extends SwingWidget implements IComponentSpi {
 			@Override
 			public void keyPressed(final KeyEvent e) {
 				keyObservable.fireKeyPressed(new LazyKeyEventContentFactory(e));
+			}
+		});
+
+		getUiReference().addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseExited(final MouseEvent e) {
+				mouseObservable.fireMouseExit(new Position(e.getX(), e.getY()));
+			}
+
+			@Override
+			public void mouseEntered(final MouseEvent e) {
+				mouseObservable.fireMouseEnter(new Position(e.getX(), e.getY()));
+			}
+
+			@Override
+			public void mouseClicked(final MouseEvent e) {
+				final IMouseButtonEvent mouseEvent = getMouseEvent(e, 2);
+				if (mouseEvent != null) {
+					mouseObservable.fireMouseDoubleClicked(mouseEvent);
+				}
+			}
+
+			@Override
+			public void mousePressed(final MouseEvent e) {
+				final IMouseButtonEvent mouseEvent = getMouseEvent(e, 1);
+				if (mouseEvent != null) {
+					mouseObservable.fireMousePressed(mouseEvent);
+				}
+			}
+
+			@Override
+			public void mouseReleased(final MouseEvent e) {
+				final IMouseButtonEvent mouseEvent = getMouseEvent(e, 1);
+				if (mouseEvent != null) {
+					mouseObservable.fireMouseReleased(mouseEvent);
+				}
+			}
+
+			private IMouseButtonEvent getMouseEvent(final MouseEvent event, final int clickCount) {
+				if (event.getClickCount() != clickCount) {
+					return null;
+				}
+
+				final MouseButton mouseButton = MouseUtil.getMouseButton(event);
+				if (mouseButton == null) {
+					return null;
+				}
+				final Position position = new Position(event.getX(), event.getY());
+				return new MouseButtonEvent(position, mouseButton, MouseUtil.getModifier(event));
 			}
 		});
 	}
@@ -219,6 +277,16 @@ public class SwingComponent extends SwingWidget implements IComponentSpi {
 	@Override
 	public void removeKeyListener(final IKeyListener listener) {
 		keyObservable.removeKeyListener(listener);
+	}
+
+	@Override
+	public void addMouseListener(final IMouseListener mouseListener) {
+		mouseObservable.addMouseListener(mouseListener);
+	}
+
+	@Override
+	public void removeMouseListener(final IMouseListener mouseListener) {
+		mouseObservable.removeMouseListener(mouseListener);
 	}
 
 	@Override

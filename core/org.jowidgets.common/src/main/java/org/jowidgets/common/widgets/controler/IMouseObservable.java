@@ -28,53 +28,10 @@
 
 package org.jowidgets.common.widgets.controler;
 
-import java.util.Set;
+public interface IMouseObservable {
 
-import org.jowidgets.common.types.Modifier;
-import org.jowidgets.common.types.VirtualKey;
+	void addMouseListener(IMouseListener mouseListener);
 
-public interface IKeyEvent {
-
-	/**
-	 * Gets the virtual key that was typed.
-	 * 
-	 * If the typed key is not defined in the virtual key enumeration,
-	 * VirtualKey.UNKOWN will be returned.
-	 * 
-	 * @return The virtual key of the event, may be VirtualKey.UNKNOWN
-	 */
-	VirtualKey getVirtualKey();
-
-	/**
-	 * Gets the character representation of the typed key if the key is representable
-	 * by an character.
-	 * 
-	 * Remark: Modifiers have not applied on this character.
-	 * i.e.: On a German Keyboard 'SHIFT + 1' will return '1' and not '!'. To get the resulting
-	 * Character use the method 'IKeyEvent#getResultingCharacter()'.
-	 * 
-	 * @return The character representation or null, if the key has no character representation.
-	 * @see IKeyEvent#getResultingCharacter()
-	 */
-	Character getCharacter();
-
-	/**
-	 * Gets the character representation of the typed key after all modifiers have been applied.
-	 * 
-	 * Remark: Modifiers have applied on this character.
-	 * i.e.: On a German Keyboard 'SHIFT + 1' will return '!' and not '1'. To get the character
-	 * representation of the typed key use the method 'IKeyEvent#getCharacter()'.
-	 * 
-	 * @return The character representation or null, if the key has no character representation.
-	 * @see IKeyEvent#getCharacter()
-	 */
-	Character getResultingCharacter();
-
-	/**
-	 * Gets the modifiers of the key event.
-	 * 
-	 * @return The set of the applied modifiers. May be empty but is never null
-	 */
-	Set<Modifier> getModifier();
+	void removeMouseListener(IMouseListener mouseListener);
 
 }
