@@ -74,7 +74,6 @@ import org.jowidgets.common.model.ITableDataModelObservable;
 import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.types.Modifier;
 import org.jowidgets.common.types.MouseButton;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.TablePackPolicy;
@@ -108,6 +107,7 @@ import org.jowidgets.spi.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.spi.impl.swing.util.AlignmentConvert;
 import org.jowidgets.spi.impl.swing.util.ColorConvert;
 import org.jowidgets.spi.impl.swing.util.FontProvider;
+import org.jowidgets.spi.impl.swing.util.MouseUtil;
 import org.jowidgets.spi.impl.swing.util.PositionConvert;
 import org.jowidgets.spi.impl.swing.widgets.base.TableColumnModelAdapter;
 import org.jowidgets.spi.widgets.ITableSpi;
@@ -492,32 +492,6 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		return null;
 	}
 
-	private static MouseButton getMouseButton(final MouseEvent event) {
-		if (SwingUtilities.isLeftMouseButton(event)) {
-			return MouseButton.LEFT;
-		}
-		else if (SwingUtilities.isRightMouseButton(event)) {
-			return MouseButton.RIGHT;
-		}
-		else {
-			return null;
-		}
-	}
-
-	private static Set<Modifier> getModifier(final MouseEvent event) {
-		final Set<Modifier> modifier = new HashSet<Modifier>();
-		if (event.isShiftDown()) {
-			modifier.add(Modifier.SHIFT);
-		}
-		if (event.isControlDown()) {
-			modifier.add(Modifier.CTRL);
-		}
-		if (event.isAltDown()) {
-			modifier.add(Modifier.ALT);
-		}
-		return modifier;
-	}
-
 	final class TableCellListener extends MouseAdapter {
 
 		@Override
@@ -549,14 +523,18 @@ public class TableImpl extends SwingControl implements ITableSpi {
 				return null;
 			}
 
-			final MouseButton mouseButton = getMouseButton(event);
+			final MouseButton mouseButton = MouseUtil.getMouseButton(event);
 			if (mouseButton == null) {
 				return null;
 			}
 
 			final CellIndices indices = getCellIndices(event);
 			if (indices != null) {
-				return new TableCellMouseEvent(indices.getRowIndex(), indices.getColumnIndex(), mouseButton, getModifier(event));
+				return new TableCellMouseEvent(
+					indices.getRowIndex(),
+					indices.getColumnIndex(),
+					mouseButton,
+					MouseUtil.getModifier(event));
 			}
 			return null;
 		}
@@ -618,7 +596,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			if (SwingUtilities.isLeftMouseButton(e) && e.getClickCount() == 1) {
 				int columnIndex = table.getTableHeader().getColumnModel().getColumnIndexAtX(e.getX());
 				columnIndex = table.convertColumnIndexToModel(columnIndex);
-				final ITableColumnMouseEvent mouseEvent = new TableColumnMouseEvent(columnIndex, getModifier(e));
+				final ITableColumnMouseEvent mouseEvent = new TableColumnMouseEvent(columnIndex, MouseUtil.getModifier(e));
 				tableColumnObservable.fireMouseClicked(mouseEvent);
 			}
 		}

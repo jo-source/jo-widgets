@@ -35,6 +35,7 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IKeyListener;
+import org.jowidgets.common.widgets.controler.IMouseListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.spi.impl.controler.InputObservable;
 import org.jowidgets.spi.widgets.IInputControlSpi;
@@ -164,6 +165,16 @@ public abstract class AbstractInputControl extends InputObservable implements II
 	@Override
 	public void removeKeyListener(final IKeyListener listener) {
 		swingComponentDelegate.removeKeyListener(listener);
+	}
+
+	@Override
+	public void addMouseListener(final IMouseListener mouseListener) {
+		swingComponentDelegate.addMouseListener(mouseListener);
+	}
+
+	@Override
+	public void removeMouseListener(final IMouseListener mouseListener) {
+		swingComponentDelegate.removeMouseListener(mouseListener);
 	}
 
 	@Override

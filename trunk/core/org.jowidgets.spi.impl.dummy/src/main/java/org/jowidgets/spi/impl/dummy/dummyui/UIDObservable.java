@@ -44,6 +44,8 @@ import org.jowidgets.common.widgets.controler.IKeyListener;
 import org.jowidgets.common.widgets.controler.IKeyObservable;
 import org.jowidgets.common.widgets.controler.IMenuListener;
 import org.jowidgets.common.widgets.controler.IMenuObservable;
+import org.jowidgets.common.widgets.controler.IMouseListener;
+import org.jowidgets.common.widgets.controler.IMouseObservable;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionObservable;
 import org.jowidgets.common.widgets.controler.ITreeNodeListener;
@@ -66,7 +68,8 @@ public class UIDObservable implements
 		ITreeSelectionObservableSpi,
 		ITabItemObservableSpi,
 		IFocusObservable,
-		IKeyObservable {
+		IKeyObservable,
+		IMouseObservable {
 
 	private final Set<IInputListener> inputListeners;
 	private final Set<IActionListener> actionListeners;
@@ -79,6 +82,7 @@ public class UIDObservable implements
 	private final Set<ITreeSelectionListenerSpi> treeSelectionListeners;
 	private final Set<IFocusListener> focusListeners;
 	private final Set<IKeyListener> keyListeners;
+	private final Set<IMouseListener> mouseListeners;
 
 	public UIDObservable() {
 		super();
@@ -93,6 +97,7 @@ public class UIDObservable implements
 		this.treeSelectionListeners = new HashSet<ITreeSelectionListenerSpi>();
 		this.focusListeners = new HashSet<IFocusListener>();
 		this.keyListeners = new HashSet<IKeyListener>();
+		this.mouseListeners = new HashSet<IMouseListener>();
 	}
 
 	@Override
@@ -203,6 +208,16 @@ public class UIDObservable implements
 	@Override
 	public void removeKeyListener(final IKeyListener listener) {
 		keyListeners.remove(listener);
+	}
+
+	@Override
+	public void addMouseListener(final IMouseListener mouseListener) {
+		mouseListeners.add(mouseListener);
+	}
+
+	@Override
+	public void removeMouseListener(final IMouseListener mouseListener) {
+		mouseListeners.remove(mouseListener);
 	}
 
 	public void fireActionPerformed() {

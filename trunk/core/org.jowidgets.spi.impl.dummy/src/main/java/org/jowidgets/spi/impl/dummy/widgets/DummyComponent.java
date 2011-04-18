@@ -33,6 +33,7 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IKeyListener;
+import org.jowidgets.common.widgets.controler.IMouseListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
 import org.jowidgets.spi.widgets.IComponentSpi;
@@ -132,6 +133,16 @@ public class DummyComponent extends DummyWidget implements IComponentSpi {
 	@Override
 	public void removeKeyListener(final IKeyListener listener) {
 		getUiReference().removeKeyListener(listener);
+	}
+
+	@Override
+	public void addMouseListener(final IMouseListener mouseListener) {
+		getUiReference().addMouseListener(mouseListener);
+	}
+
+	@Override
+	public void removeMouseListener(final IMouseListener mouseListener) {
+		getUiReference().removeMouseListener(mouseListener);
 	}
 
 	@Override

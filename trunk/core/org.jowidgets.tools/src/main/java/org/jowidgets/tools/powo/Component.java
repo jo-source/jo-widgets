@@ -42,6 +42,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IKeyListener;
+import org.jowidgets.common.widgets.controler.IMouseListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
@@ -52,6 +53,7 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 	private final Set<IPopupDetectionListener> popupDetectionListeners;
 	private final Set<IFocusListener> focusListeners;
 	private final Set<IKeyListener> keyListeners;
+	private final Set<IMouseListener> mouseListeners;
 	private final Set<JoPopupMenu> popupMenus;
 
 	private IMenuModel popupMenu;
@@ -61,6 +63,7 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 		this.popupDetectionListeners = new HashSet<IPopupDetectionListener>();
 		this.focusListeners = new HashSet<IFocusListener>();
 		this.keyListeners = new HashSet<IKeyListener>();
+		this.mouseListeners = new HashSet<IMouseListener>();
 		this.popupMenus = new HashSet<JoPopupMenu>();
 	}
 
@@ -85,6 +88,14 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 		for (final IKeyListener keyListener : keyListeners) {
 			widget.addKeyListener(keyListener);
 		}
+		for (final IMouseListener mouseListener : mouseListeners) {
+			widget.addMouseListener(mouseListener);
+		}
+
+		popupDetectionListeners.clear();
+		focusListeners.clear();
+		keyListeners.clear();
+		mouseListeners.clear();
 	}
 
 	public final void addPopupMenu(final JoPopupMenu popupMenu) {
@@ -203,6 +214,26 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 		}
 		else {
 			keyListeners.remove(listener);
+		}
+	}
+
+	@Override
+	public void addMouseListener(final IMouseListener mouseListener) {
+		if (isInitialized()) {
+			getWidget().addMouseListener(mouseListener);
+		}
+		else {
+			mouseListeners.add(mouseListener);
+		}
+	}
+
+	@Override
+	public void removeMouseListener(final IMouseListener mouseListener) {
+		if (isInitialized()) {
+			getWidget().removeMouseListener(mouseListener);
+		}
+		else {
+			mouseListeners.remove(mouseListener);
 		}
 	}
 

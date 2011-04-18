@@ -38,6 +38,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IKeyListener;
+import org.jowidgets.common.widgets.controler.IMouseListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 
 public class ComponentWrapper extends WidgetWrapper implements IComponent {
@@ -154,6 +155,16 @@ public class ComponentWrapper extends WidgetWrapper implements IComponent {
 	@Override
 	public void removeKeyListener(final IKeyListener listener) {
 		getWidget().removeKeyListener(listener);
+	}
+
+	@Override
+	public void addMouseListener(final IMouseListener mouseListener) {
+		getWidget().addMouseListener(mouseListener);
+	}
+
+	@Override
+	public void removeMouseListener(final IMouseListener mouseListener) {
+		getWidget().removeMouseListener(mouseListener);
 	}
 
 	@Override

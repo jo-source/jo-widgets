@@ -33,6 +33,9 @@ import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.MenuDetectEvent;
 import org.eclipse.swt.events.MenuDetectListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.MouseTrackAdapter;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Control;
@@ -40,16 +43,21 @@ import org.jowidgets.common.color.ColorValue;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.MouseButton;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IKeyListener;
+import org.jowidgets.common.widgets.controler.IMouseListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.spi.impl.controler.FocusObservable;
 import org.jowidgets.spi.impl.controler.KeyObservable;
+import org.jowidgets.spi.impl.controler.MouseButtonEvent;
+import org.jowidgets.spi.impl.controler.MouseObservable;
 import org.jowidgets.spi.impl.controler.PopupDetectionObservable;
 import org.jowidgets.spi.impl.swt.color.ColorCache;
 import org.jowidgets.spi.impl.swt.cursor.CursorCache;
 import org.jowidgets.spi.impl.swt.util.DimensionConvert;
+import org.jowidgets.spi.impl.swt.util.MouseUtil;
 import org.jowidgets.spi.impl.swt.util.PositionConvert;
 import org.jowidgets.spi.impl.swt.widgets.event.LazyKeyEventContentFactory;
 import org.jowidgets.spi.widgets.IComponentSpi;
@@ -60,6 +68,7 @@ public class SwtComponent extends SwtWidget implements IComponentSpi {
 	private final PopupDetectionObservable popupDetectionObservable;
 	private final FocusObservable focusObservable;
 	private final KeyObservable keyObservable;
+	private final MouseObservable mouseObservable;
 	private MenuDetectListener menuDetectListener;
 
 	public SwtComponent(final Control control) {
@@ -67,6 +76,7 @@ public class SwtComponent extends SwtWidget implements IComponentSpi {
 		this.popupDetectionObservable = new PopupDetectionObservable();
 		this.focusObservable = new FocusObservable();
 		this.keyObservable = new KeyObservable();
+		this.mouseObservable = new MouseObservable();
 
 		this.menuDetectListener = new MenuDetectListener() {
 
@@ -101,6 +111,62 @@ public class SwtComponent extends SwtWidget implements IComponentSpi {
 			@Override
 			public void keyPressed(final KeyEvent e) {
 				keyObservable.fireKeyPressed(new LazyKeyEventContentFactory(e));
+			}
+		});
+
+		getUiReference().addMouseListener(new MouseListener() {
+			@Override
+			public void mouseUp(final MouseEvent e) {
+				final MouseButtonEvent mouseEvent = getMouseEvent(e, 1);
+				if (mouseEvent != null) {
+					mouseObservable.fireMouseReleased(mouseEvent);
+				}
+			}
+
+			@Override
+			public void mouseDown(final MouseEvent e) {
+				final MouseButtonEvent mouseEvent = getMouseEvent(e, 1);
+				if (mouseEvent != null) {
+					mouseObservable.fireMousePressed(mouseEvent);
+				}
+			}
+
+			@Override
+			public void mouseDoubleClick(final MouseEvent e) {
+				final MouseButtonEvent mouseEvent = getMouseEvent(e, 2);
+				if (mouseEvent != null) {
+					mouseObservable.fireMouseDoubleClicked(mouseEvent);
+				}
+			}
+
+			private MouseButtonEvent getMouseEvent(final MouseEvent event, final int maxCount) {
+				try {
+					if (event.count > maxCount) {
+						return null;
+					}
+				}
+				catch (final NoSuchFieldError e) {
+					//RWT doesn't support count field :-( 
+					//so the mouse down and mouse up may be fired twice at double clicks :-(
+				}
+				final MouseButton mouseButton = MouseUtil.getMouseButton(event);
+				if (mouseButton == null) {
+					return null;
+				}
+				final Position position = new Position(event.x, event.y);
+				return new MouseButtonEvent(position, mouseButton, MouseUtil.getModifier(event.stateMask));
+			}
+		});
+
+		getUiReference().addMouseTrackListener(new MouseTrackAdapter() {
+			@Override
+			public void mouseExit(final MouseEvent e) {
+				mouseObservable.fireMouseExit(new Position(e.x, e.y));
+			}
+
+			@Override
+			public void mouseEnter(final MouseEvent e) {
+				mouseObservable.fireMouseEnter(new Position(e.x, e.y));
 			}
 		});
 	}
@@ -225,6 +291,16 @@ public class SwtComponent extends SwtWidget implements IComponentSpi {
 	@Override
 	public void removeKeyListener(final IKeyListener listener) {
 		keyObservable.removeKeyListener(listener);
+	}
+
+	@Override
+	public void addMouseListener(final IMouseListener mouseListener) {
+		mouseObservable.addMouseListener(mouseListener);
+	}
+
+	@Override
+	public void removeMouseListener(final IMouseListener mouseListener) {
+		mouseObservable.removeMouseListener(mouseListener);
 	}
 
 	@Override
