@@ -31,6 +31,7 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.controler.IComponentListener;
 import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IKeyListener;
 import org.jowidgets.common.widgets.controler.IMouseListener;
@@ -137,6 +138,16 @@ public abstract class AbstractActionComponent extends AbstractActionWidget imple
 	@Override
 	public void removeKeyListener(final IKeyListener listener) {
 		dummyComponentDelegate.removeKeyListener(listener);
+	}
+
+	@Override
+	public void addComponentListener(final IComponentListener componentListener) {
+		dummyComponentDelegate.addComponentListener(componentListener);
+	}
+
+	@Override
+	public void removeComponentListener(final IComponentListener componentListener) {
+		dummyComponentDelegate.removeComponentListener(componentListener);
 	}
 
 	@Override

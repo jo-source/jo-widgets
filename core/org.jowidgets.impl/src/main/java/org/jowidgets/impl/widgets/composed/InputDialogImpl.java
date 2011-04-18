@@ -52,6 +52,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controler.IComponentListener;
 import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.controler.IKeyListener;
@@ -395,6 +396,16 @@ public class InputDialogImpl<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 	@Override
 	public void removeMouseListener(final IMouseListener mouseListener) {
 		inputCompositeWidget.removeMouseListener(mouseListener);
+	}
+
+	@Override
+	public void addComponentListener(final IComponentListener componentListener) {
+		inputCompositeWidget.addComponentListener(componentListener);
+	}
+
+	@Override
+	public void removeComponentListener(final IComponentListener componentListener) {
+		inputCompositeWidget.removeComponentListener(componentListener);
 	}
 
 	@Override

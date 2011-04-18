@@ -40,6 +40,7 @@ import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IComponentCommon;
+import org.jowidgets.common.widgets.controler.IComponentListener;
 import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IKeyListener;
 import org.jowidgets.common.widgets.controler.IMouseListener;
@@ -54,6 +55,7 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 	private final Set<IFocusListener> focusListeners;
 	private final Set<IKeyListener> keyListeners;
 	private final Set<IMouseListener> mouseListeners;
+	private final Set<IComponentListener> componentListners;
 	private final Set<JoPopupMenu> popupMenus;
 
 	private IMenuModel popupMenu;
@@ -64,6 +66,7 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 		this.focusListeners = new HashSet<IFocusListener>();
 		this.keyListeners = new HashSet<IKeyListener>();
 		this.mouseListeners = new HashSet<IMouseListener>();
+		this.componentListners = new HashSet<IComponentListener>();
 		this.popupMenus = new HashSet<JoPopupMenu>();
 	}
 
@@ -91,11 +94,15 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 		for (final IMouseListener mouseListener : mouseListeners) {
 			widget.addMouseListener(mouseListener);
 		}
+		for (final IComponentListener componentListener : componentListners) {
+			widget.addComponentListener(componentListener);
+		}
 
 		popupDetectionListeners.clear();
 		focusListeners.clear();
 		keyListeners.clear();
 		mouseListeners.clear();
+		componentListners.clear();
 	}
 
 	public final void addPopupMenu(final JoPopupMenu popupMenu) {
@@ -234,6 +241,26 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 		}
 		else {
 			mouseListeners.remove(mouseListener);
+		}
+	}
+
+	@Override
+	public void addComponentListener(final IComponentListener componentListener) {
+		if (isInitialized()) {
+			getWidget().addComponentListener(componentListener);
+		}
+		else {
+			componentListners.add(componentListener);
+		}
+	}
+
+	@Override
+	public void removeComponentListener(final IComponentListener componentListener) {
+		if (isInitialized()) {
+			getWidget().removeComponentListener(componentListener);
+		}
+		else {
+			componentListners.remove(componentListener);
 		}
 	}
 

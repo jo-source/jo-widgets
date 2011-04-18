@@ -44,16 +44,16 @@ public class KeyObservable implements IKeyObservable {
 	}
 
 	@Override
-	public void addKeyListener(final IKeyListener listener) {
+	public final void addKeyListener(final IKeyListener listener) {
 		listeners.add(listener);
 	}
 
 	@Override
-	public void removeKeyListener(final IKeyListener listener) {
+	public final void removeKeyListener(final IKeyListener listener) {
 		listeners.remove(listener);
 	}
 
-	public void fireKeyPressed(final ILazyKeyEventContentFactory contentFactory) {
+	public final void fireKeyPressed(final ILazyKeyEventContentFactory contentFactory) {
 		if (listeners.size() > 0) {
 			final IKeyEvent event = new KeyEvent(contentFactory);
 			for (final IKeyListener listener : listeners) {
@@ -63,7 +63,7 @@ public class KeyObservable implements IKeyObservable {
 
 	}
 
-	public void fireKeyReleased(final ILazyKeyEventContentFactory contentFactory) {
+	public final void fireKeyReleased(final ILazyKeyEventContentFactory contentFactory) {
 		if (listeners.size() > 0) {
 			final IKeyEvent event = new KeyEvent(contentFactory);
 			for (final IKeyListener listener : listeners) {

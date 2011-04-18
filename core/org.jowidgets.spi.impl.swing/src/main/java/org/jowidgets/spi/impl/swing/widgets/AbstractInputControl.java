@@ -33,6 +33,7 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.controler.IComponentListener;
 import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IKeyListener;
 import org.jowidgets.common.widgets.controler.IMouseListener;
@@ -175,6 +176,16 @@ public abstract class AbstractInputControl extends InputObservable implements II
 	@Override
 	public void removeMouseListener(final IMouseListener mouseListener) {
 		swingComponentDelegate.removeMouseListener(mouseListener);
+	}
+
+	@Override
+	public void addComponentListener(final IComponentListener componentListener) {
+		swingComponentDelegate.addComponentListener(componentListener);
+	}
+
+	@Override
+	public void removeComponentListener(final IComponentListener componentListener) {
+		swingComponentDelegate.removeComponentListener(componentListener);
 	}
 
 	@Override

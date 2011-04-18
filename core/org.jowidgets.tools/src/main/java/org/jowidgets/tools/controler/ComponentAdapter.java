@@ -26,42 +26,16 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.controler;
+package org.jowidgets.tools.controler;
 
-import java.util.HashSet;
-import java.util.Set;
+import org.jowidgets.common.widgets.controler.IComponentListener;
 
-import org.jowidgets.common.widgets.controler.IFocusListener;
-import org.jowidgets.common.widgets.controler.IFocusObservable;
-
-public class FocusObservable implements IFocusObservable {
-
-	private final Set<IFocusListener> listeners;
-
-	public FocusObservable() {
-		this.listeners = new HashSet<IFocusListener>();
-	}
+public class ComponentAdapter implements IComponentListener {
 
 	@Override
-	public final void addFocusListener(final IFocusListener listener) {
-		listeners.add(listener);
-	}
+	public void sizeChanged() {}
 
 	@Override
-	public final void removeFocusListener(final IFocusListener listener) {
-		listeners.remove(listener);
-	}
-
-	public final void focusGained() {
-		for (final IFocusListener listener : listeners) {
-			listener.focusGained();
-		}
-	}
-
-	public final void focusLost() {
-		for (final IFocusListener listener : listeners) {
-			listener.focusLost();
-		}
-	}
+	public void positionChanged() {}
 
 }
