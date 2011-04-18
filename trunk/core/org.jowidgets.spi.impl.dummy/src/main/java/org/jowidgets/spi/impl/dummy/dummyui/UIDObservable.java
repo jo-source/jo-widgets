@@ -34,6 +34,8 @@ import java.util.Set;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IActionObservable;
+import org.jowidgets.common.widgets.controler.IComponentListener;
+import org.jowidgets.common.widgets.controler.IComponentObservable;
 import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IFocusObservable;
 import org.jowidgets.common.widgets.controler.IInputListener;
@@ -69,7 +71,8 @@ public class UIDObservable implements
 		ITabItemObservableSpi,
 		IFocusObservable,
 		IKeyObservable,
-		IMouseObservable {
+		IMouseObservable,
+		IComponentObservable {
 
 	private final Set<IInputListener> inputListeners;
 	private final Set<IActionListener> actionListeners;
@@ -83,6 +86,7 @@ public class UIDObservable implements
 	private final Set<IFocusListener> focusListeners;
 	private final Set<IKeyListener> keyListeners;
 	private final Set<IMouseListener> mouseListeners;
+	private final Set<IComponentListener> componentListeners;
 
 	public UIDObservable() {
 		super();
@@ -98,6 +102,7 @@ public class UIDObservable implements
 		this.focusListeners = new HashSet<IFocusListener>();
 		this.keyListeners = new HashSet<IKeyListener>();
 		this.mouseListeners = new HashSet<IMouseListener>();
+		this.componentListeners = new HashSet<IComponentListener>();
 	}
 
 	@Override
@@ -218,6 +223,16 @@ public class UIDObservable implements
 	@Override
 	public void removeMouseListener(final IMouseListener mouseListener) {
 		mouseListeners.remove(mouseListener);
+	}
+
+	@Override
+	public void addComponentListener(final IComponentListener componentListener) {
+		componentListeners.add(componentListener);
+	}
+
+	@Override
+	public void removeComponentListener(final IComponentListener componentListener) {
+		componentListeners.remove(componentListener);
 	}
 
 	public void fireActionPerformed() {

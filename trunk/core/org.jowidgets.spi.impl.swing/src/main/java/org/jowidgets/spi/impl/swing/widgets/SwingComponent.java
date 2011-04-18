@@ -28,6 +28,8 @@
 package org.jowidgets.spi.impl.swing.widgets;
 
 import java.awt.Component;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
@@ -43,11 +45,13 @@ import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.MouseButton;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.controler.IComponentListener;
 import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IKeyListener;
 import org.jowidgets.common.widgets.controler.IMouseButtonEvent;
 import org.jowidgets.common.widgets.controler.IMouseListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
+import org.jowidgets.spi.impl.controler.ComponentObservable;
 import org.jowidgets.spi.impl.controler.FocusObservable;
 import org.jowidgets.spi.impl.controler.KeyObservable;
 import org.jowidgets.spi.impl.controler.MouseButtonEvent;
@@ -68,6 +72,7 @@ public class SwingComponent extends SwingWidget implements IComponentSpi {
 	private final FocusObservable focusObservable;
 	private final KeyObservable keyObservable;
 	private final MouseObservable mouseObservable;
+	private final ComponentObservable componentObservable;
 	private MouseListener mouseListener;
 
 	public SwingComponent(final Component component) {
@@ -76,6 +81,7 @@ public class SwingComponent extends SwingWidget implements IComponentSpi {
 		this.focusObservable = new FocusObservable();
 		this.keyObservable = new KeyObservable();
 		this.mouseObservable = new MouseObservable();
+		this.componentObservable = new ComponentObservable();
 
 		this.mouseListener = new MouseAdapter() {
 			@Override
@@ -93,6 +99,18 @@ public class SwingComponent extends SwingWidget implements IComponentSpi {
 			}
 		};
 		component.addMouseListener(mouseListener);
+
+		getUiReference().addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(final ComponentEvent e) {
+				componentObservable.fireSizeChanged();
+			}
+
+			@Override
+			public void componentMoved(final ComponentEvent e) {
+				componentObservable.firePositionChanged();
+			}
+		});
 
 		getUiReference().addFocusListener(new FocusListener() {
 			@Override
@@ -287,6 +305,16 @@ public class SwingComponent extends SwingWidget implements IComponentSpi {
 	@Override
 	public void removeMouseListener(final IMouseListener mouseListener) {
 		mouseObservable.removeMouseListener(mouseListener);
+	}
+
+	@Override
+	public void addComponentListener(final IComponentListener componentListener) {
+		componentObservable.addComponentListener(componentListener);
+	}
+
+	@Override
+	public void removeComponentListener(final IComponentListener componentListener) {
+		componentObservable.removeComponentListener(componentListener);
 	}
 
 	@Override

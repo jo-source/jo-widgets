@@ -42,6 +42,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IButtonCommon;
 import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controler.IComponentListener;
 import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IKeyListener;
 import org.jowidgets.common.widgets.controler.IMouseListener;
@@ -266,6 +267,16 @@ public class MessageDialogImpl implements IMessageDialog {
 	@Override
 	public void removeMouseListener(final IMouseListener mouseListener) {
 		dialogWidget.removeMouseListener(mouseListener);
+	}
+
+	@Override
+	public void addComponentListener(final IComponentListener componentListener) {
+		dialogWidget.addComponentListener(componentListener);
+	}
+
+	@Override
+	public void removeComponentListener(final IComponentListener componentListener) {
+		dialogWidget.removeComponentListener(componentListener);
 	}
 
 	@Override

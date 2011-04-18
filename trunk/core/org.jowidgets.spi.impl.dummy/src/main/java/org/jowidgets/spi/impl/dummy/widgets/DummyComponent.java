@@ -31,6 +31,7 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.controler.IComponentListener;
 import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IKeyListener;
 import org.jowidgets.common.widgets.controler.IMouseListener;
@@ -143,6 +144,16 @@ public class DummyComponent extends DummyWidget implements IComponentSpi {
 	@Override
 	public void removeMouseListener(final IMouseListener mouseListener) {
 		getUiReference().removeMouseListener(mouseListener);
+	}
+
+	@Override
+	public void addComponentListener(final IComponentListener componentListener) {
+		getUiReference().addComponentListener(componentListener);
+	}
+
+	@Override
+	public void removeComponentListener(final IComponentListener componentListener) {
+		getUiReference().removeComponentListener(componentListener);
 	}
 
 	@Override

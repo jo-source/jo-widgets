@@ -44,6 +44,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.IIconCommon;
 import org.jowidgets.common.widgets.ITextLabelCommon;
+import org.jowidgets.common.widgets.controler.IComponentListener;
 import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IKeyListener;
 import org.jowidgets.common.widgets.controler.IMouseListener;
@@ -248,6 +249,16 @@ public class LabelImpl implements ILabel {
 	@Override
 	public void removeMouseListener(final IMouseListener mouseListener) {
 		compositeWidget.removeMouseListener(mouseListener);
+	}
+
+	@Override
+	public void addComponentListener(final IComponentListener componentListener) {
+		compositeWidget.addComponentListener(componentListener);
+	}
+
+	@Override
+	public void removeComponentListener(final IComponentListener componentListener) {
+		compositeWidget.removeComponentListener(componentListener);
 	}
 
 	@Override

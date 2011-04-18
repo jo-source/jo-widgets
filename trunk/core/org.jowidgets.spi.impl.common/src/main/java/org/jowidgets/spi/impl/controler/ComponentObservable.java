@@ -31,36 +31,36 @@ package org.jowidgets.spi.impl.controler;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jowidgets.common.widgets.controler.IFocusListener;
-import org.jowidgets.common.widgets.controler.IFocusObservable;
+import org.jowidgets.common.widgets.controler.IComponentListener;
+import org.jowidgets.common.widgets.controler.IComponentObservable;
 
-public class FocusObservable implements IFocusObservable {
+public class ComponentObservable implements IComponentObservable {
 
-	private final Set<IFocusListener> listeners;
+	private final Set<IComponentListener> listeners;
 
-	public FocusObservable() {
-		this.listeners = new HashSet<IFocusListener>();
+	public ComponentObservable() {
+		this.listeners = new HashSet<IComponentListener>();
 	}
 
 	@Override
-	public final void addFocusListener(final IFocusListener listener) {
-		listeners.add(listener);
+	public final void addComponentListener(final IComponentListener componentListener) {
+		listeners.add(componentListener);
 	}
 
 	@Override
-	public final void removeFocusListener(final IFocusListener listener) {
-		listeners.remove(listener);
+	public final void removeComponentListener(final IComponentListener componentListener) {
+		listeners.remove(componentListener);
 	}
 
-	public final void focusGained() {
-		for (final IFocusListener listener : listeners) {
-			listener.focusGained();
+	public final void fireSizeChanged() {
+		for (final IComponentListener listener : listeners) {
+			listener.sizeChanged();
 		}
 	}
 
-	public final void focusLost() {
-		for (final IFocusListener listener : listeners) {
-			listener.focusLost();
+	public final void firePositionChanged() {
+		for (final IComponentListener listener : listeners) {
+			listener.positionChanged();
 		}
 	}
 

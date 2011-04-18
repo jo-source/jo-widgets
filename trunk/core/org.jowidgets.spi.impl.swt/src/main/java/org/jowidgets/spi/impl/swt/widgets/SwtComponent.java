@@ -27,6 +27,8 @@
  */
 package org.jowidgets.spi.impl.swt.widgets;
 
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.KeyEvent;
@@ -45,10 +47,12 @@ import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.MouseButton;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.controler.IComponentListener;
 import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IKeyListener;
 import org.jowidgets.common.widgets.controler.IMouseListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
+import org.jowidgets.spi.impl.controler.ComponentObservable;
 import org.jowidgets.spi.impl.controler.FocusObservable;
 import org.jowidgets.spi.impl.controler.KeyObservable;
 import org.jowidgets.spi.impl.controler.MouseButtonEvent;
@@ -69,6 +73,7 @@ public class SwtComponent extends SwtWidget implements IComponentSpi {
 	private final FocusObservable focusObservable;
 	private final KeyObservable keyObservable;
 	private final MouseObservable mouseObservable;
+	private final ComponentObservable componentObservable;
 	private MenuDetectListener menuDetectListener;
 
 	public SwtComponent(final Control control) {
@@ -77,6 +82,7 @@ public class SwtComponent extends SwtWidget implements IComponentSpi {
 		this.focusObservable = new FocusObservable();
 		this.keyObservable = new KeyObservable();
 		this.mouseObservable = new MouseObservable();
+		this.componentObservable = new ComponentObservable();
 
 		this.menuDetectListener = new MenuDetectListener() {
 
@@ -88,6 +94,18 @@ public class SwtComponent extends SwtWidget implements IComponentSpi {
 		};
 
 		getUiReference().addMenuDetectListener(menuDetectListener);
+
+		getUiReference().addControlListener(new ControlListener() {
+			@Override
+			public void controlResized(final ControlEvent e) {
+				componentObservable.fireSizeChanged();
+			}
+
+			@Override
+			public void controlMoved(final ControlEvent e) {
+				componentObservable.firePositionChanged();
+			}
+		});
 
 		getUiReference().addFocusListener(new FocusListener() {
 
@@ -291,6 +309,16 @@ public class SwtComponent extends SwtWidget implements IComponentSpi {
 	@Override
 	public void removeKeyListener(final IKeyListener listener) {
 		keyObservable.removeKeyListener(listener);
+	}
+
+	@Override
+	public void addComponentListener(final IComponentListener componentListener) {
+		componentObservable.addComponentListener(componentListener);
+	}
+
+	@Override
+	public void removeComponentListener(final IComponentListener componentListener) {
+		componentObservable.removeComponentListener(componentListener);
 	}
 
 	@Override

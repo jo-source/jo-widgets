@@ -39,6 +39,7 @@ import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IControlCommon;
+import org.jowidgets.common.widgets.controler.IComponentListener;
 import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IKeyListener;
 import org.jowidgets.common.widgets.controler.IMouseListener;
@@ -190,6 +191,16 @@ public class ToolBarContainerItemImpl extends ToolBarItemImpl implements IToolBa
 	@Override
 	public void removeMouseListener(final IMouseListener mouseListener) {
 		swtComposite.removeMouseListener(mouseListener);
+	}
+
+	@Override
+	public void addComponentListener(final IComponentListener componentListener) {
+		swtComposite.addComponentListener(componentListener);
+	}
+
+	@Override
+	public void removeComponentListener(final IComponentListener componentListener) {
+		swtComposite.removeComponentListener(componentListener);
 	}
 
 	@Override
