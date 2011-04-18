@@ -46,8 +46,11 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.widgets.controler.IKeyEvent;
+import org.jowidgets.common.widgets.controler.IMouseButtonEvent;
+import org.jowidgets.common.widgets.controler.IMouseEvent;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.controler.KeyAdapter;
+import org.jowidgets.tools.controler.MouseAdapter;
 
 public class DemoForm1ContentCreator implements IInputContentCreator<List<String>> {
 
@@ -135,6 +138,44 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 		lastname = container.add(stringMandatoryFieldBp, inputWidgetConstraints);
 		lastnameValidationWidget = container.add(validationLabelBp, "wrap");
 		lastnameValidationWidget.registerInputWidget(lastname);
+
+		lastname.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mousePressed(final IMouseButtonEvent mouseEvent) {
+				//CHECKSTYLE:OFF
+				System.out.println("mousePressed " + mouseEvent);
+				//CHECKSTYLE:ON
+			}
+
+			@Override
+			public void mouseReleased(final IMouseButtonEvent mouseEvent) {
+				//CHECKSTYLE:OFF
+				System.out.println("mouseReleased " + mouseEvent);
+				//CHECKSTYLE:ON
+			}
+
+			@Override
+			public void mouseDoubleClicked(final IMouseButtonEvent mouseEvent) {
+				//CHECKSTYLE:OFF
+				System.out.println("mouseDoubleClicked " + mouseEvent);
+				//CHECKSTYLE:ON
+			}
+
+			@Override
+			public void mouseEnter(final IMouseEvent mouseEvent) {
+				//CHECKSTYLE:OFF
+				System.out.println("mouseEnter " + mouseEvent);
+				//CHECKSTYLE:ON
+			}
+
+			@Override
+			public void mouseExit(final IMouseEvent mouseEvent) {
+				//CHECKSTYLE:OFF
+				System.out.println("mouseExit " + mouseEvent);
+				//CHECKSTYLE:ON
+			}
+		});
 
 		container.add(textLabelBp.setText("Street*"), "right, sg lg");
 		street = container.add(stringMandatoryFieldBp, inputWidgetConstraints);
