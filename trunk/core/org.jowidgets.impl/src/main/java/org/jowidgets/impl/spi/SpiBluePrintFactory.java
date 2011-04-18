@@ -38,6 +38,7 @@ import org.jowidgets.impl.spi.blueprint.IDirectoryChooserBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IFileChooserBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IFrameBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IIconBluePrintSpi;
+import org.jowidgets.impl.spi.blueprint.IPopupDialogBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IProgressBarBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IScrollCompositeBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ISeparatorBluePrintSpi;
@@ -67,6 +68,11 @@ public class SpiBluePrintFactory extends AbstractBluePrintFactory implements ISp
 	@Override
 	public IDialogBluePrintSpi dialog() {
 		return createProxy(IDialogBluePrintSpi.class);
+	}
+
+	@Override
+	public IPopupDialogBluePrintSpi popupDialog() {
+		return createProxy(IPopupDialogBluePrintSpi.class);
 	}
 
 	@Override

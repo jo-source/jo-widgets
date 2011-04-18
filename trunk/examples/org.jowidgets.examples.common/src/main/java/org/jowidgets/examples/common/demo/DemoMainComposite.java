@@ -151,6 +151,18 @@ public final class DemoMainComposite {
 			}
 		});
 
+		final IButton popupDialogDemoButton = parentContainer.add(
+				bpF.button("Popup dialog demo", "Demonstrates popup dialogs"),
+				"grow, sg bg, wrap");
+		popupDialogDemoButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final IFrame popupDialogDemoFrame = new PopupDialogDemoFrame();
+				popupDialogDemoFrame.setSize(new Dimension(400, 300));
+				popupDialogDemoFrame.setVisible(true);
+			}
+		});
+
 		final IFrame fileChooserDialog = getParentWindow().createChildWindow(bpF.dialog("File chooser demo"));
 		new DemoFileChooserComposite(fileChooserDialog);
 		final IButton fileChooserDialogButton = parentContainer.add(

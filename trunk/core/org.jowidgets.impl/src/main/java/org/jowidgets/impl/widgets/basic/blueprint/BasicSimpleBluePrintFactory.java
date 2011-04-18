@@ -43,6 +43,7 @@ import org.jowidgets.api.widgets.blueprint.IFileChooserBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.IIconBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMainMenuBluePrint;
+import org.jowidgets.api.widgets.blueprint.IPopupDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IRadioMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISeparatorBluePrint;
@@ -90,6 +91,11 @@ public class BasicSimpleBluePrintFactory extends AbstractBluePrintFactory implem
 	@Override
 	public final IDialogBluePrint dialog() {
 		return createProxy(IDialogBluePrint.class);
+	}
+
+	@Override
+	public IPopupDialogBluePrint popupDialog() {
+		return createProxy(IPopupDialogBluePrint.class);
 	}
 
 	@Override

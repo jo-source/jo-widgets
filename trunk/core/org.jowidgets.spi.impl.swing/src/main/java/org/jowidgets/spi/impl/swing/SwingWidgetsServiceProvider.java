@@ -29,9 +29,14 @@
 package org.jowidgets.spi.impl.swing;
 
 import java.awt.Component;
+import java.awt.Point;
 import java.awt.Window;
 import java.util.LinkedList;
 import java.util.List;
+
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
@@ -116,23 +121,41 @@ public class SwingWidgetsServiceProvider implements IWidgetsServiceProvider {
 
 	@Override
 	public Position toScreen(final Position localPosition, final IComponentCommon component) {
-		if (!(component.getUiReference() instanceof Component)) {
+		final Point result = PositionConvert.convert(localPosition);
+
+		if ((component.getUiReference() instanceof JFrame)) {
+			SwingUtilities.convertPointToScreen(result, ((JFrame) component.getUiReference()).getContentPane());
+		}
+		else if ((component.getUiReference() instanceof JDialog)) {
+			SwingUtilities.convertPointToScreen(result, ((JDialog) component.getUiReference()).getContentPane());
+		}
+		else if ((component.getUiReference() instanceof Component)) {
+			SwingUtilities.convertPointToScreen(result, (Component) component.getUiReference());
+		}
+		else {
 			throw new IllegalArgumentException("UiReference of component must be instance of '" + Component.class.getName() + "'");
 		}
 
-		final Component uiReference = (Component) component.getUiReference();
-		final Position componentScreenPosition = PositionConvert.convert(uiReference.getLocationOnScreen());
-		return Position.add(componentScreenPosition, localPosition);
+		return PositionConvert.convert(result);
 	}
 
 	@Override
 	public Position toLocal(final Position screenPosition, final IComponentCommon component) {
-		if (!(component.getUiReference() instanceof Component)) {
+		final Point result = PositionConvert.convert(screenPosition);
+
+		if ((component.getUiReference() instanceof JFrame)) {
+			SwingUtilities.convertPointFromScreen(result, ((JFrame) component.getUiReference()).getContentPane());
+		}
+		else if ((component.getUiReference() instanceof JDialog)) {
+			SwingUtilities.convertPointFromScreen(result, ((JDialog) component.getUiReference()).getContentPane());
+		}
+		else if ((component.getUiReference() instanceof Component)) {
+			SwingUtilities.convertPointFromScreen(result, (Component) component.getUiReference());
+		}
+		else {
 			throw new IllegalArgumentException("UiReference of component must be instance of '" + Component.class.getName() + "'");
 		}
 
-		final Component uiReference = (Component) component.getUiReference();
-		final Position componentScreenPosition = PositionConvert.convert(uiReference.getLocationOnScreen());
-		return Position.subtract(screenPosition, componentScreenPosition);
+		return PositionConvert.convert(result);
 	}
 }

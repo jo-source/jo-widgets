@@ -41,6 +41,7 @@ import org.jowidgets.spi.impl.swt.widgets.DialogImpl;
 import org.jowidgets.spi.impl.swt.widgets.FrameImpl;
 import org.jowidgets.spi.impl.swt.widgets.FrameWrapper;
 import org.jowidgets.spi.impl.swt.widgets.IconImpl;
+import org.jowidgets.spi.impl.swt.widgets.PopupDialogImpl;
 import org.jowidgets.spi.impl.swt.widgets.ProgressBarImpl;
 import org.jowidgets.spi.impl.swt.widgets.ScrollCompositeImpl;
 import org.jowidgets.spi.impl.swt.widgets.SeparatorImpl;
@@ -61,6 +62,7 @@ import org.jowidgets.spi.widgets.ICompositeSpi;
 import org.jowidgets.spi.widgets.IControlSpi;
 import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.spi.widgets.IIconSpi;
+import org.jowidgets.spi.widgets.IPopupDialogSpi;
 import org.jowidgets.spi.widgets.IProgressBarSpi;
 import org.jowidgets.spi.widgets.IScrollCompositeSpi;
 import org.jowidgets.spi.widgets.ISplitCompositeSpi;
@@ -80,6 +82,7 @@ import org.jowidgets.spi.widgets.setup.ICompositeSetupSpi;
 import org.jowidgets.spi.widgets.setup.IDialogSetupSpi;
 import org.jowidgets.spi.widgets.setup.IFrameSetupSpi;
 import org.jowidgets.spi.widgets.setup.IIconSetupSpi;
+import org.jowidgets.spi.widgets.setup.IPopupDialogSetupSpi;
 import org.jowidgets.spi.widgets.setup.IProgressBarSetupSpi;
 import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
 import org.jowidgets.spi.widgets.setup.ISeparatorSetupSpi;
@@ -135,6 +138,14 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 	@Override
 	public IFrameSpi createDialog(final IGenericWidgetFactory factory, final Object parentUiReference, final IDialogSetupSpi setup) {
 		return new DialogImpl(factory, parentUiReference, setup);
+	}
+
+	@Override
+	public IPopupDialogSpi createPopupDialog(
+		final IGenericWidgetFactory factory,
+		final Object parentUiReference,
+		final IPopupDialogSetupSpi setup) {
+		return new PopupDialogImpl(factory, parentUiReference, setup);
 	}
 
 	@Override

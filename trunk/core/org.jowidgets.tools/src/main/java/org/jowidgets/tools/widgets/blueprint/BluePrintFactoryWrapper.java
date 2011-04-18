@@ -50,6 +50,7 @@ import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMainMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
+import org.jowidgets.api.widgets.blueprint.IPopupDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IProgressBarBluePrint;
 import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IRadioMenuItemBluePrint;
@@ -338,6 +339,11 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	public <WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends IComponentSetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
 		final Class<BLUE_PRINT_TYPE> bluePrintType) {
 		return bluePrintFactory.bluePrint(bluePrintType);
+	}
+
+	@Override
+	public IPopupDialogBluePrint popupDialog() {
+		return bluePrintFactory.popupDialog();
 	}
 
 	@Override
