@@ -36,6 +36,7 @@ import org.jowidgets.spi.widgets.ICompositeSpi;
 import org.jowidgets.spi.widgets.IControlSpi;
 import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.spi.widgets.IIconSpi;
+import org.jowidgets.spi.widgets.IPopupDialogSpi;
 import org.jowidgets.spi.widgets.IProgressBarSpi;
 import org.jowidgets.spi.widgets.IScrollCompositeSpi;
 import org.jowidgets.spi.widgets.ISplitCompositeSpi;
@@ -55,6 +56,7 @@ import org.jowidgets.spi.widgets.setup.ICompositeSetupSpi;
 import org.jowidgets.spi.widgets.setup.IDialogSetupSpi;
 import org.jowidgets.spi.widgets.setup.IFrameSetupSpi;
 import org.jowidgets.spi.widgets.setup.IIconSetupSpi;
+import org.jowidgets.spi.widgets.setup.IPopupDialogSetupSpi;
 import org.jowidgets.spi.widgets.setup.IProgressBarSetupSpi;
 import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
 import org.jowidgets.spi.widgets.setup.ISeparatorSetupSpi;
@@ -84,6 +86,8 @@ public interface IWidgetFactorySpi {
 	IFrameSpi createFrame(IGenericWidgetFactory factory, IFrameSetupSpi setup);
 
 	IFrameSpi createDialog(IGenericWidgetFactory factory, Object parentUiReference, IDialogSetupSpi setup);
+
+	IPopupDialogSpi createPopupDialog(IGenericWidgetFactory factory, Object parentUiReference, IPopupDialogSetupSpi setup);
 
 	ICompositeSpi createComposite(IGenericWidgetFactory factory, Object parentUiReference, ICompositeSetupSpi setup);
 

@@ -46,6 +46,7 @@ import org.jowidgets.impl.base.delegate.ContainerDelegate;
 import org.jowidgets.impl.base.delegate.DisplayDelegate;
 import org.jowidgets.impl.base.delegate.WindowDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractFrameSpiWrapper;
 import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.test.api.widgets.IFrameUi;
@@ -65,6 +66,7 @@ public class FrameImpl extends AbstractFrameSpiWrapper implements IFrameUi {
 		this.windowDelegate = new WindowDelegate(frameWidgetSpi, this, setup);
 		this.containerDelegate = new ContainerDelegate(frameWidgetSpi, this);
 		ColorSettingsInvoker.setColors(setup, this);
+		VisibiliySettingsInvoker.setVisibility(setup, frameWidgetSpi);
 	}
 
 	@Override

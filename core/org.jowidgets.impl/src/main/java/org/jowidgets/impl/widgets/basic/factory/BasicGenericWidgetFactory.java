@@ -48,6 +48,7 @@ import org.jowidgets.api.widgets.descriptor.IDirectoryChooserDescriptor;
 import org.jowidgets.api.widgets.descriptor.IFileChooserDescriptor;
 import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
 import org.jowidgets.api.widgets.descriptor.IIconDescriptor;
+import org.jowidgets.api.widgets.descriptor.IPopupDialogDescriptor;
 import org.jowidgets.api.widgets.descriptor.IScrollCompositeDescriptor;
 import org.jowidgets.api.widgets.descriptor.ISeparatorDescriptor;
 import org.jowidgets.api.widgets.descriptor.ISplitCompositeDescriptor;
@@ -73,6 +74,7 @@ import org.jowidgets.impl.widgets.basic.factory.internal.DirectoryChooserFactory
 import org.jowidgets.impl.widgets.basic.factory.internal.FileChooserFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.FrameFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.IconFactory;
+import org.jowidgets.impl.widgets.basic.factory.internal.PopupDialogFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.ScrollCompositeFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.SeparatorFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.SplitCompositeFactory;
@@ -129,6 +131,7 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 	private void registerBaseWidgets(final IWidgetsServiceProvider widgetsServiceProvider, final ISpiBluePrintFactory bpF) {
 		register(IFrameDescriptor.class, new FrameFactory(this, widgetsServiceProvider, bpF));
 		register(IDialogDescriptor.class, new DialogFactory(this, widgetsServiceProvider, bpF));
+		register(IPopupDialogDescriptor.class, new PopupDialogFactory(this, widgetsServiceProvider, bpF));
 		register(IFileChooserDescriptor.class, new FileChooserFactory(this, widgetsServiceProvider, bpF));
 		register(IDirectoryChooserDescriptor.class, new DirectoryChooserFactory(this, widgetsServiceProvider, bpF));
 		register(ICompositeDescriptor.class, new CompositeFactory(this, widgetsServiceProvider, bpF));

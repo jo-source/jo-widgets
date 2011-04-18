@@ -37,6 +37,7 @@ import org.jowidgets.impl.spi.blueprint.IDirectoryChooserBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IFileChooserBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IFrameBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IIconBluePrintSpi;
+import org.jowidgets.impl.spi.blueprint.IPopupDialogBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IProgressBarBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IScrollCompositeBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ISeparatorBluePrintSpi;
@@ -55,6 +56,8 @@ public interface ISpiBluePrintFactory {
 	IFrameBluePrintSpi frame();
 
 	IDialogBluePrintSpi dialog();
+
+	IPopupDialogBluePrintSpi popupDialog();
 
 	IFileChooserBluePrintSpi fileChooser();
 
