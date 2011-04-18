@@ -34,31 +34,62 @@ import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IPopupDialog;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.controler.IMouseButtonEvent;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.tools.controler.MouseAdapter;
 import org.jowidgets.tools.powo.JoFrame;
 
 public class PopupDialogDemoFrame extends JoFrame {
 
 	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
+	private IPopupDialog popupDialog;
+
 	public PopupDialogDemoFrame() {
 		super("Popup dialog demo");
 
-		setLayout(new MigLayoutDescriptor("[grow]", "[]"));
+		setLayout(new MigLayoutDescriptor("[grow]", "[][]"));
 
-		final IButton button = add(BPF.button("open popup window..."), "");
+		final IButton button1 = add(BPF.button("Open popup window..."), "wrap, sg bg");
+		button1.addMouseListener(new MouseAdapter() {
 
-		button.addActionListener(new IActionListener() {
 			@Override
-			public void actionPerformed() {
-				final IPopupDialog popupDialog = createChildWindow(BPF.popupDialog());
-				final Dimension buttonSize = button.getSize();
+			public void mousePressed(final IMouseButtonEvent event) {
+				popupDialog = createChildWindow(BPF.popupDialog());
+				final Dimension buttonSize = button1.getSize();
 				popupDialog.setBackgroundColor(Colors.WHITE);
 				popupDialog.setSize(new Dimension(buttonSize.getWidth(), 200));
-				popupDialog.setPosition(Toolkit.toScreen(button.getPosition(), PopupDialogDemoFrame.this));
+				popupDialog.setPosition(Toolkit.toScreen(button1.getPosition(), PopupDialogDemoFrame.this));
 				popupDialog.setVisible(true);
 			}
+
 		});
+
+		final IButton button2 = add(BPF.button("Open / Close popup window..."), "sg bg");
+		button2.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mousePressed(final IMouseButtonEvent event) {
+				popupDialog = createChildWindow(BPF.popupDialog().setAutoDispose(false));
+				final Dimension buttonSize = button2.getSize();
+				final Position buttonPos = button2.getPosition();
+				popupDialog.setBackgroundColor(Colors.WHITE);
+				popupDialog.setSize(new Dimension(buttonSize.getWidth(), 150));
+				popupDialog.setPosition(Toolkit.toScreen(
+						new Position(buttonPos.getX(), buttonPos.getY() + buttonSize.getHeight()),
+						PopupDialogDemoFrame.this));
+				popupDialog.setVisible(true);
+			}
+
+			@Override
+			public void mouseReleased(final IMouseButtonEvent mouseEvent) {
+				if (popupDialog != null) {
+					popupDialog.dispose();
+				}
+			}
+
+		});
+
 	}
 }
