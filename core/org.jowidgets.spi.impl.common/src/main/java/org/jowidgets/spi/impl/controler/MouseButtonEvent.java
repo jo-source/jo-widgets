@@ -63,13 +63,7 @@ public class MouseButtonEvent extends MouseEvent implements IMouseButtonEvent {
 
 	@Override
 	public String toString() {
-		return "MouseButtonEvent [mouseButton="
-			+ mouseButton
-			+ ", modifiers="
-			+ modifiers
-			+ ", getPosition()="
-			+ getPosition()
-			+ "]";
+		return "MouseButtonEvent [mouseButton=" + mouseButton + ", modifiers=" + modifiers + ", position=" + getPosition() + "]";
 	}
 
 }
