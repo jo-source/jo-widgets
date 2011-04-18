@@ -35,6 +35,7 @@ import org.jowidgets.api.widgets.IPopupDialog;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.controler.IComponentListener;
 import org.jowidgets.common.widgets.controler.IMouseButtonEvent;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.controler.MouseAdapter;
@@ -48,6 +49,23 @@ public class PopupDialogDemoFrame extends JoFrame {
 
 	public PopupDialogDemoFrame() {
 		super("Popup dialog demo");
+
+		addComponentListener(new IComponentListener() {
+
+			@Override
+			public void sizeChanged() {
+				//CHECKSTYLE:OFF
+				System.out.println(getSize());
+				//CHECKSTYLE:ON
+			}
+
+			@Override
+			public void positionChanged() {
+				//CHECKSTYLE:OFF
+				System.out.println(getPosition());
+				//CHECKSTYLE:ON
+			}
+		});
 
 		setLayout(new MigLayoutDescriptor("[grow]", "[][]"));
 
