@@ -30,41 +30,42 @@ package org.jowidgets.impl.widgets.composed;
 import java.util.Date;
 
 import org.jowidgets.api.color.Colors;
-import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.ICalendar;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITextLabel;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.setup.ICalendarSetup;
 import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.types.Cursor;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.types.Position;
-import org.jowidgets.common.widgets.IComponentCommon;
-import org.jowidgets.common.widgets.controler.IComponentListener;
-import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IInputListener;
-import org.jowidgets.common.widgets.controler.IKeyListener;
 import org.jowidgets.common.widgets.controler.IMouseButtonEvent;
 import org.jowidgets.common.widgets.controler.IMouseEvent;
 import org.jowidgets.common.widgets.controler.IMouseListener;
-import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
+import org.jowidgets.tools.controler.InputObservable;
 import org.jowidgets.tools.controler.MouseAdapter;
 
-public class FallbackCalendarImpl implements ICalendar {
+public class FallbackCalendarImpl extends CompositeBasedControl implements ICalendar {
 
-	private final IComposite composite;
+	private static final String MONDAY = "Mon";
+	private static final String TUESDAY = "Tue";
+	private static final String WEDNESDAY = "Wed";
+	private static final String THURSDAY = "Thu";
+	private static final String FRIDAY = "Fri";
+	private static final String SATURDAY = "Sat";
+	private static final String SUNDAY = "Sun";
+
+	private final InputObservable inputObservable;
+	private final DayButton[][] dayButtons;
 
 	public FallbackCalendarImpl(final IComposite composite, final ICalendarSetup setup) {
-
-		super();
-
-		this.composite = composite;
+		super(composite);
+		this.inputObservable = new InputObservable();
+		this.dayButtons = new DayButton[6][7];
 
 		createContent(composite);
 
@@ -76,15 +77,16 @@ public class FallbackCalendarImpl implements ICalendar {
 		final BluePrintFactory bpf = new BluePrintFactory();
 
 		container.setBackgroundColor(Colors.WHITE);
-		container.setLayout(new MigLayoutDescriptor("wrap", "0[]0[]0[]0[]0[]0[]0[]0", "0[]2[]2[]0[]0[]0[]0[]0[]0"));
+		container.setLayout(new MigLayoutDescriptor("hidemode 3, wrap", "0[]0[]0[]0[]0[]0[]0[]0", "0[]2[]2[]0[]0[]0[]0[]0[]0"));
 
-		container.add(bpf.textLabel(" Mon ").alignCenter(), "alignx center, aligny center, sgx lgh");
-		container.add(bpf.textLabel(" Tue ").alignCenter(), "alignx center, aligny center, sgx lgh");
-		container.add(bpf.textLabel(" Wed ").alignCenter(), "alignx center, aligny center, sgx lgh");
-		container.add(bpf.textLabel(" Thu ").alignCenter(), "alignx center, aligny center, sgx lgh");
-		container.add(bpf.textLabel(" Fri ").alignCenter(), "alignx center, aligny center, sgx lgh");
-		container.add(bpf.textLabel(" Sat ").alignCenter(), "alignx center, aligny center, sgx lgh");
-		container.add(bpf.textLabel(" Sun ").alignCenter(), "alignx center, aligny center, sgx lgh");
+		final String headerConstraints = "alignx center, aligny center, sg lgh";
+		container.add(bpf.textLabel(" " + MONDAY + " ").alignCenter(), headerConstraints);
+		container.add(bpf.textLabel(" " + TUESDAY + " ").alignCenter(), headerConstraints);
+		container.add(bpf.textLabel(" " + WEDNESDAY + " ").alignCenter(), headerConstraints);
+		container.add(bpf.textLabel(" " + THURSDAY + " ").alignCenter(), headerConstraints);
+		container.add(bpf.textLabel(" " + FRIDAY + " ").alignCenter(), headerConstraints);
+		container.add(bpf.textLabel(" " + SATURDAY + " ").alignCenter(), headerConstraints);
+		container.add(bpf.textLabel(" " + SUNDAY + " ").alignCenter(), headerConstraints);
 
 		container.add(bpf.separator(), "growx, span 7");
 
@@ -92,36 +94,23 @@ public class FallbackCalendarImpl implements ICalendar {
 		boolean gray = true;
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 7; j++) {
-				final IComposite outerCellComposite;
-				if (i == 3 && j == 5) {
-					outerCellComposite = container.add(bpf.composite().setBorder(), "alignx center, aligny center, grow, sgx cg");
+				final DayButton dayButton = new DayButton(container);
 
-				}
-				else if (i == 3 && j == 4) {
-					outerCellComposite = container.add(
-							bpf.composite().setBorder().setBackgroundColor(Colors.DEFAULT_TABLE_EVEN_BACKGROUND_COLOR),
-							"alignx center, aligny center, grow, sgx cg");
-				}
-				else {
-					outerCellComposite = container.add(bpf.composite(), "alignx center, aligny center, grow, sgx cg");
+				dayButtons[i][j] = dayButton;
+
+				dayButton.setText("" + (day));
+
+				if (i == 3 && j == 4) {
+					dayButton.setBorder(true);
 				}
 
-				outerCellComposite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
-
-				final IComposite innerCellComposite = outerCellComposite.add(
-						bpf.composite(),
-						"alignx center, aligny center, sgx lgh");
-
-				innerCellComposite.setLayout(new MigLayoutDescriptor("fill", "0[]0", "0[]0"));
-
-				final ITextLabel label = innerCellComposite.add(
-						bpf.textLabel().setText(("" + (day))).alignRight(),
-						"alignx right, aligny center, sg lg");
-
-				//label.setBackgroundColor(Colors.STRONG);
+				if (i == 2 && j == 2) {
+					dayButton.setBorder(true);
+					dayButton.setBackgroundColor(Colors.DEFAULT_TABLE_EVEN_BACKGROUND_COLOR);
+				}
 
 				if (gray) {
-					label.setForegroundColor(Colors.DISABLED);
+					dayButton.setForegroundColor(Colors.DISABLED);
 				}
 
 				day++;
@@ -129,33 +118,6 @@ public class FallbackCalendarImpl implements ICalendar {
 					gray = !gray;
 					day = 1;
 				}
-
-				final IMouseListener mouseListener = new MouseAdapter() {
-
-					@Override
-					public void mouseReleased(final IMouseButtonEvent event) {
-						//CHECKSTYLE:OFF
-						System.out.println("Pressed: " + event);
-						//CHECKSTYLE:ON
-					}
-
-					@Override
-					public void mouseExit(final IMouseEvent event) {
-						//CHECKSTYLE:OFF
-						System.out.println("Exit: " + event);
-						//CHECKSTYLE:ON
-					}
-
-					@Override
-					public void mouseEnter(final IMouseEvent event) {
-						//CHECKSTYLE:OFF
-						System.out.println("Enter: " + event);
-						//CHECKSTYLE:ON
-					}
-
-				};
-				outerCellComposite.addMouseListener(mouseListener);
-				label.addMouseListener(mouseListener);
 			}
 		}
 	}
@@ -173,204 +135,103 @@ public class FallbackCalendarImpl implements ICalendar {
 
 	@Override
 	public void addInputListener(final IInputListener listener) {
-		// TODO Auto-generated method stub		
+		inputObservable.addInputListener(listener);
 	}
 
 	@Override
 	public void removeInputListener(final IInputListener listener) {
-		// TODO Auto-generated method stub	
+		inputObservable.removeInputListener(listener);
 	}
 
-	@Override
-	public IContainer getParent() {
-		return composite.getParent();
-	}
+	private final class DayButton {
 
-	@Override
-	public void setParent(final IContainer parent) {
-		composite.setParent(parent);
-	}
+		private static final String OUTER_CONSTRAINTS = "hidemode 3, alignx center, aligny center, grow, sg cg";
+		private static final String INNER_CONSTRAINTS = "alignx center, aligny center, sg ig";
+		private static final String LABEL_CONSTRAINTS = "alignx right, aligny center, sg lg";
 
-	@Override
-	public boolean isReparentable() {
-		return composite.isReparentable();
-	}
+		private final IComposite outerComposite;
+		private final IComposite innerComposite;
+		private final ITextLabel label;
 
-	@Override
-	public Object getUiReference() {
-		return composite.getUiReference();
-	}
+		private final IComposite outerCompositeBorder;
+		private final IComposite innerCompositeBorder;
+		private final ITextLabel labelBorder;
 
-	@Override
-	public void setLayoutConstraints(final Object layoutConstraints) {
-		composite.setLayoutConstraints(layoutConstraints);
-	}
+		private DayButton(final IContainer container) {
 
-	@Override
-	public Object getLayoutConstraints() {
-		return composite.getLayoutConstraints();
-	}
+			final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-	@Override
-	public void redraw() {
-		composite.redraw();
-	}
+			this.outerCompositeBorder = container.add(bpf.composite().setBorder(), OUTER_CONSTRAINTS);
+			this.outerComposite = container.add(bpf.composite(), OUTER_CONSTRAINTS);
+			outerCompositeBorder.setVisible(false);
 
-	@Override
-	public void setRedrawEnabled(final boolean enabled) {
-		composite.setRedrawEnabled(enabled);
-	}
+			final MigLayoutDescriptor outerLayout = new MigLayoutDescriptor("0[grow]0", "0[grow]0");
+			outerCompositeBorder.setLayout(outerLayout);
+			outerComposite.setLayout(outerLayout);
 
-	@Override
-	public void setCursor(final Cursor cursor) {
-		composite.setCursor(cursor);
-	}
+			this.innerCompositeBorder = outerCompositeBorder.add(bpf.composite(), INNER_CONSTRAINTS);
+			this.innerComposite = outerComposite.add(bpf.composite(), INNER_CONSTRAINTS);
 
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		composite.setForegroundColor(colorValue);
-	}
+			final MigLayoutDescriptor innerLayout = new MigLayoutDescriptor("0[]0", "0[]0");
+			innerCompositeBorder.setLayout(innerLayout);
+			innerComposite.setLayout(innerLayout);
 
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		composite.setBackgroundColor(colorValue);
-		composite.setBackgroundColor(colorValue);
-	}
+			labelBorder = innerCompositeBorder.add(bpf.textLabel().alignRight(), LABEL_CONSTRAINTS);
+			label = innerComposite.add(bpf.textLabel().alignRight(), LABEL_CONSTRAINTS);
 
-	@Override
-	public IColorConstant getForegroundColor() {
-		return composite.getForegroundColor();
-	}
+			final IMouseListener mouseListener = new MouseAdapter() {
 
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return composite.getBackgroundColor();
-	}
+				@Override
+				public void mouseReleased(final IMouseButtonEvent event) {
+					//CHECKSTYLE:OFF
+					System.out.println("Pressed: " + event);
+					//CHECKSTYLE:ON
+				}
 
-	@Override
-	public void setVisible(final boolean visible) {
-		composite.setVisible(visible);
-	}
+				@Override
+				public void mouseExit(final IMouseEvent event) {
+					//CHECKSTYLE:OFF
+					System.out.println("Exit: " + event);
+					//CHECKSTYLE:ON
+				}
 
-	@Override
-	public boolean isVisible() {
-		return composite.isVisible();
-	}
+				@Override
+				public void mouseEnter(final IMouseEvent event) {
+					//CHECKSTYLE:OFF
+					System.out.println("Enter: " + event);
+					//CHECKSTYLE:ON
+				}
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		composite.setEnabled(enabled);
-	}
+			};
 
-	@Override
-	public boolean isEnabled() {
-		return composite.isEnabled();
-	}
+			outerCompositeBorder.addMouseListener(mouseListener);
+			outerComposite.addMouseListener(mouseListener);
+			innerCompositeBorder.addMouseListener(mouseListener);
+			innerComposite.addMouseListener(mouseListener);
+			labelBorder.addMouseListener(mouseListener);
+			label.addMouseListener(mouseListener);
 
-	@Override
-	public Dimension getSize() {
-		return composite.getSize();
-	}
+		}
 
-	@Override
-	public void setSize(final Dimension size) {
-		composite.setSize(size);
-	}
+		public void setBorder(final boolean border) {
+			outerCompositeBorder.setVisible(border);
+			outerComposite.setVisible(!border);
+		}
 
-	@Override
-	public Position getPosition() {
-		return composite.getPosition();
-	}
+		public void setForegroundColor(final IColorConstant color) {
+			label.setForegroundColor(color);
+			labelBorder.setForegroundColor(color);
+		}
 
-	@Override
-	public void setPosition(final Position position) {
-		composite.setPosition(position);
-	}
+		public void setBackgroundColor(final IColorConstant color) {
+			outerCompositeBorder.setBackgroundColor(color);
+			outerComposite.setBackgroundColor(color);
+		}
 
-	@Override
-	public Position toScreen(final Position localPosition) {
-		return composite.toScreen(localPosition);
-	}
-
-	@Override
-	public Position toLocal(final Position screenPosition) {
-		return composite.toLocal(screenPosition);
-	}
-
-	@Override
-	public Position fromComponent(final IComponentCommon component, final Position componentPosition) {
-		return composite.fromComponent(component, componentPosition);
-	}
-
-	@Override
-	public Position toComponent(final Position componentPosition, final IComponentCommon component) {
-		return composite.toComponent(componentPosition, component);
-	}
-
-	@Override
-	public boolean requestFocus() {
-		return composite.requestFocus();
-	}
-
-	@Override
-	public void addFocusListener(final IFocusListener listener) {
-		composite.addFocusListener(listener);
-	}
-
-	@Override
-	public void removeFocusListener(final IFocusListener listener) {
-		composite.removeFocusListener(listener);
-	}
-
-	@Override
-	public void addKeyListener(final IKeyListener listener) {
-		composite.addKeyListener(listener);
-	}
-
-	@Override
-	public void removeKeyListener(final IKeyListener listener) {
-		composite.removeKeyListener(listener);
-	}
-
-	@Override
-	public void addMouseListener(final IMouseListener mouseListener) {
-		composite.addMouseListener(mouseListener);
-	}
-
-	@Override
-	public void removeMouseListener(final IMouseListener mouseListener) {
-		composite.removeMouseListener(mouseListener);
-	}
-
-	@Override
-	public void addComponentListener(final IComponentListener componentListener) {
-		composite.addComponentListener(componentListener);
-	}
-
-	@Override
-	public void removeComponentListener(final IComponentListener componentListener) {
-		composite.removeComponentListener(componentListener);
-	}
-
-	@Override
-	public IPopupMenu createPopupMenu() {
-		return composite.createPopupMenu();
-	}
-
-	@Override
-	public void setPopupMenu(final IMenuModel popupMenu) {
-		//TODO MG this might not work, popup must be set on all sub components 
-		composite.setPopupMenu(popupMenu);
-	}
-
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		composite.addPopupDetectionListener(listener);
-	}
-
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		composite.removePopupDetectionListener(listener);
+		public void setText(final String text) {
+			label.setText(text);
+			labelBorder.setText(text);
+		}
 	}
 
 }
