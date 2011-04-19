@@ -28,10 +28,8 @@
 
 package org.jowidgets.addons.testtool;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import org.jowidgets.addons.testtool.internal.IListModelListener;
 import org.jowidgets.addons.testtool.internal.TestDataListModel;
@@ -62,11 +60,6 @@ import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITableBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.model.ITableColumn;
-import org.jowidgets.common.model.ITableColumnModel;
-import org.jowidgets.common.model.ITableColumnModelObservable;
-import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
@@ -77,7 +70,7 @@ import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.model.table.DefaultTableColumnBuilder;
 import org.jowidgets.util.Assert;
 
-public class TestToolView implements ITestToolView {
+public class TestToolView {
 
 	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 	private static final IActionBuilderFactory ABF = Toolkit.getActionBuilderFactory();
@@ -151,89 +144,16 @@ public class TestToolView implements ITestToolView {
 		final ITabFolder folder = frame.add(BPF.tabFolder(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 		folder.setSize(new Dimension(200, 300));
 		final ITabItem item = folder.addItem(BPF.tabItem().setText("Test Data"));
-
 		tableDataModel = Toolkit.getModelFactoryProvider().getTableModelFactory().simpleTableModel();
 		final DefaultTableColumnBuilder colBuilder = new DefaultTableColumnBuilder();
 		tableDataModel.addColumn(colBuilder.setText("step").build());
 		tableDataModel.addColumn(colBuilder.setText("Widget").build());
 		tableDataModel.addColumn(colBuilder.setText("User Action").build());
 		tableDataModel.addColumn(colBuilder.setText("ID").build());
-
-		final int columnCount = tableDataModel.getColumnCount();
-		final Map<Integer, ITableColumn> columns = new HashMap<Integer, ITableColumn>();
-		final ITableColumnModel columnModel = new ITableColumnModel() {
-
-			@Override
-			public int getColumnCount() {
-				return columnCount;
-			}
-
-			@Override
-			public ITableColumn getColumn(final int columnIndex) {
-				ITableColumn result = columns.get(Integer.valueOf(columnIndex));
-				if (result == null) {
-					result = new ITableColumn() {
-
-						private int width = 100;
-
-						@Override
-						public void setWidth(final int width) {
-							this.width = width;
-						}
-
-						@Override
-						public int getWidth() {
-							return width;
-						}
-
-						@Override
-						public String getToolTipText() {
-							return "";
-						}
-
-						@Override
-						public String getText() {
-							switch (columnIndex) {
-								case 0:
-									return "Step";
-								case 1:
-									return "Widget";
-								case 2:
-									return "User Action";
-								case 3:
-									return "ID";
-								default:
-									return "Column " + columnIndex;
-							}
-						}
-
-						@Override
-						public IImageConstant getIcon() {
-							return null;
-						}
-
-						@Override
-						public AlignmentHorizontal getAlignment() {
-							return null;
-						}
-					};
-				}
-				columns.put(Integer.valueOf(columnIndex), result);
-				return result;
-			}
-
-			@Override
-			public ITableColumnModelObservable getTableColumnModelObservable() {
-				return null;
-			}
-
-		};
-
-		final ITableBluePrint tableBluePrint = BPF.table(columnModel, tableDataModel);
+		final ITableBluePrint tableBluePrint = BPF.table(tableDataModel);
 		item.setLayout(MigLayoutFactory.growingInnerCellLayout());
 		table = item.add(tableBluePrint, "grow");
 		item.setBackgroundColor(Colors.WHITE);
-		table.createPopupMenu();
 		table.pack();
 	}
 
@@ -397,8 +317,17 @@ public class TestToolView implements ITestToolView {
 
 		toolBar.addSeparator();
 
-		// TODO LG show the current widget, when a table item is selected
-		toolBar.addItem(BPF.toolBarButton().setText("show"));
+		final IActionBuilder showBuilder = ABF.create();
+		final IToolBarButton showButton = toolBar.addItem(BPF.toolBarButton().setText("show"));
+		final ICommandExecutor showCommand = new ICommandExecutor() {
+
+			@Override
+			public void execute(final IExecutionContext executionContext) throws Exception {
+				// TODO LG show the current widget, when a table item is selected
+			}
+		};
+		showBuilder.setCommand(showCommand);
+		showButton.setAction(showBuilder.setText("show").build());
 	}
 
 	private void setupTestTool() {
