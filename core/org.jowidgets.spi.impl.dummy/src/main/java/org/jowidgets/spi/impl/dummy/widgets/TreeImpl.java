@@ -31,17 +31,10 @@ package org.jowidgets.spi.impl.dummy.widgets;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.types.Position;
-import org.jowidgets.common.widgets.controler.IComponentListener;
-import org.jowidgets.common.widgets.controler.IFocusListener;
-import org.jowidgets.common.widgets.controler.IKeyListener;
-import org.jowidgets.common.widgets.controler.IMouseListener;
-import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.ITreeNodeListener;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDObservable;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDTree;
@@ -52,16 +45,15 @@ import org.jowidgets.spi.widgets.ITreeSpi;
 import org.jowidgets.spi.widgets.controler.ITreeSelectionListenerSpi;
 import org.jowidgets.spi.widgets.setup.ITreeSetupSpi;
 
-public class TreeImpl implements ITreeSpi, ITreeNodeSpi {
+public class TreeImpl extends DummyControl implements ITreeSpi, ITreeNodeSpi {
 
-	private final UIDTree tree;
 	private final UIDObservable popupObs;
 	private final List<TreeNodeImpl> items;
 	private Position position;
 	private Dimension size;
 
 	public TreeImpl(final ITreeSetupSpi setup) {
-		this.tree = new UIDTree();
+		super(new UIDTree());
 		this.popupObs = new UIDObservable();
 		this.items = new LinkedList<TreeNodeImpl>();
 	}
@@ -73,7 +65,7 @@ public class TreeImpl implements ITreeSpi, ITreeNodeSpi {
 
 	@Override
 	public UIDTree getUiReference() {
-		return tree;
+		return new UIDTree();
 	}
 
 	@Override
@@ -87,68 +79,8 @@ public class TreeImpl implements ITreeSpi, ITreeNodeSpi {
 	}
 
 	@Override
-	public void redraw() {
-		getUiReference().redraw();
-	}
-
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		getUiReference().setForegroundColor(colorValue);
-	}
-
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		getUiReference().setBackgroundColor(colorValue);
-	}
-
-	@Override
-	public IColorConstant getForegroundColor() {
-		return getUiReference().getForegroundColor();
-	}
-
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return getUiReference().getBackgroundColor();
-	}
-
-	@Override
-	public void setCursor(final Cursor cursor) {
-		getUiReference().setCursor(cursor);
-	}
-
-	@Override
-	public void setVisible(final boolean visible) {
-		getUiReference().setVisible(visible);
-	}
-
-	@Override
-	public boolean isVisible() {
-		return getUiReference().isVisible();
-	}
-
-	@Override
 	public Dimension getSize() {
 		return size;
-	}
-
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		popupObs.addPopupDetectionListener(listener);
-	}
-
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		popupObs.removePopupDetectionListener(listener);
-	}
-
-	@Override
-	public void setLayoutConstraints(final Object layoutConstraints) {
-		getUiReference().setLayoutConstraints(layoutConstraints);
-	}
-
-	@Override
-	public Object getLayoutConstraints() {
-		return getUiReference().getLayoutConstraints();
 	}
 
 	@Override
@@ -257,55 +189,4 @@ public class TreeImpl implements ITreeSpi, ITreeNodeSpi {
 	public void setPosition(final Position position) {
 		this.position = position;
 	}
-
-	@Override
-	public void setRedrawEnabled(final boolean enabled) {
-		getUiReference().setRedrawEnabled(enabled);
-	}
-
-	@Override
-	public boolean requestFocus() {
-		return getUiReference().requestFocus();
-	}
-
-	@Override
-	public void addFocusListener(final IFocusListener listener) {
-		getUiReference().addFocusListener(listener);
-	}
-
-	@Override
-	public void removeFocusListener(final IFocusListener listener) {
-		getUiReference().removeFocusListener(listener);
-	}
-
-	@Override
-	public void addKeyListener(final IKeyListener listener) {
-		getUiReference().addKeyListener(listener);
-	}
-
-	@Override
-	public void removeKeyListener(final IKeyListener listener) {
-		getUiReference().removeKeyListener(listener);
-	}
-
-	@Override
-	public void addMouseListener(final IMouseListener mouseListener) {
-		getUiReference().addMouseListener(mouseListener);
-	}
-
-	@Override
-	public void addComponentListener(final IComponentListener componentListener) {
-		getUiReference().addComponentListener(componentListener);
-	}
-
-	@Override
-	public void removeComponentListener(final IComponentListener componentListener) {
-		getUiReference().removeComponentListener(componentListener);
-	}
-
-	@Override
-	public void removeMouseListener(final IMouseListener mouseListener) {
-		getUiReference().removeMouseListener(mouseListener);
-	}
-
 }
