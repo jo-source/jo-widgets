@@ -32,6 +32,7 @@ import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.model.table.ITableModel;
 import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
+import org.jowidgets.api.widgets.blueprint.ICalendarBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICheckBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICheckedMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
@@ -281,6 +282,11 @@ public class BasicSimpleBluePrintFactory extends AbstractBluePrintFactory implem
 		final ITableBluePrint result = createProxy(ITableBluePrint.class);
 		result.setColumnModel(columnModel).setDataModel(dataModel);
 		return result;
+	}
+
+	@Override
+	public ICalendarBluePrint calendar() {
+		return createProxy(ICalendarBluePrint.class);
 	}
 
 }

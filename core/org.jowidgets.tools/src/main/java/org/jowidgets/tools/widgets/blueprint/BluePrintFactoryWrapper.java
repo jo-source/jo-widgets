@@ -34,6 +34,7 @@ import org.jowidgets.api.model.table.ITableModel;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
+import org.jowidgets.api.widgets.blueprint.ICalendarBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICheckBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICheckedMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
@@ -645,6 +646,11 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	@Override
 	public ITableBluePrint table(final ITableColumnModel columnModel, final ITableDataModel dataModel) {
 		return bluePrintFactory.table(columnModel, dataModel);
+	}
+
+	@Override
+	public ICalendarBluePrint calendar() {
+		return bluePrintFactory.calendar();
 	}
 
 }

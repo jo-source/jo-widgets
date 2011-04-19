@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.dummy;
+package org.jowidgets.impl.widgets.basic.factory;
 
 import org.jowidgets.spi.IOptionalWidgetsFactorySpi;
 import org.jowidgets.spi.widgets.ICalendarSpi;
@@ -36,7 +36,7 @@ import org.jowidgets.spi.widgets.setup.ICalendarSetupSpi;
 import org.jowidgets.spi.widgets.setup.IDirectoryChooserSetupSpi;
 import org.jowidgets.spi.widgets.setup.IFileChooserSetupSpi;
 
-public class DummyOptionalWidgetsFactory implements IOptionalWidgetsFactorySpi {
+public class DefaultOptionalWidgetsFactorySpi implements IOptionalWidgetsFactorySpi {
 
 	@Override
 	public boolean hasFileChooser() {

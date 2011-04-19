@@ -27,6 +27,11 @@
  */
 package org.jowidgets.common.widgets.descriptor.setup;
 
+import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
+
 public interface IPopupDialogSetupCommon extends IContainerSetupCommon {
+
+	@Mandatory
+	boolean hasBorder();
 
 }

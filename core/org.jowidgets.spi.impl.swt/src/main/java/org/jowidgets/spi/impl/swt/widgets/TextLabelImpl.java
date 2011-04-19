@@ -41,7 +41,7 @@ public class TextLabelImpl extends SwtControl implements ITextLabelSpi {
 
 	public TextLabelImpl(final Object parentUiReference, final ITextLabelSetupSpi setup) {
 
-		super(new Label((Composite) parentUiReference, SWT.BOLD));
+		super(new Label((Composite) parentUiReference, SWT.NONE));
 
 		setText(setup.getText());
 		setToolTipText(setup.getToolTipText());

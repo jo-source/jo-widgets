@@ -27,6 +27,7 @@
  */
 package org.jowidgets.impl.widgets.composed.factory;
 
+import org.jowidgets.api.widgets.descriptor.ICalendarDescriptor;
 import org.jowidgets.api.widgets.descriptor.IInputCompositeDescriptor;
 import org.jowidgets.api.widgets.descriptor.IInputDialogDescriptor;
 import org.jowidgets.api.widgets.descriptor.IInputFieldDescriptor;
@@ -37,6 +38,7 @@ import org.jowidgets.api.widgets.descriptor.IQuestionDialogDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextSeparatorDescriptor;
 import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
 import org.jowidgets.impl.widgets.basic.factory.BasicGenericWidgetFactory;
+import org.jowidgets.impl.widgets.composed.factory.internal.FallbackCalendarFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.InputCompositeFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.InputDialogFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.InputFieldFactory;
@@ -53,6 +55,7 @@ public class GenericWidgetFactory extends BasicGenericWidgetFactory {
 	public GenericWidgetFactory(final IWidgetsServiceProvider widgetsServiceProvider) {
 		super(widgetsServiceProvider);
 		registerCustomWidgetFactories();
+		registerFallbackWidgets();
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
@@ -66,6 +69,12 @@ public class GenericWidgetFactory extends BasicGenericWidgetFactory {
 		register(IInputCompositeDescriptor.class, new InputCompositeFactory());
 		register(IValidationLabelDescriptor.class, new ValidationLabelFactory(this));
 		register(IProgressBarDescriptor.class, new ProgressBarFactory(getSpiWidgetFactory()));
+	}
+
+	private void registerFallbackWidgets() {
+		if (getFactory(ICalendarDescriptor.class) == null) {
+			register(ICalendarDescriptor.class, new FallbackCalendarFactory());
+		}
 	}
 
 }

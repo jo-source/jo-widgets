@@ -25,11 +25,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.common.widgets.builder;
+package org.jowidgets.impl.spi.descriptor;
 
-public interface IPopupDialogSetupBuilderCommon<INSTANCE_TYPE extends IPopupDialogSetupBuilderCommon<?>> extends
-		IContainerSetupBuilderCommon<INSTANCE_TYPE> {
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.spi.widgets.ICalendarSpi;
+import org.jowidgets.spi.widgets.setup.ICalendarSetupSpi;
 
-	INSTANCE_TYPE setBorder(boolean border);
-
-}
+public interface ICalendarDescriptorSpi extends ICalendarSetupSpi, IWidgetDescriptor<ICalendarSpi> {}

@@ -28,17 +28,23 @@
 
 package org.jowidgets.examples.common.demo;
 
+import java.util.Date;
+
 import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
+import org.jowidgets.api.widgets.ICalendar;
+import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupDialog;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controler.IComponentListener;
+import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.controler.IMouseButtonEvent;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.controler.MouseAdapter;
+import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.powo.JoFrame;
 
 public class PopupDialogDemoFrame extends JoFrame {
@@ -69,34 +75,35 @@ public class PopupDialogDemoFrame extends JoFrame {
 
 		setLayout(new MigLayoutDescriptor("[grow]", "[][]"));
 
-		final IButton button1 = add(BPF.button("Open popup window..."), "wrap, sg bg");
+		final IButton button1 = add(BPF.button("Date chooser..."), "wrap, sg bg");
 		button1.addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mousePressed(final IMouseButtonEvent event) {
-				popupDialog = createChildWindow(BPF.popupDialog());
-				final Dimension buttonSize = button1.getSize();
-				popupDialog.setBackgroundColor(Colors.WHITE);
-				popupDialog.setSize(new Dimension(buttonSize.getWidth(), 200));
-				popupDialog.setPosition(Toolkit.toScreen(button1.getPosition(), PopupDialogDemoFrame.this));
+				popupDialog = createChildWindow(BPF.popupDialog().setBorder(false));
+				final Position buttonPos = button1.getPosition();
+				popupDialog.setPosition(Toolkit.toScreen(buttonPos, PopupDialogDemoFrame.this));
+				setContent(popupDialog);
+				popupDialog.pack();
 				popupDialog.setVisible(true);
 			}
 
 		});
 
-		final IButton button2 = add(BPF.button("Open / Close popup window..."), "sg bg");
+		final IButton button2 = add(BPF.button("Open / Close caledar popup"), "sg bg");
 		button2.addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mousePressed(final IMouseButtonEvent event) {
-				popupDialog = createChildWindow(BPF.popupDialog().setAutoDispose(false));
+				popupDialog = createChildWindow(BPF.popupDialog().setAutoDispose(false).setBorder(false));
 				final Dimension buttonSize = button2.getSize();
 				final Position buttonPos = button2.getPosition();
 				popupDialog.setBackgroundColor(Colors.WHITE);
-				popupDialog.setSize(new Dimension(buttonSize.getWidth(), 150));
+				setContent(popupDialog);
 				popupDialog.setPosition(Toolkit.toScreen(
 						new Position(buttonPos.getX(), buttonPos.getY() + buttonSize.getHeight()),
 						PopupDialogDemoFrame.this));
+				popupDialog.pack();
 				popupDialog.setVisible(true);
 			}
 
@@ -110,4 +117,19 @@ public class PopupDialogDemoFrame extends JoFrame {
 		});
 
 	}
+
+	private void setContent(final IContainer container) {
+		container.setLayout(MigLayoutFactory.growingInnerCellLayout());
+		final ICalendar calendar = container.add(BPF.calendar(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+		calendar.setDate(new Date());
+		calendar.addInputListener(new IInputListener() {
+			@Override
+			public void inputChanged() {
+				//CHECKSTYLE:OFF
+				System.out.println(calendar.getDate());
+				//CHECKSTYLE:ON
+			}
+		});
+	}
+
 }

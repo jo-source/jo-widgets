@@ -31,8 +31,10 @@ package org.jowidgets.spi.impl.swing;
 import org.jowidgets.spi.IOptionalWidgetsFactorySpi;
 import org.jowidgets.spi.impl.swing.widgets.DirectoryChooserImpl;
 import org.jowidgets.spi.impl.swing.widgets.FileChooserImpl;
+import org.jowidgets.spi.widgets.ICalendarSpi;
 import org.jowidgets.spi.widgets.IDirectoryChooserSpi;
 import org.jowidgets.spi.widgets.IFileChooserSpi;
+import org.jowidgets.spi.widgets.setup.ICalendarSetupSpi;
 import org.jowidgets.spi.widgets.setup.IDirectoryChooserSetupSpi;
 import org.jowidgets.spi.widgets.setup.IFileChooserSetupSpi;
 
@@ -58,4 +60,13 @@ public class SwingOptionalWidgetsFactory implements IOptionalWidgetsFactorySpi {
 		return new DirectoryChooserImpl(parentUiReference, setup);
 	}
 
+	@Override
+	public boolean hasCalendar() {
+		return false;
+	}
+
+	@Override
+	public ICalendarSpi createCalendar(final Object parentUiReference, final ICalendarSetupSpi setup) {
+		return null;
+	}
 }

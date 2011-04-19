@@ -25,11 +25,9 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.common.widgets.builder;
+package org.jowidgets.impl.spi.blueprint;
 
-public interface IPopupDialogSetupBuilderCommon<INSTANCE_TYPE extends IPopupDialogSetupBuilderCommon<?>> extends
-		IContainerSetupBuilderCommon<INSTANCE_TYPE> {
+import org.jowidgets.impl.spi.blueprint.builder.ICalendarSetupBuilderSpi;
+import org.jowidgets.impl.spi.descriptor.ICalendarDescriptorSpi;
 
-	INSTANCE_TYPE setBorder(boolean border);
-
-}
+public interface ICalendarBluePrintSpi extends ICalendarSetupBuilderSpi<ICalendarBluePrintSpi>, ICalendarDescriptorSpi {}

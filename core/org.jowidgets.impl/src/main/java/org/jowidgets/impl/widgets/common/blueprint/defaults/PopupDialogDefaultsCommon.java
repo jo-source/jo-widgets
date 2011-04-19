@@ -25,11 +25,16 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.common.widgets.builder;
+package org.jowidgets.impl.widgets.common.blueprint.defaults;
 
-public interface IPopupDialogSetupBuilderCommon<INSTANCE_TYPE extends IPopupDialogSetupBuilderCommon<?>> extends
-		IContainerSetupBuilderCommon<INSTANCE_TYPE> {
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
+import org.jowidgets.common.widgets.builder.IPopupDialogSetupBuilderCommon;
 
-	INSTANCE_TYPE setBorder(boolean border);
+public class PopupDialogDefaultsCommon implements IDefaultInitializer<IPopupDialogSetupBuilderCommon<?>> {
+
+	@Override
+	public void initialize(final IPopupDialogSetupBuilderCommon<?> builder) {
+		builder.setBorder(true);
+	}
 
 }

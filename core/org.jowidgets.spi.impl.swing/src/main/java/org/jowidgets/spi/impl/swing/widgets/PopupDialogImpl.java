@@ -32,7 +32,7 @@ import java.awt.Window;
 
 import javax.swing.JComponent;
 import javax.swing.JDialog;
-import javax.swing.JPopupMenu;
+import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 import org.jowidgets.common.color.IColorConstant;
@@ -46,7 +46,7 @@ import org.jowidgets.spi.widgets.setup.IPopupDialogSetupSpi;
 
 public class PopupDialogImpl extends SwingWindow implements IPopupDialogSpi {
 
-	private static final Border BORDER = new JPopupMenu().getBorder();
+	private static final Border BORDER = new JTextField().getBorder();
 
 	public PopupDialogImpl(
 		final IGenericWidgetFactory factory,
@@ -59,7 +59,7 @@ public class PopupDialogImpl extends SwingWindow implements IPopupDialogSpi {
 		getUiReference().setUndecorated(true);
 		getUiReference().setModal(false);
 
-		if (getUiReference().getContentPane() instanceof JComponent) {
+		if (setup.hasBorder() && getUiReference().getContentPane() instanceof JComponent) {
 			((JComponent) getUiReference().getContentPane()).setBorder(BORDER);
 		}
 

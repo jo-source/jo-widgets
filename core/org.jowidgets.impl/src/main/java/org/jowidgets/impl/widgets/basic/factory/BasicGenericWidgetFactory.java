@@ -39,6 +39,7 @@ import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToggleButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarBluePrint;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
+import org.jowidgets.api.widgets.descriptor.ICalendarDescriptor;
 import org.jowidgets.api.widgets.descriptor.ICheckBoxDescriptor;
 import org.jowidgets.api.widgets.descriptor.IComboBoxDescriptor;
 import org.jowidgets.api.widgets.descriptor.IComboBoxSelectionDescriptor;
@@ -65,6 +66,7 @@ import org.jowidgets.impl.base.factory.GenericWidgetFactoryWrapper;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
 import org.jowidgets.impl.spi.SpiBluePrintFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.ButtonFactory;
+import org.jowidgets.impl.widgets.basic.factory.internal.CalendarFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.CheckBoxFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.ComboBoxFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.ComboBoxSelectionFactory;
@@ -87,6 +89,7 @@ import org.jowidgets.impl.widgets.basic.factory.internal.ToggleButtonFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.ToolBarFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.TreeFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.UiWidgetFactory;
+import org.jowidgets.spi.IOptionalWidgetsFactorySpi;
 import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.test.api.widgets.IButtonUi;
@@ -118,6 +121,7 @@ import org.jowidgets.test.api.widgets.descriptor.IToolBarDescriptorUi;
 public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 
 	private final IWidgetsServiceProvider widgetsServiceProvider;
+	private final IOptionalWidgetsFactorySpi optionalWidgetsFactorySpi;
 
 	public BasicGenericWidgetFactory(final IWidgetsServiceProvider widgetsServiceProvider) {
 		super(new DefaultGenericWidgetFactory());
@@ -125,6 +129,15 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 		final SpiBluePrintFactory spiBbf = new SpiBluePrintFactory();
 		registerBaseWidgets(widgetsServiceProvider, spiBbf);
 		registerUiWidgets(widgetsServiceProvider, spiBbf);
+
+		final IOptionalWidgetsFactorySpi optionalFactorySpi = widgetsServiceProvider.getOptionalWidgetFactory();
+		if (optionalFactorySpi == null) {
+			this.optionalWidgetsFactorySpi = new DefaultOptionalWidgetsFactorySpi();
+		}
+		else {
+			this.optionalWidgetsFactorySpi = optionalFactorySpi;
+		}
+		registerOptionalWidgets(widgetsServiceProvider, spiBbf);
 	}
 
 	@SuppressWarnings({"unchecked"})
@@ -132,8 +145,6 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 		register(IFrameDescriptor.class, new FrameFactory(this, widgetsServiceProvider, bpF));
 		register(IDialogDescriptor.class, new DialogFactory(this, widgetsServiceProvider, bpF));
 		register(IPopupDialogDescriptor.class, new PopupDialogFactory(this, widgetsServiceProvider, bpF));
-		register(IFileChooserDescriptor.class, new FileChooserFactory(this, widgetsServiceProvider, bpF));
-		register(IDirectoryChooserDescriptor.class, new DirectoryChooserFactory(this, widgetsServiceProvider, bpF));
 		register(ICompositeDescriptor.class, new CompositeFactory(this, widgetsServiceProvider, bpF));
 		register(IScrollCompositeDescriptor.class, new ScrollCompositeFactory(this, widgetsServiceProvider, bpF));
 		register(ISplitCompositeDescriptor.class, new SplitCompositeFactory(this, widgetsServiceProvider, bpF));
@@ -151,6 +162,19 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 		register(ITabFolderDescriptor.class, new TabFolderFactory(this, widgetsServiceProvider, bpF));
 		register(ITreeDescriptor.class, new TreeFactory(this, widgetsServiceProvider, bpF));
 		register(ITableDescriptor.class, new TableFactory(this, widgetsServiceProvider, bpF));
+	}
+
+	private void registerOptionalWidgets(final IWidgetsServiceProvider widgetsServiceProvider, final ISpiBluePrintFactory bpF) {
+
+		if (optionalWidgetsFactorySpi.hasFileChooser()) {
+			register(IFileChooserDescriptor.class, new FileChooserFactory(this, widgetsServiceProvider, bpF));
+		}
+		if (optionalWidgetsFactorySpi.hasDirectoryChooser()) {
+			register(IDirectoryChooserDescriptor.class, new DirectoryChooserFactory(this, widgetsServiceProvider, bpF));
+		}
+		if (optionalWidgetsFactorySpi.hasCalendar()) {
+			register(ICalendarDescriptor.class, new CalendarFactory(this, widgetsServiceProvider, bpF));
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -178,6 +202,10 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 
 	protected IWidgetFactorySpi getSpiWidgetFactory() {
 		return widgetsServiceProvider.getWidgetFactory();
+	}
+
+	protected IWidgetsServiceProvider getWidgetsServiceProvider() {
+		return widgetsServiceProvider;
 	}
 
 }

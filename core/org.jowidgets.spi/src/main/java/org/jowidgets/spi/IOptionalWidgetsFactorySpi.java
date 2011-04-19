@@ -27,17 +27,17 @@
  */
 package org.jowidgets.spi;
 
+import org.jowidgets.spi.widgets.ICalendarSpi;
 import org.jowidgets.spi.widgets.IDirectoryChooserSpi;
 import org.jowidgets.spi.widgets.IFileChooserSpi;
+import org.jowidgets.spi.widgets.setup.ICalendarSetupSpi;
 import org.jowidgets.spi.widgets.setup.IDirectoryChooserSetupSpi;
 import org.jowidgets.spi.widgets.setup.IFileChooserSetupSpi;
 
 public interface IOptionalWidgetsFactorySpi {
 
-	//create widgets from setup
-
 	/**
-	 * @return true, if this spi supports a file chooser
+	 * @return true, if this spi supports a file chooser, false otherwise
 	 */
 	boolean hasFileChooser();
 
@@ -48,6 +48,9 @@ public interface IOptionalWidgetsFactorySpi {
 	 */
 	IFileChooserSpi createFileChooser(Object parentUiReference, IFileChooserSetupSpi setup);
 
+	/**
+	 * @return true, if this spi supports a directory chooser, false otherwise
+	 */
 	boolean hasDirectoryChooser();
 
 	/**
@@ -57,4 +60,15 @@ public interface IOptionalWidgetsFactorySpi {
 	 */
 	IDirectoryChooserSpi createDirectoryChooser(Object parentUiReference, IDirectoryChooserSetupSpi setup);
 
+	/**
+	 * @return true, if this spi supports a calendar, false otherwise
+	 */
+	boolean hasCalendar();
+
+	/**
+	 * @param parentUiReference
+	 * @param setup
+	 * @return The calendar or null if {@link IOptionalWidgetsFactorySpi#hasCalendar()} returns true
+	 */
+	ICalendarSpi createCalendar(Object parentUiReference, ICalendarSetupSpi setup);
 }
