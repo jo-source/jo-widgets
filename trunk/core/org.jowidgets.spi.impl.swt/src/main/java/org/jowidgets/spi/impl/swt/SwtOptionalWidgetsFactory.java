@@ -31,10 +31,13 @@ package org.jowidgets.spi.impl.swt;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.FileDialog;
 import org.jowidgets.spi.IOptionalWidgetsFactorySpi;
+import org.jowidgets.spi.impl.swt.widgets.CalendarImpl;
 import org.jowidgets.spi.impl.swt.widgets.DirectoryChooserImpl;
 import org.jowidgets.spi.impl.swt.widgets.FileChooserImpl;
+import org.jowidgets.spi.widgets.ICalendarSpi;
 import org.jowidgets.spi.widgets.IDirectoryChooserSpi;
 import org.jowidgets.spi.widgets.IFileChooserSpi;
+import org.jowidgets.spi.widgets.setup.ICalendarSetupSpi;
 import org.jowidgets.spi.widgets.setup.IDirectoryChooserSetupSpi;
 import org.jowidgets.spi.widgets.setup.IFileChooserSetupSpi;
 
@@ -70,6 +73,16 @@ public class SwtOptionalWidgetsFactory implements IOptionalWidgetsFactorySpi {
 	@Override
 	public IDirectoryChooserSpi createDirectoryChooser(final Object parentUiReference, final IDirectoryChooserSetupSpi setup) {
 		return new DirectoryChooserImpl(parentUiReference, setup);
+	}
+
+	@Override
+	public boolean hasCalendar() {
+		return false;
+	}
+
+	@Override
+	public ICalendarSpi createCalendar(final Object parentUiReference, final ICalendarSetupSpi setup) {
+		return new CalendarImpl(parentUiReference, setup);
 	}
 
 }

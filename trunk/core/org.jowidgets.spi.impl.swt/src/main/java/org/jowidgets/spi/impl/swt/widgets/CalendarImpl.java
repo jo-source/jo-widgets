@@ -25,11 +25,63 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.common.widgets.builder;
+package org.jowidgets.spi.impl.swt.widgets;
 
-public interface IPopupDialogSetupBuilderCommon<INSTANCE_TYPE extends IPopupDialogSetupBuilderCommon<?>> extends
-		IContainerSetupBuilderCommon<INSTANCE_TYPE> {
+import java.util.Date;
 
-	INSTANCE_TYPE setBorder(boolean border);
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.DateTime;
+import org.jowidgets.common.widgets.controler.IInputListener;
+import org.jowidgets.spi.impl.controler.InputObservable;
+import org.jowidgets.spi.widgets.ICalendarSpi;
+import org.jowidgets.spi.widgets.setup.ICalendarSetupSpi;
+
+public class CalendarImpl extends SwtControl implements ICalendarSpi {
+
+	private final InputObservable inputObservable;
+
+	public CalendarImpl(final Object parentUiReference, final ICalendarSetupSpi setup) {
+		super(new DateTime((Composite) parentUiReference, SWT.CALENDAR));
+
+		this.inputObservable = new InputObservable();
+
+		getUiReference().addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(final SelectionEvent e) {
+				inputObservable.fireInputChanged();
+			}
+
+		});
+	}
+
+	@Override
+	public DateTime getUiReference() {
+		return (DateTime) super.getUiReference();
+	}
+
+	@Override
+	public void setDate(final Date date) {
+
+	}
+
+	@Override
+	public Date getDate() {
+
+		return null;
+	}
+
+	@Override
+	public void addInputListener(final IInputListener listener) {
+		inputObservable.addInputListener(listener);
+	}
+
+	@Override
+	public void removeInputListener(final IInputListener listener) {
+		inputObservable.removeInputListener(listener);
+	}
 
 }

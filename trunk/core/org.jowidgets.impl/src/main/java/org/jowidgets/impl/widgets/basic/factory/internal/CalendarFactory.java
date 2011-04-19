@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2010, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,46 +26,33 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.dummy;
+package org.jowidgets.impl.widgets.basic.factory.internal;
 
-import org.jowidgets.spi.IOptionalWidgetsFactorySpi;
+import org.jowidgets.api.widgets.ICalendar;
+import org.jowidgets.api.widgets.descriptor.ICalendarDescriptor;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.widgets.factory.IWidgetFactory;
+import org.jowidgets.impl.spi.ISpiBluePrintFactory;
+import org.jowidgets.impl.spi.blueprint.ICalendarBluePrintSpi;
+import org.jowidgets.impl.widgets.basic.CalendarImpl;
+import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.widgets.ICalendarSpi;
-import org.jowidgets.spi.widgets.IDirectoryChooserSpi;
-import org.jowidgets.spi.widgets.IFileChooserSpi;
-import org.jowidgets.spi.widgets.setup.ICalendarSetupSpi;
-import org.jowidgets.spi.widgets.setup.IDirectoryChooserSetupSpi;
-import org.jowidgets.spi.widgets.setup.IFileChooserSetupSpi;
 
-public class DummyOptionalWidgetsFactory implements IOptionalWidgetsFactorySpi {
+public class CalendarFactory extends AbstractWidgetFactory implements IWidgetFactory<ICalendar, ICalendarDescriptor> {
 
-	@Override
-	public boolean hasFileChooser() {
-		return false;
+	public CalendarFactory(
+		final IGenericWidgetFactory genericWidgetFactory,
+		final IWidgetsServiceProvider widgetsServiceProvider,
+		final ISpiBluePrintFactory bpF) {
+
+		super(genericWidgetFactory, widgetsServiceProvider, bpF);
 	}
 
 	@Override
-	public IFileChooserSpi createFileChooser(final Object parentUiReference, final IFileChooserSetupSpi setup) {
-		return null;
+	public ICalendar create(final Object parentUiReference, final ICalendarDescriptor descriptor) {
+		final ICalendarBluePrintSpi bpSpi = getSpiBluePrintFactory().calendar();
+		bpSpi.setSetup(descriptor);
+		final ICalendarSpi widgetSpi = getOptionalSpiWidgetsFactory().createCalendar(parentUiReference, bpSpi);
+		return new CalendarImpl(widgetSpi, descriptor);
 	}
-
-	@Override
-	public boolean hasDirectoryChooser() {
-		return false;
-	}
-
-	@Override
-	public IDirectoryChooserSpi createDirectoryChooser(final Object parentUiReference, final IDirectoryChooserSetupSpi setup) {
-		return null;
-	}
-
-	@Override
-	public boolean hasCalendar() {
-		return false;
-	}
-
-	@Override
-	public ICalendarSpi createCalendar(final Object parentUiReference, final ICalendarSetupSpi setup) {
-		return null;
-	}
-
 }

@@ -33,6 +33,7 @@ import org.jowidgets.common.widgets.builder.ICheckBoxSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.IContainerSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.IDialogSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.IFrameSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.IPopupDialogSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.IScrollCompositeSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ISeparatorSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITabFolderSetupBuilderCommon;
@@ -47,6 +48,7 @@ import org.jowidgets.impl.widgets.common.blueprint.defaults.CheckBoxDefaultsComm
 import org.jowidgets.impl.widgets.common.blueprint.defaults.ContainerDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.DialogDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.FrameDefaultsCommon;
+import org.jowidgets.impl.widgets.common.blueprint.defaults.PopupDialogDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.ScrolledCompositeDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.SeparatorDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.TabFolderDefaultsCommon;
@@ -76,5 +78,6 @@ public class CommonDefaultsInitializerRegistry extends DefaultsInitializerRegist
 		register(ITabFolderSetupBuilderCommon.class, new TabFolderDefaultsCommon());
 		register(ITreeSetupBuilderCommon.class, new TreeDefaultsCommon());
 		register(ITableSetupBuilderCommon.class, new TableDefaultsCommon());
+		register(IPopupDialogSetupBuilderCommon.class, new PopupDialogDefaultsCommon());
 	}
 }
