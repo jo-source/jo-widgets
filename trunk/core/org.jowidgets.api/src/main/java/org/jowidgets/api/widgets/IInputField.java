@@ -34,6 +34,10 @@ public interface IInputField<VALUE_TYPE> extends IInputControl<VALUE_TYPE> {
 
 	void setSelection(int start, int end);
 
+	void setCaretPosition(int pos);
+
+	int getCaretPosition();
+
 	String getText();
 
 }

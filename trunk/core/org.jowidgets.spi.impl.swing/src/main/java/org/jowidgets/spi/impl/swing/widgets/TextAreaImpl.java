@@ -30,10 +30,11 @@ package org.jowidgets.spi.impl.swing.widgets;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import org.jowidgets.spi.impl.swing.widgets.util.InputModifierDocument;
 import org.jowidgets.spi.widgets.ITextAreaSpi;
 import org.jowidgets.spi.widgets.setup.ITextAreaSetupSpi;
 
-public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaSpi {
+public class TextAreaImpl extends AbstractInputControl implements ITextAreaSpi {
 
 	private final JTextArea textArea;
 
@@ -54,7 +55,7 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 			}
 		}
 
-		registerTextComponent(textArea);
+		textArea.setDocument(new InputModifierDocument(textArea, this));
 	}
 
 	@Override
@@ -86,6 +87,16 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 	@Override
 	public void setEditable(final boolean editable) {
 		textArea.setEditable(editable);
+	}
+
+	@Override
+	public void setCaretPosition(final int pos) {
+		textArea.setCaretPosition(pos);
+	}
+
+	@Override
+	public int getCaretPosition() {
+		return textArea.getCaretPosition();
 	}
 
 	@Override

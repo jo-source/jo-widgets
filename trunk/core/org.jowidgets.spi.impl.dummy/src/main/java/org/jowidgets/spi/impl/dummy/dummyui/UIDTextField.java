@@ -72,4 +72,9 @@ public class UIDTextField extends UIDTextComponent {
 		//TODO LG implement setSelection()
 	}
 
+	public int getCaretPosition() {
+		// TODO LG implement getCaretPosition
+		return 0;
+	}
+
 }

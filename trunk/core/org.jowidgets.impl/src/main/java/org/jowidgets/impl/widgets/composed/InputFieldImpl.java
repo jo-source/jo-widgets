@@ -96,6 +96,16 @@ public class InputFieldImpl<VALUE_TYPE> extends AbstractInputControl<VALUE_TYPE>
 	}
 
 	@Override
+	public void setCaretPosition(final int pos) {
+		textField.setCaretPosition(pos);
+	}
+
+	@Override
+	public int getCaretPosition() {
+		return textField.getCaretPosition();
+	}
+
+	@Override
 	public String getText() {
 		return textField.getText();
 	}

@@ -32,17 +32,17 @@ import javax.swing.JTextField;
 
 import org.jowidgets.spi.impl.swing.widgets.util.InputModifierDocument;
 import org.jowidgets.spi.verify.IInputVerifier;
+import org.jowidgets.spi.widgets.ITextControlSpi;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 
-public class TextFieldImpl extends AbstractTextInputControl {
+public class TextFieldImpl extends AbstractInputControl implements ITextControlSpi {
 
 	public TextFieldImpl(final ITextFieldSetupSpi setup) {
 		super(setup.isPasswordPresentation() ? new JPasswordField() : new JTextField());
 
 		final IInputVerifier inputModifier = setup.getInputVerifier();
 
-		getUiReference().setDocument(new InputModifierDocument(getUiReference(), inputModifier));
-		registerTextComponent(getUiReference());
+		getUiReference().setDocument(new InputModifierDocument(getUiReference(), inputModifier, this));
 	}
 
 	@Override
@@ -69,6 +69,16 @@ public class TextFieldImpl extends AbstractTextInputControl {
 	public void setSelection(final int start, final int end) {
 		getUiReference().setSelectionStart(start);
 		getUiReference().setSelectionEnd(end);
+	}
+
+	@Override
+	public void setCaretPosition(final int pos) {
+		getUiReference().setCaretPosition(pos);
+	}
+
+	@Override
+	public int getCaretPosition() {
+		return getUiReference().getCaretPosition();
 	}
 
 	@Override

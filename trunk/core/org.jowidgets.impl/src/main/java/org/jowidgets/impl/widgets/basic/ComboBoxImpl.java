@@ -49,12 +49,12 @@ public class ComboBoxImpl<VALUE_TYPE> extends ComboBoxSelectionImpl<VALUE_TYPE> 
 		this.textInputValidator = setup.getStringObjectConverter();
 
 		addValidatable(new IValidateable() {
-
 			@Override
 			public ValidationResult validate() {
 				return textInputValidator.validate(comboBoxWidgetSpi.getText());
 			}
 		});
+
 	}
 
 	@Override

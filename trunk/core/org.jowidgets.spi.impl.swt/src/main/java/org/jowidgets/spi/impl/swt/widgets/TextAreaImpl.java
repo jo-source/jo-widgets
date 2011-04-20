@@ -157,6 +157,16 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 	}
 
 	@Override
+	public void setCaretPosition(final int pos) {
+		textArea.setSelection(pos, pos);
+	}
+
+	@Override
+	public int getCaretPosition() {
+		return textArea.getCaretPosition();
+	}
+
+	@Override
 	public void setEditable(final boolean editable) {
 		textArea.setEditable(editable);
 	}

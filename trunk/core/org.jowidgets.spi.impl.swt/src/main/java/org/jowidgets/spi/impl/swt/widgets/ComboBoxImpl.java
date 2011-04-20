@@ -35,8 +35,11 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSetupSpi;
+import org.jowidgets.util.NullCompatibleEquivalence;
 
 public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi {
+
+	private String lastValue;
 
 	public ComboBoxImpl(final Object parentUiReference, final IComboBoxSetupSpi setup) {
 		super(new Combo((Composite) parentUiReference, SWT.NONE | SWT.DROP_DOWN), setup);
@@ -68,6 +71,24 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 	@Override
 	public void setSelection(final int start, final int end) {
 		getUiReference().setSelection(new Point(start, end));
+	}
+
+	@Override
+	public void setCaretPosition(final int pos) {
+		setSelection(pos, pos);
+	}
+
+	@Override
+	public int getCaretPosition() {
+		return getUiReference().getSelection().y;
+	}
+
+	@Override
+	public void fireInputChanged() {
+		if (!NullCompatibleEquivalence.equals(getText(), lastValue)) {
+			super.fireInputChanged();
+			lastValue = getText();
+		}
 	}
 
 }
