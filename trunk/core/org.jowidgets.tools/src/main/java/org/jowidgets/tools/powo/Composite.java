@@ -31,12 +31,17 @@ package org.jowidgets.tools.powo;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.blueprint.builder.ICompositeSetupBuilder;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 class Composite<WIDGET_TYPE extends IComposite, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & ICompositeSetupBuilder<?>> extends
 		Container<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IComposite {
 
 	private Object layoutConstraints;
+
+	private Dimension minSize;
+	private Dimension preferredSize;
+	private Dimension maxSize;
 
 	Composite(final BLUE_PRINT_TYPE bluePrint) {
 		super(bluePrint);
@@ -47,6 +52,15 @@ class Composite<WIDGET_TYPE extends IComposite, BLUE_PRINT_TYPE extends IWidgetD
 		super.initialize(widget);
 		if (layoutConstraints != null) {
 			getWidget().setLayoutConstraints(layoutConstraints);
+		}
+		if (minSize != null) {
+			getWidget().setMinSize(minSize);
+		}
+		if (preferredSize != null) {
+			getWidget().setPreferredSize(preferredSize);
+		}
+		if (maxSize != null) {
+			getWidget().setMaxSize(maxSize);
 		}
 	}
 
@@ -79,6 +93,54 @@ class Composite<WIDGET_TYPE extends IComposite, BLUE_PRINT_TYPE extends IWidgetD
 		}
 		else {
 			return layoutConstraints;
+		}
+	}
+
+	@Override
+	public Dimension getMinSize() {
+		checkInitialized();
+		return getWidget().getMinSize();
+	}
+
+	@Override
+	public Dimension getPreferredSize() {
+		checkInitialized();
+		return getWidget().getPreferredSize();
+	}
+
+	@Override
+	public Dimension getMaxSize() {
+		checkInitialized();
+		return getWidget().getMaxSize();
+	}
+
+	@Override
+	public void setMinSize(final Dimension minSize) {
+		if (isInitialized()) {
+			getWidget().setMinSize(minSize);
+		}
+		else {
+			this.minSize = minSize;
+		}
+	}
+
+	@Override
+	public void setPreferredSize(final Dimension preferredSize) {
+		if (isInitialized()) {
+			getWidget().setPreferredSize(preferredSize);
+		}
+		else {
+			this.preferredSize = preferredSize;
+		}
+	}
+
+	@Override
+	public void setMaxSize(final Dimension maxSize) {
+		if (isInitialized()) {
+			getWidget().setMaxSize(maxSize);
+		}
+		else {
+			this.maxSize = maxSize;
 		}
 	}
 }

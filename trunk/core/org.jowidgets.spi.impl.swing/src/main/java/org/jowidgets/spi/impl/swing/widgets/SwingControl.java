@@ -33,6 +33,9 @@ import java.awt.LayoutManager;
 
 import net.miginfocom.swing.MigLayout;
 
+import org.jowidgets.common.types.Dimension;
+import org.jowidgets.spi.impl.swing.layout.LayoutManagerImpl;
+import org.jowidgets.spi.impl.swing.util.DimensionConvert;
 import org.jowidgets.spi.widgets.IControlSpi;
 
 public class SwingControl extends SwingComponent implements IControlSpi {
@@ -43,9 +46,12 @@ public class SwingControl extends SwingComponent implements IControlSpi {
 
 	@Override
 	public void setLayoutConstraints(final Object layoutConstraints) {
-		final MigLayout migLayout = getParentMigLayout();
-		if (migLayout != null) {
-			migLayout.setComponentConstraints(getUiReference(), layoutConstraints);
+		final LayoutManager layoutManager = getParentLayout();
+		if (layoutManager instanceof MigLayout) {
+			((MigLayout) layoutManager).setComponentConstraints(getUiReference(), layoutConstraints);
+		}
+		else if (layoutManager instanceof LayoutManagerImpl) {
+			((LayoutManagerImpl) layoutManager).addLayoutComponent(getUiReference(), layoutConstraints);
 		}
 		else {
 			throw new IllegalStateException("MigLayout expected");
@@ -54,22 +60,37 @@ public class SwingControl extends SwingComponent implements IControlSpi {
 
 	@Override
 	public Object getLayoutConstraints() {
-		final MigLayout migLayout = getParentMigLayout();
-		if (migLayout != null) {
-			return migLayout.getComponentConstraints(getUiReference());
+		final LayoutManager layoutManager = getParentLayout();
+		if (layoutManager instanceof MigLayout) {
+			return ((MigLayout) layoutManager).getComponentConstraints(getUiReference());
+		}
+		if (layoutManager instanceof LayoutManager) {
+			return ((LayoutManagerImpl) layoutManager).getLayoutConstraints(getUiReference());
 		}
 		else {
 			throw new IllegalStateException("MigLayout expected");
 		}
 	}
 
-	private MigLayout getParentMigLayout() {
+	@Override
+	public Dimension getMinSize() {
+		return DimensionConvert.convert(getUiReference().getMinimumSize());
+	}
+
+	@Override
+	public Dimension getPreferredSize() {
+		return DimensionConvert.convert(getUiReference().getPreferredSize());
+	}
+
+	@Override
+	public Dimension getMaxSize() {
+		return DimensionConvert.convert(getUiReference().getMaximumSize());
+	}
+
+	private LayoutManager getParentLayout() {
 		final Container container = getUiReference().getParent();
 		if (container != null) {
-			final LayoutManager layout = container.getLayout();
-			if (layout instanceof MigLayout) {
-				return (MigLayout) layout;
-			}
+			return container.getLayout();
 		}
 		return null;
 	}

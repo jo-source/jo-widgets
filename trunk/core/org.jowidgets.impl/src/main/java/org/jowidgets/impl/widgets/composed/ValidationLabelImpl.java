@@ -303,6 +303,36 @@ public class ValidationLabelImpl implements IValidationLabel {
 	}
 
 	@Override
+	public Dimension getMinSize() {
+		return labelControl.getMinSize();
+	}
+
+	@Override
+	public Dimension getPreferredSize() {
+		return labelControl.getPreferredSize();
+	}
+
+	@Override
+	public Dimension getMaxSize() {
+		return labelControl.getMaxSize();
+	}
+
+	@Override
+	public void setMinSize(final Dimension minSize) {
+		labelControl.setMinSize(minSize);
+	}
+
+	@Override
+	public void setPreferredSize(final Dimension preferredSize) {
+		labelControl.setPreferredSize(preferredSize);
+	}
+
+	@Override
+	public void setMaxSize(final Dimension maxSize) {
+		labelControl.setMaxSize(maxSize);
+	}
+
+	@Override
 	public Dimension getSize() {
 		return labelControl.getSize();
 	}

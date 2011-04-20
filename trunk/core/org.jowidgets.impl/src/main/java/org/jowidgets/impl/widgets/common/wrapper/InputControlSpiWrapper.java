@@ -32,7 +32,7 @@ import org.jowidgets.common.widgets.IInputControlCommon;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.spi.widgets.IInputControlSpi;
 
-public class InputControlSpiWrapper extends ComponentSpiWrapper implements IInputControlCommon {
+public class InputControlSpiWrapper extends ControlSpiWrapper implements IInputControlCommon {
 
 	public InputControlSpiWrapper(final IInputControlSpi widget) {
 		super(widget);

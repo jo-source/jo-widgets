@@ -27,6 +27,7 @@
  */
 package org.jowidgets.spi.impl.dummy.widgets;
 
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
 import org.jowidgets.spi.widgets.IControlSpi;
 
@@ -44,6 +45,21 @@ public class DummyControl extends DummyComponent implements IControlSpi {
 	@Override
 	public Object getLayoutConstraints() {
 		return getUiReference().getLayoutConstraints();
+	}
+
+	@Override
+	public Dimension getMinSize() {
+		return getUiReference().getMinSize();
+	}
+
+	@Override
+	public Dimension getPreferredSize() {
+		return getUiReference().getPreferredSize();
+	}
+
+	@Override
+	public Dimension getMaxSize() {
+		return getUiReference().getMaxSize();
 	}
 
 }

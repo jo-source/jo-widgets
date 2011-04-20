@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,20 +26,43 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.widgets;
+package org.jowidgets.spi.impl.swt.layout;
 
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Layout;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.widgets.layout.ILayouter;
+import org.jowidgets.spi.impl.swt.util.DimensionConvert;
 
-public interface IControlCommon extends IComponentCommon {
+public class LayoutImpl extends Layout {
 
-	void setLayoutConstraints(Object layoutConstraints);
+	private final ILayouter layouter;
 
-	Object getLayoutConstraints();
+	public LayoutImpl(final ILayouter layouter) {
+		this.layouter = layouter;
+	}
 
-	Dimension getMinSize();
+	@Override
+	protected Point computeSize(final Composite composite, final int wHint, final int hHint, final boolean flushCache) {
+		if (flushCache) {
+			layouter.invalidate();
+		}
+		final Dimension size = layouter.getPreferredSize();
+		if (size != null) {
+			return DimensionConvert.convert(size);
+		}
+		else {
+			return null;
+		}
+	}
 
-	Dimension getPreferredSize();
-
-	Dimension getMaxSize();
+	@Override
+	protected void layout(final Composite composite, final boolean flushCache) {
+		if (flushCache) {
+			layouter.invalidate();
+		}
+		layouter.layout();
+	}
 
 }

@@ -184,6 +184,36 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputComposite<INPUT_T
 	}
 
 	@Override
+	public Dimension getMinSize() {
+		return parentComposite.getMinSize();
+	}
+
+	@Override
+	public Dimension getPreferredSize() {
+		return parentComposite.getPreferredSize();
+	}
+
+	@Override
+	public Dimension getMaxSize() {
+		return parentComposite.getMaxSize();
+	}
+
+	@Override
+	public void setMinSize(final Dimension minSize) {
+		parentComposite.setMinSize(minSize);
+	}
+
+	@Override
+	public void setPreferredSize(final Dimension preferredSize) {
+		parentComposite.setPreferredSize(preferredSize);
+	}
+
+	@Override
+	public void setMaxSize(final Dimension maxSize) {
+		parentComposite.setMaxSize(maxSize);
+	}
+
+	@Override
 	public Dimension getSize() {
 		return parentComposite.getSize();
 	}

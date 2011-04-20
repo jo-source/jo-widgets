@@ -28,6 +28,7 @@
 
 package org.jowidgets.api.widgets;
 
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IControlCommon;
 
 public interface IControl extends IComponent, IControlCommon {
@@ -36,5 +37,11 @@ public interface IControl extends IComponent, IControlCommon {
 
 	@Override
 	IContainer getParent();
+
+	void setMinSize(final Dimension minSize);
+
+	void setPreferredSize(Dimension preferredSize);
+
+	void setMaxSize(Dimension maxSize);
 
 }

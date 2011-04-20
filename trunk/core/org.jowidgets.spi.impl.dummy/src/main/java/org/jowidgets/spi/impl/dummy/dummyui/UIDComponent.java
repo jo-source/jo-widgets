@@ -129,4 +129,19 @@ public class UIDComponent extends UIDObservable {
 		return false;
 	}
 
+	public Dimension getMinSize() {
+		//TODO LG implement getMinSize
+		return new Dimension(0, 0);
+	}
+
+	public Dimension getPreferredSize() {
+		//TODO LG implement getPreferredSize
+		return new Dimension(100, 100);
+	}
+
+	public Dimension getMaxSize() {
+		//TODO LG implement getMaxSize
+		return new Dimension(Short.MAX_VALUE, Short.MAX_VALUE);
+	}
+
 }

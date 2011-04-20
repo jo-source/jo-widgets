@@ -48,7 +48,9 @@ import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
+import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.spi.impl.swing.layout.LayoutManagerImpl;
 import org.jowidgets.spi.impl.swing.widgets.util.ChildRemover;
 import org.jowidgets.spi.widgets.IContainerSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
@@ -76,19 +78,20 @@ public class SwingContainer implements IContainerSpi {
 	}
 
 	@Override
-	public final void setLayout(final ILayoutDescriptor layoutManager) {
-		Assert.paramNotNull(layoutManager, "layoutManager");
-		if (layoutManager instanceof MigLayoutDescriptor) {
-			final MigLayoutDescriptor migLayoutManager = (MigLayoutDescriptor) layoutManager;
+	public final void setLayout(final ILayoutDescriptor layout) {
+		Assert.paramNotNull(layout, "layout");
+		if (layout instanceof MigLayoutDescriptor) {
+			final MigLayoutDescriptor migLayoutManager = (MigLayoutDescriptor) layout;
 			container.setLayout(new MigLayout(
 				migLayoutManager.getLayoutConstraints(),
 				migLayoutManager.getColumnConstraints(),
 				migLayoutManager.getRowConstraints()));
 		}
+		else if (layout instanceof ILayouter) {
+			container.setLayout(new LayoutManagerImpl((ILayouter) layout));
+		}
 		else {
-			throw new IllegalArgumentException("Layout Manager of type '"
-				+ layoutManager.getClass().getName()
-				+ "' is not supported");
+			throw new IllegalArgumentException("Layout Manager of type '" + layout.getClass().getName() + "' is not supported");
 		}
 	}
 

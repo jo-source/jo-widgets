@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,20 +26,20 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.widgets;
+package org.jowidgets.common.widgets.layout;
 
 import org.jowidgets.common.types.Dimension;
 
-public interface IControlCommon extends IComponentCommon {
+public interface ILayouter extends ILayoutDescriptor {
 
-	void setLayoutConstraints(Object layoutConstraints);
-
-	Object getLayoutConstraints();
+	void layout();
 
 	Dimension getMinSize();
 
 	Dimension getPreferredSize();
 
 	Dimension getMaxSize();
+
+	void invalidate();
 
 }

@@ -30,6 +30,7 @@ package org.jowidgets.tools.widgets.wrapper;
 
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
+import org.jowidgets.common.types.Dimension;
 
 public class ControlWrapper extends ComponentWrapper implements IControl {
 
@@ -60,6 +61,36 @@ public class ControlWrapper extends ComponentWrapper implements IControl {
 	@Override
 	public Object getLayoutConstraints() {
 		return getWidget().getLayoutConstraints();
+	}
+
+	@Override
+	public Dimension getMinSize() {
+		return getWidget().getMinSize();
+	}
+
+	@Override
+	public Dimension getPreferredSize() {
+		return getWidget().getPreferredSize();
+	}
+
+	@Override
+	public Dimension getMaxSize() {
+		return getWidget().getMaxSize();
+	}
+
+	@Override
+	public void setMinSize(final Dimension minSize) {
+		getWidget().setMinSize(minSize);
+	}
+
+	@Override
+	public void setPreferredSize(final Dimension preferredSize) {
+		getWidget().setPreferredSize(preferredSize);
+	}
+
+	@Override
+	public void setMaxSize(final Dimension maxSize) {
+		getWidget().setMaxSize(maxSize);
 	}
 
 }

@@ -109,6 +109,21 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 	}
 
 	@Override
+	public Dimension getMinSize() {
+		return outerContainer.getMinSize();
+	}
+
+	@Override
+	public Dimension getPreferredSize() {
+		return outerContainer.getPreferredSize();
+	}
+
+	@Override
+	public Dimension getMaxSize() {
+		return outerContainer.getMaxSize();
+	}
+
+	@Override
 	public void setLayoutConstraints(final Object layoutConstraints) {
 		outerContainer.setLayoutConstraints(layoutConstraints);
 	}

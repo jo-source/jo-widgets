@@ -29,6 +29,7 @@ package org.jowidgets.spi.impl.swing.widgets;
 
 import java.awt.Container;
 
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.widgets.ICompositeSpi;
 
@@ -49,6 +50,21 @@ public class SwingComposite extends SwingContainer implements ICompositeSpi {
 	@Override
 	public Object getLayoutConstraints() {
 		return swingControlDelegate.getLayoutConstraints();
+	}
+
+	@Override
+	public Dimension getMinSize() {
+		return swingControlDelegate.getMinSize();
+	}
+
+	@Override
+	public Dimension getPreferredSize() {
+		return swingControlDelegate.getPreferredSize();
+	}
+
+	@Override
+	public Dimension getMaxSize() {
+		return swingControlDelegate.getMaxSize();
 	}
 
 }

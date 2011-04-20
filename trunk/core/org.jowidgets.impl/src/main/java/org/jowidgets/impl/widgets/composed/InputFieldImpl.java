@@ -33,6 +33,7 @@ import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IInputField;
 import org.jowidgets.api.widgets.ITextControl;
 import org.jowidgets.api.widgets.descriptor.setup.IInputFieldSetup;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
@@ -108,6 +109,36 @@ public class InputFieldImpl<VALUE_TYPE> extends AbstractInputControl<VALUE_TYPE>
 	@Override
 	public String getText() {
 		return textField.getText();
+	}
+
+	@Override
+	public Dimension getMinSize() {
+		return textField.getMinSize();
+	}
+
+	@Override
+	public Dimension getPreferredSize() {
+		return textField.getPreferredSize();
+	}
+
+	@Override
+	public Dimension getMaxSize() {
+		return textField.getMaxSize();
+	}
+
+	@Override
+	public void setMinSize(final Dimension minSize) {
+		textField.setMinSize(minSize);
+	}
+
+	@Override
+	public void setPreferredSize(final Dimension preferredSize) {
+		textField.setPreferredSize(preferredSize);
+	}
+
+	@Override
+	public void setMaxSize(final Dimension maxSize) {
+		textField.setMaxSize(maxSize);
 	}
 
 }

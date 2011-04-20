@@ -27,26 +27,42 @@
  */
 package org.jowidgets.spi.impl.dummy.widgets;
 
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
 import org.jowidgets.spi.widgets.IControlSpi;
 
 public abstract class AbstractActionControl extends AbstractActionComponent implements IControlSpi {
 
-	private final DummyControl mockControlDelegate;
+	private final DummyControl dummyControlDelegate;
 
 	public AbstractActionControl(final UIDComponent component) {
 		super(component);
-		this.mockControlDelegate = new DummyControl(component);
+		this.dummyControlDelegate = new DummyControl(component);
 	}
 
 	@Override
 	public void setLayoutConstraints(final Object layoutConstraints) {
-		mockControlDelegate.setLayoutConstraints(layoutConstraints);
+		dummyControlDelegate.setLayoutConstraints(layoutConstraints);
 	}
 
 	@Override
 	public Object getLayoutConstraints() {
-		return mockControlDelegate.getLayoutConstraints();
+		return dummyControlDelegate.getLayoutConstraints();
+	}
+
+	@Override
+	public Dimension getMinSize() {
+		return dummyControlDelegate.getMinSize();
+	}
+
+	@Override
+	public Dimension getPreferredSize() {
+		return dummyControlDelegate.getPreferredSize();
+	}
+
+	@Override
+	public Dimension getMaxSize() {
+		return dummyControlDelegate.getMaxSize();
 	}
 
 }

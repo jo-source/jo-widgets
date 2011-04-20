@@ -142,6 +142,36 @@ public class CompositeBasedControl implements IControl {
 	}
 
 	@Override
+	public Dimension getMinSize() {
+		return composite.getMinSize();
+	}
+
+	@Override
+	public Dimension getPreferredSize() {
+		return composite.getPreferredSize();
+	}
+
+	@Override
+	public Dimension getMaxSize() {
+		return composite.getMaxSize();
+	}
+
+	@Override
+	public void setMinSize(final Dimension minSize) {
+		composite.setMinSize(minSize);
+	}
+
+	@Override
+	public void setPreferredSize(final Dimension preferredSize) {
+		composite.setPreferredSize(preferredSize);
+	}
+
+	@Override
+	public void setMaxSize(final Dimension maxSize) {
+		composite.setMaxSize(maxSize);
+	}
+
+	@Override
 	public Dimension getSize() {
 		return composite.getSize();
 	}
