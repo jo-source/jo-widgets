@@ -32,7 +32,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ComboBoxEditor;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
+import javax.swing.UIManager;
+import javax.swing.border.Border;
 
 import org.jowidgets.spi.impl.swing.widgets.util.InputModifierDocument;
 import org.jowidgets.spi.verify.IInputVerifier;
@@ -96,7 +97,11 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 		public ComboBoxEditorImpl(final IInputVerifier inputVerifier) {
 			super();
 			this.textField = new JTextField();
-			this.textField.setBorder(new EmptyBorder(0, 0, 0, 0));
+
+			final Border border = (Border) UIManager.get("ComboBox.editorBorder");
+			if (border != null) {
+				textField.setBorder(border);
+			}
 
 			this.setItemInvoked = false;
 

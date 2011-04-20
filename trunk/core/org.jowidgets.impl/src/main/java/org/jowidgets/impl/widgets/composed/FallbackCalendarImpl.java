@@ -27,13 +27,15 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.ICalendar;
 import org.jowidgets.api.widgets.IComposite;
-import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.ITextLabel;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.setup.ICalendarSetup;
@@ -48,19 +50,17 @@ import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsI
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 import org.jowidgets.tools.controler.InputObservable;
 import org.jowidgets.tools.controler.MouseAdapter;
+import org.jowidgets.util.Assert;
 
 public class FallbackCalendarImpl extends CompositeBasedControl implements ICalendar {
 
-	private static final String MONDAY = "Mon";
-	private static final String TUESDAY = "Tue";
-	private static final String WEDNESDAY = "Wed";
-	private static final String THURSDAY = "Thu";
-	private static final String FRIDAY = "Fri";
-	private static final String SATURDAY = "Sat";
-	private static final String SUNDAY = "Sun";
+	private static final Calendar CALENDAR = new GregorianCalendar();
+	private static final Locale LOCALE = Locale.getDefault();
 
 	private final InputObservable inputObservable;
 	private final DayButton[][] dayButtons;
+
+	private Date date;
 
 	public FallbackCalendarImpl(final IComposite composite, final ICalendarSetup setup) {
 		super(composite);
@@ -71,66 +71,90 @@ public class FallbackCalendarImpl extends CompositeBasedControl implements ICale
 
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
+
+		if (setup.getDate() != null) {
+			setDate(setup.getDate());
+		}
+		else {
+			setDate(new Date());
+		}
 	}
 
-	private void createContent(final IContainer container) {
+	private void createContent(final IComposite composite) {
 		final BluePrintFactory bpf = new BluePrintFactory();
 
-		container.setBackgroundColor(Colors.WHITE);
-		container.setLayout(new MigLayoutDescriptor("hidemode 3, wrap", "0[]0[]0[]0[]0[]0[]0[]0", "0[]2[]2[]0[]0[]0[]0[]0[]0"));
+		composite.setBackgroundColor(Colors.WHITE);
+
+		composite.setLayout(new MigLayoutDescriptor(
+			"hidemode 3, wrap",
+			"0[28::]0[28::]0[28::]0[28::]0[28::]0[28::]0[28::]0",
+			"0[]2[]2[]0[]0[]0[]0[]0[]0"));
+
+		int dayOfWeek = CALENDAR.getFirstDayOfWeek();
 
 		final String headerConstraints = "alignx center, aligny center, sg lgh";
-		container.add(bpf.textLabel(" " + MONDAY + " ").alignCenter(), headerConstraints);
-		container.add(bpf.textLabel(" " + TUESDAY + " ").alignCenter(), headerConstraints);
-		container.add(bpf.textLabel(" " + WEDNESDAY + " ").alignCenter(), headerConstraints);
-		container.add(bpf.textLabel(" " + THURSDAY + " ").alignCenter(), headerConstraints);
-		container.add(bpf.textLabel(" " + FRIDAY + " ").alignCenter(), headerConstraints);
-		container.add(bpf.textLabel(" " + SATURDAY + " ").alignCenter(), headerConstraints);
-		container.add(bpf.textLabel(" " + SUNDAY + " ").alignCenter(), headerConstraints);
+		for (int i = 0; i < 7; i++) {
+			composite.add(bpf.textLabel(getShortDayLabel(dayOfWeek)).alignCenter(), headerConstraints);
+			dayOfWeek = getNextDayOfWeek(dayOfWeek);
+		}
 
-		container.add(bpf.separator(), "growx, span 7");
+		composite.add(bpf.separator(), "growx, span 7");
 
-		int day = 27;
-		boolean gray = true;
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 7; j++) {
-				final DayButton dayButton = new DayButton(container);
-
-				dayButtons[i][j] = dayButton;
-
-				dayButton.setText("" + (day));
-
-				if (i == 3 && j == 4) {
-					dayButton.setBorder(true);
-				}
-
-				if (i == 2 && j == 2) {
-					dayButton.setBorder(true);
-					dayButton.setBackgroundColor(Colors.DEFAULT_TABLE_EVEN_BACKGROUND_COLOR);
-				}
-
-				if (gray) {
-					dayButton.setForegroundColor(Colors.DISABLED);
-				}
-
-				day++;
-				if (day == 32) {
-					gray = !gray;
-					day = 1;
-				}
+				dayButtons[i][j] = new DayButton(composite);
 			}
 		}
 	}
 
 	@Override
 	public void setDate(final Date date) {
-		// TODO Auto-generated method stub	
+		Assert.paramNotNull(date, "date");
+
+		final Calendar iteratingCalendar = new GregorianCalendar();
+		final Calendar calendar = new GregorianCalendar();
+		final Calendar current = new GregorianCalendar();
+
+		iteratingCalendar.setTime(date);
+		calendar.setTime(date);
+		current.setTime(new Date());
+
+		iteratingCalendar.set(Calendar.DAY_OF_MONTH, 1);
+
+		final int firstDayOfWeek = iteratingCalendar.getFirstDayOfWeek();
+		int dayOfWeek = iteratingCalendar.get(Calendar.DAY_OF_WEEK);
+
+		while (dayOfWeek > firstDayOfWeek) {
+			iteratingCalendar.add(Calendar.DAY_OF_MONTH, -1);
+			dayOfWeek = iteratingCalendar.get(Calendar.DAY_OF_WEEK);
+		}
+
+		for (int i = 0; i < 6; i++) {
+			for (int j = 0; j < 7; j++) {
+				final DayButton dayButton = dayButtons[i][j];
+				dayButton.setText("" + iteratingCalendar.get(Calendar.DAY_OF_MONTH));
+				if (iteratingCalendar.get(Calendar.MONTH) != calendar.get(Calendar.MONTH)) {
+					dayButton.setForegroundColor(Colors.DISABLED);
+				}
+				if (iteratingCalendar.get(Calendar.MONTH) == current.get(Calendar.MONTH)
+					&& iteratingCalendar.get(Calendar.DAY_OF_MONTH) == current.get(Calendar.DAY_OF_MONTH)) {
+					dayButton.setBorder(true);
+				}
+				if (iteratingCalendar.get(Calendar.MONTH) == calendar.get(Calendar.MONTH)
+					&& iteratingCalendar.get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH)) {
+					dayButton.setBorder(true);
+					dayButton.setBackgroundColor(Colors.SELECTED_BACKGROUND);
+				}
+				iteratingCalendar.add(Calendar.DAY_OF_MONTH, 1);
+			}
+		}
+
+		this.date = date;
 	}
 
 	@Override
 	public Date getDate() {
-		// TODO Auto-generated method stub
-		return null;
+		return date;
 	}
 
 	@Override
@@ -149,6 +173,8 @@ public class FallbackCalendarImpl extends CompositeBasedControl implements ICale
 		private static final String INNER_CONSTRAINTS = "alignx center, aligny center, sg ig";
 		private static final String LABEL_CONSTRAINTS = "alignx right, aligny center, sg lg";
 
+		private final IComposite rootComposite;
+
 		private final IComposite outerComposite;
 		private final IComposite innerComposite;
 		private final ITextLabel label;
@@ -157,12 +183,15 @@ public class FallbackCalendarImpl extends CompositeBasedControl implements ICale
 		private final IComposite innerCompositeBorder;
 		private final ITextLabel labelBorder;
 
-		private DayButton(final IContainer container) {
+		private DayButton(final IComposite composite) {
 
 			final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-			this.outerCompositeBorder = container.add(bpf.composite().setBorder(), OUTER_CONSTRAINTS);
-			this.outerComposite = container.add(bpf.composite(), OUTER_CONSTRAINTS);
+			this.rootComposite = composite.add(bpf.composite(), OUTER_CONSTRAINTS);
+			this.rootComposite.setLayout(new MigLayoutDescriptor("hidemode 3", "0[grow]0", "0[grow]0"));
+
+			this.outerCompositeBorder = rootComposite.add(bpf.composite().setBorder(), OUTER_CONSTRAINTS);
+			this.outerComposite = rootComposite.add(bpf.composite(), OUTER_CONSTRAINTS);
 			outerCompositeBorder.setVisible(false);
 
 			final MigLayoutDescriptor outerLayout = new MigLayoutDescriptor("0[grow]0", "0[grow]0");
@@ -179,7 +208,7 @@ public class FallbackCalendarImpl extends CompositeBasedControl implements ICale
 			labelBorder = innerCompositeBorder.add(bpf.textLabel().alignRight(), LABEL_CONSTRAINTS);
 			label = innerComposite.add(bpf.textLabel().alignRight(), LABEL_CONSTRAINTS);
 
-			final IMouseListener mouseListener = new MouseAdapter() {
+			final IMouseListener outerListener = new MouseAdapter() {
 
 				@Override
 				public void mouseReleased(final IMouseButtonEvent event) {
@@ -191,6 +220,7 @@ public class FallbackCalendarImpl extends CompositeBasedControl implements ICale
 				@Override
 				public void mouseExit(final IMouseEvent event) {
 					//CHECKSTYLE:OFF
+					setBorder(false);
 					System.out.println("Exit: " + event);
 					//CHECKSTYLE:ON
 				}
@@ -198,24 +228,72 @@ public class FallbackCalendarImpl extends CompositeBasedControl implements ICale
 				@Override
 				public void mouseEnter(final IMouseEvent event) {
 					//CHECKSTYLE:OFF
+					setBorder(true);
 					System.out.println("Enter: " + event);
 					//CHECKSTYLE:ON
 				}
 
 			};
 
-			outerCompositeBorder.addMouseListener(mouseListener);
-			outerComposite.addMouseListener(mouseListener);
-			innerCompositeBorder.addMouseListener(mouseListener);
-			innerComposite.addMouseListener(mouseListener);
-			labelBorder.addMouseListener(mouseListener);
-			label.addMouseListener(mouseListener);
+			final IMouseListener innerListener = new MouseAdapter() {
+
+				@Override
+				public void mouseReleased(final IMouseButtonEvent event) {
+					//CHECKSTYLE:OFF
+					System.out.println("Pressed: " + event);
+					//CHECKSTYLE:ON
+				}
+
+				@Override
+				public void mouseExit(final IMouseEvent event) {
+					//CHECKSTYLE:OFF
+					setBorder(event);
+					System.out.println("Exit: " + event);
+					//CHECKSTYLE:ON
+				}
+
+				@Override
+				public void mouseEnter(final IMouseEvent event) {
+					//CHECKSTYLE:OFF
+					setBorder(event);
+					System.out.println("Enter: " + event);
+					//CHECKSTYLE:ON
+				}
+
+			};
+
+			outerCompositeBorder.addMouseListener(outerListener);
+			outerComposite.addMouseListener(outerListener);
+			innerCompositeBorder.addMouseListener(innerListener);
+			innerComposite.addMouseListener(innerListener);
+			labelBorder.addMouseListener(innerListener);
+			label.addMouseListener(innerListener);
 
 		}
 
+		public void setBorder(final IMouseEvent event) {
+			final int mouseX = event.getPosition().getX();
+			final int mouseY = event.getPosition().getY();
+
+			final int x = outerCompositeBorder.getPosition().getX();
+			final int y = outerCompositeBorder.getPosition().getY();
+
+			final int width = outerCompositeBorder.getSize().getWidth();
+			final int height = outerCompositeBorder.getSize().getHeight();
+
+			if (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height) {
+				setBorder(true);
+			}
+			else {
+				setBorder(false);
+			}
+		}
+
 		public void setBorder(final boolean border) {
+			rootComposite.layoutBegin();
 			outerCompositeBorder.setVisible(border);
 			outerComposite.setVisible(!border);
+			rootComposite.layoutEnd();
 		}
 
 		public void setForegroundColor(final IColorConstant color) {
@@ -232,6 +310,49 @@ public class FallbackCalendarImpl extends CompositeBasedControl implements ICale
 			label.setText(text);
 			labelBorder.setText(text);
 		}
+	}
+
+	private int getNextDayOfWeek(final int dayOfWeek) {
+		if (dayOfWeek == 7) {
+			return 1;
+		}
+		else {
+			return dayOfWeek + 1;
+		}
+	}
+
+	private static String getShortDayLabel(final int day) {
+		CALENDAR.set(Calendar.DAY_OF_WEEK, day);
+		final String result = CALENDAR.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, LOCALE);
+		if (result == null) {
+			return getFallbackLabel(day);
+		}
+		return result;
+	}
+
+	private static String getFallbackLabel(final int day) {
+		if (Calendar.MONDAY == day) {
+			return "Mon";
+		}
+		else if (Calendar.TUESDAY == day) {
+			return "Tue";
+		}
+		else if (Calendar.WEDNESDAY == day) {
+			return "Wed";
+		}
+		else if (Calendar.THURSDAY == day) {
+			return "Thu";
+		}
+		else if (Calendar.FRIDAY == day) {
+			return "Fri";
+		}
+		else if (Calendar.SATURDAY == day) {
+			return "Sat";
+		}
+		else if (Calendar.SUNDAY == day) {
+			return "Sun";
+		}
+		return null;
 	}
 
 }
