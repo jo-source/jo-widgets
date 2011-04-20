@@ -64,6 +64,11 @@ public abstract class AbstractContainerSpiWrapper extends ComponentSpiWrapper im
 		getWidget().layoutEnd();
 	}
 
+	@Override
+	public Dimension getClientAreaSize() {
+		return getWidget().getClientAreaSize();
+	}
+
 	public void setMinSize(final Dimension minSize) {
 		this.minSize = minSize;
 	}

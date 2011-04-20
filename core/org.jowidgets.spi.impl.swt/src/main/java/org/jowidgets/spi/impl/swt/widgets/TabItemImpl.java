@@ -268,6 +268,11 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 	}
 
 	@Override
+	public Dimension getClientAreaSize() {
+		return swtContainer.getClientAreaSize();
+	}
+
+	@Override
 	public Dimension getSize() {
 		return swtContainer.getSize();
 	}

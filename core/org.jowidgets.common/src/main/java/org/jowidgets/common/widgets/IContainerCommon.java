@@ -27,6 +27,7 @@
  */
 package org.jowidgets.common.widgets;
 
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 
 public interface IContainerCommon extends IComponentCommon {
@@ -47,5 +48,7 @@ public interface IContainerCommon extends IComponentCommon {
 	 * child widgets is not indented and may lead to arbitrary behavior
 	 */
 	void removeAll();
+
+	Dimension getClientAreaSize();
 
 }

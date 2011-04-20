@@ -32,6 +32,7 @@ import java.util.List;
 
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
@@ -45,6 +46,11 @@ public class ContainerWrapper extends ComponentWrapper implements IContainer {
 	@Override
 	protected IContainer getWidget() {
 		return (IContainer) super.getWidget();
+	}
+
+	@Override
+	public Dimension getClientAreaSize() {
+		return getWidget().getClientAreaSize();
 	}
 
 	@Override

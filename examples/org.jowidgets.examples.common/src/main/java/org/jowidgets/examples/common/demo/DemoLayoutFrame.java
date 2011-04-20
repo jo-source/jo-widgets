@@ -54,30 +54,30 @@ public class DemoLayoutFrame extends JoFrame {
 				final IControl control = getChildren().get(0);
 				control.setPosition(new Position(0, 0));
 				control.setSize(control.getPreferredSize());
-				System.out.println("layout: " + getSize());
+				System.out.println("layout: " + getClientAreaSize());
 			}
 
 			@Override
 			public void invalidate() {
-				System.out.println("invalidate: " + getSize());
+				System.out.println("invalidate: " + getClientAreaSize());
 			}
 
 			@Override
 			public Dimension getMinSize() {
-				System.out.println("getMinSize: " + getSize());
+				System.out.println("getMinSize: " + getClientAreaSize());
 				return new Dimension(0, 0);
 			}
 
 			@Override
 			public Dimension getPreferredSize() {
-				System.out.println("getPrefferedSize: " + getSize());
+				System.out.println("getPrefferedSize: " + getClientAreaSize());
 				final IControl control = getChildren().get(0);
 				return control.getPreferredSize();
 			}
 
 			@Override
 			public Dimension getMaxSize() {
-				System.out.println("getMaxSize: " + getSize());
+				System.out.println("getMaxSize: " + getClientAreaSize());
 				return new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
 			}
 

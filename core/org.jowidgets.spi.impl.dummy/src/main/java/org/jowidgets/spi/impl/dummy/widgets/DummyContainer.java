@@ -139,6 +139,11 @@ public class DummyContainer implements IContainerSpi {
 	}
 
 	@Override
+	public Dimension getClientAreaSize() {
+		return dummyComponentDelegate.getClientAreaSize();
+	}
+
+	@Override
 	public Dimension getSize() {
 		return dummyComponentDelegate.getSize();
 	}

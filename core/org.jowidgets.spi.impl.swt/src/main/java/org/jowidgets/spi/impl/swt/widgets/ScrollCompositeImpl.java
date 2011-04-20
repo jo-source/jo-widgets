@@ -109,6 +109,11 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 	}
 
 	@Override
+	public Dimension getClientAreaSize() {
+		return innerContainer.getClientAreaSize();
+	}
+
+	@Override
 	public Dimension getMinSize() {
 		return outerContainer.getMinSize();
 	}

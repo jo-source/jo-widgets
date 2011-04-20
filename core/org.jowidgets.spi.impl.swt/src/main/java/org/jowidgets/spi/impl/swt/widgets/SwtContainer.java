@@ -29,6 +29,7 @@ package org.jowidgets.spi.impl.swt.widgets;
 
 import net.miginfocom.swt.MigLayout;
 
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Widget;
@@ -153,6 +154,12 @@ public class SwtContainer implements IContainerSpi {
 	@Override
 	public boolean isVisible() {
 		return swtComponentDelegate.isVisible();
+	}
+
+	@Override
+	public Dimension getClientAreaSize() {
+		final Rectangle rectangle = getUiReference().getClientArea();
+		return new Dimension(rectangle.width, rectangle.height);
 	}
 
 	@Override
