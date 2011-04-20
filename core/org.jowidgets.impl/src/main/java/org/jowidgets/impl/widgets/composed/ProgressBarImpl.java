@@ -198,6 +198,36 @@ public class ProgressBarImpl implements IProgressBar {
 	}
 
 	@Override
+	public Dimension getMinSize() {
+		return compositeWidget.getMinSize();
+	}
+
+	@Override
+	public Dimension getPreferredSize() {
+		return compositeWidget.getPreferredSize();
+	}
+
+	@Override
+	public Dimension getMaxSize() {
+		return compositeWidget.getMaxSize();
+	}
+
+	@Override
+	public void setMinSize(final Dimension minSize) {
+		compositeWidget.setMinSize(minSize);
+	}
+
+	@Override
+	public void setPreferredSize(final Dimension preferredSize) {
+		compositeWidget.setPreferredSize(preferredSize);
+	}
+
+	@Override
+	public void setMaxSize(final Dimension maxSize) {
+		compositeWidget.setMaxSize(maxSize);
+	}
+
+	@Override
 	public Dimension getSize() {
 		return compositeWidget.getSize();
 	}

@@ -28,11 +28,17 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IContainerCommon;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.spi.widgets.IContainerSpi;
+import org.jowidgets.spi.widgets.IControlSpi;
 
 public abstract class AbstractContainerSpiWrapper extends ComponentSpiWrapper implements IContainerCommon {
+
+	private Dimension minSize;
+	private Dimension prefferedSize;
+	private Dimension maxSize;
 
 	public AbstractContainerSpiWrapper(final IContainerSpi widget) {
 		super(widget);
@@ -56,6 +62,54 @@ public abstract class AbstractContainerSpiWrapper extends ComponentSpiWrapper im
 	@Override
 	public void layoutEnd() {
 		getWidget().layoutEnd();
+	}
+
+	public void setMinSize(final Dimension minSize) {
+		this.minSize = minSize;
+	}
+
+	public void setPreferredSize(final Dimension preferredSize) {
+		this.prefferedSize = preferredSize;
+	}
+
+	public void setMaxSize(final Dimension maxSize) {
+		this.maxSize = maxSize;
+	}
+
+	public Dimension getMinSize() {
+		if (minSize != null) {
+			return minSize;
+		}
+		else if (getWidget() instanceof IControlSpi) {
+			return ((IControlSpi) getWidget()).getMinSize();
+		}
+		else {
+			return null;
+		}
+	}
+
+	public Dimension getPreferredSize() {
+		if (prefferedSize != null) {
+			return prefferedSize;
+		}
+		else if (getWidget() instanceof IControlSpi) {
+			return ((IControlSpi) getWidget()).getPreferredSize();
+		}
+		else {
+			return null;
+		}
+	}
+
+	public Dimension getMaxSize() {
+		if (maxSize != null) {
+			return maxSize;
+		}
+		else if (getWidget() instanceof IControlSpi) {
+			return ((IControlSpi) getWidget()).getMaxSize();
+		}
+		else {
+			return null;
+		}
 	}
 
 }

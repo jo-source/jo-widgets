@@ -28,6 +28,7 @@
 package org.jowidgets.spi.impl.swt.widgets;
 
 import org.eclipse.swt.widgets.Control;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.spi.widgets.IControlSpi;
 
 public abstract class AbstractActionControl extends AbstractActionComponent implements IControlSpi {
@@ -47,6 +48,21 @@ public abstract class AbstractActionControl extends AbstractActionComponent impl
 	@Override
 	public Object getLayoutConstraints() {
 		return swtControlDelegate.getLayoutConstraints();
+	}
+
+	@Override
+	public Dimension getMinSize() {
+		return swtControlDelegate.getMinSize();
+	}
+
+	@Override
+	public Dimension getPreferredSize() {
+		return swtControlDelegate.getPreferredSize();
+	}
+
+	@Override
+	public Dimension getMaxSize() {
+		return swtControlDelegate.getMaxSize();
 	}
 
 }

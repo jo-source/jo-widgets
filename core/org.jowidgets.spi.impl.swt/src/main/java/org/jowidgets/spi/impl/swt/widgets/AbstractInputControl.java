@@ -123,6 +123,21 @@ public abstract class AbstractInputControl extends InputObservable implements II
 	}
 
 	@Override
+	public Dimension getMinSize() {
+		return swtControlDelegate.getMinSize();
+	}
+
+	@Override
+	public Dimension getPreferredSize() {
+		return swtControlDelegate.getPreferredSize();
+	}
+
+	@Override
+	public Dimension getMaxSize() {
+		return swtControlDelegate.getMaxSize();
+	}
+
+	@Override
 	public Dimension getSize() {
 		return swtControlDelegate.getSize();
 	}

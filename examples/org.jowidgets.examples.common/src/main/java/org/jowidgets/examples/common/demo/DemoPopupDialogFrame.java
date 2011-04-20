@@ -49,13 +49,13 @@ import org.jowidgets.tools.controler.MouseAdapter;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.powo.JoFrame;
 
-public class PopupDialogDemoFrame extends JoFrame {
+public class DemoPopupDialogFrame extends JoFrame {
 
 	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
 	private IPopupDialog popupDialog;
 
-	public PopupDialogDemoFrame() {
+	public DemoPopupDialogFrame() {
 		super("Popup dialog demo");
 
 		addComponentListener(new IComponentListener() {
@@ -84,7 +84,7 @@ public class PopupDialogDemoFrame extends JoFrame {
 			public void mousePressed(final IMouseButtonEvent event) {
 				popupDialog = createChildWindow(BPF.popupDialog().setBorder(false));
 				final Position buttonPos = button1.getPosition();
-				popupDialog.setPosition(Toolkit.toScreen(buttonPos, PopupDialogDemoFrame.this));
+				popupDialog.setPosition(Toolkit.toScreen(buttonPos, DemoPopupDialogFrame.this));
 				setContent(popupDialog);
 				popupDialog.pack();
 				popupDialog.setVisible(true);
@@ -104,7 +104,7 @@ public class PopupDialogDemoFrame extends JoFrame {
 				setContent(popupDialog);
 				popupDialog.setPosition(Toolkit.toScreen(
 						new Position(buttonPos.getX(), buttonPos.getY() + buttonSize.getHeight()),
-						PopupDialogDemoFrame.this));
+						DemoPopupDialogFrame.this));
 				popupDialog.pack();
 				popupDialog.setVisible(true);
 			}

@@ -28,10 +28,15 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.spi.widgets.IControlSpi;
 
 public class ControlSpiWrapper extends ComponentSpiWrapper implements IControlCommon {
+
+	private Dimension minSize;
+	private Dimension prefferedSize;
+	private Dimension maxSize;
 
 	public ControlSpiWrapper(final IControlSpi control) {
 		super(control);
@@ -50,6 +55,48 @@ public class ControlSpiWrapper extends ComponentSpiWrapper implements IControlCo
 	@Override
 	public Object getLayoutConstraints() {
 		return getWidget().getLayoutConstraints();
+	}
+
+	public void setMinSize(final Dimension minSize) {
+		this.minSize = minSize;
+	}
+
+	public void setPreferredSize(final Dimension preferredSize) {
+		this.prefferedSize = preferredSize;
+	}
+
+	public void setMaxSize(final Dimension maxSize) {
+		this.maxSize = maxSize;
+	}
+
+	@Override
+	public Dimension getMinSize() {
+		if (minSize != null) {
+			return minSize;
+		}
+		else {
+			return getWidget().getMinSize();
+		}
+	}
+
+	@Override
+	public Dimension getPreferredSize() {
+		if (prefferedSize != null) {
+			return prefferedSize;
+		}
+		else {
+			return getWidget().getPreferredSize();
+		}
+	}
+
+	@Override
+	public Dimension getMaxSize() {
+		if (maxSize != null) {
+			return maxSize;
+		}
+		else {
+			return getWidget().getMaxSize();
+		}
 	}
 
 }

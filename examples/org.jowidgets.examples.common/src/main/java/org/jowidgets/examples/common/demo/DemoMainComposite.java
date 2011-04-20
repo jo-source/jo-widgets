@@ -157,7 +157,7 @@ public final class DemoMainComposite {
 		popupDialogDemoButton.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
-				final IFrame popupDialogDemoFrame = new PopupDialogDemoFrame();
+				final IFrame popupDialogDemoFrame = new DemoPopupDialogFrame();
 				popupDialogDemoFrame.setSize(new Dimension(400, 300));
 				popupDialogDemoFrame.setVisible(true);
 			}
@@ -184,6 +184,16 @@ public final class DemoMainComposite {
 			@Override
 			public void actionPerformed() {
 				messagesDemoDialog.setVisible(true);
+			}
+		});
+
+		final IButton layoutTestButton = parentContainer.add(bpF.button("Test some layout stuff"), "grow, sg bg, wrap");
+		layoutTestButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final IFrame frame = new DemoLayoutFrame();
+				frame.pack();
+				frame.setVisible(true);
 			}
 		});
 

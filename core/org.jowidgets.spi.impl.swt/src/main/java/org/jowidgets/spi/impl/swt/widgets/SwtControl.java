@@ -27,10 +27,15 @@
  */
 package org.jowidgets.spi.impl.swt.widgets;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Control;
+import org.jowidgets.common.types.Dimension;
+import org.jowidgets.spi.impl.swt.util.DimensionConvert;
 import org.jowidgets.spi.widgets.IControlSpi;
 
 public class SwtControl extends SwtComponent implements IControlSpi {
+
+	private static final Dimension MAX_SIZE = new Dimension(Short.MAX_VALUE, Short.MAX_VALUE);
 
 	public SwtControl(final Control control) {
 		super(control);
@@ -44,6 +49,21 @@ public class SwtControl extends SwtComponent implements IControlSpi {
 	@Override
 	public Object getLayoutConstraints() {
 		return getUiReference().getLayoutData();
+	}
+
+	@Override
+	public Dimension getMinSize() {
+		return getPreferredSize();
+	}
+
+	@Override
+	public Dimension getPreferredSize() {
+		return DimensionConvert.convert(getUiReference().computeSize(SWT.DEFAULT, SWT.DEFAULT));
+	}
+
+	@Override
+	public Dimension getMaxSize() {
+		return MAX_SIZE;
 	}
 
 }

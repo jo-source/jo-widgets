@@ -29,6 +29,7 @@ package org.jowidgets.spi.impl.swing.widgets;
 
 import java.awt.Component;
 
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.spi.widgets.IControlSpi;
 
 public abstract class AbstractActionControl extends AbstractActionComponent implements IControlSpi {
@@ -48,6 +49,21 @@ public abstract class AbstractActionControl extends AbstractActionComponent impl
 	@Override
 	public Object getLayoutConstraints() {
 		return swingControlDelegate.getLayoutConstraints();
+	}
+
+	@Override
+	public Dimension getMinSize() {
+		return swingControlDelegate.getMinSize();
+	}
+
+	@Override
+	public Dimension getPreferredSize() {
+		return swingControlDelegate.getPreferredSize();
+	}
+
+	@Override
+	public Dimension getMaxSize() {
+		return swingControlDelegate.getMaxSize();
 	}
 
 }

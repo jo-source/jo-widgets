@@ -28,6 +28,7 @@
 package org.jowidgets.spi.impl.swt.widgets;
 
 import org.eclipse.swt.widgets.Composite;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.widgets.ICompositeSpi;
 
@@ -48,6 +49,21 @@ public class SwtComposite extends SwtContainer implements ICompositeSpi {
 	@Override
 	public Object getLayoutConstraints() {
 		return swtControlDelegate.getLayoutConstraints();
+	}
+
+	@Override
+	public Dimension getMinSize() {
+		return swtControlDelegate.getMinSize();
+	}
+
+	@Override
+	public Dimension getPreferredSize() {
+		return swtControlDelegate.getPreferredSize();
+	}
+
+	@Override
+	public Dimension getMaxSize() {
+		return swtControlDelegate.getMaxSize();
 	}
 
 }

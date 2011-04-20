@@ -27,28 +27,44 @@
  */
 package org.jowidgets.spi.impl.dummy.widgets;
 
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDContainer;
 import org.jowidgets.spi.widgets.ICompositeSpi;
 
 public class DummyComposite extends DummyContainer implements ICompositeSpi {
 
-	private final DummyControl mockControlDelegate;
+	private final DummyControl dummyControlDelegate;
 
 	public DummyComposite(final IGenericWidgetFactory factory, final UIDContainer container) {
 		super(factory, container);
 
-		this.mockControlDelegate = new DummyControl(container);
+		this.dummyControlDelegate = new DummyControl(container);
 	}
 
 	@Override
 	public void setLayoutConstraints(final Object layoutConstraints) {
-		mockControlDelegate.setLayoutConstraints(layoutConstraints);
+		dummyControlDelegate.setLayoutConstraints(layoutConstraints);
 	}
 
 	@Override
 	public Object getLayoutConstraints() {
-		return mockControlDelegate.getLayoutConstraints();
+		return dummyControlDelegate.getLayoutConstraints();
+	}
+
+	@Override
+	public Dimension getMinSize() {
+		return dummyControlDelegate.getMinSize();
+	}
+
+	@Override
+	public Dimension getPreferredSize() {
+		return dummyControlDelegate.getPreferredSize();
+	}
+
+	@Override
+	public Dimension getMaxSize() {
+		return dummyControlDelegate.getMaxSize();
 	}
 
 }

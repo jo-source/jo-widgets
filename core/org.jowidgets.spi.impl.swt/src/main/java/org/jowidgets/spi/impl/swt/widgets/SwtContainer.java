@@ -48,7 +48,9 @@ import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
+import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.spi.impl.swt.layout.LayoutImpl;
 import org.jowidgets.spi.widgets.IContainerSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.util.Assert;
@@ -76,19 +78,20 @@ public class SwtContainer implements IContainerSpi {
 	}
 
 	@Override
-	public final void setLayout(final ILayoutDescriptor layoutDescriptor) {
-		Assert.paramNotNull(layoutDescriptor, "layoutDescriptor");
-		if (layoutDescriptor instanceof MigLayoutDescriptor) {
-			final MigLayoutDescriptor migLayoutManager = (MigLayoutDescriptor) layoutDescriptor;
+	public final void setLayout(final ILayoutDescriptor layout) {
+		Assert.paramNotNull(layout, "layoutDescriptor");
+		if (layout instanceof MigLayoutDescriptor) {
+			final MigLayoutDescriptor migLayoutManager = (MigLayoutDescriptor) layout;
 			composite.setLayout(new MigLayout(
 				migLayoutManager.getLayoutConstraints(),
 				migLayoutManager.getColumnConstraints(),
 				migLayoutManager.getRowConstraints()));
 		}
+		else if (layout instanceof ILayouter) {
+			composite.setLayout(new LayoutImpl((ILayouter) layout));
+		}
 		else {
-			throw new IllegalArgumentException("LayoutDescriptor of type '"
-				+ layoutDescriptor.getClass().getName()
-				+ "' is not supported");
+			throw new IllegalArgumentException("LayoutDescriptor of type '" + layout.getClass().getName() + "' is not supported");
 		}
 	}
 
