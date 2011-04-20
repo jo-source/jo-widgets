@@ -28,7 +28,9 @@
 
 package org.jowidgets.addons.testtool.internal;
 
+import javax.xml.bind.annotation.XmlType;
 
+@XmlType(propOrder = {"type", "id", "action"})
 public class TestDataObject {
 
 	private String id;
