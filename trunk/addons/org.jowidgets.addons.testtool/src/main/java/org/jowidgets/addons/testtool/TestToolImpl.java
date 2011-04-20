@@ -67,7 +67,9 @@ import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IItemStateListener;
 import org.jowidgets.common.widgets.controler.IMenuListener;
+import org.jowidgets.common.widgets.controler.IMouseButtonEvent;
 import org.jowidgets.test.api.widgets.IButtonUi;
+import org.jowidgets.tools.controler.MouseAdapter;
 import org.jowidgets.tools.controler.TabItemAdapter;
 import org.jowidgets.tools.controler.WindowAdapter;
 
@@ -136,10 +138,10 @@ public final class TestToolImpl implements ITestTool {
 		}
 		if (widget instanceof IButtonUi) {
 			final IButtonUi button = (IButtonUi) widget;
-			button.addActionListener(new IActionListener() {
+			button.addMouseListener(new MouseAdapter() {
 
 				@Override
-				public void actionPerformed() {
+				public void mouseReleased(final IMouseButtonEvent event) {
 					record(widget, UserAction.CLICK, testToolUtilities.createWidgetID(button));
 				}
 			});

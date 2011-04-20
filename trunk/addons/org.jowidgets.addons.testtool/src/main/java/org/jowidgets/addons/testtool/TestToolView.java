@@ -28,6 +28,7 @@
 
 package org.jowidgets.addons.testtool;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -47,20 +48,20 @@ import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.table.ISimpleTableModel;
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IFileChooser;
 import org.jowidgets.api.widgets.IFrame;
-import org.jowidgets.api.widgets.IInputDialog;
 import org.jowidgets.api.widgets.ITabFolder;
 import org.jowidgets.api.widgets.ITabItem;
 import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.IToolBarButton;
-import org.jowidgets.api.widgets.ITree;
-import org.jowidgets.api.widgets.ITreeNode;
+import org.jowidgets.api.widgets.blueprint.IFileChooserBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITableBluePrint;
-import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.common.types.DialogResult;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.FileChooserType;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.command.EnabledChecker;
@@ -72,6 +73,11 @@ import org.jowidgets.util.Assert;
 
 public class TestToolView {
 
+	private static final String DEFAULT_FILEPATH = System.getProperty("user.dir")
+		+ File.separator
+		+ "resources"
+		+ File.separator
+		+ "testtool";
 	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 	private static final IActionBuilderFactory ABF = Toolkit.getActionBuilderFactory();
 	private ISimpleTableModel tableDataModel;
@@ -89,10 +95,9 @@ public class TestToolView {
 	public void createContentArea() {
 		final IFrameBluePrint frameBP = BPF.frame("TestTool");
 		frame = Toolkit.createRootFrame(frameBP);
-		frame.setLayout(new MigLayoutDescriptor("[][grow]", "[grow]"));
+		frame.setLayout(new MigLayoutDescriptor("[grow]", "[grow]"));
 		createMenuBar(frame);
 		createToolBar(frame);
-		createFileTree(frame);
 		createTable(frame);
 		setupTestTool();
 		frame.pack();
@@ -104,40 +109,6 @@ public class TestToolView {
 				testTool.deactivateReplayAndRecord();
 			}
 		});
-	}
-
-	private void createFileTree(final IFrame frame) {
-		final ITabFolder folder = frame.add(BPF.tabFolder(), "growy, h 0::");
-		final ITabItem item = folder.addItem(BPF.tabItem().setText("Available Tests"));
-
-		final ITreeBluePrint treeBp = BPF.tree();
-		final ITree tree = item.add(treeBp, "growy, h 0::");
-		item.setBackgroundColor(tree.getBackgroundColor());
-
-		final ITreeNode treeNode = tree.addNode(BPF.treeNode().setText("Tree_Tests"));
-		final ITreeNode buttonNode = tree.addNode(BPF.treeNode().setText("Button_Tests"));
-		final ITreeNode toolBarNode = tree.addNode(BPF.treeNode().setText("ToolBar_Tests"));
-		final ITreeNode menuNode = tree.addNode(BPF.treeNode().setText("Menu_Tests"));
-
-		treeNode.addNode(BPF.treeNode().setText("Tree_Selection_Test"));
-		treeNode.addNode(BPF.treeNode().setText("Tree_Expand_Test"));
-		treeNode.addNode(BPF.treeNode().setText("Tree_Test_1"));
-
-		buttonNode.addNode(BPF.treeNode().setText("Button_Test_1"));
-		buttonNode.addNode(BPF.treeNode().setText("Button_Test_2"));
-		buttonNode.addNode(BPF.treeNode().setText("Toggle_Button_test"));
-
-		toolBarNode.addNode(BPF.treeNode().setText("Toolbar_Button_Test"));
-		toolBarNode.addNode(BPF.treeNode().setText("Toolbar_Toggle_Button_Test"));
-		toolBarNode.addNode(BPF.treeNode().setText("ToolBar_Menu_Test"));
-		toolBarNode.addNode(BPF.treeNode().setText("ToolBar_Popup_Menu_Test"));
-
-		menuNode.addNode(BPF.treeNode().setText("Menu_Test_1"));
-		menuNode.addNode(BPF.treeNode().setText("Menu_Test_2"));
-		menuNode.addNode(BPF.treeNode().setText("Menu_Test_3"));
-		menuNode.addNode(BPF.treeNode().setText("Menu_Test_4"));
-
-		treeNode.setExpanded(true);
 	}
 
 	private void createTable(final IFrame frame) {
@@ -177,14 +148,15 @@ public class TestToolView {
 						obj.setId(tableDataModel.getCell(rowIndex, 3).getText());
 						list.add(obj);
 					}
-					// TODO LG use file chooser
-					final IInputDialog<String> dialog = viewUtilities.createInputDialog(frame, "Enter File Name", "file name");
-					dialog.setVisible(true);
-					if (dialog.isOkPressed()) {
-						testTool.save(list, dialog.getValue());
-						Toolkit.getMessagePane().showInfo("Test successfully saved!");
+					final IFileChooserBluePrint fileChooserBp = BPF.fileChooser(FileChooserType.SAVE);
+					final IFileChooser fileChooser = frame.createChildWindow(fileChooserBp);
+					final DialogResult result = fileChooser.open();
+					if (result == DialogResult.OK) {
+						for (final File file : fileChooser.getSelectedFiles()) {
+							testTool.save(list, file.getName());
+							Toolkit.getMessagePane().showInfo("Test successfully saved!");
+						}
 					}
-					dialog.dispose();
 				}
 				else {
 					Toolkit.getMessagePane().showWarning("There is nothing to save.");
@@ -196,27 +168,29 @@ public class TestToolView {
 
 			@Override
 			public void actionPerformed() {
-				final IInputDialog<String> dialog = viewUtilities.createInputDialog(frame, "Enter File Name", "file name");
-				dialog.setVisible(true);
-				if (dialog.isOkPressed()) {
-					// TODO LG use file chooser
-					final List<TestDataObject> results = testTool.load(dialog.getValue());
-					if (results != null) {
-						for (final TestDataObject item : results) {
-							tableDataModel.addRow(
-									Integer.toString(tableDataModel.getRowCount()),
-									item.getType(),
-									item.getAction().name(),
-									item.getId());
+				final IFileChooserBluePrint fileChooserBf = BPF.fileChooser(FileChooserType.OPEN_FILE);
+				final IFileChooser fileChooser = frame.createChildWindow(fileChooserBf);
+				fileChooser.setSelectedFile(new File(DEFAULT_FILEPATH));
+				final DialogResult result = fileChooser.open();
+				if (result == DialogResult.OK) {
+					for (final File file : fileChooser.getSelectedFiles()) {
+						final List<TestDataObject> results = testTool.load(file.getName());
+						if (results != null) {
+							for (final TestDataObject item : results) {
+								tableDataModel.addRow(
+										Integer.toString(tableDataModel.getRowCount()),
+										item.getType(),
+										item.getAction().name(),
+										item.getId());
+							}
+							table.pack();
+							Toolkit.getMessagePane().showInfo("Loading tests was successfull!");
 						}
-						table.pack();
-						Toolkit.getMessagePane().showInfo("Loading tests was successfull!");
-					}
-					else {
-						Toolkit.getMessagePane().showError("couldn't find tests for the given filename");
+						else {
+							Toolkit.getMessagePane().showError("couldn't find tests for the given filename");
+						}
 					}
 				}
-				dialog.dispose();
 			}
 		});
 
