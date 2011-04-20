@@ -103,6 +103,16 @@ public class TextAreaImpl extends InputControlSpiWrapper implements ITextArea {
 	}
 
 	@Override
+	public void setCaretPosition(final int pos) {
+		getWidget().setCaretPosition(pos);
+	}
+
+	@Override
+	public int getCaretPosition() {
+		return getWidget().getCaretPosition();
+	}
+
+	@Override
 	public void selectAll() {
 		final String text = getText();
 		if (text != null) {

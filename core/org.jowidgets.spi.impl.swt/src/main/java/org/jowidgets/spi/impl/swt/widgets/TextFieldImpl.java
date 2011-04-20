@@ -88,6 +88,16 @@ public class TextFieldImpl extends AbstractTextInputControl {
 	}
 
 	@Override
+	public void setCaretPosition(final int pos) {
+		getUiReference().setSelection(pos, pos);
+	}
+
+	@Override
+	public int getCaretPosition() {
+		return getUiReference().getCaretPosition();
+	}
+
+	@Override
 	public void setEditable(final boolean editable) {
 		getUiReference().setEditable(editable);
 	}

@@ -37,6 +37,7 @@ import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IComboBox;
 import org.jowidgets.api.widgets.IInputComponent;
+import org.jowidgets.api.widgets.IInputField;
 import org.jowidgets.api.widgets.IValidationLabel;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
@@ -45,6 +46,7 @@ import org.jowidgets.api.widgets.blueprint.IValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
+import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.controler.IKeyEvent;
 import org.jowidgets.common.widgets.controler.IMouseButtonEvent;
 import org.jowidgets.common.widgets.controler.IMouseEvent;
@@ -59,7 +61,7 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 	private IInputComponent<String> firstName;
 	private IInputComponent<String> street;
 	private IInputComponent<String> city;
-	private IInputComponent<Integer> postalCode;
+	private IInputField<Integer> postalCode;
 	private IComboBox<String> country;
 	private IInputComponent<String> phoneNumber;
 	private IInputComponent<String> mail;
@@ -120,6 +122,15 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 		gender = container.add(bpF.comboBoxSelection("Male", "Female", " ").setMandatory(false), inputWidgetConstraints);
 		genderValidationWidget = container.add(validationLabelBp, "wrap");
 		genderValidationWidget.registerInputWidget(gender);
+
+		gender.addInputListener(new IInputListener() {
+			@Override
+			public void inputChanged() {
+				//CHECKSTYLE:OFF
+				System.out.println(gender.getValue());
+				//CHECKSTYLE:ON
+			}
+		});
 
 		container.add(textLabelBp.setText("Firstname*"), "right, sg lg");
 		firstName = container.add(stringMandatoryFieldBp, inputWidgetConstraints);
@@ -186,6 +197,24 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 		postalCode = container.add(bpF.inputFieldIntegerNumber().setMaxLength(5).setMandatory(true), inputWidgetConstraints);
 		postalCodeValidationWidget = container.add(validationLabelBp, "wrap");
 		postalCodeValidationWidget.registerInputWidget(postalCode);
+
+		postalCode.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(final IKeyEvent event) {
+				//CHECKSTYLE:OFF
+				System.out.println("Caret pos: " + postalCode.getCaretPosition());
+				//CHECKSTYLE:ON
+			}
+		});
+
+		postalCode.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(final IMouseButtonEvent event) {
+				//CHECKSTYLE:OFF
+				System.out.println("Caret pos: " + postalCode.getCaretPosition());
+				//CHECKSTYLE:ON
+			}
+		});
 
 		container.add(textLabelBp.setText("City*"), "right, sg lg");
 		city = container.add(stringMandatoryFieldBp, inputWidgetConstraints);

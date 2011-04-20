@@ -33,17 +33,18 @@ import java.awt.event.ActionListener;
 import javax.swing.ComboBoxEditor;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 import org.jowidgets.spi.impl.swing.widgets.util.InputModifierDocument;
 import org.jowidgets.spi.verify.IInputVerifier;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSetupSpi;
+import org.jowidgets.util.NullCompatibleEquivalence;
 
 public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi {
 
 	private final ComboBoxEditorImpl comboBoxEditor;
+
+	private String lastValue;
 
 	public ComboBoxImpl(final IComboBoxSetupSpi setup) {
 		super(setup);
@@ -74,13 +75,23 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 	@Override
 	public void setSelection(final int start, final int end) {
 		comboBoxEditor.setSelection(start, end);
+	}
 
+	@Override
+	public void setCaretPosition(final int pos) {
+		comboBoxEditor.setCaretPosition(pos);
+	}
+
+	@Override
+	public int getCaretPosition() {
+		return comboBoxEditor.getCaretPosition();
 	}
 
 	private class ComboBoxEditorImpl implements ComboBoxEditor {
 
 		private boolean setItemInvoked;
 		private final JTextField textField;
+		private final InputModifierDocument modifierDocument;
 
 		public ComboBoxEditorImpl(final IInputVerifier inputVerifier) {
 			super();
@@ -89,31 +100,17 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 
 			this.setItemInvoked = false;
 
-			this.textField.setDocument(new InputModifierDocument(textField, inputVerifier));
-			this.textField.getDocument().addDocumentListener(new DocumentListener() {
+			this.modifierDocument = new InputModifierDocument(textField, inputVerifier, ComboBoxImpl.this);
 
-				@Override
-				public void removeUpdate(final DocumentEvent e) {
-					if (!setItemInvoked) {
-						fireInputChanged();
-					}
-				}
+			this.textField.setDocument(modifierDocument);
+		}
 
-				@Override
-				public void insertUpdate(final DocumentEvent e) {
-					if (!setItemInvoked) {
-						fireInputChanged();
-					}
-				}
+		public int getCaretPosition() {
+			return textField.getCaretPosition();
+		}
 
-				@Override
-				public void changedUpdate(final DocumentEvent e) {
-					if (!setItemInvoked) {
-						fireInputChanged();
-					}
-				}
-
-			});
+		public void setCaretPosition(final int pos) {
+			textField.setCaretPosition(pos);
 		}
 
 		public void setSelection(final int start, final int end) {
@@ -129,9 +126,11 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 		@Override
 		public void setItem(final Object anObject) {
 			if (!setItemInvoked) {
+				modifierDocument.setInputObservable(null);
 				setItemInvoked = true;
 				textField.setText((String) anObject);
 				setItemInvoked = false;
+				modifierDocument.setInputObservable(ComboBoxImpl.this);
 			}
 		}
 
@@ -151,6 +150,14 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 		@Override
 		public void removeActionListener(final ActionListener listener) {}
 
+	}
+
+	@Override
+	public void fireInputChanged() {
+		if (!NullCompatibleEquivalence.equals(getText(), lastValue)) {
+			super.fireInputChanged();
+			lastValue = getText();
+		}
 	}
 
 }

@@ -38,4 +38,8 @@ public interface ITextControlCommon extends IInputControlCommon {
 
 	void setSelection(int start, int end);
 
+	void setCaretPosition(int pos);
+
+	int getCaretPosition();
+
 }

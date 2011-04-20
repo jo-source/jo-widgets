@@ -88,7 +88,6 @@ public class ComboBoxSelectionImpl extends AbstractInputControl implements IComb
 	private void addItemListener() {
 		final JComboBox comboBox = getUiReference();
 		comboBox.addItemListener(new ItemListener() {
-
 			@Override
 			public void itemStateChanged(final ItemEvent e) {
 				if (e.getID() == ItemEvent.ITEM_STATE_CHANGED && e.getStateChange() == ItemEvent.SELECTED) {

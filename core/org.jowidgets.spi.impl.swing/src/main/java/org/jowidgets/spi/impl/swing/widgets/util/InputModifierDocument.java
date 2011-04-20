@@ -32,23 +32,42 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.JTextComponent;
 import javax.swing.text.PlainDocument;
 
+import org.jowidgets.spi.impl.controler.InputObservable;
 import org.jowidgets.spi.verify.IInputVerifier;
 import org.jowidgets.util.Assert;
 
 public class InputModifierDocument extends PlainDocument {
 
+	private static final InputObservable DUMMY_INPUT_OBSERVABLE = new InputObservable();
+
+	private static final IInputVerifier OK_VERIFIER = new IInputVerifier() {
+		@Override
+		public boolean verify(final String currentValue, final String input, final int start, final int end) {
+			return true;
+		}
+	};
+
 	private static final long serialVersionUID = 6900501331487160350L;
 
 	private final JTextComponent textComponent;
 	private final IInputVerifier inputVerifier;
+	private InputObservable inputObservable;
 
-	public InputModifierDocument(final JTextComponent textComponent, final IInputVerifier inputVerifier) {
+	public InputModifierDocument(final JTextComponent textComponent, final InputObservable inputObservable) {
+		this(textComponent, OK_VERIFIER, inputObservable);
+	}
+
+	public InputModifierDocument(
+		final JTextComponent textComponent,
+		final IInputVerifier inputVerifier,
+		final InputObservable inputObservable) {
 		super();
 		Assert.paramNotNull(textComponent, "textComponent");
 		Assert.paramNotNull(inputVerifier, "inputVerifier");
 
 		this.textComponent = textComponent;
 		this.inputVerifier = inputVerifier;
+		setInputObservable(inputObservable);
 	}
 
 	@Override
@@ -56,6 +75,7 @@ public class InputModifierDocument extends PlainDocument {
 		final String currentText = textComponent.getText();
 		if (inputVerifier.verify(currentText, str, offs, offs + str.length())) {
 			super.insertString(offs, str, a);
+			inputObservable.fireInputChanged();
 		}
 	}
 
@@ -64,6 +84,16 @@ public class InputModifierDocument extends PlainDocument {
 		final String currentText = textComponent.getText();
 		if (inputVerifier.verify(currentText, "", offs, offs + len)) {
 			super.remove(offs, len);
+			inputObservable.fireInputChanged();
+		}
+	}
+
+	public void setInputObservable(final InputObservable inputObservable) {
+		if (inputObservable == null) {
+			this.inputObservable = DUMMY_INPUT_OBSERVABLE;
+		}
+		else {
+			this.inputObservable = inputObservable;
 		}
 	}
 

@@ -80,4 +80,9 @@ public class UIDComboBox extends UIDComponent {
 		// TODO LG implement setSelection()
 	}
 
+	public int getCaretPosition() {
+		// TODO LG implement getCaretPosition()
+		return 0;
+	}
+
 }

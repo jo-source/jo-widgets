@@ -57,4 +57,14 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 		getUiReference().setSelection(start, end);
 	}
 
+	@Override
+	public void setCaretPosition(final int pos) {
+		setSelection(pos, pos);
+	}
+
+	@Override
+	public int getCaretPosition() {
+		return getUiReference().getCaretPosition();
+	}
+
 }
