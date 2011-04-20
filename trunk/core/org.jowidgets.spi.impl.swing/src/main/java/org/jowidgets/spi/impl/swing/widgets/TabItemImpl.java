@@ -223,6 +223,11 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 	}
 
 	@Override
+	public Dimension getClientAreaSize() {
+		return swingContainer.getClientAreaSize();
+	}
+
+	@Override
 	public void setEnabled(final boolean enabled) {
 		swingContainer.setEnabled(enabled);
 	}

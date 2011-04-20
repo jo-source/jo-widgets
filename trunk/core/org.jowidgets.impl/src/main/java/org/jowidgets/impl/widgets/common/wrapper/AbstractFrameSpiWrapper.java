@@ -28,6 +28,7 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IFrameCommon;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.spi.widgets.IFrameSpi;
@@ -56,6 +57,11 @@ public abstract class AbstractFrameSpiWrapper extends AbstractWindowSpiWrapper i
 	@Override
 	public void layoutEnd() {
 		getWidget().layoutEnd();
+	}
+
+	@Override
+	public Dimension getClientAreaSize() {
+		return getWidget().getClientAreaSize();
 	}
 
 }

@@ -35,11 +35,13 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IButtonCommon;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.impl.swing.image.SwingImageRegistry;
 import org.jowidgets.spi.impl.swing.util.ColorConvert;
+import org.jowidgets.spi.impl.swing.util.DimensionConvert;
 import org.jowidgets.spi.impl.swing.widgets.util.ChildRemover;
 import org.jowidgets.spi.widgets.IMenuBarSpi;
 import org.jowidgets.spi.widgets.setup.IFrameSetupSpi;
@@ -63,6 +65,11 @@ public class FrameImpl extends SwingWindow implements IFrameUiSpi {
 	@Override
 	public JFrame getUiReference() {
 		return (JFrame) super.getUiReference();
+	}
+
+	@Override
+	public Dimension getClientAreaSize() {
+		return DimensionConvert.convert(getUiReference().getContentPane().getSize());
 	}
 
 	@Override

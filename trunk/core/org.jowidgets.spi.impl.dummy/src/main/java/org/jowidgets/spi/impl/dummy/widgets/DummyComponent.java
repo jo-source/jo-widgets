@@ -171,4 +171,8 @@ public class DummyComponent extends DummyWidget implements IComponentSpi {
 		return new PopupMenuImpl(getUiReference());
 	}
 
+	public Dimension getClientAreaSize() {
+		return getSize();
+	}
+
 }

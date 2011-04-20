@@ -156,6 +156,11 @@ public class SwingContainer implements IContainerSpi {
 	}
 
 	@Override
+	public Dimension getClientAreaSize() {
+		return getSize();
+	}
+
+	@Override
 	public Dimension getSize() {
 		return swingComponentDelegate.getSize();
 	}

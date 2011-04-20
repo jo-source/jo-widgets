@@ -35,8 +35,10 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JRootPane;
 
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IButtonCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.spi.impl.swing.util.DimensionConvert;
 import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.spi.widgets.IMenuBarSpi;
 import org.jowidgets.util.TypeCast;
@@ -66,6 +68,19 @@ public class FrameWrapper extends SwingWindow implements IFrameSpi {
 		}
 
 		return new MenuBarImpl(menuBar);
+	}
+
+	@Override
+	public Dimension getClientAreaSize() {
+		if (getUiReference() instanceof JDialog) {
+			return DimensionConvert.convert(((JDialog) getUiReference()).getContentPane().getSize());
+		}
+		else if (getUiReference() instanceof JFrame) {
+			return DimensionConvert.convert(((JFrame) getUiReference()).getContentPane().getSize());
+		}
+		else {
+			return super.getClientAreaSize();
+		}
 	}
 
 	@Override

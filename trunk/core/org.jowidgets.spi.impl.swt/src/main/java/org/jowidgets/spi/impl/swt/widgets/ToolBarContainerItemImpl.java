@@ -139,6 +139,11 @@ public class ToolBarContainerItemImpl extends ToolBarItemImpl implements IToolBa
 	}
 
 	@Override
+	public Dimension getClientAreaSize() {
+		return swtComposite.getClientAreaSize();
+	}
+
+	@Override
 	public Dimension getSize() {
 		return swtComposite.getSize();
 	}

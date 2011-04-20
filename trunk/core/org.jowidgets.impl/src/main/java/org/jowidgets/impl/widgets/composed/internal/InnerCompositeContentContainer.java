@@ -146,6 +146,11 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 	}
 
 	@Override
+	public Dimension getClientAreaSize() {
+		return compositeWidget.getClientAreaSize();
+	}
+
+	@Override
 	public Dimension getSize() {
 		return compositeWidget.getSize();
 	}

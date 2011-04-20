@@ -42,6 +42,7 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.types.Border;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
@@ -172,6 +173,11 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractInputComponent<IN
 	@Override
 	public List<IControl> getChildren() {
 		return compositeWidget.getChildren();
+	}
+
+	@Override
+	public Dimension getClientAreaSize() {
+		return compositeWidget.getClientAreaSize();
 	}
 
 	private static IComposite createCompositeWidget(final IContainer parent, final boolean scrollableContent, final Border border) {

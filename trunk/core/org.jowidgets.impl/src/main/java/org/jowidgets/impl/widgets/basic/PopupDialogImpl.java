@@ -35,6 +35,7 @@ import org.jowidgets.api.widgets.IPopupDialog;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.descriptor.setup.IPopupDialogSetup;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controler.IWindowListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
@@ -101,6 +102,11 @@ public class PopupDialogImpl extends ComponentSpiWrapper implements IPopupDialog
 	@Override
 	public void layoutEnd() {
 		getWidget().layoutEnd();
+	}
+
+	@Override
+	public Dimension getClientAreaSize() {
+		return getWidget().getClientAreaSize();
 	}
 
 	@Override
