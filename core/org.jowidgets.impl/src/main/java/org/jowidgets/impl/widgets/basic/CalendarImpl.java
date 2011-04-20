@@ -52,6 +52,10 @@ public class CalendarImpl extends ControlSpiWrapper implements ICalendar {
 
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
+
+		if (setup.getDate() != null) {
+			setDate(setup.getDate());
+		}
 	}
 
 	@Override

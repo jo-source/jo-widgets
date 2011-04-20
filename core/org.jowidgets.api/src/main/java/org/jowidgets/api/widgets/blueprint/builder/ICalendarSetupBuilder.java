@@ -27,10 +27,14 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
+import java.util.Date;
+
 import org.jowidgets.common.widgets.builder.ICalendarSetupBuilderCommon;
 
 public interface ICalendarSetupBuilder<INSTANCE_TYPE extends ICalendarSetupBuilder<?>> extends
 		IComponentSetupBuilder<INSTANCE_TYPE>,
 		ICalendarSetupBuilderCommon<INSTANCE_TYPE> {
+
+	INSTANCE_TYPE setDate(Date date);
 
 }

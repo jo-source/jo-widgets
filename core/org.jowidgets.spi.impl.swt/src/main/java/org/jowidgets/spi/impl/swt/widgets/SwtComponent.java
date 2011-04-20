@@ -176,17 +176,22 @@ public class SwtComponent extends SwtWidget implements IComponentSpi {
 			}
 		});
 
-		getUiReference().addMouseTrackListener(new MouseTrackAdapter() {
-			@Override
-			public void mouseExit(final MouseEvent e) {
-				mouseObservable.fireMouseExit(new Position(e.x, e.y));
-			}
+		try {
+			getUiReference().addMouseTrackListener(new MouseTrackAdapter() {
+				@Override
+				public void mouseExit(final MouseEvent e) {
+					mouseObservable.fireMouseExit(new Position(e.x, e.y));
+				}
 
-			@Override
-			public void mouseEnter(final MouseEvent e) {
-				mouseObservable.fireMouseEnter(new Position(e.x, e.y));
-			}
-		});
+				@Override
+				public void mouseEnter(final MouseEvent e) {
+					mouseObservable.fireMouseEnter(new Position(e.x, e.y));
+				}
+			});
+		}
+		catch (final NoSuchMethodError error) {
+			//RWT doesn't support MouseTrackListener
+		}
 	}
 
 	protected PopupDetectionObservable getPopupDetectionObservable() {

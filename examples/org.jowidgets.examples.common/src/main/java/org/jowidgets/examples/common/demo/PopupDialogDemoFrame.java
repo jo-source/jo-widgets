@@ -28,7 +28,9 @@
 
 package org.jowidgets.examples.common.demo;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.toolkit.Toolkit;
@@ -119,8 +121,14 @@ public class PopupDialogDemoFrame extends JoFrame {
 	}
 
 	private void setContent(final IContainer container) {
+
+		final Calendar gregCalendar = new GregorianCalendar();
+		gregCalendar.add(Calendar.DAY_OF_MONTH, 3);
+
 		container.setLayout(MigLayoutFactory.growingInnerCellLayout());
-		final ICalendar calendar = container.add(BPF.calendar(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+		final ICalendar calendar = container.add(
+				BPF.calendar().setDate(gregCalendar.getTime()),
+				MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 		calendar.setDate(new Date());
 		calendar.addInputListener(new IInputListener() {
 			@Override
