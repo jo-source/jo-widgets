@@ -91,7 +91,7 @@ public class SwingContainer implements IContainerSpi {
 			container.setLayout(new LayoutManagerImpl((ILayouter) layout));
 		}
 		else {
-			throw new IllegalArgumentException("Layout Manager of type '" + layout.getClass().getName() + "' is not supported");
+			throw new IllegalArgumentException("Layout Descriptor of type '" + layout.getClass().getName() + "' is not supported");
 		}
 	}
 

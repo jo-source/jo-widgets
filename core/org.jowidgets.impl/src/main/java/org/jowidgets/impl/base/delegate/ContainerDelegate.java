@@ -74,6 +74,14 @@ public class ContainerDelegate {
 		return result;
 	}
 
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+		return add(descriptor, null);
+	}
+
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final ICustomWidgetCreator<WIDGET_TYPE> creator) {
+		return add(creator, null);
+	}
+
 	public List<IControl> getChildren() {
 		return new LinkedList<IControl>(children);
 	}

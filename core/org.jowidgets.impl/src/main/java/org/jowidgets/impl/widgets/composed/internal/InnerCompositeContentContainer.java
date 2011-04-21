@@ -108,6 +108,16 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 	}
 
 	@Override
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+		return compositeWidget.add(descriptor);
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final ICustomWidgetCreator<WIDGET_TYPE> creator) {
+		return compositeWidget.add(creator);
+	}
+
+	@Override
 	public boolean remove(final IControl control) {
 		return compositeWidget.remove(control);
 	}
