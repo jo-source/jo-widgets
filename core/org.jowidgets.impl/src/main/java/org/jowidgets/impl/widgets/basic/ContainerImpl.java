@@ -30,6 +30,7 @@ package org.jowidgets.impl.widgets.basic;
 
 import java.util.List;
 
+import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
@@ -42,6 +43,7 @@ import org.jowidgets.impl.base.delegate.ContainerDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractContainerSpiWrapper;
 import org.jowidgets.spi.widgets.IContainerSpi;
+import org.jowidgets.util.Assert;
 
 public class ContainerImpl extends AbstractContainerSpiWrapper implements IContainer {
 
@@ -65,6 +67,12 @@ public class ContainerImpl extends AbstractContainerSpiWrapper implements IConta
 			setVisible(visible.booleanValue());
 		}
 		this.containerDelegate = new ContainerDelegate(containerWidgetCommon, this);
+	}
+
+	@Override
+	public void setLayout(final ILayoutFactory<?> layoutFactory) {
+		Assert.paramNotNull(layoutFactory, "layoutFactory");
+		setLayout(layoutFactory.create(this));
 	}
 
 	@Override

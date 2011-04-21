@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,51 +26,40 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.impl.layout;
 
-import org.jowidgets.api.model.item.IMenuModel;
-import org.jowidgets.common.types.Position;
-import org.jowidgets.common.widgets.IComponentCommon;
+import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.widgets.layout.ILayouter;
 
-public interface IComponent extends IWidget, IComponentCommon {
+final class NullLayout implements ILayouter {
 
-	boolean isReparentable();
+	private final IContainer container;
 
-	IPopupMenu createPopupMenu();
+	NullLayout(final IContainer container) {
+		super();
+		this.container = container;
+	}
 
-	/**
-	 * Sets a popup menu for this component.
-	 * The popup menu will be shown, when an popup event occurs on this component.
-	 * 
-	 * @param menuModel
-	 *            The model of the popup menu or null, if no popup should be shown on popup events
-	 */
-	void setPopupMenu(IMenuModel popupMenu);
+	@Override
+	public void layout() {}
 
-	Position toScreen(final Position localPosition);
+	@Override
+	public Dimension getMinSize() {
+		return container.getSize();
+	}
 
-	Position toLocal(final Position screenPosition);
+	@Override
+	public Dimension getPreferredSize() {
+		return container.getSize();
+	}
 
-	void setSize(int width, int height);
+	@Override
+	public Dimension getMaxSize() {
+		return container.getSize();
+	}
 
-	void setPosition(int x, int y);
-
-	/**
-	 * Transforms a position from another component to the current component
-	 * 
-	 * @param component Component, which the position is relative to
-	 * @param componentPosition Position
-	 * @return transformed local position
-	 */
-	Position fromComponent(final IComponentCommon component, final Position componentPosition);
-
-	/**
-	 * Transforms a local position to another component
-	 * 
-	 * @param componentPosition Local position
-	 * @param component Component, which the position is transformed to
-	 * @return transformed position
-	 */
-	Position toComponent(final Position componentPosition, final IComponentCommon component);
+	@Override
+	public void invalidate() {}
 
 }

@@ -30,6 +30,7 @@ package org.jowidgets.impl.widgets.basic;
 
 import java.util.List;
 
+import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IControl;
@@ -67,6 +68,12 @@ public class FrameImpl extends AbstractFrameSpiWrapper implements IFrameUi {
 		this.containerDelegate = new ContainerDelegate(frameWidgetSpi, this);
 		ColorSettingsInvoker.setColors(setup, this);
 		VisibiliySettingsInvoker.setVisibility(setup, frameWidgetSpi);
+	}
+
+	@Override
+	public void setLayout(final ILayoutFactory<?> layoutFactory) {
+		Assert.paramNotNull(layoutFactory, "layoutFactory");
+		setLayout(layoutFactory.create(this));
 	}
 
 	@Override

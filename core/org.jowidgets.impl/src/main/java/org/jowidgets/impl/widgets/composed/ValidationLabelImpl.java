@@ -343,6 +343,16 @@ public class ValidationLabelImpl implements IValidationLabel {
 	}
 
 	@Override
+	public void setSize(final int width, final int height) {
+		labelControl.setSize(width, height);
+	}
+
+	@Override
+	public void setPosition(final int x, final int y) {
+		labelControl.setPosition(x, y);
+	}
+
+	@Override
 	public Position getPosition() {
 		return labelControl.getPosition();
 	}

@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.jowidgets.api.controler.ITabItemListener;
+import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITabFolder;
@@ -55,6 +56,7 @@ import org.jowidgets.impl.widgets.common.wrapper.AbstractContainerSpiWrapper;
 import org.jowidgets.spi.widgets.ITabItemSpi;
 import org.jowidgets.spi.widgets.controler.ITabItemListenerSpi;
 import org.jowidgets.tools.types.VetoHolder;
+import org.jowidgets.util.Assert;
 
 public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem {
 
@@ -290,6 +292,12 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 	public boolean remove(final IControl control) {
 		checkDetached();
 		return containerDelegate.remove(control);
+	}
+
+	@Override
+	public void setLayout(final ILayoutFactory<?> layoutFactory) {
+		Assert.paramNotNull(layoutFactory, "layoutFactory");
+		setLayout(layoutFactory.create(this));
 	}
 
 	@Override

@@ -224,6 +224,16 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputComposite<INPUT_T
 	}
 
 	@Override
+	public void setSize(final int width, final int height) {
+		parentComposite.setSize(width, height);
+	}
+
+	@Override
+	public void setPosition(final int x, final int y) {
+		parentComposite.setPosition(x, y);
+	}
+
+	@Override
 	public Position getPosition() {
 		return parentComposite.getPosition();
 	}

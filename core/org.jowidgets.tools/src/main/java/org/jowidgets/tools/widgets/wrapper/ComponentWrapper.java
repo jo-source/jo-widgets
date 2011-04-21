@@ -109,6 +109,16 @@ public class ComponentWrapper extends WidgetWrapper implements IComponent {
 	}
 
 	@Override
+	public void setSize(final int width, final int height) {
+		getWidget().setSize(width, height);
+	}
+
+	@Override
+	public void setPosition(final int x, final int y) {
+		getWidget().setPosition(x, y);
+	}
+
+	@Override
 	public Position getPosition() {
 		return getWidget().getPosition();
 	}

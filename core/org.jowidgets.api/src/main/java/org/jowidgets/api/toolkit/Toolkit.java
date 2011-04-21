@@ -34,6 +34,7 @@ import java.util.ServiceLoader;
 
 import org.jowidgets.api.command.IActionBuilderFactory;
 import org.jowidgets.api.convert.IConverterProvider;
+import org.jowidgets.api.layout.ILayoutFactoryProvider;
 import org.jowidgets.api.model.IModelFactoryProvider;
 import org.jowidgets.api.threads.IUiThreadAccess;
 import org.jowidgets.api.utils.IWidgetUtils;
@@ -99,6 +100,10 @@ public final class Toolkit {
 
 	public static IGenericWidgetFactory getWidgetFactory() {
 		return getInstance().getWidgetFactory();
+	}
+
+	public static ILayoutFactoryProvider getLayoutFactoryProvider() {
+		return getInstance().getLayoutFactoryProvider();
 	}
 
 	public static IBluePrintFactory getBluePrintFactory() {
