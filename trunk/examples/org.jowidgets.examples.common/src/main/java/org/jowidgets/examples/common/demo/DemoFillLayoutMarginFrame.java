@@ -34,21 +34,21 @@ import org.jowidgets.api.widgets.ITextArea;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.tools.powo.JoFrame;
 
-public class DemoFillLayoutFrame extends JoFrame {
+public class DemoFillLayoutMarginFrame extends JoFrame {
 
 	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
-	public DemoFillLayoutFrame() {
-		super("Fill layout demo");
+	public DemoFillLayoutMarginFrame() {
+		super("Fill layout (margin) demo");
 
 		final ILayoutFactoryProvider lfp = Toolkit.getLayoutFactoryProvider();
 
-		setLayout(lfp.fillLayoutBuilder().build());
+		setLayout(lfp.fillLayoutBuilder().margin(100).build());
 		final ITextArea textArea = add(BPF.textArea());
 
 		final StringBuilder stringBuilder = new StringBuilder();
 		for (int i = 0; i < 50; i++) {
-			stringBuilder.append("Text area in a fill alyout. ");
+			stringBuilder.append("Text area in a fill layout. ");
 		}
 		textArea.setText(stringBuilder.toString());
 

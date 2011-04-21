@@ -28,63 +28,59 @@
 
 package org.jowidgets.impl.layout;
 
-import org.jowidgets.api.layout.IBorderLayoutFactoryBuilder;
 import org.jowidgets.api.layout.IFillLayoutFactoryBuilder;
 import org.jowidgets.api.layout.ILayoutFactory;
-import org.jowidgets.api.layout.ILayoutFactoryProvider;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.common.widgets.layout.ILayouter;
 
-public class LayoutFactoryProvider implements ILayoutFactoryProvider {
+final class FillLayoutFactoryBuilder implements IFillLayoutFactoryBuilder {
 
-	private static final ILayoutFactory<ILayouter> NULL_LAYOUT_FACTORY = createNullLayoutFactory();
-	private static final ILayoutFactory<ILayouter> PREFERRED_SIZE_LAYOUT_FACTORY = createPreferredSizeLayoutFactory();
+	private int marginTop;
+	private int marginBottom;
+	private int marginLeft;
+	private int marginRight;
 
 	@Override
-	public ILayoutFactory<ILayouter> nullLayout() {
-		return NULL_LAYOUT_FACTORY;
+	public IFillLayoutFactoryBuilder margin(final int margin) {
+		this.marginTop = margin;
+		this.marginBottom = margin;
+		this.marginLeft = margin;
+		this.marginRight = margin;
+		return this;
 	}
 
 	@Override
-	public ILayoutFactory<ILayouter> preferredSizeLayout() {
-		return PREFERRED_SIZE_LAYOUT_FACTORY;
+	public IFillLayoutFactoryBuilder marginLeft(final int marginLeft) {
+		this.marginLeft = marginLeft;
+		return this;
 	}
 
 	@Override
-	public ILayoutFactory<ILayouter> fillLayout() {
-		return fillLayoutBuilder().build();
+	public IFillLayoutFactoryBuilder marginRight(final int marginRight) {
+		this.marginRight = marginRight;
+		return this;
 	}
 
 	@Override
-	public IFillLayoutFactoryBuilder fillLayoutBuilder() {
-		return new FillLayoutFactoryBuilder();
+	public IFillLayoutFactoryBuilder marginTop(final int marginTop) {
+		this.marginTop = marginTop;
+		return this;
 	}
 
 	@Override
-	public ILayoutFactory<ILayouter> borderLayout() {
-		return borderLayoutBuilder().build();
+	public IFillLayoutFactoryBuilder marginBottom(final int marginBottom) {
+		this.marginBottom = marginBottom;
+		return this;
 	}
 
 	@Override
-	public IBorderLayoutFactoryBuilder borderLayoutBuilder() {
-		return new BorderLayoutFactoryBuilder();
-	}
-
-	private static ILayoutFactory<ILayouter> createNullLayoutFactory() {
+	public ILayoutFactory<ILayouter> build() {
 		return new ILayoutFactory<ILayouter>() {
 			@Override
 			public ILayouter create(final IContainer container) {
-				return new NullLayout(container);
+				return new FillLayout(container, marginLeft, marginRight, marginTop, marginBottom);
 			}
-		};
-	}
 
-	private static ILayoutFactory<ILayouter> createPreferredSizeLayoutFactory() {
-		return new ILayoutFactory<ILayouter>() {
-			@Override
-			public ILayouter create(final IContainer container) {
-				return new PreferredSizeLayout(container);
-			}
 		};
 	}
 
