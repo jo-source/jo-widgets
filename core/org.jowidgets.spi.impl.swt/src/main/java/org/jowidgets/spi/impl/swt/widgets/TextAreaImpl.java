@@ -101,7 +101,7 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 	}
 
 	private void checkScrollBars() {
-		if (!isLineWrap && lineCountChanged()) {
+		if (isLineWrap && lineCountChanged()) {
 			scrolledComposite.setRedraw(false);
 			scrolledComposite.setMinSize(calcMinSize());
 

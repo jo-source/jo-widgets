@@ -44,26 +44,29 @@ public final class DemoLayoutComposite {
 
 		parentContainer.setLayout(new MigLayoutDescriptor("[300::, grow]", ""));
 
-		final IButton nullLayoutButton = parentContainer.add(
-				bpf.button("Null layout", "Shows a null layout"),
-				"grow, sg bg, wrap");
-
+		final IButton nullLayoutButton = parentContainer.add(bpf.button("Null layout"), "grow, sg bg, wrap");
 		nullLayoutButton.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
 				final IFrame frame = new DemoNullLayoutFrame();
-				frame.pack();
 				frame.setVisible(true);
 			}
 		});
 
 		final IButton preferredSizeLayoutButton = parentContainer.add(bpf.button("Preffered size layout"), "grow, sg bg, wrap");
-
 		preferredSizeLayoutButton.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
 				final IFrame frame = new DemoPreferredSizeLayoutFrame();
-				frame.pack();
+				frame.setVisible(true);
+			}
+		});
+
+		final IButton fillLayoutButton = parentContainer.add(bpf.button("Fill layout"), "grow, sg bg, wrap");
+		fillLayoutButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final IFrame frame = new DemoFillLayoutFrame();
 				frame.setVisible(true);
 			}
 		});

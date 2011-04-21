@@ -37,6 +37,7 @@ public class LayoutFactoryProvider implements ILayoutFactoryProvider {
 
 	private static final ILayoutFactory<ILayouter> NULL_LAYOUT_FACTORY = createNullLayoutFactory();
 	private static final ILayoutFactory<ILayouter> PREFERRED_SIZE_LAYOUT_FACTORY = createPreferredSizeLayoutFactory();
+	private static final ILayoutFactory<ILayouter> FILL_LAYOUT_FACTORY = createFillLayoutFactory();
 
 	@Override
 	public ILayoutFactory<ILayouter> nullLayout() {
@@ -46,6 +47,11 @@ public class LayoutFactoryProvider implements ILayoutFactoryProvider {
 	@Override
 	public ILayoutFactory<ILayouter> preferredSizeLayout() {
 		return PREFERRED_SIZE_LAYOUT_FACTORY;
+	}
+
+	@Override
+	public ILayoutFactory<ILayouter> fillLayout() {
+		return FILL_LAYOUT_FACTORY;
 	}
 
 	private static ILayoutFactory<ILayouter> createNullLayoutFactory() {
@@ -62,6 +68,15 @@ public class LayoutFactoryProvider implements ILayoutFactoryProvider {
 			@Override
 			public ILayouter create(final IContainer container) {
 				return new PreferredSizeLayout(container);
+			}
+		};
+	}
+
+	private static ILayoutFactory<ILayouter> createFillLayoutFactory() {
+		return new ILayoutFactory<ILayouter>() {
+			@Override
+			public ILayouter create(final IContainer container) {
+				return new FillLayout(container);
 			}
 		};
 	}

@@ -39,20 +39,20 @@ public class DemoPreferredSizeLayoutFrame extends JoFrame {
 	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
 	public DemoPreferredSizeLayoutFrame() {
-		super("Null layout demo");
+		super("Preferred size layout demo");
 
 		final ILayoutFactoryProvider lfp = Toolkit.getLayoutFactoryProvider();
 
 		setLayout(lfp.preferredSizeLayout());
 
 		for (int i = 0; i < 10; i++) {
-			final IButton button = add(BPF.button(), null);
+			final IButton button = add(BPF.button());
 			button.setPosition(i * 20, i * 40);
 			button.setText("Button " + i);
 		}
 
 		for (int i = 0; i < 10; i++) {
-			final IButton button = add(BPF.button(), null);
+			final IButton button = add(BPF.button());
 			button.setPosition(400 + i * 20, 200 + (9 - i) * 40);
 			button.setText("Button " + i);
 		}
