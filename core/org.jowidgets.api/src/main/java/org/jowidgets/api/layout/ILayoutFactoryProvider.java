@@ -74,6 +74,11 @@ public interface ILayoutFactoryProvider {
 	ILayoutFactory<ILayouter> fillLayout();
 
 	/**
+	 * @return A builder for an 'FillLayout'
+	 */
+	IFillLayoutFactoryBuilder fillLayoutBuilder();
+
+	/**
 	 * Creates a 'BorderLayout'
 	 * 
 	 * @return A layout factory that produces 'BorderLayouts'

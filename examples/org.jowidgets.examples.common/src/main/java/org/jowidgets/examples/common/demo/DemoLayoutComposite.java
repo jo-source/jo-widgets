@@ -71,6 +71,15 @@ public final class DemoLayoutComposite {
 			}
 		});
 
+		final IButton fillLayoutMarginButton = parentContainer.add(bpf.button("Fill layout (margin)"), "grow, sg bg, wrap");
+		fillLayoutMarginButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final IFrame frame = new DemoFillLayoutMarginFrame();
+				frame.setVisible(true);
+			}
+		});
+
 	}
 
 	public void foo() {}

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,32 +26,22 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.demo;
+package org.jowidgets.api.layout;
 
-import org.jowidgets.api.layout.ILayoutFactoryProvider;
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.ITextArea;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.tools.powo.JoFrame;
+import org.jowidgets.common.widgets.layout.ILayouter;
 
-public class DemoFillLayoutFrame extends JoFrame {
+public interface IFillLayoutFactoryBuilder {
 
-	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
+	IFillLayoutFactoryBuilder margin(int margin);
 
-	public DemoFillLayoutFrame() {
-		super("Fill layout demo");
+	IFillLayoutFactoryBuilder marginLeft(int marginLeft);
 
-		final ILayoutFactoryProvider lfp = Toolkit.getLayoutFactoryProvider();
+	IFillLayoutFactoryBuilder marginRight(int marginRight);
 
-		setLayout(lfp.fillLayoutBuilder().build());
-		final ITextArea textArea = add(BPF.textArea());
+	IFillLayoutFactoryBuilder marginTop(int marginTop);
 
-		final StringBuilder stringBuilder = new StringBuilder();
-		for (int i = 0; i < 50; i++) {
-			stringBuilder.append("Text area in a fill alyout. ");
-		}
-		textArea.setText(stringBuilder.toString());
+	IFillLayoutFactoryBuilder marginBottom(int marginBottom);
 
-		setSize(500, 400);
-	}
+	ILayoutFactory<ILayouter> build();
+
 }

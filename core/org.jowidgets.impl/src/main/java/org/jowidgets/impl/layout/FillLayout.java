@@ -38,20 +38,39 @@ final class FillLayout implements ILayouter {
 
 	private final IContainer container;
 
+	private final int marginTop;
+	private final int marginBottom;
+	private final int marginLeft;
+	private final int marginRight;
+
 	private Dimension minSize;
 	private Dimension preferredSize;
 	private Dimension maxSize;
 
-	FillLayout(final IContainer container) {
+	FillLayout(
+		final IContainer container,
+		final int marginLeft,
+		final int marginRight,
+		final int marginTop,
+		final int marginBottom) {
 		Assert.paramNotNull(container, "container");
 		this.container = container;
+
+		this.marginTop = marginTop;
+		this.marginLeft = marginLeft;
+		this.marginRight = marginRight;
+		this.marginBottom = marginBottom;
 	}
 
 	@Override
 	public void layout() {
 		final IControl control = getFirstControl();
 		if (control != null) {
-			control.setSize(container.getClientAreaSize());
+			control.setPosition(marginLeft, marginTop);
+			final Dimension clientSize = container.getClientAreaSize();
+			control.setSize(
+					Math.max(0, clientSize.getWidth() - marginRight - marginLeft),
+					Math.max(0, clientSize.getHeight() - marginBottom - marginTop));
 		}
 	}
 
@@ -89,7 +108,8 @@ final class FillLayout implements ILayouter {
 	private Dimension calcMinSize() {
 		final IControl control = getFirstControl();
 		if (control != null) {
-			return control.getMinSize();
+			final Dimension size = control.getMinSize();
+			return new Dimension(marginLeft + marginRight + size.getWidth(), marginBottom + marginBottom + size.getHeight());
 		}
 		else {
 			return new Dimension(0, 0);
@@ -99,7 +119,8 @@ final class FillLayout implements ILayouter {
 	private Dimension calcPreferredSize() {
 		final IControl control = getFirstControl();
 		if (control != null) {
-			return control.getPreferredSize();
+			final Dimension size = control.getPreferredSize();
+			return new Dimension(marginLeft + marginRight + size.getWidth(), marginBottom + marginBottom + size.getHeight());
 		}
 		else {
 			return new Dimension(0, 0);
@@ -109,7 +130,8 @@ final class FillLayout implements ILayouter {
 	private Dimension calcMaxSize() {
 		final IControl control = getFirstControl();
 		if (control != null) {
-			return control.getMaxSize();
+			final Dimension size = control.getMaxSize();
+			return new Dimension(marginLeft + marginRight + size.getWidth(), marginBottom + marginBottom + size.getHeight());
 		}
 		else {
 			return new Dimension(0, 0);
