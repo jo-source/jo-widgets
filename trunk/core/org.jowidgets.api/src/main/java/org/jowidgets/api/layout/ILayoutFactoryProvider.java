@@ -36,8 +36,6 @@ public interface ILayoutFactoryProvider {
 	 * The 'NullLayout' does no layouting at all. It returns
 	 * the containers size for min-, max-, and preferred size.
 	 * 
-	 * The layouting must be completely done by the container then
-	 * 
 	 * @return The layout factory that produces 'NullLayouts'
 	 */
 	ILayoutFactory<ILayouter> nullLayout();
@@ -58,5 +56,21 @@ public interface ILayoutFactoryProvider {
 	 * @return A layout factory that produces 'PreferredSizeLayouts'
 	 */
 	ILayoutFactory<ILayouter> preferredSizeLayout();
+
+	/**
+	 * Creates 'FillLayouts'
+	 * 
+	 * 'FillLayout' allows only one visible control in the container when calculation is done.
+	 * If more than one control is visible, it will be ignored for the layouting.
+	 * 
+	 * layout(): The size of the visible control is set to the containers clientAreaSize
+	 * 
+	 * getPreferredSize(): Returns the preferred size of the visible control
+	 * getMinSize(): Returns the min size of the visible control
+	 * getMaxSize(): Returns the max size of the visible control
+	 * 
+	 * @return
+	 */
+	ILayoutFactory<ILayouter> fillLayout();
 
 }

@@ -30,35 +30,28 @@ package org.jowidgets.examples.common.demo;
 
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IButton;
+import org.jowidgets.api.widgets.ITextArea;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.tools.powo.JoFrame;
 
-public class DemoNullLayoutFrame extends JoFrame {
+public class DemoFillLayoutFrame extends JoFrame {
 
 	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
-	public DemoNullLayoutFrame() {
-		super("Null layout demo");
+	public DemoFillLayoutFrame() {
+		super("Fill layout demo");
 
 		final ILayoutFactoryProvider lfp = Toolkit.getLayoutFactoryProvider();
 
-		setLayout(lfp.nullLayout());
+		setLayout(lfp.fillLayout());
+		final ITextArea textArea = add(BPF.textArea());
 
-		for (int i = 0; i < 10; i++) {
-			final IButton button = add(BPF.button());
-			button.setPosition(i * 20, i * 40);
-			button.setText("Button " + i);
-			button.setSize(button.getPreferredSize());
+		final StringBuilder stringBuilder = new StringBuilder();
+		for (int i = 0; i < 50; i++) {
+			stringBuilder.append("Text area in a fill alyout. ");
 		}
+		textArea.setText(stringBuilder.toString());
 
-		for (int i = 0; i < 10; i++) {
-			final IButton button = add(BPF.button());
-			button.setPosition(400 + i * 20, (9 - i) * 40);
-			button.setText("Button " + i);
-			button.setSize(200, 30);
-		}
-
-		setSize(800, 600);
+		setSize(500, 400);
 	}
 }
