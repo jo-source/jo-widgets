@@ -69,8 +69,22 @@ public interface ILayoutFactoryProvider {
 	 * getMinSize(): Returns the min size of the visible control
 	 * getMaxSize(): Returns the max size of the visible control
 	 * 
-	 * @return
+	 * @return A layout factory that produces 'FillLayouts'
 	 */
 	ILayoutFactory<ILayouter> fillLayout();
+
+	/**
+	 * Creates a 'BorderLayout'
+	 * 
+	 * @return A layout factory that produces 'BorderLayouts'
+	 */
+	ILayoutFactory<ILayouter> borderLayout();
+
+	/**
+	 * Creates a builder for a 'BorderLayout' factory
+	 * 
+	 * @return The builder
+	 */
+	IBorderLayoutFactoryBuilder borderLayoutBuilder();
 
 }
