@@ -320,6 +320,16 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 	}
 
 	@Override
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+		return containerDelegate.add(descriptor);
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final ICustomWidgetCreator<WIDGET_TYPE> creator) {
+		return containerDelegate.add(creator);
+	}
+
+	@Override
 	public void removeAll() {
 		checkDetached();
 		containerDelegate.removeAll();

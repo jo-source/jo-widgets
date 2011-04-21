@@ -153,6 +153,16 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractInputComponent<IN
 	}
 
 	@Override
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+		return compositeWidget.add(descriptor);
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final ICustomWidgetCreator<WIDGET_TYPE> creator) {
+		return compositeWidget.add(creator);
+	}
+
+	@Override
 	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
 		compositeWidget.setLayout(layoutDescriptor);
 	}
