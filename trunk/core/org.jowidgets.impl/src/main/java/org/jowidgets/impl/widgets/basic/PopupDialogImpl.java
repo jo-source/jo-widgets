@@ -41,6 +41,7 @@ import org.jowidgets.common.widgets.controler.IWindowListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
+import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.impl.base.delegate.ContainerDelegate;
 import org.jowidgets.impl.base.delegate.DisplayDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
@@ -91,9 +92,11 @@ public class PopupDialogImpl extends ComponentSpiWrapper implements IPopupDialog
 	}
 
 	@Override
-	public void setLayout(final ILayoutFactory<?> layoutFactory) {
+	public <LAYOUT_TYPE extends ILayouter> LAYOUT_TYPE setLayout(final ILayoutFactory<LAYOUT_TYPE> layoutFactory) {
 		Assert.paramNotNull(layoutFactory, "layoutFactory");
-		setLayout(layoutFactory.create(this));
+		final LAYOUT_TYPE result = layoutFactory.create(this);
+		setLayout(result);
+		return result;
 	}
 
 	@Override

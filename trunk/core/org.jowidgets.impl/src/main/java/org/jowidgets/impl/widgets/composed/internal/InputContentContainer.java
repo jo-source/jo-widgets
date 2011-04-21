@@ -47,6 +47,7 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
+import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 import org.jowidgets.tools.widgets.base.AbstractInputComponent;
 
@@ -147,8 +148,8 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractInputComponent<IN
 	}
 
 	@Override
-	public void setLayout(final ILayoutFactory<?> layoutFactory) {
-		compositeWidget.setLayout(layoutFactory);
+	public <LAYOUT_TYPE extends ILayouter> LAYOUT_TYPE setLayout(final ILayoutFactory<LAYOUT_TYPE> layoutFactory) {
+		return compositeWidget.setLayout(layoutFactory);
 	}
 
 	@Override

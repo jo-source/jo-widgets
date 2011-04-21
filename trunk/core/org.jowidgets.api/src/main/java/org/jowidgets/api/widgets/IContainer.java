@@ -34,10 +34,11 @@ import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.common.widgets.IContainerCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
+import org.jowidgets.common.widgets.layout.ILayouter;
 
 public interface IContainer extends IComponent, IContainerCommon {
 
-	void setLayout(ILayoutFactory<?> layoutFactory);
+	<LAYOUT_TYPE extends ILayouter> LAYOUT_TYPE setLayout(ILayoutFactory<LAYOUT_TYPE> layoutFactory);
 
 	/**
 	 * Gets the containers children
