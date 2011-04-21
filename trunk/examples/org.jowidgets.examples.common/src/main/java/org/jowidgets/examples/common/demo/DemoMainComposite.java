@@ -187,13 +187,13 @@ public final class DemoMainComposite {
 			}
 		});
 
-		final IButton layoutTestButton = parentContainer.add(bpF.button("Test some layout stuff"), "grow, sg bg, wrap");
+		final IFrame layoutDemoDialog = getParentWindow().createChildWindow(bpF.frame("Layout demo"));
+		new DemoLayoutComposite(layoutDemoDialog);
+		final IButton layoutTestButton = parentContainer.add(bpF.button("Layout demo"), "grow, sg bg, wrap");
 		layoutTestButton.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
-				final IFrame frame = new DemoNullLayoutFrame();
-				frame.pack();
-				frame.setVisible(true);
+				layoutDemoDialog.setVisible(true);
 			}
 		});
 

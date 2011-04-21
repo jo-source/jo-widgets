@@ -28,37 +28,36 @@
 
 package org.jowidgets.examples.common.demo;
 
-import org.jowidgets.api.layout.ILayoutFactoryProvider;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
+import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.tools.powo.JoFrame;
+import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
-public class DemoNullLayoutFrame extends JoFrame {
+public final class DemoLayoutComposite {
 
-	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
+	public DemoLayoutComposite(final IContainer parentContainer) {
 
-	public DemoNullLayoutFrame() {
-		super("Null layout demo");
+		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-		final ILayoutFactoryProvider lfp = Toolkit.getLayoutFactoryProvider();
+		parentContainer.setLayout(new MigLayoutDescriptor("[300::, grow]", ""));
 
-		setLayout(lfp.nullLayout());
+		final IButton nullLayoutButton = parentContainer.add(
+				bpf.button("Null layout", "Shows a null layout"),
+				"grow, sg bg, wrap");
 
-		for (int i = 0; i < 10; i++) {
-			final IButton button = add(BPF.button(), null);
-			button.setPosition(i * 20, i * 40);
-			button.setText("Button " + i);
-			button.setSize(button.getPreferredSize());
-		}
+		nullLayoutButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final IFrame frame = new DemoNullLayoutFrame();
+				frame.pack();
+				frame.setVisible(true);
+			}
+		});
 
-		for (int i = 0; i < 10; i++) {
-			final IButton button = add(BPF.button(), null);
-			button.setPosition(400 + i * 20, (9 - i) * 40);
-			button.setText("Button " + i);
-			button.setSize(200, 30);
-		}
-
-		setSize(800, 600);
 	}
+
+	public void foo() {}
 }
