@@ -58,6 +58,9 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 	private final Set<IComponentListener> componentListners;
 	private final Set<JoPopupMenu> popupMenus;
 
+	private Dimension size;
+	private Position position;
+
 	private IMenuModel popupMenu;
 
 	Component(final BLUE_PRINT_TYPE bluePrint) {
@@ -78,6 +81,12 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 		}
 		if (popupMenu != null) {
 			getWidget().setPopupMenu(popupMenu);
+		}
+		if (size != null) {
+			widget.setSize(size);
+		}
+		if (position != null) {
+			widget.setPosition(position);
 		}
 		for (final JoPopupMenu joPopupMenu : popupMenus) {
 			joPopupMenu.initialize(createPopupMenu());
@@ -326,8 +335,12 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 
 	@Override
 	public void setSize(final Dimension size) {
-		checkInitialized();
-		getWidget().setSize(size);
+		if (isInitialized()) {
+			getWidget().setSize(size);
+		}
+		else {
+			this.size = size;
+		}
 	}
 
 	@Override
@@ -338,8 +351,22 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 
 	@Override
 	public void setPosition(final Position position) {
-		checkInitialized();
-		getWidget().setPosition(position);
+		if (isInitialized()) {
+			getWidget().setPosition(position);
+		}
+		else {
+			this.position = position;
+		}
+	}
+
+	@Override
+	public void setSize(final int width, final int height) {
+		setSize(new Dimension(width, height));
+	}
+
+	@Override
+	public void setPosition(final int x, final int y) {
+		setPosition(new Position(x, y));
 	}
 
 	@Override

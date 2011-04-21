@@ -192,6 +192,16 @@ public class CompositeBasedControl implements IControl {
 	}
 
 	@Override
+	public void setSize(final int width, final int height) {
+		composite.setSize(width, height);
+	}
+
+	@Override
+	public void setPosition(final int x, final int y) {
+		composite.setPosition(x, y);
+	}
+
+	@Override
 	public Position toScreen(final Position localPosition) {
 		return composite.toScreen(localPosition);
 	}

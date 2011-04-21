@@ -30,11 +30,14 @@ package org.jowidgets.api.widgets;
 
 import java.util.List;
 
+import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.common.widgets.IContainerCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 
 public interface IContainer extends IComponent, IContainerCommon {
+
+	void setLayout(ILayoutFactory<?> layoutFactory);
 
 	/**
 	 * Gets the containers children

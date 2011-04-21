@@ -31,6 +31,7 @@ package org.jowidgets.tools.powo;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
@@ -49,6 +50,7 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 	@SuppressWarnings("rawtypes")
 	private final List<Tuple<Widget, Object>> preWidgets;
 	private final JoWidgetFactory widgetFactory;
+	private ILayoutFactory<?> layoutFactory;
 
 	@SuppressWarnings("rawtypes")
 	Container(final BLUE_PRINT_TYPE bluePrint) {
@@ -61,6 +63,9 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 	@Override
 	void initialize(final WIDGET_TYPE widget) {
 		super.initialize(widget);
+		if (layoutFactory != null) {
+			widget.setLayout(layoutFactory);
+		}
 		for (final Tuple<Widget, Object> preWidgetTuple : preWidgets) {
 			final Widget preWidget = preWidgetTuple.getFirst();
 			final Object layoutConstraints = preWidgetTuple.getSecond();
@@ -191,7 +196,19 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 			getWidget().setLayout(layoutDescriptor);
 		}
 		else {
+			this.layoutFactory = null;
 			getBluePrint().setLayout(layoutDescriptor);
+		}
+	}
+
+	@Override
+	public void setLayout(final ILayoutFactory<?> layoutFactory) {
+		if (isInitialized()) {
+			getWidget().setLayout(layoutFactory);
+		}
+		else {
+			getBluePrint().setLayout(null);
+			this.layoutFactory = layoutFactory;
 		}
 	}
 

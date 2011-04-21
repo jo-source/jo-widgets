@@ -205,6 +205,16 @@ public class MessageDialogImpl implements IMessageDialog {
 	}
 
 	@Override
+	public void setSize(final int width, final int height) {
+		dialogWidget.setSize(width, height);
+	}
+
+	@Override
+	public void setPosition(final int x, final int y) {
+		dialogWidget.setPosition(x, y);
+	}
+
+	@Override
 	public Position getPosition() {
 		return dialogWidget.getPosition();
 	}

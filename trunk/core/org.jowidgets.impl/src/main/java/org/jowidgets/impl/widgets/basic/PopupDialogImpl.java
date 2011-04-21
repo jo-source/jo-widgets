@@ -30,6 +30,7 @@ package org.jowidgets.impl.widgets.basic;
 
 import java.util.List;
 
+import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IPopupDialog;
 import org.jowidgets.api.widgets.IPopupMenu;
@@ -47,6 +48,7 @@ import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsI
 import org.jowidgets.impl.widgets.common.wrapper.ComponentSpiWrapper;
 import org.jowidgets.spi.widgets.IPopupDialogSpi;
 import org.jowidgets.tools.controler.WindowAdapter;
+import org.jowidgets.util.Assert;
 
 public class PopupDialogImpl extends ComponentSpiWrapper implements IPopupDialog {
 
@@ -81,12 +83,17 @@ public class PopupDialogImpl extends ComponentSpiWrapper implements IPopupDialog
 	@Override
 	public void pack() {
 		getWidget().pack();
-
 	}
 
 	@Override
 	public void dispose() {
 		getWidget().dispose();
+	}
+
+	@Override
+	public void setLayout(final ILayoutFactory<?> layoutFactory) {
+		Assert.paramNotNull(layoutFactory, "layoutFactory");
+		setLayout(layoutFactory.create(this));
 	}
 
 	@Override

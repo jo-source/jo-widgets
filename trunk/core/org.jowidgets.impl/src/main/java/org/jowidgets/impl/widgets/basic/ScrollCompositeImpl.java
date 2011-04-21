@@ -30,6 +30,7 @@ package org.jowidgets.impl.widgets.basic;
 
 import java.util.List;
 
+import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IPopupMenu;
@@ -43,6 +44,7 @@ import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvok
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractScrollCompositeSpiWrapper;
 import org.jowidgets.spi.widgets.IScrollCompositeSpi;
+import org.jowidgets.util.Assert;
 
 public class ScrollCompositeImpl extends AbstractScrollCompositeSpiWrapper implements IScrollComposite {
 
@@ -55,6 +57,12 @@ public class ScrollCompositeImpl extends AbstractScrollCompositeSpiWrapper imple
 		this.containerDelegate = new ContainerDelegate(containerWidgetSpi, this);
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
+	}
+
+	@Override
+	public void setLayout(final ILayoutFactory<?> layoutFactory) {
+		Assert.paramNotNull(layoutFactory, "layoutFactory");
+		setLayout(layoutFactory.create(this));
 	}
 
 	@Override

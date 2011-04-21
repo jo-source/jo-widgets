@@ -164,6 +164,16 @@ public class InputDialogImpl<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 	}
 
 	@Override
+	public void setSize(final int width, final int height) {
+		dialogWidget.setSize(width, height);
+	}
+
+	@Override
+	public void setPosition(final int x, final int y) {
+		dialogWidget.setPosition(x, y);
+	}
+
+	@Override
 	public Position toScreen(final Position localPosition) {
 		return dialogWidget.toScreen(localPosition);
 	}

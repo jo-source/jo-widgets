@@ -34,6 +34,7 @@ import org.jowidgets.api.command.IActionBuilderFactory;
 import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.image.IconsSmall;
+import org.jowidgets.api.layout.ILayoutFactoryProvider;
 import org.jowidgets.api.model.IModelFactoryProvider;
 import org.jowidgets.api.threads.IUiThreadAccess;
 import org.jowidgets.api.toolkit.IMessagePane;
@@ -58,6 +59,7 @@ import org.jowidgets.impl.command.ActionBuilderFactory;
 import org.jowidgets.impl.content.InputContentCreatorFactory;
 import org.jowidgets.impl.convert.DefaultConverterProvider;
 import org.jowidgets.impl.image.DefaultIconsRegisterService;
+import org.jowidgets.impl.layout.LayoutFactoryProvider;
 import org.jowidgets.impl.model.ModelFactoryProvider;
 import org.jowidgets.impl.threads.UiThreadAccess;
 import org.jowidgets.impl.utils.WidgetUtils;
@@ -72,6 +74,7 @@ public class DefaultToolkit implements IToolkit {
 
 	private final IWidgetsServiceProvider widgetsServiceProvider;
 	private final IGenericWidgetFactory genericWidgetFactory;
+	private final ILayoutFactoryProvider layoutFactoryProvider;
 	private final IWidgetWrapperFactory widgetWrapperFactory;
 	private final IBluePrintFactory bluePrintFactory;
 	private ISupportedWidgets supportedWidgets;
@@ -92,6 +95,7 @@ public class DefaultToolkit implements IToolkit {
 		this.widgetsServiceProvider = toolkitSpi;
 		this.genericWidgetFactory = new GenericWidgetFactory(toolkitSpi);
 		this.widgetWrapperFactory = new DefaultWidgetWrapperFactory(genericWidgetFactory, toolkitSpi.getWidgetFactory());
+		this.layoutFactoryProvider = new LayoutFactoryProvider();
 		this.bluePrintFactory = new BluePrintFactory();
 		this.actionBuilderFactory = new ActionBuilderFactory();
 		this.modelFactoryProvider = new ModelFactoryProvider();
@@ -132,6 +136,11 @@ public class DefaultToolkit implements IToolkit {
 	@Override
 	public IWidgetWrapperFactory getWidgetWrapperFactory() {
 		return widgetWrapperFactory;
+	}
+
+	@Override
+	public ILayoutFactoryProvider getLayoutFactoryProvider() {
+		return layoutFactoryProvider;
 	}
 
 	@Override

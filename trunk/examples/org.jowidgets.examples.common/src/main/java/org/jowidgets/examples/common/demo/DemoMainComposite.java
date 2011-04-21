@@ -191,7 +191,7 @@ public final class DemoMainComposite {
 		layoutTestButton.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
-				final IFrame frame = new DemoLayoutFrame();
+				final IFrame frame = new DemoNullLayoutFrame();
 				frame.pack();
 				frame.setVisible(true);
 			}

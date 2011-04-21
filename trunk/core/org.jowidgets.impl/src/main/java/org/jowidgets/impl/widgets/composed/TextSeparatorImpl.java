@@ -204,6 +204,16 @@ public class TextSeparatorImpl implements ITextLabel {
 	}
 
 	@Override
+	public void setSize(final int width, final int height) {
+		compositeWidget.setSize(width, height);
+	}
+
+	@Override
+	public void setPosition(final int x, final int y) {
+		compositeWidget.setPosition(x, y);
+	}
+
+	@Override
 	public Position getPosition() {
 		return compositeWidget.getPosition();
 	}

@@ -135,6 +135,14 @@ public class ComponentSpiWrapper extends WidgetSpiWrapper implements IComponentC
 		return getWidget().getPosition();
 	}
 
+	public void setSize(final int width, final int height) {
+		getWidget().setSize(new Dimension(width, height));
+	}
+
+	public void setPosition(final int x, final int y) {
+		getWidget().setPosition(new Position(x, y));
+	}
+
 	@Override
 	public void setPosition(final Position position) {
 		getWidget().setPosition(position);

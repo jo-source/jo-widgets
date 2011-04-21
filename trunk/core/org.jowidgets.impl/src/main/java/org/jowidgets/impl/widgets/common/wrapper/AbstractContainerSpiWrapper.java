@@ -31,10 +31,14 @@ package org.jowidgets.impl.widgets.common.wrapper;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IContainerCommon;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
+import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.spi.widgets.IContainerSpi;
 import org.jowidgets.spi.widgets.IControlSpi;
+import org.jowidgets.util.Assert;
 
 public abstract class AbstractContainerSpiWrapper extends ComponentSpiWrapper implements IContainerCommon {
+
+	private ILayouter layouter;
 
 	private Dimension minSize;
 	private Dimension prefferedSize;
@@ -51,6 +55,10 @@ public abstract class AbstractContainerSpiWrapper extends ComponentSpiWrapper im
 
 	@Override
 	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
+		Assert.paramNotNull(layoutDescriptor, "layoutDescriptor");
+		if (layoutDescriptor instanceof ILayouter) {
+			this.layouter = (ILayouter) layoutDescriptor;
+		}
 		getWidget().setLayout(layoutDescriptor);
 	}
 
@@ -85,6 +93,9 @@ public abstract class AbstractContainerSpiWrapper extends ComponentSpiWrapper im
 		if (minSize != null) {
 			return minSize;
 		}
+		else if (layouter != null) {
+			return layouter.getMinSize();
+		}
 		else if (getWidget() instanceof IControlSpi) {
 			return ((IControlSpi) getWidget()).getMinSize();
 		}
@@ -97,6 +108,9 @@ public abstract class AbstractContainerSpiWrapper extends ComponentSpiWrapper im
 		if (prefferedSize != null) {
 			return prefferedSize;
 		}
+		else if (layouter != null) {
+			return layouter.getPreferredSize();
+		}
 		else if (getWidget() instanceof IControlSpi) {
 			return ((IControlSpi) getWidget()).getPreferredSize();
 		}
@@ -108,6 +122,9 @@ public abstract class AbstractContainerSpiWrapper extends ComponentSpiWrapper im
 	public Dimension getMaxSize() {
 		if (maxSize != null) {
 			return maxSize;
+		}
+		else if (layouter != null) {
+			return layouter.getMaxSize();
 		}
 		else if (getWidget() instanceof IControlSpi) {
 			return ((IControlSpi) getWidget()).getMaxSize();

@@ -30,6 +30,7 @@ package org.jowidgets.tools.widgets.wrapper;
 
 import java.util.List;
 
+import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.common.types.Dimension;
@@ -56,6 +57,11 @@ public class ContainerWrapper extends ComponentWrapper implements IContainer {
 	@Override
 	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
 		getWidget().setLayout(layoutDescriptor);
+	}
+
+	@Override
+	public void setLayout(final ILayoutFactory<?> layoutFactory) {
+		getWidget().setLayout(layoutFactory);
 	}
 
 	@Override

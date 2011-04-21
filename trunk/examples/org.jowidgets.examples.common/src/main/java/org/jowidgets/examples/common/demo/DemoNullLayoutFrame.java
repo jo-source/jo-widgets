@@ -28,68 +28,37 @@
 
 package org.jowidgets.examples.common.demo;
 
+import org.jowidgets.api.layout.ILayoutFactoryProvider;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
-import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.types.Position;
-import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.tools.powo.JoFrame;
 
-public class DemoLayoutFrame extends JoFrame {
+public class DemoNullLayoutFrame extends JoFrame {
 
 	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
-	//CHECKSTYLE:OFF
-	public DemoLayoutFrame() {
+	public DemoNullLayoutFrame() {
 		super("Layout demo");
 
-		final IButton button1;
+		final ILayoutFactoryProvider lfp = Toolkit.getLayoutFactoryProvider();
 
-		setLayout(new ILayouter() {
+		setLayout(lfp.nullLayout());
 
-			@Override
-			public void layout() {
-				final IControl control = getChildren().get(0);
-				control.setPosition(new Position(0, 0));
-				control.setSize(control.getPreferredSize());
-				System.out.println("layout: " + getClientAreaSize());
-			}
+		for (int i = 0; i < 10; i++) {
+			final IButton button = add(BPF.button(), null);
+			button.setPosition(i * 20, i * 40);
+			button.setText("Button " + i);
+			button.setSize(button.getPreferredSize());
+		}
 
-			@Override
-			public void invalidate() {
-				System.out.println("invalidate: " + getClientAreaSize());
-			}
+		for (int i = 0; i < 10; i++) {
+			final IButton button = add(BPF.button(), null);
+			button.setPosition(400 + i * 20, (9 - i) * 40);
+			button.setText("Button " + i);
+			button.setSize(200, 30);
+		}
 
-			@Override
-			public Dimension getMinSize() {
-				System.out.println("getMinSize: " + getClientAreaSize());
-				return new Dimension(0, 0);
-			}
-
-			@Override
-			public Dimension getPreferredSize() {
-				System.out.println("getPrefferedSize: " + getClientAreaSize());
-				final IControl control = getChildren().get(0);
-				return control.getPreferredSize();
-			}
-
-			@Override
-			public Dimension getMaxSize() {
-				System.out.println("getMaxSize: " + getClientAreaSize());
-				return new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
-			}
-
-		});
-
-		button1 = add(BPF.button(), "hallo1");
-
-		System.out.println(button1.getPreferredSize());
-
-		button1.setText("long long long long long long long text");
-
-		System.out.println(button1.getPreferredSize());
-
+		setSize(800, 600);
 	}
 }

@@ -29,6 +29,7 @@ package org.jowidgets.impl.widgets.composed.internal;
 
 import java.util.List;
 
+import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IComposite;
@@ -63,6 +64,11 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 		Assert.paramNotNull(outerContainer, "outerContainer");
 		this.outerContainer = outerContainer;
 		this.compositeWidget = compositeWidget;
+	}
+
+	@Override
+	public void setLayout(final ILayoutFactory<?> layoutFactory) {
+		compositeWidget.setLayout(layoutFactory);
 	}
 
 	@Override
@@ -158,6 +164,16 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 	@Override
 	public void setSize(final Dimension size) {
 		compositeWidget.setSize(size);
+	}
+
+	@Override
+	public void setSize(final int width, final int height) {
+		compositeWidget.setSize(width, height);
+	}
+
+	@Override
+	public void setPosition(final int x, final int y) {
+		compositeWidget.setPosition(x, y);
 	}
 
 	@Override

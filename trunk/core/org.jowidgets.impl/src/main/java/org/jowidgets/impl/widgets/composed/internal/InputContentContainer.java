@@ -29,6 +29,7 @@ package org.jowidgets.impl.widgets.composed.internal;
 
 import java.util.List;
 
+import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.validation.IValidateable;
 import org.jowidgets.api.validation.ValidationResult;
@@ -143,6 +144,11 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractInputComponent<IN
 		final ICustomWidgetCreator<WIDGET_TYPE> creator,
 		final Object layoutConstraints) {
 		return compositeWidget.add(creator, layoutConstraints);
+	}
+
+	@Override
+	public void setLayout(final ILayoutFactory<?> layoutFactory) {
+		compositeWidget.setLayout(layoutFactory);
 	}
 
 	@Override
