@@ -41,6 +41,7 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
+import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.Tuple;
 
@@ -50,7 +51,6 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 	@SuppressWarnings("rawtypes")
 	private final List<Tuple<Widget, Object>> preWidgets;
 	private final JoWidgetFactory widgetFactory;
-	private ILayoutFactory<?> layoutFactory;
 
 	@SuppressWarnings("rawtypes")
 	Container(final BLUE_PRINT_TYPE bluePrint) {
@@ -63,9 +63,6 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 	@Override
 	void initialize(final WIDGET_TYPE widget) {
 		super.initialize(widget);
-		if (layoutFactory != null) {
-			widget.setLayout(layoutFactory);
-		}
 		for (final Tuple<Widget, Object> preWidgetTuple : preWidgets) {
 			final Widget preWidget = preWidgetTuple.getFirst();
 			final Object layoutConstraints = preWidgetTuple.getSecond();
@@ -196,19 +193,20 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 			getWidget().setLayout(layoutDescriptor);
 		}
 		else {
-			this.layoutFactory = null;
 			getBluePrint().setLayout(layoutDescriptor);
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public void setLayout(final ILayoutFactory<?> layoutFactory) {
+	public <LAYOUT_TYPE extends ILayouter> LAYOUT_TYPE setLayout(final ILayoutFactory<LAYOUT_TYPE> layoutFactory) {
 		if (isInitialized()) {
-			getWidget().setLayout(layoutFactory);
+			return getWidget().setLayout(layoutFactory);
 		}
 		else {
-			getBluePrint().setLayout(null);
-			this.layoutFactory = layoutFactory;
+			final ILayouter result = layoutFactory.create(this);
+			getBluePrint().setLayout(result);
+			return (LAYOUT_TYPE) result;
 		}
 	}
 

@@ -37,6 +37,7 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
+import org.jowidgets.common.widgets.layout.ILayouter;
 
 public class ContainerWrapper extends ComponentWrapper implements IContainer {
 
@@ -60,8 +61,8 @@ public class ContainerWrapper extends ComponentWrapper implements IContainer {
 	}
 
 	@Override
-	public void setLayout(final ILayoutFactory<?> layoutFactory) {
-		getWidget().setLayout(layoutFactory);
+	public <LAYOUT_TYPE extends ILayouter> LAYOUT_TYPE setLayout(final ILayoutFactory<LAYOUT_TYPE> layoutFactory) {
+		return getWidget().setLayout(layoutFactory);
 	}
 
 	@Override
