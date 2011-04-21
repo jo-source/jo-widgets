@@ -30,65 +30,78 @@ package org.jowidgets.impl.layout;
 
 import org.jowidgets.api.layout.IBorderLayoutFactoryBuilder;
 import org.jowidgets.api.layout.ILayoutFactory;
-import org.jowidgets.api.layout.ILayoutFactoryProvider;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.common.widgets.layout.ILayouter;
 
-public class LayoutFactoryProvider implements ILayoutFactoryProvider {
+final class BorderLayoutFactoryBuilder implements IBorderLayoutFactoryBuilder {
 
-	private static final ILayoutFactory<ILayouter> NULL_LAYOUT_FACTORY = createNullLayoutFactory();
-	private static final ILayoutFactory<ILayouter> PREFERRED_SIZE_LAYOUT_FACTORY = createPreferredSizeLayoutFactory();
-	private static final ILayoutFactory<ILayouter> FILL_LAYOUT_FACTORY = createFillLayoutFactory();
+	private int gapX;
+	private int gapY;
+	private int marginTop;
+	private int marginBottom;
+	private int marginLeft;
+	private int marginRight;
 
 	@Override
-	public ILayoutFactory<ILayouter> nullLayout() {
-		return NULL_LAYOUT_FACTORY;
+	public IBorderLayoutFactoryBuilder margin(final int margin) {
+		this.marginTop = margin;
+		this.marginBottom = margin;
+		this.marginLeft = margin;
+		this.marginRight = margin;
+		return this;
 	}
 
 	@Override
-	public ILayoutFactory<ILayouter> preferredSizeLayout() {
-		return PREFERRED_SIZE_LAYOUT_FACTORY;
+	public IBorderLayoutFactoryBuilder gap(final int gap) {
+		this.gapX = gap;
+		this.gapY = gap;
+		return this;
 	}
 
 	@Override
-	public ILayoutFactory<ILayouter> fillLayout() {
-		return FILL_LAYOUT_FACTORY;
+	public IBorderLayoutFactoryBuilder gapX(final int gapX) {
+		this.gapX = gapX;
+		return this;
 	}
 
 	@Override
-	public ILayoutFactory<ILayouter> borderLayout() {
-		return borderLayoutBuilder().build();
+	public IBorderLayoutFactoryBuilder gapY(final int gapY) {
+		this.gapY = gapY;
+		return this;
 	}
 
 	@Override
-	public IBorderLayoutFactoryBuilder borderLayoutBuilder() {
-		return new BorderLayoutFactoryBuilder();
+	public IBorderLayoutFactoryBuilder marginLeft(final int marginLeft) {
+		this.marginLeft = marginLeft;
+		return this;
 	}
 
-	private static ILayoutFactory<ILayouter> createNullLayoutFactory() {
+	@Override
+	public IBorderLayoutFactoryBuilder marginRight(final int marginRight) {
+		this.marginRight = marginRight;
+		return this;
+	}
+
+	@Override
+	public IBorderLayoutFactoryBuilder marginTop(final int marginTop) {
+		this.marginTop = marginTop;
+		return this;
+	}
+
+	@Override
+	public IBorderLayoutFactoryBuilder marginBottom(final int marginBottom) {
+		this.marginBottom = marginBottom;
+		return this;
+	}
+
+	@Override
+	public ILayoutFactory<ILayouter> build() {
 		return new ILayoutFactory<ILayouter>() {
 			@Override
 			public ILayouter create(final IContainer container) {
-				return new NullLayout(container);
+				return new BorderLayout(container, marginLeft, marginRight, marginTop, marginBottom, gapX, gapY);
 			}
-		};
-	}
 
-	private static ILayoutFactory<ILayouter> createPreferredSizeLayoutFactory() {
-		return new ILayoutFactory<ILayouter>() {
-			@Override
-			public ILayouter create(final IContainer container) {
-				return new PreferredSizeLayout(container);
-			}
-		};
-	}
-
-	private static ILayoutFactory<ILayouter> createFillLayoutFactory() {
-		return new ILayoutFactory<ILayouter>() {
-			@Override
-			public ILayouter create(final IContainer container) {
-				return new FillLayout(container);
-			}
 		};
 	}
 
