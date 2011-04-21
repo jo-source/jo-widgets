@@ -36,10 +36,16 @@ import org.jowidgets.common.widgets.layout.ILayouter;
 public class LayoutFactoryProvider implements ILayoutFactoryProvider {
 
 	private static final ILayoutFactory<ILayouter> NULL_LAYOUT_FACTORY = createNullLayoutFactory();
+	private static final ILayoutFactory<ILayouter> PREFERRED_SIZE_LAYOUT_FACTORY = createPreferredSizeLayoutFactory();
 
 	@Override
 	public ILayoutFactory<ILayouter> nullLayout() {
 		return NULL_LAYOUT_FACTORY;
+	}
+
+	@Override
+	public ILayoutFactory<ILayouter> preferredSizeLayout() {
+		return PREFERRED_SIZE_LAYOUT_FACTORY;
 	}
 
 	private static ILayoutFactory<ILayouter> createNullLayoutFactory() {
@@ -47,6 +53,15 @@ public class LayoutFactoryProvider implements ILayoutFactoryProvider {
 			@Override
 			public ILayouter create(final IContainer container) {
 				return new NullLayout(container);
+			}
+		};
+	}
+
+	private static ILayoutFactory<ILayouter> createPreferredSizeLayoutFactory() {
+		return new ILayoutFactory<ILayouter>() {
+			@Override
+			public ILayouter create(final IContainer container) {
+				return new PreferredSizeLayout(container);
 			}
 		};
 	}
