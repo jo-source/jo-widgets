@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2010, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,37 +26,37 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.layout;
+package org.jowidgets.examples.common.demo;
 
-import org.jowidgets.common.widgets.layout.ILayouter;
+import org.jowidgets.api.layout.ILayoutFactoryProvider;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IButton;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.tools.powo.JoFrame;
 
-public interface ILayoutFactoryProvider {
+public class DemoPreferredSizeLayoutFrame extends JoFrame {
 
-	/**
-	 * The 'NullLayout' does no layouting at all. It returns
-	 * the containers size for min-, max-, and preferred size.
-	 * 
-	 * The layouting must be completely done by the container then
-	 * 
-	 * @return The layout factory that produces 'NullLayouts'
-	 */
-	ILayoutFactory<ILayouter> nullLayout();
+	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
-	/**
-	 * Creates 'PreferredSizeLayouts':
-	 * 
-	 * layout(): sets the sizes of the controls to the preferred size,
-	 * positions must be set by the container
-	 * 
-	 * getPreferredSize(): get the size needed to layout all controls at its current
-	 * position with its preferred size
-	 * 
-	 * getMinSize(): gets the preferred size
-	 * 
-	 * getMaxSize(): gets the preferred size
-	 * 
-	 * @return A layout factory that produces 'PreferredSizeLayouts'
-	 */
-	ILayoutFactory<ILayouter> preferredSizeLayout();
+	public DemoPreferredSizeLayoutFrame() {
+		super("Null layout demo");
 
+		final ILayoutFactoryProvider lfp = Toolkit.getLayoutFactoryProvider();
+
+		setLayout(lfp.preferredSizeLayout());
+
+		for (int i = 0; i < 10; i++) {
+			final IButton button = add(BPF.button(), null);
+			button.setPosition(i * 20, i * 40);
+			button.setText("Button " + i);
+		}
+
+		for (int i = 0; i < 10; i++) {
+			final IButton button = add(BPF.button(), null);
+			button.setPosition(400 + i * 20, 200 + (9 - i) * 40);
+			button.setText("Button " + i);
+		}
+
+		pack();
+	}
 }

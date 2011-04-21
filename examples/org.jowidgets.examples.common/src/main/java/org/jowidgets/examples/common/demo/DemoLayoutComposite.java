@@ -57,6 +57,17 @@ public final class DemoLayoutComposite {
 			}
 		});
 
+		final IButton preferredSizeLayoutButton = parentContainer.add(bpf.button("Preffered size layout"), "grow, sg bg, wrap");
+
+		preferredSizeLayoutButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final IFrame frame = new DemoPreferredSizeLayoutFrame();
+				frame.pack();
+				frame.setVisible(true);
+			}
+		});
+
 	}
 
 	public void foo() {}
