@@ -27,6 +27,7 @@
  */
 package org.jowidgets.common.widgets;
 
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.controler.IWindowObservable;
 
@@ -37,5 +38,7 @@ public interface IWindowCommon extends IDisplayCommon, IComponentCommon, IWindow
 	void pack();
 
 	void dispose();
+
+	void setClientAreaMinSize(final Dimension minSize);
 
 }

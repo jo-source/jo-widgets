@@ -28,6 +28,8 @@
 
 package org.jowidgets.spi.impl.dummy.dummyui;
 
+import org.jowidgets.common.types.Dimension;
+
 public class UIDWindow extends UIDContainer {
 
 	private UIDImage iconImage;
@@ -58,6 +60,10 @@ public class UIDWindow extends UIDContainer {
 			setVisible(false);
 		}
 		fireWindowClosed();
+	}
+
+	public void setMinSize(final Dimension minSize) {
+		// TODO LG implement setMinSize()
 	}
 
 }

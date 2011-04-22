@@ -159,6 +159,16 @@ public class InputDialogImpl<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 	}
 
 	@Override
+	public void setClientAreaMinSize(final int width, final int height) {
+		dialogWidget.setClientAreaMinSize(width, height);
+	}
+
+	@Override
+	public void setClientAreaMinSize(final Dimension minSize) {
+		dialogWidget.setClientAreaMinSize(minSize);
+	}
+
+	@Override
 	public Dimension getSize() {
 		return dialogWidget.getSize();
 	}

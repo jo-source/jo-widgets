@@ -32,6 +32,8 @@ import org.jowidgets.api.layout.ILayoutFactoryProvider;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.ITextArea;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.tools.powo.JoFrame;
 
 public class DemoFillLayoutFrame extends JoFrame {
@@ -43,8 +45,9 @@ public class DemoFillLayoutFrame extends JoFrame {
 
 		final ILayoutFactoryProvider lfp = Toolkit.getLayoutFactoryProvider();
 
-		setLayout(lfp.fillLayoutBuilder().build());
+		final ILayouter layouter = setLayout(lfp.fillLayoutBuilder().build());
 		final ITextArea textArea = add(BPF.textArea());
+		textArea.setMinSize(new Dimension(100, 22));
 
 		final StringBuilder stringBuilder = new StringBuilder();
 		for (int i = 0; i < 50; i++) {
@@ -52,6 +55,7 @@ public class DemoFillLayoutFrame extends JoFrame {
 		}
 		textArea.setText(stringBuilder.toString());
 
+		setClientAreaMinSize(layouter.getMinSize());
 		setSize(500, 400);
 	}
 }
