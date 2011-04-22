@@ -125,6 +125,12 @@ public class SwingWindow extends SwingContainer implements IWindowSpi {
 	}
 
 	@Override
+	public void setClientAreaMinSize(final Dimension minSize) {
+		//TODO MG trim must be calculated and added
+		getUiReference().setMinimumSize(DimensionConvert.convert(minSize));
+	}
+
+	@Override
 	public final void setSize(final Dimension size) {
 		getUiReference().setSize(DimensionConvert.convert(size));
 	}

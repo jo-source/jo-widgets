@@ -165,6 +165,17 @@ public class FrameImpl extends AbstractFrameSpiWrapper implements IFrameUi {
 	}
 
 	@Override
+	public void setClientAreaMinSize(final int width, final int height) {
+		setClientAreaMinSize(new Dimension(width, height));
+	}
+
+	@Override
+	public void setClientAreaMinSize(final Dimension minSize) {
+		Assert.paramNotNull(minSize, "minSize");
+		getWidget().setClientAreaMinSize(minSize);
+	}
+
+	@Override
 	public void setDefaultButton(final IButton button) {
 		getWidget().setDefaultButton(button);
 	}

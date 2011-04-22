@@ -40,10 +40,12 @@ import org.jowidgets.spi.impl.swing.util.DimensionConvert;
 
 public class LayoutManagerImpl implements LayoutManager2 {
 
+	private final Container container;
 	private final ILayouter layouter;
 	private final Map<Component, Object> components;
 
-	public LayoutManagerImpl(final ILayouter layouter) {
+	public LayoutManagerImpl(final Container container, final ILayouter layouter) {
+		this.container = container;
 		this.layouter = layouter;
 		this.components = new HashMap<Component, Object>();
 	}
@@ -84,7 +86,9 @@ public class LayoutManagerImpl implements LayoutManager2 {
 
 	@Override
 	public void layoutContainer(final Container parent) {
-		layouter.layout();
+		synchronized (container.getTreeLock()) {
+			layouter.layout();
+		}
 	}
 
 	@Override

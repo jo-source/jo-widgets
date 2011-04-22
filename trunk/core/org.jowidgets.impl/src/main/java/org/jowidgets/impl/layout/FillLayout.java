@@ -47,6 +47,9 @@ final class FillLayout implements ILayouter {
 	private Dimension preferredSize;
 	private Dimension maxSize;
 
+	private Dimension controlMinSize;
+	private Dimension controlMaxSize;
+
 	FillLayout(
 		final IContainer container,
 		final int marginLeft,
@@ -67,10 +70,17 @@ final class FillLayout implements ILayouter {
 		final IControl control = getFirstControl();
 		if (control != null) {
 			control.setPosition(marginLeft, marginTop);
+
 			final Dimension clientSize = container.getClientAreaSize();
-			control.setSize(
-					Math.max(0, clientSize.getWidth() - marginRight - marginLeft),
-					Math.max(0, clientSize.getHeight() - marginBottom - marginTop));
+			final Dimension ctrlMinSize = getControlMinSize();
+			final Dimension ctrlMaxSize = getControlMaxSize();
+
+			int width = Math.max(ctrlMinSize.getWidth(), clientSize.getWidth() - marginRight - marginLeft);
+			int height = Math.max(ctrlMinSize.getHeight(), clientSize.getHeight() - marginBottom - marginTop);
+
+			width = Math.min(width, ctrlMaxSize.getWidth());
+			height = Math.min(height, ctrlMaxSize.getHeight());
+			control.setSize(width, height);
 		}
 	}
 
@@ -103,13 +113,29 @@ final class FillLayout implements ILayouter {
 		maxSize = null;
 		minSize = null;
 		preferredSize = null;
+		controlMinSize = null;
+		controlMaxSize = null;
+	}
+
+	private Dimension getControlMinSize() {
+		if (controlMinSize == null) {
+			this.controlMinSize = getFirstControl().getMinSize();
+		}
+		return controlMinSize;
+	}
+
+	private Dimension getControlMaxSize() {
+		if (controlMaxSize == null) {
+			this.controlMaxSize = getFirstControl().getMaxSize();
+		}
+		return controlMaxSize;
 	}
 
 	private Dimension calcMinSize() {
 		final IControl control = getFirstControl();
 		if (control != null) {
 			final Dimension size = control.getMinSize();
-			return new Dimension(marginLeft + marginRight + size.getWidth(), marginBottom + marginBottom + size.getHeight());
+			return new Dimension(marginLeft + marginRight + size.getWidth(), marginTop + marginBottom + size.getHeight());
 		}
 		else {
 			return new Dimension(0, 0);

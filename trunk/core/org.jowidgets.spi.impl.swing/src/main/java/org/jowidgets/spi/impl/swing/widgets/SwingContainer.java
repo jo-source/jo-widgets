@@ -88,7 +88,7 @@ public class SwingContainer implements IContainerSpi {
 				migLayoutManager.getRowConstraints()));
 		}
 		else if (layout instanceof ILayouter) {
-			container.setLayout(new LayoutManagerImpl((ILayouter) layout));
+			container.setLayout(new LayoutManagerImpl(getUiReference(), (ILayouter) layout));
 		}
 		else {
 			throw new IllegalArgumentException("Layout Descriptor of type '" + layout.getClass().getName() + "' is not supported");

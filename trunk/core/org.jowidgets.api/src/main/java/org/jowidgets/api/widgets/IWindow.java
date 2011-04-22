@@ -58,4 +58,6 @@ public interface IWindow extends IDisplay, IComponent, IWindowCommon {
 	 */
 	List<IDisplay> getChildWindows();
 
+	void setClientAreaMinSize(int width, int height);
+
 }
