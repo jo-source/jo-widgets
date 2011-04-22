@@ -33,6 +33,7 @@ import org.jowidgets.api.widgets.descriptor.IToolBarDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
+import org.jowidgets.impl.spi.blueprint.IToolBarBluePrintSpi;
 import org.jowidgets.impl.widgets.basic.ToolBarImpl;
 import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.widgets.IToolBarSpi;
@@ -49,7 +50,9 @@ public class ToolBarFactory extends AbstractWidgetFactory implements IWidgetFact
 
 	@Override
 	public IToolBar create(final Object parentUiReference, final IToolBarDescriptor descriptor) {
-		final IToolBarSpi toolBarSpi = getSpiWidgetFactory().createToolBar(getGenericWidgetFactory(), parentUiReference);
+		final IToolBarBluePrintSpi bp = getSpiBluePrintFactory().toolBar();
+		bp.setSetup(descriptor);
+		final IToolBarSpi toolBarSpi = getSpiWidgetFactory().createToolBar(getGenericWidgetFactory(), parentUiReference, bp);
 		return new ToolBarImpl(toolBarSpi, descriptor);
 	}
 

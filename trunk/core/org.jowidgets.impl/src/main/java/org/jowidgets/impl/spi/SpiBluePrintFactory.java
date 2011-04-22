@@ -51,6 +51,7 @@ import org.jowidgets.impl.spi.blueprint.ITextAreaBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITextFieldBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITextLabelBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IToggleButtonBluePrintSpi;
+import org.jowidgets.impl.spi.blueprint.IToolBarBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITreeBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.defaults.registry.SpiDefaultsInitializerRegistry;
 import org.jowidgets.impl.widgets.common.blueprint.convenience.registry.CommonSetupConvenienceRegistry;
@@ -164,6 +165,11 @@ public class SpiBluePrintFactory extends AbstractBluePrintFactory implements ISp
 	@Override
 	public ITabItemBluePrintSpi tabItem() {
 		return createProxy(ITabItemBluePrintSpi.class);
+	}
+
+	@Override
+	public IToolBarBluePrintSpi toolBar() {
+		return createProxy(IToolBarBluePrintSpi.class);
 	}
 
 	@Override

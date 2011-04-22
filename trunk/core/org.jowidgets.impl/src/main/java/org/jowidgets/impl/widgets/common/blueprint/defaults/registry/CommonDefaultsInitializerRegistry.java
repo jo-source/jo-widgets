@@ -41,6 +41,7 @@ import org.jowidgets.common.widgets.builder.ITableSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITextAreaSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITextFieldSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITextLabelSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.IToolBarSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITreeSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.IWindowSetupBuilderCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.ButtonDefaultsCommon;
@@ -56,6 +57,7 @@ import org.jowidgets.impl.widgets.common.blueprint.defaults.TableDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.TextAreaDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.TextFieldDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.TextLabelDefaultsCommon;
+import org.jowidgets.impl.widgets.common.blueprint.defaults.ToolBarDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.TreeDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.WindowDefaultsCommon;
 import org.jowidgets.tools.widgets.blueprint.defaults.DefaultsInitializerRegistry;
@@ -78,6 +80,7 @@ public class CommonDefaultsInitializerRegistry extends DefaultsInitializerRegist
 		register(ITabFolderSetupBuilderCommon.class, new TabFolderDefaultsCommon());
 		register(ITreeSetupBuilderCommon.class, new TreeDefaultsCommon());
 		register(ITableSetupBuilderCommon.class, new TableDefaultsCommon());
+		register(IToolBarSetupBuilderCommon.class, new ToolBarDefaultsCommon());
 		register(IPopupDialogSetupBuilderCommon.class, new PopupDialogDefaultsCommon());
 	}
 }

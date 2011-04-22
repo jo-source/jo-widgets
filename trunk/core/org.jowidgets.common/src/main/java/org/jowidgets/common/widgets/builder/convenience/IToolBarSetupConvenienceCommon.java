@@ -25,12 +25,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.blueprint.builder;
+package org.jowidgets.common.widgets.builder.convenience;
 
-import org.jowidgets.common.widgets.builder.IToolBarSetupBuilderCommon;
+public interface IToolBarSetupConvenienceCommon<INSTANCE_TYPE> {
 
-public interface IToolBarSetupBuilder<INSTANCE_TYPE extends IToolBarSetupBuilder<?>> extends
-		IComponentSetupBuilder<INSTANCE_TYPE>,
-		IToolBarSetupBuilderCommon<INSTANCE_TYPE> {
+	INSTANCE_TYPE setVertical();
+
+	INSTANCE_TYPE setHorizontal();
 
 }
