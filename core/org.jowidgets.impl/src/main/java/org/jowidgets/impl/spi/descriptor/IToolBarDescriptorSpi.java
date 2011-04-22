@@ -25,12 +25,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.blueprint.builder;
+package org.jowidgets.impl.spi.descriptor;
 
-import org.jowidgets.common.widgets.builder.IToolBarSetupBuilderCommon;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.spi.widgets.IToolBarSpi;
+import org.jowidgets.spi.widgets.setup.IToolBarSetupSpi;
 
-public interface IToolBarSetupBuilder<INSTANCE_TYPE extends IToolBarSetupBuilder<?>> extends
-		IComponentSetupBuilder<INSTANCE_TYPE>,
-		IToolBarSetupBuilderCommon<INSTANCE_TYPE> {
-
-}
+public interface IToolBarDescriptorSpi extends IToolBarSetupSpi, IWidgetDescriptor<IToolBarSpi> {}

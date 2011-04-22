@@ -27,7 +27,8 @@
  */
 package org.jowidgets.api.widgets.descriptor.setup;
 
+import org.jowidgets.common.widgets.descriptor.setup.IToolBarSetupCommon;
 
-public interface IToolBarSetup extends IComponentSetup {
+public interface IToolBarSetup extends IComponentSetup, IToolBarSetupCommon {
 
 }

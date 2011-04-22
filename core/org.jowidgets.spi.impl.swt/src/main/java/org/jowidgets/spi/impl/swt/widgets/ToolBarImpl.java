@@ -35,6 +35,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
+import org.jowidgets.common.types.Orientation;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.widgets.IToolBarButtonSpi;
 import org.jowidgets.spi.widgets.IToolBarContainerItemSpi;
@@ -42,6 +43,7 @@ import org.jowidgets.spi.widgets.IToolBarItemSpi;
 import org.jowidgets.spi.widgets.IToolBarPopupButtonSpi;
 import org.jowidgets.spi.widgets.IToolBarSpi;
 import org.jowidgets.spi.widgets.IToolBarToggleButtonSpi;
+import org.jowidgets.spi.widgets.setup.IToolBarSetupSpi;
 
 public class ToolBarImpl extends SwtControl implements IToolBarSpi {
 
@@ -49,8 +51,8 @@ public class ToolBarImpl extends SwtControl implements IToolBarSpi {
 
 	private final Map<ToolItem, ToolBarContainerItemImpl> containerMap;
 
-	public ToolBarImpl(final IGenericWidgetFactory factory, final Object parentUiReference) {
-		super(new ToolBar((Composite) parentUiReference, SWT.FLAT | SWT.WRAP | SWT.RIGHT));
+	public ToolBarImpl(final IGenericWidgetFactory factory, final Object parentUiReference, final IToolBarSetupSpi setup) {
+		super(new ToolBar((Composite) parentUiReference, getStyle(setup)));
 		this.factory = factory;
 		this.containerMap = new HashMap<ToolItem, ToolBarContainerItemImpl>();
 	}
@@ -139,4 +141,17 @@ public class ToolBarImpl extends SwtControl implements IToolBarSpi {
 		getUiReference().pack();
 	}
 
+	private static int getStyle(final IToolBarSetupSpi setup) {
+		int result = SWT.FLAT | SWT.WRAP | SWT.RIGHT;
+		if (Orientation.VERTICAL == setup.getOrientation()) {
+			result = result | SWT.VERTICAL;
+		}
+		else if (Orientation.HORIZONTAL == setup.getOrientation()) {
+			result = result | SWT.HORIZONTAL;
+		}
+		else {
+			throw new IllegalArgumentException("Orientation '" + setup.getOrientation() + "' is not known.");
+		}
+		return result;
+	}
 }

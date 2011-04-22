@@ -67,6 +67,7 @@ import org.jowidgets.spi.widgets.setup.ITextAreaSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;
+import org.jowidgets.spi.widgets.setup.IToolBarSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITreeSetupSpi;
 
 public interface IWidgetFactorySpi {
@@ -120,7 +121,7 @@ public interface IWidgetFactorySpi {
 
 	IProgressBarSpi createProgressBar(Object parentUiReference, IProgressBarSetupSpi setup);
 
-	IToolBarSpi createToolBar(IGenericWidgetFactory factory, Object parentUiReference);
+	IToolBarSpi createToolBar(IGenericWidgetFactory factory, Object parentUiReference, IToolBarSetupSpi setup);
 
 	ITabFolderSpi createTabFolder(IGenericWidgetFactory factory, Object parentUiReference, ITabFolderSetupSpi setup);
 

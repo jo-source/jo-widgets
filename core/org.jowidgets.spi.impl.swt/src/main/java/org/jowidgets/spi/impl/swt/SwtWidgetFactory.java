@@ -93,6 +93,7 @@ import org.jowidgets.spi.widgets.setup.ITextAreaSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;
+import org.jowidgets.spi.widgets.setup.IToolBarSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITreeSetupSpi;
 import org.jowidgets.util.Assert;
 
@@ -228,8 +229,11 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 	}
 
 	@Override
-	public IToolBarSpi createToolBar(final IGenericWidgetFactory factory, final Object parentUiReference) {
-		return new ToolBarImpl(factory, parentUiReference);
+	public IToolBarSpi createToolBar(
+		final IGenericWidgetFactory factory,
+		final Object parentUiReference,
+		final IToolBarSetupSpi setup) {
+		return new ToolBarImpl(factory, parentUiReference, setup);
 	}
 
 	@Override

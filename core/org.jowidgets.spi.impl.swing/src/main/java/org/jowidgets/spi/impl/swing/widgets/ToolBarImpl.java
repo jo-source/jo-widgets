@@ -37,6 +37,7 @@ import javax.swing.JToolBar;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Orientation;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.impl.swing.util.DimensionConvert;
@@ -48,15 +49,25 @@ import org.jowidgets.spi.widgets.IToolBarItemSpi;
 import org.jowidgets.spi.widgets.IToolBarPopupButtonSpi;
 import org.jowidgets.spi.widgets.IToolBarSpi;
 import org.jowidgets.spi.widgets.IToolBarToggleButtonSpi;
+import org.jowidgets.spi.widgets.setup.IToolBarSetupSpi;
 
 public class ToolBarImpl extends SwingControl implements IToolBarSpi {
 
 	private final IGenericWidgetFactory factory;
 
-	public ToolBarImpl(final IGenericWidgetFactory factory) {
+	public ToolBarImpl(final IGenericWidgetFactory factory, final IToolBarSetupSpi setup) {
 		super(new JToolBar());
 		this.factory = factory;
 
+		if (Orientation.HORIZONTAL == setup.getOrientation()) {
+			getUiReference().setOrientation(JToolBar.HORIZONTAL);
+		}
+		else if (Orientation.VERTICAL == setup.getOrientation()) {
+			getUiReference().setOrientation(JToolBar.VERTICAL);
+		}
+		else {
+			throw new IllegalArgumentException("Orientation '" + setup.getOrientation() + "' is not known.");
+		}
 		getUiReference().setFloatable(false);
 	}
 
