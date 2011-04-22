@@ -33,7 +33,10 @@ import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Modifier;
+import org.jowidgets.common.types.VirtualKey;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.examples.common.icons.DemoIconsInitializer;
 import org.jowidgets.examples.common.icons.SilkIcons;
@@ -109,6 +112,7 @@ public class WorkbenchDemo1 extends AbstractDemoWorkbench {
 		fileModel.addActionItem("Save As...", SilkIcons.DISK);
 		fileModel.addSeparator();
 		final IActionItemModel exitAction = fileModel.addActionItem("Exit");
+		exitAction.setAccelerator(new Accelerator(VirtualKey.F4, Modifier.ALT));
 		exitAction.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
