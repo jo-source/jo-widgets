@@ -50,6 +50,8 @@ public class SwingWindow extends SwingContainer implements IWindowSpi {
 
 	private final WindowObservable windowObservableDelegate;
 
+	private Dimension clientAreaMinSize;
+
 	public SwingWindow(final IGenericWidgetFactory factory, final Window window, final boolean closeable) {
 		super(factory, window);
 
@@ -99,6 +101,11 @@ public class SwingWindow extends SwingContainer implements IWindowSpi {
 	public void setVisible(final boolean visible) {
 		final boolean wasVisible = isVisible();
 		super.setVisible(visible);
+		if (clientAreaMinSize != null) {
+			setClientMinSizeImpl(clientAreaMinSize);
+			this.clientAreaMinSize = null;
+
+		}
 		if (wasVisible && !visible) {
 			windowObservableDelegate.fireWindowClosed();
 		}
@@ -126,8 +133,12 @@ public class SwingWindow extends SwingContainer implements IWindowSpi {
 
 	@Override
 	public void setClientAreaMinSize(final Dimension minSize) {
-		//TODO MG trim must be calculated and added
-		getUiReference().setMinimumSize(DimensionConvert.convert(minSize));
+		if (isVisible()) {
+			setClientMinSizeImpl(minSize);
+		}
+		else {
+			this.clientAreaMinSize = minSize;
+		}
 	}
 
 	@Override
@@ -178,6 +189,14 @@ public class SwingWindow extends SwingContainer implements IWindowSpi {
 	public void dispose() {
 		setVisible(false);
 		getUiReference().dispose();
+	}
+
+	private void setClientMinSizeImpl(final Dimension minSize) {
+		final Dimension size = getSize();
+		final Dimension clientSize = getClientAreaSize();
+		final int trimX = size.getWidth() - clientSize.getWidth();
+		final int trimY = size.getHeight() - clientSize.getHeight();
+		getUiReference().setMinimumSize(new java.awt.Dimension(minSize.getWidth() + trimX, minSize.getHeight() + trimY));
 	}
 
 }
