@@ -29,11 +29,13 @@
 package org.jowidgets.examples.common.demo;
 
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
+import org.jowidgets.api.model.table.ISimpleTableModel;
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.ITextArea;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.layout.ILayouter;
+import org.jowidgets.tools.model.table.SimpleTableModel;
 import org.jowidgets.tools.powo.JoFrame;
 
 public class DemoFillLayoutMarginFrame extends JoFrame {
@@ -46,16 +48,40 @@ public class DemoFillLayoutMarginFrame extends JoFrame {
 		final ILayoutFactoryProvider lfp = Toolkit.getLayoutFactoryProvider();
 
 		final ILayouter layouter = setLayout(lfp.fillLayoutBuilder().margin(100).build());
-		final ITextArea textArea = add(BPF.textArea());
-		textArea.setMinSize(new Dimension(100, 22));
+
+		//addTextArea(this);
+		addTable(this);
+
+		setClientAreaMinSize(layouter.getMinSize());
+		pack();
+		//setSize(500, 400);
+	}
+
+	@SuppressWarnings("unused")
+	private void addTextArea(final IContainer container) {
+		final ITextArea textArea = container.add(BPF.textArea());
 
 		final StringBuilder stringBuilder = new StringBuilder();
 		for (int i = 0; i < 50; i++) {
 			stringBuilder.append("Text area in a fill layout. ");
 		}
 		textArea.setText(stringBuilder.toString());
+	}
 
-		setClientAreaMinSize(layouter.getMinSize());
-		setSize(500, 400);
+	private void addTable(final IContainer container) {
+		final ISimpleTableModel tableModel = new SimpleTableModel();
+		for (int i = 0; i < 10; i++) {
+			tableModel.addColumn("Column " + i);
+			tableModel.getColumn(i).setWidth(100);
+		}
+		for (int i = 0; i < 20; i++) {
+			tableModel.addRow();
+			for (int j = 0; j < 10; j++) {
+				tableModel.setCellText(i, j, "Cell (" + i + " / " + j + ")");
+			}
+		}
+
+		container.add(BPF.table(tableModel).setBorder(true));
+
 	}
 }

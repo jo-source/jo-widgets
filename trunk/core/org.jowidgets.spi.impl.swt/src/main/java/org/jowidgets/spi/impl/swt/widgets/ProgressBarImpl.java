@@ -30,6 +30,7 @@ package org.jowidgets.spi.impl.swt.widgets;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ProgressBar;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.spi.impl.swt.util.OrientationConvert;
 import org.jowidgets.spi.widgets.IProgressBarSpi;
 import org.jowidgets.spi.widgets.setup.IProgressBarSetupSpi;
@@ -47,6 +48,11 @@ public class ProgressBarImpl extends SwtControl implements IProgressBarSpi {
 	@Override
 	public ProgressBar getUiReference() {
 		return (ProgressBar) super.getUiReference();
+	}
+
+	@Override
+	public Dimension getMinSize() {
+		return new Dimension(10, 10);
 	}
 
 	@Override

@@ -39,6 +39,7 @@ public class TableDefaultsCommon implements IDefaultInitializer<ITableSetupBuild
 		builder.setColumnsMoveable(true);
 		builder.setColumnsResizeable(true);
 		builder.setHeaderVisible(true);
+		builder.setBorder(false);
 	}
 
 }
