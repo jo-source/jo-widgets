@@ -38,6 +38,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Text;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.spi.widgets.ITextAreaSpi;
 import org.jowidgets.spi.widgets.setup.ITextAreaSetupSpi;
 
@@ -175,6 +176,11 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 	public void scrollToCaretPosition() {
 		final Point caretPosition = textArea.getCaretLocation();
 		scrolledComposite.setOrigin(caretPosition.x - 20, caretPosition.y - 20);
+	}
+
+	@Override
+	public Dimension getMinSize() {
+		return new Dimension(35, 32);
 	}
 
 	private static int getScrollCompositeStyle(final ITextAreaSetupSpi setup) {

@@ -196,6 +196,11 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	}
 
 	@Override
+	public Dimension getMinSize() {
+		return new Dimension(40, 40);
+	}
+
+	@Override
 	public void resetFromModel() {
 		table.setRedraw(false);
 
@@ -550,6 +555,10 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 	private static int getStyle(final ITableSetupSpi setup) {
 		int result = SWT.VIRTUAL;
+
+		if (setup.hasBorder()) {
+			result = result | SWT.BORDER;
+		}
 
 		if (TableSelectionPolicy.MULTI_ROW_SELECTION == setup.getSelectionPolicy()) {
 			result = result | SWT.FULL_SELECTION | SWT.MULTI;

@@ -43,6 +43,8 @@ public interface ITableSetupBuilderCommon<INSTANCE_TYPE extends ITableSetupBuild
 
 	INSTANCE_TYPE setHeaderVisible(boolean visible);
 
+	INSTANCE_TYPE setBorder(boolean border);
+
 	INSTANCE_TYPE setDataModel(ITableDataModel model);
 
 	INSTANCE_TYPE setColumnModel(ITableColumnModel model);

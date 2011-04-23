@@ -27,6 +27,7 @@
  */
 package org.jowidgets.spi.impl.swing.widgets;
 
+import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.WindowEvent;
@@ -192,11 +193,11 @@ public class SwingWindow extends SwingContainer implements IWindowSpi {
 	}
 
 	private void setClientMinSizeImpl(final Dimension minSize) {
-		final Dimension size = getSize();
-		final Dimension clientSize = getClientAreaSize();
-		final int trimX = size.getWidth() - clientSize.getWidth();
-		final int trimY = size.getHeight() - clientSize.getHeight();
-		getUiReference().setMinimumSize(new java.awt.Dimension(minSize.getWidth() + trimX, minSize.getHeight() + trimY));
+		final Insets insets = getUiReference().getInsets();
+		final int width = minSize.getWidth() + insets.left + insets.right;
+		final int height = minSize.getHeight() + insets.top + insets.bottom;
+		getUiReference().setMinimumSize(new java.awt.Dimension(width, height));
+
 	}
 
 }

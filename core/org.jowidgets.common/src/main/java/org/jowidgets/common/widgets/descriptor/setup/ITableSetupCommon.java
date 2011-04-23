@@ -48,6 +48,9 @@ public interface ITableSetupCommon extends IComponentSetupCommon {
 	boolean isHeaderVisible();
 
 	@Mandatory
+	boolean hasBorder();
+
+	@Mandatory
 	ITableDataModel getDataModel();
 
 	@Mandatory

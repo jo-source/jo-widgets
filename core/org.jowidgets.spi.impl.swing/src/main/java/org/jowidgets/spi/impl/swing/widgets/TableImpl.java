@@ -30,6 +30,7 @@ package org.jowidgets.spi.impl.swing.widgets;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
@@ -141,6 +142,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	private final TableColumnMoveListener tableColumnMoveListener;
 
 	private final boolean columnsResizeable;
+	private final boolean hasBorder;
 
 	private SwingTableModel swingTableModel;
 	private ArrayList<Integer> lastColumnPermutation;
@@ -177,7 +179,11 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 		this.columnsResizeable = setup.getColumnsResizeable();
 
-		getUiReference().setBorder(BorderFactory.createEmptyBorder());
+		this.hasBorder = setup.hasBorder();
+
+		if (!hasBorder) {
+			getUiReference().setBorder(BorderFactory.createEmptyBorder());
+		}
 
 		this.table = (JTable) getUiReference().getViewport().getView();
 		table.setAutoCreateColumnsFromModel(false);
@@ -222,6 +228,20 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	@Override
 	public JScrollPane getUiReference() {
 		return (JScrollPane) super.getUiReference();
+	}
+
+	@Override
+	public Dimension getPreferredSize() {
+		final java.awt.Dimension preferredSize = table.getPreferredSize();
+		final java.awt.Dimension headerSize = table.getTableHeader().getPreferredSize();
+		final Insets insets = table.getBorder().getBorderInsets(table);
+		int width = preferredSize.width + insets.left + insets.right;
+		int height = preferredSize.height + insets.top + insets.bottom + headerSize.height;
+		if (hasBorder) {
+			width = width + 2;
+			height = height + 2;
+		}
+		return new Dimension(width, height);
 	}
 
 	@Override
