@@ -30,7 +30,6 @@ package org.jowidgets.spi.impl.swt.widgets;
 
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.types.Orientation;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.impl.swt.util.BorderToComposite;
 import org.jowidgets.spi.impl.swt.widgets.base.JoSashForm;
@@ -43,7 +42,6 @@ public class SplitCompositeImpl extends SwtControl implements ISplitCompositeSpi
 	private final ICompositeSpi first;
 	private final ICompositeSpi second;
 	private final int dividerSize;
-	private final Orientation orientation;
 
 	public SplitCompositeImpl(
 		final IGenericWidgetFactory factory,
@@ -61,8 +59,7 @@ public class SplitCompositeImpl extends SwtControl implements ISplitCompositeSpi
 		first.setLayout(setup.getFirstLayout());
 		second.setLayout(setup.getSecondLayout());
 
-		this.dividerSize = setup.getDividerSize() + 1;
-		this.orientation = setup.getOrientation();
+		this.dividerSize = setup.getDividerSize();
 
 		sashForm.setWeight(setup.getWeight());
 		sashForm.setSashWidth(dividerSize);
@@ -79,25 +76,13 @@ public class SplitCompositeImpl extends SwtControl implements ISplitCompositeSpi
 	}
 
 	@Override
-	public JoSashForm getUiReference() {
-		return (JoSashForm) super.getUiReference();
+	public void setClientAreaMinSizes(final Dimension firstMinSize, final Dimension secondMinSize) {
+		// TODO MG implement setMinSizes
 	}
 
 	@Override
-	public Dimension getMinSize() {
-		final Dimension firstMinSize = getFirst().getMinSize();
-		final Dimension secondMinSize = getSecond().getMinSize();
-
-		final int width = firstMinSize.getWidth() + secondMinSize.getWidth();
-		final int height = firstMinSize.getHeight() + secondMinSize.getHeight();
-
-		if (Orientation.HORIZONTAL == orientation) {
-			return new Dimension(width, height + dividerSize);
-		}
-		else {
-			return new Dimension(width + dividerSize, height);
-		}
-
+	public JoSashForm getUiReference() {
+		return (JoSashForm) super.getUiReference();
 	}
 
 }

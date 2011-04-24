@@ -32,6 +32,8 @@ import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ISplitComposite;
 import org.jowidgets.api.widgets.descriptor.setup.ISplitCompositeSetup;
+import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Orientation;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
@@ -43,12 +45,19 @@ public class SplitCompositeImpl extends AbstractSplitCompositeSpiWrapper impleme
 	private final ControlDelegate controlDelegate;
 	private final ContainerImpl first;
 	private final ContainerImpl second;
+	private final int dividerSize;
+	private final Orientation orientation;
+
+	private Dimension firstClientAreaMinSize;
+	private Dimension secondClientAreaMinSize;
 
 	public SplitCompositeImpl(final ISplitCompositeSpi containerWidgetSpi, final ISplitCompositeSetup setup) {
 		super(containerWidgetSpi);
 		this.controlDelegate = new ControlDelegate();
 		this.first = new ContainerImpl(getWidget().getFirst());
 		this.second = new ContainerImpl(getWidget().getSecond());
+		this.dividerSize = setup.getDividerSize();
+		this.orientation = setup.getOrientation();
 		this.first.setParent(this);
 		this.second.setParent(this);
 		VisibiliySettingsInvoker.setVisibility(setup, this);
@@ -78,6 +87,56 @@ public class SplitCompositeImpl extends AbstractSplitCompositeSpiWrapper impleme
 	@Override
 	public IContainer getSecond() {
 		return second;
+	}
+
+	@Override
+	public void setClientAreaMinSizes(final Dimension firstMinSize, final Dimension secondMinSize) {
+		this.firstClientAreaMinSize = firstMinSize;
+		this.secondClientAreaMinSize = secondMinSize;
+		getWidget().setClientAreaMinSizes(firstMinSize, secondMinSize);
+	}
+
+	@Override
+	public void setFirstClientAreaMinSize(final Dimension firstMinSize) {
+		this.firstClientAreaMinSize = firstMinSize;
+		getWidget().setClientAreaMinSizes(firstMinSize, secondClientAreaMinSize);
+	}
+
+	@Override
+	public void setSecondClientAreaMinSize(final Dimension secondMinSize) {
+		this.secondClientAreaMinSize = secondMinSize;
+		getWidget().setClientAreaMinSizes(firstClientAreaMinSize, secondMinSize);
+	}
+
+	@Override
+	public Dimension getFirstClientAreaMinSize() {
+		return firstClientAreaMinSize;
+	}
+
+	@Override
+	public Dimension getSecondClientAreaMinSize() {
+		return secondClientAreaMinSize;
+	}
+
+	@Override
+	public Dimension getMinSize() {
+		final Dimension firstMinSize = first.getMinSize();
+		final Dimension secondMinSize = second.getMinSize();
+
+		int width = firstMinSize != null ? firstMinSize.getWidth() : 0;
+		int height = firstMinSize != null ? firstMinSize.getHeight() : 0;
+
+		width = width + (secondMinSize != null ? secondMinSize.getWidth() : 0);
+		height = height + (secondMinSize != null ? secondMinSize.getHeight() : 0);
+
+		if (Orientation.HORIZONTAL == orientation) {
+			height = height + dividerSize;
+		}
+		else {
+			width = width + dividerSize;
+		}
+
+		return new Dimension(width, height);
 	}
 
 	@Override

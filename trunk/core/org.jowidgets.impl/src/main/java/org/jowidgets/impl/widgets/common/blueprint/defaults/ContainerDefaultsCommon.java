@@ -28,37 +28,14 @@
 package org.jowidgets.impl.widgets.common.blueprint.defaults;
 
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
-import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.builder.IContainerSetupBuilderCommon;
-import org.jowidgets.common.widgets.layout.ILayouter;
+import org.jowidgets.impl.layout.DummyLayouter;
 
 public class ContainerDefaultsCommon implements IDefaultInitializer<IContainerSetupBuilderCommon<?>> {
 
 	@Override
 	public void initialize(final IContainerSetupBuilderCommon<?> builder) {
-		builder.setLayout(new ILayouter() {
-
-			@Override
-			public void layout() {}
-
-			@Override
-			public void invalidate() {}
-
-			@Override
-			public Dimension getPreferredSize() {
-				return new Dimension(50, 50);
-			}
-
-			@Override
-			public Dimension getMinSize() {
-				return new Dimension(0, 0);
-			}
-
-			@Override
-			public Dimension getMaxSize() {
-				return new Dimension(Short.MAX_VALUE, Short.MAX_VALUE);
-			}
-		});
+		builder.setLayout(new DummyLayouter());
 	}
 
 }

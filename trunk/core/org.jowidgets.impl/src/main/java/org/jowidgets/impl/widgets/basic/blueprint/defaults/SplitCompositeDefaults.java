@@ -32,20 +32,20 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.common.types.Border;
 import org.jowidgets.common.types.Orientation;
 import org.jowidgets.common.types.SplitResizePolicy;
-import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.impl.layout.DummyLayouter;
 
-public class SplitCompositeWidgetDefaults implements IDefaultInitializer<ISplitCompositeSetupBuilder<?>> {
+public class SplitCompositeDefaults implements IDefaultInitializer<ISplitCompositeSetupBuilder<?>> {
 
 	@Override
 	public void initialize(final ISplitCompositeSetupBuilder<?> builder) {
 		builder.setOrientation(Orientation.HORIZONTAL);
-		builder.setDividerSize(3);
+		builder.setDividerSize(4);
 		builder.setWeight(0.5);
 		builder.setResizePolicy(SplitResizePolicy.RESIZE_BOTH);
 		builder.setFirstBorder(new Border());
 		builder.setSecondBorder(new Border());
-		builder.setFirstLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
-		builder.setSecondLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
+		builder.setFirstLayout(new DummyLayouter());
+		builder.setSecondLayout(new DummyLayouter());
 	}
 
 }

@@ -28,20 +28,27 @@
 package org.jowidgets.spi.impl.swing.util;
 
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.util.Assert;
 
 public final class DimensionConvert {
 
 	private DimensionConvert() {};
 
 	public static java.awt.Dimension convert(final Dimension dimension) {
-		Assert.paramNotNull(dimension, "dimension");
-		return new java.awt.Dimension(dimension.getWidth(), dimension.getHeight());
+		if (dimension != null) {
+			return new java.awt.Dimension(dimension.getWidth(), dimension.getHeight());
+		}
+		else {
+			return null;
+		}
 	}
 
 	public static Dimension convert(final java.awt.Dimension dimension) {
-		Assert.paramNotNull(dimension, "dimension");
-		return new Dimension(dimension.width, dimension.height);
+		if (dimension != null) {
+			return new Dimension(dimension.width, dimension.height);
+		}
+		else {
+			return null;
+		}
 	}
 
 }

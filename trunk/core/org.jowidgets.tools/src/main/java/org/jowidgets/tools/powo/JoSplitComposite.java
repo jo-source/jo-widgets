@@ -34,12 +34,16 @@ import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.ISplitCompositeDescriptor;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Orientation;
 
 public class JoSplitComposite extends Control<ISplitComposite, ISplitCompositeBluePrint> implements ISplitComposite {
 
 	private final JoContainer first;
 	private final JoContainer second;
+
+	private Dimension firstMinSize;
+	private Dimension secondMinSize;
 
 	public JoSplitComposite(final Orientation orientation) {
 		this(Toolkit.getBluePrintFactory().splitComposite().setOrientation(orientation));
@@ -74,6 +78,10 @@ public class JoSplitComposite extends Control<ISplitComposite, ISplitCompositeBl
 
 		first.initialize(widget.getFirst());
 		second.initialize(widget.getSecond());
+
+		if (firstMinSize != null || secondMinSize != null) {
+			widget.setClientAreaMinSizes(firstMinSize, secondMinSize);
+		}
 	}
 
 	@Override
@@ -84,6 +92,57 @@ public class JoSplitComposite extends Control<ISplitComposite, ISplitCompositeBl
 	@Override
 	public JoContainer getSecond() {
 		return second;
+	}
+
+	@Override
+	public void setClientAreaMinSizes(final Dimension firstMinSize, final Dimension secondMinSize) {
+		if (isInitialized()) {
+			getWidget().setClientAreaMinSizes(firstMinSize, secondMinSize);
+		}
+		else {
+			this.firstMinSize = firstMinSize;
+			this.secondMinSize = secondMinSize;
+		}
+	}
+
+	@Override
+	public void setFirstClientAreaMinSize(final Dimension size) {
+		if (isInitialized()) {
+			getWidget().setFirstClientAreaMinSize(size);
+		}
+		else {
+			this.firstMinSize = size;
+		}
+	}
+
+	@Override
+	public void setSecondClientAreaMinSize(final Dimension size) {
+		if (isInitialized()) {
+			getWidget().setSecondClientAreaMinSize(size);
+		}
+		else {
+			this.secondMinSize = size;
+		}
+	}
+
+	@Override
+	public Dimension getFirstClientAreaMinSize() {
+		if (isInitialized()) {
+			return getWidget().getFirstClientAreaMinSize();
+		}
+		else {
+			return firstMinSize;
+		}
+	}
+
+	@Override
+	public Dimension getSecondClientAreaMinSize() {
+		if (isInitialized()) {
+			return getWidget().getSecondClientAreaMinSize();
+		}
+		else {
+			return secondMinSize;
+		}
 	}
 
 	public static ISplitCompositeBluePrint bluePrint() {

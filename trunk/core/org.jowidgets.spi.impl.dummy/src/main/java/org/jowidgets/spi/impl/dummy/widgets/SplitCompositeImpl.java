@@ -28,6 +28,7 @@
 
 package org.jowidgets.spi.impl.dummy.widgets;
 
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDContainer;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDSplitPane;
@@ -71,6 +72,11 @@ public class SplitCompositeImpl extends DummyControl implements ISplitCompositeS
 	@Override
 	public ICompositeSpi getSecond() {
 		return second;
+	}
+
+	@Override
+	public void setClientAreaMinSizes(final Dimension firstMinSize, final Dimension secondMinSize) {
+		// TODO LG implement setMinSizes
 	}
 
 	@Override
