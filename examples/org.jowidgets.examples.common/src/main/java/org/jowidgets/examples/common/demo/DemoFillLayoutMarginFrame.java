@@ -32,7 +32,9 @@ import org.jowidgets.api.layout.ILayoutFactoryProvider;
 import org.jowidgets.api.model.table.ISimpleTableModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.ISplitComposite;
 import org.jowidgets.api.widgets.ITextArea;
+import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.tools.model.table.SimpleTableModel;
@@ -41,23 +43,22 @@ import org.jowidgets.tools.powo.JoFrame;
 public class DemoFillLayoutMarginFrame extends JoFrame {
 
 	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
+	private static final ILayoutFactoryProvider LFP = Toolkit.getLayoutFactoryProvider();
 
 	public DemoFillLayoutMarginFrame() {
 		super("Fill layout (margin) demo");
 
-		final ILayoutFactoryProvider lfp = Toolkit.getLayoutFactoryProvider();
-
-		final ILayouter layouter = setLayout(lfp.fillLayoutBuilder().margin(100).build());
+		final ILayouter layouter = setLayout(LFP.fillLayoutBuilder().margin(100).build());
 
 		//addTextArea(this);
-		addTable(this);
+		//addTable(this);
+		addSplitComposite(this);
 
 		setClientAreaMinSize(layouter.getMinSize());
-		pack();
-		//setSize(500, 400);
+		//pack();
+		setSize(500, 400);
 	}
 
-	@SuppressWarnings("unused")
 	private void addTextArea(final IContainer container) {
 		final ITextArea textArea = container.add(BPF.textArea());
 
@@ -83,5 +84,19 @@ public class DemoFillLayoutMarginFrame extends JoFrame {
 
 		container.add(BPF.table(tableModel).setBorder(true));
 
+	}
+
+	private void addSplitComposite(final IContainer container) {
+		final ISplitCompositeBluePrint splitBp = BPF.splitComposite().resizeSecondPolicy();
+		splitBp.setVertical().setFirstBorder(null).setSecondBorder(null);
+		final ISplitComposite split = container.add(splitBp);
+		final IContainer first = split.getFirst();
+		final IContainer second = split.getSecond();
+
+		first.setLayout(LFP.fillLayout());
+		second.setLayout(LFP.fillLayout());
+
+		addTextArea(split.getFirst());
+		addTable(split.getSecond());
 	}
 }

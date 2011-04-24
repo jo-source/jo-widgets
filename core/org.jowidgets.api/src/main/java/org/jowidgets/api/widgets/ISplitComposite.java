@@ -28,6 +28,7 @@
 
 package org.jowidgets.api.widgets;
 
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.ISplitCompositeCommon;
 
 public interface ISplitComposite extends IControl, ISplitCompositeCommon {
@@ -37,5 +38,13 @@ public interface ISplitComposite extends IControl, ISplitCompositeCommon {
 
 	@Override
 	IContainer getSecond();
+
+	void setFirstClientAreaMinSize(final Dimension size);
+
+	void setSecondClientAreaMinSize(final Dimension size);
+
+	Dimension getFirstClientAreaMinSize();
+
+	Dimension getSecondClientAreaMinSize();
 
 }

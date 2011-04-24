@@ -32,9 +32,11 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.SplitResizePolicy;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.impl.swing.util.BorderConvert;
+import org.jowidgets.spi.impl.swing.util.DimensionConvert;
 import org.jowidgets.spi.impl.swing.util.SplitOrientationConvert;
 import org.jowidgets.spi.impl.swing.widgets.base.JoSplitPane;
 import org.jowidgets.spi.widgets.ICompositeSpi;
@@ -46,25 +48,28 @@ public class SplitCompositeImpl extends SwingControl implements ISplitCompositeS
 	private final ICompositeSpi first;
 	private final ICompositeSpi second;
 
+	private final JPanel firstPanel;
+	private final JPanel secondPanel;
+
 	public SplitCompositeImpl(final IGenericWidgetFactory factory, final ISplitCompositeSetupSpi setup) {
 		super(new JoSplitPane(SplitOrientationConvert.convert(setup.getOrientation()), setup.getWeight(), getResizeWeight(setup)));
 
-		final JPanel content1 = new JPanel();
-		final JPanel content2 = new JPanel();
+		this.firstPanel = new JPanel();
+		this.secondPanel = new JPanel();
 
-		content1.setBorder(BorderConvert.convert(setup.getFirstBorder()));
-		content2.setBorder(BorderConvert.convert(setup.getSecondBorder()));
+		firstPanel.setBorder(BorderConvert.convert(setup.getFirstBorder()));
+		secondPanel.setBorder(BorderConvert.convert(setup.getSecondBorder()));
 
-		first = new SwingComposite(factory, content1);
-		second = new SwingComposite(factory, content2);
+		first = new SwingComposite(factory, firstPanel);
+		second = new SwingComposite(factory, secondPanel);
 
 		first.setLayout(setup.getFirstLayout());
 		second.setLayout(setup.getSecondLayout());
 
 		final JSplitPane splitPane = getUiReference();
 
-		splitPane.setLeftComponent(content1);
-		splitPane.setRightComponent(content2);
+		splitPane.setLeftComponent(firstPanel);
+		splitPane.setRightComponent(secondPanel);
 
 		splitPane.setBorder(BorderFactory.createEmptyBorder());
 		splitPane.setDividerSize(setup.getDividerSize());
@@ -78,6 +83,12 @@ public class SplitCompositeImpl extends SwingControl implements ISplitCompositeS
 	@Override
 	public ICompositeSpi getSecond() {
 		return second;
+	}
+
+	@Override
+	public void setClientAreaMinSizes(final Dimension firstMinSize, final Dimension secondMinSize) {
+		firstPanel.setMinimumSize(DimensionConvert.convert(firstMinSize));
+		secondPanel.setMinimumSize(DimensionConvert.convert(secondMinSize));
 	}
 
 	@Override
