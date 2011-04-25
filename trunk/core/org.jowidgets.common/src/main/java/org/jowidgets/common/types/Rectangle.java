@@ -28,13 +28,20 @@
 
 package org.jowidgets.common.types;
 
-public class Rectangle {
+import org.jowidgets.util.Assert;
+
+public final class Rectangle {
 
 	private final Position position;
 	private final Dimension size;
 
+	public Rectangle(final int x, final int y, final int width, final int height) {
+		this(new Position(x, y), new Dimension(width, height));
+	}
+
 	public Rectangle(final Position position, final Dimension size) {
-		super();
+		Assert.paramNotNull(position, "position");
+		Assert.paramNotNull(size, "size");
 		this.position = position;
 		this.size = size;
 	}
@@ -47,10 +54,24 @@ public class Rectangle {
 		return size;
 	}
 
+	public int getWidth() {
+		return size.getWidth();
+	}
+
+	public int getHeight() {
+		return size.getHeight();
+	}
+
+	public int getX() {
+		return position.getX();
+	}
+
+	public int getY() {
+		return position.getY();
+	}
+
 	public boolean contains(final Position point) {
-		if ((position == null) || (size == null)) {
-			return false;
-		}
+		Assert.paramNotNull(point, "point");
 
 		return (point.getX() >= position.getX())
 			&& (point.getY() >= position.getY())
