@@ -39,12 +39,8 @@ public interface ISplitComposite extends IControl, ISplitCompositeCommon {
 	@Override
 	IContainer getSecond();
 
-	void setFirstClientAreaMinSize(final Dimension size);
+	Dimension getFirstMinSize();
 
-	void setSecondClientAreaMinSize(final Dimension size);
-
-	Dimension getFirstClientAreaMinSize();
-
-	Dimension getSecondClientAreaMinSize();
+	Dimension getSecondMinSize();
 
 }

@@ -75,7 +75,7 @@ public class SplitCompositeImpl extends DummyControl implements ISplitCompositeS
 	}
 
 	@Override
-	public void setClientAreaMinSizes(final Dimension firstMinSize, final Dimension secondMinSize) {
+	public void setMinSizes(final Dimension firstMinSize, final Dimension secondMinSize) {
 		// TODO LG implement setMinSizes
 	}
 

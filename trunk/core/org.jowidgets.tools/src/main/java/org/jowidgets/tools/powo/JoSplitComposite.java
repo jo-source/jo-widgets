@@ -80,7 +80,7 @@ public class JoSplitComposite extends Control<ISplitComposite, ISplitCompositeBl
 		second.initialize(widget.getSecond());
 
 		if (firstMinSize != null || secondMinSize != null) {
-			widget.setClientAreaMinSizes(firstMinSize, secondMinSize);
+			widget.setMinSizes(firstMinSize, secondMinSize);
 		}
 	}
 
@@ -95,9 +95,9 @@ public class JoSplitComposite extends Control<ISplitComposite, ISplitCompositeBl
 	}
 
 	@Override
-	public void setClientAreaMinSizes(final Dimension firstMinSize, final Dimension secondMinSize) {
+	public void setMinSizes(final Dimension firstMinSize, final Dimension secondMinSize) {
 		if (isInitialized()) {
-			getWidget().setClientAreaMinSizes(firstMinSize, secondMinSize);
+			getWidget().setMinSizes(firstMinSize, secondMinSize);
 		}
 		else {
 			this.firstMinSize = firstMinSize;
@@ -106,29 +106,9 @@ public class JoSplitComposite extends Control<ISplitComposite, ISplitCompositeBl
 	}
 
 	@Override
-	public void setFirstClientAreaMinSize(final Dimension size) {
+	public Dimension getFirstMinSize() {
 		if (isInitialized()) {
-			getWidget().setFirstClientAreaMinSize(size);
-		}
-		else {
-			this.firstMinSize = size;
-		}
-	}
-
-	@Override
-	public void setSecondClientAreaMinSize(final Dimension size) {
-		if (isInitialized()) {
-			getWidget().setSecondClientAreaMinSize(size);
-		}
-		else {
-			this.secondMinSize = size;
-		}
-	}
-
-	@Override
-	public Dimension getFirstClientAreaMinSize() {
-		if (isInitialized()) {
-			return getWidget().getFirstClientAreaMinSize();
+			return getWidget().getFirstMinSize();
 		}
 		else {
 			return firstMinSize;
@@ -136,9 +116,9 @@ public class JoSplitComposite extends Control<ISplitComposite, ISplitCompositeBl
 	}
 
 	@Override
-	public Dimension getSecondClientAreaMinSize() {
+	public Dimension getSecondMinSize() {
 		if (isInitialized()) {
-			return getWidget().getSecondClientAreaMinSize();
+			return getWidget().getSecondMinSize();
 		}
 		else {
 			return secondMinSize;
