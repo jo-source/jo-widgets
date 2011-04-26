@@ -52,8 +52,9 @@ public class DemoScrollCompositeFrame extends JoFrame {
 			};
 		});
 
-		setLayout(new MigLayoutDescriptor("[grow]", "grow"));
+		setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
 		final IScrollComposite scrollComposite = add(BPF.scrollComposite(), "growx, growy, w 0::, h 0::");
+		scrollComposite.setLayout(new MigLayoutDescriptor("[grow]", ""));
 
 		final Runnable updater = new Runnable() {
 
