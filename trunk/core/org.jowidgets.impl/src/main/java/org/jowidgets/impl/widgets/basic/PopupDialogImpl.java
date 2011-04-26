@@ -57,6 +57,8 @@ public class PopupDialogImpl extends ComponentSpiWrapper implements IPopupDialog
 	private final DisplayDelegate displayDelegate;
 	private final ContainerDelegate containerDelegate;
 
+	private ILayouter layouter;
+
 	public PopupDialogImpl(final IPopupDialogSpi widget, final IPopupDialogSetup setup) {
 		super(widget);
 		this.displayDelegate = new DisplayDelegate();
@@ -83,11 +85,6 @@ public class PopupDialogImpl extends ComponentSpiWrapper implements IPopupDialog
 	}
 
 	@Override
-	public void pack() {
-		getWidget().pack();
-	}
-
-	@Override
 	public void dispose() {
 		getWidget().dispose();
 	}
@@ -102,7 +99,21 @@ public class PopupDialogImpl extends ComponentSpiWrapper implements IPopupDialog
 
 	@Override
 	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
+		Assert.paramNotNull(layoutDescriptor, "layoutDescriptor");
+		if (layoutDescriptor instanceof ILayouter) {
+			this.layouter = (ILayouter) layoutDescriptor;
+		}
 		getWidget().setLayout(layoutDescriptor);
+	}
+
+	@Override
+	public void pack() {
+		if (layouter != null) {
+			setSize(layouter.getPreferredSize());
+		}
+		else {
+			getWidget().pack();
+		}
 	}
 
 	@Override

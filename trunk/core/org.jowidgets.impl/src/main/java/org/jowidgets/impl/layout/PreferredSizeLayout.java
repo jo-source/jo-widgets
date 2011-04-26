@@ -91,6 +91,6 @@ final class PreferredSizeLayout implements ILayouter {
 			maxX = Math.max(maxX, controlPos.getX() + controlSize.getWidth());
 			maxY = Math.max(maxY, controlPos.getY() + controlSize.getHeight());
 		}
-		return new Dimension(maxX, maxY);
+		return container.computeDecoratedSize(new Dimension(maxX, maxY));
 	}
 }

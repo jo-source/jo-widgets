@@ -32,9 +32,13 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IFrameCommon;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
+import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.spi.widgets.IFrameSpi;
+import org.jowidgets.util.Assert;
 
 public abstract class AbstractFrameSpiWrapper extends AbstractWindowSpiWrapper implements IFrameCommon {
+
+	private ILayouter layouter;
 
 	public AbstractFrameSpiWrapper(final IFrameSpi widget) {
 		super(widget);
@@ -47,7 +51,21 @@ public abstract class AbstractFrameSpiWrapper extends AbstractWindowSpiWrapper i
 
 	@Override
 	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
+		Assert.paramNotNull(layoutDescriptor, "layoutDescriptor");
+		if (layoutDescriptor instanceof ILayouter) {
+			this.layouter = (ILayouter) layoutDescriptor;
+		}
 		getWidget().setLayout(layoutDescriptor);
+	}
+
+	@Override
+	public void pack() {
+		if (layouter != null) {
+			setSize(layouter.getPreferredSize());
+		}
+		else {
+			super.pack();
+		}
 	}
 
 	@Override
