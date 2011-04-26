@@ -237,10 +237,30 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		final Insets insets = table.getBorder().getBorderInsets(table);
 		int width = preferredSize.width + insets.left + insets.right;
 		int height = preferredSize.height + insets.top + insets.bottom + headerSize.height;
-		if (hasBorder) {
-			width = width + 2;
-			height = height + 2;
-		}
+
+		final Insets spInsets = getUiReference().getInsets();
+
+		width = width + spInsets.left + spInsets.right;
+		height = height + spInsets.bottom + spInsets.top;
+
+		return new Dimension(width, height);
+	}
+
+	@Override
+	public Dimension getMinSize() {
+		final java.awt.Dimension minSize = getUiReference().getMinimumSize();
+
+		final java.awt.Dimension headerSize = table.getTableHeader().getMinimumSize();
+
+		final Insets insets = table.getBorder().getBorderInsets(table);
+		int width = minSize.width + insets.left + insets.right;
+		int height = minSize.height + insets.top + insets.bottom + (int) headerSize.getHeight();
+
+		final Insets spInsets = getUiReference().getInsets();
+
+		width = width + spInsets.left + spInsets.right + 17;
+		height = height + spInsets.bottom + spInsets.top + 17;
+
 		return new Dimension(width, height);
 	}
 

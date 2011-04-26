@@ -58,7 +58,7 @@ public class DemoPreferredSizeLayoutFrame extends JoFrame {
 			button.setText("Button " + i);
 		}
 
-		setClientAreaMinSize(layouter.getMinSize());
+		setMinSize(layouter.getMinSize());
 		pack();
 	}
 }

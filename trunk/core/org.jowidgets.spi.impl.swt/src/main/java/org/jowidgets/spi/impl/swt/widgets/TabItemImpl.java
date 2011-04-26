@@ -44,6 +44,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.controler.IComponentListener;
 import org.jowidgets.common.widgets.controler.IFocusListener;
@@ -268,8 +269,13 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 	}
 
 	@Override
-	public Dimension getClientAreaSize() {
-		return swtContainer.getClientAreaSize();
+	public Rectangle getClientArea() {
+		return swtContainer.getClientArea();
+	}
+
+	@Override
+	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+		return swtContainer.computeDecoratedSize(clientAreaSize);
 	}
 
 	@Override

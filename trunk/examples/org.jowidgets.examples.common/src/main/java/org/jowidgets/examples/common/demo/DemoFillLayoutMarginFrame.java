@@ -31,12 +31,15 @@ package org.jowidgets.examples.common.demo;
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
 import org.jowidgets.api.model.table.ISimpleTableModel;
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.ISplitComposite;
+import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.api.widgets.ITextArea;
 import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.widgets.layout.ILayouter;
+import org.jowidgets.tools.controler.WindowAdapter;
 import org.jowidgets.tools.model.table.SimpleTableModel;
 import org.jowidgets.tools.powo.JoFrame;
 
@@ -52,14 +55,21 @@ public class DemoFillLayoutMarginFrame extends JoFrame {
 
 		//addTextArea(this);
 		//addTable(this);
-		addSplitComposite(this);
+		addComposite(this);
+		//addSplitComposite(this);
 
-		setClientAreaMinSize(layouter.getMinSize());
 		//pack();
 		setSize(500, 400);
+
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowActivated() {
+				setMinSize(layouter.getMinSize());
+			}
+		});
 	}
 
-	private void addTextArea(final IContainer container) {
+	private ITextArea addTextArea(final IContainer container) {
 		final ITextArea textArea = container.add(BPF.textArea());
 
 		final StringBuilder stringBuilder = new StringBuilder();
@@ -67,9 +77,10 @@ public class DemoFillLayoutMarginFrame extends JoFrame {
 			stringBuilder.append("Text area in a fill layout. ");
 		}
 		textArea.setText(stringBuilder.toString());
+		return textArea;
 	}
 
-	private void addTable(final IContainer container) {
+	private ITable addTable(final IContainer container) {
 		final ISimpleTableModel tableModel = new SimpleTableModel();
 		for (int i = 0; i < 10; i++) {
 			tableModel.addColumn("Column " + i);
@@ -82,13 +93,25 @@ public class DemoFillLayoutMarginFrame extends JoFrame {
 			}
 		}
 
-		container.add(BPF.table(tableModel).setBorder(true));
+		return container.add(BPF.table(tableModel).setBorder(true));
 
 	}
 
+	private void addComposite(final IContainer container) {
+		IComposite composite = container.add(BPF.composite().setBorder());
+		composite.setLayout(LFP.fillLayout());
+		for (int i = 0; i < 10; i++) {
+			composite = composite.add(BPF.composite().setBorder());
+			composite.setLayout(LFP.fillLayout());
+		}
+
+		addTextArea(composite);
+	}
+
+	@SuppressWarnings("unused")
 	private void addSplitComposite(final IContainer container) {
 		final ISplitCompositeBluePrint splitBp = BPF.splitComposite().resizeSecondPolicy();
-		splitBp.setVertical().setFirstBorder(null).setSecondBorder(null);
+		splitBp.setVertical();
 		final ISplitComposite split = container.add(splitBp);
 		final IContainer first = split.getFirst();
 		final IContainer second = split.getSecond();
@@ -96,7 +119,9 @@ public class DemoFillLayoutMarginFrame extends JoFrame {
 		first.setLayout(LFP.fillLayout());
 		second.setLayout(LFP.fillLayout());
 
-		addTextArea(split.getFirst());
-		addTable(split.getSecond());
+		final ITextArea textArea = addTextArea(split.getFirst());
+		final ITable table = addTable(split.getSecond());
+
+		split.setClientAreaMinSizes(textArea.getMinSize(), table.getMinSize());
 	}
 }

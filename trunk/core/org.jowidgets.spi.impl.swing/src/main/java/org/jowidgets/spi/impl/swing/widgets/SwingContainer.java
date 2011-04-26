@@ -36,6 +36,7 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.controler.IComponentListener;
@@ -51,6 +52,7 @@ import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.spi.impl.swing.layout.LayoutManagerImpl;
+import org.jowidgets.spi.impl.swing.util.DecorationCalc;
 import org.jowidgets.spi.impl.swing.widgets.util.ChildRemover;
 import org.jowidgets.spi.widgets.IContainerSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
@@ -156,8 +158,14 @@ public class SwingContainer implements IContainerSpi {
 	}
 
 	@Override
-	public Dimension getClientAreaSize() {
-		return getSize();
+	public Rectangle getClientArea() {
+		return DecorationCalc.getClientArea(getUiReference());
+	}
+
+	@Override
+	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+		Assert.paramNotNull(clientAreaSize, "clientAreaSize");
+		return DecorationCalc.computeDecoratedSize(container, clientAreaSize);
 	}
 
 	@Override

@@ -37,6 +37,7 @@ import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
 import org.jowidgets.api.widgets.descriptor.IDialogDescriptor;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.util.Assert;
 
 public class JoDialog extends Window<IFrame, IDialogBluePrint> implements IFrame {
@@ -165,6 +166,16 @@ public class JoDialog extends Window<IFrame, IDialogBluePrint> implements IFrame
 		else {
 			this.defaultButton = defaultButton;
 		}
+	}
+
+	@Override
+	public void setMinSize(final Dimension minSize) {
+		getWidget().setMinSize(minSize);
+	}
+
+	@Override
+	public void setMinSize(final int width, final int height) {
+		getWidget().setMinSize(width, height);
 	}
 
 	public static JoDialog toJoDialog(final IFrame widget) {

@@ -29,20 +29,27 @@ package org.jowidgets.spi.impl.swt.util;
 
 import org.eclipse.swt.graphics.Point;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.util.Assert;
 
 public final class DimensionConvert {
 
 	private DimensionConvert() {};
 
 	public static Point convert(final Dimension dimension) {
-		Assert.paramNotNull(dimension, "dimension");
-		return new Point(dimension.getWidth(), dimension.getHeight());
+		if (dimension != null) {
+			return new Point(dimension.getWidth(), dimension.getHeight());
+		}
+		else {
+			return null;
+		}
 	}
 
 	public static Dimension convert(final Point point) {
-		Assert.paramNotNull(point, "point");
-		return new Dimension(point.x, point.y);
+		if (point != null) {
+			return new Dimension(point.x, point.y);
+		}
+		else {
+			return null;
+		}
 	}
 
 }

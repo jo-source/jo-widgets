@@ -85,8 +85,7 @@ public class DummyWindow extends DummyContainer implements IWindowSpi {
 		getUiReference().setSize(size);
 	}
 
-	@Override
-	public void setClientAreaMinSize(final Dimension minSize) {
+	public void setMinSize(final Dimension minSize) {
 		getUiReference().setMinSize(minSize);
 	}
 

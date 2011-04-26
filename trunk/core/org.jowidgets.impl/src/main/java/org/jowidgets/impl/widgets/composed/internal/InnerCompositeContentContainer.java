@@ -43,6 +43,7 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.controler.IComponentListener;
 import org.jowidgets.common.widgets.controler.IFocusListener;
@@ -163,8 +164,13 @@ public class InnerCompositeContentContainer implements IInputContentContainer {
 	}
 
 	@Override
-	public Dimension getClientAreaSize() {
-		return compositeWidget.getClientAreaSize();
+	public Rectangle getClientArea() {
+		return compositeWidget.getClientArea();
+	}
+
+	@Override
+	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+		return compositeWidget.computeDecoratedSize(clientAreaSize);
 	}
 
 	@Override

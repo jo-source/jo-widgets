@@ -31,6 +31,7 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.controler.IComponentListener;
 import org.jowidgets.common.widgets.controler.IFocusListener;
 import org.jowidgets.common.widgets.controler.IKeyListener;
@@ -171,8 +172,12 @@ public class DummyComponent extends DummyWidget implements IComponentSpi {
 		return new PopupMenuImpl(getUiReference());
 	}
 
-	public Dimension getClientAreaSize() {
-		return getSize();
+	public Rectangle getClientArea() {
+		return getUiReference().getClientArea();
+	}
+
+	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+		return getUiReference().computeDecoratedSize(clientAreaSize);
 	}
 
 }

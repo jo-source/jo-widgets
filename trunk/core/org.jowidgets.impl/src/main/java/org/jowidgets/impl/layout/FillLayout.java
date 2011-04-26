@@ -31,6 +31,7 @@ package org.jowidgets.impl.layout;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.util.Assert;
 
@@ -48,7 +49,6 @@ final class FillLayout implements ILayouter {
 	private Dimension maxSize;
 
 	private Dimension controlMinSize;
-	private Dimension controlMaxSize;
 
 	FillLayout(
 		final IContainer container,
@@ -69,17 +69,16 @@ final class FillLayout implements ILayouter {
 	public void layout() {
 		final IControl control = getFirstControl();
 		if (control != null) {
-			control.setPosition(marginLeft, marginTop);
+			final Rectangle clientArea = container.getClientArea();
 
-			final Dimension clientSize = container.getClientAreaSize();
+			control.setPosition(clientArea.getX() + marginLeft, clientArea.getY() + marginTop);
+
+			final Dimension clientSize = clientArea.getSize();
 			final Dimension ctrlMinSize = getControlMinSize();
-			final Dimension ctrlMaxSize = getControlMaxSize();
 
-			int width = Math.max(ctrlMinSize.getWidth(), clientSize.getWidth() - marginRight - marginLeft);
-			int height = Math.max(ctrlMinSize.getHeight(), clientSize.getHeight() - marginBottom - marginTop);
+			final int width = Math.max(ctrlMinSize.getWidth(), clientSize.getWidth() - marginRight - marginLeft);
+			final int height = Math.max(ctrlMinSize.getHeight(), clientSize.getHeight() - marginBottom - marginTop);
 
-			width = Math.min(width, ctrlMaxSize.getWidth());
-			height = Math.min(height, ctrlMaxSize.getHeight());
 			control.setSize(width, height);
 		}
 	}
@@ -114,7 +113,6 @@ final class FillLayout implements ILayouter {
 		minSize = null;
 		preferredSize = null;
 		controlMinSize = null;
-		controlMaxSize = null;
 	}
 
 	private Dimension getControlMinSize() {
@@ -124,44 +122,38 @@ final class FillLayout implements ILayouter {
 		return controlMinSize;
 	}
 
-	private Dimension getControlMaxSize() {
-		if (controlMaxSize == null) {
-			this.controlMaxSize = getFirstControl().getMaxSize();
-		}
-		return controlMaxSize;
-	}
-
 	private Dimension calcMinSize() {
 		final IControl control = getFirstControl();
+
+		int width = marginLeft + marginRight;
+		int height = marginTop + marginBottom;
+
 		if (control != null) {
 			final Dimension size = control.getMinSize();
-			return new Dimension(marginLeft + marginRight + size.getWidth(), marginTop + marginBottom + size.getHeight());
+			width = width + size.getWidth();
+			height = height + size.getHeight();
 		}
-		else {
-			return new Dimension(0, 0);
-		}
+
+		return container.computeDecoratedSize(new Dimension(width, height));
 	}
 
 	private Dimension calcPreferredSize() {
 		final IControl control = getFirstControl();
+
+		int width = marginLeft + marginRight;
+		int height = marginTop + marginBottom;
+
 		if (control != null) {
 			final Dimension size = control.getPreferredSize();
-			return new Dimension(marginLeft + marginRight + size.getWidth(), marginBottom + marginBottom + size.getHeight());
+			width = width + size.getWidth();
+			height = height + size.getHeight();
 		}
-		else {
-			return new Dimension(0, 0);
-		}
+
+		return container.computeDecoratedSize(new Dimension(width, height));
 	}
 
 	private Dimension calcMaxSize() {
-		final IControl control = getFirstControl();
-		if (control != null) {
-			final Dimension size = control.getMaxSize();
-			return new Dimension(marginLeft + marginRight + size.getWidth(), marginBottom + marginBottom + size.getHeight());
-		}
-		else {
-			return new Dimension(0, 0);
-		}
+		return new Dimension(Short.MAX_VALUE, Short.MAX_VALUE);
 	}
 
 	private IControl getFirstControl() {

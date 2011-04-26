@@ -38,6 +38,7 @@ import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.blueprint.builder.IContainerSetupBuilder;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
@@ -226,9 +227,15 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 	}
 
 	@Override
-	public Dimension getClientAreaSize() {
+	public Rectangle getClientArea() {
 		checkInitialized();
-		return getWidget().getClientAreaSize();
+		return getWidget().getClientArea();
+	}
+
+	@Override
+	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+		checkInitialized();
+		return getWidget().computeDecoratedSize(clientAreaSize);
 	}
 
 	@Override

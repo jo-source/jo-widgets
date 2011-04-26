@@ -27,13 +27,21 @@
  */
 package org.jowidgets.spi.impl.swing.util;
 
+import java.awt.Color;
+
 import javax.swing.BorderFactory;
+import javax.swing.UIManager;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.jowidgets.common.types.Border;
 import org.jowidgets.spi.impl.swing.widgets.defaults.Colors;
 
 public final class BorderConvert {
+
+	private static final javax.swing.border.Border BORDER = createBorder();
+	private static final javax.swing.border.Border EMPTY_BORDER = BorderFactory.createEmptyBorder();
 
 	private BorderConvert() {};
 
@@ -46,13 +54,20 @@ public final class BorderConvert {
 				return result;
 			}
 			else {
-				return BorderFactory.createEtchedBorder();
+				return BORDER;
 			}
 		}
 		else {
-			return BorderFactory.createEmptyBorder();
+			return EMPTY_BORDER;
 		}
 
 	}
 
+	private static javax.swing.border.Border createBorder() {
+		javax.swing.border.Border textFieldBorder = UIManager.getBorder("TextField.border");
+		if (textFieldBorder == null) {
+			textFieldBorder = BorderFactory.createLineBorder(Color.gray, 1);
+		}
+		return new CompoundBorder(textFieldBorder, new EmptyBorder(1, 1, 1, 1));
+	}
 }

@@ -25,37 +25,27 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets;
+package org.jowidgets.spi.impl.swt.util;
 
-import java.util.List;
+import org.jowidgets.common.types.Rectangle;
+import org.jowidgets.util.Assert;
 
-import org.jowidgets.common.widgets.IWindowCommon;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+public final class RectangleConvert {
 
-public interface IWindow extends IDisplay, IComponent, IWindowCommon {
+	private RectangleConvert() {};
 
-	/**
-	 * Centers the location relative to the parent display
-	 */
-	void centerLocation();
+	public static org.eclipse.swt.graphics.Rectangle convert(final Rectangle rectangle) {
+		Assert.paramNotNull(rectangle, "rectangle");
+		return new org.eclipse.swt.graphics.Rectangle(
+			rectangle.getX(),
+			rectangle.getY(),
+			rectangle.getWidth(),
+			rectangle.getHeight());
+	}
 
-	/**
-	 * Creates a child window with this window as parent
-	 * 
-	 * @param <WIDGET_TYPE> The type of the created child window
-	 * @param <DESCRIPTOR_TYPE> The type of the child windows descriptor
-	 * @param descriptor The child windows descriptor
-	 * @return The created window
-	 */
-	<WIDGET_TYPE extends IDisplay, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
-		final DESCRIPTOR_TYPE descriptor);
-
-	/**
-	 * Gets the child windows of this window
-	 * 
-	 * @return all children of this window or an empty list if this window
-	 *         has no child windows
-	 */
-	List<IDisplay> getChildWindows();
+	public static Rectangle convert(final org.eclipse.swt.graphics.Rectangle rectangle) {
+		Assert.paramNotNull(rectangle, "rectangle");
+		return new Rectangle(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+	}
 
 }

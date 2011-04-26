@@ -44,6 +44,7 @@ import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.types.Border;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
@@ -193,8 +194,13 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractInputComponent<IN
 	}
 
 	@Override
-	public Dimension getClientAreaSize() {
-		return compositeWidget.getClientAreaSize();
+	public Rectangle getClientArea() {
+		return compositeWidget.getClientArea();
+	}
+
+	@Override
+	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+		return compositeWidget.computeDecoratedSize(clientAreaSize);
 	}
 
 	private static IComposite createCompositeWidget(final IContainer parent, final boolean scrollableContent, final Border border) {
