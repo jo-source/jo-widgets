@@ -174,8 +174,13 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 
 	@Override
 	public void scrollToCaretPosition() {
-		final Point caretPosition = textArea.getCaretLocation();
-		scrolledComposite.setOrigin(caretPosition.x - 20, caretPosition.y - 20);
+		try {
+			final Point caretPosition = textArea.getCaretLocation();
+			scrolledComposite.setOrigin(caretPosition.x - 20, caretPosition.y - 20);
+		}
+		catch (final NoSuchMethodError e) {
+			//RWT does not support getCaretLocation()
+		}
 	}
 
 	@Override

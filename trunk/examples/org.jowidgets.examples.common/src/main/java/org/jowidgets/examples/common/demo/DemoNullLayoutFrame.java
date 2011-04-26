@@ -32,6 +32,7 @@ import org.jowidgets.api.layout.ILayoutFactoryProvider;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.tools.powo.JoFrame;
 
 public class DemoNullLayoutFrame extends JoFrame {
@@ -45,16 +46,20 @@ public class DemoNullLayoutFrame extends JoFrame {
 
 		setLayout(lfp.nullLayout());
 
+		final Rectangle clientArea = getClientArea();
+		final int x = clientArea.getX();
+		final int y = clientArea.getY();
+
 		for (int i = 0; i < 10; i++) {
 			final IButton button = add(BPF.button());
-			button.setPosition(i * 20, i * 40);
+			button.setPosition(x + i * 20, y + i * 40);
 			button.setText("Button " + i);
 			button.setSize(button.getPreferredSize());
 		}
 
 		for (int i = 0; i < 10; i++) {
 			final IButton button = add(BPF.button());
-			button.setPosition(400 + i * 20, (9 - i) * 40);
+			button.setPosition(x + 400 + i * 20, y + (9 - i) * 40);
 			button.setText("Button " + i);
 			button.setSize(200, 30);
 		}

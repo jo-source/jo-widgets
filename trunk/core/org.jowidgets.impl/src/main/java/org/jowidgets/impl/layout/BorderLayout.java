@@ -105,7 +105,7 @@ final class BorderLayout implements ILayouter {
 		final IControl bottomControl = controls.get(BorderLayoutConstraints.BOTTOM);
 		if (bottomControl != null) {
 			final Dimension size = getControlPrefSize(bottomControl);
-			bottomControl.setPosition(x, clientArea.getHeight() - marginBottom - size.getHeight());
+			bottomControl.setPosition(x, clientArea.getY() + clientArea.getHeight() - marginBottom - size.getHeight());
 			bottomControl.setSize(clientArea.getWidth() - marginLeft - marginRight, size.getHeight());
 
 			centerHeight = centerHeight - size.getHeight() - gapY;
@@ -124,7 +124,7 @@ final class BorderLayout implements ILayouter {
 		final IControl rigthControl = controls.get(BorderLayoutConstraints.RIGHT);
 		if (rigthControl != null) {
 			final Dimension size = getControlPrefSize(rigthControl);
-			rigthControl.setPosition(clientArea.getWidth() - marginRight - size.getWidth(), y);
+			rigthControl.setPosition(clientArea.getX() + clientArea.getWidth() - marginRight - size.getWidth(), y);
 			rigthControl.setSize(size.getWidth(), centerHeight);
 
 			centerWidth = centerWidth - size.getWidth() - gapX;

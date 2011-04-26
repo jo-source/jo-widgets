@@ -36,6 +36,7 @@ import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Orientation;
+import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.util.Assert;
 
@@ -61,8 +62,10 @@ final class FlowLayout implements ILayouter {
 
 	@Override
 	public void layout() {
-		int x = 0;
-		int y = 0;
+		final Rectangle clientArea = container.getClientArea();
+
+		int x = clientArea.getX();
+		int y = clientArea.getY();
 
 		final List<IControl> children = container.getChildren();
 		if (Orientation.HORIZONTAL == orientation) {
