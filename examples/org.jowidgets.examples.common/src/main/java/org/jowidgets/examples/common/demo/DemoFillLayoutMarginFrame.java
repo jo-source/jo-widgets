@@ -90,7 +90,6 @@ public class DemoFillLayoutMarginFrame extends JoFrame {
 		}
 
 		return container.add(BPF.table(tableModel).setBorder(true));
-
 	}
 
 	private IComposite addComposite(final IContainer container) {
