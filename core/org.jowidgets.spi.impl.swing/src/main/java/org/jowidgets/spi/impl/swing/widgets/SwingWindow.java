@@ -110,6 +110,14 @@ public class SwingWindow extends SwingContainer implements IWindowSpi {
 	}
 
 	@Override
+	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+		if (!getUiReference().isDisplayable()) {
+			getUiReference().addNotify();
+		}
+		return super.computeDecoratedSize(clientAreaSize);
+	}
+
+	@Override
 	public void pack() {
 		getUiReference().pack();
 	}

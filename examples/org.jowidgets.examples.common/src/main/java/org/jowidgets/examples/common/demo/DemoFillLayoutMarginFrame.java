@@ -39,7 +39,6 @@ import org.jowidgets.api.widgets.ITextArea;
 import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.widgets.layout.ILayouter;
-import org.jowidgets.tools.controler.WindowAdapter;
 import org.jowidgets.tools.model.table.SimpleTableModel;
 import org.jowidgets.tools.powo.JoFrame;
 
@@ -55,14 +54,8 @@ public class DemoFillLayoutMarginFrame extends JoFrame {
 
 		addSplitComposite(this);
 
+		setMinSize(layouter.getMinSize());
 		setSize(500, 400);
-
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowActivated() {
-				setMinSize(layouter.getMinSize());
-			}
-		});
 	}
 
 	private ITextArea addTextArea(final IContainer container) {
