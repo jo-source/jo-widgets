@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2010, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,61 +26,31 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.layout;
+package org.jowidgets.examples.common.demo;
 
-import org.jowidgets.api.layout.IFillLayoutFactoryBuilder;
-import org.jowidgets.api.layout.ILayoutFactory;
-import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.layout.ILayoutFactoryProvider;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.widgets.layout.ILayouter;
+import org.jowidgets.tools.powo.JoFrame;
 
-final class FillLayoutFactoryBuilder implements IFillLayoutFactoryBuilder {
+public class DemoFlowLayoutFrame extends JoFrame {
 
-	private int marginTop;
-	private int marginBottom;
-	private int marginLeft;
-	private int marginRight;
+	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
-	@Override
-	public IFillLayoutFactoryBuilder margin(final int margin) {
-		this.marginTop = margin;
-		this.marginBottom = margin;
-		this.marginLeft = margin;
-		this.marginRight = margin;
-		return this;
+	public DemoFlowLayoutFrame() {
+		super("Flow layout demo");
+
+		final ILayoutFactoryProvider lfp = Toolkit.getLayoutFactoryProvider();
+
+		final ILayouter layouter = setLayout(lfp.flowLayoutBuilder().build());
+
+		add(BPF.button("Button"));
+		add(BPF.comboBoxSelection("Germany", "Italy", "Spain", "USA"));
+		add(BPF.label().setText("Label"));
+		add(BPF.inputFieldString()).setValue(" Text ");
+
+		pack();
+		setMinSize(layouter.getMinSize());
 	}
-
-	@Override
-	public IFillLayoutFactoryBuilder marginLeft(final int marginLeft) {
-		this.marginLeft = marginLeft;
-		return this;
-	}
-
-	@Override
-	public IFillLayoutFactoryBuilder marginRight(final int marginRight) {
-		this.marginRight = marginRight;
-		return this;
-	}
-
-	@Override
-	public IFillLayoutFactoryBuilder marginTop(final int marginTop) {
-		this.marginTop = marginTop;
-		return this;
-	}
-
-	@Override
-	public IFillLayoutFactoryBuilder marginBottom(final int marginBottom) {
-		this.marginBottom = marginBottom;
-		return this;
-	}
-
-	@Override
-	public ILayoutFactory<ILayouter> build() {
-		return new ILayoutFactory<ILayouter>() {
-			@Override
-			public ILayouter create(final IContainer container) {
-				return new FillLayout(container, marginLeft, marginRight, marginTop, marginBottom);
-			}
-		};
-	}
-
 }

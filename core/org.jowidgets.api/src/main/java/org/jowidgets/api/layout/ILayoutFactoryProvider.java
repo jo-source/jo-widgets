@@ -58,6 +58,28 @@ public interface ILayoutFactoryProvider {
 	ILayoutFactory<ILayouter> preferredSizeLayout();
 
 	/**
+	 * Creates 'FlowLayouts'
+	 * 
+	 * layout(): set the sizes of the controls to the preferred size, positions the
+	 * controls side by side (alignment == VERTICAL) or below each other (alignment == HORIZONTAL)
+	 * with the given gap between the controls
+	 * 
+	 * getPreferredSize: get the size needed to layout all controls
+	 * 
+	 * getMinSize(): gets the preferred size
+	 * 
+	 * getMaxSize(): returns new Dimension(Short.MAX_VALUE, Short.MAX_VALUE)
+	 * 
+	 * @return A layout factory that produces 'FlowLayouts'
+	 */
+	ILayoutFactory<ILayouter> flowLayout();
+
+	/**
+	 * @return A builder for an 'FlowLayout'
+	 */
+	IFlowLayoutFactoryBuilder flowLayoutBuilder();
+
+	/**
 	 * Creates 'FillLayouts'
 	 * 
 	 * 'FillLayout' allows only one visible control in the container when calculation is done.
@@ -67,7 +89,7 @@ public interface ILayoutFactoryProvider {
 	 * 
 	 * getPreferredSize(): Returns the preferred size of the visible control
 	 * getMinSize(): Returns the min size of the visible control
-	 * getMaxSize(): Returns the max size of the visible control
+	 * getMaxSize(): returns new Dimension(Short.MAX_VALUE, Short.MAX_VALUE)
 	 * 
 	 * @return A layout factory that produces 'FillLayouts'
 	 */

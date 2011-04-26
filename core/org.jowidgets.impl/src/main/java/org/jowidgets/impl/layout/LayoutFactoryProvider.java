@@ -30,6 +30,7 @@ package org.jowidgets.impl.layout;
 
 import org.jowidgets.api.layout.IBorderLayoutFactoryBuilder;
 import org.jowidgets.api.layout.IFillLayoutFactoryBuilder;
+import org.jowidgets.api.layout.IFlowLayoutFactoryBuilder;
 import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
 import org.jowidgets.api.widgets.IContainer;
@@ -48,6 +49,16 @@ public class LayoutFactoryProvider implements ILayoutFactoryProvider {
 	@Override
 	public ILayoutFactory<ILayouter> preferredSizeLayout() {
 		return PREFERRED_SIZE_LAYOUT_FACTORY;
+	}
+
+	@Override
+	public ILayoutFactory<ILayouter> flowLayout() {
+		return flowLayoutBuilder().build();
+	}
+
+	@Override
+	public IFlowLayoutFactoryBuilder flowLayoutBuilder() {
+		return new FlowLayoutFactoryBuilder();
 	}
 
 	@Override

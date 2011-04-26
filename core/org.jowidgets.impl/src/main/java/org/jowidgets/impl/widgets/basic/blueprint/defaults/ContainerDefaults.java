@@ -35,7 +35,7 @@ public class ContainerDefaults implements IDefaultInitializer<IContainerSetupBui
 
 	@Override
 	public void initialize(final IContainerSetupBuilder<?> builder) {
-		builder.setLayoutFactory(Toolkit.getLayoutFactoryProvider().preferredSizeLayout());
+		builder.setLayoutFactory(Toolkit.getLayoutFactoryProvider().flowLayout());
 	}
 
 }
