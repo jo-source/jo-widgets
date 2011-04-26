@@ -46,6 +46,7 @@ import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.impl.base.delegate.ContainerDelegate;
 import org.jowidgets.impl.base.delegate.DisplayDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.LayoutSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.ComponentSpiWrapper;
 import org.jowidgets.spi.widgets.IPopupDialogSpi;
@@ -65,6 +66,7 @@ public class PopupDialogImpl extends ComponentSpiWrapper implements IPopupDialog
 		this.containerDelegate = new ContainerDelegate(widget, this);
 		ColorSettingsInvoker.setColors(setup, this);
 		VisibiliySettingsInvoker.setVisibility(setup, widget);
+		LayoutSettingsInvoker.setLayout(setup, this);
 
 		if (setup.isAutoDispose()) {
 			final IWindowListener windowListener = new WindowAdapter() {

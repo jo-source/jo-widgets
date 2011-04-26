@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann, Lukas Gross
+ * Copyright (c) 2010, Michael Grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,26 +25,22 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.impl.swt.widgets;
+package org.jowidgets.impl.widgets.basic.factory.internal.util;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Shell;
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.spi.widgets.IPopupDialogSpi;
-import org.jowidgets.spi.widgets.setup.IPopupDialogSetupSpi;
+import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.descriptor.setup.IContainerSetup;
 
-public class PopupDialogImpl extends WindowImpl implements IPopupDialogSpi {
+public final class LayoutSettingsInvoker {
 
-	public PopupDialogImpl(final IGenericWidgetFactory factory, final Object parentUiReference, final IPopupDialogSetupSpi setup) {
-		super(factory, new Shell((Shell) parentUiReference, getStyle(setup)), false);
-	}
+	private LayoutSettingsInvoker() {}
 
-	private static int getStyle(final IPopupDialogSetupSpi setup) {
-		if (setup.hasBorder()) {
-			return SWT.DROP_DOWN;
+	public static void setLayout(final IContainerSetup setup, final IContainer container) {
+		if (setup.getLayout() != null) {
+			container.setLayout(setup.getLayout());
 		}
-		else {
-			return SWT.DROP_DOWN | SWT.NO_TRIM;
+		else if (setup.getLayoutFactory() != null) {
+			container.setLayout(setup.getLayoutFactory());
 		}
 	}
+
 }

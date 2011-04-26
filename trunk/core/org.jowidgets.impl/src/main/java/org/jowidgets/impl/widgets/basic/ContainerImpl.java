@@ -42,6 +42,7 @@ import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.impl.base.delegate.ComponentDelegate;
 import org.jowidgets.impl.base.delegate.ContainerDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.LayoutSettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractContainerSpiWrapper;
 import org.jowidgets.spi.widgets.IContainerSpi;
 import org.jowidgets.util.Assert;
@@ -58,6 +59,7 @@ public class ContainerImpl extends AbstractContainerSpiWrapper implements IConta
 	public ContainerImpl(final IContainerSpi containerWidgetCommon, final IContainerSetup setup) {
 		this(containerWidgetCommon, setup.isVisible());
 		ColorSettingsInvoker.setColors(setup, this);
+		LayoutSettingsInvoker.setLayout(setup, this);
 	}
 
 	public ContainerImpl(final IContainerSpi containerWidgetCommon, final Boolean visible) {

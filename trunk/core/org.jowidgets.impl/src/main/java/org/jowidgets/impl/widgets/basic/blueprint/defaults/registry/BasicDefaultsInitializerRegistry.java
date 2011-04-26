@@ -32,6 +32,7 @@ import org.jowidgets.api.widgets.blueprint.IToolBarMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.builder.IButtonSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IComboBoxSelectionSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.builder.IContainerSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IInputComponentSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IPopupDialogSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.ISelectableItemSetupBuilder;
@@ -42,6 +43,7 @@ import org.jowidgets.api.widgets.blueprint.builder.ITreeNodeSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IWindowSetupBuilder;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.ButtonDefaults;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.ComboBoxSelectionDefaults;
+import org.jowidgets.impl.widgets.basic.blueprint.defaults.ContainerDefaults;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.InputWidgetDefaults;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.PopupDialogDefaults;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.SelectableItemDefaults;
@@ -59,6 +61,7 @@ public class BasicDefaultsInitializerRegistry extends CommonDefaultsInitializerR
 	public BasicDefaultsInitializerRegistry() {
 		super();
 		register(IButtonSetupBuilder.class, new ButtonDefaults());
+		register(IContainerSetupBuilder.class, new ContainerDefaults());
 		register(IComboBoxSelectionSetupBuilder.class, new ComboBoxSelectionDefaults());
 		register(IInputComponentSetupBuilder.class, new InputWidgetDefaults());
 		register(ITextFieldSetupBuilder.class, new TextFieldDefaults());

@@ -29,11 +29,9 @@
 package org.jowidgets.impl.widgets.common.blueprint.convenience.registry;
 
 import org.jowidgets.common.widgets.builder.ICompositeSetupBuilderCommon;
-import org.jowidgets.common.widgets.builder.IContainerSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITextLabelSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.IToolBarSetupBuilderCommon;
 import org.jowidgets.impl.widgets.common.blueprint.convenience.CompositeSetupConvenienceCommon;
-import org.jowidgets.impl.widgets.common.blueprint.convenience.ContainerSetupConvenienceCommon;
 import org.jowidgets.impl.widgets.common.blueprint.convenience.TextLabelSetupConvenienceCommon;
 import org.jowidgets.impl.widgets.common.blueprint.convenience.ToolBarSetupConvenienceCommon;
 import org.jowidgets.tools.widgets.blueprint.convenience.SetupBuilderConvenienceRegistry;
@@ -43,7 +41,6 @@ public class CommonSetupConvenienceRegistry extends SetupBuilderConvenienceRegis
 	public CommonSetupConvenienceRegistry() {
 		super();
 		register(ICompositeSetupBuilderCommon.class, new CompositeSetupConvenienceCommon());
-		register(IContainerSetupBuilderCommon.class, new ContainerSetupConvenienceCommon());
 		register(ITextLabelSetupBuilderCommon.class, new TextLabelSetupConvenienceCommon());
 		register(IToolBarSetupBuilderCommon.class, new ToolBarSetupConvenienceCommon());
 	}

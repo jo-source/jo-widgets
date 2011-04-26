@@ -41,7 +41,6 @@ public class FrameImpl extends WindowImpl implements IFrameUiSpi {
 		if (setup.getTitle() != null) {
 			getUiReference().setText(setup.getTitle());
 		}
-		setLayout(setup.getLayout());
 		setIcon(setup.getIcon());
 	}
 

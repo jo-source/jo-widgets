@@ -44,6 +44,7 @@ import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
+import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDContainer;
@@ -70,6 +71,9 @@ public class DummyContainer implements IContainerSpi {
 	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
 		Assert.paramNotNull(layoutDescriptor, "layoutManager");
 		if (layoutDescriptor instanceof MigLayoutDescriptor) {
+			container.setLayout(layoutDescriptor);
+		}
+		else if (layoutDescriptor instanceof ILayouter) {
 			container.setLayout(layoutDescriptor);
 		}
 		else {

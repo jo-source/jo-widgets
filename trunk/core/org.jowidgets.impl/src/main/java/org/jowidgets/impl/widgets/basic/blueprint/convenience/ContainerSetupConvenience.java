@@ -25,12 +25,27 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.common.widgets.builder.convenience;
+package org.jowidgets.impl.widgets.basic.blueprint.convenience;
 
-public interface IContainerSetupConvenienceCommon<INSTANCE_TYPE> {
+import org.jowidgets.api.widgets.blueprint.builder.IContainerSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.builder.convenience.IContainerSetupConvenience;
+import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.tools.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 
-	INSTANCE_TYPE setMigLayout(String columnConstraints, String rowConstraints);
+public class ContainerSetupConvenience extends AbstractSetupBuilderConvenience<IContainerSetupBuilder<?>> implements
+		IContainerSetupConvenience<IContainerSetupBuilder<?>> {
 
-	INSTANCE_TYPE setMigLayout(String layoutConstraints, String columnConstraints, String rowConstraints);
+	@Override
+	public IContainerSetupBuilder<?> setMigLayout(final String columnConstraints, final String rowConstraints) {
+		return getBuilder().setLayout(new MigLayoutDescriptor(columnConstraints, rowConstraints));
+	}
+
+	@Override
+	public IContainerSetupBuilder<?> setMigLayout(
+		final String layoutConstraints,
+		final String columnConstraints,
+		final String rowConstraints) {
+		return getBuilder().setLayout(new MigLayoutDescriptor(layoutConstraints, columnConstraints, rowConstraints));
+	}
 
 }
