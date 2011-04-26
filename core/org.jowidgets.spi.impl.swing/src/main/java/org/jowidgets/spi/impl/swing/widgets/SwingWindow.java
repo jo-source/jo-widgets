@@ -27,7 +27,6 @@
  */
 package org.jowidgets.spi.impl.swing.widgets;
 
-import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.WindowEvent;
@@ -50,8 +49,6 @@ import org.jowidgets.spi.widgets.IWindowSpi;
 public class SwingWindow extends SwingContainer implements IWindowSpi {
 
 	private final WindowObservable windowObservableDelegate;
-
-	private Dimension clientAreaMinSize;
 
 	public SwingWindow(final IGenericWidgetFactory factory, final Window window, final boolean closeable) {
 		super(factory, window);
@@ -102,11 +99,6 @@ public class SwingWindow extends SwingContainer implements IWindowSpi {
 	public void setVisible(final boolean visible) {
 		final boolean wasVisible = isVisible();
 		super.setVisible(visible);
-		if (clientAreaMinSize != null) {
-			setClientMinSizeImpl(clientAreaMinSize);
-			this.clientAreaMinSize = null;
-
-		}
 		if (wasVisible && !visible) {
 			windowObservableDelegate.fireWindowClosed();
 		}
@@ -132,14 +124,8 @@ public class SwingWindow extends SwingContainer implements IWindowSpi {
 		return PositionConvert.convert(getUiReference().getLocation());
 	}
 
-	@Override
-	public void setClientAreaMinSize(final Dimension minSize) {
-		if (isVisible()) {
-			setClientMinSizeImpl(minSize);
-		}
-		else {
-			this.clientAreaMinSize = minSize;
-		}
+	public void setMinSize(final Dimension minSize) {
+		getUiReference().setMinimumSize(DimensionConvert.convert(minSize));
 	}
 
 	@Override
@@ -190,14 +176,6 @@ public class SwingWindow extends SwingContainer implements IWindowSpi {
 	public void dispose() {
 		setVisible(false);
 		getUiReference().dispose();
-	}
-
-	private void setClientMinSizeImpl(final Dimension minSize) {
-		final Insets insets = getUiReference().getInsets();
-		final int width = minSize.getWidth() + insets.left + insets.right;
-		final int height = minSize.getHeight() + insets.top + insets.bottom;
-		getUiReference().setMinimumSize(new java.awt.Dimension(width, height));
-
 	}
 
 }

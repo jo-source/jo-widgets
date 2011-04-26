@@ -88,16 +88,6 @@ class Window<WIDGET_TYPE extends IWindow & IContainer, BLUE_PRINT_TYPE extends I
 	}
 
 	@Override
-	public void setClientAreaMinSize(final Dimension minSize) {
-		getWidget().setClientAreaMinSize(minSize);
-	}
-
-	@Override
-	public void setClientAreaMinSize(final int width, final int height) {
-		getWidget().setClientAreaMinSize(width, height);
-	}
-
-	@Override
 	public final void setSize(final Dimension size) {
 		getWidget().setSize(size);
 	}

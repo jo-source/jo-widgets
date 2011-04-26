@@ -29,7 +29,6 @@ package org.jowidgets.spi.impl.swt.widgets;
 
 import net.miginfocom.swt.MigLayout;
 
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Widget;
@@ -37,6 +36,7 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.controler.IComponentListener;
@@ -52,6 +52,7 @@ import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.spi.impl.swt.layout.LayoutImpl;
+import org.jowidgets.spi.impl.swt.util.RectangleConvert;
 import org.jowidgets.spi.widgets.IContainerSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.util.Assert;
@@ -157,9 +158,19 @@ public class SwtContainer implements IContainerSpi {
 	}
 
 	@Override
-	public Dimension getClientAreaSize() {
-		final Rectangle rectangle = getUiReference().getClientArea();
-		return new Dimension(rectangle.width, rectangle.height);
+	public Rectangle getClientArea() {
+		return RectangleConvert.convert(getUiReference().getClientArea());
+	}
+
+	@Override
+	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+		Assert.paramNotNull(clientAreaSize, "clientAreaSize");
+		final org.eclipse.swt.graphics.Rectangle trim = getUiReference().computeTrim(
+				0,
+				0,
+				clientAreaSize.getWidth(),
+				clientAreaSize.getHeight());
+		return new Dimension(trim.width, trim.height);
 	}
 
 	@Override

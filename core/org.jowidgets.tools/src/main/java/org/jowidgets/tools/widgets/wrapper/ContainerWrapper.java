@@ -34,6 +34,7 @@ import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
@@ -51,8 +52,13 @@ public class ContainerWrapper extends ComponentWrapper implements IContainer {
 	}
 
 	@Override
-	public Dimension getClientAreaSize() {
-		return getWidget().getClientAreaSize();
+	public Rectangle getClientArea() {
+		return getWidget().getClientArea();
+	}
+
+	@Override
+	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+		return getWidget().computeDecoratedSize(clientAreaSize);
 	}
 
 	@Override

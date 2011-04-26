@@ -119,14 +119,13 @@ public class SwtWindow extends SwtContainer implements IWindowSpi {
 		getUiReference().setSize(DimensionConvert.convert(size));
 	}
 
-	@Override
-	public void setClientAreaMinSize(final Dimension minSize) {
-		final org.eclipse.swt.graphics.Rectangle trimedSize = getUiReference().computeTrim(
-				0,
-				0,
-				minSize.getWidth(),
-				minSize.getHeight());
-		getUiReference().setMinimumSize(new Point(trimedSize.width, trimedSize.height));
+	public void setMinSize(final Dimension minSize) {
+		if (minSize == null) {
+			getUiReference().setMinimumSize(Short.MAX_VALUE, Short.MAX_VALUE);
+		}
+		else {
+			getUiReference().setMinimumSize(DimensionConvert.convert(minSize));
+		}
 	}
 
 	@Override

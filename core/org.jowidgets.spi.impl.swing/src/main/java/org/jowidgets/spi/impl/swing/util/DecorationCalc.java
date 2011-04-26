@@ -25,37 +25,42 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets;
+package org.jowidgets.spi.impl.swing.util;
 
-import java.util.List;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Insets;
 
-import org.jowidgets.common.widgets.IWindowCommon;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.types.Rectangle;
 
-public interface IWindow extends IDisplay, IComponent, IWindowCommon {
+public final class DecorationCalc {
 
-	/**
-	 * Centers the location relative to the parent display
-	 */
-	void centerLocation();
+	private DecorationCalc() {};
 
-	/**
-	 * Creates a child window with this window as parent
-	 * 
-	 * @param <WIDGET_TYPE> The type of the created child window
-	 * @param <DESCRIPTOR_TYPE> The type of the child windows descriptor
-	 * @param descriptor The child windows descriptor
-	 * @return The created window
-	 */
-	<WIDGET_TYPE extends IDisplay, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
-		final DESCRIPTOR_TYPE descriptor);
+	public static Rectangle getClientArea(final Container container) {
+		final Insets insets = container.getInsets();
+		final int x = insets.left;
+		final int y = insets.top;
+		final Dimension size = container.getSize();
+		final int width = (int) (size.getWidth() - insets.left - insets.right);
+		final int height = (int) (size.getHeight() - insets.top - insets.bottom);
+		return new Rectangle(x, y, width, height);
+	}
 
-	/**
-	 * Gets the child windows of this window
-	 * 
-	 * @return all children of this window or an empty list if this window
-	 *         has no child windows
-	 */
-	List<IDisplay> getChildWindows();
+	public static org.jowidgets.common.types.Dimension computeDecoratedSize(
+		final Container container,
+		final org.jowidgets.common.types.Dimension clientAreaSize) {
+
+		int width = clientAreaSize.getWidth();
+		int height = clientAreaSize.getHeight();
+
+		final Insets insets = container.getInsets();
+		if (insets != null) {
+			width = width + insets.left + insets.right;
+			height = height + insets.top + insets.bottom;
+		}
+
+		return new org.jowidgets.common.types.Dimension(width, height);
+	}
 
 }

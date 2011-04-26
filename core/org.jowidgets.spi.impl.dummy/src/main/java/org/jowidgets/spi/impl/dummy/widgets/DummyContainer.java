@@ -31,6 +31,7 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.controler.IComponentListener;
@@ -139,8 +140,13 @@ public class DummyContainer implements IContainerSpi {
 	}
 
 	@Override
-	public Dimension getClientAreaSize() {
-		return dummyComponentDelegate.getClientAreaSize();
+	public Rectangle getClientArea() {
+		return dummyComponentDelegate.getClientArea();
+	}
+
+	@Override
+	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+		return dummyComponentDelegate.computeDecoratedSize(clientAreaSize);
 	}
 
 	@Override

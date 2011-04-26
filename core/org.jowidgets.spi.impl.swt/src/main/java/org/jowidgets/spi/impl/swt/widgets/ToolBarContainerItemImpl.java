@@ -38,6 +38,7 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.controler.IComponentListener;
 import org.jowidgets.common.widgets.controler.IFocusListener;
@@ -139,8 +140,13 @@ public class ToolBarContainerItemImpl extends ToolBarItemImpl implements IToolBa
 	}
 
 	@Override
-	public Dimension getClientAreaSize() {
-		return swtComposite.getClientAreaSize();
+	public Rectangle getClientArea() {
+		return swtComposite.getClientArea();
+	}
+
+	@Override
+	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+		return swtComposite.computeDecoratedSize(clientAreaSize);
 	}
 
 	@Override

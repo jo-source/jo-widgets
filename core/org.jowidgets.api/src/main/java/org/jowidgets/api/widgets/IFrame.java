@@ -60,4 +60,6 @@ public interface IFrame extends IWindow, IContainer, IFrameCommon {
 
 	void setDefaultButton(IButton button);
 
+	void setMinSize(int width, int height);
+
 }

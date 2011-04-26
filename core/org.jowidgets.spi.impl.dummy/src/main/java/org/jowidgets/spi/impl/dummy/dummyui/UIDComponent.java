@@ -33,6 +33,7 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.types.Rectangle;
 
 public class UIDComponent extends UIDObservable {
 
@@ -142,6 +143,16 @@ public class UIDComponent extends UIDObservable {
 	public Dimension getMaxSize() {
 		//TODO LG implement getMaxSize
 		return new Dimension(Short.MAX_VALUE, Short.MAX_VALUE);
+	}
+
+	public Rectangle getClientArea() {
+		//TODO LG implement getClientArea
+		return new Rectangle(new Position(0, 0), getSize());
+	}
+
+	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+		// TODO LG computeDecoratedSize
+		return clientAreaSize;
 	}
 
 }

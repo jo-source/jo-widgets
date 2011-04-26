@@ -29,6 +29,7 @@
 package org.jowidgets.impl.widgets.common.wrapper;
 
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IContainerCommon;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.ILayouter;
@@ -73,8 +74,13 @@ public abstract class AbstractContainerSpiWrapper extends ComponentSpiWrapper im
 	}
 
 	@Override
-	public Dimension getClientAreaSize() {
-		return getWidget().getClientAreaSize();
+	public Rectangle getClientArea() {
+		return getWidget().getClientArea();
+	}
+
+	@Override
+	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+		return getWidget().computeDecoratedSize(clientAreaSize);
 	}
 
 	public void setMinSize(final Dimension minSize) {

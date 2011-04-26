@@ -72,7 +72,7 @@ final class BorderLayout implements ILayouter {
 	public void layout() {
 		final IControl control = getFirstControl();
 		if (control != null) {
-			control.setSize(container.getClientAreaSize());
+			control.setSize(container.getClientArea().getSize());
 		}
 	}
 

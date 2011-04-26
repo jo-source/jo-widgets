@@ -37,6 +37,7 @@ import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.descriptor.setup.IFrameSetup;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.tools.controler.WindowAdapter;
 import org.jowidgets.util.Assert;
 
@@ -159,6 +160,16 @@ public class JoFrame extends Window<IFrame, IFrameBluePrint> implements IFrame {
 		else {
 			this.defaultButton = defaultButton;
 		}
+	}
+
+	@Override
+	public void setMinSize(final Dimension minSize) {
+		getWidget().setMinSize(minSize);
+	}
+
+	@Override
+	public void setMinSize(final int width, final int height) {
+		getWidget().setMinSize(width, height);
 	}
 
 	public static JoFrame toJoFrame(final IFrame widget) {

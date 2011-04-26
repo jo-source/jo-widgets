@@ -28,6 +28,8 @@
 
 package org.jowidgets.spi.impl.swing.widgets;
 
+import java.awt.Insets;
+
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
@@ -36,7 +38,6 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.SplitResizePolicy;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.impl.swing.util.BorderConvert;
-import org.jowidgets.spi.impl.swing.util.DimensionConvert;
 import org.jowidgets.spi.impl.swing.util.SplitOrientationConvert;
 import org.jowidgets.spi.impl.swing.widgets.base.JoSplitPane;
 import org.jowidgets.spi.widgets.ICompositeSpi;
@@ -87,8 +88,24 @@ public class SplitCompositeImpl extends SwingControl implements ISplitCompositeS
 
 	@Override
 	public void setClientAreaMinSizes(final Dimension firstMinSize, final Dimension secondMinSize) {
-		firstPanel.setMinimumSize(DimensionConvert.convert(firstMinSize));
-		secondPanel.setMinimumSize(DimensionConvert.convert(secondMinSize));
+		setClientAreaMinSize(firstPanel, firstMinSize);
+		setClientAreaMinSize(secondPanel, secondMinSize);
+	}
+
+	private void setClientAreaMinSize(final JPanel panel, final Dimension minSize) {
+		if (minSize != null) {
+			int width = minSize.getWidth();
+			int height = minSize.getHeight();
+			final Insets insets = panel.getInsets();
+			if (insets != null) {
+				width = width + insets.left + insets.right;
+				height = height + insets.top + insets.bottom;
+			}
+			panel.setMinimumSize(new java.awt.Dimension(width, height));
+		}
+		else {
+			panel.setMinimumSize(null);
+		}
 	}
 
 	@Override

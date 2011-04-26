@@ -28,6 +28,7 @@
 package org.jowidgets.common.widgets;
 
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 
 public interface IContainerCommon extends IComponentCommon {
@@ -49,6 +50,14 @@ public interface IContainerCommon extends IComponentCommon {
 	 */
 	void removeAll();
 
-	Dimension getClientAreaSize();
+	Rectangle getClientArea();
+
+	/**
+	 * Gets the decorated size (size with border / insets ) for a given client area size
+	 * 
+	 * @param clientAreaSize The client area size to get the decorated size for.
+	 * @return The decorated size
+	 */
+	Dimension computeDecoratedSize(Dimension clientAreaSize);
 
 }

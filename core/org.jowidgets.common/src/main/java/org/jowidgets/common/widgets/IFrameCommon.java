@@ -27,7 +27,10 @@
  */
 package org.jowidgets.common.widgets;
 
+import org.jowidgets.common.types.Dimension;
 
 public interface IFrameCommon extends IWindowCommon, IContainerCommon {
+
+	void setMinSize(final Dimension minSize);
 
 }

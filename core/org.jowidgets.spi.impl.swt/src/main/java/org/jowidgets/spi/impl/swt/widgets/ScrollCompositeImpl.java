@@ -38,6 +38,7 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.controler.IComponentListener;
 import org.jowidgets.common.widgets.controler.IFocusListener;
@@ -109,8 +110,13 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 	}
 
 	@Override
-	public Dimension getClientAreaSize() {
-		return innerContainer.getClientAreaSize();
+	public Rectangle getClientArea() {
+		return innerContainer.getClientArea();
+	}
+
+	@Override
+	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+		return outerContainer.computeDecoratedSize(clientAreaSize);
 	}
 
 	@Override

@@ -119,4 +119,9 @@ public final class Rectangle {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "Rectangle [position=" + position + ", size=" + size + "]";
+	}
+
 }
