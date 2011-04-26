@@ -29,10 +29,12 @@
 package org.jowidgets.examples.common.demo;
 
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
+import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.ITextArea;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.widgets.layout.ILayouter;
+import org.jowidgets.tools.model.item.MenuBarModel;
 import org.jowidgets.tools.powo.JoFrame;
 
 public class DemoFillLayoutFrame extends JoFrame {
@@ -42,10 +44,14 @@ public class DemoFillLayoutFrame extends JoFrame {
 	public DemoFillLayoutFrame() {
 		super("Fill layout demo");
 
+		final IMenuBarModel menuBarModel = new MenuBarModel();
+		menuBarModel.addMenu("File");
+		setMenuBar(menuBarModel);
+
 		final ILayoutFactoryProvider lfp = Toolkit.getLayoutFactoryProvider();
 
 		final ILayouter layouter = setLayout(lfp.fillLayoutBuilder().build());
-		final ITextArea textArea = add(BPF.textArea());
+		final ITextArea textArea = add(BPF.textArea().setBorder(false));
 
 		final StringBuilder stringBuilder = new StringBuilder();
 		for (int i = 0; i < 50; i++) {

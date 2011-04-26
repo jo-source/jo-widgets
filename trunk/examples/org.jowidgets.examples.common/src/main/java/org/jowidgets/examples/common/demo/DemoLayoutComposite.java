@@ -62,6 +62,15 @@ public final class DemoLayoutComposite {
 			}
 		});
 
+		final IButton flowLayoutButton = parentContainer.add(bpf.button("Flow layout"), "grow, sg bg, wrap");
+		flowLayoutButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final IFrame frame = new DemoFlowLayoutFrame();
+				frame.setVisible(true);
+			}
+		});
+
 		final IButton fillLayoutButton = parentContainer.add(bpf.button("Fill layout"), "grow, sg bg, wrap");
 		fillLayoutButton.addActionListener(new IActionListener() {
 			@Override

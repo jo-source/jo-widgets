@@ -29,6 +29,6 @@ package org.jowidgets.spi.widgets;
 
 import org.jowidgets.common.widgets.ICompositeCommon;
 
-public interface ICompositeSpi extends IContainerSpi, ICompositeCommon {
+public interface ICompositeSpi extends IControlSpi, IContainerSpi, ICompositeCommon {
 
 }

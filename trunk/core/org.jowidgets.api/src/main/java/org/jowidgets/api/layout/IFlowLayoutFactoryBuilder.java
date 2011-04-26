@@ -26,61 +26,21 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.layout;
+package org.jowidgets.api.layout;
 
-import org.jowidgets.api.layout.IFillLayoutFactoryBuilder;
-import org.jowidgets.api.layout.ILayoutFactory;
-import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.common.types.Orientation;
 import org.jowidgets.common.widgets.layout.ILayouter;
 
-final class FillLayoutFactoryBuilder implements IFillLayoutFactoryBuilder {
+public interface IFlowLayoutFactoryBuilder {
 
-	private int marginTop;
-	private int marginBottom;
-	private int marginLeft;
-	private int marginRight;
+	IFlowLayoutFactoryBuilder gap(int gap);
 
-	@Override
-	public IFillLayoutFactoryBuilder margin(final int margin) {
-		this.marginTop = margin;
-		this.marginBottom = margin;
-		this.marginLeft = margin;
-		this.marginRight = margin;
-		return this;
-	}
+	IFlowLayoutFactoryBuilder orientation(Orientation orientation);
 
-	@Override
-	public IFillLayoutFactoryBuilder marginLeft(final int marginLeft) {
-		this.marginLeft = marginLeft;
-		return this;
-	}
+	IFlowLayoutFactoryBuilder vertical();
 
-	@Override
-	public IFillLayoutFactoryBuilder marginRight(final int marginRight) {
-		this.marginRight = marginRight;
-		return this;
-	}
+	IFlowLayoutFactoryBuilder horizontal();
 
-	@Override
-	public IFillLayoutFactoryBuilder marginTop(final int marginTop) {
-		this.marginTop = marginTop;
-		return this;
-	}
-
-	@Override
-	public IFillLayoutFactoryBuilder marginBottom(final int marginBottom) {
-		this.marginBottom = marginBottom;
-		return this;
-	}
-
-	@Override
-	public ILayoutFactory<ILayouter> build() {
-		return new ILayoutFactory<ILayouter>() {
-			@Override
-			public ILayouter create(final IContainer container) {
-				return new FillLayout(container, marginLeft, marginRight, marginTop, marginBottom);
-			}
-		};
-	}
+	ILayoutFactory<ILayouter> build();
 
 }

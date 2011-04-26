@@ -28,48 +28,44 @@
 
 package org.jowidgets.impl.layout;
 
-import org.jowidgets.api.layout.IFillLayoutFactoryBuilder;
+import org.jowidgets.api.layout.IFlowLayoutFactoryBuilder;
 import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.common.types.Orientation;
 import org.jowidgets.common.widgets.layout.ILayouter;
+import org.jowidgets.util.Assert;
 
-final class FillLayoutFactoryBuilder implements IFillLayoutFactoryBuilder {
+final class FlowLayoutFactoryBuilder implements IFlowLayoutFactoryBuilder {
 
-	private int marginTop;
-	private int marginBottom;
-	private int marginLeft;
-	private int marginRight;
+	private int gap;
+	private Orientation orientation;
+
+	FlowLayoutFactoryBuilder() {
+		this.orientation = Orientation.HORIZONTAL;
+	}
 
 	@Override
-	public IFillLayoutFactoryBuilder margin(final int margin) {
-		this.marginTop = margin;
-		this.marginBottom = margin;
-		this.marginLeft = margin;
-		this.marginRight = margin;
+	public IFlowLayoutFactoryBuilder gap(final int gap) {
+		this.gap = gap;
 		return this;
 	}
 
 	@Override
-	public IFillLayoutFactoryBuilder marginLeft(final int marginLeft) {
-		this.marginLeft = marginLeft;
+	public IFlowLayoutFactoryBuilder orientation(final Orientation orientation) {
+		Assert.paramNotNull(orientation, "orientation");
+		this.orientation = orientation;
 		return this;
 	}
 
 	@Override
-	public IFillLayoutFactoryBuilder marginRight(final int marginRight) {
-		this.marginRight = marginRight;
+	public IFlowLayoutFactoryBuilder vertical() {
+		this.orientation = Orientation.VERTICAL;
 		return this;
 	}
 
 	@Override
-	public IFillLayoutFactoryBuilder marginTop(final int marginTop) {
-		this.marginTop = marginTop;
-		return this;
-	}
-
-	@Override
-	public IFillLayoutFactoryBuilder marginBottom(final int marginBottom) {
-		this.marginBottom = marginBottom;
+	public IFlowLayoutFactoryBuilder horizontal() {
+		this.orientation = Orientation.HORIZONTAL;
 		return this;
 	}
 
@@ -78,9 +74,8 @@ final class FillLayoutFactoryBuilder implements IFillLayoutFactoryBuilder {
 		return new ILayoutFactory<ILayouter>() {
 			@Override
 			public ILayouter create(final IContainer container) {
-				return new FillLayout(container, marginLeft, marginRight, marginTop, marginBottom);
+				return new FlowLayout(container, gap, orientation);
 			}
 		};
 	}
-
 }

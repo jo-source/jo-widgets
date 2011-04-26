@@ -27,6 +27,7 @@
  */
 package org.jowidgets.spi.impl.swing.widgets;
 
+import javax.swing.BorderFactory;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
@@ -53,6 +54,10 @@ public class TextAreaImpl extends AbstractInputControl implements ITextAreaSpi {
 			if (!setup.isLineWrap()) {
 				getUiReference().setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 			}
+		}
+
+		if (!setup.hasBorder()) {
+			getUiReference().setBorder(BorderFactory.createEmptyBorder());
 		}
 
 		textArea.setDocument(new InputModifierDocument(textArea, this));
