@@ -30,7 +30,6 @@ package org.jowidgets.impl.widgets.common.blueprint.defaults.registry;
 
 import org.jowidgets.common.widgets.builder.IButtonSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ICheckBoxSetupBuilderCommon;
-import org.jowidgets.common.widgets.builder.IContainerSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.IDialogSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.IFrameSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.IPopupDialogSetupBuilderCommon;
@@ -46,7 +45,6 @@ import org.jowidgets.common.widgets.builder.ITreeSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.IWindowSetupBuilderCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.ButtonDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.CheckBoxDefaultsCommon;
-import org.jowidgets.impl.widgets.common.blueprint.defaults.ContainerDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.DialogDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.FrameDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.PopupDialogDefaultsCommon;
@@ -68,7 +66,6 @@ public class CommonDefaultsInitializerRegistry extends DefaultsInitializerRegist
 		super();
 		register(IButtonSetupBuilderCommon.class, new ButtonDefaultsCommon());
 		register(ICheckBoxSetupBuilderCommon.class, new CheckBoxDefaultsCommon());
-		register(IContainerSetupBuilderCommon.class, new ContainerDefaultsCommon());
 		register(IWindowSetupBuilderCommon.class, new WindowDefaultsCommon());
 		register(IFrameSetupBuilderCommon.class, new FrameDefaultsCommon());
 		register(IDialogSetupBuilderCommon.class, new DialogDefaultsCommon());

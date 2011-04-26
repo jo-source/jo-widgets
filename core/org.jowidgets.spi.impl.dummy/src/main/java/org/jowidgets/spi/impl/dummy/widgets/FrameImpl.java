@@ -44,7 +44,6 @@ public class FrameImpl extends DummyWindow implements IFrameSpi {
 		getUiReference().setResizable(setup.isResizable());
 
 		setIcon(setup.getIcon(), imageRegistry);
-		setLayout(setup.getLayout());
 	}
 
 	@Override

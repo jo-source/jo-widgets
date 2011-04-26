@@ -40,8 +40,8 @@ import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.impl.swing.image.SwingImageRegistry;
-import org.jowidgets.spi.impl.swing.util.DecorationCalc;
 import org.jowidgets.spi.impl.swing.util.ColorConvert;
+import org.jowidgets.spi.impl.swing.util.DecorationCalc;
 import org.jowidgets.spi.impl.swing.widgets.util.ChildRemover;
 import org.jowidgets.spi.widgets.IPopupDialogSpi;
 import org.jowidgets.spi.widgets.setup.IPopupDialogSetupSpi;
@@ -64,8 +64,6 @@ public class PopupDialogImpl extends SwingWindow implements IPopupDialogSpi {
 		if (setup.hasBorder() && getUiReference().getContentPane() instanceof JComponent) {
 			((JComponent) getUiReference().getContentPane()).setBorder(BORDER);
 		}
-
-		setLayout(setup.getLayout());
 
 	}
 

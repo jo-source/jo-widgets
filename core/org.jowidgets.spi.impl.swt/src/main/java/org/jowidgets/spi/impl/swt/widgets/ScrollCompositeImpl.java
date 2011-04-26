@@ -86,7 +86,6 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 		innerComposite.setBackgroundMode(SWT.INHERIT_DEFAULT);
 
 		this.innerContainer = new SwtContainer(factory, innerComposite);
-		this.innerContainer.setLayout(setup.getLayout());
 		scrolledComposite.setContent(innerComposite);
 		innerComposite.setLayoutData(growingCellConstraints);
 

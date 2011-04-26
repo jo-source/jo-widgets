@@ -47,7 +47,6 @@ public class DialogImpl extends WindowImpl implements IFrameSpi {
 		if (setup.getTitle() != null) {
 			getUiReference().setText(setup.getTitle());
 		}
-		setLayout(setup.getLayout());
 		setIcon(setup.getIcon());
 	}
 

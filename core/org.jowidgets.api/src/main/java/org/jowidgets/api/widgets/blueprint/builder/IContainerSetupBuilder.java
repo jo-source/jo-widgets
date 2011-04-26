@@ -27,10 +27,18 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
+import org.jowidgets.api.layout.ILayoutFactory;
+import org.jowidgets.api.widgets.blueprint.builder.convenience.IContainerSetupConvenience;
 import org.jowidgets.common.widgets.builder.IContainerSetupBuilderCommon;
+import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 
 public interface IContainerSetupBuilder<INSTANCE_TYPE extends IContainerSetupBuilder<?>> extends
 		IContainerSetupBuilderCommon<INSTANCE_TYPE>,
+		IContainerSetupConvenience<INSTANCE_TYPE>,
 		IComponentSetupBuilder<INSTANCE_TYPE> {
+
+	INSTANCE_TYPE setLayout(final ILayoutDescriptor layoutDescriptor);
+
+	INSTANCE_TYPE setLayoutFactory(final ILayoutFactory<?> layoutFactory);
 
 }

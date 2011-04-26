@@ -50,7 +50,6 @@ public class DialogImpl extends DummyWindow implements IFrameSpi {
 		getUiReference().setModal(true);
 
 		setIcon(setup.getIcon(), imageRegistry);
-		setLayout(setup.getLayout());
 	}
 
 	@Override

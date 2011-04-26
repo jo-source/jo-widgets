@@ -42,6 +42,7 @@ import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.impl.base.delegate.ContainerDelegate;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.LayoutSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractScrollCompositeSpiWrapper;
 import org.jowidgets.spi.widgets.IScrollCompositeSpi;
@@ -58,6 +59,7 @@ public class ScrollCompositeImpl extends AbstractScrollCompositeSpiWrapper imple
 		this.containerDelegate = new ContainerDelegate(containerWidgetSpi, this);
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
+		LayoutSettingsInvoker.setLayout(setup, this);
 	}
 
 	@Override

@@ -25,17 +25,17 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.widgets.common.blueprint.defaults;
+package org.jowidgets.impl.widgets.basic.blueprint.defaults;
 
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.blueprint.builder.IContainerSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
-import org.jowidgets.common.widgets.builder.IContainerSetupBuilderCommon;
-import org.jowidgets.impl.layout.DummyLayouter;
 
-public class ContainerDefaultsCommon implements IDefaultInitializer<IContainerSetupBuilderCommon<?>> {
+public class ContainerDefaults implements IDefaultInitializer<IContainerSetupBuilder<?>> {
 
 	@Override
-	public void initialize(final IContainerSetupBuilderCommon<?> builder) {
-		builder.setLayout(new DummyLayouter());
+	public void initialize(final IContainerSetupBuilder<?> builder) {
+		builder.setLayoutFactory(Toolkit.getLayoutFactoryProvider().preferredSizeLayout());
 	}
 
 }

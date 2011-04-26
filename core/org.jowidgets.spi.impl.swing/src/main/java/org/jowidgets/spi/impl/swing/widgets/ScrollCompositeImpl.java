@@ -72,7 +72,6 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 		outerContainer.setBackgroundColor(null);
 
 		this.innerContainer = new SwingContainer(factory, new JPanel());
-		innerContainer.setLayout(setup.getLayout());
 		innerContainer.setBackgroundColor(null);
 
 		scrollPane.setViewportView(innerContainer.getUiReference());

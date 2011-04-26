@@ -38,7 +38,6 @@ public class CompositeImpl extends SwingComposite {
 	public CompositeImpl(final IGenericWidgetFactory factory, final ICompositeSetupCommon setup) {
 		super(factory, new JPanel());
 		getUiReference().setBorder(BorderConvert.convert(setup.getBorder()));
-		setLayout(setup.getLayout());
 		getUiReference().setBackground(null);
 	}
 

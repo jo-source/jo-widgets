@@ -40,7 +40,6 @@ public class CompositeImpl extends SwtComposite {
 		super(factory, createComposite(parentUiReference, setup));
 
 		getUiReference().setBackgroundMode(SWT.INHERIT_DEFAULT);
-		setLayout(setup.getLayout());
 	}
 
 	private static Composite createComposite(final Object parentUiReference, final ICompositeSetupSpi setup) {
