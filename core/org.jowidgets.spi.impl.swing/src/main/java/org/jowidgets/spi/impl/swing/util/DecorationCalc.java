@@ -31,6 +31,10 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Insets;
 
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+
 import org.jowidgets.common.types.Rectangle;
 
 public final class DecorationCalc {
@@ -58,6 +62,19 @@ public final class DecorationCalc {
 		if (insets != null) {
 			width = width + insets.left + insets.right;
 			height = height + insets.top + insets.bottom;
+		}
+
+		JMenuBar menuBar = null;
+
+		if (container instanceof JFrame) {
+			menuBar = ((JFrame) container).getJMenuBar();
+		}
+		else if (container instanceof JDialog) {
+			menuBar = ((JDialog) container).getJMenuBar();
+		}
+
+		if (menuBar != null) {
+			height = height + menuBar.getPreferredSize().height;
 		}
 
 		return new org.jowidgets.common.types.Dimension(width, height);
