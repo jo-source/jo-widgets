@@ -93,7 +93,7 @@ public class DemoFillLayoutMarginFrame extends JoFrame {
 
 	}
 
-	private void addComposite(final IContainer container) {
+	private IComposite addComposite(final IContainer container) {
 		IComposite composite = container.add(BPF.composite().setBorder());
 		composite.setLayout(LFP.fillLayout());
 		for (int i = 0; i < 3; i++) {
@@ -102,6 +102,7 @@ public class DemoFillLayoutMarginFrame extends JoFrame {
 		}
 
 		addTextArea(composite);
+		return composite;
 	}
 
 	private void addSplitComposite(final IContainer container) {
