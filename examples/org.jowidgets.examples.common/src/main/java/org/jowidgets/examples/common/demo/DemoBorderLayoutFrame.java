@@ -36,6 +36,7 @@ import org.jowidgets.api.widgets.ITextArea;
 import org.jowidgets.api.widgets.ITextControl;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.tools.powo.JoFrame;
 
@@ -47,7 +48,7 @@ public class DemoBorderLayoutFrame extends JoFrame {
 		super("Border layout demo");
 
 		final ILayoutFactoryProvider lfp = Toolkit.getLayoutFactoryProvider();
-		setLayout(lfp.borderLayoutBuilder().build());
+		final ILayouter layouter = setLayout(lfp.borderLayoutBuilder().margin(1).gap(1).build());
 
 		final IToolBar toolBar = add(BPF.toolBar(), BorderLayoutConstraints.TOP);
 		final IToolBarModel toolBarModel = toolBar.getModel();
@@ -69,7 +70,7 @@ public class DemoBorderLayoutFrame extends JoFrame {
 		final ITextArea textArea = add(BPF.textArea(), BorderLayoutConstraints.CENTER);
 		final StringBuilder stringBuilder = new StringBuilder();
 		for (int i = 0; i < 50; i++) {
-			stringBuilder.append("Text area in a fill layout. ");
+			stringBuilder.append("Text area in a border layout. ");
 		}
 		textArea.setText(stringBuilder.toString());
 
@@ -89,6 +90,7 @@ public class DemoBorderLayoutFrame extends JoFrame {
 		textField.setText("Bottom");
 
 		setSize(500, 400);
+		setMinSize(layouter.getMinSize());
 
 	}
 }
