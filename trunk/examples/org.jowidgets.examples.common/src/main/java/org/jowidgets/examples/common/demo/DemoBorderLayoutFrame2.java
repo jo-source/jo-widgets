@@ -55,7 +55,7 @@ public class DemoBorderLayoutFrame2 extends JoFrame {
 		setMenuBar(menuBarModel);
 
 		final ILayoutFactoryProvider lfp = Toolkit.getLayoutFactoryProvider();
-		final ILayouter layouter = setLayout(lfp.borderLayoutBuilder().margin(1).gap(1).build());
+		final ILayouter layouter = setLayout(lfp.borderLayoutBuilder().margin(1).gap(2).build());
 
 		final IToolBar toolBar = add(BPF.toolBar(), BorderLayoutConstraints.TOP);
 		final IToolBarModel toolBarModel = toolBar.getModel();
