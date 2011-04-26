@@ -98,6 +98,15 @@ public final class DemoLayoutComposite {
 			}
 		});
 
+		final IButton borderLayoutButton2 = parentContainer.add(bpf.button("Border layout 2"), "grow, sg bg, wrap");
+		borderLayoutButton2.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final IFrame frame = new DemoBorderLayoutFrame2();
+				frame.setVisible(true);
+			}
+		});
+
 	}
 
 	public void foo() {}

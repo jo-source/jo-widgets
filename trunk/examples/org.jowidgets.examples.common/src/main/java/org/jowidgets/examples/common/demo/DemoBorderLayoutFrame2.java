@@ -28,21 +28,26 @@
 
 package org.jowidgets.examples.common.demo;
 
+import org.jowidgets.api.layout.BorderLayoutConstraints;
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
 import org.jowidgets.api.model.item.IMenuBarModel;
+import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.ITextArea;
+import org.jowidgets.api.widgets.ITextControl;
+import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.widgets.layout.ILayouter;
+import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.tools.model.item.MenuBarModel;
 import org.jowidgets.tools.powo.JoFrame;
 
-public class DemoFillLayoutFrame extends JoFrame {
+public class DemoBorderLayoutFrame2 extends JoFrame {
 
 	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
-	public DemoFillLayoutFrame() {
-		super("Fill layout demo");
+	public DemoBorderLayoutFrame2() {
+		super("Border layout demo 2");
 
 		final IMenuBarModel menuBarModel = new MenuBarModel();
 		menuBarModel.addMenu("File");
@@ -50,17 +55,26 @@ public class DemoFillLayoutFrame extends JoFrame {
 		setMenuBar(menuBarModel);
 
 		final ILayoutFactoryProvider lfp = Toolkit.getLayoutFactoryProvider();
+		final ILayouter layouter = setLayout(lfp.borderLayoutBuilder().margin(1).gap(1).build());
 
-		final ILayouter layouter = setLayout(lfp.fillLayoutBuilder().build());
-		final ITextArea textArea = add(BPF.textArea().setBorder(false));
+		final IToolBar toolBar = add(BPF.toolBar(), BorderLayoutConstraints.TOP);
+		final IToolBarModel toolBarModel = toolBar.getModel();
+		toolBarModel.addActionItem(SilkIcons.CUT, "Cut");
+		toolBarModel.addActionItem(SilkIcons.PAGE_COPY, "Copy");
+		toolBarModel.addActionItem(SilkIcons.PAGE_PASTE, "Paste");
 
+		final ITextArea textArea = add(BPF.textArea(), BorderLayoutConstraints.CENTER);
 		final StringBuilder stringBuilder = new StringBuilder();
 		for (int i = 0; i < 50; i++) {
 			stringBuilder.append("Text area in a border layout. ");
 		}
 		textArea.setText(stringBuilder.toString());
 
+		final ITextControl textField = add(BPF.textField(), BorderLayoutConstraints.BOTTOM);
+		textField.setText("Bottom");
+
 		setSize(500, 400);
 		setMinSize(layouter.getMinSize());
+
 	}
 }

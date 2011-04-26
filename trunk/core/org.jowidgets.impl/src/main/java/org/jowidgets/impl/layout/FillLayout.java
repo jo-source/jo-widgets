@@ -37,6 +37,8 @@ import org.jowidgets.util.Assert;
 
 final class FillLayout implements ILayouter {
 
+	private static final Dimension MAX_SIZE = new Dimension(Short.MAX_VALUE, Short.MAX_VALUE);
+
 	private final IContainer container;
 
 	private final int marginTop;
@@ -46,7 +48,6 @@ final class FillLayout implements ILayouter {
 
 	private Dimension minSize;
 	private Dimension preferredSize;
-	private Dimension maxSize;
 
 	private Dimension controlMinSize;
 
@@ -101,15 +102,11 @@ final class FillLayout implements ILayouter {
 
 	@Override
 	public Dimension getMaxSize() {
-		if (maxSize == null) {
-			this.maxSize = calcMaxSize();
-		}
-		return maxSize;
+		return MAX_SIZE;
 	}
 
 	@Override
 	public void invalidate() {
-		maxSize = null;
 		minSize = null;
 		preferredSize = null;
 		controlMinSize = null;
@@ -150,10 +147,6 @@ final class FillLayout implements ILayouter {
 		}
 
 		return container.computeDecoratedSize(new Dimension(width, height));
-	}
-
-	private Dimension calcMaxSize() {
-		return new Dimension(Short.MAX_VALUE, Short.MAX_VALUE);
 	}
 
 	private IControl getFirstControl() {
