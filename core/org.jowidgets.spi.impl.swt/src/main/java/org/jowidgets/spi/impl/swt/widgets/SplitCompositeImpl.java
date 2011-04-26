@@ -76,7 +76,7 @@ public class SplitCompositeImpl extends SwtControl implements ISplitCompositeSpi
 	}
 
 	@Override
-	public void setClientAreaMinSizes(final Dimension firstMinSize, final Dimension secondMinSize) {
+	public void setMinSizes(final Dimension firstMinSize, final Dimension secondMinSize) {
 		// TODO MG implement setMinSizes
 	}
 

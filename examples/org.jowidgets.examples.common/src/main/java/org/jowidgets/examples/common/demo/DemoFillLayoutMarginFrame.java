@@ -53,12 +53,8 @@ public class DemoFillLayoutMarginFrame extends JoFrame {
 
 		final ILayouter layouter = setLayout(LFP.fillLayoutBuilder().margin(100).build());
 
-		//addTextArea(this);
-		//addTable(this);
-		addComposite(this);
-		//addSplitComposite(this);
+		addSplitComposite(this);
 
-		//pack();
 		setSize(500, 400);
 
 		addWindowListener(new WindowAdapter() {
@@ -100,7 +96,7 @@ public class DemoFillLayoutMarginFrame extends JoFrame {
 	private void addComposite(final IContainer container) {
 		IComposite composite = container.add(BPF.composite().setBorder());
 		composite.setLayout(LFP.fillLayout());
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 3; i++) {
 			composite = composite.add(BPF.composite().setBorder());
 			composite.setLayout(LFP.fillLayout());
 		}
@@ -108,7 +104,6 @@ public class DemoFillLayoutMarginFrame extends JoFrame {
 		addTextArea(composite);
 	}
 
-	@SuppressWarnings("unused")
 	private void addSplitComposite(final IContainer container) {
 		final ISplitCompositeBluePrint splitBp = BPF.splitComposite().resizeSecondPolicy();
 		splitBp.setVertical();
@@ -116,12 +111,12 @@ public class DemoFillLayoutMarginFrame extends JoFrame {
 		final IContainer first = split.getFirst();
 		final IContainer second = split.getSecond();
 
-		first.setLayout(LFP.fillLayout());
-		second.setLayout(LFP.fillLayout());
+		final ILayouter firstLayouter = first.setLayout(LFP.fillLayout());
+		final ILayouter secondLayouter = second.setLayout(LFP.fillLayout());
 
-		final ITextArea textArea = addTextArea(split.getFirst());
-		final ITable table = addTable(split.getSecond());
+		addComposite(split.getFirst());
+		addTable(split.getSecond());
 
-		split.setClientAreaMinSizes(textArea.getMinSize(), table.getMinSize());
+		split.setMinSizes(firstLayouter.getMinSize(), secondLayouter.getMinSize());
 	}
 }

@@ -28,13 +28,12 @@
 
 package org.jowidgets.spi.impl.swing.widgets;
 
-import java.awt.Insets;
-
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Orientation;
 import org.jowidgets.common.types.SplitResizePolicy;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.impl.swing.util.BorderConvert;
@@ -52,8 +51,14 @@ public class SplitCompositeImpl extends SwingControl implements ISplitCompositeS
 	private final JPanel firstPanel;
 	private final JPanel secondPanel;
 
+	private final int dividerSize;
+	private final Orientation orientation;
+
 	public SplitCompositeImpl(final IGenericWidgetFactory factory, final ISplitCompositeSetupSpi setup) {
 		super(new JoSplitPane(SplitOrientationConvert.convert(setup.getOrientation()), setup.getWeight(), getResizeWeight(setup)));
+
+		this.dividerSize = setup.getDividerSize();
+		this.orientation = setup.getOrientation();
 
 		this.firstPanel = new JPanel();
 		this.secondPanel = new JPanel();
@@ -73,7 +78,7 @@ public class SplitCompositeImpl extends SwingControl implements ISplitCompositeS
 		splitPane.setRightComponent(secondPanel);
 
 		splitPane.setBorder(BorderFactory.createEmptyBorder());
-		splitPane.setDividerSize(setup.getDividerSize());
+		splitPane.setDividerSize(dividerSize);
 	}
 
 	@Override
@@ -87,19 +92,22 @@ public class SplitCompositeImpl extends SwingControl implements ISplitCompositeS
 	}
 
 	@Override
-	public void setClientAreaMinSizes(final Dimension firstMinSize, final Dimension secondMinSize) {
-		setClientAreaMinSize(firstPanel, firstMinSize);
-		setClientAreaMinSize(secondPanel, secondMinSize);
+	public void setMinSizes(final Dimension firstMinSize, final Dimension secondMinSize) {
+		setMinSize(firstPanel, firstMinSize, false);
+		setMinSize(secondPanel, secondMinSize, true);
 	}
 
-	private void setClientAreaMinSize(final JPanel panel, final Dimension minSize) {
+	private void setMinSize(final JPanel panel, final Dimension minSize, final boolean second) {
 		if (minSize != null) {
 			int width = minSize.getWidth();
 			int height = minSize.getHeight();
-			final Insets insets = panel.getInsets();
-			if (insets != null) {
-				width = width + insets.left + insets.right;
-				height = height + insets.top + insets.bottom;
+			if (second) {
+				if (Orientation.VERTICAL == orientation) {
+					height = height + dividerSize;
+				}
+				else {
+					width = width + dividerSize;
+				}
 			}
 			panel.setMinimumSize(new java.awt.Dimension(width, height));
 		}

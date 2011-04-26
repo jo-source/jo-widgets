@@ -35,6 +35,6 @@ public interface ISplitCompositeCommon extends IControlCommon {
 
 	IContainerCommon getSecond();
 
-	void setClientAreaMinSizes(final Dimension firstMinSize, final Dimension secondMinSize);
+	void setMinSizes(final Dimension firstMinSize, final Dimension secondMinSize);
 
 }
