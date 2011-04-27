@@ -33,6 +33,7 @@ import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.descriptor.setup.ICompositeSetup;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.LayoutSettingsInvoker;
 import org.jowidgets.spi.widgets.ICompositeSpi;
 
 public class CompositeImpl extends ContainerImpl implements IComposite {
@@ -42,6 +43,7 @@ public class CompositeImpl extends ContainerImpl implements IComposite {
 	public CompositeImpl(final ICompositeSpi containerSpi, final ICompositeSetup setup) {
 		super(containerSpi, setup.isVisible());
 		ColorSettingsInvoker.setColors(setup, this);
+		LayoutSettingsInvoker.setLayout(setup, this);
 		this.controlDelegate = new ControlDelegate();
 	}
 

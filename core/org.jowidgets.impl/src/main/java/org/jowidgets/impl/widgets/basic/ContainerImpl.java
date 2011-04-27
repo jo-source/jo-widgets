@@ -58,6 +58,7 @@ public class ContainerImpl extends AbstractContainerSpiWrapper implements IConta
 
 	public ContainerImpl(final IContainerSpi containerWidgetCommon, final IContainerSetup setup) {
 		this(containerWidgetCommon, setup.isVisible());
+
 		ColorSettingsInvoker.setColors(setup, this);
 		LayoutSettingsInvoker.setLayout(setup, this);
 	}
