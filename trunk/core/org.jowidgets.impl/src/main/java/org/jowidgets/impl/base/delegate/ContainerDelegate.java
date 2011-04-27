@@ -87,8 +87,8 @@ public class ContainerDelegate {
 	}
 
 	public void removeAll() {
-		containerWidget.removeAll();
 		children.clear();
+		containerWidget.removeAll();
 	}
 
 	public boolean remove(final IControl control) {
