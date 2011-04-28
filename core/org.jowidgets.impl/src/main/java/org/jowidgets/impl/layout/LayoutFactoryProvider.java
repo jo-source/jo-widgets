@@ -33,8 +33,11 @@ import org.jowidgets.api.layout.IFillLayoutFactoryBuilder;
 import org.jowidgets.api.layout.IFlowLayoutFactoryBuilder;
 import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
+import org.jowidgets.api.layout.miglayout.IMigLayout;
+import org.jowidgets.api.layout.miglayout.IMigLayoutFactoryBuilder;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.common.widgets.layout.ILayouter;
+import org.jowidgets.impl.layout.miglayout.MigLayoutFactoryBuilder;
 
 public class LayoutFactoryProvider implements ILayoutFactoryProvider {
 
@@ -79,6 +82,16 @@ public class LayoutFactoryProvider implements ILayoutFactoryProvider {
 	@Override
 	public IBorderLayoutFactoryBuilder borderLayoutBuilder() {
 		return new BorderLayoutFactoryBuilder();
+	}
+
+	@Override
+	public ILayoutFactory<IMigLayout> migLayout() {
+		return migLayoutBuilder().build();
+	}
+
+	@Override
+	public IMigLayoutFactoryBuilder migLayoutBuilder() {
+		return new MigLayoutFactoryBuilder();
 	}
 
 	private static ILayoutFactory<ILayouter> createNullLayoutFactory() {

@@ -28,6 +28,8 @@
 
 package org.jowidgets.api.layout;
 
+import org.jowidgets.api.layout.miglayout.IMigLayout;
+import org.jowidgets.api.layout.miglayout.IMigLayoutFactoryBuilder;
 import org.jowidgets.common.widgets.layout.ILayouter;
 
 public interface ILayoutFactoryProvider {
@@ -101,7 +103,7 @@ public interface ILayoutFactoryProvider {
 	IFillLayoutFactoryBuilder fillLayoutBuilder();
 
 	/**
-	 * Creates a 'BorderLayout'
+	 * Creates 'BorderLayouts'
 	 * 
 	 * @return A layout factory that produces 'BorderLayouts'
 	 */
@@ -113,5 +115,19 @@ public interface ILayoutFactoryProvider {
 	 * @return The builder
 	 */
 	IBorderLayoutFactoryBuilder borderLayoutBuilder();
+
+	/**
+	 * Creates 'MigLayouts'
+	 * 
+	 * @return A layout factory that produces 'MigLayouts'
+	 */
+	ILayoutFactory<IMigLayout> migLayout();
+
+	/**
+	 * Creates a builder for a 'MigLayout' factory
+	 * 
+	 * @return The builder
+	 */
+	IMigLayoutFactoryBuilder migLayoutBuilder();
 
 }
