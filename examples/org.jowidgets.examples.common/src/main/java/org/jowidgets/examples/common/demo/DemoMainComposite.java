@@ -151,13 +151,13 @@ public final class DemoMainComposite {
 			}
 		});
 
-		final IButton popupDialogDemoButton = parentContainer.add(
-				bpF.button("Popup dialog demo", "Demonstrates popup dialogs"),
+		final IButton chooserDemoButton = parentContainer.add(
+				bpF.button("Chooser demo", "Demonstrates choosers"),
 				"grow, sg bg, wrap");
-		popupDialogDemoButton.addActionListener(new IActionListener() {
+		chooserDemoButton.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
-				final IFrame popupDialogDemoFrame = new DemoPopupDialogFrame();
+				final IFrame popupDialogDemoFrame = new DemoChooserFrame();
 				popupDialogDemoFrame.setSize(new Dimension(400, 300));
 				popupDialogDemoFrame.setVisible(true);
 			}
