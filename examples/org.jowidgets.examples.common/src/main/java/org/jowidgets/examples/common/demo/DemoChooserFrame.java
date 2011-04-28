@@ -28,8 +28,7 @@
 
 package org.jowidgets.examples.common.demo;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.Date;
 
 import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.toolkit.Toolkit;
@@ -54,6 +53,8 @@ public class DemoChooserFrame extends JoFrame {
 	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
 	private IPopupDialog popupDialog;
+
+	private Date date;
 
 	public DemoChooserFrame() {
 		super("Chooser demo");
@@ -85,7 +86,13 @@ public class DemoChooserFrame extends JoFrame {
 				popupDialog = createChildWindow(BPF.popupDialog().setBorder(false));
 				final Position buttonPos = button1.getPosition();
 				popupDialog.setPosition(Toolkit.toScreen(buttonPos, DemoChooserFrame.this));
-				setContent(popupDialog);
+				final ICalendar calendar = setContent(popupDialog);
+				calendar.addInputListener(new IInputListener() {
+					@Override
+					public void inputChanged() {
+						popupDialog.dispose();
+					}
+				});
 				popupDialog.pack();
 				popupDialog.setVisible(true);
 			}
@@ -138,19 +145,15 @@ public class DemoChooserFrame extends JoFrame {
 
 	private ICalendar setContent(final IContainer container) {
 
-		final Calendar gregCalendar = new GregorianCalendar();
-		gregCalendar.add(Calendar.DAY_OF_MONTH, -3);
-
 		container.setLayout(MigLayoutFactory.growingInnerCellLayout());
-		final ICalendar calendar = container.add(
-				BPF.calendar().setDate(gregCalendar.getTime()),
-				MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+		final ICalendar calendar = container.add(BPF.calendar().setDate(this.date), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
 		calendar.addInputListener(new IInputListener() {
 			@Override
 			public void inputChanged() {
 				//CHECKSTYLE:OFF
 				System.out.println(calendar.getDate());
+				date = calendar.getDate();
 				//CHECKSTYLE:ON
 			}
 		});

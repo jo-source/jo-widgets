@@ -90,12 +90,14 @@ public class WindowImpl extends SwtWindow implements IWindowSpi {
 
 	@Override
 	public void dispose() {
-		programaticDispose = true;
-		if (isVisible()) {
-			setVisible(false);
+		if (!getUiReference().isDisposed()) {
+			programaticDispose = true;
+			if (isVisible()) {
+				setVisible(false);
+			}
+			getUiReference().dispose();
+			programaticDispose = false;
 		}
-		getUiReference().dispose();
-		programaticDispose = false;
 	}
 
 	@Override

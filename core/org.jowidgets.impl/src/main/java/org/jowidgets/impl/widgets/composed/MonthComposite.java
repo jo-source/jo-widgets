@@ -78,6 +78,7 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 	private final CalendarButton[][] dayButtons;
 	private final IControl separator;
 	private final ILayouter layouter;
+	private Date date;
 
 	private CalendarButton mouseoverButton;
 	private CalendarButton selectedButton;
@@ -119,12 +120,22 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 
 	}
 
+	public Date getDate() {
+		return date;
+	}
+
 	public Date getSelectedDate() {
 		if (selectedButton != null) {
 			return selectedButton.date;
 		}
 		else {
 			return null;
+		}
+	}
+
+	public void clearSelection() {
+		if (selectedButton != null) {
+			selectedButton.setSelected(false);
 		}
 	}
 
@@ -156,6 +167,8 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 	}
 
 	public void setDate(final Date date, final boolean setSelected) {
+		this.date = date;
+
 		if (selectedButton != null) {
 			selectedButton.setSelected(false);
 		}
@@ -180,9 +193,17 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 		final int firstDayOfWeek = iteratingCalendar.getFirstDayOfWeek();
 		int dayOfWeek = iteratingCalendar.get(Calendar.DAY_OF_WEEK);
 
-		while (dayOfWeek > firstDayOfWeek) {
-			iteratingCalendar.add(Calendar.DAY_OF_MONTH, -1);
-			dayOfWeek = iteratingCalendar.get(Calendar.DAY_OF_WEEK);
+		if (dayOfWeek < firstDayOfWeek) {
+			while (dayOfWeek < firstDayOfWeek) {
+				iteratingCalendar.add(Calendar.DAY_OF_MONTH, 1);
+				dayOfWeek = iteratingCalendar.get(Calendar.DAY_OF_WEEK);
+			}
+		}
+		else if (dayOfWeek > firstDayOfWeek) {
+			while (dayOfWeek > firstDayOfWeek) {
+				iteratingCalendar.add(Calendar.DAY_OF_MONTH, -1);
+				dayOfWeek = iteratingCalendar.get(Calendar.DAY_OF_WEEK);
+			}
 		}
 
 		for (int i = 0; i < 6; i++) {
@@ -219,40 +240,6 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 		else {
 			return dayOfWeek + 1;
 		}
-	}
-
-	private static String getShortDayLabel(final int day) {
-		CALENDAR.set(Calendar.DAY_OF_WEEK, day);
-		final String result = CALENDAR.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, LOCALE);
-		if (result == null) {
-			return getFallbackLabel(day);
-		}
-		return result;
-	}
-
-	private static String getFallbackLabel(final int day) {
-		if (Calendar.MONDAY == day) {
-			return "Mon";
-		}
-		else if (Calendar.TUESDAY == day) {
-			return "Tue";
-		}
-		else if (Calendar.WEDNESDAY == day) {
-			return "Wed";
-		}
-		else if (Calendar.THURSDAY == day) {
-			return "Thu";
-		}
-		else if (Calendar.FRIDAY == day) {
-			return "Fri";
-		}
-		else if (Calendar.SATURDAY == day) {
-			return "Sat";
-		}
-		else if (Calendar.SUNDAY == day) {
-			return "Sun";
-		}
-		return null;
 	}
 
 	private final class CalendarPanelLayouter implements ILayouter {
@@ -656,6 +643,40 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 			labelBorder.setForegroundColor(color);
 		}
 
+	}
+
+	private static String getShortDayLabel(final int day) {
+		CALENDAR.set(Calendar.DAY_OF_WEEK, day);
+		final String result = CALENDAR.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, LOCALE);
+		if (result == null) {
+			return getFallbackLabel(day);
+		}
+		return result;
+	}
+
+	private static String getFallbackLabel(final int day) {
+		if (Calendar.MONDAY == day) {
+			return "Mon";
+		}
+		else if (Calendar.TUESDAY == day) {
+			return "Tue";
+		}
+		else if (Calendar.WEDNESDAY == day) {
+			return "Wed";
+		}
+		else if (Calendar.THURSDAY == day) {
+			return "Thu";
+		}
+		else if (Calendar.FRIDAY == day) {
+			return "Fri";
+		}
+		else if (Calendar.SATURDAY == day) {
+			return "Sat";
+		}
+		else if (Calendar.SUNDAY == day) {
+			return "Sun";
+		}
+		return null;
 	}
 
 }

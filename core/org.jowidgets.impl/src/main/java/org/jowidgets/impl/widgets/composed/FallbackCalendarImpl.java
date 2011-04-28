@@ -27,38 +27,63 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 import org.jowidgets.api.color.Colors;
-import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.image.IconsSmall;
+import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.ICalendar;
 import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.ITextLabel;
 import org.jowidgets.api.widgets.descriptor.setup.ICalendarSetup;
+import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.controler.IInputListener;
+import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.tools.controler.InputObservable;
+import org.jowidgets.tools.powo.JoButton;
 import org.jowidgets.tools.powo.JoComposite;
+import org.jowidgets.tools.powo.JoTextLabel;
 import org.jowidgets.util.Assert;
 
 public class FallbackCalendarImpl extends CompositeBasedControl implements ICalendar {
 
-	private final InputObservable inputObservable;
+	private static final Calendar CALENDAR = new GregorianCalendar();
+	private static final Locale LOCALE = Locale.getDefault();
 
+	private static final int G_X = 8;
+	private static final int G_Y = 8;
+
+	private static final Dimension MAX_SIZE = new Dimension(Short.MAX_VALUE, Short.MAX_VALUE);
+
+	private final InputObservable inputObservable;
 	private final JoComposite composite;
+	private final MonthComposite[] monthComposites;
+	private final ITextLabel[] monthLabels;
+	private final CalendarLayouter layouter;
+
+	private final IButton navBackwardButton;
+	private final IButton navPrevButton;
+	private final IButton navNextButton;
+	private final IButton navForwardButton;
 
 	private Date date;
-
-	private final MonthComposite monthComposite;
 
 	public FallbackCalendarImpl(final IComposite composite, final ICalendarSetup setup) {
 		super(composite);
 		this.inputObservable = new InputObservable();
+		this.monthComposites = new MonthComposite[12];
+		this.monthLabels = new ITextLabel[12];
 
 		this.composite = JoComposite.toJoComposite(composite);
 		composite.setBackgroundColor(Colors.WHITE);
-
-		this.composite.setLayout(Toolkit.getLayoutFactoryProvider().fillLayout());
+		this.layouter = new CalendarLayouter();
+		this.composite.setLayout(layouter);
 
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
@@ -70,25 +95,30 @@ public class FallbackCalendarImpl extends CompositeBasedControl implements ICale
 			this.date = new Date();
 		}
 
-		this.monthComposite = new MonthComposite(this.date, true);
-		this.composite.add(monthComposite);
+		navBackwardButton = this.composite.add(new JoButton(IconsSmall.NAVIGATION_BACKWARD_TINY));
+		navNextButton = this.composite.add(new JoButton(IconsSmall.NAVIGATION_NEXT_TINY));
+		navPrevButton = this.composite.add(new JoButton(IconsSmall.NAVIGATION_PREVIOUS_TINY));
+		navForwardButton = this.composite.add(new JoButton(IconsSmall.NAVIGATION_FORWARD_TINY));
+		getMonthComposite(0);
 
-		monthComposite.addInputListener(new IInputListener() {
-			@Override
-			public void inputChanged() {
-				final Date selectedDate = monthComposite.getSelectedDate();
-				if (selectedDate != null) {
-					date = selectedDate;
-					inputObservable.fireInputChanged();
-				}
-			}
-		});
 	}
 
 	@Override
 	public void setDate(final Date date) {
 		Assert.paramNotNull(date, "date");
-		monthComposite.setDate(date, true);
+
+		monthComposites[0].setDate(date, true);
+
+		final Calendar calendar = new GregorianCalendar();
+		calendar.setTime(date);
+		calendar.set(Calendar.DAY_OF_MONTH, 1);
+
+		for (int i = 1; i < monthComposites.length; i++) {
+			calendar.add(Calendar.MONTH, 1);
+			if (monthComposites[i] != null) {
+				monthComposites[i].setDate(calendar.getTime(), false);
+			}
+		}
 		this.date = date;
 	}
 
@@ -107,4 +137,180 @@ public class FallbackCalendarImpl extends CompositeBasedControl implements ICale
 		inputObservable.removeInputListener(listener);
 	}
 
+	private MonthComposite getMonthComposite(final int index) {
+		if (monthComposites[index] == null) {
+			if (index == 0) {
+				monthComposites[index] = new MonthComposite(this.date, true);
+			}
+			else {
+				final Date prevDate = getMonthComposite(index - 1).getDate();
+				final Calendar calendar = new GregorianCalendar();
+				calendar.setTime(prevDate);
+				calendar.set(Calendar.DAY_OF_MONTH, 1);
+				calendar.add(Calendar.MONTH, 1);
+				monthComposites[index] = new MonthComposite(calendar.getTime(), false);
+			}
+			this.composite.add(monthComposites[index]);
+
+			monthComposites[index].addInputListener(new IInputListener() {
+				@Override
+				public void inputChanged() {
+					final Date selectedDate = monthComposites[index].getSelectedDate();
+					if (selectedDate != null) {
+						for (int i = 0; i < monthComposites.length; i++) {
+							if (i != index && monthComposites[i] != null) {
+								monthComposites[i].clearSelection();
+							}
+						}
+						date = selectedDate;
+						inputObservable.fireInputChanged();
+					}
+				}
+			});
+		}
+		return monthComposites[index];
+	}
+
+	private ITextLabel getMonthLabel(final int index) {
+		if (monthLabels[index] == null) {
+			final MonthComposite monthComposite = getMonthComposite(index);
+			final Date monthDate = monthComposite.getDate();
+			final Calendar calendar = new GregorianCalendar();
+			calendar.setTime(monthDate);
+			final String labelString = getMonthDisplayName(calendar.get(Calendar.MONTH)) + " " + calendar.get(Calendar.YEAR);
+			final JoTextLabel label = this.composite.add(new JoTextLabel(labelString));
+			monthLabels[index] = label;
+		}
+		return monthLabels[index];
+	}
+
+	private class CalendarLayouter implements ILayouter {
+
+		private Dimension preferredSize;
+
+		@Override
+		public void layout() {
+			final Rectangle clientArea = composite.getClientArea();
+			int x = clientArea.getX();
+			int y = clientArea.getY() + G_Y;
+
+			final ITextLabel label = getMonthLabel(0);
+			final MonthComposite monthComposite = getMonthComposite(0);
+
+			final Dimension monthSize = monthComposite.getPreferredSize();
+			final Dimension labelSize = label.getPreferredSize();
+
+			final Dimension navButtonSize = new Dimension(17, 17);
+			final int buttonOffsetY = (labelSize.getHeight() - navButtonSize.getHeight()) / 2;
+
+			navBackwardButton.setSize(navButtonSize);
+			navBackwardButton.setPosition(x, y + buttonOffsetY);
+
+			x = x + navButtonSize.getWidth();
+			navPrevButton.setSize(navButtonSize);
+			navPrevButton.setPosition(x, y + buttonOffsetY);
+
+			x = clientArea.getWidth() - navButtonSize.getWidth();
+			navForwardButton.setSize(navButtonSize);
+			navForwardButton.setPosition(x, y + buttonOffsetY);
+
+			x = x - navButtonSize.getWidth();
+			navNextButton.setSize(navButtonSize);
+			navNextButton.setPosition(x, y + buttonOffsetY);
+
+			//layout label
+			x = monthSize.getWidth() / 2 - labelSize.getWidth() / 2;
+			label.setSize(labelSize);
+			label.setPosition(x, y);
+
+			y = y + labelSize.getHeight() + G_Y;
+
+			//layout month composite
+			x = clientArea.getX();
+			monthComposite.setSize(monthSize);
+			monthComposite.setPosition(x, y);
+		}
+
+		@Override
+		public Dimension getMinSize() {
+			return getPreferredSize();
+		}
+
+		@Override
+		public Dimension getPreferredSize() {
+			if (preferredSize == null) {
+				preferredSize = calcPreferredSize();
+			}
+			return preferredSize;
+		}
+
+		@Override
+		public Dimension getMaxSize() {
+			return MAX_SIZE;
+		}
+
+		@Override
+		public void invalidate() {}
+
+		private Dimension calcPreferredSize() {
+			final ITextLabel label = getMonthLabel(0);
+			final MonthComposite monthComposite = getMonthComposite(0);
+
+			final Dimension monthSize = monthComposite.getPreferredSize();
+			final Dimension labelSize = label.getPreferredSize();
+
+			final int width = monthSize.getWidth();
+			final int height = monthSize.getHeight() + 2 * G_Y + labelSize.getHeight();
+			return composite.computeDecoratedSize(new Dimension(width, height));
+		}
+	}
+
+	private static String getMonthDisplayName(final int month) {
+		CALENDAR.set(Calendar.MONTH, month);
+		final String result = CALENDAR.getDisplayName(Calendar.MONTH, Calendar.LONG, LOCALE);
+		if (result == null) {
+			return getFallbackDisplayName(month);
+		}
+		return result;
+	}
+
+	private static String getFallbackDisplayName(final int month) {
+		if (Calendar.JANUARY == month) {
+			return "January";
+		}
+		else if (Calendar.FEBRUARY == month) {
+			return "February";
+		}
+		else if (Calendar.MARCH == month) {
+			return "March";
+		}
+		else if (Calendar.APRIL == month) {
+			return "April";
+		}
+		else if (Calendar.MAY == month) {
+			return "May";
+		}
+		else if (Calendar.JUNE == month) {
+			return "June";
+		}
+		else if (Calendar.JULY == month) {
+			return "July";
+		}
+		else if (Calendar.AUGUST == month) {
+			return "August";
+		}
+		else if (Calendar.SEPTEMBER == month) {
+			return "September";
+		}
+		else if (Calendar.OCTOBER == month) {
+			return "October";
+		}
+		else if (Calendar.NOVEMBER == month) {
+			return "November";
+		}
+		else if (Calendar.DECEMBER == month) {
+			return "December";
+		}
+		return null;
+	}
 }
