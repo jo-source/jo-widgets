@@ -55,7 +55,7 @@ import org.jowidgets.tools.powo.JoComposite;
 import org.jowidgets.tools.powo.JoTextLabel;
 import org.jowidgets.util.Assert;
 
-public class FallbackCalendarImpl extends CompositeBasedControl implements ICalendar {
+public class CustomCalendarImpl extends CompositeBasedControl implements ICalendar {
 
 	private static final Calendar CALENDAR = new GregorianCalendar();
 	private static final Locale LOCALE = Locale.getDefault();
@@ -78,7 +78,7 @@ public class FallbackCalendarImpl extends CompositeBasedControl implements ICale
 
 	private Date date;
 
-	public FallbackCalendarImpl(final IComposite composite, final ICalendarSetup setup) {
+	public CustomCalendarImpl(final IComposite composite, final ICalendarSetup setup) {
 		super(composite);
 		this.inputObservable = new InputObservable();
 		this.monthComposites = new MonthComposite[12];
@@ -193,7 +193,7 @@ public class FallbackCalendarImpl extends CompositeBasedControl implements ICale
 	@Override
 	public void setDate(final Date date) {
 		Assert.paramNotNull(date, "date");
-
+		this.composite.layoutBegin();
 		monthComposites[0].setDate(date, date);
 
 		final Calendar calendar = new GregorianCalendar();
@@ -210,7 +210,6 @@ public class FallbackCalendarImpl extends CompositeBasedControl implements ICale
 			}
 		}
 		this.date = date;
-		this.composite.layoutBegin();
 		this.composite.layoutEnd();
 	}
 

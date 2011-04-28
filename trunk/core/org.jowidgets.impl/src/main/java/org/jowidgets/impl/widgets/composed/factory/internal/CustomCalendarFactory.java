@@ -11,9 +11,9 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.ICalendarDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
-import org.jowidgets.impl.widgets.composed.FallbackCalendarImpl;
+import org.jowidgets.impl.widgets.composed.CustomCalendarImpl;
 
-public class FallbackCalendarFactory implements IWidgetFactory<ICalendar, ICalendarDescriptor> {
+public class CustomCalendarFactory implements IWidgetFactory<ICalendar, ICalendarDescriptor> {
 
 	@Override
 	public ICalendar create(final Object parentUiReference, final ICalendarDescriptor descriptor) {
@@ -23,7 +23,7 @@ public class FallbackCalendarFactory implements IWidgetFactory<ICalendar, ICalen
 
 		final IComposite compositeWidget = gwF.create(parentUiReference, bpF.composite().setBorder());
 
-		return new FallbackCalendarImpl(compositeWidget, descriptor);
+		return new CustomCalendarImpl(compositeWidget, descriptor);
 	}
 
 }

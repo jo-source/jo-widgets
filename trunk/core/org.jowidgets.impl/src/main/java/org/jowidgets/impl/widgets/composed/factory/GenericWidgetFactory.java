@@ -38,7 +38,7 @@ import org.jowidgets.api.widgets.descriptor.IQuestionDialogDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextSeparatorDescriptor;
 import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
 import org.jowidgets.impl.widgets.basic.factory.BasicGenericWidgetFactory;
-import org.jowidgets.impl.widgets.composed.factory.internal.FallbackCalendarFactory;
+import org.jowidgets.impl.widgets.composed.factory.internal.CustomCalendarFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.InputCompositeFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.InputDialogFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.InputFieldFactory;
@@ -73,7 +73,7 @@ public class GenericWidgetFactory extends BasicGenericWidgetFactory {
 
 	private void registerFallbackWidgets() {
 		if (getFactory(ICalendarDescriptor.class) == null) {
-			register(ICalendarDescriptor.class, new FallbackCalendarFactory());
+			register(ICalendarDescriptor.class, new CustomCalendarFactory());
 		}
 	}
 
