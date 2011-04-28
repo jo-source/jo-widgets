@@ -86,13 +86,7 @@ public class DemoChooserFrame extends JoFrame {
 				popupDialog = createChildWindow(BPF.popupDialog().setBorder(false));
 				final Position buttonPos = button1.getPosition();
 				popupDialog.setPosition(Toolkit.toScreen(buttonPos, DemoChooserFrame.this));
-				final ICalendar calendar = setContent(popupDialog);
-				calendar.addInputListener(new IInputListener() {
-					@Override
-					public void inputChanged() {
-						popupDialog.dispose();
-					}
-				});
+				setContent(popupDialog);
 				popupDialog.pack();
 				popupDialog.setVisible(true);
 			}

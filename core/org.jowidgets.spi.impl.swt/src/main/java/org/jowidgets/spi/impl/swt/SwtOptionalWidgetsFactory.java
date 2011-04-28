@@ -77,7 +77,7 @@ public class SwtOptionalWidgetsFactory implements IOptionalWidgetsFactorySpi {
 
 	@Override
 	public boolean hasCalendar() {
-		return false;
+		return true;
 	}
 
 	@Override

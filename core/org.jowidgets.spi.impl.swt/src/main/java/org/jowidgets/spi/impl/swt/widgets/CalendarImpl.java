@@ -27,7 +27,9 @@
  */
 package org.jowidgets.spi.impl.swt.widgets;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -38,10 +40,13 @@ import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.spi.impl.controler.InputObservable;
 import org.jowidgets.spi.widgets.ICalendarSpi;
 import org.jowidgets.spi.widgets.setup.ICalendarSetupSpi;
+import org.jowidgets.util.Assert;
 
 public class CalendarImpl extends SwtControl implements ICalendarSpi {
 
 	private final InputObservable inputObservable;
+
+	private Date date;
 
 	public CalendarImpl(final Object parentUiReference, final ICalendarSetupSpi setup) {
 		super(new DateTime((Composite) parentUiReference, SWT.CALENDAR));
@@ -52,6 +57,15 @@ public class CalendarImpl extends SwtControl implements ICalendarSpi {
 
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
+				final Calendar calendar = new GregorianCalendar();
+				calendar.set(Calendar.YEAR, getUiReference().getYear());
+				calendar.set(Calendar.MONTH, getUiReference().getMonth() + 1);
+				calendar.set(Calendar.DAY_OF_MONTH, getUiReference().getDay());
+				calendar.set(Calendar.HOUR_OF_DAY, 0);
+				calendar.set(Calendar.MINUTE, 0);
+				calendar.set(Calendar.SECOND, 0);
+				calendar.set(Calendar.MILLISECOND, 0);
+				date = calendar.getTime();
 				inputObservable.fireInputChanged();
 			}
 
@@ -65,13 +79,18 @@ public class CalendarImpl extends SwtControl implements ICalendarSpi {
 
 	@Override
 	public void setDate(final Date date) {
-
+		Assert.paramNotNull(date, "date");
+		final Calendar calendar = new GregorianCalendar();
+		calendar.setTime(date);
+		getUiReference().setDate(
+				calendar.get(Calendar.YEAR),
+				calendar.get(Calendar.MONTH) - 1,
+				calendar.get(Calendar.DAY_OF_MONTH));
 	}
 
 	@Override
 	public Date getDate() {
-
-		return null;
+		return date;
 	}
 
 	@Override
