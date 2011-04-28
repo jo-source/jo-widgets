@@ -31,7 +31,9 @@ package org.jowidgets.impl.widgets.composed;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 
 import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.toolkit.Toolkit;
@@ -66,13 +68,14 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 	private static final int M_X = 0;
 	private static final int M_Y = 0;
 
-	private static final int MIN_M_X = 10;
+	private static final int MIN_M_X = 6;
 	private static final int MIN_M_Y = 0;
 
 	private static final int G_X = 1;
 	private static final int G_Y = 1;
 
 	private final InputObservable inputObservable;
+	private final Set<IMouseoverListener> mouseoverListeners;
 
 	private final CalendarButton[] headerButtons;
 	private final CalendarButton[][] dayButtons;
@@ -87,6 +90,7 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 	public MonthComposite(final Date date, final Date selectedDate) {
 
 		this.inputObservable = new InputObservable();
+		this.mouseoverListeners = new HashSet<IMouseoverListener>();
 
 		this.headerButtons = new CalendarButton[7];
 		this.dayButtons = new CalendarButton[6][7];
@@ -137,6 +141,18 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 		if (selectedButton != null) {
 			selectedButton.setSelected(false);
 		}
+		selectedButton = null;
+	}
+
+	public void clearMouseOver() {
+		if (mouseoverButton != null) {
+			mouseoverButton.setMouseover(false);
+		}
+		mouseoverButton = null;
+	}
+
+	public void addMouseOverListener(final IMouseoverListener mouseoverListener) {
+		this.mouseoverListeners.add(mouseoverListener);
 	}
 
 	@Override
@@ -169,12 +185,9 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 	public void setDate(final Date date, final Date selectedDate) {
 		this.date = date;
 
-		if (selectedButton != null) {
-			selectedButton.setSelected(false);
-		}
-		if (mouseoverButton != null) {
-			mouseoverButton.setMouseover(false);
-		}
+		clearSelection();
+		clearMouseOver();
+
 		if (todayButton != null) {
 			todayButton.setBorder(false);
 			todayButton = null;
@@ -221,18 +234,26 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 				else {
 					dayButton.setForegroundColor(null);
 				}
-				if (iteratingCalendar.get(Calendar.MONTH) == current.get(Calendar.MONTH)
-					&& iteratingCalendar.get(Calendar.DAY_OF_MONTH) == current.get(Calendar.DAY_OF_MONTH)) {
-					dayButton.setToday();
-				}
 				if (selectedCalendar != null
+					&& iteratingCalendar.get(Calendar.MONTH) == calendar.get(Calendar.MONTH)
 					&& iteratingCalendar.get(Calendar.MONTH) == selectedCalendar.get(Calendar.MONTH)
 					&& iteratingCalendar.get(Calendar.DAY_OF_MONTH) == selectedCalendar.get(Calendar.DAY_OF_MONTH)
 					&& iteratingCalendar.get(Calendar.YEAR) == selectedCalendar.get(Calendar.YEAR)) {
 					dayButton.setSelected(true);
 				}
+				if (iteratingCalendar.get(Calendar.MONTH) == current.get(Calendar.MONTH)
+					&& iteratingCalendar.get(Calendar.DAY_OF_MONTH) == current.get(Calendar.DAY_OF_MONTH)
+					&& iteratingCalendar.get(Calendar.YEAR) == current.get(Calendar.YEAR)) {
+					dayButton.setToday();
+				}
 				iteratingCalendar.add(Calendar.DAY_OF_MONTH, 1);
 			}
+		}
+	}
+
+	private void fireOnMouseOver() {
+		for (final IMouseoverListener listener : mouseoverListeners) {
+			listener.onMouseOver();
 		}
 	}
 
@@ -466,6 +487,7 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 				public void mouseExit(final IMouseEvent event) {
 					if (isInsideCompositeEvent(event)) {
 						setMouseover(true);
+						fireOnMouseOver();
 					}
 					else {
 						setMouseover(false);
@@ -475,6 +497,7 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 				@Override
 				public void mouseEnter(final IMouseEvent event) {
 					setMouseover(true);
+					fireOnMouseOver();
 				}
 
 			};
@@ -491,6 +514,7 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 				public void mouseExit(final IMouseEvent event) {
 					if (isInsideLabelEvent(event)) {
 						setMouseover(true);
+						fireOnMouseOver();
 					}
 					else {
 						setMouseover(false);
@@ -500,6 +524,7 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 				@Override
 				public void mouseEnter(final IMouseEvent event) {
 					setMouseover(true);
+					fireOnMouseOver();
 				}
 
 			};
@@ -513,6 +538,10 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 				labelPreferredSize = label.getPreferredSize();
 			}
 			return labelPreferredSize;
+		}
+
+		protected boolean isMouseover() {
+			return mouseover;
 		}
 
 		private boolean isInsideCompositeEvent(final IMouseEvent event) {
@@ -591,21 +620,18 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 		}
 
 		void setMouseover(final boolean mouseover) {
+			if (mouseoverButton != this && mouseoverButton != null && mouseoverButton.isMouseover()) {
+				mouseoverButton.setMouseover(false);
+			}
+
 			if (date != null && this.mouseover != mouseover && !hasBorder) {
 				this.mouseover = mouseover;
-				if (mouseover) {
-					if (mouseoverButton != this) {
-						if (mouseoverButton != null) {
-							mouseoverButton.setMouseover(false);
-						}
-						mouseoverButton = this;
-					}
-				}
-				else {
-					mouseoverButton = null;
-				}
 				setBorderImpl(mouseover);
+				if (mouseover) {
+					mouseoverButton = this;
+				}
 			}
+
 		}
 
 		void setSelected(final boolean selected) {
@@ -655,6 +681,10 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 			labelBorder.setForegroundColor(color);
 		}
 
+	}
+
+	interface IMouseoverListener {
+		void onMouseOver();
 	}
 
 	private static String getShortDayLabel(final int day) {
