@@ -66,7 +66,7 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 	private static final Dimension MAX_SIZE = new Dimension(Short.MAX_VALUE, Short.MAX_VALUE);
 
 	private static final int M_X = 0;
-	private static final int M_Y = 0;
+	private static final int M_Y = 1;
 
 	private static final int MIN_M_X = 6;
 	private static final int MIN_M_Y = 0;
@@ -308,7 +308,7 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 			for (int i = 0; i < 7; i++) {
 				final CalendarButton headerButton = headerButtons[i];
 				headerButton.setPosition(new Position(x, y));
-				headerButton.layout(marginX, marginY, sizeX, sizeY);
+				headerButton.layout(marginX, marginY, sizeX, sizeY, headerMax);
 
 				x += sizeX + G_X;
 			}
@@ -327,7 +327,7 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 				for (int j = 0; j < 7; j++) {
 					final CalendarButton day = dayButtons[i][j];
 					day.setPosition(new Position(x, y));
-					day.layout(marginX, marginY, sizeX, sizeY);
+					day.layout(marginX, marginY, sizeX, sizeY, dayMax);
 
 					x += sizeX + G_X;
 				}
@@ -356,16 +356,7 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 		}
 
 		@Override
-		public void invalidate() {
-			for (int i = 0; i < 6; i++) {
-				for (int j = 0; j < 7; j++) {
-					dayButtons[i][j].invalidate();
-				}
-			}
-			layoutet = false;
-			prefSize = null;
-			dayMaxSize = null;
-		}
+		public void invalidate() {}
 
 		private Dimension calcPrefSize() {
 			final Dimension dayMax = getDayMaxSize();
@@ -471,8 +462,8 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 			composite.setLayout(Toolkit.getLayoutFactoryProvider().nullLayout());
 			compositeBorder.setLayout(Toolkit.getLayoutFactoryProvider().nullLayout());
 
-			this.label = composite.add(BPF.textLabel());
-			this.labelBorder = compositeBorder.add(BPF.textLabel());
+			this.label = composite.add(BPF.textLabel().alignRight());
+			this.labelBorder = compositeBorder.add(BPF.textLabel().alignRight());
 
 			compositeBorder.setVisible(false);
 
@@ -481,7 +472,10 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 				@Override
 				public void mousePressed(final IMouseButtonEvent event) {
 					setSelected(true);
-					inputObservable.fireInputChanged();
+					clearMouseOver();
+					if (date != null) {
+						inputObservable.fireInputChanged();
+					}
 				}
 
 				@Override
@@ -508,7 +502,10 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 				@Override
 				public void mousePressed(final IMouseButtonEvent event) {
 					setSelected(true);
-					inputObservable.fireInputChanged();
+					clearMouseOver();
+					if (date != null) {
+						inputObservable.fireInputChanged();
+					}
 				}
 
 				@Override
@@ -571,21 +568,15 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 			}
 		}
 
-		void invalidate() {
-			labelPreferredSize = null;
-		}
-
-		void layout(final int marginX, final int marginY, final int sizeX, final int sizeY) {
+		void layout(final int marginX, final int marginY, final int sizeX, final int sizeY, final Dimension labelMaxSize) {
 			composite.setSize(sizeX, sizeY);
 			compositeBorder.setSize(sizeX, sizeY);
 
-			final Dimension labelPrefSize = getLabelPreferredSize();
+			label.setSize(labelMaxSize);
+			labelBorder.setSize(labelMaxSize);
 
-			label.setSize(labelPrefSize);
-			labelBorder.setSize(labelPrefSize);
-
-			final int x = sizeX - marginX - labelPrefSize.getWidth();
-			final int y = sizeY - marginY - labelPrefSize.getHeight();
+			final int x = sizeX - marginX - labelMaxSize.getWidth();
+			final int y = sizeY - marginY - labelMaxSize.getHeight();
 
 			final Rectangle clientArea = composite.getClientArea();
 			final Rectangle clientAreaBorder = compositeBorder.getClientArea();
