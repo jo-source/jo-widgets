@@ -456,6 +456,7 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 		private boolean hasBorder;
 		private boolean mouseover;
 		private boolean isToday;
+		private IColorConstant foregroundColor;
 
 		CalendarButton(final IContainer container) {
 			this.container = container;
@@ -612,6 +613,11 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 			this.isToday = true;
 			todayButton = this;
 			setBorder(true);
+			setForegroundColor(Colors.SELECTED_BACKGROUND);
+			if (selectedButton == this) {
+				label.setForegroundColor(Colors.WHITE);
+				labelBorder.setForegroundColor(Colors.WHITE);
+			}
 		}
 
 		void setBorder(final boolean border) {
@@ -643,6 +649,10 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 					setBorder(true);
 					composite.setBackgroundColor(Colors.SELECTED_BACKGROUND);
 					compositeBorder.setBackgroundColor(Colors.SELECTED_BACKGROUND);
+					if (!isToday) {
+						label.setForegroundColor(Colors.WHITE);
+						labelBorder.setForegroundColor(Colors.WHITE);
+					}
 					selectedButton = this;
 				}
 				else {
@@ -651,6 +661,8 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 					}
 					composite.setBackgroundColor(Colors.WHITE);
 					compositeBorder.setBackgroundColor(Colors.WHITE);
+					label.setForegroundColor(foregroundColor);
+					labelBorder.setForegroundColor(foregroundColor);
 					selectedButton = null;
 				}
 
@@ -679,6 +691,7 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 		void setForegroundColor(final IColorConstant color) {
 			label.setForegroundColor(color);
 			labelBorder.setForegroundColor(color);
+			this.foregroundColor = color;
 		}
 
 	}
