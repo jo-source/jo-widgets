@@ -640,10 +640,8 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 					setBorder(true);
 					composite.setBackgroundColor(Colors.SELECTED_BACKGROUND);
 					compositeBorder.setBackgroundColor(Colors.SELECTED_BACKGROUND);
-					if (!isToday) {
-						label.setForegroundColor(Colors.WHITE);
-						labelBorder.setForegroundColor(Colors.WHITE);
-					}
+					label.setForegroundColor(Colors.WHITE);
+					labelBorder.setForegroundColor(Colors.WHITE);
 					selectedButton = this;
 				}
 				else {

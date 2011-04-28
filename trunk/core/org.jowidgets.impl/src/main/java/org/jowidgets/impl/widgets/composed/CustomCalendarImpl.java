@@ -318,17 +318,17 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 				final Dimension monthSize = monthComposite.getPreferredSize();
 				final Dimension labelSize = label.getPreferredSize();
 
-				boolean hasMoreMonth = false;
+				boolean layoutMonth = i == 0;
 
 				if (x + monthSize.getWidth() <= clientArea.getX() + clientArea.getWidth()) {
-					hasMoreMonth = true;
+					layoutMonth = true;
 				}
-				else if (y + 2 * prefHeight <= clientArea.getHeight()) {
+				else if (i != 0 && y + 2 * prefHeight <= clientArea.getHeight()) {
 					x = clientArea.getX();
 					y = y + prefHeight + G_Y;
-					hasMoreMonth = true;
+					layoutMonth = true;
 				}
-				if (hasMoreMonth) {
+				if (layoutMonth) {
 					//layout label
 					final int offsetX = monthSize.getWidth() / 2 - labelSize.getWidth() / 2;
 					label.setSize(labelSize);
