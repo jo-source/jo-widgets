@@ -29,7 +29,6 @@
 package org.jowidgets.examples.common.demo;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 import org.jowidgets.api.color.Colors;
@@ -37,6 +36,7 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.ICalendar;
 import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IPopupDialog;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Dimension;
@@ -49,14 +49,14 @@ import org.jowidgets.tools.controler.MouseAdapter;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.powo.JoFrame;
 
-public class DemoPopupDialogFrame extends JoFrame {
+public class DemoChooserFrame extends JoFrame {
 
 	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
 	private IPopupDialog popupDialog;
 
-	public DemoPopupDialogFrame() {
-		super("Popup dialog demo");
+	public DemoChooserFrame() {
+		super("Chooser demo");
 
 		addComponentListener(new IComponentListener() {
 
@@ -75,16 +75,16 @@ public class DemoPopupDialogFrame extends JoFrame {
 			}
 		});
 
-		setLayout(new MigLayoutDescriptor("[grow]", "[][]"));
+		setLayout(new MigLayoutDescriptor("[grow]", "[][][]"));
 
-		final IButton button1 = add(BPF.button("Date chooser..."), "wrap, sg bg");
+		final IButton button1 = add(BPF.button("Open calendar popup..."), "wrap, sg bg");
 		button1.addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mousePressed(final IMouseButtonEvent event) {
 				popupDialog = createChildWindow(BPF.popupDialog().setBorder(false));
 				final Position buttonPos = button1.getPosition();
-				popupDialog.setPosition(Toolkit.toScreen(buttonPos, DemoPopupDialogFrame.this));
+				popupDialog.setPosition(Toolkit.toScreen(buttonPos, DemoChooserFrame.this));
 				setContent(popupDialog);
 				popupDialog.pack();
 				popupDialog.setVisible(true);
@@ -92,7 +92,7 @@ public class DemoPopupDialogFrame extends JoFrame {
 
 		});
 
-		final IButton button2 = add(BPF.button("Open / Close caledar popup"), "sg bg");
+		final IButton button2 = add(BPF.button("Open / Close caledar popup"), "wrap, sg bg");
 		button2.addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -104,7 +104,7 @@ public class DemoPopupDialogFrame extends JoFrame {
 				setContent(popupDialog);
 				popupDialog.setPosition(Toolkit.toScreen(
 						new Position(buttonPos.getX(), buttonPos.getY() + buttonSize.getHeight()),
-						DemoPopupDialogFrame.this));
+						DemoChooserFrame.this));
 				popupDialog.pack();
 				popupDialog.setVisible(true);
 			}
@@ -118,19 +118,33 @@ public class DemoPopupDialogFrame extends JoFrame {
 
 		});
 
+		final IButton button3 = add(BPF.button("Open calendar dialog..."), "wrap, sg bg");
+		button3.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mousePressed(final IMouseButtonEvent event) {
+				final IFrame dialog = createChildWindow(BPF.dialog("Calendar dialog"));
+				final Position buttonPos = button3.getPosition();
+				dialog.setPosition(Toolkit.toScreen(buttonPos, DemoChooserFrame.this));
+				final ICalendar calendar = setContent(dialog);
+				dialog.pack();
+				dialog.setMinSize(dialog.computeDecoratedSize(calendar.getMinSize()));
+				dialog.setVisible(true);
+			}
+
+		});
+
 	}
 
-	private void setContent(final IContainer container) {
+	private ICalendar setContent(final IContainer container) {
 
 		final Calendar gregCalendar = new GregorianCalendar();
-		gregCalendar.add(Calendar.DAY_OF_MONTH, 3);
+		gregCalendar.add(Calendar.DAY_OF_MONTH, -3);
 
 		container.setLayout(MigLayoutFactory.growingInnerCellLayout());
 		final ICalendar calendar = container.add(
 				BPF.calendar().setDate(gregCalendar.getTime()),
 				MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-
-		calendar.setDate(new Date());
 
 		calendar.addInputListener(new IInputListener() {
 			@Override
@@ -140,6 +154,8 @@ public class DemoPopupDialogFrame extends JoFrame {
 				//CHECKSTYLE:ON
 			}
 		});
+
+		return calendar;
 	}
 
 }
