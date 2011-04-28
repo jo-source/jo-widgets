@@ -57,7 +57,7 @@ public class FallbackCalendarImpl extends CompositeBasedControl implements ICale
 	private static final Calendar CALENDAR = new GregorianCalendar();
 	private static final Locale LOCALE = Locale.getDefault();
 
-	private static final int G_X = 8;
+	private static final int G_X = 16;
 	private static final int G_Y = 8;
 
 	private static final Dimension MAX_SIZE = new Dimension(Short.MAX_VALUE, Short.MAX_VALUE);

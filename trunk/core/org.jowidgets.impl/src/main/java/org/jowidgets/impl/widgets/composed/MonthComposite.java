@@ -227,7 +227,8 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 				}
 				if (selectedCalendar != null
 					&& iteratingCalendar.get(Calendar.MONTH) == selectedCalendar.get(Calendar.MONTH)
-					&& iteratingCalendar.get(Calendar.DAY_OF_MONTH) == selectedCalendar.get(Calendar.DAY_OF_MONTH)) {
+					&& iteratingCalendar.get(Calendar.DAY_OF_MONTH) == selectedCalendar.get(Calendar.DAY_OF_MONTH)
+					&& iteratingCalendar.get(Calendar.YEAR) == selectedCalendar.get(Calendar.YEAR)) {
 					dayButton.setSelected(true);
 				}
 				iteratingCalendar.add(Calendar.DAY_OF_MONTH, 1);
