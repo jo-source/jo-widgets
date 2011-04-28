@@ -43,10 +43,13 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IInputListener;
+import org.jowidgets.common.widgets.controler.IMouseEvent;
 import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
+import org.jowidgets.impl.widgets.composed.MonthComposite.IMouseoverListener;
 import org.jowidgets.tools.controler.InputObservable;
+import org.jowidgets.tools.controler.MouseAdapter;
 import org.jowidgets.tools.powo.JoButton;
 import org.jowidgets.tools.powo.JoComposite;
 import org.jowidgets.tools.powo.JoTextLabel;
@@ -128,6 +131,28 @@ public class FallbackCalendarImpl extends CompositeBasedControl implements ICale
 			public void actionPerformed() {
 				interateYear(1);
 			}
+		});
+
+		this.composite.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseExit(final IMouseEvent event) {
+				clearMouseOvers();
+			}
+
+			@Override
+			public void mouseEnter(final IMouseEvent event) {
+				clearMouseOvers();
+			}
+
+			private void clearMouseOvers() {
+				for (int i = 0; i < monthComposites.length; i++) {
+					if (monthComposites[i] != null) {
+						monthComposites[i].clearMouseOver();
+					}
+				}
+			}
+
 		});
 	}
 
@@ -234,6 +259,17 @@ public class FallbackCalendarImpl extends CompositeBasedControl implements ICale
 					}
 				}
 			});
+
+			monthComposites[index].addMouseOverListener(new IMouseoverListener() {
+				@Override
+				public void onMouseOver() {
+					for (int i = 0; i < monthComposites.length; i++) {
+						if (i != index && monthComposites[i] != null) {
+							monthComposites[i].clearMouseOver();
+						}
+					}
+				}
+			});
 		}
 		return monthComposites[index];
 	}
@@ -307,8 +343,8 @@ public class FallbackCalendarImpl extends CompositeBasedControl implements ICale
 					monthComposite.setPosition(x, y + offsetY);
 					monthComposite.setVisible(true);
 
-					maxX = x + monthSize.getWidth();
-					x = maxX + G_X;
+					maxX = Math.max(maxX, x + monthSize.getWidth());
+					x = x + monthSize.getWidth() + G_X;
 				}
 				else {
 					monthComposite.setVisible(false);
