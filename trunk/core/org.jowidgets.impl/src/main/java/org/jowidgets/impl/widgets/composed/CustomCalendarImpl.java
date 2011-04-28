@@ -34,6 +34,7 @@ import java.util.Locale;
 
 import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.image.IconsSmall;
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.ICalendar;
 import org.jowidgets.api.widgets.IComposite;
@@ -66,7 +67,8 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 	private static final Dimension MAX_SIZE = new Dimension(Short.MAX_VALUE, Short.MAX_VALUE);
 
 	private final InputObservable inputObservable;
-	private final JoComposite composite;
+	private final JoComposite outerComposite;
+	private final JoComposite innerComposite;
 	private final MonthComposite[] monthComposites;
 	private final ITextLabel[] monthLabels;
 	private final CalendarLayouter layouter;
@@ -84,10 +86,16 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 		this.monthComposites = new MonthComposite[12];
 		this.monthLabels = new ITextLabel[12];
 
-		this.composite = JoComposite.toJoComposite(composite);
+		this.outerComposite = JoComposite.toJoComposite(composite);
+
+		this.innerComposite = new JoComposite(JoComposite.bluePrint().setBorder());
+		this.innerComposite.setLayout(Toolkit.getLayoutFactoryProvider().nullLayout());
+		this.outerComposite.add(innerComposite);
+
 		composite.setBackgroundColor(Colors.WHITE);
+
 		this.layouter = new CalendarLayouter();
-		this.composite.setLayout(layouter);
+		this.outerComposite.setLayout(layouter);
 
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
@@ -99,10 +107,10 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 			this.date = new Date();
 		}
 
-		navBackwardButton = this.composite.add(new JoButton(IconsSmall.NAVIGATION_BACKWARD_TINY));
-		navNextButton = this.composite.add(new JoButton(IconsSmall.NAVIGATION_NEXT_TINY));
-		navPrevButton = this.composite.add(new JoButton(IconsSmall.NAVIGATION_PREVIOUS_TINY));
-		navForwardButton = this.composite.add(new JoButton(IconsSmall.NAVIGATION_FORWARD_TINY));
+		navBackwardButton = this.innerComposite.add(new JoButton(IconsSmall.NAVIGATION_BACKWARD_TINY));
+		navNextButton = this.innerComposite.add(new JoButton(IconsSmall.NAVIGATION_NEXT_TINY));
+		navPrevButton = this.innerComposite.add(new JoButton(IconsSmall.NAVIGATION_PREVIOUS_TINY));
+		navForwardButton = this.innerComposite.add(new JoButton(IconsSmall.NAVIGATION_FORWARD_TINY));
 		getMonthComposite(0);
 
 		navPrevButton.addActionListener(new IActionListener() {
@@ -133,7 +141,7 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 			}
 		});
 
-		this.composite.addMouseListener(new MouseAdapter() {
+		this.innerComposite.addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mouseExit(final IMouseEvent event) {
@@ -157,7 +165,7 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 	}
 
 	private void interateMonth(final int offset) {
-		this.composite.layoutBegin();
+		this.outerComposite.layoutBegin();
 		final Calendar calendar = new GregorianCalendar();
 		calendar.setTime(monthComposites[0].getDate());
 		calendar.add(Calendar.MONTH, offset);
@@ -170,11 +178,11 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 			}
 			calendar.add(Calendar.MONTH, 1);
 		}
-		this.composite.layoutEnd();
+		this.outerComposite.layoutEnd();
 	}
 
 	private void interateYear(final int offset) {
-		this.composite.layoutBegin();
+		this.outerComposite.layoutBegin();
 		final Calendar calendar = new GregorianCalendar();
 		calendar.setTime(monthComposites[0].getDate());
 		calendar.add(Calendar.YEAR, offset);
@@ -187,13 +195,13 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 			}
 			calendar.add(Calendar.MONTH, 1);
 		}
-		this.composite.layoutEnd();
+		this.outerComposite.layoutEnd();
 	}
 
 	@Override
 	public void setDate(final Date date) {
 		Assert.paramNotNull(date, "date");
-		this.composite.layoutBegin();
+		this.outerComposite.layoutBegin();
 		monthComposites[0].setDate(date, date);
 
 		final Calendar calendar = new GregorianCalendar();
@@ -210,7 +218,7 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 			}
 		}
 		this.date = date;
-		this.composite.layoutEnd();
+		this.outerComposite.layoutEnd();
 	}
 
 	@Override
@@ -241,7 +249,7 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 				calendar.add(Calendar.MONTH, 1);
 				monthComposites[index] = new MonthComposite(calendar.getTime(), date);
 			}
-			this.composite.add(monthComposites[index]);
+			this.innerComposite.add(monthComposites[index]);
 
 			monthComposites[index].addInputListener(new IInputListener() {
 				@Override
@@ -280,7 +288,7 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 			final Calendar calendar = new GregorianCalendar();
 			calendar.setTime(monthDate);
 			final String labelString = getMonthDisplayName(calendar);
-			final JoTextLabel label = this.composite.add(new JoTextLabel(labelString));
+			final JoTextLabel label = this.innerComposite.add(new JoTextLabel(labelString));
 			monthLabels[index] = label;
 		}
 		return monthLabels[index];
@@ -292,7 +300,12 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 
 		@Override
 		public void layout() {
-			final Rectangle clientArea = composite.getClientArea();
+
+			outerComposite.setRedrawEnabled(false);
+
+			innerComposite.setSize(outerComposite.getClientArea().getSize());
+
+			final Rectangle clientArea = innerComposite.getClientArea();
 			int x = clientArea.getX();
 			int y = clientArea.getY() + G_Y;
 
@@ -311,6 +324,7 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 			final int prefHeight = getPreferredSize().getHeight();
 			x = clientArea.getX();
 			int maxX = x;
+			int maxY = y;
 			for (int i = 0; i < monthComposites.length; i++) {
 				final ITextLabel label = getMonthLabel(i);
 				final MonthComposite monthComposite = getMonthComposite(i);
@@ -344,6 +358,7 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 
 					maxX = Math.max(maxX, x + monthSize.getWidth());
 					x = x + monthSize.getWidth() + G_X;
+					maxY = y + prefHeight;
 				}
 				else {
 					monthComposite.setVisible(false);
@@ -364,6 +379,29 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 			x = x - navButtonSize.getWidth();
 			navNextButton.setSize(navButtonSize);
 			navNextButton.setPosition(x, y + buttonOffsetY);
+
+			final Rectangle outerClientArea = outerComposite.getClientArea();
+
+			final int innerWidth = Math.min(outerClientArea.getWidth(), maxX);
+			final int innerHeight = Math.min(outerClientArea.getHeight(), maxY);
+
+			innerComposite.setSize(innerComposite.computeDecoratedSize(new Dimension(innerWidth, innerHeight)));
+
+			final Dimension innerSize = innerComposite.getSize();
+
+			x = outerClientArea.getX();
+			y = outerClientArea.getY();
+
+			if (outerClientArea.getWidth() - innerSize.getWidth() > 2) {
+				x = x + (outerClientArea.getWidth() - innerSize.getWidth()) / 2;
+			}
+			if (outerClientArea.getHeight() - innerSize.getHeight() > 2) {
+				y = y + (outerClientArea.getHeight() - innerSize.getHeight()) / 2;
+			}
+
+			innerComposite.setPosition(x, y);
+
+			outerComposite.setRedrawEnabled(true);
 		}
 
 		@Override
@@ -396,7 +434,7 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 
 			final int width = monthSize.getWidth();
 			final int height = monthSize.getHeight() + 2 * G_Y + Math.max(17, labelSize.getHeight());
-			return composite.computeDecoratedSize(new Dimension(width, height));
+			return outerComposite.computeDecoratedSize(innerComposite.computeDecoratedSize(new Dimension(width, height)));
 		}
 	}
 

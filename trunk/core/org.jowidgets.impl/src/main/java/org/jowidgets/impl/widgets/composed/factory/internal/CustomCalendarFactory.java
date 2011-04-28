@@ -21,7 +21,7 @@ public class CustomCalendarFactory implements IWidgetFactory<ICalendar, ICalenda
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 		final IGenericWidgetFactory gwF = Toolkit.getWidgetFactory();
 
-		final IComposite compositeWidget = gwF.create(parentUiReference, bpF.composite().setBorder());
+		final IComposite compositeWidget = gwF.create(parentUiReference, bpF.composite());
 
 		return new CustomCalendarImpl(compositeWidget, descriptor);
 	}
