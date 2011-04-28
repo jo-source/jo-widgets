@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,41 +26,21 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.demo;
+package org.jowidgets.api.layout.miglayout;
 
-import org.jowidgets.api.layout.ILayoutFactoryProvider;
-import org.jowidgets.api.model.item.IMenuBarModel;
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.ITextArea;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.widgets.layout.ILayouter;
-import org.jowidgets.tools.model.item.MenuBarModel;
-import org.jowidgets.tools.powo.JoFrame;
+import org.jowidgets.api.layout.ILayoutFactory;
+import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
-public class DemoFillLayoutFrame extends JoFrame {
+public interface IMigLayoutFactoryBuilder {
 
-	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
+	IMigLayoutFactoryBuilder descriptor(MigLayoutDescriptor descriptor);
 
-	public DemoFillLayoutFrame() {
-		super("Fill layout demo");
+	IMigLayoutFactoryBuilder rowConstraints(String constraints);
 
-		final IMenuBarModel menuBarModel = new MenuBarModel();
-		menuBarModel.addMenu("File");
-		menuBarModel.addMenu("Edit");
-		setMenuBar(menuBarModel);
+	IMigLayoutFactoryBuilder columnConstraints(String constraints);
 
-		final ILayoutFactoryProvider lfp = Toolkit.getLayoutFactoryProvider();
+	IMigLayoutFactoryBuilder constraints(String constraints);
 
-		final ILayouter layouter = setLayout(lfp.fillLayout());
-		final ITextArea textArea = add(BPF.textArea().setBorder(false));
+	ILayoutFactory<IMigLayout> build();
 
-		final StringBuilder stringBuilder = new StringBuilder();
-		for (int i = 0; i < 50; i++) {
-			stringBuilder.append("Text area in a border layout. ");
-		}
-		textArea.setText(stringBuilder.toString());
-
-		setSize(500, 400);
-		setMinSize(layouter.getMinSize());
-	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,41 +26,49 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.demo;
+package org.jowidgets.impl.layout.miglayout;
 
-import org.jowidgets.api.layout.ILayoutFactoryProvider;
-import org.jowidgets.api.model.item.IMenuBarModel;
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.ITextArea;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.widgets.layout.ILayouter;
-import org.jowidgets.tools.model.item.MenuBarModel;
-import org.jowidgets.tools.powo.JoFrame;
+import org.jowidgets.api.layout.miglayout.IMigLayout;
+import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.common.types.Dimension;
 
-public class DemoFillLayoutFrame extends JoFrame {
+@SuppressWarnings("unused")
+final class MigLayout implements IMigLayout {
 
-	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
+	private final IContainer container;
 
-	public DemoFillLayoutFrame() {
-		super("Fill layout demo");
+	private final String constraints;
+	private final String columnConstraints;
+	private final String rowConstraints;
 
-		final IMenuBarModel menuBarModel = new MenuBarModel();
-		menuBarModel.addMenu("File");
-		menuBarModel.addMenu("Edit");
-		setMenuBar(menuBarModel);
-
-		final ILayoutFactoryProvider lfp = Toolkit.getLayoutFactoryProvider();
-
-		final ILayouter layouter = setLayout(lfp.fillLayout());
-		final ITextArea textArea = add(BPF.textArea().setBorder(false));
-
-		final StringBuilder stringBuilder = new StringBuilder();
-		for (int i = 0; i < 50; i++) {
-			stringBuilder.append("Text area in a border layout. ");
-		}
-		textArea.setText(stringBuilder.toString());
-
-		setSize(500, 400);
-		setMinSize(layouter.getMinSize());
+	MigLayout(final IContainer container, final String constraints, final String columnConstraints, final String rowConstraints) {
+		this.container = container;
+		this.constraints = constraints;
+		this.columnConstraints = columnConstraints;
+		this.rowConstraints = rowConstraints;
 	}
+
+	@Override
+	public void layout() {}
+
+	@Override
+	public Dimension getMinSize() {
+		return null;
+	}
+
+	@Override
+	public Dimension getPreferredSize() {
+		return null;
+	}
+
+	@Override
+	public Dimension getMaxSize() {
+		return null;
+	}
+
+	@Override
+	public void invalidate() {
+
+	}
+
 }
