@@ -41,6 +41,7 @@ import org.jowidgets.api.widgets.ITextLabel;
 import org.jowidgets.api.widgets.descriptor.setup.ICalendarSetup;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Rectangle;
+import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
@@ -101,13 +102,74 @@ public class FallbackCalendarImpl extends CompositeBasedControl implements ICale
 		navForwardButton = this.composite.add(new JoButton(IconsSmall.NAVIGATION_FORWARD_TINY));
 		getMonthComposite(0);
 
+		navPrevButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				interateMonth(-1);
+			}
+		});
+
+		navNextButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				interateMonth(1);
+			}
+		});
+
+		navBackwardButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				interateYear(-1);
+			}
+		});
+
+		navForwardButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				interateYear(1);
+			}
+		});
+	}
+
+	private void interateMonth(final int offset) {
+		this.composite.layoutBegin();
+		final Calendar calendar = new GregorianCalendar();
+		calendar.setTime(monthComposites[0].getDate());
+		calendar.add(Calendar.MONTH, offset);
+		for (int i = 0; i < monthComposites.length; i++) {
+			if (monthComposites[i] != null) {
+				monthComposites[i].setDate(calendar.getTime(), date);
+			}
+			if (monthLabels[i] != null) {
+				monthLabels[i].setText(getMonthDisplayName(calendar));
+			}
+			calendar.add(Calendar.MONTH, 1);
+		}
+		this.composite.layoutEnd();
+	}
+
+	private void interateYear(final int offset) {
+		this.composite.layoutBegin();
+		final Calendar calendar = new GregorianCalendar();
+		calendar.setTime(monthComposites[0].getDate());
+		calendar.add(Calendar.YEAR, offset);
+		for (int i = 0; i < monthComposites.length; i++) {
+			if (monthComposites[i] != null) {
+				monthComposites[i].setDate(calendar.getTime(), date);
+			}
+			if (monthLabels[i] != null) {
+				monthLabels[i].setText(getMonthDisplayName(calendar));
+			}
+			calendar.add(Calendar.MONTH, 1);
+		}
+		this.composite.layoutEnd();
 	}
 
 	@Override
 	public void setDate(final Date date) {
 		Assert.paramNotNull(date, "date");
 
-		monthComposites[0].setDate(date, true);
+		monthComposites[0].setDate(date, date);
 
 		final Calendar calendar = new GregorianCalendar();
 		calendar.setTime(date);
@@ -116,10 +178,15 @@ public class FallbackCalendarImpl extends CompositeBasedControl implements ICale
 		for (int i = 1; i < monthComposites.length; i++) {
 			calendar.add(Calendar.MONTH, 1);
 			if (monthComposites[i] != null) {
-				monthComposites[i].setDate(calendar.getTime(), false);
+				monthComposites[i].setDate(calendar.getTime(), date);
+			}
+			if (monthLabels[i] != null) {
+				monthLabels[i].setText(getMonthDisplayName(calendar));
 			}
 		}
 		this.date = date;
+		this.composite.layoutBegin();
+		this.composite.layoutEnd();
 	}
 
 	@Override
@@ -140,7 +207,7 @@ public class FallbackCalendarImpl extends CompositeBasedControl implements ICale
 	private MonthComposite getMonthComposite(final int index) {
 		if (monthComposites[index] == null) {
 			if (index == 0) {
-				monthComposites[index] = new MonthComposite(this.date, true);
+				monthComposites[index] = new MonthComposite(this.date, date);
 			}
 			else {
 				final Date prevDate = getMonthComposite(index - 1).getDate();
@@ -148,7 +215,7 @@ public class FallbackCalendarImpl extends CompositeBasedControl implements ICale
 				calendar.setTime(prevDate);
 				calendar.set(Calendar.DAY_OF_MONTH, 1);
 				calendar.add(Calendar.MONTH, 1);
-				monthComposites[index] = new MonthComposite(calendar.getTime(), false);
+				monthComposites[index] = new MonthComposite(calendar.getTime(), date);
 			}
 			this.composite.add(monthComposites[index]);
 
@@ -177,7 +244,7 @@ public class FallbackCalendarImpl extends CompositeBasedControl implements ICale
 			final Date monthDate = monthComposite.getDate();
 			final Calendar calendar = new GregorianCalendar();
 			calendar.setTime(monthDate);
-			final String labelString = getMonthDisplayName(calendar.get(Calendar.MONTH)) + " " + calendar.get(Calendar.YEAR);
+			final String labelString = getMonthDisplayName(calendar);
 			final JoTextLabel label = this.composite.add(new JoTextLabel(labelString));
 			monthLabels[index] = label;
 		}
@@ -194,14 +261,9 @@ public class FallbackCalendarImpl extends CompositeBasedControl implements ICale
 			int x = clientArea.getX();
 			int y = clientArea.getY() + G_Y;
 
-			final ITextLabel label = getMonthLabel(0);
-			final MonthComposite monthComposite = getMonthComposite(0);
-
-			final Dimension monthSize = monthComposite.getPreferredSize();
-			final Dimension labelSize = label.getPreferredSize();
-
+			//layout the left nav buttons
 			final Dimension navButtonSize = new Dimension(17, 17);
-			final int buttonOffsetY = (labelSize.getHeight() - navButtonSize.getHeight()) / 2;
+			final int buttonOffsetY = (getMonthLabel(0).getPreferredSize().getHeight() - navButtonSize.getHeight()) / 2;
 
 			navBackwardButton.setSize(navButtonSize);
 			navBackwardButton.setPosition(x, y + buttonOffsetY);
@@ -210,25 +272,63 @@ public class FallbackCalendarImpl extends CompositeBasedControl implements ICale
 			navPrevButton.setSize(navButtonSize);
 			navPrevButton.setPosition(x, y + buttonOffsetY);
 
-			x = clientArea.getWidth() - navButtonSize.getWidth();
+			//layout the months
+			final int prefHeight = getPreferredSize().getHeight();
+			x = clientArea.getX();
+			int maxX = x;
+			for (int i = 0; i < monthComposites.length; i++) {
+				final ITextLabel label = getMonthLabel(i);
+				final MonthComposite monthComposite = getMonthComposite(i);
+
+				final Dimension monthSize = monthComposite.getPreferredSize();
+				final Dimension labelSize = label.getPreferredSize();
+
+				boolean hasMoreMonth = false;
+
+				if (x + monthSize.getWidth() <= clientArea.getX() + clientArea.getWidth()) {
+					hasMoreMonth = true;
+				}
+				else if (y + 2 * prefHeight <= clientArea.getHeight()) {
+					x = clientArea.getX();
+					y = y + prefHeight + G_Y;
+					hasMoreMonth = true;
+				}
+				if (hasMoreMonth) {
+					//layout label
+					final int offsetX = monthSize.getWidth() / 2 - labelSize.getWidth() / 2;
+					label.setSize(labelSize);
+					label.setPosition(x + offsetX, y);
+					label.setVisible(true);
+
+					final int offsetY = labelSize.getHeight() + G_Y;
+
+					//layout month composite
+					monthComposite.setSize(monthSize);
+					monthComposite.setPosition(x, y + offsetY);
+					monthComposite.setVisible(true);
+
+					maxX = x + monthSize.getWidth();
+					x = maxX + G_X;
+				}
+				else {
+					monthComposite.setVisible(false);
+					label.setVisible(false);
+					if (i < monthComposites.length - 1 && monthComposites[i + 1] == null) {
+						break;
+					}
+				}
+			}
+
+			//layout the rigth nav buttons
+			y = clientArea.getY() + G_Y;
+
+			x = maxX - navButtonSize.getWidth();
 			navForwardButton.setSize(navButtonSize);
 			navForwardButton.setPosition(x, y + buttonOffsetY);
 
 			x = x - navButtonSize.getWidth();
 			navNextButton.setSize(navButtonSize);
 			navNextButton.setPosition(x, y + buttonOffsetY);
-
-			//layout label
-			x = monthSize.getWidth() / 2 - labelSize.getWidth() / 2;
-			label.setSize(labelSize);
-			label.setPosition(x, y);
-
-			y = y + labelSize.getHeight() + G_Y;
-
-			//layout month composite
-			x = clientArea.getX();
-			monthComposite.setSize(monthSize);
-			monthComposite.setPosition(x, y);
 		}
 
 		@Override
@@ -260,9 +360,13 @@ public class FallbackCalendarImpl extends CompositeBasedControl implements ICale
 			final Dimension labelSize = label.getPreferredSize();
 
 			final int width = monthSize.getWidth();
-			final int height = monthSize.getHeight() + 2 * G_Y + labelSize.getHeight();
+			final int height = monthSize.getHeight() + 2 * G_Y + Math.max(17, labelSize.getHeight());
 			return composite.computeDecoratedSize(new Dimension(width, height));
 		}
+	}
+
+	private static String getMonthDisplayName(final Calendar calendar) {
+		return getMonthDisplayName(calendar.get(Calendar.MONTH)) + " " + calendar.get(Calendar.YEAR);
 	}
 
 	private static String getMonthDisplayName(final int month) {

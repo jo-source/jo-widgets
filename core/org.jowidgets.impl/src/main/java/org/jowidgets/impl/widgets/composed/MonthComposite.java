@@ -84,7 +84,7 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 	private CalendarButton selectedButton;
 	private CalendarButton todayButton;
 
-	public MonthComposite(final Date date, final boolean setSelected) {
+	public MonthComposite(final Date date, final Date selectedDate) {
 
 		this.inputObservable = new InputObservable();
 
@@ -97,7 +97,7 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 		createHeader();
 		this.separator = add(BPF.separator());
 		createDays();
-		setDate(date, setSelected);
+		setDate(date, selectedDate);
 
 		addMouseListener(new MouseAdapter() {
 			@Override
@@ -166,7 +166,7 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 		}
 	}
 
-	public void setDate(final Date date, final boolean setSelected) {
+	public void setDate(final Date date, final Date selectedDate) {
 		this.date = date;
 
 		if (selectedButton != null) {
@@ -183,7 +183,11 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 		final Calendar iteratingCalendar = new GregorianCalendar();
 		final Calendar calendar = new GregorianCalendar();
 		final Calendar current = new GregorianCalendar();
-
+		Calendar selectedCalendar = null;
+		if (selectedDate != null) {
+			selectedCalendar = new GregorianCalendar();
+			selectedCalendar.setTime(selectedDate);
+		}
 		iteratingCalendar.setTime(date);
 		calendar.setTime(date);
 		current.setTime(new Date());
@@ -221,16 +225,14 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 					&& iteratingCalendar.get(Calendar.DAY_OF_MONTH) == current.get(Calendar.DAY_OF_MONTH)) {
 					dayButton.setToday();
 				}
-				if (setSelected
-					&& iteratingCalendar.get(Calendar.MONTH) == calendar.get(Calendar.MONTH)
-					&& iteratingCalendar.get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH)) {
+				if (selectedCalendar != null
+					&& iteratingCalendar.get(Calendar.MONTH) == selectedCalendar.get(Calendar.MONTH)
+					&& iteratingCalendar.get(Calendar.DAY_OF_MONTH) == selectedCalendar.get(Calendar.DAY_OF_MONTH)) {
 					dayButton.setSelected(true);
 				}
 				iteratingCalendar.add(Calendar.DAY_OF_MONTH, 1);
 			}
 		}
-
-		layouter.invalidate();
 	}
 
 	private int getNextDayOfWeek(final int dayOfWeek) {
@@ -333,6 +335,11 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 
 		@Override
 		public void invalidate() {
+			for (int i = 0; i < 6; i++) {
+				for (int j = 0; j < 7; j++) {
+					dayButtons[i][j].invalidate();
+				}
+			}
 			layoutet = false;
 			prefSize = null;
 			dayMaxSize = null;
@@ -531,6 +538,10 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 			else {
 				return false;
 			}
+		}
+
+		void invalidate() {
+			labelPreferredSize = null;
 		}
 
 		void layout(final int marginX, final int marginY, final int sizeX, final int sizeY) {
