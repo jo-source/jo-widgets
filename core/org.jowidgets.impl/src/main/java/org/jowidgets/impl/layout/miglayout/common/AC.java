@@ -1,3 +1,5 @@
+//CHECKSTYLE:OFF
+
 package org.jowidgets.impl.layout.miglayout.common;
 
 import java.io.Externalizable;

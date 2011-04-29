@@ -1,4 +1,7 @@
+//CHECKSTYLE:OFF
+
 package org.jowidgets.impl.layout.miglayout.common;
+
 /*
  * License (BSD):
  * ==============
@@ -36,148 +39,181 @@ package org.jowidgets.impl.layout.miglayout.common;
 import java.beans.Encoder;
 import java.beans.Expression;
 import java.beans.PersistenceDelegate;
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.ObjectStreamException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public final class UnitValue implements Serializable
-{
+public final class UnitValue implements Serializable {
 	private static final HashMap<String, Integer> UNIT_MAP = new HashMap<String, Integer>(32);
 
 	private static final ArrayList<UnitConverter> CONVERTERS = new ArrayList<UnitConverter>();
 
-	/** An operation indicating a static value.
+	/**
+	 * An operation indicating a static value.
 	 */
 	public static final int STATIC = 100;
 
-	/** An operation indicating a addition of two sub units.
+	/**
+	 * An operation indicating a addition of two sub units.
 	 */
 	public static final int ADD = 101; // Must have "sub-unit values"
 
-	/** An operation indicating a subtraction of two sub units
+	/**
+	 * An operation indicating a subtraction of two sub units
 	 */
 	public static final int SUB = 102; // Must have "sub-unit values"
 
-	/** An operation indicating a multiplication of two sub units.
+	/**
+	 * An operation indicating a multiplication of two sub units.
 	 */
 	public static final int MUL = 103; // Must have "sub-unit values"
 
-	/** An operation indicating a division of two sub units.
+	/**
+	 * An operation indicating a division of two sub units.
 	 */
 	public static final int DIV = 104; // Must have "sub-unit values"
 
-	/** An operation indicating the minimum of two sub units
+	/**
+	 * An operation indicating the minimum of two sub units
 	 */
 	public static final int MIN = 105; // Must have "sub-unit values"
 
-	/** An operation indicating the maximum of two sub units
+	/**
+	 * An operation indicating the maximum of two sub units
 	 */
 	public static final int MAX = 106; // Must have "sub-unit values"
 
-	/** An operation indicating the middle value of two sub units
+	/**
+	 * An operation indicating the middle value of two sub units
 	 */
 	public static final int MID = 107; // Must have "sub-unit values"
 
-
-
-
-	/** A unit indicating pixels.
+	/**
+	 * A unit indicating pixels.
 	 */
 	public static final int PIXEL = 0;
 
-	/** A unit indicating logical horizontal pixels.
+	/**
+	 * A unit indicating logical horizontal pixels.
 	 */
 	public static final int LPX = 1;
 
-	/** A unit indicating logical vertical pixels.
+	/**
+	 * A unit indicating logical vertical pixels.
 	 */
 	public static final int LPY = 2;
 
-	/** A unit indicating millimeters.
+	/**
+	 * A unit indicating millimeters.
 	 */
 	public static final int MM = 3;
 
-	/** A unit indicating centimeters.
+	/**
+	 * A unit indicating centimeters.
 	 */
 	public static final int CM = 4;
 
-	/** A unit indicating inches.
+	/**
+	 * A unit indicating inches.
 	 */
 	public static final int INCH = 5;
 
-	/** A unit indicating percent.
+	/**
+	 * A unit indicating percent.
 	 */
 	public static final int PERCENT = 6;
 
-	/** A unit indicating points.
+	/**
+	 * A unit indicating points.
 	 */
 	public static final int PT = 7;
 
-	/** A unit indicating screen percentage width.
+	/**
+	 * A unit indicating screen percentage width.
 	 */
 	public static final int SPX = 8;
 
-	/** A unit indicating screen percentage height.
+	/**
+	 * A unit indicating screen percentage height.
 	 */
 	public static final int SPY = 9;
 
-	/** A unit indicating alignment.
+	/**
+	 * A unit indicating alignment.
 	 */
 	public static final int ALIGN = 12;
 
-	/** A unit indicating minimum size.
+	/**
+	 * A unit indicating minimum size.
 	 */
 	public static final int MIN_SIZE = 13;
 
-	/** A unit indicating preferred size.
+	/**
+	 * A unit indicating preferred size.
 	 */
 	public static final int PREF_SIZE = 14;
 
-	/** A unit indicating maximum size.
+	/**
+	 * A unit indicating maximum size.
 	 */
 	public static final int MAX_SIZE = 15;
 
-	/** A unit indicating botton size.
+	/**
+	 * A unit indicating botton size.
 	 */
 	public static final int BUTTON = 16;
 
-	/** A unit indicating linking to x.
+	/**
+	 * A unit indicating linking to x.
 	 */
-	public static final int LINK_X = 18;   // First link
+	public static final int LINK_X = 18; // First link
 
-	/** A unit indicating linking to y.
+	/**
+	 * A unit indicating linking to y.
 	 */
 	public static final int LINK_Y = 19;
 
-	/** A unit indicating linking to width.
+	/**
+	 * A unit indicating linking to width.
 	 */
 	public static final int LINK_W = 20;
 
-	/** A unit indicating linking to height.
+	/**
+	 * A unit indicating linking to height.
 	 */
 	public static final int LINK_H = 21;
 
-	/** A unit indicating linking to x2.
+	/**
+	 * A unit indicating linking to x2.
 	 */
 	public static final int LINK_X2 = 22;
 
-	/** A unit indicating linking to y2.
+	/**
+	 * A unit indicating linking to y2.
 	 */
 	public static final int LINK_Y2 = 23;
 
-	/** A unit indicating linking to x position on screen.
+	/**
+	 * A unit indicating linking to x position on screen.
 	 */
 	public static final int LINK_XPOS = 24;
 
-	/** A unit indicating linking to y position on screen.
+	/**
+	 * A unit indicating linking to y position on screen.
 	 */
-	public static final int LINK_YPOS = 25;    // Last link
+	public static final int LINK_YPOS = 25; // Last link
 
-	/** A unit indicating a lookup.
+	/**
+	 * A unit indicating a lookup.
 	 */
 	public static final int LOOKUP = 26;
 
-	/** A unit indicating label alignment.
+	/**
+	 * A unit indicating label alignment.
 	 */
 	public static final int LABEL_ALIGN = 27;
 
@@ -228,30 +264,35 @@ public final class UnitValue implements Serializable
 	private final transient UnitValue[] subUnits;
 
 	// Pixel
-	public UnitValue(float value)  // If hor/ver does not matter.
+	public UnitValue(final float value) // If hor/ver does not matter.
 	{
 		this(value, null, PIXEL, true, STATIC, null, null, value + "px");
 	}
 
-	public UnitValue(float value, int unit, String createString)  // If hor/ver does not matter.
+	public UnitValue(final float value, final int unit, final String createString) // If hor/ver does not matter.
 	{
 		this(value, null, unit, true, STATIC, null, null, createString);
 	}
 
-	UnitValue(float value, String unitStr, boolean isHor, int oper, String createString)
-	{
+	UnitValue(final float value, final String unitStr, final boolean isHor, final int oper, final String createString) {
 		this(value, unitStr, -1, isHor, oper, null, null, createString);
 	}
 
-	UnitValue(boolean isHor, int oper, UnitValue sub1, UnitValue sub2, String createString)
-	{
+	UnitValue(final boolean isHor, final int oper, final UnitValue sub1, final UnitValue sub2, final String createString) {
 		this(0, "", -1, isHor, oper, sub1, sub2, createString);
 		if (sub1 == null || sub2 == null)
 			throw new IllegalArgumentException("Sub units is null!");
 	}
 
-	private UnitValue(float value, String unitStr, int unit, boolean isHor, int oper, UnitValue sub1, UnitValue sub2, String createString)
-	{
+	private UnitValue(
+		final float value,
+		final String unitStr,
+		final int unit,
+		final boolean isHor,
+		final int oper,
+		final UnitValue sub1,
+		final UnitValue sub2,
+		final String createString) {
 		if (oper < STATIC || oper > MID)
 			throw new IllegalArgumentException("Unknown Operation: " + oper);
 
@@ -265,33 +306,40 @@ public final class UnitValue implements Serializable
 		this.unit = unitStr != null ? parseUnitString() : unit;
 		this.subUnits = sub1 != null && sub2 != null ? new UnitValue[] {sub1, sub2} : null;
 
-		LayoutUtil.putCCString(this, createString);    // "this" escapes!! Safe though.
+		LayoutUtil.putCCString(this, createString); // "this" escapes!! Safe though.
 	}
 
-	/** Returns the size in pixels rounded.
-	 * @param refValue The reference value. Normally the size of the parent. For unit {@link #ALIGN} the current size of the component should be sent in.
-	 * @param parent The parent. May be <code>null</code> for testing the validity of the value, but should normally not and are not
-	 * required to return any usable value if <code>null</code>.
+	/**
+	 * Returns the size in pixels rounded.
+	 * 
+	 * @param refValue The reference value. Normally the size of the parent. For unit {@link #ALIGN} the current size of the
+	 *            component should be sent in.
+	 * @param parent The parent. May be <code>null</code> for testing the validity of the value, but should normally not and are
+	 *            not
+	 *            required to return any usable value if <code>null</code>.
 	 * @param comp The component, if any, that the value is for. Might be <code>null</code> if the value is not
-	 * connected to any component.
+	 *            connected to any component.
 	 * @return The size in pixels.
 	 */
-	public final int getPixels(float refValue, ContainerWrapper parent, ComponentWrapper comp)
-	{
+	public final int getPixels(final float refValue, final ContainerWrapper parent, final ComponentWrapper comp) {
 		return Math.round(getPixelsExact(refValue, parent, comp));
 	}
 
 	private static final float[] SCALE = new float[] {25.4f, 2.54f, 1f, 0f, 72f};
-	/** Returns the size in pixels.
-	 * @param refValue The reference value. Normally the size of the parent. For unit {@link #ALIGN} the current size of the component should be sent in.
-	 * @param parent The parent. May be <code>null</code> for testing the validity of the value, but should normally not and are not
-	 * required to return any usable value if <code>null</code>.
+
+	/**
+	 * Returns the size in pixels.
+	 * 
+	 * @param refValue The reference value. Normally the size of the parent. For unit {@link #ALIGN} the current size of the
+	 *            component should be sent in.
+	 * @param parent The parent. May be <code>null</code> for testing the validity of the value, but should normally not and are
+	 *            not
+	 *            required to return any usable value if <code>null</code>.
 	 * @param comp The component, if any, that the value is for. Might be <code>null</code> if the value is not
-	 * connected to any component.
+	 *            connected to any component.
 	 * @return The size in pixels.
 	 */
-	public final float getPixelsExact(float refValue, ContainerWrapper parent, ComponentWrapper comp)
-	{
+	public final float getPixelsExact(final float refValue, final ContainerWrapper parent, final ComponentWrapper comp) {
 		if (parent == null)
 			return 1;
 
@@ -309,7 +357,8 @@ public final class UnitValue implements Serializable
 				case INCH:
 				case PT:
 					float f = SCALE[unit - MM];
-					Float s = isHor ? PlatformDefaults.getHorizontalScaleFactor() : PlatformDefaults.getVerticalScaleFactor();
+					final Float s = isHor
+							? PlatformDefaults.getHorizontalScaleFactor() : PlatformDefaults.getVerticalScaleFactor();
 					if (s != null)
 						f *= s.floatValue();
 					return (isHor ? parent.getHorizontalScreenDPI() : parent.getVerticalScreenDPI()) * value / f;
@@ -322,8 +371,9 @@ public final class UnitValue implements Serializable
 					return (unit == SPX ? parent.getScreenWidth() : parent.getScreenHeight()) * value * 0.01f;
 
 				case ALIGN:
-					Integer st = LinkHandler.getValue(parent.getLayout(), "visual", isHor ? LinkHandler.X : LinkHandler.Y);
-					Integer sz = LinkHandler.getValue(parent.getLayout(), "visual", isHor ? LinkHandler.WIDTH : LinkHandler.HEIGHT);
+					final Integer st = LinkHandler.getValue(parent.getLayout(), "visual", isHor ? LinkHandler.X : LinkHandler.Y);
+					final Integer sz = LinkHandler.getValue(parent.getLayout(), "visual", isHor
+							? LinkHandler.WIDTH : LinkHandler.HEIGHT);
 					if (st == null || sz == null)
 						return 0;
 					return value * (Math.max(0, sz.intValue()) - refValue) + st.intValue();
@@ -354,7 +404,8 @@ public final class UnitValue implements Serializable
 				case LINK_Y2:
 				case LINK_XPOS:
 				case LINK_YPOS:
-					Integer v = LinkHandler.getValue(parent.getLayout(), getLinkTargetId(), unit - (unit >= LINK_XPOS ? LINK_XPOS : LINK_X));
+					final Integer v = LinkHandler.getValue(parent.getLayout(), getLinkTargetId(), unit
+						- (unit >= LINK_XPOS ? LINK_XPOS : LINK_X));
 					if (v == null)
 						return 0;
 
@@ -366,7 +417,7 @@ public final class UnitValue implements Serializable
 					return v.intValue();
 
 				case LOOKUP:
-					float res = lookup(refValue, parent, comp);
+					final float res = lookup(refValue, parent, comp);
 					if (res != UnitConverter.UNABLE)
 						return res;
 
@@ -379,8 +430,8 @@ public final class UnitValue implements Serializable
 		}
 
 		if (subUnits != null && subUnits.length == 2) {
-			float r1 = subUnits[0].getPixelsExact(refValue, parent, comp);
-			float r2 = subUnits[1].getPixelsExact(refValue, parent, comp);
+			final float r1 = subUnits[0].getPixelsExact(refValue, parent, comp);
+			final float r2 = subUnits[1].getPixelsExact(refValue, parent, comp);
 			switch (oper) {
 				case ADD:
 					return r1 + r2;
@@ -402,8 +453,7 @@ public final class UnitValue implements Serializable
 		throw new IllegalArgumentException("Internal: Unknown Oper: " + oper);
 	}
 
-	private float lookup(float refValue, ContainerWrapper parent, ComponentWrapper comp)
-	{
+	private float lookup(final float refValue, final ContainerWrapper parent, final ComponentWrapper comp) {
 		float res = UnitConverter.UNABLE;
 		for (int i = CONVERTERS.size() - 1; i >= 0; i--) {
 			res = CONVERTERS.get(i).convertToPixels(value, unitStr, isHor, refValue, parent, comp);
@@ -413,13 +463,12 @@ public final class UnitValue implements Serializable
 		return PlatformDefaults.convertToPixels(value, unitStr, isHor, refValue, parent, comp);
 	}
 
-	private int parseUnitString()
-	{
-		int len = unitStr.length();
+	private int parseUnitString() {
+		final int len = unitStr.length();
 		if (len == 0)
 			return isHor ? PlatformDefaults.getDefaultHorizontalUnit() : PlatformDefaults.getDefaultVerticalUnit();
 
-		Integer u = UNIT_MAP.get(unitStr);
+		final Integer u = UNIT_MAP.get(unitStr);
 		if (u != null)
 			return u.intValue();
 
@@ -429,15 +478,15 @@ public final class UnitValue implements Serializable
 		if (unitStr.equals("sp"))
 			return isHor ? SPX : SPY;
 
-		if (lookup(0, null, null) != UnitConverter.UNABLE)    // To test so we can fail fast
+		if (lookup(0, null, null) != UnitConverter.UNABLE) // To test so we can fail fast
 			return LOOKUP;
 
 		// Only link left. E.g. "otherID.width"
 
-		int pIx = unitStr.indexOf('.');
+		final int pIx = unitStr.indexOf('.');
 		if (pIx != -1) {
 			linkId = unitStr.substring(0, pIx);
-			String e = unitStr.substring(pIx + 1);
+			final String e = unitStr.substring(pIx + 1);
 
 			if (e.equals("x"))
 				return LINK_X;
@@ -460,13 +509,11 @@ public final class UnitValue implements Serializable
 		throw new IllegalArgumentException("Unknown keyword: " + unitStr);
 	}
 
-	final boolean isLinked()
-	{
+	final boolean isLinked() {
 		return linkId != null;
 	}
 
-	final boolean isLinkedDeep()
-	{
+	final boolean isLinkedDeep() {
 		if (subUnits == null)
 			return linkId != null;
 
@@ -478,135 +525,145 @@ public final class UnitValue implements Serializable
 		return false;
 	}
 
-	final String getLinkTargetId()
-	{
+	final String getLinkTargetId() {
 		return linkId;
 	}
 
-	final UnitValue getSubUnitValue(int i)
-	{
+	final UnitValue getSubUnitValue(final int i) {
 		return subUnits[i];
 	}
 
-	final int getSubUnitCount()
-	{
+	final int getSubUnitCount() {
 		return subUnits != null ? subUnits.length : 0;
 	}
 
-	public final UnitValue[] getSubUnits()
-	{
+	public final UnitValue[] getSubUnits() {
 		return subUnits != null ? subUnits.clone() : null;
 	}
 
-	public final int getUnit()
-	{
+	public final int getUnit() {
 		return unit;
 	}
 
-	public final String getUnitString()
-	{
+	public final String getUnitString() {
 		return unitStr;
 	}
 
-	public final int getOperation()
-	{
+	public final int getOperation() {
 		return oper;
 	}
 
-	public final float getValue()
-	{
+	public final float getValue() {
 		return value;
 	}
 
-	public final boolean isHorizontal()
-	{
+	public final boolean isHorizontal() {
 		return isHor;
 	}
 
-	final public String toString()
-	{
-		return getClass().getName() + ". Value=" + value + ", unit=" + unit + ", unitString: " + unitStr + ", oper=" + oper + ", isHor: " + isHor;
+	@Override
+	final public String toString() {
+		return getClass().getName()
+			+ ". Value="
+			+ value
+			+ ", unit="
+			+ unit
+			+ ", unitString: "
+			+ unitStr
+			+ ", oper="
+			+ oper
+			+ ", isHor: "
+			+ isHor;
 	}
 
-	/** Returns the creation string for this object. Note that {@link LayoutUtil#setDesignTime(ContainerWrapper, boolean)} must be
+	/**
+	 * Returns the creation string for this object. Note that {@link LayoutUtil#setDesignTime(ContainerWrapper, boolean)} must be
 	 * set to <code>true</code> for the creation strings to be stored.
+	 * 
 	 * @return The constraint string or <code>null</code> if none is registered.
 	 */
-	public final String getConstraintString()
-	{
+	public final String getConstraintString() {
 		return LayoutUtil.getCCString(this);
 	}
 
-	public final int hashCode()
-	{
+	@Override
+	public final int hashCode() {
 		return (int) (value * 12345) + (oper >>> 5) + unit >>> 17;
 	}
 
-	/** Adds a global unit converter that can convert from some <code>unit</code> to pixels.
+	/**
+	 * Adds a global unit converter that can convert from some <code>unit</code> to pixels.
 	 * <p>
-	 * This converter will be asked before the platform converter so the values for it (e.g. "related" and "unrelated")
-	 * can be overridden. It is however not possible to override the built in ones (e.g. "mm", "pixel" or "lp").
+	 * This converter will be asked before the platform converter so the values for it (e.g. "related" and "unrelated") can be
+	 * overridden. It is however not possible to override the built in ones (e.g. "mm", "pixel" or "lp").
+	 * 
 	 * @param conv The converter. Not <code>null</code>.
 	 */
-	public synchronized static void addGlobalUnitConverter(UnitConverter conv)
-	{
+	public synchronized static void addGlobalUnitConverter(final UnitConverter conv) {
 		if (conv == null)
 			throw new NullPointerException();
 		CONVERTERS.add(conv);
 	}
 
-	/** Removed the converter.
+	/**
+	 * Removed the converter.
+	 * 
 	 * @param unit The converter.
 	 * @return If there was a converter found and thus removed.
 	 */
-	public synchronized static boolean removeGlobalUnitConverter(UnitConverter unit)
-	{
+	public synchronized static boolean removeGlobalUnitConverter(final UnitConverter unit) {
 		return CONVERTERS.remove(unit);
 	}
 
-	/** Returns the global converters currently registered. The platform converter will not be in this list.
+	/**
+	 * Returns the global converters currently registered. The platform converter will not be in this list.
+	 * 
 	 * @return The converters. Never <code>null</code>.
 	 */
-	public synchronized static UnitConverter[] getGlobalUnitConverters()
-	{
+	public synchronized static UnitConverter[] getGlobalUnitConverters() {
 		return CONVERTERS.toArray(new UnitConverter[CONVERTERS.size()]);
 	}
 
-	/** Returns the current default unit. The default unit is the unit used if no unit is set. E.g. "width 10".
+	/**
+	 * Returns the current default unit. The default unit is the unit used if no unit is set. E.g. "width 10".
+	 * 
 	 * @return The current default unit.
 	 * @see #PIXEL
 	 * @see #LPX
-	 * @deprecated Use {@link PlatformDefaults#getDefaultHorizontalUnit()} and {@link PlatformDefaults#getDefaultVerticalUnit()} instead.
+	 * @deprecated Use {@link PlatformDefaults#getDefaultHorizontalUnit()} and {@link PlatformDefaults#getDefaultVerticalUnit()}
+	 *             instead.
 	 */
-	public static int getDefaultUnit()
-	{
+	@Deprecated
+	public static int getDefaultUnit() {
 		return PlatformDefaults.getDefaultHorizontalUnit();
 	}
 
-	/** Sets the default unit. The default unit is the unit used if no unit is set. E.g. "width 10".
+	/**
+	 * Sets the default unit. The default unit is the unit used if no unit is set. E.g. "width 10".
+	 * 
 	 * @param unit The new default unit.
 	 * @see #PIXEL
 	 * @see #LPX
-	 * @deprecated Use {@link PlatformDefaults#setDefaultHorizontalUnit(int)} and {@link PlatformDefaults#setDefaultVerticalUnit(int)} instead.
+	 * @deprecated Use {@link PlatformDefaults#setDefaultHorizontalUnit(int)} and
+	 *             {@link PlatformDefaults#setDefaultVerticalUnit(int)} instead.
 	 */
-	public static void setDefaultUnit(int unit)
-	{
+	@Deprecated
+	public static void setDefaultUnit(final int unit) {
 		PlatformDefaults.setDefaultHorizontalUnit(unit);
 		PlatformDefaults.setDefaultVerticalUnit(unit);
 	}
 
 	static {
 		LayoutUtil.setDelegate(UnitValue.class, new PersistenceDelegate() {
-			protected Expression instantiate(Object oldInstance, Encoder out)
-			{
-				UnitValue uv = (UnitValue) oldInstance;
-                String cs = uv.getConstraintString();
+			@Override
+			protected Expression instantiate(final Object oldInstance, final Encoder out) {
+				final UnitValue uv = (UnitValue) oldInstance;
+				final String cs = uv.getConstraintString();
 				if (cs == null)
 					throw new IllegalStateException("Design time must be on to use XML persistence. See LayoutUtil.");
 
 				return new Expression(oldInstance, ConstraintParser.class, "parseUnitValueOrAlign", new Object[] {
-		                uv.getConstraintString(), (uv.isHorizontal() ? Boolean.TRUE : Boolean.FALSE), null
-                });
+						uv.getConstraintString(), (uv.isHorizontal() ? Boolean.TRUE : Boolean.FALSE), null});
 			}
 		});
 	}
@@ -617,19 +674,16 @@ public final class UnitValue implements Serializable
 
 	private static final long serialVersionUID = 1L;
 
-	private Object readResolve() throws ObjectStreamException
-	{
+	private Object readResolve() throws ObjectStreamException {
 		return LayoutUtil.getSerializedObject(this);
 	}
 
-	private void writeObject(ObjectOutputStream out) throws IOException
-	{
+	private void writeObject(final ObjectOutputStream out) throws IOException {
 		if (getClass() == UnitValue.class)
 			LayoutUtil.writeAsXML(out, this);
 	}
 
-	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
-	{
+	private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
 		LayoutUtil.setSerializedObject(this, LayoutUtil.readAsXML(in));
 	}
 }
