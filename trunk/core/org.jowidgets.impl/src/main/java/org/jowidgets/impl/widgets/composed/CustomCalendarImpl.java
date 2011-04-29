@@ -61,6 +61,7 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 	private static final Calendar CALENDAR = new GregorianCalendar();
 	private static final Locale LOCALE = Locale.getDefault();
 
+	private static final int MAX_MONTH = 12;
 	private static final int G_X = 16;
 	private static final int G_Y = 8;
 
@@ -78,13 +79,19 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 	private final IButton navNextButton;
 	private final IButton navForwardButton;
 
+	private final MonthLayoutCache layoutCache;
+
 	private Date date;
+	private MonthComposite mouseoverComposite;
 
 	public CustomCalendarImpl(final IComposite composite, final ICalendarSetup setup) {
 		super(composite);
+
+		this.layoutCache = new MonthLayoutCache();
+
 		this.inputObservable = new InputObservable();
-		this.monthComposites = new MonthComposite[12];
-		this.monthLabels = new ITextLabel[12];
+		this.monthComposites = new MonthComposite[MAX_MONTH];
+		this.monthLabels = new ITextLabel[MAX_MONTH];
 
 		this.outerComposite = JoComposite.toJoComposite(composite);
 
@@ -111,6 +118,7 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 		navNextButton = this.innerComposite.add(new JoButton(IconsSmall.NAVIGATION_NEXT_TINY));
 		navPrevButton = this.innerComposite.add(new JoButton(IconsSmall.NAVIGATION_PREVIOUS_TINY));
 		navForwardButton = this.innerComposite.add(new JoButton(IconsSmall.NAVIGATION_FORWARD_TINY));
+
 		getMonthComposite(0);
 
 		navPrevButton.addActionListener(new IActionListener() {
@@ -154,10 +162,9 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 			}
 
 			private void clearMouseOvers() {
-				for (int i = 0; i < monthComposites.length; i++) {
-					if (monthComposites[i] != null) {
-						monthComposites[i].clearMouseOver();
-					}
+				if (mouseoverComposite != null) {
+					mouseoverComposite.clearMouseOver();
+					mouseoverComposite = null;
 				}
 			}
 
@@ -165,6 +172,7 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 	}
 
 	private void interateMonth(final int offset) {
+		this.layouter.setLayoutNeeded(true);
 		this.outerComposite.layoutBegin();
 		final Calendar calendar = new GregorianCalendar();
 		calendar.setTime(monthComposites[0].getDate());
@@ -182,6 +190,7 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 	}
 
 	private void interateYear(final int offset) {
+		this.layouter.setLayoutNeeded(true);
 		this.outerComposite.layoutBegin();
 		final Calendar calendar = new GregorianCalendar();
 		calendar.setTime(monthComposites[0].getDate());
@@ -201,6 +210,7 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 	@Override
 	public void setDate(final Date date) {
 		Assert.paramNotNull(date, "date");
+		this.layouter.setLayoutNeeded(true);
 		this.outerComposite.layoutBegin();
 		monthComposites[0].setDate(date, date);
 
@@ -239,7 +249,7 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 	private MonthComposite getMonthComposite(final int index) {
 		if (monthComposites[index] == null) {
 			if (index == 0) {
-				monthComposites[index] = new MonthComposite(this.date, date);
+				monthComposites[index] = new MonthComposite(this.date, date, layoutCache);
 			}
 			else {
 				final Date prevDate = getMonthComposite(index - 1).getDate();
@@ -247,7 +257,7 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 				calendar.setTime(prevDate);
 				calendar.set(Calendar.DAY_OF_MONTH, 1);
 				calendar.add(Calendar.MONTH, 1);
-				monthComposites[index] = new MonthComposite(calendar.getTime(), date);
+				monthComposites[index] = new MonthComposite(calendar.getTime(), date, layoutCache);
 			}
 			this.innerComposite.add(monthComposites[index]);
 
@@ -270,11 +280,10 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 			monthComposites[index].addMouseOverListener(new IMouseoverListener() {
 				@Override
 				public void onMouseOver() {
-					for (int i = 0; i < monthComposites.length; i++) {
-						if (i != index && monthComposites[i] != null) {
-							monthComposites[i].clearMouseOver();
-						}
+					if (mouseoverComposite != null && mouseoverComposite != monthComposites[index]) {
+						mouseoverComposite.clearMouseOver();
 					}
+					mouseoverComposite = monthComposites[index];
 				}
 			});
 		}
@@ -298,94 +307,144 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 
 		private Dimension preferredSize;
 
+		private int rows;
+		private int cols;
+		private int cells;
+
+		private boolean layoutNeeded;
+
+		CalendarLayouter() {
+			layoutNeeded = true;
+		}
+
+		void setLayoutNeeded(final boolean layoutNeeded) {
+			this.layoutNeeded = layoutNeeded;
+		}
+
 		@Override
 		public void layout() {
 
 			outerComposite.setRedrawEnabled(false);
 
-			innerComposite.setSize(outerComposite.getClientArea().getSize());
-
-			final Rectangle clientArea = innerComposite.getClientArea();
-			int x = clientArea.getX();
-			int y = clientArea.getY() + G_Y;
-
-			//layout the left nav buttons
-			final Dimension navButtonSize = new Dimension(17, 17);
-			final int buttonOffsetY = (getMonthLabel(0).getPreferredSize().getHeight() - navButtonSize.getHeight()) / 2;
-
-			navBackwardButton.setSize(navButtonSize);
-			navBackwardButton.setPosition(x, y + buttonOffsetY);
-
-			x = x + navButtonSize.getWidth();
-			navPrevButton.setSize(navButtonSize);
-			navPrevButton.setPosition(x, y + buttonOffsetY);
-
-			//layout the months
-			final int prefHeight = getPreferredSize().getHeight();
-			x = clientArea.getX();
-			int maxX = x;
-			int maxY = y;
-			for (int i = 0; i < monthComposites.length; i++) {
-				final ITextLabel label = getMonthLabel(i);
-				final MonthComposite monthComposite = getMonthComposite(i);
-
-				final Dimension monthSize = monthComposite.getPreferredSize();
-				final Dimension labelSize = label.getPreferredSize();
-
-				boolean layoutMonth = i == 0;
-
-				if (x + monthSize.getWidth() <= clientArea.getX() + clientArea.getWidth()) {
-					layoutMonth = true;
-				}
-				else if (i != 0 && y + 2 * prefHeight <= clientArea.getHeight()) {
-					x = clientArea.getX();
-					y = y + prefHeight + G_Y;
-					layoutMonth = true;
-				}
-				if (layoutMonth) {
-					//layout label
-					final int offsetX = monthSize.getWidth() / 2 - labelSize.getWidth() / 2;
-					label.setSize(labelSize);
-					label.setPosition(x + offsetX, y);
-					label.setVisible(true);
-
-					final int offsetY = labelSize.getHeight() + G_Y;
-
-					//layout month composite
-					monthComposite.setSize(monthSize);
-					monthComposite.setPosition(x, y + offsetY);
-					monthComposite.setVisible(true);
-
-					maxX = Math.max(maxX, x + monthSize.getWidth());
-					x = x + monthSize.getWidth() + G_X;
-					maxY = y + prefHeight;
-				}
-				else {
-					monthComposite.setVisible(false);
-					label.setVisible(false);
-					if (i < monthComposites.length - 1 && monthComposites[i + 1] == null) {
-						break;
-					}
-				}
-			}
-
-			//layout the rigth nav buttons
-			y = clientArea.getY() + G_Y;
-
-			x = maxX - navButtonSize.getWidth();
-			navForwardButton.setSize(navButtonSize);
-			navForwardButton.setPosition(x, y + buttonOffsetY);
-
-			x = x - navButtonSize.getWidth();
-			navNextButton.setSize(navButtonSize);
-			navNextButton.setPosition(x, y + buttonOffsetY);
-
 			final Rectangle outerClientArea = outerComposite.getClientArea();
 
-			final int innerWidth = Math.min(outerClientArea.getWidth(), maxX);
-			final int innerHeight = Math.min(outerClientArea.getHeight(), maxY);
+			final Dimension lastSize = innerComposite.getSize();
 
-			innerComposite.setSize(innerComposite.computeDecoratedSize(new Dimension(innerWidth, innerHeight)));
+			final Dimension prefSize = getPreferredSize();
+
+			final boolean moreColsPossible = (lastSize.getWidth() + prefSize.getWidth() + G_X) <= outerClientArea.getWidth() + 6;
+			final boolean moreRowsPossible = (lastSize.getHeight() + prefSize.getHeight() + G_Y) <= outerClientArea.getHeight() + 6;
+
+			final boolean toManyCols = (lastSize.getWidth()) > outerClientArea.getWidth();
+			final boolean toManyRows = (lastSize.getHeight()) > outerClientArea.getHeight();
+
+			int x = 0;
+			int y = 0;
+
+			if (layoutNeeded
+				|| cells == 0
+				|| moreColsPossible
+				|| (moreRowsPossible && !(cells == MAX_MONTH))
+				|| toManyCols
+				|| toManyRows) {
+
+				layoutNeeded = false;
+
+				innerComposite.setSize(outerComposite.getClientArea().getSize());
+				final Rectangle clientArea = innerComposite.getClientArea();
+				x = clientArea.getX();
+				y = clientArea.getY() + G_Y;
+
+				//layout the left nav buttons
+				final Dimension navButtonSize = new Dimension(17, 17);
+				final int buttonOffsetY = (getMonthLabel(0).getPreferredSize().getHeight() - navButtonSize.getHeight()) / 2;
+
+				navBackwardButton.setSize(navButtonSize);
+				navBackwardButton.setPosition(x, y + buttonOffsetY);
+
+				x = x + navButtonSize.getWidth();
+				navPrevButton.setSize(navButtonSize);
+				navPrevButton.setPosition(x, y + buttonOffsetY);
+
+				//layout the months
+				final int prefHeight = getPreferredSize().getHeight();
+				x = clientArea.getX();
+				int maxX = x;
+				int maxY = y;
+				rows = 1;
+				cols = 1;
+				cells = 0;
+				int column = 1;
+				for (int i = 0; i < monthComposites.length; i++) {
+					final ITextLabel label = getMonthLabel(i);
+					final MonthComposite monthComposite = getMonthComposite(i);
+
+					final Dimension monthSize = monthComposite.getPreferredSize();
+					final Dimension labelSize = label.getPreferredSize();
+
+					boolean layoutMonth = i == 0;
+
+					if (x + monthSize.getWidth() <= clientArea.getX() + clientArea.getWidth()) {
+						if (!layoutMonth) {
+							column++;
+						}
+						layoutMonth = true;
+						cols = Math.max(cols, column);
+					}
+					else if (i != 0 && y + 2 * prefHeight <= clientArea.getHeight()) {
+						x = clientArea.getX();
+						y = y + prefHeight + G_Y;
+						rows++;
+						column = 1;
+						layoutMonth = true;
+					}
+					if (layoutMonth) {
+						cells++;
+						//layout label
+						final int offsetX = monthSize.getWidth() / 2 - labelSize.getWidth() / 2;
+						label.setSize(labelSize);
+						label.setPosition(x + offsetX, y);
+						label.setVisible(true);
+
+						final int offsetY = labelSize.getHeight() + G_Y;
+
+						//layout month composite
+						monthComposite.setSize(monthSize);
+						monthComposite.setPosition(x, y + offsetY);
+						monthComposite.setVisible(true);
+
+						maxX = Math.max(maxX, x + monthSize.getWidth());
+						x = x + monthSize.getWidth() + G_X;
+						maxY = y + prefHeight;
+					}
+					else {
+						monthComposite.setVisible(false);
+						label.setVisible(false);
+						if (i < monthComposites.length - 1 && monthComposites[i + 1] == null) {
+							break;
+						}
+					}
+				}
+
+				//layout the rigth nav buttons
+				y = clientArea.getY() + G_Y;
+
+				x = maxX - navButtonSize.getWidth();
+				navForwardButton.setSize(navButtonSize);
+				navForwardButton.setPosition(x, y + buttonOffsetY);
+
+				x = x - navButtonSize.getWidth();
+				navNextButton.setSize(navButtonSize);
+				navNextButton.setPosition(x, y + buttonOffsetY);
+
+				final Dimension innerMaxSize = innerComposite.computeDecoratedSize(new Dimension(maxX, maxY));
+
+				final int innerWidth = Math.min(innerMaxSize.getWidth(), outerClientArea.getWidth());
+				final int innerHeight = Math.min(innerMaxSize.getHeight(), outerClientArea.getHeight());
+
+				innerComposite.setSize(Math.max(prefSize.getWidth(), innerWidth), Math.max(prefSize.getHeight(), innerHeight));
+
+			}
 
 			final Dimension innerSize = innerComposite.getSize();
 
@@ -402,6 +461,7 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 			innerComposite.setPosition(x, y);
 
 			outerComposite.setRedrawEnabled(true);
+
 		}
 
 		@Override
