@@ -47,7 +47,7 @@ public class DemoFlowLayoutFrame extends JoFrame {
 
 		add(BPF.button("Button"));
 		add(BPF.comboBoxSelection("Germany", "Italy", "Spain", "USA"));
-		add(BPF.label().setText("Label"));
+		add(BPF.textLabel().setText("Label"));
 		add(BPF.inputFieldString()).setValue(" Text ");
 
 		pack();
