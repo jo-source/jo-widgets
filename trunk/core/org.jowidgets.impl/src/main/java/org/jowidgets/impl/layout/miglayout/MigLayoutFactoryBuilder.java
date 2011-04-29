@@ -37,14 +37,14 @@ import org.jowidgets.util.Assert;
 
 public final class MigLayoutFactoryBuilder implements IMigLayoutFactoryBuilder {
 
-	private String constraints;
-	private String columnConstraints;
-	private String rowConstraints;
+	private Object constraints;
+	private Object columnConstraints;
+	private Object rowConstraints;
 
 	public MigLayoutFactoryBuilder() {
-		this.constraints = "";
-		this.columnConstraints = "";
-		this.rowConstraints = "";
+		this.constraints = null;
+		this.columnConstraints = null;
+		this.rowConstraints = null;
 	}
 
 	@Override
@@ -74,6 +74,27 @@ public final class MigLayoutFactoryBuilder implements IMigLayoutFactoryBuilder {
 	public IMigLayoutFactoryBuilder constraints(final String constraints) {
 		Assert.paramNotNull(constraints, "constraints");
 		this.rowConstraints = constraints;
+		return this;
+	}
+
+	@Override
+	public IMigLayoutFactoryBuilder rowConstraints(final Object constraints) {
+		Assert.paramNotNull(constraints, "constraints");
+		this.rowConstraints = constraints;
+		return this;
+	}
+
+	@Override
+	public IMigLayoutFactoryBuilder columnConstraints(final Object constraints) {
+		Assert.paramNotNull(constraints, "constraints");
+		this.columnConstraints = constraints;
+		return this;
+	}
+
+	@Override
+	public IMigLayoutFactoryBuilder constraints(final Object constraints) {
+		Assert.paramNotNull(constraints, "constraints");
+		this.constraints = constraints;
 		return this;
 	}
 
