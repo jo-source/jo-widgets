@@ -31,9 +31,6 @@ package org.jowidgets.examples.common.demo;
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.impl.layout.miglayout.common.AC;
-import org.jowidgets.impl.layout.miglayout.common.CC;
-import org.jowidgets.impl.layout.miglayout.common.LC;
 import org.jowidgets.tools.powo.JoFrame;
 
 public class DemoMigLayoutFrame extends JoFrame {
@@ -45,40 +42,34 @@ public class DemoMigLayoutFrame extends JoFrame {
 
 		final ILayoutFactoryProvider lfp = Toolkit.getLayoutFactoryProvider();
 
-		final LC layC = new LC().fill().wrap();
-		final AC colC = new AC().align("right", 0).fill(1, 3).grow(100, 1, 3).align("right", 2).gap("15", 1);
-		final AC rowC = new AC().index(6).gap("15!").align("top").grow(100, 8);
-
-		setLayout(lfp.migLayoutBuilder().constraints(layC).columnConstraints(colC).rowConstraints(rowC).build());
+		setLayout(lfp.migLayoutBuilder().columnConstraints("[]15[grow,fill]15[grow]").build());
 
 		add(BPF.textLabel("Last Name"), "");
 		add(BPF.textField(), "");
-		add(BPF.textLabel("First Name"), "");
-		add(BPF.textField(), "wrap");
-
+		add(BPF.textLabel("First Name"), "split"); // split divides the cell
+		add(BPF.textField(), "growx, wrap");
 		add(BPF.textLabel("Phone"), "");
 		add(BPF.textField(), "");
-
-		add(BPF.textLabel("Email"), "");
-		add(BPF.textField(), "");
+		add(BPF.textLabel("Email"), "split");
+		add(BPF.textField(), "growx, wrap");
 		add(BPF.textLabel("Address 1"), "");
-		add(BPF.textField(), new CC().spanX().growX());
+		add(BPF.textField(), "span, growx"); // span merges cells
 		add(BPF.textLabel("Address 2"), "");
-		add(BPF.textField(), new CC().spanX().growX());
+		add(BPF.textField(), "span, growx");
 		add(BPF.textLabel("City"), "");
-		add(BPF.textField(), new CC().wrap());
+		add(BPF.textField(), "wrap"); // wrap continues on next line
 		add(BPF.textLabel("State"), "");
 		add(BPF.textField(), "");
-		add(BPF.textLabel("Postal Code"), "");
-		add(BPF.textField(), new CC().spanX(2).growX(0));
+		add(BPF.textLabel("Postal Code"), "split");
+		add(BPF.textField(), "growx, wrap");
 		add(BPF.textLabel("Country"), "");
-		add(BPF.textField(), new CC().wrap());
+		add(BPF.textField(), "wrap 15");
 
-		add(BPF.button("New"), new CC().spanX(5).split(5).tag("other"));
-		add(BPF.button("Delete"), new CC().tag("other"));
-		add(BPF.button("Edit"), new CC().tag("other"));
-		add(BPF.button("Save"), new CC().tag("other"));
-		add(BPF.button("Cancel"), new CC().tag("cancel"));
+		add(BPF.button("New"), "span, split, align right");
+		add(BPF.button("Delete"), "");
+		add(BPF.button("Edit"), "");
+		add(BPF.button("Save"), "");
+		add(BPF.button("Cancel"), "wrap push");
 
 		setSize(800, 600);
 	}
