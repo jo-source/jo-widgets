@@ -41,6 +41,12 @@ public interface IMigLayoutFactoryBuilder {
 
 	IMigLayoutFactoryBuilder constraints(String constraints);
 
+	IMigLayoutFactoryBuilder rowConstraints(Object constraints);
+
+	IMigLayoutFactoryBuilder columnConstraints(Object constraints);
+
+	IMigLayoutFactoryBuilder constraints(Object constraints);
+
 	ILayoutFactory<IMigLayout> build();
 
 }
