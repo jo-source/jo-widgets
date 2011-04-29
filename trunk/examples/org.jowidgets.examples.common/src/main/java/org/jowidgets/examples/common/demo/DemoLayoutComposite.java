@@ -107,6 +107,14 @@ public final class DemoLayoutComposite {
 			}
 		});
 
+		final IButton migLayoutButton = parentContainer.add(bpf.button("MigLayout"), "grow, sg bg, wrap");
+		migLayoutButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final IFrame frame = new DemoMigLayoutFrame();
+				frame.setVisible(true);
+			}
+		});
 	}
 
 	public void foo() {}
