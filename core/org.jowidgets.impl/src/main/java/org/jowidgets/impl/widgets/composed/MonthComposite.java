@@ -68,11 +68,13 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 	private static final int M_X = 0;
 	private static final int M_Y = 1;
 
-	private static final int MIN_M_X = 6;
+	private static final int MIN_M_X = 8;
 	private static final int MIN_M_Y = 0;
 
 	private static final int G_X = 1;
 	private static final int G_Y = 1;
+
+	private final MonthLayoutCache layoutCache;
 
 	private final InputObservable inputObservable;
 	private final Set<IMouseoverListener> mouseoverListeners;
@@ -87,7 +89,9 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 	private CalendarButton selectedButton;
 	private CalendarButton todayButton;
 
-	public MonthComposite(final Date date, final Date selectedDate) {
+	public MonthComposite(final Date date, final Date selectedDate, final MonthLayoutCache layoutCache) {
+
+		this.layoutCache = layoutCache;
 
 		this.inputObservable = new InputObservable();
 		this.mouseoverListeners = new HashSet<IMouseoverListener>();
@@ -117,7 +121,6 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 					mouseoverButton.setMouseover(false);
 				}
 			}
-
 		});
 
 		setBackgroundColor(Colors.WHITE);
@@ -166,11 +169,10 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 	}
 
 	private void createHeader() {
-		int dayOfWeek = CALENDAR.getFirstDayOfWeek();
+		final String[] headerNames = getHeaderButtonsNames(layoutCache);
 		for (int i = 0; i < 7; i++) {
 			headerButtons[i] = new CalendarButton(this);
-			headerButtons[i].setContent(getShortDayLabel(dayOfWeek), null);
-			dayOfWeek = getNextDayOfWeek(dayOfWeek);
+			headerButtons[i].setContent(headerNames[i], null);
 		}
 	}
 
@@ -215,6 +217,7 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 				iteratingCalendar.add(Calendar.DAY_OF_MONTH, 1);
 				dayOfWeek = iteratingCalendar.get(Calendar.DAY_OF_WEEK);
 			}
+			iteratingCalendar.add(Calendar.WEEK_OF_YEAR, -1);
 		}
 		else if (dayOfWeek > firstDayOfWeek) {
 			while (dayOfWeek > firstDayOfWeek) {
@@ -242,6 +245,7 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 					dayButton.setSelected(true);
 				}
 				if (iteratingCalendar.get(Calendar.MONTH) == current.get(Calendar.MONTH)
+					&& iteratingCalendar.get(Calendar.MONTH) == calendar.get(Calendar.MONTH)
 					&& iteratingCalendar.get(Calendar.DAY_OF_MONTH) == current.get(Calendar.DAY_OF_MONTH)
 					&& iteratingCalendar.get(Calendar.YEAR) == current.get(Calendar.YEAR)) {
 					dayButton.setToday();
@@ -257,29 +261,13 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 		}
 	}
 
-	private int getNextDayOfWeek(final int dayOfWeek) {
-		if (dayOfWeek == 7) {
-			return 1;
-		}
-		else {
-			return dayOfWeek + 1;
-		}
-	}
-
 	private final class CalendarPanelLayouter implements ILayouter {
 
-		private final MonthComposite calendarPanel;
-
-		private Dimension prefSize;
-		private Dimension dayMaxSize;
-		private Dimension headerMaxSize;
-		private int separatorHeight;
-
+		private final MonthComposite monthComposite;
 		private boolean layoutet;
 
 		CalendarPanelLayouter(final MonthComposite calendarPanel) {
-			this.calendarPanel = calendarPanel;
-			this.separatorHeight = -1;
+			this.monthComposite = calendarPanel;
 		}
 
 		@Override
@@ -287,53 +275,31 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 			if (layoutet) {
 				return;
 			}
-
-			final Rectangle clientArea = calendarPanel.getClientArea();
-
-			final int prefWidth = getPreferredSize().getWidth();
-
-			int x = clientArea.getX();
-			int y = clientArea.getY();
-
-			final Dimension dayMax = getDayMaxSize();
-			final Dimension headerMax = getHeaderMaxSize();
-
-			final int marginX = Math.max(MIN_M_X, M_X + Math.abs(headerMax.getWidth() - dayMax.getWidth()));
-			final int marginY = Math.max(MIN_M_Y, M_Y + Math.abs(headerMax.getHeight() - dayMax.getHeight()));
-
-			final int sizeX = 2 * marginX + dayMax.getWidth();
-			final int sizeY = 2 * marginY + dayMax.getHeight();
-
-			//layout the header buttons
-			for (int i = 0; i < 7; i++) {
-				final CalendarButton headerButton = headerButtons[i];
-				headerButton.setPosition(new Position(x, y));
-				headerButton.layout(marginX, marginY, sizeX, sizeY, headerMax);
-
-				x += sizeX + G_X;
+			else if (layoutCache.getHeaderButtonsBounds() == null) {
+				calcLayoutCache(monthComposite, headerButtons, dayButtons, separator, layoutCache);
 			}
-			x = clientArea.getX();
-			y += sizeY + G_Y;
-
-			//layout the separator
-			separator.setSize(prefWidth, getSeparatorHeight());
-			separator.setPosition(x, y);
-
-			y += getSeparatorHeight() + G_Y;
-
-			//layout the days
-			for (int i = 0; i < 6; i++) {
-				x = clientArea.getX();
-				for (int j = 0; j < 7; j++) {
-					final CalendarButton day = dayButtons[i][j];
-					day.setPosition(new Position(x, y));
-					day.layout(marginX, marginY, sizeX, sizeY, dayMax);
-
-					x += sizeX + G_X;
+			else {
+				//layout the header
+				for (int i = 0; i < 7; i++) {
+					headerButtons[i].layout(
+							layoutCache.getHeaderButtonsBounds()[i],
+							layoutCache.getHeaderLabelBounds(),
+							layoutCache.getHeaderLabelBorderBounds());
 				}
-				y += sizeY + G_Y;
-			}
+				//layout the separator
+				separator.setPosition(layoutCache.getSeparatorBounds().getPosition());
+				separator.setSize(layoutCache.getSeparatorBounds().getSize());
 
+				//layout the day buttons
+				for (int i = 0; i < 6; i++) {
+					for (int j = 0; j < 7; j++) {
+						dayButtons[i][j].layout(
+								layoutCache.getDayButtonsBounds()[i][j],
+								layoutCache.getDayLabelBounds(),
+								layoutCache.getDayLabelBorderBounds());
+					}
+				}
+			}
 			layoutet = true;
 		}
 
@@ -344,10 +310,7 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 
 		@Override
 		public Dimension getPreferredSize() {
-			if (prefSize == null) {
-				this.prefSize = calcPrefSize();
-			}
-			return prefSize;
+			return getPrefSize(monthComposite, headerButtons, dayButtons, separator, layoutCache);
 		}
 
 		@Override
@@ -358,37 +321,150 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 		@Override
 		public void invalidate() {}
 
-		private Dimension calcPrefSize() {
-			final Dimension dayMax = getDayMaxSize();
-			final Dimension headerMax = getHeaderMaxSize();
+	}
+
+	private static void calcLayoutCache(
+		final MonthComposite calendarPanel,
+		final CalendarButton[] headerButtons,
+		final CalendarButton[][] dayButtons,
+		final IControl separator,
+		final MonthLayoutCache layoutCache) {
+
+		final Rectangle[] headerButtonsBounds = new Rectangle[7];
+		final Rectangle[][] dayButtonsBounds = new Rectangle[6][7];
+
+		layoutCache.setHeaderButtonsBounds(headerButtonsBounds);
+		layoutCache.setDayButtonsBounds(dayButtonsBounds);
+
+		final Rectangle clientArea = calendarPanel.getClientArea();
+
+		final int prefWidth = getPrefSize(calendarPanel, headerButtons, dayButtons, separator, layoutCache).getWidth();
+
+		int x = clientArea.getX();
+		int y = clientArea.getY();
+
+		final Dimension dayLabelMax = getDayMaxSize(dayButtons, layoutCache);
+		final Dimension headerLabelMax = getHeaderMaxSize(headerButtons, layoutCache);
+
+		final int marginX = Math.max(MIN_M_X, M_X + Math.abs(headerLabelMax.getWidth() - dayLabelMax.getWidth()));
+		final int marginY = Math.max(MIN_M_Y, M_Y + Math.abs(headerLabelMax.getHeight() - dayLabelMax.getHeight()));
+
+		final int sizeX = 2 * marginX + dayLabelMax.getWidth();
+		final int sizeY = 2 * marginY + dayLabelMax.getHeight();
+
+		//compute header label bounds
+		final IComposite headerComposite = headerButtons[0].getComposite();
+		final IComposite headerCompositeBorder = headerButtons[0].getCompositeBorder();
+
+		headerComposite.setSize(sizeX, sizeY);
+		headerCompositeBorder.setSize(sizeX, sizeY);
+
+		final int headerLabelX = sizeX - marginX - headerLabelMax.getWidth();
+		final int headerLabelY = sizeY - marginY - headerLabelMax.getHeight();
+
+		final Rectangle headerCompositeClientArea = headerComposite.getClientArea();
+		final Rectangle headerCompositeBorderClientArea = headerCompositeBorder.getClientArea();
+
+		final int borderX = (headerCompositeClientArea.getWidth() - headerCompositeBorderClientArea.getWidth()) / 2;
+		final int borderY = (headerCompositeClientArea.getHeight() - headerCompositeBorderClientArea.getHeight()) / 2;
+
+		final Position headerLabelPos = new Position(
+			headerCompositeClientArea.getX() + headerLabelX,
+			headerCompositeClientArea.getY() + headerLabelY);
+
+		final Position headerLabelBorderPos = new Position(
+			headerCompositeBorderClientArea.getX() + headerLabelX - borderX,
+			headerCompositeBorderClientArea.getY() + headerLabelY - borderY);
+
+		final Rectangle headerLabelBounds = new Rectangle(headerLabelPos, headerLabelMax);
+		final Rectangle headerLabelBorderBounds = new Rectangle(headerLabelBorderPos, headerLabelMax);
+
+		layoutCache.setHeaderLabelBounds(headerLabelBounds);
+		layoutCache.setHeaderLabelBorderBounds(headerLabelBorderBounds);
+
+		//compute day label bounds
+		final IComposite composite = dayButtons[0][0].getComposite();
+		final IComposite compositeBorder = dayButtons[0][0].getCompositeBorder();
+
+		composite.setSize(sizeX, sizeY);
+		compositeBorder.setSize(sizeX, sizeY);
+
+		final int labelX = sizeX - marginX - dayLabelMax.getWidth();
+		final int labelY = sizeY - marginY - dayLabelMax.getHeight();
+
+		final Rectangle compositeClientArea = composite.getClientArea();
+		final Rectangle compositeBorderClientArea = compositeBorder.getClientArea();
+
+		final Position dayLabelPos = new Position(compositeClientArea.getX() + labelX, compositeClientArea.getY() + labelY);
+		final Position dayLabelBorderPos = new Position(
+			compositeBorderClientArea.getX() + labelX - borderX,
+			compositeBorderClientArea.getY() + labelY - borderY);
+
+		final Rectangle dayLabelBounds = new Rectangle(dayLabelPos, dayLabelMax);
+		final Rectangle dayLabelBorderBounds = new Rectangle(dayLabelBorderPos, dayLabelMax);
+
+		layoutCache.setDayLabelBounds(dayLabelBounds);
+		layoutCache.setDayLabelBorderBounds(dayLabelBorderBounds);
+
+		//layout the header buttons
+		for (int i = 0; i < 7; i++) {
+			final CalendarButton headerButton = headerButtons[i];
+			final Rectangle bounds = new Rectangle(x, y, sizeX, sizeY);
+			headerButton.layout(bounds, headerLabelBounds, headerLabelBorderBounds);
+			x += sizeX + G_X;
+			headerButtonsBounds[i] = bounds;
+		}
+		x = clientArea.getX();
+		y += sizeY + G_Y;
+
+		//layout the separator
+		separator.setSize(prefWidth, getSeparatorHeight(separator, layoutCache));
+		separator.setPosition(x, y);
+		final Rectangle separatorBounds = new Rectangle(separator.getPosition(), separator.getSize());
+
+		layoutCache.setSeparatorBounds(separatorBounds);
+
+		y += getSeparatorHeight(separator, layoutCache) + G_Y;
+
+		//layout the days
+		for (int i = 0; i < 6; i++) {
+			x = clientArea.getX();
+			for (int j = 0; j < 7; j++) {
+				final CalendarButton day = dayButtons[i][j];
+				final Rectangle bounds = new Rectangle(x, y, sizeX, sizeY);
+				day.layout(bounds, dayLabelBounds, dayLabelBorderBounds);
+				x += sizeX + G_X;
+				dayButtonsBounds[i][j] = bounds;
+			}
+			y += sizeY + G_Y;
+		}
+
+	}
+
+	private static Dimension getPrefSize(
+		final MonthComposite monthComposite,
+		final CalendarButton[] headerButtons,
+		final CalendarButton[][] dayButtons,
+		final IControl separator,
+		final MonthLayoutCache layoutCache) {
+		if (layoutCache.getPreferredSize() == null) {
+			final Dimension dayMax = getDayMaxSize(dayButtons, layoutCache);
+			final Dimension headerMax = getHeaderMaxSize(headerButtons, layoutCache);
 
 			final int marginX = Math.max(MIN_M_X, M_X + Math.abs(headerMax.getWidth() - dayMax.getWidth()));
 			final int marginY = Math.max(MIN_M_Y, M_Y + Math.abs(headerMax.getHeight() - dayMax.getHeight()));
 
-			final Dimension labelSize = getDayMaxSize();
-			final int width = 14 * marginX + 7 * labelSize.getWidth() + 6 * G_X;
-			final int height = 14 * marginY + 7 * labelSize.getHeight() + 7 * G_Y + getSeparatorHeight();
-			return calendarPanel.computeDecoratedSize(new Dimension(width, height));
+			final int width = 14 * marginX + 7 * dayMax.getWidth() + 6 * G_X;
+			final int height = 14 * marginY + 7 * dayMax.getHeight() + 7 * G_Y + getSeparatorHeight(separator, layoutCache);
+			layoutCache.setPreferredSize(monthComposite.computeDecoratedSize(new Dimension(width, height)));
 		}
+		return layoutCache.getPreferredSize();
+	}
 
-		private Dimension getDayMaxSize() {
-			if (dayMaxSize == null) {
-				this.dayMaxSize = calcDayMaxSize();
-			}
-			return dayMaxSize;
-		}
-
-		private Dimension getHeaderMaxSize() {
-			if (headerMaxSize == null) {
-				this.headerMaxSize = calcHeaderMaxSize();
-			}
-			return headerMaxSize;
-		}
-
-		private Dimension calcDayMaxSize() {
+	private static Dimension getDayMaxSize(final CalendarButton[][] dayButtons, final MonthLayoutCache layoutCache) {
+		if (layoutCache.getMaxDaySize() == null) {
 			int width = 0;
 			int height = 0;
-
 			for (int i = 0; i < 6; i++) {
 				for (int j = 0; j < 7; j++) {
 					final CalendarButton day = dayButtons[i][j];
@@ -397,11 +473,13 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 					height = Math.max(height, size.getHeight());
 				}
 			}
-
-			return new Dimension(width, height);
+			layoutCache.setMaxDaySize(new Dimension(width, height));
 		}
+		return layoutCache.getMaxDaySize();
+	}
 
-		private Dimension calcHeaderMaxSize() {
+	private static Dimension getHeaderMaxSize(final CalendarButton[] headerButtons, final MonthLayoutCache layoutCache) {
+		if (layoutCache.getHeaderMaxSize() == null) {
 			int width = 0;
 			int height = 0;
 
@@ -412,18 +490,37 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 				height = Math.max(height, size.getHeight());
 			}
 
-			return new Dimension(width, height);
+			layoutCache.setHeaderMaxSize(new Dimension(width, height));
 		}
+		return layoutCache.getHeaderMaxSize();
+	}
 
-		private int getSeparatorHeight() {
-			if (separatorHeight == -1) {
-				this.separatorHeight = calcSeparatorHeight();
+	private static int getSeparatorHeight(final IControl separator, final MonthLayoutCache layoutCache) {
+		if (layoutCache.getSeparatorHeight() == -1) {
+			layoutCache.setSeparatorHeight(separator.getPreferredSize().getHeight());
+		}
+		return layoutCache.getSeparatorHeight();
+	}
+
+	private static String[] getHeaderButtonsNames(final MonthLayoutCache layoutCache) {
+		if (layoutCache.getHeaderButtonsNames() == null) {
+			final String[] headerButtonsNames = new String[7];
+			int dayOfWeek = CALENDAR.getFirstDayOfWeek();
+			for (int i = 0; i < 7; i++) {
+				headerButtonsNames[i] = getShortDayLabel(dayOfWeek);
+				dayOfWeek = getNextDayOfWeek(dayOfWeek);
 			}
-			return separatorHeight;
+			layoutCache.setHeaderButtonsNames(headerButtonsNames);
 		}
+		return layoutCache.getHeaderButtonsNames();
+	}
 
-		private int calcSeparatorHeight() {
-			return separator.getPreferredSize().getHeight();
+	private static int getNextDayOfWeek(final int dayOfWeek) {
+		if (dayOfWeek == 7) {
+			return 1;
+		}
+		else {
+			return dayOfWeek + 1;
 		}
 	}
 
@@ -568,36 +665,31 @@ public class MonthComposite extends JoComposite implements IInputObservable {
 			}
 		}
 
-		void layout(final int marginX, final int marginY, final int sizeX, final int sizeY, final Dimension labelMaxSize) {
-			composite.setSize(sizeX, sizeY);
-			compositeBorder.setSize(sizeX, sizeY);
+		void layout(final Rectangle bounds, final Rectangle labelBounds, final Rectangle labelBorderBounds) {
+			composite.setPosition(bounds.getPosition());
+			compositeBorder.setPosition(bounds.getPosition());
+			composite.setSize(bounds.getSize());
+			compositeBorder.setSize(bounds.getSize());
 
-			label.setSize(labelMaxSize);
-			labelBorder.setSize(labelMaxSize);
+			label.setPosition(labelBounds.getPosition());
+			label.setSize(labelBounds.getSize());
 
-			final int x = sizeX - marginX - labelMaxSize.getWidth();
-			final int y = sizeY - marginY - labelMaxSize.getHeight();
+			labelBorder.setPosition(labelBorderBounds.getPosition());
+			labelBorder.setSize(labelBorderBounds.getSize());
+		}
 
-			final Rectangle clientArea = composite.getClientArea();
-			final Rectangle clientAreaBorder = compositeBorder.getClientArea();
+		protected IComposite getComposite() {
+			return composite;
+		}
 
-			final int borderX = (clientArea.getWidth() - clientAreaBorder.getWidth()) / 2;
-			final int borderY = (clientArea.getHeight() - clientAreaBorder.getHeight()) / 2;
-
-			label.setPosition(clientArea.getX() + x, clientArea.getY() + y);
-			labelBorder.setPosition(clientAreaBorder.getX() + x - borderX, clientAreaBorder.getY() + y - borderY);
-
+		protected IComposite getCompositeBorder() {
+			return compositeBorder;
 		}
 
 		void setContent(final String text, final Date date) {
 			label.setText(text);
 			labelBorder.setText(text);
 			this.date = date;
-		}
-
-		void setPosition(final Position position) {
-			composite.setPosition(position);
-			compositeBorder.setPosition(position);
 		}
 
 		void setToday() {

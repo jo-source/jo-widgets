@@ -38,6 +38,7 @@ import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractDemoComponent;
 import org.jowidgets.examples.common.workbench.demo2.view.BigTableView;
+import org.jowidgets.examples.common.workbench.demo2.view.CalendarView;
 import org.jowidgets.examples.common.workbench.demo2.view.EmptyView;
 import org.jowidgets.examples.common.workbench.demo2.view.MediaView;
 import org.jowidgets.examples.common.workbench.demo2.view.ReportsView;
@@ -82,6 +83,9 @@ public class ComponentDemo2 extends AbstractDemoComponent implements IComponent 
 		}
 		else if (ReportsView.ID.equals(viewId)) {
 			return new ReportsView(context);
+		}
+		else if (CalendarView.ID.equals(viewId)) {
+			return new CalendarView(context);
 		}
 		else {
 			throw new IllegalArgumentException("View id '" + viewId + "' is not known.");

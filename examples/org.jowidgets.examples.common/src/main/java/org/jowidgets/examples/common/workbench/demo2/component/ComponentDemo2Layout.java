@@ -29,6 +29,7 @@
 package org.jowidgets.examples.common.workbench.demo2.component;
 
 import org.jowidgets.examples.common.workbench.demo2.view.BigTableView;
+import org.jowidgets.examples.common.workbench.demo2.view.CalendarView;
 import org.jowidgets.examples.common.workbench.demo2.view.EmptyView;
 import org.jowidgets.examples.common.workbench.demo2.view.MediaView;
 import org.jowidgets.examples.common.workbench.demo2.view.ReportsView;
@@ -108,6 +109,7 @@ public class ComponentDemo2Layout {
 	private IFolderLayoutBuilder createReportsFolder() {
 		final IFolderLayoutBuilder result = new FolderLayoutBuilder(REPORTS_FOLDER_ID);
 		result.addView(ReportsView.ID, ReportsView.DEFAULT_LABEL, ReportsView.DEFAULT_TOOLTIP, ReportsView.DEFAULT_ICON);
+		result.addView(CalendarView.ID, CalendarView.DEFAULT_LABEL, CalendarView.DEFAULT_TOOLTIP, CalendarView.DEFAULT_ICON);
 		return result;
 	}
 
