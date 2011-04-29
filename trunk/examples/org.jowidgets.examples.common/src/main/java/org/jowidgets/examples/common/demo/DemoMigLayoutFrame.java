@@ -29,6 +29,7 @@
 package org.jowidgets.examples.common.demo;
 
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
+import org.jowidgets.api.layout.miglayout.IMigLayout;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.tools.powo.JoFrame;
@@ -42,7 +43,7 @@ public class DemoMigLayoutFrame extends JoFrame {
 
 		final ILayoutFactoryProvider lfp = Toolkit.getLayoutFactoryProvider();
 
-		setLayout(lfp.migLayoutBuilder().columnConstraints("[]15[grow,fill]15[grow]").build());
+		final IMigLayout layout = setLayout(lfp.migLayoutBuilder().columnConstraints("[]15[grow,fill]15[grow]").build());
 
 		add(BPF.textLabel("Last Name"), "");
 		add(BPF.textField(), "");
@@ -72,5 +73,6 @@ public class DemoMigLayoutFrame extends JoFrame {
 		add(BPF.button("Cancel"), "wrap push");
 
 		setSize(800, 600);
+		setMinSize(computeDecoratedSize(layout.getMinSize()));
 	}
 }
