@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.verify;
+package org.jowidgets.common.verify;
 
 public interface IInputVerifier {
 

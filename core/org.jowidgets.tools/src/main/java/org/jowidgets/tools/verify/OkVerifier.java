@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,17 +26,21 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.verify;
+package org.jowidgets.tools.verify;
 
-public final class OkVerifier implements IInputVerifier {
+import org.jowidgets.common.verify.IInputVerifier;
 
-	public static final IInputVerifier INSTANCE = new OkVerifier();
+public final class OkVerifier {
 
-	private OkVerifier() {};
+	public static final IInputVerifier INSTANCE = new IInputVerifier() {
 
-	@Override
-	public boolean verify(final String currentValue, final String input, final int start, final int end) {
-		return true;
-	}
+		@Override
+		public boolean verify(final String currentValue, final String input, final int start, final int end) {
+			// TODO Auto-generated method stub
+			return true;
+		}
+	};
+
+	private OkVerifier() {}
 
 }

@@ -27,8 +27,8 @@
  */
 package org.jowidgets.impl.spi.blueprint.builder;
 
+import org.jowidgets.common.verify.IInputVerifier;
 import org.jowidgets.common.widgets.builder.IComponentSetupBuilderCommon;
-import org.jowidgets.spi.verify.IInputVerifier;
 
 public interface ITextInputComponentSetupBuilderSpi<INSTANCE_TYPE extends ITextInputComponentSetupBuilderSpi<?>> extends
 		IComponentSetupBuilderCommon<INSTANCE_TYPE> {

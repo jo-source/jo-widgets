@@ -30,8 +30,8 @@ package org.jowidgets.spi.impl.swing.widgets;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import org.jowidgets.common.verify.IInputVerifier;
 import org.jowidgets.spi.impl.swing.widgets.util.InputModifierDocument;
-import org.jowidgets.spi.verify.IInputVerifier;
 import org.jowidgets.spi.widgets.ITextControlSpi;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 

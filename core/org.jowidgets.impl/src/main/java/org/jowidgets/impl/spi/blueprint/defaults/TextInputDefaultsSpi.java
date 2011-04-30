@@ -29,7 +29,7 @@ package org.jowidgets.impl.spi.blueprint.defaults;
 
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.impl.spi.blueprint.builder.ITextInputComponentSetupBuilderSpi;
-import org.jowidgets.spi.verify.OkVerifier;
+import org.jowidgets.tools.verify.OkVerifier;
 
 public class TextInputDefaultsSpi implements IDefaultInitializer<ITextInputComponentSetupBuilderSpi<?>> {
 

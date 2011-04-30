@@ -31,7 +31,7 @@ package org.jowidgets.impl.widgets.basic.factory.internal.util;
 import org.jowidgets.api.validation.ITextInputVerifier;
 import org.jowidgets.api.validation.ValidationMessage;
 import org.jowidgets.api.validation.ValidationMessageType;
-import org.jowidgets.spi.verify.IInputVerifier;
+import org.jowidgets.common.verify.IInputVerifier;
 
 public class InputVerifier implements IInputVerifier {
 

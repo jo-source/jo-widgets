@@ -30,7 +30,7 @@ package org.jowidgets.spi.impl.dummy.dummyui;
 
 import javax.swing.text.BadLocationException;
 
-import org.jowidgets.spi.verify.IInputVerifier;
+import org.jowidgets.common.verify.IInputVerifier;
 
 public class UIDTextField extends UIDTextComponent {
 
