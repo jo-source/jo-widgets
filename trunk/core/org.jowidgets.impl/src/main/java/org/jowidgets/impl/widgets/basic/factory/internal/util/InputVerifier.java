@@ -47,7 +47,7 @@ public class InputVerifier implements IInputVerifier {
 		final String first = currentValue.substring(0, start);
 		String second = "";
 		if (end < currentValue.length() && end >= 0) {
-			second = currentValue.substring(end, currentValue.length() - 1);
+			second = currentValue.substring(end, currentValue.length());
 		}
 
 		final String newValue = first + input + second;
