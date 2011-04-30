@@ -71,19 +71,19 @@ public class InputModifierDocument extends PlainDocument {
 	}
 
 	@Override
-	public void insertString(final int offs, final String str, final AttributeSet a) throws BadLocationException {
+	public void remove(final int offs, final int len) throws BadLocationException {
 		final String currentText = textComponent.getText();
-		if (inputVerifier.verify(currentText, str, offs, offs + str.length())) {
-			super.insertString(offs, str, a);
+		if (inputVerifier.verify(currentText, "", offs, offs + len)) {
+			super.remove(offs, len);
 			inputObservable.fireInputChanged();
 		}
 	}
 
 	@Override
-	public void remove(final int offs, final int len) throws BadLocationException {
+	public void replace(final int offset, final int length, final String text, final AttributeSet attrs) throws BadLocationException {
 		final String currentText = textComponent.getText();
-		if (inputVerifier.verify(currentText, "", offs, offs + len)) {
-			super.remove(offs, len);
+		if (inputVerifier.verify(currentText, text, offset, offset + length)) {
+			super.replace(offset, length, text, attrs);
 			inputObservable.fireInputChanged();
 		}
 	}
