@@ -32,8 +32,8 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.JTextComponent;
 import javax.swing.text.PlainDocument;
 
+import org.jowidgets.common.verify.IInputVerifier;
 import org.jowidgets.spi.impl.controler.InputObservable;
-import org.jowidgets.spi.verify.IInputVerifier;
 import org.jowidgets.util.Assert;
 
 public class InputModifierDocument extends PlainDocument {

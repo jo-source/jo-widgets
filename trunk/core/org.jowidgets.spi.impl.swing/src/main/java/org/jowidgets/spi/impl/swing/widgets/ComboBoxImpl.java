@@ -35,8 +35,8 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 
+import org.jowidgets.common.verify.IInputVerifier;
 import org.jowidgets.spi.impl.swing.widgets.util.InputModifierDocument;
-import org.jowidgets.spi.verify.IInputVerifier;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSetupSpi;
 import org.jowidgets.util.NullCompatibleEquivalence;

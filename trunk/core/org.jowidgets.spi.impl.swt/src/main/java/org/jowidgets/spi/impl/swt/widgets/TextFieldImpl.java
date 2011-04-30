@@ -32,7 +32,7 @@ import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
-import org.jowidgets.spi.verify.IInputVerifier;
+import org.jowidgets.common.verify.IInputVerifier;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 
 public class TextFieldImpl extends AbstractTextInputControl {
