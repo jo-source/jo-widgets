@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,34 +26,47 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.basic.factory.internal;
+package org.jowidgets.impl.mask;
 
-import org.jowidgets.api.widgets.ITextControl;
-import org.jowidgets.api.widgets.descriptor.ITextFieldDescriptor;
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.common.widgets.factory.IWidgetFactory;
-import org.jowidgets.impl.spi.ISpiBluePrintFactory;
-import org.jowidgets.impl.spi.blueprint.ITextFieldBluePrintSpi;
-import org.jowidgets.impl.widgets.basic.TextFieldImpl;
-import org.jowidgets.spi.IWidgetsServiceProvider;
-import org.jowidgets.spi.widgets.ITextControlSpi;
+import org.jowidgets.common.mask.ICharacterMask;
 
-public class TextFieldFactory extends AbstractWidgetFactory implements IWidgetFactory<ITextControl, ITextFieldDescriptor> {
+final class CharacterMask implements ICharacterMask {
 
-	public TextFieldFactory(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetsServiceProvider widgetsServiceProvider,
-		final ISpiBluePrintFactory bpF) {
+	private final boolean readonly;
+	private final String acceptingRegExp;
+	private final String rejectingRegExp;
+	private Character placeholder;
 
-		super(genericWidgetFactory, widgetsServiceProvider, bpF);
+	CharacterMask(final boolean readonly, final String acceptingRegExp, final String rejectingRegExp, final Character placeholder) {
+		this.readonly = readonly;
+		this.acceptingRegExp = acceptingRegExp;
+		this.rejectingRegExp = rejectingRegExp;
+		this.placeholder = placeholder;
 	}
 
 	@Override
-	public ITextControl create(final Object parentUiReference, final ITextFieldDescriptor descriptor) {
-		final ITextFieldBluePrintSpi bp = getSpiBluePrintFactory().textField().setSetup(descriptor);
-		final ITextControlSpi textFieldSpi = getSpiWidgetFactory().createTextField(parentUiReference, bp);
+	public boolean isReadonly() {
+		return readonly;
+	}
 
-		final ITextControl result = new TextFieldImpl(textFieldSpi, descriptor);
-		return result;
+	@Override
+	public String getAcceptingRegExp() {
+		return acceptingRegExp;
+	}
+
+	@Override
+	public String getRejectingRegExp() {
+		return rejectingRegExp;
+	}
+
+	@Override
+	public Character getPlaceholder() {
+		return placeholder;
+	}
+
+	void setDefaultPlaceholder(final Character defaultPlaceholder) {
+		if (placeholder == null) {
+			this.placeholder = defaultPlaceholder;
+		}
 	}
 }

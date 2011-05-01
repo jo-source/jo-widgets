@@ -27,17 +27,6 @@
  */
 package org.jowidgets.common.widgets.descriptor.setup;
 
-import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
-
-public interface ITextAreaSetupCommon extends ITextComponentSetupCommon {
-
-	@Mandatory
-	boolean isLineWrap();
-
-	@Mandatory
-	boolean isAlwaysShowBars();
-
-	@Mandatory
-	boolean hasBorder();
+public interface IComboBoxSetupCommon extends IComboBoxSelectionSetupCommon, ITextComponentSetupCommon {
 
 }

@@ -25,16 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.spi.blueprint.defaults;
+package org.jowidgets.impl.spi.blueprint.builder;
 
-import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
-import org.jowidgets.impl.spi.blueprint.builder.ITextInputComponentSetupBuilderSpi;
-import org.jowidgets.tools.verify.OkVerifier;
+import org.jowidgets.common.widgets.builder.ITextComponentSetupBuilderCommon;
 
-public class TextInputDefaultsSpi implements IDefaultInitializer<ITextInputComponentSetupBuilderSpi<?>> {
+public interface ITextComponentSetupBuilderSpi<INSTANCE_TYPE extends ITextComponentSetupBuilderSpi<?>> extends
+		ITextComponentSetupBuilderCommon<INSTANCE_TYPE> {
 
-	@Override
-	public void initialize(final ITextInputComponentSetupBuilderSpi<?> builder) {
-		builder.setInputVerifier(OkVerifier.INSTANCE);
-	}
 }

@@ -35,6 +35,7 @@ import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
+import org.jowidgets.api.mask.ITextMaskBuilder;
 import org.jowidgets.api.model.IModelFactoryProvider;
 import org.jowidgets.api.threads.IUiThreadAccess;
 import org.jowidgets.api.toolkit.IMessagePane;
@@ -60,6 +61,7 @@ import org.jowidgets.impl.content.InputContentCreatorFactory;
 import org.jowidgets.impl.convert.DefaultConverterProvider;
 import org.jowidgets.impl.image.DefaultIconsRegisterService;
 import org.jowidgets.impl.layout.LayoutFactoryProvider;
+import org.jowidgets.impl.mask.TextMaskBuilder;
 import org.jowidgets.impl.model.ModelFactoryProvider;
 import org.jowidgets.impl.threads.UiThreadAccess;
 import org.jowidgets.impl.utils.WidgetUtils;
@@ -215,6 +217,11 @@ public class DefaultToolkit implements IToolkit {
 	@Override
 	public IWidgetUtils getWidgetUtils() {
 		return widgetUtils;
+	}
+
+	@Override
+	public ITextMaskBuilder createTextMaskBuilder() {
+		return new TextMaskBuilder();
 	}
 
 	@Override

@@ -34,7 +34,7 @@ public interface IInputVerifier {
 	 * Verifies an text input
 	 * 
 	 * @param currentValue The current value of the text widget, may be null
-	 * @param input The input of the user (my be empty string when deleting something)
+	 * @param input The input of the user (may be an empty string when deleting something)
 	 * @param start The index where the input starts
 	 * @param end The index where the input ends
 	 * @return true if the input should be accepted, false otherwise

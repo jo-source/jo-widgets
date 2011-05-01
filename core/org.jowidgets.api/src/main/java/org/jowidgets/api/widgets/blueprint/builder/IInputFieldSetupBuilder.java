@@ -28,13 +28,12 @@
 package org.jowidgets.api.widgets.blueprint.builder;
 
 import org.jowidgets.api.convert.IConverter;
+import org.jowidgets.common.widgets.builder.ITextFieldSetupBuilderCommon;
 
 public interface IInputFieldSetupBuilder<INSTANCE_TYPE extends IInputFieldSetupBuilder<?, ?>, INPUT_TYPE> extends
-		IInputComponentSetupBuilder<INSTANCE_TYPE, INPUT_TYPE> {
+		IInputComponentSetupBuilder<INSTANCE_TYPE, INPUT_TYPE>,
+		ITextFieldSetupBuilderCommon<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setConverter(IConverter<INPUT_TYPE> converter);
 
-	INSTANCE_TYPE setPasswordPresentation(boolean passwordPresentation);
-
-	INSTANCE_TYPE setMaxLength(int maxLength);
 }

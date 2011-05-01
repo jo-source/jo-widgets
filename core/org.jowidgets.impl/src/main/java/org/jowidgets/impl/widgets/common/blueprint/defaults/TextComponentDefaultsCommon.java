@@ -25,15 +25,18 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.convert;
+package org.jowidgets.impl.widgets.common.blueprint.defaults;
 
-import org.jowidgets.api.convert.IObjectStringConverter;
+import java.util.Collections;
 
-public abstract class AbstractObjectStringConverter<OBJECT_TYPE> implements IObjectStringConverter<OBJECT_TYPE> {
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
+import org.jowidgets.common.widgets.builder.ITextComponentSetupBuilderCommon;
 
+public class TextComponentDefaultsCommon implements IDefaultInitializer<ITextComponentSetupBuilderCommon<?>> {
+
+	@SuppressWarnings("unchecked")
 	@Override
-	public final String getDescription(final OBJECT_TYPE value) {
-		return null;
+	public void initialize(final ITextComponentSetupBuilderCommon<?> builder) {
+		builder.setAcceptingRegExps(Collections.EMPTY_LIST);
 	}
-
 }

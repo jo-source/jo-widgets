@@ -27,8 +27,14 @@
  */
 package org.jowidgets.impl.spi.blueprint.builder;
 
+import org.jowidgets.common.mask.ITextMask;
+import org.jowidgets.common.widgets.builder.IComboBoxSetupBuilderCommon;
+
 public interface IComboBoxSetupBuilderSpi<INSTANCE_TYPE extends IComboBoxSetupBuilderSpi<?>> extends
 		IComboBoxSelectionSetupBuilderSpi<INSTANCE_TYPE>,
-		ITextInputComponentSetupBuilderSpi<INSTANCE_TYPE> {
+		ITextComponentSetupBuilderSpi<INSTANCE_TYPE>,
+		IComboBoxSetupBuilderCommon<INSTANCE_TYPE> {
+
+	INSTANCE_TYPE setMask(final ITextMask textMask);
 
 }

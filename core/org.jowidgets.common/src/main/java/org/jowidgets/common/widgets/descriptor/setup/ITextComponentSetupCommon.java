@@ -25,14 +25,18 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.spi.blueprint.builder;
+package org.jowidgets.common.widgets.descriptor.setup;
+
+import java.util.List;
 
 import org.jowidgets.common.verify.IInputVerifier;
-import org.jowidgets.common.widgets.builder.IComponentSetupBuilderCommon;
 
-public interface ITextInputComponentSetupBuilderSpi<INSTANCE_TYPE extends ITextInputComponentSetupBuilderSpi<?>> extends
-		IComponentSetupBuilderCommon<INSTANCE_TYPE> {
+public interface ITextComponentSetupCommon extends IComponentSetupCommon {
 
-	INSTANCE_TYPE setInputVerifier(IInputVerifier inputVerifier);
+	IInputVerifier getInputVerifier();
+
+	List<String> getAcceptingRegExps();
+
+	Integer getMaxLength();
 
 }

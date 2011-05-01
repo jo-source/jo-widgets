@@ -33,6 +33,8 @@ import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.jowidgets.common.verify.IInputVerifier;
+import org.jowidgets.spi.impl.verify.InputVerifierHelper;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSetupSpi;
 import org.jowidgets.util.NullCompatibleEquivalence;
@@ -44,17 +46,23 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 	public ComboBoxImpl(final Object parentUiReference, final IComboBoxSetupSpi setup) {
 		super(new Combo((Composite) parentUiReference, SWT.NONE | SWT.DROP_DOWN), setup);
 
-		this.getUiReference().addVerifyListener(new VerifyListener() {
+		final IInputVerifier inputVerifier = InputVerifierHelper.getInputVerifier(setup);
+		if (inputVerifier != null) {
+			this.getUiReference().addVerifyListener(new VerifyListener() {
+				@Override
+				public void verifyText(final VerifyEvent verifyEvent) {
+					verifyEvent.doit = inputVerifier.verify(
+							getUiReference().getText(),
+							verifyEvent.text,
+							verifyEvent.start,
+							verifyEvent.end);
+				}
+			});
+		}
 
-			@Override
-			public void verifyText(final VerifyEvent verifyEvent) {
-				verifyEvent.doit = setup.getInputVerifier().verify(
-						getUiReference().getText(),
-						verifyEvent.text,
-						verifyEvent.start,
-						verifyEvent.end);
-			}
-		});
+		if (setup.getMaxLength() != null) {
+			getUiReference().setTextLimit(setup.getMaxLength().intValue());
+		}
 
 	}
 

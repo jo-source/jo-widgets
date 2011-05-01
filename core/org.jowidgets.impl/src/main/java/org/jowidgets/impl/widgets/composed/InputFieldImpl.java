@@ -29,6 +29,7 @@ package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.validation.IValidateable;
+import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IInputField;
 import org.jowidgets.api.widgets.ITextControl;
@@ -51,12 +52,16 @@ public class InputFieldImpl<VALUE_TYPE> extends AbstractInputControl<VALUE_TYPE>
 		this.textField = textField;
 		this.converter = setup.getConverter();
 
-		addValidatable(new IValidateable() {
-			@Override
-			public ValidationResult validate() {
-				return converter.validate(textField.getText());
-			}
-		});
+		final IValidator<String> stringValidator = converter.getStringValidator();
+
+		if (stringValidator != null) {
+			addValidatable(new IValidateable() {
+				@Override
+				public ValidationResult validate() {
+					return stringValidator.validate(textField.getText());
+				}
+			});
+		}
 
 		textField.addInputListener(new IInputListener() {
 			@Override

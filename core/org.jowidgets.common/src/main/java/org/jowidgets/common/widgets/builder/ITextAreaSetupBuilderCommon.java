@@ -28,14 +28,12 @@
 package org.jowidgets.common.widgets.builder;
 
 public interface ITextAreaSetupBuilderCommon<INSTANCE_TYPE extends ITextAreaSetupBuilderCommon<?>> extends
-		IComponentSetupBuilderCommon<INSTANCE_TYPE> {
+		ITextComponentSetupBuilderCommon<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setLineWrap(boolean lineWrapped);
 
 	INSTANCE_TYPE setAlwaysShowBars(boolean alwaysShowBars);
 
 	INSTANCE_TYPE setBorder(boolean border);
-
-	INSTANCE_TYPE setMaxLength(int maxLength);
 
 }

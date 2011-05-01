@@ -41,7 +41,6 @@ public abstract class AbstractTextInputControl extends AbstractInputControl impl
 
 	protected void registerTextControl(final Text textControl) {
 		textControl.addModifyListener(new ModifyListener() {
-
 			@Override
 			public void modifyText(final ModifyEvent e) {
 				fireInputChanged();

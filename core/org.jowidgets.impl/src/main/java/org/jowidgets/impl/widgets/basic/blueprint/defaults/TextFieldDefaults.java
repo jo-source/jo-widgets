@@ -29,13 +29,11 @@ package org.jowidgets.impl.widgets.basic.blueprint.defaults;
 
 import org.jowidgets.api.widgets.blueprint.builder.ITextFieldSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
-import org.jowidgets.tools.validation.OkTextInputVerifier;
 
 public class TextFieldDefaults implements IDefaultInitializer<ITextFieldSetupBuilder<?>> {
 
 	@Override
 	public void initialize(final ITextFieldSetupBuilder<?> builder) {
-		builder.setTextInputVerifier(new OkTextInputVerifier());
 		builder.setEditable(true);
 	}
 

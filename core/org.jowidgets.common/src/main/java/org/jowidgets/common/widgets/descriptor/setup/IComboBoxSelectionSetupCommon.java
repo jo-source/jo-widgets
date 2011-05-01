@@ -25,16 +25,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.tools.validation;
+package org.jowidgets.common.widgets.descriptor.setup;
 
-import org.jowidgets.api.validation.ITextInputVerifier;
-import org.jowidgets.api.validation.ValidationMessage;
+import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
-public class OkTextInputVerifier implements ITextInputVerifier {
+public interface IComboBoxSelectionSetupCommon extends IComponentSetupCommon {
 
-	@Override
-	public ValidationMessage isCompletableToValid(final String string) {
-		return OkMessage.getInstance();
-	}
+	@Mandatory
+	boolean isAutoCompletion();
 
 }

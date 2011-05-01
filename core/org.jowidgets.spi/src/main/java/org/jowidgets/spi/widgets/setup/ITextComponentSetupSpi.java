@@ -25,8 +25,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.validation;
+package org.jowidgets.spi.widgets.setup;
 
-public interface ITextInputValidator extends IValidator<String> {
+import org.jowidgets.common.widgets.descriptor.setup.ITextComponentSetupCommon;
+
+public interface ITextComponentSetupSpi extends IComponentSetupSpi, ITextComponentSetupCommon {
 
 }

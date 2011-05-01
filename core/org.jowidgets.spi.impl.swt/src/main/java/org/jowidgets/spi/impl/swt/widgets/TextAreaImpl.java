@@ -33,12 +33,16 @@ import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Text;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.verify.IInputVerifier;
+import org.jowidgets.spi.impl.verify.InputVerifierHelper;
 import org.jowidgets.spi.widgets.ITextAreaSpi;
 import org.jowidgets.spi.widgets.setup.ITextAreaSetupSpi;
 
@@ -64,6 +68,21 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 		scrolledComposite.setAlwaysShowScrollBars(setup.isAlwaysShowBars());
 
 		textArea = new Text(getUiReference(), getTextStyle(setup));
+
+		final IInputVerifier inputVerifier = InputVerifierHelper.getInputVerifier(setup);
+		if (inputVerifier != null) {
+			textArea.addVerifyListener(new VerifyListener() {
+				@Override
+				public void verifyText(final VerifyEvent verifyEvent) {
+					verifyEvent.doit = inputVerifier.verify(
+							textArea.getText(),
+							verifyEvent.text,
+							verifyEvent.start,
+							verifyEvent.end);
+				}
+			});
+		}
+
 		if (setup.getMaxLength() != null) {
 			textArea.setTextLimit(setup.getMaxLength().intValue());
 		}

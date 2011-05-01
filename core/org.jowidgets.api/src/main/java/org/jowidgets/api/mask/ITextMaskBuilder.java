@@ -26,20 +26,47 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.validation;
+package org.jowidgets.api.mask;
 
-public interface ITextInputVerifier {
+import org.jowidgets.common.mask.ICharacterMask;
+import org.jowidgets.common.mask.ITextMask;
 
-	/**
-	 * Checks a string if it could be completed to a valid input.
-	 * 
-	 * @param string
-	 *            the string to check
-	 * 
-	 * @return OK if the string is valid or if the string could be completed to
-	 *         a valid input by adding substring at any position(s), ERROR with
-	 *         valuable description otherwise
-	 */
-	ValidationMessage isCompletableToValid(String string);
+public interface ITextMaskBuilder {
+
+	ITextMaskBuilder defaultPlaceholder(char placeholder);
+
+	ITextMaskBuilder addDelimiterMask(char placeholder);
+
+	ITextMaskBuilder addAcceptingAllMask(char placeholder);
+
+	ITextMaskBuilder addNumericMask(char placeholder);
+
+	ITextMaskBuilder addAlphabeticMask(char placeholder);
+
+	ITextMaskBuilder addAlphaNumericMask(char placeholder);
+
+	ITextMaskBuilder addAcceptingMask(String acceptingRegExp, char placeholder);
+
+	ITextMaskBuilder addRejectingMask(String rejectingRegExp, char placeholder);
+
+	ITextMaskBuilder addCharacterMask(String acceptingRegExp, String rejectingRegExp, char placeholder);
+
+	ITextMaskBuilder addAcceptingAllMask();
+
+	ITextMaskBuilder addNumericMask();
+
+	ITextMaskBuilder addAlphabeticMask();
+
+	ITextMaskBuilder addAlphaNumericMask();
+
+	ITextMaskBuilder addAcceptingMask(String acceptingRegExp);
+
+	ITextMaskBuilder addRejectingMask(String rejectingRegExp);
+
+	ITextMaskBuilder addCharacterMask(String acceptingRegExp, String rejectingRegExp);
+
+	ITextMaskBuilder addCharacterMask(ICharacterMask mask);
+
+	ITextMask build();
 
 }

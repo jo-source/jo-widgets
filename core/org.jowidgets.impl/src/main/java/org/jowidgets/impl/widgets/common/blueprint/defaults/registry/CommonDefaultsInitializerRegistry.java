@@ -38,6 +38,7 @@ import org.jowidgets.common.widgets.builder.ISeparatorSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITabFolderSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITableSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITextAreaSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.ITextComponentSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITextFieldSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITextLabelSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.IToolBarSetupBuilderCommon;
@@ -53,6 +54,7 @@ import org.jowidgets.impl.widgets.common.blueprint.defaults.SeparatorDefaultsCom
 import org.jowidgets.impl.widgets.common.blueprint.defaults.TabFolderDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.TableDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.TextAreaDefaultsCommon;
+import org.jowidgets.impl.widgets.common.blueprint.defaults.TextComponentDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.TextFieldDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.TextLabelDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.ToolBarDefaultsCommon;
@@ -79,5 +81,6 @@ public class CommonDefaultsInitializerRegistry extends DefaultsInitializerRegist
 		register(ITableSetupBuilderCommon.class, new TableDefaultsCommon());
 		register(IToolBarSetupBuilderCommon.class, new ToolBarDefaultsCommon());
 		register(IPopupDialogSetupBuilderCommon.class, new PopupDialogDefaultsCommon());
+		register(ITextComponentSetupBuilderCommon.class, new TextComponentDefaultsCommon());
 	}
 }

@@ -28,11 +28,9 @@
 package org.jowidgets.impl.convert.defaults;
 
 import org.jowidgets.api.convert.IConverter;
-import org.jowidgets.api.validation.ValidationMessage;
-import org.jowidgets.api.validation.ValidationResult;
-import org.jowidgets.impl.convert.AbstractObjectStringConverter;
+import org.jowidgets.tools.converter.AbstractConverter;
 
-public class DefaultStringConverter extends AbstractObjectStringConverter<String> implements IConverter<String> {
+public class DefaultStringConverter extends AbstractConverter<String> implements IConverter<String> {
 
 	@Override
 	public String convertToObject(final String string) {
@@ -42,16 +40,6 @@ public class DefaultStringConverter extends AbstractObjectStringConverter<String
 	@Override
 	public String convertToString(final String value) {
 		return value;
-	}
-
-	@Override
-	public ValidationMessage isCompletableToValid(final String string) {
-		return ValidationMessage.OK_MESSAGE;
-	}
-
-	@Override
-	public ValidationResult validate(final String validationInput) {
-		return new ValidationResult();
 	}
 
 }

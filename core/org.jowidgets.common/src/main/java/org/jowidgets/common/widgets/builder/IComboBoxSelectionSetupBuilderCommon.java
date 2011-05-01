@@ -25,19 +25,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.common.widgets.descriptor.setup;
+package org.jowidgets.common.widgets.builder;
 
-import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
-public interface ITextAreaSetupCommon extends ITextComponentSetupCommon {
+public interface IComboBoxSelectionSetupBuilderCommon<INSTANCE_TYPE extends IComboBoxSelectionSetupBuilderCommon<?>> extends
+		IComponentSetupBuilderCommon<INSTANCE_TYPE> {
 
-	@Mandatory
-	boolean isLineWrap();
-
-	@Mandatory
-	boolean isAlwaysShowBars();
-
-	@Mandatory
-	boolean hasBorder();
+	INSTANCE_TYPE setAutoCompletion(final boolean autoCompletion);
 
 }

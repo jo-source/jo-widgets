@@ -27,18 +27,17 @@
  */
 package org.jowidgets.api.widgets.descriptor.setup;
 
-import org.jowidgets.api.validation.ITextInputVerifier;
+import org.jowidgets.common.mask.ITextMask;
 import org.jowidgets.common.widgets.descriptor.setup.ITextFieldSetupCommon;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface ITextFieldSetup extends IComponentSetup, ITextFieldSetupCommon {
 
 	@Mandatory
-	ITextInputVerifier getTextInputVerifier();
-
-	@Mandatory
 	boolean isEditable();
 
 	String getText();
+
+	ITextMask getMask();
 
 }

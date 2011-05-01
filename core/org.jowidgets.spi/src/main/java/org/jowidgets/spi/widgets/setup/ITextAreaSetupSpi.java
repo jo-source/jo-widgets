@@ -29,6 +29,6 @@ package org.jowidgets.spi.widgets.setup;
 
 import org.jowidgets.common.widgets.descriptor.setup.ITextAreaSetupCommon;
 
-public interface ITextAreaSetupSpi extends IComponentSetupSpi, ITextAreaSetupCommon {
+public interface ITextAreaSetupSpi extends ITextComponentSetupSpi, ITextAreaSetupCommon {
 
 }

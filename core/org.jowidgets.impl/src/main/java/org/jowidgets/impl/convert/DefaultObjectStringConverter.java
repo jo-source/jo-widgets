@@ -28,6 +28,7 @@
 package org.jowidgets.impl.convert;
 
 import org.jowidgets.api.convert.IObjectStringConverter;
+import org.jowidgets.tools.converter.AbstractObjectStringConverter;
 
 public final class DefaultObjectStringConverter extends AbstractObjectStringConverter<Object> {
 
