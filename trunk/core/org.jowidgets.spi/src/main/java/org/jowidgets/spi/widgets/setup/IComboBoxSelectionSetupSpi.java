@@ -27,10 +27,10 @@
  */
 package org.jowidgets.spi.widgets.setup;
 
-import org.jowidgets.common.widgets.descriptor.setup.IComponentSetupCommon;
+import org.jowidgets.common.widgets.descriptor.setup.IComboBoxSelectionSetupCommon;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
-public interface IComboBoxSelectionSetupSpi extends IComponentSetupCommon {
+public interface IComboBoxSelectionSetupSpi extends IComponentSetupSpi, IComboBoxSelectionSetupCommon {
 
 	@Mandatory
 	String[] getElements();

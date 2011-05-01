@@ -29,19 +29,30 @@
 package org.jowidgets.tools.converter;
 
 import org.jowidgets.api.convert.IStringObjectConverter;
-import org.jowidgets.api.validation.ValidationMessage;
-import org.jowidgets.api.validation.ValidationResult;
+import org.jowidgets.api.validation.IValidator;
+import org.jowidgets.common.mask.ITextMask;
+import org.jowidgets.common.verify.IInputVerifier;
 
 public abstract class AbstractStringObjectConverter<TO_TYPE> implements IStringObjectConverter<TO_TYPE> {
 
 	@Override
-	public ValidationResult validate(final String validationInput) {
-		return new ValidationResult();
+	public IValidator<String> getStringValidator() {
+		return null;
 	}
 
 	@Override
-	public ValidationMessage isCompletableToValid(final String string) {
-		return ValidationMessage.OK_MESSAGE;
+	public IInputVerifier getInputVerifier() {
+		return null;
+	}
+
+	@Override
+	public String getAcceptingRegExp() {
+		return null;
+	}
+
+	@Override
+	public ITextMask getMask() {
+		return null;
 	}
 
 }

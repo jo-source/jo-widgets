@@ -37,6 +37,7 @@ import javax.swing.border.Border;
 
 import org.jowidgets.common.verify.IInputVerifier;
 import org.jowidgets.spi.impl.swing.widgets.util.InputModifierDocument;
+import org.jowidgets.spi.impl.verify.InputVerifierHelper;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSetupSpi;
 import org.jowidgets.util.NullCompatibleEquivalence;
@@ -44,14 +45,16 @@ import org.jowidgets.util.NullCompatibleEquivalence;
 public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi {
 
 	private final ComboBoxEditorImpl comboBoxEditor;
-
 	private String lastValue;
+	private final Integer maxLength;
 
 	public ComboBoxImpl(final IComboBoxSetupSpi setup) {
 		super(setup);
 
+		this.maxLength = setup.getMaxLength();
+
 		getUiReference().setEditable(true);
-		this.comboBoxEditor = new ComboBoxEditorImpl(setup.getInputVerifier());
+		this.comboBoxEditor = new ComboBoxEditorImpl(InputVerifierHelper.getInputVerifier(setup));
 
 		getUiReference().setEditor(comboBoxEditor);
 
@@ -105,7 +108,7 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 
 			this.setItemInvoked = false;
 
-			this.modifierDocument = new InputModifierDocument(textField, inputVerifier, ComboBoxImpl.this);
+			this.modifierDocument = new InputModifierDocument(textField, inputVerifier, ComboBoxImpl.this, maxLength);
 
 			this.textField.setDocument(modifierDocument);
 		}

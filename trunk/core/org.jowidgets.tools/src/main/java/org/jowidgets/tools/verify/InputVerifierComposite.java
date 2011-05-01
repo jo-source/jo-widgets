@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,34 +26,34 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.basic.factory.internal;
+package org.jowidgets.tools.verify;
 
-import org.jowidgets.api.widgets.ITextControl;
-import org.jowidgets.api.widgets.descriptor.ITextFieldDescriptor;
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.common.widgets.factory.IWidgetFactory;
-import org.jowidgets.impl.spi.ISpiBluePrintFactory;
-import org.jowidgets.impl.spi.blueprint.ITextFieldBluePrintSpi;
-import org.jowidgets.impl.widgets.basic.TextFieldImpl;
-import org.jowidgets.spi.IWidgetsServiceProvider;
-import org.jowidgets.spi.widgets.ITextControlSpi;
+import java.util.LinkedList;
+import java.util.List;
 
-public class TextFieldFactory extends AbstractWidgetFactory implements IWidgetFactory<ITextControl, ITextFieldDescriptor> {
+import org.jowidgets.common.verify.IInputVerifier;
+import org.jowidgets.util.Assert;
 
-	public TextFieldFactory(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetsServiceProvider widgetsServiceProvider,
-		final ISpiBluePrintFactory bpF) {
+public final class InputVerifierComposite implements IInputVerifier {
 
-		super(genericWidgetFactory, widgetsServiceProvider, bpF);
+	private final List<IInputVerifier> inputVerifiers;
+
+	public InputVerifierComposite() {
+		this.inputVerifiers = new LinkedList<IInputVerifier>();
 	}
 
 	@Override
-	public ITextControl create(final Object parentUiReference, final ITextFieldDescriptor descriptor) {
-		final ITextFieldBluePrintSpi bp = getSpiBluePrintFactory().textField().setSetup(descriptor);
-		final ITextControlSpi textFieldSpi = getSpiWidgetFactory().createTextField(parentUiReference, bp);
-
-		final ITextControl result = new TextFieldImpl(textFieldSpi, descriptor);
-		return result;
+	public boolean verify(final String currentValue, final String input, final int start, final int end) {
+		for (final IInputVerifier inputVerifier : inputVerifiers) {
+			if (!inputVerifier.verify(currentValue, input, start, end)) {
+				return false;
+			}
+		}
+		return true;
 	}
+
+	public void addVerifier(final IInputVerifier inputVerifier) {
+		Assert.paramNotNull(inputVerifier, "inputVerifier");
+	}
+
 }

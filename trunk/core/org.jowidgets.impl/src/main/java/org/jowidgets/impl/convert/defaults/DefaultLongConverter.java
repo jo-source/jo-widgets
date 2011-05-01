@@ -28,21 +28,13 @@
 package org.jowidgets.impl.convert.defaults;
 
 import org.jowidgets.api.convert.IConverter;
-import org.jowidgets.api.validation.ValidationMessage;
-import org.jowidgets.api.validation.ValidationMessageType;
-import org.jowidgets.api.validation.ValidationResult;
-import org.jowidgets.impl.convert.AbstractObjectStringConverter;
-import org.jowidgets.tools.validation.OkMessage;
+import org.jowidgets.tools.converter.AbstractConverter;
 
-public class DefaultLongConverter extends AbstractObjectStringConverter<Long> implements IConverter<Long> {
-
-	private static final String NO_VALID_INTEGER_MESSAGE = "No valid long number";
+public class DefaultLongConverter extends AbstractConverter<Long> implements IConverter<Long> {
 
 	@Override
 	public Long convertToObject(final String string) {
 		try {
-			// TODO MG define business logic and parse (less tolerant) with
-			// consideration of i18n
 			return Long.valueOf(Long.parseLong(string));
 		}
 		catch (final NumberFormatException e) {
@@ -59,25 +51,8 @@ public class DefaultLongConverter extends AbstractObjectStringConverter<Long> im
 	}
 
 	@Override
-	public ValidationResult validate(final String text) {
-		if (text != null && !text.trim().isEmpty()) {
-			if (convertToObject(text) == null) {
-				return new ValidationResult(ValidationMessageType.ERROR, NO_VALID_INTEGER_MESSAGE);
-			}
-		}
-		return new ValidationResult();
-	}
-
-	@Override
-	public ValidationMessage isCompletableToValid(final String string) {
-		if (string != null && !string.trim().isEmpty()) {
-			if (!string.matches("-?[0-9]*")) {
-				return new ValidationMessage(ValidationMessageType.ERROR, "'"
-					+ string
-					+ "' could not be completed to a valid number");
-			}
-		}
-		return OkMessage.getInstance();
+	public String getAcceptingRegExp() {
+		return "-?[0-9]*";
 	}
 
 }

@@ -27,6 +27,8 @@
  */
 package org.jowidgets.spi.impl.swing.widgets.util;
 
+import java.awt.Toolkit;
+
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.JTextComponent;
@@ -40,40 +42,31 @@ public class InputModifierDocument extends PlainDocument {
 
 	private static final InputObservable DUMMY_INPUT_OBSERVABLE = new InputObservable();
 
-	private static final IInputVerifier OK_VERIFIER = new IInputVerifier() {
-		@Override
-		public boolean verify(final String currentValue, final String input, final int start, final int end) {
-			return true;
-		}
-	};
-
 	private static final long serialVersionUID = 6900501331487160350L;
 
 	private final JTextComponent textComponent;
 	private final IInputVerifier inputVerifier;
 	private InputObservable inputObservable;
-
-	public InputModifierDocument(final JTextComponent textComponent, final InputObservable inputObservable) {
-		this(textComponent, OK_VERIFIER, inputObservable);
-	}
+	private final Integer maxLength;
 
 	public InputModifierDocument(
 		final JTextComponent textComponent,
 		final IInputVerifier inputVerifier,
-		final InputObservable inputObservable) {
+		final InputObservable inputObservable,
+		final Integer maxLength) {
 		super();
 		Assert.paramNotNull(textComponent, "textComponent");
-		Assert.paramNotNull(inputVerifier, "inputVerifier");
 
 		this.textComponent = textComponent;
 		this.inputVerifier = inputVerifier;
+		this.maxLength = maxLength;
 		setInputObservable(inputObservable);
 	}
 
 	@Override
 	public void remove(final int offs, final int len) throws BadLocationException {
 		final String currentText = textComponent.getText();
-		if (inputVerifier.verify(currentText, "", offs, offs + len)) {
+		if (inputVerifier == null || inputVerifier.verify(currentText, "", offs, offs + len)) {
 			super.remove(offs, len);
 			inputObservable.fireInputChanged();
 		}
@@ -82,7 +75,17 @@ public class InputModifierDocument extends PlainDocument {
 	@Override
 	public void replace(final int offset, final int length, final String text, final AttributeSet attrs) throws BadLocationException {
 		final String currentText = textComponent.getText();
-		if (inputVerifier.verify(currentText, text, offset, offset + length)) {
+
+		if (maxLength != null) {
+			int entireLength = currentText != null ? currentText.length() : 0;
+			entireLength = entireLength + (text != null ? text.length() : 0);
+			if (entireLength > maxLength.intValue()) {
+				Toolkit.getDefaultToolkit().beep();
+				return;
+			}
+		}
+
+		if (inputVerifier == null || inputVerifier.verify(currentText, text, offset, offset + length)) {
 			super.replace(offset, length, text, attrs);
 			inputObservable.fireInputChanged();
 		}

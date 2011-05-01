@@ -33,6 +33,7 @@ import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 import org.jowidgets.common.verify.IInputVerifier;
+import org.jowidgets.spi.impl.verify.InputVerifierHelper;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 
 public class TextFieldImpl extends AbstractTextInputControl {
@@ -40,19 +41,23 @@ public class TextFieldImpl extends AbstractTextInputControl {
 	public TextFieldImpl(final Object parentUiReference, final ITextFieldSetupSpi setup) {
 		super(createText(parentUiReference, setup.isPasswordPresentation()));
 
-		final IInputVerifier inputVerifier = setup.getInputVerifier();
+		final IInputVerifier inputVerifier = InputVerifierHelper.getInputVerifier(setup);
+		if (inputVerifier != null) {
+			this.getUiReference().addVerifyListener(new VerifyListener() {
+				@Override
+				public void verifyText(final VerifyEvent verifyEvent) {
+					verifyEvent.doit = inputVerifier.verify(
+							getUiReference().getText(),
+							verifyEvent.text,
+							verifyEvent.start,
+							verifyEvent.end);
+				}
+			});
+		}
 
-		this.getUiReference().addVerifyListener(new VerifyListener() {
-
-			@Override
-			public void verifyText(final VerifyEvent verifyEvent) {
-				verifyEvent.doit = inputVerifier.verify(
-						getUiReference().getText(),
-						verifyEvent.text,
-						verifyEvent.start,
-						verifyEvent.end);
-			}
-		});
+		if (setup.getMaxLength() != null) {
+			getUiReference().setTextLimit(setup.getMaxLength().intValue());
+		}
 
 		registerTextControl(getUiReference());
 	}

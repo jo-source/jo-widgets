@@ -28,14 +28,11 @@
 
 package org.jowidgets.impl.spi.blueprint.defaults.registry;
 
-import org.jowidgets.impl.spi.blueprint.builder.ITextInputComponentSetupBuilderSpi;
-import org.jowidgets.impl.spi.blueprint.defaults.TextInputDefaultsSpi;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.registry.CommonDefaultsInitializerRegistry;
 
 public class SpiDefaultsInitializerRegistry extends CommonDefaultsInitializerRegistry {
 
 	public SpiDefaultsInitializerRegistry() {
 		super();
-		register(ITextInputComponentSetupBuilderSpi.class, new TextInputDefaultsSpi());
 	}
 }

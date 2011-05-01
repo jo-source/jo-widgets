@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,34 +26,44 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.basic.factory.internal.util;
+package org.jowidgets.spi.impl.verify;
 
-import org.jowidgets.api.validation.ITextInputVerifier;
-import org.jowidgets.api.validation.ValidationMessage;
-import org.jowidgets.api.validation.ValidationMessageType;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.jowidgets.common.verify.IInputVerifier;
+import org.jowidgets.common.widgets.descriptor.setup.ITextComponentSetupCommon;
 
-public class InputVerifier implements IInputVerifier {
+public final class InputVerifierHelper {
 
-	private final ITextInputVerifier textInputVerifier;
+	private InputVerifierHelper() {}
 
-	public InputVerifier(final ITextInputVerifier textInputVerifier) {
-		super();
-		this.textInputVerifier = textInputVerifier;
-	}
+	public static IInputVerifier getInputVerifier(final ITextComponentSetupCommon setup) {
+		final List<IInputVerifier> inputVerifiers = new LinkedList<IInputVerifier>();
 
-	@Override
-	public boolean verify(final String currentValue, final String input, final int start, final int end) {
-		final String first = currentValue.substring(0, start);
-		String second = "";
-		if (end < currentValue.length() && end >= 0) {
-			second = currentValue.substring(end, currentValue.length());
+		if (setup.getInputVerifier() != null) {
+			inputVerifiers.add(setup.getInputVerifier());
+		}
+		for (final String regExp : setup.getAcceptingRegExps()) {
+			inputVerifiers.add(new RegExpInputVerifier(regExp));
 		}
 
-		final String newValue = first + input + second;
-
-		final ValidationMessage validationMessage = textInputVerifier.isCompletableToValid(newValue);
-		return validationMessage.getType() == ValidationMessageType.OK;
+		if (inputVerifiers.size() > 0) {
+			return new IInputVerifier() {
+				@Override
+				public boolean verify(final String currentValue, final String input, final int start, final int end) {
+					for (final IInputVerifier inputVerifier : inputVerifiers) {
+						if (!inputVerifier.verify(currentValue, input, start, end)) {
+							return false;
+						}
+					}
+					return true;
+				}
+			};
+		}
+		else {
+			return null;
+		}
 	}
 
 }

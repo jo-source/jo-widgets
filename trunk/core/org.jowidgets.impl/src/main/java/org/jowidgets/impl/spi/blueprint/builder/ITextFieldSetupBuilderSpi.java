@@ -27,10 +27,13 @@
  */
 package org.jowidgets.impl.spi.blueprint.builder;
 
+import org.jowidgets.common.mask.ITextMask;
 import org.jowidgets.common.widgets.builder.ITextFieldSetupBuilderCommon;
 
 public interface ITextFieldSetupBuilderSpi<INSTANCE_TYPE extends ITextFieldSetupBuilderSpi<?>> extends
-		ITextInputComponentSetupBuilderSpi<INSTANCE_TYPE>,
+		ITextComponentSetupBuilderSpi<INSTANCE_TYPE>,
 		ITextFieldSetupBuilderCommon<INSTANCE_TYPE> {
+
+	INSTANCE_TYPE setMask(final ITextMask textMask);
 
 }

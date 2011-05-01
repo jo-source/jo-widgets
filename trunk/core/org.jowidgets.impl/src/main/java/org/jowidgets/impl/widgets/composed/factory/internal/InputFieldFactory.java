@@ -27,19 +27,22 @@
  */
 package org.jowidgets.impl.widgets.composed.factory.internal;
 
-import org.jowidgets.api.validation.ITextInputVerifier;
-import org.jowidgets.api.validation.ValidationMessage;
-import org.jowidgets.api.validation.ValidationMessageType;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.widgets.IInputField;
 import org.jowidgets.api.widgets.ITextControl;
 import org.jowidgets.api.widgets.blueprint.ITextFieldBluePrint;
 import org.jowidgets.api.widgets.descriptor.IInputFieldDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.ITextFieldSetup;
+import org.jowidgets.common.verify.IInputVerifier;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.widgets.composed.InputFieldImpl;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 import org.jowidgets.spi.IWidgetFactorySpi;
+import org.jowidgets.tools.verify.InputVerifierComposite;
 
 public class InputFieldFactory<VALUE_TYPE> implements IWidgetFactory<IInputField<VALUE_TYPE>, IInputFieldDescriptor<VALUE_TYPE>> {
 
@@ -55,21 +58,37 @@ public class InputFieldFactory<VALUE_TYPE> implements IWidgetFactory<IInputField
 
 		final BluePrintFactory bpF = new BluePrintFactory();
 
-		final ITextInputVerifier inputVerifier = descriptor.getConverter();
+		final IConverter<VALUE_TYPE> converter = descriptor.getConverter();
+
+		final IInputVerifier inputVerifier = descriptor.getInputVerifier();
+		final IInputVerifier converterInputVerifier = converter.getInputVerifier();
+
+		InputVerifierComposite tfInputVerifier = null;
+		if (inputVerifier != null || converterInputVerifier != null) {
+			tfInputVerifier = new InputVerifierComposite();
+			if (inputVerifier != null) {
+				tfInputVerifier.addVerifier(inputVerifier);
+			}
+			if (converterInputVerifier != null) {
+				tfInputVerifier.addVerifier(converterInputVerifier);
+			}
+		}
+
+		final List<String> regExps = descriptor.getAcceptingRegExps();
+		final String converterRegExp = converter.getAcceptingRegExp();
+
+		final List<String> tfRegExps = new LinkedList<String>();
+		tfRegExps.addAll(regExps);
+		if (converterRegExp != null) {
+			tfRegExps.add(converterRegExp);
+		}
 
 		final ITextFieldBluePrint textFieldBluePrint = bpF.textField();
-		textFieldBluePrint.setTextInputVerifier(new ITextInputVerifier() {
-
-			@Override
-			public ValidationMessage isCompletableToValid(final String string) {
-				if (string != null && string.trim().length() > descriptor.getMaxLength()) {
-					return new ValidationMessage(ValidationMessageType.ERROR, "Only '"
-						+ descriptor.getMaxLength()
-						+ "' are allowed");
-				}
-				return inputVerifier.isCompletableToValid(string);
-			}
-		});
+		textFieldBluePrint.setInputVerifier(tfInputVerifier);
+		textFieldBluePrint.setAcceptingRegExps(tfRegExps);
+		textFieldBluePrint.setMask(converter.getMask());
+		textFieldBluePrint.setEditable(descriptor.isEditable());
+		textFieldBluePrint.setMaxLength(descriptor.getMaxLength());
 		textFieldBluePrint.setPasswordPresentation(descriptor.isPasswordPresentation());
 
 		final ITextControl textField = genericFactory.create(parentUiReference, textFieldBluePrint);

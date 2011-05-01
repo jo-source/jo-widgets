@@ -29,8 +29,8 @@
 package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.convert.IStringObjectConverter;
-import org.jowidgets.api.validation.ITextInputValidator;
 import org.jowidgets.api.validation.IValidateable;
+import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.descriptor.setup.IComboBoxSetup;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
@@ -39,22 +39,22 @@ public class ComboBoxImpl<VALUE_TYPE> extends ComboBoxSelectionImpl<VALUE_TYPE> 
 
 	private final IComboBoxSpi comboBoxWidgetSpi;
 	private final IStringObjectConverter<VALUE_TYPE> stringObjectConverter;
-	private final ITextInputValidator textInputValidator;
 
 	public ComboBoxImpl(final IComboBoxSpi comboBoxWidgetSpi, final IComboBoxSetup<VALUE_TYPE> setup) {
 		super(comboBoxWidgetSpi, setup);
 
 		this.comboBoxWidgetSpi = comboBoxWidgetSpi;
 		this.stringObjectConverter = setup.getStringObjectConverter();
-		this.textInputValidator = setup.getStringObjectConverter();
+		final IValidator<String> textInputValidator = setup.getStringObjectConverter().getStringValidator();
 
-		addValidatable(new IValidateable() {
-			@Override
-			public ValidationResult validate() {
-				return textInputValidator.validate(comboBoxWidgetSpi.getText());
-			}
-		});
-
+		if (textInputValidator != null) {
+			addValidatable(new IValidateable() {
+				@Override
+				public ValidationResult validate() {
+					return textInputValidator.validate(comboBoxWidgetSpi.getText());
+				}
+			});
+		}
 	}
 
 	@Override

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,34 +26,46 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.basic.factory.internal;
+package org.jowidgets.common.mask;
 
-import org.jowidgets.api.widgets.ITextControl;
-import org.jowidgets.api.widgets.descriptor.ITextFieldDescriptor;
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.common.widgets.factory.IWidgetFactory;
-import org.jowidgets.impl.spi.ISpiBluePrintFactory;
-import org.jowidgets.impl.spi.blueprint.ITextFieldBluePrintSpi;
-import org.jowidgets.impl.widgets.basic.TextFieldImpl;
-import org.jowidgets.spi.IWidgetsServiceProvider;
-import org.jowidgets.spi.widgets.ITextControlSpi;
+public interface ICharacterMask {
 
-public class TextFieldFactory extends AbstractWidgetFactory implements IWidgetFactory<ITextControl, ITextFieldDescriptor> {
+	/**
+	 * Determines if the user could do some input for this character mask.
+	 * 
+	 * If false will be returned, the {@link ICharacterMask#getPlaceholder()} method
+	 * must not return null.
+	 * 
+	 * @return True if the user could input some character, false otherwise
+	 */
+	boolean isReadonly();
 
-	public TextFieldFactory(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetsServiceProvider widgetsServiceProvider,
-		final ISpiBluePrintFactory bpF) {
+	/**
+	 * Gets a regular expression that describes the valid character's for this mask.
+	 * If the result is null, all character's are valid.
+	 * 
+	 * Remark: The accepting regExp will be applied before the rejecting regExp
+	 * 
+	 * @return A regular expression or null if all character's are valid
+	 */
+	String getAcceptingRegExp();
 
-		super(genericWidgetFactory, widgetsServiceProvider, bpF);
-	}
+	/**
+	 * Gets a regular expression that describes the invalid character's for this mask.
+	 * If the result is null, no character's are invalid.
+	 * 
+	 * Remark: The accepting regExp will be applied before the rejecting regExp
+	 * 
+	 * @return A regular expression or null if no character's are invalid
+	 */
+	String getRejectingRegExp();
 
-	@Override
-	public ITextControl create(final Object parentUiReference, final ITextFieldDescriptor descriptor) {
-		final ITextFieldBluePrintSpi bp = getSpiBluePrintFactory().textField().setSetup(descriptor);
-		final ITextControlSpi textFieldSpi = getSpiWidgetFactory().createTextField(parentUiReference, bp);
+	/**
+	 * Gets the placeholder character for this mask. The placeholder would be shown, if
+	 * no character input has already been occurred.
+	 * 
+	 * @return The placeholder or null if no placeholder is defined
+	 */
+	Character getPlaceholder();
 
-		final ITextControl result = new TextFieldImpl(textFieldSpi, descriptor);
-		return result;
-	}
 }

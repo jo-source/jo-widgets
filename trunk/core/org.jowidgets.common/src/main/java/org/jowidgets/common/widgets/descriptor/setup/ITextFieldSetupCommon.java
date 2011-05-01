@@ -29,7 +29,7 @@ package org.jowidgets.common.widgets.descriptor.setup;
 
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
-public interface ITextFieldSetupCommon extends IComponentSetupCommon {
+public interface ITextFieldSetupCommon extends ITextComponentSetupCommon {
 
 	@Mandatory
 	boolean isPasswordPresentation();

@@ -26,34 +26,36 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.basic.factory.internal;
+package org.jowidgets.spi.impl.verify;
 
-import org.jowidgets.api.widgets.ITextControl;
-import org.jowidgets.api.widgets.descriptor.ITextFieldDescriptor;
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.common.widgets.factory.IWidgetFactory;
-import org.jowidgets.impl.spi.ISpiBluePrintFactory;
-import org.jowidgets.impl.spi.blueprint.ITextFieldBluePrintSpi;
-import org.jowidgets.impl.widgets.basic.TextFieldImpl;
-import org.jowidgets.spi.IWidgetsServiceProvider;
-import org.jowidgets.spi.widgets.ITextControlSpi;
+import org.jowidgets.common.verify.IInputVerifier;
+import org.jowidgets.util.Assert;
 
-public class TextFieldFactory extends AbstractWidgetFactory implements IWidgetFactory<ITextControl, ITextFieldDescriptor> {
+public class RegExpInputVerifier implements IInputVerifier {
 
-	public TextFieldFactory(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetsServiceProvider widgetsServiceProvider,
-		final ISpiBluePrintFactory bpF) {
+	private final String regExp;
 
-		super(genericWidgetFactory, widgetsServiceProvider, bpF);
+	public RegExpInputVerifier(final String regExp) {
+		Assert.paramNotNull(regExp, "regExp");
+		this.regExp = regExp;
 	}
 
 	@Override
-	public ITextControl create(final Object parentUiReference, final ITextFieldDescriptor descriptor) {
-		final ITextFieldBluePrintSpi bp = getSpiBluePrintFactory().textField().setSetup(descriptor);
-		final ITextControlSpi textFieldSpi = getSpiWidgetFactory().createTextField(parentUiReference, bp);
+	public boolean verify(final String currentValue, final String input, final int start, final int end) {
+		final String first = currentValue.substring(0, start);
+		String second = "";
+		if (end < currentValue.length() && end >= 0) {
+			second = currentValue.substring(end, currentValue.length());
+		}
 
-		final ITextControl result = new TextFieldImpl(textFieldSpi, descriptor);
-		return result;
+		final String newValue = first + input + second;
+
+		if (newValue.matches(regExp)) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
+
 }

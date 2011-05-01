@@ -31,12 +31,10 @@ import java.util.List;
 
 import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.types.AutoSelectionPolicy;
+import org.jowidgets.common.widgets.descriptor.setup.IComboBoxSelectionSetupCommon;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
-public interface IComboBoxSelectionSetup<INPUT_TYPE> extends IInputComponentSetup<INPUT_TYPE> {
-
-	@Mandatory
-	boolean isAutoCompletion();
+public interface IComboBoxSelectionSetup<INPUT_TYPE> extends IInputComponentSetup<INPUT_TYPE>, IComboBoxSelectionSetupCommon {
 
 	@Mandatory
 	IObjectStringConverter<INPUT_TYPE> getObjectStringConverter();

@@ -31,8 +31,9 @@ package org.jowidgets.tools.converter;
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.convert.IStringObjectConverter;
-import org.jowidgets.api.validation.ValidationMessage;
-import org.jowidgets.api.validation.ValidationResult;
+import org.jowidgets.api.validation.IValidator;
+import org.jowidgets.common.mask.ITextMask;
+import org.jowidgets.common.verify.IInputVerifier;
 import org.jowidgets.util.Assert;
 
 public final class Converter<TYPE> implements IConverter<TYPE> {
@@ -56,16 +57,6 @@ public final class Converter<TYPE> implements IConverter<TYPE> {
 	}
 
 	@Override
-	public ValidationMessage isCompletableToValid(final String string) {
-		return stringObjectConverter.isCompletableToValid(string);
-	}
-
-	@Override
-	public ValidationResult validate(final String validationInput) {
-		return stringObjectConverter.validate(validationInput);
-	}
-
-	@Override
 	public String convertToString(final TYPE value) {
 		return objectStringConverter.convertToString(value);
 	}
@@ -73,6 +64,26 @@ public final class Converter<TYPE> implements IConverter<TYPE> {
 	@Override
 	public String getDescription(final TYPE value) {
 		return objectStringConverter.getDescription(value);
+	}
+
+	@Override
+	public IValidator<String> getStringValidator() {
+		return stringObjectConverter.getStringValidator();
+	}
+
+	@Override
+	public IInputVerifier getInputVerifier() {
+		return stringObjectConverter.getInputVerifier();
+	}
+
+	@Override
+	public String getAcceptingRegExp() {
+		return stringObjectConverter.getAcceptingRegExp();
+	}
+
+	@Override
+	public ITextMask getMask() {
+		return stringObjectConverter.getMask();
 	}
 
 }

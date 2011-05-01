@@ -25,14 +25,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.widgets.setup;
+package org.jowidgets.common.widgets.builder;
 
-import org.jowidgets.common.verify.IInputVerifier;
-import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
-
-public interface ITextInputComponentSetupSpi extends IComponentSetupSpi {
-
-	@Mandatory
-	IInputVerifier getInputVerifier();
+public interface IComboBoxSetupBuilderCommon<INSTANCE_TYPE extends IComboBoxSetupBuilderCommon<?>> extends
+		IComboBoxSelectionSetupBuilderCommon<INSTANCE_TYPE>,
+		ITextComponentSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

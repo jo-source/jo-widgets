@@ -28,16 +28,12 @@
 package org.jowidgets.api.widgets.descriptor.setup;
 
 import org.jowidgets.api.convert.IConverter;
+import org.jowidgets.common.widgets.descriptor.setup.ITextFieldSetupCommon;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
-public interface IInputFieldSetup<INPUT_TYPE> extends IInputComponentSetup<INPUT_TYPE> {
+public interface IInputFieldSetup<INPUT_TYPE> extends IInputComponentSetup<INPUT_TYPE>, ITextFieldSetupCommon {
 
 	@Mandatory
 	IConverter<INPUT_TYPE> getConverter();
-
-	@Mandatory
-	boolean isPasswordPresentation();
-
-	int getMaxLength();
 
 }

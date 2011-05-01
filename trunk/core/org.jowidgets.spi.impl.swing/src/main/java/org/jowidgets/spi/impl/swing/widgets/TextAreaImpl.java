@@ -31,7 +31,9 @@ import javax.swing.BorderFactory;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import org.jowidgets.common.verify.IInputVerifier;
 import org.jowidgets.spi.impl.swing.widgets.util.InputModifierDocument;
+import org.jowidgets.spi.impl.verify.InputVerifierHelper;
 import org.jowidgets.spi.widgets.ITextAreaSpi;
 import org.jowidgets.spi.widgets.setup.ITextAreaSetupSpi;
 
@@ -60,7 +62,8 @@ public class TextAreaImpl extends AbstractInputControl implements ITextAreaSpi {
 			getUiReference().setBorder(BorderFactory.createEmptyBorder());
 		}
 
-		textArea.setDocument(new InputModifierDocument(textArea, this));
+		final IInputVerifier inputVerifier = InputVerifierHelper.getInputVerifier(setup);
+		textArea.setDocument(new InputModifierDocument(textArea, inputVerifier, this, setup.getMaxLength()));
 	}
 
 	@Override

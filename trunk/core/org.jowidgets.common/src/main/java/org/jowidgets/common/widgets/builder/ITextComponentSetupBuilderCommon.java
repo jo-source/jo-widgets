@@ -25,19 +25,28 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.common.widgets.descriptor.setup;
+package org.jowidgets.common.widgets.builder;
 
-import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
+import java.util.List;
 
-public interface ITextAreaSetupCommon extends ITextComponentSetupCommon {
+import org.jowidgets.common.verify.IInputVerifier;
 
-	@Mandatory
-	boolean isLineWrap();
+public interface ITextComponentSetupBuilderCommon<INSTANCE_TYPE extends ITextComponentSetupBuilderCommon<?>> extends
+		IComponentSetupBuilderCommon<INSTANCE_TYPE> {
 
-	@Mandatory
-	boolean isAlwaysShowBars();
+	INSTANCE_TYPE setInputVerifier(IInputVerifier inputVerifier);
 
-	@Mandatory
-	boolean hasBorder();
+	/**
+	 * Sets the regular expressions that describes the valid inputs. All regular expressions will be logical
+	 * connected with the AND operator.
+	 * 
+	 * REMARK: Implementors should prefer to use regular expressions instead of {@link IInputVerifier}'s
+	 * if possible because SPI implementations that uses e.g 'AJAX' could implement client side verification easier.
+	 * 
+	 * REMARK: Implementors must not assume that the regular expression will be used on all platforms
+	 */
+	INSTANCE_TYPE setAcceptingRegExps(List<String> regExp);
+
+	INSTANCE_TYPE setMaxLength(Integer maxLength);
 
 }
