@@ -136,7 +136,13 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 
 	@Override
 	public void setSelected(final boolean selected) {
-		parentTree.getTree().addSelectionPath(new TreePath(node.getPath()));
+		final TreePath treePath = new TreePath(node.getPath());
+		if (selected) {
+			parentTree.getTree().addSelectionPath(treePath);
+		}
+		else {
+			parentTree.getTree().removeSelectionPath(treePath);
+		}
 	}
 
 	@Override
