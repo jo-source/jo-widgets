@@ -33,6 +33,9 @@ import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 import org.jowidgets.common.verify.IInputVerifier;
+import org.jowidgets.spi.impl.mask.TextMaskKeyListenerFactory;
+import org.jowidgets.spi.impl.mask.TextMaskVerifierFactory;
+import org.jowidgets.spi.impl.swt.threads.SwtUiThreadAccess;
 import org.jowidgets.spi.impl.verify.InputVerifierHelper;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 
@@ -41,18 +44,11 @@ public class TextFieldImpl extends AbstractTextInputControl {
 	public TextFieldImpl(final Object parentUiReference, final ITextFieldSetupSpi setup) {
 		super(createText(parentUiReference, setup.isPasswordPresentation()));
 
-		final IInputVerifier inputVerifier = InputVerifierHelper.getInputVerifier(setup);
+		final IInputVerifier maskVerifier = TextMaskVerifierFactory.create(this, setup.getMask(), new SwtUiThreadAccess());
+
+		final IInputVerifier inputVerifier = InputVerifierHelper.getInputVerifier(maskVerifier, setup);
 		if (inputVerifier != null) {
-			this.getUiReference().addVerifyListener(new VerifyListener() {
-				@Override
-				public void verifyText(final VerifyEvent verifyEvent) {
-					verifyEvent.doit = inputVerifier.verify(
-							getUiReference().getText(),
-							verifyEvent.text,
-							verifyEvent.start,
-							verifyEvent.end);
-				}
-			});
+			addInputVerifier(inputVerifier);
 		}
 
 		if (setup.getMaxLength() != null) {
@@ -60,6 +56,11 @@ public class TextFieldImpl extends AbstractTextInputControl {
 		}
 
 		registerTextControl(getUiReference());
+
+		if (setup.getMask() != null) {
+			setText(setup.getMask().getPlaceholder());
+			addKeyListener(TextMaskKeyListenerFactory.create(this, setup.getMask()));
+		}
 	}
 
 	@Override
@@ -105,6 +106,19 @@ public class TextFieldImpl extends AbstractTextInputControl {
 	@Override
 	public void setEditable(final boolean editable) {
 		getUiReference().setEditable(editable);
+	}
+
+	private void addInputVerifier(final IInputVerifier verifier) {
+		getUiReference().addVerifyListener(new VerifyListener() {
+			@Override
+			public void verifyText(final VerifyEvent verifyEvent) {
+				verifyEvent.doit = verifier.verify(
+						getUiReference().getText(),
+						verifyEvent.text,
+						verifyEvent.start,
+						verifyEvent.end);
+			}
+		});
 	}
 
 	private static Text createText(final Object parentUiReference, final boolean passwordPresentation) {

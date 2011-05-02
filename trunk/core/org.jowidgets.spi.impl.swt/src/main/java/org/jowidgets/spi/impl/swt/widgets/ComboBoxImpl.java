@@ -34,6 +34,9 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.common.verify.IInputVerifier;
+import org.jowidgets.spi.impl.mask.TextMaskKeyListenerFactory;
+import org.jowidgets.spi.impl.mask.TextMaskVerifierFactory;
+import org.jowidgets.spi.impl.swt.threads.SwtUiThreadAccess;
 import org.jowidgets.spi.impl.verify.InputVerifierHelper;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSetupSpi;
@@ -46,7 +49,9 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 	public ComboBoxImpl(final Object parentUiReference, final IComboBoxSetupSpi setup) {
 		super(new Combo((Composite) parentUiReference, SWT.NONE | SWT.DROP_DOWN), setup);
 
-		final IInputVerifier inputVerifier = InputVerifierHelper.getInputVerifier(setup);
+		final IInputVerifier maskVerifier = TextMaskVerifierFactory.create(this, setup.getMask(), new SwtUiThreadAccess());
+
+		final IInputVerifier inputVerifier = InputVerifierHelper.getInputVerifier(maskVerifier, setup);
 		if (inputVerifier != null) {
 			this.getUiReference().addVerifyListener(new VerifyListener() {
 				@Override
@@ -62,6 +67,11 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 
 		if (setup.getMaxLength() != null) {
 			getUiReference().setTextLimit(setup.getMaxLength().intValue());
+		}
+
+		if (setup.getMask() != null) {
+			setText(setup.getMask().getPlaceholder());
+			addKeyListener(TextMaskKeyListenerFactory.create(this, setup.getMask()));
 		}
 
 	}

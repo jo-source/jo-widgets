@@ -47,4 +47,12 @@ public interface ITextMask {
 	 */
 	ICharacterMask getCharacterMask(int index);
 
+	/**
+	 * Gets the placeholder of the whole text mask. This mask may be shown, when no
+	 * input has been done already.
+	 * 
+	 * @return The placeholder of the mask
+	 */
+	String getPlaceholder();
+
 }

@@ -31,6 +31,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import org.jowidgets.common.verify.IInputVerifier;
+import org.jowidgets.spi.impl.mask.TextMaskKeyListenerFactory;
+import org.jowidgets.spi.impl.mask.TextMaskVerifierFactory;
+import org.jowidgets.spi.impl.swing.threads.SwingUiThreadAccess;
 import org.jowidgets.spi.impl.swing.widgets.util.InputModifierDocument;
 import org.jowidgets.spi.impl.verify.InputVerifierHelper;
 import org.jowidgets.spi.widgets.ITextControlSpi;
@@ -41,8 +44,15 @@ public class TextFieldImpl extends AbstractInputControl implements ITextControlS
 	public TextFieldImpl(final ITextFieldSetupSpi setup) {
 		super(setup.isPasswordPresentation() ? new JPasswordField() : new JTextField());
 
-		final IInputVerifier inputVerifier = InputVerifierHelper.getInputVerifier(setup);
+		final IInputVerifier maskVerifier = TextMaskVerifierFactory.create(this, setup.getMask(), new SwingUiThreadAccess());
+
+		final IInputVerifier inputVerifier = InputVerifierHelper.getInputVerifier(maskVerifier, setup);
+
 		getUiReference().setDocument(new InputModifierDocument(getUiReference(), inputVerifier, this, setup.getMaxLength()));
+		if (setup.getMask() != null) {
+			setText(setup.getMask().getPlaceholder());
+			addKeyListener(TextMaskKeyListenerFactory.create(this, setup.getMask()));
+		}
 	}
 
 	@Override
