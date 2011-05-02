@@ -62,7 +62,7 @@ public class TextAreaImpl extends AbstractInputControl implements ITextAreaSpi {
 			getUiReference().setBorder(BorderFactory.createEmptyBorder());
 		}
 
-		final IInputVerifier inputVerifier = InputVerifierHelper.getInputVerifier(setup);
+		final IInputVerifier inputVerifier = InputVerifierHelper.getInputVerifier(null, setup);
 		textArea.setDocument(new InputModifierDocument(textArea, inputVerifier, this, setup.getMaxLength()));
 	}
 

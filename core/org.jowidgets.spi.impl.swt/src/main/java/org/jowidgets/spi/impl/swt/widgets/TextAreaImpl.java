@@ -69,7 +69,7 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 
 		textArea = new Text(getUiReference(), getTextStyle(setup));
 
-		final IInputVerifier inputVerifier = InputVerifierHelper.getInputVerifier(setup);
+		final IInputVerifier inputVerifier = InputVerifierHelper.getInputVerifier(null, setup);
 		if (inputVerifier != null) {
 			textArea.addVerifyListener(new VerifyListener() {
 				@Override

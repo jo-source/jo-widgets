@@ -26,44 +26,51 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.mask;
+package org.jowidgets.spi.impl.mask;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.jowidgets.common.mask.ICharacterMask;
 import org.jowidgets.common.mask.ITextMask;
-import org.jowidgets.util.Assert;
+import org.jowidgets.common.types.VirtualKey;
+import org.jowidgets.common.widgets.controler.IKeyEvent;
+import org.jowidgets.common.widgets.controler.IKeyListener;
+import org.jowidgets.spi.widgets.ITextControlSpi;
 
-final class TextMask implements ITextMask {
+public final class TextMaskKeyListenerFactory {
 
-	private final ArrayList<? extends ICharacterMask> characterMasks;
+	private TextMaskKeyListenerFactory() {}
 
-	TextMask(final List<? extends ICharacterMask> characterMasks) {
-		Assert.paramNotNull(characterMasks, "characterMasks");
-		this.characterMasks = new ArrayList<ICharacterMask>(characterMasks);
-	}
-
-	@Override
-	public int getLength() {
-		return characterMasks.size();
-	}
-
-	@Override
-	public ICharacterMask getCharacterMask(final int index) {
-		return characterMasks.get(index);
-	}
-
-	@Override
-	public String getPlaceholder() {
-		final StringBuilder result = new StringBuilder();
-		for (int i = 0; i < getLength(); i++) {
-			final ICharacterMask mask = getCharacterMask(i);
-			if (mask.getPlaceholder() != null) {
-				result.append(mask.getPlaceholder().charValue());
-			}
+	public static IKeyListener create(final ITextControlSpi textControl, final ITextMask textMask) {
+		if (textMask == null) {
+			return null;
 		}
-		return result.toString();
-	}
 
+		return new IKeyListener() {
+
+			@Override
+			public void keyReleased(final IKeyEvent event) {}
+
+			@Override
+			public void keyPressed(final IKeyEvent event) {
+				if (VirtualKey.ARROW_RIGHT == event.getVirtualKey()) {
+					int caretPos = textControl.getCaretPosition() + 1;
+					while (caretPos < textMask.getLength() && textMask.getCharacterMask(caretPos).isReadonly()) {
+						caretPos++;
+					}
+					if (caretPos - 1 != textControl.getCaretPosition()) {
+						textControl.setCaretPosition(caretPos - 1);
+					}
+				}
+				if (VirtualKey.ARROW_LEFT == event.getVirtualKey()) {
+					int caretPos = textControl.getCaretPosition() - 1;
+					while (caretPos > 0 && textMask.getCharacterMask(caretPos).isReadonly()) {
+						caretPos--;
+					}
+					if (caretPos + 1 != textControl.getCaretPosition()) {
+						textControl.setCaretPosition(caretPos + 1);
+					}
+				}
+			}
+
+		};
+
+	}
 }

@@ -141,7 +141,7 @@ public final class TextMaskBuilder implements ITextMaskBuilder {
 			mask.getAcceptingRegExp(),
 			mask.getRejectingRegExp(),
 			mask.getPlaceholder()));
-		return null;
+		return this;
 	}
 
 	@Override

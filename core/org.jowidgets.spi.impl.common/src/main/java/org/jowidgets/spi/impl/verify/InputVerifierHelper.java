@@ -32,14 +32,18 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.common.verify.IInputVerifier;
-import org.jowidgets.common.widgets.descriptor.setup.ITextComponentSetupCommon;
+import org.jowidgets.spi.widgets.setup.ITextComponentSetupSpi;
 
 public final class InputVerifierHelper {
 
 	private InputVerifierHelper() {}
 
-	public static IInputVerifier getInputVerifier(final ITextComponentSetupCommon setup) {
+	public static IInputVerifier getInputVerifier(final IInputVerifier inputVerifier, final ITextComponentSetupSpi setup) {
 		final List<IInputVerifier> inputVerifiers = new LinkedList<IInputVerifier>();
+
+		if (inputVerifier != null) {
+			inputVerifiers.add(inputVerifier);
+		}
 
 		if (setup.getInputVerifier() != null) {
 			inputVerifiers.add(setup.getInputVerifier());
