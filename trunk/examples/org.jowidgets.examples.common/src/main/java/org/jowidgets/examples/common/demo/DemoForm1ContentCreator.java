@@ -220,10 +220,15 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 
 			@Override
 			public Date convertToObject(final String string) {
-				try {
-					return DATE_FORMAT.parse(string);
+				if (string != null) {
+					try {
+						return DATE_FORMAT.parse(string);
+					}
+					catch (final ParseException e) {
+						return null;
+					}
 				}
-				catch (final ParseException e) {
+				else {
 					return null;
 				}
 			}
