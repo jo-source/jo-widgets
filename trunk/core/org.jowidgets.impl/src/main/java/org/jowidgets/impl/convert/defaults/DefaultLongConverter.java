@@ -52,7 +52,7 @@ public class DefaultLongConverter extends AbstractConverter<Long> implements ICo
 
 	@Override
 	public String getAcceptingRegExp() {
-		return "-?[0-9]*";
+		return "-?(([0-9]{0,19}))";
 	}
 
 }
