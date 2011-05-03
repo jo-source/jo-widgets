@@ -203,16 +203,28 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 		});
 
 		final ITextMaskBuilder textMaskBuilder = new TextMaskBuilder();
-		textMaskBuilder.addNumericMask('D');
-		textMaskBuilder.addNumericMask('D');
+		//		textMaskBuilder.addNumericMask('D');
+		//		textMaskBuilder.addNumericMask('D');
+		//		textMaskBuilder.addDelimiterMask('-');
+		//		textMaskBuilder.addNumericMask('M');
+		//		textMaskBuilder.addNumericMask('M');
+		//		textMaskBuilder.addDelimiterMask('-');
+		//		textMaskBuilder.addNumericMask('Y');
+		//		textMaskBuilder.addNumericMask('Y');
+		//		textMaskBuilder.addNumericMask('Y');
+		//		textMaskBuilder.addNumericMask('Y');
+
+		textMaskBuilder.addNumericMask();
+		textMaskBuilder.addNumericMask();
 		textMaskBuilder.addDelimiterMask('-');
-		textMaskBuilder.addNumericMask('M');
-		textMaskBuilder.addNumericMask('M');
+		textMaskBuilder.addNumericMask();
+		textMaskBuilder.addNumericMask();
 		textMaskBuilder.addDelimiterMask('-');
-		textMaskBuilder.addNumericMask('Y');
-		textMaskBuilder.addNumericMask('Y');
-		textMaskBuilder.addNumericMask('Y');
-		textMaskBuilder.addNumericMask('Y');
+		textMaskBuilder.addNumericMask();
+		textMaskBuilder.addNumericMask();
+		textMaskBuilder.addNumericMask();
+		textMaskBuilder.addNumericMask();
+		textMaskBuilder.defaultPlaceholder('_');
 
 		final ITextMask textMask = textMaskBuilder.build();
 
@@ -279,6 +291,10 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 		street = container.add(stringMandatoryFieldBp, inputWidgetConstraints);
 		streetValidationWidget = container.add(validationLabelBp, "wrap");
 		streetValidationWidget.registerInputWidget(street);
+
+		container.add(textLabelBp.setText("Test"), "right, sg lg");
+		container.add(bpF.inputFieldShortNumber(), inputWidgetConstraints);
+		container.add(validationLabelBp, "wrap");
 
 		container.add(textLabelBp.setText("Postal code*"), "right, sg lg");
 		postalCode = container.add(bpF.inputFieldIntegerNumber().setMaxLength(5).setMandatory(true), inputWidgetConstraints);

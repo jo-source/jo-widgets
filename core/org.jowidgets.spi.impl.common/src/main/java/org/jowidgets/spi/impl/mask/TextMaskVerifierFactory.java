@@ -56,27 +56,17 @@ public final class TextMaskVerifierFactory {
 					return true;
 				}
 				onVerify = true;
-				if (start == 0 && end == 0 && input != null && input.length() == textMask.getLength()) {
-					onVerify = false;
-					return true;
-				}
-				if (start == end && input != null && input.length() == 1 && start < textMask.getLength()) {
-					final ICharacterMask mask = textMask.getCharacterMask(start);
-					boolean accept = !mask.isReadonly() || Character.valueOf(input.charAt(0)).equals(mask.getPlaceholder());
-					if (mask.getAcceptingRegExp() != null) {
-						accept = accept && input.matches(mask.getAcceptingRegExp());
-					}
-					if (mask.getRejectingRegExp() != null) {
-						accept = accept && !input.matches(mask.getRejectingRegExp());
-					}
-					if (accept) {
+				if (start == end && input != null) {//insert a string
+					if (accept(start, input)) {
 						uiThreadAccess.invokeLater(new Runnable() {
 							@Override
 							public void run() {
 								String text = currentValue;
-								text = text.substring(0, start) + input + text.substring(start + 1, text.length());
+								text = text.substring(0, start)
+									+ input
+									+ text.substring(Math.min(text.length(), start + input.length()), text.length());
 								textControl.setText(text);
-								int caretPos = start + 1;
+								int caretPos = start + input.length();
 								while (caretPos < textMask.getLength() && textMask.getCharacterMask(caretPos).isReadonly()) {
 									caretPos++;
 								}
@@ -99,6 +89,54 @@ public final class TextMaskVerifierFactory {
 					onVerify = false;
 				}
 				return false;
+			}
+
+			private boolean accept(final int pos, final String string) {
+
+				if (string != null) {
+					if (pos + string.length() > textMask.getLength()) {
+						return false;
+					}
+					final char[] chars = string.toCharArray();
+					if (chars.length == 0) {
+						return true;
+					}
+
+					int unmatchedCount = 1;
+					int letterIndex = 0;
+					String currentLetter = String.valueOf(chars[letterIndex]);
+					for (int index = pos; index < textMask.getLength(); index++) {
+						final ICharacterMask mask = textMask.getCharacterMask(index);
+						boolean accept = !mask.isReadonly();
+						if (mask.getAcceptingRegExp() != null) {
+							accept = accept && currentLetter.matches(mask.getAcceptingRegExp());
+						}
+						if (mask.getRejectingRegExp() != null) {
+							accept = accept && !currentLetter.matches(mask.getRejectingRegExp());
+						}
+						accept = accept || Character.valueOf(currentLetter.charAt(0)).equals(mask.getPlaceholder());
+
+						if (!accept && !(mask.getPlaceholder() == null)) {
+							return false;
+						}
+						if (accept) {
+							unmatchedCount--;
+							//consume next letter
+							letterIndex++;
+							if (letterIndex < chars.length) {
+								currentLetter = String.valueOf(chars[letterIndex]);
+								unmatchedCount++;
+							}
+							else {
+								return unmatchedCount == 0;
+							}
+
+						}
+
+					}
+
+				}
+				return true;
 			}
 
 		};

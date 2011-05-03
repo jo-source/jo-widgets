@@ -52,7 +52,7 @@ public class DefaultShortConverter extends AbstractConverter<Short> implements I
 
 	@Override
 	public String getAcceptingRegExp() {
-		return "-?[0-9]";
+		return "-?(([0-9]{0,5}))";
 	}
 
 }
