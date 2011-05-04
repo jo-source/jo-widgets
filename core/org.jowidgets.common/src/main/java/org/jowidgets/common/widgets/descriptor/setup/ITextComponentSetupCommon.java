@@ -33,6 +33,7 @@ import org.jowidgets.common.verify.IInputVerifier;
 
 public interface ITextComponentSetupCommon extends IComponentSetupCommon {
 
+	// TODO MG check if necessary
 	IInputVerifier getInputVerifier();
 
 	List<String> getAcceptingRegExps();
