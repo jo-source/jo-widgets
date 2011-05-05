@@ -214,10 +214,10 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 		//		textMaskBuilder.addNumericMask('Y');
 		//		textMaskBuilder.addNumericMask('Y');
 
-		textMaskBuilder.addNumericMask();
+		textMaskBuilder.addAcceptingMask("[0-3]");
 		textMaskBuilder.addNumericMask();
 		textMaskBuilder.addDelimiterMask('-');
-		textMaskBuilder.addNumericMask();
+		textMaskBuilder.addCharacterMask("[0-9]", "[2-9]");
 		textMaskBuilder.addNumericMask();
 		textMaskBuilder.addDelimiterMask('-');
 		textMaskBuilder.addNumericMask();

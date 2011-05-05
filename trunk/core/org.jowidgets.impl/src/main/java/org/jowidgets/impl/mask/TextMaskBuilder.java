@@ -100,7 +100,7 @@ public final class TextMaskBuilder implements ITextMaskBuilder {
 
 	@Override
 	public ITextMaskBuilder addCharacterMask(final String acceptingRegExp, final String rejectingRegExp) {
-		characterMasks.add(new CharacterMask(false, acceptingRegExp, null, null));
+		characterMasks.add(new CharacterMask(false, acceptingRegExp, rejectingRegExp, null));
 		return this;
 	}
 
