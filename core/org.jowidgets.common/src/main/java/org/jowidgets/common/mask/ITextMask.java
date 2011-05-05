@@ -28,7 +28,7 @@
 
 package org.jowidgets.common.mask;
 
-public interface ITextMask {
+public interface ITextMask extends Iterable<ICharacterMask> {
 
 	/**
 	 * Gets the length of the mask.

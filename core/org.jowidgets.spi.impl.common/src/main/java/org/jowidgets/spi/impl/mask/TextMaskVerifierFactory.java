@@ -51,62 +51,140 @@ public final class TextMaskVerifierFactory {
 			private boolean onVerify = false;
 
 			@Override
-			public boolean verify(final String currentValue, final String input, final int start, final int end) {
+			public boolean verify(final String currentValue, String input, final int start, final int end) {
+
 				if (onVerify) {
 					return true;
 				}
 				onVerify = true;
-				if (start == end && input != null) {//insert a string
-					if (accept(start, input)) {
+
+				if (input == null) {
+					input = "";
+				}
+
+				final int inputLength = input.length();
+
+				final boolean delete = start != end && input.isEmpty();
+				final boolean replace = start != end && !input.isEmpty();
+				final boolean insert = !delete && !replace;
+
+				final String insertSuffix = currentValue.substring(Math.min(currentValue.length(), end), currentValue.length());
+
+				final String overrideSuffix = currentValue.substring(
+						Math.min(currentValue.length(), end + input.length()),
+						currentValue.length());
+
+				//first check if the prefix (text from pos 0 inclusive input) matches
+				final String prefix = currentValue.substring(0, start) + input;
+				final Integer matchPos = match(0, prefix, insert);
+				if (matchPos == null) {
+					onVerify = false;
+					return false;
+				}
+				//after prefix matches, check if insertion is possible
+				else if (insertSuffix.length() == 0
+					|| textMask.getLength() - (matchPos.intValue() + 1) >= insertSuffix.length()
+					&& match(matchPos.intValue() + 1, insertSuffix, insert) != null) {
+
+					final int maskPos = matchPos.intValue() + 1;
+
+					if (replace || delete) {
+						final int deletedCharacterCount = end - (start + input.length());
+						final StringBuilder replacementBuilder = new StringBuilder();
+						for (int i = 0; i < deletedCharacterCount; i++) {
+							if (maskPos + i < textMask.getLength()) {
+								final ICharacterMask mask = textMask.getCharacterMask(maskPos + i);
+								if (mask.getPlaceholder() != null) {
+									replacementBuilder.append(mask.getPlaceholder());
+								}
+							}
+							else {
+								break;
+							}
+						}
+						final String replacement = input + replacementBuilder.toString();
 						uiThreadAccess.invokeLater(new Runnable() {
 							@Override
 							public void run() {
-								String text = currentValue;
-								text = text.substring(0, start)
-									+ input
-									+ text.substring(Math.min(text.length(), start + input.length()), text.length());
-								textControl.setText(text);
-								int caretPos = start + input.length();
-								while (caretPos < textMask.getLength() && textMask.getCharacterMask(caretPos).isReadonly()) {
-									caretPos++;
-								}
-								int caretEnd = caretPos;
-								if (caretPos + 1 < textMask.getLength()) {
-									caretEnd++;
+								textControl.setText(currentValue.substring(0, start) + replacement + insertSuffix);
+								int caretPos = start + inputLength;
+								if (replace) {
+									while (caretPos < textMask.getLength() && textMask.getCharacterMask(caretPos).isReadonly()) {
+										caretPos++;
+									}
 								}
 								textControl.setSelection(caretPos, caretPos);
 								onVerify = false;
 							}
 						});
+						return false;
+					}
+					else if (maskPos < textMask.getLength() && textMask.getCharacterMask(maskPos).isReadonly()) {
+						//determine delimiters to add
+						int pos = maskPos;
+						final StringBuilder delimiterBuilder = new StringBuilder();
+						while (pos < textMask.getLength() && textMask.getCharacterMask(pos).isReadonly()) {
+							delimiterBuilder.append(textMask.getCharacterMask(pos).getPlaceholder());
+							pos++;
+						}
+						final String delimiter = delimiterBuilder.toString();
+
+						final String suffix = currentValue.substring(
+								Math.min(currentValue.length(), end + delimiter.length()),
+								currentValue.length());
+
+						final String insertString = currentValue.substring(0, start) + input + delimiter + suffix;
+
+						uiThreadAccess.invokeLater(new Runnable() {
+							@Override
+							public void run() {
+								textControl.setText(insertString);
+								final int caretPos = start + inputLength + delimiter.length();
+								textControl.setSelection(caretPos, caretPos);
+								onVerify = false;
+							}
+						});
+						return false;
 					}
 					else {
 						onVerify = false;
-					}
-				}
-				//TODO MG more mask formatter
-				//else if replace
-				else {
-					onVerify = false;
-				}
-				return false;
-			}
-
-			private boolean accept(final int pos, final String string) {
-
-				if (string != null) {
-					if (pos + string.length() > textMask.getLength()) {
-						return false;
-					}
-					final char[] chars = string.toCharArray();
-					if (chars.length == 0) {
 						return true;
 					}
+				}
+				//if no insertion is possible, check if input with override mode is possible
+				else if (insert && match(matchPos.intValue() + 1, overrideSuffix, insert) != null) {
+					final String overrideString = currentValue.substring(0, start) + input + overrideSuffix;
+					uiThreadAccess.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							textControl.setText(overrideString);
+							int caretPos = start + inputLength;
+							while (caretPos < textMask.getLength() && textMask.getCharacterMask(caretPos).isReadonly()) {
+								caretPos++;
+							}
+							textControl.setSelection(caretPos, caretPos);
+							onVerify = false;
+						}
+					});
+					return false;
+				}
+				//if neither insert nor override is possible, reject the input
+				else {
+					onVerify = false;
+					return false;
+				}
 
-					int unmatchedCount = 1;
+			}
+
+			private Integer match(final int startPos, final String string, final boolean insert) {
+				boolean match = false;
+				int lastMatch = startPos - 1;
+				if (string.length() > 0) {
+					final char[] stringArray = string.toCharArray();
 					int letterIndex = 0;
-					String currentLetter = String.valueOf(chars[letterIndex]);
-					for (int index = pos; index < textMask.getLength(); index++) {
-						final ICharacterMask mask = textMask.getCharacterMask(index);
+					String currentLetter = String.valueOf(stringArray[letterIndex]);
+					for (int maskIndex = startPos; maskIndex < textMask.getLength(); maskIndex++) {
+						final ICharacterMask mask = textMask.getCharacterMask(maskIndex);
 						boolean accept = !mask.isReadonly();
 						if (mask.getAcceptingRegExp() != null) {
 							accept = accept && currentLetter.matches(mask.getAcceptingRegExp());
@@ -115,28 +193,32 @@ public final class TextMaskVerifierFactory {
 							accept = accept && !currentLetter.matches(mask.getRejectingRegExp());
 						}
 						accept = accept || Character.valueOf(currentLetter.charAt(0)).equals(mask.getPlaceholder());
-
-						if (!accept && !(mask.getPlaceholder() == null)) {
-							return false;
-						}
 						if (accept) {
-							unmatchedCount--;
-							//consume next letter
+							lastMatch = maskIndex;
 							letterIndex++;
-							if (letterIndex < chars.length) {
-								currentLetter = String.valueOf(chars[letterIndex]);
-								unmatchedCount++;
+							if (letterIndex < stringArray.length) {
+								currentLetter = String.valueOf(stringArray[letterIndex]);
 							}
 							else {
-								return unmatchedCount == 0;
+								break;
 							}
-
 						}
-
+						else if (insert && mask.isReadonly()) {
+							return null;
+						}
 					}
-
+					if (letterIndex == stringArray.length) {
+						match = true;
+						return Integer.valueOf(lastMatch);
+					}
 				}
-				return true;
+
+				if (string.length() != 0 && !match) {
+					return null;
+				}
+				else {
+					return Integer.valueOf(lastMatch);
+				}
 			}
 
 		};

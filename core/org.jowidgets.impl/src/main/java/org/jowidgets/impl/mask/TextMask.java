@@ -29,6 +29,7 @@
 package org.jowidgets.impl.mask;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.jowidgets.common.mask.ICharacterMask;
@@ -37,7 +38,7 @@ import org.jowidgets.util.Assert;
 
 final class TextMask implements ITextMask {
 
-	private final ArrayList<? extends ICharacterMask> characterMasks;
+	private final ArrayList<ICharacterMask> characterMasks;
 
 	TextMask(final List<? extends ICharacterMask> characterMasks) {
 		Assert.paramNotNull(characterMasks, "characterMasks");
@@ -64,6 +65,11 @@ final class TextMask implements ITextMask {
 			}
 		}
 		return result.toString();
+	}
+
+	@Override
+	public Iterator<ICharacterMask> iterator() {
+		return characterMasks.iterator();
 	}
 
 }
