@@ -115,6 +115,15 @@ public final class DemoLayoutComposite {
 				frame.setVisible(true);
 			}
 		});
+
+		final IButton migLayoutButton2 = parentContainer.add(bpf.button("MigLayout 2"), "grow, sg bg, wrap");
+		migLayoutButton2.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final IFrame frame = new DemoMigLayoutFrame2();
+				frame.setVisible(true);
+			}
+		});
 	}
 
 	public void foo() {}

@@ -9,10 +9,12 @@ import java.io.ObjectOutput;
 import java.io.ObjectStreamException;
 import java.util.ArrayList;
 
+import org.jowidgets.api.layout.miglayout.ICC;
+
 /**
  * A simple value holder for one component's constraint.
  */
-public final class CC implements Externalizable {
+public final class CC implements ICC, Externalizable {
 	private static final BoundSize DEF_GAP = BoundSize.NULL_SIZE; // Only used to denote default wrap/newline gap.
 
 	static final String[] DOCK_SIDES = {"north", "west", "south", "east"};

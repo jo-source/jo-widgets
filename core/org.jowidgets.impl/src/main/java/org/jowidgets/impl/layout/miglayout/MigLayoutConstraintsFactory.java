@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann, nimoll
+ * Copyright (c) 2011, nimoll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,27 +26,46 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.layout.miglayout;
+package org.jowidgets.impl.layout.miglayout;
 
-import org.jowidgets.api.layout.ILayoutFactory;
-import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.api.layout.miglayout.IAC;
+import org.jowidgets.api.layout.miglayout.ICC;
+import org.jowidgets.api.layout.miglayout.ILC;
+import org.jowidgets.api.layout.miglayout.IMigLayoutConstraintsFactory;
+import org.jowidgets.impl.layout.miglayout.common.AC;
+import org.jowidgets.impl.layout.miglayout.common.CC;
+import org.jowidgets.impl.layout.miglayout.common.LC;
 
-public interface IMigLayoutFactoryBuilder {
+public class MigLayoutConstraintsFactory implements IMigLayoutConstraintsFactory {
 
-	IMigLayoutFactoryBuilder descriptor(MigLayoutDescriptor descriptor);
+	@Override
+	public IAC columnConstraints() {
+		return AC();
+	}
 
-	IMigLayoutFactoryBuilder rowConstraints(String constraints);
+	@Override
+	public IAC rowConstraints() {
+		return AC();
+	}
 
-	IMigLayoutFactoryBuilder columnConstraints(String constraints);
+	@Override
+	public ILC layoutConstraints() {
+		return LC();
+	}
 
-	IMigLayoutFactoryBuilder constraints(String constraints);
+	@Override
+	public ICC CC() {
+		return new CC();
+	}
 
-	IMigLayoutFactoryBuilder rowConstraints(IAC constraints);
+	@Override
+	public IAC AC() {
+		return new AC();
+	}
 
-	IMigLayoutFactoryBuilder columnConstraints(IAC constraints);
-
-	IMigLayoutFactoryBuilder constraints(ILC constraints);
-
-	ILayoutFactory<IMigLayout> build();
+	@Override
+	public ILC LC() {
+		return new LC();
+	}
 
 }

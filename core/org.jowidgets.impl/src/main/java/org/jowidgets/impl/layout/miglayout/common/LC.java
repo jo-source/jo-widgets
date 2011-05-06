@@ -8,10 +8,12 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.ObjectStreamException;
 
+import org.jowidgets.api.layout.miglayout.ILC;
+
 /**
  * Contains the constraints for an instance of the {@link LC} layout manager.
  */
-public final class LC implements Externalizable {
+public final class LC implements ILC, Externalizable {
 	// See the corresponding set/get method for documentation of the property!
 
 	private int wrapAfter = LayoutUtil.INF;

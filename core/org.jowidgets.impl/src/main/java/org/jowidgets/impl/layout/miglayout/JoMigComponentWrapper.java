@@ -30,12 +30,17 @@ package org.jowidgets.impl.layout.miglayout;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
+import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.impl.layout.miglayout.common.ComponentWrapper;
 import org.jowidgets.impl.layout.miglayout.common.ContainerWrapper;
 
 class JoMigComponentWrapper implements ComponentWrapper {
+
+	// TODO NM change screen size when Jo Widgets supports screen information
+	private static Dimension screenSize;
 
 	private static boolean isUseVisualPadding;
 
@@ -169,16 +174,48 @@ class JoMigComponentWrapper implements ComponentWrapper {
 		return 72;
 	}
 
+	private IWindow getTopLevelWindow() {
+		IWidget item = component;
+		while (item.getParent() != null) {
+			item = item.getParent();
+		}
+
+		if (item instanceof IWindow) {
+			return (IWindow) item;
+		}
+		else {
+			return null;
+		}
+	}
+
 	@Override
 	public final int getScreenWidth() {
 		// TODO NM improve
-		return 1920;
+		if (screenSize == null) {
+			final IWindow topLevelWindow = getTopLevelWindow();
+			if (topLevelWindow == null) {
+				return -1;
+			}
+
+			screenSize = topLevelWindow.getParentBounds().getSize();
+		}
+
+		return screenSize.getWidth();
 	}
 
 	@Override
 	public final int getScreenHeight() {
 		// TODO NM improve
-		return 1080;
+		if (screenSize == null) {
+			final IWindow topLevelWindow = getTopLevelWindow();
+			if (topLevelWindow == null) {
+				return -1;
+			}
+
+			screenSize = topLevelWindow.getParentBounds().getSize();
+		}
+
+		return screenSize.getHeight();
 	}
 
 	@Override
@@ -249,58 +286,10 @@ class JoMigComponentWrapper implements ComponentWrapper {
 	@Override
 	public int getComponetType(final boolean disregardScrollPane) {
 		if (compType == TYPE_UNSET) {
-			compType = checkType();
+			compType = ComponentTypeUtil.getType(component);
 		}
 
 		return compType;
-	}
-
-	private int checkType() {
-		//		if (component instanceof IContainer) {
-		//			return TYPE_CONTAINER;
-		//		}
-		//		else if (component instanceof IButton) {
-		//			return TYPE_BUTTON;
-		//		}
-		//		else if (component instanceof ITextLabel) {
-		//			return TYPE_LABEL;
-		//		}
-
-		// TODO NM implement
-		//		if (c instanceof Text || c instanceof StyledText) {
-		//			return (s & SWT.MULTI) > 0 ? TYPE_TEXT_AREA : TYPE_TEXT_FIELD;
-		//		}
-		//		else if (c instanceof Label) {
-		//			return (s & SWT.SEPARATOR) > 0 ? TYPE_SEPARATOR : TYPE_LABEL;
-		//		}
-		//		else if (c instanceof Button) {
-		//			if ((s & SWT.CHECK) > 0 || (s & SWT.RADIO) > 0)
-		//				return TYPE_CHECK_BOX;
-		//			return TYPE_BUTTON;
-		//		}
-		//		else if (c instanceof Canvas) {
-		//			return TYPE_PANEL;
-		//		}
-		//		else if (c instanceof List) {
-		//			return TYPE_LIST;
-		//		}
-		//		else if (c instanceof Table) {
-		//			return TYPE_TABLE;
-		//		}
-		//		else if (c instanceof Spinner) {
-		//			return TYPE_SPINNER;
-		//		}
-		//		else if (c instanceof ProgressBar) {
-		//			return TYPE_PROGRESS_BAR;
-		//		}
-		//		else if (c instanceof Slider) {
-		//			return TYPE_SLIDER;
-		//		}
-		//		else if (c instanceof Composite) { // only AWT components is not containers.
-		//			return TYPE_CONTAINER;
-		//		}
-
-		return TYPE_UNKNOWN;
 	}
 
 	@Override
