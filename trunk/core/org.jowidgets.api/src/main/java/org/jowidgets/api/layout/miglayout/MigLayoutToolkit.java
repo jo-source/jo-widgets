@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann, nimoll
+ * Copyright (c) 2011, nimoll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,25 +28,40 @@
 
 package org.jowidgets.api.layout.miglayout;
 
-import org.jowidgets.api.layout.ILayoutFactory;
-import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import java.util.Iterator;
+import java.util.ServiceLoader;
 
-public interface IMigLayoutFactoryBuilder {
+public final class MigLayoutToolkit {
 
-	IMigLayoutFactoryBuilder descriptor(MigLayoutDescriptor descriptor);
+	private static IMigLayoutToolkit toolkit;
 
-	IMigLayoutFactoryBuilder rowConstraints(String constraints);
+	private MigLayoutToolkit() {
 
-	IMigLayoutFactoryBuilder columnConstraints(String constraints);
+	}
 
-	IMigLayoutFactoryBuilder constraints(String constraints);
+	public static synchronized IMigLayoutToolkit getInstance() {
+		if (toolkit == null) {
+			final ServiceLoader<IMigLayoutToolkit> toolkitProviderLoader = ServiceLoader.load(IMigLayoutToolkit.class);
+			final Iterator<IMigLayoutToolkit> iterator = toolkitProviderLoader.iterator();
 
-	IMigLayoutFactoryBuilder rowConstraints(IAC constraints);
+			if (!iterator.hasNext()) {
+				throw new IllegalStateException("No implementation found for '" + IMigLayoutToolkit.class.getName() + "'");
+			}
 
-	IMigLayoutFactoryBuilder columnConstraints(IAC constraints);
+			MigLayoutToolkit.toolkit = iterator.next();
 
-	IMigLayoutFactoryBuilder constraints(ILC constraints);
+			if (iterator.hasNext()) {
+				throw new IllegalStateException("More than one implementation found for '"
+					+ IMigLayoutToolkit.class.getName()
+					+ "'");
+			}
 
-	ILayoutFactory<IMigLayout> build();
+		}
+		return toolkit;
+	}
+
+	public static IMigLayoutConstraintsFactory getConstraintsFactory() {
+		return getInstance().getConstraintsFactory();
+	}
 
 }

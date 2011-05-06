@@ -29,6 +29,8 @@
 package org.jowidgets.impl.layout.miglayout;
 
 import org.jowidgets.api.layout.ILayoutFactory;
+import org.jowidgets.api.layout.miglayout.IAC;
+import org.jowidgets.api.layout.miglayout.ILC;
 import org.jowidgets.api.layout.miglayout.IMigLayout;
 import org.jowidgets.api.layout.miglayout.IMigLayoutFactoryBuilder;
 import org.jowidgets.api.widgets.IContainer;
@@ -78,21 +80,21 @@ public final class MigLayoutFactoryBuilder implements IMigLayoutFactoryBuilder {
 	}
 
 	@Override
-	public IMigLayoutFactoryBuilder rowConstraints(final Object constraints) {
+	public IMigLayoutFactoryBuilder rowConstraints(final IAC constraints) {
 		Assert.paramNotNull(constraints, "constraints");
 		this.rowConstraints = constraints;
 		return this;
 	}
 
 	@Override
-	public IMigLayoutFactoryBuilder columnConstraints(final Object constraints) {
+	public IMigLayoutFactoryBuilder columnConstraints(final IAC constraints) {
 		Assert.paramNotNull(constraints, "constraints");
 		this.columnConstraints = constraints;
 		return this;
 	}
 
 	@Override
-	public IMigLayoutFactoryBuilder constraints(final Object constraints) {
+	public IMigLayoutFactoryBuilder constraints(final ILC constraints) {
 		Assert.paramNotNull(constraints, "constraints");
 		this.constraints = constraints;
 		return this;

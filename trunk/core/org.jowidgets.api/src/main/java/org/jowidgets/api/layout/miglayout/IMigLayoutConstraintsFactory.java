@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann, nimoll
+ * Copyright (c) 2011, nimoll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,25 +28,17 @@
 
 package org.jowidgets.api.layout.miglayout;
 
-import org.jowidgets.api.layout.ILayoutFactory;
-import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+public interface IMigLayoutConstraintsFactory {
 
-public interface IMigLayoutFactoryBuilder {
+	IAC columnConstraints();
 
-	IMigLayoutFactoryBuilder descriptor(MigLayoutDescriptor descriptor);
+	IAC rowConstraints();
 
-	IMigLayoutFactoryBuilder rowConstraints(String constraints);
+	ILC layoutConstraints();
 
-	IMigLayoutFactoryBuilder columnConstraints(String constraints);
+	ICC CC();
 
-	IMigLayoutFactoryBuilder constraints(String constraints);
+	IAC AC();
 
-	IMigLayoutFactoryBuilder rowConstraints(IAC constraints);
-
-	IMigLayoutFactoryBuilder columnConstraints(IAC constraints);
-
-	IMigLayoutFactoryBuilder constraints(ILC constraints);
-
-	ILayoutFactory<IMigLayout> build();
-
+	ILC LC();
 }

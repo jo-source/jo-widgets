@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann, nimoll
+ * Copyright (c) 2011, nimoll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,27 +26,22 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.layout.miglayout;
+package org.jowidgets.impl.layout.miglayout;
 
-import org.jowidgets.api.layout.ILayoutFactory;
-import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.api.layout.miglayout.IMigLayoutConstraintsFactory;
+import org.jowidgets.api.layout.miglayout.IMigLayoutToolkit;
 
-public interface IMigLayoutFactoryBuilder {
+public final class MigLayoutToolkit implements IMigLayoutToolkit {
 
-	IMigLayoutFactoryBuilder descriptor(MigLayoutDescriptor descriptor);
+	private final MigLayoutConstraintsFactory constraintsFactory;
 
-	IMigLayoutFactoryBuilder rowConstraints(String constraints);
+	public MigLayoutToolkit() {
+		this.constraintsFactory = new MigLayoutConstraintsFactory();
+	}
 
-	IMigLayoutFactoryBuilder columnConstraints(String constraints);
-
-	IMigLayoutFactoryBuilder constraints(String constraints);
-
-	IMigLayoutFactoryBuilder rowConstraints(IAC constraints);
-
-	IMigLayoutFactoryBuilder columnConstraints(IAC constraints);
-
-	IMigLayoutFactoryBuilder constraints(ILC constraints);
-
-	ILayoutFactory<IMigLayout> build();
+	@Override
+	public IMigLayoutConstraintsFactory getConstraintsFactory() {
+		return constraintsFactory;
+	}
 
 }
