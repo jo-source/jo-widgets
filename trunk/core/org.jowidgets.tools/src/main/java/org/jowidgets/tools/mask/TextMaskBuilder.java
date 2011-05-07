@@ -32,6 +32,7 @@ import org.jowidgets.api.mask.ITextMaskBuilder;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.mask.ICharacterMask;
 import org.jowidgets.common.mask.ITextMask;
+import org.jowidgets.common.mask.TextMaskMode;
 
 public final class TextMaskBuilder implements ITextMaskBuilder {
 
@@ -48,26 +49,26 @@ public final class TextMaskBuilder implements ITextMaskBuilder {
 	}
 
 	@Override
-	public ITextMaskBuilder addDelimiterMask(final char placeholder) {
-		builder.addDelimiterMask(placeholder);
+	public ITextMaskBuilder setMode(final TextMaskMode mode) {
+		builder.setMode(mode);
 		return this;
 	}
 
 	@Override
-	public ITextMaskBuilder addAcceptingAllMask(final char placeholder) {
-		builder.addAcceptingAllMask(placeholder);
+	public ITextMaskBuilder addDelimiter(final char placeholder) {
+		builder.addDelimiter(placeholder);
 		return this;
 	}
 
 	@Override
-	public ITextMaskBuilder addAcceptingMask(final String acceptingRegExp, final char placeholder) {
-		builder.addAcceptingMask(acceptingRegExp, placeholder);
+	public ITextMaskBuilder addCharacterMask(final char placeholder) {
+		builder.addCharacterMask(placeholder);
 		return this;
 	}
 
 	@Override
-	public ITextMaskBuilder addRejectingMask(final String rejectingRegExp, final char placeholder) {
-		builder.addRejectingMask(rejectingRegExp, placeholder);
+	public ITextMaskBuilder addCharacterMask(final String acceptingRegExp, final char placeholder) {
+		builder.addCharacterMask(acceptingRegExp, placeholder);
 		return this;
 	}
 
@@ -78,20 +79,14 @@ public final class TextMaskBuilder implements ITextMaskBuilder {
 	}
 
 	@Override
-	public ITextMaskBuilder addAcceptingAllMask() {
-		builder.addAcceptingAllMask();
+	public ITextMaskBuilder addCharacterMask() {
+		builder.addCharacterMask();
 		return this;
 	}
 
 	@Override
-	public ITextMaskBuilder addAcceptingMask(final String acceptingRegExp) {
-		builder.addAcceptingMask(acceptingRegExp);
-		return this;
-	}
-
-	@Override
-	public ITextMaskBuilder addRejectingMask(final String rejectingRegExp) {
-		builder.addRejectingMask(rejectingRegExp);
+	public ITextMaskBuilder addCharacterMask(final String acceptingRegExp) {
+		builder.addCharacterMask(acceptingRegExp);
 		return this;
 	}
 

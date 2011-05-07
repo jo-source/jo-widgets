@@ -54,6 +54,7 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.mask.ITextMask;
+import org.jowidgets.common.mask.TextMaskMode;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.controler.IKeyEvent;
 import org.jowidgets.common.widgets.controler.IMouseButtonEvent;
@@ -203,28 +204,29 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 		});
 
 		final ITextMaskBuilder textMaskBuilder = new TextMaskBuilder();
-		//		textMaskBuilder.addAcceptingMask("[0-3]", 'D');
+
+		//		textMaskBuilder.addCharacterMask("[0-3]");
 		//		textMaskBuilder.addNumericMask('D');
-		//		textMaskBuilder.addDelimiterMask('-');
-		//		textMaskBuilder.addAcceptingMask("[0-1]", 'M');
+		//		textMaskBuilder.addDelimiter('-');
+		//		textMaskBuilder.addCharacterMask("[0-1]");
 		//		textMaskBuilder.addNumericMask('M');
-		//		textMaskBuilder.addDelimiterMask('-');
+		//		textMaskBuilder.addDelimiter('-');
 		//		textMaskBuilder.addNumericMask('Y');
 		//		textMaskBuilder.addNumericMask('Y');
 		//		textMaskBuilder.addNumericMask('Y');
 		//		textMaskBuilder.addNumericMask('Y');
 
-		textMaskBuilder.addAcceptingMask("[0-3]");
-		textMaskBuilder.addNumericMask();
-		textMaskBuilder.addDelimiterMask('-');
-		textMaskBuilder.addAcceptingMask("[0-1]");
-		textMaskBuilder.addNumericMask();
-		textMaskBuilder.addDelimiterMask('-');
-		textMaskBuilder.addNumericMask();
-		textMaskBuilder.addNumericMask();
-		textMaskBuilder.addNumericMask();
-		textMaskBuilder.addNumericMask();
-		textMaskBuilder.defaultPlaceholder('_');
+		textMaskBuilder.addCharacterMask("[0-3]");
+		textMaskBuilder.addNumericMask('_');
+		textMaskBuilder.addDelimiter('-');
+		textMaskBuilder.addCharacterMask("[0-1]");
+		textMaskBuilder.addNumericMask('_');
+		textMaskBuilder.addDelimiter('-');
+		textMaskBuilder.addNumericMask('_');
+		textMaskBuilder.addNumericMask('_');
+		textMaskBuilder.addNumericMask('_');
+		textMaskBuilder.addNumericMask('_');
+		textMaskBuilder.setMode(TextMaskMode.PARTITIAL_MASK);
 
 		final ITextMask textMask = textMaskBuilder.build();
 

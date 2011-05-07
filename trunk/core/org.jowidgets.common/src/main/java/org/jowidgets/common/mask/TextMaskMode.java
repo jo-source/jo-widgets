@@ -26,46 +26,18 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.mask;
+package org.jowidgets.common.mask;
 
-import org.jowidgets.common.mask.ICharacterMask;
-import org.jowidgets.common.mask.ITextMask;
-import org.jowidgets.common.mask.TextMaskMode;
+public enum TextMaskMode {
 
-public interface ITextMaskBuilder {
+	/**
+	 * All placeholders will be shown, even if the input is incomplete
+	 */
+	FULL_MASK,
 
-	ITextMaskBuilder setMode(TextMaskMode mode);
-
-	ITextMaskBuilder defaultPlaceholder(char placeholder);
-
-	ITextMaskBuilder addDelimiter(char placeholder);
-
-	ITextMaskBuilder addCharacterMask();
-
-	ITextMaskBuilder addCharacterMask(char placeholder);
-
-	ITextMaskBuilder addCharacterMask(String acceptingRegExp);
-
-	ITextMaskBuilder addCharacterMask(String acceptingRegExp, char placeholder);
-
-	ITextMaskBuilder addCharacterMask(String acceptingRegExp, String rejectingRegExp);
-
-	ITextMaskBuilder addCharacterMask(String acceptingRegExp, String rejectingRegExp, char placeholder);
-
-	ITextMaskBuilder addNumericMask();
-
-	ITextMaskBuilder addNumericMask(char placeholder);
-
-	ITextMaskBuilder addAlphabeticMask();
-
-	ITextMaskBuilder addAlphabeticMask(char placeholder);
-
-	ITextMaskBuilder addAlphaNumericMask();
-
-	ITextMaskBuilder addAlphaNumericMask(char placeholder);
-
-	ITextMaskBuilder addCharacterMask(ICharacterMask mask);
-
-	ITextMask build();
+	/**
+	 * Only the placeholders from the start index to the last input index will be shown
+	 */
+	PARTITIAL_MASK;
 
 }

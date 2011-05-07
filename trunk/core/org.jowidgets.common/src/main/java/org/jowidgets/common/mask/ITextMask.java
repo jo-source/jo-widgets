@@ -55,4 +55,9 @@ public interface ITextMask extends Iterable<ICharacterMask> {
 	 */
 	String getPlaceholder();
 
+	/**
+	 * @return The text mask mode
+	 */
+	TextMaskMode getMode();
+
 }
