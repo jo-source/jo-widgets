@@ -33,6 +33,7 @@ import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.jowidgets.common.mask.TextMaskMode;
 import org.jowidgets.common.verify.IInputVerifier;
 import org.jowidgets.spi.impl.mask.TextMaskKeyListenerFactory;
 import org.jowidgets.spi.impl.mask.TextMaskVerifierFactory;
@@ -70,7 +71,9 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 		}
 
 		if (setup.getMask() != null) {
-			setText(setup.getMask().getPlaceholder());
+			if (TextMaskMode.FULL_MASK == setup.getMask().getMode()) {
+				setText(setup.getMask().getPlaceholder());
+			}
 			addKeyListener(TextMaskKeyListenerFactory.create(this, setup.getMask()));
 		}
 

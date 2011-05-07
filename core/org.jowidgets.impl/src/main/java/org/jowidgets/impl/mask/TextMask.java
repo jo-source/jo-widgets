@@ -34,15 +34,19 @@ import java.util.List;
 
 import org.jowidgets.common.mask.ICharacterMask;
 import org.jowidgets.common.mask.ITextMask;
+import org.jowidgets.common.mask.TextMaskMode;
 import org.jowidgets.util.Assert;
 
 final class TextMask implements ITextMask {
 
 	private final ArrayList<ICharacterMask> characterMasks;
+	private final TextMaskMode mode;
 
-	TextMask(final List<? extends ICharacterMask> characterMasks) {
+	TextMask(final List<? extends ICharacterMask> characterMasks, final TextMaskMode mode) {
 		Assert.paramNotNull(characterMasks, "characterMasks");
+		Assert.paramNotNull(mode, "mode");
 		this.characterMasks = new ArrayList<ICharacterMask>(characterMasks);
+		this.mode = mode;
 	}
 
 	@Override
@@ -53,6 +57,11 @@ final class TextMask implements ITextMask {
 	@Override
 	public ICharacterMask getCharacterMask(final int index) {
 		return characterMasks.get(index);
+	}
+
+	@Override
+	public TextMaskMode getMode() {
+		return mode;
 	}
 
 	@Override

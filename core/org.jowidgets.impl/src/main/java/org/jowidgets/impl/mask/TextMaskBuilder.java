@@ -34,14 +34,18 @@ import java.util.List;
 import org.jowidgets.api.mask.ITextMaskBuilder;
 import org.jowidgets.common.mask.ICharacterMask;
 import org.jowidgets.common.mask.ITextMask;
+import org.jowidgets.common.mask.TextMaskMode;
+import org.jowidgets.util.Assert;
 
 public final class TextMaskBuilder implements ITextMaskBuilder {
 
 	private final List<CharacterMask> characterMasks;
 	private Character defaultPlaceholder;
+	private TextMaskMode mode;
 
 	public TextMaskBuilder() {
 		this.characterMasks = new LinkedList<CharacterMask>();
+		this.mode = TextMaskMode.FULL_MASK;
 	}
 
 	@Override
@@ -51,26 +55,27 @@ public final class TextMaskBuilder implements ITextMaskBuilder {
 	}
 
 	@Override
-	public ITextMaskBuilder addDelimiterMask(final char placeholder) {
+	public ITextMaskBuilder setMode(final TextMaskMode mode) {
+		Assert.paramNotNull(mode, "mode");
+		this.mode = mode;
+		return this;
+	}
+
+	@Override
+	public ITextMaskBuilder addDelimiter(final char placeholder) {
 		characterMasks.add(new CharacterMask(true, null, null, Character.valueOf(placeholder)));
 		return this;
 	}
 
 	@Override
-	public ITextMaskBuilder addAcceptingAllMask(final char placeholder) {
+	public ITextMaskBuilder addCharacterMask(final char placeholder) {
 		characterMasks.add(new CharacterMask(false, null, null, Character.valueOf(placeholder)));
 		return this;
 	}
 
 	@Override
-	public ITextMaskBuilder addAcceptingMask(final String acceptingRegExp, final char placeholder) {
+	public ITextMaskBuilder addCharacterMask(final String acceptingRegExp, final char placeholder) {
 		characterMasks.add(new CharacterMask(false, acceptingRegExp, null, Character.valueOf(placeholder)));
-		return this;
-	}
-
-	@Override
-	public ITextMaskBuilder addRejectingMask(final String rejectingRegExp, final char placeholder) {
-		characterMasks.add(new CharacterMask(false, null, rejectingRegExp, Character.valueOf(placeholder)));
 		return this;
 	}
 
@@ -81,20 +86,14 @@ public final class TextMaskBuilder implements ITextMaskBuilder {
 	}
 
 	@Override
-	public ITextMaskBuilder addAcceptingAllMask() {
+	public ITextMaskBuilder addCharacterMask() {
 		characterMasks.add(new CharacterMask(false, null, null, null));
 		return this;
 	}
 
 	@Override
-	public ITextMaskBuilder addAcceptingMask(final String acceptingRegExp) {
+	public ITextMaskBuilder addCharacterMask(final String acceptingRegExp) {
 		characterMasks.add(new CharacterMask(false, acceptingRegExp, null, null));
-		return this;
-	}
-
-	@Override
-	public ITextMaskBuilder addRejectingMask(final String rejectingRegExp) {
-		characterMasks.add(new CharacterMask(false, null, rejectingRegExp, null));
 		return this;
 	}
 
@@ -106,32 +105,32 @@ public final class TextMaskBuilder implements ITextMaskBuilder {
 
 	@Override
 	public ITextMaskBuilder addNumericMask(final char placeholder) {
-		return addAcceptingMask("[0-9]", placeholder);
+		return addCharacterMask("[0-9]", placeholder);
 	}
 
 	@Override
 	public ITextMaskBuilder addNumericMask() {
-		return addAcceptingMask("[0-9]");
+		return addCharacterMask("[0-9]");
 	}
 
 	@Override
 	public ITextMaskBuilder addAlphabeticMask(final char placeholder) {
-		return addAcceptingMask("[A-Z]", placeholder);
+		return addCharacterMask("[A-Z]", placeholder);
 	}
 
 	@Override
 	public ITextMaskBuilder addAlphaNumericMask(final char placeholder) {
-		return addAcceptingMask("[A-Z]|[0-9]", placeholder);
+		return addCharacterMask("[A-Z]|[0-9]", placeholder);
 	}
 
 	@Override
 	public ITextMaskBuilder addAlphabeticMask() {
-		return addAcceptingMask("[A-Z]");
+		return addCharacterMask("[A-Z]");
 	}
 
 	@Override
 	public ITextMaskBuilder addAlphaNumericMask() {
-		return addAcceptingMask("[A-Z]|[0-9]");
+		return addCharacterMask("[A-Z]|[0-9]");
 	}
 
 	@Override
@@ -151,7 +150,7 @@ public final class TextMaskBuilder implements ITextMaskBuilder {
 				characterMask.setDefaultPlaceholder(defaultPlaceholder);
 			}
 		}
-		return new TextMask(characterMasks);
+		return new TextMask(characterMasks, mode);
 	}
 
 }
