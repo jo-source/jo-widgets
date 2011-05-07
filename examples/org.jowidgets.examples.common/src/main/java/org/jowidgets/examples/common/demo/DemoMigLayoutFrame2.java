@@ -48,38 +48,38 @@ public class DemoMigLayoutFrame2 extends JoFrame {
 		final ILayoutFactoryProvider lfp = Toolkit.getLayoutFactoryProvider();
 		final IMigLayoutConstraintsFactory cf = MigLayoutToolkit.getConstraintsFactory();
 
-		final ILC layC = cf.LC().fill().wrap();
-		final IAC colC = cf.AC().align("right", 0).fill(1, 3).grow(100, 1, 3).align("right", 2).gap("15", 1);
-		final IAC rowC = cf.AC().index(6).gap("15!").align("top").grow(100, 8);
+		final ILC layC = cf.lc().fill().wrap();
+		final IAC colC = cf.ac().align("right", 0).fill(1, 3).grow(100, 1, 3).align("right", 2).gap("15", 1);
+		final IAC rowC = cf.ac().index(6).gap("15!").align("top").grow(100, 8);
 
 		final IMigLayout layout = setLayout(lfp.migLayoutBuilder().constraints(layC).columnConstraints(colC).rowConstraints(rowC).build());
 
 		add(BPF.textLabel("Last Name"), "");
 		add(BPF.textField(), "");
 		add(BPF.textLabel("First Name"), "");
-		add(BPF.textField(), cf.CC().wrap());
+		add(BPF.textField(), cf.cc().wrap());
 		add(BPF.textLabel("Phone"), "");
 		add(BPF.textField(), "");
 		add(BPF.textLabel("Email"), "");
 		add(BPF.textField(), "");
 		add(BPF.textLabel("Address 1"), "");
-		add(BPF.textField(), cf.CC().spanX().growX());
+		add(BPF.textField(), cf.cc().spanX().growX());
 		add(BPF.textLabel("Address 2"), "");
-		add(BPF.textField(), cf.CC().spanX().growX());
+		add(BPF.textField(), cf.cc().spanX().growX());
 		add(BPF.textLabel("City"), "");
-		add(BPF.textField(), cf.CC().wrap());
+		add(BPF.textField(), cf.cc().wrap());
 		add(BPF.textLabel("State"), "");
 		add(BPF.textField(), "");
 		add(BPF.textLabel("Postal Code"), "");
-		add(BPF.textField(), cf.CC().spanX(2).growX(0));
+		add(BPF.textField(), cf.cc().spanX(2).growX(0));
 		add(BPF.textLabel("Country"), "");
-		add(BPF.textField(), cf.CC().wrap());
+		add(BPF.textField(), cf.cc().wrap());
 
-		add(BPF.button("New"), cf.CC().spanX(5).split(5).tag("other"));
-		add(BPF.button("Delete"), cf.CC().tag("other"));
-		add(BPF.button("Edit"), cf.CC().tag("other"));
-		add(BPF.button("Save"), cf.CC().tag("other"));
-		add(BPF.button("Cancel"), cf.CC().tag("cancel"));
+		add(BPF.button("New"), cf.cc().spanX(5).split(5).tag("other"));
+		add(BPF.button("Delete"), cf.cc().tag("other"));
+		add(BPF.button("Edit"), cf.cc().tag("other"));
+		add(BPF.button("Save"), cf.cc().tag("other"));
+		add(BPF.button("Cancel"), cf.cc().tag("cancel"));
 
 		setSize(800, 600);
 		setMinSize(computeDecoratedSize(layout.getMinSize()));
