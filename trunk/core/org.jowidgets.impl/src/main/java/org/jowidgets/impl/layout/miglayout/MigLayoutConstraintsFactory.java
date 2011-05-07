@@ -40,31 +40,31 @@ public class MigLayoutConstraintsFactory implements IMigLayoutConstraintsFactory
 
 	@Override
 	public IAC columnConstraints() {
-		return AC();
+		return ac();
 	}
 
 	@Override
 	public IAC rowConstraints() {
-		return AC();
+		return ac();
 	}
 
 	@Override
 	public ILC layoutConstraints() {
-		return LC();
+		return lc();
 	}
 
 	@Override
-	public ICC CC() {
+	public ICC cc() {
 		return new CC();
 	}
 
 	@Override
-	public IAC AC() {
+	public IAC ac() {
 		return new AC();
 	}
 
 	@Override
-	public ILC LC() {
+	public ILC lc() {
 		return new LC();
 	}
 
