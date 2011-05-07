@@ -203,10 +203,10 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 		});
 
 		final ITextMaskBuilder textMaskBuilder = new TextMaskBuilder();
-		//		textMaskBuilder.addNumericMask('D');
+		//		textMaskBuilder.addAcceptingMask("[0-3]", 'D');
 		//		textMaskBuilder.addNumericMask('D');
 		//		textMaskBuilder.addDelimiterMask('-');
-		//		textMaskBuilder.addNumericMask('M');
+		//		textMaskBuilder.addAcceptingMask("[0-1]", 'M');
 		//		textMaskBuilder.addNumericMask('M');
 		//		textMaskBuilder.addDelimiterMask('-');
 		//		textMaskBuilder.addNumericMask('Y');
@@ -217,7 +217,7 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 		textMaskBuilder.addAcceptingMask("[0-3]");
 		textMaskBuilder.addNumericMask();
 		textMaskBuilder.addDelimiterMask('-');
-		textMaskBuilder.addCharacterMask("[0-9]", "[2-9]");
+		textMaskBuilder.addAcceptingMask("[0-1]");
 		textMaskBuilder.addNumericMask();
 		textMaskBuilder.addDelimiterMask('-');
 		textMaskBuilder.addNumericMask();
