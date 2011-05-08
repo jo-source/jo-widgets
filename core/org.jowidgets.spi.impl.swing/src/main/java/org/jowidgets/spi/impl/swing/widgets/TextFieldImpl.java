@@ -32,7 +32,6 @@ import javax.swing.JTextField;
 
 import org.jowidgets.common.mask.TextMaskMode;
 import org.jowidgets.common.verify.IInputVerifier;
-import org.jowidgets.spi.impl.mask.TextMaskKeyListenerFactory;
 import org.jowidgets.spi.impl.mask.TextMaskVerifierFactory;
 import org.jowidgets.spi.impl.swing.threads.SwingUiThreadAccess;
 import org.jowidgets.spi.impl.swing.widgets.util.InputModifierDocument;
@@ -50,11 +49,8 @@ public class TextFieldImpl extends AbstractInputControl implements ITextControlS
 		final IInputVerifier inputVerifier = InputVerifierHelper.getInputVerifier(maskVerifier, setup);
 
 		getUiReference().setDocument(new InputModifierDocument(getUiReference(), inputVerifier, this, setup.getMaxLength()));
-		if (setup.getMask() != null) {
-			if (TextMaskMode.FULL_MASK == setup.getMask().getMode()) {
-				setText(setup.getMask().getPlaceholder());
-			}
-			addKeyListener(TextMaskKeyListenerFactory.create(this, setup.getMask()));
+		if (setup.getMask() != null && TextMaskMode.FULL_MASK == setup.getMask().getMode()) {
+			setText(setup.getMask().getPlaceholder());
 		}
 	}
 

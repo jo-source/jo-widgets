@@ -34,7 +34,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 import org.jowidgets.common.mask.TextMaskMode;
 import org.jowidgets.common.verify.IInputVerifier;
-import org.jowidgets.spi.impl.mask.TextMaskKeyListenerFactory;
 import org.jowidgets.spi.impl.mask.TextMaskVerifierFactory;
 import org.jowidgets.spi.impl.swt.threads.SwtUiThreadAccess;
 import org.jowidgets.spi.impl.verify.InputVerifierHelper;
@@ -58,11 +57,8 @@ public class TextFieldImpl extends AbstractTextInputControl {
 
 		registerTextControl(getUiReference());
 
-		if (setup.getMask() != null) {
-			if (TextMaskMode.FULL_MASK == setup.getMask().getMode()) {
-				setText(setup.getMask().getPlaceholder());
-			}
-			addKeyListener(TextMaskKeyListenerFactory.create(this, setup.getMask()));
+		if (setup.getMask() != null && TextMaskMode.FULL_MASK == setup.getMask().getMode()) {
+			setText(setup.getMask().getPlaceholder());
 		}
 	}
 
