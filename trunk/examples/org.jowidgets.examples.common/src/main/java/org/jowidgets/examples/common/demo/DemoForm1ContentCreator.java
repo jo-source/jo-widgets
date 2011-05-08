@@ -54,7 +54,6 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.mask.ITextMask;
-import org.jowidgets.common.mask.TextMaskMode;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.controler.IKeyEvent;
 import org.jowidgets.common.widgets.controler.IMouseButtonEvent;
@@ -226,7 +225,7 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 		textMaskBuilder.addNumericMask('_');
 		textMaskBuilder.addNumericMask('_');
 		textMaskBuilder.addNumericMask('_');
-		textMaskBuilder.setMode(TextMaskMode.PARTITIAL_MASK);
+		//textMaskBuilder.setMode(TextMaskMode.PARTITIAL_MASK);
 
 		final ITextMask textMask = textMaskBuilder.build();
 
