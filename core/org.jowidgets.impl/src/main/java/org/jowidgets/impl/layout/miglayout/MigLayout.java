@@ -56,9 +56,7 @@ final class MigLayout implements IMigLayout {
 	private final IContainer container;
 	private transient ContainerWrapper cacheParentW = null;
 
-	/**
-	 * Hold the serializable text representation of the constraints.
-	 */
+	// Hold the serializable text representation of the constraints.
 	private Object constraints;
 	private Object columnConstraints;
 	private Object rowConstraints;
@@ -70,9 +68,7 @@ final class MigLayout implements IMigLayout {
 	private final transient Map<ComponentWrapper, CC> ccMap = new HashMap<ComponentWrapper, CC>(8);
 	private transient Grid grid = null;
 
-	/**
-	 * The component to string constraints mappings.
-	 */
+	// The component to string constraints mappings.
 	private final Map<IControl, Object> scrConstrMap = new IdentityHashMap<IControl, Object>(8);
 
 	private transient ArrayList<LayoutCallback> callbackList = null;
@@ -91,15 +87,7 @@ final class MigLayout implements IMigLayout {
 		setRowConstraints(rowConstraints);
 	}
 
-	/**
-	 * Sets the layout constraints for the layout manager instance as a String.
-	 * <p>
-	 * See the class JavaDocs for information on how this string is formatted.
-	 * 
-	 * @param constraints The layout constraints as a String representation. <code>null</code> is converted to <code>""</code> for
-	 *            storage.
-	 * @throws RuntimeException if the constaint was not valid.
-	 */
+	@Override
 	public void setLayoutConstraints(Object constraints) {
 		if (constraints == null || constraints instanceof String) {
 			constraints = ConstraintParser.prepare((String) constraints);
@@ -115,27 +103,12 @@ final class MigLayout implements IMigLayout {
 		grid = null;
 	}
 
-	/**
-	 * Returns layout constraints eighter as a <code>String</code> or {@link net.miginfocom.layout.LC} depending what was sent in
-	 * to the constructor or set with {@link #setLayoutConstraints(Object)}.
-	 * 
-	 * @return The layout constraints eighter as a <code>String</code> or {@link net.miginfocom.layout.LC} depending what was sent
-	 *         in
-	 *         to the constructor or set with {@link #setLayoutConstraints(Object)}. Never <code>null</code>.
-	 */
+	@Override
 	public Object getLayoutConstraints() {
 		return constraints;
 	}
 
-	/**
-	 * Sets the column layout constraints for the layout manager instance as a String.
-	 * <p>
-	 * See the class JavaDocs for information on how this string is formatted.
-	 * 
-	 * @param constraints The column layout constraints as a String representation. <code>null</code> is converted to
-	 *            <code>""</code> for storage.
-	 * @throws RuntimeException if the constaint was not valid.
-	 */
+	@Override
 	public void setColumnConstraints(Object constraints) {
 		if (constraints == null || constraints instanceof String) {
 			constraints = ConstraintParser.prepare((String) constraints);
@@ -151,27 +124,12 @@ final class MigLayout implements IMigLayout {
 		grid = null;
 	}
 
-	/**
-	 * Returns the column layout constraints either as a <code>String</code> or {@link net.miginfocom.layout.AC}.
-	 * 
-	 * @return The column constraints eighter as a <code>String</code> or {@link net.miginfocom.layout.LC} depending what was sent
-	 *         in
-	 *         to the constructor or set with {@link #setLayoutConstraints(Object)}. Never <code>null</code>.
-	 */
+	@Override
 	public Object getColumnConstraints() {
 		return columnConstraints;
 	}
 
-	/**
-	 * Sets the row layout constraints for the layout manager instance as a String.
-	 * <p>
-	 * See the class JavaDocs for information on how this string is formatted.
-	 * 
-	 * @param constraints The row layout constraints as a String representation. <code>null</code> is converted to <code>""</code>
-	 *            for
-	 *            storage.
-	 * @throws RuntimeException if the constaint was not valid.
-	 */
+	@Override
 	public void setRowConstraints(Object constraints) {
 		if (constraints == null || constraints instanceof String) {
 			constraints = ConstraintParser.prepare((String) constraints);
@@ -187,23 +145,12 @@ final class MigLayout implements IMigLayout {
 		grid = null;
 	}
 
-	/**
-	 * Returns the row layout constraints as a String representation. This string is the exact string as set with
-	 * {@link #setRowConstraints(Object)} or sent into the constructor.
-	 * <p>
-	 * See the class JavaDocs for information on how this string is formatted.
-	 * 
-	 * @return The row layout constraints as a String representation. Never <code>null</code>.
-	 */
+	@Override
 	public Object getRowConstraints() {
 		return rowConstraints;
 	}
 
-	/**
-	 * Sets the constraints map.
-	 * 
-	 * @param map The map. Will be copied.
-	 */
+	@Override
 	public void setConstraintMap(final Map<IControl, Object> map) {
 		scrConstrMap.clear();
 		ccMap.clear();
@@ -212,11 +159,7 @@ final class MigLayout implements IMigLayout {
 		}
 	}
 
-	/**
-	 * Returns a shallow copy of the constraints map.
-	 * 
-	 * @return A shallow copy of the constraints map. Never <code>null</code>.
-	 */
+	@Override
 	public Map<IControl, Object> getConstraintMap() {
 		return new IdentityHashMap<IControl, Object>(scrConstrMap);
 	}
@@ -256,21 +199,11 @@ final class MigLayout implements IMigLayout {
 		grid = null;
 	}
 
-	/**
-	 * Returns if this layout manager is currently managing this component.
-	 * 
-	 * @param control The component to check. If <code>null</code> then <code>false</code> will be returned.
-	 * @return If this layout manager is currently managing this component.
-	 */
+	@Override
 	public boolean isManagingComponent(final IControl control) {
 		return scrConstrMap.containsKey(control);
 	}
 
-	/**
-	 * Adds the callback function that will be called at different stages of the layout cylce.
-	 * 
-	 * @param callback The callback. Not <code>null</code>.
-	 */
 	public void addLayoutCallback(final LayoutCallback callback) {
 		if (callback == null) {
 			throw new NullPointerException();
@@ -283,11 +216,6 @@ final class MigLayout implements IMigLayout {
 		callbackList.add(callback);
 	}
 
-	/**
-	 * Removes the callback if it exists.
-	 * 
-	 * @param callback The callback. May be <code>null</code>.
-	 */
 	public void removeLayoutCallback(final LayoutCallback callback) {
 		if (callbackList != null) {
 			callbackList.remove(callback);

@@ -36,6 +36,8 @@ public interface IMigLayoutConstraintsFactory {
 
 	ILC layoutConstraints();
 
+	ICC cellConstraints();
+
 	ICC cc();
 
 	IAC ac();
