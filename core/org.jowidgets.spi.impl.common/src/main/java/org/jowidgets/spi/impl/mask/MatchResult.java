@@ -28,11 +28,13 @@
 
 package org.jowidgets.spi.impl.mask;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class MatchResult {
 
 	private final int lastMatch;
+	private final int lastMatchMaskPos;
 	private final int[] indices;
 	private final boolean matching;
 
@@ -61,6 +63,12 @@ public class MatchResult {
 			}
 		}
 		this.lastMatch = last;
+		if (last > -1) {
+			this.lastMatchMaskPos = getMaskIndex(last);
+		}
+		else {
+			this.lastMatchMaskPos = -1;
+		}
 	}
 
 	public int getMaskIndex(final int index) {
@@ -71,8 +79,25 @@ public class MatchResult {
 		return lastMatch;
 	}
 
+	public int getLastMatchMaskPos() {
+		return lastMatchMaskPos;
+	}
+
 	public boolean isMatching() {
 		return matching;
+	}
+
+	@Override
+	public String toString() {
+		return "MatchResult [matching="
+			+ matching
+			+ ", lastMatch="
+			+ lastMatch
+			+ ", lastMatchMaskPos="
+			+ lastMatchMaskPos
+			+ ", indices="
+			+ Arrays.toString(indices)
+			+ "]";
 	}
 
 }

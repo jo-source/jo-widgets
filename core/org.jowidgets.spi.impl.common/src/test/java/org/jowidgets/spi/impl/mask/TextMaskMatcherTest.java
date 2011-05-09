@@ -159,4 +159,31 @@ public final class TextMaskMatcherTest {
 		Assert.assertTrue(result.getLastMatch() == 0);
 	}
 
+	@Test
+	public void test7() {
+		final MatchResult result = matcher.match(0, "1-4-");
+		Assert.assertTrue(result.isMatching());
+		Assert.assertTrue(result.getMaskIndex(0) == 1);
+		Assert.assertTrue(result.getMaskIndex(1) == 2);
+		Assert.assertTrue(result.getMaskIndex(2) == 4);
+		Assert.assertTrue(result.getMaskIndex(3) == 5);
+		Assert.assertTrue(result.getLastMatch() == 3);
+		Assert.assertTrue(result.getLastMatchMaskPos() == 5);
+	}
+
+	@Test
+	public void test8() {
+		final MatchResult result = matcher.match(0, "1-3-19721234");
+		Assert.assertFalse(result.isMatching());
+		Assert.assertTrue(result.getMaskIndex(0) == 1);
+		Assert.assertTrue(result.getMaskIndex(1) == 2);
+		Assert.assertTrue(result.getMaskIndex(2) == 4);
+		Assert.assertTrue(result.getMaskIndex(3) == 5);
+		Assert.assertTrue(result.getMaskIndex(4) == 6);
+		Assert.assertTrue(result.getMaskIndex(5) == 7);
+		Assert.assertTrue(result.getMaskIndex(6) == 8);
+		Assert.assertTrue(result.getMaskIndex(7) == 9);
+		Assert.assertTrue(result.getLastMatch() == 7);
+	}
+
 }
