@@ -32,7 +32,7 @@ import org.jowidgets.api.layout.ILayoutFactoryProvider;
 import org.jowidgets.api.layout.miglayout.IAC;
 import org.jowidgets.api.layout.miglayout.ILC;
 import org.jowidgets.api.layout.miglayout.IMigLayout;
-import org.jowidgets.api.layout.miglayout.IMigLayoutConstraintsFactory;
+import org.jowidgets.api.layout.miglayout.IMigLayoutToolkit;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.tools.powo.JoFrame;
@@ -45,7 +45,7 @@ public class DemoMigLayoutFrame2 extends JoFrame {
 		super("MigLayout demo");
 
 		final ILayoutFactoryProvider lfp = Toolkit.getLayoutFactoryProvider();
-		final IMigLayoutConstraintsFactory cf = lfp.migLayoutConstraintsFactory();
+		final IMigLayoutToolkit cf = lfp.getMigLayoutToolkit();
 
 		final ILC layC = cf.lc().fill().wrap();
 		final IAC colC = cf.ac().align("right", 0).fill(1, 3).grow(100, 1, 3).align("right", 2).gap("15", 1);
