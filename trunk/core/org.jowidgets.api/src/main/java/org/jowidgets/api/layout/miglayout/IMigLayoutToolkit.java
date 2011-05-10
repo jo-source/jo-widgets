@@ -30,4 +30,11 @@ package org.jowidgets.api.layout.miglayout;
 
 public interface IMigLayoutToolkit {
 	IMigLayoutConstraintsFactory getConstraintsFactory();
+
+	/**
+	 * Returns the version of MigLayout
+	 * 
+	 * @return version
+	 */
+	String getVersion();
 }

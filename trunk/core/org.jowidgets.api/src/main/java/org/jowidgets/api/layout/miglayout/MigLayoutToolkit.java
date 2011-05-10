@@ -64,4 +64,8 @@ public final class MigLayoutToolkit {
 		return getInstance().getConstraintsFactory();
 	}
 
+	public static String getVersion() {
+		return getInstance().getVersion();
+	}
+
 }

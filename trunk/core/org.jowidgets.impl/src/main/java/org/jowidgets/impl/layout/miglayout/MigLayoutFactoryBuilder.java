@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2011, Michael Grossmann, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -61,7 +61,7 @@ public final class MigLayoutFactoryBuilder implements IMigLayoutFactoryBuilder {
 	@Override
 	public IMigLayoutFactoryBuilder rowConstraints(final String constraints) {
 		Assert.paramNotNull(constraints, "constraints");
-		this.constraints = constraints;
+		this.rowConstraints = constraints;
 		return this;
 	}
 
@@ -75,7 +75,7 @@ public final class MigLayoutFactoryBuilder implements IMigLayoutFactoryBuilder {
 	@Override
 	public IMigLayoutFactoryBuilder constraints(final String constraints) {
 		Assert.paramNotNull(constraints, "constraints");
-		this.rowConstraints = constraints;
+		this.constraints = constraints;
 		return this;
 	}
 
