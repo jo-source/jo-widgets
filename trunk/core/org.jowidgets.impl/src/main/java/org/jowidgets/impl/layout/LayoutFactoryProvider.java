@@ -34,15 +34,19 @@ import org.jowidgets.api.layout.IFlowLayoutFactoryBuilder;
 import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
 import org.jowidgets.api.layout.miglayout.IMigLayout;
+import org.jowidgets.api.layout.miglayout.IMigLayoutConstraintsFactory;
 import org.jowidgets.api.layout.miglayout.IMigLayoutFactoryBuilder;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.common.widgets.layout.ILayouter;
+import org.jowidgets.impl.layout.miglayout.MigLayoutConstraintsFactory;
 import org.jowidgets.impl.layout.miglayout.MigLayoutFactoryBuilder;
 
 public class LayoutFactoryProvider implements ILayoutFactoryProvider {
 
 	private static final ILayoutFactory<ILayouter> NULL_LAYOUT_FACTORY = createNullLayoutFactory();
 	private static final ILayoutFactory<ILayouter> PREFERRED_SIZE_LAYOUT_FACTORY = createPreferredSizeLayoutFactory();
+
+	private IMigLayoutConstraintsFactory migLayoutConstraintsFactory;
 
 	@Override
 	public ILayoutFactory<ILayouter> nullLayout() {
@@ -92,6 +96,14 @@ public class LayoutFactoryProvider implements ILayoutFactoryProvider {
 	@Override
 	public IMigLayoutFactoryBuilder migLayoutBuilder() {
 		return new MigLayoutFactoryBuilder();
+	}
+
+	@Override
+	public IMigLayoutConstraintsFactory migLayoutConstraintsFactory() {
+		if (migLayoutConstraintsFactory == null) {
+			migLayoutConstraintsFactory = new MigLayoutConstraintsFactory();
+		}
+		return migLayoutConstraintsFactory;
 	}
 
 	private static ILayoutFactory<ILayouter> createNullLayoutFactory() {

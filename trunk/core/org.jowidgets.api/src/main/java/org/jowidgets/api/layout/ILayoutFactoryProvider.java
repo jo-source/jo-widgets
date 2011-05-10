@@ -29,6 +29,7 @@
 package org.jowidgets.api.layout;
 
 import org.jowidgets.api.layout.miglayout.IMigLayout;
+import org.jowidgets.api.layout.miglayout.IMigLayoutConstraintsFactory;
 import org.jowidgets.api.layout.miglayout.IMigLayoutFactoryBuilder;
 import org.jowidgets.common.widgets.layout.ILayouter;
 
@@ -129,5 +130,12 @@ public interface ILayoutFactoryProvider {
 	 * @return The builder
 	 */
 	IMigLayoutFactoryBuilder migLayoutBuilder();
+
+	/**
+	 * Creates a factory a 'MigLayout' constraints
+	 * 
+	 * @return The factory
+	 */
+	IMigLayoutConstraintsFactory migLayoutConstraintsFactory();
 
 }
