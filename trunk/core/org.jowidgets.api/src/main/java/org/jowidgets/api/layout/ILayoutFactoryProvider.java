@@ -29,8 +29,8 @@
 package org.jowidgets.api.layout;
 
 import org.jowidgets.api.layout.miglayout.IMigLayout;
-import org.jowidgets.api.layout.miglayout.IMigLayoutConstraintsFactory;
 import org.jowidgets.api.layout.miglayout.IMigLayoutFactoryBuilder;
+import org.jowidgets.api.layout.miglayout.IMigLayoutToolkit;
 import org.jowidgets.common.widgets.layout.ILayouter;
 
 public interface ILayoutFactoryProvider {
@@ -132,10 +132,10 @@ public interface ILayoutFactoryProvider {
 	IMigLayoutFactoryBuilder migLayoutBuilder();
 
 	/**
-	 * Creates a factory a 'MigLayout' constraints
+	 * Delivers the 'MigLayout' toolkit, which provides access to the constraints classes, platform defaults and version
 	 * 
-	 * @return The factory
+	 * @return The toolkit
 	 */
-	IMigLayoutConstraintsFactory migLayoutConstraintsFactory();
+	IMigLayoutToolkit getMigLayoutToolkit();
 
 }

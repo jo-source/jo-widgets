@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -235,6 +236,8 @@ final class MigLayout implements IMigLayout {
 			}
 		}
 
+		changed = true;
+
 		if (changed) {
 			scrConstrMap.clear();
 			for (final IControl c : comps) {
@@ -244,11 +247,30 @@ final class MigLayout implements IMigLayout {
 		return changed;
 	}
 
+	private void checkCCMap() {
+		final List<IControl> comps = container.getChildren();
+		if (comps.size() < ccMap.keySet().size()) {
+			final List<ComponentWrapper> removed = new LinkedList<ComponentWrapper>();
+			for (final ComponentWrapper cw : ccMap.keySet()) {
+				if (comps.contains(cw.getComponent())) {
+					comps.remove(cw.getComponent());
+					continue;
+				}
+				removed.add(cw);
+			}
+
+			for (final ComponentWrapper cw : removed) {
+				ccMap.remove(cw);
+			}
+		}
+	}
+
 	/**
 	 * Check if something has changed and if so recrete it to the cached objects.
 	 */
 	private void checkCache() {
 		checkConstrMap();
+		checkCCMap();
 
 		// Check if the grid is valid
 		final int mc = PlatformDefaults.getModCount();
