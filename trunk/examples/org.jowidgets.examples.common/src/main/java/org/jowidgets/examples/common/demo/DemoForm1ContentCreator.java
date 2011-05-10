@@ -204,10 +204,10 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 
 		final ITextMaskBuilder textMaskBuilder = new TextMaskBuilder();
 
-		//		textMaskBuilder.addCharacterMask("[0-3]");
+		//		textMaskBuilder.addCharacterMask("[0-3]", 'D');
 		//		textMaskBuilder.addNumericMask('D');
 		//		textMaskBuilder.addDelimiter('-');
-		//		textMaskBuilder.addCharacterMask("[0-1]");
+		//		textMaskBuilder.addCharacterMask("[0-1]", 'M');
 		//		textMaskBuilder.addNumericMask('M');
 		//		textMaskBuilder.addDelimiter('-');
 		//		textMaskBuilder.addNumericMask('Y');
@@ -215,10 +215,10 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 		//		textMaskBuilder.addNumericMask('Y');
 		//		textMaskBuilder.addNumericMask('Y');
 
-		textMaskBuilder.addCharacterMask("[0-3]");
+		textMaskBuilder.addCharacterMask("[0-3]", '_');
 		textMaskBuilder.addNumericMask('_');
 		textMaskBuilder.addDelimiter('-');
-		textMaskBuilder.addCharacterMask("[0-1]");
+		textMaskBuilder.addCharacterMask("[0-1]", '_');
 		textMaskBuilder.addNumericMask('_');
 		textMaskBuilder.addDelimiter('-');
 		textMaskBuilder.addNumericMask('_');
@@ -438,7 +438,7 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 	}
 
 	private static DateFormat createDateFormat() {
-		final DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		dateFormat.setLenient(false);
 		return dateFormat;
 	}
