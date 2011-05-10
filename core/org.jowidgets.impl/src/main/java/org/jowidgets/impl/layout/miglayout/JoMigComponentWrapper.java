@@ -30,6 +30,7 @@ package org.jowidgets.impl.layout.miglayout;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
+import org.jowidgets.api.widgets.ITabFolder;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.common.types.Dimension;
@@ -159,7 +160,18 @@ class JoMigComponentWrapper implements ComponentWrapper {
 
 	@Override
 	public final ContainerWrapper getParent() {
-		return new JoMigContainerWrapper((IContainer) component.getParent());
+		if (component.getParent() instanceof IContainer) {
+			return new JoMigContainerWrapper((IContainer) component.getParent());
+		}
+		else {
+			// TODO NM remove this workaround...
+			if (component.getParent() instanceof ITabFolder) {
+				return new JoMigContainerWrapper((IContainer) component.getParent().getParent());
+			}
+
+			// TODO NM improve
+			return null;
+		}
 	}
 
 	@Override
@@ -254,9 +266,6 @@ class JoMigComponentWrapper implements ComponentWrapper {
 
 	@Override
 	public int getLayoutHashCode() {
-		//if (c.isDisposed())
-		//	return -1;
-
 		final Dimension size = component.getSize();
 		final Dimension preferredSize;
 		if (component instanceof IControl) {

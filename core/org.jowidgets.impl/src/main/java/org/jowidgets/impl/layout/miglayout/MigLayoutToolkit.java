@@ -26,21 +26,51 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.layout.miglayout;
+package org.jowidgets.impl.layout.miglayout;
 
-public interface IMigLayoutConstraintsFactory {
+import org.jowidgets.api.layout.miglayout.IAC;
+import org.jowidgets.api.layout.miglayout.ICC;
+import org.jowidgets.api.layout.miglayout.ILC;
+import org.jowidgets.api.layout.miglayout.IMigLayoutToolkit;
+import org.jowidgets.impl.layout.miglayout.common.AC;
+import org.jowidgets.impl.layout.miglayout.common.CC;
+import org.jowidgets.impl.layout.miglayout.common.LC;
 
-	IAC columnConstraints();
+public class MigLayoutToolkit implements IMigLayoutToolkit {
 
-	IAC rowConstraints();
+	@Override
+	public IAC columnConstraints() {
+		return ac();
+	}
 
-	ILC layoutConstraints();
+	@Override
+	public IAC rowConstraints() {
+		return ac();
+	}
 
-	ICC componentConstraints();
+	@Override
+	public ILC layoutConstraints() {
+		return lc();
+	}
 
-	ICC cc();
+	@Override
+	public ICC componentConstraints() {
+		return cc();
+	}
 
-	IAC ac();
+	@Override
+	public ICC cc() {
+		return new CC();
+	}
 
-	ILC lc();
+	@Override
+	public IAC ac() {
+		return new AC();
+	}
+
+	@Override
+	public ILC lc() {
+		return new LC();
+	}
+
 }
