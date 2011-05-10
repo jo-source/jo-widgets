@@ -28,6 +28,12 @@
 
 package org.jowidgets.api.convert;
 
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import org.jowidgets.common.mask.ITextMask;
+
 public interface IConverterProvider {
 
 	/**
@@ -49,5 +55,21 @@ public interface IConverterProvider {
 	IConverter<Integer> integerNumber();
 
 	IConverter<Short> shortNumber();
+
+	IConverter<Date> date(DateFormat dateFormat, String formatHint, ITextMask mask);
+
+	IConverter<Date> date(DateFormat dateFormat, String formatHint);
+
+	IConverter<Date> date();
+
+	IConverter<Date> dateTime();
+
+	IConverter<Date> time();
+
+	void registerDefaultDateConverter(Locale locale, IConverter<Date> converter);
+
+	void registerDefaultTimeConverter(Locale locale, IConverter<Date> converter);
+
+	void registerDefaultDateTimeConverter(Locale locale, IConverter<Date> converter);
 
 }

@@ -27,7 +27,11 @@
  */
 package org.jowidgets.impl.widgets.composed.blueprint;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 import org.jowidgets.api.image.Icons;
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
@@ -36,6 +40,7 @@ import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.mask.ITextMask;
 import org.jowidgets.impl.convert.DefaultConverterProvider;
 import org.jowidgets.impl.widgets.composed.blueprint.convenience.registry.ComposedSetupConvenienceRegistry;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.registry.ComposedDefaultsInitializerRegistry;
@@ -68,6 +73,31 @@ public final class BluePrintFactory extends SimpleBluePrintFactory implements IB
 	@Override
 	public IInputFieldBluePrint<Integer> inputFieldIntegerNumber() {
 		return inputField(DefaultConverterProvider.INTEGER_NUMBER);
+	}
+
+	@Override
+	public IInputFieldBluePrint<Date> inputFieldDate(final DateFormat dateFormat, final String formatHint, final ITextMask mask) {
+		return inputField(Toolkit.getConverterProvider().date(dateFormat, formatHint, mask));
+	}
+
+	@Override
+	public IInputFieldBluePrint<Date> inputFieldDate(final DateFormat dateFormat, final String formatHint) {
+		return inputField(Toolkit.getConverterProvider().date(dateFormat, formatHint));
+	}
+
+	@Override
+	public IInputFieldBluePrint<Date> inputFieldDate() {
+		return inputField(Toolkit.getConverterProvider().date());
+	}
+
+	@Override
+	public IInputFieldBluePrint<Date> inputFieldDateTime() {
+		return inputField(Toolkit.getConverterProvider().dateTime());
+	}
+
+	@Override
+	public IInputFieldBluePrint<Date> inputFieldTime() {
+		return inputField(Toolkit.getConverterProvider().time());
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////

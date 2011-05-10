@@ -28,6 +28,9 @@
 
 package org.jowidgets.tools.widgets.blueprint;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.model.table.ITableModel;
@@ -86,6 +89,7 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.mask.ITextMask;
 import org.jowidgets.common.model.ITableColumnModel;
 import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.types.FileChooserType;
@@ -441,6 +445,31 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	@Override
 	public IInputFieldBluePrint<Short> inputFieldShortNumber() {
 		return bluePrintFactory.inputFieldShortNumber();
+	}
+
+	@Override
+	public IInputFieldBluePrint<Date> inputFieldDate(final DateFormat dateFormat, final String formatHint, final ITextMask mask) {
+		return bluePrintFactory.inputFieldDate(dateFormat, formatHint, mask);
+	}
+
+	@Override
+	public IInputFieldBluePrint<Date> inputFieldDate(final DateFormat dateFormat, final String formatHint) {
+		return bluePrintFactory.inputFieldDate(dateFormat, formatHint);
+	}
+
+	@Override
+	public IInputFieldBluePrint<Date> inputFieldDate() {
+		return bluePrintFactory.inputFieldDate();
+	}
+
+	@Override
+	public IInputFieldBluePrint<Date> inputFieldDateTime() {
+		return bluePrintFactory.inputFieldDateTime();
+	}
+
+	@Override
+	public IInputFieldBluePrint<Date> inputFieldTime() {
+		return bluePrintFactory.inputFieldTime();
 	}
 
 	@Override

@@ -27,16 +27,24 @@
  */
 package org.jowidgets.impl.convert;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.convert.IObjectStringConverter;
+import org.jowidgets.api.mask.ITextMaskBuilder;
+import org.jowidgets.common.mask.ITextMask;
+import org.jowidgets.impl.convert.defaults.DefaultDateConverter;
 import org.jowidgets.impl.convert.defaults.DefaultIntegerConverter;
 import org.jowidgets.impl.convert.defaults.DefaultLongConverter;
 import org.jowidgets.impl.convert.defaults.DefaultShortConverter;
 import org.jowidgets.impl.convert.defaults.DefaultStringConverter;
+import org.jowidgets.impl.mask.TextMaskBuilder;
 import org.jowidgets.util.Assert;
 
 public final class DefaultConverterProvider implements IConverterProvider {
@@ -48,6 +56,12 @@ public final class DefaultConverterProvider implements IConverterProvider {
 	public static final IConverter<Short> SHORT_NUMBER = new DefaultShortConverter();
 
 	private static final Map<Class<?>, IConverter<? extends Object>> CONVERTER_MAP = createConverterMap();
+
+	private static final Locale DEFAULT_LOCALE = Locale.US;
+
+	private Map<Locale, IConverter<Date>> defaultDateConverter;
+	private Map<Locale, IConverter<Date>> defaultTimeConverter;
+	private Map<Locale, IConverter<Date>> defaultDateTimeConverter;
 
 	public DefaultConverterProvider() {}
 
@@ -65,6 +79,39 @@ public final class DefaultConverterProvider implements IConverterProvider {
 		result.put(Integer.class, INTEGER_NUMBER);
 		result.put(Short.class, SHORT_NUMBER);
 		return result;
+	}
+
+	@Override
+	public void registerDefaultDateConverter(final Locale locale, final IConverter<Date> converter) {
+		Assert.paramNotNull(locale, "locale");
+		if (converter != null) {
+			getDefaultDateConverters().put(locale, converter);
+		}
+		else {
+			getDefaultDateConverters().remove(locale);
+		}
+	}
+
+	@Override
+	public void registerDefaultTimeConverter(final Locale locale, final IConverter<Date> converter) {
+		Assert.paramNotNull(locale, "locale");
+		if (converter != null) {
+			getDefaultTimeConverters().put(locale, converter);
+		}
+		else {
+			getDefaultTimeConverters().remove(locale);
+		}
+	}
+
+	@Override
+	public void registerDefaultDateTimeConverter(final Locale locale, final IConverter<Date> converter) {
+		Assert.paramNotNull(locale, "locale");
+		if (converter != null) {
+			getDefaultDateTimeConverters().put(locale, converter);
+		}
+		else {
+			getDefaultDateTimeConverters().remove(locale);
+		}
 	}
 
 	@Override
@@ -92,10 +139,180 @@ public final class DefaultConverterProvider implements IConverterProvider {
 		return SHORT_NUMBER;
 	}
 
+	@Override
+	public IConverter<Date> date(final DateFormat dateFormat, final String formatHint, final ITextMask textMask) {
+		return new DefaultDateConverter(dateFormat, textMask, formatHint);
+	}
+
+	@Override
+	public IConverter<Date> date(final DateFormat dateFormat, final String formatHint) {
+		return new DefaultDateConverter(dateFormat, null, formatHint);
+	}
+
+	@Override
+	public IConverter<Date> date() {
+		IConverter<Date> converter = getDefaultDateConverters().get(Locale.getDefault());
+		if (converter == null) {
+			converter = getDefaultDateConverters().get(DEFAULT_LOCALE);
+		}
+		return converter;
+	}
+
+	@Override
+	public IConverter<Date> time() {
+		IConverter<Date> converter = getDefaultTimeConverters().get(Locale.getDefault());
+		if (converter == null) {
+			converter = getDefaultTimeConverters().get(DEFAULT_LOCALE);
+		}
+		return converter;
+	}
+
+	@Override
+	public IConverter<Date> dateTime() {
+		IConverter<Date> converter = getDefaultDateTimeConverters().get(Locale.getDefault());
+		if (converter == null) {
+			converter = getDefaultDateTimeConverters().get(DEFAULT_LOCALE);
+		}
+		return converter;
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public <OBJECT_TYPE> IObjectStringConverter<OBJECT_TYPE> toStringConverter() {
 		return (IObjectStringConverter<OBJECT_TYPE>) TO_STRING_CONVERTER;
 	}
 
+	private Map<Locale, IConverter<Date>> getDefaultDateConverters() {
+		if (defaultDateConverter == null) {
+			this.defaultDateConverter = new HashMap<Locale, IConverter<Date>>();
+
+			final ITextMaskBuilder dateMaskBuilderUS = new TextMaskBuilder();
+			dateMaskBuilderUS.addCharacterMask("[0-1]", '_');
+			dateMaskBuilderUS.addNumericMask('_');
+			dateMaskBuilderUS.addDelimiter('/');
+			dateMaskBuilderUS.addCharacterMask("[0-3]", '_');
+			dateMaskBuilderUS.addNumericMask('_');
+			dateMaskBuilderUS.addDelimiter('/');
+			dateMaskBuilderUS.addNumericMask('_');
+			dateMaskBuilderUS.addNumericMask('_');
+			dateMaskBuilderUS.addNumericMask('_');
+			dateMaskBuilderUS.addNumericMask('_');
+
+			final DateFormat dateFormatUS = new SimpleDateFormat("MM/dd/yyyy");
+			dateFormatUS.setLenient(false);
+			defaultDateConverter.put(DEFAULT_LOCALE, date(dateFormatUS, "MM/DD/YYYY", dateMaskBuilderUS.build()));
+
+			final ITextMaskBuilder dateMaskBuilderDE = new TextMaskBuilder();
+			dateMaskBuilderDE.addCharacterMask("[0-3]", '_');
+			dateMaskBuilderDE.addNumericMask('_');
+			dateMaskBuilderDE.addDelimiter('-');
+			dateMaskBuilderDE.addCharacterMask("[0-1]", '_');
+			dateMaskBuilderDE.addNumericMask('_');
+			dateMaskBuilderDE.addDelimiter('-');
+			dateMaskBuilderDE.addNumericMask('_');
+			dateMaskBuilderDE.addNumericMask('_');
+			dateMaskBuilderDE.addNumericMask('_');
+			dateMaskBuilderDE.addNumericMask('_');
+
+			final DateFormat dateFormatDE = new SimpleDateFormat("dd-MM-yyyy");
+			dateFormatDE.setLenient(false);
+
+			final IConverter<Date> converterDE = date(dateFormatDE, "DD-MM-YYYY", dateMaskBuilderDE.build());
+
+			defaultDateConverter.put(Locale.GERMANY, converterDE);
+			defaultDateConverter.put(Locale.GERMAN, converterDE);
+		}
+		return defaultDateConverter;
+	}
+
+	private Map<Locale, IConverter<Date>> getDefaultTimeConverters() {
+		if (defaultTimeConverter == null) {
+			this.defaultTimeConverter = new HashMap<Locale, IConverter<Date>>();
+
+			final ITextMaskBuilder timeMaskBuilder = new TextMaskBuilder();
+			timeMaskBuilder.addCharacterMask("[0-2]", '_');
+			timeMaskBuilder.addNumericMask('_');
+			timeMaskBuilder.addDelimiter(':');
+			timeMaskBuilder.addCharacterMask("[0-5]", '_');
+			timeMaskBuilder.addNumericMask('_');
+			timeMaskBuilder.addDelimiter(':');
+			timeMaskBuilder.addCharacterMask("[0-5]", '_');
+			timeMaskBuilder.addNumericMask('_');
+
+			final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+			dateFormat.setLenient(false);
+
+			final IConverter<Date> converter = date(dateFormat, "HH:MM:SS", timeMaskBuilder.build());
+
+			defaultTimeConverter.put(DEFAULT_LOCALE, converter);
+			defaultTimeConverter.put(Locale.GERMAN, converter);
+			defaultTimeConverter.put(Locale.GERMANY, converter);
+		}
+		return defaultTimeConverter;
+	}
+
+	private Map<Locale, IConverter<Date>> getDefaultDateTimeConverters() {
+		if (defaultDateTimeConverter == null) {
+			this.defaultDateTimeConverter = new HashMap<Locale, IConverter<Date>>();
+
+			final ITextMaskBuilder dateMaskBuilderUS = new TextMaskBuilder();
+			dateMaskBuilderUS.addCharacterMask("[0-1]", '_');
+			dateMaskBuilderUS.addNumericMask('_');
+			dateMaskBuilderUS.addDelimiter('/');
+			dateMaskBuilderUS.addCharacterMask("[0-3]", '_');
+			dateMaskBuilderUS.addNumericMask('_');
+			dateMaskBuilderUS.addDelimiter('/');
+			dateMaskBuilderUS.addNumericMask('_');
+			dateMaskBuilderUS.addNumericMask('_');
+			dateMaskBuilderUS.addNumericMask('_');
+			dateMaskBuilderUS.addNumericMask('_');
+
+			dateMaskBuilderUS.addDelimiter(' ');
+
+			dateMaskBuilderUS.addCharacterMask("[0-2]", '_');
+			dateMaskBuilderUS.addNumericMask('_');
+			dateMaskBuilderUS.addDelimiter(':');
+			dateMaskBuilderUS.addCharacterMask("[0-5]", '_');
+			dateMaskBuilderUS.addNumericMask('_');
+			dateMaskBuilderUS.addDelimiter(':');
+			dateMaskBuilderUS.addCharacterMask("[0-5]", '_');
+			dateMaskBuilderUS.addNumericMask('_');
+
+			final DateFormat dateFormatUS = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+			dateFormatUS.setLenient(false);
+			defaultDateTimeConverter.put(DEFAULT_LOCALE, date(dateFormatUS, "MM/DD/YYYY HH:MM:SS", dateMaskBuilderUS.build()));
+
+			final ITextMaskBuilder dateMaskBuilderDE = new TextMaskBuilder();
+			dateMaskBuilderDE.addCharacterMask("[0-3]", '_');
+			dateMaskBuilderDE.addNumericMask('_');
+			dateMaskBuilderDE.addDelimiter('-');
+			dateMaskBuilderDE.addCharacterMask("[0-1]", '_');
+			dateMaskBuilderDE.addNumericMask('_');
+			dateMaskBuilderDE.addDelimiter('-');
+			dateMaskBuilderDE.addNumericMask('_');
+			dateMaskBuilderDE.addNumericMask('_');
+			dateMaskBuilderDE.addNumericMask('_');
+			dateMaskBuilderDE.addNumericMask('_');
+
+			dateMaskBuilderDE.addDelimiter(' ');
+
+			dateMaskBuilderDE.addCharacterMask("[0-2]", '_');
+			dateMaskBuilderDE.addNumericMask('_');
+			dateMaskBuilderDE.addDelimiter(':');
+			dateMaskBuilderDE.addCharacterMask("[0-5]", '_');
+			dateMaskBuilderDE.addNumericMask('_');
+			dateMaskBuilderDE.addDelimiter(':');
+			dateMaskBuilderDE.addCharacterMask("[0-5]", '_');
+			dateMaskBuilderDE.addNumericMask('_');
+
+			final DateFormat dateFormatDE = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+			dateFormatDE.setLenient(false);
+
+			final IConverter<Date> germanConverter = date(dateFormatDE, "DD-MM-YYYY HH:MM:SS", dateMaskBuilderDE.build());
+
+			defaultDateTimeConverter.put(Locale.GERMAN, germanConverter);
+			defaultDateTimeConverter.put(Locale.GERMANY, germanConverter);
+		}
+		return defaultDateTimeConverter;
+	}
 }
