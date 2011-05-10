@@ -30,6 +30,7 @@ package org.jowidgets.impl.layout.miglayout;
 
 import org.jowidgets.api.layout.miglayout.IMigLayoutConstraintsFactory;
 import org.jowidgets.api.layout.miglayout.IMigLayoutToolkit;
+import org.jowidgets.impl.layout.miglayout.common.LayoutUtil;
 
 public final class MigLayoutToolkit implements IMigLayoutToolkit {
 
@@ -42,6 +43,11 @@ public final class MigLayoutToolkit implements IMigLayoutToolkit {
 	@Override
 	public IMigLayoutConstraintsFactory getConstraintsFactory() {
 		return constraintsFactory;
+	}
+
+	@Override
+	public String getVersion() {
+		return LayoutUtil.getVersion();
 	}
 
 }

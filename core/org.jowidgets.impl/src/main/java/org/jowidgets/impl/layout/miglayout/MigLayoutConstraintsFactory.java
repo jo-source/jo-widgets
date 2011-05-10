@@ -54,7 +54,7 @@ public class MigLayoutConstraintsFactory implements IMigLayoutConstraintsFactory
 	}
 
 	@Override
-	public ICC cellConstraints() {
+	public ICC componentConstraints() {
 		return cc();
 	}
 
