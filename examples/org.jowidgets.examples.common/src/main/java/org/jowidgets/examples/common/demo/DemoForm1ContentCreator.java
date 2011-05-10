@@ -28,19 +28,13 @@
 
 package org.jowidgets.examples.common.demo;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.jowidgets.api.convert.IConverter;
-import org.jowidgets.api.mask.ITextMaskBuilder;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.validation.IValidator;
-import org.jowidgets.api.validation.ValidationMessageType;
 import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IComboBox;
 import org.jowidgets.api.widgets.IInputComponent;
@@ -53,7 +47,6 @@ import org.jowidgets.api.widgets.blueprint.IValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
-import org.jowidgets.common.mask.ITextMask;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.controler.IKeyEvent;
 import org.jowidgets.common.widgets.controler.IMouseButtonEvent;
@@ -61,12 +54,8 @@ import org.jowidgets.common.widgets.controler.IMouseEvent;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.controler.KeyAdapter;
 import org.jowidgets.tools.controler.MouseAdapter;
-import org.jowidgets.tools.converter.AbstractConverter;
-import org.jowidgets.tools.mask.TextMaskBuilder;
 
 public class DemoForm1ContentCreator implements IInputContentCreator<List<String>> {
-
-	private static final DateFormat DATE_FORMAT = createDateFormat();
 
 	private IComboBox<String> gender;
 	private IInputComponent<String> lastname;
@@ -202,89 +191,8 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 			}
 		});
 
-		final ITextMaskBuilder textMaskBuilder = new TextMaskBuilder();
-
-		//		textMaskBuilder.addCharacterMask("[0-3]", 'D');
-		//		textMaskBuilder.addNumericMask('D');
-		//		textMaskBuilder.addDelimiter('-');
-		//		textMaskBuilder.addCharacterMask("[0-1]", 'M');
-		//		textMaskBuilder.addNumericMask('M');
-		//		textMaskBuilder.addDelimiter('-');
-		//		textMaskBuilder.addNumericMask('Y');
-		//		textMaskBuilder.addNumericMask('Y');
-		//		textMaskBuilder.addNumericMask('Y');
-		//		textMaskBuilder.addNumericMask('Y');
-
-		textMaskBuilder.addCharacterMask("[0-3]", '_');
-		textMaskBuilder.addNumericMask('_');
-		textMaskBuilder.addDelimiter('-');
-		textMaskBuilder.addCharacterMask("[0-1]", '_');
-		textMaskBuilder.addNumericMask('_');
-		textMaskBuilder.addDelimiter('-');
-		textMaskBuilder.addNumericMask('_');
-		textMaskBuilder.addNumericMask('_');
-		textMaskBuilder.addNumericMask('_');
-		textMaskBuilder.addNumericMask('_');
-		//textMaskBuilder.setMode(TextMaskMode.PARTITIAL_MASK);
-
-		final ITextMask textMask = textMaskBuilder.build();
-
-		final IConverter<Date> dateConverter = new AbstractConverter<Date>() {
-
-			@Override
-			public Date convertToObject(final String string) {
-				if (string != null) {
-					try {
-						return DATE_FORMAT.parse(string);
-					}
-					catch (final ParseException e) {
-						return null;
-					}
-				}
-				else {
-					return null;
-				}
-			}
-
-			@Override
-			public String convertToString(final Date value) {
-				if (value != null) {
-					DATE_FORMAT.format(value);
-				}
-				return "";
-			}
-
-			@Override
-			public IValidator<String> getStringValidator() {
-				return new IValidator<String>() {
-
-					@Override
-					public ValidationResult validate(final String input) {
-						if (input != null && !input.trim().isEmpty() && !textMask.getPlaceholder().equals(input)) {
-							try {
-								DATE_FORMAT.parse(input);
-							}
-							catch (final ParseException e) {
-								return new ValidationResult(
-									ValidationMessageType.ERROR,
-									"Input must be a date with format 'DD-MM-YYYY'");
-							}
-						}
-						return new ValidationResult();
-					}
-
-				};
-			}
-
-			@Override
-			public ITextMask getMask() {
-				return textMask;
-			}
-
-		};
-
 		container.add(textLabelBp.setText("Day of dirth*"), "right, sg lg");
-		dateOfBirth = container.add(bpF.inputField(dateConverter).setMandatory(true), inputWidgetConstraints);
+		dateOfBirth = container.add(bpF.inputFieldDate().setMandatory(true), inputWidgetConstraints);
 		dateOfBirthValidationWidget = container.add(validationLabelBp, "wrap");
 		dateOfBirthValidationWidget.registerInputWidget(dateOfBirth);
 
@@ -292,10 +200,6 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 		street = container.add(stringMandatoryFieldBp, inputWidgetConstraints);
 		streetValidationWidget = container.add(validationLabelBp, "wrap");
 		streetValidationWidget.registerInputWidget(street);
-
-		container.add(textLabelBp.setText("Test"), "right, sg lg");
-		container.add(bpF.inputFieldShortNumber(), inputWidgetConstraints);
-		container.add(validationLabelBp, "wrap");
 
 		container.add(textLabelBp.setText("Postal code*"), "right, sg lg");
 		postalCode = container.add(bpF.inputFieldIntegerNumber().setMaxLength(5).setMandatory(true), inputWidgetConstraints);
@@ -437,9 +341,4 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 		return true;
 	}
 
-	private static DateFormat createDateFormat() {
-		final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-		dateFormat.setLenient(false);
-		return dateFormat;
-	}
 }
