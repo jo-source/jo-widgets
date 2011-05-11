@@ -27,11 +27,16 @@
  */
 package org.jowidgets.spi.impl.swing.widgets;
 
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+
 import javax.swing.BorderFactory;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import org.jowidgets.common.types.InputChangeEventPolicy;
 import org.jowidgets.common.verify.IInputVerifier;
+import org.jowidgets.spi.impl.controler.InputObservable;
 import org.jowidgets.spi.impl.swing.widgets.util.InputModifierDocument;
 import org.jowidgets.spi.impl.verify.InputVerifierHelper;
 import org.jowidgets.spi.widgets.ITextAreaSpi;
@@ -62,8 +67,25 @@ public class TextAreaImpl extends AbstractInputControl implements ITextAreaSpi {
 			getUiReference().setBorder(BorderFactory.createEmptyBorder());
 		}
 
+		final InputObservable inputObservable;
+		if (setup.getInputChangeEventPolicy() == InputChangeEventPolicy.ANY_CHANGE) {
+			inputObservable = this;
+		}
+		else if (setup.getInputChangeEventPolicy() == InputChangeEventPolicy.EDIT_FINISHED) {
+			inputObservable = null;
+			getUiReference().addFocusListener(new FocusAdapter() {
+				@Override
+				public void focusLost(final FocusEvent e) {
+					fireInputChanged(getText());
+				}
+			});
+		}
+		else {
+			throw new IllegalArgumentException("InputChangeEventPolicy '" + setup.getInputChangeEventPolicy() + "' is not known.");
+		}
+
 		final IInputVerifier inputVerifier = InputVerifierHelper.getInputVerifier(null, setup);
-		textArea.setDocument(new InputModifierDocument(textArea, inputVerifier, this, setup.getMaxLength()));
+		textArea.setDocument(new InputModifierDocument(textArea, inputVerifier, inputObservable, setup.getMaxLength()));
 	}
 
 	@Override
@@ -79,6 +101,9 @@ public class TextAreaImpl extends AbstractInputControl implements ITextAreaSpi {
 	@Override
 	public void setText(final String text) {
 		textArea.setText(text);
+		if (!textArea.isFocusOwner()) {
+			fireInputChanged(getText());
+		}
 	}
 
 	@Override

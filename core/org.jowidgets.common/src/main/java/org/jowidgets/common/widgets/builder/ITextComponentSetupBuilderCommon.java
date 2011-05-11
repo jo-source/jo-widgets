@@ -32,7 +32,8 @@ import java.util.List;
 import org.jowidgets.common.verify.IInputVerifier;
 
 public interface ITextComponentSetupBuilderCommon<INSTANCE_TYPE extends ITextComponentSetupBuilderCommon<?>> extends
-		IComponentSetupBuilderCommon<INSTANCE_TYPE> {
+		IComponentSetupBuilderCommon<INSTANCE_TYPE>,
+		IInputObservableSetupBuilderCommon<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setInputVerifier(IInputVerifier inputVerifier);
 

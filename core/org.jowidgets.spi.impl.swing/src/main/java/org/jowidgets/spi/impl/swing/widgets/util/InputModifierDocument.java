@@ -68,7 +68,7 @@ public class InputModifierDocument extends PlainDocument {
 		final String currentText = textComponent.getText();
 		if (inputVerifier == null || inputVerifier.verify(currentText, "", offs, offs + len)) {
 			super.remove(offs, len);
-			inputObservable.fireInputChanged();
+			inputObservable.fireInputChanged(textComponent.getText());
 		}
 	}
 
@@ -87,7 +87,7 @@ public class InputModifierDocument extends PlainDocument {
 
 		if (inputVerifier == null || inputVerifier.verify(currentText, text, offset, offset + length)) {
 			super.replace(offset, length, text, attrs);
-			inputObservable.fireInputChanged();
+			inputObservable.fireInputChanged(textComponent.getText());
 		}
 	}
 

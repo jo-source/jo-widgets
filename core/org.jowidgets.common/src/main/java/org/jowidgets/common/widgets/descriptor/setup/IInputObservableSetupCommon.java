@@ -27,16 +27,12 @@
  */
 package org.jowidgets.common.widgets.descriptor.setup;
 
-import java.util.List;
+import org.jowidgets.common.types.InputChangeEventPolicy;
+import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
-import org.jowidgets.common.verify.IInputVerifier;
+public interface IInputObservableSetupCommon {
 
-public interface ITextComponentSetupCommon extends IComponentSetupCommon, IInputObservableSetupCommon {
-
-	IInputVerifier getInputVerifier();
-
-	List<String> getAcceptingRegExps();
-
-	Integer getMaxLength();
+	@Mandatory
+	InputChangeEventPolicy getInputChangeEventPolicy();
 
 }

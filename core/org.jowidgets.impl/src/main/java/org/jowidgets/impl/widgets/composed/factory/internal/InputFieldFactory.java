@@ -84,6 +84,7 @@ public class InputFieldFactory<VALUE_TYPE> implements IWidgetFactory<IInputField
 		}
 
 		final ITextFieldBluePrint textFieldBluePrint = bpF.textField();
+		textFieldBluePrint.setSetup(descriptor);
 		textFieldBluePrint.setInputVerifier(tfInputVerifier);
 		textFieldBluePrint.setAcceptingRegExps(tfRegExps);
 		textFieldBluePrint.setMask(converter.getMask());

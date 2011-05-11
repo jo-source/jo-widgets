@@ -40,11 +40,8 @@ import org.jowidgets.spi.impl.swt.options.SwtOptions;
 import org.jowidgets.spi.impl.verify.InputVerifierHelper;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSetupSpi;
-import org.jowidgets.util.NullCompatibleEquivalence;
 
 public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi {
-
-	private String lastValue;
 
 	public ComboBoxImpl(final Object parentUiReference, final IComboBoxSetupSpi setup) {
 		super(new Combo((Composite) parentUiReference, SWT.NONE | SWT.DROP_DOWN), setup);
@@ -85,6 +82,9 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 	@Override
 	public void setText(final String text) {
 		getUiReference().setText(text);
+		if (!getUiReference().isFocusControl()) {
+			fireInputChanged(text);
+		}
 	}
 
 	@Override
@@ -100,14 +100,6 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 	@Override
 	public int getCaretPosition() {
 		return getUiReference().getSelection().y;
-	}
-
-	@Override
-	public void fireInputChanged() {
-		if (!NullCompatibleEquivalence.equals(getText(), lastValue)) {
-			super.fireInputChanged();
-			lastValue = getText();
-		}
 	}
 
 }

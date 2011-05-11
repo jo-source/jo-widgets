@@ -92,7 +92,7 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 
 		scrolledComposite.setContent(textArea);
 
-		registerTextControl(textArea);
+		registerTextControl(textArea, setup.getInputChangeEventPolicy());
 
 		scrolledComposite.addControlListener(new ControlAdapter() {
 			@Override
@@ -167,6 +167,9 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 			textArea.setText("");
 		}
 		checkScrollBars();
+		if (!getUiReference().isFocusControl()) {
+			fireInputChanged(getText());
+		}
 	}
 
 	@Override

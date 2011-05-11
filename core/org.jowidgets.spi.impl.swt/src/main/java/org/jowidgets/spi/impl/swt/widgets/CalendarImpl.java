@@ -66,7 +66,7 @@ public class CalendarImpl extends SwtControl implements ICalendarSpi {
 				calendar.set(Calendar.SECOND, 0);
 				calendar.set(Calendar.MILLISECOND, 0);
 				date = calendar.getTime();
-				inputObservable.fireInputChanged();
+				inputObservable.fireInputChanged(date);
 			}
 
 		});

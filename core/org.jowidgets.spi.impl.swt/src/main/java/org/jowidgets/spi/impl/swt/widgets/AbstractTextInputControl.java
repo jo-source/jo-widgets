@@ -27,10 +27,13 @@
  */
 package org.jowidgets.spi.impl.swt.widgets;
 
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
+import org.jowidgets.common.types.InputChangeEventPolicy;
 import org.jowidgets.spi.widgets.ITextControlSpi;
 
 public abstract class AbstractTextInputControl extends AbstractInputControl implements ITextControlSpi {
@@ -39,13 +42,27 @@ public abstract class AbstractTextInputControl extends AbstractInputControl impl
 		super(control);
 	}
 
-	protected void registerTextControl(final Text textControl) {
-		textControl.addModifyListener(new ModifyListener() {
-			@Override
-			public void modifyText(final ModifyEvent e) {
-				fireInputChanged();
-			}
-		});
+	protected void registerTextControl(final Text textControl, final InputChangeEventPolicy policy) {
+		if (policy == InputChangeEventPolicy.ANY_CHANGE) {
+			textControl.addModifyListener(new ModifyListener() {
+				@Override
+				public void modifyText(final ModifyEvent e) {
+					fireInputChanged(textControl.getText());
+				}
+			});
+		}
+		else if (policy == InputChangeEventPolicy.EDIT_FINISHED) {
+			textControl.addFocusListener(new FocusAdapter() {
+				@Override
+				public void focusLost(final FocusEvent e) {
+					fireInputChanged(textControl.getText());
+				}
+			});
+
+		}
+		else {
+			throw new IllegalArgumentException("InputChangeEventPolicy '" + policy + "' is not known.");
+		}
 	}
 
 }

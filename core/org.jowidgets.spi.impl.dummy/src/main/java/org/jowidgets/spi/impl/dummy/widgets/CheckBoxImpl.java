@@ -50,7 +50,7 @@ public class CheckBoxImpl extends AbstractInputControl implements ICheckBoxSpi {
 		getUiReference().addInputListener(new IInputListener() {
 			@Override
 			public void inputChanged() {
-				fireInputChanged();
+				fireInputChanged(getUiReference().getText());
 			}
 		});
 	}

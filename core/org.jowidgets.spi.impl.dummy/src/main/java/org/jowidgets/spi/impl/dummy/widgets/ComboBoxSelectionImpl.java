@@ -40,7 +40,7 @@ public class ComboBoxSelectionImpl extends AbstractInputControl implements IComb
 		getUiReference().addInputListener(new IInputListener() {
 			@Override
 			public void inputChanged() {
-				fireInputChanged();
+				fireInputChanged(getUiReference().getText());
 			}
 		});
 	}
