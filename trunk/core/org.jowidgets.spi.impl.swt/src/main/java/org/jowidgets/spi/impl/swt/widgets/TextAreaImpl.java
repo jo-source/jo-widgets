@@ -42,6 +42,7 @@ import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Text;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.verify.IInputVerifier;
+import org.jowidgets.spi.impl.swt.options.SwtOptions;
 import org.jowidgets.spi.impl.verify.InputVerifierHelper;
 import org.jowidgets.spi.widgets.ITextAreaSpi;
 import org.jowidgets.spi.widgets.setup.ITextAreaSetupSpi;
@@ -69,18 +70,20 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 
 		textArea = new Text(getUiReference(), getTextStyle(setup));
 
-		final IInputVerifier inputVerifier = InputVerifierHelper.getInputVerifier(null, setup);
-		if (inputVerifier != null) {
-			textArea.addVerifyListener(new VerifyListener() {
-				@Override
-				public void verifyText(final VerifyEvent verifyEvent) {
-					verifyEvent.doit = inputVerifier.verify(
-							textArea.getText(),
-							verifyEvent.text,
-							verifyEvent.start,
-							verifyEvent.end);
-				}
-			});
+		if (SwtOptions.hasInputVerification()) {
+			final IInputVerifier inputVerifier = InputVerifierHelper.getInputVerifier(null, setup);
+			if (inputVerifier != null) {
+				textArea.addVerifyListener(new VerifyListener() {
+					@Override
+					public void verifyText(final VerifyEvent verifyEvent) {
+						verifyEvent.doit = inputVerifier.verify(
+								textArea.getText(),
+								verifyEvent.text,
+								verifyEvent.start,
+								verifyEvent.end);
+					}
+				});
+			}
 		}
 
 		if (setup.getMaxLength() != null) {

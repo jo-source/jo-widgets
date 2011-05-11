@@ -29,7 +29,6 @@
 package org.jowidgets.spi.impl.mask;
 
 import org.jowidgets.common.mask.ITextMask;
-import org.jowidgets.common.threads.IUiThreadAccessCommon;
 import org.jowidgets.common.verify.IInputVerifier;
 import org.jowidgets.spi.widgets.ITextControlSpi;
 
@@ -37,16 +36,13 @@ public final class TextMaskVerifierFactory {
 
 	private TextMaskVerifierFactory() {}
 
-	public static IInputVerifier create(
-		final ITextControlSpi textControl,
-		final ITextMask textMask,
-		final IUiThreadAccessCommon uiThreadAccess) {
+	public static IInputVerifier create(final ITextControlSpi textControl, final ITextMask textMask) {
 
 		if (textMask == null) {
 			return null;
 		}
 		else {
-			return new TextMaskVerifier(textControl, textMask, uiThreadAccess);
+			return new TextMaskVerifier(textControl, textMask);
 		}
 	}
 }

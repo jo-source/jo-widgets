@@ -35,6 +35,7 @@ import org.eclipse.rwt.lifecycle.UICallBack;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1;
+import org.jowidgets.spi.impl.swt.options.SwtOptions;
 import org.jowidgets.workbench.impl.WorkbenchRunner;
 
 public final class RwtWorkbenchDemo implements IEntryPoint {
@@ -44,6 +45,7 @@ public final class RwtWorkbenchDemo implements IEntryPoint {
 		try {
 			if (!Toolkit.isInitialized()) {
 				Toolkit.initialize(new RwtToolkitProvider());
+				SwtOptions.setInputVerification(false);
 			}
 
 			final String uuid = UUID.randomUUID().toString();
