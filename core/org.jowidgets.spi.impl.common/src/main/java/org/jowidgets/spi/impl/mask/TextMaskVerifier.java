@@ -31,7 +31,6 @@ package org.jowidgets.spi.impl.mask;
 import org.jowidgets.common.mask.ICharacterMask;
 import org.jowidgets.common.mask.ITextMask;
 import org.jowidgets.common.mask.TextMaskMode;
-import org.jowidgets.common.threads.IUiThreadAccessCommon;
 import org.jowidgets.common.verify.IInputVerifier;
 import org.jowidgets.spi.widgets.ITextControlSpi;
 import org.jowidgets.util.Assert;
@@ -40,23 +39,17 @@ public final class TextMaskVerifier implements IInputVerifier {
 
 	private final ITextControlSpi textControl;
 	private final ITextMask textMask;
-	private final IUiThreadAccessCommon uiThreadAccess;
 
 	private final TextMaskMatcher matcher;
 
 	private boolean onVerify;
 
-	public TextMaskVerifier(
-		final ITextControlSpi textControl,
-		final ITextMask textMask,
-		final IUiThreadAccessCommon uiThreadAccess) {
+	public TextMaskVerifier(final ITextControlSpi textControl, final ITextMask textMask) {
 		Assert.paramNotNull(textControl, "textControl");
 		Assert.paramNotNull(textMask, "textMask");
-		Assert.paramNotNull(uiThreadAccess, "uiThreadAccess");
 
 		this.textControl = textControl;
 		this.textMask = textMask;
-		this.uiThreadAccess = uiThreadAccess;
 
 		this.onVerify = false;
 		this.matcher = new TextMaskMatcher(textMask);
@@ -105,20 +98,16 @@ public final class TextMaskVerifier implements IInputVerifier {
 
 				final String insertString = currentValue.substring(0, start) + input + delimiter + suffix;
 
-				uiThreadAccess.invokeLater(new Runnable() {
-					@Override
-					public void run() {
-						textControl.setText(insertString);
-						int caretPos = start + inputLength;
-						int maskPos = maskMatchPos + 1;
-						while (maskPos < textMask.getLength() && textMask.getCharacterMask(maskPos).isReadonly()) {
-							caretPos++;
-							maskPos++;
-						}
-						textControl.setSelection(caretPos, caretPos);
-						onVerify = false;
-					}
-				});
+				textControl.setText(insertString);
+				int caretPos = start + inputLength;
+				int maskPos = maskMatchPos + 1;
+				while (maskPos < textMask.getLength() && textMask.getCharacterMask(maskPos).isReadonly()) {
+					caretPos++;
+					maskPos++;
+				}
+				textControl.setSelection(caretPos, caretPos);
+				onVerify = false;
+
 				return false;
 			}
 			else if (matcher.match(0, prefix + input + insertSuffix).isMatching()) { //insert mode possible
@@ -139,15 +128,11 @@ public final class TextMaskVerifier implements IInputVerifier {
 
 					final String insertString = currentValue.substring(0, start) + input + delimiter + suffix;
 
-					uiThreadAccess.invokeLater(new Runnable() {
-						@Override
-						public void run() {
-							textControl.setText(insertString);
-							final int caretPos = start + inputLength + delimiter.length();
-							textControl.setSelection(caretPos, caretPos);
-							onVerify = false;
-						}
-					});
+					textControl.setText(insertString);
+					final int caretPos = start + inputLength + delimiter.length();
+					textControl.setSelection(caretPos, caretPos);
+					onVerify = false;
+
 					return false;
 				}
 				else {//no delimiter insert is needed, just accept
@@ -193,15 +178,12 @@ public final class TextMaskVerifier implements IInputVerifier {
 				}
 				final String replacement = replacementBuilder.toString();
 				if (!replacement.isEmpty()) {
-					uiThreadAccess.invokeLater(new Runnable() {
-						@Override
-						public void run() {
-							textControl.setText(prefix + replacement + insertSuffix);
-							final int caretPos = start;
-							textControl.setSelection(caretPos, caretPos);
-							onVerify = false;
-						}
-					});
+
+					textControl.setText(prefix + replacement + insertSuffix);
+					final int caretPos = start;
+					textControl.setSelection(caretPos, caretPos);
+					onVerify = false;
+
 					return false;
 				}
 				else if (matcher.match(0, prefix + insertSuffix).isMatching()) {
@@ -229,15 +211,12 @@ public final class TextMaskVerifier implements IInputVerifier {
 				final String fillText = fillTextBuilder.toString();
 
 				final String text = prefix + input + insertSuffix + fillText;
-				uiThreadAccess.invokeLater(new Runnable() {
-					@Override
-					public void run() {
-						textControl.setText(text);
-						final int caretPos = start + inputLength;
-						textControl.setSelection(caretPos, caretPos);
-						onVerify = false;
-					}
-				});
+
+				textControl.setText(text);
+				final int caretPos = start + inputLength;
+				textControl.setSelection(caretPos, caretPos);
+				onVerify = false;
+
 				return false;
 
 			}
@@ -280,15 +259,12 @@ public final class TextMaskVerifier implements IInputVerifier {
 				}
 				final String replacement = input + replacementBuilder.toString();
 				if (!replacement.isEmpty()) {
-					uiThreadAccess.invokeLater(new Runnable() {
-						@Override
-						public void run() {
-							textControl.setText(prefix + replacement + insertSuffix);
-							final int caretPos = start + inputLength;
-							textControl.setSelection(caretPos, caretPos);
-							onVerify = false;
-						}
-					});
+
+					textControl.setText(prefix + replacement + insertSuffix);
+					final int caretPos = start + inputLength;
+					textControl.setSelection(caretPos, caretPos);
+					onVerify = false;
+
 					return false;
 				}
 				else if (matcher.match(0, prefix + input + insertSuffix).isMatching()) {

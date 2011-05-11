@@ -36,7 +36,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.common.mask.TextMaskMode;
 import org.jowidgets.common.verify.IInputVerifier;
 import org.jowidgets.spi.impl.mask.TextMaskVerifierFactory;
-import org.jowidgets.spi.impl.swt.threads.SwtUiThreadAccess;
+import org.jowidgets.spi.impl.swt.options.SwtOptions;
 import org.jowidgets.spi.impl.verify.InputVerifierHelper;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSetupSpi;
@@ -49,27 +49,29 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 	public ComboBoxImpl(final Object parentUiReference, final IComboBoxSetupSpi setup) {
 		super(new Combo((Composite) parentUiReference, SWT.NONE | SWT.DROP_DOWN), setup);
 
-		final IInputVerifier maskVerifier = TextMaskVerifierFactory.create(this, setup.getMask(), new SwtUiThreadAccess());
+		if (SwtOptions.hasInputVerification()) {
+			final IInputVerifier maskVerifier = TextMaskVerifierFactory.create(this, setup.getMask());
 
-		final IInputVerifier inputVerifier = InputVerifierHelper.getInputVerifier(maskVerifier, setup);
-		if (inputVerifier != null) {
-			this.getUiReference().addVerifyListener(new VerifyListener() {
-				@Override
-				public void verifyText(final VerifyEvent verifyEvent) {
-					verifyEvent.doit = inputVerifier.verify(
-							getUiReference().getText(),
-							verifyEvent.text,
-							verifyEvent.start,
-							verifyEvent.end);
-				}
-			});
+			final IInputVerifier inputVerifier = InputVerifierHelper.getInputVerifier(maskVerifier, setup);
+			if (inputVerifier != null) {
+				this.getUiReference().addVerifyListener(new VerifyListener() {
+					@Override
+					public void verifyText(final VerifyEvent verifyEvent) {
+						verifyEvent.doit = inputVerifier.verify(
+								getUiReference().getText(),
+								verifyEvent.text,
+								verifyEvent.start,
+								verifyEvent.end);
+					}
+				});
+			}
 		}
 
 		if (setup.getMaxLength() != null) {
 			getUiReference().setTextLimit(setup.getMaxLength().intValue());
 		}
 
-		if (setup.getMask() != null && TextMaskMode.FULL_MASK == setup.getMask().getMode()) {
+		if (SwtOptions.hasInputVerification() && setup.getMask() != null && TextMaskMode.FULL_MASK == setup.getMask().getMode()) {
 			setText(setup.getMask().getPlaceholder());
 		}
 

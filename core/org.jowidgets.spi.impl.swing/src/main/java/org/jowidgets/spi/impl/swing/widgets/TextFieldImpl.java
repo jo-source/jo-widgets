@@ -33,7 +33,6 @@ import javax.swing.JTextField;
 import org.jowidgets.common.mask.TextMaskMode;
 import org.jowidgets.common.verify.IInputVerifier;
 import org.jowidgets.spi.impl.mask.TextMaskVerifierFactory;
-import org.jowidgets.spi.impl.swing.threads.SwingUiThreadAccess;
 import org.jowidgets.spi.impl.swing.widgets.util.InputModifierDocument;
 import org.jowidgets.spi.impl.verify.InputVerifierHelper;
 import org.jowidgets.spi.widgets.ITextControlSpi;
@@ -44,7 +43,7 @@ public class TextFieldImpl extends AbstractInputControl implements ITextControlS
 	public TextFieldImpl(final ITextFieldSetupSpi setup) {
 		super(setup.isPasswordPresentation() ? new JPasswordField() : new JTextField());
 
-		final IInputVerifier maskVerifier = TextMaskVerifierFactory.create(this, setup.getMask(), new SwingUiThreadAccess());
+		final IInputVerifier maskVerifier = TextMaskVerifierFactory.create(this, setup.getMask());
 
 		final IInputVerifier inputVerifier = InputVerifierHelper.getInputVerifier(maskVerifier, setup);
 

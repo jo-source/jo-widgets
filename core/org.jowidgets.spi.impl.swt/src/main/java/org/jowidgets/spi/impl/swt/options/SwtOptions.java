@@ -30,6 +30,7 @@ package org.jowidgets.spi.impl.swt.options;
 
 public final class SwtOptions {
 
+	private static boolean inputVerification = true;
 	private static boolean classicTabs = false;
 	private static SplitlayoutMode splitLayoutMode = SplitlayoutMode.ON_MOUSE_MOVE;
 
@@ -49,6 +50,14 @@ public final class SwtOptions {
 
 	public static void setSplitLayoutMode(final SplitlayoutMode splitLayoutMode) {
 		SwtOptions.splitLayoutMode = splitLayoutMode;
+	}
+
+	public static boolean hasInputVerification() {
+		return inputVerification;
+	}
+
+	public static void setInputVerification(final boolean inputVerification) {
+		SwtOptions.inputVerification = inputVerification;
 	}
 
 }

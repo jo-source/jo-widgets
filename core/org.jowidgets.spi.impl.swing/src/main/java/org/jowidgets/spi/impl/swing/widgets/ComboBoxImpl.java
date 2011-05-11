@@ -38,7 +38,6 @@ import javax.swing.border.Border;
 import org.jowidgets.common.mask.TextMaskMode;
 import org.jowidgets.common.verify.IInputVerifier;
 import org.jowidgets.spi.impl.mask.TextMaskVerifierFactory;
-import org.jowidgets.spi.impl.swing.threads.SwingUiThreadAccess;
 import org.jowidgets.spi.impl.swing.widgets.util.InputModifierDocument;
 import org.jowidgets.spi.impl.verify.InputVerifierHelper;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
@@ -58,7 +57,7 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 
 		getUiReference().setEditable(true);
 
-		final IInputVerifier maskVerifier = TextMaskVerifierFactory.create(this, setup.getMask(), new SwingUiThreadAccess());
+		final IInputVerifier maskVerifier = TextMaskVerifierFactory.create(this, setup.getMask());
 
 		this.comboBoxEditor = new ComboBoxEditorImpl(InputVerifierHelper.getInputVerifier(maskVerifier, setup));
 

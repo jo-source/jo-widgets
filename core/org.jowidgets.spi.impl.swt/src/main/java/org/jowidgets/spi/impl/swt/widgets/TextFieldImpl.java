@@ -35,7 +35,7 @@ import org.eclipse.swt.widgets.Text;
 import org.jowidgets.common.mask.TextMaskMode;
 import org.jowidgets.common.verify.IInputVerifier;
 import org.jowidgets.spi.impl.mask.TextMaskVerifierFactory;
-import org.jowidgets.spi.impl.swt.threads.SwtUiThreadAccess;
+import org.jowidgets.spi.impl.swt.options.SwtOptions;
 import org.jowidgets.spi.impl.verify.InputVerifierHelper;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 
@@ -44,11 +44,13 @@ public class TextFieldImpl extends AbstractTextInputControl {
 	public TextFieldImpl(final Object parentUiReference, final ITextFieldSetupSpi setup) {
 		super(createText(parentUiReference, setup.isPasswordPresentation()));
 
-		final IInputVerifier maskVerifier = TextMaskVerifierFactory.create(this, setup.getMask(), new SwtUiThreadAccess());
+		if (SwtOptions.hasInputVerification()) {
+			final IInputVerifier maskVerifier = TextMaskVerifierFactory.create(this, setup.getMask());
 
-		final IInputVerifier inputVerifier = InputVerifierHelper.getInputVerifier(maskVerifier, setup);
-		if (inputVerifier != null) {
-			addInputVerifier(inputVerifier);
+			final IInputVerifier inputVerifier = InputVerifierHelper.getInputVerifier(maskVerifier, setup);
+			if (inputVerifier != null) {
+				addInputVerifier(inputVerifier);
+			}
 		}
 
 		if (setup.getMaxLength() != null) {
@@ -57,7 +59,8 @@ public class TextFieldImpl extends AbstractTextInputControl {
 
 		registerTextControl(getUiReference());
 
-		if (setup.getMask() != null && TextMaskMode.FULL_MASK == setup.getMask().getMode()) {
+		if (SwtOptions.hasInputVerification() && setup.getMask() != null && TextMaskMode.FULL_MASK == setup.getMask().getMode()) {
+			getUiReference().setMessage("DD-MM-YYYY HH:MM:SS");
 			setText(setup.getMask().getPlaceholder());
 		}
 	}
