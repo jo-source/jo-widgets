@@ -28,10 +28,13 @@
 package org.jowidgets.spi.impl.swt.widgets;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.jowidgets.common.types.InputChangeEventPolicy;
 import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
 import org.jowidgets.util.Assert;
@@ -47,12 +50,25 @@ public class ComboBoxSelectionImpl extends AbstractInputControl implements IComb
 
 		setElements(setup.getElements());
 
-		getUiReference().addModifyListener(new ModifyListener() {
-			@Override
-			public void modifyText(final ModifyEvent e) {
-				fireInputChanged();
-			}
-		});
+		if (setup.getInputChangeEventPolicy() == InputChangeEventPolicy.ANY_CHANGE) {
+			getUiReference().addModifyListener(new ModifyListener() {
+				@Override
+				public void modifyText(final ModifyEvent e) {
+					fireInputChanged(getUiReference().getText());
+				}
+			});
+		}
+		else if (setup.getInputChangeEventPolicy() == InputChangeEventPolicy.EDIT_FINISHED) {
+			getUiReference().addFocusListener(new FocusAdapter() {
+				@Override
+				public void focusLost(final FocusEvent e) {
+					fireInputChanged(getUiReference().getText());
+				}
+			});
+		}
+		else {
+			throw new IllegalArgumentException("InputChangeEventPolicy '" + setup.getInputChangeEventPolicy() + "' is not known.");
+		}
 
 	}
 
@@ -85,6 +101,9 @@ public class ComboBoxSelectionImpl extends AbstractInputControl implements IComb
 	@Override
 	public void setSelectedIndex(final int index) {
 		getUiReference().select(index);
+		if (!getUiReference().isFocusControl()) {
+			fireInputChanged(getUiReference().getText());
+		}
 	}
 
 	@Override

@@ -33,10 +33,13 @@ import java.util.Set;
 
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.controler.IInputObservable;
+import org.jowidgets.util.NullCompatibleEquivalence;
 
 public class InputObservable implements IInputObservable {
 
 	private final Set<IInputListener> inputListeners;
+
+	private Object lastValue;
 
 	public InputObservable() {
 		super();
@@ -53,9 +56,12 @@ public class InputObservable implements IInputObservable {
 		this.inputListeners.remove(listener);
 	}
 
-	public void fireInputChanged() {
-		for (final IInputListener inputListener : inputListeners) {
-			inputListener.inputChanged();
+	public void fireInputChanged(final Object value) {
+		if (!NullCompatibleEquivalence.equals(value, lastValue)) {
+			for (final IInputListener inputListener : inputListeners) {
+				inputListener.inputChanged();
+			}
+			lastValue = value;
 		}
 	}
 

@@ -29,6 +29,9 @@ package org.jowidgets.examples.rwt;
 
 import org.jowidgets.api.toolkit.IToolkit;
 import org.jowidgets.api.toolkit.IToolkitProvider;
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
+import org.jowidgets.common.types.InputChangeEventPolicy;
+import org.jowidgets.common.widgets.builder.IInputObservableSetupBuilderCommon;
 
 public class RwtToolkitProvider implements IToolkitProvider {
 
@@ -36,7 +39,18 @@ public class RwtToolkitProvider implements IToolkitProvider {
 
 		@Override
 		protected IToolkit initialValue() {
-			return new SwtToolkit();
+
+			final IToolkit result = new SwtToolkit();
+
+			final IDefaultInitializer<IInputObservableSetupBuilderCommon<?>> defaultInitializer = new IDefaultInitializer<IInputObservableSetupBuilderCommon<?>>() {
+				@Override
+				public void initialize(final IInputObservableSetupBuilderCommon<?> builder) {
+					builder.setInputChangeEventPolicy(InputChangeEventPolicy.EDIT_FINISHED);
+				}
+			};
+			result.getBluePrintFactory().addDefaultsInitializer(IInputObservableSetupBuilderCommon.class, defaultInitializer);
+
+			return result;
 		}
 
 	};

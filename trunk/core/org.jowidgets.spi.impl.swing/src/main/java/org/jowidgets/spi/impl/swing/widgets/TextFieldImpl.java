@@ -27,11 +27,16 @@
  */
 package org.jowidgets.spi.impl.swing.widgets;
 
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import org.jowidgets.common.mask.TextMaskMode;
+import org.jowidgets.common.types.InputChangeEventPolicy;
 import org.jowidgets.common.verify.IInputVerifier;
+import org.jowidgets.spi.impl.controler.InputObservable;
 import org.jowidgets.spi.impl.mask.TextMaskVerifierFactory;
 import org.jowidgets.spi.impl.swing.widgets.util.InputModifierDocument;
 import org.jowidgets.spi.impl.verify.InputVerifierHelper;
@@ -47,7 +52,25 @@ public class TextFieldImpl extends AbstractInputControl implements ITextControlS
 
 		final IInputVerifier inputVerifier = InputVerifierHelper.getInputVerifier(maskVerifier, setup);
 
-		getUiReference().setDocument(new InputModifierDocument(getUiReference(), inputVerifier, this, setup.getMaxLength()));
+		final InputObservable inputObservable;
+		if (setup.getInputChangeEventPolicy() == InputChangeEventPolicy.ANY_CHANGE) {
+			inputObservable = this;
+		}
+		else if (setup.getInputChangeEventPolicy() == InputChangeEventPolicy.EDIT_FINISHED) {
+			inputObservable = null;
+			getUiReference().addFocusListener(new FocusAdapter() {
+				@Override
+				public void focusLost(final FocusEvent e) {
+					fireInputChanged(getText());
+				}
+			});
+		}
+		else {
+			throw new IllegalArgumentException("InputChangeEventPolicy '" + setup.getInputChangeEventPolicy() + "' is not known.");
+		}
+
+		getUiReference().setDocument(
+				new InputModifierDocument(getUiReference(), inputVerifier, inputObservable, setup.getMaxLength()));
 		if (setup.getMask() != null && TextMaskMode.FULL_MASK == setup.getMask().getMode()) {
 			setText(setup.getMask().getPlaceholder());
 		}
@@ -66,6 +89,9 @@ public class TextFieldImpl extends AbstractInputControl implements ITextControlS
 	@Override
 	public void setText(final String text) {
 		getUiReference().setText(text);
+		if (!getUiReference().isFocusOwner()) {
+			fireInputChanged(getText());
+		}
 	}
 
 	@Override

@@ -29,6 +29,8 @@ package org.jowidgets.spi.impl.swing.widgets;
 
 import java.awt.Component;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 import javax.swing.ComboBoxEditor;
 import javax.swing.JTextField;
@@ -36,18 +38,18 @@ import javax.swing.UIManager;
 import javax.swing.border.Border;
 
 import org.jowidgets.common.mask.TextMaskMode;
+import org.jowidgets.common.types.InputChangeEventPolicy;
 import org.jowidgets.common.verify.IInputVerifier;
+import org.jowidgets.spi.impl.controler.InputObservable;
 import org.jowidgets.spi.impl.mask.TextMaskVerifierFactory;
 import org.jowidgets.spi.impl.swing.widgets.util.InputModifierDocument;
 import org.jowidgets.spi.impl.verify.InputVerifierHelper;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSetupSpi;
-import org.jowidgets.util.NullCompatibleEquivalence;
 
 public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi {
 
 	private final ComboBoxEditorImpl comboBoxEditor;
-	private String lastValue;
 	private final Integer maxLength;
 
 	public ComboBoxImpl(final IComboBoxSetupSpi setup) {
@@ -59,7 +61,9 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 
 		final IInputVerifier maskVerifier = TextMaskVerifierFactory.create(this, setup.getMask());
 
-		this.comboBoxEditor = new ComboBoxEditorImpl(InputVerifierHelper.getInputVerifier(maskVerifier, setup));
+		this.comboBoxEditor = new ComboBoxEditorImpl(
+			InputVerifierHelper.getInputVerifier(maskVerifier, setup),
+			setup.getInputChangeEventPolicy());
 
 		getUiReference().setEditor(comboBoxEditor);
 
@@ -104,8 +108,9 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 		private boolean setItemInvoked;
 		private final JTextField textField;
 		private final InputModifierDocument modifierDocument;
+		private final InputObservable inputObservable;
 
-		public ComboBoxEditorImpl(final IInputVerifier inputVerifier) {
+		public ComboBoxEditorImpl(final IInputVerifier inputVerifier, final InputChangeEventPolicy inputChangeEventPolicy) {
 			super();
 			this.textField = new JTextField();
 
@@ -116,7 +121,23 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 
 			this.setItemInvoked = false;
 
-			this.modifierDocument = new InputModifierDocument(textField, inputVerifier, ComboBoxImpl.this, maxLength);
+			if (inputChangeEventPolicy == InputChangeEventPolicy.ANY_CHANGE) {
+				inputObservable = ComboBoxImpl.this;
+			}
+			else if (inputChangeEventPolicy == InputChangeEventPolicy.EDIT_FINISHED) {
+				inputObservable = null;
+				textField.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusLost(final FocusEvent e) {
+						fireInputChanged(getText());
+					}
+				});
+			}
+			else {
+				throw new IllegalArgumentException("InputChangeEventPolicy '" + inputChangeEventPolicy + "' is not known.");
+			}
+
+			this.modifierDocument = new InputModifierDocument(textField, inputVerifier, inputObservable, maxLength);
 
 			this.textField.setDocument(modifierDocument);
 		}
@@ -146,7 +167,7 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 				setItemInvoked = true;
 				textField.setText((String) anObject);
 				setItemInvoked = false;
-				modifierDocument.setInputObservable(ComboBoxImpl.this);
+				modifierDocument.setInputObservable(inputObservable);
 			}
 		}
 
@@ -166,14 +187,6 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 		@Override
 		public void removeActionListener(final ActionListener listener) {}
 
-	}
-
-	@Override
-	public void fireInputChanged() {
-		if (!NullCompatibleEquivalence.equals(getText(), lastValue)) {
-			super.fireInputChanged();
-			lastValue = getText();
-		}
 	}
 
 }

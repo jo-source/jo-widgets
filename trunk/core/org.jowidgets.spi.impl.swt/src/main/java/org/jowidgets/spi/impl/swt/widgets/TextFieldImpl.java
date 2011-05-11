@@ -57,12 +57,12 @@ public class TextFieldImpl extends AbstractTextInputControl {
 			getUiReference().setTextLimit(setup.getMaxLength().intValue());
 		}
 
-		registerTextControl(getUiReference());
-
 		if (SwtOptions.hasInputVerification() && setup.getMask() != null && TextMaskMode.FULL_MASK == setup.getMask().getMode()) {
 			getUiReference().setMessage("DD-MM-YYYY HH:MM:SS");
 			setText(setup.getMask().getPlaceholder());
 		}
+
+		registerTextControl(getUiReference(), setup.getInputChangeEventPolicy());
 	}
 
 	@Override
@@ -82,6 +82,9 @@ public class TextFieldImpl extends AbstractTextInputControl {
 		}
 		else {
 			getUiReference().setText("");
+		}
+		if (!getUiReference().isFocusControl()) {
+			fireInputChanged(getText());
 		}
 	}
 

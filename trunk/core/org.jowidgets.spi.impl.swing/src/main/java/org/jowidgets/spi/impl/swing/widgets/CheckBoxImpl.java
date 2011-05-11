@@ -57,7 +57,7 @@ public class CheckBoxImpl extends AbstractInputControl implements ICheckBoxSpi {
 
 			@Override
 			public void itemStateChanged(final ItemEvent e) {
-				fireInputChanged();
+				fireInputChanged(getUiReference().getText());
 			}
 		});
 

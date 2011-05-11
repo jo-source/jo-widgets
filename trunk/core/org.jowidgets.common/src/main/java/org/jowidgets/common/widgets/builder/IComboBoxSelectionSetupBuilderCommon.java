@@ -27,8 +27,8 @@
  */
 package org.jowidgets.common.widgets.builder;
 
-
 public interface IComboBoxSelectionSetupBuilderCommon<INSTANCE_TYPE extends IComboBoxSelectionSetupBuilderCommon<?>> extends
+		IInputObservableSetupBuilderCommon<INSTANCE_TYPE>,
 		IComponentSetupBuilderCommon<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setAutoCompletion(final boolean autoCompletion);

@@ -32,6 +32,7 @@ import org.jowidgets.common.widgets.builder.IButtonSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ICheckBoxSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.IDialogSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.IFrameSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.IInputObservableSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.IPopupDialogSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.IScrollCompositeSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ISeparatorSetupBuilderCommon;
@@ -48,6 +49,7 @@ import org.jowidgets.impl.widgets.common.blueprint.defaults.ButtonDefaultsCommon
 import org.jowidgets.impl.widgets.common.blueprint.defaults.CheckBoxDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.DialogDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.FrameDefaultsCommon;
+import org.jowidgets.impl.widgets.common.blueprint.defaults.InputObservableDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.PopupDialogDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.ScrolledCompositeDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.SeparatorDefaultsCommon;
@@ -82,5 +84,6 @@ public class CommonDefaultsInitializerRegistry extends DefaultsInitializerRegist
 		register(IToolBarSetupBuilderCommon.class, new ToolBarDefaultsCommon());
 		register(IPopupDialogSetupBuilderCommon.class, new PopupDialogDefaultsCommon());
 		register(ITextComponentSetupBuilderCommon.class, new TextComponentDefaultsCommon());
+		register(IInputObservableSetupBuilderCommon.class, new InputObservableDefaultsCommon());
 	}
 }

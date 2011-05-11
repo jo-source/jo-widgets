@@ -27,6 +27,8 @@
  */
 package org.jowidgets.spi.impl.swing.widgets;
 
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -34,6 +36,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
+import org.jowidgets.common.types.InputChangeEventPolicy;
 import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
 
@@ -42,7 +45,28 @@ public class ComboBoxSelectionImpl extends AbstractInputControl implements IComb
 	public ComboBoxSelectionImpl(final IComboBoxSelectionSetupSpi setup) {
 		super(new JComboBox(new DefaultComboBoxModel(setup.getElements())));
 
-		addItemListener();
+		if (setup.getInputChangeEventPolicy() == InputChangeEventPolicy.ANY_CHANGE) {
+			getUiReference().addItemListener(new ItemListener() {
+				@Override
+				public void itemStateChanged(final ItemEvent e) {
+					if (e.getID() == ItemEvent.ITEM_STATE_CHANGED && e.getStateChange() == ItemEvent.SELECTED) {
+						fireInputChanged(getUiReference().getSelectedItem());
+					}
+				}
+			});
+		}
+		else if (setup.getInputChangeEventPolicy() == InputChangeEventPolicy.EDIT_FINISHED) {
+			getUiReference().addFocusListener(new FocusAdapter() {
+				@Override
+				public void focusLost(final FocusEvent e) {
+					fireInputChanged(getUiReference().getSelectedItem());
+				}
+			});
+		}
+		else {
+			throw new IllegalArgumentException("InputChangeEventPolicy '" + setup.getInputChangeEventPolicy() + "' is not known.");
+		}
+
 	}
 
 	@Override
@@ -83,19 +107,6 @@ public class ComboBoxSelectionImpl extends AbstractInputControl implements IComb
 	@Override
 	public void setElements(final String[] elements) {
 		getUiReference().setModel(new DefaultComboBoxModel(elements));
-	}
-
-	private void addItemListener() {
-		final JComboBox comboBox = getUiReference();
-		comboBox.addItemListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(final ItemEvent e) {
-				if (e.getID() == ItemEvent.ITEM_STATE_CHANGED && e.getStateChange() == ItemEvent.SELECTED) {
-					fireInputChanged();
-				}
-			}
-		});
-
 	}
 
 }

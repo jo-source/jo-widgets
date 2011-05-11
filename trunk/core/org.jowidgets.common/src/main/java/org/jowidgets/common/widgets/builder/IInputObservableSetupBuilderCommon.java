@@ -25,18 +25,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.common.widgets.descriptor.setup;
+package org.jowidgets.common.widgets.builder;
 
-import java.util.List;
+import org.jowidgets.common.types.InputChangeEventPolicy;
+import org.jowidgets.common.widgets.builder.ISetupBuilder;
 
-import org.jowidgets.common.verify.IInputVerifier;
+public interface IInputObservableSetupBuilderCommon<INSTANCE_TYPE extends IInputObservableSetupBuilderCommon<?>> extends
+		ISetupBuilder<INSTANCE_TYPE> {
 
-public interface ITextComponentSetupCommon extends IComponentSetupCommon, IInputObservableSetupCommon {
-
-	IInputVerifier getInputVerifier();
-
-	List<String> getAcceptingRegExps();
-
-	Integer getMaxLength();
+	INSTANCE_TYPE setInputChangeEventPolicy(InputChangeEventPolicy policy);
 
 }
