@@ -101,6 +101,7 @@ final class MigLayout implements IMigLayout {
 			throw new IllegalArgumentException("Illegal constraint type: " + constraints.getClass().toString());
 		}
 		this.constraints = constraints;
+
 		grid = null;
 	}
 
@@ -122,6 +123,7 @@ final class MigLayout implements IMigLayout {
 			throw new IllegalArgumentException("Illegal constraint type: " + constraints.getClass().toString());
 		}
 		columnConstraints = constraints;
+
 		grid = null;
 	}
 
@@ -143,6 +145,7 @@ final class MigLayout implements IMigLayout {
 			throw new IllegalArgumentException("Illegal constraint type: " + constraints.getClass().toString());
 		}
 		rowConstraints = constraints;
+
 		grid = null;
 	}
 
@@ -197,6 +200,7 @@ final class MigLayout implements IMigLayout {
 			throw new IllegalArgumentException("Constraint must be String or ComponentConstraint: "
 				+ constr.getClass().toString());
 		}
+
 		grid = null;
 	}
 
@@ -235,8 +239,6 @@ final class MigLayout implements IMigLayout {
 				}
 			}
 		}
-
-		changed = true;
 
 		if (changed) {
 			scrConstrMap.clear();
@@ -299,6 +301,7 @@ final class MigLayout implements IMigLayout {
 		checkCache();
 
 		final Rectangle r = container.getClientArea();
+		System.out.println(container + " - Rectangle: " + r);
 		final int[] b = new int[] {r.getX(), r.getY(), r.getWidth(), r.getHeight()};
 
 		final boolean layoutAgain = grid.layout(b, lc.getAlignX(), lc.getAlignY(), false, true);

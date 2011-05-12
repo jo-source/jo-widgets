@@ -48,6 +48,8 @@ class JoMigComponentWrapper implements ComponentWrapper {
 	private final IComponent component;
 	private int compType = TYPE_UNSET;
 
+	private Dimension preferredSize;
+
 	JoMigComponentWrapper(final IComponent component) {
 		this.component = component;
 	}
@@ -267,12 +269,14 @@ class JoMigComponentWrapper implements ComponentWrapper {
 	@Override
 	public int getLayoutHashCode() {
 		final Dimension size = component.getSize();
-		final Dimension preferredSize;
-		if (component instanceof IControl) {
-			preferredSize = ((IControl) component).getPreferredSize();
-		}
-		else {
-			preferredSize = new Dimension(0, 0);
+
+		if (preferredSize == null) {
+			if (component instanceof IControl) {
+				preferredSize = ((IControl) component).getPreferredSize();
+			}
+			else {
+				preferredSize = new Dimension(0, 0);
+			}
 		}
 		int h = preferredSize.getWidth() + (preferredSize.getHeight() << 12) + (size.getWidth() << 22) + (size.getHeight() << 16);
 

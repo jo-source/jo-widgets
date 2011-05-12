@@ -69,6 +69,7 @@ import org.jowidgets.common.model.ITableColumn;
 import org.jowidgets.common.model.ITableColumnModelObservable;
 import org.jowidgets.common.model.ITableDataModelObservable;
 import org.jowidgets.common.types.AlignmentHorizontal;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.tools.controler.ComponentAdapter;
@@ -214,7 +215,7 @@ public final class MigLayoutDemoComposite {
 
 	private final ITextArea descrTextArea;
 
-	private IControl windowMovedListeningWidget = null;
+	private ITabItem windowMovedListeningWidget = null;
 
 	private final AtomicBoolean allowDispatch = new AtomicBoolean(true);
 
@@ -222,6 +223,7 @@ public final class MigLayoutDemoComposite {
 		parentContainer.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void positionChanged() {
+				System.out.println("window moved");
 				windowMoved();
 			}
 		});
@@ -233,7 +235,8 @@ public final class MigLayoutDemoComposite {
 
 		// font bold...
 		final ITabItem tabPickerList = layoutPickerTabPane.addItem(BPF.tabItem().setText("Example Browser"));
-		final ITree pickerList = tabPickerList.add(BPF.tree(), "spany,grow");
+		tabPickerList.setLayout(LFP.migLayoutBuilder().constraints("fill, insets 0").build());
+		final ITree pickerList = tabPickerList.add(BPF.tree(), "spany, grow");
 		//pickerList.setBackgroundRole(layoutPickerTabPane.backgroundRole());
 
 		for (int i = 0; i < PANELS.length; i++) {
@@ -249,6 +252,7 @@ public final class MigLayoutDemoComposite {
 		tabDescriptionPane.setLayout(LFP.migLayoutBuilder().constraints("fill, insets 0").build());
 		descrTextArea = tabDescriptionPane.add(BPF.textArea().setEditable(false).setBorder(false), "grow");
 
+		//setActivePage(16);
 		setActivePage(0);
 		parentContainer.setSize(900, 600);
 
@@ -259,6 +263,31 @@ public final class MigLayoutDemoComposite {
 				setActivePage(getSelectionIndex(event.getSelected().get(0).getText()));
 			}
 		});
+	}
+
+	private void showPref(final ITabItem tabItem, final String prefix) {
+		//		final ILayouter layout = (ILayouter) tabItem.getLayout();
+		//		System.out.println(prefix + tabItem + ": " + layout.getPreferredSize() + " [" + tabItem.getSize() + "]");
+		//		for (final IControl child : tabItem.getChildren()) {
+		//			showPref(child, "  " + prefix);
+		//		}
+	}
+
+	private void showPref(final IControl control, final String prefix) {
+		//		System.out.println(prefix + control + ": " + control.getPreferredSize() + " [" + control.getSize() + "]");
+		//		if (control instanceof IContainer) {
+		//			final IContainer container = (IContainer) control;
+		//			for (final IControl child : container.getChildren()) {
+		//				showPref(child, "  " + prefix);
+		//			}
+		//		}
+		//		if (control instanceof ITabFolder) {
+		//			final ITabFolder tabFolder = (ITabFolder) control;
+		//
+		//			for (final ITabItem child : tabFolder.getItems()) {
+		//				showPref(child, "  " + prefix);
+		//			}
+		//		}
 	}
 
 	private void setActivePage(final int index) {
@@ -276,6 +305,7 @@ public final class MigLayoutDemoComposite {
 				MigLayoutDemoComposite.class.getMethod(methodName, new Class[] {}).invoke(
 						MigLayoutDemoComposite.this,
 						new Object[] {});
+
 			}
 			catch (final Exception e1) {
 				// CHECKSTYLE:OFF
@@ -284,6 +314,7 @@ public final class MigLayoutDemoComposite {
 			}
 
 			layoutDisplayPanel.redraw();
+			showPref(layoutDisplayPanel, "");
 			allowDispatch.set(true);
 		}
 	}
@@ -297,8 +328,12 @@ public final class MigLayoutDemoComposite {
 		return -1;
 	}
 
+	private static ITabFolder createTabFolder(final IContainer layoutDisplayPanel) {
+		return layoutDisplayPanel.add(BPF.tabFolder(), "grow, wmin 500");
+	}
+
 	public void createWelcome() {
-		final ITabFolder result = layoutDisplayPanel.add(BPF.tabFolder(), "grow, wmin 500");
+		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
 		final ITabItem panel = result.addItem(BPF.tabItem().setText("Welcome"));
 		panel.setLayout(LFP.migLayoutBuilder().constraints("ins 20, fill").build());
@@ -314,7 +349,7 @@ public final class MigLayoutDemoComposite {
 			+ "miglayout@miginfocom.com";
 
 		final ITextArea textArea = panel.add(BPF.textArea().setBorder(false).setText(s), "w 500:500, ay top, grow, push");
-
+		textArea.setPreferredSize(new Dimension(500, 300));
 		textArea.setBackgroundColor(panel.getBackgroundColor());
 		//textArea.setBackgroundMode(SWT.INHERIT_NONE);
 
@@ -322,7 +357,7 @@ public final class MigLayoutDemoComposite {
 	}
 
 	public void createQuickStart() {
-		final ITabFolder result = layoutDisplayPanel.add(BPF.tabFolder(), "grow, wmin 500");
+		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
 		final ITabItem panel = result.addItem(BPF.tabItem().setText("Quick Start"));
 		panel.setLayout(LFP.migLayoutBuilder().constraints("wrap").columnConstraints(
@@ -350,7 +385,7 @@ public final class MigLayoutDemoComposite {
 	}
 
 	private ITabFolder createPlainImpl(final IComposite parent) {
-		final ITabFolder result = parent.add(BPF.tabFolder(), "grow, wmin 500");
+		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
 		final ITabItem panel = result.addItem(BPF.tabItem().setText("Plain"));
 		panel.setLayout(LFP.migLayoutBuilder().columnConstraints("[r][100lp, fill][60lp][95lp, fill]").build());
@@ -385,7 +420,7 @@ public final class MigLayoutDemoComposite {
 	}
 
 	public void createAlignments() {
-		final ITabFolder result = layoutDisplayPanel.add(BPF.tabFolder(), "grow, wmin 500");
+		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
 		// Horizontal tab
 		final ITabItem horTab = result.addItem(BPF.tabItem().setText("Horizontal"));
@@ -444,7 +479,7 @@ public final class MigLayoutDemoComposite {
 	}
 
 	public void createCellAlignments() {
-		final ITabFolder result = layoutDisplayPanel.add(BPF.tabFolder(), "grow, wmin 500");
+		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
 		// Horizontal
 		final ITabItem hPanel = result.addItem(BPF.tabItem().setText("Horizontal"));
@@ -485,7 +520,7 @@ public final class MigLayoutDemoComposite {
 	}
 
 	public void createBasicSizes() {
-		final ITabFolder result = layoutDisplayPanel.add(BPF.tabFolder(), "grow, wmin 500");
+		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
 		// Horizontal tab
 		final ITabItem horTab = result.addItem(BPF.tabItem().setText("Horizontal - Column size set"));
@@ -530,7 +565,7 @@ public final class MigLayoutDemoComposite {
 	}
 
 	public void createGrowing() {
-		final ITabFolder result = layoutDisplayPanel.add(BPF.tabFolder(), "grow, wmin 500");
+		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
 		// All tab
 		final ITabItem allTab = result.addItem(BPF.tabItem().setText("All"));
@@ -601,7 +636,7 @@ public final class MigLayoutDemoComposite {
 	}
 
 	public void createGrowShrink() {
-		final ITabFolder result = layoutDisplayPanel.add(BPF.tabFolder(), "grow, wmin 500");
+		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
 		// shrink tab
 		final ITabItem shrinkPanel = result.addItem(BPF.tabItem().setText("Shrink"));
@@ -679,7 +714,7 @@ public final class MigLayoutDemoComposite {
 	}
 
 	public void createSpan() {
-		final ITabFolder result = layoutDisplayPanel.add(BPF.tabFolder(), "grow, wmin 500");
+		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
 		// Horizontal span
 		final ITabItem colPanel = result.addItem(BPF.tabItem().setText("Column Span/Split"));
@@ -721,7 +756,7 @@ public final class MigLayoutDemoComposite {
 	}
 
 	public void createFlowDirection() {
-		final ITabFolder result = layoutDisplayPanel.add(BPF.tabFolder(), "grow, wmin 500");
+		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
 		createFlowPanel(result, "Layout: flowx, Cell: flowx", "", "flowx");
 		createFlowPanel(result, "Layout: flowx, Cell: flowy", "", "flowy");
@@ -748,7 +783,7 @@ public final class MigLayoutDemoComposite {
 	}
 
 	public void createGrouping() {
-		final ITabFolder result = layoutDisplayPanel.add(BPF.tabFolder(), "grow, wmin 500");
+		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
 		// Ungrouped
 		final ITabItem ugPanel = result.addItem(BPF.tabItem().setText("Ungrouped"));
@@ -832,7 +867,7 @@ public final class MigLayoutDemoComposite {
 	}
 
 	public void createUnits() {
-		final ITabFolder result = layoutDisplayPanel.add(BPF.tabFolder(), "grow, wmin 500");
+		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
 		// Horizontal
 		final ITabItem hPanel = result.addItem(BPF.tabItem().setText("Horizontal"));
@@ -891,7 +926,7 @@ public final class MigLayoutDemoComposite {
 	}
 
 	public void createComponentSizes() {
-		final ITabFolder result = layoutDisplayPanel.add(BPF.tabFolder(), "grow, wmin 500");
+		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
 		final ITabItem tabPanel = result.addItem(BPF.tabItem().setText("Component Sizes"));
 		tabPanel.setLayout(LFP.migLayoutBuilder().constraints("fill").build());
@@ -930,7 +965,7 @@ public final class MigLayoutDemoComposite {
 	}
 
 	public void createBoundSizes() {
-		final ITabFolder result = layoutDisplayPanel.add(BPF.tabFolder(), "grow, wmin 500");
+		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
 		for (int i = 0; i < 2; i++) { // Jumping for 0 and Stable for 1
 			final String colConstr = i == 0 ? "[right][300]" : "[right, 150lp:pref][300]";
@@ -966,7 +1001,7 @@ public final class MigLayoutDemoComposite {
 	}
 
 	public void createCellPosition() {
-		final ITabFolder result = layoutDisplayPanel.add(BPF.tabFolder(), "grow, wmin 500");
+		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
 		// Absolute grid position
 		final ITabItem absPanel = result.addItem(BPF.tabItem().setText("Absolute"));
@@ -1019,7 +1054,7 @@ public final class MigLayoutDemoComposite {
 	}
 
 	public void createOrientation() {
-		final ITabFolder result = layoutDisplayPanel.add(BPF.tabFolder(), "grow, wmin 500");
+		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
 		final ITabItem mainPanel = result.addItem(BPF.tabItem().setText("Orientation"));
 		mainPanel.setLayout(LFP.migLayoutBuilder().constraints("flowy").columnConstraints("[grow,fill]").rowConstraints(
@@ -1070,15 +1105,11 @@ public final class MigLayoutDemoComposite {
 	}
 
 	public void createAbsolutePosition() {
-		final ITabFolder result = layoutDisplayPanel.add(BPF.tabFolder(), "grow, wmin 500");
+		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
-		// Pos tab
-		final ITabItem posTabPanel = result.addItem(BPF.tabItem().setText("X Y Positions"));
-		posTabPanel.setLayout(LFP.migLayoutBuilder().constraints("fill").columnConstraints("[grow,fill]").rowConstraints(
-				"[grow,fill]").build());
-
-		final IComposite posPanel = posTabPanel.add(BPF.composite(), "grow");
+		final ITabItem posPanel = result.addItem(BPF.tabItem().setText("X Y Positions"));
 		posPanel.setLayout(LFP.migLayout());
+
 		windowMovedListeningWidget = posPanel;
 
 		createButton(posPanel, "pos 0.5al 0al", null);
@@ -1128,7 +1159,7 @@ public final class MigLayoutDemoComposite {
 	}
 
 	public void createComponentLinks() {
-		final ITabFolder result = layoutDisplayPanel.add(BPF.tabFolder(), "grow, wmin 500");
+		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
 		// Links tab
 		final ITabItem linksPanel = result.addItem(BPF.tabItem().setText("Component Links"));
@@ -1186,7 +1217,7 @@ public final class MigLayoutDemoComposite {
 	}
 
 	public void createDocking() {
-		final ITabFolder result = layoutDisplayPanel.add(BPF.tabFolder(), "grow, wmin 500");
+		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
 		final ITabItem p1 = result.addItem(BPF.tabItem().setText("Docking 1"));
 		p1.setLayout(LFP.migLayoutBuilder().constraints("fill").build());
@@ -1344,7 +1375,7 @@ public final class MigLayoutDemoComposite {
 	}
 
 	public void createButtonBars() {
-		final ITabFolder result = layoutDisplayPanel.add(BPF.tabFolder(), "grow, wmin 500");
+		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
 		final ITabItem mainPanel = result.addItem(BPF.tabItem().setText("Button Bars"));
 		mainPanel.setLayout(LFP.migLayoutBuilder().constraints("ins 0 0 15lp 0").columnConstraints("[grow]").rowConstraints(
@@ -1452,7 +1483,7 @@ public final class MigLayoutDemoComposite {
 	}
 
 	public void createLayoutShowdown() {
-		final ITabFolder result = layoutDisplayPanel.add(BPF.tabFolder(), "grow, wmin 500");
+		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
 		final ITabItem p1 = result.addItem(BPF.tabItem().setText("Layout Showdown (pure)"));
 		p1.setLayout(LFP.migLayoutBuilder().columnConstraints("[]15[][grow,fill]15[grow]").build());
@@ -1524,7 +1555,7 @@ public final class MigLayoutDemoComposite {
 	}
 
 	public void createAPIConstraints1() {
-		final ITabFolder result = layoutDisplayPanel.add(BPF.tabFolder(), "grow, wmin 500");
+		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
 		final IMigLayoutToolkit cf = LFP.getMigLayoutToolkit();
 
@@ -1567,7 +1598,7 @@ public final class MigLayoutDemoComposite {
 	}
 
 	public void createAPIConstraints2() {
-		final ITabFolder result = layoutDisplayPanel.add(BPF.tabFolder(), "grow, wmin 500");
+		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
 		final IMigLayoutToolkit cf = LFP.getMigLayoutToolkit();
 
@@ -1610,6 +1641,8 @@ public final class MigLayoutDemoComposite {
 
 	private void windowMoved() {
 		if (windowMovedListeningWidget != null) {
+			//final ILayouter layout = (ILayouter) windowMovedListeningWidget.getLayout();
+			//layout.invalidate();
 			windowMovedListeningWidget.redraw();
 		}
 	}

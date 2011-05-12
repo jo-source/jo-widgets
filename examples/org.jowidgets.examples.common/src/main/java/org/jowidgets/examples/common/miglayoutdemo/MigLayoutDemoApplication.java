@@ -55,7 +55,7 @@ public class MigLayoutDemoApplication implements IApplication {
 	public void start(final IApplicationLifecycle lifecycle) {
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 
-		frame = Toolkit.createRootFrame(bpF.frame(frameTitle), lifecycle);
+		frame = Toolkit.createRootFrame(bpF.frame(frameTitle).autoPackOff(), lifecycle);
 		new MigLayoutDemoComposite(frame);
 
 		frame.setVisible(true);

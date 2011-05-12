@@ -46,7 +46,7 @@ public class LayoutFactoryProvider implements ILayoutFactoryProvider {
 	private static final ILayoutFactory<ILayouter> NULL_LAYOUT_FACTORY = createNullLayoutFactory();
 	private static final ILayoutFactory<ILayouter> PREFERRED_SIZE_LAYOUT_FACTORY = createPreferredSizeLayoutFactory();
 
-	private IMigLayoutToolkit migLayoutConstraintsFactory;
+	private IMigLayoutToolkit migLayoutConstraintsToolkit;
 
 	@Override
 	public ILayoutFactory<ILayouter> nullLayout() {
@@ -100,10 +100,10 @@ public class LayoutFactoryProvider implements ILayoutFactoryProvider {
 
 	@Override
 	public IMigLayoutToolkit getMigLayoutToolkit() {
-		if (migLayoutConstraintsFactory == null) {
-			migLayoutConstraintsFactory = new MigLayoutToolkit();
+		if (migLayoutConstraintsToolkit == null) {
+			migLayoutConstraintsToolkit = new MigLayoutToolkit();
 		}
-		return migLayoutConstraintsFactory;
+		return migLayoutConstraintsToolkit;
 	}
 
 	private static ILayoutFactory<ILayouter> createNullLayoutFactory() {

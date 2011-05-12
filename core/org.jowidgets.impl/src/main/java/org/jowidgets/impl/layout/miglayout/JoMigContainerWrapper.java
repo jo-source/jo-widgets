@@ -62,9 +62,9 @@ final class JoMigContainerWrapper extends JoMigComponentWrapper implements Conta
 
 	@Override
 	public Object getLayout() {
-		// TODO NM implement
 		//return getComponent().getLayout();
-		return null;
+		//throw new IllegalStateException();
+		return this;
 	}
 
 	@Override

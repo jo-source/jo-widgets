@@ -44,5 +44,5 @@ public interface IMigLayoutToolkit {
 
 	ILC lc();
 
-	// TODO NM add PlattformDetails here
+	// TODO NM add PlattformDefaults here
 }
