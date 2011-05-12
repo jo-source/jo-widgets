@@ -301,7 +301,6 @@ final class MigLayout implements IMigLayout {
 		checkCache();
 
 		final Rectangle r = container.getClientArea();
-		System.out.println(container + " - Rectangle: " + r);
 		final int[] b = new int[] {r.getX(), r.getY(), r.getWidth(), r.getHeight()};
 
 		final boolean layoutAgain = grid.layout(b, lc.getAlignX(), lc.getAlignY(), false, true);

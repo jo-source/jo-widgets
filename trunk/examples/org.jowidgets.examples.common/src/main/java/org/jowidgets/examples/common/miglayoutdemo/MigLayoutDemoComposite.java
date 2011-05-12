@@ -223,7 +223,6 @@ public final class MigLayoutDemoComposite {
 		parentContainer.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void positionChanged() {
-				System.out.println("window moved");
 				windowMoved();
 			}
 		});
@@ -265,30 +264,32 @@ public final class MigLayoutDemoComposite {
 		});
 	}
 
+	//CHECKSTYLE:OFF
 	private void showPref(final ITabItem tabItem, final String prefix) {
-		//		final ILayouter layout = (ILayouter) tabItem.getLayout();
-		//		System.out.println(prefix + tabItem + ": " + layout.getPreferredSize() + " [" + tabItem.getSize() + "]");
-		//		for (final IControl child : tabItem.getChildren()) {
-		//			showPref(child, "  " + prefix);
-		//		}
+		System.out.println(prefix + tabItem + ": " + tabItem.getSize());
+		for (final IControl child : tabItem.getChildren()) {
+			showPref(child, "  " + prefix);
+		}
 	}
 
 	private void showPref(final IControl control, final String prefix) {
-		//		System.out.println(prefix + control + ": " + control.getPreferredSize() + " [" + control.getSize() + "]");
-		//		if (control instanceof IContainer) {
-		//			final IContainer container = (IContainer) control;
-		//			for (final IControl child : container.getChildren()) {
-		//				showPref(child, "  " + prefix);
-		//			}
-		//		}
-		//		if (control instanceof ITabFolder) {
-		//			final ITabFolder tabFolder = (ITabFolder) control;
-		//
-		//			for (final ITabItem child : tabFolder.getItems()) {
-		//				showPref(child, "  " + prefix);
-		//			}
-		//		}
+		System.out.println(prefix + control + ": " + control.getPreferredSize() + " [" + control.getSize() + "]");
+		if (control instanceof IContainer) {
+			final IContainer container = (IContainer) control;
+			for (final IControl child : container.getChildren()) {
+				showPref(child, "  " + prefix);
+			}
+		}
+		if (control instanceof ITabFolder) {
+			final ITabFolder tabFolder = (ITabFolder) control;
+
+			for (final ITabItem child : tabFolder.getItems()) {
+				showPref(child, "  " + prefix);
+			}
+		}
 	}
+
+	//CHECKSTYLE:ON
 
 	private void setActivePage(final int index) {
 		if (index == -1) {
@@ -314,7 +315,7 @@ public final class MigLayoutDemoComposite {
 			}
 
 			layoutDisplayPanel.redraw();
-			showPref(layoutDisplayPanel, "");
+			//showPref(layoutDisplayPanel, "");
 			allowDispatch.set(true);
 		}
 	}
