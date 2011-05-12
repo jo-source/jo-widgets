@@ -31,6 +31,7 @@ package org.jowidgets.spi.impl.swt;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -117,21 +118,41 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider {
 
 	@Override
 	public Position toScreen(final Position localPosition, final IComponentCommon component) {
-		if (!(component.getUiReference() instanceof Control)) {
-			throw new IllegalArgumentException("UiReference of component must be instance of '" + Control.class.getName() + "'");
+		final Control control;
+		if (component.getUiReference() instanceof Control) {
+			control = (Control) component.getUiReference();
+		}
+		else if (component.getUiReference() instanceof CTabItem) {
+			control = ((CTabItem) component.getUiReference()).getControl();
+		}
+		else {
+			throw new IllegalArgumentException("UiReference of component must be instance of '"
+				+ Control.class.getName()
+				+ "' or '"
+				+ CTabItem.class.getName()
+				+ "'");
 		}
 
-		final Control control = (Control) component.getUiReference();
 		return PositionConvert.convert(control.toDisplay(PositionConvert.convert(localPosition)));
 	}
 
 	@Override
 	public Position toLocal(final Position screenPosition, final IComponentCommon component) {
-		if (!(component.getUiReference() instanceof Control)) {
-			throw new IllegalArgumentException("UiReference of component must be instance of '" + Control.class.getName() + "'");
+		final Control control;
+		if (component.getUiReference() instanceof Control) {
+			control = (Control) component.getUiReference();
+		}
+		else if (component.getUiReference() instanceof CTabItem) {
+			control = ((CTabItem) component.getUiReference()).getControl();
+		}
+		else {
+			throw new IllegalArgumentException("UiReference of component must be instance of '"
+				+ Control.class.getName()
+				+ "' or '"
+				+ CTabItem.class.getName()
+				+ "'");
 		}
 
-		final Control control = (Control) component.getUiReference();
 		return PositionConvert.convert(control.toControl(PositionConvert.convert(screenPosition)));
 	}
 
