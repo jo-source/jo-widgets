@@ -268,7 +268,7 @@ class JoMigComponentWrapper implements ComponentWrapper {
 
 	@Override
 	public int getLayoutHashCode() {
-		final Dimension size = component.getSize();
+		//final Dimension size = component.getSize();
 
 		if (preferredSize == null) {
 			if (component instanceof IControl) {
@@ -278,7 +278,7 @@ class JoMigComponentWrapper implements ComponentWrapper {
 				preferredSize = new Dimension(0, 0);
 			}
 		}
-		int h = preferredSize.getWidth() + (preferredSize.getHeight() << 12) + (size.getWidth() << 22) + (size.getHeight() << 16);
+		int h = preferredSize.getWidth() + (preferredSize.getHeight() << 12); // + (size.getWidth() << 22) + (size.getHeight() << 16);
 
 		if (component.isVisible()) {
 			h |= (1 << 25);

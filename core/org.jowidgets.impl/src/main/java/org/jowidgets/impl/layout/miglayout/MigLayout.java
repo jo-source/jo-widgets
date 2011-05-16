@@ -76,6 +76,12 @@ final class MigLayout implements IMigLayout {
 	private transient int lastModCount = PlatformDefaults.getModCount();
 	private transient int lastHash = -1;
 
+	private final StringBuilder reason = new StringBuilder();
+
+	private long cacheTime = 0;
+	//private long cacheTimeSetMs = 0;
+	private long cacheTimeSetNano = 0;
+
 	public MigLayout(
 		final IContainer container,
 		final Object constraints,
@@ -93,6 +99,9 @@ final class MigLayout implements IMigLayout {
 		if (constraints == null || constraints instanceof String) {
 			constraints = ConstraintParser.prepare((String) constraints);
 			lc = ConstraintParser.parseLayoutConstraint((String) constraints);
+		}
+		else if (constraints instanceof LCWrapper) {
+			lc = ((LCWrapper) constraints).getLC();
 		}
 		else if (constraints instanceof LC) {
 			lc = (LC) constraints;
@@ -116,6 +125,9 @@ final class MigLayout implements IMigLayout {
 			constraints = ConstraintParser.prepare((String) constraints);
 			colSpecs = ConstraintParser.parseColumnConstraints((String) constraints);
 		}
+		else if (constraints instanceof ACWrapper) {
+			colSpecs = ((ACWrapper) constraints).getAC();
+		}
 		else if (constraints instanceof AC) {
 			colSpecs = (AC) constraints;
 		}
@@ -137,6 +149,9 @@ final class MigLayout implements IMigLayout {
 		if (constraints == null || constraints instanceof String) {
 			constraints = ConstraintParser.prepare((String) constraints);
 			rowSpecs = ConstraintParser.parseRowConstraints((String) constraints);
+		}
+		else if (constraints instanceof ACWrapper) {
+			rowSpecs = ((ACWrapper) constraints).getAC();
 		}
 		else if (constraints instanceof AC) {
 			rowSpecs = (AC) constraints;
@@ -191,6 +206,10 @@ final class MigLayout implements IMigLayout {
 
 			scrConstrMap.put(comp, constr);
 			ccMap.put(cw, ConstraintParser.parseComponentConstraint(cStr));
+		}
+		else if (constr instanceof CCWrapper) {
+			scrConstrMap.put(comp, constr);
+			ccMap.put(cw, ((CCWrapper) constr).getCC());
 		}
 		else if (constr instanceof CC) {
 			scrConstrMap.put(comp, constr);
@@ -267,32 +286,71 @@ final class MigLayout implements IMigLayout {
 		}
 	}
 
+	private boolean calculateCache() {
+		//		if (Math.abs(cacheTimeSetMs - System.currentTimeMillis()) > 1000) {
+		//			cacheTime = 0;
+		//			return true;
+		//		}
+
+		//CHECKSTYLE:OFF
+		if (System.nanoTime() - cacheTimeSetNano < 2 * cacheTime) {
+			// start thread here...
+			//return false;
+		}
+		//CHECKSTYLE:ON
+		return true;
+	}
+
 	/**
 	 * Check if something has changed and if so recrete it to the cached objects.
 	 */
 	private void checkCache() {
-		checkConstrMap();
-		checkCCMap();
+		final long start = System.nanoTime();
+		final boolean calculateCache = calculateCache();
+		if (calculateCache) {
 
-		// Check if the grid is valid
-		final int mc = PlatformDefaults.getModCount();
-		if (lastModCount != mc) {
-			grid = null;
-			lastModCount = mc;
-		}
+			checkConstrMap();
+			checkCCMap();
 
-		int hash = container.getSize().hashCode();
-		for (final Iterator<ComponentWrapper> it = ccMap.keySet().iterator(); it.hasNext();) {
-			hash += it.next().getLayoutHashCode();
-		}
+			// Check if the grid is valid
+			final int mc = PlatformDefaults.getModCount();
+			if (lastModCount != mc) {
+				grid = null;
+				lastModCount = mc;
+				reason.append("lastmodcount,");
+			}
 
-		if (hash != lastHash) {
-			grid = null;
-			lastHash = hash;
+			int hash = container.getSize().hashCode();
+			for (final Iterator<ComponentWrapper> it = ccMap.keySet().iterator(); it.hasNext();) {
+				hash += it.next().getLayoutHashCode();
+			}
+
+			if (hash != lastHash) {
+				reason.append("hash " + hash + " vs " + lastHash + ",");
+				grid = null;
+				lastHash = hash;
+			}
 		}
 
 		if (grid == null) {
+			//CHECKSTYLE:OFF
+			System.out.println("new Grid for " + this + " [" + reason + "]");
+			//CHECKSTYLE:ON
 			grid = new Grid(cacheParentW, lc, rowSpecs, colSpecs, ccMap, callbackList);
+			reason.setLength(0);
+		}
+
+		if (calculateCache) {
+			final long end = System.nanoTime();
+			final long currentTime = end - start;
+			if (cacheTime < currentTime) {
+				cacheTime = currentTime;
+				//cacheTimeSetMs = System.currentTimeMillis();
+				cacheTimeSetNano = end;
+				//CHECKSTYLE:OFF
+				System.out.println("nano time: " + (cacheTime) + " [" + this + "]");
+				//CHECKSTYLE:ON
+			}
 		}
 	}
 
@@ -336,7 +394,7 @@ final class MigLayout implements IMigLayout {
 
 	@Override
 	public void invalidate() {
+		reason.append("invalidate,");
 		grid = null;
 	}
-
 }
