@@ -8,12 +8,10 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.ObjectStreamException;
 
-import org.jowidgets.api.layout.miglayout.ILC;
-
 /**
  * Contains the constraints for an instance of the {@link LC} layout manager.
  */
-public final class LC implements ILC, Externalizable {
+public final class LC implements Externalizable {
 	// See the corresponding set/get method for documentation of the property!
 
 	private int wrapAfter = LayoutUtil.INF;
@@ -620,7 +618,6 @@ public final class LC implements ILC, Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.5
 	 */
-	@Override
 	public final LC pack() {
 		return pack("pref", "pref");
 	}
@@ -638,7 +635,6 @@ public final class LC implements ILC, Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.5
 	 */
-	@Override
 	public final LC pack(final String width, final String height) {
 		setPackWidth(width != null ? ConstraintParser.parseBoundSize(width, false, false) : BoundSize.NULL_SIZE);
 		setPackHeight(height != null ? ConstraintParser.parseBoundSize(height, false, false) : BoundSize.NULL_SIZE);
@@ -658,7 +654,6 @@ public final class LC implements ILC, Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.5
 	 */
-	@Override
 	public final LC packAlign(final float alignX, final float alignY) {
 		setPackWidthAlign(alignX);
 		setPackHeightAlign(alignY);
@@ -674,7 +669,6 @@ public final class LC implements ILC, Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final LC wrap() {
 		setWrapAfter(0);
 		return this;
@@ -688,7 +682,6 @@ public final class LC implements ILC, Externalizable {
 	 * @param count After what cell the grid should always auto wrap. If <code>0</code> the number of columns/rows in the
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final LC wrapAfter(final int count) {
 		setWrapAfter(count);
 		return this;
@@ -702,7 +695,6 @@ public final class LC implements ILC, Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final LC noCache() {
 		setNoCache(true);
 		return this;
@@ -716,7 +708,6 @@ public final class LC implements ILC, Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final LC flowY() {
 		setFlowX(false);
 		return this;
@@ -730,7 +721,6 @@ public final class LC implements ILC, Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final LC flowX() {
 		setFlowX(true);
 		return this;
@@ -744,7 +734,6 @@ public final class LC implements ILC, Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final LC fill() {
 		setFillX(true);
 		setFillY(true);
@@ -759,7 +748,6 @@ public final class LC implements ILC, Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final LC fillX() {
 		setFillX(true);
 		return this;
@@ -773,7 +761,6 @@ public final class LC implements ILC, Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final LC fillY() {
 		setFillY(true);
 		return this;
@@ -788,7 +775,6 @@ public final class LC implements ILC, Externalizable {
 	 * @param b <code>true</code> for forcing left-to-right. <code>false</code> for forcing right-to-left.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final LC leftToRight(final boolean b) {
 		setLeftToRight(b ? Boolean.TRUE : Boolean.FALSE); // Not .valueOf due to retroweaver...
 		return this;
@@ -802,7 +788,6 @@ public final class LC implements ILC, Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
 	 */
-	@Override
 	public final LC rightToLeft() {
 		setLeftToRight(Boolean.FALSE);
 		return this;
@@ -816,7 +801,6 @@ public final class LC implements ILC, Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final LC bottomToTop() {
 		setTopToBottom(false);
 		return this;
@@ -831,7 +815,6 @@ public final class LC implements ILC, Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
 	 */
-	@Override
 	public final LC topToBottom() {
 		setTopToBottom(true);
 		return this;
@@ -845,7 +828,6 @@ public final class LC implements ILC, Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final LC noGrid() {
 		setNoGrid(true);
 		return this;
@@ -859,7 +841,6 @@ public final class LC implements ILC, Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final LC noVisualPadding() {
 		setVisualPadding(false);
 		return this;
@@ -875,7 +856,6 @@ public final class LC implements ILC, Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @see #setInsets(UnitValue[])
 	 */
-	@Override
 	public final LC insetsAll(final String allSides) {
 		final UnitValue insH = ConstraintParser.parseUnitValue(allSides, true);
 		final UnitValue insV = ConstraintParser.parseUnitValue(allSides, false);
@@ -893,7 +873,6 @@ public final class LC implements ILC, Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @see #setInsets(UnitValue[])
 	 */
-	@Override
 	public final LC insets(final String s) {
 		insets = ConstraintParser.parseInsets(s, true);
 		return this;
@@ -919,7 +898,6 @@ public final class LC implements ILC, Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @see #setInsets(UnitValue[])
 	 */
-	@Override
 	public final LC insets(final String top, final String left, final String bottom, final String right) {
 		insets = new UnitValue[] { // No setter to avoid copy again
 				ConstraintParser.parseUnitValue(top, false), ConstraintParser.parseUnitValue(left, true),
@@ -937,7 +915,6 @@ public final class LC implements ILC, Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @see #setAlignX(UnitValue)
 	 */
-	@Override
 	public final LC alignX(final String align) {
 		setAlignX(ConstraintParser.parseUnitValueOrAlign(align, true, null));
 		return this;
@@ -953,7 +930,6 @@ public final class LC implements ILC, Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @see #setAlignY(UnitValue)
 	 */
-	@Override
 	public final LC alignY(final String align) {
 		setAlignY(ConstraintParser.parseUnitValueOrAlign(align, false, null));
 		return this;
@@ -970,7 +946,6 @@ public final class LC implements ILC, Externalizable {
 	 * @see #alignX(String)
 	 * @see #alignY(String)
 	 */
-	@Override
 	public final LC align(final String ax, final String ay) {
 		if (ax != null)
 			alignX(ax);
@@ -992,7 +967,6 @@ public final class LC implements ILC, Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @see #setGridGapX(BoundSize)
 	 */
-	@Override
 	public final LC gridGapX(final String boundsSize) {
 		setGridGapX(ConstraintParser.parseBoundSize(boundsSize, true, true));
 		return this;
@@ -1009,7 +983,6 @@ public final class LC implements ILC, Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @see #setGridGapY(BoundSize)
 	 */
-	@Override
 	public final LC gridGapY(final String boundsSize) {
 		setGridGapY(ConstraintParser.parseBoundSize(boundsSize, true, false));
 		return this;
@@ -1028,7 +1001,6 @@ public final class LC implements ILC, Externalizable {
 	 * @see #gridGapX(String)
 	 * @see #gridGapY(String)
 	 */
-	@Override
 	public final LC gridGap(final String gapx, final String gapy) {
 		if (gapx != null)
 			gridGapX(gapx);
@@ -1049,7 +1021,6 @@ public final class LC implements ILC, Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @see #setDebugMillis(int)
 	 */
-	@Override
 	public final LC debug(final int repaintMillis) {
 		setDebugMillis(repaintMillis);
 		return this;
@@ -1069,7 +1040,6 @@ public final class LC implements ILC, Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @see #setHideMode(int)
 	 */
-	@Override
 	public final LC hideMode(final int mode) {
 		setHideMode(mode);
 		return this;
@@ -1083,7 +1053,6 @@ public final class LC implements ILC, Externalizable {
 	 * @param width The width expressed as a <code>UnitValue</code>. E.g. "100px" or "200mm".
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final LC minWidth(final String width) {
 		setWidth(LayoutUtil.derive(getWidth(), ConstraintParser.parseUnitValue(width, true), null, null));
 		return this;
@@ -1099,7 +1068,6 @@ public final class LC implements ILC, Externalizable {
 	 * @param width The width expressed as a <code>Boundwidth</code>. E.g. "50:100px:200mm" or "100px".
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final LC width(final String width) {
 		setWidth(ConstraintParser.parseBoundSize(width, false, true));
 		return this;
@@ -1113,7 +1081,6 @@ public final class LC implements ILC, Externalizable {
 	 * @param width The width expressed as a <code>UnitValue</code>. E.g. "100px" or "200mm".
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final LC maxWidth(final String width) {
 		setWidth(LayoutUtil.derive(getWidth(), null, null, ConstraintParser.parseUnitValue(width, true)));
 		return this;
@@ -1127,7 +1094,6 @@ public final class LC implements ILC, Externalizable {
 	 * @param height The height expressed as a <code>UnitValue</code>. E.g. "100px" or "200mm".
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final LC minHeight(final String height) {
 		setHeight(LayoutUtil.derive(getHeight(), ConstraintParser.parseUnitValue(height, false), null, null));
 		return this;
@@ -1143,7 +1109,6 @@ public final class LC implements ILC, Externalizable {
 	 * @param height The height expressed as a <code>Boundheight</code>. E.g. "50:100px:200mm" or "100px".
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final LC height(final String height) {
 		setHeight(ConstraintParser.parseBoundSize(height, false, false));
 		return this;
@@ -1157,7 +1122,6 @@ public final class LC implements ILC, Externalizable {
 	 * @param height The height expressed as a <code>UnitValue</code>. E.g. "100px" or "200mm".
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final LC maxHeight(final String height) {
 		setHeight(LayoutUtil.derive(getHeight(), null, null, ConstraintParser.parseUnitValue(height, false)));
 		return this;

@@ -9,8 +9,6 @@ import java.io.ObjectOutput;
 import java.io.ObjectStreamException;
 import java.util.ArrayList;
 
-import org.jowidgets.api.layout.miglayout.IAC;
-
 /*
  * License (BSD):
  * ==============
@@ -56,7 +54,7 @@ import org.jowidgets.api.layout.miglayout.IAC;
  * Note that there are two way to build this constraint. Through String (e.g. <code>"[100]3[200,fill]"</code> or through API (E.g.
  * <code>new AxisConstraint().size("100").gap("3").size("200").fill()</code>.
  */
-public final class AC implements IAC, Externalizable {
+public final class AC implements Externalizable {
 	private final ArrayList<DimConstraint> cList = new ArrayList<DimConstraint>(8);
 
 	private transient int curIx = 0;
@@ -117,7 +115,6 @@ public final class AC implements IAC, Externalizable {
 	 * @param size The total number of rows/columns
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final AC count(final int size) {
 		makeSize(size);
 		return this;
@@ -131,7 +128,6 @@ public final class AC implements IAC, Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final AC noGrid() {
 		return noGrid(curIx);
 	}
@@ -145,7 +141,6 @@ public final class AC implements IAC, Externalizable {
 	 * @param indexes The index(es) (0-based) of the columns/rows that should be affected by this constraint.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final AC noGrid(final int... indexes) {
 		for (int i = indexes.length - 1; i >= 0; i--) {
 			final int ix = indexes[i];
@@ -167,7 +162,6 @@ public final class AC implements IAC, Externalizable {
 	 * @param i The new current row/column.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final AC index(final int i) {
 		makeSize(i);
 		curIx = i;
@@ -181,7 +175,6 @@ public final class AC implements IAC, Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final AC fill() {
 		return fill(curIx);
 	}
@@ -195,7 +188,6 @@ public final class AC implements IAC, Externalizable {
 	 * @param indexes The index(es) (0-based) of the columns/rows that should be affected by this constraint.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final AC fill(final int... indexes) {
 		for (int i = indexes.length - 1; i >= 0; i--) {
 			final int ix = indexes[i];
@@ -246,7 +238,6 @@ public final class AC implements IAC, Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
 	 */
-	@Override
 	public final AC sizeGroup() {
 		return sizeGroup("", curIx);
 	}
@@ -260,7 +251,6 @@ public final class AC implements IAC, Externalizable {
 	 * @param s A name to associate on the group that should be the same for other rows/columns in the same group.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final AC sizeGroup(final String s) {
 		return sizeGroup(s, curIx);
 	}
@@ -275,7 +265,6 @@ public final class AC implements IAC, Externalizable {
 	 * @param indexes The index(es) (0-based) of the columns/rows that should be affected by this constraint.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final AC sizeGroup(final String s, final int... indexes) {
 		for (int i = indexes.length - 1; i >= 0; i--) {
 			final int ix = indexes[i];
@@ -295,7 +284,6 @@ public final class AC implements IAC, Externalizable {
 	 *            as a <b>BoundSize</b>. For more info on how <b>BoundSize</b> is formatted see the documentation.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final AC size(final String s) {
 		return size(s, curIx);
 	}
@@ -311,7 +299,6 @@ public final class AC implements IAC, Externalizable {
 	 * @param indexes The index(es) (0-based) of the columns/rows that should be affected by this constraint.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final AC size(final String size, final int... indexes) {
 		final BoundSize bs = ConstraintParser.parseBoundSize(size, false, true);
 		for (int i = indexes.length - 1; i >= 0; i--) {
@@ -331,7 +318,6 @@ public final class AC implements IAC, Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final AC gap() {
 		curIx++;
 		return this;
@@ -347,7 +333,6 @@ public final class AC implements IAC, Externalizable {
 	 *            documentation.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final AC gap(final String size) {
 		return gap(size, curIx++);
 	}
@@ -363,7 +348,6 @@ public final class AC implements IAC, Externalizable {
 	 * @param indexes The index(es) (0-based) of the columns/rows that should be affected by this constraint.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final AC gap(final String size, final int... indexes) {
 		final BoundSize bsa = size != null ? ConstraintParser.parseBoundSize(size, true, true) : null;
 
@@ -387,7 +371,6 @@ public final class AC implements IAC, Externalizable {
 	 *            "right".
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final AC align(final String side) {
 		return align(side, curIx);
 	}
@@ -404,7 +387,6 @@ public final class AC implements IAC, Externalizable {
 	 * @param indexes The index(es) (0-based) of the columns/rows that should be affected by this constraint.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final AC align(final String side, final int... indexes) {
 		UnitValue al = ConstraintParser.parseAlignKeywords(side, true);
 		if (al == null)
@@ -426,7 +408,6 @@ public final class AC implements IAC, Externalizable {
 	 * @param p The new grow priority.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final AC growPrio(final int p) {
 		return growPrio(p, curIx);
 	}
@@ -440,7 +421,6 @@ public final class AC implements IAC, Externalizable {
 	 * @param indexes The index(es) (0-based) of the columns/rows that should be affected by this constraint.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final AC growPrio(final int p, final int... indexes) {
 		for (int i = indexes.length - 1; i >= 0; i--) {
 			final int ix = indexes[i];
@@ -460,7 +440,6 @@ public final class AC implements IAC, Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
 	 */
-	@Override
 	public final AC grow() {
 		return grow(1f, curIx);
 	}
@@ -473,7 +452,6 @@ public final class AC implements IAC, Externalizable {
 	 * @param w The new grow weight.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final AC grow(final float w) {
 		return grow(w, curIx);
 	}
@@ -487,7 +465,6 @@ public final class AC implements IAC, Externalizable {
 	 * @param indexes The index(es) (0-based) of the columns/rows that should be affected by this constraint.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final AC grow(final float w, final int... indexes) {
 		final Float gw = new Float(w);
 		for (int i = indexes.length - 1; i >= 0; i--) {
@@ -506,7 +483,6 @@ public final class AC implements IAC, Externalizable {
 	 * @param p The new shrink priority.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final AC shrinkPrio(final int p) {
 		return shrinkPrio(p, curIx);
 	}
@@ -520,7 +496,6 @@ public final class AC implements IAC, Externalizable {
 	 * @param indexes The index(es) (0-based) of the columns/rows that should be affected by this constraint.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	@Override
 	public final AC shrinkPrio(final int p, final int... indexes) {
 		for (int i = indexes.length - 1; i >= 0; i--) {
 			final int ix = indexes[i];
@@ -540,7 +515,6 @@ public final class AC implements IAC, Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
 	 */
-	@Override
 	public final AC shrink() {
 		return shrink(100f, curIx);
 	}
@@ -554,7 +528,6 @@ public final class AC implements IAC, Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
 	 */
-	@Override
 	public final AC shrink(final float w) {
 		return shrink(w, curIx);
 	}
@@ -569,7 +542,6 @@ public final class AC implements IAC, Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
 	 */
-	@Override
 	public final AC shrink(final float w, final int... indexes) {
 		final Float sw = new Float(w);
 		for (int i = indexes.length - 1; i >= 0; i--) {
@@ -589,7 +561,6 @@ public final class AC implements IAC, Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 * @deprecated in 3.7.2. Use {@link #shrink(float)} instead.
 	 */
-	@Override
 	@Deprecated
 	public final AC shrinkWeight(final float w) {
 		return shrink(w);
@@ -605,7 +576,6 @@ public final class AC implements IAC, Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 * @deprecated in 3.7.2. Use {@link #shrink(float, int...)} instead.
 	 */
-	@Override
 	@Deprecated
 	public final AC shrinkWeight(final float w, final int... indexes) {
 		return shrink(w, indexes);

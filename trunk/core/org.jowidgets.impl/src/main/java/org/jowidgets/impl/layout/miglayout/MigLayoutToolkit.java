@@ -32,9 +32,6 @@ import org.jowidgets.api.layout.miglayout.IAC;
 import org.jowidgets.api.layout.miglayout.ICC;
 import org.jowidgets.api.layout.miglayout.ILC;
 import org.jowidgets.api.layout.miglayout.IMigLayoutToolkit;
-import org.jowidgets.impl.layout.miglayout.common.AC;
-import org.jowidgets.impl.layout.miglayout.common.CC;
-import org.jowidgets.impl.layout.miglayout.common.LC;
 
 public class MigLayoutToolkit implements IMigLayoutToolkit {
 
@@ -60,17 +57,17 @@ public class MigLayoutToolkit implements IMigLayoutToolkit {
 
 	@Override
 	public ICC cc() {
-		return new CC();
+		return new CCWrapper();
 	}
 
 	@Override
 	public IAC ac() {
-		return new AC();
+		return new ACWrapper();
 	}
 
 	@Override
 	public ILC lc() {
-		return new LC();
+		return new LCWrapper();
 	}
 
 }
