@@ -54,6 +54,7 @@ import org.jowidgets.common.widgets.controler.IMouseListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.spi.impl.controler.ComponentObservable;
 import org.jowidgets.spi.impl.controler.FocusObservable;
+import org.jowidgets.spi.impl.controler.IObservableCallback;
 import org.jowidgets.spi.impl.controler.KeyObservable;
 import org.jowidgets.spi.impl.controler.MouseButtonEvent;
 import org.jowidgets.spi.impl.controler.MouseObservable;
@@ -74,13 +75,13 @@ public class SwtComponent extends SwtWidget implements IComponentSpi {
 	private final KeyObservable keyObservable;
 	private final MouseObservable mouseObservable;
 	private final ComponentObservable componentObservable;
+	private final KeyListener keyListener;
 	private MenuDetectListener menuDetectListener;
 
 	public SwtComponent(final Control control) {
 		super(control);
 		this.popupDetectionObservable = new PopupDetectionObservable();
 		this.focusObservable = new FocusObservable();
-		this.keyObservable = new KeyObservable();
 		this.mouseObservable = new MouseObservable();
 		this.componentObservable = new ComponentObservable();
 
@@ -120,7 +121,7 @@ public class SwtComponent extends SwtWidget implements IComponentSpi {
 			}
 		});
 
-		getUiReference().addKeyListener(new KeyListener() {
+		this.keyListener = new KeyListener() {
 			@Override
 			public void keyReleased(final KeyEvent e) {
 				keyObservable.fireKeyReleased(new LazyKeyEventContentFactory(e));
@@ -130,7 +131,21 @@ public class SwtComponent extends SwtWidget implements IComponentSpi {
 			public void keyPressed(final KeyEvent e) {
 				keyObservable.fireKeyPressed(new LazyKeyEventContentFactory(e));
 			}
-		});
+		};
+
+		final IObservableCallback keyObservableCallback = new IObservableCallback() {
+			@Override
+			public void onLastUnregistered() {
+				getUiReference().removeKeyListener(keyListener);
+			}
+
+			@Override
+			public void onFirstRegistered() {
+				getUiReference().addKeyListener(keyListener);
+			}
+		};
+
+		this.keyObservable = new KeyObservable(keyObservableCallback);
 
 		getUiReference().addMouseListener(new MouseListener() {
 			@Override
