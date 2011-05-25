@@ -28,57 +28,10 @@
 
 package org.jowidgets.spi.impl.controler;
 
-import java.util.HashSet;
-import java.util.Set;
+public interface IObservableCallback {
 
-import org.jowidgets.common.widgets.controler.IKeyEvent;
-import org.jowidgets.common.widgets.controler.IKeyListener;
-import org.jowidgets.common.widgets.controler.IKeyObservable;
-import org.jowidgets.util.Assert;
+	void onFirstRegistered();
 
-public class KeyObservable implements IKeyObservable {
-
-	private final Set<IKeyListener> listeners;
-	private final IObservableCallback observableCallback;
-
-	public KeyObservable(final IObservableCallback observableCallback) {
-		Assert.paramNotNull(observableCallback, "observableCallback");
-		this.listeners = new HashSet<IKeyListener>();
-		this.observableCallback = observableCallback;
-	}
-
-	@Override
-	public final void addKeyListener(final IKeyListener listener) {
-		listeners.add(listener);
-		if (listeners.size() == 1) {
-			observableCallback.onFirstRegistered();
-		}
-	}
-
-	@Override
-	public final void removeKeyListener(final IKeyListener listener) {
-		listeners.remove(listener);
-		if (listeners.size() == 0) {
-			observableCallback.onLastUnregistered();
-		}
-	}
-
-	public final void fireKeyPressed(final ILazyKeyEventContentFactory contentFactory) {
-		if (listeners.size() > 0) {
-			final IKeyEvent event = new KeyEvent(contentFactory);
-			for (final IKeyListener listener : listeners) {
-				listener.keyPressed(event);
-			}
-		}
-	}
-
-	public final void fireKeyReleased(final ILazyKeyEventContentFactory contentFactory) {
-		if (listeners.size() > 0) {
-			final IKeyEvent event = new KeyEvent(contentFactory);
-			for (final IKeyListener listener : listeners) {
-				listener.keyReleased(event);
-			}
-		}
-	}
+	void onLastUnregistered();
 
 }

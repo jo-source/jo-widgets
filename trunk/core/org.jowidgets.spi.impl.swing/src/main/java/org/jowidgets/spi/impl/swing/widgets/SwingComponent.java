@@ -34,6 +34,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -53,6 +54,7 @@ import org.jowidgets.common.widgets.controler.IMouseListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.spi.impl.controler.ComponentObservable;
 import org.jowidgets.spi.impl.controler.FocusObservable;
+import org.jowidgets.spi.impl.controler.IObservableCallback;
 import org.jowidgets.spi.impl.controler.KeyObservable;
 import org.jowidgets.spi.impl.controler.MouseButtonEvent;
 import org.jowidgets.spi.impl.controler.MouseObservable;
@@ -73,13 +75,14 @@ public class SwingComponent extends SwingWidget implements IComponentSpi {
 	private final KeyObservable keyObservable;
 	private final MouseObservable mouseObservable;
 	private final ComponentObservable componentObservable;
+	private final KeyListener keyListener;
+
 	private MouseListener mouseListener;
 
 	public SwingComponent(final Component component) {
 		super(component);
 		this.popupDetectionObservable = new PopupDetectionObservable();
 		this.focusObservable = new FocusObservable();
-		this.keyObservable = new KeyObservable();
 		this.mouseObservable = new MouseObservable();
 		this.componentObservable = new ComponentObservable();
 
@@ -124,7 +127,7 @@ public class SwingComponent extends SwingWidget implements IComponentSpi {
 			}
 		});
 
-		getUiReference().addKeyListener(new KeyAdapter() {
+		this.keyListener = new KeyAdapter() {
 			@Override
 			public void keyReleased(final KeyEvent e) {
 				keyObservable.fireKeyReleased(new LazyKeyEventContentFactory(e));
@@ -134,7 +137,21 @@ public class SwingComponent extends SwingWidget implements IComponentSpi {
 			public void keyPressed(final KeyEvent e) {
 				keyObservable.fireKeyPressed(new LazyKeyEventContentFactory(e));
 			}
-		});
+		};
+
+		final IObservableCallback keyObservableCallback = new IObservableCallback() {
+			@Override
+			public void onLastUnregistered() {
+				getUiReference().removeKeyListener(keyListener);
+			}
+
+			@Override
+			public void onFirstRegistered() {
+				getUiReference().addKeyListener(keyListener);
+			}
+		};
+
+		this.keyObservable = new KeyObservable(keyObservableCallback);
 
 		getUiReference().addMouseListener(new MouseListener() {
 
