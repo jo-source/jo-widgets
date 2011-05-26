@@ -58,8 +58,18 @@ public class MenuItemImpl extends SwingWidget implements IMenuItemSpi {
 	}
 
 	@Override
+	public String getText() {
+		return getUiReference().getText();
+	}
+
+	@Override
 	public void setText(final String text) {
 		getUiReference().setText(text);
+	}
+
+	@Override
+	public String getToolTipText() {
+		return getUiReference().getToolTipText();
 	}
 
 	@Override

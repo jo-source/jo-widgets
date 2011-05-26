@@ -48,7 +48,17 @@ public class SeparatorMenuItemImpl extends SwingWidget implements IMenuItemSpi {
 	public void setIcon(final IImageConstant icon) {}
 
 	@Override
+	public String getText() {
+		return "";
+	}
+
+	@Override
 	public void setText(final String text) {}
+
+	@Override
+	public String getToolTipText() {
+		return "";
+	}
 
 	@Override
 	public void setToolTipText(final String text) {}

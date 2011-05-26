@@ -62,12 +62,32 @@ class CheckBox<WIDGET_TYPE extends ICheckBox, BLUE_PRINT_TYPE extends IWidgetDes
 	}
 
 	@Override
+	public String getText() {
+		if (isInitialized()) {
+			return getWidget().getText();
+		}
+		else {
+			return getBluePrint().getText();
+		}
+	}
+
+	@Override
 	public void setToolTipText(final String text) {
 		if (isInitialized()) {
 			getWidget().setToolTipText(text);
 		}
 		else {
 			getBluePrint().setToolTipText(text);
+		}
+	}
+
+	@Override
+	public String getToolTipText() {
+		if (isInitialized()) {
+			return getWidget().getToolTipText();
+		}
+		else {
+			return getBluePrint().getToolTipText();
 		}
 	}
 

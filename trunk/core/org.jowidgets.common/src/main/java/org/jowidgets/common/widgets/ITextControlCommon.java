@@ -34,6 +34,8 @@ public interface ITextControlCommon extends IInputControlCommon {
 
 	void setText(String text);
 
+	String getTooltipText();
+
 	void setTooltipText(String tooltipText);
 
 	void setSelection(int start, int end);

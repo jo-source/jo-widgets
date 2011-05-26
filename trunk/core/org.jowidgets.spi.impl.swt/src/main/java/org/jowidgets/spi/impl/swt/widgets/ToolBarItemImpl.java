@@ -61,6 +61,11 @@ public class ToolBarItemImpl implements IToolBarItemSpi {
 	}
 
 	@Override
+	public String getText() {
+		return toolItem.getText();
+	}
+
+	@Override
 	public void setText(final String text) {
 		if (text != null) {
 			toolItem.setText(text);
@@ -68,6 +73,11 @@ public class ToolBarItemImpl implements IToolBarItemSpi {
 		else {
 			toolItem.setText("");
 		}
+	}
+
+	@Override
+	public String getToolTipText() {
+		return toolItem.getToolTipText();
 	}
 
 	@Override

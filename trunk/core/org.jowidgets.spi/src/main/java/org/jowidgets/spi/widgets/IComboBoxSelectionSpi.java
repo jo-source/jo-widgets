@@ -27,12 +27,13 @@
  */
 package org.jowidgets.spi.widgets;
 
-
 public interface IComboBoxSelectionSpi extends IControlSpi, IInputControlSpi {
 
 	int getSelectedIndex();
 
 	void setSelectedIndex(int index);
+
+	String getTooltipText();
 
 	void setTooltipText(String tooltipText);
 

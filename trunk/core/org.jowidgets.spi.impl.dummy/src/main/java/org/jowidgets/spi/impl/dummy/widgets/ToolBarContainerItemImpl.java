@@ -47,7 +47,17 @@ public class ToolBarContainerItemImpl extends DummyContainer implements IToolBar
 	}
 
 	@Override
+	public String getText() {
+		return "";
+	}
+
+	@Override
 	public void setText(final String text) {}
+
+	@Override
+	public String getToolTipText() {
+		return "";
+	}
 
 	@Override
 	public void setToolTipText(final String text) {}

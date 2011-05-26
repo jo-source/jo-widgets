@@ -90,8 +90,18 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 	}
 
 	@Override
+	public String getText() {
+		return getJoTreeNode().getText();
+	}
+
+	@Override
 	public void setText(final String text) {
 		getJoTreeNode().setText(text);
+	}
+
+	@Override
+	public String getToolTipText() {
+		return getJoTreeNode().getToolTipText();
 	}
 
 	@Override

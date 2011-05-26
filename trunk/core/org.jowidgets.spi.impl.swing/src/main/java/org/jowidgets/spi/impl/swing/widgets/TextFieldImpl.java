@@ -95,6 +95,11 @@ public class TextFieldImpl extends AbstractInputControl implements ITextControlS
 	}
 
 	@Override
+	public String getTooltipText() {
+		return getUiReference().getToolTipText();
+	}
+
+	@Override
 	public void setTooltipText(final String tooltipText) {
 		getUiReference().setToolTipText(tooltipText);
 	}

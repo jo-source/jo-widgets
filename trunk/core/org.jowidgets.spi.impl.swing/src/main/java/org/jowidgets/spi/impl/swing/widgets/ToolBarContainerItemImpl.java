@@ -55,7 +55,17 @@ public class ToolBarContainerItemImpl extends SwingContainer implements IToolBar
 	}
 
 	@Override
+	public String getText() {
+		return "";
+	}
+
+	@Override
 	public void setText(final String text) {}
+
+	@Override
+	public String getToolTipText() {
+		return "";
+	}
 
 	@Override
 	public void setToolTipText(final String text) {}

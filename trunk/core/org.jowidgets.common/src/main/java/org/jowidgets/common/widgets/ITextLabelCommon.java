@@ -35,6 +35,9 @@ public interface ITextLabelCommon extends IControlCommon {
 
 	void setText(String text);
 
+	String getText();
+
 	void setToolTipText(String text);
 
+	String getToolTipText();
 }
