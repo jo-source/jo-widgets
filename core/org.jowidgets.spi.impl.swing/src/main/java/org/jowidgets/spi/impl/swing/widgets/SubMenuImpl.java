@@ -47,8 +47,18 @@ public class SubMenuImpl extends AbstractSwingMenu implements ISubMenuSpi {
 	}
 
 	@Override
+	public String getText() {
+		return menuItemDelegate.getText();
+	}
+
+	@Override
 	public void setText(final String text) {
 		menuItemDelegate.setText(text);
+	}
+
+	@Override
+	public String getToolTipText() {
+		return menuItemDelegate.getToolTipText();
 	}
 
 	@Override

@@ -156,6 +156,11 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 	}
 
 	@Override
+	public String getText() {
+		return getUiReference().getText();
+	}
+
+	@Override
 	public void setText(final String text) {
 		this.text = text;
 		if (text != null) {
@@ -164,6 +169,11 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 		else {
 			getUiReference().setText(String.valueOf(""));
 		}
+	}
+
+	@Override
+	public String getToolTipText() {
+		return getUiReference().getToolTipText();
 	}
 
 	@Override

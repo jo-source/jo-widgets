@@ -32,7 +32,11 @@ import org.jowidgets.common.image.IImageConstant;
 
 public interface IItemCommon extends IWidgetCommon {
 
+	String getText();
+
 	void setText(String text);
+
+	String getToolTipText();
 
 	void setToolTipText(String text);
 

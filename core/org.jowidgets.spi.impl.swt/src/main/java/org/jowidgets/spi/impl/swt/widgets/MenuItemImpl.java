@@ -58,6 +58,11 @@ public class MenuItemImpl extends ActionObservable implements IMenuItemSpi, IToo
 	}
 
 	@Override
+	public String getText() {
+		return getUiReference().getText();
+	}
+
+	@Override
 	public void setText(final String text) {
 		this.text = text;
 		setCombinedText();

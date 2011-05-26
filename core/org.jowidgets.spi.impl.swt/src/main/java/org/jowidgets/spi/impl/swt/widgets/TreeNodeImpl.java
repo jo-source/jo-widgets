@@ -99,6 +99,11 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 	}
 
 	@Override
+	public String getText() {
+		return getUiReference().getText();
+	}
+
+	@Override
 	public void setText(final String text) {
 		if (text != null) {
 			getUiReference().setText(text);
@@ -106,6 +111,12 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 		else {
 			getUiReference().setText(String.valueOf(""));
 		}
+	}
+
+	@Override
+	public String getToolTipText() {
+		//TODO BM Use Tooltip like in SwtMenu
+		return "";
 	}
 
 	@Override

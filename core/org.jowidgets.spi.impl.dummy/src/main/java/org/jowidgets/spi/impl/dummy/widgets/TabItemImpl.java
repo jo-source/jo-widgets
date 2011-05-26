@@ -107,6 +107,11 @@ public class TabItemImpl extends DummyContainer implements ITabItemSpi {
 	}
 
 	@Override
+	public String getText() {
+		return getUiReference().getText();
+	}
+
+	@Override
 	public void setText(final String text) {
 		this.text = text;
 		getUiReference().setText(text);
@@ -115,6 +120,11 @@ public class TabItemImpl extends DummyContainer implements ITabItemSpi {
 	@Override
 	public boolean isReparentable() {
 		return true;
+	}
+
+	@Override
+	public String getToolTipText() {
+		return getUiReference().getToolTipText();
 	}
 
 	@Override

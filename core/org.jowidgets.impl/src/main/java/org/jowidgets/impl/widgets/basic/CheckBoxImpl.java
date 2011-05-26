@@ -86,8 +86,19 @@ public class CheckBoxImpl extends AbstractBasicInputControl<Boolean> implements 
 	}
 
 	@Override
+	public String getText() {
+		// TODO Auto-generated method stub
+		return textLabelWidgetCommonWrapper.getText();
+	}
+
+	@Override
 	public void setToolTipText(final String text) {
 		textLabelWidgetCommonWrapper.setToolTipText(text);
+	}
+
+	@Override
+	public String getToolTipText() {
+		return textLabelWidgetCommonWrapper.getToolTipText();
 	}
 
 }

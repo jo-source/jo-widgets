@@ -47,18 +47,23 @@ public class SubMenuImpl extends SwtMenu implements ISubMenuSpi, IToolTipTextPro
 	}
 
 	@Override
+	public String getText() {
+		return menuItemDelegate.getText();
+	}
+
+	@Override
 	public void setText(final String text) {
 		menuItemDelegate.setText(text);
 	}
 
 	@Override
-	public void setToolTipText(final String text) {
-		menuItemDelegate.setToolTipText(text);
+	public String getToolTipText() {
+		return menuItemDelegate.getToolTipText();
 	}
 
 	@Override
-	public String getToolTipText() {
-		return menuItemDelegate.getToolTipText();
+	public void setToolTipText(final String text) {
+		menuItemDelegate.setToolTipText(text);
 	}
 
 	@Override

@@ -192,9 +192,19 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 	}
 
 	@Override
+	public String getText() {
+		return tabComponent.getText();
+	}
+
+	@Override
 	public void setText(final String text) {
 		this.text = text;
 		tabComponent.setText(text);
+	}
+
+	@Override
+	public String getToolTipText() {
+		return tabComponent.getToolTipText();
 	}
 
 	@Override
@@ -407,10 +417,6 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 		swingContainer.removeAll();
 	}
 
-	protected String getText() {
-		return text;
-	}
-
 	public final class TabComponent extends JPanel {
 
 		private static final long serialVersionUID = 7620592636356667921L;
@@ -479,6 +485,10 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 			if (tabButton != null) {
 				tabButton.repaint();
 			}
+		}
+
+		public String getText() {
+			return tabButton.getText();
 		}
 
 		public void setText(final String text) {

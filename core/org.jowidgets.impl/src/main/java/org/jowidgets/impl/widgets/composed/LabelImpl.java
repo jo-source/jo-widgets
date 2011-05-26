@@ -85,9 +85,19 @@ public class LabelImpl implements ILabel {
 	}
 
 	@Override
+	public String getText() {
+		return textLabelWidget.getText();
+	}
+
+	@Override
 	public void setToolTipText(final String text) {
 		textLabelWidget.setToolTipText(text);
 		iconWidget.setToolTipText(text);
+	}
+
+	@Override
+	public String getToolTipText() {
+		return textLabelWidget.getToolTipText();
 	}
 
 	@Override
