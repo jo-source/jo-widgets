@@ -36,7 +36,6 @@ public final class OkVerifier {
 
 		@Override
 		public boolean verify(final String currentValue, final String input, final int start, final int end) {
-			// TODO Auto-generated method stub
 			return true;
 		}
 	};
