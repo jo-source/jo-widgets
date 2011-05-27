@@ -81,6 +81,7 @@ public final class TestToolImpl implements ITestTool {
 	private final TestPlayer player;
 	private boolean record;
 	private boolean replay;
+	private boolean appStarted;
 	private final List<ITree> trees;
 	private final List<ITabFolder> tabFolders;
 
@@ -95,6 +96,7 @@ public final class TestToolImpl implements ITestTool {
 		this.player = new TestPlayer();
 		this.record = false;
 		this.replay = false;
+		this.appStarted = false;
 		this.trees = new LinkedList<ITree>();
 		this.tabFolders = new LinkedList<ITabFolder>();
 	}
@@ -130,9 +132,12 @@ public final class TestToolImpl implements ITestTool {
 
 				@Override
 				public void windowActivated() {
-					registerTreeItems();
-					registerMenuItems(frame);
-					registerTabFolderItems();
+					if (!appStarted) {
+						registerTreeItems();
+						registerMenuItems(frame);
+						registerTabFolderItems();
+						appStarted = true;
+					}
 				}
 			});
 		}

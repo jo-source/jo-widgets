@@ -117,7 +117,7 @@ public class TestToolView {
 		final ITabItem item = folder.addItem(BPF.tabItem().setText("Test Data"));
 		tableDataModel = Toolkit.getModelFactoryProvider().getTableModelFactory().simpleTableModel();
 		final DefaultTableColumnBuilder colBuilder = new DefaultTableColumnBuilder();
-		tableDataModel.addColumn(colBuilder.setText("step").build());
+		tableDataModel.addColumn(colBuilder.setText("Step").build());
 		tableDataModel.addColumn(colBuilder.setText("Widget").build());
 		tableDataModel.addColumn(colBuilder.setText("User Action").build());
 		tableDataModel.addColumn(colBuilder.setText("ID").build());

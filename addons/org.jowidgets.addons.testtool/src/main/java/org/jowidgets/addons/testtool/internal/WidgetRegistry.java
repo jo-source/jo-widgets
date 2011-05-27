@@ -29,13 +29,16 @@
 package org.jowidgets.addons.testtool.internal;
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
+import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.common.widgets.IWidgetCommon;
 
-// TODO LG Use a set instead a list?
 public final class WidgetRegistry {
-	private static WidgetRegistry instance = new WidgetRegistry();
+	private static final WidgetRegistry INSTANCE = new WidgetRegistry();
 	private final Set<IWidgetCommon> widgetRegistry;
 
 	private WidgetRegistry() {
@@ -43,7 +46,7 @@ public final class WidgetRegistry {
 	}
 
 	public static WidgetRegistry getInstance() {
-		return instance;
+		return INSTANCE;
 	}
 
 	public synchronized Set<IWidgetCommon> getWidgets() {
@@ -55,6 +58,32 @@ public final class WidgetRegistry {
 	}
 
 	public synchronized void removeWidget(final IWidgetCommon widget) {
+		removeChildWidgets(widget);
 		widgetRegistry.remove(widget);
+	}
+
+	private void removeChildWidgets(final IWidgetCommon widget) {
+		final List<IWidgetCommon> childs = getChildWidgets(widget);
+		if (!childs.isEmpty()) {
+			for (final IWidgetCommon child : childs) {
+				widgetRegistry.remove(child);
+			}
+		}
+	}
+
+	private List<IWidgetCommon> getChildWidgets(final IWidgetCommon widget) {
+		final List<IWidgetCommon> childs = new LinkedList<IWidgetCommon>();
+		if (widget instanceof IContainer) {
+			final IContainer con = (IContainer) widget;
+			for (final IWidget tmp : con.getChildren()) {
+				if (tmp instanceof IContainer) {
+					childs.addAll(getChildWidgets(tmp));
+				}
+				else {
+					childs.add(tmp);
+				}
+			}
+		}
+		return childs;
 	}
 }

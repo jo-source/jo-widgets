@@ -33,6 +33,7 @@ import java.util.List;
 import org.jowidgets.addons.testtool.internal.TestDataObject;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.application.IApplication;
+import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.factory.IWidgetFactoryListener;
 import org.jowidgets.workbench.api.IWorkbench;
@@ -79,9 +80,22 @@ public class TestToolRunner {
 				testTool.register(widget);
 			}
 		});
-		final List<TestDataObject> tests = testTool.load(fileName);
-		testTool.activateReplayMode();
-		testTool.replay(tests, 200);
+		initApplicationRunner();
+		final Thread thread = new Thread() {
+			@Override
+			public void run() {
+				super.run();
+				try {
+					Thread.sleep(200);
+				}
+				catch (final InterruptedException e) {
+				}
+				final List<TestDataObject> tests = testTool.load(fileName);
+				testTool.activateReplayMode();
+				testTool.replay(tests, 200);
+			}
+		};
+		Toolkit.getUiThreadAccess().invokeLater(thread);
 		runApplication();
 		runWorkbench();
 	}
@@ -98,5 +112,18 @@ public class TestToolRunner {
 				workbenchRunner.run(workbench);
 			}
 		}
+	}
+
+	// Workaround for swing and dummy applicationrunner. 
+	// Needed to initialize the event-dispatcher-Thread, before starting the application.
+	// TODO LG remove this workaround, when there is a callback for applications (to regonize start/stop of an application).
+	private void initApplicationRunner() {
+		Toolkit.getApplicationRunner().run(new IApplication() {
+
+			@Override
+			public void start(final IApplicationLifecycle lifecycle) {
+				lifecycle.finish();
+			}
+		});
 	}
 }
