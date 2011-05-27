@@ -55,7 +55,6 @@ public class TextLabelSpiWrapper extends ControlSpiWrapper implements ITextLabel
 
 	@Override
 	public String getText() {
-		// TODO Auto-generated method stub
 		return getWidget().getText();
 	}
 

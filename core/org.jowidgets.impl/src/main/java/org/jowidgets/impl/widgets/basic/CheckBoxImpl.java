@@ -87,7 +87,6 @@ public class CheckBoxImpl extends AbstractBasicInputControl<Boolean> implements 
 
 	@Override
 	public String getText() {
-		// TODO Auto-generated method stub
 		return textLabelWidgetCommonWrapper.getText();
 	}
 
