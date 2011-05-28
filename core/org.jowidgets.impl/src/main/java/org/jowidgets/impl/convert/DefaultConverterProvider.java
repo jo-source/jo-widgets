@@ -114,9 +114,16 @@ public final class DefaultConverterProvider implements IConverterProvider {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public <OBJECT_TYPE> IConverter<OBJECT_TYPE> getConverter(final Class<? extends OBJECT_TYPE> type) {
-		return getConverterFromMap(type);
+		final IConverter<OBJECT_TYPE> result = getConverterFromMap(type);
+		if (result == null) {
+			if (type == Date.class) {
+				return (IConverter<OBJECT_TYPE>) date();
+			}
+		}
+		return result;
 	}
 
 	@Override
