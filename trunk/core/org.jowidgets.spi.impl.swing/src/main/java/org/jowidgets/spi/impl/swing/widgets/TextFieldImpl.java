@@ -73,6 +73,12 @@ public class TextFieldImpl extends AbstractInputControl implements ITextControlS
 				new InputModifierDocument(getUiReference(), inputVerifier, inputObservable, setup.getMaxLength()));
 		if (setup.getMask() != null && TextMaskMode.FULL_MASK == setup.getMask().getMode()) {
 			setText(setup.getMask().getPlaceholder());
+			getUiReference().addFocusListener(new FocusAdapter() {
+				@Override
+				public void focusGained(final FocusEvent e) {
+					getUiReference().setCaretPosition(0);
+				}
+			});
 		}
 	}
 

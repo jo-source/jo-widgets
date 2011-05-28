@@ -28,6 +28,8 @@
 package org.jowidgets.spi.impl.swt.widgets;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.widgets.Composite;
@@ -58,8 +60,13 @@ public class TextFieldImpl extends AbstractTextInputControl {
 		}
 
 		if (SwtOptions.hasInputVerification() && setup.getMask() != null && TextMaskMode.FULL_MASK == setup.getMask().getMode()) {
-			getUiReference().setMessage("DD-MM-YYYY HH:MM:SS");
 			setText(setup.getMask().getPlaceholder());
+			getUiReference().addFocusListener(new FocusAdapter() {
+				@Override
+				public void focusGained(final FocusEvent e) {
+					getUiReference().setSelection(0, 0);
+				}
+			});
 		}
 
 		registerTextControl(getUiReference(), setup.getInputChangeEventPolicy());

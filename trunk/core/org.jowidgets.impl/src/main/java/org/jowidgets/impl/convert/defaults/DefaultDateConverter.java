@@ -80,7 +80,7 @@ public final class DefaultDateConverter extends AbstractConverter<Date> implemen
 	@Override
 	public String convertToString(final Date value) {
 		if (value != null) {
-			dateFormat.format(value);
+			return dateFormat.format(value);
 		}
 		return "";
 	}
