@@ -26,32 +26,15 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.testtool;
+package org.jowidgets.addons.testtool.internal.persister;
 
 import java.util.List;
 
-import org.jowidgets.addons.testtool.internal.TestDataListModel;
 import org.jowidgets.addons.testtool.internal.TestDataObject;
-import org.jowidgets.addons.testtool.internal.UserAction;
-import org.jowidgets.common.widgets.IWidgetCommon;
 
-public interface ITestTool {
+public interface ITestDataPersister {
 
-	void register(IWidgetCommon widget);
-
-	void record(IWidgetCommon widget, UserAction action, String id);
-
-	void replay(List<TestDataObject> list, int delay);
-
-	void save(final List<TestDataObject> list, final String fileName);
+	void save(List<TestDataObject> list, String fileName);
 
 	List<TestDataObject> load(String fileName);
-
-	TestDataListModel getListModel();
-
-	void activateRecordMode();
-
-	void activateReplayMode();
-
-	void deactivateReplayAndRecord();
 }

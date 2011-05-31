@@ -26,18 +26,13 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.testtool;
+package org.jowidgets.addons.testtool.internal;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import org.jowidgets.addons.testtool.internal.TestDataListModel;
-import org.jowidgets.addons.testtool.internal.TestDataObject;
-import org.jowidgets.addons.testtool.internal.TestDataXmlPersister;
-import org.jowidgets.addons.testtool.internal.TestPlayer;
-import org.jowidgets.addons.testtool.internal.TestToolUtilities;
-import org.jowidgets.addons.testtool.internal.UserAction;
-import org.jowidgets.addons.testtool.internal.WidgetRegistry;
+import org.jowidgets.addons.testtool.internal.persister.ITestDataPersister;
+import org.jowidgets.addons.testtool.internal.persister.TestDataXmlPersister;
 import org.jowidgets.api.controler.ITreeListener;
 import org.jowidgets.api.controler.ITreePopupDetectionListener;
 import org.jowidgets.api.controler.ITreePopupEvent;

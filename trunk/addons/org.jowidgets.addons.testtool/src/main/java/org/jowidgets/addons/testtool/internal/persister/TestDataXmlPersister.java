@@ -26,15 +26,15 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.testtool.internal;
+package org.jowidgets.addons.testtool.internal.persister;
 
 import java.io.File;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.xml.bind.JAXB;
 
-import org.jowidgets.addons.testtool.ITestDataPersister;
+import org.jowidgets.addons.testtool.internal.TestDataObject;
+import org.jowidgets.addons.testtool.internal.UserTestData;
 
 public class TestDataXmlPersister implements ITestDataPersister {
 
@@ -49,24 +49,6 @@ public class TestDataXmlPersister implements ITestDataPersister {
 		else {
 			this.filePath = filePath;
 		}
-	}
-
-	@Override
-	public List<List<TestDataObject>> loadAll() {
-		final File file = new File(filePath);
-		final List<List<TestDataObject>> results = new LinkedList<List<TestDataObject>>();
-		if (file.isDirectory()) {
-			final File[] files = file.listFiles();
-			for (final File tmp : files) {
-				final UserTestData result = JAXB.unmarshal(tmp, UserTestData.class);
-				results.add(result.getTestData());
-			}
-		}
-		else {
-			final UserTestData result = JAXB.unmarshal(file, UserTestData.class);
-			results.add(result.getTestData());
-		}
-		return results;
 	}
 
 	@Override
