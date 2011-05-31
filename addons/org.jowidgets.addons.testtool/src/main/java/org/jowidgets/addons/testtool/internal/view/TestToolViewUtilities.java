@@ -26,14 +26,19 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.testtool.internal;
+package org.jowidgets.addons.testtool.internal.view;
 
+import org.jowidgets.addons.testtool.internal.IListModelListener;
+import org.jowidgets.addons.testtool.internal.ITestTool;
+import org.jowidgets.addons.testtool.internal.TestDataListModel;
+import org.jowidgets.addons.testtool.internal.TestDataObject;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.factory.IWidgetFactoryListener;
 import org.jowidgets.tools.controler.WindowAdapter;
+import org.jowidgets.util.Assert;
 
 public class TestToolViewUtilities {
 
@@ -64,6 +69,25 @@ public class TestToolViewUtilities {
 						}
 					});
 				}
+			}
+		});
+	}
+
+	public void setupTestTool(final ITestTool testTool) {
+		final TestDataListModel listModel = testTool.getListModel();
+		listModel.addListener(new IListModelListener() {
+
+			@Override
+			public void listChanged(final TestDataObject item) {
+				Assert.paramNotNull(item, "item");
+				final String id = item.getId();
+				final String property = id.substring(id.lastIndexOf(":") + 1, id.length());
+				TestToolViewTable.getTableModel().addRow(
+						Integer.toString(TestToolViewTable.getTableModel().getRowCount()),
+						item.getType(),
+						item.getAction().name(),
+						property,
+						item.getId());
 			}
 		});
 	}

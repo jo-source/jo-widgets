@@ -30,7 +30,10 @@ package org.jowidgets.addons.testtool;
 
 import java.util.List;
 
+import org.jowidgets.addons.testtool.internal.ITestTool;
 import org.jowidgets.addons.testtool.internal.TestDataObject;
+import org.jowidgets.addons.testtool.internal.TestToolImpl;
+import org.jowidgets.addons.testtool.internal.view.TestToolView;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
