@@ -46,4 +46,14 @@ public final class Null {
 		return SOME_NULL;
 	}
 
+	@Override
+	public int hashCode() {
+		return 42;
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		return obj instanceof Null;
+	}
+
 }
