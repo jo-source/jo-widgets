@@ -145,4 +145,9 @@ public class TestToolViewMenubar {
 		final String id = item.getId();
 		return id.substring(id.lastIndexOf(":") + 1, id.length());
 	}
+
+	@Override
+	public String toString() {
+		return super.toString();
+	}
 }
