@@ -50,13 +50,16 @@ class TypeBasedComponentFactory implements IComponentFactory {
 					nodeModel,
 					context);
 		}
-		catch (final Exception exception) {
+		catch (final NoSuchMethodException exception) {
 			try {
 				return componentType.getConstructor(IComponentContext.class).newInstance(context);
 			}
 			catch (final Exception e) {
 				throw new RuntimeException("Exception while creating component from class. ", e);
 			}
+		}
+		catch (final Exception exception) {
+			throw new RuntimeException("Exception while creating component from class. ", exception);
 		}
 
 	}
