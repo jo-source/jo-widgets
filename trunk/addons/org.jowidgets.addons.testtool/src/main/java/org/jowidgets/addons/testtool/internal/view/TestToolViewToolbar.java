@@ -160,4 +160,10 @@ public class TestToolViewToolbar {
 		}
 		return result;
 	}
+
+	@Override
+	public String toString() {
+		return super.toString();
+	}
+
 }
