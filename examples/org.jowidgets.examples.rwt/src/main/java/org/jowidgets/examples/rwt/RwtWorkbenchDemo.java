@@ -27,43 +27,20 @@
  */
 package org.jowidgets.examples.rwt;
 
-import java.util.UUID;
-
-import org.eclipse.rwt.RWT;
-import org.eclipse.rwt.lifecycle.IEntryPoint;
-import org.eclipse.rwt.lifecycle.UICallBack;
-import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1;
-import org.jowidgets.spi.impl.swt.options.SwtOptions;
+import org.jowidgets.spi.impl.rwt.RwtEntryPoint;
 import org.jowidgets.workbench.impl.WorkbenchRunner;
 
-public final class RwtWorkbenchDemo implements IEntryPoint {
+public final class RwtWorkbenchDemo extends RwtEntryPoint {
 
-	@Override
-	public int createUI() {
-		try {
-			if (!Toolkit.isInitialized()) {
-				Toolkit.initialize(new RwtToolkitProvider());
-				SwtOptions.setInputVerification(false);
-			}
-
-			final String uuid = UUID.randomUUID().toString();
-			UICallBack.activate(uuid);
-
-			try {
+	public RwtWorkbenchDemo() {
+		super(new Runnable() {
+			@Override
+			public void run() {
 				new WorkbenchRunner().run(new WorkbenchDemo1(new Dimension(1024, 650)));
 			}
-
-			finally {
-				UICallBack.deactivate(uuid);
-			}
-
-			return 0;
-		}
-
-		finally {
-			RWT.getRequest().getSession().invalidate();
-		}
+		});
 	}
+
 }
