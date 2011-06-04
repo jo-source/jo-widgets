@@ -33,6 +33,7 @@ import java.util.Set;
 
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.controler.IInputObservable;
+import org.jowidgets.util.Assert;
 
 public class InputObservable implements IInputObservable {
 
@@ -45,11 +46,13 @@ public class InputObservable implements IInputObservable {
 
 	@Override
 	public final void addInputListener(final IInputListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		this.inputListeners.add(listener);
 	}
 
 	@Override
 	public final void removeInputListener(final IInputListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		this.inputListeners.remove(listener);
 	}
 
