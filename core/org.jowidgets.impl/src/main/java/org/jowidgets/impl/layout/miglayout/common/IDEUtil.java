@@ -4,6 +4,8 @@ package org.jowidgets.impl.layout.miglayout.common;
 
 import java.util.HashMap;
 
+import org.jowidgets.impl.layout.miglayout.MigLayoutToolkit;
+
 /**
  * This class contains static methods to be used by IDE vendors to convert to and from String/API constraints.
  * <p>
@@ -14,59 +16,59 @@ public class IDEUtil {
 	/**
 	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
 	 */
-	public static final UnitValue ZERO = UnitValue.ZERO;
+	public final UnitValue ZERO = MigLayoutToolkit.getUnitValueToolkit().ZERO;
 
 	/**
 	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
 	 */
-	public static final UnitValue TOP = UnitValue.TOP;
+	public final UnitValue TOP = MigLayoutToolkit.getUnitValueToolkit().TOP;
 
 	/**
 	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
 	 */
-	public static final UnitValue LEADING = UnitValue.LEADING;
+	public final UnitValue LEADING = MigLayoutToolkit.getUnitValueToolkit().LEADING;
 
 	/**
 	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
 	 */
-	public static final UnitValue LEFT = UnitValue.LEFT;
+	public final UnitValue LEFT = MigLayoutToolkit.getUnitValueToolkit().LEFT;
 
 	/**
 	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
 	 */
-	public static final UnitValue CENTER = UnitValue.CENTER;
+	public final UnitValue CENTER = MigLayoutToolkit.getUnitValueToolkit().CENTER;
 
 	/**
 	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
 	 */
-	public static final UnitValue TRAILING = UnitValue.TRAILING;
+	public final UnitValue TRAILING = MigLayoutToolkit.getUnitValueToolkit().TRAILING;
 
 	/**
 	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
 	 */
-	public static final UnitValue RIGHT = UnitValue.RIGHT;
+	public final UnitValue RIGHT = MigLayoutToolkit.getUnitValueToolkit().RIGHT;
 
 	/**
 	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
 	 */
-	public static final UnitValue BOTTOM = UnitValue.BOTTOM;
+	public final UnitValue BOTTOM = MigLayoutToolkit.getUnitValueToolkit().BOTTOM;
 
 	/**
 	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
 	 */
-	public static final UnitValue LABEL = UnitValue.LABEL;
+	public final UnitValue LABEL = MigLayoutToolkit.getUnitValueToolkit().LABEL;
 
 	/**
 	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
 	 */
-	public static final UnitValue INF = UnitValue.INF;
+	public final UnitValue INF = MigLayoutToolkit.getUnitValueToolkit().INF;
 
 	/**
 	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
 	 */
-	public static final UnitValue BASELINE_IDENTITY = UnitValue.BASELINE_IDENTITY;
+	public final UnitValue BASELINE_IDENTITY = MigLayoutToolkit.getUnitValueToolkit().BASELINE_IDENTITY;
 
-	private final static String[] X_Y_STRINGS = new String[] {"x", "y", "x2", "y2"};
+	private final String[] X_Y_STRINGS = new String[] {"x", "y", "x2", "y2"};
 
 	/**
 	 * Returns the version of IDEUtil
@@ -93,7 +95,7 @@ public class IDEUtil {
 	 *         cells explicitly to other values. Rows and columns that are completely empty and that does not have an explicit
 	 *         row/column constraint will be totally disregarded.
 	 */
-	public static HashMap<Object, int[]> getGridPositions(final Object parentContainer) {
+	public HashMap<Object, int[]> getGridPositions(final Object parentContainer) {
 		return Grid.getGridPositions(parentContainer);
 	}
 
@@ -118,7 +120,7 @@ public class IDEUtil {
 	 *         The returned sizes will be the ones calculated in the last layout cycle.
 	 * @see LayoutUtil#isDesignTime(ContainerWrapper)
 	 */
-	public static int[][] getRowSizes(final Object parentContainer) {
+	public int[][] getRowSizes(final Object parentContainer) {
 		return Grid.getSizesAndIndexes(parentContainer, true);
 	}
 
@@ -143,7 +145,7 @@ public class IDEUtil {
 	 *         The returned sizes will be the ones calculated in the last layout cycle.
 	 * @see LayoutUtil#isDesignTime(ContainerWrapper)
 	 */
-	public static int[][] getColumnSizes(final Object parentContainer) {
+	public int[][] getColumnSizes(final Object parentContainer) {
 		return Grid.getSizesAndIndexes(parentContainer, false);
 	}
 
@@ -156,11 +158,12 @@ public class IDEUtil {
 	 * @param isCols The the constraint should be returned for columns rather than rows.
 	 * @return A String. Never <code>null</code>.
 	 */
-	public static final String getConstraintString(final AC ac, final boolean asAPI, final boolean isCols) {
+	public final String getConstraintString(final AC ac, final boolean asAPI, final boolean isCols) {
 		final StringBuffer sb = new StringBuffer(32);
 
 		final DimConstraint[] dims = ac.getConstaints();
-		final BoundSize defGap = isCols ? PlatformDefaults.getGridGapX() : PlatformDefaults.getGridGapY();
+		final BoundSize defGap = isCols
+				? MigLayoutToolkit.getPlatformDefaults().getGridGapX() : MigLayoutToolkit.getPlatformDefaults().getGridGapY();
 
 		for (int i = 0; i < dims.length; i++) {
 			final DimConstraint dc = dims[i];
@@ -199,7 +202,7 @@ public class IDEUtil {
 	 * @param asAPI If the returned string should be of API type (e.g. .flowX().gap("rel").align("right")) or
 	 *            as a String type (e.g. "flowx, gap rel, right").
 	 */
-	private static final void addRowDimConstraintString(final DimConstraint dc, final StringBuffer sb, final boolean asAPI) {
+	private final void addRowDimConstraintString(final DimConstraint dc, final StringBuffer sb, final boolean asAPI) {
 		final int gp = dc.getGrowPriority();
 
 		final int firstComma = sb.length();
@@ -338,7 +341,7 @@ public class IDEUtil {
 	 * @param noGrowAdd If <code>true</code> no grow constraints will be added.
 	 * @return A constraint string. Never <code>null</code>.
 	 */
-	private static final void addComponentDimConstraintString(
+	private final void addComponentDimConstraintString(
 		final DimConstraint dc,
 		final StringBuffer sb,
 		final boolean asAPI,
@@ -435,7 +438,7 @@ public class IDEUtil {
 		}
 	}
 
-	private static void appendBoundSize(final BoundSize size, final StringBuffer sb, final boolean isHor, final boolean asAPI) {
+	private void appendBoundSize(final BoundSize size, final StringBuffer sb, final boolean isHor, final boolean asAPI) {
 		if (size.isUnset() == false) {
 			if (size.getPreferred() == null) {
 				if (size.getMin() == null) {
@@ -485,7 +488,7 @@ public class IDEUtil {
 	 *            as a String type (e.g. "flowx, gap rel, right").
 	 * @return A String. Never <code>null</code>.
 	 */
-	public static final String getConstraintString(final CC cc, final boolean asAPI) {
+	public final String getConstraintString(final CC cc, final boolean asAPI) {
 		final StringBuffer sb = new StringBuffer(16);
 
 		if (cc.isNewline())
@@ -674,7 +677,7 @@ public class IDEUtil {
 	 *            as a String type (e.g. "flowx, gap rel, right").
 	 * @return A String. Never <code>null</code>.
 	 */
-	public static final String getConstraintString(final LC lc, final boolean asAPI) {
+	public final String getConstraintString(final LC lc, final boolean asAPI) {
 		final StringBuffer sb = new StringBuffer(16);
 
 		if (lc.isFlowX() == false)
@@ -737,7 +740,8 @@ public class IDEUtil {
 
 		final UnitValue[] insets = lc.getInsets();
 		if (insets != null) {
-			final String cs = LayoutUtil.getCCString(insets);
+			final LayoutUtil layoutUtil = MigLayoutToolkit.getLayoutUtil();
+			final String cs = layoutUtil.getCCString(insets);
 			if (cs != null) {
 				if (asAPI) {
 					sb.append(".insets(\"").append(cs).append("\")");
@@ -831,11 +835,11 @@ public class IDEUtil {
 		return s.length() == 0 || s.charAt(0) != ',' ? s : s.substring(1);
 	}
 
-	private static String getUV(final UnitValue uv) {
+	private String getUV(final UnitValue uv) {
 		return uv != null ? uv.getConstraintString() : "null";
 	}
 
-	private static String getBS(final BoundSize bs) {
+	private String getBS(final BoundSize bs) {
 		return bs != null ? bs.getConstraintString() : "null";
 	}
 
@@ -845,7 +849,7 @@ public class IDEUtil {
 	 * @param f the float.
 	 * @return <code>f</code> as a string. Never <code>null</code>.
 	 */
-	private static final String floatToString(final float f, final boolean asAPI) {
+	private final String floatToString(final float f, final boolean asAPI) {
 		final String valS = String.valueOf(f);
 		return valS.endsWith(".0") ? valS.substring(0, valS.length() - 2) : (valS + (asAPI ? "f" : ""));
 	}

@@ -9,6 +9,8 @@ import java.io.ObjectOutput;
 import java.io.ObjectStreamException;
 import java.util.ArrayList;
 
+import org.jowidgets.impl.layout.miglayout.MigLayoutToolkit;
+
 /*
  * License (BSD):
  * ==============
@@ -594,17 +596,19 @@ public final class AC implements Externalizable {
 	// ************************************************
 
 	private Object readResolve() throws ObjectStreamException {
-		return LayoutUtil.getSerializedObject(this);
+		return MigLayoutToolkit.getLayoutUtil().getSerializedObject(this);
 	}
 
 	@Override
 	public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
-		LayoutUtil.setSerializedObject(this, LayoutUtil.readAsXML(in));
+		final LayoutUtil layoutUtil = MigLayoutToolkit.getLayoutUtil();
+		layoutUtil.setSerializedObject(this, layoutUtil.readAsXML(in));
 	}
 
 	@Override
 	public void writeExternal(final ObjectOutput out) throws IOException {
-		if (getClass() == AC.class)
-			LayoutUtil.writeAsXML(out, this);
+		if (getClass() == AC.class) {
+			MigLayoutToolkit.getLayoutUtil().writeAsXML(out, this);
+		}
 	}
 }

@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.jowidgets.impl.layout.miglayout.MigLayoutToolkit;
+
 /**
  * Parses string constraints.
  */
@@ -172,7 +174,7 @@ public final class ConstraintParser {
 					if (ix > -1) {
 						final String insStr = part.substring(ix).trim();
 						final UnitValue[] ins = parseInsets(insStr, true);
-						LayoutUtil.putCCString(ins, insStr);
+						MigLayoutToolkit.getLayoutUtil().putCCString(ins, insStr);
 						lc.setInsets(ins);
 						continue;
 					}
@@ -182,7 +184,7 @@ public final class ConstraintParser {
 					ix = startsWithLenient(part, new String[] {"aligny", "ay"}, new int[] {6, 2}, true);
 					if (ix > -1) {
 						final UnitValue align = parseUnitValueOrAlign(part.substring(ix).trim(), false, null);
-						if (align == UnitValue.BASELINE_IDENTITY)
+						if (align == MigLayoutToolkit.getUnitValueToolkit().BASELINE_IDENTITY)
 							throw new IllegalArgumentException("'baseline' can not be used to align the whole component group.");
 						lc.setAlignY(align);
 						continue;
@@ -893,7 +895,9 @@ public final class ConstraintParser {
 			final boolean isPanel = s.startsWith("p");
 			final UnitValue[] ins = new UnitValue[4];
 			for (int j = 0; j < 4; j++)
-				ins[j] = isPanel ? PlatformDefaults.getPanelInsets(j) : PlatformDefaults.getDialogInsets(j);
+				ins[j] = isPanel
+						? MigLayoutToolkit.getPlatformDefaults().getPanelInsets(j)
+						: MigLayoutToolkit.getPlatformDefaults().getDialogInsets(j);
 
 			return ins;
 		}
@@ -901,8 +905,11 @@ public final class ConstraintParser {
 			final String[] insS = toTrimmedTokens(s, ' ');
 			final UnitValue[] ins = new UnitValue[4];
 			for (int j = 0; j < 4; j++) {
-				final UnitValue insSz = parseUnitValue(insS[j < insS.length ? j : insS.length - 1], UnitValue.ZERO, j % 2 == 1);
-				ins[j] = insSz != null ? insSz : PlatformDefaults.getPanelInsets(j);
+				final UnitValue insSz = parseUnitValue(
+						insS[j < insS.length ? j : insS.length - 1],
+						MigLayoutToolkit.getUnitValueToolkit().ZERO,
+						j % 2 == 1);
+				ins[j] = insSz != null ? insSz : MigLayoutToolkit.getPlatformDefaults().getPanelInsets(j);
 			}
 			return ins;
 		}
@@ -1097,12 +1104,15 @@ public final class ConstraintParser {
 			return null;
 
 		if (c0 == 'i' && s.equals("inf"))
-			return UnitValue.INF;
+			return MigLayoutToolkit.getUnitValueToolkit().INF;
 
 		final int oper = getOper(s);
-		final boolean inline = oper == UnitValue.ADD || oper == UnitValue.SUB || oper == UnitValue.MUL || oper == UnitValue.DIV;
+		final boolean inline = oper == UnitValueToolkit.ADD
+			|| oper == UnitValueToolkit.SUB
+			|| oper == UnitValueToolkit.MUL
+			|| oper == UnitValueToolkit.DIV;
 
-		if (oper != UnitValue.STATIC) { // It is a multi-value
+		if (oper != UnitValueToolkit.STATIC) { // It is a multi-value
 
 			String[] uvs;
 			if (inline == false) { // If the format is of type "opr(xxx,yyy)" (compared to in-line "10%+15px")
@@ -1113,13 +1123,13 @@ public final class ConstraintParser {
 			}
 			else {
 				char delim;
-				if (oper == UnitValue.ADD) {
+				if (oper == UnitValueToolkit.ADD) {
 					delim = '+';
 				}
-				else if (oper == UnitValue.SUB) {
+				else if (oper == UnitValueToolkit.SUB) {
 					delim = '-';
 				}
-				else if (oper == UnitValue.MUL) {
+				else if (oper == UnitValueToolkit.MUL) {
 					delim = '*';
 				}
 				else { // div left
@@ -1167,35 +1177,35 @@ public final class ConstraintParser {
 	 */
 	static UnitValue parseAlignKeywords(final String s, final boolean isHor) {
 		if (startsWithLenient(s, "center", 1, false) != -1)
-			return UnitValue.CENTER;
+			return MigLayoutToolkit.getUnitValueToolkit().CENTER;
 
 		if (isHor) {
 			if (startsWithLenient(s, "left", 1, false) != -1)
-				return UnitValue.LEFT;
+				return MigLayoutToolkit.getUnitValueToolkit().LEFT;
 
 			if (startsWithLenient(s, "right", 1, false) != -1)
-				return UnitValue.RIGHT;
+				return MigLayoutToolkit.getUnitValueToolkit().RIGHT;
 
 			if (startsWithLenient(s, "leading", 4, false) != -1)
-				return UnitValue.LEADING;
+				return MigLayoutToolkit.getUnitValueToolkit().LEADING;
 
 			if (startsWithLenient(s, "trailing", 5, false) != -1)
-				return UnitValue.TRAILING;
+				return MigLayoutToolkit.getUnitValueToolkit().TRAILING;
 
 			if (startsWithLenient(s, "label", 5, false) != -1)
-				return UnitValue.LABEL;
+				return MigLayoutToolkit.getUnitValueToolkit().LABEL;
 
 		}
 		else {
 
 			if (startsWithLenient(s, "baseline", 4, false) != -1)
-				return UnitValue.BASELINE_IDENTITY;
+				return MigLayoutToolkit.getUnitValueToolkit().BASELINE_IDENTITY;
 
 			if (startsWithLenient(s, "top", 1, false) != -1)
-				return UnitValue.TOP;
+				return MigLayoutToolkit.getUnitValueToolkit().TOP;
 
 			if (startsWithLenient(s, "bottom", 1, false) != -1)
-				return UnitValue.BOTTOM;
+				return MigLayoutToolkit.getUnitValueToolkit().BOTTOM;
 		}
 
 		return null;
@@ -1229,17 +1239,17 @@ public final class ConstraintParser {
 	private static int getOper(final String s) {
 		final int len = s.length();
 		if (len < 3)
-			return UnitValue.STATIC;
+			return UnitValueToolkit.STATIC;
 
 		if (len > 5 && s.charAt(3) == '(' && s.charAt(len - 1) == ')') {
 			if (s.startsWith("min("))
-				return UnitValue.MIN;
+				return UnitValueToolkit.MIN;
 
 			if (s.startsWith("max("))
-				return UnitValue.MAX;
+				return UnitValueToolkit.MAX;
 
 			if (s.startsWith("mid("))
-				return UnitValue.MID;
+				return UnitValueToolkit.MID;
 		}
 
 		// Try in-line add/sub. E.g. "pref+10px".
@@ -1255,20 +1265,20 @@ public final class ConstraintParser {
 				else if (p == 0) {
 					if (j == 0) {
 						if (c == '+')
-							return UnitValue.ADD;
+							return UnitValueToolkit.ADD;
 						if (c == '-')
-							return UnitValue.SUB;
+							return UnitValueToolkit.SUB;
 					}
 					else {
 						if (c == '*')
-							return UnitValue.MUL;
+							return UnitValueToolkit.MUL;
 						if (c == '/')
-							return UnitValue.DIV;
+							return UnitValueToolkit.DIV;
 					}
 				}
 			}
 		}
-		return UnitValue.STATIC;
+		return UnitValueToolkit.STATIC;
 	}
 
 	/**

@@ -268,25 +268,14 @@ class JoMigComponentWrapper implements ComponentWrapper {
 
 	@Override
 	public int getLayoutHashCode() {
-		//final Dimension size = component.getSize();
-
-		if (preferredSize == null) {
-			if (component instanceof IControl) {
-				preferredSize = ((IControl) component).getPreferredSize();
-			}
-			else {
-				preferredSize = new Dimension(0, 0);
-			}
-		}
-		int h = preferredSize.getWidth() + (preferredSize.getHeight() << 12); // + (size.getWidth() << 22) + (size.getHeight() << 16);
-
+		final int h = 0;
 		if (component.isVisible()) {
-			h |= (1 << 25);
+			//h |= (1 << 25);
 		}
 
 		final String id = getLinkId();
 		if (id != null) {
-			h += id.hashCode();
+			//h += id.hashCode();
 		}
 		return h;
 	}

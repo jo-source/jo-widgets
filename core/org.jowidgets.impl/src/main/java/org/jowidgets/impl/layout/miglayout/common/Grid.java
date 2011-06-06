@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.TreeSet;
 import java.util.WeakHashMap;
 
+import org.jowidgets.impl.layout.miglayout.MigLayoutToolkit;
+
 /**
  * Holds components in a grid. Does most of the logic behind the layout manager.
  */
@@ -224,7 +226,7 @@ public final class Grid {
 			hitEndOfRow = false;
 
 			final boolean rowNoGrid = lc.isNoGrid()
-				|| ((DimConstraint) LayoutUtil.getIndexSafe(specs, lc.isFlowX() ? cellXY[1] : cellXY[0])).isNoGrid();
+				|| ((DimConstraint) MigLayoutToolkit.getLayoutUtil().getIndexSafe(specs, lc.isFlowX() ? cellXY[1] : cellXY[0])).isNoGrid();
 
 			// Move to a free y, x  if no absolute grid specified
 			final int cx = rootCc.getCellX();
@@ -420,7 +422,7 @@ public final class Grid {
 			sortCellsByPlatform(grid.values(), container);
 
 		// Calculate gaps now that the cells are filled and we know all adjacent components.
-		final boolean ltr = LayoutUtil.isLeftToRight(lc, container);
+		final boolean ltr = MigLayoutToolkit.getLayoutUtil().isLeftToRight(lc, container);
 		for (final Iterator<Cell> it = grid.values().iterator(); it.hasNext();) {
 			final Cell cell = it.next();
 			final ArrayList<CompWrap> cws = cell.compWraps;
@@ -453,7 +455,7 @@ public final class Grid {
 		pushXs = hasPushX || lc.isFillX() ? getDefaultPushWeights(false) : null;
 		pushYs = hasPushY || lc.isFillY() ? getDefaultPushWeights(true) : null;
 
-		if (LayoutUtil.isDesignTime(container))
+		if (MigLayoutToolkit.getLayoutUtil().isDesignTime(container))
 			saveGrid(container, grid);
 	}
 
@@ -778,10 +780,10 @@ public final class Grid {
 	 * @param parent The parent.
 	 */
 	private static void sortCellsByPlatform(final Collection<Cell> cells, final ContainerWrapper parent) {
-		final String order = PlatformDefaults.getButtonOrder();
+		final String order = MigLayoutToolkit.getPlatformDefaults().getButtonOrder();
 		final String orderLo = order.toLowerCase();
 
-		final int unrelSize = PlatformDefaults.convertToPixels(1, "u", true, 0, parent, null);
+		final int unrelSize = MigLayoutToolkit.getPlatformDefaults().convertToPixels(1, "u", true, 0, parent, null);
 
 		if (unrelSize == UnitConverter.UNABLE)
 			throw new IllegalArgumentException("'unrelated' not recognized by PlatformDefaults!");
@@ -813,7 +815,10 @@ public final class Grid {
 							final CompWrap cw = cell.compWraps.get(j);
 							if (tag.equals(cw.cc.getTag())) {
 								if (Character.isUpperCase(order.charAt(i))) {
-									final int min = PlatformDefaults.getMinimumButtonWidth().getPixels(0, parent, cw.comp);
+									final int min = MigLayoutToolkit.getPlatformDefaults().getMinimumButtonWidth().getPixels(
+											0,
+											parent,
+											cw.comp);
 									if (min > cw.horSizes[LayoutUtil.MIN])
 										cw.horSizes[LayoutUtil.MIN] = min;
 
@@ -927,10 +932,11 @@ public final class Grid {
 		final int parH = parentSize
 				? lc.getHeight().constrain(container.getHeight(), getParentSize(container, false), container) : 0;
 
-		final int insX = LayoutUtil.getInsets(lc, 0, defIns).getPixels(0, container, null);
-		final int insY = LayoutUtil.getInsets(lc, 1, defIns).getPixels(0, container, null);
-		final int visW = parW - insX - LayoutUtil.getInsets(lc, 2, defIns).getPixels(0, container, null);
-		final int visH = parH - insY - LayoutUtil.getInsets(lc, 3, defIns).getPixels(0, container, null);
+		final LayoutUtil layoutUtil = MigLayoutToolkit.getLayoutUtil();
+		final int insX = layoutUtil.getInsets(lc, 0, defIns).getPixels(0, container, null);
+		final int insY = layoutUtil.getInsets(lc, 1, defIns).getPixels(0, container, null);
+		final int visW = parW - insX - layoutUtil.getInsets(lc, 2, defIns).getPixels(0, container, null);
+		final int visH = parH - insY - layoutUtil.getInsets(lc, 3, defIns).getPixels(0, container, null);
 
 		LinkHandler.setBounds(lay, "visual", insX, insY, visW, visH, true, false);
 		LinkHandler.setBounds(lay, "container", 0, 0, parW, parH, true, false);
@@ -1007,7 +1013,7 @@ public final class Grid {
 			clearGroupLinkBounds();
 		}
 
-		maxEnd += LayoutUtil.getInsets(lc, isHor ? 3 : 2, !hasDocks()).getPixels(0, container, null);
+		maxEnd += MigLayoutToolkit.getLayoutUtil().getInsets(lc, isHor ? 3 : 2, !hasDocks()).getPixels(0, container, null);
 
 		if (curSizes[LayoutUtil.MIN] < maxEnd)
 			curSizes[LayoutUtil.MIN] = maxEnd;
@@ -1046,7 +1052,7 @@ public final class Grid {
 			sz = Math.min(Math.max(cw.getSize(LayoutUtil.PREF, isHor), minSz), maxSz);
 
 			if (stUV != null) {
-				st = stUV.getPixels(stUV.getUnit() == UnitValue.ALIGN ? sz : refSize, container, cw.comp);
+				st = stUV.getPixels(stUV.getUnit() == UnitValueToolkit.ALIGN ? sz : refSize, container, cw.comp);
 
 				if (endUV != null) // if (endUV == null && cw.cc.isBoundsIsGrid() == true)
 					sz = Math.min(Math.max((isHor ? (cw.x + cw.w) : (cw.y + cw.h)) - st, minSz), maxSz);
@@ -1082,19 +1088,21 @@ public final class Grid {
 	}
 
 	private void layoutInOneDim(final int refSize, final UnitValue align, final boolean isRows, final Float[] defaultPushWeights) {
-		final boolean fromEnd = !(isRows ? lc.isTopToBottom() : LayoutUtil.isLeftToRight(lc, container));
+		final LayoutUtil layoutUtil = MigLayoutToolkit.getLayoutUtil();
+
+		final boolean fromEnd = !(isRows ? lc.isTopToBottom() : layoutUtil.isLeftToRight(lc, container));
 		final DimConstraint[] primDCs = (isRows ? rowConstr : colConstr).getConstaints();
 		final FlowSizeSpec fss = isRows ? rowFlowSpecs : colFlowSpecs;
 		final ArrayList<LinkedDimGroup>[] rowCols = isRows ? rowGroupLists : colGroupLists;
 
-		final int[] rowColSizes = LayoutUtil.calculateSerial(
+		final int[] rowColSizes = layoutUtil.calculateSerial(
 				fss.sizes,
 				fss.resConstsInclGaps,
 				defaultPushWeights,
 				LayoutUtil.PREF,
 				refSize);
 
-		if (LayoutUtil.isDesignTime(container)) {
+		if (layoutUtil.isDesignTime(container)) {
 			final TreeSet<Integer> indexes = isRows ? rowIndexes : colIndexes;
 			final int[] ixArr = new int[indexes.size()];
 			int ix = 0;
@@ -1211,13 +1219,13 @@ public final class Grid {
 				if (uv != null) {
 					// If the size of the column is a link to some other size, use that instead
 					final int unit = uv.getUnit();
-					if (unit == UnitValue.PREF_SIZE) {
+					if (unit == UnitValueToolkit.PREF_SIZE) {
 						rowColSize = groupSizes[LayoutUtil.PREF];
 					}
-					else if (unit == UnitValue.MIN_SIZE) {
+					else if (unit == UnitValueToolkit.MIN_SIZE) {
 						rowColSize = groupSizes[LayoutUtil.MIN];
 					}
-					else if (unit == UnitValue.MAX_SIZE) {
+					else if (unit == UnitValueToolkit.MAX_SIZE) {
 						rowColSize = groupSizes[LayoutUtil.MAX];
 					}
 					else {
@@ -1225,7 +1233,8 @@ public final class Grid {
 					}
 				}
 				else if (cellIx >= -MAX_GRID && cellIx <= MAX_GRID && rowColSize == 0) {
-					rowColSize = LayoutUtil.isDesignTime(container) ? LayoutUtil.getDesignTimeEmptySize() : 0; // Empty rows with no size set gets XX pixels if design time
+					final LayoutUtil layoutUtil = MigLayoutToolkit.getLayoutUtil();
+					rowColSize = layoutUtil.isDesignTime(container) ? layoutUtil.getDesignTimeEmptySize() : 0; // Empty rows with no size set gets XX pixels if design time
 				}
 
 				rowColSizes[sType] = rowColSize;
@@ -1359,13 +1368,15 @@ public final class Grid {
 	private int[][] getRowGaps(final DimConstraint[] specs, final int refSize, final boolean isHor, final boolean[] fillInPushGaps) {
 		BoundSize defGap = isHor ? lc.getGridGapX() : lc.getGridGapY();
 		if (defGap == null)
-			defGap = isHor ? PlatformDefaults.getGridGapX() : PlatformDefaults.getGridGapY();
+			defGap = isHor
+					? MigLayoutToolkit.getPlatformDefaults().getGridGapX() : MigLayoutToolkit.getPlatformDefaults().getGridGapY();
 		final int[] defGapArr = defGap.getPixelSizes(refSize, container, null);
 
 		final boolean defIns = !hasDocks();
 
-		final UnitValue firstGap = LayoutUtil.getInsets(lc, isHor ? 1 : 0, defIns);
-		final UnitValue lastGap = LayoutUtil.getInsets(lc, isHor ? 3 : 2, defIns);
+		final LayoutUtil layoutUtil = MigLayoutToolkit.getLayoutUtil();
+		final UnitValue firstGap = layoutUtil.getInsets(lc, isHor ? 1 : 0, defIns);
+		final UnitValue lastGap = layoutUtil.getInsets(lc, isHor ? 3 : 2, defIns);
 
 		final int[][] retValues = new int[specs.length + 1][];
 
@@ -1495,7 +1506,8 @@ public final class Grid {
 	 * @return One <code>ArrayList<LinkedDimGroup></code> for every row/column.
 	 */
 	private ArrayList<LinkedDimGroup>[] divideIntoLinkedGroups(final boolean isRows) {
-		final boolean fromEnd = !(isRows ? lc.isTopToBottom() : LayoutUtil.isLeftToRight(lc, container));
+		final LayoutUtil layoutUtil = MigLayoutToolkit.getLayoutUtil();
+		final boolean fromEnd = !(isRows ? lc.isTopToBottom() : layoutUtil.isLeftToRight(lc, container));
 		final TreeSet<Integer> primIndexes = isRows ? rowIndexes : colIndexes;
 		final TreeSet<Integer> secIndexes = isRows ? colIndexes : rowIndexes;
 		final DimConstraint[] primDCs = (isRows ? rowConstr : colConstr).getConstaints();
@@ -1540,7 +1552,7 @@ public final class Grid {
 				else {
 					for (int cwIx = 0; cwIx < cell.compWraps.size(); cwIx++) {
 						final CompWrap cw = cell.compWraps.get(cwIx);
-						final boolean rowBaselineAlign = (isRows && lc.isTopToBottom() && dc.getAlignOrDefault(!isRows) == UnitValue.BASELINE_IDENTITY); // Disable baseline for bottomToTop since I can not verify it working.
+						final boolean rowBaselineAlign = (isRows && lc.isTopToBottom() && dc.getAlignOrDefault(!isRows) == MigLayoutToolkit.getUnitValueToolkit().BASELINE_IDENTITY); // Disable baseline for bottomToTop since I can not verify it working.
 						final boolean isBaseline = isRows && cw.isBaselineAlign(rowBaselineAlign);
 
 						final String linkCtx = isBaseline ? "baseline" : null;
@@ -1988,7 +2000,7 @@ public final class Grid {
 				return false;
 
 			final UnitValue al = cc.getVertical().getAlign();
-			return (al != null ? al == UnitValue.BASELINE_IDENTITY : defValue) && comp.hasBaseline();
+			return (al != null ? al == MigLayoutToolkit.getUnitValueToolkit().BASELINE_IDENTITY : defValue) && comp.hasBaseline();
 		}
 
 		private int getBaseline(final int sizeType) {
@@ -2017,8 +2029,8 @@ public final class Grid {
 		UnitValue align = cc.getVertical().getAlign();
 		if (spanCount == 1 && align == null)
 			align = dc.getAlignOrDefault(false);
-		if (align == UnitValue.BASELINE_IDENTITY)
-			align = UnitValue.CENTER;
+		if (align == MigLayoutToolkit.getUnitValueToolkit().BASELINE_IDENTITY)
+			align = MigLayoutToolkit.getUnitValueToolkit().CENTER;
 
 		final int offset = start
 			+ aboveBelow[0]
@@ -2047,7 +2059,8 @@ public final class Grid {
 				getGaps(compWraps, isHor));
 
 		final Float[] pushW = dc.isFill() ? GROW_100 : null;
-		final int[] sizes = LayoutUtil.calculateSerial(fss.sizes, fss.resConstsInclGaps, pushW, LayoutUtil.PREF, size);
+		final LayoutUtil layoutUtil = MigLayoutToolkit.getLayoutUtil();
+		final int[] sizes = layoutUtil.calculateSerial(fss.sizes, fss.resConstsInclGaps, pushW, LayoutUtil.PREF, size);
 		setCompWrapBounds(parent, sizes, compWraps, dc.getAlignOrDefault(isHor), start, size, isHor, fromEnd);
 	}
 
@@ -2110,7 +2123,8 @@ public final class Grid {
 
 			final Float[] pushW = dc.isFill() ? GROW_100 : null;
 
-			sizes[i] = LayoutUtil.calculateSerial(sz, resConstr, pushW, LayoutUtil.PREF, size);
+			final LayoutUtil layoutUtil = MigLayoutToolkit.getLayoutUtil();
+			sizes[i] = layoutUtil.calculateSerial(sz, resConstr, pushW, LayoutUtil.PREF, size);
 		}
 
 		final UnitValue rowAlign = dc.getAlignOrDefault(isHor);
@@ -2151,14 +2165,14 @@ public final class Grid {
 		UnitValue align = (isHor ? cc.getHorizontal() : cc.getVertical()).getAlign();
 		if (align == null)
 			align = rowAlign;
-		if (align == UnitValue.BASELINE_IDENTITY)
-			align = UnitValue.CENTER;
+		if (align == MigLayoutToolkit.getUnitValueToolkit().BASELINE_IDENTITY)
+			align = MigLayoutToolkit.getUnitValueToolkit().CENTER;
 
 		if (fromEnd) {
-			if (align == UnitValue.LEFT)
-				align = UnitValue.RIGHT;
-			else if (align == UnitValue.RIGHT)
-				align = UnitValue.LEFT;
+			if (align == MigLayoutToolkit.getUnitValueToolkit().LEFT)
+				align = MigLayoutToolkit.getUnitValueToolkit().RIGHT;
+			else if (align == MigLayoutToolkit.getUnitValueToolkit().RIGHT)
+				align = MigLayoutToolkit.getUnitValueToolkit().LEFT;
 		}
 		return align;
 	}
@@ -2370,6 +2384,7 @@ public final class Grid {
 			final int len,
 			final int sizeType,
 			final int eagerness) {
+			final LayoutUtil layoutUtil = MigLayoutToolkit.getLayoutUtil();
 			final ResizeConstraint[] resConstr = new ResizeConstraint[len];
 			final int[][] sizesToExpand = new int[len][];
 			for (int i = 0; i < len; i++) {
@@ -2378,19 +2393,19 @@ public final class Grid {
 
 				if (eagerness <= 1 && i % 2 == 0) { // (i % 2 == 0) means only odd indexes, which is only rows/col indexes and not gaps.
 					final int cIx = (i + fromIx - 1) >> 1;
-					final DimConstraint spec = (DimConstraint) LayoutUtil.getIndexSafe(specs, cIx);
+					final DimConstraint spec = (DimConstraint) layoutUtil.getIndexSafe(specs, cIx);
 
 					final BoundSize sz = spec.getSize();
-					if ((sizeType == LayoutUtil.MIN && sz.getMin() != null && sz.getMin().getUnit() != UnitValue.MIN_SIZE)
-						|| (sizeType == LayoutUtil.PREF && sz.getPreferred() != null && sz.getPreferred().getUnit() != UnitValue.PREF_SIZE)) {
+					if ((sizeType == LayoutUtil.MIN && sz.getMin() != null && sz.getMin().getUnit() != UnitValueToolkit.MIN_SIZE)
+						|| (sizeType == LayoutUtil.PREF && sz.getPreferred() != null && sz.getPreferred().getUnit() != UnitValueToolkit.PREF_SIZE)) {
 						continue;
 					}
 				}
-				resConstr[i] = (ResizeConstraint) LayoutUtil.getIndexSafe(resConstsInclGaps, i + fromIx);
+				resConstr[i] = (ResizeConstraint) layoutUtil.getIndexSafe(resConstsInclGaps, i + fromIx);
 			}
 
 			final Float[] growW = (eagerness == 1 || eagerness == 3) ? extractSubArray(specs, defGrow, fromIx, len) : null;
-			final int[] newSizes = LayoutUtil.calculateSerial(sizesToExpand, resConstr, growW, LayoutUtil.PREF, targetSize);
+			final int[] newSizes = layoutUtil.calculateSerial(sizesToExpand, resConstr, growW, LayoutUtil.PREF, targetSize);
 			int newSize = 0;
 
 			for (int i = 0; i < len; i++) {

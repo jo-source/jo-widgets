@@ -11,6 +11,8 @@ import java.io.ObjectOutputStream;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
 
+import org.jowidgets.impl.layout.miglayout.MigLayoutToolkit;
+
 /**
  * A size that contains minimum, preferred and maximum size of type {@link UnitValue}.
  * <p>
@@ -22,12 +24,14 @@ import java.io.Serializable;
  */
 public class BoundSize implements Serializable {
 	public static final BoundSize NULL_SIZE = new BoundSize(null, null);
-	public static final BoundSize ZERO_PIXEL = new BoundSize(UnitValue.ZERO, "0px");
+	public static final BoundSize ZERO_PIXEL = new BoundSize(MigLayoutToolkit.getUnitValueToolkit().ZERO, "0px");
 
 	private final transient UnitValue min;
 	private final transient UnitValue pref;
 	private final transient UnitValue max;
 	private final transient boolean gapPush;
+
+	private final LayoutUtil layoutUtil;
 
 	/**
 	 * Constructor that use the same value for min/preferred/max size.
@@ -69,12 +73,14 @@ public class BoundSize implements Serializable {
 		final UnitValue max,
 		final boolean gapPush,
 		final String createString) {
+		this.layoutUtil = MigLayoutToolkit.getLayoutUtil();
+
 		this.min = min;
 		this.pref = preferred;
 		this.max = max;
 		this.gapPush = gapPush;
 
-		LayoutUtil.putCCString(this, createString); // this escapes!!
+		layoutUtil.putCCString(this, createString); // this escapes!!
 	}
 
 	/**
@@ -146,15 +152,17 @@ public class BoundSize implements Serializable {
 	 * @return
 	 */
 	final UnitValue getSize(final int sizeType) {
-		switch (sizeType) {
-			case LayoutUtil.MIN:
-				return min;
-			case LayoutUtil.PREF:
-				return pref;
-			case LayoutUtil.MAX:
-				return max;
-			default:
-				throw new IllegalArgumentException("Unknown size: " + sizeType);
+		if (sizeType == LayoutUtil.MIN) {
+			return min;
+		}
+		else if (sizeType == LayoutUtil.PREF) {
+			return pref;
+		}
+		else if (sizeType == LayoutUtil.MAX) {
+			return max;
+		}
+		else {
+			throw new IllegalArgumentException("Unknown size: " + sizeType);
 		}
 	}
 
@@ -180,7 +188,7 @@ public class BoundSize implements Serializable {
 	 * @return A String. Never <code>null</code>.
 	 */
 	String getConstraintString() {
-		final String cs = LayoutUtil.getCCString(this);
+		final String cs = layoutUtil.getCCString(this);
 		if (cs != null)
 			return cs;
 
@@ -219,7 +227,8 @@ public class BoundSize implements Serializable {
 	}
 
 	static {
-		LayoutUtil.setDelegate(BoundSize.class, new PersistenceDelegate() {
+		final LayoutUtil lUtil = MigLayoutToolkit.getLayoutUtil();
+		lUtil.setDelegate(BoundSize.class, new PersistenceDelegate() {
 			@Override
 			protected Expression instantiate(final Object oldInstance, final Encoder out) {
 				final BoundSize bs = (BoundSize) oldInstance;
@@ -242,15 +251,16 @@ public class BoundSize implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	protected Object readResolve() throws ObjectStreamException {
-		return LayoutUtil.getSerializedObject(this);
+		return layoutUtil.getSerializedObject(this);
 	}
 
 	private void writeObject(final ObjectOutputStream out) throws IOException {
-		if (getClass() == BoundSize.class)
-			LayoutUtil.writeAsXML(out, this);
+		if (getClass() == BoundSize.class) {
+			layoutUtil.writeAsXML(out, this);
+		}
 	}
 
 	private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
-		LayoutUtil.setSerializedObject(this, LayoutUtil.readAsXML(in));
+		layoutUtil.setSerializedObject(this, layoutUtil.readAsXML(in));
 	}
 }

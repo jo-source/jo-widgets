@@ -8,6 +8,8 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.ObjectStreamException;
 
+import org.jowidgets.impl.layout.miglayout.MigLayoutToolkit;
+
 /**
  * Contains the constraints for an instance of the {@link LC} layout manager.
  */
@@ -1054,7 +1056,8 @@ public final class LC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
 	public final LC minWidth(final String width) {
-		setWidth(LayoutUtil.derive(getWidth(), ConstraintParser.parseUnitValue(width, true), null, null));
+		final LayoutUtil layoutUtil = MigLayoutToolkit.getLayoutUtil();
+		setWidth(layoutUtil.derive(getWidth(), ConstraintParser.parseUnitValue(width, true), null, null));
 		return this;
 	}
 
@@ -1082,7 +1085,8 @@ public final class LC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
 	public final LC maxWidth(final String width) {
-		setWidth(LayoutUtil.derive(getWidth(), null, null, ConstraintParser.parseUnitValue(width, true)));
+		final LayoutUtil layoutUtil = MigLayoutToolkit.getLayoutUtil();
+		setWidth(layoutUtil.derive(getWidth(), null, null, ConstraintParser.parseUnitValue(width, true)));
 		return this;
 	}
 
@@ -1095,7 +1099,8 @@ public final class LC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
 	public final LC minHeight(final String height) {
-		setHeight(LayoutUtil.derive(getHeight(), ConstraintParser.parseUnitValue(height, false), null, null));
+		final LayoutUtil layoutUtil = MigLayoutToolkit.getLayoutUtil();
+		setHeight(layoutUtil.derive(getHeight(), ConstraintParser.parseUnitValue(height, false), null, null));
 		return this;
 	}
 
@@ -1123,7 +1128,8 @@ public final class LC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
 	public final LC maxHeight(final String height) {
-		setHeight(LayoutUtil.derive(getHeight(), null, null, ConstraintParser.parseUnitValue(height, false)));
+		final LayoutUtil layoutUtil = MigLayoutToolkit.getLayoutUtil();
+		setHeight(layoutUtil.derive(getHeight(), null, null, ConstraintParser.parseUnitValue(height, false)));
 		return this;
 	}
 
@@ -1132,17 +1138,19 @@ public final class LC implements Externalizable {
 	// ************************************************
 
 	private Object readResolve() throws ObjectStreamException {
-		return LayoutUtil.getSerializedObject(this);
+		return MigLayoutToolkit.getLayoutUtil().getSerializedObject(this);
 	}
 
 	@Override
 	public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
-		LayoutUtil.setSerializedObject(this, LayoutUtil.readAsXML(in));
+		final LayoutUtil layoutUtil = MigLayoutToolkit.getLayoutUtil();
+		layoutUtil.setSerializedObject(this, layoutUtil.readAsXML(in));
 	}
 
 	@Override
 	public void writeExternal(final ObjectOutput out) throws IOException {
-		if (getClass() == LC.class)
-			LayoutUtil.writeAsXML(out, this);
+		if (getClass() == LC.class) {
+			MigLayoutToolkit.getLayoutUtil().writeAsXML(out, this);
+		}
 	}
 }
