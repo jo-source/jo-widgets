@@ -6,6 +6,8 @@ import java.util.HashMap;
 
 import javax.swing.SwingConstants;
 
+import org.jowidgets.impl.layout.miglayout.MigLayoutToolkit;
+
 /*
  * License (BSD):
  * ==============
@@ -46,59 +48,59 @@ import javax.swing.SwingConstants;
  * Currently handles Windows, Mac OS X, and GNOME spacing.
  */
 public final class PlatformDefaults {
-	private static int DEF_H_UNIT = UnitValue.LPX;
-	private static int DEF_V_UNIT = UnitValue.LPY;
+	private int DEF_H_UNIT = UnitValueToolkit.LPX;
+	private int DEF_V_UNIT = UnitValueToolkit.LPY;
 
-	private static InCellGapProvider GAP_PROVIDER = null;
+	private InCellGapProvider GAP_PROVIDER = null;
 
-	private static volatile int MOD_COUNT = 0;
+	private volatile int MOD_COUNT = 0;
 
-	private static final UnitValue LPX4 = new UnitValue(4, UnitValue.LPX, null);
-	private static final UnitValue LPX6 = new UnitValue(6, UnitValue.LPX, null);
-	private static final UnitValue LPX7 = new UnitValue(7, UnitValue.LPX, null);
-	//	private static final UnitValue LPX8 = new UnitValue(8, UnitValue.LPX, null);
-	private static final UnitValue LPX9 = new UnitValue(9, UnitValue.LPX, null);
-	private static final UnitValue LPX10 = new UnitValue(10, UnitValue.LPX, null);
-	private static final UnitValue LPX11 = new UnitValue(11, UnitValue.LPX, null);
-	private static final UnitValue LPX12 = new UnitValue(12, UnitValue.LPX, null);
-	private static final UnitValue LPX14 = new UnitValue(14, UnitValue.LPX, null);
-	private static final UnitValue LPX16 = new UnitValue(16, UnitValue.LPX, null);
-	private static final UnitValue LPX18 = new UnitValue(18, UnitValue.LPX, null);
-	private static final UnitValue LPX20 = new UnitValue(20, UnitValue.LPX, null);
+	private final UnitValue LPX4 = new UnitValue(4, UnitValueToolkit.LPX, null);
+	private final UnitValue LPX6 = new UnitValue(6, UnitValueToolkit.LPX, null);
+	private final UnitValue LPX7 = new UnitValue(7, UnitValueToolkit.LPX, null);
+	//	private final UnitValue LPX8 = new UnitValue(8, UnitValueToolkit.LPX, null);
+	private final UnitValue LPX9 = new UnitValue(9, UnitValueToolkit.LPX, null);
+	private final UnitValue LPX10 = new UnitValue(10, UnitValueToolkit.LPX, null);
+	private final UnitValue LPX11 = new UnitValue(11, UnitValueToolkit.LPX, null);
+	private final UnitValue LPX12 = new UnitValue(12, UnitValueToolkit.LPX, null);
+	private final UnitValue LPX14 = new UnitValue(14, UnitValueToolkit.LPX, null);
+	private final UnitValue LPX16 = new UnitValue(16, UnitValueToolkit.LPX, null);
+	private final UnitValue LPX18 = new UnitValue(18, UnitValueToolkit.LPX, null);
+	private final UnitValue LPX20 = new UnitValue(20, UnitValueToolkit.LPX, null);
 
-	private static final UnitValue LPY4 = new UnitValue(4, UnitValue.LPY, null);
-	private static final UnitValue LPY6 = new UnitValue(6, UnitValue.LPY, null);
-	private static final UnitValue LPY7 = new UnitValue(7, UnitValue.LPY, null);
-	//	private static final UnitValue LPY8 = new UnitValue(8, UnitValue.LPY, null);
-	private static final UnitValue LPY9 = new UnitValue(9, UnitValue.LPY, null);
-	private static final UnitValue LPY10 = new UnitValue(10, UnitValue.LPY, null);
-	private static final UnitValue LPY11 = new UnitValue(11, UnitValue.LPY, null);
-	private static final UnitValue LPY12 = new UnitValue(12, UnitValue.LPY, null);
-	private static final UnitValue LPY14 = new UnitValue(14, UnitValue.LPY, null);
-	private static final UnitValue LPY16 = new UnitValue(16, UnitValue.LPY, null);
-	private static final UnitValue LPY18 = new UnitValue(18, UnitValue.LPY, null);
-	private static final UnitValue LPY20 = new UnitValue(20, UnitValue.LPY, null);
+	private final UnitValue LPY4 = new UnitValue(4, UnitValueToolkit.LPY, null);
+	private final UnitValue LPY6 = new UnitValue(6, UnitValueToolkit.LPY, null);
+	private final UnitValue LPY7 = new UnitValue(7, UnitValueToolkit.LPY, null);
+	//	private static final UnitValue LPY8 = new UnitValue(8, UnitValueToolkit.LPY, null);
+	private final UnitValue LPY9 = new UnitValue(9, UnitValueToolkit.LPY, null);
+	private final UnitValue LPY10 = new UnitValue(10, UnitValueToolkit.LPY, null);
+	private final UnitValue LPY11 = new UnitValue(11, UnitValueToolkit.LPY, null);
+	private final UnitValue LPY12 = new UnitValue(12, UnitValueToolkit.LPY, null);
+	private final UnitValue LPY14 = new UnitValue(14, UnitValueToolkit.LPY, null);
+	private final UnitValue LPY16 = new UnitValue(16, UnitValueToolkit.LPY, null);
+	private final UnitValue LPY18 = new UnitValue(18, UnitValueToolkit.LPY, null);
+	private final UnitValue LPY20 = new UnitValue(20, UnitValueToolkit.LPY, null);
 
-	public static final int WINDOWS_XP = 0;
-	public static final int MAC_OSX = 1;
-	public static final int GNOME = 2;
+	public final int WINDOWS_XP = 0;
+	public final int MAC_OSX = 1;
+	public final int GNOME = 2;
 	//	private static final int KDE = 3;
 
-	private static int CUR_PLAF = WINDOWS_XP;
+	private int CUR_PLAF = WINDOWS_XP;
 
 	// Used for holding values.
-	private final static UnitValue[] PANEL_INS = new UnitValue[4];
-	private final static UnitValue[] DIALOG_INS = new UnitValue[4];
+	private static UnitValue[] PANEL_INS = new UnitValue[4];
+	private static UnitValue[] DIALOG_INS = new UnitValue[4];
 
-	private static String BUTTON_FORMAT = null;
+	private String BUTTON_FORMAT = null;
 
-	private static final HashMap<String, UnitValue> HOR_DEFS = new HashMap<String, UnitValue>(32);
-	private static final HashMap<String, UnitValue> VER_DEFS = new HashMap<String, UnitValue>(32);
-	private static BoundSize DEF_VGAP = null, DEF_HGAP = null;
+	private final HashMap<String, UnitValue> HOR_DEFS = new HashMap<String, UnitValue>(32);
+	private final HashMap<String, UnitValue> VER_DEFS = new HashMap<String, UnitValue>(32);
+	private BoundSize DEF_VGAP = null, DEF_HGAP = null;
 	static BoundSize RELATED_X = null, RELATED_Y = null, UNRELATED_X = null, UNRELATED_Y = null;
-	private static UnitValue BUTT_WIDTH = null;
+	private UnitValue BUTT_WIDTH = null;
 
-	private static Float horScale = null, verScale = null;
+	private Float horScale = null, verScale = null;
 
 	/**
 	 * I value indicating that the size of the font for the container of the component
@@ -109,7 +111,7 @@ public final class PlatformDefaults {
 	 * @see net.miginfocom.layout.UnitValue#LPY
 	 * @see #setLogicalPixelBase(int)
 	 */
-	public static final int BASE_FONT_SIZE = 100;
+	public final int BASE_FONT_SIZE = 100;
 
 	/**
 	 * I value indicating that the screen DPI will be used as a base for calculating the
@@ -123,7 +125,7 @@ public final class PlatformDefaults {
 	 * @see #setVerticalScaleFactor(Float)
 	 * @see #setHorizontalScaleFactor(Float)
 	 */
-	public static final int BASE_SCALE_FACTOR = 101;
+	public final int BASE_SCALE_FACTOR = 101;
 
 	/**
 	 * I value indicating that the size of a logical pixel should always be a real pixel
@@ -133,26 +135,21 @@ public final class PlatformDefaults {
 	 * @see net.miginfocom.layout.UnitValue#LPY
 	 * @see #setLogicalPixelBase(int)
 	 */
-	public static final int BASE_REAL_PIXEL = 102;
+	public final int BASE_REAL_PIXEL = 102;
 
-	private static int LP_BASE = BASE_SCALE_FACTOR;
+	private int LP_BASE = BASE_SCALE_FACTOR;
 
-	private static Integer BASE_DPI_FORCED = null;
-	private static int BASE_DPI = 96;
+	private Integer BASE_DPI_FORCED = null;
+	private int BASE_DPI = 96;
 
-	private static boolean dra = true;
-
-	static {
-		setPlatform(getCurrentPlatform());
-		MOD_COUNT = 0;
-	}
+	private boolean dra = true;
 
 	/**
 	 * Returns the platform that the JRE is running on currently.
 	 * 
 	 * @return The platform that the JRE is running on currently. E.g. {@link #MAC_OSX}, {@link #WINDOWS_XP}, or {@link #GNOME}.
 	 */
-	public static int getCurrentPlatform() {
+	public int getCurrentPlatform() {
 		final String os = System.getProperty("os.name");
 		if (os.startsWith("Mac OS")) {
 			return MAC_OSX;
@@ -165,7 +162,10 @@ public final class PlatformDefaults {
 		}
 	}
 
-	private PlatformDefaults() {}
+	public PlatformDefaults() {
+		setPlatform(getCurrentPlatform());
+		MOD_COUNT = 0;
+	}
 
 	/**
 	 * Set the defaults to the default for the platform
@@ -173,7 +173,7 @@ public final class PlatformDefaults {
 	 * @param plaf The platform. <code>PlatformDefaults.WINDOWS_XP</code>, <code>PlatformDefaults.MAC_OSX</code>, or
 	 *            <code>PlatformDefaults.GNOME</code>.
 	 */
-	public static void setPlatform(final int plaf) {
+	public void setPlatform(final int plaf) {
 		switch (plaf) {
 			case WINDOWS_XP:
 				setRelatedGap(LPX4, LPY4);
@@ -182,7 +182,7 @@ public final class PlatformDefaults {
 				setIndentGap(LPX9, LPY9);
 				setGridCellGap(LPX4, LPY4);
 
-				setMinimumButtonWidth(new UnitValue(75, UnitValue.LPX, null));
+				setMinimumButtonWidth(new UnitValue(75, UnitValueToolkit.LPX, null));
 				setButtonOrder("L_E+U+YNBXOCAH_R");
 				setDialogInsets(LPY11, LPX11, LPY11, LPX11);
 				setPanelInsets(LPY7, LPX7, LPY7, LPX7);
@@ -194,7 +194,7 @@ public final class PlatformDefaults {
 				setIndentGap(LPX10, LPY10);
 				setGridCellGap(LPX4, LPY4);
 
-				setMinimumButtonWidth(new UnitValue(68, UnitValue.LPX, null));
+				setMinimumButtonWidth(new UnitValue(68, UnitValueToolkit.LPX, null));
 				setButtonOrder("L_HE+U+NYBXCOA_R");
 				setDialogInsets(LPY14, LPX20, LPY20, LPX20);
 				setPanelInsets(LPY16, LPX16, LPY16, LPX16);
@@ -205,7 +205,7 @@ public final class PlatformDefaults {
 				//				setIndentGap(LPX10, LPY10);
 				//				setGridCellGap(LPX8, LPY8);
 				//
-				//				setMinimumButtonWidth(new UnitValue(68, UnitValue.LPX, null));
+				//				setMinimumButtonWidth(new UnitValue(68, UnitValueToolkit.LPX, null));
 				//				setButtonOrder("L_HE+U+NYBXCOA_R");
 				//				setDialogInsets(LPY14, LPX20, LPY20, LPX20);
 				//				setPanelInsets(LPY16, LPX16, LPY16, LPX16);
@@ -218,7 +218,7 @@ public final class PlatformDefaults {
 				setGridCellGap(LPX6, LPY6); // GNOME HIG 8.2.3
 
 				// GtkButtonBox, child-min-width property default value
-				setMinimumButtonWidth(new UnitValue(85, UnitValue.LPX, null));
+				setMinimumButtonWidth(new UnitValue(85, UnitValueToolkit.LPX, null));
 				setButtonOrder("L_HE+UNYACBXIO_R"); // GNOME HIG 3.4.2, 3.7.1
 				setDialogInsets(LPY12, LPX12, LPY12, LPX12); // GNOME HIG 3.4.3
 				setPanelInsets(LPY6, LPX6, LPY6, LPX6); // ???
@@ -230,7 +230,7 @@ public final class PlatformDefaults {
 		BASE_DPI = BASE_DPI_FORCED != null ? BASE_DPI_FORCED.intValue() : getPlatformDPI(plaf);
 	}
 
-	private static int getPlatformDPI(final int plaf) {
+	private int getPlatformDPI(final int plaf) {
 		switch (plaf) {
 			case WINDOWS_XP:
 			case GNOME:
@@ -252,11 +252,11 @@ public final class PlatformDefaults {
 	 * 
 	 * @return <code>PlatformDefaults.WINDOWS</code> or <code>PlatformDefaults.MAC_OSX</code>
 	 */
-	public static int getPlatform() {
+	public int getPlatform() {
 		return CUR_PLAF;
 	}
 
-	public static int getDefaultDPI() {
+	public int getDefaultDPI() {
 		return BASE_DPI;
 	}
 
@@ -268,7 +268,7 @@ public final class PlatformDefaults {
 	 * 
 	 * @param dpi The base DPI. If null the default DPI is reset to the platform base DPI.
 	 */
-	public static void setDefaultDPI(final Integer dpi) {
+	public void setDefaultDPI(final Integer dpi) {
 		BASE_DPI = dpi != null ? dpi.intValue() : getPlatformDPI(CUR_PLAF);
 		BASE_DPI_FORCED = dpi;
 	}
@@ -282,7 +282,7 @@ public final class PlatformDefaults {
 	 * @see #getHorizontalScaleFactor()
 	 * @see ComponentWrapper#getHorizontalScreenDPI()
 	 */
-	public static Float getHorizontalScaleFactor() {
+	public Float getHorizontalScaleFactor() {
 		return horScale;
 	}
 
@@ -295,8 +295,9 @@ public final class PlatformDefaults {
 	 * @see #getHorizontalScaleFactor()
 	 * @see ComponentWrapper#getHorizontalScreenDPI()
 	 */
-	public static void setHorizontalScaleFactor(final Float f) {
-		if (LayoutUtil.equals(horScale, f) == false) {
+	public void setHorizontalScaleFactor(final Float f) {
+		final LayoutUtil layoutUtil = MigLayoutToolkit.getLayoutUtil();
+		if (layoutUtil.equals(horScale, f) == false) {
 			horScale = f;
 			MOD_COUNT++;
 		}
@@ -311,7 +312,7 @@ public final class PlatformDefaults {
 	 * @see #getHorizontalScaleFactor()
 	 * @see ComponentWrapper#getVerticalScreenDPI()
 	 */
-	public static Float getVerticalScaleFactor() {
+	public Float getVerticalScaleFactor() {
 		return verScale;
 	}
 
@@ -324,8 +325,9 @@ public final class PlatformDefaults {
 	 * @see #getHorizontalScaleFactor()
 	 * @see ComponentWrapper#getVerticalScreenDPI()
 	 */
-	public static void setVerticalScaleFactor(final Float f) {
-		if (LayoutUtil.equals(verScale, f) == false) {
+	public void setVerticalScaleFactor(final Float f) {
+		final LayoutUtil layoutUtil = MigLayoutToolkit.getLayoutUtil();
+		if (layoutUtil.equals(verScale, f) == false) {
 			verScale = f;
 			MOD_COUNT++;
 		}
@@ -339,7 +341,7 @@ public final class PlatformDefaults {
 	 * @see # BASE_SCREEN_DPI_FACTOR
 	 * @see #BASE_REAL_PIXEL
 	 */
-	public static int getLogicalPixelBase() {
+	public int getLogicalPixelBase() {
 		return LP_BASE;
 	}
 
@@ -351,7 +353,7 @@ public final class PlatformDefaults {
 	 * @see # BASE_SCREEN_DPI_FACTOR
 	 * @see #BASE_REAL_PIXEL
 	 */
-	public static void setLogicalPixelBase(final int base) {
+	public void setLogicalPixelBase(final int base) {
 		if (LP_BASE != base) {
 			if (base < BASE_FONT_SIZE || base > BASE_SCALE_FACTOR)
 				throw new IllegalArgumentException("Unrecognized base: " + base);
@@ -367,7 +369,7 @@ public final class PlatformDefaults {
 	 * @param x The value that will be transformed to pixels. If <code>null</code> the current value will not change.
 	 * @param y The value that will be transformed to pixels. If <code>null</code> the current value will not change.
 	 */
-	public static void setRelatedGap(final UnitValue x, final UnitValue y) {
+	public void setRelatedGap(final UnitValue x, final UnitValue y) {
 		setUnitValue(new String[] {"r", "rel", "related"}, x, y);
 
 		RELATED_X = new BoundSize(x, x, null, "rel:rel");
@@ -380,7 +382,7 @@ public final class PlatformDefaults {
 	 * @param x The value that will be transformed to pixels. If <code>null</code> the current value will not change.
 	 * @param y The value that will be transformed to pixels. If <code>null</code> the current value will not change.
 	 */
-	public static void setUnrelatedGap(final UnitValue x, final UnitValue y) {
+	public void setUnrelatedGap(final UnitValue x, final UnitValue y) {
 		setUnitValue(new String[] {"u", "unrel", "unrelated"}, x, y);
 
 		UNRELATED_X = new BoundSize(x, x, null, "unrel:unrel");
@@ -393,7 +395,7 @@ public final class PlatformDefaults {
 	 * @param x The value that will be transformed to pixels. If <code>null</code> the current value will not change.
 	 * @param y The value that will be transformed to pixels. If <code>null</code> the current value will not change.
 	 */
-	public static void setParagraphGap(final UnitValue x, final UnitValue y) {
+	public void setParagraphGap(final UnitValue x, final UnitValue y) {
 		setUnitValue(new String[] {"p", "para", "paragraph"}, x, y);
 	}
 
@@ -403,7 +405,7 @@ public final class PlatformDefaults {
 	 * @param x The value that will be transformed to pixels. If <code>null</code> the current value will not change.
 	 * @param y The value that will be transformed to pixels. If <code>null</code> the current value will not change.
 	 */
-	public static void setIndentGap(final UnitValue x, final UnitValue y) {
+	public void setIndentGap(final UnitValue x, final UnitValue y) {
 		setUnitValue(new String[] {"i", "ind", "indent"}, x, y);
 	}
 
@@ -414,7 +416,7 @@ public final class PlatformDefaults {
 	 * @param x The value that will be transformed to pixels. If <code>null</code> the current value will not change.
 	 * @param y The value that will be transformed to pixels. If <code>null</code> the current value will not change.
 	 */
-	public static void setGridCellGap(final UnitValue x, final UnitValue y) {
+	public void setGridCellGap(final UnitValue x, final UnitValue y) {
 		if (x != null)
 			DEF_HGAP = new BoundSize(x, x, null, null);
 
@@ -429,7 +431,7 @@ public final class PlatformDefaults {
 	 * 
 	 * @param width The recommended minimum button width.
 	 */
-	public static void setMinimumButtonWidth(final UnitValue width) {
+	public void setMinimumButtonWidth(final UnitValue width) {
 		BUTT_WIDTH = width;
 		MOD_COUNT++;
 	}
@@ -439,7 +441,7 @@ public final class PlatformDefaults {
 	 * 
 	 * @return The recommended minimum button width depending on the current set platform.
 	 */
-	public static UnitValue getMinimumButtonWidth() {
+	public UnitValue getMinimumButtonWidth() {
 		return BUTT_WIDTH;
 	}
 
@@ -449,7 +451,7 @@ public final class PlatformDefaults {
 	 * @param unit The unit string.
 	 * @return The unit value associated with the unit. <code>null</code> for unrecognized units.
 	 */
-	public static UnitValue getUnitValueX(final String unit) {
+	public UnitValue getUnitValueX(final String unit) {
 		return HOR_DEFS.get(unit);
 	}
 
@@ -459,7 +461,7 @@ public final class PlatformDefaults {
 	 * @param unit The unit string.
 	 * @return The unit value associated with the unit. <code>null</code> for unrecognized units.
 	 */
-	public static UnitValue getUnitValueY(final String unit) {
+	public UnitValue getUnitValueY(final String unit) {
 		return VER_DEFS.get(unit);
 	}
 
@@ -475,7 +477,7 @@ public final class PlatformDefaults {
 	 * @param y The value for the vertical dimension. Might be same object as for <code>x</code>. If <code>null</code> the value
 	 *            is not changed.
 	 */
-	public static final void setUnitValue(final String[] unitStrings, final UnitValue x, final UnitValue y) {
+	public final void setUnitValue(final String[] unitStrings, final UnitValue x, final UnitValue y) {
 		for (int i = 0; i < unitStrings.length; i++) {
 			final String s = unitStrings[i].toLowerCase().trim();
 			if (x != null)
@@ -489,7 +491,7 @@ public final class PlatformDefaults {
 	/**
 	 * Understands ("r", "rel", "related") OR ("u", "unrel", "unrelated") OR ("i", "ind", "indent") OR ("p", "para", "paragraph").
 	 */
-	static final int convertToPixels(
+	final int convertToPixels(
 		final float value,
 		final String unit,
 		final boolean isHor,
@@ -506,7 +508,7 @@ public final class PlatformDefaults {
 	 * @return The button order.
 	 * @see #setButtonOrder(String)
 	 */
-	public static final String getButtonOrder() {
+	public final String getButtonOrder() {
 		return BUTTON_FORMAT;
 	}
 
@@ -548,7 +550,7 @@ public final class PlatformDefaults {
 	 * 
 	 * @param order The new button order for the current platform.
 	 */
-	public static final void setButtonOrder(final String order) {
+	public final void setButtonOrder(final String order) {
 		BUTTON_FORMAT = order;
 		MOD_COUNT++;
 	}
@@ -559,7 +561,7 @@ public final class PlatformDefaults {
 	 * @param c The char. Must be lower case!
 	 * @return The tag that corresponds to the char or <code>null</code> if the char is unrecognized.
 	 */
-	static final String getTagForChar(final char c) {
+	static String getTagForChar(final char c) {
 		switch (c) {
 			case 'o':
 				return "ok";
@@ -597,7 +599,7 @@ public final class PlatformDefaults {
 	 * 
 	 * @return The platform recommended inter-cell gap in the horizontal (x) dimension..
 	 */
-	public static BoundSize getGridGapX() {
+	public BoundSize getGridGapX() {
 		return DEF_HGAP;
 	}
 
@@ -606,7 +608,7 @@ public final class PlatformDefaults {
 	 * 
 	 * @return The platform recommended inter-cell gap in the vertical (x) dimension..
 	 */
-	public static BoundSize getGridGapY() {
+	public BoundSize getGridGapY() {
 		return DEF_VGAP;
 	}
 
@@ -616,7 +618,7 @@ public final class PlatformDefaults {
 	 * @param side top == 0, left == 1, bottom = 2, right = 3.
 	 * @return The inset. Never <code>null</code>.
 	 */
-	public static UnitValue getDialogInsets(final int side) {
+	public UnitValue getDialogInsets(final int side) {
 		return DIALOG_INS[side];
 	}
 
@@ -628,7 +630,7 @@ public final class PlatformDefaults {
 	 * @param bottom The bottom inset. May be <code>null</code>.
 	 * @param right The right inset. May be <code>null</code>.
 	 */
-	public static void setDialogInsets(final UnitValue top, final UnitValue left, final UnitValue bottom, final UnitValue right) {
+	public void setDialogInsets(final UnitValue top, final UnitValue left, final UnitValue bottom, final UnitValue right) {
 		if (top != null)
 			DIALOG_INS[0] = top;
 
@@ -650,7 +652,7 @@ public final class PlatformDefaults {
 	 * @param side top == 0, left == 1, bottom = 2, right = 3.
 	 * @return The inset. Never <code>null</code>.
 	 */
-	public static UnitValue getPanelInsets(final int side) {
+	public UnitValue getPanelInsets(final int side) {
 		return PANEL_INS[side];
 	}
 
@@ -662,7 +664,7 @@ public final class PlatformDefaults {
 	 * @param bottom The bottom inset. May be <code>null</code>.
 	 * @param right The right inset. May be <code>null</code>.
 	 */
-	public static void setPanelInsets(final UnitValue top, final UnitValue left, final UnitValue bottom, final UnitValue right) {
+	public void setPanelInsets(final UnitValue top, final UnitValue left, final UnitValue bottom, final UnitValue right) {
 		if (top != null)
 			PANEL_INS[0] = top;
 
@@ -683,7 +685,7 @@ public final class PlatformDefaults {
 	 * 
 	 * @return The percentage used for alignment for labels
 	 */
-	public static float getLabelAlignPercentage() {
+	public float getLabelAlignPercentage() {
 		return CUR_PLAF == MAC_OSX ? 1f : 0f;
 	}
 
@@ -699,7 +701,7 @@ public final class PlatformDefaults {
 	 * @param isLTR If it is left-to-right.
 	 * @return The default gap between two components or <code>null</code> if there should be no gap.
 	 */
-	static BoundSize getDefaultComponentGap(
+	BoundSize getDefaultComponentGap(
 		final ComponentWrapper comp,
 		final ComponentWrapper adjacentComp,
 		final int adjacentSide,
@@ -722,7 +724,7 @@ public final class PlatformDefaults {
 	 * 
 	 * @return The current gap provider or <code>null</code> if none is set and "related" should always be used.
 	 */
-	public static InCellGapProvider getGapProvider() {
+	public InCellGapProvider getGapProvider() {
 		return GAP_PROVIDER;
 	}
 
@@ -731,7 +733,7 @@ public final class PlatformDefaults {
 	 * 
 	 * @param provider The current gap provider or <code>null</code> if none is set and "related" should always be used.
 	 */
-	public static void setGapProvider(final InCellGapProvider provider) {
+	public void setGapProvider(final InCellGapProvider provider) {
 		GAP_PROVIDER = provider;
 	}
 
@@ -741,7 +743,7 @@ public final class PlatformDefaults {
 	 * 
 	 * @return How many times the defaults has been changed.
 	 */
-	public static int getModCount() {
+	public int getModCount() {
 		return MOD_COUNT;
 	}
 
@@ -759,7 +761,7 @@ public final class PlatformDefaults {
 	 * @see UnitValue#PIXEL
 	 * @see UnitValue#LPX
 	 */
-	public final static int getDefaultHorizontalUnit() {
+	public final int getDefaultHorizontalUnit() {
 		return DEF_H_UNIT;
 	}
 
@@ -770,8 +772,8 @@ public final class PlatformDefaults {
 	 * @see UnitValue#PIXEL
 	 * @see UnitValue#LPX
 	 */
-	public final static void setDefaultHorizontalUnit(final int unit) {
-		if (unit < UnitValue.PIXEL || unit > UnitValue.LABEL_ALIGN)
+	public final void setDefaultHorizontalUnit(final int unit) {
+		if (unit < UnitValueToolkit.PIXEL || unit > UnitValueToolkit.LABEL_ALIGN)
 			throw new IllegalArgumentException("Illegal Unit: " + unit);
 
 		if (DEF_H_UNIT != unit) {
@@ -787,7 +789,7 @@ public final class PlatformDefaults {
 	 * @see UnitValue#PIXEL
 	 * @see UnitValue#LPY
 	 */
-	public final static int getDefaultVerticalUnit() {
+	public final int getDefaultVerticalUnit() {
 		return DEF_V_UNIT;
 	}
 
@@ -798,8 +800,8 @@ public final class PlatformDefaults {
 	 * @see UnitValue#PIXEL
 	 * @see UnitValue#LPY
 	 */
-	public final static void setDefaultVerticalUnit(final int unit) {
-		if (unit < UnitValue.PIXEL || unit > UnitValue.LABEL_ALIGN)
+	public final void setDefaultVerticalUnit(final int unit) {
+		if (unit < UnitValueToolkit.PIXEL || unit > UnitValueToolkit.LABEL_ALIGN)
 			throw new IllegalArgumentException("Illegal Unit: " + unit);
 
 		if (DEF_V_UNIT != unit) {
@@ -814,7 +816,7 @@ public final class PlatformDefaults {
 	 * @return The current value. Default is <code>true</code>.
 	 * @since 3.5
 	 */
-	public static boolean getDefaultRowAlignmentBaseline() {
+	public boolean getDefaultRowAlignmentBaseline() {
 		return dra;
 	}
 
@@ -824,7 +826,7 @@ public final class PlatformDefaults {
 	 * @param b The new value. Default is <code>true</code> from v3.5.
 	 * @since 3.5
 	 */
-	public static void setDefaultRowAlignmentBaseline(final boolean b) {
+	public void setDefaultRowAlignmentBaseline(final boolean b) {
 		dra = b;
 	}
 }

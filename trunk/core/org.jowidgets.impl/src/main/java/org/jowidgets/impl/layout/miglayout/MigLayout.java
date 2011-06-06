@@ -50,7 +50,6 @@ import org.jowidgets.impl.layout.miglayout.common.Grid;
 import org.jowidgets.impl.layout.miglayout.common.LC;
 import org.jowidgets.impl.layout.miglayout.common.LayoutCallback;
 import org.jowidgets.impl.layout.miglayout.common.LayoutUtil;
-import org.jowidgets.impl.layout.miglayout.common.PlatformDefaults;
 
 final class MigLayout implements IMigLayout {
 
@@ -73,14 +72,16 @@ final class MigLayout implements IMigLayout {
 	private final Map<IControl, Object> scrConstrMap = new IdentityHashMap<IControl, Object>(8);
 
 	private transient ArrayList<LayoutCallback> callbackList = null;
-	private transient int lastModCount = PlatformDefaults.getModCount();
+	private transient int lastModCount = MigLayoutToolkit.getPlatformDefaults().getModCount();
 	private transient int lastHash = -1;
 
 	private final StringBuilder reason = new StringBuilder();
 
-	private long cacheTime = 0;
+	private final long cacheTime = 0;
 	//private long cacheTimeSetMs = 0;
-	private long cacheTimeSetNano = 0;
+	private final long cacheTimeSetNano = 0;
+
+	private final LayoutUtil layoutUtil;
 
 	public MigLayout(
 		final IContainer container,
@@ -89,6 +90,7 @@ final class MigLayout implements IMigLayout {
 		final Object rowConstraints) {
 		this.container = container;
 		this.cacheParentW = new JoMigContainerWrapper(container);
+		layoutUtil = MigLayoutToolkit.getLayoutUtil();
 		setLayoutConstraints(constraints);
 		setColumnConstraints(columnConstraints);
 		setRowConstraints(rowConstraints);
@@ -246,46 +248,35 @@ final class MigLayout implements IMigLayout {
 		}
 	}
 
-	private boolean checkConstrMap() {
+	private void checkChildren() {
 		final List<IControl> comps = container.getChildren();
-		boolean changed = comps.size() != scrConstrMap.size();
 
-		if (changed == false) {
-			for (final IControl c : comps) {
-				if (scrConstrMap.get(c) != c.getLayoutConstraints()) {
-					changed = true;
-					break;
-				}
+		final List<ComponentWrapper> removed = new LinkedList<ComponentWrapper>();
+		for (final ComponentWrapper cw : ccMap.keySet()) {
+			if (comps.contains(cw.getComponent())) {
+				comps.remove(cw.getComponent());
+				continue;
 			}
+			removed.add(cw);
 		}
 
-		if (changed) {
-			scrConstrMap.clear();
+		for (final ComponentWrapper cw : removed) {
+			scrConstrMap.remove(cw.getComponent());
+			ccMap.remove(cw);
+		}
+
+		if (comps.size() != scrConstrMap.size()) {
 			for (final IControl c : comps) {
+				if (scrConstrMap.containsKey(c)) {
+					continue;
+				}
+
 				setComponentConstraintsImpl(c, c.getLayoutConstraints(), true);
 			}
 		}
-		return changed;
 	}
 
-	private void checkCCMap() {
-		final List<IControl> comps = container.getChildren();
-		if (comps.size() < ccMap.keySet().size()) {
-			final List<ComponentWrapper> removed = new LinkedList<ComponentWrapper>();
-			for (final ComponentWrapper cw : ccMap.keySet()) {
-				if (comps.contains(cw.getComponent())) {
-					comps.remove(cw.getComponent());
-					continue;
-				}
-				removed.add(cw);
-			}
-
-			for (final ComponentWrapper cw : removed) {
-				ccMap.remove(cw);
-			}
-		}
-	}
-
+	@SuppressWarnings("unused")
 	private boolean calculateCache() {
 		//		if (Math.abs(cacheTimeSetMs - System.currentTimeMillis()) > 1000) {
 		//			cacheTime = 0;
@@ -294,8 +285,13 @@ final class MigLayout implements IMigLayout {
 
 		//CHECKSTYLE:OFF
 		if (System.nanoTime() - cacheTimeSetNano < 2 * cacheTime) {
-			// start thread here...
-			//return false;
+			//			if (this.thread == null) {
+			//				this.thread = new LayoutThread(this, 2 * cacheTime);
+			//			}
+			//			else {
+			//				thread.reset();
+			//			}
+			//			return false;
 		}
 		//CHECKSTYLE:ON
 		return true;
@@ -305,53 +301,56 @@ final class MigLayout implements IMigLayout {
 	 * Check if something has changed and if so recrete it to the cached objects.
 	 */
 	private void checkCache() {
-		final long start = System.nanoTime();
-		final boolean calculateCache = calculateCache();
-		if (calculateCache) {
+		//		final long start = System.nanoTime();
+		//		final boolean calculateCache = calculateCache();
+		//		if (calculateCache) {
+		checkChildren();
 
-			checkConstrMap();
-			checkCCMap();
-
-			// Check if the grid is valid
-			final int mc = PlatformDefaults.getModCount();
-			if (lastModCount != mc) {
-				grid = null;
-				lastModCount = mc;
-				reason.append("lastmodcount,");
-			}
-
-			int hash = container.getSize().hashCode();
-			for (final Iterator<ComponentWrapper> it = ccMap.keySet().iterator(); it.hasNext();) {
-				hash += it.next().getLayoutHashCode();
-			}
-
-			if (hash != lastHash) {
-				reason.append("hash " + hash + " vs " + lastHash + ",");
-				grid = null;
-				lastHash = hash;
-			}
+		// Check if the grid is valid
+		final int mc = MigLayoutToolkit.getPlatformDefaults().getModCount();
+		if (lastModCount != mc) {
+			grid = null;
+			lastModCount = mc;
+			reason.append("lastmodcount,");
 		}
+
+		int hash = container.getSize().hashCode();
+		for (final Iterator<ComponentWrapper> it = ccMap.keySet().iterator(); it.hasNext();) {
+			hash += it.next().getLayoutHashCode();
+		}
+
+		if (hash != lastHash) {
+			reason.append("hash " + hash + " vs " + lastHash + ",");
+			reason.append(container.getSize() + ",");
+			grid = null;
+			lastHash = hash;
+		}
+		//		}
 
 		if (grid == null) {
 			//CHECKSTYLE:OFF
-			System.out.println("new Grid for " + this + " [" + reason + "]");
+			//System.out.println("new Grid for " + this + " [" + reason + "]");
 			//CHECKSTYLE:ON
 			grid = new Grid(cacheParentW, lc, rowSpecs, colSpecs, ccMap, callbackList);
 			reason.setLength(0);
 		}
 
-		if (calculateCache) {
-			final long end = System.nanoTime();
-			final long currentTime = end - start;
-			if (cacheTime < currentTime) {
-				cacheTime = currentTime;
-				//cacheTimeSetMs = System.currentTimeMillis();
-				cacheTimeSetNano = end;
-				//CHECKSTYLE:OFF
-				System.out.println("nano time: " + (cacheTime) + " [" + this + "]");
-				//CHECKSTYLE:ON
-			}
-		}
+		//		if (calculateCache) {
+		//			final long end = System.nanoTime();
+		//			final long currentTime = end - start;
+		//
+		//			if (currentTime > 1000000) {
+		//				return;
+		//			}
+		//			if (cacheTime < currentTime) {
+		//				cacheTime = currentTime;
+		//				//cacheTimeSetMs = System.currentTimeMillis();
+		//				cacheTimeSetNano = end;
+		//				//CHECKSTYLE:OFF
+		//				System.out.println("nano time: " + (cacheTime) + " [" + this + "]");
+		//				//CHECKSTYLE:ON
+		//			}
+		//		}
 	}
 
 	@Override
@@ -372,8 +371,8 @@ final class MigLayout implements IMigLayout {
 
 	private Dimension getSize(final int type) {
 		checkCache();
-		final int w = LayoutUtil.getSizeSafe(grid != null ? grid.getWidth() : null, type);
-		final int h = LayoutUtil.getSizeSafe(grid != null ? grid.getHeight() : null, type);
+		final int w = layoutUtil.getSizeSafe(grid != null ? grid.getWidth() : null, type);
+		final int h = layoutUtil.getSizeSafe(grid != null ? grid.getHeight() : null, type);
 		return new Dimension(w, h);
 	}
 
@@ -394,7 +393,8 @@ final class MigLayout implements IMigLayout {
 
 	@Override
 	public void invalidate() {
-		reason.append("invalidate,");
-		grid = null;
+		//reason.append("invalidate,");
+		//grid = null;
 	}
+
 }

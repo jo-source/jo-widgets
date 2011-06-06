@@ -8,6 +8,8 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.ObjectStreamException;
 
+import org.jowidgets.impl.layout.miglayout.MigLayoutToolkit;
+
 /**
  * A simple value holder for a constraint for one dimension.
  */
@@ -163,10 +165,10 @@ public final class DimConstraint implements Externalizable {
 			return align;
 
 		if (isCols)
-			return UnitValue.LEADING;
+			return MigLayoutToolkit.getUnitValueToolkit().LEADING;
 
-		return fill || PlatformDefaults.getDefaultRowAlignmentBaseline() == false
-				? UnitValue.CENTER : UnitValue.BASELINE_IDENTITY;
+		return fill || MigLayoutToolkit.getPlatformDefaults().getDefaultRowAlignmentBaseline() == false
+				? MigLayoutToolkit.getUnitValueToolkit().CENTER : MigLayoutToolkit.getUnitValueToolkit().BASELINE_IDENTITY;
 	}
 
 	/**
@@ -451,7 +453,7 @@ public final class DimConstraint implements Externalizable {
 
 		final boolean hasGap = gap != null && gap.getGapPush();
 		if ((gap == null || gap.isUnset()) && (adjGap == null || adjGap.isUnset()) && comp != null)
-			gap = PlatformDefaults.getDefaultComponentGap(comp, adjacentComp, adjacentSide + 1, tag, isLTR);
+			gap = MigLayoutToolkit.getPlatformDefaults().getDefaultComponentGap(comp, adjacentComp, adjacentSide + 1, tag, isLTR);
 
 		if (gap == null)
 			return hasGap ? new int[] {0, 0, LayoutUtil.NOT_SET} : null;
@@ -469,17 +471,18 @@ public final class DimConstraint implements Externalizable {
 	// ************************************************
 
 	private Object readResolve() throws ObjectStreamException {
-		return LayoutUtil.getSerializedObject(this);
+		return MigLayoutToolkit.getLayoutUtil().getSerializedObject(this);
 	}
 
 	@Override
 	public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
-		LayoutUtil.setSerializedObject(this, LayoutUtil.readAsXML(in));
+		final LayoutUtil layoutUtil = MigLayoutToolkit.getLayoutUtil();
+		layoutUtil.setSerializedObject(this, layoutUtil.readAsXML(in));
 	}
 
 	@Override
 	public void writeExternal(final ObjectOutput out) throws IOException {
 		if (getClass() == DimConstraint.class)
-			LayoutUtil.writeAsXML(out, this);
+			MigLayoutToolkit.getLayoutUtil().writeAsXML(out, this);
 	}
 }

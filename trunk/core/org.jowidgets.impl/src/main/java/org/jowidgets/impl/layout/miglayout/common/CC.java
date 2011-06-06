@@ -9,6 +9,8 @@ import java.io.ObjectOutput;
 import java.io.ObjectStreamException;
 import java.util.ArrayList;
 
+import org.jowidgets.impl.layout.miglayout.MigLayoutToolkit;
+
 /**
  * A simple value holder for one component's constraint.
  */
@@ -60,6 +62,8 @@ public final class CC implements Externalizable {
 	private static final String[] EMPTY_ARR = new String[0];
 
 	private transient String[] linkTargets = null;
+
+	//private final LayoutUtil layoutUtil;
 
 	/**
 	 * Empty constructor.
@@ -140,7 +144,11 @@ public final class CC implements Externalizable {
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 */
 	public final CC minWidth(final String size) {
-		hor.setSize(LayoutUtil.derive(hor.getSize(), ConstraintParser.parseUnitValue(size, true), null, null));
+		hor.setSize(MigLayoutToolkit.getLayoutUtil().derive(
+				hor.getSize(),
+				ConstraintParser.parseUnitValue(size, true),
+				null,
+				null));
 		return this;
 	}
 
@@ -169,7 +177,11 @@ public final class CC implements Externalizable {
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 */
 	public final CC maxWidth(final String size) {
-		hor.setSize(LayoutUtil.derive(hor.getSize(), null, null, ConstraintParser.parseUnitValue(size, true)));
+		hor.setSize(MigLayoutToolkit.getLayoutUtil().derive(
+				hor.getSize(),
+				null,
+				null,
+				ConstraintParser.parseUnitValue(size, true)));
 		return this;
 	}
 
@@ -449,7 +461,11 @@ public final class CC implements Externalizable {
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 */
 	public final CC minHeight(final String size) {
-		ver.setSize(LayoutUtil.derive(ver.getSize(), ConstraintParser.parseUnitValue(size, false), null, null));
+		ver.setSize(MigLayoutToolkit.getLayoutUtil().derive(
+				ver.getSize(),
+				ConstraintParser.parseUnitValue(size, false),
+				null,
+				null));
 		return this;
 	}
 
@@ -478,7 +494,11 @@ public final class CC implements Externalizable {
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 */
 	public final CC maxHeight(final String size) {
-		ver.setSize(LayoutUtil.derive(ver.getSize(), null, null, ConstraintParser.parseUnitValue(size, false)));
+		ver.setSize(MigLayoutToolkit.getLayoutUtil().derive(
+				ver.getSize(),
+				null,
+				null,
+				ConstraintParser.parseUnitValue(size, false)));
 		return this;
 	}
 
@@ -2007,17 +2027,19 @@ public final class CC implements Externalizable {
 	// ************************************************
 
 	private Object readResolve() throws ObjectStreamException {
-		return LayoutUtil.getSerializedObject(this);
+		return MigLayoutToolkit.getLayoutUtil().getSerializedObject(this);
 	}
 
 	@Override
 	public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
-		LayoutUtil.setSerializedObject(this, LayoutUtil.readAsXML(in));
+		final LayoutUtil layoutUtil = MigLayoutToolkit.getLayoutUtil();
+		layoutUtil.setSerializedObject(this, layoutUtil.readAsXML(in));
 	}
 
 	@Override
 	public void writeExternal(final ObjectOutput out) throws IOException {
-		if (getClass() == CC.class)
-			LayoutUtil.writeAsXML(out, this);
+		if (getClass() == CC.class) {
+			MigLayoutToolkit.getLayoutUtil().writeAsXML(out, this);
+		}
 	}
 }

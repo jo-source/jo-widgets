@@ -8,6 +8,8 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.ObjectStreamException;
 
+import org.jowidgets.impl.layout.miglayout.MigLayoutToolkit;
+
 /**
  * A parsed constraint that specifies how an entity (normally column/row or component) can shrink or
  * grow compared to other entities.
@@ -48,17 +50,19 @@ final class ResizeConstraint implements Externalizable {
 	// ************************************************
 
 	private Object readResolve() throws ObjectStreamException {
-		return LayoutUtil.getSerializedObject(this);
+		return MigLayoutToolkit.getLayoutUtil().getSerializedObject(this);
 	}
 
 	@Override
 	public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
-		LayoutUtil.setSerializedObject(this, LayoutUtil.readAsXML(in));
+		final LayoutUtil layoutUtil = MigLayoutToolkit.getLayoutUtil();
+		layoutUtil.setSerializedObject(this, layoutUtil.readAsXML(in));
 	}
 
 	@Override
 	public void writeExternal(final ObjectOutput out) throws IOException {
-		if (getClass() == ResizeConstraint.class)
-			LayoutUtil.writeAsXML(out, this);
+		if (getClass() == ResizeConstraint.class) {
+			MigLayoutToolkit.getLayoutUtil().writeAsXML(out, this);
+		}
 	}
 }

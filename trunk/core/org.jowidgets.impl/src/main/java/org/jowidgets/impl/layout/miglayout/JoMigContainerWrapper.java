@@ -85,10 +85,10 @@ final class JoMigContainerWrapper extends JoMigComponentWrapper implements Conta
 
 	@Override
 	public int getLayoutHashCode() {
-		int h = super.getLayoutHashCode();
+		final int h = super.getLayoutHashCode();
 
 		if (isLeftToRight()) {
-			h |= (1 << 26);
+			//h |= (1 << 26);
 		}
 
 		return h;

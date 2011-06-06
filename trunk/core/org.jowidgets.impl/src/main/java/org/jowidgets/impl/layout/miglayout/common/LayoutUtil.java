@@ -19,6 +19,8 @@ import java.util.IdentityHashMap;
 import java.util.TreeSet;
 import java.util.WeakHashMap;
 
+import org.jowidgets.impl.layout.miglayout.MigLayoutToolkit;
+
 /**
  * A utility class that has only static helper methods.
  */
@@ -28,57 +30,31 @@ public final class LayoutUtil {
 	 * for potential overflow must exist in many places. This value is large enough for being unreasonable yet it is hard to
 	 * overflow.
 	 */
-	static final int INF = (Integer.MAX_VALUE >> 10) - 100; // To reduce likelihood of overflow errors when calculating.
+	final static int INF = (Integer.MAX_VALUE >> 10) - 100; // To reduce likelihood of overflow errors when calculating.
 
 	/**
 	 * Tag int for a value that in considered "not set". Used as "null" element in int arrays.
 	 */
-	static final int NOT_SET = Integer.MIN_VALUE + 12346; // Magic value...
+	final static int NOT_SET = Integer.MIN_VALUE + 12346; // Magic value...
 
 	// Index for the different sizes
 	public static final int MIN = 0;
 	public static final int PREF = 1;
 	public static final int MAX = 2;
 
-	private static volatile WeakHashMap<Object, String> CR_MAP = null;
-	private static volatile WeakHashMap<Object, Boolean> DT_MAP = null; // The Containers that have design time. Value not used.
-	private static int eSz = 0;
-	private static int globalDebugMillis = 0;
+	private volatile WeakHashMap<Object, String> CR_MAP = null;
+	private volatile WeakHashMap<Object, Boolean> DT_MAP = null; // The Containers that have design time. Value not used.
+	private int eSz = 0;
 
-	private LayoutUtil() {}
+	public LayoutUtil() {}
 
 	/**
 	 * Returns the current version of MiG Layout.
 	 * 
 	 * @return The current version of MiG Layout. E.g. "3.6.3" or "4.0"
 	 */
-	public static String getVersion() {
+	public String getVersion() {
 		return "3.7.4";
-	}
-
-	/**
-	 * If global debug should be on or off. If &gt; 0 then debug is turned on for all MigLayout
-	 * instances.
-	 * 
-	 * @return The current debug milliseconds.
-	 * @see LC#setDebugMillis(int)
-	 */
-	public static int getGlobalDebugMillis() {
-		return globalDebugMillis;
-	}
-
-	/**
-	 * If global debug should be on or off. If &gt; 0 then debug is turned on for all MigLayout
-	 * instances.
-	 * <p>
-	 * Note! This is a passive value and will be read by panels when the needed, which is normally when they repaint/layout.
-	 * 
-	 * @param millis The new debug milliseconds. 0 turns of global debug and leaves debug up to every
-	 *            individual panel.
-	 * @see LC#setDebugMillis(int)
-	 */
-	public static void setGlobalDebugMillis(final int millis) {
-		globalDebugMillis = millis;
 	}
 
 	/**
@@ -93,7 +69,7 @@ public final class LayoutUtil {
 	 *            design time value.
 	 * @param b <code>true</code> means design time on.
 	 */
-	public static void setDesignTime(final ContainerWrapper cw, final boolean b) {
+	public void setDesignTime(final ContainerWrapper cw, final boolean b) {
 		if (DT_MAP == null)
 			DT_MAP = new WeakHashMap<Object, Boolean>();
 
@@ -108,7 +84,7 @@ public final class LayoutUtil {
 	 *            turned on.
 	 * @return If design time is set for <code>cw</code>.
 	 */
-	public static boolean isDesignTime(ContainerWrapper cw) {
+	public boolean isDesignTime(ContainerWrapper cw) {
 		if (DT_MAP == null)
 			return Beans.isDesignTime();
 
@@ -124,7 +100,7 @@ public final class LayoutUtil {
 	 * 
 	 * @return The number of pixels. Default is 15.
 	 */
-	public static int getDesignTimeEmptySize() {
+	public int getDesignTimeEmptySize() {
 		return eSz;
 	}
 
@@ -136,7 +112,7 @@ public final class LayoutUtil {
 	 *            15 to
 	 *            get the old behaviour.
 	 */
-	public static void setDesignTimeEmptySize(final int pixels) {
+	public void setDesignTimeEmptySize(final int pixels) {
 		eSz = pixels;
 	}
 
@@ -150,7 +126,7 @@ public final class LayoutUtil {
 	 * @param con The object. if <code>null</code> the method does nothing.
 	 * @param s The creation string. if <code>null</code> the method does nothing.
 	 */
-	static void putCCString(final Object con, final String s) {
+	void putCCString(final Object con, final String s) {
 		if (s != null && con != null && isDesignTime(null)) {
 			if (CR_MAP == null)
 				CR_MAP = new WeakHashMap<Object, String>(64);
@@ -165,7 +141,7 @@ public final class LayoutUtil {
 	 * @param c The class to set the registered deligate for.
 	 * @param del The new delegate or <code>null</code> to erase to old one.
 	 */
-	static synchronized void setDelegate(@SuppressWarnings("rawtypes") final Class c, final PersistenceDelegate del) {
+	synchronized void setDelegate(@SuppressWarnings("rawtypes") final Class c, final PersistenceDelegate del) {
 		try {
 			Introspector.getBeanInfo(c, Introspector.IGNORE_ALL_BEANINFO).getBeanDescriptor().setValue("persistenceDelegate", del);
 		}
@@ -180,11 +156,11 @@ public final class LayoutUtil {
 	 * @param con The constrain object.
 	 * @return The creation string or <code>null</code> if nothing is registered with the <code>con</code> object.
 	 */
-	static String getCCString(final Object con) {
+	String getCCString(final Object con) {
 		return CR_MAP != null ? CR_MAP.get(con) : null;
 	}
 
-	static void throwCC() {
+	void throwCC() {
 		throw new IllegalStateException("setStoreConstraintData(true) must be set for strings to be saved.");
 	}
 
@@ -206,7 +182,7 @@ public final class LayoutUtil {
 	 * @param bounds To use for relative sizes.
 	 * @return The sizes. Array length will match <code>sizes</code>.
 	 */
-	static int[] calculateSerial(
+	int[] calculateSerial(
 		final int[][] sizes,
 		final ResizeConstraint[] resConstr,
 		final Float[] defPushWeights,
@@ -308,7 +284,7 @@ public final class LayoutUtil {
 		return roundSizes(lengths);
 	}
 
-	static Object getIndexSafe(final Object[] arr, final int ix) {
+	Object getIndexSafe(final Object[] arr, final int ix) {
 		return arr != null ? arr[ix < arr.length ? ix : arr.length - 1] : null;
 	}
 
@@ -324,7 +300,7 @@ public final class LayoutUtil {
 	 * @param upper The upper boundary (or <code>null</code> fo no boundary).
 	 * @return The broken boundary.
 	 */
-	private static int getBrokenBoundary(final float sz, final int lower, final int upper) {
+	private int getBrokenBoundary(final float sz, final int lower, final int upper) {
 		if (lower != NOT_SET) {
 			if (sz < lower)
 				return lower;
@@ -350,13 +326,13 @@ public final class LayoutUtil {
 		return sum(terms, 0, terms.length);
 	}
 
-	public static int getSizeSafe(final int[] sizes, final int sizeType) {
+	public int getSizeSafe(final int[] sizes, final int sizeType) {
 		if (sizes == null || sizes[sizeType] == NOT_SET)
 			return sizeType == MAX ? LayoutUtil.INF : 0;
 		return sizes[sizeType];
 	}
 
-	static BoundSize derive(final BoundSize bs, final UnitValue min, final UnitValue pref, final UnitValue max) {
+	BoundSize derive(final BoundSize bs, final UnitValue min, final UnitValue pref, final UnitValue max) {
 		if (bs == null || bs.isUnset())
 			return new BoundSize(min, pref, max, null);
 
@@ -372,7 +348,7 @@ public final class LayoutUtil {
 	 * @param container The parent that may be used to get the left-to-right if ffc does not specify this.
 	 * @return If left-to-right orientation is currently used.
 	 */
-	public static boolean isLeftToRight(final LC lc, final ContainerWrapper container) {
+	public boolean isLeftToRight(final LC lc, final ContainerWrapper container) {
 		if (lc != null && lc.getLeftToRight() != null)
 			return lc.getLeftToRight().booleanValue();
 
@@ -385,7 +361,7 @@ public final class LayoutUtil {
 	 * @param sizes The sizes to round
 	 * @return An array of equal length as <code>sizes</code>.
 	 */
-	static int[] roundSizes(final float[] sizes) {
+	int[] roundSizes(final float[] sizes) {
 		final int[] retInts = new int[sizes.length];
 		float posD = 0;
 
@@ -408,7 +384,7 @@ public final class LayoutUtil {
 	 * @return Returns <code>true</code> if <code>o1</code> and <code>o2</code> are equal (using .equals()) or both are
 	 *         <code>null</code>.
 	 */
-	static boolean equals(final Object o1, final Object o2) {
+	boolean equals(final Object o1, final Object o2) {
 		return o1 == o2 || (o1 != null && o2 != null && o1.equals(o2));
 	}
 
@@ -443,9 +419,10 @@ public final class LayoutUtil {
 	 * @param getDefault If <code>true</code> the default insets will get retrieved if <code>lc</code> has none set.
 	 * @return The inset for the side. Never <code>null</code>.
 	 */
-	static UnitValue getInsets(final LC lc, final int side, final boolean getDefault) {
+	UnitValue getInsets(final LC lc, final int side, final boolean getDefault) {
 		final UnitValue[] i = lc.getInsets();
-		return (i != null && i[side] != null) ? i[side] : (getDefault ? PlatformDefaults.getPanelInsets(side) : UnitValue.ZERO);
+		return (i != null && i[side] != null) ? i[side] : (getDefault ? MigLayoutToolkit.getPlatformDefaults().getPanelInsets(
+				side) : MigLayoutToolkit.getUnitValueToolkit().ZERO);
 	}
 
 	/**
@@ -455,7 +432,7 @@ public final class LayoutUtil {
 	 * @param o The object to be serialized.
 	 * @param listener The listener to recieve the exeptions if there are any. If <code>null</code> not used.
 	 */
-	static void writeXMLObject(final OutputStream os, final Object o, final ExceptionListener listener) {
+	void writeXMLObject(final OutputStream os, final Object o, final ExceptionListener listener) {
 		final ClassLoader oldClassLoader = Thread.currentThread().getContextClassLoader();
 		Thread.currentThread().setContextClassLoader(LayoutUtil.class.getClassLoader());
 
@@ -470,7 +447,7 @@ public final class LayoutUtil {
 		Thread.currentThread().setContextClassLoader(oldClassLoader);
 	}
 
-	private static ByteArrayOutputStream writeOutputStream = null;
+	private ByteArrayOutputStream writeOutputStream = null;
 
 	/**
 	 * Writes an object to XML.
@@ -478,7 +455,7 @@ public final class LayoutUtil {
 	 * @param out The boject out to write to. Will not be closed.
 	 * @param o The object to write.
 	 */
-	public static synchronized void writeAsXML(final ObjectOutput out, final Object o) throws IOException {
+	public synchronized void writeAsXML(final ObjectOutput out, final Object o) throws IOException {
 		if (writeOutputStream == null)
 			writeOutputStream = new ByteArrayOutputStream(16384);
 
@@ -497,7 +474,7 @@ public final class LayoutUtil {
 		out.write(buf);
 	}
 
-	private static byte[] readBuf = null;
+	private byte[] readBuf = null;
 
 	/**
 	 * Reads an object from <code>in</code> using the
@@ -506,7 +483,7 @@ public final class LayoutUtil {
 	 * @return The object. Never <code>null</code>.
 	 * @throws IOException If there was a problem saving as XML
 	 */
-	public static synchronized Object readAsXML(final ObjectInput in) throws IOException {
+	public synchronized Object readAsXML(final ObjectInput in) throws IOException {
 		if (readBuf == null)
 			readBuf = new byte[16384];
 
@@ -540,7 +517,7 @@ public final class LayoutUtil {
 		return o;
 	}
 
-	private static final IdentityHashMap<Object, Object> SER_MAP = new IdentityHashMap<Object, Object>(2);
+	private final IdentityHashMap<Object, Object> SER_MAP = new IdentityHashMap<Object, Object>(2);
 
 	/**
 	 * Sets the serialized object and associates it with <code>caller</code>.
@@ -548,7 +525,7 @@ public final class LayoutUtil {
 	 * @param caller The object created <code>o</code>
 	 * @param o The just serialized object.
 	 */
-	public static void setSerializedObject(final Object caller, final Object o) {
+	public void setSerializedObject(final Object caller, final Object o) {
 		synchronized (SER_MAP) {
 			SER_MAP.put(caller, o);
 		}
@@ -560,7 +537,7 @@ public final class LayoutUtil {
 	 * @param caller The original creator of the object.
 	 * @return The object.
 	 */
-	public static Object getSerializedObject(final Object caller) {
+	public Object getSerializedObject(final Object caller) {
 		synchronized (SER_MAP) {
 			return SER_MAP.remove(caller);
 		}
