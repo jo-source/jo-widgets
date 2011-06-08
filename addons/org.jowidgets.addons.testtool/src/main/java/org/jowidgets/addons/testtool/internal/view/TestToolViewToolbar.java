@@ -67,7 +67,7 @@ public class TestToolViewToolbar {
 				recordEnabledChecker.setEnabledState(EnabledState.DISABLED);
 				playEnabledChecker.setEnabledState(EnabledState.DISABLED);
 				testTool.activateReplayMode();
-				testTool.replay(getTableContent(), 500);
+				testTool.replay(getTableContent(), 150);
 			}
 		};
 		playBuilder.setCommand(playCommand, playEnabledChecker);
@@ -155,7 +155,9 @@ public class TestToolViewToolbar {
 			obj.setType(TestToolViewTable.getTableModel().getCell(rowIndex, 1).getText());
 			final String action = TestToolViewTable.getTableModel().getCell(rowIndex, 2).getText();
 			obj.setAction(UserAction.valueOf(action));
-			obj.setId(TestToolViewTable.getTableModel().getCell(rowIndex, 4).getText());
+			final String value = TestToolViewTable.getTableModel().getCell(rowIndex, 3).getText();
+			obj.setValue(value);
+			obj.setId(TestToolViewTable.getTableModel().getCell(rowIndex, 5).getText());
 			result.add(obj);
 		}
 		return result;
