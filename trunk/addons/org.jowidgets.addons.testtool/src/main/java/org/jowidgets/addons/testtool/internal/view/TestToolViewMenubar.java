@@ -48,6 +48,7 @@ import org.jowidgets.common.types.FileChooserType;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.tools.model.item.MenuModel;
 
+//CHECKSTYLE:OFF
 public class TestToolViewMenubar {
 
 	private static final String DEFAULT_FILEPATH = System.getProperty("user.dir")
@@ -147,10 +148,5 @@ public class TestToolViewMenubar {
 	private String getWidgetProperty(final TestDataObject item) {
 		final String id = item.getId();
 		return id.substring(id.lastIndexOf(":") + 1, id.length());
-	}
-
-	@Override
-	public String toString() {
-		return super.toString();
 	}
 }
