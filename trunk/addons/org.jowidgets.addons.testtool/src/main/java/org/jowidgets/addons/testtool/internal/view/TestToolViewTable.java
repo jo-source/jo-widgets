@@ -61,6 +61,7 @@ public class TestToolViewTable {
 		final ITable table = item.add(tableBluePrint, "grow");
 		item.setBackgroundColor(Colors.WHITE);
 		table.pack();
+		tableDataModel.addColumn(colBuilder.setText("Value").setWidth(100).build());
 		tableDataModel.addColumn(colBuilder.setText("Property").setWidth(100).build());
 		tableDataModel.addColumn(colBuilder.setText("ID").setWidth(200).build());
 	}

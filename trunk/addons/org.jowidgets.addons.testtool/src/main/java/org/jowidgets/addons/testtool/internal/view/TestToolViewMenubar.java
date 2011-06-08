@@ -74,7 +74,9 @@ public class TestToolViewMenubar {
 						obj.setType(TestToolViewTable.getTableModel().getCell(rowIndex, 1).getText());
 						final String action = TestToolViewTable.getTableModel().getCell(rowIndex, 2).getText();
 						obj.setAction(UserAction.valueOf(action));
-						obj.setId(TestToolViewTable.getTableModel().getCell(rowIndex, 4).getText());
+						final String value = TestToolViewTable.getTableModel().getCell(rowIndex, 3).getText();
+						obj.setValue(value);
+						obj.setId(TestToolViewTable.getTableModel().getCell(rowIndex, 5).getText());
 						list.add(obj);
 					}
 					final IFileChooserBluePrint fileChooserBp = BPF.fileChooser(FileChooserType.SAVE);
@@ -116,6 +118,7 @@ public class TestToolViewMenubar {
 										Integer.toString(TestToolViewTable.getTableModel().getRowCount()),
 										item.getType(),
 										item.getAction().name(),
+										item.getValue(),
 										getWidgetProperty(item),
 										item.getId());
 							}

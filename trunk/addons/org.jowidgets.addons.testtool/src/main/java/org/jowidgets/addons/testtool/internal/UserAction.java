@@ -35,5 +35,6 @@ public enum UserAction {
 	SELECT,
 	EXPAND,
 	COLLAPSE,
-	READ;
+	READ,
+	INPUT;
 }

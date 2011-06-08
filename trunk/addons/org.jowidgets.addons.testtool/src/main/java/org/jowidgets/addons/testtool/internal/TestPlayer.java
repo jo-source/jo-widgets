@@ -32,6 +32,7 @@ import java.util.List;
 
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.widgets.IInputField;
 import org.jowidgets.api.widgets.ITabItem;
 import org.jowidgets.api.widgets.IToolBarItem;
 import org.jowidgets.api.widgets.ITreeNode;
@@ -54,7 +55,7 @@ public class TestPlayer {
 				public void run() {
 					final IWidgetCommon widget = finder.findWidgetByID(WidgetRegistry.getInstance().getWidgets(), obj.getId());
 					if (widget != null) {
-						executeAction(widget, obj.getAction());
+						executeAction(widget, obj.getAction(), obj.getValue());
 						try {
 							Thread.sleep(delay);
 						}
@@ -62,50 +63,42 @@ public class TestPlayer {
 						}
 					}
 					else {
-						// TODO LG maybe a nice feature, when the user could select the missing widget.
 						System.out.println("couldn't find widget with id: " + obj.getId());
 					}
 				}
 			};
-			// TODO LG stop threads when they are finished
 			Toolkit.getUiThreadAccess().invokeLater(thread);
 		}
 	}
 
-	private synchronized void executeAction(final IWidgetCommon widget, final UserAction action) {
+	private synchronized void executeAction(final IWidgetCommon widget, final UserAction action, final String value) {
 		moveMouseToWidget(widget);
 		if (widget instanceof IButtonUi) {
 			final IButtonUi button = (IButtonUi) widget;
 			switch (action) {
 				case CLICK:
-					System.out.println("press Button");
 					button.push();
 					break;
 				default:
-					System.out.println("the given user action is not supported for this widget.");
-					break;
+					throw new IllegalStateException("the given user action is not supported for this widget.");
 			}
 		}
 		else if (widget instanceof ITreeNode) {
 			final ITreeNode node = (ITreeNode) widget;
 			switch (action) {
 				case EXPAND:
-					System.out.println("expand tree item: " + node.getText());
 					node.setSelected(true);
 					node.setExpanded(true);
 					break;
 				case COLLAPSE:
-					System.out.println("collapse tree item: " + node.getText());
 					node.setSelected(true);
 					node.setExpanded(false);
 					break;
 				case SELECT:
-					System.out.println("select tree item: " + node.getText());
 					node.setSelected(true);
 					break;
 				default:
-					System.out.println("the given user action is not supported for this widget.");
-					break;
+					throw new IllegalStateException("the given user action is not supported for this widget.");
 			}
 		}
 		else if (widget instanceof IFrame) {
@@ -118,26 +111,48 @@ public class TestPlayer {
 					System.out.println("frame closed");
 					break;
 				default:
-					System.out.println("the given user action is not supported for this widget.");
-					break;
+					throw new IllegalStateException("the given user action is not supported for this widget.");
 			}
 		}
 		else if (widget instanceof IToolBarItem) {
 			switch (action) {
 				case CLICK:
+					// TODO LG push button
 					System.out.println("ToolBarButton pushed.");
 					break;
 				default:
-					break;
+					throw new IllegalStateException("the given user action is not supported for this widget.");
 			}
 		}
 		else if (widget instanceof ITabItem) {
 			switch (action) {
 				case CLICK:
+					// TODO LG set selection
 					System.out.println("changing tab item selection");
 					break;
 				default:
+					throw new IllegalStateException("the given user action is not supported for this widget.");
+			}
+		}
+		else if (widget instanceof IInputField<?>) {
+			@SuppressWarnings("unchecked")
+			final IInputField<Object> inputField = (IInputField<Object>) widget;
+			final Object valueObject = inputField.getValue();
+			switch (action) {
+				case CLICK:
+					// TODO LG set selection
+					System.out.println("input field selected");
 					break;
+				case INPUT:
+					if (valueObject instanceof String) {
+						inputField.setValue(value);
+					}
+					else if (valueObject instanceof Integer) {
+						inputField.setValue(Integer.valueOf(value));
+					}
+					break;
+				default:
+					throw new IllegalStateException("the given user action is not supported for this widget.");
 			}
 		}
 		else {

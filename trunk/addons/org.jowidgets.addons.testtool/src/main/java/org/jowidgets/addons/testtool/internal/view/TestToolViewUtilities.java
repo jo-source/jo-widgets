@@ -86,6 +86,7 @@ public class TestToolViewUtilities {
 						Integer.toString(TestToolViewTable.getTableModel().getRowCount()),
 						item.getType(),
 						item.getAction().name(),
+						item.getValue(),
 						property,
 						item.getId());
 			}

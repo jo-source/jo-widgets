@@ -46,6 +46,7 @@ import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.model.item.IMenuItemModel;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.widgets.IInputField;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITabFolder;
 import org.jowidgets.api.widgets.ITabItem;
@@ -60,6 +61,7 @@ import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.controler.IItemStateListener;
 import org.jowidgets.common.widgets.controler.IMenuListener;
 import org.jowidgets.common.widgets.controler.IMouseButtonEvent;
@@ -98,11 +100,16 @@ public final class TestToolImpl implements ITestTool {
 
 	@Override
 	public void record(final IWidgetCommon widget, final UserAction action, final String id) {
+		record(widget, action, id, "");
+	}
+
+	private void record(final IWidgetCommon widget, final UserAction action, final String id, final String value) {
 		if (record) {
 			final TestDataObject obj = new TestDataObject();
 			obj.setId(id);
 			obj.setAction(action);
 			obj.setType(widget.getUiReference().getClass().getSimpleName());
+			obj.setValue(value);
 			listModel.addItem(obj);
 		}
 	}
@@ -258,6 +265,23 @@ public final class TestToolImpl implements ITestTool {
 			final ITabFolder tab = (ITabFolder) widget;
 			tabFolders.add(tab);
 			// TODO LG support recording/replay of TabFolder
+		}
+		if (widget instanceof IInputField<?>) {
+			final IInputField<?> inputField = (IInputField<?>) widget;
+			inputField.addMouseListener(new MouseAdapter() {
+
+				@Override
+				public void mousePressed(final IMouseButtonEvent event) {
+					record(widget, UserAction.CLICK, testToolUtilities.createWidgetID(inputField));
+				}
+			});
+			inputField.addInputListener(new IInputListener() {
+
+				@Override
+				public void inputChanged() {
+					record(widget, UserAction.INPUT, testToolUtilities.createWidgetID(inputField), inputField.getText());
+				}
+			});
 		}
 		// TODO LG use ITableUi
 		// TODO LG support recording/replay of table
