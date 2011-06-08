@@ -46,6 +46,7 @@ import org.jowidgets.api.widgets.IToolBarButton;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.tools.command.EnabledChecker;
 
+//CHECKSTYLE:OFF
 public class TestToolViewToolbar {
 	private static final IActionBuilderFactory ABF = Toolkit.getActionBuilderFactory();
 	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
@@ -162,10 +163,4 @@ public class TestToolViewToolbar {
 		}
 		return result;
 	}
-
-	@Override
-	public String toString() {
-		return super.toString();
-	}
-
 }
