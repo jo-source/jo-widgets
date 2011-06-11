@@ -48,6 +48,7 @@ class JoMigComponentWrapper implements ComponentWrapper {
 	private final IComponent component;
 	private int compType = TYPE_UNSET;
 
+	@SuppressWarnings("unused")
 	private Dimension preferredSize;
 
 	JoMigComponentWrapper(final IComponent component) {
@@ -269,6 +270,7 @@ class JoMigComponentWrapper implements ComponentWrapper {
 	@Override
 	public int getLayoutHashCode() {
 		final int h = 0;
+		//CHECKSTYLE:OFF
 		if (component.isVisible()) {
 			//h |= (1 << 25);
 		}

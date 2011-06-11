@@ -33,6 +33,7 @@ import java.util.HashMap;
 
 import org.jowidgets.impl.layout.miglayout.MigLayoutToolkit;
 
+//CHECKSTYLE:OFF
 public final class UnitValueToolkit {
 	/**
 	 * An operation indicating a static value.
