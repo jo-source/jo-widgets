@@ -28,8 +28,8 @@
 
 package org.jowidgets.util;
 
-public interface IAdapterFactory<ADAPTER, ADAPTED> {
+public interface IAdapterFactory<ADAPTOR, ADAPTEE> {
 
-	ADAPTER createAdapter(ADAPTED adapted);
+	ADAPTEE createAdapter(ADAPTOR adapted);
 
 }
