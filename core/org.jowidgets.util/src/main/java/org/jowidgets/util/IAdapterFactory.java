@@ -30,6 +30,6 @@ package org.jowidgets.util;
 
 public interface IAdapterFactory<ADAPTOR, ADAPTEE> {
 
-	ADAPTEE createAdapter(ADAPTOR adapted);
+	ADAPTOR createAdapter(ADAPTEE adapted);
 
 }
