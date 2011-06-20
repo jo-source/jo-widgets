@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jowidgets</groupId>
 	<artifactId>org.jowidgets.plugins.parent</artifactId>
-	<version>0.0.18-SNAPSHOT</version>
+	<version>0.4.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>org.jowidgets.plugins.parent</name>
 
@@ -27,8 +27,8 @@
 	<properties>
 		<java.version>1.6</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<tycho.version>0.10.0</tycho.version>
-		<jo-widgets.version>0.0.18-SNAPSHOT</jo-widgets.version>
+		<tycho.version>0.12.0</tycho.version>
+		<jo-widgets.version>0.4.0-SNAPSHOT</jo-widgets.version>
 	</properties>
 
 	<modules>
@@ -101,13 +101,13 @@
 			</plugin>
 			
 			<plugin>
-				<groupId>org.sonatype.tycho</groupId>
+				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-maven-plugin</artifactId>
 				<version>${tycho.version}</version>
 				<extensions>true</extensions>
 			</plugin>
 			<plugin>
-				<groupId>org.sonatype.tycho</groupId>
+				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>target-platform-configuration</artifactId>
 				<version>${tycho.version}</version>
 				<configuration>
@@ -123,8 +123,8 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.sonatype.tycho</groupId>
-				<artifactId>maven-osgi-source-plugin</artifactId>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-source-plugin</artifactId>
 				<version>${tycho.version}</version>
 				<executions>
 					<execution>

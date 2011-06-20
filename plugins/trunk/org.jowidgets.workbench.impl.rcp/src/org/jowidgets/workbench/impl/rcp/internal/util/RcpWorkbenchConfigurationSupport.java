@@ -59,6 +59,7 @@ public final class RcpWorkbenchConfigurationSupport {
 			workbenchFile.delete();
 			return;
 		}
+		workbenchFile.getParentFile().mkdirs();
 		try {
 			final Writer writer = new OutputStreamWriter(new FileOutputStream(workbenchFile), WORKBENCH_FILE_ENCODING);
 			try {
