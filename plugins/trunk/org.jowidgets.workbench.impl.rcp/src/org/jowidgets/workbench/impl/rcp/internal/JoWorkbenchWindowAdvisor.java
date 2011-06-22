@@ -112,6 +112,11 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	}
 
 	@Override
+	public void postWindowClose() {
+		workbench.onDispose();
+	}
+
+	@Override
 	public void createWindowContents(final Shell shell) {
 		shell.setImage(ImageHelper.getImage(workbench.getIcon(), null));
 
