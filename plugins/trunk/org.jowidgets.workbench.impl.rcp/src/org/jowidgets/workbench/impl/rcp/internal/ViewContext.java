@@ -91,7 +91,9 @@ public final class ViewContext implements IViewContext {
 
 	@Override
 	public void dispose() {
-		//TODO HW implement dispose()	
+		// un-hide view first
+		setHidden(false);
+		PartSupport.getInstance().closeView(this);
 	}
 
 	@Override

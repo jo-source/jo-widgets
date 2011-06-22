@@ -55,6 +55,7 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.tools.types.VetoHolder;
+import org.jowidgets.workbench.api.ClosePolicy;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewLayout;
 import org.jowidgets.workbench.api.ViewScope;
@@ -259,35 +260,47 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 	@Override
 	public void partClosed(final IWorkbenchPartReference partRef) {
 		final IWorkbenchPart part = partRef.getPart(false);
-		if (part == this && view != null && !PlatformUI.getWorkbench().isClosing()) {
-			if (!PartSupport.getInstance().isViewClosing(viewId)) {
-				if (PartSupport.getInstance().isViewHiding(viewId)) {
-					// re-parent composite to re-use it when opening view again
-					parent.setParent(new Shell());
-					view.onHiddenStateChanged(true);
-					return;
+		if (part == this && view != null) {
+			if (!PlatformUI.getWorkbench().isClosing()) {
+				if (!PartSupport.getInstance().isViewClosing(viewId)) {
+					if (PartSupport.getInstance().isViewHiding(viewId)) {
+						// re-parent composite to re-use it when opening view again
+						parent.setParent(new Shell());
+						view.onHiddenStateChanged(true);
+						return;
+					}
+
+					final VetoHolder vetoHolder = new VetoHolder();
+					view.onClose(vetoHolder);
+					if (vetoHolder.hasVeto()) {
+						// re-parent composite to re-use it when opening view again
+						parent.setParent(new Shell());
+						final IViewReference viewRef = (IViewReference) partRef;
+						try {
+							PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(
+									viewRef.getId(),
+									viewRef.getSecondaryId(),
+									IWorkbenchPage.VIEW_ACTIVATE);
+						}
+						catch (final PartInitException e) {
+							throw new RuntimeException(e);
+						}
+						return;
+					}
+
+					// TODO HW fix handling of hide policy
+					if (PartSupport.getInstance().getViewLayoutContext(viewId).getViewLayout().getClosePolicy() == ClosePolicy.HIDE) {
+						// re-parent composite to re-use it when opening view again
+						parent.setParent(new Shell());
+						view.onHiddenStateChanged(true);
+						return;
+					}
 				}
 
-				final VetoHolder vetoHolder = new VetoHolder();
-				view.onClose(vetoHolder);
-				if (vetoHolder.hasVeto()) {
-					// re-parent composite to re-use it when opening view again
-					parent.setParent(new Shell());
-					final IViewReference viewRef = (IViewReference) partRef;
-					try {
-						PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(
-								viewRef.getId(),
-								viewRef.getSecondaryId(),
-								IWorkbenchPage.VIEW_ACTIVATE);
-					}
-					catch (final PartInitException e) {
-						throw new RuntimeException(e);
-					}
-					return;
-				}
+				PartSupport.getInstance().removeViewAndContext(viewId);
 			}
 
-			PartSupport.getInstance().removeViewAndContext(viewId);
+			view.onDispose();
 		}
 	}
 

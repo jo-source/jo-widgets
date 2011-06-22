@@ -260,12 +260,12 @@ public final class PartSupport {
 				IWorkbenchPage.VIEW_CREATE);
 	}
 
-	public void closeView(final IView view) {
-		for (final Entry<String, IView> viewEntry : viewMap.entrySet()) {
+	public void closeView(final ViewContext viewContext) {
+		for (final Entry<String, ViewContext> viewContextEntry : viewContextMap.entrySet()) {
 			// find viewId
-			if (viewEntry.getValue() == view) {
-				final String viewId = viewEntry.getKey();
-				final String primaryViewId = viewContextMap.get(viewId).getPrimaryViewId();
+			if (viewContextEntry.getValue() == viewContext) {
+				final String viewId = viewContextEntry.getKey();
+				final String primaryViewId = viewContext.getPrimaryViewId();
 				for (final IWorkbenchPage page : PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPages()) {
 					final IViewReference viewRef = page.findViewReference(primaryViewId, viewId);
 					if (viewRef != null) {

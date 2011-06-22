@@ -77,12 +77,6 @@ public final class ComponentContext implements IComponentContext {
 		PartSupport.getInstance().resetPerspective((ComponentNodeContext) componentTreeNodeContext, this, layout);
 	}
 
-	//TODO HW removeView() method was removed
-	//	@Override
-	//	public void removeView(final IView view) {
-	//		PartSupport.getInstance().closeView(view);
-	//	}
-
 	@Override
 	public IWorkbenchApplicationContext getWorkbenchApplicationContext() {
 		return componentTreeNodeContext.getWorkbenchApplicationContext();

@@ -86,8 +86,7 @@ public final class RcpView implements IViewLayout {
 
 	@Override
 	public ClosePolicy getClosePolicy() {
-		//TODO HW implement getClosePolicy()
-		return ClosePolicy.DISPOSE;
+		return null;
 	}
 
 	@Override
