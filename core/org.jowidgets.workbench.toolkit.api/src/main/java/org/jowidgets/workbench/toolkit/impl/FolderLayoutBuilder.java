@@ -140,7 +140,7 @@ class FolderLayoutBuilder extends WorkbenchPartBuilder<IFolderLayoutBuilder> imp
 
 	@Override
 	public IFolderLayoutBuilder addView(final String id, final IImageConstant icon) {
-		return addView(view().setId(id));
+		return addView(view().setId(id).setIcon(icon));
 	}
 
 	@Override
