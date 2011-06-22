@@ -37,6 +37,8 @@ import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabFolder2Adapter;
 import org.eclipse.swt.custom.CTabFolderEvent;
 import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.ShellAdapter;
@@ -102,6 +104,9 @@ public final class WorkbenchApplicationFolder extends Composite {
 					final WorkbenchApplicationTree tree = (WorkbenchApplicationTree) tabItem.getControl();
 					tree.clearSelection(true);
 					tree.dispose();
+					if (tabItem == tabFolder.getSelection()) {
+						tabFolder.getTopRight().setVisible(false);
+					}
 				}
 				event.doit = !vetoHolder.hasVeto();
 			}
@@ -141,6 +146,12 @@ public final class WorkbenchApplicationFolder extends Composite {
 		final WorkbenchApplicationContext context = new WorkbenchApplicationContext(workbenchContext, app, appTree);
 		tabItem.setControl(appTree);
 		tabItem.setData(app);
+		tabItem.addDisposeListener(new DisposeListener() {
+			@Override
+			public void widgetDisposed(final DisposeEvent e) {
+				app.onDispose();
+			}
+		});
 		app.onContextInitialize(context);
 	}
 
