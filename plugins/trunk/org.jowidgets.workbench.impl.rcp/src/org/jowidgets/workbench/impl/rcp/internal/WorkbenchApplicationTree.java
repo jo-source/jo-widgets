@@ -46,6 +46,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Layout;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.ISharedImages;
@@ -294,6 +295,15 @@ public final class WorkbenchApplicationTree extends Composite {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public void setLayout(final Layout layout) {
+		// prevent setting layout when wrapped by jo-widgets
+		// TODO MG check widget wrapping with already set layout
+		if (layout instanceof FillLayout) {
+			super.setLayout(layout);
+		}
 	}
 
 }
