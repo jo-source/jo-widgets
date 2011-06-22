@@ -28,13 +28,16 @@
 
 package org.jowidgets.util.concurrent;
 
+import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
 public final class DaemonThreadFactory implements ThreadFactory {
 
+	private final ThreadFactory defaultThreadFactory = Executors.defaultThreadFactory();
+
 	@Override
 	public Thread newThread(final Runnable runnable) {
-		final Thread result = new Thread(runnable);
+		final Thread result = defaultThreadFactory.newThread(runnable);
 		result.setDaemon(true);
 		return result;
 	}
