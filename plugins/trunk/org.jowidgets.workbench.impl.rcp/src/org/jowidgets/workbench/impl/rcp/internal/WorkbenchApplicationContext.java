@@ -134,4 +134,8 @@ public final class WorkbenchApplicationContext implements IWorkbenchApplicationC
 		return tree.getPopupMenu();
 	}
 
+	public IWorkbenchApplication getApplication() {
+		return application;
+	}
+
 }

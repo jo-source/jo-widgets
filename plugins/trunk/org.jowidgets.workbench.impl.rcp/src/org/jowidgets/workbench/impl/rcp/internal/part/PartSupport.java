@@ -60,6 +60,7 @@ import org.jowidgets.workbench.api.ISplitLayout;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewLayout;
 import org.jowidgets.workbench.api.LayoutScope;
+import org.jowidgets.workbench.api.ViewScope;
 import org.jowidgets.workbench.impl.rcp.RcpView;
 import org.jowidgets.workbench.impl.rcp.internal.Activator;
 import org.jowidgets.workbench.impl.rcp.internal.ComponentContext;
@@ -149,7 +150,7 @@ public final class PartSupport {
 		initializeViews();
 	}
 
-	private String getPerspectiveId(final ILayout layout, ComponentNodeContext componentTreeNodeContext) {
+	private String getPerspectiveId(final ILayout layout, final ComponentNodeContext componentTreeNodeContext) {
 		final LayoutScope scope = layout.getScope();
 
 		if (scope == LayoutScope.WORKBENCH) {
@@ -161,15 +162,16 @@ public final class PartSupport {
 			return appId + "." + layout.getId();
 		}
 
+		return appId + "." + getComponentNodeId(componentTreeNodeContext) + "." + layout.getId();
+	}
+
+	private String getComponentNodeId(ComponentNodeContext componentTreeNodeContext) {
 		final StringBuilder id = new StringBuilder();
 		while (componentTreeNodeContext != null) {
 			id.insert(0, "." + componentTreeNodeContext.getId());
 			componentTreeNodeContext = (ComponentNodeContext) componentTreeNodeContext.getParent();
 		}
-		id.insert(0, appId);
-		id.append(".");
-		id.append(layout.getId());
-		return id.toString();
+		return id.substring(1);
 	}
 
 	private void initializeViews() {
@@ -197,7 +199,7 @@ public final class PartSupport {
 			final IFolderContext folderContext = new FolderContext(viewListContainer.getId(), componentContext);
 			componentContext.getComponent().onFolderCreated(folderContext);
 			for (final IViewLayout singleViewContainer : viewListContainer.getViews()) {
-				context.add(registerView(perspectiveId, viewListContainer, singleViewContainer, componentContext, folderContext));
+				context.add(registerView(viewListContainer, singleViewContainer, componentContext, folderContext));
 			}
 			return context;
 		}
@@ -205,19 +207,37 @@ public final class PartSupport {
 	}
 
 	private SingleViewContainerContext registerView(
-		final String perspectiveId,
 		final IFolderLayout folderLayout,
 		final IViewLayout view,
 		final ComponentContext componentContext,
 		final IFolderContext folderContext) {
+
 		final String viewId;
+
 		if (view instanceof RcpView) {
 			viewId = view.getId();
 		}
+
 		else {
-			viewId = perspectiveId + "." + view.getId();
+			if (view.getScope() == ViewScope.WORKBENCH) {
+				viewId = view.getId();
+			}
+			else {
+				final String appId = ((WorkbenchApplicationContext) componentContext.getWorkbenchApplicationContext()).getId();
+				if (view.getScope() == ViewScope.WORKBENCH_APPLICATION) {
+					viewId = appId + "." + view.getId();
+				}
+				else if (view.getScope() == ViewScope.COMPONENT) {
+					final String componentNodeId = getComponentNodeId((ComponentNodeContext) componentContext.getComponentNodeContext());
+					viewId = appId + "." + componentNodeId + "." + view.getId();
+				}
+				else {
+					throw new IllegalArgumentException("unsupported view layout scope: " + view.getScope());
+				}
+			}
 			viewLayoutContextMap.put(viewId, new ViewLayoutContext(view, componentContext, folderContext));
 		}
+
 		return new SingleViewContainerContext(
 			viewId,
 			folderLayout.getViewsCloseable(),
@@ -226,7 +246,6 @@ public final class PartSupport {
 	}
 
 	public void showView(final IViewLayout viewLayout, final ComponentContext componentContext, final IFolderContext folderContext) {
-		// TODO HW evaluate IViewLayout#getScope
 		final String viewId = viewLayout.getId();
 
 		try {
@@ -235,6 +254,7 @@ public final class PartSupport {
 				return;
 			}
 
+			// TODO HW do we have to deal with IViewLayout#getScope?
 			final String primaryViewId = DynamicView.ID + "." + folderContext.getFolderId();
 			registerFolderView(primaryViewId);
 			viewLayoutContextMap.put(viewId, new ViewLayoutContext(viewLayout, componentContext, folderContext));

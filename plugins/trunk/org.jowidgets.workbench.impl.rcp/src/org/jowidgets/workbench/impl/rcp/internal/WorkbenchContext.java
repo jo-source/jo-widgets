@@ -43,10 +43,12 @@ import org.jowidgets.workbench.api.IWorkbenchContext;
 public final class WorkbenchContext implements IWorkbenchContext {
 
 	private final JoWorkbenchAdvisor workbenchAdvisor;
+	private final IWorkbench workbench;
 	private IApplicationLifecycle lifecycle;
 	private IComponent currentComponent;
 
 	public WorkbenchContext(final IWorkbench workbench, final boolean saveAndRestore) {
+		this.workbench = workbench;
 		workbenchAdvisor = new JoWorkbenchAdvisor(workbench, this, saveAndRestore);
 	}
 
@@ -146,6 +148,10 @@ public final class WorkbenchContext implements IWorkbenchContext {
 
 	public void selectTreeNode(final String[] selectedTreeNode) {
 		workbenchAdvisor.getWorkbenchWindowAdvisor().selectTreeNode(selectedTreeNode);
+	}
+
+	public IWorkbench getWorkbench() {
+		return workbench;
 	}
 
 }

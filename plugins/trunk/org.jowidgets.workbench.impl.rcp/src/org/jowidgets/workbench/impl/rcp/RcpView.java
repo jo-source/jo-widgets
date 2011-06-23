@@ -81,7 +81,7 @@ public final class RcpView implements IViewLayout {
 
 	@Override
 	public ViewScope getScope() {
-		return ViewScope.WORKBENCH;
+		return null;
 	}
 
 	@Override

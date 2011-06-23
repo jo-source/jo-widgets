@@ -180,9 +180,11 @@ public final class ComponentNodeContext implements IComponentNodeContext, IWorkb
 			result.add(0, applicationContext.getId());
 			((WorkbenchContext) getWorkbenchContext()).selectTreeNode(result.toArray(new String[0]));
 		}
-		//		else {
-		//TODO HW changed from select() to setSelected()
-		//		}
+		//CHECKSTYLE:OFF
+		else {
+			// TODO HW implement un-select
+		}
+		//CHECKSTYLE:ON
 	}
 
 	@Override

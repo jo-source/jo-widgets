@@ -61,6 +61,8 @@ import org.jowidgets.workbench.api.IViewLayout;
 import org.jowidgets.workbench.api.ViewScope;
 import org.jowidgets.workbench.impl.rcp.internal.ComponentContext;
 import org.jowidgets.workbench.impl.rcp.internal.ViewContext;
+import org.jowidgets.workbench.impl.rcp.internal.WorkbenchApplicationContext;
+import org.jowidgets.workbench.impl.rcp.internal.WorkbenchContext;
 import org.jowidgets.workbench.impl.rcp.internal.util.ImageHelper;
 
 public final class DynamicView extends ViewPart implements IPartListener2 {
@@ -189,10 +191,20 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 				}
 
 				private void init() {
-					viewContext = new ViewContext(getViewSite().getId(), viewLayout.getScope(), parent, componentContext);
-					// TODO HW evaluate IViewLayout#getScope
-					if (viewLayout.getScope() == ViewScope.COMPONENT) {
+					final ViewScope scope = viewLayout.getScope();
+					viewContext = new ViewContext(getViewSite().getId(), scope, parent, componentContext);
+					if (scope == ViewScope.COMPONENT) {
 						view = componentContext.getComponent().createView(viewLayout.getId(), viewContext);
+					}
+					else if (scope == ViewScope.WORKBENCH_APPLICATION) {
+						view = ((WorkbenchApplicationContext) componentContext.getWorkbenchApplicationContext()).getApplication().createView(
+								viewLayout.getId(),
+								viewContext);
+					}
+					else if (scope == ViewScope.WORKBENCH) {
+						view = ((WorkbenchContext) componentContext.getWorkbenchContext()).getWorkbench().createView(
+								viewLayout.getId(),
+								viewContext);
 					}
 					else {
 						throw new IllegalStateException("unsupported view layout scope: " + viewLayout.getScope());
