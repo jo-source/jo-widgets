@@ -189,7 +189,7 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 				}
 
 				private void init() {
-					viewContext = new ViewContext(getViewSite().getId(), parent, componentContext);
+					viewContext = new ViewContext(getViewSite().getId(), viewLayout.getScope(), parent, componentContext);
 					// TODO HW evaluate IViewLayout#getScope
 					if (viewLayout.getScope() == ViewScope.COMPONENT) {
 						view = componentContext.getComponent().createView(viewLayout.getId(), viewContext);

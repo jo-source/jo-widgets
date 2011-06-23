@@ -47,13 +47,19 @@ import org.jowidgets.workbench.impl.rcp.internal.util.ViewToolBarHelper;
 public final class ViewContext implements IViewContext {
 
 	private final String primaryViewId;
+	private final ViewScope scope;
 	private final Composite parent;
 	private final IComponentContext componentContext;
 	private final ViewToolBarHelper toolBarHelper;
 	private boolean hidden;
 
-	public ViewContext(final String primaryViewId, final Composite parent, final IComponentContext componentContext) {
+	public ViewContext(
+		final String primaryViewId,
+		final ViewScope scope,
+		final Composite parent,
+		final IComponentContext componentContext) {
 		this.primaryViewId = primaryViewId;
+		this.scope = scope;
 		this.parent = parent;
 		this.componentContext = componentContext;
 
@@ -142,8 +148,7 @@ public final class ViewContext implements IViewContext {
 
 	@Override
 	public ViewScope getScope() {
-		//TODO HR implement getScope()
-		return null;
+		return scope;
 	}
 
 }
