@@ -39,8 +39,11 @@ import org.jowidgets.workbench.api.IFolderContext;
 import org.jowidgets.workbench.api.ILayout;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
+import org.jowidgets.workbench.api.ViewScope;
 import org.jowidgets.workbench.toolkit.api.IFolderLayoutBuilder;
 import org.jowidgets.workbench.toolkit.api.ISplitLayoutBuilder;
+import org.jowidgets.workbench.toolkit.api.IViewLayoutBuilder;
+import org.jowidgets.workbench.toolkit.api.WorkbenchToolkit;
 import org.jowidgets.workbench.tools.FolderLayoutBuilder;
 import org.jowidgets.workbench.tools.Layout;
 import org.jowidgets.workbench.tools.SplitLayoutBuilder;
@@ -75,9 +78,6 @@ public class ComponentDemo1 extends AbstractDemoComponent implements IComponent 
 		else if (ViewDemo2.ID.equals(viewId)) {
 			return new ViewDemo2(context, menuProvider);
 		}
-		else if (ViewDemo3.ID.equals(viewId)) {
-			return new ViewDemo3(context);
-		}
 		else if (ViewDemo4.ID.equals(viewId)) {
 			return new ViewDemo4(context, getTableModelLazy());
 		}
@@ -93,9 +93,13 @@ public class ComponentDemo1 extends AbstractDemoComponent implements IComponent 
 		else if (viewId.startsWith(DynamicViewDemo.ID_PREFIX)) {
 			return new DynamicViewDemo(viewId, context);
 		}
-		else {
-			throw new IllegalArgumentException("View id '" + viewId + "' is not known.");
+		else if (ViewDemo3.ID.equals(viewId)) {
+			// CHECKSTYLE:OFF
+			System.err.println("Warning: " + ViewDemo3.ID + " is created by component, not by application");
+			// CHECKSTYLE:ON
+			return new ViewDemo3(context);
 		}
+		throw new IllegalArgumentException("View id '" + viewId + "' is not known.");
 	}
 
 	@Override
@@ -139,7 +143,10 @@ public class ComponentDemo1 extends AbstractDemoComponent implements IComponent 
 	private IFolderLayoutBuilder createDetail1Folder() {
 		final IFolderLayoutBuilder result = new FolderLayoutBuilder(DETAIL1_FOLDER_ID);
 		result.addView(ViewDemo2.ID, ViewDemo2.DEFAULT_LABEL, ViewDemo2.DEFAULT_TOOLTIP, ViewDemo2.DEFAULT_ICON);
-		result.addView(ViewDemo3.ID, ViewDemo3.DEFAULT_LABEL, ViewDemo3.DEFAULT_TOOLTIP, ViewDemo3.DEFAULT_ICON);
+		final IViewLayoutBuilder view3lb = WorkbenchToolkit.getInstance().getLayoutBuilderFactory().view();
+		view3lb.setId(ViewDemo3.ID).setLabel(ViewDemo3.DEFAULT_LABEL).setTooltip(ViewDemo3.DEFAULT_TOOLTIP).setIcon(
+				ViewDemo3.DEFAULT_ICON).setScope(ViewScope.WORKBENCH_APPLICATION);
+		result.addView(view3lb.build());
 		return result;
 	}
 
