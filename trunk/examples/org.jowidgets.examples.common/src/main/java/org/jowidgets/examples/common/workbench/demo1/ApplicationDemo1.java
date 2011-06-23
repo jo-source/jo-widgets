@@ -37,6 +37,8 @@ import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractDemoApplication;
 import org.jowidgets.examples.common.workbench.widgets.WidgetsHowToTreeNode;
 import org.jowidgets.workbench.api.IComponentNode;
+import org.jowidgets.workbench.api.IView;
+import org.jowidgets.workbench.api.IViewContext;
 import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 
 public class ApplicationDemo1 extends AbstractDemoApplication {
@@ -86,6 +88,14 @@ public class ApplicationDemo1 extends AbstractDemoApplication {
 	@Override
 	public IImageConstant getIcon() {
 		return SilkIcons.USER_GREEN;
+	}
+
+	@Override
+	public IView createView(final String viewId, final IViewContext viewContext) {
+		if (ViewDemo3.ID.equals(viewId)) {
+			return new ViewDemo3(viewContext);
+		}
+		throw new IllegalArgumentException("View id '" + viewId + "' is not known.");
 	}
 
 }
