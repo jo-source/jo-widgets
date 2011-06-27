@@ -34,6 +34,9 @@ import org.jowidgets.spi.widgets.ITextLabelSpi;
 
 public class TextLabelSpiWrapper extends ControlSpiWrapper implements ITextLabelCommon {
 
+	private String text;
+	private String toolTipText;
+
 	public TextLabelSpiWrapper(final ITextLabelSpi widget) {
 		super(widget);
 	}
@@ -50,22 +53,22 @@ public class TextLabelSpiWrapper extends ControlSpiWrapper implements ITextLabel
 
 	@Override
 	public void setText(final String text) {
+		this.text = text;
 		getWidget().setText(text);
 	}
 
 	@Override
-	public String getText() {
-		return getWidget().getText();
-	}
-
-	@Override
 	public void setToolTipText(final String text) {
+		toolTipText = text;
 		getWidget().setToolTipText(text);
 	}
 
-	@Override
+	public String getText() {
+		return text;
+	}
+
 	public String getToolTipText() {
-		return getWidget().getToolTipText();
+		return toolTipText;
 	}
 
 }

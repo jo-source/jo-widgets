@@ -70,11 +70,6 @@ public class TreeNodeImpl implements ITreeNodeSpi {
 	}
 
 	@Override
-	public String getText() {
-		return item.getText();
-	}
-
-	@Override
 	public void setText(final String text) {
 		if (text != null) {
 			item.setText(text);
@@ -82,11 +77,6 @@ public class TreeNodeImpl implements ITreeNodeSpi {
 		else {
 			item.setText(String.valueOf(""));
 		}
-	}
-
-	@Override
-	public String getToolTipText() {
-		return item.getToolTipText();
 	}
 
 	@Override

@@ -65,12 +65,10 @@ public class ItemSpiWrapper extends WidgetSpiWrapper implements IItemCommon {
 		getWidget().setIcon(icon);
 	}
 
-	@Override
 	public String getText() {
 		return text;
 	}
 
-	@Override
 	public String getToolTipText() {
 		return toolTipText;
 	}

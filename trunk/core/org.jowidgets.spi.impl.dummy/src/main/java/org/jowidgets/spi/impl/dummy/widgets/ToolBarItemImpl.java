@@ -60,18 +60,8 @@ public class ToolBarItemImpl implements IToolBarItemSpi {
 	}
 
 	@Override
-	public String getText() {
-		return button.getText();
-	}
-
-	@Override
 	public void setText(final String text) {
 		button.setText(text);
-	}
-
-	@Override
-	public String getToolTipText() {
-		return button.getToolTipText();
 	}
 
 	@Override

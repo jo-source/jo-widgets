@@ -93,11 +93,6 @@ public class TextFieldImpl extends InputControlSpiWrapper implements ITextContro
 	}
 
 	@Override
-	public String getTooltipText() {
-		return getWidget().getTooltipText();
-	}
-
-	@Override
 	public void setTooltipText(final String tooltipText) {
 		getWidget().setTooltipText(tooltipText);
 	}
