@@ -156,7 +156,7 @@ public final class Grid {
 		int sizeGroupsX = 0, sizeGroupsY = 0;
 		int[] dockInsets = null; // top, left, bottom, right insets for docks.
 
-		LinkHandler.clearTemporaryBounds(container.getLayout());
+		MigLayoutToolkit.getLinkHandler().clearTemporaryBounds(container.getLayout());
 
 		for (int i = 0; i < comps.length;) {
 			final ComponentWrapper comp = comps[i];
@@ -722,14 +722,14 @@ public final class Grid {
 		final Object lay = container.getLayout();
 		boolean changed = false;
 		if (external || (linkTargetIDs != null && linkTargetIDs.containsKey(id)))
-			changed = LinkHandler.setBounds(lay, id, x, y, w, h, !external, false);
+			changed = MigLayoutToolkit.getLinkHandler().setBounds(lay, id, x, y, w, h, !external, false);
 
 		if (gid != null && (external || (linkTargetIDs != null && linkTargetIDs.containsKey(gid)))) {
 			if (linkTargetIDs == null)
 				linkTargetIDs = new HashMap<String, Boolean>(4);
 
 			linkTargetIDs.put(gid, Boolean.TRUE);
-			changed |= LinkHandler.setBounds(lay, gid, x, y, w, h, !external, true);
+			changed |= MigLayoutToolkit.getLinkHandler().setBounds(lay, gid, x, y, w, h, !external, true);
 		}
 
 		return changed;
@@ -916,14 +916,14 @@ public final class Grid {
 		for (final Iterator<Map.Entry<String, Boolean>> it = linkTargetIDs.entrySet().iterator(); it.hasNext();) {
 			final Map.Entry<String, Boolean> o = it.next();
 			if (o.getValue() == Boolean.TRUE)
-				LinkHandler.clearBounds(container.getLayout(), o.getKey());
+				MigLayoutToolkit.getLinkHandler().clearBounds(container.getLayout(), o.getKey());
 		}
 	}
 
 	private void resetLinkValues(final boolean parentSize, final boolean compLinks) {
 		final Object lay = container.getLayout();
 		if (compLinks)
-			LinkHandler.clearTemporaryBounds(lay);
+			MigLayoutToolkit.getLinkHandler().clearTemporaryBounds(lay);
 
 		final boolean defIns = !hasDocks();
 
@@ -938,8 +938,8 @@ public final class Grid {
 		final int visW = parW - insX - layoutUtil.getInsets(lc, 2, defIns).getPixels(0, container, null);
 		final int visH = parH - insY - layoutUtil.getInsets(lc, 3, defIns).getPixels(0, container, null);
 
-		LinkHandler.setBounds(lay, "visual", insX, insY, visW, visH, true, false);
-		LinkHandler.setBounds(lay, "container", 0, 0, parW, parH, true, false);
+		MigLayoutToolkit.getLinkHandler().setBounds(lay, "visual", insX, insY, visW, visH, true, false);
+		MigLayoutToolkit.getLinkHandler().setBounds(lay, "container", 0, 0, parW, parH, true, false);
 	}
 
 	/**

@@ -16,13 +16,13 @@ public final class LinkHandler {
 	public static final int X2 = 4;
 	public static final int Y2 = 5;
 
-	private static final ArrayList<WeakReference<Object>> LAYOUTS = new ArrayList<WeakReference<Object>>(4);
-	private static final ArrayList<HashMap<String, int[]>> VALUES = new ArrayList<HashMap<String, int[]>>(4);
-	private static final ArrayList<HashMap<String, int[]>> VALUES_TEMP = new ArrayList<HashMap<String, int[]>>(4);
+	private final ArrayList<WeakReference<Object>> LAYOUTS = new ArrayList<WeakReference<Object>>(4);
+	private final ArrayList<HashMap<String, int[]>> VALUES = new ArrayList<HashMap<String, int[]>>(4);
+	private final ArrayList<HashMap<String, int[]>> VALUES_TEMP = new ArrayList<HashMap<String, int[]>>(4);
 
-	private LinkHandler() {}
+	public LinkHandler() {}
 
-	public synchronized static Integer getValue(final Object layout, final String key, final int type) {
+	public synchronized Integer getValue(final Object layout, final String key, final int type) {
 		Integer ret = null;
 		boolean cont = true;
 
@@ -60,7 +60,7 @@ public final class LinkHandler {
 	 * @param height Height
 	 * @return If the value was changed
 	 */
-	public synchronized static boolean setBounds(
+	public synchronized boolean setBounds(
 		final Object layout,
 		final String key,
 		final int x,
@@ -70,7 +70,7 @@ public final class LinkHandler {
 		return setBounds(layout, key, x, y, width, height, false, false);
 	}
 
-	synchronized static boolean setBounds(
+	synchronized boolean setBounds(
 		final Object layout,
 		final String key,
 		final int x,
@@ -155,11 +155,11 @@ public final class LinkHandler {
 	 * 
 	 * @since 3.7.4
 	 */
-	public synchronized static void clearWeakReferencesNow() {
+	public synchronized void clearWeakReferencesNow() {
 		LAYOUTS.clear();
 	}
 
-	public synchronized static boolean clearBounds(final Object layout, final String key) {
+	public synchronized boolean clearBounds(final Object layout, final String key) {
 		for (int i = LAYOUTS.size() - 1; i >= 0; i--) {
 			final Object l = LAYOUTS.get(i).get();
 			if (l == layout)
@@ -168,7 +168,7 @@ public final class LinkHandler {
 		return false;
 	}
 
-	synchronized static void clearTemporaryBounds(final Object layout) {
+	synchronized void clearTemporaryBounds(final Object layout) {
 		for (int i = LAYOUTS.size() - 1; i >= 0; i--) {
 			final Object l = LAYOUTS.get(i).get();
 			if (l == layout) {

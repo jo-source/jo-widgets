@@ -168,9 +168,14 @@ public final class UnitValue implements Serializable {
 					return (unit == UnitValueToolkit.SPX ? parent.getScreenWidth() : parent.getScreenHeight()) * value * 0.01f;
 
 				case UnitValueToolkit.ALIGN:
-					final Integer st = LinkHandler.getValue(parent.getLayout(), "visual", isHor ? LinkHandler.X : LinkHandler.Y);
-					final Integer sz = LinkHandler.getValue(parent.getLayout(), "visual", isHor
-							? LinkHandler.WIDTH : LinkHandler.HEIGHT);
+					final Integer st = MigLayoutToolkit.getLinkHandler().getValue(
+							parent.getLayout(),
+							"visual",
+							isHor ? MigLayoutToolkit.getLinkHandler().X : MigLayoutToolkit.getLinkHandler().Y);
+					final Integer sz = MigLayoutToolkit.getLinkHandler().getValue(
+							parent.getLayout(),
+							"visual",
+							isHor ? MigLayoutToolkit.getLinkHandler().WIDTH : LinkHandler.HEIGHT);
 					if (st == null || sz == null)
 						return 0;
 					return value * (Math.max(0, sz.intValue()) - refValue) + st.intValue();
@@ -201,8 +206,10 @@ public final class UnitValue implements Serializable {
 				case UnitValueToolkit.LINK_Y2:
 				case UnitValueToolkit.LINK_XPOS:
 				case UnitValueToolkit.LINK_YPOS:
-					final Integer v = LinkHandler.getValue(parent.getLayout(), getLinkTargetId(), unit
-						- (unit >= UnitValueToolkit.LINK_XPOS ? UnitValueToolkit.LINK_XPOS : UnitValueToolkit.LINK_X));
+					final Integer v = MigLayoutToolkit.getLinkHandler().getValue(
+							parent.getLayout(),
+							getLinkTargetId(),
+							unit - (unit >= UnitValueToolkit.LINK_XPOS ? UnitValueToolkit.LINK_XPOS : UnitValueToolkit.LINK_X));
 					if (v == null)
 						return 0;
 
