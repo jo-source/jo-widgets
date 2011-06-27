@@ -171,11 +171,11 @@ public final class UnitValue implements Serializable {
 					final Integer st = MigLayoutToolkit.getLinkHandler().getValue(
 							parent.getLayout(),
 							"visual",
-							isHor ? MigLayoutToolkit.getLinkHandler().X : MigLayoutToolkit.getLinkHandler().Y);
+							isHor ? LinkHandler.X : LinkHandler.Y);
 					final Integer sz = MigLayoutToolkit.getLinkHandler().getValue(
 							parent.getLayout(),
 							"visual",
-							isHor ? MigLayoutToolkit.getLinkHandler().WIDTH : LinkHandler.HEIGHT);
+							isHor ? LinkHandler.WIDTH : LinkHandler.HEIGHT);
 					if (st == null || sz == null)
 						return 0;
 					return value * (Math.max(0, sz.intValue()) - refValue) + st.intValue();
