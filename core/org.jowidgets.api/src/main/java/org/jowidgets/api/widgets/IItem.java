@@ -33,10 +33,8 @@ import org.jowidgets.common.widgets.IItemCommon;
 
 public interface IItem extends IWidget, IItemCommon {
 
-	@Override
 	String getText();
 
-	@Override
 	String getToolTipText();
 
 	IImageConstant getIcon();

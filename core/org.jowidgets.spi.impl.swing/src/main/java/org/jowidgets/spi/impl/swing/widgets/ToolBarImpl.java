@@ -144,17 +144,7 @@ public class ToolBarImpl extends SwingControl implements IToolBarSpi {
 		}
 		return new IToolBarItemSpi() {
 			@Override
-			public String getToolTipText() {
-				return "";
-			}
-
-			@Override
 			public void setToolTipText(final String text) {}
-
-			@Override
-			public String getText() {
-				return "";
-			}
 
 			@Override
 			public void setText(final String text) {}

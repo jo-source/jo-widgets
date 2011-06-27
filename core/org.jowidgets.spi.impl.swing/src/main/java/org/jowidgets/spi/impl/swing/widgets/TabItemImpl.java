@@ -192,19 +192,9 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 	}
 
 	@Override
-	public String getText() {
-		return tabComponent.getText();
-	}
-
-	@Override
 	public void setText(final String text) {
 		this.text = text;
 		tabComponent.setText(text);
-	}
-
-	@Override
-	public String getToolTipText() {
-		return tabComponent.getToolTipText();
 	}
 
 	@Override

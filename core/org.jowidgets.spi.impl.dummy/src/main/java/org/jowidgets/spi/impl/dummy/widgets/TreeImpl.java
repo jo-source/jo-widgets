@@ -151,18 +151,8 @@ public class TreeImpl extends DummyControl implements ITreeSpi, ITreeNodeSpi {
 	}
 
 	@Override
-	public String getText() {
-		throw new UnsupportedOperationException("getText is not possible on the root node");
-	}
-
-	@Override
 	public void setText(final String text) {
 		throw new UnsupportedOperationException("setText is not possible on the root node");
-	}
-
-	@Override
-	public String getToolTipText() {
-		throw new UnsupportedOperationException("getToolTipText is not possible on the root node");
 	}
 
 	@Override

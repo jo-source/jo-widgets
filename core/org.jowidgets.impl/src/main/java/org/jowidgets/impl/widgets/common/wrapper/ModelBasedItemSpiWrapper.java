@@ -66,12 +66,10 @@ public class ModelBasedItemSpiWrapper extends WidgetSpiWrapper implements IItemC
 		itemDelegate.setIcon(icon);
 	}
 
-	@Override
 	public String getText() {
 		return itemDelegate.getText();
 	}
 
-	@Override
 	public String getToolTipText() {
 		return itemDelegate.getToolTipText();
 	}

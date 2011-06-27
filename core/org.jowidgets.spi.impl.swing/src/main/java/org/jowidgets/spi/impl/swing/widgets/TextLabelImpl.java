@@ -64,18 +64,8 @@ public class TextLabelImpl extends SwingControl implements ITextLabelSpi {
 	}
 
 	@Override
-	public String getText() {
-		return getUiReference().getText();
-	}
-
-	@Override
 	public void setToolTipText(final String text) {
 		getUiReference().setToolTipText(text);
-	}
-
-	@Override
-	public String getToolTipText() {
-		return getUiReference().getToolTipText();
 	}
 
 	@Override
