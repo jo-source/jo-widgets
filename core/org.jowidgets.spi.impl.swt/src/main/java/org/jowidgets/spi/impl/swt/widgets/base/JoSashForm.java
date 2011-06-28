@@ -29,6 +29,7 @@
 package org.jowidgets.spi.impl.swt.widgets.base;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
@@ -71,6 +72,7 @@ public class JoSashForm extends Composite {
 		setLayout(layout);
 
 		sash = new Sash(this, getSashStyle(setup));
+		sash.setToolTipText(getToolTipText());
 		sash.addListener(SWT.Selection, new Listener() {
 			@Override
 			public void handleEvent(final Event event) {
@@ -86,11 +88,18 @@ public class JoSashForm extends Composite {
 	}
 
 	public void setWeight(final double weight) {
+		setWeight(weight, true);
+	}
+
+	void setWeight(final double weight, final boolean doLayout) {
 		if ((weight < 0) || (weight > 1)) {
 			throw new IllegalArgumentException("Illegal weight (must be between 0 and 1, is " + weight + ")");
 		}
 		this.weight = weight;
-		layout(true);
+
+		if (doLayout) {
+			layout(true);
+		}
 	}
 
 	public double getWeight() {
@@ -217,6 +226,18 @@ public class JoSashForm extends Composite {
 
 	public Point getSecondMinSize() {
 		return secondMinSize;
+	}
+
+	@Override
+	public void setBackground(final Color color) {
+		super.setBackground(color);
+		sash.setBackground(color);
+	}
+
+	@Override
+	public void setForeground(final Color color) {
+		super.setForeground(color);
+		sash.setForeground(color);
 	}
 
 	private double getPreferredWeight() {

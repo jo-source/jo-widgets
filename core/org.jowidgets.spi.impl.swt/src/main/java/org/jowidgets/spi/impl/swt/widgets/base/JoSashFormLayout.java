@@ -137,10 +137,16 @@ final class JoSashFormLayout extends Layout {
 		if (firstSize < firstMinSize) {
 			secondSize = secondSize - (firstMinSize - firstSize);
 			firstSize = firstMinSize;
+			initialized = false;
 		}
 		if (secondSize < secondMinSize) {
 			firstSize = Math.max(firstMinSize, firstSize - (secondMinSize - secondSize));
 			secondSize = secondMinSize;
+			initialized = false;
+		}
+
+		if (initialized && (parent.getResizePolicy() != SplitResizePolicy.RESIZE_BOTH)) {
+			parent.setWeight((double) firstSize / effectiveSize, false);
 		}
 
 		final Rectangle firstBounds = parent.getFirst().getBounds();
