@@ -32,7 +32,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Layout;
 import org.jowidgets.common.types.SplitResizePolicy;
 
@@ -41,65 +40,18 @@ final class JoSashFormLayout extends Layout {
 	private final JoSashForm parent;
 	private final ISashOrientationUtil sashUtil;
 
-	private int totalWidth;
-	private int totalHeight;
-	private boolean weightIsValid;
+	private boolean initialized;
 	private int fixedChildRegularSize = 0;
 
 	public JoSashFormLayout(final JoSashForm parent, final ISashOrientationUtil calculator) {
 		this.parent = parent;
 		this.sashUtil = calculator;
-		weightIsValid = false;
+		initialized = false;
 	}
 
 	@Override
 	protected Point computeSize(final Composite composite, final int wHint, final int hHint, final boolean flushCache) {
-		if (flushCache) {
-			calculatePreferredSize();
-		}
-
-		final Point result = new Point(SWT.DEFAULT, SWT.DEFAULT);
-		if (wHint == SWT.DEFAULT) {
-			result.x = totalWidth;
-		}
-		if (hHint == SWT.DEFAULT) {
-			result.y = totalHeight;
-		}
-
-		return result;
-	}
-
-	private void calculatePreferredSize() {
-		final Control first = parent.getFirst();
-		final Control second = parent.getSecond();
-		totalWidth = 0;
-		totalHeight = 0;
-		if (sashUtil.getOrientation() == SWT.HORIZONTAL) {
-			totalWidth += parent.getSashSize();
-			if (first != null) {
-				final Point firstSize = first.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-				totalWidth += firstSize.x;
-				totalHeight = Math.max(totalHeight, firstSize.y);
-			}
-			if (second != null) {
-				final Point secondSize = second.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-				totalWidth += secondSize.x;
-				totalHeight = Math.max(totalHeight, secondSize.y);
-			}
-		}
-		else {
-			totalHeight += parent.getSashSize();
-			if (first != null) {
-				final Point firstSize = first.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-				totalHeight += firstSize.y;
-				totalWidth = Math.max(totalWidth, firstSize.x);
-			}
-			if (second != null) {
-				final Point secondSize = second.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-				totalHeight += secondSize.y;
-				totalWidth = Math.max(totalWidth, secondSize.x);
-			}
-		}
+		return new Point(SWT.DEFAULT, SWT.DEFAULT);
 	}
 
 	@Override
@@ -119,10 +71,10 @@ final class JoSashFormLayout extends Layout {
 
 		final Rectangle firstBounds = parent.getFirst().getBounds();
 		final Rectangle secondBounds = parent.getSecond().getBounds();
-		final Rectangle sashBounds = parent.getSash().getBounds();
 
-		if (!weightIsValid || (parent.getResizePolicy() == SplitResizePolicy.RESIZE_BOTH)) {
-			weightIsValid = true;
+		// always use weight when layouting first time
+		if (!initialized || (parent.getResizePolicy() == SplitResizePolicy.RESIZE_BOTH)) {
+			initialized = true;
 
 			firstSize = (int) (parent.getWeight() * effectiveSize);
 			secondSize = effectiveSize - firstSize;
@@ -162,18 +114,26 @@ final class JoSashFormLayout extends Layout {
 			secondSize = secondMinSize;
 		}
 
-		// remembering current weight if split resize policy is not set to 'resize both'
-		// and if the current weight is valid
-		//if (weightIsValid && (parent.getResizePolicy() != SplitResizePolicy.RESIZE_BOTH)) {
-		//	parent.setWeight((double) firstSize / effectiveSize, false);
-		//}
+		final Rectangle newFirstBounds = sashUtil.createBounds(area, sashUtil.getPosition(firstBounds), firstSize);
+		final Rectangle newSashBounds = sashUtil.createBounds(
+				area,
+				sashUtil.getPosition(newFirstBounds) + firstSize,
+				parent.getSashSize());
+		final Rectangle newSecondBounds = sashUtil.createBounds(
+				area,
+				sashUtil.getPosition(newSashBounds) + parent.getSashSize(),
+				secondSize);
 
-		sashUtil.updateBounds(firstBounds, area, sashUtil.getPosition(firstBounds), firstSize);
-		sashUtil.updateBounds(sashBounds, area, sashUtil.getPosition(firstBounds) + firstSize, parent.getSashSize());
-		sashUtil.updateBounds(secondBounds, area, sashUtil.getPosition(sashBounds) + parent.getSashSize(), secondSize);
+		if (!firstBounds.equals(newFirstBounds)) {
+			parent.getFirst().setBounds(newFirstBounds);
+		}
+		parent.getSash().setBounds(newSashBounds);
+		if (!secondBounds.equals(newSecondBounds)) {
+			parent.getSecond().setBounds(newSecondBounds);
+		}
+	}
 
-		parent.getFirst().setBounds(firstBounds);
-		parent.getSash().setBounds(sashBounds);
-		parent.getSecond().setBounds(secondBounds);
+	void resetRemeberedSize() {
+		fixedChildRegularSize = 0;
 	}
 }

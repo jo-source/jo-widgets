@@ -33,6 +33,8 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Event;
 
 interface ISashOrientationUtil {
+	Rectangle createBounds(Rectangle parentArea, int position, int size);
+
 	int getPosition(Rectangle control);
 
 	int getSize(Rectangle control);
@@ -42,15 +44,5 @@ interface ISashOrientationUtil {
 	int getEventPos(Event event);
 
 	int getOrientation();
-
-	/**
-	 * Updates the position and size of the recangle bounds
-	 * 
-	 * @param bounds Rectangle, which shall be updated
-	 * @param parentArea The parent's client area
-	 * @param position New position (x or y ordinate)
-	 * @param size New size
-	 */
-	void updateBounds(Rectangle bounds, Rectangle parentArea, int position, int size);
 
 }

@@ -48,7 +48,7 @@ public class JoSashForm extends Composite {
 
 	private static final int SPLIT_MINIMUM = 40;
 
-	private Double weight;
+	private double weight = -1;
 	private int sashSize;
 	private Sash sash;
 
@@ -103,7 +103,7 @@ public class JoSashForm extends Composite {
 	}
 
 	public double getWeight() {
-		if (weight == null) {
+		if (weight < -1) {
 			// if no weight is set return preferred weight
 			return getPreferredWeight();
 		}
@@ -132,7 +132,6 @@ public class JoSashForm extends Composite {
 		final Rectangle area = getClientArea();
 		final Rectangle firstBounds = first.getBounds();
 		final Rectangle secondBounds = second.getBounds();
-		final Rectangle sashBounds = sash.getBounds();
 
 		final int firstPos = sashUtil.getPosition(firstBounds);
 		int firstSize = sashUtil.getSize(firstBounds);
@@ -161,13 +160,19 @@ public class JoSashForm extends Composite {
 
 		final int newSashPos = firstPos + firstSize;
 
-		sashUtil.updateBounds(firstBounds, area, firstPos, firstSize);
-		sashUtil.updateBounds(sashBounds, area, newSashPos, sashSize);
-		sashUtil.updateBounds(secondBounds, area, secondPos, secondSize);
+		final Rectangle newFirstBounds = sashUtil.createBounds(area, firstPos, firstSize);
+		final Rectangle newSashBounds = sashUtil.createBounds(area, newSashPos, sashSize);
+		final Rectangle newSecondBounds = sashUtil.createBounds(area, secondPos, secondSize);
 
-		first.setBounds(firstBounds);
-		sash.setBounds(sashBounds);
-		second.setBounds(secondBounds);
+		layout.resetRemeberedSize();
+
+		if (!firstBounds.equals(newFirstBounds)) {
+			first.setBounds(newFirstBounds);
+		}
+		sash.setBounds(newSashBounds);
+		if (!secondBounds.equals(newSecondBounds)) {
+			second.setBounds(newSecondBounds);
+		}
 
 		// remember weight
 		weight = (double) firstSize / totalSize;

@@ -57,11 +57,8 @@ final class SashOrientationUtil {
 		}
 
 		@Override
-		public void updateBounds(final Rectangle bounds, final Rectangle parentArea, final int position, final int size) {
-			bounds.x = position;
-			bounds.width = size;
-			bounds.y = parentArea.y;
-			bounds.height = parentArea.height;
+		public Rectangle createBounds(final Rectangle parentArea, final int position, final int size) {
+			return new Rectangle(position, parentArea.y, size, parentArea.height);
 		}
 
 		@Override
@@ -93,11 +90,8 @@ final class SashOrientationUtil {
 		}
 
 		@Override
-		public void updateBounds(final Rectangle bounds, final Rectangle parentArea, final int position, final int size) {
-			bounds.y = position;
-			bounds.height = size;
-			bounds.x = parentArea.x;
-			bounds.width = parentArea.width;
+		public Rectangle createBounds(final Rectangle parentArea, final int position, final int size) {
+			return new Rectangle(parentArea.x, position, parentArea.width, size);
 		}
 
 		@Override
