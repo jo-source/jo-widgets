@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Hengler, Benjamin Marstaller
+ * Copyright (c) 2011, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -29,7 +29,7 @@
 package org.jowidgets.spi.impl.swt.widgets.base;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -45,33 +45,33 @@ import org.jowidgets.spi.widgets.setup.ISplitCompositeSetupSpi;
 
 public class JoSashForm extends Composite {
 
-	protected static final int DRAG_MINIMUM = 40;
+	private static final int SPLIT_MINIMUM = 200;
 
-	private int sashWidth;
-	private final int sashStyle;
-	private Sash sash = null;
-	private Color background;
-	private Color foreground;
-	private SplitResizePolicy resizePolicy;
-	private int firstWeight;
-	private int secondWeight;
-	private final JoSashFormLayout layout;
+	private Double weight;
+	private int sashSize;
+	private Sash sash;
+
+	private final ISashOrientationUtil sashUtil;
+
 	private Control first;
 	private Control second;
-	private Listener sashListener;
+
+	private Point firstMinSize;
+	private Point secondMinSize;
+
+	private JoSashFormLayout layout;
+
+	private final SplitResizePolicy resizePolicy;
 
 	public JoSashForm(final Composite parent, final ISplitCompositeSetupSpi setup) {
-		super(parent, getStyle(setup));
-		sashWidth = 3;
-		firstWeight = 500;
-		secondWeight = 500;
-		layout = new JoSashFormLayout();
+		super(parent, getSashFormStyle(setup));
+		resizePolicy = setup.getResizePolicy();
+		sashUtil = getSashUtil(setup);
+		layout = new JoSashFormLayout(this, sashUtil);
 		setLayout(layout);
 
-		resizePolicy = setup.getResizePolicy();
-		sashStyle = getSashStyle(setup);
-
-		sashListener = new Listener() {
+		sash = new Sash(this, getSashStyle(setup));
+		sash.addListener(SWT.Selection, new Listener() {
 			@Override
 			public void handleEvent(final Event event) {
 				if (event.detail == SWT.DRAG) {
@@ -79,218 +79,91 @@ public class JoSashForm extends Composite {
 				}
 				onDragSash(event);
 			}
-		};
-		sash = new Sash(this, sashStyle);
-		sash.setBackground(background);
-		sash.setForeground(foreground);
-		sash.setToolTipText(getToolTipText());
-		sash.addListener(SWT.Selection, sashListener);
-	}
+		});
 
-	private static int getStyle(final ISplitCompositeSetupSpi setup) {
-		final Orientation orientation = setup.getOrientation();
-		final int style = OrientationConvert.convert(orientation);
-		final int mask = SWT.BORDER | SWT.LEFT_TO_RIGHT | SWT.RIGHT_TO_LEFT;
-		return style & mask;
-	}
-
-	private int getSashStyle(final ISplitCompositeSetupSpi setup) {
-		final Orientation orientation = setup.getOrientation();
-		int style;
-		if (Orientation.HORIZONTAL == orientation) {
-			style = SWT.VERTICAL;
-		}
-		else {
-			style = SWT.HORIZONTAL;
-		}
-		if (SwtOptions.getSplitLayoutMode().equals(SplitlayoutMode.ON_MOUSE_MOVE)) {
-			style |= SWT.SMOOTH;
-		}
-		return style;
-	}
-
-	public int getOrientation() {
-		checkWidget();
-		return (sashStyle & SWT.VERTICAL) != 0 ? SWT.HORIZONTAL : SWT.VERTICAL;
-	}
-
-	@Override
-	public int getStyle() {
-		return sashStyle;
-	}
-
-	protected int getFirstWeight() {
-		checkWidget();
-		return firstWeight;
-	}
-
-	protected int getSecondWeight() {
-		checkWidget();
-		return secondWeight;
-	}
-
-	protected int getSashWidth() {
-		return sashWidth;
-	}
-
-	private void onDragSash(final Event event) {
-		event.doit = checkSizes((Sash) event.widget, event);
-	}
-
-	private boolean checkSizes(final Sash sash, final Event event) {
-
-		if (sash == null) {
-			return false;
-		}
-
-		if (second == null) {
-			first.setBounds(getClientArea());
-			return false;
-		}
-
-		final Rectangle b1 = first.getBounds();
-		final Rectangle b2 = second.getBounds();
-
-		final Rectangle sashBounds = sash.getBounds();
-
-		final boolean doit = true;
-
-		if (getOrientation() == SWT.HORIZONTAL) {
-			final int totalWidth = getClientArea().width;
-			final int shift = event.x - sashBounds.x;
-			b1.width += shift;
-			b2.x += shift;
-			b2.width -= shift;
-			if (b1.width < DRAG_MINIMUM) {
-				b1.width = DRAG_MINIMUM;
-				b2.x = b1.x + b1.width + sashBounds.width;
-				b2.width = totalWidth - b2.x;
-				event.x = b1.x + b1.width;
-			}
-			if (b2.width < DRAG_MINIMUM) {
-				b1.width = totalWidth - DRAG_MINIMUM - sashBounds.width;
-
-				b2.x = b1.x + b1.width + sashBounds.width;
-				b2.width = DRAG_MINIMUM;
-				event.x = b1.x + b1.width;
-			}
-		}
-		else {
-			final int totalHeight = getClientArea().height;
-			final int shift = event.y - sashBounds.y;
-			b1.height += shift;
-			b2.y += shift;
-			b2.height -= shift;
-			if (b1.height < DRAG_MINIMUM) {
-				b1.height = DRAG_MINIMUM;
-				b2.y = b1.y + b1.height + sashBounds.height;
-				b2.height = totalHeight - b2.y;
-				event.y = b1.y + b1.height;
-			}
-			if (b2.height < DRAG_MINIMUM) {
-				b1.height = totalHeight - DRAG_MINIMUM - sashBounds.height;
-				b2.y = b1.y + b1.height + sashBounds.height;
-				b2.height = DRAG_MINIMUM;
-				event.y = b1.y + b1.height;
-			}
-		}
-
-		first.setBounds(b1);
-		sash.setBounds(event.x, event.y, sashBounds.width, sashBounds.height);
-		second.setBounds(b2);
-
-		if (layout.getSave() > 0) {
-			if (getOrientation() == SWT.HORIZONTAL) {
-				if (getResizePolicy() == SplitResizePolicy.RESIZE_FIRST) {
-					layout.setSave(second.getBounds().width);
-				}
-				else if (getResizePolicy() == SplitResizePolicy.RESIZE_SECOND) {
-					layout.setSave(first.getBounds().width);
-				}
-			}
-			else {
-				if (getResizePolicy() == SplitResizePolicy.RESIZE_FIRST) {
-					layout.setSave(second.getBounds().height);
-				}
-				else if (getResizePolicy() == SplitResizePolicy.RESIZE_SECOND) {
-					layout.setSave(first.getBounds().height);
-				}
-			}
-
-			correctWeights();
-		}
-		return doit;
-	}
-
-	private void correctWeights() {
-		if (second == null) {
-			return;
-		}
-
-		final Rectangle area = this.getClientArea();
-
-		if (this.getOrientation() == SWT.HORIZONTAL) {
-			firstWeight = (int) (1000000 * (first.getBounds().width + (float) this.sashWidth / 2) / area.width);
-			secondWeight = (int) (1000000 * (second.getBounds().width + (float) this.sashWidth / 2) / area.width);
-		}
-		else {
-			firstWeight = (int) (1000000 * (first.getBounds().height + (float) this.sashWidth / 2) / area.height);
-			secondWeight = (int) (1000000 * (second.getBounds().height + (float) this.sashWidth / 2) / area.height);
-		}
-	}
-
-	@Override
-	public void setBackground(final Color color) {
-		super.setBackground(color);
-		background = color;
-		if (sash != null) {
-			sash.setBackground(background);
-		}
-	}
-
-	@Override
-	public void setForeground(final Color color) {
-		super.setForeground(color);
-		foreground = color;
-		if (sash != null) {
-			sash.setForeground(foreground);
-		}
-	}
-
-	public void setSashWidth(final int width) {
-		checkWidget();
-		if (sashWidth == width) {
-			return;
-		}
-		sashWidth = width;
-		layout(false);
-	}
-
-	@Override
-	public void setToolTipText(final String string) {
-		super.setToolTipText(string);
-		if (sash != null) {
-			sash.setToolTipText(string);
-		}
+		firstMinSize = new Point(SPLIT_MINIMUM, SPLIT_MINIMUM);
+		secondMinSize = new Point(SPLIT_MINIMUM, SPLIT_MINIMUM);
 	}
 
 	public void setWeight(final double weight) {
-		checkWidget();
-		if (weight < 0 || weight > 1) {
-			throw new IllegalArgumentException("Weight must be between 0.0 and 1.0 but is '" + weight + "'");
+		if ((weight < 0) || (weight > 1)) {
+			throw new IllegalArgumentException("Illegal weight (must be between 0 and 1, is " + weight + ")");
 		}
-		this.firstWeight = (int) (weight * 1000);
-		this.secondWeight = (int) (1000 - weight * 1000);
-
-		layout(false);
+		this.weight = weight;
+		layout(true);
 	}
 
-	public Sash getSash() {
-		return sash;
+	public double getWeight() {
+		if (weight == null) {
+			// if no weight is set return preferred weight
+			return getPreferredWeight();
+		}
+		return weight;
 	}
 
-	public SplitResizePolicy getResizePolicy() {
-		return resizePolicy;
+	public void setSashSize(final int sashSize) {
+		if (this.sashSize == sashSize) {
+			return;
+		}
+
+		this.sashSize = sashSize;
+		layout(true);
+	}
+
+	public int getSashSize() {
+		return sashSize;
+	}
+
+	/**
+	 * User has dragged sash
+	 * 
+	 * @param event
+	 */
+	private void onDragSash(final Event event) {
+		final Rectangle area = getClientArea();
+		final Rectangle firstBounds = first.getBounds();
+		final Rectangle secondBounds = second.getBounds();
+		final Rectangle sashBounds = sash.getBounds();
+
+		final int firstPos = sashUtil.getPosition(firstBounds);
+		int firstSize = sashUtil.getSize(firstBounds);
+		int secondPos = sashUtil.getPosition(secondBounds);
+		int secondSize = sashUtil.getSize(secondBounds);
+
+		final int totalSize = sashUtil.getSize(area);
+		final int targetPos = sashUtil.getEventPos(event);
+		final int sashPos = firstSize + firstPos; // sashBounds do not always contain the correct position
+		final int shift = targetPos - sashPos;
+
+		firstSize += shift;
+		secondPos += shift;
+		secondSize -= shift;
+		if (firstSize < sashUtil.getSize(firstMinSize)) {
+			firstSize = sashUtil.getSize(firstMinSize);
+			secondPos = firstPos + firstSize + sashSize;
+			secondSize = totalSize - secondPos;
+		}
+		if (secondSize < sashUtil.getSize(secondMinSize)) {
+			firstSize = Math.max(sashUtil.getSize(firstMinSize), totalSize - sashUtil.getSize(secondMinSize) - sashSize);
+
+			secondPos = firstPos + firstSize + sashSize;
+			secondSize = sashUtil.getSize(secondMinSize);
+		}
+
+		final int newSashPos = firstPos + firstSize;
+
+		sashUtil.updateBounds(firstBounds, area, firstPos, firstSize);
+		sashUtil.updateBounds(sashBounds, area, newSashPos, sashSize);
+		sashUtil.updateBounds(secondBounds, area, secondPos, secondSize);
+
+		first.setBounds(firstBounds);
+		sash.setBounds(sashBounds);
+		second.setBounds(secondBounds);
+
+		// remember weight
+		weight = (double) firstSize / totalSize;
+
+		event.doit = (targetPos == newSashPos);
 	}
 
 	public Control getFirst() {
@@ -304,11 +177,79 @@ public class JoSashForm extends Composite {
 
 	public Control getSecond() {
 		if (second == null) {
-			if (getChildren().length > 1) {
+			if (getChildren().length > 2) {
 				second = getChildren()[2];
 			}
 		}
 		return second;
 	}
 
+	public Sash getSash() {
+		return sash;
+	}
+
+	public SplitResizePolicy getResizePolicy() {
+		return resizePolicy;
+	}
+
+	Point getFirstMinSize() {
+		return firstMinSize;
+	}
+
+	Point getSecondMinSize() {
+		return secondMinSize;
+	}
+
+	private double getPreferredWeight() {
+		if (first == null) {
+			return 0;
+		}
+		if (second == null) {
+			return 1;
+		}
+
+		final int firstSize = sashUtil.getSize(first.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		final int secondSize = sashUtil.getSize(first.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		final int totalSize = firstSize + secondSize;
+
+		return (double) firstSize / totalSize;
+	}
+
+	private static int getSashFormStyle(final ISplitCompositeSetupSpi setup) {
+		final Orientation orientation = setup.getOrientation();
+		final int style = OrientationConvert.convert(orientation);
+		final int mask = SWT.BORDER | SWT.LEFT_TO_RIGHT | SWT.RIGHT_TO_LEFT;
+		return style & mask;
+	}
+
+	private static int getSashStyle(final ISplitCompositeSetupSpi setup) {
+		final Orientation orientation = setup.getOrientation();
+		int style;
+		if (Orientation.HORIZONTAL == orientation) {
+			style = SWT.VERTICAL;
+		}
+		else if (Orientation.VERTICAL == orientation) {
+			style = SWT.HORIZONTAL;
+		}
+		else {
+			throw new IllegalStateException("Wrong Orientation is set");
+		}
+
+		if (SwtOptions.getSplitLayoutMode().equals(SplitlayoutMode.ON_MOUSE_MOVE)) {
+			style |= SWT.SMOOTH;
+		}
+		return style;
+	}
+
+	private static ISashOrientationUtil getSashUtil(final ISplitCompositeSetupSpi setup) {
+		if (setup.getOrientation() == Orientation.HORIZONTAL) {
+			return SashOrientationUtil.HORIZONTAL;
+		}
+		else if (setup.getOrientation() == Orientation.VERTICAL) {
+			return SashOrientationUtil.VERTICAL;
+		}
+		else {
+			throw new IllegalStateException("Wrong Orientation is set");
+		}
+	}
 }

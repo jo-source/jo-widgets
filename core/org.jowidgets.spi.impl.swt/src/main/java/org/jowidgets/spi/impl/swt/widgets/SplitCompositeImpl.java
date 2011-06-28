@@ -62,7 +62,7 @@ public class SplitCompositeImpl extends SwtControl implements ISplitCompositeSpi
 		this.dividerSize = setup.getDividerSize();
 
 		sashForm.setWeight(setup.getWeight());
-		sashForm.setSashWidth(dividerSize);
+		sashForm.setSashSize(dividerSize);
 	}
 
 	@Override
