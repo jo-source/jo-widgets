@@ -45,7 +45,7 @@ import org.jowidgets.spi.widgets.setup.ISplitCompositeSetupSpi;
 
 public class JoSashForm extends Composite {
 
-	private static final int SPLIT_MINIMUM = 200;
+	private static final int SPLIT_MINIMUM = 40;
 
 	private Double weight;
 	private int sashSize;
@@ -192,11 +192,17 @@ public class JoSashForm extends Composite {
 		return resizePolicy;
 	}
 
-	Point getFirstMinSize() {
+	public void setMinSizes(final Point firstMinSize, final Point secondMinSize) {
+		this.firstMinSize = firstMinSize;
+		this.secondMinSize = secondMinSize;
+		layout(true);
+	}
+
+	public Point getFirstMinSize() {
 		return firstMinSize;
 	}
 
-	Point getSecondMinSize() {
+	public Point getSecondMinSize() {
 		return secondMinSize;
 	}
 
