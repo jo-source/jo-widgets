@@ -29,21 +29,18 @@
 package org.jowidgets.examples.common.miglayoutdemo;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IFrame;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
+import org.jowidgets.examples.common.demo.DemoMigLayoutFrame;
 import org.jowidgets.examples.common.icons.DemoIconsInitializer;
 
 public class MigLayoutDemoApplication implements IApplication {
 
-	private final String frameTitle;
-	private IFrame frame;
+	private final String framework;
 
 	public MigLayoutDemoApplication(final String framework) {
 		super();
-		// TODO NM find a way to add MigLayout core version: LayoutUtil.getVersion();
-		this.frameTitle = framework + " MigLayout Demo v2.5 - Mig Layout v";
+		this.framework = framework;
 	}
 
 	public void start() {
@@ -53,17 +50,8 @@ public class MigLayoutDemoApplication implements IApplication {
 
 	@Override
 	public void start(final IApplicationLifecycle lifecycle) {
-		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
-
-		frame = Toolkit.createRootFrame(bpF.frame(frameTitle).autoPackOff(), lifecycle);
-		new MigLayoutDemoComposite(frame);
-
+		final DemoMigLayoutFrame frame = new DemoMigLayoutFrame(framework);
 		frame.setVisible(true);
-
-	}
-
-	public IFrame getRootFrame() {
-		return frame;
 	}
 
 }
