@@ -43,12 +43,13 @@ final class JoSashFormLayout extends Layout {
 
 	private int totalWidth;
 	private int totalHeight;
-	private boolean initialized;
+	private boolean weightIsValid;
+	private int fixedChildRegularSize = 0;
 
 	public JoSashFormLayout(final JoSashForm parent, final ISashOrientationUtil calculator) {
 		this.parent = parent;
 		this.sashUtil = calculator;
-		initialized = false;
+		weightIsValid = false;
 	}
 
 	@Override
@@ -64,6 +65,7 @@ final class JoSashFormLayout extends Layout {
 		if (hHint == SWT.DEFAULT) {
 			result.y = totalHeight;
 		}
+
 		return result;
 	}
 
@@ -115,20 +117,37 @@ final class JoSashFormLayout extends Layout {
 			return;
 		}
 
-		if (!initialized || (parent.getResizePolicy() == SplitResizePolicy.RESIZE_BOTH)) {
-			initialized = true;
-			final double weight = parent.getWeight();
+		final Rectangle firstBounds = parent.getFirst().getBounds();
+		final Rectangle secondBounds = parent.getSecond().getBounds();
+		final Rectangle sashBounds = parent.getSash().getBounds();
 
-			firstSize = (int) (weight * effectiveSize);
+		if (!weightIsValid || (parent.getResizePolicy() == SplitResizePolicy.RESIZE_BOTH)) {
+			weightIsValid = true;
+
+			firstSize = (int) (parent.getWeight() * effectiveSize);
 			secondSize = effectiveSize - firstSize;
 		}
 		else if (parent.getResizePolicy() == SplitResizePolicy.RESIZE_FIRST) {
-			secondSize = sashUtil.getSize(parent.getSecond().getBounds());
+			secondSize = Math.max(sashUtil.getSize(secondBounds), fixedChildRegularSize);
 			firstSize = effectiveSize - secondSize;
+
+			if (firstSize < firstMinSize) {
+				fixedChildRegularSize = Math.max(fixedChildRegularSize, secondSize);
+			}
+			else {
+				fixedChildRegularSize = 0;
+			}
 		}
 		else if (parent.getResizePolicy() == SplitResizePolicy.RESIZE_SECOND) {
-			firstSize = sashUtil.getSize(parent.getFirst().getBounds());
+			firstSize = Math.max(sashUtil.getSize(firstBounds), fixedChildRegularSize);
 			secondSize = effectiveSize - firstSize;
+
+			if (secondSize < secondMinSize) {
+				fixedChildRegularSize = Math.max(fixedChildRegularSize, firstSize);
+			}
+			else {
+				fixedChildRegularSize = 0;
+			}
 		}
 		else {
 			throw new IllegalStateException("Wrong Orientation is set");
@@ -137,21 +156,17 @@ final class JoSashFormLayout extends Layout {
 		if (firstSize < firstMinSize) {
 			secondSize = secondSize - (firstMinSize - firstSize);
 			firstSize = firstMinSize;
-			initialized = false;
 		}
 		if (secondSize < secondMinSize) {
 			firstSize = Math.max(firstMinSize, firstSize - (secondMinSize - secondSize));
 			secondSize = secondMinSize;
-			initialized = false;
 		}
 
-		if (initialized && (parent.getResizePolicy() != SplitResizePolicy.RESIZE_BOTH)) {
-			parent.setWeight((double) firstSize / effectiveSize, false);
-		}
-
-		final Rectangle firstBounds = parent.getFirst().getBounds();
-		final Rectangle sashBounds = parent.getSash().getBounds();
-		final Rectangle secondBounds = parent.getSecond().getBounds();
+		// remembering current weight if split resize policy is not set to 'resize both'
+		// and if the current weight is valid
+		//if (weightIsValid && (parent.getResizePolicy() != SplitResizePolicy.RESIZE_BOTH)) {
+		//	parent.setWeight((double) firstSize / effectiveSize, false);
+		//}
 
 		sashUtil.updateBounds(firstBounds, area, sashUtil.getPosition(firstBounds), firstSize);
 		sashUtil.updateBounds(sashBounds, area, sashUtil.getPosition(firstBounds) + firstSize, parent.getSashSize());
