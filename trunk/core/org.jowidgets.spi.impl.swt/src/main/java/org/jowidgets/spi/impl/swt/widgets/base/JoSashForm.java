@@ -46,7 +46,7 @@ import org.jowidgets.spi.widgets.setup.ISplitCompositeSetupSpi;
 
 public class JoSashForm extends Composite {
 
-	private static final int SPLIT_MINIMUM = 40;
+	private static final int SPLIT_MINIMUM = 0;
 
 	private double weight = -1;
 	private int sashSize;
@@ -96,6 +96,7 @@ public class JoSashForm extends Composite {
 			throw new IllegalArgumentException("Illegal weight (must be between 0 and 1, is " + weight + ")");
 		}
 		this.weight = weight;
+		layout.resetRemeberedSize();
 
 		if (doLayout) {
 			layout(true);
@@ -130,54 +131,32 @@ public class JoSashForm extends Composite {
 	 */
 	private void onDragSash(final Event event) {
 		final Rectangle area = getClientArea();
-		final Rectangle firstBounds = first.getBounds();
-		final Rectangle secondBounds = second.getBounds();
-
-		final int firstPos = sashUtil.getPosition(firstBounds);
-		int firstSize = sashUtil.getSize(firstBounds);
-		int secondPos = sashUtil.getPosition(secondBounds);
-		int secondSize = sashUtil.getSize(secondBounds);
-
 		final int totalSize = sashUtil.getSize(area);
 		final int targetPos = sashUtil.getEventPos(event);
-		final int sashPos = firstSize + firstPos; // sashBounds do not always contain the correct position
-		final int shift = targetPos - sashPos;
+		final int firstSize = Math.max(targetPos, sashUtil.getSize(firstMinSize));
+		final int secondSize = totalSize - sashSize - firstSize;
 
-		firstSize += shift;
-		secondPos += shift;
-		secondSize -= shift;
-		if (firstSize < sashUtil.getSize(firstMinSize)) {
-			firstSize = sashUtil.getSize(firstMinSize);
-			secondPos = firstPos + firstSize + sashSize;
-			secondSize = totalSize - secondPos;
+		event.doit = ((targetPos >= sashUtil.getSize(firstMinSize)) && (targetPos + sashSize <= totalSize
+			- sashUtil.getSize(secondMinSize)));
+
+		if ((firstSize != sashUtil.getSize(first.getBounds())) && (event.doit) && (event.detail != SWT.DRAG)) {
+			weight = (double) firstSize / (totalSize - sashSize);
+			setChildrenBounds(area, firstSize, secondSize);
 		}
-		if (secondSize < sashUtil.getSize(secondMinSize)) {
-			firstSize = Math.max(sashUtil.getSize(firstMinSize), totalSize - sashUtil.getSize(secondMinSize) - sashSize);
+	}
 
-			secondPos = firstPos + firstSize + sashSize;
-			secondSize = sashUtil.getSize(secondMinSize);
+	void setChildrenBounds(final Rectangle area, final int firstSize, final int secondSize) {
+		final Rectangle firstBounds = sashUtil.createBounds(area, sashUtil.getPosition(area), firstSize);
+		final Rectangle sashBounds = sashUtil.createBounds(area, sashUtil.getPosition(firstBounds) + firstSize, sashSize);
+		final Rectangle secondBounds = sashUtil.createBounds(area, sashUtil.getPosition(sashBounds) + sashSize, secondSize);
+
+		first.setBounds(firstBounds);
+		if (!sash.getBounds().equals(sashBounds)) {
+			sash.setBounds(sashBounds);
 		}
-
-		final int newSashPos = firstPos + firstSize;
-
-		final Rectangle newFirstBounds = sashUtil.createBounds(area, firstPos, firstSize);
-		final Rectangle newSashBounds = sashUtil.createBounds(area, newSashPos, sashSize);
-		final Rectangle newSecondBounds = sashUtil.createBounds(area, secondPos, secondSize);
-
-		layout.resetRemeberedSize();
-
-		if (!firstBounds.equals(newFirstBounds)) {
-			first.setBounds(newFirstBounds);
+		if (!second.getBounds().equals(secondBounds)) {
+			second.setBounds(secondBounds);
 		}
-		sash.setBounds(newSashBounds);
-		if (!secondBounds.equals(newSecondBounds)) {
-			second.setBounds(newSecondBounds);
-		}
-
-		// remember weight
-		weight = (double) firstSize / totalSize;
-
-		event.doit = (targetPos == newSashPos);
 	}
 
 	private Control getChild(int childIndex) {

@@ -114,23 +114,7 @@ final class JoSashFormLayout extends Layout {
 			secondSize = secondMinSize;
 		}
 
-		final Rectangle newFirstBounds = sashUtil.createBounds(area, sashUtil.getPosition(firstBounds), firstSize);
-		final Rectangle newSashBounds = sashUtil.createBounds(
-				area,
-				sashUtil.getPosition(newFirstBounds) + firstSize,
-				parent.getSashSize());
-		final Rectangle newSecondBounds = sashUtil.createBounds(
-				area,
-				sashUtil.getPosition(newSashBounds) + parent.getSashSize(),
-				secondSize);
-
-		if (!firstBounds.equals(newFirstBounds)) {
-			parent.getFirst().setBounds(newFirstBounds);
-		}
-		parent.getSash().setBounds(newSashBounds);
-		if (!secondBounds.equals(newSecondBounds)) {
-			parent.getSecond().setBounds(newSecondBounds);
-		}
+		parent.setChildrenBounds(area, firstSize, secondSize);
 	}
 
 	void resetRemeberedSize() {
