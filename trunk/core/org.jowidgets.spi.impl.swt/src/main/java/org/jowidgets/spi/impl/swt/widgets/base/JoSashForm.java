@@ -166,20 +166,33 @@ public class JoSashForm extends Composite {
 		event.doit = (targetPos == newSashPos);
 	}
 
+	private Control getChild(int childIndex) {
+		final Control[] children = getChildren();
+		int index = 0;
+		while (index < children.length) {
+			// ignore the sash
+			if (children[index] == this.sash) {
+				childIndex++;
+			}
+			else if (index == childIndex) {
+				return children[index];
+			}
+			index++;
+		}
+
+		return null;
+	}
+
 	public Control getFirst() {
 		if (first == null) {
-			if (getChildren().length > 1) {
-				first = getChildren()[1];
-			}
+			first = getChild(0);
 		}
 		return first;
 	}
 
 	public Control getSecond() {
 		if (second == null) {
-			if (getChildren().length > 2) {
-				second = getChildren()[2];
-			}
+			second = getChild(1);
 		}
 		return second;
 	}
