@@ -32,6 +32,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.impl.swt.util.BorderToComposite;
+import org.jowidgets.spi.impl.swt.util.DimensionConvert;
 import org.jowidgets.spi.impl.swt.widgets.base.JoSashForm;
 import org.jowidgets.spi.widgets.ICompositeSpi;
 import org.jowidgets.spi.widgets.ISplitCompositeSpi;
@@ -77,7 +78,7 @@ public class SplitCompositeImpl extends SwtControl implements ISplitCompositeSpi
 
 	@Override
 	public void setMinSizes(final Dimension firstMinSize, final Dimension secondMinSize) {
-		// TODO MG implement setMinSizes
+		getUiReference().setMinSizes(DimensionConvert.convert(firstMinSize), DimensionConvert.convert(secondMinSize));
 	}
 
 	@Override
