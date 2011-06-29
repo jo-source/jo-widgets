@@ -43,4 +43,7 @@ public abstract class AbstractComponent implements IComponent {
 	@Override
 	public void onFolderCreated(final IFolderContext folderContext) {}
 
+	@Override
+	public void onDispose() {}
+
 }
