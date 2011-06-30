@@ -37,6 +37,8 @@ import javax.swing.JTabbedPane;
 
 import org.jowidgets.common.types.TabPlacement;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.spi.impl.swing.options.SwingOptions;
+import org.jowidgets.spi.impl.swing.widgets.base.JoWidgetsTabLookAndFeel;
 import org.jowidgets.spi.widgets.ITabFolderSpi;
 import org.jowidgets.spi.widgets.ITabItemSpi;
 import org.jowidgets.spi.widgets.setup.ITabFolderSetupSpi;
@@ -52,6 +54,9 @@ public class TabFolderImpl extends SwingControl implements ITabFolderSpi {
 
 	public TabFolderImpl(final IGenericWidgetFactory widgetFactory, final ITabFolderSetupSpi setup) {
 		super(new JTabbedPane());
+		if (SwingOptions.isJoWidgetsTabLayout()) {
+			getUiReference().setUI(new JoWidgetsTabLookAndFeel());
+		}
 
 		this.tabsCloseable = setup.isTabsCloseable();
 		this.widgetFactory = widgetFactory;
@@ -69,7 +74,6 @@ public class TabFolderImpl extends SwingControl implements ITabFolderSpi {
 		else {
 			throw new IllegalArgumentException("TabPlacement '" + setup.getTabPlacement() + "' is not known");
 		}
-
 	}
 
 	@Override

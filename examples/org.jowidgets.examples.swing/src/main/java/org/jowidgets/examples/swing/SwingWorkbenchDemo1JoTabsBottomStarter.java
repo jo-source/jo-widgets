@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2011, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,38 +26,39 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.swing.options;
+package org.jowidgets.examples.swing;
 
-public final class SwingOptions {
+import javax.swing.UIManager;
 
-	private static boolean oneTouchExpandableSplits = false;
-	private static boolean internalFramesForTabFolders = false;
-	private static boolean joWidgetsTabLayout = false;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.blueprint.ITabFolderBluePrint;
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.common.types.TabPlacement;
+import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1;
+import org.jowidgets.spi.impl.swing.options.SwingOptions;
+import org.jowidgets.workbench.impl.WorkbenchRunner;
 
-	private SwingOptions() {}
+public final class SwingWorkbenchDemo1JoTabsBottomStarter {
 
-	public static boolean isOneTouchExpandableSplits() {
-		return oneTouchExpandableSplits;
+	private SwingWorkbenchDemo1JoTabsBottomStarter() {}
+
+	public static void main(final String[] args) throws Exception {
+		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		System.setProperty("apple.laf.useScreenMenuBar", "true");
+		SwingOptions.setJoWidgetsTabLayout(true);
+		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+		bpf.addDefaultsInitializer(ITabFolderBluePrint.class, createTabDefaults());
+		new WorkbenchRunner().run(new WorkbenchDemo1());
 	}
 
-	public static void setOneTouchExpandableSplits(final boolean oneTouchExpandableSplits) {
-		SwingOptions.oneTouchExpandableSplits = oneTouchExpandableSplits;
-	}
-
-	public static boolean isInternalFramesForTabFolders() {
-		return internalFramesForTabFolders;
-	}
-
-	public static void setInternalFramesForTabFolders(final boolean internalFramesForTabFolders) {
-		SwingOptions.internalFramesForTabFolders = internalFramesForTabFolders;
-	};
-
-	public static boolean isJoWidgetsTabLayout() {
-		return joWidgetsTabLayout;
-	}
-
-	public static void setJoWidgetsTabLayout(final boolean joWidgetsTabLayout) {
-		SwingOptions.joWidgetsTabLayout = joWidgetsTabLayout;
+	private static IDefaultInitializer<ITabFolderBluePrint> createTabDefaults() {
+		return new IDefaultInitializer<ITabFolderBluePrint>() {
+			@Override
+			public void initialize(final ITabFolderBluePrint tabFolderBp) {
+				tabFolderBp.setTabPlacement(TabPlacement.BOTTOM);
+			}
+		};
 	}
 
 }
