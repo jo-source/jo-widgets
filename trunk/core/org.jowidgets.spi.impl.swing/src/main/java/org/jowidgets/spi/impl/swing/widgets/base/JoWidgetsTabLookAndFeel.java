@@ -29,13 +29,18 @@
 package org.jowidgets.spi.impl.swing.widgets.base;
 
 import java.awt.Color;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Insets;
 import java.awt.LayoutManager;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 
@@ -43,17 +48,38 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 
 	private static final int ARC = 2;
 
-	private Color selectedColor;
+	private final Color selectedColor = Color.WHITE; // background color of selected tab
+	private TabPopupSupport tabPopup;
 
 	public JoWidgetsTabLookAndFeel() {
 		super();
 	}
 
 	@Override
+	protected void installComponents() {
+		if (tabPopup == null) {
+			tabPopup = new TabPopupSupport(tabPane.getTabPlacement());
+		}
+		super.installComponents();
+	}
+
+	@Override
+	protected void uninstallComponents() {
+		if (tabPopup != null) {
+			tabPane.remove(tabPopup.popupButton);
+			tabPopup = null;
+		}
+		super.uninstallComponents();
+	}
+
+	@Override
 	protected void installDefaults() {
-		selectedColor = Color.WHITE;
 		UIManager.getDefaults().put("TabbedPane.selected", selectedColor);
+		UIManager.getDefaults().put("TabbedPane.selectedTabPadInsets", new Insets(0, 0, 0, 0));
+		UIManager.getDefaults().put("TabbedPane.tabAreaInsets", new Insets(0, 0, 0, 0));
+
 		super.installDefaults();
+		tabAreaInsets = new Insets(0, 0, 0, 0);
 		lightHighlight = Color.gray;
 	}
 
@@ -77,70 +103,25 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 		return getFontMetrics().getHeight() + tabInsets.top + tabInsets.bottom + 2;
 	}
 
-	@Override
-	protected int calculateTabAreaHeight(final int tabPlacement, final int horizRunCount, final int maxTabHeight) {
-		// TODO NM calculate padding (5)
-		return Math.max(0, super.calculateTabAreaHeight(tabPlacement, horizRunCount, maxTabHeight) - 5);
-	}
-
-	private boolean isMultiRow() {
-		if (tabPane.getTabCount() < 2) {
-			return false;
-		}
-
-		final int y = rects[0].y;
-		for (int i = 1; i < tabPane.getTabCount(); i++) {
-			if (rects[i].y != y) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private boolean isInFirstRow(final int tabIndex) {
-		if (tabPane.getTabCount() < 2) {
-			return true;
-		}
-
-		final int y = rects[tabIndex].y;
-		for (int i = 0; i < tabPane.getTabCount(); i++) {
-			if (rects[i].y < y) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	private boolean isLastInRow(final int tabIndex) {
-		final int x = rects[tabIndex].x;
-		final int y = rects[tabIndex].y;
-		for (int i = 0; i < tabPane.getTabCount(); i++) {
-			if ((rects[i].y == y) && (rects[i].x > x)) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	private boolean isFirstInRow(final int tabIndex) {
-		final int x = rects[tabIndex].x;
-		final int y = rects[tabIndex].y;
-		for (int i = 0; i < tabPane.getTabCount(); i++) {
-			if ((rects[i].y == y) && (rects[i].x < x)) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
 	private boolean isAfterSelected(final int tabIndex) {
 		final Rectangle boundsSelected = rects[tabPane.getSelectedIndex()];
 		final Rectangle boundsTab = rects[tabIndex];
 
-		return (boundsTab.y == boundsSelected.y) && (boundsTab.x == boundsSelected.x + boundsSelected.width);
+		return (boundsTab.x == boundsSelected.x + boundsSelected.width);
+	}
+
+	private boolean isFirstInRow(final int tabIndex) {
+		if (tabIndex < 1) {
+			return true;
+		}
+		return (rects[tabIndex].x != rects[tabIndex - 1].x + rects[tabIndex - 1].width);
+	}
+
+	private boolean isLastInRow(final int tabIndex) {
+		if (tabIndex > tabPane.getTabCount() - 2) {
+			return true;
+		}
+		return (rects[tabIndex].x + rects[tabIndex].width != rects[tabIndex + 1].x);
 	}
 
 	@Override
@@ -155,15 +136,10 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 		final boolean isSelected) {
 		g.setColor(lightHighlight);
 
-		final boolean isInFirstRow = isInFirstRow(tabIndex);
-		final boolean isFirstInRow = isFirstInRow(tabIndex);
-		final boolean isLastInRow = isLastInRow(tabIndex);
 		final boolean isAfterSelected = isAfterSelected(tabIndex);
 
-		final boolean isMultiRow = isMultiRow();
-
-		final boolean hasLeftArc = isFirstInRow || isSelected || !isInFirstRow;
-		final boolean hasRightArc = isSelected || !isInFirstRow || isLastInRow;
+		final boolean hasLeftArc = isSelected || isFirstInRow(tabIndex);
+		final boolean hasRightArc = isSelected;
 
 		switch (tabPlacement) {
 			case BOTTOM:
@@ -183,8 +159,8 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 				if (hasLeftArc) {
 					g.drawLine(x1, y1 + ARC, x1 + ARC, y1); // arc
 					g.drawLine(x1, y1 + ARC, x1, y2); // left down
-					if (isInFirstRow && !isFirstInRow) {
-						g.drawLine(x1, y1, x1 + ARC, y1);
+					if (!isFirstInRow(tabIndex)) {
+						g.drawLine(x1, y1, x1 + ARC, y1); // top connector
 					}
 				}
 				else {
@@ -198,15 +174,13 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 					g.drawLine(x2, y1 + ARC, x2, y2); // right down
 				}
 				else {
-					if (isLastInRow && !isMultiRow) {
+					if (isLastInRow(tabIndex)) {
 						g.drawLine(x2, y1, x2, y2);
 					}
 				}
 
 				g.drawLine(x1 + ARC, y1, x2 - ARC, y1); // top line              
-				if (isInFirstRow) {
-					g.drawLine(x2 - ARC, y1, x2, y1); // top connector
-				}
+				g.drawLine(x2 - ARC, y1, x2, y1); // top connector
 		}
 	}
 
@@ -220,18 +194,25 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 		final int w,
 		final int h,
 		final boolean isSelected) {
-		g.setColor(isSelected ? selectedColor : tabPane.getBackgroundAt(tabIndex));
+		if (isSelected) {
+			g.setColor(selectedColor);
+		}
+		else {
+			g.setColor(tabPane.getBackgroundAt(tabIndex));
+		}
 
-		switch (tabPlacement) {
-			case BOTTOM:
-				g.fillRect(x + 1, y, w - 1, h - 1);
-				break;
-			case TOP:
-			default:
-				g.fillRect(x + 1, y + 1, w - 1, h - 1);
+		if (tabPlacement == TOP) {
+			g.fillRect(x + 1, y + 1, w - 1, h - 1);
+		}
+		else {
+			g.fillRect(x + 1, y, w - 1, h - 1);
 		}
 	}
 
+	/**
+	 * Overridden because parent method draws a line out of the tabbed panes bounds when
+	 * the selected tab has the x ordinate 0
+	 */
 	@Override
 	protected void paintContentBorderTopEdge(
 		final Graphics g,
@@ -241,7 +222,7 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 		final int y,
 		final int w,
 		final int h) {
-		g.setColor(darkShadow);
+		g.setColor(lightHighlight);
 		if (tabPlacement == BOTTOM || selectedIndex < 0) {
 			g.drawLine(x, y, x + w - 2, y);
 		}
@@ -249,12 +230,15 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 			final Rectangle bounds = getTabBounds(selectedIndex, calcRect);
 			g.drawLine(x, y, bounds.x, y);
 			if (bounds.x + bounds.width < x + w - 2) {
-				g.setColor(lightHighlight);
 				g.drawLine(bounds.x + bounds.width, y, x + w - 2, y);
 			}
 		}
 	}
 
+	/**
+	 * Overridden because parent method draws a line out of the tabbed panes bounds when
+	 * the selected tab has the x ordinate 0
+	 */
 	@Override
 	protected void paintContentBorderBottomEdge(
 		final Graphics g,
@@ -283,115 +267,188 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 		super.paint(g, c);
 		final int tabPlacement = tabPane.getTabPlacement();
 		final Insets insets = tabPane.getInsets();
-		if (tabPlacement == BOTTOM) {
-			if (tabPane.getTabCount() > 0) {
-				final Rectangle lastTab = getTopRight();
-
-				final int border = 2;
-
-				final int edgeX = Math.max(insets.left + border, lastTab.x + lastTab.width - border);
-				final int edgeW = tabPane.getWidth() - insets.right - edgeX - 2;
-				final int edgeY = lastTab.y;
-				final int edgeH = calculateTabAreaHeight(tabPlacement, runCount, maxTabHeight - 1);
-
-				g.setColor(lightHighlight);
-				g.drawLine(edgeX, edgeY + edgeH, edgeX + edgeW - 3, edgeY + edgeH); // bottom              
-				g.drawLine(edgeX + edgeW - 2, edgeY + edgeH, edgeX + edgeW, edgeY + edgeH - 2);
-				g.drawLine(edgeX + edgeW, edgeY, edgeX + edgeW, edgeY + edgeH - 2); // right              
-			}
-			else {
-				// empty tabpane
-				final int y = insets.top + calculateTabHeight();
-				g.drawLine(insets.left, y, tabPane.getWidth() - insets.right, y);
-			}
-		}
 		if (tabPlacement == TOP) {
 			if (tabPane.getTabCount() > 0) {
 				final Rectangle lastTab = getTopRight();
 
-				final int border = 2;
-
-				final int edgeX = Math.max(insets.left + border, lastTab.x + lastTab.width - border);
-				final int edgeW = tabPane.getWidth() - insets.right - edgeX - 2;
-				final int edgeY = lastTab.y;
-				final int edgeH = calculateTabAreaHeight(tabPlacement, runCount, maxTabHeight - 1);
+				final int edgeX1 = Math.max(insets.left, lastTab.x + lastTab.width);
+				final int edgeX2 = (tabPane.getWidth() - 1) - insets.right - insets.left;
+				final int edgeY1 = lastTab.y;
+				final int edgeY2 = calculateTabAreaHeight(tabPlacement, runCount, maxTabHeight);
 
 				g.setColor(lightHighlight);
-				g.drawLine(edgeX, edgeY, edgeX + edgeW - 3, edgeY); // top              
-				g.drawLine(edgeX + edgeW - 2, edgeY, edgeX + edgeW, edgeY + 2);
-				g.drawLine(edgeX + edgeW, edgeY + 3, edgeX + edgeW, edgeY + edgeH + 2); // right              
+				g.drawLine(edgeX1, edgeY1, edgeX2 - ARC, edgeY1); // top
+				g.drawLine(edgeX2 - ARC, edgeY1, edgeX2, edgeY1 + ARC); // arc
+				g.drawLine(edgeX2, edgeY1 + ARC, edgeX2, edgeY2); // right
+
+				// TODO NM check if necessary
+				// shadow linux
+				//g.setColor(darkShadow);
+				//g.drawLine(edgeX1 + edgeX2 - 1, edgeY1, edgeX1 + edgeX2 + 1, edgeY1 + 2);
+				//g.drawLine(edgeX1 + edgeX2 + 1, edgeY1 + 3, edgeX1 + edgeX2 + 1, edgeY1 + edgeY2 + 2); // right
 			}
 			else {
 				// empty tabpane
-				final int y = insets.top + calculateTabHeight() - 2;
-				g.drawLine(insets.left, y, tabPane.getWidth() - insets.right, y);
+				final int lineY = insets.top + calculateTabHeight() + 2;
+				final int w = tabPane.getWidth() - insets.right - insets.left;
+				g.setColor(lightHighlight);
+				g.drawLine(insets.left, lineY, w, lineY);
 
 				g.setColor(tabPane.getBackground());
-				final int arcY = insets.top - 2;
-				g.fillRect(insets.left, arcY, 2, 2);
-				g.fillRect(tabPane.getWidth() - insets.right - insets.left - 2, arcY, 2, 2);
+				final int arcY = insets.top;
+				g.fillRect(insets.left, arcY, w, ARC + 1);
 
 				g.setColor(lightHighlight);
-				g.drawLine(insets.left, arcY + 2, insets.left + 2, arcY);
-				g.drawLine(tabPane.getWidth() - insets.right - insets.left - 2 - 1, arcY, tabPane.getWidth()
+				g.drawLine(insets.left + ARC, arcY, w - 2 * ARC, arcY);
+				g.drawLine(insets.left, arcY + ARC, insets.left + ARC, arcY);
+				g.drawLine(tabPane.getWidth() - insets.right - insets.left - ARC - 1, arcY, tabPane.getWidth()
 					- insets.right
 					- insets.left
-					- 1, arcY + 2);
+					- 1, arcY + ARC);
+
+				g.setColor(darkShadow);
+				g.drawLine(tabPane.getWidth() - insets.right - insets.left - ARC, arcY, tabPane.getWidth()
+					- insets.right
+					- insets.left, arcY + ARC);
 			}
 		}
 	}
 
+	/**
+	 * Overridden to avoid foucs decoration
+	 */
 	@Override
-	protected int getTabLabelShiftY(final int tabPlacement, final int tabIndex, final boolean isSelected) {
-		return super.getTabLabelShiftY(tabPlacement, tabIndex, false);
-	}
+	protected void paintFocusIndicator(
+		final Graphics g,
+		final int tabPlacement,
+		final Rectangle[] rects,
+		final int tabIndex,
+		final Rectangle iconRect,
+		final Rectangle textRect,
+		final boolean isSelected) {}
 
 	@Override
 	protected LayoutManager createLayoutManager() {
-		return new EqualTabTabbedPaneLayout();
+		return new JoWidgetsTabbedPaneLayout();
 	}
 
-	public class EqualTabTabbedPaneLayout extends BasicTabbedPaneUI.TabbedPaneLayout {
+	public class JoWidgetsTabbedPaneLayout extends BasicTabbedPaneUI.TabbedPaneLayout {
 
 		@Override
-		public void calculateLayoutInfo() {
-			super.calculateLayoutInfo();
-			if (tabPane.getTabCount() == 0) {
+		protected void calculateTabRects(final int tabPlacement, final int tabCount) {
+			final FontMetrics metrics = getFontMetrics();
+			final Dimension size = tabPane.getSize();
+			final Insets insets = tabPane.getInsets();
+			final Insets tabAreaInsets = getTabAreaInsets(tabPlacement);
+			final int availableWidth = size.width
+				- (insets.right + tabAreaInsets.right)
+				- tabPopup.popupButton.getPreferredSize().width
+				- ARC
+				- 5;
+
+			tabRunOverlay = getTabRunOverlay(tabPlacement);
+			selectedRun = -1;
+			maxTabHeight = calculateMaxTabHeight(tabPlacement);
+			maxTabWidth = 0;
+
+			final int y;
+			if (tabPlacement == BOTTOM) {
+				y = size.height - insets.bottom - tabAreaInsets.bottom - maxTabHeight;
+			}
+			else {
+				y = insets.top + tabAreaInsets.top;
+			}
+
+			if (tabCount == 0) {
 				return;
 			}
 
-			final Insets insets = tabPane.getInsets();
+			Rectangle rect;
+			int nextX = insets.left + tabAreaInsets.left;
+			runCount = 1;
+			tabRuns[0] = 0;
+			for (int i = 0; i < tabCount; i++) {
+				rect = rects[i];
+				rect.x = nextX;
+				rect.y = y;
+				rect.width = calculateTabWidth(tabPlacement, i, metrics);
+				rect.height = maxTabHeight/* - 2 */;
 
-			if (tabPane.getTabPlacement() == JTabbedPane.TOP) {
-				int shiftY = Integer.MAX_VALUE;
-				int shiftX = Integer.MAX_VALUE;
-				for (int i = 0; i < tabPane.getTabCount(); i++) {
-					shiftY = Math.min(shiftY, rects[i].y - 1);
-					shiftX = Math.min(shiftX, rects[i].x - insets.left);
-				}
-				for (int i = 0; i < tabPane.getTabCount(); i++) {
-					rects[i].y -= shiftY;
-					rects[i].x -= shiftX;
-				}
+				maxTabWidth = Math.max(maxTabWidth, rect.width);
+				nextX += rect.width;
 			}
-			else {
-				int shiftY = Integer.MIN_VALUE;
-				int shiftX = Integer.MAX_VALUE;
-				for (int i = 0; i < tabPane.getTabCount(); i++) {
-					shiftY = Math.max(shiftY, rects[i].y - 1);
-					shiftX = Math.min(shiftX, rects[i].x - insets.left);
-				}
-				for (int i = 0; i < tabPane.getTabCount(); i++) {
-					rects[i].y += 2; // Padding
-					rects[i].x -= shiftX;
+
+			for (int i = 0; i < tabCount; i++) {
+				if (rects[i].x != 2 + insets.left && rects[i].x + rects[i].width > availableWidth) {
+					rects[i].x = Integer.MAX_VALUE;
 				}
 			}
 		}
 
 		@Override
-		protected void padSelectedTab(final int tabPlacement, final int selectedIndex) {
-			// do nothing
-		}
+		public void layoutContainer(final Container parent) {
+			super.layoutContainer(parent);
 
+			// fix button geometry
+			final int tabPlacement = tabPane.getTabPlacement();
+			final Insets insets = tabPane.getInsets();
+
+			final Dimension buttonSize = tabPopup.popupButton.getPreferredSize();
+			final Rectangle tabPaneBounds = tabPane.getBounds();
+
+			boolean visible = false;
+			// final int tabCount = 2;
+			// final int currentTabWidth = rects[tabCount - 1].x + rects[tabCount - 1].width;
+			// if (currentTabWidth > tw) {
+			visible = true;
+			// }
+
+			// TODO NM list of visible rects... improve
+			int buttonX = 5;
+			for (int r = 0; r < rects.length; r++) {
+				if ((rects[r].x >= 0) && (rects[r].x < Integer.MAX_VALUE)) {
+					buttonX += rects[r].width;
+				}
+			}
+
+			final int tabHeight = calculateTabAreaHeight(tabPlacement, runCount, maxTabHeight);
+
+			final int buttonY;
+			if (tabPlacement == TOP) {
+				buttonY = insets.top + tabHeight - buttonSize.height - 1;
+			}
+			else {
+				buttonY = tabPaneBounds.height - insets.bottom - tabHeight;
+			}
+
+			tabPopup.popupButton.setVisible(visible);
+			tabPopup.popupButton.setBorder(null);
+			if (visible) {
+				tabPopup.popupButton.setBounds(buttonX, buttonY, buttonSize.width, buttonSize.height);
+			}
+		}
+	}
+
+	@Override
+	protected JButton createScrollButton(final int direction) {
+		return super.createScrollButton(direction);
+	}
+
+	private class TabPopupSupport { // implements ChangeListener
+		private final JButton popupButton;
+
+		TabPopupSupport(final int tabPlacement) {
+			popupButton = createScrollButton(EAST);
+			popupButton.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(final ActionEvent e) {
+
+				}
+
+			});
+			tabPane.add(popupButton);
+			popupButton.setMaximumSize(new Dimension(16, 16));
+		}
 	}
 }

@@ -29,6 +29,7 @@
 package org.jowidgets.spi.impl.swing.widgets;
 
 import java.awt.Color;
+import java.awt.Insets;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -53,9 +54,13 @@ public class TabFolderImpl extends SwingControl implements ITabFolderSpi {
 	private final List<TabItemImpl> items;
 
 	public TabFolderImpl(final IGenericWidgetFactory widgetFactory, final ITabFolderSetupSpi setup) {
-		super(new JTabbedPane());
+		super(createTabbedPane());
 		if (SwingOptions.isJoWidgetsTabLayout()) {
 			getUiReference().setUI(new JoWidgetsTabLookAndFeel());
+			getUiReference().setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, (Color) null));
+		}
+		else {
+			getUiReference().setBorder(BorderFactory.createMatteBorder(3, 1, 1, 1, (Color) null));
 		}
 
 		this.tabsCloseable = setup.isTabsCloseable();
@@ -74,6 +79,23 @@ public class TabFolderImpl extends SwingControl implements ITabFolderSpi {
 		else {
 			throw new IllegalArgumentException("TabPlacement '" + setup.getTabPlacement() + "' is not known");
 		}
+	}
+
+	private static JTabbedPane createTabbedPane() {
+		if (!SwingOptions.isJoWidgetsTabLayout()) {
+			return new JTabbedPane();
+		}
+
+		final JTabbedPane result = new JTabbedPane() {
+			@Override
+			public Insets getInsets() {
+				final Insets result = super.getInsets();
+				result.top = 1;
+				return result;
+			}
+		};
+		result.setUI(new JoWidgetsTabLookAndFeel());
+		return result;
 	}
 
 	@Override
