@@ -434,10 +434,10 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 		return super.createScrollButton(direction);
 	}
 
-	private class TabPopupSupport { // implements ChangeListener
+	private final class TabPopupSupport { // implements ChangeListener
 		private final JButton popupButton;
 
-		TabPopupSupport(final int tabPlacement) {
+		private TabPopupSupport(final int tabPlacement) {
 			popupButton = createScrollButton(EAST);
 			popupButton.addActionListener(new ActionListener() {
 
