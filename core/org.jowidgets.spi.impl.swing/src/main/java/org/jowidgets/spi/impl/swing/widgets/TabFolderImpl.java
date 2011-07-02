@@ -87,6 +87,9 @@ public class TabFolderImpl extends SwingControl implements ITabFolderSpi {
 		}
 
 		final JTabbedPane result = new JTabbedPane() {
+
+			private static final long serialVersionUID = 1057875611989220614L;
+
 			@Override
 			public Insets getInsets() {
 				final Insets result = super.getInsets();
