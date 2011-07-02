@@ -34,8 +34,8 @@ import java.util.Set;
 import org.jowidgets.api.command.EnabledState;
 import org.jowidgets.api.command.IEnabledChecker;
 import org.jowidgets.api.command.IEnabledState;
-import org.jowidgets.api.controler.IChangeListener;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.event.IChangeListener;
 
 public class EnabledChecker implements IEnabledChecker {
 
@@ -76,7 +76,7 @@ public class EnabledChecker implements IEnabledChecker {
 
 	public final void fireEnabledStateChanged() {
 		for (final IChangeListener listener : changeListeners) {
-			listener.changedEvent();
+			listener.changed();
 		}
 	}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,10 +26,12 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.controler;
+package org.jowidgets.util.event;
 
-public interface IChangeListener {
+public interface IChangeObservable {
 
-	void changedEvent();
+	void addChangeListener(IChangeListener listener);
+
+	void removeChangeListener(IChangeListener listener);
 
 }

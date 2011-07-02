@@ -28,13 +28,13 @@
 
 package org.jowidgets.tools.model.table;
 
-import org.jowidgets.api.controler.IChangeListener;
 import org.jowidgets.api.model.table.IDefaultTableColumn;
 import org.jowidgets.api.model.table.IDefaultTableColumnBuilder;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.event.IChangeListener;
 
 public class DefaultTableColumn implements IDefaultTableColumn {
 

@@ -28,10 +28,10 @@
 
 package org.jowidgets.api.model.table;
 
-import org.jowidgets.api.controler.IChangeObservable;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.model.ITableColumn;
 import org.jowidgets.common.types.AlignmentHorizontal;
+import org.jowidgets.util.event.IChangeObservable;
 
 public interface IDefaultTableColumn extends ITableColumn, IChangeObservable {
 
