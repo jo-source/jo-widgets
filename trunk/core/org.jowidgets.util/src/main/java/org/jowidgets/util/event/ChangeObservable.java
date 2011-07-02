@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,12 +26,37 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.controler;
+package org.jowidgets.util.event;
 
-public interface IChangeObservable {
+import java.util.HashSet;
+import java.util.Set;
 
-	void addChangeListener(IChangeListener listener);
+import org.jowidgets.util.Assert;
 
-	void removeChangeListener(IChangeListener listener);
+public class ChangeObservable implements IChangeObservable {
+
+	private final Set<IChangeListener> listeners;
+
+	public ChangeObservable() {
+		this.listeners = new HashSet<IChangeListener>();
+	}
+
+	@Override
+	public final void addChangeListener(final IChangeListener listener) {
+		Assert.paramNotNull(listener, "listener");
+		listeners.add(listener);
+	}
+
+	@Override
+	public final void removeChangeListener(final IChangeListener listener) {
+		Assert.paramNotNull(listener, "listener");
+		listeners.remove(listener);
+	}
+
+	public final void fireChangedEvent() {
+		for (final IChangeListener listener : listeners) {
+			listener.changed();
+		}
+	}
 
 }

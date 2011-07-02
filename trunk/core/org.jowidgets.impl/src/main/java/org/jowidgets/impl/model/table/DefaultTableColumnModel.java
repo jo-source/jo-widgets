@@ -36,7 +36,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.jowidgets.api.controler.IChangeListener;
 import org.jowidgets.api.model.table.IDefaultTableColumn;
 import org.jowidgets.api.model.table.IDefaultTableColumnBuilder;
 import org.jowidgets.api.model.table.IDefaultTableColumnModel;
@@ -47,6 +46,7 @@ import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.tools.controler.TableColumnModelObservable;
 import org.jowidgets.util.ArrayUtils;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.event.IChangeListener;
 
 class DefaultTableColumnModel implements IDefaultTableColumnModel, ITableColumnModelObservable {
 
@@ -395,9 +395,10 @@ class DefaultTableColumnModel implements IDefaultTableColumnModel, ITableColumnM
 		}
 
 		@Override
-		public void changedEvent() {
+		public void changed() {
 			columnChanged(columnIndex);
 		}
+
 	}
 
 }

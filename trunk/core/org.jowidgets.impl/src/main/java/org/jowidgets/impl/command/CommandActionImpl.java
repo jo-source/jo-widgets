@@ -41,9 +41,9 @@ import org.jowidgets.api.command.IEnabledChecker;
 import org.jowidgets.api.command.IEnabledState;
 import org.jowidgets.api.command.IExceptionHandler;
 import org.jowidgets.api.command.IExecutionContext;
-import org.jowidgets.api.controler.IChangeListener;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
+import org.jowidgets.util.event.IChangeListener;
 
 class CommandActionImpl implements ICommandAction, IActionChangeObservable {
 
@@ -288,7 +288,7 @@ class CommandActionImpl implements ICommandAction, IActionChangeObservable {
 
 	private class EnabledStateListener implements IChangeListener {
 		@Override
-		public void changedEvent() {
+		public void changed() {
 			enabledState = null;
 			fireEnabledChanged();
 			fireToolTipTextChanged();

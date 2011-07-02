@@ -57,6 +57,8 @@ public class DefaultIconsRegisterService extends ImageConstantRegisterService {
 		registerImage(IconsSmall.NAVIGATION_LAST_TINY, "nav_last_tiny.gif");
 		registerImage(IconsSmall.NAVIGATION_FORWARD_TINY, "nav_forward_tiny.gif");
 		registerImage(IconsSmall.NAVIGATION_BACKWARD_TINY, "nav_backward_tiny.gif");
-	}
 
+		registerImage(IconsSmall.TABLE_SORT_DESC, "table_sort_desc.gif");
+		registerImage(IconsSmall.TABLE_SORT_ASC, "table_sort_asc.gif");
+	}
 }
