@@ -27,6 +27,8 @@
  */
 package org.jowidgets.tools.validation;
 
+import java.util.Collection;
+
 import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.api.validation.ValidationMessageType;
 import org.jowidgets.api.validation.ValidationResult;
@@ -37,7 +39,7 @@ public class MandatoryInfoValidator<VALIDATION_INPUT_TYPE> implements IValidator
 	private final ValidationResult infoResult;
 
 	public MandatoryInfoValidator(final String messageText) {
-		Assert.paramNotEmpty(messageText, "controlName");
+		Assert.paramNotEmpty(messageText, "messageText");
 		this.infoResult = new ValidationResult(ValidationMessageType.INFO_ERROR, messageText);
 	}
 
@@ -47,6 +49,9 @@ public class MandatoryInfoValidator<VALIDATION_INPUT_TYPE> implements IValidator
 			return infoResult;
 		}
 		else if (validationInput instanceof String && ((String) validationInput).trim().isEmpty()) {
+			return infoResult;
+		}
+		else if (validationInput instanceof Collection<?> && ((Collection<?>) validationInput).isEmpty()) {
 			return infoResult;
 		}
 		return new ValidationResult();
