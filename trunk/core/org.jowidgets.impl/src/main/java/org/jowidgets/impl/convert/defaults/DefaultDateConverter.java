@@ -96,12 +96,10 @@ public final class DefaultDateConverter extends AbstractConverter<Date> implemen
 					}
 					catch (final ParseException e) {
 						if (formatHint != null) {
-							return new ValidationResult(ValidationMessageType.ERROR, "Input must have the format '"
-								+ formatHint
-								+ "'");
+							return new ValidationResult(ValidationMessageType.ERROR, "Must have the format '" + formatHint + "'");
 						}
 						else {
-							return new ValidationResult(ValidationMessageType.ERROR, "Input is not a valid date or time ");
+							return new ValidationResult(ValidationMessageType.ERROR, "Is not a valid date or time ");
 						}
 					}
 				}
