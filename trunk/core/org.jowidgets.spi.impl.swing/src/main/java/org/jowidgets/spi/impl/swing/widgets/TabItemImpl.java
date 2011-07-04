@@ -193,6 +193,7 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 
 	@Override
 	public void setText(final String text) {
+		parentTabbedPane.setTitleAt(getIndex(), text);
 		this.text = text;
 		tabComponent.setText(text);
 	}
