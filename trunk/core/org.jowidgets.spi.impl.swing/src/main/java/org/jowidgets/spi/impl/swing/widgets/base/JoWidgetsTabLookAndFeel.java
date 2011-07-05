@@ -132,46 +132,68 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 		final boolean hasLeftArc = isSelected || isFirstVisibleTab(tabIndex);
 		final boolean hasRightArc = isSelected;
 
-		switch (tabPlacement) {
-			case BOTTOM:
-				// TODO NM implement
-				g.drawLine(x, y, x, y + h - 4); // left
-				g.drawLine(x, y + h - 3, x + 2, y + h - 1);
-				g.drawLine(x + 2, y + h - 1, x + w - 4, y + h - 1); // bottom              
-				g.drawLine(x + w - 3, y + h - 1, x + w - 1, y + h - 3);
-				g.drawLine(x + w - 1, y, x + w - 1, y + h - 3); // right
-				break;
-			case TOP:
-			default:
-				final int y1 = y;
-				final int y2 = y + h;
-				final int x1 = x;
-				final int x2 = x + w;
-				if (hasLeftArc) {
-					g.drawLine(x1, y1 + ARC_SIZE, x1 + ARC_SIZE, y1); // arc
-					g.drawLine(x1, y1 + ARC_SIZE, x1, y2); // left down
-					if (!isFirstVisibleTab(tabIndex)) {
-						g.drawLine(x1, y1, x1 + ARC_SIZE, y1); // top connector
-					}
-				}
-				else {
+		if (tabPlacement == TOP) {
+			final int y1 = y;
+			final int y2 = y + h;
+			final int x1 = x;
+			final int x2 = x + w;
+			if (hasLeftArc) {
+				g.drawLine(x1, y1 + ARC_SIZE, x1 + ARC_SIZE, y1); // arc
+				g.drawLine(x1, y1 + ARC_SIZE, x1, y2); // left down
+				if (!isFirstVisibleTab(tabIndex)) {
 					g.drawLine(x1, y1, x1 + ARC_SIZE, y1); // top connector
-					if (!isAfterSelected) {
-						g.drawLine(x1, y1, x1, y2);
-					}
 				}
-				if (hasRightArc) {
-					g.drawLine(x2 - ARC_SIZE, y1, x2, y1 + ARC_SIZE); // arc
-					g.drawLine(x2, y1 + ARC_SIZE, x2, y2); // right down
+			}
+			else {
+				g.drawLine(x1, y1, x1 + ARC_SIZE, y1); // top connector
+				if (!isAfterSelected) {
+					g.drawLine(x1, y1, x1, y2);
 				}
-				else {
-					if (isLastVisibleTab(tabIndex)) {
-						g.drawLine(x2, y1, x2, y2);
-					}
+			}
+			if (hasRightArc) {
+				g.drawLine(x2 - ARC_SIZE, y1, x2, y1 + ARC_SIZE); // arc
+				g.drawLine(x2, y1 + ARC_SIZE, x2, y2); // right down
+			}
+			else {
+				if (isLastVisibleTab(tabIndex)) {
+					g.drawLine(x2, y1, x2, y2);
 				}
+			}
 
-				g.drawLine(x1 + ARC_SIZE, y1, x2 - ARC_SIZE, y1); // top line              
-				g.drawLine(x2 - ARC_SIZE, y1, x2, y1); // top connector
+			g.drawLine(x1 + ARC_SIZE, y1, x2 - ARC_SIZE, y1); // top line              
+			g.drawLine(x2 - ARC_SIZE, y1, x2, y1); // top connector
+		}
+		else { // BOTTOM
+			final int y1 = y;
+			final int y2 = y + h - 1;
+			final int x1 = x;
+			final int x2 = x + w;
+
+			if (hasLeftArc) {
+				g.drawLine(x1, y2 - ARC_SIZE, x1 + ARC_SIZE, y2); // arc
+				g.drawLine(x1, y2 - ARC_SIZE, x1, y1); // left down
+				if (!isFirstVisibleTab(tabIndex)) {
+					g.drawLine(x1, y2, x1 + ARC_SIZE, y2); // bottom connector
+				}
+			}
+			else {
+				g.drawLine(x1, y2, x1 + ARC_SIZE, y2); // bottom connector
+				if (!isAfterSelected) {
+					g.drawLine(x1, y1, x1, y2);
+				}
+			}
+			if (hasRightArc) {
+				g.drawLine(x2 - ARC_SIZE, y2, x2, y2 - ARC_SIZE); // arc
+				g.drawLine(x2, y2 - ARC_SIZE, x2, y1); // right down
+			}
+			else {
+				if (isLastVisibleTab(tabIndex)) {
+					g.drawLine(x2, y1, x2, y2);
+				}
+			}
+
+			g.drawLine(x1 + ARC_SIZE, y2, x2 - ARC_SIZE, y2); // bottom line              
+			g.drawLine(x2 - ARC_SIZE, y2, x2, y2); // bottom connector
 		}
 	}
 
@@ -243,14 +265,14 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 				final int edgeX1 = Math.max(insets.left, lastTab.x + lastTab.width);
 				final int edgeX2 = (tabPane.getWidth() - 1) - insets.right - insets.left;
 				final int edgeY1 = lastTab.y;
-				final int edgeY2 = calculateTabAreaHeight(tabPlacement, runCount, maxTabHeight);
+				final int edgeY2 = edgeY1 + lastTab.height;
 
 				g.setColor(lightHighlight);
 				g.drawLine(edgeX1, edgeY1, edgeX2 - ARC_SIZE, edgeY1); // top
 				g.drawLine(edgeX2 - ARC_SIZE, edgeY1, edgeX2, edgeY1 + ARC_SIZE); // arc
 				g.drawLine(edgeX2, edgeY1 + ARC_SIZE, edgeX2, edgeY2); // right
 
-				// TODO NM check if necessary
+				// TODO NM find a way to determine if necessary
 				// shadow linux
 				//g.setColor(darkShadow);
 				//g.drawLine(edgeX1 + edgeX2 - 1, edgeY1, edgeX1 + edgeX2 + 1, edgeY1 + 2);
@@ -275,10 +297,53 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 					- insets.left
 					- 1, arcY + ARC_SIZE);
 
-				g.setColor(darkShadow);
-				g.drawLine(tabPane.getWidth() - insets.right - insets.left - ARC_SIZE, arcY, tabPane.getWidth()
+				// shadow in top right corner
+				//g.setColor(darkShadow);
+				//g.drawLine(tabPane.getWidth() - insets.right - insets.left - ARC_SIZE, arcY, tabPane.getWidth()
+				//	- insets.right
+				//	- insets.left, arcY + ARC_SIZE);
+			}
+		}
+		else { // BOTTOM
+			if (tabPane.getTabCount() > 0) {
+				final Rectangle lastTab = rects[lastVisibleTab];
+
+				final int edgeX1 = Math.max(insets.left, lastTab.x + lastTab.width);
+				final int edgeX2 = (tabPane.getWidth() - 1) - insets.right - insets.left;
+				final int edgeY1 = lastTab.y;
+				final int edgeY2 = edgeY1 + lastTab.height - 1;
+
+				g.setColor(lightHighlight);
+				g.drawLine(edgeX1, edgeY2, edgeX2 - ARC_SIZE, edgeY2); // bottoom
+				g.drawLine(edgeX2 - ARC_SIZE, edgeY2, edgeX2, edgeY2 - ARC_SIZE); // arc
+				g.drawLine(edgeX2, edgeY2 - ARC_SIZE, edgeX2, edgeY1); // right
+
+				// TODO NM find a way to determine if necessary
+			}
+			else {
+				// empty tabpane
+				final int lineY = tabPane.getHeight() - insets.top - calculateTabHeight() - 4; // TODO NM why 4?
+				final int w = tabPane.getWidth() - insets.right - insets.left;
+				g.setColor(lightHighlight);
+				g.drawLine(insets.left, lineY, w, lineY);
+
+				g.setColor(tabPane.getBackground());
+				final int arcY = tabPane.getHeight() - insets.bottom - 2;
+				g.fillRect(insets.left, arcY - ARC_SIZE, w, ARC_SIZE + 1);
+
+				g.setColor(lightHighlight);
+				g.drawLine(insets.left + ARC_SIZE, arcY, w - 2 * ARC_SIZE, arcY);
+				g.drawLine(insets.left, arcY - ARC_SIZE, insets.left + ARC_SIZE, arcY);
+				g.drawLine(tabPane.getWidth() - insets.right - insets.left - ARC_SIZE - 1, arcY, tabPane.getWidth()
 					- insets.right
-					- insets.left, arcY + ARC_SIZE);
+					- insets.left
+					- 1, arcY - ARC_SIZE);
+
+				// shadow in bottom right corner
+				//	g.setColor(darkShadow);
+				//	g.drawLine(tabPane.getWidth() - insets.right - insets.left - ARC_SIZE, arcY, tabPane.getWidth()
+				//		- insets.right
+				//		- insets.left, arcY - ARC_SIZE);
 			}
 		}
 	}
@@ -320,7 +385,12 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 	 */
 	@Override
 	protected int getTabLabelShiftY(final int tabPlacement, final int tabIndex, final boolean isSelected) {
-		return 1;
+		if (tabPlacement == TOP) {
+			return 1;
+		}
+		else {
+			return -1;
+		}
 	}
 
 	/**
@@ -401,7 +471,7 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 				y = insets.top + tabAreaInsets.top;
 			}
 			else {
-				y = size.height - insets.bottom - tabAreaInsets.bottom - maxTabHeight;
+				y = size.height - insets.bottom - tabAreaInsets.bottom - maxTabHeight - 1;
 			}
 
 			int nextX = insets.left + tabAreaInsets.left;
@@ -422,11 +492,7 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 		private void ensureVisibility(final int tabCount, final int selectedIndex) {
 			final Insets insets = tabPane.getInsets();
 			final Dimension size = tabPane.getSize();
-			final int availableWidth = size.width
-				- (insets.right + tabAreaInsets.right)
-				- popupToolbar.getPreferredSize().width
-				- ARC_SIZE
-				- PopupToolbar.VERTICAL_GAP;
+			final int availableWidth = size.width - (insets.right + tabAreaInsets.right) - ARC_SIZE - PopupToolbar.VERTICAL_GAP;
 
 			allTabsVisible = true;
 			firstVisibleTab = 0;
@@ -532,7 +598,6 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 
 		@Override
 		public void paint(final Graphics g) {
-			//super.paint(g);
 			paintChildren(g);
 		}
 
@@ -639,8 +704,8 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 
 		private PopupButton() {
 			allowBorder = false;
-			setPreferredSize(new Dimension(24, 18));
-			setMaximumSize(new Dimension(24, 18));
+			setPreferredSize(new Dimension(24, 20));
+			setMaximumSize(new Dimension(24, 20));
 
 			addMouseListener(new MouseAdapter() {
 
