@@ -104,7 +104,7 @@ public class ProgressBarImpl implements IProgressBar {
 
 		this.indeterminateProgressBar = compositeWidget.add(new ICustomWidgetCreator<ProgressBarCommonToControl>() {
 			@Override
-			public ProgressBarCommonToControl create(final ICustomWidgetFactory<ProgressBarCommonToControl> widgetFactory) {
+			public ProgressBarCommonToControl create(final ICustomWidgetFactory widgetFactory) {
 				final IProgressBarSpi progressBarSpi = widgetsFactorySpi.createProgressBar(
 						getUiReference(),
 						intermediateProgressBarBp);
@@ -115,7 +115,7 @@ public class ProgressBarImpl implements IProgressBar {
 
 		this.progressBar = compositeWidget.add(new ICustomWidgetCreator<ProgressBarCommonToControl>() {
 			@Override
-			public ProgressBarCommonToControl create(final ICustomWidgetFactory<ProgressBarCommonToControl> widgetFactory) {
+			public ProgressBarCommonToControl create(final ICustomWidgetFactory widgetFactory) {
 				final IProgressBarSpi progressBarSpi = widgetsFactorySpi.createProgressBar(getUiReference(), progressBarBp);
 				return new ProgressBarCommonToControl(progressBarSpi);
 			}

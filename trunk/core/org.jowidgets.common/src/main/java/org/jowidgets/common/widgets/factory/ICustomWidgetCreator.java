@@ -31,6 +31,6 @@ import org.jowidgets.common.widgets.IWidgetCommon;
 
 public interface ICustomWidgetCreator<WIDGET_TYPE extends IWidgetCommon> {
 
-	WIDGET_TYPE create(ICustomWidgetFactory<WIDGET_TYPE> widgetFactory);
+	WIDGET_TYPE create(ICustomWidgetFactory widgetFactory);
 
 }

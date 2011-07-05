@@ -248,18 +248,18 @@ public class DummyContainer implements IContainerSpi {
 		final ICustomWidgetCreator<WIDGET_TYPE> creator,
 		final Object cellConstraints) {
 
-		final ICustomWidgetFactory<WIDGET_TYPE> customWidgetFactory = createCustomWidgetFactory();
+		final ICustomWidgetFactory customWidgetFactory = createCustomWidgetFactory();
 
 		final WIDGET_TYPE result = creator.create(customWidgetFactory);
 		addToContainer(result, cellConstraints);
 		return result;
 	}
 
-	private <WIDGET_TYPE extends IControlCommon> ICustomWidgetFactory<WIDGET_TYPE> createCustomWidgetFactory() {
-		return new ICustomWidgetFactory<WIDGET_TYPE>() {
+	private ICustomWidgetFactory createCustomWidgetFactory() {
+		return new ICustomWidgetFactory() {
 			@Override
-			public <DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE create(
-				final DESCRIPTOR_TYPE descriptor) {
+			public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE create(
+				final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
 				return factory.create(getUiReference(), descriptor);
 			}
 		};
