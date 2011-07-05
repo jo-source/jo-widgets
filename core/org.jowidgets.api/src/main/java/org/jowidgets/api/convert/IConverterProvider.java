@@ -31,6 +31,7 @@ package org.jowidgets.api.convert;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 
 import org.jowidgets.common.mask.ITextMask;
 
@@ -48,6 +49,13 @@ public interface IConverterProvider {
 
 	<OBJECT_TYPE> IObjectStringConverter<OBJECT_TYPE> toStringConverter();
 
+	<OBJECT_TYPE> IConverter<OBJECT_TYPE> mapConverter(
+		Map<? extends OBJECT_TYPE, String> objectToString,
+		Map<String, ? extends OBJECT_TYPE> stringToObject,
+		String hint);
+
+	<OBJECT_TYPE> IObjectStringConverter<OBJECT_TYPE> mapConverter(Map<OBJECT_TYPE, String> objectToString);
+
 	IConverter<String> string();
 
 	IConverter<Long> longNumber();
@@ -55,6 +63,10 @@ public interface IConverterProvider {
 	IConverter<Integer> integerNumber();
 
 	IConverter<Short> shortNumber();
+
+	IConverter<Boolean> boolYesNoLong();
+
+	IConverter<Boolean> boolYesNoShort();
 
 	IConverter<Date> date(DateFormat dateFormat, String formatHint, ITextMask mask);
 

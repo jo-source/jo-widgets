@@ -31,16 +31,17 @@ package org.jowidgets.impl.widgets.basic;
 import org.jowidgets.api.widgets.ICheckBox;
 import org.jowidgets.api.widgets.descriptor.setup.ICheckBoxSetup;
 import org.jowidgets.common.types.Markup;
+import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.TextLabelSpiWrapper;
 import org.jowidgets.spi.widgets.ICheckBoxSpi;
-import org.jowidgets.util.Assert;
 
 public class CheckBoxImpl extends AbstractBasicInputControl<Boolean> implements ICheckBox {
 
 	private final ICheckBoxSpi checkBoxWidgetSpi;
 	private final TextLabelSpiWrapper textLabelWidgetCommonWrapper;
+	private boolean isNull;
 
 	public CheckBoxImpl(final ICheckBoxSpi checkBoxWidgetSpi, final ICheckBoxSetup setup) {
 		super(checkBoxWidgetSpi, setup);
@@ -52,6 +53,13 @@ public class CheckBoxImpl extends AbstractBasicInputControl<Boolean> implements 
 		if (setup.getValue() != null) {
 			setValue(setup.getValue());
 		}
+
+		getWidget().addInputListener(new IInputListener() {
+			@Override
+			public void inputChanged() {
+				isNull = false;
+			}
+		});
 	}
 
 	@Override
@@ -66,13 +74,23 @@ public class CheckBoxImpl extends AbstractBasicInputControl<Boolean> implements 
 
 	@Override
 	public void setValue(final Boolean value) {
-		Assert.paramNotNull(value, "value");
-		setSelected(value.booleanValue());
+		if (value == null) {
+			isNull = true;
+			setSelected(false);
+		}
+		else {
+			setSelected(value.booleanValue());
+		}
 	}
 
 	@Override
 	public Boolean getValue() {
-		return Boolean.valueOf(isSelected());
+		if (isNull) {
+			return null;
+		}
+		else {
+			return Boolean.valueOf(isSelected());
+		}
 	}
 
 	@Override

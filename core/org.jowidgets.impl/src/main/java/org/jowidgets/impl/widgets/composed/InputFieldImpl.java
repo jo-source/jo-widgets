@@ -146,4 +146,10 @@ public class InputFieldImpl<VALUE_TYPE> extends AbstractInputControl<VALUE_TYPE>
 		textField.setMaxSize(maxSize);
 	}
 
+	@Override
+	public void setEditable(final boolean editable) {
+		super.setEditable(editable);
+		textField.setEditable(editable);
+	}
+
 }
