@@ -44,7 +44,10 @@ import org.jowidgets.impl.convert.defaults.DefaultIntegerConverter;
 import org.jowidgets.impl.convert.defaults.DefaultLongConverter;
 import org.jowidgets.impl.convert.defaults.DefaultShortConverter;
 import org.jowidgets.impl.convert.defaults.DefaultStringConverter;
+import org.jowidgets.impl.convert.defaults.DefaultYesNoConverterLong;
+import org.jowidgets.impl.convert.defaults.DefaultYesNoConverterShort;
 import org.jowidgets.impl.mask.TextMaskBuilder;
+import org.jowidgets.tools.converter.Converter;
 import org.jowidgets.util.Assert;
 
 public final class DefaultConverterProvider implements IConverterProvider {
@@ -54,6 +57,8 @@ public final class DefaultConverterProvider implements IConverterProvider {
 	public static final IConverter<Long> LONG_NUMBER = new DefaultLongConverter();
 	public static final IConverter<Integer> INTEGER_NUMBER = new DefaultIntegerConverter();
 	public static final IConverter<Short> SHORT_NUMBER = new DefaultShortConverter();
+	public static final IConverter<Boolean> BOOLEAN_YES_NO_LONG = new DefaultYesNoConverterLong();
+	public static final IConverter<Boolean> BOOLEAN_YES_NO_SHORT = new DefaultYesNoConverterShort();
 
 	private static final Map<Class<?>, IConverter<? extends Object>> CONVERTER_MAP = createConverterMap();
 
@@ -78,6 +83,8 @@ public final class DefaultConverterProvider implements IConverterProvider {
 		result.put(Long.class, LONG_NUMBER);
 		result.put(Integer.class, INTEGER_NUMBER);
 		result.put(Short.class, SHORT_NUMBER);
+		result.put(Boolean.class, BOOLEAN_YES_NO_LONG);
+		result.put(boolean.class, BOOLEAN_YES_NO_LONG);
 		return result;
 	}
 
@@ -114,6 +121,24 @@ public final class DefaultConverterProvider implements IConverterProvider {
 		}
 	}
 
+	@Override
+	public <OBJECT_TYPE> IConverter<OBJECT_TYPE> mapConverter(
+		final Map<? extends OBJECT_TYPE, String> objectToString,
+		final Map<String, ? extends OBJECT_TYPE> stringToObject,
+		final String hint) {
+		Assert.paramNotNull(objectToString, "objectToString");
+		Assert.paramNotNull(stringToObject, "stringToObject");
+		return new Converter<OBJECT_TYPE>(
+			new ObjectStringMapConverter<OBJECT_TYPE>(objectToString),
+			new StringObjectMapConverter<OBJECT_TYPE>(stringToObject, hint));
+	}
+
+	@Override
+	public <OBJECT_TYPE> IObjectStringConverter<OBJECT_TYPE> mapConverter(final Map<OBJECT_TYPE, String> objectToString) {
+		Assert.paramNotNull(objectToString, "objectToString");
+		return new ObjectStringMapConverter<OBJECT_TYPE>(objectToString);
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public <OBJECT_TYPE> IConverter<OBJECT_TYPE> getConverter(final Class<? extends OBJECT_TYPE> type) {
@@ -144,6 +169,16 @@ public final class DefaultConverterProvider implements IConverterProvider {
 	@Override
 	public IConverter<Short> shortNumber() {
 		return SHORT_NUMBER;
+	}
+
+	@Override
+	public IConverter<Boolean> boolYesNoLong() {
+		return BOOLEAN_YES_NO_LONG;
+	}
+
+	@Override
+	public IConverter<Boolean> boolYesNoShort() {
+		return BOOLEAN_YES_NO_SHORT;
 	}
 
 	@Override
