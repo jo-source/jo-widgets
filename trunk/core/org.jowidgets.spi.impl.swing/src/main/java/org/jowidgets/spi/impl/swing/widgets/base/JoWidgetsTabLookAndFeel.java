@@ -306,13 +306,6 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 		}
 	}
 
-	private Color getCurrentBackgroundColor(final int tabIndex, final boolean isSelected) {
-		if (isSelected) {
-			return SELECTED_COLOR;
-		}
-		return tabPane.getBackgroundAt(tabIndex);
-	}
-
 	/**
 	 * Create the overridden layout manager
 	 */
@@ -342,6 +335,13 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 		final Rectangle iconRect,
 		final Rectangle textRect,
 		final boolean isSelected) {}
+
+	private Color getCurrentBackgroundColor(final int tabIndex, final boolean isSelected) {
+		if (isSelected) {
+			return SELECTED_COLOR;
+		}
+		return tabPane.getBackgroundAt(tabIndex);
+	}
 
 	private boolean isFirstVisibleTab(final int tabIndex) {
 		// this might be changed if a list of visible tabs is introduced
@@ -516,6 +516,7 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 			setFloatable(false);
 			setBorderPainted(false);
 			setMargin(new Insets(0, 0, 0, 0));
+			setOpaque(true);
 			popupButton = new PopupButton();
 			popupButton.addActionListener(new ActionListener() {
 
@@ -527,6 +528,12 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 			});
 
 			this.add(popupButton);
+		}
+
+		@Override
+		public void paint(final Graphics g) {
+			//super.paint(g);
+			paintChildren(g);
 		}
 
 		protected void createPopupMenu() {
