@@ -28,11 +28,11 @@
 
 package org.jowidgets.common.widgets.factory;
 
-import org.jowidgets.common.widgets.IWidgetCommon;
+import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-public interface ICustomWidgetFactory<WIDGET_TYPE extends IWidgetCommon> {
+public interface ICustomWidgetFactory {
 
-	<DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE create(DESCRIPTOR_TYPE descriptor);
+	<WIDGET_TYPE extends IControlCommon> WIDGET_TYPE create(IWidgetDescriptor<? extends WIDGET_TYPE> descriptor);
 
 }
