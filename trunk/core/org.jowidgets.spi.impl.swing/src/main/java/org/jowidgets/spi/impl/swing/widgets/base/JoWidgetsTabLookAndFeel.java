@@ -492,15 +492,25 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 		private void ensureVisibility(final int tabCount, final int selectedIndex) {
 			final Insets insets = tabPane.getInsets();
 			final Dimension size = tabPane.getSize();
-			final int availableWidth = size.width - (insets.right + tabAreaInsets.right) - ARC_SIZE - PopupToolbar.VERTICAL_GAP;
+			final int toolbarSpace = 25;
+			final int availableWidth = size.width
+				- (insets.left + insets.right + tabAreaInsets.right + ARC_SIZE + PopupToolbar.VERTICAL_GAP)
+				- toolbarSpace;
 
 			allTabsVisible = true;
 			firstVisibleTab = 0;
+			lastVisibleTab = -1;
 			for (int i = 0; i < tabCount; i++) {
-				if (rects[i].x != 2 + insets.left && rects[i].x + rects[i].width > availableWidth) {
+				int additionalWidth = 0;
+				if (i == tabCount - 1) {
+					// when last tab, the available width is higher...
+					additionalWidth += toolbarSpace;
+				}
+				if (rects[i].x != 2 + insets.left && rects[i].x + rects[i].width > availableWidth + additionalWidth) {
 					// crop tabs
 					allTabsVisible = false;
 					break;
+
 				}
 				lastVisibleTab = i;
 			}
@@ -509,7 +519,13 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 				return;
 			}
 
-			if (selectedIndex > lastVisibleTab) {
+			if (lastVisibleTab < 0) {
+				// no tab is visible at all...
+				lastVisibleTab = selectedIndex;
+				firstVisibleTab = selectedIndex;
+				// TODO NM shrink tab or don't let the tabbed pane shrink further
+			}
+			else if (selectedIndex > lastVisibleTab) {
 				// shift tabs
 				lastVisibleTab = selectedIndex;
 
