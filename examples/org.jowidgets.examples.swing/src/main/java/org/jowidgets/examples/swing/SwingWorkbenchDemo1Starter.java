@@ -31,6 +31,7 @@ package org.jowidgets.examples.swing;
 import javax.swing.UIManager;
 
 import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1;
+import org.jowidgets.spi.impl.swing.options.SwingOptions;
 import org.jowidgets.workbench.impl.WorkbenchRunner;
 
 public final class SwingWorkbenchDemo1Starter {
@@ -40,6 +41,7 @@ public final class SwingWorkbenchDemo1Starter {
 	public static void main(final String[] args) throws Exception {
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
+		SwingOptions.setJoWidgetsTabLayout(true);
 		new WorkbenchRunner().run(new WorkbenchDemo1());
 	}
 }
