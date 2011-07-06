@@ -32,6 +32,8 @@ import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.common.types.InputChangeEventPolicy;
@@ -62,6 +64,17 @@ public class ComboBoxSelectionImpl extends AbstractInputControl implements IComb
 			getUiReference().addFocusListener(new FocusAdapter() {
 				@Override
 				public void focusLost(final FocusEvent e) {
+					fireInputChanged(getUiReference().getText());
+				}
+			});
+			getUiReference().addSelectionListener(new SelectionListener() {
+				@Override
+				public void widgetSelected(final SelectionEvent e) {
+					fireInputChanged(getUiReference().getText());
+				}
+
+				@Override
+				public void widgetDefaultSelected(final SelectionEvent e) {
 					fireInputChanged(getUiReference().getText());
 				}
 			});

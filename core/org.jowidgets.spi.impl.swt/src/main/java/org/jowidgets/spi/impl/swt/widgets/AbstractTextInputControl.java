@@ -31,6 +31,8 @@ import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 import org.jowidgets.common.types.InputChangeEventPolicy;
@@ -55,6 +57,12 @@ public abstract class AbstractTextInputControl extends AbstractInputControl impl
 			textControl.addFocusListener(new FocusAdapter() {
 				@Override
 				public void focusLost(final FocusEvent e) {
+					fireInputChanged(textControl.getText());
+				}
+			});
+			textControl.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetDefaultSelected(final SelectionEvent e) {
 					fireInputChanged(textControl.getText());
 				}
 			});
