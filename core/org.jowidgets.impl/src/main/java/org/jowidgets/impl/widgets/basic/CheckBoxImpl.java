@@ -36,17 +36,21 @@ import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvok
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.TextLabelSpiWrapper;
 import org.jowidgets.spi.widgets.ICheckBoxSpi;
+import org.jowidgets.tools.controler.InputObservable;
 
 public class CheckBoxImpl extends AbstractBasicInputControl<Boolean> implements ICheckBox {
 
 	private final ICheckBoxSpi checkBoxWidgetSpi;
 	private final TextLabelSpiWrapper textLabelWidgetCommonWrapper;
+	private final InputObservable inputObservable;
+
 	private boolean isNull;
 
 	public CheckBoxImpl(final ICheckBoxSpi checkBoxWidgetSpi, final ICheckBoxSetup setup) {
 		super(checkBoxWidgetSpi, setup);
 		this.checkBoxWidgetSpi = checkBoxWidgetSpi;
 		this.textLabelWidgetCommonWrapper = new TextLabelSpiWrapper(checkBoxWidgetSpi);
+		this.inputObservable = new InputObservable();
 
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
@@ -78,7 +82,12 @@ public class CheckBoxImpl extends AbstractBasicInputControl<Boolean> implements 
 			isNull = true;
 			setSelected(false);
 		}
+		else if (!value.booleanValue() && isNull) {
+			isNull = false;
+			inputObservable.fireInputChanged();
+		}
 		else {
+			isNull = false;
 			setSelected(value.booleanValue());
 		}
 	}
@@ -91,6 +100,18 @@ public class CheckBoxImpl extends AbstractBasicInputControl<Boolean> implements 
 		else {
 			return Boolean.valueOf(isSelected());
 		}
+	}
+
+	@Override
+	public void addInputListener(final IInputListener listener) {
+		super.addInputListener(listener);
+		inputObservable.addInputListener(listener);
+	}
+
+	@Override
+	public void removeInputListener(final IInputListener listener) {
+		super.removeInputListener(listener);
+		inputObservable.removeInputListener(listener);
 	}
 
 	@Override

@@ -100,7 +100,12 @@ public class ComboBoxSelectionImpl extends AbstractInputControl implements IComb
 
 	@Override
 	public void setSelectedIndex(final int index) {
-		getUiReference().select(index);
+		if (index > -1) {
+			getUiReference().select(index);
+		}
+		else {
+			getUiReference().deselect(getUiReference().getSelectionIndex());
+		}
 		if (!getUiReference().isFocusControl()) {
 			fireInputChanged(getUiReference().getText());
 		}
