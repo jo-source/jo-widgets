@@ -161,7 +161,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		table.setLinesVisible(true);
 		table.setHeaderVisible(setup.isHeaderVisible());
 
-		//TODO MG use fake column because of windows table bug
+		//TODO NM use fake column because of windows table bug
 		//and to support no selection
 		//final TableColumn fakeColumn = new TableColumn(table, SWT.NONE);
 		//fakeColumn.setResizable(false);
