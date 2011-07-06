@@ -30,6 +30,7 @@ package org.jowidgets.spi.impl.swing.widgets;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
 import javax.swing.JToggleButton;
 
@@ -62,11 +63,13 @@ public class CheckBoxImpl extends AbstractInputControl implements ICheckBoxSpi {
 		});
 
 		getUiReference().setBackground(null);
+		//avoid that checkbox have a border on the left or right side
+		getUiReference().setBorder(BorderFactory.createEmptyBorder(2, 0, 2, 0));
 	}
 
 	@Override
-	public JToggleButton getUiReference() {
-		return (JToggleButton) super.getUiReference();
+	public JCheckBox getUiReference() {
+		return (JCheckBox) super.getUiReference();
 	}
 
 	@Override
