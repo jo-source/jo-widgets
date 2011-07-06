@@ -489,6 +489,9 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 			ensureVisibility(tabCount, tabPane.getSelectedIndex());
 		}
 
+		/**
+		 * Ensure selected tab is visible
+		 */
 		private void ensureVisibility(final int tabCount, final int selectedIndex) {
 			final Insets insets = tabPane.getInsets();
 			final Dimension size = tabPane.getSize();
@@ -564,6 +567,7 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 			itemSize.height = Math.min(itemSize.height, maxTabHeight - 2);
 
 			if (!allTabsVisible) {
+				popupToolbar.popupButton.updateSize();
 				// TODO NM list of visible rects... improve
 				int buttonX = insets.left + PopupToolbar.VERTICAL_GAP;
 				for (int r = 0; r < rects.length; r++) {
@@ -588,6 +592,9 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 		}
 	}
 
+	/**
+	 * Implement UIResource, so the toolbar is not treated as a tab
+	 */
 	private final class PopupToolbar extends JToolBar implements UIResource {
 		private static final int VERTICAL_GAP = 5;
 
@@ -612,6 +619,9 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 			this.add(popupButton);
 		}
 
+		/**
+		 * Only paint the children, do not paint the toolbar itself
+		 */
 		@Override
 		public void paint(final Graphics g) {
 			paintChildren(g);
@@ -715,14 +725,15 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 
 	private final class PopupButton extends JButton {
 		private static final long serialVersionUID = 634813498872739540L;
+		private final Dimension defaultSize = new Dimension(24, 20);
+		private final Dimension maxSize = new Dimension(defaultSize.width + 4, 20);
+		private final int maxTextValue = 99;
+		private int lastInvisibleCount;
 
 		private boolean allowBorder;
 
 		private PopupButton() {
 			allowBorder = false;
-			setPreferredSize(new Dimension(24, 20));
-			setMaximumSize(new Dimension(24, 20));
-
 			addMouseListener(new MouseAdapter() {
 
 				@Override
@@ -734,8 +745,31 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 				public void mouseExited(final MouseEvent e) {
 					allowBorder = false;
 				}
-
 			});
+			setPreferredSize(defaultSize);
+			setMaximumSize(defaultSize);
+		}
+
+		private void updateSize() {
+			final int currentInvisibleCount = getInvisibleCount();
+			if (lastInvisibleCount == currentInvisibleCount) {
+				return;
+			}
+			lastInvisibleCount = currentInvisibleCount;
+
+			final Dimension dimension;
+			if (currentInvisibleCount <= maxTextValue) {
+				dimension = defaultSize;
+			}
+			else {
+				dimension = maxSize;
+			}
+			setPreferredSize(dimension);
+			setMaximumSize(dimension);
+		}
+
+		private int getInvisibleCount() {
+			return firstVisibleTab + (tabPane.getTabCount() - 1) - lastVisibleTab;
 		}
 
 		@Override
@@ -759,12 +793,15 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 			drawFilledArrow(insets.left, insets.top, g);
 
 			g.setFont(new Font("SansSerif", Font.PLAIN, 9));
-			final int tabCount = tabPane.getTabCount();
-			final int invisibleCount = firstVisibleTab + (tabCount - 1) - lastVisibleTab;
-			final String text = String.valueOf(invisibleCount);
-
-			g.drawString(text, insets.left + 8, insets.top + height);
+			g.drawString(getPopupButtonText(getInvisibleCount()), insets.left + 8, insets.top + height);
 			// right aligned: insets.left + width - g.getFontMetrics().stringWidth(text)
+		}
+
+		private String getPopupButtonText(final int count) {
+			if (count > maxTextValue) {
+				return String.valueOf(maxTextValue) + "+";
+			}
+			return String.valueOf(count);
 		}
 
 		@SuppressWarnings("unused")
