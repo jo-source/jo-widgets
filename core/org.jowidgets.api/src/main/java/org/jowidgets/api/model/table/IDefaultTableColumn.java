@@ -43,4 +43,9 @@ public interface IDefaultTableColumn extends ITableColumn, IChangeObservable {
 
 	void setAlignment(AlignmentHorizontal alignment);
 
+	//TODO NM implement setVisible
+	//	void setVisisble(boolean visible);
+	//	
+	//	boolean isVisible();
+
 }
