@@ -27,53 +27,19 @@
  */
 package org.jowidgets.validation;
 
-public interface IValidationMessage {
+public final class NullCompatibleEquivalence {
 
-	/**
-	 * @return The message type, never null
-	 */
-	MessageType getType();
+	private NullCompatibleEquivalence() {}
 
-	/**
-	 * @return The message text, may be null
-	 */
-	String getMessage();
-
-	/**
-	 * The context where the validation message has been occurred,
-	 * e.g. the property or bean label
-	 * 
-	 * @return The context, may be null
-	 */
-	String getContext();
-
-	/**
-	 * Creates a validation message that has the given context
-	 * 
-	 * @param context The context to set on the result
-	 * 
-	 * @return A new validation message with the changed context
-	 */
-	IValidationMessage withContext(String context);
-
-	/**
-	 * Checks if the severity of the given message is equal or worse
-	 * than the severity of this message.
-	 * 
-	 * @param message The message to check
-	 * @return True if the severity the of the given message is equal or worse
-	 *         than the severity of this message, false otherwise
-	 */
-	boolean equalOrWorse(final IValidationMessage message);
-
-	/**
-	 * Checks if the severity of the given message is worse
-	 * than the severity of this message.
-	 * 
-	 * @param message The message to check
-	 * @return True if the severity the of the given message is worse
-	 *         than the severity of this message, false otherwise
-	 */
-	boolean worse(final IValidationMessage message);
+	public static boolean equals(final Object object1, final Object object2) {
+		if (object1 == null && object2 == null) {
+			return true;
+		}
+		else if (object1 == null || object2 == null) {// only one of them is
+														// null
+			return false;
+		}
+		return object1.equals(object2);
+	}
 
 }

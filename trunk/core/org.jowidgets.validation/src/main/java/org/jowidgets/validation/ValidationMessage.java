@@ -44,7 +44,7 @@ public final class ValidationMessage {
 	}
 
 	public static IValidationMessage create(final MessageType type, final String message) {
-		return create(type, message, "");
+		return create(type, null, message);
 	}
 
 	public static IValidationMessage error(final String context, final String message) {
@@ -52,7 +52,7 @@ public final class ValidationMessage {
 	}
 
 	public static IValidationMessage error(final String message) {
-		return error(message, "");
+		return error(null, message);
 	}
 
 	public static IValidationMessage infoError(final String context, final String message) {
@@ -60,7 +60,7 @@ public final class ValidationMessage {
 	}
 
 	public static IValidationMessage infoError(final String message) {
-		return infoError(message, "");
+		return infoError(null, message);
 	}
 
 	public static IValidationMessage warning(final String context, final String message) {
@@ -68,7 +68,7 @@ public final class ValidationMessage {
 	}
 
 	public static IValidationMessage warning(final String message) {
-		return warning(message, "");
+		return warning(null, message);
 	}
 
 }

@@ -62,17 +62,22 @@ final class ValidationMessageImpl implements IValidationMessage, Serializable {
 
 	@Override
 	public IValidationMessage withContext(final String context) {
-		return new ValidationMessageImpl(this.type, context, this.message);
+		if (NullCompatibleEquivalence.equals(this.context, context)) {
+			return this;
+		}
+		else {
+			return new ValidationMessageImpl(this.type, context, this.message);
+		}
 	}
 
 	@Override
-	public boolean typeEqualOrWorse(final IValidationMessage message) {
+	public boolean equalOrWorse(final IValidationMessage message) {
 		Assert.paramNotNull(message, "message");
 		return type.equalOrWorse(message.getType());
 	}
 
 	@Override
-	public boolean typeWorse(final IValidationMessage message) {
+	public boolean worse(final IValidationMessage message) {
 		Assert.paramNotNull(message, "message");
 		return type.worse(message.getType());
 	}

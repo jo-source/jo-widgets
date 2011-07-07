@@ -39,6 +39,7 @@ final class ValidationResultImpl implements IValidationResult, Serializable {
 
 	private final IValidationResult inheritedResult;
 	private final IValidationResult newResult;
+	private final IValidationMessage newMessage;
 	private final String newContext;
 	private final IValidationMessage worstFirst;
 
@@ -48,34 +49,32 @@ final class ValidationResultImpl implements IValidationResult, Serializable {
 	private List<IValidationMessage> warnings;
 
 	ValidationResultImpl() {
-		this(null, null, null);
+		this(null, null, null, null);
 	}
 
 	private ValidationResultImpl(
 		final IValidationResult inheritedResult,
 		final IValidationResult newResult,
+		final IValidationMessage newMessage,
 		final String newContext) {
+
 		this.inheritedResult = inheritedResult;
 		this.newResult = newResult;
+		this.newMessage = newMessage;
 		this.newContext = newContext;
 
-		if (inheritedResult != null && newResult != null) {
-			if (inheritedResult.getWorstFirst().typeWorse(newResult.getWorstFirst())) {
-				this.worstFirst = getMessage(newResult.getWorstFirst(), newContext);
-			}
-			else {
-				this.worstFirst = getMessage(inheritedResult.getWorstFirst(), newContext);
-			}
+		final IValidationMessage firstWorst = inheritedResult != null ? inheritedResult.getWorstFirst() : ValidationMessage.ok();
+		final IValidationMessage secondWorst = newResult != null ? newResult.getWorstFirst() : ValidationMessage.ok();
+		final IValidationMessage thirdWorst = newMessage != null ? newMessage : ValidationMessage.ok();
+
+		IValidationMessage worst = firstWorst;
+		if (worst.worse(secondWorst)) {
+			worst = secondWorst;
 		}
-		else if (newResult != null) {
-			this.worstFirst = getMessage(newResult.getWorstFirst(), newContext);
+		if (worst.worse(thirdWorst)) {
+			worst = thirdWorst;
 		}
-		else if (inheritedResult != null) {
-			this.worstFirst = getMessage(inheritedResult.getWorstFirst(), newContext);
-		}
-		else {
-			this.worstFirst = ValidationMessage.ok();
-		}
+		this.worstFirst = getMessage(worst, newContext);
 	}
 
 	@Override
@@ -123,13 +122,23 @@ final class ValidationResultImpl implements IValidationResult, Serializable {
 	@Override
 	public IValidationResult withResult(final String context, final IValidationResult result) {
 		Assert.paramNotNull(result, "result");
-		return new ValidationResultImpl(this, result, context);
+		return new ValidationResultImpl(this, result, null, context);
 	}
 
 	@Override
-	public IValidationResult withMessage(final IValidationMessage messages) {
-		Assert.paramNotNull(messages, "messages");
-		return withResult(ValidationResult.create().withMessage(messages));
+	public IValidationResult withMessage(final IValidationMessage message) {
+		Assert.paramNotNull(message, "messages");
+		return new ValidationResultImpl(this, null, message, null);
+	}
+
+	@Override
+	public IValidationResult withContext(final String context) {
+		if (NullCompatibleEquivalence.equals(context, newContext)) {
+			return this;
+		}
+		else {
+			return new ValidationResultImpl(this, null, null, context);
+		}
 	}
 
 	@Override
@@ -168,8 +177,8 @@ final class ValidationResultImpl implements IValidationResult, Serializable {
 	}
 
 	@Override
-	public IValidationResult withContext(final String context) {
-		return withResult(context, this);
+	public String toString() {
+		return "ValidationResultImpl [worstFirst=" + worstFirst + "]";
 	}
 
 	private void initializeLazy() {
@@ -179,45 +188,54 @@ final class ValidationResultImpl implements IValidationResult, Serializable {
 		final List<IValidationMessage> warningsMutable = new LinkedList<IValidationMessage>();
 
 		if (inheritedResult != null) {
-			for (IValidationMessage message : inheritedResult.getAll()) {
-				message = getMessage(message, newContext);
-				if (MessageType.ERROR == message.getType()) {
-					messagesMutable.add(message);
-					errorsMutable.add(message);
-				}
-				else if (MessageType.INFO_ERROR == message.getType()) {
-					messagesMutable.add(message);
-					infoErrorsMutable.add(message);
-				}
-				else if (MessageType.WARNING == message.getType()) {
-					messagesMutable.add(message);
-					warningsMutable.add(message);
-				}
-			}
+			addMessages(inheritedResult.getAll(), messagesMutable, errorsMutable, infoErrorsMutable, warningsMutable);
 		}
 
 		if (newResult != null) {
-			for (IValidationMessage message : newResult.getAll()) {
-				message = getMessage(message, newContext);
-				if (MessageType.ERROR == message.getType()) {
-					messagesMutable.add(message);
-					errorsMutable.add(message);
-				}
-				else if (MessageType.INFO_ERROR == message.getType()) {
-					messagesMutable.add(message);
-					infoErrorsMutable.add(message);
-				}
-				else if (MessageType.WARNING == message.getType()) {
-					messagesMutable.add(message);
-					warningsMutable.add(message);
-				}
-			}
+			addMessages(newResult.getAll(), messagesMutable, errorsMutable, infoErrorsMutable, warningsMutable);
+		}
+
+		if (newMessage != null) {
+			addMessage(newMessage, messagesMutable, errorsMutable, infoErrorsMutable, warningsMutable);
 		}
 
 		messages = Collections.unmodifiableList(messagesMutable);
 		errors = Collections.unmodifiableList(errorsMutable);
 		infoErrors = Collections.unmodifiableList(infoErrorsMutable);
 		warnings = Collections.unmodifiableList(warningsMutable);
+	}
+
+	private void addMessages(
+		final List<IValidationMessage> source,
+		final List<IValidationMessage> messages,
+		final List<IValidationMessage> errors,
+		final List<IValidationMessage> infoErrors,
+		final List<IValidationMessage> warnings) {
+		for (final IValidationMessage message : source) {
+			addMessage(message, messages, errors, infoErrors, warnings);
+		}
+	}
+
+	private void addMessage(
+		IValidationMessage message,
+		final List<IValidationMessage> messages,
+		final List<IValidationMessage> errors,
+		final List<IValidationMessage> infoErrors,
+		final List<IValidationMessage> warnings) {
+
+		message = getMessage(message, newContext);
+		if (MessageType.ERROR == message.getType()) {
+			messages.add(message);
+			errors.add(message);
+		}
+		else if (MessageType.INFO_ERROR == message.getType()) {
+			messages.add(message);
+			infoErrors.add(message);
+		}
+		else if (MessageType.WARNING == message.getType()) {
+			messages.add(message);
+			warnings.add(message);
+		}
 	}
 
 	private IValidationMessage getMessage(final IValidationMessage original, final String newContext) {

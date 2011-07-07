@@ -43,7 +43,7 @@ public interface IValidationResult {
 
 	boolean isValid();
 
-	IValidationResult withMessage(final IValidationMessage messages);
+	IValidationResult withMessage(final IValidationMessage message);
 
 	IValidationResult withError(final String message);
 
