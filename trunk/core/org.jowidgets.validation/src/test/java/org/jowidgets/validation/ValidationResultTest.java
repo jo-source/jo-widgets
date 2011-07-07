@@ -63,7 +63,7 @@ public class ValidationResultTest {
 		withAdded = withAdded.withWarning("TEXT2");
 		Assert.assertTrue(withAdded.isValid());
 		Assert.assertTrue(withAdded.getWorstFirst().getType() == MessageType.WARNING);
-		Assert.assertTrue("TEXT".equals(withAdded.getWorstFirst().getMessage()));
+		Assert.assertTrue("TEXT".equals(withAdded.getWorstFirst().getText()));
 		Assert.assertTrue(withAdded.getAll().size() == 2);
 		Assert.assertTrue(withAdded.getErrors().size() == 0);
 		Assert.assertTrue(withAdded.getInfoErrors().size() == 0);
@@ -88,7 +88,7 @@ public class ValidationResultTest {
 		withAdded = withAdded.withError("TEXT5");
 		Assert.assertFalse(withAdded.isValid());
 		Assert.assertTrue(withAdded.getWorstFirst().getType() == MessageType.ERROR);
-		Assert.assertTrue("TEXT5".equals(withAdded.getWorstFirst().getMessage()));
+		Assert.assertTrue("TEXT5".equals(withAdded.getWorstFirst().getText()));
 		Assert.assertTrue(withAdded.getAll().size() == 5);
 		Assert.assertTrue(withAdded.getErrors().size() == 1);
 		Assert.assertTrue(withAdded.getInfoErrors().size() == 1);
@@ -104,7 +104,7 @@ public class ValidationResultTest {
 		IValidationResult withResult = withAdded.withResult(result2);
 		Assert.assertFalse(withResult.isValid());
 		Assert.assertTrue(withResult.getWorstFirst().getType() == MessageType.ERROR);
-		Assert.assertTrue("TEXT5".equals(withResult.getWorstFirst().getMessage()));
+		Assert.assertTrue("TEXT5".equals(withResult.getWorstFirst().getText()));
 		Assert.assertTrue(withResult.getAll().size() == 8);
 		Assert.assertTrue(withResult.getErrors().size() == 2);
 		Assert.assertTrue(withResult.getInfoErrors().size() == 2);
@@ -114,7 +114,7 @@ public class ValidationResultTest {
 		assertContext(withResult.getAll(), "NEW_CONTEXT");
 		Assert.assertFalse(withResult.isValid());
 		Assert.assertTrue(withResult.getWorstFirst().getType() == MessageType.ERROR);
-		Assert.assertTrue("TEXT5".equals(withResult.getWorstFirst().getMessage()));
+		Assert.assertTrue("TEXT5".equals(withResult.getWorstFirst().getText()));
 		Assert.assertTrue(withResult.getAll().size() == 8);
 		Assert.assertTrue(withResult.getErrors().size() == 2);
 		Assert.assertTrue(withResult.getInfoErrors().size() == 2);

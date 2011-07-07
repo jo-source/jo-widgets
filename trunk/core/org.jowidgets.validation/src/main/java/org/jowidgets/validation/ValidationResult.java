@@ -28,7 +28,6 @@
 
 package org.jowidgets.validation;
 
-
 public final class ValidationResult {
 
 	private static final IValidationResult OK = new ValidationResultImpl();
@@ -41,6 +40,35 @@ public final class ValidationResult {
 
 	public static IValidationResult ok() {
 		return OK;
+	}
+
+	public static IValidationResult create(final IValidationMessage message) {
+		Assert.paramNotNull(message, "message");
+		return create().withMessage(message);
+	}
+
+	public static IValidationResult warning(final String text) {
+		return create().withWarning(text);
+	}
+
+	public static IValidationResult infoError(final String text) {
+		return create().withInfoError(text);
+	}
+
+	public static IValidationResult error(final String text) {
+		return create().withError(text);
+	}
+
+	public static IValidationResult warning(final String context, final String text) {
+		return create().withWarning(context, text);
+	}
+
+	public static IValidationResult infoError(final String context, final String text) {
+		return create().withInfoError(context, text);
+	}
+
+	public static IValidationResult error(final String context, final String text) {
+		return create().withError(context, text);
 	}
 
 }

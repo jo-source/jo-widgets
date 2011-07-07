@@ -43,19 +43,19 @@ public interface IValidationResult {
 
 	boolean isValid();
 
-	IValidationResult withMessage(final IValidationMessage message);
+	IValidationResult withMessage(final IValidationMessage text);
 
-	IValidationResult withError(final String message);
+	IValidationResult withError(final String text);
 
-	IValidationResult withInfoError(final String message);
+	IValidationResult withInfoError(final String text);
 
-	IValidationResult withWarning(final String message);
+	IValidationResult withWarning(final String text);
 
-	IValidationResult withError(final String context, final String message);
+	IValidationResult withError(final String context, final String text);
 
-	IValidationResult withInfoError(final String context, final String message);
+	IValidationResult withInfoError(final String context, final String text);
 
-	IValidationResult withWarning(final String context, final String message);
+	IValidationResult withWarning(final String context, final String text);
 
 	IValidationResult withResult(final IValidationResult result);
 

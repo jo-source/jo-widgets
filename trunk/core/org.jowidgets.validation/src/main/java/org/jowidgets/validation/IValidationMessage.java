@@ -37,7 +37,7 @@ public interface IValidationMessage {
 	/**
 	 * @return The message text, may be null
 	 */
-	String getMessage();
+	String getText();
 
 	/**
 	 * The context where the validation message has been occurred,

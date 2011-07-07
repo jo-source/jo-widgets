@@ -38,37 +38,37 @@ public final class ValidationMessage {
 		return OK;
 	}
 
-	public static IValidationMessage create(final MessageType type, final String context, final String message) {
+	public static IValidationMessage create(final MessageType type, final String context, final String text) {
 		Assert.paramNotNull(type, "type");
-		return new ValidationMessageImpl(type, context, message);
+		return new ValidationMessageImpl(type, context, text);
 	}
 
-	public static IValidationMessage create(final MessageType type, final String message) {
-		return create(type, null, message);
+	public static IValidationMessage create(final MessageType type, final String text) {
+		return create(type, null, text);
 	}
 
-	public static IValidationMessage error(final String context, final String message) {
-		return create(MessageType.ERROR, context, message);
+	public static IValidationMessage error(final String context, final String text) {
+		return create(MessageType.ERROR, context, text);
 	}
 
 	public static IValidationMessage error(final String message) {
 		return error(null, message);
 	}
 
-	public static IValidationMessage infoError(final String context, final String message) {
-		return create(MessageType.INFO_ERROR, context, message);
+	public static IValidationMessage infoError(final String context, final String text) {
+		return create(MessageType.INFO_ERROR, context, text);
 	}
 
-	public static IValidationMessage infoError(final String message) {
-		return infoError(null, message);
+	public static IValidationMessage infoError(final String text) {
+		return infoError(null, text);
 	}
 
-	public static IValidationMessage warning(final String context, final String message) {
-		return create(MessageType.WARNING, context, message);
+	public static IValidationMessage warning(final String context, final String text) {
+		return create(MessageType.WARNING, context, text);
 	}
 
-	public static IValidationMessage warning(final String message) {
-		return warning(null, message);
+	public static IValidationMessage warning(final String text) {
+		return warning(null, text);
 	}
 
 }

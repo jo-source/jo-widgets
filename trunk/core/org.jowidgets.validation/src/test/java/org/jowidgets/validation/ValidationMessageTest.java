@@ -46,13 +46,13 @@ public class ValidationMessageTest {
 		final String context = "CONTEXT";
 
 		IValidationMessage message = ValidationMessage.error(messageText);
-		Assert.assertEquals(messageText, message.getMessage());
+		Assert.assertEquals(messageText, message.getText());
 		Assert.assertNull(message.getContext());
 
 		testWithContext(message);
 
 		message = ValidationMessage.error(context, messageText);
-		Assert.assertEquals(messageText, message.getMessage());
+		Assert.assertEquals(messageText, message.getText());
 		Assert.assertEquals(context, message.getContext());
 	}
 
@@ -62,13 +62,13 @@ public class ValidationMessageTest {
 		final String context = "CONTEXT";
 
 		IValidationMessage message = ValidationMessage.infoError(messageText);
-		Assert.assertEquals(messageText, message.getMessage());
+		Assert.assertEquals(messageText, message.getText());
 		Assert.assertNull(message.getContext());
 
 		testWithContext(message);
 
 		message = ValidationMessage.infoError(context, messageText);
-		Assert.assertEquals(messageText, message.getMessage());
+		Assert.assertEquals(messageText, message.getText());
 		Assert.assertEquals(context, message.getContext());
 	}
 
@@ -78,13 +78,13 @@ public class ValidationMessageTest {
 		final String context = "CONTEXT";
 
 		IValidationMessage message = ValidationMessage.warning(messageText);
-		Assert.assertEquals(messageText, message.getMessage());
+		Assert.assertEquals(messageText, message.getText());
 		Assert.assertNull(message.getContext());
 
 		testWithContext(message);
 
 		message = ValidationMessage.warning(context, messageText);
-		Assert.assertEquals(messageText, message.getMessage());
+		Assert.assertEquals(messageText, message.getText());
 		Assert.assertEquals(context, message.getContext());
 	}
 
@@ -134,17 +134,17 @@ public class ValidationMessageTest {
 
 	private void testWithContext(final IValidationMessage message) {
 		final String oldContext = message.getContext();
-		final String oldMessageText = message.getMessage();
+		final String oldMessageText = message.getText();
 		final MessageType oldMessageType = message.getType();
 		final String newContext = "NEW_CONTEXT";
 
 		final IValidationMessage messageWithNewContext = message.withContext(newContext);
 		Assert.assertEquals(oldContext, message.getContext());
-		Assert.assertEquals(oldMessageText, message.getMessage());
+		Assert.assertEquals(oldMessageText, message.getText());
 		Assert.assertEquals(oldMessageType, message.getType());
 
 		Assert.assertEquals(newContext, messageWithNewContext.getContext());
-		Assert.assertEquals(oldMessageText, messageWithNewContext.getMessage());
+		Assert.assertEquals(oldMessageText, messageWithNewContext.getText());
 		Assert.assertEquals(oldMessageType, messageWithNewContext.getType());
 
 		final IValidationMessage messageWithSameContext = messageWithNewContext.withContext(newContext);
