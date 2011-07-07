@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2011, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,23 +28,13 @@
 
 package org.jowidgets.api.model.table;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.model.ITableColumn;
-import org.jowidgets.common.types.AlignmentHorizontal;
-import org.jowidgets.util.event.IChangeObservable;
+import org.jowidgets.common.model.ITableColumnModel;
+import org.jowidgets.common.model.ITableDataModel;
 
-public interface IDefaultTableColumn extends ITableColumn, IChangeObservable {
+public interface ITableColumnModelSpiAdaptable {
 
-	void setText(String text);
+	ITableColumnModel createSpiModel();
 
-	void setToolTipText(String tooltipText);
-
-	void setIcon(IImageConstant icon);
-
-	void setAlignment(AlignmentHorizontal alignment);
-
-	void setVisible(boolean visible);
-
-	boolean isVisible();
+	ITableDataModel createSpiDataModel(ITableDataModel dataModel);
 
 }

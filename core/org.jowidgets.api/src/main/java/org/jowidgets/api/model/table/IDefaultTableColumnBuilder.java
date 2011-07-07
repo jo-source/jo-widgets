@@ -43,6 +43,8 @@ public interface IDefaultTableColumnBuilder {
 
 	IDefaultTableColumnBuilder setAlignment(AlignmentHorizontal alignment);
 
+	IDefaultTableColumnBuilder setVisible(boolean visible);
+
 	IDefaultTableColumn build();
 
 }

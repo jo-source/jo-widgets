@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2011, grossmann, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -34,6 +34,7 @@ import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.util.event.ChangeObservable;
 import org.jowidgets.util.event.IChangeListener;
 
+// TODO NM: How to handle width when invisible
 class DefaultTableColumn implements IDefaultTableColumn {
 
 	private final ChangeObservable changeObservable;
@@ -43,13 +44,15 @@ class DefaultTableColumn implements IDefaultTableColumn {
 	private IImageConstant icon;
 	private int width;
 	private AlignmentHorizontal alignment;
+	private boolean visible;
 
 	DefaultTableColumn(
 		final String text,
 		final String toolTipText,
 		final IImageConstant icon,
 		final int width,
-		final AlignmentHorizontal alignment) {
+		final AlignmentHorizontal alignment,
+		final boolean visible) {
 
 		this.changeObservable = new ChangeObservable();
 
@@ -58,6 +61,7 @@ class DefaultTableColumn implements IDefaultTableColumn {
 		this.icon = icon;
 		this.width = width;
 		this.alignment = alignment;
+		this.visible = visible;
 	}
 
 	@Override
@@ -112,6 +116,21 @@ class DefaultTableColumn implements IDefaultTableColumn {
 	@Override
 	public void setAlignment(final AlignmentHorizontal alignment) {
 		this.alignment = alignment;
+		changeObservable.fireChangedEvent();
+	}
+
+	@Override
+	public boolean isVisible() {
+		return visible;
+	}
+
+	@Override
+	public void setVisible(final boolean visible) {
+		if (this.visible == visible) {
+			return;
+		}
+
+		this.visible = visible;
 		changeObservable.fireChangedEvent();
 	}
 

@@ -116,6 +116,16 @@ public class DefaultTableColumn implements IDefaultTableColumn {
 	}
 
 	@Override
+	public void setVisible(final boolean visible) {
+		column.setVisible(visible);
+	}
+
+	@Override
+	public boolean isVisible() {
+		return column.isVisible();
+	}
+
+	@Override
 	public final void addChangeListener(final IChangeListener listener) {
 		column.addChangeListener(listener);
 	}

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2011, grossmann, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -65,6 +65,10 @@ public final class TableModel implements ITableModel {
 	@Override
 	public ITableColumnModelObservable getTableColumnModelObservable() {
 		return columnModel.getTableColumnModelObservable();
+	}
+
+	public ITableColumnModel getColumnModel() {
+		return columnModel;
 	}
 
 	@Override

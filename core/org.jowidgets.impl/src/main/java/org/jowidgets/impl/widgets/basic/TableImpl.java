@@ -174,11 +174,13 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 
 	@Override
 	public ArrayList<Integer> getColumnPermutation() {
+		// TODO NM transform indices and add invisible columns
 		return getWidget().getColumnPermutation();
 	}
 
 	@Override
 	public void setColumnPermutation(final List<Integer> permutation) {
+		// TODO NM transform indices, ignore inivisible columns on native widget
 		getWidget().setColumnPermutation(permutation);
 	}
 

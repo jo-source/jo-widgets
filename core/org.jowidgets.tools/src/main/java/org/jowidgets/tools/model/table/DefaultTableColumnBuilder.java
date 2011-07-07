@@ -78,6 +78,12 @@ public class DefaultTableColumnBuilder implements IDefaultTableColumnBuilder {
 	}
 
 	@Override
+	public IDefaultTableColumnBuilder setVisible(final boolean visible) {
+		builder.setVisible(true);
+		return this;
+	}
+
+	@Override
 	public final IDefaultTableColumn build() {
 		return builder.build();
 	}
