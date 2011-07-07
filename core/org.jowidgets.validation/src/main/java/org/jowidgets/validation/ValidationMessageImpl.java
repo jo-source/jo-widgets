@@ -35,14 +35,14 @@ final class ValidationMessageImpl implements IValidationMessage, Serializable {
 	private static final long serialVersionUID = 6091301415212441351L;
 
 	private final MessageType type;
-	private final String message;
+	private final String text;
 	private final String context;
 
-	ValidationMessageImpl(final MessageType type, final String context, final String message) {
+	ValidationMessageImpl(final MessageType type, final String context, final String text) {
 		Assert.paramNotNull(type, "type");
 		this.type = type;
 		this.context = context;
-		this.message = message;
+		this.text = text;
 	}
 
 	@Override
@@ -51,8 +51,8 @@ final class ValidationMessageImpl implements IValidationMessage, Serializable {
 	}
 
 	@Override
-	public String getMessage() {
-		return message;
+	public String getText() {
+		return text;
 	}
 
 	@Override
@@ -66,7 +66,7 @@ final class ValidationMessageImpl implements IValidationMessage, Serializable {
 			return this;
 		}
 		else {
-			return new ValidationMessageImpl(this.type, context, this.message);
+			return new ValidationMessageImpl(this.type, context, this.text);
 		}
 	}
 
@@ -87,7 +87,7 @@ final class ValidationMessageImpl implements IValidationMessage, Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((context == null) ? 0 : context.hashCode());
-		result = prime * result + ((message == null) ? 0 : message.hashCode());
+		result = prime * result + ((text == null) ? 0 : text.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
@@ -112,12 +112,12 @@ final class ValidationMessageImpl implements IValidationMessage, Serializable {
 		else if (!context.equals(other.context)) {
 			return false;
 		}
-		if (message == null) {
-			if (other.message != null) {
+		if (text == null) {
+			if (other.text != null) {
 				return false;
 			}
 		}
-		else if (!message.equals(other.message)) {
+		else if (!text.equals(other.text)) {
 			return false;
 		}
 		if (type != other.type) {
@@ -128,7 +128,7 @@ final class ValidationMessageImpl implements IValidationMessage, Serializable {
 
 	@Override
 	public String toString() {
-		return "ValidationMessageImpl [type=" + type + ", message=" + message + ", context=" + context + "]";
+		return "ValidationMessageImpl [type=" + type + ", text=" + text + ", context=" + context + "]";
 	}
 
 }
