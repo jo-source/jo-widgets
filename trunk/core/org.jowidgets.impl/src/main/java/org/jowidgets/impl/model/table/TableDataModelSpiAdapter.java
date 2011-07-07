@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann, Nikolaus Moll
+ * Copyright (c) 2011, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,65 +28,49 @@
 
 package org.jowidgets.impl.model.table;
 
-import org.jowidgets.api.model.table.IDefaultTableColumn;
-import org.jowidgets.api.model.table.IDefaultTableColumnBuilder;
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.AlignmentHorizontal;
+import java.util.ArrayList;
+import java.util.List;
 
-class DefaultTableColumnBuilder implements IDefaultTableColumnBuilder {
+import org.jowidgets.common.model.ITableCell;
+import org.jowidgets.common.model.ITableDataModel;
+import org.jowidgets.common.model.ITableDataModelObservable;
 
-	private String text;
-	private String toolTipText;
-	private IImageConstant icon;
-	private int width;
-	private AlignmentHorizontal alignment;
-	private boolean visible;
+final class TableDataModelSpiAdapter implements ITableDataModel {
 
-	DefaultTableColumnBuilder() {
-		this.alignment = AlignmentHorizontal.LEFT;
-		this.width = -1;
-		visible = true;
+	private final ITableDataModel dataModel;
+	private final TableColumnModelSpiAdapter columnAdapter;
+
+	TableDataModelSpiAdapter(final ITableDataModel dataModel, final TableColumnModelSpiAdapter columnAdapter) {
+		this.dataModel = dataModel;
+		this.columnAdapter = columnAdapter;
 	}
 
 	@Override
-	public IDefaultTableColumnBuilder setText(final String text) {
-		this.text = text;
-		return this;
+	public int getRowCount() {
+		return dataModel.getRowCount();
 	}
 
 	@Override
-	public IDefaultTableColumnBuilder setToolTipText(final String toolTipText) {
-		this.toolTipText = toolTipText;
-		return this;
+	public ITableCell getCell(final int rowIndex, final int columnIndex) {
+		return dataModel.getCell(rowIndex, columnAdapter.viewToLogical(columnIndex));
 	}
 
 	@Override
-	public IDefaultTableColumnBuilder setIcon(final IImageConstant icon) {
-		this.icon = icon;
-		return this;
+	public ArrayList<Integer> getSelection() {
+		// TODO NM fix indiced
+		return dataModel.getSelection();
 	}
 
 	@Override
-	public IDefaultTableColumnBuilder setWidth(final int width) {
-		this.width = width;
-		return this;
+	public void setSelection(final List<Integer> selection) {
+		// TODO NM fix indiced
+		dataModel.setSelection(selection);
 	}
 
 	@Override
-	public IDefaultTableColumnBuilder setAlignment(final AlignmentHorizontal alignment) {
-		this.alignment = alignment;
-		return this;
-	}
-
-	@Override
-	public IDefaultTableColumnBuilder setVisible(final boolean visible) {
-		this.visible = visible;
-		return this;
-	}
-
-	@Override
-	public IDefaultTableColumn build() {
-		return new DefaultTableColumn(text, toolTipText, icon, width, alignment, visible);
+	public ITableDataModelObservable getTableDataModelObservable() {
+		// TODO NM fix indiced
+		return dataModel.getTableDataModelObservable();
 	}
 
 }
