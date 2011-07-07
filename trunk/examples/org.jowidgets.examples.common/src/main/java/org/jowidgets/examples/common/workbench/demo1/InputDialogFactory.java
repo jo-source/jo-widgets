@@ -31,7 +31,6 @@ package org.jowidgets.examples.common.workbench.demo1;
 import org.jowidgets.api.command.IExecutionContext;
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.IInputDialog;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
@@ -40,6 +39,8 @@ import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.validation.ValidationResult;
 
 public class InputDialogFactory {
 
@@ -90,8 +91,8 @@ public class InputDialogFactory {
 			}
 
 			@Override
-			public ValidationResult validate() {
-				return new ValidationResult();
+			public IValidationResult validate() {
+				return ValidationResult.ok();
 			}
 
 			@Override

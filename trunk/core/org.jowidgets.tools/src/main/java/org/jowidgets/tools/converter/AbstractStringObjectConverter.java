@@ -29,9 +29,9 @@
 package org.jowidgets.tools.converter;
 
 import org.jowidgets.api.convert.IStringObjectConverter;
-import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.common.mask.ITextMask;
 import org.jowidgets.common.verify.IInputVerifier;
+import org.jowidgets.validation.IValidator;
 
 public abstract class AbstractStringObjectConverter<TO_TYPE> implements IStringObjectConverter<TO_TYPE> {
 

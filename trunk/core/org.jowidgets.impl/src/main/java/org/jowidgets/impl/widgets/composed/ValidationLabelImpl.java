@@ -31,9 +31,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.api.model.item.IMenuModel;
-import org.jowidgets.api.validation.ValidationMessage;
-import org.jowidgets.api.validation.ValidationMessageType;
-import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IInputComponent;
@@ -55,6 +52,11 @@ import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
+import org.jowidgets.validation.IValidationMessage;
+import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.validation.IValidationResultBuilder;
+import org.jowidgets.validation.MessageType;
+import org.jowidgets.validation.ValidationResult;
 
 public class ValidationLabelImpl implements IValidationLabel {
 
@@ -137,15 +139,15 @@ public class ValidationLabelImpl implements IValidationLabel {
 	}
 
 	private void doValidation(final boolean isEmpty) {
-		final ValidationResult validationResult = new ValidationResult();
+		final IValidationResultBuilder builder = ValidationResult.builder();
 		for (final IInputComponent<?> inputWidget : inputWidgets) {
-			validationResult.addValidationResult(inputWidget.validate());
+			builder.addResult(inputWidget.validate());
 		}
-		setValidationResult(validationResult, isEmpty);
+		setValidationResult(builder.build(), isEmpty);
 	}
 
-	private void setValidationResult(final ValidationResult validationResult, final boolean isEmpty) {
-		final ValidationMessage firstWorst = validationResult.getWorstFirstMessage();
+	private void setValidationResult(final IValidationResult validationResult, final boolean isEmpty) {
+		final IValidationMessage firstWorst = validationResult.getWorstFirst();
 
 		final StringBuilder messageText = new StringBuilder();
 		final String context = firstWorst.getContext();
@@ -153,10 +155,10 @@ public class ValidationLabelImpl implements IValidationLabel {
 		if (context != null && !context.trim().isEmpty()) {
 			messageText.append(firstWorst.getContext() + ": ");
 		}
-		messageText.append(firstWorst.getMessageText());
+		messageText.append(firstWorst.getText());
 		currentMessageText = messageText.toString();
 
-		if (firstWorst.getType() == ValidationMessageType.OK && hasInput && !isEmpty) {
+		if (firstWorst.getType() == MessageType.OK && hasInput && !isEmpty) {
 			labelWidget.setIcon(descriptor.getOkIcon());
 			if (showLabel) {
 				labelWidget.setMarkup(descriptor.getOkMarkup());
@@ -168,7 +170,7 @@ public class ValidationLabelImpl implements IValidationLabel {
 			}
 			currentLabelState = LabelState.OK_VALIDATION;
 		}
-		else if (firstWorst.getType() == ValidationMessageType.WARNING && !isEmpty) {
+		else if (firstWorst.getType() == MessageType.WARNING && !isEmpty) {
 			labelWidget.setIcon(descriptor.getWarningIcon());
 			if (showLabel) {
 				labelWidget.setMarkup(descriptor.getWarningMarkup());
@@ -180,7 +182,7 @@ public class ValidationLabelImpl implements IValidationLabel {
 			}
 			currentLabelState = LabelState.WARNING_VALIDATION;
 		}
-		else if (firstWorst.getType() == ValidationMessageType.INFO_ERROR) {
+		else if (firstWorst.getType() == MessageType.INFO_ERROR) {
 			labelWidget.setIcon(descriptor.getInfoErrorIcon());
 			if (showLabel) {
 				labelWidget.setMarkup(descriptor.getInfoErrorMarkup());
@@ -192,7 +194,7 @@ public class ValidationLabelImpl implements IValidationLabel {
 			}
 			currentLabelState = LabelState.INFO_ERROR_VALIDATION;
 		}
-		else if (firstWorst.getType() == ValidationMessageType.ERROR) {
+		else if (firstWorst.getType() == MessageType.ERROR) {
 			labelWidget.setIcon(descriptor.getErrorIcon());
 			if (showLabel) {
 				labelWidget.setMarkup(descriptor.getErrorMarkup());

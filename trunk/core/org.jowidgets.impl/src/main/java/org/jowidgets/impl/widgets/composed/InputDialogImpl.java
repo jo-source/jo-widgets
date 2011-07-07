@@ -31,9 +31,6 @@ import java.util.List;
 
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.types.InputDialogDefaultButtonPolicy;
-import org.jowidgets.api.validation.IValidator;
-import org.jowidgets.api.validation.ValidationMessage;
-import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
@@ -62,6 +59,9 @@ import org.jowidgets.common.widgets.controler.IWindowListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
+import org.jowidgets.validation.IValidationMessage;
+import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.validation.IValidator;
 
 public class InputDialogImpl<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 
@@ -334,7 +334,7 @@ public class InputDialogImpl<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 	}
 
 	@Override
-	public ValidationResult validate() {
+	public IValidationResult validate() {
 		return inputCompositeWidget.validate();
 	}
 
@@ -473,7 +473,7 @@ public class InputDialogImpl<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 		}
 
 		private void onInputChanged() {
-			final ValidationMessage firstWorst = inputCompositeWidget.validate().getWorstFirstMessage();
+			final IValidationMessage firstWorst = inputCompositeWidget.validate().getWorstFirst();
 
 			if (!isMandatory() || !inputCompositeWidget.isEmpty()) {
 				setValidationResult(firstWorst);
@@ -484,7 +484,7 @@ public class InputDialogImpl<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 			}
 		}
 
-		private void setValidationResult(final ValidationMessage firstWorst) {
+		private void setValidationResult(final IValidationMessage firstWorst) {
 			parentContainer.layoutBegin();
 			if (firstWorst.getType().isValid()) {
 				buttonWidget.setEnabled(true);
@@ -492,7 +492,7 @@ public class InputDialogImpl<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 			}
 			else {
 				buttonWidget.setEnabled(false);
-				buttonWidget.setToolTipText(firstWorst.getMessageText());
+				buttonWidget.setToolTipText(firstWorst.getText());
 			}
 			parentContainer.layoutEnd();
 

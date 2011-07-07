@@ -27,8 +27,8 @@
  */
 package org.jowidgets.api.widgets.descriptor.setup;
 
-import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
+import org.jowidgets.validation.IValidator;
 
 public interface IInputComponentSetup<INPUT_TYPE> extends IComponentSetup {
 

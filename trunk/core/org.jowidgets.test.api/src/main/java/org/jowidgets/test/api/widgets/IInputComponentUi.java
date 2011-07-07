@@ -28,11 +28,11 @@
 
 package org.jowidgets.test.api.widgets;
 
-import org.jowidgets.api.validation.IValidateable;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IInputComponent;
 import org.jowidgets.api.widgets.access.IInputValueAccessor;
 import org.jowidgets.test.common.widgets.IInputComponentUiCommon;
+import org.jowidgets.validation.IValidateable;
 
 public interface IInputComponentUi<VALUE_TYPE> extends
 		IComponent,

@@ -31,12 +31,14 @@ package org.jowidgets.tools.widgets.delegate;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.jowidgets.api.validation.IValidateable;
-import org.jowidgets.api.validation.IValidator;
-import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.descriptor.setup.IInputComponentSetup;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.Tuple;
+import org.jowidgets.validation.IValidateable;
+import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.validation.IValidationResultBuilder;
+import org.jowidgets.validation.IValidator;
+import org.jowidgets.validation.ValidationResult;
 
 public class InputValidationDelegate<VALUE_TYPE> {
 
@@ -80,22 +82,22 @@ public class InputValidationDelegate<VALUE_TYPE> {
 		}
 	}
 
-	public ValidationResult validate(final VALUE_TYPE value) {
-		final ValidationResult result = new ValidationResult();
+	public IValidationResult validate(final VALUE_TYPE value) {
+		final IValidationResultBuilder builder = ValidationResult.builder();
 
 		for (final Tuple<IValidateable, String> validateable : validateables) {
 			if (validateable.getSecond() == null) {
-				result.addValidationResult(validateable.getFirst().validate());
+				builder.addResult(validateable.getFirst().validate());
 			}
 			else {
-				result.addValidationResult(validateable.getFirst().validate(), validateable.getSecond());
+				builder.addResult(validateable.getSecond(), validateable.getFirst().validate());
 			}
 		}
 
 		for (final IValidator<VALUE_TYPE> validator : validators) {
-			result.addValidationResult(validator.validate(value));
+			builder.addResult(validator.validate(value));
 		}
-		return result;
+		return builder.build();
 	}
 
 	public boolean isMandatory() {

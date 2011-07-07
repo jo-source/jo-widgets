@@ -31,14 +31,14 @@ package org.jowidgets.tools.powo;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.jowidgets.api.validation.IValidator;
-import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IInputComponent;
 import org.jowidgets.api.widgets.blueprint.builder.IInputComponentSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.setup.IInputComponentSetup;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.util.Assert;
+import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.validation.IValidator;
 
 class InputComponent<WIDGET_TYPE extends IInputComponent<VALUE_TYPE>, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IInputComponentSetup<VALUE_TYPE> & IInputComponentSetupBuilder<?, VALUE_TYPE>, VALUE_TYPE> extends
 		Component<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IInputComponent<VALUE_TYPE> {
@@ -61,6 +61,7 @@ class InputComponent<WIDGET_TYPE extends IInputComponent<VALUE_TYPE>, BLUE_PRINT
 		for (final IInputListener inputListener : inputListeners) {
 			widget.addInputListener(inputListener);
 		}
+
 	}
 
 	@Override
@@ -147,7 +148,7 @@ class InputComponent<WIDGET_TYPE extends IInputComponent<VALUE_TYPE>, BLUE_PRINT
 	}
 
 	@Override
-	public ValidationResult validate() {
+	public IValidationResult validate() {
 		checkInitialized();
 		return getWidget().validate();
 	}

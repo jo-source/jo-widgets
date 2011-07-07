@@ -29,11 +29,11 @@
 package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.convert.IStringObjectConverter;
-import org.jowidgets.api.validation.IValidateable;
-import org.jowidgets.api.validation.IValidator;
-import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.descriptor.setup.IComboBoxSetup;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
+import org.jowidgets.validation.IValidateable;
+import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.validation.IValidator;
 
 public class ComboBoxImpl<VALUE_TYPE> extends ComboBoxSelectionImpl<VALUE_TYPE> {
 
@@ -50,7 +50,7 @@ public class ComboBoxImpl<VALUE_TYPE> extends ComboBoxSelectionImpl<VALUE_TYPE> 
 		if (textInputValidator != null) {
 			addValidatable(new IValidateable() {
 				@Override
-				public ValidationResult validate() {
+				public IValidationResult validate() {
 					return textInputValidator.validate(comboBoxWidgetSpi.getText());
 				}
 			});

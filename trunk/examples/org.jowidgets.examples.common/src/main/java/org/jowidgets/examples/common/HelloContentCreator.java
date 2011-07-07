@@ -28,9 +28,6 @@
 package org.jowidgets.examples.common;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.validation.IValidator;
-import org.jowidgets.api.validation.ValidationMessageType;
-import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IInputComponent;
 import org.jowidgets.api.widgets.IValidationLabel;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
@@ -40,6 +37,9 @@ import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.validation.IValidator;
+import org.jowidgets.validation.ValidationResult;
 
 public class HelloContentCreator implements IInputContentCreator<String> {
 
@@ -53,15 +53,13 @@ public class HelloContentCreator implements IInputContentCreator<String> {
 		final IBluePrintFactory bpF = Toolkit.getInstance().getBluePrintFactory();
 
 		final IValidator<String> characterLenghtValidator = new IValidator<String>() {
-
 			@Override
-			public ValidationResult validate(final String validationInput) {
+			public IValidationResult validate(final String validationInput) {
 				if (validationInput != null && validationInput.length() > 15) {
-					return new ValidationResult(ValidationMessageType.ERROR, "Only 15 characters allowed");
+					return ValidationResult.error("Only 15 characters allowed");
 				}
-				return new ValidationResult();
+				return ValidationResult.ok();
 			}
-
 		};
 
 		widgetContainer.setLayout(new MigLayoutDescriptor("[][grow, 250:250:800][250::800]", ""));
@@ -109,8 +107,8 @@ public class HelloContentCreator implements IInputContentCreator<String> {
 	}
 
 	@Override
-	public ValidationResult validate() {
-		return new ValidationResult();
+	public IValidationResult validate() {
+		return ValidationResult.ok();
 	}
 
 	@Override

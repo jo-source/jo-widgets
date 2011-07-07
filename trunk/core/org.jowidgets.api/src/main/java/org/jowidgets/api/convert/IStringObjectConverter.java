@@ -27,9 +27,9 @@
  */
 package org.jowidgets.api.convert;
 
-import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.common.mask.ITextMask;
 import org.jowidgets.common.verify.IInputVerifier;
+import org.jowidgets.validation.IValidator;
 
 public interface IStringObjectConverter<OBJECT_TYPE> {
 

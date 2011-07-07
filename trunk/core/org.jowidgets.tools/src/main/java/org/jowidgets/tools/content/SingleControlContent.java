@@ -29,11 +29,11 @@
 package org.jowidgets.tools.content;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.validation.IValidationResult;
 
 public class SingleControlContent<INPUT_TYPE> implements IInputContentCreator<INPUT_TYPE> {
 
@@ -85,7 +85,7 @@ public class SingleControlContent<INPUT_TYPE> implements IInputContentCreator<IN
 	}
 
 	@Override
-	public ValidationResult validate() {
+	public IValidationResult validate() {
 		return contentCreator.validate();
 	}
 

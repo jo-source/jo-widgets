@@ -33,12 +33,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.jowidgets.api.convert.IConverter;
-import org.jowidgets.api.validation.IValidator;
-import org.jowidgets.api.validation.ValidationMessageType;
-import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.common.mask.ITextMask;
 import org.jowidgets.tools.converter.AbstractConverter;
 import org.jowidgets.util.Assert;
+import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.validation.IValidator;
+import org.jowidgets.validation.ValidationResult;
 
 public final class DefaultDateConverter extends AbstractConverter<Date> implements IConverter<Date> {
 
@@ -89,21 +89,21 @@ public final class DefaultDateConverter extends AbstractConverter<Date> implemen
 	public IValidator<String> getStringValidator() {
 		return new IValidator<String>() {
 			@Override
-			public ValidationResult validate(final String input) {
+			public IValidationResult validate(final String input) {
 				if (input != null && !input.trim().isEmpty() && (textMask == null || !textMask.getPlaceholder().equals(input))) {
 					try {
 						dateFormat.parse(input);
 					}
 					catch (final ParseException e) {
 						if (formatHint != null) {
-							return new ValidationResult(ValidationMessageType.ERROR, "Must have the format '" + formatHint + "'");
+							return ValidationResult.error("Must have the format '" + formatHint + "'");
 						}
 						else {
-							return new ValidationResult(ValidationMessageType.ERROR, "Is not a valid date or time ");
+							return ValidationResult.error("Is not a valid date or time ");
 						}
 					}
 				}
-				return new ValidationResult();
+				return ValidationResult.ok();
 			}
 		};
 	}

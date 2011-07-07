@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,10 +26,28 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.validation;
+package org.jowidgets.validation;
 
-public interface IValidateable {
+public interface IValidationResultBuilder {
 
-	ValidationResult validate();
+	IValidationResultBuilder addMessage(final IValidationMessage text);
+
+	IValidationResultBuilder addError(final String text);
+
+	IValidationResultBuilder addInfoError(final String text);
+
+	IValidationResultBuilder addWarning(final String text);
+
+	IValidationResultBuilder addError(final String context, final String text);
+
+	IValidationResultBuilder addInfoError(final String context, final String text);
+
+	IValidationResultBuilder addWarning(final String context, final String text);
+
+	IValidationResultBuilder addResult(final IValidationResult result);
+
+	IValidationResultBuilder addResult(final String context, final IValidationResult result);
+
+	IValidationResult build();
 
 }

@@ -28,9 +28,6 @@
 package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.convert.IConverter;
-import org.jowidgets.api.validation.IValidateable;
-import org.jowidgets.api.validation.IValidator;
-import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IInputField;
 import org.jowidgets.api.widgets.ITextControl;
 import org.jowidgets.api.widgets.descriptor.setup.IInputFieldSetup;
@@ -39,6 +36,9 @@ import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.tools.widgets.base.AbstractInputControl;
+import org.jowidgets.validation.IValidateable;
+import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.validation.IValidator;
 
 public class InputFieldImpl<VALUE_TYPE> extends AbstractInputControl<VALUE_TYPE> implements IInputField<VALUE_TYPE> {
 
@@ -57,7 +57,7 @@ public class InputFieldImpl<VALUE_TYPE> extends AbstractInputControl<VALUE_TYPE>
 		if (stringValidator != null) {
 			addValidatable(new IValidateable() {
 				@Override
-				public ValidationResult validate() {
+				public IValidationResult validate() {
 					return stringValidator.validate(textField.getText());
 				}
 			});

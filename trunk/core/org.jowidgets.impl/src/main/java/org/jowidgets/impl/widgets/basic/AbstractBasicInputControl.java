@@ -28,9 +28,6 @@
 
 package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.api.validation.IValidateable;
-import org.jowidgets.api.validation.IValidator;
-import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.IPopupMenu;
@@ -40,6 +37,9 @@ import org.jowidgets.impl.widgets.common.wrapper.InputControlSpiWrapper;
 import org.jowidgets.spi.widgets.IInputControlSpi;
 import org.jowidgets.tools.widgets.delegate.InputValidationDelegate;
 import org.jowidgets.util.EmptyCheck;
+import org.jowidgets.validation.IValidateable;
+import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.validation.IValidator;
 
 public abstract class AbstractBasicInputControl<VALUE_TYPE> extends InputControlSpiWrapper implements IInputControl<VALUE_TYPE> {
 
@@ -69,7 +69,7 @@ public abstract class AbstractBasicInputControl<VALUE_TYPE> extends InputControl
 	}
 
 	@Override
-	public final ValidationResult validate() {
+	public final IValidationResult validate() {
 		return inputValidationDelegate.validate(getValue());
 	}
 
