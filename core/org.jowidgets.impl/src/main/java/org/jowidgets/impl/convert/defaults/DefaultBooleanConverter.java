@@ -28,9 +28,10 @@
 package org.jowidgets.impl.convert.defaults;
 
 import org.jowidgets.api.convert.IConverter;
-import org.jowidgets.api.validation.IValidator;
-import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.tools.converter.AbstractConverter;
+import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.validation.IValidator;
+import org.jowidgets.validation.ValidationResult;
 
 public class DefaultBooleanConverter extends AbstractConverter<Boolean> implements IConverter<Boolean> {
 
@@ -47,12 +48,11 @@ public class DefaultBooleanConverter extends AbstractConverter<Boolean> implemen
 		this.matchingRegExp = matchingRegExp;
 		this.stringValidator = new IValidator<String>() {
 			@Override
-			public ValidationResult validate(final String input) {
-				final ValidationResult result = new ValidationResult();
+			public IValidationResult validate(final String input) {
 				if (input != null && !input.isEmpty() && convertToObject(input) == null) {
-					result.addValidationError("Must be '" + trueStrings[0] + "' or '" + falseStrings[0] + "'");
+					return ValidationResult.error("Must be '" + trueStrings[0] + "' or '" + falseStrings[0] + "'");
 				}
-				return result;
+				return ValidationResult.ok();
 			}
 		};
 	}

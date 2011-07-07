@@ -27,8 +27,8 @@
  */
 package org.jowidgets.api.widgets.content;
 
-import org.jowidgets.api.validation.IValidateable;
 import org.jowidgets.api.widgets.access.IInputValueAccessor;
+import org.jowidgets.validation.IValidateable;
 
 public interface IInputContentCreator<INPUT_TYPE> extends IInputValueAccessor<INPUT_TYPE>, IValidateable {
 

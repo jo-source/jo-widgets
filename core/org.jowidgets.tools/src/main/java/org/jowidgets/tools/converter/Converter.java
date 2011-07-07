@@ -31,10 +31,10 @@ package org.jowidgets.tools.converter;
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.convert.IStringObjectConverter;
-import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.common.mask.ITextMask;
 import org.jowidgets.common.verify.IInputVerifier;
 import org.jowidgets.util.Assert;
+import org.jowidgets.validation.IValidator;
 
 public final class Converter<TYPE> implements IConverter<TYPE> {
 

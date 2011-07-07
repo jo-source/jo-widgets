@@ -31,8 +31,6 @@ import java.util.List;
 
 import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.validation.IValidateable;
-import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
@@ -51,6 +49,8 @@ import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 import org.jowidgets.tools.widgets.base.AbstractInputComponent;
+import org.jowidgets.validation.IValidateable;
+import org.jowidgets.validation.IValidationResult;
 
 public class InputContentContainer<INPUT_TYPE> extends AbstractInputComponent<INPUT_TYPE> implements IInputContentContainer {
 
@@ -72,7 +72,7 @@ public class InputContentContainer<INPUT_TYPE> extends AbstractInputComponent<IN
 		addValidatable(new IValidateable() {
 
 			@Override
-			public ValidationResult validate() {
+			public IValidationResult validate() {
 				return content.validate();
 			}
 		});

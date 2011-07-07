@@ -29,7 +29,6 @@
 package org.jowidgets.impl.content;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
@@ -37,6 +36,8 @@ import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.util.Assert;
+import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.validation.ValidationResult;
 
 class SingleControlContent<INPUT_TYPE> implements IInputContentCreator<INPUT_TYPE> {
 
@@ -103,8 +104,8 @@ class SingleControlContent<INPUT_TYPE> implements IInputContentCreator<INPUT_TYP
 	}
 
 	@Override
-	public ValidationResult validate() {
-		return new ValidationResult();
+	public IValidationResult validate() {
+		return ValidationResult.ok();
 	}
 
 	@Override

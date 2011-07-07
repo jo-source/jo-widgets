@@ -31,7 +31,6 @@ import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.IToolkit;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.ICheckBox;
 import org.jowidgets.api.widgets.IComboBox;
 import org.jowidgets.api.widgets.IToggleButton;
@@ -43,6 +42,8 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.validation.ValidationResult;
 
 public class HelloContentCreator2 implements IInputContentCreator<String> {
 
@@ -93,8 +94,8 @@ public class HelloContentCreator2 implements IInputContentCreator<String> {
 	}
 
 	@Override
-	public ValidationResult validate() {
-		return new ValidationResult();
+	public IValidationResult validate() {
+		return ValidationResult.ok();
 	}
 
 	@Override

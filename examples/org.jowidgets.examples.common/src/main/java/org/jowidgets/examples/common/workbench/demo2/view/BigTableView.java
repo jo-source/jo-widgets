@@ -38,8 +38,6 @@ import org.jowidgets.api.model.table.IDefaultTableColumnBuilder;
 import org.jowidgets.api.model.table.IDefaultTableColumnModel;
 import org.jowidgets.api.model.table.ITableCellBuilder;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.validation.IValidator;
-import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IInputDialog;
 import org.jowidgets.api.widgets.IPopupMenu;
@@ -61,6 +59,9 @@ import org.jowidgets.tools.model.table.AbstractTableDataModel;
 import org.jowidgets.tools.model.table.DefaultTableColumnBuilder;
 import org.jowidgets.tools.model.table.DefaultTableColumnModel;
 import org.jowidgets.tools.model.table.TableCellBuilder;
+import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.validation.IValidator;
+import org.jowidgets.validation.ValidationResult;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
 
@@ -218,15 +219,14 @@ public class BigTableView extends AbstractDemoView implements IView {
 
 		inputDialogBp.setValidator(new IValidator<Integer>() {
 			@Override
-			public ValidationResult validate(final Integer validationInput) {
-				final ValidationResult result = new ValidationResult();
+			public IValidationResult validate(final Integer validationInput) {
 				if (validationInput != null && validationInput > 100000000) {
-					result.addValidationError("Row count must be less than '" + 100000000 + "'");
+					return ValidationResult.error("Row count must be less than '" + 100000000 + "'");
 				}
 				if (validationInput != null && validationInput < 0) {
-					result.addValidationError("Row count must be greater than '" + 0 + "'");
+					return ValidationResult.error("Row count must be greater than '" + 0 + "'");
 				}
-				return result;
+				return ValidationResult.ok();
 			}
 		});
 

@@ -30,9 +30,11 @@ package org.jowidgets.tools.validation;
 import java.util.Arrays;
 import java.util.List;
 
-import org.jowidgets.api.validation.IValidator;
-import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.util.Assert;
+import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.validation.IValidationResultBuilder;
+import org.jowidgets.validation.IValidator;
+import org.jowidgets.validation.ValidationResult;
 
 public class CompoundValidator<VALIDATION_INPUT_TYPE> implements IValidator<VALIDATION_INPUT_TYPE> {
 
@@ -43,13 +45,13 @@ public class CompoundValidator<VALIDATION_INPUT_TYPE> implements IValidator<VALI
 	}
 
 	@Override
-	public ValidationResult validate(final VALIDATION_INPUT_TYPE validationInput) {
-		final ValidationResult validationResult = new ValidationResult();
+	public IValidationResult validate(final VALIDATION_INPUT_TYPE validationInput) {
+		final IValidationResultBuilder builder = ValidationResult.builder();
 		for (final IValidator<VALIDATION_INPUT_TYPE> validator : validators) {
-			final ValidationResult subResult = validator.validate(validationInput);
-			validationResult.addValidationResult(subResult);
+			final IValidationResult subResult = validator.validate(validationInput);
+			builder.addResult(subResult);
 		}
-		return validationResult;
+		return builder.build();
 	}
 
 	public void addValidator(final IValidator<VALIDATION_INPUT_TYPE> validator) {

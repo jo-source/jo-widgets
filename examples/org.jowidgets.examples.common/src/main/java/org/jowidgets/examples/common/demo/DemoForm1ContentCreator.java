@@ -34,8 +34,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.validation.IValidator;
-import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IComboBox;
 import org.jowidgets.api.widgets.IInputComponent;
 import org.jowidgets.api.widgets.IInputField;
@@ -54,6 +52,9 @@ import org.jowidgets.common.widgets.controler.IMouseEvent;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.controler.KeyAdapter;
 import org.jowidgets.tools.controler.MouseAdapter;
+import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.validation.IValidator;
+import org.jowidgets.validation.ValidationResult;
 
 public class DemoForm1ContentCreator implements IInputContentCreator<List<String>> {
 
@@ -89,12 +90,11 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 		final IValidator<String> moreThanOneWordValidator = new IValidator<String>() {
 
 			@Override
-			public ValidationResult validate(final String validationInput) {
-				final ValidationResult result = new ValidationResult();
+			public IValidationResult validate(final String validationInput) {
 				if (validationInput != null && validationInput.trim().length() > 0 && validationInput.trim().contains(" ")) {
-					result.addValidationWarning("Input contains more than one word");
+					return ValidationResult.warning("Input contains more than one word");
 				}
-				return result;
+				return ValidationResult.ok();
 			};
 
 		};
@@ -102,12 +102,11 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 		final IValidator<String> maxLengthValidator = new IValidator<String>() {
 
 			@Override
-			public ValidationResult validate(final String validationInput) {
-				final ValidationResult result = new ValidationResult();
+			public IValidationResult validate(final String validationInput) {
 				if (validationInput != null && validationInput.length() > 50) {
-					result.addValidationError("Input must not have more than 50 characters");
+					return ValidationResult.error("Input must not have more than 50 characters");
 				}
-				return result;
+				return ValidationResult.ok();
 			};
 
 		};
@@ -332,8 +331,8 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 	}
 
 	@Override
-	public ValidationResult validate() {
-		return new ValidationResult();
+	public IValidationResult validate() {
+		return ValidationResult.ok();
 	}
 
 	@Override

@@ -30,10 +30,11 @@ package org.jowidgets.impl.convert;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jowidgets.api.validation.IValidator;
-import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.tools.converter.AbstractStringObjectConverter;
 import org.jowidgets.util.Assert;
+import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.validation.IValidator;
+import org.jowidgets.validation.ValidationResult;
 
 public class StringObjectMapConverter<OBJECT_TYPE> extends AbstractStringObjectConverter<OBJECT_TYPE> {
 
@@ -47,17 +48,16 @@ public class StringObjectMapConverter<OBJECT_TYPE> extends AbstractStringObjectC
 		this.stringValidator = new IValidator<String>() {
 
 			@Override
-			public ValidationResult validate(final String input) {
-				final ValidationResult result = new ValidationResult();
+			public IValidationResult validate(final String input) {
 				if (input != null && !input.isEmpty() && convertToObject(input) == null) {
 					if (hint != null && !hint.isEmpty()) {
-						result.addValidationError(hint);
+						return ValidationResult.error(hint);
 					}
 					else {
-						result.addValidationError("Input not valid");
+						return ValidationResult.error("Input not valid");
 					}
 				}
-				return result;
+				return ValidationResult.ok();
 			}
 		};
 	}

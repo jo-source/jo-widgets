@@ -28,51 +28,71 @@
 
 package org.jowidgets.validation;
 
-public final class ValidationResult {
+final class ValidationResultBuilder implements IValidationResultBuilder {
 
-	private static final IValidationResult OK = new ValidationResultImpl();
+	private IValidationResult current;
 
-	private ValidationResult() {}
-
-	public static IValidationResultBuilder builder() {
-		return new ValidationResultBuilder();
+	ValidationResultBuilder() {
+		this.current = ValidationResult.create();
 	}
 
-	public static IValidationResult create() {
-		return OK;
+	@Override
+	public IValidationResultBuilder addMessage(final IValidationMessage text) {
+		current = current.withMessage(text);
+		return this;
 	}
 
-	public static IValidationResult ok() {
-		return OK;
+	@Override
+	public IValidationResultBuilder addError(final String text) {
+		current = current.withError(text);
+		return this;
 	}
 
-	public static IValidationResult create(final IValidationMessage message) {
-		Assert.paramNotNull(message, "message");
-		return create().withMessage(message);
+	@Override
+	public IValidationResultBuilder addInfoError(final String text) {
+		current = current.withInfoError(text);
+		return this;
 	}
 
-	public static IValidationResult warning(final String text) {
-		return create().withWarning(text);
+	@Override
+	public IValidationResultBuilder addWarning(final String text) {
+		current = current.withWarning(text);
+		return this;
 	}
 
-	public static IValidationResult infoError(final String text) {
-		return create().withInfoError(text);
+	@Override
+	public IValidationResultBuilder addError(final String context, final String text) {
+		current = current.withError(context, text);
+		return this;
 	}
 
-	public static IValidationResult error(final String text) {
-		return create().withError(text);
+	@Override
+	public IValidationResultBuilder addInfoError(final String context, final String text) {
+		current = current.withInfoError(context, text);
+		return this;
 	}
 
-	public static IValidationResult warning(final String context, final String text) {
-		return create().withWarning(context, text);
+	@Override
+	public IValidationResultBuilder addWarning(final String context, final String text) {
+		current = current.withWarning(context, text);
+		return this;
 	}
 
-	public static IValidationResult infoError(final String context, final String text) {
-		return create().withInfoError(context, text);
+	@Override
+	public IValidationResultBuilder addResult(final IValidationResult result) {
+		current = current.withResult(result);
+		return this;
 	}
 
-	public static IValidationResult error(final String context, final String text) {
-		return create().withError(context, text);
+	@Override
+	public IValidationResultBuilder addResult(final String context, final IValidationResult result) {
+		current = current.withResult(context, result);
+		return this;
+	}
+
+	@Override
+	public IValidationResult build() {
+		return current;
 	}
 
 }

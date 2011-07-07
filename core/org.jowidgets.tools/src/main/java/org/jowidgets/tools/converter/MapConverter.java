@@ -32,9 +32,9 @@ import java.util.Map;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.validation.IValidator;
 import org.jowidgets.common.mask.ITextMask;
 import org.jowidgets.common.verify.IInputVerifier;
+import org.jowidgets.validation.IValidator;
 
 public final class MapConverter<OBJECT_TYPE> implements IConverter<OBJECT_TYPE> {
 

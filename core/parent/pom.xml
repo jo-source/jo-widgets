@@ -16,6 +16,7 @@
 
 	<modules>
 	    <module>../org.jowidgets.util</module>
+		<module>../org.jowidgets.validation</module>
 		<module>../org.jowidgets.common</module>
 		<module>../org.jowidgets.api</module>
 		<module>../org.jowidgets.api.test</module>

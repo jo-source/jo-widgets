@@ -29,8 +29,6 @@ package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.validation.IValidator;
-import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IInputComposite;
@@ -51,6 +49,8 @@ import org.jowidgets.common.widgets.controler.IMouseListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.composed.internal.InputContentContainer;
+import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.validation.IValidator;
 
 public class InputCompositeWidget<INPUT_TYPE> implements IInputComposite<INPUT_TYPE> {
 
@@ -312,7 +312,7 @@ public class InputCompositeWidget<INPUT_TYPE> implements IInputComposite<INPUT_T
 	}
 
 	@Override
-	public ValidationResult validate() {
+	public IValidationResult validate() {
 		return contentContainer.validate();
 	}
 

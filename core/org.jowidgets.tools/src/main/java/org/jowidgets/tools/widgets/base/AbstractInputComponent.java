@@ -31,9 +31,6 @@ package org.jowidgets.tools.widgets.base;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.jowidgets.api.validation.IValidateable;
-import org.jowidgets.api.validation.IValidator;
-import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IInputComponent;
 import org.jowidgets.api.widgets.descriptor.setup.IInputComponentSetup;
@@ -43,6 +40,9 @@ import org.jowidgets.tools.widgets.delegate.InputValidationDelegate;
 import org.jowidgets.tools.widgets.wrapper.ComponentWrapper;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.EmptyCheck;
+import org.jowidgets.validation.IValidateable;
+import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.validation.IValidator;
 
 public abstract class AbstractInputComponent<VALUE_TYPE> extends ComponentWrapper implements IInputComponent<VALUE_TYPE> {
 
@@ -127,7 +127,7 @@ public abstract class AbstractInputComponent<VALUE_TYPE> extends ComponentWrappe
 	}
 
 	@Override
-	public ValidationResult validate() {
+	public IValidationResult validate() {
 		return inputValidationDelegate.validate(getValue());
 	}
 

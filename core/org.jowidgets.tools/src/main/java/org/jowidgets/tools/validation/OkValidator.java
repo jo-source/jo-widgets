@@ -27,14 +27,15 @@
  */
 package org.jowidgets.tools.validation;
 
-import org.jowidgets.api.validation.IValidator;
-import org.jowidgets.api.validation.ValidationResult;
+import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.validation.IValidator;
+import org.jowidgets.validation.ValidationResult;
 
 public class OkValidator<VALIDATION_INPUT_TYPE> implements IValidator<VALIDATION_INPUT_TYPE> {
 
 	@Override
-	public ValidationResult validate(final VALIDATION_INPUT_TYPE validationInput) {
-		return new ValidationResult();
+	public IValidationResult validate(final VALIDATION_INPUT_TYPE validationInput) {
+		return ValidationResult.ok();
 	}
 
 }

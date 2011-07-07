@@ -29,22 +29,22 @@ package org.jowidgets.tools.validation;
 
 import java.util.Collection;
 
-import org.jowidgets.api.validation.IValidator;
-import org.jowidgets.api.validation.ValidationMessageType;
-import org.jowidgets.api.validation.ValidationResult;
 import org.jowidgets.util.Assert;
+import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.validation.IValidator;
+import org.jowidgets.validation.ValidationResult;
 
 public class MandatoryInfoValidator<VALIDATION_INPUT_TYPE> implements IValidator<VALIDATION_INPUT_TYPE> {
 
-	private final ValidationResult infoResult;
+	private final IValidationResult infoResult;
 
 	public MandatoryInfoValidator(final String messageText) {
 		Assert.paramNotEmpty(messageText, "messageText");
-		this.infoResult = new ValidationResult(ValidationMessageType.INFO_ERROR, messageText);
+		this.infoResult = ValidationResult.infoError(messageText);
 	}
 
 	@Override
-	public ValidationResult validate(final VALIDATION_INPUT_TYPE validationInput) {
+	public IValidationResult validate(final VALIDATION_INPUT_TYPE validationInput) {
 		if (validationInput == null) {
 			return infoResult;
 		}
@@ -54,7 +54,7 @@ public class MandatoryInfoValidator<VALIDATION_INPUT_TYPE> implements IValidator
 		else if (validationInput instanceof Collection<?> && ((Collection<?>) validationInput).isEmpty()) {
 			return infoResult;
 		}
-		return new ValidationResult();
+		return ValidationResult.ok();
 	}
 
 }
