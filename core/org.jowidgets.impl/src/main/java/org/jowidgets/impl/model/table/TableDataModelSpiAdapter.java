@@ -57,19 +57,17 @@ final class TableDataModelSpiAdapter implements ITableDataModel {
 
 	@Override
 	public ArrayList<Integer> getSelection() {
-		// TODO NM fix indiced
 		return dataModel.getSelection();
 	}
 
 	@Override
 	public void setSelection(final List<Integer> selection) {
-		// TODO NM fix indiced
 		dataModel.setSelection(selection);
 	}
 
 	@Override
 	public ITableDataModelObservable getTableDataModelObservable() {
-		// TODO NM fix indiced
+		// TODO NM fix indices
 		return dataModel.getTableDataModelObservable();
 	}
 
