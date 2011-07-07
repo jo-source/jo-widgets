@@ -97,37 +97,37 @@ public class ValidationMessageTest {
 
 		Assert.assertTrue(ok.equalOrWorse(ok));
 		Assert.assertFalse(ok.worse(ok));
-		Assert.assertTrue(ok.equalOrWorse(warning));
-		Assert.assertTrue(ok.worse(warning));
-		Assert.assertTrue(ok.equalOrWorse(infoError));
-		Assert.assertTrue(ok.worse(infoError));
-		Assert.assertTrue(ok.equalOrWorse(error));
-		Assert.assertTrue(ok.worse(error));
+		Assert.assertFalse(ok.equalOrWorse(warning));
+		Assert.assertFalse(ok.worse(warning));
+		Assert.assertFalse(ok.equalOrWorse(infoError));
+		Assert.assertFalse(ok.worse(infoError));
+		Assert.assertFalse(ok.equalOrWorse(error));
+		Assert.assertFalse(ok.worse(error));
 
-		Assert.assertFalse(warning.equalOrWorse(ok));
-		Assert.assertFalse(warning.worse(ok));
+		Assert.assertTrue(warning.equalOrWorse(ok));
+		Assert.assertTrue(warning.worse(ok));
 		Assert.assertTrue(warning.equalOrWorse(warning));
 		Assert.assertFalse(warning.worse(warning));
-		Assert.assertTrue(warning.equalOrWorse(infoError));
-		Assert.assertTrue(warning.worse(infoError));
-		Assert.assertTrue(warning.equalOrWorse(error));
-		Assert.assertTrue(warning.worse(error));
+		Assert.assertFalse(warning.equalOrWorse(infoError));
+		Assert.assertFalse(warning.worse(infoError));
+		Assert.assertFalse(warning.equalOrWorse(error));
+		Assert.assertFalse(warning.worse(error));
 
-		Assert.assertFalse(infoError.equalOrWorse(ok));
-		Assert.assertFalse(infoError.worse(ok));
-		Assert.assertFalse(infoError.equalOrWorse(warning));
-		Assert.assertFalse(infoError.worse(warning));
+		Assert.assertTrue(infoError.equalOrWorse(ok));
+		Assert.assertTrue(infoError.worse(ok));
+		Assert.assertTrue(infoError.equalOrWorse(warning));
+		Assert.assertTrue(infoError.worse(warning));
 		Assert.assertTrue(infoError.equalOrWorse(infoError));
 		Assert.assertFalse(infoError.worse(infoError));
-		Assert.assertTrue(infoError.equalOrWorse(error));
-		Assert.assertTrue(infoError.worse(error));
+		Assert.assertFalse(infoError.equalOrWorse(error));
+		Assert.assertFalse(infoError.worse(error));
 
-		Assert.assertFalse(error.equalOrWorse(ok));
-		Assert.assertFalse(error.worse(ok));
-		Assert.assertFalse(error.equalOrWorse(warning));
-		Assert.assertFalse(error.worse(warning));
-		Assert.assertFalse(error.equalOrWorse(infoError));
-		Assert.assertFalse(error.worse(infoError));
+		Assert.assertTrue(error.equalOrWorse(ok));
+		Assert.assertTrue(error.worse(ok));
+		Assert.assertTrue(error.equalOrWorse(warning));
+		Assert.assertTrue(error.worse(warning));
+		Assert.assertTrue(error.equalOrWorse(infoError));
+		Assert.assertTrue(error.worse(infoError));
 		Assert.assertTrue(error.equalOrWorse(error));
 		Assert.assertFalse(error.worse(error));
 	}

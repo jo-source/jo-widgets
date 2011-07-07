@@ -68,10 +68,10 @@ final class ValidationResultImpl implements IValidationResult, Serializable {
 		final IValidationMessage thirdWorst = newMessage != null ? newMessage : ValidationMessage.ok();
 
 		IValidationMessage worst = firstWorst;
-		if (worst.worse(secondWorst)) {
+		if (secondWorst.worse(worst)) {
 			worst = secondWorst;
 		}
-		if (worst.worse(thirdWorst)) {
+		if (thirdWorst.worse(worst)) {
 			worst = thirdWorst;
 		}
 		this.worstFirst = getMessage(worst, newContext);
