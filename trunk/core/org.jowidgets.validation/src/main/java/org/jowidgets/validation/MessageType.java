@@ -61,12 +61,13 @@ public enum MessageType {
 	}
 
 	/**
-	 * Checks if the severity of the given type is equal or worse
-	 * than the severity of this this.
+	 * Checks if the severity of this type is equal or worse
+	 * than the severity of the given type.
 	 * 
-	 * @param message The message to check
-	 * @return True if the severity the of the given type is equal or worse
-	 *         than the severity of this type, false otherwise
+	 * @param message The type to check against
+	 * 
+	 * @return True if the severity the of this type is equal or worse
+	 *         than the severity of the given type, false otherwise
 	 */
 	public boolean equalOrWorse(final MessageType messageType) {
 		Assert.paramNotNull(messageType, "messageType");
@@ -74,26 +75,27 @@ public enum MessageType {
 	}
 
 	/**
-	 * Checks if the severity of the given type is equal
-	 * than the severity of this type.
+	 * Checks if the severity of this type is worse
+	 * than the severity of the given type.
 	 * 
-	 * @param message The message to check
-	 * @return True if the severity the of the given type is worse
-	 *         than the severity of this type, false otherwise
+	 * @param message The type to check against
+	 * 
+	 * @return True if the severity the of this type is worse
+	 *         than the severity of the given type, false otherwise
 	 */
 	public boolean worse(final MessageType messageType) {
 		Assert.paramNotNull(messageType, "messageType");
 		if (this == OK) {
-			return messageType == WARNING || messageType == INFO_ERROR || messageType == ERROR;
+			return false;
 		}
 		else if (this == WARNING) {
-			return messageType == INFO_ERROR || messageType == ERROR;
+			return messageType == OK;
 		}
 		else if (this == INFO_ERROR) {
-			return messageType == ERROR;
+			return messageType == OK || messageType == WARNING;
 		}
 		else if (this == ERROR) {
-			return false;
+			return messageType == OK || messageType == WARNING || messageType == INFO_ERROR;
 		}
 		else {
 			throw new IllegalArgumentException("MessageType '" + messageType + "' is not known");
