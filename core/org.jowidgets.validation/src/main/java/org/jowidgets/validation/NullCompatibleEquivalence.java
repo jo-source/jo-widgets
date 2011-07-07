@@ -27,11 +27,11 @@
  */
 package org.jowidgets.validation;
 
-public final class NullCompatibleEquivalence {
+final class NullCompatibleEquivalence {
 
 	private NullCompatibleEquivalence() {}
 
-	public static boolean equals(final Object object1, final Object object2) {
+	static boolean equals(final Object object1, final Object object2) {
 		if (object1 == null && object2 == null) {
 			return true;
 		}
