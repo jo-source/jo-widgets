@@ -45,29 +45,44 @@ public final class FontProvider {
 	public static Font deriveFont(final Font baseFont, final Markup markup) {
 		Assert.paramNotNull(baseFont, "baseFont");
 		Assert.paramNotNull(markup, "markup");
+		return deriveFont(baseFont, null, null, markup);
+	}
 
-		int style;
-		if (Markup.DEFAULT.equals(markup)) {
-			style = SWT.NORMAL;
+	public static Font deriveFont(final Font baseFont, final String fontName) {
+		Assert.paramNotNull(baseFont, "baseFont");
+		Assert.paramNotNull(fontName, "fontName");
+		return deriveFont(baseFont, fontName, null, null);
+	}
+
+	public static Font deriveFont(final Font baseFont, final int height) {
+		Assert.paramNotNull(baseFont, "baseFont");
+		return deriveFont(baseFont, null, Integer.valueOf(height), null);
+	}
+
+	public static Font deriveFont(final Font baseFont, final String newFontName, final Integer newHeight, final Markup newMarkup) {
+		Assert.paramNotNull(baseFont, "baseFont");
+
+		Integer newStyle = null;
+		if (Markup.DEFAULT.equals(newMarkup)) {
+			newStyle = SWT.NORMAL;
 		}
-		else if (Markup.STRONG.equals(markup)) {
-			style = SWT.BOLD;
+		else if (Markup.STRONG.equals(newMarkup)) {
+			newStyle = SWT.BOLD;
 		}
-		else if (Markup.EMPHASIZED.equals(markup)) {
-			style = SWT.ITALIC;
-		}
-		else {
-			throw new IllegalArgumentException("The markup '" + markup + "' is unknown.");
+		else if (Markup.EMPHASIZED.equals(newMarkup)) {
+			newStyle = SWT.ITALIC;
 		}
 
 		final FontData[] oldFontData = baseFont.getFontData();
 		final FontData[] newFontData = new FontData[oldFontData.length];
 
 		for (int i = 0; i < oldFontData.length; i++) {
-			newFontData[i] = new FontData(oldFontData[i].getName(), oldFontData[i].getHeight(), style);
+			final String fontName = newFontName != null ? newFontName : oldFontData[i].getName();
+			final int fontHeight = newHeight != null ? newHeight.intValue() : oldFontData[i].getHeight();
+			final int style = newStyle != null ? newStyle.intValue() : oldFontData[i].getStyle();
+			newFontData[i] = new FontData(fontName, fontHeight, style);
 		}
 
 		return FONT_CACHE.getFont(new FontDataKey(newFontData));
 	}
-
 }
