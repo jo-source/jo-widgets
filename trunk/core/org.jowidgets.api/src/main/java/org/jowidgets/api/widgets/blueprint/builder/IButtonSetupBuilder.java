@@ -35,4 +35,8 @@ public interface IButtonSetupBuilder<INSTANCE_TYPE extends IButtonSetupBuilder<?
 
 	INSTANCE_TYPE setEnabled(boolean enabled);
 
+	INSTANCE_TYPE setFontSize(Integer size);
+
+	INSTANCE_TYPE setFontName(String fontName);
+
 }

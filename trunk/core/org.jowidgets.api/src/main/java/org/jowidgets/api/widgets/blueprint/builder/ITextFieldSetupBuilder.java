@@ -28,6 +28,7 @@
 package org.jowidgets.api.widgets.blueprint.builder;
 
 import org.jowidgets.common.mask.ITextMask;
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.builder.ITextFieldSetupBuilderCommon;
 
 public interface ITextFieldSetupBuilder<INSTANCE_TYPE extends ITextFieldSetupBuilder<?>> extends
@@ -38,5 +39,11 @@ public interface ITextFieldSetupBuilder<INSTANCE_TYPE extends ITextFieldSetupBui
 	INSTANCE_TYPE setText(String text);
 
 	INSTANCE_TYPE setMask(final ITextMask textMask);
+
+	INSTANCE_TYPE setMarkup(Markup markup);
+
+	INSTANCE_TYPE setFontSize(Integer size);
+
+	INSTANCE_TYPE setFontName(String fontName);
 
 }

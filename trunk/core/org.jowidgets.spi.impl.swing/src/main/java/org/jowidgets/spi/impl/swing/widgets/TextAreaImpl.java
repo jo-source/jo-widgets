@@ -35,8 +35,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import org.jowidgets.common.types.InputChangeEventPolicy;
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.verify.IInputVerifier;
 import org.jowidgets.spi.impl.controler.InputObservable;
+import org.jowidgets.spi.impl.swing.util.FontProvider;
 import org.jowidgets.spi.impl.swing.widgets.util.InputModifierDocument;
 import org.jowidgets.spi.impl.verify.InputVerifierHelper;
 import org.jowidgets.spi.widgets.ITextAreaSpi;
@@ -104,6 +106,21 @@ public class TextAreaImpl extends AbstractInputControl implements ITextAreaSpi {
 		if (!textArea.isFocusOwner()) {
 			fireInputChanged(getText());
 		}
+	}
+
+	@Override
+	public void setFontSize(final int size) {
+		textArea.setFont(FontProvider.deriveFont(textArea.getFont(), size));
+	}
+
+	@Override
+	public void setFontName(final String fontName) {
+		textArea.setFont(FontProvider.deriveFont(textArea.getFont(), fontName));
+	}
+
+	@Override
+	public void setMarkup(final Markup markup) {
+		textArea.setFont(FontProvider.deriveFont(textArea.getFont(), markup));
 	}
 
 	@Override

@@ -58,6 +58,13 @@ public class ButtonImpl extends ButtonSpiWrapper implements IButtonUi, IActionWi
 		VisibiliySettingsInvoker.setVisibility(descriptor, this);
 		ColorSettingsInvoker.setColors(descriptor, this);
 
+		if (descriptor.getFontSize() != null) {
+			setFontSize(Integer.valueOf(descriptor.getFontSize()));
+		}
+		if (descriptor.getFontName() != null) {
+			setFontName(descriptor.getFontName());
+		}
+
 		addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {

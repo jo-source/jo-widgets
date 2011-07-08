@@ -288,6 +288,16 @@ public class TextSeparatorImpl implements ITextLabel {
 	}
 
 	@Override
+	public void setFontSize(final int size) {
+		textLabelWidget.setFontSize(size);
+	}
+
+	@Override
+	public void setFontName(final String fontName) {
+		textLabelWidget.setFontName(fontName);
+	}
+
+	@Override
 	public boolean requestFocus() {
 		return compositeWidget.requestFocus();
 	}

@@ -81,6 +81,16 @@ public class CheckBoxImpl extends AbstractInputControl implements ICheckBoxSpi {
 	}
 
 	@Override
+	public void setFontSize(final int size) {
+		getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), size));
+	}
+
+	@Override
+	public void setFontName(final String fontName) {
+		getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), fontName));
+	}
+
+	@Override
 	public void setText(final String text) {
 		if (text != null) {
 			getUiReference().setText(text);

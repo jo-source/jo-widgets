@@ -64,4 +64,14 @@ public class TextLabelImpl extends DummyControl implements ITextLabelSpi {
 		getUiReference().setMarkup(markup);
 	}
 
+	@Override
+	public void setFontSize(final int size) {
+		getUiReference().setFontSize(size);
+	}
+
+	@Override
+	public void setFontName(final String fontName) {
+		getUiReference().setFontName(fontName);
+	}
+
 }

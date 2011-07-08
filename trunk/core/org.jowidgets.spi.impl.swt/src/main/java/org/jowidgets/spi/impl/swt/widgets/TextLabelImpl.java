@@ -79,4 +79,14 @@ public class TextLabelImpl extends SwtControl implements ITextLabelSpi {
 		label.setFont(newFont);
 	}
 
+	@Override
+	public void setFontSize(final int size) {
+		getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), size));
+	}
+
+	@Override
+	public void setFontName(final String fontName) {
+		getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), fontName));
+	}
+
 }

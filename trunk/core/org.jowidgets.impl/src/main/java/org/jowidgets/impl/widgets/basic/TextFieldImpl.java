@@ -32,6 +32,7 @@ import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITextControl;
 import org.jowidgets.api.widgets.descriptor.setup.ITextFieldSetup;
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
@@ -49,6 +50,16 @@ public class TextFieldImpl extends InputControlSpiWrapper implements ITextContro
 
 		if (setup.getText() != null) {
 			setText(setup.getText());
+		}
+
+		if (setup.getMarkup() != null) {
+			setMarkup(setup.getMarkup());
+		}
+		if (setup.getFontSize() != null) {
+			setFontSize(Integer.valueOf(setup.getFontSize()));
+		}
+		if (setup.getFontName() != null) {
+			setFontName(setup.getFontName());
 		}
 
 		setEditable(setup.isEditable());
@@ -90,6 +101,21 @@ public class TextFieldImpl extends InputControlSpiWrapper implements ITextContro
 	@Override
 	public void setText(final String text) {
 		getWidget().setText(text);
+	}
+
+	@Override
+	public void setFontSize(final int size) {
+		getWidget().setFontSize(size);
+	}
+
+	@Override
+	public void setFontName(final String fontName) {
+		getWidget().setFontName(fontName);
+	}
+
+	@Override
+	public void setMarkup(final Markup markup) {
+		getWidget().setMarkup(markup);
 	}
 
 	@Override

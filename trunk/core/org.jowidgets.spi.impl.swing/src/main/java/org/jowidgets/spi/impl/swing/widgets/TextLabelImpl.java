@@ -75,6 +75,16 @@ public class TextLabelImpl extends SwingControl implements ITextLabelSpi {
 	}
 
 	@Override
+	public void setFontSize(final int size) {
+		getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), size));
+	}
+
+	@Override
+	public void setFontName(final String fontName) {
+		getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), fontName));
+	}
+
+	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
 		if (colorValue != null) {
 			getUiReference().setOpaque(true);

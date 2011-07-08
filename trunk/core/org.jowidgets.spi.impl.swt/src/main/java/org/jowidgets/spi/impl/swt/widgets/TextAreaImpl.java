@@ -41,6 +41,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Text;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.verify.IInputVerifier;
 import org.jowidgets.spi.impl.swt.options.SwtOptions;
 import org.jowidgets.spi.impl.swt.util.FontProvider;
@@ -74,8 +75,6 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 		scrolledComposite.setAlwaysShowScrollBars(setup.isAlwaysShowBars());
 
 		textArea = new Text(getUiReference(), getTextStyle(setup));
-
-		textArea.setFont(FontProvider.deriveFont(textArea.getFont(), "Courier"));
 
 		this.readonlyListener = new VerifyListener() {
 			@Override
@@ -188,6 +187,21 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 		if (!getUiReference().isFocusControl()) {
 			fireInputChanged(getText());
 		}
+	}
+
+	@Override
+	public void setFontSize(final int size) {
+		textArea.setFont(FontProvider.deriveFont(textArea.getFont(), size));
+	}
+
+	@Override
+	public void setFontName(final String fontName) {
+		textArea.setFont(FontProvider.deriveFont(textArea.getFont(), fontName));
+	}
+
+	@Override
+	public void setMarkup(final Markup markup) {
+		textArea.setFont(FontProvider.deriveFont(textArea.getFont(), markup));
 	}
 
 	@Override

@@ -58,6 +58,13 @@ public class CheckBoxImpl extends AbstractBasicInputControl<Boolean> implements 
 			setValue(setup.getValue());
 		}
 
+		if (setup.getFontSize() != null) {
+			setFontSize(Integer.valueOf(setup.getFontSize()));
+		}
+		if (setup.getFontName() != null) {
+			setFontName(setup.getFontName());
+		}
+
 		getWidget().addInputListener(new IInputListener() {
 			@Override
 			public void inputChanged() {
@@ -112,6 +119,16 @@ public class CheckBoxImpl extends AbstractBasicInputControl<Boolean> implements 
 	public void removeInputListener(final IInputListener listener) {
 		super.removeInputListener(listener);
 		inputObservable.removeInputListener(listener);
+	}
+
+	@Override
+	public void setFontSize(final int size) {
+		textLabelWidgetCommonWrapper.setFontSize(size);
+	}
+
+	@Override
+	public void setFontName(final String fontName) {
+		textLabelWidgetCommonWrapper.setFontName(fontName);
 	}
 
 	@Override

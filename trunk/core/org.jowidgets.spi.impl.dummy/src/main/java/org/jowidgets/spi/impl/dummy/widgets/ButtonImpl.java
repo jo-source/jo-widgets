@@ -84,6 +84,16 @@ public class ButtonImpl extends AbstractActionControl implements IButtonUiSpi {
 	}
 
 	@Override
+	public void setFontSize(final int size) {
+		getUiReference().setFontSize(size);
+	}
+
+	@Override
+	public void setFontName(final String fontName) {
+		getUiReference().setFontName(fontName);
+	}
+
+	@Override
 	public boolean isTestable() {
 		return true;
 	}

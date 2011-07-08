@@ -28,6 +28,7 @@
 package org.jowidgets.api.widgets.blueprint.builder;
 
 import org.jowidgets.api.convert.IConverter;
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.builder.ITextFieldSetupBuilderCommon;
 
 public interface IInputFieldSetupBuilder<INSTANCE_TYPE extends IInputFieldSetupBuilder<?, ?>, INPUT_TYPE> extends
@@ -35,5 +36,11 @@ public interface IInputFieldSetupBuilder<INSTANCE_TYPE extends IInputFieldSetupB
 		ITextFieldSetupBuilderCommon<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setConverter(IConverter<INPUT_TYPE> converter);
+
+	INSTANCE_TYPE setMarkup(Markup markup);
+
+	INSTANCE_TYPE setFontSize(Integer size);
+
+	INSTANCE_TYPE setFontName(String fontName);
 
 }

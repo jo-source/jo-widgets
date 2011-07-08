@@ -61,4 +61,12 @@ public class UIDTextLabel extends UIDComponent {
 		this.horizontalAlignment = horizontalAlignment;
 	}
 
+	public void setFontSize(final int size) {
+		// TODO LG implement setFontSize
+	}
+
+	public void setFontName(final String fontName) {
+		// TODO LG implement setFontName
+	}
+
 }

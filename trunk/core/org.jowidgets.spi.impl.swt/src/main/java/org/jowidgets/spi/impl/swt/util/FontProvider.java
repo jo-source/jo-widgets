@@ -64,13 +64,16 @@ public final class FontProvider {
 
 		Integer newStyle = null;
 		if (Markup.DEFAULT.equals(newMarkup)) {
-			newStyle = SWT.NORMAL;
+			newStyle = Integer.valueOf(SWT.NORMAL);
 		}
 		else if (Markup.STRONG.equals(newMarkup)) {
-			newStyle = SWT.BOLD;
+			newStyle = Integer.valueOf(SWT.BOLD);
 		}
 		else if (Markup.EMPHASIZED.equals(newMarkup)) {
-			newStyle = SWT.ITALIC;
+			newStyle = Integer.valueOf(SWT.ITALIC);
+		}
+		else if (newMarkup != null) {
+			throw new IllegalArgumentException("The markup '" + newMarkup + "' is unknown.");
 		}
 
 		final FontData[] oldFontData = baseFont.getFontData();

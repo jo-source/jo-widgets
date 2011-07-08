@@ -89,6 +89,26 @@ public class JoButton extends Control<IButton, IButtonBluePrint> implements IBut
 	}
 
 	@Override
+	public void setFontSize(final int size) {
+		if (isInitialized()) {
+			getWidget().setFontSize(size);
+		}
+		else {
+			getBluePrint().setFontSize(size);
+		}
+	}
+
+	@Override
+	public void setFontName(final String fontName) {
+		if (isInitialized()) {
+			getWidget().setFontName(fontName);
+		}
+		else {
+			getBluePrint().setFontName(fontName);
+		}
+	}
+
+	@Override
 	public void setText(final String text) {
 		if (isInitialized()) {
 			getWidget().setText(text);

@@ -27,6 +27,7 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.builder.ITextAreaSetupBuilderCommon;
 
 public interface ITextAreaSetupBuilder<INSTANCE_TYPE extends ITextAreaSetupBuilder<?>> extends
@@ -35,5 +36,11 @@ public interface ITextAreaSetupBuilder<INSTANCE_TYPE extends ITextAreaSetupBuild
 	INSTANCE_TYPE setEditable(boolean editable);
 
 	INSTANCE_TYPE setText(String text);
+
+	INSTANCE_TYPE setMarkup(Markup markup);
+
+	INSTANCE_TYPE setFontSize(Integer size);
+
+	INSTANCE_TYPE setFontName(String fontName);
 
 }

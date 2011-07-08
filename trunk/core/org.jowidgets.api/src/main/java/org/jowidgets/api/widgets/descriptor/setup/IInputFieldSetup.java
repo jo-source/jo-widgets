@@ -28,6 +28,7 @@
 package org.jowidgets.api.widgets.descriptor.setup;
 
 import org.jowidgets.api.convert.IConverter;
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.descriptor.setup.ITextFieldSetupCommon;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
@@ -35,5 +36,11 @@ public interface IInputFieldSetup<INPUT_TYPE> extends IInputComponentSetup<INPUT
 
 	@Mandatory
 	IConverter<INPUT_TYPE> getConverter();
+
+	Markup getMarkup();
+
+	Integer getFontSize();
+
+	String getFontName();
 
 }
