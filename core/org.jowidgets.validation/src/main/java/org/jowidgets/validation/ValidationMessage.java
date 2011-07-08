@@ -30,7 +30,7 @@ package org.jowidgets.validation;
 
 public final class ValidationMessage {
 
-	private static final IValidationMessage OK = create(MessageType.OK, "", "");
+	private static final IValidationMessage OK = create(MessageType.OK, null, null);
 
 	private ValidationMessage() {}
 
