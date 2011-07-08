@@ -47,6 +47,16 @@ public class TextLabelSpiWrapper extends ControlSpiWrapper implements ITextLabel
 	}
 
 	@Override
+	public void setFontSize(final int size) {
+		getWidget().setFontSize(size);
+	}
+
+	@Override
+	public void setFontName(final String fontName) {
+		getWidget().setFontName(fontName);
+	}
+
+	@Override
 	public void setMarkup(final Markup markup) {
 		getWidget().setMarkup(markup);
 	}

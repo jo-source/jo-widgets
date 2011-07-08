@@ -27,6 +27,7 @@
  */
 package org.jowidgets.spi.impl.dummy.widgets;
 
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSetupSpi;
 
@@ -50,6 +51,21 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 	@Override
 	public void setText(final String text) {
 		getUiReference().setText(text);
+	}
+
+	@Override
+	public void setFontSize(final int size) {
+		getUiReference().setFontSize(size);
+	}
+
+	@Override
+	public void setFontName(final String fontName) {
+		getUiReference().setFontName(fontName);
+	}
+
+	@Override
+	public void setMarkup(final Markup markup) {
+		getUiReference().setMarkup(markup);
 	}
 
 	@Override

@@ -31,4 +31,8 @@ import org.jowidgets.common.widgets.descriptor.setup.ICheckBoxSetupCommon;
 
 public interface ICheckBoxSetup extends ICheckBoxSetupCommon, IInputComponentSetup<Boolean> {
 
+	Integer getFontSize();
+
+	String getFontName();
+
 }

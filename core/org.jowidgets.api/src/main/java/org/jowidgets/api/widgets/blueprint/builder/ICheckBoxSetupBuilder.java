@@ -33,4 +33,8 @@ public interface ICheckBoxSetupBuilder<INSTANCE_TYPE extends ICheckBoxSetupBuild
 		ICheckBoxSetupBuilderCommon<INSTANCE_TYPE>,
 		IInputComponentSetupBuilder<INSTANCE_TYPE, Boolean> {
 
+	INSTANCE_TYPE setFontSize(Integer size);
+
+	INSTANCE_TYPE setFontName(String fontName);
+
 }

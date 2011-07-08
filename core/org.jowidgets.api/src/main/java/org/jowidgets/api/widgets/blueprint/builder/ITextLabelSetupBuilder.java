@@ -33,4 +33,8 @@ public interface ITextLabelSetupBuilder<INSTANCE_TYPE extends ITextLabelSetupBui
 		ITextLabelSetupBuilderCommon<INSTANCE_TYPE>,
 		IComponentSetupBuilder<INSTANCE_TYPE> {
 
+	INSTANCE_TYPE setFontSize(Integer size);
+
+	INSTANCE_TYPE setFontName(String fontName);
+
 }

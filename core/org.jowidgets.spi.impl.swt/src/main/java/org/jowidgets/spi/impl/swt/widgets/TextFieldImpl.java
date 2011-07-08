@@ -35,9 +35,11 @@ import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 import org.jowidgets.common.mask.TextMaskMode;
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.verify.IInputVerifier;
 import org.jowidgets.spi.impl.mask.TextMaskVerifierFactory;
 import org.jowidgets.spi.impl.swt.options.SwtOptions;
+import org.jowidgets.spi.impl.swt.util.FontProvider;
 import org.jowidgets.spi.impl.verify.InputVerifierHelper;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 
@@ -93,6 +95,21 @@ public class TextFieldImpl extends AbstractTextInputControl {
 		if (!getUiReference().isFocusControl()) {
 			fireInputChanged(getText());
 		}
+	}
+
+	@Override
+	public void setFontSize(final int size) {
+		getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), size));
+	}
+
+	@Override
+	public void setFontName(final String fontName) {
+		getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), fontName));
+	}
+
+	@Override
+	public void setMarkup(final Markup markup) {
+		getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), markup));
 	}
 
 	@Override

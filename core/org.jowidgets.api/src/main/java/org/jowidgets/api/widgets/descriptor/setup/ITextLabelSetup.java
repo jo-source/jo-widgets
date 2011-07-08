@@ -31,4 +31,8 @@ import org.jowidgets.common.widgets.descriptor.setup.ITextLabelSetupCommon;
 
 public interface ITextLabelSetup extends ITextLabelSetupCommon, IComponentSetup {
 
+	Integer getFontSize();
+
+	String getFontName();
+
 }

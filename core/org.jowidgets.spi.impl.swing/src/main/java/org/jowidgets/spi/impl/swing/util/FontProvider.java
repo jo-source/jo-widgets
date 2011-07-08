@@ -39,22 +39,39 @@ public final class FontProvider {
 	public static Font deriveFont(final Font baseFont, final Markup markup) {
 		Assert.paramNotNull(baseFont, "baseFont");
 		Assert.paramNotNull(markup, "markup");
+		return deriveFont(baseFont, null, null, markup);
+	}
 
-		int style;
-		if (Markup.DEFAULT.equals(markup)) {
-			style = Font.PLAIN;
+	public static Font deriveFont(final Font baseFont, final String fontName) {
+		Assert.paramNotNull(baseFont, "baseFont");
+		Assert.paramNotNull(fontName, "fontName");
+		return deriveFont(baseFont, fontName, null, null);
+	}
+
+	public static Font deriveFont(final Font baseFont, final int size) {
+		Assert.paramNotNull(baseFont, "baseFont");
+		return deriveFont(baseFont, null, Integer.valueOf(size), null);
+	}
+
+	public static Font deriveFont(final Font baseFont, final String newFontName, final Integer newSize, final Markup newMarkup) {
+		Assert.paramNotNull(baseFont, "baseFont");
+
+		Integer newStyle = null;
+		if (Markup.DEFAULT.equals(newMarkup)) {
+			newStyle = Integer.valueOf(Font.PLAIN);
 		}
-		else if (Markup.STRONG.equals(markup)) {
-			style = Font.BOLD;
+		else if (Markup.STRONG.equals(newMarkup)) {
+			newStyle = Integer.valueOf(Font.BOLD);
 		}
-		else if (Markup.EMPHASIZED.equals(markup)) {
-			style = Font.ITALIC;
-		}
-		else {
-			throw new IllegalArgumentException("The markup '" + markup + "' is unknown.");
+		else if (Markup.EMPHASIZED.equals(newMarkup)) {
+			newStyle = Integer.valueOf(Font.ITALIC);
 		}
 
-		return new Font(baseFont.getName(), style, baseFont.getSize());
+		final String fontName = newFontName != null ? newFontName : baseFont.getName();
+		final int size = newSize != null ? (newSize.intValue() * 100 / 72) : baseFont.getSize();
+		final int style = newStyle != null ? newStyle.intValue() : baseFont.getStyle();
+
+		return new Font(fontName, style, size);
 	}
 
 }

@@ -40,4 +40,12 @@ public class UIDToggleButton extends UIDButton {
 		this.selected = selected;
 	}
 
+	public void setFontSize(final int size) {
+		// TODO LG implement setFontSize
+	}
+
+	public void setFontName(final String fontName) {
+		// TODO LG implement setFontName
+	}
+
 }

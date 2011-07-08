@@ -28,6 +28,8 @@
 
 package org.jowidgets.spi.impl.dummy.dummyui;
 
+import org.jowidgets.common.types.Markup;
+
 public class UIDComboBox extends UIDComponent {
 
 	private String[] elements;
@@ -83,6 +85,18 @@ public class UIDComboBox extends UIDComponent {
 	public int getCaretPosition() {
 		// TODO LG implement getCaretPosition()
 		return 0;
+	}
+
+	public void setFontSize(final int size) {
+		// TODO LG implement setFontSize
+	}
+
+	public void setFontName(final String fontName) {
+		// TODO LG implement setFontName
+	}
+
+	public void setMarkup(final Markup markup) {
+		// TODO LG implement setMarkup
 	}
 
 }

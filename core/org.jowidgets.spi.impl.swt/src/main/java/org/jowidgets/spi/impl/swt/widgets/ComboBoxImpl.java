@@ -34,9 +34,11 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.common.mask.TextMaskMode;
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.verify.IInputVerifier;
 import org.jowidgets.spi.impl.mask.TextMaskVerifierFactory;
 import org.jowidgets.spi.impl.swt.options.SwtOptions;
+import org.jowidgets.spi.impl.swt.util.FontProvider;
 import org.jowidgets.spi.impl.verify.InputVerifierHelper;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSetupSpi;
@@ -85,6 +87,21 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 		if (!getUiReference().isFocusControl()) {
 			fireInputChanged(text);
 		}
+	}
+
+	@Override
+	public void setFontSize(final int size) {
+		getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), size));
+	}
+
+	@Override
+	public void setFontName(final String fontName) {
+		getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), fontName));
+	}
+
+	@Override
+	public void setMarkup(final Markup markup) {
+		getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), markup));
 	}
 
 	@Override

@@ -30,6 +30,7 @@ package org.jowidgets.spi.impl.dummy.dummyui;
 
 import javax.swing.text.BadLocationException;
 
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.verify.IInputVerifier;
 
 public class UIDTextField extends UIDTextComponent {
@@ -75,6 +76,18 @@ public class UIDTextField extends UIDTextComponent {
 	public int getCaretPosition() {
 		// TODO LG implement getCaretPosition
 		return 0;
+	}
+
+	public void setFontSize(final int size) {
+		// TODO LG implement setFontSize
+	}
+
+	public void setFontName(final String fontName) {
+		// TODO LG implement setFontName
+	}
+
+	public void setMarkup(final Markup markup) {
+		// TODO LG implement setMarkup
 	}
 
 }

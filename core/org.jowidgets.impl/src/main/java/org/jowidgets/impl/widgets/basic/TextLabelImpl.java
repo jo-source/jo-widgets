@@ -46,6 +46,13 @@ public class TextLabelImpl extends TextLabelSpiWrapper implements ITextLabel {
 		super(widget);
 		this.controlDelegate = new ControlDelegate();
 
+		if (setup.getFontSize() != null) {
+			setFontSize(Integer.valueOf(setup.getFontSize()));
+		}
+		if (setup.getFontName() != null) {
+			setFontName(setup.getFontName());
+		}
+
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
 	}

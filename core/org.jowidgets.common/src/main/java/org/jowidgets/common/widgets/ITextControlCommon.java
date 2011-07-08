@@ -28,6 +28,8 @@
 
 package org.jowidgets.common.widgets;
 
+import org.jowidgets.common.types.Markup;
+
 public interface ITextControlCommon extends IInputControlCommon {
 
 	String getText();
@@ -35,6 +37,12 @@ public interface ITextControlCommon extends IInputControlCommon {
 	void setText(String text);
 
 	void setTooltipText(String tooltipText);
+
+	void setFontSize(int size);
+
+	void setFontName(String fontName);
+
+	void setMarkup(Markup markup);
 
 	void setSelection(int start, int end);
 

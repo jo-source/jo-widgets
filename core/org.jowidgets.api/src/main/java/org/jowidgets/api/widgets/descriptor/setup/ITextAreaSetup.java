@@ -27,6 +27,7 @@
  */
 package org.jowidgets.api.widgets.descriptor.setup;
 
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.descriptor.setup.ITextAreaSetupCommon;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
@@ -36,5 +37,11 @@ public interface ITextAreaSetup extends IComponentSetup, ITextAreaSetupCommon {
 	boolean isEditable();
 
 	String getText();
+
+	Markup getMarkup();
+
+	Integer getFontSize();
+
+	String getFontName();
 
 }

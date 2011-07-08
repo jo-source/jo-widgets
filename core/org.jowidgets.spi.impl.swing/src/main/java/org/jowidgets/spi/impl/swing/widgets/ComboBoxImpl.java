@@ -39,9 +39,11 @@ import javax.swing.border.Border;
 
 import org.jowidgets.common.mask.TextMaskMode;
 import org.jowidgets.common.types.InputChangeEventPolicy;
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.verify.IInputVerifier;
 import org.jowidgets.spi.impl.controler.InputObservable;
 import org.jowidgets.spi.impl.mask.TextMaskVerifierFactory;
+import org.jowidgets.spi.impl.swing.util.FontProvider;
 import org.jowidgets.spi.impl.swing.widgets.util.InputModifierDocument;
 import org.jowidgets.spi.impl.verify.InputVerifierHelper;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
@@ -86,6 +88,21 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 	@Override
 	public void setText(final String text) {
 		comboBoxEditor.setItem(text);
+	}
+
+	@Override
+	public void setFontSize(final int size) {
+		comboBoxEditor.setFontSize(size);
+	}
+
+	@Override
+	public void setFontName(final String fontName) {
+		comboBoxEditor.setFontName(fontName);
+	}
+
+	@Override
+	public void setMarkup(final Markup markup) {
+		comboBoxEditor.setMarkup(markup);
 	}
 
 	@Override
@@ -179,6 +196,18 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 		@Override
 		public void selectAll() {
 			textField.selectAll();
+		}
+
+		public void setFontSize(final int size) {
+			textField.setFont(FontProvider.deriveFont(getUiReference().getFont(), size));
+		}
+
+		public void setFontName(final String fontName) {
+			textField.setFont(FontProvider.deriveFont(getUiReference().getFont(), fontName));
+		}
+
+		public void setMarkup(final Markup markup) {
+			textField.setFont(FontProvider.deriveFont(getUiReference().getFont(), markup));
 		}
 
 		@Override

@@ -28,6 +28,7 @@
 package org.jowidgets.api.widgets.descriptor.setup;
 
 import org.jowidgets.common.mask.ITextMask;
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.descriptor.setup.ITextFieldSetupCommon;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
@@ -39,5 +40,11 @@ public interface ITextFieldSetup extends IComponentSetup, ITextFieldSetupCommon 
 	String getText();
 
 	ITextMask getMask();
+
+	Markup getMarkup();
+
+	Integer getFontSize();
+
+	String getFontName();
 
 }
