@@ -85,12 +85,6 @@ final class ValidationResultBuilder implements IValidationResultBuilder {
 	}
 
 	@Override
-	public IValidationResultBuilder addResult(final String context, final IValidationResult result) {
-		current = current.withResult(context, result);
-		return this;
-	}
-
-	@Override
 	public IValidationResult build() {
 		return current;
 	}

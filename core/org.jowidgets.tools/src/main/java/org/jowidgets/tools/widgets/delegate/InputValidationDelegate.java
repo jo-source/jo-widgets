@@ -90,7 +90,7 @@ public class InputValidationDelegate<VALUE_TYPE> {
 				builder.addResult(validateable.getFirst().validate());
 			}
 			else {
-				builder.addResult(validateable.getSecond(), validateable.getFirst().validate());
+				builder.addResult(validateable.getFirst().validate().withInfoError(validateable.getSecond()));
 			}
 		}
 
