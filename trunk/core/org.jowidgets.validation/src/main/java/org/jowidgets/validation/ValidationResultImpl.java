@@ -120,12 +120,6 @@ final class ValidationResultImpl implements IValidationResult, Serializable {
 	}
 
 	@Override
-	public IValidationResult withResult(final String context, final IValidationResult result) {
-		Assert.paramNotNull(result, "result");
-		return new ValidationResultImpl(this, result, null, context);
-	}
-
-	@Override
 	public IValidationResult withMessage(final IValidationMessage message) {
 		Assert.paramNotNull(message, "messages");
 		return new ValidationResultImpl(this, null, message, null);
@@ -143,7 +137,7 @@ final class ValidationResultImpl implements IValidationResult, Serializable {
 
 	@Override
 	public IValidationResult withResult(final IValidationResult result) {
-		return withResult(null, result);
+		return new ValidationResultImpl(this, result, null, null);
 	}
 
 	@Override

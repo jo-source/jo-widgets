@@ -59,8 +59,6 @@ public interface IValidationResult {
 
 	IValidationResult withResult(final IValidationResult result);
 
-	IValidationResult withResult(final String context, final IValidationResult result);
-
 	IValidationResult withContext(final String context);
 
 }

@@ -110,8 +110,7 @@ public class ValidationResultTest {
 		Assert.assertTrue(withResult.getInfoErrors().size() == 2);
 		Assert.assertTrue(withResult.getWarnings().size() == 4);
 
-		withResult = withAdded.withResult("NEW_CONTEXT", result2);
-		assertContext(withResult.getAll(), "NEW_CONTEXT");
+		withResult = withAdded.withResult(result2);
 		Assert.assertFalse(withResult.isValid());
 		Assert.assertTrue(withResult.getWorstFirst().getType() == MessageType.ERROR);
 		Assert.assertTrue("TEXT5".equals(withResult.getWorstFirst().getText()));

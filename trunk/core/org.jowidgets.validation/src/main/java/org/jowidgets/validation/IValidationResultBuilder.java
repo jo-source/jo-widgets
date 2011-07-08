@@ -46,8 +46,6 @@ public interface IValidationResultBuilder {
 
 	IValidationResultBuilder addResult(final IValidationResult result);
 
-	IValidationResultBuilder addResult(final String context, final IValidationResult result);
-
 	IValidationResult build();
 
 }
