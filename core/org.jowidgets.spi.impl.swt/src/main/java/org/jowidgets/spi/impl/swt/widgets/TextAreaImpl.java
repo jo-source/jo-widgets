@@ -40,9 +40,11 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Text;
+import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.verify.IInputVerifier;
+import org.jowidgets.spi.impl.swt.color.ColorCache;
 import org.jowidgets.spi.impl.swt.options.SwtOptions;
 import org.jowidgets.spi.impl.swt.util.FontProvider;
 import org.jowidgets.spi.impl.verify.InputVerifierHelper;
@@ -54,12 +56,8 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 	private final Text textArea;
 	private final ScrolledComposite scrolledComposite;
 	private final boolean isLineWrap;
-	private final VerifyListener readonlyListener;
 
 	private int lastLineCount;
-
-	private boolean isEditable;
-	private boolean redonlyListenerAdded;
 
 	public TextAreaImpl(final Object parentUiReference, final ITextAreaSetupSpi setup) {
 		super(new ScrolledComposite((Composite) parentUiReference, getScrollCompositeStyle(setup)));
@@ -75,15 +73,6 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 		scrolledComposite.setAlwaysShowScrollBars(setup.isAlwaysShowBars());
 
 		textArea = new Text(getUiReference(), getTextStyle(setup));
-
-		this.readonlyListener = new VerifyListener() {
-			@Override
-			public void verifyText(final VerifyEvent e) {
-				if (!isEditable) {
-					e.doit = false;
-				}
-			}
-		};
 
 		if (SwtOptions.hasInputVerification()) {
 			final IInputVerifier inputVerifier = InputVerifierHelper.getInputVerifier(null, setup);
@@ -175,18 +164,28 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 
 	@Override
 	public void setText(final String text) {
-		removeReadonlyListener();
 		if (text != null) {
 			textArea.setText(text);
 		}
 		else {
 			textArea.setText("");
 		}
-		addReadonlyListener();
 		checkScrollBars();
 		if (!getUiReference().isFocusControl()) {
 			fireInputChanged(getText());
 		}
+	}
+
+	@Override
+	public void setForegroundColor(final IColorConstant colorValue) {
+		super.setForegroundColor(colorValue);
+		textArea.setForeground(ColorCache.getInstance().getColor(colorValue));
+	}
+
+	@Override
+	public void setBackgroundColor(final IColorConstant colorValue) {
+		super.setBackgroundColor(colorValue);
+		textArea.setBackground(ColorCache.getInstance().getColor(colorValue));
 	}
 
 	@Override
@@ -226,27 +225,7 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 
 	@Override
 	public void setEditable(final boolean editable) {
-		this.isEditable = editable;
-		if (isEditable) {
-			removeReadonlyListener();
-		}
-		else {
-			addReadonlyListener();
-		}
-	}
-
-	private void addReadonlyListener() {
-		if (!redonlyListenerAdded && !isEditable) {
-			textArea.addVerifyListener(readonlyListener);
-			redonlyListenerAdded = true;
-		}
-	}
-
-	private void removeReadonlyListener() {
-		if (redonlyListenerAdded) {
-			textArea.removeVerifyListener(readonlyListener);
-			redonlyListenerAdded = false;
-		}
+		textArea.setEditable(editable);
 	}
 
 	@Override

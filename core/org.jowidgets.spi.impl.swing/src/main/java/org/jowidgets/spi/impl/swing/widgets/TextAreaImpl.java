@@ -34,10 +34,12 @@ import javax.swing.BorderFactory;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.InputChangeEventPolicy;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.verify.IInputVerifier;
 import org.jowidgets.spi.impl.controler.InputObservable;
+import org.jowidgets.spi.impl.swing.util.ColorConvert;
 import org.jowidgets.spi.impl.swing.util.FontProvider;
 import org.jowidgets.spi.impl.swing.widgets.util.InputModifierDocument;
 import org.jowidgets.spi.impl.verify.InputVerifierHelper;
@@ -106,6 +108,18 @@ public class TextAreaImpl extends AbstractInputControl implements ITextAreaSpi {
 		if (!textArea.isFocusOwner()) {
 			fireInputChanged(getText());
 		}
+	}
+
+	@Override
+	public void setForegroundColor(final IColorConstant colorValue) {
+		super.setForegroundColor(colorValue);
+		textArea.setForeground(ColorConvert.convert(colorValue));
+	}
+
+	@Override
+	public void setBackgroundColor(final IColorConstant colorValue) {
+		super.setBackgroundColor(colorValue);
+		textArea.setBackground(ColorConvert.convert(colorValue));
 	}
 
 	@Override
