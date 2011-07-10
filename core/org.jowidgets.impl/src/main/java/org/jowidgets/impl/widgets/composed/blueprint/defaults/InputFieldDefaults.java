@@ -29,14 +29,16 @@ package org.jowidgets.impl.widgets.composed.blueprint.defaults;
 
 import org.jowidgets.api.widgets.blueprint.builder.IInputFieldSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
-import org.jowidgets.tools.validation.OkValidator;
+import org.jowidgets.validation.IValidator;
+import org.jowidgets.validation.Validator;
 
 public class InputFieldDefaults implements IDefaultInitializer<IInputFieldSetupBuilder<?, Object>> {
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	@Override
 	public void initialize(final IInputFieldSetupBuilder<?, Object> builder) {
-		builder.setValidator(new OkValidator());
+		final IValidator okValidator = Validator.okValidator();
+		builder.setValidator(okValidator);
 		builder.setPasswordPresentation(false);
 		builder.setMaxLength(100);
 	}

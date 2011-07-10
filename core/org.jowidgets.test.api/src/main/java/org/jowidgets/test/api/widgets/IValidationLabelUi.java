@@ -28,8 +28,8 @@
 
 package org.jowidgets.test.api.widgets;
 
-import org.jowidgets.api.widgets.IValidationLabel;
+import org.jowidgets.api.widgets.IValidationResultLabel;
 
-public interface IValidationLabelUi extends IControlUi, IValidationLabel {
+public interface IValidationLabelUi extends IControlUi, IValidationResultLabel {
 
 }

@@ -31,46 +31,61 @@ import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.widgets.IInputField;
 import org.jowidgets.api.widgets.ITextControl;
 import org.jowidgets.api.widgets.descriptor.setup.IInputFieldSetup;
-import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.tools.widgets.base.AbstractInputControl;
-import org.jowidgets.validation.IValidateable;
+import org.jowidgets.tools.validation.CompoundValidator;
+import org.jowidgets.tools.validation.ValidationCache;
+import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
+import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
+import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
+import org.jowidgets.validation.Validator;
 
-public class InputFieldImpl<VALUE_TYPE> extends AbstractInputControl<VALUE_TYPE> implements IInputField<VALUE_TYPE> {
+public class InputFieldImpl<VALUE_TYPE> extends ControlWrapper implements IInputField<VALUE_TYPE> {
 
-	private final ITextControl textField;
 	private final IConverter<VALUE_TYPE> converter;
+	private final CompoundValidator<VALUE_TYPE> compoundValidator;
+	private final IValidator<String> stringValidator;
+	private final ValidationCache validationCache;
 
 	public InputFieldImpl(final ITextControl textField, final IInputFieldSetup<VALUE_TYPE> setup) {
 
-		super(textField, setup);
+		super(textField);
 
-		this.textField = textField;
+		this.compoundValidator = new CompoundValidator<VALUE_TYPE>();
 		this.converter = setup.getConverter();
 
-		final IValidator<String> stringValidator = converter.getStringValidator();
-
-		if (stringValidator != null) {
-			addValidatable(new IValidateable() {
-				@Override
-				public IValidationResult validate() {
-					return stringValidator.validate(textField.getText());
-				}
-			});
+		if (converter.getStringValidator() != null) {
+			this.stringValidator = converter.getStringValidator();
 		}
+		else {
+			this.stringValidator = Validator.okValidator();
+		}
+
+		compoundValidator.addValidator(setup.getValidator());
+
+		this.validationCache = new ValidationCache(new IValidationResultCreator() {
+			@Override
+			public IValidationResult createValidationResult() {
+				final IValidationResult result = stringValidator.validate(getText());
+				//if the converter could not parse the input, do not make more validation
+				if (!result.isValid()) {
+					return result;
+				}
+				else {
+					return result.withResult(compoundValidator.validate(getValue()));
+				}
+			}
+		});
 
 		textField.addInputListener(new IInputListener() {
 			@Override
 			public void inputChanged() {
-				fireInputChanged();
+				validationCache.setDirty();
 			}
 		});
-
-		addValidator(setup.getValidator());
 
 		setEditable(setup.isEditable());
 		VisibiliySettingsInvoker.setVisibility(setup, this);
@@ -82,74 +97,83 @@ public class InputFieldImpl<VALUE_TYPE> extends AbstractInputControl<VALUE_TYPE>
 	}
 
 	@Override
+	protected ITextControl getWidget() {
+		return (ITextControl) super.getWidget();
+	}
+
+	@Override
 	public VALUE_TYPE getValue() {
-		return converter.convertToObject(textField.getText());
+		return converter.convertToObject(getWidget().getText());
 	}
 
 	@Override
 	public void setValue(final VALUE_TYPE value) {
-		textField.setText(converter.convertToString(value));
+		getWidget().setText(converter.convertToString(value));
 	}
 
 	@Override
 	public void selectAll() {
-		textField.selectAll();
+		getWidget().selectAll();
 	}
 
 	@Override
 	public void setSelection(final int start, final int end) {
-		textField.setSelection(start, end);
+		getWidget().setSelection(start, end);
 	}
 
 	@Override
 	public void setCaretPosition(final int pos) {
-		textField.setCaretPosition(pos);
+		getWidget().setCaretPosition(pos);
 	}
 
 	@Override
 	public int getCaretPosition() {
-		return textField.getCaretPosition();
+		return getWidget().getCaretPosition();
 	}
 
 	@Override
 	public String getText() {
-		return textField.getText();
+		return getWidget().getText();
 	}
 
 	@Override
-	public Dimension getMinSize() {
-		return textField.getMinSize();
+	public void addValidator(final IValidator<VALUE_TYPE> validator) {
+		compoundValidator.addValidator(validator);
 	}
 
 	@Override
-	public Dimension getPreferredSize() {
-		return textField.getPreferredSize();
+	public IValidationResult validate() {
+		return validationCache.validate();
 	}
 
 	@Override
-	public Dimension getMaxSize() {
-		return textField.getMaxSize();
+	public void addValidationConditionListener(final IValidationConditionListener listener) {
+		validationCache.addValidationConditionListener(listener);
 	}
 
 	@Override
-	public void setMinSize(final Dimension minSize) {
-		textField.setMinSize(minSize);
-	}
-
-	@Override
-	public void setPreferredSize(final Dimension preferredSize) {
-		textField.setPreferredSize(preferredSize);
-	}
-
-	@Override
-	public void setMaxSize(final Dimension maxSize) {
-		textField.setMaxSize(maxSize);
+	public void removeValidationConditionListener(final IValidationConditionListener listener) {
+		validationCache.removeValidationConditionListener(listener);
 	}
 
 	@Override
 	public void setEditable(final boolean editable) {
-		super.setEditable(editable);
-		textField.setEditable(editable);
+		getWidget().setEditable(editable);
+	}
+
+	@Override
+	public void addInputListener(final IInputListener listener) {
+		getWidget().addInputListener(listener);
+	}
+
+	@Override
+	public void removeInputListener(final IInputListener listener) {
+		getWidget().removeInputListener(listener);
+	}
+
+	@Override
+	public Object getIntermediateValue() {
+		return getText();
 	}
 
 }

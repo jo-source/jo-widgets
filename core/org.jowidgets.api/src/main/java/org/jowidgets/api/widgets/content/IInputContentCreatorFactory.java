@@ -36,17 +36,6 @@ public interface IInputContentCreatorFactory {
 	<INPUT_TYPE> IInputContentCreator<INPUT_TYPE> singleControlContent(
 		String label,
 		IWidgetDescriptor<? extends IInputControl<INPUT_TYPE>> descriptor,
-		String fieldLayoutConstraints);
-
-	<INPUT_TYPE> IInputContentCreator<INPUT_TYPE> singleControlContent(
-		String label,
-		IWidgetDescriptor<? extends IInputControl<INPUT_TYPE>> descriptor,
-		String fieldLayoutConstraints,
-		boolean mandatory);
-
-	<INPUT_TYPE> IInputContentCreator<INPUT_TYPE> singleControlContent(
-		String label,
-		IWidgetDescriptor<? extends IInputControl<INPUT_TYPE>> descriptor,
 		int fieldMinWidth);
 
 	<INPUT_TYPE> IInputContentCreator<INPUT_TYPE> singleControlContent(

@@ -30,7 +30,6 @@ package org.jowidgets.examples.common.demo;
 
 import java.util.List;
 
-import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IInputComposite;
@@ -55,8 +54,7 @@ public final class DemoForm1Creator {
 		//define the blue print for the input composite
 		final IInputCompositeBluePrint<List<String>> inputCompositeBp = bpf.inputComposite(new DemoForm1ContentCreator());
 		inputCompositeBp.setContentScrolled(scrolledContent);
-		inputCompositeBp.setMissingInputText("Please fill out all mandatory (*) fields");
-		inputCompositeBp.setMissingInputIcon(IconsSmall.INFO);
+		inputCompositeBp.setMissingInputHint("Please fill out all mandatory (*) fields");
 
 		//add the input composite to the parent composite
 		return parentContainer.add(inputCompositeBp, "growx, growy, w 0::, h 0::");

@@ -32,9 +32,8 @@ public interface IValidateable {
 
 	IValidationResult validate();
 
-	//TODO MG add this later
-	//	void addValidationStateListener(IValidationStateListener listener);
-	//
-	//	void removeValidationStateListener(IValidationStateListener listener);
+	void addValidationConditionListener(IValidationConditionListener listener);
+
+	void removeValidationConditionListener(IValidationConditionListener listener);
 
 }

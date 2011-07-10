@@ -38,12 +38,6 @@ public interface IInputComponent<VALUE_TYPE> extends
 		IValidateable,
 		IInputComponentCommon {
 
-	boolean isEmpty();
-
-	boolean isMandatory();
-
-	void setMandatory(boolean mandatory);
-
 	void addValidator(IValidator<VALUE_TYPE> validator);
 
 }

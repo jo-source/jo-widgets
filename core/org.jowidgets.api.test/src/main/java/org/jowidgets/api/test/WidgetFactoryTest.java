@@ -118,7 +118,7 @@ public class WidgetFactoryTest {
 		testChildControl(container, container.add(bpMod(BPF.textLabel()), null));
 		testChildControl(container, container.add(bpMod(BPF.textSeparator()), null));
 		testChildControl(container, container.add(bpMod(BPF.toggleButton()), null));
-		testChildControl(container, container.add(bpMod(BPF.validationLabel()), null));
+		testChildControl(container, container.add(bpMod(BPF.validationResultLabel()), null));
 
 		container.removeAll();
 		Assert.assertTrue(container.getChildren().size() == 0);

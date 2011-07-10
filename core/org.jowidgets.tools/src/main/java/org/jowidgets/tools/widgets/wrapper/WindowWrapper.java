@@ -26,43 +26,76 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.widgets.base;
+package org.jowidgets.tools.widgets.wrapper;
 
-import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.api.widgets.IInputControl;
-import org.jowidgets.api.widgets.descriptor.setup.IInputComponentSetup;
+import java.util.List;
 
-public abstract class AbstractInputControl<VALUE_TYPE> extends AbstractInputComponent<VALUE_TYPE> implements
-		IInputControl<VALUE_TYPE> {
+import org.jowidgets.api.widgets.IDisplay;
+import org.jowidgets.api.widgets.IWindow;
+import org.jowidgets.common.types.Rectangle;
+import org.jowidgets.common.widgets.controler.IWindowListener;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-	public AbstractInputControl(final IControl widget, final IInputComponentSetup<VALUE_TYPE> setup) {
-		super(widget, setup);
+public class WindowWrapper extends ComponentWrapper implements IWindow {
+
+	public WindowWrapper(final IWindow widget) {
+		super(widget);
 	}
 
 	@Override
-	protected IControl getWidget() {
-		return (IControl) super.getWidget();
+	protected IWindow getWidget() {
+		return (IWindow) super.getWidget();
 	}
 
 	@Override
-	public void setParent(final IContainer parent) {
+	public void setParent(final IWindow parent) {
 		getWidget().setParent(parent);
 	}
 
 	@Override
-	public IContainer getParent() {
+	public IWindow getParent() {
 		return getWidget().getParent();
 	}
 
 	@Override
-	public void setLayoutConstraints(final Object layoutConstraints) {
-		getWidget().setLayoutConstraints(layoutConstraints);
+	public Rectangle getParentBounds() {
+		return getWidget().getParentBounds();
 	}
 
 	@Override
-	public Object getLayoutConstraints() {
-		return getWidget().getLayoutConstraints();
+	public void pack() {
+		getWidget().pack();
+	}
+
+	@Override
+	public void dispose() {
+		getWidget().dispose();
+	}
+
+	@Override
+	public void addWindowListener(final IWindowListener listener) {
+		getWidget().addWindowListener(listener);
+	}
+
+	@Override
+	public void removeWindowListener(final IWindowListener listener) {
+		getWidget().removeWindowListener(listener);
+	}
+
+	@Override
+	public void centerLocation() {
+		getWidget().centerLocation();
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IDisplay, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
+		final DESCRIPTOR_TYPE descriptor) {
+		return getWidget().createChildWindow(descriptor);
+	}
+
+	@Override
+	public List<IDisplay> getChildWindows() {
+		return getWidget().getChildWindows();
 	}
 
 }

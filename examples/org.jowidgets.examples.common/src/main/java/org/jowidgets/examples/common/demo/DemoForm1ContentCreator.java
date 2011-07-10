@@ -37,11 +37,11 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComboBox;
 import org.jowidgets.api.widgets.IInputComponent;
 import org.jowidgets.api.widgets.IInputField;
-import org.jowidgets.api.widgets.IValidationLabel;
+import org.jowidgets.api.widgets.IValidateableStateLabel;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
-import org.jowidgets.api.widgets.blueprint.IValidationLabelBluePrint;
+import org.jowidgets.api.widgets.blueprint.IValidateableStateLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
@@ -52,6 +52,7 @@ import org.jowidgets.common.widgets.controler.IMouseEvent;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.controler.KeyAdapter;
 import org.jowidgets.tools.controler.MouseAdapter;
+import org.jowidgets.tools.validation.MandatoryInfoValidator;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
 import org.jowidgets.validation.ValidationResult;
@@ -69,16 +70,16 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 	private IInputComponent<String> phoneNumber;
 	private IInputComponent<String> mail;
 
-	private IValidationLabel genderValidationWidget;
-	private IValidationLabel firstnameValidationWidget;
-	private IValidationLabel lastnameValidationWidget;
-	private IValidationLabel dateOfBirthValidationWidget;
-	private IValidationLabel streetValidationWidget;
-	private IValidationLabel postalCodeValidationWidget;
-	private IValidationLabel cityValidationWidget;
-	private IValidationLabel countryValidationWidget;
-	private IValidationLabel phoneValidationWidget;
-	private IValidationLabel mailValidationWidget;
+	private IValidateableStateLabel genderValidationWidget;
+	private IValidateableStateLabel firstnameValidationWidget;
+	private IValidateableStateLabel lastnameValidationWidget;
+	private IValidateableStateLabel dateOfBirthValidationWidget;
+	private IValidateableStateLabel streetValidationWidget;
+	private IValidateableStateLabel postalCodeValidationWidget;
+	private IValidateableStateLabel cityValidationWidget;
+	private IValidateableStateLabel countryValidationWidget;
+	private IValidateableStateLabel phoneValidationWidget;
+	private IValidateableStateLabel mailValidationWidget;
 
 	@Override
 	public void createContent(final IInputContentContainer container) {
@@ -111,19 +112,18 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 
 		};
 
+		final IValidator<String> mandatoryValidator = new MandatoryInfoValidator<String>("Must not be null");
+
 		final ITextLabelBluePrint textLabelBp = bpF.textLabel().alignRight();
 
-		final IValidationLabelBluePrint validationLabelBp = bpF.validationLabel().setShowValidationMessage(false);
+		final IValidateableStateLabelBluePrint validationLabelBp = bpF.validatetableStateLabel().setShowValidationMessage(false);
 
-		final IInputFieldBluePrint<String> stringMandatoryFieldBp = bpF.inputFieldString().setMandatory(true).setMaxLength(51);
-		final IInputFieldBluePrint<String> stringFieldBp = bpF.inputFieldString().setMandatory(false).setMaxLength(51);
-		stringMandatoryFieldBp.setValidator(maxLengthValidator);
+		final IInputFieldBluePrint<String> stringFieldBp = bpF.inputFieldString().setMaxLength(51);
 		stringFieldBp.setValidator(maxLengthValidator);
 
 		container.add(textLabelBp.setText("Gender"), "right, sg lg");
-		gender = container.add(bpF.comboBoxSelection("Male", "Female", " ").setMandatory(false), inputWidgetConstraints);
-		genderValidationWidget = container.add(validationLabelBp, "wrap");
-		genderValidationWidget.registerInputWidget(gender);
+		gender = container.add("Gender", bpF.comboBoxSelection("Male", "Female", " "), inputWidgetConstraints);
+		genderValidationWidget = container.add(validationLabelBp.setValidateable(gender), "wrap");
 
 		gender.addInputListener(new IInputListener() {
 			@Override
@@ -135,9 +135,9 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 		});
 
 		container.add(textLabelBp.setText("Firstname*"), "right, sg lg");
-		firstName = container.add(stringMandatoryFieldBp, inputWidgetConstraints);
-		firstnameValidationWidget = container.add(validationLabelBp, "wrap");
-		firstnameValidationWidget.registerInputWidget(firstName);
+		firstName = container.add("Firstname", stringFieldBp, inputWidgetConstraints);
+		firstnameValidationWidget = container.add(validationLabelBp.setValidateable(firstName), "wrap");
+		firstName.addValidator(mandatoryValidator);
 		firstName.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(final IKeyEvent event) {
@@ -148,10 +148,9 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 		});
 
 		container.add(textLabelBp.setText("Lastname*"), "right, sg lg");
-		lastname = container.add(stringMandatoryFieldBp, inputWidgetConstraints);
-		lastnameValidationWidget = container.add(validationLabelBp, "wrap");
-		lastnameValidationWidget.registerInputWidget(lastname);
-
+		lastname = container.add("Lastname", stringFieldBp, inputWidgetConstraints);
+		lastnameValidationWidget = container.add(validationLabelBp.setValidateable(lastname), "wrap");
+		lastname.addValidator(mandatoryValidator);
 		lastname.addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -191,19 +190,19 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 		});
 
 		container.add(textLabelBp.setText("Day of dirth*"), "right, sg lg");
-		dateOfBirth = container.add(bpF.inputFieldDate().setMandatory(true), inputWidgetConstraints);
-		dateOfBirthValidationWidget = container.add(validationLabelBp, "wrap");
-		dateOfBirthValidationWidget.registerInputWidget(dateOfBirth);
+		dateOfBirth = container.add("Day of dirth", bpF.inputFieldDate(), inputWidgetConstraints);
+		dateOfBirth.addValidator(new MandatoryInfoValidator<Date>("Must not be null"));
+		dateOfBirthValidationWidget = container.add(validationLabelBp.setValidateable(dateOfBirth), "wrap");
 
 		container.add(textLabelBp.setText("Street*"), "right, sg lg");
-		street = container.add(stringMandatoryFieldBp, inputWidgetConstraints);
-		streetValidationWidget = container.add(validationLabelBp, "wrap");
-		streetValidationWidget.registerInputWidget(street);
+		street = container.add("Street", stringFieldBp, inputWidgetConstraints);
+		street.addValidator(mandatoryValidator);
+		streetValidationWidget = container.add(validationLabelBp.setValidateable(street), "wrap");
 
 		container.add(textLabelBp.setText("Postal code*"), "right, sg lg");
-		postalCode = container.add(bpF.inputFieldIntegerNumber().setMaxLength(5).setMandatory(true), inputWidgetConstraints);
-		postalCodeValidationWidget = container.add(validationLabelBp, "wrap");
-		postalCodeValidationWidget.registerInputWidget(postalCode);
+		postalCode = container.add("Postal code", bpF.inputFieldIntegerNumber().setMaxLength(5), inputWidgetConstraints);
+		postalCode.addValidator(new MandatoryInfoValidator<Integer>("Must not be null"));
+		postalCodeValidationWidget = container.add(validationLabelBp.setValidateable(postalCode), "wrap");
 
 		postalCode.addKeyListener(new KeyAdapter() {
 			@Override
@@ -224,39 +223,27 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 		});
 
 		container.add(textLabelBp.setText("City*"), "right, sg lg");
-		city = container.add(stringMandatoryFieldBp, inputWidgetConstraints);
-		cityValidationWidget = container.add(validationLabelBp, "wrap");
-		cityValidationWidget.registerInputWidget(city);
+		city = container.add("City", stringFieldBp, inputWidgetConstraints);
+		city.addValidator(mandatoryValidator);
+		cityValidationWidget = container.add(validationLabelBp.setValidateable(city), "wrap");
 
 		container.add(textLabelBp.setText("Country*"), "right, sg lg");
 		final IComboBoxBluePrint<String> countryBp = bpF.comboBox("Germany", "Spain", "Italy", "United States");
-		countryBp.setMandatory(true).setValidator(maxLengthValidator);
+		countryBp.setValidator(maxLengthValidator);
 		countryBp.setMaxLength(Integer.valueOf(51));
-		country = container.add(countryBp, inputWidgetConstraints);
-		countryValidationWidget = container.add(validationLabelBp, "wrap");
-		countryValidationWidget.registerInputWidget(country);
+		country = container.add("Country", countryBp, inputWidgetConstraints);
+		country.addValidator(mandatoryValidator);
+		countryValidationWidget = container.add(validationLabelBp.setValidateable(country), "wrap");
 
 		container.add(textLabelBp.setText("Phone number"), "right, sg lg");
-		phoneNumber = container.add(stringFieldBp, inputWidgetConstraints);
-		phoneValidationWidget = container.add(validationLabelBp, "wrap");
-		phoneValidationWidget.registerInputWidget(phoneNumber);
+		phoneNumber = container.add("Phone number", stringFieldBp, inputWidgetConstraints);
+		phoneValidationWidget = container.add(validationLabelBp.setValidateable(phoneNumber), "wrap");
 
 		container.add(textLabelBp.setText("Email"), "right, sg lg");
-		mail = container.add(stringFieldBp, inputWidgetConstraints);
+		mail = container.add("Email", stringFieldBp, inputWidgetConstraints);
 		mail.addValidator(moreThanOneWordValidator);
-		mailValidationWidget = container.add(validationLabelBp, "wrap");
-		mailValidationWidget.registerInputWidget(mail);
+		mailValidationWidget = container.add(validationLabelBp.setValidateable(mail), "wrap");
 
-		container.registerInputWidget("Gender", gender);
-		container.registerInputWidget("Lastname", lastname);
-		container.registerInputWidget("Firstname", firstName);
-		container.registerInputWidget("Date of Birth", dateOfBirth);
-		container.registerInputWidget("Street", street);
-		container.registerInputWidget("Postal code", postalCode);
-		container.registerInputWidget("City", city);
-		container.registerInputWidget("Country", country);
-		container.registerInputWidget("Phone Number", phoneNumber);
-		container.registerInputWidget("Mail", mail);
 	}
 
 	@Override
@@ -298,6 +285,7 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 		genderValidationWidget.resetValidation();
 		firstnameValidationWidget.resetValidation();
 		lastnameValidationWidget.resetValidation();
+		dateOfBirthValidationWidget.resetValidation();
 		streetValidationWidget.resetValidation();
 		postalCodeValidationWidget.resetValidation();
 		cityValidationWidget.resetValidation();
@@ -328,16 +316,6 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 		else {
 			return object.toString();
 		}
-	}
-
-	@Override
-	public IValidationResult validate() {
-		return ValidationResult.ok();
-	}
-
-	@Override
-	public boolean isMandatory() {
-		return true;
 	}
 
 }

@@ -80,7 +80,8 @@ import org.jowidgets.api.widgets.blueprint.IToolBarPopupButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarToggleButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeNodeBluePrint;
-import org.jowidgets.api.widgets.blueprint.IValidationLabelBluePrint;
+import org.jowidgets.api.widgets.blueprint.IValidateableStateLabelBluePrint;
+import org.jowidgets.api.widgets.blueprint.IValidationResultLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenience;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
@@ -96,6 +97,7 @@ import org.jowidgets.common.types.FileChooserType;
 import org.jowidgets.common.widgets.builder.ISetupBuilder;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.util.Assert;
+import org.jowidgets.validation.IValidateable;
 
 public class BluePrintFactoryWrapper implements IBluePrintFactory {
 
@@ -156,8 +158,18 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	}
 
 	@Override
-	public IValidationLabelBluePrint validationLabel() {
-		return bluePrintFactory.validationLabel();
+	public IValidationResultLabelBluePrint validationResultLabel() {
+		return bluePrintFactory.validationResultLabel();
+	}
+
+	@Override
+	public IValidateableStateLabelBluePrint validatetableStateLabel(final IValidateable validateable) {
+		return bluePrintFactory.validatetableStateLabel(validateable);
+	}
+
+	@Override
+	public IValidateableStateLabelBluePrint validatetableStateLabel() {
+		return bluePrintFactory.validatetableStateLabel();
 	}
 
 	@Override

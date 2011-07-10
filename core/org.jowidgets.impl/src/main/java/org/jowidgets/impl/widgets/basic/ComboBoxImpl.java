@@ -28,55 +28,166 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.convert.IStringObjectConverter;
+import org.jowidgets.api.widgets.IComboBox;
+import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.descriptor.setup.IComboBoxSetup;
+import org.jowidgets.common.widgets.controler.IInputListener;
+import org.jowidgets.impl.base.delegate.ControlDelegate;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
-import org.jowidgets.validation.IValidateable;
+import org.jowidgets.tools.validation.CompoundValidator;
+import org.jowidgets.tools.validation.ValidationCache;
+import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
+import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
+import org.jowidgets.validation.ValidationResult;
 
-public class ComboBoxImpl<VALUE_TYPE> extends ComboBoxSelectionImpl<VALUE_TYPE> {
+public class ComboBoxImpl<VALUE_TYPE> extends ComboBoxSelectionImpl<VALUE_TYPE> implements IComboBox<VALUE_TYPE> {
 
-	private final IComboBoxSpi comboBoxWidgetSpi;
 	private final IStringObjectConverter<VALUE_TYPE> stringObjectConverter;
+	private final IObjectStringConverter<VALUE_TYPE> objectStringConverter;
+	private final ValidationCache validationCache;
+	private final ControlDelegate controlDelegate;
+	private final CompoundValidator<VALUE_TYPE> compoundValidator;
 
 	public ComboBoxImpl(final IComboBoxSpi comboBoxWidgetSpi, final IComboBoxSetup<VALUE_TYPE> setup) {
 		super(comboBoxWidgetSpi, setup);
 
-		this.comboBoxWidgetSpi = comboBoxWidgetSpi;
-		this.stringObjectConverter = setup.getStringObjectConverter();
-		final IValidator<String> textInputValidator = setup.getStringObjectConverter().getStringValidator();
+		VisibiliySettingsInvoker.setVisibility(setup, this);
+		ColorSettingsInvoker.setColors(setup, this);
 
-		if (textInputValidator != null) {
-			addValidatable(new IValidateable() {
-				@Override
-				public IValidationResult validate() {
-					return textInputValidator.validate(comboBoxWidgetSpi.getText());
-				}
-			});
+		setElements(setup.getElements());
+
+		if (setup.getValue() != null) {
+			setValue(setup.getValue());
 		}
+
+		this.stringObjectConverter = setup.getStringObjectConverter();
+		this.objectStringConverter = setup.getObjectStringConverter();
+
+		this.controlDelegate = new ControlDelegate();
+		this.compoundValidator = new CompoundValidator<VALUE_TYPE>();
+
+		final IValidator<VALUE_TYPE> validator = setup.getValidator();
+		if (validator != null) {
+			compoundValidator.addValidator(validator);
+		}
+
+		final IValidator<String> stringValidator = stringObjectConverter.getStringValidator();
+		this.validationCache = new ValidationCache(new IValidationResultCreator() {
+			@Override
+			public IValidationResult createValidationResult() {
+				final IValidationResult result;
+				if (stringValidator != null) {
+					result = stringValidator.validate(comboBoxWidgetSpi.getText());
+				}
+				else {
+					result = ValidationResult.ok();
+				}
+				//if the converter could not parse the input, do not make more validation
+				if (!result.isValid()) {
+					return result;
+				}
+				else {
+					return result.withResult(compoundValidator.validate(getValue()));
+				}
+			}
+		});
+
+		getWidget().addInputListener(new IInputListener() {
+			@Override
+			public void inputChanged() {
+				validationCache.setDirty();
+			}
+		});
+
+	}
+
+	@Override
+	public IComboBoxSpi getWidget() {
+		return (IComboBoxSpi) super.getWidget();
+	}
+
+	@Override
+	public void addValidator(final IValidator<VALUE_TYPE> validator) {
+		compoundValidator.addValidator(validator);
+	}
+
+	@Override
+	public IValidationResult validate() {
+		return validationCache.validate();
+	}
+
+	@Override
+	public void addValidationConditionListener(final IValidationConditionListener listener) {
+		validationCache.addValidationConditionListener(listener);
+	}
+
+	@Override
+	public void removeValidationConditionListener(final IValidationConditionListener listener) {
+		validationCache.removeValidationConditionListener(listener);
 	}
 
 	@Override
 	public void setValue(final VALUE_TYPE value) {
 		if (value == null) {
-			comboBoxWidgetSpi.setText("");
-			comboBoxWidgetSpi.setSelectedIndex(-1);
+			getWidget().setText("");
+			getWidget().setSelectedIndex(-1);
 		}
 		else {
 			final int indexOfContent = getElements().indexOf(value);
 			if (indexOfContent != -1) {
-				comboBoxWidgetSpi.setSelectedIndex(indexOfContent);
+				getWidget().setSelectedIndex(indexOfContent);
 			}
 			else {
-				comboBoxWidgetSpi.setText(getObjectStringConverter().convertToString(value));
+				getWidget().setText(objectStringConverter.convertToString(value));
 			}
 		}
 	}
 
 	@Override
 	public VALUE_TYPE getValue() {
-		return stringObjectConverter.convertToObject(comboBoxWidgetSpi.getText());
+		return stringObjectConverter.convertToObject(getWidget().getText());
+	}
+
+	@Override
+	public void setParent(final IContainer parent) {
+		controlDelegate.setParent(parent);
+	}
+
+	@Override
+	public IContainer getParent() {
+		return controlDelegate.getParent();
+	}
+
+	@Override
+	public boolean isReparentable() {
+		return controlDelegate.isReparentable();
+	}
+
+	@Override
+	public IPopupMenu createPopupMenu() {
+		return new PopupMenuImpl(getWidget().createPopupMenu(), this);
+	}
+
+	@Override
+	public void setEditable(final boolean editable) {
+		getWidget().setEditable(editable);
+	}
+
+	@Override
+	public void addInputListener(final IInputListener listener) {
+		getWidget().addInputListener(listener);
+	}
+
+	@Override
+	public void removeInputListener(final IInputListener listener) {
+		getWidget().removeInputListener(listener);
 	}
 
 }

@@ -38,6 +38,7 @@ import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.util.Assert;
 import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidator;
 
 class InputComponent<WIDGET_TYPE extends IInputComponent<VALUE_TYPE>, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IInputComponentSetup<VALUE_TYPE> & IInputComponentSetupBuilder<?, VALUE_TYPE>, VALUE_TYPE> extends
@@ -45,11 +46,13 @@ class InputComponent<WIDGET_TYPE extends IInputComponent<VALUE_TYPE>, BLUE_PRINT
 
 	private final List<IValidator<VALUE_TYPE>> validators;
 	private final List<IInputListener> inputListeners;
+	private final List<IValidationConditionListener> validationStateListeners;
 
 	public InputComponent(final BLUE_PRINT_TYPE bluePrint) {
 		super(bluePrint);
 		this.validators = new LinkedList<IValidator<VALUE_TYPE>>();
 		this.inputListeners = new LinkedList<IInputListener>();
+		this.validationStateListeners = new LinkedList<IValidationConditionListener>();
 	}
 
 	@Override
@@ -61,7 +64,9 @@ class InputComponent<WIDGET_TYPE extends IInputComponent<VALUE_TYPE>, BLUE_PRINT
 		for (final IInputListener inputListener : inputListeners) {
 			widget.addInputListener(inputListener);
 		}
-
+		for (final IValidationConditionListener listener : validationStateListeners) {
+			widget.addValidationConditionListener(listener);
+		}
 	}
 
 	@Override
@@ -71,26 +76,6 @@ class InputComponent<WIDGET_TYPE extends IInputComponent<VALUE_TYPE>, BLUE_PRINT
 		}
 		else {
 			getBluePrint().setEditable(editable);
-		}
-	}
-
-	@Override
-	public boolean isMandatory() {
-		if (isInitialized()) {
-			return getWidget().isMandatory();
-		}
-		else {
-			return getBluePrint().isMandatory();
-		}
-	}
-
-	@Override
-	public void setMandatory(final boolean mandatory) {
-		if (isInitialized()) {
-			getWidget().setMandatory(mandatory);
-		}
-		else {
-			getBluePrint().setMandatory(mandatory);
 		}
 	}
 
@@ -148,15 +133,31 @@ class InputComponent<WIDGET_TYPE extends IInputComponent<VALUE_TYPE>, BLUE_PRINT
 	}
 
 	@Override
-	public IValidationResult validate() {
-		checkInitialized();
-		return getWidget().validate();
+	public void addValidationConditionListener(final IValidationConditionListener listener) {
+		Assert.paramNotNull(listener, "listener");
+		if (isInitialized()) {
+			getWidget().addValidationConditionListener(listener);
+		}
+		else {
+			validationStateListeners.add(listener);
+		}
 	}
 
 	@Override
-	public boolean isEmpty() {
+	public void removeValidationConditionListener(final IValidationConditionListener listener) {
+		Assert.paramNotNull(listener, "listener");
+		if (isInitialized()) {
+			getWidget().removeValidationConditionListener(listener);
+		}
+		else {
+			validationStateListeners.remove(listener);
+		}
+	}
+
+	@Override
+	public IValidationResult validate() {
 		checkInitialized();
-		return getWidget().isEmpty();
+		return getWidget().validate();
 	}
 
 }

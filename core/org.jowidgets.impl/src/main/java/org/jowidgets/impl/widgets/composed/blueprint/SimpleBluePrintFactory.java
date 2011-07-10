@@ -36,13 +36,15 @@ import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IProgressBarBluePrint;
 import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
-import org.jowidgets.api.widgets.blueprint.IValidationLabelBluePrint;
+import org.jowidgets.api.widgets.blueprint.IValidateableStateLabelBluePrint;
+import org.jowidgets.api.widgets.blueprint.IValidationResultLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.api.widgets.blueprint.factory.ISimpleBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.impl.widgets.basic.blueprint.BasicBluePrintFactory;
 import org.jowidgets.util.Assert;
+import org.jowidgets.validation.IValidateable;
 
 public class SimpleBluePrintFactory extends BasicBluePrintFactory implements ISimpleBluePrintFactory {
 
@@ -63,8 +65,21 @@ public class SimpleBluePrintFactory extends BasicBluePrintFactory implements ISi
 	}
 
 	@Override
-	public final IValidationLabelBluePrint validationLabel() {
-		return createProxy(IValidationLabelBluePrint.class);
+	public final IValidationResultLabelBluePrint validationResultLabel() {
+		return createProxy(IValidationResultLabelBluePrint.class);
+	}
+
+	@Override
+	public IValidateableStateLabelBluePrint validatetableStateLabel(final IValidateable validateable) {
+		Assert.paramNotNull(validateable, "validateable");
+		final IValidateableStateLabelBluePrint result = createProxy(IValidateableStateLabelBluePrint.class);
+		result.setValidateable(validateable);
+		return result;
+	}
+
+	@Override
+	public IValidateableStateLabelBluePrint validatetableStateLabel() {
+		return createProxy(IValidateableStateLabelBluePrint.class);
 	}
 
 	@Override

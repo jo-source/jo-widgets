@@ -33,13 +33,12 @@ import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IInputComponent;
 import org.jowidgets.api.widgets.IInputDialog;
-import org.jowidgets.api.widgets.IValidationLabel;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
-import org.jowidgets.api.widgets.blueprint.IValidationLabelBluePrint;
+import org.jowidgets.api.widgets.blueprint.IValidateableStateLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.blueprint.factory.ISimpleBluePrintFactory;
 import org.jowidgets.common.application.IApplication;
@@ -83,25 +82,22 @@ public class HelloWidgetApplication implements IApplication {
 		// base descriptor for left labels
 		final ITextLabelBluePrint labelBp = bpF.textLabel().alignRight();
 
-		final IValidationLabelBluePrint validationLabelBp = bpF.validationLabel();
+		final IValidateableStateLabelBluePrint validationLabelBp = bpF.validatetableStateLabel();
 
 		// row1
 		group.add(labelBp.setText("Number 1").setToolTipText("Very useful numbers here"), "sg lg");
 		final IInputComponent<Long> widget1 = group.add(bpF.inputFieldLongNumber(), "growx");
-		final IValidationLabel valLabel1 = group.add(validationLabelBp, "wrap");
-		valLabel1.registerInputWidget(widget1);
+		group.add(validationLabelBp.setValidateable(widget1), "wrap");
 
 		// row2
 		group.add(labelBp.setText("Number 2").setToolTipText("Very very useful numbers here"), "sg lg");
 		final IInputComponent<Integer> widget2 = group.add(bpF.inputFieldIntegerNumber(), "growx");
-		final IValidationLabel valLabel2 = group.add(validationLabelBp, "wrap");
-		valLabel2.registerInputWidget(widget2);
+		group.add(validationLabelBp.setValidateable(widget2), "wrap");
 
 		// row3
 		group.add(labelBp.setText("String").setToolTipText("Very special input here"), "sg lg");
 		final IInputComponent<String> widget3 = group.add(bpF.inputFieldString(), "growx");
-		final IValidationLabel valLabel3 = group.add(validationLabelBp, "wrap");
-		valLabel3.registerInputWidget(widget3);
+		group.add(validationLabelBp.setValidateable(widget3), "wrap");
 
 		// row4
 		group.add(
@@ -111,7 +107,7 @@ public class HelloWidgetApplication implements IApplication {
 		// row5
 		final IInputCompositeBluePrint<String> inputCompositeBluePrint = bpF.inputComposite(new HelloContentCreator());
 		inputCompositeBluePrint.setContentScrolled(false).setContentBorder();
-		inputCompositeBluePrint.setMissingInputText("Do input all mandatory(*) fields!");
+		inputCompositeBluePrint.setMissingInputHint("Do input all mandatory(*) fields!");
 		group.add(inputCompositeBluePrint, "grow, span, wrap");
 
 		// row6
@@ -137,7 +133,7 @@ public class HelloWidgetApplication implements IApplication {
 		inputDialogBp.setTitle("Test dialog").setAutoCenterPolicy(AutoCenterPolicy.ONCE);
 		inputDialogBp.setOkButton("very ok", "This is very ok");
 		inputDialogBp.setCancelButton("cancel user input", "cancel the current user input");
-		inputDialogBp.setMissingInputText("Do input all mandatory(*) fields!");
+		inputDialogBp.setMissingInputHint("Do input all mandatory(*) fields!");
 		inputDialogBp.setContentBorder().setContentScrolled(true);
 		final IInputDialog<String> dialog = rootFrame.createChildWindow(inputDialogBp);
 

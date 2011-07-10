@@ -36,8 +36,10 @@ import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IProgressBarBluePrint;
 import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
-import org.jowidgets.api.widgets.blueprint.IValidationLabelBluePrint;
+import org.jowidgets.api.widgets.blueprint.IValidateableStateLabelBluePrint;
+import org.jowidgets.api.widgets.blueprint.IValidationResultLabelBluePrint;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
+import org.jowidgets.validation.IValidateable;
 
 public interface ISimpleBluePrintFactory extends IBasicBluePrintFactory {
 
@@ -45,7 +47,11 @@ public interface ISimpleBluePrintFactory extends IBasicBluePrintFactory {
 
 	ITextSeparatorBluePrint textSeparator();
 
-	IValidationLabelBluePrint validationLabel();
+	IValidateableStateLabelBluePrint validatetableStateLabel(IValidateable validateable);
+
+	IValidateableStateLabelBluePrint validatetableStateLabel();
+
+	IValidationResultLabelBluePrint validationResultLabel();
 
 	<INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField(final IConverter<INPUT_TYPE> converter);
 
