@@ -29,7 +29,7 @@ package org.jowidgets.api.widgets.blueprint.builder;
 
 import org.jowidgets.api.widgets.blueprint.builder.convenience.IInputCompositeSetupConvenience;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
-import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
+import org.jowidgets.api.widgets.descriptor.setup.IValidationLabelSetup;
 import org.jowidgets.common.types.Border;
 
 public interface IInputCompositeSetupBuilder<INSTANCE_TYPE extends IInputCompositeSetupBuilder<?, ?>, INPUT_TYPE> extends
@@ -46,8 +46,8 @@ public interface IInputCompositeSetupBuilder<INSTANCE_TYPE extends IInputComposi
 
 	INSTANCE_TYPE setContentBorder(Border border);
 
-	INSTANCE_TYPE setValidationLabel(final IValidationLabelDescriptor validationLabelDescriptor);
+	INSTANCE_TYPE setValidationLabel(final IValidationLabelSetup validationLabel);
 
-	IValidationLabelDescriptor getValidationLabel();
+	INSTANCE_TYPE setMissingInputHint(String hint);
 
 }

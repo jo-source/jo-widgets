@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2010, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,28 +26,13 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.content;
+package org.jowidgets.api.widgets.blueprint;
 
-import org.jowidgets.api.widgets.IInputControl;
-import org.jowidgets.api.widgets.content.IInputContentCreator;
-import org.jowidgets.api.widgets.content.IInputContentCreatorFactory;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.api.widgets.blueprint.builder.IValidationLabelSetupBuilder;
+import org.jowidgets.api.widgets.descriptor.IValidationResultLabelDescriptor;
 
-public class InputContentCreatorFactory implements IInputContentCreatorFactory {
-
-	@Override
-	public <INPUT_TYPE> IInputContentCreator<INPUT_TYPE> singleControlContent(
-		final String label,
-		final IWidgetDescriptor<? extends IInputControl<INPUT_TYPE>> descriptor,
-		final int fieldMinWidth) {
-		return new SingleControlContent<INPUT_TYPE>(label, descriptor, "w " + fieldMinWidth + ", grow");
-	}
-
-	@Override
-	public <INPUT_TYPE> IInputContentCreator<INPUT_TYPE> singleControlContent(
-		final String label,
-		final IWidgetDescriptor<? extends IInputControl<INPUT_TYPE>> descriptor) {
-		return new SingleControlContent<INPUT_TYPE>(label, descriptor, null);
-	}
+public interface IValidationResultLabelBluePrint extends
+		IValidationLabelSetupBuilder<IValidationResultLabelBluePrint>,
+		IValidationResultLabelDescriptor {
 
 }

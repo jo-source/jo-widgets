@@ -50,7 +50,7 @@ public interface IValidationLabelSetup extends IComponentSetup {
 	Markup getErrorMarkup();
 
 	@Mandatory
-	Markup getMissingInputMarkup();
+	Markup getHintMarkup();
 
 	@Mandatory
 	IColorConstant getOkColor();
@@ -65,7 +65,7 @@ public interface IValidationLabelSetup extends IComponentSetup {
 	IColorConstant getErrorColor();
 
 	@Mandatory
-	IColorConstant getMissingInputColor();
+	IColorConstant getHintColor();
 
 	IImageConstant getOkIcon();
 
@@ -75,8 +75,6 @@ public interface IValidationLabelSetup extends IComponentSetup {
 
 	IImageConstant getErrorIcon();
 
-	IImageConstant getMissingInputIcon();
-
-	String getMissingInputText();
+	IImageConstant getHintIcon();
 
 }

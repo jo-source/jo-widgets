@@ -29,14 +29,12 @@ package org.jowidgets.examples.common;
 
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IInputComponent;
-import org.jowidgets.api.widgets.IValidationLabel;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
-import org.jowidgets.api.widgets.blueprint.IValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
-import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.tools.validation.MandatoryInfoValidator;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
 import org.jowidgets.validation.ValidationResult;
@@ -74,22 +72,14 @@ public class HelloContentCreator implements IInputContentCreator<String> {
 
 			final IInputFieldBluePrint<String> textFieldBp = bpF.inputFieldString();
 
-			textFieldBp.setMandatory(mandatory);
 			textFieldBp.setValidator(characterLenghtValidator);
 
-			widgets[i] = widgetContainer.add(textFieldBp, "growx");
-			widgetContainer.registerInputWidget(label, widgets[i]);
-
-			final IValidationLabelBluePrint validationLabelDescr = bpF.validationLabel();
+			widgets[i] = widgetContainer.add(label, textFieldBp, "growx");
 			if (mandatory) {
-				validationLabelDescr.setMissingInputText("*mandatory field");
-			}
-			else {
-				validationLabelDescr.setMissingInputText("optional field").setMissingInputMarkup(Markup.DEFAULT);
+				widgets[i].addValidator(new MandatoryInfoValidator<String>("*mandatory field"));
 			}
 
-			final IValidationLabel validationLabelWidget = widgetContainer.add(validationLabelDescr, "wrap");
-			validationLabelWidget.registerInputWidget(widgets[i]);
+			widgetContainer.add(bpF.validatetableStateLabel(widgets[i]), "wrap");
 		}
 
 	}
@@ -104,16 +94,6 @@ public class HelloContentCreator implements IInputContentCreator<String> {
 			builder.append(widgets[i].getValue() + "\n");
 		}
 		return builder.toString();
-	}
-
-	@Override
-	public IValidationResult validate() {
-		return ValidationResult.ok();
-	}
-
-	@Override
-	public boolean isMandatory() {
-		return true;
 	}
 
 }

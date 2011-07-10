@@ -28,6 +28,7 @@
 package org.jowidgets.tools.validation;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.util.Assert;
@@ -40,8 +41,13 @@ public class CompoundValidator<VALIDATION_INPUT_TYPE> implements IValidator<VALI
 
 	private final List<IValidator<VALIDATION_INPUT_TYPE>> validators;
 
+	@SuppressWarnings("unchecked")
+	public CompoundValidator() {
+		this(new IValidator[] {});
+	}
+
 	public CompoundValidator(final IValidator<VALIDATION_INPUT_TYPE>... validators) {
-		this.validators = Arrays.asList(validators);
+		this.validators = new LinkedList<IValidator<VALIDATION_INPUT_TYPE>>(Arrays.asList(validators));
 	}
 
 	@Override

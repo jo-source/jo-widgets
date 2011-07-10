@@ -30,7 +30,6 @@ package org.jowidgets.examples.common.demo;
 
 import java.util.List;
 
-import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IInputDialog;
 import org.jowidgets.api.widgets.IWindow;
@@ -55,8 +54,7 @@ public class DemoInputDialog1 {
 		final IInputDialogBluePrint<List<String>> inputDialogBp = bpF.inputDialog(new DemoForm1ContentCreator());
 		inputDialogBp.setTitle(title);
 		inputDialogBp.setIcon(icon);
-		inputDialogBp.setMissingInputText("Please fill out all mandatory (*) fields");
-		inputDialogBp.setMissingInputIcon(IconsSmall.INFO);
+		inputDialogBp.setMissingInputHint("Please fill out all mandatory (*) fields");
 		inputDialog = parentWindow.createChildWindow(inputDialogBp);
 	}
 

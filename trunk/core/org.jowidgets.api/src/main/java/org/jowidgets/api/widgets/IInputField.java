@@ -28,7 +28,7 @@
 
 package org.jowidgets.api.widgets;
 
-public interface IInputField<VALUE_TYPE> extends IInputControl<VALUE_TYPE> {
+public interface IInputField<VALUE_TYPE> extends IInputControl<VALUE_TYPE>, IComposedInputComponent<VALUE_TYPE> {
 
 	void selectAll();
 

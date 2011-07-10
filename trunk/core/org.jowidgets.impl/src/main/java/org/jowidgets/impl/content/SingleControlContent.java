@@ -36,15 +36,12 @@ import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.util.Assert;
-import org.jowidgets.validation.IValidationResult;
-import org.jowidgets.validation.ValidationResult;
 
 class SingleControlContent<INPUT_TYPE> implements IInputContentCreator<INPUT_TYPE> {
 
 	private final String label;
 	private final IWidgetDescriptor<? extends IInputControl<INPUT_TYPE>> descriptor;
 	private final String layoutConstraints;
-	private final boolean mandatory;
 
 	private IInputControl<INPUT_TYPE> control;
 	private INPUT_TYPE value;
@@ -52,8 +49,7 @@ class SingleControlContent<INPUT_TYPE> implements IInputContentCreator<INPUT_TYP
 	SingleControlContent(
 		final String label,
 		final IWidgetDescriptor<? extends IInputControl<INPUT_TYPE>> descriptor,
-		final String layoutConstraints,
-		final boolean mandatory) {
+		final String layoutConstraints) {
 
 		Assert.paramNotNull(label, "label");
 		Assert.paramNotNull(descriptor, "descriptor");
@@ -65,7 +61,6 @@ class SingleControlContent<INPUT_TYPE> implements IInputContentCreator<INPUT_TYP
 		else {
 			this.layoutConstraints = "w 150::, grow";
 		}
-		this.mandatory = mandatory;
 	}
 
 	@Override
@@ -80,7 +75,6 @@ class SingleControlContent<INPUT_TYPE> implements IInputContentCreator<INPUT_TYP
 		if (value != null) {
 			control.setValue(value);
 		}
-		contentContainer.registerInputWidget(null, control);
 	}
 
 	@Override
@@ -101,16 +95,6 @@ class SingleControlContent<INPUT_TYPE> implements IInputContentCreator<INPUT_TYP
 		else {
 			return this.value;
 		}
-	}
-
-	@Override
-	public IValidationResult validate() {
-		return ValidationResult.ok();
-	}
-
-	@Override
-	public boolean isMandatory() {
-		return mandatory;
 	}
 
 }

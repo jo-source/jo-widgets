@@ -25,17 +25,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.blueprint.builder.convenience;
+package org.jowidgets.api.widgets.descriptor;
 
+import org.jowidgets.api.widgets.IValidationResultLabel;
+import org.jowidgets.api.widgets.descriptor.setup.IValidationLabelSetup;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-public interface IInputCompositeSetupConvenience<INSTANCE_TYPE> {
-
-	INSTANCE_TYPE setBorder(final String borderTitle);
-
-	INSTANCE_TYPE setBorder();
-
-	INSTANCE_TYPE setContentBorder(final String borderTitle);
-
-	INSTANCE_TYPE setContentBorder();
+public interface IValidationResultLabelDescriptor extends IValidationLabelSetup, IWidgetDescriptor<IValidationResultLabel> {
 
 }

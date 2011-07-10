@@ -25,17 +25,44 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.tools.validation;
+package org.jowidgets.impl.widgets.composed.factory.internal;
 
-import org.jowidgets.validation.IValidationResult;
-import org.jowidgets.validation.IValidator;
-import org.jowidgets.validation.ValidationResult;
+import org.jowidgets.api.widgets.ILabel;
+import org.jowidgets.api.widgets.IValidationResultLabel;
+import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
+import org.jowidgets.api.widgets.descriptor.IValidationResultLabelDescriptor;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.widgets.factory.IWidgetFactory;
+import org.jowidgets.impl.widgets.composed.ValidationResultLabelImpl;
+import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
-public class OkValidator<VALIDATION_INPUT_TYPE> implements IValidator<VALIDATION_INPUT_TYPE> {
+public class ValidationResultLabelFactory implements IWidgetFactory<IValidationResultLabel, IValidationResultLabelDescriptor> {
+
+	private final IGenericWidgetFactory genericWidgetFactory;
+
+	public ValidationResultLabelFactory(final IGenericWidgetFactory genericWidgetFactory) {
+		super();
+		this.genericWidgetFactory = genericWidgetFactory;
+	}
 
 	@Override
-	public IValidationResult validate(final VALIDATION_INPUT_TYPE validationInput) {
-		return ValidationResult.ok();
+	public IValidationResultLabel create(final Object parentUiReference, final IValidationResultLabelDescriptor descriptor) {
+
+		final ILabelBluePrint labelDescriptor = new BluePrintFactory().label();
+
+		final ILabel labelWidget = genericWidgetFactory.create(parentUiReference, labelDescriptor);
+
+		if (labelWidget == null) {
+			throw new IllegalStateException("Could not create widget with descriptor interface class '"
+				+ IValidationResultLabelDescriptor.class
+				+ "' from '"
+				+ IGenericWidgetFactory.class.getName()
+				+ "'");
+		}
+
+		final ValidationResultLabelImpl result = new ValidationResultLabelImpl(labelWidget, descriptor);
+
+		return result;
 	}
 
 }

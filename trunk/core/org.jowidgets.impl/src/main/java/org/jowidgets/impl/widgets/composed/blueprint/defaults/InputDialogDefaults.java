@@ -41,7 +41,7 @@ public class InputDialogDefaults implements IDefaultInitializer<IInputDialogSetu
 		final BluePrintFactory bpF = new BluePrintFactory();
 		builder.setOkButton(bpF.button("OK"));
 		builder.setCancelButton(bpF.button("Cancel"));
-		builder.setValidationLabel(bpF.validationLabel());
+		builder.setValidationLabel(bpF.validationResultLabel());
 		builder.setDefaultButtonPolicy(InputDialogDefaultButtonPolicy.OK);
 		builder.setCloseable(false);
 	}

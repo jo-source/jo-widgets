@@ -43,22 +43,19 @@ public class ValidationLabelDefaults implements IDefaultInitializer<IValidationL
 		builder.setWarningMarkup(Markup.STRONG);
 		builder.setInfoErrorMarkup(Markup.STRONG);
 		builder.setErrorMarkup(Markup.STRONG);
-		builder.setMissingInputMarkup(Markup.STRONG);
+		builder.setHintMarkup(Markup.STRONG);
 
 		builder.setOkColor(Colors.DEFAULT);
 		builder.setInfoErrorColor(Colors.STRONG);
 		builder.setErrorColor(Colors.ERROR);
 		builder.setWarningColor(Colors.DEFAULT);
-		builder.setMissingInputColor(Colors.STRONG);
+		builder.setHintColor(Colors.STRONG);
 
 		builder.setOkIcon(IconsSmall.OK);
 		builder.setWarningIcon(IconsSmall.WARNING);
 		builder.setInfoErrorIcon(IconsSmall.INFO);
 		builder.setErrorIcon(IconsSmall.ERROR);
-		builder.setMissingInputIcon(null);
-
-		// i18n
-		builder.setMissingInputText("");
+		builder.setHintIcon(null);
 	}
 
 }

@@ -29,15 +29,16 @@ package org.jowidgets.impl.widgets.basic.blueprint.defaults;
 
 import org.jowidgets.api.widgets.blueprint.builder.IInputComponentSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
-import org.jowidgets.tools.validation.OkValidator;
+import org.jowidgets.validation.IValidator;
+import org.jowidgets.validation.Validator;
 
 public class InputWidgetDefaults implements IDefaultInitializer<IInputComponentSetupBuilder<?, ?>> {
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	@Override
 	public void initialize(final IInputComponentSetupBuilder<?, ?> builder) {
-		builder.setValidator(new OkValidator());
-		builder.setMandatory(false);
+		final IValidator okValidator = Validator.okValidator();
+		builder.setValidator(okValidator);
 		builder.setEditable(true);
 	}
 

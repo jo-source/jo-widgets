@@ -29,7 +29,6 @@
 package org.jowidgets.examples.common.workbench.demo1;
 
 import org.jowidgets.api.command.IExecutionContext;
-import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.IInputDialog;
@@ -39,8 +38,6 @@ import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.validation.IValidationResult;
-import org.jowidgets.validation.ValidationResult;
 
 public class InputDialogFactory {
 
@@ -57,8 +54,7 @@ public class InputDialogFactory {
 		final IInputDialogBluePrint<String> inputDialogBp = bpf.inputDialog(createLabelDialogCreator(inputName));
 		inputDialogBp.setTitle(title);
 		inputDialogBp.setIcon(icon);
-		inputDialogBp.setMissingInputText("Please enter the " + inputName);
-		inputDialogBp.setMissingInputIcon(IconsSmall.INFO);
+		inputDialogBp.setMissingInputHint("Please enter the " + inputName);
 		inputDialogBp.setCloseable(true);
 		inputDialogBp.setResizable(false);
 
@@ -75,9 +71,7 @@ public class InputDialogFactory {
 				final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 				contentContainer.setLayout(new MigLayoutDescriptor("[][grow]", "[]"));
 				contentContainer.add(bpf.textLabel(inputName), "");
-				inputField = contentContainer.add(bpf.inputFieldString(), "growx, w 180:180:180");
-
-				contentContainer.registerInputWidget(inputName, inputField);
+				inputField = contentContainer.add(inputName, bpf.inputFieldString(), "growx, w 180:180:180");
 			}
 
 			@Override
@@ -90,15 +84,6 @@ public class InputDialogFactory {
 				return inputField.getValue();
 			}
 
-			@Override
-			public IValidationResult validate() {
-				return ValidationResult.ok();
-			}
-
-			@Override
-			public boolean isMandatory() {
-				return true;
-			}
 		};
 	}
 

@@ -36,13 +36,24 @@ import java.util.List;
 import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.types.AutoSelectionPolicy;
 import org.jowidgets.api.widgets.IComboBox;
+import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.descriptor.setup.IComboBoxSelectionSetup;
+import org.jowidgets.common.widgets.controler.IInputListener;
+import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
+import org.jowidgets.impl.widgets.common.wrapper.ControlSpiWrapper;
 import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
+import org.jowidgets.tools.validation.CompoundValidator;
+import org.jowidgets.tools.validation.ValidationCache;
+import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
 import org.jowidgets.util.Assert;
+import org.jowidgets.validation.IValidationConditionListener;
+import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.validation.IValidator;
 
-public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractBasicInputControl<VALUE_TYPE> implements IComboBox<VALUE_TYPE> {
+public class ComboBoxSelectionImpl<VALUE_TYPE> extends ControlSpiWrapper implements IComboBox<VALUE_TYPE> {
 
 	private final List<VALUE_TYPE> elements;
 	private final List<VALUE_TYPE> elementsView;
@@ -50,11 +61,14 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractBasicInputControl
 	private final IComboBoxSelectionSpi comboBoxSelectionWidgetSpi;
 	private final IObjectStringConverter<VALUE_TYPE> objectStringConverter;
 	private final AutoSelectionPolicy autoSelectionPolicy;
+	private final ValidationCache validationCache;
+	private final ControlDelegate controlDelegate;
+	private final CompoundValidator<VALUE_TYPE> compoundValidator;
 
 	public ComboBoxSelectionImpl(
 		final IComboBoxSelectionSpi comboBoxSelectionWidgetSpi,
 		final IComboBoxSelectionSetup<VALUE_TYPE> setup) {
-		super(comboBoxSelectionWidgetSpi, setup);
+		super(comboBoxSelectionWidgetSpi);
 
 		this.comboBoxSelectionWidgetSpi = comboBoxSelectionWidgetSpi;
 		this.objectStringConverter = setup.getObjectStringConverter();
@@ -62,14 +76,41 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractBasicInputControl
 		this.elements = new ArrayList<VALUE_TYPE>();
 		this.elementsView = Collections.unmodifiableList(this.elements);
 
+		VisibiliySettingsInvoker.setVisibility(setup, this);
+		ColorSettingsInvoker.setColors(setup, this);
+
 		setElements(setup.getElements());
 
 		if (setup.getValue() != null) {
 			setValue(setup.getValue());
 		}
 
-		VisibiliySettingsInvoker.setVisibility(setup, this);
-		ColorSettingsInvoker.setColors(setup, this);
+		this.controlDelegate = new ControlDelegate();
+		this.compoundValidator = new CompoundValidator<VALUE_TYPE>();
+
+		final IValidator<VALUE_TYPE> validator = setup.getValidator();
+		if (validator != null) {
+			compoundValidator.addValidator(validator);
+		}
+
+		this.validationCache = new ValidationCache(new IValidationResultCreator() {
+			@Override
+			public IValidationResult createValidationResult() {
+				return compoundValidator.validate(getValue());
+			}
+		});
+
+		getWidget().addInputListener(new IInputListener() {
+			@Override
+			public void inputChanged() {
+				validationCache.setDirty();
+			}
+		});
+	}
+
+	@Override
+	public IComboBoxSelectionSpi getWidget() {
+		return (IComboBoxSelectionSpi) super.getWidget();
 	}
 
 	@Override
@@ -112,7 +153,7 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractBasicInputControl
 
 		Assert.paramNotNull(newElements, "newElements");
 
-		//determinie the last selected string
+		//determine the last selected string
 		String lastSelectedString = null;
 		final int lastSelectedIndex = comboBoxSelectionWidgetSpi.getSelectedIndex();
 		if (comboBoxSelectionWidgetSpi.getElements() != null
@@ -176,6 +217,61 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractBasicInputControl
 
 	protected IObjectStringConverter<VALUE_TYPE> getObjectStringConverter() {
 		return objectStringConverter;
+	}
+
+	@Override
+	public void setParent(final IContainer parent) {
+		controlDelegate.setParent(parent);
+	}
+
+	@Override
+	public IContainer getParent() {
+		return controlDelegate.getParent();
+	}
+
+	@Override
+	public boolean isReparentable() {
+		return controlDelegate.isReparentable();
+	}
+
+	@Override
+	public IPopupMenu createPopupMenu() {
+		return new PopupMenuImpl(getWidget().createPopupMenu(), this);
+	}
+
+	@Override
+	public void addValidator(final IValidator<VALUE_TYPE> validator) {
+		compoundValidator.addValidator(validator);
+	}
+
+	@Override
+	public IValidationResult validate() {
+		return validationCache.validate();
+	}
+
+	@Override
+	public void addValidationConditionListener(final IValidationConditionListener listener) {
+		validationCache.addValidationConditionListener(listener);
+	}
+
+	@Override
+	public void removeValidationConditionListener(final IValidationConditionListener listener) {
+		validationCache.removeValidationConditionListener(listener);
+	}
+
+	@Override
+	public void setEditable(final boolean editable) {
+		getWidget().setEditable(editable);
+	}
+
+	@Override
+	public void addInputListener(final IInputListener listener) {
+		getWidget().addInputListener(listener);
+	}
+
+	@Override
+	public void removeInputListener(final IInputListener listener) {
+		getWidget().removeInputListener(listener);
 	}
 
 }

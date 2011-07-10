@@ -27,13 +27,9 @@
  */
 package org.jowidgets.impl.widgets.composed.blueprint.convenience;
 
-import org.jowidgets.api.widgets.blueprint.IValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.builder.IInputCompositeSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.convenience.IInputCompositeSetupConvenience;
-import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
-import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Border;
-import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 import org.jowidgets.tools.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 
 public class InputCompositeSetupConvenience extends AbstractSetupBuilderConvenience<IInputCompositeSetupBuilder<?, ?>> implements
@@ -57,31 +53,6 @@ public class InputCompositeSetupConvenience extends AbstractSetupBuilderConvenie
 	@Override
 	public IInputCompositeSetupBuilder<?, ?> setContentBorder() {
 		return getBuilder().setContentBorder(new Border());
-	}
-
-	@Override
-	public IInputCompositeSetupBuilder<?, ?> setMissingInputText(final String text) {
-		getValidationLabelBluePrint().setMissingInputText(text);
-		return getBuilder();
-	}
-
-	@Override
-	public IInputCompositeSetupBuilder<?, ?> setMissingInputIcon(final IImageConstant icon) {
-		getValidationLabelBluePrint().setMissingInputIcon(icon);
-		return getBuilder();
-	}
-
-	private IValidationLabelBluePrint getValidationLabelBluePrint() {
-		final IValidationLabelDescriptor validationLabelDescriptor = getBuilder().getValidationLabel();
-		if (validationLabelDescriptor == null) {
-			return new BluePrintFactory().validationLabel();
-		}
-		else if (validationLabelDescriptor instanceof IValidationLabelBluePrint) {
-			return (IValidationLabelBluePrint) validationLabelDescriptor;
-		}
-		else {
-			return new BluePrintFactory().validationLabel().setSetup(validationLabelDescriptor);
-		}
 	}
 
 }

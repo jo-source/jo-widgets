@@ -27,42 +27,43 @@
  */
 package org.jowidgets.impl.widgets.composed.factory.internal;
 
-import org.jowidgets.api.widgets.ILabel;
-import org.jowidgets.api.widgets.IValidationLabel;
-import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
-import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IValidateableStateLabel;
+import org.jowidgets.api.widgets.IValidationResultLabel;
+import org.jowidgets.api.widgets.blueprint.IValidationResultLabelBluePrint;
+import org.jowidgets.api.widgets.descriptor.IValidateableStateLabelDescriptor;
+import org.jowidgets.api.widgets.descriptor.IValidationResultLabelDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
-import org.jowidgets.impl.widgets.composed.ValidationLabelImpl;
-import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
+import org.jowidgets.impl.widgets.composed.ValidateableStateLabelImpl;
 
-public class ValidationLabelFactory implements IWidgetFactory<IValidationLabel, IValidationLabelDescriptor> {
+public class ValidateableStateLabelFactory implements IWidgetFactory<IValidateableStateLabel, IValidateableStateLabelDescriptor> {
 
 	private final IGenericWidgetFactory genericWidgetFactory;
 
-	public ValidationLabelFactory(final IGenericWidgetFactory genericWidgetFactory) {
+	public ValidateableStateLabelFactory(final IGenericWidgetFactory genericWidgetFactory) {
 		super();
 		this.genericWidgetFactory = genericWidgetFactory;
 	}
 
 	@Override
-	public IValidationLabel create(final Object parentUiReference, final IValidationLabelDescriptor descriptor) {
+	public IValidateableStateLabel create(final Object parentUiReference, final IValidateableStateLabelDescriptor descriptor) {
+		final IValidationResultLabelBluePrint validationResultLabelBp = Toolkit.getBluePrintFactory().validationResultLabel();
+		validationResultLabelBp.setSetup(descriptor);
 
-		final ILabelBluePrint labelDescriptor = new BluePrintFactory().label();
+		final IValidationResultLabel validationResultLabel = genericWidgetFactory.create(
+				parentUiReference,
+				validationResultLabelBp);
 
-		final ILabel labelWidget = genericWidgetFactory.create(parentUiReference, labelDescriptor);
-
-		if (labelWidget == null) {
+		if (validationResultLabel == null) {
 			throw new IllegalStateException("Could not create widget with descriptor interface class '"
-				+ IValidationLabelDescriptor.class
+				+ IValidationResultLabelDescriptor.class
 				+ "' from '"
 				+ IGenericWidgetFactory.class.getName()
 				+ "'");
 		}
 
-		final ValidationLabelImpl result = new ValidationLabelImpl(labelWidget, descriptor);
-
-		return result;
+		return new ValidateableStateLabelImpl(validationResultLabel, descriptor);
 	}
 
 }

@@ -27,27 +27,19 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
-import java.util.List;
-
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.types.InputDialogDefaultButtonPolicy;
 import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.IDisplay;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IInputDialog;
 import org.jowidgets.api.widgets.IPopupMenu;
-import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.IInputDialogSetup;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.types.Position;
-import org.jowidgets.common.types.Rectangle;
-import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IComponentListener;
 import org.jowidgets.common.widgets.controler.IFocusListener;
@@ -55,15 +47,15 @@ import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.controler.IKeyListener;
 import org.jowidgets.common.widgets.controler.IMouseListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
-import org.jowidgets.common.widgets.controler.IWindowListener;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
+import org.jowidgets.tools.widgets.wrapper.WindowWrapper;
+import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationMessage;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
 
-public class InputDialogImpl<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
+public class InputDialogImpl<INPUT_TYPE> extends WindowWrapper implements IInputDialog<INPUT_TYPE> {
 
 	private final IFrame dialogWidget;
 	private final InputCompositeWidget<INPUT_TYPE> inputCompositeWidget;
@@ -73,7 +65,7 @@ public class InputDialogImpl<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 	private final boolean autoResetValidation;
 
 	public InputDialogImpl(final IFrame dialogWidget, final IInputDialogSetup<INPUT_TYPE> setup) {
-		super();
+		super(dialogWidget);
 		this.okPressed = false;
 		this.dialogWidget = dialogWidget;
 		this.autoResetValidation = setup.isAutoResetValidation();
@@ -92,15 +84,7 @@ public class InputDialogImpl<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 
 		final String buttonCellConstraints = "w 100::, sg bg";
 
-		String missingInputText = null;
-		if (setup.getValidationLabel() != null) {
-			missingInputText = setup.getValidationLabel().getMissingInputText();
-		}
-		final ValidationButton validationButton = new ValidationButton(
-			setup.getOkButton(),
-			missingInputText,
-			buttonBar,
-			buttonCellConstraints);
+		final ValidationButton validationButton = new ValidationButton(setup.getOkButton(), buttonBar, buttonCellConstraints);
 
 		final IButton okButton = validationButton.getButtonWidget();
 		final IButton cancelButton = buttonBar.add(setup.getCancelButton(), buttonCellConstraints);
@@ -139,71 +123,6 @@ public class InputDialogImpl<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 	}
 
 	@Override
-	public void centerLocation() {
-		dialogWidget.centerLocation();
-	}
-
-	@Override
-	public void setPosition(final Position position) {
-		dialogWidget.setPosition(position);
-	}
-
-	@Override
-	public Position getPosition() {
-		return dialogWidget.getPosition();
-	}
-
-	@Override
-	public void setSize(final Dimension size) {
-		dialogWidget.setSize(size);
-	}
-
-	@Override
-	public Dimension getSize() {
-		return dialogWidget.getSize();
-	}
-
-	@Override
-	public void setSize(final int width, final int height) {
-		dialogWidget.setSize(width, height);
-	}
-
-	@Override
-	public void setPosition(final int x, final int y) {
-		dialogWidget.setPosition(x, y);
-	}
-
-	@Override
-	public Position toScreen(final Position localPosition) {
-		return dialogWidget.toScreen(localPosition);
-	}
-
-	@Override
-	public Position toLocal(final Position screenPosition) {
-		return dialogWidget.toLocal(screenPosition);
-	}
-
-	@Override
-	public Position fromComponent(final IComponentCommon component, final Position componentPosition) {
-		return dialogWidget.fromComponent(component, componentPosition);
-	}
-
-	@Override
-	public Position toComponent(final Position componentPosition, final IComponentCommon component) {
-		return dialogWidget.toComponent(componentPosition, component);
-	}
-
-	@Override
-	public Rectangle getParentBounds() {
-		return dialogWidget.getParentBounds();
-	}
-
-	@Override
-	public void pack() {
-		dialogWidget.pack();
-	}
-
-	@Override
 	public void setVisible(final boolean visible) {
 		if (visible) {
 			this.okPressed = false;
@@ -212,77 +131,6 @@ public class InputDialogImpl<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 			}
 		}
 		dialogWidget.setVisible(visible);
-	}
-
-	@Override
-	public boolean isVisible() {
-		return dialogWidget.isVisible();
-	}
-
-	@Override
-	public void setEnabled(final boolean enabled) {
-		dialogWidget.setEnabled(enabled);
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return dialogWidget.isEnabled();
-	}
-
-	@Override
-	public void dispose() {
-		dialogWidget.dispose();
-	}
-
-	@Override
-	public void addWindowListener(final IWindowListener listener) {
-		dialogWidget.addWindowListener(listener);
-	}
-
-	@Override
-	public void removeWindowListener(final IWindowListener listener) {
-		dialogWidget.removeWindowListener(listener);
-	}
-
-	@Override
-	public <WIDGET_TYPE extends IDisplay, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
-		final DESCRIPTOR_TYPE descriptor) {
-		return dialogWidget.createChildWindow(descriptor);
-	}
-
-	@Override
-	public Object getUiReference() {
-		return dialogWidget.getUiReference();
-	}
-
-	@Override
-	public void redraw() {
-		dialogWidget.redraw();
-	}
-
-	@Override
-	public void setRedrawEnabled(final boolean enabled) {
-		dialogWidget.setRedrawEnabled(enabled);
-	}
-
-	@Override
-	public IWindow getParent() {
-		return dialogWidget.getParent();
-	}
-
-	@Override
-	public void setParent(final IWindow parent) {
-		dialogWidget.setParent(parent);
-	}
-
-	@Override
-	public boolean isReparentable() {
-		return dialogWidget.isReparentable();
-	}
-
-	@Override
-	public List<IDisplay> getChildWindows() {
-		return dialogWidget.getChildWindows();
 	}
 
 	@Override
@@ -323,8 +171,17 @@ public class InputDialogImpl<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 	}
 
 	@Override
+	public void addValidationConditionListener(final IValidationConditionListener listener) {
+		inputCompositeWidget.addValidationConditionListener(listener);
+	}
+
+	@Override
+	public void removeValidationConditionListener(final IValidationConditionListener listener) {
+		inputCompositeWidget.removeValidationConditionListener(listener);
+	}
+
+	@Override
 	public void setValue(final INPUT_TYPE content) {
-		value = content;
 		inputCompositeWidget.setValue(content);
 	}
 
@@ -349,23 +206,8 @@ public class InputDialogImpl<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 	}
 
 	@Override
-	public boolean isMandatory() {
-		return inputCompositeWidget.isMandatory();
-	}
-
-	@Override
-	public boolean isEmpty() {
-		return inputCompositeWidget.isEmpty();
-	}
-
-	@Override
 	public void resetValidation() {
 		inputCompositeWidget.resetValidation();
-	}
-
-	@Override
-	public void setMandatory(final boolean mandatory) {
-		inputCompositeWidget.setMandatory(mandatory);
 	}
 
 	@Override
@@ -443,17 +285,11 @@ public class InputDialogImpl<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 		private final IButtonDescriptor buttonDescriptor;
 		private final IContainer parentContainer;
 		private final IButton buttonWidget;
-		private final String missingInputText;
 
-		ValidationButton(
-			final IButtonDescriptor buttonDescriptor,
-			final String missingInputText,
-			final IContainer parentContainer,
-			final String cellConstraints) {
+		ValidationButton(final IButtonDescriptor buttonDescriptor, final IContainer parentContainer, final String cellConstraints) {
 			super();
 			this.parentContainer = parentContainer;
 			this.buttonWidget = parentContainer.add(buttonDescriptor, cellConstraints);
-			this.missingInputText = missingInputText;
 
 			this.buttonDescriptor = new BluePrintFactory().button().setSetup(buttonDescriptor);
 
@@ -474,14 +310,7 @@ public class InputDialogImpl<INPUT_TYPE> implements IInputDialog<INPUT_TYPE> {
 
 		private void onInputChanged() {
 			final IValidationMessage firstWorst = inputCompositeWidget.validate().getWorstFirst();
-
-			if (!isMandatory() || !inputCompositeWidget.isEmpty()) {
-				setValidationResult(firstWorst);
-			}
-			else {
-				buttonWidget.setEnabled(false);
-				buttonWidget.setToolTipText(missingInputText);
-			}
+			setValidationResult(firstWorst);
 		}
 
 		private void setValidationResult(final IValidationMessage firstWorst) {

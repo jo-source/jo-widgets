@@ -44,7 +44,7 @@ public interface IValidationLabelSetupBuilder<INSTANCE_TYPE extends IValidationL
 
 	INSTANCE_TYPE setErrorMarkup(Markup markup);
 
-	INSTANCE_TYPE setMissingInputMarkup(Markup markup);
+	INSTANCE_TYPE setHintMarkup(Markup markup);
 
 	INSTANCE_TYPE setOkColor(IColorConstant color);
 
@@ -54,7 +54,7 @@ public interface IValidationLabelSetupBuilder<INSTANCE_TYPE extends IValidationL
 
 	INSTANCE_TYPE setErrorColor(IColorConstant color);
 
-	INSTANCE_TYPE setMissingInputColor(IColorConstant color);
+	INSTANCE_TYPE setHintColor(IColorConstant color);
 
 	INSTANCE_TYPE setOkIcon(IImageConstant icon);
 
@@ -64,8 +64,6 @@ public interface IValidationLabelSetupBuilder<INSTANCE_TYPE extends IValidationL
 
 	INSTANCE_TYPE setErrorIcon(IImageConstant icon);
 
-	INSTANCE_TYPE setMissingInputIcon(IImageConstant icon);
-
-	INSTANCE_TYPE setMissingInputText(String text);
+	INSTANCE_TYPE setHintIcon(IImageConstant icon);
 
 }

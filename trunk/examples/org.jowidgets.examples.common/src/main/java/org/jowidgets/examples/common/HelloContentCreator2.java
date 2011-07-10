@@ -31,9 +31,7 @@ import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.IToolkit;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.ICheckBox;
 import org.jowidgets.api.widgets.IComboBox;
-import org.jowidgets.api.widgets.IToggleButton;
 import org.jowidgets.api.widgets.blueprint.ICheckBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
@@ -42,8 +40,7 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.validation.IValidationResult;
-import org.jowidgets.validation.ValidationResult;
+import org.jowidgets.tools.validation.MandatoryInfoValidator;
 
 public class HelloContentCreator2 implements IInputContentCreator<String> {
 
@@ -58,31 +55,26 @@ public class HelloContentCreator2 implements IInputContentCreator<String> {
 
 		IToggleButtonBluePrint toggleButtonBluePrint = bpF.toggleButton();
 		toggleButtonBluePrint.setText("Text").setToolTipText("ToolTiptext").alignCenter();
-		final IToggleButton tb1 = widgetContainer.add(toggleButtonBluePrint, "wrap, growx");
+		widgetContainer.add("Text", toggleButtonBluePrint, "wrap, growx");
 
 		toggleButtonBluePrint = bpF.toggleButton();
-		toggleButtonBluePrint.setText("Text").setToolTipText("ToolTiptext").setIcon(IconsSmall.OK).alignCenter();
-		final IToggleButton tb2 = widgetContainer.add(toggleButtonBluePrint, "wrap, growx");
+		toggleButtonBluePrint.setText("Text2").setToolTipText("ToolTiptext").setIcon(IconsSmall.OK).alignCenter();
+		widgetContainer.add("Text2", toggleButtonBluePrint, "wrap, growx");
 
 		final ICheckBoxBluePrint checkBoxBp = bpF.checkBox().setText("Checkbox").setToolTipText("Tooltip");
-		final ICheckBox cb1 = widgetContainer.add(checkBoxBp, "wrap, growx");
+		widgetContainer.add("Checkbox", checkBoxBp, "wrap, growx");
 
 		final IComboBoxSelectionBluePrint<String> comboBoxBp1 = bpF.comboBoxSelection(" ", "one", "two", "three");
-		final IComboBox<String> cBox1 = widgetContainer.add(comboBoxBp1, "wrap, growx");
+		widgetContainer.add("cBox1", comboBoxBp1, "wrap, growx");
 
-		final IComboBoxBluePrint<String> comboBoxBp2 = bpF.comboBox("red", "green", "blue").setMandatory(true);
-		final IComboBox<String> cBox2 = widgetContainer.add(comboBoxBp2, "wrap, growx");
+		final IComboBoxBluePrint<String> comboBoxBp2 = bpF.comboBox("red", "green", "blue");
+		final IComboBox<String> cBox2 = widgetContainer.add("cBox2", comboBoxBp2, "wrap, growx");
+		cBox2.addValidator(new MandatoryInfoValidator<String>("mandatory"));
 
-		final IComboBoxBluePrint<Long> comboBoxBp3 = bpF.comboBox(converter.longNumber()).setMandatory(true);
+		final IComboBoxBluePrint<Long> comboBoxBp3 = bpF.comboBox(converter.longNumber());
 		comboBoxBp3.setElements(Long.valueOf(23456), Long.valueOf(15468), Long.valueOf(5345519));
-		final IComboBox<Long> cBox3 = widgetContainer.add(comboBoxBp3, "wrap, growx");
-
-		widgetContainer.registerInputWidget("tb1", tb1);
-		widgetContainer.registerInputWidget("tb2", tb2);
-		widgetContainer.registerInputWidget("tb3", cb1);
-		widgetContainer.registerInputWidget("cBox1", cBox1);
-		widgetContainer.registerInputWidget("cBox2", cBox2);
-		widgetContainer.registerInputWidget("cBox3", cBox3);
+		final IComboBox<Long> cBox3 = widgetContainer.add("cBox3", comboBoxBp3, "wrap, growx");
+		cBox3.addValidator(new MandatoryInfoValidator<Long>("mandatory"));
 	}
 
 	@Override
@@ -91,16 +83,6 @@ public class HelloContentCreator2 implements IInputContentCreator<String> {
 	@Override
 	public String getValue() {
 		return null;
-	}
-
-	@Override
-	public IValidationResult validate() {
-		return ValidationResult.ok();
-	}
-
-	@Override
-	public boolean isMandatory() {
-		return true;
 	}
 
 }

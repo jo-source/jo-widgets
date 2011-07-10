@@ -36,7 +36,8 @@ import org.jowidgets.api.widgets.descriptor.IMessageDialogDescriptor;
 import org.jowidgets.api.widgets.descriptor.IProgressBarDescriptor;
 import org.jowidgets.api.widgets.descriptor.IQuestionDialogDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextSeparatorDescriptor;
-import org.jowidgets.api.widgets.descriptor.IValidationLabelDescriptor;
+import org.jowidgets.api.widgets.descriptor.IValidateableStateLabelDescriptor;
+import org.jowidgets.api.widgets.descriptor.IValidationResultLabelDescriptor;
 import org.jowidgets.impl.widgets.basic.factory.BasicGenericWidgetFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.CustomCalendarFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.InputCompositeFactory;
@@ -47,7 +48,8 @@ import org.jowidgets.impl.widgets.composed.factory.internal.MessageDialogFactory
 import org.jowidgets.impl.widgets.composed.factory.internal.ProgressBarFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.QuestionDialogFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.TextSeparatorFactory;
-import org.jowidgets.impl.widgets.composed.factory.internal.ValidationLabelFactory;
+import org.jowidgets.impl.widgets.composed.factory.internal.ValidateableStateLabelFactory;
+import org.jowidgets.impl.widgets.composed.factory.internal.ValidationResultLabelFactory;
 import org.jowidgets.spi.IWidgetsServiceProvider;
 
 public class GenericWidgetFactory extends BasicGenericWidgetFactory {
@@ -67,7 +69,8 @@ public class GenericWidgetFactory extends BasicGenericWidgetFactory {
 		register(IQuestionDialogDescriptor.class, new QuestionDialogFactory(this));
 		register(IInputDialogDescriptor.class, new InputDialogFactory(this));
 		register(IInputCompositeDescriptor.class, new InputCompositeFactory());
-		register(IValidationLabelDescriptor.class, new ValidationLabelFactory(this));
+		register(IValidationResultLabelDescriptor.class, new ValidationResultLabelFactory(this));
+		register(IValidateableStateLabelDescriptor.class, new ValidateableStateLabelFactory(this));
 		register(IProgressBarDescriptor.class, new ProgressBarFactory(getSpiWidgetFactory()));
 	}
 

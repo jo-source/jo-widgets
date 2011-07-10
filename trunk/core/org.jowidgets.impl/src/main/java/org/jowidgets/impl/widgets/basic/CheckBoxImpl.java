@@ -29,28 +29,48 @@
 package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.widgets.ICheckBox;
+import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.descriptor.setup.ICheckBoxSetup;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.controler.IInputListener;
+import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
+import org.jowidgets.impl.widgets.common.wrapper.ControlSpiWrapper;
 import org.jowidgets.impl.widgets.common.wrapper.TextLabelSpiWrapper;
 import org.jowidgets.spi.widgets.ICheckBoxSpi;
 import org.jowidgets.tools.controler.InputObservable;
+import org.jowidgets.tools.validation.CompoundValidator;
+import org.jowidgets.tools.validation.ValidationCache;
+import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
+import org.jowidgets.validation.IValidationConditionListener;
+import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.validation.IValidator;
 
-public class CheckBoxImpl extends AbstractBasicInputControl<Boolean> implements ICheckBox {
+public class CheckBoxImpl extends ControlSpiWrapper implements ICheckBox {
 
 	private final ICheckBoxSpi checkBoxWidgetSpi;
 	private final TextLabelSpiWrapper textLabelWidgetCommonWrapper;
 	private final InputObservable inputObservable;
+	private final ValidationCache validationCache;
+	private final ControlDelegate controlDelegate;
+	private final CompoundValidator<Boolean> compoundValidator;
 
 	private boolean isNull;
 
 	public CheckBoxImpl(final ICheckBoxSpi checkBoxWidgetSpi, final ICheckBoxSetup setup) {
-		super(checkBoxWidgetSpi, setup);
+		super(checkBoxWidgetSpi);
 		this.checkBoxWidgetSpi = checkBoxWidgetSpi;
 		this.textLabelWidgetCommonWrapper = new TextLabelSpiWrapper(checkBoxWidgetSpi);
 		this.inputObservable = new InputObservable();
+		this.controlDelegate = new ControlDelegate();
+		this.compoundValidator = new CompoundValidator<Boolean>();
+
+		final IValidator<Boolean> validator = setup.getValidator();
+		if (validator != null) {
+			compoundValidator.addValidator(validator);
+		}
 
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
@@ -65,12 +85,25 @@ public class CheckBoxImpl extends AbstractBasicInputControl<Boolean> implements 
 			setFontName(setup.getFontName());
 		}
 
+		this.validationCache = new ValidationCache(new IValidationResultCreator() {
+			@Override
+			public IValidationResult createValidationResult() {
+				return compoundValidator.validate(getValue());
+			}
+		});
+
 		getWidget().addInputListener(new IInputListener() {
 			@Override
 			public void inputChanged() {
 				isNull = false;
+				validationCache.setDirty();
 			}
 		});
+	}
+
+	@Override
+	public ICheckBoxSpi getWidget() {
+		return (ICheckBoxSpi) super.getWidget();
 	}
 
 	@Override
@@ -110,14 +143,57 @@ public class CheckBoxImpl extends AbstractBasicInputControl<Boolean> implements 
 	}
 
 	@Override
+	public IValidationResult validate() {
+		return validationCache.validate();
+	}
+
+	@Override
+	public void addValidationConditionListener(final IValidationConditionListener listener) {
+		validationCache.addValidationConditionListener(listener);
+	}
+
+	@Override
+	public void removeValidationConditionListener(final IValidationConditionListener listener) {
+		validationCache.removeValidationConditionListener(listener);
+	}
+
+	@Override
+	public void setParent(final IContainer parent) {
+		controlDelegate.setParent(parent);
+	}
+
+	@Override
+	public IContainer getParent() {
+		return controlDelegate.getParent();
+	}
+
+	@Override
+	public boolean isReparentable() {
+		return controlDelegate.isReparentable();
+	}
+
+	@Override
+	public IPopupMenu createPopupMenu() {
+		return new PopupMenuImpl(getWidget().createPopupMenu(), this);
+	}
+
+	@Override
+	public void setEditable(final boolean editable) {
+		getWidget().setEditable(editable);
+	}
+
+	@Override
+	public void addValidator(final IValidator<Boolean> validator) {
+		compoundValidator.addValidator(validator);
+	}
+
+	@Override
 	public void addInputListener(final IInputListener listener) {
-		super.addInputListener(listener);
 		inputObservable.addInputListener(listener);
 	}
 
 	@Override
 	public void removeInputListener(final IInputListener listener) {
-		super.removeInputListener(listener);
 		inputObservable.removeInputListener(listener);
 	}
 

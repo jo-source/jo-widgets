@@ -26,28 +26,28 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.content;
+package org.jowidgets.validation;
 
-import org.jowidgets.api.widgets.IInputControl;
-import org.jowidgets.api.widgets.content.IInputContentCreator;
-import org.jowidgets.api.widgets.content.IInputContentCreatorFactory;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+public final class Validator {
 
-public class InputContentCreatorFactory implements IInputContentCreatorFactory {
+	@SuppressWarnings("rawtypes")
+	private static final IValidator OK_VALIDATOR = createOkValidator();
 
-	@Override
-	public <INPUT_TYPE> IInputContentCreator<INPUT_TYPE> singleControlContent(
-		final String label,
-		final IWidgetDescriptor<? extends IInputControl<INPUT_TYPE>> descriptor,
-		final int fieldMinWidth) {
-		return new SingleControlContent<INPUT_TYPE>(label, descriptor, "w " + fieldMinWidth + ", grow");
+	private Validator() {}
+
+	@SuppressWarnings("rawtypes")
+	private static IValidator createOkValidator() {
+		return new IValidator() {
+			@Override
+			public IValidationResult validate(final Object value) {
+				return ValidationResult.ok();
+			}
+		};
 	}
 
-	@Override
-	public <INPUT_TYPE> IInputContentCreator<INPUT_TYPE> singleControlContent(
-		final String label,
-		final IWidgetDescriptor<? extends IInputControl<INPUT_TYPE>> descriptor) {
-		return new SingleControlContent<INPUT_TYPE>(label, descriptor, null);
+	@SuppressWarnings("unchecked")
+	public static <VALUE_TYPE> IValidator<VALUE_TYPE> okValidator() {
+		return OK_VALIDATOR;
 	}
 
 }

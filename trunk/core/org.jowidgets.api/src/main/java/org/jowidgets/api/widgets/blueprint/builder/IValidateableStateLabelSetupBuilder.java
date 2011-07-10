@@ -25,17 +25,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.blueprint.builder.convenience;
+package org.jowidgets.api.widgets.blueprint.builder;
 
+import org.jowidgets.validation.IValidateable;
 
-public interface IInputCompositeSetupConvenience<INSTANCE_TYPE> {
+public interface IValidateableStateLabelSetupBuilder<INSTANCE_TYPE extends IValidateableStateLabelSetupBuilder<?>> extends
+		IValidationLabelSetupBuilder<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setBorder(final String borderTitle);
-
-	INSTANCE_TYPE setBorder();
-
-	INSTANCE_TYPE setContentBorder(final String borderTitle);
-
-	INSTANCE_TYPE setContentBorder();
+	INSTANCE_TYPE setValidateable(IValidateable validateable);
 
 }

@@ -27,368 +27,275 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
-import org.jowidgets.api.model.item.IMenuModel;
+import java.util.List;
+
+import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IComposedInputComponent;
 import org.jowidgets.api.widgets.IComposite;
-import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IInputComposite;
-import org.jowidgets.api.widgets.IPopupMenu;
-import org.jowidgets.api.widgets.IValidationLabel;
+import org.jowidgets.api.widgets.IInputControl;
+import org.jowidgets.api.widgets.IValidationResultLabel;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
+import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
+import org.jowidgets.api.widgets.blueprint.IValidationResultLabelBluePrint;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.api.widgets.content.IInputContentContainer;
+import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.api.widgets.descriptor.setup.IInputCompositeSetup;
-import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.types.Position;
-import org.jowidgets.common.widgets.IComponentCommon;
-import org.jowidgets.common.widgets.controler.IComponentListener;
-import org.jowidgets.common.widgets.controler.IFocusListener;
+import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.controler.IInputListener;
-import org.jowidgets.common.widgets.controler.IKeyListener;
-import org.jowidgets.common.widgets.controler.IMouseListener;
-import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
+import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
+import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.impl.widgets.composed.internal.InputContentContainer;
+import org.jowidgets.tools.controler.InputObservable;
+import org.jowidgets.tools.validation.CompoundValidator;
+import org.jowidgets.tools.validation.ValidationCache;
+import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
+import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
+import org.jowidgets.validation.IValidateable;
+import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
+import org.jowidgets.validation.ValidationResult;
 
-public class InputCompositeWidget<INPUT_TYPE> implements IInputComposite<INPUT_TYPE> {
+//TODO MG inputCompositeWidget must be implemented correctly
+public class InputCompositeWidget<INPUT_TYPE> extends ControlWrapper implements
+		IInputComposite<INPUT_TYPE>,
+		IComposedInputComponent<INPUT_TYPE>,
+		IInputContentContainer {
 
-	private final IComposite parentComposite;
+	private final IInputContentCreator<INPUT_TYPE> contentCreator;
 	private final IComposite composite;
-	private final InputContentContainer<INPUT_TYPE> contentContainer;
-	private final IValidationLabel validationLabel;
+	private final IComposite innerComposite;
+	private final IValidationResultLabel validationLabel;
+	private final InputObservable inputObservable;
+	private final CompoundValidator<INPUT_TYPE> compoundValidator;
+	private final ValidationCache validationCache;
 	private final boolean isAutoResetValidation;
 
 	public InputCompositeWidget(final IComposite composite, final IInputCompositeSetup<INPUT_TYPE> setup) {
-		super();
+		super(composite);
 
+		this.inputObservable = new InputObservable();
+		this.contentCreator = setup.getContentCreator();
 		this.isAutoResetValidation = setup.isAutoResetValidation();
 
-		this.parentComposite = composite;
-		this.parentComposite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
-
-		final ICompositeBluePrint compositeBp = Toolkit.getBluePrintFactory().composite().setBorder(setup.getBorder());
-
-		this.composite = parentComposite.add(compositeBp, "growx, growy, h 0::, w 0::");
+		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+		this.composite = composite;
 
 		if (setup.getValidationLabel() != null) {
-			this.composite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[][grow][]0"));
-			validationLabel = this.composite.add(setup.getValidationLabel(), "h 18::, wrap");// TODO MG use hide instead
+			this.composite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[][grow]0"));
+			final IValidationResultLabelBluePrint validationLabelBp = bpf.validationResultLabel().setSetup(
+					setup.getValidationLabel());
+			validationLabel = this.composite.add(validationLabelBp, "h 18::, wrap");// TODO MG use hide instead
 		}
 		else {
 			validationLabel = null;
-			this.composite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow][]0"));
+			this.composite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
 		}
 
-		this.contentContainer = new InputContentContainer<INPUT_TYPE>(
-			this.composite,
-			setup.getContentCreator(),
-			setup.isContentScrolled(),
-			setup.getContentBorder(),
-			setup.getValue());
+		if (setup.isContentScrolled()) {
+			final IScrollCompositeBluePrint scrollCompositeBluePrint = bpf.scrollComposite();
+			scrollCompositeBluePrint.setBorder(setup.getContentBorder());
+			innerComposite = composite.add(scrollCompositeBluePrint, "growx, growy, h 0::,w 0::, wrap");
+		}
+		else {
+			final ICompositeBluePrint compositeBluePrint = bpf.composite();
+			compositeBluePrint.setBorder(setup.getContentBorder());
+			innerComposite = composite.add(compositeBluePrint, "growx, growy, h 0::,w 0::, wrap");
+		}
 
+		this.compoundValidator = new CompoundValidator<INPUT_TYPE>();
 		if (setup.getValidator() != null) {
-			contentContainer.addValidator(setup.getValidator());
+			compoundValidator.addValidator(setup.getValidator());
 		}
 
-		if (validationLabel != null) {
-			validationLabel.registerInputWidget(contentContainer);
-		}
+		this.validationCache = new ValidationCache(new IValidationResultCreator() {
+			@Override
+			public IValidationResult createValidationResult() {
+				// TODO implement create validation result
+				return ValidationResult.ok();
+			}
+		});
 
+		contentCreator.createContent(this);
+		if (setup.getValue() != null) {
+			contentCreator.setValue(setup.getValue());
+		}
 	}
 
 	@Override
 	public void setEditable(final boolean editable) {
-		contentContainer.setEditable(editable);
 		if (isAutoResetValidation && validationLabel != null) {
 			validationLabel.setEnabled(editable);
 		}
 	}
 
 	@Override
-	public boolean isMandatory() {
-		return contentContainer.isMandatory();
-	}
-
-	@Override
-	public void setMandatory(final boolean mandatory) {
-		contentContainer.setMandatory(mandatory);
-	}
-
-	@Override
 	public void addValidator(final IValidator<INPUT_TYPE> validator) {
-		contentContainer.addValidator(validator);
+		compoundValidator.addValidator(validator);
 	}
 
 	@Override
 	public void resetValidation() {
 		if (validationLabel != null) {
-			validationLabel.resetValidation();
+			validationLabel.setEmpty();
 		}
-	}
-
-	@Override
-	public boolean isEmpty() {
-		return contentContainer.isEmpty();
-	}
-
-	@Override
-	public IContainer getParent() {
-		return parentComposite.getParent();
-	}
-
-	@Override
-	public void setParent(final IContainer parent) {
-		parentComposite.setParent(parent);
-	}
-
-	@Override
-	public boolean isReparentable() {
-		return parentComposite.isReparentable();
-	}
-
-	@Override
-	public Object getUiReference() {
-		return parentComposite.getUiReference();
-	}
-
-	@Override
-	public void setLayoutConstraints(final Object layoutConstraints) {
-		parentComposite.setLayoutConstraints(layoutConstraints);
-	}
-
-	@Override
-	public Object getLayoutConstraints() {
-		return parentComposite.getLayoutConstraints();
-	}
-
-	@Override
-	public void setVisible(final boolean visible) {
-		parentComposite.setVisible(visible);
-	}
-
-	@Override
-	public boolean isVisible() {
-		return parentComposite.isVisible();
-	}
-
-	@Override
-	public void setEnabled(final boolean enabled) {
-		parentComposite.setEnabled(enabled);
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return parentComposite.isEnabled();
-	}
-
-	@Override
-	public Dimension getMinSize() {
-		return parentComposite.getMinSize();
-	}
-
-	@Override
-	public Dimension getPreferredSize() {
-		return parentComposite.getPreferredSize();
-	}
-
-	@Override
-	public Dimension getMaxSize() {
-		return parentComposite.getMaxSize();
-	}
-
-	@Override
-	public void setMinSize(final Dimension minSize) {
-		parentComposite.setMinSize(minSize);
-	}
-
-	@Override
-	public void setPreferredSize(final Dimension preferredSize) {
-		parentComposite.setPreferredSize(preferredSize);
-	}
-
-	@Override
-	public void setMaxSize(final Dimension maxSize) {
-		parentComposite.setMaxSize(maxSize);
-	}
-
-	@Override
-	public Dimension getSize() {
-		return parentComposite.getSize();
-	}
-
-	@Override
-	public void setSize(final Dimension size) {
-		parentComposite.setSize(size);
-	}
-
-	@Override
-	public void setSize(final int width, final int height) {
-		parentComposite.setSize(width, height);
-	}
-
-	@Override
-	public void setPosition(final int x, final int y) {
-		parentComposite.setPosition(x, y);
-	}
-
-	@Override
-	public Position getPosition() {
-		return parentComposite.getPosition();
-	}
-
-	@Override
-	public void setPosition(final Position position) {
-		parentComposite.setPosition(position);
-	}
-
-	@Override
-	public Position toScreen(final Position localPosition) {
-		return composite.toScreen(localPosition);
-	}
-
-	@Override
-	public Position toLocal(final Position screenPosition) {
-		return composite.toLocal(screenPosition);
-	}
-
-	@Override
-	public Position fromComponent(final IComponentCommon component, final Position componentPosition) {
-		return composite.fromComponent(component, componentPosition);
-	}
-
-	@Override
-	public Position toComponent(final Position componentPosition, final IComponentCommon component) {
-		return composite.toComponent(componentPosition, component);
-	}
-
-	@Override
-	public void redraw() {
-		contentContainer.redraw();
-	}
-
-	@Override
-	public void setRedrawEnabled(final boolean enabled) {
-		contentContainer.setRedrawEnabled(enabled);
-	}
-
-	@Override
-	public void setCursor(final Cursor cursor) {
-		contentContainer.setCursor(cursor);
-	}
-
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		composite.setForegroundColor(colorValue);
-	}
-
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		composite.setBackgroundColor(colorValue);
-	}
-
-	@Override
-	public IColorConstant getForegroundColor() {
-		return composite.getForegroundColor();
-	}
-
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return composite.getBackgroundColor();
-	}
-
-	@Override
-	public void setValue(final INPUT_TYPE value) {
-		contentContainer.setValue(value);
-		if (isAutoResetValidation) {
-			resetValidation();
-		}
-	}
-
-	@Override
-	public INPUT_TYPE getValue() {
-		return contentContainer.getValue();
 	}
 
 	@Override
 	public IValidationResult validate() {
-		return contentContainer.validate();
+		return validationCache.validate();
+	}
+
+	@Override
+	public void addValidationConditionListener(final IValidationConditionListener listener) {
+		validationCache.addValidationConditionListener(listener);
+	}
+
+	@Override
+	public void removeValidationConditionListener(final IValidationConditionListener listener) {
+		validationCache.removeValidationConditionListener(listener);
 	}
 
 	@Override
 	public void addInputListener(final IInputListener listener) {
-		contentContainer.addInputListener(listener);
+		inputObservable.addInputListener(listener);
 	}
 
 	@Override
 	public void removeInputListener(final IInputListener listener) {
-		contentContainer.removeInputListener(listener);
+		inputObservable.removeInputListener(listener);
 	}
 
 	@Override
-	public boolean requestFocus() {
-		return composite.requestFocus();
+	public void setValue(final INPUT_TYPE value) {
+		contentCreator.getValue();
 	}
 
 	@Override
-	public void addFocusListener(final IFocusListener listener) {
-		composite.addFocusListener(listener);
+	public INPUT_TYPE getValue() {
+		return contentCreator.getValue();
 	}
 
 	@Override
-	public void removeFocusListener(final IFocusListener listener) {
-		composite.removeFocusListener(listener);
+	public Object getIntermediateValue() {
+		//TODO MG make correct implementation of getIntermediateValue()
+		return getValue();
 	}
 
 	@Override
-	public void addKeyListener(final IKeyListener listener) {
-		composite.addKeyListener(listener);
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+		final Object layoutConstraints) {
+		return innerComposite.add(descriptor, layoutConstraints);
 	}
 
 	@Override
-	public void removeKeyListener(final IKeyListener listener) {
-		composite.removeKeyListener(listener);
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+		final ICustomWidgetCreator<WIDGET_TYPE> creator,
+		final Object layoutConstraints) {
+		return innerComposite.add(creator, layoutConstraints);
 	}
 
 	@Override
-	public void addMouseListener(final IMouseListener mouseListener) {
-		composite.addMouseListener(mouseListener);
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+		return innerComposite.add(descriptor);
 	}
 
 	@Override
-	public void removeMouseListener(final IMouseListener mouseListener) {
-		composite.removeMouseListener(mouseListener);
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final ICustomWidgetCreator<WIDGET_TYPE> creator) {
+		return innerComposite.add(creator);
 	}
 
 	@Override
-	public void addComponentListener(final IComponentListener componentListener) {
-		composite.addComponentListener(componentListener);
+	public <WIDGET_TYPE extends IInputControl<?>> WIDGET_TYPE add(
+		final String validationContext,
+		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+		final Object layoutConstraints) {
+		return add(descriptor, layoutConstraints);
 	}
 
 	@Override
-	public void removeComponentListener(final IComponentListener componentListener) {
-		composite.removeComponentListener(componentListener);
+	public <WIDGET_TYPE extends IInputControl<?>> WIDGET_TYPE add(
+		final String validationContext,
+		final ICustomWidgetCreator<WIDGET_TYPE> creator,
+		final Object layoutConstraints) {
+		return add(creator, layoutConstraints);
 	}
 
 	@Override
-	public IPopupMenu createPopupMenu() {
-		return composite.createPopupMenu();
+	public <WIDGET_TYPE extends IInputControl<?>> WIDGET_TYPE add(
+		final String validationContext,
+		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+		return add(descriptor);
 	}
 
 	@Override
-	public void setPopupMenu(final IMenuModel popupMenu) {
-		composite.setPopupMenu(popupMenu);
+	public <WIDGET_TYPE extends IInputControl<?>> WIDGET_TYPE add(
+		final String validationContext,
+		final ICustomWidgetCreator<WIDGET_TYPE> creator) {
+		return add(creator);
 	}
 
 	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		composite.addPopupDetectionListener(listener);
+	public boolean remove(final IControl control) {
+		return innerComposite.remove(control);
 	}
 
 	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		composite.removePopupDetectionListener(listener);
+	public void register(final String validationContext, final IValidateable validateable) {
+		// TODO MG implement register
+	}
+
+	@Override
+	public void unRegister(final String validationContext, final IValidateable validateable) {
+		// TODO MG implement unRegister
+	}
+
+	@Override
+	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
+		innerComposite.setLayout(layoutDescriptor);
+	}
+
+	@Override
+	public void layoutBegin() {
+		composite.layoutBegin();
+	}
+
+	@Override
+	public void layoutEnd() {
+		composite.layoutEnd();
+	}
+
+	@Override
+	public void removeAll() {
+		innerComposite.removeAll();
+	}
+
+	@Override
+	public Rectangle getClientArea() {
+		return innerComposite.getClientArea();
+	}
+
+	@Override
+	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+		return composite.computeDecoratedSize(clientAreaSize);
+	}
+
+	@Override
+	public <LAYOUT_TYPE extends ILayouter> LAYOUT_TYPE setLayout(final ILayoutFactory<LAYOUT_TYPE> layoutFactory) {
+		return innerComposite.setLayout(layoutFactory);
+	}
+
+	@Override
+	public List<IControl> getChildren() {
+		return innerComposite.getChildren();
 	}
 
 }

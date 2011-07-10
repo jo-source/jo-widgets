@@ -25,12 +25,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.descriptor;
+package org.jowidgets.api.widgets;
 
-import org.jowidgets.api.widgets.IValidationLabel;
-import org.jowidgets.api.widgets.descriptor.setup.IValidationLabelSetup;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+public interface IValidateableStateLabel extends IControl {
 
-public interface IValidationLabelDescriptor extends IValidationLabelSetup, IWidgetDescriptor<IValidationLabel> {
+	void resetValidation();
 
 }

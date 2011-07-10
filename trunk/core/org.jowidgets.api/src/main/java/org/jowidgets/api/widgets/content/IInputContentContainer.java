@@ -28,16 +28,65 @@
 package org.jowidgets.api.widgets.content;
 
 import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.IInputComponent;
+import org.jowidgets.api.widgets.IInputControl;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
+import org.jowidgets.validation.IValidateable;
 
 public interface IInputContentContainer extends IContainer {
 
-	void addSubContent(IInputContentCreator<?> subContentCreator, Object layoutConstraints);
+	void register(String validationContext, IValidateable validateable);
 
-	void registerInputWidget(String contextLabel, IInputComponent<?> inputWidget);
+	void unRegister(String validationContext, IValidateable validateable);
 
-	void unRegisterInputWidget(IInputComponent<?> inputWidget);
+	/**
+	 * Creates and adds an control to this container.
+	 * 
+	 * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
+	 * @param validationContext The validation context that should be used for validation
+	 * @param descriptor The descriptor that describes the control to add
+	 * @param layoutConstraints The layout constraints / data for the added control
+	 * @return the created and added control
+	 */
+	<WIDGET_TYPE extends IInputControl<?>> WIDGET_TYPE add(
+		String validationContext,
+		IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+		Object layoutConstraints);
 
-	void fireInputChanged();
+	/**
+	 * Creates and adds an control to this container
+	 * 
+	 * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
+	 * @param validationContext The validation context that should be used for validation
+	 * @param creator The creator that creates the control
+	 * @param layoutConstraints The layout constraints / data for the added control
+	 * @return the created and added control
+	 */
+	<WIDGET_TYPE extends IInputControl<?>> WIDGET_TYPE add(
+		String validationContext,
+		ICustomWidgetCreator<WIDGET_TYPE> creator,
+		Object layoutConstraints);
+
+	/**
+	 * Creates and adds an control to this container.
+	 * 
+	 * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
+	 * @param validationContext The validation context that should be used for validation
+	 * @param descriptor The descriptor that describes the control to add
+	 * @return the created and added control
+	 */
+	<WIDGET_TYPE extends IInputControl<?>> WIDGET_TYPE add(
+		String validationContext,
+		IWidgetDescriptor<? extends WIDGET_TYPE> descriptor);
+
+	/**
+	 * Creates and adds an control to this container
+	 * 
+	 * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
+	 * @param validationContext The validation context that should be used for validation
+	 * @param creator The creator that creates the control
+	 * @return the created and added control
+	 */
+	<WIDGET_TYPE extends IInputControl<?>> WIDGET_TYPE add(String validationContext, ICustomWidgetCreator<WIDGET_TYPE> creator);
 
 }

@@ -52,7 +52,7 @@ import org.jowidgets.api.widgets.IToolBarButton;
 import org.jowidgets.api.widgets.IToolBarPopupButton;
 import org.jowidgets.api.widgets.IToolBarToggleButton;
 import org.jowidgets.api.widgets.ITree;
-import org.jowidgets.api.widgets.IValidationLabel;
+import org.jowidgets.api.widgets.IValidationResultLabel;
 import org.jowidgets.impl.layout.miglayout.common.ComponentWrapper;
 
 final class ComponentTypeUtil {
@@ -196,7 +196,7 @@ final class ComponentTypeUtil {
 	}
 
 	private static boolean isLabel(final IComponent component) {
-		return ((component instanceof ILabel) || (component instanceof IValidationLabel));
+		return ((component instanceof ILabel) || (component instanceof IValidationResultLabel));
 	}
 
 	private static boolean isTextField(final IComponent component) {

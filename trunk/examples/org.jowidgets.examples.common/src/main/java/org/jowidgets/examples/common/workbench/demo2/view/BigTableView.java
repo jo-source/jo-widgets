@@ -230,7 +230,7 @@ public class BigTableView extends AbstractDemoView implements IView {
 			}
 		});
 
-		inputDialogBp.setMissingInputText("Please input the new row count!");
+		inputDialogBp.setMissingInputHint("Please input the new row count!");
 		inputDialogBp.setResizable(false);
 		inputDialogBp.setValue(rowCount);
 		return Toolkit.getActiveWindow().createChildWindow(inputDialogBp);

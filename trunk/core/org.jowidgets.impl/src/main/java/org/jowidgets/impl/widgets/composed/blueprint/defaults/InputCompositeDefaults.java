@@ -39,7 +39,7 @@ public class InputCompositeDefaults implements IDefaultInitializer<IInputComposi
 		builder.setAutoResetValidation(true);
 		builder.setContentScrolled(true);
 		final BluePrintFactory bpF = new BluePrintFactory();
-		builder.setValidationLabel(bpF.validationLabel());
+		builder.setValidationLabel(bpF.validationResultLabel());
 	}
 
 }
