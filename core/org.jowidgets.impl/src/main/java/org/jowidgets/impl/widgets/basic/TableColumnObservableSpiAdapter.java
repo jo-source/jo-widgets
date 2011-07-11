@@ -77,10 +77,6 @@ class TableColumnObservableSpiAdapter implements ITableColumnObservable {
 
 	public void fireMouseClicked(final ITableColumnMouseEvent event, final TableModelSpiAdapter modelSpiAdapter) {
 		if (!listeners.isEmpty()) {
-			System.out.println("event.getColumnIndex() "
-				+ event.getColumnIndex()
-				+ " => "
-				+ modelSpiAdapter.convertViewToModel(event.getColumnIndex()));
 			final ITableColumnMouseEvent decoratedEvent = new TableColumnMouseEvent(
 				modelSpiAdapter.convertViewToModel(event.getColumnIndex()),
 				event.getModifiers());
