@@ -27,18 +27,10 @@
  */
 package org.jowidgets.impl.widgets.composed.factory.internal;
 
-import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IFrame;
-import org.jowidgets.api.widgets.IInputField;
 import org.jowidgets.api.widgets.ILoginDialog;
-import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.api.widgets.content.IInputContentContainer;
-import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.api.widgets.descriptor.ILoginDialogDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.impl.widgets.composed.LoginData;
 import org.jowidgets.impl.widgets.composed.LoginDialogImpl;
 
 public class LoginDialogFactory extends AbstractDialogFactory<ILoginDialog, ILoginDialogDescriptor> {
@@ -49,43 +41,6 @@ public class LoginDialogFactory extends AbstractDialogFactory<ILoginDialog, ILog
 
 	@Override
 	protected ILoginDialog createWidget(final IFrame dialogWidget, final ILoginDialogDescriptor descriptor) {
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-		final IInputDialogBluePrint<LoginData> inputDialogBluePrint = bpf.inputDialog(new LoginDialogContentCreator());
-		inputDialogBluePrint.setSetup(descriptor);
-		return new LoginDialogImpl(dialogWidget, inputDialogBluePrint);
-	}
-
-	private class LoginDialogContentCreator implements IInputContentCreator<LoginData> {
-
-		private IInputField<String> usernameField;
-		private IInputField<String> passwordField;
-
-		@Override
-		public void setValue(final LoginData value) {
-			if (value != null) {
-				usernameField.setValue(value.getUsername());
-				passwordField.setValue(value.getPassword());
-			}
-			else {
-				usernameField.setValue(null);
-				passwordField.setValue(null);
-			}
-		}
-
-		@Override
-		public LoginData getValue() {
-			return new LoginData(usernameField.getValue(), passwordField.getValue());
-		}
-
-		@Override
-		public void createContent(final IInputContentContainer contentContainer) {
-			final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-			contentContainer.setLayout(new MigLayoutDescriptor("[][grow, 200!]", "[][]"));
-			contentContainer.add(bpf.textLabel("Username"));//TODO i18n
-			usernameField = contentContainer.add(bpf.inputFieldString(), "grow, wrap");
-			contentContainer.add(bpf.textLabel("Password"));//TODO i18n
-			passwordField = contentContainer.add(bpf.inputFieldString().setPasswordPresentation(true), "grow, wrap");
-		}
-
+		return new LoginDialogImpl(dialogWidget, descriptor);
 	}
 }

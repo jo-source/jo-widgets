@@ -27,6 +27,7 @@
  */
 package org.jowidgets.api.widgets.descriptor.setup;
 
+import org.jowidgets.api.login.ILoginInterceptor;
 import org.jowidgets.api.types.InputDialogDefaultButtonPolicy;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
@@ -34,7 +35,7 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 public interface ILoginDialogSetup extends ITitledWindowSetup {
 
 	@Mandatory
-	IButtonDescriptor getOkButton();
+	IButtonDescriptor getLoginButton();
 
 	@Mandatory
 	IButtonDescriptor getCancelButton();
@@ -44,5 +45,8 @@ public interface ILoginDialogSetup extends ITitledWindowSetup {
 
 	@Mandatory
 	boolean isCloseable();
+
+	@Mandatory
+	ILoginInterceptor getInterceptor();
 
 }

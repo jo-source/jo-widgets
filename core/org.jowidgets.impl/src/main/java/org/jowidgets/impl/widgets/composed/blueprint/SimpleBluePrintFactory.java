@@ -28,6 +28,7 @@
 package org.jowidgets.impl.widgets.composed.blueprint;
 
 import org.jowidgets.api.convert.IConverter;
+import org.jowidgets.api.login.ILoginInterceptor;
 import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
@@ -129,8 +130,11 @@ public class SimpleBluePrintFactory extends BasicBluePrintFactory implements ISi
 	}
 
 	@Override
-	public ILoginDialogBluePrint loginDialog() {
-		return createProxy(ILoginDialogBluePrint.class);
+	public ILoginDialogBluePrint loginDialog(final ILoginInterceptor loginInterceptor) {
+		Assert.paramNotNull(loginInterceptor, "loginInterceptor");
+		final ILoginDialogBluePrint result = createProxy(ILoginDialogBluePrint.class);
+		result.setInterceptor(loginInterceptor);
+		return result;
 	}
 
 }

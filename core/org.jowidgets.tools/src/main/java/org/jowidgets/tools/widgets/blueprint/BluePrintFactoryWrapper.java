@@ -33,6 +33,7 @@ import java.util.Date;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.convert.IObjectStringConverter;
+import org.jowidgets.api.login.ILoginInterceptor;
 import org.jowidgets.api.model.table.ITableColumnModel;
 import org.jowidgets.api.model.table.ITableModel;
 import org.jowidgets.api.widgets.IWidget;
@@ -696,8 +697,8 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	}
 
 	@Override
-	public ILoginDialogBluePrint loginDialog() {
-		return bluePrintFactory.loginDialog();
+	public ILoginDialogBluePrint loginDialog(final ILoginInterceptor loginInterceptor) {
+		return bluePrintFactory.loginDialog(loginInterceptor);
 	}
 
 }

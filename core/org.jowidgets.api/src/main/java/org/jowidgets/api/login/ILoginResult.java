@@ -26,23 +26,10 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.composed;
+package org.jowidgets.api.login;
 
-public class LoginData {
-	private final String username;
-	private final String password;
+public interface ILoginResult {
 
-	public LoginData(final String username, final String password) {
-		super();
-		this.username = username;
-		this.password = password;
-	}
+	boolean isLoggedOn();
 
-	public String getUsername() {
-		return username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
 }

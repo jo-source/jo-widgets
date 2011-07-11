@@ -33,6 +33,8 @@ import java.util.List;
 import org.jowidgets.api.command.IActionBuilderFactory;
 import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
+import org.jowidgets.api.login.ILoginInterceptor;
+import org.jowidgets.api.login.ILoginResult;
 import org.jowidgets.api.mask.ITextMaskBuilder;
 import org.jowidgets.api.model.IModelFactoryProvider;
 import org.jowidgets.api.threads.IUiThreadAccess;
@@ -86,6 +88,8 @@ public interface IToolkit {
 	IWindow getActiveWindow();
 
 	List<IWindow> getAllWindows();
+
+	ILoginResult login(ILoginInterceptor interceptor);
 
 	IFrame createRootFrame(IFrameDescriptor descriptor);
 
