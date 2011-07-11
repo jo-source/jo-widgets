@@ -51,6 +51,7 @@ import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvok
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.ControlSpiWrapper;
 import org.jowidgets.spi.widgets.ITableSpi;
+import org.jowidgets.tools.controler.TableColumnAdapter;
 
 public class TableImpl extends ControlSpiWrapper implements ITable {
 
@@ -66,6 +67,8 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 		this.controlDelegate = new ControlDelegate();
 		this.dataModel = setup.getDataModel();
 		this.columnModel = setup.getColumnModel();
+
+		getWidget().addTableColumnListener(new TablePermuationListener());
 
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
@@ -254,4 +257,14 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 		getWidget().removeTableColumnListener(listener);
 	}
 
+	private class TablePermuationListener extends TableColumnAdapter {
+		@Override
+		public void columnPermutationChanged() {
+
+			for (final int i : getColumnPermutation()) {
+				System.out.print(i + ", ");
+			}
+			System.out.println();
+		}
+	}
 }

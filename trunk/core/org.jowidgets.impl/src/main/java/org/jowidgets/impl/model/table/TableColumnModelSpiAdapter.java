@@ -88,7 +88,32 @@ final class TableColumnModelSpiAdapter implements ITableColumnModel {
 		}
 
 		@Override
-		public void columnsChanged(final int[] viewIndicies) {}
+		public void columnsChanged(final int[] viewIndicies) {
+			for (final int logicalIndex : viewIndicies) {
+				final DefaultTableColumn column = (DefaultTableColumn) columnModel.getColumn(logicalIndex);
+				if (column.isVisible() == visibleColumns.contains(logicalIndex)) {
+					if (column.isVisible()) {
+						// only fire events on visible columns
+						final int viewIndex = logicalToView(logicalIndex);
+						tableColumnModelObservable.fireColumnsChanged(new int[] {viewIndex});
+					}
+					continue;
+				}
+
+				if (column.isVisible()) {
+					// TODO NM improve 
+					visibleColumns.add(logicalIndex);
+					Collections.sort(visibleColumns);
+					final int viewIndex = logicalToView(logicalIndex);
+					tableColumnModelObservable.fireColumnsAdded(new int[] {viewIndex});
+				}
+				else {
+					final int viewIndex = logicalToView(logicalIndex);
+					visibleColumns.remove(viewIndex);
+					tableColumnModelObservable.fireColumnsRemoved(new int[] {viewIndex});
+				}
+			}
+		}
 	}
 
 	public int logicalToView(final int logicalIndex) {
@@ -97,25 +122,5 @@ final class TableColumnModelSpiAdapter implements ITableColumnModel {
 
 	public int viewToLogical(final int columnIndex) {
 		return visibleColumns.get(columnIndex);
-	}
-
-	public void columnChanged(final int logicalIndex) {
-		final DefaultTableColumn column = (DefaultTableColumn) columnModel.getColumn(logicalIndex);
-		if (column.isVisible() == visibleColumns.contains(logicalIndex)) {
-			return;
-		}
-
-		if (column.isVisible()) {
-			// TODO NM improve 
-			visibleColumns.add(logicalIndex);
-			Collections.sort(visibleColumns);
-			final int viewIndex = logicalToView(logicalIndex);
-			tableColumnModelObservable.fireColumnsAdded(new int[] {viewIndex});
-		}
-		else {
-			final int viewIndex = logicalToView(logicalIndex);
-			visibleColumns.remove(viewIndex);
-			tableColumnModelObservable.fireColumnsRemoved(new int[] {viewIndex});
-		}
 	}
 }

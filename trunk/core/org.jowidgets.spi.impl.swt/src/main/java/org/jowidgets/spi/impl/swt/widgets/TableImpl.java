@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2011, grossmann, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -161,13 +161,12 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		table.setLinesVisible(true);
 		table.setHeaderVisible(setup.isHeaderVisible());
 
-		//TODO NM use fake column because of windows table bug
-		//and to support no selection
-		//final TableColumn fakeColumn = new TableColumn(table, SWT.NONE);
-		//fakeColumn.setResizable(false);
-		//fakeColumn.setMoveable(false);
-		//fakeColumn.setWidth(0);
-		//fakeColumn.setText("FAKE");
+		// fake column to fix windows table bug and to support no selection
+		final TableColumn fakeColumn = new TableColumn(table, SWT.NONE);
+		fakeColumn.setResizable(false);
+		fakeColumn.setMoveable(false);
+		fakeColumn.setWidth(0);
+		fakeColumn.setText("FAKE");
 
 		try {
 			this.cursor = new TableCursor(table, SWT.NONE);
@@ -188,6 +187,10 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		table.addSelectionListener(new TableSelectionListener());
 
 		setMenuDetectListener(new TableMenuDetectListener());
+	}
+
+	private int getColumnCount() {
+		return table.getColumnCount() - 1;
 	}
 
 	@Override
@@ -234,7 +237,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	}
 
 	private void removeAllColumns() {
-		final int oldColumnCount = table.getColumnCount();
+		final int oldColumnCount = getColumnCount();
 		for (int columnIndex = 0; columnIndex < oldColumnCount; columnIndex++) {
 			removeColumnListener(columnIndex);
 		}
@@ -255,8 +258,9 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		}
 	}
 
-	private void addColumn(final int index, final ITableColumn joColumn) {
-		final TableColumn swtColumn = new TableColumn(table, SWT.NONE, index);
+	private void addColumn(final int externalIndex, final ITableColumn joColumn) {
+		final int internalIndex = externalIndex + 1;
+		final TableColumn swtColumn = new TableColumn(table, SWT.NONE, internalIndex);
 		swtColumn.setMoveable(columnsMoveable);
 		swtColumn.setResizable(columnsResizeable);
 		setColumnData(swtColumn, joColumn);
@@ -298,24 +302,27 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		swtColumn.setToolTipText(joColumn.getToolTipText());
 	}
 
-	private void addColumnListener(final int index) {
-		final TableColumn column = table.getColumn(index);
+	private void addColumnListener(final int externalIndex) {
+		final int internalIndex = externalIndex + 1;
+		final TableColumn column = table.getColumn(internalIndex);
 		if (column != null && !column.isDisposed()) {
 			column.addSelectionListener(columnSelectionListener);
 			column.addControlListener(columnControlListener);
 		}
 	}
 
-	private void removeColumnListener(final int index) {
-		final TableColumn column = table.getColumn(index);
+	private void removeColumnListener(final int externalIndex) {
+		final int internalIndex = externalIndex + 1;
+		final TableColumn column = table.getColumn(internalIndex);
 		if (column != null && !column.isDisposed()) {
 			column.removeSelectionListener(columnSelectionListener);
 			column.removeControlListener(columnControlListener);
 		}
 	}
 
-	private void removeColumn(final int index) {
-		final TableColumn column = table.getColumn(index);
+	private void removeColumn(final int externalIndex) {
+		final int internalIndex = externalIndex + 1;
+		final TableColumn column = table.getColumn(internalIndex);
 		if (column != null && !column.isDisposed()) {
 			column.dispose();
 		}
@@ -323,20 +330,22 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 	@Override
 	public Position getCellPosition(final int rowIndex, final int columnIndex) {
-		final Rectangle bounds = table.getItem(rowIndex).getBounds(columnIndex);
+		final int internalIndex = columnIndex + 1;
+		final Rectangle bounds = table.getItem(rowIndex).getBounds(internalIndex);
 		return new Position(bounds.x, bounds.y);
 	}
 
 	@Override
 	public Dimension getCellSize(final int rowIndex, final int columnIndex) {
-		final Rectangle bounds = table.getItem(rowIndex).getBounds(columnIndex);
+		final int internalIndex = columnIndex + 1;
+		final Rectangle bounds = table.getItem(rowIndex).getBounds(internalIndex);
 		return new Dimension(bounds.width, bounds.height);
 	}
 
 	@Override
 	public void pack(final TablePackPolicy policy) {
 		table.setRedraw(false);
-		for (int columnIndex = 0; columnIndex < table.getColumnCount(); columnIndex++) {
+		for (int columnIndex = 0; columnIndex < getColumnCount(); columnIndex++) {
 			packColumn(columnIndex, policy);
 		}
 		table.setRedraw(true);
@@ -350,11 +359,12 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	}
 
 	private void packColumn(final int columnIndex, final TablePackPolicy policy) {
+		final int internalIndex = columnIndex + 1;
 		final Label textLabel = new Label(table, SWT.NONE);
 		final GC context = new GC(textLabel);
 
 		final TableColumn[] columns = table.getColumns();
-		final TableColumn column = columns[columnIndex];
+		final TableColumn column = columns[internalIndex];
 		boolean packed = false;
 
 		int max = 10;
@@ -373,12 +383,12 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			for (int i = 0; i < table.getItemCount(); i++) {
 				final TableItem item = table.getItem(i);
 
-				context.setFont(item.getFont(columnIndex));
-				textLabel.setFont(item.getFont(columnIndex));
+				context.setFont(item.getFont(internalIndex));
+				textLabel.setFont(item.getFont(internalIndex));
 
-				int width = context.textExtent(item.getText(columnIndex)).x;
-				if (item.getImage(columnIndex) != null) {
-					width += item.getImage(columnIndex).getBounds().width + 5;
+				int width = context.textExtent(item.getText(internalIndex)).x;
+				if (item.getImage(internalIndex) != null) {
+					width += item.getImage(internalIndex).getBounds().width + 5;
 				}
 				max = Math.max(max, width);
 			}
@@ -403,17 +413,21 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	public ArrayList<Integer> getColumnPermutation() {
 		final ArrayList<Integer> result = new ArrayList<Integer>();
 		for (final int index : table.getColumnOrder()) {
-			result.add(Integer.valueOf(index));
+			if (index == 0) {
+				continue;
+			}
+			result.add(Integer.valueOf(index - 1));
 		}
 		return result;
 	}
 
 	@Override
 	public void setColumnPermutation(final List<Integer> permutation) {
-		final int[] columnOrder = new int[permutation.size()];
-		int i = 0;
+		final int[] columnOrder = new int[permutation.size() + 1];
+		columnOrder[0] = 0;
+		int i = 1;
 		for (final Integer permutatedIndex : permutation) {
-			columnOrder[i] = permutatedIndex.intValue();
+			columnOrder[i] = permutatedIndex.intValue() + 1;
 			i++;
 		}
 		table.setRedraw(false);
@@ -509,11 +523,12 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		tableCellEditorObservable.removeTableCellEditorListener(listener);
 	}
 
-	private CellIndices getCellIndices(final Point point) {
+	private CellIndices getExternalCellIndices(final Point point) {
 		final TableItem item = table.getItem(point);
 		if (item != null) {
-			for (int columnIndex = 0; columnIndex < table.getColumnCount(); columnIndex++) {
-				final Rectangle rect = item.getBounds(columnIndex);
+			for (int columnIndex = 0; columnIndex < getColumnCount(); columnIndex++) {
+				final int internalIndex = columnIndex + 1;
+				final Rectangle rect = item.getBounds(internalIndex);
 				if (rect.contains(point)) {
 					final int rowIndex = table.indexOf(item);
 					if (rowIndex != -1) {
@@ -529,7 +544,8 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		if (columnOfInterest != null) {
 			final TableColumn[] columns = table.getColumns();
 			for (int columnIndex = 0; columnIndex < columns.length; columnIndex++) {
-				if (columns[columnIndex] == columnOfInterest) {
+				final int internalIndex = columnIndex + 1;
+				if (columns[internalIndex] == columnOfInterest) {
 					return columnIndex;
 				}
 			}
@@ -581,8 +597,8 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		public void handleEvent(final Event event) {
 			final TableItem item = (TableItem) event.item;
 			final int rowIndex = table.indexOf(item);
-			for (int columnIndex = 0; columnIndex < table.getColumnCount(); columnIndex++) {
-
+			for (int columnIndex = 0; columnIndex < getColumnCount(); columnIndex++) {
+				final int internalIndex = columnIndex + 1;
 				final ITableCell cell = dataModel.getCell(rowIndex, columnIndex);
 
 				final String text = cell.getText();
@@ -594,23 +610,23 @@ public class TableImpl extends SwtControl implements ITableSpi {
 				//final String toolTipText = cell.getToolTipText(); 
 
 				if (text != null) {
-					item.setText(columnIndex, text);
+					item.setText(internalIndex, text);
 				}
 				else {
-					item.setText(columnIndex, "");
+					item.setText(internalIndex, "");
 				}
 				if (icon != null) {
-					item.setImage(columnIndex, SwtImageRegistry.getInstance().getImage(icon));
+					item.setImage(internalIndex, SwtImageRegistry.getInstance().getImage(icon));
 				}
 				if (markup != null) {
 					final Font newFont = FontProvider.deriveFont(item.getFont(), markup);
-					item.setFont(columnIndex, newFont);
+					item.setFont(internalIndex, newFont);
 				}
 				if (backgroundColor != null) {
-					item.setBackground(columnIndex, ColorCache.getInstance().getColor(backgroundColor));
+					item.setBackground(internalIndex, ColorCache.getInstance().getColor(backgroundColor));
 				}
 				if (foregroundColor != null) {
-					item.setForeground(columnIndex, ColorCache.getInstance().getColor(foregroundColor));
+					item.setForeground(internalIndex, ColorCache.getInstance().getColor(foregroundColor));
 				}
 			}
 		}
@@ -656,7 +672,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 				return null;
 			}
 			final Point point = new Point(event.x, event.y);
-			final CellIndices indices = getCellIndices(point);
+			final CellIndices indices = getExternalCellIndices(point);
 			if (indices != null) {
 				return new TableCellMouseEvent(
 					indices.getRowIndex(),
@@ -672,7 +688,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 		@Override
 		public void mouseDoubleClick(final MouseEvent e) {
-			final CellIndices indices = getCellIndices(new Point(e.x, e.y));
+			final CellIndices indices = getExternalCellIndices(new Point(e.x, e.y));
 			if (indices != null) {
 				final ITableCell cell = dataModel.getCell(indices.getRowIndex(), indices.getColumnIndex());
 				if (cell.isEditable()) {
@@ -684,13 +700,14 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		private void activateEditor(final CellIndices indices) {
 			final int rowIndex = indices.getRowIndex();
 			final int columnIndex = indices.getColumnIndex();
+			final int internalIndex = columnIndex + 1;
 
-			cursor.setSelection(rowIndex, columnIndex);
+			cursor.setSelection(rowIndex, internalIndex);
 			cursor.setVisible(true);
 
 			final Text textField = new Text(cursor, SWT.NONE);
 			final TableItem item = cursor.getRow();
-			textField.setText(item.getText(columnIndex));
+			textField.setText(item.getText(internalIndex));
 			textField.setSelection(0, textField.getText().length());
 
 			textField.addKeyListener(new KeyAdapter() {
@@ -731,10 +748,10 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			final TableItem item,
 			final Text textField,
 			final TableCellEditEvent editEvent) {
-
+			final int internalIndex = columnIndex + 1;
 			tableCellEditorObservable.fireEditFinished(editEvent);
 			final String newModelText = dataModel.getCell(rowIndex, columnIndex).getText();
-			item.setText(columnIndex, newModelText);
+			item.setText(internalIndex, newModelText);
 
 			textField.dispose();
 			cursor.setVisible(false);
@@ -757,7 +774,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 			//Menu detect on table cell
 			if (item != null && point.y > table.getHeaderHeight()) {
-				for (int colIndex = 0; colIndex < table.getColumnCount(); colIndex++) {
+				for (int colIndex = 0; colIndex < getColumnCount(); colIndex++) {
 					final Rectangle rect = item.getBounds(colIndex);
 					if (rect.contains(point)) {
 						final int rowIndex = table.indexOf(item);
@@ -793,8 +810,9 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		}
 
 		private void fireColumnPopupDetected(final TableItem item, final Point point, final Position position) {
-			for (int colIndex = 0; colIndex < table.getColumnCount(); colIndex++) {
-				final Rectangle rect = item.getBounds(colIndex);
+			for (int colIndex = 0; colIndex < getColumnCount(); colIndex++) {
+				final int internalIndex = colIndex + 1;
+				final Rectangle rect = item.getBounds(internalIndex);
 				if (rect.x <= point.x && point.x <= rect.x + rect.width) {
 					tableColumnPopupDetectionObservable.firePopupDetected(new TableColumnPopupEvent(colIndex, position));
 				}
@@ -938,7 +956,8 @@ public class TableImpl extends SwtControl implements ITableSpi {
 				final TableColumn[] columns = table.getColumns();
 				for (int i = 0; i < columnIndices.length; i++) {
 					final int changedIndex = columnIndices[i];
-					setColumnData(columns[changedIndex], columnModel.getColumn(changedIndex));
+					final int internalIndex = changedIndex + 1;
+					setColumnData(columns[internalIndex], columnModel.getColumn(changedIndex));
 				}
 			}
 		}
