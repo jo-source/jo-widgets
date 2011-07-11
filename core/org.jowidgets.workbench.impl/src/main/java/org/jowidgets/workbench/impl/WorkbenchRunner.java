@@ -53,6 +53,9 @@ public class WorkbenchRunner implements IWorkbenchRunner {
 				if (!vetoHolder.hasVeto()) {
 					new WorkbenchContext(workbench, lifecycle).run();
 				}
+				else {
+					lifecycle.finish();
+				}
 			}
 		});
 	}
