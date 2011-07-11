@@ -65,6 +65,6 @@ public class TableFactory extends AbstractWidgetFactory implements IWidgetFactor
 
 		final ITableSpi tableSpi = getSpiWidgetFactory().createTable(parentUiReference, tableBpSpi);
 
-		return new TableImpl(tableSpi, descriptor);
+		return new TableImpl(tableSpi, descriptor, modelSpiAdapter);
 	}
 }

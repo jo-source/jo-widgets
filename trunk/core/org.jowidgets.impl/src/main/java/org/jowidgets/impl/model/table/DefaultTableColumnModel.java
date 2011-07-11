@@ -351,7 +351,6 @@ class DefaultTableColumnModel implements IDefaultTableColumnModel, ITableColumnM
 	}
 
 	private void columnChanged(final int columnIndex) {
-		// TODO NM should not fire events on invisible column
 		if (!eventsFreezed && fireEvents) {
 			tableColumnModelObservable.fireColumnsChanged(new int[] {columnIndex});
 		}

@@ -74,29 +74,32 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 	private final TableColumnObservableSpiAdapter columnObservable;
 	private final TableColumnPopupDetectionObservableSpiAdapter columnPopupDetectionObservable;
 
-	public TableImpl(final ITableSpi widget, final ITableDescriptor setup) {
+	//private final TableModelSpiAdapter modelSpiAdapter;
+
+	public TableImpl(final ITableSpi widget, final ITableDescriptor setup, final TableModelSpiAdapter modelSpiAdapter) {
 		super(widget);
 
 		this.controlDelegate = new ControlDelegate();
 		this.dataModel = setup.getDataModel();
 		this.columnModel = setup.getColumnModel();
+		//this.modelSpiAdapter = modelSpiAdapter;
 
 		this.cellObservable = new TableCellObservableSpiAdapter();
 		getWidget().addTableCellListener(new ITableCellListener() {
 
 			@Override
 			public void mouseReleased(final ITableCellMouseEvent event) {
-				cellObservable.fireMouseReleased(event);
+				cellObservable.fireMouseReleased(event, modelSpiAdapter);
 			}
 
 			@Override
 			public void mousePressed(final ITableCellMouseEvent event) {
-				cellObservable.fireMousePressed(event);
+				cellObservable.fireMousePressed(event, modelSpiAdapter);
 			}
 
 			@Override
 			public void mouseDoubleClicked(final ITableCellMouseEvent event) {
-				cellObservable.fireMouseDoubleClicked(event);
+				cellObservable.fireMouseDoubleClicked(event, modelSpiAdapter);
 			}
 		});
 
@@ -104,7 +107,7 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 		getWidget().addTableCellPopupDetectionListener(new ITableCellPopupDetectionListener() {
 			@Override
 			public void popupDetected(final ITableCellPopupEvent event) {
-				cellPopupDetectionObservable.firePopupDetected(event);
+				cellPopupDetectionObservable.firePopupDetected(event, modelSpiAdapter);
 			}
 		});
 
@@ -113,17 +116,17 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 
 			@Override
 			public void onEdit(final IVetoable veto, final ITableCellEditEvent event) {
-				cellEditorObservable.fireOnEdit(veto, event);
+				cellEditorObservable.fireOnEdit(veto, event, modelSpiAdapter);
 			}
 
 			@Override
 			public void editFinished(final ITableCellEditEvent event) {
-				cellEditorObservable.fireEditFinished(event);
+				cellEditorObservable.fireEditFinished(event, modelSpiAdapter);
 			}
 
 			@Override
 			public void editCanceled(final ITableCellEvent event) {
-				cellEditorObservable.fireEditCanceled(event);
+				cellEditorObservable.fireEditCanceled(event, modelSpiAdapter);
 			}
 		});
 
@@ -132,12 +135,12 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 
 			@Override
 			public void mouseClicked(final ITableColumnMouseEvent event) {
-				columnObservable.fireMouseClicked(event);
+				columnObservable.fireMouseClicked(event, modelSpiAdapter);
 			}
 
 			@Override
 			public void columnResized(final ITableColumnResizeEvent event) {
-				columnObservable.fireColumnResized(event);
+				columnObservable.fireColumnResized(event, modelSpiAdapter);
 			}
 
 			@Override
@@ -151,7 +154,7 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 
 			@Override
 			public void popupDetected(final ITableColumnPopupEvent event) {
-				columnPopupDetectionObservable.firePopupDetected(event);
+				columnPopupDetectionObservable.firePopupDetected(event, modelSpiAdapter);
 			}
 		});
 
@@ -340,6 +343,10 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 	@Override
 	public void removeTableColumnListener(final ITableColumnListener listener) {
 		columnObservable.removeTableColumnListener(listener);
+	}
+
+	int modelConvertViewToModel(final int columnIndex) {
+		return 0;
 	}
 
 }

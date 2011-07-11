@@ -54,35 +54,39 @@ class TableCellObservableSpiAdapter implements ITableCellObservable {
 		listeners.remove(listener);
 	}
 
-	public void fireMouseDoubleClicked(final ITableCellMouseEvent event) {
+	public void fireMouseDoubleClicked(final ITableCellMouseEvent event, final TableModelSpiAdapter modelSpiAdapter) {
 		if (!listeners.isEmpty()) {
-			final ITableCellMouseEvent decoratedEvent = createDecoratedEvent(event);
+			final ITableCellMouseEvent decoratedEvent = createDecoratedEvent(event, modelSpiAdapter);
 			for (final ITableCellListener listener : listeners) {
 				listener.mouseDoubleClicked(decoratedEvent);
 			}
 		}
 	}
 
-	public void fireMousePressed(final ITableCellMouseEvent event) {
+	public void fireMousePressed(final ITableCellMouseEvent event, final TableModelSpiAdapter modelSpiAdapter) {
 		if (!listeners.isEmpty()) {
-			final ITableCellMouseEvent decoratedEvent = createDecoratedEvent(event);
+			final ITableCellMouseEvent decoratedEvent = createDecoratedEvent(event, modelSpiAdapter);
 			for (final ITableCellListener listener : listeners) {
 				listener.mousePressed(decoratedEvent);
 			}
 		}
 	}
 
-	public void fireMouseReleased(final ITableCellMouseEvent event) {
+	public void fireMouseReleased(final ITableCellMouseEvent event, final TableModelSpiAdapter modelSpiAdapter) {
 		if (!listeners.isEmpty()) {
-			final ITableCellMouseEvent decoratedEvent = createDecoratedEvent(event);
+			final ITableCellMouseEvent decoratedEvent = createDecoratedEvent(event, modelSpiAdapter);
 			for (final ITableCellListener listener : listeners) {
 				listener.mouseReleased(decoratedEvent);
 			}
 		}
 	}
 
-	private ITableCellMouseEvent createDecoratedEvent(final ITableCellMouseEvent event) {
-		return new TableCellMouseEvent(event.getRowIndex(), event.getColumnIndex(), event.getMouseButton(), event.getModifiers());
+	private ITableCellMouseEvent createDecoratedEvent(final ITableCellMouseEvent event, final TableModelSpiAdapter modelSpiAdapter) {
+		return new TableCellMouseEvent(
+			event.getRowIndex(),
+			modelSpiAdapter.convertViewToModel(event.getColumnIndex()),
+			event.getMouseButton(),
+			event.getModifiers());
 
 	}
 }
