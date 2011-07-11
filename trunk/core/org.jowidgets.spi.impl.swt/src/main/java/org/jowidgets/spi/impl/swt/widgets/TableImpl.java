@@ -63,10 +63,10 @@ import org.eclipse.swt.widgets.Text;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.model.ITableCell;
-import org.jowidgets.common.model.ITableColumnSpi;
-import org.jowidgets.common.model.ITableColumnModelSpi;
 import org.jowidgets.common.model.ITableColumnModelListener;
 import org.jowidgets.common.model.ITableColumnModelObservable;
+import org.jowidgets.common.model.ITableColumnModelSpi;
+import org.jowidgets.common.model.ITableColumnSpi;
 import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.model.ITableDataModelListener;
 import org.jowidgets.common.model.ITableDataModelObservable;
@@ -543,7 +543,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	private int getColumnIndex(final TableColumn columnOfInterest) {
 		if (columnOfInterest != null) {
 			final TableColumn[] columns = table.getColumns();
-			for (int columnIndex = 0; columnIndex < columns.length; columnIndex++) {
+			for (int columnIndex = 0; columnIndex < getColumnCount(); columnIndex++) {
 				final int internalIndex = columnIndex + 1;
 				if (columns[internalIndex] == columnOfInterest) {
 					return columnIndex;
