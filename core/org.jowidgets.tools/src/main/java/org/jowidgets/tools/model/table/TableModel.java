@@ -31,10 +31,10 @@ package org.jowidgets.tools.model.table;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jowidgets.api.model.table.ITableColumn;
+import org.jowidgets.api.model.table.ITableColumnModel;
 import org.jowidgets.api.model.table.ITableModel;
 import org.jowidgets.common.model.ITableCell;
-import org.jowidgets.common.model.ITableColumn;
-import org.jowidgets.common.model.ITableColumnModel;
 import org.jowidgets.common.model.ITableColumnModelObservable;
 import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.model.ITableDataModelObservable;

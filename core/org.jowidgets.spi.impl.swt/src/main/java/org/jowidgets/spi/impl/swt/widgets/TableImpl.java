@@ -63,8 +63,8 @@ import org.eclipse.swt.widgets.Text;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.model.ITableCell;
-import org.jowidgets.common.model.ITableColumn;
-import org.jowidgets.common.model.ITableColumnModel;
+import org.jowidgets.common.model.ITableColumnSpi;
+import org.jowidgets.common.model.ITableColumnModelSpi;
 import org.jowidgets.common.model.ITableColumnModelListener;
 import org.jowidgets.common.model.ITableColumnModelObservable;
 import org.jowidgets.common.model.ITableDataModel;
@@ -110,7 +110,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 	private final Table table;
 	private final ITableDataModel dataModel;
-	private final ITableColumnModel columnModel;
+	private final ITableColumnModelSpi columnModel;
 	private TableCursor cursor;
 	private ControlEditor editor;
 
@@ -258,7 +258,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		}
 	}
 
-	private void addColumn(final int externalIndex, final ITableColumn joColumn) {
+	private void addColumn(final int externalIndex, final ITableColumnSpi joColumn) {
 		final int internalIndex = externalIndex + 1;
 		final TableColumn swtColumn = new TableColumn(table, SWT.NONE, internalIndex);
 		swtColumn.setMoveable(columnsMoveable);
@@ -266,7 +266,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		setColumnData(swtColumn, joColumn);
 	}
 
-	private void setColumnData(final TableColumn swtColumn, final ITableColumn joColumn) {
+	private void setColumnData(final TableColumn swtColumn, final ITableColumnSpi joColumn) {
 		final String text = joColumn.getText();
 		final IImageConstant icon = joColumn.getIcon();
 		final AlignmentHorizontal alignment = joColumn.getAlignment();

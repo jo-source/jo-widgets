@@ -31,13 +31,13 @@ package org.jowidgets.impl.model.table;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import org.jowidgets.common.model.ITableColumn;
-import org.jowidgets.common.model.ITableColumnModel;
 import org.jowidgets.common.model.ITableColumnModelListener;
 import org.jowidgets.common.model.ITableColumnModelObservable;
+import org.jowidgets.common.model.ITableColumnModelSpi;
+import org.jowidgets.common.model.ITableColumnSpi;
 import org.jowidgets.tools.controler.TableColumnModelObservable;
 
-final class TableColumnModelSpiAdapter implements ITableColumnModel {
+final class TableColumnModelSpiAdapter implements ITableColumnModelSpi {
 
 	private final DefaultTableColumnModel columnModel;
 	private final TableColumnModelObservable tableColumnModelObservable;
@@ -48,6 +48,7 @@ final class TableColumnModelSpiAdapter implements ITableColumnModel {
 		this.tableColumnModelObservable = new TableColumnModelObservable();
 		this.visibleColumns = new ArrayList<Integer>();
 		columnModel.addColumnModelListener(new TableColumnModelListener());
+		System.out.println("TODO NM: THIS CLASS MUST BE REMOVED");
 	}
 
 	@Override
@@ -56,7 +57,7 @@ final class TableColumnModelSpiAdapter implements ITableColumnModel {
 	}
 
 	@Override
-	public ITableColumn getColumn(final int columnIndex) {
+	public ITableColumnSpi getColumn(final int columnIndex) {
 		return columnModel.getColumn(visibleColumns.get(columnIndex));
 	}
 

@@ -31,11 +31,11 @@ package org.jowidgets.impl.widgets.basic;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jowidgets.api.model.table.ITableColumnModel;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.api.widgets.descriptor.ITableDescriptor;
-import org.jowidgets.common.model.ITableColumnModel;
 import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
@@ -51,7 +51,6 @@ import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvok
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.ControlSpiWrapper;
 import org.jowidgets.spi.widgets.ITableSpi;
-import org.jowidgets.tools.controler.TableColumnAdapter;
 
 public class TableImpl extends ControlSpiWrapper implements ITable {
 
@@ -67,8 +66,6 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 		this.controlDelegate = new ControlDelegate();
 		this.dataModel = setup.getDataModel();
 		this.columnModel = setup.getColumnModel();
-
-		getWidget().addTableColumnListener(new TablePermuationListener());
 
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
@@ -257,14 +254,4 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 		getWidget().removeTableColumnListener(listener);
 	}
 
-	private class TablePermuationListener extends TableColumnAdapter {
-		@Override
-		public void columnPermutationChanged() {
-
-			for (final int i : getColumnPermutation()) {
-				System.out.print(i + ", ");
-			}
-			System.out.println();
-		}
-	}
 }

@@ -28,8 +28,13 @@
 
 package org.jowidgets.api.widgets.descriptor.setup;
 
+import org.jowidgets.api.model.table.ITableColumnModel;
 import org.jowidgets.common.widgets.descriptor.setup.ITableSetupCommon;
+import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface ITableSetup extends IComponentSetup, ITableSetupCommon {
+
+	@Mandatory
+	ITableColumnModel getColumnModel();
 
 }

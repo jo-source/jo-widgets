@@ -28,7 +28,6 @@
 
 package org.jowidgets.api.model.table;
 
-import org.jowidgets.common.model.ITableColumnModel;
 import org.jowidgets.common.model.ITableDataModel;
 
 public interface ITableModel extends ITableColumnModel, ITableDataModel {

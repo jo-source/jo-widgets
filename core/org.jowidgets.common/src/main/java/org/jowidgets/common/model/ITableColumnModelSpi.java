@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Nikolaus Moll
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,15 +26,14 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.model.table;
+package org.jowidgets.common.model;
 
-import org.jowidgets.common.model.ITableColumnModel;
-import org.jowidgets.common.model.ITableDataModel;
+public interface ITableColumnModelSpi {
 
-public interface ITableColumnModelSpiAdaptable {
+	int getColumnCount();
 
-	ITableColumnModel createSpiModel();
+	ITableColumnSpi getColumn(int columnIndex);
 
-	ITableDataModel createSpiDataModel(ITableDataModel dataModel);
+	ITableColumnModelObservable getTableColumnModelObservable();
 
 }

@@ -39,19 +39,16 @@ import java.util.Set;
 import org.jowidgets.api.model.table.IDefaultTableColumn;
 import org.jowidgets.api.model.table.IDefaultTableColumnBuilder;
 import org.jowidgets.api.model.table.IDefaultTableColumnModel;
-import org.jowidgets.api.model.table.ITableColumnModelSpiAdaptable;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.model.ITableColumnModel;
 import org.jowidgets.common.model.ITableColumnModelListener;
 import org.jowidgets.common.model.ITableColumnModelObservable;
-import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.tools.controler.TableColumnModelObservable;
 import org.jowidgets.util.ArrayUtils;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.event.IChangeListener;
 
-class DefaultTableColumnModel implements IDefaultTableColumnModel, ITableColumnModelObservable, ITableColumnModelSpiAdaptable {
+class DefaultTableColumnModel implements IDefaultTableColumnModel, ITableColumnModelObservable {
 
 	private final TableColumnModelObservable tableColumnModelObservable;
 	private final ArrayList<IDefaultTableColumn> columns;
@@ -62,8 +59,6 @@ class DefaultTableColumnModel implements IDefaultTableColumnModel, ITableColumnM
 	private boolean eventsFreezed;
 	private ArrayList<IDefaultTableColumn> freezedColumns;
 	private Set<IDefaultTableColumn> modifiedColumns;
-
-	private final TableColumnModelSpiAdapter spiModel;
 
 	DefaultTableColumnModel(final int columnCount) {
 		this.eventsFreezed = false;
@@ -76,7 +71,6 @@ class DefaultTableColumnModel implements IDefaultTableColumnModel, ITableColumnM
 		this.tableColumnModelObservable = new TableColumnModelObservable();
 		this.columns = new ArrayList<IDefaultTableColumn>(columnCount);
 		this.columnChangeListeners = new HashMap<Integer, IChangeListener>();
-		this.spiModel = new TableColumnModelSpiAdapter(this);
 
 		for (int i = 0; i < columnCount; i++) {
 			addColumn();
@@ -407,16 +401,6 @@ class DefaultTableColumnModel implements IDefaultTableColumnModel, ITableColumnM
 			columnChanged(columnIndex);
 		}
 
-	}
-
-	@Override
-	public ITableColumnModel createSpiModel() {
-		return spiModel;
-	}
-
-	@Override
-	public ITableDataModel createSpiDataModel(final ITableDataModel dataModel) {
-		return new TableDataModelSpiAdapter(dataModel, spiModel);
 	}
 
 }

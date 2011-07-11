@@ -31,7 +31,6 @@ package org.jowidgets.api.model.table;
 import java.util.ArrayList;
 
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.model.ITableColumnModel;
 import org.jowidgets.common.model.ITableColumnModelObservable;
 import org.jowidgets.common.types.AlignmentHorizontal;
 
