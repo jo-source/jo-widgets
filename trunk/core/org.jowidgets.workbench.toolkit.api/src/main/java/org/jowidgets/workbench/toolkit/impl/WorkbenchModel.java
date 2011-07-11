@@ -41,6 +41,7 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.ICloseCallback;
+import org.jowidgets.workbench.api.ILoginCallback;
 import org.jowidgets.workbench.api.IWorkbenchApplicationDescriptor;
 import org.jowidgets.workbench.toolkit.api.IViewFactory;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
@@ -67,6 +68,7 @@ class WorkbenchModel extends WorkbenchPartModel implements IWorkbenchModel {
 	private IToolBarModel toolBar;
 	private IMenuBarModel menuBar;
 	private IContentCreator statusBarCreator;
+	private final ILoginCallback loginCallback;
 	private ICloseCallback closeCallback;
 	private boolean finished;
 
@@ -82,6 +84,7 @@ class WorkbenchModel extends WorkbenchPartModel implements IWorkbenchModel {
 		final IToolBarModel toolBar,
 		final IMenuBarModel menuBar,
 		final IContentCreator statusBarCreator,
+		final ILoginCallback loginCallback,
 		final ICloseCallback closeCallback,
 		final IWorkbenchInitializeCallback initializeCallback,
 		final IViewFactory viewFactory,
@@ -100,6 +103,7 @@ class WorkbenchModel extends WorkbenchPartModel implements IWorkbenchModel {
 		this.toolBar = toolBar;
 		this.menuBar = menuBar;
 		this.statusBarCreator = statusBarCreator;
+		this.loginCallback = loginCallback;
 		this.closeCallback = closeCallback;
 		this.initializeCallback = initializeCallback;
 		this.viewFactory = viewFactory;
@@ -150,6 +154,11 @@ class WorkbenchModel extends WorkbenchPartModel implements IWorkbenchModel {
 	@Override
 	public IContentCreator getStatusBarCreator() {
 		return statusBarCreator;
+	}
+
+	@Override
+	public ILoginCallback getLoginCallback() {
+		return loginCallback;
 	}
 
 	@Override

@@ -36,6 +36,7 @@ import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.widgets.content.IContentCreator;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.workbench.api.ICloseCallback;
+import org.jowidgets.workbench.api.ILoginCallback;
 import org.jowidgets.workbench.api.IWorkbenchApplicationDescriptor;
 import org.jowidgets.workbench.api.IWorkbenchDescriptor;
 
@@ -54,6 +55,8 @@ public interface IWorkbenchModel extends IWorkbenchDescriptor, IWorkbenchPartMod
 	IContentCreator getStatusBarCreator();
 
 	ICloseCallback getCloseCallback();
+
+	ILoginCallback getLoginCallback();
 
 	IViewFactory getViewFactory();
 

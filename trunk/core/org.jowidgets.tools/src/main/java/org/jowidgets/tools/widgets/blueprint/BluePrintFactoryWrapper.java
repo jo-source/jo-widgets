@@ -53,6 +53,7 @@ import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
+import org.jowidgets.api.widgets.blueprint.ILoginDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMainMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IPopupDialogBluePrint;
@@ -692,6 +693,11 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	@Override
 	public ICalendarBluePrint calendar() {
 		return bluePrintFactory.calendar();
+	}
+
+	@Override
+	public ILoginDialogBluePrint loginDialog() {
+		return bluePrintFactory.loginDialog();
 	}
 
 }

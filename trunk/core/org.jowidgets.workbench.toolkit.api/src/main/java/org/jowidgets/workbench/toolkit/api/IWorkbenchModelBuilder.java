@@ -35,6 +35,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.workbench.api.ICloseCallback;
+import org.jowidgets.workbench.api.ILoginCallback;
 import org.jowidgets.workbench.api.IWorkbenchDescriptor;
 
 public interface IWorkbenchModelBuilder extends IWorkbenchPartBuilder<IWorkbenchModelBuilder> {
@@ -56,6 +57,8 @@ public interface IWorkbenchModelBuilder extends IWorkbenchPartBuilder<IWorkbench
 	IWorkbenchModelBuilder setMenuBar(IMenuBarModel menuBarModel);
 
 	IWorkbenchModelBuilder setStatusBarCreator(IContentCreator statusBarContentCreator);
+
+	IWorkbenchModelBuilder setLoginCallback(ILoginCallback loginCallback);
 
 	IWorkbenchModelBuilder setCloseCallback(ICloseCallback closeCallback);
 

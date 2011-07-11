@@ -26,35 +26,39 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.impl;
+package org.jowidgets.impl.widgets.composed;
 
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.common.application.IApplication;
-import org.jowidgets.common.application.IApplicationLifecycle;
-import org.jowidgets.tools.types.VetoHolder;
-import org.jowidgets.workbench.api.IWorkbench;
-import org.jowidgets.workbench.api.IWorkbenchConfigurationService;
-import org.jowidgets.workbench.api.IWorkbenchRunner;
+import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.widgets.ILoginDialog;
+import org.jowidgets.api.widgets.descriptor.setup.IInputDialogSetup;
 
-public class WorkbenchRunner implements IWorkbenchRunner {
+public class LoginDialogImpl extends InputDialogImpl<LoginData> implements ILoginDialog {
 
-	@Override
-	public void run(final IWorkbench workbench) {
-		run(workbench, new DefaultConfigurationService());
+	public LoginDialogImpl(final IFrame dialogWidget, final IInputDialogSetup<LoginData> setup) {
+		super(dialogWidget, setup);
+
 	}
 
 	@Override
-	public void run(final IWorkbench workbench, final IWorkbenchConfigurationService configurationService) {
-		Toolkit.getApplicationRunner().run(new IApplication() {
-			@Override
-			public void start(final IApplicationLifecycle lifecycle) {
-				final VetoHolder vetoHolder = new VetoHolder();
-				workbench.onLogin(vetoHolder);
-				if (!vetoHolder.hasVeto()) {
-					new WorkbenchContext(workbench, lifecycle).run();
-				}
-			}
-		});
+	public String getUserName() {
+		final LoginData value = getValue();
+		if (value != null) {
+			return value.getUsername();
+		}
+		else {
+			return null;
+		}
+	}
+
+	@Override
+	public String getPassword() {
+		final LoginData value = getValue();
+		if (value != null) {
+			return value.getPassword();
+		}
+		else {
+			return null;
+		}
 	}
 
 }

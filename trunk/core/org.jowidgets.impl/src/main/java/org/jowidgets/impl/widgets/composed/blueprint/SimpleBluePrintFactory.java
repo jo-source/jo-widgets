@@ -32,6 +32,7 @@ import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
+import org.jowidgets.api.widgets.blueprint.ILoginDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IProgressBarBluePrint;
 import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
@@ -125,6 +126,11 @@ public class SimpleBluePrintFactory extends BasicBluePrintFactory implements ISi
 
 		final IInputFieldBluePrint<INPUT_TYPE> result = createProxy(IInputFieldBluePrint.class);
 		return result.setConverter(converter);
+	}
+
+	@Override
+	public ILoginDialogBluePrint loginDialog() {
+		return createProxy(ILoginDialogBluePrint.class);
 	}
 
 }

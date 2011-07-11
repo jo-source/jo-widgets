@@ -42,6 +42,7 @@ import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.ICloseCallback;
+import org.jowidgets.workbench.api.ILoginCallback;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
 import org.jowidgets.workbench.api.IWorkbench;
@@ -174,6 +175,14 @@ class Workbench implements IWorkbench {
 		final ICloseCallback closeCallback = model.getCloseCallback();
 		if (closeCallback != null) {
 			closeCallback.onClose(vetoable);
+		}
+	}
+
+	@Override
+	public void onLogin(final IVetoable vetoable) {
+		final ILoginCallback loginCallback = model.getLoginCallback();
+		if (loginCallback != null) {
+			loginCallback.onLogin(vetoable);
 		}
 	}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2011, M. Grossmann, H. Westphal
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,36 +25,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
+package org.jowidgets.workbench.api;
 
-package org.jowidgets.workbench.impl;
+import org.jowidgets.common.types.IVetoable;
 
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.common.application.IApplication;
-import org.jowidgets.common.application.IApplicationLifecycle;
-import org.jowidgets.tools.types.VetoHolder;
-import org.jowidgets.workbench.api.IWorkbench;
-import org.jowidgets.workbench.api.IWorkbenchConfigurationService;
-import org.jowidgets.workbench.api.IWorkbenchRunner;
+public interface ILoginCallback {
 
-public class WorkbenchRunner implements IWorkbenchRunner {
-
-	@Override
-	public void run(final IWorkbench workbench) {
-		run(workbench, new DefaultConfigurationService());
-	}
-
-	@Override
-	public void run(final IWorkbench workbench, final IWorkbenchConfigurationService configurationService) {
-		Toolkit.getApplicationRunner().run(new IApplication() {
-			@Override
-			public void start(final IApplicationLifecycle lifecycle) {
-				final VetoHolder vetoHolder = new VetoHolder();
-				workbench.onLogin(vetoHolder);
-				if (!vetoHolder.hasVeto()) {
-					new WorkbenchContext(workbench, lifecycle).run();
-				}
-			}
-		});
-	}
+	void onLogin(IVetoable vetoable);
 
 }

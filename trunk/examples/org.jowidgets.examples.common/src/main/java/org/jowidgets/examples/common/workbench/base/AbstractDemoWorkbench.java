@@ -51,6 +51,13 @@ public abstract class AbstractDemoWorkbench extends AbstractWorkbench implements
 	}
 
 	@Override
+	public void onLogin(final IVetoable vetoable) {
+		// CHECKSTYLE:OFF
+		System.out.println("Workbench: onLogin");
+		// CHECKSTYLE:ON
+	}
+
+	@Override
 	public void onDispose() {
 		// CHECKSTYLE:OFF
 		System.out.println("Workbench: onDispose");

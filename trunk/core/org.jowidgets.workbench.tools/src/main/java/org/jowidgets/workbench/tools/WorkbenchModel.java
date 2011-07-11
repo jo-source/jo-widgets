@@ -39,6 +39,7 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.ICloseCallback;
+import org.jowidgets.workbench.api.ILoginCallback;
 import org.jowidgets.workbench.api.IWorkbenchApplicationDescriptor;
 import org.jowidgets.workbench.api.IWorkbenchDescriptor;
 import org.jowidgets.workbench.toolkit.api.IViewFactory;
@@ -153,6 +154,11 @@ public class WorkbenchModel implements IWorkbenchModel {
 	@Override
 	public final IContentCreator getStatusBarCreator() {
 		return model.getStatusBarCreator();
+	}
+
+	@Override
+	public ILoginCallback getLoginCallback() {
+		return model.getLoginCallback();
 	}
 
 	@Override
