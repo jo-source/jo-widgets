@@ -25,44 +25,34 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
+package org.jowidgets.impl.event;
 
-package org.jowidgets.impl.widgets.basic;
+import org.jowidgets.common.widgets.controler.ITableCellEvent;
 
-import java.util.HashSet;
-import java.util.Set;
+public class TableCellEvent implements ITableCellEvent {
 
-import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionListener;
-import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionObservable;
-import org.jowidgets.common.widgets.controler.ITableCellPopupEvent;
-import org.jowidgets.impl.event.TableCellPopupEvent;
+	private final int rowIndex;
+	private final int columnIndex;
 
-class TableCellPopupDetectionObservableSpiAdapter implements ITableCellPopupDetectionObservable {
-
-	private final Set<ITableCellPopupDetectionListener> listeners;
-
-	TableCellPopupDetectionObservableSpiAdapter() {
-		this.listeners = new HashSet<ITableCellPopupDetectionListener>();
+	public TableCellEvent(final int rowIndex, final int columnIndex) {
+		super();
+		this.rowIndex = rowIndex;
+		this.columnIndex = columnIndex;
 	}
 
 	@Override
-	public void addTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
-		listeners.add(listener);
+	public int getRowIndex() {
+		return rowIndex;
 	}
 
 	@Override
-	public void removeTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
-		listeners.remove(listener);
+	public int getColumnIndex() {
+		return columnIndex;
 	}
 
-	public void firePopupDetected(final ITableCellPopupEvent event) {
-		if (!listeners.isEmpty()) {
-			final ITableCellPopupEvent decoratedEvent = new TableCellPopupEvent(
-				event.getRowIndex(),
-				event.getColumnIndex(),
-				event.getPosition());
-			for (final ITableCellPopupDetectionListener listener : listeners) {
-				listener.popupDetected(decoratedEvent);
-			}
-		}
+	@Override
+	public String toString() {
+		return "TableCellEvent [rowIndex=" + rowIndex + ", columnIndex=" + columnIndex + "]";
 	}
+
 }

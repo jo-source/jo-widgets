@@ -26,43 +26,51 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.basic;
+package org.jowidgets.impl.event;
 
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.Set;
 
-import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionListener;
-import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionObservable;
-import org.jowidgets.common.widgets.controler.ITableCellPopupEvent;
-import org.jowidgets.impl.event.TableCellPopupEvent;
+import org.jowidgets.common.types.Modifier;
+import org.jowidgets.common.types.MouseButton;
+import org.jowidgets.common.widgets.controler.ITableCellMouseEvent;
 
-class TableCellPopupDetectionObservableSpiAdapter implements ITableCellPopupDetectionObservable {
+public class TableCellMouseEvent extends TableCellEvent implements ITableCellMouseEvent {
 
-	private final Set<ITableCellPopupDetectionListener> listeners;
+	private final MouseButton mouseButton;
+	private final Set<Modifier> modifier;
 
-	TableCellPopupDetectionObservableSpiAdapter() {
-		this.listeners = new HashSet<ITableCellPopupDetectionListener>();
+	public TableCellMouseEvent(
+		final int rowIndex,
+		final int columnIndex,
+		final MouseButton mouseButton,
+		final Set<Modifier> modifier) {
+		super(rowIndex, columnIndex);
+		this.mouseButton = mouseButton;
+		this.modifier = Collections.unmodifiableSet(modifier);
 	}
 
 	@Override
-	public void addTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
-		listeners.add(listener);
+	public MouseButton getMouseButton() {
+		return mouseButton;
 	}
 
 	@Override
-	public void removeTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
-		listeners.remove(listener);
+	public Set<Modifier> getModifiers() {
+		return modifier;
 	}
 
-	public void firePopupDetected(final ITableCellPopupEvent event) {
-		if (!listeners.isEmpty()) {
-			final ITableCellPopupEvent decoratedEvent = new TableCellPopupEvent(
-				event.getRowIndex(),
-				event.getColumnIndex(),
-				event.getPosition());
-			for (final ITableCellPopupDetectionListener listener : listeners) {
-				listener.popupDetected(decoratedEvent);
-			}
-		}
+	@Override
+	public String toString() {
+		return "TableCellMouseEvent [mouseButton="
+			+ mouseButton
+			+ ", modifier="
+			+ modifier
+			+ ", rowIndex="
+			+ getRowIndex()
+			+ ", columnIndex="
+			+ getColumnIndex()
+			+ "]";
 	}
+
 }

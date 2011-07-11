@@ -26,43 +26,27 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.basic;
+package org.jowidgets.impl.event;
 
-import java.util.HashSet;
-import java.util.Set;
+import org.jowidgets.common.widgets.controler.ITableColumnEvent;
 
-import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionListener;
-import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionObservable;
-import org.jowidgets.common.widgets.controler.ITableCellPopupEvent;
-import org.jowidgets.impl.event.TableCellPopupEvent;
+public class TableColumnEvent implements ITableColumnEvent {
 
-class TableCellPopupDetectionObservableSpiAdapter implements ITableCellPopupDetectionObservable {
+	private final int columnIndex;
 
-	private final Set<ITableCellPopupDetectionListener> listeners;
-
-	TableCellPopupDetectionObservableSpiAdapter() {
-		this.listeners = new HashSet<ITableCellPopupDetectionListener>();
+	public TableColumnEvent(final int columnIndex) {
+		super();
+		this.columnIndex = columnIndex;
 	}
 
 	@Override
-	public void addTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
-		listeners.add(listener);
+	public int getColumnIndex() {
+		return columnIndex;
 	}
 
 	@Override
-	public void removeTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
-		listeners.remove(listener);
+	public String toString() {
+		return "TableColumnEvent [columnIndex=" + columnIndex + "]";
 	}
 
-	public void firePopupDetected(final ITableCellPopupEvent event) {
-		if (!listeners.isEmpty()) {
-			final ITableCellPopupEvent decoratedEvent = new TableCellPopupEvent(
-				event.getRowIndex(),
-				event.getColumnIndex(),
-				event.getPosition());
-			for (final ITableCellPopupDetectionListener listener : listeners) {
-				listener.popupDetected(decoratedEvent);
-			}
-		}
-	}
 }

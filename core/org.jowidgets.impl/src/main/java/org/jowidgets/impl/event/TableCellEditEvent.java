@@ -25,44 +25,33 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
+package org.jowidgets.impl.event;
 
-package org.jowidgets.impl.widgets.basic;
+import org.jowidgets.common.widgets.controler.ITableCellEditEvent;
 
-import java.util.HashSet;
-import java.util.Set;
+public class TableCellEditEvent extends TableCellEvent implements ITableCellEditEvent {
 
-import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionListener;
-import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionObservable;
-import org.jowidgets.common.widgets.controler.ITableCellPopupEvent;
-import org.jowidgets.impl.event.TableCellPopupEvent;
+	private final String currentText;
 
-class TableCellPopupDetectionObservableSpiAdapter implements ITableCellPopupDetectionObservable {
-
-	private final Set<ITableCellPopupDetectionListener> listeners;
-
-	TableCellPopupDetectionObservableSpiAdapter() {
-		this.listeners = new HashSet<ITableCellPopupDetectionListener>();
+	public TableCellEditEvent(final int rowIndex, final int columnIndex, final String currentText) {
+		super(rowIndex, columnIndex);
+		this.currentText = currentText;
 	}
 
 	@Override
-	public void addTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
-		listeners.add(listener);
+	public String getCurrentText() {
+		return currentText;
 	}
 
 	@Override
-	public void removeTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
-		listeners.remove(listener);
+	public String toString() {
+		return "TableCellEditEvent [currentText="
+			+ currentText
+			+ ", rowIndex="
+			+ getRowIndex()
+			+ ", columnIndex="
+			+ getColumnIndex()
+			+ "]";
 	}
 
-	public void firePopupDetected(final ITableCellPopupEvent event) {
-		if (!listeners.isEmpty()) {
-			final ITableCellPopupEvent decoratedEvent = new TableCellPopupEvent(
-				event.getRowIndex(),
-				event.getColumnIndex(),
-				event.getPosition());
-			for (final ITableCellPopupDetectionListener listener : listeners) {
-				listener.popupDetected(decoratedEvent);
-			}
-		}
-	}
 }
