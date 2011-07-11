@@ -28,6 +28,7 @@
 package org.jowidgets.api.widgets.blueprint.factory;
 
 import org.jowidgets.api.convert.IConverter;
+import org.jowidgets.api.login.ILoginInterceptor;
 import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
@@ -66,5 +67,5 @@ public interface ISimpleBluePrintFactory extends IBasicBluePrintFactory {
 
 	<INPUT_TYPE> IInputCompositeBluePrint<INPUT_TYPE> inputComposite(final IInputContentCreator<INPUT_TYPE> contentCreator);
 
-	ILoginDialogBluePrint loginDialog();
+	ILoginDialogBluePrint loginDialog(ILoginInterceptor interceptor);
 }

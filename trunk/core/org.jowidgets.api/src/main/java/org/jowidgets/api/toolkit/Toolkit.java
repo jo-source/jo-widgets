@@ -35,6 +35,8 @@ import java.util.ServiceLoader;
 import org.jowidgets.api.command.IActionBuilderFactory;
 import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
+import org.jowidgets.api.login.ILoginInterceptor;
+import org.jowidgets.api.login.ILoginResult;
 import org.jowidgets.api.mask.ITextMaskBuilder;
 import org.jowidgets.api.model.IModelFactoryProvider;
 import org.jowidgets.api.threads.IUiThreadAccess;
@@ -161,6 +163,10 @@ public final class Toolkit {
 
 	public static ITextMaskBuilder createTextMaskBuilder() {
 		return getInstance().createTextMaskBuilder();
+	}
+
+	public static ILoginResult login(final ILoginInterceptor interceptor) {
+		return getInstance().login(interceptor);
 	}
 
 	public static IFrame createRootFrame(final IFrameDescriptor descriptor) {

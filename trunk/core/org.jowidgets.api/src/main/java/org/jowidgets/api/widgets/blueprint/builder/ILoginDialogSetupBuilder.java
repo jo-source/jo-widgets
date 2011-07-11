@@ -27,18 +27,21 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
+import org.jowidgets.api.login.ILoginInterceptor;
 import org.jowidgets.api.types.InputDialogDefaultButtonPolicy;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 
 public interface ILoginDialogSetupBuilder<INSTANCE_TYPE extends ILoginDialogSetupBuilder<?>> extends
 		ITitledWindowSetupBuilder<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setOkButton(final IButtonDescriptor buttonDescriptor);
+	INSTANCE_TYPE setLoginButton(final IButtonDescriptor buttonDescriptor);
 
 	INSTANCE_TYPE setCancelButton(final IButtonDescriptor buttonDescriptor);
 
 	INSTANCE_TYPE setDefaultButtonPolicy(InputDialogDefaultButtonPolicy policy);
 
 	INSTANCE_TYPE setCloseable(boolean closeable);
+
+	INSTANCE_TYPE setInterceptor(ILoginInterceptor interceptor);
 
 }

@@ -35,6 +35,8 @@ import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
+import org.jowidgets.api.login.ILoginInterceptor;
+import org.jowidgets.api.login.ILoginResult;
 import org.jowidgets.api.mask.ITextMaskBuilder;
 import org.jowidgets.api.model.IModelFactoryProvider;
 import org.jowidgets.api.threads.IUiThreadAccess;
@@ -43,6 +45,7 @@ import org.jowidgets.api.toolkit.IQuestionPane;
 import org.jowidgets.api.toolkit.ISupportedWidgets;
 import org.jowidgets.api.toolkit.IToolkit;
 import org.jowidgets.api.toolkit.IWidgetWrapperFactory;
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.utils.IWidgetUtils;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IFrame;
@@ -222,6 +225,11 @@ public class DefaultToolkit implements IToolkit {
 	@Override
 	public ITextMaskBuilder createTextMaskBuilder() {
 		return new TextMaskBuilder();
+	}
+
+	@Override
+	public ILoginResult login(final ILoginInterceptor interceptor) {
+		return genericWidgetFactory.create(Toolkit.getBluePrintFactory().loginDialog(interceptor)).doLogin();
 	}
 
 	@Override
