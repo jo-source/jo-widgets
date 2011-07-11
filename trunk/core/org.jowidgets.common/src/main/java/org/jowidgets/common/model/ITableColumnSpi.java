@@ -28,12 +28,21 @@
 
 package org.jowidgets.common.model;
 
-public interface ITableColumnModel {
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.AlignmentHorizontal;
 
-	int getColumnCount();
+public interface ITableColumnSpi {
 
-	ITableColumn getColumn(int columnIndex);
+	String getText();
 
-	ITableColumnModelObservable getTableColumnModelObservable();
+	String getToolTipText();
+
+	IImageConstant getIcon();
+
+	void setWidth(int width);
+
+	int getWidth();
+
+	AlignmentHorizontal getAlignment();
 
 }

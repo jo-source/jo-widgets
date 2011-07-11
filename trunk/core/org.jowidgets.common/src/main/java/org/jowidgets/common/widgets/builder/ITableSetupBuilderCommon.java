@@ -28,7 +28,6 @@
 
 package org.jowidgets.common.widgets.builder;
 
-import org.jowidgets.common.model.ITableColumnModel;
 import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.types.TableSelectionPolicy;
 
@@ -46,7 +45,5 @@ public interface ITableSetupBuilderCommon<INSTANCE_TYPE extends ITableSetupBuild
 	INSTANCE_TYPE setBorder(boolean border);
 
 	INSTANCE_TYPE setDataModel(ITableDataModel model);
-
-	INSTANCE_TYPE setColumnModel(ITableColumnModel model);
 
 }

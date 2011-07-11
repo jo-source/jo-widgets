@@ -28,7 +28,6 @@
 
 package org.jowidgets.common.widgets.descriptor.setup;
 
-import org.jowidgets.common.model.ITableColumnModel;
 import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.types.TableSelectionPolicy;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
@@ -52,8 +51,5 @@ public interface ITableSetupCommon extends IComponentSetupCommon {
 
 	@Mandatory
 	ITableDataModel getDataModel();
-
-	@Mandatory
-	ITableColumnModel getColumnModel();
 
 }

@@ -43,6 +43,7 @@ import org.jowidgets.api.layout.miglayout.IAC;
 import org.jowidgets.api.layout.miglayout.ILC;
 import org.jowidgets.api.layout.miglayout.IMigLayout;
 import org.jowidgets.api.layout.miglayout.IMigLayoutToolkit;
+import org.jowidgets.api.model.table.ITableColumn;
 import org.jowidgets.api.model.table.ITableModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
@@ -65,7 +66,6 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.color.ColorValue;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.model.ITableCell;
-import org.jowidgets.common.model.ITableColumn;
 import org.jowidgets.common.model.ITableColumnModelObservable;
 import org.jowidgets.common.model.ITableDataModelObservable;
 import org.jowidgets.common.types.AlignmentHorizontal;
@@ -1273,6 +1273,11 @@ public final class DemoMigLayoutFrame extends JoFrame {
 				@Override
 				public AlignmentHorizontal getAlignment() {
 					return AlignmentHorizontal.LEFT;
+				}
+
+				@Override
+				public boolean isVisible() {
+					return true;
 				}
 
 			}

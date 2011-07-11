@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Nikolaus Moll
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,23 +26,45 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.model.table;
+package org.jowidgets.impl.widgets.basic;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jowidgets.api.model.table.ITableColumn;
+import org.jowidgets.api.model.table.ITableColumnModel;
 import org.jowidgets.common.model.ITableCell;
+import org.jowidgets.common.model.ITableColumnModelObservable;
+import org.jowidgets.common.model.ITableColumnModelSpi;
 import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.model.ITableDataModelObservable;
+import org.jowidgets.util.Assert;
 
-final class TableDataModelSpiAdapter implements ITableDataModel {
+public class TableModelSpiAdapter implements ITableColumnModelSpi, ITableDataModel {
 
+	private final ITableColumnModel columnModel;
 	private final ITableDataModel dataModel;
-	private final TableColumnModelSpiAdapter columnAdapter;
 
-	TableDataModelSpiAdapter(final ITableDataModel dataModel, final TableColumnModelSpiAdapter columnAdapter) {
+	public TableModelSpiAdapter(final ITableColumnModel columnModel, final ITableDataModel dataModel) {
+		Assert.paramNotNull(columnModel, "columnModel");
+		Assert.paramNotNull(dataModel, "dataModel");
+		this.columnModel = columnModel;
 		this.dataModel = dataModel;
-		this.columnAdapter = columnAdapter;
+	}
+
+	@Override
+	public int getColumnCount() {
+		return columnModel.getColumnCount();
+	}
+
+	@Override
+	public ITableColumn getColumn(final int columnIndex) {
+		return columnModel.getColumn(columnIndex);
+	}
+
+	@Override
+	public ITableColumnModelObservable getTableColumnModelObservable() {
+		return columnModel.getTableColumnModelObservable();
 	}
 
 	@Override
@@ -52,7 +74,7 @@ final class TableDataModelSpiAdapter implements ITableDataModel {
 
 	@Override
 	public ITableCell getCell(final int rowIndex, final int columnIndex) {
-		return dataModel.getCell(rowIndex, columnAdapter.viewToLogical(columnIndex));
+		return dataModel.getCell(rowIndex, columnIndex);
 	}
 
 	@Override
@@ -67,7 +89,6 @@ final class TableDataModelSpiAdapter implements ITableDataModel {
 
 	@Override
 	public ITableDataModelObservable getTableDataModelObservable() {
-		// TODO NM fix indices
 		return dataModel.getTableDataModelObservable();
 	}
 

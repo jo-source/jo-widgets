@@ -28,18 +28,18 @@
 
 package org.jowidgets.impl.widgets.basic.factory.internal;
 
-import org.jowidgets.api.model.table.ITableColumnModelSpiAdaptable;
+import org.jowidgets.api.model.table.ITableColumnModel;
 import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.api.widgets.descriptor.ITableDescriptor;
-import org.jowidgets.common.model.ITableColumnModel;
+import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.ITableBluePrintSpi;
 import org.jowidgets.impl.widgets.basic.TableImpl;
+import org.jowidgets.impl.widgets.basic.TableModelSpiAdapter;
 import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.widgets.ITableSpi;
-import org.jowidgets.tools.model.table.TableModel;
 
 public class TableFactory extends AbstractWidgetFactory implements IWidgetFactory<ITable, ITableDescriptor> {
 
@@ -56,15 +56,12 @@ public class TableFactory extends AbstractWidgetFactory implements IWidgetFactor
 		final ITableBluePrintSpi tableBpSpi = getSpiBluePrintFactory().table();
 		tableBpSpi.setSetup(descriptor);
 
-		ITableColumnModel columnModel = descriptor.getColumnModel();
-		if (columnModel instanceof TableModel) {
-			columnModel = ((TableModel) columnModel).getColumnModel();
-		}
-		if (columnModel instanceof ITableColumnModelSpiAdaptable) {
-			final ITableColumnModelSpiAdaptable adaptable = (ITableColumnModelSpiAdaptable) columnModel;
-			tableBpSpi.setColumnModel(adaptable.createSpiModel());
-			tableBpSpi.setDataModel(adaptable.createSpiDataModel(descriptor.getDataModel()));
-		}
+		final ITableColumnModel columnModel = descriptor.getColumnModel();
+		final ITableDataModel dataModel = descriptor.getDataModel();
+		final TableModelSpiAdapter modelSpiAdapter = new TableModelSpiAdapter(columnModel, dataModel);
+
+		tableBpSpi.setColumnModel(modelSpiAdapter);
+		tableBpSpi.setDataModel(modelSpiAdapter);
 
 		final ITableSpi tableSpi = getSpiWidgetFactory().createTable(parentUiReference, tableBpSpi);
 

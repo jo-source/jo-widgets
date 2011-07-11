@@ -65,8 +65,8 @@ import javax.swing.table.TableColumnModel;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.model.ITableCell;
-import org.jowidgets.common.model.ITableColumn;
-import org.jowidgets.common.model.ITableColumnModel;
+import org.jowidgets.common.model.ITableColumnSpi;
+import org.jowidgets.common.model.ITableColumnModelSpi;
 import org.jowidgets.common.model.ITableColumnModelListener;
 import org.jowidgets.common.model.ITableColumnModelObservable;
 import org.jowidgets.common.model.ITableDataModel;
@@ -120,7 +120,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 	private final JTable table;
 	private final ITableDataModel dataModel;
-	private final ITableColumnModel columnModel;
+	private final ITableColumnModelSpi columnModel;
 	private final CellRenderer cellRenderer;
 	private final CellEditor cellEditor;
 	private final TableCellRenderer headerRenderer;
@@ -947,7 +947,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 					row,
 					columnIndex);
 
-			final ITableColumn column = (ITableColumn) value;
+			final ITableColumnSpi column = (ITableColumnSpi) value;
 
 			if (column.getIcon() != null) {
 				defaultComponent.setIcon(SwingImageRegistry.getInstance().getImageIcon(column.getIcon()));

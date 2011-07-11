@@ -27,9 +27,12 @@
  */
 package org.jowidgets.impl.spi.blueprint.builder;
 
+import org.jowidgets.common.model.ITableColumnModelSpi;
 import org.jowidgets.common.widgets.builder.ITableSetupBuilderCommon;
 
 public interface ITableSetupBuilderSpi<INSTANCE_TYPE extends ITableSetupBuilderSpi<?>> extends
 		ITableSetupBuilderCommon<INSTANCE_TYPE> {
+
+	INSTANCE_TYPE setColumnModel(ITableColumnModelSpi model);
 
 }

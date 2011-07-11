@@ -29,6 +29,7 @@ package org.jowidgets.impl.widgets.basic.blueprint;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.convert.IObjectStringConverter;
+import org.jowidgets.api.model.table.ITableColumnModel;
 import org.jowidgets.api.model.table.ITableModel;
 import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
@@ -70,7 +71,6 @@ import org.jowidgets.api.widgets.blueprint.ITreeNodeBluePrint;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.api.widgets.blueprint.factory.IBasicSimpleBluePrintFactory;
-import org.jowidgets.common.model.ITableColumnModel;
 import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.types.FileChooserType;
 import org.jowidgets.impl.base.blueprint.factory.AbstractBluePrintFactory;

@@ -29,6 +29,7 @@ package org.jowidgets.api.widgets.blueprint.factory;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.convert.IObjectStringConverter;
+import org.jowidgets.api.model.table.ITableColumnModel;
 import org.jowidgets.api.model.table.ITableModel;
 import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
@@ -67,7 +68,6 @@ import org.jowidgets.api.widgets.blueprint.IToolBarPopupButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarToggleButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeNodeBluePrint;
-import org.jowidgets.common.model.ITableColumnModel;
 import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.types.FileChooserType;
 
