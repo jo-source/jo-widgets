@@ -954,8 +954,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		public void columnsChanged(final int[] columnIndices) {
 			if (!setWidthInvokedOnModel) {
 				final TableColumn[] columns = table.getColumns();
-				for (int i = 0; i < columnIndices.length; i++) {
-					final int changedIndex = columnIndices[i];
+				for (final int changedIndex : columnIndices) {
 					final int internalIndex = changedIndex + 1;
 					setColumnData(columns[internalIndex], columnModel.getColumn(changedIndex));
 				}

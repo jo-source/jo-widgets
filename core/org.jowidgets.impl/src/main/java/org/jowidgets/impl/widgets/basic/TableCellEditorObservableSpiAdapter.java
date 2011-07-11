@@ -57,34 +57,39 @@ class TableCellEditorObservableSpiAdapter implements ITableCellEditorObservable 
 		listeners.remove(listener);
 	}
 
-	public void fireEditCanceled(final ITableCellEvent event) {
+	public void fireEditCanceled(final ITableCellEvent event, final TableModelSpiAdapter modelSpiAdapter) {
 		if (!listeners.isEmpty()) {
-			final ITableCellEvent decoratedEvent = new TableCellEvent(event.getRowIndex(), event.getColumnIndex());
+			final ITableCellEvent decoratedEvent = new TableCellEvent(
+				event.getRowIndex(),
+				modelSpiAdapter.convertViewToModel(event.getColumnIndex()));
 			for (final ITableCellEditorListener listener : listeners) {
 				listener.editCanceled(decoratedEvent);
 			}
 		}
 	}
 
-	public void fireEditFinished(final ITableCellEditEvent event) {
+	public void fireEditFinished(final ITableCellEditEvent event, final TableModelSpiAdapter modelSpiAdapter) {
 		if (!listeners.isEmpty()) {
-			final ITableCellEditEvent decoratedEvent = createDecoratedEvent(event);
+			final ITableCellEditEvent decoratedEvent = createDecoratedEvent(event, modelSpiAdapter);
 			for (final ITableCellEditorListener listener : listeners) {
 				listener.editFinished(decoratedEvent);
 			}
 		}
 	}
 
-	public void fireOnEdit(final IVetoable veto, final ITableCellEditEvent event) {
+	public void fireOnEdit(final IVetoable veto, final ITableCellEditEvent event, final TableModelSpiAdapter modelSpiAdapter) {
 		if (!listeners.isEmpty()) {
-			final ITableCellEditEvent decoratedEvent = createDecoratedEvent(event);
+			final ITableCellEditEvent decoratedEvent = createDecoratedEvent(event, modelSpiAdapter);
 			for (final ITableCellEditorListener listener : listeners) {
 				listener.onEdit(veto, decoratedEvent);
 			}
 		}
 	}
 
-	private ITableCellEditEvent createDecoratedEvent(final ITableCellEditEvent event) {
-		return new TableCellEditEvent(event.getRowIndex(), event.getColumnIndex(), event.getCurrentText());
+	private ITableCellEditEvent createDecoratedEvent(final ITableCellEditEvent event, final TableModelSpiAdapter modelSpiAdapter) {
+		return new TableCellEditEvent(
+			event.getRowIndex(),
+			modelSpiAdapter.convertViewToModel(event.getColumnIndex()),
+			event.getCurrentText());
 	}
 }

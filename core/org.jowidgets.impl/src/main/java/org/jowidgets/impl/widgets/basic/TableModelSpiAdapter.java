@@ -49,7 +49,7 @@ public class TableModelSpiAdapter implements ITableColumnModelSpi, ITableDataMod
 
 	private final TableColumnModelObservable columnModelObservable;
 
-	private int[] modelToView;
+	private final int[] modelToView;
 	private int[] viewToModel; // visible List
 
 	public TableModelSpiAdapter(final ITableColumnModel columnModel, final ITableDataModel dataModel) {
@@ -60,8 +60,10 @@ public class TableModelSpiAdapter implements ITableColumnModelSpi, ITableDataMod
 
 		this.columnModelObservable = new TableColumnModelObservable();
 
-		initializeLists();
+		modelToView = new int[columnModel.getColumnCount()];
+		updateMappings();
 
+		// Delegate events from app model to spi model
 		columnModel.getTableColumnModelObservable().addColumnModelListener(new ITableColumnModelListener() {
 
 			@Override
@@ -71,70 +73,75 @@ public class TableModelSpiAdapter implements ITableColumnModelSpi, ITableDataMod
 			public void columnsChanged(final int[] columnIndices) {
 				for (final int columnIndex : columnIndices) {
 					final ITableColumn column = columnModel.getColumn(columnIndex);
-					if ((modelToView[columnIndex] >= 0) && (column.isVisible())) {
-						if (column.isVisible()) {
+					if (column.isVisible()) {
+						if (modelToView[columnIndex] < 0) {
+							final int index = showColumn(columnIndex);
+							columnModelObservable.fireColumnsAdded(new int[] {index});
+						}
+						else {
 							columnModelObservable.fireColumnsChanged(new int[] {modelToView[columnIndex]});
 						}
-						continue;
-					}
-
-					if (column.isVisible()) {
-						showColumn(columnIndex);
-						columnModelObservable.fireColumnsAdded(new int[] {modelToView[columnIndex]});
-					}
-					else {
-						columnModelObservable.fireColumnsRemoved(new int[] {modelToView[columnIndex]});
 
 					}
-
+					else if (modelToView[columnIndex] >= 0) {
+						final int index = hideColumn(columnIndex);
+						columnModelObservable.fireColumnsRemoved(new int[] {index});
+					}
 				}
 			}
 
 			@Override
-			public void columnsAdded(final int[] columnIndices) {}
+			public void columnsAdded(final int[] columnIndex) {}
 		});
 	}
 
-	private void initializeLists() {
-		modelToView = new int[columnModel.getColumnCount()];
+	public int viewToModel(final int columnIndex) {
+		return viewToModel(columnIndex);
+	}
+
+	private void updateMappings() {
+		final ArrayList<Integer> visibleList = new ArrayList<Integer>();
 		for (int i = 0; i < modelToView.length; i++) {
-			modelToView[i] = i;
+			if (modelToView[i] >= 0) {
+				modelToView[i] = visibleList.size();
+				visibleList.add(i);
+			}
+			else {
+				modelToView[i] = -1;
+			}
 		}
 
-		viewToModel = new int[columnModel.getColumnCount()];
+		viewToModel = new int[visibleList.size()];
 		for (int i = 0; i < viewToModel.length; i++) {
-			viewToModel[i] = i;
+			viewToModel[i] = visibleList.get(i);
 		}
 	}
 
-	private void showColumn(final int columnIndex) {
+	private int showColumn(final int columnIndex) {
 		if (modelToView[columnIndex] < 0) {
-			int nextIndex = 0;
-			for (int i = 0; i < columnIndex; i++) {
-				nextIndex = Math.max(nextIndex, modelToView[i]);
-			}
-			modelToView[columnIndex] = nextIndex;
-			for (int i = columnIndex + 1; i < modelToView.length; i++) {
-				if (modelToView[i] >= 0) {
-					modelToView[i]++;
-				}
-			}
-
+			modelToView[columnIndex] = 1;
+			updateMappings();
 		}
+		return modelToView[columnIndex];
 	}
 
-	public int[] getVisibleList() {
-		return modelToView;
+	private int hideColumn(final int columnIndex) {
+		final int result = modelToView[columnIndex];
+		if (modelToView[columnIndex] >= 0) {
+			modelToView[columnIndex] = -1;
+			updateMappings();
+		}
+		return result;
 	}
 
 	@Override
 	public int getColumnCount() {
-		return modelToView.length;
+		return viewToModel.length;
 	}
 
 	@Override
 	public ITableColumn getColumn(final int columnIndex) {
-		return columnModel.getColumn(modelToView[columnIndex]);
+		return columnModel.getColumn(viewToModel[columnIndex]);
 	}
 
 	@Override
@@ -149,7 +156,7 @@ public class TableModelSpiAdapter implements ITableColumnModelSpi, ITableDataMod
 
 	@Override
 	public ITableCell getCell(final int rowIndex, final int columnIndex) {
-		return dataModel.getCell(rowIndex, modelToView[columnIndex]);
+		return dataModel.getCell(rowIndex, viewToModel[columnIndex]);
 	}
 
 	@Override
@@ -165,6 +172,10 @@ public class TableModelSpiAdapter implements ITableColumnModelSpi, ITableDataMod
 	@Override
 	public ITableDataModelObservable getTableDataModelObservable() {
 		return dataModel.getTableDataModelObservable();
+	}
+
+	public int convertViewToModel(final int columnIndex) {
+		return viewToModel[columnIndex];
 	}
 
 }

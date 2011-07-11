@@ -54,11 +54,11 @@ class TableCellPopupDetectionObservableSpiAdapter implements ITableCellPopupDete
 		listeners.remove(listener);
 	}
 
-	public void firePopupDetected(final ITableCellPopupEvent event) {
+	public void firePopupDetected(final ITableCellPopupEvent event, final TableModelSpiAdapter modelSpiAdapter) {
 		if (!listeners.isEmpty()) {
 			final ITableCellPopupEvent decoratedEvent = new TableCellPopupEvent(
 				event.getRowIndex(),
-				event.getColumnIndex(),
+				modelSpiAdapter.convertViewToModel(event.getColumnIndex()),
 				event.getPosition());
 			for (final ITableCellPopupDetectionListener listener : listeners) {
 				listener.popupDetected(decoratedEvent);

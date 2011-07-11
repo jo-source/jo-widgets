@@ -64,18 +64,26 @@ class TableColumnObservableSpiAdapter implements ITableColumnObservable {
 		}
 	}
 
-	public void fireColumnResized(final ITableColumnResizeEvent event) {
+	public void fireColumnResized(final ITableColumnResizeEvent event, final TableModelSpiAdapter modelSpiAdapter) {
 		if (!listeners.isEmpty()) {
-			final ITableColumnResizeEvent decoratedEvent = new TableColumnResizeEvent(event.getColumnIndex(), event.getWidth());
+			final ITableColumnResizeEvent decoratedEvent = new TableColumnResizeEvent(
+				modelSpiAdapter.convertViewToModel(event.getColumnIndex()),
+				event.getWidth());
 			for (final ITableColumnListener listener : listeners) {
 				listener.columnResized(decoratedEvent);
 			}
 		}
 	}
 
-	public void fireMouseClicked(final ITableColumnMouseEvent event) {
+	public void fireMouseClicked(final ITableColumnMouseEvent event, final TableModelSpiAdapter modelSpiAdapter) {
 		if (!listeners.isEmpty()) {
-			final ITableColumnMouseEvent decoratedEvent = new TableColumnMouseEvent(event.getColumnIndex(), event.getModifiers());
+			System.out.println("event.getColumnIndex() "
+				+ event.getColumnIndex()
+				+ " => "
+				+ modelSpiAdapter.convertViewToModel(event.getColumnIndex()));
+			final ITableColumnMouseEvent decoratedEvent = new TableColumnMouseEvent(
+				modelSpiAdapter.convertViewToModel(event.getColumnIndex()),
+				event.getModifiers());
 			for (final ITableColumnListener listener : listeners) {
 				listener.mouseClicked(decoratedEvent);
 			}
