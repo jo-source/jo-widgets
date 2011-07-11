@@ -43,6 +43,7 @@ import org.jowidgets.common.types.TablePackPolicy;
 import org.jowidgets.common.widgets.controler.ITableCellEditorListener;
 import org.jowidgets.common.widgets.controler.ITableCellListener;
 import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionListener;
+import org.jowidgets.common.widgets.controler.ITableCellPopupEvent;
 import org.jowidgets.common.widgets.controler.ITableColumnListener;
 import org.jowidgets.common.widgets.controler.ITableColumnPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.ITableSelectionListener;
@@ -60,12 +61,22 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 	private final ITableDataModel dataModel;
 	private final ITableColumnModel columnModel;
 
+	private final TableCellPopupDetectionObservableSpiAdapter cellPopupDetectionObservable;
+
 	public TableImpl(final ITableSpi widget, final ITableDescriptor setup) {
 		super(widget);
 
 		this.controlDelegate = new ControlDelegate();
 		this.dataModel = setup.getDataModel();
 		this.columnModel = setup.getColumnModel();
+
+		this.cellPopupDetectionObservable = new TableCellPopupDetectionObservableSpiAdapter();
+		getWidget().addTableCellPopupDetectionListener(new ITableCellPopupDetectionListener() {
+			@Override
+			public void popupDetected(final ITableCellPopupEvent event) {
+				cellPopupDetectionObservable.firePopupDetected(event);
+			}
+		});
 
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
@@ -196,12 +207,12 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 
 	@Override
 	public void addTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
-		getWidget().addTableCellPopupDetectionListener(listener);
+		cellPopupDetectionObservable.addTableCellPopupDetectionListener(listener);
 	}
 
 	@Override
 	public void removeTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
-		getWidget().removeTableCellPopupDetectionListener(listener);
+		cellPopupDetectionObservable.removeTableCellPopupDetectionListener(listener);
 	}
 
 	@Override
