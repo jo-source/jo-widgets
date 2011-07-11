@@ -38,14 +38,21 @@ import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.api.widgets.descriptor.ITableDescriptor;
 import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.TablePackPolicy;
+import org.jowidgets.common.widgets.controler.ITableCellEditEvent;
 import org.jowidgets.common.widgets.controler.ITableCellEditorListener;
+import org.jowidgets.common.widgets.controler.ITableCellEvent;
 import org.jowidgets.common.widgets.controler.ITableCellListener;
+import org.jowidgets.common.widgets.controler.ITableCellMouseEvent;
 import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionListener;
 import org.jowidgets.common.widgets.controler.ITableCellPopupEvent;
 import org.jowidgets.common.widgets.controler.ITableColumnListener;
+import org.jowidgets.common.widgets.controler.ITableColumnMouseEvent;
 import org.jowidgets.common.widgets.controler.ITableColumnPopupDetectionListener;
+import org.jowidgets.common.widgets.controler.ITableColumnPopupEvent;
+import org.jowidgets.common.widgets.controler.ITableColumnResizeEvent;
 import org.jowidgets.common.widgets.controler.ITableSelectionListener;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
@@ -61,7 +68,11 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 	private final ITableDataModel dataModel;
 	private final ITableColumnModel columnModel;
 
+	private final TableCellObservableSpiAdapter cellObservable;
 	private final TableCellPopupDetectionObservableSpiAdapter cellPopupDetectionObservable;
+	private final TableCellEditorObservableSpiAdapter cellEditorObservable;
+	private final TableColumnObservableSpiAdapter columnObservable;
+	private final TableColumnPopupDetectionObservableSpiAdapter columnPopupDetectionObservable;
 
 	public TableImpl(final ITableSpi widget, final ITableDescriptor setup) {
 		super(widget);
@@ -70,11 +81,77 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 		this.dataModel = setup.getDataModel();
 		this.columnModel = setup.getColumnModel();
 
+		this.cellObservable = new TableCellObservableSpiAdapter();
+		getWidget().addTableCellListener(new ITableCellListener() {
+
+			@Override
+			public void mouseReleased(final ITableCellMouseEvent event) {
+				cellObservable.fireMouseReleased(event);
+			}
+
+			@Override
+			public void mousePressed(final ITableCellMouseEvent event) {
+				cellObservable.fireMousePressed(event);
+			}
+
+			@Override
+			public void mouseDoubleClicked(final ITableCellMouseEvent event) {
+				cellObservable.fireMouseDoubleClicked(event);
+			}
+		});
+
 		this.cellPopupDetectionObservable = new TableCellPopupDetectionObservableSpiAdapter();
 		getWidget().addTableCellPopupDetectionListener(new ITableCellPopupDetectionListener() {
 			@Override
 			public void popupDetected(final ITableCellPopupEvent event) {
 				cellPopupDetectionObservable.firePopupDetected(event);
+			}
+		});
+
+		this.cellEditorObservable = new TableCellEditorObservableSpiAdapter();
+		getWidget().addTableCellEditorListener(new ITableCellEditorListener() {
+
+			@Override
+			public void onEdit(final IVetoable veto, final ITableCellEditEvent event) {
+				cellEditorObservable.fireOnEdit(veto, event);
+			}
+
+			@Override
+			public void editFinished(final ITableCellEditEvent event) {
+				cellEditorObservable.fireEditFinished(event);
+			}
+
+			@Override
+			public void editCanceled(final ITableCellEvent event) {
+				cellEditorObservable.fireEditCanceled(event);
+			}
+		});
+
+		this.columnObservable = new TableColumnObservableSpiAdapter();
+		getWidget().addTableColumnListener(new ITableColumnListener() {
+
+			@Override
+			public void mouseClicked(final ITableColumnMouseEvent event) {
+				columnObservable.fireMouseClicked(event);
+			}
+
+			@Override
+			public void columnResized(final ITableColumnResizeEvent event) {
+				columnObservable.fireColumnResized(event);
+			}
+
+			@Override
+			public void columnPermutationChanged() {
+				columnObservable.fireColumnPermutationChanged();
+			}
+		});
+
+		this.columnPopupDetectionObservable = new TableColumnPopupDetectionObservableSpiAdapter();
+		getWidget().addTableColumnPopupDetectionListener(new ITableColumnPopupDetectionListener() {
+
+			@Override
+			public void popupDetected(final ITableColumnPopupEvent event) {
+				columnPopupDetectionObservable.firePopupDetected(event);
 			}
 		});
 
@@ -217,32 +294,32 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 
 	@Override
 	public void addTableCellEditorListener(final ITableCellEditorListener listener) {
-		getWidget().addTableCellEditorListener(listener);
+		cellEditorObservable.addTableCellEditorListener(listener);
 	}
 
 	@Override
 	public void removeTableCellEditorListener(final ITableCellEditorListener listener) {
-		getWidget().removeTableCellEditorListener(listener);
+		cellEditorObservable.removeTableCellEditorListener(listener);
 	}
 
 	@Override
 	public void addTableCellListener(final ITableCellListener listener) {
-		getWidget().addTableCellListener(listener);
+		cellObservable.addTableCellListener(listener);
 	}
 
 	@Override
 	public void removeTableCellListener(final ITableCellListener listener) {
-		getWidget().removeTableCellListener(listener);
+		cellObservable.removeTableCellListener(listener);
 	}
 
 	@Override
 	public void addTableColumnPopupDetectionListener(final ITableColumnPopupDetectionListener listener) {
-		getWidget().addTableColumnPopupDetectionListener(listener);
+		columnPopupDetectionObservable.addTableColumnPopupDetectionListener(listener);
 	}
 
 	@Override
 	public void removeTableColumnPopupDetectionListener(final ITableColumnPopupDetectionListener listener) {
-		getWidget().removeTableColumnPopupDetectionListener(listener);
+		columnPopupDetectionObservable.removeTableColumnPopupDetectionListener(listener);
 	}
 
 	@Override
@@ -257,12 +334,12 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 
 	@Override
 	public void addTableColumnListener(final ITableColumnListener listener) {
-		getWidget().addTableColumnListener(listener);
+		columnObservable.addTableColumnListener(listener);
 	}
 
 	@Override
 	public void removeTableColumnListener(final ITableColumnListener listener) {
-		getWidget().removeTableColumnListener(listener);
+		columnObservable.removeTableColumnListener(listener);
 	}
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2011, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -31,37 +31,53 @@ package org.jowidgets.impl.widgets.basic;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionListener;
-import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionObservable;
-import org.jowidgets.common.widgets.controler.ITableCellPopupEvent;
-import org.jowidgets.impl.event.TableCellPopupEvent;
+import org.jowidgets.common.widgets.controler.ITableColumnListener;
+import org.jowidgets.common.widgets.controler.ITableColumnMouseEvent;
+import org.jowidgets.common.widgets.controler.ITableColumnObservable;
+import org.jowidgets.common.widgets.controler.ITableColumnResizeEvent;
+import org.jowidgets.impl.event.TableColumnMouseEvent;
+import org.jowidgets.impl.event.TableColumnResizeEvent;
 
-class TableCellPopupDetectionObservableSpiAdapter implements ITableCellPopupDetectionObservable {
+class TableColumnObservableSpiAdapter implements ITableColumnObservable {
 
-	private final Set<ITableCellPopupDetectionListener> listeners;
+	private final Set<ITableColumnListener> listeners;
 
-	TableCellPopupDetectionObservableSpiAdapter() {
-		this.listeners = new HashSet<ITableCellPopupDetectionListener>();
+	TableColumnObservableSpiAdapter() {
+		this.listeners = new HashSet<ITableColumnListener>();
 	}
 
 	@Override
-	public void addTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
+	public void addTableColumnListener(final ITableColumnListener listener) {
 		listeners.add(listener);
 	}
 
 	@Override
-	public void removeTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
+	public void removeTableColumnListener(final ITableColumnListener listener) {
 		listeners.remove(listener);
 	}
 
-	public void firePopupDetected(final ITableCellPopupEvent event) {
+	public void fireColumnPermutationChanged() {
 		if (!listeners.isEmpty()) {
-			final ITableCellPopupEvent decoratedEvent = new TableCellPopupEvent(
-				event.getRowIndex(),
-				event.getColumnIndex(),
-				event.getPosition());
-			for (final ITableCellPopupDetectionListener listener : listeners) {
-				listener.popupDetected(decoratedEvent);
+			for (final ITableColumnListener listener : listeners) {
+				listener.columnPermutationChanged();
+			}
+		}
+	}
+
+	public void fireColumnResized(final ITableColumnResizeEvent event) {
+		if (!listeners.isEmpty()) {
+			final ITableColumnResizeEvent decoratedEvent = new TableColumnResizeEvent(event.getColumnIndex(), event.getWidth());
+			for (final ITableColumnListener listener : listeners) {
+				listener.columnResized(decoratedEvent);
+			}
+		}
+	}
+
+	public void fireMouseClicked(final ITableColumnMouseEvent event) {
+		if (!listeners.isEmpty()) {
+			final ITableColumnMouseEvent decoratedEvent = new TableColumnMouseEvent(event.getColumnIndex(), event.getModifiers());
+			for (final ITableColumnListener listener : listeners) {
+				listener.mouseClicked(decoratedEvent);
 			}
 		}
 	}

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2011, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -31,36 +31,33 @@ package org.jowidgets.impl.widgets.basic;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionListener;
-import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionObservable;
-import org.jowidgets.common.widgets.controler.ITableCellPopupEvent;
-import org.jowidgets.impl.event.TableCellPopupEvent;
+import org.jowidgets.common.widgets.controler.ITableColumnPopupDetectionListener;
+import org.jowidgets.common.widgets.controler.ITableColumnPopupDetectionObservable;
+import org.jowidgets.common.widgets.controler.ITableColumnPopupEvent;
+import org.jowidgets.impl.event.TableColumnPopupEvent;
 
-class TableCellPopupDetectionObservableSpiAdapter implements ITableCellPopupDetectionObservable {
+class TableColumnPopupDetectionObservableSpiAdapter implements ITableColumnPopupDetectionObservable {
 
-	private final Set<ITableCellPopupDetectionListener> listeners;
+	private final Set<ITableColumnPopupDetectionListener> listeners;
 
-	TableCellPopupDetectionObservableSpiAdapter() {
-		this.listeners = new HashSet<ITableCellPopupDetectionListener>();
+	TableColumnPopupDetectionObservableSpiAdapter() {
+		this.listeners = new HashSet<ITableColumnPopupDetectionListener>();
 	}
 
 	@Override
-	public void addTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
+	public void addTableColumnPopupDetectionListener(final ITableColumnPopupDetectionListener listener) {
 		listeners.add(listener);
 	}
 
 	@Override
-	public void removeTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
+	public void removeTableColumnPopupDetectionListener(final ITableColumnPopupDetectionListener listener) {
 		listeners.remove(listener);
 	}
 
-	public void firePopupDetected(final ITableCellPopupEvent event) {
+	public void firePopupDetected(final ITableColumnPopupEvent event) {
 		if (!listeners.isEmpty()) {
-			final ITableCellPopupEvent decoratedEvent = new TableCellPopupEvent(
-				event.getRowIndex(),
-				event.getColumnIndex(),
-				event.getPosition());
-			for (final ITableCellPopupDetectionListener listener : listeners) {
+			final ITableColumnPopupEvent decoratedEvent = new TableColumnPopupEvent(event.getColumnIndex(), event.getPosition());
+			for (final ITableColumnPopupDetectionListener listener : listeners) {
 				listener.popupDetected(decoratedEvent);
 			}
 		}
