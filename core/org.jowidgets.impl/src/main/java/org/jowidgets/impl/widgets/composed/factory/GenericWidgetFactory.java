@@ -32,6 +32,7 @@ import org.jowidgets.api.widgets.descriptor.IInputCompositeDescriptor;
 import org.jowidgets.api.widgets.descriptor.IInputDialogDescriptor;
 import org.jowidgets.api.widgets.descriptor.IInputFieldDescriptor;
 import org.jowidgets.api.widgets.descriptor.ILabelDescriptor;
+import org.jowidgets.api.widgets.descriptor.ILoginDialogDescriptor;
 import org.jowidgets.api.widgets.descriptor.IMessageDialogDescriptor;
 import org.jowidgets.api.widgets.descriptor.IProgressBarDescriptor;
 import org.jowidgets.api.widgets.descriptor.IQuestionDialogDescriptor;
@@ -44,6 +45,7 @@ import org.jowidgets.impl.widgets.composed.factory.internal.InputCompositeFactor
 import org.jowidgets.impl.widgets.composed.factory.internal.InputDialogFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.InputFieldFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.LabelFactory;
+import org.jowidgets.impl.widgets.composed.factory.internal.LoginDialogFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.MessageDialogFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.ProgressBarFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.QuestionDialogFactory;
@@ -68,6 +70,7 @@ public class GenericWidgetFactory extends BasicGenericWidgetFactory {
 		register(IMessageDialogDescriptor.class, new MessageDialogFactory(this));
 		register(IQuestionDialogDescriptor.class, new QuestionDialogFactory(this));
 		register(IInputDialogDescriptor.class, new InputDialogFactory(this));
+		register(ILoginDialogDescriptor.class, new LoginDialogFactory(this));
 		register(IInputCompositeDescriptor.class, new InputCompositeFactory());
 		register(IValidationResultLabelDescriptor.class, new ValidationResultLabelFactory(this));
 		register(IValidateableStateLabelDescriptor.class, new ValidateableStateLabelFactory(this));

@@ -129,6 +129,11 @@ public class Workbench implements IWorkbench {
 	}
 
 	@Override
+	public void onLogin(final IVetoable vetoable) {
+		workbench.onLogin(vetoable);
+	}
+
+	@Override
 	public void onDispose() {
 		workbench.onDispose();
 	}

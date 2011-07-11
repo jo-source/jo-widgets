@@ -26,35 +26,23 @@
  * DAMAGE.
  */
 
-package org.jowidgets.workbench.impl;
+package org.jowidgets.impl.widgets.composed;
 
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.common.application.IApplication;
-import org.jowidgets.common.application.IApplicationLifecycle;
-import org.jowidgets.tools.types.VetoHolder;
-import org.jowidgets.workbench.api.IWorkbench;
-import org.jowidgets.workbench.api.IWorkbenchConfigurationService;
-import org.jowidgets.workbench.api.IWorkbenchRunner;
+public class LoginData {
+	private final String username;
+	private final String password;
 
-public class WorkbenchRunner implements IWorkbenchRunner {
-
-	@Override
-	public void run(final IWorkbench workbench) {
-		run(workbench, new DefaultConfigurationService());
+	public LoginData(final String username, final String password) {
+		super();
+		this.username = username;
+		this.password = password;
 	}
 
-	@Override
-	public void run(final IWorkbench workbench, final IWorkbenchConfigurationService configurationService) {
-		Toolkit.getApplicationRunner().run(new IApplication() {
-			@Override
-			public void start(final IApplicationLifecycle lifecycle) {
-				final VetoHolder vetoHolder = new VetoHolder();
-				workbench.onLogin(vetoHolder);
-				if (!vetoHolder.hasVeto()) {
-					new WorkbenchContext(workbench, lifecycle).run();
-				}
-			}
-		});
+	public String getUsername() {
+		return username;
 	}
 
+	public String getPassword() {
+		return password;
+	}
 }

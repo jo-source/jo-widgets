@@ -35,6 +35,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.workbench.api.ICloseCallback;
+import org.jowidgets.workbench.api.ILoginCallback;
 import org.jowidgets.workbench.api.IWorkbenchDescriptor;
 import org.jowidgets.workbench.toolkit.api.IViewFactory;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
@@ -138,6 +139,12 @@ public class WorkbenchModelBuilder implements IWorkbenchModelBuilder {
 	@Override
 	public final IWorkbenchModelBuilder setStatusBarCreator(final IContentCreator statusBarContentCreator) {
 		this.builder.setStatusBarCreator(statusBarContentCreator);
+		return this;
+	}
+
+	@Override
+	public IWorkbenchModelBuilder setLoginCallback(final ILoginCallback loginCallback) {
+		this.builder.setLoginCallback(loginCallback);
 		return this;
 	}
 
