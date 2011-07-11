@@ -45,7 +45,7 @@ class DefaultTableColumnBuilder implements IDefaultTableColumnBuilder {
 	DefaultTableColumnBuilder() {
 		this.alignment = AlignmentHorizontal.LEFT;
 		this.width = -1;
-		visible = true;
+		this.visible = true;
 	}
 
 	@Override
