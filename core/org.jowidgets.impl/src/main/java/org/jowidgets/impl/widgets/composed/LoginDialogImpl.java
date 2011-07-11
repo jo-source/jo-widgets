@@ -88,6 +88,9 @@ public class LoginDialogImpl extends WindowWrapper implements ILoginDialog {
 		final ILoginInterceptor loginInterceptor = setup.getInterceptor();
 
 		final IUiThreadAccess uiThreadAccess = Toolkit.getUiThreadAccess();
+
+		frame.setDefaultButton(loginButton);
+
 		loginButton.addActionListener(new IActionListener() {
 
 			@Override
