@@ -65,6 +65,7 @@ public class ValidationCache implements IValidateable {
 	public final IValidationResult validate() {
 		if (chacheDirty) {
 			this.validationResult = validationResultCreator.createValidationResult();
+			this.chacheDirty = false;
 		}
 		return validationResult;
 	}
