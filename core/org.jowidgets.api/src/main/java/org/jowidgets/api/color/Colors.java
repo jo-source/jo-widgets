@@ -37,6 +37,7 @@ public enum Colors implements IColorConstant {
 	STRONG(new ColorValue(0, 70, 213)),
 	WHITE(new ColorValue(255, 255, 255)),
 	DISABLED(new ColorValue(130, 130, 130)),
+	DARK_GREY(new ColorValue(80, 80, 80)),
 	DEFAULT_TABLE_EVEN_BACKGROUND_COLOR(new ColorValue(222, 235, 235)),
 	SELECTED_BACKGROUND(new ColorValue(16, 63, 149));
 

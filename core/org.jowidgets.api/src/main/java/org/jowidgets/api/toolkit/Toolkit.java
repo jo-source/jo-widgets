@@ -49,6 +49,7 @@ import org.jowidgets.api.widgets.content.IInputContentCreatorFactory;
 import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.application.IApplicationRunner;
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
@@ -167,6 +168,14 @@ public final class Toolkit {
 
 	public static ILoginResult login(final ILoginInterceptor interceptor) {
 		return getInstance().login(interceptor);
+	}
+
+	public static ILoginResult login(final IImageConstant logo, final ILoginInterceptor interceptor) {
+		return getInstance().login(logo, interceptor);
+	}
+
+	public static ILoginResult login(final String loginLabel, final ILoginInterceptor interceptor) {
+		return getInstance().login(loginLabel, interceptor);
 	}
 
 	public static IFrame createRootFrame(final IFrameDescriptor descriptor) {

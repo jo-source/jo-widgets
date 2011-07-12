@@ -50,11 +50,13 @@ import org.jowidgets.api.utils.IWidgetUtils;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IWindow;
+import org.jowidgets.api.widgets.blueprint.ILoginDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentCreatorFactory;
 import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.application.IApplicationRunner;
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
@@ -230,6 +232,19 @@ public class DefaultToolkit implements IToolkit {
 	@Override
 	public ILoginResult login(final ILoginInterceptor interceptor) {
 		return genericWidgetFactory.create(Toolkit.getBluePrintFactory().loginDialog(interceptor)).doLogin();
+	}
+
+	@Override
+	public ILoginResult login(final IImageConstant logo, final ILoginInterceptor interceptor) {
+		final ILoginDialogBluePrint loginBp = Toolkit.getBluePrintFactory().loginDialog(interceptor).setLogo(logo);
+		return genericWidgetFactory.create(loginBp).doLogin();
+	}
+
+	@Override
+	public ILoginResult login(final String loginLabel, final ILoginInterceptor interceptor) {
+		final ILoginDialogBluePrint loginBp = Toolkit.getBluePrintFactory().loginDialog(interceptor);
+		loginBp.setLoginLabel(loginLabel);
+		return genericWidgetFactory.create(loginBp).doLogin();
 	}
 
 	@Override

@@ -31,6 +31,7 @@ package org.jowidgets.impl.widgets.composed;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.login.ILoginCancelListener;
 import org.jowidgets.api.login.ILoginInterceptor;
 import org.jowidgets.api.login.ILoginResult;
@@ -44,8 +45,10 @@ import org.jowidgets.api.widgets.IInputField;
 import org.jowidgets.api.widgets.ILoginDialog;
 import org.jowidgets.api.widgets.IProgressBar;
 import org.jowidgets.api.widgets.IValidationResultLabel;
+import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.setup.ILoginDialogSetup;
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.widgets.wrapper.WindowWrapper;
@@ -67,23 +70,45 @@ public class LoginDialogImpl extends WindowWrapper implements ILoginDialog {
 		this.cancelListeners = new HashSet<ILoginCancelListener>();
 
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-		frame.setLayout(new MigLayoutDescriptor("20[]8[grow, 200!]20", "15[20!]15[][]15[][]"));
 
-		validationResultLabel = frame.add(bpf.validationResultLabel(), "span2, grow, wrap");
-		frame.add(bpf.textLabel("Username").alignRight(), "alignx r");//TODO i18n
-		usernameField = frame.add(bpf.inputFieldString(), "grow, wrap");
-		frame.add(bpf.textLabel("Password").alignRight(), "alignx r");//TODO i18n
-		passwordField = frame.add(bpf.inputFieldString().setPasswordPresentation(true), "grow, wrap");
+		frame.setLayout(new MigLayoutDescriptor("0[grow, 400::]0", "0[]0[grow]0[12!]0"));
 
-		final IProgressBar progressBar = frame.add(bpf.progressBar().setIndeterminate(true), "span 2, growx, wrap");
-		progressBar.setVisible(false);
+		if (setup.getLogo() != null) {
+			frame.add(bpf.icon(setup.getLogo()), "growx, growy, wrap");
+		}
+		else {
+			if (setup.getLoginLabel() != null) {
+				final IComposite labelComposite = frame.add(bpf.composite(), "grow, wrap");
+				labelComposite.setLayout(new MigLayoutDescriptor("15[grow]15", "15[grow]15"));
+				final ITextLabelBluePrint labelBp = bpf.textLabel().setFontSize(25);
+				labelBp.setText(setup.getLoginLabel()).setMarkup(Markup.DEFAULT);
+				labelBp.setForegroundColor(Colors.DARK_GREY);
+				labelComposite.add(labelBp, "grow");
+			}
+			else {
+				frame.add(bpf.textLabel(""), "grow, wrap");
+			}
+		}
 
-		final IComposite buttonBar = frame.add(bpf.composite(), "span2, align right, wrap");
+		final IComposite content = frame.add(bpf.composite(), "alignx r, wrap");
+
+		content.setLayout(new MigLayoutDescriptor("20[]8[grow, 200!]20", "15[20!]15[][]25[]"));
+
+		validationResultLabel = content.add(bpf.validationResultLabel(), "span2, grow, wrap");
+		content.add(bpf.textLabel("Username").alignRight(), "alignx r");//TODO i18n
+		usernameField = content.add(bpf.inputFieldString(), "grow, wrap");
+		content.add(bpf.textLabel("Password").alignRight(), "alignx r");//TODO i18n
+		passwordField = content.add(bpf.inputFieldString().setPasswordPresentation(true), "grow, wrap");
+
+		final IComposite buttonBar = content.add(bpf.composite(), "span2, align right, wrap");
 		buttonBar.setLayout(new MigLayoutDescriptor("0[][]0", "[]"));
 		final String buttonCellConstraints = "w 80::, sg bg";
 
 		final IButton loginButton = buttonBar.add(setup.getLoginButton(), buttonCellConstraints);
 		final IButton cancelButton = buttonBar.add(setup.getCancelButton(), buttonCellConstraints);
+
+		final IProgressBar progressBar = frame.add(bpf.progressBar().setIndeterminate(true), "growx, growy, aligny b");
+		progressBar.setVisible(false);
 
 		final ILoginInterceptor loginInterceptor = setup.getInterceptor();
 
