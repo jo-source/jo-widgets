@@ -30,6 +30,7 @@ package org.jowidgets.api.widgets.blueprint.builder;
 import org.jowidgets.api.login.ILoginInterceptor;
 import org.jowidgets.api.types.InputDialogDefaultButtonPolicy;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
+import org.jowidgets.common.image.IImageConstant;
 
 public interface ILoginDialogSetupBuilder<INSTANCE_TYPE extends ILoginDialogSetupBuilder<?>> extends
 		ITitledWindowSetupBuilder<INSTANCE_TYPE> {
@@ -43,5 +44,9 @@ public interface ILoginDialogSetupBuilder<INSTANCE_TYPE extends ILoginDialogSetu
 	INSTANCE_TYPE setCloseable(boolean closeable);
 
 	INSTANCE_TYPE setInterceptor(ILoginInterceptor interceptor);
+
+	INSTANCE_TYPE setLogo(IImageConstant logo);
+
+	INSTANCE_TYPE setLoginLabel(String label);
 
 }
