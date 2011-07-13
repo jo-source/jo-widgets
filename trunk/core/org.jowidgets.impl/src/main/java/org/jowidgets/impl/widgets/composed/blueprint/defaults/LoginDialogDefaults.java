@@ -30,6 +30,7 @@ package org.jowidgets.impl.widgets.composed.blueprint.defaults;
 import org.jowidgets.api.types.InputDialogDefaultButtonPolicy;
 import org.jowidgets.api.widgets.blueprint.builder.ILoginDialogSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
+import org.jowidgets.common.color.ColorValue;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
 public class LoginDialogDefaults implements IDefaultInitializer<ILoginDialogSetupBuilder<?>> {
@@ -39,6 +40,7 @@ public class LoginDialogDefaults implements IDefaultInitializer<ILoginDialogSetu
 	public void initialize(final ILoginDialogSetupBuilder<?> builder) {
 		final BluePrintFactory bpF = new BluePrintFactory();
 		builder.setDecorated(false);
+		builder.setBackgroundColor(new ColorValue(197, 216, 226));
 		builder.setLoginButton(bpF.button("Login"));
 		builder.setCancelButton(bpF.button("Cancel"));
 		builder.setDefaultButtonPolicy(InputDialogDefaultButtonPolicy.OK);
