@@ -30,9 +30,12 @@ package org.jowidgets.spi.impl.swing.widgets;
 import java.awt.Component;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
+import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Rectangle;
@@ -50,12 +53,19 @@ import org.jowidgets.util.TypeCast;
 
 public class FrameImpl extends SwingWindow implements IFrameUiSpi {
 
+	private static final Border BORDER = new JTextField().getBorder();
+
 	public FrameImpl(final IGenericWidgetFactory factory, final SwingImageRegistry imageRegistry, final IFrameSetupSpi setup) {
 		super(factory, new JFrame(), setup.isCloseable());
 
 		getUiReference().setTitle(setup.getTitle());
 		getUiReference().setResizable(setup.isResizable());
 		getUiReference().setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+
+		if (!setup.isDecorated()) {
+			getUiReference().setUndecorated(true);
+			((JComponent) getUiReference().getContentPane()).setBorder(BORDER);
+		}
 
 		setIcon(setup.getIcon(), imageRegistry);
 

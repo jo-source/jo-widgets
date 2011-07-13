@@ -38,7 +38,7 @@ public class LoginDialogDefaults implements IDefaultInitializer<ILoginDialogSetu
 	@Override
 	public void initialize(final ILoginDialogSetupBuilder<?> builder) {
 		final BluePrintFactory bpF = new BluePrintFactory();
-		builder.setTitle("Login");
+		builder.setDecorated(false);
 		builder.setLoginButton(bpF.button("Login"));
 		builder.setCancelButton(bpF.button("Cancel"));
 		builder.setDefaultButtonPolicy(InputDialogDefaultButtonPolicy.OK);

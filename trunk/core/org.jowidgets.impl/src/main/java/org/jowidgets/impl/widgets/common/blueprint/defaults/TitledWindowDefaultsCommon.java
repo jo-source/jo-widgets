@@ -25,17 +25,16 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.common.widgets.builder;
+package org.jowidgets.impl.widgets.common.blueprint.defaults;
 
-import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
+import org.jowidgets.common.widgets.builder.ITitledWindowSetupBuilderCommon;
 
-public interface ITitledWindowSetupBuilderCommon<INSTANCE_TYPE extends ITitledWindowSetupBuilderCommon<?>> extends
-		IWindowSetupBuilderCommon<INSTANCE_TYPE> {
+public class TitledWindowDefaultsCommon implements IDefaultInitializer<ITitledWindowSetupBuilderCommon<?>> {
 
-	INSTANCE_TYPE setTitle(final String title);
-
-	INSTANCE_TYPE setIcon(final IImageConstant icon);
-
-	INSTANCE_TYPE setDecorated(boolean decorated);
+	@Override
+	public void initialize(final ITitledWindowSetupBuilderCommon<?> builder) {
+		builder.setDecorated(true);
+	}
 
 }
