@@ -55,6 +55,7 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
@@ -62,6 +63,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.ToolTip;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.model.ITableCell;
@@ -134,6 +136,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 	private int[] lastColumnOrder;
 	private boolean setWidthInvokedOnModel;
+	private ToolTip toolTip;
 
 	public TableImpl(final Object parentUiReference, final ITableSetupSpi setup) {
 		super(new Table((Composite) parentUiReference, getStyle(setup)));
@@ -189,6 +192,23 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		table.addSelectionListener(new TableSelectionListener());
 
 		setMenuDetectListener(new TableMenuDetectListener());
+
+		// ToolTip support
+		try {
+			this.toolTip = new ToolTip(table.getShell(), SWT.NONE);
+		}
+		catch (final NoClassDefFoundError error) {
+			//TODO MG rwt has no tooltip, may use a window instead. 
+			//(New rwt version supports tooltips)
+		}
+
+		if (toolTip != null) {
+			final ToolTipListener toolTipListener = new ToolTipListener();
+			table.addListener(SWT.Dispose, toolTipListener);
+			table.addListener(SWT.KeyDown, toolTipListener);
+			table.addListener(SWT.MouseHover, toolTipListener);
+			table.addListener(SWT.MouseMove, toolTipListener);
+		}
 	}
 
 	private int getColumnCount() {
@@ -569,6 +589,13 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			}
 		}
 		return true;
+	}
+
+	private void showToolTip(final String message) {
+		toolTip.setMessage(message);
+		final Point location = Display.getCurrent().getCursorLocation();
+		toolTip.setLocation(location.x + 16, location.y + 16);
+		toolTip.setVisible(true);
 	}
 
 	private static int getStyle(final ITableSetupSpi setup) {
@@ -988,6 +1015,28 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 		public int getColumnIndex() {
 			return columnIndex;
+		}
+	}
+
+	final class ToolTipListener implements Listener {
+
+		@Override
+		public void handleEvent(final Event event) {
+			if (event.type == SWT.MouseHover) {
+				final CellIndices indices = getExternalCellIndices(new Point(event.x, event.y));
+				if (indices != null) {
+					toolTip.setVisible(false);
+					final ITableCell cell = dataModel.getCell(indices.rowIndex, indices.columnIndex);
+					if (cell.getToolTipText() != null) {
+						showToolTip(cell.getToolTipText());
+					}
+				}
+			}
+			else {
+				if (toolTip != null && !toolTip.isDisposed()) {
+					toolTip.setVisible(false);
+				}
+			}
 		}
 	}
 }

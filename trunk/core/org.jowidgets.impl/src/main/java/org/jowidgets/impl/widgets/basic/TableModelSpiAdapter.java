@@ -29,6 +29,7 @@
 package org.jowidgets.impl.widgets.basic;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.jowidgets.api.model.table.ITableColumn;
@@ -77,39 +78,10 @@ public class TableModelSpiAdapter implements ITableColumnModelSpi, ITableDataMod
 
 			@Override
 			public void columnsRemoved(final int[] columnIndices) {
-				// TODO NM sort array
-				for (final int modelIndex : columnIndices) {
+				final List<Integer> sortedIndices = getSortedList(columnIndices);
+				for (final int modelIndex : sortedIndices) {
 					final int removedIndex = modelToView[modelIndex];
-					currentColumnPermutation.remove(Integer.valueOf(modelIndex));
-
-					for (int i = 0; i < currentColumnPermutation.size(); i++) {
-						final int value = currentColumnPermutation.get(i);
-						if (value >= modelIndex) {
-							currentColumnPermutation.set(i, Integer.valueOf(value - 1));
-						}
-					}
-
-					final int[] newModelToView = new int[modelToView.length - 1];
-					for (int i = 0; i < modelToView.length; i++) {
-						if (i == modelIndex) {
-							continue;
-
-						}
-						final int currentIndex;
-						if (i < modelIndex) {
-							currentIndex = i;
-						}
-						else {
-							currentIndex = i - 1;
-						}
-
-						int value = modelToView[i];
-						if (value > modelIndex) {
-							value--;
-						}
-						newModelToView[currentIndex] = value;
-					}
-					modelToView = newModelToView;
+					removeColumnFromModel(modelIndex);
 					updateMappings();
 
 					ignoreTablePermutationEvents = true;
@@ -123,12 +95,14 @@ public class TableModelSpiAdapter implements ITableColumnModelSpi, ITableDataMod
 
 			@Override
 			public void columnsChanged(final int[] columnIndices) {
-				for (final int modelIndex : columnIndices) {
+				final List<Integer> sortedIndices = getSortedList(columnIndices);
+				for (final int modelIndex : sortedIndices) {
 					final ITableColumn column = columnModel.getColumn(modelIndex);
 					if (column.isVisible()) {
 						if (modelToView[modelIndex] < 0) {
 							final int index = showColumn(modelIndex);
 							ignoreTablePermutationEvents = true;
+							// TODO NM fix column width
 							columnModelObservable.fireColumnsAdded(new int[] {index});
 							if (table != null) {
 								table.setColumnPermutation(createTableColumnPermutation());
@@ -149,46 +123,15 @@ public class TableModelSpiAdapter implements ITableColumnModelSpi, ITableDataMod
 
 			@Override
 			public void columnsAdded(final int[] columnIndices) {
-				// TODO NM sort array
-				for (final int modelIndex : columnIndices) {
+				final List<Integer> sortedIndices = getSortedList(columnIndices);
+				for (final int modelIndex : sortedIndices) {
 					final ITableColumn column = columnModel.getColumn(modelIndex);
-					final int permutationIndex = currentColumnPermutation.indexOf(Math.max(0, modelIndex - 1)) + 1;
-
-					for (int i = 0; i < currentColumnPermutation.size(); i++) {
-						final int value = currentColumnPermutation.get(i);
-						if (value >= modelIndex) {
-							currentColumnPermutation.set(i, Integer.valueOf(value + 1));
-						}
-					}
-					currentColumnPermutation.add(permutationIndex, Integer.valueOf(modelIndex));
-
-					final int[] newModelToView = new int[modelToView.length + 1];
-					for (int i = 0; i < modelToView.length; i++) {
-						final int currentIndex;
-						if (i < modelIndex) {
-							currentIndex = i;
-						}
-						else {
-							currentIndex = i + 1;
-						}
-
-						int value = modelToView[i];
-						if (value >= permutationIndex) {
-							value++;
-						}
-						newModelToView[currentIndex] = value;
-					}
-					if (column.isVisible()) {
-						newModelToView[modelIndex] = 1;
-					}
-					else {
-						newModelToView[modelIndex] = -1;
-					}
-					modelToView = newModelToView;
+					insertColumnToModel(modelIndex, column.isVisible() ? 1 : -1);
 					updateMappings();
 
 					if (column.isVisible()) {
 						ignoreTablePermutationEvents = true;
+						// TODO NM fix column width
 						columnModelObservable.fireColumnsAdded(new int[] {modelToView[modelIndex]});
 						if (table != null) {
 							table.setColumnPermutation(createTableColumnPermutation());
@@ -323,6 +266,7 @@ public class TableModelSpiAdapter implements ITableColumnModelSpi, ITableDataMod
 			}
 			position++;
 		}
+
 		return -1;
 	}
 
@@ -351,4 +295,54 @@ public class TableModelSpiAdapter implements ITableColumnModelSpi, ITableDataMod
 		return currentColumnPermutation;
 	}
 
+	private void insertColumnToModel(final int index, final int value) {
+		final int permutationIndex = currentColumnPermutation.indexOf(Math.max(0, index - 1)) + 1;
+
+		for (int i = 0; i < currentColumnPermutation.size(); i++) {
+			final int permutationValue = currentColumnPermutation.get(i);
+			if (permutationValue >= index) {
+				currentColumnPermutation.set(i, Integer.valueOf(permutationValue + 1));
+			}
+		}
+		currentColumnPermutation.add(permutationIndex, Integer.valueOf(index));
+
+		final int[] newModelToView = new int[modelToView.length + 1];
+		for (int i = 0; i < index; i++) {
+			newModelToView[i] = modelToView[i];
+		}
+		newModelToView[index] = value;
+		for (int i = index; i < modelToView.length; i++) {
+			newModelToView[i + 1] = modelToView[i];
+		}
+		modelToView = newModelToView;
+	}
+
+	private void removeColumnFromModel(final int index) {
+		currentColumnPermutation.remove(Integer.valueOf(index));
+
+		for (int i = 0; i < currentColumnPermutation.size(); i++) {
+			final int permutationValue = currentColumnPermutation.get(i);
+			if (permutationValue >= index) {
+				currentColumnPermutation.set(i, Integer.valueOf(permutationValue - 1));
+			}
+		}
+
+		final int[] newModelToView = new int[modelToView.length - 1];
+		for (int i = 0; i < index; i++) {
+			newModelToView[i] = modelToView[i];
+		}
+		for (int i = index + 1; i < modelToView.length; i++) {
+			newModelToView[i - 1] = modelToView[i];
+		}
+		modelToView = newModelToView;
+	}
+
+	private List<Integer> getSortedList(final int[] array) {
+		final ArrayList<Integer> result = new ArrayList<Integer>(array.length);
+		for (int i = 0; i < array.length; i++) {
+			result.add(Integer.valueOf(array[i]));
+		}
+		Collections.sort(result);
+		return result;
+	}
 }

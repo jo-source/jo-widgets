@@ -213,7 +213,7 @@ public final class DemoTableComposite {
 
 		@Override
 		public ITableCell getCell(final int rowIndex, final int columnIndex) {
-			return new TableCell(columns.get(columnIndex).getText() + rowIndex);
+			return new TableCell(columns.get(columnIndex).getText() + rowIndex, "Tooltip for " + rowIndex + "/" + columnIndex);
 		}
 
 		@Override
