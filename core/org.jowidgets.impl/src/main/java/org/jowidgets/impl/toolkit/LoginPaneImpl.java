@@ -70,4 +70,23 @@ class LoginPaneImpl implements ILoginPane {
 		return genericWidgetFactory.create(activeWindowProvider.getActiveWindow(), loginBp).doLogin();
 	}
 
+	@Override
+	public ILoginResult login(final boolean decorated, final ILoginInterceptor interceptor) {
+		final ILoginDialogBluePrint loginBp = bluePrintFactory.loginDialog(interceptor).setDecorated(decorated);
+		return genericWidgetFactory.create(activeWindowProvider.getActiveWindow(), loginBp).doLogin();
+	}
+
+	@Override
+	public ILoginResult login(final boolean decorated, final IImageConstant logo, final ILoginInterceptor interceptor) {
+		final ILoginDialogBluePrint loginBp = bluePrintFactory.loginDialog(interceptor).setLogo(logo).setDecorated(decorated);
+		return genericWidgetFactory.create(activeWindowProvider.getActiveWindow(), loginBp).doLogin();
+	}
+
+	@Override
+	public ILoginResult login(final boolean decorated, final String loginLabel, final ILoginInterceptor interceptor) {
+		final ILoginDialogBluePrint loginBp = bluePrintFactory.loginDialog(interceptor);
+		loginBp.setLoginLabel(loginLabel).setDecorated(decorated);
+		return genericWidgetFactory.create(activeWindowProvider.getActiveWindow(), loginBp).doLogin();
+	}
+
 }
