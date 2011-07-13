@@ -57,7 +57,7 @@ public interface IStringObjectConverter<OBJECT_TYPE> {
 	 * so the validator implementation must consider inputs that won't be verified
 	 * 
 	 * REMARK: Implementors should prefer to use regular expressions instead of {@link IInputVerifier}'s
-	 * if possible because SPI implementations that use 'AJAX' could implement client side verification easier.
+	 * if possible because SPI implementations that use 'AJAX' can implement client side verification easier.
 	 * 
 	 * @return A verifier or null
 	 */
@@ -67,7 +67,7 @@ public interface IStringObjectConverter<OBJECT_TYPE> {
 	 * Gets the regular expression that describes the valid inputs.
 	 * 
 	 * REMARK: Implementors should prefer to use regular expressions instead of {@link IInputVerifier}'s
-	 * if possible because SPI implementations that uses e.g 'AJAX' could implement client side verification easier.
+	 * if possible because SPI implementations that uses e.g 'AJAX' can implement client side verification easier.
 	 * 
 	 * REMARK: Implementors must not assume that the regular expression will be used on all platforms
 	 * 

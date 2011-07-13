@@ -215,7 +215,7 @@ public class QuestionDialogImpl implements IQuestionDialog {
 			dialogWidget.dispose();
 		}
 		else {
-			throw new IllegalStateException("A message dialog could only be shown once!");
+			throw new IllegalStateException("A message dialog can only be shown once!");
 		}
 		return result;
 	}

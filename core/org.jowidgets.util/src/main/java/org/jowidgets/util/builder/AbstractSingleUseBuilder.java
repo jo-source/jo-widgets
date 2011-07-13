@@ -36,7 +36,7 @@ public abstract class AbstractSingleUseBuilder<RESULT_TYPE> {
 
 	public final RESULT_TYPE build() {
 		if (exhausted) {
-			throw new IllegalStateException("The builder is exhausted. It's a single use builder that could only be used once.");
+			throw new IllegalStateException("The builder is exhausted. It's a single use builder that can only be used once.");
 		}
 		exhausted = true;
 		return doBuild();

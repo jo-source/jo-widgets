@@ -34,7 +34,7 @@ import org.jowidgets.api.widgets.IFrame;
 public interface IWidgetWrapperFactory {
 
 	/**
-	 * Tests if the ui reference could be converted / wrapped to an IFrame
+	 * Tests if the ui reference can be converted / wrapped to an IFrame
 	 * 
 	 * @param uiReference
 	 * @return True if convertible, false otherwise
@@ -46,7 +46,7 @@ public interface IWidgetWrapperFactory {
 	 * 
 	 * Remark: The created IFrame has no parent set
 	 * 
-	 * @param uiReference The ui-platform specific object that could be wrapped to an
+	 * @param uiReference The ui-platform specific object that shall be wrapped to an
 	 *            IFrame (e.g. Window for Swing, Shell for swt).
 	 * 
 	 * @return The created IFrame
@@ -55,7 +55,7 @@ public interface IWidgetWrapperFactory {
 	IFrame createFrame(final Object uiReference);
 
 	/**
-	 * Tests if the ui reference could be converted / wrapped to an IComposite
+	 * Tests if the ui reference can be converted / wrapped to an IComposite
 	 * 
 	 * @param uiReference
 	 * @return True if convertible, false otherwise
@@ -67,7 +67,7 @@ public interface IWidgetWrapperFactory {
 	 * 
 	 * Remark: The created IComposite has no parent set
 	 * 
-	 * @param uiReference The ui-platform specific object that could be wrapped to an
+	 * @param uiReference The ui-platform specific object that shall be wrapped to an
 	 *            IComposite (e.g. Container for Swing, Composite for swt).
 	 * @return The created ICompositeCommon
 	 * @throws IllegalArgumentException If the ui-reference could not be wrapped to an IComposite.

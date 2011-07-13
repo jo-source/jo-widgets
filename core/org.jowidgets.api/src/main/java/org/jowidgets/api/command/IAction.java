@@ -56,10 +56,10 @@ public interface IAction {
 	IExceptionHandler getExceptionHandler();
 
 	/**
-	 * For mutable actions, an observable could be implemented to recognize changes
+	 * For mutable actions, an observable can be implemented to recognize changes
 	 * on this action.
 	 * 
-	 * The following properties could be mutable: text, toolTipText, icon, enabled
+	 * The following properties can be mutable: text, toolTipText, icon, enabled
 	 * 
 	 * @return The observable if the action is mutable or null if the action is immutable
 	 */

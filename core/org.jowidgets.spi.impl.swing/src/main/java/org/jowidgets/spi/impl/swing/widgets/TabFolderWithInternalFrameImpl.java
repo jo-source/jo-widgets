@@ -68,7 +68,7 @@ public class TabFolderWithInternalFrameImpl extends SwingControl implements ITab
 		this.tabbedPane = new JTabbedPane();
 		this.items = new LinkedList<TabItemImpl>();
 
-		//avoid that internal frame could be dragged 
+		//avoid that internal frame can be dragged 
 		//TODO MG this may work not for all LookAndFeels
 		final JInternalFrame internalFrame = getUiReference();
 		final InternalFrameUI internalFrameUI = internalFrame.getUI();

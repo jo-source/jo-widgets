@@ -31,12 +31,12 @@ package org.jowidgets.common.mask;
 public interface ICharacterMask {
 
 	/**
-	 * Determines if the user could do some input for this character mask.
+	 * Determines if the user can do some input for this character mask.
 	 * 
 	 * If false will be returned, the {@link ICharacterMask#getPlaceholder()} method
 	 * must not return null.
 	 * 
-	 * @return True if the user could input some character, false otherwise
+	 * @return True if the user can input some character, false otherwise
 	 */
 	boolean isReadonly();
 

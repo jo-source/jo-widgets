@@ -33,7 +33,7 @@ public final class Nothing {
 
 		@Override
 		public Object getValue() {
-			throw new IllegalStateException("Could not getvalue from nothing");
+			throw new IllegalStateException("Can not get a value from nothing");
 		}
 
 		@Override

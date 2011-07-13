@@ -32,7 +32,7 @@ public interface IMessageDialog extends IDisplay, IComponent {
 
 	/**
 	 * Shows the message of the dialog and blocks until the user pressed the OK button. After that, the
-	 * dialog will be disposed, so it could not shown a second time.
+	 * dialog will be disposed, so it can not be shown a second time.
 	 */
 	void showMessage();
 

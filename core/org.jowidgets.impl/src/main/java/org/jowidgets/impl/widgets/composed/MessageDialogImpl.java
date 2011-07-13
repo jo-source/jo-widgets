@@ -165,7 +165,7 @@ public class MessageDialogImpl implements IMessageDialog {
 			dialogWidget.dispose();
 		}
 		else {
-			throw new IllegalStateException("A message dialog could only be shown more than once!");
+			throw new IllegalStateException("A message dialog can only be shown once!");
 		}
 	}
 

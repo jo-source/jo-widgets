@@ -34,11 +34,11 @@ public interface IComposedInputComponent<VALUE_TYPE> extends IInputComponent<VAL
 	 * The intermediate value describes an intermediate state of the user input.
 	 * 
 	 * Example1: The user enters a date in an IInputField<Date>, composed from an single ITextField.
-	 * The current input (e.g. '12-11-') is incomplete so it could not be converted to a valid date,
-	 * which leads to a value of 'null'. The intermediate value could then be set to the String "12-11-".
-	 * After pressing the '2' key, the intermediate value could be "12-11-2", but the value is still null.
-	 * After pressing the keys '0', '1' , '1', the intermediate value could be "12-11-2011" and the value is
-	 * a Date object representing "12-11-2011". If the user presses the backspace key 4 times then, the value
+	 * The current input (e.g. '12-11-') is incomplete so it can not be converted to a valid date,
+	 * which leads to a value of 'null'. The intermediate value can be set to the String "12-11-".
+	 * After pressing the '2' key, the intermediate value is "12-11-2", but the value is still null.
+	 * After pressing the keys '0', '1' , '1', the intermediate value is "12-11-2011" and the value is
+	 * a Date object representing "12-11-2011". If the user presses the backspace key 4 times, the value
 	 * is 'null' and the intermediate value is "12-11-" again, which indicates that the field is in it's
 	 * original state.
 	 * 
@@ -48,7 +48,7 @@ public interface IComposedInputComponent<VALUE_TYPE> extends IInputComponent<VAL
 	 * - IComboBoxSelection<Integer> initial value: null, intermediateValue: null
 	 * - ICheckBox initial value: Boolean.FALSE, no intermediateValue, ICheckBox is not composed
 	 * 
-	 * Because the inputs of the text field and comboBox are mandatory and not set, no Person object could be created.
+	 * Because the inputs of the text field and comboBox are mandatory and not set, no Person object can be created.
 	 * This leads to a value of 'null'.
 	 * The intermediate value may be a List<Object> with the values {NullEntry.INSTANCE, "01-03-1972", NullEntry.INSTANCE,
 	 * Boolean.FALSE}.

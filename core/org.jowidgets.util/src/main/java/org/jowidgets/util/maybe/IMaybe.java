@@ -28,9 +28,9 @@
 package org.jowidgets.util.maybe;
 
 /**
- * An Object of the type TYPE that could be defined, could be null (undefined)
- * or that could be nothing (not even undefined).
- * This could be used e.g. if a value is not available, e.g. when a user input was aborted
+ * An Object of the type TYPE that can be defined, that can be null (undefined)
+ * or that can be nothing (not even undefined).
+ * This can be used e.g. if a value is not available, e.g. when a user input was aborted
  * 
  * @param <TYPE> the type of the maybe's value
  */
