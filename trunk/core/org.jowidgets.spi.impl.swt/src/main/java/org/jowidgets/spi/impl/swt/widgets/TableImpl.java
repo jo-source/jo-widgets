@@ -635,8 +635,6 @@ public class TableImpl extends SwtControl implements ITableSpi {
 				final IColorConstant backgroundColor = cell.getBackgroundColor();
 				final IColorConstant foregroundColor = cell.getForegroundColor();
 				final Markup markup = cell.getMarkup();
-				//TODO BM support tooltip like in SwtMenu
-				//final String toolTipText = cell.getToolTipText(); 
 
 				if (text != null) {
 					item.setText(internalIndex, text);
