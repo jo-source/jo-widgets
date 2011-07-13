@@ -167,10 +167,12 @@ public class TableModelSpiAdapter implements ITableColumnModelSpi, ITableDataMod
 	}
 
 	private int showColumn(final int columnIndex) {
-		if (modelToView[columnIndex] < 0) {
-			modelToView[columnIndex] = 1;
-			updateMappings();
+		if (modelToView[columnIndex] >= 0) {
+			throw new IllegalStateException("Column is already visible (" + columnIndex + ").");
 		}
+
+		modelToView[columnIndex] = 1;
+		updateMappings();
 
 		int viewIndex = 0;
 		for (int i = 0; i < columnIndex; i++) {
@@ -183,11 +185,13 @@ public class TableModelSpiAdapter implements ITableColumnModelSpi, ITableDataMod
 	}
 
 	private int hideColumn(final int columnIndex) {
-		final int result = modelToView[columnIndex];
-		if (modelToView[columnIndex] >= 0) {
-			modelToView[columnIndex] = -1;
-			updateMappings();
+		if (modelToView[columnIndex] < 0) {
+			throw new IllegalStateException("Column is already hidden (" + columnIndex + ").");
 		}
+
+		final int result = modelToView[columnIndex];
+		modelToView[columnIndex] = -1;
+		updateMappings();
 		return result;
 	}
 
