@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2010, grossmann, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -64,7 +64,7 @@ public class TableFactory extends AbstractWidgetFactory implements IWidgetFactor
 		tableBpSpi.setDataModel(modelSpiAdapter);
 
 		final ITableSpi tableSpi = getSpiWidgetFactory().createTable(parentUiReference, tableBpSpi);
-
+		modelSpiAdapter.setTable(tableSpi);
 		return new TableImpl(tableSpi, descriptor, modelSpiAdapter);
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2011, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -39,6 +39,7 @@ import org.jowidgets.common.model.ITableColumnModelObservable;
 import org.jowidgets.common.model.ITableColumnModelSpi;
 import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.model.ITableDataModelObservable;
+import org.jowidgets.spi.widgets.ITableSpi;
 import org.jowidgets.tools.controler.TableColumnModelObservable;
 import org.jowidgets.util.Assert;
 
@@ -48,15 +49,23 @@ public class TableModelSpiAdapter implements ITableColumnModelSpi, ITableDataMod
 	private final ITableDataModel dataModel;
 
 	private final TableColumnModelObservable columnModelObservable;
+	private ITableSpi table;
 
 	private final int[] modelToView;
 	private int[] viewToModel; // visible List
+	private final ArrayList<Integer> currentColumnPermutation;
+	private boolean ignoreTablePermutationEvents;
 
 	public TableModelSpiAdapter(final ITableColumnModel columnModel, final ITableDataModel dataModel) {
 		Assert.paramNotNull(columnModel, "columnModel");
 		Assert.paramNotNull(dataModel, "dataModel");
 		this.columnModel = columnModel;
 		this.dataModel = dataModel;
+		this.ignoreTablePermutationEvents = false;
+		this.currentColumnPermutation = new ArrayList<Integer>(columnModel.getColumnCount());
+		for (int i = 0; i < columnModel.getColumnCount(); i++) {
+			currentColumnPermutation.add(Integer.valueOf(i));
+		}
 
 		this.columnModelObservable = new TableColumnModelObservable();
 
@@ -67,53 +76,63 @@ public class TableModelSpiAdapter implements ITableColumnModelSpi, ITableDataMod
 		columnModel.getTableColumnModelObservable().addColumnModelListener(new ITableColumnModelListener() {
 
 			@Override
-			public void columnsRemoved(final int[] columnIndices) {}
+			public void columnsRemoved(final int[] columnIndices) {
+				// TODO NM implement
+			}
 
 			@Override
 			public void columnsChanged(final int[] columnIndices) {
-				for (final int columnIndex : columnIndices) {
-					final ITableColumn column = columnModel.getColumn(columnIndex);
+				for (final int modelIndex : columnIndices) {
+					final ITableColumn column = columnModel.getColumn(modelIndex);
 					if (column.isVisible()) {
-						if (modelToView[columnIndex] < 0) {
-							final int index = showColumn(columnIndex);
+						if (modelToView[modelIndex] < 0) {
+							final int index = showColumn(modelIndex);
+							ignoreTablePermutationEvents = true;
 							columnModelObservable.fireColumnsAdded(new int[] {index});
+							if (table != null) {
+								table.setColumnPermutation(createTableColumnPermutation());
+							}
+							ignoreTablePermutationEvents = false;
 						}
 						else {
-							columnModelObservable.fireColumnsChanged(new int[] {modelToView[columnIndex]});
+							columnModelObservable.fireColumnsChanged(new int[] {modelToView[modelIndex]});
 						}
 
 					}
-					else if (modelToView[columnIndex] >= 0) {
-						final int index = hideColumn(columnIndex);
+					else if (modelToView[modelIndex] >= 0) {
+						final int index = hideColumn(modelIndex);
 						columnModelObservable.fireColumnsRemoved(new int[] {index});
 					}
 				}
 			}
 
 			@Override
-			public void columnsAdded(final int[] columnIndex) {}
+			public void columnsAdded(final int[] columnIndex) {
+				// TODO NM implement
+			}
 		});
 	}
 
-	public int viewToModel(final int columnIndex) {
-		return viewToModel(columnIndex);
+	public void setTable(final ITableSpi table) {
+		Assert.paramNotNull(table, "table");
+		this.table = table;
 	}
 
 	private void updateMappings() {
-		final ArrayList<Integer> visibleList = new ArrayList<Integer>();
+		final ArrayList<Integer> visibleColumns = new ArrayList<Integer>();
 		for (int i = 0; i < modelToView.length; i++) {
 			if (modelToView[i] >= 0) {
-				modelToView[i] = visibleList.size();
-				visibleList.add(i);
+				modelToView[i] = visibleColumns.size();
+				visibleColumns.add(i);
 			}
 			else {
 				modelToView[i] = -1;
 			}
 		}
 
-		viewToModel = new int[visibleList.size()];
+		viewToModel = new int[visibleColumns.size()];
 		for (int i = 0; i < viewToModel.length; i++) {
-			viewToModel[i] = visibleList.get(i);
+			viewToModel[i] = visibleColumns.get(i);
 		}
 	}
 
@@ -122,7 +141,15 @@ public class TableModelSpiAdapter implements ITableColumnModelSpi, ITableDataMod
 			modelToView[columnIndex] = 1;
 			updateMappings();
 		}
-		return modelToView[columnIndex];
+
+		int viewIndex = 0;
+		for (int i = 0; i < columnIndex; i++) {
+			if (modelToView[i] >= 0) {
+				viewIndex++;
+			}
+		}
+
+		return viewIndex;
 	}
 
 	private int hideColumn(final int columnIndex) {
@@ -174,8 +201,66 @@ public class TableModelSpiAdapter implements ITableColumnModelSpi, ITableDataMod
 		return dataModel.getTableDataModelObservable();
 	}
 
-	public int convertViewToModel(final int columnIndex) {
+	int convertViewToModel(final int columnIndex) {
 		return viewToModel[columnIndex];
+	}
+
+	private ArrayList<Integer> createTableColumnPermutation() {
+		final ArrayList<Integer> result = new ArrayList<Integer>(viewToModel.length);
+		for (int i = 0; i < currentColumnPermutation.size(); i++) {
+			final int modelIndex = currentColumnPermutation.get(i);
+			if (modelToView[modelIndex] >= 0) {
+				result.add(Integer.valueOf(modelToView[modelIndex]));
+			}
+		}
+		return result;
+	}
+
+	List<Integer> convertColumnPermutationToView(final List<Integer> permutation) {
+		final ArrayList<Integer> result = new ArrayList<Integer>();
+		for (final Integer modelIndex : permutation) {
+			if (modelToView[modelIndex] >= 0) {
+				result.add(Integer.valueOf(modelToView[modelIndex]));
+			}
+		}
+
+		return result;
+	}
+
+	private int getNextVisibleIndex(int position) {
+		while (position < currentColumnPermutation.size()) {
+			final int currentIndex = currentColumnPermutation.get(position);
+			if (modelToView[currentIndex] >= 0) {
+				return position;
+			}
+			position++;
+		}
+		return -1;
+	}
+
+	void tableColumnPermutationChanged(final ArrayList<Integer> tablePermutation) {
+		if (ignoreTablePermutationEvents) {
+			return;
+		}
+
+		int position = 0;
+		for (final int tableColumnIndex : tablePermutation) {
+			final int modelColumnIndex = viewToModel[tableColumnIndex];
+
+			final int nextVisible = getNextVisibleIndex(position);
+			if (currentColumnPermutation.get(nextVisible) == modelColumnIndex) {
+				position = nextVisible + 1;
+				continue;
+			}
+
+			currentColumnPermutation.remove(Integer.valueOf(modelColumnIndex));
+			currentColumnPermutation.add(position, Integer.valueOf(modelColumnIndex));
+			position++;
+		}
+	}
+
+	ArrayList<Integer> getCurrentPermutation() {
+		return currentColumnPermutation;
 	}
 
 }

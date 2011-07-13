@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2011, grossmann, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -74,7 +74,7 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 	private final TableColumnObservableSpiAdapter columnObservable;
 	private final TableColumnPopupDetectionObservableSpiAdapter columnPopupDetectionObservable;
 
-	//private final TableModelSpiAdapter modelSpiAdapter;
+	private final TableModelSpiAdapter modelSpiAdapter;
 
 	public TableImpl(final ITableSpi widget, final ITableDescriptor setup, final TableModelSpiAdapter modelSpiAdapter) {
 		super(widget);
@@ -82,7 +82,7 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 		this.controlDelegate = new ControlDelegate();
 		this.dataModel = setup.getDataModel();
 		this.columnModel = setup.getColumnModel();
-		//this.modelSpiAdapter = modelSpiAdapter;
+		this.modelSpiAdapter = modelSpiAdapter;
 
 		this.cellObservable = new TableCellObservableSpiAdapter();
 		getWidget().addTableCellListener(new ITableCellListener() {
@@ -145,6 +145,7 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 
 			@Override
 			public void columnPermutationChanged() {
+				modelSpiAdapter.tableColumnPermutationChanged(getWidget().getColumnPermutation());
 				columnObservable.fireColumnPermutationChanged();
 			}
 		});
@@ -265,14 +266,12 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 
 	@Override
 	public ArrayList<Integer> getColumnPermutation() {
-		// TODO NM transform indices and add invisible columns
-		return getWidget().getColumnPermutation();
+		return modelSpiAdapter.getCurrentPermutation();
 	}
 
 	@Override
 	public void setColumnPermutation(final List<Integer> permutation) {
-		// TODO NM transform indices, ignore inivisible columns on native widget
-		getWidget().setColumnPermutation(permutation);
+		getWidget().setColumnPermutation(modelSpiAdapter.convertColumnPermutationToView(permutation));
 	}
 
 	@Override
@@ -344,9 +343,4 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 	public void removeTableColumnListener(final ITableColumnListener listener) {
 		columnObservable.removeTableColumnListener(listener);
 	}
-
-	int modelConvertViewToModel(final int columnIndex) {
-		return 0;
-	}
-
 }
