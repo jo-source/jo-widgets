@@ -234,4 +234,8 @@ public final class DemoTableComposite {
 		}
 
 	}
+
+	public void foo() {
+
+	}
 }
