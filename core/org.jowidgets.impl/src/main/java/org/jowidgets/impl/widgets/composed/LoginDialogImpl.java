@@ -72,7 +72,6 @@ public class LoginDialogImpl extends WindowWrapper implements ILoginDialog {
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
 		frame.setLayout(new MigLayoutDescriptor("0[grow, 400::]0", "0[]0[grow]0[12!]0"));
-		//frame.setBackgroundColor(new ColorValue(197, 216, 226));
 
 		if (setup.getLogo() != null) {
 			frame.add(bpf.icon(setup.getLogo()), "growx, growy, wrap");
@@ -108,6 +107,9 @@ public class LoginDialogImpl extends WindowWrapper implements ILoginDialog {
 
 		final IButton loginButton = buttonBar.add(setup.getLoginButton(), buttonCellConstraints);
 		final IButton cancelButton = buttonBar.add(setup.getCancelButton(), buttonCellConstraints);
+
+		loginButton.setBackgroundColor(frame.getBackgroundColor());
+		cancelButton.setBackgroundColor(frame.getBackgroundColor());
 
 		final IProgressBar progressBar = frame.add(bpf.progressBar().setIndeterminate(true), "growx, growy, aligny b");
 		progressBar.setVisible(false);
