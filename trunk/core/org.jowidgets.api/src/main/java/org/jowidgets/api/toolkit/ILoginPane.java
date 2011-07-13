@@ -40,4 +40,10 @@ public interface ILoginPane {
 
 	ILoginResult login(String loginLabel, ILoginInterceptor interceptor);
 
+	ILoginResult login(boolean decorated, ILoginInterceptor interceptor);
+
+	ILoginResult login(boolean decorated, IImageConstant logo, ILoginInterceptor interceptor);
+
+	ILoginResult login(boolean decorated, String loginLabel, ILoginInterceptor interceptor);
+
 }

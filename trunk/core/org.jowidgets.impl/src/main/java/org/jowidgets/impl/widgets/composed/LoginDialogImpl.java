@@ -50,32 +50,51 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.setup.ILoginDialogSetup;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.widgets.wrapper.WindowWrapper;
+import org.jowidgets.util.Assert;
 import org.jowidgets.validation.ValidationResult;
 
 public class LoginDialogImpl extends WindowWrapper implements ILoginDialog {
 
+	private final IUiThreadAccess uiThreadAccess;
 	private final Set<ILoginCancelListener> cancelListeners;
+
+	private final IFrame frame;
+	private final ILoginInterceptor loginInterceptor;
 
 	private final IValidationResultLabel validationResultLabel;
 	private final IInputField<String> usernameField;
 	private final IInputField<String> passwordField;
+	private final IButton loginButton;
+	private final IButton cancelButton;
+	private final IProgressBar progressBar;
 
 	private ILoginResult result;
+	private boolean disposed;
+	private boolean loginButtonPressed;
 
 	public LoginDialogImpl(final IFrame frame, final ILoginDialogSetup setup) {
 		super(frame);
+		Assert.paramNotNull(frame, "frame");
+		Assert.paramNotNull(setup, "setup");
+		Assert.paramNotNull(setup.getInterceptor(), "setup.getInterceptor()");
 
+		this.uiThreadAccess = Toolkit.getUiThreadAccess();
 		this.cancelListeners = new HashSet<ILoginCancelListener>();
+		this.frame = frame;
+		this.loginInterceptor = setup.getInterceptor();
 
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
 		frame.setLayout(new MigLayoutDescriptor("0[grow, 400::]0", "0[]0[grow]0[12!]0"));
 
+		//set logo, or if not exists
 		if (setup.getLogo() != null) {
 			frame.add(bpf.icon(setup.getLogo()), "growx, growy, wrap");
 		}
+		//set login label
 		else {
 			if (setup.getLoginLabel() != null) {
 				final IComposite labelComposite = frame.add(bpf.composite().setBackgroundColor(Colors.WHITE), "grow, wrap");
@@ -90,100 +109,37 @@ public class LoginDialogImpl extends WindowWrapper implements ILoginDialog {
 			}
 		}
 
+		//create content pane
 		final IComposite content = frame.add(bpf.composite(), "alignx r, wrap");
-
 		content.setLayout(new MigLayoutDescriptor("20[grow]8[grow, 200!]20", "20[20!]15[][]45[grow]10"));
 
+		//validation label
 		validationResultLabel = content.add(bpf.validationResultLabel(), "span2, growx, wrap");
+
+		//input fields
 		content.add(bpf.textLabel("Username").alignRight(), "alignx r");//TODO i18n
 		usernameField = content.add(bpf.inputFieldString(), "growx, wrap");
 		content.add(bpf.textLabel("Password").alignRight(), "alignx r");//TODO i18n
 		passwordField = content.add(bpf.inputFieldString().setPasswordPresentation(true), "growx, wrap");
 
-		content.add(bpf.textLabel(""), "aligny bottom");
-		final IComposite buttonBar = content.add(bpf.composite(), "alignx r, growy");
+		//button bar
+		final IComposite buttonBar = content.add(bpf.composite(), "span2, alignx r, growy");
 		buttonBar.setLayout(new MigLayoutDescriptor("0[][]0", "0[]0"));
-		final String buttonCellConstraints = "w 80::, aligny b, sg bg";
-
-		final IButton loginButton = buttonBar.add(setup.getLoginButton(), buttonCellConstraints);
-		final IButton cancelButton = buttonBar.add(setup.getCancelButton(), buttonCellConstraints);
-
+		this.loginButton = buttonBar.add(setup.getLoginButton(), "w 80::, aligny b, sg bg");
+		this.cancelButton = buttonBar.add(setup.getCancelButton(), "w 80::, aligny b, sg bg");
 		loginButton.setBackgroundColor(frame.getBackgroundColor());
 		cancelButton.setBackgroundColor(frame.getBackgroundColor());
-
-		final IProgressBar progressBar = frame.add(bpf.progressBar().setIndeterminate(true), "growx, growy, aligny b");
-		progressBar.setVisible(false);
-
-		final ILoginInterceptor loginInterceptor = setup.getInterceptor();
-
-		final IUiThreadAccess uiThreadAccess = Toolkit.getUiThreadAccess();
-
 		frame.setDefaultButton(loginButton);
 
-		loginButton.addActionListener(new IActionListener() {
+		//progress bar
+		this.progressBar = frame.add(bpf.progressBar().setIndeterminate(true), "growx, growy, aligny b");
+		progressBar.setVisible(false);
 
-			@Override
-			public void actionPerformed() {
-				loginButton.setEnabled(false);
-				progressBar.setVisible(true);
-				validationResultLabel.setEmpty();
-
-				final ILoginResultCallback resultCallback = new ILoginResultCallback() {
-
-					@Override
-					public void granted() {
-						uiThreadAccess.invokeLater(new Runnable() {
-							@Override
-							public void run() {
-								result = new LoginResult(true);
-								dispose();
-							}
-						});
-					}
-
-					@Override
-					public void denied(final String reason) {
-						uiThreadAccess.invokeLater(new Runnable() {
-							@Override
-							public void run() {
-								validationResultLabel.setResult(ValidationResult.error(reason));
-								progressBar.setVisible(false);
-								loginButton.setEnabled(true);
-								frame.layoutBegin();
-								frame.layoutEnd();
-							}
-						});
-					}
-
-					@Override
-					public void addCancelListener(final ILoginCancelListener cancelListener) {
-						cancelListeners.add(cancelListener);
-					}
-
-				};
-
-				final String username = usernameField.getValue();
-				final String password = passwordField.getValue();
-				final Thread thread = new Thread(new Runnable() {
-					@Override
-					public void run() {
-						loginInterceptor.login(resultCallback, username, password);
-					}
-				});
-				thread.setDaemon(true);
-				thread.start();
-
-			}
-		});
-
-		cancelButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				result = new LoginResult(false);
-				fireCanceled();
-				dispose();
-			}
-		});
+		//register listeners
+		usernameField.addInputListener(new ValidationInputListener());
+		passwordField.addInputListener(new ValidationInputListener());
+		loginButton.addActionListener(new LoginActionListener());
+		cancelButton.addActionListener(new CancelActionListener());
 	}
 
 	@Override
@@ -192,9 +148,109 @@ public class LoginDialogImpl extends WindowWrapper implements ILoginDialog {
 		return result;
 	}
 
-	private void fireCanceled() {
-		for (final ILoginCancelListener listener : cancelListeners) {
-			listener.canceled();
+	@Override
+	public void dispose() {
+		if (!disposed) {
+			this.disposed = true;
+			super.dispose();
+		}
+	}
+
+	private void loginButtonPressed() {
+		loginButtonPressed = true;
+		loginButton.setEnabled(false);
+		usernameField.setEnabled(false);
+		passwordField.setEnabled(false);
+		progressBar.setIndeterminate(true);
+		progressBar.setVisible(true);
+		validationResultLabel.setEmpty();
+	}
+
+	private void loginGranted() {
+		uiThreadAccess.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				result = new LoginResult(true);
+				dispose();
+			}
+		});
+	}
+
+	private void loginDenied(final String reason) {
+		uiThreadAccess.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				if (!disposed) {
+					validationResultLabel.setResult(ValidationResult.error(reason));
+					loginButtonPressed = false;
+					loginButton.setEnabled(true);
+					usernameField.setEnabled(true);
+					passwordField.setEnabled(true);
+					progressBar.setVisible(false);
+					frame.layoutBegin();
+					frame.layoutEnd();
+					frame.setDefaultButton(loginButton);
+				}
+			}
+		});
+	}
+
+	private final class LoginActionListener implements IActionListener {
+
+		@Override
+		public void actionPerformed() {
+			if (!loginButtonPressed) {
+				loginButtonPressed();
+
+				final String username = usernameField.getValue();
+				final String password = passwordField.getValue();
+
+				final Thread thread = new Thread(new Runnable() {
+					@Override
+					public void run() {
+						loginInterceptor.login(new LoginResultCallback(), username, password);
+					}
+				});
+				thread.setDaemon(true);
+				thread.start();
+			}
+		}
+	}
+
+	private final class LoginResultCallback implements ILoginResultCallback {
+
+		@Override
+		public void granted() {
+			loginGranted();
+		}
+
+		@Override
+		public void denied(final String reason) {
+			loginDenied(reason);
+		}
+
+		@Override
+		public void addCancelListener(final ILoginCancelListener cancelListener) {
+			cancelListeners.add(cancelListener);
+		}
+
+	}
+
+	private final class CancelActionListener implements IActionListener {
+		@Override
+		public void actionPerformed() {
+			result = new LoginResult(false);
+			for (final ILoginCancelListener listener : cancelListeners) {
+				listener.canceled();
+			}
+			dispose();
+		}
+	}
+
+	private final class ValidationInputListener implements IInputListener {
+		@Override
+		public void inputChanged() {
+			validationResultLabel.setEmpty();
 		}
 	}
 
