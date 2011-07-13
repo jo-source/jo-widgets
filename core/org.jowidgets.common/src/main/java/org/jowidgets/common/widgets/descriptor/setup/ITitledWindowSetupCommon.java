@@ -28,11 +28,15 @@
 package org.jowidgets.common.widgets.descriptor.setup;
 
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface ITitledWindowSetupCommon extends IWindowSetupCommon {
 
 	IImageConstant getIcon();
 
 	String getTitle();
+
+	@Mandatory
+	boolean isDecorated();
 
 }

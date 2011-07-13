@@ -42,6 +42,7 @@ import org.jowidgets.common.widgets.builder.ITextAreaSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITextComponentSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITextFieldSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITextLabelSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.ITitledWindowSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.IToolBarSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITreeSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.IWindowSetupBuilderCommon;
@@ -59,6 +60,7 @@ import org.jowidgets.impl.widgets.common.blueprint.defaults.TextAreaDefaultsComm
 import org.jowidgets.impl.widgets.common.blueprint.defaults.TextComponentDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.TextFieldDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.TextLabelDefaultsCommon;
+import org.jowidgets.impl.widgets.common.blueprint.defaults.TitledWindowDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.ToolBarDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.TreeDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.WindowDefaultsCommon;
@@ -85,5 +87,6 @@ public class CommonDefaultsInitializerRegistry extends DefaultsInitializerRegist
 		register(IPopupDialogSetupBuilderCommon.class, new PopupDialogDefaultsCommon());
 		register(ITextComponentSetupBuilderCommon.class, new TextComponentDefaultsCommon());
 		register(IInputObservableSetupBuilderCommon.class, new InputObservableDefaultsCommon());
+		register(ITitledWindowSetupBuilderCommon.class, new TitledWindowDefaultsCommon());
 	}
 }

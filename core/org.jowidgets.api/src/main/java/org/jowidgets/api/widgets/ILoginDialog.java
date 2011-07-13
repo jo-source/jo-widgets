@@ -29,7 +29,7 @@ package org.jowidgets.api.widgets;
 
 import org.jowidgets.api.login.ILoginResult;
 
-public interface ILoginDialog extends IWindow {
+public interface ILoginDialog extends IDisplay {
 
 	ILoginResult doLogin();
 

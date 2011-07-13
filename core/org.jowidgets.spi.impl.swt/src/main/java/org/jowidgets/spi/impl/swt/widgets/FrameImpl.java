@@ -45,11 +45,17 @@ public class FrameImpl extends WindowImpl implements IFrameUiSpi {
 	}
 
 	private static int getStyle(final IFrameSetupSpi setup) {
-		int result = SWT.TITLE | SWT.MIN | SWT.MAX;
-		if (setup.isResizable()) {
+		int result;
+		if (setup.isDecorated()) {
+			result = SWT.TITLE | SWT.MIN | SWT.MAX;
+		}
+		else {
+			result = SWT.NONE;
+		}
+		if (setup.isResizable() && setup.isDecorated()) {
 			result = result | SWT.RESIZE;
 		}
-		if (setup.isCloseable()) {
+		if (setup.isCloseable() && setup.isDecorated()) {
 			result = result | SWT.CLOSE;
 		}
 		return result;

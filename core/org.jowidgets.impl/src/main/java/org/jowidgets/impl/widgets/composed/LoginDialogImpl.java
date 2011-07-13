@@ -72,15 +72,16 @@ public class LoginDialogImpl extends WindowWrapper implements ILoginDialog {
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
 		frame.setLayout(new MigLayoutDescriptor("0[grow, 400::]0", "0[]0[grow]0[12!]0"));
+		//frame.setBackgroundColor(new ColorValue(197, 216, 226));
 
 		if (setup.getLogo() != null) {
 			frame.add(bpf.icon(setup.getLogo()), "growx, growy, wrap");
 		}
 		else {
 			if (setup.getLoginLabel() != null) {
-				final IComposite labelComposite = frame.add(bpf.composite(), "grow, wrap");
+				final IComposite labelComposite = frame.add(bpf.composite().setBackgroundColor(Colors.WHITE), "grow, wrap");
 				labelComposite.setLayout(new MigLayoutDescriptor("15[grow]15", "15[grow]15"));
-				final ITextLabelBluePrint labelBp = bpf.textLabel().setFontSize(25);
+				final ITextLabelBluePrint labelBp = bpf.textLabel().setFontSize(25).setStrong().setFontName("Arial");
 				labelBp.setText(setup.getLoginLabel()).setMarkup(Markup.DEFAULT);
 				labelBp.setForegroundColor(Colors.DARK_GREY);
 				labelComposite.add(labelBp, "grow");
@@ -92,17 +93,18 @@ public class LoginDialogImpl extends WindowWrapper implements ILoginDialog {
 
 		final IComposite content = frame.add(bpf.composite(), "alignx r, wrap");
 
-		content.setLayout(new MigLayoutDescriptor("20[]8[grow, 200!]20", "15[20!]15[][]25[]"));
+		content.setLayout(new MigLayoutDescriptor("20[grow]8[grow, 200!]20", "20[20!]15[][]45[grow]10"));
 
-		validationResultLabel = content.add(bpf.validationResultLabel(), "span2, grow, wrap");
+		validationResultLabel = content.add(bpf.validationResultLabel(), "span2, growx, wrap");
 		content.add(bpf.textLabel("Username").alignRight(), "alignx r");//TODO i18n
-		usernameField = content.add(bpf.inputFieldString(), "grow, wrap");
+		usernameField = content.add(bpf.inputFieldString(), "growx, wrap");
 		content.add(bpf.textLabel("Password").alignRight(), "alignx r");//TODO i18n
-		passwordField = content.add(bpf.inputFieldString().setPasswordPresentation(true), "grow, wrap");
+		passwordField = content.add(bpf.inputFieldString().setPasswordPresentation(true), "growx, wrap");
 
-		final IComposite buttonBar = content.add(bpf.composite(), "span2, align right, wrap");
-		buttonBar.setLayout(new MigLayoutDescriptor("0[][]0", "[]"));
-		final String buttonCellConstraints = "w 80::, sg bg";
+		content.add(bpf.textLabel(""), "aligny bottom");
+		final IComposite buttonBar = content.add(bpf.composite(), "alignx r, growy");
+		buttonBar.setLayout(new MigLayoutDescriptor("0[][]0", "0[]0"));
+		final String buttonCellConstraints = "w 80::, aligny b, sg bg";
 
 		final IButton loginButton = buttonBar.add(setup.getLoginButton(), buttonCellConstraints);
 		final IButton cancelButton = buttonBar.add(setup.getCancelButton(), buttonCellConstraints);

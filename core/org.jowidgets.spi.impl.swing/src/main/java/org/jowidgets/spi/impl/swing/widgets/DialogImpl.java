@@ -31,8 +31,11 @@ import java.awt.Component;
 import java.awt.Window;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JMenuBar;
+import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Rectangle;
@@ -50,6 +53,8 @@ import org.jowidgets.util.TypeCast;
 
 public class DialogImpl extends SwingWindow implements IFrameSpi {
 
+	private static final Border BORDER = new JTextField().getBorder();
+
 	public DialogImpl(
 		final IGenericWidgetFactory factory,
 		final SwingImageRegistry imageRegistry,
@@ -62,6 +67,11 @@ public class DialogImpl extends SwingWindow implements IFrameSpi {
 		getUiReference().setModal(setup.isModal());
 
 		getUiReference().setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+
+		if (!setup.isDecorated()) {
+			getUiReference().setUndecorated(true);
+			((JComponent) getUiReference().getContentPane()).setBorder(BORDER);
+		}
 
 		setIcon(setup.getIcon(), imageRegistry);
 

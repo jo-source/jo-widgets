@@ -71,11 +71,17 @@ public class DialogImpl extends WindowImpl implements IFrameSpi {
 	}
 
 	private static int getStyle(final IDialogSetupSpi setup) {
-		int result = SWT.TITLE | SWT.BORDER;
-		if (setup.isCloseable()) {
+		int result;
+		if (setup.isDecorated()) {
+			result = SWT.TITLE | SWT.BORDER;
+		}
+		else {
+			result = SWT.NONE;
+		}
+		if (setup.isCloseable() && setup.isDecorated()) {
 			result = result | SWT.CLOSE;
 		}
-		if (setup.isResizable()) {
+		if (setup.isResizable() && setup.isDecorated()) {
 			result = result | SWT.RESIZE;
 		}
 		if (setup.isModal()) {
