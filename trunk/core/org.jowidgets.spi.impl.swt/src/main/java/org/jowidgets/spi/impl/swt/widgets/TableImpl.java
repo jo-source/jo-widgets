@@ -48,6 +48,8 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
@@ -710,11 +712,22 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			textField.setText(item.getText(internalIndex));
 			textField.setSelection(0, textField.getText().length());
 
+			textField.addVerifyListener(new VerifyListener() {
+				@Override
+				public void verifyText(final VerifyEvent verifyEvent) {
+					final String newText = getNewText(textField, verifyEvent);
+					final TableCellEditEvent editEvent = new TableCellEditEvent(rowIndex, columnIndex, newText);
+					final boolean veto = tableCellEditorObservable.fireOnEdit(editEvent);
+					if (veto) {
+						verifyEvent.doit = false;
+					}
+				}
+
+			});
 			textField.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyPressed(final KeyEvent keyEvent) {
-					final String newText = getNewText(textField, keyEvent);
-					final TableCellEditEvent editEvent = new TableCellEditEvent(rowIndex, columnIndex, newText);
+					final TableCellEditEvent editEvent = new TableCellEditEvent(rowIndex, columnIndex, textField.getText());
 					if (keyEvent.character == SWT.CR) {
 						editFinished(rowIndex, columnIndex, item, textField, editEvent);
 					}
@@ -722,12 +735,6 @@ public class TableImpl extends SwtControl implements ITableSpi {
 						tableCellEditorObservable.fireEditCanceled(editEvent);
 						textField.dispose();
 						cursor.setVisible(false);
-					}
-					else {
-						final boolean veto = tableCellEditorObservable.fireOnEdit(editEvent);
-						if (veto) {
-							keyEvent.doit = false;
-						}
 					}
 				}
 			});
@@ -757,9 +764,10 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			cursor.setVisible(false);
 		}
 
-		private String getNewText(final Text textField, final KeyEvent keyEvent) {
-			//TODO MG get the correct new text
-			return textField.getText();
+		private String getNewText(final Text textField, final VerifyEvent verifyEvent) {
+			final StringBuilder result = new StringBuilder(textField.getText());
+			result.replace(verifyEvent.start, verifyEvent.end, verifyEvent.text);
+			return result.toString();
 		}
 	}
 
