@@ -35,28 +35,24 @@ import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
-import org.jowidgets.api.login.ILoginInterceptor;
-import org.jowidgets.api.login.ILoginResult;
 import org.jowidgets.api.mask.ITextMaskBuilder;
 import org.jowidgets.api.model.IModelFactoryProvider;
 import org.jowidgets.api.threads.IUiThreadAccess;
+import org.jowidgets.api.toolkit.ILoginPane;
 import org.jowidgets.api.toolkit.IMessagePane;
 import org.jowidgets.api.toolkit.IQuestionPane;
 import org.jowidgets.api.toolkit.ISupportedWidgets;
 import org.jowidgets.api.toolkit.IToolkit;
 import org.jowidgets.api.toolkit.IWidgetWrapperFactory;
-import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.utils.IWidgetUtils;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IWindow;
-import org.jowidgets.api.widgets.blueprint.ILoginDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentCreatorFactory;
 import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.application.IApplicationRunner;
-import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
@@ -92,6 +88,7 @@ public class DefaultToolkit implements IToolkit {
 	private final WindowProvider windowProvider;
 	private final IMessagePane messagePane;
 	private final IQuestionPane questionPane;
+	private final ILoginPane loginPane;
 	private final IWidgetUtils widgetUtils;
 
 	private IUiThreadAccess uiThreadAccess;
@@ -109,8 +106,9 @@ public class DefaultToolkit implements IToolkit {
 		this.converterProvider = new DefaultConverterProvider();
 		this.inputContentCreatorFactory = new InputContentCreatorFactory();
 		this.windowProvider = new WindowProvider(genericWidgetFactory, toolkitSpi);
-		this.messagePane = new DefaultMessagePane(genericWidgetFactory, bluePrintFactory, windowProvider);
-		this.questionPane = new DefaultQuestionPane(genericWidgetFactory, bluePrintFactory, windowProvider);
+		this.messagePane = new MessagePaneImpl(genericWidgetFactory, bluePrintFactory, windowProvider);
+		this.questionPane = new QuestionPaneImpl(genericWidgetFactory, bluePrintFactory, windowProvider);
+		this.loginPane = new LoginPaneImpl(genericWidgetFactory, bluePrintFactory, windowProvider);
 		this.widgetUtils = new WidgetUtils();
 
 		final IImageRegistry imageRegistry = toolkitSpi.getImageRegistry();
@@ -230,21 +228,8 @@ public class DefaultToolkit implements IToolkit {
 	}
 
 	@Override
-	public ILoginResult login(final ILoginInterceptor interceptor) {
-		return genericWidgetFactory.create(Toolkit.getBluePrintFactory().loginDialog(interceptor)).doLogin();
-	}
-
-	@Override
-	public ILoginResult login(final IImageConstant logo, final ILoginInterceptor interceptor) {
-		final ILoginDialogBluePrint loginBp = Toolkit.getBluePrintFactory().loginDialog(interceptor).setLogo(logo);
-		return genericWidgetFactory.create(loginBp).doLogin();
-	}
-
-	@Override
-	public ILoginResult login(final String loginLabel, final ILoginInterceptor interceptor) {
-		final ILoginDialogBluePrint loginBp = Toolkit.getBluePrintFactory().loginDialog(interceptor);
-		loginBp.setLoginLabel(loginLabel);
-		return genericWidgetFactory.create(loginBp).doLogin();
+	public ILoginPane getLoginPane() {
+		return loginPane;
 	}
 
 	@Override

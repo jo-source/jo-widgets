@@ -33,8 +33,6 @@ import java.util.List;
 import org.jowidgets.api.command.IActionBuilderFactory;
 import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
-import org.jowidgets.api.login.ILoginInterceptor;
-import org.jowidgets.api.login.ILoginResult;
 import org.jowidgets.api.mask.ITextMaskBuilder;
 import org.jowidgets.api.model.IModelFactoryProvider;
 import org.jowidgets.api.threads.IUiThreadAccess;
@@ -47,7 +45,6 @@ import org.jowidgets.api.widgets.content.IInputContentCreatorFactory;
 import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.application.IApplicationRunner;
-import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
@@ -59,6 +56,8 @@ public interface IToolkit {
 	IMessagePane getMessagePane();
 
 	IQuestionPane getQuestionPane();
+
+	ILoginPane getLoginPane();
 
 	IGenericWidgetFactory getWidgetFactory();
 
@@ -89,12 +88,6 @@ public interface IToolkit {
 	IWindow getActiveWindow();
 
 	List<IWindow> getAllWindows();
-
-	ILoginResult login(ILoginInterceptor interceptor);
-
-	ILoginResult login(IImageConstant logo, ILoginInterceptor interceptor);
-
-	ILoginResult login(String loginLabel, ILoginInterceptor interceptor);
 
 	IFrame createRootFrame(IFrameDescriptor descriptor);
 

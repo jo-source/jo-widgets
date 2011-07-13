@@ -37,13 +37,13 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.util.Assert;
 
-public class DefaultMessagePane implements IMessagePane {
+class MessagePaneImpl implements IMessagePane {
 
 	private final IGenericWidgetFactory genericWidgetFactory;
 	private final IBluePrintFactory bluePrintFactory;
 	private final WindowProvider activeWindowProvider;
 
-	public DefaultMessagePane(
+	MessagePaneImpl(
 		final IGenericWidgetFactory genericWidgetFactory,
 		final IBluePrintFactory bluePrintFactory,
 		final WindowProvider activeWindowProvider) {
