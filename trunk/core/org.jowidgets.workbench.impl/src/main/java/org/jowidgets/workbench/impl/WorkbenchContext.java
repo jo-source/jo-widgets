@@ -326,7 +326,7 @@ public class WorkbenchContext implements IWorkbenchContext {
 						applicationContext.getApplication().onVisibleStateChanged(true);
 						selectComponentNode(applicationContext.getSelectedNodeContext());
 					}
-					//else{this could happen if the application was just added}
+					//else{this can happen if the application was just added}
 				}
 			}
 

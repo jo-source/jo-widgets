@@ -80,7 +80,7 @@ public class DirectoryChooserImpl implements IDirectoryChooserSpi {
 	@Override
 	public void setEnabled(final boolean enabled) {
 		if (!enabled) {
-			throw new IllegalArgumentException("Could not disable a file chooser");
+			throw new IllegalArgumentException("Can not disable a file chooser");
 		}
 	}
 

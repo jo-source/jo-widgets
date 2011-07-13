@@ -42,7 +42,7 @@ public interface ITextComponentSetupBuilderCommon<INSTANCE_TYPE extends ITextCom
 	 * connected with the AND operator.
 	 * 
 	 * REMARK: Implementors should prefer to use regular expressions instead of {@link IInputVerifier}'s
-	 * if possible because SPI implementations that uses e.g 'AJAX' could implement client side verification easier.
+	 * if possible because SPI implementations that uses e.g 'AJAX' can implement client side verification easier.
 	 * 
 	 * REMARK: Implementors must not assume that the regular expression will be used on all platforms
 	 */

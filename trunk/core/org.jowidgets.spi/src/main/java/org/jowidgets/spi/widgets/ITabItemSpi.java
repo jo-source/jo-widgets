@@ -34,7 +34,7 @@ import org.jowidgets.spi.widgets.controler.ITabItemObservableSpi;
 public interface ITabItemSpi extends IItemSpi, IContainerSpi, ITabItemObservableSpi, ITabItemCommon {
 
 	/**
-	 * Detaches the content from this item. The detached content could be attached later on another item.
+	 * Detaches the content from this item. The detached content can be attached later on another item.
 	 * If the content should be attached to an item of another folder, this item must be reparentable.
 	 * 
 	 * @return The content reference of the item.

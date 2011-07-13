@@ -31,7 +31,7 @@ package org.jowidgets.api.command;
 public enum ActionStyle {
 
 	/**
-	 * This style shows every information of the action that could be
+	 * This style shows every information of the action that can be
 	 * rendered for the widget.
 	 */
 	COMPLETE,

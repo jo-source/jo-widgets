@@ -147,7 +147,7 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 			return control.isReparentable();
 		}
 		else {
-			//workaround to test if potential items could be reparented
+			//workaround to test if potential items can be reparented
 			final Composite testComposite = new Composite(parentFolder, SWT.NONE);
 			final boolean result = testComposite.isReparentable();
 			testComposite.dispose();

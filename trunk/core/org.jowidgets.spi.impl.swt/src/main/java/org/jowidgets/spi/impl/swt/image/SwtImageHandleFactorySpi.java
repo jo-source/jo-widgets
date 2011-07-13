@@ -133,7 +133,7 @@ public class SwtImageHandleFactorySpi extends SwtImageHandleFactory implements I
 		gc.drawImage(originalImage, 0, 0, imageData.width, imageData.height, 0, 0, width, height);
 
 		//clone the image data of the scaled smooth image(
-		//getImageData() is not enough because the fields could not be overridden)
+		//getImageData() is not enough because the fields can not be overridden)
 		final ImageData scaledSmoothImageData = (ImageData) scaledSmoothImageTmp.getImageData().clone();
 
 		//workaround, because drawImage does lost the mask data (tested with WinXP)

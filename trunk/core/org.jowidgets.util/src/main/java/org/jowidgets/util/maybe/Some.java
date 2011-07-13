@@ -42,7 +42,7 @@ public final class Some<TYPE> implements IMaybe<TYPE> {
 	/**
 	 * Creates a maybe with an value
 	 * 
-	 * @param value the value, could be null
+	 * @param value the value, can be null
 	 */
 	public Some(final TYPE value) {
 		this.value = value;

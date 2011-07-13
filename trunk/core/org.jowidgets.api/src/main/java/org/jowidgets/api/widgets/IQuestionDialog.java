@@ -34,7 +34,7 @@ public interface IQuestionDialog extends IDisplay, IComponent {
 
 	/**
 	 * Shows the question dialog and blocks until the user pressed any button. After that, the
-	 * dialog will be disposed, so it could not used a second time.
+	 * dialog will be disposed, so it can not be used a second time.
 	 * 
 	 * @return the result of the question
 	 */

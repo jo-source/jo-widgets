@@ -45,7 +45,7 @@ public interface IViewContext {
 	void dispose();
 
 	/**
-	 * Gets the container this view could paint into
+	 * Gets the container this view can paint into
 	 * 
 	 * @return the views container
 	 */

@@ -33,7 +33,7 @@ import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 public interface ITabItemCommon extends IItemCommon, IContainerCommon {
 
 	/**
-	 * @return true if a item content could be attached to items of another folder. False otherwise.
+	 * @return true if a item content can be attached to items of another folder. False otherwise.
 	 */
 	boolean isReparentable();
 

@@ -60,7 +60,7 @@ public class TreeNodeImpl implements ITreeNodeSpi {
 	@Override
 	public void setEnabled(final boolean enabled) {
 		if (!enabled) {
-			throw new UnsupportedOperationException("Tree items could not be disabled");
+			throw new UnsupportedOperationException("Tree items can not be disabled");
 		}
 	}
 

@@ -38,7 +38,7 @@ public final class AntiAliasingFilter {
 
 	/**
 	 * Filters an image as preliminary for an scale function. If an image must be scaled to an lower resolution,
-	 * it must be low pass filtered to respect the nyquist theorem. After it was scaled, it could be
+	 * it must be low pass filtered to respect the nyquist theorem. After it was scaled, it can be
 	 * scaled (resampled) with an lower resolution (frequency).
 	 * 
 	 * Remark: This algorithm is only used in case of RWT. To simplify matters this implementation filters
