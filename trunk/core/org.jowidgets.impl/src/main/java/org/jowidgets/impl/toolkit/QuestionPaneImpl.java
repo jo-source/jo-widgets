@@ -36,13 +36,13 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 
-public class DefaultQuestionPane implements IQuestionPane {
+class QuestionPaneImpl implements IQuestionPane {
 
 	private final IGenericWidgetFactory genericWidgetFactory;
 	private final IBluePrintFactory bluePrintFactory;
 	private final WindowProvider activeWindowProvider;
 
-	public DefaultQuestionPane(
+	QuestionPaneImpl(
 		final IGenericWidgetFactory genericWidgetFactory,
 		final IBluePrintFactory bluePrintFactory,
 		final WindowProvider activeWindowProvider) {
