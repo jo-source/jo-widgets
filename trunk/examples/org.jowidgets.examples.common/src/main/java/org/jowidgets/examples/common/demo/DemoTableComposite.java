@@ -218,15 +218,11 @@ public final class DemoTableComposite {
 
 		@Override
 		public ArrayList<Integer> getSelection() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
 		@Override
-		public void setSelection(final List<Integer> selection) {
-			// TODO Auto-generated method stub
-
-		}
+		public void setSelection(final List<Integer> selection) {}
 
 		@Override
 		public ITableDataModelObservable getTableDataModelObservable() {
