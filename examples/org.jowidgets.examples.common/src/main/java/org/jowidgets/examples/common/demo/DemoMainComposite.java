@@ -138,6 +138,19 @@ public final class DemoMainComposite {
 			}
 		});
 
+		final IButton tableDemoButton = parentContainer.add(
+				bpF.button("Table demo", "Shows an frame with a table"),
+				"grow, sg bg, wrap");
+		tableDemoButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final IFrame tableDemoFrame = getParentWindow().createChildWindow(bpF.frame("Table demo").autoPackOff());
+				tableDemoFrame.setSize(new Dimension(800, 600));
+				new DemoTableComposite(tableDemoFrame);
+				tableDemoFrame.setVisible(true);
+			}
+		});
+
 		final IButton progressBarDialogButton = parentContainer.add(
 				bpF.button("Progress bar demo", "Opens the progress bar demo"),
 				"grow, sg bg, wrap");
