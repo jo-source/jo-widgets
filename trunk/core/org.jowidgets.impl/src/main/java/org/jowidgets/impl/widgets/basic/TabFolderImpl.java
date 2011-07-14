@@ -269,9 +269,6 @@ public class TabFolderImpl extends TabFolderSpiWrapper implements ITabFolder {
 			height = Math.max(height, minSize.getHeight());
 		}
 
-		// TODO NM computeDecoratedSize
-		System.out.println("vor compute: " + new Dimension(width, height));
-		System.out.println("nach compute: " + getWidget().computeDecoratedSize(new Dimension(width, height)));
 		return getWidget().computeDecoratedSize(new Dimension(width, height));
 	}
 
