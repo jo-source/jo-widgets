@@ -60,6 +60,9 @@ public abstract class AbstractContainerSpiWrapper extends ComponentSpiWrapper im
 		if (layoutDescriptor instanceof ILayouter) {
 			this.layouter = (ILayouter) layoutDescriptor;
 		}
+		else {
+			this.layouter = null;
+		}
 		getWidget().setLayout(layoutDescriptor);
 	}
 
