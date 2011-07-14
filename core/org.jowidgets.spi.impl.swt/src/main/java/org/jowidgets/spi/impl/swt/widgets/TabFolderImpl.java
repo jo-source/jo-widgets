@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2011, grossmann, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -43,6 +43,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.TabPlacement;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
@@ -207,6 +208,17 @@ public class TabFolderImpl extends SwtControl implements ITabFolderSpi {
 	@Override
 	public int getSelectedIndex() {
 		return getUiReference().getSelectionIndex();
+	}
+
+	@Override
+	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+		Assert.paramNotNull(clientAreaSize, "clientAreaSize");
+		final org.eclipse.swt.graphics.Rectangle trim = getUiReference().computeTrim(
+				0,
+				0,
+				clientAreaSize.getWidth(),
+				clientAreaSize.getHeight());
+		return new Dimension(trim.width, trim.height);
 	}
 
 	private static int getStyle(final ITabFolderSetupSpi setup) {

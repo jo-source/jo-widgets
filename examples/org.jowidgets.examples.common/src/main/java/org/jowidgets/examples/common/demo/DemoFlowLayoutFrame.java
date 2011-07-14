@@ -30,7 +30,10 @@ package org.jowidgets.examples.common.demo;
 
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IControl;
+import org.jowidgets.api.widgets.IInputField;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.tools.powo.JoFrame;
 
@@ -45,10 +48,18 @@ public class DemoFlowLayoutFrame extends JoFrame {
 
 		final ILayouter layouter = setLayout(lfp.flowLayoutBuilder().build());
 
-		add(BPF.button("Button"));
-		add(BPF.comboBoxSelection("Germany", "Italy", "Spain", "USA"));
-		add(BPF.textLabel().setText("Label"));
-		add(BPF.inputFieldString()).setValue(" Text ");
+		final IControl button = add(BPF.button("Button"));
+		button.setPreferredSize(new Dimension(200, button.getMinSize().getHeight()));
+
+		final IControl comboBox = add(BPF.comboBoxSelection("Germany", "Italy", "Spain", "USA"));
+		comboBox.setPreferredSize(new Dimension(200, comboBox.getMinSize().getHeight()));
+
+		final IControl label = add(BPF.textLabel().setText("Label"));
+		label.setPreferredSize(new Dimension(200, label.getMinSize().getHeight()));
+
+		final IInputField<String> input = add(BPF.inputFieldString());
+		input.setValue(" Text ");
+		input.setPreferredSize(new Dimension(200, input.getMinSize().getHeight()));
 
 		pack();
 		setMinSize(layouter.getMinSize());

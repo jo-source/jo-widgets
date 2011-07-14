@@ -560,7 +560,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Half tab
 		final ITabItem halfTab = result.addItem(BPF.tabItem().setText("Half"));
-		allTab.setLayout(LFP.migLayoutBuilder().columnConstraints("[pref!][grow,fill]").rowConstraints("[]15[]").build());
+		halfTab.setLayout(LFP.migLayoutBuilder().columnConstraints("[pref!][grow,fill]").rowConstraints("[]15[]").build());
 
 		createLabel(halfTab, "Fixed", "");
 		createLabel(halfTab, "Gets half of extra space", "");
@@ -582,9 +582,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		createTextField(p1Tab, "     ", "");
 
 		// Percent 2 tab
-		final ITabItem p2TabItem = result.addItem(BPF.tabItem().setText("Percent 2"));
-
-		final IComposite p2Tab = p2TabItem.add(BPF.composite());
+		final ITabItem p2Tab = result.addItem(BPF.tabItem().setText("Percent 2"));
 		p2Tab.setLayout(LFP.migLayoutBuilder().columnConstraints("[0:0,grow 33,fill][0:0,grow 67,fill]").rowConstraints("[]15[]").build());
 
 		createLabel(p2Tab, "Gets 33% of extra space", "");
@@ -1370,17 +1368,18 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		mainPanel.setLayout(LFP.migLayoutBuilder().constraints("ins 0 0 15lp 0").columnConstraints("[grow]").rowConstraints(
 				"[grow]u[baseline,nogrid]").build());
 
+		// TODO NM don't create an inner tab folder 
 		final ITabFolder tabbedPane = mainPanel.add(BPF.tabFolder(), "grow, wrap");
 
 		createButtonBarsPanel(tabbedPane, "Buttons", "help", false);
 		createButtonBarsPanel(tabbedPane, "Buttons with Help2", "help2", false);
 		createButtonBarsPanel(tabbedPane, "Buttons (Same width)", "help", true);
-		// TODO: check if it is necessary to add the panels...
+		// TODO NM check if it is necessary to add the panels...
 
 		createLabel(mainPanel, "Button Order:", "");
 		// final ITextLabel formatLabel = 
 		createLabel(mainPanel, "", "growx");
-		// TODO: Font
+		// TODO NM Font
 		// formatLabel.setFont(deriveFont(formatLabel.font(), true, -1));
 
 		final IToggleButton winButt = createToggleButton(mainPanel, "Windows", "wmin button");
@@ -1393,6 +1392,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 			@Override
 			public void inputChanged() {
+				//Toolkit.getLayoutFactoryProvider().getMigLayoutToolkit(). ...
 				//PlatformDefaults.setPlatform(PlatformDefaults.WINDOWS_XP);
 				//formatLabel.setText("'" + PlatformDefaults.getButtonOrder() + "'");
 				winButt.setSelected(true);
@@ -1405,6 +1405,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 			@Override
 			public void inputChanged() {
+				//Toolkit.getLayoutFactoryProvider().getMigLayoutToolkit(). ...
 				//PlatformDefaults.setPlatform(PlatformDefaults.MAC_OSX);
 				//formatLabel.setText("'" + PlatformDefaults.getButtonOrder() + "'");
 				macButt.setSelected(true);
@@ -1637,7 +1638,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 	}
 
 	private static void addSeparator(final IContainer panel, final String text) {
-		final ITextLabel l = createLabel(panel, text, "gaptop para, span, split 2");
+		final ITextLabel l = createLabel(panel, text, "gapbottom 1, span, split 2, aligny center");
 		l.setForegroundColor(LABEL_COLOR);
 		panel.add(BPF.separator(), "gapleft rel, growx");
 	}

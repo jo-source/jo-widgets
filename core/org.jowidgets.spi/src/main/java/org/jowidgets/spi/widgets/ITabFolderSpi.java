@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2011, grossmann, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,6 +28,7 @@
 
 package org.jowidgets.spi.widgets;
 
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.ITabFolderCommon;
 import org.jowidgets.spi.widgets.setup.ITabItemSetupSpi;
 
@@ -42,5 +43,7 @@ public interface ITabFolderSpi extends IControlSpi, ITabFolderCommon {
 	void attachItem(ITabItemSpi item);
 
 	void attachItem(int index, ITabItemSpi item);
+
+	Dimension computeDecoratedSize(Dimension clientAreaSize);
 
 }

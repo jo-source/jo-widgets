@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2011, grossmann, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -45,8 +45,10 @@ import javax.swing.event.ChangeListener;
 import javax.swing.plaf.InternalFrameUI;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.TabPlacement;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.spi.impl.swing.util.DecorationCalc;
 import org.jowidgets.spi.impl.swing.widgets.TabItemImpl.TabComponent;
 import org.jowidgets.spi.widgets.ITabFolderSpi;
 import org.jowidgets.spi.widgets.ITabItemSpi;
@@ -235,6 +237,12 @@ public class TabFolderWithInternalFrameImpl extends SwingControl implements ITab
 		itemImpl.attach(tabbedPane, tabsCloseable, Integer.valueOf(index));
 		items.add(index, itemImpl);
 		setSelectedTitle();
+	}
+
+	@Override
+	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+		Assert.paramNotNull(clientAreaSize, "clientAreaSize");
+		return DecorationCalc.computeDecoratedSize(getUiReference(), clientAreaSize);
 	}
 
 }

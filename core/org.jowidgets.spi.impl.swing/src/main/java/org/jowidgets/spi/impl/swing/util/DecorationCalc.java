@@ -34,6 +34,7 @@ import java.awt.Insets;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
+import javax.swing.JTabbedPane;
 
 import org.jowidgets.common.types.Rectangle;
 
@@ -75,6 +76,12 @@ public final class DecorationCalc {
 
 		if (menuBar != null) {
 			height = height + menuBar.getPreferredSize().height;
+		}
+
+		if (container instanceof JTabbedPane) {
+			@SuppressWarnings("unused")
+			final JTabbedPane tabbedPane = (JTabbedPane) container;
+			// TODO NM add tab height here
 		}
 
 		return new org.jowidgets.common.types.Dimension(width, height);
