@@ -51,7 +51,6 @@ import org.jowidgets.api.widgets.ICheckBox;
 import org.jowidgets.api.widgets.IComboBox;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.ISplitComposite;
 import org.jowidgets.api.widgets.ITabFolder;
 import org.jowidgets.api.widgets.ITabItem;
@@ -73,6 +72,8 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.tools.controler.ComponentAdapter;
+import org.jowidgets.tools.controler.TableColumnModelObservable;
+import org.jowidgets.tools.controler.TableDataModelObservable;
 import org.jowidgets.tools.model.table.TableCell;
 import org.jowidgets.tools.powo.JoFrame;
 
@@ -272,33 +273,6 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		});
 	}
 
-	//CHECKSTYLE:OFF
-	private void showPref(final ITabItem tabItem, final String prefix) {
-		System.out.println(prefix + tabItem + ": " + tabItem.getSize());
-		for (final IControl child : tabItem.getChildren()) {
-			showPref(child, "  " + prefix);
-		}
-	}
-
-	private void showPref(final IControl control, final String prefix) {
-		System.out.println(prefix + control + ": " + control.getPreferredSize() + " [" + control.getSize() + "]");
-		if (control instanceof IContainer) {
-			final IContainer container = (IContainer) control;
-			for (final IControl child : container.getChildren()) {
-				showPref(child, "  " + prefix);
-			}
-		}
-		if (control instanceof ITabFolder) {
-			final ITabFolder tabFolder = (ITabFolder) control;
-
-			for (final ITabItem child : tabFolder.getItems()) {
-				showPref(child, "  " + prefix);
-			}
-		}
-	}
-
-	//CHECKSTYLE:ON
-
 	private void setActivePage(final int index) {
 		if (index == -1) {
 			return;
@@ -311,7 +285,9 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 			try {
 				descrTextArea.setText(PANELS[index][1]);
+				layoutBegin();
 				DemoMigLayoutFrame.class.getMethod(methodName, new Class[] {}).invoke(DemoMigLayoutFrame.this, new Object[] {});
+				layoutEnd();
 
 			}
 			catch (final Exception e1) {
@@ -321,7 +297,6 @@ public final class DemoMigLayoutFrame extends JoFrame {
 			}
 
 			layoutDisplayPanel.redraw();
-			//showPref(layoutDisplayPanel, "");
 			allowDispatch.set(true);
 		}
 	}
@@ -1235,6 +1210,8 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		createPanel(p1, "4. South", "south");
 
 		p1.add(BPF.table(new ITableModel() {
+			private final TableColumnModelObservable columnModelObservable = new TableColumnModelObservable();
+			private final TableDataModelObservable dataModelObservable = new TableDataModelObservable();
 
 			final class TableColumn implements ITableColumn {
 
@@ -1294,7 +1271,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 			@Override
 			public ITableColumnModelObservable getTableColumnModelObservable() {
-				return null;
+				return columnModelObservable;
 			}
 
 			@Override
@@ -1318,7 +1295,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 			@Override
 			public ITableDataModelObservable getTableDataModelObservable() {
-				return null;
+				return dataModelObservable;
 			}
 
 		}), "grow");
