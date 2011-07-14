@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2011, grossmann, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -39,10 +39,7 @@ import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.util.Assert;
 
-final class BorderLayout implements ILayouter {
-
-	private static final Dimension MAX_SIZE = new Dimension(Short.MAX_VALUE, Short.MAX_VALUE);
-
+final class BorderLayout extends AbstractCachingLayout implements ILayouter {
 	private final IContainer container;
 
 	private final int gapX;
@@ -52,12 +49,7 @@ final class BorderLayout implements ILayouter {
 	private final int marginLeft;
 	private final int marginRight;
 
-	private final Map<IControl, Dimension> prefSizes;
-	private final Map<IControl, Dimension> minSizes;
-
 	private Map<BorderLayoutConstraints, IControl> controlsMap;
-	private Dimension minSize;
-	private Dimension preferredSize;
 
 	BorderLayout(
 		final IContainer container,
@@ -76,207 +68,218 @@ final class BorderLayout implements ILayouter {
 		this.marginTop = marginTop;
 		this.marginBottom = marginBottom;
 
-		this.prefSizes = new HashMap<IControl, Dimension>();
-		this.minSizes = new HashMap<IControl, Dimension>();
 	}
 
 	@Override
 	public void layout() {
 		final Rectangle clientArea = container.getClientArea();
-
-		int x = clientArea.getX() + marginLeft;
-		int y = clientArea.getY() + marginTop;
-
-		int centerHeight = clientArea.getHeight() - marginTop - marginBottom;
-		int centerWidth = clientArea.getWidth() - marginLeft - marginRight;
-
 		final Map<BorderLayoutConstraints, IControl> controls = getControls();
 
+		final int rowCount = getRowCount(controls);
+		final int centerColumnCount = getCenterColumnCount(controls);
+		final Dimension minimumSize = calcControlsSize(minimumPolicy());
+
+		final int x = clientArea.getX() + marginLeft;
+		int y = clientArea.getY() + marginTop;
+
+		// do not allow sizes less than minimum size
+		final int totalHeight = Math.max(clientArea.getHeight() - marginTop - marginBottom, minimumSize.getHeight());
+		final int totalWidth = Math.max(clientArea.getWidth() - marginLeft - marginRight, minimumSize.getWidth());
+
 		final IControl topControl = controls.get(BorderLayoutConstraints.TOP);
-		if (topControl != null) {
-			final Dimension size = getControlPrefSize(topControl);
-			topControl.setPosition(x, y);
-			topControl.setSize(clientArea.getWidth() - marginLeft - marginRight, size.getHeight());
-
-			y = y + gapY + size.getHeight();
-			centerHeight = centerHeight - size.getHeight() - gapY;
-		}
-
 		final IControl bottomControl = controls.get(BorderLayoutConstraints.BOTTOM);
-		if (bottomControl != null) {
-			final Dimension size = getControlPrefSize(bottomControl);
-			bottomControl.setPosition(x, clientArea.getY() + clientArea.getHeight() - marginBottom - size.getHeight());
-			bottomControl.setSize(clientArea.getWidth() - marginLeft - marginRight, size.getHeight());
-
-			centerHeight = centerHeight - size.getHeight() - gapY;
-		}
-
 		final IControl leftControl = controls.get(BorderLayoutConstraints.LEFT);
-		if (leftControl != null) {
-			final Dimension size = getControlPrefSize(leftControl);
-			leftControl.setPosition(x, y);
-			leftControl.setSize(size.getWidth(), centerHeight);
-
-			x = x + gapX + size.getWidth();
-			centerWidth = centerWidth - size.getWidth() - gapX;
-		}
-
-		final IControl rigthControl = controls.get(BorderLayoutConstraints.RIGHT);
-		if (rigthControl != null) {
-			final Dimension size = getControlPrefSize(rigthControl);
-			rigthControl.setPosition(clientArea.getX() + clientArea.getWidth() - marginRight - size.getWidth(), y);
-			rigthControl.setSize(size.getWidth(), centerHeight);
-
-			centerWidth = centerWidth - size.getWidth() - gapX;
-		}
-
 		final IControl centerControl = controls.get(BorderLayoutConstraints.CENTER);
+		final IControl rightControl = controls.get(BorderLayoutConstraints.RIGHT);
+
+		final int[] minimumHeights = new int[] {
+				minimumPolicy().getSize(topControl).getHeight(), calcCenterHeight(controls, minimumPolicy()),
+				minimumPolicy().getSize(bottomControl).getHeight()};
+		final int[] preferredHeights = new int[] {
+				preferredPolicy().getSize(topControl).getHeight(), calcCenterHeight(controls, preferredPolicy()),
+				preferredPolicy().getSize(bottomControl).getHeight()};
+
+		final int[] minimumWidths = new int[] {
+				minimumPolicy().getSize(leftControl).getWidth(),
+				minimumPolicy().getSize(leftControl).getWidth()
+					+ minimumPolicy().getSize(centerControl).getWidth()
+					+ minimumPolicy().getSize(rightControl).getWidth(), minimumPolicy().getSize(rightControl).getWidth()};
+		final int[] preferredWidths = new int[] {
+				preferredPolicy().getSize(leftControl).getWidth(),
+				preferredPolicy().getSize(leftControl).getWidth()
+					+ preferredPolicy().getSize(centerControl).getWidth()
+					+ preferredPolicy().getSize(rightControl).getWidth(), preferredPolicy().getSize(rightControl).getWidth()};
+
+		final int[] usedHeights = calcRatio(minimumHeights, preferredHeights, totalHeight - (rowCount - 1) * gapY);
+		final int[] usedWidths = calcRatio(minimumWidths, preferredWidths, totalWidth - (centerColumnCount - 1) * gapX);
+
+		final int gapYAfterTop = gapY; // TODO NM calculate gap after top
+		final int gapYBeforeBottom = gapY; // TODO NM calculate gap before bottem
+		final int gapXAfterLeft = gapX; // TODO NM calculate gap after left
+		final int gapXBeforeRight = gapX; // TODO NM calculate gap before right
+
+		if (topControl != null) {
+			topControl.setPosition(x, y);
+			topControl.setSize(totalWidth, usedHeights[0]);
+			y = y + usedHeights[0] + gapYAfterTop;
+		}
+
+		int centerX = x;
+		if (leftControl != null) {
+			leftControl.setPosition(centerX, y);
+			leftControl.setSize(usedWidths[0], usedHeights[1]);
+			centerX = centerX + usedWidths[0] + gapXAfterLeft;
+		}
 		if (centerControl != null) {
-			centerControl.setPosition(x, y);
-			centerControl.setSize(centerWidth, centerHeight);
+			centerControl.setPosition(centerX, y);
+			centerControl.setSize(usedWidths[1], usedHeights[1]);
+			centerX = centerX + usedWidths[1];
+		}
+		if (rightControl != null) {
+			centerX = centerX + gapXBeforeRight;
+			rightControl.setPosition(centerX, y);
+			rightControl.setSize(usedWidths[2], usedHeights[1]);
+		}
+
+		y = y + usedHeights[1];
+
+		if (bottomControl != null) {
+			y = y + gapYBeforeBottom;
+			bottomControl.setPosition(x, y);
+			bottomControl.setSize(totalWidth, usedHeights[2]);
 		}
 	}
 
-	@Override
-	public Dimension getMinSize() {
-		if (minSize == null) {
-			this.minSize = calcMinSize();
+	private int[] calcRatio(final int[] minSizes, final int[] prefSizes, final int totalSize) {
+		final int totalMin = minSizes[0] + minSizes[1] + minSizes[2];
+		final int totalPref = prefSizes[0] + prefSizes[1] + prefSizes[2];
+		if (totalSize < totalMin) {
+			return minSizes;
 		}
-		return minSize;
+
+		final int[] result = new int[3];
+		if (totalSize >= totalPref) {
+			result[0] = prefSizes[0];
+			result[2] = prefSizes[2];
+		}
+		else {
+			final int availableSize = totalSize - totalMin;
+			final double ratio = (double) availableSize / (totalPref - totalMin);
+			result[0] = (int) (ratio * (prefSizes[0] - minSizes[0]) + minSizes[0]);
+			result[2] = (int) (ratio * (prefSizes[2] - minSizes[2]) + minSizes[2]);
+		}
+		result[1] = totalSize - result[0] - result[2];
+		return result;
 	}
 
-	@Override
-	public Dimension getPreferredSize() {
-		if (preferredSize == null) {
-			this.preferredSize = calcPreferredSize();
-		}
-		return preferredSize;
+	private int calcCenterHeight(final Map<BorderLayoutConstraints, IControl> controls, final ISizeProvider policy) {
+		int height = 0;
+
+		height = Math.max(policy.getSize(controls.get(BorderLayoutConstraints.LEFT)).getHeight(), height);
+		height = Math.max(policy.getSize(controls.get(BorderLayoutConstraints.CENTER)).getHeight(), height);
+		height = Math.max(policy.getSize(controls.get(BorderLayoutConstraints.RIGHT)).getHeight(), height);
+
+		return height;
 	}
 
-	@Override
-	public Dimension getMaxSize() {
-		return MAX_SIZE;
+	private int getRowCount(final Map<BorderLayoutConstraints, IControl> controls) {
+		int result = 0;
+		if (controls.get(BorderLayoutConstraints.TOP) != null) {
+			result++;
+		}
+		if (controls.get(BorderLayoutConstraints.BOTTOM) != null) {
+			result++;
+		}
+		if (controls.get(BorderLayoutConstraints.CENTER) != null
+			|| controls.get(BorderLayoutConstraints.LEFT) != null
+			|| controls.get(BorderLayoutConstraints.RIGHT) != null) {
+			result++;
+		}
+
+		return result;
+	}
+
+	private int getCenterColumnCount(final Map<BorderLayoutConstraints, IControl> controls) {
+		int result = 0;
+		if (controls.get(BorderLayoutConstraints.LEFT) != null) {
+			result++;
+		}
+		if (controls.get(BorderLayoutConstraints.RIGHT) != null) {
+			result++;
+		}
+		if (controls.get(BorderLayoutConstraints.CENTER) != null) {
+			result++;
+		}
+
+		return result;
 	}
 
 	@Override
 	public void invalidate() {
-		minSize = null;
-		preferredSize = null;
+		super.invalidate();
 		controlsMap = null;
-		prefSizes.clear();
-		minSizes.clear();
 	}
 
-	private Dimension calcMinSize() {
+	private Dimension calcControlsSize(final ISizeProvider policy) {
 		final Map<BorderLayoutConstraints, IControl> controls = getControls();
 
 		int width = 0;
 		int height = 0;
-
-		final IControl leftControl = controls.get(BorderLayoutConstraints.LEFT);
-		if (leftControl != null) {
-			final Dimension size = getControlMinSize(leftControl);
-			width = width + size.getWidth() + gapX;
-			height = Math.max(height, size.getHeight());
-		}
+		int horizontalCount = 0;
+		int verticalCount = 0;
 
 		final IControl centerControl = controls.get(BorderLayoutConstraints.CENTER);
 		if (centerControl != null) {
-			final Dimension size = getControlMinSize(centerControl);
+			final Dimension size = policy.getSize(centerControl);
+			width = size.getWidth();
+			height = size.getHeight();
+			horizontalCount++;
+			verticalCount++;
+		}
+
+		final IControl leftControl = controls.get(BorderLayoutConstraints.LEFT);
+		if (leftControl != null) {
+			final Dimension size = policy.getSize(leftControl);
 			width = width + size.getWidth();
-			height = height + size.getHeight();
+			height = Math.max(height, size.getHeight());
+			horizontalCount++;
 		}
 
 		final IControl rightControl = controls.get(BorderLayoutConstraints.RIGHT);
 		if (rightControl != null) {
-			final Dimension size = getControlMinSize(rightControl);
-			width = width + size.getWidth() + gapX;
-			height = Math.max(height, size.getHeight());
-		}
-
-		final IControl topControl = controls.get(BorderLayoutConstraints.TOP);
-		if (topControl != null) {
-			final Dimension size = getControlMinSize(topControl);
-			height = height + size.getHeight() + gapY;
-			width = Math.max(width, size.getWidth());
-		}
-
-		final IControl bottomControl = controls.get(BorderLayoutConstraints.BOTTOM);
-		if (bottomControl != null) {
-			final Dimension size = getControlMinSize(bottomControl);
-			height = height + size.getHeight() + gapY;
-			width = Math.max(width, size.getWidth());
-		}
-
-		width = width + marginLeft + marginRight;
-		height = height + marginTop + marginBottom;
-
-		return container.computeDecoratedSize(new Dimension(width, height));
-	}
-
-	private Dimension calcPreferredSize() {
-		final Map<BorderLayoutConstraints, IControl> controls = getControls();
-
-		int width = 0;
-		int height = 0;
-
-		final IControl leftControl = controls.get(BorderLayoutConstraints.LEFT);
-		if (leftControl != null) {
-			final Dimension size = getControlPrefSize(leftControl);
-			width = width + size.getWidth() + gapX;
-			height = Math.max(height, size.getHeight());
-		}
-
-		final IControl centerControl = controls.get(BorderLayoutConstraints.CENTER);
-		if (centerControl != null) {
-			final Dimension size = getControlPrefSize(centerControl);
+			final Dimension size = policy.getSize(rightControl);
 			width = width + size.getWidth();
-			height = height + size.getHeight();
+			height = Math.max(height, size.getHeight());
+			horizontalCount++;
 		}
 
-		final IControl rightControl = controls.get(BorderLayoutConstraints.RIGHT);
-		if (rightControl != null) {
-			final Dimension size = getControlPrefSize(rightControl);
-			width = width + size.getWidth() + gapX;
-			height = Math.max(height, size.getHeight());
-		}
+		width = width + Math.max(0, (horizontalCount - 1)) * gapX;
 
 		final IControl topControl = controls.get(BorderLayoutConstraints.TOP);
 		if (topControl != null) {
-			final Dimension size = getControlPrefSize(topControl);
-			height = height + size.getHeight() + gapY;
+			final Dimension size = policy.getSize(topControl);
+			height = height + size.getHeight();
 			width = Math.max(width, size.getWidth());
+			verticalCount++;
 		}
 
 		final IControl bottomControl = controls.get(BorderLayoutConstraints.BOTTOM);
 		if (bottomControl != null) {
-			final Dimension size = getControlPrefSize(bottomControl);
-			height = height + size.getHeight() + gapY;
+			final Dimension size = policy.getSize(bottomControl);
+			height = height + size.getHeight();
 			width = Math.max(width, size.getWidth());
+			verticalCount++;
 		}
 
-		width = width + marginLeft + marginRight;
-		height = height + marginTop + marginBottom;
+		height = height + Math.max(0, (verticalCount - 1)) * gapY;
+		return new Dimension(width, height);
+	}
 
+	private Dimension calcSize(final ISizeProvider policy) {
+		final Dimension controlsSize = calcControlsSize(policy);
+		final int width = controlsSize.getWidth() + marginLeft + marginRight;
+		final int height = controlsSize.getHeight() + marginTop + marginBottom;
 		return container.computeDecoratedSize(new Dimension(width, height));
-	}
-
-	private Dimension getControlMinSize(final IControl control) {
-		Dimension result = minSizes.get(control);
-		if (result == null) {
-			result = control.getMinSize();
-			minSizes.put(control, result);
-		}
-		return result;
-	}
-
-	private Dimension getControlPrefSize(final IControl control) {
-		Dimension result = prefSizes.get(control);
-		if (result == null) {
-			result = control.getPreferredSize();
-			prefSizes.put(control, result);
-		}
-		return result;
 	}
 
 	private Map<BorderLayoutConstraints, IControl> getControls() {
@@ -306,6 +309,16 @@ final class BorderLayout implements ILayouter {
 			}
 		}
 		return controlsMap;
+	}
+
+	@Override
+	protected Dimension calculateMinSize() {
+		return calcSize(minimumPolicy());
+	}
+
+	@Override
+	protected Dimension calculatePreferredSize() {
+		return calcSize(preferredPolicy());
 	}
 
 }
