@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2010, grossmann, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -106,39 +106,45 @@ public class SplitCompositeImpl extends AbstractSplitCompositeSpiWrapper impleme
 		return secondClientAreaMinSize;
 	}
 
-	@Override
-	public Dimension getMinSize() {
-		final Dimension firstMinSize = first.getMinSize();
-		final Dimension secondMinSize = second.getMinSize();
-
+	private Dimension getSize(final Dimension firstSize, final Dimension secondSize) {
 		int width = 0;
 		int height = 0;
 		if (Orientation.VERTICAL == orientation) {
 			height = height + dividerSize;
 
-			if (firstMinSize != null) {
-				width = Math.max(width, firstMinSize.getWidth());
-				height = height + firstMinSize.getHeight();
+			if (firstSize != null) {
+				width = Math.max(width, firstSize.getWidth());
+				height = height + firstSize.getHeight();
 			}
-			if (secondMinSize != null) {
-				width = Math.max(width, secondMinSize.getWidth());
-				height = height + secondMinSize.getHeight();
+			if (secondSize != null) {
+				width = Math.max(width, secondSize.getWidth());
+				height = height + secondSize.getHeight();
 			}
 		}
 		else {
 			width = width + dividerSize;
 
-			if (firstMinSize != null) {
-				width = width + firstMinSize.getWidth();
-				height = Math.max(height, firstMinSize.getHeight());
+			if (firstSize != null) {
+				width = width + firstSize.getWidth();
+				height = Math.max(height, firstSize.getHeight());
 			}
-			if (secondMinSize != null) {
-				width = width + secondMinSize.getWidth();
-				height = Math.max(height, secondMinSize.getHeight());
+			if (secondSize != null) {
+				width = width + secondSize.getWidth();
+				height = Math.max(height, secondSize.getHeight());
 			}
 		}
 
 		return new Dimension(width, height);
+	}
+
+	@Override
+	public Dimension getMinSize() {
+		return getSize(first.getMinSize(), second.getMinSize());
+	}
+
+	@Override
+	public Dimension getPreferredSize() {
+		return getSize(first.getPreferredSize(), second.getPreferredSize());
 	}
 
 	@Override

@@ -41,6 +41,7 @@ import org.jowidgets.api.widgets.ITabFolder;
 import org.jowidgets.api.widgets.ITabItem;
 import org.jowidgets.api.widgets.descriptor.ITabFolderDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITabItemDescriptor;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.event.TabSelectionEvent;
 import org.jowidgets.impl.spi.SpiBluePrintFactory;
@@ -256,6 +257,35 @@ public class TabFolderImpl extends TabFolderSpiWrapper implements ITabFolder {
 	@Override
 	public void removeTabFolderListener(final ITabFolderListener listener) {
 		tabFolderListeners.remove(listener);
+	}
+
+	@Override
+	public Dimension getMinSize() {
+		int width = 0;
+		int height = 0;
+		for (final TabItemImpl item : items) {
+			final Dimension minSize = item.getMinSize();
+			width = Math.max(width, minSize.getWidth());
+			height = Math.max(height, minSize.getHeight());
+		}
+
+		// TODO NM computeDecoratedSize
+		System.out.println("vor compute: " + new Dimension(width, height));
+		System.out.println("nach compute: " + getWidget().computeDecoratedSize(new Dimension(width, height)));
+		return getWidget().computeDecoratedSize(new Dimension(width, height));
+	}
+
+	@Override
+	public Dimension getPreferredSize() {
+		int width = 0;
+		int height = 0;
+		for (final TabItemImpl item : items) {
+			final Dimension prefSize = item.getPreferredSize();
+			width = Math.max(width, prefSize.getWidth());
+			height = Math.max(height, prefSize.getHeight());
+		}
+
+		return getWidget().computeDecoratedSize(new Dimension(width, height));
 	}
 
 	protected void fireOnDeselection(final VetoHolder vetoHolder, final ITabItem deselectedItem, final ITabItem newSelectedItem) {
