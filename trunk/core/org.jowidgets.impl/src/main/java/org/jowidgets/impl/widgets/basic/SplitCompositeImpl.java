@@ -111,17 +111,31 @@ public class SplitCompositeImpl extends AbstractSplitCompositeSpiWrapper impleme
 		final Dimension firstMinSize = first.getMinSize();
 		final Dimension secondMinSize = second.getMinSize();
 
-		int width = firstMinSize != null ? firstMinSize.getWidth() : 0;
-		int height = firstMinSize != null ? firstMinSize.getHeight() : 0;
-
-		width = width + (secondMinSize != null ? secondMinSize.getWidth() : 0);
-		height = height + (secondMinSize != null ? secondMinSize.getHeight() : 0);
-
+		int width = 0;
+		int height = 0;
 		if (Orientation.VERTICAL == orientation) {
 			height = height + dividerSize;
+
+			if (firstMinSize != null) {
+				width = Math.max(width, firstMinSize.getWidth());
+				height = height + firstMinSize.getHeight();
+			}
+			if (secondMinSize != null) {
+				width = Math.max(width, secondMinSize.getWidth());
+				height = height + secondMinSize.getHeight();
+			}
 		}
 		else {
 			width = width + dividerSize;
+
+			if (firstMinSize != null) {
+				width = width + firstMinSize.getWidth();
+				height = Math.max(height, firstMinSize.getHeight());
+			}
+			if (secondMinSize != null) {
+				width = width + secondMinSize.getWidth();
+				height = Math.max(height, secondMinSize.getHeight());
+			}
 		}
 
 		return new Dimension(width, height);
