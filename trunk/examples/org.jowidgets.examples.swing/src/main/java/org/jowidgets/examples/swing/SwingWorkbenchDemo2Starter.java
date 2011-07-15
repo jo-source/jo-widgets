@@ -42,6 +42,6 @@ public final class SwingWorkbenchDemo2Starter {
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
 		SwingOptions.setJoWidgetsTabLayout(true);
-		new WorkbenchRunner().run(new WorkbenchDemo2().createWorkbench());
+		new WorkbenchRunner().run(new WorkbenchDemo2());
 	}
 }

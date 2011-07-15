@@ -26,21 +26,32 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.swt;
+package org.jowidgets.examples.common.workbench.demo1;
 
-import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1Factory;
-import org.jowidgets.spi.impl.swt.options.SplitlayoutMode;
-import org.jowidgets.spi.impl.swt.options.SwtOptions;
-import org.jowidgets.workbench.impl.WorkbenchRunner;
+import org.jowidgets.common.types.Dimension;
+import org.jowidgets.workbench.api.IWorkbench;
+import org.jowidgets.workbench.api.IWorkbenchFactory;
 
-public final class SwtWorkbenchDemo1ClassicTabsStarter {
+public class WorkbenchDemo1Factory implements IWorkbenchFactory {
 
-	private SwtWorkbenchDemo1ClassicTabsStarter() {}
+	private final Dimension initialDimension;
 
-	public static void main(final String[] args) throws Exception {
-		SwtOptions.setClassicTabs(true);
-		SwtOptions.setSplitLayoutMode(SplitlayoutMode.ON_MOUSE_MOVE);
-		new WorkbenchRunner().run(new WorkbenchDemo1Factory());
+	public WorkbenchDemo1Factory() {
+		this(null);
+	}
+
+	public WorkbenchDemo1Factory(final Dimension initialDimension) {
+		if (initialDimension != null) {
+			this.initialDimension = initialDimension;
+		}
+		else {
+			this.initialDimension = new Dimension(1280, 900);
+		}
+	}
+
+	@Override
+	public IWorkbench create() {
+		return new WorkbenchDemo1(initialDimension);
 	}
 
 }

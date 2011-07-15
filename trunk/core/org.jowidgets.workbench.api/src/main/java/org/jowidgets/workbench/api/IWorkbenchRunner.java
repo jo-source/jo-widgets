@@ -29,8 +29,8 @@ package org.jowidgets.workbench.api;
 
 public interface IWorkbenchRunner {
 
-	void run(IWorkbench workbench);
+	void run(IWorkbenchFactory workbenchFactory);
 
-	void run(IWorkbench workbench, IWorkbenchConfigurationService configurationService);
+	void run(IWorkbenchFactory workbenchFactory, IWorkbenchConfigurationService configurationService);
 
 }

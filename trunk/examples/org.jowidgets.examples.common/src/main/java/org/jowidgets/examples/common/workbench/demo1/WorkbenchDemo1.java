@@ -49,10 +49,6 @@ public class WorkbenchDemo1 extends AbstractDemoWorkbench {
 
 	private final Dimension initialDimension;
 
-	public WorkbenchDemo1() {
-		this(new Dimension(1280, 900));
-	}
-
 	public WorkbenchDemo1(final Dimension initialDimension) {
 		DemoIconsInitializer.initialize();
 		this.initialDimension = initialDimension;

@@ -36,7 +36,7 @@ public final class SwtWorkbenchDemo2Starter {
 	private SwtWorkbenchDemo2Starter() {}
 
 	public static void main(final String[] args) throws Exception {
-		new WorkbenchRunner().run(new WorkbenchDemo2().createWorkbench());
+		new WorkbenchRunner().run(new WorkbenchDemo2());
 	}
 
 }

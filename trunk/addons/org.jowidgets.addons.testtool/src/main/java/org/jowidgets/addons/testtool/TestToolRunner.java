@@ -39,25 +39,25 @@ import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.factory.IWidgetFactoryListener;
-import org.jowidgets.workbench.api.IWorkbench;
+import org.jowidgets.workbench.api.IWorkbenchFactory;
 import org.jowidgets.workbench.api.IWorkbenchRunner;
 
 public class TestToolRunner {
 
 	private final IApplication app;
 	private final IWorkbenchRunner workbenchRunner;
-	private final IWorkbench workbench;
+	private final IWorkbenchFactory workbenchFactory;
 
 	public TestToolRunner(final IApplication app) {
 		this.app = app;
-		this.workbench = null;
+		this.workbenchFactory = null;
 		this.workbenchRunner = null;
 	}
 
-	public TestToolRunner(final IWorkbenchRunner workbenchRunner, final IWorkbench workbench) {
+	public TestToolRunner(final IWorkbenchRunner workbenchRunner, final IWorkbenchFactory workbench) {
 		this.app = null;
 		this.workbenchRunner = workbenchRunner;
-		this.workbench = workbench;
+		this.workbenchFactory = workbench;
 	}
 
 	public void run() {
@@ -111,8 +111,8 @@ public class TestToolRunner {
 
 	private void runWorkbench() {
 		if (workbenchRunner != null) {
-			if (workbench != null) {
-				workbenchRunner.run(workbench);
+			if (workbenchFactory != null) {
+				workbenchRunner.run(workbenchFactory);
 			}
 		}
 	}
