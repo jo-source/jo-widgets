@@ -30,7 +30,7 @@ package org.jowidgets.examples.swt.testtool;
 
 import org.jowidgets.addons.testtool.TestToolRunner;
 import org.jowidgets.examples.common.icons.DemoIconsInitializer;
-import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1;
+import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1Factory;
 import org.jowidgets.workbench.impl.WorkbenchRunner;
 
 public final class WorkbenchExample {
@@ -39,7 +39,7 @@ public final class WorkbenchExample {
 
 	public static void main(final String[] args) throws Exception {
 		DemoIconsInitializer.initialize();
-		new TestToolRunner(new WorkbenchRunner(), new WorkbenchDemo1()).run();
+		new TestToolRunner(new WorkbenchRunner(), new WorkbenchDemo1Factory()).run();
 	}
 
 }

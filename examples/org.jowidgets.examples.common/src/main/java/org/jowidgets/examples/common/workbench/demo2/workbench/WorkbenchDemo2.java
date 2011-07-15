@@ -50,17 +50,16 @@ import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.model.item.ToolBarModel;
 import org.jowidgets.workbench.api.ICloseCallback;
 import org.jowidgets.workbench.api.IWorkbench;
+import org.jowidgets.workbench.api.IWorkbenchFactory;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchModel;
 import org.jowidgets.workbench.toolkit.api.WorkbenchToolkit;
 import org.jowidgets.workbench.tools.CloseCallbackAdapter;
 import org.jowidgets.workbench.tools.WorkbenchModelBuilder;
 
-public class WorkbenchDemo2 {
+public class WorkbenchDemo2 implements IWorkbenchFactory {
 
-	private final IWorkbenchModel model;
-	private final IAction exitAction;
-
-	public WorkbenchDemo2() {
+	@Override
+	public IWorkbench create() {
 		DemoIconsInitializer.initialize();
 
 		final WorkbenchModelBuilder builder = new WorkbenchModelBuilder();
@@ -70,21 +69,15 @@ public class WorkbenchDemo2 {
 		builder.setInitialSplitWeight(0.18);
 		builder.setCloseCallback(createCloseCallback());
 
-		exitAction = createExitAction();
+		final IWorkbenchModel model = builder.build();
+		final IAction exitAction = createExitAction(model);
 
-		model = builder.build();
 		model.setToolBar(createToolBar());
-		model.setMenuBar(createMenuBar());
+		model.setMenuBar(createMenuBar(exitAction));
 
 		model.addApplication(new Application1().getModel());
 		model.addApplication(new Application2().getModel());
-	}
 
-	public IWorkbenchModel getModel() {
-		return model;
-	}
-
-	public IWorkbench createWorkbench() {
 		return WorkbenchToolkit.getWorkbenchPartFactory().workbench(model);
 	}
 
@@ -100,7 +93,7 @@ public class WorkbenchDemo2 {
 		return toolBar;
 	}
 
-	private IMenuBarModel createMenuBar() {
+	private IMenuBarModel createMenuBar(final IAction exitAction) {
 		final IMenuBarModel menuBarModel = new MenuBarModel();
 
 		final IMenuModel fileMenu = new MenuModel("File");
@@ -133,7 +126,7 @@ public class WorkbenchDemo2 {
 		};
 	}
 
-	private IAction createExitAction() {
+	private IAction createExitAction(final IWorkbenchModel model) {
 		final ICommandAction result = new ExitAction();
 		result.setCommand(new ICommandExecutor() {
 			@Override

@@ -28,7 +28,7 @@
 package org.jowidgets.examples.rwt;
 
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1;
+import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1Factory;
 import org.jowidgets.spi.impl.rwt.RwtEntryPoint;
 import org.jowidgets.workbench.impl.WorkbenchRunner;
 
@@ -38,7 +38,7 @@ public final class RwtWorkbenchDemo extends RwtEntryPoint {
 		super(new Runnable() {
 			@Override
 			public void run() {
-				new WorkbenchRunner().run(new WorkbenchDemo1(new Dimension(1024, 650)));
+				new WorkbenchRunner().run(new WorkbenchDemo1Factory(new Dimension(1024, 650)));
 			}
 		});
 	}

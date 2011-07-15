@@ -28,7 +28,7 @@
 
 package org.jowidgets.examples.swt;
 
-import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1;
+import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1Factory;
 import org.jowidgets.workbench.impl.WorkbenchRunner;
 
 public final class SwtWorkbenchDemo1Starter {
@@ -36,7 +36,7 @@ public final class SwtWorkbenchDemo1Starter {
 	private SwtWorkbenchDemo1Starter() {}
 
 	public static void main(final String[] args) throws Exception {
-		new WorkbenchRunner().run(new WorkbenchDemo1());
+		new WorkbenchRunner().run(new WorkbenchDemo1Factory());
 	}
 
 }

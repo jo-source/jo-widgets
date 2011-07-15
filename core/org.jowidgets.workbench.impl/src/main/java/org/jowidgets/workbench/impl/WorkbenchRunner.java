@@ -32,22 +32,26 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.tools.types.VetoHolder;
+import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.IWorkbench;
 import org.jowidgets.workbench.api.IWorkbenchConfigurationService;
+import org.jowidgets.workbench.api.IWorkbenchFactory;
 import org.jowidgets.workbench.api.IWorkbenchRunner;
 
 public class WorkbenchRunner implements IWorkbenchRunner {
 
 	@Override
-	public void run(final IWorkbench workbench) {
-		run(workbench, new DefaultConfigurationService());
+	public void run(final IWorkbenchFactory workbenchFactory) {
+		run(workbenchFactory, new DefaultConfigurationService());
 	}
 
 	@Override
-	public void run(final IWorkbench workbench, final IWorkbenchConfigurationService configurationService) {
+	public void run(final IWorkbenchFactory workbenchFactory, final IWorkbenchConfigurationService configurationService) {
+		Assert.paramNotNull(workbenchFactory, "workbenchFactory");
 		Toolkit.getApplicationRunner().run(new IApplication() {
 			@Override
 			public void start(final IApplicationLifecycle lifecycle) {
+				final IWorkbench workbench = workbenchFactory.create();
 				final VetoHolder vetoHolder = new VetoHolder();
 				workbench.onLogin(vetoHolder);
 				if (!vetoHolder.hasVeto()) {
