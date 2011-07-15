@@ -33,7 +33,7 @@ import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.swt.widgets.Display;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1;
+import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1Factory;
 import org.jowidgets.impl.toolkit.DefaultToolkitProvider;
 import org.jowidgets.spi.impl.swt.SwtWidgetsServiceProvider;
 import org.jowidgets.workbench.impl.rcp.WorkbenchRunner;
@@ -46,7 +46,7 @@ public class RcpWorkbenchDemo1Starter implements IApplication {
 			Toolkit.initialize(new DefaultToolkitProvider(new SwtWidgetsServiceProvider(Display.getDefault())));
 		}
 		final String configFilePath = System.getProperty("user.home") + File.separator + getClass().getName() + ".config";
-		new WorkbenchRunner().run(new WorkbenchDemo1(), new FileConfigService(configFilePath));
+		new WorkbenchRunner().run(new WorkbenchDemo1Factory(), new FileConfigService(configFilePath));
 		return IApplication.EXIT_OK;
 	}
 

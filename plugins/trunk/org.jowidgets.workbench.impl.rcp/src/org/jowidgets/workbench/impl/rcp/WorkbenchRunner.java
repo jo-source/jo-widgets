@@ -31,48 +31,55 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.util.Assert;
-import org.jowidgets.workbench.api.IWorkbench;
 import org.jowidgets.workbench.api.IWorkbenchConfigurationService;
+import org.jowidgets.workbench.api.IWorkbenchFactory;
 import org.jowidgets.workbench.api.IWorkbenchRunner;
 import org.jowidgets.workbench.impl.rcp.internal.WorkbenchContext;
 import org.jowidgets.workbench.impl.rcp.internal.util.RcpWorkbenchConfigurationSupport;
 
+//TODO HW check if the IWorkbechFactory refactoring works
 public final class WorkbenchRunner implements IWorkbenchRunner {
 
 	@Override
-	public void run(final IWorkbench workbench) {
-		run(new WorkbenchContext(workbench, false));
-	}
-
-	@Override
-	public void run(final IWorkbench workbench, final IWorkbenchConfigurationService configurationService) {
-		Assert.paramNotNull(configurationService, "configurationService");
-		final WorkbenchConfiguration config = (WorkbenchConfiguration) configurationService.loadConfiguration();
-		final WorkbenchContext context = new WorkbenchContext(workbench, true);
-		final RcpWorkbenchConfigurationSupport rcpSupport = new RcpWorkbenchConfigurationSupport();
-		if (config != null) {
-			context.setSelectedTreeNode(config.getSelectedTreeNode());
-			context.setFolderRatio(config.getFolderRatio());
-			rcpSupport.setConfiguration(config.getWorkbenchXml());
-		}
-		else {
-			rcpSupport.setConfiguration(null);
-		}
-		run(context);
-		configurationService.saveConfiguration(new WorkbenchConfiguration(
-			context.getSelectedTreeNode(),
-			context.getFolderRatio(),
-			rcpSupport.getConfiguration()));
-	}
-
-	private void run(final WorkbenchContext context) {
+	public void run(final IWorkbenchFactory workbenchFactory) {
 		Toolkit.getApplicationRunner().run(new IApplication() {
 			@Override
 			public void start(final IApplicationLifecycle lifecycle) {
+				final WorkbenchContext context = new WorkbenchContext(workbenchFactory.create(), false);
 				context.setLifecycle(lifecycle);
 				context.run();
 			}
 		});
+	}
+
+	@Override
+	public void run(final IWorkbenchFactory workbenchFactory, final IWorkbenchConfigurationService configurationService) {
+		Assert.paramNotNull(workbenchFactory, "workbenchFactory");
+		Assert.paramNotNull(configurationService, "configurationService");
+
+		Toolkit.getApplicationRunner().run(new IApplication() {
+			@Override
+			public void start(final IApplicationLifecycle lifecycle) {
+				final WorkbenchConfiguration config = (WorkbenchConfiguration) configurationService.loadConfiguration();
+				final WorkbenchContext context = new WorkbenchContext(workbenchFactory.create(), true);
+				final RcpWorkbenchConfigurationSupport rcpSupport = new RcpWorkbenchConfigurationSupport();
+				if (config != null) {
+					context.setSelectedTreeNode(config.getSelectedTreeNode());
+					context.setFolderRatio(config.getFolderRatio());
+					rcpSupport.setConfiguration(config.getWorkbenchXml());
+				}
+				else {
+					rcpSupport.setConfiguration(null);
+				}
+				context.setLifecycle(lifecycle);
+				context.run();
+				configurationService.saveConfiguration(new WorkbenchConfiguration(
+					context.getSelectedTreeNode(),
+					context.getFolderRatio(),
+					rcpSupport.getConfiguration()));
+			}
+		});
+
 	}
 
 }
