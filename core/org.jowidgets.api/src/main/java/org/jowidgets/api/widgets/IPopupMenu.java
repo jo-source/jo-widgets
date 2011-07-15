@@ -28,11 +28,15 @@
 
 package org.jowidgets.api.widgets;
 
+import org.jowidgets.api.command.IExecutionContextValues;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IPopupMenuCommon;
 
 public interface IPopupMenu extends IMenu, IPopupMenuCommon {
 
 	@Override
 	IComponent getParent();
+
+	void show(Position position, IExecutionContextValues context);
 
 }
