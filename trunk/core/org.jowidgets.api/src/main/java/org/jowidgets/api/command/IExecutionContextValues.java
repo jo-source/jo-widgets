@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,12 +28,10 @@
 
 package org.jowidgets.api.command;
 
-import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.util.ITypedKey;
 
-public interface IExecutionContext extends IExecutionContextValues {
+public interface IExecutionContextValues {
 
-	IAction getAction();
-
-	IWidget getSource();
+	<VALUE_TYPE> VALUE_TYPE getValue(final ITypedKey<VALUE_TYPE> key);
 
 }
