@@ -29,11 +29,16 @@
 package org.jowidgets.api.command;
 
 import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.util.ITypedKey;
 
 public interface IExecutionContext {
 
 	IAction getAction();
 
 	IWidget getSource();
+
+	<VALUE_TYPE> void putValue(ITypedKey<VALUE_TYPE> key, VALUE_TYPE value);
+
+	<VALUE_TYPE> VALUE_TYPE getValue(final ITypedKey<VALUE_TYPE> key);
 
 }
