@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,51 +26,8 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.command;
+package org.jowidgets.util;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.jowidgets.api.command.IAction;
-import org.jowidgets.api.command.IExecutionContext;
-import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.util.ITypedKey;
-
-@SuppressWarnings("rawtypes")
-public final class ExecutionContext implements IExecutionContext {
-
-	private final Map values;
-
-	private final IAction action;
-	private final IWidget source;
-
-	public ExecutionContext(final IAction action, final IWidget source) {
-		super();
-		this.values = new HashMap();
-		this.action = action;
-		this.source = source;
-	}
-
-	@Override
-	public IAction getAction() {
-		return action;
-	}
-
-	@Override
-	public IWidget getSource() {
-		return source;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public <VALUE_TYPE> void putValue(final ITypedKey<VALUE_TYPE> key, final VALUE_TYPE value) {
-		values.put(key, value);
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public <VALUE_TYPE> VALUE_TYPE getValue(final ITypedKey<VALUE_TYPE> key) {
-		return (VALUE_TYPE) values.get(key);
-	}
+public interface ITypedKey<VALUE_TYPE> {
 
 }
