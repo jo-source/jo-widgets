@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2010, grossmann, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -33,6 +33,7 @@ import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.spi.widgets.IControlSpi;
 
 public class ControlSpiWrapper extends ComponentSpiWrapper implements IControlCommon {
+	private static final Dimension INFINITE_SIZE = new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
 
 	private Dimension minSize;
 	private Dimension prefferedSize;
@@ -95,8 +96,7 @@ public class ControlSpiWrapper extends ComponentSpiWrapper implements IControlCo
 			return maxSize;
 		}
 		else {
-			return getWidget().getMaxSize();
+			return INFINITE_SIZE;
 		}
 	}
-
 }
