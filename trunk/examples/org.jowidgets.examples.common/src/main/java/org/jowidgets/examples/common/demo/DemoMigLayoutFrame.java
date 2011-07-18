@@ -1650,8 +1650,8 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 	private void windowMoved() {
 		if (windowMovedListeningWidget != null) {
-			//final ILayouter layout = (ILayouter) windowMovedListeningWidget.getLayout();
-			//layout.invalidate();
+			windowMovedListeningWidget.layoutBegin();
+			windowMovedListeningWidget.layoutEnd();
 			windowMovedListeningWidget.redraw();
 		}
 	}
