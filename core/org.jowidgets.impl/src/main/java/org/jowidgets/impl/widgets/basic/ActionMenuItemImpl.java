@@ -56,6 +56,8 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 	private ActionExecuter actionExecuter;
 	private IAction action;
 
+	private boolean onItemChange;
+
 	public ActionMenuItemImpl(
 		final IMenu parent,
 		final IActionMenuItemSpi actionMenuItemSpi,
@@ -81,8 +83,11 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 		this.modelListener = new IItemModelListener() {
 			@Override
 			public void itemChanged(final IItemModel item) {
-				if (getModel().getAction() != action) {
-					setActionValue(action);
+				final IAction newAction = getModel().getAction();
+				if (!onItemChange && newAction != action) {
+					onItemChange = true;
+					setActionValue(newAction);
+					onItemChange = false;
 				}
 			}
 		};
@@ -133,19 +138,25 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 
 	private void setActionValue(final IAction action) {
 		if (this.action != action) {
-			if (action.getAccelerator() != null) {
-				setAccelerator(action.getAccelerator());
-			}
 
-			if (action.getMnemonic() != null) {
-				setMnemonic(action.getMnemonic().charValue());
+			if (action != null) {
+
+				if (action.getAccelerator() != null) {
+					setAccelerator(action.getAccelerator());
+				}
+
+				if (action.getMnemonic() != null) {
+					setMnemonic(action.getMnemonic().charValue());
+				}
 			}
 
 			//dispose the old sync if exists
 			disposeActionWidgetSync();
 
-			actionWidgetSync = new ActionWidgetSync(action, this);
-			actionExecuter = new ActionExecuter(action, this);
+			if (action != null) {
+				actionWidgetSync = new ActionWidgetSync(action, this);
+				actionExecuter = new ActionExecuter(action, this);
+			}
 
 			this.action = action;
 		}

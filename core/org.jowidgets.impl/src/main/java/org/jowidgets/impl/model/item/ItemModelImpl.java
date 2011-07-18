@@ -29,6 +29,7 @@
 package org.jowidgets.impl.model.item;
 
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 import java.util.UUID;
 
@@ -195,7 +196,7 @@ class ItemModelImpl implements IItemModel {
 
 	protected final void fireItemChanged() {
 		final Set<IItemModelListener> brokenListeners = new HashSet<IItemModelListener>();
-		for (final IItemModelListener listener : menuItemModelListeners) {
+		for (final IItemModelListener listener : new LinkedList<IItemModelListener>(menuItemModelListeners)) {
 			try {
 				listener.itemChanged(this);
 			}
