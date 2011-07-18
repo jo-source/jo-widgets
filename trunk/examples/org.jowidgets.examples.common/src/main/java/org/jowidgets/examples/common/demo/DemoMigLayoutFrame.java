@@ -43,6 +43,7 @@ import org.jowidgets.api.layout.miglayout.IAC;
 import org.jowidgets.api.layout.miglayout.ILC;
 import org.jowidgets.api.layout.miglayout.IMigLayout;
 import org.jowidgets.api.layout.miglayout.IMigLayoutToolkit;
+import org.jowidgets.api.layout.miglayout.IPlatformDefaults;
 import org.jowidgets.api.model.table.ITableColumn;
 import org.jowidgets.api.model.table.ITableModel;
 import org.jowidgets.api.toolkit.Toolkit;
@@ -69,6 +70,7 @@ import org.jowidgets.common.model.ITableColumnModelObservable;
 import org.jowidgets.common.model.ITableDataModelObservable;
 import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.tools.controler.ComponentAdapter;
@@ -221,13 +223,16 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 	private final AtomicBoolean allowDispatch = new AtomicBoolean(true);
 
+	private final IPlatformDefaults platformDefaults;
+
 	public DemoMigLayoutFrame() {
 		this("");
 	}
 
 	public DemoMigLayoutFrame(final String framework) {
-		super((framework + " MigLayout Demo v2.5 - Mig Layout v").trim());
-		// TODO NM find a way to add MigLayout core version: LayoutUtil.getVersion();
+		super((framework + " MigLayout Demo v2.5 - Mig Layout v").trim()
+			+ Toolkit.getLayoutFactoryProvider().getMigLayoutToolkit().getMigLayoutVersion());
+		platformDefaults = Toolkit.getLayoutFactoryProvider().getMigLayoutToolkit().getPlatformDefaults();
 
 		addComponentListener(new ComponentAdapter() {
 			@Override
@@ -250,6 +255,8 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		for (int i = 0; i < PANELS.length; i++) {
 			final ITreeNode node = pickerList.addNode();
 			node.setText(PANELS[i][0]);
+			node.setMarkup(Markup.STRONG);
+			node.setIcon(null);
 		}
 
 		layoutDisplayPanel = add(BPF.composite());
@@ -259,6 +266,8 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		final ITabItem tabDescriptionPane = descriptionTabPane.addItem(BPF.tabItem().setText("Description"));
 		tabDescriptionPane.setLayout(LFP.migLayoutBuilder().constraints("fill, insets 0").build());
 		descrTextArea = tabDescriptionPane.add(BPF.textArea().setEditable(false).setBorder(false), "grow");
+		descrTextArea.setFontName("tahoma");
+		descrTextArea.setFontSize(8);
 
 		//setActivePage(16);
 		setActivePage(0);
@@ -331,9 +340,14 @@ public final class DemoMigLayoutFrame extends JoFrame {
 			+ "miglayout@miginfocom.com";
 
 		final ITextArea textArea = panel.add(BPF.textArea().setBorder(false).setText(s), "w 500:500, ay top, grow, push");
+		textArea.setFontName("tahoma");
+		textArea.setFontSize(8);
+		textArea.setMarkup(Markup.STRONG);
 		textArea.setPreferredSize(new Dimension(500, 300));
+
+		// textArea should be transparent
+		// textArea.setBackgroundMode(SWT.INHERIT_NONE);
 		textArea.setBackgroundColor(panel.getBackgroundColor());
-		//textArea.setBackgroundMode(SWT.INHERIT_NONE);
 
 		result.setVisible(true);
 	}
@@ -1377,8 +1391,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		// TODO NM check if it is necessary to add the panels...
 
 		createLabel(mainPanel, "Button Order:", "");
-		// final ITextLabel formatLabel = 
-		createLabel(mainPanel, "", "growx");
+		final ITextLabel formatLabel = createLabel(mainPanel, "", "growx");
 		// TODO NM Font
 		// formatLabel.setFont(deriveFont(formatLabel.font(), true, -1));
 
@@ -1392,9 +1405,8 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 			@Override
 			public void inputChanged() {
-				//Toolkit.getLayoutFactoryProvider().getMigLayoutToolkit(). ...
-				//PlatformDefaults.setPlatform(PlatformDefaults.WINDOWS_XP);
-				//formatLabel.setText("'" + PlatformDefaults.getButtonOrder() + "'");
+				platformDefaults.setPlatform(IPlatformDefaults.WINDOWS_XP);
+				formatLabel.setText("'" + platformDefaults.getButtonOrder() + "'");
 				winButt.setSelected(true);
 				macButt.setSelected(false);
 				mainPanel.redraw();
@@ -1405,9 +1417,8 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 			@Override
 			public void inputChanged() {
-				//Toolkit.getLayoutFactoryProvider().getMigLayoutToolkit(). ...
-				//PlatformDefaults.setPlatform(PlatformDefaults.MAC_OSX);
-				//formatLabel.setText("'" + PlatformDefaults.getButtonOrder() + "'");
+				platformDefaults.setPlatform(IPlatformDefaults.MAC_OSX);
+				formatLabel.setText("'" + platformDefaults.getButtonOrder() + "'");
 				macButt.setSelected(true);
 				winButt.setSelected(false);
 				mainPanel.redraw();
@@ -1420,14 +1431,13 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 			@Override
 			public void actionPerformed() {
-				//		QMessageBox.information(
-				//				this,
-				//				"Help",
-				//				"See JavaDoc for PlatformConverter.getButtonBarOrder(..) for details on the format string.");
+				Toolkit.getMessagePane().showInfo(
+						"Help",
+						"See JavaDoc for PlatformConverter.getButtonBarOrder(..) for details on the format string.");
 			}
 		});
 
-		//(PlatformDefaults.getPlatform() == PlatformDefaults.WINDOWS_XP ? winButt : macButt).setChecked(true);
+		(platformDefaults.getPlatform() == IPlatformDefaults.WINDOWS_XP ? winButt : macButt).setSelected(true);
 	}
 
 	private ITabItem createButtonBarsPanel(
@@ -1668,7 +1678,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 	private static IButton createButton(final IContainer parent, final String text, final Object layoutdata, final boolean bold) {
 		final IButton b = parent.add(BPF.button(), layoutdata != null ? layoutdata : text);
 		b.setText(text.length() == 0 ? "\"\"" : text);
-		// TODO: set bold ?
+		// TODO NM set bold ?
 		return b;
 	}
 
