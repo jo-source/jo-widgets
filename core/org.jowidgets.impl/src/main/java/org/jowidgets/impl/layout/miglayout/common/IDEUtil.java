@@ -16,57 +16,57 @@ public class IDEUtil {
 	/**
 	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
 	 */
-	public final UnitValue ZERO = MigLayoutToolkit.getUnitValueToolkit().ZERO;
+	public final UnitValue ZERO = MigLayoutToolkit.getMigUnitValueToolkit().ZERO;
 
 	/**
 	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
 	 */
-	public final UnitValue TOP = MigLayoutToolkit.getUnitValueToolkit().TOP;
+	public final UnitValue TOP = MigLayoutToolkit.getMigUnitValueToolkit().TOP;
 
 	/**
 	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
 	 */
-	public final UnitValue LEADING = MigLayoutToolkit.getUnitValueToolkit().LEADING;
+	public final UnitValue LEADING = MigLayoutToolkit.getMigUnitValueToolkit().LEADING;
 
 	/**
 	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
 	 */
-	public final UnitValue LEFT = MigLayoutToolkit.getUnitValueToolkit().LEFT;
+	public final UnitValue LEFT = MigLayoutToolkit.getMigUnitValueToolkit().LEFT;
 
 	/**
 	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
 	 */
-	public final UnitValue CENTER = MigLayoutToolkit.getUnitValueToolkit().CENTER;
+	public final UnitValue CENTER = MigLayoutToolkit.getMigUnitValueToolkit().CENTER;
 
 	/**
 	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
 	 */
-	public final UnitValue TRAILING = MigLayoutToolkit.getUnitValueToolkit().TRAILING;
+	public final UnitValue TRAILING = MigLayoutToolkit.getMigUnitValueToolkit().TRAILING;
 
 	/**
 	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
 	 */
-	public final UnitValue RIGHT = MigLayoutToolkit.getUnitValueToolkit().RIGHT;
+	public final UnitValue RIGHT = MigLayoutToolkit.getMigUnitValueToolkit().RIGHT;
 
 	/**
 	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
 	 */
-	public final UnitValue BOTTOM = MigLayoutToolkit.getUnitValueToolkit().BOTTOM;
+	public final UnitValue BOTTOM = MigLayoutToolkit.getMigUnitValueToolkit().BOTTOM;
 
 	/**
 	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
 	 */
-	public final UnitValue LABEL = MigLayoutToolkit.getUnitValueToolkit().LABEL;
+	public final UnitValue LABEL = MigLayoutToolkit.getMigUnitValueToolkit().LABEL;
 
 	/**
 	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
 	 */
-	public final UnitValue INF = MigLayoutToolkit.getUnitValueToolkit().INF;
+	public final UnitValue INF = MigLayoutToolkit.getMigUnitValueToolkit().INF;
 
 	/**
 	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
 	 */
-	public final UnitValue BASELINE_IDENTITY = MigLayoutToolkit.getUnitValueToolkit().BASELINE_IDENTITY;
+	public final UnitValue BASELINE_IDENTITY = MigLayoutToolkit.getMigUnitValueToolkit().BASELINE_IDENTITY;
 
 	private final String[] X_Y_STRINGS = new String[] {"x", "y", "x2", "y2"};
 
@@ -163,7 +163,7 @@ public class IDEUtil {
 
 		final DimConstraint[] dims = ac.getConstaints();
 		final BoundSize defGap = isCols
-				? MigLayoutToolkit.getPlatformDefaults().getGridGapX() : MigLayoutToolkit.getPlatformDefaults().getGridGapY();
+				? MigLayoutToolkit.getMigPlatformDefaults().getGridGapX() : MigLayoutToolkit.getMigPlatformDefaults().getGridGapY();
 
 		for (int i = 0; i < dims.length; i++) {
 			final DimConstraint dc = dims[i];
@@ -740,7 +740,7 @@ public class IDEUtil {
 
 		final UnitValue[] insets = lc.getInsets();
 		if (insets != null) {
-			final LayoutUtil layoutUtil = MigLayoutToolkit.getLayoutUtil();
+			final LayoutUtil layoutUtil = MigLayoutToolkit.getMigLayoutUtil();
 			final String cs = layoutUtil.getCCString(insets);
 			if (cs != null) {
 				if (asAPI) {

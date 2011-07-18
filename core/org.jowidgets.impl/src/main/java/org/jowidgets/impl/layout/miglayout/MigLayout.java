@@ -43,18 +43,18 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.impl.layout.miglayout.common.AC;
 import org.jowidgets.impl.layout.miglayout.common.CC;
-import org.jowidgets.impl.layout.miglayout.common.ComponentWrapper;
+import org.jowidgets.impl.layout.miglayout.common.IComponentWrapper;
 import org.jowidgets.impl.layout.miglayout.common.ConstraintParser;
-import org.jowidgets.impl.layout.miglayout.common.ContainerWrapper;
+import org.jowidgets.impl.layout.miglayout.common.IContainerWrapper;
 import org.jowidgets.impl.layout.miglayout.common.Grid;
 import org.jowidgets.impl.layout.miglayout.common.LC;
-import org.jowidgets.impl.layout.miglayout.common.LayoutCallback;
+import org.jowidgets.impl.layout.miglayout.common.AbstractLayoutCallback;
 import org.jowidgets.impl.layout.miglayout.common.LayoutUtil;
 
 final class MigLayout implements IMigLayout {
 
 	private final IContainer container;
-	private transient ContainerWrapper cacheParentW = null;
+	private transient IContainerWrapper cacheParentW = null;
 
 	// Hold the serializable text representation of the constraints.
 	private Object constraints;
@@ -65,14 +65,14 @@ final class MigLayout implements IMigLayout {
 	private transient AC colSpecs = null;
 	private transient AC rowSpecs = null;
 
-	private final transient Map<ComponentWrapper, CC> ccMap = new HashMap<ComponentWrapper, CC>(8);
+	private final transient Map<IComponentWrapper, CC> ccMap = new HashMap<IComponentWrapper, CC>(8);
 	private transient Grid grid = null;
 
 	// The component to string constraints mappings.
 	private final Map<IControl, Object> scrConstrMap = new IdentityHashMap<IControl, Object>(8);
 
-	private transient ArrayList<LayoutCallback> callbackList = null;
-	private transient int lastModCount = MigLayoutToolkit.getPlatformDefaults().getModCount();
+	private transient ArrayList<AbstractLayoutCallback> callbackList = null;
+	private transient int lastModCount = MigLayoutToolkit.getMigPlatformDefaults().getModCount();
 	private transient int lastHash = -1;
 
 	private final StringBuilder reason = new StringBuilder();
@@ -90,7 +90,7 @@ final class MigLayout implements IMigLayout {
 		final Object rowConstraints) {
 		this.container = container;
 		this.cacheParentW = new JoMigContainerWrapper(container);
-		layoutUtil = MigLayoutToolkit.getLayoutUtil();
+		layoutUtil = MigLayoutToolkit.getMigLayoutUtil();
 		setLayoutConstraints(constraints);
 		setColumnConstraints(columnConstraints);
 		setRowConstraints(rowConstraints);
@@ -201,7 +201,7 @@ final class MigLayout implements IMigLayout {
 			throw new IllegalArgumentException("Component must already be added to parent!");
 		}
 
-		final ComponentWrapper cw = new JoMigComponentWrapper(comp);
+		final IComponentWrapper cw = new JoMigComponentWrapper(comp);
 
 		if (constr == null || constr instanceof String) {
 			final String cStr = ConstraintParser.prepare((String) constr);
@@ -230,19 +230,19 @@ final class MigLayout implements IMigLayout {
 		return scrConstrMap.containsKey(control);
 	}
 
-	public void addLayoutCallback(final LayoutCallback callback) {
+	public void addLayoutCallback(final AbstractLayoutCallback callback) {
 		if (callback == null) {
 			throw new NullPointerException();
 		}
 
 		if (callbackList == null) {
-			callbackList = new ArrayList<LayoutCallback>(1);
+			callbackList = new ArrayList<AbstractLayoutCallback>(1);
 		}
 
 		callbackList.add(callback);
 	}
 
-	public void removeLayoutCallback(final LayoutCallback callback) {
+	public void removeLayoutCallback(final AbstractLayoutCallback callback) {
 		if (callbackList != null) {
 			callbackList.remove(callback);
 		}
@@ -251,8 +251,8 @@ final class MigLayout implements IMigLayout {
 	private void checkChildren() {
 		final List<IControl> comps = container.getChildren();
 
-		final List<ComponentWrapper> removed = new LinkedList<ComponentWrapper>();
-		for (final ComponentWrapper cw : ccMap.keySet()) {
+		final List<IComponentWrapper> removed = new LinkedList<IComponentWrapper>();
+		for (final IComponentWrapper cw : ccMap.keySet()) {
 			if (comps.contains(cw.getComponent())) {
 				comps.remove(cw.getComponent());
 				continue;
@@ -260,7 +260,7 @@ final class MigLayout implements IMigLayout {
 			removed.add(cw);
 		}
 
-		for (final ComponentWrapper cw : removed) {
+		for (final IComponentWrapper cw : removed) {
 			scrConstrMap.remove(cw.getComponent());
 			ccMap.remove(cw);
 		}
@@ -307,7 +307,7 @@ final class MigLayout implements IMigLayout {
 		checkChildren();
 
 		// Check if the grid is valid
-		final int mc = MigLayoutToolkit.getPlatformDefaults().getModCount();
+		final int mc = MigLayoutToolkit.getMigPlatformDefaults().getModCount();
 		if (lastModCount != mc) {
 			grid = null;
 			lastModCount = mc;
@@ -315,7 +315,7 @@ final class MigLayout implements IMigLayout {
 		}
 
 		int hash = container.getSize().hashCode();
-		for (final Iterator<ComponentWrapper> it = ccMap.keySet().iterator(); it.hasNext();) {
+		for (final Iterator<IComponentWrapper> it = ccMap.keySet().iterator(); it.hasNext();) {
 			hash += it.next().getLayoutHashCode();
 		}
 

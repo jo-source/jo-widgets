@@ -1,5 +1,31 @@
-//CHECKSTYLE:OFF
-
+/*
+ * Copyright (c) 2004, Mikael Grev, MiG InfoCom AB. (miglayout (at) miginfocom (dot) com), 
+ * modifications by Nikolaus Moll
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * Redistributions of source code must retain the above copyright notice, this list
+ * of conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright notice, this
+ * list of conditions and the following disclaimer in the documentation and/or other
+ * materials provided with the distribution.
+ * Neither the name of the MiG InfoCom AB nor the names of its contributors may be
+ * used to endorse or promote products derived from this software without specific
+ * prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ * IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+ * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+ * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+ * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+ * OF SUCH DAMAGE.
+ *
+ */
 package org.jowidgets.impl.layout.miglayout.common;
 
 import java.io.Externalizable;
@@ -17,7 +43,9 @@ public final class DimConstraint implements Externalizable {
 	/**
 	 * How this entity can be resized in the dimension that this constraint represents.
 	 */
+	//CHECKSTYLE:OFF
 	final ResizeConstraint resize = new ResizeConstraint();
+	//CHECKSTYLE:ON
 
 	// Look at the properties' getter/setter methods for explanation
 
@@ -25,7 +53,8 @@ public final class DimConstraint implements Externalizable {
 
 	private BoundSize size = BoundSize.NULL_SIZE; // Min, pref, max. Never null, but sizes can be null.
 
-	private BoundSize gapBefore = null, gapAfter = null;
+	private BoundSize gapBefore = null;
+	private BoundSize gapAfter = null;
 
 	private UnitValue align = null;
 
@@ -161,14 +190,16 @@ public final class DimConstraint implements Externalizable {
 	}
 
 	public UnitValue getAlignOrDefault(final boolean isCols) {
-		if (align != null)
+		if (align != null) {
 			return align;
+		}
 
-		if (isCols)
-			return MigLayoutToolkit.getUnitValueToolkit().LEADING;
+		if (isCols) {
+			return MigLayoutToolkit.getMigUnitValueToolkit().LEADING;
+		}
 
-		return fill || MigLayoutToolkit.getPlatformDefaults().getDefaultRowAlignmentBaseline() == false
-				? MigLayoutToolkit.getUnitValueToolkit().CENTER : MigLayoutToolkit.getUnitValueToolkit().BASELINE_IDENTITY;
+		return fill || MigLayoutToolkit.getMigPlatformDefaults().getDefaultRowAlignmentBaseline() == false
+				? MigLayoutToolkit.getMigUnitValueToolkit().CENTER : MigLayoutToolkit.getMigUnitValueToolkit().BASELINE_IDENTITY;
 	}
 
 	/**
@@ -283,8 +314,9 @@ public final class DimConstraint implements Externalizable {
 	 * @param size The new size. May be <code>null</code>.
 	 */
 	public void setSize(final BoundSize size) {
-		if (size != null)
+		if (size != null) {
 			size.checkNotLinked();
+		}
 		this.size = size;
 	}
 
@@ -409,13 +441,15 @@ public final class DimConstraint implements Externalizable {
 	 *         sizes that are <code>null</code>. Returns <code>null</code> if there was no gap specified. A new and free to use
 	 *         array.
 	 */
-	int[] getRowGaps(final ContainerWrapper parent, final BoundSize defGap, final int refSize, final boolean before) {
+	int[] getRowGaps(final IContainerWrapper parent, final BoundSize defGap, final int refSize, final boolean before) {
 		BoundSize gap = before ? gapBefore : gapAfter;
-		if (gap == null || gap.isUnset())
+		if (gap == null || gap.isUnset()) {
 			gap = defGap;
+		}
 
-		if (gap == null || gap.isUnset())
+		if (gap == null || gap.isUnset()) {
 			return null;
+		}
 
 		final int[] ret = new int[3];
 		for (int i = LayoutUtil.MIN; i <= LayoutUtil.MAX; i++) {
@@ -441,10 +475,10 @@ public final class DimConstraint implements Externalizable {
 	 *         array.
 	 */
 	int[] getComponentGaps(
-		final ContainerWrapper parent,
-		final ComponentWrapper comp,
+		final IContainerWrapper parent,
+		final IComponentWrapper comp,
 		final BoundSize adjGap,
-		final ComponentWrapper adjacentComp,
+		final IComponentWrapper adjacentComp,
 		final String tag,
 		final int refSize,
 		final int adjacentSide,
@@ -452,11 +486,18 @@ public final class DimConstraint implements Externalizable {
 		BoundSize gap = adjacentSide < 2 ? gapBefore : gapAfter;
 
 		final boolean hasGap = gap != null && gap.getGapPush();
-		if ((gap == null || gap.isUnset()) && (adjGap == null || adjGap.isUnset()) && comp != null)
-			gap = MigLayoutToolkit.getPlatformDefaults().getDefaultComponentGap(comp, adjacentComp, adjacentSide + 1, tag, isLTR);
+		if ((gap == null || gap.isUnset()) && (adjGap == null || adjGap.isUnset()) && comp != null) {
+			gap = MigLayoutToolkit.getMigPlatformDefaults().getDefaultComponentGap(
+					comp,
+					adjacentComp,
+					adjacentSide + 1,
+					tag,
+					isLTR);
+		}
 
-		if (gap == null)
+		if (gap == null) {
 			return hasGap ? new int[] {0, 0, LayoutUtil.NOT_SET} : null;
+		}
 
 		final int[] ret = new int[3];
 		for (int i = LayoutUtil.MIN; i <= LayoutUtil.MAX; i++) {
@@ -471,18 +512,19 @@ public final class DimConstraint implements Externalizable {
 	// ************************************************
 
 	private Object readResolve() throws ObjectStreamException {
-		return MigLayoutToolkit.getLayoutUtil().getSerializedObject(this);
+		return MigLayoutToolkit.getMigLayoutUtil().getSerializedObject(this);
 	}
 
 	@Override
 	public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
-		final LayoutUtil layoutUtil = MigLayoutToolkit.getLayoutUtil();
+		final LayoutUtil layoutUtil = MigLayoutToolkit.getMigLayoutUtil();
 		layoutUtil.setSerializedObject(this, layoutUtil.readAsXML(in));
 	}
 
 	@Override
 	public void writeExternal(final ObjectOutput out) throws IOException {
-		if (getClass() == DimConstraint.class)
-			MigLayoutToolkit.getLayoutUtil().writeAsXML(out, this);
+		if (getClass() == DimConstraint.class) {
+			MigLayoutToolkit.getMigLayoutUtil().writeAsXML(out, this);
+		}
 	}
 }

@@ -1,12 +1,6 @@
-//CHECKSTYLE:OFF
-
-package org.jowidgets.impl.layout.miglayout.common;
-
 /*
- * License (BSD):
- * ==============
- *
- * Copyright (c) 2004, Mikael Grev, MiG InfoCom AB. (miglayout (at) miginfocom (dot) com)
+ * Copyright (c) 2004, Mikael Grev, MiG InfoCom AB. (miglayout (at) miginfocom (dot) com), 
+ * modifications by Nikolaus Moll
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -35,24 +29,25 @@ package org.jowidgets.impl.layout.miglayout.common;
  * @author Mikael Grev, MiG InfoCom AB
  *         Date: 2006-sep-08
  */
+package org.jowidgets.impl.layout.miglayout.common;
 
 /**
  * A class that wraps a container that contains components.
  */
-public interface ContainerWrapper extends ComponentWrapper {
+public interface IContainerWrapper extends IComponentWrapper {
 	/**
 	 * Returns the components of the container that wrapper is wrapping.
 	 * 
 	 * @return The components of the container that wrapper is wrapping. Never <code>null</code>.
 	 */
-	public abstract ComponentWrapper[] getComponents();
+	IComponentWrapper[] getComponents();
 
 	/**
 	 * Returns the number of components that this parent has.
 	 * 
 	 * @return The number of components that this parent has.
 	 */
-	public abstract int getComponentCount();
+	int getComponentCount();
 
 	/**
 	 * Returns the <code>LayoutHandler</code> (in Swing terms) that is handling the layout of this container.
@@ -61,14 +56,14 @@ public interface ContainerWrapper extends ComponentWrapper {
 	 * 
 	 * @return The layout handler instance. Never <code>null</code>.
 	 */
-	public abstract Object getLayout();
+	Object getLayout();
 
 	/**
 	 * Returns if this container is using left-to-right component ordering.
 	 * 
 	 * @return If this container is using left-to-right component ordering.
 	 */
-	public abstract boolean isLeftToRight();
+	boolean isLeftToRight();
 
 	/**
 	 * Paints a cell to indicate where it is.
@@ -78,5 +73,5 @@ public interface ContainerWrapper extends ComponentWrapper {
 	 * @param width The width to draw/fill
 	 * @param height The height to draw/fill
 	 */
-	public abstract void paintDebugCell(int x, int y, int width, int height);
+	void paintDebugCell(int x, int y, int width, int height);
 }

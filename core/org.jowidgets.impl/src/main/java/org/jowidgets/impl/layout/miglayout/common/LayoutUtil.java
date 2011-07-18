@@ -1,5 +1,31 @@
-//CHECKSTYLE:OFF
-
+/*
+ * Copyright (c) 2004, Mikael Grev, MiG InfoCom AB. (miglayout (at) miginfocom (dot) com), 
+ * modifications by Nikolaus Moll
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * Redistributions of source code must retain the above copyright notice, this list
+ * of conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright notice, this
+ * list of conditions and the following disclaimer in the documentation and/or other
+ * materials provided with the distribution.
+ * Neither the name of the MiG InfoCom AB nor the names of its contributors may be
+ * used to endorse or promote products derived from this software without specific
+ * prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ * IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+ * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+ * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+ * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+ * OF SUCH DAMAGE.
+ *
+ */
 package org.jowidgets.impl.layout.miglayout.common;
 
 import java.beans.Beans;
@@ -25,26 +51,31 @@ import org.jowidgets.impl.layout.miglayout.MigLayoutToolkit;
  * A utility class that has only static helper methods.
  */
 public final class LayoutUtil {
+	public static final int MIN = 0;
+	public static final int PREF = 1;
+	public static final int MAX = 2;
+
 	/**
 	 * A substitute value for aa really large value. Integer.MAX_VALUE is not used since that means a lot of defensive code
 	 * for potential overflow must exist in many places. This value is large enough for being unreasonable yet it is hard to
 	 * overflow.
 	 */
-	final static int INF = (Integer.MAX_VALUE >> 10) - 100; // To reduce likelihood of overflow errors when calculating.
+	static final int INF = (Integer.MAX_VALUE >> 10) - 100; // To reduce likelihood of overflow errors when calculating.
 
 	/**
 	 * Tag int for a value that in considered "not set". Used as "null" element in int arrays.
 	 */
-	final static int NOT_SET = Integer.MIN_VALUE + 12346; // Magic value...
+	static final int NOT_SET = Integer.MIN_VALUE + 12346; // Magic value...
 
 	// Index for the different sizes
-	public static final int MIN = 0;
-	public static final int PREF = 1;
-	public static final int MAX = 2;
 
-	private volatile WeakHashMap<Object, String> CR_MAP = null;
-	private volatile WeakHashMap<Object, Boolean> DT_MAP = null; // The Containers that have design time. Value not used.
+	private volatile WeakHashMap<Object, String> crMap = null;
+	private volatile WeakHashMap<Object, Boolean> dtMap = null; // The Containers that have design time. Value not used.
 	private int eSz = 0;
+
+	private ByteArrayOutputStream writeOutputStream = null;
+	private byte[] readBuf = null;
+	private final IdentityHashMap<Object, Object> serMap = new IdentityHashMap<Object, Object>(2);
 
 	public LayoutUtil() {}
 
@@ -58,7 +89,7 @@ public final class LayoutUtil {
 	}
 
 	/**
-	 * Sets if design time is turned on for a Container in {@link ContainerWrapper}.
+	 * Sets if design time is turned on for a Container in {@link IContainerWrapper}.
 	 * 
 	 * @param cw The container to set design time for. <code>null</code> is legal and can be used as
 	 *            a key to turn on/off design time "in general". Note though that design time "in general" is
@@ -69,29 +100,32 @@ public final class LayoutUtil {
 	 *            design time value.
 	 * @param b <code>true</code> means design time on.
 	 */
-	public void setDesignTime(final ContainerWrapper cw, final boolean b) {
-		if (DT_MAP == null)
-			DT_MAP = new WeakHashMap<Object, Boolean>();
+	public void setDesignTime(final IContainerWrapper cw, final boolean b) {
+		if (dtMap == null) {
+			dtMap = new WeakHashMap<Object, Boolean>();
+		}
 
-		DT_MAP.put((cw != null ? cw.getComponent() : null), Boolean.valueOf(b));
+		dtMap.put((cw != null ? cw.getComponent() : null), Boolean.valueOf(b));
 	}
 
 	/**
-	 * Returns if design time is turned on for a Container in {@link ContainerWrapper}.
+	 * Returns if design time is turned on for a Container in {@link IContainerWrapper}.
 	 * 
 	 * @param cw The container to set design time for. <code>null</code> is legal will return <code>true</code> if there is at
 	 *            least one <code>ContainerWrapper</code> (or <code>null</code>) that have design time
 	 *            turned on.
 	 * @return If design time is set for <code>cw</code>.
 	 */
-	public boolean isDesignTime(ContainerWrapper cw) {
-		if (DT_MAP == null)
+	public boolean isDesignTime(IContainerWrapper cw) {
+		if (dtMap == null) {
 			return Beans.isDesignTime();
+		}
 
-		if (cw != null && DT_MAP.containsKey(cw.getComponent()) == false)
+		if (cw != null && dtMap.containsKey(cw.getComponent()) == false) {
 			cw = null;
+		}
 
-		final Boolean b = DT_MAP.get(cw != null ? cw.getComponent() : null);
+		final Boolean b = dtMap.get(cw != null ? cw.getComponent() : null);
 		return b != null && b.booleanValue();
 	}
 
@@ -121,17 +155,18 @@ public final class LayoutUtil {
 	 * probably have an equals method that compares identities or <code>con</code> objects that .equals() will only
 	 * be able to have <b>one</b> creation string.
 	 * <p>
-	 * If {@link LayoutUtil#isDesignTime(ContainerWrapper)} returns <code>false</code> the method does nothing.
+	 * If {@link LayoutUtil#isDesignTime(IContainerWrapper)} returns <code>false</code> the method does nothing.
 	 * 
 	 * @param con The object. if <code>null</code> the method does nothing.
 	 * @param s The creation string. if <code>null</code> the method does nothing.
 	 */
 	void putCCString(final Object con, final String s) {
 		if (s != null && con != null && isDesignTime(null)) {
-			if (CR_MAP == null)
-				CR_MAP = new WeakHashMap<Object, String>(64);
+			if (crMap == null) {
+				crMap = new WeakHashMap<Object, String>(64);
+			}
 
-			CR_MAP.put(con, s);
+			crMap.put(con, s);
 		}
 	}
 
@@ -151,13 +186,13 @@ public final class LayoutUtil {
 
 	/**
 	 * Returns strings set with {@link #putCCString(Object, String)} or <code>null</code> if nothing is associated or
-	 * {@link LayoutUtil#isDesignTime(ContainerWrapper)} returns <code>false</code>.
+	 * {@link LayoutUtil#isDesignTime(IContainerWrapper)} returns <code>false</code>.
 	 * 
 	 * @param con The constrain object.
 	 * @return The creation string or <code>null</code> if nothing is registered with the <code>con</code> object.
 	 */
 	String getCCString(final Object con) {
-		return CR_MAP != null ? CR_MAP.get(con) : null;
+		return crMap != null ? crMap.get(con) : null;
 	}
 
 	void throwCC() {
@@ -196,8 +231,9 @@ public final class LayoutUtil {
 			if (sizes[i] != null) {
 				float len = sizes[i][startSizeType] != NOT_SET ? sizes[i][startSizeType] : 0;
 				final int newSizeBounded = getBrokenBoundary(len, sizes[i][MIN], sizes[i][MAX]);
-				if (newSizeBounded != NOT_SET)
+				if (newSizeBounded != NOT_SET) {
 					len = newSizeBounded;
+				}
 
 				usedLength += len;
 				lengths[i] = len;
@@ -212,8 +248,9 @@ public final class LayoutUtil {
 			final TreeSet<Integer> prioList = new TreeSet<Integer>();
 			for (int i = 0; i < sizes.length; i++) {
 				final ResizeConstraint resC = (ResizeConstraint) getIndexSafe(resConstr, i);
-				if (resC != null)
+				if (resC != null) {
 					prioList.add(Integer.valueOf(isGrow ? resC.growPrio : resC.shrinkPrio));
+				}
 			}
 			final Integer[] prioIntegers = prioList.toArray(new Integer[prioList.size()]);
 
@@ -224,8 +261,9 @@ public final class LayoutUtil {
 					float totWeight = 0f;
 					final Float[] resizeWeight = new Float[sizes.length];
 					for (int i = 0; i < sizes.length; i++) {
-						if (sizes[i] == null) // if no min/pref/max size at all do not grow or shrink.
+						if (sizes[i] == null) {
 							continue;
+						}
 
 						final ResizeConstraint resC = (ResizeConstraint) getIndexSafe(resConstr, i);
 						if (resC != null) {
@@ -240,8 +278,9 @@ public final class LayoutUtil {
 								else {
 									resizeWeight[i] = resC.shrink;
 								}
-								if (resizeWeight[i] != null)
+								if (resizeWeight[i] != null) {
 									totWeight += resizeWeight[i].floatValue();
+								}
 							}
 						}
 					}
@@ -302,23 +341,27 @@ public final class LayoutUtil {
 	 */
 	private int getBrokenBoundary(final float sz, final int lower, final int upper) {
 		if (lower != NOT_SET) {
-			if (sz < lower)
+			if (sz < lower) {
 				return lower;
+			}
 		}
 		else if (sz < 0f) {
 			return 0;
 		}
 
-		if (upper != NOT_SET && sz > upper)
+		if (upper != NOT_SET && sz > upper) {
 			return upper;
+		}
 
 		return NOT_SET;
 	}
 
 	static int sum(final int[] terms, final int start, final int len) {
 		int s = 0;
-		for (int i = start, iSz = start + len; i < iSz; i++)
+		final int iSz = start + len;
+		for (int i = start; i < iSz; i++) {
 			s += terms[i];
+		}
 		return s;
 	}
 
@@ -327,14 +370,16 @@ public final class LayoutUtil {
 	}
 
 	public int getSizeSafe(final int[] sizes, final int sizeType) {
-		if (sizes == null || sizes[sizeType] == NOT_SET)
+		if (sizes == null || sizes[sizeType] == NOT_SET) {
 			return sizeType == MAX ? LayoutUtil.INF : 0;
+		}
 		return sizes[sizeType];
 	}
 
 	BoundSize derive(final BoundSize bs, final UnitValue min, final UnitValue pref, final UnitValue max) {
-		if (bs == null || bs.isUnset())
+		if (bs == null || bs.isUnset()) {
 			return new BoundSize(min, pref, max, null);
+		}
 
 		return new BoundSize(min != null ? min : bs.getMin(), pref != null ? pref : bs.getPreferred(), max != null
 				? max : bs.getMax(), bs.getGapPush(), null);
@@ -348,9 +393,10 @@ public final class LayoutUtil {
 	 * @param container The parent that may be used to get the left-to-right if ffc does not specify this.
 	 * @return If left-to-right orientation is currently used.
 	 */
-	public boolean isLeftToRight(final LC lc, final ContainerWrapper container) {
-		if (lc != null && lc.getLeftToRight() != null)
+	public boolean isLeftToRight(final LC lc, final IContainerWrapper container) {
+		if (lc != null && lc.getLeftToRight() != null) {
 			return lc.getLeftToRight().booleanValue();
+		}
 
 		return container == null || container.isLeftToRight();
 	}
@@ -421,8 +467,8 @@ public final class LayoutUtil {
 	 */
 	UnitValue getInsets(final LC lc, final int side, final boolean getDefault) {
 		final UnitValue[] i = lc.getInsets();
-		return (i != null && i[side] != null) ? i[side] : (getDefault ? MigLayoutToolkit.getPlatformDefaults().getPanelInsets(
-				side) : MigLayoutToolkit.getUnitValueToolkit().ZERO);
+		return (i != null && i[side] != null) ? i[side] : (getDefault ? MigLayoutToolkit.getMigPlatformDefaults().getPanelInsets(
+				side) : MigLayoutToolkit.getMigUnitValueToolkit().ZERO);
 	}
 
 	/**
@@ -438,16 +484,15 @@ public final class LayoutUtil {
 
 		final XMLEncoder encoder = new XMLEncoder(os);
 
-		if (listener != null)
+		if (listener != null) {
 			encoder.setExceptionListener(listener);
+		}
 
 		encoder.writeObject(o);
 		encoder.close(); // Must be closed to write.
 
 		Thread.currentThread().setContextClassLoader(oldClassLoader);
 	}
-
-	private ByteArrayOutputStream writeOutputStream = null;
 
 	/**
 	 * Writes an object to XML.
@@ -456,15 +501,18 @@ public final class LayoutUtil {
 	 * @param o The object to write.
 	 */
 	public synchronized void writeAsXML(final ObjectOutput out, final Object o) throws IOException {
-		if (writeOutputStream == null)
+		if (writeOutputStream == null) {
 			writeOutputStream = new ByteArrayOutputStream(16384);
+		}
 
 		writeOutputStream.reset();
 
 		writeXMLObject(writeOutputStream, o, new ExceptionListener() {
 			@Override
 			public void exceptionThrown(final Exception e) {
+				//CHECKSTYLE:OFF
 				e.printStackTrace();
+				//CHECKSTYLE:ON
 			}
 		});
 
@@ -474,8 +522,6 @@ public final class LayoutUtil {
 		out.write(buf);
 	}
 
-	private byte[] readBuf = null;
-
 	/**
 	 * Reads an object from <code>in</code> using the
 	 * 
@@ -484,8 +530,9 @@ public final class LayoutUtil {
 	 * @throws IOException If there was a problem saving as XML
 	 */
 	public synchronized Object readAsXML(final ObjectInput in) throws IOException {
-		if (readBuf == null)
+		if (readBuf == null) {
 			readBuf = new byte[16384];
+		}
 
 		final Thread cThread = Thread.currentThread();
 		ClassLoader oldCL = null;
@@ -500,8 +547,9 @@ public final class LayoutUtil {
 		Object o = null;
 		try {
 			final int length = in.readInt();
-			if (length > readBuf.length)
+			if (length > readBuf.length) {
 				readBuf = new byte[length];
+			}
 
 			in.readFully(readBuf, 0, length);
 
@@ -511,13 +559,12 @@ public final class LayoutUtil {
 		catch (final EOFException ignored) {
 		}
 
-		if (oldCL != null)
+		if (oldCL != null) {
 			cThread.setContextClassLoader(oldCL);
+		}
 
 		return o;
 	}
-
-	private final IdentityHashMap<Object, Object> SER_MAP = new IdentityHashMap<Object, Object>(2);
 
 	/**
 	 * Sets the serialized object and associates it with <code>caller</code>.
@@ -526,8 +573,8 @@ public final class LayoutUtil {
 	 * @param o The just serialized object.
 	 */
 	public void setSerializedObject(final Object caller, final Object o) {
-		synchronized (SER_MAP) {
-			SER_MAP.put(caller, o);
+		synchronized (serMap) {
+			serMap.put(caller, o);
 		}
 	}
 
@@ -538,8 +585,8 @@ public final class LayoutUtil {
 	 * @return The object.
 	 */
 	public Object getSerializedObject(final Object caller) {
-		synchronized (SER_MAP) {
-			return SER_MAP.remove(caller);
+		synchronized (serMap) {
+			return serMap.remove(caller);
 		}
 	}
 }

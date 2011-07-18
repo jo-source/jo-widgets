@@ -1,12 +1,6 @@
-//CHECKSTYLE:OFF
-
-package org.jowidgets.impl.layout.miglayout.common;
-
 /*
- * License (BSD):
- * ==============
- *
- * Copyright (c) 2004, Mikael Grev, MiG InfoCom AB. (miglayout (at) miginfocom (dot) com)
+ * Copyright (c) 2004, Mikael Grev, MiG InfoCom AB. (miglayout (at) miginfocom (dot) com), 
+ * modifications by Nikolaus Moll
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -35,6 +29,7 @@ package org.jowidgets.impl.layout.miglayout.common;
  * @author Mikael Grev, MiG InfoCom AB
  *         Date: 2006-sep-08
  */
+package org.jowidgets.impl.layout.miglayout.common;
 
 /**
  * A class that wraps the important parts of a Component.
@@ -54,27 +49,27 @@ package org.jowidgets.impl.layout.miglayout.common;
  * }
  * </pre>
  */
-public interface ComponentWrapper {
-	static final int TYPE_UNSET = -1;
-	public static final int TYPE_UNKNOWN = 0;
-	public static final int TYPE_CONTAINER = 1;
-	public static final int TYPE_LABEL = 2;
-	public static final int TYPE_TEXT_FIELD = 3;
-	public static final int TYPE_TEXT_AREA = 4;
-	public static final int TYPE_BUTTON = 5;
-	public static final int TYPE_LIST = 6;
-	public static final int TYPE_TABLE = 7;
-	public static final int TYPE_SCROLL_PANE = 8;
-	public static final int TYPE_IMAGE = 9;
-	public static final int TYPE_PANEL = 10;
-	public static final int TYPE_COMBO_BOX = 11;
-	public static final int TYPE_SLIDER = 12;
-	public static final int TYPE_SPINNER = 13;
-	public static final int TYPE_PROGRESS_BAR = 14;
-	public static final int TYPE_TREE = 15;
-	public static final int TYPE_CHECK_BOX = 16;
-	public static final int TYPE_SCROLL_BAR = 17;
-	public static final int TYPE_SEPARATOR = 18;
+public interface IComponentWrapper {
+	int TYPE_UNSET = -1;
+	int TYPE_UNKNOWN = 0;
+	int TYPE_CONTAINER = 1;
+	int TYPE_LABEL = 2;
+	int TYPE_TEXT_FIELD = 3;
+	int TYPE_TEXT_AREA = 4;
+	int TYPE_BUTTON = 5;
+	int TYPE_LIST = 6;
+	int TYPE_TABLE = 7;
+	int TYPE_SCROLL_PANE = 8;
+	int TYPE_IMAGE = 9;
+	int TYPE_PANEL = 10;
+	int TYPE_COMBO_BOX = 11;
+	int TYPE_SLIDER = 12;
+	int TYPE_SPINNER = 13;
+	int TYPE_PROGRESS_BAR = 14;
+	int TYPE_TREE = 15;
+	int TYPE_CHECK_BOX = 16;
+	int TYPE_SCROLL_BAR = 17;
+	int TYPE_SEPARATOR = 18;
 
 	/**
 	 * Returns the actual object that this wrapper is aggregating. This might be needed for getting
@@ -84,49 +79,49 @@ public interface ComponentWrapper {
 	 * 
 	 * @return The actual object that this wrapper is aggregating. Not <code>null</code>.
 	 */
-	public abstract Object getComponent();
+	Object getComponent();
 
 	/**
 	 * Returns the current x coordinate for this component.
 	 * 
 	 * @return The current x coordinate for this component.
 	 */
-	public abstract int getX();
+	int getX();
 
 	/**
 	 * Returns the current y coordinate for this component.
 	 * 
 	 * @return The current y coordinate for this component.
 	 */
-	public abstract int getY();
+	int getY();
 
 	/**
 	 * Returns the current width for this component.
 	 * 
 	 * @return The current width for this component.
 	 */
-	public abstract int getWidth();
+	int getWidth();
 
 	/**
 	 * Returns the current height for this component.
 	 * 
 	 * @return The current height for this component.
 	 */
-	public abstract int getHeight();
+	int getHeight();
 
 	/**
 	 * Returns the screen x-coordinate for the upper left coordinate of the component layout-able bounds.
 	 * 
 	 * @return The screen x-coordinate for the upper left coordinate of the component layout-able bounds.
 	 */
-	public abstract int getScreenLocationX();
+	int getScreenLocationX();
 
 	/**
 	 * Returns the screen y-coordinate for the upper left coordinate of the component layout-able bounds.
 	 * 
 	 * @return The screen y-coordinate for the upper left coordinate of the component layout-able bounds.
 	 */
-	public abstract int getScreenLocationY();
+	int getScreenLocationY();
 
 	/**
 	 * Returns the minimum width of the component.
@@ -138,7 +133,7 @@ public interface ComponentWrapper {
 	 * @since 3.5. Added the hint as a parameter knowing that a correction and recompilation is necessary for
 	 *        any implementing classes. This change was worth it though.
 	 */
-	public abstract int getMinimumWidth(int hHint);
+	int getMinimumWidth(int hHint);
 
 	/**
 	 * Returns the minimum height of the component.
@@ -150,7 +145,7 @@ public interface ComponentWrapper {
 	 * @since 3.5. Added the hint as a parameter knowing that a correction and recompilation is necessary for
 	 *        any implementing classes. This change was worth it though.
 	 */
-	public abstract int getMinimumHeight(int wHint);
+	int getMinimumHeight(int wHint);
 
 	/**
 	 * Returns the preferred width of the component.
@@ -162,7 +157,7 @@ public interface ComponentWrapper {
 	 * @since 3.5. Added the hint as a parameter knowing that a correction and recompilation is necessary for
 	 *        any implementing classes. This change was worth it though.
 	 */
-	public abstract int getPreferredWidth(int hHint);
+	int getPreferredWidth(int hHint);
 
 	/**
 	 * Returns the preferred height of the component.
@@ -174,7 +169,7 @@ public interface ComponentWrapper {
 	 * @since 3.5. Added the hint as a parameter knowing that a correction and recompilation is necessary for
 	 *        any implementing classes. This change was worth it though.
 	 */
-	public abstract int getPreferredHeight(int wHint);
+	int getPreferredHeight(int wHint);
 
 	/**
 	 * Returns the maximum width of the component.
@@ -186,7 +181,7 @@ public interface ComponentWrapper {
 	 * @since 3.5. Added the hint as a parameter knowing that a correction and recompilation is necessary for
 	 *        any implementing classes. This change was worth it though.
 	 */
-	public abstract int getMaximumWidth(int hHint);
+	int getMaximumWidth(int hHint);
 
 	/**
 	 * Returns the maximum height of the component.
@@ -198,7 +193,7 @@ public interface ComponentWrapper {
 	 * @since 3.5. Added the hint as a parameter knowing that a correction and recompilation is necessary for
 	 *        any implementing classes. This change was worth it though.
 	 */
-	public abstract int getMaximumHeight(int wHint);
+	int getMaximumHeight(int wHint);
 
 	/**
 	 * Sets the component's bounds.
@@ -208,7 +203,7 @@ public interface ComponentWrapper {
 	 * @param width The width.
 	 * @param height The height.
 	 */
-	public abstract void setBounds(int x, int y, int width, int height);
+	void setBounds(int x, int y, int width, int height);
 
 	/**
 	 * Returns if the component's visibility is set to <code>true</code>. This should not return if the component is
@@ -216,7 +211,7 @@ public interface ComponentWrapper {
 	 * 
 	 * @return <code>true</code> means visible.
 	 */
-	public abstract boolean isVisible();
+	boolean isVisible();
 
 	/**
 	 * Returns the baseline for the component given the suggested height.
@@ -225,7 +220,7 @@ public interface ComponentWrapper {
 	 * @param height The height to calculate for if other than the current. If <code>-1</code> the current size should be used.
 	 * @return The baseline from the top or -1 if not applicable.
 	 */
-	public abstract int getBaseline(int width, int height);
+	int getBaseline(int width, int height);
 
 	/**
 	 * Returns if the component has a baseline and if it can be retrieved. Should for instance return <code>false</code> for Swing
@@ -233,14 +228,14 @@ public interface ComponentWrapper {
 	 * 
 	 * @return If the component has a baseline and if it can be retrieved.
 	 */
-	public abstract boolean hasBaseline();
+	boolean hasBaseline();
 
 	/**
 	 * Returns the container for this component.
 	 * 
 	 * @return The container for this component. Will return <code>null</code> if the component has no parent.
 	 */
-	public abstract ContainerWrapper getParent();
+	IContainerWrapper getParent();
 
 	/**
 	 * Returns the pixel unit factor for the horizontal or vertical dimension.
@@ -259,7 +254,7 @@ public interface ComponentWrapper {
 	 * @param isHor If it is the horizontal factor that should be returned.
 	 * @return The factor.
 	 */
-	public abstract float getPixelUnitFactor(boolean isHor);
+	float getPixelUnitFactor(boolean isHor);
 
 	/**
 	 * Returns the DPI (Dots Per Inch) of the screen the component is currently in or for the default
@@ -269,7 +264,7 @@ public interface ComponentWrapper {
 	 * 
 	 * @return The DPI.
 	 */
-	public abstract int getHorizontalScreenDPI();
+	int getHorizontalScreenDPI();
 
 	/**
 	 * Returns the DPI (Dots Per Inch) of the screen the component is currently in or for the default
@@ -279,7 +274,7 @@ public interface ComponentWrapper {
 	 * 
 	 * @return The DPI.
 	 */
-	public abstract int getVerticalScreenDPI();
+	int getVerticalScreenDPI();
 
 	/**
 	 * Returns the pixel size of the screen that the component is currently in or for the default
@@ -289,7 +284,7 @@ public interface ComponentWrapper {
 	 * 
 	 * @return The screen size. E.g. <code>1280</code>.
 	 */
-	public abstract int getScreenWidth();
+	int getScreenWidth();
 
 	/**
 	 * Returns the pixel size of the screen that the component is currently in or for the default
@@ -299,7 +294,7 @@ public interface ComponentWrapper {
 	 * 
 	 * @return The screen size. E.g. <code>1024</code>.
 	 */
-	public abstract int getScreenHeight();
+	int getScreenHeight();
 
 	/**
 	 * Returns a String id that can be used to reference the component in link constraints. This value should
@@ -311,7 +306,7 @@ public interface ComponentWrapper {
 	 * 
 	 * @return The string link id or <code>null</code>.
 	 */
-	public abstract String getLinkId();
+	String getLinkId();
 
 	/**
 	 * Returns a hash code that should be reasonably different for anything that might change the layout. This value is used to
@@ -321,7 +316,7 @@ public interface ComponentWrapper {
 	 *         is
 	 *         disposed.
 	 */
-	public abstract int getLayoutHashCode();
+	int getLayoutHashCode();
 
 	/**
 	 * Returns the padding on a component by component basis. This method can be overridden to return padding to compensate for
@@ -338,12 +333,12 @@ public interface ComponentWrapper {
 	 *         changed so that
 	 *         the same insets can be returned many times. [top, left, bottom, right]
 	 */
-	public int[] getVisualPadding();
+	int[] getVisualPadding();
 
 	/**
 	 * Paints component outline to indicate where it is.
 	 */
-	public abstract void paintDebugOutline();
+	void paintDebugOutline();
 
 	/**
 	 * Returns the type of component that this wrapper is wrapping.
@@ -356,5 +351,5 @@ public interface ComponentWrapper {
 	 *            of the scrolled component should be returned.
 	 * @return The type of component that this wrapper is wrapping. E.g. {@link #TYPE_LABEL}.
 	 */
-	public abstract int getComponetType(boolean disregardScrollPane);
+	int getComponetType(boolean disregardScrollPane);
 }
