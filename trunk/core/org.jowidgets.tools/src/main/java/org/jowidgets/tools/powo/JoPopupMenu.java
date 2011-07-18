@@ -28,7 +28,6 @@
 
 package org.jowidgets.tools.powo;
 
-import org.jowidgets.api.command.IExecutionContextValues;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.common.types.Position;
@@ -43,12 +42,6 @@ public class JoPopupMenu extends Menu<IPopupMenu, DummyBluePrint<IPopupMenu>> im
 	public void show(final Position position) {
 		checkInitialized();
 		getWidget().show(position);
-	}
-
-	@Override
-	public void show(final Position position, final IExecutionContextValues context) {
-		checkInitialized();
-		getWidget().show(position, context);
 	}
 
 	@Override

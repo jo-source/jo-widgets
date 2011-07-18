@@ -29,63 +29,33 @@
 package org.jowidgets.tools.command;
 
 import org.jowidgets.api.command.IAction;
-import org.jowidgets.api.command.IActionChangeObservable;
-import org.jowidgets.api.command.IExceptionHandler;
 import org.jowidgets.api.command.IExecutionContext;
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.Accelerator;
+import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.util.Assert;
+import org.jowidgets.util.ITypedKey;
 
-public class ActionWrapper implements IAction {
+public class ExecutionContextWrapper implements IExecutionContext {
 
-	private final IAction action;
+	private final IExecutionContext executionContext;
 
-	public ActionWrapper(final IAction action) {
-		this.action = action;
+	public ExecutionContextWrapper(final IExecutionContext executionContext) {
+		Assert.paramNotNull(executionContext, "executionContext");
+		this.executionContext = executionContext;
 	}
 
 	@Override
-	public String getText() {
-		return action.getText();
+	public <VALUE_TYPE> VALUE_TYPE getValue(final ITypedKey<VALUE_TYPE> key) {
+		return executionContext.getValue(key);
 	}
 
 	@Override
-	public String getToolTipText() {
-		return action.getToolTipText();
+	public IAction getAction() {
+		return executionContext.getAction();
 	}
 
 	@Override
-	public IImageConstant getIcon() {
-		return action.getIcon();
-	}
-
-	@Override
-	public Character getMnemonic() {
-		return action.getMnemonic();
-	}
-
-	@Override
-	public Accelerator getAccelerator() {
-		return action.getAccelerator();
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return action.isEnabled();
-	}
-
-	@Override
-	public void execute(final IExecutionContext actionEvent) throws Exception {
-		action.execute(actionEvent);
-	}
-
-	@Override
-	public IExceptionHandler getExceptionHandler() {
-		return action.getExceptionHandler();
-	}
-
-	@Override
-	public IActionChangeObservable getActionChangeObservable() {
-		return action.getActionChangeObservable();
+	public IWidget getSource() {
+		return executionContext.getSource();
 	}
 
 }

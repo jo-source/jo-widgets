@@ -34,6 +34,7 @@ import org.jowidgets.api.model.item.IActionItemModelBuilder;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.util.IDecorator;
 
 public class ActionItemModel extends AbstractItemModelWrapper implements IActionItemModel {
 
@@ -92,6 +93,16 @@ public class ActionItemModel extends AbstractItemModelWrapper implements IAction
 	@Override
 	public final void setAction(final IAction action) {
 		getItemModel().setAction(action);
+	}
+
+	@Override
+	public void addDecorator(final IDecorator<IAction> action) {
+		getItemModel().addDecorator(action);
+	}
+
+	@Override
+	public void removeDecorator(final IDecorator<IAction> action) {
+		getItemModel().removeDecorator(action);
 	}
 
 	@Override

@@ -31,13 +31,11 @@ package org.jowidgets.impl.widgets.basic;
 import java.util.List;
 
 import org.jowidgets.api.command.IAction;
-import org.jowidgets.api.command.IExecutionContextValues;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.widgets.IActionMenuItem;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IMenuItem;
 import org.jowidgets.api.widgets.IPopupMenu;
-import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.impl.base.delegate.ItemDelegate;
 import org.jowidgets.impl.base.delegate.MenuDelegate;
@@ -56,15 +54,6 @@ public class PopupMenuImpl extends PopupMenuSpiWrapper implements IPopupMenu, ID
 
 		this.menuDelegate = new MenuDelegate(this, popupMenuSpi, getModel());
 		this.parent = parent;
-	}
-
-	@Override
-	public void show(final Position position, final IExecutionContextValues context) {
-		//TODO MG set the context on all elements
-
-		getWidget().show(position);
-
-		//TODO MG remove the context on all elements
 	}
 
 	@Override

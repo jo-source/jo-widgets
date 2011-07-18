@@ -30,6 +30,7 @@ package org.jowidgets.api.model.item;
 
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.common.widgets.controler.IActionObservable;
+import org.jowidgets.util.IDecorator;
 
 public interface IActionItemModel extends IMenuItemModel, IToolBarItemModel, IActionObservable {
 
@@ -38,6 +39,10 @@ public interface IActionItemModel extends IMenuItemModel, IToolBarItemModel, IAc
 	void setAction(IAction action);
 
 	void actionPerformed();
+
+	void addDecorator(IDecorator<IAction> decorator);
+
+	void removeDecorator(IDecorator<IAction> decorator);
 
 	/**
 	 * Makes a deep copy of the item.
