@@ -97,6 +97,7 @@ public class CheckBoxImpl extends ControlSpiWrapper implements ICheckBox {
 			public void inputChanged() {
 				isNull = false;
 				validationCache.setDirty();
+				inputObservable.fireInputChanged();
 			}
 		});
 	}

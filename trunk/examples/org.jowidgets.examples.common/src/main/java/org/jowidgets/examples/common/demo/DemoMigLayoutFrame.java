@@ -225,6 +225,11 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 	private final IPlatformDefaults platformDefaults;
 
+	private boolean ignorePlatformEvents = false;
+	private ITextLabel formatLabel;
+	private IToggleButton winButt;
+	private IToggleButton macButt;
+
 	public DemoMigLayoutFrame() {
 		this("");
 	}
@@ -1391,39 +1396,31 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		// TODO NM check if it is necessary to add the panels...
 
 		createLabel(mainPanel, "Button Order:", "");
-		final ITextLabel formatLabel = createLabel(mainPanel, "", "growx");
-		// TODO NM Font
-		// formatLabel.setFont(deriveFont(formatLabel.font(), true, -1));
+		formatLabel = createLabel(mainPanel, "'" + platformDefaults.getButtonOrder() + "'", "growx");
+		formatLabel.setMarkup(Markup.STRONG);
+		formatLabel.setFontSize(8);
 
-		final IToggleButton winButt = createToggleButton(mainPanel, "Windows", "wmin button");
-		final IToggleButton macButt = createToggleButton(mainPanel, "Mac OS X", "wmin button");
-
-		//		winButt.clicked.connect(this, "clickedButtonWindows()");
-		//		macButt.clicked.connect(this, "clickedButtonMacOS()");
+		winButt = createToggleButton(mainPanel, "Windows", "wmin button");
+		macButt = createToggleButton(mainPanel, "Mac OS X", "wmin button");
 
 		winButt.addInputListener(new IInputListener() {
 
 			@Override
 			public void inputChanged() {
-				platformDefaults.setPlatform(IPlatformDefaults.WINDOWS_XP);
-				formatLabel.setText("'" + platformDefaults.getButtonOrder() + "'");
-				winButt.setSelected(true);
-				macButt.setSelected(false);
-				mainPanel.redraw();
+				if (ignorePlatformEvents) {
+					return;
+				}
+				setPlatform(IPlatformDefaults.WINDOWS_XP);
 			}
-
 		});
 		macButt.addInputListener(new IInputListener() {
-
 			@Override
 			public void inputChanged() {
-				platformDefaults.setPlatform(IPlatformDefaults.MAC_OSX);
-				formatLabel.setText("'" + platformDefaults.getButtonOrder() + "'");
-				macButt.setSelected(true);
-				winButt.setSelected(false);
-				mainPanel.redraw();
+				if (ignorePlatformEvents) {
+					return;
+				}
+				setPlatform(IPlatformDefaults.MAC_OSX);
 			}
-
 		});
 
 		final IButton helpButt = createButton(mainPanel, "Help", "gap unrel,wmin button");
@@ -1438,6 +1435,18 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		});
 
 		(platformDefaults.getPlatform() == IPlatformDefaults.WINDOWS_XP ? winButt : macButt).setSelected(true);
+	}
+
+	private void setPlatform(final int platform) {
+		ignorePlatformEvents = true;
+		platformDefaults.setPlatform(platform);
+		formatLabel.setText("'" + platformDefaults.getButtonOrder() + "'");
+		winButt.setSelected(platform == IPlatformDefaults.WINDOWS_XP);
+		macButt.setSelected(platform == IPlatformDefaults.MAC_OSX);
+		ignorePlatformEvents = false;
+		layoutBegin();
+		layoutEnd();
+		redraw();
 	}
 
 	private ITabItem createButtonBarsPanel(
