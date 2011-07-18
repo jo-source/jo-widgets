@@ -1716,7 +1716,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 	}
 
 	private static IContainer createPanel(final IContainer parent, final ILayoutFactory<IMigLayout> layout) {
-		final IComposite panel = parent.add(BPF.compositeWithBorder());
+		final IComposite panel = parent.add(BPF.composite());
 		if (layout != null) {
 			panel.setLayout(layout);
 		}
