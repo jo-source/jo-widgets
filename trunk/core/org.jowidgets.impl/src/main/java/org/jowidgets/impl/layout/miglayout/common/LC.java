@@ -1,5 +1,31 @@
-//CHECKSTYLE:OFF
-
+/*
+ * Copyright (c) 2004, Mikael Grev, MiG InfoCom AB. (miglayout (at) miginfocom (dot) com), 
+ * modifications by Nikolaus Moll
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * Redistributions of source code must retain the above copyright notice, this list
+ * of conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright notice, this
+ * list of conditions and the following disclaimer in the documentation and/or other
+ * materials provided with the distribution.
+ * Neither the name of the MiG InfoCom AB nor the names of its contributors may be
+ * used to endorse or promote products derived from this software without specific
+ * prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ * IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+ * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+ * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+ * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+ * OF SUCH DAMAGE.
+ *
+ */
 package org.jowidgets.impl.layout.miglayout.common;
 
 import java.io.Externalizable;
@@ -22,15 +48,20 @@ public final class LC implements Externalizable {
 
 	private UnitValue[] insets = null; // Never null elememts but if unset array is null
 
-	private UnitValue alignX = null, alignY = null;
+	private UnitValue alignX = null;
+	private UnitValue alignY = null;
 
-	private BoundSize gridGapX = null, gridGapY = null;
+	private BoundSize gridGapX = null;
+	private BoundSize gridGapY = null;
 
-	private BoundSize width = BoundSize.NULL_SIZE, height = BoundSize.NULL_SIZE;
+	private BoundSize width = BoundSize.NULL_SIZE;
+	private BoundSize height = BoundSize.NULL_SIZE;
 
-	private BoundSize packW = BoundSize.NULL_SIZE, packH = BoundSize.NULL_SIZE;
+	private BoundSize packW = BoundSize.NULL_SIZE;
+	private BoundSize packH = BoundSize.NULL_SIZE;
 
-	private float pwAlign = 0.5f, phAlign = 1.0f;
+	private float pwAlign = 0.5f;
+	private float phAlign = 1.0f;
 
 	private int debugMillis = 0;
 
@@ -40,7 +71,8 @@ public final class LC implements Externalizable {
 
 	private boolean flowX = true;
 
-	private boolean fillX = false, fillY = false;
+	private boolean fillX = false;
+	private boolean fillY = false;
 
 	private boolean topToBottom = true;
 
@@ -90,7 +122,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return The current alignment.
 	 */
-	public final UnitValue getAlignX() {
+	public UnitValue getAlignX() {
 		return alignX;
 	}
 
@@ -104,7 +136,7 @@ public final class LC implements Externalizable {
 	 * @param uv The new alignment. Use {@link ConstraintParser#parseAlignKeywords(String, boolean)} to create the
 	 *            {@link UnitValue}. May be <code>null</code>.
 	 */
-	public final void setAlignX(final UnitValue uv) {
+	public void setAlignX(final UnitValue uv) {
 		this.alignX = uv;
 	}
 
@@ -117,7 +149,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return The current alignment.
 	 */
-	public final UnitValue getAlignY() {
+	public UnitValue getAlignY() {
 		return alignY;
 	}
 
@@ -131,7 +163,7 @@ public final class LC implements Externalizable {
 	 * @param uv The new alignment. Use {@link ConstraintParser#parseAlignKeywords(String, boolean)} to create the
 	 *            {@link UnitValue}. May be <code>null</code>.
 	 */
-	public final void setAlignY(final UnitValue uv) {
+	public void setAlignY(final UnitValue uv) {
 		this.alignY = uv;
 	}
 
@@ -141,7 +173,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return The current debug repaint interval.
 	 */
-	public final int getDebugMillis() {
+	public int getDebugMillis() {
 		return debugMillis;
 	}
 
@@ -151,7 +183,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @param millis The new debug repaint interval.
 	 */
-	public final void setDebugMillis(final int millis) {
+	public void setDebugMillis(final int millis) {
 		this.debugMillis = millis;
 	}
 
@@ -160,7 +192,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return <code>true</code> means fill. <code>false</code> is default.
 	 */
-	public final boolean isFillX() {
+	public boolean isFillX() {
 		return fillX;
 	}
 
@@ -169,7 +201,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @param b <code>true</code> means fill. <code>false</code> is default.
 	 */
-	public final void setFillX(final boolean b) {
+	public void setFillX(final boolean b) {
 		this.fillX = b;
 	}
 
@@ -178,7 +210,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return <code>true</code> means fill. <code>false</code> is default.
 	 */
-	public final boolean isFillY() {
+	public boolean isFillY() {
 		return fillY;
 	}
 
@@ -187,7 +219,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @param b <code>true</code> means fill. <code>false</code> is default.
 	 */
-	public final void setFillY(final boolean b) {
+	public void setFillY(final boolean b) {
 		this.fillY = b;
 	}
 
@@ -199,7 +231,7 @@ public final class LC implements Externalizable {
 	 * @return <code>true</code> is the default flow horizontally.
 	 * @see #setLeftToRight(Boolean)
 	 */
-	public final boolean isFlowX() {
+	public boolean isFlowX() {
 		return flowX;
 	}
 
@@ -211,7 +243,7 @@ public final class LC implements Externalizable {
 	 * @param b <code>true</code> is the default flow horizontally.
 	 * @see #setLeftToRight(Boolean)
 	 */
-	public final void setFlowX(final boolean b) {
+	public void setFlowX(final boolean b) {
 		this.flowX = b;
 	}
 
@@ -221,7 +253,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return The default grid gap between columns in the grid. <code>null</code> if the platform default is used.
 	 */
-	public final BoundSize getGridGapX() {
+	public BoundSize getGridGapX() {
 		return gridGapX;
 	}
 
@@ -231,7 +263,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @param x The default grid gap between columns in the grid. If <code>null</code> the platform default is used.
 	 */
-	public final void setGridGapX(final BoundSize x) {
+	public void setGridGapX(final BoundSize x) {
 		this.gridGapX = x;
 	}
 
@@ -241,7 +273,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return The default grid gap between rows in the grid. <code>null</code> if the platform default is used.
 	 */
-	public final BoundSize getGridGapY() {
+	public BoundSize getGridGapY() {
 		return gridGapY;
 	}
 
@@ -251,7 +283,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @param y The default grid gap between rows in the grid. If <code>null</code> the platform default is used.
 	 */
-	public final void setGridGapY(final BoundSize y) {
+	public void setGridGapY(final BoundSize y) {
 		this.gridGapY = y;
 	}
 
@@ -264,7 +296,7 @@ public final class LC implements Externalizable {
 	 *         2 == If hidden the size will be 0, 0 and gaps set to zero.<br>
 	 *         3 == If hidden the component will be disregarded completely and not take up a cell in the grid..
 	 */
-	public final int getHideMode() {
+	public int getHideMode() {
 		return hideMode;
 	}
 
@@ -277,9 +309,10 @@ public final class LC implements Externalizable {
 	 *            2 == If hidden the size will be 0, 0 and gaps set to zero.<br>
 	 *            3 == If hidden the component will be disregarded completely and not take up a cell in the grid..
 	 */
-	public final void setHideMode(final int mode) {
-		if (mode < 0 || mode > 3)
+	public void setHideMode(final int mode) {
+		if (mode < 0 || mode > 3) {
 			throw new IllegalArgumentException("Wrong hideMode: " + mode);
+		}
 
 		this.hideMode = mode;
 	}
@@ -295,7 +328,7 @@ public final class LC implements Externalizable {
 	 *         <code>null</code>. The array is a copy and can be used freely.
 	 * @see net.miginfocom.layout.ConstraintParser#parseInsets(String, boolean)
 	 */
-	public final UnitValue[] getInsets() {
+	public UnitValue[] getInsets() {
 		return insets != null ? new UnitValue[] {insets[0], insets[1], insets[2], insets[3]} : null;
 	}
 
@@ -311,7 +344,7 @@ public final class LC implements Externalizable {
 	 *            the platform default for that side. The array is copied for storage.
 	 * @see net.miginfocom.layout.ConstraintParser#parseInsets(String, boolean)
 	 */
-	public final void setInsets(final UnitValue[] ins) {
+	public void setInsets(final UnitValue[] ins) {
 		this.insets = ins != null ? new UnitValue[] {ins[0], ins[1], ins[2], ins[3]} : null;
 	}
 
@@ -322,7 +355,7 @@ public final class LC implements Externalizable {
 	 * @return <code>Boolean.TRUE</code> if force left-to-right. <code>Boolean.FALSE</code> if force tight-to-left.
 	 *         <code>null</code> for the default "let the current Locale decide".
 	 */
-	public final Boolean getLeftToRight() {
+	public Boolean getLeftToRight() {
 		return leftToRight;
 	}
 
@@ -333,7 +366,7 @@ public final class LC implements Externalizable {
 	 * @param b <code>Boolean.TRUE</code> to force left-to-right. <code>Boolean.FALSE</code> to force tight-to-left.
 	 *            <code>null</code> for the default "let the current Locale decide".
 	 */
-	public final void setLeftToRight(final Boolean b) {
+	public void setLeftToRight(final Boolean b) {
 		this.leftToRight = b;
 	}
 
@@ -343,7 +376,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return <code>true</code> means not grid based. <code>false</code> is default.
 	 */
-	public final boolean isNoGrid() {
+	public boolean isNoGrid() {
 		return noGrid;
 	}
 
@@ -353,7 +386,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @param b <code>true</code> means no grid. <code>false</code> is default.
 	 */
-	public final void setNoGrid(final boolean b) {
+	public void setNoGrid(final boolean b) {
 		this.noGrid = b;
 	}
 
@@ -362,7 +395,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return <code>true</code> for the default top-to-bottom.
 	 */
-	public final boolean isTopToBottom() {
+	public boolean isTopToBottom() {
 		return topToBottom;
 	}
 
@@ -371,7 +404,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @param b <code>true</code> for the default top-to-bottom.
 	 */
-	public final void setTopToBottom(final boolean b) {
+	public void setTopToBottom(final boolean b) {
 		this.topToBottom = b;
 	}
 
@@ -380,7 +413,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return <code>true</code> if visual padding.
 	 */
-	public final boolean isVisualPadding() {
+	public boolean isVisualPadding() {
 		return visualPadding;
 	}
 
@@ -389,7 +422,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @param b <code>true</code> turns on visual padding.
 	 */
-	public final void setVisualPadding(final boolean b) {
+	public void setVisualPadding(final boolean b) {
 		this.visualPadding = b;
 	}
 
@@ -399,7 +432,7 @@ public final class LC implements Externalizable {
 	 * @return After what cell the grid should always auto wrap. If <code>0</code> the number of columns/rows in the
 	 *         {@link net.miginfocom.layout.AC} is used. <code>LayoutUtil.INF</code> is used for no auto wrap.
 	 */
-	public final int getWrapAfter() {
+	public int getWrapAfter() {
 		return wrapAfter;
 	}
 
@@ -409,7 +442,7 @@ public final class LC implements Externalizable {
 	 * @param count After what cell the grid should always auto wrap. If <code>0</code> the number of columns/rows in the
 	 *            {@link net.miginfocom.layout.AC} is used. <code>LayoutUtil.INF</code> is used for no auto wrap.
 	 */
-	public final void setWrapAfter(final int count) {
+	public void setWrapAfter(final int count) {
 		this.wrapAfter = count;
 	}
 
@@ -428,7 +461,7 @@ public final class LC implements Externalizable {
 	 * @return The current value. Never <code>null</code>. Check if not set with <code>.isUnset()</code>.
 	 * @since 3.5
 	 */
-	public final BoundSize getPackWidth() {
+	public BoundSize getPackWidth() {
 		return packW;
 	}
 
@@ -447,7 +480,7 @@ public final class LC implements Externalizable {
 	 * @param size The new pack size. If <code>null</code> it will be corrected to an "unset" BoundSize.
 	 * @since 3.5
 	 */
-	public final void setPackWidth(final BoundSize size) {
+	public void setPackWidth(final BoundSize size) {
 		packW = size != null ? size : BoundSize.NULL_SIZE;
 	}
 
@@ -466,7 +499,7 @@ public final class LC implements Externalizable {
 	 * @return The current value. Never <code>null</code>. Check if not set with <code>.isUnset()</code>.
 	 * @since 3.5
 	 */
-	public final BoundSize getPackHeight() {
+	public BoundSize getPackHeight() {
 		return packH;
 	}
 
@@ -485,7 +518,7 @@ public final class LC implements Externalizable {
 	 * @param size The new pack size. If <code>null</code> it will be corrected to an "unset" BoundSize.
 	 * @since 3.5
 	 */
-	public final void setPackHeight(final BoundSize size) {
+	public void setPackHeight(final BoundSize size) {
 		packH = size != null ? size : BoundSize.NULL_SIZE;
 	}
 
@@ -501,7 +534,7 @@ public final class LC implements Externalizable {
 	 * @return The pack alignment. Always between 0f and 1f, inclusive.
 	 * @since 3.5
 	 */
-	public final float getPackHeightAlign() {
+	public float getPackHeightAlign() {
 		return phAlign;
 	}
 
@@ -517,7 +550,7 @@ public final class LC implements Externalizable {
 	 * @param align The pack alignment. Always between 0f and 1f, inclusive. Values outside this will be truncated.
 	 * @since 3.5
 	 */
-	public final void setPackHeightAlign(final float align) {
+	public void setPackHeightAlign(final float align) {
 		phAlign = Math.max(0f, Math.min(1f, align));
 	}
 
@@ -533,7 +566,7 @@ public final class LC implements Externalizable {
 	 * @return The pack alignment. Always between 0f and 1f, inclusive.
 	 * @since 3.5
 	 */
-	public final float getPackWidthAlign() {
+	public float getPackWidthAlign() {
 		return pwAlign;
 	}
 
@@ -549,7 +582,7 @@ public final class LC implements Externalizable {
 	 * @param align The pack alignment. Always between 0f and 1f, inclusive. Values outside this will be truncated.
 	 * @since 3.5
 	 */
-	public final void setPackWidthAlign(final float align) {
+	public void setPackWidthAlign(final float align) {
 		pwAlign = Math.max(0f, Math.min(1f, align));
 	}
 
@@ -562,7 +595,7 @@ public final class LC implements Externalizable {
 	 *         all sizes can be <code>null</code>.
 	 * @since 3.5
 	 */
-	public final BoundSize getWidth() {
+	public BoundSize getWidth() {
 		return width;
 	}
 
@@ -575,7 +608,7 @@ public final class LC implements Externalizable {
 	 *            a bound size containing only null sizes.
 	 * @since 3.5
 	 */
-	public final void setWidth(final BoundSize size) {
+	public void setWidth(final BoundSize size) {
 		this.width = size != null ? size : BoundSize.NULL_SIZE;
 	}
 
@@ -588,7 +621,7 @@ public final class LC implements Externalizable {
 	 *         all sizes can be <code>null</code>.
 	 * @since 3.5
 	 */
-	public final BoundSize getHeight() {
+	public BoundSize getHeight() {
 		return height;
 	}
 
@@ -601,7 +634,7 @@ public final class LC implements Externalizable {
 	 *            a bound size containing only null sizes.
 	 * @since 3.5
 	 */
-	public final void setHeight(final BoundSize size) {
+	public void setHeight(final BoundSize size) {
 		this.height = size != null ? size : BoundSize.NULL_SIZE;
 	}
 
@@ -620,7 +653,7 @@ public final class LC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.5
 	 */
-	public final LC pack() {
+	public LC pack() {
 		return pack("pref", "pref");
 	}
 
@@ -637,7 +670,7 @@ public final class LC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.5
 	 */
-	public final LC pack(final String width, final String height) {
+	public LC pack(final String width, final String height) {
 		setPackWidth(width != null ? ConstraintParser.parseBoundSize(width, false, false) : BoundSize.NULL_SIZE);
 		setPackHeight(height != null ? ConstraintParser.parseBoundSize(height, false, false) : BoundSize.NULL_SIZE);
 		return this;
@@ -656,7 +689,7 @@ public final class LC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.5
 	 */
-	public final LC packAlign(final float alignX, final float alignY) {
+	public LC packAlign(final float alignX, final float alignY) {
 		setPackWidthAlign(alignX);
 		setPackHeightAlign(alignY);
 		return this;
@@ -671,7 +704,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final LC wrap() {
+	public LC wrap() {
 		setWrapAfter(0);
 		return this;
 	}
@@ -684,7 +717,7 @@ public final class LC implements Externalizable {
 	 * @param count After what cell the grid should always auto wrap. If <code>0</code> the number of columns/rows in the
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final LC wrapAfter(final int count) {
+	public LC wrapAfter(final int count) {
 		setWrapAfter(count);
 		return this;
 	}
@@ -697,7 +730,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final LC noCache() {
+	public LC noCache() {
 		setNoCache(true);
 		return this;
 	}
@@ -710,7 +743,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final LC flowY() {
+	public LC flowY() {
 		setFlowX(false);
 		return this;
 	}
@@ -723,7 +756,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final LC flowX() {
+	public LC flowX() {
 		setFlowX(true);
 		return this;
 	}
@@ -736,7 +769,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final LC fill() {
+	public LC fill() {
 		setFillX(true);
 		setFillY(true);
 		return this;
@@ -750,7 +783,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final LC fillX() {
+	public LC fillX() {
 		setFillX(true);
 		return this;
 	}
@@ -763,7 +796,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final LC fillY() {
+	public LC fillY() {
 		setFillY(true);
 		return this;
 	}
@@ -777,7 +810,7 @@ public final class LC implements Externalizable {
 	 * @param b <code>true</code> for forcing left-to-right. <code>false</code> for forcing right-to-left.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final LC leftToRight(final boolean b) {
+	public LC leftToRight(final boolean b) {
 		setLeftToRight(b ? Boolean.TRUE : Boolean.FALSE); // Not .valueOf due to retroweaver...
 		return this;
 	}
@@ -790,7 +823,7 @@ public final class LC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
 	 */
-	public final LC rightToLeft() {
+	public LC rightToLeft() {
 		setLeftToRight(Boolean.FALSE);
 		return this;
 	}
@@ -803,7 +836,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final LC bottomToTop() {
+	public LC bottomToTop() {
 		setTopToBottom(false);
 		return this;
 	}
@@ -817,7 +850,7 @@ public final class LC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
 	 */
-	public final LC topToBottom() {
+	public LC topToBottom() {
 		setTopToBottom(true);
 		return this;
 	}
@@ -830,7 +863,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final LC noGrid() {
+	public LC noGrid() {
 		setNoGrid(true);
 		return this;
 	}
@@ -843,7 +876,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final LC noVisualPadding() {
+	public LC noVisualPadding() {
 		setVisualPadding(false);
 		return this;
 	}
@@ -858,7 +891,7 @@ public final class LC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @see #setInsets(UnitValue[])
 	 */
-	public final LC insetsAll(final String allSides) {
+	public LC insetsAll(final String allSides) {
 		final UnitValue insH = ConstraintParser.parseUnitValue(allSides, true);
 		final UnitValue insV = ConstraintParser.parseUnitValue(allSides, false);
 		insets = new UnitValue[] {insV, insH, insV, insH}; // No setter to avoid copy again
@@ -875,7 +908,7 @@ public final class LC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @see #setInsets(UnitValue[])
 	 */
-	public final LC insets(final String s) {
+	public LC insets(final String s) {
 		insets = ConstraintParser.parseInsets(s, true);
 		return this;
 	}
@@ -900,7 +933,7 @@ public final class LC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @see #setInsets(UnitValue[])
 	 */
-	public final LC insets(final String top, final String left, final String bottom, final String right) {
+	public LC insets(final String top, final String left, final String bottom, final String right) {
 		insets = new UnitValue[] { // No setter to avoid copy again
 				ConstraintParser.parseUnitValue(top, false), ConstraintParser.parseUnitValue(left, true),
 				ConstraintParser.parseUnitValue(bottom, false), ConstraintParser.parseUnitValue(right, true)};
@@ -917,7 +950,7 @@ public final class LC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @see #setAlignX(UnitValue)
 	 */
-	public final LC alignX(final String align) {
+	public LC alignX(final String align) {
 		setAlignX(ConstraintParser.parseUnitValueOrAlign(align, true, null));
 		return this;
 	}
@@ -932,7 +965,7 @@ public final class LC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @see #setAlignY(UnitValue)
 	 */
-	public final LC alignY(final String align) {
+	public LC alignY(final String align) {
 		setAlignY(ConstraintParser.parseUnitValueOrAlign(align, false, null));
 		return this;
 	}
@@ -948,12 +981,14 @@ public final class LC implements Externalizable {
 	 * @see #alignX(String)
 	 * @see #alignY(String)
 	 */
-	public final LC align(final String ax, final String ay) {
-		if (ax != null)
+	public LC align(final String ax, final String ay) {
+		if (ax != null) {
 			alignX(ax);
+		}
 
-		if (ay != null)
+		if (ay != null) {
 			alignY(ay);
+		}
 
 		return this;
 	}
@@ -969,7 +1004,7 @@ public final class LC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @see #setGridGapX(BoundSize)
 	 */
-	public final LC gridGapX(final String boundsSize) {
+	public LC gridGapX(final String boundsSize) {
 		setGridGapX(ConstraintParser.parseBoundSize(boundsSize, true, true));
 		return this;
 	}
@@ -985,7 +1020,7 @@ public final class LC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @see #setGridGapY(BoundSize)
 	 */
-	public final LC gridGapY(final String boundsSize) {
+	public LC gridGapY(final String boundsSize) {
 		setGridGapY(ConstraintParser.parseBoundSize(boundsSize, true, false));
 		return this;
 	}
@@ -1003,12 +1038,14 @@ public final class LC implements Externalizable {
 	 * @see #gridGapX(String)
 	 * @see #gridGapY(String)
 	 */
-	public final LC gridGap(final String gapx, final String gapy) {
-		if (gapx != null)
+	public LC gridGap(final String gapx, final String gapy) {
+		if (gapx != null) {
 			gridGapX(gapx);
+		}
 
-		if (gapy != null)
+		if (gapy != null) {
 			gridGapY(gapy);
+		}
 
 		return this;
 	}
@@ -1023,7 +1060,7 @@ public final class LC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @see #setDebugMillis(int)
 	 */
-	public final LC debug(final int repaintMillis) {
+	public LC debug(final int repaintMillis) {
 		setDebugMillis(repaintMillis);
 		return this;
 	}
@@ -1042,7 +1079,7 @@ public final class LC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @see #setHideMode(int)
 	 */
-	public final LC hideMode(final int mode) {
+	public LC hideMode(final int mode) {
 		setHideMode(mode);
 		return this;
 	}
@@ -1055,8 +1092,8 @@ public final class LC implements Externalizable {
 	 * @param width The width expressed as a <code>UnitValue</code>. E.g. "100px" or "200mm".
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final LC minWidth(final String width) {
-		final LayoutUtil layoutUtil = MigLayoutToolkit.getLayoutUtil();
+	public LC minWidth(final String width) {
+		final LayoutUtil layoutUtil = MigLayoutToolkit.getMigLayoutUtil();
 		setWidth(layoutUtil.derive(getWidth(), ConstraintParser.parseUnitValue(width, true), null, null));
 		return this;
 	}
@@ -1071,7 +1108,7 @@ public final class LC implements Externalizable {
 	 * @param width The width expressed as a <code>Boundwidth</code>. E.g. "50:100px:200mm" or "100px".
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final LC width(final String width) {
+	public LC width(final String width) {
 		setWidth(ConstraintParser.parseBoundSize(width, false, true));
 		return this;
 	}
@@ -1084,8 +1121,8 @@ public final class LC implements Externalizable {
 	 * @param width The width expressed as a <code>UnitValue</code>. E.g. "100px" or "200mm".
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final LC maxWidth(final String width) {
-		final LayoutUtil layoutUtil = MigLayoutToolkit.getLayoutUtil();
+	public LC maxWidth(final String width) {
+		final LayoutUtil layoutUtil = MigLayoutToolkit.getMigLayoutUtil();
 		setWidth(layoutUtil.derive(getWidth(), null, null, ConstraintParser.parseUnitValue(width, true)));
 		return this;
 	}
@@ -1098,8 +1135,8 @@ public final class LC implements Externalizable {
 	 * @param height The height expressed as a <code>UnitValue</code>. E.g. "100px" or "200mm".
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final LC minHeight(final String height) {
-		final LayoutUtil layoutUtil = MigLayoutToolkit.getLayoutUtil();
+	public LC minHeight(final String height) {
+		final LayoutUtil layoutUtil = MigLayoutToolkit.getMigLayoutUtil();
 		setHeight(layoutUtil.derive(getHeight(), ConstraintParser.parseUnitValue(height, false), null, null));
 		return this;
 	}
@@ -1114,7 +1151,7 @@ public final class LC implements Externalizable {
 	 * @param height The height expressed as a <code>Boundheight</code>. E.g. "50:100px:200mm" or "100px".
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final LC height(final String height) {
+	public LC height(final String height) {
 		setHeight(ConstraintParser.parseBoundSize(height, false, false));
 		return this;
 	}
@@ -1127,8 +1164,8 @@ public final class LC implements Externalizable {
 	 * @param height The height expressed as a <code>UnitValue</code>. E.g. "100px" or "200mm".
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final LC maxHeight(final String height) {
-		final LayoutUtil layoutUtil = MigLayoutToolkit.getLayoutUtil();
+	public LC maxHeight(final String height) {
+		final LayoutUtil layoutUtil = MigLayoutToolkit.getMigLayoutUtil();
 		setHeight(layoutUtil.derive(getHeight(), null, null, ConstraintParser.parseUnitValue(height, false)));
 		return this;
 	}
@@ -1138,19 +1175,19 @@ public final class LC implements Externalizable {
 	// ************************************************
 
 	private Object readResolve() throws ObjectStreamException {
-		return MigLayoutToolkit.getLayoutUtil().getSerializedObject(this);
+		return MigLayoutToolkit.getMigLayoutUtil().getSerializedObject(this);
 	}
 
 	@Override
 	public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
-		final LayoutUtil layoutUtil = MigLayoutToolkit.getLayoutUtil();
+		final LayoutUtil layoutUtil = MigLayoutToolkit.getMigLayoutUtil();
 		layoutUtil.setSerializedObject(this, layoutUtil.readAsXML(in));
 	}
 
 	@Override
 	public void writeExternal(final ObjectOutput out) throws IOException {
 		if (getClass() == LC.class) {
-			MigLayoutToolkit.getLayoutUtil().writeAsXML(out, this);
+			MigLayoutToolkit.getMigLayoutUtil().writeAsXML(out, this);
 		}
 	}
 }

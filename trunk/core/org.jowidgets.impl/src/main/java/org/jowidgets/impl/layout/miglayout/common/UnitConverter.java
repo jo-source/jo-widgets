@@ -1,12 +1,6 @@
-//CHECKSTYLE:OFF
-
-package org.jowidgets.impl.layout.miglayout.common;
-
 /*
- * License (BSD):
- * ==============
- *
  * Copyright (c) 2004, Mikael Grev, MiG InfoCom AB. (miglayout (at) miginfocom (dot) com)
+ * modifications by Nikolaus Moll
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -35,10 +29,13 @@ package org.jowidgets.impl.layout.miglayout.common;
  * @author Mikael Grev, MiG InfoCom AB
  *         Date: 2006-sep-08
  */
+package org.jowidgets.impl.layout.miglayout.common;
 
 /**
  */
+//CHECKSTYLE:OFF
 public abstract class UnitConverter {
+	//CHECKSTYLE:ON
 	/**
 	 * Value to return if this converter can not handle the <code>unit</code> sent in as an argument
 	 * to the convert method.
@@ -65,6 +62,6 @@ public abstract class UnitConverter {
 		String unit,
 		boolean isHor,
 		float refValue,
-		ContainerWrapper parent,
-		ComponentWrapper comp);
+		IContainerWrapper parent,
+		IComponentWrapper comp);
 }

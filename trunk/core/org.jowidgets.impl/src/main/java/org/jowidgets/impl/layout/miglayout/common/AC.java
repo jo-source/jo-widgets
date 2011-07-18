@@ -1,21 +1,6 @@
-//CHECKSTYLE:OFF
-
-package org.jowidgets.impl.layout.miglayout.common;
-
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
-import java.io.ObjectStreamException;
-import java.util.ArrayList;
-
-import org.jowidgets.impl.layout.miglayout.MigLayoutToolkit;
-
 /*
- * License (BSD):
- * ==============
- *
- * Copyright (c) 2004, Mikael Grev, MiG InfoCom AB. (miglayout (at) miginfocom (dot) com)
+ * Copyright (c) 2004, Mikael Grev, MiG InfoCom AB. (miglayout (at) miginfocom (dot) com), 
+ * modifications by Nikolaus Moll
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -44,6 +29,16 @@ import org.jowidgets.impl.layout.miglayout.MigLayoutToolkit;
  * @author Mikael Grev, MiG InfoCom AB
  *         Date: 2006-sep-08
  */
+package org.jowidgets.impl.layout.miglayout.common;
+
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+import java.io.ObjectStreamException;
+import java.util.ArrayList;
+
+import org.jowidgets.impl.layout.miglayout.MigLayoutToolkit;
 
 /**
  * A constraint that holds the column <b>or</b> row constraints for the grid. It also holds the gaps between the rows and columns.
@@ -78,7 +73,7 @@ public final class AC implements Externalizable {
 	 * @return The different {@link net.miginfocom.layout.DimConstraint}s that this object consists of. A new list and
 	 *         never <code>null</code>.
 	 */
-	public final DimConstraint[] getConstaints() {
+	public DimConstraint[] getConstaints() {
 		return cList.toArray(new DimConstraint[cList.size()]);
 	}
 
@@ -91,14 +86,16 @@ public final class AC implements Externalizable {
 	 *            will be copied for storage. <code>null</code> or and emty array will reset the constraints to one
 	 *            <code>DimConstraint</code> with default values.
 	 */
-	public final void setConstaints(DimConstraint[] constr) {
-		if (constr == null || constr.length < 1)
+	public void setConstaints(DimConstraint[] constr) {
+		if (constr == null || constr.length < 1) {
 			constr = new DimConstraint[] {new DimConstraint()};
+		}
 
 		cList.clear();
 		cList.ensureCapacity(constr.length);
-		for (int i = 0; i < constr.length; i++)
+		for (int i = 0; i < constr.length; i++) {
 			cList.add(constr[i]);
+		}
 	}
 
 	/**
@@ -117,7 +114,7 @@ public final class AC implements Externalizable {
 	 * @param size The total number of rows/columns
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final AC count(final int size) {
+	public AC count(final int size) {
 		makeSize(size);
 		return this;
 	}
@@ -130,7 +127,7 @@ public final class AC implements Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final AC noGrid() {
+	public AC noGrid() {
 		return noGrid(curIx);
 	}
 
@@ -143,7 +140,7 @@ public final class AC implements Externalizable {
 	 * @param indexes The index(es) (0-based) of the columns/rows that should be affected by this constraint.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final AC noGrid(final int... indexes) {
+	public AC noGrid(final int... indexes) {
 		for (int i = indexes.length - 1; i >= 0; i--) {
 			final int ix = indexes[i];
 			makeSize(ix);
@@ -164,7 +161,7 @@ public final class AC implements Externalizable {
 	 * @param i The new current row/column.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final AC index(final int i) {
+	public AC index(final int i) {
 		makeSize(i);
 		curIx = i;
 		return this;
@@ -177,7 +174,7 @@ public final class AC implements Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final AC fill() {
+	public AC fill() {
 		return fill(curIx);
 	}
 
@@ -190,7 +187,7 @@ public final class AC implements Externalizable {
 	 * @param indexes The index(es) (0-based) of the columns/rows that should be affected by this constraint.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final AC fill(final int... indexes) {
+	public AC fill(final int... indexes) {
 		for (int i = indexes.length - 1; i >= 0; i--) {
 			final int ix = indexes[i];
 			makeSize(ix);
@@ -240,7 +237,7 @@ public final class AC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
 	 */
-	public final AC sizeGroup() {
+	public AC sizeGroup() {
 		return sizeGroup("", curIx);
 	}
 
@@ -253,7 +250,7 @@ public final class AC implements Externalizable {
 	 * @param s A name to associate on the group that should be the same for other rows/columns in the same group.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final AC sizeGroup(final String s) {
+	public AC sizeGroup(final String s) {
 		return sizeGroup(s, curIx);
 	}
 
@@ -267,7 +264,7 @@ public final class AC implements Externalizable {
 	 * @param indexes The index(es) (0-based) of the columns/rows that should be affected by this constraint.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final AC sizeGroup(final String s, final int... indexes) {
+	public AC sizeGroup(final String s, final int... indexes) {
 		for (int i = indexes.length - 1; i >= 0; i--) {
 			final int ix = indexes[i];
 			makeSize(ix);
@@ -286,7 +283,7 @@ public final class AC implements Externalizable {
 	 *            as a <b>BoundSize</b>. For more info on how <b>BoundSize</b> is formatted see the documentation.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final AC size(final String s) {
+	public AC size(final String s) {
 		return size(s, curIx);
 	}
 
@@ -301,7 +298,7 @@ public final class AC implements Externalizable {
 	 * @param indexes The index(es) (0-based) of the columns/rows that should be affected by this constraint.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final AC size(final String size, final int... indexes) {
+	public AC size(final String size, final int... indexes) {
 		final BoundSize bs = ConstraintParser.parseBoundSize(size, false, true);
 		for (int i = indexes.length - 1; i >= 0; i--) {
 			final int ix = indexes[i];
@@ -320,7 +317,7 @@ public final class AC implements Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final AC gap() {
+	public AC gap() {
 		curIx++;
 		return this;
 	}
@@ -335,7 +332,7 @@ public final class AC implements Externalizable {
 	 *            documentation.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final AC gap(final String size) {
+	public AC gap(final String size) {
 		return gap(size, curIx++);
 	}
 
@@ -350,14 +347,15 @@ public final class AC implements Externalizable {
 	 * @param indexes The index(es) (0-based) of the columns/rows that should be affected by this constraint.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final AC gap(final String size, final int... indexes) {
+	public AC gap(final String size, final int... indexes) {
 		final BoundSize bsa = size != null ? ConstraintParser.parseBoundSize(size, true, true) : null;
 
 		for (int i = indexes.length - 1; i >= 0; i--) {
 			final int ix = indexes[i];
 			makeSize(ix);
-			if (bsa != null)
+			if (bsa != null) {
 				cList.get(ix).setGapAfter(bsa);
+			}
 		}
 		return this;
 	}
@@ -373,7 +371,7 @@ public final class AC implements Externalizable {
 	 *            "right".
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final AC align(final String side) {
+	public AC align(final String side) {
 		return align(side, curIx);
 	}
 
@@ -389,10 +387,11 @@ public final class AC implements Externalizable {
 	 * @param indexes The index(es) (0-based) of the columns/rows that should be affected by this constraint.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final AC align(final String side, final int... indexes) {
+	public AC align(final String side, final int... indexes) {
 		UnitValue al = ConstraintParser.parseAlignKeywords(side, true);
-		if (al == null)
+		if (al == null) {
 			al = ConstraintParser.parseAlignKeywords(side, false);
+		}
 
 		for (int i = indexes.length - 1; i >= 0; i--) {
 			final int ix = indexes[i];
@@ -410,7 +409,7 @@ public final class AC implements Externalizable {
 	 * @param p The new grow priority.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final AC growPrio(final int p) {
+	public AC growPrio(final int p) {
 		return growPrio(p, curIx);
 	}
 
@@ -423,7 +422,7 @@ public final class AC implements Externalizable {
 	 * @param indexes The index(es) (0-based) of the columns/rows that should be affected by this constraint.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final AC growPrio(final int p, final int... indexes) {
+	public AC growPrio(final int p, final int... indexes) {
 		for (int i = indexes.length - 1; i >= 0; i--) {
 			final int ix = indexes[i];
 			makeSize(ix);
@@ -442,7 +441,7 @@ public final class AC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
 	 */
-	public final AC grow() {
+	public AC grow() {
 		return grow(1f, curIx);
 	}
 
@@ -454,7 +453,7 @@ public final class AC implements Externalizable {
 	 * @param w The new grow weight.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final AC grow(final float w) {
+	public AC grow(final float w) {
 		return grow(w, curIx);
 	}
 
@@ -467,7 +466,7 @@ public final class AC implements Externalizable {
 	 * @param indexes The index(es) (0-based) of the columns/rows that should be affected by this constraint.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final AC grow(final float w, final int... indexes) {
+	public AC grow(final float w, final int... indexes) {
 		final Float gw = new Float(w);
 		for (int i = indexes.length - 1; i >= 0; i--) {
 			final int ix = indexes[i];
@@ -485,7 +484,7 @@ public final class AC implements Externalizable {
 	 * @param p The new shrink priority.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final AC shrinkPrio(final int p) {
+	public AC shrinkPrio(final int p) {
 		return shrinkPrio(p, curIx);
 	}
 
@@ -498,7 +497,7 @@ public final class AC implements Externalizable {
 	 * @param indexes The index(es) (0-based) of the columns/rows that should be affected by this constraint.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 */
-	public final AC shrinkPrio(final int p, final int... indexes) {
+	public AC shrinkPrio(final int p, final int... indexes) {
 		for (int i = indexes.length - 1; i >= 0; i--) {
 			final int ix = indexes[i];
 			makeSize(ix);
@@ -517,7 +516,7 @@ public final class AC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
 	 */
-	public final AC shrink() {
+	public AC shrink() {
 		return shrink(100f, curIx);
 	}
 
@@ -530,7 +529,7 @@ public final class AC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
 	 */
-	public final AC shrink(final float w) {
+	public AC shrink(final float w) {
 		return shrink(w, curIx);
 	}
 
@@ -544,7 +543,7 @@ public final class AC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
 	 */
-	public final AC shrink(final float w, final int... indexes) {
+	public AC shrink(final float w, final int... indexes) {
 		final Float sw = new Float(w);
 		for (int i = indexes.length - 1; i >= 0; i--) {
 			final int ix = indexes[i];
@@ -564,7 +563,7 @@ public final class AC implements Externalizable {
 	 * @deprecated in 3.7.2. Use {@link #shrink(float)} instead.
 	 */
 	@Deprecated
-	public final AC shrinkWeight(final float w) {
+	public AC shrinkWeight(final float w) {
 		return shrink(w);
 	}
 
@@ -579,15 +578,16 @@ public final class AC implements Externalizable {
 	 * @deprecated in 3.7.2. Use {@link #shrink(float, int...)} instead.
 	 */
 	@Deprecated
-	public final AC shrinkWeight(final float w, final int... indexes) {
+	public AC shrinkWeight(final float w, final int... indexes) {
 		return shrink(w, indexes);
 	}
 
 	private void makeSize(final int sz) {
 		if (cList.size() <= sz) {
 			cList.ensureCapacity(sz);
-			for (int i = cList.size(); i <= sz; i++)
+			for (int i = cList.size(); i <= sz; i++) {
 				cList.add(new DimConstraint());
+			}
 		}
 	}
 
@@ -596,19 +596,19 @@ public final class AC implements Externalizable {
 	// ************************************************
 
 	private Object readResolve() throws ObjectStreamException {
-		return MigLayoutToolkit.getLayoutUtil().getSerializedObject(this);
+		return MigLayoutToolkit.getMigLayoutUtil().getSerializedObject(this);
 	}
 
 	@Override
 	public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
-		final LayoutUtil layoutUtil = MigLayoutToolkit.getLayoutUtil();
+		final LayoutUtil layoutUtil = MigLayoutToolkit.getMigLayoutUtil();
 		layoutUtil.setSerializedObject(this, layoutUtil.readAsXML(in));
 	}
 
 	@Override
 	public void writeExternal(final ObjectOutput out) throws IOException {
 		if (getClass() == AC.class) {
-			MigLayoutToolkit.getLayoutUtil().writeAsXML(out, this);
+			MigLayoutToolkit.getMigLayoutUtil().writeAsXML(out, this);
 		}
 	}
 }

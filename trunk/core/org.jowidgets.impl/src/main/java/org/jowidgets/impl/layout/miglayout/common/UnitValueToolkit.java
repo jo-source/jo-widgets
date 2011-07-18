@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, nimoll
+ * Copyright (c) 2011, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -33,7 +33,6 @@ import java.util.HashMap;
 
 import org.jowidgets.impl.layout.miglayout.MigLayoutToolkit;
 
-//CHECKSTYLE:OFF
 public final class UnitValueToolkit {
 	/**
 	 * An operation indicating a static value.
@@ -202,6 +201,7 @@ public final class UnitValueToolkit {
 
 	static final int IDENTITY = -1;
 
+	//CHECKSTYLE:OFF
 	final UnitValue ZERO = new UnitValue(0, null, PIXEL, true, STATIC, null, null, "0px");
 	final UnitValue TOP = new UnitValue(0, null, PERCENT, false, STATIC, null, null, "top");
 	final UnitValue LEADING = new UnitValue(0, null, PERCENT, true, STATIC, null, null, "leading");
@@ -215,6 +215,7 @@ public final class UnitValueToolkit {
 	final UnitValue INF = new UnitValue(LayoutUtil.INF, null, PIXEL, true, STATIC, null, null, "inf");
 
 	final UnitValue BASELINE_IDENTITY = new UnitValue(0, null, IDENTITY, false, STATIC, null, null, "baseline");
+	//CHECKSTYLE:ON
 
 	private final HashMap<String, Integer> unitMap = new HashMap<String, Integer>(32);
 
@@ -295,7 +296,7 @@ public final class UnitValueToolkit {
 	 */
 	@Deprecated
 	public int getDefaultUnit() {
-		return MigLayoutToolkit.getPlatformDefaults().getDefaultHorizontalUnit();
+		return MigLayoutToolkit.getMigPlatformDefaults().getDefaultHorizontalUnit();
 	}
 
 	/**
@@ -309,8 +310,8 @@ public final class UnitValueToolkit {
 	 */
 	@Deprecated
 	public void setDefaultUnit(final int unit) {
-		MigLayoutToolkit.getPlatformDefaults().setDefaultHorizontalUnit(unit);
-		MigLayoutToolkit.getPlatformDefaults().setDefaultVerticalUnit(unit);
+		MigLayoutToolkit.getMigPlatformDefaults().setDefaultHorizontalUnit(unit);
+		MigLayoutToolkit.getMigPlatformDefaults().setDefaultVerticalUnit(unit);
 	}
 
 }

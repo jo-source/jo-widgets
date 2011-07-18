@@ -1,5 +1,34 @@
-//CHECKSTYLE:OFF
-
+/*
+ * Copyright (c) 2004, Mikael Grev, MiG InfoCom AB. (miglayout (at) miginfocom (dot) com), 
+ * modifications by Nikolaus Moll
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * Redistributions of source code must retain the above copyright notice, this list
+ * of conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright notice, this
+ * list of conditions and the following disclaimer in the documentation and/or other
+ * materials provided with the distribution.
+ * Neither the name of the MiG InfoCom AB nor the names of its contributors may be
+ * used to endorse or promote products derived from this software without specific
+ * prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ * IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+ * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+ * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+ * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+ * OF SUCH DAMAGE.
+ *
+ * @version 1.0
+ * @author Mikael Grev, MiG InfoCom AB
+ *         Date: 2006-sep-08
+ */
 package org.jowidgets.impl.layout.miglayout.common;
 
 import java.beans.Encoder;
@@ -24,7 +53,9 @@ import org.jowidgets.impl.layout.miglayout.MigLayoutToolkit;
  */
 public class BoundSize implements Serializable {
 	public static final BoundSize NULL_SIZE = new BoundSize(null, null);
-	public static final BoundSize ZERO_PIXEL = new BoundSize(MigLayoutToolkit.getUnitValueToolkit().ZERO, "0px");
+	public static final BoundSize ZERO_PIXEL = new BoundSize(MigLayoutToolkit.getMigUnitValueToolkit().ZERO, "0px");
+
+	private static final long serialVersionUID = 1L;
 
 	private final transient UnitValue min;
 	private final transient UnitValue pref;
@@ -73,7 +104,7 @@ public class BoundSize implements Serializable {
 		final UnitValue max,
 		final boolean gapPush,
 		final String createString) {
-		this.layoutUtil = MigLayoutToolkit.getLayoutUtil();
+		this.layoutUtil = MigLayoutToolkit.getMigLayoutUtil();
 
 		this.min = min;
 		this.pref = preferred;
@@ -137,11 +168,13 @@ public class BoundSize implements Serializable {
 	 * @param parent The parent container.
 	 * @return The size, constrained within min and max.
 	 */
-	public int constrain(int size, final float refValue, final ContainerWrapper parent) {
-		if (max != null)
+	public int constrain(int size, final float refValue, final IContainerWrapper parent) {
+		if (max != null) {
 			size = Math.min(size, max.getPixels(refValue, parent, parent));
-		if (min != null)
+		}
+		if (min != null) {
 			size = Math.max(size, min.getPixels(refValue, parent, parent));
+		}
 		return size;
 	}
 
@@ -176,7 +209,7 @@ public class BoundSize implements Serializable {
 	 * @param comp The component, if applicable, can be <code>null</code>.
 	 * @return An array of lenth three (min,pref,max).
 	 */
-	final int[] getPixelSizes(final float refSize, final ContainerWrapper parent, final ComponentWrapper comp) {
+	final int[] getPixelSizes(final float refSize, final IContainerWrapper parent, final IComponentWrapper comp) {
 		return new int[] {
 				min != null ? min.getPixels(refSize, parent, comp) : 0, pref != null ? pref.getPixels(refSize, parent, comp) : 0,
 				max != null ? max.getPixels(refSize, parent, comp) : LayoutUtil.INF};
@@ -189,32 +222,38 @@ public class BoundSize implements Serializable {
 	 */
 	String getConstraintString() {
 		final String cs = layoutUtil.getCCString(this);
-		if (cs != null)
+		if (cs != null) {
 			return cs;
+		}
 
-		if (min == pref && pref == max)
+		if (min == pref && pref == max) {
 			return min != null ? (min.getConstraintString() + "!") : "null";
+		}
 
 		final StringBuilder sb = new StringBuilder(16);
 
-		if (min != null)
+		if (min != null) {
 			sb.append(min.getConstraintString()).append(':');
+		}
 
 		if (pref != null) {
-			if (min == null && max != null)
+			if (min == null && max != null) {
 				sb.append(":");
+			}
 			sb.append(pref.getConstraintString());
 		}
 		else if (min != null) {
 			sb.append('n');
 		}
 
-		if (max != null)
+		if (max != null) {
 			sb.append(sb.length() == 0 ? "::" : ":").append(max.getConstraintString());
+		}
 
 		if (gapPush) {
-			if (sb.length() > 0)
+			if (sb.length() > 0) {
 				sb.append(':');
+			}
 			sb.append("push");
 		}
 
@@ -222,12 +261,13 @@ public class BoundSize implements Serializable {
 	}
 
 	void checkNotLinked() {
-		if (min != null && min.isLinkedDeep() || pref != null && pref.isLinkedDeep() || max != null && max.isLinkedDeep())
+		if (min != null && min.isLinkedDeep() || pref != null && pref.isLinkedDeep() || max != null && max.isLinkedDeep()) {
 			throw new IllegalArgumentException("Size may not contain links");
+		}
 	}
 
 	static {
-		final LayoutUtil lUtil = MigLayoutToolkit.getLayoutUtil();
+		final LayoutUtil lUtil = MigLayoutToolkit.getMigLayoutUtil();
 		lUtil.setDelegate(BoundSize.class, new PersistenceDelegate() {
 			@Override
 			protected Expression instantiate(final Object oldInstance, final Encoder out) {
@@ -247,9 +287,6 @@ public class BoundSize implements Serializable {
 	// ************************************************
 	// Persistence Delegate and Serializable combined.
 	// ************************************************
-
-	private static final long serialVersionUID = 1L;
-
 	protected Object readResolve() throws ObjectStreamException {
 		return layoutUtil.getSerializedObject(this);
 	}

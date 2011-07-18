@@ -32,6 +32,7 @@ import org.jowidgets.api.layout.miglayout.IAC;
 import org.jowidgets.api.layout.miglayout.ICC;
 import org.jowidgets.api.layout.miglayout.ILC;
 import org.jowidgets.api.layout.miglayout.IMigLayoutToolkit;
+import org.jowidgets.api.layout.miglayout.IPlatformDefaults;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.impl.layout.miglayout.common.LayoutUtil;
 import org.jowidgets.impl.layout.miglayout.common.LinkHandler;
@@ -51,7 +52,7 @@ public class MigLayoutToolkit implements IMigLayoutToolkit {
 		return (MigLayoutToolkit) Toolkit.getLayoutFactoryProvider().getMigLayoutToolkit();
 	}
 
-	public static LayoutUtil getLayoutUtil() {
+	public static LayoutUtil getMigLayoutUtil() {
 		final MigLayoutToolkit toolkit = getToolkit();
 		if (toolkit.layoutUtil == null) {
 			toolkit.layoutUtil = new LayoutUtil();
@@ -59,7 +60,7 @@ public class MigLayoutToolkit implements IMigLayoutToolkit {
 		return toolkit.layoutUtil;
 	}
 
-	public static PlatformDefaults getPlatformDefaults() {
+	public static PlatformDefaults getMigPlatformDefaults() {
 		final MigLayoutToolkit toolkit = getToolkit();
 		if (toolkit.platformDefaults == null) {
 			toolkit.platformDefaults = new PlatformDefaults();
@@ -67,7 +68,7 @@ public class MigLayoutToolkit implements IMigLayoutToolkit {
 		return toolkit.platformDefaults;
 	}
 
-	public static UnitValueToolkit getUnitValueToolkit() {
+	public static UnitValueToolkit getMigUnitValueToolkit() {
 		final MigLayoutToolkit toolkit = getToolkit();
 		if (toolkit.unitValueToolkit == null) {
 			toolkit.unitValueToolkit = new UnitValueToolkit();
@@ -75,7 +76,7 @@ public class MigLayoutToolkit implements IMigLayoutToolkit {
 		return toolkit.unitValueToolkit;
 	}
 
-	public static LinkHandler getLinkHandler() {
+	public static LinkHandler getMigLinkHandler() {
 		final MigLayoutToolkit toolkit = getToolkit();
 		if (toolkit.linkHandler == null) {
 			toolkit.linkHandler = new LinkHandler();
@@ -116,6 +117,16 @@ public class MigLayoutToolkit implements IMigLayoutToolkit {
 	@Override
 	public ILC lc() {
 		return new LCWrapper();
+	}
+
+	@Override
+	public IPlatformDefaults getPlatformDefaults() {
+		return getMigPlatformDefaults();
+	}
+
+	@Override
+	public String getMigLayoutVersion() {
+		return getMigLayoutUtil().getVersion();
 	}
 
 }

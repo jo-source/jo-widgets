@@ -44,5 +44,7 @@ public interface IMigLayoutToolkit {
 
 	ILC lc();
 
-	// TODO NM add PlattformDefaults here
+	IPlatformDefaults getPlatformDefaults();
+
+	String getMigLayoutVersion();
 }
