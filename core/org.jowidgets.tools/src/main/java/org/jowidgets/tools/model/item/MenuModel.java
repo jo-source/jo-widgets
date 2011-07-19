@@ -42,6 +42,7 @@ import org.jowidgets.api.model.item.IRadioItemModel;
 import org.jowidgets.api.model.item.ISeparatorItemModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.util.IDecorator;
 
 public class MenuModel extends AbstractItemModelWrapper implements IMenuModel {
 
@@ -259,6 +260,16 @@ public class MenuModel extends AbstractItemModelWrapper implements IMenuModel {
 	@Override
 	public final void unbind(final IMenuModel model) {
 		getItemModel().unbind(model);
+	}
+
+	@Override
+	public void addDecorator(final IDecorator<IAction> decorator) {
+		getItemModel().addDecorator(decorator);
+	}
+
+	@Override
+	public void removeDecorator(final IDecorator<IAction> decorator) {
+		getItemModel().removeDecorator(decorator);
 	}
 
 	@Override
