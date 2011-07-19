@@ -31,6 +31,8 @@ import org.jowidgets.common.image.IImageConstant;
 
 public enum IconsSmall implements IImageConstant {
 
+	EMPTY,
+
 	OK,
 	INFO,
 	QUESTION,
@@ -47,6 +49,10 @@ public enum IconsSmall implements IImageConstant {
 	NAVIGATION_BACKWARD_TINY,
 
 	TABLE_SORT_DESC,
-	TABLE_SORT_ASC;
+	TABLE_SORT_ASC,
+
+	ADD,
+	ADD_ALL,
+	SUB;
 
 }

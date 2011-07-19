@@ -40,6 +40,8 @@ public class DefaultIconsRegisterService extends ImageConstantRegisterService {
 	}
 
 	public void registerImages() {
+		registerImage(IconsSmall.EMPTY, "empty.png");
+
 		registerImage(IconsSmall.OK, "ok.png");
 		registerImage(IconsSmall.POPUP_ARROW, "popup_arrow.png");
 
@@ -60,5 +62,9 @@ public class DefaultIconsRegisterService extends ImageConstantRegisterService {
 
 		registerImage(IconsSmall.TABLE_SORT_DESC, "table_sort_desc.gif");
 		registerImage(IconsSmall.TABLE_SORT_ASC, "table_sort_asc.gif");
+
+		registerImage(IconsSmall.ADD, "add.gif");
+		registerImage(IconsSmall.ADD_ALL, "add_all.gif");
+		registerImage(IconsSmall.SUB, "sub.gif");
 	}
 }

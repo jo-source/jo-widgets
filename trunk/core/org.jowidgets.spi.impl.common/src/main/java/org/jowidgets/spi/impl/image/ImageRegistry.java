@@ -67,6 +67,17 @@ public class ImageRegistry implements IImageRegistry {
 	}
 
 	@Override
+	public void registerImageConstant(final IImageConstant key, final IImageConstant substitude) {
+		Assert.paramNotNull(key, "key");
+		Assert.paramNotNull(substitude, "substitude");
+		final IImageHandle imageHandle = imageMap.get(substitude);
+		if (imageHandle == null) {
+			throw new IllegalArgumentException("Substitude is not registered");
+		}
+		registerImageConstant(key, imageHandle);
+	}
+
+	@Override
 	public void registerImageConstant(final IImageConstant key, final IImageUrlProvider urlProvider) {
 		Assert.paramNotNull(key, "key");
 		Assert.paramNotNull(urlProvider, "urlProvider");
