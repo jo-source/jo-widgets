@@ -33,6 +33,7 @@ import java.util.List;
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.model.IListModelObservable;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.util.IDecorator;
 
 public interface IMenuModel extends IItemModel, IMenuItemModel, IToolBarItemModel, IListModelObservable {
 
@@ -133,6 +134,10 @@ public interface IMenuModel extends IItemModel, IMenuItemModel, IToolBarItemMode
 	void removeAllItems();
 
 	IMenuItemModel findItemByPath(String... idPath);
+
+	void addDecorator(IDecorator<IAction> decorator);
+
+	void removeDecorator(IDecorator<IAction> decorator);
 
 	List<IMenuItemModel> getChildren();
 

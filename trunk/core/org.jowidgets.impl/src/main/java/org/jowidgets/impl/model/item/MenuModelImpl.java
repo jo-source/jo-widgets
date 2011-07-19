@@ -46,11 +46,13 @@ import org.jowidgets.api.model.item.ISeparatorItemModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.IDecorator;
 
 class MenuModelImpl extends ItemModelImpl implements IMenuModel {
 
 	private final ListModelDelegate listModelDelegate;
 	private final Set<IMenuModel> boundModels;
+	private final List<IDecorator<IAction>> decorators;
 
 	protected MenuModelImpl() {
 		this(null, null, null, null, null, null, true);
@@ -68,6 +70,7 @@ class MenuModelImpl extends ItemModelImpl implements IMenuModel {
 
 		this.listModelDelegate = new ListModelDelegate();
 		this.boundModels = new HashSet<IMenuModel>();
+		this.decorators = new LinkedList<IDecorator<IAction>>();
 
 		this.addListModelListener(new IListModelListener() {
 
@@ -85,6 +88,64 @@ class MenuModelImpl extends ItemModelImpl implements IMenuModel {
 				}
 			}
 		});
+
+		this.addListModelListener(new IListModelListener() {
+			@Override
+			public void childRemoved(final int index) {
+				final IMenuItemModel itemModel = getChildren().get(index);
+				if (itemModel instanceof IActionItemModel || itemModel instanceof IMenuModel) {
+					for (final IDecorator<IAction> decorator : decorators) {
+						addDecorator(itemModel, decorator);
+					}
+				}
+			}
+
+			@Override
+			public void childAdded(final int index) {
+				final IMenuItemModel itemModel = getChildren().get(index);
+				if (itemModel instanceof IActionItemModel || itemModel instanceof IMenuModel) {
+					for (final IDecorator<IAction> decorator : decorators) {
+						addDecorator(itemModel, decorator);
+					}
+				}
+			}
+		});
+	}
+
+	@Override
+	public void addDecorator(final IDecorator<IAction> decorator) {
+		Assert.paramNotNull(decorator, "decorator");
+		decorators.add(decorator);
+		for (final IMenuItemModel itemModel : getChildren()) {
+			addDecorator(itemModel, decorator);
+		}
+	}
+
+	@Override
+	public void removeDecorator(final IDecorator<IAction> decorator) {
+		Assert.paramNotNull(decorator, "decorator");
+		decorators.remove(decorator);
+		for (final IMenuItemModel itemModel : getChildren()) {
+			removeDecorator(itemModel, decorator);
+		}
+	}
+
+	private void addDecorator(final IMenuItemModel itemModel, final IDecorator<IAction> decorator) {
+		if (itemModel instanceof IActionItemModel) {
+			((IActionItemModel) itemModel).addDecorator(decorator);
+		}
+		else if (itemModel instanceof IMenuModel) {
+			((IMenuModel) itemModel).addDecorator(decorator);
+		}
+	}
+
+	private void removeDecorator(final IMenuItemModel itemModel, final IDecorator<IAction> decorator) {
+		if (itemModel instanceof IActionItemModel) {
+			((IActionItemModel) itemModel).removeDecorator(decorator);
+		}
+		else if (itemModel instanceof IMenuModel) {
+			((IMenuModel) itemModel).removeDecorator(decorator);
+		}
 	}
 
 	@Override
