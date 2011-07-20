@@ -53,6 +53,8 @@ public enum IconsSmall implements IImageConstant {
 
 	ADD,
 	ADD_ALL,
-	SUB;
+	SUB,
+
+	SETTINGS;
 
 }
