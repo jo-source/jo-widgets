@@ -34,10 +34,14 @@ public abstract class AbstractSingleUseBuilder<RESULT_TYPE> {
 
 	protected abstract RESULT_TYPE doBuild();
 
-	public final RESULT_TYPE build() {
+	protected final void checkExhausted() {
 		if (exhausted) {
 			throw new IllegalStateException("The builder is exhausted. It's a single use builder that can only be used once.");
 		}
+	}
+
+	public final RESULT_TYPE build() {
+		checkExhausted();
 		exhausted = true;
 		return doBuild();
 	}
