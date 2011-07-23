@@ -51,6 +51,7 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 
 	private final IMenu parent;
 	private final IItemModelListener modelListener;
+	private final IMenuListener parentMenuListener;
 
 	private ActionWidgetSync actionWidgetSync;
 	private ActionExecuter actionExecuter;
@@ -94,7 +95,7 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 
 		getModel().addItemModelListener(modelListener);
 
-		parent.addMenuListener(new IMenuListener() {
+		this.parentMenuListener = new IMenuListener() {
 
 			@Override
 			public void menuActivated() {
@@ -110,7 +111,9 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 				}
 			}
 
-		});
+		};
+
+		parent.addMenuListener(parentMenuListener);
 
 		addActionListener(new IActionListener() {
 			@Override
@@ -164,6 +167,8 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 
 	@Override
 	public void dispose() {
+		parent.removeMenuListener(parentMenuListener);
+		getModel().removeItemModelListener(modelListener);
 		disposeActionWidgetSync();
 	}
 

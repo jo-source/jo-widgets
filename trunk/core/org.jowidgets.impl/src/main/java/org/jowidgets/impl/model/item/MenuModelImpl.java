@@ -95,7 +95,7 @@ class MenuModelImpl extends ItemModelImpl implements IMenuModel {
 				final IMenuItemModel itemModel = getChildren().get(index);
 				if (itemModel instanceof IActionItemModel || itemModel instanceof IMenuModel) {
 					for (final IDecorator<IAction> decorator : decorators) {
-						addDecorator(itemModel, decorator);
+						removeDecorator(itemModel, decorator);
 					}
 				}
 			}

@@ -295,4 +295,9 @@ class CommandActionImpl implements ICommandAction, IActionChangeObservable {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return "CommandActionImpl [text=" + text + ", enabled=" + enabled + "]";
+	}
+
 }
