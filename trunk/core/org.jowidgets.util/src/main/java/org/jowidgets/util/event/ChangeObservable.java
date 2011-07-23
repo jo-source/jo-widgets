@@ -29,6 +29,7 @@
 package org.jowidgets.util.event;
 
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.jowidgets.util.Assert;
@@ -54,7 +55,7 @@ public class ChangeObservable implements IChangeObservable {
 	}
 
 	public final void fireChangedEvent() {
-		for (final IChangeListener listener : listeners) {
+		for (final IChangeListener listener : new LinkedList<IChangeListener>(listeners)) {
 			listener.changed();
 		}
 	}
