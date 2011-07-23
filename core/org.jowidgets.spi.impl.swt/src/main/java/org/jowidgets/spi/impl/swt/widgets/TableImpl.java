@@ -808,9 +808,11 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			//Menu detect on table cell
 			if (item != null && point.y > table.getHeaderHeight()) {
 				for (int colIndex = 0; colIndex < getColumnCount(); colIndex++) {
-					final Rectangle rect = item.getBounds(colIndex);
+					final int internalColIndex = colIndex + 1;
+					final Rectangle rect = item.getBounds(internalColIndex);
 					if (rect.contains(point)) {
 						final int rowIndex = table.indexOf(item);
+
 						if (rowIndex != -1) {
 							tableCellPopupDetectionObservable.firePopupDetected(new TableCellPopupEvent(
 								rowIndex,
