@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,44 +26,16 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.controler;
-
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Set;
+package org.jowidgets.tools.controler;
 
 import org.jowidgets.common.widgets.controler.IMenuListener;
-import org.jowidgets.common.widgets.controler.IMenuObservable;
 
-public class MenuObservable implements IMenuObservable {
-
-	private final Set<IMenuListener> listeners;
-
-	public MenuObservable() {
-		super();
-		this.listeners = new HashSet<IMenuListener>();
-	}
+public class MenuAdapter implements IMenuListener {
 
 	@Override
-	public void addMenuListener(final IMenuListener listener) {
-		listeners.add(listener);
-	}
+	public void menuActivated() {}
 
 	@Override
-	public void removeMenuListener(final IMenuListener listener) {
-		listeners.remove(listener);
-	}
-
-	public void fireMenuActivated() {
-		for (final IMenuListener menuListener : new LinkedList<IMenuListener>(listeners)) {
-			menuListener.menuActivated();
-		}
-	}
-
-	public void fireMenuDeactivated() {
-		for (final IMenuListener menuListener : new LinkedList<IMenuListener>(listeners)) {
-			menuListener.menuDeactivated();
-		}
-	}
+	public void menuDeactivated() {}
 
 }
