@@ -123,6 +123,16 @@ public class InputDialogImpl<INPUT_TYPE> extends WindowWrapper implements IInput
 	}
 
 	@Override
+	public boolean hasModifications() {
+		return inputCompositeWidget.hasModifications();
+	}
+
+	@Override
+	public void resetModificationState() {
+		inputCompositeWidget.resetModificationState();
+	}
+
+	@Override
 	public void setVisible(final boolean visible) {
 		if (visible) {
 			this.okPressed = false;
