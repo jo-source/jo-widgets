@@ -47,6 +47,7 @@ final class ValidationResultImpl implements IValidationResult, Serializable {
 	private List<IValidationMessage> errors;
 	private List<IValidationMessage> infoErrors;
 	private List<IValidationMessage> warnings;
+	private List<IValidationMessage> infos;
 
 	ValidationResultImpl() {
 		this(null, null, null, null);
@@ -110,6 +111,14 @@ final class ValidationResultImpl implements IValidationResult, Serializable {
 	}
 
 	@Override
+	public List<IValidationMessage> getInfos() {
+		if (infos == null) {
+			initializeLazy();
+		}
+		return infos;
+	}
+
+	@Override
 	public IValidationMessage getWorstFirst() {
 		return worstFirst;
 	}
@@ -156,6 +165,11 @@ final class ValidationResultImpl implements IValidationResult, Serializable {
 	}
 
 	@Override
+	public IValidationResult withInfo(final String message) {
+		return withMessage(ValidationMessage.info(message));
+	}
+
+	@Override
 	public IValidationResult withError(final String context, final String message) {
 		return withMessage(ValidationMessage.error(context, message));
 	}
@@ -171,6 +185,11 @@ final class ValidationResultImpl implements IValidationResult, Serializable {
 	}
 
 	@Override
+	public IValidationResult withInfo(final String context, final String message) {
+		return withMessage(ValidationMessage.info(context, message));
+	}
+
+	@Override
 	public String toString() {
 		return "ValidationResultImpl [worstFirst=" + worstFirst + "]";
 	}
@@ -180,23 +199,31 @@ final class ValidationResultImpl implements IValidationResult, Serializable {
 		final List<IValidationMessage> errorsMutable = new LinkedList<IValidationMessage>();
 		final List<IValidationMessage> infoErrorsMutable = new LinkedList<IValidationMessage>();
 		final List<IValidationMessage> warningsMutable = new LinkedList<IValidationMessage>();
+		final List<IValidationMessage> infosMutable = new LinkedList<IValidationMessage>();
 
 		if (inheritedResult != null) {
-			addMessages(inheritedResult.getAll(), messagesMutable, errorsMutable, infoErrorsMutable, warningsMutable);
+			addMessages(
+					inheritedResult.getAll(),
+					messagesMutable,
+					errorsMutable,
+					infoErrorsMutable,
+					warningsMutable,
+					infosMutable);
 		}
 
 		if (newResult != null) {
-			addMessages(newResult.getAll(), messagesMutable, errorsMutable, infoErrorsMutable, warningsMutable);
+			addMessages(newResult.getAll(), messagesMutable, errorsMutable, infoErrorsMutable, warningsMutable, infosMutable);
 		}
 
 		if (newMessage != null) {
-			addMessage(newMessage, messagesMutable, errorsMutable, infoErrorsMutable, warningsMutable);
+			addMessage(newMessage, messagesMutable, errorsMutable, infoErrorsMutable, warningsMutable, infosMutable);
 		}
 
 		messages = Collections.unmodifiableList(messagesMutable);
 		errors = Collections.unmodifiableList(errorsMutable);
 		infoErrors = Collections.unmodifiableList(infoErrorsMutable);
 		warnings = Collections.unmodifiableList(warningsMutable);
+		infos = Collections.unmodifiableList(infosMutable);
 	}
 
 	private void addMessages(
@@ -204,9 +231,10 @@ final class ValidationResultImpl implements IValidationResult, Serializable {
 		final List<IValidationMessage> messages,
 		final List<IValidationMessage> errors,
 		final List<IValidationMessage> infoErrors,
-		final List<IValidationMessage> warnings) {
+		final List<IValidationMessage> warnings,
+		final List<IValidationMessage> infos) {
 		for (final IValidationMessage message : source) {
-			addMessage(message, messages, errors, infoErrors, warnings);
+			addMessage(message, messages, errors, infoErrors, warnings, infos);
 		}
 	}
 
@@ -215,7 +243,8 @@ final class ValidationResultImpl implements IValidationResult, Serializable {
 		final List<IValidationMessage> messages,
 		final List<IValidationMessage> errors,
 		final List<IValidationMessage> infoErrors,
-		final List<IValidationMessage> warnings) {
+		final List<IValidationMessage> warnings,
+		final List<IValidationMessage> infos) {
 
 		message = getMessage(message, newContext);
 		if (MessageType.ERROR == message.getType()) {
@@ -229,6 +258,10 @@ final class ValidationResultImpl implements IValidationResult, Serializable {
 		else if (MessageType.WARNING == message.getType()) {
 			messages.add(message);
 			warnings.add(message);
+		}
+		else if (MessageType.INFO == message.getType()) {
+			messages.add(message);
+			infos.add(message);
 		}
 	}
 

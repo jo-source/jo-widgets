@@ -71,4 +71,12 @@ public final class ValidationMessage {
 		return warning(null, text);
 	}
 
+	public static IValidationMessage info(final String context, final String text) {
+		return create(MessageType.INFO, context, text);
+	}
+
+	public static IValidationMessage info(final String text) {
+		return info(null, text);
+	}
+
 }
