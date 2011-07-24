@@ -33,6 +33,8 @@ import org.jowidgets.api.widgets.descriptor.setup.IValidationLabelSetup;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
+import org.jowidgets.util.EmptyCheck;
+import org.jowidgets.util.NullCompatibleEquivalence;
 import org.jowidgets.validation.IValidationMessage;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.MessageType;
@@ -43,9 +45,8 @@ public class ValidationResultLabelImpl extends ControlWrapper implements IValida
 	private final ILabel label;
 	private final boolean showLabel;
 
-	private String currentMessageText;
 	private IValidationResult validationResult;
-	private String hint;
+	private IValidationMessage lastFirstWorst;
 
 	public ValidationResultLabelImpl(final ILabel labelWidget, final IValidationLabelSetup setup) {
 		super(labelWidget);
@@ -60,45 +61,49 @@ public class ValidationResultLabelImpl extends ControlWrapper implements IValida
 
 	@Override
 	public void setEmpty() {
-		this.hint = null;
 		this.validationResult = null;
+		this.lastFirstWorst = null;
 
 		label.setIcon(null);
 		label.setText(null);
 		label.setToolTipText(null);
-		//label.redraw();
 	}
 
 	@Override
 	public boolean isEmpty() {
-		return hint == null && validationResult == null;
+		return validationResult == null;
 	}
 
 	@Override
 	public void setResult(final IValidationResult result) {
 		this.validationResult = result;
-		this.hint = null;
 
 		final IValidationMessage firstWorst = result.getWorstFirst();
+		if (NullCompatibleEquivalence.equals(firstWorst, lastFirstWorst)) {
+			return;
+		}
+		else {
+			lastFirstWorst = firstWorst;
+		}
 
-		final StringBuilder messageText = new StringBuilder();
+		final StringBuilder messageTextBuilder = new StringBuilder();
 		final String context = firstWorst.getContext();
 
 		if (context != null && !context.trim().isEmpty()) {
-			messageText.append(firstWorst.getContext() + ": ");
+			messageTextBuilder.append(firstWorst.getContext() + ": ");
 		}
-		messageText.append(firstWorst.getText());
-		currentMessageText = messageText.toString();
+		messageTextBuilder.append(firstWorst.getText());
+		final String messageText = messageTextBuilder.toString();
 
 		if (firstWorst.getType() == MessageType.OK) {
 			label.setIcon(setup.getOkIcon());
 			if (showLabel) {
 				label.setMarkup(setup.getOkMarkup());
 				label.setForegroundColor(setup.getOkColor());
-				label.setText(currentMessageText);
+				label.setText(messageText);
 			}
-			else if (currentMessageText != null && !currentMessageText.trim().isEmpty()) {
-				label.setToolTipText(currentMessageText);
+			else if (!EmptyCheck.isEmpty(messageText)) {
+				label.setToolTipText(messageText);
 			}
 		}
 		else if (firstWorst.getType() == MessageType.WARNING) {
@@ -106,10 +111,10 @@ public class ValidationResultLabelImpl extends ControlWrapper implements IValida
 			if (showLabel) {
 				label.setMarkup(setup.getWarningMarkup());
 				label.setForegroundColor(setup.getWarningColor());
-				label.setText(currentMessageText);
+				label.setText(messageText);
 			}
-			else if (currentMessageText != null && !currentMessageText.trim().isEmpty()) {
-				label.setToolTipText(currentMessageText);
+			else if (!EmptyCheck.isEmpty(messageText)) {
+				label.setToolTipText(messageText);
 			}
 		}
 		else if (firstWorst.getType() == MessageType.INFO_ERROR) {
@@ -117,10 +122,10 @@ public class ValidationResultLabelImpl extends ControlWrapper implements IValida
 			if (showLabel) {
 				label.setMarkup(setup.getInfoErrorMarkup());
 				label.setForegroundColor(setup.getInfoErrorColor());
-				label.setText(currentMessageText);
+				label.setText(messageText);
 			}
-			else if (currentMessageText != null && !currentMessageText.trim().isEmpty()) {
-				label.setToolTipText(currentMessageText);
+			else if (!EmptyCheck.isEmpty(messageText)) {
+				label.setToolTipText(messageText);
 			}
 		}
 		else if (firstWorst.getType() == MessageType.ERROR) {
@@ -128,10 +133,10 @@ public class ValidationResultLabelImpl extends ControlWrapper implements IValida
 			if (showLabel) {
 				label.setMarkup(setup.getErrorMarkup());
 				label.setForegroundColor(setup.getErrorColor());
-				label.setText(currentMessageText);
+				label.setText(messageText);
 			}
-			else if (currentMessageText != null && !currentMessageText.trim().isEmpty()) {
-				label.setToolTipText(currentMessageText);
+			else if (!EmptyCheck.isEmpty(messageText)) {
+				label.setToolTipText(messageText);
 			}
 		}
 		label.redraw();
@@ -140,23 +145,6 @@ public class ValidationResultLabelImpl extends ControlWrapper implements IValida
 	@Override
 	public IValidationResult getResult() {
 		return validationResult;
-	}
-
-	@Override
-	public void setHint(final String hint) {
-		this.hint = hint;
-		this.validationResult = null;
-		label.setIcon(setup.getHintIcon());
-		label.setMarkup(setup.getHintMarkup());
-		label.setForegroundColor(setup.getHintColor());
-		currentMessageText = hint;
-		label.setText(currentMessageText);
-		label.redraw();
-	}
-
-	@Override
-	public String getHint() {
-		return hint;
 	}
 
 }

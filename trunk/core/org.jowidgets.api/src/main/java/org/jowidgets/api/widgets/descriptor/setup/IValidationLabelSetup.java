@@ -50,9 +50,6 @@ public interface IValidationLabelSetup extends IComponentSetup {
 	Markup getErrorMarkup();
 
 	@Mandatory
-	Markup getHintMarkup();
-
-	@Mandatory
 	IColorConstant getOkColor();
 
 	@Mandatory
@@ -64,9 +61,6 @@ public interface IValidationLabelSetup extends IComponentSetup {
 	@Mandatory
 	IColorConstant getErrorColor();
 
-	@Mandatory
-	IColorConstant getHintColor();
-
 	IImageConstant getOkIcon();
 
 	IImageConstant getWarningIcon();
@@ -74,7 +68,5 @@ public interface IValidationLabelSetup extends IComponentSetup {
 	IImageConstant getInfoErrorIcon();
 
 	IImageConstant getErrorIcon();
-
-	IImageConstant getHintIcon();
 
 }

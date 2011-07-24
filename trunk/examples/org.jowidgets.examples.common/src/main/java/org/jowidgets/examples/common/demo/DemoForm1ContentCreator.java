@@ -36,12 +36,12 @@ import java.util.List;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComboBox;
 import org.jowidgets.api.widgets.IInputComponent;
-import org.jowidgets.api.widgets.IInputField;
 import org.jowidgets.api.widgets.IInputComponentValidationLabel;
+import org.jowidgets.api.widgets.IInputField;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
+import org.jowidgets.api.widgets.blueprint.IInputComponentValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
-import org.jowidgets.api.widgets.blueprint.IInputComponentValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
@@ -116,7 +116,8 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 
 		final ITextLabelBluePrint textLabelBp = bpF.textLabel().alignRight();
 
-		final IInputComponentValidationLabelBluePrint validationLabelBp = bpF.validatetableStateLabel().setShowValidationMessage(false);
+		final IInputComponentValidationLabelBluePrint validationLabelBp = bpF.validatetableStateLabel().setShowValidationMessage(
+				false);
 
 		final IInputFieldBluePrint<String> stringFieldBp = bpF.inputFieldString().setMaxLength(51);
 		stringFieldBp.setValidator(maxLengthValidator);
