@@ -35,18 +35,25 @@ import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvok
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.IDecorator;
 import org.jowidgets.validation.IValidationConditionListener;
+import org.jowidgets.validation.IValidationResult;
 
 public class InputComponentValidationStateLabelImpl extends ControlWrapper implements IInputComponentValidationLabel {
 
 	private final IValidationResultLabel resultLabel;
 	private final IInputComponent<?> inputComponent;
+	private final IDecorator<IValidationResult> initialDecorator;
+	private final IDecorator<IValidationResult> unmodifiedDecorator;
 
 	public InputComponentValidationStateLabelImpl(
 		final IValidationResultLabel resultLabel,
 		final IInputComponentValidationLabelSetup setup) {
 		super(resultLabel);
 		Assert.paramNotNull(setup.getInputComponent(), "setup.getInputComponent()");
+
+		this.initialDecorator = setup.getInitialValidationDecorator();
+		this.unmodifiedDecorator = setup.getUnmodifiedValidationDecorator();
 
 		this.resultLabel = resultLabel;
 
@@ -58,8 +65,12 @@ public class InputComponentValidationStateLabelImpl extends ControlWrapper imple
 		inputComponent.addValidationConditionListener(new IValidationConditionListener() {
 			@Override
 			public void validationConditionsChanged() {
-				if (inputComponent.hasModifications()) {
-					resultLabel.setResult(inputComponent.validate());
+				IValidationResult validationResult = inputComponent.validate();
+				if (!inputComponent.hasModifications() && unmodifiedDecorator != null) {
+					validationResult = unmodifiedDecorator.decorate(validationResult);
+				}
+				if (validationResult != null) {
+					resultLabel.setResult(validationResult);
 				}
 				else {
 					resultLabel.setEmpty();
@@ -67,12 +78,25 @@ public class InputComponentValidationStateLabelImpl extends ControlWrapper imple
 			}
 		});
 
+		resetValidation();
 	}
 
 	@Override
 	public void resetValidation() {
-		inputComponent.resetModificationState();
-		resultLabel.setEmpty();
+		initialValidation();
+	}
+
+	private void initialValidation() {
+		IValidationResult validationResult = inputComponent.validate();
+		if (initialDecorator != null) {
+			validationResult = initialDecorator.decorate(validationResult);
+		}
+		if (validationResult != null) {
+			resultLabel.setResult(validationResult);
+		}
+		else {
+			resultLabel.setEmpty();
+		}
 	}
 
 }

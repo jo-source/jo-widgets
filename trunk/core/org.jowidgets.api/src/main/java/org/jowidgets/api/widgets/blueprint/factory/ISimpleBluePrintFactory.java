@@ -49,9 +49,9 @@ public interface ISimpleBluePrintFactory extends IBasicBluePrintFactory {
 
 	ITextSeparatorBluePrint textSeparator();
 
-	IInputComponentValidationLabelBluePrint validatetableStateLabel(IInputComponent<?> inputComponent);
+	IInputComponentValidationLabelBluePrint inputComponentValidationLabel(IInputComponent<?> inputComponent);
 
-	IInputComponentValidationLabelBluePrint validatetableStateLabel();
+	IInputComponentValidationLabelBluePrint inputComponentValidationLabel();
 
 	IValidationResultLabelBluePrint validationResultLabel();
 

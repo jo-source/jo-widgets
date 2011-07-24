@@ -165,13 +165,13 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	}
 
 	@Override
-	public IInputComponentValidationLabelBluePrint validatetableStateLabel(final IInputComponent<?> inputComponent) {
-		return bluePrintFactory.validatetableStateLabel(inputComponent);
+	public IInputComponentValidationLabelBluePrint inputComponentValidationLabel(final IInputComponent<?> inputComponent) {
+		return bluePrintFactory.inputComponentValidationLabel(inputComponent);
 	}
 
 	@Override
-	public IInputComponentValidationLabelBluePrint validatetableStateLabel() {
-		return bluePrintFactory.validatetableStateLabel();
+	public IInputComponentValidationLabelBluePrint inputComponentValidationLabel() {
+		return bluePrintFactory.inputComponentValidationLabel();
 	}
 
 	@Override

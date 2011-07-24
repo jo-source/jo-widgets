@@ -38,6 +38,8 @@ public interface IValidationLabelSetupBuilder<INSTANCE_TYPE extends IValidationL
 
 	INSTANCE_TYPE setOkMarkup(Markup markup);
 
+	INSTANCE_TYPE setInfoMarkup(Markup markup);
+
 	INSTANCE_TYPE setWarningMarkup(Markup markup);
 
 	INSTANCE_TYPE setInfoErrorMarkup(Markup markup);
@@ -46,6 +48,8 @@ public interface IValidationLabelSetupBuilder<INSTANCE_TYPE extends IValidationL
 
 	INSTANCE_TYPE setOkColor(IColorConstant color);
 
+	INSTANCE_TYPE setInfoColor(IColorConstant color);
+
 	INSTANCE_TYPE setWarningColor(IColorConstant color);
 
 	INSTANCE_TYPE setInfoErrorColor(IColorConstant color);
@@ -53,6 +57,8 @@ public interface IValidationLabelSetupBuilder<INSTANCE_TYPE extends IValidationL
 	INSTANCE_TYPE setErrorColor(IColorConstant color);
 
 	INSTANCE_TYPE setOkIcon(IImageConstant icon);
+
+	INSTANCE_TYPE setInfoIcon(IImageConstant icon);
 
 	INSTANCE_TYPE setWarningIcon(IImageConstant icon);
 

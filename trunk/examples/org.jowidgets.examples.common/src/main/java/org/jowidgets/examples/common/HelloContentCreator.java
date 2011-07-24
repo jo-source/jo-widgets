@@ -34,9 +34,12 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.tools.validation.MandatoryInfoValidator;
+import org.jowidgets.tools.validation.MandatoryValidator;
+import org.jowidgets.util.IDecorator;
+import org.jowidgets.validation.IValidationMessage;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
+import org.jowidgets.validation.MessageType;
 import org.jowidgets.validation.ValidationResult;
 
 public class HelloContentCreator implements IInputContentCreator<String> {
@@ -76,10 +79,25 @@ public class HelloContentCreator implements IInputContentCreator<String> {
 
 			widgets[i] = widgetContainer.add(label, textFieldBp, "growx");
 			if (mandatory) {
-				widgets[i].addValidator(new MandatoryInfoValidator<String>("*mandatory field"));
+				widgets[i].addValidator(new MandatoryValidator<String>("*mandatory field"));
 			}
 
-			widgetContainer.add(bpF.validatetableStateLabel(widgets[i]), "wrap");
+			final IDecorator<IValidationResult> initialDecorator = new IDecorator<IValidationResult>() {
+				@Override
+				public IValidationResult decorate(final IValidationResult original) {
+					final IValidationMessage worstFirst = original.getWorstFirst();
+					if (worstFirst.getType().equalOrWorse(MessageType.ERROR)) {
+						return ValidationResult.infoError("*mandator field");
+					}
+					else {
+						return ValidationResult.create().withInfo("optional");
+					}
+				}
+			};
+
+			widgetContainer.add(
+					bpF.inputComponentValidationLabel(widgets[i]).setInitialValidationDecorator(initialDecorator),
+					"wrap");
 		}
 
 	}

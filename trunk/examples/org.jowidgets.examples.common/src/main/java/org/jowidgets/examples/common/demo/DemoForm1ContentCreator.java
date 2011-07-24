@@ -52,7 +52,7 @@ import org.jowidgets.common.widgets.controler.IMouseEvent;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.controler.KeyAdapter;
 import org.jowidgets.tools.controler.MouseAdapter;
-import org.jowidgets.tools.validation.MandatoryInfoValidator;
+import org.jowidgets.tools.validation.MandatoryValidator;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
 import org.jowidgets.validation.ValidationResult;
@@ -112,12 +112,12 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 
 		};
 
-		final IValidator<String> mandatoryValidator = new MandatoryInfoValidator<String>("Must not be null");
+		final IValidator<String> mandatoryValidator = new MandatoryValidator<String>("Must not be null");
 
 		final ITextLabelBluePrint textLabelBp = bpF.textLabel().alignRight();
 
-		final IInputComponentValidationLabelBluePrint validationLabelBp = bpF.validatetableStateLabel().setShowValidationMessage(
-				false);
+		final IInputComponentValidationLabelBluePrint validationLabelBp = bpF.inputComponentValidationLabel();
+		validationLabelBp.setShowValidationMessage(false);
 
 		final IInputFieldBluePrint<String> stringFieldBp = bpF.inputFieldString().setMaxLength(51);
 		stringFieldBp.setValidator(maxLengthValidator);
@@ -137,10 +137,8 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 
 		container.add(textLabelBp.setText("Firstname*"), "right, sg lg");
 		firstName = container.add("Firstname", stringFieldBp, inputWidgetConstraints);
-		firstName.setValue("Michael");
-		firstName.resetModificationState();
-		firstnameValidationWidget = container.add(validationLabelBp.setInputComponent(firstName), "wrap");
 		firstName.addValidator(mandatoryValidator);
+		firstnameValidationWidget = container.add(validationLabelBp.setInputComponent(firstName), "wrap");
 		firstName.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(final IKeyEvent event) {
@@ -152,8 +150,8 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 
 		container.add(textLabelBp.setText("Lastname*"), "right, sg lg");
 		lastname = container.add("Lastname", stringFieldBp, inputWidgetConstraints);
-		lastnameValidationWidget = container.add(validationLabelBp.setInputComponent(lastname), "wrap");
 		lastname.addValidator(mandatoryValidator);
+		lastnameValidationWidget = container.add(validationLabelBp.setInputComponent(lastname), "wrap");
 		lastname.addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -194,7 +192,7 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 
 		container.add(textLabelBp.setText("Day of dirth*"), "right, sg lg");
 		dateOfBirth = container.add("Day of dirth", bpF.inputFieldDate(), inputWidgetConstraints);
-		dateOfBirth.addValidator(new MandatoryInfoValidator<Date>("Must not be null"));
+		dateOfBirth.addValidator(new MandatoryValidator<Date>("Must not be null"));
 		dateOfBirthValidationWidget = container.add(validationLabelBp.setInputComponent(dateOfBirth), "wrap");
 
 		container.add(textLabelBp.setText("Street*"), "right, sg lg");
@@ -204,7 +202,7 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 
 		container.add(textLabelBp.setText("Postal code*"), "right, sg lg");
 		postalCode = container.add("Postal code", bpF.inputFieldIntegerNumber().setMaxLength(5), inputWidgetConstraints);
-		postalCode.addValidator(new MandatoryInfoValidator<Integer>("Must not be null"));
+		postalCode.addValidator(new MandatoryValidator<Integer>("Must not be null"));
 		postalCodeValidationWidget = container.add(validationLabelBp.setInputComponent(postalCode), "wrap");
 
 		postalCode.addKeyListener(new KeyAdapter() {
@@ -247,6 +245,7 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 		mail.addValidator(moreThanOneWordValidator);
 		mailValidationWidget = container.add(validationLabelBp.setInputComponent(mail), "wrap");
 
+		resetValidation();
 	}
 
 	@Override
@@ -284,17 +283,7 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 			phoneNumber.setValue(null);
 			mail.setValue(null);
 		}
-
-		genderValidationWidget.resetValidation();
-		firstnameValidationWidget.resetValidation();
-		lastnameValidationWidget.resetValidation();
-		dateOfBirthValidationWidget.resetValidation();
-		streetValidationWidget.resetValidation();
-		postalCodeValidationWidget.resetValidation();
-		cityValidationWidget.resetValidation();
-		countryValidationWidget.resetValidation();
-		phoneValidationWidget.resetValidation();
-		mailValidationWidget.resetValidation();
+		resetValidation();
 	}
 
 	@Override
@@ -310,6 +299,19 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 		result.add(getStringValue(phoneNumber.getValue()));
 		result.add(getStringValue(mail.getValue()));
 		return result;
+	}
+
+	private void resetValidation() {
+		genderValidationWidget.resetValidation();
+		firstnameValidationWidget.resetValidation();
+		lastnameValidationWidget.resetValidation();
+		dateOfBirthValidationWidget.resetValidation();
+		streetValidationWidget.resetValidation();
+		postalCodeValidationWidget.resetValidation();
+		cityValidationWidget.resetValidation();
+		countryValidationWidget.resetValidation();
+		phoneValidationWidget.resetValidation();
+		mailValidationWidget.resetValidation();
 	}
 
 	private String getStringValue(final Object object) {

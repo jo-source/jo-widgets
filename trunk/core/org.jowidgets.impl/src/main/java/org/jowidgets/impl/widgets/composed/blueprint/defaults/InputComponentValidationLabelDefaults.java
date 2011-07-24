@@ -27,33 +27,47 @@
  */
 package org.jowidgets.impl.widgets.composed.blueprint.defaults;
 
-import org.jowidgets.api.color.Colors;
-import org.jowidgets.api.image.IconsSmall;
-import org.jowidgets.api.widgets.blueprint.builder.IValidationLabelSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.builder.IInputComponentValidationLabelSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
-import org.jowidgets.common.types.Markup;
+import org.jowidgets.util.IDecorator;
+import org.jowidgets.validation.IValidationMessage;
+import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.validation.MessageType;
+import org.jowidgets.validation.ValidationResult;
 
-public class ValidationLabelDefaults implements IDefaultInitializer<IValidationLabelSetupBuilder<?>> {
+public class InputComponentValidationLabelDefaults implements IDefaultInitializer<IInputComponentValidationLabelSetupBuilder<?>> {
+
+	private static final IDecorator<IValidationResult> INITIAL_VALIDATION_DECORATOR = createDefaultInitialDecorator();
+	private static final IDecorator<IValidationResult> UNMODIFIED_VALIDATION_DECORATOR = createUnmodifiedInitialDecorator();
 
 	@Override
-	public void initialize(final IValidationLabelSetupBuilder<?> builder) {
-		builder.setShowValidationMessage(true);
-
-		builder.setOkMarkup(Markup.STRONG);
-		builder.setInfoMarkup(Markup.DEFAULT);
-		builder.setWarningMarkup(Markup.STRONG);
-		builder.setInfoErrorMarkup(Markup.STRONG);
-		builder.setErrorMarkup(Markup.STRONG);
-
-		builder.setOkColor(Colors.DEFAULT);
-		builder.setInfoColor(Colors.STRONG);
-		builder.setInfoErrorColor(Colors.STRONG);
-		builder.setErrorColor(Colors.ERROR);
-		builder.setWarningColor(Colors.DEFAULT);
-
-		builder.setOkIcon(IconsSmall.OK);
-		builder.setWarningIcon(IconsSmall.WARNING);
-		builder.setErrorIcon(IconsSmall.ERROR);
+	public void initialize(final IInputComponentValidationLabelSetupBuilder<?> builder) {
+		builder.setInitialValidationDecorator(INITIAL_VALIDATION_DECORATOR);
+		builder.setUnmodifiedValidationDecorator(UNMODIFIED_VALIDATION_DECORATOR);
 	}
 
+	private static IDecorator<IValidationResult> createDefaultInitialDecorator() {
+		return new IDecorator<IValidationResult>() {
+			@Override
+			public IValidationResult decorate(final IValidationResult original) {
+				//do not do initial validation by default
+				return null;
+			}
+		};
+	}
+
+	private static IDecorator<IValidationResult> createUnmodifiedInitialDecorator() {
+		return new IDecorator<IValidationResult>() {
+			@Override
+			public IValidationResult decorate(final IValidationResult original) {
+				final IValidationMessage worstFirst = original.getWorstFirst();
+				if (worstFirst.getType().equalOrWorse(MessageType.WARNING)) {
+					return original;
+				}
+				else {
+					return ValidationResult.create().withInfo(null);
+				}
+			}
+		};
+	}
 }
