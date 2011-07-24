@@ -38,7 +38,7 @@ import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
-import org.jowidgets.api.widgets.blueprint.IValidateableStateLabelBluePrint;
+import org.jowidgets.api.widgets.blueprint.IInputComponentValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.blueprint.factory.ISimpleBluePrintFactory;
 import org.jowidgets.common.application.IApplication;
@@ -82,22 +82,22 @@ public class HelloWidgetApplication implements IApplication {
 		// base descriptor for left labels
 		final ITextLabelBluePrint labelBp = bpF.textLabel().alignRight();
 
-		final IValidateableStateLabelBluePrint validationLabelBp = bpF.validatetableStateLabel();
+		final IInputComponentValidationLabelBluePrint validationLabelBp = bpF.validatetableStateLabel();
 
 		// row1
 		group.add(labelBp.setText("Number 1").setToolTipText("Very useful numbers here"), "sg lg");
 		final IInputComponent<Long> widget1 = group.add(bpF.inputFieldLongNumber(), "growx");
-		group.add(validationLabelBp.setValidateable(widget1), "wrap");
+		group.add(validationLabelBp.setInputComponent(widget1), "wrap");
 
 		// row2
 		group.add(labelBp.setText("Number 2").setToolTipText("Very very useful numbers here"), "sg lg");
 		final IInputComponent<Integer> widget2 = group.add(bpF.inputFieldIntegerNumber(), "growx");
-		group.add(validationLabelBp.setValidateable(widget2), "wrap");
+		group.add(validationLabelBp.setInputComponent(widget2), "wrap");
 
 		// row3
 		group.add(labelBp.setText("String").setToolTipText("Very special input here"), "sg lg");
 		final IInputComponent<String> widget3 = group.add(bpF.inputFieldString(), "growx");
-		group.add(validationLabelBp.setValidateable(widget3), "wrap");
+		group.add(validationLabelBp.setInputComponent(widget3), "wrap");
 
 		// row4
 		group.add(

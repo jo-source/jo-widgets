@@ -25,14 +25,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.descriptor;
+package org.jowidgets.api.widgets.blueprint.builder;
 
-import org.jowidgets.api.widgets.IValidateableStateLabel;
-import org.jowidgets.api.widgets.descriptor.setup.IValidateableStateLabelSetup;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.api.widgets.IInputComponent;
 
-public interface IValidateableStateLabelDescriptor extends
-		IValidateableStateLabelSetup,
-		IWidgetDescriptor<IValidateableStateLabel> {
+public interface IInputComponentValidationLabelSetupBuilder<INSTANCE_TYPE extends IInputComponentValidationLabelSetupBuilder<?>> extends
+		IValidationLabelSetupBuilder<INSTANCE_TYPE> {
+
+	INSTANCE_TYPE setInputComponent(IInputComponent<?> inputComponent);
 
 }

@@ -25,44 +25,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.widgets.composed;
+package org.jowidgets.api.widgets.descriptor.setup;
 
-import org.jowidgets.api.widgets.IValidateableStateLabel;
-import org.jowidgets.api.widgets.IValidationResultLabel;
-import org.jowidgets.api.widgets.descriptor.setup.IValidateableStateLabelSetup;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
-import org.jowidgets.util.Assert;
-import org.jowidgets.validation.IValidateable;
-import org.jowidgets.validation.IValidationConditionListener;
+import org.jowidgets.api.widgets.IInputComponent;
+import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
-public class ValidateableStateLabelImpl extends ControlWrapper implements IValidateableStateLabel {
+public interface IInputComponentValidationLabelSetup extends IValidationLabelSetup {
 
-	private final IValidationResultLabel resultLabel;
-
-	public ValidateableStateLabelImpl(final IValidationResultLabel resultLabel, final IValidateableStateLabelSetup setup) {
-		super(resultLabel);
-		Assert.paramNotNull(setup.getValidateable(), "setup.getValidateable()");
-
-		this.resultLabel = resultLabel;
-
-		ColorSettingsInvoker.setColors(setup, this);
-		VisibiliySettingsInvoker.setVisibility(setup, this);
-
-		final IValidateable validateable = setup.getValidateable();
-
-		validateable.addValidationConditionListener(new IValidationConditionListener() {
-			@Override
-			public void validationConditionsChanged() {
-				resultLabel.setResult(validateable.validate());
-			}
-		});
-	}
-
-	@Override
-	public void resetValidation() {
-		resultLabel.setEmpty();
-	}
+	@Mandatory
+	IInputComponent<?> getInputComponent();
 
 }

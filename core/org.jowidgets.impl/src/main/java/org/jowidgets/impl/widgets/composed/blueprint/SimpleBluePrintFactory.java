@@ -29,6 +29,8 @@ package org.jowidgets.impl.widgets.composed.blueprint;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.login.ILoginInterceptor;
+import org.jowidgets.api.widgets.IInputComponent;
+import org.jowidgets.api.widgets.blueprint.IInputComponentValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
@@ -38,7 +40,6 @@ import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IProgressBarBluePrint;
 import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
-import org.jowidgets.api.widgets.blueprint.IValidateableStateLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IValidationResultLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
@@ -46,7 +47,6 @@ import org.jowidgets.api.widgets.blueprint.factory.ISimpleBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.impl.widgets.basic.blueprint.BasicBluePrintFactory;
 import org.jowidgets.util.Assert;
-import org.jowidgets.validation.IValidateable;
 
 public class SimpleBluePrintFactory extends BasicBluePrintFactory implements ISimpleBluePrintFactory {
 
@@ -72,16 +72,16 @@ public class SimpleBluePrintFactory extends BasicBluePrintFactory implements ISi
 	}
 
 	@Override
-	public IValidateableStateLabelBluePrint validatetableStateLabel(final IValidateable validateable) {
-		Assert.paramNotNull(validateable, "validateable");
-		final IValidateableStateLabelBluePrint result = createProxy(IValidateableStateLabelBluePrint.class);
-		result.setValidateable(validateable);
+	public IInputComponentValidationLabelBluePrint validatetableStateLabel(final IInputComponent<?> inputComponent) {
+		Assert.paramNotNull(inputComponent, "inputComponent");
+		final IInputComponentValidationLabelBluePrint result = createProxy(IInputComponentValidationLabelBluePrint.class);
+		result.setInputComponent(inputComponent);
 		return result;
 	}
 
 	@Override
-	public IValidateableStateLabelBluePrint validatetableStateLabel() {
-		return createProxy(IValidateableStateLabelBluePrint.class);
+	public IInputComponentValidationLabelBluePrint validatetableStateLabel() {
+		return createProxy(IInputComponentValidationLabelBluePrint.class);
 	}
 
 	@Override

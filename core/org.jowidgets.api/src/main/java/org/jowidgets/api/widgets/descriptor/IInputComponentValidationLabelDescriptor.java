@@ -25,10 +25,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets;
+package org.jowidgets.api.widgets.descriptor;
 
-public interface IValidateableStateLabel extends IControl {
+import org.jowidgets.api.widgets.IInputComponentValidationLabel;
+import org.jowidgets.api.widgets.descriptor.setup.IInputComponentValidationLabelSetup;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-	void resetValidation();
+public interface IInputComponentValidationLabelDescriptor extends
+		IInputComponentValidationLabelSetup,
+		IWidgetDescriptor<IInputComponentValidationLabel> {
 
 }
