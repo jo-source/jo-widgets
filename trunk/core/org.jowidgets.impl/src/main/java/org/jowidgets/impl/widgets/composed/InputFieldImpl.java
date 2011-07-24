@@ -108,7 +108,7 @@ public class InputFieldImpl<VALUE_TYPE> extends ControlWrapper implements IInput
 
 	@Override
 	public boolean hasModifications() {
-		return NullCompatibleEquivalence.equals(lastUnmodifiedTextValue, getText());
+		return !NullCompatibleEquivalence.equals(lastUnmodifiedTextValue, getText());
 	}
 
 	@Override
