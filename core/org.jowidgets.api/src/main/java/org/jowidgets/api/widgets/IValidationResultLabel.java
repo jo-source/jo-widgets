@@ -39,8 +39,4 @@ public interface IValidationResultLabel extends IControl {
 
 	IValidationResult getResult();
 
-	void setHint(String hint);
-
-	String getHint();
-
 }

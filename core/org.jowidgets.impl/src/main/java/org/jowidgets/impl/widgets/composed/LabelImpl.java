@@ -67,7 +67,7 @@ public class LabelImpl implements ILabel {
 		super();
 
 		this.compositeWidget = compositeWidget;
-		this.compositeWidget.setLayout(new MigLayoutDescriptor("0[][]0", "0[]0"));
+		this.compositeWidget.setLayout(new MigLayoutDescriptor("0[][grow]0", "0[]0"));
 
 		final BluePrintFactory bpF = new BluePrintFactory();
 
@@ -75,7 +75,7 @@ public class LabelImpl implements ILabel {
 		this.iconWidget = compositeWidget.add(iconDescriptor, "w 0::");
 
 		final ITextLabelDescriptor textLabelDescriptor = bpF.textLabel().setSetup(setup);
-		this.textLabelWidget = compositeWidget.add(textLabelDescriptor, "");
+		this.textLabelWidget = compositeWidget.add(textLabelDescriptor, "w 0::, grow");
 
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
