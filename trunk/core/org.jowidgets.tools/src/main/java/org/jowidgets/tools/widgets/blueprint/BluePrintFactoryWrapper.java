@@ -36,6 +36,7 @@ import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.login.ILoginInterceptor;
 import org.jowidgets.api.model.table.ITableColumnModel;
 import org.jowidgets.api.model.table.ITableModel;
+import org.jowidgets.api.widgets.IInputComponent;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
@@ -50,6 +51,7 @@ import org.jowidgets.api.widgets.blueprint.IDirectoryChooserBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFileChooserBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.IIconBluePrint;
+import org.jowidgets.api.widgets.blueprint.IInputComponentValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
@@ -83,7 +85,6 @@ import org.jowidgets.api.widgets.blueprint.IToolBarPopupButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarToggleButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeNodeBluePrint;
-import org.jowidgets.api.widgets.blueprint.IValidateableStateLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IValidationResultLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenience;
@@ -99,7 +100,6 @@ import org.jowidgets.common.types.FileChooserType;
 import org.jowidgets.common.widgets.builder.ISetupBuilder;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.util.Assert;
-import org.jowidgets.validation.IValidateable;
 
 public class BluePrintFactoryWrapper implements IBluePrintFactory {
 
@@ -165,12 +165,12 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	}
 
 	@Override
-	public IValidateableStateLabelBluePrint validatetableStateLabel(final IValidateable validateable) {
-		return bluePrintFactory.validatetableStateLabel(validateable);
+	public IInputComponentValidationLabelBluePrint validatetableStateLabel(final IInputComponent<?> inputComponent) {
+		return bluePrintFactory.validatetableStateLabel(inputComponent);
 	}
 
 	@Override
-	public IValidateableStateLabelBluePrint validatetableStateLabel() {
+	public IInputComponentValidationLabelBluePrint validatetableStateLabel() {
 		return bluePrintFactory.validatetableStateLabel();
 	}
 

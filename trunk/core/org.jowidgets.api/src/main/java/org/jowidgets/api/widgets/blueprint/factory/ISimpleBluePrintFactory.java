@@ -29,6 +29,8 @@ package org.jowidgets.api.widgets.blueprint.factory;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.login.ILoginInterceptor;
+import org.jowidgets.api.widgets.IInputComponent;
+import org.jowidgets.api.widgets.blueprint.IInputComponentValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
@@ -38,10 +40,8 @@ import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IProgressBarBluePrint;
 import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
-import org.jowidgets.api.widgets.blueprint.IValidateableStateLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IValidationResultLabelBluePrint;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
-import org.jowidgets.validation.IValidateable;
 
 public interface ISimpleBluePrintFactory extends IBasicBluePrintFactory {
 
@@ -49,9 +49,9 @@ public interface ISimpleBluePrintFactory extends IBasicBluePrintFactory {
 
 	ITextSeparatorBluePrint textSeparator();
 
-	IValidateableStateLabelBluePrint validatetableStateLabel(IValidateable validateable);
+	IInputComponentValidationLabelBluePrint validatetableStateLabel(IInputComponent<?> inputComponent);
 
-	IValidateableStateLabelBluePrint validatetableStateLabel();
+	IInputComponentValidationLabelBluePrint validatetableStateLabel();
 
 	IValidationResultLabelBluePrint validationResultLabel();
 

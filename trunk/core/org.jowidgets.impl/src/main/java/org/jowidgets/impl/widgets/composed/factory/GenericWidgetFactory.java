@@ -37,7 +37,7 @@ import org.jowidgets.api.widgets.descriptor.IMessageDialogDescriptor;
 import org.jowidgets.api.widgets.descriptor.IProgressBarDescriptor;
 import org.jowidgets.api.widgets.descriptor.IQuestionDialogDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextSeparatorDescriptor;
-import org.jowidgets.api.widgets.descriptor.IValidateableStateLabelDescriptor;
+import org.jowidgets.api.widgets.descriptor.IInputComponentValidationLabelDescriptor;
 import org.jowidgets.api.widgets.descriptor.IValidationResultLabelDescriptor;
 import org.jowidgets.impl.widgets.basic.factory.BasicGenericWidgetFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.CustomCalendarFactory;
@@ -73,7 +73,7 @@ public class GenericWidgetFactory extends BasicGenericWidgetFactory {
 		register(ILoginDialogDescriptor.class, new LoginDialogFactory(this));
 		register(IInputCompositeDescriptor.class, new InputCompositeFactory());
 		register(IValidationResultLabelDescriptor.class, new ValidationResultLabelFactory(this));
-		register(IValidateableStateLabelDescriptor.class, new ValidateableStateLabelFactory(this));
+		register(IInputComponentValidationLabelDescriptor.class, new ValidateableStateLabelFactory(this));
 		register(IProgressBarDescriptor.class, new ProgressBarFactory(getSpiWidgetFactory()));
 	}
 

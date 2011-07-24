@@ -25,45 +25,54 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.widgets.composed.factory.internal;
+package org.jowidgets.impl.widgets.composed;
 
-import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IInputComponent;
 import org.jowidgets.api.widgets.IInputComponentValidationLabel;
 import org.jowidgets.api.widgets.IValidationResultLabel;
-import org.jowidgets.api.widgets.blueprint.IValidationResultLabelBluePrint;
-import org.jowidgets.api.widgets.descriptor.IInputComponentValidationLabelDescriptor;
-import org.jowidgets.api.widgets.descriptor.IValidationResultLabelDescriptor;
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.common.widgets.factory.IWidgetFactory;
-import org.jowidgets.impl.widgets.composed.InputComponentValidationStateLabelImpl;
+import org.jowidgets.api.widgets.descriptor.setup.IInputComponentValidationLabelSetup;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
+import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
+import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
+import org.jowidgets.util.Assert;
+import org.jowidgets.validation.IValidationConditionListener;
 
-public class ValidateableStateLabelFactory implements IWidgetFactory<IInputComponentValidationLabel, IInputComponentValidationLabelDescriptor> {
+public class InputComponentValidationStateLabelImpl extends ControlWrapper implements IInputComponentValidationLabel {
 
-	private final IGenericWidgetFactory genericWidgetFactory;
+	private final IValidationResultLabel resultLabel;
+	private final IInputComponent<?> inputComponent;
 
-	public ValidateableStateLabelFactory(final IGenericWidgetFactory genericWidgetFactory) {
-		super();
-		this.genericWidgetFactory = genericWidgetFactory;
+	public InputComponentValidationStateLabelImpl(
+		final IValidationResultLabel resultLabel,
+		final IInputComponentValidationLabelSetup setup) {
+		super(resultLabel);
+		Assert.paramNotNull(setup.getInputComponent(), "setup.getInputComponent()");
+
+		this.resultLabel = resultLabel;
+
+		ColorSettingsInvoker.setColors(setup, this);
+		VisibiliySettingsInvoker.setVisibility(setup, this);
+
+		this.inputComponent = setup.getInputComponent();
+
+		inputComponent.addValidationConditionListener(new IValidationConditionListener() {
+			@Override
+			public void validationConditionsChanged() {
+				if (inputComponent.hasModifications()) {
+					resultLabel.setResult(inputComponent.validate());
+				}
+				else {
+					resultLabel.setEmpty();
+				}
+			}
+		});
+
 	}
 
 	@Override
-	public IInputComponentValidationLabel create(final Object parentUiReference, final IInputComponentValidationLabelDescriptor descriptor) {
-		final IValidationResultLabelBluePrint validationResultLabelBp = Toolkit.getBluePrintFactory().validationResultLabel();
-		validationResultLabelBp.setSetup(descriptor);
-
-		final IValidationResultLabel validationResultLabel = genericWidgetFactory.create(
-				parentUiReference,
-				validationResultLabelBp);
-
-		if (validationResultLabel == null) {
-			throw new IllegalStateException("Could not create widget with descriptor interface class '"
-				+ IValidationResultLabelDescriptor.class
-				+ "' from '"
-				+ IGenericWidgetFactory.class.getName()
-				+ "'");
-		}
-
-		return new InputComponentValidationStateLabelImpl(validationResultLabel, descriptor);
+	public void resetValidation() {
+		inputComponent.resetModificationState();
+		resultLabel.setEmpty();
 	}
 
 }
