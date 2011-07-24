@@ -39,6 +39,8 @@ public interface IValidationResult {
 
 	List<IValidationMessage> getWarnings();
 
+	List<IValidationMessage> getInfos();
+
 	IValidationMessage getWorstFirst();
 
 	boolean isValid();
@@ -51,11 +53,15 @@ public interface IValidationResult {
 
 	IValidationResult withWarning(final String text);
 
+	IValidationResult withInfo(final String text);
+
 	IValidationResult withError(final String context, final String text);
 
 	IValidationResult withInfoError(final String context, final String text);
 
 	IValidationResult withWarning(final String context, final String text);
+
+	IValidationResult withInfo(final String context, final String text);
 
 	IValidationResult withResult(final IValidationResult result);
 

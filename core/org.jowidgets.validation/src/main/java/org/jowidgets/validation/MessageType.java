@@ -35,6 +35,11 @@ public enum MessageType {
 	OK(true),
 
 	/**
+	 * Input is valid but some info should be given to the user (e.g. at initial state)
+	 */
+	INFO(true),
+
+	/**
 	 * Input is valid but seems to be unusual
 	 */
 	WARNING(true),
@@ -88,14 +93,17 @@ public enum MessageType {
 		if (this == OK) {
 			return false;
 		}
-		else if (this == WARNING) {
+		if (this == INFO) {
 			return messageType == OK;
 		}
+		else if (this == WARNING) {
+			return messageType == INFO || messageType == OK;
+		}
 		else if (this == INFO_ERROR) {
-			return messageType == OK || messageType == WARNING;
+			return messageType == INFO || messageType == OK || messageType == WARNING;
 		}
 		else if (this == ERROR) {
-			return messageType == OK || messageType == WARNING || messageType == INFO_ERROR;
+			return messageType == INFO || messageType == OK || messageType == WARNING || messageType == INFO_ERROR;
 		}
 		else {
 			throw new IllegalArgumentException("MessageType '" + messageType + "' is not known");
