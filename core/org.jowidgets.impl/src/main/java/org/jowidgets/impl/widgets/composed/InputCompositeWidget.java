@@ -31,7 +31,6 @@ import java.util.List;
 
 import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IComposedInputComponent;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IInputComposite;
@@ -66,7 +65,6 @@ import org.jowidgets.validation.ValidationResult;
 //TODO MG inputCompositeWidget must be implemented correctly
 public class InputCompositeWidget<INPUT_TYPE> extends ControlWrapper implements
 		IInputComposite<INPUT_TYPE>,
-		IComposedInputComponent<INPUT_TYPE>,
 		IInputContentContainer {
 
 	private final IInputContentCreator<INPUT_TYPE> contentCreator;
@@ -142,6 +140,17 @@ public class InputCompositeWidget<INPUT_TYPE> extends ControlWrapper implements
 	}
 
 	@Override
+	public boolean hasModifications() {
+		// TODO MG implement hasModifications
+		return false;
+	}
+
+	@Override
+	public void resetModificationState() {
+		// TODO MG implement resetModificationState
+	}
+
+	@Override
 	public void resetValidation() {
 		if (validationLabel != null) {
 			validationLabel.setEmpty();
@@ -181,12 +190,6 @@ public class InputCompositeWidget<INPUT_TYPE> extends ControlWrapper implements
 	@Override
 	public INPUT_TYPE getValue() {
 		return contentCreator.getValue();
-	}
-
-	@Override
-	public Object getIntermediateValue() {
-		//TODO MG make correct implementation of getIntermediateValue()
-		return getValue();
 	}
 
 	@Override

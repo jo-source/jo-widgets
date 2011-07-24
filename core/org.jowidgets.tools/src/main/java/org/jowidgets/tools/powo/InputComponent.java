@@ -37,8 +37,9 @@ import org.jowidgets.api.widgets.descriptor.setup.IInputComponentSetup;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.util.Assert;
-import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.util.NullCompatibleEquivalence;
 import org.jowidgets.validation.IValidationConditionListener;
+import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
 
 class InputComponent<WIDGET_TYPE extends IInputComponent<VALUE_TYPE>, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IInputComponentSetup<VALUE_TYPE> & IInputComponentSetupBuilder<?, VALUE_TYPE>, VALUE_TYPE> extends
@@ -48,11 +49,14 @@ class InputComponent<WIDGET_TYPE extends IInputComponent<VALUE_TYPE>, BLUE_PRINT
 	private final List<IInputListener> inputListeners;
 	private final List<IValidationConditionListener> validationStateListeners;
 
+	private VALUE_TYPE lastUnmodifiedValue;
+
 	public InputComponent(final BLUE_PRINT_TYPE bluePrint) {
 		super(bluePrint);
 		this.validators = new LinkedList<IValidator<VALUE_TYPE>>();
 		this.inputListeners = new LinkedList<IInputListener>();
 		this.validationStateListeners = new LinkedList<IValidationConditionListener>();
+		this.lastUnmodifiedValue = null;
 	}
 
 	@Override
@@ -97,6 +101,27 @@ class InputComponent<WIDGET_TYPE extends IInputComponent<VALUE_TYPE>, BLUE_PRINT
 		else {
 			return getBluePrint().getValue();
 		}
+	}
+
+	@Override
+	public boolean hasModifications() {
+		if (isInitialized()) {
+			return getWidget().hasModifications();
+		}
+		else {
+			return !NullCompatibleEquivalence.equals(lastUnmodifiedValue, getValue());
+		}
+	}
+
+	@Override
+	public void resetModificationState() {
+		if (isInitialized()) {
+			getWidget().resetModificationState();
+		}
+		else {
+			lastUnmodifiedValue = getValue();
+		}
+
 	}
 
 	@Override

@@ -44,6 +44,7 @@ import org.jowidgets.tools.controler.InputObservable;
 import org.jowidgets.tools.validation.CompoundValidator;
 import org.jowidgets.tools.validation.ValidationCache;
 import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
+import org.jowidgets.util.NullCompatibleEquivalence;
 import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
@@ -58,6 +59,7 @@ public class CheckBoxImpl extends ControlSpiWrapper implements ICheckBox {
 	private final CompoundValidator<Boolean> compoundValidator;
 
 	private boolean isNull;
+	private Boolean lastUnmodifiedValue;
 
 	public CheckBoxImpl(final ICheckBoxSpi checkBoxWidgetSpi, final ICheckBoxSetup setup) {
 		super(checkBoxWidgetSpi);
@@ -100,11 +102,23 @@ public class CheckBoxImpl extends ControlSpiWrapper implements ICheckBox {
 				inputObservable.fireInputChanged();
 			}
 		});
+
+		resetModificationState();
 	}
 
 	@Override
 	public ICheckBoxSpi getWidget() {
 		return (ICheckBoxSpi) super.getWidget();
+	}
+
+	@Override
+	public boolean hasModifications() {
+		return !NullCompatibleEquivalence.equals(lastUnmodifiedValue, getValue());
+	}
+
+	@Override
+	public void resetModificationState() {
+		lastUnmodifiedValue = getValue();
 	}
 
 	@Override

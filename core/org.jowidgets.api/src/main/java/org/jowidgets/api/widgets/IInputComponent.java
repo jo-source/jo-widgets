@@ -40,4 +40,33 @@ public interface IInputComponent<VALUE_TYPE> extends
 
 	void addValidator(IValidator<VALUE_TYPE> validator);
 
+	/**
+	 * Determines if modifications has been occurred since object creation or the last invocation of
+	 * resetModificationState().
+	 * 
+	 * Remark: The component may have modifications even if the public value not differs from its
+	 * original value, Example:
+	 * The user enters a date in an IInputField<Date>, composed from an single ITextField.
+	 * The current input (e.g. '12-11-') is incomplete so it can not be converted to a valid date,
+	 * which leads to a value of 'null'. The {@link #resetModificationState()} method will be invoked,
+	 * so the method {@link #hasModifications()} returns false.
+	 * After pressing the '2' key, the method {@link #hasModifications()} returns true, but the value is still null.
+	 * After pressing the keys '0', '1' , '1', the method {@link #hasModifications()} returns still true and the value is
+	 * a Date object representing "12-11-2011". If the user presses the backspace key 4 times, the value
+	 * is 'null' and the method {@link #hasModifications()} returns false again, which indicates that the field is in it's
+	 * original state.
+	 * 
+	 * @return True if the component has modifications, false otherwise
+	 * @see IInputComponent#hasModifications()
+	 */
+	boolean hasModifications();
+
+	/**
+	 * Resets the modification state. After that, the {@link #hasModifications()} method must return false,
+	 * until modification was made by the user or programmatically.
+	 * 
+	 * Remark: This method invocation must not reset the modifications. Only the modification state (modified or not)
+	 * will be reseted.
+	 */
+	void resetModificationState();
 }

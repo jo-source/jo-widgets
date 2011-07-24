@@ -66,7 +66,7 @@ public class ValidationResultLabelImpl extends ControlWrapper implements IValida
 		label.setIcon(null);
 		label.setText(null);
 		label.setToolTipText(null);
-		label.redraw();
+		//label.redraw();
 	}
 
 	@Override

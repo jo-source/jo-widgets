@@ -38,6 +38,7 @@ import org.jowidgets.tools.validation.CompoundValidator;
 import org.jowidgets.tools.validation.ValidationCache;
 import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
+import org.jowidgets.util.NullCompatibleEquivalence;
 import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
@@ -49,6 +50,8 @@ public class InputFieldImpl<VALUE_TYPE> extends ControlWrapper implements IInput
 	private final CompoundValidator<VALUE_TYPE> compoundValidator;
 	private final IValidator<String> stringValidator;
 	private final ValidationCache validationCache;
+
+	private String lastUnmodifiedTextValue;
 
 	public InputFieldImpl(final ITextControl textField, final IInputFieldSetup<VALUE_TYPE> setup) {
 
@@ -94,11 +97,23 @@ public class InputFieldImpl<VALUE_TYPE> extends ControlWrapper implements IInput
 		if (setup.getValue() != null) {
 			setValue(setup.getValue());
 		}
+
+		resetModificationState();
 	}
 
 	@Override
 	protected ITextControl getWidget() {
 		return (ITextControl) super.getWidget();
+	}
+
+	@Override
+	public boolean hasModifications() {
+		return NullCompatibleEquivalence.equals(lastUnmodifiedTextValue, getText());
+	}
+
+	@Override
+	public void resetModificationState() {
+		this.lastUnmodifiedTextValue = getText();
 	}
 
 	@Override
@@ -169,11 +184,6 @@ public class InputFieldImpl<VALUE_TYPE> extends ControlWrapper implements IInput
 	@Override
 	public void removeInputListener(final IInputListener listener) {
 		getWidget().removeInputListener(listener);
-	}
-
-	@Override
-	public Object getIntermediateValue() {
-		return getText();
 	}
 
 }

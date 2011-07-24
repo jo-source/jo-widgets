@@ -42,6 +42,7 @@ import org.jowidgets.spi.widgets.IComboBoxSpi;
 import org.jowidgets.tools.validation.CompoundValidator;
 import org.jowidgets.tools.validation.ValidationCache;
 import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
+import org.jowidgets.util.NullCompatibleEquivalence;
 import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
@@ -54,6 +55,8 @@ public class ComboBoxImpl<VALUE_TYPE> extends ComboBoxSelectionImpl<VALUE_TYPE> 
 	private final ValidationCache validationCache;
 	private final ControlDelegate controlDelegate;
 	private final CompoundValidator<VALUE_TYPE> compoundValidator;
+
+	private String lastUnmodifiedValue;
 
 	public ComboBoxImpl(final IComboBoxSpi comboBoxWidgetSpi, final IComboBoxSetup<VALUE_TYPE> setup) {
 		super(comboBoxWidgetSpi, setup);
@@ -111,6 +114,16 @@ public class ComboBoxImpl<VALUE_TYPE> extends ComboBoxSelectionImpl<VALUE_TYPE> 
 	@Override
 	public IComboBoxSpi getWidget() {
 		return (IComboBoxSpi) super.getWidget();
+	}
+
+	@Override
+	public boolean hasModifications() {
+		return !NullCompatibleEquivalence.equals(lastUnmodifiedValue, getWidget().getText());
+	}
+
+	@Override
+	public void resetModificationState() {
+		this.lastUnmodifiedValue = getWidget().getText();
 	}
 
 	@Override
