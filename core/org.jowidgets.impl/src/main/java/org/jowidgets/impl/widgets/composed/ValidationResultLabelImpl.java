@@ -88,11 +88,15 @@ public class ValidationResultLabelImpl extends ControlWrapper implements IValida
 
 		final StringBuilder messageTextBuilder = new StringBuilder();
 		final String context = firstWorst.getContext();
+		final String text = firstWorst.getText();
 
-		if (context != null && !context.trim().isEmpty()) {
+		if (!EmptyCheck.isEmpty(context) && !EmptyCheck.isEmpty(text)) {
 			messageTextBuilder.append(firstWorst.getContext() + ": ");
 		}
-		messageTextBuilder.append(firstWorst.getText());
+
+		if (!EmptyCheck.isEmpty(text)) {
+			messageTextBuilder.append(firstWorst.getText());
+		}
 		final String messageText = messageTextBuilder.toString();
 
 		if (firstWorst.getType() == MessageType.OK) {
@@ -100,6 +104,17 @@ public class ValidationResultLabelImpl extends ControlWrapper implements IValida
 			if (showLabel) {
 				label.setMarkup(setup.getOkMarkup());
 				label.setForegroundColor(setup.getOkColor());
+				label.setText(messageText);
+			}
+			else if (!EmptyCheck.isEmpty(messageText)) {
+				label.setToolTipText(messageText);
+			}
+		}
+		else if (firstWorst.getType() == MessageType.INFO) {
+			label.setIcon(setup.getInfoIcon());
+			if (showLabel) {
+				label.setMarkup(setup.getInfoMarkup());
+				label.setForegroundColor(setup.getInfoColor());
 				label.setText(messageText);
 			}
 			else if (!EmptyCheck.isEmpty(messageText)) {

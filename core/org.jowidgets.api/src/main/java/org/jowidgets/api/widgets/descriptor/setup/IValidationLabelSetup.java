@@ -41,6 +41,9 @@ public interface IValidationLabelSetup extends IComponentSetup {
 	Markup getOkMarkup();
 
 	@Mandatory
+	Markup getInfoMarkup();
+
+	@Mandatory
 	Markup getWarningMarkup();
 
 	@Mandatory
@@ -53,6 +56,9 @@ public interface IValidationLabelSetup extends IComponentSetup {
 	IColorConstant getOkColor();
 
 	@Mandatory
+	IColorConstant getInfoColor();
+
+	@Mandatory
 	IColorConstant getWarningColor();
 
 	@Mandatory
@@ -62,6 +68,8 @@ public interface IValidationLabelSetup extends IComponentSetup {
 	IColorConstant getErrorColor();
 
 	IImageConstant getOkIcon();
+
+	IImageConstant getInfoIcon();
 
 	IImageConstant getWarningIcon();
 

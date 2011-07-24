@@ -40,7 +40,7 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.tools.validation.MandatoryInfoValidator;
+import org.jowidgets.tools.validation.MandatoryValidator;
 
 public class HelloContentCreator2 implements IInputContentCreator<String> {
 
@@ -69,12 +69,12 @@ public class HelloContentCreator2 implements IInputContentCreator<String> {
 
 		final IComboBoxBluePrint<String> comboBoxBp2 = bpF.comboBox("red", "green", "blue");
 		final IComboBox<String> cBox2 = widgetContainer.add("cBox2", comboBoxBp2, "wrap, growx");
-		cBox2.addValidator(new MandatoryInfoValidator<String>("mandatory"));
+		cBox2.addValidator(new MandatoryValidator<String>("mandatory"));
 
 		final IComboBoxBluePrint<Long> comboBoxBp3 = bpF.comboBox(converter.longNumber());
 		comboBoxBp3.setElements(Long.valueOf(23456), Long.valueOf(15468), Long.valueOf(5345519));
 		final IComboBox<Long> cBox3 = widgetContainer.add("cBox3", comboBoxBp3, "wrap, growx");
-		cBox3.addValidator(new MandatoryInfoValidator<Long>("mandatory"));
+		cBox3.addValidator(new MandatoryValidator<Long>("mandatory"));
 	}
 
 	@Override

@@ -72,7 +72,7 @@ public class SimpleBluePrintFactory extends BasicBluePrintFactory implements ISi
 	}
 
 	@Override
-	public IInputComponentValidationLabelBluePrint validatetableStateLabel(final IInputComponent<?> inputComponent) {
+	public IInputComponentValidationLabelBluePrint inputComponentValidationLabel(final IInputComponent<?> inputComponent) {
 		Assert.paramNotNull(inputComponent, "inputComponent");
 		final IInputComponentValidationLabelBluePrint result = createProxy(IInputComponentValidationLabelBluePrint.class);
 		result.setInputComponent(inputComponent);
@@ -80,7 +80,7 @@ public class SimpleBluePrintFactory extends BasicBluePrintFactory implements ISi
 	}
 
 	@Override
-	public IInputComponentValidationLabelBluePrint validatetableStateLabel() {
+	public IInputComponentValidationLabelBluePrint inputComponentValidationLabel() {
 		return createProxy(IInputComponentValidationLabelBluePrint.class);
 	}
 

@@ -34,13 +34,13 @@ import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
 import org.jowidgets.validation.ValidationResult;
 
-public class MandatoryInfoValidator<VALIDATION_INPUT_TYPE> implements IValidator<VALIDATION_INPUT_TYPE> {
+public class MandatoryValidator<VALIDATION_INPUT_TYPE> implements IValidator<VALIDATION_INPUT_TYPE> {
 
 	private final IValidationResult infoResult;
 
-	public MandatoryInfoValidator(final String messageText) {
+	public MandatoryValidator(final String messageText) {
 		Assert.paramNotEmpty(messageText, "messageText");
-		this.infoResult = ValidationResult.infoError(messageText);
+		this.infoResult = ValidationResult.error(messageText);
 	}
 
 	@Override

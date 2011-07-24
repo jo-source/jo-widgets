@@ -34,11 +34,11 @@ import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IInputComponent;
 import org.jowidgets.api.widgets.IInputDialog;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
+import org.jowidgets.api.widgets.blueprint.IInputComponentValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
-import org.jowidgets.api.widgets.blueprint.IInputComponentValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.blueprint.factory.ISimpleBluePrintFactory;
 import org.jowidgets.common.application.IApplication;
@@ -82,7 +82,7 @@ public class HelloWidgetApplication implements IApplication {
 		// base descriptor for left labels
 		final ITextLabelBluePrint labelBp = bpF.textLabel().alignRight();
 
-		final IInputComponentValidationLabelBluePrint validationLabelBp = bpF.validatetableStateLabel();
+		final IInputComponentValidationLabelBluePrint validationLabelBp = bpF.inputComponentValidationLabel();
 
 		// row1
 		group.add(labelBp.setText("Number 1").setToolTipText("Very useful numbers here"), "sg lg");

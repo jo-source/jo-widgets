@@ -29,10 +29,16 @@ package org.jowidgets.api.widgets.descriptor.setup;
 
 import org.jowidgets.api.widgets.IInputComponent;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
+import org.jowidgets.util.IDecorator;
+import org.jowidgets.validation.IValidationResult;
 
 public interface IInputComponentValidationLabelSetup extends IValidationLabelSetup {
 
 	@Mandatory
 	IInputComponent<?> getInputComponent();
+
+	IDecorator<IValidationResult> getUnmodifiedValidationDecorator();
+
+	IDecorator<IValidationResult> getInitialValidationDecorator();
 
 }
