@@ -29,8 +29,23 @@ package org.jowidgets.common.types;
 
 public enum AlignmentHorizontal {
 
-	LEFT,
-	RIGHT,
-	CENTER;
+	// TODO i18n
+	LEFT("Left"),
+	RIGHT("Right"),
+	CENTER("Center");
 
+	private String label;
+
+	private AlignmentHorizontal(final String label) {
+		this.label = label;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	@Override
+	public String toString() {
+		return label;
+	}
 }
