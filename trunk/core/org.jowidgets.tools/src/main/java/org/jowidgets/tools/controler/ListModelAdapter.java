@@ -26,14 +26,19 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.model;
+package org.jowidgets.tools.controler;
 
-public interface IListModelListener {
+import org.jowidgets.api.model.IListModelListener;
 
-	void afterChildAdded(int index);
+public class ListModelAdapter implements IListModelListener {
 
-	void beforeChildRemove(int index);
+	@Override
+	public void afterChildAdded(final int index) {}
 
-	void afterChildRemoved(int index);
+	@Override
+	public void beforeChildRemove(final int index) {}
+
+	@Override
+	public void afterChildRemoved(final int index) {}
 
 }

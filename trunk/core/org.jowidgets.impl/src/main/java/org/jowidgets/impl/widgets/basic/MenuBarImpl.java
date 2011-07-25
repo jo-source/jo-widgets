@@ -43,6 +43,7 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.IMainMenuDescriptor;
 import org.jowidgets.impl.widgets.common.wrapper.WidgetSpiWrapper;
 import org.jowidgets.spi.widgets.IMenuBarSpi;
+import org.jowidgets.tools.controler.ListModelAdapter;
 import org.jowidgets.util.Assert;
 
 public class MenuBarImpl extends WidgetSpiWrapper implements IMenuBar {
@@ -58,7 +59,7 @@ public class MenuBarImpl extends WidgetSpiWrapper implements IMenuBar {
 		this.parent = parent;
 		this.menus = new LinkedList<IMenu>();
 
-		this.listModelListener = new IListModelListener() {
+		this.listModelListener = new ListModelAdapter() {
 
 			@Override
 			public void afterChildRemoved(final int index) {

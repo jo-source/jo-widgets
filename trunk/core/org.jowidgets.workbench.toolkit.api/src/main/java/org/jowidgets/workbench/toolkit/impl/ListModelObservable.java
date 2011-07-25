@@ -52,13 +52,19 @@ class ListModelObservable implements IListModelObservable {
 		listeners.remove(listener);
 	}
 
-	public void fireChildAdded(final int index) {
+	public void fireAfterChildAdded(final int index) {
 		for (final IListModelListener listener : listeners) {
 			listener.afterChildAdded(index);
 		}
 	}
 
-	public void fireChildRemoved(final int index) {
+	public void fireBeforeChildRemove(final int index) {
+		for (final IListModelListener listener : listeners) {
+			listener.beforeChildRemove(index);
+		}
+	}
+
+	public void fireAfterChildRemoved(final int index) {
 		for (final IListModelListener listener : listeners) {
 			listener.afterChildRemoved(index);
 		}

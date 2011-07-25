@@ -226,7 +226,7 @@ class ListModelDelegate {
 		checkIds(item);
 		children.add(index, item);
 		item.addItemModelListener(itemModelListener);
-		fireChildAdded(index);
+		fireAfterChildAdded(index);
 		return item;
 	}
 
@@ -325,10 +325,13 @@ class ListModelDelegate {
 	}
 
 	protected void removeItem(final int index) {
+		if (children.size() < index) {
+			fireBeforeChildRemove(index);
+		}
 		final IItemModel removedItem = children.remove(index);
 		if (removedItem != null) {
 			removedItem.removeItemModelListener(itemModelListener);
-			fireChildRemoved(index);
+			fireAfterChildRemoved(index);
 		}
 	}
 
@@ -346,13 +349,19 @@ class ListModelDelegate {
 		listModelListeners.remove(listener);
 	}
 
-	private void fireChildAdded(final int index) {
+	private void fireAfterChildAdded(final int index) {
 		for (final IListModelListener listener : new LinkedList<IListModelListener>(listModelListeners)) {
 			listener.afterChildAdded(index);
 		}
 	}
 
-	private void fireChildRemoved(final int index) {
+	private void fireBeforeChildRemove(final int index) {
+		for (final IListModelListener listener : new LinkedList<IListModelListener>(listModelListeners)) {
+			listener.beforeChildRemove(index);
+		}
+	}
+
+	private void fireAfterChildRemoved(final int index) {
 		for (final IListModelListener listener : new LinkedList<IListModelListener>(listModelListeners)) {
 			listener.afterChildRemoved(index);
 		}

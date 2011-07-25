@@ -33,6 +33,7 @@ import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.controler.ITreeNodeListener;
+import org.jowidgets.tools.controler.ListModelAdapter;
 import org.jowidgets.tools.controler.TreeNodeObservable;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.types.VetoHolder;
@@ -168,7 +169,7 @@ public class ComponentNodeContext extends ComponentNodeContainerContext implemen
 	}
 
 	private IListModelListener createPopupMenuListener() {
-		return new IListModelListener() {
+		return new ListModelAdapter() {
 
 			@Override
 			public void afterChildRemoved(final int index) {

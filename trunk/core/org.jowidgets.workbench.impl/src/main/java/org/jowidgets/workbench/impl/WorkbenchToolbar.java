@@ -28,13 +28,13 @@
 
 package org.jowidgets.workbench.impl;
 
-import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.tools.controler.ListModelAdapter;
 import org.jowidgets.tools.model.item.ToolBarModel;
 
 public class WorkbenchToolbar {
@@ -55,7 +55,7 @@ public class WorkbenchToolbar {
 		toolBar.setModel(toolBarModel);
 		container.setVisible(false);
 
-		toolBarModel.addListModelListener(new IListModelListener() {
+		toolBarModel.addListModelListener(new ListModelAdapter() {
 
 			@Override
 			public void afterChildAdded(final int index) {

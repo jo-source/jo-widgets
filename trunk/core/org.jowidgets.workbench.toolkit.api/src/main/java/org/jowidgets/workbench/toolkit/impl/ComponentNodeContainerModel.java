@@ -98,16 +98,19 @@ class ComponentNodeContainerModel implements IComponentNodeContainerModel {
 		children.add(index, childModel.getUnwrappedThis());
 		childModel.setParentContainer(this);
 
-		listModelObservable.fireChildAdded(index);
+		listModelObservable.fireAfterChildAdded(index);
 		return childModel;
 	}
 
 	@Override
 	public void remove(final int index) {
+		if (children.size() < index) {
+			listModelObservable.fireBeforeChildRemove(index);
+		}
 		final IComponentNodeModel child = children.remove(index);
 		if (child != null) {
 			child.setParentContainer(null);
-			listModelObservable.fireChildRemoved(index);
+			listModelObservable.fireAfterChildRemoved(index);
 		}
 	}
 

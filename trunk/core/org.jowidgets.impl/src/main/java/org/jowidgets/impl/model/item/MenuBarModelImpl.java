@@ -38,6 +38,7 @@ import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IMenuModelBuilder;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.tools.controler.ListModelAdapter;
 import org.jowidgets.util.Assert;
 
 class MenuBarModelImpl implements IMenuBarModel {
@@ -50,7 +51,7 @@ class MenuBarModelImpl implements IMenuBarModel {
 		this.listModelDelegate = new ListModelDelegate();
 		this.boundModels = new HashSet<IMenuBarModel>();
 
-		this.addListModelListener(new IListModelListener() {
+		this.addListModelListener(new ListModelAdapter() {
 
 			@Override
 			public void afterChildRemoved(final int index) {

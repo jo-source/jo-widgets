@@ -28,7 +28,6 @@
 
 package org.jowidgets.workbench.impl;
 
-import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
@@ -38,6 +37,7 @@ import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.tools.controler.ListModelAdapter;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.model.item.ToolBarModel;
@@ -65,7 +65,7 @@ public class ViewWithToolBar {
 		final IControl toolBarSeparator = container.add(bpf.separator(), "growx, w 0::, hidemode 2, wrap");
 		toolBarSeparator.setVisible(false);
 
-		toolBarModel.addListModelListener(new IListModelListener() {
+		toolBarModel.addListModelListener(new ListModelAdapter() {
 
 			@Override
 			public void afterChildAdded(final int index) {
@@ -79,7 +79,7 @@ public class ViewWithToolBar {
 
 		});
 
-		toolBarMenuModel.addListModelListener(new IListModelListener() {
+		toolBarMenuModel.addListModelListener(new ListModelAdapter() {
 
 			@Override
 			public void afterChildAdded(final int index) {
@@ -97,7 +97,7 @@ public class ViewWithToolBar {
 
 		});
 
-		innerToolBarModel.addListModelListener(new IListModelListener() {
+		innerToolBarModel.addListModelListener(new ListModelAdapter() {
 
 			@Override
 			public void afterChildAdded(final int index) {

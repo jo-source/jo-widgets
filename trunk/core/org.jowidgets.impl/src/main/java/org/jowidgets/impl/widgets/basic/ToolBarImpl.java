@@ -75,6 +75,7 @@ import org.jowidgets.spi.widgets.IToolBarItemSpi;
 import org.jowidgets.spi.widgets.IToolBarPopupButtonSpi;
 import org.jowidgets.spi.widgets.IToolBarSpi;
 import org.jowidgets.spi.widgets.IToolBarToggleButtonSpi;
+import org.jowidgets.tools.controler.ListModelAdapter;
 import org.jowidgets.util.Assert;
 
 public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar, IListItemObservable {
@@ -95,7 +96,7 @@ public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar, IListIte
 		ColorSettingsInvoker.setColors(setup, this);
 
 		this.itemObs = new ListItemObservable();
-		this.listModelListener = new IListModelListener() {
+		this.listModelListener = new ListModelAdapter() {
 
 			@Override
 			public void afterChildRemoved(final int index) {

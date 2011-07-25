@@ -31,7 +31,6 @@ package org.jowidgets.workbench.toolkit.impl;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.widgets.IContainer;
@@ -40,6 +39,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.tools.controler.ListModelAdapter;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.ICloseCallback;
 import org.jowidgets.workbench.api.ILoginCallback;
@@ -89,7 +89,7 @@ class Workbench implements IWorkbench {
 			createdApplications.add(application);
 		}
 
-		model.addListModelListener(new IListModelListener() {
+		model.addListModelListener(new ListModelAdapter() {
 			@Override
 			public void afterChildRemoved(final int index) {
 				final WorkbenchApplication application = createdApplications.remove(index);

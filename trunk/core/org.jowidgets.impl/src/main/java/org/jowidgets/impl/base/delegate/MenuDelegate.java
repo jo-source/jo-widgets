@@ -68,6 +68,7 @@ import org.jowidgets.spi.widgets.IMenuItemSpi;
 import org.jowidgets.spi.widgets.IMenuSpi;
 import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 import org.jowidgets.spi.widgets.ISubMenuSpi;
+import org.jowidgets.tools.controler.ListModelAdapter;
 import org.jowidgets.util.Assert;
 
 public class MenuDelegate implements IDisposeable {
@@ -87,7 +88,7 @@ public class MenuDelegate implements IDisposeable {
 		this.menu = menu;
 		this.menuSpi = menuSpi;
 
-		this.listModelListener = new IListModelListener() {
+		this.listModelListener = new ListModelAdapter() {
 
 			@Override
 			public void afterChildRemoved(final int index) {

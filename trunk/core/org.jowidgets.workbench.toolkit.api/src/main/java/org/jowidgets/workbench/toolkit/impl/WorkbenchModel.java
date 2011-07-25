@@ -244,16 +244,19 @@ class WorkbenchModel extends WorkbenchPartModel implements IWorkbenchModel {
 		}
 		applications.add(index, applicationModel.getUnwrappedThis());
 		applicationModel.setWorkbench(this);
-		listModelObservable.fireChildAdded(index);
+		listModelObservable.fireAfterChildAdded(index);
 		return applicationModel;
 	}
 
 	@Override
 	public void removeApplication(final int index) {
+		if (applications.size() < index) {
+			listModelObservable.fireBeforeChildRemove(index);
+		}
 		final IWorkbenchApplicationModel applicationModel = applications.remove(index);
 		if (applicationModel != null) {
 			applicationModel.setWorkbench(null);
-			listModelObservable.fireChildRemoved(index);
+			listModelObservable.fireAfterChildRemoved(index);
 		}
 	}
 
