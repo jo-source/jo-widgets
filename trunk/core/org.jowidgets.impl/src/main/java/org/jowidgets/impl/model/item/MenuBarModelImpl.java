@@ -53,14 +53,14 @@ class MenuBarModelImpl implements IMenuBarModel {
 		this.addListModelListener(new IListModelListener() {
 
 			@Override
-			public void childRemoved(final int index) {
+			public void afterChildRemoved(final int index) {
 				for (final IMenuBarModel boundModel : boundModels) {
 					boundModel.removeMenu(index);
 				}
 			}
 
 			@Override
-			public void childAdded(final int index) {
+			public void afterChildAdded(final int index) {
 				for (final IMenuBarModel boundModel : boundModels) {
 					boundModel.addMenu(getMenus().get(index));
 				}

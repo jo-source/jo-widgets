@@ -61,14 +61,14 @@ class ToolBarModelImpl implements IToolBarModel {
 		this.addListModelListener(new IListModelListener() {
 
 			@Override
-			public void childRemoved(final int index) {
+			public void afterChildRemoved(final int index) {
 				for (final IToolBarModel boundModel : boundModels) {
 					boundModel.removeItem(index);
 				}
 			}
 
 			@Override
-			public void childAdded(final int index) {
+			public void afterChildAdded(final int index) {
 				for (final IToolBarModel boundModel : boundModels) {
 					boundModel.addItem(getItems().get(index));
 				}

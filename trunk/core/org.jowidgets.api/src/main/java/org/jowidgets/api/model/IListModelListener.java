@@ -30,8 +30,8 @@ package org.jowidgets.api.model;
 
 public interface IListModelListener {
 
-	void childAdded(int index);
+	void afterChildAdded(int index);
 
-	void childRemoved(int index);
+	void afterChildRemoved(int index);
 
 }

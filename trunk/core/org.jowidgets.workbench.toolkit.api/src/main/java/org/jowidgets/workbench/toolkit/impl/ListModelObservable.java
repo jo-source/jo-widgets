@@ -54,13 +54,13 @@ class ListModelObservable implements IListModelObservable {
 
 	public void fireChildAdded(final int index) {
 		for (final IListModelListener listener : listeners) {
-			listener.childAdded(index);
+			listener.afterChildAdded(index);
 		}
 	}
 
 	public void fireChildRemoved(final int index) {
 		for (final IListModelListener listener : listeners) {
-			listener.childRemoved(index);
+			listener.afterChildRemoved(index);
 		}
 	}
 

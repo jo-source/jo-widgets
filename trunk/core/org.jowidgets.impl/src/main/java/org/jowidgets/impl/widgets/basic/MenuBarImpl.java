@@ -61,12 +61,12 @@ public class MenuBarImpl extends WidgetSpiWrapper implements IMenuBar {
 		this.listModelListener = new IListModelListener() {
 
 			@Override
-			public void childRemoved(final int index) {
+			public void afterChildRemoved(final int index) {
 				remove(index);
 			}
 
 			@Override
-			public void childAdded(final int index) {
+			public void afterChildAdded(final int index) {
 				final IMenuModel addedModel = getModel().getMenus().get(index);
 				addMenuModel(index, addedModel);
 			}

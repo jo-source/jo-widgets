@@ -91,7 +91,7 @@ class Workbench implements IWorkbench {
 
 		model.addListModelListener(new IListModelListener() {
 			@Override
-			public void childRemoved(final int index) {
+			public void afterChildRemoved(final int index) {
 				final WorkbenchApplication application = createdApplications.remove(index);
 				if (application != null) {
 					context.remove(application);
@@ -100,7 +100,7 @@ class Workbench implements IWorkbench {
 			}
 
 			@Override
-			public void childAdded(final int index) {
+			public void afterChildAdded(final int index) {
 				final IWorkbenchApplicationModel applicationModel = model.getApplications().get(index);
 				final WorkbenchApplication application = new WorkbenchApplication(applicationModel);
 				context.add(index, application);
