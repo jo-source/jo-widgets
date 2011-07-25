@@ -75,14 +75,14 @@ class MenuModelImpl extends ItemModelImpl implements IMenuModel {
 		this.addListModelListener(new IListModelListener() {
 
 			@Override
-			public void childRemoved(final int index) {
+			public void afterChildRemoved(final int index) {
 				for (final IMenuModel boundModel : boundModels) {
 					boundModel.removeItem(index);
 				}
 			}
 
 			@Override
-			public void childAdded(final int index) {
+			public void afterChildAdded(final int index) {
 				for (final IMenuModel boundModel : boundModels) {
 					boundModel.addItem(getChildren().get(index));
 				}
@@ -91,7 +91,7 @@ class MenuModelImpl extends ItemModelImpl implements IMenuModel {
 
 		this.addListModelListener(new IListModelListener() {
 			@Override
-			public void childRemoved(final int index) {
+			public void afterChildRemoved(final int index) {
 				final IMenuItemModel itemModel = getChildren().get(index);
 				if (itemModel instanceof IActionItemModel || itemModel instanceof IMenuModel) {
 					for (final IDecorator<IAction> decorator : decorators) {
@@ -101,7 +101,7 @@ class MenuModelImpl extends ItemModelImpl implements IMenuModel {
 			}
 
 			@Override
-			public void childAdded(final int index) {
+			public void afterChildAdded(final int index) {
 				final IMenuItemModel itemModel = getChildren().get(index);
 				if (itemModel instanceof IActionItemModel || itemModel instanceof IMenuModel) {
 					for (final IDecorator<IAction> decorator : decorators) {

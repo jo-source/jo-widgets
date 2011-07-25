@@ -171,14 +171,14 @@ public class ComponentNodeContext extends ComponentNodeContainerContext implemen
 		return new IListModelListener() {
 
 			@Override
-			public void childRemoved(final int index) {
+			public void afterChildRemoved(final int index) {
 				if (popupMenuModel.getChildren().size() == 0) {
 					treeNode.setPopupMenu(null);
 				}
 			}
 
 			@Override
-			public void childAdded(final int index) {
+			public void afterChildAdded(final int index) {
 				if (popupMenuModel.getChildren().size() == 1) {
 					treeNode.setPopupMenu(popupMenuModel);
 				}

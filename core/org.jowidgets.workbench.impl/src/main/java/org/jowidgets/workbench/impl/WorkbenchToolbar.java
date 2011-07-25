@@ -58,14 +58,14 @@ public class WorkbenchToolbar {
 		toolBarModel.addListModelListener(new IListModelListener() {
 
 			@Override
-			public void childAdded(final int index) {
+			public void afterChildAdded(final int index) {
 				if (toolBarModel.getItems().size() == 1) {
 					container.setVisible(true);
 				}
 			}
 
 			@Override
-			public void childRemoved(final int index) {
+			public void afterChildRemoved(final int index) {
 				if (toolBarModel.getItems().size() == 0) {
 					container.setVisible(false);
 				}

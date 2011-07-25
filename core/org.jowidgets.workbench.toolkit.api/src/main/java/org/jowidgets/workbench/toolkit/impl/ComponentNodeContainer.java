@@ -66,7 +66,7 @@ class ComponentNodeContainer {
 
 		listModelListener = new IListModelListener() {
 			@Override
-			public void childRemoved(final int index) {
+			public void afterChildRemoved(final int index) {
 				final ComponentNode componentNode = createdChildren.remove(index);
 				if (componentNode != null) {
 					context.remove(componentNode);
@@ -75,7 +75,7 @@ class ComponentNodeContainer {
 			}
 
 			@Override
-			public void childAdded(final int index) {
+			public void afterChildAdded(final int index) {
 				final IComponentNodeModel nodeModel = model.getChildren().get(index);
 				final ComponentNode componentNode = new ComponentNode(nodeModel);
 				createdChildren.add(index, componentNode);

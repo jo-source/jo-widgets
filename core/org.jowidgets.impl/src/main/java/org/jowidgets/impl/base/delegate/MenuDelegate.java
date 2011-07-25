@@ -90,12 +90,12 @@ public class MenuDelegate implements IDisposeable {
 		this.listModelListener = new IListModelListener() {
 
 			@Override
-			public void childRemoved(final int index) {
+			public void afterChildRemoved(final int index) {
 				removeItem(index);
 			}
 
 			@Override
-			public void childAdded(final int index) {
+			public void afterChildAdded(final int index) {
 				final IMenuItemModel addedModel = getModel().getChildren().get(index);
 				addChild(index, addedModel);
 			}
