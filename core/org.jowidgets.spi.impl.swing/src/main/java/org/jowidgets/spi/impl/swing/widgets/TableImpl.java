@@ -65,10 +65,10 @@ import javax.swing.table.TableColumnModel;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.model.ITableCell;
-import org.jowidgets.common.model.ITableColumnSpi;
-import org.jowidgets.common.model.ITableColumnModelSpi;
 import org.jowidgets.common.model.ITableColumnModelListener;
 import org.jowidgets.common.model.ITableColumnModelObservable;
+import org.jowidgets.common.model.ITableColumnModelSpi;
+import org.jowidgets.common.model.ITableColumnSpi;
 import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.model.ITableDataModelListener;
 import org.jowidgets.common.model.ITableDataModelObservable;
@@ -1118,7 +1118,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 					//CHECKSTYLE:OFF
 					if (veto) {
-						//TODO MG handle veto
+						//TODO NM handle veto
 					}
 					//CHECKSTYLE:ON
 				}

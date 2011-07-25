@@ -132,7 +132,7 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 			scrolledComposite.setRedraw(false);
 			scrolledComposite.setMinSize(calcMinSize());
 
-			//TODO MG only scroll if its is really necessary
+			//TODO NM evaluate only to scroll if its is really necessary
 			scrollToCaretPosition();
 			scrolledComposite.setRedraw(true);
 		}
