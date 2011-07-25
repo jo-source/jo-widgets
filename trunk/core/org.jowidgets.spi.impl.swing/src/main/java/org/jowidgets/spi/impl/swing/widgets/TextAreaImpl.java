@@ -165,7 +165,7 @@ public class TextAreaImpl extends AbstractInputControl implements ITextAreaSpi {
 
 	@Override
 	public void scrollToCaretPosition() {
-		//TODO MG implement scrollToCaretPosition
+		//TODO NM implement scrollToCaretPosition
 	}
 
 }
