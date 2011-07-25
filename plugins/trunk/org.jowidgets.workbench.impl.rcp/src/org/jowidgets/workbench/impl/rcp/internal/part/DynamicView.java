@@ -49,11 +49,11 @@ import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
-import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.tools.controler.ListModelAdapter;
 import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.workbench.api.ClosePolicy;
 import org.jowidgets.workbench.api.IView;
@@ -151,7 +151,7 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 				});
 			}
 		});
-		menuModel.addListModelListener(new IListModelListener() {
+		menuModel.addListModelListener(new ListModelAdapter() {
 			@Override
 			public void afterChildAdded(final int index) {
 				if (menuModel.getChildren().size() == 1) {

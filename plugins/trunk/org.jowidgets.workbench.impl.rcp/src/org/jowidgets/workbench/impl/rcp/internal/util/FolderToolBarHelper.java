@@ -31,7 +31,6 @@ package org.jowidgets.workbench.impl.rcp.internal.util;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
@@ -39,6 +38,7 @@ import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.tools.controler.ListModelAdapter;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.model.item.ToolBarModel;
 
@@ -63,7 +63,7 @@ public final class FolderToolBarHelper {
 		final IToolBar toolBar = joComposite.add(bpf.toolBar(), "alignx right, wrap");
 		toolBar.setModel(innerToolBarModel);
 
-		toolBarModel.addListModelListener(new IListModelListener() {
+		toolBarModel.addListModelListener(new ListModelAdapter() {
 			@Override
 			public void afterChildAdded(final int index) {
 				innerToolBarModel.addItem(index, toolBarModel.getItems().get(index));
@@ -75,7 +75,7 @@ public final class FolderToolBarHelper {
 			}
 		});
 
-		toolBarMenuModel.addListModelListener(new IListModelListener() {
+		toolBarMenuModel.addListModelListener(new ListModelAdapter() {
 			@Override
 			public void afterChildAdded(final int index) {
 				if (toolBarMenuModel.getChildren().size() == 1) {
