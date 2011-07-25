@@ -67,26 +67,26 @@ public final class ViewToolBarHelper {
 
 		toolBarModel.addListModelListener(new IListModelListener() {
 			@Override
-			public void childAdded(final int index) {
+			public void afterChildAdded(final int index) {
 				innerToolBarModel.addItem(index, toolBarModel.getItems().get(index));
 			}
 
 			@Override
-			public void childRemoved(final int index) {
+			public void afterChildRemoved(final int index) {
 				innerToolBarModel.removeItem(index);
 			}
 		});
 
 		toolBarMenuModel.addListModelListener(new IListModelListener() {
 			@Override
-			public void childAdded(final int index) {
+			public void afterChildAdded(final int index) {
 				if (toolBarMenuModel.getChildren().size() == 1) {
 					innerToolBarModel.addItem(toolBarMenuModel);
 				}
 			}
 
 			@Override
-			public void childRemoved(final int index) {
+			public void afterChildRemoved(final int index) {
 				if (toolBarMenuModel.getChildren().size() == 0) {
 					innerToolBarModel.removeItem(toolBarMenuModel);
 				}
@@ -95,7 +95,7 @@ public final class ViewToolBarHelper {
 
 		innerToolBarModel.addListModelListener(new IListModelListener() {
 			@Override
-			public void childAdded(final int index) {
+			public void afterChildAdded(final int index) {
 				if (innerToolBarModel.getItems().size() == 1) {
 					toolBar.setVisible(true);
 					toolBarSeparator.setVisible(true);
@@ -103,7 +103,7 @@ public final class ViewToolBarHelper {
 			}
 
 			@Override
-			public void childRemoved(final int index) {
+			public void afterChildRemoved(final int index) {
 				if (innerToolBarModel.getItems().size() == 0) {
 					innerToolBarModel.removeItem(innerToolBarModel.getItems().size());
 					toolBar.setVisible(false);

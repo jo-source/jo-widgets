@@ -153,7 +153,7 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 		});
 		menuModel.addListModelListener(new IListModelListener() {
 			@Override
-			public void childAdded(final int index) {
+			public void afterChildAdded(final int index) {
 				if (menuModel.getChildren().size() == 1) {
 					menuManager.add(EMPTY_ACTION);
 					menuManager.update(true);
@@ -161,7 +161,7 @@ public final class DynamicView extends ViewPart implements IPartListener2 {
 			}
 
 			@Override
-			public void childRemoved(final int index) {
+			public void afterChildRemoved(final int index) {
 				if (menuModel.getChildren().size() == 0) {
 					menuManager.removeAll();
 					menuManager.update(true);

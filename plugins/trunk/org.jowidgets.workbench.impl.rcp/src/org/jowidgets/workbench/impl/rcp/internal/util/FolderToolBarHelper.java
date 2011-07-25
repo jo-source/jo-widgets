@@ -65,26 +65,26 @@ public final class FolderToolBarHelper {
 
 		toolBarModel.addListModelListener(new IListModelListener() {
 			@Override
-			public void childAdded(final int index) {
+			public void afterChildAdded(final int index) {
 				innerToolBarModel.addItem(index, toolBarModel.getItems().get(index));
 			}
 
 			@Override
-			public void childRemoved(final int index) {
+			public void afterChildRemoved(final int index) {
 				innerToolBarModel.removeItem(index);
 			}
 		});
 
 		toolBarMenuModel.addListModelListener(new IListModelListener() {
 			@Override
-			public void childAdded(final int index) {
+			public void afterChildAdded(final int index) {
 				if (toolBarMenuModel.getChildren().size() == 1) {
 					innerToolBarModel.addItem(toolBarMenuModel);
 				}
 			}
 
 			@Override
-			public void childRemoved(final int index) {
+			public void afterChildRemoved(final int index) {
 				if (toolBarMenuModel.getChildren().size() == 0) {
 					innerToolBarModel.removeItem(toolBarMenuModel);
 				}
