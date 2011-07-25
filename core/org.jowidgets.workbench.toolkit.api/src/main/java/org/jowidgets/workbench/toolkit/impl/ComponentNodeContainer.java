@@ -32,6 +32,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.api.model.IListModelListener;
+import org.jowidgets.tools.controler.ListModelAdapter;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.IComponentNodeContainerContext;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeContainerModel;
@@ -64,7 +65,7 @@ class ComponentNodeContainer {
 			context.add(componentNode);
 		}
 
-		listModelListener = new IListModelListener() {
+		listModelListener = new ListModelAdapter() {
 			@Override
 			public void afterChildRemoved(final int index) {
 				final ComponentNode componentNode = createdChildren.remove(index);

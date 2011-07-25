@@ -45,6 +45,7 @@ import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.tools.controler.ListModelAdapter;
 import org.jowidgets.tools.controler.TabItemAdapter;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.model.item.MenuModel;
@@ -251,7 +252,7 @@ public class WorkbenchApplicationContext implements IWorkbenchApplicationContext
 	}
 
 	private IListModelListener createPopupMenuModelListener() {
-		return new IListModelListener() {
+		return new ListModelAdapter() {
 
 			@Override
 			public void afterChildRemoved(final int index) {

@@ -45,6 +45,7 @@ import org.jowidgets.api.model.item.IRadioItemModel;
 import org.jowidgets.api.model.item.ISeparatorItemModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
+import org.jowidgets.tools.controler.ListModelAdapter;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.IDecorator;
 
@@ -72,7 +73,7 @@ class MenuModelImpl extends ItemModelImpl implements IMenuModel {
 		this.boundModels = new HashSet<IMenuModel>();
 		this.decorators = new LinkedList<IDecorator<IAction>>();
 
-		this.addListModelListener(new IListModelListener() {
+		this.addListModelListener(new ListModelAdapter() {
 
 			@Override
 			public void afterChildRemoved(final int index) {
@@ -89,9 +90,9 @@ class MenuModelImpl extends ItemModelImpl implements IMenuModel {
 			}
 		});
 
-		this.addListModelListener(new IListModelListener() {
+		this.addListModelListener(new ListModelAdapter() {
 			@Override
-			public void afterChildRemoved(final int index) {
+			public void beforeChildRemove(final int index) {
 				final IMenuItemModel itemModel = getChildren().get(index);
 				if (itemModel instanceof IActionItemModel || itemModel instanceof IMenuModel) {
 					for (final IDecorator<IAction> decorator : decorators) {
