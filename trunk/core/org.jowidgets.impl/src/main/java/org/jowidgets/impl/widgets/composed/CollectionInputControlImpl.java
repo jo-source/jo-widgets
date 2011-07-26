@@ -29,16 +29,17 @@ package org.jowidgets.impl.widgets.composed;
 
 import java.util.Collection;
 
-import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IInputControl;
+import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
+import org.jowidgets.api.widgets.blueprint.IInputComponentValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.ICollectionInputControlDescriptor;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
@@ -51,41 +52,62 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 	public CollectionInputControlImpl(final IComposite composite, final ICollectionInputControlDescriptor<INPUT_TYPE> setup) {
 		super(composite);
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+
+		//Gets some settings from setup
 		final ICustomWidgetCreator<IInputControl<INPUT_TYPE>> widgetCreator = setup.getElementWidgetCreator();
+		final IButtonBluePrint removeButtonBp = bpf.button().setSetup(setup.getRemoveButton());
+		final IButtonBluePrint addButtonBp = bpf.button().setSetup(setup.getAddButton());
+		final String addButtonConstraints = getCellConstraintsFromDimension(setup.getAddButtonSize());
+		final String removeButtonConstraints = getCellConstraintsFromDimension(setup.getRemoveButtonSize());
 
-		composite.setLayout(MigLayoutFactory.growingInnerCellLayout());
-		final IComposite innerComposite = composite.add(bpf.composite(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+		//TODO NM proper handling of the non mandatory setup params 
+		//(validation label and constraints may be null so do not render them)
+		final IInputComponentValidationLabelBluePrint validationLabelBp = bpf.inputComponentValidationLabel();
+		validationLabelBp.setSetup(setup.getValidationLabel());
+		final String validationLabelConstraints = getCellConstraintsFromDimension(setup.getValidationLabelSize());
 
-		innerComposite.setLayout(new MigLayoutDescriptor("wrap", "0[][]0[grow, 0::][20!]0", "0[]0[]0[]0[]0[]0[]0[]0[]0"));
+		//TODO NM re-implement this example code 
+		composite.setLayout(new MigLayoutDescriptor("wrap", "0[][]0[grow, 0::][20!]0", "0[]0[]0[]0[]0[]0[]0[]0[]0"));
 
 		for (int i = 0; i < 8; i++) {
 
 			final String userIndex = "" + (i + 1);
 
-			innerComposite.add(bpf.textLabel(userIndex));
+			composite.add(bpf.textLabel(userIndex));
 
-			innerComposite.add(bpf.button().setIcon(IconsSmall.SUB).setToolTipText("Remove entry " + userIndex), "w 21!, h 21!");
+			composite.add(removeButtonBp.setToolTipText("Remove entry " + userIndex), removeButtonConstraints);
 
-			innerComposite.add(widgetCreator, "grow, w 0::");
+			final IInputControl<INPUT_TYPE> inputControl = composite.add(widgetCreator, "grow, w 0::");
 
+			//START BLOCK -> remove this block later except commented line below 
+			if (i != 3 && i != 6) {
+				//later only this code line is necessary , the rest is this block is for tst purpose
+				composite.add(validationLabelBp.setInputComponent(inputControl));
+			}
 			if (i == 3) {
-				innerComposite.add(bpf.validationResultLabel().setShowValidationMessage(false)).setResult(
+				composite.add(bpf.validationResultLabel().setShowValidationMessage(false), validationLabelConstraints).setResult(
 						ValidationResult.create().withError("Must be a propper value"));
 			}
 			else if (i == 6) {
-				innerComposite.add(bpf.validationResultLabel().setShowValidationMessage(false)).setResult(
+				composite.add(bpf.validationResultLabel().setShowValidationMessage(false), validationLabelConstraints).setResult(
 						ValidationResult.create().withWarning("Seems unusual"));
 			}
-			else {
-				innerComposite.add(bpf.composite(), "w 0!, h 0!");
-			}
+			//END BLOCK -> remove this block later except commented line above
 
 		}
 
-		innerComposite.add(bpf.composite(), "w 0!, h 0!");
-		//innerComposite.add(bpf.textLabel("" + 9).setForegroundColor(Colors.DISABLED));
+		composite.add(bpf.composite(), "w 0!, h 0!");
 
-		innerComposite.add(bpf.button().setIcon(IconsSmall.ADD).setToolTipText("Add new entry"), "w 21!, h 21!");
+		composite.add(addButtonBp, addButtonConstraints);
+	}
+
+	private String getCellConstraintsFromDimension(final Dimension dimension) {
+		if (dimension == null) {
+			return "";
+		}
+		else {
+			return "w " + dimension.getWidth() + "!, h " + dimension.getHeight() + "!";
+		}
 	}
 
 	@Override

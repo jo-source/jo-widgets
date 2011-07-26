@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Michael Grossmann
+ * Copyright (c) 2010, Michael Grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,36 +25,33 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.descriptor.setup;
+package org.jowidgets.impl.widgets.composed.blueprint.defaults;
 
-import java.util.Collection;
-
-import org.jowidgets.api.widgets.IInputControl;
+import org.jowidgets.api.image.IconsSmall;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.blueprint.builder.ICollectionInputControlSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
-import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.validation.IValidator;
+import org.jowidgets.validation.Validator;
 
-public interface ICollectionInputControlSetup<ELEMENT_TYPE> extends IInputComponentSetup<Collection<ELEMENT_TYPE>> {
+public class CollectionInputControlDefaults implements IDefaultInitializer<ICollectionInputControlSetupBuilder<?, ?>> {
 
-	@Mandatory
-	ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> getElementWidgetCreator();
-
-	@Mandatory
-	IButtonSetup getRemoveButton();
-
-	@Mandatory
-	IButtonSetup getAddButton();
-
-	@Mandatory
-	IValidator<Collection<ELEMENT_TYPE>> getCollectionValidator();
-
-	Dimension getRemoveButtonSize();
-
-	Dimension getAddButtonSize();
-
-	IInputComponentValidationLabelSetup getValidationLabel();
-
-	Dimension getValidationLabelSize();
-
+	// i18n
+	@SuppressWarnings({"rawtypes", "unchecked"})
+	@Override
+	public void initialize(final ICollectionInputControlSetupBuilder<?, ?> builder) {
+		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+		builder.setValidationLabel(bpf.inputComponentValidationLabel().setShowValidationMessage(false));
+		builder.setValidationLabelSize(new Dimension(20, 20));
+		builder.setAddButton(bpf.button().setIcon(IconsSmall.ADD).setToolTipText("Add new entry"));
+		builder.setAddButtonSize(new Dimension(21, 21));
+		builder.setRemoveButton(bpf.button().setIcon(IconsSmall.SUB));
+		builder.setRemoveButtonSize(new Dimension(21, 21));
+		builder.setEditable(true);
+		final IValidator validator = Validator.okValidator();
+		builder.setValidator(validator);
+		builder.setCollectionValidator(validator);
+	}
 }
