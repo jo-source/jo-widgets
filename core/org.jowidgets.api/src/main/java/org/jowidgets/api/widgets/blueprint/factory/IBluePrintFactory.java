@@ -30,6 +30,8 @@ package org.jowidgets.api.widgets.blueprint.factory;
 import java.text.DateFormat;
 import java.util.Date;
 
+import org.jowidgets.api.widgets.IInputControl;
+import org.jowidgets.api.widgets.blueprint.ICollectionInputControlBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
@@ -38,6 +40,7 @@ import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.mask.ITextMask;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public interface IBluePrintFactory extends ISimpleBluePrintFactory {
 
@@ -100,5 +103,8 @@ public interface IBluePrintFactory extends ISimpleBluePrintFactory {
 	IProgressBarBluePrint progressBar(int minimum, int maximum);
 
 	IProgressBarBluePrint progressBar(int maximum);
+
+	<ELEMENT_TYPE> ICollectionInputControlBluePrint<ELEMENT_TYPE> collectionInputControl(
+		IWidgetDescriptor<IInputControl<ELEMENT_TYPE>> descriptor);
 
 }

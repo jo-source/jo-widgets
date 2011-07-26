@@ -32,6 +32,8 @@ import java.util.Date;
 
 import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IInputControl;
+import org.jowidgets.api.widgets.blueprint.ICollectionInputControlBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
@@ -41,6 +43,9 @@ import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.mask.ITextMask;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
+import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.impl.convert.DefaultConverterProvider;
 import org.jowidgets.impl.widgets.composed.blueprint.convenience.registry.ComposedSetupConvenienceRegistry;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.registry.ComposedDefaultsInitializerRegistry;
@@ -190,4 +195,14 @@ public final class BluePrintFactory extends SimpleBluePrintFactory implements IB
 		return progressBar().setIndeterminate(false).setMaximum(maximum);
 	}
 
+	@Override
+	public <ELEMENT_TYPE> ICollectionInputControlBluePrint<ELEMENT_TYPE> collectionInputControl(
+		final IWidgetDescriptor<IInputControl<ELEMENT_TYPE>> descriptor) {
+		return collectionInputControl(new ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>>() {
+			@Override
+			public IInputControl<ELEMENT_TYPE> create(final ICustomWidgetFactory widgetFactory) {
+				return widgetFactory.create(descriptor);
+			}
+		});
+	}
 }
