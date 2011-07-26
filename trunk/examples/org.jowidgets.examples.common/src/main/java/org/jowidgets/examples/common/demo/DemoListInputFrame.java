@@ -28,13 +28,12 @@
 
 package org.jowidgets.examples.common.demo;
 
-import org.jowidgets.api.color.Colors;
-import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IScrollComposite;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.powo.JoFrame;
 import org.jowidgets.validation.ValidationResult;
 
@@ -45,45 +44,21 @@ public class DemoListInputFrame extends JoFrame {
 
 	@SuppressWarnings("unchecked")
 	public DemoListInputFrame() {
-		super("Text area demo");
+		super("List input demo");
 
-		setLayout(Toolkit.getLayoutFactoryProvider().fillLayout());
-		final IScrollComposite scrollComposite = add(BPF.scrollComposite(), "");
+		setLayout(new MigLayoutDescriptor("[grow, 0::]", "[]10[grow, 0::]"));
 
-		scrollComposite.setLayout(new MigLayoutDescriptor("wrap", "[][]0[grow, 0::][20!]", "[]10[]0[]0[]0[]0[]0[]0[]0[]"));
-
-		scrollComposite.add(BPF.validationResultLabel(), "span 4").setResult(
+		add(BPF.validationResultLabel(), "wrap").setResult(
 				ValidationResult.create().withError("Entry 4: Must be a propper value"));
 
-		for (int i = 0; i < 8; i++) {
-
-			final String userIndex = "" + (i + 1);
-
-			scrollComposite.add(BPF.textLabel(userIndex));
-
-			scrollComposite.add(BPF.button().setIcon(IconsSmall.SUB).setToolTipText("Remove entry " + userIndex), "w 21!, h 21!");
-
-			scrollComposite.add(getControlBp(), "grow, w 0::");
-
-			if (i == 3 || i == 6) {
-				scrollComposite.add(BPF.validationResultLabel().setShowValidationMessage(false)).setResult(
-						ValidationResult.create().withError("Must be a propper value"));
-			}
-			else {
-				scrollComposite.add(BPF.composite(), "w 0!, h 0!");
-			}
-
-		}
-
-		scrollComposite.add(BPF.textLabel("" + 9).setForegroundColor(Colors.DISABLED));
-
-		scrollComposite.add(BPF.button().setIcon(IconsSmall.ADD).setToolTipText("Add new entry"), "w 21!, h 21!");
-
-		//add(BPF.button().setIcon(IconsSmall.ADD), "");
+		final IScrollComposite scrollComposite = add(BPF.scrollComposite(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+		scrollComposite.setLayout(MigLayoutFactory.growingInnerCellLayout());
+		scrollComposite.add(BPF.collectionInputControl(getControlBp()), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 	}
 
+	//	@SuppressWarnings("rawtypes")
 	//	private IWidgetDescriptor getControlBp() {
-	//		return BPF.comboBoxSelection("Germany", "Spain", "Italy", "USA");
+	//		return BPF.comboBoxSelection("Germany", "Spain", "Italy", "USA", "Frankreich", "Portugal", "Bayern");
 	//	}
 
 	@SuppressWarnings("rawtypes")
@@ -91,10 +66,12 @@ public class DemoListInputFrame extends JoFrame {
 		return BPF.comboBox("Germany", "Spain", "Italy", "USA", "Frankreich", "Portugal", "Bayern");
 	}
 
+	//	@SuppressWarnings("rawtypes")
 	//	private IWidgetDescriptor getControlBp() {
 	//		return BPF.inputFieldDate();
 	//	}
 
+	//	@SuppressWarnings("rawtypes")
 	//	private IWidgetDescriptor getControlBp() {
 	//		return BPF.inputFieldIntegerNumber();
 	//	}

@@ -30,6 +30,8 @@ package org.jowidgets.impl.widgets.composed.blueprint;
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.login.ILoginInterceptor;
 import org.jowidgets.api.widgets.IInputComponent;
+import org.jowidgets.api.widgets.IInputControl;
+import org.jowidgets.api.widgets.blueprint.ICollectionInputControlBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputComponentValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
@@ -45,6 +47,7 @@ import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceR
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.api.widgets.blueprint.factory.ISimpleBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
+import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.impl.widgets.basic.blueprint.BasicBluePrintFactory;
 import org.jowidgets.util.Assert;
 
@@ -134,6 +137,14 @@ public class SimpleBluePrintFactory extends BasicBluePrintFactory implements ISi
 		Assert.paramNotNull(loginInterceptor, "loginInterceptor");
 		final ILoginDialogBluePrint result = createProxy(ILoginDialogBluePrint.class);
 		result.setInterceptor(loginInterceptor);
+		return result;
+	}
+
+	@Override
+	public <ELEMENT_TYPE> ICollectionInputControlBluePrint<ELEMENT_TYPE> collectionInputControl(
+		final ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> widgetCreator) {
+		final ICollectionInputControlBluePrint<ELEMENT_TYPE> result = createProxy(ICollectionInputControlBluePrint.class);
+		result.setElementWidgetCreator(widgetCreator);
 		return result;
 	}
 

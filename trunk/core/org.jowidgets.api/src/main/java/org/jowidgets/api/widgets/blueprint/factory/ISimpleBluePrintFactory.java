@@ -30,6 +30,8 @@ package org.jowidgets.api.widgets.blueprint.factory;
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.login.ILoginInterceptor;
 import org.jowidgets.api.widgets.IInputComponent;
+import org.jowidgets.api.widgets.IInputControl;
+import org.jowidgets.api.widgets.blueprint.ICollectionInputControlBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputComponentValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
@@ -42,6 +44,7 @@ import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
 import org.jowidgets.api.widgets.blueprint.IValidationResultLabelBluePrint;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
+import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 
 public interface ISimpleBluePrintFactory extends IBasicBluePrintFactory {
 
@@ -68,4 +71,7 @@ public interface ISimpleBluePrintFactory extends IBasicBluePrintFactory {
 	<INPUT_TYPE> IInputCompositeBluePrint<INPUT_TYPE> inputComposite(final IInputContentCreator<INPUT_TYPE> contentCreator);
 
 	ILoginDialogBluePrint loginDialog(ILoginInterceptor interceptor);
+
+	<ELEMENT_TYPE> ICollectionInputControlBluePrint<ELEMENT_TYPE> collectionInputControl(
+		ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> widgetCreator);
 }

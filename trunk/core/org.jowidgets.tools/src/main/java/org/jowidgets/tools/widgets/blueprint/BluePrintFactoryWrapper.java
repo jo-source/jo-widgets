@@ -37,12 +37,14 @@ import org.jowidgets.api.login.ILoginInterceptor;
 import org.jowidgets.api.model.table.ITableColumnModel;
 import org.jowidgets.api.model.table.ITableModel;
 import org.jowidgets.api.widgets.IInputComponent;
+import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICalendarBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICheckBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICheckedMenuItemBluePrint;
+import org.jowidgets.api.widgets.blueprint.ICollectionInputControlBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
@@ -99,6 +101,7 @@ import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.types.FileChooserType;
 import org.jowidgets.common.widgets.builder.ISetupBuilder;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.util.Assert;
 
 public class BluePrintFactoryWrapper implements IBluePrintFactory {
@@ -699,6 +702,18 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	@Override
 	public ILoginDialogBluePrint loginDialog(final ILoginInterceptor loginInterceptor) {
 		return bluePrintFactory.loginDialog(loginInterceptor);
+	}
+
+	@Override
+	public <ELEMENT_TYPE> ICollectionInputControlBluePrint<ELEMENT_TYPE> collectionInputControl(
+		final ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> widgetCreator) {
+		return bluePrintFactory.collectionInputControl(widgetCreator);
+	}
+
+	@Override
+	public <ELEMENT_TYPE> ICollectionInputControlBluePrint<ELEMENT_TYPE> collectionInputControl(
+		final IWidgetDescriptor<IInputControl<ELEMENT_TYPE>> descriptor) {
+		return bluePrintFactory.collectionInputControl(descriptor);
 	}
 
 }
