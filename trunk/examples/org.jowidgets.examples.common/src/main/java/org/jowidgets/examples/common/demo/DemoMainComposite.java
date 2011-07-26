@@ -63,6 +63,16 @@ public final class DemoMainComposite {
 			}
 		});
 
+		final IButton listInputDemoButton = parentContainer.add(bpF.button("List input demo"), "grow, sg bg, wrap");
+		listInputDemoButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final IFrame menuDemoFrame = new DemoListInputFrame();
+				menuDemoFrame.setSize(new Dimension(250, 400));
+				menuDemoFrame.setVisible(true);
+			}
+		});
+
 		final IButton textAreaDemoButton = parentContainer.add(
 				bpF.button("Text area demo", "Shows a text area with line wrapping"),
 				"grow, sg bg, wrap");
