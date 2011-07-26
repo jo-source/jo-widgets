@@ -28,6 +28,7 @@
 
 package org.jowidgets.impl.widgets.composed.blueprint.defaults.registry;
 
+import org.jowidgets.api.widgets.blueprint.builder.ICollectionInputControlSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IInputComponentValidationLabelSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IInputCompositeSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IInputDialogSetupBuilder;
@@ -38,6 +39,7 @@ import org.jowidgets.api.widgets.blueprint.builder.IProgressBarSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IQuestionDialogSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IValidationLabelSetupBuilder;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.registry.BasicDefaultsInitializerRegistry;
+import org.jowidgets.impl.widgets.composed.blueprint.defaults.CollectionInputControlDefaults;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.InputComponentValidationLabelDefaults;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.InputCompositeDefaults;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.InputDialogDefaults;
@@ -53,6 +55,7 @@ public class ComposedDefaultsInitializerRegistry extends BasicDefaultsInitialize
 	public ComposedDefaultsInitializerRegistry() {
 		super();
 		register(IInputCompositeSetupBuilder.class, new InputCompositeDefaults());
+		register(ICollectionInputControlSetupBuilder.class, new CollectionInputControlDefaults());
 		register(IMessageDialogSetupBuilder.class, new MessageDialogDefaults());
 		register(IQuestionDialogSetupBuilder.class, new QuestionDialogDefaults());
 		register(IProgressBarSetupBuilder.class, new ProgressBarDefaults());

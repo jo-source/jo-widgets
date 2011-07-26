@@ -68,7 +68,7 @@ public final class DemoMainComposite {
 			@Override
 			public void actionPerformed() {
 				final IFrame menuDemoFrame = new DemoListInputFrame();
-				menuDemoFrame.setSize(new Dimension(250, 400));
+				menuDemoFrame.setSize(new Dimension(300, 300));
 				menuDemoFrame.setVisible(true);
 			}
 		});
