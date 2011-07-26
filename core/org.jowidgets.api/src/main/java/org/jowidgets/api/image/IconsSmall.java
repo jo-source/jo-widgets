@@ -55,6 +55,9 @@ public enum IconsSmall implements IImageConstant {
 	ADD_ALL,
 	SUB,
 
+	DELETE_TINY,
+	DELETE_GREY_TINY,
+
 	SETTINGS;
 
 }
