@@ -63,7 +63,7 @@ import org.jowidgets.validation.IValidator;
 import org.jowidgets.validation.ValidationResult;
 
 //TODO MG inputCompositeWidget must be implemented correctly
-public class InputCompositeWidget<INPUT_TYPE> extends ControlWrapper implements
+public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements
 		IInputComposite<INPUT_TYPE>,
 		IInputContentContainer {
 
@@ -76,7 +76,7 @@ public class InputCompositeWidget<INPUT_TYPE> extends ControlWrapper implements
 	private final ValidationCache validationCache;
 	private final boolean isAutoResetValidation;
 
-	public InputCompositeWidget(final IComposite composite, final IInputCompositeSetup<INPUT_TYPE> setup) {
+	public InputCompositeImpl(final IComposite composite, final IInputCompositeSetup<INPUT_TYPE> setup) {
 		super(composite);
 
 		this.inputObservable = new InputObservable();

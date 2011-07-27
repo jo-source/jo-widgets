@@ -30,7 +30,7 @@ package org.jowidgets.impl.widgets.composed.factory.internal;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IInputContainer;
 import org.jowidgets.api.widgets.descriptor.IInputCompositeDescriptor;
-import org.jowidgets.impl.widgets.composed.InputCompositeWidget;
+import org.jowidgets.impl.widgets.composed.InputCompositeImpl;
 import org.jowidgets.tools.widgets.factory.AbstractCompositeWidgetFactory;
 
 public class InputCompositeFactory<INPUT_TYPE> extends
@@ -40,7 +40,7 @@ public class InputCompositeFactory<INPUT_TYPE> extends
 	protected IInputContainer<INPUT_TYPE> createWidget(
 		final IComposite compositeWidget,
 		final IInputCompositeDescriptor<INPUT_TYPE> descriptor) {
-		return new InputCompositeWidget<INPUT_TYPE>(compositeWidget, descriptor);
+		return new InputCompositeImpl<INPUT_TYPE>(compositeWidget, descriptor);
 	}
 
 }
