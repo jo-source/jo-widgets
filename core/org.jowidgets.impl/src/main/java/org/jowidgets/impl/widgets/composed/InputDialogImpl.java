@@ -58,7 +58,7 @@ import org.jowidgets.validation.IValidator;
 public class InputDialogImpl<INPUT_TYPE> extends WindowWrapper implements IInputDialog<INPUT_TYPE> {
 
 	private final IFrame dialogWidget;
-	private final InputCompositeWidget<INPUT_TYPE> inputCompositeWidget;
+	private final InputCompositeImpl<INPUT_TYPE> inputCompositeWidget;
 
 	private INPUT_TYPE value;
 	private boolean okPressed;
@@ -76,7 +76,7 @@ public class InputDialogImpl<INPUT_TYPE> extends WindowWrapper implements IInput
 
 		// composite widget
 		final IComposite compositeWidget = dialogWidget.add(bpF.composite(), "growx, growy, h 0::,w 0::, wrap");
-		this.inputCompositeWidget = new InputCompositeWidget<INPUT_TYPE>(compositeWidget, setup);
+		this.inputCompositeWidget = new InputCompositeImpl<INPUT_TYPE>(compositeWidget, setup);
 
 		// buttons
 		final IComposite buttonBar = dialogWidget.add(bpF.composite(), "align right");
