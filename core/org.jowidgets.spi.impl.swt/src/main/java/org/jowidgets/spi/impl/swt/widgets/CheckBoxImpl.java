@@ -113,6 +113,7 @@ public class CheckBoxImpl extends AbstractInputControl implements ICheckBoxSpi {
 	@Override
 	public void setSelected(final boolean selected) {
 		getUiReference().setSelection(selected);
+		fireInputChanged(selected);
 	}
 
 }
