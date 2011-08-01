@@ -107,56 +107,57 @@ public final class LinkHandler {
 		final boolean incCur) {
 		for (int i = layouts.size() - 1; i >= 0; i--) {
 			final Object l = layouts.get(i).get();
-			if (l == layout) {
-				final HashMap<String, int[]> map = (temporary ? valuesTemp : valuesMap).get(i);
-				final int[] old = map.get(key);
+			if (l != layout) {
+				continue;
+			}
 
-				if (old == null || old[X] != x || old[Y] != y || old[WIDTH] != width || old[HEIGHT] != height) {
-					if (old == null || incCur == false) {
-						map.put(key, new int[] {x, y, width, height, x + width, y + height});
-						return true;
+			final HashMap<String, int[]> map = (temporary ? valuesTemp : valuesMap).get(i);
+			final int[] old = map.get(key);
+
+			if (old == null || old[X] != x || old[Y] != y || old[WIDTH] != width || old[HEIGHT] != height) {
+				if (old == null || incCur == false) {
+					map.put(key, new int[] {x, y, width, height, x + width, y + height});
+					return true;
+				}
+
+				boolean changed = false;
+
+				if (x != LayoutUtil.NOT_SET) {
+					if (old[X] == LayoutUtil.NOT_SET || x < old[X]) {
+						old[X] = x;
+						old[WIDTH] = old[X2] - x;
+						changed = true;
 					}
-					else {
-						boolean changed = false;
 
-						if (x != LayoutUtil.NOT_SET) {
-							if (old[X] == LayoutUtil.NOT_SET || x < old[X]) {
-								old[X] = x;
-								old[WIDTH] = old[X2] - x;
-								changed = true;
-							}
-
-							if (width != LayoutUtil.NOT_SET) {
-								final int x2 = x + width;
-								if (old[X2] == LayoutUtil.NOT_SET || x2 > old[X2]) {
-									old[X2] = x2;
-									old[WIDTH] = x2 - old[X];
-									changed = true;
-								}
-							}
+					if (width != LayoutUtil.NOT_SET) {
+						final int x2 = x + width;
+						if (old[X2] == LayoutUtil.NOT_SET || x2 > old[X2]) {
+							old[X2] = x2;
+							old[WIDTH] = x2 - old[X];
+							changed = true;
 						}
-
-						if (y != LayoutUtil.NOT_SET) {
-							if (old[Y] == LayoutUtil.NOT_SET || y < old[Y]) {
-								old[Y] = y;
-								old[HEIGHT] = old[Y2] - y;
-								changed = true;
-							}
-
-							if (height != LayoutUtil.NOT_SET) {
-								final int y2 = y + height;
-								if (old[Y2] == LayoutUtil.NOT_SET || y2 > old[Y2]) {
-									old[Y2] = y2;
-									old[HEIGHT] = y2 - old[Y];
-									changed = true;
-								}
-							}
-						}
-						return changed;
 					}
 				}
-				return false;
+
+				if (y != LayoutUtil.NOT_SET) {
+					if (old[Y] == LayoutUtil.NOT_SET || y < old[Y]) {
+						old[Y] = y;
+						old[HEIGHT] = old[Y2] - y;
+						changed = true;
+					}
+
+					if (height != LayoutUtil.NOT_SET) {
+						final int y2 = y + height;
+						if (old[Y2] == LayoutUtil.NOT_SET || y2 > old[Y2]) {
+							old[Y2] = y2;
+							old[HEIGHT] = y2 - old[Y];
+							changed = true;
+						}
+					}
+				}
+				return changed;
 			}
+			return false;
 		}
 
 		layouts.add(new WeakReference<Object>(layout));

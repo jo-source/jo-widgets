@@ -913,36 +913,37 @@ public final class Grid {
 						final int jSz = cell.compWraps.size();
 						for (int j = 0; j < jSz; j++) {
 							final CompWrap cw = cell.compWraps.get(j);
-							if (tag.equals(cw.cc.getTag())) {
-								if (Character.isUpperCase(order.charAt(i))) {
-									final int min = MigLayoutToolkit.getMigPlatformDefaults().getMinimumButtonWidth().getPixels(
-											0,
-											parent,
-											cw.comp);
-									if (min > cw.horSizes[LayoutUtil.MIN]) {
-										cw.horSizes[LayoutUtil.MIN] = min;
-									}
-
-									correctMinMax(cw.horSizes);
-								}
-
-								sortedList.add(cw);
-
-								if (nextUnrel) {
-									(prevCW != null ? prevCW : cw).mergeGapSizes(gapUnrel, cell.flowx, prevCW == null);
-									if (nextPush) {
-										cw.forcedPushGaps = 1;
-										nextUnrel = false;
-										nextPush = false;
-									}
-								}
-
-								// "unknown" components will always get an Unrelated gap.
-								if (c == 'u') {
-									nextUnrel = true;
-								}
-								prevCW = cw;
+							if (!tag.equals(cw.cc.getTag())) {
+								continue;
 							}
+							if (Character.isUpperCase(order.charAt(i))) {
+								final int min = MigLayoutToolkit.getMigPlatformDefaults().getMinimumButtonWidth().getPixels(
+										0,
+										parent,
+										cw.comp);
+								if (min > cw.horSizes[LayoutUtil.MIN]) {
+									cw.horSizes[LayoutUtil.MIN] = min;
+								}
+
+								correctMinMax(cw.horSizes);
+							}
+
+							sortedList.add(cw);
+
+							if (nextUnrel) {
+								(prevCW != null ? prevCW : cw).mergeGapSizes(gapUnrel, cell.flowx, prevCW == null);
+								if (nextPush) {
+									cw.forcedPushGaps = 1;
+									nextUnrel = false;
+									nextPush = false;
+								}
+							}
+
+							// "unknown" components will always get an Unrelated gap.
+							if (c == 'u') {
+								nextUnrel = true;
+							}
+							prevCW = cw;
 						}
 					}
 				}
@@ -1414,37 +1415,39 @@ public final class Grid {
 		final BoundSize sz = isHor ? lc.getWidth() : lc.getHeight();
 
 		for (int i = 0; i < sizes.length; i++) {
-			if (sizes[i] != null) {
-				final int[] size = sizes[i];
-				for (int sType = LayoutUtil.MIN; sType <= LayoutUtil.MAX; sType++) {
-					if (sz.getSize(sType) != null) {
-						if (i == 0) {
-							retSizes[sType] = sz.getSize(sType).getPixels(getParentSize(container, isHor), container, null);
-						}
+			if (sizes[i] == null) {
+				continue;
+			}
+
+			final int[] size = sizes[i];
+			for (int sType = LayoutUtil.MIN; sType <= LayoutUtil.MAX; sType++) {
+				if (sz.getSize(sType) != null) {
+					if (i == 0) {
+						retSizes[sType] = sz.getSize(sType).getPixels(getParentSize(container, isHor), container, null);
 					}
-					else {
-						int s = size[sType];
+				}
+				else {
+					int s = size[sType];
 
-						if (s != LayoutUtil.NOT_SET) {
-							if (sType == LayoutUtil.PREF) {
-								int bnd = size[LayoutUtil.MAX];
-								if (bnd != LayoutUtil.NOT_SET && bnd < s) {
-									s = bnd;
-								}
-
-								bnd = size[LayoutUtil.MIN];
-								if (bnd > s) {
-									s = bnd;
-								}
+					if (s != LayoutUtil.NOT_SET) {
+						if (sType == LayoutUtil.PREF) {
+							int bnd = size[LayoutUtil.MAX];
+							if (bnd != LayoutUtil.NOT_SET && bnd < s) {
+								s = bnd;
 							}
 
-							retSizes[sType] += s; // MAX compensated below.
+							bnd = size[LayoutUtil.MIN];
+							if (bnd > s) {
+								s = bnd;
+							}
 						}
 
-						// So that MAX is always correct.
-						if (size[LayoutUtil.MAX] == LayoutUtil.NOT_SET || retSizes[LayoutUtil.MAX] > LayoutUtil.INF) {
-							retSizes[LayoutUtil.MAX] = LayoutUtil.INF;
-						}
+						retSizes[sType] += s; // MAX compensated below.
+					}
+
+					// So that MAX is always correct.
+					if (size[LayoutUtil.MAX] == LayoutUtil.NOT_SET || retSizes[LayoutUtil.MAX] > LayoutUtil.INF) {
+						retSizes[LayoutUtil.MAX] = LayoutUtil.INF;
 					}
 				}
 			}
