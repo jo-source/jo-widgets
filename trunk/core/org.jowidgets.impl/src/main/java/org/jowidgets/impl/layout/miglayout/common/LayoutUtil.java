@@ -294,24 +294,25 @@ public final class LayoutUtil {
 							for (int i = 0; i < sizes.length && totWeight > 0.0001f; i++) {
 
 								final Float weight = resizeWeight[i];
-								if (weight != null) {
-									float sizeDelta = toChange * weight.floatValue() / totWeight;
-									float newSize = lengths[i] + sizeDelta;
-
-									if (sizes[i] != null) {
-										final int newSizeBounded = getBrokenBoundary(newSize, sizes[i][MIN], sizes[i][MAX]);
-										if (newSizeBounded != NOT_SET) {
-											resizeWeight[i] = null;
-											hit = true;
-											changedWeight += weight.floatValue();
-											newSize = newSizeBounded;
-											sizeDelta = newSize - lengths[i];
-										}
-									}
-
-									lengths[i] = newSize;
-									usedLength += sizeDelta;
+								if (weight == null) {
+									continue;
 								}
+								float sizeDelta = toChange * weight.floatValue() / totWeight;
+								float newSize = lengths[i] + sizeDelta;
+
+								if (sizes[i] != null) {
+									final int newSizeBounded = getBrokenBoundary(newSize, sizes[i][MIN], sizes[i][MAX]);
+									if (newSizeBounded != NOT_SET) {
+										resizeWeight[i] = null;
+										hit = true;
+										changedWeight += weight.floatValue();
+										newSize = newSizeBounded;
+										sizeDelta = newSize - lengths[i];
+									}
+								}
+
+								lengths[i] = newSize;
+								usedLength += sizeDelta;
 							}
 							totWeight -= changedWeight;
 						}
