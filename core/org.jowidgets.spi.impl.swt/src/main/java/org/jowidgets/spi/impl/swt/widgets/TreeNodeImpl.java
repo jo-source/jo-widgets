@@ -54,6 +54,7 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 
 	private final TreeImpl parentTree;
 	private final TreeItem item;
+	private String toolTipText;
 
 	public TreeNodeImpl(final TreeImpl parentTree, final TreeItem parentItem, final Integer index) {
 		super();
@@ -110,7 +111,11 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 
 	@Override
 	public void setToolTipText(final String toolTipText) {
-		//TODO NM Use Tooltip like in SwtMenu
+		this.toolTipText = toolTipText;
+	}
+
+	public String getToolTipText() {
+		return toolTipText;
 	}
 
 	@Override

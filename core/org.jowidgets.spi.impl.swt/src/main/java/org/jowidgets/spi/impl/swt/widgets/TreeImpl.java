@@ -44,6 +44,10 @@ import org.eclipse.swt.events.TreeEvent;
 import org.eclipse.swt.events.TreeListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.jowidgets.common.image.IImageConstant;
@@ -62,6 +66,7 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi {
 	private final boolean multiSelection;
 	private final Map<TreeItem, TreeNodeImpl> items;
 	private final TreeSelectionObservableSpi treeObservable;
+	private ToolTip toolTip;
 
 	private List<TreeItem> lastSelection;
 
@@ -141,6 +146,23 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi {
 
 		getUiReference().addSelectionListener(selectionListener);
 
+		// ToolTip support
+		try {
+			this.toolTip = new ToolTip(getUiReference().getShell(), SWT.NONE);
+		}
+		catch (final NoClassDefFoundError error) {
+			//TODO MG rwt has no tooltip, may use a window instead. 
+			//(New rwt version supports tooltips)
+		}
+
+		if (toolTip != null) {
+			final ToolTipListener toolTipListener = new ToolTipListener();
+			final Tree tree = getUiReference();
+			tree.addListener(SWT.Dispose, toolTipListener);
+			tree.addListener(SWT.KeyDown, toolTipListener);
+			tree.addListener(SWT.MouseHover, toolTipListener);
+			tree.addListener(SWT.MouseMove, toolTipListener);
+		}
 	}
 
 	@Override
@@ -236,6 +258,13 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi {
 	@Override
 	public void removeTreeNodeListener(final ITreeNodeListener listener) {
 		throw new UnsupportedOperationException("removeTreeNodeListener is not possible on the root node");
+	}
+
+	private void showToolTip(final String message) {
+		toolTip.setMessage(message);
+		final Point location = Display.getCurrent().getCursorLocation();
+		toolTip.setLocation(location.x + 16, location.y + 16);
+		toolTip.setVisible(true);
 	}
 
 	protected void setSelected(final TreeNodeImpl treeNode, final boolean selected) {
@@ -340,5 +369,28 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi {
 		}
 
 		return result;
+	}
+
+	final class ToolTipListener implements Listener {
+
+		@Override
+		public void handleEvent(final Event event) {
+			if (event.type == SWT.MouseHover) {
+				final TreeItem item = getUiReference().getItem(new Point(event.x, event.y));
+
+				if (item != null) {
+					final TreeNodeImpl itemImpl = items.get(item);
+					toolTip.setVisible(false);
+					if (itemImpl.getToolTipText() != null) {
+						showToolTip(itemImpl.getToolTipText());
+					}
+				}
+			}
+			else {
+				if (toolTip != null && !toolTip.isDisposed()) {
+					toolTip.setVisible(false);
+				}
+			}
+		}
 	}
 }
