@@ -33,7 +33,7 @@ import java.util.List;
 import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.controler.ITreeNodeListener;
+import org.jowidgets.common.widgets.controller.ITreeNodeListener;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IDisposeCallback;

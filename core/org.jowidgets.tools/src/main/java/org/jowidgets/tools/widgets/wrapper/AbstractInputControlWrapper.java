@@ -29,7 +29,7 @@
 package org.jowidgets.tools.widgets.wrapper;
 
 import org.jowidgets.api.widgets.IInputControl;
-import org.jowidgets.common.widgets.controler.IInputListener;
+import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;

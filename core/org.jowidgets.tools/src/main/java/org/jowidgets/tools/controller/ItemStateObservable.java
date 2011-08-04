@@ -31,8 +31,8 @@ package org.jowidgets.tools.controller;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jowidgets.common.widgets.controler.IItemStateListener;
-import org.jowidgets.common.widgets.controler.IItemStateObservable;
+import org.jowidgets.common.widgets.controller.IItemStateListener;
+import org.jowidgets.common.widgets.controller.IItemStateObservable;
 
 public class ItemStateObservable implements IItemStateObservable {
 

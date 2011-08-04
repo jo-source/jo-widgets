@@ -28,7 +28,7 @@
 
 package org.jowidgets.api.widgets;
 
-import org.jowidgets.api.controler.ITabItemObservable;
+import org.jowidgets.api.controller.ITabItemObservable;
 import org.jowidgets.common.widgets.ITabItemCommon;
 
 public interface ITabItem extends IItem, IContainer, ITabItemObservable, ITabItemCommon {

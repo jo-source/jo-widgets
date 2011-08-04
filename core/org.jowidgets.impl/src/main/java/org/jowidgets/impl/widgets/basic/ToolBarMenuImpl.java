@@ -36,7 +36,7 @@ import org.jowidgets.api.widgets.IToolBarMenu;
 import org.jowidgets.api.widgets.descriptor.setup.IItemSetup;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
-import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.impl.base.delegate.ItemDelegate;
 import org.jowidgets.impl.model.item.MenuModelBuilder;
 import org.jowidgets.impl.widgets.common.wrapper.ToolBarItemSpiWrapper;

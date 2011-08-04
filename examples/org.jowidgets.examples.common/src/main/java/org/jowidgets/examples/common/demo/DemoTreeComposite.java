@@ -28,11 +28,11 @@
 
 package org.jowidgets.examples.common.demo;
 
-import org.jowidgets.api.controler.ITreeListener;
-import org.jowidgets.api.controler.ITreePopupDetectionListener;
-import org.jowidgets.api.controler.ITreePopupEvent;
-import org.jowidgets.api.controler.ITreeSelectionEvent;
-import org.jowidgets.api.controler.ITreeSelectionListener;
+import org.jowidgets.api.controller.ITreeListener;
+import org.jowidgets.api.controller.ITreePopupDetectionListener;
+import org.jowidgets.api.controller.ITreePopupEvent;
+import org.jowidgets.api.controller.ITreeSelectionEvent;
+import org.jowidgets.api.controller.ITreeSelectionListener;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IMenu;
@@ -42,8 +42,8 @@ import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.api.widgets.blueprint.ITreeNodeBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Position;
-import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
-import org.jowidgets.common.widgets.controler.ITreeNodeListener;
+import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
+import org.jowidgets.common.widgets.controller.ITreeNodeListener;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 

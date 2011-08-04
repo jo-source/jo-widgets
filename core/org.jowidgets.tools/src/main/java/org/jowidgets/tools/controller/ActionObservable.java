@@ -31,8 +31,8 @@ package org.jowidgets.tools.controller;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jowidgets.common.widgets.controler.IActionListener;
-import org.jowidgets.common.widgets.controler.IActionObservable;
+import org.jowidgets.common.widgets.controller.IActionListener;
+import org.jowidgets.common.widgets.controller.IActionObservable;
 
 public class ActionObservable implements IActionObservable {
 

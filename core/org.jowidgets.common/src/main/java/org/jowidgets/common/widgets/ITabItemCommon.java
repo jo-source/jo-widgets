@@ -28,7 +28,7 @@
 
 package org.jowidgets.common.widgets;
 
-import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
+import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 
 public interface ITabItemCommon extends IItemCommon, IContainerCommon {
 

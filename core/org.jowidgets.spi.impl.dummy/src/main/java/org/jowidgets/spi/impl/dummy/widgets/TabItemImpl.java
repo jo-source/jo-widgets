@@ -36,7 +36,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IControlCommon;
-import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
+import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
@@ -46,7 +46,7 @@ import org.jowidgets.spi.impl.dummy.dummyui.UIDTabFolder;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDTabItem;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.ITabItemSpi;
-import org.jowidgets.spi.widgets.controler.ITabItemListenerSpi;
+import org.jowidgets.spi.widgets.controller.ITabItemListenerSpi;
 
 public class TabItemImpl extends DummyContainer implements ITabItemSpi {
 

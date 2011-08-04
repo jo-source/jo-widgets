@@ -28,7 +28,7 @@
 package org.jowidgets.spi.impl.swing.widgets;
 
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.controler.IMenuListener;
+import org.jowidgets.common.widgets.controller.IMenuListener;
 import org.jowidgets.spi.impl.swing.widgets.base.JoMenu;
 import org.jowidgets.spi.widgets.ISubMenuSpi;
 

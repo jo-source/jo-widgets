@@ -28,7 +28,7 @@
 
 package org.jowidgets.spi.impl.dummy.widgets;
 
-import org.jowidgets.common.widgets.controler.IItemStateListener;
+import org.jowidgets.common.widgets.controller.IItemStateListener;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDObservable;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDToolBarToggleButton;
 import org.jowidgets.spi.widgets.IToolBarToggleButtonSpi;

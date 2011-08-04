@@ -33,8 +33,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.jowidgets.api.controler.ITabFolderListener;
-import org.jowidgets.api.controler.ITabSelectionEvent;
+import org.jowidgets.api.controller.ITabFolderListener;
+import org.jowidgets.api.controller.ITabSelectionEvent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITabFolder;

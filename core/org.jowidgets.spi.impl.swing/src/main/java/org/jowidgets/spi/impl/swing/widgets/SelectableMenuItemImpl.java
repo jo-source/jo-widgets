@@ -32,8 +32,8 @@ import java.awt.event.ItemListener;
 
 import javax.swing.JMenuItem;
 
-import org.jowidgets.common.widgets.controler.IItemStateListener;
-import org.jowidgets.spi.impl.controler.ItemStateObservable;
+import org.jowidgets.common.widgets.controller.IItemStateListener;
+import org.jowidgets.spi.impl.controller.ItemStateObservable;
 import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 
 public class SelectableMenuItemImpl extends MenuItemImpl implements ISelectableMenuItemSpi {

@@ -29,7 +29,7 @@
 package org.jowidgets.impl.widgets.common.wrapper;
 
 import org.jowidgets.common.widgets.IInputControlCommon;
-import org.jowidgets.common.widgets.controler.IInputListener;
+import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.spi.widgets.IInputControlSpi;
 
 public class InputControlSpiWrapper extends ControlSpiWrapper implements IInputControlCommon {

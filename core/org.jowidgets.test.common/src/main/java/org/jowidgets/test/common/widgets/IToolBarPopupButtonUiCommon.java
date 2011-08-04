@@ -29,7 +29,7 @@
 package org.jowidgets.test.common.widgets;
 
 import org.jowidgets.common.widgets.IToolBarPopupButtonCommon;
-import org.jowidgets.common.widgets.controler.IPopupDetectionObservable;
+import org.jowidgets.common.widgets.controller.IPopupDetectionObservable;
 
 public interface IToolBarPopupButtonUiCommon extends IToolBarButtonUiCommon, IPopupDetectionObservable, IToolBarPopupButtonCommon {
 

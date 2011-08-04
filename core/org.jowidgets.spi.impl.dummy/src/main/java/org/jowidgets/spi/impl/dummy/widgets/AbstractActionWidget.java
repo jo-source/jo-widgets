@@ -27,7 +27,7 @@
  */
 package org.jowidgets.spi.impl.dummy.widgets;
 
-import org.jowidgets.spi.impl.controler.ActionObservable;
+import org.jowidgets.spi.impl.controller.ActionObservable;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
 import org.jowidgets.spi.widgets.IActionWidgetSpi;
 

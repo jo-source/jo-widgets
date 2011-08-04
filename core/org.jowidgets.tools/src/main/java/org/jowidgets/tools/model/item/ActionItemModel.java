@@ -33,7 +33,7 @@ import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.IActionItemModelBuilder;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.util.IDecorator;
 
 public class ActionItemModel extends AbstractItemModelWrapper implements IActionItemModel {

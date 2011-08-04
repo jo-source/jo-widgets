@@ -33,7 +33,7 @@ import java.util.Set;
 
 import org.jowidgets.common.types.Modifier;
 import org.jowidgets.common.types.MouseButton;
-import org.jowidgets.common.widgets.controler.ITableCellMouseEvent;
+import org.jowidgets.common.widgets.controller.ITableCellMouseEvent;
 
 public class TableCellMouseEvent extends TableCellEvent implements ITableCellMouseEvent {
 

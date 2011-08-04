@@ -28,7 +28,7 @@
 
 package org.jowidgets.tools.controller;
 
-import org.jowidgets.common.widgets.controler.IComponentListener;
+import org.jowidgets.common.widgets.controller.IComponentListener;
 
 public class ComponentAdapter implements IComponentListener {
 

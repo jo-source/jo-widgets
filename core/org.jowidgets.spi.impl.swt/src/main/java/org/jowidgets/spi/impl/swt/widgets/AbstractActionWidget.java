@@ -28,7 +28,7 @@
 package org.jowidgets.spi.impl.swt.widgets;
 
 import org.eclipse.swt.widgets.Control;
-import org.jowidgets.spi.impl.controler.ActionObservable;
+import org.jowidgets.spi.impl.controller.ActionObservable;
 import org.jowidgets.spi.widgets.IActionWidgetSpi;
 
 public abstract class AbstractActionWidget extends ActionObservable implements IActionWidgetSpi {

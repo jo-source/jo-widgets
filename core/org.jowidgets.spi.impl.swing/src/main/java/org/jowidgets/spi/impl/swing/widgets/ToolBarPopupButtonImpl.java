@@ -37,8 +37,8 @@ import javax.swing.JButton;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Position;
-import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
-import org.jowidgets.spi.impl.controler.PopupDetectionObservable;
+import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
+import org.jowidgets.spi.impl.controller.PopupDetectionObservable;
 import org.jowidgets.spi.impl.swing.widgets.base.JoArrowButton;
 import org.jowidgets.spi.widgets.IToolBarPopupButtonSpi;
 

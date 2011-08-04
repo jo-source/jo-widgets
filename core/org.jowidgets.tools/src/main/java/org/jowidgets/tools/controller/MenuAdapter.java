@@ -28,7 +28,7 @@
 
 package org.jowidgets.tools.controller;
 
-import org.jowidgets.common.widgets.controler.IMenuListener;
+import org.jowidgets.common.widgets.controller.IMenuListener;
 
 public class MenuAdapter implements IMenuListener {
 

@@ -28,7 +28,7 @@
 
 package org.jowidgets.spi.impl.dummy.widgets;
 
-import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.spi.impl.dummy.dummyui.AbstractUIDButton;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDObservable;
 import org.jowidgets.spi.widgets.IToolBarButtonSpi;

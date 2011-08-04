@@ -28,7 +28,7 @@
 
 package org.jowidgets.common.widgets;
 
-import org.jowidgets.common.widgets.controler.IItemStateObservable;
+import org.jowidgets.common.widgets.controller.IItemStateObservable;
 
 public interface ISelectableItemCommon extends IItemCommon, IItemStateObservable {
 

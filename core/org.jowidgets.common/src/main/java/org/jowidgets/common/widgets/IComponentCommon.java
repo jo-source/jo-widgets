@@ -31,11 +31,11 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
-import org.jowidgets.common.widgets.controler.IComponentObservable;
-import org.jowidgets.common.widgets.controler.IFocusObservable;
-import org.jowidgets.common.widgets.controler.IKeyObservable;
-import org.jowidgets.common.widgets.controler.IMouseObservable;
-import org.jowidgets.common.widgets.controler.IPopupDetectionObservable;
+import org.jowidgets.common.widgets.controller.IComponentObservable;
+import org.jowidgets.common.widgets.controller.IFocusObservable;
+import org.jowidgets.common.widgets.controller.IKeyObservable;
+import org.jowidgets.common.widgets.controller.IMouseObservable;
+import org.jowidgets.common.widgets.controller.IPopupDetectionObservable;
 
 public interface IComponentCommon extends
 		IWidgetCommon,

@@ -31,8 +31,8 @@ package org.jowidgets.spi.impl.swing.widgets;
 import java.awt.Component;
 
 import org.jowidgets.common.types.Position;
-import org.jowidgets.common.widgets.controler.IMenuListener;
-import org.jowidgets.spi.impl.controler.MenuObservable;
+import org.jowidgets.common.widgets.controller.IMenuListener;
+import org.jowidgets.spi.impl.controller.MenuObservable;
 import org.jowidgets.spi.impl.swing.widgets.base.JoPopupMenu;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 

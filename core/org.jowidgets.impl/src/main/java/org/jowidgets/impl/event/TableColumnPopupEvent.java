@@ -29,7 +29,7 @@
 package org.jowidgets.impl.event;
 
 import org.jowidgets.common.types.Position;
-import org.jowidgets.common.widgets.controler.ITableColumnPopupEvent;
+import org.jowidgets.common.widgets.controller.ITableColumnPopupEvent;
 
 public class TableColumnPopupEvent extends TableColumnEvent implements ITableColumnPopupEvent {
 

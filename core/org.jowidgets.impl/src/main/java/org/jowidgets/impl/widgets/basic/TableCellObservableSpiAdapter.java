@@ -31,9 +31,9 @@ package org.jowidgets.impl.widgets.basic;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jowidgets.common.widgets.controler.ITableCellListener;
-import org.jowidgets.common.widgets.controler.ITableCellMouseEvent;
-import org.jowidgets.common.widgets.controler.ITableCellObservable;
+import org.jowidgets.common.widgets.controller.ITableCellListener;
+import org.jowidgets.common.widgets.controller.ITableCellMouseEvent;
+import org.jowidgets.common.widgets.controller.ITableCellObservable;
 import org.jowidgets.impl.event.TableCellMouseEvent;
 
 class TableCellObservableSpiAdapter implements ITableCellObservable {

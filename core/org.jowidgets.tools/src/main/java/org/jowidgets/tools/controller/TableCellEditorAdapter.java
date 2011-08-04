@@ -29,9 +29,9 @@
 package org.jowidgets.tools.controller;
 
 import org.jowidgets.common.types.IVetoable;
-import org.jowidgets.common.widgets.controler.ITableCellEditEvent;
-import org.jowidgets.common.widgets.controler.ITableCellEditorListener;
-import org.jowidgets.common.widgets.controler.ITableCellEvent;
+import org.jowidgets.common.widgets.controller.ITableCellEditEvent;
+import org.jowidgets.common.widgets.controller.ITableCellEditorListener;
+import org.jowidgets.common.widgets.controller.ITableCellEvent;
 
 public class TableCellEditorAdapter implements ITableCellEditorListener {
 

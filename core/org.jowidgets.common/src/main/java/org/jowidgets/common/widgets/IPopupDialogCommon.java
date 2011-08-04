@@ -27,7 +27,7 @@
  */
 package org.jowidgets.common.widgets;
 
-import org.jowidgets.common.widgets.controler.IWindowObservable;
+import org.jowidgets.common.widgets.controller.IWindowObservable;
 
 public interface IPopupDialogCommon extends IDisplayCommon, IContainerCommon, IWindowObservable {
 

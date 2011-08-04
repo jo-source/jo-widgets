@@ -36,7 +36,7 @@ import org.jowidgets.api.widgets.ISelectableMenuItem;
 import org.jowidgets.api.widgets.blueprint.builder.ISelectableItemSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.setup.ISelectableItemSetup;
 import org.jowidgets.common.types.Accelerator;
-import org.jowidgets.common.widgets.controler.IItemStateListener;
+import org.jowidgets.common.widgets.controller.IItemStateListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 class SelectableMenuItem<WIDGET_TYPE extends ISelectableMenuItem, BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE> & ISelectableItemSetupBuilder<?> & ISelectableItemSetup> extends

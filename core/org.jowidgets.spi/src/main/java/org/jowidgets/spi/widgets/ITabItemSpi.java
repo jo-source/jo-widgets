@@ -29,7 +29,7 @@
 package org.jowidgets.spi.widgets;
 
 import org.jowidgets.common.widgets.ITabItemCommon;
-import org.jowidgets.spi.widgets.controler.ITabItemObservableSpi;
+import org.jowidgets.spi.widgets.controller.ITabItemObservableSpi;
 
 public interface ITabItemSpi extends IItemSpi, IContainerSpi, ITabItemObservableSpi, ITabItemCommon {
 

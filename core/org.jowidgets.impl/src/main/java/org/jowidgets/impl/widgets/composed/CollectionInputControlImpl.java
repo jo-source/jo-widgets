@@ -46,14 +46,13 @@ import org.jowidgets.api.widgets.descriptor.ICollectionInputControlDescriptor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.types.VirtualKey;
-import org.jowidgets.common.widgets.controler.IActionListener;
-import org.jowidgets.common.widgets.controler.IInputListener;
-import org.jowidgets.common.widgets.controler.IKeyEvent;
+import org.jowidgets.common.widgets.controller.IActionListener;
+import org.jowidgets.common.widgets.controller.IInputListener;
+import org.jowidgets.common.widgets.controller.IKeyEvent;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.impl.widgets.composed.CollectionInputControlImpl.RowLayout.ColumnMode;
 import org.jowidgets.impl.widgets.composed.CollectionInputControlImpl.RowLayout.RowLayoutCommon;
-import org.jowidgets.tools.controller.FocusAdapter;
 import org.jowidgets.tools.controller.KeyAdapter;
 import org.jowidgets.tools.widgets.wrapper.CompositeWrapper;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
@@ -306,15 +305,6 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 
 			});
 
-			removeButton.addFocusListener(new FocusAdapter() {
-
-				@Override
-				public void focusGained() {
-					inputControl.requestFocus();
-					removeButton.redraw();
-				}
-
-			});
 			removeButton.addActionListener(new IActionListener() {
 
 				@Override

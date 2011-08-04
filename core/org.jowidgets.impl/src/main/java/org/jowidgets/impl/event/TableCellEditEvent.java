@@ -27,7 +27,7 @@
  */
 package org.jowidgets.impl.event;
 
-import org.jowidgets.common.widgets.controler.ITableCellEditEvent;
+import org.jowidgets.common.widgets.controller.ITableCellEditEvent;
 
 public class TableCellEditEvent extends TableCellEvent implements ITableCellEditEvent {
 

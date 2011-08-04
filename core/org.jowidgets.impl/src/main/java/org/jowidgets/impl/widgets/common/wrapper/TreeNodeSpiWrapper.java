@@ -31,8 +31,8 @@ package org.jowidgets.impl.widgets.common.wrapper;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.ITreeNodeCommon;
-import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
-import org.jowidgets.common.widgets.controler.ITreeNodeListener;
+import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
+import org.jowidgets.common.widgets.controller.ITreeNodeListener;
 import org.jowidgets.spi.widgets.ITreeNodeSpi;
 
 public class TreeNodeSpiWrapper extends ItemSpiWrapper implements ITreeNodeCommon {

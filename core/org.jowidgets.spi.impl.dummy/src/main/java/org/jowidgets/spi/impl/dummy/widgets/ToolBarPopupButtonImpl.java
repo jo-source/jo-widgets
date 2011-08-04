@@ -29,7 +29,7 @@
 package org.jowidgets.spi.impl.dummy.widgets;
 
 import org.jowidgets.common.types.Position;
-import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
+import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.spi.impl.dummy.dummyui.AbstractUIDButton;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDObservable;
 import org.jowidgets.spi.widgets.IToolBarPopupButtonSpi;

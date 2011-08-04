@@ -28,9 +28,9 @@
 
 package org.jowidgets.tools.controller;
 
-import org.jowidgets.common.widgets.controler.ITableColumnListener;
-import org.jowidgets.common.widgets.controler.ITableColumnMouseEvent;
-import org.jowidgets.common.widgets.controler.ITableColumnResizeEvent;
+import org.jowidgets.common.widgets.controller.ITableColumnListener;
+import org.jowidgets.common.widgets.controller.ITableColumnMouseEvent;
+import org.jowidgets.common.widgets.controller.ITableColumnResizeEvent;
 
 public class TableColumnAdapter implements ITableColumnListener {
 

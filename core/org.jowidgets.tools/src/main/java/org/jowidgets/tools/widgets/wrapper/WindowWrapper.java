@@ -33,7 +33,7 @@ import java.util.List;
 import org.jowidgets.api.widgets.IDisplay;
 import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.common.types.Rectangle;
-import org.jowidgets.common.widgets.controler.IWindowListener;
+import org.jowidgets.common.widgets.controller.IWindowListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public class WindowWrapper extends ComponentWrapper implements IWindow {

@@ -31,8 +31,8 @@ package org.jowidgets.tools.controller;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jowidgets.api.controler.ITreeListener;
-import org.jowidgets.api.controler.ITreeObservable;
+import org.jowidgets.api.controller.ITreeListener;
+import org.jowidgets.api.controller.ITreeObservable;
 import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.util.Assert;
 

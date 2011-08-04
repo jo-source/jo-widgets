@@ -31,7 +31,7 @@ package org.jowidgets.impl.event;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.jowidgets.api.controler.ITreeSelectionEvent;
+import org.jowidgets.api.controller.ITreeSelectionEvent;
 import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.util.Assert;
 

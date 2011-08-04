@@ -30,7 +30,7 @@ package org.jowidgets.impl.widgets.common.wrapper;
 
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IPopupMenuCommon;
-import org.jowidgets.common.widgets.controler.IMenuListener;
+import org.jowidgets.common.widgets.controller.IMenuListener;
 import org.jowidgets.impl.base.delegate.ItemDelegate;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 

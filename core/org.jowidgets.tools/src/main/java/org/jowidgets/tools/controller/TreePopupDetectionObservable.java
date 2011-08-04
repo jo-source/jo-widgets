@@ -31,9 +31,9 @@ package org.jowidgets.tools.controller;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jowidgets.api.controler.ITreePopupDetectionListener;
-import org.jowidgets.api.controler.ITreePopupDetectionObservable;
-import org.jowidgets.api.controler.ITreePopupEvent;
+import org.jowidgets.api.controller.ITreePopupDetectionListener;
+import org.jowidgets.api.controller.ITreePopupDetectionObservable;
+import org.jowidgets.api.controller.ITreePopupEvent;
 
 public class TreePopupDetectionObservable implements ITreePopupDetectionObservable {
 

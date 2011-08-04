@@ -34,7 +34,7 @@ import java.util.List;
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
-import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.tools.controller.ActionObservable;
 import org.jowidgets.util.IDecorator;
 

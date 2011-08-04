@@ -35,7 +35,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.jowidgets.common.types.Modifier;
 import org.jowidgets.common.types.VirtualKey;
-import org.jowidgets.spi.impl.controler.ILazyKeyEventContentFactory;
+import org.jowidgets.spi.impl.controller.ILazyKeyEventContentFactory;
 import org.jowidgets.spi.impl.swt.util.VirtualKeyConvert;
 
 public class LazyKeyEventContentFactory implements ILazyKeyEventContentFactory {
