@@ -68,7 +68,7 @@ import org.jowidgets.spi.widgets.IMenuItemSpi;
 import org.jowidgets.spi.widgets.IMenuSpi;
 import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 import org.jowidgets.spi.widgets.ISubMenuSpi;
-import org.jowidgets.tools.controler.ListModelAdapter;
+import org.jowidgets.tools.controller.ListModelAdapter;
 import org.jowidgets.util.Assert;
 
 public class MenuDelegate implements IDisposeable {

@@ -26,38 +26,47 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.controler;
+package org.jowidgets.tools.controller;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jowidgets.api.controler.ITreeSelectionEvent;
-import org.jowidgets.api.controler.ITreeSelectionListener;
-import org.jowidgets.api.controler.ITreeSelectionObservable;
-import org.jowidgets.util.Assert;
+import org.jowidgets.common.model.ITableColumnModelListener;
+import org.jowidgets.common.model.ITableColumnModelObservable;
 
-public class TreeSelectionObservable implements ITreeSelectionObservable {
+public class TableColumnModelObservable implements ITableColumnModelObservable {
 
-	private final Set<ITreeSelectionListener> listeners;
+	private final Set<ITableColumnModelListener> listeners;
 
-	public TreeSelectionObservable() {
-		this.listeners = new HashSet<ITreeSelectionListener>();
+	public TableColumnModelObservable() {
+		this.listeners = new HashSet<ITableColumnModelListener>();
 	}
 
 	@Override
-	public void addTreeSelectionListener(final ITreeSelectionListener listener) {
+	public void addColumnModelListener(final ITableColumnModelListener listener) {
 		listeners.add(listener);
 	}
 
 	@Override
-	public void removeTreeSelectionListener(final ITreeSelectionListener listener) {
+	public void removeColumnModelListener(final ITableColumnModelListener listener) {
 		listeners.remove(listener);
 	}
 
-	public void fireSelectionChanged(final ITreeSelectionEvent event) {
-		Assert.paramNotNull(event, "event");
-		for (final ITreeSelectionListener listener : listeners) {
-			listener.selectionChanged(event);
+	public void fireColumnsAdded(final int[] columnIndices) {
+		for (final ITableColumnModelListener listener : listeners) {
+			listener.columnsAdded(columnIndices);
+		}
+	}
+
+	public void fireColumnsRemoved(final int[] columnIndices) {
+		for (final ITableColumnModelListener listener : listeners) {
+			listener.columnsRemoved(columnIndices);
+		}
+	}
+
+	public void fireColumnsChanged(final int[] columnIndices) {
+		for (final ITableColumnModelListener listener : listeners) {
+			listener.columnsChanged(columnIndices);
 		}
 	}
 

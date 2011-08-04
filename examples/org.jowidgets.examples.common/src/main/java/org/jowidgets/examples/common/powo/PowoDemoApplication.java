@@ -49,7 +49,7 @@ import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.examples.common.icons.DemoIconsInitializer;
-import org.jowidgets.tools.controler.WindowAdapter;
+import org.jowidgets.tools.controller.WindowAdapter;
 import org.jowidgets.tools.powo.IJoMenu;
 import org.jowidgets.tools.powo.JoActionMenuItem;
 import org.jowidgets.tools.powo.JoButton;

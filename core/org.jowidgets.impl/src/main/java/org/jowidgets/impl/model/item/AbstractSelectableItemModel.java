@@ -32,7 +32,7 @@ import org.jowidgets.api.model.item.ISelectableItemModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.common.widgets.controler.IItemStateListener;
-import org.jowidgets.tools.controler.ItemStateObservable;
+import org.jowidgets.tools.controller.ItemStateObservable;
 
 abstract class AbstractSelectableItemModel extends ItemModelImpl implements ISelectableItemModel {
 

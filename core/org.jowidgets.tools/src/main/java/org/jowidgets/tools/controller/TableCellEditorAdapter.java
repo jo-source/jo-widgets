@@ -26,17 +26,22 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.controler;
+package org.jowidgets.tools.controller;
 
-import org.jowidgets.common.widgets.controler.IKeyEvent;
-import org.jowidgets.common.widgets.controler.IKeyListener;
+import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.common.widgets.controler.ITableCellEditEvent;
+import org.jowidgets.common.widgets.controler.ITableCellEditorListener;
+import org.jowidgets.common.widgets.controler.ITableCellEvent;
 
-public class KeyAdapter implements IKeyListener {
+public class TableCellEditorAdapter implements ITableCellEditorListener {
 
 	@Override
-	public void keyPressed(final IKeyEvent event) {}
+	public void onEdit(final IVetoable veto, final ITableCellEditEvent event) {}
 
 	@Override
-	public void keyReleased(final IKeyEvent event) {}
+	public void editFinished(final ITableCellEditEvent event) {}
+
+	@Override
+	public void editCanceled(final ITableCellEvent event) {}
 
 }

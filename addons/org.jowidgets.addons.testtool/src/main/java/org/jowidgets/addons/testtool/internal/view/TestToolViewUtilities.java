@@ -37,7 +37,7 @@ import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.factory.IWidgetFactoryListener;
-import org.jowidgets.tools.controler.WindowAdapter;
+import org.jowidgets.tools.controller.WindowAdapter;
 import org.jowidgets.util.Assert;
 
 public class TestToolViewUtilities {

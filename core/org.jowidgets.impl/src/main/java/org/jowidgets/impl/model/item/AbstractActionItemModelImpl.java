@@ -35,7 +35,7 @@ import org.jowidgets.api.command.IAction;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.common.widgets.controler.IActionListener;
-import org.jowidgets.tools.controler.ActionObservable;
+import org.jowidgets.tools.controller.ActionObservable;
 import org.jowidgets.util.IDecorator;
 
 abstract class AbstractActionItemModelImpl extends ItemModelImpl {

@@ -38,7 +38,7 @@ import org.jowidgets.api.widgets.descriptor.setup.IFrameSetup;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.tools.controler.WindowAdapter;
+import org.jowidgets.tools.controller.WindowAdapter;
 import org.jowidgets.util.Assert;
 
 public class JoFrame extends Window<IFrame, IFrameBluePrint> implements IFrame {

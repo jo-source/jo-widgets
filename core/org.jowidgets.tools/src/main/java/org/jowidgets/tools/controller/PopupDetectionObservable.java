@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2010, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,47 +26,37 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.controler;
+package org.jowidgets.tools.controller;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jowidgets.common.model.ITableColumnModelListener;
-import org.jowidgets.common.model.ITableColumnModelObservable;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
+import org.jowidgets.common.widgets.controler.IPopupDetectionObservable;
 
-public class TableColumnModelObservable implements ITableColumnModelObservable {
+public class PopupDetectionObservable implements IPopupDetectionObservable {
 
-	private final Set<ITableColumnModelListener> listeners;
+	private final Set<IPopupDetectionListener> listeners;
 
-	public TableColumnModelObservable() {
-		this.listeners = new HashSet<ITableColumnModelListener>();
+	public PopupDetectionObservable() {
+		super();
+		this.listeners = new HashSet<IPopupDetectionListener>();
 	}
 
 	@Override
-	public void addColumnModelListener(final ITableColumnModelListener listener) {
+	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
 		listeners.add(listener);
 	}
 
 	@Override
-	public void removeColumnModelListener(final ITableColumnModelListener listener) {
+	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
 		listeners.remove(listener);
 	}
 
-	public void fireColumnsAdded(final int[] columnIndices) {
-		for (final ITableColumnModelListener listener : listeners) {
-			listener.columnsAdded(columnIndices);
-		}
-	}
-
-	public void fireColumnsRemoved(final int[] columnIndices) {
-		for (final ITableColumnModelListener listener : listeners) {
-			listener.columnsRemoved(columnIndices);
-		}
-	}
-
-	public void fireColumnsChanged(final int[] columnIndices) {
-		for (final ITableColumnModelListener listener : listeners) {
-			listener.columnsChanged(columnIndices);
+	public void firePopupDetected(final Position position) {
+		for (final IPopupDetectionListener listener : listeners) {
+			listener.popupDetected(position);
 		}
 	}
 

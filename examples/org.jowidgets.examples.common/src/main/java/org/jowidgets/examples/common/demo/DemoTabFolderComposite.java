@@ -50,7 +50,7 @@ import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.examples.common.icons.SilkIcons;
-import org.jowidgets.tools.controler.TabItemAdapter;
+import org.jowidgets.tools.controller.TabItemAdapter;
 import org.jowidgets.tools.model.item.MenuModel;
 
 public final class DemoTabFolderComposite {

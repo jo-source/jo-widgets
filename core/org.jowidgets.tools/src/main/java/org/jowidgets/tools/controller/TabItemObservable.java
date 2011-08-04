@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Lukas Gross
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,45 +26,60 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.testtool.internal.view;
+package org.jowidgets.tools.controller;
 
-import org.jowidgets.addons.testtool.internal.ITestTool;
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IFrame;
-import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.tools.controller.WindowAdapter;
+import java.util.HashSet;
+import java.util.Set;
 
-public class TestToolView {
+import org.jowidgets.api.controler.ITabItemListener;
+import org.jowidgets.api.controler.ITabItemObservable;
+import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.util.ValueHolder;
 
-	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
-	private final ITestTool testTool;
-	private final TestToolViewUtilities viewUtilities;
+public class TabItemObservable implements ITabItemObservable {
 
-	public TestToolView(final ITestTool testTool) {
-		this.testTool = testTool;
-		this.viewUtilities = new TestToolViewUtilities();
-		createContentArea();
+	private final Set<ITabItemListener> listeners;
+
+	public TabItemObservable() {
+		this.listeners = new HashSet<ITabItemListener>();
 	}
 
-	public void createContentArea() {
-		final IFrameBluePrint frameBP = BPF.frame("TestTool");
-		final IFrame frame = Toolkit.createRootFrame(frameBP);
-		frame.setLayout(new MigLayoutDescriptor("[grow]", "[grow]"));
-		new TestToolViewMenubar(frame, testTool);
-		new TestToolViewToolbar(frame, testTool);
-		new TestToolViewTable(frame);
-		viewUtilities.setupTestTool(testTool);
-		frame.pack();
-		frame.setSize(new Dimension(700, 500));
-		viewUtilities.setPositionRelativeToMainWindow(frame);
-		frame.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosed() {
-				testTool.deactivateReplayAndRecord();
+	@Override
+	public void addTabItemListener(final ITabItemListener listener) {
+		listeners.add(listener);
+	}
+
+	@Override
+	public void removeTabItemListener(final ITabItemListener listener) {
+		listeners.remove(listener);
+	}
+
+	public void fireSelectionChanged(final boolean selected) {
+		for (final ITabItemListener listener : listeners) {
+			listener.selectionChanged(selected);
+		}
+	}
+
+	public void fireOnClose(final IVetoable vetoable) {
+		for (final ITabItemListener listener : listeners) {
+			listener.onClose(vetoable);
+		}
+	}
+
+	public boolean fireOnClose() {
+		final ValueHolder<Boolean> veto = new ValueHolder<Boolean>(Boolean.FALSE);
+		for (final ITabItemListener listener : listeners) {
+			listener.onClose(new IVetoable() {
+				@Override
+				public void veto() {
+					veto.set(Boolean.TRUE);
+				}
+			});
+			if (veto.get().booleanValue()) {
+				break;
 			}
-		});
+		}
+		return veto.get().booleanValue();
 	}
+
 }

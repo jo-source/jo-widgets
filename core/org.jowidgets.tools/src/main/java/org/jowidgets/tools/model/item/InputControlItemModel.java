@@ -42,7 +42,7 @@ import org.jowidgets.common.widgets.controler.IInputListener;
 import org.jowidgets.common.widgets.controler.IInputObservable;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.tools.controler.InputObservable;
+import org.jowidgets.tools.controller.InputObservable;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.Tuple;
 

@@ -26,21 +26,16 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.controler;
+package org.jowidgets.tools.controller;
 
-import org.jowidgets.common.widgets.controler.ITableColumnListener;
-import org.jowidgets.common.widgets.controler.ITableColumnMouseEvent;
-import org.jowidgets.common.widgets.controler.ITableColumnResizeEvent;
+import org.jowidgets.common.widgets.controler.IComponentListener;
 
-public class TableColumnAdapter implements ITableColumnListener {
+public class ComponentAdapter implements IComponentListener {
 
 	@Override
-	public void mouseClicked(final ITableColumnMouseEvent event) {}
+	public void sizeChanged() {}
 
 	@Override
-	public void columnResized(final ITableColumnResizeEvent event) {}
-
-	@Override
-	public void columnPermutationChanged() {}
+	public void positionChanged() {}
 
 }

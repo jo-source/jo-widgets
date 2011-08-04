@@ -37,7 +37,7 @@ import org.jowidgets.api.widgets.blueprint.ITabFolderBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITabItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.IVetoable;
-import org.jowidgets.tools.controler.TabItemAdapter;
+import org.jowidgets.tools.controller.TabItemAdapter;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.types.VetoHolder;

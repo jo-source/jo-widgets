@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,39 +26,45 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.controler;
+package org.jowidgets.tools.controller;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jowidgets.common.widgets.controler.IInputListener;
-import org.jowidgets.common.widgets.controler.IInputObservable;
+import org.jowidgets.api.controler.ITreeListener;
+import org.jowidgets.api.controler.ITreeObservable;
+import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.util.Assert;
 
-public class InputObservable implements IInputObservable {
+public class TreeObservable implements ITreeObservable {
 
-	private final Set<IInputListener> inputListeners;
+	private final Set<ITreeListener> listeners;
 
-	public InputObservable() {
-		super();
-		this.inputListeners = new HashSet<IInputListener>();
+	public TreeObservable() {
+		this.listeners = new HashSet<ITreeListener>();
 	}
 
 	@Override
-	public final void addInputListener(final IInputListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		this.inputListeners.add(listener);
+	public void addTreeListener(final ITreeListener listener) {
+		listeners.add(listener);
 	}
 
 	@Override
-	public final void removeInputListener(final IInputListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		this.inputListeners.remove(listener);
+	public void removeTreeListener(final ITreeListener listener) {
+		listeners.remove(listener);
 	}
 
-	public final void fireInputChanged() {
-		for (final IInputListener inputListener : inputListeners) {
-			inputListener.inputChanged();
+	public void fireNodeExpanded(final ITreeNode node) {
+		Assert.paramNotNull(node, "node");
+		for (final ITreeListener listener : listeners) {
+			listener.nodeExpanded(node);
+		}
+	}
+
+	public void fireNodeCollapsed(final ITreeNode node) {
+		Assert.paramNotNull(node, "node");
+		for (final ITreeListener listener : listeners) {
+			listener.nodeCollapsed(node);
 		}
 	}
 

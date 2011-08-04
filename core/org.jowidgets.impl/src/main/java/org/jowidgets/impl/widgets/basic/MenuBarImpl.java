@@ -43,7 +43,7 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.IMainMenuDescriptor;
 import org.jowidgets.impl.widgets.common.wrapper.WidgetSpiWrapper;
 import org.jowidgets.spi.widgets.IMenuBarSpi;
-import org.jowidgets.tools.controler.ListModelAdapter;
+import org.jowidgets.tools.controller.ListModelAdapter;
 import org.jowidgets.util.Assert;
 
 public class MenuBarImpl extends WidgetSpiWrapper implements IMenuBar {

@@ -26,16 +26,60 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.controler;
+package org.jowidgets.tools.controller;
 
-import org.jowidgets.common.widgets.controler.ITreeNodeListener;
+import java.util.HashSet;
+import java.util.Set;
 
-public class TreeNodeAdapter implements ITreeNodeListener {
+import org.jowidgets.common.model.ITableDataModelListener;
+import org.jowidgets.common.model.ITableDataModelObservable;
+
+public class TableDataModelObservable implements ITableDataModelObservable {
+
+	private final Set<ITableDataModelListener> listeners;
+
+	public TableDataModelObservable() {
+		this.listeners = new HashSet<ITableDataModelListener>();
+	}
 
 	@Override
-	public void selectionChanged(final boolean selected) {}
+	public void addDataModelListener(final ITableDataModelListener listener) {
+		listeners.add(listener);
+	}
 
 	@Override
-	public void expandedChanged(final boolean expanded) {}
+	public void removeDataModelListener(final ITableDataModelListener listener) {
+		listeners.remove(listener);
+	}
+
+	public void fireRowsAdded(final int[] rowIndices) {
+		for (final ITableDataModelListener listener : listeners) {
+			listener.rowsAdded(rowIndices);
+		}
+	}
+
+	public void fireRowsRemoved(final int[] rowIndices) {
+		for (final ITableDataModelListener listener : listeners) {
+			listener.rowsRemoved(rowIndices);
+		}
+	}
+
+	public void fireRowsChanged(final int[] rowIndices) {
+		for (final ITableDataModelListener listener : listeners) {
+			listener.rowsChanged(rowIndices);
+		}
+	}
+
+	public void fireDataChanged() {
+		for (final ITableDataModelListener listener : listeners) {
+			listener.dataChanged();
+		}
+	}
+
+	public void fireSelectionChanged() {
+		for (final ITableDataModelListener listener : listeners) {
+			listener.selectionChanged();
+		}
+	}
 
 }

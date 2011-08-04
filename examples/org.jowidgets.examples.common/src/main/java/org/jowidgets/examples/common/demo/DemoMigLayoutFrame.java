@@ -73,9 +73,9 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.controler.IActionListener;
 import org.jowidgets.common.widgets.controler.IInputListener;
-import org.jowidgets.tools.controler.ComponentAdapter;
-import org.jowidgets.tools.controler.TableColumnModelObservable;
-import org.jowidgets.tools.controler.TableDataModelObservable;
+import org.jowidgets.tools.controller.ComponentAdapter;
+import org.jowidgets.tools.controller.TableColumnModelObservable;
+import org.jowidgets.tools.controller.TableDataModelObservable;
 import org.jowidgets.tools.model.table.TableCell;
 import org.jowidgets.tools.powo.JoFrame;
 

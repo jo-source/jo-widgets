@@ -43,7 +43,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.model.ITableColumnModelListener;
 import org.jowidgets.common.model.ITableColumnModelObservable;
 import org.jowidgets.common.types.AlignmentHorizontal;
-import org.jowidgets.tools.controler.TableColumnModelObservable;
+import org.jowidgets.tools.controller.TableColumnModelObservable;
 import org.jowidgets.util.ArrayUtils;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.event.IChangeListener;

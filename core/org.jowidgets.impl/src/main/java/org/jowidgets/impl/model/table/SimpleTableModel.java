@@ -41,7 +41,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.model.ITableCell;
 import org.jowidgets.common.model.ITableDataModelListener;
 import org.jowidgets.common.model.ITableDataModelObservable;
-import org.jowidgets.tools.controler.TableDataModelObservable;
+import org.jowidgets.tools.controller.TableDataModelObservable;
 import org.jowidgets.util.Assert;
 
 class SimpleTableModel extends DefaultTableColumnModel implements ISimpleTableModel, ITableDataModelObservable {

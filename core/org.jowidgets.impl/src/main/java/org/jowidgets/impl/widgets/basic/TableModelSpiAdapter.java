@@ -41,7 +41,7 @@ import org.jowidgets.common.model.ITableColumnModelSpi;
 import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.model.ITableDataModelObservable;
 import org.jowidgets.spi.widgets.ITableSpi;
-import org.jowidgets.tools.controler.TableColumnModelObservable;
+import org.jowidgets.tools.controller.TableColumnModelObservable;
 import org.jowidgets.util.Assert;
 
 public class TableModelSpiAdapter implements ITableColumnModelSpi, ITableDataModel {

@@ -49,8 +49,8 @@ import org.jowidgets.common.widgets.controler.ITableColumnPopupDetectionListener
 import org.jowidgets.common.widgets.controler.ITableColumnPopupEvent;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.tools.controler.TableColumnModelObservable;
-import org.jowidgets.tools.controler.TableDataModelObservable;
+import org.jowidgets.tools.controller.TableColumnModelObservable;
+import org.jowidgets.tools.controller.TableDataModelObservable;
 import org.jowidgets.tools.model.table.DefaultTableColumn;
 import org.jowidgets.tools.model.table.TableCell;
 

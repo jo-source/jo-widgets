@@ -53,7 +53,8 @@ import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.impl.widgets.composed.CollectionInputControlImpl.RowLayout.ColumnMode;
 import org.jowidgets.impl.widgets.composed.CollectionInputControlImpl.RowLayout.RowLayoutCommon;
-import org.jowidgets.tools.controler.KeyAdapter;
+import org.jowidgets.tools.controller.FocusAdapter;
+import org.jowidgets.tools.controller.KeyAdapter;
 import org.jowidgets.tools.widgets.wrapper.CompositeWrapper;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.validation.IValidationConditionListener;
@@ -273,14 +274,6 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 			// TODO i18n
 			final IButton removeButton = add(removeButtonBp.setToolTipText("Remove entry " + userIndex));
 			removeButton.setPreferredSize(removeButtonSize);
-			removeButton.addActionListener(new IActionListener() {
-
-				@Override
-				public void actionPerformed() {
-					removeRow(index);
-				}
-
-			});
 
 			inputControl = add(widgetCreator);
 			inputControl.addKeyListener(new KeyAdapter() {
@@ -309,6 +302,24 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 							}
 						}
 					}
+				}
+
+			});
+
+			removeButton.addFocusListener(new FocusAdapter() {
+
+				@Override
+				public void focusGained() {
+					inputControl.requestFocus();
+					removeButton.redraw();
+				}
+
+			});
+			removeButton.addActionListener(new IActionListener() {
+
+				@Override
+				public void actionPerformed() {
+					removeRow(index);
 				}
 
 			});

@@ -52,7 +52,7 @@ import org.jowidgets.test.api.toolkit.ITestToolkit;
 import org.jowidgets.test.api.widgets.IFrameUi;
 import org.jowidgets.test.api.widgets.blueprint.factory.IBasicSimpleTestBluePrintFactory;
 import org.jowidgets.test.api.widgets.descriptor.IFrameDescriptorUi;
-import org.jowidgets.tools.controler.WindowAdapter;
+import org.jowidgets.tools.controller.WindowAdapter;
 
 public final class TestToolkit implements ITestToolkit {
 

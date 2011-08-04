@@ -26,46 +26,19 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.controler;
+package org.jowidgets.tools.controller;
 
-import java.util.HashSet;
-import java.util.Set;
+import org.jowidgets.api.model.IListModelListener;
 
-import org.jowidgets.api.controler.ITreeListener;
-import org.jowidgets.api.controler.ITreeObservable;
-import org.jowidgets.api.widgets.ITreeNode;
-import org.jowidgets.util.Assert;
-
-public class TreeObservable implements ITreeObservable {
-
-	private final Set<ITreeListener> listeners;
-
-	public TreeObservable() {
-		this.listeners = new HashSet<ITreeListener>();
-	}
+public class ListModelAdapter implements IListModelListener {
 
 	@Override
-	public void addTreeListener(final ITreeListener listener) {
-		listeners.add(listener);
-	}
+	public void afterChildAdded(final int index) {}
 
 	@Override
-	public void removeTreeListener(final ITreeListener listener) {
-		listeners.remove(listener);
-	}
+	public void beforeChildRemove(final int index) {}
 
-	public void fireNodeExpanded(final ITreeNode node) {
-		Assert.paramNotNull(node, "node");
-		for (final ITreeListener listener : listeners) {
-			listener.nodeExpanded(node);
-		}
-	}
-
-	public void fireNodeCollapsed(final ITreeNode node) {
-		Assert.paramNotNull(node, "node");
-		for (final ITreeListener listener : listeners) {
-			listener.nodeCollapsed(node);
-		}
-	}
+	@Override
+	public void afterChildRemoved(final int index) {}
 
 }

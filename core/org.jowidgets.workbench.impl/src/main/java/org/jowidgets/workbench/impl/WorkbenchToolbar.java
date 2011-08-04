@@ -34,7 +34,7 @@ import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.tools.controler.ListModelAdapter;
+import org.jowidgets.tools.controller.ListModelAdapter;
 import org.jowidgets.tools.model.item.ToolBarModel;
 
 public class WorkbenchToolbar {

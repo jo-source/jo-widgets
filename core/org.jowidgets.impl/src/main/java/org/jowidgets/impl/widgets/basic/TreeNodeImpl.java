@@ -44,7 +44,7 @@ import org.jowidgets.impl.base.delegate.TreeContainerDelegate;
 import org.jowidgets.impl.event.TreePopupEvent;
 import org.jowidgets.impl.widgets.common.wrapper.TreeNodeSpiWrapper;
 import org.jowidgets.spi.widgets.ITreeNodeSpi;
-import org.jowidgets.tools.controler.TreeNodeAdapter;
+import org.jowidgets.tools.controller.TreeNodeAdapter;
 import org.jowidgets.util.EmptyCheck;
 
 public class TreeNodeImpl extends TreeNodeSpiWrapper implements ITreeNode {

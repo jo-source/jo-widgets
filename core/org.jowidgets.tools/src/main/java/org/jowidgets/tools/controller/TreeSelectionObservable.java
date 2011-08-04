@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,36 +26,38 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.controler;
+package org.jowidgets.tools.controller;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jowidgets.common.widgets.controler.IItemStateListener;
-import org.jowidgets.common.widgets.controler.IItemStateObservable;
+import org.jowidgets.api.controler.ITreeSelectionEvent;
+import org.jowidgets.api.controler.ITreeSelectionListener;
+import org.jowidgets.api.controler.ITreeSelectionObservable;
+import org.jowidgets.util.Assert;
 
-public class ItemStateObservable implements IItemStateObservable {
+public class TreeSelectionObservable implements ITreeSelectionObservable {
 
-	private final Set<IItemStateListener> itemListeners;
+	private final Set<ITreeSelectionListener> listeners;
 
-	public ItemStateObservable() {
-		super();
-		this.itemListeners = new HashSet<IItemStateListener>();
+	public TreeSelectionObservable() {
+		this.listeners = new HashSet<ITreeSelectionListener>();
 	}
 
 	@Override
-	public final void addItemListener(final IItemStateListener listener) {
-		this.itemListeners.add(listener);
+	public void addTreeSelectionListener(final ITreeSelectionListener listener) {
+		listeners.add(listener);
 	}
 
 	@Override
-	public final void removeItemListener(final IItemStateListener listener) {
-		this.itemListeners.remove(listener);
+	public void removeTreeSelectionListener(final ITreeSelectionListener listener) {
+		listeners.remove(listener);
 	}
 
-	public final void fireItemStateChanged() {
-		for (final IItemStateListener listener : itemListeners) {
-			listener.itemStateChanged();
+	public void fireSelectionChanged(final ITreeSelectionEvent event) {
+		Assert.paramNotNull(event, "event");
+		for (final ITreeSelectionListener listener : listeners) {
+			listener.selectionChanged(event);
 		}
 	}
 

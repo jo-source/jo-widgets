@@ -26,29 +26,40 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.controler;
+package org.jowidgets.tools.controller;
 
-import org.jowidgets.common.types.IVetoable;
-import org.jowidgets.common.widgets.controler.IWindowListener;
+import java.util.HashSet;
+import java.util.Set;
 
-public class WindowAdapter implements IWindowListener {
+import org.jowidgets.common.widgets.controler.IInputListener;
+import org.jowidgets.common.widgets.controler.IInputObservable;
+import org.jowidgets.util.Assert;
 
-	@Override
-	public void windowActivated() {}
+public class InputObservable implements IInputObservable {
 
-	@Override
-	public void windowDeactivated() {}
+	private final Set<IInputListener> inputListeners;
 
-	@Override
-	public void windowIconified() {}
-
-	@Override
-	public void windowDeiconified() {}
-
-	@Override
-	public void windowClosed() {}
+	public InputObservable() {
+		super();
+		this.inputListeners = new HashSet<IInputListener>();
+	}
 
 	@Override
-	public void windowClosing(final IVetoable vetoable) {}
+	public final void addInputListener(final IInputListener listener) {
+		Assert.paramNotNull(listener, "listener");
+		this.inputListeners.add(listener);
+	}
+
+	@Override
+	public final void removeInputListener(final IInputListener listener) {
+		Assert.paramNotNull(listener, "listener");
+		this.inputListeners.remove(listener);
+	}
+
+	public final void fireInputChanged() {
+		for (final IInputListener inputListener : inputListeners) {
+			inputListener.inputChanged();
+		}
+	}
 
 }

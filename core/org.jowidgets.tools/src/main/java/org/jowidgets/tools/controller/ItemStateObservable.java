@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2010, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,59 +26,36 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.controler;
+package org.jowidgets.tools.controller;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jowidgets.common.model.ITableDataModelListener;
-import org.jowidgets.common.model.ITableDataModelObservable;
+import org.jowidgets.common.widgets.controler.IItemStateListener;
+import org.jowidgets.common.widgets.controler.IItemStateObservable;
 
-public class TableDataModelObservable implements ITableDataModelObservable {
+public class ItemStateObservable implements IItemStateObservable {
 
-	private final Set<ITableDataModelListener> listeners;
+	private final Set<IItemStateListener> itemListeners;
 
-	public TableDataModelObservable() {
-		this.listeners = new HashSet<ITableDataModelListener>();
+	public ItemStateObservable() {
+		super();
+		this.itemListeners = new HashSet<IItemStateListener>();
 	}
 
 	@Override
-	public void addDataModelListener(final ITableDataModelListener listener) {
-		listeners.add(listener);
+	public final void addItemListener(final IItemStateListener listener) {
+		this.itemListeners.add(listener);
 	}
 
 	@Override
-	public void removeDataModelListener(final ITableDataModelListener listener) {
-		listeners.remove(listener);
+	public final void removeItemListener(final IItemStateListener listener) {
+		this.itemListeners.remove(listener);
 	}
 
-	public void fireRowsAdded(final int[] rowIndices) {
-		for (final ITableDataModelListener listener : listeners) {
-			listener.rowsAdded(rowIndices);
-		}
-	}
-
-	public void fireRowsRemoved(final int[] rowIndices) {
-		for (final ITableDataModelListener listener : listeners) {
-			listener.rowsRemoved(rowIndices);
-		}
-	}
-
-	public void fireRowsChanged(final int[] rowIndices) {
-		for (final ITableDataModelListener listener : listeners) {
-			listener.rowsChanged(rowIndices);
-		}
-	}
-
-	public void fireDataChanged() {
-		for (final ITableDataModelListener listener : listeners) {
-			listener.dataChanged();
-		}
-	}
-
-	public void fireSelectionChanged() {
-		for (final ITableDataModelListener listener : listeners) {
-			listener.selectionChanged();
+	public final void fireItemStateChanged() {
+		for (final IItemStateListener listener : itemListeners) {
+			listener.itemStateChanged();
 		}
 	}
 

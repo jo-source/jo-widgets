@@ -26,22 +26,16 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.controler;
+package org.jowidgets.tools.controller;
 
-import org.jowidgets.common.types.IVetoable;
-import org.jowidgets.common.widgets.controler.ITableCellEditEvent;
-import org.jowidgets.common.widgets.controler.ITableCellEditorListener;
-import org.jowidgets.common.widgets.controler.ITableCellEvent;
+import org.jowidgets.common.widgets.controler.ITreeNodeListener;
 
-public class TableCellEditorAdapter implements ITableCellEditorListener {
+public class TreeNodeAdapter implements ITreeNodeListener {
 
 	@Override
-	public void onEdit(final IVetoable veto, final ITableCellEditEvent event) {}
+	public void selectionChanged(final boolean selected) {}
 
 	@Override
-	public void editFinished(final ITableCellEditEvent event) {}
-
-	@Override
-	public void editCanceled(final ITableCellEvent event) {}
+	public void expandedChanged(final boolean expanded) {}
 
 }
