@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,11 @@
 
 package org.jowidgets.examples.common.demo;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.IScrollComposite;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
@@ -38,11 +42,11 @@ import org.jowidgets.tools.powo.JoFrame;
 import org.jowidgets.validation.ValidationResult;
 
 //CHECKSTYLE:OFF
+@SuppressWarnings({"unchecked", "serial", "rawtypes"})
 public class DemoListInputFrame extends JoFrame {
 
 	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
-	@SuppressWarnings("unchecked")
 	public DemoListInputFrame() {
 		super("List input demo");
 
@@ -53,25 +57,32 @@ public class DemoListInputFrame extends JoFrame {
 
 		final IScrollComposite scrollComposite = add(BPF.scrollComposite(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 		scrollComposite.setLayout(MigLayoutFactory.growingInnerCellLayout());
-		scrollComposite.add(BPF.collectionInputControl(getControlBp()), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+		final IInputControl<Collection<String>> add = scrollComposite.add(
+				BPF.collectionInputControl(getControlBp()),
+				MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+
+		add.setValue(new ArrayList<String>() {
+			{
+				add("Germany");
+				add("Spain");
+				add("Italy");
+				add("USA");
+			}
+		});
 	}
 
-	//	@SuppressWarnings("rawtypes")
 	//	private IWidgetDescriptor getControlBp() {
 	//		return BPF.comboBoxSelection("Germany", "Spain", "Italy", "USA", "Frankreich", "Portugal", "Bayern");
 	//	}
 
-	@SuppressWarnings("rawtypes")
 	private IWidgetDescriptor getControlBp() {
 		return BPF.comboBox("Germany", "Spain", "Italy", "USA", "Frankreich", "Portugal", "Bayern");
 	}
 
-	//	@SuppressWarnings("rawtypes")
 	//	private IWidgetDescriptor getControlBp() {
 	//		return BPF.inputFieldDate();
 	//	}
 
-	//	@SuppressWarnings("rawtypes")
 	//	private IWidgetDescriptor getControlBp() {
 	//		return BPF.inputFieldIntegerNumber();
 	//	}
