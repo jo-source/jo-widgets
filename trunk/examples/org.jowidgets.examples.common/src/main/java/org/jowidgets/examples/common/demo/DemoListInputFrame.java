@@ -28,11 +28,7 @@
 
 package org.jowidgets.examples.common.demo;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.IScrollComposite;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
@@ -42,7 +38,7 @@ import org.jowidgets.tools.powo.JoFrame;
 import org.jowidgets.validation.ValidationResult;
 
 //CHECKSTYLE:OFF
-@SuppressWarnings({"unchecked", "serial", "rawtypes"})
+@SuppressWarnings({"unchecked", "rawtypes"})
 public class DemoListInputFrame extends JoFrame {
 
 	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
@@ -57,18 +53,8 @@ public class DemoListInputFrame extends JoFrame {
 
 		final IScrollComposite scrollComposite = add(BPF.scrollComposite(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 		scrollComposite.setLayout(MigLayoutFactory.growingInnerCellLayout());
-		final IInputControl<Collection<String>> add = scrollComposite.add(
-				BPF.collectionInputControl(getControlBp()),
-				MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
-		add.setValue(new ArrayList<String>() {
-			{
-				add("Germany");
-				add("Spain");
-				add("Italy");
-				add("USA");
-			}
-		});
+		scrollComposite.add(BPF.collectionInputControl(getControlBp()), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 	}
 
 	//	private IWidgetDescriptor getControlBp() {
