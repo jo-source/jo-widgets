@@ -38,7 +38,7 @@ import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.tools.controler.ListModelAdapter;
+import org.jowidgets.tools.controller.ListModelAdapter;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.model.item.ToolBarModel;
 

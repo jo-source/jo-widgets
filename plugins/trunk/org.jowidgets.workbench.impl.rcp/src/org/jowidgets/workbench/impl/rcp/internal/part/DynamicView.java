@@ -53,7 +53,7 @@ import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.common.types.Position;
-import org.jowidgets.tools.controler.ListModelAdapter;
+import org.jowidgets.tools.controller.ListModelAdapter;
 import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.workbench.api.ClosePolicy;
 import org.jowidgets.workbench.api.IView;
