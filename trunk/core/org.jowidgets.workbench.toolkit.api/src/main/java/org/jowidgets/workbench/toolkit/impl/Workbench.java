@@ -39,7 +39,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.types.Position;
-import org.jowidgets.tools.controler.ListModelAdapter;
+import org.jowidgets.tools.controller.ListModelAdapter;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.ICloseCallback;
 import org.jowidgets.workbench.api.ILoginCallback;

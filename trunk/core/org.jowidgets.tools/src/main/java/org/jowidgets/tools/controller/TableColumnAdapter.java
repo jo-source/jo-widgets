@@ -26,60 +26,21 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.controler;
+package org.jowidgets.tools.controller;
 
-import java.util.HashSet;
-import java.util.Set;
+import org.jowidgets.common.widgets.controler.ITableColumnListener;
+import org.jowidgets.common.widgets.controler.ITableColumnMouseEvent;
+import org.jowidgets.common.widgets.controler.ITableColumnResizeEvent;
 
-import org.jowidgets.api.controler.ITabItemListener;
-import org.jowidgets.api.controler.ITabItemObservable;
-import org.jowidgets.common.types.IVetoable;
-import org.jowidgets.util.ValueHolder;
-
-public class TabItemObservable implements ITabItemObservable {
-
-	private final Set<ITabItemListener> listeners;
-
-	public TabItemObservable() {
-		this.listeners = new HashSet<ITabItemListener>();
-	}
+public class TableColumnAdapter implements ITableColumnListener {
 
 	@Override
-	public void addTabItemListener(final ITabItemListener listener) {
-		listeners.add(listener);
-	}
+	public void mouseClicked(final ITableColumnMouseEvent event) {}
 
 	@Override
-	public void removeTabItemListener(final ITabItemListener listener) {
-		listeners.remove(listener);
-	}
+	public void columnResized(final ITableColumnResizeEvent event) {}
 
-	public void fireSelectionChanged(final boolean selected) {
-		for (final ITabItemListener listener : listeners) {
-			listener.selectionChanged(selected);
-		}
-	}
-
-	public void fireOnClose(final IVetoable vetoable) {
-		for (final ITabItemListener listener : listeners) {
-			listener.onClose(vetoable);
-		}
-	}
-
-	public boolean fireOnClose() {
-		final ValueHolder<Boolean> veto = new ValueHolder<Boolean>(Boolean.FALSE);
-		for (final ITabItemListener listener : listeners) {
-			listener.onClose(new IVetoable() {
-				@Override
-				public void veto() {
-					veto.set(Boolean.TRUE);
-				}
-			});
-			if (veto.get().booleanValue()) {
-				break;
-			}
-		}
-		return veto.get().booleanValue();
-	}
+	@Override
+	public void columnPermutationChanged() {}
 
 }

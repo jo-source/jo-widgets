@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2011, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,23 +26,16 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.controler;
+package org.jowidgets.tools.controller;
 
-import org.jowidgets.api.controler.ITabItemListener;
-import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.common.widgets.controler.IFocusListener;
 
-public class TabItemAdapter implements ITabItemListener {
-
-	@Override
-	public void onDeselection(final IVetoable vetoable) {}
+public class FocusAdapter implements IFocusListener {
 
 	@Override
-	public void onClose(final IVetoable vetoable) {}
+	public void focusGained() {}
 
 	@Override
-	public void selectionChanged(final boolean selected) {}
-
-	@Override
-	public void closed() {}
+	public void focusLost() {}
 
 }

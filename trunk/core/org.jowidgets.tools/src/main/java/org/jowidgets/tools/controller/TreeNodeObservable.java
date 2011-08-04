@@ -26,27 +26,41 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.controler;
+package org.jowidgets.tools.controller;
 
-import org.jowidgets.common.widgets.controler.IMouseButtonEvent;
-import org.jowidgets.common.widgets.controler.IMouseEvent;
-import org.jowidgets.common.widgets.controler.IMouseListener;
+import java.util.HashSet;
+import java.util.Set;
 
-public class MouseAdapter implements IMouseListener {
+import org.jowidgets.common.widgets.controler.ITreeNodeListener;
+import org.jowidgets.common.widgets.controler.ITreeNodeObservable;
 
-	@Override
-	public void mousePressed(final IMouseButtonEvent mouseEvent) {}
+public class TreeNodeObservable implements ITreeNodeObservable {
 
-	@Override
-	public void mouseReleased(final IMouseButtonEvent mouseEvent) {}
+	private final Set<ITreeNodeListener> listeners;
 
-	@Override
-	public void mouseDoubleClicked(final IMouseButtonEvent mouseEvent) {}
-
-	@Override
-	public void mouseEnter(final IMouseEvent mouseEvent) {}
+	public TreeNodeObservable() {
+		this.listeners = new HashSet<ITreeNodeListener>();
+	}
 
 	@Override
-	public void mouseExit(final IMouseEvent mouseEvent) {}
+	public void addTreeNodeListener(final ITreeNodeListener listener) {
+		listeners.add(listener);
+	}
 
+	@Override
+	public void removeTreeNodeListener(final ITreeNodeListener listener) {
+		listeners.remove(listener);
+	}
+
+	public void fireSelectionChanged(final boolean selected) {
+		for (final ITreeNodeListener listener : listeners) {
+			listener.selectionChanged(selected);
+		}
+	}
+
+	public void fireExpandedChanged(final boolean expanded) {
+		for (final ITreeNodeListener listener : listeners) {
+			listener.expandedChanged(expanded);
+		}
+	}
 }

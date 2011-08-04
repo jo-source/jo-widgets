@@ -75,7 +75,7 @@ import org.jowidgets.spi.widgets.IToolBarItemSpi;
 import org.jowidgets.spi.widgets.IToolBarPopupButtonSpi;
 import org.jowidgets.spi.widgets.IToolBarSpi;
 import org.jowidgets.spi.widgets.IToolBarToggleButtonSpi;
-import org.jowidgets.tools.controler.ListModelAdapter;
+import org.jowidgets.tools.controller.ListModelAdapter;
 import org.jowidgets.util.Assert;
 
 public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar, IListItemObservable {

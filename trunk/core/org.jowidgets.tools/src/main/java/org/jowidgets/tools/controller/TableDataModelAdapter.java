@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.controler;
+package org.jowidgets.tools.controller;
 
 import org.jowidgets.common.model.ITableDataModelListener;
 

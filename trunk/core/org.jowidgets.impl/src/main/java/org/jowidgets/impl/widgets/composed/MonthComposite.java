@@ -52,8 +52,8 @@ import org.jowidgets.common.widgets.controler.IMouseButtonEvent;
 import org.jowidgets.common.widgets.controler.IMouseEvent;
 import org.jowidgets.common.widgets.controler.IMouseListener;
 import org.jowidgets.common.widgets.layout.ILayouter;
-import org.jowidgets.tools.controler.InputObservable;
-import org.jowidgets.tools.controler.MouseAdapter;
+import org.jowidgets.tools.controller.InputObservable;
+import org.jowidgets.tools.controller.MouseAdapter;
 import org.jowidgets.tools.powo.JoComposite;
 
 public class MonthComposite extends JoComposite implements IInputObservable {

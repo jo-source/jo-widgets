@@ -66,9 +66,9 @@ import org.jowidgets.common.widgets.controler.IItemStateListener;
 import org.jowidgets.common.widgets.controler.IMenuListener;
 import org.jowidgets.common.widgets.controler.IMouseButtonEvent;
 import org.jowidgets.test.api.widgets.IButtonUi;
-import org.jowidgets.tools.controler.MouseAdapter;
-import org.jowidgets.tools.controler.TabItemAdapter;
-import org.jowidgets.tools.controler.WindowAdapter;
+import org.jowidgets.tools.controller.MouseAdapter;
+import org.jowidgets.tools.controller.TabItemAdapter;
+import org.jowidgets.tools.controller.WindowAdapter;
 
 public final class TestToolImpl implements ITestTool {
 

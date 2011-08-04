@@ -52,7 +52,7 @@ import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.types.SplitResizePolicy;
 import org.jowidgets.common.widgets.controler.IWindowListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.tools.controler.WindowAdapter;
+import org.jowidgets.tools.controller.WindowAdapter;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.model.item.MenuBarModel;
 import org.jowidgets.tools.types.VetoHolder;

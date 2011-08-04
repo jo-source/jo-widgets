@@ -40,7 +40,7 @@ import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsI
 import org.jowidgets.impl.widgets.common.wrapper.ControlSpiWrapper;
 import org.jowidgets.impl.widgets.common.wrapper.TextLabelSpiWrapper;
 import org.jowidgets.spi.widgets.ICheckBoxSpi;
-import org.jowidgets.tools.controler.InputObservable;
+import org.jowidgets.tools.controller.InputObservable;
 import org.jowidgets.tools.validation.CompoundValidator;
 import org.jowidgets.tools.validation.ValidationCache;
 import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;

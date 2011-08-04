@@ -56,9 +56,9 @@ import org.jowidgets.impl.widgets.common.wrapper.ControlSpiWrapper;
 import org.jowidgets.spi.widgets.ITreeNodeSpi;
 import org.jowidgets.spi.widgets.ITreeSpi;
 import org.jowidgets.spi.widgets.controler.ITreeSelectionListenerSpi;
-import org.jowidgets.tools.controler.TreeObservable;
-import org.jowidgets.tools.controler.TreePopupDetectionObservable;
-import org.jowidgets.tools.controler.TreeSelectionObservable;
+import org.jowidgets.tools.controller.TreeObservable;
+import org.jowidgets.tools.controller.TreePopupDetectionObservable;
+import org.jowidgets.tools.controller.TreeSelectionObservable;
 
 public class TreeImpl extends ControlSpiWrapper implements ITree {
 

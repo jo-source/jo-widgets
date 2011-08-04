@@ -49,8 +49,8 @@ import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.composed.MonthComposite.IMouseoverListener;
-import org.jowidgets.tools.controler.InputObservable;
-import org.jowidgets.tools.controler.MouseAdapter;
+import org.jowidgets.tools.controller.InputObservable;
+import org.jowidgets.tools.controller.MouseAdapter;
 import org.jowidgets.tools.powo.JoButton;
 import org.jowidgets.tools.powo.JoComposite;
 import org.jowidgets.tools.powo.JoTextLabel;
@@ -307,6 +307,7 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 
 		private Dimension preferredSize;
 
+		@SuppressWarnings("unused")
 		private int rows;
 		private int cols;
 		private int cells;

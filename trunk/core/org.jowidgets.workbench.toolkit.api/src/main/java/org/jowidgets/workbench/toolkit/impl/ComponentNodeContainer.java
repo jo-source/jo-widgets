@@ -32,7 +32,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.api.model.IListModelListener;
-import org.jowidgets.tools.controler.ListModelAdapter;
+import org.jowidgets.tools.controller.ListModelAdapter;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.IComponentNodeContainerContext;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeContainerModel;

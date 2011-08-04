@@ -45,7 +45,7 @@ import org.jowidgets.api.model.item.IRadioItemModel;
 import org.jowidgets.api.model.item.ISeparatorItemModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
-import org.jowidgets.tools.controler.ListModelAdapter;
+import org.jowidgets.tools.controller.ListModelAdapter;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.IDecorator;
 

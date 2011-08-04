@@ -50,7 +50,7 @@ import org.jowidgets.impl.widgets.basic.factory.internal.util.LayoutSettingsInvo
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.ComponentSpiWrapper;
 import org.jowidgets.spi.widgets.IPopupDialogSpi;
-import org.jowidgets.tools.controler.WindowAdapter;
+import org.jowidgets.tools.controller.WindowAdapter;
 import org.jowidgets.util.Assert;
 
 public class PopupDialogImpl extends ComponentSpiWrapper implements IPopupDialog {

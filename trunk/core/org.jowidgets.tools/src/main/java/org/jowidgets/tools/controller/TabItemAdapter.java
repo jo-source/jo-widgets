@@ -26,41 +26,23 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.controler;
+package org.jowidgets.tools.controller;
 
-import java.util.HashSet;
-import java.util.Set;
+import org.jowidgets.api.controler.ITabItemListener;
+import org.jowidgets.common.types.IVetoable;
 
-import org.jowidgets.common.widgets.controler.ITreeNodeListener;
-import org.jowidgets.common.widgets.controler.ITreeNodeObservable;
-
-public class TreeNodeObservable implements ITreeNodeObservable {
-
-	private final Set<ITreeNodeListener> listeners;
-
-	public TreeNodeObservable() {
-		this.listeners = new HashSet<ITreeNodeListener>();
-	}
+public class TabItemAdapter implements ITabItemListener {
 
 	@Override
-	public void addTreeNodeListener(final ITreeNodeListener listener) {
-		listeners.add(listener);
-	}
+	public void onDeselection(final IVetoable vetoable) {}
 
 	@Override
-	public void removeTreeNodeListener(final ITreeNodeListener listener) {
-		listeners.remove(listener);
-	}
+	public void onClose(final IVetoable vetoable) {}
 
-	public void fireSelectionChanged(final boolean selected) {
-		for (final ITreeNodeListener listener : listeners) {
-			listener.selectionChanged(selected);
-		}
-	}
+	@Override
+	public void selectionChanged(final boolean selected) {}
 
-	public void fireExpandedChanged(final boolean expanded) {
-		for (final ITreeNodeListener listener : listeners) {
-			listener.expandedChanged(expanded);
-		}
-	}
+	@Override
+	public void closed() {}
+
 }

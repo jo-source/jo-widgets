@@ -54,6 +54,7 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.MandatoryCheckRes
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class BluePrintProxyInvocationHandler implements InvocationHandler {
 
+	@SuppressWarnings("unused")
 	private static final long serialVersionUID = -983268051877912134L;
 
 	private final Map<String, Object> fields;

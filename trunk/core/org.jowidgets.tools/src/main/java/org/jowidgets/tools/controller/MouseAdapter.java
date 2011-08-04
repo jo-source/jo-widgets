@@ -26,16 +26,27 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.controler;
+package org.jowidgets.tools.controller;
 
-import org.jowidgets.common.widgets.controler.IComponentListener;
+import org.jowidgets.common.widgets.controler.IMouseButtonEvent;
+import org.jowidgets.common.widgets.controler.IMouseEvent;
+import org.jowidgets.common.widgets.controler.IMouseListener;
 
-public class ComponentAdapter implements IComponentListener {
+public class MouseAdapter implements IMouseListener {
 
 	@Override
-	public void sizeChanged() {}
+	public void mousePressed(final IMouseButtonEvent mouseEvent) {}
 
 	@Override
-	public void positionChanged() {}
+	public void mouseReleased(final IMouseButtonEvent mouseEvent) {}
+
+	@Override
+	public void mouseDoubleClicked(final IMouseButtonEvent mouseEvent) {}
+
+	@Override
+	public void mouseEnter(final IMouseEvent mouseEvent) {}
+
+	@Override
+	public void mouseExit(final IMouseEvent mouseEvent) {}
 
 }

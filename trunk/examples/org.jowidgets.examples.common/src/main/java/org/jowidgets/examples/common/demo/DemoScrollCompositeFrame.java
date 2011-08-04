@@ -32,7 +32,7 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IScrollComposite;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.tools.controler.WindowAdapter;
+import org.jowidgets.tools.controller.WindowAdapter;
 import org.jowidgets.tools.powo.JoFrame;
 import org.jowidgets.util.ValueHolder;
 

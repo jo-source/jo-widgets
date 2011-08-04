@@ -34,7 +34,7 @@ import java.util.List;
 import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.model.ITableDataModelListener;
 import org.jowidgets.common.model.ITableDataModelObservable;
-import org.jowidgets.tools.controler.TableDataModelObservable;
+import org.jowidgets.tools.controller.TableDataModelObservable;
 
 public abstract class AbstractTableDataModel implements ITableDataModel, ITableDataModelObservable {
 

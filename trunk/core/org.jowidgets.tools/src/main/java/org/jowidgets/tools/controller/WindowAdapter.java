@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2010, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,37 +26,29 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.controler;
+package org.jowidgets.tools.controller;
 
-import java.util.HashSet;
-import java.util.Set;
+import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.common.widgets.controler.IWindowListener;
 
-import org.jowidgets.api.controler.ITreePopupDetectionListener;
-import org.jowidgets.api.controler.ITreePopupDetectionObservable;
-import org.jowidgets.api.controler.ITreePopupEvent;
-
-public class TreePopupDetectionObservable implements ITreePopupDetectionObservable {
-
-	private final Set<ITreePopupDetectionListener> listeners;
-
-	public TreePopupDetectionObservable() {
-		this.listeners = new HashSet<ITreePopupDetectionListener>();
-	}
+public class WindowAdapter implements IWindowListener {
 
 	@Override
-	public void addTreePopupDetectionListener(final ITreePopupDetectionListener listener) {
-		listeners.add(listener);
-	}
+	public void windowActivated() {}
 
 	@Override
-	public void removeTreePopupDetectionListener(final ITreePopupDetectionListener listener) {
-		listeners.remove(listener);
-	}
+	public void windowDeactivated() {}
 
-	public void firePopupDetected(final ITreePopupEvent event) {
-		for (final ITreePopupDetectionListener listener : listeners) {
-			listener.popupDetected(event);
-		}
-	}
+	@Override
+	public void windowIconified() {}
+
+	@Override
+	public void windowDeiconified() {}
+
+	@Override
+	public void windowClosed() {}
+
+	@Override
+	public void windowClosing(final IVetoable vetoable) {}
 
 }

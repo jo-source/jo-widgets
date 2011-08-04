@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,36 +26,36 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.controler;
+package org.jowidgets.tools.controller;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jowidgets.common.widgets.controler.IActionListener;
-import org.jowidgets.common.widgets.controler.IActionObservable;
+import org.jowidgets.api.controler.ITreePopupDetectionListener;
+import org.jowidgets.api.controler.ITreePopupDetectionObservable;
+import org.jowidgets.api.controler.ITreePopupEvent;
 
-public class ActionObservable implements IActionObservable {
+public class TreePopupDetectionObservable implements ITreePopupDetectionObservable {
 
-	private final Set<IActionListener> actionListeners;
+	private final Set<ITreePopupDetectionListener> listeners;
 
-	public ActionObservable() {
-		super();
-		this.actionListeners = new HashSet<IActionListener>();
+	public TreePopupDetectionObservable() {
+		this.listeners = new HashSet<ITreePopupDetectionListener>();
 	}
 
 	@Override
-	public final void addActionListener(final IActionListener listener) {
-		this.actionListeners.add(listener);
+	public void addTreePopupDetectionListener(final ITreePopupDetectionListener listener) {
+		listeners.add(listener);
 	}
 
 	@Override
-	public final void removeActionListener(final IActionListener listener) {
-		this.actionListeners.remove(listener);
+	public void removeTreePopupDetectionListener(final ITreePopupDetectionListener listener) {
+		listeners.remove(listener);
 	}
 
-	public final void fireActionPerformed() {
-		for (final IActionListener actionListener : actionListeners) {
-			actionListener.actionPerformed();
+	public void firePopupDetected(final ITreePopupEvent event) {
+		for (final ITreePopupDetectionListener listener : listeners) {
+			listener.popupDetected(event);
 		}
 	}
 

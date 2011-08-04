@@ -26,19 +26,16 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.controler;
+package org.jowidgets.tools.controller;
 
-import org.jowidgets.api.model.IListModelListener;
+import org.jowidgets.common.widgets.controler.IMenuListener;
 
-public class ListModelAdapter implements IListModelListener {
-
-	@Override
-	public void afterChildAdded(final int index) {}
+public class MenuAdapter implements IMenuListener {
 
 	@Override
-	public void beforeChildRemove(final int index) {}
+	public void menuActivated() {}
 
 	@Override
-	public void afterChildRemoved(final int index) {}
+	public void menuDeactivated() {}
 
 }
