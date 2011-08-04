@@ -28,34 +28,64 @@
 
 package org.jowidgets.tools.widgets.wrapper;
 
-import java.util.List;
+import org.jowidgets.api.widgets.ICheckBox;
+import org.jowidgets.common.types.Markup;
 
-import org.jowidgets.api.widgets.IComboBox;
+public class CheckBoxWrapper extends AbstractInputControlWrapper<Boolean> implements ICheckBox {
 
-public class ComboBoxWrapper<VALUE_TYPE> extends AbstractInputControlWrapper<VALUE_TYPE> implements IComboBox<VALUE_TYPE> {
-
-	public ComboBoxWrapper(final IComboBox<VALUE_TYPE> widget) {
+	public CheckBoxWrapper(final ICheckBox widget) {
 		super(widget);
 	}
 
 	@Override
-	protected IComboBox<VALUE_TYPE> getWidget() {
-		return (IComboBox<VALUE_TYPE>) super.getWidget();
+	protected ICheckBox getWidget() {
+		return (ICheckBox) super.getWidget();
 	}
 
 	@Override
-	public List<VALUE_TYPE> getElements() {
-		return getWidget().getElements();
+	public String getText() {
+		return getWidget().getText();
 	}
 
 	@Override
-	public void setElements(final List<VALUE_TYPE> elements) {
-		getWidget().setElements(elements);
+	public String getToolTipText() {
+		return getWidget().getToolTipText();
 	}
 
 	@Override
-	public void setElements(final VALUE_TYPE... elements) {
-		getWidget().setElements(elements);
+	public void setFontSize(final int size) {
+		getWidget().setFontSize(size);
+	}
+
+	@Override
+	public void setFontName(final String fontName) {
+		getWidget().setFontName(fontName);
+	}
+
+	@Override
+	public void setMarkup(final Markup markup) {
+		getWidget().setMarkup(markup);
+	}
+
+	@Override
+	public void setText(final String text) {
+		getWidget().setText(text);
+	}
+
+	@Override
+	public void setToolTipText(final String text) {
+		getWidget().setToolTipText(text);
+	}
+
+	@Override
+	public boolean isSelected() {
+		return getWidget().isSelected();
+
+	}
+
+	@Override
+	public void setSelected(final boolean selected) {
+		getWidget().setSelected(selected);
 	}
 
 }
