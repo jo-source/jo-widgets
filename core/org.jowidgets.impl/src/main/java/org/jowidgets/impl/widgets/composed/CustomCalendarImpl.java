@@ -307,7 +307,6 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 
 		private Dimension preferredSize;
 
-		@SuppressWarnings("unused")
 		private int rows;
 		private int cols;
 		private int cells;
