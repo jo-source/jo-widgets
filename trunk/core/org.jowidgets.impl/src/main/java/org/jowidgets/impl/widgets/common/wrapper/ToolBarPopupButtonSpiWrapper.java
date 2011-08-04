@@ -30,8 +30,8 @@ package org.jowidgets.impl.widgets.common.wrapper;
 
 import org.jowidgets.api.model.item.IPopupActionItemModel;
 import org.jowidgets.common.widgets.IToolBarPopupButtonCommon;
-import org.jowidgets.common.widgets.controler.IActionListener;
-import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
+import org.jowidgets.common.widgets.controller.IActionListener;
+import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.impl.base.delegate.ItemDelegate;
 import org.jowidgets.spi.widgets.IToolBarPopupButtonSpi;
 

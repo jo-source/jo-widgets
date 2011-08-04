@@ -29,7 +29,7 @@
 package org.jowidgets.tools.model.item;
 
 import org.jowidgets.api.model.item.ISelectableItemModel;
-import org.jowidgets.common.widgets.controler.IItemStateListener;
+import org.jowidgets.common.widgets.controller.IItemStateListener;
 
 abstract class AbstractSelectableItemModelWrapper extends AbstractItemModelWrapper implements ISelectableItemModel {
 

@@ -28,7 +28,7 @@
 
 package org.jowidgets.tools.controller;
 
-import org.jowidgets.common.widgets.controler.ITreeNodeListener;
+import org.jowidgets.common.widgets.controller.ITreeNodeListener;
 
 public class TreeNodeAdapter implements ITreeNodeListener {
 

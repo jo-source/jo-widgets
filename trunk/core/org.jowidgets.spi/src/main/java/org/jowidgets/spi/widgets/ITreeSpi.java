@@ -31,7 +31,7 @@ package org.jowidgets.spi.widgets;
 import java.util.List;
 
 import org.jowidgets.common.widgets.ITreeCommon;
-import org.jowidgets.spi.widgets.controler.ITreeSelectionObservableSpi;
+import org.jowidgets.spi.widgets.controller.ITreeSelectionObservableSpi;
 
 public interface ITreeSpi extends IControlSpi, ITreeSelectionObservableSpi, ITreeCommon {
 

@@ -32,8 +32,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.jowidgets.common.types.IVetoable;
-import org.jowidgets.common.widgets.controler.IWindowListener;
-import org.jowidgets.common.widgets.controler.IWindowObservable;
+import org.jowidgets.common.widgets.controller.IWindowListener;
+import org.jowidgets.common.widgets.controller.IWindowObservable;
 import org.jowidgets.util.ValueHolder;
 
 public class WindowObservable implements IWindowObservable {

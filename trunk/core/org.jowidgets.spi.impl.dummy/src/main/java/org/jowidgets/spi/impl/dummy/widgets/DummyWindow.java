@@ -33,7 +33,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IButtonCommon;
 import org.jowidgets.common.widgets.IDisplayCommon;
-import org.jowidgets.common.widgets.controler.IWindowListener;
+import org.jowidgets.common.widgets.controller.IWindowListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDWindow;

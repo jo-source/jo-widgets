@@ -28,7 +28,7 @@
 
 package org.jowidgets.impl.event;
 
-import org.jowidgets.common.widgets.controler.ITableColumnResizeEvent;
+import org.jowidgets.common.widgets.controller.ITableColumnResizeEvent;
 
 public class TableColumnResizeEvent extends TableColumnEvent implements ITableColumnResizeEvent {
 

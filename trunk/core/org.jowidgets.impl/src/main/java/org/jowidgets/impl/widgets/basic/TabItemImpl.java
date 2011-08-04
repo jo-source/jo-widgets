@@ -32,7 +32,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.jowidgets.api.controler.ITabItemListener;
+import org.jowidgets.api.controller.ITabItemListener;
 import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IPopupMenu;
@@ -45,7 +45,7 @@ import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.types.Position;
-import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
+import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
@@ -56,7 +56,7 @@ import org.jowidgets.impl.widgets.basic.factory.internal.util.LayoutSettingsInvo
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractContainerSpiWrapper;
 import org.jowidgets.spi.widgets.ITabItemSpi;
-import org.jowidgets.spi.widgets.controler.ITabItemListenerSpi;
+import org.jowidgets.spi.widgets.controller.ITabItemListenerSpi;
 import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.util.Assert;
 

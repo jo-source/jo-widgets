@@ -28,9 +28,9 @@
 
 package org.jowidgets.api.widgets;
 
-import org.jowidgets.api.controler.ITreeObservable;
-import org.jowidgets.api.controler.ITreePopupDetectionObservable;
-import org.jowidgets.api.controler.ITreeSelectionObservable;
+import org.jowidgets.api.controller.ITreeObservable;
+import org.jowidgets.api.controller.ITreePopupDetectionObservable;
+import org.jowidgets.api.controller.ITreeSelectionObservable;
 import org.jowidgets.common.widgets.ITreeCommon;
 
 public interface ITree extends

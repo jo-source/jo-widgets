@@ -28,7 +28,7 @@
 package org.jowidgets.spi.impl.dummy.widgets;
 
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.widgets.controler.IInputListener;
+import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDToggleButton;
 import org.jowidgets.spi.widgets.ICheckBoxSpi;
 import org.jowidgets.spi.widgets.setup.ICheckBoxSetupSpi;

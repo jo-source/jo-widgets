@@ -30,7 +30,7 @@ package org.jowidgets.spi.impl.swt.widgets;
 import org.eclipse.swt.widgets.MenuItem;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
-import org.jowidgets.spi.impl.controler.ActionObservable;
+import org.jowidgets.spi.impl.controller.ActionObservable;
 import org.jowidgets.spi.impl.swt.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.util.AcceleratorConvert;
 import org.jowidgets.spi.widgets.IMenuItemSpi;

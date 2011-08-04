@@ -31,9 +31,9 @@ package org.jowidgets.tools.controller;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jowidgets.api.controler.ITreeSelectionEvent;
-import org.jowidgets.api.controler.ITreeSelectionListener;
-import org.jowidgets.api.controler.ITreeSelectionObservable;
+import org.jowidgets.api.controller.ITreeSelectionEvent;
+import org.jowidgets.api.controller.ITreeSelectionListener;
+import org.jowidgets.api.controller.ITreeSelectionObservable;
 import org.jowidgets.util.Assert;
 
 public class TreeSelectionObservable implements ITreeSelectionObservable {

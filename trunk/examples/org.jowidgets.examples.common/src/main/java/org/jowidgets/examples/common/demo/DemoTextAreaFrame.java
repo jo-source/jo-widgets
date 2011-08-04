@@ -31,7 +31,7 @@ package org.jowidgets.examples.common.demo;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.ITextArea;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.widgets.controler.IInputListener;
+import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.powo.JoFrame;
 

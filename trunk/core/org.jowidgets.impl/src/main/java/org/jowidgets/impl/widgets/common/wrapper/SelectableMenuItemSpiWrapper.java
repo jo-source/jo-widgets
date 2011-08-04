@@ -31,7 +31,7 @@ package org.jowidgets.impl.widgets.common.wrapper;
 import org.jowidgets.api.model.item.ISelectableItemModel;
 import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.common.widgets.ISelectableMenuItemCommon;
-import org.jowidgets.common.widgets.controler.IItemStateListener;
+import org.jowidgets.common.widgets.controller.IItemStateListener;
 import org.jowidgets.impl.base.delegate.SelectableItemDelegate;
 import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 

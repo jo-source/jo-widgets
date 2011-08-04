@@ -29,7 +29,7 @@
 package org.jowidgets.test.common.widgets;
 
 import org.jowidgets.common.widgets.IWindowCommon;
-import org.jowidgets.common.widgets.controler.IWindowObservable;
+import org.jowidgets.common.widgets.controller.IWindowObservable;
 
 public interface IWindowUiCommon extends IDisplayUiCommon, IWindowObservable, IWindowCommon {
 

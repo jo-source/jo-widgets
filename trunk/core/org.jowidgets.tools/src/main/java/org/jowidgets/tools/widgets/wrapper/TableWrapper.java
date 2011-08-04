@@ -35,12 +35,12 @@ import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.TablePackPolicy;
-import org.jowidgets.common.widgets.controler.ITableCellEditorListener;
-import org.jowidgets.common.widgets.controler.ITableCellListener;
-import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionListener;
-import org.jowidgets.common.widgets.controler.ITableColumnListener;
-import org.jowidgets.common.widgets.controler.ITableColumnPopupDetectionListener;
-import org.jowidgets.common.widgets.controler.ITableSelectionListener;
+import org.jowidgets.common.widgets.controller.ITableCellEditorListener;
+import org.jowidgets.common.widgets.controller.ITableCellListener;
+import org.jowidgets.common.widgets.controller.ITableCellPopupDetectionListener;
+import org.jowidgets.common.widgets.controller.ITableColumnListener;
+import org.jowidgets.common.widgets.controller.ITableColumnPopupDetectionListener;
+import org.jowidgets.common.widgets.controller.ITableSelectionListener;
 
 public class TableWrapper extends ControlWrapper implements ITable {
 

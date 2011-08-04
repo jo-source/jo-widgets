@@ -29,7 +29,7 @@
 package org.jowidgets.tools.controller;
 
 import org.jowidgets.common.types.IVetoable;
-import org.jowidgets.common.widgets.controler.IWindowListener;
+import org.jowidgets.common.widgets.controller.IWindowListener;
 
 public class WindowAdapter implements IWindowListener {
 

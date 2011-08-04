@@ -37,7 +37,7 @@ import org.jowidgets.api.model.item.IToolBarItemModel;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.IToolBarButton;
 import org.jowidgets.api.widgets.descriptor.setup.IItemSetup;
-import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.impl.base.delegate.ItemDelegate;
 import org.jowidgets.impl.command.ActionExecuter;
 import org.jowidgets.impl.command.ActionWidgetSync;

@@ -34,7 +34,7 @@ import org.jowidgets.api.model.item.IPopupActionItemModel;
 import org.jowidgets.api.model.item.IPopupActionItemModelBuilder;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controller.IActionListener;
 
 public class PopupActionItemModel extends AbstractItemModelWrapper implements IPopupActionItemModel {
 

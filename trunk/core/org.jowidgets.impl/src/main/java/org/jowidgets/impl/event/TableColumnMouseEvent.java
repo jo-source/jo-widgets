@@ -32,7 +32,7 @@ import java.util.Collections;
 import java.util.Set;
 
 import org.jowidgets.common.types.Modifier;
-import org.jowidgets.common.widgets.controler.ITableColumnMouseEvent;
+import org.jowidgets.common.widgets.controller.ITableColumnMouseEvent;
 
 public class TableColumnMouseEvent extends TableColumnEvent implements ITableColumnMouseEvent {
 

@@ -54,11 +54,11 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.SelectionPolicy;
-import org.jowidgets.common.widgets.controler.ITreeNodeListener;
-import org.jowidgets.spi.impl.controler.TreeSelectionObservableSpi;
+import org.jowidgets.common.widgets.controller.ITreeNodeListener;
+import org.jowidgets.spi.impl.controller.TreeSelectionObservableSpi;
 import org.jowidgets.spi.widgets.ITreeNodeSpi;
 import org.jowidgets.spi.widgets.ITreeSpi;
-import org.jowidgets.spi.widgets.controler.ITreeSelectionListenerSpi;
+import org.jowidgets.spi.widgets.controller.ITreeSelectionListenerSpi;
 import org.jowidgets.spi.widgets.setup.ITreeSetupSpi;
 
 public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi {

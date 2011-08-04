@@ -28,7 +28,7 @@
 
 package org.jowidgets.tools.controller;
 
-import org.jowidgets.api.controler.ITabItemListener;
+import org.jowidgets.api.controller.ITabItemListener;
 import org.jowidgets.common.types.IVetoable;
 
 public class TabItemAdapter implements ITabItemListener {

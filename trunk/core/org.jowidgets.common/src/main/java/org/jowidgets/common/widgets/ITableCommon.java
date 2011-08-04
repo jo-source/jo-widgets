@@ -34,12 +34,12 @@ import java.util.List;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.TablePackPolicy;
-import org.jowidgets.common.widgets.controler.ITableCellEditorObservable;
-import org.jowidgets.common.widgets.controler.ITableCellObservable;
-import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionObservable;
-import org.jowidgets.common.widgets.controler.ITableColumnObservable;
-import org.jowidgets.common.widgets.controler.ITableColumnPopupDetectionObservable;
-import org.jowidgets.common.widgets.controler.ITableSelectionObservable;
+import org.jowidgets.common.widgets.controller.ITableCellEditorObservable;
+import org.jowidgets.common.widgets.controller.ITableCellObservable;
+import org.jowidgets.common.widgets.controller.ITableCellPopupDetectionObservable;
+import org.jowidgets.common.widgets.controller.ITableColumnObservable;
+import org.jowidgets.common.widgets.controller.ITableColumnPopupDetectionObservable;
+import org.jowidgets.common.widgets.controller.ITableSelectionObservable;
 
 public interface ITableCommon extends
 		ITableSelectionObservable,

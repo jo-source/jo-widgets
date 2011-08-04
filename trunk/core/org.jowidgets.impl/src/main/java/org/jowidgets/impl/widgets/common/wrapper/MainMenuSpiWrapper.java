@@ -29,7 +29,7 @@
 package org.jowidgets.impl.widgets.common.wrapper;
 
 import org.jowidgets.common.widgets.IMainMenuCommon;
-import org.jowidgets.common.widgets.controler.IMenuListener;
+import org.jowidgets.common.widgets.controller.IMenuListener;
 import org.jowidgets.impl.base.delegate.ItemDelegate;
 import org.jowidgets.spi.widgets.IMainMenuSpi;
 

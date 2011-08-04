@@ -28,7 +28,7 @@
 
 package org.jowidgets.impl.event;
 
-import org.jowidgets.common.widgets.controler.ITableColumnEvent;
+import org.jowidgets.common.widgets.controller.ITableColumnEvent;
 
 public class TableColumnEvent implements ITableColumnEvent {
 

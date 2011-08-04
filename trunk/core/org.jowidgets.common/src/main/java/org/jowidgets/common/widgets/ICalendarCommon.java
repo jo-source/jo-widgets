@@ -30,7 +30,7 @@ package org.jowidgets.common.widgets;
 
 import java.util.Date;
 
-import org.jowidgets.common.widgets.controler.IInputObservable;
+import org.jowidgets.common.widgets.controller.IInputObservable;
 
 public interface ICalendarCommon extends IControlCommon, IInputObservable {
 

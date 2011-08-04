@@ -38,7 +38,7 @@ import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.IMenuItem;
 import org.jowidgets.api.widgets.ISubMenu;
 import org.jowidgets.api.widgets.descriptor.setup.IMenuItemSetup;
-import org.jowidgets.common.widgets.controler.IMenuListener;
+import org.jowidgets.common.widgets.controller.IMenuListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.impl.base.delegate.ItemDelegate;
 import org.jowidgets.impl.base.delegate.MenuDelegate;

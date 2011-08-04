@@ -37,7 +37,7 @@ import org.jowidgets.common.mask.TextMaskMode;
 import org.jowidgets.common.types.InputChangeEventPolicy;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.verify.IInputVerifier;
-import org.jowidgets.spi.impl.controler.InputObservable;
+import org.jowidgets.spi.impl.controller.InputObservable;
 import org.jowidgets.spi.impl.mask.TextMaskVerifierFactory;
 import org.jowidgets.spi.impl.swing.util.FontProvider;
 import org.jowidgets.spi.impl.swing.widgets.util.InputModifierDocument;

@@ -30,7 +30,7 @@ package org.jowidgets.api.widgets;
 
 import java.util.List;
 
-import org.jowidgets.api.controler.ITabFolderObservable;
+import org.jowidgets.api.controller.ITabFolderObservable;
 import org.jowidgets.api.widgets.descriptor.ITabItemDescriptor;
 import org.jowidgets.common.widgets.ITabFolderCommon;
 

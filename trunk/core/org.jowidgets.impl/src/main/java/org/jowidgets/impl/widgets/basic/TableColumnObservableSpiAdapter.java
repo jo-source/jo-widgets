@@ -31,10 +31,10 @@ package org.jowidgets.impl.widgets.basic;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jowidgets.common.widgets.controler.ITableColumnListener;
-import org.jowidgets.common.widgets.controler.ITableColumnMouseEvent;
-import org.jowidgets.common.widgets.controler.ITableColumnObservable;
-import org.jowidgets.common.widgets.controler.ITableColumnResizeEvent;
+import org.jowidgets.common.widgets.controller.ITableColumnListener;
+import org.jowidgets.common.widgets.controller.ITableColumnMouseEvent;
+import org.jowidgets.common.widgets.controller.ITableColumnObservable;
+import org.jowidgets.common.widgets.controller.ITableColumnResizeEvent;
 import org.jowidgets.impl.event.TableColumnMouseEvent;
 import org.jowidgets.impl.event.TableColumnResizeEvent;
 

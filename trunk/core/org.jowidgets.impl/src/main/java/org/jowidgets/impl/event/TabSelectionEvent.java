@@ -28,7 +28,7 @@
 
 package org.jowidgets.impl.event;
 
-import org.jowidgets.api.controler.ITabSelectionEvent;
+import org.jowidgets.api.controller.ITabSelectionEvent;
 import org.jowidgets.api.widgets.ITabItem;
 
 public class TabSelectionEvent implements ITabSelectionEvent {

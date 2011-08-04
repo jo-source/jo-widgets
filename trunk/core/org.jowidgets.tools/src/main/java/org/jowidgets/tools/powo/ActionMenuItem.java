@@ -37,7 +37,7 @@ import org.jowidgets.api.widgets.IActionMenuItem;
 import org.jowidgets.api.widgets.blueprint.builder.IAccelerateableMenuItemSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.setup.IAccelerateableMenuItemSetup;
 import org.jowidgets.common.types.Accelerator;
-import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 class ActionMenuItem<WIDGET_TYPE extends IActionMenuItem, BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE> & IAccelerateableMenuItemSetupBuilder<?> & IAccelerateableMenuItemSetup> extends

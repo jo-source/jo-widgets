@@ -29,7 +29,7 @@
 package org.jowidgets.api.model.item;
 
 import org.jowidgets.api.command.IAction;
-import org.jowidgets.common.widgets.controler.IActionObservable;
+import org.jowidgets.common.widgets.controller.IActionObservable;
 
 public interface IPopupActionItemModel extends IToolBarItemModel, IActionObservable {
 

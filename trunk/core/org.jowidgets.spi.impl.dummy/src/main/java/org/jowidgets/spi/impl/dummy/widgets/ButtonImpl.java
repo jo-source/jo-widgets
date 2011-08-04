@@ -29,7 +29,7 @@ package org.jowidgets.spi.impl.dummy.widgets;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDButton;
 import org.jowidgets.spi.impl.dummy.image.DummyImageRegistry;
 import org.jowidgets.spi.widgets.setup.IButtonSetupSpi;

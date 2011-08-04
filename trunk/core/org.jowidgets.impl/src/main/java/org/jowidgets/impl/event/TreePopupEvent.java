@@ -28,7 +28,7 @@
 
 package org.jowidgets.impl.event;
 
-import org.jowidgets.api.controler.ITreePopupEvent;
+import org.jowidgets.api.controller.ITreePopupEvent;
 import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.util.Assert;

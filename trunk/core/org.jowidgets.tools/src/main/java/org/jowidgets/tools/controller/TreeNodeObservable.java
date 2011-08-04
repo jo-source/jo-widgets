@@ -31,8 +31,8 @@ package org.jowidgets.tools.controller;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jowidgets.common.widgets.controler.ITreeNodeListener;
-import org.jowidgets.common.widgets.controler.ITreeNodeObservable;
+import org.jowidgets.common.widgets.controller.ITreeNodeListener;
+import org.jowidgets.common.widgets.controller.ITreeNodeObservable;
 
 public class TreeNodeObservable implements ITreeNodeObservable {
 

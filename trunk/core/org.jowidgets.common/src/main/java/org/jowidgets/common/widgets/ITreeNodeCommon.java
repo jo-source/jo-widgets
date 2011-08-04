@@ -30,8 +30,8 @@ package org.jowidgets.common.widgets;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.widgets.controler.IPopupDetectionObservable;
-import org.jowidgets.common.widgets.controler.ITreeNodeObservable;
+import org.jowidgets.common.widgets.controller.IPopupDetectionObservable;
+import org.jowidgets.common.widgets.controller.ITreeNodeObservable;
 
 public interface ITreeNodeCommon extends IItemCommon, ITreeNodeObservable, IPopupDetectionObservable {
 

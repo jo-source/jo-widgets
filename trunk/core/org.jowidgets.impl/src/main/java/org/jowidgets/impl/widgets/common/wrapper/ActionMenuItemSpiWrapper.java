@@ -31,7 +31,7 @@ package org.jowidgets.impl.widgets.common.wrapper;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.common.widgets.IActionMenuItemCommon;
-import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.impl.base.delegate.ItemDelegate;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 

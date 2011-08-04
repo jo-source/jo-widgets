@@ -30,7 +30,7 @@ package org.jowidgets.impl.widgets.common.wrapper;
 
 import org.jowidgets.api.model.item.ICheckedItemModel;
 import org.jowidgets.common.widgets.IToolBarToggleButtonCommon;
-import org.jowidgets.common.widgets.controler.IItemStateListener;
+import org.jowidgets.common.widgets.controller.IItemStateListener;
 import org.jowidgets.impl.base.delegate.SelectableItemDelegate;
 import org.jowidgets.spi.widgets.IToolBarToggleButtonSpi;
 

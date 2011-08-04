@@ -28,8 +28,8 @@
 
 package org.jowidgets.tools.controller;
 
-import org.jowidgets.common.widgets.controler.IKeyEvent;
-import org.jowidgets.common.widgets.controler.IKeyListener;
+import org.jowidgets.common.widgets.controller.IKeyEvent;
+import org.jowidgets.common.widgets.controller.IKeyListener;
 
 public class KeyAdapter implements IKeyListener {
 

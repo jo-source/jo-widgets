@@ -31,8 +31,8 @@ package org.jowidgets.tools.controller;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jowidgets.common.widgets.controler.IMenuListener;
-import org.jowidgets.common.widgets.controler.IMenuObservable;
+import org.jowidgets.common.widgets.controller.IMenuListener;
+import org.jowidgets.common.widgets.controller.IMenuObservable;
 
 public class MenuObservable implements IMenuObservable {
 

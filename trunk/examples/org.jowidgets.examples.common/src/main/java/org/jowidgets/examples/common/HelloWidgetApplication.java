@@ -44,7 +44,7 @@ import org.jowidgets.api.widgets.blueprint.factory.ISimpleBluePrintFactory;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.widgets.IActionWidgetCommon;
-import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.examples.common.icons.DemoIconsInitializer;
 
 public class HelloWidgetApplication implements IApplication {

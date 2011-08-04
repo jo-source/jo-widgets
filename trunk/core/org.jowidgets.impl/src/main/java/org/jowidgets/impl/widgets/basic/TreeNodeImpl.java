@@ -39,7 +39,7 @@ import org.jowidgets.api.widgets.ITreeContainer;
 import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.api.widgets.descriptor.ITreeNodeDescriptor;
 import org.jowidgets.common.types.Position;
-import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
+import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.impl.base.delegate.TreeContainerDelegate;
 import org.jowidgets.impl.event.TreePopupEvent;
 import org.jowidgets.impl.widgets.common.wrapper.TreeNodeSpiWrapper;

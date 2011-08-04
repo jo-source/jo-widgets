@@ -28,9 +28,9 @@
 
 package org.jowidgets.tools.controller;
 
-import org.jowidgets.common.widgets.controler.IMouseButtonEvent;
-import org.jowidgets.common.widgets.controler.IMouseEvent;
-import org.jowidgets.common.widgets.controler.IMouseListener;
+import org.jowidgets.common.widgets.controller.IMouseButtonEvent;
+import org.jowidgets.common.widgets.controller.IMouseEvent;
+import org.jowidgets.common.widgets.controller.IMouseListener;
 
 public class MouseAdapter implements IMouseListener {
 

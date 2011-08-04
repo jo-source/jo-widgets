@@ -43,7 +43,7 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.DialogResult;
 import org.jowidgets.common.types.FileChooserType;
 import org.jowidgets.common.types.IFileChooserFilter;
-import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.types.FileChooserFilter;
 

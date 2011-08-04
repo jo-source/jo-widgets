@@ -29,7 +29,7 @@
 package org.jowidgets.test.common.widgets;
 
 import org.jowidgets.common.widgets.IInputComponentCommon;
-import org.jowidgets.common.widgets.controler.IInputObservable;
+import org.jowidgets.common.widgets.controller.IInputObservable;
 
 public interface IInputComponentUiCommon extends IComponentUiCommon, IInputObservable, IInputComponentCommon {
 

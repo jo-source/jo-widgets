@@ -32,8 +32,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.jowidgets.common.types.Position;
-import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
-import org.jowidgets.common.widgets.controler.IPopupDetectionObservable;
+import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
+import org.jowidgets.common.widgets.controller.IPopupDetectionObservable;
 
 public class PopupDetectionObservable implements IPopupDetectionObservable {
 

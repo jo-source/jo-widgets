@@ -32,12 +32,12 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
-import org.jowidgets.common.widgets.controler.IComponentListener;
-import org.jowidgets.common.widgets.controler.IFocusListener;
-import org.jowidgets.common.widgets.controler.IKeyListener;
-import org.jowidgets.common.widgets.controler.IMouseListener;
-import org.jowidgets.common.widgets.controler.IPopupDetectionListener;
-import org.jowidgets.spi.impl.controler.InputObservable;
+import org.jowidgets.common.widgets.controller.IComponentListener;
+import org.jowidgets.common.widgets.controller.IFocusListener;
+import org.jowidgets.common.widgets.controller.IKeyListener;
+import org.jowidgets.common.widgets.controller.IMouseListener;
+import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
+import org.jowidgets.spi.impl.controller.InputObservable;
 import org.jowidgets.spi.widgets.IInputControlSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 

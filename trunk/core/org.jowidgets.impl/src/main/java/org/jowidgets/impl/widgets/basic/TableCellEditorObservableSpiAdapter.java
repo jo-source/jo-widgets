@@ -32,10 +32,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.jowidgets.common.types.IVetoable;
-import org.jowidgets.common.widgets.controler.ITableCellEditEvent;
-import org.jowidgets.common.widgets.controler.ITableCellEditorListener;
-import org.jowidgets.common.widgets.controler.ITableCellEditorObservable;
-import org.jowidgets.common.widgets.controler.ITableCellEvent;
+import org.jowidgets.common.widgets.controller.ITableCellEditEvent;
+import org.jowidgets.common.widgets.controller.ITableCellEditorListener;
+import org.jowidgets.common.widgets.controller.ITableCellEditorObservable;
+import org.jowidgets.common.widgets.controller.ITableCellEvent;
 import org.jowidgets.impl.event.TableCellEditEvent;
 import org.jowidgets.impl.event.TableCellEvent;
 

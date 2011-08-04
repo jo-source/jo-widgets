@@ -28,7 +28,7 @@
 
 package org.jowidgets.tools.controller;
 
-import org.jowidgets.common.widgets.controler.IFocusListener;
+import org.jowidgets.common.widgets.controller.IFocusListener;
 
 public class FocusAdapter implements IFocusListener {
 

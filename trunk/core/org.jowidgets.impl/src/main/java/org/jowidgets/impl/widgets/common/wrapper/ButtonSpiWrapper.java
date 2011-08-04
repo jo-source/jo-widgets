@@ -30,7 +30,7 @@ package org.jowidgets.impl.widgets.common.wrapper;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.IButtonCommon;
-import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.spi.widgets.IButtonSpi;
 
 public class ButtonSpiWrapper extends TextLabelSpiWrapper implements IButtonCommon {

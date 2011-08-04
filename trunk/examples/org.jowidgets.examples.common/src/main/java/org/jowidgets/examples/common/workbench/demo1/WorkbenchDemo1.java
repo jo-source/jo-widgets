@@ -37,7 +37,7 @@ import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Modifier;
 import org.jowidgets.common.types.VirtualKey;
-import org.jowidgets.common.widgets.controler.IActionListener;
+import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.examples.common.icons.DemoIconsInitializer;
 import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractDemoWorkbench;

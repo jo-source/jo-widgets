@@ -31,8 +31,8 @@ package org.jowidgets.tools.controller;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jowidgets.api.controler.ITabItemListener;
-import org.jowidgets.api.controler.ITabItemObservable;
+import org.jowidgets.api.controller.ITabItemListener;
+import org.jowidgets.api.controller.ITabItemObservable;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.util.ValueHolder;
 

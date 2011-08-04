@@ -30,9 +30,9 @@ package org.jowidgets.spi.impl.swing.widgets.base;
 
 import javax.swing.JPopupMenu;
 
-import org.jowidgets.common.widgets.controler.IMenuListener;
-import org.jowidgets.common.widgets.controler.IMenuObservable;
-import org.jowidgets.spi.impl.controler.MenuObservable;
+import org.jowidgets.common.widgets.controller.IMenuListener;
+import org.jowidgets.common.widgets.controller.IMenuObservable;
+import org.jowidgets.spi.impl.controller.MenuObservable;
 
 public class JoPopupMenu extends JPopupMenu implements IMenuObservable {
 

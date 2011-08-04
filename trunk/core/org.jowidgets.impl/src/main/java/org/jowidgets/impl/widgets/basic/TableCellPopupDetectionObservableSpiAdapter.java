@@ -31,9 +31,9 @@ package org.jowidgets.impl.widgets.basic;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionListener;
-import org.jowidgets.common.widgets.controler.ITableCellPopupDetectionObservable;
-import org.jowidgets.common.widgets.controler.ITableCellPopupEvent;
+import org.jowidgets.common.widgets.controller.ITableCellPopupDetectionListener;
+import org.jowidgets.common.widgets.controller.ITableCellPopupDetectionObservable;
+import org.jowidgets.common.widgets.controller.ITableCellPopupEvent;
 import org.jowidgets.impl.event.TableCellPopupEvent;
 
 class TableCellPopupDetectionObservableSpiAdapter implements ITableCellPopupDetectionObservable {

@@ -27,7 +27,7 @@
  */
 package org.jowidgets.common.widgets;
 
-import org.jowidgets.common.widgets.controler.IActionObservable;
+import org.jowidgets.common.widgets.controller.IActionObservable;
 
 public interface IActionWidgetCommon extends IWidgetCommon, IActionObservable {
 

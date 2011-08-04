@@ -31,8 +31,8 @@ package org.jowidgets.tools.controller;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jowidgets.common.widgets.controler.IInputListener;
-import org.jowidgets.common.widgets.controler.IInputObservable;
+import org.jowidgets.common.widgets.controller.IInputListener;
+import org.jowidgets.common.widgets.controller.IInputObservable;
 import org.jowidgets.util.Assert;
 
 public class InputObservable implements IInputObservable {

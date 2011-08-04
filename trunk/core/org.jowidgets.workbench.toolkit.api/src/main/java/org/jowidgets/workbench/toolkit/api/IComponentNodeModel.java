@@ -30,7 +30,7 @@ package org.jowidgets.workbench.toolkit.api;
 
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.controler.ITreeNodeObservable;
+import org.jowidgets.common.widgets.controller.ITreeNodeObservable;
 import org.jowidgets.workbench.api.IComponentNodeDescriptor;
 import org.jowidgets.workbench.api.IDisposeCallback;
 

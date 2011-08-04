@@ -31,9 +31,9 @@ package org.jowidgets.workbench.impl;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jowidgets.api.controler.ITabItemListener;
-import org.jowidgets.api.controler.ITreeSelectionEvent;
-import org.jowidgets.api.controler.ITreeSelectionListener;
+import org.jowidgets.api.controller.ITabItemListener;
+import org.jowidgets.api.controller.ITreeSelectionEvent;
+import org.jowidgets.api.controller.ITreeSelectionListener;
 import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IToolBarModel;

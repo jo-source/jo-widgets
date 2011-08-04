@@ -54,14 +54,14 @@ import javax.swing.tree.TreeSelectionModel;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.SelectionPolicy;
-import org.jowidgets.spi.impl.controler.TreeSelectionObservableSpi;
+import org.jowidgets.spi.impl.controller.TreeSelectionObservableSpi;
 import org.jowidgets.spi.impl.swing.util.ColorConvert;
 import org.jowidgets.spi.impl.swing.util.PositionConvert;
 import org.jowidgets.spi.impl.swing.widgets.base.JoTreeNode;
 import org.jowidgets.spi.impl.swing.widgets.base.JoTreeNodeRenderer;
 import org.jowidgets.spi.widgets.ITreeNodeSpi;
 import org.jowidgets.spi.widgets.ITreeSpi;
-import org.jowidgets.spi.widgets.controler.ITreeSelectionListenerSpi;
+import org.jowidgets.spi.widgets.controller.ITreeSelectionListenerSpi;
 import org.jowidgets.spi.widgets.setup.ITreeSetupSpi;
 
 public class TreeImpl extends SwingControl implements ITreeSpi {

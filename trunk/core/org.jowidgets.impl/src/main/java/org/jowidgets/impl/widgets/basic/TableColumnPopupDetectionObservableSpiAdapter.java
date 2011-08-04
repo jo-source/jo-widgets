@@ -31,9 +31,9 @@ package org.jowidgets.impl.widgets.basic;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jowidgets.common.widgets.controler.ITableColumnPopupDetectionListener;
-import org.jowidgets.common.widgets.controler.ITableColumnPopupDetectionObservable;
-import org.jowidgets.common.widgets.controler.ITableColumnPopupEvent;
+import org.jowidgets.common.widgets.controller.ITableColumnPopupDetectionListener;
+import org.jowidgets.common.widgets.controller.ITableColumnPopupDetectionObservable;
+import org.jowidgets.common.widgets.controller.ITableColumnPopupEvent;
 import org.jowidgets.impl.event.TableColumnPopupEvent;
 
 class TableColumnPopupDetectionObservableSpiAdapter implements ITableColumnPopupDetectionObservable {
