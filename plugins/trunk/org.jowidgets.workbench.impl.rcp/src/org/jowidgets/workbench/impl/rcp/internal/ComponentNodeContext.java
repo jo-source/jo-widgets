@@ -40,7 +40,7 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.controler.ITreeNodeListener;
+import org.jowidgets.common.widgets.controller.ITreeNodeListener;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IComponentNode;
 import org.jowidgets.workbench.api.IComponentNodeContext;
