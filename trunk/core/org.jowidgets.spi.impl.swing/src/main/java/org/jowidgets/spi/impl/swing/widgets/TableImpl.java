@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2011, grossmann, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -51,8 +51,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableColumnModelEvent;
@@ -61,6 +59,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
@@ -1052,6 +1053,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			this.currentColumn = column;
 
 			final JTextField textField = (JTextField) super.getTableCellEditorComponent(table, value, isSelected, row, column);
+			textField.setDocument(new TableCellDocument(row, column));
 
 			final String text = dataModel.getCell(row, column).getText();
 			if (text != null) {
@@ -1094,36 +1096,44 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		private void startEditing(final JTextField textField, final String text, final int row, final int column) {
 			textField.setText(text);
 			textField.selectAll();
-			textField.getDocument().addDocumentListener(new DocumentListener() {
+		}
+	}
 
-				@Override
-				public void removeUpdate(final DocumentEvent e) {
-					fireEditEvent(e);
-				}
+	/**
+	 * This class implements the editor veto capabilities.
+	 * Limitation: If selected text is replaced by new text, and new input fails, selected text stays removed and won't be
+	 * restored
+	 */
+	final class TableCellDocument extends PlainDocument {
 
-				@Override
-				public void insertUpdate(final DocumentEvent e) {
-					fireEditEvent(e);
-				}
+		private static final long serialVersionUID = -3417284499762627374L;
+		private final int row;
+		private final int column;
 
-				@Override
-				public void changedUpdate(final DocumentEvent e) {
-					fireEditEvent(e);
-				}
+		public TableCellDocument(final int row, final int column) {
+			this.row = row;
+			this.column = column;
+		}
 
-				private void fireEditEvent(final DocumentEvent e) {
-					final String text = textField.getText();
-					final ITableCellEditEvent editEvent = new TableCellEditEvent(row, column, text);
-					final boolean veto = tableCellEditorObservable.fireOnEdit(editEvent);
+		@Override
+		public void remove(final int offset, final int length) throws BadLocationException {
+			final String text = getText(0, offset) + getText(offset + length, getLength() - (offset + length));
+			if (fireEditEvent(text)) {
+				super.remove(offset, length);
+			}
+		}
 
-					//CHECKSTYLE:OFF
-					if (veto) {
-						//TODO NM handle veto
-					}
-					//CHECKSTYLE:ON
-				}
+		@Override
+		public void insertString(final int offset, final String str, final AttributeSet a) throws BadLocationException {
+			final String text = getText(0, offset) + str + getText(offset, getLength() - offset);
+			if (fireEditEvent(text)) {
+				super.insertString(offset, str, a);
+			}
+		}
 
-			});
+		private boolean fireEditEvent(final String text) {
+			final ITableCellEditEvent editEvent = new TableCellEditEvent(row, column, text);
+			return tableCellEditorObservable.fireOnEdit(editEvent);
 		}
 
 	}
