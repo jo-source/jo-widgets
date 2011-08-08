@@ -31,6 +31,9 @@ import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.ComboBoxEditor;
 import javax.swing.JTextField;
@@ -41,9 +44,13 @@ import org.jowidgets.common.mask.TextMaskMode;
 import org.jowidgets.common.types.InputChangeEventPolicy;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.verify.IInputVerifier;
+import org.jowidgets.common.widgets.controller.IKeyListener;
+import org.jowidgets.spi.impl.controller.IObservableCallback;
 import org.jowidgets.spi.impl.controller.InputObservable;
+import org.jowidgets.spi.impl.controller.KeyObservable;
 import org.jowidgets.spi.impl.mask.TextMaskVerifierFactory;
 import org.jowidgets.spi.impl.swing.util.FontProvider;
+import org.jowidgets.spi.impl.swing.widgets.event.LazyKeyEventContentFactory;
 import org.jowidgets.spi.impl.swing.widgets.util.InputModifierDocument;
 import org.jowidgets.spi.impl.verify.InputVerifierHelper;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
@@ -54,9 +61,11 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 	private final ComboBoxEditorImpl comboBoxEditor;
 	private final Integer maxLength;
 
+	private final KeyObservable keyObservable;
+	private final KeyListener keyListener;
+
 	public ComboBoxImpl(final IComboBoxSetupSpi setup) {
 		super(setup);
-
 		this.maxLength = setup.getMaxLength();
 
 		getUiReference().setEditable(true);
@@ -72,6 +81,32 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 		if (setup.getMask() != null && TextMaskMode.FULL_MASK == setup.getMask().getMode()) {
 			setText(setup.getMask().getPlaceholder());
 		}
+
+		this.keyListener = new KeyAdapter() {
+			@Override
+			public void keyReleased(final KeyEvent e) {
+				keyObservable.fireKeyReleased(new LazyKeyEventContentFactory(e));
+			}
+
+			@Override
+			public void keyPressed(final KeyEvent e) {
+				keyObservable.fireKeyPressed(new LazyKeyEventContentFactory(e));
+			}
+		};
+		final IObservableCallback keyObservableCallback = new IObservableCallback() {
+			@Override
+			public void onLastUnregistered() {
+				comboBoxEditor.removeKeyListener(keyListener);
+			}
+
+			@Override
+			public void onFirstRegistered() {
+
+				comboBoxEditor.addKeyListener(keyListener);
+			}
+		};
+		this.keyObservable = new KeyObservable(keyObservableCallback);
+
 	}
 
 	@Override
@@ -120,6 +155,16 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 		return comboBoxEditor.getCaretPosition();
 	}
 
+	@Override
+	public void addKeyListener(final IKeyListener listener) {
+		keyObservable.addKeyListener(listener);
+	}
+
+	@Override
+	public void removeKeyListener(final IKeyListener listener) {
+		keyObservable.removeKeyListener(listener);
+	}
+
 	private class ComboBoxEditorImpl implements ComboBoxEditor {
 
 		private boolean setItemInvoked;
@@ -157,6 +202,15 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 			this.modifierDocument = new InputModifierDocument(textField, inputVerifier, inputObservable, maxLength);
 
 			this.textField.setDocument(modifierDocument);
+		}
+
+		public void addKeyListener(final KeyListener keyListener) {
+			textField.addKeyListener(keyListener);
+
+		}
+
+		public void removeKeyListener(final KeyListener keyListener) {
+			textField.removeKeyListener(keyListener);
 		}
 
 		public int getCaretPosition() {
