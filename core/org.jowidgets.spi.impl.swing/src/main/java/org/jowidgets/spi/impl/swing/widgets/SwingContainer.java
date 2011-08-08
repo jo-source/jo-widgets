@@ -296,6 +296,7 @@ public class SwingContainer implements IContainerSpi {
 
 	@Override
 	public void layoutEnd() {
+		container.doLayout();
 		redraw();
 	}
 
