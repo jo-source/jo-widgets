@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2010, Michael Grossmann, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -165,7 +165,20 @@ public class TextAreaImpl extends AbstractInputControl implements ITextAreaSpi {
 
 	@Override
 	public void scrollToCaretPosition() {
-		//TODO NM implement scrollToCaretPosition
+		final int caretPosition = textArea.getCaretPosition();
+		final int usedPosition;
+
+		final int next = Math.min(caretPosition + 1, textArea.getDocument().getLength());
+		final int previous = Math.max(caretPosition - 1, 0);
+		if (next != caretPosition) {
+			usedPosition = next;
+		}
+		else {
+			usedPosition = previous;
+		}
+
+		textArea.setCaretPosition(usedPosition);
+		textArea.setCaretPosition(caretPosition);
 	}
 
 }
