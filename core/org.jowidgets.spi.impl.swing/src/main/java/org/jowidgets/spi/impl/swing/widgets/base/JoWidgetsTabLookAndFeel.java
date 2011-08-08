@@ -62,6 +62,7 @@ import org.jowidgets.spi.impl.swing.widgets.TabItemImpl.TabComponent;
 
 public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 	private static final Color SELECTED_COLOR = Color.WHITE; // background color of selected tab
+	private static final int ICON_HEIGHT = 16;
 	private static final int ARC_SIZE = 2;
 	private static final Color ARROW_COLOR = new Color(80, 80, 80);
 
@@ -426,6 +427,13 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 	private int calculateTabHeight() {
 		final Insets tabInsets = getTabInsets(0, 0);
 		return getFontMetrics().getHeight() + tabInsets.top + tabInsets.bottom + 2;
+	}
+
+	@Override
+	protected int calculateTabHeight(final int tabPlacement, final int tabIndex, final int fontHeight) {
+		return Math.max(
+				ICON_HEIGHT + tabInsets.top + tabInsets.bottom + 2,
+				super.calculateTabHeight(tabPlacement, tabIndex, fontHeight));
 	}
 
 	private boolean isAfterSelected(final int tabIndex) {
