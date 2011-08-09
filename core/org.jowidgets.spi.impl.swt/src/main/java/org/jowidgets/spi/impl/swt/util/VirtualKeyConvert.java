@@ -104,6 +104,8 @@ public final class VirtualKeyConvert {
 			virtualKeyToKeyCode.put(VirtualKey.PAGE_DOWN, SWT.PAGE_DOWN);
 			virtualKeyToKeyCode.put(VirtualKey.END, SWT.END);
 			virtualKeyToKeyCode.put(VirtualKey.HOME, SWT.HOME);
+			virtualKeyToKeyCode.put(VirtualKey.DELETE, Integer.valueOf(SWT.DEL));
+			virtualKeyToKeyCode.put(VirtualKey.END, SWT.INSERT);
 
 			virtualKeyToKeyCode.put(VirtualKey.ARROW_LEFT, SWT.ARROW_LEFT);
 			virtualKeyToKeyCode.put(VirtualKey.ARROW_UP, SWT.ARROW_UP);
@@ -143,6 +145,8 @@ public final class VirtualKeyConvert {
 			keyCodeToVirtualKey.put(SWT.PAGE_DOWN, VirtualKey.PAGE_DOWN);
 			keyCodeToVirtualKey.put(SWT.END, VirtualKey.END);
 			keyCodeToVirtualKey.put(SWT.HOME, VirtualKey.HOME);
+			keyCodeToVirtualKey.put(Integer.valueOf(SWT.DEL), VirtualKey.DELETE);
+			keyCodeToVirtualKey.put(SWT.INSERT, VirtualKey.END);
 
 			keyCodeToVirtualKey.put(SWT.ARROW_LEFT, VirtualKey.ARROW_LEFT);
 			keyCodeToVirtualKey.put(SWT.ARROW_UP, VirtualKey.ARROW_UP);

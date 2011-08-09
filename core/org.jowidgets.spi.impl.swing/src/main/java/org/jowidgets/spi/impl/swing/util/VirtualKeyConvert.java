@@ -104,6 +104,8 @@ public final class VirtualKeyConvert {
 			virtualKeyToKeyCode.put(VirtualKey.PAGE_DOWN, KeyEvent.VK_PAGE_DOWN);
 			virtualKeyToKeyCode.put(VirtualKey.END, KeyEvent.VK_END);
 			virtualKeyToKeyCode.put(VirtualKey.HOME, KeyEvent.VK_HOME);
+			virtualKeyToKeyCode.put(VirtualKey.DELETE, KeyEvent.VK_DELETE);
+			virtualKeyToKeyCode.put(VirtualKey.INSERT, KeyEvent.VK_INSERT);
 
 			virtualKeyToKeyCode.put(VirtualKey.ARROW_LEFT, KeyEvent.VK_LEFT);
 			virtualKeyToKeyCode.put(VirtualKey.ARROW_UP, KeyEvent.VK_UP);
@@ -143,6 +145,8 @@ public final class VirtualKeyConvert {
 			keyCodeToVirtualKey.put(KeyEvent.VK_PAGE_DOWN, VirtualKey.PAGE_DOWN);
 			keyCodeToVirtualKey.put(KeyEvent.VK_END, VirtualKey.END);
 			keyCodeToVirtualKey.put(KeyEvent.VK_HOME, VirtualKey.HOME);
+			keyCodeToVirtualKey.put(KeyEvent.VK_DELETE, VirtualKey.DELETE);
+			keyCodeToVirtualKey.put(KeyEvent.VK_INSERT, VirtualKey.INSERT);
 
 			keyCodeToVirtualKey.put(KeyEvent.VK_LEFT, VirtualKey.ARROW_LEFT);
 			keyCodeToVirtualKey.put(KeyEvent.VK_UP, VirtualKey.ARROW_UP);
