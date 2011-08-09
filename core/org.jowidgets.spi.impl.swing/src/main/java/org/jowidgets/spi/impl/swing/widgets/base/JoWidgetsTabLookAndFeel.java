@@ -114,7 +114,7 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 	}
 
 	/**
-	 * Draw roundes borders
+	 * Draw round borders
 	 */
 	@Override
 	protected void paintTabBorder(
@@ -252,7 +252,7 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 	}
 
 	/**
-	 * Overriden to draw rounded borders and additional line if tab count is 0
+	 * Overridden to draw rounded borders and additional line if tab count is 0
 	 */
 	@Override
 	public void paint(final Graphics g, final JComponent c) {
@@ -395,7 +395,7 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 	}
 
 	/**
-	 * Overridden to avoid foucs decoration
+	 * Overridden to avoid focus decoration
 	 */
 	@Override
 	protected void paintFocusIndicator(
@@ -447,7 +447,7 @@ public class JoWidgetsTabLookAndFeel extends BasicTabbedPaneUI {
 		private boolean allTabsVisible = true;
 
 		private boolean isTabVisible(final int index) {
-			// this might be chaned if visible tab list is introduced
+			// this might be changed if visible tab list is introduced
 			return allTabsVisible || ((index >= firstVisibleTab) && (index <= lastVisibleTab));
 		}
 
