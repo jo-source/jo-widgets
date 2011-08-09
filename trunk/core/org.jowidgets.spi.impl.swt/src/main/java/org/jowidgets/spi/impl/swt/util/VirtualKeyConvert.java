@@ -132,6 +132,7 @@ public final class VirtualKeyConvert {
 			keyCodeToVirtualKey.put(SWT.F12, VirtualKey.F12);
 
 			keyCodeToVirtualKey.put(Integer.valueOf(SWT.CR), VirtualKey.ENTER);
+			keyCodeToVirtualKey.put(Integer.valueOf(SWT.KEYPAD_CR), VirtualKey.ENTER);
 			keyCodeToVirtualKey.put(Integer.valueOf(SWT.BS), VirtualKey.BACK_SPACE);
 			keyCodeToVirtualKey.put(Integer.valueOf(SWT.TAB), VirtualKey.TAB);
 			keyCodeToVirtualKey.put(SWT.SHIFT, VirtualKey.SHIFT);
