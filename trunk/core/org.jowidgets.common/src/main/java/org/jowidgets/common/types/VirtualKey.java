@@ -60,6 +60,8 @@ public enum VirtualKey {
 	PAGE_DOWN(null, "Page down"),
 	END(null, "End"),
 	HOME(null, "Home"),
+	DELETE(null, "Delete"),
+	INSERT(null, "Insert"),
 
 	ARROW_LEFT(null, "Arrow left"),
 	ARROW_UP(null, "Arrow up"),
