@@ -28,103 +28,135 @@
 package org.jowidgets.impl.widgets.composed;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jowidgets.api.layout.tablelayout.ITableLayout;
+import org.jowidgets.api.layout.tablelayout.ITableLayoutBuilder;
+import org.jowidgets.api.layout.tablelayout.ITableLayoutBuilder.ColumnMode;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IComposite;
-import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IInputComponentValidationLabel;
 import org.jowidgets.api.widgets.IInputControl;
+import org.jowidgets.api.widgets.ITextLabel;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputComponentValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.ICollectionInputControlDescriptor;
+import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.types.Rectangle;
+import org.jowidgets.common.types.Modifier;
 import org.jowidgets.common.types.VirtualKey;
 import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.common.widgets.controller.IKeyEvent;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
-import org.jowidgets.common.widgets.layout.ILayouter;
-import org.jowidgets.impl.widgets.composed.CollectionInputControlImpl.RowLayout.ColumnMode;
-import org.jowidgets.impl.widgets.composed.CollectionInputControlImpl.RowLayout.RowLayoutCommon;
+import org.jowidgets.impl.layout.ListLayout;
+import org.jowidgets.impl.layout.tablelayout.TableRowLayout;
+import org.jowidgets.spi.impl.controller.InputObservable;
 import org.jowidgets.tools.controller.KeyAdapter;
+import org.jowidgets.tools.validation.CompoundValidator;
+import org.jowidgets.tools.validation.ValidationCache;
+import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
 import org.jowidgets.tools.widgets.wrapper.CompositeWrapper;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
-import org.jowidgets.validation.ValidationResult;
 
 public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper implements IInputControl<Collection<INPUT_TYPE>> {
 
 	private final IBluePrintFactory bpf;
-	private final RowLayoutCommon rowLayoutCommon;
+	private final ITableLayout tableCommon;
 	private final IInputComponentValidationLabelBluePrint validationLabelBp;
 	private final IButtonBluePrint removeButtonBp;
 	private final Dimension removeButtonSize;
 	private final ICustomWidgetCreator<IInputControl<INPUT_TYPE>> widgetCreator;
 	private final Dimension validationLabelSize;
-	private final List<Row> rows;
-	private final IContainer rowContainer;
-	private final IComposite addRowComposite;
+	private final ValuesContainer valuesContainer;
+	private final IComposite addValueComposite;
+	private final IButton addButton;
+
+	private final InputObservable inputObservable;
+	private final ValidationCache validationCache;
+	private final CompoundValidator<Collection<INPUT_TYPE>> compoundValidator;
+	private int lastHashCode;
+	private boolean programmaticUpdate;
 
 	public CollectionInputControlImpl(final IComposite composite, final ICollectionInputControlDescriptor<INPUT_TYPE> setup) {
 		super(composite);
 		this.bpf = Toolkit.getBluePrintFactory();
-		this.rows = new LinkedList<Row>();
+		this.inputObservable = new InputObservable();
+		this.compoundValidator = new CompoundValidator<Collection<INPUT_TYPE>>();
 
 		//Get some settings from setup
 		this.removeButtonBp = bpf.button().setSetup(setup.getRemoveButton());
 		this.removeButtonSize = setup.getRemoveButtonSize();
 		this.widgetCreator = setup.getElementWidgetCreator();
 		final IButtonBluePrint addButtonBp = bpf.button().setSetup(setup.getAddButton());
-		this.validationLabelBp = bpf.inputComponentValidationLabel();
-		validationLabelBp.setSetup(setup.getValidationLabel());
+
+		if (setup.getValidationLabel() != null) {
+			this.validationLabelBp = bpf.inputComponentValidationLabel();
+			validationLabelBp.setSetup(setup.getValidationLabel());
+		}
+		else {
+			this.validationLabelBp = null;
+		}
 		this.validationLabelSize = setup.getValidationLabelSize();
 
 		final int columns = getColumnCount(setup);
+		final int maxButtonWidth = Math.max(setup.getRemoveButtonSize().getWidth(), setup.getAddButtonSize().getWidth());
 
-		this.rowLayoutCommon = new RowLayoutCommon(columns, 0);
-		rowLayoutCommon.setGap(3);
-		rowLayoutCommon.setGapAfterColumn(columns - 1, 8);
-		rowLayoutCommon.setColumnMode(2, ColumnMode.Growing);
-		rowLayoutCommon.setFixedWidth(1, Math.max(setup.getRemoveButtonSize().getWidth(), setup.getAddButtonSize().getWidth()));
+		final ITableLayoutBuilder rowLayoutCommonBuilder = Toolkit.getLayoutFactoryProvider().tableLayoutBuilder();
+		rowLayoutCommonBuilder.layoutMinRows(2);
+		rowLayoutCommonBuilder.columnCount(columns);
+		rowLayoutCommonBuilder.gap(3);
+		rowLayoutCommonBuilder.gapAfterColumn(columns - 1, 8);
+
+		rowLayoutCommonBuilder.columnMode(2, ColumnMode.GROWING);
+		rowLayoutCommonBuilder.fixedColumnWidth(1, maxButtonWidth);
 		if (columns > 3) {
-			rowLayoutCommon.setFixedWidth(3, 20);
+			rowLayoutCommonBuilder.fixedColumnWidth(3, 20);
 		}
+		this.tableCommon = rowLayoutCommonBuilder.build();
 
 		//TODO NM proper handling of the non mandatory setup params 
 		//(validation label and constraints may be null so do not render them)
 
 		//TODO NM re-implement this example code 
-		composite.setLayout(new ListLayout(composite));
-		rowContainer = composite.add(bpf.composite());
-		rowContainer.setLayout(new ListLayout(rowContainer));
+		composite.setLayout(Toolkit.getLayoutFactoryProvider().listLayout());
+		valuesContainer = new ValuesContainer(composite.add(bpf.composite()));
+		valuesContainer.addRow();
 
-		for (int i = 0; i < 10; i++) {
-			addRow();
-		}
-
-		this.addRowComposite = composite.add(bpf.composite());
-		addRowComposite.setLayout(new RowLayout(addRowComposite, rowLayoutCommon));
-		final IButton addButton = addRowComposite.add(addButtonBp, 1);
+		this.addValueComposite = composite.add(bpf.composite());
+		addValueComposite.setLayout(tableCommon.rowBuilder().ignoreInCalculations(true).build());
+		this.addButton = addValueComposite.add(addButtonBp, "index 1");
 		addButton.setPreferredSize(setup.getAddButtonSize());
 		addButton.addActionListener(new IActionListener() {
 
 			@Override
 			public void actionPerformed() {
-				addRow();
+				valuesContainer.addRow().inputControl.requestFocus();
 			}
 
 		});
 
-		rowLayoutCommon.calculateLayout();
+		if (setup.getValidator() != null) {
+			compoundValidator.addValidator(setup.getValidator());
+		}
+
+		this.validationCache = new ValidationCache(new IValidationResultCreator() {
+			@Override
+			public IValidationResult createValidationResult() {
+				return compoundValidator.validate(getValue());
+			}
+		});
+
+		tableCommon.validate();
+
+		resetModificationState();
 	}
 
 	private int getColumnCount(final ICollectionInputControlDescriptor<INPUT_TYPE> setup) {
@@ -136,142 +168,97 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 		}
 	}
 
-	private Row addRow() {
-		final Row row = new Row(rowContainer.add(bpf.composite()), rows.size());
-		rows.add(row);
-		updateLayout();
-		return row;
-	}
-
-	private Row addRow(final int index) {
-		Row lastRow = addRow();
-		for (int i = rows.size() - 1; i > index; i--) {
-			final Row previousRow = rows.get(i - 1);
-			final INPUT_TYPE value = previousRow.getValue();
-			previousRow.setValue(null);
-			lastRow.setValue(value);
-			lastRow = previousRow;
-		}
-		return lastRow;
-	}
-
-	private void removeRow(final int index) {
-		Row lastRow = rows.get(index);
-		for (int i = index + 1; i < rows.size(); i++) {
-			final Row previousRow = rows.get(i);
-			final INPUT_TYPE value = previousRow.getValue();
-			previousRow.setValue(null);
-			lastRow.setValue(value);
-			lastRow = previousRow;
-		}
-		lastRow.removeLayout();
-		rowContainer.remove(lastRow.getControl());
-		rows.remove(rows.size() - 1);
-
-		updateLayout();
-	}
-
-	private Row getRow(final int index) {
-		if (index < 0 || index >= rows.size()) {
-			return null;
-		}
-
-		return rows.get(index);
-	}
-
-	private void clear() {
-		rowContainer.layoutBegin();
-		for (final Row row : rows) {
-			row.removeLayout();
-			rowContainer.remove(row.getControl());
-		}
-		rowContainer.layoutEnd();
-		rows.clear();
-		updateLayout();
-	}
-
 	private void updateLayout() {
-		if (addRowComposite != null) {
-			rowLayoutCommon.invalidate();
-			getParent().layoutBegin();
-			getParent().layoutEnd();
-			rowContainer.redraw();
+		if (addValueComposite != null) {
+			valuesContainer.redraw();
+			addValueComposite.redraw();
+			getParent().redraw();
 		}
 	}
 
 	@Override
 	public void setEditable(final boolean editable) {
-
+		valuesContainer.setEditable(editable);
+		addButton.setEnabled(editable);
 	}
 
 	@Override
 	public void addValidator(final IValidator<Collection<INPUT_TYPE>> validator) {
-
+		compoundValidator.addValidator(validator);
 	}
 
 	@Override
 	public boolean hasModifications() {
-		return false;
+		return lastHashCode == valuesContainer.getValue().hashCode();
 	}
 
 	@Override
-	public void resetModificationState() {}
+	public void resetModificationState() {
+		lastHashCode = valuesContainer.getValue().hashCode();
+	}
 
 	@Override
 	public IValidationResult validate() {
-		return ValidationResult.ok();
+		return validationCache.validate();
 	}
 
 	@Override
 	public void addValidationConditionListener(final IValidationConditionListener listener) {
-
+		validationCache.addValidationConditionListener(listener);
 	}
 
 	@Override
 	public void removeValidationConditionListener(final IValidationConditionListener listener) {
-
+		validationCache.removeValidationConditionListener(listener);
 	}
 
 	@Override
 	public void addInputListener(final IInputListener listener) {
-
+		inputObservable.addInputListener(listener);
 	}
 
 	@Override
 	public void removeInputListener(final IInputListener listener) {
-
+		inputObservable.removeInputListener(listener);
 	}
 
-	@Override
-	public void setValue(final Collection<INPUT_TYPE> value) {
-		clear();
-		for (final INPUT_TYPE currentValue : value) {
-			addRow().setValue(currentValue);
+	private void fireInputChanged() {
+		if (!programmaticUpdate) {
+			inputObservable.fireInputChanged(getValue());
 		}
 	}
 
 	@Override
+	public void setValue(final Collection<INPUT_TYPE> value) {
+		programmaticUpdate = true;
+		valuesContainer.setValue(value);
+		programmaticUpdate = false;
+	}
+
+	@Override
 	public Collection<INPUT_TYPE> getValue() {
-		return null;
+		return valuesContainer.getValue();
 	}
 
 	private final class Row extends CompositeWrapper {
 
 		private final IInputControl<INPUT_TYPE> inputControl;
+		private final IButton removeButton;
 		private final IInputComponentValidationLabel validationLabel;
-		private final RowLayout layout;
+		private final TableRowLayout layout;
+		private final ITextLabel valueIndex;
 
-		private Row(final IComposite container, final int index) {
+		private Row(final IComposite container) {
 			super(container);
-			layout = new RowLayout(container, rowLayoutCommon);
+			layout = new TableRowLayout(container, tableCommon, false);
 			setLayout(layout);
 
-			final String userIndex = String.valueOf(index + 1);
+			final String userIndex = String.valueOf(valuesContainer.getValueCount() + 1);
 
-			add(bpf.textLabel(userIndex));
+			valueIndex = add(bpf.textLabel(userIndex));
 
 			// TODO i18n
-			final IButton removeButton = add(removeButtonBp.setToolTipText("Remove entry " + userIndex));
+			removeButton = add(removeButtonBp.setToolTipText("Remove entry " + userIndex));
 			removeButton.setPreferredSize(removeButtonSize);
 
 			inputControl = add(widgetCreator);
@@ -279,11 +266,21 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 
 				@Override
 				public void keyPressed(final IKeyEvent event) {
+					final int index = valuesContainer.indexOf(Row.this);
+
 					if (VirtualKey.ENTER.equals(event.getVirtualKey())) {
-						final Row row = addRow(index + 1);
+						final int newIndex;
+						if (event.getModifier().contains(Modifier.SHIFT)) {
+							newIndex = index;
+						}
+						else {
+							newIndex = index + 1;
+						}
+						final Row row = valuesContainer.addRow(newIndex);
 						row.inputControl.requestFocus();
 					}
-					else if (VirtualKey.BACK_SPACE.equals(event.getVirtualKey())) {
+					else if (VirtualKey.BACK_SPACE.equals(event.getVirtualKey())
+						|| VirtualKey.DELETE.equals(event.getVirtualKey())) {
 						boolean removeControl = (inputControl.getValue() == null);
 						if (!removeControl) {
 							final Object value = inputControl.getValue();
@@ -294,8 +291,15 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 							}
 						}
 						if (removeControl) {
-							removeRow(index);
-							final Row row = getRow(Math.max(0, index - 1));
+							int delta = 0;
+							if (VirtualKey.BACK_SPACE.equals(event.getVirtualKey())) {
+								delta = -1;
+							}
+
+							valuesContainer.removeRow(index);
+							final Row row = valuesContainer.getRow(Math.min(
+									Math.max(0, index + delta),
+									valuesContainer.getValueCount() - 1));
 							if (row != null) {
 								row.inputControl.requestFocus();
 							}
@@ -304,12 +308,20 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 				}
 
 			});
+			inputControl.addInputListener(new IInputListener() {
+
+				@Override
+				public void inputChanged() {
+					fireInputChanged();
+				}
+			});
 
 			removeButton.addActionListener(new IActionListener() {
 
 				@Override
 				public void actionPerformed() {
-					removeRow(index);
+					final int index = valuesContainer.indexOf(Row.this);
+					valuesContainer.removeRow(index);
 				}
 
 			});
@@ -321,6 +333,16 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 			else {
 				validationLabel = null;
 			}
+		}
+
+		public void setValueIndex(final int index) {
+			valueIndex.setText(String.valueOf(index));
+			layout.invalidateControl(valueIndex);
+		}
+
+		public void setEditable(final boolean editable) {
+			inputControl.setEditable(editable);
+			removeButton.setEnabled(editable);
 		}
 
 		public void removeLayout() {
@@ -340,382 +362,131 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 		}
 	}
 
-	public static final class RowLayout implements ILayouter {
-		public enum ColumnMode {
-			Preferred,
-			Growing,
-			Fixed
-		};
+	private class ValuesContainer extends CompositeWrapper {
 
-		public static final class RowLayoutCommon {
-			private final int columnCount;
-			private final int verticalGap;
-			private final int[] widths;
-			private final int[] gaps;
-			private final ColumnMode[] modes;
-			private int layoutHashCode;
-			private int availableWidth;
-			private final LinkedList<RowLayout> layouters;
-			private Dimension preferredSize;
+		private final List<Row> rows;
+		private final List<IControl> controls;
 
-			public RowLayoutCommon(final int columnCount, final int verticalGap) {
-				this.columnCount = columnCount;
-				this.verticalGap = verticalGap;
-				layouters = new LinkedList<RowLayout>();
-				modes = new ColumnMode[columnCount];
-				widths = new int[columnCount];
-				gaps = new int[columnCount + 1];
-
-				for (int i = 0; i < modes.length; i++) {
-					modes[i] = ColumnMode.Preferred;
-				}
-
-				invalidate();
-			}
-
-			private void addRowLayout(final RowLayout rowLayout) {
-				layouters.add(rowLayout);
-				invalidate();
-			}
-
-			private void removeRowLayout(final RowLayout rowLayout) {
-				layouters.remove(rowLayout);
-				invalidate();
-			}
-
-			public void invalidate() {
-				availableWidth = 0;
-				layoutHashCode = 0;
-			}
-
-			public int getAvailableWidth() {
-				return availableWidth;
-			}
-
-			public int getLayoutHashCode() {
-				if (layoutHashCode == 0) {
-					layoutHashCode = 17;
-					layoutHashCode = 31 * layoutHashCode + availableWidth;
-					for (int i = 0; i < widths.length; i++) {
-						layoutHashCode = 31 * layoutHashCode + widths[i];
-					}
-					for (int i = 0; i < gaps.length; i++) {
-						layoutHashCode = 31 * layoutHashCode + gaps[i];
-					}
-				}
-
-				return layoutHashCode;
-			}
-
-			public void setFixedWidth(final int column, final int width) {
-				widths[column] = width;
-				modes[column] = ColumnMode.Fixed;
-				invalidate();
-			}
-
-			public void setGap(final int gap) {
-				for (int i = 0; i < gaps.length; i++) {
-					gaps[i] = gap;
-				}
-				invalidate();
-			}
-
-			public void setGapBeforceColumn(final int column, final int gap) {
-				gaps[column] = gap;
-				invalidate();
-			}
-
-			public void setGapAfterColumn(final int column, final int gap) {
-				gaps[column + 1] = gap;
-				invalidate();
-			}
-
-			public void setColumnMode(final int column, final ColumnMode mode) {
-				modes[column] = mode;
-				invalidate();
-			}
-
-			private void calculateLayout() {
-				if (layouters.size() < 2) {
-					return;
-				}
-
-				final RowLayout rowLayout = layouters.get(0);
-				final Rectangle clientArea = rowLayout.container.getClientArea();
-				availableWidth = clientArea.getWidth();
-
-				for (int i = 0; i < widths.length; i++) {
-					if (modes[i] != ColumnMode.Fixed) {
-						widths[i] = 0;
-					}
-				}
-
-				int minHeight = 0;
-				for (final RowLayout layouter : layouters) {
-					for (int i = 0; i < columnCount; i++) {
-						final IControl control = layouter.getChild(i);
-						if (control == null) {
-							continue;
-						}
-						final Dimension size = layouter.getPreferredSize(control);
-						widths[i] = Math.max(widths[i], size.getWidth());
-						minHeight = Math.max(minHeight, size.getHeight());
-					}
-				}
-
-				int currentWidth = 0;
-				for (final int width : widths) {
-					currentWidth = currentWidth + width;
-				}
-				for (final int gap : gaps) {
-					currentWidth = currentWidth + gap;
-				}
-
-				final int usedWidth = currentWidth;
-				if (availableWidth > currentWidth) {
-					final int additionalWidth = availableWidth - currentWidth;
-					final List<Integer> growingColumns = new LinkedList<Integer>();
-					for (int i = 0; i < widths.length; i++) {
-						if (modes[i] == ColumnMode.Growing) {
-							growingColumns.add(Integer.valueOf(i));
-						}
-					}
-
-					int columnAdditional = additionalWidth / growingColumns.size();
-					for (final Integer index : growingColumns) {
-						widths[index] = widths[index] + columnAdditional;
-						currentWidth = currentWidth + columnAdditional;
-						columnAdditional = Math.min(columnAdditional, availableWidth - currentWidth);
-					}
-				}
-
-				preferredSize = new Dimension(usedWidth, minHeight + 2 * verticalGap);
-				layoutHashCode = 0;
-			}
-
-			public Dimension getPreferredSize() {
-				return preferredSize;
-			}
+		public ValuesContainer(final IComposite widget) {
+			super(widget);
+			this.rows = new LinkedList<Row>();
+			controls = new LinkedList<IControl>();
+			setLayout(new ListLayout(this, new IColorConstant[0]));
 		}
 
-		private final IContainer container;
-		private final RowLayoutCommon rowLayoutCommon;
-		private final HashMap<IControl, Dimension> preferredSizes;
-		private final HashMap<Integer, IControl> controls;
-		private int layoutHashCode;
-
-		private RowLayout(final IContainer container, final RowLayoutCommon rowLayoutCommon) {
-			this.container = container;
-			this.rowLayoutCommon = rowLayoutCommon;
-			this.preferredSizes = new HashMap<IControl, Dimension>();
-			this.controls = new HashMap<Integer, IControl>();
-			this.layoutHashCode = 0;
-			// TODO NM remove again
-			rowLayoutCommon.addRowLayout(this);
-		}
-
-		public IControl getChild(final int index) {
-			if (controls.containsKey(Integer.valueOf(index))) {
-				return controls.get(index);
+		public Collection<INPUT_TYPE> getValue() {
+			final List<INPUT_TYPE> result = new LinkedList<INPUT_TYPE>();
+			for (final Row row : rows) {
+				result.add(row.getValue());
 			}
-
-			final List<IControl> children = container.getChildren();
-			boolean manualPositioning = false;
-			for (final IControl control : children) {
-				if (control.getLayoutConstraints() == null) {
-					continue;
-				}
-				if (control.getLayoutConstraints() instanceof Integer) {
-					manualPositioning = true;
-					break;
-				}
-			}
-
-			IControl result = null;
-			if (manualPositioning) {
-				for (final IControl control : children) {
-					if (control.getLayoutConstraints() == null) {
-						continue;
-					}
-					if (control.getLayoutConstraints() instanceof Integer) {
-						final int currentIndex = (Integer) control.getLayoutConstraints();
-						if (currentIndex == index) {
-							result = control;
-						}
-						controls.put(currentIndex, control);
-					}
-				}
-			}
-			else {
-				int currentIndex = 0;
-				for (final IControl control : children) {
-					controls.put(currentIndex, control);
-					if (currentIndex == index) {
-						result = control;
-					}
-					currentIndex++;
-				}
-			}
-
 			return result;
 		}
 
-		private Dimension getPreferredSize(final IControl control) {
-			if (!preferredSizes.containsKey(control)) {
-				final Dimension size = control.getPreferredSize();
-				if (size.getHeight() > 0) {
-					preferredSizes.put(control, size);
+		public int getValueCount() {
+			return rows.size();
+		}
+
+		public int indexOf(final Row row) {
+			return rows.indexOf(row);
+		}
+
+		public void setValue(final Collection<INPUT_TYPE> value) {
+			clear();
+			for (final INPUT_TYPE currentValue : value) {
+				addRow().setValue(currentValue);
+			}
+		}
+
+		@Override
+		public List<IControl> getChildren() {
+			return controls;
+		}
+
+		@Override
+		public void redraw() {
+			final int lastHash = tableCommon.getLayoutHashCode();
+			tableCommon.validate();
+			final boolean changed = (lastHash != tableCommon.getLayoutHashCode());
+			if (changed) {
+				for (final Row row : rows) {
+					row.redraw();
 				}
-				return size;
+				addValueComposite.redraw();
 			}
-			return preferredSizes.get(control);
+			layoutBegin();
+			layoutEnd();
+			super.redraw();
 		}
 
-		@Override
-		public void layout() {
-			final Rectangle clientArea = container.getClientArea();
-			if (clientArea.getWidth() != rowLayoutCommon.getAvailableWidth()) {
-				rowLayoutCommon.calculateLayout();
-			}
-			if (layoutHashCode == rowLayoutCommon.getLayoutHashCode()) {
-				return;
-			}
-			layoutHashCode = rowLayoutCommon.getLayoutHashCode();
-
-			int x = rowLayoutCommon.gaps[0];
-			for (int index = 0; index < rowLayoutCommon.columnCount; index++) {
-				final IControl control = getChild(index);
-				final int width = rowLayoutCommon.widths[index];
-
-				if (control != null) {
-					final Dimension size = getPreferredSize(control);
-					final int y = clientArea.getY() + (clientArea.getHeight() - size.getHeight()) / 2;
-
-					control.setSize(width, size.getHeight());
-					control.setPosition(x, y);
-				}
-
-				x = x + width + rowLayoutCommon.gaps[index + 1];
+		public void setEditable(final boolean editable) {
+			for (final Row row : rows) {
+				row.setEditable(editable);
 			}
 		}
 
-		@Override
-		public Dimension getMinSize() {
-			return getPreferredSize();
+		public Row addRow() {
+			final Row row = new Row(valuesContainer.add(bpf.composite()));
+			rows.add(row);
+			controls.add(row.getControl());
+			updateLayout();
+
+			fireInputChanged();
+			return row;
 		}
 
-		@Override
-		public Dimension getPreferredSize() {
-			return rowLayoutCommon.getPreferredSize();
-		}
+		public Row addRow(final int index) {
+			layoutBegin();
+			final Row result = new Row(valuesContainer.add(bpf.composite()));
 
-		@Override
-		public Dimension getMaxSize() {
-			return getPreferredSize();
-		}
-
-		@Override
-		public void invalidate() {
-			preferredSizes.clear();
-			final Rectangle clientArea = container.getClientArea();
-			if (clientArea.getWidth() != rowLayoutCommon.getAvailableWidth()) {
-				rowLayoutCommon.invalidate();
-			}
-		}
-
-		public void remove() {
-			rowLayoutCommon.removeRowLayout(this);
-		}
-	}
-
-	private static final class ListLayout implements ILayouter {
-
-		private final IContainer container;
-		private final HashMap<IControl, Dimension> preferredSizes;
-		private Dimension preferredSize;
-
-		private ListLayout(final IContainer container) {
-			this.container = container;
-			this.preferredSizes = new HashMap<IControl, Dimension>();
-		}
-
-		@Override
-		public void layout() {
-			final Rectangle clientArea = container.getClientArea();
-			final int x = clientArea.getX();
-			int y = clientArea.getY();
-			final int width = clientArea.getWidth();
-
-			for (final IControl control : container.getChildren()) {
-				final Dimension size = getPreferredSize(control);
-
-				control.setPosition(x, y);
-				control.setSize(width, size.getHeight());
-				y = y + size.getHeight();
-			}
-		}
-
-		@Override
-		public Dimension getMinSize() {
-			return getPreferredSize();
-		}
-
-		@Override
-		public Dimension getPreferredSize() {
-			if (preferredSize == null) {
-				calculateSizes();
-			}
-			return preferredSize;
-		}
-
-		@Override
-		public Dimension getMaxSize() {
-			return getPreferredSize();
-		}
-
-		@Override
-		public void invalidate() {
-			preferredSizes.clear();
-			preferredSize = null;
-		}
-
-		private void calculateSizes() {
-			//final Rectangle clientArea = container.getClientArea();
-			int preferredWidth = 0;
-			int preferredHeight = 0;
-			for (final IControl control : container.getChildren()) {
-				final boolean controlVisible = control.isVisible();
-				if (!control.isEnabled()) {
-					if (controlVisible) {
-						control.setVisible(false);
-					}
-					continue;
-				}
-
-				if (!controlVisible) {
-					control.setVisible(true);
-				}
-
-				final Dimension size = getPreferredSize(control);
-				preferredWidth = Math.max(preferredWidth, size.getWidth());
-				preferredHeight = preferredHeight + size.getHeight();
-			}
-			preferredSize = container.computeDecoratedSize(new Dimension(preferredWidth, preferredHeight));
-		}
-
-		private Dimension getPreferredSize(final IControl control) {
-			if (!preferredSizes.containsKey(control)) {
-				final Dimension size = control.getPreferredSize();
-				if (size == null) {
-					return new Dimension(0, 0);
-				}
-				if (size.getHeight() > 0) {
-					preferredSizes.put(control, size);
-				}
-				return size;
+			rows.add(index, result);
+			controls.add(index, result.getControl());
+			for (int i = index; i < rows.size(); i++) {
+				final Row row = rows.get(i);
+				row.setValueIndex(i + 1);
 			}
 
-			return preferredSizes.get(control);
+			layoutEnd();
+			updateLayout();
+
+			fireInputChanged();
+			return result;
+		}
+
+		public void removeRow(final int index) {
+			layoutBegin();
+			final Row removedRow = rows.get(index);
+			rows.remove(index);
+			controls.remove(index);
+
+			for (int i = index; i < rows.size(); i++) {
+				final Row row = rows.get(i);
+				row.setValueIndex(i + 1);
+			}
+			removedRow.removeLayout();
+			valuesContainer.remove(removedRow.getControl());
+			layoutEnd();
+			updateLayout();
+
+			fireInputChanged();
+		}
+
+		public Row getRow(final int index) {
+			if (index < 0 || index >= rows.size()) {
+				return null;
+			}
+
+			return rows.get(index);
+		}
+
+		public void clear() {
+			valuesContainer.layoutBegin();
+			for (final Row row : rows) {
+				row.removeLayout();
+				valuesContainer.remove(row.getControl());
+			}
+			valuesContainer.layoutEnd();
+			rows.clear();
+			updateLayout();
 		}
 	}
 }
