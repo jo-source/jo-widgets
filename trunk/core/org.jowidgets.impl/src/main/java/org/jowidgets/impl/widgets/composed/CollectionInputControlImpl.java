@@ -55,7 +55,7 @@ import org.jowidgets.common.widgets.controller.IKeyEvent;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.impl.layout.ListLayout;
 import org.jowidgets.impl.layout.tablelayout.TableRowLayout;
-import org.jowidgets.spi.impl.controller.InputObservable;
+import org.jowidgets.tools.controller.InputObservable;
 import org.jowidgets.tools.controller.KeyAdapter;
 import org.jowidgets.tools.validation.CompoundValidator;
 import org.jowidgets.tools.validation.ValidationCache;
@@ -224,7 +224,7 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 
 	private void fireInputChanged() {
 		if (!programmaticUpdate) {
-			inputObservable.fireInputChanged(getValue());
+			inputObservable.fireInputChanged();
 		}
 	}
 
