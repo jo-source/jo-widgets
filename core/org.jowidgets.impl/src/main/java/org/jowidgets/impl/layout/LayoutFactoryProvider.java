@@ -33,13 +33,16 @@ import org.jowidgets.api.layout.IFillLayoutFactoryBuilder;
 import org.jowidgets.api.layout.IFlowLayoutFactoryBuilder;
 import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
+import org.jowidgets.api.layout.IListLayoutFactoryBuilder;
 import org.jowidgets.api.layout.miglayout.IMigLayout;
-import org.jowidgets.api.layout.miglayout.IMigLayoutToolkit;
 import org.jowidgets.api.layout.miglayout.IMigLayoutFactoryBuilder;
+import org.jowidgets.api.layout.miglayout.IMigLayoutToolkit;
+import org.jowidgets.api.layout.tablelayout.ITableLayoutBuilder;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.common.widgets.layout.ILayouter;
-import org.jowidgets.impl.layout.miglayout.MigLayoutToolkit;
 import org.jowidgets.impl.layout.miglayout.MigLayoutFactoryBuilder;
+import org.jowidgets.impl.layout.miglayout.MigLayoutToolkit;
+import org.jowidgets.impl.layout.tablelayout.TableLayoutBuilder;
 
 public class LayoutFactoryProvider implements ILayoutFactoryProvider {
 
@@ -89,6 +92,16 @@ public class LayoutFactoryProvider implements ILayoutFactoryProvider {
 	}
 
 	@Override
+	public ILayoutFactory<ILayouter> listLayout() {
+		return listLayoutBuilder().build();
+	}
+
+	@Override
+	public IListLayoutFactoryBuilder listLayoutBuilder() {
+		return new ListLayoutFactoryBuilder();
+	}
+
+	@Override
 	public ILayoutFactory<IMigLayout> migLayout() {
 		return migLayoutBuilder().build();
 	}
@@ -122,6 +135,11 @@ public class LayoutFactoryProvider implements ILayoutFactoryProvider {
 				return new PreferredSizeLayout(container);
 			}
 		};
+	}
+
+	@Override
+	public ITableLayoutBuilder tableLayoutBuilder() {
+		return new TableLayoutBuilder();
 	}
 
 }

@@ -31,6 +31,7 @@ package org.jowidgets.api.layout;
 import org.jowidgets.api.layout.miglayout.IMigLayout;
 import org.jowidgets.api.layout.miglayout.IMigLayoutFactoryBuilder;
 import org.jowidgets.api.layout.miglayout.IMigLayoutToolkit;
+import org.jowidgets.api.layout.tablelayout.ITableLayoutBuilder;
 import org.jowidgets.common.widgets.layout.ILayouter;
 
 public interface ILayoutFactoryProvider {
@@ -44,7 +45,7 @@ public interface ILayoutFactoryProvider {
 	ILayoutFactory<ILayouter> nullLayout();
 
 	/**
-	 * Creates 'PreferredSizeLayouts':
+	 * Creates 'PreferredSizeLayout':
 	 * 
 	 * layout(): sets the sizes of the controls to the preferred size,
 	 * positions must be set by the container
@@ -61,7 +62,7 @@ public interface ILayoutFactoryProvider {
 	ILayoutFactory<ILayouter> preferredSizeLayout();
 
 	/**
-	 * Creates 'FlowLayouts'
+	 * Creates 'FlowLayout'
 	 * 
 	 * layout(): set the sizes of the controls to the preferred size, positions the
 	 * controls side by side (alignment == VERTICAL) or below each other (alignment == HORIZONTAL)
@@ -83,7 +84,7 @@ public interface ILayoutFactoryProvider {
 	IFlowLayoutFactoryBuilder flowLayoutBuilder();
 
 	/**
-	 * Creates 'FillLayouts'
+	 * Creates 'FillLayout'
 	 * 
 	 * 'FillLayout' allows only one visible control in the container when calculation is done.
 	 * If more than one control is visible, it will be ignored for the layouting.
@@ -104,7 +105,7 @@ public interface ILayoutFactoryProvider {
 	IFillLayoutFactoryBuilder fillLayoutBuilder();
 
 	/**
-	 * Creates 'BorderLayouts'
+	 * Creates 'BorderLayout'
 	 * 
 	 * @return A layout factory that produces 'BorderLayouts'
 	 */
@@ -118,7 +119,7 @@ public interface ILayoutFactoryProvider {
 	IBorderLayoutFactoryBuilder borderLayoutBuilder();
 
 	/**
-	 * Creates 'MigLayouts'
+	 * Creates 'MigLayout'
 	 * 
 	 * @return A layout factory that produces 'MigLayouts'
 	 */
@@ -137,5 +138,23 @@ public interface ILayoutFactoryProvider {
 	 * @return The toolkit
 	 */
 	IMigLayoutToolkit getMigLayoutToolkit();
+
+	/**
+	 * Creates 'ListLayout'
+	 * 
+	 * A ListLayout is kind of a vertical Flow Layout
+	 * 
+	 * @return A layout factory that produces 'BorderLayouts'
+	 */
+	ILayoutFactory<ILayouter> listLayout();
+
+	/**
+	 * Creates a builder for a 'ListLayout' factory
+	 * 
+	 * @return The builder
+	 */
+	IListLayoutFactoryBuilder listLayoutBuilder();
+
+	ITableLayoutBuilder tableLayoutBuilder();
 
 }
