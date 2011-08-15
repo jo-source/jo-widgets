@@ -88,7 +88,7 @@ public class LoginDialogImpl extends WindowWrapper implements ILoginDialog {
 
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-		frame.setLayout(new MigLayoutDescriptor("0[grow, 400::]0", "0[]0[grow]0[12!]0"));
+		frame.setLayout(new MigLayoutDescriptor("0[grow]0", "0[]0[grow]0[12!]0"));
 
 		//set logo, or if not exists
 		if (setup.getLogo() != null) {
