@@ -425,7 +425,7 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 		}
 
 		public Row addRow() {
-			final Row row = new Row(valuesContainer.add(bpf.composite()));
+			final Row row = new Row(add(bpf.composite()));
 			rows.add(row);
 			controls.add(row.getControl());
 			updateLayout();
@@ -436,7 +436,7 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 
 		public Row addRow(final int index) {
 			layoutBegin();
-			final Row result = new Row(valuesContainer.add(bpf.composite()));
+			final Row result = new Row(add(bpf.composite()));
 
 			rows.add(index, result);
 			controls.add(index, result.getControl());
@@ -463,7 +463,7 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 				row.setValueIndex(i + 1);
 			}
 			removedRow.removeLayout();
-			valuesContainer.remove(removedRow.getControl());
+			remove(removedRow.getControl());
 			layoutEnd();
 			updateLayout();
 
@@ -479,14 +479,16 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 		}
 
 		public void clear() {
-			valuesContainer.layoutBegin();
+			layoutBegin();
 			for (final Row row : rows) {
 				row.removeLayout();
-				valuesContainer.remove(row.getControl());
+				remove(row.getControl());
 			}
-			valuesContainer.layoutEnd();
+			layoutEnd();
 			rows.clear();
 			updateLayout();
+
+			fireInputChanged();
 		}
 	}
 }
