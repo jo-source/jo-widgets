@@ -53,6 +53,7 @@ import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
+import org.jowidgets.util.NullCompatibleEquivalence;
 
 public class LabelImpl implements ILabel {
 
@@ -83,8 +84,12 @@ public class LabelImpl implements ILabel {
 
 	@Override
 	public void setText(final String text) {
-		this.text = text;
-		textLabelWidget.setText(text);
+		if (!NullCompatibleEquivalence.equals(text, this.text)) {
+			this.text = text;
+			textLabelWidget.setText(text);
+			compositeWidget.layoutBegin();
+			compositeWidget.layoutEnd();
+		}
 	}
 
 	@Override
@@ -354,7 +359,12 @@ public class LabelImpl implements ILabel {
 
 	@Override
 	public void setIcon(final IImageConstant icon) {
+		final Dimension lastPreferredSize = iconWidget.getPreferredSize();
 		iconWidget.setIcon(icon);
+		if (!lastPreferredSize.equals(iconWidget.getPreferredSize())) {
+			compositeWidget.layoutBegin();
+			compositeWidget.layoutEnd();
+		}
 	}
 
 }
