@@ -35,6 +35,8 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.powo.JoFrame;
+import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.validation.IValidator;
 import org.jowidgets.validation.ValidationResult;
 
 //CHECKSTYLE:OFF
@@ -61,16 +63,26 @@ public class DemoListInputFrame extends JoFrame {
 	//		return BPF.comboBoxSelection("Germany", "Spain", "Italy", "USA", "Frankreich", "Portugal", "Bayern");
 	//	}
 
-	private IWidgetDescriptor getControlBp() {
-		return BPF.comboBox("Germany", "Spain", "Italy", "USA", "Frankreich", "Portugal", "Bayern");
-	}
+	//	private IWidgetDescriptor getControlBp() {
+	//		return BPF.comboBox("Germany", "Spain", "Italy", "USA", "Frankreich", "Portugal", "Bayern");
+	//	}
 
 	//	private IWidgetDescriptor getControlBp() {
 	//		return BPF.inputFieldDate();
 	//	}
 
-	//	private IWidgetDescriptor getControlBp() {
-	//		return BPF.inputFieldIntegerNumber();
-	//	}
+	private IWidgetDescriptor getControlBp() {
+		return BPF.inputFieldIntegerNumber().setValidator(new IValidator<Integer>() {
+			@Override
+			public IValidationResult validate(final Integer value) {
+				if (value != null && value == 303) {
+					return ValidationResult.create().withError("Cool numbers are not supported");
+				}
+				else {
+					return ValidationResult.ok();
+				}
+			}
+		});
+	}
 
 }
