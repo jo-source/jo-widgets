@@ -90,6 +90,10 @@ public class LoginDialogImpl extends WindowWrapper implements ILoginDialog {
 
 		frame.setLayout(new MigLayoutDescriptor("0[grow]0", "0[]0[grow]0[12!]0"));
 
+		if (setup.getMinSize() != null) {
+			frame.setMinSize(setup.getMinSize());
+		}
+
 		//set logo, or if not exists
 		if (setup.getLogo() != null) {
 			frame.add(bpf.icon(setup.getLogo()), "growx, growy, wrap");

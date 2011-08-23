@@ -31,6 +31,7 @@ import org.jowidgets.api.types.InputDialogDefaultButtonPolicy;
 import org.jowidgets.api.widgets.blueprint.builder.ILoginDialogSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.common.color.ColorValue;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
 public class LoginDialogDefaults implements IDefaultInitializer<ILoginDialogSetupBuilder<?>> {
@@ -46,6 +47,7 @@ public class LoginDialogDefaults implements IDefaultInitializer<ILoginDialogSetu
 		builder.setDefaultButtonPolicy(InputDialogDefaultButtonPolicy.OK);
 		builder.setCloseable(false);
 		builder.setResizable(false);
+		builder.setMinSize(new Dimension(400, 200));
 	}
 
 }
