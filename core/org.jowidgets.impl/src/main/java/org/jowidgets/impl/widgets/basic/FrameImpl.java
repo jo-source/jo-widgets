@@ -71,6 +71,10 @@ public class FrameImpl extends AbstractFrameSpiWrapper implements IFrameUi {
 		ColorSettingsInvoker.setColors(setup, this);
 		VisibiliySettingsInvoker.setVisibility(setup, frameWidgetSpi);
 		LayoutSettingsInvoker.setLayout(setup, this);
+
+		if (setup.getMinSize() != null) {
+			setMinSize(setup.getMinSize());
+		}
 	}
 
 	@Override

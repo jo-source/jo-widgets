@@ -31,6 +31,7 @@ import org.jowidgets.api.login.ILoginInterceptor;
 import org.jowidgets.api.types.InputDialogDefaultButtonPolicy;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface ILoginDialogSetup extends ITitledWindowSetup {
@@ -53,5 +54,7 @@ public interface ILoginDialogSetup extends ITitledWindowSetup {
 	IImageConstant getLogo();
 
 	String getLoginLabel();
+
+	Dimension getMinSize();
 
 }
