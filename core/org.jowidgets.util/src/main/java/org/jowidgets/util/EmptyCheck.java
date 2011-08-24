@@ -56,4 +56,8 @@ public final class EmptyCheck {
 		return collection == null || collection.isEmpty();
 	}
 
+	public static boolean isEmpty(final Object[] array) {
+		return array == null || array.length == 0;
+	}
+
 }
