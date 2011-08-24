@@ -123,6 +123,22 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
+	public <M_WIDGET_TYPE extends IControl> M_WIDGET_TYPE add(
+		final int index,
+		final IWidgetDescriptor<? extends M_WIDGET_TYPE> descriptor,
+		final Object layoutConstraints) {
+		if (isInitialized()) {
+			return getWidget().add(index, descriptor, layoutConstraints);
+		}
+		else {
+			final Widget powo = widgetFactory.create(descriptor);
+			preWidgets.add(index, new Tuple<Widget, Object>(powo, layoutConstraints));
+			return (M_WIDGET_TYPE) powo;
+		}
+	}
+
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	@Override
 	public final <M_WIDGET_TYPE extends IControl> M_WIDGET_TYPE add(
 		final IWidgetDescriptor<? extends M_WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
@@ -248,6 +264,15 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 	public final void layoutEnd() {
 		checkInitialized();
 		getWidget().layoutEnd();
+	}
+
+	@Override
+	public <M_WIDGET_TYPE extends IControl> M_WIDGET_TYPE add(
+		final int index,
+		final ICustomWidgetCreator<M_WIDGET_TYPE> creator,
+		final Object layoutConstraints) {
+		checkInitialized();
+		return getWidget().add(index, creator, layoutConstraints);
 	}
 
 	@Override

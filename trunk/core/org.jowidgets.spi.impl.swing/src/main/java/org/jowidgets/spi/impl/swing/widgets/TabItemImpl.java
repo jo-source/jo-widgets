@@ -246,16 +246,18 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 
 	@Override
 	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+		final Integer index,
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
-		return swingContainer.add(descriptor, layoutConstraints);
+		return swingContainer.add(index, descriptor, layoutConstraints);
 	}
 
 	@Override
 	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+		final Integer index,
 		final ICustomWidgetCreator<WIDGET_TYPE> creator,
 		final Object layoutConstraints) {
-		return swingContainer.add(creator, layoutConstraints);
+		return swingContainer.add(index, creator, layoutConstraints);
 	}
 
 	@Override
