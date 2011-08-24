@@ -253,10 +253,8 @@ public class SwingContainer implements IContainerSpi {
 		final Integer index,
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object cellConstraints) {
-
-		//TODO MG consider index
 		final WIDGET_TYPE result = factory.create(getUiReference(), descriptor);
-		addToContainer(result, cellConstraints);
+		addToContainer(index, result, cellConstraints);
 		return result;
 	}
 
@@ -265,11 +263,9 @@ public class SwingContainer implements IContainerSpi {
 		final Integer index,
 		final ICustomWidgetCreator<WIDGET_TYPE> customWidgetCreator,
 		final Object cellConstraints) {
-
 		final ICustomWidgetFactory customWidgetFactory = createCustomWidgetFactory();
-		//TODO MG consider index
 		final WIDGET_TYPE result = customWidgetCreator.create(customWidgetFactory);
-		addToContainer(result, cellConstraints);
+		addToContainer(index, result, cellConstraints);
 		return result;
 	}
 
@@ -308,12 +304,22 @@ public class SwingContainer implements IContainerSpi {
 		return factory;
 	}
 
-	private void addToContainer(final IWidgetCommon widget, final Object cellConstraints) {
+	private void addToContainer(final Integer index, final IWidgetCommon widget, final Object cellConstraints) {
 		if (cellConstraints != null) {
-			container.add((Component) (widget.getUiReference()), cellConstraints);
+			if (index != null) {
+				container.add((Component) (widget.getUiReference()), cellConstraints, index.intValue());
+			}
+			else {
+				container.add((Component) (widget.getUiReference()), cellConstraints);
+			}
 		}
 		else {
-			container.add((Component) (widget.getUiReference()));
+			if (index != null) {
+				container.add((Component) (widget.getUiReference()), index.intValue());
+			}
+			else {
+				container.add((Component) (widget.getUiReference()));
+			}
 		}
 	}
 

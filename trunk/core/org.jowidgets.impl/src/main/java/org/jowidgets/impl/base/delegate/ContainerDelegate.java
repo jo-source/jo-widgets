@@ -94,7 +94,12 @@ public class ContainerDelegate {
 		if (result instanceof IControl) {
 			((IControl) result).setParent(widget);
 		}
-		children.add(result);
+		if (index != null) {
+			children.add(index.intValue(), result);
+		}
+		else {
+			children.add(result);
+		}
 		return result;
 	}
 
@@ -106,7 +111,12 @@ public class ContainerDelegate {
 		if (result instanceof IControl) {
 			((IControl) result).setParent(widget);
 		}
-		children.add(result);
+		if (index != null) {
+			children.add(index.intValue(), result);
+		}
+		else {
+			children.add(result);
+		}
 		return result;
 	}
 
