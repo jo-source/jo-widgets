@@ -63,9 +63,7 @@ import org.jowidgets.validation.IValidator;
 import org.jowidgets.validation.ValidationResult;
 
 //TODO MG inputCompositeWidget must be implemented correctly
-public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements
-		IInputComposite<INPUT_TYPE>,
-		IInputContentContainer {
+public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements IInputComposite<INPUT_TYPE>, IInputContentContainer {
 
 	private final IInputContentCreator<INPUT_TYPE> contentCreator;
 	private final IComposite composite;
@@ -190,6 +188,22 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements
 	@Override
 	public INPUT_TYPE getValue() {
 		return contentCreator.getValue();
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+		final int index,
+		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+		final Object layoutConstraints) {
+		return innerComposite.add(index, descriptor, layoutConstraints);
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+		final int index,
+		final ICustomWidgetCreator<WIDGET_TYPE> creator,
+		final Object layoutConstraints) {
+		return innerComposite.add(index, creator, layoutConstraints);
 	}
 
 	@Override

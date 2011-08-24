@@ -263,16 +263,18 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 
 	@Override
 	public final <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+		final Integer index,
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object cellConstraints) {
-		return innerContainer.add(descriptor, cellConstraints);
+		return innerContainer.add(index, descriptor, cellConstraints);
 	}
 
 	@Override
 	public final <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+		final Integer index,
 		final ICustomWidgetCreator<WIDGET_TYPE> creator,
 		final Object cellConstraints) {
-		return innerContainer.add(creator, cellConstraints);
+		return innerContainer.add(index, creator, cellConstraints);
 	}
 
 	@Override

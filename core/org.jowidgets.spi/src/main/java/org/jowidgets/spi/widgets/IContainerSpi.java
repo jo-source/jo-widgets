@@ -35,10 +35,14 @@ import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 public interface IContainerSpi extends IComponentSpi, IContainerCommon {
 
 	<WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+		Integer index,
 		IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		Object layoutConstraints);
 
-	<WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(ICustomWidgetCreator<WIDGET_TYPE> creator, Object layoutConstraints);
+	<WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+		Integer index,
+		ICustomWidgetCreator<WIDGET_TYPE> creator,
+		Object layoutConstraints);
 
 	boolean remove(IControlCommon control);
 

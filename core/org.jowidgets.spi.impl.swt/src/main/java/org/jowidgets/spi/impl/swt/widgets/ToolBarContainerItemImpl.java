@@ -70,18 +70,20 @@ public class ToolBarContainerItemImpl extends ToolBarItemImpl implements IToolBa
 
 	@Override
 	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+		final Integer index,
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
-		final WIDGET_TYPE result = swtComposite.add(descriptor, layoutConstraints);
+		final WIDGET_TYPE result = swtComposite.add(index, descriptor, layoutConstraints);
 
 		return result;
 	}
 
 	@Override
 	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+		final Integer index,
 		final ICustomWidgetCreator<WIDGET_TYPE> creator,
 		final Object layoutConstraints) {
-		return swtComposite.add(creator, layoutConstraints);
+		return swtComposite.add(index, creator, layoutConstraints);
 	}
 
 	@Override

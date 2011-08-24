@@ -63,6 +63,31 @@ public interface IContainer extends IComponent, IContainerCommon {
 	 * Creates and adds an control to this container.
 	 * 
 	 * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
+	 * @param index The index at which the control should be added in the container
+	 * @param descriptor The descriptor that describes the control to add
+	 * @param layoutConstraints The layout constraints / data for the added control
+	 * @return the created and added control
+	 */
+	<WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+		int index,
+		IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+		Object layoutConstraints);
+
+	/**
+	 * Creates and adds an control to this container
+	 * 
+	 * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
+	 * @param index The index at which the control should be added in the container
+	 * @param creator The creator that creates the control
+	 * @param layoutConstraints The layout constraints / data for the added control
+	 * @return the created and added control
+	 */
+	<WIDGET_TYPE extends IControl> WIDGET_TYPE add(int index, ICustomWidgetCreator<WIDGET_TYPE> creator, Object layoutConstraints);
+
+	/**
+	 * Creates and adds an control to this container.
+	 * 
+	 * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
 	 * @param descriptor The descriptor that describes the control to add
 	 * @param layoutConstraints The layout constraints / data for the added control
 	 * @return the created and added control

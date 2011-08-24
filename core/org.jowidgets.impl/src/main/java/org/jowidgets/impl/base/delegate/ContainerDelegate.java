@@ -53,25 +53,29 @@ public class ContainerDelegate {
 	}
 
 	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+		final int index,
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
-		final WIDGET_TYPE result = containerWidget.add(descriptor, layoutConstraints);
-		if (result instanceof IControl) {
-			((IControl) result).setParent(widget);
-		}
-		children.add(result);
-		return result;
+		return add(Integer.valueOf(index), descriptor, layoutConstraints);
+	}
+
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+		final int index,
+		final ICustomWidgetCreator<WIDGET_TYPE> creator,
+		final Object layoutConstraints) {
+		return add(Integer.valueOf(index), creator, layoutConstraints);
+	}
+
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+		final Object layoutConstraints) {
+		return add(null, descriptor, layoutConstraints);
 	}
 
 	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
 		final ICustomWidgetCreator<WIDGET_TYPE> creator,
 		final Object layoutConstraints) {
-		final WIDGET_TYPE result = containerWidget.add(creator, layoutConstraints);
-		if (result instanceof IControl) {
-			((IControl) result).setParent(widget);
-		}
-		children.add(result);
-		return result;
+		return add(null, creator, layoutConstraints);
 	}
 
 	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
@@ -80,6 +84,30 @@ public class ContainerDelegate {
 
 	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final ICustomWidgetCreator<WIDGET_TYPE> creator) {
 		return add(creator, null);
+	}
+
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+		final Integer index,
+		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+		final Object layoutConstraints) {
+		final WIDGET_TYPE result = containerWidget.add(index, descriptor, layoutConstraints);
+		if (result instanceof IControl) {
+			((IControl) result).setParent(widget);
+		}
+		children.add(result);
+		return result;
+	}
+
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+		final Integer index,
+		final ICustomWidgetCreator<WIDGET_TYPE> creator,
+		final Object layoutConstraints) {
+		final WIDGET_TYPE result = containerWidget.add(index, creator, layoutConstraints);
+		if (result instanceof IControl) {
+			((IControl) result).setParent(widget);
+		}
+		children.add(result);
+		return result;
 	}
 
 	public List<IControl> getChildren() {

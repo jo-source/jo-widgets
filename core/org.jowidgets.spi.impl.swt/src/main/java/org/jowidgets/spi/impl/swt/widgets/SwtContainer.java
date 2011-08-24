@@ -256,9 +256,11 @@ public class SwtContainer implements IContainerSpi {
 
 	@Override
 	public final <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+		final Integer index,
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object cellConstraints) {
 
+		//TODO MG consider index
 		final WIDGET_TYPE result = factory.create(getUiReference(), descriptor);
 		setLayoutConstraints(result, cellConstraints);
 		return result;
@@ -266,11 +268,13 @@ public class SwtContainer implements IContainerSpi {
 
 	@Override
 	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+		final Integer index,
 		final ICustomWidgetCreator<WIDGET_TYPE> widgetCreator,
 		final Object cellConstraints) {
 
 		final ICustomWidgetFactory customWidgetFactory = createCustomWidgetFactory();
 
+		//TODO MG consider index
 		final WIDGET_TYPE result = widgetCreator.create(customWidgetFactory);
 		setLayoutConstraints(result, cellConstraints);
 		return result;

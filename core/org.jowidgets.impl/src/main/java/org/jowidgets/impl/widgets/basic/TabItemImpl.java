@@ -307,6 +307,24 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 
 	@Override
 	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+		final int index,
+		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+		final Object layoutConstraints) {
+		checkDetached();
+		return containerDelegate.add(index, descriptor, layoutConstraints);
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+		final int index,
+		final ICustomWidgetCreator<WIDGET_TYPE> creator,
+		final Object layoutConstraints) {
+		checkDetached();
+		return containerDelegate.add(index, creator, layoutConstraints);
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
 		checkDetached();
@@ -323,11 +341,13 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 
 	@Override
 	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+		checkDetached();
 		return containerDelegate.add(descriptor);
 	}
 
 	@Override
 	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final ICustomWidgetCreator<WIDGET_TYPE> creator) {
+		checkDetached();
 		return containerDelegate.add(creator);
 	}
 

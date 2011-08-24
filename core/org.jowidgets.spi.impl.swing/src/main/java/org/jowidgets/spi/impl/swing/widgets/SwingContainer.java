@@ -250,9 +250,11 @@ public class SwingContainer implements IContainerSpi {
 
 	@Override
 	public final <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+		final Integer index,
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object cellConstraints) {
 
+		//TODO MG consider index
 		final WIDGET_TYPE result = factory.create(getUiReference(), descriptor);
 		addToContainer(result, cellConstraints);
 		return result;
@@ -260,10 +262,12 @@ public class SwingContainer implements IContainerSpi {
 
 	@Override
 	public final <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+		final Integer index,
 		final ICustomWidgetCreator<WIDGET_TYPE> customWidgetCreator,
 		final Object cellConstraints) {
 
 		final ICustomWidgetFactory customWidgetFactory = createCustomWidgetFactory();
+		//TODO MG consider index
 		final WIDGET_TYPE result = customWidgetCreator.create(customWidgetFactory);
 		addToContainer(result, cellConstraints);
 		return result;
