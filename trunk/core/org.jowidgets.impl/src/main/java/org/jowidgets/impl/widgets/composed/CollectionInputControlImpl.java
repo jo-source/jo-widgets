@@ -170,9 +170,8 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 
 	private void updateLayout() {
 		if (addValueComposite != null) {
-			valuesContainer.redraw();
-			addValueComposite.redraw();
-			getParent().redraw();
+			getParent().layoutBegin();
+			getParent().layoutEnd();
 		}
 	}
 
@@ -436,7 +435,7 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 
 		public Row addRow(final int index) {
 			layoutBegin();
-			final Row result = new Row(add(bpf.composite()));
+			final Row result = new Row(add(index, bpf.composite(), null));
 
 			rows.add(index, result);
 			controls.add(index, result.getControl());
