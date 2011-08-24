@@ -260,9 +260,9 @@ public class SwtContainer implements IContainerSpi {
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object cellConstraints) {
 
-		//TODO MG consider index
 		final WIDGET_TYPE result = factory.create(getUiReference(), descriptor);
 		setLayoutConstraints(result, cellConstraints);
+		correctIndex(index, result);
 		return result;
 	}
 
@@ -274,9 +274,9 @@ public class SwtContainer implements IContainerSpi {
 
 		final ICustomWidgetFactory customWidgetFactory = createCustomWidgetFactory();
 
-		//TODO MG consider index
 		final WIDGET_TYPE result = widgetCreator.create(customWidgetFactory);
 		setLayoutConstraints(result, cellConstraints);
+		correctIndex(index, result);
 		return result;
 	}
 
@@ -319,7 +319,7 @@ public class SwtContainer implements IContainerSpi {
 		composite.setRedraw(true);
 	}
 
-	protected void setLayoutConstraints(final IWidgetCommon widget, final Object layoutConstraints) {
+	private void setLayoutConstraints(final IWidgetCommon widget, final Object layoutConstraints) {
 		final Object object = widget.getUiReference();
 		if (object instanceof Control) {
 			final Control control = (Control) object;
@@ -331,6 +331,19 @@ public class SwtContainer implements IContainerSpi {
 				+ "' excpected, but '"
 				+ object.getClass().getName()
 				+ "' found.");
+		}
+	}
+
+	private void correctIndex(final Integer index, final IWidgetCommon widget) {
+		if (index != null) {
+			final int indexInt = index.intValue();
+			if (indexInt > 0 && indexInt < composite.getChildren().length - 1) {
+				((Control) widget.getUiReference()).moveAbove(composite.getChildren()[indexInt]);
+			}
+			else if (indexInt < 0 || indexInt > composite.getChildren().length - 1) {
+				throw new IndexOutOfBoundsException("Index '" + indexInt + "' is out of range");
+			}
+			//else {control is already at the last position}
 		}
 	}
 
