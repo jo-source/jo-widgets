@@ -27,21 +27,16 @@
  */
 package org.jowidgets.spi.impl.swt.widgets;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import net.miginfocom.swt.MigLayout;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.TraverseEvent;
-import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Widget;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.types.IFocusTraversalPolicy;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IControlCommon;
@@ -63,110 +58,23 @@ import org.jowidgets.spi.impl.swt.util.RectangleConvert;
 import org.jowidgets.spi.widgets.IContainerSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.util.Assert;
-import org.jowidgets.util.EmptyCheck;
 
-//CHECKSTYLE:OFF
 public class SwtContainer implements IContainerSpi {
 
 	private final IGenericWidgetFactory factory;
 	private final SwtComponent swtComponentDelegate;
-	private final IFocusTraversalPolicy focusTraversalPolicy;
-	private final TraverseListener traverseListener;
-	private final List<IControlCommon> children;
 
 	private Composite composite;
-	private SwtContainer parent;
 
 	public SwtContainer(final IGenericWidgetFactory factory, final Composite composite) {
-		//final IFocusTraversalPolicy focusTraversalPolicy) {
 
 		Assert.paramNotNull(factory, "factory");
 		Assert.paramNotNull(composite, "composite");
 
 		this.factory = factory;
 		this.composite = composite;
-		this.children = new LinkedList<IControlCommon>();
 		this.swtComponentDelegate = new SwtComponent(composite);
 
-		this.focusTraversalPolicy = null;
-		if (focusTraversalPolicy != null) {
-			this.traverseListener = new TraverseListener() {
-				@Override
-				public void keyTraversed(final TraverseEvent e) {
-					final Control control = ((Control) e.getSource());
-					if (e.detail == SWT.TRAVERSE_TAB_NEXT) {
-						final IControlCommon lastFocusable = getLastFocusable();
-						if (lastFocusable != null && lastFocusable.getUiReference() == control) {
-							if (parent != null) {
-
-							}
-						}
-					}
-					else if (e.detail == SWT.TRAVERSE_TAB_PREVIOUS) {
-
-					}
-
-				}
-			};
-		}
-		else {
-			this.traverseListener = null;
-		}
-	}
-
-	private boolean focusFirst() {
-		final IControlCommon control = getFirstFocusable();
-		if (control != null) {
-			if (control instanceof SwtContainer) {
-				return ((SwtContainer) control).focusFirst();
-			}
-			else {
-				return control.requestFocus();
-			}
-		}
-		else {
-			return swtComponentDelegate.requestFocus();
-		}
-	}
-
-	@SuppressWarnings("unused")
-	private boolean focusLast() {
-		final IControlCommon control = getLastFocusable();
-		if (control != null) {
-			if (control instanceof SwtContainer) {
-				return ((SwtContainer) control).focusLast();
-			}
-			else {
-				return control.requestFocus();
-			}
-		}
-		else {
-			return swtComponentDelegate.requestFocus();
-		}
-	}
-
-	IControlCommon getFirstFocusable() {
-		if (focusTraversalPolicy != null) {
-			return focusTraversalPolicy.getFirst();
-		}
-		else if (!children.isEmpty()) {
-			return children.get(0);
-		}
-		else {
-			return null;
-		}
-	}
-
-	IControlCommon getLastFocusable() {
-		if (focusTraversalPolicy != null) {
-			return focusTraversalPolicy.getLast();
-		}
-		else if (!children.isEmpty()) {
-			return children.get(children.size() - 1);
-		}
-		else {
-			return null;
-		}
 	}
 
 	public void setComposite(final Composite composite) {
@@ -296,12 +204,7 @@ public class SwtContainer implements IContainerSpi {
 
 	@Override
 	public boolean requestFocus() {
-		if (EmptyCheck.isEmpty(composite.getChildren())) {
-			return swtComponentDelegate.requestFocus();
-		}
-		else {
-			return focusFirst();
-		}
+		return swtComponentDelegate.requestFocus();
 	}
 
 	@Override
@@ -352,6 +255,22 @@ public class SwtContainer implements IContainerSpi {
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
 		swtComponentDelegate.removePopupDetectionListener(listener);
+	}
+
+	@Override
+	public void setTabOrder(final List<? extends IControlCommon> tabOrder) {
+		if (tabOrder == null) {
+			getUiReference().setTabList(null);
+		}
+		else {
+			final Control[] tabList = new Control[tabOrder.size()];
+			int index = 0;
+			for (final IControlCommon control : tabOrder) {
+				tabList[index] = (Control) control.getUiReference();
+				index++;
+			}
+			getUiReference().setTabList(tabList);
+		}
 	}
 
 	@Override
@@ -420,8 +339,6 @@ public class SwtContainer implements IContainerSpi {
 	private void afterChildCreation(final Integer index, final IWidgetCommon child, final Object layoutConstraints) {
 		setLayoutConstraints(child, layoutConstraints);
 		correctIndex(index, child);
-		addTraverseListener(child);
-		setThisAsParent(child);
 	}
 
 	private void setLayoutConstraints(final IWidgetCommon widget, final Object layoutConstraints) {
@@ -449,18 +366,6 @@ public class SwtContainer implements IContainerSpi {
 				throw new IndexOutOfBoundsException("Index '" + indexInt + "' is out of range");
 			}
 			//else {control is already at the last position}
-		}
-	}
-
-	private void addTraverseListener(final IWidgetCommon widget) {
-		if (traverseListener != null) {
-			((Control) widget.getUiReference()).addTraverseListener(traverseListener);
-		}
-	}
-
-	private void setThisAsParent(final IWidgetCommon widget) {
-		if (widget instanceof SwtContainer) {
-			((SwtContainer) widget).parent = this;
 		}
 	}
 

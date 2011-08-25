@@ -53,6 +53,8 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 	private final List<Tuple<Widget, Object>> preWidgets;
 	private final JoWidgetFactory widgetFactory;
 
+	private List<? extends IControl> tabOrder;
+
 	@SuppressWarnings("rawtypes")
 	Container(final BLUE_PRINT_TYPE bluePrint) {
 		super(bluePrint);
@@ -69,6 +71,11 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 			final Object layoutConstraints = preWidgetTuple.getSecond();
 			final IControl newWidget = widget.add(preWidget.getDescriptor(), layoutConstraints);
 			preWidget.initialize(newWidget);
+		}
+
+		if (tabOrder != null) {
+			widget.setTabOrder(tabOrder);
+			tabOrder = null;
 		}
 	}
 
@@ -119,6 +126,17 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 		final JoLabel label = new JoLabel(icon, text, tooltipText);
 		add(label, layoutConstraints);
 		return label;
+	}
+
+	@Override
+	public void setTabOrder(final List<? extends IControl> tabOrder) {
+		if (isInitialized()) {
+			getWidget().setTabOrder(tabOrder);
+		}
+		else {
+			this.tabOrder = tabOrder;
+		}
+
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})

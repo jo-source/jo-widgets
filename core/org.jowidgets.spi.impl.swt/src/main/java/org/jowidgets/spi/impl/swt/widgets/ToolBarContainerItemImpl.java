@@ -28,6 +28,8 @@
 
 package org.jowidgets.spi.impl.swt.widgets;
 
+import java.util.List;
+
 import net.miginfocom.swt.MigLayout;
 
 import org.eclipse.swt.SWT;
@@ -66,6 +68,11 @@ public class ToolBarContainerItemImpl extends ToolBarItemImpl implements IToolBa
 		item.setControl(composite);
 
 		this.swtComposite = new SwtComposite(factory, composite);
+	}
+
+	@Override
+	public void setTabOrder(final List<? extends IControlCommon> tabOrder) {
+		swtComposite.setTabOrder(tabOrder);
 	}
 
 	@Override

@@ -27,6 +27,8 @@
  */
 package org.jowidgets.spi.impl.dummy.widgets;
 
+import java.util.List;
+
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
@@ -231,6 +233,11 @@ public class DummyContainer implements IContainerSpi {
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
 		dummyComponentDelegate.removePopupDetectionListener(listener);
+	}
+
+	@Override
+	public void setTabOrder(final List<? extends IControlCommon> tabOrder) {
+
 	}
 
 	@Override

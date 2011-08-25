@@ -120,6 +120,10 @@ public class ContainerDelegate {
 		return result;
 	}
 
+	public void setTabOrder(final List<? extends IControl> tabOrder) {
+		containerWidget.setTabOrder(tabOrder);
+	}
+
 	public List<IControl> getChildren() {
 		return new LinkedList<IControl>(children);
 	}
