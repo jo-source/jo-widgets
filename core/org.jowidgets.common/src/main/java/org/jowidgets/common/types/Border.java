@@ -42,4 +42,9 @@ public class Border {
 		return title;
 	}
 
+	@Override
+	public String toString() {
+		return "Border [title=" + title + "]";
+	}
+
 }

@@ -28,6 +28,7 @@
 package org.jowidgets.api.widgets.content;
 
 import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
@@ -38,6 +39,40 @@ public interface IInputContentContainer extends IContainer {
 	void register(String validationContext, IValidateable validateable);
 
 	void unRegister(String validationContext, IValidateable validateable);
+
+	/**
+	 * Creates and adds an control to this container.
+	 * 
+	 * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
+	 * @param validationContext The validation context that should be used for validation
+	 * @param index The index at which the control should be added in the container
+	 * @param descriptor The descriptor that describes the control to add
+	 * @param layoutConstraints The layout constraints / data for the added control
+	 * 
+	 * @return the created and added control
+	 */
+	<WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+		String validationContext,
+		int index,
+		IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+		Object layoutConstraints);
+
+	/**
+	 * Creates and adds an control to this container
+	 * 
+	 * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
+	 * @param validationContext The validation context that should be used for validation
+	 * @param index The index at which the control should be added in the container
+	 * @param creator The creator that creates the control
+	 * @param layoutConstraints The layout constraints / data for the added control
+	 * 
+	 * @return the created and added control
+	 */
+	<WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+		String validationContext,
+		int index,
+		ICustomWidgetCreator<WIDGET_TYPE> creator,
+		Object layoutConstraints);
 
 	/**
 	 * Creates and adds an control to this container.
