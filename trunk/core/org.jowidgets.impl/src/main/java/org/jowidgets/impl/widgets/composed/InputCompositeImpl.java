@@ -27,6 +27,7 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.api.layout.ILayoutFactory;
@@ -56,14 +57,19 @@ import org.jowidgets.tools.validation.CompoundValidator;
 import org.jowidgets.tools.validation.ValidationCache;
 import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
+import org.jowidgets.util.Tuple;
 import org.jowidgets.validation.IValidateable;
 import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.validation.IValidationResultBuilder;
 import org.jowidgets.validation.IValidator;
 import org.jowidgets.validation.ValidationResult;
 
 //TODO MG inputCompositeWidget must be implemented correctly
 public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements IInputComposite<INPUT_TYPE>, IInputContentContainer {
+
+	private final List<Tuple<String, IInputControl<?>>> inputControls;
+	private final List<Tuple<String, IValidateable>> validatables;
 
 	private final IInputContentCreator<INPUT_TYPE> contentCreator;
 	private final IComposite composite;
@@ -77,6 +83,9 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 	public InputCompositeImpl(final IComposite composite, final IInputCompositeSetup<INPUT_TYPE> setup) {
 		super(composite);
 
+		this.inputControls = new LinkedList<Tuple<String, IInputControl<?>>>();
+		this.validatables = new LinkedList<Tuple<String, IValidateable>>();
+
 		this.inputObservable = new InputObservable();
 		this.contentCreator = setup.getContentCreator();
 		this.isAutoResetValidation = setup.isAutoResetValidation();
@@ -88,7 +97,7 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 			this.composite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[][grow]0"));
 			final IValidationResultLabelBluePrint validationLabelBp = bpf.validationResultLabel().setSetup(
 					setup.getValidationLabel());
-			validationLabel = this.composite.add(validationLabelBp, "h 18::, wrap");// TODO MG use hide instead
+			validationLabel = this.composite.add(validationLabelBp, "h 18::, wrap");
 		}
 		else {
 			validationLabel = null;
@@ -111,13 +120,16 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 			compoundValidator.addValidator(setup.getValidator());
 		}
 
-		this.validationCache = new ValidationCache(new IValidationResultCreator() {
-			@Override
-			public IValidationResult createValidationResult() {
-				// TODO implement create validation result
-				return ValidationResult.ok();
-			}
-		});
+		this.validationCache = new ValidationCache(new ValidationResultCreator());
+
+		if (validationLabel != null) {
+			this.validationCache.addValidationConditionListener(new IValidationConditionListener() {
+				@Override
+				public void validationConditionsChanged() {
+					validationLabel.setResult(validate());
+				}
+			});
+		}
 
 		contentCreator.createContent(this);
 		if (setup.getValue() != null) {
@@ -139,13 +151,19 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 
 	@Override
 	public boolean hasModifications() {
-		// TODO MG implement hasModifications
+		for (final Tuple<String, IInputControl<?>> tuple : inputControls) {
+			if (tuple.getSecond().hasModifications()) {
+				return true;
+			}
+		}
 		return false;
 	}
 
 	@Override
 	public void resetModificationState() {
-		// TODO MG implement resetModificationState
+		for (final Tuple<String, IInputControl<?>> tuple : inputControls) {
+			tuple.getSecond().resetModificationState();
+		}
 	}
 
 	@Override
@@ -191,93 +209,18 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
-		final int index,
-		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
-		final Object layoutConstraints) {
-		return innerComposite.add(index, descriptor, layoutConstraints);
-	}
-
-	@Override
-	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
-		final int index,
-		final ICustomWidgetCreator<WIDGET_TYPE> creator,
-		final Object layoutConstraints) {
-		return innerComposite.add(index, creator, layoutConstraints);
-	}
-
-	@Override
-	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
-		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
-		final Object layoutConstraints) {
-		return innerComposite.add(descriptor, layoutConstraints);
-	}
-
-	@Override
-	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
-		final ICustomWidgetCreator<WIDGET_TYPE> creator,
-		final Object layoutConstraints) {
-		return innerComposite.add(creator, layoutConstraints);
-	}
-
-	@Override
-	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
-		return innerComposite.add(descriptor);
-	}
-
-	@Override
-	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final ICustomWidgetCreator<WIDGET_TYPE> creator) {
-		return innerComposite.add(creator);
-	}
-
-	@Override
-	public <WIDGET_TYPE extends IInputControl<?>> WIDGET_TYPE add(
-		final String validationContext,
-		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
-		final Object layoutConstraints) {
-		return add(descriptor, layoutConstraints);
-	}
-
-	@Override
-	public <WIDGET_TYPE extends IInputControl<?>> WIDGET_TYPE add(
-		final String validationContext,
-		final ICustomWidgetCreator<WIDGET_TYPE> creator,
-		final Object layoutConstraints) {
-		return add(creator, layoutConstraints);
-	}
-
-	@Override
-	public <WIDGET_TYPE extends IInputControl<?>> WIDGET_TYPE add(
-		final String validationContext,
-		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
-		return add(descriptor);
-	}
-
-	@Override
-	public <WIDGET_TYPE extends IInputControl<?>> WIDGET_TYPE add(
-		final String validationContext,
-		final ICustomWidgetCreator<WIDGET_TYPE> creator) {
-		return add(creator);
-	}
-
-	@Override
 	public void setTabOrder(final List<? extends IControl> tabOrder) {
 		innerComposite.setTabOrder(tabOrder);
 	}
 
 	@Override
-	public boolean remove(final IControl control) {
-		return innerComposite.remove(control);
-	}
-
-	@Override
 	public void register(final String validationContext, final IValidateable validateable) {
-		// TODO MG implement register
+		this.validatables.add(new Tuple<String, IValidateable>(validationContext, validateable));
 	}
 
 	@Override
 	public void unRegister(final String validationContext, final IValidateable validateable) {
-		// TODO MG implement unRegister
+		this.validatables.remove(new Tuple<String, IValidateable>(validationContext, validateable));
 	}
 
 	@Override
@@ -293,11 +236,6 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 	@Override
 	public void layoutEnd() {
 		composite.layoutEnd();
-	}
-
-	@Override
-	public void removeAll() {
-		innerComposite.removeAll();
 	}
 
 	@Override
@@ -318,6 +256,200 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 	@Override
 	public List<IControl> getChildren() {
 		return innerComposite.getChildren();
+	}
+
+	@Override
+	public boolean remove(final IControl control) {
+		removeControlFromInputControls(control);
+		return innerComposite.remove(control);
+	}
+
+	private void removeControlFromInputControls(final IControl control) {
+		int index = 0;
+		for (final Tuple<String, IInputControl<?>> tuple : new LinkedList<Tuple<String, IInputControl<?>>>(inputControls)) {
+			if (tuple.getSecond() == control) {
+				inputControls.remove(index);
+				return;
+			}
+			index++;
+		}
+	}
+
+	@Override
+	public void removeAll() {
+		inputControls.clear();
+		innerComposite.removeAll();
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+		final int index,
+		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+		final Object layoutConstraints) {
+
+		final WIDGET_TYPE result = innerComposite.add(index, descriptor, layoutConstraints);
+		afterAdd(null, result);
+		return result;
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+		final int index,
+		final ICustomWidgetCreator<WIDGET_TYPE> creator,
+		final Object layoutConstraints) {
+
+		final WIDGET_TYPE result = innerComposite.add(index, creator, layoutConstraints);
+		afterAdd(null, result);
+		return result;
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+		final Object layoutConstraints) {
+
+		final WIDGET_TYPE result = innerComposite.add(descriptor, layoutConstraints);
+		afterAdd(null, result);
+		return result;
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+		final ICustomWidgetCreator<WIDGET_TYPE> creator,
+		final Object layoutConstraints) {
+
+		final WIDGET_TYPE result = innerComposite.add(creator, layoutConstraints);
+		afterAdd(null, result);
+		return result;
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+		final WIDGET_TYPE result = innerComposite.add(descriptor);
+		afterAdd(null, result);
+		return result;
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final ICustomWidgetCreator<WIDGET_TYPE> creator) {
+
+		final WIDGET_TYPE result = innerComposite.add(creator);
+		afterAdd(null, result);
+		return result;
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+		final String validationContext,
+		final int index,
+		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+		final Object layoutConstraints) {
+
+		final WIDGET_TYPE result = innerComposite.add(index, descriptor, layoutConstraints);
+		afterAdd(validationContext, result);
+		return result;
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+		final String validationContext,
+		final int index,
+		final ICustomWidgetCreator<WIDGET_TYPE> creator,
+		final Object layoutConstraints) {
+
+		final WIDGET_TYPE result = innerComposite.add(index, creator, layoutConstraints);
+		afterAdd(validationContext, result);
+		return result;
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IInputControl<?>> WIDGET_TYPE add(
+		final String validationContext,
+		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+		final Object layoutConstraints) {
+
+		final WIDGET_TYPE result = innerComposite.add(descriptor, layoutConstraints);
+		afterAdd(validationContext, result);
+		return result;
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IInputControl<?>> WIDGET_TYPE add(
+		final String validationContext,
+		final ICustomWidgetCreator<WIDGET_TYPE> creator,
+		final Object layoutConstraints) {
+
+		final WIDGET_TYPE result = innerComposite.add(creator, layoutConstraints);
+		afterAdd(validationContext, result);
+		return result;
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IInputControl<?>> WIDGET_TYPE add(
+		final String validationContext,
+		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+
+		final WIDGET_TYPE result = innerComposite.add(descriptor);
+		afterAdd(validationContext, result);
+		return result;
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IInputControl<?>> WIDGET_TYPE add(
+		final String validationContext,
+		final ICustomWidgetCreator<WIDGET_TYPE> creator) {
+
+		final WIDGET_TYPE result = innerComposite.add(creator);
+		afterAdd(validationContext, result);
+		return result;
+	}
+
+	private void afterAdd(final String context, final IControl control) {
+		if (control instanceof IInputControl) {
+			final IInputControl<?> inputControl = (IInputControl<?>) control;
+
+			inputControls.add(new Tuple<String, IInputControl<?>>(context, inputControl));
+
+			inputControl.addValidationConditionListener(new IValidationConditionListener() {
+				@Override
+				public void validationConditionsChanged() {
+					validationCache.setDirty();
+				}
+			});
+
+			inputControl.addInputListener(new IInputListener() {
+				@Override
+				public void inputChanged() {
+					inputObservable.fireInputChanged();
+				}
+			});
+		}
+	}
+
+	private class ValidationResultCreator implements IValidationResultCreator {
+
+		@Override
+		public IValidationResult createValidationResult() {
+			final IValidationResultBuilder builder = ValidationResult.builder();
+
+			for (final Tuple<String, IInputControl<?>> tuple : inputControls) {
+				builder.addResult(validate(tuple));
+			}
+
+			for (final Tuple<String, IValidateable> tuple : validatables) {
+				builder.addResult(validate(tuple));
+			}
+
+			builder.addResult(compoundValidator.validate(getValue()));
+
+			return builder.build();
+		}
+
+		private IValidationResult validate(final Tuple<String, ? extends IValidateable> tuple) {
+			final String context = tuple.getFirst();
+			final IValidateable inputControl = tuple.getSecond();
+			return inputControl.validate().withContext(context);
+		}
 	}
 
 }

@@ -75,7 +75,9 @@ public class InputDialogImpl<INPUT_TYPE> extends WindowWrapper implements IInput
 		this.dialogWidget.setLayout(new MigLayoutDescriptor("[grow]", "[grow][]"));
 
 		// composite widget
-		final IComposite compositeWidget = dialogWidget.add(bpF.composite(), "growx, growy, h 0::,w 0::, wrap");
+		final IComposite compositeWidget = dialogWidget.add(
+				bpF.composite().setBorder(setup.getBorder()),
+				"growx, growy, h 0::,w 0::, wrap");
 		this.inputCompositeWidget = new InputCompositeImpl<INPUT_TYPE>(compositeWidget, setup);
 
 		// buttons
@@ -303,10 +305,9 @@ public class InputDialogImpl<INPUT_TYPE> extends WindowWrapper implements IInput
 
 			this.buttonDescriptor = new BluePrintFactory().button().setSetup(buttonDescriptor);
 
-			inputCompositeWidget.addInputListener(new IInputListener() {
-
+			inputCompositeWidget.addValidationConditionListener(new IValidationConditionListener() {
 				@Override
-				public void inputChanged() {
+				public void validationConditionsChanged() {
 					onInputChanged();
 				}
 			});

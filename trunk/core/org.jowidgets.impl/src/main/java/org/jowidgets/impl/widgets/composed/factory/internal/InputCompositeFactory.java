@@ -27,20 +27,28 @@
  */
 package org.jowidgets.impl.widgets.composed.factory.internal;
 
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IInputContainer;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.IInputCompositeDescriptor;
+import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.widgets.composed.InputCompositeImpl;
-import org.jowidgets.tools.widgets.factory.AbstractCompositeWidgetFactory;
 
-public class InputCompositeFactory<INPUT_TYPE> extends
-		AbstractCompositeWidgetFactory<IInputContainer<INPUT_TYPE>, IInputCompositeDescriptor<INPUT_TYPE>> {
+public class InputCompositeFactory<INPUT_TYPE> implements
+		IWidgetFactory<IInputContainer<INPUT_TYPE>, IInputCompositeDescriptor<INPUT_TYPE>> {
 
 	@Override
-	protected IInputContainer<INPUT_TYPE> createWidget(
-		final IComposite compositeWidget,
+	public IInputContainer<INPUT_TYPE> create(
+		final Object parentUiReference,
 		final IInputCompositeDescriptor<INPUT_TYPE> descriptor) {
-		return new InputCompositeImpl<INPUT_TYPE>(compositeWidget, descriptor);
-	}
 
+		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+
+		final IComposite composite = Toolkit.getWidgetFactory().create(
+				parentUiReference,
+				bpf.composite().setBorder(descriptor.getBorder()));
+
+		return new InputCompositeImpl<INPUT_TYPE>(composite, descriptor);
+	}
 }
