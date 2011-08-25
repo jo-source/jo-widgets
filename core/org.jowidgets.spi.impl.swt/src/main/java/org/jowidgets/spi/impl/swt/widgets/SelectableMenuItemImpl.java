@@ -27,8 +27,11 @@
  */
 package org.jowidgets.spi.impl.swt.widgets;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.jowidgets.common.widgets.controller.IItemStateListener;
 import org.jowidgets.spi.impl.controller.ItemStateObservable;
@@ -42,7 +45,6 @@ public class SelectableMenuItemImpl extends MenuItemImpl implements ISelectableM
 		super(menuItem);
 
 		this.itemStateObservable = new ItemStateObservable();
-
 		menuItem.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
@@ -56,9 +58,39 @@ public class SelectableMenuItemImpl extends MenuItemImpl implements ISelectableM
 		return getUiReference().getSelection();
 	}
 
+	private static boolean isRadio(final MenuItem menuItem) {
+		return (menuItem.getStyle() & SWT.RADIO) == SWT.RADIO;
+	}
+
+	private static void unselectItem(final MenuItem menuItem) {
+		if (menuItem.getSelection()) {
+			menuItem.setSelection(false);
+			menuItem.notifyListeners(SWT.Selection, new Event());
+		}
+	}
+
 	@Override
 	public void setSelected(final boolean selected) {
+		// TODO MG please check if code is ok
+		if (selected && isRadio(getUiReference())) {
+			final Menu menu = getUiReference().getParent();
+			final MenuItem[] items = menu.getItems();
+			final int index = menu.indexOf(getUiReference());
+
+			int i = index - 1;
+			while (i >= 0 && isRadio(items[i])) {
+				unselectItem(items[i]);
+				i--;
+			}
+
+			i = index + 1;
+			while (i < menu.getItemCount() && isRadio(items[i])) {
+				unselectItem(items[i]);
+				i++;
+			}
+		}
 		getUiReference().setSelection(selected);
+		itemStateObservable.fireItemStateChanged();
 	}
 
 	@Override
