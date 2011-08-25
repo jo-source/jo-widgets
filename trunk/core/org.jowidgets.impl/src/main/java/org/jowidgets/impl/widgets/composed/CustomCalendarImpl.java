@@ -307,8 +307,6 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 
 		private Dimension preferredSize;
 
-		@SuppressWarnings("unused")
-		private int rows;
 		private int cols;
 		private int cells;
 
@@ -372,7 +370,6 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 				x = clientArea.getX();
 				int maxX = x;
 				int maxY = y;
-				rows = 1;
 				cols = 1;
 				cells = 0;
 				int column = 1;
@@ -395,7 +392,6 @@ public class CustomCalendarImpl extends CompositeBasedControl implements ICalend
 					else if (i != 0 && y + 2 * prefHeight <= clientArea.getHeight()) {
 						x = clientArea.getX();
 						y = y + prefHeight + G_Y;
-						rows++;
 						column = 1;
 						layoutMonth = true;
 					}
