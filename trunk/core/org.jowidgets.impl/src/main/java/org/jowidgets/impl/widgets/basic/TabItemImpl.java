@@ -352,6 +352,11 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 	}
 
 	@Override
+	public void setTabOrder(final List<? extends IControl> tabOrder) {
+		containerDelegate.setTabOrder(tabOrder);
+	}
+
+	@Override
 	public void removeAll() {
 		checkDetached();
 		containerDelegate.removeAll();

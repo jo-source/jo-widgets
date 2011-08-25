@@ -27,6 +27,8 @@
  */
 package org.jowidgets.spi.impl.swt.widgets;
 
+import java.util.List;
+
 import net.miginfocom.layout.ComponentWrapper;
 import net.miginfocom.layout.LayoutCallback;
 import net.miginfocom.swt.MigLayout;
@@ -279,6 +281,11 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
 		innerContainer.removePopupDetectionListener(listener);
+	}
+
+	@Override
+	public void setTabOrder(final List<? extends IControlCommon> tabOrder) {
+		innerContainer.setTabOrder(tabOrder);
 	}
 
 	@Override

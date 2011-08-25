@@ -55,6 +55,7 @@ public interface IContainer extends IComponent, IContainerCommon {
 	 * A further using / access of removed controls is not indented and may lead to arbitrary behavior
 	 * 
 	 * @param control The control to remove
+	 * 
 	 * @return true if the widget could be removed, false otherwise
 	 */
 	boolean remove(IControl control);
@@ -66,6 +67,7 @@ public interface IContainer extends IComponent, IContainerCommon {
 	 * @param index The index at which the control should be added in the container
 	 * @param descriptor The descriptor that describes the control to add
 	 * @param layoutConstraints The layout constraints / data for the added control
+	 * 
 	 * @return the created and added control
 	 */
 	<WIDGET_TYPE extends IControl> WIDGET_TYPE add(
@@ -80,6 +82,7 @@ public interface IContainer extends IComponent, IContainerCommon {
 	 * @param index The index at which the control should be added in the container
 	 * @param creator The creator that creates the control
 	 * @param layoutConstraints The layout constraints / data for the added control
+	 * 
 	 * @return the created and added control
 	 */
 	<WIDGET_TYPE extends IControl> WIDGET_TYPE add(int index, ICustomWidgetCreator<WIDGET_TYPE> creator, Object layoutConstraints);
@@ -90,6 +93,7 @@ public interface IContainer extends IComponent, IContainerCommon {
 	 * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
 	 * @param descriptor The descriptor that describes the control to add
 	 * @param layoutConstraints The layout constraints / data for the added control
+	 * 
 	 * @return the created and added control
 	 */
 	<WIDGET_TYPE extends IControl> WIDGET_TYPE add(IWidgetDescriptor<? extends WIDGET_TYPE> descriptor, Object layoutConstraints);
@@ -100,6 +104,7 @@ public interface IContainer extends IComponent, IContainerCommon {
 	 * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
 	 * @param creator The creator that creates the control
 	 * @param layoutConstraints The layout constraints / data for the added control
+	 * 
 	 * @return the created and added control
 	 */
 	<WIDGET_TYPE extends IControl> WIDGET_TYPE add(ICustomWidgetCreator<WIDGET_TYPE> creator, Object layoutConstraints);
@@ -109,6 +114,7 @@ public interface IContainer extends IComponent, IContainerCommon {
 	 * 
 	 * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
 	 * @param descriptor The descriptor that describes the control to add
+	 * 
 	 * @return the created and added control
 	 */
 	<WIDGET_TYPE extends IControl> WIDGET_TYPE add(IWidgetDescriptor<? extends WIDGET_TYPE> descriptor);
@@ -118,8 +124,16 @@ public interface IContainer extends IComponent, IContainerCommon {
 	 * 
 	 * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
 	 * @param creator The creator that creates the control
+	 * 
 	 * @return the created and added control
 	 */
 	<WIDGET_TYPE extends IControl> WIDGET_TYPE add(ICustomWidgetCreator<WIDGET_TYPE> creator);
+
+	/**
+	 * Sets the tab order of the container's controls.
+	 * 
+	 * @param tabOrder the tab order to set or null to set the default tab behavior.
+	 */
+	void setTabOrder(List<? extends IControl> tabOrder);
 
 }

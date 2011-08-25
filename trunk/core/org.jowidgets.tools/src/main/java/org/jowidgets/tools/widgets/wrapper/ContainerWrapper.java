@@ -136,4 +136,9 @@ public class ContainerWrapper extends ComponentWrapper implements IContainer {
 		return getWidget().add(creator);
 	}
 
+	@Override
+	public void setTabOrder(final List<? extends IControl> tabOrder) {
+		getWidget().setTabOrder(tabOrder);
+	}
+
 }

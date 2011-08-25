@@ -36,6 +36,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.swing.BorderFactory;
@@ -242,6 +243,11 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 	@Override
 	public boolean isEnabled() {
 		return swingContainer.isEnabled();
+	}
+
+	@Override
+	public void setTabOrder(final List<? extends IControlCommon> tabOrder) {
+		swingContainer.setTabOrder(tabOrder);
 	}
 
 	@Override

@@ -28,7 +28,6 @@
 package org.jowidgets.api.widgets.descriptor.setup;
 
 import org.jowidgets.api.layout.ILayoutFactory;
-import org.jowidgets.common.types.IFocusTraversalPolicy;
 import org.jowidgets.common.widgets.descriptor.setup.IContainerSetupCommon;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
@@ -39,7 +38,5 @@ public interface IContainerSetup extends IComponentSetup, IContainerSetupCommon 
 
 	@Mandatory
 	ILayoutFactory<?> getLayoutFactory();
-
-	IFocusTraversalPolicy getFocusTraversalPolicy();
 
 }

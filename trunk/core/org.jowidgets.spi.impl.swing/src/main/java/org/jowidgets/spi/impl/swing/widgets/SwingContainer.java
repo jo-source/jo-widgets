@@ -29,6 +29,7 @@ package org.jowidgets.spi.impl.swing.widgets;
 
 import java.awt.Component;
 import java.awt.Container;
+import java.util.List;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -246,6 +247,11 @@ public class SwingContainer implements IContainerSpi {
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
 		swingComponentDelegate.removePopupDetectionListener(listener);
+	}
+
+	@Override
+	public void setTabOrder(final List<? extends IControlCommon> tabOrder) {
+		// TODO NM implement tab order
 	}
 
 	@Override

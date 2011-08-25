@@ -111,6 +111,11 @@ public class ScrollCompositeImpl extends AbstractScrollCompositeSpiWrapper imple
 	}
 
 	@Override
+	public void setTabOrder(final List<? extends IControl> tabOrder) {
+		containerDelegate.setTabOrder(tabOrder);
+	}
+
+	@Override
 	public List<IControl> getChildren() {
 		return containerDelegate.getChildren();
 	}

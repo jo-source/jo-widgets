@@ -261,6 +261,11 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 	}
 
 	@Override
+	public void setTabOrder(final List<? extends IControl> tabOrder) {
+		innerComposite.setTabOrder(tabOrder);
+	}
+
+	@Override
 	public boolean remove(final IControl control) {
 		return innerComposite.remove(control);
 	}

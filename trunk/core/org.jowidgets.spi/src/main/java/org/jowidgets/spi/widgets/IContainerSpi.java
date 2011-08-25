@@ -27,6 +27,8 @@
  */
 package org.jowidgets.spi.widgets;
 
+import java.util.List;
+
 import org.jowidgets.common.widgets.IContainerCommon;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
@@ -45,5 +47,7 @@ public interface IContainerSpi extends IComponentSpi, IContainerCommon {
 		Object layoutConstraints);
 
 	boolean remove(IControlCommon control);
+
+	void setTabOrder(List<? extends IControlCommon> tabOrder);
 
 }

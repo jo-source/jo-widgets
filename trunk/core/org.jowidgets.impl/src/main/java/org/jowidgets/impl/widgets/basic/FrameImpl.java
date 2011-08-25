@@ -126,6 +126,11 @@ public class FrameImpl extends AbstractFrameSpiWrapper implements IFrameUi {
 	}
 
 	@Override
+	public void setTabOrder(final List<? extends IControl> tabOrder) {
+		containerDelegate.setTabOrder(tabOrder);
+	}
+
+	@Override
 	public List<IControl> getChildren() {
 		return containerDelegate.getChildren();
 	}

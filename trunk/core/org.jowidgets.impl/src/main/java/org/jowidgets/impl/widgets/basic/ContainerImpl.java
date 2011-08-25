@@ -122,6 +122,11 @@ public class ContainerImpl extends AbstractContainerSpiWrapper implements IConta
 	}
 
 	@Override
+	public void setTabOrder(final List<? extends IControl> tabOrder) {
+		containerDelegate.setTabOrder(tabOrder);
+	}
+
+	@Override
 	public List<IControl> getChildren() {
 		return containerDelegate.getChildren();
 	}

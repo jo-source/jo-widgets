@@ -28,6 +28,7 @@
 package org.jowidgets.impl.widgets.composed;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -332,6 +333,8 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 			else {
 				validationLabel = null;
 			}
+
+			setTabOrder(Collections.singletonList(inputControl));
 		}
 
 		public void setValueIndex(final int index) {
