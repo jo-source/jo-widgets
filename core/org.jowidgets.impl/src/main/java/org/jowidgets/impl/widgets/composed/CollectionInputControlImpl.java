@@ -126,7 +126,6 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 		//TODO NM proper handling of the non mandatory setup params 
 		//(validation label and constraints may be null so do not render them)
 
-		//TODO NM re-implement this example code 
 		composite.setLayout(Toolkit.getLayoutFactoryProvider().listLayout());
 		valuesContainer = new ValuesContainer(composite.add(bpf.composite()));
 		valuesContainer.addRow();
@@ -171,6 +170,9 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 
 	private void updateLayout() {
 		if (addValueComposite != null) {
+			valuesContainer.updateRowsLayout();
+			addValueComposite.layoutBegin();
+			addValueComposite.layoutEnd();
 			getParent().layoutBegin();
 			getParent().layoutEnd();
 		}
@@ -255,7 +257,7 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 
 			final String userIndex = String.valueOf(valuesContainer.getValueCount() + 1);
 
-			valueIndex = add(bpf.textLabel(userIndex));
+			valueIndex = add(bpf.textLabel(userIndex).alignRight());
 
 			// TODO i18n
 			removeButton = add(removeButtonBp.setToolTipText("Remove entry " + userIndex));
@@ -281,7 +283,7 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 					}
 					else if (VirtualKey.BACK_SPACE.equals(event.getVirtualKey())
 						|| VirtualKey.DELETE.equals(event.getVirtualKey())) {
-						boolean removeControl = (inputControl.getValue() == null);
+						boolean removeControl = (!inputControl.hasModifications());
 						if (!removeControl) {
 							final Object value = inputControl.getValue();
 							if (value instanceof String) {
@@ -313,6 +315,13 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 				@Override
 				public void inputChanged() {
 					fireInputChanged();
+				}
+			});
+			inputControl.addValidationConditionListener(new IValidationConditionListener() {
+
+				@Override
+				public void validationConditionsChanged() {
+					validationCache.setDirty();
 				}
 			});
 
@@ -404,20 +413,11 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 			return controls;
 		}
 
-		@Override
-		public void redraw() {
-			final int lastHash = tableCommon.getLayoutHashCode();
-			tableCommon.validate();
-			final boolean changed = (lastHash != tableCommon.getLayoutHashCode());
-			if (changed) {
-				for (final Row row : rows) {
-					row.redraw();
-				}
-				addValueComposite.redraw();
+		public void updateRowsLayout() {
+			for (final Row row : rows) {
+				row.layoutBegin();
+				row.layoutEnd();
 			}
-			layoutBegin();
-			layoutEnd();
-			super.redraw();
 		}
 
 		public void setEditable(final boolean editable) {
@@ -493,4 +493,5 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 			fireInputChanged();
 		}
 	}
+
 }
