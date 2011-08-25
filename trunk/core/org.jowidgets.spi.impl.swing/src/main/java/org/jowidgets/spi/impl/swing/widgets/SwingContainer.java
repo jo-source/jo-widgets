@@ -29,6 +29,8 @@ package org.jowidgets.spi.impl.swing.widgets;
 
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.FocusTraversalPolicy;
+import java.util.ArrayList;
 import java.util.List;
 
 import net.miginfocom.swing.MigLayout;
@@ -251,7 +253,14 @@ public class SwingContainer implements IContainerSpi {
 
 	@Override
 	public void setTabOrder(final List<? extends IControlCommon> tabOrder) {
-		// TODO NM implement tab order
+		if (tabOrder == null) {
+			getUiReference().setFocusTraversalPolicy(null);
+			getUiReference().setFocusTraversalPolicyProvider(false);
+		}
+		else {
+			getUiReference().setFocusTraversalPolicy(new TabListTraversalPolicy(tabOrder));
+			getUiReference().setFocusTraversalPolicyProvider(true);
+		}
 	}
 
 	@Override
@@ -329,4 +338,52 @@ public class SwingContainer implements IContainerSpi {
 		}
 	}
 
+	private final class TabListTraversalPolicy extends FocusTraversalPolicy {
+		private final ArrayList<Component> tabOrder;
+
+		private TabListTraversalPolicy(final List<? extends IControlCommon> tabOrder) {
+			this.tabOrder = new ArrayList<Component>(tabOrder.size());
+			for (final IControlCommon control : tabOrder) {
+				this.tabOrder.add((Component) control.getUiReference());
+			}
+		}
+
+		@Override
+		public Component getComponentAfter(final Container aContainer, final Component aComponent) {
+			final int index = tabOrder.indexOf(aComponent) + 1;
+			if (index >= tabOrder.size()) {
+				return getFirstComponent(aContainer);
+			}
+			else {
+				return tabOrder.get(index);
+			}
+		}
+
+		@Override
+		public Component getComponentBefore(final Container aContainer, final Component aComponent) {
+			final int index = tabOrder.indexOf(aComponent) - 1;
+			if (index < 0) {
+				return getLastComponent(aContainer);
+			}
+			else {
+				return tabOrder.get(index);
+			}
+		}
+
+		@Override
+		public Component getFirstComponent(final Container aContainer) {
+			return tabOrder.get(0);
+		}
+
+		@Override
+		public Component getLastComponent(final Container aContainer) {
+			return tabOrder.get(tabOrder.size() - 1);
+		}
+
+		@Override
+		public Component getDefaultComponent(final Container aContainer) {
+			return getFirstComponent(aContainer);
+		}
+
+	}
 }
