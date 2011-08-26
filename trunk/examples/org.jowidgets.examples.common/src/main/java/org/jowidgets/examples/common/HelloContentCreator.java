@@ -87,7 +87,7 @@ public class HelloContentCreator implements IInputContentCreator<String> {
 				public IValidationResult decorate(final IValidationResult original) {
 					final IValidationMessage worstFirst = original.getWorstFirst();
 					if (worstFirst.getType().equalOrWorse(MessageType.ERROR)) {
-						return ValidationResult.infoError("*mandator field");
+						return ValidationResult.infoError("*mandatory field");
 					}
 					else {
 						return ValidationResult.create().withInfo("optional");
