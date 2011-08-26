@@ -27,9 +27,13 @@
  */
 package org.jowidgets.impl.widgets.composed.blueprint.defaults;
 
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.blueprint.IInputComponentValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.builder.IInputCompositeSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
-import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.util.IDecorator;
+import org.jowidgets.validation.IValidationResult;
 
 public class InputCompositeDefaults implements IDefaultInitializer<IInputCompositeSetupBuilder<?, ?>> {
 
@@ -37,8 +41,20 @@ public class InputCompositeDefaults implements IDefaultInitializer<IInputComposi
 	@Override
 	public void initialize(final IInputCompositeSetupBuilder<?, ?> builder) {
 		builder.setContentScrolled(true);
-		final BluePrintFactory bpF = new BluePrintFactory();
-		builder.setValidationLabel(bpF.validationResultLabel());
+		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
+
+		final IInputComponentValidationLabelBluePrint validationLabelBp = bpF.inputComponentValidationLabel();
+		validationLabelBp.setInitialValidationDecorator(new IDecorator<IValidationResult>() {
+			@Override
+			public IValidationResult decorate(final IValidationResult original) {
+				if (!original.isValid()) {
+					return original;
+				}
+				return null;
+			}
+		});
+
+		builder.setValidationLabel(validationLabelBp);
 	}
 
 }

@@ -359,7 +359,7 @@ public class SwtContainer implements IContainerSpi {
 	private void correctIndex(final Integer index, final IWidgetCommon widget) {
 		if (index != null) {
 			final int indexInt = index.intValue();
-			if (indexInt > 0 && indexInt < composite.getChildren().length - 1) {
+			if (indexInt >= 0 && indexInt < composite.getChildren().length - 1) {
 				((Control) widget.getUiReference()).moveAbove(composite.getChildren()[indexInt]);
 			}
 			else if (indexInt < 0 || indexInt > composite.getChildren().length - 1) {

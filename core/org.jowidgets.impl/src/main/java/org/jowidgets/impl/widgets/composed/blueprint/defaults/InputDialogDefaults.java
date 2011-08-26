@@ -28,9 +28,12 @@
 package org.jowidgets.impl.widgets.composed.blueprint.defaults;
 
 import org.jowidgets.api.types.InputDialogDefaultButtonPolicy;
+import org.jowidgets.api.widgets.blueprint.IInputComponentValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.builder.IInputDialogSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
+import org.jowidgets.util.IDecorator;
+import org.jowidgets.validation.IValidationResult;
 
 public class InputDialogDefaults implements IDefaultInitializer<IInputDialogSetupBuilder<?, ?>> {
 
@@ -41,9 +44,22 @@ public class InputDialogDefaults implements IDefaultInitializer<IInputDialogSetu
 		final BluePrintFactory bpF = new BluePrintFactory();
 		builder.setOkButton(bpF.button("OK"));
 		builder.setCancelButton(bpF.button("Cancel"));
-		builder.setValidationLabel(bpF.validationResultLabel());
+		builder.setValidationLabel(bpF.inputComponentValidationLabel());
 		builder.setDefaultButtonPolicy(InputDialogDefaultButtonPolicy.OK);
 		builder.setCloseable(false);
+
+		final IInputComponentValidationLabelBluePrint validationLabelBp = bpF.inputComponentValidationLabel();
+		validationLabelBp.setInitialValidationDecorator(new IDecorator<IValidationResult>() {
+			@Override
+			public IValidationResult decorate(final IValidationResult original) {
+				if (!original.isValid()) {
+					return original;
+				}
+				return null;
+			}
+		});
+
+		builder.setValidationLabel(validationLabelBp);
 	}
 
 }
