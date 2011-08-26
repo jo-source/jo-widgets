@@ -47,6 +47,8 @@ import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 
 public class TextFieldImpl extends AbstractInputControl implements ITextControlSpi {
 
+	private final InputModifierDocument modifierDocument;
+
 	public TextFieldImpl(final ITextFieldSetupSpi setup) {
 		super(setup.isPasswordPresentation() ? new JPasswordField() : new JTextField());
 
@@ -71,8 +73,9 @@ public class TextFieldImpl extends AbstractInputControl implements ITextControlS
 			throw new IllegalArgumentException("InputChangeEventPolicy '" + setup.getInputChangeEventPolicy() + "' is not known.");
 		}
 
-		getUiReference().setDocument(
-				new InputModifierDocument(getUiReference(), inputVerifier, inputObservable, setup.getMaxLength()));
+		this.modifierDocument = new InputModifierDocument(getUiReference(), inputVerifier, inputObservable, setup.getMaxLength());
+
+		getUiReference().setDocument(modifierDocument);
 		if (setup.getMask() != null && TextMaskMode.FULL_MASK == setup.getMask().getMode()) {
 			setText(setup.getMask().getPlaceholder());
 			getUiReference().addFocusListener(new FocusAdapter() {
@@ -96,7 +99,9 @@ public class TextFieldImpl extends AbstractInputControl implements ITextControlS
 
 	@Override
 	public void setText(final String text) {
+		modifierDocument.setProgramaticChangeState(true);
 		getUiReference().setText(text);
+		modifierDocument.setProgramaticChangeState(false);
 		if (!getUiReference().isFocusOwner()) {
 			fireInputChanged(getText());
 		}

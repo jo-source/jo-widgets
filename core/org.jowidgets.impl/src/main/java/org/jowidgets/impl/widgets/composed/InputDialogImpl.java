@@ -62,13 +62,11 @@ public class InputDialogImpl<INPUT_TYPE> extends WindowWrapper implements IInput
 
 	private INPUT_TYPE value;
 	private boolean okPressed;
-	private final boolean autoResetValidation;
 
 	public InputDialogImpl(final IFrame dialogWidget, final IInputDialogSetup<INPUT_TYPE> setup) {
 		super(dialogWidget);
 		this.okPressed = false;
 		this.dialogWidget = dialogWidget;
-		this.autoResetValidation = setup.isAutoResetValidation();
 
 		final IBluePrintFactory bpF = new BluePrintFactory();
 
@@ -138,9 +136,6 @@ public class InputDialogImpl<INPUT_TYPE> extends WindowWrapper implements IInput
 	public void setVisible(final boolean visible) {
 		if (visible) {
 			this.okPressed = false;
-			if (autoResetValidation) {
-				resetValidation();
-			}
 		}
 		dialogWidget.setVisible(visible);
 	}
@@ -215,11 +210,6 @@ public class InputDialogImpl<INPUT_TYPE> extends WindowWrapper implements IInput
 	@Override
 	public void setEditable(final boolean editable) {
 		inputCompositeWidget.setEditable(editable);
-	}
-
-	@Override
-	public void resetValidation() {
-		inputCompositeWidget.resetValidation();
 	}
 
 	@Override

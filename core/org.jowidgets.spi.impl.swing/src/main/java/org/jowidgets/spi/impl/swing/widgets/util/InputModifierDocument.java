@@ -49,6 +49,8 @@ public class InputModifierDocument extends PlainDocument {
 	private InputObservable inputObservable;
 	private final Integer maxLength;
 
+	private boolean programaticChangeState;
+
 	public InputModifierDocument(
 		final JTextComponent textComponent,
 		final IInputVerifier inputVerifier,
@@ -57,6 +59,7 @@ public class InputModifierDocument extends PlainDocument {
 		super();
 		Assert.paramNotNull(textComponent, "textComponent");
 
+		this.programaticChangeState = false;
 		this.textComponent = textComponent;
 		this.inputVerifier = inputVerifier;
 		this.maxLength = maxLength;
@@ -66,7 +69,7 @@ public class InputModifierDocument extends PlainDocument {
 	@Override
 	public void remove(final int offs, final int len) throws BadLocationException {
 		final String currentText = textComponent.getText();
-		if (inputVerifier == null || inputVerifier.verify(currentText, "", offs, offs + len)) {
+		if (inputVerifier == null || inputVerifier.verify(currentText, "", offs, offs + len) || programaticChangeState) {
 			super.remove(offs, len);
 			inputObservable.fireInputChanged(textComponent.getText());
 		}
@@ -85,7 +88,7 @@ public class InputModifierDocument extends PlainDocument {
 			}
 		}
 
-		if (inputVerifier == null || inputVerifier.verify(currentText, text, offset, offset + length)) {
+		if (inputVerifier == null || inputVerifier.verify(currentText, text, offset, offset + length) || programaticChangeState) {
 			super.replace(offset, length, text, attrs);
 			inputObservable.fireInputChanged(textComponent.getText());
 		}
@@ -98,6 +101,10 @@ public class InputModifierDocument extends PlainDocument {
 		else {
 			this.inputObservable = inputObservable;
 		}
+	}
+
+	public void setProgramaticChangeState(final boolean programaticChangeState) {
+		this.programaticChangeState = programaticChangeState;
 	}
 
 }

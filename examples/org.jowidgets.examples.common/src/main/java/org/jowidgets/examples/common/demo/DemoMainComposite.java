@@ -59,6 +59,7 @@ public final class DemoMainComposite {
 		inputDialog1Button.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
+				inputDialog1.setValue(null);
 				inputDialog1.setVisible(true);
 			}
 		});

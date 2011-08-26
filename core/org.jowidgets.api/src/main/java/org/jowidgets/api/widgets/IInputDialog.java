@@ -27,7 +27,7 @@
  */
 package org.jowidgets.api.widgets;
 
-public interface IInputDialog<INPUT_TYPE> extends IWindow, IInputContainer<INPUT_TYPE> {
+public interface IInputDialog<INPUT_TYPE> extends IWindow, IInputComponent<INPUT_TYPE> {
 
 	boolean isOkPressed();
 

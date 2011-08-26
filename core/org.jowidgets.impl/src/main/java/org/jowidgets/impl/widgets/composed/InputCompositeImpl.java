@@ -27,8 +27,10 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.toolkit.Toolkit;
@@ -65,11 +67,11 @@ import org.jowidgets.validation.IValidationResultBuilder;
 import org.jowidgets.validation.IValidator;
 import org.jowidgets.validation.ValidationResult;
 
-//TODO MG inputCompositeWidget must be implemented correctly
 public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements IInputComposite<INPUT_TYPE>, IInputContentContainer {
 
 	private final List<Tuple<String, IInputControl<?>>> inputControls;
 	private final List<Tuple<String, IValidateable>> validatables;
+	private final Set<IInputControl<?>> editedControls;
 
 	private final IInputContentCreator<INPUT_TYPE> contentCreator;
 	private final IComposite composite;
@@ -78,26 +80,27 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 	private final InputObservable inputObservable;
 	private final CompoundValidator<INPUT_TYPE> compoundValidator;
 	private final ValidationCache validationCache;
-	private final boolean isAutoResetValidation;
+	private final String missingInputHint;
 
 	public InputCompositeImpl(final IComposite composite, final IInputCompositeSetup<INPUT_TYPE> setup) {
 		super(composite);
 
 		this.inputControls = new LinkedList<Tuple<String, IInputControl<?>>>();
 		this.validatables = new LinkedList<Tuple<String, IValidateable>>();
+		this.editedControls = new HashSet<IInputControl<?>>();
 
 		this.inputObservable = new InputObservable();
 		this.contentCreator = setup.getContentCreator();
-		this.isAutoResetValidation = setup.isAutoResetValidation();
 
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 		this.composite = composite;
+		this.missingInputHint = setup.getMissingInputHint();
 
 		if (setup.getValidationLabel() != null) {
 			this.composite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[][grow]0"));
 			final IValidationResultLabelBluePrint validationLabelBp = bpf.validationResultLabel().setSetup(
 					setup.getValidationLabel());
-			validationLabel = this.composite.add(validationLabelBp, "h 18::, wrap");
+			validationLabel = this.composite.add(validationLabelBp, "h 18::, growx, wrap");
 		}
 		else {
 			validationLabel = null;
@@ -122,6 +125,9 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 
 		this.validationCache = new ValidationCache(new ValidationResultCreator());
 
+		contentCreator.createContent(this);
+		contentCreator.setValue(setup.getValue());
+
 		if (validationLabel != null) {
 			this.validationCache.addValidationConditionListener(new IValidationConditionListener() {
 				@Override
@@ -131,16 +137,14 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 			});
 		}
 
-		contentCreator.createContent(this);
-		if (setup.getValue() != null) {
-			contentCreator.setValue(setup.getValue());
-		}
+		resetModificationState();
+		validationCache.setDirty();
 	}
 
 	@Override
 	public void setEditable(final boolean editable) {
-		if (isAutoResetValidation && validationLabel != null) {
-			validationLabel.setEnabled(editable);
+		for (final Tuple<String, IInputControl<?>> tuple : inputControls) {
+			tuple.getSecond().setEditable(editable);
 		}
 	}
 
@@ -164,13 +168,7 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 		for (final Tuple<String, IInputControl<?>> tuple : inputControls) {
 			tuple.getSecond().resetModificationState();
 		}
-	}
-
-	@Override
-	public void resetValidation() {
-		if (validationLabel != null) {
-			validationLabel.setEmpty();
-		}
+		editedControls.clear();
 	}
 
 	@Override
@@ -200,7 +198,9 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 
 	@Override
 	public void setValue(final INPUT_TYPE value) {
-		contentCreator.getValue();
+		contentCreator.setValue(value);
+		resetModificationState();
+		validationCache.setDirty();
 	}
 
 	@Override
@@ -269,6 +269,7 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 		for (final Tuple<String, IInputControl<?>> tuple : new LinkedList<Tuple<String, IInputControl<?>>>(inputControls)) {
 			if (tuple.getSecond() == control) {
 				inputControls.remove(index);
+				editedControls.remove(control);
 				return;
 			}
 			index++;
@@ -420,6 +421,7 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 			inputControl.addInputListener(new IInputListener() {
 				@Override
 				public void inputChanged() {
+					editedControls.add(inputControl);
 					inputObservable.fireInputChanged();
 				}
 			});
@@ -430,10 +432,20 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 
 		@Override
 		public IValidationResult createValidationResult() {
+			boolean hintAdded = false;
+
 			final IValidationResultBuilder builder = ValidationResult.builder();
 
 			for (final Tuple<String, IInputControl<?>> tuple : inputControls) {
-				builder.addResult(validate(tuple));
+				final IValidationResult result = validate(tuple);
+				final IInputControl<?> control = tuple.getSecond();
+				if (control.hasModifications() || editedControls.contains(control) || missingInputHint == null) {
+					builder.addResult(validate(tuple));
+				}
+				else if (!hintAdded && !result.isValid()) {
+					builder.addInfoError(missingInputHint);
+					hintAdded = true;
+				}
 			}
 
 			for (final Tuple<String, IValidateable> tuple : validatables) {
