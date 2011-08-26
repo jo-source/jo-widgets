@@ -30,6 +30,6 @@ package org.jowidgets.test.api.widgets;
 
 import org.jowidgets.api.widgets.IInputDialog;
 
-public interface IInputDialogUi<INPUT_TYPE> extends IWindowUi, IInputContainerUi<INPUT_TYPE>, IInputDialog<INPUT_TYPE> {
+public interface IInputDialogUi<INPUT_TYPE> extends IWindowUi, IInputComponentUi<INPUT_TYPE>, IInputDialog<INPUT_TYPE> {
 
 }

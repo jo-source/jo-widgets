@@ -36,7 +36,6 @@ public class InputCompositeDefaults implements IDefaultInitializer<IInputComposi
 	// i18n
 	@Override
 	public void initialize(final IInputCompositeSetupBuilder<?, ?> builder) {
-		builder.setAutoResetValidation(true);
 		builder.setContentScrolled(true);
 		final BluePrintFactory bpF = new BluePrintFactory();
 		builder.setValidationLabel(bpF.validationResultLabel());

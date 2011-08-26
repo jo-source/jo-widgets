@@ -35,7 +35,6 @@ import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IIcon;
-import org.jowidgets.api.widgets.IInputContainer;
 import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.IInputField;
 import org.jowidgets.api.widgets.ILabel;
@@ -186,7 +185,6 @@ final class ComponentTypeUtil {
 
 	private static boolean isContainer(final IComponent component) {
 		return ((component instanceof IFrame)
-			|| (component instanceof IInputContainer)
 			|| (component instanceof IContainer)
 			|| (component instanceof ITabFolder)
 			|| (component instanceof IToolBar)

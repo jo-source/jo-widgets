@@ -29,17 +29,17 @@ package org.jowidgets.impl.widgets.composed.factory.internal;
 
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
-import org.jowidgets.api.widgets.IInputContainer;
+import org.jowidgets.api.widgets.IInputComposite;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.IInputCompositeDescriptor;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.widgets.composed.InputCompositeImpl;
 
 public class InputCompositeFactory<INPUT_TYPE> implements
-		IWidgetFactory<IInputContainer<INPUT_TYPE>, IInputCompositeDescriptor<INPUT_TYPE>> {
+		IWidgetFactory<IInputComposite<INPUT_TYPE>, IInputCompositeDescriptor<INPUT_TYPE>> {
 
 	@Override
-	public IInputContainer<INPUT_TYPE> create(
+	public IInputComposite<INPUT_TYPE> create(
 		final Object parentUiReference,
 		final IInputCompositeDescriptor<INPUT_TYPE> descriptor) {
 

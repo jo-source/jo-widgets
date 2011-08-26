@@ -30,6 +30,6 @@ package org.jowidgets.test.api.widgets;
 
 import org.jowidgets.api.widgets.IInputComposite;
 
-public interface IInputCompositeUi<INPUT_TYPE> extends IControlUi, IInputContainerUi<INPUT_TYPE>, IInputComposite<INPUT_TYPE> {
+public interface IInputCompositeUi<INPUT_TYPE> extends IControlUi, IInputComponentUi<INPUT_TYPE>, IInputComposite<INPUT_TYPE> {
 
 }

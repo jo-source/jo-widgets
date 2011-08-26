@@ -123,7 +123,12 @@ public class InputFieldImpl<VALUE_TYPE> extends ControlWrapper implements IInput
 
 	@Override
 	public void setValue(final VALUE_TYPE value) {
-		getWidget().setText(converter.convertToString(value));
+		if (value == null) {
+			getWidget().setText(null);
+		}
+		else {
+			getWidget().setText(converter.convertToString(value));
+		}
 	}
 
 	@Override

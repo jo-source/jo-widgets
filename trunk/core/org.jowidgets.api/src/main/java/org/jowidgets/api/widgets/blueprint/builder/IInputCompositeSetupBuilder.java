@@ -36,8 +36,6 @@ public interface IInputCompositeSetupBuilder<INSTANCE_TYPE extends IInputComposi
 		IInputComponentSetupBuilder<INSTANCE_TYPE, INPUT_TYPE>,
 		IInputCompositeSetupConvenience<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setAutoResetValidation(final boolean autoResetValidation);
-
 	INSTANCE_TYPE setContentCreator(final IInputContentCreator<INPUT_TYPE> contentCreator);
 
 	INSTANCE_TYPE setContentScrolled(final boolean scrolledContent);

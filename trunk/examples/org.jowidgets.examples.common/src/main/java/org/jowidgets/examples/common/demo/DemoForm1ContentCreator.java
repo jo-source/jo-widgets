@@ -276,6 +276,7 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 			gender.setValue(" ");
 			lastname.setValue(null);
 			firstName.setValue(null);
+			dateOfBirth.setValue(null);
 			street.setValue(null);
 			postalCode.setValue(null);
 			city.setValue(null);
