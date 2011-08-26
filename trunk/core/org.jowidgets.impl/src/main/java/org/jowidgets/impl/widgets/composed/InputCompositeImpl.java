@@ -36,12 +36,12 @@ import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IControl;
+import org.jowidgets.api.widgets.IInputComponentValidationLabel;
 import org.jowidgets.api.widgets.IInputComposite;
 import org.jowidgets.api.widgets.IInputControl;
-import org.jowidgets.api.widgets.IValidationResultLabel;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
+import org.jowidgets.api.widgets.blueprint.IInputComponentValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
-import org.jowidgets.api.widgets.blueprint.IValidationResultLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
@@ -76,7 +76,7 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 	private final IInputContentCreator<INPUT_TYPE> contentCreator;
 	private final IComposite composite;
 	private final IComposite innerComposite;
-	private final IValidationResultLabel validationLabel;
+	private final IInputComponentValidationLabel validationLabel;
 	private final InputObservable inputObservable;
 	private final CompoundValidator<INPUT_TYPE> compoundValidator;
 	private final ValidationCache validationCache;
@@ -96,14 +96,12 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 		this.composite = composite;
 		this.missingInputHint = setup.getMissingInputHint();
 
+		this.validationCache = new ValidationCache(new ValidationResultCreator());
+
 		if (setup.getValidationLabel() != null) {
 			this.composite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[][grow]0"));
-			final IValidationResultLabelBluePrint validationLabelBp = bpf.validationResultLabel().setSetup(
-					setup.getValidationLabel());
-			validationLabel = this.composite.add(validationLabelBp, "h 18::, growx, wrap");
 		}
 		else {
-			validationLabel = null;
 			this.composite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
 		}
 
@@ -123,22 +121,22 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 			compoundValidator.addValidator(setup.getValidator());
 		}
 
-		this.validationCache = new ValidationCache(new ValidationResultCreator());
-
 		contentCreator.createContent(this);
 		contentCreator.setValue(setup.getValue());
 
-		if (validationLabel != null) {
-			this.validationCache.addValidationConditionListener(new IValidationConditionListener() {
-				@Override
-				public void validationConditionsChanged() {
-					validationLabel.setResult(validate());
-				}
-			});
+		if (setup.getValidationLabel() != null) {
+			final IInputComponentValidationLabelBluePrint validationLabelBp = bpf.inputComponentValidationLabel();
+			validationLabelBp.setSetup(setup.getValidationLabel());
+			validationLabelBp.setInputComponent(this);
+			validationLabel = this.composite.add(0, validationLabelBp, "h 18::, growx, wrap");
+		}
+		else {
+			validationLabel = null;
 		}
 
 		resetModificationState();
 		validationCache.setDirty();
+		validationLabel.resetValidation();
 	}
 
 	@Override
@@ -201,6 +199,7 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 		contentCreator.setValue(value);
 		resetModificationState();
 		validationCache.setDirty();
+		validationLabel.resetValidation();
 	}
 
 	@Override

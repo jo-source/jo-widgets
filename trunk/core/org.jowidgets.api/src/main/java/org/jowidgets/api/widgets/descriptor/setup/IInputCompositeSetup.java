@@ -43,7 +43,7 @@ public interface IInputCompositeSetup<INPUT_TYPE> extends IInputComponentSetup<I
 
 	Border getContentBorder();
 
-	IValidationLabelSetup getValidationLabel();
+	IInputComponentValidationLabelSetup getValidationLabel();
 
 	String getMissingInputHint();
 
