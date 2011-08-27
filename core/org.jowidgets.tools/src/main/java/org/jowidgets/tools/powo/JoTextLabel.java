@@ -98,16 +98,6 @@ public class JoTextLabel extends Control<ITextLabel, ITextLabelBluePrint> implem
 		}
 	}
 
-	@Override
-	public void setToolTipText(final String text) {
-		if (isInitialized()) {
-			getWidget().setToolTipText(text);
-		}
-		else {
-			getBluePrint().setToolTipText(text);
-		}
-	}
-
 	public static ITextLabelBluePrint bluePrint() {
 		return Toolkit.getBluePrintFactory().textLabel();
 	}
