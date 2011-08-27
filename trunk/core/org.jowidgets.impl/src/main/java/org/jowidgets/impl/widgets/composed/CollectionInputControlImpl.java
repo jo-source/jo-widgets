@@ -65,7 +65,9 @@ import org.jowidgets.tools.widgets.wrapper.CompositeWrapper;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.validation.IValidationResultBuilder;
 import org.jowidgets.validation.IValidator;
+import org.jowidgets.validation.ValidationResult;
 
 public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper implements IInputControl<Collection<INPUT_TYPE>> {
 
@@ -83,7 +85,7 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 	private final InputObservable inputObservable;
 	private final ValidationCache validationCache;
 	private final CompoundValidator<Collection<INPUT_TYPE>> compoundValidator;
-	private int lastHashCode;
+	private int lastRowCount;
 	private boolean programmaticUpdate;
 
 	public CollectionInputControlImpl(final IComposite composite, final ICollectionInputControlDescriptor<INPUT_TYPE> setup) {
@@ -107,6 +109,31 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 		}
 		this.validationLabelSize = setup.getValidationLabelSize();
 
+		this.validationCache = new ValidationCache(new IValidationResultCreator() {
+			@Override
+			public IValidationResult createValidationResult() {
+				final IValidationResultBuilder builder = ValidationResult.builder();
+				int index = 1;
+				for (final Row row : valuesContainer.rows) {
+					final IInputControl<INPUT_TYPE> inputControl = row.inputControl;
+					//TODO i18n
+					final IValidationResult controlResult = inputControl.validate().withContext("Element " + index);
+					if (inputControl.hasModifications()) {
+						builder.addResult(controlResult);
+					}
+					else {
+						//TODO i18n
+						builder.addResult(ValidationResult.infoError("Please edit element " + index));
+					}
+					index++;
+				}
+
+				builder.addResult(compoundValidator.validate(getValue()));
+
+				return builder.build();
+			}
+		});
+
 		final int columns = getColumnCount(setup);
 		final int maxButtonWidth = Math.max(setup.getRemoveButtonSize().getWidth(), setup.getAddButtonSize().getWidth());
 
@@ -123,11 +150,15 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 		}
 		this.tableCommon = rowLayoutCommonBuilder.build();
 
+		//TODO Review MG, NM is this todo already fixed?
 		//TODO NM proper handling of the non mandatory setup params 
 		//(validation label and constraints may be null so do not render them)
 
 		composite.setLayout(Toolkit.getLayoutFactoryProvider().listLayout());
 		valuesContainer = new ValuesContainer(composite.add(bpf.composite()));
+
+		//TODO Review MG, NM do not add an initial control, maybe the collection is empty or null
+		//but if this code line will be removed, there is no add button
 		valuesContainer.addRow();
 
 		this.addValueComposite = composite.add(bpf.composite());
@@ -147,16 +178,17 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 			compoundValidator.addValidator(setup.getValidator());
 		}
 
-		this.validationCache = new ValidationCache(new IValidationResultCreator() {
-			@Override
-			public IValidationResult createValidationResult() {
-				return compoundValidator.validate(getValue());
-			}
-		});
-
 		tableCommon.validate();
 
+		//TODO Review MG, NM the initial value should be set from setup
+		setValue(setup.getValue());
+
 		resetModificationState();
+	}
+
+	@Override
+	protected IComposite getWidget() {
+		return (IComposite) super.getWidget();
 	}
 
 	private int getColumnCount(final ICollectionInputControlDescriptor<INPUT_TYPE> setup) {
@@ -173,8 +205,18 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 			valuesContainer.updateRowsLayout();
 			addValueComposite.layoutBegin();
 			addValueComposite.layoutEnd();
-			getParent().layoutBegin();
-			getParent().layoutEnd();
+
+			//TODO review MG, NM the parent is (unfortunately) not initialized when this method will be invoked
+			//from the constructor
+			if (getParent() != null) {
+				getParent().layoutBegin();
+				getParent().layoutEnd();
+			}
+			else {
+				getWidget().layoutBegin();
+				getWidget().layoutEnd();
+			}
+
 		}
 	}
 
@@ -191,12 +233,34 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 
 	@Override
 	public boolean hasModifications() {
-		return lastHashCode == valuesContainer.getValue().hashCode();
+		//TODO review MG, NM this may not work, maybe its modified but has the same hashCode
+		//return lastHashCode == valuesContainer.getValue().hashCode();
+
+		boolean result = lastRowCount != valuesContainer.rows.size();
+		result = result || isControlModified();
+
+		return result;
+	}
+
+	private boolean isControlModified() {
+		for (final Row row : valuesContainer.rows) {
+			if (row.inputControl.hasModifications()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
 	public void resetModificationState() {
-		lastHashCode = valuesContainer.getValue().hashCode();
+		lastRowCount = valuesContainer.rows.size();
+
+		//TODO review MG, NM the controls must be reseted so
+		//the controls validation labels may not show errors
+		//on unmodified controls
+		for (final Row row : valuesContainer.rows) {
+			row.inputControl.resetModificationState();
+		}
 	}
 
 	@Override
@@ -227,6 +291,10 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 	private void fireInputChanged() {
 		if (!programmaticUpdate) {
 			inputObservable.fireInputChanged();
+
+			//TODO Review MG, NM the validation cache must be set dirty, if rows was added
+			//or removed. Is there may be a better place do do this?
+			validationCache.setDirty();
 		}
 	}
 
@@ -235,6 +303,7 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 		programmaticUpdate = true;
 		valuesContainer.setValue(value);
 		programmaticUpdate = false;
+		validationCache.setDirty();
 	}
 
 	@Override
@@ -376,6 +445,8 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 	private class ValuesContainer extends CompositeWrapper {
 
 		private final List<Row> rows;
+
+		//TODO Review MG, NM why track the controls, the composite already do this?
 		private final List<IControl> controls;
 
 		public ValuesContainer(final IComposite widget) {
@@ -403,12 +474,16 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 
 		public void setValue(final Collection<INPUT_TYPE> value) {
 			clear();
-			for (final INPUT_TYPE currentValue : value) {
-				addRow().setValue(currentValue);
+			//TODO Review MG, NM null is a valid value for an input control
+			if (value != null) {
+				for (final INPUT_TYPE currentValue : value) {
+					addRow().setValue(currentValue);
+				}
 			}
 		}
 
 		@Override
+		//TODO Review MG, NM why override get children?
 		public List<IControl> getChildren() {
 			return controls;
 		}
@@ -485,6 +560,8 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 			for (final Row row : rows) {
 				row.removeLayout();
 				remove(row.getControl());
+				//TODO Review MG, NM control must also be removed from the internal children tracking?
+				controls.remove(row.getControl());
 			}
 			layoutEnd();
 			rows.clear();
