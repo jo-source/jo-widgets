@@ -70,7 +70,7 @@ public class InputDialogImpl<INPUT_TYPE> extends WindowWrapper implements IInput
 
 		final IBluePrintFactory bpF = new BluePrintFactory();
 
-		this.dialogWidget.setLayout(new MigLayoutDescriptor("[grow]", "[grow][]"));
+		this.dialogWidget.setLayout(new MigLayoutDescriptor("[grow, 0::]", "[grow, 0::][]"));
 
 		// composite widget
 		final IComposite compositeWidget = dialogWidget.add(

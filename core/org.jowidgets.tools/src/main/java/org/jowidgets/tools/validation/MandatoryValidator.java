@@ -36,23 +36,23 @@ import org.jowidgets.validation.ValidationResult;
 
 public class MandatoryValidator<VALIDATION_INPUT_TYPE> implements IValidator<VALIDATION_INPUT_TYPE> {
 
-	private final IValidationResult infoResult;
+	private final IValidationResult result;
 
 	public MandatoryValidator(final String messageText) {
 		Assert.paramNotEmpty(messageText, "messageText");
-		this.infoResult = ValidationResult.error(messageText);
+		this.result = ValidationResult.error(messageText);
 	}
 
 	@Override
 	public IValidationResult validate(final VALIDATION_INPUT_TYPE validationInput) {
 		if (validationInput == null) {
-			return infoResult;
+			return result;
 		}
 		else if (validationInput instanceof String && ((String) validationInput).trim().isEmpty()) {
-			return infoResult;
+			return result;
 		}
 		else if (validationInput instanceof Collection<?> && ((Collection<?>) validationInput).isEmpty()) {
-			return infoResult;
+			return result;
 		}
 		return ValidationResult.ok();
 	}

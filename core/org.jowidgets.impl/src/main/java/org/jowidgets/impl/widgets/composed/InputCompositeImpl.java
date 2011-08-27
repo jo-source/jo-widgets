@@ -108,12 +108,12 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 		if (setup.isContentScrolled()) {
 			final IScrollCompositeBluePrint scrollCompositeBluePrint = bpf.scrollComposite();
 			scrollCompositeBluePrint.setBorder(setup.getContentBorder());
-			innerComposite = composite.add(scrollCompositeBluePrint, "growx, growy, h 0::,w 0::, wrap");
+			innerComposite = composite.add(scrollCompositeBluePrint, "growx, growy, h 0::,w 0::");
 		}
 		else {
 			final ICompositeBluePrint compositeBluePrint = bpf.composite();
 			compositeBluePrint.setBorder(setup.getContentBorder());
-			innerComposite = composite.add(compositeBluePrint, "growx, growy, h 0::,w 0::, wrap");
+			innerComposite = composite.add(compositeBluePrint, "growx, growy, h 0::,w 0::");
 		}
 
 		this.compoundValidator = new CompoundValidator<INPUT_TYPE>();
@@ -451,9 +451,18 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 				builder.addResult(validate(tuple));
 			}
 
-			builder.addResult(compoundValidator.validate(getValue()));
+			final IValidationResult compoundResult = compoundValidator.validate(getValue());
+			if (hasModifications() || missingInputHint == null) {
+				builder.addResult(compoundResult);
+			}
+			else if (!hintAdded && !compoundResult.isValid()) {
+				builder.addInfoError(missingInputHint);
+				hintAdded = true;
+			}
 
-			return builder.build();
+			final IValidationResult result = builder.build();
+
+			return result;
 		}
 
 		private IValidationResult validate(final Tuple<String, ? extends IValidateable> tuple) {

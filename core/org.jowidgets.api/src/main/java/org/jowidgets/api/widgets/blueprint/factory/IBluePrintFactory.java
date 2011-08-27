@@ -32,6 +32,7 @@ import java.util.Date;
 
 import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.blueprint.ICollectionInputControlBluePrint;
+import org.jowidgets.api.widgets.blueprint.ICollectionInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
@@ -41,6 +42,7 @@ import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.mask.ITextMask;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 
 public interface IBluePrintFactory extends ISimpleBluePrintFactory {
 
@@ -105,6 +107,12 @@ public interface IBluePrintFactory extends ISimpleBluePrintFactory {
 	IProgressBarBluePrint progressBar(int maximum);
 
 	<ELEMENT_TYPE> ICollectionInputControlBluePrint<ELEMENT_TYPE> collectionInputControl(
-		IWidgetDescriptor<IInputControl<ELEMENT_TYPE>> descriptor);
+		IWidgetDescriptor<? extends IInputControl<ELEMENT_TYPE>> descriptor);
+
+	<ELEMENT_TYPE> ICollectionInputDialogBluePrint<ELEMENT_TYPE> collectionInputDialog(
+		ICustomWidgetCreator<? extends IInputControl<ELEMENT_TYPE>> widgetCreator);
+
+	<ELEMENT_TYPE> ICollectionInputDialogBluePrint<ELEMENT_TYPE> collectionInputDialog(
+		IWidgetDescriptor<? extends IInputControl<ELEMENT_TYPE>> descriptor);
 
 }

@@ -34,7 +34,6 @@ import org.jowidgets.api.widgets.descriptor.setup.IButtonSetup;
 import org.jowidgets.api.widgets.descriptor.setup.IInputComponentValidationLabelSetup;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
-import org.jowidgets.validation.IValidator;
 
 public interface ICollectionInputControlSetupBuilder<INSTANCE_TYPE extends ICollectionInputControlSetupBuilder<?, ?>, ELEMENT_TYPE> extends
 		IInputComponentSetupBuilder<INSTANCE_TYPE, Collection<ELEMENT_TYPE>> {
@@ -52,7 +51,5 @@ public interface ICollectionInputControlSetupBuilder<INSTANCE_TYPE extends IColl
 	INSTANCE_TYPE setValidationLabel(IInputComponentValidationLabelSetup validationLabel);
 
 	INSTANCE_TYPE setValidationLabelSize(Dimension dimension);
-
-	INSTANCE_TYPE setCollectionValidator(IValidator<Collection<ELEMENT_TYPE>> validator);
 
 }

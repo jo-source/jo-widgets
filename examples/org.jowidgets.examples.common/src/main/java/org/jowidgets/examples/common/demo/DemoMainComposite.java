@@ -28,6 +28,9 @@
 
 package org.jowidgets.examples.common.demo;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.api.toolkit.Toolkit;
@@ -36,10 +39,15 @@ import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IInputDialog;
 import org.jowidgets.api.widgets.IWindow;
+import org.jowidgets.api.widgets.blueprint.ICollectionInputDialogBluePrint;
+import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.validation.IValidator;
+import org.jowidgets.validation.ValidationResult;
 
 public final class DemoMainComposite {
 
@@ -68,9 +76,50 @@ public final class DemoMainComposite {
 		listInputDemoButton.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
-				final IFrame menuDemoFrame = new DemoListInputFrame();
-				menuDemoFrame.setSize(new Dimension(300, 300));
-				menuDemoFrame.setVisible(true);
+
+				final IInputFieldBluePrint<Integer> inputFieldBp = bpF.inputFieldIntegerNumber().setValidator(
+						new IValidator<Integer>() {
+							@Override
+							public IValidationResult validate(final Integer value) {
+								if (value == null) {
+									return ValidationResult.create().withError("Must not be empty");
+								}
+								if (value != null && value == 303) {
+									return ValidationResult.create().withError("Cool numbers are not supported");
+								}
+								else {
+									return ValidationResult.ok();
+								}
+							}
+						});
+
+				final ICollectionInputDialogBluePrint<Integer> dialogBp = bpF.collectionInputDialog(inputFieldBp);
+				dialogBp.setValidator(new IValidator<Collection<Integer>>() {
+
+					@Override
+					public IValidationResult validate(final Collection<Integer> value) {
+						if (value == null || value.size() == 0) {
+							return ValidationResult.error("Input must not be empty");
+						}
+						else {
+							if (value.size() != new HashSet<Integer>(value).size()) {
+								return ValidationResult.error("Input must not contain dublicates");
+							}
+						}
+						return null;
+					}
+				});
+
+				final List<Integer> values = new LinkedList<Integer>();
+				values.add(null);
+
+				dialogBp.setValue(values);
+				dialogBp.setMissingInputHint("Please edit the list");
+
+				final IInputDialog<Collection<Integer>> inputDialog = getParentWindow().createChildWindow(dialogBp);
+
+				inputDialog.setSize(new Dimension(300, 300));
+				inputDialog.setVisible(true);
 			}
 		});
 

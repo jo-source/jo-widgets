@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Michael Grossmann
+ * Copyright (c) 2010, Michael Grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,32 +25,18 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.descriptor.setup;
+package org.jowidgets.impl.widgets.composed.blueprint.defaults;
 
-import java.util.Collection;
+import org.jowidgets.api.types.InputDialogDefaultButtonPolicy;
+import org.jowidgets.api.widgets.blueprint.builder.ICollectionInputDialogSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
-import org.jowidgets.api.widgets.IInputControl;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
-import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
+public class CollectionInputDialogDefaults implements IDefaultInitializer<ICollectionInputDialogSetupBuilder<?, ?>> {
 
-public interface ICollectionInputControlSetup<ELEMENT_TYPE> extends IInputComponentSetup<Collection<ELEMENT_TYPE>> {
-
-	@Mandatory
-	ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> getElementWidgetCreator();
-
-	@Mandatory
-	IButtonSetup getRemoveButton();
-
-	@Mandatory
-	IButtonSetup getAddButton();
-
-	Dimension getRemoveButtonSize();
-
-	Dimension getAddButtonSize();
-
-	IInputComponentValidationLabelSetup getValidationLabel();
-
-	Dimension getValidationLabelSize();
+	// i18n
+	@Override
+	public void initialize(final ICollectionInputDialogSetupBuilder<?, ?> builder) {
+		builder.setDefaultButtonPolicy(InputDialogDefaultButtonPolicy.DISABLED);
+	}
 
 }
