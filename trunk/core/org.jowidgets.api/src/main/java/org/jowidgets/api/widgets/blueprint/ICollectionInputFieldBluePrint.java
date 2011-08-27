@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Michael Grossmann
+ * Copyright (c) 2010, Michael Grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,32 +25,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.descriptor.setup;
+package org.jowidgets.api.widgets.blueprint;
 
-import java.util.Collection;
+import org.jowidgets.api.widgets.blueprint.builder.ICollectionInputFieldSetupBuilder;
+import org.jowidgets.api.widgets.descriptor.ICollectionInputFieldDescriptor;
 
-import org.jowidgets.api.widgets.IInputControl;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
-import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
-
-public interface ICollectionInputControlSetup<ELEMENT_TYPE> extends IInputComponentSetup<Collection<ELEMENT_TYPE>> {
-
-	@Mandatory
-	ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> getElementWidgetCreator();
-
-	@Mandatory
-	IButtonSetup getRemoveButton();
-
-	@Mandatory
-	IButtonSetup getAddButton();
-
-	Dimension getRemoveButtonSize();
-
-	Dimension getAddButtonSize();
-
-	IInputComponentValidationLabelSetup getValidationLabel();
-
-	Dimension getValidationLabelSize();
+public interface ICollectionInputFieldBluePrint<ELEMENT_TYPE> extends
+		ICollectionInputFieldSetupBuilder<ICollectionInputFieldBluePrint<ELEMENT_TYPE>, ELEMENT_TYPE>,
+		ICollectionInputFieldDescriptor<ELEMENT_TYPE> {
 
 }

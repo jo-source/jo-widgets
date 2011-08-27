@@ -29,10 +29,13 @@ package org.jowidgets.impl.widgets.composed.blueprint.defaults;
 
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.blueprint.IInputComponentValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.builder.ICollectionInputControlSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.util.IDecorator;
+import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
 import org.jowidgets.validation.Validator;
 
@@ -43,7 +46,17 @@ public class CollectionInputControlDefaults implements IDefaultInitializer<IColl
 	@Override
 	public void initialize(final ICollectionInputControlSetupBuilder<?, ?> builder) {
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-		builder.setValidationLabel(bpf.inputComponentValidationLabel().setShowValidationMessage(false));
+
+		final IInputComponentValidationLabelBluePrint validationLabelBp = bpf.inputComponentValidationLabel();
+		validationLabelBp.setShowValidationMessage(false);
+		validationLabelBp.setUnmodifiedValidationDecorator(new IDecorator<IValidationResult>() {
+			@Override
+			public IValidationResult decorate(final IValidationResult original) {
+				return null;
+			}
+		});
+
+		builder.setValidationLabel(validationLabelBp);
 		builder.setValidationLabelSize(new Dimension(20, 20));
 		builder.setAddButton(bpf.button().setIcon(IconsSmall.ADD).setToolTipText("Add new entry"));
 		builder.setAddButtonSize(new Dimension(21, 21));
@@ -52,6 +65,5 @@ public class CollectionInputControlDefaults implements IDefaultInitializer<IColl
 		builder.setEditable(true);
 		final IValidator validator = Validator.okValidator();
 		builder.setValidator(validator);
-		builder.setCollectionValidator(validator);
 	}
 }

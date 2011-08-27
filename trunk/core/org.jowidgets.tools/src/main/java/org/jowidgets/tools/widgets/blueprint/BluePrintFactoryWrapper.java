@@ -45,6 +45,8 @@ import org.jowidgets.api.widgets.blueprint.ICalendarBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICheckBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICheckedMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICollectionInputControlBluePrint;
+import org.jowidgets.api.widgets.blueprint.ICollectionInputDialogBluePrint;
+import org.jowidgets.api.widgets.blueprint.ICollectionInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
@@ -95,6 +97,7 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
+import org.jowidgets.api.widgets.descriptor.setup.ICollectionInputControlSetup;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.mask.ITextMask;
 import org.jowidgets.common.model.ITableDataModel;
@@ -712,8 +715,32 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 
 	@Override
 	public <ELEMENT_TYPE> ICollectionInputControlBluePrint<ELEMENT_TYPE> collectionInputControl(
-		final IWidgetDescriptor<IInputControl<ELEMENT_TYPE>> descriptor) {
+		final IWidgetDescriptor<? extends IInputControl<ELEMENT_TYPE>> descriptor) {
 		return bluePrintFactory.collectionInputControl(descriptor);
+	}
+
+	@Override
+	public <ELEMENT_TYPE> ICollectionInputDialogBluePrint<ELEMENT_TYPE> collectionInputDialog(
+		final ICollectionInputControlSetup<ELEMENT_TYPE> setup) {
+		return bluePrintFactory.collectionInputDialog(setup);
+	}
+
+	@Override
+	public <ELEMENT_TYPE> ICollectionInputFieldBluePrint<ELEMENT_TYPE> collectionInputField(
+		final IConverter<ELEMENT_TYPE> converter) {
+		return bluePrintFactory.collectionInputField(converter);
+	}
+
+	@Override
+	public <ELEMENT_TYPE> ICollectionInputDialogBluePrint<ELEMENT_TYPE> collectionInputDialog(
+		final ICustomWidgetCreator<? extends IInputControl<ELEMENT_TYPE>> widgetCreator) {
+		return bluePrintFactory.collectionInputDialog(widgetCreator);
+	}
+
+	@Override
+	public <ELEMENT_TYPE> ICollectionInputDialogBluePrint<ELEMENT_TYPE> collectionInputDialog(
+		final IWidgetDescriptor<? extends IInputControl<ELEMENT_TYPE>> descriptor) {
+		return bluePrintFactory.collectionInputDialog(descriptor);
 	}
 
 }

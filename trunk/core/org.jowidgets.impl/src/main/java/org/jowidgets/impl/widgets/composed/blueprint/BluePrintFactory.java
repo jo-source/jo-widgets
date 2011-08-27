@@ -34,6 +34,7 @@ import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.blueprint.ICollectionInputControlBluePrint;
+import org.jowidgets.api.widgets.blueprint.ICollectionInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
@@ -41,6 +42,7 @@ import org.jowidgets.api.widgets.blueprint.IProgressBarBluePrint;
 import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.api.widgets.descriptor.setup.ICollectionInputControlSetup;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.mask.ITextMask;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
@@ -49,6 +51,7 @@ import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.impl.convert.DefaultConverterProvider;
 import org.jowidgets.impl.widgets.composed.blueprint.convenience.registry.ComposedSetupConvenienceRegistry;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.registry.ComposedDefaultsInitializerRegistry;
+import org.jowidgets.util.Assert;
 
 public final class BluePrintFactory extends SimpleBluePrintFactory implements IBluePrintFactory {
 
@@ -197,7 +200,8 @@ public final class BluePrintFactory extends SimpleBluePrintFactory implements IB
 
 	@Override
 	public <ELEMENT_TYPE> ICollectionInputControlBluePrint<ELEMENT_TYPE> collectionInputControl(
-		final IWidgetDescriptor<IInputControl<ELEMENT_TYPE>> descriptor) {
+		final IWidgetDescriptor<? extends IInputControl<ELEMENT_TYPE>> descriptor) {
+		Assert.paramNotNull(descriptor, "descriptor");
 		return collectionInputControl(new ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>>() {
 			@Override
 			public IInputControl<ELEMENT_TYPE> create(final ICustomWidgetFactory widgetFactory) {
@@ -205,4 +209,20 @@ public final class BluePrintFactory extends SimpleBluePrintFactory implements IB
 			}
 		});
 	}
+
+	@Override
+	public <ELEMENT_TYPE> ICollectionInputDialogBluePrint<ELEMENT_TYPE> collectionInputDialog(
+		final ICustomWidgetCreator<? extends IInputControl<ELEMENT_TYPE>> widgetCreator) {
+		@SuppressWarnings("unchecked")
+		final ICollectionInputControlSetup<ELEMENT_TYPE> collectionInputControlSetup = collectionInputControl((IWidgetDescriptor<? extends IInputControl<ELEMENT_TYPE>>) widgetCreator);
+		return collectionInputDialog(collectionInputControlSetup);
+	}
+
+	@Override
+	public <ELEMENT_TYPE> ICollectionInputDialogBluePrint<ELEMENT_TYPE> collectionInputDialog(
+		final IWidgetDescriptor<? extends IInputControl<ELEMENT_TYPE>> descriptor) {
+		final ICollectionInputControlSetup<ELEMENT_TYPE> collectionInputControlSetup = collectionInputControl(descriptor);
+		return collectionInputDialog(collectionInputControlSetup);
+	}
+
 }

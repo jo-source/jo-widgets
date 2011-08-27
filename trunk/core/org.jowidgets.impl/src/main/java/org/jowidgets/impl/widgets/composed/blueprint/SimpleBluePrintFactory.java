@@ -32,6 +32,8 @@ import org.jowidgets.api.login.ILoginInterceptor;
 import org.jowidgets.api.widgets.IInputComponent;
 import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.blueprint.ICollectionInputControlBluePrint;
+import org.jowidgets.api.widgets.blueprint.ICollectionInputDialogBluePrint;
+import org.jowidgets.api.widgets.blueprint.ICollectionInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputComponentValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
@@ -47,6 +49,7 @@ import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceR
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.api.widgets.blueprint.factory.ISimpleBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
+import org.jowidgets.api.widgets.descriptor.setup.ICollectionInputControlSetup;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.impl.widgets.basic.blueprint.BasicBluePrintFactory;
 import org.jowidgets.util.Assert;
@@ -143,9 +146,27 @@ public class SimpleBluePrintFactory extends BasicBluePrintFactory implements ISi
 	@Override
 	public <ELEMENT_TYPE> ICollectionInputControlBluePrint<ELEMENT_TYPE> collectionInputControl(
 		final ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> widgetCreator) {
+		Assert.paramNotNull(widgetCreator, "widgetCreator");
 		final ICollectionInputControlBluePrint<ELEMENT_TYPE> result = createProxy(ICollectionInputControlBluePrint.class);
 		result.setElementWidgetCreator(widgetCreator);
 		return result;
 	}
 
+	@Override
+	public <ELEMENT_TYPE> ICollectionInputDialogBluePrint<ELEMENT_TYPE> collectionInputDialog(
+		final ICollectionInputControlSetup<ELEMENT_TYPE> setup) {
+		Assert.paramNotNull(setup, "setup");
+		final ICollectionInputDialogBluePrint<ELEMENT_TYPE> result = createProxy(ICollectionInputDialogBluePrint.class);
+		result.setCollectionInputControlSetup(setup);
+		return result;
+	}
+
+	@Override
+	public <ELEMENT_TYPE> ICollectionInputFieldBluePrint<ELEMENT_TYPE> collectionInputField(
+		final IConverter<ELEMENT_TYPE> converter) {
+		Assert.paramNotNull(converter, "converter");
+		final ICollectionInputFieldBluePrint<ELEMENT_TYPE> result = createProxy(ICollectionInputFieldBluePrint.class);
+		result.setConverter(converter);
+		return result;
+	}
 }

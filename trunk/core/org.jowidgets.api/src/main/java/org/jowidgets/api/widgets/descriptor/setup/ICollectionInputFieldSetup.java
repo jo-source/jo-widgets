@@ -29,28 +29,23 @@ package org.jowidgets.api.widgets.descriptor.setup;
 
 import java.util.Collection;
 
-import org.jowidgets.api.widgets.IInputControl;
-import org.jowidgets.common.types.Dimension;
+import org.jowidgets.api.convert.IConverter;
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
-import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 
-public interface ICollectionInputControlSetup<ELEMENT_TYPE> extends IInputComponentSetup<Collection<ELEMENT_TYPE>> {
+public interface ICollectionInputFieldSetup<ELEMENT_TYPE> extends IInputComponentSetup<Collection<ELEMENT_TYPE>> {
 
-	@Mandatory
-	ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> getElementWidgetCreator();
+	ICollectionInputDialogSetup<ELEMENT_TYPE> getCollectionInputDialogSetup();
 
-	@Mandatory
-	IButtonSetup getRemoveButton();
+	IImageConstant getEditButtonIcon();
 
 	@Mandatory
-	IButtonSetup getAddButton();
+	IConverter<ELEMENT_TYPE> getConverter();
 
-	Dimension getRemoveButtonSize();
+	@Mandatory
+	Character getSeparator();
 
-	Dimension getAddButtonSize();
-
-	IInputComponentValidationLabelSetup getValidationLabel();
-
-	Dimension getValidationLabelSize();
+	@Mandatory
+	Character getMaskingCharacter();
 
 }

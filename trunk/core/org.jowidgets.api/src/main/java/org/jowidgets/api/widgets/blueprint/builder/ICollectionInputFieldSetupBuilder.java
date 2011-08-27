@@ -25,32 +25,25 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.descriptor.setup;
+package org.jowidgets.api.widgets.blueprint.builder;
 
 import java.util.Collection;
 
-import org.jowidgets.api.widgets.IInputControl;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
-import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
+import org.jowidgets.api.convert.IConverter;
+import org.jowidgets.api.widgets.descriptor.setup.ICollectionInputDialogSetup;
+import org.jowidgets.common.image.IImageConstant;
 
-public interface ICollectionInputControlSetup<ELEMENT_TYPE> extends IInputComponentSetup<Collection<ELEMENT_TYPE>> {
+public interface ICollectionInputFieldSetupBuilder<INSTANCE_TYPE extends ICollectionInputFieldSetupBuilder<?, ?>, ELEMENT_TYPE> extends
+		IInputComponentSetupBuilder<INSTANCE_TYPE, Collection<ELEMENT_TYPE>> {
 
-	@Mandatory
-	ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> getElementWidgetCreator();
+	INSTANCE_TYPE setCollectionInputDialogSetup(final ICollectionInputDialogSetup<ELEMENT_TYPE> setup);
 
-	@Mandatory
-	IButtonSetup getRemoveButton();
+	INSTANCE_TYPE setEditButtonIcon(IImageConstant icon);
 
-	@Mandatory
-	IButtonSetup getAddButton();
+	INSTANCE_TYPE setConverter(IConverter<ELEMENT_TYPE> converter);
 
-	Dimension getRemoveButtonSize();
+	INSTANCE_TYPE setSeparator(Character separator);
 
-	Dimension getAddButtonSize();
-
-	IInputComponentValidationLabelSetup getValidationLabel();
-
-	Dimension getValidationLabelSize();
+	INSTANCE_TYPE setMaskingCharacter(Character mask);
 
 }
