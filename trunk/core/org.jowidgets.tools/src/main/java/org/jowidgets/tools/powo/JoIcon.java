@@ -54,16 +54,6 @@ public class JoIcon extends Control<IIcon, IIconBluePrint> implements IIcon {
 		}
 	}
 
-	@Override
-	public void setToolTipText(final String text) {
-		if (isInitialized()) {
-			getWidget().setToolTipText(text);
-		}
-		else {
-			getBluePrint().setToolTipText(text);
-		}
-	}
-
 	public static IIconBluePrint bluePrint() {
 		return Toolkit.getBluePrintFactory().icon();
 	}
