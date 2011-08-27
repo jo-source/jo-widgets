@@ -61,7 +61,6 @@ public class LabelImpl implements ILabel {
 	private final ITextLabelCommon textLabelWidget;
 	private final IComposite compositeWidget;
 	private String text;
-	private String toolTipText;
 
 	public LabelImpl(final IComposite compositeWidget, final ILabelSetup setup) {
 
@@ -99,14 +98,8 @@ public class LabelImpl implements ILabel {
 
 	@Override
 	public void setToolTipText(final String text) {
-		toolTipText = text;
 		textLabelWidget.setToolTipText(text);
 		iconWidget.setToolTipText(text);
-	}
-
-	@Override
-	public String getToolTipText() {
-		return toolTipText;
 	}
 
 	@Override

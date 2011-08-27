@@ -48,11 +48,6 @@ public class CheckBoxWrapper extends AbstractInputControlWrapper<Boolean> implem
 	}
 
 	@Override
-	public String getToolTipText() {
-		return getWidget().getToolTipText();
-	}
-
-	@Override
 	public void setFontSize(final int size) {
 		getWidget().setFontSize(size);
 	}

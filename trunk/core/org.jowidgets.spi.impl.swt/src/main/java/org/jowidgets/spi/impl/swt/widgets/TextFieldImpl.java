@@ -113,11 +113,6 @@ public class TextFieldImpl extends AbstractTextInputControl {
 	}
 
 	@Override
-	public void setTooltipText(final String tooltipText) {
-		getUiReference().setToolTipText(tooltipText);
-	}
-
-	@Override
 	public void setSelection(final int start, final int end) {
 		getUiReference().setSelection(start, end);
 	}

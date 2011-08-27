@@ -66,16 +66,6 @@ public class ComboBoxSelectionImpl extends AbstractInputControl implements IComb
 	}
 
 	@Override
-	public String getTooltipText() {
-		return getUiReference().getToolTipText();
-	}
-
-	@Override
-	public void setTooltipText(final String tooltipText) {
-		getUiReference().setToolTipText(tooltipText);
-	}
-
-	@Override
 	public String[] getElements() {
 		return getUiReference().getElements();
 	}

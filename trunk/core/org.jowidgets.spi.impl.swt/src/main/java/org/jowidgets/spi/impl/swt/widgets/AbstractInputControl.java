@@ -217,4 +217,9 @@ public abstract class AbstractInputControl extends InputObservable implements II
 		swtControlDelegate.removePopupDetectionListener(listener);
 	}
 
+	@Override
+	public void setToolTipText(final String toolTip) {
+		swtControlDelegate.setToolTipText(toolTip);
+	}
+
 }

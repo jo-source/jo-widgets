@@ -122,16 +122,6 @@ public class JoLabel extends Control<ILabel, ILabelBluePrint> implements ILabel 
 	}
 
 	@Override
-	public String getToolTipText() {
-		if (isInitialized()) {
-			return getWidget().getToolTipText();
-		}
-		else {
-			return getBluePrint().getToolTipText();
-		}
-	}
-
-	@Override
 	public void setIcon(final IImageConstant icon) {
 		if (isInitialized()) {
 			getWidget().setIcon(icon);

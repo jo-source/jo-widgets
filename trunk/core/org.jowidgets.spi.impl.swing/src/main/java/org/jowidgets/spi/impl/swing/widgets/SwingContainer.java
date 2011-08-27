@@ -284,6 +284,10 @@ public class SwingContainer implements IContainerSpi {
 		return result;
 	}
 
+	public void setToolTipText(final String toolTip) {
+		swingComponentDelegate.setToolTipText(toolTip);
+	}
+
 	private ICustomWidgetFactory createCustomWidgetFactory() {
 		return new ICustomWidgetFactory() {
 			@Override

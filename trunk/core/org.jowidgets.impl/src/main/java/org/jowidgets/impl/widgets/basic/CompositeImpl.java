@@ -76,4 +76,10 @@ public class CompositeImpl extends ContainerImpl implements IComposite {
 	public Object getLayoutConstraints() {
 		return getWidget().getLayoutConstraints();
 	}
+
+	@Override
+	public void setToolTipText(final String toolTip) {
+		getWidget().setToolTipText(toolTip);
+	}
+
 }

@@ -55,11 +55,6 @@ public class TextLabelImpl extends DummyControl implements ITextLabelSpi {
 	}
 
 	@Override
-	public void setToolTipText(final String text) {
-		getUiReference().setToolTipText(text);
-	}
-
-	@Override
 	public void setMarkup(final Markup markup) {
 		getUiReference().setMarkup(markup);
 	}

@@ -93,4 +93,9 @@ public class CompositeWrapper extends ContainerWrapper implements IComposite {
 		return getWidget().getMaxSize();
 	}
 
+	@Override
+	public void setToolTipText(final String toolTip) {
+		getWidget().setToolTipText(toolTip);
+	}
+
 }

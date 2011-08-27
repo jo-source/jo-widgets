@@ -286,4 +286,9 @@ public class CompositeBasedControl implements IControl {
 		composite.removePopupDetectionListener(listener);
 	}
 
+	@Override
+	public void setToolTipText(final String toolTip) {
+		composite.setToolTipText(toolTip);
+	}
+
 }

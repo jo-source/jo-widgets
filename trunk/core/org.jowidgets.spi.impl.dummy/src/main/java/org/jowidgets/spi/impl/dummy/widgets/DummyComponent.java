@@ -180,4 +180,8 @@ public class DummyComponent extends DummyWidget implements IComponentSpi {
 		return getUiReference().computeDecoratedSize(clientAreaSize);
 	}
 
+	public void setToolTipText(final String toolTip) {
+		getUiReference().setToolTipText(toolTip);
+	}
+
 }

@@ -48,9 +48,4 @@ public class IconSpiWrapper extends ControlSpiWrapper implements IIconCommon {
 		getWidget().setIcon(icon);
 	}
 
-	@Override
-	public void setToolTipText(final String text) {
-		getWidget().setToolTipText(text);
-	}
-
 }

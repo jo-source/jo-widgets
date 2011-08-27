@@ -57,7 +57,6 @@ public class TextSeparatorImpl implements ITextLabel {
 	private final IComposite compositeWidget;
 	private final ITextLabelCommon textLabelWidget;
 	private String text;
-	private String toolTipText;
 
 	public TextSeparatorImpl(final IComposite compositeWidget, final ITextSeparatorDescriptor descriptor) {
 		super();
@@ -108,13 +107,7 @@ public class TextSeparatorImpl implements ITextLabel {
 
 	@Override
 	public void setToolTipText(final String text) {
-		toolTipText = text;
 		textLabelWidget.setToolTipText(text);
-	}
-
-	@Override
-	public String getToolTipText() {
-		return toolTipText;
 	}
 
 	@Override

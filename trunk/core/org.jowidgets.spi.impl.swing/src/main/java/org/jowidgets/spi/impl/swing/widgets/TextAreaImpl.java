@@ -138,11 +138,6 @@ public class TextAreaImpl extends AbstractInputControl implements ITextAreaSpi {
 	}
 
 	@Override
-	public void setTooltipText(final String tooltipText) {
-		textArea.setToolTipText(tooltipText);
-	}
-
-	@Override
 	public void setSelection(final int start, final int end) {
 		textArea.setSelectionStart(start);
 		textArea.setSelectionEnd(end);

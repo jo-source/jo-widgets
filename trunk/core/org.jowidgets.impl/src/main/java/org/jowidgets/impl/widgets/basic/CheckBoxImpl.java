@@ -237,14 +237,4 @@ public class CheckBoxImpl extends ControlSpiWrapper implements ICheckBox {
 		return textLabelWidgetCommonWrapper.getText();
 	}
 
-	@Override
-	public void setToolTipText(final String text) {
-		textLabelWidgetCommonWrapper.setToolTipText(text);
-	}
-
-	@Override
-	public String getToolTipText() {
-		return textLabelWidgetCommonWrapper.getToolTipText();
-	}
-
 }
