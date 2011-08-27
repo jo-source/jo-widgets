@@ -42,6 +42,7 @@ class Composite<WIDGET_TYPE extends IComposite, BLUE_PRINT_TYPE extends IWidgetD
 	private Dimension minSize;
 	private Dimension preferredSize;
 	private Dimension maxSize;
+	private String toolTipText;
 
 	Composite(final BLUE_PRINT_TYPE bluePrint) {
 		super(bluePrint);
@@ -61,6 +62,9 @@ class Composite<WIDGET_TYPE extends IComposite, BLUE_PRINT_TYPE extends IWidgetD
 		}
 		if (maxSize != null) {
 			getWidget().setMaxSize(maxSize);
+		}
+		if (toolTipText != null) {
+			getWidget().setToolTipText(toolTipText);
 		}
 	}
 
@@ -141,6 +145,16 @@ class Composite<WIDGET_TYPE extends IComposite, BLUE_PRINT_TYPE extends IWidgetD
 		}
 		else {
 			this.maxSize = maxSize;
+		}
+	}
+
+	@Override
+	public void setToolTipText(final String toolTip) {
+		if (isInitialized()) {
+			getWidget().setToolTipText(toolTip);
+		}
+		else {
+			this.toolTipText = toolTip;
 		}
 	}
 }

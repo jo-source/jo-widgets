@@ -48,11 +48,6 @@ public class IconImpl extends SwingControl implements IIconSpi {
 	}
 
 	@Override
-	public void setToolTipText(final String text) {
-		getUiReference().setToolTipText(text);
-	}
-
-	@Override
 	public JLabel getUiReference() {
 		return (JLabel) super.getUiReference();
 	}

@@ -361,4 +361,8 @@ public class SwtComponent extends SwtWidget implements IComponentSpi {
 		popupDetectionObservable.removePopupDetectionListener(listener);
 	}
 
+	public void setToolTipText(final String toolTip) {
+		getUiReference().setToolTipText(toolTip);
+	}
+
 }

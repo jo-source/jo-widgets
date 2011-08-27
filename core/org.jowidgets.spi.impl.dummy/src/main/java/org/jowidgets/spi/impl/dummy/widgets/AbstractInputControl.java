@@ -215,4 +215,9 @@ public abstract class AbstractInputControl extends InputObservable implements II
 		dummyControlDelegate.removePopupDetectionListener(listener);
 	}
 
+	@Override
+	public void setToolTipText(final String toolTip) {
+		dummyControlDelegate.setToolTipText(toolTip);
+	}
+
 }

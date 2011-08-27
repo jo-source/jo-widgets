@@ -68,11 +68,6 @@ public class TextLabelImpl extends SwtControl implements ITextLabelSpi {
 	}
 
 	@Override
-	public void setToolTipText(final String text) {
-		getUiReference().setToolTipText(text);
-	}
-
-	@Override
 	public void setMarkup(final Markup markup) {
 		final Label label = this.getUiReference();
 		final Font newFont = FontProvider.deriveFont(label.getFont(), markup);

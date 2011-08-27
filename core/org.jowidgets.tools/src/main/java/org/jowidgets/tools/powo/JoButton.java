@@ -139,16 +139,6 @@ public class JoButton extends Control<IButton, IButtonBluePrint> implements IBut
 	}
 
 	@Override
-	public String getToolTipText() {
-		if (isInitialized()) {
-			return getWidget().getToolTipText();
-		}
-		else {
-			return getBluePrint().getToolTipText();
-		}
-	}
-
-	@Override
 	public void setIcon(final IImageConstant icon) {
 		if (isInitialized()) {
 			getWidget().setIcon(icon);

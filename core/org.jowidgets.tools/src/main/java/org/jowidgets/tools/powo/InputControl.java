@@ -43,6 +43,7 @@ class InputControl<WIDGET_TYPE extends IInputControl<VALUE_TYPE>, BLUE_PRINT_TYP
 	private Dimension minSize;
 	private Dimension preferredSize;
 	private Dimension maxSize;
+	private String toolTipText;
 
 	public InputControl(final BLUE_PRINT_TYPE bluePrint) {
 		super(bluePrint);
@@ -62,6 +63,9 @@ class InputControl<WIDGET_TYPE extends IInputControl<VALUE_TYPE>, BLUE_PRINT_TYP
 		}
 		if (maxSize != null) {
 			getWidget().setMaxSize(maxSize);
+		}
+		if (toolTipText != null) {
+			getWidget().setToolTipText(toolTipText);
 		}
 	}
 
@@ -142,6 +146,16 @@ class InputControl<WIDGET_TYPE extends IInputControl<VALUE_TYPE>, BLUE_PRINT_TYP
 		}
 		else {
 			this.maxSize = maxSize;
+		}
+	}
+
+	@Override
+	public void setToolTipText(final String toolTip) {
+		if (isInitialized()) {
+			getWidget().setToolTipText(toolTip);
+		}
+		else {
+			this.toolTipText = toolTip;
 		}
 	}
 }

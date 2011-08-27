@@ -257,6 +257,10 @@ public class SwtContainer implements IContainerSpi {
 		swtComponentDelegate.removePopupDetectionListener(listener);
 	}
 
+	public void setToolTipText(final String toolTip) {
+		swtComponentDelegate.setToolTipText(toolTip);
+	}
+
 	@Override
 	public void setTabOrder(final List<? extends IControlCommon> tabOrder) {
 		if (tabOrder == null) {

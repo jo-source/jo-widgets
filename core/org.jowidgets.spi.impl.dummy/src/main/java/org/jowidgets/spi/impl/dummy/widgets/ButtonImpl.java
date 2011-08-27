@@ -69,11 +69,6 @@ public class ButtonImpl extends AbstractActionControl implements IButtonUiSpi {
 	}
 
 	@Override
-	public void setToolTipText(final String text) {
-		getUiReference().setToolTipText(text);
-	}
-
-	@Override
 	public void setIcon(final IImageConstant icon) {
 		getUiReference().setIcon(imageRegistry.getImageIcon(icon));
 	}

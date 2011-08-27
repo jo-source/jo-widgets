@@ -119,11 +119,6 @@ public class TextAreaImpl extends InputControlSpiWrapper implements ITextArea {
 	}
 
 	@Override
-	public void setTooltipText(final String tooltipText) {
-		getWidget().setTooltipText(tooltipText);
-	}
-
-	@Override
 	public void setSelection(final int start, final int end) {
 		getWidget().setSelection(start, end);
 	}

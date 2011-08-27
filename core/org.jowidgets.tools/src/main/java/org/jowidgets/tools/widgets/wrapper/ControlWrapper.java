@@ -93,4 +93,9 @@ public class ControlWrapper extends ComponentWrapper implements IControl {
 		getWidget().setMaxSize(maxSize);
 	}
 
+	@Override
+	public void setToolTipText(final String toolTip) {
+		getWidget().setToolTipText(toolTip);
+	}
+
 }

@@ -52,4 +52,9 @@ public abstract class AbstractScrollCompositeSpiWrapper extends AbstractContaine
 		return getWidget().getLayoutConstraints();
 	}
 
+	@Override
+	public void setToolTipText(final String toolTip) {
+		getWidget().setToolTipText(toolTip);
+	}
+
 }

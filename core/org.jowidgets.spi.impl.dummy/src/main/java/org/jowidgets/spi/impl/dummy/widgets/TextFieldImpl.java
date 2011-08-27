@@ -70,11 +70,6 @@ public class TextFieldImpl extends AbstractTextInputControl {
 	}
 
 	@Override
-	public void setTooltipText(final String tooltipText) {
-		getUiReference().setToolTipText(tooltipText);
-	}
-
-	@Override
 	public void setEditable(final boolean editable) {
 		getUiReference().setEditable(editable);
 	}

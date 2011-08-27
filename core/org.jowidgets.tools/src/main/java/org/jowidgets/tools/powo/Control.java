@@ -41,6 +41,7 @@ class Control<WIDGET_TYPE extends IControl, BLUE_PRINT_TYPE extends IWidgetDescr
 	private Dimension minSize;
 	private Dimension preferredSize;
 	private Dimension maxSize;
+	private String toolTipText;
 
 	public Control(final BLUE_PRINT_TYPE bluePrint) {
 		super(bluePrint);
@@ -60,6 +61,9 @@ class Control<WIDGET_TYPE extends IControl, BLUE_PRINT_TYPE extends IWidgetDescr
 		}
 		if (maxSize != null) {
 			getWidget().setMaxSize(maxSize);
+		}
+		if (toolTipText != null) {
+			getWidget().setToolTipText(toolTipText);
 		}
 	}
 
@@ -142,4 +146,15 @@ class Control<WIDGET_TYPE extends IControl, BLUE_PRINT_TYPE extends IWidgetDescr
 			this.maxSize = maxSize;
 		}
 	}
+
+	@Override
+	public void setToolTipText(final String toolTip) {
+		if (isInitialized()) {
+			getWidget().setToolTipText(toolTip);
+		}
+		else {
+			this.toolTipText = toolTip;
+		}
+	}
+
 }

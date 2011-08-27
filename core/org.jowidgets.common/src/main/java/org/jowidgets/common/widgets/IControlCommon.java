@@ -32,6 +32,8 @@ import org.jowidgets.common.types.Dimension;
 
 public interface IControlCommon extends IComponentCommon {
 
+	void setToolTipText(String toolTip);
+
 	void setLayoutConstraints(Object layoutConstraints);
 
 	Object getLayoutConstraints();

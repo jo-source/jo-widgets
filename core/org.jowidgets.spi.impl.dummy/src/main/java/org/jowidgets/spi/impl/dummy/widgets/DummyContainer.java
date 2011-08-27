@@ -235,6 +235,10 @@ public class DummyContainer implements IContainerSpi {
 		dummyComponentDelegate.removePopupDetectionListener(listener);
 	}
 
+	public void setToolTipText(final String toolTip) {
+		dummyComponentDelegate.setToolTipText(toolTip);
+	}
+
 	@Override
 	public void setTabOrder(final List<? extends IControlCommon> tabOrder) {
 

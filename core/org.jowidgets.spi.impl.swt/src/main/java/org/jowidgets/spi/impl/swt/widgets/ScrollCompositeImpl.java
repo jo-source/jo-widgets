@@ -325,4 +325,9 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 		innerContainer.removeAll();
 	}
 
+	@Override
+	public void setToolTipText(final String toolTip) {
+		innerContainer.setToolTipText(toolTip);
+	}
+
 }

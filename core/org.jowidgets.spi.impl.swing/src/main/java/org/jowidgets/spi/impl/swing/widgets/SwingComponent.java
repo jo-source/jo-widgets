@@ -259,6 +259,13 @@ public class SwingComponent extends SwingWidget implements IComponentSpi {
 		return ColorConvert.convert(getUiReference().getBackground());
 	}
 
+	public void setToolTipText(final String toolTip) {
+		final Component uiReference = getUiReference();
+		if (uiReference instanceof JComponent) {
+			((JComponent) uiReference).setToolTipText(toolTip);
+		}
+	}
+
 	@Override
 	public void setCursor(final Cursor cursor) {
 		getUiReference().setCursor(CursorConvert.convert(cursor));

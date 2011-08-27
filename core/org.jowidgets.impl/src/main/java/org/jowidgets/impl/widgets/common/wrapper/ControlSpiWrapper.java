@@ -71,6 +71,11 @@ public class ControlSpiWrapper extends ComponentSpiWrapper implements IControlCo
 	}
 
 	@Override
+	public void setToolTipText(final String toolTip) {
+		getWidget().setToolTipText(toolTip);
+	}
+
+	@Override
 	public Dimension getMinSize() {
 		if (minSize != null) {
 			return minSize;

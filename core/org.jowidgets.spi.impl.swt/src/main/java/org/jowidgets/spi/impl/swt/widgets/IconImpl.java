@@ -56,11 +56,6 @@ public class IconImpl extends SwtControl implements IIconSpi {
 	}
 
 	@Override
-	public void setToolTipText(final String text) {
-		getUiReference().setToolTipText(text);
-	}
-
-	@Override
 	public Label getUiReference() {
 		return (Label) super.getUiReference();
 	}

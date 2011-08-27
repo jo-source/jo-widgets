@@ -33,10 +33,6 @@ public interface IComboBoxSelectionSpi extends IControlSpi, IInputControlSpi {
 
 	void setSelectedIndex(int index);
 
-	String getTooltipText();
-
-	void setTooltipText(String tooltipText);
-
 	String[] getElements();
 
 	void setElements(String[] elements);

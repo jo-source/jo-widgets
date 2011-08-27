@@ -463,4 +463,11 @@ public class ProgressBarImpl implements IProgressBar {
 		compositeWidget.removePopupDetectionListener(listener);
 	}
 
+	@Override
+	public void setToolTipText(final String toolTip) {
+		compositeWidget.setToolTipText(toolTip);
+		indeterminateProgressBar.setToolTipText(toolTip);
+		progressBar.setToolTipText(toolTip);
+	}
+
 }

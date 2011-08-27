@@ -65,4 +65,9 @@ public abstract class AbstractActionControl extends AbstractActionComponent impl
 		return dummyControlDelegate.getMaxSize();
 	}
 
+	@Override
+	public void setToolTipText(final String toolTip) {
+		dummyControlDelegate.setToolTipText(toolTip);
+	}
+
 }

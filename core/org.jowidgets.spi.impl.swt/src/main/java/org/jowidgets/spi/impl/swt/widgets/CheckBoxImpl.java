@@ -101,11 +101,6 @@ public class CheckBoxImpl extends AbstractInputControl implements ICheckBoxSpi {
 	}
 
 	@Override
-	public void setToolTipText(final String text) {
-		getUiReference().setToolTipText(text);
-	}
-
-	@Override
 	public boolean isSelected() {
 		return getUiReference().getSelection();
 	}

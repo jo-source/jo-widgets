@@ -54,9 +54,4 @@ public class IconImpl extends DummyControl implements IIconSpi {
 		return (UIDIcon) super.getUiReference();
 	}
 
-	@Override
-	public void setToolTipText(final String text) {
-		getUiReference().setToolTipText(text);
-	}
-
 }

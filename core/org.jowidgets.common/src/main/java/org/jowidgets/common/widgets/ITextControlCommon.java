@@ -36,8 +36,6 @@ public interface ITextControlCommon extends IInputControlCommon {
 
 	void setText(String text);
 
-	void setTooltipText(String tooltipText);
-
 	void setFontSize(int size);
 
 	void setFontName(String fontName);
