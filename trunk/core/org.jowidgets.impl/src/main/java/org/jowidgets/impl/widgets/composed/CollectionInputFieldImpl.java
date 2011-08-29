@@ -29,6 +29,7 @@ package org.jowidgets.impl.widgets.composed;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.toolkit.Toolkit;
@@ -47,10 +48,15 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.tools.controller.InputObservable;
+import org.jowidgets.tools.validation.CompoundValidator;
+import org.jowidgets.tools.validation.ValidationCache;
+import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.util.EmptyCheck;
 import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.validation.IValidationResultBuilder;
 import org.jowidgets.validation.IValidator;
 import org.jowidgets.validation.ValidationResult;
 
@@ -61,6 +67,9 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 	private final IConverter<ELEMENT_TYPE> converter;
 	private final Character separator;
 	private final Character maskingCharacter;
+	private final ValidationCache validationCache;
+	private final CompoundValidator<Collection<ELEMENT_TYPE>> compoundValidator;
+	private final InputObservable inputObservable;
 
 	private Dimension lastDialogSize;
 
@@ -75,6 +84,9 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 
 		final ICollectionInputDialogSetup<ELEMENT_TYPE> inputDialogSetup = setup.getCollectionInputDialogSetup();
 
+		this.inputObservable = new InputObservable();
+		this.compoundValidator = new CompoundValidator<Collection<ELEMENT_TYPE>>();
+
 		if (inputDialogSetup != null) {
 			composite.setLayout(new MigLayoutDescriptor("0[grow, 0::]2[]0", "0[grow]0"));
 		}
@@ -84,6 +96,40 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 		this.textField = composite.add(bpf.inputFieldString(), "growx, growy, w 0::, id tf");
+		textField.addInputListener(new IInputListener() {
+
+			@Override
+			public void inputChanged() {
+				inputChangedListener();
+			}
+		});
+
+		this.validationCache = new ValidationCache(new IValidationResultCreator() {
+			@SuppressWarnings("unused")
+			@Override
+			public IValidationResult createValidationResult() {
+				final IValidationResultBuilder builder = ValidationResult.builder();
+				int index = 1;
+				if (value != null) {
+					for (final ELEMENT_TYPE element : value) {
+						// TODO NM, MG validation still missing :-)
+
+						//final IValidationResult controlResult = inputControl.validate().withContext("Element " + index);
+						//if (inputControl.hasModifications() && !controlResult.isValid()) {
+						//	builder.addResult(controlResult);
+						//}
+						//else if (!controlResult.isValid()) {
+						//	builder.addResult(ValidationResult.infoError("Please edit element " + index));
+						//}
+						index++;
+					}
+				}
+
+				builder.addResult(compoundValidator.validate(getValue()));
+
+				return builder.build();
+			}
+		});
 
 		if (inputDialogSetup != null) {
 
@@ -116,6 +162,7 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 					}
 					final IInputDialog<Collection<ELEMENT_TYPE>> dialog = Toolkit.getActiveWindow().createChildWindow(
 							inputDialogBp);
+
 					if (EmptyCheck.isEmpty(value)) {
 						dialog.setValue((Collection<ELEMENT_TYPE>) Collections.singleton(null));
 					}
@@ -145,7 +192,7 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 
 	@Override
 	public void addValidator(final IValidator<Collection<ELEMENT_TYPE>> validator) {
-
+		compoundValidator.addValidator(validator);
 	}
 
 	@Override
@@ -160,6 +207,7 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 
 	@Override
 	public void setValue(final Collection<ELEMENT_TYPE> value) {
+		// TODO MG, NM think about copying list instead
 		this.value = value;
 		if (EmptyCheck.isEmpty(value)) {
 			textField.setValue(null);
@@ -171,7 +219,9 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 			for (final ELEMENT_TYPE element : value) {
 				final String converted = converter.convertToString(element);
 				if (converted.contains(separatorString)) {
-					valueString.append(maskingString + converted + maskingString);
+					valueString.append(maskingString
+						+ converted.replace(maskingString, maskingString + maskingString)
+						+ maskingString);
 				}
 				else {
 					valueString.append(converted);
@@ -185,22 +235,23 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 
 	@Override
 	public Collection<ELEMENT_TYPE> getValue() {
+		// TODO MG, NM think about returning a copy instead
 		return value;
 	}
 
 	@Override
 	public IValidationResult validate() {
-		return ValidationResult.ok();
+		return validationCache.validate();
 	}
 
 	@Override
 	public void addValidationConditionListener(final IValidationConditionListener listener) {
-
+		validationCache.addValidationConditionListener(listener);
 	}
 
 	@Override
 	public void removeValidationConditionListener(final IValidationConditionListener listener) {
-
+		validationCache.removeValidationConditionListener(listener);
 	}
 
 	@Override
@@ -213,12 +264,92 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 
 	@Override
 	public void addInputListener(final IInputListener listener) {
-		textField.addInputListener(listener);
+		inputObservable.addInputListener(listener);
 	}
 
 	@Override
 	public void removeInputListener(final IInputListener listener) {
-		textField.removeInputListener(listener);
+		inputObservable.removeInputListener(listener);
+	}
+
+	private void inputChangedListener() {
+		final String maskingString = String.valueOf(maskingCharacter.charValue());
+		final String separatorString = String.valueOf(separator.charValue());
+
+		value = new LinkedList<ELEMENT_TYPE>();
+		final String input = textField.getValue();
+
+		int pos = 0;
+		while (true) {
+			pos = skipSpaces(input, pos);
+			if (pos >= input.length()) {
+				break;
+			}
+
+			final boolean startsWithMask = equalsStringPart(input, maskingString, pos);
+			if (startsWithMask) {
+				pos = pos + maskingString.length();
+			}
+
+			int currentEndPos = pos;
+			if (startsWithMask && !equalsStringPart(input, maskingString, pos)) {
+				while (currentEndPos > 0) {
+					currentEndPos = input.indexOf(maskingString, currentEndPos);
+					if (currentEndPos < 0) {
+						break;
+					}
+					if (equalsStringPart(input, maskingString + maskingString, currentEndPos)) {
+						currentEndPos = currentEndPos + 2 * maskingString.length();
+					}
+					else {
+						break;
+					}
+				}
+			}
+			else {
+				currentEndPos = input.indexOf(separatorString, pos);
+			}
+
+			if (currentEndPos < 0) {
+				currentEndPos = input.length();
+			}
+			final String element = input.substring(pos, currentEndPos).replace(maskingString + maskingString, maskingString);
+			value.add(converter.convertToObject(element));
+			pos = currentEndPos + separatorString.length();
+
+			pos = skipSpaces(input, pos);
+			//CHECKSTYLE:OFF
+			if (pos < input.length() && !equalsStringPart(input, separatorString, pos)) {
+				// TODO NM, MG error
+			}
+			//CHECKSTYLE:ON
+			else {
+				pos = pos + separatorString.length();
+			}
+		}
+
+		validationCache.setDirty();
+		inputObservable.fireInputChanged();
+	}
+
+	private static boolean equalsStringPart(final String text, final String search, final int pos) {
+		int index = 0;
+		while (pos + index < text.length() && index < search.length()) {
+			if (text.charAt(pos + index) != search.charAt(index)) {
+				return false;
+			}
+			index++;
+		}
+
+		return true;
+	}
+
+	private static int skipSpaces(final String text, final int pos) {
+		int result = pos;
+		while (result < text.length() && text.charAt(result) == ' ') {
+			result++;
+		}
+		return result;
 	}
 
 }
