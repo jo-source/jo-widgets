@@ -162,7 +162,7 @@ public final class TableRowLayout implements ITableRowLayout {
 
 	@Override
 	public void invalidate() {
-		//rowLayoutCommon.validate();
+		layout();
 	}
 
 	@Override

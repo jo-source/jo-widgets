@@ -52,6 +52,7 @@ public final class TableLayoutImpl implements ITableLayout {
 	private final LinkedList<ITableRowLayout> layouters;
 	private Dimension preferredSize;
 	private boolean layouting;
+	private boolean internalLayouting;
 	private final List<Integer> growingColumns;
 	private int usedIndex;
 
@@ -80,6 +81,7 @@ public final class TableLayoutImpl implements ITableLayout {
 		}
 
 		usedIndex = -1;
+		internalLayouting = false;
 		invalidate();
 	}
 
@@ -158,12 +160,21 @@ public final class TableLayoutImpl implements ITableLayout {
 	}
 
 	public void calculateLayout() {
+		if (internalLayouting) {
+			return;
+		}
+
 		if (layouters.size() < layoutMinRows) {
 			preferredSize = new Dimension(0, 0);
 			return;
 		}
 
-		final ITableRowLayout rowLayout = layouters.get(usedIndex);
+		int currentIndex = usedIndex;
+		if (currentIndex < 0) {
+			currentIndex = layouters.size() - 1;
+		}
+
+		final ITableRowLayout rowLayout = layouters.get(currentIndex);
 		final Rectangle clientArea = rowLayout.getContainer().getClientArea();
 		availableWidth = clientArea.getWidth();
 
@@ -216,7 +227,15 @@ public final class TableLayoutImpl implements ITableLayout {
 		}
 
 		preferredSize = new Dimension(usedWidth, minHeight + 2 * verticalGap);
-		layoutHashCode = calculateHashCode();
+		final int newLayoutHashCode = calculateHashCode();
+		if (newLayoutHashCode != layoutHashCode) {
+			layoutHashCode = newLayoutHashCode;
+			internalLayouting = true;
+			for (final ITableRowLayout layouter : layouters) {
+				layouter.layout();
+			}
+			internalLayouting = false;
+		}
 	}
 
 	@Override
@@ -253,17 +272,13 @@ public final class TableLayoutImpl implements ITableLayout {
 			}
 		}
 
-		if (usedIndex < 0) {
-			return;
-		}
-
 		if (layoutHashCode != calculateHashCode()) {
 			invalidate();
 			return;
 		}
 
-		final ITableRowLayout rowLayout = layouters.get(usedIndex);
-		if (rowLayout != null) {
+		if (usedIndex >= 0 && layouters.size() > usedIndex) {
+			final ITableRowLayout rowLayout = layouters.get(usedIndex);
 			final Rectangle clientArea = rowLayout.getContainer().getClientArea();
 			if (availableWidth != clientArea.getWidth()) {
 				invalidate();

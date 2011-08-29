@@ -41,6 +41,7 @@ import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IInputComponentValidationLabel;
 import org.jowidgets.api.widgets.IInputControl;
+import org.jowidgets.api.widgets.IInputField;
 import org.jowidgets.api.widgets.ITextLabel;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputComponentValidationLabelBluePrint;
@@ -138,7 +139,7 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 		final int maxButtonWidth = Math.max(setup.getRemoveButtonSize().getWidth(), setup.getAddButtonSize().getWidth());
 
 		final ITableLayoutBuilder rowLayoutCommonBuilder = Toolkit.getLayoutFactoryProvider().tableLayoutBuilder();
-		rowLayoutCommonBuilder.layoutMinRows(2);
+		rowLayoutCommonBuilder.layoutMinRows(1);
 		rowLayoutCommonBuilder.columnCount(columns);
 		rowLayoutCommonBuilder.gap(3);
 		rowLayoutCommonBuilder.gapAfterColumn(columns - 1, 8);
@@ -150,19 +151,11 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 		}
 		this.tableCommon = rowLayoutCommonBuilder.build();
 
-		//TODO Review MG, NM is this todo already fixed?
-		//TODO NM proper handling of the non mandatory setup params 
-		//(validation label and constraints may be null so do not render them)
-
 		composite.setLayout(Toolkit.getLayoutFactoryProvider().listLayout());
 		valuesContainer = new ValuesContainer(composite.add(bpf.composite()));
 
-		//TODO Review MG, NM do not add an initial control, maybe the collection is empty or null
-		//but if this code line will be removed, there is no add button
-		valuesContainer.addRow();
-
 		this.addValueComposite = composite.add(bpf.composite());
-		addValueComposite.setLayout(tableCommon.rowBuilder().ignoreInCalculations(true).build());
+		addValueComposite.setLayout(tableCommon.rowBuilder().build());
 		this.addButton = addValueComposite.add(addButtonBp, "index 1");
 		addButton.setPreferredSize(setup.getAddButtonSize());
 		addButton.addActionListener(new IActionListener() {
@@ -178,11 +171,9 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 			compoundValidator.addValidator(setup.getValidator());
 		}
 
-		tableCommon.validate();
-
-		//TODO Review MG, NM the initial value should be set from setup
 		setValue(setup.getValue());
 
+		tableCommon.validate();
 		resetModificationState();
 	}
 
@@ -202,21 +193,16 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 
 	private void updateLayout() {
 		if (addValueComposite != null) {
-			valuesContainer.updateRowsLayout();
-			addValueComposite.layoutBegin();
-			addValueComposite.layoutEnd();
-
-			//TODO review MG, NM the parent is (unfortunately) not initialized when this method will be invoked
-			//from the constructor
+			getWidget().layoutBegin();
+			getWidget().layoutEnd();
 			if (getParent() != null) {
 				getParent().layoutBegin();
 				getParent().layoutEnd();
 			}
-			else {
-				getWidget().layoutBegin();
-				getWidget().layoutEnd();
-			}
-
+			tableCommon.validate();
+			addValueComposite.layoutBegin();
+			addValueComposite.layoutEnd();
+			valuesContainer.updateRowsLayout();
 		}
 	}
 
@@ -254,10 +240,6 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 	@Override
 	public void resetModificationState() {
 		lastRowCount = valuesContainer.rows.size();
-
-		//TODO review MG, NM the controls must be reseted so
-		//the controls validation labels may not show errors
-		//on unmodified controls
 		for (final Row row : valuesContainer.rows) {
 			row.inputControl.resetModificationState();
 		}
@@ -304,6 +286,7 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 		valuesContainer.setValue(value);
 		programmaticUpdate = false;
 		validationCache.setDirty();
+		updateLayout();
 	}
 
 	@Override
@@ -324,61 +307,80 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 			layout = new TableRowLayout(container, tableCommon, false);
 			setLayout(layout);
 
-			final String userIndex = String.valueOf(valuesContainer.getValueCount() + 1);
+			final int index = valuesContainer.getValueCount() + 1;
 
-			valueIndex = add(bpf.textLabel(userIndex).alignRight());
+			valueIndex = add(bpf.textLabel("").alignRight());
 
-			// TODO i18n
-			removeButton = add(removeButtonBp.setToolTipText("Remove entry " + userIndex));
+			removeButton = add(removeButtonBp);
 			removeButton.setPreferredSize(removeButtonSize);
 
 			inputControl = add(widgetCreator);
-			inputControl.addKeyListener(new KeyAdapter() {
+			if (inputControl instanceof IInputField) {
+				final IInputField<INPUT_TYPE> inputField = (IInputField<INPUT_TYPE>) inputControl;
+				inputControl.addKeyListener(new KeyAdapter() {
 
-				@Override
-				public void keyPressed(final IKeyEvent event) {
-					final int index = valuesContainer.indexOf(Row.this);
+					@Override
+					public void keyPressed(final IKeyEvent event) {
+						final int index = valuesContainer.indexOf(Row.this);
 
-					if (VirtualKey.ENTER.equals(event.getVirtualKey())) {
-						final int newIndex;
-						if (event.getModifier().contains(Modifier.SHIFT)) {
-							newIndex = index;
+						if (VirtualKey.ENTER.equals(event.getVirtualKey())) {
+							final int newIndex;
+							if (event.getModifier().contains(Modifier.SHIFT)) {
+								newIndex = index;
+							}
+							else {
+								newIndex = index + 1;
+							}
+							final Row row = valuesContainer.addRow(newIndex);
+							row.inputControl.requestFocus();
 						}
-						else {
-							newIndex = index + 1;
-						}
-						final Row row = valuesContainer.addRow(newIndex);
-						row.inputControl.requestFocus();
-					}
-					else if (VirtualKey.BACK_SPACE.equals(event.getVirtualKey())
-						|| VirtualKey.DELETE.equals(event.getVirtualKey())) {
-						boolean removeControl = (!inputControl.hasModifications());
-						if (!removeControl) {
-							final Object value = inputControl.getValue();
-							if (value instanceof String) {
-								if ("".equals(value)) {
-									removeControl = true;
+						else if (VirtualKey.BACK_SPACE.equals(event.getVirtualKey())
+							|| VirtualKey.DELETE.equals(event.getVirtualKey())) {
+							final String text = inputField.getText();
+							boolean removeControl = (text == null || "".equals(text));
+							if (!removeControl) {
+								final Object value = inputField.getValue();
+								if (value instanceof String) {
+									if ("".equals(value)) {
+										removeControl = true;
+									}
+								}
+							}
+							if (removeControl) {
+								int delta = 0;
+								if (VirtualKey.BACK_SPACE.equals(event.getVirtualKey())) {
+									delta = -1;
+								}
+								valuesContainer.removeRow(index);
+								final Row row = valuesContainer.getRow(Math.min(
+										Math.max(0, index + delta),
+										valuesContainer.getValueCount() - 1));
+								if (row != null) {
+									row.inputControl.requestFocus();
+								}
+								else {
+									addButton.requestFocus();
 								}
 							}
 						}
-						if (removeControl) {
-							int delta = 0;
-							if (VirtualKey.BACK_SPACE.equals(event.getVirtualKey())) {
-								delta = -1;
+						else if (VirtualKey.ARROW_UP.equals(event.getVirtualKey())) {
+							if (index > 0) {
+								final Row row = valuesContainer.getRow(index - 1);
+								row.inputControl.requestFocus();
 							}
-
-							valuesContainer.removeRow(index);
-							final Row row = valuesContainer.getRow(Math.min(
-									Math.max(0, index + delta),
-									valuesContainer.getValueCount() - 1));
-							if (row != null) {
+						}
+						else if (VirtualKey.ARROW_DOWN.equals(event.getVirtualKey())) {
+							// size - 1 because of add button
+							if (index < valuesContainer.rows.size() - 1) {
+								final Row row = valuesContainer.getRow(index + 1);
 								row.inputControl.requestFocus();
 							}
 						}
 					}
-				}
 
-			});
+				});
+			}
+
 			inputControl.addInputListener(new IInputListener() {
 
 				@Override
@@ -413,10 +415,13 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 			}
 
 			setTabOrder(Collections.singletonList(inputControl));
+			setValueIndex(index);
 		}
 
 		public void setValueIndex(final int index) {
 			valueIndex.setText(String.valueOf(index));
+			// TODO i18n
+			removeButton.setToolTipText("Remove entry " + index);
 			layout.invalidateControl(valueIndex);
 		}
 
@@ -446,13 +451,9 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 
 		private final List<Row> rows;
 
-		//TODO Review MG, NM why track the controls, the composite already do this?
-		private final List<IControl> controls;
-
 		public ValuesContainer(final IComposite widget) {
 			super(widget);
 			this.rows = new LinkedList<Row>();
-			controls = new LinkedList<IControl>();
 			setLayout(new ListLayout(this, new IColorConstant[0]));
 		}
 
@@ -482,16 +483,9 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 			}
 		}
 
-		@Override
-		//TODO Review MG, NM why override get children?
-		public List<IControl> getChildren() {
-			return controls;
-		}
-
 		public void updateRowsLayout() {
 			for (final Row row : rows) {
-				row.layoutBegin();
-				row.layoutEnd();
+				row.layout.layout();
 			}
 		}
 
@@ -504,7 +498,6 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 		public Row addRow() {
 			final Row row = new Row(add(bpf.composite()));
 			rows.add(row);
-			controls.add(row.getControl());
 			updateLayout();
 
 			fireInputChanged();
@@ -516,7 +509,6 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 			final Row result = new Row(add(index, bpf.composite(), null));
 
 			rows.add(index, result);
-			controls.add(index, result.getControl());
 			for (int i = index; i < rows.size(); i++) {
 				final Row row = rows.get(i);
 				row.setValueIndex(i + 1);
@@ -533,7 +525,6 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 			layoutBegin();
 			final Row removedRow = rows.get(index);
 			rows.remove(index);
-			controls.remove(index);
 
 			for (int i = index; i < rows.size(); i++) {
 				final Row row = rows.get(i);
@@ -545,6 +536,14 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 			updateLayout();
 
 			fireInputChanged();
+
+			final Row row = valuesContainer.getRow(Math.min(Math.max(0, index), valuesContainer.getValueCount() - 1));
+			if (row != null) {
+				row.inputControl.requestFocus();
+			}
+			else {
+				addButton.requestFocus();
+			}
 		}
 
 		public Row getRow(final int index) {
@@ -560,8 +559,6 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 			for (final Row row : rows) {
 				row.removeLayout();
 				remove(row.getControl());
-				//TODO Review MG, NM control must also be removed from the internal children tracking?
-				controls.remove(row.getControl());
 			}
 			layoutEnd();
 			rows.clear();
