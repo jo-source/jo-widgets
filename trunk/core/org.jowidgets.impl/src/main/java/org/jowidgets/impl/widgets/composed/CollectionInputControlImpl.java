@@ -119,10 +119,10 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 					final IInputControl<INPUT_TYPE> inputControl = row.inputControl;
 					//TODO i18n
 					final IValidationResult controlResult = inputControl.validate().withContext("Element " + index);
-					if (inputControl.hasModifications()) {
+					if (inputControl.hasModifications() && !controlResult.isValid()) {
 						builder.addResult(controlResult);
 					}
-					else {
+					else if (!controlResult.isValid()) {
 						//TODO i18n
 						builder.addResult(ValidationResult.infoError("Please edit element " + index));
 					}
