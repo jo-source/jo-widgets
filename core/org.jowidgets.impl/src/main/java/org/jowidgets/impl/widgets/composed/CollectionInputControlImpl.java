@@ -219,9 +219,6 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 
 	@Override
 	public boolean hasModifications() {
-		//TODO review MG, NM this may not work, maybe its modified but has the same hashCode
-		//return lastHashCode == valuesContainer.getValue().hashCode();
-
 		boolean result = lastRowCount != valuesContainer.rows.size();
 		result = result || isControlModified();
 
@@ -315,6 +312,26 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 			removeButton.setPreferredSize(removeButtonSize);
 
 			inputControl = add(widgetCreator);
+			inputControl.addKeyListener(new KeyAdapter() {
+
+				@Override
+				public void keyPressed(final IKeyEvent event) {
+					final int index = valuesContainer.indexOf(Row.this);
+
+					if (VirtualKey.ENTER.equals(event.getVirtualKey())) {
+						final int newIndex;
+						if (event.getModifier().contains(Modifier.SHIFT)) {
+							newIndex = index;
+						}
+						else {
+							newIndex = index + 1;
+						}
+						final Row row = valuesContainer.addRow(newIndex);
+						row.inputControl.requestFocus();
+					}
+				}
+			});
+
 			if (inputControl instanceof IInputField) {
 				final IInputField<INPUT_TYPE> inputField = (IInputField<INPUT_TYPE>) inputControl;
 				inputControl.addKeyListener(new KeyAdapter() {
@@ -323,18 +340,7 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 					public void keyPressed(final IKeyEvent event) {
 						final int index = valuesContainer.indexOf(Row.this);
 
-						if (VirtualKey.ENTER.equals(event.getVirtualKey())) {
-							final int newIndex;
-							if (event.getModifier().contains(Modifier.SHIFT)) {
-								newIndex = index;
-							}
-							else {
-								newIndex = index + 1;
-							}
-							final Row row = valuesContainer.addRow(newIndex);
-							row.inputControl.requestFocus();
-						}
-						else if (VirtualKey.BACK_SPACE.equals(event.getVirtualKey())
+						if (VirtualKey.BACK_SPACE.equals(event.getVirtualKey())
 							|| VirtualKey.DELETE.equals(event.getVirtualKey())) {
 							final String text = inputField.getText();
 							boolean removeControl = (text == null || "".equals(text));
@@ -475,7 +481,6 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 
 		public void setValue(final Collection<INPUT_TYPE> value) {
 			clear();
-			//TODO Review MG, NM null is a valid value for an input control
 			if (value != null) {
 				for (final INPUT_TYPE currentValue : value) {
 					addRow().setValue(currentValue);
