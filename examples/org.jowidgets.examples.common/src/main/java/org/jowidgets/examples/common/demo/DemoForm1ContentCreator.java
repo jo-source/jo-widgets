@@ -29,6 +29,7 @@
 package org.jowidgets.examples.common.demo;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -37,7 +38,9 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComboBox;
 import org.jowidgets.api.widgets.IInputComponent;
 import org.jowidgets.api.widgets.IInputComponentValidationLabel;
+import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.IInputField;
+import org.jowidgets.api.widgets.blueprint.ICollectionInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputComponentValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
@@ -67,6 +70,7 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 	private IInputComponent<String> city;
 	private IInputField<Integer> postalCode;
 	private IComboBox<String> country;
+	private IInputControl<Collection<String>> languages;
 	private IInputComponent<String> phoneNumber;
 	private IInputComponent<String> mail;
 
@@ -78,6 +82,7 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 	private IInputComponentValidationLabel postalCodeValidationWidget;
 	private IInputComponentValidationLabel cityValidationWidget;
 	private IInputComponentValidationLabel countryValidationWidget;
+	private IInputComponentValidationLabel languagesValidationWidget;
 	private IInputComponentValidationLabel phoneValidationWidget;
 	private IInputComponentValidationLabel mailValidationWidget;
 
@@ -236,6 +241,12 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 		country.addValidator(mandatoryValidator);
 		countryValidationWidget = container.add(validationLabelBp.setInputComponent(country), "wrap");
 
+		container.add(textLabelBp.setText("Languages"), "right, sg lg");
+		final ICollectionInputFieldBluePrint<String> collectionInputFieldBp = bpF.collectionInputField(Toolkit.getConverterProvider().string());
+		collectionInputFieldBp.setCollectionInputDialogSetup(bpF.collectionInputDialog(bpF.comboBox("English", "German", "French")));
+		languages = container.add("Languages", collectionInputFieldBp, inputWidgetConstraints);
+		languagesValidationWidget = container.add(validationLabelBp.setInputComponent(languages), "wrap");
+
 		container.add(textLabelBp.setText("Phone number"), "right, sg lg");
 		phoneNumber = container.add("Phone number", stringFieldBp, inputWidgetConstraints);
 		phoneValidationWidget = container.add(validationLabelBp.setInputComponent(phoneNumber), "wrap");
@@ -283,6 +294,7 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 			country.setValue(null);
 			phoneNumber.setValue(null);
 			mail.setValue(null);
+			languages.setValue(new LinkedList<String>());
 		}
 		resetValidation();
 	}
@@ -313,6 +325,7 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 		countryValidationWidget.resetValidation();
 		phoneValidationWidget.resetValidation();
 		mailValidationWidget.resetValidation();
+		languagesValidationWidget.resetValidation();
 	}
 
 	private String getStringValue(final Object object) {

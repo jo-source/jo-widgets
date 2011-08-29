@@ -71,5 +71,7 @@ public class DefaultIconsRegisterService extends ImageConstantRegisterService {
 		registerImage(IconsSmall.DELETE_GREY_TINY, "delete_grey_tiny.png");
 
 		registerImage(IconsSmall.SETTINGS, "settings.gif");
+
+		registerImage(IconsSmall.EDIT, "edit.png");
 	}
 }

@@ -30,6 +30,7 @@ package org.jowidgets.impl.widgets.composed.factory;
 import org.jowidgets.api.widgets.descriptor.ICalendarDescriptor;
 import org.jowidgets.api.widgets.descriptor.ICollectionInputControlDescriptor;
 import org.jowidgets.api.widgets.descriptor.ICollectionInputDialogDescriptor;
+import org.jowidgets.api.widgets.descriptor.ICollectionInputFieldDescriptor;
 import org.jowidgets.api.widgets.descriptor.IInputComponentValidationLabelDescriptor;
 import org.jowidgets.api.widgets.descriptor.IInputCompositeDescriptor;
 import org.jowidgets.api.widgets.descriptor.IInputDialogDescriptor;
@@ -44,6 +45,7 @@ import org.jowidgets.api.widgets.descriptor.IValidationResultLabelDescriptor;
 import org.jowidgets.impl.widgets.basic.factory.BasicGenericWidgetFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.CollectionInputControlFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.CollectionInputDialogFactory;
+import org.jowidgets.impl.widgets.composed.factory.internal.CollectionInputFieldFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.CustomCalendarFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.InputCompositeFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.InputDialogFactory;
@@ -81,6 +83,7 @@ public class GenericWidgetFactory extends BasicGenericWidgetFactory {
 		register(IProgressBarDescriptor.class, new ProgressBarFactory(getSpiWidgetFactory()));
 		register(ICollectionInputControlDescriptor.class, new CollectionInputControlFactory());
 		register(ICollectionInputDialogDescriptor.class, new CollectionInputDialogFactory());
+		register(ICollectionInputFieldDescriptor.class, new CollectionInputFieldFactory());
 	}
 
 	private void registerFallbackWidgets() {
