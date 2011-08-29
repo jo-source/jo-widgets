@@ -43,11 +43,13 @@ public final class ListLayout implements ILayouter {
 	private final HashMap<IControl, Dimension> preferredSizes;
 	private Dimension preferredSize;
 	private final IColorConstant[] colors;
+	private int lastWidth;
 
 	public ListLayout(final IContainer container, final IColorConstant[] backgroundColors) {
 		this.container = container;
 		this.colors = backgroundColors;
 		this.preferredSizes = new HashMap<IControl, Dimension>();
+		this.lastWidth = -1;
 	}
 
 	@Override
@@ -81,6 +83,11 @@ public final class ListLayout implements ILayouter {
 
 			control.setPosition(x, y);
 			control.setSize(width, size.getHeight());
+			if (lastWidth != width && control instanceof IContainer) {
+				final IContainer c = ((IContainer) control);
+				c.layoutBegin();
+				c.layoutEnd();
+			}
 
 			if (size.getHeight() > 0 && colors.length > 0) {
 				control.setBackgroundColor(getAttributeColor(groupIndex));
@@ -89,6 +96,8 @@ public final class ListLayout implements ILayouter {
 
 			y = y + size.getHeight();
 		}
+
+		lastWidth = width;
 	}
 
 	private IColorConstant getAttributeColor(final int index) {
