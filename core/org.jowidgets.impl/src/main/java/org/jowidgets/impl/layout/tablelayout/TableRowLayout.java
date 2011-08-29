@@ -106,10 +106,11 @@ public final class TableRowLayout implements ITableRowLayout {
 	@Override
 	public void layout() {
 		final Rectangle clientArea = container.getClientArea();
-		if (clientArea.getHeight() == 0) {
+		if (clientArea.getHeight() <= 1) {
 			// no valid layout
 			return;
 		}
+
 		rowLayoutCommon.validate();
 		if (layoutHashCode == rowLayoutCommon.getLayoutHashCode()) {
 			return;
