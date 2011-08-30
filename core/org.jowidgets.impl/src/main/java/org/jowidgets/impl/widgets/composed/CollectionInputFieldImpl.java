@@ -217,14 +217,13 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 			final StringBuilder valueString = new StringBuilder();
 			for (final ELEMENT_TYPE element : value) {
 				final String converted = converter.convertToString(element);
+				final String masked = converted.replace(maskingString, maskingString + maskingString);
 				this.value.add(converted);
 				if (converted.contains(separatorString)) {
-					valueString.append(maskingString
-						+ converted.replace(maskingString, maskingString + maskingString)
-						+ maskingString);
+					valueString.append(maskingString + masked + maskingString);
 				}
 				else {
-					valueString.append(converted);
+					valueString.append(masked);
 				}
 				valueString.append(separator + " ");
 			}
@@ -282,57 +281,39 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 		value.clear();
 		final String input = textField.getValue();
 
+		boolean isQuoted = false;
+
 		int pos = 0;
-		while (true) {
-			pos = skipSpaces(input, pos);
-			if (pos >= input.length()) {
-				break;
-			}
-
-			final boolean startsWithMask = equalsStringPart(input, maskingString, pos);
-			if (startsWithMask) {
+		final StringBuilder currentElement = new StringBuilder();
+		while (pos < input.length()) {
+			if (equalsStringPart(input, maskingString, pos)) {
 				pos = pos + maskingString.length();
+				if (equalsStringPart(input, maskingString, pos)) {
+					currentElement.append(maskingString);
+					pos = pos + maskingString.length();
+				}
+				else {
+					isQuoted = !isQuoted;
+				}
 			}
-
-			final boolean isQuoted = startsWithMask && !equalsStringPart(input, maskingString, pos);
-
-			int currentEndPos = pos;
-			if (isQuoted) {
-				while (currentEndPos > 0) {
-					currentEndPos = input.indexOf(maskingString, currentEndPos);
-					if (currentEndPos < 0) {
-						break;
-					}
-					if (equalsStringPart(input, maskingString + maskingString, currentEndPos)) {
-						currentEndPos = currentEndPos + 2 * maskingString.length();
-					}
-					else {
-						break;
-					}
+			else if (equalsStringPart(input, separatorString, pos)) {
+				pos = pos + separatorString.length();
+				if (isQuoted) {
+					currentElement.append(separatorString);
+				}
+				else {
+					value.add(currentElement.toString());
+					currentElement.setLength(0);
+					pos = skipSpaces(input, pos);
 				}
 			}
 			else {
-				currentEndPos = input.indexOf(separatorString, pos);
+				currentElement.append(input.charAt(pos));
+				pos++;
 			}
-
-			if (currentEndPos < 0) {
-				currentEndPos = input.length();
-			}
-			final String element = input.substring(pos, currentEndPos).replace(maskingString + maskingString, maskingString);
-			if (!"".equals(element)) {
-				value.add(element);
-			}
-
-			pos = skipSpaces(input, currentEndPos);
-			if (isQuoted && equalsStringPart(input, maskingString, pos)) {
-				pos = pos + maskingString.length();
-				pos = skipSpaces(input, pos);
-			}
-
-			if (equalsStringPart(input, separatorString, pos)) {
-				pos = pos + separatorString.length();
-			}
-			pos = skipSpaces(input, pos);
+		}
+		if (input.trim().endsWith(separatorString)) {
+			value.add(currentElement.toString());
 		}
 
 		validationCache.setDirty();
@@ -340,6 +321,10 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 	}
 
 	private static boolean equalsStringPart(final String text, final String search, final int pos) {
+		if (pos + search.length() > text.length()) {
+			return false;
+		}
+
 		int index = 0;
 		while (pos + index < text.length() && index < search.length()) {
 			if (text.charAt(pos + index) != search.charAt(index)) {
