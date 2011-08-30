@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2011, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -27,7 +27,7 @@
  */
 package org.jowidgets.api.types;
 
-public enum AutoPackPolicy {
+public enum AutoPositionCorrectionPolicy {
 
 	ALWAYS,
 

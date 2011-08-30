@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2010, Michael Grossmann, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -29,6 +29,7 @@ package org.jowidgets.api.widgets.descriptor.setup;
 
 import org.jowidgets.api.types.AutoCenterPolicy;
 import org.jowidgets.api.types.AutoPackPolicy;
+import org.jowidgets.api.types.AutoPositionCorrectionPolicy;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
@@ -37,6 +38,9 @@ public interface IWindowSetup extends IComponentSetup {
 
 	@Mandatory
 	AutoPackPolicy getAutoPackPolicy();
+
+	@Mandatory
+	AutoPositionCorrectionPolicy getAutoPositionCorrectionPolicy();
 
 	@Mandatory
 	AutoCenterPolicy getAutoCenterPolicy();

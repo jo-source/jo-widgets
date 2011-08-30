@@ -34,6 +34,6 @@ public interface IScrollCompositeSetupCommon extends IContainerSetupCommon, ICom
 
 	boolean hasHorizontalBar();
 
-	boolean isAllwaysShowBars();
+	boolean isAlwaysShowBars();
 
 }

@@ -36,6 +36,6 @@ public interface IScrollCompositeSetupBuilderCommon<INSTANCE_TYPE extends IScrol
 
 	INSTANCE_TYPE setHorizontalBar(final boolean hasHorizontalBar);
 
-	INSTANCE_TYPE setAllwaysShowBars(final boolean allwaysShowBars);
+	INSTANCE_TYPE setAlwaysShowBars(final boolean alwaysShowBars);
 
 }

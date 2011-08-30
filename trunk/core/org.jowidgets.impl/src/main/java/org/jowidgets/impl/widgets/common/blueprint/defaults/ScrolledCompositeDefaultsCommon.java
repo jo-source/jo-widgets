@@ -36,7 +36,7 @@ public class ScrolledCompositeDefaultsCommon implements IDefaultInitializer<IScr
 	public void initialize(final IScrollCompositeSetupBuilderCommon<?> builder) {
 		builder.setHorizontalBar(true);
 		builder.setVerticalBar(true);
-		builder.setAllwaysShowBars(false);
+		builder.setAlwaysShowBars(false);
 	}
 
 }

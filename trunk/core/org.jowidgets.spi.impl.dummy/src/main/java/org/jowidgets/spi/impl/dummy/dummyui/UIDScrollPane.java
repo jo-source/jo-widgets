@@ -32,7 +32,7 @@ public class UIDScrollPane extends UIDContainer {
 
 	private boolean verticalBar;
 	private boolean horizontalBar;
-	private boolean allwaysShowBars;
+	private boolean alwaysShowBars;
 
 	public boolean isVerticalBar() {
 		return verticalBar;
@@ -50,12 +50,12 @@ public class UIDScrollPane extends UIDContainer {
 		this.horizontalBar = horizontalBar;
 	}
 
-	public boolean isAllwaysShowBars() {
-		return allwaysShowBars;
+	public boolean isAlwaysShowBars() {
+		return alwaysShowBars;
 	}
 
-	public void setAllwaysShowBars(final boolean allwaysShowBars) {
-		this.allwaysShowBars = allwaysShowBars;
+	public void setAlwaysShowBars(final boolean alwaysShowBars) {
+		this.alwaysShowBars = alwaysShowBars;
 	}
 
 }
