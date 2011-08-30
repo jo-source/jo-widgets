@@ -42,6 +42,7 @@ public class ComboBoxSelectionDefaults implements IDefaultInitializer<IComboBoxS
 		builder.setAutoCompletion(true);
 		builder.setAutoSelectionPolicy(AutoSelectionPolicy.OFF);
 		builder.setElements(Collections.unmodifiableList(new LinkedList()));
+		builder.setLenient(false);
 	}
 
 }

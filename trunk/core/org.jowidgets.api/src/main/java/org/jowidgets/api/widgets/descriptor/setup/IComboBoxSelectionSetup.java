@@ -45,4 +45,7 @@ public interface IComboBoxSelectionSetup<INPUT_TYPE> extends IInputComponentSetu
 	@Mandatory
 	AutoSelectionPolicy getAutoSelectionPolicy();
 
+	@Mandatory
+	boolean isLenient();
+
 }
