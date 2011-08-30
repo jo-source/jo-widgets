@@ -282,7 +282,6 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 		final String input = textField.getValue();
 
 		boolean isQuoted = false;
-
 		int pos = 0;
 		final StringBuilder currentElement = new StringBuilder();
 		while (pos < input.length()) {
@@ -312,7 +311,7 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 				pos++;
 			}
 		}
-		if (input.trim().endsWith(separatorString)) {
+		if (input.length() > 0) {
 			value.add(currentElement.toString());
 		}
 
