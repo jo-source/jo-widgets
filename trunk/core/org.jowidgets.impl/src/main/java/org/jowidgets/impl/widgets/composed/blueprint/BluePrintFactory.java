@@ -214,7 +214,7 @@ public final class BluePrintFactory extends SimpleBluePrintFactory implements IB
 	public <ELEMENT_TYPE> ICollectionInputDialogBluePrint<ELEMENT_TYPE> collectionInputDialog(
 		final ICustomWidgetCreator<? extends IInputControl<ELEMENT_TYPE>> widgetCreator) {
 		@SuppressWarnings("unchecked")
-		final ICollectionInputControlSetup<ELEMENT_TYPE> collectionInputControlSetup = collectionInputControl((IWidgetDescriptor<? extends IInputControl<ELEMENT_TYPE>>) widgetCreator);
+		final ICollectionInputControlSetup<ELEMENT_TYPE> collectionInputControlSetup = collectionInputControl((ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>>) widgetCreator);
 		return collectionInputDialog(collectionInputControlSetup);
 	}
 
