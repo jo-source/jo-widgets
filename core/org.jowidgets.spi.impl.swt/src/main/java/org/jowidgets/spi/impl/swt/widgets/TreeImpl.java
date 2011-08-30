@@ -358,14 +358,10 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi {
 		//e.g. tree get auto selected when it get the focus
 		//selection could no disabled with clicking on item together with CTRL
 		//single selection will be simulated by selection listener
-		int result = SWT.NONE | SWT.MULTI;
+		int result = SWT.MULTI;
 
-		if (setup.isContentScrolled()) {
-			result = result | SWT.V_SCROLL | SWT.H_SCROLL;
-		}
-
-		else if (SelectionPolicy.SINGLE_SELECTION != setup.getSelectionPolicy()) {
-			throw new IllegalArgumentException("SelectionPolicy '" + setup.getSelectionPolicy() + "' is not known");
+		if (!setup.isContentScrolled()) {
+			result = result | SWT.NO_SCROLL;
 		}
 
 		return result;
