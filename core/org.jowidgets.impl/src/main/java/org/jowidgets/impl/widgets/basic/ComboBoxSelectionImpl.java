@@ -58,6 +58,7 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends ControlSpiWrapper impleme
 
 	private final List<VALUE_TYPE> elements;
 	private final List<VALUE_TYPE> elementsView;
+	private final boolean lenient;
 
 	private final IComboBoxSelectionSpi comboBoxSelectionWidgetSpi;
 	private final IObjectStringConverter<VALUE_TYPE> objectStringConverter;
@@ -67,11 +68,14 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends ControlSpiWrapper impleme
 	private final CompoundValidator<VALUE_TYPE> compoundValidator;
 
 	private VALUE_TYPE lastUnmodifiedValue;
+	private VALUE_TYPE lenientValue;
 
 	public ComboBoxSelectionImpl(
 		final IComboBoxSelectionSpi comboBoxSelectionWidgetSpi,
 		final IComboBoxSelectionSetup<VALUE_TYPE> setup) {
 		super(comboBoxSelectionWidgetSpi);
+
+		this.lenient = setup.isLenient();
 
 		this.comboBoxSelectionWidgetSpi = comboBoxSelectionWidgetSpi;
 		this.objectStringConverter = setup.getObjectStringConverter();
@@ -106,6 +110,7 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends ControlSpiWrapper impleme
 		getWidget().addInputListener(new IInputListener() {
 			@Override
 			public void inputChanged() {
+				removeLinientValue();
 				validationCache.setDirty();
 			}
 		});
@@ -130,6 +135,7 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends ControlSpiWrapper impleme
 
 	@Override
 	public void setValue(final VALUE_TYPE value) {
+		removeLinientValue();
 		if (value == null) {
 			comboBoxSelectionWidgetSpi.setSelectedIndex(-1);
 		}
@@ -138,8 +144,42 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends ControlSpiWrapper impleme
 			if (indexOfContent >= 0 && indexOfContent < elements.size()) {
 				comboBoxSelectionWidgetSpi.setSelectedIndex(indexOfContent);
 			}
-			else {
+			else if (!lenient) {
 				throw new IllegalArgumentException("Value '" + value + "' is not a element of this combo box");
+			}
+			else {
+				addLenientValue(value);
+			}
+		}
+	}
+
+	private void addLenientValue(final VALUE_TYPE value) {
+		final String[] spiElements = comboBoxSelectionWidgetSpi.getElements();
+		final String[] newSpiElements = new String[spiElements.length + 1];
+		for (int i = 0; i < spiElements.length; i++) {
+			newSpiElements[i] = spiElements[i];
+		}
+		newSpiElements[spiElements.length] = "* " + objectStringConverter.convertToString(value);
+		comboBoxSelectionWidgetSpi.setElements(newSpiElements);
+		comboBoxSelectionWidgetSpi.setSelectedIndex(spiElements.length);
+		this.lenientValue = value;
+	}
+
+	private void removeLinientValue() {
+		if (lenientValue != null) {
+			lenientValue = null;
+
+			final int oldIndex = comboBoxSelectionWidgetSpi.getSelectedIndex();
+
+			final String[] spiElements = comboBoxSelectionWidgetSpi.getElements();
+			final String[] newSpiElements = new String[spiElements.length - 1];
+			for (int i = 0; i < newSpiElements.length; i++) {
+				newSpiElements[i] = spiElements[i];
+			}
+			comboBoxSelectionWidgetSpi.setElements(newSpiElements);
+
+			if (oldIndex < newSpiElements.length) {
+				comboBoxSelectionWidgetSpi.setSelectedIndex(oldIndex);
 			}
 		}
 	}
@@ -150,7 +190,12 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends ControlSpiWrapper impleme
 		if (selectedIndex >= 0 && selectedIndex < elements.size()) {
 			return elements.get(selectedIndex);
 		}
-		return null;
+		else if (selectedIndex >= 0) {
+			return lenientValue;
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Override

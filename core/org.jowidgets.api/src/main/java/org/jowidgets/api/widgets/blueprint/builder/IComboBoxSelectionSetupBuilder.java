@@ -45,4 +45,15 @@ public interface IComboBoxSelectionSetupBuilder<INSTANCE_TYPE extends IComboBoxS
 
 	INSTANCE_TYPE setObjectStringConverter(IObjectStringConverter<INPUT_TYPE> objectStringConverter);
 
+	/**
+	 * A lenient combobox allows to set values that are not contained in the elements list.
+	 * If such a value is set, the elements list shows the new value at the end of the list.
+	 * The method getValue() returns the (invalid) value. If a new value is set, the added value
+	 * will be removed from the list
+	 * 
+	 * @param lenient true for lenient mode, false otherwise
+	 * 
+	 * @return this builder
+	 */
+	INSTANCE_TYPE setLenient(boolean lenient);
 }
