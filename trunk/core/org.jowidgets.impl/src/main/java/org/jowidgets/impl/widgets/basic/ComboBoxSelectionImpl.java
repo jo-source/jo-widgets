@@ -144,11 +144,11 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends ControlSpiWrapper impleme
 			if (indexOfContent >= 0 && indexOfContent < elements.size()) {
 				comboBoxSelectionWidgetSpi.setSelectedIndex(indexOfContent);
 			}
-			else if (!lenient) {
-				throw new IllegalArgumentException("Value '" + value + "' is not a element of this combo box");
+			else if (lenient) {
+				addLenientValue(value);
 			}
 			else {
-				addLenientValue(value);
+				throw new IllegalArgumentException("Value '" + value + "' is not a element of this combo box");
 			}
 		}
 	}
