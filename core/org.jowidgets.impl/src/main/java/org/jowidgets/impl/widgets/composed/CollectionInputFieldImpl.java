@@ -45,11 +45,15 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.ICollectionInputFieldDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.ICollectionInputDialogSetup;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Modifier;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.types.VirtualKey;
 import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.controller.IInputListener;
+import org.jowidgets.common.widgets.controller.IKeyEvent;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.controller.InputObservable;
+import org.jowidgets.tools.controller.KeyAdapter;
 import org.jowidgets.tools.validation.CompoundValidator;
 import org.jowidgets.tools.validation.ValidationCache;
 import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
@@ -71,10 +75,13 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 	private final ValidationCache validationCache;
 	private final CompoundValidator<Collection<ELEMENT_TYPE>> compoundValidator;
 	private final InputObservable inputObservable;
+	private final ICollectionInputDialogBluePrint<ELEMENT_TYPE> inputDialogBp;
 
 	private Dimension lastDialogSize;
 
 	private final Collection<String> value;
+
+	private boolean editable; // TODO MG replace by getter when implemented
 
 	public CollectionInputFieldImpl(final IComposite composite, final ICollectionInputFieldDescriptor<ELEMENT_TYPE> setup) {
 		super(composite);
@@ -88,6 +95,8 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 		this.value = new LinkedList<String>();
 		this.inputObservable = new InputObservable();
 		this.compoundValidator = new CompoundValidator<Collection<ELEMENT_TYPE>>();
+
+		this.editable = true;
 
 		if (inputDialogSetup != null) {
 			composite.setLayout(new MigLayoutDescriptor("0[grow, 0::]2[]0", "0[grow]0"));
@@ -110,15 +119,24 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 			@Override
 			public IValidationResult createValidationResult() {
 				final IValidationResultBuilder builder = ValidationResult.builder();
-				if (converter.getStringValidator() != null) {
-					int index = 1;
-					for (final String element : value) {
-						setup.getCollectionInputDialogSetup().getCollectionInputControlSetup().getElementWidgetCreator();
-						final IValidationResult controlResult = converter.getStringValidator().validate(element).withContext(
+				int index = 1;
+				for (final String element : value) {
+					boolean validated = false;
+					if (converter.getStringValidator() != null) {
+						final IValidationResult stringResult = converter.getStringValidator().validate(element).withContext(
 								"Element " + index);
-						builder.addResult(controlResult);
-						index++;
+						if (!stringResult.isValid()) {
+							validated = true;
+							builder.addResult(stringResult);
+						}
 					}
+					if (!validated) {
+						final IValidationResult elementResult = setup.getElementValidator().validate(
+								converter.convertToObject(element)).withContext("Element " + index);
+						builder.addResult(elementResult);
+					}
+
+					index++;
 				}
 				builder.addResult(compoundValidator.validate(getValue()));
 
@@ -127,8 +145,7 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 		});
 
 		if (inputDialogSetup != null) {
-
-			final ICollectionInputDialogBluePrint<ELEMENT_TYPE> inputDialogBp = bpf.collectionInputDialog(inputDialogSetup.getCollectionInputControlSetup());
+			inputDialogBp = bpf.collectionInputDialog(inputDialogSetup.getCollectionInputControlSetup());
 			inputDialogBp.setSetup(inputDialogSetup);
 			inputDialogBp.setValidator(setup.getValidator());
 
@@ -145,44 +162,60 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 
 			this.editButton.addActionListener(new IActionListener() {
 
-				@SuppressWarnings("unchecked")
 				@Override
 				public void actionPerformed() {
-					final Position buttonPos = Toolkit.toScreen(editButton.getPosition(), composite);
-					inputDialogBp.setPosition(buttonPos);
-					if (lastDialogSize != null) {
-						inputDialogBp.setSize(lastDialogSize);
-					}
-					else {
-						inputDialogBp.setSize(new Dimension(300, 270));
-					}
-					final IInputDialog<Collection<ELEMENT_TYPE>> dialog = Toolkit.getActiveWindow().createChildWindow(
-							inputDialogBp);
-
-					if (EmptyCheck.isEmpty(value)) {
-						dialog.setValue((Collection<ELEMENT_TYPE>) Collections.singleton(null));
-					}
-					else {
-						dialog.setValue(getValue());
-					}
-					dialog.setVisible(true);
-
-					if (dialog.isOkPressed()) {
-						lastDialogSize = dialog.getSize();
-						setValue(dialog.getValue());
-					}
-
-					dialog.dispose();
+					openDialog();
 				}
 			});
+
+			textField.addKeyListener(new KeyAdapter() {
+
+				@Override
+				public void keyPressed(final IKeyEvent event) {
+					if (event.getModifier().contains(Modifier.ALT) && VirtualKey.ENTER.equals(event.getVirtualKey())) {
+						openDialog();
+					}
+				}
+
+			});
+
 		}
 		else {
+			this.inputDialogBp = null;
 			this.editButton = null;
 		}
 
 		if (setup.getValidator() != null) {
 			compoundValidator.addValidator(setup.getValidator());
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private void openDialog() {
+		final Position buttonPos = Toolkit.toScreen(editButton.getPosition(), getWidget());
+		inputDialogBp.setPosition(buttonPos);
+		if (lastDialogSize != null) {
+			inputDialogBp.setSize(lastDialogSize);
+		}
+		else {
+			inputDialogBp.setSize(new Dimension(300, 270));
+		}
+		final IInputDialog<Collection<ELEMENT_TYPE>> dialog = Toolkit.getActiveWindow().createChildWindow(inputDialogBp);
+
+		if (EmptyCheck.isEmpty(value)) {
+			dialog.setValue((Collection<ELEMENT_TYPE>) Collections.singleton(null));
+		}
+		else {
+			dialog.setValue(getValue());
+		}
+		dialog.setVisible(true);
+
+		if (dialog.isOkPressed()) {
+			lastDialogSize = dialog.getSize();
+			setValue(dialog.getValue());
+		}
+
+		dialog.dispose();
 	}
 
 	@Override
@@ -219,7 +252,7 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 				final String converted = converter.convertToString(element);
 				final String masked = converted.replace(maskingString, maskingString + maskingString);
 				this.value.add(converted);
-				if (converted.contains(separatorString)) {
+				if (converted.contains(separatorString) || converted.startsWith(" ")) {
 					valueString.append(maskingString + masked + maskingString);
 				}
 				else {
@@ -258,9 +291,18 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 
 	@Override
 	public void setEditable(final boolean editable) {
+		this.editable = editable;
 		textField.setEditable(editable);
 		if (editButton != null) {
-			editButton.setEnabled(editable);
+			editButton.setEnabled(editable && textField.isEnabled());
+		}
+	}
+
+	@Override
+	public void setEnabled(final boolean enabled) {
+		textField.setEnabled(enabled);
+		if (editButton != null) {
+			editButton.setEnabled(enabled && editable);
 		}
 	}
 
