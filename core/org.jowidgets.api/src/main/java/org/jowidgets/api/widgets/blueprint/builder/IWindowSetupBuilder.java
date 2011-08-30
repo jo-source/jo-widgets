@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2010, Michael Grossmann, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -29,6 +29,7 @@ package org.jowidgets.api.widgets.blueprint.builder;
 
 import org.jowidgets.api.types.AutoCenterPolicy;
 import org.jowidgets.api.types.AutoPackPolicy;
+import org.jowidgets.api.types.AutoPositionCorrectionPolicy;
 import org.jowidgets.api.widgets.blueprint.builder.convenience.IWindowSetupConvenience;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
@@ -42,6 +43,8 @@ public interface IWindowSetupBuilder<INSTANCE_TYPE extends IWindowSetupBuilder<?
 	INSTANCE_TYPE setAutoPackPolicy(final AutoPackPolicy autoPackPolicy);
 
 	INSTANCE_TYPE setAutoCenterPolicy(final AutoCenterPolicy autoCenterPolicy);
+
+	INSTANCE_TYPE setAutoPositionCorrectionPolicy(final AutoPositionCorrectionPolicy autoPositionCorrectionPolicy);
 
 	INSTANCE_TYPE setSize(Dimension size);
 

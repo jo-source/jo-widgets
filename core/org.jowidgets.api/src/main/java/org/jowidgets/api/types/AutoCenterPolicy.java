@@ -29,7 +29,7 @@ package org.jowidgets.api.types;
 
 public enum AutoCenterPolicy {
 
-	ALLWAYS,
+	ALWAYS,
 
 	ONCE,
 

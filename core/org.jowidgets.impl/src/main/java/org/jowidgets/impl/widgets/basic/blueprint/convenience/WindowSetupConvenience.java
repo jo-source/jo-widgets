@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2010, Michael Grossmann, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -29,6 +29,7 @@ package org.jowidgets.impl.widgets.basic.blueprint.convenience;
 
 import org.jowidgets.api.types.AutoCenterPolicy;
 import org.jowidgets.api.types.AutoPackPolicy;
+import org.jowidgets.api.types.AutoPositionCorrectionPolicy;
 import org.jowidgets.api.widgets.blueprint.builder.IWindowSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.convenience.IWindowSetupConvenience;
 import org.jowidgets.tools.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
@@ -42,8 +43,8 @@ public class WindowSetupConvenience extends AbstractSetupBuilderConvenience<IWin
 	}
 
 	@Override
-	public IWindowSetupBuilder<?> autoPackAllways() {
-		return getBuilder().setAutoPackPolicy(AutoPackPolicy.ALLWAYS);
+	public IWindowSetupBuilder<?> autoPackAlways() {
+		return getBuilder().setAutoPackPolicy(AutoPackPolicy.ALWAYS);
 	}
 
 	@Override
@@ -52,18 +53,32 @@ public class WindowSetupConvenience extends AbstractSetupBuilderConvenience<IWin
 	}
 
 	@Override
+	public IWindowSetupBuilder<?> autoPositionCorrectionOnce() {
+		return getBuilder().setAutoPositionCorrectionPolicy(AutoPositionCorrectionPolicy.OFF);
+	}
+
+	@Override
+	public IWindowSetupBuilder<?> autoPositionCorrectionAlways() {
+		return getBuilder().setAutoPositionCorrectionPolicy(AutoPositionCorrectionPolicy.OFF);
+	}
+
+	@Override
+	public IWindowSetupBuilder<?> autoPositionCorrectionOff() {
+		return getBuilder().setAutoPositionCorrectionPolicy(AutoPositionCorrectionPolicy.OFF);
+	}
+
+	@Override
 	public IWindowSetupBuilder<?> autoCenterOnce() {
 		return getBuilder().setAutoCenterPolicy(AutoCenterPolicy.ONCE);
 	}
 
 	@Override
-	public IWindowSetupBuilder<?> autoCenterAllways() {
-		return getBuilder().setAutoCenterPolicy(AutoCenterPolicy.ALLWAYS);
+	public IWindowSetupBuilder<?> autoCenterAlways() {
+		return getBuilder().setAutoCenterPolicy(AutoCenterPolicy.ALWAYS);
 	}
 
 	@Override
 	public IWindowSetupBuilder<?> autoCenterOff() {
 		return getBuilder().setAutoCenterPolicy(AutoCenterPolicy.OFF);
 	}
-
 }

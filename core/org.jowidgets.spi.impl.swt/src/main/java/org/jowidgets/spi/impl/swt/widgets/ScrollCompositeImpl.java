@@ -81,7 +81,7 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 		scrolledComposite.setLayoutData(growingCellConstraints);
 		scrolledComposite.setExpandHorizontal(true);
 		scrolledComposite.setExpandVertical(true);
-		scrolledComposite.setAlwaysShowScrollBars(setup.isAllwaysShowBars());
+		scrolledComposite.setAlwaysShowScrollBars(setup.isAlwaysShowBars());
 		scrolledComposite.setBackgroundMode(SWT.INHERIT_FORCE);
 
 		final Composite innerComposite = new Composite(scrolledWidget.getUiReference(), SWT.NONE);

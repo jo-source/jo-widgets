@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2010, Michael Grossmann, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -31,13 +31,19 @@ public interface IWindowSetupConvenience<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE autoPackOnce();
 
-	INSTANCE_TYPE autoPackAllways();
+	INSTANCE_TYPE autoPackAlways();
 
 	INSTANCE_TYPE autoPackOff();
 
+	INSTANCE_TYPE autoPositionCorrectionOnce();
+
+	INSTANCE_TYPE autoPositionCorrectionAlways();
+
+	INSTANCE_TYPE autoPositionCorrectionOff();
+
 	INSTANCE_TYPE autoCenterOnce();
 
-	INSTANCE_TYPE autoCenterAllways();
+	INSTANCE_TYPE autoCenterAlways();
 
 	INSTANCE_TYPE autoCenterOff();
 

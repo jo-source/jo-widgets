@@ -40,7 +40,7 @@ public final class ScrollBarSettingsConvert {
 		Assert.paramNotNull(setup, "setup");
 
 		if (setup.hasVerticalBar()) {
-			if (setup.isAllwaysShowBars()) {
+			if (setup.isAlwaysShowBars()) {
 				return JScrollPane.VERTICAL_SCROLLBAR_ALWAYS;
 			}
 			else {
@@ -56,7 +56,7 @@ public final class ScrollBarSettingsConvert {
 		Assert.paramNotNull(setup, "setup");
 
 		if (setup.hasHorizontalBar()) {
-			if (setup.isAllwaysShowBars()) {
+			if (setup.isAlwaysShowBars()) {
 				return JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS;
 			}
 			else {

@@ -40,7 +40,7 @@ public class ScrollCompositeImpl extends DummyComposite implements IScrollCompos
 
 		scrollPane.setVerticalBar(setup.hasVerticalBar());
 		scrollPane.setHorizontalBar(setup.hasHorizontalBar());
-		scrollPane.setAllwaysShowBars(setup.isAllwaysShowBars());
+		scrollPane.setAlwaysShowBars(setup.isAlwaysShowBars());
 
 	}
 
