@@ -30,6 +30,7 @@ package org.jowidgets.impl.widgets.composed;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.toolkit.Toolkit;
@@ -73,7 +74,7 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 
 	private Dimension lastDialogSize;
 
-	private Collection<ELEMENT_TYPE> value;
+	private final Collection<String> value;
 
 	public CollectionInputFieldImpl(final IComposite composite, final ICollectionInputFieldDescriptor<ELEMENT_TYPE> setup) {
 		super(composite);
@@ -84,6 +85,7 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 
 		final ICollectionInputDialogSetup<ELEMENT_TYPE> inputDialogSetup = setup.getCollectionInputDialogSetup();
 
+		this.value = new LinkedList<String>();
 		this.inputObservable = new InputObservable();
 		this.compoundValidator = new CompoundValidator<Collection<ELEMENT_TYPE>>();
 
@@ -105,26 +107,19 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 		});
 
 		this.validationCache = new ValidationCache(new IValidationResultCreator() {
-			@SuppressWarnings("unused")
 			@Override
 			public IValidationResult createValidationResult() {
 				final IValidationResultBuilder builder = ValidationResult.builder();
-				int index = 1;
-				if (value != null) {
-					for (final ELEMENT_TYPE element : value) {
-						// TODO NM, MG validation still missing :-)
-
-						//final IValidationResult controlResult = inputControl.validate().withContext("Element " + index);
-						//if (inputControl.hasModifications() && !controlResult.isValid()) {
-						//	builder.addResult(controlResult);
-						//}
-						//else if (!controlResult.isValid()) {
-						//	builder.addResult(ValidationResult.infoError("Please edit element " + index));
-						//}
+				if (converter.getStringValidator() != null) {
+					int index = 1;
+					for (final String element : value) {
+						setup.getCollectionInputDialogSetup().getCollectionInputControlSetup().getElementWidgetCreator();
+						final IValidationResult controlResult = converter.getStringValidator().validate(element).withContext(
+								"Element " + index);
+						builder.addResult(controlResult);
 						index++;
 					}
 				}
-
 				builder.addResult(compoundValidator.validate(getValue()));
 
 				return builder.build();
@@ -135,6 +130,7 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 
 			final ICollectionInputDialogBluePrint<ELEMENT_TYPE> inputDialogBp = bpf.collectionInputDialog(inputDialogSetup.getCollectionInputControlSetup());
 			inputDialogBp.setSetup(inputDialogSetup);
+			inputDialogBp.setValidator(setup.getValidator());
 
 			final IButtonBluePrint buttonBp = bpf.button();
 			if (setup.getEditButtonIcon() != null) {
@@ -167,7 +163,7 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 						dialog.setValue((Collection<ELEMENT_TYPE>) Collections.singleton(null));
 					}
 					else {
-						dialog.setValue(value);
+						dialog.setValue(getValue());
 					}
 					dialog.setVisible(true);
 
@@ -182,6 +178,10 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 		}
 		else {
 			this.editButton = null;
+		}
+
+		if (setup.getValidator() != null) {
+			compoundValidator.addValidator(setup.getValidator());
 		}
 	}
 
@@ -207,8 +207,7 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 
 	@Override
 	public void setValue(final Collection<ELEMENT_TYPE> value) {
-		// TODO MG, NM think about copying list instead
-		this.value = value;
+		this.value.clear();
 		if (EmptyCheck.isEmpty(value)) {
 			textField.setValue(null);
 		}
@@ -218,6 +217,7 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 			final StringBuilder valueString = new StringBuilder();
 			for (final ELEMENT_TYPE element : value) {
 				final String converted = converter.convertToString(element);
+				this.value.add(converted);
 				if (converted.contains(separatorString)) {
 					valueString.append(maskingString
 						+ converted.replace(maskingString, maskingString + maskingString)
@@ -235,8 +235,11 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 
 	@Override
 	public Collection<ELEMENT_TYPE> getValue() {
-		// TODO MG, NM think about returning a copy instead
-		return value;
+		final List<ELEMENT_TYPE> result = new LinkedList<ELEMENT_TYPE>();
+		for (final String element : value) {
+			result.add(converter.convertToObject(element));
+		}
+		return result;
 	}
 
 	@Override
@@ -276,7 +279,7 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 		final String maskingString = String.valueOf(maskingCharacter.charValue());
 		final String separatorString = String.valueOf(separator.charValue());
 
-		value = new LinkedList<ELEMENT_TYPE>();
+		value.clear();
 		final String input = textField.getValue();
 
 		int pos = 0;
@@ -291,8 +294,10 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 				pos = pos + maskingString.length();
 			}
 
+			final boolean isQuoted = startsWithMask && !equalsStringPart(input, maskingString, pos);
+
 			int currentEndPos = pos;
-			if (startsWithMask && !equalsStringPart(input, maskingString, pos)) {
+			if (isQuoted) {
 				while (currentEndPos > 0) {
 					currentEndPos = input.indexOf(maskingString, currentEndPos);
 					if (currentEndPos < 0) {
@@ -314,18 +319,20 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 				currentEndPos = input.length();
 			}
 			final String element = input.substring(pos, currentEndPos).replace(maskingString + maskingString, maskingString);
-			value.add(converter.convertToObject(element));
-			pos = currentEndPos + separatorString.length();
-
-			pos = skipSpaces(input, pos);
-			//CHECKSTYLE:OFF
-			if (pos < input.length() && !equalsStringPart(input, separatorString, pos)) {
-				// TODO NM, MG error
+			if (!"".equals(element)) {
+				value.add(element);
 			}
-			//CHECKSTYLE:ON
-			else {
+
+			pos = skipSpaces(input, currentEndPos);
+			if (isQuoted && equalsStringPart(input, maskingString, pos)) {
+				pos = pos + maskingString.length();
+				pos = skipSpaces(input, pos);
+			}
+
+			if (equalsStringPart(input, separatorString, pos)) {
 				pos = pos + separatorString.length();
 			}
+			pos = skipSpaces(input, pos);
 		}
 
 		validationCache.setDirty();
