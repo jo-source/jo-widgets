@@ -32,6 +32,7 @@ import java.util.Collection;
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
+import org.jowidgets.validation.IValidator;
 
 public interface ICollectionInputFieldSetup<ELEMENT_TYPE> extends IInputComponentSetup<Collection<ELEMENT_TYPE>> {
 
@@ -41,6 +42,9 @@ public interface ICollectionInputFieldSetup<ELEMENT_TYPE> extends IInputComponen
 
 	@Mandatory
 	IConverter<ELEMENT_TYPE> getConverter();
+
+	@Mandatory
+	IValidator<ELEMENT_TYPE> getElementValidator();
 
 	@Mandatory
 	Character getSeparator();

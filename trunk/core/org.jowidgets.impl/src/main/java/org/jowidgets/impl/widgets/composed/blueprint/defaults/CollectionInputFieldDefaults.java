@@ -30,15 +30,20 @@ package org.jowidgets.impl.widgets.composed.blueprint.defaults;
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.widgets.blueprint.builder.ICollectionInputFieldSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
+import org.jowidgets.validation.IValidator;
+import org.jowidgets.validation.Validator;
 
 public class CollectionInputFieldDefaults implements IDefaultInitializer<ICollectionInputFieldSetupBuilder<?, ?>> {
 
 	// i18n
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public void initialize(final ICollectionInputFieldSetupBuilder<?, ?> builder) {
 		builder.setEditButtonIcon(IconsSmall.EDIT);
 		builder.setSeparator(Character.valueOf(','));
 		builder.setMaskingCharacter(Character.valueOf('"'));
+		final IValidator okValidator = Validator.okValidator();
+		builder.setElementValidator(okValidator);
 	}
 
 }
