@@ -153,7 +153,7 @@ public class WindowDelegate {
 		if (x + size.getWidth() > screenBounds.getX() + screenBounds.getWidth()) {
 			x = screenBounds.getX() + screenBounds.getWidth() - size.getWidth();
 		}
-		if (y + size.getHeight() > screenBounds.getHeight() + screenBounds.getHeight()) {
+		if (y + size.getHeight() > screenBounds.getY() + screenBounds.getHeight()) {
 			y = screenBounds.getY() + screenBounds.getHeight() - size.getHeight();
 		}
 
@@ -163,5 +163,4 @@ public class WindowDelegate {
 		windowSpi.setPosition(new Position(x, y));
 		positionCorrected = true;
 	}
-
 }
