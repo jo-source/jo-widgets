@@ -73,5 +73,13 @@ public class DefaultIconsRegisterService extends ImageConstantRegisterService {
 		registerImage(IconsSmall.SETTINGS, "settings.gif");
 
 		registerImage(IconsSmall.EDIT, "edit.png");
+
+		registerImage(IconsSmall.FILTER, "filter.png");
+		registerImage(IconsSmall.FILTER_INCLUDING, "filter_including.png");
+		registerImage(IconsSmall.FILTER_EXCLUDING, "filter_excluding.png");
+		registerImage(IconsSmall.FILTER_EDIT, "filter_edit.png");
+		registerImage(IconsSmall.FILTER_DISABLED, "filter_disabled.png");
+		registerImage(IconsSmall.FILTER_ENABLED, "filter_enabled.png");
+		registerImage(IconsSmall.FILTER_DELETE, "filter_delete.png");
 	}
 }
