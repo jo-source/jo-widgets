@@ -800,13 +800,18 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 		@Override
 		public void menuDetected(final MenuDetectEvent e) {
+			// calculate position manually due to different behavior of Windows and Linux
+			final Rectangle tableBounds = table.getBounds();
+			final Point tableOrigin = table.getParent().toDisplay(new Point(tableBounds.x, tableBounds.y));
+			final Point tableEventPoint = new Point(e.x - tableOrigin.x, e.y - tableOrigin.y);
+
 			Point point = new Point(e.x, e.y);
 			point = table.toControl(point);
 			final Position position = new Position(point.x, point.y);
 			TableItem item = table.getItem(point);
 
 			//Menu detect on table cell
-			if (item != null && point.y > table.getHeaderHeight()) {
+			if (item != null && tableEventPoint.y > table.getHeaderHeight()) {
 				for (int colIndex = 0; colIndex < getColumnCount(); colIndex++) {
 					final int internalColIndex = colIndex + 1;
 					final Rectangle rect = item.getBounds(internalColIndex);
@@ -823,14 +828,14 @@ public class TableImpl extends SwtControl implements ITableSpi {
 				}
 			}
 			//Menu detect on header. Table has some item(s)
-			else if (table.getItemCount() > 0 && point.y < table.getHeaderHeight()) {
+			else if (table.getItemCount() > 0 && tableEventPoint.y < table.getHeaderHeight()) {
 				item = table.getItem(0);
 				fireColumnPopupDetected(item, point, position);
 			}
 			//Menu detect on header but table has no item.
 			//Just temporarily add an item to the table an remove it, after
 			//position was calculated.
-			else if (point.y < table.getHeaderHeight()) {
+			else if (tableEventPoint.y < table.getHeaderHeight()) {
 				table.setRedraw(false);
 				table.removeListener(SWT.SetData, dataListener);
 				final TableItem dummyItem = new TableItem(table, SWT.NONE);
