@@ -1118,7 +1118,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		@Override
 		public void remove(final int offset, final int length) throws BadLocationException {
 			final String text = getText(0, offset) + getText(offset + length, getLength() - (offset + length));
-			if (fireEditEvent(text)) {
+			if (!fireEditEvent(text)) {
 				super.remove(offset, length);
 			}
 		}
@@ -1126,7 +1126,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		@Override
 		public void insertString(final int offset, final String str, final AttributeSet a) throws BadLocationException {
 			final String text = getText(0, offset) + str + getText(offset, getLength() - offset);
-			if (fireEditEvent(text)) {
+			if (!fireEditEvent(text)) {
 				super.insertString(offset, str, a);
 			}
 		}
