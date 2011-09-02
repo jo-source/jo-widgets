@@ -39,4 +39,40 @@
 		</dependency>
 	</dependencies>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+					<execution>
+						<id>copy-embedded-jars</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>com.miglayout</groupId>
+									<artifactId>miglayout</artifactId>
+									<version>3.7.3.1</version>
+									<classifier>swt</classifier>
+									<outputDirectory>${basedir}</outputDirectory>
+								</artifactItem>
+								<artifactItem>
+									<groupId>org.easymock</groupId>
+									<artifactId>easymock</artifactId>
+									<version>3.0</version>
+									<outputDirectory>${basedir}</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
 </project>
