@@ -30,14 +30,15 @@ package org.jowidgets.workbench.impl.rcp;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
+import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.util.Assert;
+import org.jowidgets.workbench.api.IWorkbench;
 import org.jowidgets.workbench.api.IWorkbenchConfigurationService;
 import org.jowidgets.workbench.api.IWorkbenchFactory;
 import org.jowidgets.workbench.api.IWorkbenchRunner;
 import org.jowidgets.workbench.impl.rcp.internal.WorkbenchContext;
 import org.jowidgets.workbench.impl.rcp.internal.util.RcpWorkbenchConfigurationSupport;
 
-//TODO HW check if the IWorkbechFactory refactoring works
 public final class WorkbenchRunner implements IWorkbenchRunner {
 
 	@Override
@@ -45,7 +46,15 @@ public final class WorkbenchRunner implements IWorkbenchRunner {
 		Toolkit.getApplicationRunner().run(new IApplication() {
 			@Override
 			public void start(final IApplicationLifecycle lifecycle) {
-				final WorkbenchContext context = new WorkbenchContext(workbenchFactory.create(), false);
+				final IWorkbench workbench = workbenchFactory.create();
+				final VetoHolder vetoHolder = new VetoHolder();
+				workbench.onLogin(vetoHolder);
+				if (vetoHolder.hasVeto()) {
+					lifecycle.finish();
+					return;
+				}
+
+				final WorkbenchContext context = new WorkbenchContext(workbench, false);
 				context.setLifecycle(lifecycle);
 				context.run();
 			}
@@ -60,8 +69,16 @@ public final class WorkbenchRunner implements IWorkbenchRunner {
 		Toolkit.getApplicationRunner().run(new IApplication() {
 			@Override
 			public void start(final IApplicationLifecycle lifecycle) {
+				final IWorkbench workbench = workbenchFactory.create();
+				final VetoHolder vetoHolder = new VetoHolder();
+				workbench.onLogin(vetoHolder);
+				if (vetoHolder.hasVeto()) {
+					lifecycle.finish();
+					return;
+				}
+
 				final WorkbenchConfiguration config = (WorkbenchConfiguration) configurationService.loadConfiguration();
-				final WorkbenchContext context = new WorkbenchContext(workbenchFactory.create(), true);
+				final WorkbenchContext context = new WorkbenchContext(workbench, true);
 				final RcpWorkbenchConfigurationSupport rcpSupport = new RcpWorkbenchConfigurationSupport();
 				if (config != null) {
 					context.setSelectedTreeNode(config.getSelectedTreeNode());
