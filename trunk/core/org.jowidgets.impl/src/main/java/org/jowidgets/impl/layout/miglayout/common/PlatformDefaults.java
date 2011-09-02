@@ -197,7 +197,7 @@ public final class PlatformDefaults implements IPlatformDefaults {
 				throw new IllegalArgumentException("Unknown platform: " + plaf);
 		}
 		currentPlatform = plaf;
-		baseDpi = baseDpiForces != null ? baseDpiForces.intValue() : getPlatformDPI(plaf);
+		baseDpi = baseDpiForces != null ? baseDpiForces : getPlatformDPI(plaf);
 	}
 
 	private int getPlatformDPI(final int plaf) {
@@ -242,7 +242,7 @@ public final class PlatformDefaults implements IPlatformDefaults {
 	 */
 	@Override
 	public void setDefaultDPI(final Integer dpi) {
-		baseDpi = dpi != null ? dpi.intValue() : getPlatformDPI(currentPlatform);
+		baseDpi = dpi != null ? dpi : getPlatformDPI(currentPlatform);
 		baseDpiForces = dpi;
 	}
 
@@ -315,7 +315,7 @@ public final class PlatformDefaults implements IPlatformDefaults {
 	 * 
 	 * @return The current base. Default is {@link #BASE_SCALE_FACTOR}
 	 * @see #BASE_FONT_SIZE
-	 * @see # BASE_SCREEN_DPI_FACTOR
+	 * @see #BASE_SCALE_FACTOR
 	 * @see #BASE_REAL_PIXEL
 	 */
 	@Override
@@ -328,7 +328,7 @@ public final class PlatformDefaults implements IPlatformDefaults {
 	 * 
 	 * @param base The new base. Default is {@link #BASE_SCALE_FACTOR}
 	 * @see #BASE_FONT_SIZE
-	 * @see # BASE_SCREEN_DPI_FACTOR
+	 * @see #BASE_SCALE_FACTOR
 	 * @see #BASE_REAL_PIXEL
 	 */
 	@Override
@@ -460,8 +460,8 @@ public final class PlatformDefaults implements IPlatformDefaults {
 	 *            is not changed.
 	 */
 	public void setUnitValue(final String[] unitStrings, final UnitValue x, final UnitValue y) {
-		for (int i = 0; i < unitStrings.length; i++) {
-			final String s = unitStrings[i].toLowerCase().trim();
+		for (final String unitString : unitStrings) {
+			final String s = unitString.toLowerCase().trim();
 			if (x != null) {
 				horDefs.put(s, x);
 			}

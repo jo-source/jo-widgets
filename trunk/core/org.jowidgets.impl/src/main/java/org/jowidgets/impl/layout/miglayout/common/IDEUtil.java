@@ -158,12 +158,13 @@ public class IDEUtil {
 	 * @param isCols The the constraint should be returned for columns rather than rows.
 	 * @return A String. Never <code>null</code>.
 	 */
-	public final String getConstraintString(final AC ac, final boolean asAPI, final boolean isCols) {
+	public String getConstraintString(final AC ac, final boolean asAPI, final boolean isCols) {
 		final StringBuffer sb = new StringBuffer(32);
 
 		final DimConstraint[] dims = ac.getConstaints();
 		final BoundSize defGap = isCols
-				? MigLayoutToolkit.getMigPlatformDefaults().getGridGapX() : MigLayoutToolkit.getMigPlatformDefaults().getGridGapY();
+				? MigLayoutToolkit.getMigPlatformDefaults().getGridGapX()
+				: MigLayoutToolkit.getMigPlatformDefaults().getGridGapY();
 
 		for (int i = 0; i < dims.length; i++) {
 			final DimConstraint dc = dims[i];
@@ -202,7 +203,7 @@ public class IDEUtil {
 	 * @param asAPI If the returned string should be of API type (e.g. .flowX().gap("rel").align("right")) or
 	 *            as a String type (e.g. "flowx, gap rel, right").
 	 */
-	private final void addRowDimConstraintString(final DimConstraint dc, final StringBuffer sb, final boolean asAPI) {
+	private void addRowDimConstraintString(final DimConstraint dc, final StringBuffer sb, final boolean asAPI) {
 		final int gp = dc.getGrowPriority();
 
 		final int firstComma = sb.length();
@@ -228,7 +229,7 @@ public class IDEUtil {
 
 		final Float gw = dc.getGrow();
 		if (gw != null) {
-			final String g = gw.floatValue() != 100f ? floatToString(gw.floatValue(), asAPI) : "";
+			final String g = gw != 100f ? floatToString(gw, asAPI) : "";
 			if (asAPI) {
 				if (g.length() == 0) {
 					sb.append(".grow()");
@@ -253,8 +254,8 @@ public class IDEUtil {
 		}
 
 		final Float sw = dc.getShrink();
-		if (sw != null && sw.intValue() != 100) {
-			final String s = floatToString(sw.floatValue(), asAPI);
+		if (sw != null && sw != 100) {
+			final String s = floatToString(sw, asAPI);
 			if (asAPI) {
 				sb.append(".shrink(\"").append(s).append("\")");
 			}
@@ -341,7 +342,7 @@ public class IDEUtil {
 	 * @param noGrowAdd If <code>true</code> no grow constraints will be added.
 	 * @return A constraint string. Never <code>null</code>.
 	 */
-	private final void addComponentDimConstraintString(
+	private void addComponentDimConstraintString(
 		final DimConstraint dc,
 		final StringBuffer sb,
 		final boolean asAPI,
@@ -360,7 +361,7 @@ public class IDEUtil {
 		if (noGrowAdd == false) {
 			final Float gw = dc.getGrow();
 			if (gw != null) {
-				final String g = gw.floatValue() != 100f ? floatToString(gw.floatValue(), asAPI) : "";
+				final String g = gw != 100f ? floatToString(gw, asAPI) : "";
 				if (asAPI) {
 					sb.append(isHor ? ".growX(" : ".growY(").append(g).append(')');
 				}
@@ -381,8 +382,8 @@ public class IDEUtil {
 		}
 
 		final Float sw = dc.getShrink();
-		if (sw != null && sw.intValue() != 100) {
-			final String s = floatToString(sw.floatValue(), asAPI);
+		if (sw != null && sw != 100) {
+			final String s = floatToString(sw, asAPI);
 			if (asAPI) {
 				sb.append(isHor ? ".shrinkX(" : ".shrinkY(").append(s).append(')');
 			}
@@ -488,7 +489,7 @@ public class IDEUtil {
 	 *            as a String type (e.g. "flowx, gap rel, right").
 	 * @return A String. Never <code>null</code>.
 	 */
-	public final String getConstraintString(final CC cc, final boolean asAPI) {
+	public String getConstraintString(final CC cc, final boolean asAPI) {
 		final StringBuffer sb = new StringBuffer(16);
 
 		if (cc.isNewline())
@@ -500,10 +501,10 @@ public class IDEUtil {
 		final Boolean flowX = cc.getFlowX();
 		if (flowX != null) {
 			if (asAPI) {
-				sb.append(flowX.booleanValue() ? ".flowX()" : ".flowY()");
+				sb.append(flowX ? ".flowX()" : ".flowY()");
 			}
 			else {
-				sb.append(flowX.booleanValue() ? ",flowx" : ",flowy");
+				sb.append(flowX ? ",flowx" : ",flowy");
 			}
 		}
 
@@ -653,9 +654,9 @@ public class IDEUtil {
 		}
 
 		final boolean noGrowAdd = cc.getHorizontal().getGrow() != null
-			&& cc.getHorizontal().getGrow().intValue() == 100
+			&& cc.getHorizontal().getGrow() == 100
 			&& cc.getVertical().getGrow() != null
-			&& cc.getVertical().getGrow().intValue() == 100;
+			&& cc.getVertical().getGrow() == 100;
 
 		addComponentDimConstraintString(cc.getHorizontal(), sb, asAPI, true, noGrowAdd);
 		addComponentDimConstraintString(cc.getVertical(), sb, asAPI, false, noGrowAdd);
@@ -677,7 +678,7 @@ public class IDEUtil {
 	 *            as a String type (e.g. "flowx, gap rel, right").
 	 * @return A String. Never <code>null</code>.
 	 */
-	public final String getConstraintString(final LC lc, final boolean asAPI) {
+	public String getConstraintString(final LC lc, final boolean asAPI) {
 		final StringBuffer sb = new StringBuffer(16);
 
 		if (lc.isFlowX() == false)
@@ -700,7 +701,7 @@ public class IDEUtil {
 				sb.append(".leftToRight(").append(leftToRight).append(')');
 			}
 			else {
-				sb.append(leftToRight.booleanValue() ? ",ltr" : ",rtl");
+				sb.append(leftToRight ? ",ltr" : ",rtl");
 			}
 		}
 
@@ -849,7 +850,7 @@ public class IDEUtil {
 	 * @param f the float.
 	 * @return <code>f</code> as a string. Never <code>null</code>.
 	 */
-	private final String floatToString(final float f, final boolean asAPI) {
+	private String floatToString(final float f, final boolean asAPI) {
 		final String valS = String.valueOf(f);
 		return valS.endsWith(".0") ? valS.substring(0, valS.length() - 2) : (valS + (asAPI ? "f" : ""));
 	}

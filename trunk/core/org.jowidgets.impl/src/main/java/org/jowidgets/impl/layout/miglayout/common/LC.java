@@ -291,7 +291,7 @@ public final class LC implements Externalizable {
 	 * How a component that is hidden (not visible) should be treated by default.
 	 * 
 	 * @return The mode:<br>
-	 *         0 == Normal. Bounds will be caclulated as if the component was visible.<br>
+	 *         0 == Normal. Bounds will be calculated as if the component was visible.<br>
 	 *         1 == If hidden the size will be 0, 0 but the gaps remain.<br>
 	 *         2 == If hidden the size will be 0, 0 and gaps set to zero.<br>
 	 *         3 == If hidden the component will be disregarded completely and not take up a cell in the grid..
@@ -304,7 +304,7 @@ public final class LC implements Externalizable {
 	 * How a component that is hidden (not visible) should be treated.
 	 * 
 	 * @param mode The mode:<br>
-	 *            0 == Normal. Bounds will be caclulated as if the component was visible.<br>
+	 *            0 == Normal. Bounds will be calculated as if the component was visible.<br>
 	 *            1 == If hidden the size will be 0, 0 but the gaps remain.<br>
 	 *            2 == If hidden the size will be 0, 0 and gaps set to zero.<br>
 	 *            3 == If hidden the component will be disregarded completely and not take up a cell in the grid..
@@ -811,7 +811,7 @@ public final class LC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
 	public LC leftToRight(final boolean b) {
-		setLeftToRight(b ? Boolean.TRUE : Boolean.FALSE); // Not .valueOf due to retroweaver...
+		setLeftToRight(b ? Boolean.TRUE : Boolean.FALSE);
 		return this;
 	}
 
@@ -1072,7 +1072,7 @@ public final class LC implements Externalizable {
 	 * For a more thorough explanation of what this constraint does see the white paper or cheat Sheet at www.migcomponents.com.
 	 * 
 	 * @param mode The mode:<br>
-	 *            0 == Normal. Bounds will be caclulated as if the component was visible.<br>
+	 *            0 == Normal. Bounds will be calculated as if the component was visible.<br>
 	 *            1 == If hidden the size will be 0, 0 but the gaps remain.<br>
 	 *            2 == If hidden the size will be 0, 0 and gaps set to zero.<br>
 	 *            3 == If hidden the component will be disregarded completely and not take up a cell in the grid..
@@ -1099,13 +1099,13 @@ public final class LC implements Externalizable {
 	}
 
 	/**
-	 * The width for the container as a min and/or preferref and/or maximum width. The value will override any value that is set
+	 * The width for the container as a min and/or preferred and/or maximum width. The value will override any value that is set
 	 * on
 	 * the container itself.
 	 * <p>
 	 * For a more thorough explanation of what this constraint does see the white paper or Cheat Sheet at www.migcontainers.com.
 	 * 
-	 * @param width The width expressed as a <code>Boundwidth</code>. E.g. "50:100px:200mm" or "100px".
+	 * @param width The width expressed as a <code>BoundSize</code>. E.g. "50:100px:200mm" or "100px".
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
 	public LC width(final String width) {
@@ -1142,13 +1142,13 @@ public final class LC implements Externalizable {
 	}
 
 	/**
-	 * The height for the container as a min and/or preferref and/or maximum height. The value will override any value that is set
+	 * The height for the container as a min and/or preferred and/or maximum height. The value will override any value that is set
 	 * on
 	 * the container itself.
 	 * <p>
 	 * For a more thorough explanation of what this constraint does see the white paper or cheat Sheet at www.migcontainers.com.
 	 * 
-	 * @param height The height expressed as a <code>Boundheight</code>. E.g. "50:100px:200mm" or "100px".
+	 * @param height The height expressed as a <code>BoundSize</code>. E.g. "50:100px:200mm" or "100px".
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
 	public LC height(final String height) {

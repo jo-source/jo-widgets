@@ -57,11 +57,11 @@ public final class LinkHandler {
 			if (ret == null && l == layout) {
 				int[] rect = valuesTemp.get(i).get(key);
 				if (cont && rect != null && rect[type] != LayoutUtil.NOT_SET) {
-					ret = Integer.valueOf(rect[type]);
+					ret = rect[type];
 				}
 				else {
 					rect = valuesMap.get(i).get(key);
-					ret = (rect != null && rect[type] != LayoutUtil.NOT_SET) ? Integer.valueOf(rect[type]) : null;
+					ret = (rect != null && rect[type] != LayoutUtil.NOT_SET) ? rect[type] : null;
 				}
 				cont = false;
 			}
