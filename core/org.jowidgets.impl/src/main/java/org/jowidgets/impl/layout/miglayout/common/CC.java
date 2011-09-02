@@ -426,7 +426,7 @@ public final class CC implements Externalizable {
 	}
 
 	/**
-	 * The end group that this componet should be placed in.
+	 * The end group that this component should be placed in.
 	 * <p>
 	 * For a more thorough explanation of what this constraint does see the white paper or cheat Sheet at www.migcomponents.com.
 	 * 
@@ -440,11 +440,11 @@ public final class CC implements Externalizable {
 	}
 
 	/**
-	 * The end group(s) that this componet should be placed in.
+	 * The end group(s) that this component should be placed in.
 	 * <p>
 	 * For a more thorough explanation of what this constraint does see the white paper or cheat Sheet at www.migcomponents.com.
 	 * 
-	 * @param xy The end group for x and y repsectively. 1-2 arguments, not null.
+	 * @param xy The end group for x and y respectively. 1-2 arguments, not null.
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
@@ -465,7 +465,7 @@ public final class CC implements Externalizable {
 	}
 
 	/**
-	 * The size group that this componet should be placed in.
+	 * The size group that this component should be placed in.
 	 * <p>
 	 * For a more thorough explanation of what this constraint does see the white paper or cheat Sheet at www.migcomponents.com.
 	 * 
@@ -479,11 +479,11 @@ public final class CC implements Externalizable {
 	}
 
 	/**
-	 * The size group(s) that this componet should be placed in.
+	 * The size group(s) that this component should be placed in.
 	 * <p>
 	 * For a more thorough explanation of what this constraint does see the white paper or cheat Sheet at www.migcomponents.com.
 	 * 
-	 * @param xy The size group for x and y repsectively. 1-2 arguments, not null.
+	 * @param xy The size group for x and y respectively. 1-2 arguments, not null.
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
@@ -522,7 +522,7 @@ public final class CC implements Externalizable {
 	}
 
 	/**
-	 * The size for the component as a min and/or preferref and/or maximum size. The value will override any value that is set on
+	 * The size for the component as a min and/or preferred and/or maximum size. The value will override any value that is set on
 	 * the component itself.
 	 * <p>
 	 * For a more thorough explanation of what this constraint does see the white paper or cheat Sheet at www.migcomponents.com.
@@ -814,7 +814,7 @@ public final class CC implements Externalizable {
 	}
 
 	/**
-	 * Sets the horizontal gap before the component.
+	 * Sets the horizontal gap after the component.
 	 * <p>
 	 * Note! This is currently same as gapLeft(). This might change in 4.x.
 	 * 
@@ -840,7 +840,7 @@ public final class CC implements Externalizable {
 	}
 
 	/**
-	 * Sets the gap above the component.
+	 * Sets the gap to the left of the component.
 	 * 
 	 * @param boundsSize The size of the gap expressed as a <code>BoundSize</code>. E.g. "50:100px:200mm" or "100px!".
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
@@ -852,7 +852,7 @@ public final class CC implements Externalizable {
 	}
 
 	/**
-	 * Sets the gap above the component.
+	 * Sets the gap below the component.
 	 * 
 	 * @param boundsSize The size of the gap expressed as a <code>BoundSize</code>. E.g. "50:100px:200mm" or "100px!".
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
@@ -864,7 +864,7 @@ public final class CC implements Externalizable {
 	}
 
 	/**
-	 * Sets the gap above the component.
+	 * Sets the gap to the right of the component.
 	 * 
 	 * @param boundsSize The size of the gap expressed as a <code>BoundSize</code>. E.g. "50:100px:200mm" or "100px!".
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
@@ -876,7 +876,7 @@ public final class CC implements Externalizable {
 	}
 
 	/**
-	 * Same functionality as {@link #setSpanY(int LayoutUtil.INF)} which means this cell will span the rest of the column.
+	 * Same functionality as {@link #setSpanY(int)} which means this cell will span the rest of the column.
 	 * This method returns <code>this</code> for chaining multiple calls.
 	 * <p>
 	 * For a more thorough explanation of what this constraint does see the white paper or cheat Sheet at www.migcomponents.com.
@@ -890,7 +890,7 @@ public final class CC implements Externalizable {
 	}
 
 	/**
-	 * Same functionality as {@link #setSpanY(int cells)} only this method returns <code>this</code> for chaining multiple calls.
+	 * Same functionality as {@link #setSpanY(int)} only this method returns <code>this</code> for chaining multiple calls.
 	 * <p>
 	 * For a more thorough explanation of what this constraint does see the white paper or cheat Sheet at www.migcomponents.com.
 	 * 
@@ -904,7 +904,7 @@ public final class CC implements Externalizable {
 	}
 
 	/**
-	 * Same functionality as {@link #setSpanX(int LayoutUtil.INF)} which means this cell will span the rest of the row.
+	 * Same functionality as {@link #setSpanX(int)} which means this cell will span the rest of the row.
 	 * This method returns <code>this</code> for chaining multiple calls.
 	 * <p>
 	 * For a more thorough explanation of what this constraint does see the white paper or cheat Sheet at www.migcomponents.com.
@@ -918,7 +918,7 @@ public final class CC implements Externalizable {
 	}
 
 	/**
-	 * Same functionality as {@link #setSpanX(int cells)} only this method returns <code>this</code> for chaining multiple calls.
+	 * Same functionality as {@link #setSpanX(int)} only this method returns <code>this</code> for chaining multiple calls.
 	 * <p>
 	 * For a more thorough explanation of what this constraint does see the white paper or cheat Sheet at www.migcomponents.com.
 	 * 
@@ -974,7 +974,6 @@ public final class CC implements Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @see #setPushY(Float)
-	 * @see #pushY()
 	 */
 	public CC pushY() {
 		return pushY(ResizeConstraint.WEIGHT_100);
@@ -1003,7 +1002,6 @@ public final class CC implements Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @see #setPushX(Float)
-	 * @see #pushX()
 	 */
 	public CC pushX() {
 		return pushX(ResizeConstraint.WEIGHT_100);
@@ -1449,7 +1447,7 @@ public final class CC implements Externalizable {
 
 	/**
 	 * Returns the horizontal dimension constraint for this component constraint. It has constraints for the horizontal size
-	 * and grow/shink priorities and weights.
+	 * and grow/shrink priorities and weights.
 	 * <p>
 	 * Note! If any changes is to be made it must be made direct when the object is returned. It is not allowed to save the
 	 * constraint for later use.
@@ -1462,7 +1460,7 @@ public final class CC implements Externalizable {
 
 	/**
 	 * Sets the horizontal dimension constraint for this component constraint. It has constraints for the horizontal size
-	 * and grow/shink priorities and weights.
+	 * and grow/shrink priorities and weights.
 	 * 
 	 * @param h The new dimension constraint. If <code>null</code> it will be reset to <code>new DimConstraint();</code>
 	 */
@@ -1472,7 +1470,7 @@ public final class CC implements Externalizable {
 
 	/**
 	 * Returns the vertical dimension constraint for this component constraint. It has constraints for the vertical size
-	 * and grow/shink priorities and weights.
+	 * and grow/shrink priorities and weights.
 	 * <p>
 	 * Note! If any changes is to be made it must be made direct when the object is returned. It is not allowed to save the
 	 * constraint for later use.
@@ -1485,7 +1483,7 @@ public final class CC implements Externalizable {
 
 	/**
 	 * Sets the vertical dimension constraint for this component constraint. It has constraints for the vertical size
-	 * and grow/shink priorities and weights.
+	 * and grow/shrink priorities and weights.
 	 * 
 	 * @param v The new dimension constraint. If <code>null</code> it will be reset to <code>new DimConstraint();</code>
 	 */
@@ -1929,7 +1927,7 @@ public final class CC implements Externalizable {
 	/**
 	 * Returns in how many parts the current cell (that this constraint's component will be in) should be split in. If for
 	 * instance
-	 * it is split in two, the next componet will also share the same cell. Note that the cell can also span a number of
+	 * it is split in two, the next component will also share the same cell. Note that the cell can also span a number of
 	 * cells, which means that you can for instance span three cells and split that big cell for two components. Split can be
 	 * set to a very high value to make all components in the same row/column share the same cell (e.g.
 	 * <code>LayoutUtil.INF</code>).
@@ -1946,7 +1944,7 @@ public final class CC implements Externalizable {
 
 	/**
 	 * Sets in how many parts the current cell (that this constraint's component will be in) should be split in. If for instance
-	 * it is split in two, the next componet will also share the same cell. Note that the cell can also span a number of
+	 * it is split in two, the next component will also share the same cell. Note that the cell can also span a number of
 	 * cells, which means that you can for instance span three cells and split that big cell for two components. Split can be
 	 * set to a very high value to make all components in the same row/column share the same cell (e.g.
 	 * <code>LayoutUtil.INF</code>).

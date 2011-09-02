@@ -157,7 +157,7 @@ public final class UnitValue implements Serializable {
 							? MigLayoutToolkit.getMigPlatformDefaults().getHorizontalScaleFactor()
 							: MigLayoutToolkit.getMigPlatformDefaults().getVerticalScaleFactor();
 					if (s != null) {
-						f *= s.floatValue();
+						f *= s;
 					}
 					return (isHor ? parent.getHorizontalScreenDPI() : parent.getVerticalScreenDPI()) * value / f;
 
@@ -180,7 +180,7 @@ public final class UnitValue implements Serializable {
 					if (st == null || sz == null) {
 						return 0;
 					}
-					return value * (Math.max(0, sz.intValue()) - refValue) + st.intValue();
+					return value * (Math.max(0, sz) - refValue) + st;
 
 				case UnitValueToolkit.MIN_SIZE:
 					if (comp == null) {
@@ -220,13 +220,13 @@ public final class UnitValue implements Serializable {
 					}
 
 					if (unit == UnitValueToolkit.LINK_XPOS) {
-						return parent.getScreenLocationX() + v.intValue();
+						return parent.getScreenLocationX() + v;
 					}
 					if (unit == UnitValueToolkit.LINK_YPOS) {
-						return parent.getScreenLocationY() + v.intValue();
+						return parent.getScreenLocationY() + v;
 					}
 
-					return v.intValue();
+					return v;
 
 				case UnitValueToolkit.LOOKUP:
 					final float res = lookup(refValue, parent, comp);
@@ -292,7 +292,7 @@ public final class UnitValue implements Serializable {
 
 		final Integer u = MigLayoutToolkit.getMigUnitValueToolkit().getUnitMap().get(unitStr);
 		if (u != null) {
-			return u.intValue();
+			return u;
 		}
 
 		if (unitStr.equals("lp")) {
@@ -352,8 +352,8 @@ public final class UnitValue implements Serializable {
 			return linkId != null;
 		}
 
-		for (int i = 0; i < subUnits.length; i++) {
-			if (subUnits[i].isLinkedDeep()) {
+		for (final UnitValue subUnit : subUnits) {
+			if (subUnit.isLinkedDeep()) {
 				return true;
 			}
 		}
@@ -430,19 +430,21 @@ public final class UnitValue implements Serializable {
 
 	static {
 		final LayoutUtil layoutUtil = MigLayoutToolkit.getMigLayoutUtil();
-		layoutUtil.setDelegate(UnitValue.class, new PersistenceDelegate() {
-			@Override
-			protected Expression instantiate(final Object oldInstance, final Encoder out) {
-				final UnitValue uv = (UnitValue) oldInstance;
-				final String cs = uv.getConstraintString();
-				if (cs == null) {
-					throw new IllegalStateException("Design time must be on to use XML persistence. See LayoutUtil.");
-				}
+		if (layoutUtil.hasBeans()) {
+			layoutUtil.setDelegate(UnitValue.class, new PersistenceDelegate() {
+				@Override
+				protected Expression instantiate(final Object oldInstance, final Encoder out) {
+					final UnitValue uv = (UnitValue) oldInstance;
+					final String cs = uv.getConstraintString();
+					if (cs == null) {
+						throw new IllegalStateException("Design time must be on to use XML persistence. See LayoutUtil.");
+					}
 
-				return new Expression(oldInstance, ConstraintParser.class, "parseUnitValueOrAlign", new Object[] {
-						uv.getConstraintString(), (uv.isHorizontal() ? Boolean.TRUE : Boolean.FALSE), null});
-			}
-		});
+					return new Expression(oldInstance, ConstraintParser.class, "parseUnitValueOrAlign", new Object[] {
+							uv.getConstraintString(), (uv.isHorizontal() ? Boolean.TRUE : Boolean.FALSE), null});
+				}
+			});
+		}
 	}
 
 	// ************************************************

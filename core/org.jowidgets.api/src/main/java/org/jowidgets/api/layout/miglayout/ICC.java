@@ -220,7 +220,7 @@ public interface ICC {
 	ICC shrink(final float... widthHeight);
 
 	/**
-	 * The end group that this componet should be placed in.
+	 * The end group that this component should be placed in.
 	 * <p>
 	 * For a more thorough explanation of what this constraint does see the white paper or cheat Sheet at www.migcomponents.com.
 	 * 
@@ -231,11 +231,11 @@ public interface ICC {
 	ICC endGroupY(final String s);
 
 	/**
-	 * The end group(s) that this componet should be placed in.
+	 * The end group(s) that this component should be placed in.
 	 * <p>
 	 * For a more thorough explanation of what this constraint does see the white paper or cheat Sheet at www.migcomponents.com.
 	 * 
-	 * @param xy The end group for x and y repsectively. 1-2 arguments, not null.
+	 * @param xy The end group for x and y respectively. 1-2 arguments, not null.
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
@@ -243,7 +243,7 @@ public interface ICC {
 	ICC endGroup(final String... xy);
 
 	/**
-	 * The size group that this componet should be placed in.
+	 * The size group that this component should be placed in.
 	 * <p>
 	 * For a more thorough explanation of what this constraint does see the white paper or cheat Sheet at www.migcomponents.com.
 	 * 
@@ -254,11 +254,11 @@ public interface ICC {
 	ICC sizeGroupY(final String s);
 
 	/**
-	 * The size group(s) that this componet should be placed in.
+	 * The size group(s) that this component should be placed in.
 	 * <p>
 	 * For a more thorough explanation of what this constraint does see the white paper or cheat Sheet at www.migcomponents.com.
 	 * 
-	 * @param xy The size group for x and y repsectively. 1-2 arguments, not null.
+	 * @param xy The size group for x and y respectively. 1-2 arguments, not null.
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
@@ -277,7 +277,7 @@ public interface ICC {
 	ICC minHeight(final String size);
 
 	/**
-	 * The size for the component as a min and/or preferref and/or maximum size. The value will override any value that is set on
+	 * The size for the component as a min and/or preferred and/or maximum size. The value will override any value that is set on
 	 * the component itself.
 	 * <p>
 	 * For a more thorough explanation of what this constraint does see the white paper or cheat Sheet at www.migcomponents.com.
@@ -474,7 +474,7 @@ public interface ICC {
 	ICC gapBefore(final String boundsSize);
 
 	/**
-	 * Sets the horizontal gap before the component.
+	 * Sets the horizontal gap after the component.
 	 * <p>
 	 * Note! This is currently same as gapLeft(). This might change in 4.x.
 	 * 
@@ -494,7 +494,7 @@ public interface ICC {
 	ICC gapTop(final String boundsSize);
 
 	/**
-	 * Sets the gap above the component.
+	 * Sets the gap to the left of the component.
 	 * 
 	 * @param boundsSize The size of the gap expressed as a <code>BoundSize</code>. E.g. "50:100px:200mm" or "100px!".
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
@@ -503,7 +503,7 @@ public interface ICC {
 	ICC gapLeft(final String boundsSize);
 
 	/**
-	 * Sets the gap above the component.
+	 * Sets the gap below the component.
 	 * 
 	 * @param boundsSize The size of the gap expressed as a <code>BoundSize</code>. E.g. "50:100px:200mm" or "100px!".
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
@@ -512,7 +512,7 @@ public interface ICC {
 	ICC gapBottom(final String boundsSize);
 
 	/**
-	 * Sets the gap above the component.
+	 * Sets the gap to the right of the component.
 	 * 
 	 * @param boundsSize The size of the gap expressed as a <code>BoundSize</code>. E.g. "50:100px:200mm" or "100px!".
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
@@ -521,7 +521,7 @@ public interface ICC {
 	ICC gapRight(final String boundsSize);
 
 	/**
-	 * Same functionality as {@link #setSpanY(int LayoutUtil.INF)} which means this cell will span the rest of the column.
+	 * Same functionality as {@link #setSpanY(int)} which means this cell will span the rest of the column.
 	 * This method returns <code>this</code> for chaining multiple calls.
 	 * <p>
 	 * For a more thorough explanation of what this constraint does see the white paper or cheat Sheet at www.migcomponents.com.
@@ -533,7 +533,7 @@ public interface ICC {
 	ICC spanY();
 
 	/**
-	 * Same functionality as {@link #setSpanY(int cells)} only this method returns <code>this</code> for chaining multiple calls.
+	 * Same functionality as {@link #setSpanY(int)} only this method returns <code>this</code> for chaining multiple calls.
 	 * <p>
 	 * For a more thorough explanation of what this constraint does see the white paper or cheat Sheet at www.migcomponents.com.
 	 * 
@@ -544,7 +544,7 @@ public interface ICC {
 	ICC spanY(final int cells);
 
 	/**
-	 * Same functionality as {@link #setSpanX(int LayoutUtil.INF)} which means this cell will span the rest of the row.
+	 * Same functionality as {@link #setSpanX(int)} which means this cell will span the rest of the row.
 	 * This method returns <code>this</code> for chaining multiple calls.
 	 * <p>
 	 * For a more thorough explanation of what this constraint does see the white paper or cheat Sheet at www.migcomponents.com.
@@ -556,7 +556,7 @@ public interface ICC {
 	ICC spanX();
 
 	/**
-	 * Same functionality as {@link #setSpanX(int cells)} only this method returns <code>this</code> for chaining multiple calls.
+	 * Same functionality as {@link #setSpanX(int)} only this method returns <code>this</code> for chaining multiple calls.
 	 * <p>
 	 * For a more thorough explanation of what this constraint does see the white paper or cheat Sheet at www.migcomponents.com.
 	 * 
@@ -605,7 +605,6 @@ public interface ICC {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @see #setPushY(Float)
-	 * @see #pushY()
 	 */
 	ICC pushY();
 
@@ -629,7 +628,6 @@ public interface ICC {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @see #setPushX(Float)
-	 * @see #pushX()
 	 */
 	ICC pushX();
 

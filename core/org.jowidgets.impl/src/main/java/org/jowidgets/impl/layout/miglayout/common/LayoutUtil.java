@@ -60,14 +60,16 @@ public final class LayoutUtil {
 	 * for potential overflow must exist in many places. This value is large enough for being unreasonable yet it is hard to
 	 * overflow.
 	 */
-	static final int INF = (Integer.MAX_VALUE >> 10) - 100; // To reduce likelihood of overflow errors when calculating.
+	public static final int INF = (Integer.MAX_VALUE >> 10) - 100; // To reduce likelihood of overflow errors when calculating.
 
 	/**
 	 * Tag int for a value that in considered "not set". Used as "null" element in int arrays.
 	 */
-	static final int NOT_SET = Integer.MIN_VALUE + 12346; // Magic value...
+	public static final int NOT_SET = Integer.MIN_VALUE + 12346; // Magic value...
 
 	// Index for the different sizes
+
+	private final boolean hasBeans;
 
 	private volatile WeakHashMap<Object, String> crMap = null;
 	private volatile WeakHashMap<Object, Boolean> dtMap = null; // The Containers that have design time. Value not used.
@@ -77,7 +79,9 @@ public final class LayoutUtil {
 	private byte[] readBuf = null;
 	private final IdentityHashMap<Object, Object> serMap = new IdentityHashMap<Object, Object>(2);
 
-	public LayoutUtil() {}
+	public LayoutUtil() {
+		hasBeans = initializeHasBeans();
+	}
 
 	/**
 	 * Returns the current version of MiG Layout.
@@ -85,7 +89,21 @@ public final class LayoutUtil {
 	 * @return The current version of MiG Layout. E.g. "3.6.3" or "4.0"
 	 */
 	public String getVersion() {
-		return "3.7.4";
+		return "4.0";
+	}
+
+	private boolean initializeHasBeans() {
+		try {
+			LayoutUtil.class.getClassLoader().loadClass("java.beans.Beans");
+			return true;
+		}
+		catch (final ClassNotFoundException e) {
+			return false;
+		}
+	}
+
+	public boolean hasBeans() {
+		return hasBeans;
 	}
 
 	/**
@@ -105,7 +123,7 @@ public final class LayoutUtil {
 			dtMap = new WeakHashMap<Object, Boolean>();
 		}
 
-		dtMap.put((cw != null ? cw.getComponent() : null), Boolean.valueOf(b));
+		dtMap.put((cw != null ? cw.getComponent() : null), b);
 	}
 
 	/**
@@ -118,7 +136,7 @@ public final class LayoutUtil {
 	 */
 	public boolean isDesignTime(IContainerWrapper cw) {
 		if (dtMap == null) {
-			return Beans.isDesignTime();
+			return hasBeans && Beans.isDesignTime();
 		}
 
 		if (cw != null && dtMap.containsKey(cw.getComponent()) == false) {
@@ -126,7 +144,7 @@ public final class LayoutUtil {
 		}
 
 		final Boolean b = dtMap.get(cw != null ? cw.getComponent() : null);
-		return b != null && b.booleanValue();
+		return b != null && b;
 	}
 
 	/**
@@ -249,14 +267,14 @@ public final class LayoutUtil {
 			for (int i = 0; i < sizes.length; i++) {
 				final ResizeConstraint resC = (ResizeConstraint) getIndexSafe(resConstr, i);
 				if (resC != null) {
-					prioList.add(Integer.valueOf(isGrow ? resC.growPrio : resC.shrinkPrio));
+					prioList.add(isGrow ? resC.growPrio : resC.shrinkPrio);
 				}
 			}
 			final Integer[] prioIntegers = prioList.toArray(new Integer[prioList.size()]);
 
 			for (int force = 0; force <= ((isGrow && defPushWeights != null) ? 1 : 0); force++) { // Run twice if defGrow and the need for growing.
 				for (int pr = prioIntegers.length - 1; pr >= 0; pr--) {
-					final int curPrio = prioIntegers[pr].intValue();
+					final int curPrio = prioIntegers[pr];
 
 					float totWeight = 0f;
 					final Float[] resizeWeight = new Float[sizes.length];
@@ -279,7 +297,7 @@ public final class LayoutUtil {
 									resizeWeight[i] = resC.shrink;
 								}
 								if (resizeWeight[i] != null) {
-									totWeight += resizeWeight[i].floatValue();
+									totWeight += resizeWeight[i];
 								}
 							}
 						}
@@ -297,7 +315,7 @@ public final class LayoutUtil {
 								if (weight == null) {
 									continue;
 								}
-								float sizeDelta = toChange * weight.floatValue() / totWeight;
+								float sizeDelta = toChange * weight / totWeight;
 								float newSize = lengths[i] + sizeDelta;
 
 								if (sizes[i] != null) {
@@ -305,7 +323,7 @@ public final class LayoutUtil {
 									if (newSizeBounded != NOT_SET) {
 										resizeWeight[i] = null;
 										hit = true;
-										changedWeight += weight.floatValue();
+										changedWeight += weight;
 										newSize = newSizeBounded;
 										sizeDelta = newSize - lengths[i];
 									}
@@ -396,7 +414,7 @@ public final class LayoutUtil {
 	 */
 	public boolean isLeftToRight(final LC lc, final IContainerWrapper container) {
 		if (lc != null && lc.getLeftToRight() != null) {
-			return lc.getLeftToRight().booleanValue();
+			return lc.getLeftToRight();
 		}
 
 		return container == null || container.isLeftToRight();

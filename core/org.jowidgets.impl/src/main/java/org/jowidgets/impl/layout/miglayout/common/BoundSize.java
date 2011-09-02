@@ -268,20 +268,22 @@ public class BoundSize implements Serializable {
 
 	static {
 		final LayoutUtil lUtil = MigLayoutToolkit.getMigLayoutUtil();
-		lUtil.setDelegate(BoundSize.class, new PersistenceDelegate() {
-			@Override
-			protected Expression instantiate(final Object oldInstance, final Encoder out) {
-				final BoundSize bs = (BoundSize) oldInstance;
-				if (Grid.TEST_GAPS) {
-					return new Expression(oldInstance, BoundSize.class, "new", new Object[] {
-							bs.getMin(), bs.getPreferred(), bs.getMax(), bs.getGapPush(), bs.getConstraintString()});
+		if (lUtil.hasBeans()) {
+			lUtil.setDelegate(BoundSize.class, new PersistenceDelegate() {
+				@Override
+				protected Expression instantiate(final Object oldInstance, final Encoder out) {
+					final BoundSize bs = (BoundSize) oldInstance;
+					if (Grid.TEST_GAPS) {
+						return new Expression(oldInstance, BoundSize.class, "new", new Object[] {
+								bs.getMin(), bs.getPreferred(), bs.getMax(), bs.getGapPush(), bs.getConstraintString()});
+					}
+					else {
+						return new Expression(oldInstance, BoundSize.class, "new", new Object[] {
+								bs.getMin(), bs.getPreferred(), bs.getMax(), bs.getConstraintString()});
+					}
 				}
-				else {
-					return new Expression(oldInstance, BoundSize.class, "new", new Object[] {
-							bs.getMin(), bs.getPreferred(), bs.getMax(), bs.getConstraintString()});
-				}
-			}
-		});
+			});
+		}
 	}
 
 	// ************************************************

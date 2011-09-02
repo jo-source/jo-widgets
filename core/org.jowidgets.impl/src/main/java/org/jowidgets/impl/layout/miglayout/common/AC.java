@@ -93,8 +93,8 @@ public final class AC implements Externalizable {
 
 		cList.clear();
 		cList.ensureCapacity(constr.length);
-		for (int i = 0; i < constr.length; i++) {
-			cList.add(constr[i]);
+		for (final DimConstraint c : constr) {
+			cList.add(c);
 		}
 	}
 

@@ -222,25 +222,25 @@ public final class UnitValueToolkit {
 	private final ArrayList<UnitConverter> converteres = new ArrayList<UnitConverter>();
 
 	public UnitValueToolkit() {
-		unitMap.put("px", Integer.valueOf(PIXEL));
-		unitMap.put("lpx", Integer.valueOf(LPX));
-		unitMap.put("lpy", Integer.valueOf(LPY));
-		unitMap.put("%", Integer.valueOf(PERCENT));
-		unitMap.put("cm", Integer.valueOf(CM));
-		unitMap.put("in", Integer.valueOf(INCH));
-		unitMap.put("spx", Integer.valueOf(SPX));
-		unitMap.put("spy", Integer.valueOf(SPY));
-		unitMap.put("al", Integer.valueOf(ALIGN));
-		unitMap.put("mm", Integer.valueOf(MM));
-		unitMap.put("pt", Integer.valueOf(PT));
-		unitMap.put("min", Integer.valueOf(MIN_SIZE));
-		unitMap.put("minimum", Integer.valueOf(MIN_SIZE));
-		unitMap.put("p", Integer.valueOf(PREF_SIZE));
-		unitMap.put("pref", Integer.valueOf(PREF_SIZE));
-		unitMap.put("max", Integer.valueOf(MAX_SIZE));
-		unitMap.put("maximum", Integer.valueOf(MAX_SIZE));
-		unitMap.put("button", Integer.valueOf(BUTTON));
-		unitMap.put("label", Integer.valueOf(LABEL_ALIGN));
+		unitMap.put("px", PIXEL);
+		unitMap.put("lpx", LPX);
+		unitMap.put("lpy", LPY);
+		unitMap.put("%", PERCENT);
+		unitMap.put("cm", CM);
+		unitMap.put("in", INCH);
+		unitMap.put("spx", SPX);
+		unitMap.put("spy", SPY);
+		unitMap.put("al", ALIGN);
+		unitMap.put("mm", MM);
+		unitMap.put("pt", PT);
+		unitMap.put("min", MIN_SIZE);
+		unitMap.put("minimum", MIN_SIZE);
+		unitMap.put("p", PREF_SIZE);
+		unitMap.put("pref", PREF_SIZE);
+		unitMap.put("max", MAX_SIZE);
+		unitMap.put("maximum", MAX_SIZE);
+		unitMap.put("button", BUTTON);
+		unitMap.put("label", LABEL_ALIGN);
 	}
 
 	public HashMap<String, Integer> getUnitMap() {
