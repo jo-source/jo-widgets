@@ -128,7 +128,7 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 		stringFieldBp.setValidator(maxLengthValidator);
 
 		container.add(textLabelBp.setText("Gender"), "right, sg lg");
-		gender = container.add("Gender", bpF.comboBoxSelection("Male", "Female", " "), inputWidgetConstraints);
+		gender = container.add("Gender", bpF.comboBoxSelection("Male", "Female", ""), inputWidgetConstraints);
 		genderValidationWidget = container.add(validationLabelBp.setInputComponent(gender), "wrap");
 
 		gender.addInputListener(new IInputListener() {
@@ -284,7 +284,7 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 			mail.setValue(values.get(8));
 		}
 		else {
-			gender.setValue(" ");
+			gender.setValue("");
 			lastname.setValue(null);
 			firstName.setValue(null);
 			dateOfBirth.setValue(null);
