@@ -39,7 +39,6 @@ import org.jowidgets.spi.impl.swing.options.SwingOptions;
 import org.jowidgets.spi.impl.swing.widgets.ButtonImpl;
 import org.jowidgets.spi.impl.swing.widgets.CheckBoxImpl;
 import org.jowidgets.spi.impl.swing.widgets.ComboBoxImpl;
-import org.jowidgets.spi.impl.swing.widgets.ComboBoxSelectionImpl;
 import org.jowidgets.spi.impl.swing.widgets.CompositeImpl;
 import org.jowidgets.spi.impl.swing.widgets.CompositeWrapper;
 import org.jowidgets.spi.impl.swing.widgets.DialogImpl;
@@ -224,7 +223,7 @@ public final class SwingWidgetFactory implements IWidgetFactorySpi {
 
 	@Override
 	public IComboBoxSelectionSpi createComboBoxSelection(final Object parentUiReference, final IComboBoxSelectionSetupSpi setup) {
-		return new ComboBoxSelectionImpl(setup);
+		return new ComboBoxImpl(setup);
 	}
 
 	@Override
