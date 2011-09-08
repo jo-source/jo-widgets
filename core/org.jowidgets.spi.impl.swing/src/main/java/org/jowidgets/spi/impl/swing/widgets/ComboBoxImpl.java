@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2010, Michael Grossmann, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -31,14 +31,22 @@ import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.ComboBoxEditor;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.JTextComponent;
 
 import org.jowidgets.common.mask.TextMaskMode;
 import org.jowidgets.common.types.InputChangeEventPolicy;
@@ -53,116 +61,251 @@ import org.jowidgets.spi.impl.swing.util.FontProvider;
 import org.jowidgets.spi.impl.swing.widgets.event.LazyKeyEventContentFactory;
 import org.jowidgets.spi.impl.swing.widgets.util.InputModifierDocument;
 import org.jowidgets.spi.impl.verify.InputVerifierHelper;
+import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
+import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSetupSpi;
 
-public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi {
+public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelectionSpi, IComboBoxSpi {
 
 	private final ComboBoxEditorImpl comboBoxEditor;
-	private final Integer maxLength;
+	private Integer maxLength;
 
 	private final KeyObservable keyObservable;
 	private final KeyListener keyListener;
+	private final boolean isAutoCompletionMode;
+	private final boolean isSelectionMode;
 
-	public ComboBoxImpl(final IComboBoxSetupSpi setup) {
-		super(setup);
-		this.maxLength = setup.getMaxLength();
+	private boolean inputEventsEnabled;
 
-		getUiReference().setEditable(true);
+	private AutoCompletionModel autoCompletionModel;
+	private final IInputVerifier inputVerifier;
 
-		final IInputVerifier maskVerifier = TextMaskVerifierFactory.create(this, setup.getMask());
+	public ComboBoxImpl(final IComboBoxSelectionSetupSpi setup) {
+		super(new JComboBox());
+		this.inputEventsEnabled = true;
 
-		this.comboBoxEditor = new ComboBoxEditorImpl(
-			InputVerifierHelper.getInputVerifier(maskVerifier, setup),
-			setup.getInputChangeEventPolicy());
+		this.isAutoCompletionMode = setup.isAutoCompletion();
+		this.isSelectionMode = !(setup instanceof IComboBoxSetupSpi);
+		final boolean hasEditor = isAutoCompletionMode || !isSelectionMode;
 
-		getUiReference().setEditor(comboBoxEditor);
+		getUiReference().setModel(createComboBoxModel(setup.getElements()));
 
-		if (setup.getMask() != null && TextMaskMode.FULL_MASK == setup.getMask().getMode()) {
-			setText(setup.getMask().getPlaceholder());
+		final IInputVerifier maskVerifier;
+		String initialText = null;
+		if (setup instanceof IComboBoxSetupSpi) {
+			final IComboBoxSetupSpi comboBoxSetup = (IComboBoxSetupSpi) setup;
+
+			this.maxLength = comboBoxSetup.getMaxLength();
+			maskVerifier = TextMaskVerifierFactory.create(this, comboBoxSetup.getMask());
+			inputVerifier = InputVerifierHelper.getInputVerifier(maskVerifier, comboBoxSetup);
+
+			if (comboBoxSetup.getMask() != null && TextMaskMode.FULL_MASK == comboBoxSetup.getMask().getMode()) {
+				initialText = comboBoxSetup.getMask().getPlaceholder();
+			}
+		}
+		else {
+			inputVerifier = null;
+			maskVerifier = null;
+			maxLength = null;
 		}
 
-		this.keyListener = new KeyAdapter() {
-			@Override
-			public void keyReleased(final KeyEvent e) {
-				keyObservable.fireKeyReleased(new LazyKeyEventContentFactory(e));
+		if (hasEditor) {
+			getUiReference().setEditable(true);
+			this.comboBoxEditor = new ComboBoxEditorImpl(inputVerifier, setup.getInputChangeEventPolicy());
+
+			getUiReference().setEditor(comboBoxEditor);
+
+			if (initialText != null) {
+				setText(initialText);
 			}
 
-			@Override
-			public void keyPressed(final KeyEvent e) {
-				keyObservable.fireKeyPressed(new LazyKeyEventContentFactory(e));
-			}
-		};
-		final IObservableCallback keyObservableCallback = new IObservableCallback() {
-			@Override
-			public void onLastUnregistered() {
-				comboBoxEditor.removeKeyListener(keyListener);
+			this.keyListener = new KeyAdapter() {
+				@Override
+				public void keyReleased(final KeyEvent e) {
+					keyObservable.fireKeyReleased(new LazyKeyEventContentFactory(e));
+				}
+
+				@Override
+				public void keyPressed(final KeyEvent e) {
+					keyObservable.fireKeyPressed(new LazyKeyEventContentFactory(e));
+				}
+			};
+			final IObservableCallback keyObservableCallback = new IObservableCallback() {
+				@Override
+				public void onLastUnregistered() {
+					comboBoxEditor.removeKeyListener(keyListener);
+				}
+
+				@Override
+				public void onFirstRegistered() {
+					comboBoxEditor.addKeyListener(keyListener);
+				}
+			};
+			this.keyObservable = new KeyObservable(keyObservableCallback);
+		}
+		else {
+			this.comboBoxEditor = null;
+			this.keyObservable = null;
+			this.keyListener = null;
+		}
+
+		if (setup.getInputChangeEventPolicy() == InputChangeEventPolicy.ANY_CHANGE) {
+			getUiReference().addItemListener(new ItemListener() {
+				@Override
+				public void itemStateChanged(final ItemEvent e) {
+					if (e.getID() == ItemEvent.ITEM_STATE_CHANGED && e.getStateChange() == ItemEvent.SELECTED) {
+						fireInputChanged(getUiReference().getSelectedItem());
+					}
+				}
+			});
+		}
+		else if (setup.getInputChangeEventPolicy() == InputChangeEventPolicy.EDIT_FINISHED) {
+			getUiReference().addFocusListener(new FocusAdapter() {
+				@Override
+				public void focusLost(final FocusEvent e) {
+					fireInputChanged(getUiReference().getSelectedItem());
+				}
+			});
+		}
+		else {
+			throw new IllegalArgumentException("InputChangeEventPolicy '" + setup.getInputChangeEventPolicy() + "' is not known.");
+		}
+	}
+
+	private ComboBoxModel createComboBoxModel(final String[] elements) {
+		final ComboBoxModel result;
+		if (isAutoCompletionMode) {
+			if (isSelectionMode) {
+				int max = 0;
+				for (final String item : elements) {
+					max = Math.max(item.length(), max);
+				}
+				maxLength = max;
 			}
 
-			@Override
-			public void onFirstRegistered() {
+			autoCompletionModel = new AutoCompletionModel(elements);
+			result = autoCompletionModel;
+		}
+		else {
+			result = new DefaultComboBoxModel(elements);
+			autoCompletionModel = null;
+		}
+		return result;
+	}
 
-				comboBoxEditor.addKeyListener(keyListener);
-			}
-		};
-		this.keyObservable = new KeyObservable(keyObservableCallback);
-
+	@Override
+	public JComboBox getUiReference() {
+		return (JComboBox) super.getUiReference();
 	}
 
 	@Override
 	public void setEditable(final boolean editable) {
-		super.setEditable(editable);
-		getUiReference().setEditable(true);
+		getUiReference().setEnabled(editable);
+		if (comboBoxEditor != null) {
+			getUiReference().setEditable(editable);
+		}
+	}
+
+	@Override
+	public int getSelectedIndex() {
+		return getUiReference().getSelectedIndex();
+	}
+
+	@Override
+	public void setSelectedIndex(final int index) {
+		getUiReference().setSelectedIndex(index);
+	}
+
+	@Override
+	public String[] getElements() {
+		final ComboBoxModel model = getUiReference().getModel();
+		final String[] result = new String[model.getSize()];
+		for (int i = 0; i < result.length; i++) {
+			result[i] = (String) model.getElementAt(i);
+		}
+		return result;
+	}
+
+	@Override
+	public void setElements(final String[] elements) {
+		getUiReference().setModel(createComboBoxModel(elements));
 	}
 
 	@Override
 	public String getText() {
-		return comboBoxEditor.getItem();
+		if (comboBoxEditor != null) {
+			return comboBoxEditor.getItem();
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Override
 	public void setText(final String text) {
-		comboBoxEditor.setItem(text);
+		if (comboBoxEditor != null) {
+			comboBoxEditor.setItem(text);
+		}
 	}
 
 	@Override
 	public void setFontSize(final int size) {
-		comboBoxEditor.setFontSize(size);
+		if (comboBoxEditor != null) {
+			comboBoxEditor.setFontSize(size);
+		}
 	}
 
 	@Override
 	public void setFontName(final String fontName) {
-		comboBoxEditor.setFontName(fontName);
+		if (comboBoxEditor != null) {
+			comboBoxEditor.setFontName(fontName);
+		}
 	}
 
 	@Override
 	public void setMarkup(final Markup markup) {
-		comboBoxEditor.setMarkup(markup);
+		if (comboBoxEditor != null) {
+			comboBoxEditor.setMarkup(markup);
+		}
 	}
 
 	@Override
 	public void setSelection(final int start, final int end) {
-		comboBoxEditor.setSelection(start, end);
+		if (comboBoxEditor != null) {
+			comboBoxEditor.setSelection(start, end);
+		}
 	}
 
 	@Override
 	public void setCaretPosition(final int pos) {
-		comboBoxEditor.setCaretPosition(pos);
+		if (comboBoxEditor != null) {
+			comboBoxEditor.setCaretPosition(pos);
+		}
 	}
 
 	@Override
 	public int getCaretPosition() {
-		return comboBoxEditor.getCaretPosition();
+		if (comboBoxEditor != null) {
+			return comboBoxEditor.getCaretPosition();
+		}
+		else {
+			return 0;
+		}
 	}
 
 	@Override
 	public void addKeyListener(final IKeyListener listener) {
-		keyObservable.addKeyListener(listener);
+		if (keyObservable != null) {
+			keyObservable.addKeyListener(listener);
+		}
 	}
 
 	@Override
 	public void removeKeyListener(final IKeyListener listener) {
-		keyObservable.removeKeyListener(listener);
+		if (keyObservable != null) {
+			keyObservable.removeKeyListener(listener);
+		}
 	}
 
 	private class ComboBoxEditorImpl implements ComboBoxEditor {
@@ -171,6 +314,9 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 		private final JTextField textField;
 		private final InputModifierDocument modifierDocument;
 		private final InputObservable inputObservable;
+		private boolean keyPressedBackspace;
+		private boolean keyPressedDelete;
+		private boolean deleteOnSelection;
 
 		public ComboBoxEditorImpl(final IInputVerifier inputVerifier, final InputChangeEventPolicy inputChangeEventPolicy) {
 			super();
@@ -199,9 +345,43 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 				throw new IllegalArgumentException("InputChangeEventPolicy '" + inputChangeEventPolicy + "' is not known.");
 			}
 
-			this.modifierDocument = new InputModifierDocument(textField, inputVerifier, inputObservable, maxLength);
+			if (isAutoCompletionMode) {
+				if (isSelectionMode) {
+					this.modifierDocument = new AutoCompletionSelectionDocument(
+						textField,
+						inputVerifier,
+						inputObservable,
+						maxLength);
+				}
+				else {
+					this.modifierDocument = new AutoCompletionDocument(textField, inputVerifier, inputObservable, maxLength);
+				}
+			}
+			else {
+				this.modifierDocument = new InputModifierDocument(textField, inputVerifier, inputObservable, maxLength);
+			}
 
 			this.textField.setDocument(modifierDocument);
+
+			this.textField.addKeyListener(new KeyAdapter() {
+
+				@Override
+				public void keyPressed(final KeyEvent e) {
+					if (e.getKeyChar() != KeyEvent.CHAR_UNDEFINED && getUiReference().isDisplayable()) {
+						if (!getUiReference().isPopupVisible()) {
+							getUiReference().setPopupVisible(true);
+						}
+					}
+
+					keyPressedBackspace = (e.getKeyCode() == KeyEvent.VK_BACK_SPACE);
+					keyPressedDelete = (e.getKeyCode() == KeyEvent.VK_DELETE);
+
+					if (keyPressedBackspace || keyPressedDelete) {
+						deleteOnSelection = textField.getSelectionStart() != textField.getSelectionEnd();
+					}
+				}
+			});
+
 		}
 
 		public void addKeyListener(final KeyListener keyListener) {
@@ -270,6 +450,255 @@ public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi 
 		@Override
 		public void removeActionListener(final ActionListener listener) {}
 
+		public void setSelectionStart(final int start) {
+			textField.setSelectionStart(start);
+		}
+
+		public void setSelectionEnd(final int end) {
+			textField.setSelectionEnd(end);
+		}
+
+		public void moveCaretPosition(final int pos) {
+			textField.moveCaretPosition(pos);
+		}
 	}
 
+	private final class AutoCompletionModel extends DefaultComboBoxModel {
+		private static final long serialVersionUID = 7679165913730011187L;
+
+		private final String[] elements;
+
+		public AutoCompletionModel(final String[] elements) {
+			// TODO MG,NM review: copy instead?
+			this.elements = elements;
+		}
+
+		@Override
+		public int getSize() {
+			return elements.length;
+		}
+
+		@Override
+		public Object getElementAt(final int index) {
+			return elements[index];
+		}
+	}
+
+	private abstract class AbstractAutoCompletionDocument extends InputModifierDocument {
+		private static final long serialVersionUID = 1L;
+		private boolean programmaticModelUpdate;
+		//private final DocumentListener[] listenerList;
+		private int disableCount;
+
+		public AbstractAutoCompletionDocument(
+			final JTextComponent textComponent,
+			final IInputVerifier inputVerifier,
+			final InputObservable inputObservable,
+			final Integer maxLength) {
+			super(textComponent, inputVerifier, inputObservable, maxLength);
+			disableCount = 0;
+		}
+
+		protected boolean isValidPrefix(final String text) {
+			final String lowerText = text.toLowerCase();
+			for (final String item : autoCompletionModel.elements) {
+				if (item.toLowerCase().startsWith(lowerText)) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		protected String getFirstMatch(final String text) {
+			final String lowerText = text.toLowerCase();
+			for (final String item : autoCompletionModel.elements) {
+				if (item.toLowerCase().startsWith(lowerText)) {
+					return item;
+				}
+			}
+
+			if (isSelectionMode) {
+				return "";
+			}
+			else {
+				return text;
+			}
+		}
+
+		protected String getStringAfterReplacing(final int offset, final int length, final String text) throws BadLocationException {
+			String result = getText(0, offset) + text;
+			if (offset + length < getLength()) {
+				result = result + getText(offset + length + 1, getLength() - offset -
+
+				length);
+			}
+			return result;
+		}
+
+		protected void beginProgrammaticModelUpdate() {
+			programmaticModelUpdate = true;
+		}
+
+		protected void endProgrammaticModelUpdate() {
+			programmaticModelUpdate = false;
+		}
+
+		protected boolean isProgrammaticModelUpdate() {
+			return programmaticModelUpdate;
+		}
+
+		protected void disableEvents() {
+			if (disableCount == 0) {
+				inputEventsEnabled = false;
+			}
+			disableCount++;
+		}
+
+		protected void enableEvents() throws BadLocationException {
+			disableCount--;
+			if (disableCount == 0) {
+				inputEventsEnabled = true;
+				fireInputChanged(getText(0, getLength()));
+			}
+		}
+	}
+
+	private final class AutoCompletionDocument extends AbstractAutoCompletionDocument {
+
+		private static final long serialVersionUID = -745323548478120663L;
+
+		public AutoCompletionDocument(
+			final JTextComponent textComponent,
+			final IInputVerifier inputVerifier,
+			final InputObservable inputObservable,
+			final Integer maxLength) {
+			super(textComponent, inputVerifier, inputObservable, maxLength);
+		}
+
+		@Override
+		public void insertString(final int offs, final String str, final AttributeSet a) throws BadLocationException {
+			// all changes are allowed
+			if (isProgrammaticModelUpdate()) {
+				return;
+			}
+
+			// check if changes are valid
+			final String text = getStringAfterReplacing(offs, 0, str);
+			if (!isValidPrefix(text)) {
+				// no auto completion
+				super.insertString(offs, str, a);
+			}
+			else {
+				disableEvents();
+
+				// do auto completion
+				final String autoCompletion = getFirstMatch(text);
+				beginProgrammaticModelUpdate();
+				autoCompletionModel.setSelectedItem(autoCompletion);
+				endProgrammaticModelUpdate();
+
+				super.remove(0, getLength());
+				super.insertString(0, autoCompletion, a);
+
+				if (comboBoxEditor != null) {
+					comboBoxEditor.setSelectionEnd(getLength());
+					comboBoxEditor.moveCaretPosition(offs + str.length());
+				}
+				enableEvents();
+			}
+		}
+
+		@Override
+		public void replace(final int offset, final int length, final String text, final AttributeSet attrs) throws BadLocationException {
+			disableEvents();
+			super.replace(offset, length, text, attrs);
+			enableEvents();
+		}
+
+	}
+
+	private final class AutoCompletionSelectionDocument extends AbstractAutoCompletionDocument {
+
+		private static final long serialVersionUID = -745323548478120664L;
+
+		public AutoCompletionSelectionDocument(
+			final JTextComponent textComponent,
+			final IInputVerifier inputVerifier,
+			final InputObservable inputObservable,
+			final Integer maxLength) {
+			super(textComponent, inputVerifier, inputObservable, maxLength);
+		}
+
+		@Override
+		public void insertString(int offs, final String str, final AttributeSet a) throws BadLocationException {
+			if (isProgrammaticModelUpdate()) {
+				return;
+			}
+
+			// check if changes are valid
+			String text = getStringAfterReplacing(offs, 0, str);
+			if (!isValidPrefix(text)) {
+				final Object item = getUiReference().getSelectedItem();
+				if (item == null) {
+					text = "";
+				}
+				else {
+					text = item.toString();
+				}
+				offs = offs - str.length();
+				UIManager.getLookAndFeel().provideErrorFeedback(getUiReference());
+			}
+
+			final String autoCompletion = getFirstMatch(text);
+			beginProgrammaticModelUpdate();
+			autoCompletionModel.setSelectedItem(autoCompletion);
+			endProgrammaticModelUpdate();
+
+			disableEvents();
+			super.remove(0, getLength());
+			enableEvents();
+			super.insertString(0, autoCompletion, a);
+
+			if (comboBoxEditor != null) {
+				comboBoxEditor.setSelectionEnd(getLength());
+				comboBoxEditor.setSelectionStart(offs + str.length());
+			}
+		}
+
+		@Override
+		public void remove(int offs, int len) throws BadLocationException {
+			if (isProgrammaticModelUpdate()) {
+				return;
+			}
+
+			if (comboBoxEditor.keyPressedBackspace || comboBoxEditor.keyPressedDelete) {
+				if (comboBoxEditor.keyPressedBackspace && offs > 0 && comboBoxEditor.deleteOnSelection) {
+					offs--;
+					len++;
+				}
+
+				final String newText = getStringAfterReplacing(offs, len, "");
+				if (!isValidPrefix(newText)) {
+					len = getLength() - offs;
+				}
+
+				if (comboBoxEditor.keyPressedBackspace || (comboBoxEditor.keyPressedDelete && !comboBoxEditor.deleteOnSelection)) {
+					comboBoxEditor.setCaretPosition(getLength());
+					comboBoxEditor.moveCaretPosition(offs);
+				}
+			}
+			else {
+				super.remove(offs, len);
+			}
+		}
+	}
+
+	// Input Observable method
+	@Override
+	public void fireInputChanged(final Object value) {
+		if (inputEventsEnabled) {
+			super.fireInputChanged(value);
+		}
+	}
 }
