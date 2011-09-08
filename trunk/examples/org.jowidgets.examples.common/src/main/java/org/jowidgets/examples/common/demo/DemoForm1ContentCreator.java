@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2011, grossmann, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -41,7 +41,7 @@ import org.jowidgets.api.widgets.IInputComponentValidationLabel;
 import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.IInputField;
 import org.jowidgets.api.widgets.blueprint.ICollectionInputFieldBluePrint;
-import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
+import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputComponentValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
@@ -53,6 +53,8 @@ import org.jowidgets.common.widgets.controller.IKeyEvent;
 import org.jowidgets.common.widgets.controller.IMouseButtonEvent;
 import org.jowidgets.common.widgets.controller.IMouseEvent;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.examples.common.data.Countries;
+import org.jowidgets.examples.common.data.GermanCities;
 import org.jowidgets.tools.controller.KeyAdapter;
 import org.jowidgets.tools.controller.MouseAdapter;
 import org.jowidgets.tools.validation.MandatoryValidator;
@@ -229,14 +231,15 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 		});
 
 		container.add(textLabelBp.setText("City*"), "right, sg lg");
-		city = container.add("City", stringFieldBp, inputWidgetConstraints);
+		city = container.add("City", bpF.comboBox(GermanCities.CITIES), inputWidgetConstraints);
 		city.addValidator(mandatoryValidator);
 		cityValidationWidget = container.add(validationLabelBp.setInputComponent(city), "wrap");
 
 		container.add(textLabelBp.setText("Country*"), "right, sg lg");
-		final IComboBoxBluePrint<String> countryBp = bpF.comboBox("Germany", "Spain", "Italy", "United States");
+		//final IComboBoxBluePrint<String> countryBp = bpF.comboBox(Countries.COUNTRIES);
+		final IComboBoxSelectionBluePrint<String> countryBp = bpF.comboBoxSelection(Countries.COUNTRIES);
 		countryBp.setValidator(maxLengthValidator);
-		countryBp.setMaxLength(Integer.valueOf(51));
+		//countryBp.setMaxLength(Integer.valueOf(51));
 		country = container.add("Country", countryBp, inputWidgetConstraints);
 		country.addValidator(mandatoryValidator);
 		countryValidationWidget = container.add(validationLabelBp.setInputComponent(country), "wrap");
