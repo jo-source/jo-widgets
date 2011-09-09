@@ -44,6 +44,8 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.JTextComponent;
@@ -143,6 +145,29 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 				}
 			};
 			this.keyObservable = new KeyObservable(keyObservableCallback);
+
+			if (isAutoCompletionMode) {
+				getUiReference().addPopupMenuListener(new PopupMenuListener() {
+					private boolean canceled;
+
+					@Override
+					public void popupMenuWillBecomeVisible(final PopupMenuEvent e) {
+						canceled = false;
+					}
+
+					@Override
+					public void popupMenuWillBecomeInvisible(final PopupMenuEvent e) {
+						if (!canceled) {
+							comboBoxEditor.setCaretPosition(comboBoxEditor.getItem().length());
+						}
+					}
+
+					@Override
+					public void popupMenuCanceled(final PopupMenuEvent e) {
+						canceled = true;
+					}
+				});
+			}
 		}
 		else {
 			this.comboBoxEditor = null;
