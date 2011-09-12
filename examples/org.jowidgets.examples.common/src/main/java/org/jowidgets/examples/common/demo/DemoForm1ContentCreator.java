@@ -55,6 +55,7 @@ import org.jowidgets.common.widgets.controller.IMouseEvent;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.examples.common.data.Countries;
 import org.jowidgets.examples.common.data.GermanCities;
+import org.jowidgets.examples.common.data.Languages;
 import org.jowidgets.tools.controller.KeyAdapter;
 import org.jowidgets.tools.controller.MouseAdapter;
 import org.jowidgets.tools.validation.MandatoryValidator;
@@ -246,7 +247,7 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 
 		container.add(textLabelBp.setText("Languages"), "right, sg lg");
 		final ICollectionInputFieldBluePrint<String> collectionInputFieldBp = bpF.collectionInputField(Toolkit.getConverterProvider().string());
-		collectionInputFieldBp.setCollectionInputDialogSetup(bpF.collectionInputDialog(bpF.comboBox("English", "German", "French")));
+		collectionInputFieldBp.setCollectionInputDialogSetup(bpF.collectionInputDialog(bpF.comboBox(Languages.LANGUAGES)));
 		languages = container.add("Languages", collectionInputFieldBp, inputWidgetConstraints);
 		languagesValidationWidget = container.add(validationLabelBp.setInputComponent(languages), "wrap");
 
