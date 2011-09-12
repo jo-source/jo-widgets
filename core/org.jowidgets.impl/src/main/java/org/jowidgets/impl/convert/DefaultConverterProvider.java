@@ -36,7 +36,9 @@ import java.util.Map;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.convert.IConverterProvider;
+import org.jowidgets.api.convert.IObjectLabelConverter;
 import org.jowidgets.api.convert.IObjectStringConverter;
+import org.jowidgets.api.convert.IStringObjectConverter;
 import org.jowidgets.api.mask.ITextMaskBuilder;
 import org.jowidgets.common.mask.ITextMask;
 import org.jowidgets.impl.convert.defaults.DefaultDateConverter;
@@ -47,6 +49,7 @@ import org.jowidgets.impl.convert.defaults.DefaultStringConverter;
 import org.jowidgets.impl.convert.defaults.DefaultYesNoConverterLong;
 import org.jowidgets.impl.convert.defaults.DefaultYesNoConverterShort;
 import org.jowidgets.impl.mask.TextMaskBuilder;
+import org.jowidgets.tools.converter.AbstractObjectLabelConverter;
 import org.jowidgets.tools.converter.Converter;
 import org.jowidgets.util.Assert;
 
@@ -149,6 +152,42 @@ public final class DefaultConverterProvider implements IConverterProvider {
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public <OBJECT_TYPE> IObjectStringConverter<OBJECT_TYPE> getObjectStringConverter(final Class<? extends OBJECT_TYPE> type) {
+		final IConverter<OBJECT_TYPE> converter = getConverter(type);
+
+		if (converter != null) {
+			return converter;
+		}
+		else {
+			return toStringConverter();
+		}
+	}
+
+	@Override
+	public <OBJECT_TYPE> IObjectLabelConverter<OBJECT_TYPE> getObjectLabelConverter(final Class<? extends OBJECT_TYPE> type) {
+		final IObjectStringConverter<OBJECT_TYPE> objStringConverter = getObjectStringConverter(type);
+
+		return new AbstractObjectLabelConverter<OBJECT_TYPE>() {
+
+			@Override
+			public String convertToString(final OBJECT_TYPE value) {
+				return objStringConverter.convertToString(value);
+			}
+
+			@Override
+			public String getDescription(final OBJECT_TYPE value) {
+				return objStringConverter.getDescription(value);
+			}
+
+		};
+	}
+
+	@Override
+	public <OBJECT_TYPE> IStringObjectConverter<OBJECT_TYPE> getStringObjectConverter(final Class<? extends OBJECT_TYPE> type) {
+		return getConverter(type);
 	}
 
 	@Override
