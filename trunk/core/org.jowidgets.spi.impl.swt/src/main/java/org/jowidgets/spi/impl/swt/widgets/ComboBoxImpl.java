@@ -295,17 +295,31 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 		}
 
 		final String lowerText = text.toLowerCase();
+		final boolean isEmpty = lowerText.length() == 0;
 		final String[] items = getUiReference().getItems();
 		boolean isPrefix = false;
 		String completion = "";
 		int index = 0;
-		for (final String item : items) {
-			if (item.toLowerCase().startsWith(lowerText)) {
-				isPrefix = true;
-				completion = item;
-				break;
+
+		if (isEmpty) {
+			for (final String item : items) {
+				if (item.length() == 0) {
+					isPrefix = true;
+					completion = item;
+					break;
+				}
+				index++;
 			}
-			index++;
+		}
+		else {
+			for (final String item : items) {
+				if (item.toLowerCase().startsWith(lowerText)) {
+					isPrefix = true;
+					completion = item;
+					break;
+				}
+				index++;
+			}
 		}
 
 		if (isSelectionMode && !isPrefix && (keyCode == KeyEvent.VK_DELETE || keyCode == KeyEvent.VK_BACK_SPACE)) {
