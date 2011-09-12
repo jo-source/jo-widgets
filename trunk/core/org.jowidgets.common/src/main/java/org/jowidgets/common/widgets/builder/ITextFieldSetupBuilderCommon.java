@@ -32,4 +32,6 @@ public interface ITextFieldSetupBuilderCommon<INSTANCE_TYPE extends ITextFieldSe
 
 	INSTANCE_TYPE setPasswordPresentation(boolean passwordPresentation);
 
+	INSTANCE_TYPE setBorder(boolean border);
+
 }

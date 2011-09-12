@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2010, Michael Grossmann, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -46,7 +46,7 @@ import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 public class TextFieldImpl extends AbstractTextInputControl {
 
 	public TextFieldImpl(final Object parentUiReference, final ITextFieldSetupSpi setup) {
-		super(createText(parentUiReference, setup.isPasswordPresentation()));
+		super(new Text((Composite) parentUiReference, getStyle(setup)));
 
 		if (SwtOptions.hasInputVerification()) {
 			final IInputVerifier maskVerifier = TextMaskVerifierFactory.create(this, setup.getMask());
@@ -145,13 +145,15 @@ public class TextFieldImpl extends AbstractTextInputControl {
 		});
 	}
 
-	private static Text createText(final Object parentUiReference, final boolean passwordPresentation) {
-		if (passwordPresentation) {
-			return new Text((Composite) parentUiReference, SWT.BORDER | SWT.PASSWORD);
+	private static int getStyle(final ITextFieldSetupSpi setup) {
+		int result = 0;
+		if (setup.hasBorder()) {
+			result = result | SWT.BORDER;
 		}
-		else {
-			return new Text((Composite) parentUiReference, SWT.BORDER);
+		if (setup.isPasswordPresentation()) {
+			result = result | SWT.PASSWORD;
 		}
+		return result;
 	}
 
 }

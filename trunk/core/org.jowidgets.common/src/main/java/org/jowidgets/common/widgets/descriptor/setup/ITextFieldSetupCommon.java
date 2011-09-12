@@ -34,4 +34,7 @@ public interface ITextFieldSetupCommon extends ITextComponentSetupCommon {
 	@Mandatory
 	boolean isPasswordPresentation();
 
+	// TODO NM set/get border
+	boolean hasBorder();
+
 }

@@ -52,6 +52,10 @@ public class TextFieldImpl extends AbstractInputControl implements ITextControlS
 	public TextFieldImpl(final ITextFieldSetupSpi setup) {
 		super(setup.isPasswordPresentation() ? new JPasswordField() : new JTextField());
 
+		if (!setup.hasBorder()) {
+			getUiReference().setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		}
+
 		final IInputVerifier maskVerifier = TextMaskVerifierFactory.create(this, setup.getMask());
 
 		final IInputVerifier inputVerifier = InputVerifierHelper.getInputVerifier(maskVerifier, setup);
