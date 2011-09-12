@@ -55,4 +55,14 @@ public class ComboBoxSelectionSetupConvenience extends AbstractSetupBuilderConve
 		return getBuilder().setAutoSelectionPolicy(AutoSelectionPolicy.OFF);
 	}
 
+	@Override
+	public IComboBoxSelectionSetupBuilder<?, ?> autoCompletionOn() {
+		return getBuilder().setAutoCompletion(true);
+	}
+
+	@Override
+	public IComboBoxSelectionSetupBuilder<?, ?> autoCompletionOff() {
+		return getBuilder().setAutoCompletion(false);
+	}
+
 }

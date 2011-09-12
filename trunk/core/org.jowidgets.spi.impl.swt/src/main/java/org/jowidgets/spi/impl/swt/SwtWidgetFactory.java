@@ -34,7 +34,6 @@ import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.impl.swt.widgets.ButtonImpl;
 import org.jowidgets.spi.impl.swt.widgets.CheckBoxImpl;
 import org.jowidgets.spi.impl.swt.widgets.ComboBoxImpl;
-import org.jowidgets.spi.impl.swt.widgets.ComboBoxSelectionImpl;
 import org.jowidgets.spi.impl.swt.widgets.CompositeImpl;
 import org.jowidgets.spi.impl.swt.widgets.CompositeWrapper;
 import org.jowidgets.spi.impl.swt.widgets.DialogImpl;
@@ -215,7 +214,7 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 
 	@Override
 	public IComboBoxSelectionSpi createComboBoxSelection(final Object parentUiReference, final IComboBoxSelectionSetupSpi setup) {
-		return new ComboBoxSelectionImpl(parentUiReference, setup);
+		return new ComboBoxImpl(parentUiReference, setup);
 	}
 
 	@Override
