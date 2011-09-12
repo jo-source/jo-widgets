@@ -40,6 +40,7 @@ public class InputFieldDefaults implements IDefaultInitializer<IInputFieldSetupB
 		final IValidator okValidator = Validator.okValidator();
 		builder.setValidator(okValidator);
 		builder.setPasswordPresentation(false);
+		builder.setBorder(true);
 		builder.setMaxLength(100);
 	}
 }

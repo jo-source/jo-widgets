@@ -35,6 +35,7 @@ public class TextFieldDefaultsCommon implements IDefaultInitializer<ITextFieldSe
 	@Override
 	public void initialize(final ITextFieldSetupBuilderCommon<?> builder) {
 		builder.setPasswordPresentation(false);
+		builder.setBorder(true);
 	}
 
 }
