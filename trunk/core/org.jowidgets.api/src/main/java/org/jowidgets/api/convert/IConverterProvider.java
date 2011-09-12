@@ -45,7 +45,13 @@ public interface IConverterProvider {
 	 * @param type the class to get the converter for
 	 * @return The converter for the type or null if no converter exists for the type
 	 */
-	<OBJECT_TYPE> IConverter<OBJECT_TYPE> getConverter(final Class<? extends OBJECT_TYPE> type);
+	<OBJECT_TYPE> IConverter<OBJECT_TYPE> getConverter(Class<? extends OBJECT_TYPE> type);
+
+	<OBJECT_TYPE> IObjectStringConverter<OBJECT_TYPE> getObjectStringConverter(Class<? extends OBJECT_TYPE> type);
+
+	<OBJECT_TYPE> IObjectLabelConverter<OBJECT_TYPE> getObjectLabelConverter(Class<? extends OBJECT_TYPE> type);
+
+	<OBJECT_TYPE> IStringObjectConverter<OBJECT_TYPE> getStringObjectConverter(Class<? extends OBJECT_TYPE> type);
 
 	<OBJECT_TYPE> IObjectStringConverter<OBJECT_TYPE> toStringConverter();
 
