@@ -247,7 +247,8 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 
 		container.add(textLabelBp.setText("Languages"), "right, sg lg");
 		final ICollectionInputFieldBluePrint<String> collectionInputFieldBp = bpF.collectionInputField(Toolkit.getConverterProvider().string());
-		collectionInputFieldBp.setCollectionInputDialogSetup(bpF.collectionInputDialog(bpF.comboBox(Languages.LANGUAGES)));
+		collectionInputFieldBp.setCollectionInputDialogSetup(bpF.collectionInputDialog(bpF.comboBoxSelection(Languages.LANGUAGES).setLenient(
+				true)));
 		languages = container.add("Languages", collectionInputFieldBp, inputWidgetConstraints);
 		languagesValidationWidget = container.add(validationLabelBp.setInputComponent(languages), "wrap");
 
