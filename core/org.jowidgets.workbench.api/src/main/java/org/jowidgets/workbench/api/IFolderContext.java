@@ -50,7 +50,7 @@ public interface IFolderContext {
 	void addView(boolean addToFront, IViewLayout viewLayout);
 
 	/**
-	 * Gets the folders popop menu model.
+	 * Gets the folders popup menu model.
 	 * If no popup menu model already exists for the folder, a popup menu model will be created
 	 * 
 	 * @return the popup menu model for a folder or null if the folder is not known

@@ -218,7 +218,7 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 		Assert.paramNotNull(elements, "elements");
 		programmaticTextChange = true;
 		getUiReference().setItems(elements);
-		if (isAutoCompletionMode && isSelectionMode) {
+		if (isAutoCompletionMode && isSelectionMode && elements.length > 0) {
 			getUiReference().setTextLimit(getMaxTextLength(elements));
 		}
 		programmaticTextChange = false;
