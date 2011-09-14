@@ -250,13 +250,16 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 			final StringBuilder valueString = new StringBuilder();
 			for (final ELEMENT_TYPE element : value) {
 				final String converted = converter.convertToString(element);
-				final String masked = converted.replace(maskingString, maskingString + maskingString);
 				this.value.add(converted);
-				if (converted.contains(separatorString) || converted.startsWith(" ")) {
-					valueString.append(maskingString + masked + maskingString);
-				}
-				else {
-					valueString.append(masked);
+
+				if (converted != null) {
+					final String masked = converted.replace(maskingString, maskingString + maskingString);
+					if (converted.contains(separatorString) || converted.startsWith(" ")) {
+						valueString.append(maskingString + masked + maskingString);
+					}
+					else {
+						valueString.append(masked);
+					}
 				}
 				valueString.append(separator + " ");
 			}

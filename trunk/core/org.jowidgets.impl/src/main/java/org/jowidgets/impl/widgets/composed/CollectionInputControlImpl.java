@@ -271,7 +271,7 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 		if (!programmaticUpdate) {
 			inputObservable.fireInputChanged();
 
-			//TODO Review MG, NM the validation cache must be set dirty, if rows was added
+			//TODO MG,NM Review the validation cache must be set dirty, if rows was added
 			//or removed. Is there may be a better place do do this?
 			validationCache.setDirty();
 		}
