@@ -188,7 +188,7 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 	}
 
 	private static int getMaxTextLength(final String[] elements) {
-		int max = 0;
+		int max = 1;
 		if (elements != null) {
 			for (final String item : elements) {
 				max = Math.max(max, item.length());
