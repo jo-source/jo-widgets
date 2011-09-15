@@ -64,6 +64,7 @@ import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.color.ColorValue;
+import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.model.ITableCell;
 import org.jowidgets.common.model.ITableColumnModelObservable;
@@ -664,8 +665,8 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		createTextField(sPanel, "shp 100,shrink 25", "shp 100,shrink 25,w 10:130");
 		createTextField(sPanel, "shp 100,shrink 75", "shp 100,shrink 75,w 10:130");
 
-		// final ITextControl sDescText = 
-		createTextArea(
+		sTextPanel.setLayout(LFP.migLayoutBuilder().rowConstraints("0[grow]0").columnConstraints("0[grow]0").build());
+		final ITextControl sTextArea = createTextArea(
 				sTextPanel,
 				"Use the slider to see how the components shrink depending on the constraints set on them.\n\n'shp' means Shrink Priority. "
 					+ "Lower values will be shrunk before higer ones and the default value is 100.\n\n'shrink' means Shrink Weight. "
@@ -673,8 +674,9 @@ public final class DemoMigLayoutFrame extends JoFrame {
 					+ "Shrink Weight is only relative to components with the same Shrink Priority. Default Shrink Weight is 100.\n\n"
 					+ "The component's minimum size will always be honored.\n\nFor SWT, which doesn't have a component notion of minimum, "
 					+ "preferred or maximum size, those sizes are set explicitly to minimum 10 and preferred 130 pixels.",
-				"");
-		// sDescText no border
+				"grow",
+				false);
+		sTextArea.setBackgroundColor(sTextPanel.getBackgroundColor());
 
 		// Grow tab
 		final ITabItem growPanel = result.addItem(BPF.tabItem().setText("Grow"));
@@ -699,8 +701,8 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		createButton(gPanel, "gp 100, grow 25", "gp 100, grow 25, wmax 170");
 		createButton(gPanel, "gp 100, grow 75", "gp 100, grow 75, wmax 170");
 
-		// final ITextControl gDescText = 
-		createTextArea(
+		gTextPanel.setLayout(LFP.migLayoutBuilder().rowConstraints("0[grow]0").columnConstraints("0[grow]0").build());
+		final ITextControl gTextArea = createTextArea(
 				gTextPanel,
 				"'gp' means Grow Priority. "
 					+ "Higher values will be grown before lower ones and the default value is 100.\n\n'grow' means Grow Weight. "
@@ -708,8 +710,9 @@ public final class DemoMigLayoutFrame extends JoFrame {
 					+ "Grow Weight is only relative to components with the same Grow Priority. Default Grow Weight is 0 which means "
 					+ "components will normally not grow. \n\nNote that the buttons in the first and last row have max width set to 170 to "
 					+ "emphasize Grow Priority.\n\nThe component's maximum size will always be honored.",
-				"");
-		// gDescText no border
+				"grow",
+				false);
+		gTextArea.setBackgroundColor(gTextPanel.getBackgroundColor());
 	}
 
 	public void createSpan() {
@@ -769,14 +772,10 @@ public final class DemoMigLayoutFrame extends JoFrame {
 				"[110,fill]").build());
 
 		for (int i = 0; i < 9; i++) {
-			// final IComposite b = 
-			createPanel(result, "" + (i + 1), cellFlow);
-			//b.setFont(deriveFont(b.getFont(), false, 20));
+			createPanel(result, "" + (i + 1), cellFlow, 20);
 		}
 
-		// final IComposite b = 
-		createPanel(result, "5:2", cellFlow + ",cell 1 1");
-		//b.setFont(deriveFont(b.getFont(), false, 20));
+		createPanel(result, "5:2", cellFlow + ",cell 1 1", 20);
 
 		return result;
 	}
@@ -955,12 +954,13 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		createLabel(panel, "width 40:40:40", null);
 		createTextField(panel, "8       ", "width 40:40:40");
 
-		// final ITextControl sDescText = 
-		createTextArea(
+		textPanel.setLayout(LFP.migLayoutBuilder().rowConstraints("0[grow]0").columnConstraints("0[grow]0").build());
+		final ITextControl textArea = createTextArea(
 				textPanel,
 				"Use slider to see how the components grow and shrink depending on the constraints set on them.",
-				"");
-		// sDescText remove border
+				"",
+				false);
+		textArea.setBackgroundColor(textPanel.getBackgroundColor());
 	}
 
 	public void createBoundSizes() {
@@ -1146,14 +1146,13 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		createButton(boundsPanel, "pos visual.x 40 visual.x2 70", null);
 		createButton(boundsPanel, "pos 0 0 container.x2 n", null);
 
-		// final ITextLabel southLabel = 
-		createLabel(boundsPanel, "pos (visual.x+visual.w*0.1) visual.y2-40 (visual.x2-visual.w*0.1) visual.y2", null);
-		//final QPalette plt = new QPalette();
-		// set Background
-		//plt.setBrush(ColorRole.Window, new QBrush(new QColor(200, 200, 255)));
-		//southLabel.setPalette(plt);
-		//southLabel.setAutoFillBackground(true);
-		//southLabel.setFont(deriveFont(southLabel.font(), true, 10));
+		final ITextLabel southLabel = createLabel(
+				boundsPanel,
+				"pos (visual.x+visual.w*0.1) visual.y2-40 (visual.x2-visual.w*0.1) visual.y2",
+				null);
+		southLabel.setBackgroundColor(new ColorValue(200, 200, 255));
+		southLabel.setMarkup(Markup.STRONG);
+		southLabel.setFontSize(10);
 
 	}
 
@@ -1196,13 +1195,8 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		final ITabItem gpPanel = result.addItem(BPF.tabItem().setText("Group Bounds"));
 		linksPanel.setLayout(LFP.migLayout());
 
-		// final IContainer boundsPanel = 
-		createPanel(gpPanel, null, "pos grp1.x grp1.y grp1.x2 grp1.y2");
-		//final QPalette plt = new QPalette();
-		// set Background
-		//plt.setBrush(ColorRole.Window, new QBrush(new QColor(200, 200, 255)));
-		//boundsPanel.setPalette(plt);
-		//boundsPanel.setAutoFillBackground(true);
+		final IContainer boundsPanel = createPanel(gpPanel, null, "pos grp1.x grp1.y grp1.x2 grp1.y2");
+		boundsPanel.setBackgroundColor(new ColorValue(200, 200, 255));
 
 		createButton(gpPanel, "id grp1.b1, pos n 0.5al 50% n", null);
 		createButton(gpPanel, "id grp1.b2, pos 50% 0.5al n n", null);
@@ -1666,12 +1660,28 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		return parent.add(BPF.textLabel(text), layoutdata != null ? layoutdata : text);
 	}
 
+	private static ITextLabel createLabel(
+		final IContainer parent,
+		final String text,
+		final Object layoutdata,
+		final AlignmentHorizontal alignment) {
+		return parent.add(BPF.textLabel(text).setAlignment(alignment), layoutdata != null ? layoutdata : text);
+	}
+
 	private static ITextControl createTextField(final IContainer parent, final String text, final Object layoutdata) {
 		return parent.add(BPF.textField().setText(text), layoutdata != null ? layoutdata : text);
 	}
 
 	private static ITextControl createTextArea(final IContainer parent, final String text, final Object layoutdata) {
 		return parent.add(BPF.textArea().setText(text), layoutdata != null ? layoutdata : text);
+	}
+
+	private static ITextControl createTextArea(
+		final IContainer parent,
+		final String text,
+		final Object layoutdata,
+		final boolean borders) {
+		return parent.add(BPF.textArea().setText(text).setBorder(borders), layoutdata != null ? layoutdata : text);
 	}
 
 	private static IComboBox<String> createCombo(final IContainer parent, final String[] texts, final Object layoutdata) {
@@ -1687,7 +1697,9 @@ public final class DemoMigLayoutFrame extends JoFrame {
 	private static IButton createButton(final IContainer parent, final String text, final Object layoutdata, final boolean bold) {
 		final IButton b = parent.add(BPF.button(), layoutdata != null ? layoutdata : text);
 		b.setText(text.length() == 0 ? "\"\"" : text);
-		// TODO NM set bold ?
+		if (bold) {
+			b.setMarkup(Markup.STRONG);
+		}
 		return b;
 	}
 
@@ -1701,17 +1713,30 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		final IComposite panel = parent.add(BPF.compositeWithBorder(), layout != null ? layout : text);
 		panel.setLayout(LFP.migLayoutBuilder().constraints("fill").build());
 
-		//QColor bg = new Color(display.getActiveShell().getDisplay(), 255, 255, 255);
-		//panel.setBackground(bg);
+		final IColorConstant bg = new ColorValue(255, 255, 255);
+		panel.setBackgroundColor(bg);
 
 		if (text != null) {
 			text = text.length() == 0 ? "\"\"" : text;
-			//final ITextLabel label = 
-			createLabel(panel, text, "grow");
-			//label.setAlignment(Qt.AlignmentFlag.AlignCenter);
-			//label.setBackground(bg);
+			final ITextLabel label = createLabel(panel, text, "grow", AlignmentHorizontal.CENTER);
+			label.setBackgroundColor(bg);
 		}
+		return panel;
+	}
 
+	private static IComposite createPanel(final IContainer parent, String text, final Object layout, final int fontSize) {
+		final IComposite panel = parent.add(BPF.compositeWithBorder(), layout != null ? layout : text);
+		panel.setLayout(LFP.migLayoutBuilder().constraints("fill").build());
+
+		final IColorConstant bg = new ColorValue(255, 255, 255);
+		panel.setBackgroundColor(bg);
+
+		if (text != null) {
+			text = text.length() == 0 ? "\"\"" : text;
+			final ITextLabel label = createLabel(panel, text, "grow", AlignmentHorizontal.CENTER);
+			label.setFontSize(fontSize);
+			label.setBackgroundColor(bg);
+		}
 		return panel;
 	}
 
@@ -1735,25 +1760,4 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		return list;
 	}
 
-	//	public static Font deriveFont(final Font baseFont, final boolean bold, final int size) {
-	//
-	//		final boolean italic = false;
-	//		final int weight;
-	//		if (bold) {
-	//			weight = QFont.Weight.Bold.value();
-	//		}
-	//		else {
-	//			weight = QFont.Weight.Normal.value();
-	//		}
-	//
-	//		final int usedSize;
-	//		if (size < 0) {
-	//			usedSize = baseFont.pointSize() + size;
-	//		}
-	//		else {
-	//			usedSize = size;
-	//		}
-	//
-	//		return new QFont(baseFont.family(), usedSize, weight, italic);
-	//	}
 }
