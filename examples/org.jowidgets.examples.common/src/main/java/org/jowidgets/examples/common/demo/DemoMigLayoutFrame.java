@@ -958,7 +958,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		final ITextControl textArea = createTextArea(
 				textPanel,
 				"Use slider to see how the components grow and shrink depending on the constraints set on them.",
-				"",
+				"grow",
 				false);
 		textArea.setBackgroundColor(textPanel.getBackgroundColor());
 	}
@@ -1184,7 +1184,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// End grouping
 		final ITabItem egPanel = result.addItem(BPF.tabItem().setText("End Grouping"));
-		linksPanel.setLayout(LFP.migLayout());
+		egPanel.setLayout(LFP.migLayout());
 
 		createButton(egPanel, "id b1, endgroupx g1, pos 200 200", null);
 		createButton(egPanel, "id b2, endgroupx g1, pos (b1.x+2ind) (b1.y2+rel)", null);
@@ -1193,7 +1193,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Group Bounds tab
 		final ITabItem gpPanel = result.addItem(BPF.tabItem().setText("Group Bounds"));
-		linksPanel.setLayout(LFP.migLayout());
+		gpPanel.setLayout(LFP.migLayout());
 
 		final IContainer boundsPanel = createPanel(gpPanel, null, "pos grp1.x grp1.y grp1.x2 grp1.y2");
 		boundsPanel.setBackgroundColor(new ColorValue(200, 200, 255));
