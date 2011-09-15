@@ -68,8 +68,8 @@ public class CheckBoxImpl extends AbstractInputControl implements ICheckBoxSpi {
 	}
 
 	@Override
-	public JCheckBox getUiReference() {
-		return (JCheckBox) super.getUiReference();
+	public JToggleButton getUiReference() {
+		return (JToggleButton) super.getUiReference();
 	}
 
 	@Override
