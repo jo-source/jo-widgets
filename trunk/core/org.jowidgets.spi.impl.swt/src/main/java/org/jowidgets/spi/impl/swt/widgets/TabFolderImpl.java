@@ -92,7 +92,7 @@ public class TabFolderImpl extends SwtControl implements ITabFolderSpi {
 					final TabItemImpl itemImpl = items.get(item);
 					getUiReference().setSelection(item);
 					itemImpl.fireSelected();
-					itemImpl.firePopopDetected(new Position(position.x, position.y));
+					itemImpl.firePopupDetected(new Position(position.x, position.y));
 				}
 			}
 		});
