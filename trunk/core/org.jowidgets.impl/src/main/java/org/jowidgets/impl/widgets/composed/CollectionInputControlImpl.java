@@ -347,9 +347,7 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 							if (!removeControl) {
 								final Object value = inputField.getValue();
 								if (value instanceof String) {
-									if ("".equals(value)) {
-										removeControl = true;
-									}
+									removeControl = ("".equals(value));
 								}
 							}
 							if (removeControl) {
