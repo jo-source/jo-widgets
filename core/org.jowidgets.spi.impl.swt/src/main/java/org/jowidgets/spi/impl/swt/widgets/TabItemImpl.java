@@ -391,7 +391,7 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 		swtContainer.removeAll();
 	}
 
-	protected void firePopopDetected(final Position position) {
+	protected void firePopupDetected(final Position position) {
 		for (final IPopupDetectionListener listener : tabPopupDetectionListeners) {
 			listener.popupDetected(position);
 		}
