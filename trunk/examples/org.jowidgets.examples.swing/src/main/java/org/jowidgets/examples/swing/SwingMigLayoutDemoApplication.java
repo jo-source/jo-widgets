@@ -27,6 +27,8 @@
  */
 package org.jowidgets.examples.swing;
 
+import javax.swing.UIManager;
+
 import org.jowidgets.examples.common.miglayoutdemo.MigLayoutDemoApplication;
 
 public final class SwingMigLayoutDemoApplication {
@@ -34,6 +36,8 @@ public final class SwingMigLayoutDemoApplication {
 	private SwingMigLayoutDemoApplication() {}
 
 	public static void main(final String[] args) throws Exception {
+		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		System.setProperty("apple.laf.useScreenMenuBar", "true");
 		new MigLayoutDemoApplication("Swing").start();
 	}
 
