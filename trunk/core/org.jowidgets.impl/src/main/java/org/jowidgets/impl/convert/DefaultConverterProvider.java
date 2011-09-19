@@ -84,8 +84,11 @@ public final class DefaultConverterProvider implements IConverterProvider {
 		final Map<Class<?>, IConverter<? extends Object>> result = new HashMap<Class<?>, IConverter<? extends Object>>();
 		result.put(String.class, STRING);
 		result.put(Long.class, LONG_NUMBER);
+		result.put(long.class, LONG_NUMBER);
 		result.put(Integer.class, INTEGER_NUMBER);
+		result.put(int.class, INTEGER_NUMBER);
 		result.put(Short.class, SHORT_NUMBER);
+		result.put(short.class, SHORT_NUMBER);
 		result.put(Boolean.class, BOOLEAN_YES_NO_LONG);
 		result.put(boolean.class, BOOLEAN_YES_NO_LONG);
 		return result;
