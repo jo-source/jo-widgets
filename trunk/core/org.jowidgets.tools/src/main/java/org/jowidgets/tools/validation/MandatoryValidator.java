@@ -36,7 +36,14 @@ import org.jowidgets.validation.ValidationResult;
 
 public class MandatoryValidator<VALIDATION_INPUT_TYPE> implements IValidator<VALIDATION_INPUT_TYPE> {
 
+	//TODO i18n
+	private static final String MUST_NOT_BE_NULL = "Must not be null";
+
 	private final IValidationResult result;
+
+	public MandatoryValidator() {
+		this(MUST_NOT_BE_NULL);
+	}
 
 	public MandatoryValidator(final String messageText) {
 		Assert.paramNotEmpty(messageText, "messageText");
