@@ -27,6 +27,8 @@
  */
 package org.jowidgets.impl.widgets.basic.blueprint;
 
+import java.util.List;
+
 import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
@@ -140,12 +142,22 @@ public class BasicBluePrintFactory extends BasicSimpleBluePrintFactory implement
 	}
 
 	@Override
+	public IComboBoxBluePrint<String> comboBox(final List<String> elements) {
+		return comboBox().setElements(elements);
+	}
+
+	@Override
 	public final IComboBoxSelectionBluePrint<String> comboBoxSelection() {
 		return comboBoxSelection(DefaultConverterProvider.STRING);
 	}
 
 	@Override
 	public final IComboBoxSelectionBluePrint<String> comboBoxSelection(final String... elements) {
+		return comboBoxSelection().setElements(elements);
+	}
+
+	@Override
+	public IComboBoxSelectionBluePrint<String> comboBoxSelection(final List<String> elements) {
 		return comboBoxSelection().setElements(elements);
 	}
 
