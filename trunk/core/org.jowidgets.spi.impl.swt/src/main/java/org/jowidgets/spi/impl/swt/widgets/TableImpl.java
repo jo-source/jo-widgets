@@ -163,6 +163,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		this.columnsResizeable = setup.getColumnsResizeable();
 
 		this.table = getUiReference();
+
 		table.setLinesVisible(true);
 		table.setHeaderVisible(setup.isHeaderVisible());
 
