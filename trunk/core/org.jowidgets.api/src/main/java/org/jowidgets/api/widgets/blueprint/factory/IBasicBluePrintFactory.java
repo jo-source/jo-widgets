@@ -27,6 +27,8 @@
  */
 package org.jowidgets.api.widgets.blueprint.factory;
 
+import java.util.List;
+
 import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICheckedMenuItemBluePrint;
@@ -84,6 +86,8 @@ public interface IBasicBluePrintFactory extends IBasicSimpleBluePrintFactory {
 
 	IComboBoxBluePrint<String> comboBox(String... elements);
 
+	IComboBoxBluePrint<String> comboBox(List<String> elements);
+
 	IComboBoxBluePrint<String> comboBoxString();
 
 	IComboBoxBluePrint<Long> comboBoxLongNumber();
@@ -95,6 +99,8 @@ public interface IBasicBluePrintFactory extends IBasicSimpleBluePrintFactory {
 	IComboBoxSelectionBluePrint<String> comboBoxSelection();
 
 	IComboBoxSelectionBluePrint<String> comboBoxSelection(String... elements);
+
+	IComboBoxSelectionBluePrint<String> comboBoxSelection(List<String> elements);
 
 	<ENUM_TYPE extends Enum<?>> IComboBoxSelectionBluePrint<ENUM_TYPE> comboBoxSelection(final ENUM_TYPE... enumValues);
 

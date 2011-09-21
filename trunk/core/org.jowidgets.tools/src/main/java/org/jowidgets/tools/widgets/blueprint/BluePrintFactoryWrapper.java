@@ -30,6 +30,7 @@ package org.jowidgets.tools.widgets.blueprint;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.convert.IObjectStringConverter;
@@ -306,6 +307,11 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	}
 
 	@Override
+	public IComboBoxBluePrint<String> comboBox(final List<String> elements) {
+		return bluePrintFactory.comboBox(elements);
+	}
+
+	@Override
 	public IComboBoxBluePrint<String> comboBoxString() {
 		return bluePrintFactory.comboBoxString();
 	}
@@ -332,6 +338,11 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 
 	@Override
 	public IComboBoxSelectionBluePrint<String> comboBoxSelection(final String... elements) {
+		return bluePrintFactory.comboBoxSelection(elements);
+	}
+
+	@Override
+	public IComboBoxSelectionBluePrint<String> comboBoxSelection(final List<String> elements) {
 		return bluePrintFactory.comboBoxSelection(elements);
 	}
 
