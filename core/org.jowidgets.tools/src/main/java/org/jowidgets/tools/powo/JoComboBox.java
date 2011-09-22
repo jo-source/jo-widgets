@@ -67,7 +67,7 @@ public class JoComboBox<VALUE_TYPE> extends InputControl<IComboBox<VALUE_TYPE>, 
 	}
 
 	@Override
-	public void setElements(final List<VALUE_TYPE> elements) {
+	public void setElements(final List<? extends VALUE_TYPE> elements) {
 		if (isInitialized()) {
 			getWidget().setElements(elements);
 		}

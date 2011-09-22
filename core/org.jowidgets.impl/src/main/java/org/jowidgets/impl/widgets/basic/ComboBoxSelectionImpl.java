@@ -209,7 +209,7 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends ControlSpiWrapper impleme
 	}
 
 	@Override
-	public void setElements(final List<VALUE_TYPE> newElements) {
+	public void setElements(final List<? extends VALUE_TYPE> newElements) {
 
 		Assert.paramNotNull(newElements, "newElements");
 

@@ -77,7 +77,7 @@ public class JoComboBoxSelection<VALUE_TYPE> extends
 	}
 
 	@Override
-	public void setElements(final List<VALUE_TYPE> elements) {
+	public void setElements(final List<? extends VALUE_TYPE> elements) {
 		if (isInitialized()) {
 			getWidget().setElements(elements);
 		}

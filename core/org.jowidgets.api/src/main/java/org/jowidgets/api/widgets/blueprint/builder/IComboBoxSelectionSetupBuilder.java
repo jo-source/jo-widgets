@@ -41,7 +41,7 @@ public interface IComboBoxSelectionSetupBuilder<INSTANCE_TYPE extends IComboBoxS
 
 	INSTANCE_TYPE setAutoSelectionPolicy(AutoSelectionPolicy autoSelectionPolicy);
 
-	INSTANCE_TYPE setElements(List<INPUT_TYPE> elements);
+	INSTANCE_TYPE setElements(List<? extends INPUT_TYPE> elements);
 
 	INSTANCE_TYPE setObjectStringConverter(IObjectStringConverter<INPUT_TYPE> objectStringConverter);
 
