@@ -33,7 +33,7 @@ public interface IComboBox<VALUE_TYPE> extends IControl, IInputControl<VALUE_TYP
 
 	List<VALUE_TYPE> getElements();
 
-	void setElements(List<VALUE_TYPE> elements);
+	void setElements(List<? extends VALUE_TYPE> elements);
 
 	void setElements(VALUE_TYPE... elements);
 

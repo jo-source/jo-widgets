@@ -49,7 +49,7 @@ public class ComboBoxWrapper<VALUE_TYPE> extends AbstractInputControlWrapper<VAL
 	}
 
 	@Override
-	public void setElements(final List<VALUE_TYPE> elements) {
+	public void setElements(final List<? extends VALUE_TYPE> elements) {
 		getWidget().setElements(elements);
 	}
 
