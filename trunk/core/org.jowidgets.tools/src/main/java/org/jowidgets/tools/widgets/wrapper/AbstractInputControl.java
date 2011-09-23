@@ -101,6 +101,10 @@ public abstract class AbstractInputControl<VALUE_TYPE> extends ControlWrapper im
 		inputObservable.removeInputListener(listener);
 	}
 
+	protected final void setValidationCacheDirty() {
+		validationCache.setDirty();
+	}
+
 	protected final void fireInputChanged() {
 		inputObservable.fireInputChanged();
 	}
