@@ -40,6 +40,8 @@ public interface IContainer extends IComponent, IContainerCommon {
 
 	<LAYOUT_TYPE extends ILayouter> LAYOUT_TYPE setLayout(ILayoutFactory<LAYOUT_TYPE> layoutFactory);
 
+	void layout();
+
 	/**
 	 * Gets the containers children
 	 * 

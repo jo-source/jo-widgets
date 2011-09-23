@@ -77,6 +77,11 @@ public class ContainerWrapper extends ComponentWrapper implements IContainer {
 	}
 
 	@Override
+	public void layout() {
+		getWidget().layout();
+	}
+
+	@Override
 	public void layoutEnd() {
 		getWidget().layoutEnd();
 	}

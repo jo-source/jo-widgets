@@ -68,6 +68,11 @@ public abstract class AbstractFrameSpiWrapper extends AbstractWindowSpiWrapper i
 		}
 	}
 
+	public void layout() {
+		layoutBegin();
+		layoutEnd();
+	}
+
 	@Override
 	public void layoutBegin() {
 		getWidget().layoutBegin();
