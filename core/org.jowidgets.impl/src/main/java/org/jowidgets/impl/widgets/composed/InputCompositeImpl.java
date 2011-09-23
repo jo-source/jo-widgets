@@ -230,6 +230,11 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 	}
 
 	@Override
+	public void layout() {
+		composite.layout();
+	}
+
+	@Override
 	public void layoutBegin() {
 		composite.layoutBegin();
 	}

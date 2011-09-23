@@ -66,6 +66,11 @@ public abstract class AbstractContainerSpiWrapper extends ComponentSpiWrapper im
 		getWidget().setLayout(layoutDescriptor);
 	}
 
+	public void layout() {
+		layoutBegin();
+		layoutEnd();
+	}
+
 	@Override
 	public void layoutBegin() {
 		getWidget().layoutBegin();

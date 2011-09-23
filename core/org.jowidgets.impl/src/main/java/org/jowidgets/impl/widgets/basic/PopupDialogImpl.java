@@ -119,6 +119,12 @@ public class PopupDialogImpl extends ComponentSpiWrapper implements IPopupDialog
 	}
 
 	@Override
+	public void layout() {
+		layoutBegin();
+		layoutEnd();
+	}
+
+	@Override
 	public void layoutBegin() {
 		getWidget().layoutBegin();
 	}

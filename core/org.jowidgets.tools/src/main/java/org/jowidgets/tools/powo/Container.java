@@ -273,6 +273,12 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 	}
 
 	@Override
+	public void layout() {
+		checkInitialized();
+		getWidget().layout();
+	}
+
+	@Override
 	public final void layoutBegin() {
 		checkInitialized();
 		getWidget().layoutBegin();
