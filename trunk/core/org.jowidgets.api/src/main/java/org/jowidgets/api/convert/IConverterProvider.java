@@ -84,6 +84,10 @@ public interface IConverterProvider {
 
 	IConverter<Date> time();
 
+	<OBJECT_TYPE> void register(Locale locale, Class<? extends OBJECT_TYPE> type, IConverter<OBJECT_TYPE> converter);
+
+	<OBJECT_TYPE> void register(Class<? extends OBJECT_TYPE> type, IConverter<OBJECT_TYPE> converter);
+
 	void registerDefaultDateConverter(Locale locale, IConverter<Date> converter);
 
 	void registerDefaultTimeConverter(Locale locale, IConverter<Date> converter);
