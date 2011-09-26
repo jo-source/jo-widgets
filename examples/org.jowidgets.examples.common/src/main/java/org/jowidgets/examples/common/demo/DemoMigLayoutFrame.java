@@ -1135,17 +1135,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		final IContainer boundsPanel = boundsTabPanel.add(BPF.composite(), "grow");
 		boundsPanel.setLayout(LFP.migLayout());
 
-		createButton(boundsPanel, "pos n 50% 50% n", null);
-		createButton(boundsPanel, "pos 50% n n 50%", null);
-		createButton(boundsPanel, "pos 50% 50% n n", null);
-		createButton(boundsPanel, "pos n n 50% 50%", null);
-		createButton(boundsPanel, "pos 0.5al 0.5al, pad 3 0 -3 0", null);
-		createButton(boundsPanel, "pos 0.9al 0.4al n visual.y2-10", null);
-		createButton(boundsPanel, "pos 0.1al 0.4al n visual.y2-10", null);
-		createButton(boundsPanel, "pos visual.x 100 visual.x2 p", null);
-		createButton(boundsPanel, "pos visual.x 40 visual.x2 70", null);
-		createButton(boundsPanel, "pos 0 0 container.x2 n", null);
-
+		// label should have a border
 		final ITextLabel southLabel = createLabel(
 				boundsPanel,
 				"pos (visual.x+visual.w*0.1) visual.y2-40 (visual.x2-visual.w*0.1) visual.y2",
@@ -1154,6 +1144,17 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		southLabel.setMarkup(Markup.STRONG);
 		southLabel.setFontSize(10);
 
+		createButton(boundsPanel, "pos 0.5al 0.5al, pad 3 0 -3 0", null);
+
+		createButton(boundsPanel, "pos n 50% 50% n", null);
+		createButton(boundsPanel, "pos 50% n n 50%", null);
+		createButton(boundsPanel, "pos 50% 50% n n", null);
+		createButton(boundsPanel, "pos n n 50% 50%", null);
+		createButton(boundsPanel, "pos 0.9al 0.4al n visual.y2-10", null);
+		createButton(boundsPanel, "pos 0.1al 0.4al n visual.y2-10", null);
+		createButton(boundsPanel, "pos visual.x 100 visual.x2 p", null);
+		createButton(boundsPanel, "pos visual.x 40 visual.x2 70", null);
+		createButton(boundsPanel, "pos 0 0 container.x2 n", null);
 	}
 
 	public void createComponentLinks() {
@@ -1195,9 +1196,6 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		final ITabItem gpPanel = result.addItem(BPF.tabItem().setText("Group Bounds"));
 		gpPanel.setLayout(LFP.migLayout());
 
-		final IContainer boundsPanel = createPanel(gpPanel, null, "pos grp1.x grp1.y grp1.x2 grp1.y2");
-		boundsPanel.setBackgroundColor(new ColorValue(200, 200, 255));
-
 		createButton(gpPanel, "id grp1.b1, pos n 0.5al 50% n", null);
 		createButton(gpPanel, "id grp1.b2, pos 50% 0.5al n n", null);
 		createButton(gpPanel, "id grp1.b3, pos 0.5al n n b1.y", null);
@@ -1207,6 +1205,9 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		createButton(gpPanel, "pos n n grp1.x grp1.y", null);
 		createButton(gpPanel, "pos grp1.x2 n n grp1.y", null);
 		createButton(gpPanel, "pos grp1.x2 grp1.y2", null);
+
+		final IContainer boundsPanel = createPanelWithoutBorder(gpPanel, null, "pos grp1.x grp1.y grp1.x2 grp1.y2");
+		boundsPanel.setBackgroundColor(new ColorValue(200, 200, 255));
 	}
 
 	public void createDocking() {
@@ -1711,6 +1712,21 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 	private static IComposite createPanel(final IContainer parent, String text, final Object layout) {
 		final IComposite panel = parent.add(BPF.compositeWithBorder(), layout != null ? layout : text);
+		panel.setLayout(LFP.migLayoutBuilder().constraints("fill").build());
+
+		final IColorConstant bg = new ColorValue(255, 255, 255);
+		panel.setBackgroundColor(bg);
+
+		if (text != null) {
+			text = text.length() == 0 ? "\"\"" : text;
+			final ITextLabel label = createLabel(panel, text, "grow", AlignmentHorizontal.CENTER);
+			label.setBackgroundColor(bg);
+		}
+		return panel;
+	}
+
+	private static IComposite createPanelWithoutBorder(final IContainer parent, String text, final Object layout) {
+		final IComposite panel = parent.add(BPF.composite(), layout != null ? layout : text);
 		panel.setLayout(LFP.migLayoutBuilder().constraints("fill").build());
 
 		final IColorConstant bg = new ColorValue(255, 255, 255);
