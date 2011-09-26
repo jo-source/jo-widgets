@@ -78,6 +78,16 @@ public final class DefaultConverterProvider implements IConverterProvider {
 		final IConverter<Boolean> booleanLong = new DefaultYesNoConverterLong();
 		register(Boolean.class, booleanLong);
 		register(boolean.class, booleanLong);
+
+		final IConverter<Double> doubleNumberUS = new DefaultDoubleConverterUS();
+		register(Double.class, doubleNumberUS);
+		register(double.class, doubleNumberUS);
+
+		final IConverter<Double> doubleNumberDE = new DefaultDoubleConverterDE();
+		register(Locale.GERMANY, Double.class, doubleNumberDE);
+		register(Locale.GERMANY, double.class, doubleNumberDE);
+		register(Locale.GERMAN, Double.class, doubleNumberDE);
+		register(Locale.GERMAN, double.class, doubleNumberDE);
 	}
 
 	@Override
@@ -99,7 +109,7 @@ public final class DefaultConverterProvider implements IConverterProvider {
 
 	@Override
 	public <OBJECT_TYPE> void register(final Class<? extends OBJECT_TYPE> type, final IConverter<OBJECT_TYPE> converter) {
-		// remove from all locales and register to default locale 
+		// remove type from all locales and register to default locale 
 		for (final Entry<Locale, Map<Class<?>, IConverter<?>>> entry : converters.entrySet()) {
 			if (entry.getValue().containsKey(type)) {
 				entry.getValue().remove(type);
