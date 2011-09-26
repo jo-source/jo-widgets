@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2010, Michael Grossmann, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -33,65 +33,51 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.convert.IObjectLabelConverter;
 import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.convert.IStringObjectConverter;
-import org.jowidgets.api.mask.ITextMaskBuilder;
 import org.jowidgets.common.mask.ITextMask;
-import org.jowidgets.impl.convert.defaults.DefaultDateConverter;
-import org.jowidgets.impl.convert.defaults.DefaultIntegerConverter;
-import org.jowidgets.impl.convert.defaults.DefaultLongConverter;
-import org.jowidgets.impl.convert.defaults.DefaultShortConverter;
-import org.jowidgets.impl.convert.defaults.DefaultStringConverter;
-import org.jowidgets.impl.convert.defaults.DefaultYesNoConverterLong;
-import org.jowidgets.impl.convert.defaults.DefaultYesNoConverterShort;
-import org.jowidgets.impl.mask.TextMaskBuilder;
 import org.jowidgets.tools.converter.AbstractObjectLabelConverter;
 import org.jowidgets.tools.converter.Converter;
 import org.jowidgets.util.Assert;
 
 public final class DefaultConverterProvider implements IConverterProvider {
 
-	public static final IObjectStringConverter<Object> TO_STRING_CONVERTER = new DefaultObjectStringConverter();
-	public static final IConverter<String> STRING = new DefaultStringConverter();
-	public static final IConverter<Long> LONG_NUMBER = new DefaultLongConverter();
-	public static final IConverter<Integer> INTEGER_NUMBER = new DefaultIntegerConverter();
-	public static final IConverter<Short> SHORT_NUMBER = new DefaultShortConverter();
-	public static final IConverter<Boolean> BOOLEAN_YES_NO_LONG = new DefaultYesNoConverterLong();
-	public static final IConverter<Boolean> BOOLEAN_YES_NO_SHORT = new DefaultYesNoConverterShort();
-
-	private static final Map<Class<?>, IConverter<? extends Object>> CONVERTER_MAP = createConverterMap();
-
 	private static final Locale DEFAULT_LOCALE = Locale.US;
+
+	private final IObjectStringConverter<Object> toStringConverter;
+	private final Map<Locale, Map<Class<?>, IConverter<?>>> converters;
 
 	private Map<Locale, IConverter<Date>> defaultDateConverter;
 	private Map<Locale, IConverter<Date>> defaultTimeConverter;
 	private Map<Locale, IConverter<Date>> defaultDateTimeConverter;
+	private Map<Locale, IConverter<Boolean>> booleanLongConverters;
+	private Map<Locale, IConverter<Boolean>> booleanShortConverters;
 
-	public DefaultConverterProvider() {}
+	public DefaultConverterProvider() {
+		toStringConverter = new DefaultObjectStringConverter();
+		converters = new HashMap<Locale, Map<Class<?>, IConverter<?>>>();
+		register(String.class, new DefaultStringConverter());
 
-	@SuppressWarnings("unchecked")
-	private static <OBJECT_TYPE> IConverter<OBJECT_TYPE> getConverterFromMap(final Class<? extends OBJECT_TYPE> type) {
-		Assert.paramNotNull(type, "type");
-		final Object result = CONVERTER_MAP.get(type);
-		return (IConverter<OBJECT_TYPE>) result;
-	}
+		final IConverter<Long> longNumber = new DefaultLongConverter();
+		register(Long.class, longNumber);
+		register(long.class, longNumber);
 
-	private static Map<Class<?>, IConverter<? extends Object>> createConverterMap() {
-		final Map<Class<?>, IConverter<? extends Object>> result = new HashMap<Class<?>, IConverter<? extends Object>>();
-		result.put(String.class, STRING);
-		result.put(Long.class, LONG_NUMBER);
-		result.put(long.class, LONG_NUMBER);
-		result.put(Integer.class, INTEGER_NUMBER);
-		result.put(int.class, INTEGER_NUMBER);
-		result.put(Short.class, SHORT_NUMBER);
-		result.put(short.class, SHORT_NUMBER);
-		result.put(Boolean.class, BOOLEAN_YES_NO_LONG);
-		result.put(boolean.class, BOOLEAN_YES_NO_LONG);
-		return result;
+		final IConverter<Integer> integerNumber = new DefaultIntegerConverter();
+		register(Integer.class, integerNumber);
+		register(int.class, integerNumber);
+
+		final IConverter<Short> shortNumber = new DefaultShortConverter();
+		register(Short.class, shortNumber);
+		register(short.class, shortNumber);
+
+		final IConverter<Boolean> booleanLong = new DefaultYesNoConverterLong();
+		register(Boolean.class, booleanLong);
+		register(boolean.class, booleanLong);
 	}
 
 	@Override
@@ -99,13 +85,28 @@ public final class DefaultConverterProvider implements IConverterProvider {
 		final Locale locale,
 		final Class<? extends OBJECT_TYPE> type,
 		final IConverter<OBJECT_TYPE> converter) {
-		// TODO NM implement register converter method
+		final Map<Class<?>, IConverter<?>> map;
+		if (converters.containsKey(locale)) {
+			map = converters.get(locale);
+		}
+		else {
+			map = new HashMap<Class<?>, IConverter<?>>();
+			converters.put(locale, map);
+		}
 
+		map.put(type, converter);
 	}
 
 	@Override
 	public <OBJECT_TYPE> void register(final Class<? extends OBJECT_TYPE> type, final IConverter<OBJECT_TYPE> converter) {
-		// TODO NM implement register converter method
+		// remove from all locales and register to default locale 
+		for (final Entry<Locale, Map<Class<?>, IConverter<?>>> entry : converters.entrySet()) {
+			if (entry.getValue().containsKey(type)) {
+				entry.getValue().remove(type);
+			}
+		}
+
+		register(DEFAULT_LOCALE, type, converter);
 	}
 
 	@Override
@@ -142,6 +143,48 @@ public final class DefaultConverterProvider implements IConverterProvider {
 	}
 
 	@Override
+	public void registerDefaultBooleanLongConverter(final Locale locale, final IConverter<Boolean> converter) {
+		Assert.paramNotNull(locale, "locale");
+		if (converter != null) {
+			getDefaultBooleanLongConverters().put(locale, converter);
+		}
+		else {
+			getDefaultBooleanLongConverters().remove(locale);
+		}
+	}
+
+	@Override
+	public void registerDefaultBooleanShortConverter(final Locale locale, final IConverter<Boolean> converter) {
+		Assert.paramNotNull(locale, "locale");
+		if (converter != null) {
+			getDefaultBooleanShortConverters().put(locale, converter);
+		}
+		else {
+			getDefaultBooleanShortConverters().remove(locale);
+		}
+	}
+
+	private Map<Locale, IConverter<Boolean>> getDefaultBooleanLongConverters() {
+		if (booleanLongConverters == null) {
+			booleanLongConverters = new HashMap<Locale, IConverter<Boolean>>();
+			final IConverter<Boolean> booleanLong = new DefaultYesNoConverterLong();
+			booleanLongConverters.put(DEFAULT_LOCALE, booleanLong);
+			booleanLongConverters.put(DEFAULT_LOCALE, booleanLong);
+		}
+		return booleanLongConverters;
+	}
+
+	private Map<Locale, IConverter<Boolean>> getDefaultBooleanShortConverters() {
+		if (booleanShortConverters == null) {
+			booleanShortConverters = new HashMap<Locale, IConverter<Boolean>>();
+			final IConverter<Boolean> booleanYesNoShort = new DefaultYesNoConverterShort();
+			booleanShortConverters.put(DEFAULT_LOCALE, booleanYesNoShort);
+			booleanShortConverters.put(DEFAULT_LOCALE, booleanYesNoShort);
+		}
+		return booleanShortConverters;
+	}
+
+	@Override
 	public <OBJECT_TYPE> IConverter<OBJECT_TYPE> mapConverter(
 		final Map<? extends OBJECT_TYPE, String> objectToString,
 		final Map<String, ? extends OBJECT_TYPE> stringToObject,
@@ -159,15 +202,36 @@ public final class DefaultConverterProvider implements IConverterProvider {
 		return new ObjectStringMapConverter<OBJECT_TYPE>(objectToString);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public <OBJECT_TYPE> IConverter<OBJECT_TYPE> getConverter(final Class<? extends OBJECT_TYPE> type) {
-		final IConverter<OBJECT_TYPE> result = getConverterFromMap(type);
+		IConverter<OBJECT_TYPE> result = getConverterFromLocale(Locale.getDefault(), type);
 		if (result == null) {
-			if (type == Date.class) {
-				return (IConverter<OBJECT_TYPE>) date();
-			}
+			result = getConverterFromLocale(DEFAULT_LOCALE, type);
 		}
+		return result;
+	}
+
+	@SuppressWarnings("unchecked")
+	public <OBJECT_TYPE> IConverter<OBJECT_TYPE> getConverterFromLocale(
+		final Locale locale,
+		final Class<? extends OBJECT_TYPE> type) {
+		IConverter<OBJECT_TYPE> result = null;
+		if (converters.containsKey(locale)) {
+			final Map<Class<?>, IConverter<?>> map = converters.get(locale);
+			if (map.containsKey(type)) {
+				result = (IConverter<OBJECT_TYPE>) map.get(type);
+			}
+			if (result == null) {
+				if (type == Date.class) {
+					return (IConverter<OBJECT_TYPE>) date();
+				}
+				if (type == Boolean.class) {
+					return (IConverter<OBJECT_TYPE>) boolLong();
+				}
+			}
+
+		}
+
 		return result;
 	}
 
@@ -209,32 +273,40 @@ public final class DefaultConverterProvider implements IConverterProvider {
 
 	@Override
 	public IConverter<String> string() {
-		return STRING;
+		return getConverter(String.class);
 	}
 
 	@Override
 	public IConverter<Long> longNumber() {
-		return LONG_NUMBER;
+		return getConverter(Long.class);
 	}
 
 	@Override
 	public IConverter<Integer> integerNumber() {
-		return INTEGER_NUMBER;
+		return getConverter(Integer.class);
 	}
 
 	@Override
 	public IConverter<Short> shortNumber() {
-		return SHORT_NUMBER;
+		return getConverter(Short.class);
 	}
 
 	@Override
-	public IConverter<Boolean> boolYesNoLong() {
-		return BOOLEAN_YES_NO_LONG;
+	public IConverter<Boolean> boolLong() {
+		IConverter<Boolean> converter = getDefaultBooleanLongConverters().get(Locale.getDefault());
+		if (converter == null) {
+			converter = getDefaultBooleanLongConverters().get(DEFAULT_LOCALE);
+		}
+		return converter;
 	}
 
 	@Override
-	public IConverter<Boolean> boolYesNoShort() {
-		return BOOLEAN_YES_NO_SHORT;
+	public IConverter<Boolean> boolShort() {
+		IConverter<Boolean> converter = getDefaultBooleanShortConverters().get(Locale.getDefault());
+		if (converter == null) {
+			converter = getDefaultBooleanShortConverters().get(DEFAULT_LOCALE);
+		}
+		return converter;
 	}
 
 	@Override
@@ -277,45 +349,20 @@ public final class DefaultConverterProvider implements IConverterProvider {
 	@SuppressWarnings("unchecked")
 	@Override
 	public <OBJECT_TYPE> IObjectStringConverter<OBJECT_TYPE> toStringConverter() {
-		return (IObjectStringConverter<OBJECT_TYPE>) TO_STRING_CONVERTER;
+		return (IObjectStringConverter<OBJECT_TYPE>) toStringConverter;
 	}
 
 	private Map<Locale, IConverter<Date>> getDefaultDateConverters() {
 		if (defaultDateConverter == null) {
 			this.defaultDateConverter = new HashMap<Locale, IConverter<Date>>();
 
-			final ITextMaskBuilder dateMaskBuilderUS = new TextMaskBuilder();
-			dateMaskBuilderUS.addCharacterMask("[0-1]", '_');
-			dateMaskBuilderUS.addNumericMask('_');
-			dateMaskBuilderUS.addDelimiter('/');
-			dateMaskBuilderUS.addCharacterMask("[0-3]", '_');
-			dateMaskBuilderUS.addNumericMask('_');
-			dateMaskBuilderUS.addDelimiter('/');
-			dateMaskBuilderUS.addNumericMask('_');
-			dateMaskBuilderUS.addNumericMask('_');
-			dateMaskBuilderUS.addNumericMask('_');
-			dateMaskBuilderUS.addNumericMask('_');
-
 			final DateFormat dateFormatUS = new SimpleDateFormat("MM/dd/yyyy");
 			dateFormatUS.setLenient(false);
-			defaultDateConverter.put(DEFAULT_LOCALE, date(dateFormatUS, "MM/DD/YYYY", dateMaskBuilderUS.build()));
-
-			final ITextMaskBuilder dateMaskBuilderDE = new TextMaskBuilder();
-			dateMaskBuilderDE.addCharacterMask("[0-3]", '_');
-			dateMaskBuilderDE.addNumericMask('_');
-			dateMaskBuilderDE.addDelimiter('-');
-			dateMaskBuilderDE.addCharacterMask("[0-1]", '_');
-			dateMaskBuilderDE.addNumericMask('_');
-			dateMaskBuilderDE.addDelimiter('-');
-			dateMaskBuilderDE.addNumericMask('_');
-			dateMaskBuilderDE.addNumericMask('_');
-			dateMaskBuilderDE.addNumericMask('_');
-			dateMaskBuilderDE.addNumericMask('_');
+			defaultDateConverter.put(DEFAULT_LOCALE, date(dateFormatUS, "MM/DD/YYYY", TextMaskProvider.dateMaskUS()));
 
 			final DateFormat dateFormatDE = new SimpleDateFormat("dd-MM-yyyy");
 			dateFormatDE.setLenient(false);
-
-			final IConverter<Date> converterDE = date(dateFormatDE, "DD-MM-YYYY", dateMaskBuilderDE.build());
+			final IConverter<Date> converterDE = date(dateFormatDE, "DD-MM-YYYY", TextMaskProvider.dateMaskDE());
 
 			defaultDateConverter.put(Locale.GERMANY, converterDE);
 			defaultDateConverter.put(Locale.GERMAN, converterDE);
@@ -327,20 +374,9 @@ public final class DefaultConverterProvider implements IConverterProvider {
 		if (defaultTimeConverter == null) {
 			this.defaultTimeConverter = new HashMap<Locale, IConverter<Date>>();
 
-			final ITextMaskBuilder timeMaskBuilder = new TextMaskBuilder();
-			timeMaskBuilder.addCharacterMask("[0-2]", '_');
-			timeMaskBuilder.addNumericMask('_');
-			timeMaskBuilder.addDelimiter(':');
-			timeMaskBuilder.addCharacterMask("[0-5]", '_');
-			timeMaskBuilder.addNumericMask('_');
-			timeMaskBuilder.addDelimiter(':');
-			timeMaskBuilder.addCharacterMask("[0-5]", '_');
-			timeMaskBuilder.addNumericMask('_');
-
 			final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 			dateFormat.setLenient(false);
-
-			final IConverter<Date> converter = date(dateFormat, "HH:MM:SS", timeMaskBuilder.build());
+			final IConverter<Date> converter = date(dateFormat, "HH:MM:SS", TextMaskProvider.timeMask());
 
 			defaultTimeConverter.put(DEFAULT_LOCALE, converter);
 			defaultTimeConverter.put(Locale.GERMAN, converter);
@@ -353,60 +389,15 @@ public final class DefaultConverterProvider implements IConverterProvider {
 		if (defaultDateTimeConverter == null) {
 			this.defaultDateTimeConverter = new HashMap<Locale, IConverter<Date>>();
 
-			final ITextMaskBuilder dateMaskBuilderUS = new TextMaskBuilder();
-			dateMaskBuilderUS.addCharacterMask("[0-1]", '_');
-			dateMaskBuilderUS.addNumericMask('_');
-			dateMaskBuilderUS.addDelimiter('/');
-			dateMaskBuilderUS.addCharacterMask("[0-3]", '_');
-			dateMaskBuilderUS.addNumericMask('_');
-			dateMaskBuilderUS.addDelimiter('/');
-			dateMaskBuilderUS.addNumericMask('_');
-			dateMaskBuilderUS.addNumericMask('_');
-			dateMaskBuilderUS.addNumericMask('_');
-			dateMaskBuilderUS.addNumericMask('_');
-
-			dateMaskBuilderUS.addDelimiter(' ');
-
-			dateMaskBuilderUS.addCharacterMask("[0-2]", '_');
-			dateMaskBuilderUS.addNumericMask('_');
-			dateMaskBuilderUS.addDelimiter(':');
-			dateMaskBuilderUS.addCharacterMask("[0-5]", '_');
-			dateMaskBuilderUS.addNumericMask('_');
-			dateMaskBuilderUS.addDelimiter(':');
-			dateMaskBuilderUS.addCharacterMask("[0-5]", '_');
-			dateMaskBuilderUS.addNumericMask('_');
-
 			final DateFormat dateFormatUS = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 			dateFormatUS.setLenient(false);
-			defaultDateTimeConverter.put(DEFAULT_LOCALE, date(dateFormatUS, "MM/DD/YYYY HH:MM:SS", dateMaskBuilderUS.build()));
-
-			final ITextMaskBuilder dateMaskBuilderDE = new TextMaskBuilder();
-			dateMaskBuilderDE.addCharacterMask("[0-3]", '_');
-			dateMaskBuilderDE.addNumericMask('_');
-			dateMaskBuilderDE.addDelimiter('-');
-			dateMaskBuilderDE.addCharacterMask("[0-1]", '_');
-			dateMaskBuilderDE.addNumericMask('_');
-			dateMaskBuilderDE.addDelimiter('-');
-			dateMaskBuilderDE.addNumericMask('_');
-			dateMaskBuilderDE.addNumericMask('_');
-			dateMaskBuilderDE.addNumericMask('_');
-			dateMaskBuilderDE.addNumericMask('_');
-
-			dateMaskBuilderDE.addDelimiter(' ');
-
-			dateMaskBuilderDE.addCharacterMask("[0-2]", '_');
-			dateMaskBuilderDE.addNumericMask('_');
-			dateMaskBuilderDE.addDelimiter(':');
-			dateMaskBuilderDE.addCharacterMask("[0-5]", '_');
-			dateMaskBuilderDE.addNumericMask('_');
-			dateMaskBuilderDE.addDelimiter(':');
-			dateMaskBuilderDE.addCharacterMask("[0-5]", '_');
-			dateMaskBuilderDE.addNumericMask('_');
+			defaultDateTimeConverter.put(
+					DEFAULT_LOCALE,
+					date(dateFormatUS, "MM/DD/YYYY HH:MM:SS", TextMaskProvider.dateTimeMaskUS()));
 
 			final DateFormat dateFormatDE = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 			dateFormatDE.setLenient(false);
-
-			final IConverter<Date> germanConverter = date(dateFormatDE, "DD-MM-YYYY HH:MM:SS", dateMaskBuilderDE.build());
+			final IConverter<Date> germanConverter = date(dateFormatDE, "DD-MM-YYYY HH:MM:SS", TextMaskProvider.dateTimeMaskDE());
 
 			defaultDateTimeConverter.put(Locale.GERMAN, germanConverter);
 			defaultDateTimeConverter.put(Locale.GERMANY, germanConverter);

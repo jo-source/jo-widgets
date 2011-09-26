@@ -25,45 +25,52 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.convert.defaults;
+package org.jowidgets.impl.convert;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.jowidgets.api.convert.IConverter;
+import org.jowidgets.common.mask.ITextMask;
 import org.jowidgets.tools.converter.AbstractConverter;
+import org.jowidgets.util.Assert;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
 import org.jowidgets.validation.ValidationResult;
 
-public class DefaultBooleanConverter extends AbstractConverter<Boolean> implements IConverter<Boolean> {
+final class DefaultDateConverter extends AbstractConverter<Date> implements IConverter<Date> {
 
-	private final String[] trueStrings;
-	private final String[] falseStrings;
-	private final String matchingRegExp;
+	private final DateFormat dateFormat;
+	private final ITextMask textMask;
+	private final String formatHint;
 
-	private final IValidator<String> stringValidator;
+	DefaultDateConverter(final DateFormat dateFormat, final ITextMask textMask, final String formatHint) {
+		Assert.paramNotNull(dateFormat, "dateFormat");
+		this.dateFormat = dateFormat;
+		this.textMask = textMask;
 
-	public DefaultBooleanConverter(final String[] trueStrings, final String[] falseStrings, final String matchingRegExp) {
-		super();
-		this.trueStrings = trueStrings;
-		this.falseStrings = falseStrings;
-		this.matchingRegExp = matchingRegExp;
-		this.stringValidator = new IValidator<String>() {
-			@Override
-			public IValidationResult validate(final String input) {
-				if (input != null && !input.isEmpty() && convertToObject(input) == null) {
-					return ValidationResult.error("Must be '" + trueStrings[0] + "' or '" + falseStrings[0] + "'");
-				}
-				return ValidationResult.ok();
-			}
-		};
+		if (formatHint != null) {
+			this.formatHint = formatHint;
+		}
+		else if (dateFormat instanceof SimpleDateFormat) {
+			this.formatHint = ((SimpleDateFormat) dateFormat).toPattern();
+		}
+		else {
+			this.formatHint = null;
+		}
 	}
 
 	@Override
-	public Boolean convertToObject(final String string) {
-		if (contains(trueStrings, string)) {
-			return Boolean.valueOf(true);
-		}
-		else if (contains(falseStrings, string)) {
-			return Boolean.valueOf(false);
+	public Date convertToObject(final String string) {
+		if (string != null) {
+			try {
+				return dateFormat.parse(string);
+			}
+			catch (final ParseException e) {
+				return null;
+			}
 		}
 		else {
 			return null;
@@ -71,35 +78,39 @@ public class DefaultBooleanConverter extends AbstractConverter<Boolean> implemen
 	}
 
 	@Override
-	public String convertToString(final Boolean value) {
+	public String convertToString(final Date value) {
 		if (value != null) {
-			if (value.booleanValue()) {
-				return trueStrings[0];
-			}
-			else {
-				return falseStrings[0];
-			}
+			return dateFormat.format(value);
 		}
 		return "";
 	}
 
 	@Override
-	public String getAcceptingRegExp() {
-		return matchingRegExp;
+	public IValidator<String> getStringValidator() {
+		return new IValidator<String>() {
+			@Override
+			public IValidationResult validate(final String input) {
+				if (input != null && !input.trim().isEmpty() && (textMask == null || !textMask.getPlaceholder().equals(input))) {
+					try {
+						dateFormat.parse(input);
+					}
+					catch (final ParseException e) {
+						if (formatHint != null) {
+							return ValidationResult.error("Must have the format '" + formatHint + "'");
+						}
+						else {
+							return ValidationResult.error("Is not a valid date or time ");
+						}
+					}
+				}
+				return ValidationResult.ok();
+			}
+		};
 	}
 
 	@Override
-	public IValidator<String> getStringValidator() {
-		return stringValidator;
-	}
-
-	private boolean contains(final String[] tangas, final String tanga) {
-		for (final String string : tangas) {
-			if (string.equals(tanga)) {
-				return true;
-			}
-		}
-		return false;
+	public ITextMask getMask() {
+		return textMask;
 	}
 
 }

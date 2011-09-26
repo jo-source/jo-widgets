@@ -25,10 +25,9 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.convert.defaults;
+package org.jowidgets.impl.convert;
 
-
-public class DefaultYesNoConverterShort extends DefaultBooleanConverter {
+class DefaultYesNoConverterShort extends DefaultBooleanConverter {
 
 	//TODO i18n
 	private static final String[] TRUE_STRINGS = new String[] {"Y", "y"};
