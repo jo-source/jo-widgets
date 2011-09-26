@@ -87,7 +87,7 @@ final class SwingGoogleEarthWidget implements IMapWidget {
 					map = new GoogleEarth(shell, apiKey);
 					shell.open();
 					latch.countDown();
-					while (true) {
+					while (!shell.isDisposed()) {
 						if (!display.readAndDispatch()) {
 							display.sleep();
 						}
