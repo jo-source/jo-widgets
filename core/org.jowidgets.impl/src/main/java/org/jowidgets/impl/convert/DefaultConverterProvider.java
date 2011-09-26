@@ -95,6 +95,20 @@ public final class DefaultConverterProvider implements IConverterProvider {
 	}
 
 	@Override
+	public <OBJECT_TYPE> void register(
+		final Locale locale,
+		final Class<? extends OBJECT_TYPE> type,
+		final IConverter<OBJECT_TYPE> converter) {
+		// TODO NM implement register converter method
+
+	}
+
+	@Override
+	public <OBJECT_TYPE> void register(final Class<? extends OBJECT_TYPE> type, final IConverter<OBJECT_TYPE> converter) {
+		// TODO NM implement register converter method
+	}
+
+	@Override
 	public void registerDefaultDateConverter(final Locale locale, final IConverter<Date> converter) {
 		Assert.paramNotNull(locale, "locale");
 		if (converter != null) {
