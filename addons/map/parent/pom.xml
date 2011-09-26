@@ -12,6 +12,8 @@
 
 	<modules>
 		<module>../org.jowidgets.addons.map.common</module>
+		<module>../org.jowidgets.addons.map.swing</module>
+		<module>../org.jowidgets.addons.map.swt</module>
 	</modules>
 
 </project>
