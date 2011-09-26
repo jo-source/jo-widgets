@@ -25,18 +25,34 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.convert.defaults;
+package org.jowidgets.impl.convert;
 
+import org.jowidgets.api.convert.IConverter;
+import org.jowidgets.tools.converter.AbstractConverter;
 
-public class DefaultYesNoConverterLong extends DefaultBooleanConverter {
+class DefaultShortConverter extends AbstractConverter<Short> implements IConverter<Short> {
 
-	//TODO i18n
-	private static final String[] TRUE_STRINGS = new String[] {"Yes", "YES", "yes"};
-	private static final String[] FALSE_STRINGS = new String[] {"No", "NO", "no"};
-	private static final String MATCHING_REG_EXP = "^$|Y|y|Ye|ye|YE|Yes|YES|yes|N|n|No|no|NO";
+	@Override
+	public Short convertToObject(final String string) {
+		try {
+			return Short.valueOf(Short.parseShort(string));
+		}
+		catch (final NumberFormatException e) {
+			return null;
+		}
+	}
 
-	public DefaultYesNoConverterLong() {
-		super(TRUE_STRINGS, FALSE_STRINGS, MATCHING_REG_EXP);
+	@Override
+	public String convertToString(final Short value) {
+		if (value != null) {
+			return value.toString();
+		}
+		return null;
+	}
+
+	@Override
+	public String getAcceptingRegExp() {
+		return "-?(([0-9]{0,5}))";
 	}
 
 }

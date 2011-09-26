@@ -25,21 +25,34 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.convert.defaults;
+package org.jowidgets.impl.convert;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.tools.converter.AbstractConverter;
 
-public class DefaultStringConverter extends AbstractConverter<String> implements IConverter<String> {
+class DefaultIntegerConverter extends AbstractConverter<Integer> implements IConverter<Integer> {
 
 	@Override
-	public String convertToObject(final String string) {
-		return string;
+	public Integer convertToObject(final String string) {
+		try {
+			return Integer.valueOf(Integer.parseInt(string));
+		}
+		catch (final NumberFormatException e) {
+			return null;
+		}
 	}
 
 	@Override
-	public String convertToString(final String value) {
-		return value;
+	public String convertToString(final Integer value) {
+		if (value != null) {
+			return value.toString();
+		}
+		return null;
+	}
+
+	@Override
+	public String getAcceptingRegExp() {
+		return "-?(([0-9]{0,10}))";
 	}
 
 }

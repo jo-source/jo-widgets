@@ -48,7 +48,6 @@ import org.jowidgets.common.mask.ITextMask;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
-import org.jowidgets.impl.convert.DefaultConverterProvider;
 import org.jowidgets.impl.widgets.composed.blueprint.convenience.registry.ComposedSetupConvenienceRegistry;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.registry.ComposedDefaultsInitializerRegistry;
 import org.jowidgets.util.Assert;
@@ -65,22 +64,22 @@ public final class BluePrintFactory extends SimpleBluePrintFactory implements IB
 
 	@Override
 	public IInputFieldBluePrint<String> inputFieldString() {
-		return inputField(DefaultConverterProvider.STRING);
+		return inputField(Toolkit.getConverterProvider().string());
 	}
 
 	@Override
 	public IInputFieldBluePrint<Long> inputFieldLongNumber() {
-		return inputField(DefaultConverterProvider.LONG_NUMBER);
+		return inputField(Toolkit.getConverterProvider().longNumber());
 	}
 
 	@Override
 	public IInputFieldBluePrint<Short> inputFieldShortNumber() {
-		return inputField(DefaultConverterProvider.SHORT_NUMBER);
+		return inputField(Toolkit.getConverterProvider().shortNumber());
 	}
 
 	@Override
 	public IInputFieldBluePrint<Integer> inputFieldIntegerNumber() {
-		return inputField(DefaultConverterProvider.INTEGER_NUMBER);
+		return inputField(Toolkit.getConverterProvider().integerNumber());
 	}
 
 	@Override

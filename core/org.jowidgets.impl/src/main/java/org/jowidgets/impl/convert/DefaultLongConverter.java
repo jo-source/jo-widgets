@@ -25,12 +25,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.convert.defaults;
+package org.jowidgets.impl.convert;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.tools.converter.AbstractConverter;
 
-public class DefaultLongConverter extends AbstractConverter<Long> implements IConverter<Long> {
+class DefaultLongConverter extends AbstractConverter<Long> implements IConverter<Long> {
 
 	@Override
 	public Long convertToObject(final String string) {

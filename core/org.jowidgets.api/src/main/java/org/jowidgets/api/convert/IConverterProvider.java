@@ -70,9 +70,9 @@ public interface IConverterProvider {
 
 	IConverter<Short> shortNumber();
 
-	IConverter<Boolean> boolYesNoLong();
+	IConverter<Boolean> boolLong();
 
-	IConverter<Boolean> boolYesNoShort();
+	IConverter<Boolean> boolShort();
 
 	IConverter<Date> date(DateFormat dateFormat, String formatHint, ITextMask mask);
 
@@ -94,4 +94,7 @@ public interface IConverterProvider {
 
 	void registerDefaultDateTimeConverter(Locale locale, IConverter<Date> converter);
 
+	void registerDefaultBooleanLongConverter(Locale locale, IConverter<Boolean> converter);
+
+	void registerDefaultBooleanShortConverter(Locale locale, IConverter<Boolean> converter);
 }
