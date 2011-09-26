@@ -16,6 +16,7 @@
 
 	<modules>
 		<module>../org.jowidgets.addons.testtool</module>
+		<module>../map/parent</module>
 	</modules>
 
 	<build>
