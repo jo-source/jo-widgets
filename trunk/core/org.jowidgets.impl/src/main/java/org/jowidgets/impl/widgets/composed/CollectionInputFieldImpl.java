@@ -127,7 +127,7 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 					boolean validated = false;
 					if (converter.getStringValidator() != null) {
 						final IValidationResult stringResult = converter.getStringValidator().validate(element).withContext(
-								ELEMENT + index);
+								Toolkit.getMessageReplacer().replace(ELEMENT, String.valueOf(index)));
 						if (!stringResult.isValid()) {
 							validated = true;
 							builder.addResult(stringResult);
@@ -135,7 +135,8 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 					}
 					if (!validated) {
 						final IValidationResult elementResult = setup.getElementValidator().validate(
-								converter.convertToObject(element)).withContext(ELEMENT + index);
+								converter.convertToObject(element)).withContext(
+								Toolkit.getMessageReplacer().replace(ELEMENT, String.valueOf(index)));
 						builder.addResult(elementResult);
 					}
 
