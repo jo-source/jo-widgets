@@ -30,24 +30,22 @@ package org.jowidgets.addons.map.swing;
 
 import java.awt.Canvas;
 import java.awt.Container;
+import java.util.Collections;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.CountDownLatch;
 
-import org.eclipse.swt.awt.SWT_AWT;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.addons.map.common.IAvailableCallback;
-import org.jowidgets.addons.map.common.IMap;
 import org.jowidgets.addons.map.common.IMapContext;
 import org.jowidgets.addons.map.common.IViewChangeListener;
 import org.jowidgets.addons.map.common.impl.GoogleEarth;
 import org.jowidgets.addons.map.common.widget.IMapWidget;
 import org.jowidgets.addons.map.common.widget.IMapWidgetBlueprint;
+import org.jowidgets.addons.map.swing.AbstractSwtThread.IWidgetCallback;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IPopupMenu;
@@ -66,62 +64,45 @@ import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsI
 
 final class SwingGoogleEarthWidget implements IMapWidget {
 
+	private final String apiKey;
+	private final Canvas canvas;
+	private final IControl control;
 	private final ConcurrentMap<IViewChangeListener, IViewChangeListener> viewChangeListeners = new ConcurrentHashMap<IViewChangeListener, IViewChangeListener>();
-	private final IControl joControl;
-	private volatile Display display;
-	private volatile IMap map;
+	private volatile String language;
+	private volatile GoogleEarth map;
 
-	SwingGoogleEarthWidget(final Container parent, final IMapWidgetBlueprint descriptor, final String apiKey) {
-		final Container container = new Container();
-		parent.add(container);
-		final Canvas canvas = new Canvas();
+	SwingGoogleEarthWidget(final IMapWidgetBlueprint descriptor, final String apiKey) {
+		this.apiKey = apiKey;
+
+		final IComposite composite = Toolkit.getWidgetFactory().create(Toolkit.getBluePrintFactory().composite());
+		composite.setLayout(Toolkit.getLayoutFactoryProvider().fillLayout());
+		final Container container = (Container) composite.getUiReference();
+		canvas = new Canvas();
 		container.add(canvas);
-		final CountDownLatch latch = new CountDownLatch(1);
-		final Thread swtThread = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				display = new Display();
-				try {
-					final Shell shell = SWT_AWT.new_Shell(display, canvas);
-					shell.setLayout(new FillLayout());
-					map = new GoogleEarth(shell, apiKey);
-					shell.open();
-					latch.countDown();
-					while (!shell.isDisposed()) {
-						if (!display.readAndDispatch()) {
-							display.sleep();
-						}
-					}
-				}
-				finally {
-					display.dispose();
-				}
-			}
-		});
-		swtThread.setName("swt-" + System.currentTimeMillis());
-		swtThread.setDaemon(true);
-		swtThread.start();
-		try {
-			latch.await();
-		}
-		catch (final InterruptedException e) {
-			throw new RuntimeException(e);
-		}
-		joControl = Toolkit.getWidgetWrapperFactory().createComposite(container);
+		control = composite;
+
 		VisibiliySettingsInvoker.setVisibility(descriptor, this);
 		ColorSettingsInvoker.setColors(descriptor, this);
 	}
 
 	@Override
 	public void setLanguage(final String language) {
-		map.setLanguage(language);
+		if (map == null) {
+			this.language = language;
+		}
+		else {
+			map.setLanguage(language);
+		}
 	}
 
 	@Override
 	public void initialize(final IAvailableCallback callback) {
-		display.asyncExec(new Runnable() {
+		new AbstractSwtThread<GoogleEarth>(canvas, new IWidgetCallback<GoogleEarth>() {
 			@Override
-			public void run() {
+			public void onWidgetCreated(final GoogleEarth widget) {
+				synchronized (SwingGoogleEarthWidget.this) {
+					map = widget;
+				}
 				final IAvailableCallback callbackProxy;
 				if (callback == null) {
 					callbackProxy = null;
@@ -129,28 +110,46 @@ final class SwingGoogleEarthWidget implements IMapWidget {
 				else {
 					callbackProxy = new IAvailableCallback() {
 						@Override
-						public void onAvailable(final IMapContext googleEarth) {
+						public void onAvailable(final IMapContext mapContext) {
 							Toolkit.getUiThreadAccess().invokeLater(new Runnable() {
 								@Override
 								public void run() {
-									callback.onAvailable(new MapContextAdapter(display, googleEarth));
+									callback.onAvailable(new MapContextAdapter(widget.getDisplay(), mapContext));
 								}
 							});
 						}
 					};
 				}
-				map.initialize(callbackProxy);
+				widget.initialize(callbackProxy);
 			}
-		});
+		}) {
+			@Override
+			protected GoogleEarth createWidget(final Shell shell) {
+				final GoogleEarth widget = new GoogleEarth(shell, apiKey);
+				if (language != null) {
+					widget.setLanguage(language);
+				}
+				for (final IViewChangeListener viewChangeListener : viewChangeListeners.values()) {
+					widget.addViewChangeListener(viewChangeListener);
+				}
+				return widget;
+			}
+		}.start();
 	}
 
 	@Override
-	public boolean isInitialized() {
+	public synchronized boolean isInitialized() {
+		if (map == null) {
+			return false;
+		}
 		return map.isInitialized();
 	}
 
 	@Override
-	public boolean isAvailable() {
+	public synchronized boolean isAvailable() {
+		if (map == null) {
+			return false;
+		}
 		return map.isAvailable();
 	}
 
@@ -170,256 +169,268 @@ final class SwingGoogleEarthWidget implements IMapWidget {
 			};
 			viewChangeListeners.putIfAbsent(listener, swtListener);
 		}
-		map.addViewChangeListener(viewChangeListeners.get(listener));
+		synchronized (this) {
+			if (map != null) {
+				map.addViewChangeListener(viewChangeListeners.get(listener));
+			}
+		}
 	}
 
 	@Override
 	public boolean removeViewChangeListener(final IViewChangeListener listener) {
-		final IViewChangeListener swtListener = viewChangeListeners.get(listener);
+		final IViewChangeListener swtListener = viewChangeListeners.remove(listener);
 		if (swtListener == null) {
 			return false;
 		}
-		return map.removeViewChangeListener(swtListener);
+		synchronized (this) {
+			if (map == null) {
+				return true;
+			}
+			return map.removeViewChangeListener(swtListener);
+		}
 	}
 
 	@Override
-	public Set<Class<?>> getSupportedDesignationClasses() {
+	public synchronized Set<Class<?>> getSupportedDesignationClasses() {
+		if (map == null) {
+			return Collections.emptySet();
+		}
 		return map.getSupportedDesignationClasses();
 	}
 
 	@Override
 	public void addKeyListener(final IKeyListener listener) {
-		joControl.addKeyListener(listener);
+		control.addKeyListener(listener);
 	}
 
 	@Override
 	public void addFocusListener(final IFocusListener listener) {
-		joControl.addFocusListener(listener);
+		control.addFocusListener(listener);
 	}
 
 	@Override
 	public void addMouseListener(final IMouseListener mouseListener) {
-		joControl.addMouseListener(mouseListener);
+		control.addMouseListener(mouseListener);
 	}
 
 	@Override
 	public void addComponentListener(final IComponentListener componentListener) {
-		joControl.addComponentListener(componentListener);
+		control.addComponentListener(componentListener);
 	}
 
 	@Override
 	public Object getUiReference() {
-		return joControl.getUiReference();
+		return control.getUiReference();
 	}
 
 	@Override
 	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		joControl.addPopupDetectionListener(listener);
+		control.addPopupDetectionListener(listener);
 	}
 
 	@Override
 	public void removeKeyListener(final IKeyListener listener) {
-		joControl.removeKeyListener(listener);
+		control.removeKeyListener(listener);
 	}
 
 	@Override
 	public void removeFocusListener(final IFocusListener listener) {
-		joControl.removeFocusListener(listener);
+		control.removeFocusListener(listener);
 	}
 
 	@Override
 	public void removeMouseListener(final IMouseListener mouseListener) {
-		joControl.removeMouseListener(mouseListener);
+		control.removeMouseListener(mouseListener);
 	}
 
 	@Override
 	public void setLayoutConstraints(final Object layoutConstraints) {
-		joControl.setLayoutConstraints(layoutConstraints);
+		control.setLayoutConstraints(layoutConstraints);
 	}
 
 	@Override
 	public void removeComponentListener(final IComponentListener componentListener) {
-		joControl.removeComponentListener(componentListener);
+		control.removeComponentListener(componentListener);
 	}
 
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		joControl.removePopupDetectionListener(listener);
+		control.removePopupDetectionListener(listener);
 	}
 
 	@Override
 	public void setParent(final IContainer parent) {
-		joControl.setParent(parent);
+		control.setParent(parent);
 	}
 
 	@Override
 	public void setToolTipText(final String toolTip) {
-		joControl.setToolTipText(toolTip);
+		control.setToolTipText(toolTip);
 	}
 
 	@Override
 	public Object getLayoutConstraints() {
-		return joControl.getLayoutConstraints();
+		return control.getLayoutConstraints();
 	}
 
 	@Override
 	public Dimension getMinSize() {
-		return joControl.getMinSize();
+		return control.getMinSize();
 	}
 
 	@Override
 	public IContainer getParent() {
-		return joControl.getParent();
+		return control.getParent();
 	}
 
 	@Override
 	public boolean isReparentable() {
-		return joControl.isReparentable();
+		return control.isReparentable();
 	}
 
 	@Override
 	public Dimension getPreferredSize() {
-		return joControl.getPreferredSize();
+		return control.getPreferredSize();
 	}
 
 	@Override
 	public void setMinSize(final Dimension minSize) {
-		joControl.setMinSize(minSize);
+		control.setMinSize(minSize);
 	}
 
 	@Override
 	public IPopupMenu createPopupMenu() {
-		return joControl.createPopupMenu();
+		return control.createPopupMenu();
 	}
 
 	@Override
 	public Dimension getMaxSize() {
-		return joControl.getMaxSize();
+		return control.getMaxSize();
 	}
 
 	@Override
 	public void setPopupMenu(final IMenuModel popupMenu) {
-		joControl.setPopupMenu(popupMenu);
+		control.setPopupMenu(popupMenu);
 	}
 
 	@Override
 	public void setEnabled(final boolean enabled) {
-		joControl.setEnabled(enabled);
+		control.setEnabled(enabled);
 	}
 
 	@Override
 	public void setPreferredSize(final Dimension preferredSize) {
-		joControl.setPreferredSize(preferredSize);
+		control.setPreferredSize(preferredSize);
 	}
 
 	@Override
 	public boolean isEnabled() {
-		return joControl.isEnabled();
+		return control.isEnabled();
 	}
 
 	@Override
 	public void setMaxSize(final Dimension maxSize) {
-		joControl.setMaxSize(maxSize);
+		control.setMaxSize(maxSize);
 	}
 
 	@Override
 	public Position toScreen(final Position localPosition) {
-		return joControl.toScreen(localPosition);
+		return control.toScreen(localPosition);
 	}
 
 	@Override
 	public Position toLocal(final Position screenPosition) {
-		return joControl.toLocal(screenPosition);
+		return control.toLocal(screenPosition);
 	}
 
 	@Override
 	public void setSize(final int width, final int height) {
-		joControl.setSize(width, height);
+		control.setSize(width, height);
 	}
 
 	@Override
 	public void redraw() {
-		joControl.redraw();
+		control.redraw();
 	}
 
 	@Override
 	public void setPosition(final int x, final int y) {
-		joControl.setPosition(x, y);
+		control.setPosition(x, y);
 	}
 
 	@Override
 	public Position fromComponent(final IComponentCommon component, final Position componentPosition) {
-		return joControl.fromComponent(component, componentPosition);
+		return control.fromComponent(component, componentPosition);
 	}
 
 	@Override
 	public void setRedrawEnabled(final boolean enabled) {
-		joControl.setRedrawEnabled(enabled);
+		control.setRedrawEnabled(enabled);
 	}
 
 	@Override
 	public Position toComponent(final Position componentPosition, final IComponentCommon component) {
-		return joControl.toComponent(componentPosition, component);
+		return control.toComponent(componentPosition, component);
 	}
 
 	@Override
 	public boolean requestFocus() {
-		return joControl.requestFocus();
+		return control.requestFocus();
 	}
 
 	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
-		joControl.setForegroundColor(colorValue);
+		control.setForegroundColor(colorValue);
 	}
 
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
-		joControl.setBackgroundColor(colorValue);
+		control.setBackgroundColor(colorValue);
 	}
 
 	@Override
 	public IColorConstant getForegroundColor() {
-		return joControl.getForegroundColor();
+		return control.getForegroundColor();
 	}
 
 	@Override
 	public IColorConstant getBackgroundColor() {
-		return joControl.getBackgroundColor();
+		return control.getBackgroundColor();
 	}
 
 	@Override
 	public void setCursor(final Cursor cursor) {
-		joControl.setCursor(cursor);
+		control.setCursor(cursor);
 	}
 
 	@Override
 	public void setVisible(final boolean visible) {
-		joControl.setVisible(visible);
+		control.setVisible(visible);
 	}
 
 	@Override
 	public boolean isVisible() {
-		return joControl.isVisible();
+		return control.isVisible();
 	}
 
 	@Override
 	public Dimension getSize() {
-		return joControl.getSize();
+		return control.getSize();
 	}
 
 	@Override
 	public void setSize(final Dimension size) {
-		joControl.setSize(size);
+		control.setSize(size);
 	}
 
 	@Override
 	public Position getPosition() {
-		return joControl.getPosition();
+		return control.getPosition();
 	}
 
 	@Override
 	public void setPosition(final Position position) {
-		joControl.setPosition(position);
+		control.setPosition(position);
 	}
 
 }
