@@ -29,11 +29,12 @@
 package org.jowidgets.addons.map.swing;
 
 import java.awt.Canvas;
-import java.awt.Container;
 import java.util.Collections;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+
+import javax.swing.JPanel;
 
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.addons.map.common.IAvailableCallback;
@@ -47,7 +48,6 @@ import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
@@ -66,7 +66,7 @@ final class SwingGoogleEarthWidget implements IMapWidget {
 
 	private final String apiKey;
 	private final Canvas canvas;
-	private final IControl control;
+	private final IComposite composite;
 	private final ConcurrentMap<IViewChangeListener, IViewChangeListener> viewChangeListeners = new ConcurrentHashMap<IViewChangeListener, IViewChangeListener>();
 	private volatile String language;
 	private volatile GoogleEarth map;
@@ -74,12 +74,11 @@ final class SwingGoogleEarthWidget implements IMapWidget {
 	SwingGoogleEarthWidget(final IMapWidgetBlueprint descriptor, final String apiKey) {
 		this.apiKey = apiKey;
 
-		final IComposite composite = Toolkit.getWidgetFactory().create(Toolkit.getBluePrintFactory().composite());
+		final JPanel panel = new JPanel();
+		composite = Toolkit.getWidgetWrapperFactory().createComposite(panel);
 		composite.setLayout(Toolkit.getLayoutFactoryProvider().fillLayout());
-		final Container container = (Container) composite.getUiReference();
 		canvas = new Canvas();
-		container.add(canvas);
-		control = composite;
+		panel.add(canvas);
 
 		VisibiliySettingsInvoker.setVisibility(descriptor, this);
 		ColorSettingsInvoker.setColors(descriptor, this);
@@ -200,237 +199,237 @@ final class SwingGoogleEarthWidget implements IMapWidget {
 
 	@Override
 	public void addKeyListener(final IKeyListener listener) {
-		control.addKeyListener(listener);
+		composite.addKeyListener(listener);
 	}
 
 	@Override
 	public void addFocusListener(final IFocusListener listener) {
-		control.addFocusListener(listener);
+		composite.addFocusListener(listener);
 	}
 
 	@Override
 	public void addMouseListener(final IMouseListener mouseListener) {
-		control.addMouseListener(mouseListener);
+		composite.addMouseListener(mouseListener);
 	}
 
 	@Override
 	public void addComponentListener(final IComponentListener componentListener) {
-		control.addComponentListener(componentListener);
+		composite.addComponentListener(componentListener);
 	}
 
 	@Override
 	public Object getUiReference() {
-		return control.getUiReference();
+		return composite.getUiReference();
 	}
 
 	@Override
 	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		control.addPopupDetectionListener(listener);
+		composite.addPopupDetectionListener(listener);
 	}
 
 	@Override
 	public void removeKeyListener(final IKeyListener listener) {
-		control.removeKeyListener(listener);
+		composite.removeKeyListener(listener);
 	}
 
 	@Override
 	public void removeFocusListener(final IFocusListener listener) {
-		control.removeFocusListener(listener);
+		composite.removeFocusListener(listener);
 	}
 
 	@Override
 	public void removeMouseListener(final IMouseListener mouseListener) {
-		control.removeMouseListener(mouseListener);
+		composite.removeMouseListener(mouseListener);
 	}
 
 	@Override
 	public void setLayoutConstraints(final Object layoutConstraints) {
-		control.setLayoutConstraints(layoutConstraints);
+		composite.setLayoutConstraints(layoutConstraints);
 	}
 
 	@Override
 	public void removeComponentListener(final IComponentListener componentListener) {
-		control.removeComponentListener(componentListener);
+		composite.removeComponentListener(componentListener);
 	}
 
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		control.removePopupDetectionListener(listener);
+		composite.removePopupDetectionListener(listener);
 	}
 
 	@Override
 	public void setParent(final IContainer parent) {
-		control.setParent(parent);
+		composite.setParent(parent);
 	}
 
 	@Override
 	public void setToolTipText(final String toolTip) {
-		control.setToolTipText(toolTip);
+		composite.setToolTipText(toolTip);
 	}
 
 	@Override
 	public Object getLayoutConstraints() {
-		return control.getLayoutConstraints();
+		return composite.getLayoutConstraints();
 	}
 
 	@Override
 	public Dimension getMinSize() {
-		return control.getMinSize();
+		return composite.getMinSize();
 	}
 
 	@Override
 	public IContainer getParent() {
-		return control.getParent();
+		return composite.getParent();
 	}
 
 	@Override
 	public boolean isReparentable() {
-		return control.isReparentable();
+		return composite.isReparentable();
 	}
 
 	@Override
 	public Dimension getPreferredSize() {
-		return control.getPreferredSize();
+		return composite.getPreferredSize();
 	}
 
 	@Override
 	public void setMinSize(final Dimension minSize) {
-		control.setMinSize(minSize);
+		composite.setMinSize(minSize);
 	}
 
 	@Override
 	public IPopupMenu createPopupMenu() {
-		return control.createPopupMenu();
+		return composite.createPopupMenu();
 	}
 
 	@Override
 	public Dimension getMaxSize() {
-		return control.getMaxSize();
+		return composite.getMaxSize();
 	}
 
 	@Override
 	public void setPopupMenu(final IMenuModel popupMenu) {
-		control.setPopupMenu(popupMenu);
+		composite.setPopupMenu(popupMenu);
 	}
 
 	@Override
 	public void setEnabled(final boolean enabled) {
-		control.setEnabled(enabled);
+		composite.setEnabled(enabled);
 	}
 
 	@Override
 	public void setPreferredSize(final Dimension preferredSize) {
-		control.setPreferredSize(preferredSize);
+		composite.setPreferredSize(preferredSize);
 	}
 
 	@Override
 	public boolean isEnabled() {
-		return control.isEnabled();
+		return composite.isEnabled();
 	}
 
 	@Override
 	public void setMaxSize(final Dimension maxSize) {
-		control.setMaxSize(maxSize);
+		composite.setMaxSize(maxSize);
 	}
 
 	@Override
 	public Position toScreen(final Position localPosition) {
-		return control.toScreen(localPosition);
+		return composite.toScreen(localPosition);
 	}
 
 	@Override
 	public Position toLocal(final Position screenPosition) {
-		return control.toLocal(screenPosition);
+		return composite.toLocal(screenPosition);
 	}
 
 	@Override
 	public void setSize(final int width, final int height) {
-		control.setSize(width, height);
+		composite.setSize(width, height);
 	}
 
 	@Override
 	public void redraw() {
-		control.redraw();
+		composite.redraw();
 	}
 
 	@Override
 	public void setPosition(final int x, final int y) {
-		control.setPosition(x, y);
+		composite.setPosition(x, y);
 	}
 
 	@Override
 	public Position fromComponent(final IComponentCommon component, final Position componentPosition) {
-		return control.fromComponent(component, componentPosition);
+		return composite.fromComponent(component, componentPosition);
 	}
 
 	@Override
 	public void setRedrawEnabled(final boolean enabled) {
-		control.setRedrawEnabled(enabled);
+		composite.setRedrawEnabled(enabled);
 	}
 
 	@Override
 	public Position toComponent(final Position componentPosition, final IComponentCommon component) {
-		return control.toComponent(componentPosition, component);
+		return composite.toComponent(componentPosition, component);
 	}
 
 	@Override
 	public boolean requestFocus() {
-		return control.requestFocus();
+		return composite.requestFocus();
 	}
 
 	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
-		control.setForegroundColor(colorValue);
+		composite.setForegroundColor(colorValue);
 	}
 
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
-		control.setBackgroundColor(colorValue);
+		composite.setBackgroundColor(colorValue);
 	}
 
 	@Override
 	public IColorConstant getForegroundColor() {
-		return control.getForegroundColor();
+		return composite.getForegroundColor();
 	}
 
 	@Override
 	public IColorConstant getBackgroundColor() {
-		return control.getBackgroundColor();
+		return composite.getBackgroundColor();
 	}
 
 	@Override
 	public void setCursor(final Cursor cursor) {
-		control.setCursor(cursor);
+		composite.setCursor(cursor);
 	}
 
 	@Override
 	public void setVisible(final boolean visible) {
-		control.setVisible(visible);
+		composite.setVisible(visible);
 	}
 
 	@Override
 	public boolean isVisible() {
-		return control.isVisible();
+		return composite.isVisible();
 	}
 
 	@Override
 	public Dimension getSize() {
-		return control.getSize();
+		return composite.getSize();
 	}
 
 	@Override
 	public void setSize(final Dimension size) {
-		control.setSize(size);
+		composite.setSize(size);
 	}
 
 	@Override
 	public Position getPosition() {
-		return control.getPosition();
+		return composite.getPosition();
 	}
 
 	@Override
 	public void setPosition(final Position position) {
-		control.setPosition(position);
+		composite.setPosition(position);
 	}
 
 }
