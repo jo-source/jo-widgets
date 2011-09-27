@@ -59,6 +59,7 @@ import org.jowidgets.common.widgets.controller.IFocusListener;
 import org.jowidgets.common.widgets.controller.IKeyListener;
 import org.jowidgets.common.widgets.controller.IMouseListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
+import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 
@@ -76,9 +77,9 @@ final class SwingGoogleEarthWidget implements IMapWidget {
 
 		final JPanel panel = new JPanel();
 		composite = Toolkit.getWidgetWrapperFactory().createComposite(panel);
-		composite.setLayout(Toolkit.getLayoutFactoryProvider().fillLayout());
+		composite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
 		canvas = new Canvas();
-		panel.add(canvas);
+		panel.add(canvas, "grow");
 
 		VisibiliySettingsInvoker.setVisibility(descriptor, this);
 		ColorSettingsInvoker.setColors(descriptor, this);

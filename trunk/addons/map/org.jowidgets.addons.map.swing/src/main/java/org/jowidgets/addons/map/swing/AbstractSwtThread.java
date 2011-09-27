@@ -73,7 +73,6 @@ abstract class AbstractSwtThread<T> extends Thread {
 					callback.onWidgetCreated(widget);
 				}
 			});
-			shell.open();
 			while (!shell.isDisposed()) {
 				if (!display.readAndDispatch()) {
 					display.sleep();
