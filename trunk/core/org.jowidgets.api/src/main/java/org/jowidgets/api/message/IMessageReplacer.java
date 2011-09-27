@@ -32,6 +32,8 @@ import java.util.List;
 
 public interface IMessageReplacer {
 
+	// TODO MG,NM think about escaping possibility...
+
 	/**
 	 * Replaces all variables (%1, ..., %n) with the given string parameters
 	 * 

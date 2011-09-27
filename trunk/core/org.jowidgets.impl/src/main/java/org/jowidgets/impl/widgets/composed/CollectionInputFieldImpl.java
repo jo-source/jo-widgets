@@ -67,6 +67,9 @@ import org.jowidgets.validation.ValidationResult;
 
 public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper implements IInputControl<Collection<ELEMENT_TYPE>> {
 
+	private static final String ELEMENT = Messages.getString("CollectionInputFieldImpl.element"); //$NON-NLS-1$
+	private static final String EDIT = Messages.getString("CollectionInputFieldImpl.edit"); //$NON-NLS-1$
+
 	private final IInputField<String> textField;
 	private final IButton editButton;
 	private final IConverter<ELEMENT_TYPE> converter;
@@ -99,14 +102,14 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 		this.editable = true;
 
 		if (inputDialogSetup != null) {
-			composite.setLayout(new MigLayoutDescriptor("0[grow, 0::]2[]0", "0[grow]0"));
+			composite.setLayout(new MigLayoutDescriptor("0[grow, 0::]2[]0", "0[grow]0")); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		else {
-			composite.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow]0"));
+			composite.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow]0")); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-		this.textField = composite.add(bpf.inputFieldString(), "growx, growy, w 0::, id tf");
+		this.textField = composite.add(bpf.inputFieldString(), "growx, growy, w 0::, id tf"); //$NON-NLS-1$
 		textField.addInputListener(new IInputListener() {
 
 			@Override
@@ -124,7 +127,7 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 					boolean validated = false;
 					if (converter.getStringValidator() != null) {
 						final IValidationResult stringResult = converter.getStringValidator().validate(element).withContext(
-								"Element " + index);
+								ELEMENT + index);
 						if (!stringResult.isValid()) {
 							validated = true;
 							builder.addResult(stringResult);
@@ -132,7 +135,7 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 					}
 					if (!validated) {
 						final IValidationResult elementResult = setup.getElementValidator().validate(
-								converter.convertToObject(element)).withContext("Element " + index);
+								converter.convertToObject(element)).withContext(ELEMENT + index);
 						builder.addResult(elementResult);
 					}
 
@@ -153,11 +156,11 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 			if (setup.getEditButtonIcon() != null) {
 				buttonBp.setIcon(setup.getEditButtonIcon());
 				final int width = composite.getPreferredSize().getHeight() + 2;
-				this.editButton = composite.add(buttonBp, "grow, h ::" + width + ", w ::" + width);
+				this.editButton = composite.add(buttonBp, "grow, h ::" + width + ", w ::" + width); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 			else {
-				buttonBp.setText("Edit");
-				this.editButton = composite.add(buttonBp, "grow, h ::" + (composite.getPreferredSize().getHeight() + 2));
+				buttonBp.setText(EDIT);
+				this.editButton = composite.add(buttonBp, "grow, h ::" + (composite.getPreferredSize().getHeight() + 2)); //$NON-NLS-1$
 			}
 
 			this.editButton.addActionListener(new IActionListener() {
@@ -254,16 +257,16 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 
 				if (converted != null) {
 					final String masked = converted.replace(maskingString, maskingString + maskingString);
-					if (converted.contains(separatorString) || converted.startsWith(" ")) {
+					if (converted.contains(separatorString) || converted.startsWith(" ")) { //$NON-NLS-1$
 						valueString.append(maskingString + masked + maskingString);
 					}
 					else {
 						valueString.append(masked);
 					}
 				}
-				valueString.append(separator + " ");
+				valueString.append(separator + " "); //$NON-NLS-1$
 			}
-			valueString.replace(valueString.length() - 2, valueString.length(), "");
+			valueString.replace(valueString.length() - 2, valueString.length(), ""); //$NON-NLS-1$
 			textField.setValue(valueString.toString());
 		}
 	}
