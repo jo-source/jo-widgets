@@ -28,21 +28,63 @@
 
 package org.jowidgets.addons.map.swing;
 
-import org.jowidgets.addons.map.common.widget.IMapWidget;
-import org.jowidgets.addons.map.common.widget.IMapWidgetBlueprint;
-import org.jowidgets.common.widgets.factory.IWidgetFactory;
+import java.awt.Canvas;
 
-public final class SwingGoogleEarthWidgetFactory implements IWidgetFactory<IMapWidget, IMapWidgetBlueprint> {
+import org.eclipse.swt.awt.SWT_AWT;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
-	private final String apiKey;
+abstract class AbstractSwtThread<T> extends Thread {
 
-	public SwingGoogleEarthWidgetFactory(final String apiKey) {
-		this.apiKey = apiKey;
+	interface IWidgetCallback<T> {
+		void onWidgetCreated(T widget);
+	}
+
+	private final Canvas canvas;
+	private final IWidgetCallback<T> callback;
+
+	AbstractSwtThread(final Canvas canvas, final IWidgetCallback<T> callback) {
+		this.canvas = canvas;
+		this.callback = callback;
+		setName("swt-" + System.currentTimeMillis());
+		setDaemon(true);
 	}
 
 	@Override
-	public IMapWidget create(final Object parentUiReference, final IMapWidgetBlueprint descriptor) {
-		return new SwingGoogleEarthWidget(descriptor, apiKey);
+	public void run() {
+		while (!canvas.isDisplayable()) {
+			try {
+				Thread.sleep(100);
+			}
+			catch (final InterruptedException e) {
+				Thread.currentThread().interrupt();
+				return;
+			}
+		}
+		final Display display = new Display();
+		try {
+			final Shell shell = SWT_AWT.new_Shell(display, canvas);
+			shell.setLayout(new FillLayout());
+			final T widget = createWidget(shell);
+			display.asyncExec(new Runnable() {
+				@Override
+				public void run() {
+					callback.onWidgetCreated(widget);
+				}
+			});
+			shell.open();
+			while (!shell.isDisposed()) {
+				if (!display.readAndDispatch()) {
+					display.sleep();
+				}
+			}
+		}
+		finally {
+			display.dispose();
+		}
 	}
+
+	protected abstract T createWidget(Shell shell);
 
 }
