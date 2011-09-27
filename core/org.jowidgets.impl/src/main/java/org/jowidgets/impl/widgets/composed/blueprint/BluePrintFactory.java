@@ -54,6 +54,8 @@ import org.jowidgets.util.Assert;
 
 public final class BluePrintFactory extends SimpleBluePrintFactory implements IBluePrintFactory {
 
+	private static final String CANCEL = Messages.getString("BluePrintFactory.cancel"); //$NON-NLS-1$
+
 	public BluePrintFactory() {
 		super(new ComposedSetupConvenienceRegistry(), new ComposedDefaultsInitializerRegistry());
 	}
@@ -171,10 +173,9 @@ public final class BluePrintFactory extends SimpleBluePrintFactory implements IB
 		return questionDialog();
 	}
 
-	//TODO I18N
 	@Override
 	public IQuestionDialogBluePrint yesNoCancelQuestion() {
-		return questionDialog().setCancelButton(button("Cancel"));
+		return questionDialog().setCancelButton(button(CANCEL));
 	}
 
 	@Override
@@ -200,7 +201,7 @@ public final class BluePrintFactory extends SimpleBluePrintFactory implements IB
 	@Override
 	public <ELEMENT_TYPE> ICollectionInputControlBluePrint<ELEMENT_TYPE> collectionInputControl(
 		final IWidgetDescriptor<? extends IInputControl<ELEMENT_TYPE>> descriptor) {
-		Assert.paramNotNull(descriptor, "descriptor");
+		Assert.paramNotNull(descriptor, "descriptor"); //$NON-NLS-1$
 		return collectionInputControl(new ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>>() {
 			@Override
 			public IInputControl<ELEMENT_TYPE> create(final ICustomWidgetFactory widgetFactory) {

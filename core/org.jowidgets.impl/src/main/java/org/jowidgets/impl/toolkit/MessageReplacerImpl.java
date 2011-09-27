@@ -35,15 +35,35 @@ import org.jowidgets.api.message.IMessageReplacer;
 final class MessageReplacerImpl implements IMessageReplacer {
 
 	@Override
-	public String replace(final String message, final String... parameter) {
-		// TODO NM implement replace
-		return message;
+	public String replace(final String message, final String... parameters) {
+		final StringBuilder result = new StringBuilder(message);
+		for (int i = parameters.length - 1; i >= 0; i--) {
+			final String parameter = parameters[i];
+			final String search = "%" + String.valueOf(i + 1);
+			int pos = result.indexOf(search);
+			while (pos >= 0) {
+				result.delete(pos, pos + search.length());
+				result.insert(pos, parameter);
+				pos = result.indexOf(search, pos + parameter.length());
+			}
+		}
+		return result.toString();
 	}
 
 	@Override
-	public String replace(final String message, final List<String> parameter) {
-		// TODO NM implement replace
-		return message;
+	public String replace(final String message, final List<String> parameters) {
+		final StringBuilder result = new StringBuilder(message);
+		for (int i = parameters.size() - 1; i >= 0; i--) {
+			final String parameter = parameters.get(i);
+			final String search = "%" + String.valueOf(i + 1);
+			int pos = result.indexOf(search);
+			while (pos >= 0) {
+				result.delete(pos, pos + search.length());
+				result.insert(pos, parameter);
+				pos = result.indexOf(search, pos + parameter.length());
+			}
+		}
+		return result.toString();
 	}
 
 }

@@ -29,13 +29,33 @@ package org.jowidgets.impl.convert;
 
 class DefaultYesNoConverterShort extends DefaultBooleanConverter {
 
-	//TODO i18n
-	private static final String[] TRUE_STRINGS = new String[] {"Y", "y"};
-	private static final String[] FALSE_STRINGS = new String[] {"N", "n"};
-	private static final String MATCHING_REG_EXP = "^$|Y|y|N|n";
+	private static final String[] TRUE_STRINGS = new String[] {
+			Messages.getString("DefaultYesNoConverterShort.yes_short_uppercase"), //$NON-NLS-1$ 
+			Messages.getString("DefaultYesNoConverterShort.yes_short_lowercase")}; //$NON-NLS-1$
+	private static final String[] FALSE_STRINGS = new String[] {
+			Messages.getString("DefaultYesNoConverterShort.no_short_uppercase"),//$NON-NLS-1$ 
+			Messages.getString("DefaultYesNoConverterShort.no_short_lowercase")}; //$NON-NLS-1$
+	private static final String MATCHING_REG_EXP = buildRegExp();
 
 	public DefaultYesNoConverterShort() {
 		super(TRUE_STRINGS, FALSE_STRINGS, MATCHING_REG_EXP);
 	}
 
+	private static String buildRegExp() {
+		final StringBuilder result = new StringBuilder();
+		result.append("^$"); //$NON-NLS-1$
+		for (final String word : TRUE_STRINGS) {
+			for (int i = 0; i < word.length(); i++) {
+				result.append('|');
+				result.append(word.substring(0, i + 1));
+			}
+		}
+		for (final String word : FALSE_STRINGS) {
+			for (int i = 0; i < word.length(); i++) {
+				result.append('|');
+				result.append(word.substring(0, i + 1));
+			}
+		}
+		return result.toString();
+	}
 }

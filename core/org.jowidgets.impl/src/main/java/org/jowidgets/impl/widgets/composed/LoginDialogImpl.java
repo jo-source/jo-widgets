@@ -58,6 +58,9 @@ import org.jowidgets.validation.ValidationResult;
 
 public class LoginDialogImpl extends WindowWrapper implements ILoginDialog {
 
+	private static final String USERNAME = Messages.getString("LoginDialogImpl.username"); //$NON-NLS-1$
+	private static final String PASSWORD = Messages.getString("LoginDialogImpl.password"); //$NON-NLS-1$
+
 	private final IUiThreadAccess uiThreadAccess;
 	private final Set<ILoginCancelListener> cancelListeners;
 
@@ -77,9 +80,9 @@ public class LoginDialogImpl extends WindowWrapper implements ILoginDialog {
 
 	public LoginDialogImpl(final IFrame frame, final ILoginDialogSetup setup) {
 		super(frame);
-		Assert.paramNotNull(frame, "frame");
-		Assert.paramNotNull(setup, "setup");
-		Assert.paramNotNull(setup.getInterceptor(), "setup.getInterceptor()");
+		Assert.paramNotNull(frame, "frame"); //$NON-NLS-1$
+		Assert.paramNotNull(setup, "setup"); //$NON-NLS-1$
+		Assert.paramNotNull(setup.getInterceptor(), "setup.getInterceptor()"); //$NON-NLS-1$
 
 		this.uiThreadAccess = Toolkit.getUiThreadAccess();
 		this.cancelListeners = new HashSet<ILoginCancelListener>();
@@ -88,7 +91,7 @@ public class LoginDialogImpl extends WindowWrapper implements ILoginDialog {
 
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-		frame.setLayout(new MigLayoutDescriptor("0[grow]0", "0[]0[grow]0[12!]0"));
+		frame.setLayout(new MigLayoutDescriptor("0[grow]0", "0[]0[grow]0[12!]0")); //$NON-NLS-1$ //$NON-NLS-2$
 
 		if (setup.getMinSize() != null) {
 			frame.setMinSize(setup.getMinSize());
@@ -96,47 +99,47 @@ public class LoginDialogImpl extends WindowWrapper implements ILoginDialog {
 
 		//set logo, or if not exists
 		if (setup.getLogo() != null) {
-			frame.add(bpf.icon(setup.getLogo()), "growx, growy, wrap");
+			frame.add(bpf.icon(setup.getLogo()), "growx, growy, wrap"); //$NON-NLS-1$
 		}
 		//set login label
 		else {
 			if (setup.getLoginLabel() != null) {
-				final IComposite labelComposite = frame.add(bpf.composite().setBackgroundColor(Colors.WHITE), "grow, wrap");
-				labelComposite.setLayout(new MigLayoutDescriptor("15[grow]15", "15[grow]15"));
-				final ITextLabelBluePrint labelBp = bpf.textLabel().setFontSize(25).setStrong().setFontName("Arial");
+				final IComposite labelComposite = frame.add(bpf.composite().setBackgroundColor(Colors.WHITE), "grow, wrap"); //$NON-NLS-1$
+				labelComposite.setLayout(new MigLayoutDescriptor("15[grow]15", "15[grow]15")); //$NON-NLS-1$ //$NON-NLS-2$
+				final ITextLabelBluePrint labelBp = bpf.textLabel().setFontSize(25).setStrong().setFontName("Arial"); //$NON-NLS-1$
 				labelBp.setText(setup.getLoginLabel()).setMarkup(Markup.DEFAULT);
 				labelBp.setForegroundColor(Colors.DARK_GREY);
-				labelComposite.add(labelBp, "grow");
+				labelComposite.add(labelBp, "grow"); //$NON-NLS-1$
 			}
 			else {
-				frame.add(bpf.textLabel(""), "grow, wrap");
+				frame.add(bpf.textLabel(""), "grow, wrap"); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		}
 
 		//create content pane
-		final IComposite content = frame.add(bpf.composite(), "alignx r, wrap");
-		content.setLayout(new MigLayoutDescriptor("20[grow]8[grow, 200!]20", "20[20!]15[][]45[grow]10"));
+		final IComposite content = frame.add(bpf.composite(), "alignx r, wrap"); //$NON-NLS-1$
+		content.setLayout(new MigLayoutDescriptor("20[grow]8[grow, 200!]20", "20[20!]15[][]45[grow]10")); //$NON-NLS-1$ //$NON-NLS-2$
 
 		//validation label
-		validationResultLabel = content.add(bpf.validationResultLabel(), "span2, growx, wrap");
+		validationResultLabel = content.add(bpf.validationResultLabel(), "span2, growx, wrap"); //$NON-NLS-1$
 
 		//input fields
-		content.add(bpf.textLabel("Username").alignRight(), "alignx r");//TODO i18n
-		usernameField = content.add(bpf.inputFieldString(), "growx, wrap");
-		content.add(bpf.textLabel("Password").alignRight(), "alignx r");//TODO i18n
-		passwordField = content.add(bpf.inputFieldString().setPasswordPresentation(true), "growx, wrap");
+		content.add(bpf.textLabel(USERNAME).alignRight(), "alignx r"); //$NON-NLS-1$
+		usernameField = content.add(bpf.inputFieldString(), "growx, wrap"); //$NON-NLS-1$
+		content.add(bpf.textLabel(PASSWORD).alignRight(), "alignx r"); //$NON-NLS-1$
+		passwordField = content.add(bpf.inputFieldString().setPasswordPresentation(true), "growx, wrap"); //$NON-NLS-1$
 
 		//button bar
-		final IComposite buttonBar = content.add(bpf.composite(), "span2, alignx r, growy");
-		buttonBar.setLayout(new MigLayoutDescriptor("0[][]0", "0[]0"));
-		this.loginButton = buttonBar.add(setup.getLoginButton(), "w 80::, aligny b, sg bg");
-		this.cancelButton = buttonBar.add(setup.getCancelButton(), "w 80::, aligny b, sg bg");
+		final IComposite buttonBar = content.add(bpf.composite(), "span2, alignx r, growy"); //$NON-NLS-1$
+		buttonBar.setLayout(new MigLayoutDescriptor("0[][]0", "0[]0")); //$NON-NLS-1$ //$NON-NLS-2$
+		this.loginButton = buttonBar.add(setup.getLoginButton(), "w 80::, aligny b, sg bg"); //$NON-NLS-1$
+		this.cancelButton = buttonBar.add(setup.getCancelButton(), "w 80::, aligny b, sg bg"); //$NON-NLS-1$
 		loginButton.setBackgroundColor(frame.getBackgroundColor());
 		cancelButton.setBackgroundColor(frame.getBackgroundColor());
 		frame.setDefaultButton(loginButton);
 
 		//progress bar
-		this.progressBar = frame.add(bpf.progressBar().setIndeterminate(true), "growx, growy, aligny b");
+		this.progressBar = frame.add(bpf.progressBar().setIndeterminate(true), "growx, growy, aligny b"); //$NON-NLS-1$
 		progressBar.setVisible(false);
 
 		//register listeners

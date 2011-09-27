@@ -29,13 +29,33 @@ package org.jowidgets.impl.convert;
 
 class DefaultYesNoConverterLong extends DefaultBooleanConverter {
 
-	//TODO i18n
-	private static final String[] TRUE_STRINGS = new String[] {"Yes", "YES", "yes"};
-	private static final String[] FALSE_STRINGS = new String[] {"No", "NO", "no"};
-	private static final String MATCHING_REG_EXP = "^$|Y|y|Ye|ye|YE|Yes|YES|yes|N|n|No|no|NO";
+	private static final String[] TRUE_STRINGS = new String[] {Messages.getString("DefaultYesNoConverterLong.yes"), //$NON-NLS-1$
+			Messages.getString("DefaultYesNoConverterLong.yes_uppercase"), //$NON-NLS-1$
+			Messages.getString("DefaultYesNoConverterLong.yes_lowercase")}; //$NON-NLS-1$
+	private static final String[] FALSE_STRINGS = new String[] {Messages.getString("DefaultYesNoConverterLong.no"), //$NON-NLS-1$
+			Messages.getString("DefaultYesNoConverterLong.no_uppercase"), //$NON-NLS-1$
+			Messages.getString("DefaultYesNoConverterLong.no_lowercase")}; //$NON-NLS-1$
+	private static final String MATCHING_REG_EXP = buildRegExp();
 
 	public DefaultYesNoConverterLong() {
 		super(TRUE_STRINGS, FALSE_STRINGS, MATCHING_REG_EXP);
 	}
 
+	private static String buildRegExp() {
+		final StringBuilder result = new StringBuilder();
+		result.append("^$"); //$NON-NLS-1$
+		for (final String word : TRUE_STRINGS) {
+			for (int i = 0; i < word.length(); i++) {
+				result.append('|');
+				result.append(word.substring(0, i + 1));
+			}
+		}
+		for (final String word : FALSE_STRINGS) {
+			for (int i = 0; i < word.length(); i++) {
+				result.append('|');
+				result.append(word.substring(0, i + 1));
+			}
+		}
+		return result.toString();
+	}
 }

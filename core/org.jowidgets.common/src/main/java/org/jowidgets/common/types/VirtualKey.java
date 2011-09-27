@@ -33,84 +33,84 @@ import java.util.Map;
 
 public enum VirtualKey {
 
-	F1(null, "F1"),
-	F2(null, "F2"),
-	F3(null, "F3"),
-	F4(null, "F4"),
-	F5(null, "F5"),
-	F6(null, "F6"),
-	F7(null, "F7"),
-	F8(null, "F8"),
-	F9(null, "F9"),
-	F10(null, "F10"),
-	F11(null, "F11"),
-	F12(null, "F12"),
+	F1(null, "F1"), //$NON-NLS-1$
+	F2(null, "F2"), //$NON-NLS-1$
+	F3(null, "F3"), //$NON-NLS-1$
+	F4(null, "F4"), //$NON-NLS-1$
+	F5(null, "F5"), //$NON-NLS-1$
+	F6(null, "F6"), //$NON-NLS-1$
+	F7(null, "F7"), //$NON-NLS-1$
+	F8(null, "F8"), //$NON-NLS-1$
+	F9(null, "F9"), //$NON-NLS-1$
+	F10(null, "F10"), //$NON-NLS-1$
+	F11(null, "F11"), //$NON-NLS-1$
+	F12(null, "F12"), //$NON-NLS-1$
 
-	ENTER(null, "Enter"),
-	BACK_SPACE(null, "Back Space"),
-	TAB(null, "Tab"),
-	SHIFT(null, "Shift"),
-	CONTROL(null, "Ctrl"),
-	ALT(null, "Alt"),
-	PAUSE(null, "Pause"),
-	CAPS_LOCK(null, "Caps Lock"),
-	ESC(null, "Esc"),
-	SPACE(null, "Space"),
-	PAGE_UP(null, "Page up"),
-	PAGE_DOWN(null, "Page down"),
-	END(null, "End"),
-	HOME(null, "Home"),
-	DELETE(null, "Delete"),
-	INSERT(null, "Insert"),
+	ENTER(null, Messages.getString("VirtualKey.enter")), //$NON-NLS-1$
+	BACK_SPACE(null, Messages.getString("VirtualKey.back_space")), //$NON-NLS-1$
+	TAB(null, Messages.getString("VirtualKey.tab")), //$NON-NLS-1$
+	SHIFT(null, Messages.getString("VirtualKey.shift")), //$NON-NLS-1$
+	CONTROL(null, Messages.getString("VirtualKey.ctrl")), //$NON-NLS-1$
+	ALT(null, Messages.getString("VirtualKey.alt")), //$NON-NLS-1$
+	PAUSE(null, Messages.getString("VirtualKey.pause")), //$NON-NLS-1$
+	CAPS_LOCK(null, Messages.getString("VirtualKey.caps_lock")), //$NON-NLS-1$
+	ESC(null, Messages.getString("VirtualKey.esc")), //$NON-NLS-1$
+	SPACE(null, Messages.getString("VirtualKey.space")), //$NON-NLS-1$
+	PAGE_UP(null, Messages.getString("VirtualKey.page_up")), //$NON-NLS-1$
+	PAGE_DOWN(null, Messages.getString("VirtualKey.page_down")), //$NON-NLS-1$
+	END(null, Messages.getString("VirtualKey.end")), //$NON-NLS-1$
+	HOME(null, Messages.getString("VirtualKey.home")), //$NON-NLS-1$
+	DELETE(null, Messages.getString("VirtualKey.delete")), //$NON-NLS-1$
+	INSERT(null, Messages.getString("VirtualKey.insert")), //$NON-NLS-1$
 
-	ARROW_LEFT(null, "Arrow left"),
-	ARROW_UP(null, "Arrow up"),
-	ARROW_RIGHT(null, "Arrow right"),
-	ARROW_DOWN(null, "Arrow down"),
+	ARROW_LEFT(null, Messages.getString("VirtualKey.arrow_left")), //$NON-NLS-1$
+	ARROW_UP(null, Messages.getString("VirtualKey.arrow_up")), //$NON-NLS-1$
+	ARROW_RIGHT(null, Messages.getString("VirtualKey.arrow_right")), //$NON-NLS-1$
+	ARROW_DOWN(null, Messages.getString("VirtualKey.arrow_down")), //$NON-NLS-1$
 
-	DIGIT_0(Character.valueOf('0'), "0"),
-	DIGIT_1(Character.valueOf('1'), "1"),
-	DIGIT_2(Character.valueOf('2'), "2"),
-	DIGIT_3(Character.valueOf('3'), "3"),
-	DIGIT_4(Character.valueOf('4'), "4"),
-	DIGIT_5(Character.valueOf('5'), "5"),
-	DIGIT_6(Character.valueOf('6'), "6"),
-	DIGIT_7(Character.valueOf('7'), "7"),
-	DIGIT_8(Character.valueOf('8'), "8"),
-	DIGIT_9(Character.valueOf('9'), "9"),
+	DIGIT_0(Character.valueOf('0'), "0"), //$NON-NLS-1$
+	DIGIT_1(Character.valueOf('1'), "1"), //$NON-NLS-1$
+	DIGIT_2(Character.valueOf('2'), "2"), //$NON-NLS-1$
+	DIGIT_3(Character.valueOf('3'), "3"), //$NON-NLS-1$
+	DIGIT_4(Character.valueOf('4'), "4"), //$NON-NLS-1$
+	DIGIT_5(Character.valueOf('5'), "5"), //$NON-NLS-1$
+	DIGIT_6(Character.valueOf('6'), "6"), //$NON-NLS-1$
+	DIGIT_7(Character.valueOf('7'), "7"), //$NON-NLS-1$
+	DIGIT_8(Character.valueOf('8'), "8"), //$NON-NLS-1$
+	DIGIT_9(Character.valueOf('9'), "9"), //$NON-NLS-1$
 
-	A(Character.valueOf('A'), "A"),
-	B(Character.valueOf('B'), "B"),
-	C(Character.valueOf('C'), "C"),
-	D(Character.valueOf('D'), "D"),
-	E(Character.valueOf('E'), "E"),
-	F(Character.valueOf('F'), "F"),
-	G(Character.valueOf('G'), "G"),
-	H(Character.valueOf('H'), "H"),
-	I(Character.valueOf('I'), "I"),
-	J(Character.valueOf('J'), "J"),
-	K(Character.valueOf('K'), "K"),
-	L(Character.valueOf('L'), "L"),
-	M(Character.valueOf('M'), "M"),
-	N(Character.valueOf('N'), "N"),
-	O(Character.valueOf('O'), "O"),
-	P(Character.valueOf('P'), "P"),
-	Q(Character.valueOf('Q'), "Q"),
-	R(Character.valueOf('R'), "R"),
-	S(Character.valueOf('S'), "S"),
-	T(Character.valueOf('T'), "T"),
-	U(Character.valueOf('U'), "U"),
-	V(Character.valueOf('V'), "V"),
-	W(Character.valueOf('W'), "W"),
-	X(Character.valueOf('X'), "X"),
-	Y(Character.valueOf('Y'), "Y"),
-	Z(Character.valueOf('Z'), "Z"),
+	A(Character.valueOf('A'), "A"), //$NON-NLS-1$
+	B(Character.valueOf('B'), "B"), //$NON-NLS-1$
+	C(Character.valueOf('C'), "C"), //$NON-NLS-1$
+	D(Character.valueOf('D'), "D"), //$NON-NLS-1$
+	E(Character.valueOf('E'), "E"), //$NON-NLS-1$
+	F(Character.valueOf('F'), "F"), //$NON-NLS-1$
+	G(Character.valueOf('G'), "G"), //$NON-NLS-1$
+	H(Character.valueOf('H'), "H"), //$NON-NLS-1$
+	I(Character.valueOf('I'), "I"), //$NON-NLS-1$
+	J(Character.valueOf('J'), "J"), //$NON-NLS-1$
+	K(Character.valueOf('K'), "K"), //$NON-NLS-1$
+	L(Character.valueOf('L'), "L"), //$NON-NLS-1$
+	M(Character.valueOf('M'), "M"), //$NON-NLS-1$
+	N(Character.valueOf('N'), "N"), //$NON-NLS-1$
+	O(Character.valueOf('O'), "O"), //$NON-NLS-1$
+	P(Character.valueOf('P'), "P"), //$NON-NLS-1$
+	Q(Character.valueOf('Q'), "Q"), //$NON-NLS-1$
+	R(Character.valueOf('R'), "R"), //$NON-NLS-1$
+	S(Character.valueOf('S'), "S"), //$NON-NLS-1$
+	T(Character.valueOf('T'), "T"), //$NON-NLS-1$
+	U(Character.valueOf('U'), "U"), //$NON-NLS-1$
+	V(Character.valueOf('V'), "V"), //$NON-NLS-1$
+	W(Character.valueOf('W'), "W"), //$NON-NLS-1$
+	X(Character.valueOf('X'), "X"), //$NON-NLS-1$
+	Y(Character.valueOf('Y'), "Y"), //$NON-NLS-1$
+	Z(Character.valueOf('Z'), "Z"), //$NON-NLS-1$
 
 	/**
 	 * The key pressed or released is not defined as a virtual key.
 	 * This must not be used to define accelerators.
 	 */
-	UNDEFINED(null, "Undefined");
+	UNDEFINED(null, Messages.getString("VirtualKey.undefined")); //$NON-NLS-1$
 
 	private static Map<Character, VirtualKey> characterToVirtualKey;
 
@@ -123,7 +123,6 @@ public enum VirtualKey {
 	}
 
 	/**
-	 * //TODO I18N
 	 * Gets the label of the key.
 	 * 
 	 * @return The label of the key
