@@ -36,6 +36,7 @@ import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
 import org.jowidgets.api.mask.ITextMaskBuilder;
+import org.jowidgets.api.message.IMessageReplacer;
 import org.jowidgets.api.model.IModelFactoryProvider;
 import org.jowidgets.api.threads.IUiThreadAccess;
 import org.jowidgets.api.toolkit.ILoginPane;
@@ -84,6 +85,7 @@ public class DefaultToolkit implements IToolkit {
 	private final IActionBuilderFactory actionBuilderFactory;
 	private final IModelFactoryProvider modelFactoryProvider;
 	private final IConverterProvider converterProvider;
+	private final IMessageReplacer messageReplacer;
 	private final IInputContentCreatorFactory inputContentCreatorFactory;
 	private final WindowProvider windowProvider;
 	private final IMessagePane messagePane;
@@ -104,6 +106,7 @@ public class DefaultToolkit implements IToolkit {
 		this.actionBuilderFactory = new ActionBuilderFactory();
 		this.modelFactoryProvider = new ModelFactoryProvider();
 		this.converterProvider = new DefaultConverterProvider();
+		this.messageReplacer = new MessageReplacerImpl();
 		this.inputContentCreatorFactory = new InputContentCreatorFactory();
 		this.windowProvider = new WindowProvider(genericWidgetFactory, toolkitSpi);
 		this.messagePane = new MessagePaneImpl(genericWidgetFactory, bluePrintFactory, windowProvider);
@@ -179,6 +182,11 @@ public class DefaultToolkit implements IToolkit {
 	@Override
 	public IConverterProvider getConverterProvider() {
 		return converterProvider;
+	}
+
+	@Override
+	public IMessageReplacer getMessageReplacer() {
+		return messageReplacer;
 	}
 
 	@Override
