@@ -34,6 +34,7 @@ import org.jowidgets.api.command.IActionBuilderFactory;
 import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
 import org.jowidgets.api.mask.ITextMaskBuilder;
+import org.jowidgets.api.message.IMessageReplacer;
 import org.jowidgets.api.model.IModelFactoryProvider;
 import org.jowidgets.api.threads.IUiThreadAccess;
 import org.jowidgets.api.utils.IWidgetUtils;
@@ -72,6 +73,8 @@ public interface IToolkit {
 	IInputContentCreatorFactory getInputContentCreatorFactory();
 
 	IConverterProvider getConverterProvider();
+
+	IMessageReplacer getMessageReplacer();
 
 	IActionBuilderFactory getActionBuilderFactory();
 

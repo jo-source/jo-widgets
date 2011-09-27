@@ -34,6 +34,7 @@ import org.jowidgets.api.command.IActionBuilderFactory;
 import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
 import org.jowidgets.api.mask.ITextMaskBuilder;
+import org.jowidgets.api.message.IMessageReplacer;
 import org.jowidgets.api.model.IModelFactoryProvider;
 import org.jowidgets.api.threads.IUiThreadAccess;
 import org.jowidgets.api.toolkit.ILoginPane;
@@ -122,6 +123,11 @@ public class ToolkitWrapper implements IToolkit {
 	@Override
 	public IConverterProvider getConverterProvider() {
 		return toolkit.getConverterProvider();
+	}
+
+	@Override
+	public IMessageReplacer getMessageReplacer() {
+		return toolkit.getMessageReplacer();
 	}
 
 	@Override
