@@ -1,22 +1,22 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2011, nimoll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  * * Redistributions of source code must retain the above copyright
- * notice, this list of conditions and the following disclaimer.
+ *   notice, this list of conditions and the following disclaimer.
  * * Redistributions in binary form must reproduce the above copyright
- * notice, this list of conditions and the following disclaimer in the
- * documentation and/or other materials provided with the distribution.
+ *   notice, this list of conditions and the following disclaimer in the
+ *   documentation and/or other materials provided with the distribution.
  * * Neither the name of the jo-widgets.org nor the
- * names of its contributors may be used to endorse or promote products
- * derived from this software without specific prior written permission.
+ *   names of its contributors may be used to endorse or promote products
+ *   derived from this software without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY
+ * ARE DISCLAIMED. IN NO EVENT SHALL jo-widgets.org BE LIABLE FOR ANY
  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
  * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
@@ -25,20 +25,25 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
+
 package org.jowidgets.impl.widgets.composed.blueprint.defaults;
 
-import org.jowidgets.api.image.Icons;
-import org.jowidgets.api.widgets.blueprint.builder.IMessageDialogSetupBuilder;
-import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
-import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
-public class MessageDialogDefaults implements IDefaultInitializer<IMessageDialogSetupBuilder<?>> {
+public class Messages {
+	private static final String BUNDLE_NAME = "org.jowidgets.impl.widgets.composed.blueprint.defaults.messages"; //$NON-NLS-1$
 
-	@Override
-	public void initialize(final IMessageDialogSetupBuilder<?> builder) {
-		final BluePrintFactory bpF = new BluePrintFactory();
-		builder.setOkButton(bpF.button(Messages.getString("MessageDialogDefaults.ok"))); //$NON-NLS-1$
-		builder.setIcon(Icons.INFO);
+	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
+
+	private Messages() {}
+
+	public static String getString(String key) {
+		try {
+			return RESOURCE_BUNDLE.getString(key);
+		}
+		catch (MissingResourceException e) {
+			return '!' + key + '!';
+		}
 	}
-
 }

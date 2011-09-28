@@ -36,14 +36,13 @@ import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
 public class LoginDialogDefaults implements IDefaultInitializer<ILoginDialogSetupBuilder<?>> {
 
-	// i18n
 	@Override
 	public void initialize(final ILoginDialogSetupBuilder<?> builder) {
 		final BluePrintFactory bpF = new BluePrintFactory();
 		builder.setDecorated(false);
 		builder.setBackgroundColor(new ColorValue(197, 216, 226));
-		builder.setLoginButton(bpF.button("Login"));
-		builder.setCancelButton(bpF.button("Cancel"));
+		builder.setLoginButton(bpF.button(Messages.getString("LoginDialogDefaults.login"))); //$NON-NLS-1$
+		builder.setCancelButton(bpF.button(Messages.getString("LoginDialogDefaults.cancel"))); //$NON-NLS-1$
 		builder.setDefaultButtonPolicy(InputDialogDefaultButtonPolicy.OK);
 		builder.setCloseable(false);
 		builder.setResizable(false);
