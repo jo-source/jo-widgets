@@ -37,13 +37,12 @@ import org.jowidgets.validation.IValidationResult;
 
 public class InputDialogDefaults implements IDefaultInitializer<IInputDialogSetupBuilder<?, ?>> {
 
-	// i18n
 	@Override
 	public void initialize(final IInputDialogSetupBuilder<?, ?> builder) {
 		builder.setContentScrolled(true);
 		final BluePrintFactory bpF = new BluePrintFactory();
-		builder.setOkButton(bpF.button("OK"));
-		builder.setCancelButton(bpF.button("Cancel"));
+		builder.setOkButton(bpF.button(Messages.getString("InputDialogDefaults.ok"))); //$NON-NLS-1$
+		builder.setCancelButton(bpF.button(Messages.getString("InputDialogDefaults.cancel"))); //$NON-NLS-1$
 		builder.setValidationLabel(bpF.inputComponentValidationLabel());
 		builder.setDefaultButtonPolicy(InputDialogDefaultButtonPolicy.OK);
 		builder.setCloseable(false);

@@ -37,7 +37,6 @@ import org.jowidgets.validation.IValidationResult;
 
 public class InputCompositeDefaults implements IDefaultInitializer<IInputCompositeSetupBuilder<?, ?>> {
 
-	// i18n
 	@Override
 	public void initialize(final IInputCompositeSetupBuilder<?, ?> builder) {
 		builder.setContentScrolled(true);

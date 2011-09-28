@@ -35,7 +35,6 @@ import org.jowidgets.validation.Validator;
 
 public class CollectionInputFieldDefaults implements IDefaultInitializer<ICollectionInputFieldSetupBuilder<?, ?>> {
 
-	// i18n
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public void initialize(final ICollectionInputFieldSetupBuilder<?, ?> builder) {

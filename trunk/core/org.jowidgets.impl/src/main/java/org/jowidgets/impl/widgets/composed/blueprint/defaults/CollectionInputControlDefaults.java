@@ -41,7 +41,6 @@ import org.jowidgets.validation.Validator;
 
 public class CollectionInputControlDefaults implements IDefaultInitializer<ICollectionInputControlSetupBuilder<?, ?>> {
 
-	// i18n
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	@Override
 	public void initialize(final ICollectionInputControlSetupBuilder<?, ?> builder) {
@@ -58,7 +57,7 @@ public class CollectionInputControlDefaults implements IDefaultInitializer<IColl
 
 		builder.setValidationLabel(validationLabelBp);
 		builder.setValidationLabelSize(new Dimension(20, 20));
-		builder.setAddButton(bpf.button().setIcon(IconsSmall.ADD).setToolTipText("Add new entry"));
+		builder.setAddButton(bpf.button().setIcon(IconsSmall.ADD).setToolTipText(Messages.getString("CollectionInputControlDefaults.add_new_entry"))); //$NON-NLS-1$
 		builder.setAddButtonSize(new Dimension(21, 21));
 		builder.setRemoveButton(bpf.button().setIcon(IconsSmall.SUB));
 		builder.setRemoveButtonSize(new Dimension(21, 21));
