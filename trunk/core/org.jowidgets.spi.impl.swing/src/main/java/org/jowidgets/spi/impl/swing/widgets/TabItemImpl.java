@@ -75,6 +75,9 @@ import org.jowidgets.spi.widgets.ITabItemSpi;
 
 public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 
+	private static final String CLOSE_LABEL = Messages.getString("TabItemImpl.close"); //$NON-NLS-1$
+	private static final String CLOSE_N_LABEL = Messages.getString("TabItemImpl.close_n"); //$NON-NLS-1$
+
 	private final JPanel tabContentContainer;
 	private final SwingContainer swingContainer;
 	private final PopupDetectionObservable tabPopupDetectionObservable;
@@ -106,7 +109,7 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 		this.tabPopupMenus = new HashSet<PopupMenuImpl>();
 
 		this.tabContentContainer = new JPanel();
-		this.tabContentContainer.setLayout(new MigLayout("", "[]", "[]"));
+		this.tabContentContainer.setLayout(new MigLayout("", "[]", "[]")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
 		if (index != null) {
 			parentTabbedPane.add(tabContentContainer, index.intValue());
@@ -430,14 +433,14 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 			this.label = new JLabel();
 			this.label.setOpaque(false);
 			if (closeable) {
-				setLayout(new MigLayout("", "0[]10[]0", "0[]0"));
+				setLayout(new MigLayout("", "0[]10[]0", "0[]0")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				add(label);
 				this.tabButton = new TabButton();
 				add(tabButton);
 			}
 			else {
 				this.tabButton = null;
-				setLayout(new MigLayout("", "0[]0", "0[]0"));
+				setLayout(new MigLayout("", "0[]0", "0[]0")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				add(label);
 			}
 
@@ -520,8 +523,6 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 
 		private static final long serialVersionUID = 1171212461380220004L;
 
-		private static final String CLOSE_LABEL = "Close"; //TODO I18N
-
 		public TabButton() {
 
 			setPreferredSize(new java.awt.Dimension(16, 16));
@@ -553,7 +554,7 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 
 		@Override
 		public void setText(final String text) {
-			setToolTipText(CLOSE_LABEL + " " + text);
+			setToolTipText(CLOSE_N_LABEL.replace("%1", text)); //$NON-NLS-1$
 		}
 
 		@Override
