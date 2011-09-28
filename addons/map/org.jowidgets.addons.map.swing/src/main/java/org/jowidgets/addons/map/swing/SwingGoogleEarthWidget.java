@@ -30,7 +30,6 @@ package org.jowidgets.addons.map.swing;
 
 import java.awt.Canvas;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.util.Collections;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -113,8 +112,6 @@ final class SwingGoogleEarthWidget extends ControlWrapper implements IMapWidget 
 			@Override
 			protected GoogleEarth createWidget(final Shell shell) {
 				final GoogleEarth widget = new GoogleEarth(shell, apiKey);
-				final Dimension dim = canvas.getSize();
-				shell.setSize(dim.width, dim.height);
 				if (language != null) {
 					widget.setLanguage(language);
 				}

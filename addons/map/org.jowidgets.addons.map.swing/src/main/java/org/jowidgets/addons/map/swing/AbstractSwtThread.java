@@ -29,6 +29,7 @@
 package org.jowidgets.addons.map.swing;
 
 import java.awt.Canvas;
+import java.awt.Dimension;
 
 import org.eclipse.swt.awt.SWT_AWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -67,6 +68,8 @@ abstract class AbstractSwtThread<T> extends Thread {
 			final Shell shell = SWT_AWT.new_Shell(display, canvas);
 			shell.setLayout(new FillLayout());
 			final T widget = createWidget(shell);
+			final Dimension canvasSize = canvas.getSize();
+			shell.setSize(canvasSize.width, canvasSize.height);
 			display.asyncExec(new Runnable() {
 				@Override
 				public void run() {
