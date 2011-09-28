@@ -29,6 +29,7 @@
 package org.jowidgets.api.convert;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
@@ -74,6 +75,10 @@ public interface IConverterProvider {
 
 	IConverter<Boolean> boolShort();
 
+	IConverter<Double> doubleNumber();
+
+	IConverter<Double> doubleNumber(DecimalFormat decimalFormat, String formatHint);
+
 	IConverter<Date> date(DateFormat dateFormat, String formatHint, ITextMask mask);
 
 	IConverter<Date> date(DateFormat dateFormat, String formatHint);
@@ -97,4 +102,5 @@ public interface IConverterProvider {
 	void registerDefaultBooleanLongConverter(Locale locale, IConverter<Boolean> converter);
 
 	void registerDefaultBooleanShortConverter(Locale locale, IConverter<Boolean> converter);
+
 }
