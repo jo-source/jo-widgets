@@ -40,7 +40,7 @@ public final class AcceleratorConvert {
 		final StringBuilder result = new StringBuilder();
 		for (final Modifier modifier : accelerator.getModifier()) {
 			result.append(acceleratorText(modifier));
-			result.append("+");
+			result.append("+"); //$NON-NLS-1$
 		}
 		final Character character = accelerator.getCharacter();
 		if (character != null) {
@@ -70,7 +70,7 @@ public final class AcceleratorConvert {
 	}
 
 	public static int convert(final Modifier modifier) {
-		Assert.paramNotNull(modifier, "modifier");
+		Assert.paramNotNull(modifier, "modifier"); //$NON-NLS-1$
 
 		if (modifier == Modifier.ALT) {
 			return SWT.ALT;
@@ -83,27 +83,26 @@ public final class AcceleratorConvert {
 		}
 
 		else {
-			throw new IllegalArgumentException("Modifier '" + modifier + "' is unknown");
+			throw new IllegalArgumentException("Modifier '" + modifier + "' is unknown"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 
 	}
 
-	//TODO I18N
 	private static String acceleratorText(final Modifier modifier) {
-		Assert.paramNotNull(modifier, "modifier");
+		Assert.paramNotNull(modifier, "modifier"); //$NON-NLS-1$
 
 		if (modifier == Modifier.ALT) {
-			return "Alt";
+			return Messages.getString("AcceleratorConvert.alt"); //$NON-NLS-1$
 		}
 		else if (modifier == Modifier.CTRL) {
-			return "Ctrl";
+			return Messages.getString("AcceleratorConvert.ctrl"); //$NON-NLS-1$
 		}
 		else if (modifier == Modifier.SHIFT) {
-			return "Shift";
+			return Messages.getString("AcceleratorConvert.shift"); //$NON-NLS-1$
 		}
 
 		else {
-			throw new IllegalArgumentException("Modifier '" + modifier + "' is unknown");
+			throw new IllegalArgumentException("Modifier '" + modifier + "' is unknown"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 
 	}
