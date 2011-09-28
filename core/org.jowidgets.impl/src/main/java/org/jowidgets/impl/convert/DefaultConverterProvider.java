@@ -28,6 +28,7 @@
 package org.jowidgets.impl.convert;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -79,11 +80,15 @@ public final class DefaultConverterProvider implements IConverterProvider {
 		register(Boolean.class, booleanLong);
 		register(boolean.class, booleanLong);
 
-		final IConverter<Double> doubleNumberUS = new DefaultDoubleConverterUS();
+		// TODO NM fix formatHint
+		final DecimalFormat decimalFormatUS = (DecimalFormat) DecimalFormat.getInstance(Locale.US);
+		final IConverter<Double> doubleNumberUS = new DefaultDoubleConverter(decimalFormatUS, "us");
 		register(Double.class, doubleNumberUS);
 		register(double.class, doubleNumberUS);
 
-		final IConverter<Double> doubleNumberDE = new DefaultDoubleConverterDE();
+		// TODO NM fix formatHint
+		final DecimalFormat decimalFormatDE = (DecimalFormat) DecimalFormat.getInstance(Locale.GERMAN);
+		final IConverter<Double> doubleNumberDE = new DefaultDoubleConverter(decimalFormatDE, "de");
 		register(Locale.GERMANY, Double.class, doubleNumberDE);
 		register(Locale.GERMANY, double.class, doubleNumberDE);
 		register(Locale.GERMAN, Double.class, doubleNumberDE);
@@ -299,6 +304,16 @@ public final class DefaultConverterProvider implements IConverterProvider {
 	@Override
 	public IConverter<Short> shortNumber() {
 		return getConverter(Short.class);
+	}
+
+	@Override
+	public IConverter<Double> doubleNumber() {
+		return getConverter(Double.class);
+	}
+
+	@Override
+	public IConverter<Double> doubleNumber(final DecimalFormat decimalFormat, final String formatHint) {
+		return new DefaultDoubleConverter(decimalFormat, formatHint);
 	}
 
 	@Override

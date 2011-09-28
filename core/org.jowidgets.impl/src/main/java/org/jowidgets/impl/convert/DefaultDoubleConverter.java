@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2011, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -27,63 +27,47 @@
  */
 package org.jowidgets.impl.convert;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.text.DecimalFormat;
+import java.text.ParsePosition;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.common.mask.ITextMask;
 import org.jowidgets.tools.converter.AbstractConverter;
-import org.jowidgets.util.Assert;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
 import org.jowidgets.validation.ValidationResult;
 
-final class DefaultDateConverter extends AbstractConverter<Date> implements IConverter<Date> {
+class DefaultDoubleConverter extends AbstractConverter<Double> implements IConverter<Double> {
 
-	private final DateFormat dateFormat;
-	private final ITextMask textMask;
+	private final DecimalFormat decimalFormat;
 	private final String formatHint;
 
-	DefaultDateConverter(final DateFormat dateFormat, final ITextMask textMask, final String formatHint) {
-		Assert.paramNotNull(dateFormat, "dateFormat");
-		this.dateFormat = dateFormat;
-		this.textMask = textMask;
-
-		if (formatHint != null) {
-			this.formatHint = formatHint;
-		}
-		else if (dateFormat instanceof SimpleDateFormat) {
-			this.formatHint = ((SimpleDateFormat) dateFormat).toPattern();
-		}
-		else {
-			this.formatHint = null;
-		}
+	DefaultDoubleConverter(final DecimalFormat decimalFormat, final String formatHint) {
+		this.decimalFormat = decimalFormat;
+		this.formatHint = formatHint;
 	}
 
 	@Override
-	public Date convertToObject(final String string) {
-		if (string != null) {
-			try {
-				return dateFormat.parse(string);
-			}
-			catch (final ParseException e) {
+	public Double convertToObject(final String string) {
+		try {
+			final ParsePosition pos = new ParsePosition(0);
+			final Number result = decimalFormat.parse(string, pos);
+			if (result == null || pos.getIndex() < string.length()) {
 				return null;
 			}
+			return result.doubleValue();
 		}
-		else {
+		catch (final NumberFormatException e) {
 			return null;
 		}
 	}
 
 	@Override
-	public String convertToString(final Date value) {
+	public String convertToString(final Double value) {
 		if (value != null) {
-			return dateFormat.format(value);
+			return decimalFormat.format(value);
 		}
-		return "";
+		return null;
 	}
 
 	@Override
@@ -91,11 +75,10 @@ final class DefaultDateConverter extends AbstractConverter<Date> implements ICon
 		return new IValidator<String>() {
 			@Override
 			public IValidationResult validate(final String input) {
-				if (input != null && !input.trim().isEmpty() && (textMask == null || !textMask.getPlaceholder().equals(input))) {
-					try {
-						dateFormat.parse(input);
-					}
-					catch (final ParseException e) {
+				if (input != null && !input.trim().isEmpty()) {
+					final ParsePosition pos = new ParsePosition(0);
+					decimalFormat.parse(input, pos);
+					if (pos.getIndex() < input.length()) {
 						if (formatHint != null) {
 							return ValidationResult.error(Toolkit.getMessageReplacer().replace(
 									"Must have the format '%1'",
@@ -112,8 +95,22 @@ final class DefaultDateConverter extends AbstractConverter<Date> implements ICon
 	}
 
 	@Override
-	public ITextMask getMask() {
-		return textMask;
+	public String getAcceptingRegExp() {
+		final String decimalSeparatorRegEx;
+		if (isSpecialChar(decimalFormat.getDecimalFormatSymbols().getDecimalSeparator())) {
+			decimalSeparatorRegEx = "\\" + decimalFormat.getDecimalFormatSymbols().getDecimalSeparator();
+		}
+		else {
+			decimalSeparatorRegEx = String.valueOf(decimalFormat.getDecimalFormatSymbols().getDecimalSeparator());
+		}
+		return "-?([0-9]*([0-9]" + decimalSeparatorRegEx + "[0-9]*)?)";
 	}
 
+	// TODO NM add more special chars... externalize method?
+	private boolean isSpecialChar(final char c) {
+		if (c == '.') {
+			return true;
+		}
+		return false;
+	}
 }
