@@ -35,8 +35,10 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.addons.map.common.IAvailableCallback;
+import org.jowidgets.addons.map.common.IMap;
 import org.jowidgets.addons.map.common.IMapContext;
 import org.jowidgets.addons.map.common.IViewChangeListener;
 import org.jowidgets.addons.map.common.impl.GoogleEarth;
@@ -56,7 +58,7 @@ final class SwingGoogleEarthWidget extends ControlWrapper implements IMapWidget 
 	private final Canvas canvas;
 	private final ConcurrentMap<IViewChangeListener, IViewChangeListener> viewChangeListeners = new ConcurrentHashMap<IViewChangeListener, IViewChangeListener>();
 	private volatile String language;
-	private volatile GoogleEarth map;
+	private volatile IMap map;
 
 	SwingGoogleEarthWidget(final IMapWidgetBlueprint descriptor, final String apiKey) {
 		super(Toolkit.getWidgetFactory().create(Toolkit.getBluePrintFactory().composite()));
@@ -83,9 +85,9 @@ final class SwingGoogleEarthWidget extends ControlWrapper implements IMapWidget 
 
 	@Override
 	public void initialize(final IAvailableCallback callback) {
-		new AbstractSwtThread<GoogleEarth>(canvas, new IWidgetCallback<GoogleEarth>() {
+		new AbstractSwtThread<IMap>(canvas, new IWidgetCallback<IMap>() {
 			@Override
-			public void onWidgetCreated(final GoogleEarth widget) {
+			public void onWidgetCreated(final IMap widget) {
 				synchronized (SwingGoogleEarthWidget.this) {
 					map = widget;
 				}
@@ -100,7 +102,7 @@ final class SwingGoogleEarthWidget extends ControlWrapper implements IMapWidget 
 							Toolkit.getUiThreadAccess().invokeLater(new Runnable() {
 								@Override
 								public void run() {
-									callback.onAvailable(new MapContextAdapter(widget.getDisplay(), mapContext));
+									callback.onAvailable(new MapContextAdapter(((Composite) widget).getDisplay(), mapContext));
 								}
 							});
 						}
@@ -110,8 +112,8 @@ final class SwingGoogleEarthWidget extends ControlWrapper implements IMapWidget 
 			}
 		}) {
 			@Override
-			protected GoogleEarth createWidget(final Shell shell) {
-				final GoogleEarth widget = new GoogleEarth(shell, apiKey);
+			protected IMap createWidget(final Shell shell) {
+				final IMap widget = new GoogleEarth(shell, apiKey);
 				if (language != null) {
 					widget.setLanguage(language);
 				}
