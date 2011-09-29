@@ -169,7 +169,7 @@ public class TreeNodeImpl extends TreeNodeSpiWrapper implements ITreeNode {
 		if (!isDisposed()) {
 			if (parentNode != null && parentNode.getChildren().contains(this) && !onRemoveByDispose) {
 				onRemoveByDispose = true;
-				parentNode.getChildren().remove(this); //this will invoke dispose by the parent node
+				parentNode.removeNode(this); //this will invoke dispose by the parent node
 				onRemoveByDispose = false;
 			}
 			else {
