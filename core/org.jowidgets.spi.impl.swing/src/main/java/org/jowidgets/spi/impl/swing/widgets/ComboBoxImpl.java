@@ -537,13 +537,20 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 
 		protected String getFirstMatch(final String text) {
 			final String lowerText = text.toLowerCase();
+			String firstMatch = null;
 			for (final String item : autoCompletionModel.elements) {
-				if (item.toLowerCase().startsWith(lowerText)) {
+				final String lowerItem = item.toLowerCase();
+				if (lowerItem.equals(lowerText)) {
 					return item;
 				}
+				if (firstMatch == null && lowerItem.startsWith(lowerText)) {
+					firstMatch = item;
+				}
 			}
-
-			if (isSelectionMode) {
+			if (firstMatch != null) {
+				return firstMatch;
+			}
+			else if (isSelectionMode) {
 				return "";
 			}
 			else {
