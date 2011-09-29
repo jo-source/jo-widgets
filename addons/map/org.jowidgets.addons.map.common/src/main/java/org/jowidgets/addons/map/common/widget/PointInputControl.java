@@ -30,6 +30,7 @@ package org.jowidgets.addons.map.common.widget;
 
 import org.jowidgets.addons.map.common.IAvailableCallback;
 import org.jowidgets.addons.map.common.IDesignationListener;
+import org.jowidgets.addons.map.common.IMap;
 import org.jowidgets.addons.map.common.IMapContext;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.widgets.controller.IInputListener;
@@ -53,7 +54,6 @@ final class PointInputControl extends ControlWrapper implements IPointInputContr
 
 	private static final String PLACEMARK_ID = PointInputControl.class.getSimpleName();
 
-	private final IMapWidget mapWidget;
 	private final InputObservable inputObservable = new InputObservable();;
 	private final CompoundValidator<Point> compoundValidator = new CompoundValidator<Point>();
 	private final ValidationCache validationCache;
@@ -67,7 +67,6 @@ final class PointInputControl extends ControlWrapper implements IPointInputContr
 		super(Toolkit.getWidgetFactory().create(
 				parentUiReference,
 				Toolkit.getBluePrintFactory().bluePrint(IMapWidgetBlueprint.class)));
-		this.mapWidget = (IMapWidget) getWidget();
 
 		VisibiliySettingsInvoker.setVisibility(descriptor, this);
 		ColorSettingsInvoker.setColors(descriptor, this);
@@ -90,10 +89,10 @@ final class PointInputControl extends ControlWrapper implements IPointInputContr
 		resetModificationState();
 		validationCache.setDirty();
 
-		mapWidget.initialize(new IAvailableCallback() {
+		((IMap) getWidget()).initialize(new IAvailableCallback() {
 			@Override
-			public void onAvailable(final IMapContext googleEarth) {
-				PointInputControl.this.mapContext = googleEarth;
+			public void onAvailable(final IMapContext mapContext) {
+				PointInputControl.this.mapContext = mapContext;
 				updateValue(true);
 				setEditable(editable);
 			}
