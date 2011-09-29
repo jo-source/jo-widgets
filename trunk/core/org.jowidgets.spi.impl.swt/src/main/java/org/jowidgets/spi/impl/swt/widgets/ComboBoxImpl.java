@@ -294,13 +294,37 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 			return true;
 		}
 
+		final CompletionItem ci = getIndexOfPrefix(text);
+
+		if (isSelectionMode && !ci.isPrefix && (keyCode == KeyEvent.VK_DELETE || keyCode == KeyEvent.VK_BACK_SPACE)) {
+			getUiReference().setSelection(new Point(pos, getUiReference().getText().length()));
+			return false;
+		}
+
+		if (ci.isPrefix) {
+			getUiReference().select(ci.index);
+
+			// Only open the popup list in selection due to windows behavior: If the list is visible,
+			// Windows automatically selects an item, if the text partially matches an element 
+			if (isSelectionMode && keyCode != 0 && !getUiReference().getListVisible()) {
+				getUiReference().setListVisible(true);
+			}
+
+			getUiReference().setSelection(new Point(pos, ci.completion.length()));
+			return false;
+		}
+
+		return !isSelectionMode || ci.isPrefix;
+	}
+
+	private CompletionItem getIndexOfPrefix(final String text) {
+		String completion = "";
+		boolean isPrefix = false;
 		final String lowerText = text.toLowerCase();
 		final boolean isEmpty = lowerText.length() == 0;
 		final String[] items = getUiReference().getItems();
-		boolean isPrefix = false;
-		String completion = "";
-		int index = 0;
 
+		int index = 0;
 		if (isEmpty) {
 			for (final String item : items) {
 				if (item.length() == 0) {
@@ -312,35 +336,39 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 			}
 		}
 		else {
+			int prefixIndex = -1;
 			for (final String item : items) {
-				if (item.toLowerCase().startsWith(lowerText)) {
+				if (item.toLowerCase().equals(lowerText)) {
+					prefixIndex = -1;
 					isPrefix = true;
 					completion = item;
 					break;
 				}
+				if (prefixIndex < 0 && item.toLowerCase().startsWith(lowerText)) {
+					prefixIndex = index;
+					isPrefix = true;
+					completion = item;
+				}
 				index++;
 			}
-		}
-
-		if (isSelectionMode && !isPrefix && (keyCode == KeyEvent.VK_DELETE || keyCode == KeyEvent.VK_BACK_SPACE)) {
-			getUiReference().setSelection(new Point(pos, getUiReference().getText().length()));
-			return false;
-		}
-
-		if (isPrefix) {
-			getUiReference().select(index);
-
-			// Only open the popup list in selection due to windows behavior: If the list is visible,
-			// Windows automatically selects an item, if the text partially matches an element 
-			if (isSelectionMode && keyCode != 0 && !getUiReference().getListVisible()) {
-				getUiReference().setListVisible(true);
+			if (prefixIndex >= 0) {
+				index = prefixIndex;
 			}
-
-			getUiReference().setSelection(new Point(pos, completion.length()));
-			return false;
 		}
 
-		return !isSelectionMode || isPrefix;
+		return new CompletionItem(index, isPrefix, completion);
+	}
+
+	private static final class CompletionItem {
+		private final int index;
+		private final boolean isPrefix;
+		private final String completion;
+
+		private CompletionItem(final int index, final boolean isPrefix, final String completion) {
+			this.index = index;
+			this.isPrefix = isPrefix;
+			this.completion = completion;
+		}
 	}
 
 }
