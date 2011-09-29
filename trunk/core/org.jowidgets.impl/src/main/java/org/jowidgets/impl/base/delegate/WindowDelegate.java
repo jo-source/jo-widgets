@@ -77,6 +77,13 @@ public class WindowDelegate {
 		}
 	}
 
+	public void dispose() {
+		for (final IDisplay childWindow : new LinkedList<IDisplay>(childWindows)) {
+			childWindow.dispose();
+		}
+		childWindows.clear();
+	}
+
 	public void centerLocation() {
 		final Rectangle parentBounds = windowSpi.getParentBounds();
 		final Dimension parentSize = parentBounds.getSize();

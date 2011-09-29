@@ -91,6 +91,7 @@ public class FrameImpl extends AbstractFrameSpiWrapper implements IFrameUi {
 	@Override
 	public void dispose() {
 		if (!isDisposed()) {
+			windowDelegate.dispose();
 			if (menuBar != null) {
 				menuBar.dispose();
 			}
