@@ -28,6 +28,7 @@
 
 package org.jowidgets.impl.base.delegate;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -42,6 +43,7 @@ import org.jowidgets.util.Assert;
 public class TreeContainerDelegate implements ITreeContainer {
 
 	private final List<ITreeNode> children;
+	private final List<ITreeNode> childrenView;
 
 	private final TreeImpl parentTree;
 	private final TreeNodeImpl parentNode;
@@ -56,6 +58,7 @@ public class TreeContainerDelegate implements ITreeContainer {
 		Assert.paramNotNull(treeNodeSpi, "treeNodeSpi");
 
 		this.children = new LinkedList<ITreeNode>();
+		this.childrenView = Collections.unmodifiableList(children);
 
 		this.parentTree = parentTree;
 		this.parentNode = parentNode;
@@ -136,7 +139,7 @@ public class TreeContainerDelegate implements ITreeContainer {
 
 	@Override
 	public List<ITreeNode> getChildren() {
-		return new LinkedList<ITreeNode>(children);
+		return children;
 	}
 
 	@Override
