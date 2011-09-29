@@ -685,15 +685,17 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	final class TableColumnResizeListener implements PropertyChangeListener {
 		@Override
 		public void propertyChange(final PropertyChangeEvent evt) {
-			final TableColumn column = (TableColumn) evt.getSource();
-			if (column != null) {
-				final Object newObject = evt.getNewValue();
-				if (newObject instanceof Integer) {
-					final int newWidth = ((Integer) newObject).intValue();
-					setWidthInvokedOnModel = true;
-					columnModel.getColumn(column.getModelIndex()).setWidth(newWidth);
-					setWidthInvokedOnModel = false;
-					tableColumnObservable.fireColumnResized(new TableColumnResizeEvent(column.getModelIndex(), newWidth));
+			if ("width".equals(evt.getPropertyName())) {
+				final TableColumn column = (TableColumn) evt.getSource();
+				if (column != null) {
+					final Object newObject = evt.getNewValue();
+					if (newObject instanceof Integer) {
+						final int newWidth = ((Integer) newObject).intValue();
+						setWidthInvokedOnModel = true;
+						columnModel.getColumn(column.getModelIndex()).setWidth(newWidth);
+						setWidthInvokedOnModel = false;
+						tableColumnObservable.fireColumnResized(new TableColumnResizeEvent(column.getModelIndex(), newWidth));
+					}
 				}
 			}
 		}
@@ -800,7 +802,6 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 		@Override
 		public void columnsRemoved(final int[] columnIndices) {
-
 			if (columnIndices.length == 0) {
 				return;
 			}
@@ -834,7 +835,6 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			for (final TableColumn column : columnsToRemove) {
 				table.removeColumn(column);
 			}
-
 		}
 
 		@Override
