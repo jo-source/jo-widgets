@@ -67,7 +67,7 @@ final class SwingGoogleEarthWidget extends ControlWrapper implements IMapWidget 
 		((IComposite) getWidget()).setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
 		canvas = new Canvas();
 		final Container container = (Container) getWidget().getUiReference();
-		container.add(canvas, "grow");
+		container.add(canvas, "grow, wmin 0, hmin 0");
 
 		VisibiliySettingsInvoker.setVisibility(descriptor, this);
 		ColorSettingsInvoker.setColors(descriptor, this);
