@@ -31,6 +31,7 @@ package org.jowidgets.impl.widgets.basic;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.model.item.IMenuModel;
@@ -41,6 +42,7 @@ import org.jowidgets.api.widgets.IMenuBar;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.IMainMenuDescriptor;
+import org.jowidgets.impl.base.delegate.DisposableDelegate;
 import org.jowidgets.impl.widgets.common.wrapper.WidgetSpiWrapper;
 import org.jowidgets.spi.widgets.IMenuBarSpi;
 import org.jowidgets.tools.controller.ListModelAdapter;
@@ -51,6 +53,7 @@ public class MenuBarImpl extends WidgetSpiWrapper implements IMenuBar {
 	private final List<IMenu> menus;
 	private final IWidget parent;
 	private final IListModelListener listModelListener;
+	private final DisposableDelegate disposableDelegate;
 
 	private IMenuBarModel model;
 
@@ -58,7 +61,7 @@ public class MenuBarImpl extends WidgetSpiWrapper implements IMenuBar {
 		super(widget);
 		this.parent = parent;
 		this.menus = new LinkedList<IMenu>();
-
+		this.disposableDelegate = new DisposableDelegate();
 		this.listModelListener = new ListModelAdapter() {
 
 			@Override
@@ -84,6 +87,29 @@ public class MenuBarImpl extends WidgetSpiWrapper implements IMenuBar {
 	@Override
 	public IWidget getParent() {
 		return parent;
+	}
+
+	@Override
+	public void dispose() {
+		if (!isDisposed()) {
+			removeAll();
+			disposableDelegate.dispose();
+		}
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return disposableDelegate.isDisposed();
+	}
+
+	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		disposableDelegate.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		disposableDelegate.removeDisposeListener(listener);
 	}
 
 	@Override
@@ -132,10 +158,8 @@ public class MenuBarImpl extends WidgetSpiWrapper implements IMenuBar {
 	@Override
 	public void remove(final int index) {
 		final IMenu menu = menus.get(index);
-		if (menu instanceof IDisposeable) {
-			((IDisposeable) menu).dispose();
-		}
 		menus.remove(index);
+		menu.dispose();
 		getWidget().remove(index);
 	}
 

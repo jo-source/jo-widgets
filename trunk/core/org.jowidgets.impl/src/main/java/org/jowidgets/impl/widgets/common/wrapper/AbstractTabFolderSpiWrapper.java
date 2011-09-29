@@ -26,10 +26,35 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.basic;
+package org.jowidgets.impl.widgets.common.wrapper;
 
-public interface IDisposeable {
+import org.jowidgets.common.widgets.ITabFolderCommon;
+import org.jowidgets.spi.widgets.ITabFolderSpi;
 
-	void dispose();
+public abstract class AbstractTabFolderSpiWrapper extends AbstractControlSpiWrapper implements ITabFolderCommon {
+
+	public AbstractTabFolderSpiWrapper(final ITabFolderSpi widget) {
+		super(widget);
+	}
+
+	@Override
+	public ITabFolderSpi getWidget() {
+		return (ITabFolderSpi) super.getWidget();
+	}
+
+	@Override
+	public void removeItem(final int index) {
+		getWidget().removeItem(index);
+	}
+
+	@Override
+	public void setSelectedItem(final int index) {
+		getWidget().setSelectedItem(index);
+	}
+
+	@Override
+	public int getSelectedIndex() {
+		return getWidget().getSelectedIndex();
+	}
 
 }

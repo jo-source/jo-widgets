@@ -29,12 +29,12 @@
 package org.jowidgets.impl.widgets.common.wrapper;
 
 import org.jowidgets.common.widgets.IMenuItemCommon;
-import org.jowidgets.impl.base.delegate.ItemDelegate;
+import org.jowidgets.impl.base.delegate.ItemModelBindingDelegate;
 import org.jowidgets.spi.widgets.IMenuItemSpi;
 
 public class MenuItemSpiWrapper extends ModelBasedItemSpiWrapper implements IMenuItemCommon {
 
-	public MenuItemSpiWrapper(final IMenuItemSpi component, final ItemDelegate itemDelegate) {
+	public MenuItemSpiWrapper(final IMenuItemSpi component, final ItemModelBindingDelegate itemDelegate) {
 		super(component, itemDelegate);
 	}
 
@@ -45,7 +45,7 @@ public class MenuItemSpiWrapper extends ModelBasedItemSpiWrapper implements IMen
 
 	@Override
 	public void setMnemonic(final char mnemonic) {
-		getItemDelegate().setMnemonic(mnemonic);
+		getItemModelBindingDelegate().setMnemonic(mnemonic);
 	}
 
 }

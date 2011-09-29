@@ -31,6 +31,7 @@ package org.jowidgets.impl.widgets.basic;
 import java.util.List;
 
 import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.widgets.IActionMenuItem;
 import org.jowidgets.api.widgets.IMainMenu;
@@ -38,22 +39,22 @@ import org.jowidgets.api.widgets.IMenuItem;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.descriptor.setup.IMainMenuSetup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.impl.base.delegate.ItemDelegate;
+import org.jowidgets.impl.base.delegate.ItemModelBindingDelegate;
 import org.jowidgets.impl.base.delegate.MenuDelegate;
 import org.jowidgets.impl.model.item.MenuModelBuilder;
 import org.jowidgets.impl.widgets.common.wrapper.MainMenuSpiWrapper;
 import org.jowidgets.impl.widgets.common.wrapper.invoker.MainMenuSpiInvoker;
 import org.jowidgets.spi.widgets.IMainMenuSpi;
 
-public class MainMenuImpl extends MainMenuSpiWrapper implements IMainMenu, IDisposeable {
+public class MainMenuImpl extends MainMenuSpiWrapper implements IMainMenu {
 
 	private final MenuDelegate menuDelegate;
 	private final IWidget parent;
 
 	public MainMenuImpl(final IMainMenuSpi mainMenuSpi, final IWidget parent, final IMainMenuSetup setup) {
-		super(mainMenuSpi, new ItemDelegate(new MainMenuSpiInvoker(mainMenuSpi), new MenuModelBuilder().build()));
+		super(mainMenuSpi, new ItemModelBindingDelegate(new MainMenuSpiInvoker(mainMenuSpi), new MenuModelBuilder().build()));
 
-		this.menuDelegate = new MenuDelegate(this, mainMenuSpi, getModel());
+		this.menuDelegate = new MenuDelegate(this, mainMenuSpi, getModel(), getItemDelegate());
 		this.parent = parent;
 
 		setText(setup.getText());
@@ -118,8 +119,23 @@ public class MainMenuImpl extends MainMenuSpiWrapper implements IMainMenu, IDisp
 	}
 
 	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		menuDelegate.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		menuDelegate.removeDisposeListener(listener);
+	}
+
+	@Override
 	public void dispose() {
 		menuDelegate.dispose();
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return menuDelegate.isDisposed();
 	}
 
 	@Override

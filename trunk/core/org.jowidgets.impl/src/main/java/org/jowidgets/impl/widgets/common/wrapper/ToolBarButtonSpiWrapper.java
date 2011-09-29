@@ -31,12 +31,12 @@ package org.jowidgets.impl.widgets.common.wrapper;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.common.widgets.IToolBarButtonCommon;
 import org.jowidgets.common.widgets.controller.IActionListener;
-import org.jowidgets.impl.base.delegate.ItemDelegate;
+import org.jowidgets.impl.base.delegate.ItemModelBindingDelegate;
 import org.jowidgets.spi.widgets.IToolBarButtonSpi;
 
 public class ToolBarButtonSpiWrapper extends ToolBarItemSpiWrapper implements IToolBarButtonCommon {
 
-	public ToolBarButtonSpiWrapper(final IToolBarButtonSpi widget, final ItemDelegate itemDelegate) {
+	public ToolBarButtonSpiWrapper(final IToolBarButtonSpi widget, final ItemModelBindingDelegate itemDelegate) {
 		super(widget, itemDelegate);
 		widget.addActionListener(new IActionListener() {
 			@Override
@@ -52,7 +52,7 @@ public class ToolBarButtonSpiWrapper extends ToolBarItemSpiWrapper implements IT
 	}
 
 	public IActionItemModel getModel() {
-		return (IActionItemModel) getItemDelegate().getModel();
+		return (IActionItemModel) getItemModelBindingDelegate().getModel();
 	}
 
 	@Override

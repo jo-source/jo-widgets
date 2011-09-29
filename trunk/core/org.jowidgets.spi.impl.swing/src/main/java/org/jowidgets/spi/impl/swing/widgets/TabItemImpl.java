@@ -554,7 +554,12 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 
 		@Override
 		public void setText(final String text) {
-			setToolTipText(CLOSE_N_LABEL.replace("%1", text)); //$NON-NLS-1$
+			if (text != null) {
+				setToolTipText(CLOSE_N_LABEL.replace("%1", text)); //$NON-NLS-1$
+			}
+			else {
+				setToolTipText(null);
+			}
 		}
 
 		@Override

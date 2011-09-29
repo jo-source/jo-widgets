@@ -29,25 +29,16 @@ package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.widgets.IComposite;
-import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.ILabel;
-import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.descriptor.IIconDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextLabelDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.ILabelSetup;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.types.Position;
-import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.IIconCommon;
 import org.jowidgets.common.widgets.ITextLabelCommon;
-import org.jowidgets.common.widgets.controller.IComponentListener;
-import org.jowidgets.common.widgets.controller.IFocusListener;
-import org.jowidgets.common.widgets.controller.IKeyListener;
-import org.jowidgets.common.widgets.controller.IMouseListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
@@ -55,27 +46,27 @@ import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsI
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 import org.jowidgets.util.NullCompatibleEquivalence;
 
-public class LabelImpl implements ILabel {
+public class LabelImpl extends CompositeBasedControl implements ILabel {
 
 	private final IIconCommon iconWidget;
 	private final ITextLabelCommon textLabelWidget;
-	private final IComposite compositeWidget;
+	private final IComposite composite;
 	private String text;
 
-	public LabelImpl(final IComposite compositeWidget, final ILabelSetup setup) {
+	public LabelImpl(final IComposite composite, final ILabelSetup setup) {
 
-		super();
+		super(composite);
 
-		this.compositeWidget = compositeWidget;
-		this.compositeWidget.setLayout(new MigLayoutDescriptor("0[][grow]0", "0[]0"));
+		this.composite = composite;
+		this.composite.setLayout(new MigLayoutDescriptor("0[][grow]0", "0[]0"));
 
 		final BluePrintFactory bpF = new BluePrintFactory();
 
 		final IIconDescriptor iconDescriptor = bpF.icon(setup.getIcon());
-		this.iconWidget = compositeWidget.add(iconDescriptor, "w 0::");
+		this.iconWidget = composite.add(iconDescriptor, "w 0::");
 
 		final ITextLabelDescriptor textLabelDescriptor = bpF.textLabel().setSetup(setup);
-		this.textLabelWidget = compositeWidget.add(textLabelDescriptor, "w 0::, grow");
+		this.textLabelWidget = composite.add(textLabelDescriptor, "w 0::, grow");
 
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
@@ -86,8 +77,8 @@ public class LabelImpl implements ILabel {
 		if (!NullCompatibleEquivalence.equals(text, this.text)) {
 			this.text = text;
 			textLabelWidget.setText(text);
-			compositeWidget.layoutBegin();
-			compositeWidget.layoutEnd();
+			composite.layoutBegin();
+			composite.layoutEnd();
 		}
 	}
 
@@ -100,51 +91,6 @@ public class LabelImpl implements ILabel {
 	public void setToolTipText(final String text) {
 		textLabelWidget.setToolTipText(text);
 		iconWidget.setToolTipText(text);
-	}
-
-	@Override
-	public IContainer getParent() {
-		return compositeWidget.getParent();
-	}
-
-	@Override
-	public void setParent(final IContainer parent) {
-		compositeWidget.setParent(parent);
-	}
-
-	@Override
-	public boolean isReparentable() {
-		return compositeWidget.isReparentable();
-	}
-
-	@Override
-	public Object getUiReference() {
-		return compositeWidget.getUiReference();
-	}
-
-	@Override
-	public void setLayoutConstraints(final Object layoutConstraints) {
-		compositeWidget.setLayoutConstraints(layoutConstraints);
-	}
-
-	@Override
-	public Object getLayoutConstraints() {
-		return compositeWidget.getLayoutConstraints();
-	}
-
-	@Override
-	public void redraw() {
-		compositeWidget.redraw();
-	}
-
-	@Override
-	public void setRedrawEnabled(final boolean enabled) {
-		compositeWidget.setRedrawEnabled(enabled);
-	}
-
-	@Override
-	public void setCursor(final Cursor cursor) {
-		compositeWidget.setCursor(cursor);
 	}
 
 	@Override
@@ -169,16 +115,6 @@ public class LabelImpl implements ILabel {
 	}
 
 	@Override
-	public void setVisible(final boolean visible) {
-		compositeWidget.setVisible(visible);
-	}
-
-	@Override
-	public boolean isVisible() {
-		return compositeWidget.isVisible();
-	}
-
-	@Override
 	public void setEnabled(final boolean enabled) {
 		textLabelWidget.setEnabled(enabled);
 	}
@@ -189,150 +125,20 @@ public class LabelImpl implements ILabel {
 	}
 
 	@Override
-	public Dimension getMinSize() {
-		return compositeWidget.getMinSize();
-	}
-
-	@Override
-	public Dimension getPreferredSize() {
-		return compositeWidget.getPreferredSize();
-	}
-
-	@Override
-	public Dimension getMaxSize() {
-		return compositeWidget.getMaxSize();
-	}
-
-	@Override
-	public void setMinSize(final Dimension minSize) {
-		compositeWidget.setMinSize(minSize);
-	}
-
-	@Override
-	public void setPreferredSize(final Dimension preferredSize) {
-		compositeWidget.setPreferredSize(preferredSize);
-	}
-
-	@Override
-	public void setMaxSize(final Dimension maxSize) {
-		compositeWidget.setMaxSize(maxSize);
-	}
-
-	@Override
-	public Dimension getSize() {
-		return compositeWidget.getSize();
-	}
-
-	@Override
-	public void setSize(final Dimension size) {
-		compositeWidget.setSize(size);
-	}
-
-	@Override
-	public void setSize(final int width, final int height) {
-		compositeWidget.setSize(width, height);
-	}
-
-	@Override
-	public void setPosition(final int x, final int y) {
-		compositeWidget.setPosition(x, y);
-	}
-
-	@Override
-	public Position getPosition() {
-		return compositeWidget.getPosition();
-	}
-
-	@Override
-	public void setPosition(final Position position) {
-		compositeWidget.setPosition(position);
-	}
-
-	@Override
-	public Position toScreen(final Position localPosition) {
-		return compositeWidget.toScreen(localPosition);
-	}
-
-	@Override
-	public Position toLocal(final Position screenPosition) {
-		return compositeWidget.toLocal(screenPosition);
-	}
-
-	@Override
-	public Position fromComponent(final IComponentCommon component, final Position componentPosition) {
-		return compositeWidget.fromComponent(component, componentPosition);
-	}
-
-	@Override
-	public Position toComponent(final Position componentPosition, final IComponentCommon component) {
-		return compositeWidget.toComponent(componentPosition, component);
-	}
-
-	@Override
-	public boolean requestFocus() {
-		return compositeWidget.requestFocus();
-	}
-
-	@Override
-	public void addFocusListener(final IFocusListener listener) {
-		compositeWidget.addFocusListener(listener);
-	}
-
-	@Override
-	public void removeFocusListener(final IFocusListener listener) {
-		compositeWidget.removeFocusListener(listener);
-	}
-
-	@Override
-	public void addKeyListener(final IKeyListener listener) {
-		compositeWidget.addKeyListener(listener);
-	}
-
-	@Override
-	public void removeKeyListener(final IKeyListener listener) {
-		compositeWidget.removeKeyListener(listener);
-	}
-
-	@Override
-	public void addMouseListener(final IMouseListener mouseListener) {
-		compositeWidget.addMouseListener(mouseListener);
-	}
-
-	@Override
-	public void removeMouseListener(final IMouseListener mouseListener) {
-		compositeWidget.removeMouseListener(mouseListener);
-	}
-
-	@Override
-	public void addComponentListener(final IComponentListener componentListener) {
-		compositeWidget.addComponentListener(componentListener);
-	}
-
-	@Override
-	public void removeComponentListener(final IComponentListener componentListener) {
-		compositeWidget.removeComponentListener(componentListener);
-	}
-
-	@Override
-	public IPopupMenu createPopupMenu() {
-		return compositeWidget.createPopupMenu();
-	}
-
-	@Override
 	public void setPopupMenu(final IMenuModel popupMenu) {
 		//TODO MG this might not work, popup must be set on label an text also. 
 		//For that, label and texfield must be api widgets 
-		compositeWidget.setPopupMenu(popupMenu);
+		composite.setPopupMenu(popupMenu);
 	}
 
 	@Override
 	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		compositeWidget.addPopupDetectionListener(listener);
+		composite.addPopupDetectionListener(listener);
 	}
 
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		compositeWidget.removePopupDetectionListener(listener);
+		composite.removePopupDetectionListener(listener);
 	}
 
 	@Override
@@ -355,8 +161,8 @@ public class LabelImpl implements ILabel {
 		final Dimension lastPreferredSize = iconWidget.getPreferredSize();
 		iconWidget.setIcon(icon);
 		if (!lastPreferredSize.equals(iconWidget.getPreferredSize())) {
-			compositeWidget.layoutBegin();
-			compositeWidget.layoutEnd();
+			composite.layoutBegin();
+			composite.layoutEnd();
 		}
 	}
 

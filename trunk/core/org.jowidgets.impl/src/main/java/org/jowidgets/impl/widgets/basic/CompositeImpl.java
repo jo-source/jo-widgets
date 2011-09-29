@@ -44,7 +44,7 @@ public class CompositeImpl extends ContainerImpl implements IComposite {
 		super(containerSpi, setup.isVisible());
 		ColorSettingsInvoker.setColors(setup, this);
 		LayoutSettingsInvoker.setLayout(setup, this);
-		this.controlDelegate = new ControlDelegate();
+		this.controlDelegate = new ControlDelegate(containerSpi, this);
 	}
 
 	@Override

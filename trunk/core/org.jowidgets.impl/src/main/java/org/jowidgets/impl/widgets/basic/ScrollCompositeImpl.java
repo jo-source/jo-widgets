@@ -30,6 +30,7 @@ package org.jowidgets.impl.widgets.basic;
 
 import java.util.List;
 
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
@@ -55,7 +56,7 @@ public class ScrollCompositeImpl extends AbstractScrollCompositeSpiWrapper imple
 
 	public ScrollCompositeImpl(final IScrollCompositeSpi containerWidgetSpi, final IScrollCompositeSetup setup) {
 		super(containerWidgetSpi);
-		this.controlDelegate = new ControlDelegate();
+		this.controlDelegate = new ControlDelegate(containerWidgetSpi, this);
 		this.containerDelegate = new ContainerDelegate(containerWidgetSpi, this);
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
@@ -146,8 +147,28 @@ public class ScrollCompositeImpl extends AbstractScrollCompositeSpiWrapper imple
 	}
 
 	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		containerDelegate.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		containerDelegate.removeDisposeListener(listener);
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return containerDelegate.isDisposed();
+	}
+
+	@Override
+	public void dispose() {
+		containerDelegate.dispose();
+	}
+
+	@Override
 	public IPopupMenu createPopupMenu() {
-		return new PopupMenuImpl(getWidget().createPopupMenu(), this);
+		return containerDelegate.createPopupMenu();
 	}
 
 }

@@ -28,6 +28,7 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IToolBarItemModel;
 import org.jowidgets.api.widgets.IPopupMenu;
@@ -37,7 +38,8 @@ import org.jowidgets.api.widgets.descriptor.setup.IItemSetup;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controller.IActionListener;
-import org.jowidgets.impl.base.delegate.ItemDelegate;
+import org.jowidgets.impl.base.delegate.ItemModelBindingDelegate;
+import org.jowidgets.impl.base.delegate.ToolBarItemDiposableDelegate;
 import org.jowidgets.impl.model.item.MenuModelBuilder;
 import org.jowidgets.impl.widgets.common.wrapper.ToolBarItemSpiWrapper;
 import org.jowidgets.impl.widgets.common.wrapper.invoker.ToolBarMenuSpiInvoker;
@@ -47,13 +49,15 @@ public class ToolBarMenuImpl extends ToolBarItemSpiWrapper implements IToolBarMe
 
 	private final IToolBar parent;
 	private final IPopupMenu popupMenu;
+	private final ToolBarItemDiposableDelegate disposableDelegate;
 
 	public ToolBarMenuImpl(final IToolBar parent, final IToolBarButtonSpi toolBarButtonSpi, final IItemSetup setup) {
-		super(toolBarButtonSpi, new ItemDelegate(
+		super(toolBarButtonSpi, new ItemModelBindingDelegate(
 			new ToolBarMenuSpiInvoker(toolBarButtonSpi, setup.getIcon()),
 			new MenuModelBuilder().build()));
 
 		this.parent = parent;
+		this.disposableDelegate = new ToolBarItemDiposableDelegate(this, getItemModelBindingDelegate());
 
 		setText(setup.getText());
 		setToolTipText(setup.getToolTipText());
@@ -82,6 +86,29 @@ public class ToolBarMenuImpl extends ToolBarItemSpiWrapper implements IToolBarMe
 	}
 
 	@Override
+	public void dispose() {
+		if (!isDisposed()) {
+			popupMenu.dispose();
+			disposableDelegate.dispose();
+		}
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return disposableDelegate.isDisposed();
+	}
+
+	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		disposableDelegate.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		disposableDelegate.removeDisposeListener(listener);
+	}
+
+	@Override
 	public IToolBar getParent() {
 		return parent;
 	}
@@ -93,12 +120,12 @@ public class ToolBarMenuImpl extends ToolBarItemSpiWrapper implements IToolBarMe
 
 	@Override
 	public IMenuModel getModel() {
-		return (IMenuModel) getItemDelegate().getModel();
+		return (IMenuModel) getItemModelBindingDelegate().getModel();
 	}
 
 	@Override
 	public void setModel(final IMenuModel model) {
-		getItemDelegate().setModel(model);
+		getItemModelBindingDelegate().setModel(model);
 		popupMenu.setModel(model);
 	}
 

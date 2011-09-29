@@ -30,6 +30,7 @@ package org.jowidgets.impl.widgets.basic;
 
 import java.util.List;
 
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.widgets.IButton;
@@ -75,6 +76,32 @@ public class FrameImpl extends AbstractFrameSpiWrapper implements IFrameUi {
 		if (setup.getMinSize() != null) {
 			setMinSize(setup.getMinSize());
 		}
+	}
+
+	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		containerDelegate.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		containerDelegate.removeDisposeListener(listener);
+	}
+
+	@Override
+	public void dispose() {
+		if (!isDisposed()) {
+			if (menuBar != null) {
+				menuBar.dispose();
+			}
+			containerDelegate.dispose();
+			super.dispose();
+		}
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return containerDelegate.isDisposed();
 	}
 
 	@Override
@@ -209,7 +236,7 @@ public class FrameImpl extends AbstractFrameSpiWrapper implements IFrameUi {
 
 	@Override
 	public IPopupMenu createPopupMenu() {
-		return new PopupMenuImpl(getWidget().createPopupMenu(), this);
+		return containerDelegate.createPopupMenu();
 	}
 
 	@Override

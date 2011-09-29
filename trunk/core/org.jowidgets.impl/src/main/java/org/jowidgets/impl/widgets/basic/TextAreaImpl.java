@@ -28,6 +28,7 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITextArea;
@@ -36,17 +37,17 @@ import org.jowidgets.common.types.Markup;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.impl.widgets.common.wrapper.InputControlSpiWrapper;
+import org.jowidgets.impl.widgets.common.wrapper.AbstractInputControlSpiWrapper;
 import org.jowidgets.spi.widgets.ITextAreaSpi;
 
-public class TextAreaImpl extends InputControlSpiWrapper implements ITextArea {
+public class TextAreaImpl extends AbstractInputControlSpiWrapper implements ITextArea {
 
 	private final ControlDelegate controlDelegate;
 
 	public TextAreaImpl(final ITextAreaSpi textAreaSpi, final ITextAreaSetup setup) {
 		super(textAreaSpi);
 
-		this.controlDelegate = new ControlDelegate();
+		this.controlDelegate = new ControlDelegate(textAreaSpi, this);
 
 		if (setup.getText() != null) {
 			setText(setup.getText());
@@ -89,8 +90,28 @@ public class TextAreaImpl extends InputControlSpiWrapper implements ITextArea {
 	}
 
 	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		controlDelegate.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		controlDelegate.removeDisposeListener(listener);
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return controlDelegate.isDisposed();
+	}
+
+	@Override
+	public void dispose() {
+		controlDelegate.dispose();
+	}
+
+	@Override
 	public IPopupMenu createPopupMenu() {
-		return new PopupMenuImpl(getWidget().createPopupMenu(), this);
+		return controlDelegate.createPopupMenu();
 	}
 
 	@Override

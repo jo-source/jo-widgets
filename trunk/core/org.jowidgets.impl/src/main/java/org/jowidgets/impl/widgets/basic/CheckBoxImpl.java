@@ -28,6 +28,7 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.widgets.ICheckBox;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
@@ -37,8 +38,7 @@ import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.impl.widgets.common.wrapper.ControlSpiWrapper;
-import org.jowidgets.impl.widgets.common.wrapper.TextLabelSpiWrapper;
+import org.jowidgets.impl.widgets.common.wrapper.AbstractControlSpiWrapper;
 import org.jowidgets.spi.widgets.ICheckBoxSpi;
 import org.jowidgets.tools.controller.InputObservable;
 import org.jowidgets.tools.validation.CompoundValidator;
@@ -49,24 +49,23 @@ import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
 
-public class CheckBoxImpl extends ControlSpiWrapper implements ICheckBox {
+public class CheckBoxImpl extends AbstractControlSpiWrapper implements ICheckBox {
 
 	private final ICheckBoxSpi checkBoxWidgetSpi;
-	private final TextLabelSpiWrapper textLabelWidgetCommonWrapper;
 	private final InputObservable inputObservable;
 	private final ValidationCache validationCache;
 	private final ControlDelegate controlDelegate;
 	private final CompoundValidator<Boolean> compoundValidator;
 
+	private String text;
 	private boolean isNull;
 	private Boolean lastUnmodifiedValue;
 
 	public CheckBoxImpl(final ICheckBoxSpi checkBoxWidgetSpi, final ICheckBoxSetup setup) {
 		super(checkBoxWidgetSpi);
 		this.checkBoxWidgetSpi = checkBoxWidgetSpi;
-		this.textLabelWidgetCommonWrapper = new TextLabelSpiWrapper(checkBoxWidgetSpi);
 		this.inputObservable = new InputObservable();
-		this.controlDelegate = new ControlDelegate();
+		this.controlDelegate = new ControlDelegate(checkBoxWidgetSpi, this);
 		this.compoundValidator = new CompoundValidator<Boolean>();
 
 		final IValidator<Boolean> validator = setup.getValidator();
@@ -188,8 +187,28 @@ public class CheckBoxImpl extends ControlSpiWrapper implements ICheckBox {
 	}
 
 	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		controlDelegate.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		controlDelegate.removeDisposeListener(listener);
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return controlDelegate.isDisposed();
+	}
+
+	@Override
+	public void dispose() {
+		controlDelegate.dispose();
+	}
+
+	@Override
 	public IPopupMenu createPopupMenu() {
-		return new PopupMenuImpl(getWidget().createPopupMenu(), this);
+		return controlDelegate.createPopupMenu();
 	}
 
 	@Override
@@ -214,27 +233,28 @@ public class CheckBoxImpl extends ControlSpiWrapper implements ICheckBox {
 
 	@Override
 	public void setFontSize(final int size) {
-		textLabelWidgetCommonWrapper.setFontSize(size);
+		getWidget().setFontSize(size);
 	}
 
 	@Override
 	public void setFontName(final String fontName) {
-		textLabelWidgetCommonWrapper.setFontName(fontName);
+		getWidget().setFontName(fontName);
 	}
 
 	@Override
 	public void setMarkup(final Markup markup) {
-		textLabelWidgetCommonWrapper.setMarkup(markup);
+		getWidget().setMarkup(markup);
 	}
 
 	@Override
 	public void setText(final String text) {
-		textLabelWidgetCommonWrapper.setText(text);
+		this.text = text;
+		getWidget().setText(text);
 	}
 
 	@Override
 	public String getText() {
-		return textLabelWidgetCommonWrapper.getText();
+		return text;
 	}
 
 }

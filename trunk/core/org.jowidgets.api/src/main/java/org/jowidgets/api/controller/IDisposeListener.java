@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,25 +26,10 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.common.wrapper;
+package org.jowidgets.api.controller;
 
-import org.jowidgets.common.widgets.IToolBarCommon;
-import org.jowidgets.spi.widgets.IToolBarSpi;
+public interface IDisposeListener {
 
-public class ToolBarSpiWrapper extends ControlSpiWrapper implements IToolBarCommon {
-
-	public ToolBarSpiWrapper(final IToolBarSpi component) {
-		super(component);
-	}
-
-	@Override
-	public IToolBarSpi getWidget() {
-		return (IToolBarSpi) super.getWidget();
-	}
-
-	@Override
-	public void pack() {
-		getWidget().pack();
-	}
+	void onDispose();
 
 }

@@ -27,10 +27,15 @@
  */
 package org.jowidgets.api.widgets;
 
+import org.jowidgets.api.controller.IDisposeObservable;
 import org.jowidgets.common.widgets.IWidgetCommon;
 
-public interface IWidget extends IWidgetCommon {
+public interface IWidget extends IWidgetCommon, IDisposeObservable {
 
 	IWidget getParent();
+
+	void dispose();
+
+	boolean isDisposed();
 
 }

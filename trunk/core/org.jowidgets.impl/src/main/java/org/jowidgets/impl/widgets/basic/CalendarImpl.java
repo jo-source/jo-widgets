@@ -30,6 +30,7 @@ package org.jowidgets.impl.widgets.basic;
 
 import java.util.Date;
 
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.widgets.ICalendar;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
@@ -38,17 +39,17 @@ import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.impl.widgets.common.wrapper.ControlSpiWrapper;
+import org.jowidgets.impl.widgets.common.wrapper.AbstractControlSpiWrapper;
 import org.jowidgets.spi.widgets.ICalendarSpi;
 
-public class CalendarImpl extends ControlSpiWrapper implements ICalendar {
+public class CalendarImpl extends AbstractControlSpiWrapper implements ICalendar {
 
 	private final ControlDelegate controlDelegate;
 
-	public CalendarImpl(final ICalendarSpi widget, final ICalendarDescriptor setup) {
-		super(widget);
+	public CalendarImpl(final ICalendarSpi widgetSpi, final ICalendarDescriptor setup) {
+		super(widgetSpi);
 
-		this.controlDelegate = new ControlDelegate();
+		this.controlDelegate = new ControlDelegate(widgetSpi, this);
 
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
@@ -79,8 +80,28 @@ public class CalendarImpl extends ControlSpiWrapper implements ICalendar {
 	}
 
 	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		controlDelegate.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		controlDelegate.removeDisposeListener(listener);
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return controlDelegate.isDisposed();
+	}
+
+	@Override
+	public void dispose() {
+		controlDelegate.dispose();
+	}
+
+	@Override
 	public IPopupMenu createPopupMenu() {
-		return new PopupMenuImpl(getWidget().createPopupMenu(), this);
+		return controlDelegate.createPopupMenu();
 	}
 
 	@Override

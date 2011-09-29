@@ -29,6 +29,7 @@
 package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
@@ -39,21 +40,21 @@ import org.jowidgets.impl.command.ActionWidgetSync;
 import org.jowidgets.impl.command.IActionWidget;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.impl.widgets.common.wrapper.ButtonSpiWrapper;
+import org.jowidgets.impl.widgets.common.wrapper.AbstractButtonSpiWrapper;
 import org.jowidgets.spi.widgets.IButtonSpi;
 import org.jowidgets.test.api.widgets.IButtonUi;
 import org.jowidgets.test.spi.widgets.IButtonUiSpi;
 
-public class ButtonImpl extends ButtonSpiWrapper implements IButtonUi, IActionWidget, IDisposeable {
+public class ButtonImpl extends AbstractButtonSpiWrapper implements IButtonUi, IActionWidget {
 
 	private final ControlDelegate controlDelegate;
 
 	private ActionWidgetSync actionWidgetSync;
 	private ActionExecuter actionExecuter;
 
-	public ButtonImpl(final IButtonSpi buttonWidgetSpi, final IButtonDescriptor descriptor) {
-		super(buttonWidgetSpi);
-		this.controlDelegate = new ControlDelegate();
+	public ButtonImpl(final IButtonSpi buttonSpi, final IButtonDescriptor descriptor) {
+		super(buttonSpi);
+		this.controlDelegate = new ControlDelegate(buttonSpi, this);
 		setEnabled(descriptor.isEnabled());
 		VisibiliySettingsInvoker.setVisibility(descriptor, this);
 		ColorSettingsInvoker.setColors(descriptor, this);
@@ -91,8 +92,29 @@ public class ButtonImpl extends ButtonSpiWrapper implements IButtonUi, IActionWi
 	}
 
 	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		controlDelegate.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		controlDelegate.removeDisposeListener(listener);
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return controlDelegate.isDisposed();
+	}
+
+	@Override
+	public void dispose() {
+		disposeActionWidgetSync();
+		controlDelegate.dispose();
+	}
+
+	@Override
 	public IPopupMenu createPopupMenu() {
-		return new PopupMenuImpl(getWidget().createPopupMenu(), this);
+		return controlDelegate.createPopupMenu();
 	}
 
 	@Override
@@ -104,11 +126,6 @@ public class ButtonImpl extends ButtonSpiWrapper implements IButtonUi, IActionWi
 		actionWidgetSync.setActive(true);
 
 		actionExecuter = new ActionExecuter(action, this);
-	}
-
-	@Override
-	public void dispose() {
-		disposeActionWidgetSync();
 	}
 
 	private void disposeActionWidgetSync() {

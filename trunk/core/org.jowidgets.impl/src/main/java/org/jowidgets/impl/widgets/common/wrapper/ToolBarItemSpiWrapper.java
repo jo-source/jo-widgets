@@ -31,12 +31,12 @@ package org.jowidgets.impl.widgets.common.wrapper;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IToolBarItemCommon;
-import org.jowidgets.impl.base.delegate.ItemDelegate;
+import org.jowidgets.impl.base.delegate.ItemModelBindingDelegate;
 import org.jowidgets.spi.widgets.IToolBarItemSpi;
 
 public class ToolBarItemSpiWrapper extends ModelBasedItemSpiWrapper implements IToolBarItemCommon {
 
-	public ToolBarItemSpiWrapper(final IToolBarItemSpi component, final ItemDelegate itemDelegate) {
+	public ToolBarItemSpiWrapper(final IToolBarItemSpi component, final ItemModelBindingDelegate itemDelegate) {
 		super(component, itemDelegate);
 	}
 

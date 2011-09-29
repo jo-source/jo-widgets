@@ -36,7 +36,7 @@ import org.jowidgets.impl.widgets.common.wrapper.invoker.IItemSpiInvoker;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.NullCompatibleEquivalence;
 
-public class ItemDelegate {
+public class ItemModelBindingDelegate {
 
 	private final IItemSpiInvoker widget;
 	private final IItemModelListener itemModelListener;
@@ -50,7 +50,7 @@ public class ItemDelegate {
 
 	private IItemModel model;
 
-	public ItemDelegate(final IItemSpiInvoker widget, final IItemModel model) {
+	public ItemModelBindingDelegate(final IItemSpiInvoker widget, final IItemModel model) {
 		Assert.paramNotNull(model, "model");
 
 		this.itemModelListener = new IItemModelListener() {
@@ -72,6 +72,10 @@ public class ItemDelegate {
 
 	public IItemModel getModel() {
 		return model;
+	}
+
+	public void dispose() {
+		unRegisterModel();
 	}
 
 	public void setText(final String text) {

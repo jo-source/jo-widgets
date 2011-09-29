@@ -30,6 +30,7 @@ package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.command.ActionStyle;
 import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.model.item.IItemModel;
 import org.jowidgets.api.model.item.IItemModelListener;
 import org.jowidgets.api.model.item.IMenuModel;
@@ -42,7 +43,8 @@ import org.jowidgets.api.widgets.descriptor.setup.IItemSetup;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
-import org.jowidgets.impl.base.delegate.ItemDelegate;
+import org.jowidgets.impl.base.delegate.ItemModelBindingDelegate;
+import org.jowidgets.impl.base.delegate.ToolBarItemDiposableDelegate;
 import org.jowidgets.impl.command.ActionExecuter;
 import org.jowidgets.impl.command.ActionWidgetSync;
 import org.jowidgets.impl.command.IActionWidget;
@@ -51,14 +53,12 @@ import org.jowidgets.impl.widgets.common.wrapper.ToolBarPopupButtonSpiWrapper;
 import org.jowidgets.impl.widgets.common.wrapper.invoker.ToolBarItemSpiInvoker;
 import org.jowidgets.spi.widgets.IToolBarPopupButtonSpi;
 
-public class ToolBarPopupButtonImpl extends ToolBarPopupButtonSpiWrapper implements
-		IToolBarPopupButton,
-		IActionWidget,
-		IDisposeable {
+public class ToolBarPopupButtonImpl extends ToolBarPopupButtonSpiWrapper implements IToolBarPopupButton, IActionWidget {
 
 	private final IToolBar parent;
 	private final IPopupDetectionListener popupListener;
 	private final IItemModelListener modelListener;
+	private final ToolBarItemDiposableDelegate disposableDelegate;
 
 	private IMenuModel popupMenuModel;
 	private IPopupMenu popupMenu;
@@ -71,11 +71,12 @@ public class ToolBarPopupButtonImpl extends ToolBarPopupButtonSpiWrapper impleme
 		final IToolBar parent,
 		final IToolBarPopupButtonSpi toolBarPopupButtonSpi,
 		final IItemSetup setup) {
-		super(toolBarPopupButtonSpi, new ItemDelegate(
+		super(toolBarPopupButtonSpi, new ItemModelBindingDelegate(
 			new ToolBarItemSpiInvoker(toolBarPopupButtonSpi),
 			new PopupActionItemModelBuilder().build()));
 
 		this.parent = parent;
+		this.disposableDelegate = new ToolBarItemDiposableDelegate(this, getItemModelBindingDelegate());
 
 		setText(setup.getText());
 		setToolTipText(setup.getToolTipText());
@@ -142,7 +143,29 @@ public class ToolBarPopupButtonImpl extends ToolBarPopupButtonSpiWrapper impleme
 
 	@Override
 	public void dispose() {
-		disposeActionWidgetSync();
+		if (!isDisposed()) {
+			if (popupMenu != null) {
+				popupMenu.dispose();
+			}
+			getModel().removeItemModelListener(modelListener);
+			disposeActionWidgetSync();
+			disposableDelegate.dispose();
+		}
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return disposableDelegate.isDisposed();
+	}
+
+	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		disposableDelegate.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		disposableDelegate.removeDisposeListener(listener);
 	}
 
 	@Override
@@ -188,7 +211,7 @@ public class ToolBarPopupButtonImpl extends ToolBarPopupButtonSpiWrapper impleme
 
 	@Override
 	public IPopupActionItemModel getModel() {
-		return (IPopupActionItemModel) getItemDelegate().getModel();
+		return (IPopupActionItemModel) getItemModelBindingDelegate().getModel();
 	}
 
 	@Override
@@ -196,7 +219,7 @@ public class ToolBarPopupButtonImpl extends ToolBarPopupButtonSpiWrapper impleme
 		if (getModel() != null) {
 			getModel().removeItemModelListener(modelListener);
 		}
-		getItemDelegate().setModel(model);
+		getItemModelBindingDelegate().setModel(model);
 		setActionValue(model.getAction(), ActionStyle.OMIT_TEXT);
 		setPopupMenuValue(model.getPopupMenu());
 		model.addItemModelListener(modelListener);

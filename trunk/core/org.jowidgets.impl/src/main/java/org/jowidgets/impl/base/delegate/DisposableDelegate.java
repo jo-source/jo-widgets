@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,35 +26,51 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.common.wrapper;
+package org.jowidgets.impl.base.delegate;
 
-import org.jowidgets.common.widgets.IProgressBarCommon;
-import org.jowidgets.spi.widgets.IProgressBarSpi;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Set;
 
-public class ProgressBarSpiWrapper extends ControlSpiWrapper implements IProgressBarCommon {
+import org.jowidgets.api.controller.IDisposeListener;
+import org.jowidgets.util.Assert;
 
-	public ProgressBarSpiWrapper(final IProgressBarSpi widget) {
-		super(widget);
+public class DisposableDelegate {
+
+	private final Set<IDisposeListener> listeners;
+
+	private boolean disposed;
+
+	public DisposableDelegate() {
+		this.listeners = new HashSet<IDisposeListener>();
+		this.disposed = false;
+	};
+
+	public void addDisposeListener(final IDisposeListener listener) {
+		Assert.paramNotNull(listener, "listener");
+		listeners.add(listener);
 	}
 
-	@Override
-	public IProgressBarSpi getWidget() {
-		return (IProgressBarSpi) super.getWidget();
+	public void removeDisposeListener(final IDisposeListener listener) {
+		Assert.paramNotNull(listener, "listener");
+		listeners.remove(listener);
 	}
 
-	@Override
-	public void setMinimum(final int min) {
-		getWidget().setMinimum(min);
+	public void dispose() {
+		if (!disposed) {
+			fireOnDispose();
+			this.disposed = true;
+		}
 	}
 
-	@Override
-	public void setMaximum(final int max) {
-		getWidget().setMaximum(max);
+	public boolean isDisposed() {
+		return disposed;
 	}
 
-	@Override
-	public void setProgress(final int progress) {
-		getWidget().setProgress(progress);
+	public void fireOnDispose() {
+		for (final IDisposeListener listener : new LinkedList<IDisposeListener>(listeners)) {
+			listener.onDispose();
+		}
 	}
 
 }

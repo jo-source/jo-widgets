@@ -26,66 +26,38 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.common.wrapper;
+package org.jowidgets.impl.base.delegate;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.IItemCommon;
-import org.jowidgets.impl.base.delegate.ItemModelBindingDelegate;
-import org.jowidgets.spi.widgets.IItemSpi;
+import org.jowidgets.api.widgets.IToolBarItem;
 
-public class ModelBasedItemSpiWrapper extends WidgetSpiWrapper implements IItemCommon {
+public class ToolBarItemDiposableDelegate extends DisposableDelegate {
 
+	private final IToolBarItem toolbarItem;
 	private final ItemModelBindingDelegate itemModelBindingDelegate;
 
-	public ModelBasedItemSpiWrapper(final IItemSpi component, final ItemModelBindingDelegate itemModelBindingDelegate) {
-		super(component);
+	private boolean onRemoveByDispose = false;
+
+	public ToolBarItemDiposableDelegate(final IToolBarItem toolbarItem, final ItemModelBindingDelegate itemModelBindingDelegate) {
+		super();
+		this.toolbarItem = toolbarItem;
 		this.itemModelBindingDelegate = itemModelBindingDelegate;
 	}
 
 	@Override
-	public IItemSpi getWidget() {
-		return (IItemSpi) super.getWidget();
-	}
-
-	protected ItemModelBindingDelegate getItemModelBindingDelegate() {
-		return itemModelBindingDelegate;
-	}
-
-	@Override
-	public void setText(final String text) {
-		itemModelBindingDelegate.setText(text);
-	}
-
-	@Override
-	public void setToolTipText(final String toolTipText) {
-		itemModelBindingDelegate.setToolTipText(toolTipText);
-	}
-
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		itemModelBindingDelegate.setIcon(icon);
-	}
-
-	public String getText() {
-		return itemModelBindingDelegate.getText();
-	}
-
-	public String getToolTipText() {
-		return itemModelBindingDelegate.getToolTipText();
-	}
-
-	public IImageConstant getIcon() {
-		return itemModelBindingDelegate.getIcon();
-	}
-
-	@Override
-	public void setEnabled(final boolean enabled) {
-		itemModelBindingDelegate.setEnabled(enabled);
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return itemModelBindingDelegate.isEnabled();
+	public void dispose() {
+		if (!isDisposed()) {
+			if (toolbarItem.getParent() != null
+				&& toolbarItem.getParent().getChildren().contains(toolbarItem)
+				&& !onRemoveByDispose) {
+				onRemoveByDispose = true;
+				toolbarItem.getParent().getChildren().remove(toolbarItem); //this will invoke dispose by the parent menu
+				onRemoveByDispose = false;
+			}
+			else {
+				itemModelBindingDelegate.dispose();
+				super.dispose();
+			}
+		}
 	}
 
 }

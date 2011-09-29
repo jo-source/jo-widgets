@@ -28,21 +28,22 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.common.widgets.IProgressBarCommon;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
-import org.jowidgets.impl.widgets.common.wrapper.ProgressBarSpiWrapper;
+import org.jowidgets.impl.widgets.common.wrapper.AbstractProgressBarSpiWrapper;
 import org.jowidgets.spi.widgets.IProgressBarSpi;
 
-public class ProgressBarCommonToControl extends ProgressBarSpiWrapper implements IProgressBarCommon, IControl {
+public class ProgressBarCommonToControl extends AbstractProgressBarSpiWrapper implements IProgressBarCommon, IControl {
 
 	private final ControlDelegate controlDelegate;
 
 	public ProgressBarCommonToControl(final IProgressBarSpi progressBarSpi) {
 		super(progressBarSpi);
-		this.controlDelegate = new ControlDelegate();
+		this.controlDelegate = new ControlDelegate(progressBarSpi, this);
 	}
 
 	@Override
@@ -61,7 +62,27 @@ public class ProgressBarCommonToControl extends ProgressBarSpiWrapper implements
 	}
 
 	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		controlDelegate.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		controlDelegate.removeDisposeListener(listener);
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return controlDelegate.isDisposed();
+	}
+
+	@Override
+	public void dispose() {
+		controlDelegate.dispose();
+	}
+
+	@Override
 	public IPopupMenu createPopupMenu() {
-		return new PopupMenuImpl(getWidget().createPopupMenu(), this);
+		return controlDelegate.createPopupMenu();
 	}
 }

@@ -31,10 +31,12 @@ package org.jowidgets.impl.widgets.basic;
 import java.io.File;
 import java.util.List;
 
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.widgets.IFileChooser;
 import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.common.types.DialogResult;
 import org.jowidgets.impl.base.delegate.DisplayDelegate;
+import org.jowidgets.impl.widgets.WidgetCheck;
 import org.jowidgets.impl.widgets.common.wrapper.WidgetSpiWrapper;
 import org.jowidgets.spi.widgets.IFileChooserSpi;
 
@@ -69,7 +71,30 @@ public class FileChooserImpl extends WidgetSpiWrapper implements IFileChooser {
 
 	@Override
 	public DialogResult open() {
-		return getWidget().open();
+		WidgetCheck.check(this);
+		final DialogResult result = getWidget().open();
+		dispose();
+		return result;
+	}
+
+	@Override
+	public void dispose() {
+		displayDelegate.dispose();
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return displayDelegate.isDisposed();
+	}
+
+	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		displayDelegate.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		displayDelegate.removeDisposeListener(listener);
 	}
 
 	@Override

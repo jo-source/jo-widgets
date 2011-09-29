@@ -31,6 +31,7 @@ package org.jowidgets.impl.widgets.basic;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.model.table.ITableColumnModel;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
@@ -57,10 +58,10 @@ import org.jowidgets.common.widgets.controller.ITableSelectionListener;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.impl.widgets.common.wrapper.ControlSpiWrapper;
+import org.jowidgets.impl.widgets.common.wrapper.AbstractControlSpiWrapper;
 import org.jowidgets.spi.widgets.ITableSpi;
 
-public class TableImpl extends ControlSpiWrapper implements ITable {
+public class TableImpl extends AbstractControlSpiWrapper implements ITable {
 
 	private static final TablePackPolicy DEFAULT_PACK_POLICY = TablePackPolicy.HEADER_AND_DATA_VISIBLE;
 
@@ -76,10 +77,10 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 
 	private final TableModelSpiAdapter modelSpiAdapter;
 
-	public TableImpl(final ITableSpi widget, final ITableDescriptor setup, final TableModelSpiAdapter modelSpiAdapter) {
-		super(widget);
+	public TableImpl(final ITableSpi widgetSpi, final ITableDescriptor setup, final TableModelSpiAdapter modelSpiAdapter) {
+		super(widgetSpi);
 
-		this.controlDelegate = new ControlDelegate();
+		this.controlDelegate = new ControlDelegate(widgetSpi, this);
 		this.dataModel = setup.getDataModel();
 		this.columnModel = setup.getColumnModel();
 		this.modelSpiAdapter = modelSpiAdapter;
@@ -186,8 +187,28 @@ public class TableImpl extends ControlSpiWrapper implements ITable {
 	}
 
 	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		controlDelegate.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		controlDelegate.removeDisposeListener(listener);
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return controlDelegate.isDisposed();
+	}
+
+	@Override
+	public void dispose() {
+		controlDelegate.dispose();
+	}
+
+	@Override
 	public IPopupMenu createPopupMenu() {
-		return new PopupMenuImpl(getWidget().createPopupMenu(), this);
+		return controlDelegate.createPopupMenu();
 	}
 
 	@Override

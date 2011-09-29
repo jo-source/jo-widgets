@@ -31,28 +31,29 @@ package org.jowidgets.impl.widgets.basic;
 import java.util.List;
 
 import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.widgets.IActionMenuItem;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IMenuItem;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.impl.base.delegate.ItemDelegate;
+import org.jowidgets.impl.base.delegate.ItemModelBindingDelegate;
 import org.jowidgets.impl.base.delegate.MenuDelegate;
 import org.jowidgets.impl.model.item.MenuModelBuilder;
 import org.jowidgets.impl.widgets.common.wrapper.PopupMenuSpiWrapper;
 import org.jowidgets.impl.widgets.common.wrapper.invoker.PopupMenuSpiInvoker;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
-public class PopupMenuImpl extends PopupMenuSpiWrapper implements IPopupMenu, IDisposeable {
+public class PopupMenuImpl extends PopupMenuSpiWrapper implements IPopupMenu {
 
 	private final MenuDelegate menuDelegate;
 	private final IComponent parent;
 
 	public PopupMenuImpl(final IPopupMenuSpi popupMenuSpi, final IComponent parent) {
-		super(popupMenuSpi, new ItemDelegate(new PopupMenuSpiInvoker(popupMenuSpi), new MenuModelBuilder().build()));
+		super(popupMenuSpi, new ItemModelBindingDelegate(new PopupMenuSpiInvoker(popupMenuSpi), new MenuModelBuilder().build()));
 
-		this.menuDelegate = new MenuDelegate(this, popupMenuSpi, getModel());
+		this.menuDelegate = new MenuDelegate(this, popupMenuSpi, getModel(), getItemModelBindingDelegate());
 		this.parent = parent;
 	}
 
@@ -105,18 +106,33 @@ public class PopupMenuImpl extends PopupMenuSpiWrapper implements IPopupMenu, ID
 
 	@Override
 	public IMenuModel getModel() {
-		return (IMenuModel) getItemDelegate().getModel();
+		return (IMenuModel) getItemModelBindingDelegate().getModel();
 	}
 
 	@Override
 	public void setModel(final IMenuModel model) {
-		getItemDelegate().setModel(model);
+		getItemModelBindingDelegate().setModel(model);
 		menuDelegate.setModel(model);
+	}
+
+	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		menuDelegate.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		menuDelegate.removeDisposeListener(listener);
 	}
 
 	@Override
 	public void dispose() {
 		menuDelegate.dispose();
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return menuDelegate.isDisposed();
 	}
 
 	@Override

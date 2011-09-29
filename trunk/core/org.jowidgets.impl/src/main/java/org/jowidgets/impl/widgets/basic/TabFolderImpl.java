@@ -33,6 +33,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.controller.ITabFolderListener;
 import org.jowidgets.api.controller.ITabSelectionEvent;
 import org.jowidgets.api.widgets.IContainer;
@@ -48,14 +49,14 @@ import org.jowidgets.impl.spi.SpiBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.ITabItemBluePrintSpi;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.impl.widgets.common.wrapper.TabFolderSpiWrapper;
+import org.jowidgets.impl.widgets.common.wrapper.AbstractTabFolderSpiWrapper;
 import org.jowidgets.spi.widgets.ITabFolderSpi;
 import org.jowidgets.spi.widgets.ITabItemSpi;
 import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.TypeCast;
 
-public class TabFolderImpl extends TabFolderSpiWrapper implements ITabFolder {
+public class TabFolderImpl extends AbstractTabFolderSpiWrapper implements ITabFolder {
 
 	private static final SpiBluePrintFactory SPI_BPF = new SpiBluePrintFactory();
 	private final ControlDelegate controlDelegate;
@@ -66,7 +67,7 @@ public class TabFolderImpl extends TabFolderSpiWrapper implements ITabFolder {
 
 	public TabFolderImpl(final ITabFolderSpi widget, final ITabFolderDescriptor descriptor) {
 		super(widget);
-		this.controlDelegate = new ControlDelegate();
+		this.controlDelegate = new ControlDelegate(widget, this);
 		this.tabFolderListeners = new HashSet<ITabFolderListener>();
 		this.items = new LinkedList<TabItemImpl>();
 
@@ -90,8 +91,37 @@ public class TabFolderImpl extends TabFolderSpiWrapper implements ITabFolder {
 	}
 
 	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		controlDelegate.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		controlDelegate.removeDisposeListener(listener);
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return controlDelegate.isDisposed();
+	}
+
+	@Override
+	public void dispose() {
+		if (!isDisposed()) {
+			final List<TabItemImpl> itemsCopy = new LinkedList<TabItemImpl>(items);
+			//clear the children to avoid that children will be removed
+			//unnecessarily from its parent container on dispose invocation
+			items.clear();
+			for (final TabItemImpl item : itemsCopy) {
+				item.dispose();
+			}
+			controlDelegate.dispose();
+		}
+	}
+
+	@Override
 	public IPopupMenu createPopupMenu() {
-		return new PopupMenuImpl(getWidget().createPopupMenu(), this);
+		return controlDelegate.createPopupMenu();
 	}
 
 	@Override
@@ -132,6 +162,7 @@ public class TabFolderImpl extends TabFolderSpiWrapper implements ITabFolder {
 			if (itemImpl.isSelected()) {
 				itemImpl.setSelected(false);
 			}
+			itemImpl.dispose();
 		}
 	}
 

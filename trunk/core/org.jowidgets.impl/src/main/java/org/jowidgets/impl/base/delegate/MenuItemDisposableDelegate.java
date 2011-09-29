@@ -28,66 +28,34 @@
 
 package org.jowidgets.impl.base.delegate;
 
-import org.jowidgets.api.widgets.IComponent;
-import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.api.widgets.IPopupMenu;
-import org.jowidgets.spi.widgets.IControlSpi;
+import org.jowidgets.api.widgets.IMenuItem;
 
-public class ControlDelegate extends DisposableDelegate {
+public class MenuItemDisposableDelegate extends DisposableDelegate {
 
-	private final IControl control;
-	private final PopupMenuCreationDelegate popupMenuCreationDelegate;
+	private final IMenuItem menuItem;
+	private final ItemModelBindingDelegate itemDelegate;
 
-	private IContainer parent;
-	private boolean onRemoveByDispose;
+	private boolean onRemoveByDispose = false;
 
-	public ControlDelegate(final IControlSpi controlSpi, final IControl control) {
+	public MenuItemDisposableDelegate(final IMenuItem menuItem, final ItemModelBindingDelegate itemDelegate) {
 		super();
-		this.control = control;
-		this.popupMenuCreationDelegate = new PopupMenuCreationDelegate(controlSpi, control);
-		this.onRemoveByDispose = false;
-	}
-
-	public IContainer getParent() {
-		return parent;
-	}
-
-	public void setParent(final IComponent parent) {
-		if (this.parent == null) {
-			if (parent instanceof IContainer) {
-				this.parent = (IContainer) parent;
-			}
-			else {
-				throw new IllegalArgumentException("Parent must be instance of '" + IContainer.class.getName() + "'");
-			}
-		}
-		else if (!isReparentable()) {
-			throw new IllegalStateException("Widget is not reparentable");
-		}
-	}
-
-	public boolean isReparentable() {
-		//TODO MG will be implemented later
-		return false;
+		this.menuItem = menuItem;
+		this.itemDelegate = itemDelegate;
 	}
 
 	@Override
 	public void dispose() {
 		if (!isDisposed()) {
-			if (parent != null && parent.getChildren().contains(control) && !onRemoveByDispose) {
+			if (menuItem.getParent() != null && menuItem.getParent().getChildren().contains(menuItem) && !onRemoveByDispose) {
 				onRemoveByDispose = true;
-				parent.remove(control); //this will invoke dispose by the parent container
+				menuItem.getParent().getChildren().remove(menuItem); //this will invoke dispose by the parent menu
 				onRemoveByDispose = false;
 			}
 			else {
-				popupMenuCreationDelegate.dispose();
+				itemDelegate.dispose();
 				super.dispose();
 			}
 		}
 	}
 
-	public IPopupMenu createPopupMenu() {
-		return popupMenuCreationDelegate.createPopupMenu();
-	}
 }

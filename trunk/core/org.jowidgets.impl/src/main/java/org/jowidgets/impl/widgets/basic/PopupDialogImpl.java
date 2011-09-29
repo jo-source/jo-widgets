@@ -30,6 +30,7 @@ package org.jowidgets.impl.widgets.basic;
 
 import java.util.List;
 
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IPopupDialog;
@@ -48,12 +49,12 @@ import org.jowidgets.impl.base.delegate.DisplayDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.LayoutSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.impl.widgets.common.wrapper.ComponentSpiWrapper;
+import org.jowidgets.impl.widgets.common.wrapper.AbstractComponentSpiWrapper;
 import org.jowidgets.spi.widgets.IPopupDialogSpi;
 import org.jowidgets.tools.controller.WindowAdapter;
 import org.jowidgets.util.Assert;
 
-public class PopupDialogImpl extends ComponentSpiWrapper implements IPopupDialog {
+public class PopupDialogImpl extends AbstractComponentSpiWrapper implements IPopupDialog {
 
 	private final DisplayDelegate displayDelegate;
 	private final ContainerDelegate containerDelegate;
@@ -87,7 +88,23 @@ public class PopupDialogImpl extends ComponentSpiWrapper implements IPopupDialog
 	}
 
 	@Override
+	public boolean isDisposed() {
+		return containerDelegate.isDisposed();
+	}
+
+	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		containerDelegate.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		containerDelegate.removeDisposeListener(listener);
+	}
+
+	@Override
 	public void dispose() {
+		containerDelegate.dispose();
 		getWidget().dispose();
 	}
 
@@ -231,7 +248,7 @@ public class PopupDialogImpl extends ComponentSpiWrapper implements IPopupDialog
 
 	@Override
 	public IPopupMenu createPopupMenu() {
-		return new PopupMenuImpl(getWidget().createPopupMenu(), this);
+		return containerDelegate.createPopupMenu();
 	}
 
 }

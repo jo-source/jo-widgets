@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,60 +26,24 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.base.delegate;
+package org.jowidgets.impl.widgets;
 
-import org.jowidgets.api.model.item.ISelectableMenuItemModel;
-import org.jowidgets.impl.widgets.common.wrapper.invoker.ISelectableItemSpiInvoker;
-import org.jowidgets.util.Assert;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IWidget;
 
-public class SelectableItemDelegate extends ItemDelegate {
+public final class WidgetCheck {
 
-	private boolean selected;
+	private WidgetCheck() {};
 
-	public SelectableItemDelegate(final ISelectableItemSpiInvoker widget, final ISelectableMenuItemModel model) {
-		super(widget, model);
-		Assert.paramNotNull(model, "model");
-
-		this.selected = false;
-		updateThisFromModel();
-	}
-
-	@Override
-	public ISelectableItemSpiInvoker getWidget() {
-		return (ISelectableItemSpiInvoker) super.getWidget();
-	}
-
-	@Override
-	public ISelectableMenuItemModel getModel() {
-		return (ISelectableMenuItemModel) super.getModel();
-	}
-
-	public void setSelected(final boolean selected) {
-		setSelectedValue(selected);
-		unRegisterModel();
-		getModel().setSelected(selected);
-		registerModel();
-	}
-
-	public boolean isSelected() {
-		return selected;
-	}
-
-	@Override
-	protected void updateFromModel() {
-		super.updateFromModel();
-		updateThisFromModel();
-	}
-
-	private void updateThisFromModel() {
-		setSelectedValue(getModel().isSelected());
-	}
-
-	private void setSelectedValue(final boolean selected) {
-		if (this.selected != selected || getWidget().isSelected() != selected) {
-			this.selected = selected;
-			getWidget().setSelected(selected);
+	public static void check(final Object object) {
+		if (object instanceof IWidget) {
+			final IWidget widget = (IWidget) object;
+			if (widget.isDisposed()) {
+				throw new IllegalStateException("Widget is disposed");
+			}
+		}
+		if (!Toolkit.getUiThreadAccess().isUiThread()) {
+			throw new IllegalStateException("Wrong thread! Wigdet must be accessed in the UI thread");
 		}
 	}
-
 }

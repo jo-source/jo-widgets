@@ -32,12 +32,12 @@ import org.jowidgets.api.model.item.ISelectableItemModel;
 import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.common.widgets.ISelectableMenuItemCommon;
 import org.jowidgets.common.widgets.controller.IItemStateListener;
-import org.jowidgets.impl.base.delegate.SelectableItemDelegate;
+import org.jowidgets.impl.base.delegate.SelectableItemModelBindingDelegate;
 import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 
 public class SelectableMenuItemSpiWrapper extends MenuItemSpiWrapper implements ISelectableMenuItemCommon {
 
-	public SelectableMenuItemSpiWrapper(final ISelectableMenuItemSpi widget, final SelectableItemDelegate itemDelegate) {
+	public SelectableMenuItemSpiWrapper(final ISelectableMenuItemSpi widget, final SelectableItemModelBindingDelegate itemDelegate) {
 		super(widget, itemDelegate);
 		widget.addItemListener(new IItemStateListener() {
 
@@ -54,12 +54,12 @@ public class SelectableMenuItemSpiWrapper extends MenuItemSpiWrapper implements 
 	}
 
 	@Override
-	protected SelectableItemDelegate getItemDelegate() {
-		return (SelectableItemDelegate) super.getItemDelegate();
+	protected SelectableItemModelBindingDelegate getItemModelBindingDelegate() {
+		return (SelectableItemModelBindingDelegate) super.getItemModelBindingDelegate();
 	}
 
 	public ISelectableItemModel getModel() {
-		return getItemDelegate().getModel();
+		return getItemModelBindingDelegate().getModel();
 	}
 
 	@Override
@@ -74,17 +74,17 @@ public class SelectableMenuItemSpiWrapper extends MenuItemSpiWrapper implements 
 
 	@Override
 	public void setAccelerator(final Accelerator accelerator) {
-		getItemDelegate().setAccelerator(accelerator);
+		getItemModelBindingDelegate().setAccelerator(accelerator);
 	}
 
 	@Override
 	public void setSelected(final boolean selected) {
-		getItemDelegate().setSelected(selected);
+		getItemModelBindingDelegate().setSelected(selected);
 	}
 
 	@Override
 	public boolean isSelected() {
-		return getItemDelegate().isSelected();
+		return getItemModelBindingDelegate().isSelected();
 	}
 
 }

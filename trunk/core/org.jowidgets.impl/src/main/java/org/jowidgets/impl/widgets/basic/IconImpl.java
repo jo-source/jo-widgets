@@ -28,6 +28,7 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IIcon;
 import org.jowidgets.api.widgets.IPopupMenu;
@@ -35,16 +36,16 @@ import org.jowidgets.api.widgets.descriptor.setup.IIconSetup;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.impl.widgets.common.wrapper.IconSpiWrapper;
+import org.jowidgets.impl.widgets.common.wrapper.AbstractIconSpiWrapper;
 import org.jowidgets.spi.widgets.IIconSpi;
 
-public class IconImpl extends IconSpiWrapper implements IIcon {
+public class IconImpl extends AbstractIconSpiWrapper implements IIcon {
 
 	private final ControlDelegate controlDelegate;
 
 	public IconImpl(final IIconSpi iconSpi, final IIconSetup setup) {
 		super(iconSpi);
-		this.controlDelegate = new ControlDelegate();
+		this.controlDelegate = new ControlDelegate(iconSpi, this);
 
 		if (setup.getToolTipText() != null) {
 			setToolTipText(setup.getToolTipText());
@@ -70,7 +71,27 @@ public class IconImpl extends IconSpiWrapper implements IIcon {
 	}
 
 	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		controlDelegate.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		controlDelegate.removeDisposeListener(listener);
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return controlDelegate.isDisposed();
+	}
+
+	@Override
+	public void dispose() {
+		controlDelegate.dispose();
+	}
+
+	@Override
 	public IPopupMenu createPopupMenu() {
-		return new PopupMenuImpl(getWidget().createPopupMenu(), this);
+		return controlDelegate.createPopupMenu();
 	}
 }

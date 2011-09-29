@@ -28,10 +28,12 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.model.item.IToolBarItemModel;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.IToolBarItem;
-import org.jowidgets.impl.base.delegate.ItemDelegate;
+import org.jowidgets.impl.base.delegate.ItemModelBindingDelegate;
+import org.jowidgets.impl.base.delegate.ToolBarItemDiposableDelegate;
 import org.jowidgets.impl.model.item.SeparatorItemModelBuilder;
 import org.jowidgets.impl.widgets.common.wrapper.ToolBarItemSpiWrapper;
 import org.jowidgets.impl.widgets.common.wrapper.invoker.ToolBarItemSpiInvoker;
@@ -40,12 +42,14 @@ import org.jowidgets.spi.widgets.IToolBarItemSpi;
 public class ToolBarSeparatorItemImpl extends ToolBarItemSpiWrapper implements IToolBarItem {
 
 	private final IToolBar parent;
+	private final ToolBarItemDiposableDelegate disposableDelegate;
 
 	public ToolBarSeparatorItemImpl(final IToolBar parent, final IToolBarItemSpi toolBarItemSpi) {
-		super(
-			toolBarItemSpi,
-			new ItemDelegate(new ToolBarItemSpiInvoker(toolBarItemSpi), new SeparatorItemModelBuilder().build()));
+		super(toolBarItemSpi, new ItemModelBindingDelegate(
+			new ToolBarItemSpiInvoker(toolBarItemSpi),
+			new SeparatorItemModelBuilder().build()));
 		this.parent = parent;
+		this.disposableDelegate = new ToolBarItemDiposableDelegate(this, getItemModelBindingDelegate());
 	}
 
 	@Override
@@ -54,13 +58,33 @@ public class ToolBarSeparatorItemImpl extends ToolBarItemSpiWrapper implements I
 	}
 
 	@Override
+	public void dispose() {
+		disposableDelegate.dispose();
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return disposableDelegate.isDisposed();
+	}
+
+	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		disposableDelegate.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		disposableDelegate.removeDisposeListener(listener);
+	}
+
+	@Override
 	public void setModel(final IToolBarItemModel model) {
-		getItemDelegate().setModel(model);
+		getItemModelBindingDelegate().setModel(model);
 	}
 
 	@Override
 	public IToolBarItemModel getModel() {
-		return (IToolBarItemModel) getItemDelegate().getModel();
+		return (IToolBarItemModel) getItemModelBindingDelegate().getModel();
 	}
 
 }

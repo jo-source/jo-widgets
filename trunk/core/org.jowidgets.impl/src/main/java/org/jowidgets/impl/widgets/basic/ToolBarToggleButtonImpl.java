@@ -28,12 +28,14 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.model.item.ICheckedItemModel;
 import org.jowidgets.api.model.item.IToolBarItemModel;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.IToolBarToggleButton;
 import org.jowidgets.api.widgets.descriptor.setup.IItemSetup;
-import org.jowidgets.impl.base.delegate.SelectableItemDelegate;
+import org.jowidgets.impl.base.delegate.SelectableItemModelBindingDelegate;
+import org.jowidgets.impl.base.delegate.ToolBarItemDiposableDelegate;
 import org.jowidgets.impl.model.item.CheckedItemModelBuilder;
 import org.jowidgets.impl.widgets.common.wrapper.ToolBarToggleButtonSpiWrapper;
 import org.jowidgets.impl.widgets.common.wrapper.invoker.ToolBarToggleButtonSpiInvoker;
@@ -42,16 +44,17 @@ import org.jowidgets.spi.widgets.IToolBarToggleButtonSpi;
 public class ToolBarToggleButtonImpl extends ToolBarToggleButtonSpiWrapper implements IToolBarToggleButton {
 
 	private final IToolBar parent;
+	private final ToolBarItemDiposableDelegate disposableDelegate;
 
 	public ToolBarToggleButtonImpl(
 		final IToolBar parent,
 		final IToolBarToggleButtonSpi toolBarToggleButtonSpi,
 		final IItemSetup setup) {
-		super(toolBarToggleButtonSpi, new SelectableItemDelegate(
-			new ToolBarToggleButtonSpiInvoker(toolBarToggleButtonSpi),
-			new CheckedItemModelBuilder().build()));
+		super(toolBarToggleButtonSpi, new SelectableItemModelBindingDelegate(new ToolBarToggleButtonSpiInvoker(
+			toolBarToggleButtonSpi), new CheckedItemModelBuilder().build()));
 
 		this.parent = parent;
+		this.disposableDelegate = new ToolBarItemDiposableDelegate(this, getItemModelBindingDelegate());
 
 		setText(setup.getText());
 		setToolTipText(setup.getToolTipText());
@@ -65,13 +68,33 @@ public class ToolBarToggleButtonImpl extends ToolBarToggleButtonSpiWrapper imple
 	}
 
 	@Override
+	public void dispose() {
+		disposableDelegate.dispose();
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return disposableDelegate.isDisposed();
+	}
+
+	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		disposableDelegate.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		disposableDelegate.removeDisposeListener(listener);
+	}
+
+	@Override
 	public ICheckedItemModel getModel() {
-		return (ICheckedItemModel) getItemDelegate().getModel();
+		return (ICheckedItemModel) getItemModelBindingDelegate().getModel();
 	}
 
 	@Override
 	public void setModel(final ICheckedItemModel model) {
-		getItemDelegate().setModel(model);
+		getItemModelBindingDelegate().setModel(model);
 	}
 
 	@Override

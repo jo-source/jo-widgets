@@ -28,6 +28,7 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ISplitComposite;
@@ -53,7 +54,7 @@ public class SplitCompositeImpl extends AbstractSplitCompositeSpiWrapper impleme
 
 	public SplitCompositeImpl(final ISplitCompositeSpi containerWidgetSpi, final ISplitCompositeSetup setup) {
 		super(containerWidgetSpi);
-		this.controlDelegate = new ControlDelegate();
+		this.controlDelegate = new ControlDelegate(containerWidgetSpi, this);
 		this.first = new ContainerImpl(getWidget().getFirst());
 		this.second = new ContainerImpl(getWidget().getSecond());
 		this.dividerSize = setup.getDividerSize();
@@ -77,6 +78,30 @@ public class SplitCompositeImpl extends AbstractSplitCompositeSpiWrapper impleme
 	@Override
 	public boolean isReparentable() {
 		return controlDelegate.isReparentable();
+	}
+
+	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		controlDelegate.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		controlDelegate.removeDisposeListener(listener);
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return controlDelegate.isDisposed();
+	}
+
+	@Override
+	public void dispose() {
+		if (!isDisposed()) {
+			first.dispose();
+			second.dispose();
+			controlDelegate.dispose();
+		}
 	}
 
 	@Override
@@ -149,7 +174,7 @@ public class SplitCompositeImpl extends AbstractSplitCompositeSpiWrapper impleme
 
 	@Override
 	public IPopupMenu createPopupMenu() {
-		return new PopupMenuImpl(getWidget().createPopupMenu(), this);
+		return controlDelegate.createPopupMenu();
 	}
 
 }

@@ -37,7 +37,7 @@ import org.jowidgets.spi.widgets.IContainerSpi;
 import org.jowidgets.spi.widgets.IControlSpi;
 import org.jowidgets.util.Assert;
 
-public abstract class AbstractContainerSpiWrapper extends ComponentSpiWrapper implements IContainerCommon {
+public abstract class AbstractContainerSpiWrapper extends AbstractComponentSpiWrapper implements IContainerCommon {
 
 	private ILayouter layouter;
 

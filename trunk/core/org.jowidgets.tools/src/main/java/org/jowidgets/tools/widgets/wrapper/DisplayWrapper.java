@@ -28,6 +28,7 @@
 
 package org.jowidgets.tools.widgets.wrapper;
 
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.widgets.IDisplay;
 import org.jowidgets.api.widgets.IWindow;
 
@@ -62,6 +63,26 @@ public class DisplayWrapper implements IDisplay {
 	@Override
 	public boolean isEnabled() {
 		return display.isEnabled();
+	}
+
+	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		display.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		display.removeDisposeListener(listener);
+	}
+
+	@Override
+	public void dispose() {
+		display.dispose();
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return display.isDisposed();
 	}
 
 }

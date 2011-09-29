@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann, Nikolaus Moll
+ * Copyright (c) 2010, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,24 +28,34 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.IControlCommon;
-import org.jowidgets.spi.widgets.IControlSpi;
+import org.jowidgets.common.widgets.IInputControlCommon;
+import org.jowidgets.common.widgets.controller.IInputListener;
+import org.jowidgets.spi.widgets.IInputControlSpi;
 
-public class ControlSpiWrapper extends ComponentSpiWrapper implements IControlCommon {
-	private static final Dimension INFINITE_SIZE = new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
+public abstract class AbstractInputControlSpiWrapper extends AbstractControlSpiWrapper implements IInputControlCommon {
 
-	private Dimension minSize;
-	private Dimension prefferedSize;
-	private Dimension maxSize;
-
-	public ControlSpiWrapper(final IControlSpi control) {
-		super(control);
+	public AbstractInputControlSpiWrapper(final IInputControlSpi widget) {
+		super(widget);
 	}
 
 	@Override
-	public IControlSpi getWidget() {
-		return (IControlSpi) super.getWidget();
+	public IInputControlSpi getWidget() {
+		return (IInputControlSpi) super.getWidget();
+	}
+
+	@Override
+	public void addInputListener(final IInputListener listener) {
+		getWidget().addInputListener(listener);
+	}
+
+	@Override
+	public void removeInputListener(final IInputListener listener) {
+		getWidget().removeInputListener(listener);
+	}
+
+	@Override
+	public void setEditable(final boolean editable) {
+		getWidget().setEditable(editable);
 	}
 
 	@Override
@@ -58,50 +68,4 @@ public class ControlSpiWrapper extends ComponentSpiWrapper implements IControlCo
 		return getWidget().getLayoutConstraints();
 	}
 
-	public void setMinSize(final Dimension minSize) {
-		this.minSize = minSize;
-	}
-
-	public void setPreferredSize(final Dimension preferredSize) {
-		this.prefferedSize = preferredSize;
-	}
-
-	public void setMaxSize(final Dimension maxSize) {
-		this.maxSize = maxSize;
-	}
-
-	@Override
-	public void setToolTipText(final String toolTip) {
-		getWidget().setToolTipText(toolTip);
-	}
-
-	@Override
-	public Dimension getMinSize() {
-		if (minSize != null) {
-			return minSize;
-		}
-		else {
-			return getWidget().getMinSize();
-		}
-	}
-
-	@Override
-	public Dimension getPreferredSize() {
-		if (prefferedSize != null) {
-			return prefferedSize;
-		}
-		else {
-			return getWidget().getPreferredSize();
-		}
-	}
-
-	@Override
-	public Dimension getMaxSize() {
-		if (maxSize != null) {
-			return maxSize;
-		}
-		else {
-			return INFINITE_SIZE;
-		}
-	}
 }
