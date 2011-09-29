@@ -139,7 +139,7 @@ public class TreeContainerDelegate implements ITreeContainer {
 
 	@Override
 	public List<ITreeNode> getChildren() {
-		return children;
+		return childrenView;
 	}
 
 	@Override
