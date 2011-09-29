@@ -27,6 +27,7 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
@@ -42,12 +43,14 @@ import org.jowidgets.common.widgets.controller.IFocusListener;
 import org.jowidgets.common.widgets.controller.IKeyListener;
 import org.jowidgets.common.widgets.controller.IMouseListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
+import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 
-public class CompositeBasedControl implements IControl {
+public class CompositeBasedControl extends ControlWrapper implements IControl {
 
 	private final IComposite composite;
 
 	public CompositeBasedControl(final IComposite composite) {
+		super(composite);
 		this.composite = composite;
 	}
 
@@ -68,6 +71,26 @@ public class CompositeBasedControl implements IControl {
 	@Override
 	public boolean isReparentable() {
 		return composite.isReparentable();
+	}
+
+	@Override
+	public void dispose() {
+		composite.dispose();
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return composite.isDisposed();
+	}
+
+	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		composite.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		composite.removeDisposeListener(listener);
 	}
 
 	@Override
@@ -107,7 +130,6 @@ public class CompositeBasedControl implements IControl {
 
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
-		composite.setBackgroundColor(colorValue);
 		composite.setBackgroundColor(colorValue);
 	}
 

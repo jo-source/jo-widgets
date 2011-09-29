@@ -31,7 +31,7 @@ package org.jowidgets.impl.base.delegate;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.IWindow;
 
-public class DisplayDelegate {
+public class DisplayDelegate extends DisposableDelegate {
 
 	private IWindow parent;
 

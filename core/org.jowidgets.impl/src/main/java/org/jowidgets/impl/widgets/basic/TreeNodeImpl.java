@@ -31,6 +31,7 @@ package org.jowidgets.impl.widgets.basic;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IPopupMenu;
@@ -40,6 +41,9 @@ import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.api.widgets.descriptor.ITreeNodeDescriptor;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
+import org.jowidgets.impl.base.delegate.DisposableDelegate;
+import org.jowidgets.impl.base.delegate.PopupMenuCreationDelegate;
+import org.jowidgets.impl.base.delegate.PopupMenuCreationDelegate.IPopupFactory;
 import org.jowidgets.impl.base.delegate.TreeContainerDelegate;
 import org.jowidgets.impl.event.TreePopupEvent;
 import org.jowidgets.impl.widgets.common.wrapper.TreeNodeSpiWrapper;
@@ -52,10 +56,13 @@ public class TreeNodeImpl extends TreeNodeSpiWrapper implements ITreeNode {
 	private final TreeImpl parentTree;
 	private final TreeNodeImpl parentNode;
 	private final TreeContainerDelegate treeContainerDelegate;
-
+	private final PopupMenuCreationDelegate popupMenuCreationDelegate;
 	private final IPopupDetectionListener popupListener;
+	private final DisposableDelegate disposableDelegate;
+
 	private IMenuModel popupMenuModel;
 	private IPopupMenu popupMenu;
+	private boolean onRemoveByDispose;
 
 	public TreeNodeImpl(final TreeImpl parentTree, final TreeNodeImpl parentNode, final ITreeNodeSpi widget) {
 		this(parentTree, parentNode, widget, Toolkit.getBluePrintFactory().treeNode());
@@ -74,7 +81,7 @@ public class TreeNodeImpl extends TreeNodeSpiWrapper implements ITreeNode {
 			public void popupDetected(final Position position) {
 				if (popupMenuModel != null) {
 					if (popupMenu == null) {
-						popupMenu = new PopupMenuImpl(getWidget().createPopupMenu(), parentTree);
+						popupMenu = popupMenuCreationDelegate.createPopupMenu();
 					}
 					if (popupMenu.getModel() != popupMenuModel) {
 						popupMenu.setModel(popupMenuModel);
@@ -86,6 +93,17 @@ public class TreeNodeImpl extends TreeNodeSpiWrapper implements ITreeNode {
 
 		this.parentTree = parentTree;
 		this.parentNode = parentNode;
+
+		this.popupMenuCreationDelegate = new PopupMenuCreationDelegate(new IPopupFactory() {
+			@Override
+			public IPopupMenu create() {
+				return new PopupMenuImpl(getWidget().createPopupMenu(), parentTree);
+			}
+		});
+
+		this.disposableDelegate = new DisposableDelegate();
+
+		this.onRemoveByDispose = false;
 
 		if (descriptor.getForegroundColor() != null) {
 			setForegroundColor(descriptor.getForegroundColor());
@@ -147,8 +165,39 @@ public class TreeNodeImpl extends TreeNodeSpiWrapper implements ITreeNode {
 	}
 
 	@Override
+	public void dispose() {
+		if (!isDisposed()) {
+			if (parentNode != null && parentNode.getChildren().contains(this) && !onRemoveByDispose) {
+				onRemoveByDispose = true;
+				parentNode.getChildren().remove(this); //this will invoke dispose by the parent node
+				onRemoveByDispose = false;
+			}
+			else {
+				popupMenuCreationDelegate.dispose();
+				treeContainerDelegate.dispose();
+				disposableDelegate.dispose();
+			}
+		}
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return disposableDelegate.isDisposed();
+	}
+
+	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		disposableDelegate.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		disposableDelegate.removeDisposeListener(listener);
+	}
+
+	@Override
 	public IPopupMenu createPopupMenu() {
-		return new PopupMenuImpl(getWidget().createPopupMenu(), parentTree);
+		return popupMenuCreationDelegate.createPopupMenu();
 	}
 
 	@Override

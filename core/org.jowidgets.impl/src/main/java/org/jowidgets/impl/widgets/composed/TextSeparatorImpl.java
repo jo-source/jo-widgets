@@ -30,60 +30,50 @@ package org.jowidgets.impl.widgets.composed;
 import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.widgets.IComposite;
-import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITextLabel;
 import org.jowidgets.api.widgets.descriptor.ITextLabelDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextSeparatorDescriptor;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.AlignmentHorizontal;
-import org.jowidgets.common.types.Cursor;
-import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.types.Position;
-import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.ITextLabelCommon;
-import org.jowidgets.common.widgets.controller.IComponentListener;
-import org.jowidgets.common.widgets.controller.IFocusListener;
-import org.jowidgets.common.widgets.controller.IKeyListener;
-import org.jowidgets.common.widgets.controller.IMouseListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 import org.jowidgets.util.Assert;
 
-public class TextSeparatorImpl implements ITextLabel {
+public class TextSeparatorImpl extends CompositeBasedControl implements ITextLabel {
 
-	private final IComposite compositeWidget;
+	private final IComposite composite;
 	private final ITextLabelCommon textLabelWidget;
 	private String text;
 
-	public TextSeparatorImpl(final IComposite compositeWidget, final ITextSeparatorDescriptor descriptor) {
-		super();
-		Assert.paramNotNull(compositeWidget, "compositeWidget");
+	public TextSeparatorImpl(final IComposite composite, final ITextSeparatorDescriptor descriptor) {
+		super(composite);
+		Assert.paramNotNull(composite, "composite");
 		Assert.paramNotNull(descriptor, "descriptor");
 
-		this.compositeWidget = compositeWidget;
+		this.composite = composite;
 
 		final BluePrintFactory bpF = new BluePrintFactory();
 
 		final ITextLabelDescriptor textLabelDescriptor = bpF.textLabel().setSetup(descriptor);
 
 		if (AlignmentHorizontal.LEFT.equals(descriptor.getAlignment())) {
-			this.compositeWidget.setLayout(new MigLayoutDescriptor("0[][grow]", "0[]0"));
-			textLabelWidget = compositeWidget.add(textLabelDescriptor, "");
-			compositeWidget.add(bpF.separator(), "growx");
+			this.composite.setLayout(new MigLayoutDescriptor("0[][grow]", "0[]0"));
+			textLabelWidget = composite.add(textLabelDescriptor, "");
+			composite.add(bpF.separator(), "growx");
 		}
 		else if (AlignmentHorizontal.RIGHT.equals(descriptor.getAlignment())) {
-			this.compositeWidget.setLayout(new MigLayoutDescriptor("0[grow][]", "0[]0"));
-			compositeWidget.add(bpF.separator(), "growx");
-			textLabelWidget = compositeWidget.add(textLabelDescriptor, "");
+			this.composite.setLayout(new MigLayoutDescriptor("0[grow][]", "0[]0"));
+			composite.add(bpF.separator(), "growx");
+			textLabelWidget = composite.add(textLabelDescriptor, "");
 		}
 		else if (AlignmentHorizontal.CENTER.equals(descriptor.getAlignment())) {
-			this.compositeWidget.setLayout(new MigLayoutDescriptor("0[grow][][grow]", "0[]0"));
-			compositeWidget.add(bpF.separator(), "growx");
-			textLabelWidget = compositeWidget.add(textLabelDescriptor, "");
-			compositeWidget.add(bpF.separator(), "growx");
+			this.composite.setLayout(new MigLayoutDescriptor("0[grow][][grow]", "0[]0"));
+			composite.add(bpF.separator(), "growx");
+			textLabelWidget = composite.add(textLabelDescriptor, "");
+			composite.add(bpF.separator(), "growx");
 		}
 		else {
 			throw new IllegalArgumentException("Alignment '" + descriptor.getAlignment() + "' is unknown.");
@@ -111,56 +101,6 @@ public class TextSeparatorImpl implements ITextLabel {
 	}
 
 	@Override
-	public IContainer getParent() {
-		return compositeWidget.getParent();
-	}
-
-	@Override
-	public void setParent(final IContainer parent) {
-		compositeWidget.setParent(parent);
-	}
-
-	@Override
-	public boolean isReparentable() {
-		return compositeWidget.isReparentable();
-	}
-
-	@Override
-	public Object getUiReference() {
-		return compositeWidget.getUiReference();
-	}
-
-	@Override
-	public void setLayoutConstraints(final Object layoutConstraints) {
-		compositeWidget.setLayoutConstraints(layoutConstraints);
-	}
-
-	@Override
-	public Object getLayoutConstraints() {
-		return compositeWidget.getLayoutConstraints();
-	}
-
-	@Override
-	public void redraw() {
-		compositeWidget.redraw();
-	}
-
-	@Override
-	public void setRedrawEnabled(final boolean enabled) {
-		compositeWidget.setRedrawEnabled(enabled);
-	}
-
-	@Override
-	public void setVisible(final boolean visible) {
-		compositeWidget.setVisible(visible);
-	}
-
-	@Override
-	public boolean isVisible() {
-		return compositeWidget.isVisible();
-	}
-
-	@Override
 	public void setEnabled(final boolean enabled) {
 		textLabelWidget.setEnabled(enabled);
 	}
@@ -168,91 +108,6 @@ public class TextSeparatorImpl implements ITextLabel {
 	@Override
 	public boolean isEnabled() {
 		return textLabelWidget.isEnabled();
-	}
-
-	@Override
-	public Dimension getMinSize() {
-		return compositeWidget.getMinSize();
-	}
-
-	@Override
-	public Dimension getPreferredSize() {
-		return compositeWidget.getPreferredSize();
-	}
-
-	@Override
-	public Dimension getMaxSize() {
-		return compositeWidget.getMaxSize();
-	}
-
-	@Override
-	public void setMinSize(final Dimension minSize) {
-		compositeWidget.setMinSize(minSize);
-	}
-
-	@Override
-	public void setPreferredSize(final Dimension preferredSize) {
-		compositeWidget.setPreferredSize(preferredSize);
-	}
-
-	@Override
-	public void setMaxSize(final Dimension maxSize) {
-		compositeWidget.setMaxSize(maxSize);
-	}
-
-	@Override
-	public Dimension getSize() {
-		return compositeWidget.getSize();
-	}
-
-	@Override
-	public void setSize(final Dimension size) {
-		compositeWidget.setSize(size);
-	}
-
-	@Override
-	public void setSize(final int width, final int height) {
-		compositeWidget.setSize(width, height);
-	}
-
-	@Override
-	public void setPosition(final int x, final int y) {
-		compositeWidget.setPosition(x, y);
-	}
-
-	@Override
-	public Position getPosition() {
-		return compositeWidget.getPosition();
-	}
-
-	@Override
-	public void setPosition(final Position position) {
-		compositeWidget.setPosition(position);
-	}
-
-	@Override
-	public Position toScreen(final Position localPosition) {
-		return compositeWidget.toScreen(localPosition);
-	}
-
-	@Override
-	public Position toLocal(final Position screenPosition) {
-		return compositeWidget.toLocal(screenPosition);
-	}
-
-	@Override
-	public Position fromComponent(final IComponentCommon component, final Position componentPosition) {
-		return compositeWidget.fromComponent(component, componentPosition);
-	}
-
-	@Override
-	public Position toComponent(final Position componentPosition, final IComponentCommon component) {
-		return compositeWidget.toComponent(componentPosition, component);
-	}
-
-	@Override
-	public void setCursor(final Cursor cursor) {
-		compositeWidget.setCursor(cursor);
 	}
 
 	@Override
@@ -291,70 +146,20 @@ public class TextSeparatorImpl implements ITextLabel {
 	}
 
 	@Override
-	public boolean requestFocus() {
-		return compositeWidget.requestFocus();
-	}
-
-	@Override
-	public void addFocusListener(final IFocusListener listener) {
-		compositeWidget.addFocusListener(listener);
-	}
-
-	@Override
-	public void removeFocusListener(final IFocusListener listener) {
-		compositeWidget.removeFocusListener(listener);
-	}
-
-	@Override
-	public void addKeyListener(final IKeyListener listener) {
-		compositeWidget.addKeyListener(listener);
-	}
-
-	@Override
-	public void removeKeyListener(final IKeyListener listener) {
-		compositeWidget.removeKeyListener(listener);
-	}
-
-	@Override
-	public void addMouseListener(final IMouseListener mouseListener) {
-		compositeWidget.addMouseListener(mouseListener);
-	}
-
-	@Override
-	public void removeMouseListener(final IMouseListener mouseListener) {
-		compositeWidget.removeMouseListener(mouseListener);
-	}
-
-	@Override
-	public void addComponentListener(final IComponentListener componentListener) {
-		compositeWidget.addComponentListener(componentListener);
-	}
-
-	@Override
-	public void removeComponentListener(final IComponentListener componentListener) {
-		compositeWidget.removeComponentListener(componentListener);
-	}
-
-	@Override
-	public IPopupMenu createPopupMenu() {
-		return compositeWidget.createPopupMenu();
-	}
-
-	@Override
 	public void setPopupMenu(final IMenuModel popupMenu) {
 		//TODO MG this might not work, popup must be set on inner widgets
 		//For that, inner widgets must be api widgets 
-		compositeWidget.setPopupMenu(popupMenu);
+		composite.setPopupMenu(popupMenu);
 	}
 
 	@Override
 	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		compositeWidget.addPopupDetectionListener(listener);
+		composite.addPopupDetectionListener(listener);
 	}
 
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		compositeWidget.removePopupDetectionListener(listener);
+		composite.removePopupDetectionListener(listener);
 	}
 
 }

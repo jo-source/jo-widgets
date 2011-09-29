@@ -31,16 +31,16 @@ package org.jowidgets.impl.widgets.common.wrapper;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IPopupMenuCommon;
 import org.jowidgets.common.widgets.controller.IMenuListener;
-import org.jowidgets.impl.base.delegate.ItemDelegate;
+import org.jowidgets.impl.base.delegate.ItemModelBindingDelegate;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
 public class PopupMenuSpiWrapper extends WidgetSpiWrapper implements IPopupMenuCommon {
 
-	private final ItemDelegate itemDelegate;
+	private final ItemModelBindingDelegate itemModelBindingDelegate;
 
-	public PopupMenuSpiWrapper(final IPopupMenuSpi component, final ItemDelegate itemDelegate) {
+	public PopupMenuSpiWrapper(final IPopupMenuSpi component, final ItemModelBindingDelegate itemDelegate) {
 		super(component);
-		this.itemDelegate = itemDelegate;
+		this.itemModelBindingDelegate = itemDelegate;
 	}
 
 	@Override
@@ -48,18 +48,18 @@ public class PopupMenuSpiWrapper extends WidgetSpiWrapper implements IPopupMenuC
 		return (IPopupMenuSpi) super.getWidget();
 	}
 
-	protected ItemDelegate getItemDelegate() {
-		return itemDelegate;
+	protected ItemModelBindingDelegate getItemModelBindingDelegate() {
+		return itemModelBindingDelegate;
 	}
 
 	@Override
 	public void setEnabled(final boolean enabled) {
-		itemDelegate.setEnabled(enabled);
+		itemModelBindingDelegate.setEnabled(enabled);
 	}
 
 	@Override
 	public boolean isEnabled() {
-		return itemDelegate.isEnabled();
+		return itemModelBindingDelegate.isEnabled();
 	}
 
 	@Override

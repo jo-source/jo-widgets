@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,26 +26,50 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.common.wrapper;
+package org.jowidgets.impl.base.delegate;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.IIconCommon;
-import org.jowidgets.spi.widgets.IIconSpi;
+import java.util.LinkedList;
+import java.util.List;
 
-public class IconSpiWrapper extends ControlSpiWrapper implements IIconCommon {
+import org.jowidgets.api.widgets.IComponent;
+import org.jowidgets.api.widgets.IPopupMenu;
+import org.jowidgets.impl.widgets.basic.PopupMenuImpl;
+import org.jowidgets.spi.widgets.IComponentSpi;
+import org.jowidgets.util.Assert;
 
-	public IconSpiWrapper(final IIconSpi widget) {
-		super(widget);
+public class PopupMenuCreationDelegate {
+
+	private final IPopupFactory popupFactory;
+	private final List<IPopupMenu> popupMenus;
+
+	public PopupMenuCreationDelegate(final IComponentSpi componentSpi, final IComponent component) {
+		this(new IPopupFactory() {
+			@Override
+			public IPopupMenu create() {
+				return new PopupMenuImpl(componentSpi.createPopupMenu(), component);
+			}
+		});
 	}
 
-	@Override
-	public IIconSpi getWidget() {
-		return (IIconSpi) super.getWidget();
+	public PopupMenuCreationDelegate(final IPopupFactory popupFactory) {
+		Assert.paramNotNull(popupFactory, "popupFactory");
+		this.popupFactory = popupFactory;
+		this.popupMenus = new LinkedList<IPopupMenu>();
 	}
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		getWidget().setIcon(icon);
+	public IPopupMenu createPopupMenu() {
+		final IPopupMenu result = popupFactory.create();
+		popupMenus.add(result);
+		return result;
 	}
 
+	public void dispose() {
+		for (final IPopupMenu popupMenu : popupMenus) {
+			popupMenu.dispose();
+		}
+	}
+
+	public interface IPopupFactory {
+		IPopupMenu create();
+	}
 }

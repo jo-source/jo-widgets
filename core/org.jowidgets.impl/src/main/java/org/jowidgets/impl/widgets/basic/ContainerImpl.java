@@ -30,6 +30,7 @@ package org.jowidgets.impl.widgets.basic;
 
 import java.util.List;
 
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
@@ -71,6 +72,31 @@ public class ContainerImpl extends AbstractContainerSpiWrapper implements IConta
 			setVisible(visible.booleanValue());
 		}
 		this.containerDelegate = new ContainerDelegate(containerWidgetCommon, this);
+	}
+
+	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		containerDelegate.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		containerDelegate.removeDisposeListener(listener);
+	}
+
+	@Override
+	public void dispose() {
+		containerDelegate.dispose();
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return containerDelegate.isDisposed();
+	}
+
+	@Override
+	public IPopupMenu createPopupMenu() {
+		return containerDelegate.createPopupMenu();
 	}
 
 	@Override
@@ -153,11 +179,6 @@ public class ContainerImpl extends AbstractContainerSpiWrapper implements IConta
 	@Override
 	public boolean isReparentable() {
 		return componentDelegate.isReparentable();
-	}
-
-	@Override
-	public IPopupMenu createPopupMenu() {
-		return new PopupMenuImpl(getWidget().createPopupMenu(), this);
 	}
 
 }

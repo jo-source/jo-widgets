@@ -30,6 +30,7 @@ package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.command.ActionStyle;
 import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.IItemModel;
 import org.jowidgets.api.model.item.IItemModelListener;
@@ -38,7 +39,8 @@ import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.IToolBarButton;
 import org.jowidgets.api.widgets.descriptor.setup.IItemSetup;
 import org.jowidgets.common.widgets.controller.IActionListener;
-import org.jowidgets.impl.base.delegate.ItemDelegate;
+import org.jowidgets.impl.base.delegate.ItemModelBindingDelegate;
+import org.jowidgets.impl.base.delegate.ToolBarItemDiposableDelegate;
 import org.jowidgets.impl.command.ActionExecuter;
 import org.jowidgets.impl.command.ActionWidgetSync;
 import org.jowidgets.impl.command.IActionWidget;
@@ -47,21 +49,23 @@ import org.jowidgets.impl.widgets.common.wrapper.ToolBarButtonSpiWrapper;
 import org.jowidgets.impl.widgets.common.wrapper.invoker.ToolBarItemSpiInvoker;
 import org.jowidgets.spi.widgets.IToolBarButtonSpi;
 
-public class ToolBarButtonImpl extends ToolBarButtonSpiWrapper implements IToolBarButton, IActionWidget, IDisposeable {
+public class ToolBarButtonImpl extends ToolBarButtonSpiWrapper implements IToolBarButton, IActionWidget {
 
 	private final IToolBar parent;
 	private final IItemModelListener modelListener;
+	private final ToolBarItemDiposableDelegate disposableDelegate;
 
 	private ActionWidgetSync actionWidgetSync;
 	private ActionExecuter actionExecuter;
 	private IAction action;
 
 	public ToolBarButtonImpl(final IToolBar parent, final IToolBarButtonSpi toolBarButtonSpi, final IItemSetup setup) {
-		super(toolBarButtonSpi, new ItemDelegate(
+		super(toolBarButtonSpi, new ItemModelBindingDelegate(
 			new ToolBarItemSpiInvoker(toolBarButtonSpi),
 			new ActionItemModelBuilder().build()));
 
 		this.parent = parent;
+		this.disposableDelegate = new ToolBarItemDiposableDelegate(this, getItemModelBindingDelegate());
 
 		setText(setup.getText());
 		setToolTipText(setup.getToolTipText());
@@ -122,8 +126,27 @@ public class ToolBarButtonImpl extends ToolBarButtonSpiWrapper implements IToolB
 	}
 
 	@Override
+	public boolean isDisposed() {
+		return disposableDelegate.isDisposed();
+	}
+
+	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		disposableDelegate.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		disposableDelegate.removeDisposeListener(listener);
+	}
+
+	@Override
 	public void dispose() {
-		disposeActionWidgetSync();
+		if (!isDisposed()) {
+			getModel().removeItemModelListener(modelListener);
+			disposeActionWidgetSync();
+			disposableDelegate.dispose();
+		}
 	}
 
 	private void disposeActionWidgetSync() {
@@ -135,7 +158,7 @@ public class ToolBarButtonImpl extends ToolBarButtonSpiWrapper implements IToolB
 
 	@Override
 	public IActionItemModel getModel() {
-		return (IActionItemModel) getItemDelegate().getModel();
+		return (IActionItemModel) getItemModelBindingDelegate().getModel();
 	}
 
 	@Override
@@ -143,7 +166,7 @@ public class ToolBarButtonImpl extends ToolBarButtonSpiWrapper implements IToolB
 		if (getModel() != null) {
 			getModel().removeItemModelListener(modelListener);
 		}
-		getItemDelegate().setModel(model);
+		getItemModelBindingDelegate().setModel(model);
 		setActionValue(model.getAction(), ActionStyle.OMIT_TEXT);
 		model.addItemModelListener(modelListener);
 	}

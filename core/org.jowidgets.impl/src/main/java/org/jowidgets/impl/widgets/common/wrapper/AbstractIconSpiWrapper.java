@@ -29,63 +29,23 @@
 package org.jowidgets.impl.widgets.common.wrapper;
 
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.IItemCommon;
-import org.jowidgets.impl.base.delegate.ItemModelBindingDelegate;
-import org.jowidgets.spi.widgets.IItemSpi;
+import org.jowidgets.common.widgets.IIconCommon;
+import org.jowidgets.spi.widgets.IIconSpi;
 
-public class ModelBasedItemSpiWrapper extends WidgetSpiWrapper implements IItemCommon {
+public abstract class AbstractIconSpiWrapper extends AbstractControlSpiWrapper implements IIconCommon {
 
-	private final ItemModelBindingDelegate itemModelBindingDelegate;
-
-	public ModelBasedItemSpiWrapper(final IItemSpi component, final ItemModelBindingDelegate itemModelBindingDelegate) {
-		super(component);
-		this.itemModelBindingDelegate = itemModelBindingDelegate;
+	public AbstractIconSpiWrapper(final IIconSpi widget) {
+		super(widget);
 	}
 
 	@Override
-	public IItemSpi getWidget() {
-		return (IItemSpi) super.getWidget();
-	}
-
-	protected ItemModelBindingDelegate getItemModelBindingDelegate() {
-		return itemModelBindingDelegate;
-	}
-
-	@Override
-	public void setText(final String text) {
-		itemModelBindingDelegate.setText(text);
-	}
-
-	@Override
-	public void setToolTipText(final String toolTipText) {
-		itemModelBindingDelegate.setToolTipText(toolTipText);
+	public IIconSpi getWidget() {
+		return (IIconSpi) super.getWidget();
 	}
 
 	@Override
 	public void setIcon(final IImageConstant icon) {
-		itemModelBindingDelegate.setIcon(icon);
-	}
-
-	public String getText() {
-		return itemModelBindingDelegate.getText();
-	}
-
-	public String getToolTipText() {
-		return itemModelBindingDelegate.getToolTipText();
-	}
-
-	public IImageConstant getIcon() {
-		return itemModelBindingDelegate.getIcon();
-	}
-
-	@Override
-	public void setEnabled(final boolean enabled) {
-		itemModelBindingDelegate.setEnabled(enabled);
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return itemModelBindingDelegate.isEnabled();
+		getWidget().setIcon(icon);
 	}
 
 }

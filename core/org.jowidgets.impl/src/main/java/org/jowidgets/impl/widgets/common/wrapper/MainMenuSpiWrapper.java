@@ -30,14 +30,14 @@ package org.jowidgets.impl.widgets.common.wrapper;
 
 import org.jowidgets.common.widgets.IMainMenuCommon;
 import org.jowidgets.common.widgets.controller.IMenuListener;
-import org.jowidgets.impl.base.delegate.ItemDelegate;
+import org.jowidgets.impl.base.delegate.ItemModelBindingDelegate;
 import org.jowidgets.spi.widgets.IMainMenuSpi;
 
 public class MainMenuSpiWrapper extends WidgetSpiWrapper implements IMainMenuCommon {
 
-	private final ItemDelegate itemDelegate;
+	private final ItemModelBindingDelegate itemDelegate;
 
-	public MainMenuSpiWrapper(final IMainMenuSpi widget, final ItemDelegate itemDelegate) {
+	public MainMenuSpiWrapper(final IMainMenuSpi widget, final ItemModelBindingDelegate itemDelegate) {
 		super(widget);
 		this.itemDelegate = itemDelegate;
 	}
@@ -47,7 +47,7 @@ public class MainMenuSpiWrapper extends WidgetSpiWrapper implements IMainMenuCom
 		return (IMainMenuSpi) super.getWidget();
 	}
 
-	protected ItemDelegate getItemDelegate() {
+	protected ItemModelBindingDelegate getItemDelegate() {
 		return itemDelegate;
 	}
 

@@ -33,6 +33,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.types.AutoSelectionPolicy;
 import org.jowidgets.api.widgets.IComboBox;
@@ -43,7 +44,7 @@ import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.impl.widgets.common.wrapper.ControlSpiWrapper;
+import org.jowidgets.impl.widgets.common.wrapper.AbstractControlSpiWrapper;
 import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
 import org.jowidgets.tools.validation.CompoundValidator;
 import org.jowidgets.tools.validation.ValidationCache;
@@ -54,7 +55,7 @@ import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
 
-public class ComboBoxSelectionImpl<VALUE_TYPE> extends ControlSpiWrapper implements IComboBox<VALUE_TYPE> {
+public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper implements IComboBox<VALUE_TYPE> {
 
 	private final List<VALUE_TYPE> elements;
 	private final List<VALUE_TYPE> elementsView;
@@ -92,7 +93,7 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends ControlSpiWrapper impleme
 			setValue(setup.getValue());
 		}
 
-		this.controlDelegate = new ControlDelegate();
+		this.controlDelegate = new ControlDelegate(comboBoxSelectionWidgetSpi, this);
 		this.compoundValidator = new CompoundValidator<VALUE_TYPE>();
 
 		final IValidator<VALUE_TYPE> validator = setup.getValidator();
@@ -295,8 +296,28 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends ControlSpiWrapper impleme
 	}
 
 	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		controlDelegate.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		controlDelegate.removeDisposeListener(listener);
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return controlDelegate.isDisposed();
+	}
+
+	@Override
+	public void dispose() {
+		controlDelegate.dispose();
+	}
+
+	@Override
 	public IPopupMenu createPopupMenu() {
-		return new PopupMenuImpl(getWidget().createPopupMenu(), this);
+		return controlDelegate.createPopupMenu();
 	}
 
 	@Override

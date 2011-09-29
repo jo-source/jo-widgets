@@ -26,66 +26,60 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.common.wrapper;
+package org.jowidgets.impl.base.delegate;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.IItemCommon;
-import org.jowidgets.impl.base.delegate.ItemModelBindingDelegate;
-import org.jowidgets.spi.widgets.IItemSpi;
+import org.jowidgets.api.model.item.ISelectableMenuItemModel;
+import org.jowidgets.impl.widgets.common.wrapper.invoker.ISelectableItemSpiInvoker;
+import org.jowidgets.util.Assert;
 
-public class ModelBasedItemSpiWrapper extends WidgetSpiWrapper implements IItemCommon {
+public class SelectableItemModelBindingDelegate extends ItemModelBindingDelegate {
 
-	private final ItemModelBindingDelegate itemModelBindingDelegate;
+	private boolean selected;
 
-	public ModelBasedItemSpiWrapper(final IItemSpi component, final ItemModelBindingDelegate itemModelBindingDelegate) {
-		super(component);
-		this.itemModelBindingDelegate = itemModelBindingDelegate;
+	public SelectableItemModelBindingDelegate(final ISelectableItemSpiInvoker widget, final ISelectableMenuItemModel model) {
+		super(widget, model);
+		Assert.paramNotNull(model, "model");
+
+		this.selected = false;
+		updateThisFromModel();
 	}
 
 	@Override
-	public IItemSpi getWidget() {
-		return (IItemSpi) super.getWidget();
-	}
-
-	protected ItemModelBindingDelegate getItemModelBindingDelegate() {
-		return itemModelBindingDelegate;
+	public ISelectableItemSpiInvoker getWidget() {
+		return (ISelectableItemSpiInvoker) super.getWidget();
 	}
 
 	@Override
-	public void setText(final String text) {
-		itemModelBindingDelegate.setText(text);
+	public ISelectableMenuItemModel getModel() {
+		return (ISelectableMenuItemModel) super.getModel();
+	}
+
+	public void setSelected(final boolean selected) {
+		setSelectedValue(selected);
+		unRegisterModel();
+		getModel().setSelected(selected);
+		registerModel();
+	}
+
+	public boolean isSelected() {
+		return selected;
 	}
 
 	@Override
-	public void setToolTipText(final String toolTipText) {
-		itemModelBindingDelegate.setToolTipText(toolTipText);
+	protected void updateFromModel() {
+		super.updateFromModel();
+		updateThisFromModel();
 	}
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		itemModelBindingDelegate.setIcon(icon);
+	private void updateThisFromModel() {
+		setSelectedValue(getModel().isSelected());
 	}
 
-	public String getText() {
-		return itemModelBindingDelegate.getText();
-	}
-
-	public String getToolTipText() {
-		return itemModelBindingDelegate.getToolTipText();
-	}
-
-	public IImageConstant getIcon() {
-		return itemModelBindingDelegate.getIcon();
-	}
-
-	@Override
-	public void setEnabled(final boolean enabled) {
-		itemModelBindingDelegate.setEnabled(enabled);
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return itemModelBindingDelegate.isEnabled();
+	private void setSelectedValue(final boolean selected) {
+		if (this.selected != selected || getWidget().isSelected() != selected) {
+			this.selected = selected;
+			getWidget().setSelected(selected);
+		}
 	}
 
 }

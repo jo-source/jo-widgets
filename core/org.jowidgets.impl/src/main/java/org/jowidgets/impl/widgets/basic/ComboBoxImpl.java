@@ -28,6 +28,7 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.convert.IStringObjectConverter;
 import org.jowidgets.api.widgets.IComboBox;
@@ -73,7 +74,7 @@ public class ComboBoxImpl<VALUE_TYPE> extends ComboBoxSelectionImpl<VALUE_TYPE> 
 		this.stringObjectConverter = setup.getStringObjectConverter();
 		this.objectStringConverter = setup.getObjectStringConverter();
 
-		this.controlDelegate = new ControlDelegate();
+		this.controlDelegate = new ControlDelegate(comboBoxWidgetSpi, this);
 		this.compoundValidator = new CompoundValidator<VALUE_TYPE>();
 
 		final IValidator<VALUE_TYPE> validator = setup.getValidator();
@@ -184,8 +185,28 @@ public class ComboBoxImpl<VALUE_TYPE> extends ComboBoxSelectionImpl<VALUE_TYPE> 
 	}
 
 	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		controlDelegate.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		controlDelegate.removeDisposeListener(listener);
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return controlDelegate.isDisposed();
+	}
+
+	@Override
+	public void dispose() {
+		controlDelegate.dispose();
+	}
+
+	@Override
 	public IPopupMenu createPopupMenu() {
-		return new PopupMenuImpl(getWidget().createPopupMenu(), this);
+		return controlDelegate.createPopupMenu();
 	}
 
 	@Override

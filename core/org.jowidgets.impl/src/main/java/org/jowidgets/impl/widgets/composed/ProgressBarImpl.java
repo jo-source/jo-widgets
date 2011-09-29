@@ -29,21 +29,12 @@ package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.widgets.IComposite;
-import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.IProgressBar;
 import org.jowidgets.api.widgets.descriptor.setup.IProgressBarSetup;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
-import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Orientation;
-import org.jowidgets.common.types.Position;
-import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.IProgressBarCommon;
-import org.jowidgets.common.widgets.controller.IComponentListener;
-import org.jowidgets.common.widgets.controller.IFocusListener;
-import org.jowidgets.common.widgets.controller.IKeyListener;
-import org.jowidgets.common.widgets.controller.IMouseListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
@@ -58,9 +49,9 @@ import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsI
 import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.widgets.IProgressBarSpi;
 
-public class ProgressBarImpl implements IProgressBar {
+public class ProgressBarImpl extends CompositeBasedControl implements IProgressBar {
 
-	private final IComposite compositeWidget;
+	private final IComposite composite;
 	private final IProgressBarCommon indeterminateProgressBar;
 	private final IProgressBarCommon progressBar;
 
@@ -69,12 +60,11 @@ public class ProgressBarImpl implements IProgressBar {
 	private int progress;
 	private boolean isIndeterminate;
 
-	public ProgressBarImpl(
-		final IComposite compositeWidget,
-		final IProgressBarSetup setup,
-		final IWidgetFactorySpi widgetsFactorySpi) {
+	public ProgressBarImpl(final IComposite composite, final IProgressBarSetup setup, final IWidgetFactorySpi widgetsFactorySpi) {
 
-		this.compositeWidget = compositeWidget;
+		super(composite);
+
+		this.composite = composite;
 
 		final String componentLayoutConstraints;
 		if (setup.getOrientation() == Orientation.HORIZONTAL) {
@@ -92,7 +82,7 @@ public class ProgressBarImpl implements IProgressBar {
 			layoutDescriptor = new MigLayoutDescriptor("0[grow]0", "0[grow][grow]0");
 		}
 
-		this.compositeWidget.setLayout(layoutDescriptor);
+		this.composite.setLayout(layoutDescriptor);
 
 		final ISpiBluePrintFactory spiBpf = new SpiBluePrintFactory();
 
@@ -102,7 +92,7 @@ public class ProgressBarImpl implements IProgressBar {
 		final IProgressBarBluePrintSpi progressBarBp = spiBpf.progressBar();
 		progressBarBp.setSetup(setup).setIndeterminate(false);
 
-		this.indeterminateProgressBar = compositeWidget.add(new ICustomWidgetCreator<ProgressBarCommonToControl>() {
+		this.indeterminateProgressBar = composite.add(new ICustomWidgetCreator<ProgressBarCommonToControl>() {
 			@Override
 			public ProgressBarCommonToControl create(final ICustomWidgetFactory widgetFactory) {
 				final IProgressBarSpi progressBarSpi = widgetsFactorySpi.createProgressBar(
@@ -113,7 +103,7 @@ public class ProgressBarImpl implements IProgressBar {
 		},
 				componentLayoutConstraints);
 
-		this.progressBar = compositeWidget.add(new ICustomWidgetCreator<ProgressBarCommonToControl>() {
+		this.progressBar = composite.add(new ICustomWidgetCreator<ProgressBarCommonToControl>() {
 			@Override
 			public ProgressBarCommonToControl create(final ICustomWidgetFactory widgetFactory) {
 				final IProgressBarSpi progressBarSpi = widgetsFactorySpi.createProgressBar(getUiReference(), progressBarBp);
@@ -137,56 +127,6 @@ public class ProgressBarImpl implements IProgressBar {
 	}
 
 	@Override
-	public IContainer getParent() {
-		return compositeWidget.getParent();
-	}
-
-	@Override
-	public void setParent(final IContainer parent) {
-		compositeWidget.setParent(parent);
-	}
-
-	@Override
-	public boolean isReparentable() {
-		return compositeWidget.isReparentable();
-	}
-
-	@Override
-	public Object getUiReference() {
-		return compositeWidget.getUiReference();
-	}
-
-	@Override
-	public void setLayoutConstraints(final Object layoutConstraints) {
-		compositeWidget.setLayoutConstraints(layoutConstraints);
-	}
-
-	@Override
-	public Object getLayoutConstraints() {
-		return compositeWidget.getLayoutConstraints();
-	}
-
-	@Override
-	public void redraw() {
-		compositeWidget.redraw();
-	}
-
-	@Override
-	public void setRedrawEnabled(final boolean enabled) {
-		compositeWidget.setRedrawEnabled(enabled);
-	}
-
-	@Override
-	public void setVisible(final boolean visible) {
-		compositeWidget.setVisible(visible);
-	}
-
-	@Override
-	public boolean isVisible() {
-		return compositeWidget.isVisible();
-	}
-
-	@Override
 	public void setEnabled(final boolean enabled) {
 		indeterminateProgressBar.setEnabled(enabled);
 		progressBar.setEnabled(enabled);
@@ -195,86 +135,6 @@ public class ProgressBarImpl implements IProgressBar {
 	@Override
 	public boolean isEnabled() {
 		return indeterminateProgressBar.isEnabled();
-	}
-
-	@Override
-	public Dimension getMinSize() {
-		return compositeWidget.getMinSize();
-	}
-
-	@Override
-	public Dimension getPreferredSize() {
-		return compositeWidget.getPreferredSize();
-	}
-
-	@Override
-	public Dimension getMaxSize() {
-		return compositeWidget.getMaxSize();
-	}
-
-	@Override
-	public void setMinSize(final Dimension minSize) {
-		compositeWidget.setMinSize(minSize);
-	}
-
-	@Override
-	public void setPreferredSize(final Dimension preferredSize) {
-		compositeWidget.setPreferredSize(preferredSize);
-	}
-
-	@Override
-	public void setMaxSize(final Dimension maxSize) {
-		compositeWidget.setMaxSize(maxSize);
-	}
-
-	@Override
-	public Dimension getSize() {
-		return compositeWidget.getSize();
-	}
-
-	@Override
-	public void setSize(final Dimension size) {
-		compositeWidget.setSize(size);
-	}
-
-	@Override
-	public void setSize(final int width, final int height) {
-		compositeWidget.setSize(width, height);
-	}
-
-	@Override
-	public void setPosition(final int x, final int y) {
-		compositeWidget.setPosition(x, y);
-	}
-
-	@Override
-	public Position getPosition() {
-		return compositeWidget.getPosition();
-	}
-
-	@Override
-	public void setPosition(final Position position) {
-		compositeWidget.setPosition(position);
-	}
-
-	@Override
-	public Position toScreen(final Position localPosition) {
-		return compositeWidget.toScreen(localPosition);
-	}
-
-	@Override
-	public Position toLocal(final Position screenPosition) {
-		return compositeWidget.toLocal(screenPosition);
-	}
-
-	@Override
-	public Position fromComponent(final IComponentCommon component, final Position componentPosition) {
-		return compositeWidget.fromComponent(component, componentPosition);
-	}
-
-	@Override
-	public Position toComponent(final Position componentPosition, final IComponentCommon component) {
-		return compositeWidget.toComponent(componentPosition, component);
 	}
 
 	@Override
@@ -295,9 +155,9 @@ public class ProgressBarImpl implements IProgressBar {
 	@Override
 	public void setIndeterminate(final boolean indeterminate) {
 		if (this.isIndeterminate != indeterminate) {
-			compositeWidget.layoutBegin();
+			composite.layoutBegin();
 			setIndeterminatState(indeterminate);
-			compositeWidget.layoutEnd();
+			composite.layoutEnd();
 		}
 	}
 
@@ -397,75 +257,25 @@ public class ProgressBarImpl implements IProgressBar {
 	}
 
 	@Override
-	public boolean requestFocus() {
-		return compositeWidget.requestFocus();
-	}
-
-	@Override
-	public void addFocusListener(final IFocusListener listener) {
-		compositeWidget.addFocusListener(listener);
-	}
-
-	@Override
-	public void removeFocusListener(final IFocusListener listener) {
-		compositeWidget.removeFocusListener(listener);
-	}
-
-	@Override
-	public void addKeyListener(final IKeyListener listener) {
-		compositeWidget.addKeyListener(listener);
-	}
-
-	@Override
-	public void removeKeyListener(final IKeyListener listener) {
-		compositeWidget.removeKeyListener(listener);
-	}
-
-	@Override
-	public void addMouseListener(final IMouseListener mouseListener) {
-		compositeWidget.addMouseListener(mouseListener);
-	}
-
-	@Override
-	public void removeMouseListener(final IMouseListener mouseListener) {
-		compositeWidget.removeMouseListener(mouseListener);
-	}
-
-	@Override
-	public void addComponentListener(final IComponentListener componentListener) {
-		compositeWidget.addComponentListener(componentListener);
-	}
-
-	@Override
-	public void removeComponentListener(final IComponentListener componentListener) {
-		compositeWidget.removeComponentListener(componentListener);
-	}
-
-	@Override
-	public IPopupMenu createPopupMenu() {
-		return compositeWidget.createPopupMenu();
-	}
-
-	@Override
 	public void setPopupMenu(final IMenuModel popupMenu) {
 		//TODO MG this might not work, popup must be set on progressBar and indeterminateProgressBar also. 
 		//For that, progressBar and indeterminateProgressBar must be api widgets 
-		compositeWidget.setPopupMenu(popupMenu);
+		composite.setPopupMenu(popupMenu);
 	}
 
 	@Override
 	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		compositeWidget.addPopupDetectionListener(listener);
+		composite.addPopupDetectionListener(listener);
 	}
 
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		compositeWidget.removePopupDetectionListener(listener);
+		composite.removePopupDetectionListener(listener);
 	}
 
 	@Override
 	public void setToolTipText(final String toolTip) {
-		compositeWidget.setToolTipText(toolTip);
+		composite.setToolTipText(toolTip);
 		indeterminateProgressBar.setToolTipText(toolTip);
 		progressBar.setToolTipText(toolTip);
 	}

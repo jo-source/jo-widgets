@@ -28,46 +28,40 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.widgets.ITextLabelCommon;
-import org.jowidgets.spi.widgets.ITextLabelSpi;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.widgets.IButtonCommon;
+import org.jowidgets.common.widgets.controller.IActionListener;
+import org.jowidgets.spi.widgets.IButtonSpi;
 
-public class TextLabelSpiWrapper extends ControlSpiWrapper implements ITextLabelCommon {
+public abstract class AbstractButtonSpiWrapper extends AbstractTextLabelSpiWrapper implements IButtonCommon {
 
-	private String text;
-
-	public TextLabelSpiWrapper(final ITextLabelSpi widget) {
+	public AbstractButtonSpiWrapper(final IButtonSpi widget) {
 		super(widget);
 	}
 
 	@Override
-	public ITextLabelSpi getWidget() {
-		return (ITextLabelSpi) super.getWidget();
+	public IButtonSpi getWidget() {
+		return (IButtonSpi) super.getWidget();
 	}
 
 	@Override
-	public void setFontSize(final int size) {
-		getWidget().setFontSize(size);
+	public void setIcon(final IImageConstant icon) {
+		getWidget().setIcon(icon);
 	}
 
 	@Override
-	public void setFontName(final String fontName) {
-		getWidget().setFontName(fontName);
+	public void setEnabled(final boolean enabled) {
+		getWidget().setEnabled(enabled);
 	}
 
 	@Override
-	public void setMarkup(final Markup markup) {
-		getWidget().setMarkup(markup);
+	public void addActionListener(final IActionListener actionListener) {
+		getWidget().addActionListener(actionListener);
 	}
 
 	@Override
-	public void setText(final String text) {
-		this.text = text;
-		getWidget().setText(text);
-	}
-
-	public String getText() {
-		return text;
+	public void removeActionListener(final IActionListener actionListener) {
+		getWidget().removeActionListener(actionListener);
 	}
 
 }

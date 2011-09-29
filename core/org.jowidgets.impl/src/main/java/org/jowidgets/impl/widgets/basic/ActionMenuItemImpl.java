@@ -29,6 +29,7 @@
 package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.IItemModel;
 import org.jowidgets.api.model.item.IItemModelListener;
@@ -38,7 +39,8 @@ import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.descriptor.setup.IAccelerateableMenuItemSetup;
 import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.controller.IMenuListener;
-import org.jowidgets.impl.base.delegate.ItemDelegate;
+import org.jowidgets.impl.base.delegate.ItemModelBindingDelegate;
+import org.jowidgets.impl.base.delegate.MenuItemDisposableDelegate;
 import org.jowidgets.impl.command.ActionExecuter;
 import org.jowidgets.impl.command.ActionWidgetSync;
 import org.jowidgets.impl.command.IActionWidget;
@@ -47,11 +49,12 @@ import org.jowidgets.impl.widgets.common.wrapper.ActionMenuItemSpiWrapper;
 import org.jowidgets.impl.widgets.common.wrapper.invoker.ActionMenuItemSpiInvoker;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 
-public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IActionMenuItem, IActionWidget, IDisposeable {
+public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IActionMenuItem, IActionWidget {
 
 	private final IMenu parent;
 	private final IItemModelListener modelListener;
 	private final IMenuListener parentMenuListener;
+	private final MenuItemDisposableDelegate disposableDelegate;
 
 	private ActionWidgetSync actionWidgetSync;
 	private ActionExecuter actionExecuter;
@@ -63,11 +66,12 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 		final IMenu parent,
 		final IActionMenuItemSpi actionMenuItemSpi,
 		final IAccelerateableMenuItemSetup setup) {
-		super(actionMenuItemSpi, new ItemDelegate(
+		super(actionMenuItemSpi, new ItemModelBindingDelegate(
 			new ActionMenuItemSpiInvoker(actionMenuItemSpi),
 			new ActionItemModelBuilder().build()));
 
 		this.parent = parent;
+		this.disposableDelegate = new MenuItemDisposableDelegate(this, getItemModelBindingDelegate());
 
 		setText(setup.getText());
 		setToolTipText(setup.getToolTipText());
@@ -166,10 +170,28 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 	}
 
 	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		disposableDelegate.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		disposableDelegate.removeDisposeListener(listener);
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return disposableDelegate.isDisposed();
+	}
+
+	@Override
 	public void dispose() {
-		parent.removeMenuListener(parentMenuListener);
-		getModel().removeItemModelListener(modelListener);
-		disposeActionWidgetSync();
+		if (!isDisposed()) {
+			parent.removeMenuListener(parentMenuListener);
+			getModel().removeItemModelListener(modelListener);
+			disposeActionWidgetSync();
+			disposableDelegate.dispose();
+		}
 	}
 
 	private void disposeActionWidgetSync() {
@@ -184,7 +206,7 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 		if (getModel() != null) {
 			getModel().removeItemModelListener(modelListener);
 		}
-		getItemDelegate().setModel(model);
+		getItemModelBindingDelegate().setModel(model);
 		setActionValue(model.getAction());
 		model.addItemModelListener(modelListener);
 	}

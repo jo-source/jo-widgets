@@ -28,6 +28,7 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.model.item.IMenuItemModel;
 import org.jowidgets.api.model.item.ISelectableItemModel;
 import org.jowidgets.api.model.item.ISelectableMenuItemModel;
@@ -35,22 +36,25 @@ import org.jowidgets.api.widgets.IMenu;
 import org.jowidgets.api.widgets.ISelectableMenuItem;
 import org.jowidgets.api.widgets.descriptor.setup.ISelectableItemSetup;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.impl.base.delegate.SelectableItemDelegate;
+import org.jowidgets.impl.base.delegate.MenuItemDisposableDelegate;
+import org.jowidgets.impl.base.delegate.SelectableItemModelBindingDelegate;
 import org.jowidgets.impl.widgets.common.wrapper.SelectableMenuItemSpiWrapper;
 import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 
 public class SelectableMenuItemImpl extends SelectableMenuItemSpiWrapper implements ISelectableMenuItem {
 
 	private final IMenu parent;
+	private final MenuItemDisposableDelegate disposableDelegate;
 
 	public SelectableMenuItemImpl(
 		final IMenu parent,
 		final ISelectableMenuItemSpi actionMenuItemSpi,
 		final ISelectableItemSetup setup,
-		final SelectableItemDelegate itemDelegate) {
+		final SelectableItemModelBindingDelegate itemDelegate) {
 		super(actionMenuItemSpi, itemDelegate);
 
 		this.parent = parent;
+		this.disposableDelegate = new MenuItemDisposableDelegate(this, getItemModelBindingDelegate());
 
 		setText(setup.getText());
 		setToolTipText(setup.getToolTipText());
@@ -67,6 +71,26 @@ public class SelectableMenuItemImpl extends SelectableMenuItemSpiWrapper impleme
 	}
 
 	@Override
+	public void dispose() {
+		disposableDelegate.dispose();
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return disposableDelegate.isDisposed();
+	}
+
+	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		disposableDelegate.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		disposableDelegate.removeDisposeListener(listener);
+	}
+
+	@Override
 	public IMenu getParent() {
 		return parent;
 	}
@@ -78,7 +102,7 @@ public class SelectableMenuItemImpl extends SelectableMenuItemSpiWrapper impleme
 
 	@Override
 	public void setModel(final ISelectableMenuItemModel model) {
-		super.getItemDelegate().setModel(model);
+		super.getItemModelBindingDelegate().setModel(model);
 	}
 
 	@Override
@@ -93,7 +117,7 @@ public class SelectableMenuItemImpl extends SelectableMenuItemSpiWrapper impleme
 
 	@Override
 	public ISelectableMenuItemModel getModel() {
-		return getItemDelegate().getModel();
+		return getItemModelBindingDelegate().getModel();
 	}
 
 }

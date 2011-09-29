@@ -110,21 +110,20 @@ public class TreeContainerDelegate implements ITreeContainer {
 	}
 
 	@Override
-	public void removeNode(final ITreeNode node) {
-		Assert.paramNotNull(node, "node");
-		final int index = children.indexOf(node);
-		if (index != -1) {
-			children.remove(index);
-			treeNodeSpi.removeNode(index);
-		}
+	public void removeNode(final int index) {
+		final ITreeNode node = children.remove(index);
+		node.dispose();
+		treeNodeSpi.removeNode(index);
 		parentTree.unRegisterNode((TreeNodeImpl) node);
 	}
 
 	@Override
-	public void removeNode(final int index) {
-		final ITreeNode node = children.remove(index);
-		treeNodeSpi.removeNode(index);
-		parentTree.unRegisterNode((TreeNodeImpl) node);
+	public void removeNode(final ITreeNode node) {
+		Assert.paramNotNull(node, "node");
+		final int index = children.indexOf(node);
+		if (index != -1) {
+			removeNode(index);
+		}
 	}
 
 	@Override
@@ -144,6 +143,16 @@ public class TreeContainerDelegate implements ITreeContainer {
 	public void setAllChildrenExpanded(final boolean expanded) {
 		for (final ITreeNode childNode : children) {
 			childNode.setAllChildrenExpanded(expanded);
+		}
+	}
+
+	public void dispose() {
+		final List<ITreeNode> childrenCopy = new LinkedList<ITreeNode>(children);
+		//clear the children to avoid that children will be removed
+		//unnecessarily from its parent tree node on dispose invocation
+		children.clear();
+		for (final ITreeNode child : childrenCopy) {
+			child.dispose();
 		}
 	}
 

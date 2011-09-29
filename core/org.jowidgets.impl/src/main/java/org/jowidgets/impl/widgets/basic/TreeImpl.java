@@ -33,6 +33,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.controller.ITreeListener;
 import org.jowidgets.api.controller.ITreePopupDetectionListener;
 import org.jowidgets.api.controller.ITreeSelectionListener;
@@ -52,7 +53,7 @@ import org.jowidgets.impl.event.TreePopupEvent;
 import org.jowidgets.impl.event.TreeSelectionEvent;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.impl.widgets.common.wrapper.ControlSpiWrapper;
+import org.jowidgets.impl.widgets.common.wrapper.AbstractControlSpiWrapper;
 import org.jowidgets.spi.widgets.ITreeNodeSpi;
 import org.jowidgets.spi.widgets.ITreeSpi;
 import org.jowidgets.spi.widgets.controller.ITreeSelectionListenerSpi;
@@ -60,7 +61,7 @@ import org.jowidgets.tools.controller.TreeObservable;
 import org.jowidgets.tools.controller.TreePopupDetectionObservable;
 import org.jowidgets.tools.controller.TreeSelectionObservable;
 
-public class TreeImpl extends ControlSpiWrapper implements ITree {
+public class TreeImpl extends AbstractControlSpiWrapper implements ITree {
 
 	private final ControlDelegate controlDelegate;
 	private final TreeSelectionObservable treeSelectionObservable;
@@ -74,13 +75,13 @@ public class TreeImpl extends ControlSpiWrapper implements ITree {
 
 	private List<ITreeNodeSpi> lastSelection;
 
-	public TreeImpl(final ITreeSpi widget, final ITreeDescriptor descriptor) {
-		super(widget);
+	public TreeImpl(final ITreeSpi widgetSpi, final ITreeDescriptor descriptor) {
+		super(widgetSpi);
 
 		this.defaultInnerIcon = descriptor.getDefaultInnerIcon();
 		this.defaultLeafIcon = descriptor.getDefaultLeafIcon();
 
-		this.controlDelegate = new ControlDelegate();
+		this.controlDelegate = new ControlDelegate(widgetSpi, this);
 
 		this.treeSelectionObservable = new TreeSelectionObservable();
 		this.treeObservable = new TreeObservable();
@@ -133,7 +134,7 @@ public class TreeImpl extends ControlSpiWrapper implements ITree {
 			}
 		});
 
-		this.treeContainerDelegate = new TreeContainerDelegate(this, null, null, widget.getRootNode());
+		this.treeContainerDelegate = new TreeContainerDelegate(this, null, null, widgetSpi.getRootNode());
 	}
 
 	@Override
@@ -157,8 +158,31 @@ public class TreeImpl extends ControlSpiWrapper implements ITree {
 	}
 
 	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		controlDelegate.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		controlDelegate.removeDisposeListener(listener);
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return controlDelegate.isDisposed();
+	}
+
+	@Override
+	public void dispose() {
+		if (!isDisposed()) {
+			treeContainerDelegate.dispose();
+			controlDelegate.dispose();
+		}
+	}
+
+	@Override
 	public IPopupMenu createPopupMenu() {
-		return new PopupMenuImpl(getWidget().createPopupMenu(), this);
+		return controlDelegate.createPopupMenu();
 	}
 
 	@Override

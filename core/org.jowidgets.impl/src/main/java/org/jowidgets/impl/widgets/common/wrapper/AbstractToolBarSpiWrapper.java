@@ -28,44 +28,23 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.widgets.IInputControlCommon;
-import org.jowidgets.common.widgets.controller.IInputListener;
-import org.jowidgets.spi.widgets.IInputControlSpi;
+import org.jowidgets.common.widgets.IToolBarCommon;
+import org.jowidgets.spi.widgets.IToolBarSpi;
 
-public class InputControlSpiWrapper extends ControlSpiWrapper implements IInputControlCommon {
+public abstract class AbstractToolBarSpiWrapper extends AbstractControlSpiWrapper implements IToolBarCommon {
 
-	public InputControlSpiWrapper(final IInputControlSpi widget) {
-		super(widget);
+	public AbstractToolBarSpiWrapper(final IToolBarSpi component) {
+		super(component);
 	}
 
 	@Override
-	public IInputControlSpi getWidget() {
-		return (IInputControlSpi) super.getWidget();
+	public IToolBarSpi getWidget() {
+		return (IToolBarSpi) super.getWidget();
 	}
 
 	@Override
-	public void addInputListener(final IInputListener listener) {
-		getWidget().addInputListener(listener);
-	}
-
-	@Override
-	public void removeInputListener(final IInputListener listener) {
-		getWidget().removeInputListener(listener);
-	}
-
-	@Override
-	public void setEditable(final boolean editable) {
-		getWidget().setEditable(editable);
-	}
-
-	@Override
-	public void setLayoutConstraints(final Object layoutConstraints) {
-		getWidget().setLayoutConstraints(layoutConstraints);
-	}
-
-	@Override
-	public Object getLayoutConstraints() {
-		return getWidget().getLayoutConstraints();
+	public void pack() {
+		getWidget().pack();
 	}
 
 }

@@ -32,6 +32,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.controller.ITabItemListener;
 import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.widgets.IControl;
@@ -51,6 +52,8 @@ import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.impl.base.delegate.ContainerDelegate;
+import org.jowidgets.impl.base.delegate.PopupMenuCreationDelegate;
+import org.jowidgets.impl.base.delegate.PopupMenuCreationDelegate.IPopupFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.LayoutSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
@@ -82,6 +85,10 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 	private final Set<IPopupDetectionListener> tabPopupDetectionListeners;
 	private final IPopupDetectionListener tabPopupDetectionListener;
 
+	private final PopupMenuCreationDelegate tabPopupMenuCreationDelegate;
+
+	private boolean onRemoveByDispose;
+
 	public TabItemImpl(final ITabItemSpi widgetSpi, final ITabItemDescriptor descriptor, final TabFolderImpl tabFolderImpl) {
 		super(widgetSpi);
 		this.tabFolderImpl = tabFolderImpl;
@@ -89,6 +96,7 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 		this.selected = false;
 		this.itemListeners = new HashSet<ITabItemListener>();
 		this.parent = tabFolderImpl;
+		this.onRemoveByDispose = false;
 
 		VisibiliySettingsInvoker.setVisibility(descriptor, this);
 		ColorSettingsInvoker.setColors(descriptor, this);
@@ -158,6 +166,12 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 		widgetSpi.addPopupDetectionListener(popupDetectionListener);
 		widgetSpi.addTabPopupDetectionListener(tabPopupDetectionListener);
 
+		this.tabPopupMenuCreationDelegate = new PopupMenuCreationDelegate(new IPopupFactory() {
+			@Override
+			public IPopupMenu create() {
+				return new PopupMenuImpl(getWidget().createTabPopupMenu(), TabItemImpl.this);
+			}
+		});
 		this.containerDelegate = new ContainerDelegate(widgetSpi, this);
 	}
 
@@ -286,6 +300,36 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 	}
 
 	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		containerDelegate.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		containerDelegate.removeDisposeListener(listener);
+	}
+
+	@Override
+	public void dispose() {
+		if (!isDisposed()) {
+			if (getParent().getItems().contains(this) && !onRemoveByDispose) {
+				onRemoveByDispose = true;
+				getParent().removeItem(this);
+				onRemoveByDispose = false;
+			}
+			else {
+				tabPopupMenuCreationDelegate.dispose();
+				containerDelegate.dispose();
+			}
+		}
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return containerDelegate.isDisposed();
+	}
+
+	@Override
 	public List<IControl> getChildren() {
 		checkDetached();
 		return containerDelegate.getChildren();
@@ -365,13 +409,13 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 	@Override
 	public IPopupMenu createPopupMenu() {
 		checkDetached();
-		return new PopupMenuImpl(getWidget().createPopupMenu(), this);
+		return containerDelegate.createPopupMenu();
 	}
 
 	@Override
 	public IPopupMenu createTabPopupMenu() {
 		checkDetached();
-		return new PopupMenuImpl(getWidget().createTabPopupMenu(), this);
+		return tabPopupMenuCreationDelegate.createPopupMenu();
 	}
 
 	@Override

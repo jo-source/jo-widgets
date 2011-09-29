@@ -42,6 +42,7 @@ import org.jowidgets.api.model.item.ISeparatorItemModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IActionMenuItem;
 import org.jowidgets.api.widgets.IMenu;
+import org.jowidgets.api.widgets.IMenuBar;
 import org.jowidgets.api.widgets.IMenuItem;
 import org.jowidgets.api.widgets.ISelectableMenuItem;
 import org.jowidgets.api.widgets.ISubMenu;
@@ -58,7 +59,6 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.impl.model.item.CheckedItemModelBuilder;
 import org.jowidgets.impl.model.item.RadioItemModelBuilder;
 import org.jowidgets.impl.widgets.basic.ActionMenuItemImpl;
-import org.jowidgets.impl.widgets.basic.IDisposeable;
 import org.jowidgets.impl.widgets.basic.SelectableMenuItemImpl;
 import org.jowidgets.impl.widgets.basic.SeparatorMenuItemImpl;
 import org.jowidgets.impl.widgets.basic.SubMenuImpl;
@@ -71,22 +71,26 @@ import org.jowidgets.spi.widgets.ISubMenuSpi;
 import org.jowidgets.tools.controller.ListModelAdapter;
 import org.jowidgets.util.Assert;
 
-public class MenuDelegate implements IDisposeable {
+public class MenuDelegate extends DisposableDelegate {
 
 	private final IMenuSpi menuSpi;
 	private final IMenu menu;
+	private final ItemModelBindingDelegate itemDelegate;
 	private final List<IMenuItem> children;
 	private final IListModelListener listModelListener;
 
 	private IMenuModel model;
+	private boolean onRemoveByDispose;
 
-	public MenuDelegate(final IMenu menu, final IMenuSpi menuSpi, final IMenuModel model) {
+	public MenuDelegate(final IMenu menu, final IMenuSpi menuSpi, final IMenuModel model, final ItemModelBindingDelegate itemDelegate) {
 		Assert.paramNotNull(menu, "menu");
 		Assert.paramNotNull(menuSpi, "menuSpi");
 
 		this.children = new LinkedList<IMenuItem>();
 		this.menu = menu;
 		this.menuSpi = menuSpi;
+		this.itemDelegate = itemDelegate;
+		this.onRemoveByDispose = false;
 
 		this.listModelListener = new ListModelAdapter() {
 
@@ -166,7 +170,7 @@ public class MenuDelegate implements IDisposeable {
 				menu,
 				selectableMenuItemSpi,
 				(ISelectableItemSetup) descriptor,
-				new SelectableItemDelegate(
+				new SelectableItemModelBindingDelegate(
 					new SelectableMenuItemSpiInvoker(selectableMenuItemSpi),
 					new CheckedItemModelBuilder().build()));
 			result = (WIDGET_TYPE) selectableMenuItem;
@@ -177,7 +181,7 @@ public class MenuDelegate implements IDisposeable {
 				menu,
 				selectableMenuItemSpi,
 				(ISelectableItemSetup) descriptor,
-				new SelectableItemDelegate(
+				new SelectableItemModelBindingDelegate(
 					new SelectableMenuItemSpiInvoker(selectableMenuItemSpi),
 					new RadioItemModelBuilder().build()));
 			result = (WIDGET_TYPE) selectableMenuItem;
@@ -256,10 +260,8 @@ public class MenuDelegate implements IDisposeable {
 
 	public void removeItem(final int index) {
 		final IMenuItem item = children.get(index);
-		if (item instanceof IDisposeable) {
-			((IDisposeable) item).dispose();
-		}
 		children.remove(index);
+		item.dispose();
 		menuSpi.remove(index);
 	}
 
@@ -300,8 +302,37 @@ public class MenuDelegate implements IDisposeable {
 
 	@Override
 	public void dispose() {
-		this.model.removeListModelListener(listModelListener);
-		removeAll();
-	}
+		if (!isDisposed()) {
+			this.model.removeListModelListener(listModelListener);
+			if (menu.getParent() instanceof IMenu
+				&& menu.getParent() != null
+				&& ((IMenu) menu.getParent()).getChildren().contains(menu)
+				&& !onRemoveByDispose) {
 
+				onRemoveByDispose = true;
+				((IMenu) menu.getParent()).getChildren().remove(menu); //this will invoke dispose by the parent menu
+				onRemoveByDispose = false;
+			}
+			else if (menu.getParent() instanceof IMenuBar
+				&& menu.getParent() != null
+				&& ((IMenuBar) menu.getParent()).getMenus().contains(menu)
+				&& !onRemoveByDispose) {
+
+				onRemoveByDispose = true;
+				((IMenuBar) menu.getParent()).getMenus().remove(menu); //this will invoke dispose by the parent menu bar
+				onRemoveByDispose = false;
+			}
+			else {
+				itemDelegate.dispose();
+				final List<IMenuItem> childrenCopy = new LinkedList<IMenuItem>(children);
+				//clear the children to avoid that children will be removed
+				//unnecessarily from its parent container on dispose invocation
+				children.clear();
+				for (final IMenuItem child : childrenCopy) {
+					child.dispose();
+				}
+				super.dispose();
+			}
+		}
+	}
 }

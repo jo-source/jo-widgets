@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2010, grossmann, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,64 +28,80 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.IItemCommon;
-import org.jowidgets.impl.base.delegate.ItemModelBindingDelegate;
-import org.jowidgets.spi.widgets.IItemSpi;
+import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.widgets.IControlCommon;
+import org.jowidgets.spi.widgets.IControlSpi;
 
-public class ModelBasedItemSpiWrapper extends WidgetSpiWrapper implements IItemCommon {
+public abstract class AbstractControlSpiWrapper extends AbstractComponentSpiWrapper implements IControlCommon {
+	private static final Dimension INFINITE_SIZE = new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
 
-	private final ItemModelBindingDelegate itemModelBindingDelegate;
+	private Dimension minSize;
+	private Dimension prefferedSize;
+	private Dimension maxSize;
 
-	public ModelBasedItemSpiWrapper(final IItemSpi component, final ItemModelBindingDelegate itemModelBindingDelegate) {
-		super(component);
-		this.itemModelBindingDelegate = itemModelBindingDelegate;
+	public AbstractControlSpiWrapper(final IControlSpi control) {
+		super(control);
 	}
 
 	@Override
-	public IItemSpi getWidget() {
-		return (IItemSpi) super.getWidget();
-	}
-
-	protected ItemModelBindingDelegate getItemModelBindingDelegate() {
-		return itemModelBindingDelegate;
+	public IControlSpi getWidget() {
+		return (IControlSpi) super.getWidget();
 	}
 
 	@Override
-	public void setText(final String text) {
-		itemModelBindingDelegate.setText(text);
+	public void setLayoutConstraints(final Object layoutConstraints) {
+		getWidget().setLayoutConstraints(layoutConstraints);
 	}
 
 	@Override
-	public void setToolTipText(final String toolTipText) {
-		itemModelBindingDelegate.setToolTipText(toolTipText);
+	public Object getLayoutConstraints() {
+		return getWidget().getLayoutConstraints();
+	}
+
+	public void setMinSize(final Dimension minSize) {
+		this.minSize = minSize;
+	}
+
+	public void setPreferredSize(final Dimension preferredSize) {
+		this.prefferedSize = preferredSize;
+	}
+
+	public void setMaxSize(final Dimension maxSize) {
+		this.maxSize = maxSize;
 	}
 
 	@Override
-	public void setIcon(final IImageConstant icon) {
-		itemModelBindingDelegate.setIcon(icon);
-	}
-
-	public String getText() {
-		return itemModelBindingDelegate.getText();
-	}
-
-	public String getToolTipText() {
-		return itemModelBindingDelegate.getToolTipText();
-	}
-
-	public IImageConstant getIcon() {
-		return itemModelBindingDelegate.getIcon();
+	public void setToolTipText(final String toolTip) {
+		getWidget().setToolTipText(toolTip);
 	}
 
 	@Override
-	public void setEnabled(final boolean enabled) {
-		itemModelBindingDelegate.setEnabled(enabled);
+	public Dimension getMinSize() {
+		if (minSize != null) {
+			return minSize;
+		}
+		else {
+			return getWidget().getMinSize();
+		}
 	}
 
 	@Override
-	public boolean isEnabled() {
-		return itemModelBindingDelegate.isEnabled();
+	public Dimension getPreferredSize() {
+		if (prefferedSize != null) {
+			return prefferedSize;
+		}
+		else {
+			return getWidget().getPreferredSize();
+		}
 	}
 
+	@Override
+	public Dimension getMaxSize() {
+		if (maxSize != null) {
+			return maxSize;
+		}
+		else {
+			return INFINITE_SIZE;
+		}
+	}
 }

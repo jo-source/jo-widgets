@@ -28,6 +28,7 @@
 
 package org.jowidgets.tools.widgets.wrapper;
 
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.util.Assert;
 
@@ -62,6 +63,26 @@ public class WidgetWrapper implements IWidget {
 	@Override
 	public IWidget getParent() {
 		return widget.getParent();
+	}
+
+	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		widget.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		widget.removeDisposeListener(listener);
+	}
+
+	@Override
+	public void dispose() {
+		widget.dispose();
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return widget.isDisposed();
 	}
 
 }

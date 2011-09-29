@@ -35,7 +35,7 @@ import org.jowidgets.common.widgets.IWindowCommon;
 import org.jowidgets.common.widgets.controller.IWindowListener;
 import org.jowidgets.spi.widgets.IWindowSpi;
 
-public abstract class AbstractWindowSpiWrapper extends ComponentSpiWrapper implements IWindowCommon {
+public abstract class AbstractWindowSpiWrapper extends AbstractComponentSpiWrapper implements IWindowCommon {
 
 	public AbstractWindowSpiWrapper(final IWindowSpi widget) {
 		super(widget);

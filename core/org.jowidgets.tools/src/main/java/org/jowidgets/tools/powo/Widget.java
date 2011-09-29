@@ -28,6 +28,10 @@
 
 package org.jowidgets.tools.powo;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.common.widgets.builder.ISetupBuilder;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
@@ -37,11 +41,15 @@ class Widget<WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends IWidgetDescrip
 		IWidget {
 
 	private final BLUE_PRINT_TYPE bluePrint;
+	private final Set<IDisposeListener> disposeListeners;
 	private WIDGET_TYPE widget;
 	private Boolean enabled;
+	private boolean disposed;
 
 	Widget(final BLUE_PRINT_TYPE bluePrint) {
 		this.bluePrint = bluePrint;
+		this.disposeListeners = new HashSet<IDisposeListener>();
+		this.disposed = false;
 	}
 
 	public final boolean isInitialized() {
@@ -51,14 +59,65 @@ class Widget<WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends IWidgetDescrip
 	void initialize(final WIDGET_TYPE widget) {
 		Assert.paramNotNull(widget, "widget");
 		checkNotInitialized();
+		if (disposed) {
+			throw new IllegalStateException("Widget is disposed!");
+		}
 		this.widget = widget;
 		if (enabled != null) {
 			widget.setEnabled(enabled.booleanValue());
+		}
+		for (final IDisposeListener listener : disposeListeners) {
+			widget.addDisposeListener(listener);
 		}
 	}
 
 	final IWidgetDescriptor<? extends WIDGET_TYPE> getDescriptor() {
 		return bluePrint;
+	}
+
+	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		Assert.paramNotNull(listener, "listener");
+		if (isInitialized()) {
+			widget.addDisposeListener(listener);
+		}
+		else {
+			disposeListeners.add(listener);
+		}
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		Assert.paramNotNull(listener, "listener");
+		if (isInitialized()) {
+			widget.removeDisposeListener(listener);
+		}
+		else {
+			disposeListeners.remove(listener);
+		}
+	}
+
+	@Override
+	public void dispose() {
+		if (isInitialized()) {
+			widget.dispose();
+		}
+		else {
+			for (final IDisposeListener listener : disposeListeners) {
+				listener.onDispose();
+			}
+			this.disposed = true;
+		}
+	}
+
+	@Override
+	public boolean isDisposed() {
+		if (isInitialized()) {
+			return widget.isDisposed();
+		}
+		else {
+			return disposed;
+		}
 	}
 
 	@Override
@@ -73,8 +132,12 @@ class Widget<WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends IWidgetDescrip
 
 	@Override
 	public boolean isEnabled() {
-		checkInitialized();
-		return widget.isEnabled();
+		if (isInitialized()) {
+			return widget.isEnabled();
+		}
+		else {
+			return enabled == null || enabled.booleanValue();
+		}
 	}
 
 	@Override

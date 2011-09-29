@@ -42,16 +42,15 @@ import org.jowidgets.common.widgets.controller.IFocusListener;
 import org.jowidgets.common.widgets.controller.IKeyListener;
 import org.jowidgets.common.widgets.controller.IMouseListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
-import org.jowidgets.impl.widgets.basic.PopupMenuImpl;
 import org.jowidgets.spi.widgets.IComponentSpi;
 
-public class ComponentSpiWrapper extends WidgetSpiWrapper implements IComponentCommon {
+public abstract class AbstractComponentSpiWrapper extends WidgetSpiWrapper implements IComponentCommon {
 
 	private final IPopupDetectionListener popupListener;
 	private IMenuModel popupMenuModel;
 	private IPopupMenu popupMenu;
 
-	public ComponentSpiWrapper(final IComponentSpi component) {
+	public AbstractComponentSpiWrapper(final IComponentSpi component) {
 		super(component);
 		this.popupListener = new IPopupDetectionListener() {
 
@@ -59,7 +58,7 @@ public class ComponentSpiWrapper extends WidgetSpiWrapper implements IComponentC
 			public void popupDetected(final Position position) {
 				if (popupMenuModel != null) {
 					if (popupMenu == null) {
-						popupMenu = new PopupMenuImpl(getWidget().createPopupMenu(), (IComponent) ComponentSpiWrapper.this);
+						popupMenu = createPopupMenu();
 					}
 					if (popupMenu.getModel() != popupMenuModel) {
 						popupMenu.setModel(popupMenuModel);
@@ -69,6 +68,8 @@ public class ComponentSpiWrapper extends WidgetSpiWrapper implements IComponentC
 			}
 		};
 	}
+
+	public abstract IPopupMenu createPopupMenu();
 
 	@Override
 	public void redraw() {

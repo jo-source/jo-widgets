@@ -32,6 +32,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.model.IListItemListener;
 import org.jowidgets.api.model.IListItemObservable;
 import org.jowidgets.api.model.IListModelListener;
@@ -68,7 +69,7 @@ import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.event.ListItemObservable;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.impl.widgets.common.wrapper.ToolBarSpiWrapper;
+import org.jowidgets.impl.widgets.common.wrapper.AbstractToolBarSpiWrapper;
 import org.jowidgets.spi.widgets.IToolBarButtonSpi;
 import org.jowidgets.spi.widgets.IToolBarContainerItemSpi;
 import org.jowidgets.spi.widgets.IToolBarItemSpi;
@@ -78,7 +79,7 @@ import org.jowidgets.spi.widgets.IToolBarToggleButtonSpi;
 import org.jowidgets.tools.controller.ListModelAdapter;
 import org.jowidgets.util.Assert;
 
-public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar, IListItemObservable {
+public class ToolBarImpl extends AbstractToolBarSpiWrapper implements IToolBar, IListItemObservable {
 
 	private final ControlDelegate controlDelegate;
 	private final List<IToolBarItem> children;
@@ -86,9 +87,9 @@ public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar, IListIte
 	private final ListItemObservable itemObs;
 	private IToolBarModel model;
 
-	public ToolBarImpl(final IToolBarSpi widget, final IToolBarSetup setup) {
-		super(widget);
-		this.controlDelegate = new ControlDelegate();
+	public ToolBarImpl(final IToolBarSpi widgetSpi, final IToolBarSetup setup) {
+		super(widgetSpi);
+		this.controlDelegate = new ControlDelegate(widgetSpi, this);
 
 		this.children = new LinkedList<IToolBarItem>();
 
@@ -150,8 +151,38 @@ public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar, IListIte
 	}
 
 	@Override
+	public void addDisposeListener(final IDisposeListener listener) {
+		controlDelegate.addDisposeListener(listener);
+	}
+
+	@Override
+	public void removeDisposeListener(final IDisposeListener listener) {
+		controlDelegate.removeDisposeListener(listener);
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return controlDelegate.isDisposed();
+	}
+
+	@Override
+	public void dispose() {
+		if (!isDisposed()) {
+			final List<IToolBarItem> childrenCopy = new LinkedList<IToolBarItem>(children);
+			//clear the children to avoid that children will be removed
+			//unnecessarily from its parent toolbar on dispose invocation
+			children.clear();
+			for (final IToolBarItem child : childrenCopy) {
+				child.dispose();
+			}
+			controlDelegate.dispose();
+		}
+
+	}
+
+	@Override
 	public IPopupMenu createPopupMenu() {
-		return new PopupMenuImpl(getWidget().createPopupMenu(), this);
+		return controlDelegate.createPopupMenu();
 	}
 
 	@Override
@@ -162,10 +193,8 @@ public class ToolBarImpl extends ToolBarSpiWrapper implements IToolBar, IListIte
 	@Override
 	public void remove(final int index) {
 		final IToolBarItem item = children.get(index);
-		if (item instanceof IDisposeable) {
-			((IDisposeable) item).dispose();
-		}
 		children.remove(index);
+		item.dispose();
 		getWidget().remove(index);
 	}
 

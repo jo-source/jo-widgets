@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,42 +26,12 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.common.wrapper;
+package org.jowidgets.api.controller;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.IButtonCommon;
-import org.jowidgets.common.widgets.controller.IActionListener;
-import org.jowidgets.spi.widgets.IButtonSpi;
+public interface IDisposeObservable {
 
-public class ButtonSpiWrapper extends TextLabelSpiWrapper implements IButtonCommon {
+	void addDisposeListener(IDisposeListener listener);
 
-	public ButtonSpiWrapper(final IButtonSpi widget) {
-		super(widget);
-	}
-
-	@Override
-	public IButtonSpi getWidget() {
-		return (IButtonSpi) super.getWidget();
-	}
-
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		getWidget().setIcon(icon);
-	}
-
-	@Override
-	public void setEnabled(final boolean enabled) {
-		getWidget().setEnabled(enabled);
-	}
-
-	@Override
-	public void addActionListener(final IActionListener actionListener) {
-		getWidget().addActionListener(actionListener);
-	}
-
-	@Override
-	public void removeActionListener(final IActionListener actionListener) {
-		getWidget().removeActionListener(actionListener);
-	}
+	void removeDisposeListener(IDisposeListener listener);
 
 }

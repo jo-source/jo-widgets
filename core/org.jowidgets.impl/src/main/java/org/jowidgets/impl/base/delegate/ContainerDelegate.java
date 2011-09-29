@@ -33,23 +33,59 @@ import java.util.List;
 
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
+import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.spi.widgets.IContainerSpi;
 import org.jowidgets.util.Assert;
 
-public class ContainerDelegate {
+public class ContainerDelegate extends DisposableDelegate {
 
-	private final IContainerSpi containerWidget;
-	private final IContainer widget;
+	private final IContainerSpi containerSpi;
+	private final IContainer container;
 	private final List<IControl> children;
+	private final PopupMenuCreationDelegate popupMenuCreationDelegate;
 
-	public ContainerDelegate(final IContainerSpi containerWidget, final IContainer widget) {
-		Assert.paramNotNull(containerWidget, "containerWidget");
-		Assert.paramNotNull(widget, "widget");
-		this.containerWidget = containerWidget;
-		this.widget = widget;
+	private boolean onRemoveByDispose;
+
+	public ContainerDelegate(final IContainerSpi containerSpi, final IContainer container) {
+		Assert.paramNotNull(containerSpi, "containerWidget");
+		Assert.paramNotNull(container, "widget");
+		this.containerSpi = containerSpi;
+		this.container = container;
 		this.children = new LinkedList<IControl>();
+		this.popupMenuCreationDelegate = new PopupMenuCreationDelegate(containerSpi, container);
+		this.onRemoveByDispose = false;
+	}
+
+	public IPopupMenu createPopupMenu() {
+		return popupMenuCreationDelegate.createPopupMenu();
+	}
+
+	@Override
+	public void dispose() {
+		if (!isDisposed()) {
+			if (container instanceof IControl
+				&& container.getParent() != null
+				&& (((IControl) container).getParent()).getChildren().contains(container)
+				&& !onRemoveByDispose) {
+
+				onRemoveByDispose = true;
+				(((IControl) container).getParent()).getChildren().remove(container); //this will invoke dispose by the parent container
+				onRemoveByDispose = false;
+			}
+			else {
+				popupMenuCreationDelegate.dispose();
+				final List<IControl> childrenCopy = new LinkedList<IControl>(children);
+				//clear the children to avoid that children will be removed
+				//unnecessarily from its parent container on dispose invocation
+				children.clear();
+				for (final IControl child : childrenCopy) {
+					child.dispose();
+				}
+				super.dispose();
+			}
+		}
 	}
 
 	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
@@ -90,9 +126,9 @@ public class ContainerDelegate {
 		final Integer index,
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
-		final WIDGET_TYPE result = containerWidget.add(index, descriptor, layoutConstraints);
+		final WIDGET_TYPE result = containerSpi.add(index, descriptor, layoutConstraints);
 		if (result instanceof IControl) {
-			((IControl) result).setParent(widget);
+			((IControl) result).setParent(container);
 		}
 		if (index != null) {
 			children.add(index.intValue(), result);
@@ -107,9 +143,9 @@ public class ContainerDelegate {
 		final Integer index,
 		final ICustomWidgetCreator<WIDGET_TYPE> creator,
 		final Object layoutConstraints) {
-		final WIDGET_TYPE result = containerWidget.add(index, creator, layoutConstraints);
+		final WIDGET_TYPE result = containerSpi.add(index, creator, layoutConstraints);
 		if (result instanceof IControl) {
-			((IControl) result).setParent(widget);
+			((IControl) result).setParent(container);
 		}
 		if (index != null) {
 			children.add(index.intValue(), result);
@@ -121,7 +157,7 @@ public class ContainerDelegate {
 	}
 
 	public void setTabOrder(final List<? extends IControl> tabOrder) {
-		containerWidget.setTabOrder(tabOrder);
+		containerSpi.setTabOrder(tabOrder);
 	}
 
 	public List<IControl> getChildren() {
@@ -129,15 +165,20 @@ public class ContainerDelegate {
 	}
 
 	public void removeAll() {
+		final List<IControl> childrenCopy = new LinkedList<IControl>(children);
 		children.clear();
-		containerWidget.removeAll();
+		for (final IControl child : childrenCopy) {
+			child.dispose();
+		}
+		containerSpi.removeAll();
 	}
 
 	public boolean remove(final IControl control) {
 		Assert.paramNotNull(control, "control");
 		if (children.contains(control)) {
-			boolean removed = containerWidget.remove(control);
-			removed = removed && children.remove(control);
+			boolean removed = children.remove(control);
+			control.dispose();
+			removed = removed && containerSpi.remove(control);
 			if (removed) {
 				return true;
 			}

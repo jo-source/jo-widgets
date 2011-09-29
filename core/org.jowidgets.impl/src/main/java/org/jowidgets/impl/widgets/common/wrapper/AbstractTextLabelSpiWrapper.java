@@ -28,33 +28,46 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.widgets.ITabFolderCommon;
-import org.jowidgets.spi.widgets.ITabFolderSpi;
+import org.jowidgets.common.types.Markup;
+import org.jowidgets.common.widgets.ITextLabelCommon;
+import org.jowidgets.spi.widgets.ITextLabelSpi;
 
-public class TabFolderSpiWrapper extends ControlSpiWrapper implements ITabFolderCommon {
+public abstract class AbstractTextLabelSpiWrapper extends AbstractControlSpiWrapper implements ITextLabelCommon {
 
-	public TabFolderSpiWrapper(final ITabFolderSpi widget) {
+	private String text;
+
+	public AbstractTextLabelSpiWrapper(final ITextLabelSpi widget) {
 		super(widget);
 	}
 
 	@Override
-	public ITabFolderSpi getWidget() {
-		return (ITabFolderSpi) super.getWidget();
+	public ITextLabelSpi getWidget() {
+		return (ITextLabelSpi) super.getWidget();
 	}
 
 	@Override
-	public void removeItem(final int index) {
-		getWidget().removeItem(index);
+	public void setFontSize(final int size) {
+		getWidget().setFontSize(size);
 	}
 
 	@Override
-	public void setSelectedItem(final int index) {
-		getWidget().setSelectedItem(index);
+	public void setFontName(final String fontName) {
+		getWidget().setFontName(fontName);
 	}
 
 	@Override
-	public int getSelectedIndex() {
-		return getWidget().getSelectedIndex();
+	public void setMarkup(final Markup markup) {
+		getWidget().setMarkup(markup);
+	}
+
+	@Override
+	public void setText(final String text) {
+		this.text = text;
+		getWidget().setText(text);
+	}
+
+	public String getText() {
+		return text;
 	}
 
 }

@@ -28,64 +28,33 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.IItemCommon;
-import org.jowidgets.impl.base.delegate.ItemModelBindingDelegate;
-import org.jowidgets.spi.widgets.IItemSpi;
+import org.jowidgets.common.widgets.IProgressBarCommon;
+import org.jowidgets.spi.widgets.IProgressBarSpi;
 
-public class ModelBasedItemSpiWrapper extends WidgetSpiWrapper implements IItemCommon {
+public abstract class AbstractProgressBarSpiWrapper extends AbstractControlSpiWrapper implements IProgressBarCommon {
 
-	private final ItemModelBindingDelegate itemModelBindingDelegate;
-
-	public ModelBasedItemSpiWrapper(final IItemSpi component, final ItemModelBindingDelegate itemModelBindingDelegate) {
-		super(component);
-		this.itemModelBindingDelegate = itemModelBindingDelegate;
+	public AbstractProgressBarSpiWrapper(final IProgressBarSpi widget) {
+		super(widget);
 	}
 
 	@Override
-	public IItemSpi getWidget() {
-		return (IItemSpi) super.getWidget();
-	}
-
-	protected ItemModelBindingDelegate getItemModelBindingDelegate() {
-		return itemModelBindingDelegate;
+	public IProgressBarSpi getWidget() {
+		return (IProgressBarSpi) super.getWidget();
 	}
 
 	@Override
-	public void setText(final String text) {
-		itemModelBindingDelegate.setText(text);
+	public void setMinimum(final int min) {
+		getWidget().setMinimum(min);
 	}
 
 	@Override
-	public void setToolTipText(final String toolTipText) {
-		itemModelBindingDelegate.setToolTipText(toolTipText);
+	public void setMaximum(final int max) {
+		getWidget().setMaximum(max);
 	}
 
 	@Override
-	public void setIcon(final IImageConstant icon) {
-		itemModelBindingDelegate.setIcon(icon);
-	}
-
-	public String getText() {
-		return itemModelBindingDelegate.getText();
-	}
-
-	public String getToolTipText() {
-		return itemModelBindingDelegate.getToolTipText();
-	}
-
-	public IImageConstant getIcon() {
-		return itemModelBindingDelegate.getIcon();
-	}
-
-	@Override
-	public void setEnabled(final boolean enabled) {
-		itemModelBindingDelegate.setEnabled(enabled);
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return itemModelBindingDelegate.isEnabled();
+	public void setProgress(final int progress) {
+		getWidget().setProgress(progress);
 	}
 
 }
