@@ -36,7 +36,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({
 		ToolkitTest.class, WidgetFactoryTest.class, MenuTest.class, ToolBarTest.class, BluePrintFactoryTest.class,
 		BluePrintFactoryAnnotationsTest.class, CheckMandatoryTest.class, TabFolderTest.class, TreeTest.class,
-		BluePrintFactoryProblematicDescriptorTest.class})
+		BluePrintFactoryProblematicDescriptorTest.class, WidgetDisposeTest.class})
 public class ApiBlackBoxTestSuite {
 
 }
