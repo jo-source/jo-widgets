@@ -120,7 +120,7 @@ public interface IMigLayout extends ILayouter {
 	 */
 	boolean isManagingComponent(IControl control);
 
-	// TODO NM implement
+	// TODO NM implement to allow layout callbacks
 	///**
 	// * Adds the callback function that will be called at different stages of the layout cylce.
 	// * 
