@@ -1382,7 +1382,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		mainPanel.setLayout(LFP.migLayoutBuilder().constraints("ins 0 0 15lp 0").columnConstraints("[grow]").rowConstraints(
 				"[grow]u[baseline,nogrid]").build());
 
-		// TODO NM don't create an inner tab folder 
+		// TODO NM should not create an inner tab folder 
 		final ITabFolder tabbedPane = mainPanel.add(BPF.tabFolder(), "grow, wrap");
 
 		createButtonBarsPanel(tabbedPane, "Buttons", "help", false);

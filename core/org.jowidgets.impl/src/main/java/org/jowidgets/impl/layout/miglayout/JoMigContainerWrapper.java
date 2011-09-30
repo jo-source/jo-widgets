@@ -68,7 +68,7 @@ final class JoMigContainerWrapper extends JoMigComponentWrapper implements ICont
 
 	@Override
 	public boolean isLeftToRight() {
-		// TODO NM implement left to right and right to left support
+		// TODO MG,NM MigLayout - implement left to right and right to left support
 		return true;
 	}
 

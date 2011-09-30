@@ -80,13 +80,13 @@ public final class DefaultConverterProvider implements IConverterProvider {
 		register(Boolean.class, booleanLong);
 		register(boolean.class, booleanLong);
 
-		// TODO NM fix formatHint
+		// TODO MG,NM set a formatHint for double numbers (US format)
 		final DecimalFormat decimalFormatUS = (DecimalFormat) DecimalFormat.getInstance(Locale.US);
 		final IConverter<Double> doubleNumberUS = new DefaultDoubleConverter(decimalFormatUS, "us");
 		register(Double.class, doubleNumberUS);
 		register(double.class, doubleNumberUS);
 
-		// TODO NM fix formatHint
+		// TODO MG,NM set a formatHint for double numbers (DE format)
 		final DecimalFormat decimalFormatDE = (DecimalFormat) DecimalFormat.getInstance(Locale.GERMAN);
 		final IConverter<Double> doubleNumberDE = new DefaultDoubleConverter(decimalFormatDE, "de");
 		register(Locale.GERMANY, Double.class, doubleNumberDE);
