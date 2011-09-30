@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2011, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -36,34 +36,52 @@ final class MessageReplacerImpl implements IMessageReplacer {
 
 	@Override
 	public String replace(final String message, final String... parameters) {
-		final StringBuilder result = new StringBuilder(message);
-		for (int i = parameters.length - 1; i >= 0; i--) {
-			final String parameter = parameters[i];
-			final String search = "%" + String.valueOf(i + 1);
-			int pos = result.indexOf(search);
-			while (pos >= 0) {
-				result.delete(pos, pos + search.length());
-				result.insert(pos, parameter);
-				pos = result.indexOf(search, pos + parameter.length());
+		final StringBuilder result = new StringBuilder();
+		final StringBuilder digits = new StringBuilder();
+		boolean digitMode = false;
+		for (final char c : message.toCharArray()) {
+			if (digitMode) {
+				if (c >= '0' && c <= '9') {
+					digits.append(c);
+				}
+				else {
+					digitMode = false;
+					if (digits.length() > 0) {
+						final int paramIndex = Integer.valueOf(digits.toString()) - 1;
+						if (paramIndex > parameters.length) {
+							throw new IllegalStateException("Message '" + message + "' contains to many placeholders.");
+						}
+						result.append(parameters[paramIndex]);
+					}
+					else {
+						result.append('%');
+					}
+					result.append(c);
+				}
+			}
+			else if (c == '%') {
+				digits.setLength(0);
+				digitMode = true;
+			}
+			else {
+				result.append(c);
 			}
 		}
+
+		if (digitMode && digits.length() > 0) {
+			final int paramIndex = Integer.valueOf(digits.toString()) - 1;
+			if (paramIndex > parameters.length) {
+				throw new IllegalStateException("Message '" + message + "' contains to many placeholders.");
+			}
+			result.append(parameters[paramIndex]);
+		}
+
 		return result.toString();
 	}
 
 	@Override
 	public String replace(final String message, final List<String> parameters) {
-		final StringBuilder result = new StringBuilder(message);
-		for (int i = parameters.size() - 1; i >= 0; i--) {
-			final String parameter = parameters.get(i);
-			final String search = "%" + String.valueOf(i + 1);
-			int pos = result.indexOf(search);
-			while (pos >= 0) {
-				result.delete(pos, pos + search.length());
-				result.insert(pos, parameter);
-				pos = result.indexOf(search, pos + parameter.length());
-			}
-		}
-		return result.toString();
+		return replace(message, parameters.toArray(new String[parameters.size()]));
 	}
 
 }
