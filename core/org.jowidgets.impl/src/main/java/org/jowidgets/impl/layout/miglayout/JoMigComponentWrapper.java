@@ -40,7 +40,7 @@ import org.jowidgets.impl.layout.miglayout.common.IContainerWrapper;
 
 class JoMigComponentWrapper implements IComponentWrapper {
 
-	// TODO NM change screen size when Jo Widgets supports screen information
+	// TODO MG,NM MigLayout - change screen size when Jo Widgets supports screen information
 	private static Dimension screenSize;
 
 	private static boolean isUseVisualPadding;
@@ -67,7 +67,7 @@ class JoMigComponentWrapper implements IComponentWrapper {
 
 	@Override
 	public final float getPixelUnitFactor(final boolean isHor) {
-		// TODO NM improve
+		// TODO MG,NM Miglayout - implement correct pixel unit factor calculation
 		return 1f;
 	}
 
@@ -167,25 +167,26 @@ class JoMigComponentWrapper implements IComponentWrapper {
 			return new JoMigContainerWrapper((IContainer) component.getParent());
 		}
 		else {
-			// TODO NM remove this workaround...
+			// workaround: if the parent is a tab folder use its parent
 			if (component.getParent() instanceof ITabFolder) {
 				return new JoMigContainerWrapper((IContainer) component.getParent().getParent());
 			}
 
-			// TODO NM improve
-			return null;
+			throw new IllegalStateException("Don't know how to handle '"
+				+ component.getParent().getClass().getName()
+				+ "' as a parent.");
 		}
 	}
 
 	@Override
 	public int getHorizontalScreenDPI() {
-		// TODO NM improve
+		// TODO MG,NM MigLayout - return horizontal screen dpi
 		return 72;
 	}
 
 	@Override
 	public int getVerticalScreenDPI() {
-		// TODO NM improve
+		// TODO MG,NM MigLayout - return vertical screen dpi
 		return 72;
 	}
 
@@ -205,7 +206,7 @@ class JoMigComponentWrapper implements IComponentWrapper {
 
 	@Override
 	public final int getScreenWidth() {
-		// TODO NM improve
+		// TODO MG,NM MigLayout - improve way to get screen width
 		if (screenSize == null) {
 			final IWindow topLevelWindow = getTopLevelWindow();
 			if (topLevelWindow == null) {
@@ -220,7 +221,7 @@ class JoMigComponentWrapper implements IComponentWrapper {
 
 	@Override
 	public final int getScreenHeight() {
-		// TODO NM improve
+		// TODO MG,NM MigLayout - improve way to get screen height
 		if (screenSize == null) {
 			final IWindow topLevelWindow = getTopLevelWindow();
 			if (topLevelWindow == null) {

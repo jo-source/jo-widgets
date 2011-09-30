@@ -62,14 +62,13 @@ final class JoMigContainerWrapper extends JoMigComponentWrapper implements ICont
 
 	@Override
 	public Object getLayout() {
-		//return getComponent().getLayout();
-		//throw new IllegalStateException();
+		// This method is used for component links. Due to the fact, that the instance cannot be determined in Jo Widgets return the wrapper
 		return this;
 	}
 
 	@Override
 	public boolean isLeftToRight() {
-		// TODO NM implement
+		// TODO NM implement left to right and right to left support
 		return true;
 	}
 
@@ -86,11 +85,9 @@ final class JoMigContainerWrapper extends JoMigComponentWrapper implements ICont
 	@Override
 	public int getLayoutHashCode() {
 		final int h = super.getLayoutHashCode();
-		//CHECKSTYLE:OFF
-		if (isLeftToRight()) {
-			//h |= (1 << 26);
-		}
-
+		//	if (isLeftToRight()) {
+		//		h |= (1 << 26);
+		//	}
 		return h;
 	}
 }
