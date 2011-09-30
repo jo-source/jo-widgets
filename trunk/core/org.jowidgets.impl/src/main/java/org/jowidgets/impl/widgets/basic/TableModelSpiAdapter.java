@@ -102,7 +102,6 @@ public class TableModelSpiAdapter implements ITableColumnModelSpi, ITableDataMod
 						if (modelToView[modelIndex] < 0) {
 							final int index = showColumn(modelIndex);
 							ignoreTablePermutationEvents = true;
-							// TODO NM fix column width
 							columnModelObservable.fireColumnsAdded(new int[] {index});
 							if (table != null) {
 								table.setColumnPermutation(createTableColumnPermutation());
@@ -131,7 +130,6 @@ public class TableModelSpiAdapter implements ITableColumnModelSpi, ITableDataMod
 
 					if (column.isVisible()) {
 						ignoreTablePermutationEvents = true;
-						// TODO NM fix column width
 						columnModelObservable.fireColumnsAdded(new int[] {modelToView[modelIndex]});
 						if (table != null) {
 							table.setColumnPermutation(createTableColumnPermutation());
