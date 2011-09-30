@@ -121,7 +121,7 @@ final class ComponentTypeUtil {
 	}
 
 	private static boolean isSeparator(final IComponent component) {
-		// TODO NM find a way to detect separator
+		// TODO MG,NM MigLayout - find a way to detect separator
 		//		if (component instanceof IControl) {
 		//			IControl control = (IControl) component;
 		//		}

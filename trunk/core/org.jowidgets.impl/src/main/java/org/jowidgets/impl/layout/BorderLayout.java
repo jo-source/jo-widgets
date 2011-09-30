@@ -113,10 +113,11 @@ final class BorderLayout extends AbstractCachingLayout implements ILayouter {
 		final int[] usedHeights = calcRatio(minimumHeights, preferredHeights, totalHeight - (rowCount - 1) * gapY);
 		final int[] usedWidths = calcRatio(minimumWidths, preferredWidths, totalWidth - (centerColumnCount - 1) * gapX);
 
-		final int gapYAfterTop = gapY; // TODO NM calculate gap after top
-		final int gapYBeforeBottom = gapY; // TODO NM calculate gap before bottem
-		final int gapXAfterLeft = gapX; // TODO NM calculate gap after left
-		final int gapXBeforeRight = gapX; // TODO NM calculate gap before right
+		// TODO MG,NM BorderLayout - calculate gaps after top, before bottom, after left and before right
+		final int gapYAfterTop = gapY;
+		final int gapYBeforeBottom = gapY;
+		final int gapXAfterLeft = gapX;
+		final int gapXBeforeRight = gapX;
 
 		if (topControl != null) {
 			topControl.setPosition(x, y);
