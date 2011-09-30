@@ -82,7 +82,11 @@ public class MenuDelegate extends DisposableDelegate {
 	private IMenuModel model;
 	private boolean onRemoveByDispose;
 
-	public MenuDelegate(final IMenu menu, final IMenuSpi menuSpi, final IMenuModel model, final ItemModelBindingDelegate itemDelegate) {
+	public MenuDelegate(
+		final IMenu menu,
+		final IMenuSpi menuSpi,
+		final IMenuModel model,
+		final ItemModelBindingDelegate itemDelegate) {
 		Assert.paramNotNull(menu, "menu");
 		Assert.paramNotNull(menuSpi, "menuSpi");
 
@@ -310,7 +314,7 @@ public class MenuDelegate extends DisposableDelegate {
 				&& !onRemoveByDispose) {
 
 				onRemoveByDispose = true;
-				((IMenu) menu.getParent()).getChildren().remove(menu); //this will invoke dispose by the parent menu
+				((IMenu) menu.getParent()).remove((IMenuItem) menu); //this will invoke dispose by the parent menu
 				onRemoveByDispose = false;
 			}
 			else if (menu.getParent() instanceof IMenuBar
@@ -319,7 +323,7 @@ public class MenuDelegate extends DisposableDelegate {
 				&& !onRemoveByDispose) {
 
 				onRemoveByDispose = true;
-				((IMenuBar) menu.getParent()).getMenus().remove(menu); //this will invoke dispose by the parent menu bar
+				((IMenuBar) menu.getParent()).remove(menu); //this will invoke dispose by the parent menu bar
 				onRemoveByDispose = false;
 			}
 			else {
