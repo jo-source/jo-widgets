@@ -42,6 +42,12 @@ public enum AutoSelectionPolicy {
 	/** Auto-selects the element of the previous selection if possible or the last element of a list when the list changes */
 	PREVIOUS_SELECTED_OR_FIRST,
 
+	/**
+	 * Auto-selects the element of the previous selection if possible or nothing if the previous element doesn't exist in the
+	 * elements
+	 */
+	PREVIOUS_SELECTED,
+
 	/** No Auto-selection. After a list changes, nothing will be selected */
 	OFF;
 

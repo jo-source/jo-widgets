@@ -248,6 +248,11 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 		else if (AutoSelectionPolicy.LAST_ELEMENT == autoSelectionPolicy && spiElements.length > 0) {
 			comboBoxSelectionWidgetSpi.setSelectedIndex(spiElements.length - 1);
 		}
+		else if (AutoSelectionPolicy.PREVIOUS_SELECTED == autoSelectionPolicy && spiElements.length > 0) {
+			if (newSelectionIndex != -1) {
+				comboBoxSelectionWidgetSpi.setSelectedIndex(newSelectionIndex);
+			}
+		}
 		else if (AutoSelectionPolicy.PREVIOUS_SELECTED_OR_FIRST == autoSelectionPolicy && spiElements.length > 0) {
 			if (newSelectionIndex != -1) {
 				comboBoxSelectionWidgetSpi.setSelectedIndex(newSelectionIndex);
