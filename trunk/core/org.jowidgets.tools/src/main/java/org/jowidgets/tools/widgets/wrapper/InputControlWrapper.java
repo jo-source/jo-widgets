@@ -34,9 +34,9 @@ import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
 
-abstract class AbstractInputControlWrapper<VALUE_TYPE> extends ControlWrapper implements IInputControl<VALUE_TYPE> {
+public class InputControlWrapper<VALUE_TYPE> extends ControlWrapper implements IInputControl<VALUE_TYPE> {
 
-	AbstractInputControlWrapper(final IInputControl<VALUE_TYPE> widget) {
+	public InputControlWrapper(final IInputControl<VALUE_TYPE> widget) {
 		super(widget);
 	}
 

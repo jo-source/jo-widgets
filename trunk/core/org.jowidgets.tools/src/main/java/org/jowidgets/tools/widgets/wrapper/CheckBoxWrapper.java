@@ -31,7 +31,7 @@ package org.jowidgets.tools.widgets.wrapper;
 import org.jowidgets.api.widgets.ICheckBox;
 import org.jowidgets.common.types.Markup;
 
-public class CheckBoxWrapper extends AbstractInputControlWrapper<Boolean> implements ICheckBox {
+public class CheckBoxWrapper extends InputControlWrapper<Boolean> implements ICheckBox {
 
 	public CheckBoxWrapper(final ICheckBox widget) {
 		super(widget);

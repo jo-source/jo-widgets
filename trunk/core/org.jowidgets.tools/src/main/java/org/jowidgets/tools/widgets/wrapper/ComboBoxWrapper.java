@@ -32,7 +32,7 @@ import java.util.List;
 
 import org.jowidgets.api.widgets.IComboBox;
 
-public class ComboBoxWrapper<VALUE_TYPE> extends AbstractInputControlWrapper<VALUE_TYPE> implements IComboBox<VALUE_TYPE> {
+public class ComboBoxWrapper<VALUE_TYPE> extends InputControlWrapper<VALUE_TYPE> implements IComboBox<VALUE_TYPE> {
 
 	public ComboBoxWrapper(final IComboBox<VALUE_TYPE> widget) {
 		super(widget);
