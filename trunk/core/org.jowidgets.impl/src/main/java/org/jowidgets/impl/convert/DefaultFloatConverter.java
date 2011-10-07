@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2011, Nikolaus Moll
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,23 +25,19 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.widgets.composed.blueprint.defaults;
+package org.jowidgets.impl.convert;
 
-import org.jowidgets.api.image.IconsSmall;
-import org.jowidgets.api.widgets.blueprint.builder.ICollectionInputFieldSetupBuilder;
-import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
-import org.jowidgets.validation.IValidator;
-import org.jowidgets.validation.Validator;
+import java.text.DecimalFormat;
 
-public class CollectionInputFieldDefaults implements IDefaultInitializer<ICollectionInputFieldSetupBuilder<?, ?>> {
+class DefaultFloatConverter extends AbstractFloatingPointNumberConverter<Float> {
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
+	DefaultFloatConverter(final DecimalFormat decimalFormat, final String formatHint) {
+		super(decimalFormat, formatHint);
+	}
+
 	@Override
-	public void initialize(final ICollectionInputFieldSetupBuilder<?, ?> builder) {
-		builder.setEditButtonIcon(IconsSmall.EDIT);
-		builder.setMaskingCharacter(Character.valueOf('"'));
-		final IValidator okValidator = Validator.okValidator();
-		builder.setElementValidator(okValidator);
+	Float convert(final Number number) {
+		return number.floatValue();
 	}
 
 }

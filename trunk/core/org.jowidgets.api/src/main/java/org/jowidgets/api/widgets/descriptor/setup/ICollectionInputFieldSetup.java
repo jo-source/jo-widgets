@@ -46,7 +46,6 @@ public interface ICollectionInputFieldSetup<ELEMENT_TYPE> extends IInputComponen
 	@Mandatory
 	IValidator<ELEMENT_TYPE> getElementValidator();
 
-	@Mandatory
 	Character getSeparator();
 
 	@Mandatory
