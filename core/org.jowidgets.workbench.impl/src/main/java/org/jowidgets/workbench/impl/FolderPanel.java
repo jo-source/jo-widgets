@@ -150,6 +150,8 @@ public class FolderPanel implements ILayoutPanel {
 		final ViewContext viewContext = new ViewContext(tabFolder, tabItem, viewLayout.getScope(), currentComponent);
 		final IView view = currentComponent.getComponent().createView(viewLayout.getId(), viewContext);
 
+		tabItem.layout();
+
 		tabItem.addTabItemListener(new TabItemAdapter() {
 
 			@Override
