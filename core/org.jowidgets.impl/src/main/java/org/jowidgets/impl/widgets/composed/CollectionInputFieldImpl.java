@@ -69,6 +69,7 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 
 	private static final String ELEMENT = Messages.getString("CollectionInputFieldImpl.element"); //$NON-NLS-1$
 	private static final String EDIT = Messages.getString("CollectionInputFieldImpl.edit"); //$NON-NLS-1$
+	private static final Character DEFAULT_SEPARATOR = Character.valueOf(',');
 
 	private final IInputField<String> textField;
 	private final IButton editButton;
@@ -90,7 +91,13 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 		super(composite);
 
 		this.converter = setup.getConverter();
-		this.separator = setup.getSeparator();
+
+		if (setup.getSeparator() != null) {
+			this.separator = setup.getSeparator();
+		}
+		else {
+			this.separator = DEFAULT_SEPARATOR;
+		}
 		this.maskingCharacter = setup.getMaskingCharacter();
 
 		final ICollectionInputDialogSetup<ELEMENT_TYPE> inputDialogSetup = setup.getCollectionInputDialogSetup();

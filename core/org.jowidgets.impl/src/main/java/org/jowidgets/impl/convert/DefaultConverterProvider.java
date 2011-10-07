@@ -80,19 +80,29 @@ public final class DefaultConverterProvider implements IConverterProvider {
 		register(Boolean.class, booleanLong);
 		register(boolean.class, booleanLong);
 
-		// TODO MG,NM set a formatHint for double numbers (US format)
 		final DecimalFormat decimalFormatUS = (DecimalFormat) DecimalFormat.getInstance(Locale.US);
-		final IConverter<Double> doubleNumberUS = new DefaultDoubleConverter(decimalFormatUS, "us");
+
+		final IConverter<Double> doubleNumberUS = new DefaultDoubleConverter(decimalFormatUS, "Must be a floating point number");
 		register(Double.class, doubleNumberUS);
 		register(double.class, doubleNumberUS);
 
-		// TODO MG,NM set a formatHint for double numbers (DE format)
+		final IConverter<Float> floatNumberUS = new DefaultFloatConverter(decimalFormatUS, "Must be a floating point number");
+		register(Float.class, floatNumberUS);
+		register(float.class, floatNumberUS);
+
 		final DecimalFormat decimalFormatDE = (DecimalFormat) DecimalFormat.getInstance(Locale.GERMAN);
-		final IConverter<Double> doubleNumberDE = new DefaultDoubleConverter(decimalFormatDE, "de");
+
+		final IConverter<Double> doubleNumberDE = new DefaultDoubleConverter(decimalFormatDE, "Muss eine Kommazahl sein");
 		register(Locale.GERMANY, Double.class, doubleNumberDE);
 		register(Locale.GERMANY, double.class, doubleNumberDE);
 		register(Locale.GERMAN, Double.class, doubleNumberDE);
 		register(Locale.GERMAN, double.class, doubleNumberDE);
+
+		final IConverter<Float> floatNumberDE = new DefaultFloatConverter(decimalFormatDE, "Muss eine Kommazahl sein");
+		register(Locale.GERMANY, Float.class, floatNumberDE);
+		register(Locale.GERMANY, float.class, floatNumberDE);
+		register(Locale.GERMAN, Float.class, floatNumberDE);
+		register(Locale.GERMAN, float.class, floatNumberDE);
 	}
 
 	@Override
