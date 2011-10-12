@@ -33,6 +33,8 @@ import java.awt.Component;
 import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
@@ -80,6 +82,7 @@ import org.jowidgets.common.types.MouseButton;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.TablePackPolicy;
 import org.jowidgets.common.types.TableSelectionPolicy;
+import org.jowidgets.common.widgets.controller.IFocusListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.common.widgets.controller.ITableCellEditEvent;
 import org.jowidgets.common.widgets.controller.ITableCellEditorListener;
@@ -91,6 +94,7 @@ import org.jowidgets.common.widgets.controller.ITableColumnListener;
 import org.jowidgets.common.widgets.controller.ITableColumnMouseEvent;
 import org.jowidgets.common.widgets.controller.ITableColumnPopupDetectionListener;
 import org.jowidgets.common.widgets.controller.ITableSelectionListener;
+import org.jowidgets.spi.impl.controller.FocusObservable;
 import org.jowidgets.spi.impl.controller.PopupDetectionObservable;
 import org.jowidgets.spi.impl.controller.TableCellEditEvent;
 import org.jowidgets.spi.impl.controller.TableCellEditorObservable;
@@ -133,6 +137,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	private final TableColumnObservable tableColumnObservable;
 	private final TableSelectionObservable tableSelectionObservable;
 	private final TableCellEditorObservable tableCellEditorObservable;
+	private final FocusObservable focusObservable;
 
 	private final TableColumnResizeListener tableColumnResizeListener;
 	private final TableSelectionListener tableSelectionListener;
@@ -163,6 +168,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		this.tableColumnObservable = new TableColumnObservable();
 		this.tableSelectionObservable = new TableSelectionObservable();
 		this.tableCellEditorObservable = new TableCellEditorObservable();
+		this.focusObservable = new FocusObservable();
 
 		this.tableColumnResizeListener = new TableColumnResizeListener();
 		this.tableSelectionListener = new TableSelectionListener();
@@ -223,6 +229,19 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 		table.addMouseListener(new TableCellListener());
 		table.addMouseListener(tableCellMenuDetectListener);
+
+		table.addFocusListener(new FocusListener() {
+			@Override
+			public void focusLost(final FocusEvent e) {
+				focusObservable.focusLost();
+			}
+
+			@Override
+			public void focusGained(final FocusEvent e) {
+				focusObservable.focusGained();
+			}
+		});
+
 		getUiReference().addMouseListener(tableCellMenuDetectListener);
 	}
 
@@ -458,6 +477,18 @@ public class TableImpl extends SwingControl implements ITableSpi {
 				}
 			}
 		}
+	}
+
+	@Override
+	public void addFocusListener(final IFocusListener listener) {
+		super.addFocusListener(listener);
+		focusObservable.addFocusListener(listener);
+	}
+
+	@Override
+	public void removeFocusListener(final IFocusListener listener) {
+		super.removeFocusListener(listener);
+		focusObservable.removeFocusListener(listener);
 	}
 
 	@Override
