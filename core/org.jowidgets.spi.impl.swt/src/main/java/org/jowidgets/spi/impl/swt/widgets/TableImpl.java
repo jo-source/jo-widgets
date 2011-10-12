@@ -629,32 +629,34 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			final int rowIndex = table.indexOf(item);
 			for (int columnIndex = 0; columnIndex < getColumnCount(); columnIndex++) {
 				final int internalIndex = columnIndex + 1;
-				final ITableCell cell = dataModel.getCell(rowIndex, columnIndex);
+				if (dataModel.getRowCount() > rowIndex) {
+					final ITableCell cell = dataModel.getCell(rowIndex, columnIndex);
 
-				final String text = cell.getText();
-				final IImageConstant icon = cell.getIcon();
-				final IColorConstant backgroundColor = cell.getBackgroundColor();
-				final IColorConstant foregroundColor = cell.getForegroundColor();
-				final Markup markup = cell.getMarkup();
+					final String text = cell.getText();
+					final IImageConstant icon = cell.getIcon();
+					final IColorConstant backgroundColor = cell.getBackgroundColor();
+					final IColorConstant foregroundColor = cell.getForegroundColor();
+					final Markup markup = cell.getMarkup();
 
-				if (text != null) {
-					item.setText(internalIndex, text);
-				}
-				else {
-					item.setText(internalIndex, "");
-				}
-				if (icon != null) {
-					item.setImage(internalIndex, SwtImageRegistry.getInstance().getImage(icon));
-				}
-				if (markup != null) {
-					final Font newFont = FontProvider.deriveFont(item.getFont(), markup);
-					item.setFont(internalIndex, newFont);
-				}
-				if (backgroundColor != null) {
-					item.setBackground(internalIndex, ColorCache.getInstance().getColor(backgroundColor));
-				}
-				if (foregroundColor != null) {
-					item.setForeground(internalIndex, ColorCache.getInstance().getColor(foregroundColor));
+					if (text != null) {
+						item.setText(internalIndex, text);
+					}
+					else {
+						item.setText(internalIndex, "");
+					}
+					if (icon != null) {
+						item.setImage(internalIndex, SwtImageRegistry.getInstance().getImage(icon));
+					}
+					if (markup != null) {
+						final Font newFont = FontProvider.deriveFont(item.getFont(), markup);
+						item.setFont(internalIndex, newFont);
+					}
+					if (backgroundColor != null) {
+						item.setBackground(internalIndex, ColorCache.getInstance().getColor(backgroundColor));
+					}
+					if (foregroundColor != null) {
+						item.setForeground(internalIndex, ColorCache.getInstance().getColor(foregroundColor));
+					}
 				}
 			}
 		}
