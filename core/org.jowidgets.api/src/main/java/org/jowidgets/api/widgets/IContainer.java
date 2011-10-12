@@ -30,15 +30,16 @@ package org.jowidgets.api.widgets;
 
 import java.util.List;
 
-import org.jowidgets.api.controller.IContainerRegistry;
 import org.jowidgets.api.controller.IContainerObservable;
+import org.jowidgets.api.controller.IContainerRegistry;
+import org.jowidgets.api.controller.IRecursiveContainerObservable;
 import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.common.widgets.IContainerCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.layout.ILayouter;
 
-public interface IContainer extends IComponent, IContainerObservable, IContainerCommon {
+public interface IContainer extends IComponent, IContainerObservable, IRecursiveContainerObservable, IContainerCommon {
 
 	<LAYOUT_TYPE extends ILayouter> LAYOUT_TYPE setLayout(ILayoutFactory<LAYOUT_TYPE> layoutFactory);
 

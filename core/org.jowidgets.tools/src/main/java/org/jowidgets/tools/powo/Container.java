@@ -33,8 +33,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.jowidgets.api.controller.IContainerRegistry;
 import org.jowidgets.api.controller.IContainerListener;
+import org.jowidgets.api.controller.IContainerRegistry;
+import org.jowidgets.api.controller.IListenerFactory;
 import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
@@ -43,6 +44,11 @@ import org.jowidgets.api.widgets.blueprint.builder.IContainerSetupBuilder;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Rectangle;
+import org.jowidgets.common.widgets.controller.IComponentListener;
+import org.jowidgets.common.widgets.controller.IFocusListener;
+import org.jowidgets.common.widgets.controller.IKeyListener;
+import org.jowidgets.common.widgets.controller.IMouseListener;
+import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
@@ -58,6 +64,11 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 	private final JoWidgetFactory widgetFactory;
 	private final Set<IContainerListener> containerListeners;
 	private final Set<IContainerRegistry> containerChildrenRegistries;
+	private final Set<IListenerFactory<IComponentListener>> componentListenerFactories;
+	private final Set<IListenerFactory<IFocusListener>> focusListenerFactories;
+	private final Set<IListenerFactory<IKeyListener>> keyListenerFactories;
+	private final Set<IListenerFactory<IMouseListener>> mouseListenerFactories;
+	private final Set<IListenerFactory<IPopupDetectionListener>> popupDetectionListenerFactories;
 
 	private List<? extends IControl> tabOrder;
 
@@ -68,6 +79,11 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 		this.widgetFactory = new JoWidgetFactory();
 		this.containerListeners = new LinkedHashSet<IContainerListener>();
 		this.containerChildrenRegistries = new LinkedHashSet<IContainerRegistry>();
+		this.componentListenerFactories = new LinkedHashSet<IListenerFactory<IComponentListener>>();
+		this.focusListenerFactories = new LinkedHashSet<IListenerFactory<IFocusListener>>();
+		this.keyListenerFactories = new LinkedHashSet<IListenerFactory<IKeyListener>>();
+		this.mouseListenerFactories = new LinkedHashSet<IListenerFactory<IMouseListener>>();
+		this.popupDetectionListenerFactories = new LinkedHashSet<IListenerFactory<IPopupDetectionListener>>();
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
@@ -79,6 +95,21 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 		}
 		for (final IContainerRegistry registry : containerChildrenRegistries) {
 			widget.addContainerRegistry(registry);
+		}
+		for (final IListenerFactory<IComponentListener> factory : componentListenerFactories) {
+			widget.addComponentListenerRecursive(factory);
+		}
+		for (final IListenerFactory<IFocusListener> factory : focusListenerFactories) {
+			widget.addFocusListenerRecursive(factory);
+		}
+		for (final IListenerFactory<IKeyListener> factory : keyListenerFactories) {
+			widget.addKeyListenerRecursive(factory);
+		}
+		for (final IListenerFactory<IMouseListener> factory : mouseListenerFactories) {
+			widget.addMouseListenerRecursive(factory);
+		}
+		for (final IListenerFactory<IPopupDetectionListener> factory : popupDetectionListenerFactories) {
+			widget.addPopupDetectionListenerRecursive(factory);
 		}
 		for (final Tuple<Widget, Object> preWidgetTuple : preWidgets) {
 			final Widget preWidget = preWidgetTuple.getFirst();
@@ -189,6 +220,106 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 		}
 		else {
 			containerChildrenRegistries.remove(registry);
+		}
+	}
+
+	@Override
+	public void addComponentListenerRecursive(final IListenerFactory<IComponentListener> listenerFactory) {
+		if (isInitialized()) {
+			getWidget().addComponentListenerRecursive(listenerFactory);
+		}
+		else {
+			componentListenerFactories.add(listenerFactory);
+		}
+	}
+
+	@Override
+	public void removeComponentListenerRecursive(final IListenerFactory<IComponentListener> listenerFactory) {
+		if (isInitialized()) {
+			getWidget().removeComponentListenerRecursive(listenerFactory);
+		}
+		else {
+			componentListenerFactories.remove(listenerFactory);
+		}
+	}
+
+	@Override
+	public void addFocusListenerRecursive(final IListenerFactory<IFocusListener> listenerFactory) {
+		if (isInitialized()) {
+			getWidget().addFocusListenerRecursive(listenerFactory);
+		}
+		else {
+			focusListenerFactories.add(listenerFactory);
+		}
+	}
+
+	@Override
+	public void removeFocusListenerRecursive(final IListenerFactory<IFocusListener> listenerFactory) {
+		if (isInitialized()) {
+			getWidget().removeFocusListenerRecursive(listenerFactory);
+		}
+		else {
+			focusListenerFactories.remove(listenerFactory);
+		}
+	}
+
+	@Override
+	public void addKeyListenerRecursive(final IListenerFactory<IKeyListener> listenerFactory) {
+		if (isInitialized()) {
+			getWidget().addKeyListenerRecursive(listenerFactory);
+		}
+		else {
+			keyListenerFactories.add(listenerFactory);
+		}
+	}
+
+	@Override
+	public void removeKeyListenerRecursive(final IListenerFactory<IKeyListener> listenerFactory) {
+		if (isInitialized()) {
+			getWidget().removeKeyListenerRecursive(listenerFactory);
+		}
+		else {
+			keyListenerFactories.remove(listenerFactory);
+		}
+	}
+
+	@Override
+	public void addMouseListenerRecursive(final IListenerFactory<IMouseListener> listenerFactory) {
+		if (isInitialized()) {
+			getWidget().addMouseListenerRecursive(listenerFactory);
+		}
+		else {
+			mouseListenerFactories.add(listenerFactory);
+		}
+	}
+
+	@Override
+	public void removeMouseListenerRecursive(final IListenerFactory<IMouseListener> listenerFactory) {
+		if (isInitialized()) {
+			getWidget().removeMouseListenerRecursive(listenerFactory);
+		}
+		else {
+			mouseListenerFactories.remove(listenerFactory);
+		}
+	}
+
+	@Override
+	public void addPopupDetectionListenerRecursive(final IListenerFactory<IPopupDetectionListener> listenerFactory) {
+		if (isInitialized()) {
+			getWidget().addPopupDetectionListenerRecursive(listenerFactory);
+		}
+		else {
+			popupDetectionListenerFactories.add(listenerFactory);
+		}
+	}
+
+	@Override
+	public void removePopupDetectionListenerRecursive(final IListenerFactory<IPopupDetectionListener> listenerFactory) {
+		if (isInitialized()) {
+			getWidget().removePopupDetectionListenerRecursive(listenerFactory);
+		}
+		else {
+			popupDetectionListenerFactories.remove(listenerFactory);
 		}
 	}
 
