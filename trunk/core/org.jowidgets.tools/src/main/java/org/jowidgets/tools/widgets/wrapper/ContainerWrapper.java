@@ -30,6 +30,7 @@ package org.jowidgets.tools.widgets.wrapper;
 
 import java.util.List;
 
+import org.jowidgets.api.controller.IContainerRegistry;
 import org.jowidgets.api.controller.IContainerListener;
 import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.widgets.IContainer;
@@ -155,6 +156,16 @@ public class ContainerWrapper extends ComponentWrapper implements IContainer {
 	@Override
 	public void removeContainerListener(final IContainerListener listener) {
 		getWidget().removeContainerListener(listener);
+	}
+
+	@Override
+	public void addContainerRegistry(final IContainerRegistry registry) {
+		getWidget().addContainerRegistry(registry);
+	}
+
+	@Override
+	public void removeContainerRegistry(final IContainerRegistry registry) {
+		getWidget().removeContainerRegistry(registry);
 	}
 
 }

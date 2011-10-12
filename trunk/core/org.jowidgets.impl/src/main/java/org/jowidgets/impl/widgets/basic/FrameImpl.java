@@ -30,6 +30,7 @@ package org.jowidgets.impl.widgets.basic;
 
 import java.util.List;
 
+import org.jowidgets.api.controller.IContainerRegistry;
 import org.jowidgets.api.controller.IContainerListener;
 import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.layout.ILayoutFactory;
@@ -122,6 +123,16 @@ public class FrameImpl extends AbstractFrameSpiWrapper implements IFrameUi {
 	@Override
 	public void removeContainerListener(final IContainerListener listener) {
 		containerDelegate.removeContainerListener(listener);
+	}
+
+	@Override
+	public void addContainerRegistry(final IContainerRegistry registry) {
+		containerDelegate.addContainerRegistry(registry);
+	}
+
+	@Override
+	public void removeContainerRegistry(final IContainerRegistry registry) {
+		containerDelegate.removeContainerRegistry(registry);
 	}
 
 	@Override

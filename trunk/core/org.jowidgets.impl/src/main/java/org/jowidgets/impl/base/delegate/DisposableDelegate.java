@@ -60,6 +60,7 @@ public class DisposableDelegate {
 		if (!disposed) {
 			fireOnDispose();
 			this.disposed = true;
+			listeners.clear();
 		}
 	}
 

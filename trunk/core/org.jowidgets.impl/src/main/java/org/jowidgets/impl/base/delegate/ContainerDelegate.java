@@ -34,6 +34,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.jowidgets.api.controller.IContainerListener;
+import org.jowidgets.api.controller.IContainerRegistry;
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IPopupMenu;
@@ -49,6 +51,8 @@ public class ContainerDelegate extends DisposableDelegate {
 	private final List<IControl> children;
 	private final PopupMenuCreationDelegate popupMenuCreationDelegate;
 	private final Set<IContainerListener> containerListeners;
+	private final Set<IContainerRegistry> containerRegistries;
+	private final IContainerRegistry containerRegistry;
 
 	private boolean onRemoveByDispose;
 
@@ -59,8 +63,37 @@ public class ContainerDelegate extends DisposableDelegate {
 		this.container = container;
 		this.children = new LinkedList<IControl>();
 		this.containerListeners = new LinkedHashSet<IContainerListener>();
+		this.containerRegistries = new LinkedHashSet<IContainerRegistry>();
 		this.popupMenuCreationDelegate = new PopupMenuCreationDelegate(containerSpi, container);
 		this.onRemoveByDispose = false;
+
+		this.containerRegistry = new IContainerRegistry() {
+
+			@Override
+			public void register(final IControl control) {
+				for (final IContainerRegistry registry : containerRegistries) {
+					final IDisposeListener disposeListener = new IDisposeListener() {
+						@Override
+						public void onDispose() {
+							for (final IContainerRegistry registry : containerRegistries) {
+								registry.unregister(control);
+							}
+						}
+					};
+					control.addDisposeListener(disposeListener);
+
+					registry.register(control);
+				}
+			}
+
+			@Override
+			public void unregister(final IControl control) {
+				for (final IContainerRegistry registry : containerRegistries) {
+					registry.unregister(control);
+				}
+			}
+
+		};
 	}
 
 	public IPopupMenu createPopupMenu() {
@@ -99,6 +132,18 @@ public class ContainerDelegate extends DisposableDelegate {
 
 	public void removeContainerListener(final IContainerListener listener) {
 		containerListeners.remove(listener);
+	}
+
+	public void addContainerRegistry(final IContainerRegistry registry) {
+		Assert.paramNotNull(registry, "registry");
+		containerRegistries.add(registry);
+		for (final IControl control : new LinkedList<IControl>(children)) {
+			registerCurrentChildrenRecursively(control, registry);
+		}
+	}
+
+	public void removeContainerRegistry(final IContainerRegistry registry) {
+		containerRegistries.remove(registry);
 	}
 
 	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
@@ -140,14 +185,7 @@ public class ContainerDelegate extends DisposableDelegate {
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
 		final WIDGET_TYPE result = containerSpi.add(index, descriptor, layoutConstraints);
-		result.setParent(container);
-		if (index != null) {
-			children.add(index.intValue(), result);
-		}
-		else {
-			children.add(result);
-		}
-		fireAfterAdded(result);
+		afterAdded(index, result);
 		return result;
 	}
 
@@ -156,14 +194,7 @@ public class ContainerDelegate extends DisposableDelegate {
 		final ICustomWidgetCreator<WIDGET_TYPE> creator,
 		final Object layoutConstraints) {
 		final WIDGET_TYPE result = containerSpi.add(index, creator, layoutConstraints);
-		result.setParent(container);
-		if (index != null) {
-			children.add(index.intValue(), result);
-		}
-		else {
-			children.add(result);
-		}
-		fireAfterAdded(result);
+		afterAdded(index, result);
 		return result;
 	}
 
@@ -203,6 +234,48 @@ public class ContainerDelegate extends DisposableDelegate {
 		else {
 			return false;
 		}
+	}
+
+	private void afterAdded(final Integer index, final IControl control) {
+		control.setParent(container);
+		if (index != null) {
+			children.add(index.intValue(), control);
+		}
+		else {
+			children.add(control);
+		}
+		fireAfterAdded(control);
+		registerNewCreatedChild(control);
+	}
+
+	private void registerCurrentChildrenRecursively(final IControl control, final IContainerRegistry registry) {
+		registry.register(control);
+		if (control instanceof IContainer) {
+			for (final IControl childControl : ((IContainer) control).getChildren()) {
+				registerCurrentChildrenRecursively(childControl, registry);
+			}
+		}
+	}
+
+	private void registerNewCreatedChild(final IControl control) {
+		for (final IContainerRegistry registry : containerRegistries) {
+			registry.register(control);
+		}
+		if (control instanceof IContainer) {
+			final IContainer childContainer = (IContainer) control;
+			childContainer.addContainerRegistry(containerRegistry);
+		}
+
+		final IDisposeListener disposeListener = new IDisposeListener() {
+			@Override
+			public void onDispose() {
+				for (final IContainerRegistry registry : containerRegistries) {
+					registry.unregister(control);
+				}
+			}
+		};
+
+		control.addDisposeListener(disposeListener);
 	}
 
 	private void fireAfterAdded(final IControl control) {
