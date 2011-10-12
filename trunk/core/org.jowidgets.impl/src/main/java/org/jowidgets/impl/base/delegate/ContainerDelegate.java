@@ -28,9 +28,12 @@
 
 package org.jowidgets.impl.base.delegate;
 
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
+import org.jowidgets.api.controller.IContainerListener;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IPopupMenu;
@@ -45,6 +48,7 @@ public class ContainerDelegate extends DisposableDelegate {
 	private final IContainer container;
 	private final List<IControl> children;
 	private final PopupMenuCreationDelegate popupMenuCreationDelegate;
+	private final Set<IContainerListener> containerListeners;
 
 	private boolean onRemoveByDispose;
 
@@ -54,6 +58,7 @@ public class ContainerDelegate extends DisposableDelegate {
 		this.containerSpi = containerSpi;
 		this.container = container;
 		this.children = new LinkedList<IControl>();
+		this.containerListeners = new LinkedHashSet<IContainerListener>();
 		this.popupMenuCreationDelegate = new PopupMenuCreationDelegate(containerSpi, container);
 		this.onRemoveByDispose = false;
 	}
@@ -86,6 +91,14 @@ public class ContainerDelegate extends DisposableDelegate {
 				super.dispose();
 			}
 		}
+	}
+
+	public void addContainerListener(final IContainerListener listener) {
+		containerListeners.add(listener);
+	}
+
+	public void removeContainerListener(final IContainerListener listener) {
+		containerListeners.remove(listener);
 	}
 
 	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
@@ -127,15 +140,14 @@ public class ContainerDelegate extends DisposableDelegate {
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
 		final WIDGET_TYPE result = containerSpi.add(index, descriptor, layoutConstraints);
-		if (result instanceof IControl) {
-			((IControl) result).setParent(container);
-		}
+		result.setParent(container);
 		if (index != null) {
 			children.add(index.intValue(), result);
 		}
 		else {
 			children.add(result);
 		}
+		fireAfterAdded(result);
 		return result;
 	}
 
@@ -144,15 +156,14 @@ public class ContainerDelegate extends DisposableDelegate {
 		final ICustomWidgetCreator<WIDGET_TYPE> creator,
 		final Object layoutConstraints) {
 		final WIDGET_TYPE result = containerSpi.add(index, creator, layoutConstraints);
-		if (result instanceof IControl) {
-			((IControl) result).setParent(container);
-		}
+		result.setParent(container);
 		if (index != null) {
 			children.add(index.intValue(), result);
 		}
 		else {
 			children.add(result);
 		}
+		fireAfterAdded(result);
 		return result;
 	}
 
@@ -168,6 +179,7 @@ public class ContainerDelegate extends DisposableDelegate {
 		final List<IControl> childrenCopy = new LinkedList<IControl>(children);
 		children.clear();
 		for (final IControl child : childrenCopy) {
+			fireBeforeRemove(child);
 			child.dispose();
 		}
 		containerSpi.removeAll();
@@ -176,6 +188,7 @@ public class ContainerDelegate extends DisposableDelegate {
 	public boolean remove(final IControl control) {
 		Assert.paramNotNull(control, "control");
 		if (children.contains(control)) {
+			fireBeforeRemove(control);
 			boolean removed = children.remove(control);
 			control.dispose();
 			removed = removed && containerSpi.remove(control);
@@ -189,6 +202,18 @@ public class ContainerDelegate extends DisposableDelegate {
 		}
 		else {
 			return false;
+		}
+	}
+
+	private void fireAfterAdded(final IControl control) {
+		for (final IContainerListener listener : new LinkedList<IContainerListener>(containerListeners)) {
+			listener.afterAdded(control);
+		}
+	}
+
+	private void fireBeforeRemove(final IControl control) {
+		for (final IContainerListener listener : new LinkedList<IContainerListener>(containerListeners)) {
+			listener.beforeRemove(control);
 		}
 	}
 

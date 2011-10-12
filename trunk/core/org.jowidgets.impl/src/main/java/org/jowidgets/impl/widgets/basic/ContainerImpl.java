@@ -30,6 +30,7 @@ package org.jowidgets.impl.widgets.basic;
 
 import java.util.List;
 
+import org.jowidgets.api.controller.IContainerListener;
 import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.widgets.IComponent;
@@ -105,6 +106,16 @@ public class ContainerImpl extends AbstractContainerSpiWrapper implements IConta
 		final LAYOUT_TYPE result = layoutFactory.create(this);
 		setLayout(result);
 		return result;
+	}
+
+	@Override
+	public void addContainerListener(final IContainerListener listener) {
+		containerDelegate.addContainerListener(listener);
+	}
+
+	@Override
+	public void removeContainerListener(final IContainerListener listener) {
+		containerDelegate.removeContainerListener(listener);
 	}
 
 	@Override

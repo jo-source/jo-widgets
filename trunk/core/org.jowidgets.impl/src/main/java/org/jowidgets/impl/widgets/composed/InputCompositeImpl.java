@@ -32,6 +32,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.jowidgets.api.controller.IContainerListener;
 import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
@@ -268,6 +269,16 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 	public boolean remove(final IControl control) {
 		removeControlFromInputControls(control);
 		return innerComposite.remove(control);
+	}
+
+	@Override
+	public void addContainerListener(final IContainerListener listener) {
+		innerComposite.addContainerListener(listener);
+	}
+
+	@Override
+	public void removeContainerListener(final IContainerListener listener) {
+		innerComposite.removeContainerListener(listener);
 	}
 
 	private void removeControlFromInputControls(final IControl control) {

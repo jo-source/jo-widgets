@@ -30,6 +30,7 @@ package org.jowidgets.tools.widgets.wrapper;
 
 import java.util.List;
 
+import org.jowidgets.api.controller.IContainerListener;
 import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
@@ -144,6 +145,16 @@ public class ContainerWrapper extends ComponentWrapper implements IContainer {
 	@Override
 	public void setTabOrder(final List<? extends IControl> tabOrder) {
 		getWidget().setTabOrder(tabOrder);
+	}
+
+	@Override
+	public void addContainerListener(final IContainerListener listener) {
+		getWidget().addContainerListener(listener);
+	}
+
+	@Override
+	public void removeContainerListener(final IContainerListener listener) {
+		getWidget().removeContainerListener(listener);
 	}
 
 }

@@ -28,9 +28,12 @@
 
 package org.jowidgets.tools.powo;
 
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
+import org.jowidgets.api.controller.IContainerListener;
 import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
@@ -52,6 +55,7 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 	@SuppressWarnings("rawtypes")
 	private final List<Tuple<Widget, Object>> preWidgets;
 	private final JoWidgetFactory widgetFactory;
+	private final Set<IContainerListener> containerListeners;
 
 	private List<? extends IControl> tabOrder;
 
@@ -60,12 +64,16 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 		super(bluePrint);
 		this.preWidgets = new LinkedList<Tuple<Widget, Object>>();
 		this.widgetFactory = new JoWidgetFactory();
+		this.containerListeners = new LinkedHashSet<IContainerListener>();
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	void initialize(final WIDGET_TYPE widget) {
 		super.initialize(widget);
+		for (final IContainerListener containerListener : containerListeners) {
+			widget.addContainerListener(containerListener);
+		}
 		for (final Tuple<Widget, Object> preWidgetTuple : preWidgets) {
 			final Widget preWidget = preWidgetTuple.getFirst();
 			final Object layoutConstraints = preWidgetTuple.getSecond();
@@ -136,7 +144,26 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 		else {
 			this.tabOrder = tabOrder;
 		}
+	}
 
+	@Override
+	public void addContainerListener(final IContainerListener listener) {
+		if (isInitialized()) {
+			getWidget().addContainerListener(listener);
+		}
+		else {
+			containerListeners.add(listener);
+		}
+	}
+
+	@Override
+	public void removeContainerListener(final IContainerListener listener) {
+		if (isInitialized()) {
+			getWidget().removeContainerListener(listener);
+		}
+		else {
+			containerListeners.remove(listener);
+		}
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
