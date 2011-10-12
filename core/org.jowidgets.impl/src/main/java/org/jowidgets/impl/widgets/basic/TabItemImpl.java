@@ -32,6 +32,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.jowidgets.api.controller.IContainerRegistry;
 import org.jowidgets.api.controller.IContainerListener;
 import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.controller.ITabItemListener;
@@ -358,6 +359,16 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 	@Override
 	public void removeContainerListener(final IContainerListener listener) {
 		containerDelegate.removeContainerListener(listener);
+	}
+
+	@Override
+	public void addContainerRegistry(final IContainerRegistry registry) {
+		containerDelegate.addContainerRegistry(registry);
+	}
+
+	@Override
+	public void removeContainerRegistry(final IContainerRegistry registry) {
+		containerDelegate.removeContainerRegistry(registry);
 	}
 
 	@Override

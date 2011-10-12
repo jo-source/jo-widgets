@@ -33,6 +33,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.jowidgets.api.controller.IContainerRegistry;
 import org.jowidgets.api.controller.IContainerListener;
 import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.widgets.IComponent;
@@ -56,6 +57,7 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 	private final List<Tuple<Widget, Object>> preWidgets;
 	private final JoWidgetFactory widgetFactory;
 	private final Set<IContainerListener> containerListeners;
+	private final Set<IContainerRegistry> containerChildrenRegistries;
 
 	private List<? extends IControl> tabOrder;
 
@@ -65,6 +67,7 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 		this.preWidgets = new LinkedList<Tuple<Widget, Object>>();
 		this.widgetFactory = new JoWidgetFactory();
 		this.containerListeners = new LinkedHashSet<IContainerListener>();
+		this.containerChildrenRegistries = new LinkedHashSet<IContainerRegistry>();
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
@@ -73,6 +76,9 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 		super.initialize(widget);
 		for (final IContainerListener containerListener : containerListeners) {
 			widget.addContainerListener(containerListener);
+		}
+		for (final IContainerRegistry registry : containerChildrenRegistries) {
+			widget.addContainerRegistry(registry);
 		}
 		for (final Tuple<Widget, Object> preWidgetTuple : preWidgets) {
 			final Widget preWidget = preWidgetTuple.getFirst();
@@ -163,6 +169,26 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 		}
 		else {
 			containerListeners.remove(listener);
+		}
+	}
+
+	@Override
+	public void addContainerRegistry(final IContainerRegistry registry) {
+		if (isInitialized()) {
+			getWidget().addContainerRegistry(registry);
+		}
+		else {
+			containerChildrenRegistries.add(registry);
+		}
+	}
+
+	@Override
+	public void removeContainerRegistry(final IContainerRegistry registry) {
+		if (isInitialized()) {
+			getWidget().removeContainerRegistry(registry);
+		}
+		else {
+			containerChildrenRegistries.remove(registry);
 		}
 	}
 

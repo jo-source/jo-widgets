@@ -30,6 +30,7 @@ package org.jowidgets.api.widgets;
 
 import java.util.List;
 
+import org.jowidgets.api.controller.IContainerRegistry;
 import org.jowidgets.api.controller.IContainerObservable;
 import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.common.widgets.IContainerCommon;
@@ -42,6 +43,10 @@ public interface IContainer extends IComponent, IContainerObservable, IContainer
 	<LAYOUT_TYPE extends ILayouter> LAYOUT_TYPE setLayout(ILayoutFactory<LAYOUT_TYPE> layoutFactory);
 
 	void layout();
+
+	void addContainerRegistry(IContainerRegistry registry);
+
+	void removeContainerRegistry(IContainerRegistry registry);
 
 	/**
 	 * Gets the containers children

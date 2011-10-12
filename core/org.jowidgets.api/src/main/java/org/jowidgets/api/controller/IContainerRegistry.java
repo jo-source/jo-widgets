@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann, Lukas Gross
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,17 +26,34 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.test;
+package org.jowidgets.api.controller;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
+import org.jowidgets.api.widgets.IControl;
 
-@RunWith(Suite.class)
-@SuiteClasses({
-		ToolkitTest.class, WidgetFactoryTest.class, ContainerRegistryTest.class, MenuTest.class, ToolBarTest.class,
-		BluePrintFactoryTest.class, BluePrintFactoryAnnotationsTest.class, CheckMandatoryTest.class, TabFolderTest.class,
-		TreeTest.class, BluePrintFactoryProblematicDescriptorTest.class, WidgetDisposeTest.class})
-public class ApiBlackBoxTestSuite {
+public interface IContainerRegistry {
+
+	/**
+	 * The method will be invoked for all eventually created children
+	 * (recursively) of the container once.
+	 * 
+	 * When adding this registry to a container, all currently existing
+	 * children will be passed to this method. After that, all children
+	 * that will be added in future will be added as well.
+	 * 
+	 * @param control The control that has been added to this container
+	 *            or to one of its children
+	 */
+	void register(IControl control);
+
+	/**
+	 * This method will be invoked for all children (recursively) of the
+	 * container that will be removed / disposed.
+	 * 
+	 * Remark: Controls that was disposed before adding this registry to the container
+	 * will not be passed to this method
+	 * 
+	 * @param control The control before it will be removed / disposed
+	 */
+	void unregister(IControl control);
 
 }
