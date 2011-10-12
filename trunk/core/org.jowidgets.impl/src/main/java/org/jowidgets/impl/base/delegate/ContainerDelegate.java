@@ -71,17 +71,8 @@ public class ContainerDelegate extends DisposableDelegate {
 
 			@Override
 			public void register(final IControl control) {
+				control.addDisposeListener(new DisposeListener(control));
 				for (final IContainerRegistry registry : containerRegistries) {
-					final IDisposeListener disposeListener = new IDisposeListener() {
-						@Override
-						public void onDispose() {
-							for (final IContainerRegistry registry : containerRegistries) {
-								registry.unregister(control);
-							}
-						}
-					};
-					control.addDisposeListener(disposeListener);
-
 					registry.register(control);
 				}
 			}
@@ -266,16 +257,7 @@ public class ContainerDelegate extends DisposableDelegate {
 			childContainer.addContainerRegistry(containerRegistry);
 		}
 
-		final IDisposeListener disposeListener = new IDisposeListener() {
-			@Override
-			public void onDispose() {
-				for (final IContainerRegistry registry : containerRegistries) {
-					registry.unregister(control);
-				}
-			}
-		};
-
-		control.addDisposeListener(disposeListener);
+		control.addDisposeListener(new DisposeListener(control));
 	}
 
 	private void fireAfterAdded(final IControl control) {
@@ -288,6 +270,27 @@ public class ContainerDelegate extends DisposableDelegate {
 		for (final IContainerListener listener : new LinkedList<IContainerListener>(containerListeners)) {
 			listener.beforeRemove(control);
 		}
+	}
+
+	private final class DisposeListener implements IDisposeListener {
+
+		private final IControl control;
+
+		DisposeListener(final IControl control) {
+			this.control = control;
+		}
+
+		@Override
+		public void onDispose() {
+			for (final IContainerRegistry registry : containerRegistries) {
+				registry.unregister(control);
+				if (control instanceof IContainer) {
+					((IContainer) control).removeContainerRegistry(containerRegistry);
+				}
+				control.removeDisposeListener(this);
+			}
+		}
+
 	}
 
 }
