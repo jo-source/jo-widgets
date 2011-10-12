@@ -36,6 +36,8 @@ public interface IComponent extends IWidget, IComponentCommon {
 
 	boolean isReparentable();
 
+	boolean hasFocus();
+
 	IPopupMenu createPopupMenu();
 
 	/**
