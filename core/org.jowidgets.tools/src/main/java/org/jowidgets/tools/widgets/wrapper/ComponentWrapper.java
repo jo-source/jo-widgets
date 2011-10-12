@@ -159,6 +159,11 @@ public class ComponentWrapper extends WidgetWrapper implements IComponent {
 	}
 
 	@Override
+	public boolean hasFocus() {
+		return getWidget().hasFocus();
+	}
+
+	@Override
 	public void addKeyListener(final IKeyListener listener) {
 		getWidget().addKeyListener(listener);
 	}

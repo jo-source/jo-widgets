@@ -28,6 +28,9 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComponent;
@@ -47,11 +50,16 @@ import org.jowidgets.spi.widgets.IComponentSpi;
 public abstract class AbstractComponentSpiWrapper extends WidgetSpiWrapper implements IComponentCommon {
 
 	private final IPopupDetectionListener popupListener;
+	private final Set<IFocusListener> focusListeners;
+
 	private IMenuModel popupMenuModel;
 	private IPopupMenu popupMenu;
 
+	private boolean hasFocus;
+
 	public AbstractComponentSpiWrapper(final IComponentSpi component) {
 		super(component);
+		this.focusListeners = new HashSet<IFocusListener>();
 		this.popupListener = new IPopupDetectionListener() {
 
 			@Override
@@ -67,9 +75,31 @@ public abstract class AbstractComponentSpiWrapper extends WidgetSpiWrapper imple
 				}
 			}
 		};
+
+		component.addFocusListener(new IFocusListener() {
+			@Override
+			public void focusLost() {
+				hasFocus = false;
+				for (final IFocusListener focusListener : focusListeners) {
+					focusListener.focusLost();
+				}
+			}
+
+			@Override
+			public void focusGained() {
+				hasFocus = true;
+				for (final IFocusListener focusListener : focusListeners) {
+					focusListener.focusGained();
+				}
+			}
+		});
 	}
 
 	public abstract IPopupMenu createPopupMenu();
+
+	public boolean hasFocus() {
+		return hasFocus;
+	}
 
 	@Override
 	public void redraw() {
@@ -180,13 +210,13 @@ public abstract class AbstractComponentSpiWrapper extends WidgetSpiWrapper imple
 	}
 
 	@Override
-	public void addFocusListener(final IFocusListener listener) {
-		getWidget().addFocusListener(listener);
+	public final void addFocusListener(final IFocusListener listener) {
+		focusListeners.add(listener);
 	}
 
 	@Override
-	public void removeFocusListener(final IFocusListener listener) {
-		getWidget().removeFocusListener(listener);
+	public final void removeFocusListener(final IFocusListener listener) {
+		focusListeners.remove(listener);
 	}
 
 	@Override

@@ -184,6 +184,16 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 	}
 
 	@Override
+	public boolean hasFocus() {
+		if (isInitialized()) {
+			return getWidget().hasFocus();
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
 	public boolean requestFocus() {
 		if (isInitialized()) {
 			return getWidget().requestFocus();
