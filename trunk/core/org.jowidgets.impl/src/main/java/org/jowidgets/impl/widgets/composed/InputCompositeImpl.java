@@ -32,8 +32,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.jowidgets.api.controller.IContainerRegistry;
 import org.jowidgets.api.controller.IContainerListener;
+import org.jowidgets.api.controller.IContainerRegistry;
+import org.jowidgets.api.controller.IListenerFactory;
 import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
@@ -50,7 +51,12 @@ import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.api.widgets.descriptor.setup.IInputCompositeSetup;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Rectangle;
+import org.jowidgets.common.widgets.controller.IComponentListener;
+import org.jowidgets.common.widgets.controller.IFocusListener;
 import org.jowidgets.common.widgets.controller.IInputListener;
+import org.jowidgets.common.widgets.controller.IKeyListener;
+import org.jowidgets.common.widgets.controller.IMouseListener;
+import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
@@ -290,6 +296,56 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 	@Override
 	public void removeContainerRegistry(final IContainerRegistry registry) {
 		innerComposite.removeContainerRegistry(registry);
+	}
+
+	@Override
+	public void addComponentListenerRecursive(final IListenerFactory<IComponentListener> listenerFactory) {
+		innerComposite.addComponentListenerRecursive(listenerFactory);
+	}
+
+	@Override
+	public void removeComponentListenerRecursive(final IListenerFactory<IComponentListener> listenerFactory) {
+		innerComposite.removeComponentListenerRecursive(listenerFactory);
+	}
+
+	@Override
+	public void addFocusListenerRecursive(final IListenerFactory<IFocusListener> listenerFactory) {
+		innerComposite.addFocusListenerRecursive(listenerFactory);
+	}
+
+	@Override
+	public void removeFocusListenerRecursive(final IListenerFactory<IFocusListener> listenerFactory) {
+		innerComposite.removeFocusListenerRecursive(listenerFactory);
+	}
+
+	@Override
+	public void addKeyListenerRecursive(final IListenerFactory<IKeyListener> listenerFactory) {
+		innerComposite.addKeyListenerRecursive(listenerFactory);
+	}
+
+	@Override
+	public void removeKeyListenerRecursive(final IListenerFactory<IKeyListener> listenerFactory) {
+		innerComposite.removeKeyListenerRecursive(listenerFactory);
+	}
+
+	@Override
+	public void addMouseListenerRecursive(final IListenerFactory<IMouseListener> listenerFactory) {
+		innerComposite.addMouseListenerRecursive(listenerFactory);
+	}
+
+	@Override
+	public void removeMouseListenerRecursive(final IListenerFactory<IMouseListener> listenerFactory) {
+		innerComposite.removeMouseListenerRecursive(listenerFactory);
+	}
+
+	@Override
+	public void addPopupDetectionListenerRecursive(final IListenerFactory<IPopupDetectionListener> listenerFactory) {
+		innerComposite.addPopupDetectionListenerRecursive(listenerFactory);
+	}
+
+	@Override
+	public void removePopupDetectionListenerRecursive(final IListenerFactory<IPopupDetectionListener> listenerFactory) {
+		innerComposite.removePopupDetectionListenerRecursive(listenerFactory);
 	}
 
 	private void removeControlFromInputControls(final IControl control) {

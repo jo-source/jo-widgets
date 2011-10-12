@@ -30,13 +30,19 @@ package org.jowidgets.tools.widgets.wrapper;
 
 import java.util.List;
 
-import org.jowidgets.api.controller.IContainerRegistry;
 import org.jowidgets.api.controller.IContainerListener;
+import org.jowidgets.api.controller.IContainerRegistry;
+import org.jowidgets.api.controller.IListenerFactory;
 import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Rectangle;
+import org.jowidgets.common.widgets.controller.IComponentListener;
+import org.jowidgets.common.widgets.controller.IFocusListener;
+import org.jowidgets.common.widgets.controller.IKeyListener;
+import org.jowidgets.common.widgets.controller.IMouseListener;
+import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
@@ -166,6 +172,56 @@ public class ContainerWrapper extends ComponentWrapper implements IContainer {
 	@Override
 	public void removeContainerRegistry(final IContainerRegistry registry) {
 		getWidget().removeContainerRegistry(registry);
+	}
+
+	@Override
+	public void addComponentListenerRecursive(final IListenerFactory<IComponentListener> listenerFactory) {
+		getWidget().addComponentListenerRecursive(listenerFactory);
+	}
+
+	@Override
+	public void removeComponentListenerRecursive(final IListenerFactory<IComponentListener> listenerFactory) {
+		getWidget().removeComponentListenerRecursive(listenerFactory);
+	}
+
+	@Override
+	public void addFocusListenerRecursive(final IListenerFactory<IFocusListener> listenerFactory) {
+		getWidget().addFocusListenerRecursive(listenerFactory);
+	}
+
+	@Override
+	public void removeFocusListenerRecursive(final IListenerFactory<IFocusListener> listenerFactory) {
+		getWidget().removeFocusListenerRecursive(listenerFactory);
+	}
+
+	@Override
+	public void addKeyListenerRecursive(final IListenerFactory<IKeyListener> listenerFactory) {
+		getWidget().addKeyListenerRecursive(listenerFactory);
+	}
+
+	@Override
+	public void removeKeyListenerRecursive(final IListenerFactory<IKeyListener> listenerFactory) {
+		getWidget().removeKeyListenerRecursive(listenerFactory);
+	}
+
+	@Override
+	public void addMouseListenerRecursive(final IListenerFactory<IMouseListener> listenerFactory) {
+		getWidget().addMouseListenerRecursive(listenerFactory);
+	}
+
+	@Override
+	public void removeMouseListenerRecursive(final IListenerFactory<IMouseListener> listenerFactory) {
+		getWidget().removeMouseListenerRecursive(listenerFactory);
+	}
+
+	@Override
+	public void addPopupDetectionListenerRecursive(final IListenerFactory<IPopupDetectionListener> listenerFactory) {
+		getWidget().addPopupDetectionListenerRecursive(listenerFactory);
+	}
+
+	@Override
+	public void removePopupDetectionListenerRecursive(final IListenerFactory<IPopupDetectionListener> listenerFactory) {
+		getWidget().removePopupDetectionListenerRecursive(listenerFactory);
 	}
 
 }

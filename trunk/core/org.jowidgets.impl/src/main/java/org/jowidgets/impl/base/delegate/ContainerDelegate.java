@@ -36,9 +36,15 @@ import java.util.Set;
 import org.jowidgets.api.controller.IContainerListener;
 import org.jowidgets.api.controller.IContainerRegistry;
 import org.jowidgets.api.controller.IDisposeListener;
+import org.jowidgets.api.controller.IListenerFactory;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IPopupMenu;
+import org.jowidgets.common.widgets.controller.IComponentListener;
+import org.jowidgets.common.widgets.controller.IFocusListener;
+import org.jowidgets.common.widgets.controller.IKeyListener;
+import org.jowidgets.common.widgets.controller.IMouseListener;
+import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.spi.widgets.IContainerSpi;
@@ -135,6 +141,46 @@ public class ContainerDelegate extends DisposableDelegate {
 
 	public void removeContainerRegistry(final IContainerRegistry registry) {
 		containerRegistries.remove(registry);
+	}
+
+	public void addComponentListenerRecursive(final IListenerFactory<IComponentListener> listenerFactory) {
+		//TODO MG implement recursive listeners
+	}
+
+	public void removeComponentListenerRecursive(final IListenerFactory<IComponentListener> listenerFactory) {
+		//TODO MG implement recursive listeners
+	}
+
+	public void addFocusListenerRecursive(final IListenerFactory<IFocusListener> listenerFactory) {
+		//TODO MG implement recursive listeners
+	}
+
+	public void removeFocusListenerRecursive(final IListenerFactory<IFocusListener> listenerFactory) {
+		//TODO MG implement recursive listeners
+	}
+
+	public void addKeyListenerRecursive(final IListenerFactory<IKeyListener> listenerFactory) {
+		//TODO MG implement recursive listeners
+	}
+
+	public void removeKeyListenerRecursive(final IListenerFactory<IKeyListener> listenerFactory) {
+		//TODO MG implement recursive listeners
+	}
+
+	public void addMouseListenerRecursive(final IListenerFactory<IMouseListener> listenerFactory) {
+		//TODO MG implement recursive listeners
+	}
+
+	public void removeMouseListenerRecursive(final IListenerFactory<IMouseListener> listenerFactory) {
+		//TODO MG implement recursive listeners
+	}
+
+	public void addPopupDetectionListenerRecursive(final IListenerFactory<IPopupDetectionListener> listenerFactory) {
+		//TODO MG implement recursive listeners
+	}
+
+	public void removePopupDetectionListenerRecursive(final IListenerFactory<IPopupDetectionListener> listenerFactory) {
+		//TODO MG implement recursive listeners
 	}
 
 	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
