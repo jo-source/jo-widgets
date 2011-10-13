@@ -30,6 +30,7 @@ package org.jowidgets.impl.layout.miglayout;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
+import org.jowidgets.api.widgets.ISplitComposite;
 import org.jowidgets.api.widgets.ITabFolder;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.IWindow;
@@ -163,15 +164,21 @@ class JoMigComponentWrapper implements IComponentWrapper {
 
 	@Override
 	public final IContainerWrapper getParent() {
-		if (component.getParent() instanceof IContainer) {
+		if (component.getParent() == null) {
+			return null;
+		}
+		else if (component.getParent() instanceof IContainer) {
 			return new JoMigContainerWrapper((IContainer) component.getParent());
 		}
-		else {
+		else if (component.getParent() instanceof ITabFolder) {
 			// workaround: if the parent is a tab folder use its parent
-			if (component.getParent() instanceof ITabFolder) {
-				return new JoMigContainerWrapper((IContainer) component.getParent().getParent());
-			}
-
+			return new JoMigContainerWrapper((IContainer) component.getParent().getParent());
+		}
+		else if (component.getParent() instanceof ISplitComposite) {
+			// workaround: if the parent is a split composite use its parent
+			return new JoMigContainerWrapper((IContainer) component.getParent().getParent());
+		}
+		else {
 			throw new IllegalStateException("Don't know how to handle '"
 				+ component.getParent().getClass().getName()
 				+ "' as a parent.");
