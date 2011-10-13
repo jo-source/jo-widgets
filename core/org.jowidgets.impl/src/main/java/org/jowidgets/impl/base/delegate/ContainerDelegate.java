@@ -28,15 +28,18 @@
 
 package org.jowidgets.impl.base.delegate;
 
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.jowidgets.api.controller.IContainerListener;
 import org.jowidgets.api.controller.IContainerRegistry;
 import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.controller.IListenerFactory;
+import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IPopupMenu;
@@ -47,6 +50,7 @@ import org.jowidgets.common.widgets.controller.IMouseListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
+import org.jowidgets.impl.base.delegate.RecursiveListenenerManager.IListenerRegistrationDelegate;
 import org.jowidgets.spi.widgets.IContainerSpi;
 import org.jowidgets.util.Assert;
 
@@ -59,6 +63,7 @@ public class ContainerDelegate extends DisposableDelegate {
 	private final Set<IContainerListener> containerListeners;
 	private final Set<IContainerRegistry> containerRegistries;
 	private final IContainerRegistry containerRegistry;
+	private final Map<IListenerFactory<?>, RecursiveListenenerManager<?>> listenenerManagers;
 
 	private boolean onRemoveByDispose;
 
@@ -70,6 +75,7 @@ public class ContainerDelegate extends DisposableDelegate {
 		this.children = new LinkedList<IControl>();
 		this.containerListeners = new LinkedHashSet<IContainerListener>();
 		this.containerRegistries = new LinkedHashSet<IContainerRegistry>();
+		this.listenenerManagers = new HashMap<IListenerFactory<?>, RecursiveListenenerManager<?>>();
 		this.popupMenuCreationDelegate = new PopupMenuCreationDelegate(containerSpi, container);
 		this.onRemoveByDispose = false;
 
@@ -116,8 +122,17 @@ public class ContainerDelegate extends DisposableDelegate {
 				//unnecessarily from its parent container on dispose invocation
 				children.clear();
 				for (final IControl child : childrenCopy) {
+					if (child instanceof IContainer) {
+						((IContainer) child).removeContainerRegistry(containerRegistry);
+					}
 					child.dispose();
 				}
+				containerRegistries.clear();
+				containerListeners.clear();
+				for (final RecursiveListenenerManager<?> listenenerManager : listenenerManagers.values()) {
+					listenenerManager.dispose();
+				}
+				listenenerManagers.clear();
 				super.dispose();
 			}
 		}
@@ -144,43 +159,113 @@ public class ContainerDelegate extends DisposableDelegate {
 	}
 
 	public void addComponentListenerRecursive(final IListenerFactory<IComponentListener> listenerFactory) {
-		//TODO MG implement recursive listeners
+		final IListenerRegistrationDelegate<IComponentListener> registrationDelegate;
+		registrationDelegate = new IListenerRegistrationDelegate<IComponentListener>() {
+
+			@Override
+			public void addListener(final IComponent component, final IComponentListener listener) {
+				component.addComponentListener(listener);
+			}
+
+			@Override
+			public void removeListener(final IComponent component, final IComponentListener listener) {
+				component.removeComponentListener(listener);
+			}
+
+		};
+		addListenerRecursive(listenerFactory, registrationDelegate);
 	}
 
 	public void removeComponentListenerRecursive(final IListenerFactory<IComponentListener> listenerFactory) {
-		//TODO MG implement recursive listeners
+		removeListenerRecursive(listenerFactory);
 	}
 
 	public void addFocusListenerRecursive(final IListenerFactory<IFocusListener> listenerFactory) {
-		//TODO MG implement recursive listeners
+		final IListenerRegistrationDelegate<IFocusListener> registrationDelegate;
+		registrationDelegate = new IListenerRegistrationDelegate<IFocusListener>() {
+
+			@Override
+			public void addListener(final IComponent component, final IFocusListener listener) {
+				component.addFocusListener(listener);
+			}
+
+			@Override
+			public void removeListener(final IComponent component, final IFocusListener listener) {
+				component.removeFocusListener(listener);
+			}
+
+		};
+		addListenerRecursive(listenerFactory, registrationDelegate);
 	}
 
 	public void removeFocusListenerRecursive(final IListenerFactory<IFocusListener> listenerFactory) {
-		//TODO MG implement recursive listeners
+		removeListenerRecursive(listenerFactory);
 	}
 
 	public void addKeyListenerRecursive(final IListenerFactory<IKeyListener> listenerFactory) {
-		//TODO MG implement recursive listeners
+		final IListenerRegistrationDelegate<IKeyListener> registrationDelegate;
+		registrationDelegate = new IListenerRegistrationDelegate<IKeyListener>() {
+
+			@Override
+			public void addListener(final IComponent component, final IKeyListener listener) {
+				component.addKeyListener(listener);
+			}
+
+			@Override
+			public void removeListener(final IComponent component, final IKeyListener listener) {
+				component.removeKeyListener(listener);
+			}
+
+		};
+		addListenerRecursive(listenerFactory, registrationDelegate);
 	}
 
 	public void removeKeyListenerRecursive(final IListenerFactory<IKeyListener> listenerFactory) {
-		//TODO MG implement recursive listeners
+		removeListenerRecursive(listenerFactory);
 	}
 
 	public void addMouseListenerRecursive(final IListenerFactory<IMouseListener> listenerFactory) {
-		//TODO MG implement recursive listeners
+		final IListenerRegistrationDelegate<IMouseListener> registrationDelegate;
+		registrationDelegate = new IListenerRegistrationDelegate<IMouseListener>() {
+
+			@Override
+			public void addListener(final IComponent component, final IMouseListener listener) {
+				component.addMouseListener(listener);
+			}
+
+			@Override
+			public void removeListener(final IComponent component, final IMouseListener listener) {
+				component.removeMouseListener(listener);
+			}
+
+		};
+		addListenerRecursive(listenerFactory, registrationDelegate);
 	}
 
 	public void removeMouseListenerRecursive(final IListenerFactory<IMouseListener> listenerFactory) {
-		//TODO MG implement recursive listeners
+		removeListenerRecursive(listenerFactory);
 	}
 
 	public void addPopupDetectionListenerRecursive(final IListenerFactory<IPopupDetectionListener> listenerFactory) {
-		//TODO MG implement recursive listeners
+		final IListenerRegistrationDelegate<IPopupDetectionListener> registrationDelegate;
+		registrationDelegate = new IListenerRegistrationDelegate<IPopupDetectionListener>() {
+
+			@Override
+			public void addListener(final IComponent component, final IPopupDetectionListener listener) {
+				component.addPopupDetectionListener(listener);
+			}
+
+			@Override
+			public void removeListener(final IComponent component, final IPopupDetectionListener listener) {
+				component.removePopupDetectionListener(listener);
+			}
+
+		};
+		addListenerRecursive(listenerFactory, registrationDelegate);
 	}
 
 	public void removePopupDetectionListenerRecursive(final IListenerFactory<IPopupDetectionListener> listenerFactory) {
-		//TODO MG implement recursive listeners
+		removeListenerRecursive(listenerFactory);
 	}
 
 	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
@@ -315,6 +400,25 @@ public class ContainerDelegate extends DisposableDelegate {
 	private void fireBeforeRemove(final IControl control) {
 		for (final IContainerListener listener : new LinkedList<IContainerListener>(containerListeners)) {
 			listener.beforeRemove(control);
+		}
+	}
+
+	private <LISTENER_TYPE> void addListenerRecursive(
+		final IListenerFactory<LISTENER_TYPE> listenerFactory,
+		final IListenerRegistrationDelegate<LISTENER_TYPE> registrationDelegate) {
+		Assert.paramNotNull(listenerFactory, "listenerFactory");
+		if (!listenenerManagers.containsKey(listenerFactory)) {
+			RecursiveListenenerManager<LISTENER_TYPE> listenenerManager;
+			listenenerManager = new RecursiveListenenerManager<LISTENER_TYPE>(container, listenerFactory, registrationDelegate);
+			listenenerManagers.put(listenerFactory, listenenerManager);
+		}
+	}
+
+	private void removeListenerRecursive(final IListenerFactory<?> listenerFactory) {
+		Assert.paramNotNull(listenerFactory, "listenerFactory");
+		final RecursiveListenenerManager<?> listenenerManager = listenenerManagers.remove(listenerFactory);
+		if (listenenerManager != null) {
+			listenenerManager.dispose();
 		}
 	}
 
