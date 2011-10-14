@@ -34,6 +34,16 @@ public interface IWidget extends IWidgetCommon, IDisposeObservable {
 
 	IWidget getParent();
 
+	/**
+	 * If the widget is a composed widget, the root widget
+	 * that holds the content will be returned.
+	 * 
+	 * If the widget is not composed, 'this' widget will be returned.
+	 * 
+	 * @return the root widget
+	 */
+	IWidget getRoot();
+
 	void dispose();
 
 	boolean isDisposed();

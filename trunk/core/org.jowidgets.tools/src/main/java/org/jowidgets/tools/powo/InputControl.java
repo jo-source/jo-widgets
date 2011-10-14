@@ -29,6 +29,7 @@
 package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.blueprint.builder.IInputComponentSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.setup.IInputComponentSetup;
@@ -73,6 +74,11 @@ class InputControl<WIDGET_TYPE extends IInputControl<VALUE_TYPE>, BLUE_PRINT_TYP
 	public IContainer getParent() {
 		checkInitialized();
 		return getWidget().getParent();
+	}
+
+	@Override
+	public IControl getRoot() {
+		return (IControl) super.getRoot();
 	}
 
 	@Override

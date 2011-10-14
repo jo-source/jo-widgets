@@ -66,6 +66,11 @@ public class WidgetWrapper implements IWidget {
 	}
 
 	@Override
+	public IWidget getRoot() {
+		return widget.getRoot();
+	}
+
+	@Override
 	public void addDisposeListener(final IDisposeListener listener) {
 		widget.addDisposeListener(listener);
 	}

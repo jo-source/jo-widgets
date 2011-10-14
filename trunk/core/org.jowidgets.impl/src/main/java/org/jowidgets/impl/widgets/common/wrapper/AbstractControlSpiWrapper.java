@@ -28,6 +28,7 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
+import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.spi.widgets.IControlSpi;
@@ -46,6 +47,11 @@ public abstract class AbstractControlSpiWrapper extends AbstractComponentSpiWrap
 	@Override
 	public IControlSpi getWidget() {
 		return (IControlSpi) super.getWidget();
+	}
+
+	@Override
+	public IControl getRoot() {
+		return (IControl) super.getRoot();
 	}
 
 	@Override

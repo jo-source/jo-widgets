@@ -76,6 +76,16 @@ class Widget<WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends IWidgetDescrip
 	}
 
 	@Override
+	public IWidget getRoot() {
+		if (isInitialized()) {
+			return widget.getRoot();
+		}
+		else {
+			return this;
+		}
+	}
+
+	@Override
 	public void addDisposeListener(final IDisposeListener listener) {
 		Assert.paramNotNull(listener, "listener");
 		if (isInitialized()) {

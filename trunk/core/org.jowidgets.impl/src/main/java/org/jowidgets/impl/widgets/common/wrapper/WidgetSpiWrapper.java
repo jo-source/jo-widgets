@@ -28,6 +28,7 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
+import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.spi.widgets.IWidgetSpi;
 import org.jowidgets.util.Assert;
@@ -47,6 +48,10 @@ public class WidgetSpiWrapper implements IWidgetCommon {
 
 	public void setWidget(final IWidgetSpi widget) {
 		this.widget = widget;
+	}
+
+	public IWidget getRoot() {
+		return (IWidget) this;
 	}
 
 	@Override

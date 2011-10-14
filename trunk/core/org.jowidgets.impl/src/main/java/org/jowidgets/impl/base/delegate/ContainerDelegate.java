@@ -377,6 +377,11 @@ public class ContainerDelegate extends DisposableDelegate {
 				registerCurrentChildrenRecursively(childControl, registry);
 			}
 		}
+		else if (control.getRoot() instanceof IContainer) {
+			for (final IControl childControl : ((IContainer) control.getRoot()).getChildren()) {
+				registerCurrentChildrenRecursively(childControl, registry);
+			}
+		}
 	}
 
 	private void registerNewCreatedChild(final IControl control) {
@@ -385,6 +390,10 @@ public class ContainerDelegate extends DisposableDelegate {
 		}
 		if (control instanceof IContainer) {
 			final IContainer childContainer = (IContainer) control;
+			childContainer.addContainerRegistry(containerRegistry);
+		}
+		else if (control.getRoot() instanceof IContainer) {
+			final IContainer childContainer = (IContainer) control.getRoot();
 			childContainer.addContainerRegistry(containerRegistry);
 		}
 
@@ -436,6 +445,9 @@ public class ContainerDelegate extends DisposableDelegate {
 				registry.unregister(control);
 				if (control instanceof IContainer) {
 					((IContainer) control).removeContainerRegistry(containerRegistry);
+				}
+				else if (control.getRoot() instanceof IContainer) {
+					((IContainer) control.getRoot()).removeContainerRegistry(containerRegistry);
 				}
 				control.removeDisposeListener(this);
 			}

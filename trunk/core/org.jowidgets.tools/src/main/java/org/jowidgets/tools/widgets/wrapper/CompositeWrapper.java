@@ -30,6 +30,7 @@ package org.jowidgets.tools.widgets.wrapper;
 
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.common.types.Dimension;
 
 public class CompositeWrapper extends ContainerWrapper implements IComposite {
@@ -51,6 +52,11 @@ public class CompositeWrapper extends ContainerWrapper implements IComposite {
 	@Override
 	public IContainer getParent() {
 		return getWidget().getParent();
+	}
+
+	@Override
+	public IControl getRoot() {
+		return getWidget().getRoot();
 	}
 
 	@Override

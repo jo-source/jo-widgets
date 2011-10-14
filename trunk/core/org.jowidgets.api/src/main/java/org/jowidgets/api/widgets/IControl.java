@@ -38,6 +38,9 @@ public interface IControl extends IComponent, IControlCommon {
 	@Override
 	IContainer getParent();
 
+	@Override
+	IControl getRoot();
+
 	void setMinSize(final Dimension minSize);
 
 	void setPreferredSize(Dimension preferredSize);

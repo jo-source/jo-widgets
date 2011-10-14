@@ -54,6 +54,11 @@ public class ControlWrapper extends ComponentWrapper implements IControl {
 	}
 
 	@Override
+	public IControl getRoot() {
+		return getWidget().getRoot();
+	}
+
+	@Override
 	public void setLayoutConstraints(final Object layoutConstraints) {
 		getWidget().setLayoutConstraints(layoutConstraints);
 	}
