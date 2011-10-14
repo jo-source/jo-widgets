@@ -30,6 +30,7 @@ package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.blueprint.builder.ICompositeSetupBuilder;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
@@ -72,6 +73,11 @@ class Composite<WIDGET_TYPE extends IComposite, BLUE_PRINT_TYPE extends IWidgetD
 	public final IContainer getParent() {
 		checkInitialized();
 		return getWidget().getParent();
+	}
+
+	@Override
+	public IControl getRoot() {
+		return (IControl) super.getRoot();
 	}
 
 	@Override

@@ -30,6 +30,7 @@ package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.descriptor.setup.ICompositeSetup;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
@@ -55,6 +56,11 @@ public class CompositeImpl extends ContainerImpl implements IComposite {
 	@Override
 	public IContainer getParent() {
 		return controlDelegate.getParent();
+	}
+
+	@Override
+	public IControl getRoot() {
+		return (IControl) super.getRoot();
 	}
 
 	@Override

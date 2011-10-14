@@ -72,6 +72,11 @@ public class ScrollCompositeImpl extends AbstractScrollCompositeSpiWrapper imple
 	}
 
 	@Override
+	public IControl getRoot() {
+		return (IControl) super.getRoot();
+	}
+
+	@Override
 	public <LAYOUT_TYPE extends ILayouter> LAYOUT_TYPE setLayout(final ILayoutFactory<LAYOUT_TYPE> layoutFactory) {
 		Assert.paramNotNull(layoutFactory, "layoutFactory");
 		final LAYOUT_TYPE result = layoutFactory.create(this);

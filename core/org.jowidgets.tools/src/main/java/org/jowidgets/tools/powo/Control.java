@@ -74,6 +74,11 @@ class Control<WIDGET_TYPE extends IControl, BLUE_PRINT_TYPE extends IWidgetDescr
 	}
 
 	@Override
+	public IControl getRoot() {
+		return (IControl) super.getRoot();
+	}
+
+	@Override
 	public void setParent(final IContainer parent) {
 		checkInitialized();
 		getWidget().setParent(parent);
