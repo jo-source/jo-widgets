@@ -73,6 +73,14 @@ public class TableModelSpiAdapter implements ITableColumnModelSpi, ITableDataMod
 		modelToView = new int[columnModel.getColumnCount()];
 		updateMappings();
 
+		for (int modelIndex = 0; modelIndex < columnModel.getColumnCount(); modelIndex++) {
+			final ITableColumn column = columnModel.getColumn(modelIndex);
+			if (!column.isVisible() && modelToView[modelIndex] >= 0) {
+				final int index = hideColumn(modelIndex);
+				columnModelObservable.fireColumnsRemoved(new int[] {index});
+			}
+		}
+
 		// Delegate events from app model to spi model
 		columnModel.getTableColumnModelObservable().addColumnModelListener(new ITableColumnModelListener() {
 
