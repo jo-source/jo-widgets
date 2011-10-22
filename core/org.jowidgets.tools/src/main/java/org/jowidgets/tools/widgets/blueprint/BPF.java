@@ -29,6 +29,7 @@
 package org.jowidgets.tools.widgets.blueprint;
 
 import java.text.DateFormat;
+import java.util.Collection;
 import java.util.Date;
 
 import org.jowidgets.api.convert.IConverter;
@@ -47,6 +48,7 @@ import org.jowidgets.api.widgets.blueprint.ICheckedMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICollectionInputControlBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICollectionInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICollectionInputFieldBluePrint;
+import org.jowidgets.api.widgets.blueprint.ICombinedCollectionInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
@@ -318,6 +320,12 @@ public final class BPF {
 	public static <ELEMENT_TYPE> ICollectionInputFieldBluePrint<ELEMENT_TYPE> collectionInputField(
 		final IConverter<ELEMENT_TYPE> converter) {
 		return Toolkit.getBluePrintFactory().collectionInputField(converter);
+	}
+
+	public static <ELEMENT_TYPE> ICombinedCollectionInputFieldBluePrint<ELEMENT_TYPE> combinedCollectionInputField(
+		final ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> elementTypeCreator,
+		final ICustomWidgetCreator<IInputControl<? extends Collection<ELEMENT_TYPE>>> collectionTypeCreator) {
+		return Toolkit.getBluePrintFactory().combinedCollectionInputField(elementTypeCreator, collectionTypeCreator);
 	}
 
 	public static IInputFieldBluePrint<String> inputFieldString() {
