@@ -29,6 +29,7 @@
 package org.jowidgets.tools.widgets.blueprint;
 
 import java.text.DateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -48,6 +49,7 @@ import org.jowidgets.api.widgets.blueprint.ICheckedMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICollectionInputControlBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICollectionInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICollectionInputFieldBluePrint;
+import org.jowidgets.api.widgets.blueprint.ICombinedCollectionInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
@@ -752,6 +754,13 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	public <ELEMENT_TYPE> ICollectionInputDialogBluePrint<ELEMENT_TYPE> collectionInputDialog(
 		final IWidgetDescriptor<? extends IInputControl<ELEMENT_TYPE>> descriptor) {
 		return bluePrintFactory.collectionInputDialog(descriptor);
+	}
+
+	@Override
+	public <ELEMENT_TYPE> ICombinedCollectionInputFieldBluePrint<ELEMENT_TYPE> combinedCollectionInputField(
+		final ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> elementTypeCreator,
+		final ICustomWidgetCreator<IInputControl<? extends Collection<ELEMENT_TYPE>>> collectionTypeCreator) {
+		return bluePrintFactory.combinedCollectionInputField(elementTypeCreator, collectionTypeCreator);
 	}
 
 }

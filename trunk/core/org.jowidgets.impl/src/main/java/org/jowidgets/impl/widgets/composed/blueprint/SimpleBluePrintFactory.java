@@ -27,6 +27,8 @@
  */
 package org.jowidgets.impl.widgets.composed.blueprint;
 
+import java.util.Collection;
+
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.login.ILoginInterceptor;
 import org.jowidgets.api.widgets.IInputComponent;
@@ -34,6 +36,7 @@ import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.blueprint.ICollectionInputControlBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICollectionInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICollectionInputFieldBluePrint;
+import org.jowidgets.api.widgets.blueprint.ICombinedCollectionInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputComponentValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
@@ -169,4 +172,17 @@ public class SimpleBluePrintFactory extends BasicBluePrintFactory implements ISi
 		result.setConverter(converter);
 		return result;
 	}
+
+	@Override
+	public <ELEMENT_TYPE> ICombinedCollectionInputFieldBluePrint<ELEMENT_TYPE> combinedCollectionInputField(
+		final ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> elementTypeCreator,
+		final ICustomWidgetCreator<IInputControl<? extends Collection<ELEMENT_TYPE>>> collectionTypeCreator) {
+		Assert.paramNotNull(elementTypeCreator, "elementTypeCreator");
+		Assert.paramNotNull(collectionTypeCreator, "collectionTypeCreator");
+		final ICombinedCollectionInputFieldBluePrint<ELEMENT_TYPE> result = createProxy(ICombinedCollectionInputFieldBluePrint.class);
+		result.setElementTypeControlCreator(elementTypeCreator);
+		result.setCollectionTypeControlCreator(collectionTypeCreator);
+		return result;
+	}
+
 }
