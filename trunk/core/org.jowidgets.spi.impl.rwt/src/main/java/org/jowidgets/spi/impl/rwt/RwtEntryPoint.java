@@ -33,7 +33,6 @@ import org.eclipse.rwt.RWT;
 import org.eclipse.rwt.lifecycle.IEntryPoint;
 import org.eclipse.rwt.lifecycle.UICallBack;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.spi.impl.swt.options.SwtOptions;
 import org.jowidgets.util.Assert;
 
 public class RwtEntryPoint implements IEntryPoint {
@@ -50,7 +49,7 @@ public class RwtEntryPoint implements IEntryPoint {
 		try {
 			if (!Toolkit.isInitialized()) {
 				Toolkit.initialize(new RwtToolkitProvider());
-				SwtOptions.setInputVerification(false);
+				RwtUiDefaultsInitializer.initialize();
 			}
 
 			final String uuid = UUID.randomUUID().toString();
