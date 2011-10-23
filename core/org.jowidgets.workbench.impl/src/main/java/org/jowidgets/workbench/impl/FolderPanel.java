@@ -151,6 +151,7 @@ public class FolderPanel implements ILayoutPanel {
 		final IView view = currentComponent.getComponent().createView(viewLayout.getId(), viewContext);
 
 		tabItem.layout();
+		viewContext.packToolBar();
 
 		tabItem.addTabItemListener(new TabItemAdapter() {
 
