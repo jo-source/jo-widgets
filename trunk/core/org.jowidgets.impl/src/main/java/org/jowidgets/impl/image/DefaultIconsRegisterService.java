@@ -70,6 +70,7 @@ public class DefaultIconsRegisterService extends ImageConstantRegisterService {
 		registerImage(IconsSmall.ADD_ALL, "add_all.gif");
 		registerImage(IconsSmall.SUB, "sub.gif");
 
+		registerImage(IconsSmall.DELETE, "delete.gif");
 		registerImage(IconsSmall.DELETE_TINY, "delete_tiny.png");
 		registerImage(IconsSmall.DELETE_GREY_TINY, "delete_grey_tiny.png");
 
