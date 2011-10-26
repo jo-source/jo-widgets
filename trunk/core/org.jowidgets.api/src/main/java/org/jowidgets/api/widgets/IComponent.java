@@ -30,6 +30,7 @@ package org.jowidgets.api.widgets;
 
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IComponentCommon;
 
 public interface IComponent extends IWidget, IComponentCommon {
@@ -56,6 +57,10 @@ public interface IComponent extends IWidget, IComponentCommon {
 	void setSize(int width, int height);
 
 	void setPosition(int x, int y);
+
+	Rectangle getBounds();
+
+	void setBounds(Rectangle bounds);
 
 	/**
 	 * Transforms a position from another component to the current component

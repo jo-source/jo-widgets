@@ -39,6 +39,7 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.controller.IComponentListener;
 import org.jowidgets.common.widgets.controller.IFocusListener;
@@ -177,6 +178,15 @@ public abstract class AbstractComponentSpiWrapper extends WidgetSpiWrapper imple
 	@Override
 	public void setPosition(final Position position) {
 		getWidget().setPosition(position);
+	}
+
+	public Rectangle getBounds() {
+		return new Rectangle(getWidget().getPosition(), getWidget().getSize());
+	}
+
+	public void setBounds(final Rectangle bounds) {
+		getWidget().setPosition(bounds.getPosition());
+		getWidget().setSize(bounds.getSize());
 	}
 
 	@Override

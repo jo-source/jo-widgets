@@ -50,6 +50,7 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.JTextComponent;
 
+import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.mask.TextMaskMode;
 import org.jowidgets.common.types.InputChangeEventPolicy;
 import org.jowidgets.common.types.Markup;
@@ -59,6 +60,7 @@ import org.jowidgets.spi.impl.controller.IObservableCallback;
 import org.jowidgets.spi.impl.controller.InputObservable;
 import org.jowidgets.spi.impl.controller.KeyObservable;
 import org.jowidgets.spi.impl.mask.TextMaskVerifierFactory;
+import org.jowidgets.spi.impl.swing.util.ColorConvert;
 import org.jowidgets.spi.impl.swing.util.FontProvider;
 import org.jowidgets.spi.impl.swing.widgets.event.LazyKeyEventContentFactory;
 import org.jowidgets.spi.impl.swing.widgets.util.InputModifierDocument;
@@ -331,6 +333,18 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 		if (keyObservable != null) {
 			keyObservable.removeKeyListener(listener);
 		}
+	}
+
+	@Override
+	public void setForegroundColor(final IColorConstant colorValue) {
+		getUiReference().getEditor().getEditorComponent().setForeground(ColorConvert.convert(colorValue));
+		super.setForegroundColor(colorValue);
+	}
+
+	@Override
+	public void setBackgroundColor(final IColorConstant colorValue) {
+		getUiReference().getEditor().getEditorComponent().setBackground(ColorConvert.convert(colorValue));
+		super.setBackgroundColor(colorValue);
 	}
 
 	private class ComboBoxEditorImpl implements ComboBoxEditor {

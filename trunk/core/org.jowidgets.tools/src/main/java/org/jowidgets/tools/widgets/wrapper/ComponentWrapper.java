@@ -35,6 +35,7 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.controller.IComponentListener;
 import org.jowidgets.common.widgets.controller.IFocusListener;
@@ -126,6 +127,16 @@ public class ComponentWrapper extends WidgetWrapper implements IComponent {
 	@Override
 	public void setPosition(final Position position) {
 		getWidget().setPosition(position);
+	}
+
+	@Override
+	public Rectangle getBounds() {
+		return getWidget().getBounds();
+	}
+
+	@Override
+	public void setBounds(final Rectangle bounds) {
+		getWidget().setBounds(bounds);
 	}
 
 	@Override
