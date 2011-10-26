@@ -55,6 +55,9 @@ public abstract class AbstractFrameSpiWrapper extends AbstractWindowSpiWrapper i
 		if (layoutDescriptor instanceof ILayouter) {
 			this.layouter = (ILayouter) layoutDescriptor;
 		}
+		else {
+			this.layouter = null;
+		}
 		getWidget().setLayout(layoutDescriptor);
 	}
 

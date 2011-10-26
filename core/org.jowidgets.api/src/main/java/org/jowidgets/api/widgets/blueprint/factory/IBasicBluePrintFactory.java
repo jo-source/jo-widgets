@@ -76,6 +76,10 @@ public interface IBasicBluePrintFactory extends IBasicSimpleBluePrintFactory {
 
 	IButtonBluePrint button(final String text, final String toolTipText);
 
+	IButtonBluePrint buttonOk();
+
+	IButtonBluePrint buttonCancel();
+
 	IIconBluePrint icon(final IImageConstant icon);
 
 	ITextLabelBluePrint textLabel(final String text);

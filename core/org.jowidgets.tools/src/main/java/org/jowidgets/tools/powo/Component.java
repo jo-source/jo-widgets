@@ -39,6 +39,7 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.common.widgets.controller.IComponentListener;
 import org.jowidgets.common.widgets.controller.IFocusListener;
@@ -367,6 +368,24 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 		else {
 			this.position = position;
 		}
+	}
+
+	@Override
+	public Rectangle getBounds() {
+		checkInitialized();
+		return getWidget().getBounds();
+	}
+
+	@Override
+	public void setBounds(final Rectangle bounds) {
+		if (isInitialized()) {
+			getWidget().setBounds(bounds);
+		}
+		else {
+			this.position = bounds.getPosition();
+			this.size = bounds.getSize();
+		}
+
 	}
 
 	@Override
