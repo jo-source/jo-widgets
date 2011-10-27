@@ -28,7 +28,7 @@
 
 package org.jowidgets.spi.impl.controller;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
@@ -44,7 +44,7 @@ public class InputObservable implements IInputObservable {
 
 	public InputObservable() {
 		super();
-		this.inputListeners = new HashSet<IInputListener>();
+		this.inputListeners = new LinkedHashSet<IInputListener>();
 	}
 
 	@Override

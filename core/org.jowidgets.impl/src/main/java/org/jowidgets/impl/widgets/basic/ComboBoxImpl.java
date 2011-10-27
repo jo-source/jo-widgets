@@ -40,6 +40,7 @@ import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
+import org.jowidgets.tools.controller.InputObservable;
 import org.jowidgets.tools.validation.CompoundValidator;
 import org.jowidgets.tools.validation.ValidationCache;
 import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
@@ -56,6 +57,7 @@ public class ComboBoxImpl<VALUE_TYPE> extends ComboBoxSelectionImpl<VALUE_TYPE> 
 	private final ValidationCache validationCache;
 	private final ControlDelegate controlDelegate;
 	private final CompoundValidator<VALUE_TYPE> compoundValidator;
+	private final InputObservable inputObservable;
 
 	private String lastUnmodifiedValue;
 
@@ -70,6 +72,8 @@ public class ComboBoxImpl<VALUE_TYPE> extends ComboBoxSelectionImpl<VALUE_TYPE> 
 		if (setup.getValue() != null) {
 			setValue(setup.getValue());
 		}
+
+		this.inputObservable = new InputObservable();
 
 		this.stringObjectConverter = setup.getStringObjectConverter();
 		this.objectStringConverter = setup.getObjectStringConverter();
@@ -106,6 +110,7 @@ public class ComboBoxImpl<VALUE_TYPE> extends ComboBoxSelectionImpl<VALUE_TYPE> 
 		getWidget().addInputListener(new IInputListener() {
 			@Override
 			public void inputChanged() {
+				inputObservable.fireInputChanged();
 				validationCache.setDirty();
 			}
 		});
@@ -216,12 +221,12 @@ public class ComboBoxImpl<VALUE_TYPE> extends ComboBoxSelectionImpl<VALUE_TYPE> 
 
 	@Override
 	public void addInputListener(final IInputListener listener) {
-		getWidget().addInputListener(listener);
+		inputObservable.addInputListener(listener);
 	}
 
 	@Override
 	public void removeInputListener(final IInputListener listener) {
-		getWidget().removeInputListener(listener);
+		inputObservable.removeInputListener(listener);
 	}
 
 }

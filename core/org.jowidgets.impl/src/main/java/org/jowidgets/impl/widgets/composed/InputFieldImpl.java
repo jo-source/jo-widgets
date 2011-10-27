@@ -34,11 +34,12 @@ import org.jowidgets.api.widgets.descriptor.setup.IInputFieldSetup;
 import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
+import org.jowidgets.tools.controller.InputObservable;
 import org.jowidgets.tools.validation.CompoundValidator;
 import org.jowidgets.tools.validation.ValidationCache;
 import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
-import org.jowidgets.util.NullCompatibleEquivalence;
+import org.jowidgets.util.EmptyCompatibleEquivalence;
 import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
@@ -50,6 +51,7 @@ public class InputFieldImpl<VALUE_TYPE> extends ControlWrapper implements IInput
 	private final CompoundValidator<VALUE_TYPE> compoundValidator;
 	private final IValidator<String> stringValidator;
 	private final ValidationCache validationCache;
+	private final InputObservable inputObservable;
 
 	private String lastUnmodifiedTextValue;
 
@@ -57,6 +59,7 @@ public class InputFieldImpl<VALUE_TYPE> extends ControlWrapper implements IInput
 
 		super(textField);
 
+		this.inputObservable = new InputObservable();
 		this.compoundValidator = new CompoundValidator<VALUE_TYPE>();
 		this.converter = setup.getConverter();
 
@@ -86,6 +89,7 @@ public class InputFieldImpl<VALUE_TYPE> extends ControlWrapper implements IInput
 		textField.addInputListener(new IInputListener() {
 			@Override
 			public void inputChanged() {
+				inputObservable.fireInputChanged();
 				validationCache.setDirty();
 			}
 		});
@@ -108,7 +112,7 @@ public class InputFieldImpl<VALUE_TYPE> extends ControlWrapper implements IInput
 
 	@Override
 	public boolean hasModifications() {
-		return !NullCompatibleEquivalence.equals(lastUnmodifiedTextValue, getText());
+		return !EmptyCompatibleEquivalence.equals(lastUnmodifiedTextValue, getText());
 	}
 
 	@Override
@@ -183,12 +187,12 @@ public class InputFieldImpl<VALUE_TYPE> extends ControlWrapper implements IInput
 
 	@Override
 	public void addInputListener(final IInputListener listener) {
-		getWidget().addInputListener(listener);
+		inputObservable.addInputListener(listener);
 	}
 
 	@Override
 	public void removeInputListener(final IInputListener listener) {
-		getWidget().removeInputListener(listener);
+		inputObservable.removeInputListener(listener);
 	}
 
 }
