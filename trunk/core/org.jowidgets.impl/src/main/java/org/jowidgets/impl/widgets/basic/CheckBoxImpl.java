@@ -97,8 +97,8 @@ public class CheckBoxImpl extends AbstractControlSpiWrapper implements ICheckBox
 			@Override
 			public void inputChanged() {
 				isNull = false;
-				validationCache.setDirty();
 				inputObservable.fireInputChanged();
+				validationCache.setDirty();
 			}
 		});
 

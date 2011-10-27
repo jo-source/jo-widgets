@@ -46,6 +46,7 @@ import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvok
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractControlSpiWrapper;
 import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
+import org.jowidgets.tools.controller.InputObservable;
 import org.jowidgets.tools.validation.CompoundValidator;
 import org.jowidgets.tools.validation.ValidationCache;
 import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
@@ -67,6 +68,7 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 	private final ValidationCache validationCache;
 	private final ControlDelegate controlDelegate;
 	private final CompoundValidator<VALUE_TYPE> compoundValidator;
+	private final InputObservable inputObservable;
 
 	private VALUE_TYPE lastUnmodifiedValue;
 	private VALUE_TYPE lenientValue;
@@ -77,7 +79,7 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 		super(comboBoxSelectionWidgetSpi);
 
 		this.lenient = setup.isLenient();
-
+		this.inputObservable = new InputObservable();
 		this.comboBoxSelectionWidgetSpi = comboBoxSelectionWidgetSpi;
 		this.objectStringConverter = setup.getObjectStringConverter();
 		this.autoSelectionPolicy = setup.getAutoSelectionPolicy();
@@ -112,6 +114,7 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 			@Override
 			public void inputChanged() {
 				removeLinientValue();
+				inputObservable.fireInputChanged();
 				validationCache.setDirty();
 			}
 		});
@@ -352,12 +355,12 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 
 	@Override
 	public void addInputListener(final IInputListener listener) {
-		getWidget().addInputListener(listener);
+		inputObservable.addInputListener(listener);
 	}
 
 	@Override
 	public void removeInputListener(final IInputListener listener) {
-		getWidget().removeInputListener(listener);
+		inputObservable.removeInputListener(listener);
 	}
 
 }

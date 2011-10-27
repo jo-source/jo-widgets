@@ -385,8 +385,8 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 			value.add(currentElement.toString());
 		}
 
-		validationCache.setDirty();
 		inputObservable.fireInputChanged();
+		validationCache.setDirty();
 	}
 
 	private static boolean equalsStringPart(final String text, final String search, final int pos) {
