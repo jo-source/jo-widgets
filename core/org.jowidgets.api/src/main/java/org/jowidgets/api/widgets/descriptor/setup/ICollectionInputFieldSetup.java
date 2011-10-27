@@ -54,4 +54,7 @@ public interface ICollectionInputFieldSetup<ELEMENT_TYPE> extends IInputComponen
 	@Mandatory
 	boolean isFilterEmptyValues();
 
+	@Mandatory
+	boolean getDublicatesAllowed();
+
 }
