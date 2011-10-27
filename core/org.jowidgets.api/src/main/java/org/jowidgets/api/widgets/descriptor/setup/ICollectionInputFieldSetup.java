@@ -51,4 +51,7 @@ public interface ICollectionInputFieldSetup<ELEMENT_TYPE> extends IInputComponen
 	@Mandatory
 	Character getMaskingCharacter();
 
+	@Mandatory
+	boolean isFilterEmptyValues();
+
 }

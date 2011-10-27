@@ -71,6 +71,7 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 	private static final String EDIT = Messages.getString("CollectionInputFieldImpl.edit"); //$NON-NLS-1$
 	private static final Character DEFAULT_SEPARATOR = Character.valueOf(',');
 
+	private final boolean filterEmptyValues;
 	private final IInputField<String> textField;
 	private final IButton editButton;
 	private final IConverter<ELEMENT_TYPE> converter;
@@ -90,6 +91,7 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 	public CollectionInputFieldImpl(final IComposite composite, final ICollectionInputFieldDescriptor<ELEMENT_TYPE> setup) {
 		super(composite);
 
+		this.filterEmptyValues = setup.isFilterEmptyValues();
 		this.converter = setup.getConverter();
 
 		if (setup.getSeparator() != null) {
@@ -283,7 +285,10 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 	public Collection<ELEMENT_TYPE> getValue() {
 		final List<ELEMENT_TYPE> result = new LinkedList<ELEMENT_TYPE>();
 		for (final String element : value) {
-			result.add(converter.convertToObject(element));
+			final ELEMENT_TYPE converted = converter.convertToObject(element);
+			if (!filterEmptyValues || (!EmptyCheck.isEmpty(converted) && !EmptyCheck.isEmpty(element))) {
+				result.add(converted);
+			}
 		}
 		return result;
 	}
