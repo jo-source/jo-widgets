@@ -29,6 +29,7 @@
 package org.jowidgets.tools.controller;
 
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.jowidgets.common.widgets.controller.IInputListener;
@@ -57,7 +58,7 @@ public class InputObservable implements IInputObservable {
 	}
 
 	public final void fireInputChanged() {
-		for (final IInputListener inputListener : inputListeners) {
+		for (final IInputListener inputListener : new LinkedList<IInputListener>(inputListeners)) {
 			inputListener.inputChanged();
 		}
 	}
