@@ -41,6 +41,7 @@ public class CollectionInputFieldDefaults implements IDefaultInitializer<ICollec
 		builder.setEditButtonIcon(IconsSmall.EDIT);
 		builder.setMaskingCharacter(Character.valueOf('"'));
 		builder.setFilterEmptyValues(true);
+		builder.setDublicatesAllowed(false);
 		final IValidator okValidator = Validator.okValidator();
 		builder.setElementValidator(okValidator);
 	}

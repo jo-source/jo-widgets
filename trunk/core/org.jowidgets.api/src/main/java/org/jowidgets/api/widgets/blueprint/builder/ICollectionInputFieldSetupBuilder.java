@@ -51,4 +51,6 @@ public interface ICollectionInputFieldSetupBuilder<INSTANCE_TYPE extends ICollec
 
 	INSTANCE_TYPE setFilterEmptyValues(boolean filter);
 
+	INSTANCE_TYPE setDublicatesAllowed(boolean dublicatesAllowed);
+
 }

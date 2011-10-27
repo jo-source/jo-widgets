@@ -29,6 +29,7 @@ package org.jowidgets.impl.widgets.composed;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -72,6 +73,7 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 	private static final Character DEFAULT_SEPARATOR = Character.valueOf(',');
 
 	private final boolean filterEmptyValues;
+	private final boolean dublicatesAllowed;
 	private final IInputField<String> textField;
 	private final IButton editButton;
 	private final IConverter<ELEMENT_TYPE> converter;
@@ -92,6 +94,7 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 		super(composite);
 
 		this.filterEmptyValues = setup.isFilterEmptyValues();
+		this.dublicatesAllowed = setup.getDublicatesAllowed();
 		this.converter = setup.getConverter();
 
 		if (setup.getSeparator() != null) {
@@ -151,7 +154,13 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 
 					index++;
 				}
-				builder.addResult(compoundValidator.validate(getValue()));
+				final Collection<ELEMENT_TYPE> currentValue = getValue();
+				builder.addResult(compoundValidator.validate(currentValue));
+				if (!dublicatesAllowed
+					&& currentValue != null
+					&& currentValue.size() != new HashSet<ELEMENT_TYPE>(currentValue).size()) {
+					builder.addError(Messages.getString("CollectionInputFieldImpl.contains_dublicates"));
+				}
 
 				return builder.build();
 			}
