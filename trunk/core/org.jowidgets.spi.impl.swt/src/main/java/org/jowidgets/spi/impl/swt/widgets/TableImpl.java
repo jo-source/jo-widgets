@@ -50,6 +50,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
@@ -130,6 +131,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	private final TableModelListener tableModelListener;
 	private final TableColumnModelListener tableColumnModelListener;
 	private final DataListener dataListener;
+	private final EraseItemListener eraseItemListener;
 
 	private final boolean columnsMoveable;
 	private final boolean columnsResizeable;
@@ -151,6 +153,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		this.tableCellEditorObservable = new TableCellEditorObservable();
 
 		this.dataListener = new DataListener();
+		this.eraseItemListener = new EraseItemListener();
 		this.columnSelectionListener = new ColumnSelectionListener();
 		this.columnControlListener = new ColumnControlListener();
 		this.tableModelListener = new TableModelListener();
@@ -189,6 +192,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		}
 
 		table.addListener(SWT.SetData, dataListener);
+		table.addListener(SWT.EraseItem, eraseItemListener);
 		table.addMouseListener(new TableCellListener());
 		table.addSelectionListener(new TableSelectionListener());
 
@@ -620,6 +624,35 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		}
 
 		return result;
+	}
+
+	//This listener fixes Bug 50163 by using workaround from comment 13
+	//(Visited url: https://bugs.eclipse.org/bugs/show_bug.cgi?id=50163)
+	final class EraseItemListener implements Listener {
+		@Override
+		public void handleEvent(final Event event) {
+			if ((event.detail & SWT.SELECTED) != 0 || (event.detail & SWT.HOT) != 0) {
+				return; /// item selected or hot
+			}
+			final TableItem item = (TableItem) event.item;
+			final int rowIndex = table.indexOf(item);
+			for (int columnIndex = 0; columnIndex < getColumnCount(); columnIndex++) {
+				if (dataModel.getRowCount() > rowIndex) {
+					final ITableCell cell = dataModel.getCell(rowIndex, columnIndex);
+					final IColorConstant backgroundColor = cell.getBackgroundColor();
+					if (backgroundColor != null && cell.getIcon() != null) {
+						final int clientWidth = table.getClientArea().width;
+
+						final GC gc = event.gc;
+						final Color oldBackground = gc.getBackground();
+
+						gc.setBackground(ColorCache.getInstance().getColor(backgroundColor));
+						gc.fillRectangle(0, event.y, clientWidth, event.height);
+						gc.setBackground(oldBackground);
+					}
+				}
+			}
+		}
 	}
 
 	final class DataListener implements Listener {
