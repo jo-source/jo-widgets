@@ -44,6 +44,8 @@ public class ToolBarButtonImpl extends ToolBarItemImpl implements IToolBarButton
 	public ToolBarButtonImpl(final JButton button) {
 		super(button);
 
+		getUiReference().setOpaque(false);
+
 		getUiReference().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent e) {
