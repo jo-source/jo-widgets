@@ -35,12 +35,16 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.EventObject;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -83,6 +87,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.TablePackPolicy;
 import org.jowidgets.common.types.TableSelectionPolicy;
 import org.jowidgets.common.widgets.controller.IFocusListener;
+import org.jowidgets.common.widgets.controller.IKeyListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.common.widgets.controller.ITableCellEditEvent;
 import org.jowidgets.common.widgets.controller.ITableCellEditorListener;
@@ -95,6 +100,8 @@ import org.jowidgets.common.widgets.controller.ITableColumnMouseEvent;
 import org.jowidgets.common.widgets.controller.ITableColumnPopupDetectionListener;
 import org.jowidgets.common.widgets.controller.ITableSelectionListener;
 import org.jowidgets.spi.impl.controller.FocusObservable;
+import org.jowidgets.spi.impl.controller.IObservableCallback;
+import org.jowidgets.spi.impl.controller.KeyObservable;
 import org.jowidgets.spi.impl.controller.PopupDetectionObservable;
 import org.jowidgets.spi.impl.controller.TableCellEditEvent;
 import org.jowidgets.spi.impl.controller.TableCellEditorObservable;
@@ -116,6 +123,7 @@ import org.jowidgets.spi.impl.swing.util.FontProvider;
 import org.jowidgets.spi.impl.swing.util.MouseUtil;
 import org.jowidgets.spi.impl.swing.util.PositionConvert;
 import org.jowidgets.spi.impl.swing.widgets.base.TableColumnModelAdapter;
+import org.jowidgets.spi.impl.swing.widgets.event.LazyKeyEventContentFactory;
 import org.jowidgets.spi.widgets.ITableSpi;
 import org.jowidgets.spi.widgets.setup.ITableSetupSpi;
 import org.jowidgets.util.ArrayUtils;
@@ -138,6 +146,8 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	private final TableSelectionObservable tableSelectionObservable;
 	private final TableCellEditorObservable tableCellEditorObservable;
 	private final FocusObservable focusObservable;
+	private final KeyObservable keyObservable;
+	private final KeyListener keyListener;
 
 	private final TableColumnResizeListener tableColumnResizeListener;
 	private final TableSelectionListener tableSelectionListener;
@@ -241,6 +251,32 @@ public class TableImpl extends SwingControl implements ITableSpi {
 				focusObservable.focusGained();
 			}
 		});
+
+		this.keyListener = new KeyAdapter() {
+			@Override
+			public void keyReleased(final KeyEvent e) {
+				keyObservable.fireKeyReleased(new LazyKeyEventContentFactory(e));
+			}
+
+			@Override
+			public void keyPressed(final KeyEvent e) {
+				keyObservable.fireKeyPressed(new LazyKeyEventContentFactory(e));
+			}
+		};
+
+		final IObservableCallback keyObservableCallback = new IObservableCallback() {
+			@Override
+			public void onLastUnregistered() {
+				table.removeKeyListener(keyListener);
+			}
+
+			@Override
+			public void onFirstRegistered() {
+				table.addKeyListener(keyListener);
+			}
+		};
+
+		this.keyObservable = new KeyObservable(keyObservableCallback);
 
 		getUiReference().addMouseListener(tableCellMenuDetectListener);
 	}
@@ -477,6 +513,18 @@ public class TableImpl extends SwingControl implements ITableSpi {
 				}
 			}
 		}
+	}
+
+	@Override
+	public void addKeyListener(final IKeyListener listener) {
+		super.addKeyListener(listener);
+		keyObservable.addKeyListener(listener);
+	}
+
+	@Override
+	public void removeKeyListener(final IKeyListener listener) {
+		super.removeKeyListener(listener);
+		keyObservable.removeKeyListener(listener);
 	}
 
 	@Override
@@ -1128,6 +1176,15 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			textField.setText(text);
 			textField.selectAll();
 		}
+
+		@Override
+		public boolean isCellEditable(final EventObject evt) {
+			if (evt instanceof MouseEvent) {
+				return ((MouseEvent) evt).getClickCount() >= 2;
+			}
+			return false;
+		}
+
 	}
 
 	/**
