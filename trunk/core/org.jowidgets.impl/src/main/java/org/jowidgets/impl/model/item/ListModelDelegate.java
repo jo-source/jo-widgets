@@ -325,7 +325,7 @@ class ListModelDelegate {
 	}
 
 	protected void removeItem(final int index) {
-		if (children.size() < index) {
+		if (children.size() > index) {
 			fireBeforeChildRemove(index);
 		}
 		final IItemModel removedItem = children.remove(index);
