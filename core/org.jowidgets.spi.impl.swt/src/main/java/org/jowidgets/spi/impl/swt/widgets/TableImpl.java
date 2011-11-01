@@ -478,7 +478,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	@Override
 	public void setSelection(final List<Integer> selection) {
 		if (!isSelectionEqualWithView(selection)) {
-			table.select(new int[0]);
+			table.setSelection(new int[0]);
 			if (!EmptyCheck.isEmpty(selection)) {
 				final int[] newSelection = new int[selection.size()];
 				for (int i = 0; i < newSelection.length; i++) {
@@ -491,7 +491,10 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 	@Override
 	public void showSelection() {
-		table.showSelection();
+		final int selectionIndex = table.getSelectionIndex();
+		if (selectionIndex != -1) {
+			table.showItem(table.getItem(selectionIndex));
+		}
 	}
 
 	@Override

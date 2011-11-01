@@ -520,9 +520,9 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		final int selectedRow = table.getSelectedRow();
 		if (selectedRow != -1) {
 			final Rectangle rectangle = table.getCellRect(selectedRow, 0, false);
-			final Rectangle visibleRectangle = getUiReference().getVisibleRect();
+			final Rectangle visibleRectangle = table.getVisibleRect();
 			if (!visibleRectangle.contains(rectangle)) {
-				getUiReference().scrollRectToVisible(rectangle);
+				table.scrollRectToVisible(rectangle);
 			}
 		}
 	}
