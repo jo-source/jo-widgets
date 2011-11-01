@@ -306,6 +306,11 @@ public class TableImpl extends AbstractControlSpiWrapper implements ITable {
 	}
 
 	@Override
+	public void showSelection() {
+		getWidget().showSelection();
+	}
+
+	@Override
 	public void addTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
 		cellPopupDetectionObservable.addTableCellPopupDetectionListener(listener);
 	}

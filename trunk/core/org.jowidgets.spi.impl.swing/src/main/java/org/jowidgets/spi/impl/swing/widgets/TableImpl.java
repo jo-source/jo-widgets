@@ -516,6 +516,18 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	}
 
 	@Override
+	public void showSelection() {
+		final int selectedRow = table.getSelectedRow();
+		if (selectedRow != -1) {
+			final Rectangle rectangle = table.getCellRect(selectedRow, 0, false);
+			final Rectangle visibleRectangle = getUiReference().getVisibleRect();
+			if (!visibleRectangle.contains(rectangle)) {
+				getUiReference().scrollRectToVisible(rectangle);
+			}
+		}
+	}
+
+	@Override
 	public void addKeyListener(final IKeyListener listener) {
 		super.addKeyListener(listener);
 		keyObservable.addKeyListener(listener);

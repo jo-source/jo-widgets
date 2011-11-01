@@ -490,6 +490,11 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	}
 
 	@Override
+	public void showSelection() {
+		table.showSelection();
+	}
+
+	@Override
 	public void addTableCellListener(final ITableCellListener listener) {
 		tableCellObservable.addTableCellListener(listener);
 	}

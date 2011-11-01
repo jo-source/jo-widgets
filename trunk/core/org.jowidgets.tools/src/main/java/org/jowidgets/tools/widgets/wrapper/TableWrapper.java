@@ -129,6 +129,11 @@ public class TableWrapper extends ControlWrapper implements ITable {
 	}
 
 	@Override
+	public void showSelection() {
+		getWidget().showSelection();
+	}
+
+	@Override
 	public void pack(final TablePackPolicy policy) {
 		getWidget().pack(policy);
 	}
