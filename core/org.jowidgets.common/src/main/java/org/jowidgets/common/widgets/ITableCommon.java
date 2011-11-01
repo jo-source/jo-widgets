@@ -64,6 +64,8 @@ public interface ITableCommon extends
 
 	void setSelection(List<Integer> selection);
 
+	void showSelection();
+
 	void pack(TablePackPolicy policy);
 
 	void pack(int columnIndex, TablePackPolicy policy);
