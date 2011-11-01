@@ -110,6 +110,7 @@ import org.jowidgets.spi.impl.swt.util.MouseUtil;
 import org.jowidgets.spi.widgets.ITableSpi;
 import org.jowidgets.spi.widgets.setup.ITableSetupSpi;
 import org.jowidgets.util.ArrayUtils;
+import org.jowidgets.util.EmptyCheck;
 
 public class TableImpl extends SwtControl implements ITableSpi {
 
@@ -477,15 +478,13 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	@Override
 	public void setSelection(final List<Integer> selection) {
 		if (!isSelectionEqualWithView(selection)) {
-			if (selection == null || selection.size() == 0) {
-				table.setSelection(new int[0]);
-			}
-			else {
+			table.select(new int[0]);
+			if (!EmptyCheck.isEmpty(selection)) {
 				final int[] newSelection = new int[selection.size()];
 				for (int i = 0; i < newSelection.length; i++) {
 					newSelection[i] = selection.get(i).intValue();
-					table.setSelection(newSelection);
 				}
+				table.select(newSelection);
 			}
 		}
 	}
