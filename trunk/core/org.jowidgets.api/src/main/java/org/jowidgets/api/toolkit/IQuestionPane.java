@@ -28,6 +28,7 @@
 
 package org.jowidgets.api.toolkit;
 
+import org.jowidgets.api.command.IExecutionContext;
 import org.jowidgets.api.types.QuestionResult;
 import org.jowidgets.common.image.IImageConstant;
 
@@ -63,4 +64,5 @@ public interface IQuestionPane {
 		QuestionResult defaultResult,
 		IImageConstant icon);
 
+	QuestionResult askYesNoQuestion(IExecutionContext executionContext, String question, QuestionResult defaultResult);
 }

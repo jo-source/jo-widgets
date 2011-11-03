@@ -28,6 +28,8 @@
 
 package org.jowidgets.impl.toolkit;
 
+import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.command.IExecutionContext;
 import org.jowidgets.api.toolkit.IQuestionPane;
 import org.jowidgets.api.types.QuestionResult;
 import org.jowidgets.api.widgets.IWindow;
@@ -137,6 +139,19 @@ class QuestionPaneImpl implements IQuestionPane {
 
 		final IQuestionDialogBluePrint bp = bluePrintFactory.yesNoCancelQuestion().setTitle(title).setTitleIcon(titleIcon);
 		bp.setText(question).setDefaultResult(defaultResult).setIcon(icon);
+		return askQuestion(bp);
+	}
+
+	@Override
+	public QuestionResult askYesNoQuestion(
+		final IExecutionContext executionContext,
+		final String question,
+		final QuestionResult defaultResult) {
+		final IAction action = executionContext.getAction();
+		final String title = action.getText();
+		final IImageConstant titleIcon = action.getIcon();
+		final IQuestionDialogBluePrint bp = bluePrintFactory.yesNoQuestion();
+		bp.setTitle(title).setTitleIcon(titleIcon).setText(question).setDefaultResult(defaultResult);
 		return askQuestion(bp);
 	}
 
