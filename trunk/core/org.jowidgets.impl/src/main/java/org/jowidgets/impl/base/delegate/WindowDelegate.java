@@ -48,6 +48,8 @@ public class WindowDelegate {
 	private final List<IDisplay> childWindows;
 	private final AutoCenterPolicy autoCenterPolicy;
 	private final AutoPackPolicy autoPackPolicy;
+	private Dimension minPackSize;
+	private Dimension maxPackSize;
 	private final AutoPositionCorrectionPolicy autoPositionCorrectionPolicy;
 	private final IWindowSpi windowSpi;
 	private final IWindow window;
@@ -60,6 +62,8 @@ public class WindowDelegate {
 		this.childWindows = new LinkedList<IDisplay>();
 		this.autoCenterPolicy = setup.getAutoCenterPolicy();
 		this.autoPackPolicy = setup.getAutoPackPolicy();
+		this.minPackSize = setup.getMinPackSize();
+		this.maxPackSize = setup.getMaxPackSize();
 		this.autoPositionCorrectionPolicy = setup.getAutoPositionCorrectionPolicy();
 		this.windowSpi = windowSpi;
 		this.window = window;
@@ -100,10 +104,10 @@ public class WindowDelegate {
 	public void setVisible(final boolean visible) {
 		if (visible) {
 			if (AutoPackPolicy.ALWAYS == autoPackPolicy) {
-				windowSpi.pack();
+				pack();
 			}
 			else if (!sizeSet && !wasVisible && AutoPackPolicy.ONCE == autoPackPolicy) {
-				windowSpi.pack();
+				pack();
 			}
 			if (AutoCenterPolicy.ALWAYS == autoCenterPolicy) {
 				centerLocation();
@@ -120,6 +124,33 @@ public class WindowDelegate {
 			wasVisible = true;
 		}
 		windowSpi.setVisible(visible);
+	}
+
+	public void pack() {
+		window.pack();
+		final Dimension oldSize = window.getSize();
+		Dimension size = oldSize;
+		if (minPackSize != null) {
+			size = new Dimension(Math.max(size.getWidth(), minPackSize.getWidth()), Math.max(
+					size.getHeight(),
+					minPackSize.getHeight()));
+		}
+		if (maxPackSize != null) {
+			size = new Dimension(Math.min(size.getWidth(), maxPackSize.getWidth()), Math.min(
+					size.getHeight(),
+					maxPackSize.getHeight()));
+		}
+		if (!oldSize.equals(size)) {
+			window.setSize(size);
+		}
+	}
+
+	public void setMinPackSize(final Dimension size) {
+		this.minPackSize = size;
+	}
+
+	public void setMaxPackSize(final Dimension size) {
+		this.maxPackSize = size;
 	}
 
 	public void setPosition(final Position position) {

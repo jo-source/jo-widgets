@@ -32,6 +32,7 @@ import java.util.List;
 
 import org.jowidgets.api.widgets.IDisplay;
 import org.jowidgets.api.widgets.IWindow;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.controller.IWindowListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
@@ -65,6 +66,16 @@ public class WindowWrapper extends ComponentWrapper implements IWindow {
 	@Override
 	public void pack() {
 		getWidget().pack();
+	}
+
+	@Override
+	public void setMinPackSize(final Dimension size) {
+		getWidget().setMinPackSize(size);
+	}
+
+	@Override
+	public void setMaxPackSize(final Dimension size) {
+		getWidget().setMaxPackSize(size);
 	}
 
 	@Override

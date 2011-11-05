@@ -97,6 +97,16 @@ public class FrameImpl extends AbstractFrameSpiWrapper implements IFrameUi {
 	}
 
 	@Override
+	public void setMinPackSize(final Dimension size) {
+		windowDelegate.setMinPackSize(size);
+	}
+
+	@Override
+	public void setMaxPackSize(final Dimension size) {
+		windowDelegate.setMaxPackSize(size);
+	}
+
+	@Override
 	public void dispose() {
 		if (!isDisposed()) {
 			windowDelegate.dispose();

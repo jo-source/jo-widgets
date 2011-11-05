@@ -29,6 +29,7 @@ package org.jowidgets.api.widgets;
 
 import java.util.List;
 
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IWindowCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
@@ -57,5 +58,9 @@ public interface IWindow extends IDisplay, IComponent, IWindowCommon {
 	 *         has no child windows
 	 */
 	List<IDisplay> getChildWindows();
+
+	void setMinPackSize(Dimension size);
+
+	void setMaxPackSize(Dimension size);
 
 }

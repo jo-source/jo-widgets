@@ -46,6 +46,10 @@ public interface IWindowSetupBuilder<INSTANCE_TYPE extends IWindowSetupBuilder<?
 
 	INSTANCE_TYPE setAutoPositionCorrectionPolicy(final AutoPositionCorrectionPolicy autoPositionCorrectionPolicy);
 
+	INSTANCE_TYPE setMinPackSize(Dimension size);
+
+	INSTANCE_TYPE setMaxPackSize(Dimension size);
+
 	INSTANCE_TYPE setSize(Dimension size);
 
 	INSTANCE_TYPE setPosition(Position position);
