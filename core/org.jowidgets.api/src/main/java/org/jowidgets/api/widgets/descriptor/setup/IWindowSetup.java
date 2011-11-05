@@ -45,6 +45,10 @@ public interface IWindowSetup extends IComponentSetup {
 	@Mandatory
 	AutoCenterPolicy getAutoCenterPolicy();
 
+	Dimension getMinPackSize();
+
+	Dimension getMaxPackSize();
+
 	Dimension getSize();
 
 	Position getPosition();

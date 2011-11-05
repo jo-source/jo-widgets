@@ -103,6 +103,16 @@ class Window<WIDGET_TYPE extends IWindow & IContainer, BLUE_PRINT_TYPE extends I
 	}
 
 	@Override
+	public void setMinPackSize(final Dimension size) {
+		getWidget().setMinPackSize(size);
+	}
+
+	@Override
+	public void setMaxPackSize(final Dimension size) {
+		getWidget().setMaxPackSize(size);
+	}
+
+	@Override
 	public final void pack() {
 		getWidget().pack();
 	}
