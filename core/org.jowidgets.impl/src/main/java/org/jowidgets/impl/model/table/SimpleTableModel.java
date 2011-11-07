@@ -30,6 +30,7 @@ package org.jowidgets.impl.model.table;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -340,7 +341,7 @@ class SimpleTableModel extends DefaultTableColumnModel implements ISimpleTableMo
 	}
 
 	@Override
-	public void setSelection(List<Integer> selection) {
+	public void setSelection(Collection<Integer> selection) {
 		if (selection == null) {
 			selection = new ArrayList<Integer>();
 		}

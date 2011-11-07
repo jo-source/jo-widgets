@@ -31,7 +31,7 @@
 package org.jowidgets.examples.common.demo;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -1303,7 +1303,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 			}
 
 			@Override
-			public void setSelection(final List<Integer> selection) {}
+			public void setSelection(final Collection<Integer> selection) {}
 
 			@Override
 			public ITableDataModelObservable getTableDataModelObservable() {

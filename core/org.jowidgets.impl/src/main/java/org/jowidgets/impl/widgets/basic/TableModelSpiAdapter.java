@@ -29,6 +29,7 @@
 package org.jowidgets.impl.widgets.basic;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -232,7 +233,7 @@ public class TableModelSpiAdapter implements ITableColumnModelSpi, ITableDataMod
 	}
 
 	@Override
-	public void setSelection(final List<Integer> selection) {
+	public void setSelection(final Collection<Integer> selection) {
 		dataModel.setSelection(selection);
 	}
 
