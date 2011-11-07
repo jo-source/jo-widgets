@@ -29,7 +29,7 @@
 package org.jowidgets.common.model;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 public interface ITableDataModel {
 
@@ -39,7 +39,7 @@ public interface ITableDataModel {
 
 	ArrayList<Integer> getSelection();
 
-	void setSelection(List<Integer> selection);
+	void setSelection(Collection<Integer> selection);
 
 	ITableDataModelObservable getTableDataModelObservable();
 

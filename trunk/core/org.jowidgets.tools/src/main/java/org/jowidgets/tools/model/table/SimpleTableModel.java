@@ -29,6 +29,7 @@
 package org.jowidgets.tools.model.table;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.jowidgets.api.model.table.IDefaultTableColumn;
@@ -87,7 +88,7 @@ public class SimpleTableModel implements ISimpleTableModel {
 	}
 
 	@Override
-	public final void setSelection(final List<Integer> selection) {
+	public final void setSelection(final Collection<Integer> selection) {
 		tableModel.setSelection(selection);
 	}
 
