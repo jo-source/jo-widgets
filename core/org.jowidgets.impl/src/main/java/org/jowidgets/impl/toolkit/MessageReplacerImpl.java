@@ -39,24 +39,29 @@ final class MessageReplacerImpl implements IMessageReplacer {
 		final StringBuilder result = new StringBuilder();
 		final StringBuilder digits = new StringBuilder();
 		boolean digitMode = false;
+		boolean toLowercase = false;
 		for (final char c : message.toCharArray()) {
 			if (digitMode) {
 				if (c >= '0' && c <= '9') {
 					digits.append(c);
 				}
+				else if (c == 'L') {
+					toLowercase = true;
+				}
 				else {
-					digitMode = false;
 					if (digits.length() > 0) {
 						final int paramIndex = Integer.valueOf(digits.toString()) - 1;
 						if (paramIndex > parameters.length) {
 							throw new IllegalStateException("Message '" + message + "' contains to many placeholders.");
 						}
-						result.append(parameters[paramIndex]);
+						result.append(getParameter(paramIndex, toLowercase, parameters));
 					}
 					else {
 						result.append('%');
 					}
 					result.append(c);
+					digitMode = false;
+					toLowercase = false;
 				}
 			}
 			else if (c == '%') {
@@ -73,7 +78,7 @@ final class MessageReplacerImpl implements IMessageReplacer {
 			if (paramIndex > parameters.length) {
 				throw new IllegalStateException("Message '" + message + "' contains to many placeholders.");
 			}
-			result.append(parameters[paramIndex]);
+			result.append(getParameter(paramIndex, toLowercase, parameters));
 		}
 
 		return result.toString();
@@ -82,6 +87,16 @@ final class MessageReplacerImpl implements IMessageReplacer {
 	@Override
 	public String replace(final String message, final List<String> parameters) {
 		return replace(message, parameters.toArray(new String[parameters.size()]));
+	}
+
+	private String getParameter(final int paramIndex, final boolean toLowercase, final String... parameters) {
+		if (toLowercase) {
+			//TODO MG use the local from IUserLocaleProvider (when interface was introduced)
+			return parameters[paramIndex].toLowerCase();
+		}
+		else {
+			return parameters[paramIndex];
+		}
 	}
 
 }
