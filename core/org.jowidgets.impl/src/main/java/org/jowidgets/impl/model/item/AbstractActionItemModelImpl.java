@@ -79,6 +79,9 @@ abstract class AbstractActionItemModelImpl extends ItemModelImpl {
 	}
 
 	private IAction getDecoratedAction() {
+		if (action == null) {
+			return null;
+		}
 		if (decoratorsDirty) {
 			decoratedAction = action;
 			for (final IDecorator<IAction> decorator : decorators) {

@@ -34,12 +34,14 @@ import org.jowidgets.api.command.IExceptionHandler;
 import org.jowidgets.api.command.IExecutionContext;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
+import org.jowidgets.util.Assert;
 
 public class ActionWrapper implements IAction {
 
 	private final IAction action;
 
 	public ActionWrapper(final IAction action) {
+		Assert.paramNotNull(action, "action");
 		this.action = action;
 	}
 
