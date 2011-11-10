@@ -56,4 +56,9 @@ class SeparatorItemModelImpl extends ItemModelImpl implements ISeparatorItemMode
 		return result;
 	}
 
+	@Override
+	public String toString() {
+		return "SeparatorItemModelImpl [toString()=" + super.toString() + "]";
+	}
+
 }
