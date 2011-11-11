@@ -1,0 +1,56 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+	<groupId>org.jowidgets</groupId>
+	<artifactId>org.jowidgets.assemblies.examples.swing.SwingWorkbenchDemo1Starter</artifactId>
+	<version>0.6.0</version>
+	<packaging>pom</packaging>
+	<name>org.jowidgets.assemblies.examples.swing.SwingWorkbenchDemo1Starter</name>
+  
+	<parent>
+		<groupId>org.jowidgets</groupId>
+		<artifactId>org.jowidgets.assemblies.examples.parent</artifactId>
+		<version>0.6.0</version>
+		<relativePath>../parent/pom.xml</relativePath>
+	</parent>
+  
+    <dependencies>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.examples.swing</artifactId>
+			<version>0.6.0</version>
+		</dependency>   
+	</dependencies>
+	
+	<build>
+		<plugins>
+		  <plugin>
+			<artifactId>maven-assembly-plugin</artifactId>
+			<version>2.2</version>
+			
+			<configuration>   
+				<descriptorRefs>
+					<descriptorRef>jar-with-dependencies</descriptorRef>
+				</descriptorRefs>
+
+				<archive>
+					<manifest>
+					  <mainClass>org.jowidgets.examples.swing.SwingWorkbenchDemo1Starter</mainClass>
+					</manifest>
+				</archive>
+			</configuration>
+			
+			<executions>
+				<execution>
+					<id>make-assembly</id> <!-- this is used for inheritance merges -->
+					<phase>package</phase> <!-- append to the packaging phase. -->
+					<goals>
+						<goal>single</goal> <!-- goals == mojos -->
+					</goals>
+				</execution>
+			</executions>
+		  </plugin>
+		</plugins>
+	</build>
+
+</project>
