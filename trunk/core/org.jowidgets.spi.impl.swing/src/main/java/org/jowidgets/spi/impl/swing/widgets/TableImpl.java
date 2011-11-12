@@ -528,6 +528,11 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	}
 
 	@Override
+	public boolean isColumnPopupDetectionSupported() {
+		return true;
+	}
+
+	@Override
 	public void addKeyListener(final IKeyListener listener) {
 		super.addKeyListener(listener);
 		keyObservable.addKeyListener(listener);
