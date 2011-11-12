@@ -134,6 +134,11 @@ public class TableWrapper extends ControlWrapper implements ITable {
 	}
 
 	@Override
+	public boolean isColumnPopupDetectionSupported() {
+		return getWidget().isColumnPopupDetectionSupported();
+	}
+
+	@Override
 	public void pack(final TablePackPolicy policy) {
 		getWidget().pack(policy);
 	}

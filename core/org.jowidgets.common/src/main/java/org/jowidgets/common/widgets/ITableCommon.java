@@ -70,4 +70,6 @@ public interface ITableCommon extends
 
 	void pack(int columnIndex, TablePackPolicy policy);
 
+	boolean isColumnPopupDetectionSupported();
+
 }

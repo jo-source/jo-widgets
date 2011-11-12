@@ -58,6 +58,7 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
@@ -140,6 +141,8 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	private int[] lastColumnOrder;
 	private boolean setWidthInvokedOnModel;
 	private ToolTip toolTip;
+
+	private Boolean isColumnPopupDetectionSupported;
 
 	public TableImpl(final Object parentUiReference, final ITableSetupSpi setup) {
 		super(new Table((Composite) parentUiReference, getStyle(setup)));
@@ -495,6 +498,24 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		if (selectionIndex != -1) {
 			table.showItem(table.getItem(selectionIndex));
 		}
+	}
+
+	@Override
+	public boolean isColumnPopupDetectionSupported() {
+		if (isColumnPopupDetectionSupported == null) {
+			isColumnPopupDetectionSupported = determineIfColumnPopupDetectionIsSupported();
+		}
+		return isColumnPopupDetectionSupported.booleanValue();
+	}
+
+	private boolean determineIfColumnPopupDetectionIsSupported() {
+		try {
+			FileDialog.class.getName();
+		}
+		catch (final NoClassDefFoundError error) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
