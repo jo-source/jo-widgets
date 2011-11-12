@@ -82,6 +82,10 @@ public class ValidationCache implements IValidateable {
 		validationConditionListener.remove(listener);
 	}
 
+	public final void dispose() {
+		validationConditionListener.clear();
+	}
+
 	public interface IValidationResultCreator {
 		IValidationResult createValidationResult();
 	}

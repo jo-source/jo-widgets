@@ -103,4 +103,9 @@ public final class EnabledState implements IEnabledState {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "EnabledState [enabled=" + enabled + ", reason=" + reason + "]";
+	}
+
 }
