@@ -88,7 +88,8 @@ abstract class AbstractFloatingPointNumberConverter<NUMBER_TYPE extends Number> 
 									formatHint));
 						}
 						else {
-							return ValidationResult.error("Is not a valid date or time");
+							//TODO i18n
+							return ValidationResult.error("Is not a valid decimal");
 						}
 					}
 				}
@@ -99,6 +100,7 @@ abstract class AbstractFloatingPointNumberConverter<NUMBER_TYPE extends Number> 
 
 	@Override
 	public String getAcceptingRegExp() {
+		//TODO MG this wont't work correctly with decimal separators
 		final String decimalSeparatorRegEx;
 		if (isSpecialChar(decimalFormat.getDecimalFormatSymbols().getDecimalSeparator())) {
 			decimalSeparatorRegEx = "\\" + decimalFormat.getDecimalFormatSymbols().getDecimalSeparator();
