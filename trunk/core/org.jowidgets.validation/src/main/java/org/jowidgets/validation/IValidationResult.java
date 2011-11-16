@@ -45,6 +45,8 @@ public interface IValidationResult {
 
 	boolean isValid();
 
+	boolean isOk();
+
 	IValidationResult withMessage(final IValidationMessage text);
 
 	IValidationResult withError(final String text);

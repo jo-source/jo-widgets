@@ -129,6 +129,11 @@ final class ValidationResultImpl implements IValidationResult, Serializable {
 	}
 
 	@Override
+	public boolean isOk() {
+		return MessageType.OK == worstFirst.getType();
+	}
+
+	@Override
 	public IValidationResult withMessage(final IValidationMessage message) {
 		Assert.paramNotNull(message, "messages");
 		return new ValidationResultImpl(this, null, message, null);
