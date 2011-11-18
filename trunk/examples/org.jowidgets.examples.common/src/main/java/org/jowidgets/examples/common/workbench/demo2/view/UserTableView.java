@@ -28,6 +28,7 @@
 
 package org.jowidgets.examples.common.workbench.demo2.view;
 
+import org.jowidgets.addons.icons.silkicons.SilkIcons;
 import org.jowidgets.api.model.table.ISimpleTableModel;
 import org.jowidgets.api.model.table.ITableModel;
 import org.jowidgets.api.toolkit.Toolkit;
@@ -36,7 +37,6 @@ import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.TablePackPolicy;
-import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.model.table.SimpleTableModelBuilder;
 import org.jowidgets.workbench.api.IViewContext;

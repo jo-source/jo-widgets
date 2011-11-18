@@ -31,6 +31,7 @@ package org.jowidgets.examples.common.workbench.demo1;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jowidgets.addons.icons.silkicons.SilkIcons;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.table.ISimpleTableModel;
@@ -56,7 +57,6 @@ import org.jowidgets.common.widgets.controller.ITableColumnPopupDetectionListene
 import org.jowidgets.common.widgets.controller.ITableColumnPopupEvent;
 import org.jowidgets.examples.common.demo.DemoInputDialog1;
 import org.jowidgets.examples.common.demo.DemoMenuProvider;
-import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractDemoView;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.model.table.DefaultTableColumn;

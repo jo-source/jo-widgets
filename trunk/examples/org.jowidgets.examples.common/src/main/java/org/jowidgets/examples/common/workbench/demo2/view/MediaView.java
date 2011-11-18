@@ -28,6 +28,7 @@
 
 package org.jowidgets.examples.common.workbench.demo2.view;
 
+import org.jowidgets.addons.icons.silkicons.SilkIcons;
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.command.IActionBuilder;
 import org.jowidgets.api.command.ICommandExecutor;
@@ -40,7 +41,6 @@ import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractDemoView;
 import org.jowidgets.tools.command.ActionBuilder;
 import org.jowidgets.tools.layout.MigLayoutFactory;

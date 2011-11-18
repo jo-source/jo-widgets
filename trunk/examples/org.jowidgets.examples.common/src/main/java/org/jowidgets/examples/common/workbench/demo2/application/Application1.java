@@ -28,7 +28,7 @@
 
 package org.jowidgets.examples.common.workbench.demo2.application;
 
-import org.jowidgets.examples.common.icons.SilkIcons;
+import org.jowidgets.addons.icons.silkicons.SilkIcons;
 import org.jowidgets.examples.common.workbench.demo2.component.ComponentDemo2;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeModelBuilder;

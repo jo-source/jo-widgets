@@ -28,6 +28,7 @@
 
 package org.jowidgets.examples.common.demo;
 
+import org.jowidgets.addons.icons.silkicons.SilkIcons;
 import org.jowidgets.api.command.EnabledState;
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.command.IActionBuilder;
@@ -48,7 +49,6 @@ import org.jowidgets.common.types.Modifier;
 import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.common.widgets.controller.IItemStateListener;
-import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.tools.command.EnabledChecker;
 import org.jowidgets.tools.model.item.InputControlItemModel;
 import org.jowidgets.tools.model.item.MenuModel;

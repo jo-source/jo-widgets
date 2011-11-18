@@ -30,6 +30,7 @@ package org.jowidgets.examples.common.workbench.demo1;
 
 import java.util.UUID;
 
+import org.jowidgets.addons.icons.silkicons.SilkIcons;
 import org.jowidgets.api.command.EnabledState;
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.command.IActionBuilder;
@@ -38,7 +39,6 @@ import org.jowidgets.api.command.IExecutionContext;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IInputDialog;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.tools.command.EnabledChecker;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IComponentNode;

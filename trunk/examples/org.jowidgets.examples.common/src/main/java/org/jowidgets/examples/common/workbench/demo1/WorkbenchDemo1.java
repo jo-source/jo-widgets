@@ -28,6 +28,7 @@
 
 package org.jowidgets.examples.common.workbench.demo1;
 
+import org.jowidgets.addons.icons.silkicons.SilkIcons;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.model.item.IMenuModel;
@@ -39,7 +40,6 @@ import org.jowidgets.common.types.Modifier;
 import org.jowidgets.common.types.VirtualKey;
 import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.examples.common.icons.DemoIconsInitializer;
-import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractDemoWorkbench;
 import org.jowidgets.tools.model.item.ActionItemModel;
 import org.jowidgets.tools.model.item.MenuModel;
