@@ -28,6 +28,7 @@
 
 package org.jowidgets.examples.common.icons;
 
+import org.jowidgets.addons.icons.silkicons.SilkIcons;
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;

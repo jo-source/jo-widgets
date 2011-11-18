@@ -28,6 +28,7 @@
 
 package org.jowidgets.examples.common.workbench.demo2.component;
 
+import org.jowidgets.addons.icons.silkicons.SilkIcons;
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.command.IActionBuilder;
 import org.jowidgets.api.command.ICommand;
@@ -35,7 +36,6 @@ import org.jowidgets.api.command.ICommandExecutor;
 import org.jowidgets.api.command.IExecutionContext;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.types.IVetoable;
-import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractDemoComponent;
 import org.jowidgets.examples.common.workbench.demo2.view.BigTableView;
 import org.jowidgets.examples.common.workbench.demo2.view.CalendarView;

@@ -28,7 +28,7 @@
 
 package org.jowidgets.examples.common.workbench.widgets;
 
-import org.jowidgets.examples.common.icons.SilkIcons;
+import org.jowidgets.addons.icons.silkicons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractDemoComponentNode;
 import org.jowidgets.examples.common.workbench.widgets.views.LabelKitchensinkView;
 import org.jowidgets.examples.common.workbench.widgets.views.LabelWithIconView;

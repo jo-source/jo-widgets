@@ -28,6 +28,7 @@
 
 package org.jowidgets.examples.common.workbench.demo2.view;
 
+import org.jowidgets.addons.icons.silkicons.SilkIcons;
 import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.command.IActionBuilder;
@@ -49,7 +50,6 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.model.ITableCell;
 import org.jowidgets.common.widgets.controller.ITableCellPopupDetectionListener;
 import org.jowidgets.common.widgets.controller.ITableCellPopupEvent;
-import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractDemoView;
 import org.jowidgets.tools.command.ActionBuilder;
 import org.jowidgets.tools.content.SingleControlContent;

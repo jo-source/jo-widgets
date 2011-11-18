@@ -30,6 +30,7 @@ package org.jowidgets.examples.common.workbench.demo1;
 
 import java.util.ArrayList;
 
+import org.jowidgets.addons.icons.silkicons.SilkIcons;
 import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.IMenuModel;
@@ -61,7 +62,6 @@ import org.jowidgets.common.widgets.controller.ITableColumnPopupEvent;
 import org.jowidgets.common.widgets.controller.ITableColumnResizeEvent;
 import org.jowidgets.common.widgets.controller.ITableSelectionListener;
 import org.jowidgets.examples.common.demo.DemoMenuProvider;
-import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractDemoView;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.model.table.AbstractTableDataModel;

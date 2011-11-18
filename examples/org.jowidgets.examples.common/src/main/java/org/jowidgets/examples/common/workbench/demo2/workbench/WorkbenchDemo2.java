@@ -28,6 +28,7 @@
 
 package org.jowidgets.examples.common.workbench.demo2.workbench;
 
+import org.jowidgets.addons.icons.silkicons.SilkIcons;
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.command.ICommandAction;
 import org.jowidgets.api.command.ICommandExecutor;
@@ -40,7 +41,6 @@ import org.jowidgets.api.types.QuestionResult;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.examples.common.icons.DemoIconsInitializer;
-import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.demo2.application.Application1;
 import org.jowidgets.examples.common.workbench.demo2.application.Application2;
 import org.jowidgets.examples.common.workbench.demo2.workbench.command.ExitAction;

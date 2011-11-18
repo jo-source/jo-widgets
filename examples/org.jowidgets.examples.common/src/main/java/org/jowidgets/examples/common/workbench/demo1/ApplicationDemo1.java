@@ -31,9 +31,9 @@ package org.jowidgets.examples.common.workbench.demo1;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jowidgets.addons.icons.silkicons.SilkIcons;
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.examples.common.workbench.base.AbstractDemoApplication;
 import org.jowidgets.examples.common.workbench.widgets.WidgetsHowToTreeNode;
 import org.jowidgets.workbench.api.IComponentNode;

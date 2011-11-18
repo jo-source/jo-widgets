@@ -28,6 +28,7 @@
 
 package org.jowidgets.examples.common.demo;
 
+import org.jowidgets.addons.icons.silkicons.SilkIcons;
 import org.jowidgets.api.layout.BorderLayoutConstraints;
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
 import org.jowidgets.api.model.item.IToolBarModel;
@@ -37,7 +38,6 @@ import org.jowidgets.api.widgets.ITextControl;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.widgets.layout.ILayouter;
-import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.tools.powo.JoFrame;
 
 public class DemoBorderLayoutFrame extends JoFrame {

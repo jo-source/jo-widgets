@@ -28,6 +28,7 @@
 
 package org.jowidgets.examples.common.demo;
 
+import org.jowidgets.addons.icons.silkicons.SilkIcons;
 import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IToolBarModel;
@@ -49,7 +50,6 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.tools.controller.TabItemAdapter;
 import org.jowidgets.tools.model.item.MenuModel;
 

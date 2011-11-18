@@ -28,6 +28,7 @@
 
 package org.jowidgets.examples.common.map;
 
+import org.jowidgets.addons.icons.silkicons.SilkIcons;
 import org.jowidgets.addons.map.common.IAvailableCallback;
 import org.jowidgets.addons.map.common.IDesignationListener;
 import org.jowidgets.addons.map.common.IMapContext;
@@ -35,7 +36,6 @@ import org.jowidgets.addons.map.common.widget.IMapWidget;
 import org.jowidgets.addons.map.common.widget.IMapWidgetBlueprint;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.application.IApplicationLifecycle;
-import org.jowidgets.examples.common.icons.SilkIcons;
 import org.jowidgets.tools.controller.WindowAdapter;
 import org.jowidgets.tools.powo.JoFrame;
 
