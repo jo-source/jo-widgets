@@ -40,18 +40,7 @@ public final class SilkIconsInitializer {
 
 	public static void initialize() {
 		Toolkit.getImageRegistry().registerImageEnum(SilkIcons.class);
-
 		Toolkit.getImageRegistry().registerImageConstant(IconsSmall.OK, SilkIcons.TICK);
-
-		Toolkit.getBluePrintFactory().addDefaultsInitializer(
-				ITreeBluePrint.class,
-				new IDefaultInitializer<ITreeSetupBuilder<?>>() {
-					@Override
-					public void initialize(final ITreeSetupBuilder<?> setupBuilder) {
-						setupBuilder.setDefaultInnerIcon(SilkIcons.FOLDER);
-						setupBuilder.setDefaultLeafIcon(SilkIcons.PAGE_WHITE);
-					}
-				});
 	}
 
 	public static void initializeFull() {
