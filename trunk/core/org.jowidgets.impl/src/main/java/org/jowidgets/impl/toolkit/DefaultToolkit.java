@@ -194,6 +194,9 @@ public class DefaultToolkit implements IToolkit {
 		if (uiThreadAccess == null) {
 			uiThreadAccess = new UiThreadAccess(widgetsServiceProvider);
 		}
+		if (!uiThreadAccess.isUiThread()) {
+			throw new IllegalStateException("The ui thread access must be get in the ui thread");
+		}
 		return uiThreadAccess;
 	}
 
