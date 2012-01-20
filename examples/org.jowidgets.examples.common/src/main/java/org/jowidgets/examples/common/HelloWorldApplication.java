@@ -33,6 +33,7 @@ import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public class HelloWorldApplication implements IApplication {
@@ -45,9 +46,9 @@ public class HelloWorldApplication implements IApplication {
 	public void start(final IApplicationLifecycle lifecycle) {
 		final IFrameBluePrint frameBp = BPF.frame().setTitle("Hello World");
 		frameBp.setSize(new Dimension(800, 600));
-
+		frameBp.setPosition(new Position(200, 200));
 		//TODO DB remove this later
-		frameBp.autoCenterOff().autoPositionCorrectionOff();
+		//frameBp.autoCenterOff().autoPositionCorrectionOff();
 
 		final IFrame rootFrame = Toolkit.createRootFrame(frameBp, lifecycle);
 		rootFrame.setVisible(true);
