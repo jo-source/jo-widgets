@@ -61,7 +61,6 @@ public class FrameImpl implements IFrameSpi {
 
 	private final Stage stage;
 	private final Group group;
-	@SuppressWarnings("unused")
 	private final Scene scene;
 
 	public FrameImpl(final IGenericWidgetFactory factory, final IFrameSetupSpi setup) {
@@ -80,8 +79,8 @@ public class FrameImpl implements IFrameSpi {
 	}
 
 	@Override
-	public Object getUiReference() {
-		return null;
+	public Stage getUiReference() {
+		return stage;
 	}
 
 	@Override
@@ -107,7 +106,8 @@ public class FrameImpl implements IFrameSpi {
 
 	@Override
 	public boolean requestFocus() {
-		return false;
+		stage.requestFocus();
+		return stage.focusedProperty().getValue();
 	}
 
 	@Override
@@ -132,7 +132,15 @@ public class FrameImpl implements IFrameSpi {
 
 	@Override
 	public void setCursor(final Cursor cursor) {
-
+		if (cursor == Cursor.ARROW) {
+			scene.setCursor(javafx.scene.Cursor.MOVE);
+		}
+		else if (cursor == Cursor.DEFAULT) {
+			scene.setCursor(javafx.scene.Cursor.DEFAULT);
+		}
+		else if (cursor == Cursor.WAIT) {
+			scene.setCursor(javafx.scene.Cursor.WAIT);
+		}
 	}
 
 	@Override
@@ -152,7 +160,7 @@ public class FrameImpl implements IFrameSpi {
 
 	@Override
 	public Dimension getSize() {
-		return null;
+		return new Dimension((int) stage.getHeight(), (int) stage.getWidth());
 	}
 
 	@Override
@@ -163,12 +171,13 @@ public class FrameImpl implements IFrameSpi {
 
 	@Override
 	public Position getPosition() {
-		return null;
+		return new Position((int) stage.getX(), (int) stage.getY());
 	}
 
 	@Override
 	public void setPosition(final Position position) {
-
+		stage.setX(position.getX());
+		stage.setY(position.getY());
 	}
 
 	@Override
@@ -223,7 +232,7 @@ public class FrameImpl implements IFrameSpi {
 
 	@Override
 	public Rectangle getParentBounds() {
-		return null;
+		return new Rectangle(getPosition(), getSize());
 	}
 
 	@Override
@@ -251,6 +260,7 @@ public class FrameImpl implements IFrameSpi {
 		final Integer index,
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
+
 		return null;
 	}
 
