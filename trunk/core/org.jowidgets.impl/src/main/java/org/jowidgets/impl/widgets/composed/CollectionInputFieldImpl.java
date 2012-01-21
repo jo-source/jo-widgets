@@ -45,6 +45,7 @@ import org.jowidgets.api.widgets.blueprint.ICollectionInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.ICollectionInputFieldDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.ICollectionInputDialogSetup;
+import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Modifier;
 import org.jowidgets.common.types.Position;
@@ -342,6 +343,26 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 	@Override
 	public void removeInputListener(final IInputListener listener) {
 		inputObservable.removeInputListener(listener);
+	}
+
+	@Override
+	public void setForegroundColor(final IColorConstant colorValue) {
+		textField.setForegroundColor(colorValue);
+	}
+
+	@Override
+	public void setBackgroundColor(final IColorConstant colorValue) {
+		textField.setBackgroundColor(colorValue);
+	}
+
+	@Override
+	public IColorConstant getForegroundColor() {
+		return textField.getForegroundColor();
+	}
+
+	@Override
+	public IColorConstant getBackgroundColor() {
+		return textField.getBackgroundColor();
 	}
 
 	private void inputChangedListener() {

@@ -55,6 +55,7 @@ public enum IconsSmall implements IImageConstant {
 	TABLE_FILTER,
 
 	ADD,
+	ADD_GREEN,
 	ADD_ALL,
 	SUB,
 
