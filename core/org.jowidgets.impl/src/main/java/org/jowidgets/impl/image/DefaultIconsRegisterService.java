@@ -67,6 +67,7 @@ public class DefaultIconsRegisterService extends ImageConstantRegisterService {
 		registerImage(IconsSmall.TABLE_FILTER, "table_filter.gif");
 
 		registerImage(IconsSmall.ADD, "add.gif");
+		registerImage(IconsSmall.ADD_GREEN, "add_green.gif");
 		registerImage(IconsSmall.ADD_ALL, "add_all.gif");
 		registerImage(IconsSmall.SUB, "sub.gif");
 
