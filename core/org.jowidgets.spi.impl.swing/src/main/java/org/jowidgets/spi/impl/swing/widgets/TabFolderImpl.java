@@ -81,6 +81,10 @@ public class TabFolderImpl extends SwingControl implements ITabFolderSpi {
 		else {
 			throw new IllegalArgumentException("TabPlacement '" + setup.getTabPlacement() + "' is not known");
 		}
+
+		if (SwingOptions.isWrapTapLayout()) {
+			getUiReference().setTabLayoutPolicy(JTabbedPane.WRAP_TAB_LAYOUT);
+		}
 	}
 
 	private static JTabbedPane createTabbedPane() {
