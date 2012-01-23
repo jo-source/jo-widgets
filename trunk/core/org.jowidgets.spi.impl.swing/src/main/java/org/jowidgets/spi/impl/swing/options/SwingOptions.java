@@ -33,6 +33,7 @@ public final class SwingOptions {
 	private static boolean oneTouchExpandableSplits = false;
 	private static boolean internalFramesForTabFolders = false;
 	private static boolean joWidgetsTabLayout = false;
+	private static boolean wrapTabLayout = false;
 
 	private SwingOptions() {}
 
@@ -58,6 +59,14 @@ public final class SwingOptions {
 
 	public static void setJoWidgetsTabLayout(final boolean joWidgetsTabLayout) {
 		SwingOptions.joWidgetsTabLayout = joWidgetsTabLayout;
+	}
+
+	public static void setWrapTapLayout(final boolean wrapTabLayout) {
+		SwingOptions.wrapTabLayout = wrapTabLayout;
+	}
+
+	public static boolean isWrapTapLayout() {
+		return SwingOptions.wrapTabLayout;
 	}
 
 }
