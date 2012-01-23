@@ -30,6 +30,6 @@ package org.jowidgets.api.widgets;
 
 import org.jowidgets.common.widgets.ITextAreaCommon;
 
-public interface ITextArea extends ITextControl, ITextAreaCommon {
+public interface ITextArea extends ITextControl, ITextAreaCommon, IInputControl<String> {
 
 }

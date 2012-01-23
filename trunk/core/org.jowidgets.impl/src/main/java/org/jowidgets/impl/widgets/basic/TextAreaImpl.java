@@ -34,20 +34,49 @@ import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITextArea;
 import org.jowidgets.api.widgets.descriptor.setup.ITextAreaSetup;
 import org.jowidgets.common.types.Markup;
+import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.impl.widgets.common.wrapper.AbstractInputControlSpiWrapper;
+import org.jowidgets.impl.widgets.common.wrapper.AbstractControlSpiWrapper;
 import org.jowidgets.spi.widgets.ITextAreaSpi;
+import org.jowidgets.tools.controller.InputObservable;
+import org.jowidgets.tools.validation.CompoundValidator;
+import org.jowidgets.tools.validation.ValidationCache;
+import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
+import org.jowidgets.util.NullCompatibleEquivalence;
+import org.jowidgets.validation.IValidationConditionListener;
+import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.validation.IValidationResultBuilder;
+import org.jowidgets.validation.IValidator;
+import org.jowidgets.validation.ValidationResult;
 
-public class TextAreaImpl extends AbstractInputControlSpiWrapper implements ITextArea {
+public class TextAreaImpl extends AbstractControlSpiWrapper implements ITextArea {
 
 	private final ControlDelegate controlDelegate;
+
+	private final ValidationCache validationCache;
+	private final CompoundValidator<String> compoundValidator;
+	private final InputObservable inputObservable;
+
+	private String lastUnmodiefiedText;
 
 	public TextAreaImpl(final ITextAreaSpi textAreaSpi, final ITextAreaSetup setup) {
 		super(textAreaSpi);
 
 		this.controlDelegate = new ControlDelegate(textAreaSpi, this);
+
+		this.inputObservable = new InputObservable();
+
+		this.compoundValidator = new CompoundValidator<String>();
+		this.validationCache = new ValidationCache(new IValidationResultCreator() {
+			@Override
+			public IValidationResult createValidationResult() {
+				final IValidationResultBuilder builder = ValidationResult.builder();
+				builder.addResult(compoundValidator.validate(getValue()));
+				return builder.build();
+			}
+		});
 
 		if (setup.getText() != null) {
 			setText(setup.getText());
@@ -67,6 +96,16 @@ public class TextAreaImpl extends AbstractInputControlSpiWrapper implements ITex
 
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
+
+		textAreaSpi.addInputListener(new IInputListener() {
+			@Override
+			public void inputChanged() {
+				inputObservable.fireInputChanged();
+				validationCache.setDirty();
+			}
+		});
+
+		lastUnmodiefiedText = textAreaSpi.getText();
 	}
 
 	@Override
@@ -165,6 +204,61 @@ public class TextAreaImpl extends AbstractInputControlSpiWrapper implements ITex
 	@Override
 	public void scrollToCaretPosition() {
 		getWidget().scrollToCaretPosition();
+	}
+
+	@Override
+	public void setEditable(final boolean editable) {
+		getWidget().setEditable(editable);
+	}
+
+	@Override
+	public void addInputListener(final IInputListener listener) {
+		inputObservable.addInputListener(listener);
+	}
+
+	@Override
+	public void removeInputListener(final IInputListener listener) {
+		inputObservable.removeInputListener(listener);
+	}
+
+	@Override
+	public void addValidator(final IValidator<String> validator) {
+		compoundValidator.addValidator(validator);
+	}
+
+	@Override
+	public boolean hasModifications() {
+		return !NullCompatibleEquivalence.equals(lastUnmodiefiedText, getWidget().getText());
+	}
+
+	@Override
+	public void resetModificationState() {
+		lastUnmodiefiedText = getWidget().getText();
+	}
+
+	@Override
+	public void setValue(final String value) {
+		getWidget().setText(value);
+	}
+
+	@Override
+	public String getValue() {
+		return getWidget().getText();
+	}
+
+	@Override
+	public IValidationResult validate() {
+		return validationCache.validate();
+	}
+
+	@Override
+	public void addValidationConditionListener(final IValidationConditionListener listener) {
+		validationCache.addValidationConditionListener(listener);
+	}
+
+	@Override
+	public void removeValidationConditionListener(final IValidationConditionListener listener) {
+		validationCache.removeValidationConditionListener(listener);
 	}
 
 }
