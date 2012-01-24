@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann
+ * Copyright (c) 2012, David Bauknecht
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -155,7 +155,7 @@ public class FrameImpl implements IFrameSpi {
 
 	@Override
 	public boolean isVisible() {
-		return false;
+		return stage.isShowing();
 	}
 
 	@Override
