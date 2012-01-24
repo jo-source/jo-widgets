@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2012, David Bauknecht
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,6 +28,8 @@
 
 package org.jowidgets.spi.impl.javafx.image;
 
+import javafx.scene.image.ImageView;
+
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.image.IImageHandle;
 import org.jowidgets.spi.image.IImageHandleFactorySpi;
@@ -42,9 +44,9 @@ public class JavafxImageHandleFactorySpi extends JavafxImageHandleFactory implem
 
 	@Override
 	public IImageHandle infoIcon() {
-		return new ImageHandle<Object>(new IImageFactory<Object>() {
+		return new ImageHandle<ImageView>(new IImageFactory<ImageView>() {
 			@Override
-			public Object createImage() {
+			public ImageView createImage() {
 				return null;
 			}
 		});
@@ -52,9 +54,9 @@ public class JavafxImageHandleFactorySpi extends JavafxImageHandleFactory implem
 
 	@Override
 	public IImageHandle questionIcon() {
-		return new ImageHandle<Object>(new IImageFactory<Object>() {
+		return new ImageHandle<ImageView>(new IImageFactory<ImageView>() {
 			@Override
-			public Object createImage() {
+			public ImageView createImage() {
 				return null;
 			}
 		});
@@ -62,9 +64,9 @@ public class JavafxImageHandleFactorySpi extends JavafxImageHandleFactory implem
 
 	@Override
 	public IImageHandle warningIcon() {
-		return new ImageHandle<Object>(new IImageFactory<Object>() {
+		return new ImageHandle<ImageView>(new IImageFactory<ImageView>() {
 			@Override
-			public Object createImage() {
+			public ImageView createImage() {
 				return null;
 			}
 		});
@@ -72,9 +74,9 @@ public class JavafxImageHandleFactorySpi extends JavafxImageHandleFactory implem
 
 	@Override
 	public IImageHandle errorIcon() {
-		return new ImageHandle<Object>(new IImageFactory<Object>() {
+		return new ImageHandle<ImageView>(new IImageFactory<ImageView>() {
 			@Override
-			public Object createImage() {
+			public ImageView createImage() {
 				return null;
 			}
 		});
@@ -82,9 +84,9 @@ public class JavafxImageHandleFactorySpi extends JavafxImageHandleFactory implem
 
 	@Override
 	public IImageHandle createImageHandle(final IImageConstant imageConstant, final int width, final int height) {
-		return new ImageHandle<Object>(new IImageFactory<Object>() {
+		return new ImageHandle<ImageView>(new IImageFactory<ImageView>() {
 			@Override
-			public Object createImage() {
+			public ImageView createImage() {
 				return null;
 			}
 		});

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2012, David Bauknecht
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -30,6 +30,8 @@ package org.jowidgets.spi.impl.javafx.image;
 
 import java.net.URL;
 
+import javafx.scene.image.ImageView;
+
 import org.jowidgets.common.image.IImageHandle;
 import org.jowidgets.common.image.IImageHandleFactory;
 import org.jowidgets.spi.impl.image.ImageHandle;
@@ -38,7 +40,7 @@ public class JavafxImageHandleFactory implements IImageHandleFactory {
 
 	@Override
 	public IImageHandle createImageHandle(final URL url) {
-		return new ImageHandle<Object>(new JavafxImageFactory(url));
+		return new ImageHandle<ImageView>(new JavafxImageFactory(url));
 	}
 
 }

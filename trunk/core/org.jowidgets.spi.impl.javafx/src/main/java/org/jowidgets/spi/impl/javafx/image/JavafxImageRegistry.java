@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2012, David Bauknecht
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -27,6 +27,8 @@
  */
 package org.jowidgets.spi.impl.javafx.image;
 
+import javafx.scene.image.Image;
+
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.image.IImageHandleFactory;
 import org.jowidgets.spi.impl.image.ImageHandle;
@@ -42,8 +44,8 @@ public final class JavafxImageRegistry extends ImageRegistry {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public synchronized ImageHandle<Object> getImageHandle(final IImageConstant key) {
-		return (ImageHandle<Object>) super.getImageHandle(key);
+	public synchronized ImageHandle<Image> getImageHandle(final IImageConstant key) {
+		return (ImageHandle<Image>) super.getImageHandle(key);
 	}
 
 	public static JavafxImageRegistry getInstance() {

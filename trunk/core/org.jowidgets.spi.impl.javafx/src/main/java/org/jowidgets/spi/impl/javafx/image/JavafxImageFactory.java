@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2012,David Bauknecht
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -29,12 +29,14 @@ package org.jowidgets.spi.impl.javafx.image;
 
 import java.net.URL;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 import org.jowidgets.spi.impl.image.IImageFactory;
 import org.jowidgets.util.Assert;
 
-public class JavafxImageFactory implements IImageFactory<Object> {
+public class JavafxImageFactory implements IImageFactory<ImageView> {
 
-	@SuppressWarnings("unused")
 	private final URL url;
 
 	public JavafxImageFactory(final URL url) {
@@ -43,7 +45,13 @@ public class JavafxImageFactory implements IImageFactory<Object> {
 	}
 
 	@Override
-	public Object createImage() {
-		throw new UnsupportedOperationException();
+	public ImageView createImage() {
+		try {
+			return new ImageView(new Image(this.url.toString()));
+		}
+		catch (final Exception e) {
+			throw new RuntimeException(e);
+		}
+
 	}
 }
