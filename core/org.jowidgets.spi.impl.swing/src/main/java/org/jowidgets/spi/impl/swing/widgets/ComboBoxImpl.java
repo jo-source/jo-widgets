@@ -69,6 +69,7 @@ import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSetupSpi;
+import org.jowidgets.util.Tuple;
 
 public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelectionSpi, IComboBoxSpi {
 
@@ -182,7 +183,7 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 				@Override
 				public void itemStateChanged(final ItemEvent e) {
 					if (e.getID() == ItemEvent.ITEM_STATE_CHANGED && e.getStateChange() == ItemEvent.SELECTED) {
-						fireInputChanged(getUiReference().getSelectedItem());
+						fireInputChanged();
 					}
 				}
 			});
@@ -191,7 +192,7 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 			getUiReference().addFocusListener(new FocusAdapter() {
 				@Override
 				public void focusLost(final FocusEvent e) {
-					fireInputChanged(getUiReference().getSelectedItem());
+					fireInputChanged();
 				}
 			});
 		}
@@ -347,6 +348,20 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 		super.setBackgroundColor(colorValue);
 	}
 
+	private void fireInputChanged() {
+		if (inputEventsEnabled) {
+			super.fireInputChanged(new Tuple<Integer, String>(getSelectedIndex(), getText()));
+		}
+	}
+
+	// Input Observable method
+	@Override
+	public void fireInputChanged(final Object value) {
+		if (inputEventsEnabled) {
+			super.fireInputChanged(new Tuple<Integer, String>(getSelectedIndex(), getText()));
+		}
+	}
+
 	private class ComboBoxEditorImpl implements ComboBoxEditor {
 
 		private boolean setItemInvoked;
@@ -376,7 +391,7 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 				textField.addFocusListener(new FocusAdapter() {
 					@Override
 					public void focusLost(final FocusEvent e) {
-						fireInputChanged(getText());
+						fireInputChanged();
 					}
 				});
 			}
@@ -545,7 +560,6 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 					return true;
 				}
 			}
-
 			return false;
 		}
 
@@ -557,7 +571,7 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 				if (lowerItem.equals(lowerText)) {
 					return item;
 				}
-				if (firstMatch == null && lowerItem.startsWith(lowerText)) {
+				if (firstMatch == null && (lowerItem.startsWith(lowerText))) {
 					firstMatch = item;
 				}
 			}
@@ -575,9 +589,7 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 		protected String getStringAfterReplacing(final int offset, final int length, final String text) throws BadLocationException {
 			String result = getText(0, offset) + text;
 			if (offset + length < getLength()) {
-				result = result + getText(offset + length + 1, getLength() - offset -
-
-				length);
+				result = result + getText(offset + length + 1, getLength() - offset - length);
 			}
 			return result;
 		}
@@ -605,7 +617,7 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 			disableCount--;
 			if (disableCount == 0) {
 				inputEventsEnabled = true;
-				fireInputChanged(getText(0, getLength()));
+				fireInputChanged();
 			}
 		}
 	}
@@ -718,7 +730,13 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 				return;
 			}
 
-			if (comboBoxEditor.keyPressedBackspace || comboBoxEditor.keyPressedDelete) {
+			if (isValidPrefix("") && offs == 0 && getLength() == len) {
+				beginProgrammaticModelUpdate();
+				autoCompletionModel.setSelectedItem("");
+				endProgrammaticModelUpdate();
+				super.remove(0, len);
+			}
+			else if (comboBoxEditor.keyPressedBackspace || comboBoxEditor.keyPressedDelete) {
 				if (comboBoxEditor.keyPressedBackspace && offs > 0 && comboBoxEditor.deleteOnSelection) {
 					offs--;
 					len++;
@@ -740,11 +758,4 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 		}
 	}
 
-	// Input Observable method
-	@Override
-	public void fireInputChanged(final Object value) {
-		if (inputEventsEnabled) {
-			super.fireInputChanged(value);
-		}
-	}
 }

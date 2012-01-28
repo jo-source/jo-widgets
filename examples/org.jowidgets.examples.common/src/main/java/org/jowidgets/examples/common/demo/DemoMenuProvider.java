@@ -172,6 +172,8 @@ public class DemoMenuProvider {
 		subMenu.addRadioItem("Group 1: 1.");
 		subMenu.addRadioItem("Group 1: 2.");
 
+		subMenu.addSeparator();
+
 		final IActionItemModel subItem4 = subMenu.addActionItem("Sub item4");
 		final IActionItemModel subItem5 = subMenu.addActionItem("Sub item5");
 
@@ -184,7 +186,7 @@ public class DemoMenuProvider {
 		editItem = menuModel.addCheckedItem("Readonly");
 		editItem.setIcon(SilkIcons.EYE);
 
-		subMenu.addSeparator();
+		menuModel.addSeparator();
 
 		final IRadioItemModel item5 = menuModel.addRadioItem("Low");
 		final IRadioItemModel item6 = menuModel.addItem(RadioItemModel.builder("Med").setSelected(true));

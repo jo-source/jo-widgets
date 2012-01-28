@@ -31,6 +31,7 @@ package org.jowidgets.examples.common.demo;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.jowidgets.api.image.IconsSmall;
+import org.jowidgets.api.threads.IUiThreadAccess;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IContainer;
@@ -82,6 +83,7 @@ public class DemoProgressBar {
 						return;
 					}
 					progressBarFinished.set(false);
+					final IUiThreadAccess uiThreadAccess = Toolkit.getUiThreadAccess();
 					new Thread(new Runnable() {
 
 						private int i = 0;
@@ -89,7 +91,7 @@ public class DemoProgressBar {
 						@Override
 						public void run() {
 							for (i = 0; i <= max && windowActive.get() && !progressBarFinished.get(); i++) {
-								Toolkit.getUiThreadAccess().invokeLater(new Runnable() {
+								uiThreadAccess.invokeLater(new Runnable() {
 
 									@Override
 									public void run() {
