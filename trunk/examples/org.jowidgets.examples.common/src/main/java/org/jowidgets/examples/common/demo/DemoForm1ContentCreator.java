@@ -209,11 +209,7 @@ public class DemoForm1ContentCreator implements IInputContentCreator<List<String
 		streetValidationWidget = container.add(validationLabelBp.setInputComponent(street), "wrap");
 
 		container.add(textLabelBp.setText("Postal code*"), "right, sg lg");
-		postalCode = container.add(
-				"Postal code",
-				bpF.inputFieldIntegerNumber().setMaxLength(5).setBorder(false),
-				inputWidgetConstraints);
-		postalCode.setBackgroundColor(null);
+		postalCode = container.add("Postal code", bpF.inputFieldIntegerNumber().setMaxLength(5), inputWidgetConstraints);
 		postalCode.addValidator(new MandatoryValidator<Integer>("Must not be null"));
 		postalCodeValidationWidget = container.add(validationLabelBp.setInputComponent(postalCode), "wrap");
 

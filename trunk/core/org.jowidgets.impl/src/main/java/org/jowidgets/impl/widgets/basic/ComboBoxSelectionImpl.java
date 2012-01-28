@@ -51,7 +51,7 @@ import org.jowidgets.tools.validation.CompoundValidator;
 import org.jowidgets.tools.validation.ValidationCache;
 import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
 import org.jowidgets.util.Assert;
-import org.jowidgets.util.NullCompatibleEquivalence;
+import org.jowidgets.util.EmptyCompatibleEquivalence;
 import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
@@ -129,7 +129,7 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 
 	@Override
 	public boolean hasModifications() {
-		return !NullCompatibleEquivalence.equals(lastUnmodifiedValue, getValue());
+		return !EmptyCompatibleEquivalence.equals(lastUnmodifiedValue, getValue());
 	}
 
 	@Override

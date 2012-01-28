@@ -28,6 +28,7 @@
 
 package org.jowidgets.examples.common.demo;
 
+import org.jowidgets.api.threads.IUiThreadAccess;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IScrollComposite;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
@@ -56,6 +57,8 @@ public class DemoScrollCompositeFrame extends JoFrame {
 		final IScrollComposite scrollComposite = add(BPF.scrollComposite(), "growx, growy, w 0::, h 0::");
 		scrollComposite.setLayout(new MigLayoutDescriptor("[grow]", ""));
 
+		final IUiThreadAccess uiThreadAccess = Toolkit.getUiThreadAccess();
+
 		final Runnable updater = new Runnable() {
 
 			@Override
@@ -64,7 +67,7 @@ public class DemoScrollCompositeFrame extends JoFrame {
 
 				while (!finish.get().booleanValue()) {
 
-					Toolkit.getUiThreadAccess().invokeLater(new Runnable() {
+					uiThreadAccess.invokeLater(new Runnable() {
 						@Override
 						public void run() {
 							scrollComposite.layoutBegin();
