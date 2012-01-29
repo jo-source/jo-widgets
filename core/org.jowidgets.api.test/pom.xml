@@ -4,13 +4,13 @@
 
 	<groupId>org.jowidgets</groupId>
 	<artifactId>org.jowidgets.api.test</artifactId>
-	<version>0.8.0-SNAPSHOT</version>
+	<version>0.7.0-SNAPSHOT</version>
 	<name>org.jowidgets.api.test</name>
 
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.core.parent</artifactId>
-		<version>0.8.0-SNAPSHOT</version>
+		<version>0.7.0-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 
