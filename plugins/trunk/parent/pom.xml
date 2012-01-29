@@ -20,7 +20,7 @@
 	<distributionManagement>
 		<repository>
 			<id>jowidgets-ftp-repository</id>
-			<url>ftp://jowidgets.org/maven2/</url>
+			<url>ftp://jowidgets.org/jowidgets-org/maven2/</url>
 		</repository>
 	</distributionManagement>
 
