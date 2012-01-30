@@ -27,9 +27,14 @@
  */
 package org.jowidgets.examples.common;
 
+import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.widgets.ILabel;
+import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
+import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.types.Dimension;
@@ -47,11 +52,36 @@ public class HelloWorldApplication implements IApplication {
 		final IFrameBluePrint frameBp = BPF.frame().setTitle("Hello World");
 		frameBp.setSize(new Dimension(800, 600));
 		frameBp.setPosition(new Position(200, 200));
-		//TODO DB remove this later
-		//frameBp.autoCenterOff().autoPositionCorrectionOff();
-
+		final ILabelBluePrint labelBp = BPF.label().setText("     It works!").setToolTipText("Great").setFontSize(15).setIcon(
+				IconsSmall.SETTINGS);
+		final IButtonBluePrint buttonBp = BPF.button();
+		final IButtonBluePrint buttonBp2 = BPF.button();
 		final IFrame rootFrame = Toolkit.createRootFrame(frameBp, lifecycle);
-		rootFrame.setVisible(true);
-	}
 
+		//		rootFrame.setLayout(Toolkit.getLayoutFactoryProvider().nullLayout());
+
+		final ILabel label = rootFrame.add(labelBp);
+		final IButton button = rootFrame.add(buttonBp);
+		final IButton button2 = rootFrame.add(buttonBp2);
+		rootFrame.setVisible(true);
+		label.setSize(500, 100);
+		button.setPosition(100, 200);
+		button.setSize(100, 100);
+		button.setMaxSize(new Dimension(100, 200));
+		button.setMinSize(new Dimension(50, 100));
+		button.setText("aaaaa");
+		button.setToolTipText(button.getPreferredSize().toString()
+			+ " \n Max: "
+			+ button.getMaxSize().toString()
+			+ " \n Min: "
+			+ button.getMaxSize().toString());
+		button2.setSize(100, 100);
+		button2.setPosition(350, 10);
+		button2.setToolTipText(button2.getPreferredSize().toString()
+			+ " \n Max: "
+			+ button2.getMaxSize().toString()
+			+ " \n Min: "
+			+ button2.getMaxSize().toString());
+
+	}
 }
