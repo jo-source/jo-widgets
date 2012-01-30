@@ -29,7 +29,12 @@ package org.jowidgets.spi.impl.javafx;
 
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.IWidgetFactorySpi;
+import org.jowidgets.spi.impl.javafx.widgets.ButtonImpl;
+import org.jowidgets.spi.impl.javafx.widgets.CompositeImpl;
 import org.jowidgets.spi.impl.javafx.widgets.FrameImpl;
+import org.jowidgets.spi.impl.javafx.widgets.IconImpl;
+import org.jowidgets.spi.impl.javafx.widgets.TextFieldImpl;
+import org.jowidgets.spi.impl.javafx.widgets.TextLabelImpl;
 import org.jowidgets.spi.widgets.IButtonSpi;
 import org.jowidgets.spi.widgets.ICheckBoxSpi;
 import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
@@ -124,7 +129,7 @@ public final class JavafxWidgetFactory implements IWidgetFactorySpi {
 		final IGenericWidgetFactory factory,
 		final Object parentUiReference,
 		final ICompositeSetupSpi setup) {
-		throw new UnsupportedOperationException();
+		return new CompositeImpl(factory, setup);
 	}
 
 	@Override
@@ -145,7 +150,7 @@ public final class JavafxWidgetFactory implements IWidgetFactorySpi {
 
 	@Override
 	public ITextControlSpi createTextField(final Object parentUiReference, final ITextFieldSetupSpi setup) {
-		throw new UnsupportedOperationException();
+		return new TextFieldImpl(setup);
 	}
 
 	@Override
@@ -155,17 +160,17 @@ public final class JavafxWidgetFactory implements IWidgetFactorySpi {
 
 	@Override
 	public ITextLabelSpi createTextLabel(final Object parentUiReference, final ITextLabelSetupSpi setup) {
-		throw new UnsupportedOperationException();
+		return new TextLabelImpl(setup);
 	}
 
 	@Override
 	public IIconSpi createIcon(final Object parentUiReference, final IIconSetupSpi setup) {
-		throw new UnsupportedOperationException();
+		return new IconImpl(setup);
 	}
 
 	@Override
 	public IButtonSpi createButton(final Object parentUiReference, final IButtonSetupSpi setup) {
-		throw new UnsupportedOperationException();
+		return new ButtonImpl(setup);
 	}
 
 	@Override

@@ -25,31 +25,59 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.impl.javafx.image;
+package org.jowidgets.spi.impl.javafx.widgets;
 
-import javafx.scene.image.ImageView;
+import javafx.scene.control.Label;
+import javafx.scene.text.Font;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.image.IImageHandleFactory;
-import org.jowidgets.spi.impl.image.ImageHandle;
-import org.jowidgets.spi.impl.image.ImageRegistry;
+import org.jowidgets.common.types.Markup;
+import org.jowidgets.spi.widgets.ITextLabelSpi;
+import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 
-public final class JavafxImageRegistry extends ImageRegistry {
+public class TextLabelImpl extends JavafxControl implements ITextLabelSpi {
 
-	private static final JavafxImageRegistry INSTANCE = new JavafxImageRegistry(new JavafxImageHandleFactory());
+	public TextLabelImpl(final ITextLabelSetupSpi setup) {
+		super(new Label());
+		setText(setup.getText());
+		setToolTipText(setup.getToolTipText());
 
-	private JavafxImageRegistry(final IImageHandleFactory imageHandleFactory) {
-		super(imageHandleFactory);
+		setMarkup(setup.getMarkup());
+
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public synchronized ImageHandle<ImageView> getImageHandle(final IImageConstant key) {
-		return (ImageHandle<ImageView>) super.getImageHandle(key);
+	public Label getUiReference() {
+		return (Label) super.getUiReference();
 	}
 
-	public static JavafxImageRegistry getInstance() {
-		return INSTANCE;
+	@Override
+	public void setFontSize(final int size) {
+		getUiReference().setFont(new Font(size));
+
+	}
+
+	@Override
+	public void setFontName(final String fontName) {
+		if (getUiReference().getFont() != null) {
+			getUiReference().setFont(new Font(fontName, getUiReference().getFont().getSize()));
+		}
+
+	}
+
+	@Override
+	public void setMarkup(final Markup markup) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void setText(String text) {
+		//allow line breaks by using html
+		if (text != null && text.contains("\n")) {
+			text = "<html>" + text.replace("\n", "<br>") + "</html>";
+		}
+		getUiReference().setText(text);
+
 	}
 
 }

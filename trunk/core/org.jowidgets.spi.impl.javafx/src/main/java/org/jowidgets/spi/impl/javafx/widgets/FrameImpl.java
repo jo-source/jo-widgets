@@ -30,45 +30,42 @@ package org.jowidgets.spi.impl.javafx.widgets;
 
 import java.util.List;
 
-import javafx.scene.Group;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
-import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IButtonCommon;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.IDisplayCommon;
-import org.jowidgets.common.widgets.controller.IComponentListener;
-import org.jowidgets.common.widgets.controller.IFocusListener;
-import org.jowidgets.common.widgets.controller.IKeyListener;
-import org.jowidgets.common.widgets.controller.IMouseListener;
-import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
-import org.jowidgets.common.widgets.controller.IWindowListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.spi.widgets.IMenuBarSpi;
-import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.setup.IFrameSetupSpi;
 
-public class FrameImpl implements IFrameSpi {
+public class FrameImpl extends JavafxWindow implements IFrameSpi {
 
-	private final Stage stage;
-	private final Group group;
+	private final IGenericWidgetFactory factory;
+	private final BorderPane group;
 	private final Scene scene;
 
 	public FrameImpl(final IGenericWidgetFactory factory, final IFrameSetupSpi setup) {
-		this.stage = new Stage();
-		this.group = new Group();
-		this.scene = new Scene(group);
+		super(factory, new Stage(), setup.isCloseable());
+		group = new BorderPane();
 
-		stage.setTitle(setup.getTitle());
+		scene = new Scene(group);
+		this.factory = factory;
+		getUiReference().setScene(scene);
+		getUiReference().setTitle(setup.getTitle());
+		getUiReference().setResizable(setup.isResizable());
+
 	}
 
 	@Override
@@ -80,178 +77,18 @@ public class FrameImpl implements IFrameSpi {
 
 	@Override
 	public Stage getUiReference() {
-		return stage;
+		return (Stage) super.getUiReference();
 	}
 
 	@Override
-	public void setEnabled(final boolean enabled) {}
-
-	@Override
-	public boolean isEnabled() {
-		return false;
-	}
-
-	@Override
-	public IPopupMenuSpi createPopupMenu() {
+	public IMenuBarSpi createMenuBar() {
+		// throw new UnsupportedOperationException();
 		return null;
 	}
 
 	@Override
-	public void redraw() {}
-
-	@Override
-	public void setRedrawEnabled(final boolean enabled) {
-
-	}
-
-	@Override
-	public boolean requestFocus() {
-		stage.requestFocus();
-		return stage.focusedProperty().getValue();
-	}
-
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-
-	}
-
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-
-	}
-
-	@Override
-	public IColorConstant getForegroundColor() {
-		return null;
-	}
-
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return null;
-	}
-
-	@Override
-	public void setCursor(final Cursor cursor) {
-		if (cursor == Cursor.ARROW) {
-			scene.setCursor(javafx.scene.Cursor.MOVE);
-		}
-		else if (cursor == Cursor.DEFAULT) {
-			scene.setCursor(javafx.scene.Cursor.DEFAULT);
-		}
-		else if (cursor == Cursor.WAIT) {
-			scene.setCursor(javafx.scene.Cursor.WAIT);
-		}
-	}
-
-	@Override
-	public void setVisible(final boolean visible) {
-		if (visible) {
-			stage.show();
-		}
-		else {
-			stage.hide();
-		}
-	}
-
-	@Override
-	public boolean isVisible() {
-		return stage.isShowing();
-	}
-
-	@Override
-	public Dimension getSize() {
-		return new Dimension((int) stage.getHeight(), (int) stage.getWidth());
-	}
-
-	@Override
-	public void setSize(final Dimension size) {
-		stage.setHeight(size.getHeight());
-		stage.setWidth(size.getWidth());
-	}
-
-	@Override
-	public Position getPosition() {
-		return new Position((int) stage.getX(), (int) stage.getY());
-	}
-
-	@Override
-	public void setPosition(final Position position) {
-		stage.setX(position.getX());
-		stage.setY(position.getY());
-	}
-
-	@Override
-	public void addComponentListener(final IComponentListener componentListener) {
-
-	}
-
-	@Override
-	public void removeComponentListener(final IComponentListener componentListener) {
-
-	}
-
-	@Override
-	public void addFocusListener(final IFocusListener listener) {
-
-	}
-
-	@Override
-	public void removeFocusListener(final IFocusListener listener) {
-
-	}
-
-	@Override
-	public void addKeyListener(final IKeyListener listener) {
-
-	}
-
-	@Override
-	public void removeKeyListener(final IKeyListener listener) {
-
-	}
-
-	@Override
-	public void addMouseListener(final IMouseListener listener) {
-
-	}
-
-	@Override
-	public void removeMouseListener(final IMouseListener listener) {
-
-	}
-
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-
-	}
-
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-
-	}
-
-	@Override
-	public Rectangle getParentBounds() {
-		return new Rectangle(getPosition(), getSize());
-	}
-
-	@Override
-	public void pack() {
-
-	}
-
-	@Override
-	public void dispose() {
-
-	}
-
-	@Override
-	public void addWindowListener(final IWindowListener listener) {
-
-	}
-
-	@Override
-	public void removeWindowListener(final IWindowListener listener) {
+	public void setDefaultButton(final IButtonCommon button) {
+		// throw new UnsupportedOperationException();
 
 	}
 
@@ -260,8 +97,11 @@ public class FrameImpl implements IFrameSpi {
 		final Integer index,
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
+		final WIDGET_TYPE result = factory.create(getUiReference(), descriptor);
 
-		return null;
+		group.getChildren().add((Node) result.getUiReference());
+
+		return result;
 	}
 
 	@Override
@@ -269,16 +109,17 @@ public class FrameImpl implements IFrameSpi {
 		final Integer index,
 		final ICustomWidgetCreator<WIDGET_TYPE> creator,
 		final Object layoutConstraints) {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean remove(final IControlCommon control) {
-		return false;
+		return group.getChildren().remove(control.getUiReference());
 	}
 
 	@Override
 	public void setTabOrder(final List<? extends IControlCommon> tabOrder) {
+		throw new UnsupportedOperationException();
 
 	}
 
@@ -289,42 +130,41 @@ public class FrameImpl implements IFrameSpi {
 
 	@Override
 	public void layoutBegin() {
+		throw new UnsupportedOperationException();
 
 	}
 
 	@Override
 	public void layoutEnd() {
+		throw new UnsupportedOperationException();
 
 	}
 
 	@Override
 	public void removeAll() {
+		throw new UnsupportedOperationException();
 
 	}
 
 	@Override
 	public Rectangle getClientArea() {
-		return null;
+		//TODO DB remove Cast
+		final Insets insets = ((Region) getUiReference().getScene().getRoot()).getInsets();
+		final int x = (int) insets.getLeft();
+		final int y = (int) insets.getTop();
+		final Dimension size = super.getSize();
+		final int width = (int) (size.getWidth() - insets.getLeft() - insets.getRight());
+		final int height = (int) (size.getHeight() - insets.getTop() - insets.getBottom());
+		return new Rectangle(x, y, width, height);
 	}
 
 	@Override
 	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void setMinSize(final Dimension minSize) {
-
+		throw new UnsupportedOperationException();
 	}
-
-	@Override
-	public IMenuBarSpi createMenuBar() {
-		return null;
-	}
-
-	@Override
-	public void setDefaultButton(final IButtonCommon button) {
-
-	}
-
 }
