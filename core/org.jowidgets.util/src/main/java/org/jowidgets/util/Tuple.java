@@ -27,7 +27,11 @@
  */
 package org.jowidgets.util;
 
-public class Tuple<FIRST_TYPE, SECOND_TYPE> {
+import java.io.Serializable;
+
+public class Tuple<FIRST_TYPE, SECOND_TYPE> implements Serializable {
+
+	private static final long serialVersionUID = -3197651699285507006L;
 
 	private final FIRST_TYPE first;
 	private final SECOND_TYPE second;
