@@ -36,4 +36,5 @@ public interface ITableSetupBuilder<INSTANCE_TYPE extends ITableSetupBuilder<?>>
 
 	INSTANCE_TYPE setColumnModel(ITableColumnModel model);
 
+	INSTANCE_TYPE setEditable(boolean editable);
 }

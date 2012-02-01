@@ -37,6 +37,7 @@ import org.jowidgets.api.widgets.blueprint.builder.IInputComponentSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IPopupDialogSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.ISelectableItemSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.ISplitCompositeSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.builder.ITableSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.ITextAreaSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.ITextFieldSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.ITreeNodeSetupBuilder;
@@ -48,6 +49,7 @@ import org.jowidgets.impl.widgets.basic.blueprint.defaults.InputWidgetDefaults;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.PopupDialogDefaults;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.SelectableItemDefaults;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.SplitCompositeDefaults;
+import org.jowidgets.impl.widgets.basic.blueprint.defaults.TableDefaults;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.TextAreaDefaults;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.TextFieldDefaults;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.ToolBarMenuDefaults;
@@ -73,5 +75,6 @@ public class BasicDefaultsInitializerRegistry extends CommonDefaultsInitializerR
 		register(ITreeNodeSetupBuilder.class, new TreeNodeDefaults());
 		register(IToolBarMenuBluePrint.class, new ToolBarMenuDefaults());
 		register(IPopupDialogSetupBuilder.class, new PopupDialogDefaults());
+		register(ITableSetupBuilder.class, new TableDefaults());
 	}
 }

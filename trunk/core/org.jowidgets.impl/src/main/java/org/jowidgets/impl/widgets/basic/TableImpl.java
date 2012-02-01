@@ -86,6 +86,9 @@ public class TableImpl extends AbstractControlSpiWrapper implements ITable {
 		this.modelSpiAdapter = modelSpiAdapter;
 
 		this.cellObservable = new TableCellObservableSpiAdapter();
+
+		getWidget().setEditable(setup.isEditable());
+
 		getWidget().addTableCellListener(new ITableCellListener() {
 
 			@Override
@@ -263,6 +266,11 @@ public class TableImpl extends AbstractControlSpiWrapper implements ITable {
 			permutation.add(Integer.valueOf(i));
 		}
 		setColumnPermutation(permutation);
+	}
+
+	@Override
+	public void setEditable(final boolean editable) {
+		getWidget().setEditable(editable);
 	}
 
 	@Override

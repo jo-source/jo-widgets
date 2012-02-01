@@ -164,9 +164,12 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	private ArrayList<Integer> lastColumnPermutation;
 	private boolean columnMoveOccured;
 	private boolean setWidthInvokedOnModel;
+	private boolean editable;
 
 	public TableImpl(final ITableSetupSpi setup) {
 		super(new JScrollPane(new JTable()));
+
+		this.editable = true;
 
 		this.cellRenderer = new CellRenderer();
 		this.cellEditor = new CellEditor();
@@ -284,6 +287,11 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	@Override
 	public JScrollPane getUiReference() {
 		return (JScrollPane) super.getUiReference();
+	}
+
+	@Override
+	public void setEditable(final boolean editable) {
+		this.editable = editable;
 	}
 
 	@Override
@@ -1196,10 +1204,15 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 		@Override
 		public boolean isCellEditable(final EventObject evt) {
-			if (evt instanceof MouseEvent) {
+			if (!editable) {
+				return false;
+			}
+			else if (evt instanceof MouseEvent) {
 				return ((MouseEvent) evt).getClickCount() >= 2;
 			}
-			return false;
+			else {
+				return false;
+			}
 		}
 
 	}
