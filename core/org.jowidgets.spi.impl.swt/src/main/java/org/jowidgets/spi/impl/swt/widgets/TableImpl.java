@@ -141,11 +141,14 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	private int[] lastColumnOrder;
 	private boolean setWidthInvokedOnModel;
 	private ToolTip toolTip;
+	private boolean editable;
 
 	private Boolean isColumnPopupDetectionSupported;
 
 	public TableImpl(final Object parentUiReference, final ITableSetupSpi setup) {
 		super(new Table((Composite) parentUiReference, getStyle(setup)));
+
+		this.editable = true;
 
 		this.setWidthInvokedOnModel = false;
 
@@ -218,6 +221,11 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			table.addListener(SWT.MouseHover, toolTipListener);
 			table.addListener(SWT.MouseMove, toolTipListener);
 		}
+	}
+
+	@Override
+	public void setEditable(final boolean editable) {
+		this.editable = editable;
 	}
 
 	private int getColumnCount() {
@@ -782,7 +790,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			final CellIndices indices = getExternalCellIndices(new Point(e.x, e.y));
 			if (indices != null) {
 				final ITableCell cell = dataModel.getCell(indices.getRowIndex(), indices.getColumnIndex());
-				if (cell.isEditable()) {
+				if (cell.isEditable() && editable) {
 					activateEditor(indices);
 				}
 			}

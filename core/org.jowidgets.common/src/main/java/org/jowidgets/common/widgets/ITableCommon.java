@@ -50,6 +50,14 @@ public interface ITableCommon extends
 		ITableColumnPopupDetectionObservable,
 		IControlCommon {
 
+	/**
+	 * Sets the tables global editable property. The global editable state and the cells editable state will
+	 * be conjuncted with a logical AND
+	 * 
+	 * @param editable The editable state to set
+	 */
+	void setEditable(boolean editable);
+
 	void resetFromModel();
 
 	Position getCellPosition(int rowIndex, int columnIndex);

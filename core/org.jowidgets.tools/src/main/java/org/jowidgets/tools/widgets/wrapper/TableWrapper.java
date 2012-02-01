@@ -99,6 +99,11 @@ public class TableWrapper extends ControlWrapper implements ITable {
 	}
 
 	@Override
+	public void setEditable(final boolean editable) {
+		getWidget().setEditable(editable);
+	}
+
+	@Override
 	public Position getCellPosition(final int rowIndex, final int columnIndex) {
 		return getWidget().getCellPosition(rowIndex, columnIndex);
 	}
