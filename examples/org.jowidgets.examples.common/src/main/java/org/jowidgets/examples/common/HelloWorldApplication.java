@@ -32,13 +32,17 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.ILabel;
+import org.jowidgets.api.widgets.ITextControl;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
+import org.jowidgets.api.widgets.blueprint.ITextFieldBluePrint;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
+import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public class HelloWorldApplication implements IApplication {
@@ -57,31 +61,51 @@ public class HelloWorldApplication implements IApplication {
 		final IButtonBluePrint buttonBp = BPF.button();
 		final IButtonBluePrint buttonBp2 = BPF.button();
 		final IFrame rootFrame = Toolkit.createRootFrame(frameBp, lifecycle);
+		final ITextFieldBluePrint textfieldBp = BPF.textField();
+		rootFrame.setLayout(Toolkit.getLayoutFactoryProvider().nullLayout());
 
-		//		rootFrame.setLayout(Toolkit.getLayoutFactoryProvider().nullLayout());
-
-		final ILabel label = rootFrame.add(labelBp);
-		final IButton button = rootFrame.add(buttonBp);
 		final IButton button2 = rootFrame.add(buttonBp2);
-		rootFrame.setVisible(true);
-		label.setSize(500, 100);
+		final IButton button = rootFrame.add(buttonBp);
+		final ILabel label = rootFrame.add(labelBp);
+		final ITextControl textfield = rootFrame.add(textfieldBp);
+		button.setText("A A A A");
+
+		button2.setText("AAA");
+		label.setPosition(100, 300);
+		label.setCursor(Cursor.WAIT);
 		button.setPosition(100, 200);
-		button.setSize(100, 100);
+		button.setPreferredSize(new Dimension(100, 100));
 		button.setMaxSize(new Dimension(100, 200));
 		button.setMinSize(new Dimension(50, 100));
-		button.setText("aaaaa");
-		button.setToolTipText(button.getPreferredSize().toString()
-			+ " \n Max: "
-			+ button.getMaxSize().toString()
-			+ " \n Min: "
-			+ button.getMaxSize().toString());
-		button2.setSize(100, 100);
-		button2.setPosition(350, 10);
-		button2.setToolTipText(button2.getPreferredSize().toString()
-			+ " \n Max: "
-			+ button2.getMaxSize().toString()
-			+ " \n Min: "
-			+ button2.getMaxSize().toString());
+		button.addActionListener(new IActionListener() {
 
+			@Override
+			public void actionPerformed() {
+				button2.setSize(button2.getSize().getWidth() + 3, button2.getSize().getHeight() + 3);
+
+			}
+		});
+		textfield.setPosition(500, 500);
+
+		rootFrame.setVisible(true);
+		button.setSize(100, 100);
+
+		button.setToolTipText("Pref: "
+			+ button.getPreferredSize().toString()
+			+ " \nMax: "
+			+ button.getMaxSize().toString()
+			+ " \nMin: "
+			+ button.getMaxSize().toString()
+			+ " \nSize: "
+			+ button.getSize().toString());
+
+		button2.setToolTipText("Pref: "
+			+ button2.getPreferredSize().toString()
+			+ " \nMax: "
+			+ button2.getMaxSize().toString()
+			+ " \nMin: "
+			+ button2.getMaxSize().toString()
+			+ " \nSize: "
+			+ button2.getSize().toString());
 	}
 }

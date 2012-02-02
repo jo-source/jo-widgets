@@ -29,26 +29,16 @@ package org.jowidgets.spi.impl.javafx.widgets;
 
 import javafx.scene.control.Label;
 
-import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.Cursor;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.types.Position;
-import org.jowidgets.common.widgets.controller.IComponentListener;
-import org.jowidgets.common.widgets.controller.IFocusListener;
-import org.jowidgets.common.widgets.controller.IKeyListener;
-import org.jowidgets.common.widgets.controller.IMouseListener;
-import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.spi.impl.javafx.image.JavafxImageRegistry;
 import org.jowidgets.spi.widgets.IIconSpi;
-import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.setup.IIconSetupSpi;
 
-public class IconImpl implements IIconSpi {
-	private final Label label;
+public class IconImpl extends JavafxControl implements IIconSpi {
 
 	public IconImpl(final IIconSetupSpi setup) {
-		label = new Label();
+
+		super(new Label());
 		setIcon(setup.getIcon());
 
 	}
@@ -65,205 +55,7 @@ public class IconImpl implements IIconSpi {
 
 	@Override
 	public Label getUiReference() {
-		return label;
-	}
-
-	@Override
-	public IPopupMenuSpi createPopupMenu() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setEnabled(final boolean enabled) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void redraw() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setRedrawEnabled(final boolean enabled) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean requestFocus() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public IColorConstant getForegroundColor() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public IColorConstant getBackgroundColor() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setCursor(final Cursor cursor) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setVisible(final boolean visible) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean isVisible() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Dimension getSize() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setSize(final Dimension size) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public Position getPosition() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setPosition(final Position position) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void addComponentListener(final IComponentListener componentListener) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void removeComponentListener(final IComponentListener componentListener) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void addFocusListener(final IFocusListener listener) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void removeFocusListener(final IFocusListener listener) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void addKeyListener(final IKeyListener listener) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void removeKeyListener(final IKeyListener listener) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void addMouseListener(final IMouseListener listener) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void removeMouseListener(final IMouseListener listener) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setToolTipText(final String toolTip) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setLayoutConstraints(final Object layoutConstraints) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public Object getLayoutConstraints() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Dimension getMinSize() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Dimension getPreferredSize() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Dimension getMaxSize() {
-		// TODO Auto-generated method stub
-		return null;
+		return (Label) super.getUiReference();
 	}
 
 }

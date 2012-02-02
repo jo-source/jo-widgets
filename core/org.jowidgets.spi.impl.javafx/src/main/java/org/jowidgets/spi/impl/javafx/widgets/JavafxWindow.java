@@ -119,7 +119,6 @@ public class JavafxWindow implements IWindowSpi {
 	@Override
 	public void redraw() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -142,7 +141,7 @@ public class JavafxWindow implements IWindowSpi {
 
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
-		stage.getScene().setFill(
+		getUiReference().getScene().setFill(
 				Color.rgb(
 						colorValue.getDefaultValue().getRed(),
 						colorValue.getDefaultValue().getGreen(),
@@ -158,6 +157,7 @@ public class JavafxWindow implements IWindowSpi {
 
 	@Override
 	public IColorConstant getBackgroundColor() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -192,7 +192,7 @@ public class JavafxWindow implements IWindowSpi {
 
 	@Override
 	public Dimension getSize() {
-		return new Dimension((int) stage.getWidth(), (int) stage.getHeight());
+		return new Dimension((int) getUiReference().getWidth(), (int) getUiReference().getHeight());
 	}
 
 	@Override
@@ -204,7 +204,7 @@ public class JavafxWindow implements IWindowSpi {
 
 	@Override
 	public Position getPosition() {
-		return new Position((int) stage.getX(), (int) stage.getY());
+		return new Position((int) getUiReference().getX(), (int) getUiReference().getY());
 	}
 
 	@Override

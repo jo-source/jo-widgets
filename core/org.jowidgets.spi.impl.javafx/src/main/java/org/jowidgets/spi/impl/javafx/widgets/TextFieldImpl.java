@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, dabaukne
+ * Copyright (c) 2012, David Bauknecht
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -38,12 +38,17 @@ import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 public class TextFieldImpl extends JavafxControl implements ITextControlSpi {
 
 	public TextFieldImpl(final ITextFieldSetupSpi setup) {
-		super(new TextField(setup.getMask().getPlaceholder()));
+		super(new TextField());
+	}
+
+	@Override
+	public TextField getUiReference() {
+		return (TextField) super.getUiReference();
 	}
 
 	@Override
 	public void setEditable(final boolean editable) {
-		throw new UnsupportedOperationException();
+		getUiReference().setEditable(editable);
 
 	}
 
@@ -61,12 +66,12 @@ public class TextFieldImpl extends JavafxControl implements ITextControlSpi {
 
 	@Override
 	public String getText() {
-		throw new UnsupportedOperationException();
+		return getUiReference().getText();
 	}
 
 	@Override
 	public void setText(final String text) {
-		throw new UnsupportedOperationException();
+		getUiReference().setText(text);
 
 	}
 
@@ -84,25 +89,24 @@ public class TextFieldImpl extends JavafxControl implements ITextControlSpi {
 
 	@Override
 	public void setMarkup(final Markup markup) {
-		throw new UnsupportedOperationException();
 
 	}
 
 	@Override
 	public void setSelection(final int start, final int end) {
-		throw new UnsupportedOperationException();
+		getUiReference().selectRange(start, end);
 
 	}
 
 	@Override
 	public void setCaretPosition(final int pos) {
-		throw new UnsupportedOperationException();
+		getUiReference().selectPositionCaret(pos);
 
 	}
 
 	@Override
 	public int getCaretPosition() {
-		return 0;
+		return getUiReference().getCaretPosition();
 	}
 
 }

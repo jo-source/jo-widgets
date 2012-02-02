@@ -30,8 +30,7 @@ package org.jowidgets.spi.impl.javafx.widgets;
 
 import java.util.List;
 
-import javafx.scene.Group;
-import javafx.scene.Node;
+import javafx.scene.layout.Pane;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
@@ -53,185 +52,175 @@ import org.jowidgets.spi.widgets.ICompositeSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
 public class CompositeImpl implements ICompositeSpi {
-	private final Group group;
+	private final Pane pane;
 	private final IGenericWidgetFactory factory;
+	private final JavafxContainer containerDelegate;
 
 	public CompositeImpl(final IGenericWidgetFactory factory, final ICompositeSetupCommon setup) {
-		group = new Group();
+		pane = new Pane();
 		this.factory = factory;
+		containerDelegate = new JavafxContainer(this.factory, pane);
+	}
+
+	@Override
+	public Pane getUiReference() {
+		return containerDelegate.getUiReference();
 	}
 
 	@Override
 	public IPopupMenuSpi createPopupMenu() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Group getUiReference() {
-		return group;
+		return containerDelegate.createPopupMenu();
 	}
 
 	@Override
 	public void setEnabled(final boolean enabled) {
-		// TODO Auto-generated method stub
+		containerDelegate.setEnabled(enabled);
 
 	}
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return false;
+		return containerDelegate.isEnabled();
 	}
 
 	@Override
 	public void redraw() {
-		// TODO Auto-generated method stub
+		containerDelegate.redraw();
 
 	}
 
 	@Override
 	public void setRedrawEnabled(final boolean enabled) {
-		// TODO Auto-generated method stub
+		containerDelegate.setRedrawEnabled(enabled);
 
 	}
 
 	@Override
 	public boolean requestFocus() {
-		// TODO Auto-generated method stub
-		return false;
+		return containerDelegate.requestFocus();
 	}
 
 	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
-		// TODO Auto-generated method stub
+		containerDelegate.setForegroundColor(colorValue);
 
 	}
 
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
-		// TODO Auto-generated method stub
+		containerDelegate.setBackgroundColor(colorValue);
 
 	}
 
 	@Override
 	public IColorConstant getForegroundColor() {
-		// TODO Auto-generated method stub
-		return null;
+		return containerDelegate.getForegroundColor();
 	}
 
 	@Override
 	public IColorConstant getBackgroundColor() {
-		// TODO Auto-generated method stub
-		return null;
+		return containerDelegate.getBackgroundColor();
 	}
 
 	@Override
 	public void setCursor(final Cursor cursor) {
-		// TODO Auto-generated method stub
-
+		containerDelegate.setCursor(cursor);
 	}
 
 	@Override
 	public void setVisible(final boolean visible) {
-		// TODO Auto-generated method stub
+		containerDelegate.setVisible(visible);
 
 	}
 
 	@Override
 	public boolean isVisible() {
-		// TODO Auto-generated method stub
-		return false;
+		return containerDelegate.isVisible();
 	}
 
 	@Override
 	public Dimension getSize() {
-		// TODO Auto-generated method stub
-		return null;
+		return containerDelegate.getSize();
 	}
 
 	@Override
 	public void setSize(final Dimension size) {
-		// TODO Auto-generated method stub
-
+		containerDelegate.setSize(size);
 	}
 
 	@Override
 	public Position getPosition() {
-		// TODO Auto-generated method stub
-		return null;
+		return containerDelegate.getPosition();
 	}
 
 	@Override
 	public void setPosition(final Position position) {
-		// TODO Auto-generated method stub
-
+		containerDelegate.setPosition(position);
 	}
 
 	@Override
 	public void addComponentListener(final IComponentListener componentListener) {
-		// TODO Auto-generated method stub
+		containerDelegate.addComponentListener(componentListener);
 
 	}
 
 	@Override
 	public void removeComponentListener(final IComponentListener componentListener) {
-		// TODO Auto-generated method stub
+		containerDelegate.removeComponentListener(componentListener);
 
 	}
 
 	@Override
 	public void addFocusListener(final IFocusListener listener) {
-		// TODO Auto-generated method stub
+		containerDelegate.addFocusListener(listener);
 
 	}
 
 	@Override
 	public void removeFocusListener(final IFocusListener listener) {
-		// TODO Auto-generated method stub
+		containerDelegate.removeFocusListener(listener);
 
 	}
 
 	@Override
 	public void addKeyListener(final IKeyListener listener) {
-		// TODO Auto-generated method stub
+		containerDelegate.addKeyListener(listener);
 
 	}
 
 	@Override
 	public void removeKeyListener(final IKeyListener listener) {
-		// TODO Auto-generated method stub
+		containerDelegate.removeKeyListener(listener);
 
 	}
 
 	@Override
 	public void addMouseListener(final IMouseListener listener) {
-		// TODO Auto-generated method stub
+		containerDelegate.addMouseListener(listener);
 
 	}
 
 	@Override
 	public void removeMouseListener(final IMouseListener listener) {
-		// TODO Auto-generated method stub
+		containerDelegate.removeMouseListener(listener);
 
 	}
 
 	@Override
 	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		// TODO Auto-generated method stub
+		containerDelegate.addPopupDetectionListener(listener);
 
 	}
 
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		// TODO Auto-generated method stub
+		containerDelegate.removePopupDetectionListener(listener);
 
 	}
 
 	@Override
 	public void setToolTipText(final String toolTip) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -248,20 +237,17 @@ public class CompositeImpl implements ICompositeSpi {
 
 	@Override
 	public Dimension getMinSize() {
-		// TODO Auto-generated method stub
-		return null;
+		return new Dimension((int) getUiReference().getMinWidth(), (int) getUiReference().getMinHeight());
 	}
 
 	@Override
 	public Dimension getPreferredSize() {
-		// TODO Auto-generated method stub
-		return null;
+		return new Dimension((int) getUiReference().getPrefWidth(), (int) getUiReference().getPrefHeight());
 	}
 
 	@Override
 	public Dimension getMaxSize() {
-		// TODO Auto-generated method stub
-		return null;
+		return new Dimension((int) getUiReference().getMaxWidth(), (int) getUiReference().getMaxHeight());
 	}
 
 	@Override
@@ -270,10 +256,8 @@ public class CompositeImpl implements ICompositeSpi {
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
 
-		final WIDGET_TYPE result = factory.create(getUiReference(), descriptor);
+		return containerDelegate.add(index, descriptor, layoutConstraints);
 
-		group.getChildren().add((Node) result.getUiReference());
-		return result;
 	}
 
 	@Override
@@ -281,56 +265,50 @@ public class CompositeImpl implements ICompositeSpi {
 		final Integer index,
 		final ICustomWidgetCreator<WIDGET_TYPE> creator,
 		final Object layoutConstraints) {
-		// TODO Auto-generated method stub
-		return null;
+		return containerDelegate.add(index, creator, layoutConstraints);
 	}
 
 	@Override
 	public boolean remove(final IControlCommon control) {
-		// TODO Auto-generated method stub
-		return false;
+		return containerDelegate.remove(control);
 	}
 
 	@Override
 	public void setTabOrder(final List<? extends IControlCommon> tabOrder) {
-		// TODO Auto-generated method stub
+		containerDelegate.setTabOrder(tabOrder);
 
 	}
 
 	@Override
 	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
-		// TODO Auto-generated method stub
+		containerDelegate.setLayout(layoutDescriptor);
 
 	}
 
 	@Override
 	public void layoutBegin() {
-		// TODO Auto-generated method stub
+		containerDelegate.layoutBegin();
 
 	}
 
 	@Override
 	public void layoutEnd() {
-		// TODO Auto-generated method stub
-
+		containerDelegate.layoutEnd();
 	}
 
 	@Override
 	public void removeAll() {
-		group.getChildren().clear();
-
+		containerDelegate.removeAll();
 	}
 
 	@Override
 	public Rectangle getClientArea() {
-		// TODO Auto-generated method stub
-		return null;
+		return containerDelegate.getClientArea();
 	}
 
 	@Override
 	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
-		// TODO Auto-generated method stub
-		return null;
+		return containerDelegate.computeDecoratedSize(clientAreaSize);
 	}
 
 }
