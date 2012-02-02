@@ -28,28 +28,39 @@
 
 package org.jowidgets.spi.impl.javafx.widgets;
 
-import javafx.scene.control.Control;
-import javafx.scene.control.Tooltip;
+import java.util.List;
+
+import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.layout.Pane;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.types.Rectangle;
+import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.controller.IComponentListener;
 import org.jowidgets.common.widgets.controller.IFocusListener;
 import org.jowidgets.common.widgets.controller.IKeyListener;
 import org.jowidgets.common.widgets.controller.IMouseListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
-import org.jowidgets.spi.widgets.IControlSpi;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
+import org.jowidgets.spi.impl.javafx.util.CursorConvert;
+import org.jowidgets.spi.widgets.IContainerSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
-import org.jowidgets.util.Assert;
 
-public class JavafxControl implements IControlSpi {
+public class JavafxContainer implements IContainerSpi {
 
-	private final Control control;
+	private final IGenericWidgetFactory factory;
+	private final Pane pane;
 
-	public JavafxControl(final Control control) {
-		this.control = control;
+	public JavafxContainer(final IGenericWidgetFactory factory, final Pane pane) {
+		this.pane = pane;
+		this.factory = factory;
 	}
 
 	@Override
@@ -59,25 +70,23 @@ public class JavafxControl implements IControlSpi {
 	}
 
 	@Override
-	public Control getUiReference() {
-		return control;
-
+	public Pane getUiReference() {
+		return pane;
 	}
 
 	@Override
 	public void setEnabled(final boolean enabled) {
-		getUiReference().setDisable(!(enabled));
+		getUiReference().disableProperty().setValue(enabled);
 
 	}
 
 	@Override
 	public boolean isEnabled() {
-		return (!getUiReference().isDisabled());
+		return getUiReference().disableProperty().getValue();
 	}
 
 	@Override
 	public void redraw() {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -90,18 +99,12 @@ public class JavafxControl implements IControlSpi {
 	@Override
 	public boolean requestFocus() {
 		getUiReference().requestFocus();
-		if (getUiReference().isFocused()) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return getUiReference().focusedProperty().getValue();
 	}
 
 	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -124,7 +127,7 @@ public class JavafxControl implements IControlSpi {
 
 	@Override
 	public void setCursor(final Cursor cursor) {
-		// TODO Auto-generated method stub
+		getUiReference().setCursor(CursorConvert.convert(cursor));
 
 	}
 
@@ -141,17 +144,12 @@ public class JavafxControl implements IControlSpi {
 
 	@Override
 	public Dimension getSize() {
-		return new Dimension(
-			getUiReference().widthProperty().getValue().intValue(),
-			getUiReference().heightProperty().getValue().intValue());
+		return new Dimension((int) getUiReference().getWidth(), (int) getUiReference().getHeight());
 	}
 
 	@Override
 	public void setSize(final Dimension size) {
-		Assert.paramNotNull(size, "size");
-		getUiReference().managedProperty().setValue(true);
 		getUiReference().resize(size.getWidth(), size.getHeight());
-		getUiReference().managedProperty().setValue(false);
 	}
 
 	@Override
@@ -226,38 +224,75 @@ public class JavafxControl implements IControlSpi {
 	}
 
 	@Override
-	public void setToolTipText(final String toolTip) {
-		getUiReference().setTooltip(new Tooltip(toolTip));
-
-	}
-
-	@Override
-	public void setLayoutConstraints(final Object layoutConstraints) {
+	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public Object getLayoutConstraints() {
+	public void layoutBegin() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void layoutEnd() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void removeAll() {
+		getUiReference().getChildren().clear();
+
+	}
+
+	@Override
+	public Rectangle getClientArea() {
+		final Insets insets = getUiReference().getInsets();
+		final int x = (int) insets.getLeft();
+		final int y = (int) insets.getTop();
+		final Dimension size = getSize();
+		final int width = (int) (size.getWidth() - insets.getLeft() - insets.getRight());
+		final int height = (int) (size.getHeight() - insets.getTop() - insets.getBottom());
+		return new Rectangle(x, y, width, height);
+	}
+
+	@Override
+	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Dimension getMinSize() {
-		return new Dimension((int) getUiReference().getMinWidth(), (int) getUiReference().getMinHeight());
+	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+		final Integer index,
+		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+		final Object layoutConstraints) {
+		final WIDGET_TYPE result = factory.create(getUiReference(), descriptor);
+		getUiReference().getChildren().add((Node) result.getUiReference());
+
+		return result;
 	}
 
 	@Override
-	public Dimension getPreferredSize() {
+	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+		final Integer index,
+		final ICustomWidgetCreator<WIDGET_TYPE> creator,
+		final Object layoutConstraints) {
 
-		return new Dimension((int) getUiReference().prefWidth(Control.USE_COMPUTED_SIZE), (int) getUiReference().prefHeight(
-				Control.USE_COMPUTED_SIZE));
+		return null;
 	}
 
 	@Override
-	public Dimension getMaxSize() {
-		return new Dimension((int) getUiReference().getMaxWidth(), (int) getUiReference().getMaxHeight());
+	public boolean remove(final IControlCommon control) {
+		return getUiReference().getChildren().remove(control.getUiReference());
+	}
+
+	@Override
+	public void setTabOrder(final List<? extends IControlCommon> tabOrder) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

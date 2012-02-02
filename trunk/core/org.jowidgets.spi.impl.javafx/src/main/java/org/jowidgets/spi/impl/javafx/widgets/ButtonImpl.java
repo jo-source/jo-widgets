@@ -28,7 +28,12 @@
 
 package org.jowidgets.spi.impl.javafx.widgets;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBuilder;
+import javafx.scene.control.Tooltip;
+import javafx.scene.text.Font;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
@@ -40,10 +45,9 @@ import org.jowidgets.test.spi.widgets.IButtonUiSpi;
 public class ButtonImpl extends JavafxControl implements IButtonUiSpi {
 
 	public ButtonImpl(final IButtonSetupSpi setup) {
-		super(new Button());
-		setText(setup.getText());
+		super(ButtonBuilder.create().text(setup.getText()).tooltip(new Tooltip(setup.getToolTipText())).managed(true).build());
 		setIcon(setup.getIcon());
-		setToolTipText(setup.getToolTipText());
+
 	}
 
 	@Override
@@ -59,13 +63,20 @@ public class ButtonImpl extends JavafxControl implements IButtonUiSpi {
 
 	@Override
 	public void setFontSize(final int size) {
-		// TODO Auto-generated method stub
+		if (getUiReference().getFont() != null) {
+			getUiReference().setFont(new Font(getUiReference().getFont().getName(), size));
+		}
+		else {
+			getUiReference().setFont(new Font(size));
+		}
 
 	}
 
 	@Override
 	public void setFontName(final String fontName) {
-		// TODO Auto-generated method stub
+		if (getUiReference().getFont() != null) {
+			getUiReference().setFont(new Font(fontName, getUiReference().getFont().getSize()));
+		}
 
 	}
 
@@ -78,7 +89,6 @@ public class ButtonImpl extends JavafxControl implements IButtonUiSpi {
 	@Override
 	public void setText(final String text) {
 		getUiReference().setText(text);
-
 	}
 
 	@Override
@@ -100,8 +110,14 @@ public class ButtonImpl extends JavafxControl implements IButtonUiSpi {
 
 	@Override
 	public void addActionListener(final IActionListener actionListener) {
-		// TODO Auto-generated method stub
+		getUiReference().setOnAction(new EventHandler<ActionEvent>() {
 
+			@Override
+			public void handle(final ActionEvent paramT) {
+				actionListener.actionPerformed();
+
+			}
+		});
 	}
 
 	@Override

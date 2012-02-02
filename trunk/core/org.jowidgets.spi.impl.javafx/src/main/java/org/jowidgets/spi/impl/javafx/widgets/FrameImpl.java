@@ -33,8 +33,8 @@ import java.util.List;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Region;
+import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import org.jowidgets.common.types.Dimension;
@@ -46,6 +46,8 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
+import org.jowidgets.common.widgets.layout.ILayouter;
+import org.jowidgets.spi.impl.javafx.layout.LayoutManagerImpl;
 import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.spi.widgets.IMenuBarSpi;
 import org.jowidgets.spi.widgets.setup.IFrameSetupSpi;
@@ -53,19 +55,17 @@ import org.jowidgets.spi.widgets.setup.IFrameSetupSpi;
 public class FrameImpl extends JavafxWindow implements IFrameSpi {
 
 	private final IGenericWidgetFactory factory;
-	private final BorderPane group;
+	private final Pane pane;
 	private final Scene scene;
 
 	public FrameImpl(final IGenericWidgetFactory factory, final IFrameSetupSpi setup) {
 		super(factory, new Stage(), setup.isCloseable());
-		group = new BorderPane();
-
-		scene = new Scene(group);
-		this.factory = factory;
-		getUiReference().setScene(scene);
 		getUiReference().setTitle(setup.getTitle());
 		getUiReference().setResizable(setup.isResizable());
-
+		this.factory = factory;
+		pane = new Pane();
+		scene = new Scene(pane);
+		getUiReference().setScene(scene);
 	}
 
 	@Override
@@ -82,13 +82,12 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 
 	@Override
 	public IMenuBarSpi createMenuBar() {
-		// throw new UnsupportedOperationException();
 		return null;
 	}
 
 	@Override
 	public void setDefaultButton(final IButtonCommon button) {
-		// throw new UnsupportedOperationException();
+		((Button) button.getUiReference()).setDefaultButton(true);
 
 	}
 
@@ -97,9 +96,8 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 		final Integer index,
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
-		final WIDGET_TYPE result = factory.create(getUiReference(), descriptor);
-
-		group.getChildren().add((Node) result.getUiReference());
+		final WIDGET_TYPE result = factory.create(getUiReference().getScene(), descriptor);
+		((Pane) scene.getRoot()).getChildren().add((Node) result.getUiReference());
 
 		return result;
 	}
@@ -114,7 +112,7 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 
 	@Override
 	public boolean remove(final IControlCommon control) {
-		return group.getChildren().remove(control.getUiReference());
+		return ((Pane) scene.getRoot()).getChildren().remove(control.getUiReference());
 	}
 
 	@Override
@@ -125,7 +123,9 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 
 	@Override
 	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
-
+		if (layoutDescriptor != null) {
+			scene.setRoot(new LayoutManagerImpl(pane, (ILayouter) layoutDescriptor));
+		}
 	}
 
 	@Override
@@ -142,17 +142,15 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 
 	@Override
 	public void removeAll() {
-		throw new UnsupportedOperationException();
 
 	}
 
 	@Override
 	public Rectangle getClientArea() {
-		//TODO DB remove Cast
-		final Insets insets = ((Region) getUiReference().getScene().getRoot()).getInsets();
+		final Insets insets = ((Pane) getUiReference().getScene().getRoot()).getInsets();
 		final int x = (int) insets.getLeft();
 		final int y = (int) insets.getTop();
-		final Dimension size = super.getSize();
+		final Dimension size = getSize();
 		final int width = (int) (size.getWidth() - insets.getLeft() - insets.getRight());
 		final int height = (int) (size.getHeight() - insets.getTop() - insets.getBottom());
 		return new Rectangle(x, y, width, height);
@@ -165,6 +163,8 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 
 	@Override
 	public void setMinSize(final Dimension minSize) {
-		throw new UnsupportedOperationException();
+		getUiReference().setMinHeight(minSize.getHeight());
+		getUiReference().setMinWidth(minSize.getWidth());
 	}
+
 }
