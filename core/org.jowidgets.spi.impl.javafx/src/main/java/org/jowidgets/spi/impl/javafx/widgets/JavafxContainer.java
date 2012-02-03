@@ -87,7 +87,7 @@ public class JavafxContainer implements IContainerSpi {
 
 	@Override
 	public void redraw() {
-
+		// TODO Auto-generated method stub
 	}
 
 	@Override

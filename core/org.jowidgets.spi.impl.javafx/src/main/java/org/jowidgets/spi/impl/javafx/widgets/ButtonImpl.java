@@ -37,16 +37,25 @@ import javafx.scene.text.Font;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.spi.impl.javafx.image.JavafxImageRegistry;
+import org.jowidgets.spi.impl.javafx.util.FontProvider;
 import org.jowidgets.spi.widgets.setup.IButtonSetupSpi;
 import org.jowidgets.test.spi.widgets.IButtonUiSpi;
 
 public class ButtonImpl extends JavafxControl implements IButtonUiSpi {
 
 	public ButtonImpl(final IButtonSetupSpi setup) {
-		super(ButtonBuilder.create().text(setup.getText()).tooltip(new Tooltip(setup.getToolTipText())).managed(true).build());
+		super(ButtonBuilder.create().text(setup.getText()).tooltip(new Tooltip(setup.getToolTipText())).build());
 		setIcon(setup.getIcon());
+
+		getUiReference().setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(final ActionEvent paramT) {
+				fireActionPerformed();
+
+			}
+		});
 
 	}
 
@@ -57,33 +66,24 @@ public class ButtonImpl extends JavafxControl implements IButtonUiSpi {
 
 	@Override
 	public boolean isTestable() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public void setFontSize(final int size) {
-		if (getUiReference().getFont() != null) {
-			getUiReference().setFont(new Font(getUiReference().getFont().getName(), size));
-		}
-		else {
-			getUiReference().setFont(new Font(size));
-		}
-
+		getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), size));
 	}
 
 	@Override
 	public void setFontName(final String fontName) {
-		if (getUiReference().getFont() != null) {
-			getUiReference().setFont(new Font(fontName, getUiReference().getFont().getSize()));
-		}
-
+		getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), fontName));
 	}
 
 	@Override
 	public void setMarkup(final Markup markup) {
-		// TODO Auto-generated method stub
-
+		final Button button = this.getUiReference();
+		final Font newFont = FontProvider.deriveFont(button.getFont(), markup);
+		button.setFont(newFont);
 	}
 
 	@Override
@@ -105,24 +105,6 @@ public class ButtonImpl extends JavafxControl implements IButtonUiSpi {
 		else {
 			getUiReference().setGraphic(null);
 		}
-
-	}
-
-	@Override
-	public void addActionListener(final IActionListener actionListener) {
-		getUiReference().setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(final ActionEvent paramT) {
-				actionListener.actionPerformed();
-
-			}
-		});
-	}
-
-	@Override
-	public void removeActionListener(final IActionListener actionListener) {
-		// TODO Auto-generated method stub
 
 	}
 

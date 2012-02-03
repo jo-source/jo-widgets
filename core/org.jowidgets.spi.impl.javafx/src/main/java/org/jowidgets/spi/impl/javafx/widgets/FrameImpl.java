@@ -32,6 +32,7 @@ import java.util.List;
 
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
@@ -42,6 +43,7 @@ import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IButtonCommon;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.IDisplayCommon;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
@@ -98,7 +100,7 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 		final Object layoutConstraints) {
 		final WIDGET_TYPE result = factory.create(getUiReference().getScene(), descriptor);
 		((Pane) scene.getRoot()).getChildren().add((Node) result.getUiReference());
-
+		setLayoutConstraints(result, layoutConstraints);
 		return result;
 	}
 
@@ -165,6 +167,21 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 	public void setMinSize(final Dimension minSize) {
 		getUiReference().setMinHeight(minSize.getHeight());
 		getUiReference().setMinWidth(minSize.getWidth());
+	}
+
+	private void setLayoutConstraints(final IWidgetCommon widget, final Object layoutConstraints) {
+		final Object object = widget.getUiReference();
+		if (object instanceof Parent) {
+			final Parent control = (Parent) object;
+			control.setUserData(layoutConstraints);
+		}
+		else {
+			throw new IllegalArgumentException("'"
+				+ Parent.class
+				+ "' excpected, but '"
+				+ object.getClass().getName()
+				+ "' found.");
+		}
 	}
 
 }

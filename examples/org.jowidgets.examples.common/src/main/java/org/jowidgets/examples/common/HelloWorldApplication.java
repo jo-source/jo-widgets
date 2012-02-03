@@ -28,6 +28,7 @@
 package org.jowidgets.examples.common;
 
 import org.jowidgets.api.image.IconsSmall;
+import org.jowidgets.api.layout.BorderLayoutConstraints;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IFrame;
@@ -54,7 +55,7 @@ public class HelloWorldApplication implements IApplication {
 	@Override
 	public void start(final IApplicationLifecycle lifecycle) {
 		final IFrameBluePrint frameBp = BPF.frame().setTitle("Hello World");
-		frameBp.setSize(new Dimension(800, 600));
+		frameBp.setSize(new Dimension(300, 300));
 		frameBp.setPosition(new Position(200, 200));
 		final ILabelBluePrint labelBp = BPF.label().setText("     It works!").setToolTipText("Great").setFontSize(15).setIcon(
 				IconsSmall.SETTINGS);
@@ -62,33 +63,60 @@ public class HelloWorldApplication implements IApplication {
 		final IButtonBluePrint buttonBp2 = BPF.button();
 		final IFrame rootFrame = Toolkit.createRootFrame(frameBp, lifecycle);
 		final ITextFieldBluePrint textfieldBp = BPF.textField();
-		rootFrame.setLayout(Toolkit.getLayoutFactoryProvider().nullLayout());
-
-		final IButton button2 = rootFrame.add(buttonBp2);
-		final IButton button = rootFrame.add(buttonBp);
-		final ILabel label = rootFrame.add(labelBp);
-		final ITextControl textfield = rootFrame.add(textfieldBp);
-		button.setText("A A A A");
-
-		button2.setText("AAA");
+		rootFrame.setLayout(Toolkit.getLayoutFactoryProvider().borderLayout());
+		final IButton button2 = rootFrame.add(buttonBp2, BorderLayoutConstraints.TOP);
+		final IButton button = rootFrame.add(buttonBp, BorderLayoutConstraints.LEFT);
+		final ILabel label = rootFrame.add(labelBp, BorderLayoutConstraints.RIGHT);
+		final ITextControl textfield = rootFrame.add(textfieldBp, BorderLayoutConstraints.BOTTOM);
+		button2.setText("On/Off");
 		label.setPosition(100, 300);
 		label.setCursor(Cursor.WAIT);
-		button.setPosition(100, 200);
-		button.setPreferredSize(new Dimension(100, 100));
+		//		button.setPosition(100, 200);
+		//		button.setPreferredSize(new Dimension(100, 100));
 		button.setMaxSize(new Dimension(100, 200));
 		button.setMinSize(new Dimension(50, 100));
-		button.addActionListener(new IActionListener() {
+		final IActionListener listener = new IActionListener() {
 
 			@Override
 			public void actionPerformed() {
 				button2.setSize(button2.getSize().getWidth() + 3, button2.getSize().getHeight() + 3);
+				button2.setToolTipText("Pref: "
+					+ button2.getPreferredSize().toString()
+					+ " \nMax: "
+					+ button2.getMaxSize().toString()
+					+ " \nMin: "
+					+ button2.getMaxSize().toString()
+					+ " \nSize: "
+					+ button2.getSize().toString());
+
+			}
+		};
+		button.addActionListener(listener);
+
+		button2.addActionListener(new IActionListener() {
+
+			private boolean flag = true;
+
+			@Override
+			public void actionPerformed() {
+
+				if (flag) {
+					button.removeActionListener(listener);
+					flag = false;
+					textfield.setText("" + textfield.requestFocus());
+				}
+				else {
+					button.addActionListener(listener);
+					flag = true;
+					textfield.setText("" + textfield.hasFocus());
+				}
 
 			}
 		});
-		textfield.setPosition(500, 500);
+		//		textfield.setPosition(500, 500);
 
 		rootFrame.setVisible(true);
-		button.setSize(100, 100);
+		//		button.setSize(100, 100);
 
 		button.setToolTipText("Pref: "
 			+ button.getPreferredSize().toString()
@@ -99,13 +127,5 @@ public class HelloWorldApplication implements IApplication {
 			+ " \nSize: "
 			+ button.getSize().toString());
 
-		button2.setToolTipText("Pref: "
-			+ button2.getPreferredSize().toString()
-			+ " \nMax: "
-			+ button2.getMaxSize().toString()
-			+ " \nMin: "
-			+ button2.getMaxSize().toString()
-			+ " \nSize: "
-			+ button2.getSize().toString());
 	}
 }
