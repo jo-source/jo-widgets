@@ -44,28 +44,19 @@ public class LayoutManagerImpl extends Pane {
 
 	@Override
 	protected double computePrefWidth(final double height) {
-		if (height != 0) {
-			return height;
-		}
-		else {
-			return layouter.getPreferredSize().getWidth();
-		}
+		final double computeHeight = super.computePrefHeight(height);
+		return (getInsets().getTop() + computeHeight + getInsets().getBottom());
 	}
 
 	@Override
 	protected double computePrefHeight(final double width) {
-		if (width != 0) {
-			return width;
-		}
-		else {
-			return layouter.getPreferredSize().getHeight();
-		}
+		final double computeWidth = super.computePrefWidth(width);
+		return (getInsets().getTop() + computeWidth + getInsets().getBottom());
 	}
 
 	@Override
 	protected void layoutChildren() {
 		for (final Node tmp : this.getChildren()) {
-
 			tmp.setManaged(false);
 		}
 		layouter.layout();

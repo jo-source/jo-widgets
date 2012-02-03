@@ -40,11 +40,13 @@ import org.jowidgets.common.widgets.controller.IFocusListener;
 import org.jowidgets.common.widgets.controller.IKeyListener;
 import org.jowidgets.common.widgets.controller.IMouseListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
+import org.jowidgets.spi.impl.controller.ActionObservable;
+import org.jowidgets.spi.impl.javafx.util.CursorConvert;
 import org.jowidgets.spi.widgets.IControlSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.util.Assert;
 
-public class JavafxControl implements IControlSpi {
+public class JavafxControl extends ActionObservable implements IControlSpi {
 
 	private final Control control;
 
@@ -124,7 +126,7 @@ public class JavafxControl implements IControlSpi {
 
 	@Override
 	public void setCursor(final Cursor cursor) {
-		// TODO Auto-generated method stub
+		getUiReference().setCursor(CursorConvert.convert(cursor));
 
 	}
 
@@ -233,14 +235,13 @@ public class JavafxControl implements IControlSpi {
 
 	@Override
 	public void setLayoutConstraints(final Object layoutConstraints) {
-		// TODO Auto-generated method stub
+		getUiReference().setUserData(layoutConstraints);
 
 	}
 
 	@Override
 	public Object getLayoutConstraints() {
-		// TODO Auto-generated method stub
-		return null;
+		return getUiReference().getUserData();
 	}
 
 	@Override
