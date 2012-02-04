@@ -73,6 +73,11 @@ public enum IconsSmall implements IImageConstant {
 	FILTER_EDIT,
 	FILTER_DISABLED,
 	FILTER_ENABLED,
-	FILTER_DELETE;
+	FILTER_DELETE,
+
+	WAIT_1,
+	WAIT_2,
+	WAIT_3,
+	WAIT_4;
 
 }

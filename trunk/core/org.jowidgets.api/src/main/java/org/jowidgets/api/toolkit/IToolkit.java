@@ -30,6 +30,7 @@ package org.jowidgets.api.toolkit;
 
 import java.util.List;
 
+import org.jowidgets.api.animation.IWaitAnimationProcessor;
 import org.jowidgets.api.command.IActionBuilderFactory;
 import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
@@ -83,6 +84,8 @@ public interface IToolkit {
 	IApplicationRunner getApplicationRunner();
 
 	IUiThreadAccess getUiThreadAccess();
+
+	IWaitAnimationProcessor getWaitAnimationProcessor();
 
 	IWidgetUtils getWidgetUtils();
 

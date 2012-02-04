@@ -30,6 +30,7 @@ package org.jowidgets.impl.toolkit;
 
 import java.util.List;
 
+import org.jowidgets.api.animation.IWaitAnimationProcessor;
 import org.jowidgets.api.command.IActionBuilderFactory;
 import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.image.Icons;
@@ -93,6 +94,7 @@ public class DefaultToolkit implements IToolkit {
 	private final ILoginPane loginPane;
 	private final IWidgetUtils widgetUtils;
 
+	private IWaitAnimationProcessor waitAnimationProcessor;
 	private IUiThreadAccess uiThreadAccess;
 	private IApplicationRunner applicationRunner;
 
@@ -187,6 +189,14 @@ public class DefaultToolkit implements IToolkit {
 	@Override
 	public IMessageReplacer getMessageReplacer() {
 		return messageReplacer;
+	}
+
+	@Override
+	public IWaitAnimationProcessor getWaitAnimationProcessor() {
+		if (waitAnimationProcessor == null) {
+			waitAnimationProcessor = new DefaultWaitAnimationProcessor();
+		}
+		return waitAnimationProcessor;
 	}
 
 	@Override
