@@ -30,6 +30,7 @@ package org.jowidgets.tools.toolkit;
 
 import java.util.List;
 
+import org.jowidgets.api.animation.IWaitAnimationProcessor;
 import org.jowidgets.api.command.IActionBuilderFactory;
 import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
@@ -143,6 +144,11 @@ public class ToolkitWrapper implements IToolkit {
 	@Override
 	public IUiThreadAccess getUiThreadAccess() {
 		return toolkit.getUiThreadAccess();
+	}
+
+	@Override
+	public IWaitAnimationProcessor getWaitAnimationProcessor() {
+		return toolkit.getWaitAnimationProcessor();
 	}
 
 	@Override

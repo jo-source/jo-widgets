@@ -32,6 +32,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ServiceLoader;
 
+import org.jowidgets.api.animation.IWaitAnimationProcessor;
 import org.jowidgets.api.command.IActionBuilderFactory;
 import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
@@ -142,6 +143,10 @@ public final class Toolkit {
 
 	public static IUiThreadAccess getUiThreadAccess() {
 		return getInstance().getUiThreadAccess();
+	}
+
+	public static IWaitAnimationProcessor getWaitAnimationProcessor() {
+		return getInstance().getWaitAnimationProcessor();
 	}
 
 	public static IWindow getActiveWindow() {
