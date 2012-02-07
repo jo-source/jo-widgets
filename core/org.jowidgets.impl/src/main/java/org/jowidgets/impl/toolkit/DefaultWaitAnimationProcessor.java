@@ -29,6 +29,7 @@
 package org.jowidgets.impl.toolkit;
 
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -154,7 +155,7 @@ final class DefaultWaitAnimationProcessor implements IWaitAnimationProcessor {
 	}
 
 	private void fireChangedEvent() {
-		for (final IChangeListener listener : changeListeners) {
+		for (final IChangeListener listener : new LinkedList<IChangeListener>(changeListeners)) {
 			listener.changed();
 		}
 	}
