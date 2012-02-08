@@ -30,6 +30,7 @@ package org.jowidgets.spi.impl.javafx.widgets;
 
 import java.util.List;
 
+import javafx.scene.control.Control;
 import javafx.scene.layout.Pane;
 
 import org.jowidgets.common.color.IColorConstant;
@@ -225,14 +226,13 @@ public class CompositeImpl implements ICompositeSpi {
 
 	@Override
 	public void setLayoutConstraints(final Object layoutConstraints) {
-		// TODO Auto-generated method stub
+		getUiReference().setUserData(layoutConstraints);
 
 	}
 
 	@Override
 	public Object getLayoutConstraints() {
-		// TODO Auto-generated method stub
-		return null;
+		return getUiReference().getUserData();
 	}
 
 	@Override
@@ -242,7 +242,8 @@ public class CompositeImpl implements ICompositeSpi {
 
 	@Override
 	public Dimension getPreferredSize() {
-		return new Dimension((int) getUiReference().getPrefWidth(), (int) getUiReference().getPrefHeight());
+		return new Dimension((int) getUiReference().prefWidth(Control.USE_COMPUTED_SIZE), (int) getUiReference().prefHeight(
+				Control.USE_COMPUTED_SIZE));
 	}
 
 	@Override

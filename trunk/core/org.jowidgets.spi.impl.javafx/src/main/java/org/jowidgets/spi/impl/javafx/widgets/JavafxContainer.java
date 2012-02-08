@@ -149,7 +149,9 @@ public class JavafxContainer implements IContainerSpi {
 
 	@Override
 	public void setSize(final Dimension size) {
+		getUiReference().managedProperty().setValue(false);
 		getUiReference().resize(size.getWidth(), size.getHeight());
+
 	}
 
 	@Override
@@ -260,8 +262,15 @@ public class JavafxContainer implements IContainerSpi {
 
 	@Override
 	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
-		// TODO Auto-generated method stub
-		return null;
+		int width = clientAreaSize.getWidth();
+		int height = clientAreaSize.getHeight();
+		final Pane pane2 = (Pane) getUiReference().getScene().getRoot();
+		final Insets insets = pane2.getInsets();
+		if (insets != null) {
+			width = (int) (width + insets.getLeft() + insets.getRight());
+			height = (int) (height + insets.getTop() + insets.getBottom());
+		}
+		return new Dimension(width, height);
 	}
 
 	@Override

@@ -55,32 +55,54 @@ public class HelloWorldApplication implements IApplication {
 	@Override
 	public void start(final IApplicationLifecycle lifecycle) {
 		final IFrameBluePrint frameBp = BPF.frame().setTitle("Hello World");
-		frameBp.setSize(new Dimension(300, 300));
+		frameBp.setSize(new Dimension(800, 600));
 		frameBp.setPosition(new Position(200, 200));
-		final ILabelBluePrint labelBp = BPF.label().setText("     It works!").setToolTipText("Great").setFontSize(15).setIcon(
+		final ILabelBluePrint labelBp = BPF.label().setText("     It works!").setToolTipText("Great").setFontSize(10).setIcon(
 				IconsSmall.SETTINGS);
 		final IButtonBluePrint buttonBp = BPF.button();
 		final IButtonBluePrint buttonBp2 = BPF.button();
 		final IFrame rootFrame = Toolkit.createRootFrame(frameBp, lifecycle);
 		final ITextFieldBluePrint textfieldBp = BPF.textField();
-		rootFrame.setLayout(Toolkit.getLayoutFactoryProvider().borderLayout());
+
+		rootFrame.setLayout(Toolkit.getLayoutFactoryProvider().borderLayoutBuilder().margin(5).gap(5).build());
 		final IButton button2 = rootFrame.add(buttonBp2, BorderLayoutConstraints.TOP);
-		final IButton button = rootFrame.add(buttonBp, BorderLayoutConstraints.LEFT);
-		final ILabel label = rootFrame.add(labelBp, BorderLayoutConstraints.RIGHT);
-		final ITextControl textfield = rootFrame.add(textfieldBp, BorderLayoutConstraints.BOTTOM);
+		final IButton button = rootFrame.add(buttonBp, BorderLayoutConstraints.BOTTOM);
+		final ILabel label = rootFrame.add(labelBp, BorderLayoutConstraints.LEFT);
+		final ITextControl textfield = rootFrame.add(textfieldBp, BorderLayoutConstraints.CENTER);
+
+		//		rootFrame.setLayout(Toolkit.getLayoutFactoryProvider().migLayoutBuilder().constraints("insets 50 10 10 20").columnConstraints(
+		//				"[][][]").rowConstraints("[]40[]40[]40[]").build());
+		//		final IButton button2 = rootFrame.add(buttonBp2, "cell 0 0");
+		//		final ILabel label = rootFrame.add(labelBp, "west");
+		//		final IButton button = rootFrame.add(buttonBp, "cell 0 1");
+		//		final ITextControl textfield = rootFrame.add(textfieldBp, "cell 0 2");
+
 		button2.setText("On/Off");
-		label.setPosition(100, 300);
 		label.setCursor(Cursor.WAIT);
-		//		button.setPosition(100, 200);
-		//		button.setPreferredSize(new Dimension(100, 100));
+		label.setPosition(500, 0);
+		label.setPreferredSize(new Dimension(100, 10));
+		label.setMaxSize(new Dimension(100, 10));
+		label.setMinSize(new Dimension(100, 10));
+		label.setSize(100, 10);
+		button.setPosition(200, 200);
+		button.setPreferredSize(new Dimension(100, 100));
 		button.setMaxSize(new Dimension(100, 200));
 		button.setMinSize(new Dimension(50, 100));
 		final IActionListener listener = new IActionListener() {
 
 			@Override
 			public void actionPerformed() {
-				button2.setSize(button2.getSize().getWidth() + 3, button2.getSize().getHeight() + 3);
-				button2.setToolTipText("Pref: "
+				//				button2.setSize(button2.getSize().getWidth(), button2.getSize().getHeight() - 3);
+				//				button2.setToolTipText("Pref: "
+				//					+ button2.getPreferredSize().toString()
+				//					+ " \nMax: "
+				//					+ button2.getMaxSize().toString()
+				//					+ " \nMin: "
+				//					+ button2.getMaxSize().toString()
+				//					+ " \nSize: "
+				//					+ button2.getSize().toString());
+
+				System.out.println("Button2 \nPref: "
 					+ button2.getPreferredSize().toString()
 					+ " \nMax: "
 					+ button2.getMaxSize().toString()
@@ -88,6 +110,30 @@ public class HelloWorldApplication implements IApplication {
 					+ button2.getMaxSize().toString()
 					+ " \nSize: "
 					+ button2.getSize().toString());
+				System.out.println("Button \nPref: "
+					+ button.getPreferredSize().toString()
+					+ " \nMax: "
+					+ button.getMaxSize().toString()
+					+ " \nMin: "
+					+ button.getMaxSize().toString()
+					+ " \nSize: "
+					+ button.getSize().toString());
+				System.out.println("Label \nPref: "
+					+ label.getPreferredSize().toString()
+					+ " \nMax: "
+					+ label.getMaxSize().toString()
+					+ " \nMin: "
+					+ label.getMaxSize().toString()
+					+ " \nSize: "
+					+ label.getSize().toString());
+				System.out.println("Textfield \nPref: "
+					+ textfield.getPreferredSize().toString()
+					+ " \nMax: "
+					+ textfield.getMaxSize().toString()
+					+ " \nMin: "
+					+ textfield.getMaxSize().toString()
+					+ " \nSize: "
+					+ textfield.getSize().toString());
 
 			}
 		};
@@ -113,10 +159,10 @@ public class HelloWorldApplication implements IApplication {
 
 			}
 		});
-		//		textfield.setPosition(500, 500);
-
+		textfield.setPosition(500, 500);
+		textfield.setPreferredSize(new Dimension(144, 21));
 		rootFrame.setVisible(true);
-		//		button.setSize(100, 100);
+		button.setSize(100, 100);
 
 		button.setToolTipText("Pref: "
 			+ button.getPreferredSize().toString()

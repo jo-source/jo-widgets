@@ -49,9 +49,11 @@ import org.jowidgets.util.Assert;
 public class JavafxControl extends ActionObservable implements IControlSpi {
 
 	private final Control control;
+	private final JavafxComponent componentdelegate;
 
 	public JavafxControl(final Control control) {
 		this.control = control;
+		componentdelegate = new JavafxComponent(control);
 	}
 
 	@Override
@@ -151,9 +153,9 @@ public class JavafxControl extends ActionObservable implements IControlSpi {
 	@Override
 	public void setSize(final Dimension size) {
 		Assert.paramNotNull(size, "size");
-		getUiReference().managedProperty().setValue(true);
-		getUiReference().resize(size.getWidth(), size.getHeight());
 		getUiReference().managedProperty().setValue(false);
+		getUiReference().resize(size.getWidth(), size.getHeight());
+
 	}
 
 	@Override
@@ -169,61 +171,58 @@ public class JavafxControl extends ActionObservable implements IControlSpi {
 
 	@Override
 	public void addComponentListener(final IComponentListener componentListener) {
-		// TODO Auto-generated method stub
+		componentdelegate.addComponentListener(componentListener);
 
 	}
 
 	@Override
 	public void removeComponentListener(final IComponentListener componentListener) {
-		// TODO Auto-generated method stub
+		componentdelegate.removeComponentListener(componentListener);
 
 	}
 
 	@Override
 	public void addFocusListener(final IFocusListener listener) {
-		// TODO Auto-generated method stub
+		componentdelegate.addFocusListener(listener);
 
 	}
 
 	@Override
 	public void removeFocusListener(final IFocusListener listener) {
-		// TODO Auto-generated method stub
-
+		componentdelegate.removeFocusListener(listener);
 	}
 
 	@Override
 	public void addKeyListener(final IKeyListener listener) {
-		// TODO Auto-generated method stub
+		componentdelegate.addKeyListener(listener);
 
 	}
 
 	@Override
 	public void removeKeyListener(final IKeyListener listener) {
-		// TODO Auto-generated method stub
+		componentdelegate.removeKeyListener(listener);
 
 	}
 
 	@Override
 	public void addMouseListener(final IMouseListener listener) {
-		// TODO Auto-generated method stub
-
+		componentdelegate.addMouseListener(listener);
 	}
 
 	@Override
 	public void removeMouseListener(final IMouseListener listener) {
-		// TODO Auto-generated method stub
-
+		componentdelegate.removeMouseListener(listener);
 	}
 
 	@Override
 	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		// TODO Auto-generated method stub
+		componentdelegate.addPopupDetectionListener(listener);
 
 	}
 
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		// TODO Auto-generated method stub
+		componentdelegate.removePopupDetectionListener(listener);
 
 	}
 

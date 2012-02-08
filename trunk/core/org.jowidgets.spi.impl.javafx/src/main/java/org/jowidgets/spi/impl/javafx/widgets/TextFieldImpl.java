@@ -39,6 +39,7 @@ public class TextFieldImpl extends JavafxControl implements ITextControlSpi {
 
 	public TextFieldImpl(final ITextFieldSetupSpi setup) {
 		super(new TextField());
+
 	}
 
 	@Override
@@ -76,21 +77,13 @@ public class TextFieldImpl extends JavafxControl implements ITextControlSpi {
 	}
 
 	@Override
-	public void setFontSize(final int size) {
-		throw new UnsupportedOperationException();
-
-	}
+	public void setFontSize(final int size) {}
 
 	@Override
-	public void setFontName(final String fontName) {
-		throw new UnsupportedOperationException();
-
-	}
+	public void setFontName(final String fontName) {}
 
 	@Override
-	public void setMarkup(final Markup markup) {
-
-	}
+	public void setMarkup(final Markup markup) {}
 
 	@Override
 	public void setSelection(final int start, final int end) {
@@ -108,5 +101,4 @@ public class TextFieldImpl extends JavafxControl implements ITextControlSpi {
 	public int getCaretPosition() {
 		return getUiReference().getCaretPosition();
 	}
-
 }
