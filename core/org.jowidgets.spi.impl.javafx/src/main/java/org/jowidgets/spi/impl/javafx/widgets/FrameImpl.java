@@ -67,6 +67,7 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 		this.factory = factory;
 		pane = new Pane();
 		scene = new Scene(pane);
+
 		getUiReference().setScene(scene);
 	}
 
@@ -126,7 +127,7 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 	@Override
 	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
 		if (layoutDescriptor != null) {
-			scene.setRoot(new LayoutManagerImpl(pane, (ILayouter) layoutDescriptor));
+			scene.setRoot(new LayoutManagerImpl((ILayouter) layoutDescriptor));
 		}
 	}
 
@@ -144,15 +145,18 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 
 	@Override
 	public void removeAll() {
-
+		getUiReference().getScene().getRoot().getChildrenUnmodifiable().clear();
 	}
 
 	@Override
 	public Rectangle getClientArea() {
-		final Insets insets = ((Pane) getUiReference().getScene().getRoot()).getInsets();
+		final Pane pane2 = (Pane) getUiReference().getScene().getRoot();
+		final Insets insets = pane2.getInsets();
 		final int x = (int) insets.getLeft();
 		final int y = (int) insets.getTop();
-		final Dimension size = getSize();
+		final Dimension size = new Dimension(
+			(int) getUiReference().getScene().getWidth(),
+			(int) getUiReference().getScene().getHeight());
 		final int width = (int) (size.getWidth() - insets.getLeft() - insets.getRight());
 		final int height = (int) (size.getHeight() - insets.getTop() - insets.getBottom());
 		return new Rectangle(x, y, width, height);
@@ -160,7 +164,15 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 
 	@Override
 	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
-		throw new UnsupportedOperationException();
+		int width = clientAreaSize.getWidth();
+		int height = clientAreaSize.getHeight();
+		final Pane pane2 = (Pane) getUiReference().getScene().getRoot();
+		final Insets insets = pane2.getInsets();
+		if (insets != null) {
+			width = (int) (width + insets.getLeft() + insets.getRight());
+			height = (int) (height + insets.getTop() + insets.getBottom());
+		}
+		return new Dimension(width, height);
 	}
 
 	@Override

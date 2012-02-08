@@ -26,32 +26,43 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.javafx.layout;
+package org.jowidgets.spi.impl.javafx.util;
 
-import javafx.scene.Node;
-import javafx.scene.layout.Pane;
+import java.util.HashSet;
+import java.util.Set;
 
-import org.jowidgets.common.widgets.layout.ILayouter;
+import javafx.scene.input.MouseEvent;
 
-public class LayoutManagerImpl extends Pane {
+import org.jowidgets.common.types.Modifier;
+import org.jowidgets.common.types.MouseButton;
 
-	private final ILayouter layouter;
+public final class MouseUtil {
 
-	public LayoutManagerImpl(final ILayouter layoutDescriptor) {
-		this.layouter = layoutDescriptor;
-	}
+	private MouseUtil() {}
 
-	@Override
-	protected void layoutChildren() {
-
-		super.layoutChildren();
-		for (final Node node : this.getChildren()) {
-			if (node instanceof Pane) {
-				((Pane) node).layout();
-			}
+	public static MouseButton getMouseButton(final MouseEvent event) {
+		if (event.isPrimaryButtonDown()) {
+			return MouseButton.LEFT;
 		}
-
-		layouter.layout();
+		else if (event.isSecondaryButtonDown()) {
+			return MouseButton.RIGHT;
+		}
+		else {
+			return null;
+		}
 	}
 
+	public static Set<Modifier> getModifier(final MouseEvent event) {
+		final Set<Modifier> modifier = new HashSet<Modifier>();
+		if (event.isShiftDown()) {
+			modifier.add(Modifier.SHIFT);
+		}
+		if (event.isControlDown()) {
+			modifier.add(Modifier.CTRL);
+		}
+		if (event.isAltDown()) {
+			modifier.add(Modifier.ALT);
+		}
+		return modifier;
+	}
 }

@@ -39,6 +39,7 @@ public class IconImpl extends JavafxControl implements IIconSpi {
 	public IconImpl(final IIconSetupSpi setup) {
 
 		super(new Label());
+
 		setIcon(setup.getIcon());
 
 	}

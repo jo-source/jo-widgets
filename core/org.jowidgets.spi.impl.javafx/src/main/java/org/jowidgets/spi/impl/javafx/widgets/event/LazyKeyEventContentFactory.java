@@ -26,32 +26,66 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.javafx.layout;
+package org.jowidgets.spi.impl.javafx.widgets.event;
 
-import javafx.scene.Node;
-import javafx.scene.layout.Pane;
+import java.util.HashSet;
+import java.util.Set;
 
-import org.jowidgets.common.widgets.layout.ILayouter;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
-public class LayoutManagerImpl extends Pane {
+import org.jowidgets.common.types.Modifier;
+import org.jowidgets.common.types.VirtualKey;
+import org.jowidgets.spi.impl.controller.ILazyKeyEventContentFactory;
 
-	private final ILayouter layouter;
+public class LazyKeyEventContentFactory implements ILazyKeyEventContentFactory {
 
-	public LayoutManagerImpl(final ILayouter layoutDescriptor) {
-		this.layouter = layoutDescriptor;
+	private final KeyEvent keyEvent;
+
+	public LazyKeyEventContentFactory(final KeyEvent keyEvent) {
+		super();
+		this.keyEvent = keyEvent;
 	}
 
 	@Override
-	protected void layoutChildren() {
+	public VirtualKey createVirtualKey() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-		super.layoutChildren();
-		for (final Node node : this.getChildren()) {
-			if (node instanceof Pane) {
-				((Pane) node).layout();
-			}
+	@Override
+	public Character createCharacter() {
+		if (!KeyEvent.CHAR_UNDEFINED.equals(keyEvent.getCode())) {
+			return Character.valueOf(keyEvent.getCharacter().charAt(0));
 		}
+		else {
+			return null;
+		}
+	}
 
-		layouter.layout();
+	@Override
+	public Character createResultingCharacter() {
+		if (!KeyEvent.CHAR_UNDEFINED.equals(keyEvent.getCode())) {
+			return Character.valueOf(keyEvent.getCharacter().charAt(0));
+		}
+		else {
+			return null;
+		}
+	}
+
+	@Override
+	public Set<Modifier> createModifier() {
+		final Set<Modifier> result = new HashSet<Modifier>();
+		if (keyEvent.isAltDown() && keyEvent.getCode() != KeyCode.ALT) {
+			result.add(Modifier.ALT);
+		}
+		if (keyEvent.isShiftDown() && keyEvent.getCode() != KeyCode.SHIFT) {
+			result.add(Modifier.SHIFT);
+		}
+		if (keyEvent.isControlDown() && keyEvent.getCode() != KeyCode.CONTROL) {
+			result.add(Modifier.CTRL);
+		}
+		return result;
 	}
 
 }

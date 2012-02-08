@@ -31,6 +31,7 @@ import javafx.scene.control.Label;
 import javafx.scene.text.Font;
 
 import org.jowidgets.common.types.Markup;
+import org.jowidgets.spi.impl.javafx.util.FontProvider;
 import org.jowidgets.spi.widgets.ITextLabelSpi;
 import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 
@@ -66,7 +67,9 @@ public class TextLabelImpl extends JavafxControl implements ITextLabelSpi {
 
 	@Override
 	public void setMarkup(final Markup markup) {
-		// TODO Auto-generated method stub
+		final Label label = this.getUiReference();
+		final Font newFont = FontProvider.deriveFont(label.getFont(), markup);
+		label.setFont(newFont);
 
 	}
 
