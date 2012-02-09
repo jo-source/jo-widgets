@@ -45,8 +45,12 @@ public class MandatoryValidator<VALIDATION_INPUT_TYPE> implements IValidator<VAL
 	}
 
 	public MandatoryValidator(final String messageText) {
-		Assert.paramNotEmpty(messageText, "messageText"); //$NON-NLS-1$
-		this.result = ValidationResult.error(messageText);
+		this(ValidationResult.error(messageText));
+	}
+
+	public MandatoryValidator(final IValidationResult errorResult) {
+		Assert.paramNotNull(errorResult, "errorResult"); //$NON-NLS-1$
+		this.result = errorResult;
 	}
 
 	@Override
