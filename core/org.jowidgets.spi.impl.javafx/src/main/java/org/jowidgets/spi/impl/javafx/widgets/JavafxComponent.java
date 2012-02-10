@@ -55,6 +55,7 @@ import org.jowidgets.spi.impl.controller.KeyObservable;
 import org.jowidgets.spi.impl.controller.MouseButtonEvent;
 import org.jowidgets.spi.impl.controller.MouseObservable;
 import org.jowidgets.spi.impl.controller.PopupDetectionObservable;
+import org.jowidgets.spi.impl.javafx.util.CursorConvert;
 import org.jowidgets.spi.impl.javafx.util.MouseUtil;
 import org.jowidgets.spi.impl.javafx.widgets.event.LazyKeyEventContentFactory;
 import org.jowidgets.spi.widgets.IComponentSpi;
@@ -136,7 +137,7 @@ public class JavafxComponent implements IComponentSpi {
 				final ObservableValue<? extends Boolean> observableValue,
 				final Boolean oldValue,
 				final Boolean newValue) {
-				if (!newValue) {
+				if (newValue) {
 					focusObservable.focusGained();
 				}
 				else {
@@ -199,9 +200,11 @@ public class JavafxComponent implements IComponentSpi {
 		getUiReference().setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(final MouseEvent event) {
-				final IMouseButtonEvent mouseEvent = getMouseEvent(event, 2);
-				if (mouseEvent != null) {
-					mouseObservable.fireMouseDoubleClicked(mouseEvent);
+				if (event.getClickCount() > 1) {
+					final IMouseButtonEvent mouseEvent = getMouseEvent(event, 2);
+					if (mouseEvent != null) {
+						mouseObservable.fireMouseDoubleClicked(mouseEvent);
+					}
 				}
 			}
 		});
@@ -258,14 +261,13 @@ public class JavafxComponent implements IComponentSpi {
 
 	@Override
 	public void setEnabled(final boolean enabled) {
-		// TODO Auto-generated method stub
+		node.setDisable(!enabled);
 
 	}
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return false;
+		return !node.isDisable();
 	}
 
 	@Override
@@ -282,8 +284,13 @@ public class JavafxComponent implements IComponentSpi {
 
 	@Override
 	public boolean requestFocus() {
-		// TODO Auto-generated method stub
-		return false;
+		node.requestFocus();
+		if (node.isFocused()) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	@Override
@@ -312,20 +319,19 @@ public class JavafxComponent implements IComponentSpi {
 
 	@Override
 	public void setCursor(final Cursor cursor) {
-		// TODO Auto-generated method stub
+		getUiReference().setCursor(CursorConvert.convert(cursor));
 
 	}
 
 	@Override
 	public void setVisible(final boolean visible) {
-		// TODO Auto-generated method stub
+		getUiReference().setVisible(visible);
 
 	}
 
 	@Override
 	public boolean isVisible() {
-		// TODO Auto-generated method stub
-		return false;
+		return getUiReference().isVisible();
 	}
 
 	@Override

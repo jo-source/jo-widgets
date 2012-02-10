@@ -26,32 +26,35 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.javafx.layout;
+package org.jowidgets.spi.impl.javafx.util;
 
-import javafx.scene.Node;
-import javafx.scene.layout.Pane;
+import org.jowidgets.common.color.ColorValue;
+import org.jowidgets.common.color.IColorConstant;
 
-import org.jowidgets.common.widgets.layout.ILayouter;
+public final class ColorCSSConverter {
 
-public class LayoutManagerImpl extends Pane {
+	private ColorCSSConverter() {
 
-	private final ILayouter layouter;
-
-	public LayoutManagerImpl(final ILayouter layoutDescriptor) {
-		this.layouter = layoutDescriptor;
 	}
 
-	@Override
-	protected void layoutChildren() {
+	public static IColorConstant cssToColor(final String csscode) {
+		final String hex = csscode.substring(csscode.indexOf("#"), csscode.indexOf(";"));
+		final int r = Integer.valueOf(hex.substring(0, 1));
+		final int g = Integer.valueOf(hex.substring(2, 3));
+		final int b = Integer.valueOf(hex.substring(4, 5));
 
-		for (final Node node : this.getChildren()) {
-			if (node instanceof Pane) {
-				((Pane) node).requestLayout();
-			}
-		}
-		super.layoutChildren();
+		return new ColorValue(r, g, b);
+	}
 
-		layouter.layout();
+	public static String colorToCSS(final IColorConstant color) {
+		final String colorString = Integer.toHexString(color.getDefaultValue().getRed())
+			+ ""
+			+ Integer.toHexString(color.getDefaultValue().getGreen())
+			+ ""
+			+ Integer.toHexString(color.getDefaultValue().getBlue());
+
+		return colorString;
+
 	}
 
 }

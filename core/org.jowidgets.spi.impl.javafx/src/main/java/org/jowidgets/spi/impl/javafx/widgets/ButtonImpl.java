@@ -42,12 +42,11 @@ import org.jowidgets.spi.impl.javafx.util.FontProvider;
 import org.jowidgets.spi.widgets.setup.IButtonSetupSpi;
 import org.jowidgets.test.spi.widgets.IButtonUiSpi;
 
-public class ButtonImpl extends JavafxControl implements IButtonUiSpi {
+public class ButtonImpl extends AbstractActionControl implements IButtonUiSpi {
 
 	public ButtonImpl(final IButtonSetupSpi setup) {
 		super(ButtonBuilder.create().text(setup.getText()).tooltip(new Tooltip(setup.getToolTipText())).build());
 		setIcon(setup.getIcon());
-
 		getUiReference().setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -61,7 +60,7 @@ public class ButtonImpl extends JavafxControl implements IButtonUiSpi {
 
 	@Override
 	public Button getUiReference() {
-		return (Button) super.getUiReference();
+		return super.getUiReference();
 	}
 
 	@Override
@@ -106,6 +105,17 @@ public class ButtonImpl extends JavafxControl implements IButtonUiSpi {
 			getUiReference().setGraphic(null);
 		}
 
+	}
+
+	@Override
+	public void setEnabled(final boolean enabled) {
+		getUiReference().setDisable(!enabled);
+
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return !getUiReference().isDisabled();
 	}
 
 }

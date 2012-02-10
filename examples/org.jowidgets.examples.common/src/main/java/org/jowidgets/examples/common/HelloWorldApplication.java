@@ -27,23 +27,24 @@
  */
 package org.jowidgets.examples.common;
 
-import org.jowidgets.api.image.IconsSmall;
-import org.jowidgets.api.layout.BorderLayoutConstraints;
+import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IFrame;
-import org.jowidgets.api.widgets.ILabel;
+import org.jowidgets.api.widgets.ITextArea;
 import org.jowidgets.api.widgets.ITextControl;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
+import org.jowidgets.api.widgets.blueprint.ITextAreaBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextFieldBluePrint;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
-import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controller.IActionListener;
+import org.jowidgets.common.widgets.controller.IFocusListener;
+import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public class HelloWorldApplication implements IApplication {
@@ -54,124 +55,101 @@ public class HelloWorldApplication implements IApplication {
 
 	@Override
 	public void start(final IApplicationLifecycle lifecycle) {
-		final IFrameBluePrint frameBp = BPF.frame().setTitle("Hello World");
+		final IFrameBluePrint frameBp = BPF.frame().setTitle("Hello World").setBackgroundColor(Colors.WHITE);
 		frameBp.setSize(new Dimension(800, 600));
-		frameBp.setPosition(new Position(200, 200));
-		final ILabelBluePrint labelBp = BPF.label().setText("     It works!").setToolTipText("Great").setFontSize(10).setIcon(
-				IconsSmall.SETTINGS);
-		final IButtonBluePrint buttonBp = BPF.button();
-		final IButtonBluePrint buttonBp2 = BPF.button();
+		frameBp.setPosition(new Position(500, 100));
+		final ILabelBluePrint labelBp = BPF.label().setText("Vorname: ").alignRight();
+		final ILabelBluePrint label2Bp = BPF.label().setText("Name: ").alignRight();
+		final ILabelBluePrint label3Bp = BPF.label().setText("Sonstiges: ").alignRight();
+		final IButtonBluePrint buttonSubmitBp = BPF.button().setText("Submit").setEnabled(false).setToolTipText("Submit");
+		final IButtonBluePrint buttonClearBp = BPF.button().setText("Clear").setToolTipText("Clear");
 		final IFrame rootFrame = Toolkit.createRootFrame(frameBp, lifecycle);
-		final ITextFieldBluePrint textfieldBp = BPF.textField();
+		final ITextFieldBluePrint textfieldBp = BPF.textField().setMaxLength(20);
+		final ITextFieldBluePrint textfield2Bp = BPF.textField().setMaxLength(20);
+		final ITextFieldBluePrint textfield3Bp = BPF.textField().setEditable(false).setPasswordPresentation(true);
+		final ITextAreaBluePrint textareaBp = BPF.textArea().setFontName("Century Gothic").setFontSize(10).setBorder(false);
 
-		rootFrame.setLayout(Toolkit.getLayoutFactoryProvider().borderLayoutBuilder().margin(5).gap(5).build());
-		final IButton button2 = rootFrame.add(buttonBp2, BorderLayoutConstraints.TOP);
-		final IButton button = rootFrame.add(buttonBp, BorderLayoutConstraints.BOTTOM);
-		final ILabel label = rootFrame.add(labelBp, BorderLayoutConstraints.LEFT);
-		final ITextControl textfield = rootFrame.add(textfieldBp, BorderLayoutConstraints.CENTER);
+		//		rootFrame.setLayout(Toolkit.getLayoutFactoryProvider().borderLayoutBuilder().margin(5).gap(5).build());
+		//		final IButton button2 = rootFrame.add(buttonBp2, BorderLayoutConstraints.TOP);
+		//		final IButton button = rootFrame.add(buttonBp, BorderLayoutConstraints.BOTTOM);
+		//		final ILabel label = rootFrame.add(labelBp, BorderLayoutConstraints.LEFT);
+		//		final ITextControl textfield = rootFrame.add(textfieldBp, BorderLayoutConstraints.CENTER);
 
-		//		rootFrame.setLayout(Toolkit.getLayoutFactoryProvider().migLayoutBuilder().constraints("insets 50 10 10 20").columnConstraints(
-		//				"[][][]").rowConstraints("[]40[]40[]40[]").build());
-		//		final IButton button2 = rootFrame.add(buttonBp2, "cell 0 0");
-		//		final ILabel label = rootFrame.add(labelBp, "west");
-		//		final IButton button = rootFrame.add(buttonBp, "cell 0 1");
-		//		final ITextControl textfield = rootFrame.add(textfieldBp, "cell 0 2");
+		rootFrame.setLayout(Toolkit.getLayoutFactoryProvider().migLayoutBuilder().constraints("insets 10 10 10 10").columnConstraints(
+				"[][]").rowConstraints("[]20[]20[]20[]20[]20[]").build());
+		rootFrame.add(labelBp, "cell 0 0");
+		rootFrame.add(label2Bp, "cell 0 1");
+		rootFrame.add(label3Bp, "cell 0 2");
+		final ITextControl textfield = rootFrame.add(textfieldBp, "cell 1 0");
+		final ITextControl textfield2 = rootFrame.add(textfield2Bp, "cell 1 1");
+		final ITextControl textfield3 = rootFrame.add(textfield3Bp, "cell 1 2");
+		final IButton buttonsub = rootFrame.add(buttonSubmitBp, "cell 0 3");
+		final IButton buttonclear = rootFrame.add(buttonClearBp, "cell 1 3");
+		final ITextArea textarea = rootFrame.add(textareaBp, "cell 0 4, span");
 
-		button2.setText("On/Off");
-		label.setCursor(Cursor.WAIT);
-		label.setPosition(500, 0);
-		label.setPreferredSize(new Dimension(100, 10));
-		label.setMaxSize(new Dimension(100, 10));
-		label.setMinSize(new Dimension(100, 10));
-		label.setSize(100, 10);
-		button.setPosition(200, 200);
-		button.setPreferredSize(new Dimension(100, 100));
-		button.setMaxSize(new Dimension(100, 200));
-		button.setMinSize(new Dimension(50, 100));
-		final IActionListener listener = new IActionListener() {
-
+		final IFocusListener listener = new IFocusListener() {
 			@Override
-			public void actionPerformed() {
-				//				button2.setSize(button2.getSize().getWidth(), button2.getSize().getHeight() - 3);
-				//				button2.setToolTipText("Pref: "
-				//					+ button2.getPreferredSize().toString()
-				//					+ " \nMax: "
-				//					+ button2.getMaxSize().toString()
-				//					+ " \nMin: "
-				//					+ button2.getMaxSize().toString()
-				//					+ " \nSize: "
-				//					+ button2.getSize().toString());
-
-				System.out.println("Button2 \nPref: "
-					+ button2.getPreferredSize().toString()
-					+ " \nMax: "
-					+ button2.getMaxSize().toString()
-					+ " \nMin: "
-					+ button2.getMaxSize().toString()
-					+ " \nSize: "
-					+ button2.getSize().toString());
-				System.out.println("Button \nPref: "
-					+ button.getPreferredSize().toString()
-					+ " \nMax: "
-					+ button.getMaxSize().toString()
-					+ " \nMin: "
-					+ button.getMaxSize().toString()
-					+ " \nSize: "
-					+ button.getSize().toString());
-				System.out.println("Label \nPref: "
-					+ label.getPreferredSize().toString()
-					+ " \nMax: "
-					+ label.getMaxSize().toString()
-					+ " \nMin: "
-					+ label.getMaxSize().toString()
-					+ " \nSize: "
-					+ label.getSize().toString());
-				System.out.println("Textfield \nPref: "
-					+ textfield.getPreferredSize().toString()
-					+ " \nMax: "
-					+ textfield.getMaxSize().toString()
-					+ " \nMin: "
-					+ textfield.getMaxSize().toString()
-					+ " \nSize: "
-					+ textfield.getSize().toString());
-
-			}
-		};
-		button.addActionListener(listener);
-
-		button2.addActionListener(new IActionListener() {
-
-			private boolean flag = true;
-
-			@Override
-			public void actionPerformed() {
-
-				if (flag) {
-					button.removeActionListener(listener);
-					flag = false;
-					textfield.setText("" + textfield.requestFocus());
+			public void focusLost() {
+				if ((!textfield.getText().isEmpty()) && (!textfield2.getText().isEmpty())) {
+					textfield3.setEditable(true);
+					buttonsub.setEnabled(true);
 				}
 				else {
-					button.addActionListener(listener);
-					flag = true;
-					textfield.setText("" + textfield.hasFocus());
+					textfield3.setEditable(false);
+					buttonsub.setEnabled(false);
+				}
+				textfield.setBackgroundColor(Colors.DARK_GREY);
+			}
+
+			@Override
+			public void focusGained() {
+				textfield.setBackgroundColor(Colors.GREEN);
+			}
+		};
+
+		buttonclear.addActionListener(new IActionListener() {
+
+			@Override
+			public void actionPerformed() {
+				textfield.setText("");
+				textfield2.setText("");
+				textfield3.setText("");
+				textarea.setText("");
+			}
+		});
+
+		buttonsub.addActionListener(new IActionListener() {
+
+			@Override
+			public void actionPerformed() {
+				final String tmp = textarea.getText()
+					+ "\n"
+					+ textfield.getText()
+					+ "\n"
+					+ textfield2.getText()
+					+ "\n"
+					+ textfield3.getText();
+				textarea.setText(tmp);
+			}
+		});
+
+		textfield2.addInputListener(new IInputListener() {
+
+			@Override
+			public void inputChanged() {
+				if (textfield2.getText().isEmpty()) {
+					buttonsub.setEnabled(false);
+				}
+				else {
+					buttonsub.setEnabled(true);
 				}
 
 			}
 		});
-		textfield.setPosition(500, 500);
-		textfield.setPreferredSize(new Dimension(144, 21));
-		rootFrame.setVisible(true);
-		button.setSize(100, 100);
 
-		button.setToolTipText("Pref: "
-			+ button.getPreferredSize().toString()
-			+ " \nMax: "
-			+ button.getMaxSize().toString()
-			+ " \nMin: "
-			+ button.getMaxSize().toString()
-			+ " \nSize: "
-			+ button.getSize().toString());
+		textfield.addFocusListener(listener);
+		textfield2.addFocusListener(listener);
+		rootFrame.setVisible(true);
 
 	}
 }
