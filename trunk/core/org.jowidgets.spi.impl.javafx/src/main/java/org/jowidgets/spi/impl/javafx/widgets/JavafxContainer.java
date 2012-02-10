@@ -57,10 +57,12 @@ public class JavafxContainer implements IContainerSpi {
 
 	private final IGenericWidgetFactory factory;
 	private final Pane pane;
+	private final JavafxComponent componentDelegate;
 
 	public JavafxContainer(final IGenericWidgetFactory factory, final Pane pane) {
 		this.pane = pane;
 		this.factory = factory;
+		componentDelegate = new JavafxComponent(pane);
 	}
 
 	@Override
@@ -104,25 +106,23 @@ public class JavafxContainer implements IContainerSpi {
 
 	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
-		// TODO Auto-generated method stub
+		componentDelegate.setForegroundColor(colorValue);
 	}
 
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
-		// TODO Auto-generated method stub
+		componentDelegate.setBackgroundColor(colorValue);
 
 	}
 
 	@Override
 	public IColorConstant getForegroundColor() {
-		// TODO Auto-generated method stub
-		return null;
+		return componentDelegate.getForegroundColor();
 	}
 
 	@Override
 	public IColorConstant getBackgroundColor() {
-		// TODO Auto-generated method stub
-		return null;
+		return componentDelegate.getBackgroundColor();
 	}
 
 	@Override
@@ -167,61 +167,59 @@ public class JavafxContainer implements IContainerSpi {
 
 	@Override
 	public void addComponentListener(final IComponentListener componentListener) {
-		// TODO Auto-generated method stub
+		componentDelegate.addComponentListener(componentListener);
 
 	}
 
 	@Override
 	public void removeComponentListener(final IComponentListener componentListener) {
-		// TODO Auto-generated method stub
+		componentDelegate.removeComponentListener(componentListener);
 
 	}
 
 	@Override
 	public void addFocusListener(final IFocusListener listener) {
-		// TODO Auto-generated method stub
+		componentDelegate.addFocusListener(listener);
 
 	}
 
 	@Override
 	public void removeFocusListener(final IFocusListener listener) {
-		// TODO Auto-generated method stub
+		componentDelegate.removeFocusListener(listener);
 
 	}
 
 	@Override
 	public void addKeyListener(final IKeyListener listener) {
-		// TODO Auto-generated method stub
+		componentDelegate.addKeyListener(listener);
 
 	}
 
 	@Override
 	public void removeKeyListener(final IKeyListener listener) {
-		// TODO Auto-generated method stub
+		componentDelegate.removeKeyListener(listener);
 
 	}
 
 	@Override
 	public void addMouseListener(final IMouseListener listener) {
-		// TODO Auto-generated method stub
+		componentDelegate.addMouseListener(listener);
 
 	}
 
 	@Override
 	public void removeMouseListener(final IMouseListener listener) {
-		// TODO Auto-generated method stub
-
+		componentDelegate.removeMouseListener(listener);
 	}
 
 	@Override
 	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		// TODO Auto-generated method stub
-
+		componentDelegate.addPopupDetectionListener(listener);
 	}
 
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		// TODO Auto-generated method stub
+		componentDelegate.removePopupDetectionListener(listener);
 
 	}
 

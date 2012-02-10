@@ -30,14 +30,17 @@ package org.jowidgets.spi.impl.javafx.widgets;
 
 import javafx.scene.control.Control;
 
+import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.spi.widgets.IControlSpi;
 
-public abstract class AbstractActionControl implements IControlSpi {
+public abstract class AbstractActionControl extends AbstractActionComponent implements IControlSpi {
 
 	private final JavafxControl javafxControlDelegate;
 
 	public AbstractActionControl(final Control control) {
+		super(control);
 		this.javafxControlDelegate = new JavafxControl(control);
 	}
 
@@ -64,6 +67,44 @@ public abstract class AbstractActionControl implements IControlSpi {
 	@Override
 	public Dimension getMaxSize() {
 		return javafxControlDelegate.getMaxSize();
+	}
+
+	@Override
+	public void setCursor(final Cursor cursor) {
+		javafxControlDelegate.setCursor(cursor);
+
+	}
+
+	@Override
+	public void setVisible(final boolean visible) {
+		javafxControlDelegate.setVisible(visible);
+
+	}
+
+	@Override
+	public boolean isVisible() {
+		return javafxControlDelegate.isVisible();
+	}
+
+	@Override
+	public Dimension getSize() {
+		return javafxControlDelegate.getSize();
+	}
+
+	@Override
+	public void setSize(final Dimension size) {
+		javafxControlDelegate.setSize(size);
+
+	}
+
+	@Override
+	public Position getPosition() {
+		return javafxControlDelegate.getPosition();
+	}
+
+	@Override
+	public void setPosition(final Position position) {
+		javafxControlDelegate.setPosition(position);
 	}
 
 	@Override

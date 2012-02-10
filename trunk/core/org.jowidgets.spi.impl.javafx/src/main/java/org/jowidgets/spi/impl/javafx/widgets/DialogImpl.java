@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2012, David Bauknecht
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -29,8 +29,11 @@ package org.jowidgets.spi.impl.javafx.widgets;
 
 import java.util.List;
 
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Dimension;
@@ -41,23 +44,22 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
-import org.jowidgets.spi.impl.javafx.image.JavafxImageRegistry;
 import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.spi.widgets.IMenuBarSpi;
 import org.jowidgets.spi.widgets.setup.IDialogSetupSpi;
 
 public class DialogImpl extends JavafxWindow implements IFrameSpi {
 
-	public DialogImpl(
-		final IGenericWidgetFactory factory,
-		final JavafxImageRegistry imageRegistry,
-		final Object parentUiReference,
-		final IDialogSetupSpi setup) {
+	public DialogImpl(final IGenericWidgetFactory factory, final Object parentUiReference, final IDialogSetupSpi setup) {
 		super(factory, new Stage(), setup.isCloseable());
 
 		getUiReference().setTitle(setup.getTitle());
 		getUiReference().setResizable(setup.isResizable());
 		getUiReference().initModality(Modality.WINDOW_MODAL);
+		getUiReference().initOwner((Window) parentUiReference);
+
+		final Scene scene = new Scene(new Group());
+		getUiReference().setScene(scene);
 
 	}
 
@@ -79,7 +81,7 @@ public class DialogImpl extends JavafxWindow implements IFrameSpi {
 
 	@Override
 	public void setVisible(final boolean visible) {
-		// TODO Auto-generated method stub
+		getUiReference().show();
 	}
 
 	@Override

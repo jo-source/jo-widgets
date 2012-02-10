@@ -25,61 +25,32 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.impl.javafx.widgets;
+package org.jowidgets.spi.impl.javafx.util;
 
-import javafx.scene.control.Label;
-import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 
-import org.jowidgets.common.types.Markup;
-import org.jowidgets.spi.impl.javafx.util.AlignmentConvert;
-import org.jowidgets.spi.impl.javafx.util.FontProvider;
-import org.jowidgets.spi.widgets.ITextLabelSpi;
-import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
+import org.jowidgets.common.types.AlignmentHorizontal;
+import org.jowidgets.util.Assert;
 
-public class TextLabelImpl extends JavafxControl implements ITextLabelSpi {
+public final class AlignmentConvert {
 
-	public TextLabelImpl(final ITextLabelSetupSpi setup) {
-		super(new Label());
-		setText(setup.getText());
-		setToolTipText(setup.getToolTipText());
-		setMarkup(setup.getMarkup());
-		getUiReference().setTextAlignment(AlignmentConvert.convert(setup.getAlignment()));
-	}
+	private AlignmentConvert() {};
 
-	@Override
-	public Label getUiReference() {
-		return (Label) super.getUiReference();
-	}
+	public static TextAlignment convert(final AlignmentHorizontal alignmentHorizontal) {
+		Assert.paramNotNull(alignmentHorizontal, "alignmentHorizontal");
 
-	@Override
-	public void setFontSize(final int size) {
-		getUiReference().setFont(new Font(size));
-
-	}
-
-	@Override
-	public void setFontName(final String fontName) {
-		if (getUiReference().getFont() != null) {
-			getUiReference().setFont(new Font(fontName, getUiReference().getFont().getSize()));
+		if (AlignmentHorizontal.RIGHT.equals(alignmentHorizontal)) {
+			return TextAlignment.RIGHT;
 		}
-
-	}
-
-	@Override
-	public void setMarkup(final Markup markup) {
-		final Label label = this.getUiReference();
-		final Font newFont = FontProvider.deriveFont(label.getFont(), markup);
-		label.setFont(newFont);
-
-	}
-
-	@Override
-	public void setText(String text) {
-		//allow line breaks by using html
-		if (text != null && text.contains("\n")) {
-			text = "<html>" + text.replace("\n", "<br>") + "</html>";
+		else if (AlignmentHorizontal.LEFT.equals(alignmentHorizontal)) {
+			return TextAlignment.LEFT;
 		}
-		getUiReference().setText(text);
+		else if (AlignmentHorizontal.CENTER.equals(alignmentHorizontal)) {
+			return TextAlignment.CENTER;
+		}
+		else {
+			throw new IllegalArgumentException("Alignment '" + alignmentHorizontal + "' is unknown");
+		}
 
 	}
 
