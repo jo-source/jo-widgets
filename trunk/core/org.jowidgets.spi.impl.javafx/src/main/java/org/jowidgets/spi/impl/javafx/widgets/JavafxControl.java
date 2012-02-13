@@ -153,7 +153,7 @@ public class JavafxControl extends ActionObservable implements IControlSpi {
 	@Override
 	public void setSize(final Dimension size) {
 		Assert.paramNotNull(size, "size");
-		//		getUiReference().managedProperty().setValue(false);
+		getUiReference().managedProperty().setValue(false);
 		getUiReference().resize(size.getWidth(), size.getHeight());
 
 	}

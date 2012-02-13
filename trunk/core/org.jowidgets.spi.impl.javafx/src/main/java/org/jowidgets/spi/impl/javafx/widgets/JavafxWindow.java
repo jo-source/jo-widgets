@@ -100,7 +100,6 @@ public class JavafxWindow implements IWindowSpi {
 
 	@Override
 	public void setEnabled(final boolean enabled) {
-		// TODO Auto-generated method stub
 
 	}
 

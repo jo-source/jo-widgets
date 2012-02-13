@@ -30,14 +30,17 @@ package org.jowidgets.examples.common;
 import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
+import org.jowidgets.api.widgets.ICheckBox;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.ITextArea;
 import org.jowidgets.api.widgets.ITextControl;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
+import org.jowidgets.api.widgets.blueprint.ICheckBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextAreaBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextFieldBluePrint;
+import org.jowidgets.api.widgets.blueprint.IToggleButtonBluePrint;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.types.Dimension;
@@ -64,10 +67,12 @@ public class HelloWorldApplication implements IApplication {
 		final IButtonBluePrint buttonSubmitBp = BPF.button().setText("Submit").setEnabled(false).setToolTipText("Submit");
 		final IButtonBluePrint buttonClearBp = BPF.button().setText("Clear").setToolTipText("Clear");
 		final IFrame rootFrame = Toolkit.createRootFrame(frameBp, lifecycle);
-		final ITextFieldBluePrint textfieldBp = BPF.textField().setMaxLength(20);
-		final ITextFieldBluePrint textfield2Bp = BPF.textField().setMaxLength(20);
+		final ITextFieldBluePrint textfieldBp = BPF.textField().setMaxLength(20).setBorder(false);
+		final ITextFieldBluePrint textfield2Bp = BPF.textField().setMaxLength(20).setBorder(false);
 		final ITextFieldBluePrint textfield3Bp = BPF.textField().setEditable(false).setPasswordPresentation(true);
-		final ITextAreaBluePrint textareaBp = BPF.textArea().setFontName("Century Gothic").setFontSize(10).setBorder(false);
+		final ITextAreaBluePrint textareaBp = BPF.textArea().setFontName("Century Gothic").setFontSize(25);
+		final ICheckBoxBluePrint checkboxBp = BPF.checkBox().setText("Test");
+		final IToggleButtonBluePrint toogleButtonBp = BPF.toggleButton().setText("Toggle me");
 
 		//		rootFrame.setLayout(Toolkit.getLayoutFactoryProvider().borderLayoutBuilder().margin(5).gap(5).build());
 		//		final IButton button2 = rootFrame.add(buttonBp2, BorderLayoutConstraints.TOP);
@@ -86,6 +91,38 @@ public class HelloWorldApplication implements IApplication {
 		final IButton buttonsub = rootFrame.add(buttonSubmitBp, "cell 0 3");
 		final IButton buttonclear = rootFrame.add(buttonClearBp, "cell 1 3");
 		final ITextArea textarea = rootFrame.add(textareaBp, "cell 0 4, span");
+		final ICheckBox checkbox = rootFrame.add(checkboxBp, "cell 0 5");
+		rootFrame.add(toogleButtonBp, "cell 1 5");
+		textarea.setPreferredSize(new Dimension(50, 50));
+
+		checkbox.addInputListener(new IInputListener() {
+
+			@Override
+			public void inputChanged() {
+				if (checkbox.isSelected()) {
+					labelBp.setVisible(false);
+					label2Bp.setVisible(false);
+					label3Bp.setVisible(false);
+					textfield.setVisible(false);
+					textfield2.setVisible(false);
+					textfield3.setVisible(false);
+					buttonsub.setVisible(false);
+					buttonclear.setVisible(false);
+					textarea.setVisible(false);
+				}
+				else {
+					labelBp.setVisible(true);
+					label2Bp.setVisible(true);
+					label3Bp.setVisible(true);
+					textfield.setVisible(true);
+					textfield2.setVisible(true);
+					textfield3.setVisible(true);
+					buttonsub.setVisible(true);
+					buttonclear.setVisible(true);
+					textarea.setVisible(true);
+				}
+			}
+		});
 
 		final IFocusListener listener = new IFocusListener() {
 			@Override
@@ -98,7 +135,7 @@ public class HelloWorldApplication implements IApplication {
 					textfield3.setEditable(false);
 					buttonsub.setEnabled(false);
 				}
-				textfield.setBackgroundColor(Colors.DARK_GREY);
+				textfield.setBackgroundColor(Colors.ERROR);
 			}
 
 			@Override
@@ -111,6 +148,7 @@ public class HelloWorldApplication implements IApplication {
 
 			@Override
 			public void actionPerformed() {
+
 				textfield.setText("");
 				textfield2.setText("");
 				textfield3.setText("");
@@ -143,6 +181,7 @@ public class HelloWorldApplication implements IApplication {
 				else {
 					buttonsub.setEnabled(true);
 				}
+				textarea.setText("" + textfield2.getText().length());
 
 			}
 		});

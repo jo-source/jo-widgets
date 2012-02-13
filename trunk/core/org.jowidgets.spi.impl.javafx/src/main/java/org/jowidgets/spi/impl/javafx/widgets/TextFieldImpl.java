@@ -28,40 +28,33 @@
 
 package org.jowidgets.spi.impl.javafx.widgets;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.spi.impl.javafx.util.ColorCSSConverter;
+import org.jowidgets.spi.impl.javafx.util.StyleUtil;
 import org.jowidgets.spi.widgets.ITextControlSpi;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 
 public class TextFieldImpl extends AbstractInputControl implements ITextControlSpi {
 
-	private String fontNameCSS = "";
-	private String fontSizeCSS = "";
-	private String fontColorCSS = "";
-	private String backgroundColorCSS = "";
-	private final String borderCSS = "";
+	private final StyleUtil styleUtil;
 
 	public TextFieldImpl(final ITextFieldSetupSpi setup) {
 		super(setup.isPasswordPresentation() ? new PasswordField() : new TextField());
-
+		styleUtil = new StyleUtil(getUiReference());
 		if (!setup.hasBorder()) {
-			//TODO DB Bordersyling CSS
-			getUiReference().setStyle("");
+			styleUtil.setBorder();
 		}
 
-		getUiReference().textProperty().addListener(new ChangeListener<String>() {
+		getUiReference().textProperty().addListener(new InvalidationListener() {
+
 			@Override
-			public void changed(
-				final ObservableValue<? extends String> paramObservableValue,
-				final String oldValue,
-				final String newValue) {
-				fireInputChanged(newValue);
+			public void invalidated(final Observable observable) {
+				fireInputChanged(getUiReference().getText());
 			}
 		});
 
@@ -91,26 +84,22 @@ public class TextFieldImpl extends AbstractInputControl implements ITextControlS
 
 	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
-		fontColorCSS = "-fx-text-fill: #" + ColorCSSConverter.colorToCSS(colorValue) + ";";
-		setStyle();
+		styleUtil.setForegroundColor(colorValue);
 	}
 
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
-		backgroundColorCSS = "-fx-background-color: #" + ColorCSSConverter.colorToCSS(colorValue) + ";";
-		setStyle();
+		styleUtil.setBackgroundColor(colorValue);
 	}
 
 	@Override
 	public void setFontSize(final int size) {
-		fontSizeCSS = "-fx-font-size: " + size + ";";
-		setStyle();
+		styleUtil.setFontSize(size);
 	}
 
 	@Override
 	public void setFontName(final String fontName) {
-		fontNameCSS = "-fx-font-family: " + fontName + ";";
-		setStyle();
+		styleUtil.setFontName(fontName);
 	}
 
 	@Override
@@ -133,9 +122,5 @@ public class TextFieldImpl extends AbstractInputControl implements ITextControlS
 	@Override
 	public int getCaretPosition() {
 		return getUiReference().getCaretPosition();
-	}
-
-	private void setStyle() {
-		getUiReference().setStyle(fontNameCSS + fontSizeCSS + borderCSS + backgroundColorCSS + fontColorCSS);
 	}
 }

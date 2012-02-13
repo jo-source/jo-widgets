@@ -143,9 +143,7 @@ public class JavafxComponent implements IComponentSpi {
 				else {
 					focusObservable.focusLost();
 				}
-
 			}
-
 		});
 
 		this.keyListener = new EventHandler<KeyEvent>() {
@@ -302,7 +300,6 @@ public class JavafxComponent implements IComponentSpi {
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
