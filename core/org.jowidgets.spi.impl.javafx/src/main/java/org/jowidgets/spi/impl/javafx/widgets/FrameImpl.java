@@ -145,7 +145,7 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 
 	@Override
 	public void removeAll() {
-		getUiReference().getScene().getRoot().getChildrenUnmodifiable().clear();
+		((Pane) getUiReference().getScene().getRoot()).getChildren().clear();
 	}
 
 	@Override

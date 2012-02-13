@@ -49,6 +49,8 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
+import org.jowidgets.common.widgets.layout.ILayouter;
+import org.jowidgets.spi.impl.javafx.layout.LayoutManagerImpl;
 import org.jowidgets.spi.impl.javafx.util.CursorConvert;
 import org.jowidgets.spi.widgets.IContainerSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
@@ -56,7 +58,7 @@ import org.jowidgets.spi.widgets.IPopupMenuSpi;
 public class JavafxContainer implements IContainerSpi {
 
 	private final IGenericWidgetFactory factory;
-	private final Pane pane;
+	private Pane pane;
 	private final JavafxComponent componentDelegate;
 
 	public JavafxContainer(final IGenericWidgetFactory factory, final Pane pane) {
@@ -225,13 +227,14 @@ public class JavafxContainer implements IContainerSpi {
 
 	@Override
 	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
-		// TODO Auto-generated method stub
-
+		if ((layoutDescriptor instanceof ILayouter)) {
+			pane = new LayoutManagerImpl((ILayouter) layoutDescriptor);
+		}
 	}
 
 	@Override
 	public void layoutBegin() {
-		// TODO Auto-generated method stub
+		pane.layout();
 
 	}
 

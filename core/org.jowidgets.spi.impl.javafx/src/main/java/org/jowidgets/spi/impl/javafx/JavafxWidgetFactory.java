@@ -30,6 +30,7 @@ package org.jowidgets.spi.impl.javafx;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.impl.javafx.widgets.ButtonImpl;
+import org.jowidgets.spi.impl.javafx.widgets.CheckBoxImpl;
 import org.jowidgets.spi.impl.javafx.widgets.CompositeImpl;
 import org.jowidgets.spi.impl.javafx.widgets.DialogImpl;
 import org.jowidgets.spi.impl.javafx.widgets.FrameImpl;
@@ -37,6 +38,7 @@ import org.jowidgets.spi.impl.javafx.widgets.IconImpl;
 import org.jowidgets.spi.impl.javafx.widgets.TextAreaImpl;
 import org.jowidgets.spi.impl.javafx.widgets.TextFieldImpl;
 import org.jowidgets.spi.impl.javafx.widgets.TextLabelImpl;
+import org.jowidgets.spi.impl.javafx.widgets.ToggleButtonImpl;
 import org.jowidgets.spi.widgets.IButtonSpi;
 import org.jowidgets.spi.widgets.ICheckBoxSpi;
 import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
@@ -182,12 +184,12 @@ public final class JavafxWidgetFactory implements IWidgetFactorySpi {
 
 	@Override
 	public ICheckBoxSpi createCheckBox(final Object parentUiReference, final ICheckBoxSetupSpi setup) {
-		throw new UnsupportedOperationException();
+		return new CheckBoxImpl(setup);
 	}
 
 	@Override
 	public IToggleButtonSpi createToggleButton(final Object parentUiReference, final IToggleButtonSetupSpi setup) {
-		throw new UnsupportedOperationException();
+		return new ToggleButtonImpl(setup);
 	}
 
 	@Override

@@ -33,28 +33,23 @@ import javafx.scene.control.TextArea;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.spi.impl.javafx.util.ColorCSSConverter;
+import org.jowidgets.spi.impl.javafx.util.StyleUtil;
 import org.jowidgets.spi.widgets.ITextAreaSpi;
 import org.jowidgets.spi.widgets.setup.ITextAreaSetupSpi;
 
 public class TextAreaImpl extends AbstractInputControl implements ITextAreaSpi {
 
 	private final TextArea textArea;
-	private String fontNameCSS = "";
-	private String fontSizeCSS = "";
-	private String fontColorCSS = "";
-	private String backgroundColorCSS = "";
-	private String borderCSS = "";
+
+	private final StyleUtil styleUtil;
 
 	public TextAreaImpl(final ITextAreaSetupSpi setup) {
 		super(new TextArea());
+		styleUtil = new StyleUtil(getUiReference());
 		textArea = getUiReference();
-
 		textArea.setWrapText(setup.isLineWrap());
-		textArea.setScrollLeft(10);
-		textArea.setScrollTop(10);
 		if (!setup.hasBorder()) {
-			borderCSS = "-fx-border-color: rgba(0,0,0,0);\n" + "-fx-border-insets: 0;\n" + "-fx-border-width: 0;\n";
+			styleUtil.setBorder();
 		}
 
 		getUiReference().textProperty().addListener(new ChangeListener<String>() {
@@ -66,6 +61,7 @@ public class TextAreaImpl extends AbstractInputControl implements ITextAreaSpi {
 				fireInputChanged(newValue);
 			}
 		});
+
 	}
 
 	@Override
@@ -88,31 +84,27 @@ public class TextAreaImpl extends AbstractInputControl implements ITextAreaSpi {
 
 	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
-		fontColorCSS = "-fx-text-fill: #" + ColorCSSConverter.colorToCSS(colorValue) + ";";
-		setStyle();
+		styleUtil.setForegroundColor(colorValue);
 	}
 
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
-		backgroundColorCSS = "-fx-background-color: #" + ColorCSSConverter.colorToCSS(colorValue) + ";";
-		setStyle();
+		styleUtil.setBackgroundColor(colorValue);
 	}
 
 	@Override
 	public void setFontSize(final int size) {
-		fontSizeCSS = "-fx-font-size: " + size + ";";
-		setStyle();
+		styleUtil.setFontSize(size);
 	}
 
 	@Override
 	public void setFontName(final String fontName) {
-		fontNameCSS = "-fx-font-family: " + fontName + ";";
-		setStyle();
+		styleUtil.setFontName(fontName);
 	}
 
 	@Override
 	public void setMarkup(final Markup markup) {
-		//		textArea.setFont(FontProvider.deriveFont(textArea.getFont(), markup));
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -151,10 +143,6 @@ public class TextAreaImpl extends AbstractInputControl implements ITextAreaSpi {
 
 		textArea.selectPositionCaret(usedPosition);
 		textArea.selectPositionCaret(caretPosition);
-	}
-
-	private void setStyle() {
-		getUiReference().setStyle(fontNameCSS + fontSizeCSS + borderCSS + backgroundColorCSS + fontColorCSS);
 	}
 
 }

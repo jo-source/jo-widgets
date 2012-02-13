@@ -5,18 +5,18 @@
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  * * Redistributions of source code must retain the above copyright
- *   notice, this list of conditions and the following disclaimer.
+ * notice, this list of conditions and the following disclaimer.
  * * Redistributions in binary form must reproduce the above copyright
- *   notice, this list of conditions and the following disclaimer in the
- *   documentation and/or other materials provided with the distribution.
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
  * * Neither the name of the jo-widgets.org nor the
- *   names of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * names of its contributors may be used to endorse or promote products
+ * derived from this software without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL jo-widgets.org BE LIABLE FOR ANY
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY
  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
  * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
@@ -25,47 +25,52 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-
 package org.jowidgets.spi.impl.javafx.widgets;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBuilder;
-import javafx.scene.control.Tooltip;
-import javafx.scene.text.Font;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.scene.control.ToggleButton;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.spi.impl.javafx.image.JavafxImageRegistry;
 import org.jowidgets.spi.impl.javafx.util.FontProvider;
-import org.jowidgets.spi.widgets.setup.IButtonSetupSpi;
-import org.jowidgets.test.spi.widgets.IButtonUiSpi;
+import org.jowidgets.spi.widgets.IToggleButtonSpi;
+import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;
 
-public class ButtonImpl extends AbstractActionControl implements IButtonUiSpi {
+public class ToggleButtonImpl extends AbstractInputControl implements IToggleButtonSpi {
 
-	public ButtonImpl(final IButtonSetupSpi setup) {
-		super(ButtonBuilder.create().text(setup.getText()).tooltip(new Tooltip(setup.getToolTipText())).build());
-		setIcon(setup.getIcon());
-		getUiReference().setOnAction(new EventHandler<ActionEvent>() {
+	public ToggleButtonImpl(final IToggleButtonSetupSpi setup) {
+		super(new ToggleButton());
+
+		setText(setup.getText());
+		setToolTipText(setup.getToolTipText());
+		setMarkup(setup.getMarkup());
+
+		getUiReference().selectedProperty().addListener(new InvalidationListener() {
 
 			@Override
-			public void handle(final ActionEvent paramT) {
-				fireActionPerformed();
-
+			public void invalidated(final Observable paramObservable) {
+				fireInputChanged(getUiReference().isSelected());
 			}
 		});
 
 	}
 
 	@Override
-	public Button getUiReference() {
-		return (Button) super.getUiReference();
+	public ToggleButton getUiReference() {
+		return (ToggleButton) super.getUiReference();
 	}
 
 	@Override
-	public boolean isTestable() {
-		return true;
+	public void setEditable(final boolean editable) {
+		getUiReference().setDisable(!editable);
+	}
+
+	@Override
+	public void setMarkup(final Markup markup) {
+		final ToggleButton toggleButton = getUiReference();
+		toggleButton.setFont(FontProvider.deriveFont(toggleButton.getFont(), markup));
 	}
 
 	@Override
@@ -79,21 +84,18 @@ public class ButtonImpl extends AbstractActionControl implements IButtonUiSpi {
 	}
 
 	@Override
-	public void setMarkup(final Markup markup) {
-		final Button button = this.getUiReference();
-		final Font newFont = FontProvider.deriveFont(button.getFont(), markup);
-		button.setFont(newFont);
-	}
-
-	@Override
 	public void setText(final String text) {
 		getUiReference().setText(text);
 	}
 
 	@Override
-	public void push() {
-		// TODO Auto-generated method stub
+	public boolean isSelected() {
+		return getUiReference().isSelected();
+	}
 
+	@Override
+	public void setSelected(final boolean selected) {
+		getUiReference().setSelected(selected);
 	}
 
 	@Override
@@ -104,18 +106,6 @@ public class ButtonImpl extends AbstractActionControl implements IButtonUiSpi {
 		else {
 			getUiReference().setGraphic(null);
 		}
-
-	}
-
-	@Override
-	public void setEnabled(final boolean enabled) {
-		getUiReference().setDisable(!enabled);
-
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return !getUiReference().isDisabled();
 	}
 
 }

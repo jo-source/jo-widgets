@@ -28,33 +28,57 @@
 
 package org.jowidgets.spi.impl.javafx.util;
 
-import org.jowidgets.common.color.ColorValue;
+import javafx.scene.Node;
+
 import org.jowidgets.common.color.IColorConstant;
 
-public final class ColorCSSConverter {
+public class StyleUtil {
+	private String fontColorCSS = "";
+	private String backgroundColorCSS = "";
+	private String fontSizeCSS = "";
+	private String fontNameCSS = "";
+	private final Node node;
+	private String borderCSS = "";
 
-	private ColorCSSConverter() {
-
+	public StyleUtil(final Node node) {
+		this.node = node;
 	}
 
-	public static IColorConstant cssToColor(final String csscode) {
-		final String hex = csscode.substring(csscode.indexOf("#"), csscode.indexOf(";"));
-		final int r = Integer.valueOf(hex.substring(0, 1));
-		final int g = Integer.valueOf(hex.substring(2, 3));
-		final int b = Integer.valueOf(hex.substring(4, 5));
-
-		return new ColorValue(r, g, b);
+	public void setForegroundColor(final IColorConstant colorValue) {
+		fontColorCSS = "-fx-text-fill: #" + ColorCSSConverter.colorToCSS(colorValue) + ";\n";
+		setStyle();
 	}
 
-	public static String colorToCSS(final IColorConstant color) {
-		final String colorString = Integer.toHexString(0x100 | color.getDefaultValue().getRed()).substring(1)
-			+ ""
-			+ Integer.toHexString(0x100 | color.getDefaultValue().getGreen()).substring(1)
-			+ ""
-			+ Integer.toHexString(0x100 | color.getDefaultValue().getBlue()).substring(1);
+	public void setBackgroundColor(final IColorConstant colorValue) {
+		backgroundColorCSS = "-fx-background-color: #" + ColorCSSConverter.colorToCSS(colorValue) + ";\n";
+		setStyle();
+	}
 
-		return colorString;
+	public IColorConstant getForegroundColor() {
+		return ColorCSSConverter.cssToColor(fontColorCSS);
+	}
 
+	public IColorConstant getBackgroundColor() {
+		return ColorCSSConverter.cssToColor(backgroundColorCSS);
+	}
+
+	public void setFontSize(final int size) {
+		fontSizeCSS = "-fx-font-size: " + size + ";\n";
+		setStyle();
+	}
+
+	public void setFontName(final String fontName) {
+		fontNameCSS = "-fx-font-family: " + fontName + ";\n";
+		setStyle();
+	}
+
+	public void setBorder() {
+		borderCSS = "-fx-border-color: rgba(0,0,0,0);\n" + "-fx-border-insets: 0;\n" + "-fx-border-width: 0;\n";
+		setStyle();
+	}
+
+	public void setStyle() {
+		node.setStyle(fontNameCSS + fontSizeCSS + borderCSS + backgroundColorCSS + fontColorCSS);
 	}
 
 }

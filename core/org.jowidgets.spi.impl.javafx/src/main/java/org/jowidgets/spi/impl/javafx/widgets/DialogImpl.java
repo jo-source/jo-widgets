@@ -33,6 +33,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.Window;
 
 import org.jowidgets.common.color.IColorConstant;
@@ -60,6 +61,12 @@ public class DialogImpl extends JavafxWindow implements IFrameSpi {
 
 		final Scene scene = new Scene(new Group());
 		getUiReference().setScene(scene);
+
+		if (!setup.isDecorated()) {
+			getUiReference().initStyle(StageStyle.UNDECORATED);
+			//TODO DB init Border via CSS
+
+		}
 
 	}
 

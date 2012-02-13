@@ -28,7 +28,6 @@
 package org.jowidgets.spi.impl.javafx.widgets;
 
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
@@ -53,8 +52,8 @@ public abstract class AbstractActionComponent extends ActionObservable implement
 	}
 
 	@Override
-	public Button getUiReference() {
-		return (Button) javafxComponentDelegate.getUiReference();
+	public Node getUiReference() {
+		return javafxComponentDelegate.getUiReference();
 	}
 
 	@Override
