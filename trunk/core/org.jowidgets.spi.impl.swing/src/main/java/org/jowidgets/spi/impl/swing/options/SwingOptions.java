@@ -61,7 +61,7 @@ public final class SwingOptions {
 		SwingOptions.joWidgetsTabLayout = joWidgetsTabLayout;
 	}
 
-	public static void setWrapTapLayout(final boolean wrapTabLayout) {
+	public static void setWrapTabLayout(final boolean wrapTabLayout) {
 		SwingOptions.wrapTabLayout = wrapTabLayout;
 	}
 
