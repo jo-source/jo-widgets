@@ -168,8 +168,10 @@ public class TabFolderImpl extends AbstractTabFolderSpiWrapper implements ITabFo
 
 	@Override
 	public void removeItem(final int index) {
-		items.remove(index);
-		super.removeItem(index);
+		final ITabItem itemToRemove = getItem(index);
+		if (itemToRemove != null) {
+			removeItem(itemToRemove);
+		}
 	}
 
 	protected void itemClosed(final TabItemImpl tabItemImpl) {
