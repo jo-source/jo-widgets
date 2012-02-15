@@ -224,6 +224,11 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 	}
 
 	@Override
+	public void setEnabled(final boolean enabled) {
+		textArea.setEnabled(enabled);
+	}
+
+	@Override
 	public void scrollToCaretPosition() {
 		try {
 			final Point caretPosition = textArea.getCaretLocation();
