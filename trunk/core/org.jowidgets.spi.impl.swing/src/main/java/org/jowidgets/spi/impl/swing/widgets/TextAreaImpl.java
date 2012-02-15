@@ -149,6 +149,11 @@ public class TextAreaImpl extends AbstractInputControl implements ITextAreaSpi {
 	}
 
 	@Override
+	public void setEnabled(final boolean enabled) {
+		textArea.setEnabled(enabled);
+	}
+
+	@Override
 	public void setCaretPosition(final int pos) {
 		textArea.setCaretPosition(pos);
 	}
