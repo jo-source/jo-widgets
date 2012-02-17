@@ -28,35 +28,33 @@
 
 package org.jowidgets.spi.impl.javafx.widgets;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.spi.impl.javafx.util.StyleUtil;
+import org.jowidgets.spi.impl.javafx.widgets.util.InputModifierTextComponent;
 import org.jowidgets.spi.widgets.ITextControlSpi;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 
-public class TextFieldImpl extends AbstractInputControl implements ITextControlSpi {
+public class TextFieldImpl extends AbstractTextInputControl implements ITextControlSpi {
 
+	private static InputModifierTextComponent input;
 	private final StyleUtil styleUtil;
 
 	public TextFieldImpl(final ITextFieldSetupSpi setup) {
-		super(setup.isPasswordPresentation() ? new PasswordField() : new TextField());
+		//		super(setup.isPasswordPresentation() ? new PasswordField() : new TextField());
+		//TODO DB find a better solution
+		//CHECKSTYLE:OFF
+		super(input = new InputModifierTextComponent(setup));
+		//CHECKSTYLE:ON
 		styleUtil = new StyleUtil(getUiReference());
 		if (!setup.hasBorder()) {
-			styleUtil.setBorder();
+			styleUtil.setNoBorder();
 		}
 
-		getUiReference().textProperty().addListener(new InvalidationListener() {
-
-			@Override
-			public void invalidated(final Observable observable) {
-				fireInputChanged(getUiReference().getText());
-			}
-		});
+		//		registerTextControl(getUiReference(), setup.getInputChangeEventPolicy());
+		input.init(this);
 
 	}
 
@@ -79,7 +77,6 @@ public class TextFieldImpl extends AbstractInputControl implements ITextControlS
 	@Override
 	public void setText(final String text) {
 		getUiReference().setText(text);
-
 	}
 
 	@Override
@@ -110,17 +107,16 @@ public class TextFieldImpl extends AbstractInputControl implements ITextControlS
 	@Override
 	public void setSelection(final int start, final int end) {
 		getUiReference().selectRange(start, end);
-
 	}
 
 	@Override
 	public void setCaretPosition(final int pos) {
 		getUiReference().selectPositionCaret(pos);
-
 	}
 
 	@Override
 	public int getCaretPosition() {
 		return getUiReference().getCaretPosition();
 	}
+
 }

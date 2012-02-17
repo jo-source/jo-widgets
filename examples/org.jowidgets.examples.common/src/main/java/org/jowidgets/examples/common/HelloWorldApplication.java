@@ -27,6 +27,8 @@
  */
 package org.jowidgets.examples.common;
 
+import java.util.Date;
+
 import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
@@ -37,6 +39,7 @@ import org.jowidgets.api.widgets.ITextControl;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICheckBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
+import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextAreaBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextFieldBluePrint;
@@ -44,6 +47,7 @@ import org.jowidgets.api.widgets.blueprint.IToggleButtonBluePrint;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.InputChangeEventPolicy;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.controller.IFocusListener;
@@ -68,12 +72,14 @@ public class HelloWorldApplication implements IApplication {
 		final IButtonBluePrint buttonClearBp = BPF.button().setText("Clear").setToolTipText("Clear");
 		final IFrame rootFrame = Toolkit.createRootFrame(frameBp, lifecycle);
 		final ITextFieldBluePrint textfieldBp = BPF.textField().setMaxLength(20).setBorder(false);
-		final ITextFieldBluePrint textfield2Bp = BPF.textField().setMaxLength(20).setBorder(false);
+		final ITextFieldBluePrint textfield2Bp = BPF.textField().setMaxLength(20).setBorder(false).setInputChangeEventPolicy(
+				InputChangeEventPolicy.EDIT_FINISHED);
 		final ITextFieldBluePrint textfield3Bp = BPF.textField().setEditable(false).setPasswordPresentation(true);
-		final ITextAreaBluePrint textareaBp = BPF.textArea().setFontName("Century Gothic").setFontSize(25);
+		final ITextAreaBluePrint textareaBp = BPF.textArea().setFontName("Century Gothic");
 		final ICheckBoxBluePrint checkboxBp = BPF.checkBox().setText("Test");
 		final IToggleButtonBluePrint toogleButtonBp = BPF.toggleButton().setText("Toggle me");
-
+		final IInputFieldBluePrint<Date> inputFieldDateBp = BPF.inputFieldDate();
+		final IInputFieldBluePrint<Integer> inputFieldIntegerNumberBp = BPF.inputFieldIntegerNumber();
 		//		rootFrame.setLayout(Toolkit.getLayoutFactoryProvider().borderLayoutBuilder().margin(5).gap(5).build());
 		//		final IButton button2 = rootFrame.add(buttonBp2, BorderLayoutConstraints.TOP);
 		//		final IButton button = rootFrame.add(buttonBp, BorderLayoutConstraints.BOTTOM);
@@ -92,9 +98,9 @@ public class HelloWorldApplication implements IApplication {
 		final IButton buttonclear = rootFrame.add(buttonClearBp, "cell 1 3");
 		final ITextArea textarea = rootFrame.add(textareaBp, "cell 0 4, span");
 		final ICheckBox checkbox = rootFrame.add(checkboxBp, "cell 0 5");
+		rootFrame.add(inputFieldDateBp, "cell 0 6");
 		rootFrame.add(toogleButtonBp, "cell 1 5");
-		textarea.setPreferredSize(new Dimension(50, 50));
-
+		rootFrame.add(inputFieldIntegerNumberBp, "cell 1 6");
 		checkbox.addInputListener(new IInputListener() {
 
 			@Override

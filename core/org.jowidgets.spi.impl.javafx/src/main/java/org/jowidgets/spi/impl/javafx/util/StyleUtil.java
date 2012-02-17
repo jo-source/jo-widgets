@@ -34,11 +34,11 @@ import org.jowidgets.common.color.IColorConstant;
 
 public class StyleUtil {
 	private String fontColorCSS = "";
-	private String backgroundColorCSS = "";
+	private String backgroundColorCSS = "-fx-background-color: #ffffff;";
 	private String fontSizeCSS = "";
 	private String fontNameCSS = "";
-	private final Node node;
 	private String borderCSS = "";
+	private final Node node;
 
 	public StyleUtil(final Node node) {
 		this.node = node;
@@ -72,8 +72,13 @@ public class StyleUtil {
 		setStyle();
 	}
 
-	public void setBorder() {
-		borderCSS = "-fx-border-color: rgba(0,0,0,0);\n" + "-fx-border-insets: 0;\n" + "-fx-border-width: 0;\n";
+	public void setNoBorder() {
+		if (backgroundColorCSS.isEmpty()) {
+			borderCSS = "-fx-border-color: #ffffff;\n" + "-fx-border-insets: 0;\n" + "-fx-border-width: 0;\n";
+		}
+		else {
+			borderCSS = "-fx-border-color: null;\n" + "-fx-border-insets: 0;\n" + "-fx-border-width: 0;\n";
+		}
 		setStyle();
 	}
 
