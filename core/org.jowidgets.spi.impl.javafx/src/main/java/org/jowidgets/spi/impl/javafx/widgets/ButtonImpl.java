@@ -39,33 +39,29 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.spi.impl.javafx.image.JavafxImageRegistry;
 import org.jowidgets.spi.impl.javafx.util.FontProvider;
+import org.jowidgets.spi.widgets.IButtonSpi;
 import org.jowidgets.spi.widgets.setup.IButtonSetupSpi;
-import org.jowidgets.test.spi.widgets.IButtonUiSpi;
 
-public class ButtonImpl extends AbstractActionControl implements IButtonUiSpi {
+public class ButtonImpl extends AbstractActionControl implements IButtonSpi {
 
 	public ButtonImpl(final IButtonSetupSpi setup) {
-		super(ButtonBuilder.create().text(setup.getText()).tooltip(new Tooltip(setup.getToolTipText())).build());
+		super(createButton(setup));
 		setIcon(setup.getIcon());
 		getUiReference().setOnAction(new EventHandler<ActionEvent>() {
-
 			@Override
 			public void handle(final ActionEvent paramT) {
 				fireActionPerformed();
-
 			}
 		});
+	}
 
+	private static Button createButton(final IButtonSetupSpi setup) {
+		return ButtonBuilder.create().text(setup.getText()).tooltip(new Tooltip(setup.getToolTipText())).build();
 	}
 
 	@Override
 	public Button getUiReference() {
 		return (Button) super.getUiReference();
-	}
-
-	@Override
-	public boolean isTestable() {
-		return true;
 	}
 
 	@Override
@@ -91,12 +87,6 @@ public class ButtonImpl extends AbstractActionControl implements IButtonUiSpi {
 	}
 
 	@Override
-	public void push() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void setIcon(final IImageConstant icon) {
 		if (icon != null) {
 			getUiReference().setGraphic(JavafxImageRegistry.getInstance().getImageHandle(icon).getImage());
@@ -104,13 +94,11 @@ public class ButtonImpl extends AbstractActionControl implements IButtonUiSpi {
 		else {
 			getUiReference().setGraphic(null);
 		}
-
 	}
 
 	@Override
 	public void setEnabled(final boolean enabled) {
 		getUiReference().setDisable(!enabled);
-
 	}
 
 	@Override

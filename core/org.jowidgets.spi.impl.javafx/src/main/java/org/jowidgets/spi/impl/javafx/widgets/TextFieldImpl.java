@@ -28,34 +28,82 @@
 
 package org.jowidgets.spi.impl.javafx.widgets;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
 
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.mask.TextMaskMode;
+import org.jowidgets.common.types.InputChangeEventPolicy;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.spi.impl.javafx.util.StyleUtil;
-import org.jowidgets.spi.impl.javafx.widgets.util.InputModifierTextComponent;
+import org.jowidgets.spi.impl.javafx.widgets.util.IInputModfierField;
+import org.jowidgets.spi.impl.javafx.widgets.util.InputModifierPasswordField;
+import org.jowidgets.spi.impl.javafx.widgets.util.InputModifierTextField;
+import org.jowidgets.spi.impl.javafx.widgets.util.TextVerifierDelegateImpl;
 import org.jowidgets.spi.widgets.ITextControlSpi;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
+import org.jowidgets.util.IProvider;
 
-public class TextFieldImpl extends AbstractTextInputControl implements ITextControlSpi {
+public class TextFieldImpl extends AbstractTextInputControl implements ITextControlSpi, IProvider<Boolean> {
 
-	private static InputModifierTextComponent input;
 	private final StyleUtil styleUtil;
 
+	private boolean programmaticChange;
+
 	public TextFieldImpl(final ITextFieldSetupSpi setup) {
-		//		super(setup.isPasswordPresentation() ? new PasswordField() : new TextField());
-		//TODO DB find a better solution
-		//CHECKSTYLE:OFF
-		super(input = new InputModifierTextComponent(setup));
+		super(setup.isPasswordPresentation() ? new InputModifierPasswordField() : new InputModifierTextField());
+
+		this.programmaticChange = false;
+
+		if (setup.getInputChangeEventPolicy() == InputChangeEventPolicy.EDIT_FINISHED) {
+			getUiReference().focusedProperty().addListener(new ChangeListener<Boolean>() {
+				@Override
+				public void changed(
+					final ObservableValue<? extends Boolean> paramObservableValue,
+					final Boolean oldValue,
+					final Boolean newValue) {
+					if (!newValue) {
+						fireInputChanged(getUiReference().getText());
+					}
+				}
+			});
+		}
+
+		if (setup.getMask() != null && TextMaskMode.FULL_MASK == setup.getMask().getMode()) {
+			setText(setup.getMask().getPlaceholder());
+			getUiReference().focusedProperty().addListener(new ChangeListener<Boolean>() {
+				@Override
+				public void changed(
+					final ObservableValue<? extends Boolean> paramObservableValue,
+					final Boolean oldValue,
+					final Boolean newValue) {
+					if (newValue) {
+						getUiReference().selectPositionCaret(0);
+					}
+				}
+			});
+		}
+
 		//CHECKSTYLE:ON
 		styleUtil = new StyleUtil(getUiReference());
 		if (!setup.hasBorder()) {
 			styleUtil.setNoBorder();
 		}
 
-		//		registerTextControl(getUiReference(), setup.getInputChangeEventPolicy());
-		input.init(this);
+		getInputModifierField().setTextVerifierDelegate(
+				new TextVerifierDelegateImpl(
+					setup.getMask(),
+					this,
+					setup.getInputChangeEventPolicy(),
+					setup.getMaxLength(),
+					this,
+					this));
 
+	}
+
+	private IInputModfierField getInputModifierField() {
+		return (IInputModfierField) getUiReference();
 	}
 
 	@Override
@@ -76,7 +124,14 @@ public class TextFieldImpl extends AbstractTextInputControl implements ITextCont
 
 	@Override
 	public void setText(final String text) {
+		programmaticChange = true;
 		getUiReference().setText(text);
+		programmaticChange = false;
+	}
+
+	@Override
+	public Boolean get() {
+		return Boolean.valueOf(programmaticChange);
 	}
 
 	@Override

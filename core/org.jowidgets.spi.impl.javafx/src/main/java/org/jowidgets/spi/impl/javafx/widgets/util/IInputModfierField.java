@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, David Bauknecht
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,33 +26,10 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.javafx.layout;
+package org.jowidgets.spi.impl.javafx.widgets.util;
 
-import javafx.scene.Node;
-import javafx.scene.layout.Pane;
+public interface IInputModfierField {
 
-import org.jowidgets.common.widgets.layout.ILayouter;
-
-public class LayoutManagerImpl extends Pane {
-
-	private final ILayouter layouter;
-
-	public LayoutManagerImpl(final ILayouter layoutDescriptor) {
-		this.layouter = layoutDescriptor;
-	}
-
-	@Override
-	protected void layoutChildren() {
-
-		//TODO DB Check if this is necessary
-		for (final Node node : this.getChildren()) {
-			if (node instanceof Pane) {
-				((Pane) node).requestLayout();
-			}
-		}
-		super.layoutChildren();
-
-		layouter.layout();
-	}
+	void setTextVerifierDelegate(final ITextVerifierDelegate textVerifierDelegate);
 
 }
