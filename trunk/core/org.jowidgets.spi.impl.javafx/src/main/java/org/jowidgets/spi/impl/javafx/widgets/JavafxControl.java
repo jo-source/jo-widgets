@@ -228,8 +228,13 @@ public class JavafxControl extends ActionObservable implements IControlSpi {
 
 	@Override
 	public void setToolTipText(final String toolTip) {
-		getUiReference().setTooltip(new Tooltip(toolTip));
-
+		final Tooltip tool = new Tooltip(toolTip);
+		if (toolTip == null || toolTip.isEmpty()) {
+			Tooltip.uninstall(getUiReference(), tool);
+		}
+		else {
+			Tooltip.install(getUiReference(), tool);
+		}
 	}
 
 	@Override

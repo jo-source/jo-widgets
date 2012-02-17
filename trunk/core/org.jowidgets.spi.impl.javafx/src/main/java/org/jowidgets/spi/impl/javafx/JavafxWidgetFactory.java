@@ -35,6 +35,7 @@ import org.jowidgets.spi.impl.javafx.widgets.CompositeImpl;
 import org.jowidgets.spi.impl.javafx.widgets.DialogImpl;
 import org.jowidgets.spi.impl.javafx.widgets.FrameImpl;
 import org.jowidgets.spi.impl.javafx.widgets.IconImpl;
+import org.jowidgets.spi.impl.javafx.widgets.ProgressBarImpl;
 import org.jowidgets.spi.impl.javafx.widgets.TextAreaImpl;
 import org.jowidgets.spi.impl.javafx.widgets.TextFieldImpl;
 import org.jowidgets.spi.impl.javafx.widgets.TextLabelImpl;
@@ -204,7 +205,7 @@ public final class JavafxWidgetFactory implements IWidgetFactorySpi {
 
 	@Override
 	public IProgressBarSpi createProgressBar(final Object parentUiReference, final IProgressBarSetupSpi setup) {
-		throw new UnsupportedOperationException();
+		return new ProgressBarImpl(setup);
 	}
 
 	@Override

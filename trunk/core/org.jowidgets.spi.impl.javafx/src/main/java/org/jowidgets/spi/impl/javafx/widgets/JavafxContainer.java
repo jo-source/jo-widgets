@@ -47,6 +47,7 @@ import org.jowidgets.common.widgets.controller.IMouseListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
+import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.ILayouter;
@@ -234,14 +235,13 @@ public class JavafxContainer implements IContainerSpi {
 
 	@Override
 	public void layoutBegin() {
-		pane.layout();
-
+		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void layoutEnd() {
-		// TODO Auto-generated method stub
-
+		getUiReference().layout();
+		redraw();
 	}
 
 	@Override
@@ -290,8 +290,20 @@ public class JavafxContainer implements IContainerSpi {
 		final Integer index,
 		final ICustomWidgetCreator<WIDGET_TYPE> creator,
 		final Object layoutConstraints) {
+		final ICustomWidgetFactory customWidgetFactory = createCustomWidgetFactory();
+		final WIDGET_TYPE result = creator.create(customWidgetFactory);
+		getUiReference().getChildren().add((Node) result.getUiReference());
+		return result;
+	}
 
-		return null;
+	private ICustomWidgetFactory createCustomWidgetFactory() {
+		return new ICustomWidgetFactory() {
+			@Override
+			public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE create(
+				final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+				return factory.create(getUiReference(), descriptor);
+			}
+		};
 	}
 
 	@Override
