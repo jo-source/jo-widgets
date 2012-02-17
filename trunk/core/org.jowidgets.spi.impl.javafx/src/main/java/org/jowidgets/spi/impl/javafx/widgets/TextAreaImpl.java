@@ -64,7 +64,6 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 			styleUtil.setNoBorder();
 		}
 
-		registerTextControl(textArea, setup.getInputChangeEventPolicy());
 	}
 
 	@Override
