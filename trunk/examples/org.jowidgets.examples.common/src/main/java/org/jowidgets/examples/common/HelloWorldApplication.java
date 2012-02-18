@@ -72,8 +72,8 @@ public class HelloWorldApplication implements IApplication {
 		final IButtonBluePrint buttonClearBp = BPF.button().setText("Clear").setToolTipText("Clear");
 		final IFrame rootFrame = Toolkit.createRootFrame(frameBp, lifecycle);
 		final ITextFieldBluePrint textfieldBp = BPF.textField().setMaxLength(20).setBorder(false);
-		final ITextFieldBluePrint textfield2Bp = BPF.textField().setMaxLength(20).setBorder(false).setInputChangeEventPolicy(
-				InputChangeEventPolicy.EDIT_FINISHED);
+		final ITextFieldBluePrint textfield2Bp = BPF.textField();
+		textfield2Bp.setMaxLength(20).setBorder(false).setInputChangeEventPolicy(InputChangeEventPolicy.EDIT_FINISHED);
 		final ITextFieldBluePrint textfield3Bp = BPF.textField().setEditable(false).setPasswordPresentation(true);
 		final ITextAreaBluePrint textareaBp = BPF.textArea().setFontName("Century Gothic");
 		final ICheckBoxBluePrint checkboxBp = BPF.checkBox().setText("Test");
@@ -87,20 +87,20 @@ public class HelloWorldApplication implements IApplication {
 		//		final ITextControl textfield = rootFrame.add(textfieldBp, BorderLayoutConstraints.CENTER);
 
 		rootFrame.setLayout(Toolkit.getLayoutFactoryProvider().migLayoutBuilder().constraints("insets 10 10 10 10").columnConstraints(
-				"[][]").rowConstraints("[]20[]20[]20[]20[]20[]").build());
+				"[grow][grow]").rowConstraints("[]20[]20[]20[]20[]20[]").build());
 		rootFrame.add(labelBp, "cell 0 0");
 		rootFrame.add(label2Bp, "cell 0 1");
 		rootFrame.add(label3Bp, "cell 0 2");
-		final ITextControl textfield = rootFrame.add(textfieldBp, "cell 1 0");
-		final ITextControl textfield2 = rootFrame.add(textfield2Bp, "cell 1 1");
-		final ITextControl textfield3 = rootFrame.add(textfield3Bp, "cell 1 2");
+		final ITextControl textfield = rootFrame.add(textfieldBp, "cell 1 0, growx, h 0::");
+		final ITextControl textfield2 = rootFrame.add(textfield2Bp, "cell 1 1, growx, h 0::");
+		final ITextControl textfield3 = rootFrame.add(textfield3Bp, "cell 1 2, growx, h 0::");
 		final IButton buttonsub = rootFrame.add(buttonSubmitBp, "cell 0 3");
 		final IButton buttonclear = rootFrame.add(buttonClearBp, "cell 1 3");
-		final ITextArea textarea = rootFrame.add(textareaBp, "cell 0 4, span");
+		final ITextArea textarea = rootFrame.add(textareaBp, "cell 0 4, span, growx, h 0::");
 		final ICheckBox checkbox = rootFrame.add(checkboxBp, "cell 0 5");
-		rootFrame.add(inputFieldDateBp, "cell 0 6");
+		rootFrame.add(inputFieldDateBp, "cell 0 6, growx, h 0::");
 		rootFrame.add(toogleButtonBp, "cell 1 5");
-		rootFrame.add(inputFieldIntegerNumberBp, "cell 1 6");
+		rootFrame.add(inputFieldIntegerNumberBp, "cell 1 6, growx, h 0::");
 		checkbox.addInputListener(new IInputListener() {
 
 			@Override
@@ -159,6 +159,7 @@ public class HelloWorldApplication implements IApplication {
 				textfield2.setText("");
 				textfield3.setText("");
 				textarea.setText("");
+
 			}
 		});
 
