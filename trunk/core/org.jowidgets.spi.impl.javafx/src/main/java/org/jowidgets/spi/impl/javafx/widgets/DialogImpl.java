@@ -29,14 +29,14 @@ package org.jowidgets.spi.impl.javafx.widgets;
 
 import java.util.List;
 
-import javafx.scene.Group;
-import javafx.scene.Scene;
+import javafx.geometry.Insets;
+import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 
-import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IButtonCommon;
@@ -45,6 +45,8 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
+import org.jowidgets.common.widgets.layout.ILayouter;
+import org.jowidgets.spi.impl.javafx.layout.LayoutManagerImpl;
 import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.spi.widgets.IMenuBarSpi;
 import org.jowidgets.spi.widgets.setup.IDialogSetupSpi;
@@ -56,34 +58,25 @@ public class DialogImpl extends JavafxWindow implements IFrameSpi {
 
 		getUiReference().setTitle(setup.getTitle());
 		getUiReference().setResizable(setup.isResizable());
-		getUiReference().initModality(Modality.WINDOW_MODAL);
+		if (setup.isModal()) {
+			getUiReference().initModality(Modality.WINDOW_MODAL);
+		}
 		getUiReference().initOwner((Window) parentUiReference);
 
-		final Scene scene = new Scene(new Group());
-		getUiReference().setScene(scene);
-
 		if (!setup.isDecorated()) {
-			getUiReference().initStyle(StageStyle.UNDECORATED);
-			//TODO DB init Border via CSS
-
+			getUiReference().initStyle(StageStyle.UTILITY);
 		}
 
 	}
 
 	@Override
 	public Stage getUiReference() {
-		return (Stage) super.getUiReference();
+		return super.getUiReference();
 	}
 
 	@Override
 	public void setDefaultButton(final IButtonCommon button) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public Rectangle getClientArea() {
-		// TODO Auto-generated method stub
-		return null;
+		((Button) button.getUiReference()).setDefaultButton(true);
 	}
 
 	@Override
@@ -92,25 +85,36 @@ public class DialogImpl extends JavafxWindow implements IFrameSpi {
 	}
 
 	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		// TODO Auto-generated method stub
+	public Rectangle getClientArea() {
+		final Pane paneTmp = (Pane) getUiReference().getScene().getRoot();
+		final Insets insets = paneTmp.getInsets();
+		final int x = (int) insets.getLeft();
+		final int y = (int) insets.getTop();
+		final Dimension size = new Dimension(
+			(int) getUiReference().getScene().getWidth(),
+			(int) getUiReference().getScene().getHeight());
+		final int width = (int) (size.getWidth() - insets.getLeft() - insets.getRight());
+		final int height = (int) (size.getHeight() - insets.getTop() - insets.getBottom());
+		return new Rectangle(x, y, width, height);
 	}
 
 	@Override
-	public boolean remove(final IControlCommon control) {
-		// TODO Auto-generated method stub
-		return false;
+	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+		int width = clientAreaSize.getWidth();
+		int height = clientAreaSize.getHeight();
+		final Pane paneTmp = (Pane) getUiReference().getScene().getRoot();
+		final Insets insets = paneTmp.getInsets();
+		if (insets != null) {
+			width = (int) (width + insets.getLeft() + insets.getRight());
+			height = (int) (height + insets.getTop() + insets.getBottom());
+		}
+		return new Dimension(width, height);
 	}
 
 	@Override
-	public void removeAll() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public IMenuBarSpi createMenuBar() {
-		// TODO Auto-generated method stub
-		return null;
+	public void setMinSize(final Dimension minSize) {
+		getUiReference().setMinHeight(minSize.getHeight());
+		getUiReference().setMinWidth(minSize.getWidth());
 	}
 
 	@Override
@@ -118,8 +122,11 @@ public class DialogImpl extends JavafxWindow implements IFrameSpi {
 		final Integer index,
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
-		// TODO Auto-generated method stub
-		return null;
+		//		final WIDGET_TYPE result = factory.create(getUiReference().getScene(), descriptor);
+		//		((Pane) scene.getRoot()).getChildren().add((Node) result.getUiReference());
+		//		setLayoutConstraints(result, layoutConstraints);
+		//		return result;
+		return getContainerDelegate().add(index, descriptor, layoutConstraints);
 	}
 
 	@Override
@@ -127,44 +134,49 @@ public class DialogImpl extends JavafxWindow implements IFrameSpi {
 		final Integer index,
 		final ICustomWidgetCreator<WIDGET_TYPE> creator,
 		final Object layoutConstraints) {
-		// TODO Auto-generated method stub
-		return null;
+		return getContainerDelegate().add(index, creator, layoutConstraints);
+	}
+
+	@Override
+	public boolean remove(final IControlCommon control) {
+		return ((Pane) getUiReference().getScene().getRoot()).getChildren().remove(control.getUiReference());
 	}
 
 	@Override
 	public void setTabOrder(final List<? extends IControlCommon> tabOrder) {
-		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
 
 	}
 
 	@Override
 	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
-		// TODO Auto-generated method stub
-
+		if (layoutDescriptor != null) {
+			((LayoutManagerImpl) getUiReference().getScene().getRoot()).setLayouter((ILayouter) layoutDescriptor);
+		}
 	}
 
 	@Override
 	public void layoutBegin() {
-		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
 
 	}
 
 	@Override
 	public void layoutEnd() {
-		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
 
 	}
 
 	@Override
-	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
-		// TODO Auto-generated method stub
+	public void removeAll() {
+		((Pane) getUiReference().getScene().getRoot()).getChildren().clear();
+
+	}
+
+	@Override
+	public IMenuBarSpi createMenuBar() {
+		// TODO DB Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public void setMinSize(final Dimension minSize) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

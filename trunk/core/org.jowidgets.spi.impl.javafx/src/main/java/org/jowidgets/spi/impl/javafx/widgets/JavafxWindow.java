@@ -27,10 +27,15 @@
  */
 package org.jowidgets.spi.impl.javafx.widgets;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 
+import org.jowidgets.common.color.ColorValue;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
@@ -45,16 +50,59 @@ import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.common.widgets.controller.IWindowListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.spi.impl.controller.WindowObservable;
+import org.jowidgets.spi.impl.javafx.layout.LayoutManagerImpl;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.IWindowSpi;
 
 public class JavafxWindow implements IWindowSpi {
 
-	private final Window stage;
+	private final Stage stage;
+	private final WindowObservable windowObservableDelegate;
+	private final JavafxContainer containerDelegate;
+	private final LayoutManagerImpl pane;
+	private final Scene scene;
+	private final IGenericWidgetFactory factory;
 
 	public JavafxWindow(final IGenericWidgetFactory factory, final Stage stage, final boolean closeable) {
-
+		this.factory = factory;
 		this.stage = stage;
+		pane = new LayoutManagerImpl();
+		scene = new Scene(pane);
+
+		stage.setScene(scene);
+		this.windowObservableDelegate = new WindowObservable();
+		final EventHandler<WindowEvent> handler = new EventHandler<WindowEvent>() {
+
+			@Override
+			public void handle(final WindowEvent event) {
+				if (event.getEventType() == WindowEvent.WINDOW_CLOSE_REQUEST) {
+					windowObservableDelegate.fireWindowClosing();
+				}
+				else if (event.getEventType() == WindowEvent.WINDOW_SHOWN) {
+					windowObservableDelegate.fireWindowActivated();
+				}
+				else if (event.getEventType() == WindowEvent.WINDOW_HIDDEN) {
+					windowObservableDelegate.fireWindowClosed();
+				}
+			}
+		};
+
+		getUiReference().addEventHandler(WindowEvent.ANY, handler);
+		containerDelegate = new JavafxContainer(factory, (LayoutManagerImpl) stage.getScene().getRoot());
+		getUiReference().iconifiedProperty().addListener(new ChangeListener<Boolean>() {
+
+			@Override
+			public void changed(final ObservableValue<? extends Boolean> arg0, final Boolean oldValue, final Boolean newValue) {
+				if (newValue) {
+					windowObservableDelegate.fireWindowIconified();
+				}
+				else {
+					windowObservableDelegate.fireWindowDeiconified();
+				}
+			}
+
+		});
 
 	}
 
@@ -65,65 +113,61 @@ public class JavafxWindow implements IWindowSpi {
 
 	@Override
 	public void pack() {
-		// TODO Auto-generated method stub
+		// TODO DB Auto-generated method stub
 
 	}
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
+		// TODO DB Auto-generated method stub
 	}
 
 	@Override
 	public void addWindowListener(final IWindowListener listener) {
-		// TODO Auto-generated method stub
-
+		windowObservableDelegate.addWindowListener(listener);
 	}
 
 	@Override
 	public void removeWindowListener(final IWindowListener listener) {
-		// TODO Auto-generated method stub
-
+		windowObservableDelegate.removeWindowListener(listener);
 	}
 
 	@Override
 	public <WIDGET_TYPE extends IDisplayCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
 		final DESCRIPTOR_TYPE descriptor) {
-		// TODO Auto-generated method stub
-		return null;
+		return factory.create(getUiReference(), descriptor);
 	}
 
 	@Override
-	public Window getUiReference() {
+	public Stage getUiReference() {
 		return stage;
 	}
 
 	@Override
 	public void setEnabled(final boolean enabled) {
+		containerDelegate.setEnabled(enabled);
 
 	}
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return false;
+		return containerDelegate.isEnabled();
 	}
 
 	@Override
 	public IPopupMenuSpi createPopupMenu() {
-		// TODO Auto-generated method stub
+		// TODO DB Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void redraw() {
-		// TODO Auto-generated method stub
+		containerDelegate.redraw();
 	}
 
 	@Override
 	public void setRedrawEnabled(final boolean enabled) {
-		// TODO Auto-generated method stub
-
+		containerDelegate.setRedrawEnabled(enabled);
 	}
 
 	@Override
@@ -134,8 +178,7 @@ public class JavafxWindow implements IWindowSpi {
 
 	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
-		// TODO Auto-generated method stub
-
+		containerDelegate.setForegroundColor(colorValue);
 	}
 
 	@Override
@@ -145,19 +188,17 @@ public class JavafxWindow implements IWindowSpi {
 						colorValue.getDefaultValue().getRed(),
 						colorValue.getDefaultValue().getGreen(),
 						colorValue.getDefaultValue().getBlue()));
-
 	}
 
 	@Override
 	public IColorConstant getForegroundColor() {
-		// TODO Auto-generated method stub
-		return null;
+		return containerDelegate.getForegroundColor();
 	}
 
 	@Override
 	public IColorConstant getBackgroundColor() {
-		// TODO Auto-generated method stub
-		return null;
+		final Color color = (Color) getUiReference().getScene().getFill();
+		return new ColorValue((int) color.getRed(), (int) color.getGreen(), (int) color.getBlue());
 	}
 
 	@Override
@@ -176,12 +217,11 @@ public class JavafxWindow implements IWindowSpi {
 	@Override
 	public void setVisible(final boolean visible) {
 		if (visible) {
-			((Stage) getUiReference()).show();
+			getUiReference().show();
 		}
 		else {
 			getUiReference().hide();
 		}
-
 	}
 
 	@Override
@@ -198,7 +238,6 @@ public class JavafxWindow implements IWindowSpi {
 	public void setSize(final Dimension size) {
 		getUiReference().setHeight(size.getHeight());
 		getUiReference().setWidth(size.getWidth());
-
 	}
 
 	@Override
@@ -214,62 +253,66 @@ public class JavafxWindow implements IWindowSpi {
 
 	@Override
 	public void addComponentListener(final IComponentListener componentListener) {
-		// TODO Auto-generated method stub
+		containerDelegate.addComponentListener(componentListener);
 
 	}
 
 	@Override
 	public void removeComponentListener(final IComponentListener componentListener) {
-		// TODO Auto-generated method stub
+		containerDelegate.removeComponentListener(componentListener);
 
 	}
 
 	@Override
 	public void addFocusListener(final IFocusListener listener) {
-		// TODO Auto-generated method stub
+		containerDelegate.addFocusListener(listener);
 
 	}
 
 	@Override
 	public void removeFocusListener(final IFocusListener listener) {
-		// TODO Auto-generated method stub
+		containerDelegate.removeFocusListener(listener);
 
 	}
 
 	@Override
 	public void addKeyListener(final IKeyListener listener) {
-		// TODO Auto-generated method stub
+		containerDelegate.addKeyListener(listener);
 
 	}
 
 	@Override
 	public void removeKeyListener(final IKeyListener listener) {
-		// TODO Auto-generated method stub
+		containerDelegate.removeKeyListener(listener);
 
 	}
 
 	@Override
 	public void addMouseListener(final IMouseListener listener) {
-		// TODO Auto-generated method stub
+		containerDelegate.addMouseListener(listener);
 
 	}
 
 	@Override
 	public void removeMouseListener(final IMouseListener listener) {
-		// TODO Auto-generated method stub
+		containerDelegate.removeMouseListener(listener);
 
 	}
 
 	@Override
 	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		// TODO Auto-generated method stub
+		containerDelegate.addPopupDetectionListener(listener);
 
 	}
 
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		// TODO Auto-generated method stub
+		containerDelegate.removePopupDetectionListener(listener);
 
+	}
+
+	JavafxContainer getContainerDelegate() {
+		return containerDelegate;
 	}
 
 }

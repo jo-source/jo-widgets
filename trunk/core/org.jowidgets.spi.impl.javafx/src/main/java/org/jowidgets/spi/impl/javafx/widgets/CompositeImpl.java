@@ -30,8 +30,8 @@ package org.jowidgets.spi.impl.javafx.widgets;
 
 import java.util.List;
 
+import javafx.scene.control.Control;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
@@ -221,7 +221,7 @@ public class CompositeImpl implements ICompositeSpi {
 
 	@Override
 	public void setToolTipText(final String toolTip) {
-		// TODO Auto-generated method stub
+		// TODO DB Auto-generated method stub
 	}
 
 	@Override
@@ -237,21 +237,18 @@ public class CompositeImpl implements ICompositeSpi {
 
 	@Override
 	public Dimension getMinSize() {
-		return new Dimension((int) getUiReference().minWidth(Region.USE_PREF_SIZE), (int) getUiReference().minHeight(
-				Region.USE_PREF_SIZE));
+		return new Dimension((int) getUiReference().getMinWidth(), (int) getUiReference().getMinHeight());
 	}
 
 	@Override
 	public Dimension getPreferredSize() {
-		return new Dimension((int) getUiReference().prefWidth(Region.USE_PREF_SIZE), (int) getUiReference().prefHeight(
-				Region.USE_PREF_SIZE));
-
+		return new Dimension((int) getUiReference().prefWidth(Control.USE_COMPUTED_SIZE), (int) getUiReference().prefHeight(
+				Control.USE_COMPUTED_SIZE));
 	}
 
 	@Override
 	public Dimension getMaxSize() {
-		return new Dimension((int) getUiReference().maxWidth(Region.USE_COMPUTED_SIZE), (int) getUiReference().maxHeight(
-				Region.USE_COMPUTED_SIZE));
+		return new Dimension((int) getUiReference().getMaxWidth(), (int) getUiReference().getMaxHeight());
 	}
 
 	@Override

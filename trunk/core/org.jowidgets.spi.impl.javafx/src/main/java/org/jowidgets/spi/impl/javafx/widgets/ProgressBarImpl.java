@@ -33,13 +33,13 @@ import org.jowidgets.spi.widgets.IProgressBarSpi;
 import org.jowidgets.spi.widgets.setup.IProgressBarSetupSpi;
 
 public class ProgressBarImpl extends JavafxControl implements IProgressBarSpi {
-	private int minimum;
-	private int maximum;
+	private double minimum;
+	private double maximum;
 
 	public ProgressBarImpl(final IProgressBarSetupSpi setup) {
 		super(new ProgressBar());
 		if (setup.isIndeterminate()) {
-			getUiReference().setProgress(-1);
+			getUiReference().setProgress(-1d);
 		}
 		setMinimum(setup.getMinimum());
 		setMaximum(setup.getMaximum());
@@ -63,9 +63,11 @@ public class ProgressBarImpl extends JavafxControl implements IProgressBarSpi {
 
 	@Override
 	public void setProgress(final int progress) {
-		if (!(progress < minimum || progress > maximum)) {
-			getUiReference().setProgress(progress / 100.0);
-		}//TODO DB Throw something in else cause
-	}
 
+		if (!(progress < minimum || progress > maximum)) {
+			final double value = 100 / (maximum - minimum) * (progress - minimum);
+			getUiReference().setProgress(value / 100);
+		}
+
+	}
 }

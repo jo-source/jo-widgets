@@ -49,17 +49,16 @@ import org.jowidgets.util.Assert;
 public class JavafxControl extends ActionObservable implements IControlSpi {
 
 	private final Control control;
-	private final JavafxComponent componentdelegate;
+	private final JavafxComponent componentDelegate;
 
 	public JavafxControl(final Control control) {
 		this.control = control;
-		componentdelegate = new JavafxComponent(control);
+		componentDelegate = new JavafxComponent(control);
 	}
 
 	@Override
 	public IPopupMenuSpi createPopupMenu() {
-		// TODO Auto-generated method stub
-		return null;
+		return componentDelegate.createPopupMenu();
 	}
 
 	@Override
@@ -81,14 +80,12 @@ public class JavafxControl extends ActionObservable implements IControlSpi {
 
 	@Override
 	public void redraw() {
-		// TODO Auto-generated method stub
-
+		componentDelegate.redraw();
 	}
 
 	@Override
 	public void setRedrawEnabled(final boolean enabled) {
-		// TODO Auto-generated method stub
-
+		componentDelegate.setRedrawEnabled(enabled);
 	}
 
 	@Override
@@ -104,26 +101,24 @@ public class JavafxControl extends ActionObservable implements IControlSpi {
 
 	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
-		// TODO Auto-generated method stub
+		componentDelegate.setForegroundColor(colorValue);
 
 	}
 
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
-		// TODO Auto-generated method stub
+		componentDelegate.setBackgroundColor(colorValue);
 
 	}
 
 	@Override
 	public IColorConstant getForegroundColor() {
-		// TODO Auto-generated method stub
-		return null;
+		return componentDelegate.getForegroundColor();
 	}
 
 	@Override
 	public IColorConstant getBackgroundColor() {
-		// TODO Auto-generated method stub
-		return null;
+		return componentDelegate.getBackgroundColor();
 	}
 
 	@Override
@@ -171,58 +166,58 @@ public class JavafxControl extends ActionObservable implements IControlSpi {
 
 	@Override
 	public void addComponentListener(final IComponentListener componentListener) {
-		componentdelegate.addComponentListener(componentListener);
+		componentDelegate.addComponentListener(componentListener);
 
 	}
 
 	@Override
 	public void removeComponentListener(final IComponentListener componentListener) {
-		componentdelegate.removeComponentListener(componentListener);
+		componentDelegate.removeComponentListener(componentListener);
 
 	}
 
 	@Override
 	public void addFocusListener(final IFocusListener listener) {
-		componentdelegate.addFocusListener(listener);
+		componentDelegate.addFocusListener(listener);
 
 	}
 
 	@Override
 	public void removeFocusListener(final IFocusListener listener) {
-		componentdelegate.removeFocusListener(listener);
+		componentDelegate.removeFocusListener(listener);
 	}
 
 	@Override
 	public void addKeyListener(final IKeyListener listener) {
-		componentdelegate.addKeyListener(listener);
+		componentDelegate.addKeyListener(listener);
 
 	}
 
 	@Override
 	public void removeKeyListener(final IKeyListener listener) {
-		componentdelegate.removeKeyListener(listener);
+		componentDelegate.removeKeyListener(listener);
 
 	}
 
 	@Override
 	public void addMouseListener(final IMouseListener listener) {
-		componentdelegate.addMouseListener(listener);
+		componentDelegate.addMouseListener(listener);
 	}
 
 	@Override
 	public void removeMouseListener(final IMouseListener listener) {
-		componentdelegate.removeMouseListener(listener);
+		componentDelegate.removeMouseListener(listener);
 	}
 
 	@Override
 	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		componentdelegate.addPopupDetectionListener(listener);
+		componentDelegate.addPopupDetectionListener(listener);
 
 	}
 
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		componentdelegate.removePopupDetectionListener(listener);
+		componentDelegate.removePopupDetectionListener(listener);
 
 	}
 

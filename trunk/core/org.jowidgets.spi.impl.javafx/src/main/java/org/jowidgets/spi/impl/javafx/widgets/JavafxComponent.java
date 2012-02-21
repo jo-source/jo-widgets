@@ -36,6 +36,7 @@ import javafx.scene.Node;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Popup;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
@@ -72,6 +73,8 @@ public class JavafxComponent implements IComponentSpi {
 	private final ComponentObservable componentObservable;
 	private final EventHandler<KeyEvent> keyListener;
 
+	private final StyleUtil styleDelegate;
+
 	private EventHandler<MouseEvent> mouseListener;
 
 	public JavafxComponent(final Node node) {
@@ -80,6 +83,7 @@ public class JavafxComponent implements IComponentSpi {
 		this.focusObservable = new FocusObservable();
 		this.mouseObservable = new MouseObservable();
 		this.componentObservable = new ComponentObservable();
+		this.styleDelegate = new StyleUtil(this.node);
 
 		node.setOnMousePressed(new EventHandler<MouseEvent>() {
 
@@ -91,7 +95,6 @@ public class JavafxComponent implements IComponentSpi {
 					popupDetectionObservable.firePopupDetected(new Position((int) event.getX(), (int) event.getY()));
 				}
 			}
-
 		});
 
 		node.setOnMouseReleased(new EventHandler<MouseEvent>() {
@@ -103,7 +106,6 @@ public class JavafxComponent implements IComponentSpi {
 					popupDetectionObservable.firePopupDetected(new Position((int) event.getX(), (int) event.getY()));
 				}
 			}
-
 		});
 
 		getUiReference().setOnDragDone(new EventHandler<DragEvent>() {
@@ -111,7 +113,6 @@ public class JavafxComponent implements IComponentSpi {
 			@Override
 			public void handle(final DragEvent paramT) {
 				componentObservable.firePositionChanged();
-
 			}
 		});
 
@@ -125,9 +126,7 @@ public class JavafxComponent implements IComponentSpi {
 				if (newValue.getHeight() != oldValue.getHeight() || newValue.getWidth() != oldValue.getWidth()) {
 					componentObservable.fireSizeChanged();
 				}
-
 			}
-
 		});
 
 		getUiReference().focusedProperty().addListener(new ChangeListener<Boolean>() {
@@ -152,14 +151,11 @@ public class JavafxComponent implements IComponentSpi {
 			@Override
 			public void handle(final KeyEvent paramT) {
 				if (paramT.getEventType() == paramT.KEY_PRESSED) {
-
 					keyObservable.fireKeyPressed(new LazyKeyEventContentFactory(paramT));
-
 				}
 				if (paramT.getEventType() == paramT.KEY_RELEASED) {
 					keyObservable.fireKeyReleased(new LazyKeyEventContentFactory(paramT));
 				}
-
 			}
 		};
 
@@ -177,55 +173,42 @@ public class JavafxComponent implements IComponentSpi {
 
 		this.keyObservable = new KeyObservable(keyObservableCallback);
 
-		getUiReference().setOnMouseExited(new EventHandler<MouseEvent>() {
+		final EventHandler<MouseEvent> handler = new EventHandler<MouseEvent>() {
 
 			@Override
 			public void handle(final MouseEvent event) {
-				mouseObservable.fireMouseExit(new Position((int) event.getX(), (int) event.getY()));
-
-			}
-		});
-
-		getUiReference().setOnMouseEntered(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(final MouseEvent event) {
-				mouseObservable.fireMouseEnter(new Position((int) event.getX(), (int) event.getY()));
-
-			}
-		});
-
-		getUiReference().setOnMouseClicked(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(final MouseEvent event) {
-				if (event.getClickCount() > 1) {
-					final IMouseButtonEvent mouseEvent = getMouseEvent(event, 2);
-					if (mouseEvent != null) {
-						mouseObservable.fireMouseDoubleClicked(mouseEvent);
+				if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
+					mouseObservable.fireMouseExit(new Position((int) event.getX(), (int) event.getY()));
+				}
+				else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
+					mouseObservable.fireMouseEnter(new Position((int) event.getX(), (int) event.getY()));
+				}
+				else if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
+					if (event.getClickCount() > 1) {
+						final IMouseButtonEvent mouseEvent = getMouseEvent(event, 2);
+						if (mouseEvent != null) {
+							mouseObservable.fireMouseDoubleClicked(mouseEvent);
+						}
 					}
 				}
-			}
-		});
-
-		getUiReference().setOnMousePressed(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(final MouseEvent event) {
-				final IMouseButtonEvent mouseEvent = getMouseEvent(event, 1);
-				if (mouseEvent != null) {
-					mouseObservable.fireMousePressed(mouseEvent);
+				else if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
+					final IMouseButtonEvent mouseEvent = getMouseEvent(event, 1);
+					if (mouseEvent != null) {
+						mouseObservable.fireMousePressed(mouseEvent);
+					}
+				}
+				else if (event.getEventType() == MouseEvent.MOUSE_RELEASED) {
+					final IMouseButtonEvent mouseEvent = getMouseEvent(event, 1);
+					if (mouseEvent != null) {
+						mouseObservable.fireMouseReleased(mouseEvent);
+					}
+				}
+				else if (event.getTarget().getClass() == Popup.class) {
+					popupDetectionObservable.firePopupDetected(new Position((int) event.getX(), (int) event.getY()));
 				}
 			}
-		});
-
-		getUiReference().setOnMouseReleased(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(final MouseEvent event) {
-				final IMouseButtonEvent mouseEvent = getMouseEvent(event, 1);
-				if (mouseEvent != null) {
-					mouseObservable.fireMouseReleased(mouseEvent);
-				}
-			}
-		});
+		};
+		getUiReference().addEventHandler(MouseEvent.ANY, handler);
 
 	}
 
@@ -259,31 +242,31 @@ public class JavafxComponent implements IComponentSpi {
 
 	@Override
 	public void setEnabled(final boolean enabled) {
-		node.setDisable(!enabled);
+		getUiReference().setDisable(!enabled);
 
 	}
 
 	@Override
 	public boolean isEnabled() {
-		return !node.isDisable();
+		return !getUiReference().isDisable();
 	}
 
 	@Override
 	public void redraw() {
-		// TODO Auto-generated method stub
+		// TODO DB Auto-generated method stub
 
 	}
 
 	@Override
 	public void setRedrawEnabled(final boolean enabled) {
-		// TODO Auto-generated method stub
+		// TODO DB Auto-generated method stub
 
 	}
 
 	@Override
 	public boolean requestFocus() {
-		node.requestFocus();
-		if (node.isFocused()) {
+		getUiReference().requestFocus();
+		if (getUiReference().isFocused()) {
 			return true;
 		}
 		else {
@@ -293,25 +276,23 @@ public class JavafxComponent implements IComponentSpi {
 
 	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
-		// TODO Auto-generated method stub
+		styleDelegate.setForegroundColor(colorValue);
 
 	}
 
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
-		// TODO Auto-generated method stub
+		styleDelegate.setBackgroundColor(colorValue);
 	}
 
 	@Override
 	public IColorConstant getForegroundColor() {
-		// TODO Auto-generated method stub
-		return null;
+		return styleDelegate.getForegroundColor();
 	}
 
 	@Override
 	public IColorConstant getBackgroundColor() {
-		// TODO Auto-generated method stub
-		return null;
+		return styleDelegate.getBackgroundColor();
 	}
 
 	@Override
@@ -333,26 +314,26 @@ public class JavafxComponent implements IComponentSpi {
 
 	@Override
 	public Dimension getSize() {
-		// TODO Auto-generated method stub
+		// TODO DB Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void setSize(final Dimension size) {
-		// TODO Auto-generated method stub
+		getUiReference().setManaged(false);
+		getUiReference().resize(size.getWidth(), size.getHeight());
 
 	}
 
 	@Override
 	public Position getPosition() {
-		// TODO Auto-generated method stub
-		return null;
+		return new Position((int) getUiReference().getLayoutX(), (int) getUiReference().getLayoutY());
 	}
 
 	@Override
 	public void setPosition(final Position position) {
-		// TODO Auto-generated method stub
-
+		getUiReference().setLayoutX(position.getX());
+		getUiReference().setLayoutY(position.getY());
 	}
 
 	@Override
@@ -407,7 +388,7 @@ public class JavafxComponent implements IComponentSpi {
 
 	@Override
 	public IPopupMenuSpi createPopupMenu() {
-		// TODO Auto-generated method stub
+		// TODO DB Auto-generated method stub
 		return null;
 	}
 

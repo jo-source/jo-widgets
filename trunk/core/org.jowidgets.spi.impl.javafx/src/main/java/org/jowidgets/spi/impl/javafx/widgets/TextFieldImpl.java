@@ -36,7 +36,6 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.mask.TextMaskMode;
 import org.jowidgets.common.types.InputChangeEventPolicy;
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.spi.impl.javafx.util.StyleUtil;
 import org.jowidgets.spi.impl.javafx.widgets.util.IInputModfierField;
 import org.jowidgets.spi.impl.javafx.widgets.util.InputModifierPasswordField;
 import org.jowidgets.spi.impl.javafx.widgets.util.InputModifierTextField;
@@ -85,7 +84,6 @@ public class TextFieldImpl extends AbstractTextInputControl implements ITextCont
 			});
 		}
 
-		//CHECKSTYLE:ON
 		styleUtil = new StyleUtil(getUiReference());
 		if (!setup.hasBorder()) {
 			styleUtil.setNoBorder();
