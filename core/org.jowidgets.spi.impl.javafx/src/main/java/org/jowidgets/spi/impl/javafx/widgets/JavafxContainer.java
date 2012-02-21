@@ -32,6 +32,7 @@ import java.util.List;
 
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 
 import org.jowidgets.common.color.IColorConstant;
@@ -40,6 +41,7 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IControlCommon;
+import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.controller.IComponentListener;
 import org.jowidgets.common.widgets.controller.IFocusListener;
 import org.jowidgets.common.widgets.controller.IKeyListener;
@@ -50,8 +52,6 @@ import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
-import org.jowidgets.common.widgets.layout.ILayouter;
-import org.jowidgets.spi.impl.javafx.layout.LayoutManagerImpl;
 import org.jowidgets.spi.impl.javafx.util.CursorConvert;
 import org.jowidgets.spi.widgets.IContainerSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
@@ -59,7 +59,7 @@ import org.jowidgets.spi.widgets.IPopupMenuSpi;
 public class JavafxContainer implements IContainerSpi {
 
 	private final IGenericWidgetFactory factory;
-	private Pane pane;
+	private final Pane pane;
 	private final JavafxComponent componentDelegate;
 
 	public JavafxContainer(final IGenericWidgetFactory factory, final Pane pane) {
@@ -70,8 +70,7 @@ public class JavafxContainer implements IContainerSpi {
 
 	@Override
 	public IPopupMenuSpi createPopupMenu() {
-		// TODO Auto-generated method stub
-		return null;
+		return componentDelegate.createPopupMenu();
 	}
 
 	@Override
@@ -92,13 +91,12 @@ public class JavafxContainer implements IContainerSpi {
 
 	@Override
 	public void redraw() {
-		// TODO Auto-generated method stub
+		componentDelegate.redraw();
 	}
 
 	@Override
 	public void setRedrawEnabled(final boolean enabled) {
-		// TODO Auto-generated method stub
-
+		componentDelegate.setRedrawEnabled(enabled);
 	}
 
 	@Override
@@ -152,20 +150,17 @@ public class JavafxContainer implements IContainerSpi {
 
 	@Override
 	public void setSize(final Dimension size) {
-		getUiReference().managedProperty().setValue(false);
-		getUiReference().resize(size.getWidth(), size.getHeight());
-
+		componentDelegate.setSize(size);
 	}
 
 	@Override
 	public Position getPosition() {
-		return new Position((int) getUiReference().getLayoutX(), (int) getUiReference().getLayoutY());
+		return componentDelegate.getPosition();
 	}
 
 	@Override
 	public void setPosition(final Position position) {
-		getUiReference().setLayoutX(position.getX());
-		getUiReference().setLayoutY(position.getY());
+		componentDelegate.setPosition(position);
 	}
 
 	@Override
@@ -228,20 +223,20 @@ public class JavafxContainer implements IContainerSpi {
 
 	@Override
 	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
-		if ((layoutDescriptor instanceof ILayouter)) {
-			pane = new LayoutManagerImpl((ILayouter) layoutDescriptor);
-		}
+		//		if (layoutDescriptor != null && layoutDescriptor instanceof ILayouter) {
+		//			//pane.setLayouter((ILayouter) layoutDescriptor);
+		//		}
 	}
 
 	@Override
 	public void layoutBegin() {
-		// TODO Auto-generated method stub
+		// TODO DB Auto-generated method stub
 	}
 
 	@Override
 	public void layoutEnd() {
 		getUiReference().layout();
-		redraw();
+
 	}
 
 	@Override
@@ -281,7 +276,7 @@ public class JavafxContainer implements IContainerSpi {
 		final Object layoutConstraints) {
 		final WIDGET_TYPE result = factory.create(getUiReference(), descriptor);
 		getUiReference().getChildren().add((Node) result.getUiReference());
-
+		setLayoutConstraints(result, layoutConstraints);
 		return result;
 	}
 
@@ -293,6 +288,7 @@ public class JavafxContainer implements IContainerSpi {
 		final ICustomWidgetFactory customWidgetFactory = createCustomWidgetFactory();
 		final WIDGET_TYPE result = creator.create(customWidgetFactory);
 		getUiReference().getChildren().add((Node) result.getUiReference());
+		setLayoutConstraints(result, layoutConstraints);
 		return result;
 	}
 
@@ -313,8 +309,23 @@ public class JavafxContainer implements IContainerSpi {
 
 	@Override
 	public void setTabOrder(final List<? extends IControlCommon> tabOrder) {
-		// TODO Auto-generated method stub
+		// TODO DB Auto-generated method stub
 
+	}
+
+	private void setLayoutConstraints(final IWidgetCommon widget, final Object layoutConstraints) {
+		final Object object = widget.getUiReference();
+		if (object instanceof Parent) {
+			final Parent control = (Parent) object;
+			control.setUserData(layoutConstraints);
+		}
+		else {
+			throw new IllegalArgumentException("'"
+				+ Parent.class
+				+ "' excpected, but '"
+				+ object.getClass().getName()
+				+ "' found.");
+		}
 	}
 
 }

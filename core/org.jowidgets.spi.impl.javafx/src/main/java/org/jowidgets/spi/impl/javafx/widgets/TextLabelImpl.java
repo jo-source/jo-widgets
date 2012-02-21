@@ -43,7 +43,7 @@ public class TextLabelImpl extends JavafxControl implements ITextLabelSpi {
 		setText(setup.getText());
 		setToolTipText(setup.getToolTipText());
 		setMarkup(setup.getMarkup());
-		getUiReference().setTextAlignment(AlignmentConvert.convert(setup.getAlignment()));
+		getUiReference().setAlignment(AlignmentConvert.convertPosAlignment(setup.getAlignment()));
 	}
 
 	@Override

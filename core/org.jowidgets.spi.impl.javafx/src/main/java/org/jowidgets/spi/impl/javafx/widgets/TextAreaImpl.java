@@ -34,7 +34,7 @@ import javafx.scene.control.TextArea;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.spi.impl.javafx.util.StyleUtil;
+import org.jowidgets.spi.impl.javafx.widgets.util.InputModifierTextArea;
 import org.jowidgets.spi.widgets.ITextAreaSpi;
 import org.jowidgets.spi.widgets.setup.ITextAreaSetupSpi;
 
@@ -45,7 +45,7 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 
 	public TextAreaImpl(final ITextAreaSetupSpi setup) {
 		super(new ScrollPane());
-		getUiReference().setContent(new TextArea());
+		getUiReference().setContent(new InputModifierTextArea());
 
 		styleUtil = new StyleUtil(getUiReference().getContent());
 		textArea = (TextArea) getUiReference().getContent();

@@ -27,6 +27,7 @@
  */
 package org.jowidgets.spi.impl.javafx.util;
 
+import javafx.geometry.Pos;
 import javafx.scene.text.TextAlignment;
 
 import org.jowidgets.common.types.AlignmentHorizontal;
@@ -36,7 +37,7 @@ public final class AlignmentConvert {
 
 	private AlignmentConvert() {};
 
-	public static TextAlignment convert(final AlignmentHorizontal alignmentHorizontal) {
+	public static TextAlignment convertTextAlignment(final AlignmentHorizontal alignmentHorizontal) {
 		Assert.paramNotNull(alignmentHorizontal, "alignmentHorizontal");
 
 		if (AlignmentHorizontal.RIGHT.equals(alignmentHorizontal)) {
@@ -51,7 +52,23 @@ public final class AlignmentConvert {
 		else {
 			throw new IllegalArgumentException("Alignment '" + alignmentHorizontal + "' is unknown");
 		}
+	}
 
+	public static Pos convertPosAlignment(final AlignmentHorizontal alignmentHorizontal) {
+		Assert.paramNotNull(alignmentHorizontal, "alignmentHorizontal");
+
+		if (AlignmentHorizontal.RIGHT.equals(alignmentHorizontal)) {
+			return Pos.CENTER_RIGHT;
+		}
+		else if (AlignmentHorizontal.LEFT.equals(alignmentHorizontal)) {
+			return Pos.CENTER_LEFT;
+		}
+		else if (AlignmentHorizontal.CENTER.equals(alignmentHorizontal)) {
+			return Pos.CENTER;
+		}
+		else {
+			throw new IllegalArgumentException("Alignment '" + alignmentHorizontal + "' is unknown");
+		}
 	}
 
 }

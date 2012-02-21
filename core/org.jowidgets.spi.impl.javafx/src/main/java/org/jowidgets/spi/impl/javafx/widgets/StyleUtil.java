@@ -26,13 +26,14 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.javafx.util;
+package org.jowidgets.spi.impl.javafx.widgets;
 
 import javafx.scene.Node;
 
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.spi.impl.javafx.util.ColorCSSConverter;
 
-public class StyleUtil {
+public final class StyleUtil {
 	private String fontColorCSS = "";
 	private String backgroundColorCSS = "-fx-background-color: #ffffff;";
 	private String fontSizeCSS = "";

@@ -37,6 +37,7 @@ import javafx.scene.input.KeyEvent;
 import org.jowidgets.common.types.Modifier;
 import org.jowidgets.common.types.VirtualKey;
 import org.jowidgets.spi.impl.controller.ILazyKeyEventContentFactory;
+import org.jowidgets.spi.impl.javafx.util.VirtualKeyConvert;
 
 public class LazyKeyEventContentFactory implements ILazyKeyEventContentFactory {
 
@@ -49,8 +50,7 @@ public class LazyKeyEventContentFactory implements ILazyKeyEventContentFactory {
 
 	@Override
 	public VirtualKey createVirtualKey() {
-		// TODO Auto-generated method stub
-		return null;
+		return VirtualKeyConvert.convert(keyEvent.getCode());
 	}
 
 	@Override

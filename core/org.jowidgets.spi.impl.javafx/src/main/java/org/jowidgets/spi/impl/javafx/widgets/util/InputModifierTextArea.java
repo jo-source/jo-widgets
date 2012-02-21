@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, David Bauknecht
+ * Copyright (c) 2012, dabaukne
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,34 +26,37 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.javafx.layout;
+package org.jowidgets.spi.impl.javafx.widgets.util;
 
-import javafx.scene.layout.Pane;
+import javafx.scene.control.TextArea;
 
-import org.jowidgets.common.widgets.layout.ILayouter;
+public class InputModifierTextArea extends TextArea implements IInputModfierField {
 
-public class LayoutManagerImpl extends Pane {
+	private ITextVerifierDelegate textVerifierDelegate;
 
-	private ILayouter layouter;
-
-	public LayoutManagerImpl(final ILayouter layoutDescriptor) {
-		this.layouter = layoutDescriptor;
-	}
-
-	public LayoutManagerImpl() {
-		this.layouter = null;
-	}
-
-	public void setLayouter(final ILayouter layoutDescriptor) {
-		this.layouter = layoutDescriptor;
+	public InputModifierTextArea() {
+		super();
 	}
 
 	@Override
-	protected void layoutChildren() {
-
-		super.layoutChildren();
-		if (layouter != null) {
-			layouter.layout();
+	public void deleteText(final int offs, final int len) {
+		if (textVerifierDelegate.doDeleteText(offs, len, getText(), getLength())) {
+			super.deleteText(offs, len);
+			textVerifierDelegate.fireInputChanged(getText());
 		}
 	}
+
+	@Override
+	public void replaceText(final int offset, final int length, final String text) {
+		if (textVerifierDelegate.doReplaceText(offset, length, text, getText(), getLength())) {
+			super.replaceText(offset, length, text);
+			textVerifierDelegate.fireInputChanged(getText());
+		}
+	}
+
+	@Override
+	public void setTextVerifierDelegate(final ITextVerifierDelegate textVerifierDelegate) {
+		this.textVerifierDelegate = textVerifierDelegate;
+	}
+
 }
