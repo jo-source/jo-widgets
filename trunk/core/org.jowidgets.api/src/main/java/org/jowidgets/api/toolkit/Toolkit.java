@@ -53,6 +53,7 @@ import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.ITypedKey;
 
 public final class Toolkit {
 
@@ -91,6 +92,14 @@ public final class Toolkit {
 
 		}
 		return toolkitProvider.get();
+	}
+
+	public static <VALUE_TYPE> void setValue(final ITypedKey<VALUE_TYPE> key, final VALUE_TYPE value) {
+		getInstance().setValue(key, value);
+	}
+
+	public static <VALUE_TYPE> VALUE_TYPE getValue(final ITypedKey<VALUE_TYPE> key) {
+		return getInstance().getValue(key);
 	}
 
 	public static IImageRegistry getImageRegistry() {

@@ -28,7 +28,9 @@
 
 package org.jowidgets.impl.toolkit;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jowidgets.api.animation.IWaitAnimationProcessor;
 import org.jowidgets.api.command.IActionBuilderFactory;
@@ -46,6 +48,7 @@ import org.jowidgets.api.toolkit.IQuestionPane;
 import org.jowidgets.api.toolkit.ISupportedWidgets;
 import org.jowidgets.api.toolkit.IToolkit;
 import org.jowidgets.api.toolkit.IWidgetWrapperFactory;
+import org.jowidgets.api.toolkit.ToolkitInterceptor;
 import org.jowidgets.api.utils.IWidgetUtils;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IFrame;
@@ -74,9 +77,11 @@ import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.image.IImageHandleFactorySpi;
 import org.jowidgets.tools.controller.WindowAdapter;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.ITypedKey;
 
 public class DefaultToolkit implements IToolkit {
 
+	private final Map<ITypedKey<? extends Object>, Object> values;
 	private final IWidgetsServiceProvider widgetsServiceProvider;
 	private final IGenericWidgetFactory genericWidgetFactory;
 	private final ILayoutFactoryProvider layoutFactoryProvider;
@@ -100,6 +105,7 @@ public class DefaultToolkit implements IToolkit {
 
 	public DefaultToolkit(final IWidgetsServiceProvider toolkitSpi) {
 		Assert.paramNotNull(toolkitSpi, "toolkitSpi");
+		this.values = new HashMap<ITypedKey<? extends Object>, Object>();
 		this.widgetsServiceProvider = toolkitSpi;
 		this.genericWidgetFactory = new GenericWidgetFactory(toolkitSpi);
 		this.widgetWrapperFactory = new DefaultWidgetWrapperFactory(genericWidgetFactory, toolkitSpi.getWidgetFactory());
@@ -131,6 +137,20 @@ public class DefaultToolkit implements IToolkit {
 		imageRegistry.registerImageConstant(IconsSmall.QUESTION, imageHandleFactory.createImageHandle(Icons.QUESTION, 16, 16));
 		imageRegistry.registerImageConstant(IconsSmall.WARNING, imageHandleFactory.createImageHandle(Icons.WARNING, 16, 16));
 		imageRegistry.registerImageConstant(IconsSmall.ERROR, imageHandleFactory.createImageHandle(Icons.ERROR, 16, 16));
+
+		ToolkitInterceptor.onToolkitCreate(this);
+	}
+
+	@Override
+	public <VALUE_TYPE> void setValue(final ITypedKey<VALUE_TYPE> key, final VALUE_TYPE value) {
+		Assert.paramNotNull(key, "key");
+		values.put(key, value);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <VALUE_TYPE> VALUE_TYPE getValue(final ITypedKey<VALUE_TYPE> key) {
+		return (VALUE_TYPE) values.get(key);
 	}
 
 	@Override
