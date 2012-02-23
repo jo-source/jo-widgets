@@ -50,8 +50,28 @@ import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.util.ITypedKey;
 
 public interface IToolkit {
+
+	/**
+	 * Sets a value for a typed key for the toolkit
+	 * 
+	 * @param <VALUE_TYPE> The type of the value
+	 * @param key The key
+	 * @param value The value to set, may be null
+	 */
+	<VALUE_TYPE> void setValue(ITypedKey<VALUE_TYPE> key, VALUE_TYPE value);
+
+	/**
+	 * Gets a value for a typed key
+	 * 
+	 * @param <VALUE_TYPE> The type of the resulting value
+	 * @param key The key to get the value for
+	 * 
+	 * @return The value for the key, may be null
+	 */
+	<VALUE_TYPE> VALUE_TYPE getValue(ITypedKey<VALUE_TYPE> key);
 
 	IImageRegistry getImageRegistry();
 
