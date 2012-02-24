@@ -30,8 +30,12 @@ package org.jowidgets.spi.impl.javafx.widgets;
 
 import java.util.List;
 
+import javafx.scene.Node;
 import javafx.scene.control.Control;
+import javafx.scene.control.Tooltip;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
@@ -47,25 +51,30 @@ import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.descriptor.setup.ICompositeSetupCommon;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
+import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.spi.widgets.ICompositeSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
 public class CompositeImpl implements ICompositeSpi {
-	private final Pane pane;
-	private final IGenericWidgetFactory factory;
+	private final GridPane pane;
 	private final JavafxContainer containerDelegate;
+	private final IGenericWidgetFactory factory;
+	private int indexsize;
 
 	public CompositeImpl(final IGenericWidgetFactory factory, final ICompositeSetupCommon setup) {
-		pane = new Pane();
 		this.factory = factory;
-		containerDelegate = new JavafxContainer(this.factory, pane);
+		pane = new GridPane();
+		indexsize = 0;
+		//TODO DB remove this after testing 
+		pane.setStyle("-fx-border-color: #00FF00;");
+		containerDelegate = new JavafxContainer(factory, pane);
 	}
 
 	@Override
-	public Pane getUiReference() {
-		return containerDelegate.getUiReference();
+	public GridPane getUiReference() {
+		return (GridPane) containerDelegate.getUiReference();
 	}
 
 	@Override
@@ -76,7 +85,6 @@ public class CompositeImpl implements ICompositeSpi {
 	@Override
 	public void setEnabled(final boolean enabled) {
 		containerDelegate.setEnabled(enabled);
-
 	}
 
 	@Override
@@ -87,13 +95,11 @@ public class CompositeImpl implements ICompositeSpi {
 	@Override
 	public void redraw() {
 		containerDelegate.redraw();
-
 	}
 
 	@Override
 	public void setRedrawEnabled(final boolean enabled) {
 		containerDelegate.setRedrawEnabled(enabled);
-
 	}
 
 	@Override
@@ -104,13 +110,11 @@ public class CompositeImpl implements ICompositeSpi {
 	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
 		containerDelegate.setForegroundColor(colorValue);
-
 	}
 
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
 		containerDelegate.setBackgroundColor(colorValue);
-
 	}
 
 	@Override
@@ -131,7 +135,6 @@ public class CompositeImpl implements ICompositeSpi {
 	@Override
 	public void setVisible(final boolean visible) {
 		containerDelegate.setVisible(visible);
-
 	}
 
 	@Override
@@ -147,6 +150,13 @@ public class CompositeImpl implements ICompositeSpi {
 	@Override
 	public void setSize(final Dimension size) {
 		containerDelegate.setSize(size);
+		//Size children also because this call only set the size of the pane
+		//to resize the children 
+		for (final Node node : getUiReference().getChildren()) {
+			if (((Control) node).getPrefWidth() == -1d || ((Control) node).getPrefHeight() == -1d) {
+				((Control) node).setMaxSize(Integer.MAX_VALUE, Integer.MAX_VALUE);
+			}
+		}
 	}
 
 	@Override
@@ -162,72 +172,67 @@ public class CompositeImpl implements ICompositeSpi {
 	@Override
 	public void addComponentListener(final IComponentListener componentListener) {
 		containerDelegate.addComponentListener(componentListener);
-
 	}
 
 	@Override
 	public void removeComponentListener(final IComponentListener componentListener) {
 		containerDelegate.removeComponentListener(componentListener);
-
 	}
 
 	@Override
 	public void addFocusListener(final IFocusListener listener) {
 		containerDelegate.addFocusListener(listener);
-
 	}
 
 	@Override
 	public void removeFocusListener(final IFocusListener listener) {
 		containerDelegate.removeFocusListener(listener);
-
 	}
 
 	@Override
 	public void addKeyListener(final IKeyListener listener) {
 		containerDelegate.addKeyListener(listener);
-
 	}
 
 	@Override
 	public void removeKeyListener(final IKeyListener listener) {
 		containerDelegate.removeKeyListener(listener);
-
 	}
 
 	@Override
 	public void addMouseListener(final IMouseListener listener) {
 		containerDelegate.addMouseListener(listener);
-
 	}
 
 	@Override
 	public void removeMouseListener(final IMouseListener listener) {
 		containerDelegate.removeMouseListener(listener);
-
 	}
 
 	@Override
 	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
 		containerDelegate.addPopupDetectionListener(listener);
-
 	}
 
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
 		containerDelegate.removePopupDetectionListener(listener);
-
 	}
 
 	@Override
 	public void setToolTipText(final String toolTip) {
-		// TODO DB Auto-generated method stub
+		final Tooltip tool = new Tooltip(toolTip);
+		if (toolTip == null || toolTip.isEmpty()) {
+			Tooltip.uninstall(getUiReference(), tool);
+		}
+		else {
+			Tooltip.install(getUiReference(), tool);
+		}
 	}
 
 	@Override
 	public void setLayoutConstraints(final Object layoutConstraints) {
 		getUiReference().setUserData(layoutConstraints);
-
 	}
 
 	@Override
@@ -237,18 +242,20 @@ public class CompositeImpl implements ICompositeSpi {
 
 	@Override
 	public Dimension getMinSize() {
-		return new Dimension((int) getUiReference().getMinWidth(), (int) getUiReference().getMinHeight());
+		return new Dimension((int) getUiReference().minHeight(Pane.USE_COMPUTED_SIZE), (int) getUiReference().minHeight(
+				Pane.USE_COMPUTED_SIZE));
 	}
 
 	@Override
 	public Dimension getPreferredSize() {
-		return new Dimension((int) getUiReference().prefWidth(Control.USE_COMPUTED_SIZE), (int) getUiReference().prefHeight(
-				Control.USE_COMPUTED_SIZE));
+		return new Dimension((int) getUiReference().prefWidth(Pane.USE_COMPUTED_SIZE), (int) getUiReference().prefHeight(
+				Pane.USE_COMPUTED_SIZE));
 	}
 
 	@Override
 	public Dimension getMaxSize() {
-		return new Dimension((int) getUiReference().getMaxWidth(), (int) getUiReference().getMaxHeight());
+		return new Dimension((int) getUiReference().maxHeight(Pane.USE_COMPUTED_SIZE), (int) getUiReference().maxHeight(
+				Pane.USE_COMPUTED_SIZE));
 	}
 
 	@Override
@@ -256,9 +263,12 @@ public class CompositeImpl implements ICompositeSpi {
 		final Integer index,
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
-
-		return containerDelegate.add(index, descriptor, layoutConstraints);
-
+		final WIDGET_TYPE result = factory.create(getUiReference(), descriptor);
+		GridPane.setHgrow((Node) result.getUiReference(), Priority.ALWAYS);
+		GridPane.setVgrow((Node) result.getUiReference(), Priority.ALWAYS);
+		getUiReference().add((Node) result.getUiReference(), indexsize, 0);
+		indexsize++;
+		return result;
 	}
 
 	@Override
@@ -266,7 +276,22 @@ public class CompositeImpl implements ICompositeSpi {
 		final Integer index,
 		final ICustomWidgetCreator<WIDGET_TYPE> creator,
 		final Object layoutConstraints) {
-		return containerDelegate.add(index, creator, layoutConstraints);
+		final ICustomWidgetFactory customWidgetFactory = createCustomWidgetFactory();
+		final WIDGET_TYPE result = creator.create(customWidgetFactory);
+		GridPane.setHgrow((Node) result.getUiReference(), Priority.ALWAYS);
+		GridPane.setVgrow((Node) result.getUiReference(), Priority.ALWAYS);
+		getUiReference().add((Node) result.getUiReference(), 0, 0);
+		return result;
+	}
+
+	private ICustomWidgetFactory createCustomWidgetFactory() {
+		return new ICustomWidgetFactory() {
+			@Override
+			public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE create(
+				final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+				return factory.create(getUiReference(), descriptor);
+			}
+		};
 	}
 
 	@Override
@@ -277,19 +302,16 @@ public class CompositeImpl implements ICompositeSpi {
 	@Override
 	public void setTabOrder(final List<? extends IControlCommon> tabOrder) {
 		containerDelegate.setTabOrder(tabOrder);
-
 	}
 
 	@Override
 	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
 		containerDelegate.setLayout(layoutDescriptor);
-
 	}
 
 	@Override
 	public void layoutBegin() {
 		containerDelegate.layoutBegin();
-
 	}
 
 	@Override
@@ -311,5 +333,4 @@ public class CompositeImpl implements ICompositeSpi {
 	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
 		return containerDelegate.computeDecoratedSize(clientAreaSize);
 	}
-
 }

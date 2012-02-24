@@ -38,8 +38,11 @@ import org.jowidgets.spi.impl.image.ImageHandle;
 
 public class JavafxImageHandleFactorySpi extends JavafxImageHandleFactory implements IImageHandleFactorySpi {
 
-	public JavafxImageHandleFactorySpi() {
+	private final JavafxImageRegistry javafxImageRegistry;
+
+	public JavafxImageHandleFactorySpi(final JavafxImageRegistry javafxImageRegistry) {
 		super();
+		this.javafxImageRegistry = javafxImageRegistry;
 	}
 
 	@Override
@@ -87,7 +90,11 @@ public class JavafxImageHandleFactorySpi extends JavafxImageHandleFactory implem
 		return new ImageHandle<ImageView>(new IImageFactory<ImageView>() {
 			@Override
 			public ImageView createImage() {
-				return null;
+				final ImageView templateImage = javafxImageRegistry.getImage(imageConstant);
+				templateImage.setScaleX(width);
+				templateImage.setScaleY(height);
+				templateImage.setSmooth(true);
+				return templateImage;
 			}
 		});
 	}

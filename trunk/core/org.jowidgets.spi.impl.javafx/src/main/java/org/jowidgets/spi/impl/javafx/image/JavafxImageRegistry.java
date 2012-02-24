@@ -48,6 +48,19 @@ public final class JavafxImageRegistry extends ImageRegistry {
 		return (ImageHandle<ImageView>) super.getImageHandle(key);
 	}
 
+	public synchronized ImageView getImage(final IImageConstant key) {
+		if (key == null) {
+			return null;
+		}
+		final ImageHandle<ImageView> imageHandle = getImageHandle(key);
+		if (imageHandle != null) {
+			return imageHandle.getImage();
+		}
+		else {
+			throw new IllegalArgumentException("No icon found for the image constant '" + key + "'");
+		}
+	}
+
 	public static JavafxImageRegistry getInstance() {
 		return INSTANCE;
 	}

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, Michael Grossmann
+ * Copyright (c) 2012, David Bauknecht
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -30,17 +30,22 @@ package org.jowidgets.examples.common;
 import java.util.Date;
 
 import org.jowidgets.api.color.Colors;
+import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.ICheckBox;
 import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.widgets.ILabel;
+import org.jowidgets.api.widgets.IProgressBar;
 import org.jowidgets.api.widgets.ITextArea;
 import org.jowidgets.api.widgets.ITextControl;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICheckBoxBluePrint;
+import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
+import org.jowidgets.api.widgets.blueprint.IProgressBarBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextAreaBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToggleButtonBluePrint;
@@ -65,9 +70,9 @@ public class HelloWorldApplication implements IApplication {
 		final IFrameBluePrint frameBp = BPF.frame().setTitle("Hello World").setBackgroundColor(Colors.WHITE);
 		frameBp.setSize(new Dimension(800, 600));
 		frameBp.setPosition(new Position(500, 100));
-		final ILabelBluePrint labelBp = BPF.label().setText("Vorname: ").alignRight();
-		final ILabelBluePrint label2Bp = BPF.label().setText("Name: ").alignRight();
-		final ILabelBluePrint label3Bp = BPF.label().setText("Sonstiges: ").alignRight();
+		final ILabelBluePrint labelBp = BPF.label().setText("Vorname: ").setIcon(IconsSmall.SETTINGS);
+		final ILabelBluePrint label2Bp = BPF.label().setText("Name: ");
+		final ILabelBluePrint label3Bp = BPF.label().setText("Sonstiges: ");
 		final IButtonBluePrint buttonSubmitBp = BPF.button().setText("Submit").setEnabled(false).setToolTipText("Submit");
 		final IButtonBluePrint buttonClearBp = BPF.button().setText("Clear").setToolTipText("Clear");
 		final IFrame rootFrame = Toolkit.createRootFrame(frameBp, lifecycle);
@@ -80,17 +85,15 @@ public class HelloWorldApplication implements IApplication {
 		final IToggleButtonBluePrint toogleButtonBp = BPF.toggleButton().setText("Toggle me");
 		final IInputFieldBluePrint<Date> inputFieldDateBp = BPF.inputFieldDate();
 		final IInputFieldBluePrint<Integer> inputFieldIntegerNumberBp = BPF.inputFieldIntegerNumber();
-		//		rootFrame.setLayout(Toolkit.getLayoutFactoryProvider().borderLayoutBuilder().margin(5).gap(5).build());
-		//		final IButton button2 = rootFrame.add(buttonBp2, BorderLayoutConstraints.TOP);
-		//		final IButton button = rootFrame.add(buttonBp, BorderLayoutConstraints.BOTTOM);
-		//		final ILabel label = rootFrame.add(labelBp, BorderLayoutConstraints.LEFT);
-		//		final ITextControl textfield = rootFrame.add(textfieldBp, BorderLayoutConstraints.CENTER);
+		final IProgressBarBluePrint progressBarBp = BPF.progressBar(1, 100);
+		final IDialogBluePrint dialogBP = BPF.dialog().setSize(new Dimension(100, 100)).setDecorated(false);
 
+		final IFrame childWindow = rootFrame.createChildWindow(dialogBP);
 		rootFrame.setLayout(Toolkit.getLayoutFactoryProvider().migLayoutBuilder().constraints("insets 10 10 10 10").columnConstraints(
 				"[grow][grow]").rowConstraints("[]20[]20[]20[]20[]20[]").build());
-		rootFrame.add(labelBp, "cell 0 0");
-		rootFrame.add(label2Bp, "cell 0 1");
-		rootFrame.add(label3Bp, "cell 0 2");
+		final ILabel label1 = rootFrame.add(labelBp, "cell 0 0");
+		final ILabel label2 = rootFrame.add(label2Bp, "cell 0 1");
+		final ILabel label3 = rootFrame.add(label3Bp, "cell 0 2");
 		final ITextControl textfield = rootFrame.add(textfieldBp, "cell 1 0, growx, h 0::");
 		final ITextControl textfield2 = rootFrame.add(textfield2Bp, "cell 1 1, growx, h 0::");
 		final ITextControl textfield3 = rootFrame.add(textfield3Bp, "cell 1 2, growx, h 0::");
@@ -101,14 +104,17 @@ public class HelloWorldApplication implements IApplication {
 		rootFrame.add(inputFieldDateBp, "cell 0 6, growx, h 0::");
 		rootFrame.add(toogleButtonBp, "cell 1 5");
 		rootFrame.add(inputFieldIntegerNumberBp, "cell 1 6, growx, h 0::");
+		final IProgressBar progressBar = rootFrame.add(progressBarBp, "cell 0 7");
+		progressBar.setPreferredSize(new Dimension(300, 10));
+
 		checkbox.addInputListener(new IInputListener() {
 
 			@Override
 			public void inputChanged() {
 				if (checkbox.isSelected()) {
-					labelBp.setVisible(false);
-					label2Bp.setVisible(false);
-					label3Bp.setVisible(false);
+					label1.setVisible(false);
+					label2.setVisible(false);
+					label3.setVisible(false);
 					textfield.setVisible(false);
 					textfield2.setVisible(false);
 					textfield3.setVisible(false);
@@ -117,9 +123,9 @@ public class HelloWorldApplication implements IApplication {
 					textarea.setVisible(false);
 				}
 				else {
-					labelBp.setVisible(true);
-					label2Bp.setVisible(true);
-					label3Bp.setVisible(true);
+					label1.setVisible(true);
+					label2.setVisible(true);
+					label3.setVisible(true);
 					textfield.setVisible(true);
 					textfield2.setVisible(true);
 					textfield3.setVisible(true);
@@ -159,7 +165,6 @@ public class HelloWorldApplication implements IApplication {
 				textfield2.setText("");
 				textfield3.setText("");
 				textarea.setText("");
-
 			}
 		});
 
@@ -175,6 +180,7 @@ public class HelloWorldApplication implements IApplication {
 					+ "\n"
 					+ textfield3.getText();
 				textarea.setText(tmp);
+				childWindow.setVisible(true);
 			}
 		});
 
@@ -196,6 +202,5 @@ public class HelloWorldApplication implements IApplication {
 		textfield.addFocusListener(listener);
 		textfield2.addFocusListener(listener);
 		rootFrame.setVisible(true);
-
 	}
 }

@@ -64,13 +64,11 @@ public class JavafxControl extends ActionObservable implements IControlSpi {
 	@Override
 	public Control getUiReference() {
 		return control;
-
 	}
 
 	@Override
 	public void setEnabled(final boolean enabled) {
 		getUiReference().setDisable(!(enabled));
-
 	}
 
 	@Override
@@ -102,13 +100,11 @@ public class JavafxControl extends ActionObservable implements IControlSpi {
 	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
 		componentDelegate.setForegroundColor(colorValue);
-
 	}
 
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
 		componentDelegate.setBackgroundColor(colorValue);
-
 	}
 
 	@Override
@@ -124,13 +120,11 @@ public class JavafxControl extends ActionObservable implements IControlSpi {
 	@Override
 	public void setCursor(final Cursor cursor) {
 		getUiReference().setCursor(CursorConvert.convert(cursor));
-
 	}
 
 	@Override
 	public void setVisible(final boolean visible) {
 		getUiReference().setVisible(visible);
-
 	}
 
 	@Override
@@ -148,9 +142,8 @@ public class JavafxControl extends ActionObservable implements IControlSpi {
 	@Override
 	public void setSize(final Dimension size) {
 		Assert.paramNotNull(size, "size");
-		getUiReference().managedProperty().setValue(false);
+		getUiReference().setManaged(false);
 		getUiReference().resize(size.getWidth(), size.getHeight());
-
 	}
 
 	@Override
@@ -167,19 +160,16 @@ public class JavafxControl extends ActionObservable implements IControlSpi {
 	@Override
 	public void addComponentListener(final IComponentListener componentListener) {
 		componentDelegate.addComponentListener(componentListener);
-
 	}
 
 	@Override
 	public void removeComponentListener(final IComponentListener componentListener) {
 		componentDelegate.removeComponentListener(componentListener);
-
 	}
 
 	@Override
 	public void addFocusListener(final IFocusListener listener) {
 		componentDelegate.addFocusListener(listener);
-
 	}
 
 	@Override
@@ -190,13 +180,11 @@ public class JavafxControl extends ActionObservable implements IControlSpi {
 	@Override
 	public void addKeyListener(final IKeyListener listener) {
 		componentDelegate.addKeyListener(listener);
-
 	}
 
 	@Override
 	public void removeKeyListener(final IKeyListener listener) {
 		componentDelegate.removeKeyListener(listener);
-
 	}
 
 	@Override
@@ -218,7 +206,6 @@ public class JavafxControl extends ActionObservable implements IControlSpi {
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
 		componentDelegate.removePopupDetectionListener(listener);
-
 	}
 
 	@Override
@@ -235,7 +222,6 @@ public class JavafxControl extends ActionObservable implements IControlSpi {
 	@Override
 	public void setLayoutConstraints(final Object layoutConstraints) {
 		getUiReference().setUserData(layoutConstraints);
-
 	}
 
 	@Override

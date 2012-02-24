@@ -37,11 +37,8 @@ import org.jowidgets.spi.widgets.setup.IIconSetupSpi;
 public class IconImpl extends JavafxControl implements IIconSpi {
 
 	public IconImpl(final IIconSetupSpi setup) {
-
 		super(new Label());
-
 		setIcon(setup.getIcon());
-
 	}
 
 	@Override
@@ -58,5 +55,4 @@ public class IconImpl extends JavafxControl implements IIconSpi {
 	public Label getUiReference() {
 		return (Label) super.getUiReference();
 	}
-
 }

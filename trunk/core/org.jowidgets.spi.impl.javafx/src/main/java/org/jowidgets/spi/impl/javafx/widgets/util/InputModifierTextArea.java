@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, dabaukne
+ * Copyright (c) 2012, David Bauknecht
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without

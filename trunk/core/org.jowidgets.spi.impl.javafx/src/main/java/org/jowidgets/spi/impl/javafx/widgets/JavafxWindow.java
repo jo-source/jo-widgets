@@ -69,7 +69,6 @@ public class JavafxWindow implements IWindowSpi {
 		this.stage = stage;
 		pane = new LayoutManagerImpl();
 		scene = new Scene(pane);
-
 		stage.setScene(scene);
 		this.windowObservableDelegate = new WindowObservable();
 		final EventHandler<WindowEvent> handler = new EventHandler<WindowEvent>() {
@@ -114,7 +113,6 @@ public class JavafxWindow implements IWindowSpi {
 	@Override
 	public void pack() {
 		// TODO DB Auto-generated method stub
-
 	}
 
 	@Override

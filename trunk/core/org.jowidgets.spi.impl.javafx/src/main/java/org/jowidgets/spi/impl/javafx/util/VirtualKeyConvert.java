@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2012, David Bauknecht
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -41,7 +41,6 @@ public final class VirtualKeyConvert {
 
 	private VirtualKeyConvert() {};
 
-	//TODO DB test class
 	public static KeyCode convert(final VirtualKey virtualKey) {
 		KeyCode result;
 		if (virtualKey.isCharacter()) {

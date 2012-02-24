@@ -36,7 +36,6 @@ import javafx.scene.Node;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Popup;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
@@ -147,13 +146,12 @@ public class JavafxComponent implements IComponentSpi {
 
 		this.keyListener = new EventHandler<KeyEvent>() {
 
-			@SuppressWarnings("static-access")
 			@Override
 			public void handle(final KeyEvent paramT) {
-				if (paramT.getEventType() == paramT.KEY_PRESSED) {
+				if (paramT.getEventType() == KeyEvent.KEY_PRESSED) {
 					keyObservable.fireKeyPressed(new LazyKeyEventContentFactory(paramT));
 				}
-				if (paramT.getEventType() == paramT.KEY_RELEASED) {
+				if (paramT.getEventType() == KeyEvent.KEY_RELEASED) {
 					keyObservable.fireKeyReleased(new LazyKeyEventContentFactory(paramT));
 				}
 			}
@@ -202,9 +200,6 @@ public class JavafxComponent implements IComponentSpi {
 					if (mouseEvent != null) {
 						mouseObservable.fireMouseReleased(mouseEvent);
 					}
-				}
-				else if (event.getTarget().getClass() == Popup.class) {
-					popupDetectionObservable.firePopupDetected(new Position((int) event.getX(), (int) event.getY()));
 				}
 			}
 		};
@@ -277,7 +272,6 @@ public class JavafxComponent implements IComponentSpi {
 	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
 		styleDelegate.setForegroundColor(colorValue);
-
 	}
 
 	@Override
@@ -298,13 +292,11 @@ public class JavafxComponent implements IComponentSpi {
 	@Override
 	public void setCursor(final Cursor cursor) {
 		getUiReference().setCursor(CursorConvert.convert(cursor));
-
 	}
 
 	@Override
 	public void setVisible(final boolean visible) {
 		getUiReference().setVisible(visible);
-
 	}
 
 	@Override

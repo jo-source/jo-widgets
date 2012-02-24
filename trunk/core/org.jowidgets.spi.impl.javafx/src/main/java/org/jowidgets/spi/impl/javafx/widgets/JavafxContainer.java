@@ -223,9 +223,7 @@ public class JavafxContainer implements IContainerSpi {
 
 	@Override
 	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
-		//		if (layoutDescriptor != null && layoutDescriptor instanceof ILayouter) {
-		//			//pane.setLayouter((ILayouter) layoutDescriptor);
-		//		}
+		//TODO DB set MigLayout Port for JavaFX
 	}
 
 	@Override
