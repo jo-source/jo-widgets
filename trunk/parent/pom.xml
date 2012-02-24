@@ -23,7 +23,6 @@
 		<module>../core/parent</module>
 		<module>../addons/parent</module>
 		<module>../examples/parent</module>
-		<module>../assemblies/parent</module>
 	</modules>
 
 	<distributionManagement>
