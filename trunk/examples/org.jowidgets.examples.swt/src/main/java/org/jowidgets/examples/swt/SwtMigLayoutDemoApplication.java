@@ -28,7 +28,7 @@
 package org.jowidgets.examples.swt;
 
 import org.jowidgets.examples.common.miglayoutdemo.MigLayoutDemoApplication;
-import org.jowidgets.spi.impl.swt.options.SwtOptions;
+import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 
 public final class SwtMigLayoutDemoApplication {
 

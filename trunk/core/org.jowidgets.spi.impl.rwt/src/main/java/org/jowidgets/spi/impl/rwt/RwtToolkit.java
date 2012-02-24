@@ -30,7 +30,7 @@ package org.jowidgets.spi.impl.rwt;
 
 import org.eclipse.swt.widgets.Display;
 import org.jowidgets.impl.toolkit.DefaultToolkit;
-import org.jowidgets.spi.impl.swt.SwtWidgetsServiceProvider;
+import org.jowidgets.spi.impl.swt.common.SwtWidgetsServiceProvider;
 
 public class RwtToolkit extends DefaultToolkit {
 
