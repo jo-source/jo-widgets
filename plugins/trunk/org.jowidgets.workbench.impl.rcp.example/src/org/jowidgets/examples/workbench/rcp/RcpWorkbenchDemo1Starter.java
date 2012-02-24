@@ -35,7 +35,7 @@ import org.eclipse.swt.widgets.Display;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1Factory;
 import org.jowidgets.impl.toolkit.DefaultToolkitProvider;
-import org.jowidgets.spi.impl.swt.SwtWidgetsServiceProvider;
+import org.jowidgets.spi.impl.swt.common.SwtWidgetsServiceProvider;
 import org.jowidgets.workbench.impl.rcp.WorkbenchRunner;
 
 public class RcpWorkbenchDemo1Starter implements IApplication {

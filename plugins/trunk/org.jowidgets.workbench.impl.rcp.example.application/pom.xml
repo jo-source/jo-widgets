@@ -24,7 +24,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
-			<artifactId>org.jowidgets.spi.impl.swt</artifactId>
+			<artifactId>org.jowidgets.spi.impl.swt.common</artifactId>
 			<version>${jo-widgets.version}</version>
 		</dependency>
 		<dependency>

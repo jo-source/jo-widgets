@@ -7,15 +7,15 @@ Bundle-Vendor: jo-widgets.org
 Require-Bundle: org.eclipse.core.runtime;bundle-version="3.6.0",
  org.eclipse.ui;bundle-version="3.6.0",
  org.jowidgets.workbench.api,
- org.jowidgets.examples.common,
  org.jowidgets.api,
  org.jowidgets.common,
  org.jowidgets.impl,
  org.jowidgets.spi,
- org.jowidgets.spi.impl.swt,
  org.jowidgets.workbench.toolkit.api,
  org.jowidgets.workbench.impl.rcp,
- org.jowidgets.workbench.tools;bundle-version="0.0.18"
+ org.jowidgets.workbench.tools,
+ org.jowidgets.spi.impl.swt.common,
+ org.jowidgets.examples.common
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: miglayout-3.7.3.1-swt.jar,
  easymock-3.0.jar,
