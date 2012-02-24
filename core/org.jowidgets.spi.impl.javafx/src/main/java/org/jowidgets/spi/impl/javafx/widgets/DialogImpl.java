@@ -122,10 +122,6 @@ public class DialogImpl extends JavafxWindow implements IFrameSpi {
 		final Integer index,
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
-		//		final WIDGET_TYPE result = factory.create(getUiReference().getScene(), descriptor);
-		//		((Pane) scene.getRoot()).getChildren().add((Node) result.getUiReference());
-		//		setLayoutConstraints(result, layoutConstraints);
-		//		return result;
 		return getContainerDelegate().add(index, descriptor, layoutConstraints);
 	}
 

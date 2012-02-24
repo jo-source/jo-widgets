@@ -53,8 +53,9 @@ public class TextLabelImpl extends JavafxControl implements ITextLabelSpi {
 
 	@Override
 	public void setFontSize(final int size) {
-		getUiReference().setFont(new Font(size));
-
+		if (getUiReference().getFont() != null) {
+			getUiReference().setFont(new Font(getUiReference().getFont().getName(), size));
+		}
 	}
 
 	@Override
@@ -62,7 +63,6 @@ public class TextLabelImpl extends JavafxControl implements ITextLabelSpi {
 		if (getUiReference().getFont() != null) {
 			getUiReference().setFont(new Font(fontName, getUiReference().getFont().getSize()));
 		}
-
 	}
 
 	@Override
@@ -70,7 +70,6 @@ public class TextLabelImpl extends JavafxControl implements ITextLabelSpi {
 		final Label label = this.getUiReference();
 		final Font newFont = FontProvider.deriveFont(label.getFont(), markup);
 		label.setFont(newFont);
-
 	}
 
 	@Override
@@ -80,7 +79,5 @@ public class TextLabelImpl extends JavafxControl implements ITextLabelSpi {
 			text = "<html>" + text.replace("\n", "<br>") + "</html>";
 		}
 		getUiReference().setText(text);
-
 	}
-
 }

@@ -49,10 +49,12 @@ public class JavafxWidgetsServiceProvider implements IWidgetsServiceProvider {
 	private final JavafxImageHandleFactorySpi imageHandleFactorySpi;
 	private final JavafxWidgetFactory widgetFactory;
 	private final JavafxOptionalWidgetsFactory optionalWidgetsFactory;
+	private final JavafxImageRegistry imageRegistry;
 
 	public JavafxWidgetsServiceProvider() {
 		super();
-		this.imageHandleFactorySpi = new JavafxImageHandleFactorySpi();
+		this.imageRegistry = JavafxImageRegistry.getInstance();
+		this.imageHandleFactorySpi = new JavafxImageHandleFactorySpi(imageRegistry);
 		this.widgetFactory = new JavafxWidgetFactory();
 		this.optionalWidgetsFactory = new JavafxOptionalWidgetsFactory();
 	}

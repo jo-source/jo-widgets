@@ -55,7 +55,6 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 		super(factory, new Stage(), setup.isCloseable());
 		getUiReference().setTitle(setup.getTitle());
 		getUiReference().setResizable(setup.isResizable());
-
 	}
 
 	@Override
@@ -109,13 +108,13 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 
 	@Override
 	public void layoutBegin() {
-		getUiReference().getScene().getRoot().layout();
+		throw new UnsupportedOperationException();
 
 	}
 
 	@Override
 	public void layoutEnd() {
-		throw new UnsupportedOperationException();
+		getUiReference().getScene().getRoot().layout();
 
 	}
 
