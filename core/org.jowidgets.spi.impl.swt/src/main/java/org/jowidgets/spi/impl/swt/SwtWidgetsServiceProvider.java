@@ -44,9 +44,11 @@ import org.jowidgets.spi.IOptionalWidgetsFactorySpi;
 import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.image.IImageHandleFactorySpi;
+import org.jowidgets.spi.impl.swt.application.BridgedSwtAwtApplicationRunner;
 import org.jowidgets.spi.impl.swt.application.SwtApplicationRunner;
 import org.jowidgets.spi.impl.swt.image.SwtImageHandleFactorySpi;
 import org.jowidgets.spi.impl.swt.image.SwtImageRegistry;
+import org.jowidgets.spi.impl.swt.options.SwtOptions;
 import org.jowidgets.spi.impl.swt.threads.SwtUiThreadAccess;
 import org.jowidgets.spi.impl.swt.util.PositionConvert;
 
@@ -98,7 +100,12 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider {
 
 	@Override
 	public IApplicationRunner createApplicationRunner() {
-		return new SwtApplicationRunner();
+		if (SwtOptions.isSwtAwtBridgedMode()) {
+			return new BridgedSwtAwtApplicationRunner();
+		}
+		else {
+			return new SwtApplicationRunner();
+		}
 	}
 
 	@Override
