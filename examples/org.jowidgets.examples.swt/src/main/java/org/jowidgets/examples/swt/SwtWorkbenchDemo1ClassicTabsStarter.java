@@ -29,8 +29,8 @@
 package org.jowidgets.examples.swt;
 
 import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1Factory;
-import org.jowidgets.spi.impl.swt.options.SplitlayoutMode;
-import org.jowidgets.spi.impl.swt.options.SwtOptions;
+import org.jowidgets.spi.impl.swt.common.options.SplitlayoutMode;
+import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 import org.jowidgets.workbench.impl.WorkbenchRunner;
 
 public final class SwtWorkbenchDemo1ClassicTabsStarter {
