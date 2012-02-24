@@ -30,6 +30,7 @@ package org.jowidgets.spi.impl.swt.options;
 
 public final class SwtOptions {
 
+	private static boolean swtAwtBridgedMode = false;
 	private static boolean inputVerification = true;
 	private static boolean classicTabs = false;
 	private static SplitlayoutMode splitLayoutMode = SplitlayoutMode.ON_MOUSE_MOVE;
@@ -38,6 +39,14 @@ public final class SwtOptions {
 
 	public static boolean hasClassicTabs() {
 		return classicTabs;
+	}
+
+	public static boolean isSwtAwtBridgedMode() {
+		return swtAwtBridgedMode;
+	}
+
+	public static void setSwtAwtBridgedMode(final boolean swtAwtBridgedMode) {
+		SwtOptions.swtAwtBridgedMode = swtAwtBridgedMode;
 	}
 
 	public static void setClassicTabs(final boolean classicTabs) {
