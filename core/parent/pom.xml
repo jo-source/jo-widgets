@@ -31,9 +31,11 @@
 		<module>../org.jowidgets.spi.impl.dummy</module>
 		<module>../org.jowidgets.spi.impl.swing</module>
 		<module>../org.jowidgets.spi.impl.swing.addons</module>
-		<module>../org.jowidgets.spi.impl.swt.common</module>
+		<module>../org.jowidgets.spi.impl.swt.common</module>	
 		<module>../org.jowidgets.spi.impl.swt</module>
 		<module>../org.jowidgets.spi.impl.swt.addons</module>
+		<module>../org.jowidgets.spi.impl.bridge.swt.awt.common</module>
+		<module>../org.jowidgets.spi.impl.bridge.swt.awt</module>	
 		<module>../org.jowidgets.spi.impl.rwt</module>
 		<module>../org.jowidgets.test.common</module>
 		<module>../org.jowidgets.test.api</module>

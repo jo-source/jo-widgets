@@ -26,38 +26,10 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.swt.common.options;
+package org.jowidgets.util;
 
-public final class SwtOptions {
+public interface IFactory<VALUE_TYPE> {
 
-	private static boolean inputVerification = true;
-	private static boolean classicTabs = false;
-	private static SplitlayoutMode splitLayoutMode = SplitlayoutMode.ON_MOUSE_MOVE;
-
-	private SwtOptions() {}
-
-	public static boolean hasClassicTabs() {
-		return classicTabs;
-	}
-
-	public static void setClassicTabs(final boolean classicTabs) {
-		SwtOptions.classicTabs = classicTabs;
-	}
-
-	public static SplitlayoutMode getSplitLayoutMode() {
-		return splitLayoutMode;
-	}
-
-	public static void setSplitLayoutMode(final SplitlayoutMode splitLayoutMode) {
-		SwtOptions.splitLayoutMode = splitLayoutMode;
-	}
-
-	public static boolean hasInputVerification() {
-		return inputVerification;
-	}
-
-	public static void setInputVerification(final boolean inputVerification) {
-		SwtOptions.inputVerification = inputVerification;
-	}
+	VALUE_TYPE create();
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,38 +26,14 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.swt.common.options;
+package org.jowidgets.spi.impl.bridge.swt.awt.common.swt;
 
-public final class SwtOptions {
+import java.awt.Container;
 
-	private static boolean inputVerification = true;
-	private static boolean classicTabs = false;
-	private static SplitlayoutMode splitLayoutMode = SplitlayoutMode.ON_MOUSE_MOVE;
+import org.jowidgets.spi.widgets.IControlSpi;
 
-	private SwtOptions() {}
+public interface ISwtAwtControlSpi extends IControlSpi {
 
-	public static boolean hasClassicTabs() {
-		return classicTabs;
-	}
-
-	public static void setClassicTabs(final boolean classicTabs) {
-		SwtOptions.classicTabs = classicTabs;
-	}
-
-	public static SplitlayoutMode getSplitLayoutMode() {
-		return splitLayoutMode;
-	}
-
-	public static void setSplitLayoutMode(final SplitlayoutMode splitLayoutMode) {
-		SwtOptions.splitLayoutMode = splitLayoutMode;
-	}
-
-	public static boolean hasInputVerification() {
-		return inputVerification;
-	}
-
-	public static void setInputVerification(final boolean inputVerification) {
-		SwtOptions.inputVerification = inputVerification;
-	}
+	Container getAwtContainer();
 
 }
