@@ -44,13 +44,13 @@ import org.jowidgets.spi.IOptionalWidgetsFactorySpi;
 import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.image.IImageHandleFactorySpi;
-import org.jowidgets.spi.impl.swt.common.application.BridgedSwtAwtApplicationRunner;
-import org.jowidgets.spi.impl.swt.common.application.SwtApplicationRunner;
+import org.jowidgets.spi.impl.swt.common.application.SwtApplicationRunnerFactory;
 import org.jowidgets.spi.impl.swt.common.image.SwtImageHandleFactorySpi;
 import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
-import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 import org.jowidgets.spi.impl.swt.common.threads.SwtUiThreadAccess;
 import org.jowidgets.spi.impl.swt.common.util.PositionConvert;
+import org.jowidgets.util.Assert;
+import org.jowidgets.util.IFactory;
 
 public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider {
 
@@ -59,14 +59,24 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider {
 	private final SwtImageHandleFactorySpi imageHandleFactorySpi;
 	private final SwtWidgetFactory widgetFactory;
 	private final SwtOptionalWidgetsFactory optionalWidgetsFactory;
+	private final IFactory<IApplicationRunner> applicationRunnerFactory;
 
 	public SwtWidgetsServiceProvider() {
-		this(null);
+		this((Display) null);
 	}
 
 	public SwtWidgetsServiceProvider(final Display display) {
-		super();
+		this(display, new SwtApplicationRunnerFactory());
+	}
+
+	public SwtWidgetsServiceProvider(final IFactory<IApplicationRunner> applicationRunnerFactory) {
+		this(null, applicationRunnerFactory);
+	}
+
+	public SwtWidgetsServiceProvider(final Display display, final IFactory<IApplicationRunner> applicationRunnerFactory) {
+		Assert.paramNotNull(applicationRunnerFactory, "applicationRunnerFactory");
 		this.display = display;
+		this.applicationRunnerFactory = applicationRunnerFactory;
 		this.imageRegistry = SwtImageRegistry.getInstance();
 		this.imageHandleFactorySpi = new SwtImageHandleFactorySpi(imageRegistry);
 		this.widgetFactory = new SwtWidgetFactory();
@@ -100,12 +110,7 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider {
 
 	@Override
 	public IApplicationRunner createApplicationRunner() {
-		if (SwtOptions.isSwtAwtBridgedMode()) {
-			return new BridgedSwtAwtApplicationRunner();
-		}
-		else {
-			return new SwtApplicationRunner();
-		}
+		return applicationRunnerFactory.create();
 	}
 
 	@Override

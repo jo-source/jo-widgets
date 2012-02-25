@@ -83,9 +83,8 @@ public class SwtContainer implements IContainerSpi {
 	}
 
 	@Override
-	public final void setLayout(final ILayoutDescriptor layout) {
+	public void setLayout(final ILayoutDescriptor layout) {
 		Assert.paramNotNull(layout, "layoutDescriptor");
-
 		if (layout instanceof MigLayoutDescriptor) {
 			final MigLayoutDescriptor migLayoutManager = (MigLayoutDescriptor) layout;
 			composite.setLayout(new MigLayout(

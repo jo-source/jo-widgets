@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.swt.common.application;
+package org.jowidgets.spi.impl.bridge.swt.awt.common.application;
 
 import java.awt.Window;
 import java.lang.reflect.Method;
@@ -47,13 +47,13 @@ import org.jowidgets.common.application.IApplicationRunner;
  * This can be useful if the SWT-AWT bridge is used. Usually then there are two event dispatching threads that leads
  * to many many problems.
  * 
- * This application runner runs the awt edt and that it pumps every n millis one event on the awt event queue that
+ * This application runner runs the awt edt and then it pumps every n millis one event on the awt event queue that
  * dispatches all swt events.
  * 
  * Remark: This application runner is a prototype that was not tested very intensive yet !!!
  * Potentially known but yet unsolved problems:
  * 
- * 1. If the awt evt hat uncaught exceptions, a new thread will be created by awt.
+ * 1. If the awt evt has uncaught exceptions, a new thread will be created by awt.
  * After that the evt of awt and swt differs. Maybe this could be fixed by installing an uncought exception handler
  * in the awt evt.
  * 
@@ -77,7 +77,7 @@ public class BridgedSwtAwtApplicationRunner implements IApplicationRunner {
 				"The current thread is the EventDispatcherThread. A ApplicationRunner must not be used from the EventDispatcherThread");
 		}
 
-		//Create a lifecycle that disposes all windows when finished
+		//Create a lifecycle that disposes all windows and shells when finished
 		final IApplicationLifecycle lifecycle = new IApplicationLifecycle() {
 
 			@Override
@@ -99,10 +99,12 @@ public class BridgedSwtAwtApplicationRunner implements IApplicationRunner {
 
 					//stop event dispatching
 					try {
-						final Class<?> edtClass = Class.forName("java.awt.EventDispatchThread");
-						final Method method = edtClass.getDeclaredMethod("stopDispatching");
-						method.setAccessible(true);
-						method.invoke(eventDispatcherThread);
+						if (eventDispatcherThread != null) {
+							final Class<?> edtClass = Class.forName("java.awt.EventDispatchThread");
+							final Method method = edtClass.getDeclaredMethod("stopDispatching");
+							method.setAccessible(true);
+							method.invoke(eventDispatcherThread);
+						}
 					}
 					catch (final Exception e) {
 						throw new RuntimeException(e);
