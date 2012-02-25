@@ -37,7 +37,7 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.TabPlacement;
 import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1Factory;
-import org.jowidgets.spi.impl.swing.options.SwingOptions;
+import org.jowidgets.spi.impl.swing.common.options.SwingOptions;
 import org.jowidgets.workbench.impl.WorkbenchRunner;
 
 public final class SwingWorkbenchDemo1FramesStarter {

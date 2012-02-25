@@ -31,7 +31,7 @@ package org.jowidgets.examples.swing;
 import javax.swing.UIManager;
 
 import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1Factory;
-import org.jowidgets.spi.impl.swing.options.SwingOptions;
+import org.jowidgets.spi.impl.swing.common.options.SwingOptions;
 import org.jowidgets.workbench.impl.WorkbenchRunner;
 
 public final class SwingWorkbenchDemo1Starter {
