@@ -34,6 +34,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.eclipse.swt.widgets.Display;
 import org.jowidgets.addons.map.common.IDesignationListener;
 import org.jowidgets.addons.map.common.IMapContext;
+import org.jowidgets.api.threads.IUiThreadAccess;
 import org.jowidgets.api.toolkit.Toolkit;
 
 import de.micromata.opengis.kml.v_2_2_0.Feature;
@@ -140,13 +141,14 @@ final class MapContextAdapter implements IMapContext {
 
 	@Override
 	public <T> boolean startDesignation(final Class<T> type, final IDesignationListener<? super T> listener) {
+		final IUiThreadAccess uiThreadAccess = Toolkit.getUiThreadAccess();
 		return call(new Callable<Boolean>() {
 			@Override
 			public Boolean call() throws Exception {
 				return context.startDesignation(type, new IDesignationListener<T>() {
 					@Override
 					public void onDesignation(final T object) {
-						Toolkit.getUiThreadAccess().invokeLater(new Runnable() {
+						uiThreadAccess.invokeLater(new Runnable() {
 							@Override
 							public void run() {
 								listener.onDesignation(object);

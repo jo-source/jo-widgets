@@ -45,6 +45,7 @@ import org.jowidgets.addons.map.common.impl.GoogleEarth;
 import org.jowidgets.addons.map.common.widget.IMapWidget;
 import org.jowidgets.addons.map.common.widget.IMapWidgetBlueprint;
 import org.jowidgets.addons.map.swing.AbstractSwtThread.IWidgetCallback;
+import org.jowidgets.api.threads.IUiThreadAccess;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
@@ -85,6 +86,7 @@ final class SwingGoogleEarthWidget extends ControlWrapper implements IMapWidget 
 
 	@Override
 	public void initialize(final IAvailableCallback callback) {
+		final IUiThreadAccess uiThreadAccess = Toolkit.getUiThreadAccess();
 		new AbstractSwtThread<IMap>(canvas, new IWidgetCallback<IMap>() {
 			@Override
 			public void onWidgetCreated(final IMap widget) {
@@ -99,7 +101,7 @@ final class SwingGoogleEarthWidget extends ControlWrapper implements IMapWidget 
 					callbackProxy = new IAvailableCallback() {
 						@Override
 						public void onAvailable(final IMapContext mapContext) {
-							Toolkit.getUiThreadAccess().invokeLater(new Runnable() {
+							uiThreadAccess.invokeLater(new Runnable() {
 								@Override
 								public void run() {
 									callback.onAvailable(new MapContextAdapter(((Composite) widget).getDisplay(), mapContext));
