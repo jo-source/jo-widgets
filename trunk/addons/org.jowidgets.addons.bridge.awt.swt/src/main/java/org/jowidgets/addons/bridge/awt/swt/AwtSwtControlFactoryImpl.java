@@ -34,9 +34,8 @@ import org.jowidgets.spi.impl.bridge.swt.awt.common.awt.IAwtSwtControlSpi;
 final class AwtSwtControlFactoryImpl implements IAwtSwtControlFactory {
 
 	@Override
-	public IAwtSwtControl createAwtSwtControl() {
-		final IAwtSwtControlSpi controlSpi = AwtSwtControlFactorySpi.getInstance().createAwtSwtControl();
+	public IAwtSwtControl createAwtSwtControl(final Object parentUiReference) {
+		final IAwtSwtControlSpi controlSpi = AwtSwtControlFactorySpi.getInstance().createAwtSwtControl(parentUiReference);
 		return new AwtSwtControlImpl(controlSpi);
 	}
-
 }

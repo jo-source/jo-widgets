@@ -139,7 +139,7 @@ public class BridgedSwtAwtApplicationRunner implements IApplicationRunner {
 				public void run() {
 					final Display currentDisplay = getDisplay();
 					boolean hasMoreSwtEvents = true;
-					while (!currentDisplay.isDisposed() && hasMoreSwtEvents) {
+					while (!currentDisplay.isDisposed() && hasMoreSwtEvents && Display.getCurrent() != null) {
 						hasMoreSwtEvents = currentDisplay.readAndDispatch();
 					}
 					latch.countDown();

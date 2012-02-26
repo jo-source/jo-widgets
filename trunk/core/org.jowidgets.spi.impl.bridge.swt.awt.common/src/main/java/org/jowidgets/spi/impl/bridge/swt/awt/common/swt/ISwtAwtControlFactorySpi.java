@@ -28,9 +28,8 @@
 
 package org.jowidgets.spi.impl.bridge.swt.awt.common.swt;
 
-
 public interface ISwtAwtControlFactorySpi {
 
-	ISwtAwtControlSpi createSwtAwtControl(final Object parentUiReference);
+	ISwtAwtControlSpi createSwtAwtControl(Object parentUiReference);
 
 }

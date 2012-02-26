@@ -19,6 +19,7 @@
 		<module>../org.jowidgets.addons.bridge.awt.swt</module>
 		<module>../org.jowidgets.addons.testtool</module>
 		<module>../org.jowidgets.addons.icons.silkicons</module>	
+		<module>../widgets/parent</module>
 		<module>../map/parent</module>
 	</modules>
 
