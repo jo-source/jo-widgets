@@ -47,21 +47,29 @@ import org.jowidgets.spi.IOptionalWidgetsFactorySpi;
 import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.image.IImageHandleFactorySpi;
-import org.jowidgets.spi.impl.swing.common.application.SwingApplicationRunner;
+import org.jowidgets.spi.impl.swing.common.application.SwingApplicationRunnerFactory;
 import org.jowidgets.spi.impl.swing.common.image.SwingImageHandleFactorySpi;
 import org.jowidgets.spi.impl.swing.common.image.SwingImageRegistry;
 import org.jowidgets.spi.impl.swing.common.threads.SwingUiThreadAccess;
 import org.jowidgets.spi.impl.swing.common.util.PositionConvert;
+import org.jowidgets.util.Assert;
+import org.jowidgets.util.IFactory;
 
 public class SwingWidgetsServiceProvider implements IWidgetsServiceProvider {
 
+	private final IFactory<IApplicationRunner> applicationRunnerFactory;
 	private final SwingImageHandleFactorySpi imageHandleFactorySpi;
 	private final SwingImageRegistry imageRegistry;
 	private final SwingWidgetFactory widgetFactory;
 	private final SwingOptionalWidgetsFactory optionalWidgetsFactory;
 
 	public SwingWidgetsServiceProvider() {
-		super();
+		this(new SwingApplicationRunnerFactory());
+	}
+
+	public SwingWidgetsServiceProvider(final IFactory<IApplicationRunner> applicationRunnerFactory) {
+		Assert.paramNotNull(applicationRunnerFactory, "applicationRunnerFactory");
+		this.applicationRunnerFactory = applicationRunnerFactory;
 		this.imageRegistry = SwingImageRegistry.getInstance();
 		this.imageHandleFactorySpi = new SwingImageHandleFactorySpi(imageRegistry);
 		this.widgetFactory = new SwingWidgetFactory(imageRegistry);
@@ -95,7 +103,7 @@ public class SwingWidgetsServiceProvider implements IWidgetsServiceProvider {
 
 	@Override
 	public IApplicationRunner createApplicationRunner() {
-		return new SwingApplicationRunner();
+		return applicationRunnerFactory.create();
 	}
 
 	@Override
