@@ -28,10 +28,12 @@
 package org.jowidgets.spi.impl.bridge.swt.awt.common.awt;
 
 import java.awt.Canvas;
+import java.awt.Container;
+import java.awt.event.HierarchyEvent;
+import java.awt.event.HierarchyListener;
 
 import javax.swing.SwingUtilities;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -39,33 +41,50 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.spi.impl.bridge.swt.awt.common.application.BridgedSwtAwtApplicationRunner;
 import org.jowidgets.spi.impl.swing.common.widgets.SwingControl;
+import org.jowidgets.util.Assert;
 
 class AwtSwtControlImpl extends SwingControl implements IAwtSwtControlSpi {
 
-	private final Composite composite;
+	private Composite composite;
 
-	public AwtSwtControlImpl() {
+	public AwtSwtControlImpl(final Object parentUiReference) {
 		super(new Canvas());
 		if (!SwingUtilities.isEventDispatchThread()) {
 			throw new IllegalArgumentException("The AwtSwtControl must be created in the event dispatching thread of swing");
 		}
-		final Display currentDisplay = Display.getCurrent();
-		if (currentDisplay != null) {
-			final Shell shell = SWT_AWT.new_Shell(currentDisplay, getUiReference());
-			shell.setLayout(new FillLayout());
-			this.composite = new Composite(shell, SWT.NONE);
-			composite.setLayout(new FillLayout());
-			//TODO check if this is necessary
-			shell.open();
+
+		Assert.paramHasType(parentUiReference, Container.class, "parentUiReference");
+		final Container parentSwtContainer = (Container) parentUiReference;
+		if (!parentSwtContainer.isDisplayable()) {
+			synchronized (parentSwtContainer.getTreeLock()) {
+				parentSwtContainer.addNotify();
+			}
 		}
-		else {
-			throw new IllegalStateException("This thread has no swt display. "
-				+ "To ensure that the awt event dispatching thread has a display, e.g. the class "
-				+ "'"
-				+ BridgedSwtAwtApplicationRunner.class.getName()
-				+ "' could be used, or, if no application "
-				+ "runner should be used, use the single ui thread pattern implemented there.");
-		}
+
+		//TODO MG the composite will not be created before the SwingContainer impl has added this control to its container
+		//unfortunately this will be happen AFTER the whole widgets was created. 
+		getUiReference().addHierarchyListener(new HierarchyListener() {
+			@Override
+			public void hierarchyChanged(final HierarchyEvent e) {
+				if (getUiReference().getParent() != null && composite == null) {
+					final Display currentDisplay = Display.getCurrent();
+					if (currentDisplay != null) {
+						final Shell shell = SWT_AWT.new_Shell(currentDisplay, getUiReference());
+						shell.setLayout(new FillLayout());
+						composite = shell;
+					}
+					else {
+						throw new IllegalStateException("This thread has no swt display. "
+							+ "To ensure that the awt event dispatching thread has a display, e.g. the class "
+							+ "'"
+							+ BridgedSwtAwtApplicationRunner.class.getName()
+							+ "' could be used, or, if no application "
+							+ "runner should be used, use the single ui thread pattern implemented there.");
+					}
+				}
+			}
+		});
+
 	}
 
 	@Override

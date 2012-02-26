@@ -31,8 +31,8 @@ package org.jowidgets.spi.impl.bridge.swt.awt.common.awt;
 final class AwtSwtControlFactorySpiImpl implements IAwtSwtControlFactorySpi {
 
 	@Override
-	public IAwtSwtControlSpi createAwtSwtControl() {
-		return new AwtSwtControlImpl();
+	public IAwtSwtControlSpi createAwtSwtControl(final Object parentUiReference) {
+		return new AwtSwtControlImpl(parentUiReference);
 	}
 
 }

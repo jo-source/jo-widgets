@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2012, Michael Grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -30,11 +30,12 @@ package org.jowidgets.addons.bridge.awt.swt;
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.impl.widgets.basic.ControlImpl;
 import org.jowidgets.spi.impl.bridge.swt.awt.common.awt.IAwtSwtControlSpi;
+import org.jowidgets.util.IProvider;
 
-class AwtSwtControlImpl extends ControlImpl implements IAwtSwtControl {
+class AwtSwtControlImpl extends ControlImpl implements IAwtSwtControl, IProvider<Composite> {
 
-	public AwtSwtControlImpl(final IAwtSwtControlSpi controlSpi) {
-		super(controlSpi);
+	public AwtSwtControlImpl(final IAwtSwtControlSpi awtSwtControlSpi) {
+		super(awtSwtControlSpi);
 	}
 
 	@Override
@@ -45,6 +46,16 @@ class AwtSwtControlImpl extends ControlImpl implements IAwtSwtControl {
 	@Override
 	public Composite getSwtComposite() {
 		return getWidget().getSwtComposite();
+	}
+
+	@Override
+	public Composite get() {
+		return getSwtComposite();
+	}
+
+	@Override
+	public IProvider<Composite> getSwtCompositeProvider() {
+		return this;
 	}
 
 }
