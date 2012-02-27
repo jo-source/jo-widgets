@@ -33,4 +33,6 @@ public interface IFrameCommon extends IWindowCommon, IContainerCommon {
 
 	void setMinSize(final Dimension minSize);
 
+	void setTitle(String title);
+
 }

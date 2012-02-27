@@ -26,54 +26,22 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.browser.api;
+package org.jowidgets.addons.widgets.browser.tools;
 
-import org.jowidgets.api.widgets.IControl;
+import org.jowidgets.addons.widgets.browser.api.IBrowserDocumentListener;
 
-public interface IBrowser extends IControl {
+public class BrowserDocumentAdapter implements IBrowserDocumentListener {
 
-	void setUrl(String url);
+	@Override
+	public void titleChanged(final String title) {}
 
-	String getUrl();
+	@Override
+	public void statusTextChanged(final String statusText) {}
 
-	void setHtml(String html);
+	@Override
+	public void loadProgressChanged(final int progress, final int totalAmount) {}
 
-	String getHtml();
-
-	Object evaluateScript(String javaScript);
-
-	boolean executeScript(String javaScript);
-
-	void setJavascriptEnabled(boolean enabled);
-
-	boolean isJavascriptEnabled();
-
-	boolean setCookie(String url, String cookieValue);
-
-	String getCookie(String url, String cookieName);
-
-	void clearAllCookies();
-
-	void reload();
-
-	void cancel();
-
-	void back();
-
-	boolean isBackEnabled();
-
-	void forward();
-
-	boolean isForwardEnabled();
-
-	void addLocationListener(IBrowserLocationListener listener);
-
-	void removeLocationListener(IBrowserLocationListener listener);
-
-	void addDocumentListener(IBrowserDocumentListener listener);
-
-	void removeDocumentListener(IBrowserDocumentListener listener);
-
-	//TODO MG - HRW discuss and complete interface
+	@Override
+	public void loadFinished() {}
 
 }

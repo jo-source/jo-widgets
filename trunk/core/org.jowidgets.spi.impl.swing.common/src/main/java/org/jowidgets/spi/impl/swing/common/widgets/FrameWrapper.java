@@ -84,6 +84,16 @@ public class FrameWrapper extends SwingWindow implements IFrameSpi {
 	}
 
 	@Override
+	public void setTitle(final String title) {
+		if (getUiReference() instanceof JDialog) {
+			((JDialog) getUiReference()).setTitle(title);
+		}
+		else if (getUiReference() instanceof JFrame) {
+			((JFrame) getUiReference()).setTitle(title);
+		}
+	}
+
+	@Override
 	public void setDefaultButton(final IButtonCommon button) {
 		if (getUiReference() instanceof JFrame) {
 			setDefaultButton(((JFrame) getUiReference()).getRootPane(), button);

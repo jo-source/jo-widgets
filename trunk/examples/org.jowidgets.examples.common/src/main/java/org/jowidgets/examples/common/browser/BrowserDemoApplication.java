@@ -28,15 +28,23 @@
 
 package org.jowidgets.examples.common.browser;
 
+import org.jowidgets.addons.icons.silkicons.SilkIcons;
 import org.jowidgets.addons.widgets.browser.api.BrowserBPF;
 import org.jowidgets.addons.widgets.browser.api.IBrowser;
+import org.jowidgets.addons.widgets.browser.api.IBrowserDocumentListener;
+import org.jowidgets.addons.widgets.browser.api.IBrowserLocationEvent;
+import org.jowidgets.addons.widgets.browser.api.IBrowserLocationListener;
+import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.ITextControl;
+import org.jowidgets.api.widgets.ITextLabel;
+import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
+import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.types.VirtualKey;
 import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.controller.IKeyEvent;
@@ -45,10 +53,17 @@ import org.jowidgets.examples.common.icons.DemoIconsInitializer;
 import org.jowidgets.tools.controller.KeyAdapter;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.widgets.blueprint.BPF;
+import org.jowidgets.util.EmptyCheck;
 
 public final class BrowserDemoApplication implements IApplication {
 
 	private static final String HOME_URL = "http://www.google.de";
+
+	private final String titlePrefix;
+
+	public BrowserDemoApplication(final String title) {
+		this.titlePrefix = title;
+	}
 
 	public void start() {
 		DemoIconsInitializer.initialize();
@@ -58,18 +73,25 @@ public final class BrowserDemoApplication implements IApplication {
 	@Override
 	public void start(final IApplicationLifecycle lifecycle) {
 		final IFrame frame = Toolkit.createRootFrame(BPF.frame().setTitle("Browser Demo").autoPackOff(), lifecycle);
+		frame.setBackgroundColor(Colors.WHITE);
 		frame.setSize(1024, 768);
-		frame.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "[][grow, 0::]0"));
+		frame.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "[30!][]0[grow, 0::]2[]2[18!]"));
 
 		final IComposite navigation = frame.add(BPF.composite(), "growx, h 0::, wrap");
-		navigation.setLayout(new MigLayoutDescriptor("[][][grow, 0::]", "0[]0"));
-		final IButton backButton = navigation.add(BPF.button().setText("Back"), "sg bg");
-		final IButton forwardButton = navigation.add(BPF.button().setText("Forward"), "sg bg");
+		navigation.setLayout(new MigLayoutDescriptor("[][][][][grow, 0::]", "0[]0"));
+		final IButton backButton = navigation.add(BPF.button().setEnabled(false).setIcon(SilkIcons.ARROW_LEFT), "sg bg");
+		final IButton forwardButton = navigation.add(BPF.button().setEnabled(false).setIcon(SilkIcons.ARROW_RIGHT), "sg bg");
+		final IButton reloadButton = navigation.add(BPF.button().setIcon(SilkIcons.ARROW_REFRESH), "sg bg");
+		final IButton cancelButton = navigation.add(BPF.button().setEnabled(false).setIcon(SilkIcons.CANCEL), "sg bg");
 		final ITextControl urlField = navigation.add(BPF.textField(), "growx, h 0::");
-		urlField.setText(HOME_URL);
+		frame.add(BPF.separator(), "growx, h 0::, wrap");
 
-		final IBrowser browser = frame.add(BrowserBPF.browser(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-		browser.setUrl(HOME_URL);
+		final IBrowser browser = frame.add(BrowserBPF.browser(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS + ",wrap");
+		frame.add(BPF.separator(), "growx, h 0::, wrap");
+
+		final ITextLabelBluePrint statusLabelBp = BPF.textLabel();
+		statusLabelBp.setForegroundColor(Colors.DISABLED);
+		final ITextLabel statusLabel = frame.add(statusLabelBp, "growx, h 0::, gapleft 5");
 
 		backButton.addActionListener(new IActionListener() {
 			@Override
@@ -85,6 +107,20 @@ public final class BrowserDemoApplication implements IApplication {
 			}
 		});
 
+		reloadButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				browser.reload();
+			}
+		});
+
+		cancelButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				browser.cancel();
+			}
+		});
+
 		urlField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(final IKeyEvent event) {
@@ -93,6 +129,65 @@ public final class BrowserDemoApplication implements IApplication {
 				}
 			}
 		});
+
+		browser.addLocationListener(new IBrowserLocationListener() {
+
+			@Override
+			public void onLocationChange(final IBrowserLocationEvent event, final IVetoable veto) {
+				if (event.getLocation().equals("http://www.gmx.de/")) {
+					veto.veto();
+				}
+			}
+
+			@Override
+			public void locationChanged(final IBrowserLocationEvent event) {
+				if (event.isTopFrameLocation()) {
+					urlField.setText(event.getLocation());
+					checkNavButtons();
+				}
+			}
+
+			private void checkNavButtons() {
+				forwardButton.setEnabled(browser.isForwardEnabled());
+				backButton.setEnabled(browser.isBackEnabled());
+			}
+		});
+
+		browser.addDocumentListener(new IBrowserDocumentListener() {
+
+			@Override
+			public void titleChanged(final String title) {
+				if (EmptyCheck.isEmpty(title)) {
+					frame.setTitle(titlePrefix);
+				}
+				else {
+					frame.setTitle(titlePrefix + " - " + title);
+				}
+			}
+
+			@Override
+			public void statusTextChanged(final String statusText) {
+				statusLabel.setText(" " + statusText);
+			}
+
+			@Override
+			public void loadProgressChanged(final int progress, final int totalAmount) {
+				//CHECKSTYLE:OFF
+				System.out.println("LOAD PROGRESS CHANGED: " + progress + " / " + totalAmount);
+				//CHECKSTYLE:ON
+				cancelButton.setEnabled(progress != totalAmount);
+			}
+
+			@Override
+			public void loadFinished() {
+				//CHECKSTYLE:OFF
+				System.out.println("LOAD FINISHED");
+				//CHECKSTYLE:ON
+				cancelButton.setEnabled(false);
+			}
+		});
+
+		browser.setUrl(HOME_URL);
 
 		frame.setVisible(true);
 	}

@@ -82,6 +82,11 @@ public class FrameImpl extends SwingWindow implements IFrameUiSpi {
 	}
 
 	@Override
+	public void setTitle(final String title) {
+		getUiReference().setTitle(title);
+	}
+
+	@Override
 	public void setDefaultButton(final IButtonCommon button) {
 		if (button != null) {
 			getUiReference().getRootPane().setDefaultButton(TypeCast.toType(button.getUiReference(), JButton.class));

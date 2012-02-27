@@ -178,6 +178,16 @@ public class JoDialog extends Window<IFrame, IDialogBluePrint> implements IFrame
 		getWidget().setMinSize(width, height);
 	}
 
+	@Override
+	public void setTitle(final String title) {
+		if (isInitialized()) {
+			getWidget().setDefaultButton(defaultButton);
+		}
+		else {
+			getBluePrint().setTitle(title);
+		}
+	}
+
 	public static JoDialog toJoDialog(final IFrame widget) {
 		Assert.paramNotNull(widget, "widget");
 		if (widget instanceof JoDialog) {

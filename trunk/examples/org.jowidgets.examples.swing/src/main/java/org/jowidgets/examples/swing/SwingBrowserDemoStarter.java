@@ -41,6 +41,6 @@ public final class SwingBrowserDemoStarter {
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
 		Toolkit.initialize(AwtSwtToolkitProviderFactory.create());
-		new BrowserDemoApplication().start();
+		new BrowserDemoApplication("Swing Browser Demo").start();
 	}
 }

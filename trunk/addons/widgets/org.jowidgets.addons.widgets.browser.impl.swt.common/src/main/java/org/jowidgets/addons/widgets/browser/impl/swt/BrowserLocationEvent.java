@@ -26,54 +26,36 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.browser.api;
+package org.jowidgets.addons.widgets.browser.impl.swt;
 
-import org.jowidgets.api.widgets.IControl;
+import org.eclipse.swt.browser.LocationEvent;
+import org.jowidgets.addons.widgets.browser.api.IBrowserLocationEvent;
 
-public interface IBrowser extends IControl {
+final class BrowserLocationEvent implements IBrowserLocationEvent {
 
-	void setUrl(String url);
+	private final LocationEvent locationEvent;
+	private final String location;
+	private final boolean isTopFrameLocation;
 
-	String getUrl();
+	BrowserLocationEvent(final LocationEvent locationEvent) {
+		this.locationEvent = locationEvent;
+		this.location = locationEvent.location;
+		this.isTopFrameLocation = locationEvent.top;
+	}
 
-	void setHtml(String html);
+	@Override
+	public String getLocation() {
+		return location;
+	}
 
-	String getHtml();
+	@Override
+	public boolean isTopFrameLocation() {
+		return isTopFrameLocation;
+	}
 
-	Object evaluateScript(String javaScript);
-
-	boolean executeScript(String javaScript);
-
-	void setJavascriptEnabled(boolean enabled);
-
-	boolean isJavascriptEnabled();
-
-	boolean setCookie(String url, String cookieValue);
-
-	String getCookie(String url, String cookieName);
-
-	void clearAllCookies();
-
-	void reload();
-
-	void cancel();
-
-	void back();
-
-	boolean isBackEnabled();
-
-	void forward();
-
-	boolean isForwardEnabled();
-
-	void addLocationListener(IBrowserLocationListener listener);
-
-	void removeLocationListener(IBrowserLocationListener listener);
-
-	void addDocumentListener(IBrowserDocumentListener listener);
-
-	void removeDocumentListener(IBrowserDocumentListener listener);
-
-	//TODO MG - HRW discuss and complete interface
+	@Override
+	public String toString() {
+		return "BrowserLocationEvent [locationEvent=" + locationEvent + ", location=" + location + "]";
+	}
 
 }

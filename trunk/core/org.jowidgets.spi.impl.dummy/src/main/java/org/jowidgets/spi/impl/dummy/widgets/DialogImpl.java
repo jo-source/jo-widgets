@@ -63,6 +63,11 @@ public class DialogImpl extends DummyWindow implements IFrameSpi {
 	}
 
 	@Override
+	public void setTitle(final String title) {
+		getUiReference().setTitle(title);
+	}
+
+	@Override
 	public IMenuBarSpi createMenuBar() {
 		return new MenuBarImpl(new UIDMenuItem());
 	}

@@ -156,4 +156,8 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 		getUiReference().setMinWidth(minSize.getWidth());
 	}
 
+	@Override
+	public void setTitle(final String title) {
+		getUiReference().setTitle(title);
+	}
 }

@@ -66,4 +66,8 @@ public class UIDWindow extends UIDContainer {
 		// TODO LG implement setMinSize()
 	}
 
+	public void setTitle(final String title) {
+
+	}
+
 }

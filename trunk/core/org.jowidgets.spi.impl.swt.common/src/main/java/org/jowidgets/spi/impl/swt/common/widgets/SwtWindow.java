@@ -94,6 +94,15 @@ public class SwtWindow extends SwtContainer implements IWindowSpi {
 		}
 	}
 
+	public void setTitle(final String title) {
+		if (title != null) {
+			getUiReference().setText(title);
+		}
+		else {
+			getUiReference().setText("");
+		}
+	}
+
 	@Override
 	public void dispose() {
 		getUiReference().dispose();
