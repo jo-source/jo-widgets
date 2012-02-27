@@ -85,6 +85,11 @@ public class DialogImpl extends JavafxWindow implements IFrameSpi {
 	}
 
 	@Override
+	public void setTitle(final String title) {
+		getUiReference().setTitle(title);
+	}
+
+	@Override
 	public Rectangle getClientArea() {
 		final Pane paneTmp = (Pane) getUiReference().getScene().getRoot();
 		final Insets insets = paneTmp.getInsets();

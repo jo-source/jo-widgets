@@ -96,4 +96,9 @@ public abstract class AbstractFrameSpiWrapper extends AbstractWindowSpiWrapper i
 		return getWidget().computeDecoratedSize(clientAreaSize);
 	}
 
+	@Override
+	public void setTitle(final String title) {
+		getWidget().setTitle(title);
+	}
+
 }

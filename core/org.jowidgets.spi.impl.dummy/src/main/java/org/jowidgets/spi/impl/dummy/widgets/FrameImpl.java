@@ -56,4 +56,9 @@ public class FrameImpl extends DummyWindow implements IFrameSpi {
 		return new MenuBarImpl(new UIDMenuItem());
 	}
 
+	@Override
+	public void setTitle(final String title) {
+		getUiReference().setTitle(title);
+	}
+
 }

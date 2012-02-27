@@ -104,5 +104,4 @@ public class WindowImpl extends SwtWindow implements IWindowSpi {
 	public boolean isVisible() {
 		return getUiReference().isVisible();
 	}
-
 }

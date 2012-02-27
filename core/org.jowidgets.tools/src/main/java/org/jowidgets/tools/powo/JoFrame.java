@@ -163,6 +163,16 @@ public class JoFrame extends Window<IFrame, IFrameBluePrint> implements IFrame {
 	}
 
 	@Override
+	public void setTitle(final String title) {
+		if (isInitialized()) {
+			getWidget().setDefaultButton(defaultButton);
+		}
+		else {
+			getBluePrint().setTitle(title);
+		}
+	}
+
+	@Override
 	public void setMinSize(final Dimension minSize) {
 		getWidget().setMinSize(minSize);
 	}

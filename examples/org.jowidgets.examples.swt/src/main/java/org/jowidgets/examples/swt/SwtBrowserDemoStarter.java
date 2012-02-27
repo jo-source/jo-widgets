@@ -34,7 +34,7 @@ public final class SwtBrowserDemoStarter {
 	private SwtBrowserDemoStarter() {}
 
 	public static void main(final String[] args) throws Exception {
-		new BrowserDemoApplication().start();
+		new BrowserDemoApplication("Swt Browser Demo").start();
 	}
 
 }

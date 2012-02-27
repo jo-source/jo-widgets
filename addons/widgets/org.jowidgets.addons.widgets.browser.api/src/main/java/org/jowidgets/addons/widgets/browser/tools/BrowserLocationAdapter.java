@@ -26,54 +26,18 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.browser.api;
+package org.jowidgets.addons.widgets.browser.tools;
 
-import org.jowidgets.api.widgets.IControl;
+import org.jowidgets.addons.widgets.browser.api.IBrowserLocationEvent;
+import org.jowidgets.addons.widgets.browser.api.IBrowserLocationListener;
+import org.jowidgets.common.types.IVetoable;
 
-public interface IBrowser extends IControl {
+public class BrowserLocationAdapter implements IBrowserLocationListener {
 
-	void setUrl(String url);
+	@Override
+	public void onLocationChange(final IBrowserLocationEvent event, final IVetoable veto) {}
 
-	String getUrl();
-
-	void setHtml(String html);
-
-	String getHtml();
-
-	Object evaluateScript(String javaScript);
-
-	boolean executeScript(String javaScript);
-
-	void setJavascriptEnabled(boolean enabled);
-
-	boolean isJavascriptEnabled();
-
-	boolean setCookie(String url, String cookieValue);
-
-	String getCookie(String url, String cookieName);
-
-	void clearAllCookies();
-
-	void reload();
-
-	void cancel();
-
-	void back();
-
-	boolean isBackEnabled();
-
-	void forward();
-
-	boolean isForwardEnabled();
-
-	void addLocationListener(IBrowserLocationListener listener);
-
-	void removeLocationListener(IBrowserLocationListener listener);
-
-	void addDocumentListener(IBrowserDocumentListener listener);
-
-	void removeDocumentListener(IBrowserDocumentListener listener);
-
-	//TODO MG - HRW discuss and complete interface
+	@Override
+	public void locationChanged(final IBrowserLocationEvent event) {}
 
 }

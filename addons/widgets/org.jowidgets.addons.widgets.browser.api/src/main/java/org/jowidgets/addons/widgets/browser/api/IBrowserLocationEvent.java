@@ -28,52 +28,10 @@
 
 package org.jowidgets.addons.widgets.browser.api;
 
-import org.jowidgets.api.widgets.IControl;
+public interface IBrowserLocationEvent {
 
-public interface IBrowser extends IControl {
+	String getLocation();
 
-	void setUrl(String url);
-
-	String getUrl();
-
-	void setHtml(String html);
-
-	String getHtml();
-
-	Object evaluateScript(String javaScript);
-
-	boolean executeScript(String javaScript);
-
-	void setJavascriptEnabled(boolean enabled);
-
-	boolean isJavascriptEnabled();
-
-	boolean setCookie(String url, String cookieValue);
-
-	String getCookie(String url, String cookieName);
-
-	void clearAllCookies();
-
-	void reload();
-
-	void cancel();
-
-	void back();
-
-	boolean isBackEnabled();
-
-	void forward();
-
-	boolean isForwardEnabled();
-
-	void addLocationListener(IBrowserLocationListener listener);
-
-	void removeLocationListener(IBrowserLocationListener listener);
-
-	void addDocumentListener(IBrowserDocumentListener listener);
-
-	void removeDocumentListener(IBrowserDocumentListener listener);
-
-	//TODO MG - HRW discuss and complete interface
+	boolean isTopFrameLocation();
 
 }

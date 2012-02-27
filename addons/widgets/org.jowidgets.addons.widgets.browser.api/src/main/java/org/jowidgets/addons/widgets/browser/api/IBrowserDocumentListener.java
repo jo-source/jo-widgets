@@ -28,52 +28,14 @@
 
 package org.jowidgets.addons.widgets.browser.api;
 
-import org.jowidgets.api.widgets.IControl;
+public interface IBrowserDocumentListener {
 
-public interface IBrowser extends IControl {
+	void titleChanged(String title);
 
-	void setUrl(String url);
+	void statusTextChanged(String statusText);
 
-	String getUrl();
+	void loadProgressChanged(int progress, int totalAmount);
 
-	void setHtml(String html);
-
-	String getHtml();
-
-	Object evaluateScript(String javaScript);
-
-	boolean executeScript(String javaScript);
-
-	void setJavascriptEnabled(boolean enabled);
-
-	boolean isJavascriptEnabled();
-
-	boolean setCookie(String url, String cookieValue);
-
-	String getCookie(String url, String cookieName);
-
-	void clearAllCookies();
-
-	void reload();
-
-	void cancel();
-
-	void back();
-
-	boolean isBackEnabled();
-
-	void forward();
-
-	boolean isForwardEnabled();
-
-	void addLocationListener(IBrowserLocationListener listener);
-
-	void removeLocationListener(IBrowserLocationListener listener);
-
-	void addDocumentListener(IBrowserDocumentListener listener);
-
-	void removeDocumentListener(IBrowserDocumentListener listener);
-
-	//TODO MG - HRW discuss and complete interface
+	void loadFinished();
 
 }

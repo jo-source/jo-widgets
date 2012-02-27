@@ -103,6 +103,11 @@ public class DialogImpl extends SwingWindow implements IFrameSpi {
 	}
 
 	@Override
+	public void setTitle(final String title) {
+		getUiReference().setTitle(title);
+	}
+
+	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
 		getUiReference().getContentPane().setBackground(ColorConvert.convert(colorValue));
 		super.setBackgroundColor(colorValue);
