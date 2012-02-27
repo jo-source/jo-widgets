@@ -77,6 +77,7 @@ public final class BrowserDemoApplication implements IApplication {
 		frame.setSize(1024, 768);
 		frame.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "[30!][]0[grow, 0::]2[]2[18!]"));
 
+		//add navigation bar
 		final IComposite navigation = frame.add(BPF.composite(), "growx, h 0::, wrap");
 		navigation.setLayout(new MigLayoutDescriptor("[][][][][grow, 0::]", "0[]0"));
 		final IButton backButton = navigation.add(BPF.button().setEnabled(false).setIcon(SilkIcons.ARROW_LEFT), "sg bg");
@@ -86,9 +87,11 @@ public final class BrowserDemoApplication implements IApplication {
 		final ITextControl urlField = navigation.add(BPF.textField(), "growx, h 0::");
 		frame.add(BPF.separator(), "growx, h 0::, wrap");
 
+		//add browser content
 		final IBrowser browser = frame.add(BrowserBPF.browser(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS + ",wrap");
 		frame.add(BPF.separator(), "growx, h 0::, wrap");
 
+		//add status bar
 		final ITextLabelBluePrint statusLabelBp = BPF.textLabel();
 		statusLabelBp.setForegroundColor(Colors.DISABLED);
 		final ITextLabel statusLabel = frame.add(statusLabelBp, "growx, h 0::, gapleft 5");
@@ -135,6 +138,7 @@ public final class BrowserDemoApplication implements IApplication {
 			@Override
 			public void onLocationChange(final IBrowserLocationEvent event, final IVetoable veto) {
 				if (event.getLocation().equals("http://www.gmx.de/")) {
+					Toolkit.getMessagePane().showInfo("GMX will be blocked! \n(Just for test purpose :-)");
 					veto.veto();
 				}
 			}
