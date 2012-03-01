@@ -30,8 +30,6 @@ package org.jowidgets.spi.impl.bridge.swt.awt.common.application;
 
 import java.awt.Window;
 import java.lang.reflect.Method;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.SwingUtilities;
 
@@ -48,7 +46,7 @@ import org.jowidgets.common.application.IApplicationRunner;
  * to many many problems.
  * 
  * This application runner runs the awt edt and then it pumps every n millis one event on the awt event queue that
- * dispatches all swt events.
+ * dispatches m swt events.
  * 
  * Remark: This application runner is a prototype that was not tested very intensive yet !!!
  * Potentially known but yet unsolved problems:
@@ -62,27 +60,35 @@ import org.jowidgets.common.application.IApplicationRunner;
  * In jowidgets this may be fixed by using the same events loop pattern for modal dialogs.
  * 
  */
-public class BridgedSwtAwtApplicationRunner implements IApplicationRunner {
+final class BridgedSwtAwtApplicationRunner implements IApplicationRunner {
 
-	private final AtomicBoolean isRunning = new AtomicBoolean();
-
+	private BridgedSwtEventLoop swtEventLoop;
 	private Thread eventDispatcherThread;
-	private Display display;
+	private Thread eventPumpThread;
 
 	@Override
 	public void run(final IApplication application) {
+
+		if (eventPumpThread != null && Thread.currentThread() != eventPumpThread) {
+			throw new IllegalStateException("The application runner is already running with another event pump thread");
+		}
 
 		if (SwingUtilities.isEventDispatchThread()) {
 			throw new IllegalStateException(
 				"The current thread is the EventDispatcherThread. A ApplicationRunner must not be used from the EventDispatcherThread");
 		}
 
+		swtEventLoop = new BridgedSwtEventLoop();
+		eventPumpThread = Thread.currentThread();
+		eventDispatcherThread = swtEventLoop.getEventDispatchingThread();
+
 		//Create a lifecycle that disposes all windows and shells when finished
 		final IApplicationLifecycle lifecycle = new IApplicationLifecycle() {
 
 			@Override
 			public synchronized void finish() {
-				if (isRunning.getAndSet(false)) {
+				if (eventPumpThread != null) {
+					eventPumpThread = null;
 
 					//dispose all windows
 					for (final Window window : Window.getWindows()) {
@@ -90,14 +96,17 @@ public class BridgedSwtAwtApplicationRunner implements IApplicationRunner {
 					}
 
 					//dispose all shells
-					final Display currentDisplay = getDisplay();
-					if (!currentDisplay.isDisposed()) {
+					final Display currentDisplay = Display.getCurrent();
+					if (currentDisplay != null && !currentDisplay.isDisposed()) {
 						for (final Shell shell : currentDisplay.getShells()) {
 							shell.dispose();
 						}
 					}
 
-					//stop event dispatching
+					//stop the swt event dispatching
+					swtEventLoop.stop();
+
+					//stop the awt event dispatching
 					try {
 						if (eventDispatcherThread != null) {
 							final Class<?> edtClass = Class.forName("java.awt.EventDispatchThread");
@@ -113,58 +122,19 @@ public class BridgedSwtAwtApplicationRunner implements IApplicationRunner {
 			}
 		};
 
-		isRunning.set(true);
-
-		final CountDownLatch initLatch = new CountDownLatch(1);
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				getDisplay();
-				eventDispatcherThread = Thread.currentThread();
-				application.start(lifecycle);
-				initLatch.countDown();
-			}
-		});
 		try {
-			initLatch.await();
+			SwingUtilities.invokeAndWait(new Runnable() {
+				@Override
+				public void run() {
+					application.start(lifecycle);
+				}
+			});
 		}
-		catch (final InterruptedException e) {
+		catch (final Exception e) {
 			throw new RuntimeException(e);
 		}
 
-		while (isRunning.get()) {
-			final CountDownLatch latch = new CountDownLatch(1);
-			SwingUtilities.invokeLater(new Runnable() {
-				@Override
-				public void run() {
-					final Display currentDisplay = getDisplay();
-					boolean hasMoreSwtEvents = true;
-					while (!currentDisplay.isDisposed() && hasMoreSwtEvents && Display.getCurrent() != null) {
-						hasMoreSwtEvents = currentDisplay.readAndDispatch();
-					}
-					latch.countDown();
-				}
-			});
-			try {
-				latch.await();
-				Thread.sleep(5);
-			}
-			catch (final Exception e) {
-				throw new RuntimeException(e);
-			}
-		}
-
+		//this will block until the lifecycle was finished
+		swtEventLoop.start();
 	}
-
-	private Display getDisplay() {
-		if (display == null) {
-			display = Display.getDefault();
-			if (display.getThread() != Thread.currentThread()) {
-				throw new IllegalStateException(
-					"A default Display exists, but the current thread is not the owner of this display.");
-			}
-		}
-		return display;
-	}
-
 }

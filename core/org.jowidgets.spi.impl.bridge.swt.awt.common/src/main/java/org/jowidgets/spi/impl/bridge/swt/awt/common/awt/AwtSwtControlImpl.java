@@ -39,7 +39,6 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.jowidgets.spi.impl.bridge.swt.awt.common.application.BridgedSwtAwtApplicationRunner;
 import org.jowidgets.spi.impl.swing.common.widgets.SwingControl;
 import org.jowidgets.util.Assert;
 
@@ -57,7 +56,7 @@ class AwtSwtControlImpl extends SwingControl implements IAwtSwtControlSpi {
 		final Container parentSwtContainer = (Container) parentUiReference;
 		if (!parentSwtContainer.isDisplayable()) {
 			synchronized (parentSwtContainer.getTreeLock()) {
-				parentSwtContainer.addNotify();
+				SwingUtilities.getRoot(parentSwtContainer).addNotify();
 			}
 		}
 
@@ -77,7 +76,7 @@ class AwtSwtControlImpl extends SwingControl implements IAwtSwtControlSpi {
 						throw new IllegalStateException("This thread has no swt display. "
 							+ "To ensure that the awt event dispatching thread has a display, e.g. the class "
 							+ "'"
-							+ BridgedSwtAwtApplicationRunner.class.getName()
+							+ "BridgedSwtAwtApplicationRunner"
 							+ "' could be used, or, if no application "
 							+ "runner should be used, use the single ui thread pattern implemented there.");
 					}
