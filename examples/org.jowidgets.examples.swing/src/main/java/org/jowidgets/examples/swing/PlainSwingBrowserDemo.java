@@ -48,8 +48,6 @@ import org.jowidgets.tools.layout.MigLayoutFactory;
 
 public final class PlainSwingBrowserDemo {
 
-	private static BridgedSwtEventLoop swtEventLoop;
-
 	private PlainSwingBrowserDemo() {}
 
 	public static void main(final String[] args) throws Exception {
@@ -57,13 +55,13 @@ public final class PlainSwingBrowserDemo {
 		DemoIconsInitializer.initialize();
 
 		//the swt event loop must be initialized before the swing context will be created
-		swtEventLoop = new BridgedSwtEventLoop();
+		final BridgedSwtEventLoop swtEventLoop = new BridgedSwtEventLoop();
 
 		//The swing context must be created before the swt event loops starts
 		SwingUtilities.invokeAndWait(new Runnable() {
 			@Override
 			public void run() {
-				runInUiThread();
+				runInUiThread(swtEventLoop);
 			}
 		});
 
@@ -72,7 +70,7 @@ public final class PlainSwingBrowserDemo {
 
 	}
 
-	private static void runInUiThread() {
+	private static void runInUiThread(final BridgedSwtEventLoop swtEventLoop) {
 		final JFrame frame = new JFrame();
 		frame.setSize(1024, 768);
 		frame.addWindowListener(new WindowAdapter() {
