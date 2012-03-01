@@ -28,8 +28,6 @@
 
 package org.jowidgets.examples.swing;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -41,7 +39,6 @@ import javax.swing.UIManager;
 import org.jowidgets.addons.widgets.browser.api.BrowserBPF;
 import org.jowidgets.addons.widgets.browser.api.IBrowser;
 import org.jowidgets.api.widgets.IComposite;
-import org.jowidgets.examples.common.icons.DemoIconsInitializer;
 import org.jowidgets.spi.impl.bridge.swt.awt.common.application.BridgedSwtEventLoop;
 import org.jowidgets.spi.impl.swing.addons.SwingToJo;
 import org.jowidgets.tools.layout.MigLayoutFactory;
@@ -51,8 +48,8 @@ public final class PlainSwingBrowserDemo {
 	private PlainSwingBrowserDemo() {}
 
 	public static void main(final String[] args) throws Exception {
+		//set the swing system look and feel
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		DemoIconsInitializer.initialize();
 
 		//the swt event loop must be initialized before the swing context will be created
 		final BridgedSwtEventLoop swtEventLoop = new BridgedSwtEventLoop();
@@ -61,7 +58,7 @@ public final class PlainSwingBrowserDemo {
 		SwingUtilities.invokeAndWait(new Runnable() {
 			@Override
 			public void run() {
-				runInUiThread(swtEventLoop);
+				createSwingContext(swtEventLoop);
 			}
 		});
 
@@ -70,8 +67,9 @@ public final class PlainSwingBrowserDemo {
 
 	}
 
-	private static void runInUiThread(final BridgedSwtEventLoop swtEventLoop) {
+	private static void createSwingContext(final BridgedSwtEventLoop swtEventLoop) {
 		final JFrame frame = new JFrame();
+		frame.setTitle("Plain swing browser demo");
 		frame.setSize(1024, 768);
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
@@ -83,21 +81,17 @@ public final class PlainSwingBrowserDemo {
 			}
 		});
 
-		final Container contentPane = frame.getContentPane();
-		contentPane.setLayout(new BorderLayout());
+		//convert the content pane to a jo widgets composite
+		final JPanel contentPane = (JPanel) frame.getContentPane();
+		final IComposite composite = SwingToJo.create(contentPane);
 
-		final JPanel contentPanel = new JPanel();
-		contentPane.add(BorderLayout.CENTER, contentPanel);
-
-		final IComposite contentComposite = SwingToJo.create(contentPanel);
-		contentComposite.setLayout(MigLayoutFactory.growingInnerCellLayout());
-
-		final IBrowser browser = contentComposite.add(BrowserBPF.browser(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+		//add the browser widget to the composite
+		composite.setLayout(MigLayoutFactory.growingInnerCellLayout());
+		final IBrowser browser = composite.add(BrowserBPF.browser(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 		browser.setUrl("http://www.google.de/");
 
-		//show the frame
+		//make the root frame visible
 		frame.setVisible(true);
-
 	}
 
 }
