@@ -35,13 +35,16 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.spi.impl.javafx.widgets.util.InputModifierTextArea;
+import org.jowidgets.spi.impl.javafx.widgets.util.TextVerifierDelegateImpl;
 import org.jowidgets.spi.widgets.ITextAreaSpi;
 import org.jowidgets.spi.widgets.setup.ITextAreaSetupSpi;
+import org.jowidgets.util.IProvider;
 
-public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaSpi {
+public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaSpi, IProvider<Boolean> {
 
 	private final TextArea textArea;
 	private final StyleUtil styleUtil;
+	private boolean programmaticChange;
 
 	public TextAreaImpl(final ITextAreaSetupSpi setup) {
 		super(new ScrollPane());
@@ -64,6 +67,18 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 			styleUtil.setNoBorder();
 		}
 
+		getInputModifierField().setTextVerifierDelegate(
+				new TextVerifierDelegateImpl(
+					setup.getInputVerifier(),
+					this,
+					setup.getInputChangeEventPolicy(),
+					setup.getMaxLength(),
+					this));
+
+	}
+
+	private InputModifierTextArea getInputModifierField() {
+		return (InputModifierTextArea) getUiReference().getContent();
 	}
 
 	@Override
@@ -152,6 +167,11 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 		return new Dimension(
 			(int) textArea.minWidth(TextArea.USE_COMPUTED_SIZE),
 			(int) textArea.minHeight(TextArea.USE_COMPUTED_SIZE));
+	}
+
+	@Override
+	public Boolean get() {
+		return Boolean.valueOf(programmaticChange);
 	}
 
 }

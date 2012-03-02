@@ -79,6 +79,9 @@ public class TextFieldImpl extends AbstractTextInputControl implements ITextCont
 					final Boolean newValue) {
 					if (newValue) {
 						getUiReference().selectPositionCaret(0);
+						if (getText().isEmpty()) {
+							setText(setup.getMask().getPlaceholder());
+						}
 					}
 				}
 			});
@@ -164,12 +167,11 @@ public class TextFieldImpl extends AbstractTextInputControl implements ITextCont
 
 	@Override
 	public void setCaretPosition(final int pos) {
-		getUiReference().selectPositionCaret(pos);
+		getUiReference().positionCaret(pos);
 	}
 
 	@Override
 	public int getCaretPosition() {
 		return getUiReference().getCaretPosition();
 	}
-
 }

@@ -52,15 +52,20 @@ import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
+import org.jowidgets.common.widgets.layout.ILayouter;
+import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.spi.impl.javafx.layout.LayoutManagerImpl;
 import org.jowidgets.spi.impl.javafx.util.CursorConvert;
 import org.jowidgets.spi.widgets.IContainerSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
+import org.jowidgets.util.Assert;
+import org.tbee.javafx.scene.layout.MigPane;
 
 public class JavafxContainer implements IContainerSpi {
 
 	private final IGenericWidgetFactory factory;
-	private final Pane pane;
-	private final JavafxComponent componentDelegate;
+	private Pane pane;
+	private JavafxComponent componentDelegate;
 
 	public JavafxContainer(final IGenericWidgetFactory factory, final Pane pane) {
 		this.pane = pane;
@@ -223,7 +228,25 @@ public class JavafxContainer implements IContainerSpi {
 
 	@Override
 	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
-		//TODO DB set MigLayout Port for JavaFX
+		Assert.paramNotNull(layoutDescriptor, "layout");
+		if (layoutDescriptor instanceof MigLayoutDescriptor) {
+			final MigLayoutDescriptor migLayoutManager = (MigLayoutDescriptor) layoutDescriptor;
+			pane = new MigPane(
+				migLayoutManager.getLayoutConstraints(),
+				migLayoutManager.getColumnConstraints(),
+				migLayoutManager.getRowConstraints());
+			componentDelegate = new JavafxComponent(pane);
+		}
+		else if (layoutDescriptor instanceof ILayouter) {
+			pane = new LayoutManagerImpl((ILayouter) layoutDescriptor);
+			setLayoutConstraints(this, layoutDescriptor);
+			componentDelegate = new JavafxComponent(pane);
+		}
+		else {
+			throw new IllegalArgumentException("Layout Descriptor of type '"
+				+ layoutDescriptor.getClass().getName()
+				+ "' is not supported");
+		}
 	}
 
 	@Override
@@ -258,8 +281,8 @@ public class JavafxContainer implements IContainerSpi {
 	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
 		int width = clientAreaSize.getWidth();
 		int height = clientAreaSize.getHeight();
-		final Pane pane2 = (Pane) getUiReference().getScene().getRoot();
-		final Insets insets = pane2.getInsets();
+		final Pane paneTmp = (Pane) getUiReference().getScene().getRoot();
+		final Insets insets = paneTmp.getInsets();
 		if (insets != null) {
 			width = (int) (width + insets.getLeft() + insets.getRight());
 			height = (int) (height + insets.getTop() + insets.getBottom());
@@ -273,7 +296,7 @@ public class JavafxContainer implements IContainerSpi {
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
 		final WIDGET_TYPE result = factory.create(getUiReference(), descriptor);
-		getUiReference().getChildren().add((Node) result.getUiReference());
+		addToContainer((Node) result.getUiReference(), layoutConstraints);
 		setLayoutConstraints(result, layoutConstraints);
 		return result;
 	}
@@ -285,9 +308,18 @@ public class JavafxContainer implements IContainerSpi {
 		final Object layoutConstraints) {
 		final ICustomWidgetFactory customWidgetFactory = createCustomWidgetFactory();
 		final WIDGET_TYPE result = creator.create(customWidgetFactory);
-		getUiReference().getChildren().add((Node) result.getUiReference());
+		addToContainer((Node) result.getUiReference(), layoutConstraints);
 		setLayoutConstraints(result, layoutConstraints);
 		return result;
+	}
+
+	private void addToContainer(final Node result, final Object layoutConstraints) {
+		if (getUiReference() instanceof MigPane) {
+			((MigPane) getUiReference()).add(result, "" + layoutConstraints);
+		}
+		else {
+			getUiReference().getChildren().add(result);
+		}
 	}
 
 	private ICustomWidgetFactory createCustomWidgetFactory() {

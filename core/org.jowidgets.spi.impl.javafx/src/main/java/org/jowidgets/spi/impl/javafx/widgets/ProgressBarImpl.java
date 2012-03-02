@@ -65,8 +65,8 @@ public class ProgressBarImpl extends JavafxControl implements IProgressBarSpi {
 	public void setProgress(final int progress) {
 
 		if (!(progress < minimum || progress > maximum)) {
-			final double value = 100 / (maximum - minimum) * (progress - minimum);
-			getUiReference().setProgress(value / 100);
+			final double value = (progress - minimum) / (maximum - minimum);
+			getUiReference().setProgress(value);
 		}
 
 	}

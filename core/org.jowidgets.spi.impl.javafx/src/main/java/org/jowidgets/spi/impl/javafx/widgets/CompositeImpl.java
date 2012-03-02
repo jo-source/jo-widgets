@@ -33,9 +33,7 @@ import java.util.List;
 import javafx.scene.Node;
 import javafx.scene.control.Control;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
@@ -51,30 +49,23 @@ import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.descriptor.setup.ICompositeSetupCommon;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
-import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.spi.widgets.ICompositeSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
 public class CompositeImpl implements ICompositeSpi {
-	private final GridPane pane;
+	private final Pane pane;
 	private final JavafxContainer containerDelegate;
-	private final IGenericWidgetFactory factory;
-	private int indexsize;
 
 	public CompositeImpl(final IGenericWidgetFactory factory, final ICompositeSetupCommon setup) {
-		this.factory = factory;
-		pane = new GridPane();
-		indexsize = 0;
-		//TODO DB remove this after testing 
-		pane.setStyle("-fx-border-color: #00FF00;");
+		pane = new Pane();
 		containerDelegate = new JavafxContainer(factory, pane);
 	}
 
 	@Override
-	public GridPane getUiReference() {
-		return (GridPane) containerDelegate.getUiReference();
+	public Pane getUiReference() {
+		return containerDelegate.getUiReference();
 	}
 
 	@Override
@@ -150,8 +141,7 @@ public class CompositeImpl implements ICompositeSpi {
 	@Override
 	public void setSize(final Dimension size) {
 		containerDelegate.setSize(size);
-		//Size children also because this call only set the size of the pane
-		//to resize the children 
+
 		for (final Node node : getUiReference().getChildren()) {
 			if (((Control) node).getPrefWidth() == -1d || ((Control) node).getPrefHeight() == -1d) {
 				((Control) node).setMaxSize(Integer.MAX_VALUE, Integer.MAX_VALUE);
@@ -263,12 +253,8 @@ public class CompositeImpl implements ICompositeSpi {
 		final Integer index,
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
-		final WIDGET_TYPE result = factory.create(getUiReference(), descriptor);
-		GridPane.setHgrow((Node) result.getUiReference(), Priority.ALWAYS);
-		GridPane.setVgrow((Node) result.getUiReference(), Priority.ALWAYS);
-		getUiReference().add((Node) result.getUiReference(), indexsize, 0);
-		indexsize++;
-		return result;
+		return containerDelegate.add(index, descriptor, layoutConstraints);
+
 	}
 
 	@Override
@@ -276,22 +262,7 @@ public class CompositeImpl implements ICompositeSpi {
 		final Integer index,
 		final ICustomWidgetCreator<WIDGET_TYPE> creator,
 		final Object layoutConstraints) {
-		final ICustomWidgetFactory customWidgetFactory = createCustomWidgetFactory();
-		final WIDGET_TYPE result = creator.create(customWidgetFactory);
-		GridPane.setHgrow((Node) result.getUiReference(), Priority.ALWAYS);
-		GridPane.setVgrow((Node) result.getUiReference(), Priority.ALWAYS);
-		getUiReference().add((Node) result.getUiReference(), 0, 0);
-		return result;
-	}
-
-	private ICustomWidgetFactory createCustomWidgetFactory() {
-		return new ICustomWidgetFactory() {
-			@Override
-			public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE create(
-				final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
-				return factory.create(getUiReference(), descriptor);
-			}
-		};
+		return containerDelegate.add(index, creator, layoutConstraints);
 	}
 
 	@Override
