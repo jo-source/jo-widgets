@@ -40,7 +40,7 @@ final class BrowserFactory implements IWidgetFactory<IBrowser, IBrowserBluePrint
 	@Override
 	public IBrowser create(final Object parentUiReference, final IBrowserBluePrint bluePrint) {
 		final IAwtSwtControl awtSwtControl = AwtSwtControlFactory.getInstance().createAwtSwtControl(parentUiReference);
-		return SwtBrowserFactory.create(awtSwtControl, awtSwtControl.getSwtCompositeProvider(), bluePrint);
+		return SwtBrowserFactory.createBrowser(awtSwtControl, awtSwtControl.getSwtCompositeProvider(), bluePrint);
 	}
 
 }

@@ -26,16 +26,15 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.browser.tools;
+package org.jowidgets.addons.widgets.browser.api;
 
-import org.jowidgets.addons.widgets.browser.api.IBrowserDocumentListener;
+import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
+import org.jowidgets.api.widgets.descriptor.setup.IComponentSetup;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-public class BrowserDocumentAdapter implements IBrowserDocumentListener {
-
-	@Override
-	public void titleChanged(final String title) {}
-
-	@Override
-	public void statusTextChanged(final String statusText) {}
+public interface IMainBrowserBluePrint extends
+		IComponentSetup,
+		IComponentSetupBuilder<IMainBrowserBluePrint>,
+		IWidgetDescriptor<IMainBrowser> {
 
 }

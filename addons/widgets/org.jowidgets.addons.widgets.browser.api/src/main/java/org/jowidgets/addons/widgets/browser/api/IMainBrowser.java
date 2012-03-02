@@ -26,16 +26,40 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.browser.tools;
+package org.jowidgets.addons.widgets.browser.api;
 
-import org.jowidgets.addons.widgets.browser.api.IBrowserDocumentListener;
+public interface IMainBrowser extends IBrowser {
 
-public class BrowserDocumentAdapter implements IBrowserDocumentListener {
+	String getUrl();
 
-	@Override
-	public void titleChanged(final String title) {}
+	String getHtml();
 
-	@Override
-	public void statusTextChanged(final String statusText) {}
+	void setJavascriptEnabled(boolean enabled);
+
+	boolean isJavascriptEnabled();
+
+	boolean setCookie(String url, String cookieValue);
+
+	String getCookie(String url, String cookieName);
+
+	void clearAllCookies();
+
+	void reload();
+
+	void cancel();
+
+	void back();
+
+	boolean isBackEnabled();
+
+	void forward();
+
+	boolean isForwardEnabled();
+
+	void addDocumentListener(IBrowserDocumentListener listener);
+
+	void removeDocumentListener(IBrowserDocumentListener listener);
+
+	//TODO MG - HRW discuss and complete interface
 
 }

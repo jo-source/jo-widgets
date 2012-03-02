@@ -38,179 +38,120 @@ import org.eclipse.swt.browser.LocationEvent;
 import org.eclipse.swt.browser.LocationListener;
 import org.eclipse.swt.browser.ProgressEvent;
 import org.eclipse.swt.browser.ProgressListener;
-import org.eclipse.swt.browser.StatusTextEvent;
-import org.eclipse.swt.browser.StatusTextListener;
-import org.eclipse.swt.browser.TitleEvent;
-import org.eclipse.swt.browser.TitleListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.jowidgets.addons.widgets.browser.api.BrowserBPF;
 import org.jowidgets.addons.widgets.browser.api.IBrowser;
-import org.jowidgets.addons.widgets.browser.api.IBrowserBluePrint;
-import org.jowidgets.addons.widgets.browser.api.IBrowserDocumentListener;
 import org.jowidgets.addons.widgets.browser.api.IBrowserLocationEvent;
 import org.jowidgets.addons.widgets.browser.api.IBrowserLocationListener;
+import org.jowidgets.addons.widgets.browser.api.IBrowserProgressListener;
 import org.jowidgets.api.widgets.IControl;
+import org.jowidgets.api.widgets.descriptor.setup.IComponentSetup;
+import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.spi.impl.swt.common.color.ColorCache;
 import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.IProvider;
 
-final class BrowserImpl extends ControlWrapper implements IBrowser {
+class BrowserImpl extends ControlWrapper implements IBrowser {
 
-	private final IBrowserBluePrint bluePrint;
+	private final Boolean initialVisiblityState;
+	private final IColorConstant initialBackgroundColor;
+	private final IColorConstant initialForegroundColor;
+
 	private final IProvider<Composite> swtCompositeProvider;
 	private final Set<IBrowserLocationListener> locationListeners;
-	private final Set<IBrowserDocumentListener> documentListeners;
+	private final Set<IBrowserProgressListener> progressListeners;
 
 	private Browser swtBrowser;
 
-	BrowserImpl(final IControl control, final IProvider<Composite> swtCompositeProvider, final IBrowserBluePrint bluePrint) {
+	BrowserImpl(final IControl control, final IProvider<Composite> swtCompositeProvider, final IComponentSetup setup) {
 		super(control);
+
+		this.initialVisiblityState = setup.isVisible();
+		this.initialBackgroundColor = setup.getBackgroundColor();
+		this.initialForegroundColor = setup.getForegroundColor();
+
 		this.swtCompositeProvider = swtCompositeProvider;
-		this.bluePrint = BrowserBPF.browser();
-		this.bluePrint.setSetup(bluePrint);
 
 		this.locationListeners = new LinkedHashSet<IBrowserLocationListener>();
-		this.documentListeners = new LinkedHashSet<IBrowserDocumentListener>();
+		this.progressListeners = new LinkedHashSet<IBrowserProgressListener>();
 	}
 
-	private Browser getSwtBrowser() {
+	final Browser getSwtBrowser() {
 		if (swtBrowser == null) {
-			final Composite swtComposite = swtCompositeProvider.get();
-			swtComposite.setLayout(new FillLayout());
-			this.swtBrowser = new Browser(swtComposite, SWT.NONE);
-
-			if (bluePrint.isVisible() != null) {
-				setVisible(bluePrint.isVisible());
-			}
-
-			if (bluePrint.getBackgroundColor() != null) {
-				swtBrowser.setBackground(ColorCache.getInstance().getColor(bluePrint.getBackgroundColor()));
-			}
-
-			if (bluePrint.getForegroundColor() != null) {
-				swtBrowser.setForeground(ColorCache.getInstance().getColor(bluePrint.getBackgroundColor()));
-			}
-
-			swtBrowser.addLocationListener(new LocationListenerImpl());
-			swtBrowser.addTitleListener(new TitleListenerImpl());
-			swtBrowser.addStatusTextListener(new StatusTextListenerImpl());
-			swtBrowser.addProgressListener(new ProgressListenerImpl());
+			swtBrowser = createSwtBrowser();
 		}
 		return swtBrowser;
 	}
 
+	Browser createSwtBrowser() {
+		final Composite swtComposite = swtCompositeProvider.get();
+		swtComposite.setLayout(new FillLayout());
+		final Browser result = new Browser(swtComposite, SWT.NONE);
+
+		if (initialVisiblityState != null) {
+			setVisible(initialVisiblityState.booleanValue());
+		}
+
+		if (initialBackgroundColor != null) {
+			result.setBackground(ColorCache.getInstance().getColor(initialBackgroundColor));
+		}
+
+		if (initialForegroundColor != null) {
+			result.setForeground(ColorCache.getInstance().getColor(initialForegroundColor));
+		}
+
+		result.addLocationListener(new LocationListenerImpl());
+		result.addProgressListener(new ProgressListenerImpl());
+
+		return result;
+	}
+
 	@Override
-	public void setUrl(final String url) {
+	public final void setUrl(final String url) {
 		getSwtBrowser().setUrl(url);
 	}
 
 	@Override
-	public String getUrl() {
-		return getSwtBrowser().getUrl();
-	}
-
-	@Override
-	public void setHtml(final String html) {
+	public final void setHtml(final String html) {
 		getSwtBrowser().setText(html);
 	}
 
 	@Override
-	public String getHtml() {
-		return getSwtBrowser().getText();
-	}
-
-	@Override
-	public Object evaluateScript(final String javaScript) {
+	public final Object evaluateScript(final String javaScript) {
 		Assert.paramNotNull(javaScript, "javaScript");
 		return getSwtBrowser().evaluate(javaScript);
 	}
 
 	@Override
-	public boolean executeScript(final String javaScript) {
+	public final boolean executeScript(final String javaScript) {
 		Assert.paramNotNull(javaScript, "javaScript");
 		return getSwtBrowser().execute(javaScript);
 	}
 
 	@Override
-	public void setJavascriptEnabled(final boolean enabled) {
-		getSwtBrowser().setJavascriptEnabled(enabled);
-	}
-
-	@Override
-	public boolean isJavascriptEnabled() {
-		return getSwtBrowser().getJavascriptEnabled();
-	}
-
-	@Override
-	public boolean setCookie(final String url, final String cookieValue) {
-		return Browser.setCookie(cookieValue, url);
-	}
-
-	@Override
-	public String getCookie(final String url, final String cookieName) {
-		return Browser.getCookie(cookieName, url);
-	}
-
-	@Override
-	public void clearAllCookies() {
-		Browser.clearSessions();
-	}
-
-	@Override
-	public void back() {
-		getSwtBrowser().back();
-	}
-
-	@Override
-	public boolean isBackEnabled() {
-		return getSwtBrowser().isBackEnabled();
-	}
-
-	@Override
-	public void forward() {
-		getSwtBrowser().forward();
-	}
-
-	@Override
-	public boolean isForwardEnabled() {
-		return getSwtBrowser().isForwardEnabled();
-	}
-
-	@Override
-	public void reload() {
-		getSwtBrowser().refresh();
-	}
-
-	@Override
-	public void cancel() {
-		getSwtBrowser().stop();
-	}
-
-	@Override
-	public void addLocationListener(final IBrowserLocationListener listener) {
+	public final void addLocationListener(final IBrowserLocationListener listener) {
 		Assert.paramNotNull(listener, "listener");
 		locationListeners.add(listener);
 	}
 
 	@Override
-	public void removeLocationListener(final IBrowserLocationListener listener) {
+	public final void removeLocationListener(final IBrowserLocationListener listener) {
 		Assert.paramNotNull(listener, "listener");
 		locationListeners.remove(listener);
 	}
 
 	@Override
-	public void addDocumentListener(final IBrowserDocumentListener listener) {
+	public final void addProgressListener(final IBrowserProgressListener listener) {
 		Assert.paramNotNull(listener, "listener");
-		documentListeners.add(listener);
+		progressListeners.add(listener);
 	}
 
 	@Override
-	public void removeDocumentListener(final IBrowserDocumentListener listener) {
+	public final void removeProgressListener(final IBrowserProgressListener listener) {
 		Assert.paramNotNull(listener, "listener");
-		documentListeners.remove(listener);
+		progressListeners.remove(listener);
 	}
 
 	private final class LocationListenerImpl implements LocationListener {
@@ -257,36 +198,18 @@ final class BrowserImpl extends ControlWrapper implements IBrowser {
 		}
 	}
 
-	private final class TitleListenerImpl implements TitleListener {
-		@Override
-		public void changed(final TitleEvent event) {
-			for (final IBrowserDocumentListener listener : new LinkedList<IBrowserDocumentListener>(documentListeners)) {
-				listener.titleChanged(event.title);
-			}
-		}
-	}
-
-	private final class StatusTextListenerImpl implements StatusTextListener {
-		@Override
-		public void changed(final StatusTextEvent event) {
-			for (final IBrowserDocumentListener listener : new LinkedList<IBrowserDocumentListener>(documentListeners)) {
-				listener.statusTextChanged(event.text);
-			}
-		}
-	}
-
 	private final class ProgressListenerImpl implements ProgressListener {
 
 		@Override
 		public void changed(final ProgressEvent event) {
-			for (final IBrowserDocumentListener listener : new LinkedList<IBrowserDocumentListener>(documentListeners)) {
+			for (final IBrowserProgressListener listener : new LinkedList<IBrowserProgressListener>(progressListeners)) {
 				listener.loadProgressChanged(event.current, event.total);
 			}
 		}
 
 		@Override
 		public void completed(final ProgressEvent event) {
-			for (final IBrowserDocumentListener listener : new LinkedList<IBrowserDocumentListener>(documentListeners)) {
+			for (final IBrowserProgressListener listener : new LinkedList<IBrowserProgressListener>(progressListeners)) {
 				listener.loadFinished();
 			}
 		}

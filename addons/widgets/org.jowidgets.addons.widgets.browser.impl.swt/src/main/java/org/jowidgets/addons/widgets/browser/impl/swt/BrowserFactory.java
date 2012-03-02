@@ -42,7 +42,7 @@ final class BrowserFactory implements IWidgetFactory<IBrowser, IBrowserBluePrint
 	public IBrowser create(final Object parentUiReference, final IBrowserBluePrint bluePrint) {
 		final IComposite composite = Toolkit.getWidgetFactory().create(parentUiReference, BPF.composite());
 		if (composite.getUiReference() instanceof Composite) {
-			return SwtBrowserFactory.create(composite, (Composite) composite.getUiReference(), bluePrint);
+			return SwtBrowserFactory.createBrowser(composite, (Composite) composite.getUiReference(), bluePrint);
 		}
 		else {
 			throw new IllegalArgumentException("The given composite must be an swt composite");
