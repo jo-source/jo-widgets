@@ -61,10 +61,25 @@ public final class TextVerifierDelegateImpl implements ITextVerifierDelegate {
 		this.programmaticChangeProvider = programmaticChangeProvider;
 	}
 
+	public TextVerifierDelegateImpl(
+		final IInputVerifier inputVerifier,
+		final InputObservable inputObservable,
+		final InputChangeEventPolicy inputChangeEventPolicy,
+		final Integer maxLength,
+		final IProvider<Boolean> programmaticChangeProvider) {
+
+		this.inputObservable = inputObservable;
+		this.inputChangeEventPolicy = inputChangeEventPolicy;
+		this.maxLength = maxLength;
+		this.maskVerifier = inputVerifier;
+		this.programmaticChangeProvider = programmaticChangeProvider;
+	}
+
 	@Override
 	public boolean doDeleteText(final int offs, final int len, final String currentText, final int currentLength) {
 		if (maskVerifier == null || maskVerifier.verify(currentText, "", offs, currentLength) || programmaticChangeProvider.get()) {
 			return true;
+
 		}
 		else {
 			return false;
@@ -88,9 +103,7 @@ public final class TextVerifierDelegateImpl implements ITextVerifierDelegate {
 			}
 		}
 
-		if (maskVerifier == null
-			|| maskVerifier.verify(currentText, text, offset, offset + length)
-			|| programmaticChangeProvider.get()) {
+		if (maskVerifier == null || maskVerifier.verify(currentText, text, offset, length) || programmaticChangeProvider.get()) {
 			return true;
 		}
 		else {
