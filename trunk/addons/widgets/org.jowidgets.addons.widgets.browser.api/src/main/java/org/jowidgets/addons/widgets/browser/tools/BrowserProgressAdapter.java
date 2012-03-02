@@ -26,55 +26,16 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.browser.impl.swt;
+package org.jowidgets.addons.widgets.browser.tools;
 
-import org.eclipse.swt.widgets.Composite;
-import org.jowidgets.addons.widgets.browser.api.IBrowser;
-import org.jowidgets.addons.widgets.browser.api.IBrowserBluePrint;
-import org.jowidgets.addons.widgets.browser.api.IMainBrowser;
-import org.jowidgets.addons.widgets.browser.api.IMainBrowserBluePrint;
-import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.util.IProvider;
+import org.jowidgets.addons.widgets.browser.api.IBrowserProgressListener;
 
-public final class SwtBrowserFactory {
+public class BrowserProgressAdapter implements IBrowserProgressListener {
 
-	private SwtBrowserFactory() {}
+	@Override
+	public void loadProgressChanged(final int progress, final int totalAmount) {}
 
-	public static IBrowser createBrowser(final IControl control, final Composite swtComposite, final IBrowserBluePrint bluePrint) {
-		return createBrowser(control, new IProvider<Composite>() {
-			@Override
-			public Composite get() {
-				return swtComposite;
-			}
-		}, bluePrint);
-	}
-
-	public static IBrowser createBrowser(
-		final IControl control,
-		final IProvider<Composite> swtComposite,
-		final IBrowserBluePrint bluePrint) {
-
-		return new BrowserImpl(control, swtComposite, bluePrint);
-	}
-
-	public static IMainBrowser createMainBrowser(
-		final IControl control,
-		final Composite swtComposite,
-		final IMainBrowserBluePrint bluePrint) {
-		return createMainBrowser(control, new IProvider<Composite>() {
-			@Override
-			public Composite get() {
-				return swtComposite;
-			}
-		}, bluePrint);
-	}
-
-	public static IMainBrowser createMainBrowser(
-		final IControl control,
-		final IProvider<Composite> swtComposite,
-		final IMainBrowserBluePrint bluePrint) {
-
-		return new MainBrowserImpl(control, swtComposite, bluePrint);
-	}
+	@Override
+	public void loadFinished() {}
 
 }

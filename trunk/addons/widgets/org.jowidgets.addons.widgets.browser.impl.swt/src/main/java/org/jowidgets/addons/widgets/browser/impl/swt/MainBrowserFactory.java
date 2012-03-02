@@ -29,52 +29,25 @@
 package org.jowidgets.addons.widgets.browser.impl.swt;
 
 import org.eclipse.swt.widgets.Composite;
-import org.jowidgets.addons.widgets.browser.api.IBrowser;
-import org.jowidgets.addons.widgets.browser.api.IBrowserBluePrint;
 import org.jowidgets.addons.widgets.browser.api.IMainBrowser;
 import org.jowidgets.addons.widgets.browser.api.IMainBrowserBluePrint;
-import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.util.IProvider;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.common.widgets.factory.IWidgetFactory;
+import org.jowidgets.tools.widgets.blueprint.BPF;
 
-public final class SwtBrowserFactory {
+final class MainBrowserFactory implements IWidgetFactory<IMainBrowser, IMainBrowserBluePrint> {
 
-	private SwtBrowserFactory() {}
+	@Override
+	public IMainBrowser create(final Object parentUiReference, final IMainBrowserBluePrint bluePrint) {
+		final IComposite composite = Toolkit.getWidgetFactory().create(parentUiReference, BPF.composite());
+		if (composite.getUiReference() instanceof Composite) {
+			return SwtBrowserFactory.createMainBrowser(composite, (Composite) composite.getUiReference(), bluePrint);
+		}
+		else {
+			throw new IllegalArgumentException("The given composite must be an swt composite");
+		}
 
-	public static IBrowser createBrowser(final IControl control, final Composite swtComposite, final IBrowserBluePrint bluePrint) {
-		return createBrowser(control, new IProvider<Composite>() {
-			@Override
-			public Composite get() {
-				return swtComposite;
-			}
-		}, bluePrint);
-	}
-
-	public static IBrowser createBrowser(
-		final IControl control,
-		final IProvider<Composite> swtComposite,
-		final IBrowserBluePrint bluePrint) {
-
-		return new BrowserImpl(control, swtComposite, bluePrint);
-	}
-
-	public static IMainBrowser createMainBrowser(
-		final IControl control,
-		final Composite swtComposite,
-		final IMainBrowserBluePrint bluePrint) {
-		return createMainBrowser(control, new IProvider<Composite>() {
-			@Override
-			public Composite get() {
-				return swtComposite;
-			}
-		}, bluePrint);
-	}
-
-	public static IMainBrowser createMainBrowser(
-		final IControl control,
-		final IProvider<Composite> swtComposite,
-		final IMainBrowserBluePrint bluePrint) {
-
-		return new MainBrowserImpl(control, swtComposite, bluePrint);
 	}
 
 }

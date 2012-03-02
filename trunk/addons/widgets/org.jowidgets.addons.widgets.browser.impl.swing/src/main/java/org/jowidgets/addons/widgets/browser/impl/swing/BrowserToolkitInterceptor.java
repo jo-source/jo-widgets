@@ -29,14 +29,18 @@
 package org.jowidgets.addons.widgets.browser.impl.swing;
 
 import org.jowidgets.addons.widgets.browser.api.IBrowserBluePrint;
+import org.jowidgets.addons.widgets.browser.api.IMainBrowserBluePrint;
 import org.jowidgets.api.toolkit.IToolkit;
 import org.jowidgets.api.toolkit.IToolkitInterceptor;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 
 final class BrowserToolkitInterceptor implements IToolkitInterceptor {
 
 	@Override
 	public void onToolkitCreate(final IToolkit toolkit) {
-		toolkit.getWidgetFactory().register(IBrowserBluePrint.class, new BrowserFactory());
+		final IGenericWidgetFactory widgetFactory = toolkit.getWidgetFactory();
+		widgetFactory.register(IBrowserBluePrint.class, new BrowserFactory());
+		widgetFactory.register(IMainBrowserBluePrint.class, new MainBrowserFactory());
 	}
 
 }

@@ -34,8 +34,4 @@ public interface IBrowserDocumentListener {
 
 	void statusTextChanged(String statusText);
 
-	void loadProgressChanged(int progress, int totalAmount);
-
-	void loadFinished();
-
 }
