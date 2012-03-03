@@ -30,6 +30,11 @@ package org.jowidgets.examples.swing;
 
 import javax.swing.UIManager;
 
+import org.jowidgets.addons.bridge.awt.swt.AwtSwtToolkitProviderFactory;
+import org.jowidgets.addons.map.common.widget.IMapWidgetBlueprint;
+import org.jowidgets.addons.map.swing.SwingGoogleEarthWidgetFactory;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.examples.common.map.MapDemoApplication;
 import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1Factory;
 import org.jowidgets.spi.impl.swing.common.options.SwingOptions;
 import org.jowidgets.workbench.impl.WorkbenchRunner;
@@ -41,6 +46,10 @@ public final class SwingWorkbenchDemo1Starter {
 	public static void main(final String[] args) throws Exception {
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
+		Toolkit.initialize(AwtSwtToolkitProviderFactory.create());
+		Toolkit.getWidgetFactory().register(
+				IMapWidgetBlueprint.class,
+				new SwingGoogleEarthWidgetFactory(MapDemoApplication.API_KEY));
 		SwingOptions.setJoWidgetsTabLayout(true);
 		new WorkbenchRunner().run(new WorkbenchDemo1Factory());
 	}

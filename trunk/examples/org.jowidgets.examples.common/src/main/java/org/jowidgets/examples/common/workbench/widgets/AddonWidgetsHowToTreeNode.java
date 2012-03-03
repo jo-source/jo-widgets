@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,29 +26,33 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.swing;
+package org.jowidgets.examples.common.workbench.widgets;
 
-import javax.swing.UIManager;
+import org.jowidgets.addons.icons.silkicons.SilkIcons;
+import org.jowidgets.examples.common.workbench.base.AbstractDemoComponentNode;
+import org.jowidgets.examples.common.workbench.widgets.views.BrowserView;
+import org.jowidgets.examples.common.workbench.widgets.views.MapView;
+import org.jowidgets.workbench.api.IComponent;
+import org.jowidgets.workbench.api.IComponentContext;
+import org.jowidgets.workbench.api.IComponentNodeContext;
 
-import org.jowidgets.addons.bridge.awt.swt.AwtSwtToolkitProviderFactory;
-import org.jowidgets.addons.map.common.widget.IMapWidgetBlueprint;
-import org.jowidgets.addons.map.swing.SwingGoogleEarthWidgetFactory;
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.examples.common.map.MapDemoApplication;
-import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1Factory;
-import org.jowidgets.workbench.impl.WorkbenchRunner;
+public class AddonWidgetsHowToTreeNode extends AbstractDemoComponentNode {
 
-public final class SwingWorkbenchDemo1Motif {
+	public static final String ID = AddonWidgetsHowToTreeNode.class.getName();
 
-	private SwingWorkbenchDemo1Motif() {}
-
-	public static void main(final String[] args) throws Exception {
-		UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
-		System.setProperty("apple.laf.useScreenMenuBar", "true");
-		Toolkit.initialize(AwtSwtToolkitProviderFactory.create());
-		Toolkit.getWidgetFactory().register(
-				IMapWidgetBlueprint.class,
-				new SwingGoogleEarthWidgetFactory(MapDemoApplication.API_KEY));
-		new WorkbenchRunner().run(new WorkbenchDemo1Factory());
+	public AddonWidgetsHowToTreeNode() {
+		super(ID, "Addons", null, SilkIcons.FOLDER);
 	}
+
+	@Override
+	public void onContextInitialize(final IComponentNodeContext context) {
+		context.add(new SingleViewTreeNode(BrowserView.class, BrowserView.ID, BrowserView.DEFAULT_LABEL));
+		context.add(new SingleViewTreeNode(MapView.class, MapView.ID, MapView.DEFAULT_LABEL));
+	}
+
+	@Override
+	public IComponent createComponent(final IComponentContext context) {
+		return null;
+	}
+
 }

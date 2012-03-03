@@ -28,6 +28,10 @@
 
 package org.jowidgets.examples.swt;
 
+import org.jowidgets.addons.map.common.widget.IMapWidgetBlueprint;
+import org.jowidgets.addons.map.swt.SwtGoogleEarthWidgetFactory;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.examples.common.map.MapDemoApplication;
 import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1Factory;
 import org.jowidgets.workbench.impl.WorkbenchRunner;
 
@@ -36,6 +40,9 @@ public final class SwtWorkbenchDemo1Starter {
 	private SwtWorkbenchDemo1Starter() {}
 
 	public static void main(final String[] args) throws Exception {
+		Toolkit.getWidgetFactory().register(
+				IMapWidgetBlueprint.class,
+				new SwtGoogleEarthWidgetFactory(MapDemoApplication.API_KEY));
 		new WorkbenchRunner().run(new WorkbenchDemo1Factory());
 	}
 
