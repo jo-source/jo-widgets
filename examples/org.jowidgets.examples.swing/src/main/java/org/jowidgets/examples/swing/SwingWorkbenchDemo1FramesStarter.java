@@ -30,12 +30,16 @@ package org.jowidgets.examples.swing;
 
 import javax.swing.UIManager;
 
+import org.jowidgets.addons.bridge.awt.swt.AwtSwtToolkitProviderFactory;
+import org.jowidgets.addons.map.common.widget.IMapWidgetBlueprint;
+import org.jowidgets.addons.map.swing.SwingGoogleEarthWidgetFactory;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITabFolderBluePrint;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.TabPlacement;
+import org.jowidgets.examples.common.map.MapDemoApplication;
 import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1Factory;
 import org.jowidgets.spi.impl.swing.common.options.SwingOptions;
 import org.jowidgets.workbench.impl.WorkbenchRunner;
@@ -48,6 +52,12 @@ public final class SwingWorkbenchDemo1FramesStarter {
 
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
+
+		Toolkit.initialize(AwtSwtToolkitProviderFactory.create());
+
+		Toolkit.getWidgetFactory().register(
+				IMapWidgetBlueprint.class,
+				new SwingGoogleEarthWidgetFactory(MapDemoApplication.API_KEY));
 
 		SwingOptions.setInternalFramesForTabFolders(true);
 		SwingOptions.setOneTouchExpandableSplits(true);

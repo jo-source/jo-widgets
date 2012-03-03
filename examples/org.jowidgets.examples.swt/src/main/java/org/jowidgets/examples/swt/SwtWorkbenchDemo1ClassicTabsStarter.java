@@ -28,6 +28,10 @@
 
 package org.jowidgets.examples.swt;
 
+import org.jowidgets.addons.map.common.widget.IMapWidgetBlueprint;
+import org.jowidgets.addons.map.swt.SwtGoogleEarthWidgetFactory;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.examples.common.map.MapDemoApplication;
 import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1Factory;
 import org.jowidgets.spi.impl.swt.common.options.SplitlayoutMode;
 import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
@@ -40,6 +44,9 @@ public final class SwtWorkbenchDemo1ClassicTabsStarter {
 	public static void main(final String[] args) throws Exception {
 		SwtOptions.setClassicTabs(true);
 		SwtOptions.setSplitLayoutMode(SplitlayoutMode.ON_MOUSE_MOVE);
+		Toolkit.getWidgetFactory().register(
+				IMapWidgetBlueprint.class,
+				new SwtGoogleEarthWidgetFactory(MapDemoApplication.API_KEY));
 		new WorkbenchRunner().run(new WorkbenchDemo1Factory());
 	}
 

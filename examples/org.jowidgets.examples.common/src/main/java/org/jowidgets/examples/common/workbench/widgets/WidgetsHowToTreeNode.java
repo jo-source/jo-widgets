@@ -45,6 +45,7 @@ public class WidgetsHowToTreeNode extends AbstractDemoComponentNode {
 	@Override
 	public void onContextInitialize(final IComponentNodeContext context) {
 		context.add(new LabelsHowToTreeNode());
+		context.add(new AddonWidgetsHowToTreeNode());
 	}
 
 	@Override
