@@ -87,7 +87,7 @@ class BrowserImpl extends ControlWrapper implements IBrowser {
 		this.progressListeners = new LinkedHashSet<IBrowserProgressListener>();
 		this.browserFunctions = new LinkedHashMap<String, Tuple<IBrowserFunction, BrowserFunctionHandle>>();
 
-		swtComposite.addInitializationCallback(new IFutureValueCallback<Composite>() {
+		swtComposite.addFutureCallback(new IFutureValueCallback<Composite>() {
 			@Override
 			public void initialized(final Composite value) {
 				swtBrowser = createSwtBrowser(value);
