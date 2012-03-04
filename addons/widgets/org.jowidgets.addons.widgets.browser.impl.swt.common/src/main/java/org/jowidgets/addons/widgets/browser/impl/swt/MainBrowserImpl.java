@@ -49,6 +49,8 @@ final class MainBrowserImpl extends BrowserImpl implements IMainBrowser {
 
 	private final Set<IBrowserDocumentListener> documentListeners;
 
+	private Boolean javaScriptEnabled;
+
 	MainBrowserImpl(final IControl control, final IAsyncCreationValue<Composite> swtComposite, final IComponentSetup setup) {
 		super(control, swtComposite, setup);
 		this.documentListeners = new LinkedHashSet<IBrowserDocumentListener>();
@@ -59,27 +61,10 @@ final class MainBrowserImpl extends BrowserImpl implements IMainBrowser {
 		final Browser result = super.createSwtBrowser(composite);
 		result.addTitleListener(new TitleListenerImpl());
 		result.addStatusTextListener(new StatusTextListenerImpl());
+		if (javaScriptEnabled != null) {
+			result.setJavascriptEnabled(javaScriptEnabled.booleanValue());
+		}
 		return result;
-	}
-
-	@Override
-	public String getUrl() {
-		return getSwtBrowser().getUrl();
-	}
-
-	@Override
-	public String getHtml() {
-		return getSwtBrowser().getText();
-	}
-
-	@Override
-	public void setJavascriptEnabled(final boolean enabled) {
-		getSwtBrowser().setJavascriptEnabled(enabled);
-	}
-
-	@Override
-	public boolean isJavascriptEnabled() {
-		return getSwtBrowser().getJavascriptEnabled();
 	}
 
 	@Override
@@ -98,33 +83,95 @@ final class MainBrowserImpl extends BrowserImpl implements IMainBrowser {
 	}
 
 	@Override
+	public String getUrl() {
+		if (isInitialized()) {
+			return getSwtBrowser().getUrl();
+		}
+		else {
+			return super.getUrl();
+		}
+	}
+
+	@Override
+	public String getHtml() {
+		if (isInitialized()) {
+			return getSwtBrowser().getText();
+		}
+		else {
+			return super.getHtml();
+		}
+	}
+
+	@Override
+	public void setJavascriptEnabled(final boolean enabled) {
+		if (isInitialized()) {
+			getSwtBrowser().setJavascriptEnabled(enabled);
+		}
+		else {
+			javaScriptEnabled = Boolean.valueOf(enabled);
+		}
+	}
+
+	@Override
+	public boolean isJavascriptEnabled() {
+		if (isInitialized()) {
+			return getSwtBrowser().getJavascriptEnabled();
+		}
+		else {
+			return javaScriptEnabled != null ? javaScriptEnabled.booleanValue() : false;
+		}
+	}
+
+	@Override
 	public void back() {
-		getSwtBrowser().back();
+		if (isInitialized()) {
+			getSwtBrowser().back();
+		}
+		//else back is not enabled, so do nothing
 	}
 
 	@Override
 	public boolean isBackEnabled() {
-		return getSwtBrowser().isBackEnabled();
+		if (isInitialized()) {
+			return getSwtBrowser().isBackEnabled();
+		}
+		else {
+			return false;
+		}
 	}
 
 	@Override
 	public void forward() {
-		getSwtBrowser().forward();
+		if (isInitialized()) {
+			getSwtBrowser().forward();
+		}
+		//else forward is not enabled, so do nothing
 	}
 
 	@Override
 	public boolean isForwardEnabled() {
-		return getSwtBrowser().isForwardEnabled();
+		if (isInitialized()) {
+			return getSwtBrowser().isForwardEnabled();
+		}
+		else {
+			return false;
+		}
 	}
 
 	@Override
 	public void reload() {
-		getSwtBrowser().refresh();
+		if (isInitialized()) {
+			getSwtBrowser().refresh();
+		}
+		//else do nothing
 	}
 
 	@Override
 	public void cancel() {
-		getSwtBrowser().stop();
+		if (isInitialized()) {
+			getSwtBrowser().stop();
+		}
+		//else do nothing
 	}
 
 	@Override
