@@ -28,13 +28,47 @@
 
 package org.jowidgets.util;
 
-public interface IAsyncCreationCallback<VALUE_TYPE> {
+/**
+ * A value of a specific type that will be initialized later.
+ * 
+ * @param <VALUE_TYPE> The type of the value that will be initialized later
+ */
+public interface IFutureValue<VALUE_TYPE> {
 
 	/**
-	 * This method will be invoked for the created value.
+	 * Adds a callback that will be invoked in the following manner:
 	 * 
-	 * @param value The created value
+	 * 1. If the value is already initialized, the given callback will be invoked immediately
+	 * 
+	 * 2. If the value was not already initialized, the given callback will be invoked later
+	 * but immediately after the value was initialized
+	 * 
+	 * Remark: After the initialize method was invoked on the callback, the callback reference will be cleared
+	 * automatically on this future, because a future value can not be initialized twice.
+	 * Clients of this interface may not remove the callback for initialized values manually
+	 * 
+	 * @param callback The callback that gets the initialized value
 	 */
-	void created(VALUE_TYPE value);
+	void addInitializationCallback(IFutureValueCallback<VALUE_TYPE> callback);
+
+	/**
+	 * Removes a creation callback if no longer interested on the value.
+	 * 
+	 * @param callback The callback to remove
+	 */
+	void removeInitializationCallback(IFutureValueCallback<VALUE_TYPE> callback);
+
+	/**
+	 * @return True if the value was already initialized, false otherwise
+	 */
+	boolean isInitialized();
+
+	/**
+	 * Gets the value if the future is initialized and throw a runtime exception otherwise
+	 * 
+	 * @return The value of the future if initialized (may be null)
+	 * @throws IllegalStateException if the future is not already initialized
+	 */
+	VALUE_TYPE getValue();
 
 }

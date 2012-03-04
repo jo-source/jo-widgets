@@ -28,34 +28,13 @@
 
 package org.jowidgets.util;
 
-/**
- * A value of a specific type that will be created later.
- * 
- * @param <VALUE_TYPE> The type of the value that will be created later
- */
-public interface IAsyncCreationValue<VALUE_TYPE> {
+public interface IFutureValueCallback<VALUE_TYPE> {
 
 	/**
-	 * Adds a callback that will be invoked in the following manner:
+	 * This method will be invoked after the value was initialized
 	 * 
-	 * 1. If the value is already created, the given callback will be invoked immediately
-	 * 2. If the value was not already created, the given callback will be invoked later
-	 * but immediately after the value was created
-	 * 
-	 * @param callback The callback that gets the created value
+	 * @param value The initialized value, may be null
 	 */
-	void addCreationCallback(IAsyncCreationCallback<VALUE_TYPE> callback);
-
-	/**
-	 * Removes a creation callback if no longer interested on the value.
-	 * 
-	 * @param callback The callback to remove
-	 */
-	void removeCreationCallback(IAsyncCreationCallback<VALUE_TYPE> callback);
-
-	/**
-	 * @return True if the value was already created, false otherwise
-	 */
-	boolean isCreated();
+	void initialized(VALUE_TYPE value);
 
 }

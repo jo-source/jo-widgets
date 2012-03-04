@@ -36,27 +36,27 @@ import org.jowidgets.util.maybe.IMaybe;
 import org.jowidgets.util.maybe.Nothing;
 import org.jowidgets.util.maybe.Some;
 
-public final class AsyncCreationValue<VALUE_TYPE> implements IAsyncCreationValue<VALUE_TYPE> {
+public final class FutureValue<VALUE_TYPE> implements IFutureValue<VALUE_TYPE> {
 
-	private final Set<IAsyncCreationCallback<VALUE_TYPE>> callbacks;
+	private final Set<IFutureValueCallback<VALUE_TYPE>> callbacks;
 
 	private IMaybe<VALUE_TYPE> value;
 
-	public AsyncCreationValue() {
-		this.callbacks = new LinkedHashSet<IAsyncCreationCallback<VALUE_TYPE>>();
+	public FutureValue() {
+		this.callbacks = new LinkedHashSet<IFutureValueCallback<VALUE_TYPE>>();
 		this.value = Nothing.getInstance();
 	}
 
-	public AsyncCreationValue(final VALUE_TYPE value) {
+	public FutureValue(final VALUE_TYPE value) {
 		this();
-		valueCreated(value);
+		initialize(value);
 	}
 
 	@Override
-	public void addCreationCallback(final IAsyncCreationCallback<VALUE_TYPE> callback) {
+	public void addInitializationCallback(final IFutureValueCallback<VALUE_TYPE> callback) {
 		Assert.paramNotNull(callback, "callback");
-		if (isCreated()) {
-			callback.created(value.getValue());
+		if (isInitialized()) {
+			callback.initialized(value.getValue());
 		}
 		else {
 			callbacks.add(callback);
@@ -64,24 +64,40 @@ public final class AsyncCreationValue<VALUE_TYPE> implements IAsyncCreationValue
 	}
 
 	@Override
-	public void removeCreationCallback(final IAsyncCreationCallback<VALUE_TYPE> callback) {
+	public void removeInitializationCallback(final IFutureValueCallback<VALUE_TYPE> callback) {
 		Assert.paramNotNull(callback, "callback");
 		callbacks.remove(callback);
 	}
 
 	@Override
-	public boolean isCreated() {
+	public boolean isInitialized() {
 		return !value.isNothing();
 	}
 
-	public void valueCreated(final VALUE_TYPE value) {
-		if (isCreated()) {
+	@Override
+	public VALUE_TYPE getValue() {
+		if (isInitialized()) {
+			return value.getValue();
+		}
+		else {
+			throw new IllegalStateException("The future is not already initialized");
+		}
+	}
+
+	/**
+	 * Initializes the future with a defined value. This can only be done once.
+	 * 
+	 * @param value The value to initialize the future with, may be null
+	 * @throws IllegalStateException if the future was already initialized
+	 */
+	public void initialize(final VALUE_TYPE value) {
+		if (isInitialized()) {
 			throw new IllegalStateException("Value must not be created twice");
 		}
 		else {
 			this.value = new Some<VALUE_TYPE>(value);
-			for (final IAsyncCreationCallback<VALUE_TYPE> callback : new LinkedList<IAsyncCreationCallback<VALUE_TYPE>>(callbacks)) {
-				callback.created(value);
+			for (final IFutureValueCallback<VALUE_TYPE> callback : new LinkedList<IFutureValueCallback<VALUE_TYPE>>(callbacks)) {
+				callback.initialized(value);
 			}
 			//the callbacks are no longer needed, so do not hold references longer on them
 			callbacks.clear();

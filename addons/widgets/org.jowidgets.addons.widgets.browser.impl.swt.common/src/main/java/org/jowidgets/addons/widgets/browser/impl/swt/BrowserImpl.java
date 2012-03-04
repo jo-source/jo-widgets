@@ -57,8 +57,8 @@ import org.jowidgets.spi.impl.swt.common.color.ColorCache;
 import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.util.Assert;
-import org.jowidgets.util.IAsyncCreationCallback;
-import org.jowidgets.util.IAsyncCreationValue;
+import org.jowidgets.util.IFutureValueCallback;
+import org.jowidgets.util.IFutureValue;
 import org.jowidgets.util.Tuple;
 
 class BrowserImpl extends ControlWrapper implements IBrowser {
@@ -76,7 +76,7 @@ class BrowserImpl extends ControlWrapper implements IBrowser {
 	private String url;
 	private String html;
 
-	BrowserImpl(final IControl control, final IAsyncCreationValue<Composite> swtComposite, final IComponentSetup setup) {
+	BrowserImpl(final IControl control, final IFutureValue<Composite> swtComposite, final IComponentSetup setup) {
 		super(control);
 
 		this.initialVisiblityState = setup.isVisible();
@@ -87,9 +87,9 @@ class BrowserImpl extends ControlWrapper implements IBrowser {
 		this.progressListeners = new LinkedHashSet<IBrowserProgressListener>();
 		this.browserFunctions = new LinkedHashMap<String, Tuple<IBrowserFunction, BrowserFunctionHandle>>();
 
-		swtComposite.addCreationCallback(new IAsyncCreationCallback<Composite>() {
+		swtComposite.addInitializationCallback(new IFutureValueCallback<Composite>() {
 			@Override
-			public void created(final Composite value) {
+			public void initialized(final Composite value) {
 				swtBrowser = createSwtBrowser(value);
 			}
 		});

@@ -41,13 +41,13 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.spi.impl.swing.common.widgets.SwingControl;
 import org.jowidgets.util.Assert;
-import org.jowidgets.util.AsyncCreationValue;
-import org.jowidgets.util.IAsyncCreationCallback;
-import org.jowidgets.util.IAsyncCreationValue;
+import org.jowidgets.util.FutureValue;
+import org.jowidgets.util.IFutureValueCallback;
+import org.jowidgets.util.IFutureValue;
 
 class AwtSwtControlImpl extends SwingControl implements IAwtSwtControlSpi {
 
-	private final AsyncCreationValue<Composite> asyncCreatedComposite;
+	private final FutureValue<Composite> compositeFuture;
 
 	public AwtSwtControlImpl(final Object parentUiReference) {
 		super(new Canvas());
@@ -63,17 +63,17 @@ class AwtSwtControlImpl extends SwingControl implements IAwtSwtControlSpi {
 			}
 		}
 
-		this.asyncCreatedComposite = new AsyncCreationValue<Composite>();
+		this.compositeFuture = new FutureValue<Composite>();
 
 		final HierarchyListener hierarchyListener = new HierarchyListener() {
 			@Override
 			public void hierarchyChanged(final HierarchyEvent e) {
-				if (getUiReference().getParent() != null && !asyncCreatedComposite.isCreated()) {
+				if (getUiReference().getParent() != null && !compositeFuture.isInitialized()) {
 					final Display currentDisplay = Display.getCurrent();
 					if (currentDisplay != null) {
 						final Shell shell = SWT_AWT.new_Shell(currentDisplay, getUiReference());
 						shell.setLayout(new FillLayout());
-						asyncCreatedComposite.valueCreated(shell);
+						compositeFuture.initialize(shell);
 					}
 					else {
 						throw new IllegalStateException("This thread has no swt display. "
@@ -88,9 +88,9 @@ class AwtSwtControlImpl extends SwingControl implements IAwtSwtControlSpi {
 		};
 
 		getUiReference().addHierarchyListener(hierarchyListener);
-		this.asyncCreatedComposite.addCreationCallback(new IAsyncCreationCallback<Composite>() {
+		this.compositeFuture.addInitializationCallback(new IFutureValueCallback<Composite>() {
 			@Override
-			public void created(final Composite value) {
+			public void initialized(final Composite value) {
 				getUiReference().removeHierarchyListener(hierarchyListener);
 			}
 		});
@@ -102,8 +102,8 @@ class AwtSwtControlImpl extends SwingControl implements IAwtSwtControlSpi {
 	}
 
 	@Override
-	public IAsyncCreationValue<Composite> getSwtComposite() {
-		return asyncCreatedComposite;
+	public IFutureValue<Composite> getSwtComposite() {
+		return compositeFuture;
 	}
 
 }

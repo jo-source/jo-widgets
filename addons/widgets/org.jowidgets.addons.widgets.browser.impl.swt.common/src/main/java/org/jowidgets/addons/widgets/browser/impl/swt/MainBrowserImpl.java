@@ -43,7 +43,7 @@ import org.jowidgets.addons.widgets.browser.api.IMainBrowser;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.descriptor.setup.IComponentSetup;
 import org.jowidgets.util.Assert;
-import org.jowidgets.util.IAsyncCreationValue;
+import org.jowidgets.util.IFutureValue;
 
 final class MainBrowserImpl extends BrowserImpl implements IMainBrowser {
 
@@ -51,7 +51,7 @@ final class MainBrowserImpl extends BrowserImpl implements IMainBrowser {
 
 	private Boolean javaScriptEnabled;
 
-	MainBrowserImpl(final IControl control, final IAsyncCreationValue<Composite> swtComposite, final IComponentSetup setup) {
+	MainBrowserImpl(final IControl control, final IFutureValue<Composite> swtComposite, final IComponentSetup setup) {
 		super(control, swtComposite, setup);
 		this.documentListeners = new LinkedHashSet<IBrowserDocumentListener>();
 	}

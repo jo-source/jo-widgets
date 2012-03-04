@@ -30,7 +30,7 @@ package org.jowidgets.addons.bridge.awt.swt;
 
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.util.IAsyncCreationValue;
+import org.jowidgets.util.IFutureValue;
 
 public interface IAwtSwtControl extends IControl {
 
@@ -42,6 +42,6 @@ public interface IAwtSwtControl extends IControl {
 	 * 
 	 * @return The swt awt composite
 	 */
-	IAsyncCreationValue<Composite> getSwtComposite();
+	IFutureValue<Composite> getSwtComposite();
 
 }
