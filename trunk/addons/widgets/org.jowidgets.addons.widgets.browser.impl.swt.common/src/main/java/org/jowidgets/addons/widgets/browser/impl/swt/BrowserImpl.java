@@ -34,6 +34,7 @@ import java.util.Set;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
+import org.eclipse.swt.browser.BrowserFunction;
 import org.eclipse.swt.browser.LocationEvent;
 import org.eclipse.swt.browser.LocationListener;
 import org.eclipse.swt.browser.ProgressEvent;
@@ -41,6 +42,8 @@ import org.eclipse.swt.browser.ProgressListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.addons.widgets.browser.api.IBrowser;
+import org.jowidgets.addons.widgets.browser.api.IBrowserFunction;
+import org.jowidgets.addons.widgets.browser.api.IBrowserFunctionHandle;
 import org.jowidgets.addons.widgets.browser.api.IBrowserLocationEvent;
 import org.jowidgets.addons.widgets.browser.api.IBrowserLocationListener;
 import org.jowidgets.addons.widgets.browser.api.IBrowserProgressListener;
@@ -128,6 +131,35 @@ class BrowserImpl extends ControlWrapper implements IBrowser {
 	public final boolean executeScript(final String javaScript) {
 		Assert.paramNotNull(javaScript, "javaScript");
 		return getSwtBrowser().execute(javaScript);
+	}
+
+	@Override
+	public IBrowserFunctionHandle createBrowserFunction(final String functionName, final IBrowserFunction function) {
+		Assert.paramNotEmpty(functionName, "functionName");
+		Assert.paramNotNull(function, "function");
+		final BrowserFunction browserFunction = new BrowserFunction(getSwtBrowser(), functionName) {
+			@Override
+			public Object function(final Object[] arguments) {
+				return function.invoke(arguments);
+			}
+		};
+		return new IBrowserFunctionHandle() {
+
+			@Override
+			public boolean isDisposed() {
+				return browserFunction.isDisposed();
+			}
+
+			@Override
+			public String getFunctionName() {
+				return browserFunction.getName();
+			}
+
+			@Override
+			public void dispose() {
+				browserFunction.dispose();
+			}
+		};
 	}
 
 	@Override
