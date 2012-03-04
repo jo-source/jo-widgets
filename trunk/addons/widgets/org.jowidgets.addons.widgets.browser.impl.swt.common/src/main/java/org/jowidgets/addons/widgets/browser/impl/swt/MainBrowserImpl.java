@@ -43,20 +43,20 @@ import org.jowidgets.addons.widgets.browser.api.IMainBrowser;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.descriptor.setup.IComponentSetup;
 import org.jowidgets.util.Assert;
-import org.jowidgets.util.IProvider;
+import org.jowidgets.util.IAsyncCreationValue;
 
 final class MainBrowserImpl extends BrowserImpl implements IMainBrowser {
 
 	private final Set<IBrowserDocumentListener> documentListeners;
 
-	MainBrowserImpl(final IControl control, final IProvider<Composite> swtCompositeProvider, final IComponentSetup setup) {
-		super(control, swtCompositeProvider, setup);
+	MainBrowserImpl(final IControl control, final IAsyncCreationValue<Composite> swtComposite, final IComponentSetup setup) {
+		super(control, swtComposite, setup);
 		this.documentListeners = new LinkedHashSet<IBrowserDocumentListener>();
 	}
 
 	@Override
-	Browser createSwtBrowser() {
-		final Browser result = super.createSwtBrowser();
+	Browser createSwtBrowser(final Composite composite) {
+		final Browser result = super.createSwtBrowser(composite);
 		result.addTitleListener(new TitleListenerImpl());
 		result.addStatusTextListener(new StatusTextListenerImpl());
 		return result;

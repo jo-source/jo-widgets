@@ -40,7 +40,7 @@ final class MainBrowserFactory implements IWidgetFactory<IMainBrowser, IMainBrow
 	@Override
 	public IMainBrowser create(final Object parentUiReference, final IMainBrowserBluePrint bluePrint) {
 		final IAwtSwtControl awtSwtControl = AwtSwtControlFactory.getInstance().createAwtSwtControl(parentUiReference);
-		return SwtBrowserFactory.createMainBrowser(awtSwtControl, awtSwtControl.getSwtCompositeProvider(), bluePrint);
+		return SwtBrowserFactory.createMainBrowser(awtSwtControl, awtSwtControl.getSwtComposite(), bluePrint);
 	}
 
 }

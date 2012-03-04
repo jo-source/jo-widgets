@@ -30,9 +30,9 @@ package org.jowidgets.addons.bridge.awt.swt;
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.impl.widgets.basic.ControlImpl;
 import org.jowidgets.spi.impl.bridge.swt.awt.common.awt.IAwtSwtControlSpi;
-import org.jowidgets.util.IProvider;
+import org.jowidgets.util.IAsyncCreationValue;
 
-class AwtSwtControlImpl extends ControlImpl implements IAwtSwtControl, IProvider<Composite> {
+class AwtSwtControlImpl extends ControlImpl implements IAwtSwtControl {
 
 	public AwtSwtControlImpl(final IAwtSwtControlSpi awtSwtControlSpi) {
 		super(awtSwtControlSpi);
@@ -44,18 +44,8 @@ class AwtSwtControlImpl extends ControlImpl implements IAwtSwtControl, IProvider
 	}
 
 	@Override
-	public Composite getSwtComposite() {
+	public IAsyncCreationValue<Composite> getSwtComposite() {
 		return getWidget().getSwtComposite();
-	}
-
-	@Override
-	public Composite get() {
-		return getSwtComposite();
-	}
-
-	@Override
-	public IProvider<Composite> getSwtCompositeProvider() {
-		return this;
 	}
 
 }

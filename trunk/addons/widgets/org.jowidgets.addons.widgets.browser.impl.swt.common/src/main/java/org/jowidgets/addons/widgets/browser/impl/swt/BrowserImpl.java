@@ -54,7 +54,8 @@ import org.jowidgets.spi.impl.swt.common.color.ColorCache;
 import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.util.Assert;
-import org.jowidgets.util.IProvider;
+import org.jowidgets.util.IAsyncCreationCallback;
+import org.jowidgets.util.IAsyncCreationValue;
 
 class BrowserImpl extends ControlWrapper implements IBrowser {
 
@@ -62,34 +63,38 @@ class BrowserImpl extends ControlWrapper implements IBrowser {
 	private final IColorConstant initialBackgroundColor;
 	private final IColorConstant initialForegroundColor;
 
-	private final IProvider<Composite> swtCompositeProvider;
 	private final Set<IBrowserLocationListener> locationListeners;
 	private final Set<IBrowserProgressListener> progressListeners;
 
 	private Browser swtBrowser;
 
-	BrowserImpl(final IControl control, final IProvider<Composite> swtCompositeProvider, final IComponentSetup setup) {
+	BrowserImpl(final IControl control, final IAsyncCreationValue<Composite> swtComposite, final IComponentSetup setup) {
 		super(control);
 
 		this.initialVisiblityState = setup.isVisible();
 		this.initialBackgroundColor = setup.getBackgroundColor();
 		this.initialForegroundColor = setup.getForegroundColor();
 
-		this.swtCompositeProvider = swtCompositeProvider;
-
 		this.locationListeners = new LinkedHashSet<IBrowserLocationListener>();
 		this.progressListeners = new LinkedHashSet<IBrowserProgressListener>();
+
+		swtComposite.addCreationCallback(new IAsyncCreationCallback<Composite>() {
+			@Override
+			public void created(final Composite value) {
+				swtBrowser = createSwtBrowser(value);
+			}
+		});
 	}
 
 	final Browser getSwtBrowser() {
 		if (swtBrowser == null) {
-			swtBrowser = createSwtBrowser();
+			throw new IllegalStateException("The browser was not yet initialized.");
 		}
 		return swtBrowser;
 	}
 
-	Browser createSwtBrowser() {
-		final Composite swtComposite = swtCompositeProvider.get();
+	Browser createSwtBrowser(final Composite swtComposite) {
+
 		swtComposite.setLayout(new FillLayout());
 		final Browser result = new Browser(swtComposite, SWT.NONE);
 
