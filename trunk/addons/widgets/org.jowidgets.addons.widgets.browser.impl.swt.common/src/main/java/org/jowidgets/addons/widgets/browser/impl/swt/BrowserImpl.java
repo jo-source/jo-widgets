@@ -28,8 +28,11 @@
 
 package org.jowidgets.addons.widgets.browser.impl.swt;
 
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.eclipse.swt.SWT;
@@ -56,6 +59,7 @@ import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.IAsyncCreationCallback;
 import org.jowidgets.util.IAsyncCreationValue;
+import org.jowidgets.util.Tuple;
 
 class BrowserImpl extends ControlWrapper implements IBrowser {
 
@@ -66,7 +70,11 @@ class BrowserImpl extends ControlWrapper implements IBrowser {
 	private final Set<IBrowserLocationListener> locationListeners;
 	private final Set<IBrowserProgressListener> progressListeners;
 
+	private final Map<String, Tuple<IBrowserFunction, BrowserFunctionHandle>> browserFunctions;
+
 	private Browser swtBrowser;
+	private String url;
+	private String html;
 
 	BrowserImpl(final IControl control, final IAsyncCreationValue<Composite> swtComposite, final IComponentSetup setup) {
 		super(control);
@@ -77,6 +85,7 @@ class BrowserImpl extends ControlWrapper implements IBrowser {
 
 		this.locationListeners = new LinkedHashSet<IBrowserLocationListener>();
 		this.progressListeners = new LinkedHashSet<IBrowserProgressListener>();
+		this.browserFunctions = new LinkedHashMap<String, Tuple<IBrowserFunction, BrowserFunctionHandle>>();
 
 		swtComposite.addCreationCallback(new IAsyncCreationCallback<Composite>() {
 			@Override
@@ -113,17 +122,51 @@ class BrowserImpl extends ControlWrapper implements IBrowser {
 		result.addLocationListener(new LocationListenerImpl());
 		result.addProgressListener(new ProgressListenerImpl());
 
+		for (final Entry<String, Tuple<IBrowserFunction, BrowserFunctionHandle>> entry : browserFunctions.entrySet()) {
+			final BrowserFunctionHandle handle = entry.getValue().getSecond();
+			if (!handle.isDisposed()) {
+				final IBrowserFunction function = entry.getValue().getFirst();
+				final BrowserFunction browserFunction = new BrowserFunction(result, entry.getKey()) {
+					@Override
+					public Object function(final Object[] arguments) {
+						return function.invoke(arguments);
+					}
+				};
+				handle.setBrowserFunction(browserFunction);
+			}
+		}
+		browserFunctions.clear();
+
+		if (url != null) {
+			result.setUrl(url);
+		}
+		if (html != null) {
+			result.setText(html);
+		}
+
 		return result;
 	}
 
 	@Override
 	public final void setUrl(final String url) {
-		getSwtBrowser().setUrl(url);
+		if (isInitialized()) {
+			getSwtBrowser().setUrl(url);
+		}
+		else {
+			this.html = null;
+			this.url = url;
+		}
 	}
 
 	@Override
 	public final void setHtml(final String html) {
-		getSwtBrowser().setText(html);
+		if (isInitialized()) {
+			getSwtBrowser().setText(html);
+		}
+		else {
+			this.url = null;
+			this.html = html;
+		}
 	}
 
 	@Override
@@ -142,29 +185,17 @@ class BrowserImpl extends ControlWrapper implements IBrowser {
 	public IBrowserFunctionHandle createBrowserFunction(final String functionName, final IBrowserFunction function) {
 		Assert.paramNotEmpty(functionName, "functionName");
 		Assert.paramNotNull(function, "function");
-		final BrowserFunction browserFunction = new BrowserFunction(getSwtBrowser(), functionName) {
-			@Override
-			public Object function(final Object[] arguments) {
-				return function.invoke(arguments);
-			}
-		};
-		return new IBrowserFunctionHandle() {
-
-			@Override
-			public boolean isDisposed() {
-				return browserFunction.isDisposed();
-			}
-
-			@Override
-			public String getFunctionName() {
-				return browserFunction.getName();
-			}
-
-			@Override
-			public void dispose() {
-				browserFunction.dispose();
-			}
-		};
+		if (isInitialized()) {
+			final BrowserFunction browserFunction = new BrowserFunctionAdapter(getSwtBrowser(), functionName, function);
+			return new BrowserFunctionHandle(functionName, browserFunction);
+		}
+		else {
+			final BrowserFunctionHandle functionHandle = new BrowserFunctionHandle(functionName);
+			Tuple<IBrowserFunction, BrowserFunctionHandle> tuple;
+			tuple = new Tuple<IBrowserFunction, BrowserFunctionHandle>(function, functionHandle);
+			browserFunctions.put(functionName, tuple);
+			return functionHandle;
+		}
 	}
 
 	@Override
@@ -189,6 +220,18 @@ class BrowserImpl extends ControlWrapper implements IBrowser {
 	public final void removeProgressListener(final IBrowserProgressListener listener) {
 		Assert.paramNotNull(listener, "listener");
 		progressListeners.remove(listener);
+	}
+
+	final boolean isInitialized() {
+		return swtBrowser != null;
+	}
+
+	String getUrl() {
+		return url;
+	}
+
+	String getHtml() {
+		return html;
 	}
 
 	private final class LocationListenerImpl implements LocationListener {
@@ -249,6 +292,67 @@ class BrowserImpl extends ControlWrapper implements IBrowser {
 			for (final IBrowserProgressListener listener : new LinkedList<IBrowserProgressListener>(progressListeners)) {
 				listener.loadFinished();
 			}
+		}
+
+	}
+
+	private final class BrowserFunctionAdapter extends BrowserFunction {
+
+		private final IBrowserFunction function;
+
+		public BrowserFunctionAdapter(final Browser browser, final String functionName, final IBrowserFunction function) {
+			super(browser, functionName);
+			this.function = function;
+		}
+
+		@Override
+		public Object function(final Object[] arguments) {
+			return function.invoke(arguments);
+		}
+	}
+
+	private final class BrowserFunctionHandle implements IBrowserFunctionHandle {
+
+		private final String functionName;
+
+		private BrowserFunction browserFunction;
+		private Boolean disposed;
+
+		private BrowserFunctionHandle(final String functionName) {
+			this(functionName, null);
+		}
+
+		private BrowserFunctionHandle(final String functionName, final BrowserFunction browserFunction) {
+			this.functionName = functionName;
+		}
+
+		private void setBrowserFunction(final BrowserFunction browserFunction) {
+			this.browserFunction = browserFunction;
+		}
+
+		@Override
+		public void dispose() {
+			if (browserFunction != null) {
+				browserFunction.dispose();
+			}
+			else {
+				disposed = Boolean.TRUE;
+			}
+		}
+
+		@Override
+		public boolean isDisposed() {
+			if (browserFunction != null) {
+				return browserFunction.isDisposed();
+			}
+			else {
+				return disposed != null && disposed.booleanValue();
+			}
+		}
+
+		@Override
+		public String getFunctionName() {
+			return functionName;
 		}
 
 	}
