@@ -53,7 +53,7 @@ public final class FutureValue<VALUE_TYPE> implements IFutureValue<VALUE_TYPE> {
 	}
 
 	@Override
-	public void addInitializationCallback(final IFutureValueCallback<VALUE_TYPE> callback) {
+	public void addFutureCallback(final IFutureValueCallback<VALUE_TYPE> callback) {
 		Assert.paramNotNull(callback, "callback");
 		if (isInitialized()) {
 			callback.initialized(value.getValue());
@@ -64,7 +64,7 @@ public final class FutureValue<VALUE_TYPE> implements IFutureValue<VALUE_TYPE> {
 	}
 
 	@Override
-	public void removeInitializationCallback(final IFutureValueCallback<VALUE_TYPE> callback) {
+	public void removeFutureCallback(final IFutureValueCallback<VALUE_TYPE> callback) {
 		Assert.paramNotNull(callback, "callback");
 		callbacks.remove(callback);
 	}

@@ -88,7 +88,7 @@ class AwtSwtControlImpl extends SwingControl implements IAwtSwtControlSpi {
 		};
 
 		getUiReference().addHierarchyListener(hierarchyListener);
-		this.compositeFuture.addInitializationCallback(new IFutureValueCallback<Composite>() {
+		this.compositeFuture.addFutureCallback(new IFutureValueCallback<Composite>() {
 			@Override
 			public void initialized(final Composite value) {
 				getUiReference().removeHierarchyListener(hierarchyListener);

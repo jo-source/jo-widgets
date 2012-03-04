@@ -49,14 +49,14 @@ public interface IFutureValue<VALUE_TYPE> {
 	 * 
 	 * @param callback The callback that gets the initialized value
 	 */
-	void addInitializationCallback(IFutureValueCallback<VALUE_TYPE> callback);
+	void addFutureCallback(IFutureValueCallback<VALUE_TYPE> callback);
 
 	/**
 	 * Removes a creation callback if no longer interested on the value.
 	 * 
 	 * @param callback The callback to remove
 	 */
-	void removeInitializationCallback(IFutureValueCallback<VALUE_TYPE> callback);
+	void removeFutureCallback(IFutureValueCallback<VALUE_TYPE> callback);
 
 	/**
 	 * @return True if the value was already initialized, false otherwise
