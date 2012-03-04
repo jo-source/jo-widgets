@@ -26,41 +26,36 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.browser.api;
+package org.jowidgets.util;
 
+/**
+ * A value of a specific type that will be created later.
+ * 
+ * @param <VALUE_TYPE> The type of the value that will be created later
+ */
+public interface IAsyncCreationValue<VALUE_TYPE> {
 
-public interface IMainBrowser extends IBrowser {
+	/**
+	 * Adds a callback that will be invoked in the following manner:
+	 * 
+	 * 1. If the value is already created, the given callback will be invoked immediately
+	 * 2. If the value was not already created, the given callback will be invoked later
+	 * but immediately after the value was created
+	 * 
+	 * @param callback The callback that gets the created value
+	 */
+	void addCreationCallback(IAsyncCreationCallback<VALUE_TYPE> callback);
 
-	String getUrl();
+	/**
+	 * Removes a creation callback if no longer interested on the value.
+	 * 
+	 * @param callback The callback to remove
+	 */
+	void removeCreationCallback(IAsyncCreationCallback<VALUE_TYPE> callback);
 
-	String getHtml();
-
-	void setJavascriptEnabled(boolean enabled);
-
-	boolean isJavascriptEnabled();
-
-	boolean setCookie(String url, String cookieValue);
-
-	String getCookie(String url, String cookieName);
-
-	void clearAllCookies();
-
-	void reload();
-
-	void cancel();
-
-	void back();
-
-	boolean isBackEnabled();
-
-	void forward();
-
-	boolean isForwardEnabled();
-
-	void addDocumentListener(IBrowserDocumentListener listener);
-
-	void removeDocumentListener(IBrowserDocumentListener listener);
-
-	//TODO MG - HRW discuss and complete interface
+	/**
+	 * @return True if the value was already created, false otherwise
+	 */
+	boolean isCreated();
 
 }

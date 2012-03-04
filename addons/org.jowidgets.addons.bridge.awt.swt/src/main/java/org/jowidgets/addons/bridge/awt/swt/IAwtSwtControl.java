@@ -30,7 +30,7 @@ package org.jowidgets.addons.bridge.awt.swt;
 
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.util.IProvider;
+import org.jowidgets.util.IAsyncCreationValue;
 
 public interface IAwtSwtControl extends IControl {
 
@@ -38,18 +38,10 @@ public interface IAwtSwtControl extends IControl {
 	 * Gets the swt composite.
 	 * 
 	 * REMARK: Because swt-awt bridge needs a peer to create its composite, the swt composite
-	 * is not initialized before the widget was created completely.
-	 * At the moment the workaround is to use a provider of the composite and initialize custom bridged widgets
-	 * layzy with help of the provider
+	 * is not initialized before the widget was created completely and added to its parent container.
 	 * 
 	 * @return The swt awt composite
 	 */
-	//TODO MG fix the swt awt creation problem described at remark
-	Composite getSwtComposite();
-
-	/**
-	 * @return Gets a provider of the swt composite to make the described workaround above a little more convenient
-	 */
-	IProvider<Composite> getSwtCompositeProvider();
+	IAsyncCreationValue<Composite> getSwtComposite();
 
 }

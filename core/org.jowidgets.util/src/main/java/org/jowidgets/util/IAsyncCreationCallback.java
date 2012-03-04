@@ -26,41 +26,15 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.browser.api;
+package org.jowidgets.util;
 
+public interface IAsyncCreationCallback<VALUE_TYPE> {
 
-public interface IMainBrowser extends IBrowser {
-
-	String getUrl();
-
-	String getHtml();
-
-	void setJavascriptEnabled(boolean enabled);
-
-	boolean isJavascriptEnabled();
-
-	boolean setCookie(String url, String cookieValue);
-
-	String getCookie(String url, String cookieName);
-
-	void clearAllCookies();
-
-	void reload();
-
-	void cancel();
-
-	void back();
-
-	boolean isBackEnabled();
-
-	void forward();
-
-	boolean isForwardEnabled();
-
-	void addDocumentListener(IBrowserDocumentListener listener);
-
-	void removeDocumentListener(IBrowserDocumentListener listener);
-
-	//TODO MG - HRW discuss and complete interface
+	/**
+	 * This method will be invoked for the created value.
+	 * 
+	 * @param value The created value
+	 */
+	void created(VALUE_TYPE value);
 
 }
