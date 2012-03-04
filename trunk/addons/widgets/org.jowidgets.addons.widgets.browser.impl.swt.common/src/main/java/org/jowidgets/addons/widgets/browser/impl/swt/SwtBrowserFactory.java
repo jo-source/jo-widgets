@@ -34,20 +34,20 @@ import org.jowidgets.addons.widgets.browser.api.IBrowserBluePrint;
 import org.jowidgets.addons.widgets.browser.api.IMainBrowser;
 import org.jowidgets.addons.widgets.browser.api.IMainBrowserBluePrint;
 import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.util.AsyncCreationValue;
-import org.jowidgets.util.IAsyncCreationValue;
+import org.jowidgets.util.FutureValue;
+import org.jowidgets.util.IFutureValue;
 
 public final class SwtBrowserFactory {
 
 	private SwtBrowserFactory() {}
 
 	public static IBrowser createBrowser(final IControl control, final Composite swtComposite, final IBrowserBluePrint bluePrint) {
-		return createBrowser(control, new AsyncCreationValue<Composite>(swtComposite), bluePrint);
+		return createBrowser(control, new FutureValue<Composite>(swtComposite), bluePrint);
 	}
 
 	public static IBrowser createBrowser(
 		final IControl control,
-		final IAsyncCreationValue<Composite> swtComposite,
+		final IFutureValue<Composite> swtComposite,
 		final IBrowserBluePrint bluePrint) {
 		return new BrowserImpl(control, swtComposite, bluePrint);
 	}
@@ -56,12 +56,12 @@ public final class SwtBrowserFactory {
 		final IControl control,
 		final Composite swtComposite,
 		final IMainBrowserBluePrint bluePrint) {
-		return createMainBrowser(control, new AsyncCreationValue<Composite>(swtComposite), bluePrint);
+		return createMainBrowser(control, new FutureValue<Composite>(swtComposite), bluePrint);
 	}
 
 	public static IMainBrowser createMainBrowser(
 		final IControl control,
-		final IAsyncCreationValue<Composite> swtComposite,
+		final IFutureValue<Composite> swtComposite,
 		final IMainBrowserBluePrint bluePrint) {
 		return new MainBrowserImpl(control, swtComposite, bluePrint);
 	}

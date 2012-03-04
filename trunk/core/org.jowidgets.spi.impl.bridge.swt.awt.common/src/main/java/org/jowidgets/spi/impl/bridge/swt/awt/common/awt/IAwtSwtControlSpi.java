@@ -30,10 +30,10 @@ package org.jowidgets.spi.impl.bridge.swt.awt.common.awt;
 
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.spi.widgets.IControlSpi;
-import org.jowidgets.util.IAsyncCreationValue;
+import org.jowidgets.util.IFutureValue;
 
 public interface IAwtSwtControlSpi extends IControlSpi {
 
-	IAsyncCreationValue<Composite> getSwtComposite();
+	IFutureValue<Composite> getSwtComposite();
 
 }
