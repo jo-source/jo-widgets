@@ -151,7 +151,7 @@ public class DialogImpl extends JavafxWindow implements IFrameSpi {
 
 	@Override
 	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
-		if (layoutDescriptor != null) {
+		if (layoutDescriptor != null && layoutDescriptor instanceof ILayouter) {
 			((LayoutManagerImpl) getUiReference().getScene().getRoot()).setLayouter((ILayouter) layoutDescriptor);
 		}
 	}
